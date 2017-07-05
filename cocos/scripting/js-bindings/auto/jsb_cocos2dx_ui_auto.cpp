@@ -15119,6 +15119,44 @@ bool js_cocos2dx_ui_RichText_setAnchorTextGlow(JSContext *cx, uint32_t argc, jsv
     JS_ReportError(cx, "js_cocos2dx_ui_RichText_setAnchorTextGlow : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_ui_RichText_getHorizontalAlignment(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_getHorizontalAlignment : Invalid Native Object");
+    if (argc == 0) {
+        int ret = (int)cobj->getHorizontalAlignment();
+        JS::RootedValue jsret(cx);
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_getHorizontalAlignment : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_RichText_setHorizontalAlignment(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::RichText* cobj = (cocos2d::ui::RichText *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_RichText_setHorizontalAlignment : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::ui::RichText::HorizontalAlignment arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_RichText_setHorizontalAlignment : Error processing arguments");
+        cobj->setHorizontalAlignment(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_RichText_setHorizontalAlignment : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_ui_RichText_setAnchorTextDel(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -15926,6 +15964,8 @@ void js_register_cocos2dx_ui_RichText(JSContext *cx, JS::HandleObject global) {
         JS_FN("setAnchorFontColor", js_cocos2dx_ui_RichText_setAnchorFontColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFontFace", js_cocos2dx_ui_RichText_setFontFace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAnchorTextGlow", js_cocos2dx_ui_RichText_setAnchorTextGlow, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getHorizontalAlignment", js_cocos2dx_ui_RichText_getHorizontalAlignment, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setHorizontalAlignment", js_cocos2dx_ui_RichText_setHorizontalAlignment, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAnchorTextDel", js_cocos2dx_ui_RichText_setAnchorTextDel, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getAnchorTextOutlineColor3B", js_cocos2dx_ui_RichText_getAnchorTextOutlineColor3B, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("stringWithColor4B", js_cocos2dx_ui_RichText_stringWithColor4B, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),

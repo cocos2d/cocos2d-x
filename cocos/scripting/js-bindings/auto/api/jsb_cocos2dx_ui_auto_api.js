@@ -6059,6 +6059,26 @@ color3b
 },
 
 /**
+ * @method getHorizontalAlignment
+ * @return {ccui.RichText::HorizontalAlignment}
+ */
+getHorizontalAlignment : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setHorizontalAlignment
+ * @param {ccui.RichText::HorizontalAlignment} arg0
+ */
+setHorizontalAlignment : function (
+horizontalalignment 
+)
+{
+},
+
+/**
  * @method setAnchorTextDel
  * @param {bool} arg0
  */

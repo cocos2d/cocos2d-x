@@ -28061,6 +28061,103 @@ int lua_cocos2dx_ui_RichText_setAnchorTextGlow(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_RichText_getHorizontalAlignment(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::RichText* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.RichText",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::RichText*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_RichText_getHorizontalAlignment'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_RichText_getHorizontalAlignment'", nullptr);
+            return 0;
+        }
+        int ret = (int)cobj->getHorizontalAlignment();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.RichText:getHorizontalAlignment",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_RichText_getHorizontalAlignment'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_RichText_setHorizontalAlignment(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::RichText* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.RichText",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::RichText*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_RichText_setHorizontalAlignment'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::ui::RichText::HorizontalAlignment arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.RichText:setHorizontalAlignment");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_RichText_setHorizontalAlignment'", nullptr);
+            return 0;
+        }
+        cobj->setHorizontalAlignment(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.RichText:setHorizontalAlignment",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_RichText_setHorizontalAlignment'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_RichText_setAnchorTextDel(lua_State* tolua_S)
 {
     int argc = 0;
@@ -29794,6 +29891,8 @@ int lua_register_cocos2dx_ui_RichText(lua_State* tolua_S)
         tolua_function(tolua_S,"setAnchorFontColor",lua_cocos2dx_ui_RichText_setAnchorFontColor);
         tolua_function(tolua_S,"setFontFace",lua_cocos2dx_ui_RichText_setFontFace);
         tolua_function(tolua_S,"setAnchorTextGlow",lua_cocos2dx_ui_RichText_setAnchorTextGlow);
+        tolua_function(tolua_S,"getHorizontalAlignment",lua_cocos2dx_ui_RichText_getHorizontalAlignment);
+        tolua_function(tolua_S,"setHorizontalAlignment",lua_cocos2dx_ui_RichText_setHorizontalAlignment);
         tolua_function(tolua_S,"setAnchorTextDel",lua_cocos2dx_ui_RichText_setAnchorTextDel);
         tolua_function(tolua_S,"getAnchorTextOutlineColor3B",lua_cocos2dx_ui_RichText_getAnchorTextOutlineColor3B);
         tolua_function(tolua_S,"stringWithColor4B",lua_cocos2dx_ui_RichText_stringWithColor4B);
