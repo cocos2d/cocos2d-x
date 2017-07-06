@@ -75,7 +75,6 @@ static id s_sharedDirectorCaller;
     if (self)
     {
         isAppActive = [UIApplication sharedApplication].applicationState == UIApplicationStateActive;
-        lastDisplayTime = 0;
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         [nc addObserver:self selector:@selector(appDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
         [nc addObserver:self selector:@selector(appDidBecomeInactive) name:UIApplicationWillResignActiveNotification object:nil];
@@ -108,6 +107,7 @@ static id s_sharedDirectorCaller;
     displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
     [displayLink setFrameInterval: self.interval];
     [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    lastDisplayTime = ((CADisplayLink*)displayLink).timestamp;
 }
 
 -(void) stopMainLoop
@@ -126,6 +126,7 @@ static id s_sharedDirectorCaller;
     displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
     [displayLink setFrameInterval: self.interval];
     [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    lastDisplayTime = ((CADisplayLink*)displayLink).timestamp;
 }
                       
 -(void) doCaller: (id) sender
@@ -138,10 +139,7 @@ static id s_sharedDirectorCaller;
         
         [EAGLContext setCurrentContext: cocos2dxContext];
 
-        CFTimeInterval dt = 0;
-        if (lastDisplayTime != 0) {
-            dt = ((CADisplayLink*)displayLink).timestamp - lastDisplayTime;
-        }
+        CFTimeInterval dt = ((CADisplayLink*)displayLink).timestamp - lastDisplayTime;
         lastDisplayTime = ((CADisplayLink*)displayLink).timestamp;
         director->mainLoop(dt);
     }
