@@ -143,14 +143,14 @@ namespace {
                 }
                 else
                 {
-                    bufferSize = ret + 3;
+                    bufferSize = nret + 3;
                     delete[] buf;
                 }
             }
             else // < 0
             {	// VS2013 or Unix-like System(GCC)
-	               bufferSize *= 2;
-	               delete[] buf;
+	        bufferSize *= 2;
+	        delete[] buf;
             }
         } while (true);
         buf[nret] = '\n';
