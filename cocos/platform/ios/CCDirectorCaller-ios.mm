@@ -51,7 +51,7 @@ static id s_sharedDirectorCaller;
 {
     if (s_sharedDirectorCaller == nil)
     {
-        s_sharedDirectorCaller = [CCDirectorCaller new];
+        s_sharedDirectorCaller = [[CCDirectorCaller alloc] init];
     }
     
     return s_sharedDirectorCaller;
@@ -107,6 +107,7 @@ static id s_sharedDirectorCaller;
     displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
     [displayLink setFrameInterval: self.interval];
     [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    lastDisplayTime = ((CADisplayLink*)displayLink).timestamp;
 }
 
 -(void) stopMainLoop
@@ -125,6 +126,7 @@ static id s_sharedDirectorCaller;
     displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
     [displayLink setFrameInterval: self.interval];
     [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    lastDisplayTime = ((CADisplayLink*)displayLink).timestamp;
 }
                       
 -(void) doCaller: (id) sender
