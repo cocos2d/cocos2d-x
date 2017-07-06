@@ -52,7 +52,6 @@ static id s_sharedDirectorCaller;
     if (s_sharedDirectorCaller == nil)
     {
         s_sharedDirectorCaller = [CCDirectorCaller new];
-        ((CCDirectorCaller*) s_sharedDirectorCaller)->lastDisplayTime = 0;
     }
     
     return s_sharedDirectorCaller;
@@ -76,6 +75,7 @@ static id s_sharedDirectorCaller;
     if (self)
     {
         isAppActive = [UIApplication sharedApplication].applicationState == UIApplicationStateActive;
+        lastDisplayTime = 0;
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         [nc addObserver:self selector:@selector(appDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
         [nc addObserver:self selector:@selector(appDidBecomeInactive) name:UIApplicationWillResignActiveNotification object:nil];
