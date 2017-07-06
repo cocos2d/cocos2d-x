@@ -128,26 +128,33 @@ namespace {
     {
         int bufferSize = MAX_LOG_LENGTH;
         char* buf = nullptr;
-        
+        int nret = 0;
         do
         {
             buf = new (std::nothrow) char[bufferSize];
             if (buf == nullptr)
-                return; // not enough memory
-            
-            int ret = vsnprintf(buf, bufferSize - 3, format, args);
-            if (ret < 0)
-            {
-                bufferSize *= 2;
-                
-                delete [] buf;
+                return;
+            nret = vsnprintf(buf, bufferSize - 3, format, args);
+            if (nret >= 0)
+            { // VS2015/2017
+                if (nret <= bufferSize - 3)
+                {// success, so don't need to realloc
+                    break;
+                }
+                else
+                {
+                    bufferSize = ret + 3;
+                    delete[] buf;
+                }
             }
-            else
-                break;
-            
+            else // < 0
+            {	// VS2013 or Unix-like System(GCC)
+	               bufferSize *= 2;
+	               delete[] buf;
+            }
         } while (true);
-        
-        strcat(buf, "\n");
+        buf[nret] = '\n';
+        buf[++nret] = '\0';
         
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
         __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info", "%s", buf);
@@ -155,7 +162,7 @@ namespace {
 #elif CC_TARGET_PLATFORM ==  CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
         
         int pos = 0;
-        int len = strlen(buf);
+        int len = nret;
         char tempBuf[MAX_LOG_LENGTH + 1] = { 0 };
         WCHAR wszBuf[MAX_LOG_LENGTH + 1] = { 0 };
         
