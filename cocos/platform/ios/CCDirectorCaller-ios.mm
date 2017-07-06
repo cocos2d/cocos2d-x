@@ -51,7 +51,7 @@ static id s_sharedDirectorCaller;
 {
     if (s_sharedDirectorCaller == nil)
     {
-        s_sharedDirectorCaller = [CCDirectorCaller new];
+        s_sharedDirectorCaller = [[CCDirectorCaller alloc] init];
     }
     
     return s_sharedDirectorCaller;
