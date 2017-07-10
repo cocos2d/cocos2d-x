@@ -420,6 +420,7 @@
         "cocos/base/CCConsole.h", 
         "cocos/base/CCController-android.cpp", 
         "cocos/base/CCController-apple.mm", 
+        "cocos/base/CCController-linux-win32.cpp", 
         "cocos/base/CCController.cpp", 
         "cocos/base/CCController.h", 
         "cocos/base/CCData.cpp", 
