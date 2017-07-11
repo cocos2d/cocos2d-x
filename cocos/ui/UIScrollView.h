@@ -244,6 +244,19 @@ public:
      * @param attenuated Whether scroll speed attenuate or not.
      */
     virtual void scrollToPercentBothDirection(const Vec2& percent, float timeInSec, bool attenuated);
+	
+	/**
+	 * @return How far the scroll view is scrolled in the vertical axis
+	 */
+    float getScrolledPercentVertical() const;
+	/**
+	 * @return How far the scroll view is scrolled in the horizontal axis
+	 */
+    float getScrolledPercentHorizontal() const;
+	/**
+	 * @return How far the scroll view is scrolled in both axes, combined as a Vec2
+	 */
+    Vec2 getScrolledPercentBothDirection() const;
 
     /**
      * Move inner container to bottom boundary of scrollview.
