@@ -109,6 +109,12 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
         AudioSessionInitialize(NULL, NULL, AudioEngineInterruptionListenerCallback, self);
       }
 #endif
+    
+    BOOL success = [[AVAudioSession sharedInstance]
+                    setCategory: AVAudioSessionCategoryAmbient
+                    error: nil];
+    if (!success)
+        ALOGE("Fail to set audio session.");
     }
     return self;
 }
