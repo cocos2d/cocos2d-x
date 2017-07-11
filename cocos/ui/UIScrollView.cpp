@@ -1426,6 +1426,7 @@ void ScrollView::copySpecialProperties(Widget *widget)
         _touchMoveDisplacements = scrollView->_touchMoveDisplacements;
         _touchMoveTimeDeltas = scrollView->_touchMoveTimeDeltas;
         _touchMovePreviousTimestamp = scrollView->_touchMovePreviousTimestamp;
+        _scrolling = scrollView->_scrolling;
         _autoScrolling = scrollView->_autoScrolling;
         _autoScrollAttenuate = scrollView->_autoScrollAttenuate;
         _autoScrollStartPosition = scrollView->_autoScrollStartPosition;
