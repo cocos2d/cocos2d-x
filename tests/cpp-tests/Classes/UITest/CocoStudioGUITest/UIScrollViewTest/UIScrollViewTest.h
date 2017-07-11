@@ -154,4 +154,17 @@ protected:
 
     cocos2d::ui::Text* _displayValueLabel;
 };
+
+class UIScrollViewTestEvents : public UIScene
+{
+public:
+	CREATE_FUNC(UIScrollViewTestEvents);
+	
+	UIScrollViewTestEvents();
+	virtual bool init() override;
+	
+protected:
+	
+	cocos2d::ui::Text* _displayValueLabel;
+};
 #endif /* defined(__TestCpp__UIScrollViewTest__) */

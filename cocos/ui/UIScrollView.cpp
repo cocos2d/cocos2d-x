@@ -60,6 +60,7 @@ _bePressed(false),
 _childFocusCancelOffsetInInch(MOVE_INCH),
 _touchMovePreviousTimestamp(0),
 _touchTotalTimeThreshold(0.5f),
+_scrolling(false),
 _autoScrolling(false),
 _autoScrollAttenuate(true),
 _autoScrollTotalTime(0),
@@ -933,6 +934,10 @@ void ScrollView::handleReleaseLogic(Touch *touch)
     {
         _horizontalScrollBar->onTouchEnded();
     }
+    
+    if ( _scrolling ) {
+        processScrollingEndedEvent();
+    }
 }
 
 bool ScrollView::onTouchBegan(Touch *touch, Event *unusedEvent)
@@ -1080,7 +1085,16 @@ void ScrollView::processScrollEvent(MoveDirection dir, bool bounce)
 
 void ScrollView::processScrollingEvent()
 {
+    if ( !_scrolling ) {
+        _scrolling = true;
+        dispatchEvent(SCROLLVIEW_EVENT_SCROLLING_BEGAN, EventType::SCROLLING_BEGAN);
+    }
     dispatchEvent(SCROLLVIEW_EVENT_SCROLLING, EventType::SCROLLING);
+}
+    
+void ScrollView::processScrollingEndedEvent() {
+    _scrolling = false;
+    dispatchEvent(SCROLLVIEW_EVENT_SCROLLING_ENDED, EventType::SCROLLING_ENDED);
 }
 
 void ScrollView::dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType)
