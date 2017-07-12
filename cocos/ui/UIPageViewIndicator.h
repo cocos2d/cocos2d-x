@@ -61,6 +61,10 @@ public:
     const Color3B& getIndexNodesColor() const { return _indexNodesColor; }
     void setIndexNodesScale(float indexNodesScale);
     float getIndexNodesScale() const { return _indexNodesScale; }
+	void setSelectedIndexOpacity(GLubyte opacity) { _currentIndexNode->setOpacity(opacity); }
+	GLubyte getSelectedIndexOpacity() const { return _currentIndexNode->getOpacity(); }
+	void setIndexNodesOpacity(GLubyte opacity);
+	GLubyte getIndexNodesOpacity() const { return _indexNodesOpacity; }
     
     /**
      * Sets texture for index nodes.
@@ -82,6 +86,7 @@ protected:
     float _spaceBetweenIndexNodes;
     float _indexNodesScale;
     Color3B _indexNodesColor;
+	GLubyte _indexNodesOpacity;
     
     bool _useDefaultTexture;
     std::string _indexNodesTextureFile;

@@ -507,6 +507,34 @@ const Color3B& PageView::getIndicatorIndexNodesColor() const
     CCASSERT(_indicator != nullptr, "");
     return _indicator->getIndexNodesColor();
 }
+    
+void PageView::setIndicatorSelectedIndexOpacity(GLubyte opacity)
+{
+    if(_indicator != nullptr)
+    {
+        _indicator->setSelectedIndexOpacity(opacity);
+    }
+}
+
+GLubyte PageView::getIndicatorSelectedIndexOpacity() const
+{
+    CCASSERT(_indicator != nullptr, "");
+    return _indicator->getSelectedIndexOpacity();
+}
+
+void PageView::setIndicatorIndexNodesOpacity(GLubyte opacity)
+{
+    if(_indicator != nullptr)
+    {
+        _indicator->setIndexNodesOpacity(opacity);
+    }
+}
+
+GLubyte PageView::getIndicatorIndexNodesOpacity() const
+{
+    CCASSERT(_indicator != nullptr, "");
+    return _indicator->getIndexNodesOpacity();
+}
 
 void PageView::setIndicatorIndexNodesScale(float indexNodesScale)
 {

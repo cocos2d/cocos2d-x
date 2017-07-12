@@ -31,7 +31,11 @@ static const char* CIRCLE_IMAGE_KEY = "/__circleImage";
 
 NS_CC_BEGIN
 
-static const float SPACE_BETWEEN_INDEX_NODES_DEFAULT = 23;
+namespace {
+    static const float SPACE_BETWEEN_INDEX_NODES_DEFAULT = 23;
+    constexpr GLubyte SELECTED_INDEX_NODE_OPACITY_DEFAULT = 255;
+    constexpr GLubyte INDEX_NODES_OPACITY_DEFAULT = 0.3*255;
+}
 
 namespace ui {
 
@@ -53,6 +57,7 @@ PageViewIndicator::PageViewIndicator()
 , _spaceBetweenIndexNodes(SPACE_BETWEEN_INDEX_NODES_DEFAULT)
 , _indexNodesScale(1.0f)
 , _indexNodesColor(Color3B::WHITE)
+, _indexNodesOpacity(INDEX_NODES_OPACITY_DEFAULT)
 , _useDefaultTexture(true)
 , _indexNodesTextureFile("")
 , _indexNodesTexType(Widget::TextureResType::LOCAL)
@@ -151,6 +156,12 @@ void PageViewIndicator::setIndexNodesColor(const Color3B& indexNodesColor)
         indexNode->setColor(indexNodesColor);
     }
 }
+    
+void PageViewIndicator::setIndexNodesOpacity(GLubyte opacity) {
+    _indexNodesOpacity = opacity;
+    for ( auto& indexNode : _indexNodes )
+        indexNode->setOpacity(opacity);
+}
 
 void PageViewIndicator::setIndexNodesScale(float indexNodesScale)
 {
@@ -220,7 +231,7 @@ void PageViewIndicator::increaseNumberOfPages()
     
     indexNode->setColor(_indexNodesColor);
     indexNode->setScale(_indexNodesScale);
-    indexNode->setOpacity(255 * 0.3f);
+    indexNode->setOpacity(_indexNodesOpacity);
     addProtectedChild(indexNode);
     _indexNodes.pushBack(indexNode);
 }
