@@ -33,7 +33,6 @@ NS_CC_BEGIN
 
 namespace {
     static const float SPACE_BETWEEN_INDEX_NODES_DEFAULT = 23;
-    constexpr GLubyte SELECTED_INDEX_NODE_OPACITY_DEFAULT = 255;
     constexpr GLubyte INDEX_NODES_OPACITY_DEFAULT = 0.3*255;
 }
 
