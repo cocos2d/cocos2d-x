@@ -2280,4 +2280,13 @@ int register_all_cocos2dx(lua_State* tolua_S);
 
 
 
+
+
+
+
+
+
+
+
+
 #endif // __cocos2dx_h__
