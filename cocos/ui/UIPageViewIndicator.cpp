@@ -54,6 +54,7 @@ PageViewIndicator* PageViewIndicator::create()
 PageViewIndicator::PageViewIndicator()
 : _direction(PageView::Direction::HORIZONTAL)
 , _currentIndexNode(nullptr)
+, _currentOverlappingIndexNode(nullptr)
 , _spaceBetweenIndexNodes(SPACE_BETWEEN_INDEX_NODES_DEFAULT)
 , _indexNodesScale(1.0f)
 , _indexNodesColor(Color3B::WHITE)
@@ -102,7 +103,14 @@ void PageViewIndicator::indicate(ssize_t index)
     {
         return;
     }
-    _currentIndexNode->setPosition(_indexNodes.at(index)->getPosition());
+    Sprite* oldOverlappingNode = _currentOverlappingIndexNode;
+    _currentOverlappingIndexNode = _indexNodes.at(index);
+    if ( oldOverlappingNode != _currentOverlappingIndexNode ) {
+        if ( oldOverlappingNode )
+            oldOverlappingNode->setVisible(true);
+        _currentOverlappingIndexNode->setVisible(false);
+        _currentIndexNode->setPosition(_currentOverlappingIndexNode->getPosition());
+    }
 }
 
 void PageViewIndicator::rearrange()

@@ -83,6 +83,7 @@ protected:
     PageView::Direction _direction;
     Vector<Sprite*> _indexNodes;
     Sprite* _currentIndexNode;
+	Sprite* _currentOverlappingIndexNode;
     float _spaceBetweenIndexNodes;
     float _indexNodesScale;
     Color3B _indexNodesColor;
