@@ -42,6 +42,15 @@ class CC_DLL ControllerImpl
 
 		ControllerImpl()
 		{
+			//FIXME: Once GLFW 3.3 is bundled with cocos2d-x and no extra
+			//controllers have been added here, remove all the code here.  If
+			//extra controllers were added, make sure to add them to the SDL
+			//Controller Database at
+			//https://github.com/gabomdq/SDL_GameControllerDB which GLFW uses
+			//for providing the new gamepad API. We are going to map the GLFW
+			//game pad events to Controller::Key key codes.
+
+
 			// Note: the controllers input profile were taken from the
 			// RetroArch joypad autoconfig project at:
 			// https://github.com/libretro/retroarch-joypad-autoconfig/tree/master/udev
@@ -4854,6 +4863,11 @@ class CC_DLL ControllerImpl
 		}
 
 	private:
+		//FIXME: Once GLFW 3.3 is bundled with cocos2d-x, remove these
+		//controller profiles and all the related code.  We will only need to
+		//provide a mapping from the GLFW gamepad key codes to the
+		//Controller::Key keycodes. So far an std::unordered_map<int,int>
+		//should suffice.
 		static std::map<std::string, std::pair< std::unordered_map<int, int>, std::unordered_map<int, int> > > s_controllerProfiles;
 };
 
