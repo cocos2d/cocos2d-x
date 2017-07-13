@@ -1250,11 +1250,10 @@ bool UIButtonScale9ChangeSpriteFrame::init()
 {
     if (UIScene::init())
     {
-        ImageView* sprite = ImageView::create("Images/blocks9.png");
+        ImageView* sprite = ImageView::create("Images/blocks.png");
         sprite->setScale9Enabled(true);
         sprite->setCapInsets(Rect(32, 32, 32, 32));
-        sprite->setContentSize(Size(sprite->getContentSize().width * 1.5,
-                                    sprite->getContentSize().height));
+        sprite->setContentSize(Size(96 * 1.5, 96));
         sprite->setNormalizedPosition(Vec2(0.2, 0.5));
         this->addChild(sprite);
         
@@ -1266,9 +1265,7 @@ bool UIButtonScale9ChangeSpriteFrame::init()
         addChild(button);
         
         button->addClickEventListener([sprite](Ref* button){
-            sprite->loadTexture("Images/blocks.png");
-//            ((Scale9Sprite*)sprite->getVirtualRenderer())->setRenderingType(Scale9Sprite::RenderingType::SLICE);
-//            sprite->setCapInsets(Rect(32, 32, 32, 32));
+            sprite->loadTexture("Images/blocks9.png");
         });
 
         
