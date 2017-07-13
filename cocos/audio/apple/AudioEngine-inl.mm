@@ -215,6 +215,7 @@ ALvoid AudioEngineImpl::myAlSourceNotificationCallback(ALuint sid, ALuint notifi
         return;
 
     AudioPlayer* player = nullptr;
+    s_instance->_threadMutex.lock();
     for (const auto& e : s_instance->_audioPlayers)
     {
         player = e.second;
@@ -223,6 +224,7 @@ ALvoid AudioEngineImpl::myAlSourceNotificationCallback(ALuint sid, ALuint notifi
             player->wakeupRotateThread();
         }
     }
+    s_instance->_threadMutex.unlock();
 }
 
 AudioEngineImpl::AudioEngineImpl()
