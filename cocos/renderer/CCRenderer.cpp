@@ -281,7 +281,14 @@ void Renderer::setupVBOAndVAO()
     glGenBuffers(2, &_buffersVBO[0]);
 
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * VBO_SIZE, _verts, GL_DYNAMIC_DRAW);
+    // Issue #15652
+    // Should not initialize VBO with a large size (VBO_SIZE=65536),
+    // it may cause low FPS on some Android devices like LG G4 & Nexus 5X.
+    // It's probably because some implementations of OpenGLES driver will
+    // copy the whole memory of VBO which initialized at the first time
+    // once glBufferData/glBufferSubData is invoked.
+    // For more discussion, please refer to https://github.com/cocos2d/cocos2d-x/issues/15652
+    //glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * VBO_SIZE, _verts, GL_DYNAMIC_DRAW);
 
     // vertices
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
