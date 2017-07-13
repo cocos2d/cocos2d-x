@@ -14,6 +14,7 @@ UIScrollViewTests::UIScrollViewTests()
     ADD_TEST_CASE(UIScrollViewRotated);
     ADD_TEST_CASE(UIScrollViewDisableTest);
     ADD_TEST_CASE(UIScrollViewInnerSize);
+    ADD_TEST_CASE(UIScrollViewTestEvents);
 }
 // UIScrollViewTest_Vertical
 
@@ -682,3 +683,82 @@ bool UIScrollViewInnerSize::init()
 
     return false;
 }
+
+UIScrollViewTestEvents::UIScrollViewTestEvents()
+: _displayValueLabel(nullptr)
+{
+    
+}
+
+bool UIScrollViewTestEvents::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add a label in which the dragpanel events will be displayed
+        _displayValueLabel = Text::create("(no events)","fonts/Marker Felt.ttf",32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
+        _uiLayer->addChild(_displayValueLabel);
+        
+        // Add the alert
+        Text* alert = Text::create("ScrollView events","fonts/Marker Felt.ttf",30);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
+        _uiLayer->addChild(alert);
+        
+        Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
+        
+        Layout* background = static_cast<Layout*>(root->getChildByName("background_Panel"));
+        
+        // Create the dragpanel
+        ui::ScrollView* scrollView = ui::ScrollView::create();
+        scrollView->setDirection(ui::ScrollView::Direction::BOTH);
+        scrollView->setTouchEnabled(true);
+        scrollView->setBounceEnabled(true);
+        scrollView->setBackGroundImageScale9Enabled(true);
+        scrollView->setBackGroundImage("cocosui/green_edit.png");
+        scrollView->setContentSize(Size(210, 122.5));
+        scrollView->setScrollBarWidth(4);
+        scrollView->setScrollBarPositionFromCorner(Vec2(6, 6));
+        Size backgroundSize = background->getContentSize();
+        scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
+                                     (backgroundSize.width - scrollView->getContentSize().width) / 2.0f,
+                                     (widgetSize.height - backgroundSize.height) / 2.0f +
+                                     (backgroundSize.height - scrollView->getContentSize().height) / 2.0f));
+        ImageView* imageView = ImageView::create("Hello.png");
+        scrollView->addChild(imageView);
+        
+        scrollView->setInnerContainerSize(imageView->getContentSize());
+        Size innerSize = scrollView->getInnerContainerSize();
+        imageView->setPosition(Vec2(innerSize.width / 2.0f, innerSize.height / 2.0f));
+        
+        _uiLayer->addChild(scrollView);
+        
+        // Jump to right bottom
+        scrollView->jumpToBottomRight();
+        
+        auto getRandomColor = [] {
+            return Color4B(random(0, 255), random(0, 255), random(0, 255), 255);
+        };
+        scrollView->addEventListener([&](Ref*, ui::ScrollView::EventType e) {
+            switch ( e ) {
+                case ui::ScrollView::EventType::SCROLLING_BEGAN:
+                    _displayValueLabel->setString("scrolling began!");
+                    _displayValueLabel->setTextColor(getRandomColor());
+                    break;
+                case ui::ScrollView::EventType::SCROLLING_ENDED:
+                    _displayValueLabel->setString("scrolling ended!");
+                    _displayValueLabel->setTextColor(getRandomColor());
+                    break;
+                default: break;
+            }
+        });
+        
+        return true;
+    }
+    
+    return false;
+}
+

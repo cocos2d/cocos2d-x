@@ -60,6 +60,7 @@ _bePressed(false),
 _childFocusCancelOffsetInInch(MOVE_INCH),
 _touchMovePreviousTimestamp(0),
 _touchTotalTimeThreshold(0.5f),
+_scrolling(false),
 _autoScrolling(false),
 _autoScrollAttenuate(true),
 _autoScrollTotalTime(0),
@@ -750,6 +751,18 @@ void ScrollView::scrollToPercentBothDirection(const Vec2& percent, float timeInS
     float w = _innerContainer->getContentSize().width - _contentSize.width;
     startAutoScrollToDestination(Vec2(-(percent.x * w / 100.0f), minY + percent.y * h / 100.0f), timeInSec, attenuated);
 }
+    
+float ScrollView::getScrolledPercentVertical() const {
+    const float minY = getContentSize().height - getInnerContainerSize().height;
+    return (1.f - getInnerContainerPosition().y / minY)*100.f;
+}
+float ScrollView::getScrolledPercentHorizontal() const {
+    const float minX = getContentSize().width - getInnerContainerSize().width;
+    return getInnerContainerPosition().x / minX * 100.f;
+}
+Vec2 ScrollView::getScrolledPercentBothDirection() const {
+    return {getScrolledPercentHorizontal(), getScrolledPercentVertical()};
+}
 
 void ScrollView::jumpToBottom()
 {
@@ -933,6 +946,10 @@ void ScrollView::handleReleaseLogic(Touch *touch)
     {
         _horizontalScrollBar->onTouchEnded();
     }
+    
+    if ( _scrolling ) {
+        processScrollingEndedEvent();
+    }
 }
 
 bool ScrollView::onTouchBegan(Touch *touch, Event *unusedEvent)
@@ -1080,7 +1097,16 @@ void ScrollView::processScrollEvent(MoveDirection dir, bool bounce)
 
 void ScrollView::processScrollingEvent()
 {
+    if ( !_scrolling ) {
+        _scrolling = true;
+        dispatchEvent(SCROLLVIEW_EVENT_SCROLLING_BEGAN, EventType::SCROLLING_BEGAN);
+    }
     dispatchEvent(SCROLLVIEW_EVENT_SCROLLING, EventType::SCROLLING);
+}
+    
+void ScrollView::processScrollingEndedEvent() {
+    _scrolling = false;
+    dispatchEvent(SCROLLVIEW_EVENT_SCROLLING_ENDED, EventType::SCROLLING_ENDED);
 }
 
 void ScrollView::dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType)
@@ -1412,6 +1438,7 @@ void ScrollView::copySpecialProperties(Widget *widget)
         _touchMoveDisplacements = scrollView->_touchMoveDisplacements;
         _touchMoveTimeDeltas = scrollView->_touchMoveTimeDeltas;
         _touchMovePreviousTimestamp = scrollView->_touchMovePreviousTimestamp;
+        _scrolling = scrollView->_scrolling;
         _autoScrolling = scrollView->_autoScrolling;
         _autoScrollAttenuate = scrollView->_autoScrollAttenuate;
         _autoScrollStartPosition = scrollView->_autoScrollStartPosition;
