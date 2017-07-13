@@ -104,6 +104,9 @@ public:
 	void QueueWinRTKeyboardEvent(WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args);
 	void QueueEvent(std::shared_ptr<InputEvent>& event);
 
+    void RunOnGLThread(Windows::UI::Core::DispatchedHandler^ handler);
+    void RunOnUIThread(Windows::UI::Core::DispatchedHandler^ handler);
+
     bool ShowMessageBox(Platform::String^ title, Platform::String^ message);
 
 	int Run();
@@ -180,6 +183,7 @@ private:
     bool m_appShouldExit;
 
     Concurrency::concurrent_queue<std::shared_ptr<InputEvent>> mInputEvents;
+    Concurrency::concurrent_queue<Windows::UI::Core::DispatchedHandler^> mDispatchHandlers;
 
     Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
     Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;

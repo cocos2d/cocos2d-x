@@ -630,8 +630,24 @@ void GLViewImpl::QueueEvent(std::shared_ptr<InputEvent>& event)
     mInputEvents.push(event);
 }
 
+void GLViewImpl::RunOnGLThread(Windows::UI::Core::DispatchedHandler ^ handler)
+{
+    mDispatchHandlers.push(handler);
+}
+
+void GLViewImpl::RunOnUIThread(Windows::UI::Core::DispatchedHandler ^ handler)
+{
+    m_dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, handler);
+}
+
 void GLViewImpl::ProcessEvents()
 {
+    Windows::UI::Core::DispatchedHandler^ handler;
+    while (mDispatchHandlers.try_pop(handler)) 
+    {
+        handler->Invoke();
+    }
+
     std::shared_ptr<InputEvent> e;
     while (mInputEvents.try_pop(e))
     {
