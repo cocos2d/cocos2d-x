@@ -220,10 +220,14 @@ private:
     EventController *_axisEvent;
 
     #if ( CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 )
+    //FIXME: Once GLFW 3.3 is bundled with cocos2d-x, remove these unordered
+    //maps. They won't be needed. We will only need to provide a mapping from
+    //the GLFW gamepad key codes to the Controller::Key.
+
     // Attach the controller profiles from CCController-linux-win32.cpp to each
     // of the Controller variables in order to minimize profile lookup time.
 
-    // Note: this increases memory usage unecessarily since the same maps are
+    // Note: this increases memory usage unnecessarily since the same maps are
     // already stored on ControllerImpl within the static member variable
     // "s_controllerProfiles", but on these platforms the increase in memory
     // usage is negligible.  Peformance over memory optimization was
