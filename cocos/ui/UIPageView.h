@@ -341,35 +341,35 @@ public:
      * @return color
      */
     const Color3B& getIndicatorIndexNodesColor() const;
-	
-	/**
-	 * @brief Set opacity of page indicator's selected index.
-	 *
-	 * @param color New opacity for selected (current) index.
-	 */
-	void setIndicatorSelectedIndexOpacity(GLubyte opacity);
-	
-	/**
-	 * @brief Get the opacity of page indicator's selected index.
-	 *
-	 * @return opacity
-	 */
-	GLubyte getIndicatorSelectedIndexOpacity() const;
-	
-	/**
-	 * @brief Set opacity of page indicator's index nodes.
-	 *
-	 * @param opacity New indicator node opacity.
-	 */
-	void setIndicatorIndexNodesOpacity(GLubyte opacity);
-	
-	/**
-	 * @brief Get the opacity of page indicator's index nodes.
-	 *
-	 * @return opacity
-	 */
-	GLubyte getIndicatorIndexNodesOpacity() const;
-	
+    
+    /**
+     * @brief Set opacity of page indicator's selected index.
+     *
+     * @param color New opacity for selected (current) index.
+     */
+    void setIndicatorSelectedIndexOpacity(GLubyte opacity);
+    
+    /**
+     * @brief Get the opacity of page indicator's selected index.
+     *
+     * @return opacity
+     */
+    GLubyte getIndicatorSelectedIndexOpacity() const;
+    
+    /**
+     * @brief Set opacity of page indicator's index nodes.
+     *
+     * @param opacity New indicator node opacity.
+     */
+    void setIndicatorIndexNodesOpacity(GLubyte opacity);
+    
+    /**
+     * @brief Get the opacity of page indicator's index nodes.
+     *
+     * @return opacity
+     */
+    GLubyte getIndicatorIndexNodesOpacity() const;
+    
     /**
      * @brief Set scale of page indicator's index nodes.
      *
