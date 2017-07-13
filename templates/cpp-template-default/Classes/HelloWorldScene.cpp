@@ -37,17 +37,18 @@ bool HelloWorld::init()
                                            "CloseNormal.png",
                                            "CloseSelected.png",
                                            CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
-    auto w = closeItem->getContentSize().width;
-    auto h = closeItem->getContentSize().height;
-    if (w <= 0 || h <= 0)
+
+    if (closeItem == nullptr ||
+        closeItem->getContentSize().width <= 0 ||
+        closeItem->getContentSize().height <= 0)
     {
-        printf("closeItem has invalid size: %fx%f.\n", w, h);
         problemLoading("'CloseNormal.png' and 'CloseSelected.png'");
     }
     else
     {
-        closeItem->setPosition(Vec2(origin.x + visibleSize.width - w/2 ,
-                                    origin.y + h/2));
+        float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;
+        float y = origin.y + closeItem->getContentSize().height/2);
+        closeItem->setPosition(Vec2(x,y));
     }
 
     // create menu, it's an autorelease object
