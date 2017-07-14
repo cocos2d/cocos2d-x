@@ -1654,6 +1654,9 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
 
     // self render
     if( ! _batchNode ) {
+        if (_renderMode != RenderMode::SLICE9) {
+            _renderMode = RenderMode::QUAD;
+        }
         _atlasIndex = INDEX_NOT_INITIALIZED;
         setTextureAtlas(nullptr);
         _recursiveDirty = false;
