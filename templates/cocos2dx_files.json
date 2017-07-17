@@ -1,5 +1,6 @@
 {
     "common": [
+        ".appveyor.yml", 
         "AUTHORS", 
         "CHANGELOG", 
         "CMakeLists.txt", 
@@ -5833,6 +5834,8 @@
         "plugin/tools/toolsForPublish/checkEnvironment.sh", 
         "plugin/tools/toolsForPublish/genPrebuildMK.sh", 
         "plugin/tools/toolsForPublish/publishPlugin.sh", 
+        "tools/appveyor-scripts/before-build.ps1", 
+        "tools/appveyor-scripts/build.ps1", 
         "tools/coding-style/include-linter.py", 
         "tools/coding-style/tailing-spaces.py", 
         "tools/fbx-conv/README.md", 
