@@ -88,6 +88,8 @@ bool UIPageViewTest::init()
         //This method is deprecated, we used here only testing purpose
         pageView->addEventListenerPageView(this, pagevieweventselector(UIPageViewTest::pageViewEvent));
         
+        pageView->setIndicatorIndexNodesOpacity(255);
+        
         _uiLayer->addChild(pageView);
         
         return true;
