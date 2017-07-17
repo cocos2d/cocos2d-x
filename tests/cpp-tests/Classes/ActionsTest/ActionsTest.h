@@ -635,4 +635,19 @@ private:
     
 };
 
+class Issue18003 : public ActionsDemo
+{
+public:
+    CREATE_FUNC(Issue18003);
+    
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+private:
+    cocos2d::ActionManager* _manager;
+    cocos2d::Node* _target;
+    
+};
+
 #endif

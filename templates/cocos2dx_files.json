@@ -1,5 +1,6 @@
 {
     "common": [
+        ".appveyor.yml", 
         "AUTHORS", 
         "CHANGELOG", 
         "CMakeLists.txt", 
@@ -420,6 +421,7 @@
         "cocos/base/CCConsole.h", 
         "cocos/base/CCController-android.cpp", 
         "cocos/base/CCController-apple.mm", 
+        "cocos/base/CCController-linux-win32.cpp", 
         "cocos/base/CCController.cpp", 
         "cocos/base/CCController.h", 
         "cocos/base/CCData.cpp", 
@@ -5832,6 +5834,8 @@
         "plugin/tools/toolsForPublish/checkEnvironment.sh", 
         "plugin/tools/toolsForPublish/genPrebuildMK.sh", 
         "plugin/tools/toolsForPublish/publishPlugin.sh", 
+        "tools/appveyor-scripts/before-build.ps1", 
+        "tools/appveyor-scripts/build.ps1", 
         "tools/coding-style/include-linter.py", 
         "tools/coding-style/tailing-spaces.py", 
         "tools/fbx-conv/README.md", 
