@@ -5278,6 +5278,26 @@ int
 },
 
 /**
+ * @method setIndicatorIndexNodesOpacity
+ * @param {unsigned char} arg0
+ */
+setIndicatorIndexNodesOpacity : function (
+char 
+)
+{
+},
+
+/**
+ * @method setIndicatorSelectedIndexOpacity
+ * @param {unsigned char} arg0
+ */
+setIndicatorSelectedIndexOpacity : function (
+char 
+)
+{
+},
+
+/**
  * @method removeAllPages
  */
 removeAllPages : function (
@@ -5396,6 +5416,16 @@ vec2
 },
 
 /**
+ * @method getIndicatorSelectedIndexOpacity
+ * @return {unsigned char}
+ */
+getIndicatorSelectedIndexOpacity : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method scrollToPage
 * @param {int|int} int
 * @param {float} float
@@ -5437,6 +5467,16 @@ setIndicatorIndexNodesColor : function (
 color3b 
 )
 {
+},
+
+/**
+ * @method getIndicatorIndexNodesOpacity
+ * @return {unsigned char}
+ */
+getIndicatorIndexNodesOpacity : function (
+)
+{
+    return 0;
 },
 
 /**
