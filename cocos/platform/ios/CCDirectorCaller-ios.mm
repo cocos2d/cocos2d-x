@@ -90,6 +90,11 @@ static id s_sharedDirectorCaller;
 
 - (void)appDidBecomeActive
 {
+    // initialize initLastDisplayTime, or the dt will be invalid when
+    // - the app is lauched
+    // - the app resumes from background
+    [self initLastDisplayTime];
+
     isAppActive = YES;
 }
 
@@ -100,12 +105,8 @@ static id s_sharedDirectorCaller;
 
 -(void) startMainLoop
 {
-        // Director::setAnimationInterval() is called, we should invalidate it first
+    // Director::setAnimationInterval() is called, we should invalidate it first
     [self stopMainLoop];
-    
-    // initialize initLastDisplayTime, or the dt of of first frame is invalid
-    // should init before start displayLink
-    [self initLastDisplayTime];
     
     displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
     [displayLink setFrameInterval: self.interval];
