@@ -143,7 +143,6 @@ static id s_sharedDirectorCaller;
 
         CFTimeInterval dt = ((CADisplayLink*)displayLink).timestamp - lastDisplayTime;
         lastDisplayTime = ((CADisplayLink*)displayLink).timestamp;
-        NSLog(@"dt is %f", dt);
         director->mainLoop(dt);
     }
 }
