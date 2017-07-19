@@ -94,11 +94,6 @@ bool PUMeshSurfaceEmitterTranslator::translateChildProperty( PUScriptCompiler* c
                     emitter->setDistribution(MeshInfo::MSD_HOMOGENEOUS);
                     return true;
                 }
-                else if (val == token[TOKEN_MESH_SURFACE_HOMOGENEOUS])
-                {
-                    emitter->setDistribution(MeshInfo::MSD_HOMOGENEOUS);
-                    return true;
-                }
             }
         }
     }
