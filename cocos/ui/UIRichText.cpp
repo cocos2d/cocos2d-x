@@ -163,10 +163,10 @@ bool RichElementText::init(int tag, const Color3B &color, GLubyte opacity, const
     return false;
 }
 
-RichElementImage* RichElementImage::create(int tag, const Color3B &color, GLubyte opacity, const std::string& filePath, const std::string& url)
+RichElementImage* RichElementImage::create(int tag, const Color3B &color, GLubyte opacity, const std::string& filePath, const std::string& url, Widget::TextureResType texType)
 {
     RichElementImage* element = new (std::nothrow) RichElementImage();
-    if (element && element->init(tag, color, opacity, filePath, url))
+    if (element && element->init(tag, color, opacity, filePath, url, texType))
     {
         element->autorelease();
         return element;
@@ -175,7 +175,7 @@ RichElementImage* RichElementImage::create(int tag, const Color3B &color, GLubyt
     return nullptr;
 }
     
-bool RichElementImage::init(int tag, const Color3B &color, GLubyte opacity, const std::string& filePath, const std::string& url)
+bool RichElementImage::init(int tag, const Color3B &color, GLubyte opacity, const std::string& filePath, const std::string& url, Widget::TextureResType texType)
 {
     if (RichElement::init(tag, color, opacity))
     {
@@ -183,6 +183,7 @@ bool RichElementImage::init(int tag, const Color3B &color, GLubyte opacity, cons
         _width = -1;
         _height = -1;
         _url = url;
+        _textureType = texType;
         return true;
     }
     return false;
@@ -422,6 +423,7 @@ MyXMLVisitor::MyXMLVisitor(RichText* richText)
         std::string src;
         int height = -1;
         int width = -1;
+        Widget::TextureResType resType = Widget::TextureResType::LOCAL;
         
         if (tagAttrValueMap.find("src") != tagAttrValueMap.end()) {
             src = tagAttrValueMap.at("src").asString();
@@ -432,10 +434,17 @@ MyXMLVisitor::MyXMLVisitor(RichText* richText)
         if (tagAttrValueMap.find("width") != tagAttrValueMap.end()) {
             width = tagAttrValueMap.at("width").asInt();
         }
+        if (tagAttrValueMap.find("type") != tagAttrValueMap.end()) {
+            // texture type
+            // 0: normal file path
+            // 1: sprite frame name
+            int type = tagAttrValueMap.at("type").asInt();
+            resType = type == 0 ? Widget::TextureResType::LOCAL : Widget::TextureResType::PLIST;
+        }
         
         RichElementImage* elementImg = nullptr;
         if (src.length()) {
-            elementImg = RichElementImage::create(0, Color3B::WHITE, 255, src);
+            elementImg = RichElementImage::create(0, Color3B::WHITE, 255, src, "", resType);
             if (0 <= height) elementImg->setHeight(height);
             if (0 <= width)  elementImg->setWidth(width);
         }
@@ -1395,7 +1404,11 @@ void RichText::formatText()
                     case RichElement::Type::IMAGE:
                     {
                         RichElementImage* elmtImage = static_cast<RichElementImage*>(element);
-                        elementRenderer = Sprite::create(elmtImage->_filePath);
+                        if (elmtImage->_textureType == Widget::TextureResType::LOCAL)
+                            elementRenderer = Sprite::create(elmtImage->_filePath);
+                        else
+                            elementRenderer = Sprite::createWithSpriteFrameName(elmtImage->_filePath);
+                        
                         if (elementRenderer && (elmtImage->_height != -1 || elmtImage->_width != -1))
                         {
                             auto currentSize = elementRenderer->getContentSize();
