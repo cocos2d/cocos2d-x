@@ -215,6 +215,10 @@ void PageViewIndicator::setIndexNodesTexture(const std::string& texName, Widget:
     
 void PageViewIndicator::increaseNumberOfPages()
 {
+    if ( _currentOverlappingIndexNode ) {
+        _currentOverlappingIndexNode->setVisible(true);
+        _currentOverlappingIndexNode = nullptr;
+    }
     Sprite* indexNode;
     
     if(_useDefaultTexture)
@@ -245,6 +249,10 @@ void PageViewIndicator::increaseNumberOfPages()
 
 void PageViewIndicator::decreaseNumberOfPages()
 {
+    if ( _currentOverlappingIndexNode ) {
+        _currentOverlappingIndexNode->setVisible(true);
+        _currentOverlappingIndexNode = nullptr;
+    }
     if(_indexNodes.empty())
     {
         return;
@@ -255,6 +263,10 @@ void PageViewIndicator::decreaseNumberOfPages()
 
 void PageViewIndicator::clear()
 {
+    if ( _currentOverlappingIndexNode ) {
+        _currentOverlappingIndexNode->setVisible(true);
+        _currentOverlappingIndexNode = nullptr;
+    }
     for(auto& indexNode : _indexNodes)
     {
         removeProtectedChild(indexNode);
