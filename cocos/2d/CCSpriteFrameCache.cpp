@@ -509,20 +509,22 @@ void SpriteFrameCache::removeSpriteFrameByName(const std::string& name)
 
 void SpriteFrameCache::removeSpriteFramesFromFile(const std::string& plist)
 {
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
-    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
-    if (dict.empty())
-    {
-        CCLOG("cocos2d:SpriteFrameCache:removeSpriteFramesFromFile: create dict by %s fail.",plist.c_str());
-        return;
-    }
-    removeSpriteFramesFromDictionary(dict);
-
-    // remove it from the cache
     set<string>::iterator ret = _loadedFileNames->find(plist);
-    if (ret != _loadedFileNames->end())
-    {
-        _loadedFileNames->erase(ret);
+    if (ret != _loadedFileNames->end()) {
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
+        ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
+        if (dict.empty())
+        {
+            CCLOG("cocos2d:SpriteFrameCache:removeSpriteFramesFromFile: create dict by %s fail.",plist.c_str());
+            return;
+        }
+        removeSpriteFramesFromDictionary(dict);
+        
+        // remove it from the cache
+        if (ret != _loadedFileNames->end())
+        {
+            _loadedFileNames->erase(ret);
+        }
     }
 }
 
