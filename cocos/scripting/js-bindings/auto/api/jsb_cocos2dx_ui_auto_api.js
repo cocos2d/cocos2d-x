@@ -5861,6 +5861,7 @@ int
  * @param {unsigned char} arg2
  * @param {String} arg3
  * @param {String} arg4
+ * @param {ccui.Widget::TextureResType} arg5
  * @return {bool}
  */
 init : function (
@@ -5868,7 +5869,8 @@ int,
 color3b, 
 char, 
 str, 
-str 
+str, 
+texturerestype 
 )
 {
     return false;
@@ -5901,6 +5903,7 @@ str
  * @param {unsigned char} arg2
  * @param {String} arg3
  * @param {String} arg4
+ * @param {ccui.Widget::TextureResType} arg5
  * @return {ccui.RichElementImage}
  */
 create : function (
@@ -5908,7 +5911,8 @@ int,
 color3b, 
 char, 
 str, 
-str 
+str, 
+texturerestype 
 )
 {
     return ccui.RichElementImage;
