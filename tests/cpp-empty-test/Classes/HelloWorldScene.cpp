@@ -1,5 +1,6 @@
 #include "HelloWorldScene.h"
 #include "AppMacros.h"
+#include "NetSprite.h"
 
 USING_NS_CC;
 
@@ -63,6 +64,12 @@ bool HelloWorld::init()
     // add the sprite as a child to this layer
     this->addChild(sprite);
     
+	auto url = "http://img.581gg.com/picdata-watermark/a1/218/21869-10.jpg";
+
+	auto name = "21869-10.jpg";
+
+	NetSprite::createWithUrl(url,name);
+
     return true;
 }
 
