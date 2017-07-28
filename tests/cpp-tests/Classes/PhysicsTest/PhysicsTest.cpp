@@ -28,6 +28,7 @@ PhysicsTests::PhysicsTests()
     ADD_TEST_CASE(PhysicsTransformTest);
     ADD_TEST_CASE(PhysicsIssue9959);
     ADD_TEST_CASE(PhysicsIssue15932);
+    ADD_TEST_CASE(PhysicsBoxGetSizeTest);
 }
 
 namespace
@@ -1893,6 +1894,28 @@ std::string PhysicsIssue15932::title() const
 std::string PhysicsIssue15932::subtitle() const
 {
     return "addComponent()/removeComponent() should not crash";
+}
+
+void PhysicsBoxGetSizeTest::onEnter()
+{
+    PhysicsDemo::onEnter();
+
+    const auto size1 = Size(100, 50);
+    PhysicsBody *pb=PhysicsBody::createBox(size1,PhysicsMaterial());
+    this->addComponent(pb);
+    const auto size2 = dynamic_cast<PhysicsShapeBox*>(pb->getFirstShape())->getSize();
+	
+    auto s = VisibleRect::getVisibleRect().size;
+    char buffer[128];
+    sprintf(buffer, "create size w:%d h:%d\nget size w:%d, h:%d", (int)size1.width, (int)size1.height, (int)size2.width, (int)size2.height);
+    auto label = Label::createWithTTF(buffer, "fonts/arial.ttf", 24);
+    this->addChild(label);
+    label->setPosition(Vec2(s.width / 2, s.height - 100));
+}
+
+std::string PhysicsBoxGetSizeTest::title() const
+{
+    return "PhysicsShapeBox::getSize() Test";
 }
 
 #endif

@@ -534,8 +534,8 @@ bool PhysicsShapeBox::init(const Size& size, const PhysicsMaterial& material/* =
 Size PhysicsShapeBox::getSize() const
 {
     cpShape* shape = _cpShapes.front();
-    return PhysicsHelper::cpv2size(cpv(cpvdist(cpPolyShapeGetVert(shape, 1), cpPolyShapeGetVert(shape, 2)),
-                                       cpvdist(cpPolyShapeGetVert(shape, 0), cpPolyShapeGetVert(shape, 1))));
+    return PhysicsHelper::cpv2size(cpv(cpvdist(cpPolyShapeGetVert(shape, 0), cpPolyShapeGetVert(shape, 1)),
+                                       cpvdist(cpPolyShapeGetVert(shape, 1), cpPolyShapeGetVert(shape, 2))));
 }
 
 // PhysicsShapePolygon

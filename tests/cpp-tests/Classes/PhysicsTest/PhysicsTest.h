@@ -277,4 +277,13 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class PhysicsBoxGetSizeTest : public PhysicsDemo
+{
+public:
+    CREATE_FUNC(PhysicsBoxGetSizeTest);
+
+    void onEnter() override;
+    virtual std::string title() const override;
+};
+
 #endif // #if CC_USE_PHYSICS
