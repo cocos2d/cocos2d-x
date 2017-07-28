@@ -595,7 +595,6 @@ void FontFreeType::renderCharAt(unsigned char *dest,int posX, int posY, unsigned
             iX  = posX;
             iY += 1;
         }
-        delete [] bitmap;
     }
     else
     {
