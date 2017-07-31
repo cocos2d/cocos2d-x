@@ -219,7 +219,7 @@ FontAtlas * FontFreeType::createFontAtlas()
                 _fontAtlas->prepareLetterDefinitions(utf32);
             }
         }
-        this->autorelease();
+//        this->autorelease();
     }
     
     return _fontAtlas;
