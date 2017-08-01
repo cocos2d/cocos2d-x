@@ -722,8 +722,8 @@ void WebSocket::close()
 
     {
         std::unique_lock<std::mutex> lkClose(_closeMutex);
-        _closeCondition.wait(lkClose);
         _closeState = CloseState::SYNC_CLOSED;
+        _closeCondition.notify_one();
     }
 
     // Wait 5 milliseconds for onConnectionClosed to exit!
@@ -1236,13 +1236,8 @@ int WebSocket::onConnectionClosed()
                 LOGD("onConnectionClosed, WebSocket (%p) is closing by client synchronously.\n", this);
                 for(;;)
                 {
-                    std::lock_guard<std::mutex> lkClose(_closeMutex);
-                    _closeCondition.notify_one();
-                    if (_closeState == CloseState::SYNC_CLOSED)
-                    {
-                        break;
-                    }
-                    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+                    std::unique_lock<std::mutex> lkClose(_closeMutex);
+                    _closeCondition.wait(lkClose);
                 }
 
                 return 0;
