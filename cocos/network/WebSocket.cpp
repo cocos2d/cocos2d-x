@@ -75,6 +75,8 @@ static void _winLog(const char *format, va_list args)
             bufferSize *= 2;
 
             delete[] buf;
+            
+            return;
         }
         else
             break;
@@ -391,7 +393,7 @@ void WsThreadHelper::onSubThreadStarted()
     int log_level = LLL_ERR | LLL_WARN | LLL_NOTICE | LLL_INFO/* | LLL_DEBUG | LLL_PARSER | LLL_HEADER*/ | LLL_EXT | LLL_CLIENT | LLL_LATENCY;
     lws_set_log_level(log_level, printWebSocketLog);
 
-    memset(__defaultProtocols, 0, sizeof(2 * sizeof(struct lws_protocols)));
+    memset(__defaultProtocols, 0, 2 * sizeof(struct lws_protocols));
 
     __defaultProtocols[0].name = "";
     __defaultProtocols[0].callback = WebSocketCallbackWrapper::onSocketCallback;
@@ -646,6 +648,7 @@ void WebSocket::send(const std::string& message)
         // In main thread
         Data* data = new (std::nothrow) Data();
         data->bytes = (char*)malloc(message.length() + 1);
+        assert(data->bytes);
         // Make sure the last byte is '\0'
         data->bytes[message.length()] = '\0';
         strcpy(data->bytes, message.c_str());
@@ -669,6 +672,7 @@ void WebSocket::send(const unsigned char* binaryMsg, unsigned int len)
     {
         // In main thread
         Data* data = new (std::nothrow) Data();
+        assert(data);
         if (len == 0)
         {
             // If data length is zero, allocate 1 byte for safe.
