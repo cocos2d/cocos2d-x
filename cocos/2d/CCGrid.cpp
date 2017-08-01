@@ -105,15 +105,16 @@ bool GridBase::initWithSize(const cocos2d::Size &gridSize, const cocos2d::Rect &
     }
     
     Texture2D *texture = new (std::nothrow) Texture2D();
-    texture->initWithData(data, dataLen,  format, POTWide, POTHigh, s);
-    
-    free(data);
     
     if (! texture)
     {
+        free(data);
         CCLOG("cocos2d: Grid: error creating texture");
         return false;
     }
+    
+    texture->initWithData(data, dataLen,  format, POTWide, POTHigh, s);
+    free(data);
     
     initWithSize(gridSize, texture, false, rect);
     
