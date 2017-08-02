@@ -276,7 +276,9 @@ public class Cocos2dxDownloader {
         Cocos2dxDownloader downloader = new Cocos2dxDownloader();
         downloader._id = id;
 
-        downloader._httpClient.setEnableRedirects(true);
+        downloader._httpClient.setEnableRedirects(true);        
+        downloader._httpClient.setURLEncodingEnabled(false);
+
         if (timeoutInSeconds > 0) {
             downloader._httpClient.setTimeout(timeoutInSeconds * 1000);
         }
