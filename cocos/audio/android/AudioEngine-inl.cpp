@@ -212,7 +212,7 @@ void AudioEngineImpl::onEnterBackground(EventCustom* event)
         if (dynamic_cast<UrlAudioPlayer*>(player) != nullptr
             && player->getState() == IAudioPlayer::State::PLAYING)
         {
-            _urlAudioPlayersNeedResume.insert(std::make_pair(e.first, player));
+            _urlAudioPlayersNeedResume.emplace(e.first, player);
             player->pause();
         }
     }
