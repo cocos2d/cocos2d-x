@@ -143,7 +143,7 @@ int LuaObjcBridge::callObjcStaticMethod(lua_State *L)
                         break;
                         
                     case LUA_TTABLE:
-                        luaTableWithObjcDictionary(L, dict2, key2);
+                        luaTableWithObjcDictionary(L, dict, key);
                         break;
                 }
                 
