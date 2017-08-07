@@ -206,6 +206,14 @@ void ScrollView::setTouchEnabled(bool enabled)
     }
 }
 
+void ScrollView::setSwallowTouches(bool needSwallow)
+{
+    if (_touchListener != nullptr)
+    {
+        _touchListener->setSwallowTouches(needSwallow);
+    }
+}
+
 void ScrollView::setContentOffset(Vec2 offset, bool animated/* = false*/)
 {
     if (animated)
