@@ -4983,22 +4983,24 @@ bool js_cocos2dx_extension_ScrollView_hasVisibleParents(JSContext *cx, uint32_t 
     JS_ReportError(cx, "js_cocos2dx_extension_ScrollView_hasVisibleParents : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_extension_ScrollView_getDirection(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_extension_ScrollView_setSwallowTouches(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::extension::ScrollView* cobj = (cocos2d::extension::ScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ScrollView_getDirection : Invalid Native Object");
-    if (argc == 0) {
-        int ret = (int)cobj->getDirection();
-        JS::RootedValue jsret(cx);
-        jsret = int32_to_jsval(cx, ret);
-        args.rval().set(jsret);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ScrollView_setSwallowTouches : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_extension_ScrollView_setSwallowTouches : Error processing arguments");
+        cobj->setSwallowTouches(arg0);
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_extension_ScrollView_getDirection : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_cocos2dx_extension_ScrollView_setSwallowTouches : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_extension_ScrollView_getContainer(JSContext *cx, uint32_t argc, jsval *vp)
@@ -5495,6 +5497,24 @@ bool js_cocos2dx_extension_ScrollView_minContainerOffset(JSContext *cx, uint32_t
     JS_ReportError(cx, "js_cocos2dx_extension_ScrollView_minContainerOffset : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_extension_ScrollView_getDirection(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::extension::ScrollView* cobj = (cocos2d::extension::ScrollView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_extension_ScrollView_getDirection : Invalid Native Object");
+    if (argc == 0) {
+        int ret = (int)cobj->getDirection();
+        JS::RootedValue jsret(cx);
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_extension_ScrollView_getDirection : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_extension_ScrollView_setZoomScale(JSContext *cx, uint32_t argc, jsval *vp)
 {
     bool ok = true;
@@ -5655,7 +5675,7 @@ void js_register_cocos2dx_extension_ScrollView(JSContext *cx, JS::HandleObject g
         JS_FN("updateTweenAction", js_cocos2dx_extension_ScrollView_updateTweenAction, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMaxScale", js_cocos2dx_extension_ScrollView_setMaxScale, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("hasVisibleParents", js_cocos2dx_extension_ScrollView_hasVisibleParents, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getDirection", js_cocos2dx_extension_ScrollView_getDirection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setSwallowTouches", js_cocos2dx_extension_ScrollView_setSwallowTouches, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getContainer", js_cocos2dx_extension_ScrollView_getContainer, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMinScale", js_cocos2dx_extension_ScrollView_setMinScale, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getZoomScale", js_cocos2dx_extension_ScrollView_getZoomScale, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -5679,6 +5699,7 @@ void js_register_cocos2dx_extension_ScrollView(JSContext *cx, JS::HandleObject g
         JS_FN("isTouchMoved", js_cocos2dx_extension_ScrollView_isTouchMoved, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isNodeVisible", js_cocos2dx_extension_ScrollView_isNodeVisible, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("minContainerOffset", js_cocos2dx_extension_ScrollView_minContainerOffset, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getDirection", js_cocos2dx_extension_ScrollView_getDirection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setZoomScale", js_cocos2dx_extension_ScrollView_setZoomScale, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_cocos2dx_extension_ScrollView_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
