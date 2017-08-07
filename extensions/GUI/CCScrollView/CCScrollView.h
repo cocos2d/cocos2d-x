@@ -172,11 +172,11 @@ public:
     /**
      * Returns the current container's minimum offset. You may want this while you animate scrolling by yourself
      */
-    Vec2 minContainerOffset();
+    Vec2 minContainerOffset() const;
     /**
      * Returns the current container's maximum offset. You may want this while you animate scrolling by yourself
      */
-    Vec2 maxContainerOffset(); 
+    Vec2 maxContainerOffset() const; 
     /**
      * Determines if a given node's bounding box is in visible bounds
      *
@@ -200,7 +200,8 @@ public:
     bool isTouchMoved() const { return _touchMoved; }
     bool isBounceable() const { return _bounceable; }
     void setBounceable(bool bBounceable) { _bounceable = bBounceable; }
-
+    bool isScrolling() const;
+    
     /**
      * size to clip. Node boundingBox uses contentSize directly.
      * It's semantically different what it actually means to common scroll views.
@@ -288,6 +289,10 @@ protected:
      * Expire animated scroll delegate calls
      */
     void stoppedAnimatedScroll(Node* node);
+
+    Vec2 getMinInset() const;
+    Vec2 getMaxInset() const;
+    
     /**
      * clip this view so that outside of the visible bounds can be hidden.
      */
