@@ -336,7 +336,12 @@ public class Cocos2dxEditBoxHelper {
                     editBox.setChangedTextProgrammatically(true);
                     editBox.setText(text);
                     int position = text.length();
-                    editBox.setSelection(position);
+                    try {
+                        editBox.setSelection(editBox.getMaxLength() > position ? position : editBox.getMaxLength());
+                    }
+                    catch (java.lang.IndexOutOfBoundsException e) {
+
+                    }
                 }
             }
         });
