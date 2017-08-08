@@ -82,6 +82,7 @@ struct GLContextAttrs
     int alphaBits;
     int depthBits;
     int stencilBits;
+    int multisamplingCount;
 };
 
 NS_CC_BEGIN

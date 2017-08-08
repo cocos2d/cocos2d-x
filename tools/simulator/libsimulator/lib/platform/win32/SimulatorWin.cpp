@@ -88,8 +88,8 @@ std::string getCurAppPath(void)
 
 static void initGLContextAttrs()
 {
-    // set OpenGL context attributes: red,green,blue,alpha,depth,stencil
-    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+    // set OpenGL context attributes: red,green,blue,alpha,depth,stencil,multisamplesCount
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8, 0};
 
     GLView::setGLContextAttrs(glContextAttrs);
 }

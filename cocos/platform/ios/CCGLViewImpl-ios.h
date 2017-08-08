@@ -56,6 +56,12 @@ public:
     static void convertAttrs();
     static void* _pixelFormat;
     static int _depthFormat;
+<<<<<<< HEAD
+=======
+    static int _multisamplingCount;
+    
+    void screenSizeChanged(int newWidth, int newHeight);
+>>>>>>> 58803da... multisampling support on all platforms(except WP)
 
     /** sets the content scale factor */
     virtual bool setContentScaleFactor(float contentScaleFactor) override;

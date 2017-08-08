@@ -56,8 +56,8 @@ static AppDelegate s_sharedApplication;
                                          depthFormat: cocos2d::GLViewImpl::_depthFormat
                                   preserveBackbuffer: NO
                                           sharegroup: nil
-                                       multiSampling: NO
-                                     numberOfSamples: 0 ];
+                                       multiSampling: cocos2d::GLViewImpl::_multisamplingCount > 0 ? YES : NO
+                                     numberOfSamples: cocos2d::GLViewImpl::_multisamplingCount ];
 
 #if !defined(CC_TARGET_OS_TVOS)
     [eaglView setMultipleTouchEnabled:YES];
