@@ -129,7 +129,7 @@ public:
         return _rootArray;
     }
 
-    void startElement(void *ctx, const char *name, const char **atts)
+    void startElement(void *ctx, const char *name, const char **atts) override
     {
         const std::string sName(name);
         if( sName == "dict" )
@@ -218,7 +218,7 @@ public:
         }
     }
 
-    void endElement(void *ctx, const char *name)
+    void endElement(void *ctx, const char *name) override
     {
         SAXState curState = _stateStack.empty() ? SAX_DICT : _stateStack.top();
         const std::string sName((char*)name);
