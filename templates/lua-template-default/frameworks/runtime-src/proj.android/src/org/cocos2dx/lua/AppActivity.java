@@ -25,8 +25,8 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.lua;
 
+import android.os.Bundle;
 import org.cocos2dx.lib.Cocos2dxActivity;
-
 
 public class AppActivity extends Cocos2dxActivity{
     @Override
