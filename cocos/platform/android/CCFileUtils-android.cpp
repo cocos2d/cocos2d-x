@@ -30,12 +30,10 @@ THE SOFTWARE.
 #include "platform/CCCommon.h"
 #include "platform/android/jni/JniHelper.h"
 #include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.h"
 #include "android/asset_manager.h"
 #include "android/asset_manager_jni.h"
 #include "base/ZipUtils.h"
-#include "base/CCDirector.h"
-#include "base/CCEventDispatcher.h"
-#include "base/CCEventType.h"
 
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -283,7 +281,7 @@ long FileUtilsAndroid::getFileSize(const std::string& filepath)
 
 FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer)
 {
-    Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(EVENT_BEFORE_READ_FILE);
+    EngineDataManager::onBeforeReadFile();
 
     static const std::string apkprefix("assets/");
     if (filename.empty())
