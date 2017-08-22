@@ -1345,12 +1345,9 @@ void TransitionCrossFade::onEnter()
 
     // create blend functions
 
-    BlendFunc blend1 = {GL_ONE, GL_ONE}; // inScene will lay on background and will not be used with alpha
-    BlendFunc blend2 = {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}; // we are going to blend outScene via alpha 
-
     // set blendfunctions
-    inTexture->getSprite()->setBlendFunc(blend1);
-    outTexture->getSprite()->setBlendFunc(blend2);    
+    inTexture->getSprite()->setBlendFunc(BlendFunc::DISABLE);
+    outTexture->getSprite()->setBlendFunc(BlendFunc::ALPHA_PREMULTIPLIED);    
 
     // add render textures to the layer
     layer->addChild(inTexture);
