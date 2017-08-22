@@ -2250,6 +2250,16 @@ RadioButtonGroup : function (
 ccui.ImageView = {
 
 /**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
  * @method loadTexture
  * @param {String} arg0
  * @param {ccui.Widget::TextureResType} arg1
@@ -2257,6 +2267,16 @@ ccui.ImageView = {
 loadTexture : function (
 str, 
 texturerestype 
+)
+{
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
 )
 {
 },
