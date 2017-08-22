@@ -145,8 +145,6 @@ int LuaObjcBridge::callObjcStaticMethod(lua_State *L)
                         int functionId = retainLuaFunction(L, -1, NULL);
                         [dict setObject:[NSNumber numberWithInt:functionId] forKey:key];
                         break;
-                        
-                    
                 }
                 
                 lua_pop(L, 1);
