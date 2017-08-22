@@ -24,11 +24,6 @@
 
 __BEGIN_DECLS
 
-static inline bool bitmask_test(unsigned int *bitmask, int bit)
-{
-    return bitmask[BIT_WORD(bit)] & BIT_MASK(bit);
-}
-
 static inline int popcount(unsigned int x)
 {
     return __builtin_popcount(x);
