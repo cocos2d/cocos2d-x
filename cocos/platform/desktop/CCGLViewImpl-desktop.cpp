@@ -546,6 +546,9 @@ Size GLViewImpl::getMonitorSize() const {
         GLFWwindow* window = this->getWindow();
         monitor = glfwGetWindowMonitor(window);
     }
+    if (nullptr == monitor) {
+        monitor = glfwGetPrimaryMonitor();
+    }
     if (nullptr != monitor) {
         const GLFWvidmode* videoMode = glfwGetVideoMode(monitor);
         Size size = Size(videoMode->width, videoMode->height);
