@@ -37,7 +37,7 @@ static void luaTableToObjcDictionary(lua_State *L, NSMutableDictionary *dict,NSS
                           forKey:key2];
                 break;
             case LUA_TTABLE:
-                luaTableWithObjcDictionary(L, dict2, key2);
+                luaTableToObjcDictionary(L, dict2, key2);
                 break;
         }
         lua_pop(L,1);
