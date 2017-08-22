@@ -5677,6 +5677,24 @@ void js_register_cocos2dx_ui_RadioButtonGroup(JSContext *cx, JS::HandleObject gl
 JSClass  *jsb_cocos2d_ui_ImageView_class;
 JSObject *jsb_cocos2d_ui_ImageView_prototype;
 
+bool js_cocos2dx_ui_ImageView_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::ImageView* cobj = (cocos2d::ui::ImageView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ImageView_getBlendFunc : Invalid Native Object");
+    if (argc == 0) {
+        const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
+        JS::RootedValue jsret(cx);
+        jsret = blendfunc_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_ImageView_getBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_ui_ImageView_loadTexture(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -5705,6 +5723,26 @@ bool js_cocos2dx_ui_ImageView_loadTexture(JSContext *cx, uint32_t argc, jsval *v
     }
 
     JS_ReportError(cx, "js_cocos2dx_ui_ImageView_loadTexture : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_ImageView_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::ImageView* cobj = (cocos2d::ui::ImageView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ImageView_setBlendFunc : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::BlendFunc arg0;
+        ok &= jsval_to_blendfunc(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ImageView_setBlendFunc : Error processing arguments");
+        cobj->setBlendFunc(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_ImageView_setBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_ui_ImageView_init(JSContext *cx, uint32_t argc, jsval *vp)
@@ -5962,7 +6000,9 @@ void js_register_cocos2dx_ui_ImageView(JSContext *cx, JS::HandleObject global) {
     };
 
     static JSFunctionSpec funcs[] = {
+        JS_FN("getBlendFunc", js_cocos2dx_ui_ImageView_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadTexture", js_cocos2dx_ui_ImageView_loadTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setBlendFunc", js_cocos2dx_ui_ImageView_setBlendFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("_init", js_cocos2dx_ui_ImageView_init, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setScale9Enabled", js_cocos2dx_ui_ImageView_setScale9Enabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTextureRect", js_cocos2dx_ui_ImageView_setTextureRect, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
