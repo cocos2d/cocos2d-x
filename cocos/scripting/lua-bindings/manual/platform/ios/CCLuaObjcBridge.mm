@@ -15,7 +15,7 @@ void LuaObjcBridge::luaopen_luaoc(lua_State *L)
 }
 
 
-static void luaTableWithObjcDictionary(lua_State *L, NSMutableDictionary *dict,NSString *key){
+static void luaTableToObjcDictionary(lua_State *L, NSMutableDictionary *dict,NSString *key){
     NSMutableDictionary *dict2 = [[NSMutableDictionary alloc] init];
     lua_pushnil(L);
     while(lua_next(L, -2))
@@ -137,14 +137,16 @@ int LuaObjcBridge::callObjcStaticMethod(lua_State *L)
                                  forKey:key];
                         break;
                         
+                    case LUA_TTABLE:
+                        luaTableToObjcDictionary(L, dict, key);
+                        break;
+                        
                     case LUA_TFUNCTION:
                         int functionId = retainLuaFunction(L, -1, NULL);
                         [dict setObject:[NSNumber numberWithInt:functionId] forKey:key];
                         break;
                         
-                    case LUA_TTABLE:
-                        luaTableWithObjcDictionary(L, dict, key);
-                        break;
+                    
                 }
                 
                 lua_pop(L, 1);
