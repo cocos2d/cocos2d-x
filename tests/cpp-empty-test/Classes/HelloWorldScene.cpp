@@ -1,76 +1,147 @@
 #include "HelloWorldScene.h"
+
+#include <string>
+
 #include "AppMacros.h"
+#include "reader/CreatorReader.h"
+#include "reader/collider/ColliderManager.h"
+#include "ui/UIVideoPlayer.h"
+#include "ui/UIButton.h"
 
 USING_NS_CC;
+
+cocos2d::Scene* HelloWorld::g_currentScene = nullptr;;
+creator::CreatorReader* HelloWorld::g_reader = nullptr;
 
 
 Scene* HelloWorld::scene()
 {
-     return HelloWorld::create();
+    auto scene = createScene("creator/scenes/Main.ccreator");
+    HelloWorld::handleButtonsClick(scene);
+    return scene;
 }
 
-// on "init" you need to initialize your instance
-bool HelloWorld::init()
+////////////////////////////////////////////////////
+// private functions
+///////////////////////////////////////////////////
+
+cocos2d::Scene* HelloWorld::createScene(const std::string& ccreatorPath)
 {
-    //////////////////////////////
-    // 1. super init first
-    if ( !Scene::init() )
-    {
-        return false;
-    }
+    auto reader = creator::CreatorReader::createWithFilename(ccreatorPath);
+    reader->setup();
+    auto scene = reader->getSceneGraph();
     
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    auto origin = Director::getInstance()->getVisibleOrigin();
-
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
-
-    // add a "close" icon to exit the progress. it's an autorelease object
-    auto closeItem = MenuItemImage::create(
-                                        "CloseNormal.png",
-                                        "CloseSelected.png",
-                                        CC_CALLBACK_1(HelloWorld::menuCloseCallback,this));
+    HelloWorld::g_reader = reader;
+    HelloWorld::g_currentScene = scene;
     
-    closeItem->setPosition(origin + Vec2(visibleSize) - Vec2(closeItem->getContentSize() / 2));
-
-    // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, nullptr);
-    menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 1);
-    
-    /////////////////////////////
-    // 3. add your codes below...
-
-    // add a label shows "Hello World"
-    // create and initialize a label
-    
-    auto label = Label::createWithTTF("Hello World", "fonts/arial.ttf", TITLE_FONT_SIZE);
-    
-    // position the label on the center of the screen
-    label->setPosition(origin.x + visibleSize.width/2,
-                            origin.y + visibleSize.height - label->getContentSize().height);
-
-    // add the label as a child to this layer
-    this->addChild(label, 1);
-
-    // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
-
-    // position the sprite on the center of the screen
-    sprite->setPosition(Vec2(visibleSize / 2) + origin);
-
-    // add the sprite as a child to this layer
-    this->addChild(sprite);
-    
-    return true;
+    return scene;;
 }
 
-void HelloWorld::menuCloseCallback(Ref* sender)
+cocos2d::ui::Button* HelloWorld::createBackButton()
 {
-    Director::getInstance()->end();
+    auto director = Director::getInstance();
+    const auto visibleSize = director->getVisibleSize();
+    const auto visibleOrigin = director->getVisibleOrigin();
+    
+    auto backButton = ui::Button::create();
+    backButton->setTitleText("back");
+    backButton->setTitleFontSize(30);
+    auto contentSize = backButton->getContentSize();
+    backButton->setPosition(Vec2(visibleOrigin.x + visibleSize.width - contentSize.width/2,
+                                 contentSize.height/2));
+    
+    backButton->addClickEventListener([](Ref*) {
+        auto scene = createScene("creator/scenes/Main.ccreator");
+        HelloWorld::handleButtonsClick(scene);
+        Director::getInstance()->replaceScene(scene);
+    });
+    
+    return backButton;
+}
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
+void HelloWorld::repalceScene(const std::string& ccreatorPath)
+{
+    auto scene = createScene(ccreatorPath);
+    auto backButton = HelloWorld::createBackButton();
+    scene->addChild(backButton);
+    Director::getInstance()->replaceScene(scene);
+}
+
+void HelloWorld::handleButtonClick(cocos2d::Scene* scene, const std::string& buttonName, const std::string& ccreatorPath)
+{
+    auto button = utils::findChild<ui::Button*>(scene, buttonName);
+    button->addClickEventListener([=](Ref*) {
+        HelloWorld::repalceScene(ccreatorPath);
+    });
+}
+
+void HelloWorld::handleColliderButtonClick(cocos2d::Scene* scene)
+{
+    auto button = utils::findChild<ui::Button*>(scene, "collider");
+    button->addClickEventListener([](Ref*) {
+        HelloWorld::repalceScene("creator/scenes/collider/collider.ccreator");
+        
+        // regisger call back for collision event
+        auto colliderManager = HelloWorld::g_reader->getColliderManager();
+        colliderManager->enableAABBDebugDraw(true);
+        colliderManager->registerCollitionCallback([=](creator::Contract::CollisionType type,
+                                                       creator::Collider* collider1,
+                                                       creator::Collider* collider2) {
+            if (type == creator::Contract::CollisionType::ENTER)
+                colliderManager->enableDebugDraw(true);
+            
+            if (type == creator::Contract::CollisionType::EXIT)
+                colliderManager->enableDebugDraw(false);
+            
+        }, "");
+        
+        auto boxCollider = utils::findChild(HelloWorld::g_currentScene, "boxcollider");
+        auto circleCollider = utils::findChild(HelloWorld::g_currentScene, "collider2");
+        //    auto polygonCollider = utils::findChild(scene, "polygoncollider");
+        
+        auto action1 = RepeatForever::create(RotateBy::create(1, 5));
+        auto action2 = RepeatForever::create(RotateBy::create(1, 5));
+        //    auto action3 = RepeatForever::create(RotateBy::create(1, 5));
+        
+        boxCollider->runAction(action1);
+        circleCollider->runAction(action2);
+        //            polygonCollider->runAction(action3);
+    });
+}
+
+void HelloWorld::handleVideoButtonClick(cocos2d::Scene* scene)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    auto button = utils::findChild<ui::Button*>(scene, "video");
+    button->addClickEventListener([=](Ref*) {
+        HelloWorld::repalceScene("creator/scenes/video/VideoPlayer.ccreator");
+
+        auto videoPlayer = utils::findChild<experimental::ui::VideoPlayer*>(HelloWorld::g_currentScene, "videoplayer");
+        videoPlayer->play();
+    });
 #endif
+}
+
+void HelloWorld::handleButtonsClick(cocos2d::Scene* scene)
+{
+    HelloWorld::handleButtonClick(scene, "animation", "creator/scenes/animation/CreatorAnim.ccreator");
+    HelloWorld::handleButtonClick(scene, "label", "creator/scenes/label/CreatorLabels.ccreator");
+    HelloWorld::handleButtonClick(scene, "mask", "creator/scenes/mask/Mask.ccreator");
+    HelloWorld::handleButtonClick(scene, "pageview", "creator/scenes/pageview/pageview.ccreator");
+    HelloWorld::handleButtonClick(scene, "prefab", "creator/scenes/prefab/prefab-test.ccreator");
+    HelloWorld::handleButtonClick(scene, "richtext", "creator/scenes/richtext/CreatorRichtext.ccreator");
+    HelloWorld::handleButtonClick(scene, "slider", "creator/scenes/slider/slider.ccreator");
+    HelloWorld::handleButtonClick(scene, "sprites", "creator/scenes/sprites/CreatorSprites.ccreator");
+    HelloWorld::handleButtonClick(scene, "tilemap", "creator/scenes/tilemap/CreatorTilemap.ccreator");
+    HelloWorld::handleButtonClick(scene, "toggle", "creator/scenes/toggle/toggle.ccreator");
+    HelloWorld::handleButtonClick(scene, "toggle_group", "creator/scenes/toggle_group/toggle_group.ccreator");
+    HelloWorld::handleButtonClick(scene, "ui", "creator/scenes/ui/CreatorUI.ccreator");
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    HelloWorld::handleButtonClick(scene, "webview", "creator/scenes/webview/WebView.ccreator");
+#endif
+    
+    HelloWorld::handleColliderButtonClick(scene);
+    HelloWorld::handleVideoButtonClick(scene);
+    
 }

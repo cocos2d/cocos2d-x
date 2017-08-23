@@ -3,18 +3,38 @@
 
 #include "cocos2d.h"
 
-class HelloWorld : public cocos2d::Scene
+#include <string>
+
+namespace creator
+{
+    class CreatorReader;
+}
+
+namespace cocos2d
+{
+    namespace ui
+    {
+        class Button;
+    }
+}
+
+class HelloWorld
 {
 public:
-    virtual bool init() override;
-
     static cocos2d::Scene* scene();
-
-    // a selector callback
-    void menuCloseCallback(Ref* sender);
-
-    // implement the "static create()" method manually
-    CREATE_FUNC(HelloWorld);
+    
+private:
+    
+    static cocos2d::Scene* createScene(const std::string& ccreatorPath);
+    static cocos2d::ui::Button* createBackButton();
+    static void repalceScene(const std::string& ccreatorPath);
+    static void handleButtonClick(cocos2d::Scene* scene, const std::string& buttonName, const std::string& ccreatorPath);
+    static void handleButtonsClick(cocos2d::Scene* scene);
+    static void handleColliderButtonClick(cocos2d::Scene* scene);
+    static void handleVideoButtonClick(cocos2d::Scene* scene);
+    
+    static cocos2d::Scene* g_currentScene;
+    static creator::CreatorReader* g_reader;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
