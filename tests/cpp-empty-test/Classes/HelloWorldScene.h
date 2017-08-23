@@ -32,6 +32,7 @@ private:
     static void handleButtonsClick(cocos2d::Scene* scene);
     static void handleColliderButtonClick(cocos2d::Scene* scene);
     static void handleVideoButtonClick(cocos2d::Scene* scene);
+    static void handleAnimationButtonClick(cocos2d::Scene* scene);
     
     static cocos2d::Scene* g_currentScene;
     static creator::CreatorReader* g_reader;

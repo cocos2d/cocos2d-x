@@ -96,16 +96,11 @@ void HelloWorld::handleColliderButtonClick(cocos2d::Scene* scene)
         }, "");
         
         auto boxCollider = utils::findChild(HelloWorld::g_currentScene, "boxcollider");
-        auto circleCollider = utils::findChild(HelloWorld::g_currentScene, "collider2");
-        //    auto polygonCollider = utils::findChild(scene, "polygoncollider");
+        auto polygonCollider = utils::findChild(HelloWorld::g_currentScene, "polygoncollider");
         
         auto action1 = RepeatForever::create(RotateBy::create(1, 5));
-        auto action2 = RepeatForever::create(RotateBy::create(1, 5));
-        //    auto action3 = RepeatForever::create(RotateBy::create(1, 5));
-        
         boxCollider->runAction(action1);
-        circleCollider->runAction(action2);
-        //            polygonCollider->runAction(action3);
+        polygonCollider->runAction(action1->clone());
     });
 }
 
@@ -122,9 +117,28 @@ void HelloWorld::handleVideoButtonClick(cocos2d::Scene* scene)
 #endif
 }
 
+void HelloWorld::handleAnimationButtonClick(cocos2d::Scene* scene)
+{
+    auto button = utils::findChild<ui::Button*>(scene, "animation");
+    button->addClickEventListener([=](Ref*) {
+        HelloWorld::repalceScene("creator/scenes/animation/CreatorAnim.ccreator");
+        
+        auto grossini_dance_08_2 = utils::findChild<cocos2d::Sprite*>(HelloWorld::g_currentScene, "grossini_dance_08_2");
+        auto animationManager = HelloWorld::g_reader->getAnimationManager();
+        grossini_dance_08_2->runAction(Sequence::create(DelayTime::create(3),
+                                                        CallFunc::create([=]() {
+            animationManager->pauseAnimationClip(grossini_dance_08_2, "Animation2");
+                                                        }),
+                                                        DelayTime::create(1),
+                                                        CallFunc::create([=]() {
+            animationManager->resumeAnimationClip(grossini_dance_08_2, "Animation2");
+                                                        }),
+                                                        nullptr));
+    });
+}
+
 void HelloWorld::handleButtonsClick(cocos2d::Scene* scene)
 {
-    HelloWorld::handleButtonClick(scene, "animation", "creator/scenes/animation/CreatorAnim.ccreator");
     HelloWorld::handleButtonClick(scene, "label", "creator/scenes/label/CreatorLabels.ccreator");
     HelloWorld::handleButtonClick(scene, "mask", "creator/scenes/mask/Mask.ccreator");
     HelloWorld::handleButtonClick(scene, "pageview", "creator/scenes/pageview/pageview.ccreator");
@@ -137,10 +151,10 @@ void HelloWorld::handleButtonsClick(cocos2d::Scene* scene)
     HelloWorld::handleButtonClick(scene, "toggle_group", "creator/scenes/toggle_group/toggle_group.ccreator");
     HelloWorld::handleButtonClick(scene, "ui", "creator/scenes/ui/CreatorUI.ccreator");
     
+    HelloWorld::handleAnimationButtonClick(scene);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     HelloWorld::handleButtonClick(scene, "webview", "creator/scenes/webview/WebView.ccreator");
 #endif
-    
     HelloWorld::handleColliderButtonClick(scene);
     HelloWorld::handleVideoButtonClick(scene);
     
