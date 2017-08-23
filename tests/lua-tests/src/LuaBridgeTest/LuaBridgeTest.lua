@@ -6,6 +6,7 @@ local LuaBridgeTestsName =
 {
     "LuaJavaBridge",
     "LuaObjectCBridge",
+    "LuaTableToObjcDictTest",
 }
 
 local s = cc.Director:getInstance():getWinSize()
@@ -121,11 +122,38 @@ local function LuaBridgeLayer()
         return newScene
     end
 
+    local function newLuaTableToObjcDict()
+        local newScene = cc.Scene:create()
+        local titleLabel = cc.Label:createWithTTF("", s_arialPath, 28)
+        newScene:addChild(titleLabel, 1)
+        titleLabel:setAnchorPoint(cc.p(0.5, 0.5))
+        titleLabel:setPosition(s.width / 2, s.height - 50)
+        titleLabel:setString("LuaTableToObjcDict Test")
+
+        subtitleLabel = cc.Label:createWithTTF("", s_thonburiPath, 16)
+        newScene:addChild(subtitleLabel, 1)
+        subtitleLabel:setAnchorPoint(cc.p(0.5, 0.5))
+        subtitleLabel:setPosition(s.width / 2, s.height - 80)
+        subtitleLabel:setString("See the console.")
+        if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or (cc.PLATFORM_OS_MAC == targetPlatform) then
+            local args = {name = "jett" ,method = "call OC"}
+            local args_tab = {tab = args , name = "table_test"}
+            local luaoc = require "cocos.cocos2d.luaoc"
+            local className = "LuaObjectCBridgeTest"
+            local ok,ret  = luaoc.callStaticMethod(className,"printLuaTableToDictionary",args_tab)
+
+        end
+        return newScene
+    end
+
+
     local function newLuaBridgeScene(idx)
         if 1 == idx then
             return newLuaJavaBridge()
         elseif 2 == idx then
             return newLuaObjectCBridge()
+        elseif 3 == idx then
+            return newLuaTableToObjcDict()
         end
     end
 
@@ -145,7 +173,8 @@ local function LuaBridgeLayer()
         item:setPosition(s.width / 2, s.height - i * LINE_SPACE)
         menu:addChild(item, itemTagBasic + i)
         if ((i == 1) and (false == supportJavaBridge))
-        or ((i == 2) and (false == supportObjectCBridge)) then
+        or ((i == 2) and (false == supportObjectCBridge)) 
+        or ((i == 3) and (false == supportObjectCBridge))then
             item:setEnabled(false)
         end
     end
