@@ -33,3 +33,5 @@
 #define USING_NS_CC
 #define NS_CC
 #endif
+
+#define USE_DRAGON_BONES 1

@@ -33,6 +33,11 @@
 #include "CreatorReader_generated.h"
 #include "collider/ColliderManager.h"
 
+#if (USE_DRAGON_BONES == 1)
+#include "dragonbones/DragonBonesHeaders.h"
+#include "dragonbones/cocos2dx/CCDragonBonesHeaders.h"
+#endif
+
 
 NS_CCR_BEGIN
 
@@ -138,6 +143,11 @@ protected:
     
     cocos2d::ClippingNode* createMask(const buffers::Mask* maskBuffer) const;
     void parseMask(cocos2d::ClippingNode* mask, const buffers::Mask* maskBuffer) const;
+    
+#if (USE_DRAGON_BONES == 1)
+    dragonBones::CCArmatureDisplay* createArmatureDisplay(const buffers::DragonBones* dragonBonesBuffer) const;
+    void parseArmatureDisplay(dragonBones::CCArmatureDisplay* armatureDisplay, const buffers::DragonBones* dragonBonesBuffer) const;
+#endif
     
     void setupSpriteFrames();
     void setupCollisionMatrix();

@@ -66,6 +66,8 @@ struct AnimationRef;
 
 struct Collider;
 
+struct DragonBones;
+
 struct AnimationClip;
 
 struct AnimCurveData;
@@ -329,12 +331,13 @@ enum AnyNode {
   AnyNode_ToggleGroup = 18,
   AnyNode_PageView = 19,
   AnyNode_Mask = 20,
+  AnyNode_DragonBones = 21,
   AnyNode_MIN = AnyNode_NONE,
-  AnyNode_MAX = AnyNode_Mask
+  AnyNode_MAX = AnyNode_DragonBones
 };
 
 inline const char **EnumNamesAnyNode() {
-  static const char *names[] = { "NONE", "Scene", "Sprite", "Label", "Particle", "TileMap", "Node", "Button", "ProgressBar", "ScrollView", "CreatorScene", "EditBox", "RichText", "SpineSkeleton", "VideoPlayer", "WebView", "Slider", "Toggle", "ToggleGroup", "PageView", "Mask", nullptr };
+  static const char *names[] = { "NONE", "Scene", "Sprite", "Label", "Particle", "TileMap", "Node", "Button", "ProgressBar", "ScrollView", "CreatorScene", "EditBox", "RichText", "SpineSkeleton", "VideoPlayer", "WebView", "Slider", "Toggle", "ToggleGroup", "PageView", "Mask", "DragonBones", nullptr };
   return names;
 }
 
@@ -422,6 +425,10 @@ template<> struct AnyNodeTraits<PageView> {
 
 template<> struct AnyNodeTraits<Mask> {
   static const AnyNode enum_value = AnyNode_Mask;
+};
+
+template<> struct AnyNodeTraits<DragonBones> {
+  static const AnyNode enum_value = AnyNode_DragonBones;
 };
 
 inline bool VerifyAnyNode(flatbuffers::Verifier &verifier, const void *union_obj, AnyNode type);
@@ -2658,6 +2665,89 @@ inline flatbuffers::Offset<Collider> CreateColliderDirect(flatbuffers::FlatBuffe
   return CreateCollider(_fbb, type, offset, size, points ? _fbb.CreateVector<const Vec2 *>(*points) : 0, radius);
 }
 
+struct DragonBones FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_NODE = 4,
+    VT_BONEDATAPATH = 6,
+    VT_TEXTUREDATAPATH = 8,
+    VT_ARMATURE = 10,
+    VT_ANIMATION = 12,
+    VT_TIMESCALE = 14,
+    VT_PLAYTIMES = 16
+  };
+  const Node *node() const { return GetPointer<const Node *>(VT_NODE); }
+  const flatbuffers::String *boneDataPath() const { return GetPointer<const flatbuffers::String *>(VT_BONEDATAPATH); }
+  const flatbuffers::String *textureDataPath() const { return GetPointer<const flatbuffers::String *>(VT_TEXTUREDATAPATH); }
+  const flatbuffers::String *armature() const { return GetPointer<const flatbuffers::String *>(VT_ARMATURE); }
+  const flatbuffers::String *animation() const { return GetPointer<const flatbuffers::String *>(VT_ANIMATION); }
+  float timeScale() const { return GetField<float>(VT_TIMESCALE, 0.0f); }
+  int32_t playTimes() const { return GetField<int32_t>(VT_PLAYTIMES, 0); }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_NODE) &&
+           verifier.VerifyTable(node()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_BONEDATAPATH) &&
+           verifier.Verify(boneDataPath()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_TEXTUREDATAPATH) &&
+           verifier.Verify(textureDataPath()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_ARMATURE) &&
+           verifier.Verify(armature()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_ANIMATION) &&
+           verifier.Verify(animation()) &&
+           VerifyField<float>(verifier, VT_TIMESCALE) &&
+           VerifyField<int32_t>(verifier, VT_PLAYTIMES) &&
+           verifier.EndTable();
+  }
+};
+
+struct DragonBonesBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_node(flatbuffers::Offset<Node> node) { fbb_.AddOffset(DragonBones::VT_NODE, node); }
+  void add_boneDataPath(flatbuffers::Offset<flatbuffers::String> boneDataPath) { fbb_.AddOffset(DragonBones::VT_BONEDATAPATH, boneDataPath); }
+  void add_textureDataPath(flatbuffers::Offset<flatbuffers::String> textureDataPath) { fbb_.AddOffset(DragonBones::VT_TEXTUREDATAPATH, textureDataPath); }
+  void add_armature(flatbuffers::Offset<flatbuffers::String> armature) { fbb_.AddOffset(DragonBones::VT_ARMATURE, armature); }
+  void add_animation(flatbuffers::Offset<flatbuffers::String> animation) { fbb_.AddOffset(DragonBones::VT_ANIMATION, animation); }
+  void add_timeScale(float timeScale) { fbb_.AddElement<float>(DragonBones::VT_TIMESCALE, timeScale, 0.0f); }
+  void add_playTimes(int32_t playTimes) { fbb_.AddElement<int32_t>(DragonBones::VT_PLAYTIMES, playTimes, 0); }
+  DragonBonesBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  DragonBonesBuilder &operator=(const DragonBonesBuilder &);
+  flatbuffers::Offset<DragonBones> Finish() {
+    auto o = flatbuffers::Offset<DragonBones>(fbb_.EndTable(start_, 7));
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<DragonBones> CreateDragonBones(flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<Node> node = 0,
+    flatbuffers::Offset<flatbuffers::String> boneDataPath = 0,
+    flatbuffers::Offset<flatbuffers::String> textureDataPath = 0,
+    flatbuffers::Offset<flatbuffers::String> armature = 0,
+    flatbuffers::Offset<flatbuffers::String> animation = 0,
+    float timeScale = 0.0f,
+    int32_t playTimes = 0) {
+  DragonBonesBuilder builder_(_fbb);
+  builder_.add_playTimes(playTimes);
+  builder_.add_timeScale(timeScale);
+  builder_.add_animation(animation);
+  builder_.add_armature(armature);
+  builder_.add_textureDataPath(textureDataPath);
+  builder_.add_boneDataPath(boneDataPath);
+  builder_.add_node(node);
+  return builder_.Finish();
+}
+
+inline flatbuffers::Offset<DragonBones> CreateDragonBonesDirect(flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<Node> node = 0,
+    const char *boneDataPath = nullptr,
+    const char *textureDataPath = nullptr,
+    const char *armature = nullptr,
+    const char *animation = nullptr,
+    float timeScale = 0.0f,
+    int32_t playTimes = 0) {
+  return CreateDragonBones(_fbb, node, boneDataPath ? _fbb.CreateString(boneDataPath) : 0, textureDataPath ? _fbb.CreateString(textureDataPath) : 0, armature ? _fbb.CreateString(armature) : 0, animation ? _fbb.CreateString(animation) : 0, timeScale, playTimes);
+}
+
 struct AnimationClip FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_NAME = 4,
@@ -3496,6 +3586,7 @@ inline bool VerifyAnyNode(flatbuffers::Verifier &verifier, const void *union_obj
     case AnyNode_ToggleGroup: return verifier.VerifyTable(reinterpret_cast<const ToggleGroup *>(union_obj));
     case AnyNode_PageView: return verifier.VerifyTable(reinterpret_cast<const PageView *>(union_obj));
     case AnyNode_Mask: return verifier.VerifyTable(reinterpret_cast<const Mask *>(union_obj));
+    case AnyNode_DragonBones: return verifier.VerifyTable(reinterpret_cast<const DragonBones *>(union_obj));
     default: return false;
   }
 }

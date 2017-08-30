@@ -8,6 +8,8 @@
 #include "ui/UIVideoPlayer.h"
 #include "ui/UIButton.h"
 
+#include "DragonBonesHandler.h"
+
 USING_NS_CC;
 
 cocos2d::Scene* HelloWorld::g_currentScene = nullptr;;
@@ -137,6 +139,17 @@ void HelloWorld::handleAnimationButtonClick(cocos2d::Scene* scene)
     });
 }
 
+void HelloWorld::handleDragonbones(cocos2d::Scene* scene)
+{
+    auto button = utils::findChild<ui::Button*>(scene, "dragonbones");
+    button->addClickEventListener([=](Ref*){
+        HelloWorld::repalceScene("creator/scenes/dragon_bones/DragonBones.ccreator");
+        
+        auto dragonBonesHandler = new DragonBonesHandler(HelloWorld::g_currentScene);
+        HelloWorld::g_currentScene->addChild(dragonBonesHandler);
+    });
+}
+
 void HelloWorld::handleButtonsClick(cocos2d::Scene* scene)
 {
     HelloWorld::handleButtonClick(scene, "label", "creator/scenes/label/CreatorLabels.ccreator");
@@ -157,5 +170,5 @@ void HelloWorld::handleButtonsClick(cocos2d::Scene* scene)
 #endif
     HelloWorld::handleColliderButtonClick(scene);
     HelloWorld::handleVideoButtonClick(scene);
-    
+    HelloWorld::handleDragonbones(scene);
 }

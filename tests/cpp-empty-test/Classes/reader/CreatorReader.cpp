@@ -330,6 +330,11 @@ cocos2d::Node* CreatorReader::createTree(const buffers::NodeTree* tree) const
         case buffers::AnyNode_Mask:
             node = createMask(static_cast<const buffers::Mask*>(buffer));
             break;
+#if (USE_DRAGON_BONES == 1)
+        case buffers::AnyNode_DragonBones:
+            node = createArmatureDisplay(static_cast<const buffers::DragonBones*>(buffer));
+            break;
+#endif
     }
 
     // recursively add its children
@@ -1251,6 +1256,42 @@ void CreatorReader::parseSpineSkeleton(spine::SkeletonAnimation* spine, const bu
     spine->setDebugSlotsEnabled(debugSlots);
     spine->setDebugBonesEnabled(debugBones);
 }
+
+#if (USE_DRAGON_BONES == 1)
+dragonBones::CCArmatureDisplay* CreatorReader::createArmatureDisplay(const buffers::DragonBones* dragonBonesBuffer) const
+{
+    const auto& boneDataPath = dragonBonesBuffer->boneDataPath();
+    const auto& atlasDataPath = dragonBonesBuffer->textureDataPath();
+    
+    if (boneDataPath && atlasDataPath)
+    {
+        auto& factory = dragonBones::CCFactory::factory;
+        factory.loadDragonBonesData(boneDataPath->str());
+        factory.loadTextureAtlasData(atlasDataPath->str());
+        
+        const auto& armatureName = dragonBonesBuffer->armature();
+        auto display = factory.buildArmatureDisplay(armatureName->str());
+        parseArmatureDisplay(display, dragonBonesBuffer);
+        
+        return display;
+    }
+    else
+        return nullptr;
+    
+}
+
+void CreatorReader::parseArmatureDisplay(dragonBones::CCArmatureDisplay* armatureDisplay, const buffers::DragonBones* dragonBonesBuffer) const
+{
+    const auto& nodeBuffer = dragonBonesBuffer->node();
+    parseNode(armatureDisplay, nodeBuffer);
+    
+    const auto& animationName = dragonBonesBuffer->animation();
+    if (animationName)
+    {
+        armatureDisplay->getAnimation().play(animationName->str());
+    }
+}
+#endif // (USE_DRAGON_BONES == 1)
 
 
 //
