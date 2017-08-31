@@ -2669,14 +2669,16 @@ struct DragonBones FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_NODE = 4,
     VT_BONEDATAPATH = 6,
-    VT_TEXTUREDATAPATH = 8,
-    VT_ARMATURE = 10,
-    VT_ANIMATION = 12,
-    VT_TIMESCALE = 14,
-    VT_PLAYTIMES = 16
+    VT_BONEDATANAME = 8,
+    VT_TEXTUREDATAPATH = 10,
+    VT_ARMATURE = 12,
+    VT_ANIMATION = 14,
+    VT_TIMESCALE = 16,
+    VT_PLAYTIMES = 18
   };
   const Node *node() const { return GetPointer<const Node *>(VT_NODE); }
   const flatbuffers::String *boneDataPath() const { return GetPointer<const flatbuffers::String *>(VT_BONEDATAPATH); }
+  const flatbuffers::String *boneDataName() const { return GetPointer<const flatbuffers::String *>(VT_BONEDATANAME); }
   const flatbuffers::String *textureDataPath() const { return GetPointer<const flatbuffers::String *>(VT_TEXTUREDATAPATH); }
   const flatbuffers::String *armature() const { return GetPointer<const flatbuffers::String *>(VT_ARMATURE); }
   const flatbuffers::String *animation() const { return GetPointer<const flatbuffers::String *>(VT_ANIMATION); }
@@ -2688,6 +2690,8 @@ struct DragonBones FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            verifier.VerifyTable(node()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_BONEDATAPATH) &&
            verifier.Verify(boneDataPath()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_BONEDATANAME) &&
+           verifier.Verify(boneDataName()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_TEXTUREDATAPATH) &&
            verifier.Verify(textureDataPath()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_ARMATURE) &&
@@ -2705,6 +2709,7 @@ struct DragonBonesBuilder {
   flatbuffers::uoffset_t start_;
   void add_node(flatbuffers::Offset<Node> node) { fbb_.AddOffset(DragonBones::VT_NODE, node); }
   void add_boneDataPath(flatbuffers::Offset<flatbuffers::String> boneDataPath) { fbb_.AddOffset(DragonBones::VT_BONEDATAPATH, boneDataPath); }
+  void add_boneDataName(flatbuffers::Offset<flatbuffers::String> boneDataName) { fbb_.AddOffset(DragonBones::VT_BONEDATANAME, boneDataName); }
   void add_textureDataPath(flatbuffers::Offset<flatbuffers::String> textureDataPath) { fbb_.AddOffset(DragonBones::VT_TEXTUREDATAPATH, textureDataPath); }
   void add_armature(flatbuffers::Offset<flatbuffers::String> armature) { fbb_.AddOffset(DragonBones::VT_ARMATURE, armature); }
   void add_animation(flatbuffers::Offset<flatbuffers::String> animation) { fbb_.AddOffset(DragonBones::VT_ANIMATION, animation); }
@@ -2713,7 +2718,7 @@ struct DragonBonesBuilder {
   DragonBonesBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   DragonBonesBuilder &operator=(const DragonBonesBuilder &);
   flatbuffers::Offset<DragonBones> Finish() {
-    auto o = flatbuffers::Offset<DragonBones>(fbb_.EndTable(start_, 7));
+    auto o = flatbuffers::Offset<DragonBones>(fbb_.EndTable(start_, 8));
     return o;
   }
 };
@@ -2721,6 +2726,7 @@ struct DragonBonesBuilder {
 inline flatbuffers::Offset<DragonBones> CreateDragonBones(flatbuffers::FlatBufferBuilder &_fbb,
     flatbuffers::Offset<Node> node = 0,
     flatbuffers::Offset<flatbuffers::String> boneDataPath = 0,
+    flatbuffers::Offset<flatbuffers::String> boneDataName = 0,
     flatbuffers::Offset<flatbuffers::String> textureDataPath = 0,
     flatbuffers::Offset<flatbuffers::String> armature = 0,
     flatbuffers::Offset<flatbuffers::String> animation = 0,
@@ -2732,6 +2738,7 @@ inline flatbuffers::Offset<DragonBones> CreateDragonBones(flatbuffers::FlatBuffe
   builder_.add_animation(animation);
   builder_.add_armature(armature);
   builder_.add_textureDataPath(textureDataPath);
+  builder_.add_boneDataName(boneDataName);
   builder_.add_boneDataPath(boneDataPath);
   builder_.add_node(node);
   return builder_.Finish();
@@ -2740,12 +2747,13 @@ inline flatbuffers::Offset<DragonBones> CreateDragonBones(flatbuffers::FlatBuffe
 inline flatbuffers::Offset<DragonBones> CreateDragonBonesDirect(flatbuffers::FlatBufferBuilder &_fbb,
     flatbuffers::Offset<Node> node = 0,
     const char *boneDataPath = nullptr,
+    const char *boneDataName = nullptr,
     const char *textureDataPath = nullptr,
     const char *armature = nullptr,
     const char *animation = nullptr,
     float timeScale = 0.0f,
     int32_t playTimes = 0) {
-  return CreateDragonBones(_fbb, node, boneDataPath ? _fbb.CreateString(boneDataPath) : 0, textureDataPath ? _fbb.CreateString(textureDataPath) : 0, armature ? _fbb.CreateString(armature) : 0, animation ? _fbb.CreateString(animation) : 0, timeScale, playTimes);
+  return CreateDragonBones(_fbb, node, boneDataPath ? _fbb.CreateString(boneDataPath) : 0, boneDataName ? _fbb.CreateString(boneDataName) : 0, textureDataPath ? _fbb.CreateString(textureDataPath) : 0, armature ? _fbb.CreateString(armature) : 0, animation ? _fbb.CreateString(animation) : 0, timeScale, playTimes);
 }
 
 struct AnimationClip FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {

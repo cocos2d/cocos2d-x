@@ -260,7 +260,6 @@ std::string CreatorReader::getVersion() const
 cocos2d::Node* CreatorReader::createTree(const buffers::NodeTree* tree) const
 {
     cocos2d::Node *node = nullptr;
-    bool treat_child_as_label = false;
 
     const void* buffer = tree->object();
     buffers::AnyNode bufferType = tree->object_type();
@@ -297,7 +296,6 @@ cocos2d::Node* CreatorReader::createTree(const buffers::NodeTree* tree) const
             break;
         case buffers::AnyNode_Button:
             node = createButton(static_cast<const buffers::Button*>(buffer));
-            treat_child_as_label = true;
             break;
         case buffers::AnyNode_EditBox:
             node = createEditBox(static_cast<const buffers::EditBox*>(buffer));
@@ -342,16 +340,9 @@ cocos2d::Node* CreatorReader::createTree(const buffers::NodeTree* tree) const
     for(const auto& childBuffer: *children) {
         cocos2d::Node* child = createTree(childBuffer);
         if (child && node)  {
-            if (!treat_child_as_label) {
-                // every node should do this
-                node->addChild(child);
-                adjustPosition(child);
-            } else {
-                // ...except if for Buttons
-                auto button = static_cast<cocos2d::ui::Button*>(node);
-                auto label = static_cast<cocos2d::Label*>(child);
-                button->setTitleLabel(label);
-            }
+            // every node should do this
+            node->addChild(child);
+            adjustPosition(child);
         }
     }
 
@@ -1266,8 +1257,14 @@ dragonBones::CCArmatureDisplay* CreatorReader::createArmatureDisplay(const buffe
     if (boneDataPath && atlasDataPath)
     {
         auto& factory = dragonBones::CCFactory::factory;
-        factory.loadDragonBonesData(boneDataPath->str());
-        factory.loadTextureAtlasData(atlasDataPath->str());
+        const auto& boneDataName = dragonBonesBuffer->boneDataName();
+        
+        // DragonBones can not reload Bone data in debug mode, may cause asset crash.
+        if (factory.getDragonBonesData(boneDataName->str()) == nullptr)
+        {
+            factory.loadDragonBonesData(boneDataPath->str());
+            factory.loadTextureAtlasData(atlasDataPath->str());
+        }
         
         const auto& armatureName = dragonBonesBuffer->armature();
         auto display = factory.buildArmatureDisplay(armatureName->str());
