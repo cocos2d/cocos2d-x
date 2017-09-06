@@ -91,6 +91,10 @@ local function baseLayer_onEnterOrExit(tag)
 		baseLayer_entry = scheduler:scheduleScriptFunc(update, 0, false)
 	elseif tag == "exit" then
 		scheduler:unscheduleScriptEntry(baseLayer_entry)
+        if emitter ~= nil then
+            emitter:release()
+            emitter = nil
+        end
 	end
 end
 
@@ -390,7 +394,7 @@ local function DemoFlower()
 	local layer = getBaseLayer()
 
 	emitter = cc.ParticleFlower:create()
-	-- emitter:retain()
+	emitter:retain()
     background:addChild(emitter, 10)
     emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_stars1))
 
@@ -407,7 +411,7 @@ local function DemoGalaxy()
 	local layer = getBaseLayer()
 
 	emitter = cc.ParticleGalaxy:create()
-    -- emitter:retain()
+    emitter:retain()
     background:addChild(emitter, 10)
 
     emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
@@ -425,7 +429,7 @@ local function DemoFirework()
 	local layer = getBaseLayer()
 
 	emitter = cc.ParticleFireworks:create()
-    -- emitter:retain()
+    emitter:retain()
     background:addChild(emitter, 10)
 
     emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_stars1))
@@ -443,7 +447,7 @@ local function DemoSpiral()
 	local layer = getBaseLayer()
 
 	emitter = cc.ParticleSpiral:create()
-    -- emitter:retain()
+    emitter:retain()
     background:addChild(emitter, 10)
 
     emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
@@ -461,7 +465,7 @@ local function DemoSun()
 	local layer = getBaseLayer()
 
 	emitter = cc.ParticleSun:create()
-    -- emitter:retain()
+    emitter:retain()
     background:addChild(emitter, 10)
 
     emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
@@ -477,17 +481,16 @@ end
 ---------------------------------
 local function DemoPause()
 local layer = getBaseLayer()
+    emitter = cc.ParticleSmoke:create()
+    emitter:retain()
+    background:addChild(emitter, 10)
 
-emitter = cc.ParticleSmoke:create()
--- emitter:retain()
-background:addChild(emitter, 10)
+    emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
 
-emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
+    setEmitterPosition()
 
-setEmitterPosition()
-
-titleLabel:setString("Pasue Particle")
-return layer
+    titleLabel:setString("Pasue Particle")
+    return layer
 end
 
 ---------------------------------
@@ -497,7 +500,7 @@ local function DemoMeteor()
 	local layer = getBaseLayer()
 
 	emitter = cc.ParticleMeteor:create()
-    -- emitter:retain()
+    emitter:retain()
     background:addChild(emitter, 10)
 
     emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
@@ -515,7 +518,7 @@ local function DemoFire()
 	local layer = getBaseLayer()
 
 	emitter = cc.ParticleFire:create()
-    -- emitter:retain()
+    emitter:retain()
     background:addChild(emitter, 10)
 
     emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
@@ -533,7 +536,7 @@ local function DemoSmoke()
 	local layer = getBaseLayer()
 
 	emitter = cc.ParticleSmoke:create()
-    -- emitter:retain()
+    emitter:retain()
     background:addChild(emitter, 10)
     emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
     local pos_x, pos_y = emitter:getPosition()
@@ -552,7 +555,7 @@ local function DemoExplosion()
 	local layer = getBaseLayer()
 
 	emitter = cc.ParticleExplosion:create()
-    -- emitter:retain()
+    emitter:retain()
     background:addChild(emitter, 10)
 
     emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_stars1))
@@ -572,7 +575,7 @@ local function DemoSnow()
 	local layer = getBaseLayer()
 
 	emitter = cc.ParticleSnow:create()
-    -- emitter:retain()
+    emitter:retain()
     background:addChild(emitter, 10)
     local pos_x, pos_y = emitter:getPosition()
     emitter:setPosition(pos_x, pos_y - 110)
@@ -613,7 +616,7 @@ local function DemoRain()
 	local layer = getBaseLayer()
 
 	emitter = cc.ParticleRain:create()
-    -- emitter:retain()
+    emitter:retain()
     background:addChild(emitter, 10)
     local pos_x, pos_y = emitter:getPosition()
     emitter:setPosition(pos_x, pos_y - 100)
@@ -634,9 +637,9 @@ local function DemoBigFlower()
 	local layer = getBaseLayer()
 
 	emitter = cc.ParticleSystemQuad:createWithTotalParticles(50)
+    emitter:retain()
 
     background:addChild(emitter, 10)
-    ----emitter:release()    -- win32 :  use this line or remove this line and use autorelease()
     emitter:setTexture( cc.Director:getInstance():getTextureCache():addImage(s_stars1) )
     emitter:setDuration(-1)
 
@@ -703,6 +706,7 @@ local function DemoRotFlower()
 	local layer = getBaseLayer()
 
 	emitter = cc.ParticleSystemQuad:createWithTotalParticles(300)
+    emitter:retain()
 
     background:addChild(emitter, 10)
     ----emitter:release()    -- win32 : Remove this line
@@ -774,6 +778,7 @@ local function DemoModernArt()
 	local layer = getBaseLayer()
 
 	emitter = cc.ParticleSystemQuad:createWithTotalParticles(1000)
+    emitter:retain()
 
     background:addChild(emitter, 10)
     ----emitter:release()
@@ -842,7 +847,7 @@ local function DemoRing()
 	local layer = getBaseLayer()
 
 	emitter = cc.ParticleFlower:create()
-    -- emitter:retain()
+    emitter:retain()
 
     background:addChild(emitter, 10)
 
@@ -878,7 +883,7 @@ local function ParallaxParticle()
     p:addChild(p2, 2, cc.p(1.5, 1), cc.p(0, 50))
 
     emitter = cc.ParticleFlower:create()
-    -- emitter:retain()
+    emitter:retain()
     emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage(s_fire))
 
     p1:addChild(emitter, 10)
@@ -909,6 +914,8 @@ local function DemoParticleFromFile(name)
 
     local filename = "Particles/" .. name .. ".plist"
     emitter = cc.ParticleSystemQuad:create(filename)
+    emitter:retain()
+
     layer:addChild(emitter, 10)
 
     setEmitterPosition()
@@ -928,6 +935,8 @@ local function RadiusMode1()
     background = nil
 
     emitter = cc.ParticleSystemQuad:createWithTotalParticles(200)
+    emitter:retain()
+
     layer:addChild(emitter, 10)
     emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage("Images/stars-grayscale.png"))
 
@@ -998,6 +1007,8 @@ local function RadiusMode2()
     background = nil
 
     emitter = cc.ParticleSystemQuad:createWithTotalParticles(200)
+    emitter:retain()
+
     layer:addChild(emitter, 10)
     emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage("Images/stars-grayscale.png"))
 
@@ -1067,6 +1078,8 @@ local function Issue704()
     background = nil
 
     emitter = cc.ParticleSystemQuad:createWithTotalParticles(100)
+    emitter:retain()
+
     layer:addChild(emitter, 10)
     emitter:setTexture(cc.Director:getInstance():getTextureCache():addImage("Images/fire.png"))
 
@@ -1164,6 +1177,7 @@ local function Issue870()
     system:setTextureWithRect(cc.Director:getInstance():getTextureCache():addImage("Images/particles.png"), cc.rect(0,0,32,32))
     layer:addChild(system, 10)
     emitter = system
+    emitter:retain()
 
     Issue870_index = 0
 	layer:registerScriptHandler(Issue870_onEnterOrExit)
@@ -1424,6 +1438,7 @@ local function PremultipliedAlphaTest()
     background = nil
 
     emitter = cc.ParticleSystemQuad:create("Particles/BoilingFoam.plist")
+    emitter:retain()
 
     emitter:setBlendFunc(cc.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA))
 
@@ -1452,6 +1467,7 @@ local function PremultipliedAlphaTest2()
     background = nil
 
     emitter = cc.ParticleSystemQuad:create("Particles/TestPremultipliedAlpha.plist")
+    emitter:retain()
     layer:addChild(emitter ,10)
 
 	titleLabel:setString("premultiplied alpha 2")
