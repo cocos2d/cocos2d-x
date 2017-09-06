@@ -8268,7 +8268,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../tests/cpp-empty-test/Classes/reader";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -8289,7 +8289,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../tests/cpp-empty-test/Classes/reader";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7";
 			};
