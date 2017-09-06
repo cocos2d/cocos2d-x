@@ -53,14 +53,14 @@ public:
     cocos2d::Scene* getSceneGraph() const;
     
     /**
-     Return the AnimationManager, will be released when CreatorReader is destroyed
+     Return the CollisionManager. It is added as a child of the Scene to simplify the codes.
      @return The `AnimationManager` of the scene
      */
     AnimationManager* getAnimationManager() const;
     
     /**
      Return the CollisionManager. It is added as a child of the Scene to make collision take effect.
-     @return The `AnimationManager` of the scene
+     @return The `CollisionManager` of the scene
      */
     ColliderManager* getColliderManager() const;
 

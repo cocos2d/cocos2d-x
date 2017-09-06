@@ -21,7 +21,7 @@ public:
     virtual void completedAnimationSequenceNamed(const char *name) = 0;
 };
 
-class CC_DLL CCBAnimationManager : public cocos2d::Ref
+class CC_DLL CCBAnimationManager : public cocos2d::Node
 {
 public:
     bool _jsControlled;

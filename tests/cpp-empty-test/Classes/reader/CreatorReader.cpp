@@ -237,6 +237,7 @@ cocos2d::Scene* CreatorReader::getSceneGraph() const
     _animationManager->playOnLoad();
     
     node->addChild(_collisionManager);
+    node->addChild(_animationManager);
     _collisionManager->start();
 
     return static_cast<cocos2d::Scene*>(node);
