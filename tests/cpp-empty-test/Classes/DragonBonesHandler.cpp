@@ -357,7 +357,7 @@ void DragonBonesHandler::updateAnim()
                                                           dragonBones::AnimationFadeOutMode::SameGroup);
     }
     
-    _animState->weight = std::fabsf(_animRadian / M_PI * 2);
+    _animState->weight = std::fabs(_animRadian / M_PI * 2);
     _armature->invalidUpdate();
 }
 
@@ -438,8 +438,8 @@ void DragonBonesHandler::addBullet(const std::shared_ptr<DragonBoneBullet>& bull
 DragonBoneBullet::DragonBoneBullet(cocos2d::Node *parent, dragonBones::Armature *armature, dragonBones::Armature *effect,
                  float radian, float speed, const cocos2d::Vec2& position)
 {
-    _speedX = std::cosf(radian) * speed;
-    _speedY = -std::sinf(radian) * speed;
+    _speedX = std::cos(radian) * speed;
+    _speedY = -std::sin(radian) * speed;
     auto thePos = parent->convertToNodeSpace(position);
     
     _armature = armature;

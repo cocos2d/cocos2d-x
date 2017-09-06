@@ -11,7 +11,8 @@ LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := main.cpp \
                    ../../Classes/AppDelegate.cpp \
-                   ../../Classes/HelloWorldScene.cpp
+                   ../../Classes/HelloWorldScene.cpp \
+                   ../../Classes/DragonBonesHandler.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
                     $(LOCAL_PATH)/../../../../extensions \
