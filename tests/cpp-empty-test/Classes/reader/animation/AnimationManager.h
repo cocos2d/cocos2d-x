@@ -42,7 +42,7 @@ struct AnimationInfo
     cocos2d::Node* target; // will retain the target
 };
 
-class AnimationManager : public cocos2d::Ref
+class AnimationManager : public cocos2d::Node
 {
 public:
     static AnimationManager* create();
