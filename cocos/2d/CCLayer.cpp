@@ -1254,12 +1254,18 @@ bool LayerMultiplex::initWithArray(const Vector<Layer*>& arrayOfLayers)
 
 void LayerMultiplex::switchTo(int n)
 {
+    
+    switchTo(n, true);
+}
+
+void LayerMultiplex::switchTo(int n, bool cleanup)
+{
     CCASSERT( n < _layers.size(), "Invalid index in MultiplexLayer switchTo message" );
-
-    this->removeChild(_layers.at(_enabledLayer), true);
-
+    
+    this->removeChild(_layers.at(_enabledLayer), cleanup);
+    
     _enabledLayer = n;
-
+    
     this->addChild(_layers.at(n));
 }
 
