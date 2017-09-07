@@ -936,6 +936,11 @@ public:
      * @note Don't call this manually unless a child added needs to be removed in the same frame.
      */
     virtual void sortAllChildren();
+    
+    /**
+    * Internal used for node sorts.
+    */
+    unsigned int _getOrderOfArrival() const { return static_cast<unsigned int>(_localZOrderAndArrival & 0xffffffff); }
 
     /**
     * Sorts helper function
@@ -950,8 +955,8 @@ public:
             return (n1->_localZOrderAndArrival < n2->_localZOrderAndArrival);
         });
 #else
-        std::stable_sort(std::begin(nodes), std::end(nodes), [](_T* n1, _T* n2) {
-            return n1->_localZOrder < n2->_localZOrder;
+        std::sort(std::begin(nodes), std::end(nodes), [](_T* n1, _T* n2) {
+            return n1->_localZOrder < n2->_localZOrder || (n1->_localZOrder == n2->_localZOrder && n1->_getOrderOfArrival() < n2->_getOrderOfArrival() );
         });
 #endif
     }
