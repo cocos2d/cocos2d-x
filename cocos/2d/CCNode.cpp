@@ -83,9 +83,10 @@ Node::Node()
 , _transformUpdated(true)
 // children (lazy allocs)
 // lazy alloc
-, _localZOrderAndArrival(0)
 , _localZOrder(0)
-#if !CC_64BITS
+#if CC_64BITS
+, _localZOrderAndArrival(0)
+#else
 , _orderOfArrival(0)
 #endif
 , _globalZOrder(0)
