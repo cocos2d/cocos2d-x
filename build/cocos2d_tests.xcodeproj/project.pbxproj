@@ -27,7 +27,6 @@
 			buildPhases = (
 			);
 			dependencies = (
-				50FC3FAB1D74C3D0001C936A /* PBXTargetDependency */,
 				293CE83A1B43F3ED00F66EF1 /* PBXTargetDependency */,
 				1ADA8BA418CF277400AE24B9 /* PBXTargetDependency */,
 				1ADA8BA618CF277400AE24B9 /* PBXTargetDependency */,
@@ -1278,6 +1277,8 @@
 		C5384A7E1C85314A00EC986E /* UITabControlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5384A7C1C8530E200EC986E /* UITabControlTest.cpp */; };
 		C5384A7F1C8531A700EC986E /* UITabControlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5384A7C1C8530E200EC986E /* UITabControlTest.cpp */; };
 		C5384A801C85339200EC986E /* UITabControlTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C5384A7C1C8530E200EC986E /* UITabControlTest.cpp */; };
+		C8DE9E471F0EACE400B48C6B /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FC3FA01D74C15B001C936A /* GameController.framework */; };
+		C8DE9E491F0EAECD00B48C6B /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8DE9E481F0EAECD00B48C6B /* GameController.framework */; };
 		D0FD03641A3B546400825BB5 /* AllocatorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD03621A3B546400825BB5 /* AllocatorTest.cpp */; };
 		D0FD03651A3B546400825BB5 /* AllocatorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD03621A3B546400825BB5 /* AllocatorTest.cpp */; };
 		D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
@@ -1754,13 +1755,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
 			remoteInfo = "cocos2dx Mac";
-		};
-		50FC3FAA1D74C3D0001C936A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50FC3F701D74BCC9001C936A;
-			remoteInfo = "game-controller-test Mac";
 		};
 		A035ACBF178246BD00987F6C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2494,6 +2488,7 @@
 		C08689C018D370C90093E810 /* background.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.caf; path = "../tests/cpp-tests/Resources/background.caf"; sourceTree = "<group>"; };
 		C5384A7C1C8530E200EC986E /* UITabControlTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UITabControlTest.cpp; path = UITabControlTest/UITabControlTest.cpp; sourceTree = "<group>"; };
 		C5384A7D1C8530E200EC986E /* UITabControlTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UITabControlTest.h; path = UITabControlTest/UITabControlTest.h; sourceTree = "<group>"; };
+		C8DE9E481F0EAECD00B48C6B /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
 		D0FD03621A3B546400825BB5 /* AllocatorTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AllocatorTest.cpp; path = AllocatorTest/AllocatorTest.cpp; sourceTree = "<group>"; };
 		D0FD03631A3B546400825BB5 /* AllocatorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllocatorTest.h; path = AllocatorTest/AllocatorTest.h; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
@@ -2607,6 +2602,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8DE9E471F0EACE400B48C6B /* GameController.framework in Frameworks */,
 				185663581B4155D3009EF2AE /* Security.framework in Frameworks */,
 				185664951B4246C9009EF2AE /* libsqlite3.dylib in Frameworks */,
 				185664941B4246BA009EF2AE /* AppKit.framework in Frameworks */,
@@ -2630,6 +2626,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8DE9E491F0EAECD00B48C6B /* GameController.framework in Frameworks */,
 				294D7D8F1D0E50B2002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BB11CA114C700D55A14 /* Security.framework in Frameworks */,
 				18FC4D5F1B4257CD00B76F95 /* libsqlite3.dylib in Frameworks */,
@@ -4549,6 +4546,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C8DE9E481F0EAECD00B48C6B /* GameController.framework */,
 				50FC3FA01D74C15B001C936A /* GameController.framework */,
 				29DC5A1E1CFFE5E700CF2930 /* CoreText.framework */,
 				4B5C5BB41CA114DB00D55A14 /* Security.framework */,
@@ -7378,11 +7376,6 @@
 			isa = PBXTargetDependency;
 			name = "cocos2dx Mac";
 			targetProxy = 50FC3F721D74BCC9001C936A /* PBXContainerItemProxy */;
-		};
-		50FC3FAB1D74C3D0001C936A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50FC3F701D74BCC9001C936A /* game-controller-test Mac */;
-			targetProxy = 50FC3FAA1D74C3D0001C936A /* PBXContainerItemProxy */;
 		};
 		A035ACC0178246BD00987F6C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

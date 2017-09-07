@@ -34,7 +34,6 @@
 #include "platform/CCFileUtils.h"
 #include "audio/apple/AudioDecoder.h"
 
-#define VERY_VERY_VERBOSE_LOGGING
 #ifdef VERY_VERY_VERBOSE_LOGGING
 #define ALOGVV ALOGV
 #else
@@ -145,7 +144,7 @@ void AudioPlayer::setCache(AudioCache* cache)
 bool AudioPlayer::play2d()
 {
     _play2dMutex.lock();
-    ALOGV("AudioPlayer::play2d, _alSource: %u", _alSource);
+    ALOGVV("AudioPlayer::play2d, _alSource: %u", _alSource);
 
     /*********************************************************************/
     /*       Note that it may be in sub thread or in main thread.       **/

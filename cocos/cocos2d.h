@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 // 0x00 HI ME LO
 // 00   03 08 00
-#define COCOS2D_VERSION 0x00031501
+#define COCOS2D_VERSION 0x00031600
 
 //
 // all cocos2d include files
@@ -75,8 +75,11 @@ THE SOFTWARE.
 #include "base/CCEventListenerFocus.h"
 #include "base/CCEventListenerKeyboard.h"
 #include "base/CCEventListenerMouse.h"
+#include "base/CCEventListenerController.h"
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventMouse.h"
+#include "base/CCEventController.h"
+#include "base/CCController.h"
 #include "base/CCEventTouch.h"
 #include "base/CCEventType.h"
 

@@ -55,6 +55,8 @@ public:
 
     static void notifyGameStatus(GameStatus type, int cpuLevel, int gpuLevel);
     static void setAnimationInterval(float interval, SetIntervalReason reason);
+    // Used in FileUtilsAndroid::getContents
+    static void onBeforeReadFile();
 
 private:
     static void notifyContinuousFrameLost(int frameLostCycle, int continueFrameLostThreshold, int times);
@@ -68,7 +70,6 @@ private:
     static void onAfterDrawScene(EventCustom* event);
     static void onEnterForeground(EventCustom* event);
     static void onEnterBackground(EventCustom* event);
-    static void onBeforeReadFile(EventCustom* event);
 
     static int getTotalParticleCount();
 

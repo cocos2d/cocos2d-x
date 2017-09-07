@@ -142,7 +142,6 @@ Documentations and samples
 * [Programmers Guide](http://cocos2d-x.org/docs/programmers-guide/2/index.html)
 * [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
 * [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
-* [Cocos2d sample games](https://github.com/cocos2d/cocos2d-x-samples) _More samples will be added in v3.8_
 
 Main features
 -------------
@@ -184,7 +183,7 @@ Build Requirements
 * or Windows 7+, VS 2013+
 * Python 2.7.5
 * NDK r11+ is required to build Android games
-* Android Studio 2.3+ bo build Android games
+* Android Studio 2.3+ to build Android games
 * Tizen SDK 2.3+ is required to build Tizen games
 * Windows Phone/Store 10.0 VS 2015
 * JRE or JDK 1.6+ is required for web publishing
@@ -249,10 +248,6 @@ $ bin/lua-empty-test/lua-empty-test
 * For Windows
 
 Open the `cocos2d-x/build/cocos2d-win32.sln`
-
-* For Windows 8.1 Universal Apps (Phone and Store)
-
-Open the `cocos2d-x/build/cocos2d-win8.1-universal.sln`
 
 * For Windows 10.0 Universal Windows Platform (UWP) Apps (Phone and Store)
 

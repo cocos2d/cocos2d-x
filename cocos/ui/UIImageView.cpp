@@ -315,6 +315,16 @@ void ImageView::setGLProgramState(cocos2d::GLProgramState* glProgramState)
     _imageRenderer->setGLProgramState(glProgramState);
 }
 
+void ImageView::setBlendFunc(const BlendFunc &blendFunc)
+{
+    _imageRenderer->setBlendFunc(blendFunc);
+}
+    
+const BlendFunc& ImageView::getBlendFunc() const
+{
+    return _imageRenderer->getBlendFunc();
+}
+
 }
 
 NS_CC_END

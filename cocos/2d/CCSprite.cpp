@@ -1433,23 +1433,7 @@ void Sprite::setFlippedX(bool flippedX)
     if (_flippedX != flippedX)
     {
         _flippedX = flippedX;
-
-        if (_renderMode == RenderMode::QUAD_BATCHNODE)
-        {
-            setDirty(true);
-        }
-        else if (_renderMode == RenderMode::POLYGON)
-        {
-            for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
-                auto& v = _polyInfo.triangles.verts[i].vertices;
-                v.x = _contentSize.width -v.x;
-            }
-        }
-        else
-        {
-            // RenderMode:: Quad or Slice9
-            updatePoly();
-        }
+        flipX();
     }
 }
 
@@ -1463,29 +1447,51 @@ void Sprite::setFlippedY(bool flippedY)
     if (_flippedY != flippedY)
     {
         _flippedY = flippedY;
-
-        if (_renderMode == RenderMode::QUAD_BATCHNODE)
-        {
-            setDirty(true);
-        }
-        else if (_renderMode == RenderMode::POLYGON)
-        {
-            for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
-                auto& v = _polyInfo.triangles.verts[i].vertices;
-                v.y = _contentSize.height -v.y;
-            }
-        }
-        else
-        {
-            // RenderMode:: Quad or Slice9
-            updatePoly();
-        }
+        flipY();
     }
 }
 
 bool Sprite::isFlippedY(void) const
 {
     return _flippedY;
+}
+
+void Sprite::flipX() {
+    if (_renderMode == RenderMode::QUAD_BATCHNODE)
+    {
+        setDirty(true);
+    }
+    else if (_renderMode == RenderMode::POLYGON)
+    {
+        for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
+            auto& v = _polyInfo.triangles.verts[i].vertices;
+            v.x = _contentSize.width -v.x;
+        }
+    }
+    else
+    {
+        // RenderMode:: Quad or Slice9
+        updatePoly();
+    }
+}
+
+void Sprite::flipY() {
+    if (_renderMode == RenderMode::QUAD_BATCHNODE)
+    {
+        setDirty(true);
+    }
+    else if (_renderMode == RenderMode::POLYGON)
+    {
+        for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
+            auto& v = _polyInfo.triangles.verts[i].vertices;
+            v.y = _contentSize.height -v.y;
+        }
+    }
+    else
+    {
+        // RenderMode:: Quad or Slice9
+        updatePoly();
+    }
 }
 
 //
@@ -1591,6 +1597,9 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
     {
         _polyInfo = spriteFrame->getPolygonInfo();
         _renderMode = RenderMode::POLYGON;
+        if (_flippedX) flipX();
+        if (_flippedY) flipY();
+        updateColor();
     }
     if (spriteFrame->hasAnchorPoint())
     {
@@ -1654,7 +1663,9 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
 
     // self render
     if( ! _batchNode ) {
-        _renderMode = RenderMode::QUAD;
+        if (_renderMode != RenderMode::SLICE9) {
+            _renderMode = RenderMode::QUAD;
+        }
         _atlasIndex = INDEX_NOT_INITIALIZED;
         setTextureAtlas(nullptr);
         _recursiveDirty = false;

@@ -28,6 +28,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "js-tests", "..\tests\js-tes
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "performance-tests", "..\tests\performance-tests\proj.win32\performance-tests.vcxproj", "{2778C02D-DDD0-4A92-A6AA-C3E2B7EDE3FF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "game-controller-test", "..\tests\game-controller-test\proj.win32\game-controller-test.vcxproj", "{1FA2BD06-2F52-48F6-8468-C0CC33127F5E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -108,6 +110,12 @@ Global
 		{2778C02D-DDD0-4A92-A6AA-C3E2B7EDE3FF}.Release|ARM.ActiveCfg = Release|Win32
 		{2778C02D-DDD0-4A92-A6AA-C3E2B7EDE3FF}.Release|Win32.ActiveCfg = Release|Win32
 		{2778C02D-DDD0-4A92-A6AA-C3E2B7EDE3FF}.Release|Win32.Build.0 = Release|Win32
+		{1FA2BD06-2F52-48F6-8468-C0CC33127F5E}.Debug|ARM.ActiveCfg = Debug|Win32
+		{1FA2BD06-2F52-48F6-8468-C0CC33127F5E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1FA2BD06-2F52-48F6-8468-C0CC33127F5E}.Debug|Win32.Build.0 = Debug|Win32
+		{1FA2BD06-2F52-48F6-8468-C0CC33127F5E}.Release|ARM.ActiveCfg = Release|Win32
+		{1FA2BD06-2F52-48F6-8468-C0CC33127F5E}.Release|Win32.ActiveCfg = Release|Win32
+		{1FA2BD06-2F52-48F6-8468-C0CC33127F5E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

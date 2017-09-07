@@ -109,6 +109,12 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
         AudioSessionInitialize(NULL, NULL, AudioEngineInterruptionListenerCallback, self);
       }
 #endif
+    
+    BOOL success = [[AVAudioSession sharedInstance]
+                    setCategory: AVAudioSessionCategoryAmbient
+                    error: nil];
+    if (!success)
+        ALOGE("Fail to set audio session.");
     }
     return self;
 }
@@ -215,6 +221,7 @@ ALvoid AudioEngineImpl::myAlSourceNotificationCallback(ALuint sid, ALuint notifi
         return;
 
     AudioPlayer* player = nullptr;
+    s_instance->_threadMutex.lock();
     for (const auto& e : s_instance->_audioPlayers)
     {
         player = e.second;
@@ -223,6 +230,7 @@ ALvoid AudioEngineImpl::myAlSourceNotificationCallback(ALuint sid, ALuint notifi
             player->wakeupRotateThread();
         }
     }
+    s_instance->_threadMutex.unlock();
 }
 
 AudioEngineImpl::AudioEngineImpl()

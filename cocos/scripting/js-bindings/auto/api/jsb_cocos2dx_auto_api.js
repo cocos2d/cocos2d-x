@@ -8096,6 +8096,23 @@ EventListenerMouse : function (
 };
 
 /**
+ * @class EventListenerController
+ */
+cc.EventListenerController = {
+
+/**
+ * @method create
+ * @return {cc.EventListenerController}
+ */
+create : function (
+)
+{
+    return cc.EventListenerController;
+},
+
+};
+
+/**
  * @class EventListenerTouchOneByOne
  */
 cc.EventListenerTouchOneByOne = {
@@ -8161,6 +8178,88 @@ init : function (
  * @constructor
  */
 EventListenerTouchAllAtOnce : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EventController
+ */
+cc.EventController = {
+
+/**
+ * @method getControllerEventType
+ * @return {cc.EventController::ControllerEventType}
+ */
+getControllerEventType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setConnectStatus
+ * @param {bool} arg0
+ */
+setConnectStatus : function (
+bool 
+)
+{
+},
+
+/**
+ * @method isConnected
+ * @return {bool}
+ */
+isConnected : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setKeyCode
+ * @param {int} arg0
+ */
+setKeyCode : function (
+int 
+)
+{
+},
+
+/**
+ * @method getController
+ * @return {cc.Controller}
+ */
+getController : function (
+)
+{
+    return cc.Controller;
+},
+
+/**
+ * @method getKeyCode
+ * @return {int}
+ */
+getKeyCode : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method EventController
+ * @constructor
+* @param {cc.EventController::ControllerEventType|cc.EventController::ControllerEventType} controllereventtype
+* @param {cc.Controller|cc.Controller} controller
+* @param {bool|int} bool
+*/
+EventController : function(
+controllereventtype,
+controller,
+int 
 )
 {
 },
