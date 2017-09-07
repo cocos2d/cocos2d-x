@@ -773,6 +773,9 @@ public:
     virtual void stop() override;
     /// @} end of PlayableProtocol
     
+    void setSourcePositionCompatible(bool sourcePositionCompatible) { _sourcePositionCompatible = sourcePositionCompatible; }
+    bool isSourcePositionCompatible() const { return _sourcePositionCompatible; }
+    
 CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
@@ -984,6 +987,9 @@ protected:
     
     /** is the emitter paused */
     bool _paused;
+    
+    /** is sourcePosition compatible */
+    bool _sourcePositionCompatible;
 
     static Vector<ParticleSystem*> __allInstances;
     
