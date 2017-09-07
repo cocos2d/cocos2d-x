@@ -938,11 +938,6 @@ public:
     virtual void sortAllChildren();
     
     /**
-    * Internal used for node sorts.
-    */
-    unsigned int _getOrderOfArrival() const { return static_cast<unsigned int>(_localZOrderAndArrival & 0xffffffff); }
-
-    /**
     * Sorts helper function
     *
     */
@@ -956,7 +951,7 @@ public:
         });
 #else
         std::sort(std::begin(nodes), std::end(nodes), [](_T* n1, _T* n2) {
-            return n1->_localZOrder < n2->_localZOrder || (n1->_localZOrder == n2->_localZOrder && n1->_getOrderOfArrival() < n2->_getOrderOfArrival() );
+            return n1->_localZOrder < n2->_localZOrder || (n1->_localZOrder == n2->_localZOrder && n1->_orderOfArrival < n2->_orderOfArrival );
         });
 #endif
     }
@@ -1947,6 +1942,9 @@ protected:
 
     std::int64_t _localZOrderAndArrival; /// cache, for 64bits compress optimize.
     int _localZOrder; /// < Local order (relative to its siblings) used to sort the node
+#if !CC_64BITS
+    unsigned int _orderOfArrival; /// The order of arrival on 32bits
+#endif
 
     float _globalZOrder;            ///< Global order used to sort the node
 
