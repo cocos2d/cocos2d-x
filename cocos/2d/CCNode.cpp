@@ -83,8 +83,12 @@ Node::Node()
 , _transformUpdated(true)
 // children (lazy allocs)
 // lazy alloc
-, _localZOrderAndArrival(0)
 , _localZOrder(0)
+#if CC_64BITS
+, _localZOrderAndArrival(0)
+#else
+, _orderOfArrival(0)
+#endif
 , _globalZOrder(0)
 , _parent(nullptr)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
@@ -277,13 +281,19 @@ void Node::setLocalZOrder(int z)
 /// used internally to alter the zOrder variable. DON'T call this method manually
 void Node::_setLocalZOrder(int z)
 {
-    _localZOrderAndArrival = (static_cast<std::int64_t>(z) << 32) | (_localZOrderAndArrival & 0xffffffff);
     _localZOrder = z;
+#if CC_64BITS
+    _localZOrderAndArrival = (static_cast<std::int64_t>(z) << 32) | (_localZOrderAndArrival & 0xffffffff);
+#endif
 }
 
 void Node::updateOrderOfArrival()
 {
+#if CC_64BITS
     _localZOrderAndArrival = (_localZOrderAndArrival & 0xffffffff00000000) | (++s_globalOrderOfArrival);
+#else
+    _orderOfArrival = ++s_globalOrderOfArrival;
+#endif
 }
 
 void Node::setGlobalZOrder(float globalZOrder)
