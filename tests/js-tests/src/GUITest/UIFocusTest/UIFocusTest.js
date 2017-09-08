@@ -26,6 +26,7 @@ var UIFocusTestBase = UIMainLayer.extend({
     _dpadMenu: null,
     _firstFocusedWidget: null,
     _eventListener:null,
+    _btn:null,
 
     init: function(){
         if (this._super()) {
@@ -55,6 +56,14 @@ var UIFocusTestBase = UIMainLayer.extend({
 
             this._dpadMenu.setPosition(0, 0);
             this.addChild(this._dpadMenu);
+
+            this._btn = new ccui.Button("ccs-res/cocosui/switch-mask.png");
+            this._btn.setTitleText("Toggle Loop");
+            this._btn.setPosition(60, winSize.height - 50);
+            this._btn.setTitleColor(cc.color.RED);
+            this._btn.addTouchEventListener(this.toggleFocusLoop,this);
+            this._btn.setFocusEnabled(false);
+            this.addChild(this._btn);
 
             //call this method to enable Dpad focus navigation
             ccui.Widget.enableDpadNavigation(true);
@@ -144,12 +153,7 @@ var UIFocusTestHorizontal = UIFocusTestBase.extend({
             this._loopText.setColor(cc.color.GREEN);
             this.addChild(this._loopText);
 
-            var btn = new ccui.Button("ccs-res/cocosui/switch-mask.png");
-            btn.setTitleText("Toggle Loop");
-            btn.setPosition(60, winSize.height - 50);
-            btn.setTitleColor(cc.color.RED);
-            btn.addTouchEventListener(this.toggleFocusLoop,this);
-            this.addChild(btn);
+            this._btn.addTouchEventListener(this.toggleFocusLoop,this);
             return true;
         }
         return false;
@@ -199,12 +203,7 @@ var UIFocusTestVertical = UIFocusTestBase.extend({
             this._loopText.setColor(cc.color.GREEN);
             this.addChild(this._loopText);
 
-            var btn = new ccui.Button("ccs-res/cocosui/switch-mask.png");
-            btn.setTitleText("Toggle Loop");
-            btn.setPosition(60, winSize.height - 50);
-            btn.setTitleColor(cc.color.RED);
-            btn.addTouchEventListener(this.toggleFocusLoop, this);
-            this.addChild(btn);
+            this._btn.addTouchEventListener(this.toggleFocusLoop,this);
             return true;
         }
         return false;
@@ -285,12 +284,7 @@ var UIFocusTestNestedLayout1 = UIFocusTestBase.extend({
             this._loopText.setColor(cc.color.GREEN);
             this.addChild(this._loopText);
 
-            var btn = new ccui.Button("ccs-res/cocosui/switch-mask.png");
-            btn.setTitleText("Toggle Loop");
-            btn.setPosition(60, winSize.height - 50);
-            btn.setTitleColor(cc.color.RED);
-            btn.addTouchEventListener(this.toggleFocusLoop, this);
-            this.addChild(btn);
+            this._btn.addTouchEventListener(this.toggleFocusLoop,this);
             return true;
         }
         return false;
@@ -372,12 +366,7 @@ var UIFocusTestNestedLayout2 = UIFocusTestBase.extend({
             this._loopText.setColor(cc.color.GREEN);
             this.addChild(this._loopText);
 
-            var btn = new ccui.Button("ccs-res/cocosui/switch-mask.png");
-            btn.setTitleText("Toggle Loop");
-            btn.setPosition(60, winSize.height - 50);
-            btn.setTitleColor(cc.color.RED);
-            btn.addTouchEventListener(this.toggleFocusLoop, this);
-            this.addChild(btn);
+            this._btn.addTouchEventListener(this.toggleFocusLoop,this);
             return true;
         }
         return false;
@@ -464,12 +453,7 @@ var UIFocusTestNestedLayout3 = UIFocusTestBase.extend({
             this._loopText.setColor(cc.color.GREEN);
             this.addChild(this._loopText);
 
-            var btn = new ccui.Button("ccs-res/cocosui/switch-mask.png");
-            btn.setTitleText("Toggle Loop");
-            btn.setPosition(60, winSize.height - 50);
-            btn.setTitleColor(cc.color.RED);
-            btn.addTouchEventListener(this.toggleFocusLoop, this);
-            this.addChild(btn);
+            this._btn.addTouchEventListener(this.toggleFocusLoop,this);
             return true;
         }
         return false;
@@ -532,12 +516,7 @@ var UIFocusTestListView = UIFocusTestBase.extend({
             this._loopText.setColor(cc.color.GREEN);
             this.addChild(this._loopText);
 
-            var btn = new ccui.Button("ccs-res/cocosui/switch-mask.png");
-            btn.setTitleText("Toggle Loop");
-            btn.setPosition(60, winSize.height - 50);
-            btn.setTitleColor(cc.color.RED);
-            btn.addTouchEventListener(this.toggleFocusLoop, this);
-            this.addChild(btn);
+            this._btn.addTouchEventListener(this.toggleFocusLoop,this);
             return true;
         }
         return false;
