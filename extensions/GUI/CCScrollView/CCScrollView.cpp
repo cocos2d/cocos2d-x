@@ -255,10 +255,13 @@ void ScrollView::setContentOffsetInDuration(Vec2 offset, float dt)
 }
 
 void ScrollView::stopAnimatedContentOffset() {
-    stopAction(_animatedScrollAction);
-    _animatedScrollAction->release();
-    _animatedScrollAction = nullptr;
-    stoppedAnimatedScroll(this);
+    if (_animatedScrollAction)
+    {
+        stopAction(_animatedScrollAction);
+        _animatedScrollAction->release();
+        _animatedScrollAction = nullptr;
+        stoppedAnimatedScroll(this);
+    }
 }
 
 Vec2 ScrollView::getContentOffset()
