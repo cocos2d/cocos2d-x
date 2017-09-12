@@ -1069,7 +1069,7 @@ static int lua_cocos2dx_XMLHttpRequest_getAllResponseHeaders(lua_State* L)
     
     if ( 0 == argc )
     {
-        auto httpHeader = self->getHttpHeader();
+        const auto& httpHeader = self->getHttpHeader();
         
         for (auto it = httpHeader.begin(); it != httpHeader.end(); ++it)
         {
