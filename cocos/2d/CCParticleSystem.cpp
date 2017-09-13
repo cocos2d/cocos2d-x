@@ -1061,6 +1061,8 @@ void ParticleSystem::setTexture(Texture2D* var)
         CC_SAFE_RELEASE(_texture);
         _texture = var;
         updateBlendFunc();
+	    
+	setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, _texture));
     }
 }
 
