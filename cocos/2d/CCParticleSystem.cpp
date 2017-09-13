@@ -223,6 +223,7 @@ ParticleSystem::ParticleSystem()
 , _yCoordFlipped(1)
 , _positionType(PositionType::FREE)
 , _paused(false)
+, _sourcePositionCompatible(true) // In the furture this member's default value maybe false or be removed.
 {
     modeA.gravity.setZero();
     modeA.speed = 0;
@@ -372,7 +373,12 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
             // position
             float x = dictionary["sourcePositionx"].asFloat();
             float y = dictionary["sourcePositiony"].asFloat();
-            this->setSourcePosition(Vec2(x,y));            
+	    if(!_sourcePositionCompatible) {
+                this->setSourcePosition(Vec2(x, y));
+	    }
+            else {
+		this->setPosition(Vec2(x, y));
+	    }
             _posVar.x = dictionary["sourcePositionVariancex"].asFloat();
             _posVar.y = dictionary["sourcePositionVariancey"].asFloat();
 

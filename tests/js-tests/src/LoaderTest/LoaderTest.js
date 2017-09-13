@@ -78,11 +78,10 @@ var LoaderTestLayer = BaseTestLayer.extend({
 
         cc.loader.loadAliases(str, function(){
             var sprite = new cc.Sprite("grossini.bmp");
-            self.addChild( sprite );
+            self.addChild( sprite, 100);
             sprite.x = winSize.width/2;
             sprite.y = winSize.height/2;
         });
-
     },
 
     onNextCallback: function(){
@@ -185,13 +184,13 @@ var LoaderCycleLayer = BaseTestLayer.extend({
     },
 
     onRestartCallback: function(){
-        var parent = this._parent;
+        var parent = this.getParent();
         parent.removeChild(this);
         parent.addChild(new LoaderCycleLayer());
     },
 
     onBackCallback: function(){
-        var parent = this._parent;
+        var parent = this.getParent();
         parent.removeChild(this);
         parent.addChild(new LoaderTestLayer());
     }

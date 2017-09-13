@@ -620,7 +620,7 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
             cc.callFunc(function () {
                 this._spriteSaved = true;
                 this._sprite.retain();
-                this._sprite.removeFromParent();
+                this._sprite.removeFromParent(false);
             }, this),
             cc.delayTime(5.0),
             cc.callFunc(function () {

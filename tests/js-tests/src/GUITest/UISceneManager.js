@@ -732,6 +732,7 @@
         ctor: function(){
             TestScene.prototype.ctor.call(this);
 
+            global.UISceneManager.getInstance().ctor();
             var menu = new cc.Menu();
             menu.x = 0;
             menu.y = 0;
