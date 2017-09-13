@@ -727,6 +727,9 @@ public:
      * @param n The layer indexed by n will display.
      */
     void switchTo(int n);
+    /** The same as switchTo(int), but has a parameter to set if need to clean up child.
+     */
+    void switchTo(int n, bool cleanup);
     /** release the current layer and switches to another layer indexed by n.
     The current (old) layer will be removed from it's parent with 'cleanup=true'.
      *
