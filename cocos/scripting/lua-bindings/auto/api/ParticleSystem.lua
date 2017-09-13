@@ -70,6 +70,13 @@
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
+-- / @} end of PlayableProtocol
+-- @function [parent=#ParticleSystem] setSourcePositionCompatible 
+-- @param self
+-- @param #bool sourcePositionCompatible
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
 --  Gets the start spin variance of each particle.<br>
 -- return The start spin variance of each particle.
 -- @function [parent=#ParticleSystem] getStartSpinVar 
@@ -734,6 +741,12 @@
 --  Whether or not the particle system removed self on finish.<br>
 -- return True if the particle system removed self on finish.
 -- @function [parent=#ParticleSystem] isAutoRemoveOnFinish 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#ParticleSystem] isSourcePositionCompatible 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         

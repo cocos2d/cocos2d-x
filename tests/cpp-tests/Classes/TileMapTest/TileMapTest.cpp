@@ -887,9 +887,11 @@ TMXIsoZorder::TMXIsoZorder()
     
     _tamara = Sprite::create(s_pathSister1);
     map->addChild(_tamara, (int)map->getChildren().size() );
+    
     _tamara->retain();
     int mapWidth = map->getMapSize().width * map->getTileSize().width;
     _tamara->setPosition(CC_POINT_PIXELS_TO_POINTS(Vec2( mapWidth/2,0)));
+    _tamara->setScale(0.5);
     _tamara->setAnchorPoint(Vec2(0.5f,0));
 
     
@@ -919,11 +921,11 @@ void TMXIsoZorder::repositionSprite(float dt)
     auto map = getChildByTag(kTagTileMap);
     
     // there are only 4 layers. (grass and 3 trees layers)
-    // if tamara < 48, z=4
-    // if tamara < 96, z=3
-    // if tamara < 144,z=2
+    // if tamara < 30, z=4
+    // if tamara < 60, z=3
+    // if tamara < 90,z=2
     
-    int newZ = 4 - (p.y / 48);
+    int newZ = 4 - (static_cast<int>(p.y) / 30);
     newZ = std::max(newZ,0);
     
     map->reorderChild(_tamara, newZ);    

@@ -138,6 +138,11 @@ android.applicationVariants.all { variant ->
         }
 
         copy {
+            from "${buildDir}/../../../../resjs"
+            into "${buildDir}/intermediates/assets/${variant.dirName}/res/resjs"
+        }
+
+        copy {
             from "${buildDir}/../../../../src"
             into "${buildDir}/intermediates/assets/${variant.dirName}/src"
         }

@@ -14365,10 +14365,12 @@ layer
 
 /**
  * @method switchTo
- * @param {int} arg0
- */
-switchTo : function (
-int 
+* @param {int|int} int
+* @param {bool} bool
+*/
+switchTo : function(
+int,
+bool 
 )
 {
 },
@@ -15642,6 +15644,16 @@ float
 },
 
 /**
+ * @method setSourcePositionCompatible
+ * @param {bool} arg0
+ */
+setSourcePositionCompatible : function (
+bool 
+)
+{
+},
+
+/**
  * @method getStartSpinVar
  * @return {float}
  */
@@ -16526,6 +16538,16 @@ str
  * @return {bool}
  */
 isAutoRemoveOnFinish : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isSourcePositionCompatible
+ * @return {bool}
+ */
+isSourcePositionCompatible : function (
 )
 {
     return false;
