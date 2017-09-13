@@ -120,16 +120,16 @@ void RenderTexture::listenToBackground(EventCustom* /*event*/)
     glDeleteFramebuffers(1, &_FBO);
     _FBO = 0;
 
-    if (_depthRenderBufffer)
+    if (_depthRenderBuffer)
     {
-        glDeleteRenderbuffers(1, &_depthRenderBufffer);
-        _depthRenderBufffer = 0;
+        glDeleteRenderbuffers(1, &_depthRenderBuffer);
+        _depthRenderBuffer = 0;
     }
     
-    if (_stencilRenderBufffer)
+    if (_stencilRenderBuffer)
     {
-        glDeleteRenderbuffers(1, &_stencilRenderBufffer);
-        _stencilRenderBufffer = 0;
+        glDeleteRenderbuffers(1, &_stencilRenderBuffer);
+        _stencilRenderBuffer = 0;
     }
 #endif
 }
