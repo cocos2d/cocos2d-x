@@ -372,10 +372,6 @@ void Sprite::setTexture(const std::string &filename)
 
 void Sprite::setTexture(Texture2D *texture)
 {
-    if(_glProgramState == nullptr)
-    {
-        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, texture));
-    }
     // If batchnode, then texture id should be the same
     CCASSERT(! _batchNode || (texture &&  texture->getName() == _batchNode->getTexture()->getName()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
@@ -396,6 +392,13 @@ void Sprite::setTexture(Texture2D *texture)
             texture = _director->getTextureCache()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
             CC_SAFE_RELEASE(image);
         }
+    }
+    
+    // #Fix: should update GLProgramState always when follow condition is true.
+    auto oldHasAlphaTex = (_texture != nullptr && _texture->getAlphaTexture() ！= nullptr);
+    if(_glProgramState == nullptr || oldHasAlphaTex != (texture->getAlphaTexture() != nullptr))
+    {
+        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, texture));
     }
 
     if ((_renderMode != RenderMode::QUAD_BATCHNODE) && (_texture != texture))
