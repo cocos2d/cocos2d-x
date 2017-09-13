@@ -395,7 +395,7 @@ void Sprite::setTexture(Texture2D *texture)
     }
     
     // #Fix: should update GLProgramState always when follow condition is true.
-    auto oldHasAlphaTex = (_texture != nullptr && _texture->getAlphaTexture() ！= nullptr);
+    auto oldHasAlphaTex = (_texture != nullptr && _texture->getAlphaTexture() != nullptr);
     if(_glProgramState == nullptr || oldHasAlphaTex != (texture->getAlphaTexture() != nullptr))
     {
         setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, texture));
