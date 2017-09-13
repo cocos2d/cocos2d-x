@@ -228,7 +228,7 @@ elseif(MACOSX OR APPLE)
 
 else()
 
-    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/$<CONFIG>")
+    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 
     set_target_properties(${APP_NAME} PROPERTIES
             RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
