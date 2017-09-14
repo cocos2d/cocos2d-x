@@ -32,13 +32,13 @@ local function MenuLayerMainMenu()
 
     local function menuCallback(sender)
         cclog("menuCallback...")
-        ret:getParent():switchTo(1)
+        ret:getParent():switchTo(1, false)
     end
 
     item1:registerScriptTapHandler(menuCallback)
     -- Image Item
     local function menuCallback2(sender)
-        ret:getParent():switchTo(2)
+        ret:getParent():switchTo(2, false)
     end
 
     local  item2 = cc.MenuItemImage:create(s_SendScore, s_PressSendScore)
@@ -85,7 +85,7 @@ local function MenuLayerMainMenu()
     cc.MenuItemFont:setFontName("Marker Felt")
 
     local function menuCallbackConfig(sender)
-        ret:getParent():switchTo(3)
+        ret:getParent():switchTo(3, false)
     end
 
     -- Label Item (cc.LabelBMFont)
@@ -100,7 +100,7 @@ local function MenuLayerMainMenu()
     -- Events
     cc.MenuItemFont:setFontName("Marker Felt")
     local function menuCallbackBugsTest(pSender)
-        ret:getParent():switchTo(4)
+        ret:getParent():switchTo(4, false)
     end
 
     -- Bugs Item
@@ -116,7 +116,7 @@ local function MenuLayerMainMenu()
     item7:registerScriptTapHandler(onQuit)
 
     local function menuMovingCallback(pSender)
-        ret:getParent():switchTo(5)
+        ret:getParent():switchTo(5, false)
     end
 
     local  item8 = cc.MenuItemFont:create("Remove menu item when moving")
@@ -237,7 +237,7 @@ local function MenuLayer2()
     end
 
     local function menuCallback(sender)
-        ret:getParent():switchTo(0)
+        ret:getParent():switchTo(0, false)
     end
 
     local function menuCallbackOpacity(tag, sender)
@@ -306,7 +306,7 @@ local function MenuLayer3()
     local m_disabledItem = nil
     local ret = cc.Layer:create()
     local function menuCallback(sender)
-        ret:getParent():switchTo(0)
+        ret:getParent():switchTo(0, false)
     end
 
     local function menuCallback2(sender)
@@ -404,7 +404,7 @@ local function MenuLayer4()
     end
 
     local function backCallback(tag, sender)
-        ret:getParent():switchTo(0)
+        ret:getParent():switchTo(0, false)
     end
 
     item1:registerScriptTapHandler(menuCallback)
@@ -492,7 +492,7 @@ local function BugsTest()
     end
 
     local function backMenuCallback(tag, pSender)
-        ret:getParent():switchTo(0)
+        ret:getParent():switchTo(0, false)
     end
 
 
@@ -530,7 +530,7 @@ local function RemoveMenuItemWhenMove()
 
     local back = cc.MenuItemFont:create("go back")
     local function goBack(tag, pSender)
-        ret:getParent():switchTo(0)
+        ret:getParent():switchTo(0, false)
     end
 
     back:registerScriptTapHandler(goBack)
