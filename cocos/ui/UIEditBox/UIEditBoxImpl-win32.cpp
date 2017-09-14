@@ -176,7 +176,8 @@ namespace ui {
     {
         //not implemented yet
         this->_fontSize = fontSize;
-        HFONT hFont = CreateFontW(fontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
+        HFONT hFont = CreateFontW(static_cast<int>(fontSize * Director::getInstance()->getContentScaleFactor()), 0, 0, 0,
+            FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
             CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, TEXT("Arial"));
 
         SendMessage(hwndEdit,             // Handle of edit control
