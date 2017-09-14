@@ -584,7 +584,7 @@ bool Issue8316::init()
                                 widgetSize.height / 2.0f + label->getContentSize().height * 1.5f));
         _uiLayer->addChild(label);
         
-        Text* alert = Text::create("ListView Disable Touch", "fonts/Marker Felt.ttf", 20);
+        Text* alert = Text::create("Can not scroll list view", "fonts/Marker Felt.ttf", 20);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
                                 widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
