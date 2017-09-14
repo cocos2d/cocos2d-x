@@ -915,7 +915,7 @@ bool UIRichTextXMLUrl::init()
 		_widget->addChild(button3);
 
         // RichText
-        _richText = RichText::createWithXML("And this link will redirect you to google: <a href='http://www.google.com'>click me</a>");
+        _richText = RichText::createWithXML("And this link will redirect you togoogle: <a href='http://www.google.com'>click me</a>");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
 

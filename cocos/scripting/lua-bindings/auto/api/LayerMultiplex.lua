@@ -30,14 +30,14 @@
 -- @return LayerMultiplex#LayerMultiplex self (return value: cc.LayerMultiplex)
         
 --------------------------------
---  Switches to a certain layer indexed by n.<br>
--- The current (old) layer will be removed from it's parent with 'cleanup=true'.<br>
--- param n The layer indexed by n will display.
--- @function [parent=#LayerMultiplex] switchTo 
+-- @overload self, int, bool         
+-- @overload self, int         
+-- @function [parent=#LayerMultiplex] switchTo
 -- @param self
 -- @param #int n
+-- @param #bool cleanup
 -- @return LayerMultiplex#LayerMultiplex self (return value: cc.LayerMultiplex)
-        
+
 --------------------------------
 -- 
 -- @function [parent=#LayerMultiplex] init 
