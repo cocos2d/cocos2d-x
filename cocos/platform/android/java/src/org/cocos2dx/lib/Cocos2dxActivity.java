@@ -40,6 +40,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 
 import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
@@ -254,6 +255,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
             new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                                        ViewGroup.LayoutParams.WRAP_CONTENT);
         Cocos2dxEditBox edittext = new Cocos2dxEditBox(this);
+        edittext.setImeOptions(edittext.getImeOptions() | EditorInfo.IME_FLAG_NO_EXTRACT_UI);
         edittext.setLayoutParams(edittext_layout_params);
 
 
