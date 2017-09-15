@@ -54,6 +54,8 @@ THE SOFTWARE.
 #include "base/CCProfiling.h"
 #include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramState.h"
 #include "platform/CCFileUtils.h"
 
 using namespace std;
