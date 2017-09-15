@@ -623,6 +623,14 @@
 		1ACF6A531E4C52660033C137 /* cacert.pem in Resources */ = {isa = PBXBuildFile; fileRef = 1ACF6A511E4C52660033C137 /* cacert.pem */; };
 		1AE4C21D1F6BC0B0009C71D2 /* LaunchScreenBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AE4C21C1F6BC048009C71D2 /* LaunchScreenBackground.png */; };
 		1AE4C21E1F6BC21C009C71D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AE4C21B1F6BBFDD009C71D2 /* LaunchScreen.storyboard */; };
+		1AE4C2211F6BC35B009C71D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AE4C2201F6BC346009C71D2 /* LaunchScreen.storyboard */; };
+		1AE4C2221F6BC35B009C71D2 /* LaunchScreenBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AE4C21F1F6BC346009C71D2 /* LaunchScreenBackground.png */; };
+		1AE4C2251F6BC470009C71D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AE4C2231F6BC464009C71D2 /* LaunchScreen.storyboard */; };
+		1AE4C2261F6BC470009C71D2 /* LaunchScreenBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AE4C2241F6BC465009C71D2 /* LaunchScreenBackground.png */; };
+		1AE4C2291F6BC51E009C71D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AE4C2271F6BC508009C71D2 /* LaunchScreen.storyboard */; };
+		1AE4C22A1F6BC520009C71D2 /* LaunchScreenBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AE4C2281F6BC509009C71D2 /* LaunchScreenBackground.png */; };
+		1AE4C22D1F6BC5E7009C71D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AE4C22B1F6BC5E2009C71D2 /* LaunchScreen.storyboard */; };
+		1AE4C22E1F6BC5E9009C71D2 /* LaunchScreenBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AE4C22C1F6BC5E3009C71D2 /* LaunchScreenBackground.png */; };
 		1AF5ECFC1E56D6BC00484A9D /* cacert.pem in Resources */ = {isa = PBXBuildFile; fileRef = 1ACF6A511E4C52660033C137 /* cacert.pem */; };
 		1AF5ECFD1E56D6BC00484A9D /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
 		1AF5ECFE1E56D6CD00484A9D /* cacert.pem in Resources */ = {isa = PBXBuildFile; fileRef = 1ACF6A511E4C52660033C137 /* cacert.pem */; };
@@ -2268,6 +2276,14 @@
 		1ACF6A511E4C52660033C137 /* cacert.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cacert.pem; path = "../tests/cpp-tests/Resources/cacert.pem"; sourceTree = "<group>"; };
 		1AE4C21B1F6BBFDD009C71D2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1AE4C21C1F6BC048009C71D2 /* LaunchScreenBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreenBackground.png; sourceTree = "<group>"; };
+		1AE4C21F1F6BC346009C71D2 /* LaunchScreenBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreenBackground.png; sourceTree = "<group>"; };
+		1AE4C2201F6BC346009C71D2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1AE4C2231F6BC464009C71D2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1AE4C2241F6BC465009C71D2 /* LaunchScreenBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreenBackground.png; sourceTree = "<group>"; };
+		1AE4C2271F6BC508009C71D2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1AE4C2281F6BC509009C71D2 /* LaunchScreenBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreenBackground.png; sourceTree = "<group>"; };
+		1AE4C22B1F6BC5E2009C71D2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1AE4C22C1F6BC5E3009C71D2 /* LaunchScreenBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreenBackground.png; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* cpp-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F33634D18E37E840074764D /* RefPtrTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RefPtrTest.cpp; sourceTree = "<group>"; };
 		1F33634E18E37E840074764D /* RefPtrTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefPtrTest.h; sourceTree = "<group>"; };
@@ -3172,6 +3188,8 @@
 		1856640E1B422FFF009EF2AE /* proj.ios */ = {
 			isa = PBXGroup;
 			children = (
+				1AE4C2231F6BC464009C71D2 /* LaunchScreen.storyboard */,
+				1AE4C2241F6BC465009C71D2 /* LaunchScreenBackground.png */,
 				1856640F1B422FFF009EF2AE /* AppController.h */,
 				185664101B422FFF009EF2AE /* AppController.mm */,
 				185664111B422FFF009EF2AE /* Default-568h@2x.png */,
@@ -4066,6 +4084,8 @@
 		1AC35C6D18CECF1400F37B72 /* proj.ios */ = {
 			isa = PBXGroup;
 			children = (
+				1AE4C2201F6BC346009C71D2 /* LaunchScreen.storyboard */,
+				1AE4C21F1F6BC346009C71D2 /* LaunchScreenBackground.png */,
 				527B1F3219EF9CF8000A1F82 /* Default-667h@2x.png */,
 				527B1F3319EF9CF8000A1F82 /* Default-736h@3x.png */,
 				1AC35C6E18CECF1400F37B72 /* Classes */,
@@ -4206,6 +4226,8 @@
 		1AC35D3318CEDE9400F37B72 /* proj.ios */ = {
 			isa = PBXGroup;
 			children = (
+				1AE4C2271F6BC508009C71D2 /* LaunchScreen.storyboard */,
+				1AE4C2281F6BC509009C71D2 /* LaunchScreenBackground.png */,
 				527B1F3E19EFAD44000A1F82 /* Default-667h@2x.png */,
 				527B1F3F19EFAD44000A1F82 /* Default-736h@3x.png */,
 				1AC35D3418CEDE9400F37B72 /* AppController.h */,
@@ -4289,6 +4311,8 @@
 		1AC35D8518CEE5D100F37B72 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				1AE4C22B1F6BC5E2009C71D2 /* LaunchScreen.storyboard */,
+				1AE4C22C1F6BC5E3009C71D2 /* LaunchScreenBackground.png */,
 				527B1F4219EFAE13000A1F82 /* Default-667h@2x.png */,
 				527B1F4319EFAE13000A1F82 /* Default-736h@3x.png */,
 				1AC35D8618CEE5D100F37B72 /* AppController.h */,
@@ -5696,6 +5720,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AE4C2251F6BC470009C71D2 /* LaunchScreen.storyboard in Resources */,
+				1AE4C2261F6BC470009C71D2 /* LaunchScreenBackground.png in Resources */,
 				185664831B42407B009EF2AE /* script in Resources */,
 				185664841B42407B009EF2AE /* Default-568h@2x.png in Resources */,
 				185664851B42407B009EF2AE /* Default.png in Resources */,
@@ -5775,6 +5801,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AE4C2291F6BC51E009C71D2 /* LaunchScreen.storyboard in Resources */,
+				1AE4C22A1F6BC520009C71D2 /* LaunchScreenBackground.png in Resources */,
 				1AC35D4A18CEDE9400F37B72 /* Icon-120.png in Resources */,
 				1AC35D4D18CEDE9400F37B72 /* Icon-57.png in Resources */,
 				527B1F4019EFAD44000A1F82 /* Default-667h@2x.png in Resources */,
@@ -5848,6 +5876,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AE4C22D1F6BC5E7009C71D2 /* LaunchScreen.storyboard in Resources */,
+				1AE4C22E1F6BC5E9009C71D2 /* LaunchScreenBackground.png in Resources */,
 				1AF5ECFE1E56D6CD00484A9D /* cacert.pem in Resources */,
 				1A78A5541D1A3D0F00B61B27 /* ccs-res in Resources */,
 				15BF83C71B1D9E8900D518FA /* NavMesh in Resources */,
@@ -6207,6 +6237,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AE4C2211F6BC35B009C71D2 /* LaunchScreen.storyboard in Resources */,
+				1AE4C2221F6BC35B009C71D2 /* LaunchScreenBackground.png in Resources */,
 				1AC35CDF18CED84500F37B72 /* components in Resources */,
 				1AC35C8E18CECF1400F37B72 /* Icon-144.png in Resources */,
 				1AC35C9218CECF1400F37B72 /* Icon-50.png in Resources */,
