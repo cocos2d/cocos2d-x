@@ -621,6 +621,8 @@
 		1AC35DF818CEE65B00F37B72 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC418CED84500F37B72 /* pew-pew-lei.wav */; };
 		1ACF6A521E4C52660033C137 /* cacert.pem in Resources */ = {isa = PBXBuildFile; fileRef = 1ACF6A511E4C52660033C137 /* cacert.pem */; };
 		1ACF6A531E4C52660033C137 /* cacert.pem in Resources */ = {isa = PBXBuildFile; fileRef = 1ACF6A511E4C52660033C137 /* cacert.pem */; };
+		1AE4C21D1F6BC0B0009C71D2 /* LaunchScreenBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AE4C21C1F6BC048009C71D2 /* LaunchScreenBackground.png */; };
+		1AE4C21E1F6BC21C009C71D2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AE4C21B1F6BBFDD009C71D2 /* LaunchScreen.storyboard */; };
 		1AF5ECFC1E56D6BC00484A9D /* cacert.pem in Resources */ = {isa = PBXBuildFile; fileRef = 1ACF6A511E4C52660033C137 /* cacert.pem */; };
 		1AF5ECFD1E56D6BC00484A9D /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
 		1AF5ECFE1E56D6CD00484A9D /* cacert.pem in Resources */ = {isa = PBXBuildFile; fileRef = 1ACF6A511E4C52660033C137 /* cacert.pem */; };
@@ -2264,6 +2266,8 @@
 		1AC35DAF18CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LuaObjectCBridgeTest.mm; sourceTree = "<group>"; };
 		1AC35DB018CEE5DA00F37B72 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1ACF6A511E4C52660033C137 /* cacert.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cacert.pem; path = "../tests/cpp-tests/Resources/cacert.pem"; sourceTree = "<group>"; };
+		1AE4C21B1F6BBFDD009C71D2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1AE4C21C1F6BC048009C71D2 /* LaunchScreenBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreenBackground.png; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* cpp-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F33634D18E37E840074764D /* RefPtrTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RefPtrTest.cpp; sourceTree = "<group>"; };
 		1F33634E18E37E840074764D /* RefPtrTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefPtrTest.h; sourceTree = "<group>"; };
@@ -3281,6 +3285,8 @@
 		1AC358C418CEC1CA00F37B72 /* proj.ios */ = {
 			isa = PBXGroup;
 			children = (
+				1AE4C21C1F6BC048009C71D2 /* LaunchScreenBackground.png */,
+				1AE4C21B1F6BBFDD009C71D2 /* LaunchScreen.storyboard */,
 				527B1F2E19EF9819000A1F82 /* Default-667h@2x.png */,
 				527B1F2F19EF9819000A1F82 /* Default-736h@3x.png */,
 				1AC358C518CEC1CA00F37B72 /* AppController.h */,
@@ -5739,6 +5745,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AE4C21D1F6BC0B0009C71D2 /* LaunchScreenBackground.png in Resources */,
 				1AC358E118CEC1CB00F37B72 /* Icon-120.png in Resources */,
 				1AC358DD18CEC1CB00F37B72 /* Default@2x.png in Resources */,
 				1AC358E018CEC1CB00F37B72 /* Icon-114.png in Resources */,
@@ -5747,6 +5754,7 @@
 				1AC3590C18CEC1FB00F37B72 /* iphone in Resources */,
 				1AC358E818CEC1CB00F37B72 /* Icon-76.png in Resources */,
 				1AC358E418CEC1CB00F37B72 /* Icon-40.png in Resources */,
+				1AE4C21E1F6BC21C009C71D2 /* LaunchScreen.storyboard in Resources */,
 				1AC358E618CEC1CB00F37B72 /* Icon-58.png in Resources */,
 				527B1F3019EF9819000A1F82 /* Default-667h@2x.png in Resources */,
 				1AC358DB18CEC1CB00F37B72 /* Default-568h@2x.png in Resources */,
