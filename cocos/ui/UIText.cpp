@@ -409,6 +409,16 @@ Sprite * Text::getLetter(int lettetIndex)
     return _labelRenderer->getLetter(lettetIndex);
 }
 
+void Text::setBlendFunc(const BlendFunc &blendFunc)
+{
+    _labelRenderer->setBlendFunc(blendFunc);
+}
+
+const BlendFunc& Text::getBlendFunc() const
+{
+    return _labelRenderer->getBlendFunc();
+}
+    
 Widget* Text::createCloneInstance()
 {
     return Text::create();
