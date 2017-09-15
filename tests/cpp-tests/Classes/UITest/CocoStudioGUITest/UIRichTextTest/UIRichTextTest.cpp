@@ -915,7 +915,7 @@ bool UIRichTextXMLUrl::init()
 		_widget->addChild(button3);
 
         // RichText
-        _richText = RichText::createWithXML("And this link will redirect you togoogle: <a href='http://www.google.com'>click me</a>");
+        _richText = RichText::createWithXML("This link will redirect you to google: <a href='http://www.google.com'>click me</a>");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
 
@@ -1016,7 +1016,7 @@ bool UIRichTextXMLUrlImg::init()
 		_widget->addChild(button3);
         
         // RichText
-        _richText = RichText::createWithXML("And this link will redirect you to google: <a href='http://www.google.com'><img src=\"cocosui/ccicon.png\" height=\"48\" width=\"48\" /></a>");
+        _richText = RichText::createWithXML("This link will redirect you to google: <a href='http://www.google.com'><img src=\"cocosui/ccicon.png\" height=\"48\" width=\"48\" /></a>");
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(100, 100));
         
@@ -1119,7 +1119,7 @@ bool UIRichTextXMLFace::init()
         // RichText
         _richText = RichText::createWithXML("<font size='20' face='fonts/Marker Felt.ttf'>Marker Felt 20.<font face='fonts/arial.ttf'>Arial 20.</font></font><font face='font/Thonburi.ttf' size='24' color='#0000ff'>Thonburi 24 blue</font>");
         _richText->ignoreContentAdaptWithSize(false);
-        _richText->setContentSize(Size(100, 100));
+        _richText->setContentSize(Size(120, 100));
 
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));
         _richText->setLocalZOrder(10);
