@@ -936,7 +936,7 @@ public:
      * @note Don't call this manually unless a child added needs to be removed in the same frame.
      */
     virtual void sortAllChildren();
-
+    
     /**
     * Sorts helper function
     *
@@ -950,8 +950,8 @@ public:
             return (n1->_localZOrderAndArrival < n2->_localZOrderAndArrival);
         });
 #else
-        std::stable_sort(std::begin(nodes), std::end(nodes), [](_T* n1, _T* n2) {
-            return n1->_localZOrder < n2->_localZOrder;
+        std::sort(std::begin(nodes), std::end(nodes), [](_T* n1, _T* n2) {
+            return n1->_localZOrder < n2->_localZOrder || (n1->_localZOrder == n2->_localZOrder && n1->_orderOfArrival < n2->_orderOfArrival );
         });
 #endif
     }
@@ -1940,8 +1940,12 @@ protected:
     mutable bool _additionalTransformDirty; ///< transform dirty ?
     bool _transformUpdated;         ///< Whether or not the Transform object was updated since the last frame
 
-    std::int64_t _localZOrderAndArrival; /// cache, for 64bits compress optimize.
     int _localZOrder; /// < Local order (relative to its siblings) used to sort the node
+#if CC_64BITS
+    std::int64_t _localZOrderAndArrival; /// cache, for 64bits compress optimize.
+#else
+    unsigned int _orderOfArrival; /// The order of arrival on 32bits
+#endif
 
     float _globalZOrder;            ///< Global order used to sort the node
 
