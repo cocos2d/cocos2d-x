@@ -13,15 +13,15 @@
 		15427CEE198F24AF00DC375D /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A8A4171834BDA200142BE0 /* libcocos2d Mac.a */; };
 		15A8A4491834C64F00142BE0 /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 5023810C17EBBCAC00990C9B /* Icon-114.png */; };
 		15A8A4881834C90F00142BE0 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A8A4871834C90E00142BE0 /* libcurl.dylib */; };
+		1A8A4ED91F6F9AEB0044495E /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 1A8A4ED61F6F9AE70044495E /* config.json */; };
+		1A8A4EDA1F6F9AEB0044495E /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 1A8A4ED61F6F9AE70044495E /* config.json */; };
+		1A8A4EDB1F6F9AEE0044495E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 1A8A4ED71F6F9AE70044495E /* res */; };
+		1A8A4EDC1F6F9AEE0044495E /* src in Resources */ = {isa = PBXBuildFile; fileRef = 1A8A4ED81F6F9AE80044495E /* src */; };
+		1A8A4EDD1F6F9AEF0044495E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 1A8A4ED71F6F9AE70044495E /* res */; };
+		1A8A4EDE1F6F9AEF0044495E /* src in Resources */ = {isa = PBXBuildFile; fileRef = 1A8A4ED81F6F9AE80044495E /* src */; };
 		1AF4C403178663F200122817 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AF4C402178663F200122817 /* libz.dylib */; };
 		1AF87BAA1F6F8733007BE51C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AF87BA91F6F8730007BE51C /* LaunchScreen.storyboard */; };
 		1AF87BAB1F6F8733007BE51C /* LaunchScreenBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AF87BA81F6F872F007BE51C /* LaunchScreenBackground.png */; };
-		1AF87BB31F6F8928007BE51C /* res in Resources */ = {isa = PBXBuildFile; fileRef = 1AF87BB01F6F890F007BE51C /* res */; };
-		1AF87BB41F6F892B007BE51C /* src in Resources */ = {isa = PBXBuildFile; fileRef = 1AF87BB11F6F890F007BE51C /* src */; };
-		1AF87BB51F6F892D007BE51C /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 1AF87BB21F6F8918007BE51C /* config.json */; };
-		1AF87BB71F6F8980007BE51C /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 1AF87BB21F6F8918007BE51C /* config.json */; };
-		1AF87BB81F6F8984007BE51C /* res in Resources */ = {isa = PBXBuildFile; fileRef = 1AF87BB01F6F890F007BE51C /* res */; };
-		1AF87BB91F6F8984007BE51C /* src in Resources */ = {isa = PBXBuildFile; fileRef = 1AF87BB11F6F890F007BE51C /* src */; };
 		294D0D721D0D572600F7F5D4 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 294D0D711D0D572600F7F5D4 /* CoreText.framework */; };
 		3EEEDB61197107C0006A9FF8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EEEDB60197107C0006A9FF8 /* MediaPlayer.framework */; };
 		5023811817EBBCAC00990C9B /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5023810817EBBCAC00990C9B /* AppController.mm */; };
@@ -179,12 +179,12 @@
 		15A8A4031834BDA200142BE0 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = "../../cocos2d-x/build/cocos2d_libs.xcodeproj"; sourceTree = "<group>"; };
 		15A8A4871834C90E00142BE0 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		15C1568D1683131500D239F2 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = "../../cocos2d-x/cocos2dx/platform/third_party/ios/libraries/libcurl.a"; sourceTree = "<group>"; };
+		1A8A4ED61F6F9AE70044495E /* config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = config.json; path = ../../../config.json; sourceTree = "<group>"; };
+		1A8A4ED71F6F9AE70044495E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../../res; sourceTree = "<group>"; };
+		1A8A4ED81F6F9AE80044495E /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = ../../../src; sourceTree = "<group>"; };
 		1AF4C402178663F200122817 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		1AF87BA81F6F872F007BE51C /* LaunchScreenBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreenBackground.png; sourceTree = "<group>"; };
 		1AF87BA91F6F8730007BE51C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		1AF87BB01F6F890F007BE51C /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = ../../../../res; sourceTree = "<group>"; };
-		1AF87BB11F6F890F007BE51C /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = ../../../../src; sourceTree = "<group>"; };
-		1AF87BB21F6F8918007BE51C /* config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = config.json; path = ../../../../config.json; sourceTree = "<group>"; };
 		294D0D711D0D572600F7F5D4 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
 		3EEEDB60197107C0006A9FF8 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		5023810717EBBCAC00990C9B /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -306,14 +306,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1AF87BAF1F6F88F4007BE51C /* Resources */ = {
+		1A8A4ED51F6F9AD00044495E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1AF87BB21F6F8918007BE51C /* config.json */,
-				1AF87BB01F6F890F007BE51C /* res */,
-				1AF87BB11F6F890F007BE51C /* src */,
+				1A8A4ED61F6F9AE70044495E /* config.json */,
+				1A8A4ED71F6F9AE70044495E /* res */,
+				1A8A4ED81F6F9AE80044495E /* src */,
 			);
-			path = Resources;
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		5023810617EBBCAC00990C9B /* ios */ = {
@@ -400,7 +400,7 @@
 				9FF504781A5E86D600AFDA55 /* libsimulator.xcodeproj */,
 				5023817117EBBE3400990C9B /* mac */,
 				F293B3C915EB7BE500256477 /* Products */,
-				1AF87BAF1F6F88F4007BE51C /* Resources */,
+				1A8A4ED51F6F9AD00044495E /* Resources */,
 			);
 			sourceTree = "<group>";
 		};
@@ -605,10 +605,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FF504841A5E87B100AFDA55 /* ConsoleWindow.xib in Resources */,
-				1AF87BB71F6F8980007BE51C /* config.json in Resources */,
+				1A8A4EDA1F6F9AEB0044495E /* config.json in Resources */,
 				5023817617EBBE3400990C9B /* Icon.icns in Resources */,
-				1AF87BB91F6F8984007BE51C /* src in Resources */,
-				1AF87BB81F6F8984007BE51C /* res in Resources */,
+				1A8A4EDE1F6F9AEF0044495E /* src in Resources */,
+				1A8A4EDD1F6F9AEF0044495E /* res in Resources */,
 				9FFC07361A4A764100AED399 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -617,9 +617,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1AF87BB51F6F892D007BE51C /* config.json in Resources */,
-				1AF87BB31F6F8928007BE51C /* res in Resources */,
-				1AF87BB41F6F892B007BE51C /* src in Resources */,
 				15A8A4491834C64F00142BE0 /* Icon-114.png in Resources */,
 				5023811D17EBBCAC00990C9B /* Icon-120.png in Resources */,
 				1AF87BAB1F6F8733007BE51C /* LaunchScreenBackground.png in Resources */,
@@ -629,12 +626,15 @@
 				5023811F17EBBCAC00990C9B /* Icon-152.png in Resources */,
 				5023812017EBBCAC00990C9B /* Icon-57.png in Resources */,
 				1AF87BAA1F6F8733007BE51C /* LaunchScreen.storyboard in Resources */,
+				1A8A4EDC1F6F9AEE0044495E /* src in Resources */,
+				1A8A4ED91F6F9AEB0044495E /* config.json in Resources */,
 				5023812217EBBCAC00990C9B /* Icon-76.png in Resources */,
 				5091733A17ECE17A00D62437 /* Icon-80.png in Resources */,
 				5091733717ECE17A00D62437 /* Icon-40.png in Resources */,
 				5023811E17EBBCAC00990C9B /* Icon-144.png in Resources */,
 				5091733817ECE17A00D62437 /* Icon-50.png in Resources */,
 				5023812117EBBCAC00990C9B /* Icon-72.png in Resources */,
+				1A8A4EDB1F6F9AEE0044495E /* res in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
