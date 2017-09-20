@@ -14,6 +14,7 @@ UILayoutTests::UILayoutTests()
     ADD_TEST_CASE(UILayoutTest_Layout_Linear_Horizontal);
     ADD_TEST_CASE(UILayoutTest_Layout_Relative_Align_Parent);
     ADD_TEST_CASE(UILayoutTest_Layout_Relative_Location);
+    ADD_TEST_CASE(UILayoutTest_Layout_Scaled_Widget);
     ADD_TEST_CASE(UILayoutComponentTest);
     ADD_TEST_CASE(UILayoutComponent_Berth_Test);
     ADD_TEST_CASE(UILayoutComponent_Berth_Stretch_Test);
@@ -725,6 +726,62 @@ bool UILayoutTest_Layout_Relative_Location::init()
     
     return false;
 }
+
+// UILayoutTest_Layout_Relative_Location
+
+UILayoutTest_Layout_Scaled_Widget::UILayoutTest_Layout_Scaled_Widget()
+{
+}
+
+UILayoutTest_Layout_Scaled_Widget::~UILayoutTest_Layout_Scaled_Widget()
+{
+}
+
+bool UILayoutTest_Layout_Scaled_Widget::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add the alert
+        Text* alert = Text::create("Layout Scaled Widget", "fonts/Marker Felt.ttf", 20);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 4.5f));
+        _uiLayer->addChild(alert);
+        
+        Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
+        
+        Layout* background = dynamic_cast<Layout*>(root->getChildByName("background_Panel"));
+        
+        // Create the layout
+        Layout* layout = Layout::create();
+        layout->setLayoutType(Layout::Type::HORIZONTAL);
+        layout->setContentSize(Size(280, 150));
+        Size backgroundSize = background->getContentSize();
+        layout->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
+                                 (backgroundSize.width - layout->getContentSize().width) / 2.0f,
+                                 (widgetSize.height - backgroundSize.height) / 2.0f +
+                                 (backgroundSize.height - layout->getContentSize().height) / 2.0f));
+        _uiLayer->addChild(layout);
+        
+        ImageView* imageView_Center1 = ImageView::create("cocosui/scrollviewbg.png");
+        imageView_Center1->setScale(0.5);
+        layout->addChild(imageView_Center1);
+        
+        ImageView* imageView_Center2 = ImageView::create("cocosui/scrollviewbg.png");
+        imageView_Center2->setScale(1.2);
+        layout->addChild(imageView_Center2);
+        
+        ImageView* imageView_Center3 = ImageView::create("cocosui/scrollviewbg.png");
+        imageView_Center3->setScale(0.8);
+        layout->addChild(imageView_Center3);
+        
+        return true;
+    }
+    
+    return false;
+}
+
 
 bool UILayoutComponentTest::init()
 {

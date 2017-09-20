@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -564,7 +564,7 @@ if (ccui.WebView)
 
     ccui.WebView.prototype._loadURL = ccui.WebView.prototype.loadURL;
     ccui.WebView.prototype.loadURL = function (url) {
-        if (url.indexOf("http://") >= 0)
+        if (url.indexOf("http://") >= 0 || url.indexOf("https://") >= 0)
         {
             this._loadURL(url);
         }

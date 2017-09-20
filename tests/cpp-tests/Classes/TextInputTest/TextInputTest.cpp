@@ -154,7 +154,7 @@ void TextFieldTTFDefaultTest::onEnter()
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)    
     // on android, TextFieldTTF cannot auto adjust its position when soft-keyboard pop up
-    // so we had to set a higher position to make it visable
+    // so we had to set a higher position to make it visible
     pTextField->setPosition(Vec2(s.width / 2, s.height/2 + 50));
 #else
     pTextField->setPosition(Vec2(s.width / 2, s.height / 2));
@@ -366,7 +366,7 @@ void TextFieldTTFSecureTextEntryTest::onEnter()
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     // on android, TextFieldTTF cannot auto adjust its position when soft-keyboard pop up
-    // so we had to set a higher position to make it visable
+    // so we had to set a higher position to make it visible
     pTextField->setPosition(Vec2(s.width / 2, s.height/2 + 50));
 #else
     pTextField->setPosition(Vec2(s.width / 2, s.height / 2));

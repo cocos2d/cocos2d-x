@@ -1,29 +1,8 @@
-// CSParseBinary IDL file
+// TabControl IDL file
+
+include "CSParseBinary.fbs";
 
 namespace flatbuffers;
-
-table WidgetOptions
-{
-    
-}
-
-table PanelOptions
-{
-	
-}
-
-table NodeTree
-{
-	
-}
-
-struct Color
-{
-    a:ubyte;
-    r:ubyte;
-    g:ubyte;
-    b:ubyte;
-}
 
 table TabControlOption
 {
@@ -33,6 +12,7 @@ table TabControlOption
     headerHeight:int;
     selectedTabZoom:float;
     selectedTabIndex:int;
+    ignoreHeaderTextureSize:ubyte;
     tabItems:[TabItemOption];
 }
 
@@ -53,15 +33,8 @@ table TabHeaderOption
 table TabItemOption
 {
 	header:TabHeaderOption;
-	container:PanelOptions;
-	nodeTree:NodeTree;
+	container:NodeTree;
 }
 
 
 root_type TabControlOption;
-
-table ResourceData
-{
-    type:int = 0;
-    path:string;
-}

@@ -1060,6 +1060,8 @@ void ParticleDemo::onEnter(void)
 {
     TestCase::onEnter();
 
+    MenuItemFont::setFontSize(32);
+
 	_color = LayerColor::create( Color4B(127,127,127,255) );
 	this->addChild(_color);
 
@@ -1813,7 +1815,7 @@ std::string PremultipliedAlphaTest::subtitle() const
     return "no black halo, particles should fade out\n animation should be normal";
 }
 
-void PremultipliedAlphaTest::readdPaticle(float delta)
+void PremultipliedAlphaTest::readdParticle(float delta)
 {
     if (_hasEmitter)
     {
@@ -1856,7 +1858,7 @@ void PremultipliedAlphaTest::onEnter()
     this->addChild(_emitter, 10);
     _hasEmitter = true;
     
-    schedule(CC_SCHEDULE_SELECTOR(PremultipliedAlphaTest::readdPaticle), 1.0f);
+    schedule(CC_SCHEDULE_SELECTOR(PremultipliedAlphaTest::readdParticle), 1.0f);
 }
 
 // PremultipliedAlphaTest2
@@ -1999,7 +2001,9 @@ void ParticleResetTotalParticles::onEnter()
                                     {
                                         p->setTotalParticles(p->getTotalParticles() + 10 );
                                     });
+    add->setFontSizeObj(20);
     add->setPosition(Vec2(0, 25));
+    
     auto remove = MenuItemFont::create("remove 10 particles",
                                        [p](Ref*)->void
                                        {
@@ -2008,6 +2012,7 @@ void ParticleResetTotalParticles::onEnter()
                                            p->setTotalParticles(count);
                                        });
     remove->setPosition(Vec2(0, -25));
+    remove->setFontSizeObj(20);
     
     auto menu = Menu::create(add, remove, nullptr);
     menu->setPosition(Vec2(VisibleRect::center()));

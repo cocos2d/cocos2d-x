@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -798,6 +798,10 @@ public:
      It tells the Garbage Collector that the associated Scripting object can be collected
      */
     virtual void unrootObject(Ref* /*obj*/) {}
+
+    /** Remove proxy for a native object
+     */
+    virtual void removeObjectProxy(Ref* obj) {}
 
     /** Triggers the garbage collector */
     virtual void garbageCollect() {}

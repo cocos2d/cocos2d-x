@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -128,26 +128,39 @@ namespace {
     {
         int bufferSize = MAX_LOG_LENGTH;
         char* buf = nullptr;
-        
+        int nret = 0;
         do
         {
             buf = new (std::nothrow) char[bufferSize];
             if (buf == nullptr)
-                return; // not enough memory
-            
-            int ret = vsnprintf(buf, bufferSize - 3, format, args);
-            if (ret < 0)
-            {
-                bufferSize *= 2;
-                
-                delete [] buf;
+                return;
+            /*
+	    pitfall: The behavior of vsnprintf between VS2013 and VS2015/2017 is different
+              VS2013 or Unix-Like System will return -1 when buffer not enough, but VS2015/2017 will return the actural needed length for buffer at this station
+              The _vsnprintf behavior is compatible API which always return -1 when buffer isn't enough at VS2013/2015/2017
+              Yes, The vsnprintf is more efficient implemented by MSVC 19.0 or later, AND it's also standard-compliant, see reference: http://www.cplusplus.com/reference/cstdio/vsnprintf/
+	    */
+            nret = vsnprintf(buf, bufferSize - 3, format, args);
+            if (nret >= 0)
+            { // VS2015/2017
+                if (nret <= bufferSize - 3)
+                {// success, so don't need to realloc
+                    break;
+                }
+                else
+                {
+                    bufferSize = nret + 3;
+                    delete[] buf;
+                }
             }
-            else
-                break;
-            
+            else // < 0
+            {	// VS2013 or Unix-like System(GCC)
+	        bufferSize *= 2;
+	        delete[] buf;
+            }
         } while (true);
-        
-        strcat(buf, "\n");
+        buf[nret] = '\n';
+        buf[++nret] = '\0';
         
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
         __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info", "%s", buf);
@@ -155,7 +168,7 @@ namespace {
 #elif CC_TARGET_PLATFORM ==  CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
         
         int pos = 0;
-        int len = strlen(buf);
+        int len = nret;
         char tempBuf[MAX_LOG_LENGTH + 1] = { 0 };
         WCHAR wszBuf[MAX_LOG_LENGTH + 1] = { 0 };
         
@@ -386,6 +399,7 @@ Console::Console()
 : _listenfd(-1)
 , _running(false)
 , _endThread(false)
+, _isIpv6Server(false)
 , _sendDebugStrings(false)
 , _bindAddress("")
 {
@@ -479,21 +493,22 @@ bool Console::listenOnTCP(int port)
     listen(listenfd, 50);
 
     if (res->ai_family == AF_INET) {
-        char buf[INET_ADDRSTRLEN] = "";
+        _isIpv6Server = false;
+        char buf[INET_ADDRSTRLEN] = {0};
         struct sockaddr_in *sin = (struct sockaddr_in*) res->ai_addr;
         if( inet_ntop(res->ai_family, &sin->sin_addr, buf, sizeof(buf)) != nullptr )
-            cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin_port));
+            cocos2d::log("Console: IPV4 server is listening on %s:%d", buf, ntohs(sin->sin_port));
         else
             perror("inet_ntop");
     } else if (res->ai_family == AF_INET6) {
-        char buf[INET6_ADDRSTRLEN] = "";
+        _isIpv6Server = true;
+        char buf[INET6_ADDRSTRLEN] = {0};
         struct sockaddr_in6 *sin = (struct sockaddr_in6*) res->ai_addr;
         if( inet_ntop(res->ai_family, &sin->sin6_addr, buf, sizeof(buf)) != nullptr )
-            cocos2d::log("Console: listening on  %s : %d", buf, ntohs(sin->sin6_port));
+            cocos2d::log("Console: IPV6 server is listening on [%s]:%d", buf, ntohs(sin->sin6_port));
         else
             perror("inet_ntop");
     }
-
 
     freeaddrinfo(ressave);
     return listenOnFileDescriptor(listenfd);
@@ -603,6 +618,11 @@ void Console::setBindAddress(const std::string &address)
     _bindAddress = address;
 }
 
+bool Console::isIpv6Server() const
+{
+    return _isIpv6Server;
+}
+
 //
 // Main Loop
 //
@@ -633,7 +653,7 @@ void Console::loop()
         {
             /* error */
             if(errno != EINTR)
-                log("Abnormal error in select()\n");
+                cocos2d::log("Abnormal error in select()\n");
             continue;
         }
         else if( nready == 0 )
@@ -857,12 +877,13 @@ bool Console::parseCommand(int fd)
 
 void Console::addClient()
 {
-    struct sockaddr client;
-    socklen_t client_len;
+    struct sockaddr_in6 ipv6Addr;
+    struct sockaddr_in ipv4Addr;
+    struct sockaddr* addr = _isIpv6Server ? (struct sockaddr*)&ipv6Addr : (struct sockaddr*)&ipv4Addr;
+    socklen_t addrLen = _isIpv6Server ? sizeof(ipv6Addr) : sizeof(ipv4Addr);
     
     /* new client */
-    client_len = sizeof( client );
-    int fd = accept(_listenfd, (struct sockaddr *)&client, &client_len );
+    int fd = accept(_listenfd, addr, &addrLen);
     
     // add fd to list of FD
     if( fd != -1 ) {
@@ -1338,23 +1359,24 @@ static char invalid_filename_char[] = {':', '/', '\\', '?', '%', '*', '<', '>', 
 void Console::commandUpload(int fd)
 {
     ssize_t n, rc;
-    char buf[512], c;
+    char buf[512] = {0};
+    char c = 0;
     char *ptr = buf;
     //read file name
     for( n = 0; n < sizeof(buf) - 1; n++ )
     {
-        if( (rc = recv(fd, &c, 1, 0)) ==1 ) 
+        if( (rc = recv(fd, &c, 1, 0)) == 1 )
         {
             for(char x : invalid_filename_char)
             {
-                if(c == x)
+                if (c == x)
                 {
                     const char err[] = "upload: invalid file name!\n";
                     Console::Utility::sendToConsole(fd, err, strlen(err));
                     return;
                 }
             }
-            if(c == ' ') 
+            if (c == ' ')
             {
                 break;
             }
@@ -1385,8 +1407,8 @@ void Console::commandUpload(int fd)
         Console::Utility::sendToConsole(fd, err, strlen(err));
         return;
     }
-    
-    while (true) 
+
+    while (true)
     {
         char data[4];
         for(int i = 0; i < 4; i++)
@@ -1402,9 +1424,9 @@ void Console::commandUpload(int fd)
         unsigned char *decode;
         unsigned char *in = (unsigned char *)data;
         int dt = base64Decode(in, 4, &decode);
-        for(int i = 0; i < dt; i++)
+        if (dt > 0)
         {
-            fwrite(decode+i, 1, 1, fp);
+            fwrite(decode, dt, 1, fp);
         }
         free(decode);
     }

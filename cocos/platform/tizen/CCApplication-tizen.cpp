@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -498,6 +498,11 @@ void Application::setAnimationInterval(float interval)
 {
     _animationInterval = interval*1000.0f;
     ecore_animator_frametime_set(interval);
+}
+
+void Application::setAnimationInterval(float interval, SetIntervalReason reason)
+{
+    setAnimationInterval(interval);
 }
 
 void Application::setResourceRootPath(const std::string& rootResDir)

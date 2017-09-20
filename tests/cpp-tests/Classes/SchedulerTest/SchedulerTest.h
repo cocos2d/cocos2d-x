@@ -284,6 +284,16 @@ private:
     cocos2d::Node* testNode;
 };
 
+class SchedulerIssueWithReschedule : public SchedulerTestLayer
+{
+public:
+    CREATE_FUNC(SchedulerIssueWithReschedule);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void onEnter() override;
+};
+
 class ScheduleCallbackTest : public SchedulerTestLayer
 {
 public:
@@ -403,6 +413,23 @@ private:
         bool _cleanedUp;
     };
     std::vector<TestClass *> _testvector;
+};
+
+class SchedulerRemoveSelectorDuringCall: public SchedulerTestLayer
+{
+public:
+    CREATE_FUNC(SchedulerRemoveSelectorDuringCall);
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
+private:
+    void callback( float );
+
+private:
+    bool _scheduled;
 };
 
 #endif

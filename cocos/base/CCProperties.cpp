@@ -1,6 +1,6 @@
 /**
  Copyright 2013 BlackBerry Inc.
- Copyright (c) 2015 Chukong Technologies
+ Copyright (c) 2015-2017 Chukong Technologies
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -480,10 +480,8 @@ char* Properties::trimWhiteSpace(char *str)
         return str;
     }
 
-    char *end;
-
     // Trim leading space.
-    while (isspace(*str))
+    while (*str != '\0' && isspace(*str))
         str++;
 
     // All spaces?
@@ -493,7 +491,7 @@ char* Properties::trimWhiteSpace(char *str)
     }
 
     // Trim trailing space.
-    end = str + strlen(str) - 1;
+    char *end = str + strlen(str) - 1;
     while (end > str && isspace(*end))
         end--;
 

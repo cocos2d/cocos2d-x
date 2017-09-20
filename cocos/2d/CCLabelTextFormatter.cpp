@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -87,12 +87,16 @@ int Label::getFirstWordLen(const std::u32string& utf32Text, int startIndex, int 
 
     int len = 1;
     FontLetterDefinition letterDef;
-    auto nextLetterX = 0;
+    if(!_fontAtlas->getLetterDefinitionForChar(character, letterDef)) {
+        return len;
+    }
+    auto nextLetterX = letterDef.xAdvance * _bmfontScale + _additionalKerning;
+
     auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
     for (int index = startIndex + 1; index < textLen; ++index)
     {
         character = utf32Text[index];
-        if (_fontAtlas->getLetterDefinitionForChar(character, letterDef) == false)
+        if (!_fontAtlas->getLetterDefinitionForChar(character, letterDef))
         {
             break;
         }
@@ -101,14 +105,14 @@ int Label::getFirstWordLen(const std::u32string& utf32Text, int startIndex, int 
         if (_maxLineWidth > 0.f && letterX + letterDef.width * _bmfontScale > _maxLineWidth
             && !StringUtils::isUnicodeSpace(character))
         {
-            if(len >= 2) {
-                return len -1;
-            }
+            return len;
         }
 
         nextLetterX += letterDef.xAdvance * _bmfontScale + _additionalKerning;
 
-        if (character == (char16_t)TextFormatter::NewLine || StringUtils::isUnicodeSpace(character) || StringUtils::isCJKUnicode(character))
+        if (character == (char16_t)TextFormatter::NewLine
+            || StringUtils::isUnicodeSpace(character)
+            || StringUtils::isCJKUnicode(character))
         {
             break;
         }
@@ -186,7 +190,7 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
                 recordPlaceholderInfo(letterIndex, character);
                 continue;
             }
-            if (_fontAtlas->getLetterDefinitionForChar(character, letterDef) == false)
+            if (!_fontAtlas->getLetterDefinitionForChar(character, letterDef))
             {
                 recordPlaceholderInfo(letterIndex, character);
                 CCLOG("LabelTextFormatter error:can't find letter definition in font file for letter: %c", character);
@@ -378,6 +382,7 @@ void Label::recordLetterInfo(const cocos2d::Vec2& point, char32_t utf32Char, int
     _lettersInfo[letterIndex].valid = _fontAtlas->_letterDefinitions[utf32Char].validDefinition;
     _lettersInfo[letterIndex].positionX = point.x;
     _lettersInfo[letterIndex].positionY = point.y;
+    _lettersInfo[letterIndex].atlasIndex = -1;
 }
 
 void Label::recordPlaceholderInfo(int letterIndex, char32_t utf32Char)

@@ -9,6 +9,10 @@ elseif(ANDROID)
     base/CCUserDefault-android.cpp
     base/CCController-android.cpp
   )
+elseif(LINUX)
+  set(COCOS_BASE_SPECIFIC_SRC
+    base/CCController-linux-win32.cpp
+  )
 endif()
 
 set(COCOS_BASE_SRC

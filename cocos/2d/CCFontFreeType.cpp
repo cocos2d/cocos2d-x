@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2013      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -219,7 +219,7 @@ FontAtlas * FontFreeType::createFontAtlas()
                 _fontAtlas->prepareLetterDefinitions(utf32);
             }
         }
-        this->autorelease();
+//        this->autorelease();
     }
     
     return _fontAtlas;

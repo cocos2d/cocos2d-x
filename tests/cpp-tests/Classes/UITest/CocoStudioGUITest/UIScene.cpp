@@ -34,7 +34,7 @@ bool UIScene::init()
         _uiLayer->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                     (screenSize.height - rootSize.height) / 2));
         
-        // disable these widgets because they are confict with menu itmes created in `TestCase`
+        // disable these widgets because they are conflict with menu items created in `TestCase`
         
         auto restartButton = Helper::seekWidgetByName(_widget, "middle_Button");
         restartButton->setVisible(false);

@@ -1,6 +1,6 @@
 --[[
 
-Copyright (c) 2011-2014 chukong-inc.com
+Copyright (c) 2014-2017 Chukong Technologies Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -267,7 +267,7 @@ function iskindof(obj, classname)
     local mt
     if t == "userdata" then
         if tolua.iskindof(obj, classname) then return true end
-        mt = tolua.getpeer(obj)
+        mt = getmetatable(tolua.getpeer(obj))
     else
         mt = getmetatable(obj)
     end

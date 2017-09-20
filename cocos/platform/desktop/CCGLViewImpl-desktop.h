@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -52,6 +52,7 @@ THE SOFTWARE.
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 NS_CC_BEGIN
+
 
 class CC_DLL GLViewImpl : public GLView
 {
@@ -171,6 +172,89 @@ public:
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(GLViewImpl);
+};
+
+
+class CC_DLL GLFWEventHandler
+{
+public:
+    static void onGLFWError(int errorID, const char* errorDesc)
+    {
+        if (_view)
+            _view->onGLFWError(errorID, errorDesc);
+    }
+
+    static void onGLFWMouseCallBack(GLFWwindow* window, int button, int action, int modify)
+    {
+        if (_view)
+            _view->onGLFWMouseCallBack(window, button, action, modify);
+    }
+
+    static void onGLFWMouseMoveCallBack(GLFWwindow* window, double x, double y)
+    {
+        if (_view)
+            _view->onGLFWMouseMoveCallBack(window, x, y);
+    }
+
+    static void onGLFWMouseScrollCallback(GLFWwindow* window, double x, double y)
+    {
+        if (_view)
+            _view->onGLFWMouseScrollCallback(window, x, y);
+    }
+
+    static void onGLFWKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+    {
+        if (_view)
+            _view->onGLFWKeyCallback(window, key, scancode, action, mods);
+    }
+
+    static void onGLFWCharCallback(GLFWwindow* window, unsigned int character)
+    {
+        if (_view)
+            _view->onGLFWCharCallback(window, character);
+    }
+
+    static void onGLFWWindowPosCallback(GLFWwindow* windows, int x, int y)
+    {
+        if (_view)
+            _view->onGLFWWindowPosCallback(windows, x, y);
+    }
+
+    static void onGLFWframebuffersize(GLFWwindow* window, int w, int h)
+    {
+        if (_view)
+            _view->onGLFWframebuffersize(window, w, h);
+    }
+
+    static void onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height)
+    {
+        if (_view)
+            _view->onGLFWWindowSizeFunCallback(window, width, height);
+    }
+
+    static void setGLViewImpl(GLViewImpl* view)
+    {
+        _view = view;
+    }
+
+    static void onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
+    {
+        if (_view)
+        {
+            _view->onGLFWWindowIconifyCallback(window, iconified);
+        }
+    }
+
+    static void onGLFWWindowFocusCallback(GLFWwindow* window, int focused)
+    {
+        if (_view)
+        {
+            _view->onGLFWWindowFocusCallback(window, focused);
+        }
+    }
+
+private:
+    static GLViewImpl* _view;
 };
 
 NS_CC_END   // end of namespace   cocos2d

@@ -1,6 +1,6 @@
 /*
  * Created by Chris Hannon 2014 http://www.channon.us
- * Copyright (c) 2014 Chukong Technologies Inc.
+ * Copyright (c) 2014-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -143,20 +143,45 @@ bool js_cocos2dx_SocketIO_connect(JSContext* cx, uint32_t argc, jsval* vp)
     CCLOG("JSB SocketIO.connect method called");
 
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    if (argc == 1 || argc == 2)
+    if (argc >= 1 && argc <= 3)
     {
         std::string url;
+        std::string caFilePath;
+        bool ok = false;
         
-        do
+        ok = jsval_to_std_string(cx, args[0], &url);
+        JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
+
+        if (argc == 2)
         {
-            bool ok = jsval_to_std_string(cx, args.get(0), &url);
-            JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
-        } while (0);
+            if (args[1].isObject())
+            {
+                // Just ignore the option argument
+            }
+            else if (args[1].isString())
+            {
+                // Assume it's CA root file path
+                ok = jsval_to_std_string(cx, args[1], &caFilePath);
+                JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
+            }
+        }
+
+        if (argc == 3)
+        {
+            // Just ignore the option argument
+
+            if (args[2].isString())
+            {
+                // Assume it's CA root file path
+                ok = jsval_to_std_string(cx, args[2], &caFilePath);
+                JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
+            }
+        }
         
         JSB_SocketIODelegate* siodelegate = new (std::nothrow) JSB_SocketIODelegate();
         
         CCLOG("Calling native SocketIO.connect method");
-        SIOClient* ret = SocketIO::connect(url, *siodelegate);
+        SIOClient* ret = SocketIO::connect(url, *siodelegate, caFilePath);
         
         jsval jsret;
         do

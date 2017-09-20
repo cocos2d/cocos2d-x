@@ -118,6 +118,6 @@ void BugCameraMask::switchSpriteFlag(Ref *sender)
 void BugCameraMask::updateSpriteMaskLabel()
 {
     std::stringstream stream;
-    stream<<"The camera Mask is "<<(_sprite->getCameraMask() == 1 ? "CamereFlag::Default" : "CameraFlag::User1")<<std::endl;
+    stream << "The camera Mask is " << (_sprite->getCameraMask() == 1 ? "CameraFlag::Default" : "CameraFlag::User1") << std::endl;
     _spriteMaskLabel->setString(stream.str());
 }

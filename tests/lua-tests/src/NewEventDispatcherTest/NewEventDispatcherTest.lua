@@ -751,9 +751,9 @@ function SpriteAccelerationEventTest:onEnter()
         target:setPosition(cc.p(ptNowX , ptNowY))
     end
 
-    local listerner  = cc.EventListenerAcceleration:create(accelerometerListener)
+    local listener = cc.EventListenerAcceleration:create(accelerometerListener)
 
-    self:getEventDispatcher():addEventListenerWithSceneGraphPriority(listerner,sprite)
+    self:getEventDispatcher():addEventListenerWithSceneGraphPriority(listener, sprite)
 end
 
 function SpriteAccelerationEventTest:onExit()
@@ -849,7 +849,7 @@ function RemoveAndRetainNodeTest:onEnter()
     local function retainSprite()
         self._spriteSaved = true
         self._sprite:retain()
-        self._sprite:removeFromParent()
+        self._sprite:removeFromParent(false)
     end
 
     local function releaseSprite()

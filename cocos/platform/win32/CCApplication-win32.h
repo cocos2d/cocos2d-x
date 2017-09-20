@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -65,7 +65,9 @@ public:
     CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
     
     /* override functions */
-    virtual void setAnimationInterval(float interval);
+    virtual void setAnimationInterval(float interval) override;
+    virtual void setAnimationInterval(float interval, SetIntervalReason reason) override;
+
     virtual LanguageType getCurrentLanguage();
 
     virtual const char * getCurrentLanguageCode();

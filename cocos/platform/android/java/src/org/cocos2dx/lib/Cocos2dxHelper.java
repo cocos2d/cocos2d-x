@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -47,7 +47,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
-import android.hardware.SensorManager;
 
 import com.android.vending.expansion.zipfile.APKExpansionSupport;
 import com.android.vending.expansion.zipfile.ZipResourceFile;
@@ -56,6 +55,7 @@ import com.enhance.gameservice.IGameTuningService;
 
 import java.io.IOException;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -192,17 +192,24 @@ public class Cocos2dxHelper {
     // else it returns the absolute path to the APK.
     public static String getAssetsPath()
     {
-        if (Cocos2dxHelper.sAssetsPath == "") {
-            int versionCode = 1;
-            try {
-                versionCode = Cocos2dxHelper.sActivity.getPackageManager().getPackageInfo(Cocos2dxHelper.sPackageName, 0).versionCode;
-            } catch (NameNotFoundException e) {
-                e.printStackTrace();
-            }
-            String pathToOBB = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/obb/" + Cocos2dxHelper.sPackageName + "/main." + versionCode + "." + Cocos2dxHelper.sPackageName + ".obb";
-            File obbFile = new File(pathToOBB);
+        if (Cocos2dxHelper.sAssetsPath.equals("")) {
+
+            String pathToOBB = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/obb/" + Cocos2dxHelper.sPackageName;
+
+	    	// Listing all files inside the folder (pathToOBB) where OBB files are expected to be found.
+            String[] fileNames = new File(pathToOBB).list(new FilenameFilter() { // Using filter to pick up only main OBB file name.
+                public boolean accept(File dir, String name) {
+                    return name.startsWith("main.") && name.endsWith(".obb");  // It's possible to filter only by extension here to get path to patch OBB file also.
+                }
+            });
+
+            String fullPathToOBB = "";
+            if (fileNames != null && fileNames.length > 0)  // If there is at least 1 element inside the array with OBB file names, then we may think fileNames[0] will have desired main OBB file name.
+                fullPathToOBB = pathToOBB + "/" + fileNames[0];  // Composing full file name for main OBB file.
+
+            File obbFile = new File(fullPathToOBB);
             if (obbFile.exists())
-                Cocos2dxHelper.sAssetsPath = pathToOBB;
+                Cocos2dxHelper.sAssetsPath = fullPathToOBB;
             else
                 Cocos2dxHelper.sAssetsPath = Cocos2dxHelper.sActivity.getApplicationInfo().sourceDir;
         }
@@ -436,6 +443,11 @@ public class Cocos2dxHelper {
 
     public static void stopAllEffects() {
         Cocos2dxHelper.sCocos2dSound.stopAllEffects();
+    }
+
+    static void setAudioFocus(boolean isAudioFocus) {
+        sCocos2dMusic.setAudioFocus(isAudioFocus);
+        sCocos2dSound.setAudioFocus(isAudioFocus);
     }
 
     public static void end() {

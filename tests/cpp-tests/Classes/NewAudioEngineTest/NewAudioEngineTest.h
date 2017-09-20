@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -41,6 +41,9 @@ public:
     
     virtual std::string title() const override;
     virtual void onExit() override;
+
+    virtual void onBackCallback(cocos2d::Ref* sender) override;
+
 protected:
     std::shared_ptr<bool> _isDestroyed;
 };
@@ -212,6 +215,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class AudioSmallFile3Test : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioSmallFile3Test);
+
+    virtual void onEnter() override;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class AudioPauseResumeAfterPlay : public AudioEngineTestDemo
 {
 public:
@@ -258,6 +272,37 @@ public:
     
 private:
     std::vector<std::string> _oldSearchPaths;
+};
+
+class AudioPlayInFinishedCB : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioPlayInFinishedCB);
+
+    virtual void onEnter() override;
+    virtual void onExit() override;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+private:
+    void doPlay(const std::string& filename);
+    void playMusic(const std::string& filename);
+    std::list<std::string> _playList;
+};
+
+class AudioUncacheInFinishedCB : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioUncacheInFinishedCB);
+
+    virtual void onEnter() override;
+    virtual void onExit() override;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+private:
 };
 
 #endif /* defined(__NEWAUDIOENGINE_TEST_H_) */

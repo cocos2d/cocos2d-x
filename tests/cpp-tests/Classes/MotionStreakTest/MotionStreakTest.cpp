@@ -42,7 +42,7 @@ void MotionStreakTest1::onEnter()
     // create the streak object and add it to the scene
     _streak = MotionStreak::create(2, 3, 32, Color3B::GREEN, s_streak);
     addChild(_streak);
-    // schedule an update on each frame so we can syncronize the streak with the target
+    // schedule an update on each frame so we can synchronize the streak with the target
     schedule(CC_SCHEDULE_SELECTOR(MotionStreakTest1::onUpdate));
   
     auto a1 = RotateBy::create(2, 360);

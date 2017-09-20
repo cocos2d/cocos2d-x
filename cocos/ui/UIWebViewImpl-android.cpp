@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -285,6 +285,19 @@ namespace cocos2d {
             void WebViewImpl::setVisible(bool visible) {
                 JniHelper::callStaticVoidMethod(className, "setVisible", _viewTag, visible);
             }
+            
+            void WebViewImpl::setOpacityWebView(const float opacity){
+                JniHelper::callStaticVoidMethod(className, "setOpacityWebView", _viewTag, opacity);
+            };
+            
+            
+            float WebViewImpl::getOpacityWebView()const{
+                return JniHelper::callStaticFloatMethod(className, "getOpacityWebView", _viewTag);
+            };
+            
+            void WebViewImpl::setBackgroundTransparent(){
+                JniHelper::callStaticVoidMethod(className, "setBackgroundTransparent", _viewTag);
+            };
 
             void WebViewImpl::setBounces(bool bounces) {
                 // empty function as this was mainly a fix for iOS

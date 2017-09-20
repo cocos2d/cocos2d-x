@@ -3897,7 +3897,7 @@ int lua_cocos2dx_physics3d_Physics3DComponent_getPhysics3DComponentName(lua_Stat
             return 0;
         }
         std::string& ret = cocos2d::Physics3DComponent::getPhysics3DComponentName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.Physics3DComponent:getPhysics3DComponentName",argc, 0);

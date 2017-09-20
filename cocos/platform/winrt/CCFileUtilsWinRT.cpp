@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include <regex>
 #include "platform/winrt/CCWinRTUtils.h"
 #include "platform/CCCommon.h"
+#include "tinydir/tinydir.h"
 using namespace std;
 
 NS_CC_BEGIN
@@ -286,7 +287,7 @@ bool CCFileUtilsWinRT::removeDirectory(const std::string& path)
                 if (wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
                 {
                     temp += '/';
-                    ret = ret && this->removeDirectory(std::string(temp.begin(), temp.end()));
+                    ret = ret && this->removeDirectory(StringWideCharToUtf8(temp));
                 }
                 else
                 {
@@ -370,11 +371,95 @@ bool CCFileUtilsWinRT::renameFile(const std::string &path, const std::string &ol
     return renameFile(oldPath, newPath);
 }
 
-
 string CCFileUtilsWinRT::getWritablePath() const
 {
     auto localFolderPath = Windows::Storage::ApplicationData::Current->LocalFolder->Path;
     return convertPathFormatToUnixStyle(std::string(PlatformStringToString(localFolderPath)) + '\\');
+}
+
+void CCFileUtilsWinRT::listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const
+{
+    std::string fullpath = fullPathForFilename(dirPath);
+    if (isDirectoryExist(fullpath))
+    {
+        tinydir_dir dir;
+        std::wstring fullpathstr = StringUtf8ToWideChar(fullpath);
+
+        if (tinydir_open(&dir, &fullpathstr[0]) != -1)
+        {
+            while (dir.has_next)
+            {
+                tinydir_file file;
+                if (tinydir_readfile(&dir, &file) == -1)
+                {
+                    // Error getting file
+                    break;
+                }
+                std::string fileName = StringWideCharToUtf8(file.name);
+
+                if (fileName != "." && fileName != "..")
+                {
+                    std::string filepath = StringWideCharToUtf8(file.path);
+                    if (file.is_dir)
+                    {
+                        filepath.append("/");
+                        files->push_back(filepath);
+                        listFilesRecursively(filepath, files);
+                    }
+                    else
+                    {
+                        files->push_back(filepath);
+                    }
+                }
+
+                if (tinydir_next(&dir) == -1)
+                {
+                    // Error getting next file
+                    break;
+                }
+            }
+        }
+        tinydir_close(&dir);
+    }
+}
+
+std::vector<std::string> CCFileUtilsWinRT::listFiles(const std::string& dirPath) const
+{
+    std::string fullpath = fullPathForFilename(dirPath);
+    std::vector<std::string> files;
+    if (isDirectoryExist(fullpath))
+    {
+        tinydir_dir dir;
+        std::wstring fullpathstr = StringUtf8ToWideChar(fullpath);
+
+        if (tinydir_open(&dir, &fullpathstr[0]) != -1)
+        {
+            while (dir.has_next)
+            {
+                tinydir_file file;
+                if (tinydir_readfile(&dir, &file) == -1)
+                {
+                    // Error getting file
+                    break;
+                }
+
+                std::string filepath = StringWideCharToUtf8(file.path);
+                if (file.is_dir)
+                {
+                    filepath.append("/");
+                }
+                files.push_back(filepath);
+
+                if (tinydir_next(&dir) == -1)
+                {
+                    // Error getting next file
+                    break;
+                }
+            }
+        }
+        tinydir_close(&dir);
+    }
+    return files;
 }
 
 string CCFileUtilsWinRT::getAppPath()

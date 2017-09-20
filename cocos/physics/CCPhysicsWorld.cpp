@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -811,7 +811,7 @@ void PhysicsWorld::removeAllBodies()
 
 void PhysicsWorld::setDebugDrawMask(int mask)
 {
-    if (mask == DEBUGDRAW_NONE)
+    if (mask == DEBUGDRAW_NONE && _debugDraw)
     {
         _debugDraw->removeFromParent();
         CC_SAFE_RELEASE_NULL(_debugDraw);

@@ -4,11 +4,9 @@
 cocos2d-x
 =========
 
-|  |iOS|Mac|Linux|Win32|Android|Win8.1-Universal|
+|  |iOS|Mac|Linux|Win32|Android|Tizen|
 | ----|----|----- | ---|----|------|---|
-|v3|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=ios)](http://45.56.80.45:8080/job/daily-build-v3/node=ios)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=mac)](http://45.56.80.45:8080/job/daily-build-v3/node=mac)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=linux)](http://45.56.80.45:8080/job/daily-build-v3/node=linux)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=win32_bak)](http://45.56.80.45:8080/job/daily-build-v3/node=win32_bak)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=android)](http://45.56.80.45:8080/job/daily-build-v3/node=android)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=windows-universal_bak)](http://45.56.80.45:8080/job/daily-build-v3/node=windows-universal_bak)|
-|v4|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=ios)](http://45.56.80.45:8080/job/daily-build-v4/node=ios)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=mac)](http://45.56.80.45:8080/job/daily-build-v4/node=mac)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=linux)](http://45.56.80.45:8080/job/daily-build-v4/node=linux)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=win32_bak)](http://45.56.80.45:8080/job/daily-build-v4/node=win32_bak)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=android)](http://45.56.80.45:8080/job/daily-build-v4/node=android)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=windows-universal_bak)](http://45.56.80.45:8080/job/daily-build-v4/node=windows-universal_bak)|
-
+|v3|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=ios)](http://45.56.80.45:8080/job/daily-build-v3/node=ios)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=mac)](http://45.56.80.45:8080/job/daily-build-v3/node=mac)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=linux)](http://45.56.80.45:8080/job/daily-build-v3/node=linux)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=win32_bak)](http://45.56.80.45:8080/job/daily-build-v3/node=win32_bak)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=android)](http://45.56.80.45:8080/job/daily-build-v3/node=android)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=tizen-daily-build/node=tizen_mac)](http://45.56.80.45:8080/job/tizen-daily-build/node=tizen_mac/)|
 
 
 [cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
@@ -79,9 +77,13 @@ You can also create a JS project or Lua project with `-l js` or `-l lua`.
 
 ### Build and run a new project for Tizen ###
 
-The cocos command line tools doesn't support Tizen yet, you have to use Tizen IDE to do the build.
+There are two ways to build and run Tizen project:
 
-Please refer to this [guide](http://cocos2d-x.org/docs/installation/Tizen/index.html ).
+* use cocos console(can not work on 32-bit Windows currently)
+  ```
+  cocos run -p tizen
+  ```
+* use Tizen IDE, can refer to [this doc](http://cocos2d-x.org/docs/installation/Tizen/index.html ) for detail usage
 
 
 ### Build and run a new project for Linux ###
@@ -140,7 +142,6 @@ Documentations and samples
 * [Programmers Guide](http://cocos2d-x.org/docs/programmers-guide/2/index.html)
 * [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
 * [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
-* [Cocos2d sample games](https://github.com/cocos2d/cocos2d-x-samples) _More samples will be added in v3.8_
 
 Main features
 -------------
@@ -182,8 +183,8 @@ Build Requirements
 * or Windows 7+, VS 2013+
 * Python 2.7.5
 * NDK r11+ is required to build Android games
+* Android Studio 2.3+ to build Android games
 * Tizen SDK 2.3+ is required to build Tizen games
-* Windows Phone/Store 8.1 VS 2013 Update 4+ or VS 2015
 * Windows Phone/Store 10.0 VS 2015
 * JRE or JDK 1.6+ is required for web publishing
 
@@ -192,7 +193,6 @@ Runtime Requirements
   * iOS 7.0+ for iPhone / iPad games
   * Android 2.3.3+ for Android games
   * Tizen 2.3+ or 2.4+ for Tizen games
-  * Windows 8.1 or Windows 10.0 for Windows Phone/Store 8.1 games
   * Windows 10.0 for Windows Phone/Store 10.0  games
   * OS X v10.9+ for Mac games
   * Windows 7+ for Win games
@@ -249,10 +249,6 @@ $ bin/lua-empty-test/lua-empty-test
 
 Open the `cocos2d-x/build/cocos2d-win32.sln`
 
-* For Windows 8.1 Universal Apps (Phone and Store)
-
-Open the `cocos2d-x/build/cocos2d-win8.1-universal.sln`
-
 * For Windows 10.0 Universal Windows Platform (UWP) Apps (Phone and Store)
 
 Open the `cocos2d-x/build/cocos2d-win10.sln`
@@ -261,11 +257,11 @@ Open the `cocos2d-x/build/cocos2d-win10.sln`
 
 ```
 $ cd cocos2d-x/build
-$ python ./android-build.py cpp-empty-test -p 10
+$ python ./android-build.py cpp-empty-test -p 13
 $ adb install ../tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
 ```
 
-Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 10.
+Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 13.
 
 * For Tizen
 

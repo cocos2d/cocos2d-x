@@ -252,7 +252,7 @@ void SkeletonRenderer::draw (Renderer* renderer, const Mat4& transform, uint32_t
 			blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 		}
 
-		batch->addCommand(renderer, _globalZOrder, attachmentVertices->_texture->getName(), _glProgramState, blendFunc,
+		batch->addCommand(renderer, _globalZOrder, attachmentVertices->_texture, _glProgramState, blendFunc,
 			*attachmentVertices->_triangles, transform, transformFlags);
 	}
 
@@ -317,7 +317,7 @@ AttachmentVertices* SkeletonRenderer::getAttachmentVertices (spMeshAttachment* a
 	return (AttachmentVertices*)attachment->rendererObject;
 }
 
-Rect SkeletonRenderer::getBoundingBox () const {
+cocos2d::Rect SkeletonRenderer::getBoundingBox () const {
 	float minX = FLT_MAX, minY = FLT_MAX, maxX = -FLT_MAX, maxY = -FLT_MAX;
 	float scaleX = getScaleX(), scaleY = getScaleY();
 	for (int i = 0; i < _skeleton->slotsCount; ++i) {
@@ -343,8 +343,8 @@ Rect SkeletonRenderer::getBoundingBox () const {
 		}
 	}
 	Vec2 position = getPosition();
-    if (minX == FLT_MAX) minX = minY = maxX = maxY = 0;    
-	return Rect(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
+    if (minX == FLT_MAX) minX = minY = maxX = maxY = 0;
+	return cocos2d::Rect(position.x + minX, position.y + minY, maxX - minX, maxY - minY);
 }
 
 // --- Convenience methods for Skeleton_* functions.

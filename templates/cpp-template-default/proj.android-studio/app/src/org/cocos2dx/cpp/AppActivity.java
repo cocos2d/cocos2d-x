@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2015 Chukong Technologies Inc.
+Copyright (c) 2015-2017 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -23,7 +23,15 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.cpp;
 
+import android.os.Bundle;
 import org.cocos2dx.lib.Cocos2dxActivity;
 
 public class AppActivity extends Cocos2dxActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.setEnableVirtualButton(false);
+        super.onCreate(savedInstanceState);
+    }
+
 }

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -354,7 +354,7 @@ var UIPageViewTouchPropagationTest = UIMainLayer.extend({
 
 //            var eventListener = new cc.EventListenerTouchOneByOne();
 //            eventListener.onTouchBegan = function(touch, event){
-//                cc.log("layout recieves touches");
+//                cc.log("layout receives touches");
 //                return true;
 //            };
 //            this._eventDispatcher.addEventListenerWithSceneGraphPriority(eventListener, this);
@@ -738,7 +738,7 @@ var UIPageViewIndicatorTest = UIMainLayer.extend({
         if(this._super()){
             var widgetSize = this._widget.getContentSize();
 
-            this._topDisplayLabel.setString("PageView indidcator custom texture\nscale : 0.5, index color: RED");
+            this._topDisplayLabel.setString("PageView indicator custom texture\nscale : 0.5, index color: RED");
             this._topDisplayLabel.setFontSize(14);
             this._topDisplayLabel.x = widgetSize.width / 2.0;
             this._topDisplayLabel.y = widgetSize.height / 2.0 + this._topDisplayLabel.height;

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -38,7 +38,7 @@
 #include <AL/al.h>
 #endif
 #include "platform/CCPlatformMacros.h"
-#include "audio/apple/AudioMacros.h"
+#include "audio/win32/AudioMacros.h"
 
 NS_CC_BEGIN
 namespace experimental{

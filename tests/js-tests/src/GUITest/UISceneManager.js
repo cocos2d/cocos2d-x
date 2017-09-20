@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -276,9 +276,9 @@
                 }
             },
             {
-                title: "UITextTest_IgnoreConentSize",
+                title: "UITextTest_IgnoreContentSize",
                 func: function(){
-                    return new UITextTest_IgnoreConentSize();
+                    return new UITextTest_IgnoreContentSize();
                 }
             },
             {
@@ -408,6 +408,12 @@
                 title: "UILayoutTest_Layout_Relative_Location",
                 func: function () {
                     return new UILayoutTest_Layout_Relative_Location();
+                }
+            },
+            {
+                title: "UILayoutTest_Layout_Scaled_Widget",
+                func: function () {
+                    return new UILayoutTest_Layout_Scaled_Widget();
                 }
             },
             {
@@ -726,6 +732,7 @@
         ctor: function(){
             TestScene.prototype.ctor.call(this);
 
+            global.UISceneManager.getInstance().ctor();
             var menu = new cc.Menu();
             menu.x = 0;
             menu.y = 0;

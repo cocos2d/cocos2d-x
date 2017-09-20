@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -73,6 +73,12 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
 - (void)setVisible:(bool)visible;
 
 - (void)setBounces:(bool)bounces;
+
+- (void)setOpacityWebView:(float)opacity;
+
+- (float)getOpacityWebView;
+
+- (void)setBackgroundTransparent;
 
 - (void)setFrameWithX:(float)x y:(float)y width:(float)width height:(float)height;
 
@@ -150,6 +156,19 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
 
 - (void)setBounces:(bool)bounces {
   self.uiWebView.scrollView.bounces = bounces;
+}
+
+- (void)setOpacityWebView:(float)opacity {
+    self.uiWebView.alpha=opacity;
+    [self.uiWebView setOpaque:NO];
+}
+
+-(float) getOpacityWebView{
+    return self.uiWebView.alpha;
+}
+
+-(void) setBackgroundTransparent{
+    [self.uiWebView setBackgroundColor:[UIColor clearColor]];
 }
 
 - (void)setFrameWithX:(float)x y:(float)y width:(float)width height:(float)height {
@@ -231,6 +250,8 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
     if (!self.uiWebView) {[self setupWebView];}
     self.uiWebView.scalesPageToFit = scalesPageToFit;
 }
+
+
 
 #pragma mark - UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
@@ -397,6 +418,19 @@ void WebViewImpl::draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transfo
 void WebViewImpl::setVisible(bool visible){
     [_uiWebViewWrapper setVisible:visible];
 }
+        
+void WebViewImpl::setOpacityWebView(float opacity){
+    [_uiWebViewWrapper setOpacityWebView: opacity];
+}
+        
+float WebViewImpl::getOpacityWebView() const{
+    return [_uiWebViewWrapper getOpacityWebView];
+}
+
+void WebViewImpl::setBackgroundTransparent(){
+    [_uiWebViewWrapper setBackgroundTransparent];
+}
+
         
     } // namespace ui
 } // namespace experimental

@@ -42,8 +42,8 @@ local function AccelerometerMainLayer()
             target:setPosition(cc.p(ptNowX , ptNowY))
         end
 
-        local listerner  = cc.EventListenerAcceleration:create(accelerometerListener)
-        layer:getEventDispatcher():addEventListenerWithSceneGraphPriority(listerner,ball)
+        local listener = cc.EventListenerAcceleration:create(accelerometerListener)
+        layer:getEventDispatcher():addEventListenerWithSceneGraphPriority(listener, ball)
     end
 
     local function onExit()

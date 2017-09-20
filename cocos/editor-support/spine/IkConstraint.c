@@ -152,7 +152,9 @@ void spIkConstraint_apply2 (spBone* parent, spBone* child, float targetX, float 
 		float d = c1 * c1 - 4 * c2 * c0;
 		float minAngle = 0, minDist = FLT_MAX, minX = 0, minY = 0;
 		float maxAngle = 0, maxDist = 0, maxX = 0, maxY = 0;
-		float x = l1 + a, dist = x * x, angle, y;
+		float dist, angle;
+        x = l1 + a;
+        dist = x * x;
 		if (d >= 0) {
 			float q = SQRT(d), r0, r1;
 			if (c1 < 0) q = -q;

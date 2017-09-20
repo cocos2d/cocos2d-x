@@ -71,6 +71,19 @@
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
 
 --------------------------------
+-- List all files recursively in a directory, async off the main cocos thread.<br>
+-- param dirPath The path of the directory, it could be a relative or an absolute path.<br>
+-- param callback The callback to be called once the list operation is complete. <br>
+-- Will be called on the main cocos thread.<br>
+-- js NA<br>
+-- lua NA
+-- @function [parent=#FileUtils] listFilesRecursivelyAsync 
+-- @param self
+-- @param #string dirPath
+-- @param #function callback
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+        
+--------------------------------
 -- Checks whether the path is an absolute path.<br>
 -- note On Android, if the parameter passed in is relative to "assets/", this method will treat it as an absolute path.<br>
 -- Also on Blackberry, path starts with "app/native/Resources/" is treated as an absolute path.<br>
@@ -94,6 +107,12 @@
 -- @param #function callback
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
 
+--------------------------------
+-- Get default resource root path.
+-- @function [parent=#FileUtils] getDefaultResourceRootPath 
+-- @param self
+-- @return string#string ret (return value: string)
+        
 --------------------------------
 -- Loads the filenameLookup dictionary from the contents of a filename.<br>
 -- note The plist file name should follow the format below:<br>
@@ -144,7 +163,10 @@
         
 --------------------------------
 -- Gets the array of search paths.<br>
--- return The array of search paths.<br>
+-- return The array of search paths which may contain the prefix of default resource root path. <br>
+-- note In best practise, getter function should return the value of setter function passes in.<br>
+-- But since we should not break the compatibility, we keep using the old logic. <br>
+-- Therefore, If you want to get the original search paths, please call 'getOriginalSearchPaths()' instead.<br>
 -- see fullPathForFilename(const char*).<br>
 -- lua NA
 -- @function [parent=#FileUtils] getSearchPaths 
@@ -163,6 +185,13 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- Gets the original search path array set by 'setSearchPaths' or 'addSearchPath'.<br>
+-- return The array of the original search paths
+-- @function [parent=#FileUtils] getOriginalSearchPaths 
+-- @param self
+-- @return array_table#array_table ret (return value: array_table)
+        
+--------------------------------
 -- Gets the new filename from the filename lookup dictionary.<br>
 -- It is possible to have a override names.<br>
 -- param filename The original filename.<br>
@@ -172,6 +201,15 @@
 -- @param self
 -- @param #string filename
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- List all files in a directory.<br>
+-- param dirPath The path of the directory, it could be a relative or an absolute path.<br>
+-- return File paths in a string vector
+-- @function [parent=#FileUtils] listFiles 
+-- @param self
+-- @param #string dirPath
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- Converts the contents of a file to a ValueMap.<br>
@@ -388,11 +426,33 @@
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
 
 --------------------------------
+-- List all files in a directory async, off of the main cocos thread.<br>
+-- param dirPath The path of the directory, it could be a relative or an absolute path.<br>
+-- param callback The callback to be called once the list operation is complete. Will be called on the main cocos thread.<br>
+-- js NA<br>
+-- lua NA
+-- @function [parent=#FileUtils] listFilesAsync 
+-- @param self
+-- @param #string dirPath
+-- @param #function callback
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+        
+--------------------------------
 -- Gets the writable path.<br>
 -- return  The path that can be write/read a file in
 -- @function [parent=#FileUtils] getWritablePath 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- List all files recursively in a directory.<br>
+-- param dirPath The path of the directory, it could be a relative or an absolute path.<br>
+-- return File paths in a string vector
+-- @function [parent=#FileUtils] listFilesRecursively 
+-- @param self
+-- @param #string dirPath
+-- @param #array_table files
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
 -- Destroys the instance of FileUtils.

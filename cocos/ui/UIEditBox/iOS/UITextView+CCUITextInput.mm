@@ -86,7 +86,7 @@
 
 - (UIColor *)ccui_placeholderTextColor
 {
-    SEL selector = @selector(placeHolderLabel);
+    SEL selector = NSSelectorFromString(@"placeHolderLabel");
     if ([self respondsToSelector:selector]) {
         return ((UILabel *)[self performSelector:selector]).textColor;
     }
@@ -95,7 +95,7 @@
 
 - (void)ccui_setPlaceholderTextColor:(UIColor *)ccui_placeholderTextColor
 {
-    SEL selector = @selector(placeHolderLabel);
+    SEL selector = NSSelectorFromString(@"placeHolderLabel");
     if ([self respondsToSelector:selector]) {
         ((UILabel *)[self performSelector:selector]).textColor = ccui_placeholderTextColor;
     }
@@ -103,7 +103,7 @@
 
 - (UIFont *)ccui_placeholderFont
 {
-    SEL selector = @selector(placeHolderLabel);
+    SEL selector = NSSelectorFromString(@"placeHolderLabel");
     if ([self respondsToSelector:selector]) {
         return ((UILabel *)[self performSelector:selector]).font;
     }
@@ -112,7 +112,7 @@
 
 - (void)ccui_setPlaceholderFont:(UIFont *)ccui_placeholderFont
 {
-    SEL selector = @selector(placeHolderLabel);
+    SEL selector = NSSelectorFromString(@"placeHolderLabel");
     if ([self respondsToSelector:selector]) {
         ((UILabel *)[self performSelector:selector]).font = ccui_placeholderFont;
     }

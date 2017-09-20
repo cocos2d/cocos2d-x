@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -85,8 +85,8 @@ void PageView::doLayout()
     ListView::doLayout();
     if(_indicator != nullptr)
     {
-        ssize_t index = getIndex(getCenterItemInCurrentView());
-        _indicator->indicate(index);
+        _currentPageIndex = getIndex(getCenterItemInCurrentView());
+        _indicator->indicate(_currentPageIndex);
     }
     _innerContainerDoLayoutDirty = false;
 }
@@ -145,6 +145,15 @@ void PageView::setCurPageIndex( ssize_t index )
     setCurrentPageIndex(index);
 }
 
+ssize_t PageView::getCurrentPageIndex()
+{
+    //The _currentPageIndex is lazy calculated
+    if (_innerContainerDoLayoutDirty) {
+        _currentPageIndex = getIndex(getCenterItemInCurrentView());
+    }
+    return _currentPageIndex;
+}
+
 void PageView::setCurrentPageIndex(ssize_t index)
 {
     jumpToItem(index, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
@@ -162,11 +171,17 @@ void PageView::scrollToPage(ssize_t idx, float time)
 
 void PageView::scrollToItem(ssize_t itemIndex)
 {
+    if (_innerContainerDoLayoutDirty) {
+        this->forceDoLayout();
+    }
     ListView::scrollToItem(itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
 }
 
 void PageView::scrollToItem(ssize_t itemIndex, float time)
 {
+    if (_innerContainerDoLayoutDirty) {
+        this->forceDoLayout();
+    }
     ListView::scrollToItem(itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE, time >= 0 ? time : _scrollTime);
 }
 
@@ -491,6 +506,34 @@ const Color3B& PageView::getIndicatorIndexNodesColor() const
 {
     CCASSERT(_indicator != nullptr, "");
     return _indicator->getIndexNodesColor();
+}
+    
+void PageView::setIndicatorSelectedIndexOpacity(GLubyte opacity)
+{
+    if(_indicator != nullptr)
+    {
+        _indicator->setSelectedIndexOpacity(opacity);
+    }
+}
+
+GLubyte PageView::getIndicatorSelectedIndexOpacity() const
+{
+    CCASSERT(_indicator != nullptr, "");
+    return _indicator->getSelectedIndexOpacity();
+}
+
+void PageView::setIndicatorIndexNodesOpacity(GLubyte opacity)
+{
+    if(_indicator != nullptr)
+    {
+        _indicator->setIndexNodesOpacity(opacity);
+    }
+}
+
+GLubyte PageView::getIndicatorIndexNodesOpacity() const
+{
+    CCASSERT(_indicator != nullptr, "");
+    return _indicator->getIndexNodesOpacity();
 }
 
 void PageView::setIndicatorIndexNodesScale(float indexNodesScale)

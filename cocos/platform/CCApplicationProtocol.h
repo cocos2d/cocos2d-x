@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "platform/CCPlatformMacros.h"
 #include "base/CCScriptSupport.h"
 #include "base/CCAutoreleasePool.h"
+#include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
@@ -102,6 +103,7 @@ public:
     * @lua NA
     */
     virtual void setAnimationInterval(float interval) = 0;
+    virtual void setAnimationInterval(float interval, SetIntervalReason reason) = 0;
 
     /** Subclass override the function to set OpenGL context attribution instead of use default value.
     * And now can only set six attributions:redBits,greenBits,blueBits,alphaBits,depthBits,stencilBits.

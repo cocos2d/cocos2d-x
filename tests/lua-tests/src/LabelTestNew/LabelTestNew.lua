@@ -520,7 +520,7 @@ function LabelFNTGlyphDesigner.create()
     label1:setPosition(cc.p(s.width/2, s.height/2))
 
     Helper.titleLabel:setString("New Label + .FNT file")
-    Helper.subtitleLabel:setString("Testing Glyph Designer: you should see a font with shawdows and outline")
+    Helper.subtitleLabel:setString("Testing Glyph Designer: you should see a font with shadows and outline")
     return layer
 end
 
@@ -777,7 +777,7 @@ function LabelFNTUNICODELanguages.create()
     local layer = cc.Layer:create()
     Helper.initWithLayer(layer)
     Helper.titleLabel:setString("New Label + .FNT + UNICODE")
-    Helper.subtitleLabel:setString("You should see 3 differnt labels:\nIn Spanish, Chinese, and Japanese")
+    Helper.subtitleLabel:setString("You should see 3 different labels:\nIn Spanish, Chinese, and Japanese")
 
     local s = cc.Director:getInstance():getWinSize()
     

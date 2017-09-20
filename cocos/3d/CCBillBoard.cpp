@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -103,6 +103,11 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
         return;
     }
     bool visibleByCamera = isVisitableByVisitingCamera();
+    // quick return if not visible by camera and has no children.
+    if (!visibleByCamera && _children.empty())
+    {
+        return;
+    }
     
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
     
@@ -185,10 +190,7 @@ bool BillBoard::calculateBillboardTransform()
             camDir.set(camWorldMat.m[8], camWorldMat.m[9], camWorldMat.m[10]);
         }
         camDir.normalize();
-        
-        Quaternion rotationQuaternion;
-        this->getNodeToWorldTransform().getRotation(&rotationQuaternion);
-        
+
         Mat4 rotationMatrix;
         rotationMatrix.setIdentity();
 

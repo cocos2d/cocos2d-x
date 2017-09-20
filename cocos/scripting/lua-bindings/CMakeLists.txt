@@ -125,6 +125,10 @@ if(MACOSX)
         )
 endif()
 
+if(USE_BULLET)
+  include_directories(${BULLET_INCLUDE_DIRS})
+endif()
+
 set(lua_bindings_files ${lua_cocos2d_source_files} ${lua_bindings_manual_files} ${lua_bindings_auto_files})
 
 add_library(luacocos2d ${lua_bindings_files})

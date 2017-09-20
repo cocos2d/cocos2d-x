@@ -66,12 +66,12 @@
 -- @return ActionManager#ActionManager self (return value: cc.ActionManager)
         
 --------------------------------
---  Main loop of ActionManager.<br>
--- param dt    In seconds.
--- @function [parent=#ActionManager] update 
+--  Returns the numbers of actions that are running in all targets.<br>
+-- return  The numbers of actions that are running in all target.<br>
+-- js NA
+-- @function [parent=#ActionManager] getNumberOfRunningActions 
 -- @param self
--- @param #float dt
--- @return ActionManager#ActionManager self (return value: cc.ActionManager)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  Pauses the target: all running actions and newly added actions will be paused.<br>
@@ -125,6 +125,14 @@
 -- @function [parent=#ActionManager] pauseAllRunningActions 
 -- @param self
 -- @return array_table#array_table ret (return value: array_table)
+        
+--------------------------------
+--  Main loop of ActionManager.<br>
+-- param dt    In seconds.
+-- @function [parent=#ActionManager] update 
+-- @param self
+-- @param #float dt
+-- @return ActionManager#ActionManager self (return value: cc.ActionManager)
         
 --------------------------------
 --  Removes all actions given its tag and the target.<br>

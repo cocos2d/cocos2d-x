@@ -14,6 +14,41 @@ void LuaObjcBridge::luaopen_luaoc(lua_State *L)
     lua_setglobal(L, "LuaObjcBridge");
 }
 
+
+static void luaTableToObjcDictionary(lua_State *L, NSMutableDictionary *dict,NSString *key){
+    NSMutableDictionary *dict2 = [[NSMutableDictionary alloc] init];
+    lua_pushnil(L);
+    while(lua_next(L, -2))
+    {
+        NSString *key2 = [NSString stringWithCString:lua_tostring(L, -2) encoding:NSUTF8StringEncoding];
+        
+        switch (lua_type(L, -1))
+        {
+            case LUA_TNUMBER:
+                [dict2 setObject:[NSNumber numberWithFloat:lua_tonumber(L, -1)] forKey:key2];
+                break;
+                
+            case LUA_TBOOLEAN:
+                [dict2 setObject:[NSNumber numberWithBool:lua_toboolean(L, -1)] forKey:key2];
+                break;
+                
+            case LUA_TSTRING:
+                [dict2 setObject:[NSString stringWithCString:lua_tostring(L, -1) encoding:NSUTF8StringEncoding]
+                          forKey:key2];
+                break;
+            case LUA_TTABLE:
+                luaTableToObjcDictionary(L, dict2, key2);
+                break;
+        }
+        lua_pop(L,1);
+    }
+    
+    
+    [dict setObject:dict2 forKey:key];
+    
+    
+}
+
 /**
  className
  methodName
@@ -102,6 +137,10 @@ int LuaObjcBridge::callObjcStaticMethod(lua_State *L)
                                  forKey:key];
                         break;
                         
+                    case LUA_TTABLE:
+                        luaTableToObjcDictionary(L, dict, key);
+                        break;
+                        
                     case LUA_TFUNCTION:
                         int functionId = retainLuaFunction(L, -1, NULL);
                         [dict setObject:[NSNumber numberWithInt:functionId] forKey:key];
@@ -122,25 +161,25 @@ int LuaObjcBridge::callObjcStaticMethod(lua_State *L)
         lua_pushboolean(L, 1);
         if (returnLength > 0)
         {
-            if (strcmp(returnType, "@") == 0)
+            if (strcmp(returnType, @encode(id)) == 0)
             {
                 id ret;
                 [invocation getReturnValue:&ret];
                 pushValue(L, ret);
             }
-            else if (strcmp(returnType, "c") == 0) // BOOL
+            else if (strcmp(returnType, @encode(BOOL)) == 0) // BOOL
             {
                 char ret;
                 [invocation getReturnValue:&ret];
                 lua_pushboolean(L, ret);
             }
-            else if (strcmp(returnType, "i") == 0) // int
+            else if (strcmp(returnType, @encode(int)) == 0) // int
             {
                 int ret;
                 [invocation getReturnValue:&ret];
                 lua_pushinteger(L, ret);
             }
-            else if (strcmp(returnType, "f") == 0) // float
+            else if (strcmp(returnType, @encode(float)) == 0) // float
             {
                 float ret;
                 [invocation getReturnValue:&ret];

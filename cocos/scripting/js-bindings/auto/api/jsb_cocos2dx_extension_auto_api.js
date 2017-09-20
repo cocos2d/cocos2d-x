@@ -1859,13 +1859,13 @@ hasVisibleParents : function (
 },
 
 /**
- * @method getDirection
- * @return {cc.ScrollView::Direction}
+ * @method setSwallowTouches
+ * @param {bool} arg0
  */
-getDirection : function (
+setSwallowTouches : function (
+bool 
 )
 {
-    return 0;
 },
 
 /**
@@ -2100,6 +2100,16 @@ minContainerOffset : function (
 )
 {
     return cc.Vec2;
+},
+
+/**
+ * @method getDirection
+ * @return {cc.ScrollView::Direction}
+ */
+getDirection : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -2538,9 +2548,29 @@ getState : function (
 },
 
 /**
+ * @method getMaxConcurrentTask
+ * @return {int}
+ */
+getMaxConcurrentTask : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method checkUpdate
  */
 checkUpdate : function (
+)
+{
+},
+
+/**
+ * @method setVerifyCallback
+ * @param {function} arg0
+ */
+setVerifyCallback : function (
+func 
 )
 {
 },
@@ -2559,6 +2589,26 @@ getStoragePath : function (
  * @method update
  */
 update : function (
+)
+{
+},
+
+/**
+ * @method setVersionCompareHandle
+ * @param {function} arg0
+ */
+setVersionCompareHandle : function (
+func 
+)
+{
+},
+
+/**
+ * @method setMaxConcurrentTask
+ * @param {int} arg0
+ */
+setMaxConcurrentTask : function (
+int 
 )
 {
 },

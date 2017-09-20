@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -95,10 +95,10 @@ THE SOFTWARE.
  * 0.5 seconds, means that the FPS number will be updated every 0.5 seconds.
  * Having a bigger number means a more reliable FPS.
 
- * Default value: 0.1f
+ * Default value: 0.5f
  */
 #ifndef CC_DIRECTOR_STATS_INTERVAL
-#define CC_DIRECTOR_STATS_INTERVAL (0.1f)
+#define CC_DIRECTOR_STATS_INTERVAL (0.5f)
 #endif
 
 /** @def CC_DIRECTOR_FPS_POSITION
@@ -323,7 +323,7 @@ THE SOFTWARE.
 #endif
 
 /** When CC_ENABLE_SCRIPT_BINDING and CC_ENABLE_GC_FOR_NATIVE_OBJECTS are both 1
- then the Garbage collector will release the native objects, only when the JS/Lua objets
+ then the Garbage collector will release the native objects, only when the JS/Lua objects
  are collected.
  The benefit is that users don't need to retain/release the JS/Lua objects manually.
 
@@ -396,6 +396,13 @@ THE SOFTWARE.
  */
 #ifndef CC_ENABLE_PREMULTIPLIED_ALPHA
 # define CC_ENABLE_PREMULTIPLIED_ALPHA 1
+#endif
+
+/** @def CC_STRIP_FPS
+ * Whether to strip FPS related data and functions, such as cc_fps_images_png
+ */
+#ifndef CC_STRIP_FPS
+#define CC_STRIP_FPS 0
 #endif
 
 #endif // __CCCONFIG_H__

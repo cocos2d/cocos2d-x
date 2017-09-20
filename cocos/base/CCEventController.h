@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -43,7 +43,7 @@ class EventListenerController;
 /** @class EventController
  * @brief Controller event.
  */
-class EventController : public Event
+class CC_DLL EventController : public Event
 {
 public:
     /** ControllerEventType Controller event type.*/

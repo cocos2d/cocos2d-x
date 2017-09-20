@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -271,6 +271,10 @@ void AndroidJavaEngine::preloadEffect(const char* filePath)
         std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
         JniHelper::callStaticVoidMethod(helperClassName, "preloadEffect", fullPath);
     }
+    else
+    {
+        AudioEngine::preload(filePath);
+    }
 }
 
 void AndroidJavaEngine::unloadEffect(const char* filePath)
@@ -279,5 +283,9 @@ void AndroidJavaEngine::unloadEffect(const char* filePath)
     {
         std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
         JniHelper::callStaticVoidMethod(helperClassName, "unloadEffect", fullPath);
+    }
+    else
+    {
+        AudioEngine::uncache(filePath);
     }
 }

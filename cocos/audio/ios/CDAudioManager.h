@@ -146,13 +146,7 @@ typedef enum {
  - Frameworks: OpenAL, AudioToolbox, AVFoundation
  @since v0.8
  */
-
-// AVAudioSessionDelegate not available on tvOS
-#if defined(CC_TARGET_OS_TVOS)
 @interface CDAudioManager : NSObject <CDLongAudioSourceDelegate, CDAudioInterruptProtocol> {
-#else
-@interface CDAudioManager : NSObject <CDLongAudioSourceDelegate, CDAudioInterruptProtocol, AVAudioSessionDelegate> {
-#endif
     CDSoundEngine        *soundEngine;
     CDLongAudioSource    *backgroundMusic;
     NSMutableArray        *audioSourceChannels;

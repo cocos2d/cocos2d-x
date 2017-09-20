@@ -355,7 +355,7 @@ bool UISliderNewEventCallbackTest::init()
         _uiLayer->addChild(_displayValueLabel);
 
         // Add the alert
-        Text* alert = Text::create("See console ouput for Slider Down and Up event.","fonts/Marker Felt.ttf",20);
+        Text* alert = Text::create("See console output for Slider Down and Up event.", "fonts/Marker Felt.ttf", 20);
         alert->setColor(Color3B(159, 168, 176));
         alert->setPosition(Vec2(widgetSize.width / 2.0f,
                                 widgetSize.height / 2.0f - alert->getContentSize().height * 3.75f));

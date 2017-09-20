@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010      cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include <string>
 #include "2d/CCNode.h"
 #include "base/ccMacros.h"
+#include "base/CCData.h"
 
 /** @file ccUtils.h
 Misc free functions
@@ -140,7 +141,7 @@ namespace utils
 
      * @return Returns found node or nullptr
      */
-   CC_DLL Node*  findChild(Node* levelRoot, int tag);
+    CC_DLL Node*  findChild(Node* levelRoot, int tag);
 
     /**
      * Find a child by name recursively
@@ -163,6 +164,21 @@ namespace utils
     {
         return dynamic_cast<T>(findChild(levelRoot, tag));
     }
+
+    /**
+     *  Gets the md5 hash for the given file.
+     *  @param filename The file to calculate md5 hash.
+     *  @return The md5 hash for the file
+     */
+    CC_DLL std::string getFileMD5Hash(const std::string &filename);
+
+
+    /**
+    *  Gets the md5 hash for the given buffer.
+    *  @param data The buffer to calculate md5 hash.
+    *  @return The md5 hash for the data
+    */
+    CC_DLL std::string getDataMD5Hash(const Data &data);
 }
 
 NS_CC_END

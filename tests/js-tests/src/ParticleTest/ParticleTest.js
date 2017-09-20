@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -516,7 +516,7 @@ var DemoBigFlower = ParticleDemo.extend({
         this._emitter.radialAccel = -120;
         this._emitter.radialAccelVar = 0;
 
-        // tagential
+        // tangential
         this._emitter.tangentialAccel = 30;
         this._emitter.tangentialAccelVar = 0;
 

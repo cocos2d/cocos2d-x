@@ -39,7 +39,7 @@ MciPlayer::MciPlayer()
         wc.lpszClassName  = _T(WIN_CLASS_NAME);                 // Set The Class Name
 
         if (! RegisterClass(&wc)
-            && 1410 != GetLastError())
+            && ERROR_CLASS_ALREADY_EXISTS != GetLastError())
         {
             return;
         }

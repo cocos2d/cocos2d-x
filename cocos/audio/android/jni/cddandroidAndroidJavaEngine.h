@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,8 +22,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CDDANDRIODANDROIDJAVAENGINE_H__
-#define __CDDANDRIODANDROIDJAVAENGINE_H__
+#ifndef __CDDANDROIDANDROIDJAVAENGINE_H__
+#define __CDDANDROIDANDROIDJAVAENGINE_H__
 
 #include "audio/include/SimpleAudioEngine.h"
 #include "platform/android/jni/JniHelper.h"
@@ -67,4 +67,4 @@ namespace CocosDenshion {
     }
 }
 
-#endif //__CDDANDRIODANDROIDJAVAENGINE_H__
+#endif //__CDDANDROIDANDROIDJAVAENGINE_H__

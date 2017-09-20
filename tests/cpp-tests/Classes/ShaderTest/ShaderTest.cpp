@@ -573,13 +573,16 @@ void ShaderRetroEffect::update(float dt)
     for (int i = 0; i < letterCount; ++i)
     {
         auto sprite = _label->getLetter(i);
-        auto oldPosition = sprite->getPosition();
-        sprite->setPosition(Vec2( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
-        
-        // add fabs() to prevent negative scaling
-        float scaleY = ( sinf( _accum * 2 + i/2.0 + 0.707) );
-        
-        sprite->setScaleY(scaleY);
+        if (sprite != nullptr)
+        {
+            auto oldPosition = sprite->getPosition();
+            sprite->setPosition(Vec2( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
+            
+            // add fabs() to prevent negative scaling
+            float scaleY = ( sinf( _accum * 2 + i/2.0 + 0.707) );
+            
+            sprite->setScaleY(scaleY);
+        }
     }
 }
 

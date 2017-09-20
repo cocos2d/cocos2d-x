@@ -1,5 +1,5 @@
 #/****************************************************************************
-# Copyright (c) 2014 Chukong Technologies Inc.
+# Copyright (c) 2014-2017 Chukong Technologies Inc.
 #
 # http://www.cocos2d-x.org
 #
@@ -39,6 +39,7 @@ set(JSBINDING_SRC
   auto/jsb_cocos2dx_audioengine_auto.cpp
   auto/jsb_cocos2dx_builder_auto.cpp
   auto/jsb_cocos2dx_extension_auto.cpp
+  auto/jsb_cocos2dx_network_auto.cpp
   auto/jsb_cocos2dx_spine_auto.cpp
   auto/jsb_cocos2dx_studio_auto.cpp
   auto/jsb_cocos2dx_ui_auto.cpp
@@ -69,6 +70,7 @@ set(JSBINDING_SRC
   manual/network/XMLHTTPRequest.cpp
   manual/network/jsb_websocket.cpp
   manual/network/jsb_socketio.cpp
+  manual/network/js_network_manual.cpp
   manual/spine/jsb_cocos2dx_spine_manual.cpp
   manual/ui/jsb_cocos2dx_ui_manual.cpp
   manual/3d/jsb_cocos2dx_3d_manual.cpp
@@ -110,3 +112,7 @@ set_target_properties(jscocos2d
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
+
+if(USE_BULLET)
+  include_directories(${BULLET_INCLUDE_DIRS})
+endif()

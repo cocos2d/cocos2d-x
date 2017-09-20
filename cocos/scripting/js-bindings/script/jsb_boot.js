@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Chukong Technologies Inc.
+ * Copyright (c) 2015-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -1822,6 +1822,29 @@ cc.game = /** @lends cc.game# */{
 
 //+++++++++++++++++++++++++something about CCGame end+++++++++++++++++++++++++++++
 
+// Original bind in Spidermonkey v33 will trigger object life cycle track issue in our memory model and cause crash
+Function.prototype.bind = function (oThis) {
+    if (!cc.isFunction(this)) {
+        // closest thing possible to the ECMAScript 5
+        // internal IsCallable function
+        throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+    }
+
+    var aArgs = Array.prototype.slice.call(arguments, 1),
+        fToBind = this,
+        fNOP = function () {},
+        fBound = function () {
+            return fToBind.apply(this instanceof fNOP && oThis
+                ? this
+                : oThis,
+                aArgs.concat(Array.prototype.slice.call(arguments)));
+        };
+
+    fNOP.prototype = this.prototype;
+    fBound.prototype = new fNOP();
+
+    return fBound;
+};
 
 jsb.urlRegExp = new RegExp(
     "^" +
