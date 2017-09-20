@@ -281,6 +281,27 @@ CC_ASSERT(__gl_error_code == GL_NO_ERROR, "Error"); \
 #define CC_64BITS 0
 #endif
 
+ /*********************************/
+ /** LittleEndian Sense Macro **/
+ /*********************************/
+#ifdef _MSC_VER
+  #if defined(_M_IX86)
+    #define CC_LITTLE_ENDIAN 1
+  #else
+    #define CC_LITTLE_ENDIAN 0
+  #endif
+  #if _MSC_VER >= 1300
+    #pragma runtime_checks("c", off)
+  #endif
+#else
+  #include <sys/param.h>
+  #if defined(__BYTE_ORDER) && __BYTE_ORDER == __LITTLE_ENDIAN
+    #define CC_LITTLE_ENDIAN 1
+  #else
+    #define CC_LITTLE_ENDIAN 0
+  #endif
+#endif
+
 
 /** @def CC_INCREMENT_GL_DRAWS_BY_ONE
  Increments the GL Draws counts by one.
