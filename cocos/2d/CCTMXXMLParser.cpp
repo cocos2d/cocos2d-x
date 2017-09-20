@@ -518,6 +518,8 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
         dict["width"] = Value(s.width);
         dict["height"] = Value(s.height);
 
+        dict["rotation"] = attributeDict["rotation"].asDouble();
+
         // Add the object to the objectGroup
         objectGroup->getObjects().push_back(Value(dict));
 
