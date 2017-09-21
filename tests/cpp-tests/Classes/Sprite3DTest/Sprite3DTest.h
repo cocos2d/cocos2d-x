@@ -591,6 +591,7 @@ public:
     Sprite3DNormalMappingTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+    virtual void update(float dt) override;
 
     virtual ~Sprite3DNormalMappingTest();
 };

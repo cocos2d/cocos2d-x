@@ -1597,6 +1597,7 @@ void PhysicsSetGravityEnableTest::onEnter()
     // common box
     auto commonBox = makeBox(Vec2(100, 100), Size(50, 50), 1);
     commonBox->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    commonBox->getPhysicsBody()->setGravityEnable(true);
     addChild(commonBox);
     
     auto box = makeBox(Vec2(200, 100), Size(50, 50), 2);
@@ -1622,7 +1623,7 @@ void PhysicsSetGravityEnableTest::onScheduleOnce(float /*delta*/)
     auto ball = getChildByTag(2);
     ball->getPhysicsBody()->setMass(200);
     
-    _physicsWorld->setGravity(Vec2(0, 98));
+    _physicsWorld->setGravity(Vec2(0, -98));
 }
 
 std::string PhysicsSetGravityEnableTest::title() const
