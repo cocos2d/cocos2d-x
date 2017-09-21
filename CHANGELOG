@@ -1,3 +1,78 @@
+cocos2d-x-3.16 Sep.30 2017
+[NEW]           Add RadialGradientLayer
+
+[REFINE]        3rd: use prebuilt bullet
+[REFINE]        CameraBackgroundBrush: use VAO/VBO to improve performance
+[REFINE]        Color4F: add arithmentic operators
+[REFINE]        LayerMultiplex: add `LayerMultiplex::switch(int, bool)` to not clean up previous layer after switching to a new layer
+[REFINE]        ListView: add padding options
+[REFINE]        FileUtils: add more async functions
+[REFINE]        ImageView: add `ImageView::setBlendFunc()` to change blend function
+[REFINE]        PageView: allow customizing opacity of indicator nodes
+[REFINE]        ParticleSystem: add `ParticleSystem::setSourcePositionCompatible(bool)` to set source position instead of position
+[REFINE]        RichText: image tag supports sprite frame
+[REFINE]        RichText: support horizontal alignment
+[REFINE]        ScrollView: add `ScrollView::setSwallowTouches(bool)`
+[REFINE]        ScrollView: dispatch more useful events and add more getters
+[REFINE]        Spine: support ETC1
+[REFINE]        WebView: can set opacity
+[REFINE]        Android: update to support Android Studio 2.3.3
+[REFINE]        Android: add `Cocos2dxActivity.setEnableVirtualButton(boolean)` to control whether the hide virtual button or not
+[REFINE]        iOS: more stable delta time between frames
+[REFINE]        Engine: fix many warning issues
+[REFINE]        Engine: exclude fps image in release mode
+[REFINE]        Engine: add function for calculating md5 hash from Data
+[REFINE]        Windows 10 metro mode, Windows Phone and Tizen are not supported
+
+[FIX]           Application: openURL() can not open URLs that have `&` character on linux
+[FIX]           Audio: may crash if play, stop frequently on Mac/Android
+[FIX]           Audio: may crash if switch to background with effect playing and switch to foreground again on Android
+[FIX]           Audio: may freeze app on iOS/Mac
+[FIX]           Audio: may crash if have multiple audio tracks running at the same time and frequently call `_play2d(AudioCache *cache, int audioID)` on iOS/Mac
+[FIX]           Audio: can not mute audio while a ring or a call is comming on Android
+[FIX]           Audio: audio loops get evently cut
+[FIX]           Button: scale9 effect may wrong
+[FIX]           Director: will dispatch `EVENT_BEFORE_DRAW` before drawing a frame
+[FIX]           Downloader: task may be suspend and not been executed on Android
+[FIX]           Downloader: may crash if downloading large file on iOS/Mac
+[FIX]           EditBox: may not show cursor and input text on Android
+[FIX]           EditBox: may not show any character when type on keyboard on Android
+[FIX]           EditBox: fix spacing and alignment on Windows
+[FIX]           EditBox: text is larger and mis-aligned on Android
+[FIX]           EventDispatcher: `pauseEventListenersForTarget()` can not work correctly if invoked in event callback
+[FIX]           FileUtils: `listFiles` and `listFilesRecursively` can not work correctly if the path include unicode charater on Windows
+[FIX]           FileUtils: getFileSize() always return -1 on Android
+[FIX]           FontAtlas: may cause crash when back from background on Android
+[FIX]           FontAtlas: memory leak in `FontAtlas::prepareLetterDefinitions()`
+[FIX]           HttpClient: may cause crash if used in non network environment on Android
+[FIX]           ImageView: scale9 effect may wrong
+[FIX]           Label: line height is reset when call `FontAtlasCache::purgeCachedData()`
+[FIX]           Label: memory leak in `Label::setFontAtlas()`
+[FIX]           Label: wrong effect of shrink overflow clamp on iOS
+[FIX]           Physics: crash if calling `PhysicsWorld::setDebugDrawMask(false)` right after `Scene::initWithPhysics()`
+[FIX]           Scheduler: can not work correctly if reschedule with same key in callback
+[FIX]           Sprite: `Sprite::setTexture()` will reset program state
+[FIX]           Studio: revert Studio reader and flatbuffer
+[FIX]           TextField: crash when text exceeds content with enabled cursor
+[FIX]           Transition: TransitionCrossFade is darker than it should
+[FIX]           Widget: wrong layout in scaled widget
+[FIX]           Android: app will crash at the first time launching by clicking app icon
+[FIX]           Android: compiling error built with Android Studio for x86
+[FIX]           Android: can not creat EGL context if the device doesn't support 24bit depth buffer
+[FIX]           Android: may stop response to touch event
+[FIX]           Android: can not use previous OBB file when APK version changed
+[FIX]           iOS: can not use cocos console compile and run in release mode on iOS with Xcode 8.3+
+[FIX]           Desktop: `GLViewImpl::getMonitorSize()` may return zero
+[FIX]           Apple: may crash if there are more than 10 touches
+[FIX]           JSB: add chipmunk binding for `cpSpace::segmentQuery()`
+[FIX]           JSB: XMLHTTPRequest memory leak if CC_ENABLE_GC_FOR_NATIVE_OBJECTS is enabled
+[FIX]           JSB: WebView doesn't support https
+[FIX]           Lua: export `cocos2d::utils::findChild()`
+[FIX]           Lua: LuaObjcBridge return wrong type when return type is bool
+[FIX]           Lua: will crash if lua file is encrypted and it has BOM header
+[FIX]           Lua: iskindof() return wrong result
+[FIX]           Lua: crash if run on iOS simulator with Xcode 8.0+
+
 cocos2d-x-3.15.1 May.27 2017
 
 [REFINE]        Add optimization codes for huawei devices
