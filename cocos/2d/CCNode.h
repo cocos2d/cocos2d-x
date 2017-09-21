@@ -163,15 +163,15 @@ public:
      *
      * @param localZOrder The local Z order value.
      */
-    virtual void setLocalZOrder(int localZOrder);
+    virtual void setLocalZOrder(std::int32_t localZOrder);
 
-    CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(int localZOrder) { setLocalZOrder(localZOrder); }
+    CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(std::int32_t localZOrder) { setLocalZOrder(localZOrder); }
     
     /* 
      Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
      @js NA
      */
-    virtual void _setLocalZOrder(int z);
+    virtual void _setLocalZOrder(std::int32_t z);
 
     /** !!! ONLY FOR INTERNAL USE
     * Sets the arrival order when this node has a same ZOrder with other children.
@@ -193,9 +193,9 @@ public:
      * @return The local (relative to its siblings) Z order.
      */
 
-    virtual int getLocalZOrder() const { return _localZOrder; }
+    virtual std::int32_t getLocalZOrder() const { return _localZOrder; }
 
-    CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
+    CC_DEPRECATED_ATTRIBUTE virtual std::int32_t getZOrder() const { return getLocalZOrder(); }
 
     /**
      Defines the order in which the nodes are renderer.
@@ -1943,16 +1943,16 @@ protected:
 #if CC_LITTLE_ENDIAN
     union {
         struct {
-            unsigned int _orderOfArrival;
-            int _localZOrder;
+            std::uint32_t _orderOfArrival;
+            std::int32_t _localZOrder;
         };
         std::int64_t _localZOrder$Arrival;
     };
 #else
     union {
         struct {
-            int _localZOrder;
-            unsigned int _orderOfArrival;
+            std::int32_t _localZOrder;
+            std::uint32_t _orderOfArrival;
         };
         std::int64_t _localZOrder$Arrival;
     };
@@ -1960,7 +1960,7 @@ protected:
 
     float _globalZOrder;            ///< Global order used to sort the node
 
-    static unsigned int s_globalOrderOfArrival;
+    static std::uint32_t s_globalOrderOfArrival;
 
     Vector<Node*> _children;        ///< array of children nodes
     Node *_parent;                  ///< weak reference to parent node
