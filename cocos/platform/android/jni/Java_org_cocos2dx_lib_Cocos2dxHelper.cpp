@@ -44,16 +44,12 @@ static void* s_ctx = nullptr;
 static int __deviceSampleRate = 44100;
 static int __deviceAudioBufferSizeInFrames = 192;
 
+static std::string g_apkPath;
+
 using namespace cocos2d;
 using namespace std;
 
-string g_apkPath;
-
 extern "C" {
-
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetApkPath(JNIEnv*  env, jobject thiz, jstring apkPath) {
-        g_apkPath = JniHelper::jstring2string(apkPath);
-    }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetContext(JNIEnv*  env, jobject thiz, jobject context, jobject assetManager) {
         JniHelper::setClassLoaderFrom(context);
@@ -88,6 +84,11 @@ extern "C" {
 }
 
 const char * getApkPath() {
+    if (g_apkPath.empty())
+    {
+        g_apkPath = JniHelper::callStaticStringMethod(className, "getAssetsPath");
+    }
+
     return g_apkPath.c_str();
 }
 
