@@ -1,5 +1,6 @@
 cocos2d-x-3.16 Sep.30 2017
 [NEW]           Add RadialGradientLayer
+[NEW]           Web: Add GLProgramState and upgrade web shader usage APIs
 
 [REFINE]        3rd: use prebuilt bullet
 [REFINE]        CameraBackgroundBrush: use VAO/VBO to improve performance
@@ -23,6 +24,15 @@ cocos2d-x-3.16 Sep.30 2017
 [REFINE]        Engine: exclude fps image in release mode
 [REFINE]        Engine: add function for calculating md5 hash from Data
 [REFINE]        Windows 10 metro mode, Windows Phone and Tizen are not supported
+[REFINE]        Web: Text wrapping supports more languages
+[REFINE]        Web: upgrade Spine to v3.5.35 and support Spine skeleton batching
+[REFINE]        Web: improve Editbox user experience
+[REFINE]        Web: improve screen adaptation for games inside iframe
+[REFINE]        Web: use imagePool to reduce image cache memory usage in WebGL mode
+[REFINE]        Web: ParticleSystem: Mark changeColor only if needed
+[REFINE]        Web: use default scheduler to control action manager
+[REFINE]        Web: remove accelerometer event listener by default
+[REFINE]        Web: use arraybuffer responseType in BinaryLoader
 
 [FIX]           Application: openURL() can not open URLs that have `&` character on linux
 [FIX]           Audio: may crash if play, stop frequently on Mac/Android
@@ -62,6 +72,7 @@ cocos2d-x-3.16 Sep.30 2017
 [FIX]           Android: may stop response to touch event
 [FIX]           Android: can not use previous OBB file when APK version changed
 [FIX]           iOS: can not use cocos console compile and run in release mode on iOS with Xcode 8.3+
+[FIX]           iOS: FileUtils will cause compiling error on iOS 11
 [FIX]           Desktop: `GLViewImpl::getMonitorSize()` may return zero
 [FIX]           Apple: may crash if there are more than 10 touches
 [FIX]           JSB: add chipmunk binding for `cpSpace::segmentQuery()`
@@ -71,7 +82,13 @@ cocos2d-x-3.16 Sep.30 2017
 [FIX]           Lua: LuaObjcBridge return wrong type when return type is bool
 [FIX]           Lua: will crash if lua file is encrypted and it has BOM header
 [FIX]           Lua: iskindof() return wrong result
-[FIX]           Lua: crash if run on iOS simulator with Xcode 8.0+
+[FIX]           Lua: crash if run on iOS simulator with Xcode 8.0+    
+[FIX]           Web: memory leak in action manager
+[FIX]           Web: local resources loading failed
+[FIX]           Web: infinite call stack in ArmatureWebGLRenderCmd
+[FIX]           Web: label stroke effect
+[FIX]           Web: ProgressTimer vertex is not updated when changing transform
+[FIX]           Web: DrawNode canvas displayedOpacity rendering
 
 cocos2d-x-3.15.1 May.27 2017
 
