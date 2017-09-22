@@ -220,23 +220,15 @@ $ bin/lua-empty-test/lua-empty-test
 
 Open the `cocos2d-x/build/cocos2d-win32.sln`
 
-* For Windows 10.0 Universal Windows Platform (UWP) Apps (Phone and Store)
-
-Open the `cocos2d-x/build/cocos2d-win10.sln`
-
 * For Android
 
 ```
 $ cd cocos2d-x/build
-$ python ./android-build.py cpp-empty-test -p 13
+$ python ./android-build.py cpp-empty-test -p 14
 $ adb install ../tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
 ```
 
-Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 13.
-
-* For Tizen
-
-Please refer to this [guide](http://cocos2d-x.org/docs/installation/Tizen/index.html ).
+Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 14.
 
 Learning Resources
 --------------------------------
