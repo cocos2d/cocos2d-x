@@ -24,18 +24,12 @@ THE SOFTWARE.
 package org.cocos2dx.cpp_empty_test;
 
 import android.os.Bundle;
-import android.os.StrictMode;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
 public class AppActivity extends Cocos2dxActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-            .detectAll()
-            .penaltyLog()
-            .build());
-
         super.setEnableVirtualButton(false);
         super.onCreate(savedInstanceState);
         // Workaround in https://stackoverflow.com/questions/16283079/re-launch-of-activity-on-home-button-but-only-the-first-time/16447508
