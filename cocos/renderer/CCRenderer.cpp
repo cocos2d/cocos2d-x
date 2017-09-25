@@ -66,16 +66,17 @@ RenderQueue::RenderQueue()
     
 }
 
-void RenderQueue::push_back(RenderCommand* command)
+RenderQueue::QUEUE_GROUP RenderQueue::getQueueGroup(RenderCommand* command)
 {
     float z = command->getGlobalOrder();
+    RenderQueue::QUEUE_GROUP retQueueGroup = QUEUE_GROUP::GLOBALZ_ZERO;
     if(z < 0)
     {
-        _commands[QUEUE_GROUP::GLOBALZ_NEG].push_back(command);
+        retQueueGroup = QUEUE_GROUP::GLOBALZ_NEG;
     }
     else if(z > 0)
     {
-        _commands[QUEUE_GROUP::GLOBALZ_POS].push_back(command);
+        retQueueGroup = QUEUE_GROUP::GLOBALZ_POS;
     }
     else
     {
@@ -83,18 +84,21 @@ void RenderQueue::push_back(RenderCommand* command)
         {
             if(command->isTransparent())
             {
-                _commands[QUEUE_GROUP::TRANSPARENT_3D].push_back(command);
+                retQueueGroup = QUEUE_GROUP::TRANSPARENT_3D;
             }
             else
             {
-                _commands[QUEUE_GROUP::OPAQUE_3D].push_back(command);
+                retQueueGroup = QUEUE_GROUP::OPAQUE_3D;
             }
         }
-        else
-        {
-            _commands[QUEUE_GROUP::GLOBALZ_ZERO].push_back(command);
-        }
     }
+    return retQueueGroup;
+}
+
+void RenderQueue::push_back(RenderCommand* command)
+{
+    RenderQueue::QUEUE_GROUP queueGroup = getQueueGroup(command);
+    _commands[queueGroup].push_back(command);
 }
 
 ssize_t RenderQueue::size() const

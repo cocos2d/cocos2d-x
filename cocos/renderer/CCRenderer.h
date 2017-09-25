@@ -90,6 +90,8 @@ public:
 public:
     /**Constructor.*/
     RenderQueue();
+    /**Get a queue type*/
+    RenderQueue::QUEUE_GROUP getQueueGroup(RenderCommand* command);
     /**Push a renderCommand into current renderqueue.*/
     void push_back(RenderCommand* command);
     /**Return the number of render commands.*/
@@ -182,6 +184,8 @@ public:
 
     /** set color for clear screen */
     void setClearColor(const Color4F& clearColor);
+    /* returns the Render Queue */
+    std::vector<RenderQueue>& getRenderGroups() { return _renderGroups; }
     /* returns the number of drawn batches in the last frame */
     ssize_t getDrawnBatches() const { return _drawnBatches; }
     /* RenderCommands (except) TrianglesCommand should update this value */
