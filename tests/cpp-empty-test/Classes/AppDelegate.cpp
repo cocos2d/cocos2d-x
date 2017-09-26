@@ -52,26 +52,26 @@ bool AppDelegate::applicationDidFinishLaunching()
     // this can make sure that the resource's height could fit for the height of design resolution.
 
     // if the frame's height is larger than the height of medium resource size, select large resource.
-	if (frameSize.height > mediumResource.size.height)
-	{
-        searchPath.push_back(largeResource.directory);
-
-        director->setContentScaleFactor(MIN(largeResource.size.height/designResolutionSize.height, largeResource.size.width/designResolutionSize.width));
-	}
-    // if the frame's height is larger than the height of small resource size, select medium resource.
-    else if (frameSize.height > smallResource.size.height)
-    {
-        searchPath.push_back(mediumResource.directory);
-        
-        director->setContentScaleFactor(MIN(mediumResource.size.height/designResolutionSize.height, mediumResource.size.width/designResolutionSize.width));
-    }
-    // if the frame's height is smaller than the height of medium resource size, select small resource.
-	else
-    {
-        searchPath.push_back(smallResource.directory);
-
-        director->setContentScaleFactor(MIN(smallResource.size.height/designResolutionSize.height, smallResource.size.width/designResolutionSize.width));
-    }
+//	if (frameSize.height > mediumResource.size.height)
+//	{
+//        searchPath.push_back(largeResource.directory);
+//
+//        director->setContentScaleFactor(MIN(largeResource.size.height/designResolutionSize.height, largeResource.size.width/designResolutionSize.width));
+//	}
+//    // if the frame's height is larger than the height of small resource size, select medium resource.
+//    else if (frameSize.height > smallResource.size.height)
+//    {
+//        searchPath.push_back(mediumResource.directory);
+//        
+//        director->setContentScaleFactor(MIN(mediumResource.size.height/designResolutionSize.height, mediumResource.size.width/designResolutionSize.width));
+//    }
+//    // if the frame's height is smaller than the height of medium resource size, select small resource.
+//	else
+//    {
+//        searchPath.push_back(smallResource.directory);
+//
+//        director->setContentScaleFactor(MIN(smallResource.size.height/designResolutionSize.height, smallResource.size.width/designResolutionSize.width));
+//    }
     
     // set searching path
     FileUtils::getInstance()->setSearchPaths(searchPath);
