@@ -801,11 +801,7 @@ void RenderTexture::begin()
     Renderer *renderer =  Director::getInstance()->getRenderer();
 
     //make sure the same group command will not be added more times
-    std::vector<RenderQueue>& renderGroups = renderer->getRenderGroups();
-    int renderQueueID = _groupCommand.getRenderQueueID();
-    RenderQueue::QUEUE_GROUP queueGroup = renderGroups[renderQueueID].getQueueGroup(&_groupCommand);
-    std::vector<RenderCommand*>& queue = renderGroups[renderQueueID].getSubQueue(queueGroup);
-    if (queue.empty()){
+    if (renderer->isGroupCommandRenderQueueEmpty(&_groupCommand)){
         renderer->addCommand(&_groupCommand);
     }
     renderer->pushGroup(_groupCommand.getRenderQueueID());

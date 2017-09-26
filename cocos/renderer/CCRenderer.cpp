@@ -937,4 +937,15 @@ void Renderer::setClearColor(const Color4F &clearColor)
     _clearColor = clearColor;
 }
 
+bool Renderer::isGroupCommandRenderQueueEmpty(GroupCommand* command){
+    bool retBool = true;
+    if (command != nullptr){
+        int renderQueueID = command->getRenderQueueID();
+        RenderQueue::QUEUE_GROUP queueGroup = _renderGroups[renderQueueID].getQueueGroup(command);
+        std::vector<RenderCommand*>& queue = _renderGroups[renderQueueID].getSubQueue(queueGroup);
+        retBool = queue.empty();
+    }
+    return retBool;
+}
+
 NS_CC_END

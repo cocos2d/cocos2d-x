@@ -31,6 +31,7 @@
 
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderCommand.h"
+#include "renderer/CCGroupCommand.h"
 #include "renderer/CCGLProgram.h"
 #include "platform/CCGL.h"
 
@@ -184,8 +185,8 @@ public:
 
     /** set color for clear screen */
     void setClearColor(const Color4F& clearColor);
-    /* returns the Render Queue */
-    std::vector<RenderQueue>& getRenderGroups() { return _renderGroups; }
+    /* returns true if the render queue for a group command is empty */
+    bool isGroupCommandRenderQueueEmpty(GroupCommand* command);
     /* returns the number of drawn batches in the last frame */
     ssize_t getDrawnBatches() const { return _drawnBatches; }
     /* RenderCommands (except) TrianglesCommand should update this value */
