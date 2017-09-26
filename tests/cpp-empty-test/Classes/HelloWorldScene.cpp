@@ -147,6 +147,7 @@ void HelloWorld::handleDragonbones(cocos2d::Scene* scene)
         
         auto dragonBonesHandler = new DragonBonesHandler(HelloWorld::g_currentScene);
         HelloWorld::g_currentScene->addChild(dragonBonesHandler);
+        dragonBonesHandler->release();
     });
 }
 

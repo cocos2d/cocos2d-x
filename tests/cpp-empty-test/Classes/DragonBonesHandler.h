@@ -19,9 +19,10 @@ class DragonBonesHandler : public cocos2d::Node
 {
 public:
     DragonBonesHandler(cocos2d::Scene* scene);
-    
+
     virtual void update(float dt) override;
     virtual void onEnter() override;
+    virtual void onExit() override;
     
     void animationEventHandler(dragonBones::EventObject*);
     void frameEventHandler(dragonBones::EventObject*);

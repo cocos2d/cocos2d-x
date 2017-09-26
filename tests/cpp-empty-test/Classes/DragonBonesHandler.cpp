@@ -144,6 +144,13 @@ void DragonBonesHandler::onEnter()
     cocos2d::Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(touchLisener, _armatureDisplay);
 }
 
+void DragonBonesHandler::onExit()
+{
+    Node::onExit();
+    // since `CCArmatureDisplay` reset EventDispacher, so we should remove event listener manually
+    cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListenersForTarget(_armatureDisplay);
+}
+
 void DragonBonesHandler::animationEventHandler(dragonBones::EventObject* event)
 {
     if (event->type == dragonBones::EventObject::FADE_IN_COMPLETE)
