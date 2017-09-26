@@ -39,13 +39,15 @@ public:
         EXIT
     };
     
-    Contract(Collider* collider1, Collider* collider2);
-    ~Contract();
-    
-    CollisionType updateState();
     Collider* getCollider1() const;
     Collider* getCollider2() const;
+    
 private:
+    friend class ColliderManager;
+    
+    Contract(Collider* collider1, Collider* collider2);
+    ~Contract();
+    CollisionType updateState();
     bool test() const;
     
     static bool isBoxCollider(Collider* collider);
@@ -58,6 +60,8 @@ private:
     bool _isPolygonPolygon;
     bool _isCircleCircle;
     bool _isPolygonCircle;
+    
+    CREATOR_DISALLOW_COPY_ASSIGN_AND_MOVE(Contract);
 };
 
 NS_CCR_END

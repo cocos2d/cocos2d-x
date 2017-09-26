@@ -39,9 +39,6 @@ class ColliderManager : public cocos2d::Node
 public:
     typedef std::function<void(Contract::CollisionType, Collider*, Collider*)> CollistionCallback;
     
-    ColliderManager();
-    ~ColliderManager();
-    
     void update(float dt);
     void removeCollider(Collider* collider);
     
@@ -59,6 +56,9 @@ public:
     
 private:
     friend class CreatorReader;
+    
+    ColliderManager();
+    ~ColliderManager();
     
     // invoked by CreatorReader
     void start();
@@ -78,6 +78,8 @@ private:
     cocos2d::DrawNode* _debugDrawNode;
     
     std::unordered_map<std::string, CollistionCallback> _collisionCallbacks;
+    
+    CREATOR_DISALLOW_COPY_ASSIGN_AND_MOVE(ColliderManager);
 };
 
 NS_CCR_END

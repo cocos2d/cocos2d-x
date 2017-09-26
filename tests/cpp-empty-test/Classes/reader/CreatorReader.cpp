@@ -90,19 +90,15 @@ namespace {
 // CreatorReader main class
 //
 CreatorReader::CreatorReader()
-: _scene(nullptr)
-, _version("")
+: _version("")
 , _positionDiffDesignResolution(0, 0)
 {
-    _animationManager = AnimationManager::create();
-    _animationManager->retain();
-    
+    _animationManager = new AnimationManager();
     _collisionManager = new ColliderManager();
 }
 
 CreatorReader::~CreatorReader()
 {
-    CC_SAFE_RELEASE_NULL(_scene);
     CC_SAFE_RELEASE_NULL(_collisionManager);
     CC_SAFE_RELEASE_NULL(_animationManager);
 }
@@ -331,11 +327,9 @@ cocos2d::Node* CreatorReader::createTree(const buffers::NodeTree* tree) const
         case buffers::AnyNode_Mask:
             node = createMask(static_cast<const buffers::Mask*>(buffer));
             break;
-#if (USE_DRAGON_BONES == 1)
         case buffers::AnyNode_DragonBones:
             node = createArmatureDisplay(static_cast<const buffers::DragonBones*>(buffer));
             break;
-#endif
     }
 
     // recursively add its children
@@ -1259,7 +1253,6 @@ void CreatorReader::parseSpineSkeleton(spine::SkeletonAnimation* spine, const bu
     spine->setDebugBonesEnabled(debugBones);
 }
 
-#if (USE_DRAGON_BONES == 1)
 dragonBones::CCArmatureDisplay* CreatorReader::createArmatureDisplay(const buffers::DragonBones* dragonBonesBuffer) const
 {
     const auto& boneDataPath = dragonBonesBuffer->boneDataPath();
@@ -1299,7 +1292,6 @@ void CreatorReader::parseArmatureDisplay(dragonBones::CCArmatureDisplay* armatur
         armatureDisplay->getAnimation().play(animationName->str());
     }
 }
-#endif // (USE_DRAGON_BONES == 1)
 
 
 //

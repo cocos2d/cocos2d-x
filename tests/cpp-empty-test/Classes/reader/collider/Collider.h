@@ -32,19 +32,14 @@ NS_CCR_BEGIN
 class Collider : public cocos2d::Ref
 {
 public:
-    Collider(cocos2d::Node* target, int targetGroupIndex, const cocos2d::Vec2& offset);
-    ~Collider();
-    
     virtual void update() = 0;
-    
-    const std::vector<cocos2d::Vec2>& getWorldPoints() const;
+
     const cocos2d::Rect& getAABB() const;
     cocos2d::Node* getTarget() const;
-    int getTargetGroupIndex() const;
-    cocos2d::Vec2 getOffset() const;
-    void setOffset(const cocos2d::Vec2& offset);
     
 protected:
+    Collider(cocos2d::Node* target, int targetGroupIndex, const cocos2d::Vec2& offset);
+    virtual ~Collider();
     cocos2d::Mat4 getNodeToWorldTransformAR() const;
     
     cocos2d::Node* _target;
@@ -52,49 +47,81 @@ protected:
     cocos2d::Vec2 _offset;
     cocos2d::Rect _AABB;
     std::vector<cocos2d::Vec2> _worldPoints;
+    
+private:
+    friend class Contract;
+    friend class ColliderManager;
+    
+    cocos2d::Vec2 getOffset() const;
+    void setOffset(const cocos2d::Vec2& offset);
+    int getTargetGroupIndex() const;
+    const std::vector<cocos2d::Vec2>& getWorldPoints() const;
+    
+    CREATOR_DISALLOW_COPY_ASSIGN_AND_MOVE(Collider);
 };
 
 class CircleCollider : public Collider
 {
 public:
-    CircleCollider(cocos2d::Node* target, int targetGroupIndex, const cocos2d::Vec2& offset, float radius);
-    
     virtual void update() override;
-    
     float getRadius() const;
-    void setRadius(float radius);
+    
+private:
+    friend class Contract;
+    friend class ColliderManager;
+    friend class CreatorReader;
+    
+    CircleCollider(cocos2d::Node* target, int targetGroupIndex, const cocos2d::Vec2& offset, float radius);
+    ~CircleCollider();
+    
     float getWorldRadius() const;
     const cocos2d::Vec2& getWorldPosition() const;
-private:
+    void setRadius(float radius);
+    
     float _radius;
     float _worldRadius;
     cocos2d::Vec2 _worldPosition;
+    
+    CREATOR_DISALLOW_COPY_ASSIGN_AND_MOVE(CircleCollider);
 };
 
 class BoxCollider : public Collider
 {
 public:
-    BoxCollider(cocos2d::Node* target, int targetGroupIndex, const cocos2d::Vec2& offset, const cocos2d::Size& size);
-    
     virtual void update() override;
-    
     cocos2d::Size getSize() const;
-    void setSize(const cocos2d::Size& size);
+    
 private:
+    friend class Contract;
+    friend class ColliderManager;
+    friend class CreatorReader;
+    
+    BoxCollider(cocos2d::Node* target, int targetGroupIndex, const cocos2d::Vec2& offset, const cocos2d::Size& size);
+    ~BoxCollider();
+    void setSize(const cocos2d::Size& size);
+    
     cocos2d::Size _size;
+    
+    CREATOR_DISALLOW_COPY_ASSIGN_AND_MOVE(BoxCollider);
 };
 
 class PolygonCollider : public Collider
 {
 public:
-    PolygonCollider(cocos2d::Node* target, int targetGroupIndex, const cocos2d::Vec2& offset, const std::vector<cocos2d::Vec2>& points);
-    
     virtual void update() override;
-    
     std::vector<cocos2d::Vec2> getPoints() const;
-    void setPoints(const std::vector<cocos2d::Vec2>& points);
+    
 private:
+    friend class Contract;
+    friend class ColliderManager;
+    friend class CreatorReader;
+    
+    PolygonCollider(cocos2d::Node* target, int targetGroupIndex, const cocos2d::Vec2& offset, const std::vector<cocos2d::Vec2>& points);
+    ~PolygonCollider();
+    void setPoints(const std::vector<cocos2d::Vec2>& points);
     std::vector<cocos2d::Vec2> _points;
+    
+    CREATOR_DISALLOW_COPY_ASSIGN_AND_MOVE(PolygonCollider);
 };
 
 NS_CCR_END

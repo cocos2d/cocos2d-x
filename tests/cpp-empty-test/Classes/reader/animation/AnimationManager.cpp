@@ -4,13 +4,8 @@
 
 NS_CCR_BEGIN
 
-AnimationManager* AnimationManager::create()
-{
-    auto self = new (std::nothrow)AnimationManager;
-    if (self)
-        self->autorelease();
-    return self;
-}
+AnimationManager::AnimationManager()
+{}
 
 AnimationManager::~AnimationManager()
 {

@@ -92,6 +92,9 @@ CircleCollider::CircleCollider(cocos2d::Node* target, int targetGroupIndex, cons
 , _worldRadius(radius)
 {}
 
+CircleCollider::~CircleCollider()
+{}
+
 void CircleCollider::update()
 {
     // world position
@@ -147,6 +150,9 @@ BoxCollider::BoxCollider(cocos2d::Node* target, int targetGroupIndex, const coco
     };
 }
 
+BoxCollider::~BoxCollider()
+{}
+
 void BoxCollider::update()
 {
     // world position
@@ -191,6 +197,9 @@ PolygonCollider::PolygonCollider(cocos2d::Node* target, int targetGroupIndex, co
 {
     _points = std::move(points);
 }
+
+PolygonCollider::~PolygonCollider()
+{}
 
 void PolygonCollider::update()
 {

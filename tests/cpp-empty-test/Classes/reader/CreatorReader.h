@@ -32,11 +32,9 @@
 #include "Macros.h"
 #include "CreatorReader_generated.h"
 #include "collider/ColliderManager.h"
-
-#if (USE_DRAGON_BONES == 1)
 #include "dragonbones/DragonBonesHeaders.h"
 #include "dragonbones/cocos2dx/CCDragonBonesHeaders.h"
-#endif
+
 
 
 NS_CCR_BEGIN
@@ -144,10 +142,8 @@ protected:
     cocos2d::ClippingNode* createMask(const buffers::Mask* maskBuffer) const;
     void parseMask(cocos2d::ClippingNode* mask, const buffers::Mask* maskBuffer) const;
     
-#if (USE_DRAGON_BONES == 1)
     dragonBones::CCArmatureDisplay* createArmatureDisplay(const buffers::DragonBones* dragonBonesBuffer) const;
     void parseArmatureDisplay(dragonBones::CCArmatureDisplay* armatureDisplay, const buffers::DragonBones* dragonBonesBuffer) const;
-#endif
     
     void setupSpriteFrames();
     void setupCollisionMatrix();
@@ -159,7 +155,6 @@ protected:
     void adjustPosition(cocos2d::Node* node) const;
 
     // variables
-    cocos2d::Scene* _scene;
     cocos2d::Data _data;
     std::string _version;
     
@@ -169,6 +164,8 @@ protected:
     // creator will make scene at the center of screen when apply design solution strategy, cocos2d-x doesn't do it like this
     // this value record the diff
     cocos2d::Vec2 _positionDiffDesignResolution;
+    
+    CREATOR_DISALLOW_COPY_ASSIGN_AND_MOVE(CreatorReader);
 };
 
 NS_CCR_END
