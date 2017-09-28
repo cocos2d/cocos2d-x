@@ -229,6 +229,13 @@ cocos2d::Scene* CreatorReader::getSceneGraph() const
     CCLOG("NodeTree: %p", nodeTree);
 
     cocos2d::Node* node = createTree(nodeTree);
+
+    // make scene at the center of screen
+    // should not just node's position because it is a Scene, and it will cause issue that click position is not correct(it is a bug of cocos2d-x)
+    // and should not change camera's position
+    for (auto& child : node->getChildren())
+        if (dynamic_cast<Camera*>(child) == nullptr)
+            child->setPosition(child->getPosition() + _positionDiffDesignResolution);
     
     _animationManager->playOnLoad();
     
@@ -397,7 +404,7 @@ void CreatorReader::parseNode(cocos2d::Node* node, const buffers::Node* nodeBuff
     const auto& opacityModifyRGB = nodeBuffer->opacityModifyRGB();
     node->setOpacityModifyRGB(opacityModifyRGB);
     const auto position = nodeBuffer->position();
-    if (position) node->setPosition(cocos2d::Vec2(position->x(), position->y()) + _positionDiffDesignResolution);
+    if (position) node->setPosition(cocos2d::Vec2(position->x(), position->y()));
     node->setRotationSkewX(nodeBuffer->rotationSkewX());
     node->setRotationSkewY(nodeBuffer->rotationSkewY());
     node->setScaleX(nodeBuffer->scaleX());
