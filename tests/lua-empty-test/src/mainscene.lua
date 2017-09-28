@@ -124,8 +124,8 @@ end
 
 
 handleButtonClick = function (scene)
-	handleNormalButtonClick(scene, 'label', 'creator/scenes/label/CreatorLabels.ccreator')
-	handleNormalButtonClick(scene, 'mask', 'creator/scenes/mask/Mask.ccreator')
+	handleNormalButtonClick(scene, 'label', 'creator/scenes/Label/CreatorLabels.ccreator')
+	handleNormalButtonClick(scene, 'mask', 'creator/scenes/Mask/Mask.ccreator')
 	handleNormalButtonClick(scene, 'pageview', 'creator/scenes/pageview/pageview.ccreator')
 	handleNormalButtonClick(scene, 'prefab', 'creator/scenes/prefab/prefab-test.ccreator')
 	handleNormalButtonClick(scene, 'richtext', 'creator/scenes/richtext/CreatorRichtext.ccreator')

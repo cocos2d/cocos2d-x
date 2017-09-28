@@ -1,6 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
+path := $(LOCAL_PATH)
 
 LOCAL_MODULE := lua_empty_test_shared
 
@@ -15,7 +16,10 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
                     $(LOCAL_PATH)/../../../../../external/lua/tolua \
 
 LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES += creator_reader_lua
 
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,scripting/lua-bindings/proj.android)
+$(call import-add-path, $(path)/../../Classes/)
+$(call import-module, reader)
