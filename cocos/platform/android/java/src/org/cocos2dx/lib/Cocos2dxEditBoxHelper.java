@@ -335,7 +335,7 @@ public class Cocos2dxEditBoxHelper {
                 if (editBox != null) {
                     editBox.setChangedTextProgrammatically(true);
                     editBox.setText(text);
-                    int position = text.length();
+                    int position = editBox.getText().length();
                     editBox.setSelection(position);
                 }
             }
