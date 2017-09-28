@@ -4,6 +4,7 @@
 #include "base/CCScriptSupport.h"
 #include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "scripting/lua-bindings/manual/lua_module_register.h"
+#include "reader/lua-bindings/lua_creator_reader_auto.hpp"
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -35,6 +36,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     ScriptEngineManager::getInstance()->setScriptEngine(engine);
     lua_State* L = engine->getLuaStack()->getLuaState();
     lua_module_register(L);
+    register_all_creator_reader(L);
     //The call was commented because it will lead to ZeroBrane Studio can't find correct context when debugging
     //engine->executeScriptFile("src/hello.lua");
     
