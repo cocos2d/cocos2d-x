@@ -174,6 +174,10 @@ public class Cocos2dxEditBox extends EditText {
         this.setFilters(new InputFilter[]{new InputFilter.LengthFilter(this.mMaxLength) });
     }
 
+    public int getMaxLength() {
+        return this.mMaxLength;
+    }
+
     public void setMultilineEnabled(boolean flag){
         this.mInputModeConstraints |= InputType.TYPE_TEXT_FLAG_MULTI_LINE;
     }
