@@ -172,7 +172,7 @@ void ColliderManager::registerCollitionCallback(CollistionCallback callback, con
     
     _collisionCallbacks[key] = callback;
 }
-void ColliderManager::unregisterCollisionCallback(CollistionCallback callback, const std::string& key)
+void ColliderManager::unregisterCollisionCallback(const std::string& key)
 {
     if (_collisionCallbacks.find(key) != _collisionCallbacks.end())
         _collisionCallbacks.erase(key);

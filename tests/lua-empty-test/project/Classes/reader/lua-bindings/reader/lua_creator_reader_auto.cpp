@@ -1,4 +1,4 @@
-#include "lua-bindings/lua_creator_reader_auto.hpp"
+#include "lua-bindings/reader/lua_creator_reader_auto.hpp"
 #include "CreatorReader.h"
 #include "Collider.h"
 #include "Contract.h"
@@ -625,120 +625,6 @@ int lua_register_creator_reader_Contract(lua_State* tolua_S)
     return 1;
 }
 
-int lua_creator_reader_ColliderManager_registerCollitionCallback(lua_State* tolua_S)
-{
-    int argc = 0;
-    creator::ColliderManager* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"creator.ColliderManager",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (creator::ColliderManager*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_creator_reader_ColliderManager_registerCollitionCallback'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
-    {
-        std::function<void (creator::Contract::CollisionType, creator::Collider *, creator::Collider *)> arg0;
-        std::string arg1;
-
-        do {
-			// Lambda binding for lua is not supported.
-			assert(false);
-		} while(0)
-		;
-
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "creator.ColliderManager:registerCollitionCallback");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_creator_reader_ColliderManager_registerCollitionCallback'", nullptr);
-            return 0;
-        }
-        cobj->registerCollitionCallback(arg0, arg1);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "creator.ColliderManager:registerCollitionCallback",argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_creator_reader_ColliderManager_registerCollitionCallback'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_creator_reader_ColliderManager_unregisterCollisionCallback(lua_State* tolua_S)
-{
-    int argc = 0;
-    creator::ColliderManager* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"creator.ColliderManager",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (creator::ColliderManager*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_creator_reader_ColliderManager_unregisterCollisionCallback'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
-    {
-        std::function<void (creator::Contract::CollisionType, creator::Collider *, creator::Collider *)> arg0;
-        std::string arg1;
-
-        do {
-			// Lambda binding for lua is not supported.
-			assert(false);
-		} while(0)
-		;
-
-        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "creator.ColliderManager:unregisterCollisionCallback");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_creator_reader_ColliderManager_unregisterCollisionCallback'", nullptr);
-            return 0;
-        }
-        cobj->unregisterCollisionCallback(arg0, arg1);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "creator.ColliderManager:unregisterCollisionCallback",argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_creator_reader_ColliderManager_unregisterCollisionCallback'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_creator_reader_ColliderManager_isDebugDrawEnabled(lua_State* tolua_S)
 {
     int argc = 0;
@@ -995,8 +881,6 @@ int lua_register_creator_reader_ColliderManager(lua_State* tolua_S)
     tolua_cclass(tolua_S,"ColliderManager","creator.ColliderManager","cc.Node",nullptr);
 
     tolua_beginmodule(tolua_S,"ColliderManager");
-        tolua_function(tolua_S,"registerCollitionCallback",lua_creator_reader_ColliderManager_registerCollitionCallback);
-        tolua_function(tolua_S,"unregisterCollisionCallback",lua_creator_reader_ColliderManager_unregisterCollisionCallback);
         tolua_function(tolua_S,"isDebugDrawEnabled",lua_creator_reader_ColliderManager_isDebugDrawEnabled);
         tolua_function(tolua_S,"enableDebugDraw",lua_creator_reader_ColliderManager_enableDebugDraw);
         tolua_function(tolua_S,"enableAABBDebugDraw",lua_creator_reader_ColliderManager_enableAABBDebugDraw);

@@ -95,7 +95,30 @@ local function handleColliderButtonClick(scene)
 	button:addClickEventListener(function (sender)
 		replaceScene('creator/scenes/collider/collider.ccreator')
 		local colliderManager = currentReader:getColliderManager()
-		--colliderManager:registerCollitionCallback
+		colliderManager:enableAABBDebugDraw(true)
+		colliderManager:registerCollitionCallback(function (type, collider1, collider2)
+			if type == 1 then
+				colliderManager:enableDebugDraw(true)
+			end
+			if type == 3 then
+				colliderManager:enableDebugDraw(false)
+			end
+		end, '')
+
+		local boxCollider = findChild(currentScene, 'boxcollider', 'cc.Sprite')
+		local polygonCollider = findChild(currentScene, 'polygoncollider', 'cc.Sprite')
+		local action = cc.RepeatForever:create(cc.RotateBy:create(1, 5))
+		boxCollider:runAction(action)
+		polygonCollider:runAction(action:clone())
+	end)
+end
+
+local function handleVideoButtonClick(scene)
+	local button = findChild(scene, 'video', 'ccui.Button')
+	button:addClickEventListener(function (sender)
+		replaceScene('creator/scenes/video/VideoPlayer.ccreator')
+		local videoPlayer = findChild(currentScene, 'videoplayer', 'ccexp.VideoPlayer')
+		videoPlayer:play()
 	end)
 end
 
@@ -115,4 +138,10 @@ handleButtonClick = function (scene)
 
 	handleAnimatoinButtonClick(scene)
 	handleColliderButtonClick(scene)
+
+    local targetPlatform = cc.Application:getInstance():getTargetPlatform()
+	if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or (cc.PLATFORM_OS_ANDROID == targetPlatform) then
+        handleNormalButtonClick(scene, 'webview', 'creator/scenes/webview/WebView.ccreator')
+        handleVideoButtonClick(scene)
+    end
 end

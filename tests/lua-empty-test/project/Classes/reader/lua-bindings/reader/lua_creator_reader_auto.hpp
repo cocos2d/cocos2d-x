@@ -41,6 +41,4 @@ int register_all_creator_reader(lua_State* tolua_S);
 
 
 
-
-
 #endif // __creator_reader_h__

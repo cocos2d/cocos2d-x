@@ -136,7 +136,7 @@ def main():
     try:
 
         tolua_root = '%s/tools/tocreator' % project_root
-        output_dir = '%s/tests/lua-empty-test/project/Classes/reader/lua-bindings' % project_root
+        output_dir = '%s/tests/lua-empty-test/project/Classes/reader/lua-bindings/reader' % project_root
 
         cmd_args = {'creator_reader.ini' : ('creator_reader', 'lua_creator_reader_auto')}
         target = 'lua'

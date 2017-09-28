@@ -52,7 +52,7 @@ public:
     /** Register/unregister a callback. `key` is used to unregister because can not compare std::function<>.
      */
     void registerCollitionCallback(CollistionCallback callback, const std::string& key);
-    void unregisterCollisionCallback(CollistionCallback callback, const std::string& key);
+    void unregisterCollisionCallback(const std::string& key);
     
 private:
     friend class CreatorReader;
