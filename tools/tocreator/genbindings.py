@@ -136,16 +136,18 @@ def main():
     try:
 
         tolua_root = '%s/tools/tocreator' % project_root
-        output_dir = '%s/tests/lua-empty-test/project/Classes/reader/lua-bindings/reader' % project_root
+        output_dir_creator_reader = '%s/tests/lua-empty-test/project/Classes/reader/lua-bindings/reader' % project_root
+        output_dir_dragonbones = '%s/tests/lua-empty-test/project/Classes/reader/lua-bindings/dragonbones' % project_root
 
-        cmd_args = {'creator_reader.ini' : ('creator_reader', 'lua_creator_reader_auto')}
+        cmd_args = {'creator_reader.ini' : ('creator_reader', 'lua_creator_reader_auto', output_dir_creator_reader), 
+                    'dragonbones.ini' : ('dragonbones', 'lua_dragonbones_auto', output_dir_dragonbones)}
         target = 'lua'
         generator_py = '%s/generator.py' % cxx_generator_root
         for key in cmd_args.keys():
             args = cmd_args[key]
             cfg = '%s/%s' % (tolua_root, key)
             print 'Generating bindings for %s...' % (key[:-4])
-            command = '%s %s %s -s %s -t %s -o %s -n %s' % (python_bin, generator_py, cfg, args[0], target, output_dir, args[1])
+            command = '%s %s %s -s %s -t %s -o %s -n %s' % (python_bin, generator_py, cfg, args[0], target, args[2], args[1])
             _run_cmd(command)
 
         print '---------------------------------'

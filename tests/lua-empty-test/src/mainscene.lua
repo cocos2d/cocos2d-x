@@ -1,3 +1,6 @@
+require('DragonBonesHandler')
+require('utils')
+
 local handleButtonClick
 local createScene
 local currentScene
@@ -18,25 +21,6 @@ createScene = function (path)
     currentReader = reader
 
     return scene
-end
-
-local function findChild(node, childName, type)
-    local target = node:getChildByName(childName)
-    if target ~= nil then
-    	return tolua.cast(target, type)
-    end
-
-    local children = node:getChildren()
-    for i = 1, #children do
-    	print(i)
-    	local child = children[i]
-    	local result = findChild(child, childName, type)
-    	if result ~= nil then
-    		return tolua.cast(result, type)
-    	end
-    end
-
-    return nil
 end
 
 local function createBackButton()
@@ -122,6 +106,16 @@ local function handleVideoButtonClick(scene)
 	end)
 end
 
+local function handleDragonbonesButtonClick(scene)
+	local button = findChild(scene, 'dragonbones', 'ccui.Button')
+	button:addClickEventListener(function (sender)
+		replaceScene('creator/scenes/dragon_bones/DragonBones.ccreator')
+
+		local dragonbonesHandler = DragonBonesHandler.new(currentScene)
+		currentScene:addChild(dragonbonesHandler)
+	end)
+end
+
 
 handleButtonClick = function (scene)
 	handleNormalButtonClick(scene, 'label', 'creator/scenes/Label/CreatorLabels.ccreator')
@@ -144,4 +138,6 @@ handleButtonClick = function (scene)
         handleNormalButtonClick(scene, 'webview', 'creator/scenes/webview/WebView.ccreator')
         handleVideoButtonClick(scene)
     end
+
+    handleDragonbonesButtonClick(scene)
 end

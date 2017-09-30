@@ -894,6 +894,10 @@
 		46FB70801F7CD230008D4175 /* PageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FB70231F7CD230008D4175 /* PageView.cpp */; };
 		46FB70811F7CD230008D4175 /* RichtextStringVisitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FB70251F7CD230008D4175 /* RichtextStringVisitor.cpp */; };
 		46FB70821F7CD230008D4175 /* RichtextStringVisitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FB70251F7CD230008D4175 /* RichtextStringVisitor.cpp */; };
+		46FB708A1F7DF25A008D4175 /* lua_dragonbones_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FB70861F7DF25A008D4175 /* lua_dragonbones_auto.cpp */; };
+		46FB708B1F7DF25A008D4175 /* lua_dragonbones_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FB70861F7DF25A008D4175 /* lua_dragonbones_auto.cpp */; };
+		46FB708C1F7DF25A008D4175 /* lua_dragonbones_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FB70881F7DF25A008D4175 /* lua_dragonbones_manual.cpp */; };
+		46FB708D1F7DF25A008D4175 /* lua_dragonbones_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FB70881F7DF25A008D4175 /* lua_dragonbones_manual.cpp */; };
 		4B5C5BA81CA1147300D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
 		4B5C5BA91CA1147F00D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
 		4B5C5BAB1CA1149900D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5C5BAA1CA1149900D55A14 /* Security.framework */; };
@@ -2711,6 +2715,10 @@
 		46FB70241F7CD230008D4175 /* PageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageView.h; sourceTree = "<group>"; };
 		46FB70251F7CD230008D4175 /* RichtextStringVisitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RichtextStringVisitor.cpp; sourceTree = "<group>"; };
 		46FB70261F7CD230008D4175 /* RichtextStringVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RichtextStringVisitor.h; sourceTree = "<group>"; };
+		46FB70861F7DF25A008D4175 /* lua_dragonbones_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_dragonbones_auto.cpp; sourceTree = "<group>"; };
+		46FB70871F7DF25A008D4175 /* lua_dragonbones_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_dragonbones_auto.hpp; sourceTree = "<group>"; };
+		46FB70881F7DF25A008D4175 /* lua_dragonbones_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_dragonbones_manual.cpp; sourceTree = "<group>"; };
+		46FB70891F7DF25A008D4175 /* lua_dragonbones_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_dragonbones_manual.hpp; sourceTree = "<group>"; };
 		4B5C5BAA1CA1149900D55A14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.2.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		4B5C5BB41CA114DB00D55A14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS9.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		500D1CD11CF4A48B00535D35 /* Bug-15594.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-15594.cpp"; sourceTree = "<group>"; };
@@ -5537,6 +5545,10 @@
 		46FB701B1F7CD230008D4175 /* dragonbones */ = {
 			isa = PBXGroup;
 			children = (
+				46FB70861F7DF25A008D4175 /* lua_dragonbones_auto.cpp */,
+				46FB70871F7DF25A008D4175 /* lua_dragonbones_auto.hpp */,
+				46FB70881F7DF25A008D4175 /* lua_dragonbones_manual.cpp */,
+				46FB70891F7DF25A008D4175 /* lua_dragonbones_manual.hpp */,
 			);
 			path = dragonbones;
 			sourceTree = "<group>";
@@ -7406,6 +7418,7 @@
 				46FB70411F7CD230008D4175 /* WorldClock.cpp in Sources */,
 				46FB70431F7CD230008D4175 /* Armature.cpp in Sources */,
 				46FB70551F7CD230008D4175 /* BaseFactory.cpp in Sources */,
+				46FB708A1F7DF25A008D4175 /* lua_dragonbones_auto.cpp in Sources */,
 				46FB702F1F7CD230008D4175 /* Collider.cpp in Sources */,
 				1AC35D3118CEDE8B00F37B72 /* AppDelegate.cpp in Sources */,
 				46FB70351F7CD230008D4175 /* Intersection.cpp in Sources */,
@@ -7413,6 +7426,7 @@
 				46FB705B1F7CD230008D4175 /* DragonBonesData.cpp in Sources */,
 				46FB70611F7CD230008D4175 /* DataParser.cpp in Sources */,
 				46FB70531F7CD230008D4175 /* EventObject.cpp in Sources */,
+				46FB708C1F7DF25A008D4175 /* lua_dragonbones_manual.cpp in Sources */,
 				46FB703D1F7CD230008D4175 /* AnimationState.cpp in Sources */,
 				46FB70651F7CD230008D4175 /* TextureData.cpp in Sources */,
 				46FB704B1F7CD230008D4175 /* CCFactory.cpp in Sources */,
@@ -7495,11 +7509,13 @@
 				46FB70661F7CD230008D4175 /* TextureData.cpp in Sources */,
 				46FB70541F7CD230008D4175 /* EventObject.cpp in Sources */,
 				46FB70801F7CD230008D4175 /* PageView.cpp in Sources */,
+				46FB708B1F7DF25A008D4175 /* lua_dragonbones_auto.cpp in Sources */,
 				46FB70521F7CD230008D4175 /* BaseObject.cpp in Sources */,
 				46FB70641F7CD230008D4175 /* JSONDataParser.cpp in Sources */,
 				46FB702E1F7CD230008D4175 /* AnimationManager.cpp in Sources */,
 				46FB70381F7CD230008D4175 /* CreatorReader.cpp in Sources */,
 				46FB707E1F7CD230008D4175 /* lua_creator_reader_manual.cpp in Sources */,
+				46FB708D1F7DF25A008D4175 /* lua_dragonbones_manual.cpp in Sources */,
 				46FB70421F7CD230008D4175 /* WorldClock.cpp in Sources */,
 				46FB70621F7CD230008D4175 /* DataParser.cpp in Sources */,
 				46FB70341F7CD230008D4175 /* Contract.cpp in Sources */,
