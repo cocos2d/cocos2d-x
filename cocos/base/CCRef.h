@@ -129,6 +129,7 @@ public:
      *
      * @returns A shared_ptr of this as a Ref.
      * @js NA
+     * @lua NA
      */
     std::shared_ptr<cocos2d::Ref> shared_ptr() {
         if(!_self_weak_ref.expired()) {
@@ -150,6 +151,7 @@ public:
      *
      * @returns A shared_ptr of this type template.
      * @js NA
+     * @lua NA
      */
     template <class T> std::shared_ptr<T> shared_ptr() {
         if(!_self_weak_ref.expired()) {
