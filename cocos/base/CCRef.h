@@ -123,6 +123,49 @@ public:
      * @js NA
      */
     unsigned int getReferenceCount() const;
+    
+    /**
+     * Returns a shared_ptr of this Ref.
+     *
+     * @returns A shared_ptr of this as a Ref.
+     * @js NA
+     */
+    std::shared_ptr<cocos2d::Ref> shared_ptr() {
+        if(!_self_weak_ref.expired()) {
+            return _self_weak_ref.lock();
+        }
+        
+        auto shared_ptr = std::shared_ptr<cocos2d::Ref>(this, [=](cocos2d::Ref* ref)
+        {
+            if(ref->getReferenceCount() == 0) {
+                delete ref;
+            }
+        });
+        _self_weak_ref = shared_ptr;
+        return shared_ptr;
+    }
+    
+    /**
+     * Template version of shared_ptr
+     *
+     * @returns A shared_ptr of this type template.
+     * @js NA
+     */
+    template <class T> std::shared_ptr<T> shared_ptr() {
+        if(!_self_weak_ref.expired()) {
+            return std::static_pointer_cast<T>(_self_weak_ref.lock());
+        }
+        
+        auto shared_ptr = std::shared_ptr<cocos2d::Ref>(this, [=](cocos2d::Ref* ref)
+        {
+            auto cc_ref = static_cast<cocos2d::Ref*>(ref);
+            if(cc_ref->getReferenceCount() == 0) {
+                delete cc_ref;
+            }
+        });
+        _self_weak_ref = shared_ptr;
+        return std::static_pointer_cast<T>(shared_ptr);
+    }
 
 protected:
     /**
@@ -145,6 +188,9 @@ public:
 protected:
     /// count of references
     unsigned int _referenceCount;
+    
+    /// weak ptr of self
+    std::weak_ptr<cocos2d::Ref> _self_weak_ref{};
 
     friend class AutoreleasePool;
 
