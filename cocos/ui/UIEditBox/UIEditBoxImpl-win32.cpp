@@ -367,7 +367,7 @@ namespace ui {
         int inputLength = ::GetWindowTextLengthW(this->hwndEdit);
         wstrResult.resize(inputLength);
 
-        ::GetWindowTextW(this->hwndEdit, (LPWSTR) const_cast<char16_t*>(wstrResult.c_str()), inputLength + 1);
+        ::GetWindowTextW(this->hwndEdit, (LPWSTR)&wstrResult[0], inputLength + 1);
         bool conversionResult = cocos2d::StringUtils::UTF16ToUTF8(wstrResult, utf8Result);
         if (!conversionResult)
         {
