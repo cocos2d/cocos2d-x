@@ -305,8 +305,8 @@ namespace cocos2d {
         }
     }
 
-    void JniHelper::reportError(const std::string& className, const std::string& methodName, const std::string& signature) {
-        LOGE("Failed to find static java method. Class name: %s, method name: %s, signature: %s ",  className.c_str(), methodName.c_str(), signature.c_str());
+    void JniHelper::reportError(const char* className, const char* methodName, const char* signature) {
+        LOGE("Failed to find static java method. Class name: %s, method name: %s, signature: %s ",  className, methodName, signature);
     }
 
 } //namespace cocos2d
