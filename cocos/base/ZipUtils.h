@@ -27,6 +27,7 @@ THE SOFTWARE.
 #define __SUPPORT_ZIPUTILS_H__
 /// @cond DO_NOT_SHOW
 
+#include <cstdio>
 #include <string>
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCPlatformMacros.h"

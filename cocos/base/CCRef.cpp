@@ -146,7 +146,11 @@ void Ref::release()
 #if CC_REF_LEAK_DETECTION
         untrackRef(this);
 #endif
-        delete this;
+        
+        // if the weak reference is not expired, the object is still managed by a shared_ptr
+        if(_self_weak_ref.expired()) {
+            delete this;
+        }
     }
 }
 

@@ -23,6 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+// FIXME: hack, this needs to be before minizip/unzip...
+#include <string> 
+
 // FIXME: hack, must be included before ziputils
 #ifdef MINIZIP_FROM_SYSTEM
 #include <minizip/unzip.h>
