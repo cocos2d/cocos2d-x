@@ -96,7 +96,7 @@ void EditBoxImplCommon::initInactiveLabels(const Size& size)
     
     _labelPlaceHolder = Label::create();
     _labelPlaceHolder->setAnchorPoint(Vec2(0, 1.0f));
-    _labelPlaceHolder->setColor(Color3B::GRAY);
+    _labelPlaceHolder->setTextColor(Color4B::GRAY);
     _labelPlaceHolder->enableWrap(false);
     _editBox->addChild(_labelPlaceHolder, kLabelZOrder);
     
