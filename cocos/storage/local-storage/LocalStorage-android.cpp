@@ -42,7 +42,7 @@
 USING_NS_CC;
 static int _initialized = 0;
 
-static std::string className = "org/cocos2dx/lib/Cocos2dxLocalStorage";
+static const char* className = "org/cocos2dx/lib/Cocos2dxLocalStorage";
 
 static void splitFilename (std::string& str)
 {

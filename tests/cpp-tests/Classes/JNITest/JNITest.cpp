@@ -24,7 +24,7 @@ JNITest::JNITest()
     checkLabel->setPosition(VisibleRect::center());
     addChild(checkLabel);
 
-    const std::string classPath = "org/cocos2dx/cpp_tests/JNITest";
+    const char* classPath = "org/cocos2dx/cpp_tests/JNITest";
 
     JniHelper::callStaticVoidMethod(classPath, "voidMethod1");
 

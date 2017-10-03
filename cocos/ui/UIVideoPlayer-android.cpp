@@ -37,7 +37,7 @@
 
 //-----------------------------------------------------------------------------------------------------------
 
-static const std::string videoHelperClassName = "org/cocos2dx/lib/Cocos2dxVideoHelper";
+static const char* videoHelperClassName = "org/cocos2dx/lib/Cocos2dxVideoHelper";
 
 USING_NS_CC;
 
@@ -55,7 +55,7 @@ int createVideoWidgetJNI()
 {
     JniMethodInfo t;
     int ret = -1;
-    if (JniHelper::getStaticMethodInfo(t, videoHelperClassName.c_str(), "createVideoWidget", "()I")) {
+    if (JniHelper::getStaticMethodInfo(t, videoHelperClassName, "createVideoWidget", "()I")) {
         ret = t.env->CallStaticIntMethod(t.classID, t.methodID);
 
         t.env->DeleteLocalRef(t.classID);

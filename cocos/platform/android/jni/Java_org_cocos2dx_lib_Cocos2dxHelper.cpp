@@ -36,7 +36,7 @@ THE SOFTWARE.
 #define  LOG_TAG    "Java_org_cocos2dx_lib_Cocos2dxHelper.cpp"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
-static const std::string className = "org/cocos2dx/lib/Cocos2dxHelper";
+static const char* className = "org/cocos2dx/lib/Cocos2dxHelper";
 
 static EditTextCallback s_editTextCallback = nullptr;
 static void* s_ctx = nullptr;
@@ -100,7 +100,7 @@ int getObbAssetFileDescriptorJNI(const char* path, long* startOffset, long* size
     JniMethodInfo methodInfo;
     int fd = 0;
     
-    if (JniHelper::getStaticMethodInfo(methodInfo, className.c_str(), "getObbAssetFileDescriptor", "(Ljava/lang/String;)[J")) {
+    if (JniHelper::getStaticMethodInfo(methodInfo, className, "getObbAssetFileDescriptor", "(Ljava/lang/String;)[J")) {
         jstring stringArg = methodInfo.env->NewStringUTF(path);
         jlongArray newArray = (jlongArray)methodInfo.env->CallStaticObjectMethod(methodInfo.classID, methodInfo.methodID, stringArg);
         jsize theArrayLen = methodInfo.env->GetArrayLength(newArray);
@@ -135,7 +135,7 @@ void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharse
 {
     JniMethodInfo methodInfo;
 
-    if (JniHelper::getStaticMethodInfo(methodInfo, className.c_str(), "conversionEncoding", "([BLjava/lang/String;Ljava/lang/String;)[B")) {
+    if (JniHelper::getStaticMethodInfo(methodInfo, className, "conversionEncoding", "([BLjava/lang/String;Ljava/lang/String;)[B")) {
         jbyteArray strArray = methodInfo.env->NewByteArray(byteSize);
         methodInfo.env->SetByteArrayRegion(strArray, 0, byteSize, reinterpret_cast<const jbyte*>(src));
 
