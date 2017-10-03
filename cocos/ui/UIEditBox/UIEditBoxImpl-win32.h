@@ -75,8 +75,6 @@ namespace ui {
         static LRESULT CALLBACK hookGLFWWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
         HWND hwndEdit;
-        //FIXME: fontSize should be in parent class
-        int _fontSize;
         bool _changedTextManually;
         bool _hasFocus;
         static WNDPROC s_prevCocosWndProc;
@@ -96,3 +94,4 @@ NS_CC_END
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */
 
 #endif /* __UIEditBoxIMPLWIN_H__ */
+

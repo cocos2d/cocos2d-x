@@ -72,7 +72,6 @@ namespace ui {
 
     EditBoxImplWin::EditBoxImplWin(EditBox* pEditText)
         : EditBoxImplCommon(pEditText),
-        _fontSize(40),
         _changedTextManually(false),
         _hasFocus(false)
     {
@@ -174,9 +173,8 @@ namespace ui {
 
     void EditBoxImplWin::setNativeFont(const char * pFontName, int fontSize)
     {
-        //not implemented yet
-        this->_fontSize = fontSize;
-        HFONT hFont = CreateFontW(static_cast<int>(fontSize * Director::getInstance()->getContentScaleFactor()), 0, 0, 0,
+        float nativeSize = fontSize * Director::getInstance()->getContentScaleFactor();
+        HFONT hFont = ::CreateFontW(static_cast<int>(nativeSize), 0, 0, 0,
             FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
             CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, TEXT("Arial"));
 
