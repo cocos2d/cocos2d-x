@@ -73,7 +73,8 @@ namespace ui {
     EditBoxImplWin::EditBoxImplWin(EditBox* pEditText)
         : EditBoxImplCommon(pEditText),
         _changedTextManually(false),
-        _hasFocus(false)
+        _hasFocus(false),
+        _endAction(EditBoxDelegate::EditBoxEndAction::UNKNOWN)
     {
         if (!s_isInitialized)
         {
@@ -326,6 +327,30 @@ namespace ui {
             {
                 if (_editBoxInputMode != cocos2d::ui::EditBox::InputMode::ANY) {
                     if (s_previousFocusWnd != s_hwndCocos) {
+                        switch (_keyboardReturnType)
+                        {
+                        case cocos2d::ui::EditBox::KeyboardReturnType::DEFAULT:
+                            _endAction = EditBoxDelegate::EditBoxEndAction::UNKNOWN;
+                            break;
+                        case cocos2d::ui::EditBox::KeyboardReturnType::DONE:
+                            _endAction = EditBoxDelegate::EditBoxEndAction::RETURN;
+                            break;
+                        case cocos2d::ui::EditBox::KeyboardReturnType::SEND:
+                            _endAction = EditBoxDelegate::EditBoxEndAction::RETURN;
+                            break;
+                        case cocos2d::ui::EditBox::KeyboardReturnType::SEARCH:
+                            _endAction = EditBoxDelegate::EditBoxEndAction::RETURN;
+                            break;
+                        case cocos2d::ui::EditBox::KeyboardReturnType::GO:
+                            _endAction = EditBoxDelegate::EditBoxEndAction::RETURN;
+                            break;
+                        case cocos2d::ui::EditBox::KeyboardReturnType::NEXT:
+                            _endAction = EditBoxDelegate::EditBoxEndAction::TAB_TO_NEXT;
+                            break;
+                        default:
+                            _endAction = EditBoxDelegate::EditBoxEndAction::UNKNOWN;
+                            break;
+                        }
                         ::ShowWindow(s_previousFocusWnd, SW_HIDE);
                         ::SendMessage(s_hwndCocos, WM_SETFOCUS, (WPARAM)s_previousFocusWnd, 0);
                         s_previousFocusWnd = s_hwndCocos;
@@ -349,7 +374,7 @@ namespace ui {
             //when app enter background, this message also be called.
             if (this->_editingMode && !IsWindowVisible(hwnd))
             {
-                this->editBoxEditingDidEnd(this->getText());
+                this->editBoxEditingDidEnd(this->getText(), _endAction);
             }
             break;
         default:

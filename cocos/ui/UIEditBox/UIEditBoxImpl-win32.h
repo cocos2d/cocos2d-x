@@ -77,6 +77,7 @@ namespace ui {
         HWND hwndEdit;
         bool _changedTextManually;
         bool _hasFocus;
+        EditBoxDelegate::EditBoxEndAction _endAction;
         static WNDPROC s_prevCocosWndProc;
 
         static HINSTANCE s_hInstance;
