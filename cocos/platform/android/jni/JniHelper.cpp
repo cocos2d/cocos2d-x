@@ -25,9 +25,6 @@ THE SOFTWARE.
 #include "platform/android/jni/JniHelper.h"
 #include <android/log.h>
 #include <string.h>
-#include <pthread.h>
-
-#include "base/ccUTF8.h"
 
 #define  LOG_TAG    "JniHelper"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
@@ -286,29 +283,8 @@ namespace cocos2d {
         return strValue;
     }
 
-    jstring JniHelper::convert(LocalRefMapType& localRefs, cocos2d::JniMethodInfo& t, const char* x) {
-        jstring ret = cocos2d::StringUtils::newStringUTFJNI(t.env, x ? x : "");
-        localRefs[t.env].push_back(ret);
-        return ret;
-    }
-
-    jstring JniHelper::convert(LocalRefMapType& localRefs, cocos2d::JniMethodInfo& t, const std::string& x) {
-        return convert(localRefs, t, x.c_str());
-    }
-
-    void JniHelper::deleteLocalRefs(JNIEnv* env, LocalRefMapType& localRefs) {
-        if (!env) {
-            return;
-        }
-
-        for (const auto& ref : localRefs[env]) {
-            env->DeleteLocalRef(ref);
-        }
-        localRefs[env].clear();
-    }
-
-    void JniHelper::reportError(const std::string& className, const std::string& methodName, const std::string& signature) {
-        LOGE("Failed to find static java method. Class name: %s, method name: %s, signature: %s ",  className.c_str(), methodName.c_str(), signature.c_str());
+    void JniHelper::reportError(const char* className, const char* methodName, const char* signature) {
+        LOGE("Failed to find static java method. Class name: %s, method name: %s, signature: %s ",  className, methodName, signature);
     }
 
 } //namespace cocos2d
