@@ -25,7 +25,6 @@
 #ifndef __ANDROID_JNI_HELPER_INL_H__
 #define __ANDROID_JNI_HELPER_INL_H__
 
-#include "JniHelper.h"
 #include "base/ccUTF8.h"
 
 NS_CC_BEGIN
@@ -101,14 +100,14 @@ namespace JniHelperDetail {
     };
 
     template <char... Chars1, char...Chars2, class ... Seq>
-    struct SequenceConcatenator<CharSequence<Chars1...>, CharSequence<Chars2...>, Seq...> :
-        SequenceConcatenator<CharSequence<Chars1..., Chars2...>, Seq...> { };
+    struct SequenceConcatenator<CharSequence<Chars1...>, CharSequence<Chars2...>, Seq...> {
+        typedef typename SequenceConcatenator<CharSequence<Chars1..., Chars2...>, Seq...>::Result Result;
+    };
 
     //
     // JNISignature
     //
     template <class T, class... Ts> struct JNISignature {
-        static inline std::string arg() { return std::string(JNISignature<T>::arg()) + JNISignature<Ts...>::arg(); };
         typedef typename SequenceConcatenator<typename JNISignature<T>::Sequence, typename JNISignature<Ts...>::Sequence>::Result Sequence;
     };
 
