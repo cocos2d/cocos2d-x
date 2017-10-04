@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "platform/android/jni/JniHelper.h"
 #include "platform/CCFileUtils.h"
 
-static const std::string helperClassName = "org/cocos2dx/lib/Cocos2dxHelper";
+static const char* helperClassName = "org/cocos2dx/lib/Cocos2dxHelper";
 
 NS_CC_BEGIN
 
