@@ -30,6 +30,7 @@
 NS_CC_BEGIN
 
 namespace JniHelperDetail {
+
     struct LocalRefWrapper {
         explicit LocalRefWrapper(JNIEnv* env, jobject obj) : _env(env), _obj(obj) { }
         ~LocalRefWrapper() { _env->DeleteLocalRef(_obj); }
@@ -76,31 +77,24 @@ namespace JniHelperDetail {
     };
 
     //
-    // ArgumentTypeConverter
+    // ArgumentConverter
     //
-    template <class T> struct ArgumentTypeConverter {
-        typedef T Type;
-    };
+    template <class T> struct ArgumentConverter { typedef T Type; };
 
-    template <> struct ArgumentTypeConverter<std::string> {
-        typedef const char* Type;
-    };
+    template <> struct ArgumentConverter<std::string> { typedef const char* Type; };
+    template <size_t N> struct ArgumentConverter<char [N]> { typedef const char* Type; };
+    template <size_t N> struct ArgumentConverter<const char [N]> { typedef const char* Type; };
 
-    template <size_t N> struct ArgumentTypeConverter<char [N]> : ArgumentTypeConverter<std::string> { };
-    template <size_t N> struct ArgumentTypeConverter<const char [N]> : ArgumentTypeConverter<std::string> { };
-
-    template <class T> struct ArgumentTypeConverter<const T> :ArgumentTypeConverter<T> { };
-    template <class T> struct ArgumentTypeConverter<T&> :ArgumentTypeConverter<T> { };
-    template <class T> struct ArgumentTypeConverter<const T&> :ArgumentTypeConverter<T> { };
-    template <class T> struct ArgumentTypeConverter<T&&> :ArgumentTypeConverter<T> { };
+    template <class T> struct ArgumentConverter<const T> :ArgumentConverter<T> { };
+    template <class T> struct ArgumentConverter<T&> :ArgumentConverter<T> { };
+    template <class T> struct ArgumentConverter<const T&> :ArgumentConverter<T> { };
+    template <class T> struct ArgumentConverter<T&&> :ArgumentConverter<T> { };
 
     //
     // CharSequence
     //
     template <char... Chars>
-    struct CharSequence {
-        static const char value[sizeof...(Chars) + 1];
-    };
+    struct CharSequence { static const char value[sizeof...(Chars) + 1]; };
 
     template <char... Chars>
     const char CharSequence<Chars...>::value[sizeof...(Chars) + 1] = {
@@ -110,8 +104,7 @@ namespace JniHelperDetail {
     //
     // SequenceConcatenator
     //
-    template <class Seq, class... Seqs>
-    struct SequenceConcatenator;
+    template <class Seq, class... Seqs> struct SequenceConcatenator;
 
     template <char... Chars>
     struct SequenceConcatenator<CharSequence<Chars...> > {
@@ -129,91 +122,63 @@ namespace JniHelperDetail {
     };
 
     //
-    // JNISignature
+    // SignatureImpl
     //
-    template <class T, class... Ts> struct JNISignature {
-        typedef typename SequenceConcatenator<typename JNISignature<T>::Sequence, typename JNISignature<Ts...>::Sequence>::Result Sequence;
+    template <class T, class... Ts> struct SignatureImpl {
+        typedef typename SequenceConcatenator<typename SignatureImpl<T>::Sequence,
+            typename SignatureImpl<Ts...>::Sequence>::Result Sequence;
     };
 
-    template <> struct JNISignature<bool> {
-        typedef CharSequence<'Z'> Sequence;
-    };
-
-    template <> struct JNISignature<uint8_t> {
-        typedef CharSequence<'B'> Sequence;
-    };
-
-    template <> struct JNISignature<uint16_t> {
-        typedef CharSequence<'C'> Sequence;
-    };
-
-    template <> struct JNISignature<short> {
-        typedef CharSequence<'S'> Sequence;
-    };
-
-    template <> struct JNISignature<int> {
-        typedef CharSequence<'I'> Sequence;
-    };
-
-    template <> struct JNISignature<long> {
-        typedef CharSequence<'J'> Sequence;
-    };
-
-    template <> struct JNISignature<int64_t> {
-        typedef CharSequence<'J'> Sequence;
-    };
-
-    template <> struct JNISignature<float> {
-        typedef CharSequence<'F'> Sequence;
-    };
-
-    template <> struct JNISignature<double> {
-        typedef CharSequence<'D'> Sequence;
-    };
-
-    template <> struct JNISignature<void> {
-        typedef CharSequence<'V'> Sequence;
-    };
-
-    template <> struct JNISignature<char*> {
+    template <> struct SignatureImpl<bool> { typedef CharSequence<'Z'> Sequence; };
+    template <> struct SignatureImpl<uint8_t> { typedef CharSequence<'B'> Sequence; };
+    template <> struct SignatureImpl<uint16_t> { typedef CharSequence<'C'> Sequence; };
+    template <> struct SignatureImpl<short> { typedef CharSequence<'S'> Sequence; };
+    template <> struct SignatureImpl<int> { typedef CharSequence<'I'> Sequence; };
+    template <> struct SignatureImpl<long> { typedef CharSequence<'J'> Sequence; };
+    template <> struct SignatureImpl<int64_t> { typedef CharSequence<'J'> Sequence; };
+    template <> struct SignatureImpl<float> { typedef CharSequence<'F'> Sequence; };
+    template <> struct SignatureImpl<double> { typedef CharSequence<'D'> Sequence; };
+    template <> struct SignatureImpl<void> { typedef CharSequence<'V'> Sequence; };
+    template <> struct SignatureImpl<char*> {
         typedef CharSequence<'L', 'j', 'a', 'v', 'a', '/', 'l', 'a', 'n', 'g', '/', 'S', 't', 'r', 'i', 'n', 'g', ';'> Sequence;
     };
-    template <> struct JNISignature<const char*> : JNISignature<char*> { };
-    template <size_t N> struct JNISignature<char [N]> : JNISignature<char*> { };
-    template <size_t N> struct JNISignature<const char [N]> : JNISignature<char*> { };
+    template <> struct SignatureImpl<const char*> : SignatureImpl<char*> { };
+    template <size_t N> struct SignatureImpl<char [N]> : SignatureImpl<char*> { };
+    template <size_t N> struct SignatureImpl<const char [N]> : SignatureImpl<char*> { };
 
-    template <> struct JNISignature<std::string> : JNISignature<char*> { };
+    template <> struct SignatureImpl<std::string> : SignatureImpl<char*> { };
 
-    template <class T> struct JNISignature<std::vector<T> > {
-        typedef typename SequenceConcatenator<CharSequence<'['>, typename JNISignature<T>::Sequence>::Result Sequence;
+    template <class T> struct SignatureImpl<std::vector<T> > {
+        typedef typename SequenceConcatenator<CharSequence<'['>,
+            typename SignatureImpl<T>::Sequence>::Result Sequence;
     };
 
-    template <class T> struct JNISignature<const T> : JNISignature<T> { };
-    template <class T> struct JNISignature<T&> : JNISignature<T> { };
-    template <class T> struct JNISignature<const T&> : JNISignature<T> { };
-    template <class T> struct JNISignature<T&&> : JNISignature<T> { };
+    template <class T> struct SignatureImpl<const T> : SignatureImpl<T> { };
+    template <class T> struct SignatureImpl<T&> : SignatureImpl<T> { };
+    template <class T> struct SignatureImpl<const T&> : SignatureImpl<T> { };
+    template <class T> struct SignatureImpl<T&&> : SignatureImpl<T> { };
 
     //
-    // SignatureGetter
+    // SignatureParser
     //
-    template <class T> struct SignatureGetter;
+    template <class T> struct SignatureParser;
 
-    template <class Ret, class... Args> struct SignatureGetter<Ret (Args...)> {
+    template <class Ret, class... Args> struct SignatureParser<Ret (Args...)> {
         typedef typename SequenceConcatenator<CharSequence<'('>,
-            typename JNISignature<Args...>::Sequence,
+            typename SignatureImpl<Args...>::Sequence,
             CharSequence<')'>,
-            typename JNISignature<Ret>::Sequence>::Result SignatureSequence;
+            typename SignatureImpl<Ret>::Sequence>::Result Result;
     };
 
-    template<class Ret> struct SignatureGetter<Ret ()> {
+    template <class Ret> struct SignatureParser<Ret ()> {
         typedef typename SequenceConcatenator<CharSequence<'(', ')'>,
-            typename JNISignature<Ret>::Sequence>::Result SignatureSequence;
+            typename SignatureImpl<Ret>::Sequence>::Result Result;
     };
 
     //
     // MethodInvokerImpl
     //
-    template <class T> struct MethodInvokerImpl { };
+    template <class Ret> struct MethodInvokerImpl;
 
     template <> struct MethodInvokerImpl<bool> {
         static bool staticInvoke(JNIEnv* env, jclass clazz, jmethodID methodID, va_list args) {
@@ -283,13 +248,10 @@ namespace JniHelperDetail {
         }
     };
 
-    template <> struct MethodInvokerImpl<const char *> : MethodInvokerImpl<std::string> { };
-
     //
     // MethodInvoker
     //
-    template <class Ret>
-    struct MethodInvoker {
+    template <class Ret> struct MethodInvoker {
         static Ret staticInvoke(JNIEnv* env, jclass clazz, jmethodID methodID, ...) {
             va_list args;
             va_start(args, methodID);
@@ -299,8 +261,7 @@ namespace JniHelperDetail {
         }
     };
 
-    template <>
-    struct MethodInvoker<void> {
+    template <> struct MethodInvoker<void> {
         static void staticInvoke(JNIEnv* env, jclass clazz, jmethodID methodID, ...) {
             va_list args;
             va_start(args, methodID);

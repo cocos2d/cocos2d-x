@@ -68,14 +68,14 @@ public:
 
     template <typename Ret, typename... Args>
     static Ret callStaticMethod(const char* className, const char* methodName, const Args& ...args) {
-        typedef typename JniHelperDetail::SignatureGetter<Ret (Args...)>::SignatureSequence SignatureSequence;
+        typedef typename JniHelperDetail::SignatureParser<Ret (Args...)>::Result SignatureSequence;
         const char* signature = SignatureSequence::value;
 
         JniMethodInfo t;
         if (getStaticMethodInfo(t, className, methodName, signature)) {
             JniHelperDetail::LocalRefWrapper clazz(t.env, t.classID);
             return JniHelperDetail::MethodInvoker<Ret>::staticInvoke(t.env, t.classID, t.methodID,
-                JniHelperDetail::ArgumentWrapper<typename JniHelperDetail::ArgumentTypeConverter<Args>::Type>(t.env, args).get()...);
+                JniHelperDetail::ArgumentWrapper<typename JniHelperDetail::ArgumentConverter<Args>::Type>(t.env, args).get()...);
         }
         else {
             reportError(className, methodName, signature);
@@ -85,7 +85,7 @@ public:
 
     template <typename... Args>
     static float* callStaticFloatArrayMethod(const char* className, const char* methodName, const Args& ...args) {
-        typedef typename JniHelperDetail::SignatureGetter<std::vector<float> (Args...)>::SignatureSequence SignatureSequence;
+        typedef typename JniHelperDetail::SignatureParser<std::vector<float> (Args...)>::Result SignatureSequence;
         const char* signature = SignatureSequence::value;
 
         static float ret[32];
@@ -93,7 +93,7 @@ public:
         if (getStaticMethodInfo(t, className, methodName, signature)) {
             JniHelperDetail::LocalRefWrapper clazz(t.env, t.classID);
             jfloatArray array = (jfloatArray)t.env->CallStaticObjectMethod(t.classID, t.methodID,
-                JniHelperDetail::ArgumentWrapper<typename JniHelperDetail::ArgumentTypeConverter<Args>::Type>(t.env, args).get()...);
+                JniHelperDetail::ArgumentWrapper<typename JniHelperDetail::ArgumentConverter<Args>::Type>(t.env, args).get()...);
             JniHelperDetail::LocalRefWrapper arr(t.env, array);
             jsize len = t.env->GetArrayLength(array);
             if (len <= 32) {
@@ -112,7 +112,7 @@ public:
 
     template <typename... Args>
     static Vec3 callStaticVec3Method(const char* className, const char* methodName, const Args& ...args) {
-        typedef typename JniHelperDetail::SignatureGetter<std::vector<float> (Args...)>::SignatureSequence SignatureSequence;
+        typedef typename JniHelperDetail::SignatureParser<std::vector<float> (Args...)>::Result SignatureSequence;
         const char* signature = SignatureSequence::value;
 
         Vec3 ret;
@@ -120,7 +120,7 @@ public:
         if (getStaticMethodInfo(t, className, methodName, signature)) {
             JniHelperDetail::LocalRefWrapper clazz(t.env, t.classID);
             jfloatArray array = (jfloatArray) t.env->CallStaticObjectMethod(t.classID, t.methodID,
-                JniHelperDetail::ArgumentWrapper<typename JniHelperDetail::ArgumentTypeConverter<Args>::Type>(t.env, args).get()...);
+                JniHelperDetail::ArgumentWrapper<typename JniHelperDetail::ArgumentConverter<Args>::Type>(t.env, args).get()...);
             JniHelperDetail::LocalRefWrapper arr(t.env, array);
             jsize len = t.env->GetArrayLength(array);
             if (len == 3) {
