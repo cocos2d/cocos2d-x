@@ -6,7 +6,7 @@
 using namespace std;
 using namespace cocos2d;
 
-static std::string className = "org/cocos2dx/lua/AppActivity";
+static const char* className = "org/cocos2dx/lua/AppActivity";
 
 void setActivityPathForAndroid(const std::string& path)
 {
@@ -15,5 +15,5 @@ void setActivityPathForAndroid(const std::string& path)
 
 string getIPAddress()
 {
-    return JniHelper::callStaticStringMethod(className, "getLocalIpAddress");
+    return JniHelper::callStaticMethod<std::string>(className, "getLocalIpAddress");
 }

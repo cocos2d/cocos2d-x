@@ -32,7 +32,7 @@
 #include <sstream>
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) 
-#include "platform/android/jni/JniHelper.h"
+#include <jni.h>
 #endif
 
 NS_CC_BEGIN
