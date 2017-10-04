@@ -74,12 +74,13 @@ public:
         JniMethodInfo t;
         if (getStaticMethodInfo(t, className, methodName, signature)) {
             JniHelperDetail::LocalRefWrapper clazz(t.env, t.classID);
-            return JniHelperDetail::MethodInvoker<Ret>::staticInvoke(t.env, t.classID, t.methodID, JniHelperDetail::ArgumentWrapper<Args>(t.env, args).get()...);
+            return JniHelperDetail::MethodInvoker<Ret>::staticInvoke(t.env, t.classID, t.methodID,
+                JniHelperDetail::ArgumentWrapper<typename JniHelperDetail::ArgumentTypeConverter<Args>::Type>(t.env, args).get()...);
         }
         else {
             reportError(className, methodName, signature);
+            return Ret();
         }
-        return Ret();
     }
 
     template <typename... Args>
@@ -91,7 +92,8 @@ public:
         JniMethodInfo t;
         if (getStaticMethodInfo(t, className, methodName, signature)) {
             JniHelperDetail::LocalRefWrapper clazz(t.env, t.classID);
-            jfloatArray array = (jfloatArray)t.env->CallStaticObjectMethod(t.classID, t.methodID, JniHelperDetail::ArgumentWrapper<Args>(t.env, args).get()...);
+            jfloatArray array = (jfloatArray)t.env->CallStaticObjectMethod(t.classID, t.methodID,
+                JniHelperDetail::ArgumentWrapper<typename JniHelperDetail::ArgumentTypeConverter<Args>::Type>(t.env, args).get()...);
             JniHelperDetail::LocalRefWrapper arr(t.env, array);
             jsize len = t.env->GetArrayLength(array);
             if (len <= 32) {
@@ -117,7 +119,8 @@ public:
         JniMethodInfo t;
         if (getStaticMethodInfo(t, className, methodName, signature)) {
             JniHelperDetail::LocalRefWrapper clazz(t.env, t.classID);
-            jfloatArray array = (jfloatArray) t.env->CallStaticObjectMethod(t.classID, t.methodID, JniHelperDetail::ArgumentWrapper<Args>(t.env, args).get()...);
+            jfloatArray array = (jfloatArray) t.env->CallStaticObjectMethod(t.classID, t.methodID,
+                JniHelperDetail::ArgumentWrapper<typename JniHelperDetail::ArgumentTypeConverter<Args>::Type>(t.env, args).get()...);
             JniHelperDetail::LocalRefWrapper arr(t.env, array);
             jsize len = t.env->GetArrayLength(array);
             if (len == 3) {
