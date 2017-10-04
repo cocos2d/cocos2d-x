@@ -31,10 +31,15 @@ NS_CC_BEGIN
 
 namespace JniHelperDetail {
     struct LocalRefWrapper {
-        LocalRefWrapper(JNIEnv* env, jobject obj) : _env(env), _obj(obj) { }
+        explicit LocalRefWrapper(JNIEnv* env, jobject obj) : _env(env), _obj(obj) { }
         ~LocalRefWrapper() { _env->DeleteLocalRef(_obj); }
-        // FIXME: copy constructor, move constructor
+
     private:
+        LocalRefWrapper(const LocalRefWrapper&) = delete;
+        LocalRefWrapper(LocalRefWrapper&&) = delete;
+        LocalRefWrapper& operator=(const LocalRefWrapper&) = delete;
+        LocalRefWrapper& operator=(LocalRefWrapper&&) = delete;
+
         JNIEnv* _env;
         jobject _obj;
     };
@@ -45,7 +50,7 @@ namespace JniHelperDetail {
     template <class T> class ArgumentWrapper {
         T _arg;
     public:
-        ArgumentWrapper(JNIEnv*, T arg) : _arg(arg) { }
+        explicit ArgumentWrapper(JNIEnv*, T arg) : _arg(arg) { }
         inline T get() const { return _arg; };
     };
 
@@ -64,8 +69,8 @@ namespace JniHelperDetail {
 
     public:
         ~ArgumentWrapper() { _env->DeleteLocalRef(_str); }
-        ArgumentWrapper(JNIEnv* env, const char* str) : _env(env) { set(str); }
-        ArgumentWrapper(JNIEnv* env, const std::string& str) : _env(env) { set(str.c_str()); }
+        explicit ArgumentWrapper(JNIEnv* env, const char* str) : _env(env) { set(str); }
+        explicit ArgumentWrapper(JNIEnv* env, const std::string& str) : _env(env) { set(str.c_str()); }
 
         inline jstring get() const { return _str; };
     };
