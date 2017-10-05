@@ -25,9 +25,6 @@ THE SOFTWARE.
 #include "platform/android/jni/JniHelper.h"
 #include <android/log.h>
 #include <string.h>
-#include <pthread.h>
-
-#include "base/ccUTF8.h"
 
 #define  LOG_TAG    "JniHelper"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
@@ -54,7 +51,7 @@ jclass _getClassID(const char *className) {
     }
 
     env->DeleteLocalRef(_jstrClassName);
-        
+
     return _clazz;
 }
 
@@ -68,7 +65,7 @@ namespace cocos2d {
     jmethodID JniHelper::loadclassMethod_methodID = nullptr;
     jobject JniHelper::classloader = nullptr;
     std::function<void()> JniHelper::classloaderCallback = nullptr;
-    
+
     jobject JniHelper::_activity = nullptr;
 
     JavaVM* JniHelper::getJavaVM() {
@@ -89,13 +86,13 @@ namespace cocos2d {
         JNIEnv* _env = nullptr;
         // get jni environment
         jint ret = jvm->GetEnv((void**)&_env, JNI_VERSION_1_4);
-        
+
         switch (ret) {
         case JNI_OK :
             // Success!
             pthread_setspecific(g_key, _env);
             return _env;
-                
+
         case JNI_EDETACHED :
             // Thread not attached
             if (jvm->AttachCurrentThread(&_env, nullptr) < 0)
@@ -108,7 +105,7 @@ namespace cocos2d {
                 pthread_setspecific(g_key, _env);
                 return _env;
             }
-                
+
         case JNI_EVERSION :
             // Cannot recover from this error
             LOGE("JNI interface version 1.4 not supported");
@@ -124,7 +121,7 @@ namespace cocos2d {
             _env = JniHelper::cacheEnv(_psJavaVM);
         return _env;
     }
-    
+
     jobject JniHelper::getActivity() {
         return _activity;
     }
@@ -164,7 +161,7 @@ namespace cocos2d {
     }
 
     bool JniHelper::getStaticMethodInfo(JniMethodInfo &methodinfo,
-                                        const char *className, 
+                                        const char *className,
                                         const char *methodName,
                                         const char *paramCode) {
         if ((nullptr == className) ||
@@ -178,7 +175,7 @@ namespace cocos2d {
             LOGE("Failed to get JNIEnv");
             return false;
         }
-            
+
         jclass classID = _getClassID(className);
         if (! classID) {
             LOGE("Failed to find class %s", className);
@@ -192,7 +189,7 @@ namespace cocos2d {
             env->ExceptionClear();
             return false;
         }
-            
+
         methodinfo.classID = classID;
         methodinfo.env = env;
         methodinfo.methodID = methodID;
@@ -275,7 +272,7 @@ namespace cocos2d {
         if (jstr == nullptr) {
             return "";
         }
-        
+
         JNIEnv *env = JniHelper::getEnv();
         if (!env) {
             return "";
@@ -286,29 +283,8 @@ namespace cocos2d {
         return strValue;
     }
 
-    jstring JniHelper::convert(LocalRefMapType& localRefs, cocos2d::JniMethodInfo& t, const char* x) {
-        jstring ret = cocos2d::StringUtils::newStringUTFJNI(t.env, x ? x : "");
-        localRefs[t.env].push_back(ret);
-        return ret;
-    }
-
-    jstring JniHelper::convert(LocalRefMapType& localRefs, cocos2d::JniMethodInfo& t, const std::string& x) {
-        return convert(localRefs, t, x.c_str());
-    }
-
-    void JniHelper::deleteLocalRefs(JNIEnv* env, LocalRefMapType& localRefs) {
-        if (!env) {
-            return;
-        }
-
-        for (const auto& ref : localRefs[env]) {
-            env->DeleteLocalRef(ref);
-        }
-        localRefs[env].clear();
-    }
-
-    void JniHelper::reportError(const std::string& className, const std::string& methodName, const std::string& signature) {
-        LOGE("Failed to find static java method. Class name: %s, method name: %s, signature: %s ",  className.c_str(), methodName.c_str(), signature.c_str());
+    void JniHelper::reportError(const char* className, const char* methodName, const char* signature) {
+        LOGE("Failed to find static java method. Class name: %s, method name: %s, signature: %s ",  className, methodName, signature);
     }
 
 } //namespace cocos2d
