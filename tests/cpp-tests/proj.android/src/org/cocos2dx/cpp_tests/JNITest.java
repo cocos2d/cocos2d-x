@@ -117,4 +117,10 @@ public class JNITest {
 		Log.v(TAG, message.toString());
 		return ret;
 	}
+
+	public static int[] arrayMethod() {
+		Log.v(TAG, "Called arrayMethod");
+		int[] ret = {1, 2, 3, 4, 5};
+		return ret;
+	}
 }
