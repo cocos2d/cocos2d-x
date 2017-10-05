@@ -30,15 +30,15 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "base/ccUTF8.h"
 
-static const std::string className = "org/cocos2dx/lib/Cocos2dxBitmap";
+static const char* className = "org/cocos2dx/lib/Cocos2dxBitmap";
 
 using namespace cocos2d;
 
 int getFontSizeAccordingHeightJni(int height) {
-    return JniHelper::callStaticIntMethod(className, "getFontSizeAccordingHeight", height);
+    return JniHelper::callStaticMethod<int>(className, "getFontSizeAccordingHeight", height);
 }
 
 std::string getStringWithEllipsisJni(const char* text, float width, float fontSize) {
-    return JniHelper::callStaticStringMethod(className, "getStringWithEllipsis", text, width, fontSize);
+    return JniHelper::callStaticMethod<std::string>(className, "getStringWithEllipsis", text, width, fontSize);
 }
 

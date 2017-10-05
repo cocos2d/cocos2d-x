@@ -28,7 +28,7 @@ namespace cocos2d { namespace experimental {
 
 int getSDKVersion()
 {
-    return JniHelper::callStaticIntMethod("org/cocos2dx/lib/Cocos2dxHelper", "getSDKVersion");
+    return JniHelper::callStaticMethod<int>("org/cocos2dx/lib/Cocos2dxHelper", "getSDKVersion");
 }
 
 }} // end of namespace cocos2d { namespace experimental
