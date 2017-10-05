@@ -127,10 +127,7 @@ namespace JniHelperDetail {
     //
     // SignatureImpl
     //
-    template <class Ty1, class... TyN> struct SignatureImpl {
-        typedef typename SequenceConcatenator<typename SignatureImpl<Ty1>::Sequence,
-            typename SignatureImpl<TyN...>::Sequence>::Result Sequence;
-    };
+    template <class Ty> struct SignatureImpl;
 
     template <> struct SignatureImpl<bool> { typedef CharSequence<'Z'> Sequence; };
     template <> struct SignatureImpl<uint8_t> { typedef CharSequence<'B'> Sequence; };
@@ -169,13 +166,8 @@ namespace JniHelperDetail {
 
     template <class Ret, class... Args> struct SignatureParser<Ret (Args...)> {
         typedef typename SequenceConcatenator<CharSequence<'('>,
-            typename SignatureImpl<Args...>::Sequence,
+            typename SignatureImpl<Args>::Sequence...,
             CharSequence<')'>,
-            typename SignatureImpl<Ret>::Sequence>::Result Result;
-    };
-
-    template <class Ret> struct SignatureParser<Ret ()> {
-        typedef typename SequenceConcatenator<CharSequence<'(', ')'>,
             typename SignatureImpl<Ret>::Sequence>::Result Result;
     };
 
@@ -204,6 +196,7 @@ namespace JniHelperDetail {
         static uint8_t callStatic(JNIEnv* env, jclass clazz, jmethodID methodID, va_list args) {
             return env->CallStaticByteMethodV(clazz, methodID, args);
         }
+
         typedef jbyteArray ArrayType;
         typedef jbyte ElementType;
         static ElementType* getArrayElements(JNIEnv* env, ArrayType arr, jboolean* isCopy) {
