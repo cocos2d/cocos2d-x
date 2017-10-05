@@ -41,6 +41,7 @@ namespace JniHelperDetail {
         LocalRefWrapper& operator=(const LocalRefWrapper&) = delete;
         LocalRefWrapper& operator=(LocalRefWrapper&&) = delete;
 
+    protected:
         JNIEnv* _env;
         jobject _obj;
     };
@@ -57,29 +58,22 @@ namespace JniHelperDetail {
         inline Ty get() const { return _arg; };
     };
 
-    template <> class ArgumentWrapper<const char*> {
-        JNIEnv* _env;
-        jstring _str;
-
+    template <> class ArgumentWrapper<const char*> : LocalRefWrapper {
         ArgumentWrapper(const ArgumentWrapper&) = delete;
         ArgumentWrapper(ArgumentWrapper&&) = delete;
         ArgumentWrapper& operator=(const ArgumentWrapper&) = delete;
         ArgumentWrapper& operator=(ArgumentWrapper&&) = delete;
 
     public:
-        ~ArgumentWrapper() {
-            _env->DeleteLocalRef(_str);
+        explicit ArgumentWrapper(JNIEnv* env, const char* str)
+            : LocalRefWrapper(env, StringUtils::newStringUTFJNI(env, str != nullptr ? str : "")) {
         }
 
-        explicit ArgumentWrapper(JNIEnv* env, const char* str) : _env(env) {
-            _str = StringUtils::newStringUTFJNI(_env, str != nullptr ? str : "");
+        explicit ArgumentWrapper(JNIEnv* env, const std::string& str)
+            : LocalRefWrapper(env, StringUtils::newStringUTFJNI(env, str.c_str())) {
         }
 
-        explicit ArgumentWrapper(JNIEnv* env, const std::string& str) : _env(env) {
-            _str = StringUtils::newStringUTFJNI(_env, str.c_str());
-        }
-
-        inline jstring get() const { return _str; };
+        inline jstring get() const { return (jstring)_obj; };
     };
 
     //
@@ -91,10 +85,10 @@ namespace JniHelperDetail {
     template <size_t Size> struct ArgumentConverter<char [Size]> { typedef const char* Type; };
     template <size_t Size> struct ArgumentConverter<const char [Size]> { typedef const char* Type; };
 
-    template <class Ty> struct ArgumentConverter<const Ty> :ArgumentConverter<Ty> { };
-    template <class Ty> struct ArgumentConverter<Ty&> :ArgumentConverter<Ty> { };
-    template <class Ty> struct ArgumentConverter<const Ty&> :ArgumentConverter<Ty> { };
-    template <class Ty> struct ArgumentConverter<Ty&&> :ArgumentConverter<Ty> { };
+    template <class Ty> struct ArgumentConverter<const Ty> : ArgumentConverter<Ty> { };
+    template <class Ty> struct ArgumentConverter<Ty&> : ArgumentConverter<Ty> { };
+    template <class Ty> struct ArgumentConverter<const Ty&> : ArgumentConverter<Ty> { };
+    template <class Ty> struct ArgumentConverter<Ty&&> : ArgumentConverter<Ty> { };
 
     //
     // CharSequence
@@ -106,7 +100,7 @@ namespace JniHelperDetail {
 
     template <char... Chars>
     const char CharSequence<Chars...>::value[sizeof...(Chars) + 1] = {
-        Chars...,
+        Chars..., '\0'
     };
 
     //
@@ -120,12 +114,12 @@ namespace JniHelperDetail {
         typedef CharSequence<Chars...> Result;
     };
 
-    template <char... Chars1, char...Chars2>
+    template <char... Chars1, char... Chars2>
     struct SequenceConcatenator<CharSequence<Chars1...>, CharSequence<Chars2...> > {
         typedef CharSequence<Chars1..., Chars2...> Result;
     };
 
-    template <char... Chars1, char...Chars2, class ... Rest>
+    template <char... Chars1, char... Chars2, class... Rest>
     struct SequenceConcatenator<CharSequence<Chars1...>, CharSequence<Chars2...>, Rest...> {
         typedef typename SequenceConcatenator<CharSequence<Chars1..., Chars2...>, Rest...>::Result Result;
     };
@@ -215,7 +209,6 @@ namespace JniHelperDetail {
         static ElementType* getArrayElements(JNIEnv* env, ArrayType arr, jboolean* isCopy) {
             env->GetByteArrayElements(arr, isCopy);
         }
-
         static void releaseArrayElements(JNIEnv* env, ArrayType arr, ElementType* elems, jint mode) {
             env->ReleaseByteArrayElements(arr, elems, mode);
         }
