@@ -44,7 +44,7 @@ static int lua_Slot_displayController_set(lua_State* L)
     tolua_Error tolua_err;
     if (!tolua_isusertype(L,1,"ccdb.Slot",0,&tolua_err))
     {
-        tolua_error(L,"'Slot::displayController=' is not executed with Slot\n", NULL);
+        tolua_error(L,"'displayController' is not accessed with Slot\n", NULL);
         return 0;
     }
     
@@ -55,18 +55,18 @@ static int lua_Slot_displayController_set(lua_State* L)
     {
         if (!lua_isstring(L, 2))
         {
-            luaL_error(L, "'Slot::displayController=' first parameter is not a string\n");
+            luaL_error(L, "set 'displayController' without a string\n");
             return 0;
         }
         
         const char* value = lua_tostring(L, 2);
         self->displayController = value;
         
-        return 1;
+        return 0;
     }
     else
     {
-        luaL_error(L, "'Slot::displayController=' has wrong number of arguments: %d, was expecting 1\n", argc);
+        luaL_error(L, "set 'displayController' without wrong number parameters, expected 1 parameter, recieved %d\n", argc);
         return 0;
     }
 }
@@ -79,12 +79,12 @@ static int lua_Slot_displayController_get(lua_State* L)
     tolua_Error tolua_err;
     if (!tolua_isusertype(L,1,"ccdb.Slot",0,&tolua_err))
     {
-        tolua_error(L,"'addEvent' is not executed with Slot\n", NULL);
+        tolua_error(L,"'displayController' is accessed with Slot\n", NULL);
         return 0;
     }
     
-    auto self = static_cast<dragonBones::Armature*>(tolua_tousertype(L,1,0));
-    object_to_luaval<dragonBones::Animation>(L, "ccdb.Slot", self->_animation);
+    auto self = static_cast<dragonBones::Slot*>(tolua_tousertype(L,1,0));
+    lua_pushstring(L, self->displayController.c_str());
     return 1;
 }
 
@@ -120,6 +120,24 @@ static int lua_Armature_getAnimation(lua_State* L)
     return 1;
 }
 
+static int lua_Armature_getDisplay(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"ccdb.Armature",0,&tolua_err))
+    {
+        tolua_error(L,"'getDisplay' is not executed with Armature\n", NULL);
+        return 0;
+    }
+    
+    auto self = static_cast<dragonBones::Armature*>(tolua_tousertype(L,1,0));
+    object_to_luaval<dragonBones::CCArmatureDisplay>(L, "ccdb.CCArmatureDisplay", static_cast<dragonBones::CCArmatureDisplay*>(self->getDisplay()));
+    
+    return 1;
+}
+
 static void extendArmature(lua_State* L)
 {
     lua_pushstring(L, "ccdb.Armature");
@@ -127,6 +145,7 @@ static void extendArmature(lua_State* L)
     if (lua_istable(L,-1))
     {
         tolua_function(L, "getAnimation", lua_Armature_getAnimation);
+        tolua_function(L, "getDisplay", lua_Armature_getDisplay);
     }
     lua_pop(L, 1);
 }
@@ -302,7 +321,7 @@ static int lua_CCArmatureDisplay_addEvent(lua_State* L)
         
         ScriptHandlerMgr::getInstance()->addCustomHandler((void*)self, handler);
         
-        return 1;
+        return 0;
     }
     else
     {

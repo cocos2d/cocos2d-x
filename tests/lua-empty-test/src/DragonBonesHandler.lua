@@ -44,8 +44,8 @@ function DragonBonesHandler:ctor(scene)
     self._weaponR = self._armature:getSlot('weapon_r'):getChildArmature()
     self._weaponL = self._armature:getSlot('weapon_l'):getChildArmature()
 
-    tolua.cast(self._weaponR:getDisplay(), 'ccdb.CCArmatureDisplay'):addEvent(ccdb.EventObject.FRAME_EVENT, self.frameEventHandler)
-    tolua.cast(self._weaponL:getDisplay(), 'ccdb.CCArmatureDisplay'):addEvent(ccdb.EventObject.FRAME_EVENT, self.frameEventHandler)
+    self._weaponR:getDisplay():addEvent(ccdb.EventObject.FRAME_EVENT, self.frameEventHandler)
+    self._weaponL:getDisplay():addEvent(ccdb.EventObject.FRAME_EVENT, self.frameEventHandler)
 
     self.updateAnimation()
 
@@ -58,9 +58,9 @@ function DragonBonesHandler:ctor(scene)
     -- down
     button = findChild(scene, 'down', 'ccui.Button')
     button:addTouchEventListener(function (sender, type)
-    	if type == ccui.Widget.TouchEventType.BEGAN then
+    	if type == ccui.TouchEventType.begin then
     		self.squat(true)
-    	elseif type == ccui.Widget.TouchEventType.END then
+    	elseif type == ccui.TouchEventType.ended then
     		self.squat(false)
     	end
     end)
@@ -68,9 +68,9 @@ function DragonBonesHandler:ctor(scene)
     -- left
     button = findChild(scene, 'left', 'ccui.Button')
     button:addTouchEventListener(function (sender, type)
-    	if type == ccui.Widget.TouchEventType.BEGAN then
+    	if type == ccui.TouchEventType.begin then
     		self._left = true
-    	elseif type == ccui.Widget.TouchEventType.END then
+    	elseif type == ccui.TouchEventType.ended then
     		self._left = false
     	end
 
@@ -80,9 +80,9 @@ function DragonBonesHandler:ctor(scene)
     -- right
     button = findChild(scene, 'right', 'ccui.Button')
     button:addTouchEventListener(function (sender, type)
-    	if type == ccui.Widget.TouchEventType.BEGAN then
+    	if type == ccui.TouchEventType.begin then
     		self._right = true
-    	elseif type == ccui.Widget.TouchEventType.END then
+    	elseif type == ccui.TouchEventType.ended then
     		self._right = false
     	end
 
@@ -101,7 +101,13 @@ function DragonBonesHandler:ctor(scene)
     	self.switchWeaponR()
     end)
 
-    self:scheduleUpdate()
+    local scheduler = cc.Director:getInstance():getScheduler()
+    scheduler:scheduleScriptFunc(function (dt)
+        self.updatePosition()
+        self.updateAnim()
+        self.updateAttack()
+        self.enterFrameHandler(dt)
+    end, 0, false)
 
     self:registerScriptHandler(function(tag)
         if "enter" == tag then
@@ -113,11 +119,32 @@ function DragonBonesHandler:ctor(scene)
 end
 
 function DragonBonesHandler:onEnter()
-	-- body
+
+    function onTouchBegan(touches, event)
+        self.attack()
+        return true
+    end
+
+    function onTouchMoved(touches, event)
+        local touchloc = touches[1]:getLocation()
+        self.aim(touchloc.x, touchloc.y)
+    end
+
+    function onTouchEnded(touches, event)
+        self.attack(false)
+    end
+
+	local listener = cc.EventListenerTouchAllAtOnce:create()
+    listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCHES_BEGAN)
+    listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCHES_MOVED)
+    listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCHES_ENDED)
+
+    local eventDispatcher = cc.Director:getInstance():getEventDispatcher()
+    eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self._armatureDisplay) 
 end
 
 function DragonBonesHandler:onExit()
-	-- body
+	cc.Director:getInstance():getEventDispatcher():removeEventListenersForTarget(self._armatureDisplay)
 end
 
 function DragonBonesHandler:animationEventHandler(event)
@@ -135,7 +162,21 @@ function DragonBonesHandler:animationEventHandler(event)
 end
 
 function DragonBonesHandler:updateAnimation()
-	-- body
+	if self._isJumpingA then
+        return
+    end
+
+    if self._isSquating then
+        self._speedX = 0
+        --TODO: add binding for getAnimation
+        self._armature:getAnimation():fadeIn('squat', -1, -1, 0, NORMAL_ANIMATION_GROUP)
+        self._walkState = nil
+        return;
+    end
+
+    if self._moveDir == 0 then
+    else
+    end
 end
 
 function DragonBonesHandler:frameEventHandler(event)
