@@ -38,7 +38,7 @@ THE SOFTWARE.
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 // Java class
-static const std::string helperClassName = "org/cocos2dx/lib/Cocos2dxHelper";
+static const char* helperClassName = "org/cocos2dx/lib/Cocos2dxHelper";
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;
@@ -70,50 +70,50 @@ AndroidJavaEngine::~AndroidJavaEngine()
         stopAllEffects();
     }
 
-    JniHelper::callStaticVoidMethod(helperClassName, "end");
+    JniHelper::callStaticMethod<void>(helperClassName, "end");
 }
 
 void AndroidJavaEngine::preloadBackgroundMusic(const char* filePath) {
     std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
-    JniHelper::callStaticVoidMethod(helperClassName, "preloadBackgroundMusic", fullPath);
+    JniHelper::callStaticMethod<void>(helperClassName, "preloadBackgroundMusic", fullPath);
 }
 
 void AndroidJavaEngine::playBackgroundMusic(const char* filePath, bool loop) {
     std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
-    JniHelper::callStaticVoidMethod(helperClassName, "playBackgroundMusic", fullPath, loop);
+    JniHelper::callStaticMethod<void>(helperClassName, "playBackgroundMusic", fullPath, loop);
 }
 
 void AndroidJavaEngine::stopBackgroundMusic(bool releaseData) {
-    JniHelper::callStaticVoidMethod(helperClassName, "stopBackgroundMusic");
+    JniHelper::callStaticMethod<void>(helperClassName, "stopBackgroundMusic");
 }
 
 void AndroidJavaEngine::pauseBackgroundMusic() {
-    JniHelper::callStaticVoidMethod(helperClassName, "pauseBackgroundMusic");
+    JniHelper::callStaticMethod<void>(helperClassName, "pauseBackgroundMusic");
 
 }
 
 void AndroidJavaEngine::resumeBackgroundMusic() {
-    JniHelper::callStaticVoidMethod(helperClassName, "resumeBackgroundMusic");
+    JniHelper::callStaticMethod<void>(helperClassName, "resumeBackgroundMusic");
 }
 
 void AndroidJavaEngine::rewindBackgroundMusic() {
-    JniHelper::callStaticVoidMethod(helperClassName, "rewindBackgroundMusic");
+    JniHelper::callStaticMethod<void>(helperClassName, "rewindBackgroundMusic");
 }
 
 bool AndroidJavaEngine::willPlayBackgroundMusic() {
-    return JniHelper::callStaticBooleanMethod(helperClassName, "willPlayBackgroundMusic");
+    return JniHelper::callStaticMethod<bool>(helperClassName, "willPlayBackgroundMusic");
 }
 
 bool AndroidJavaEngine::isBackgroundMusicPlaying() {
-    return JniHelper::callStaticBooleanMethod(helperClassName, "isBackgroundMusicPlaying");
+    return JniHelper::callStaticMethod<bool>(helperClassName, "isBackgroundMusicPlaying");
 }
 
 float AndroidJavaEngine::getBackgroundMusicVolume() {
-    return JniHelper::callStaticFloatMethod(helperClassName, "getBackgroundMusicVolume");
+    return JniHelper::callStaticMethod<float>(helperClassName, "getBackgroundMusicVolume");
 }
 
 void AndroidJavaEngine::setBackgroundMusicVolume(float volume) {
-    JniHelper::callStaticVoidMethod(helperClassName, "setBackgroundMusicVolume", volume);
+    JniHelper::callStaticMethod<void>(helperClassName, "setBackgroundMusicVolume", volume);
 }
 
 float AndroidJavaEngine::getEffectsVolume()
@@ -124,7 +124,7 @@ float AndroidJavaEngine::getEffectsVolume()
     }
     else
     {
-        return JniHelper::callStaticFloatMethod(helperClassName, "getEffectsVolume");
+        return JniHelper::callStaticMethod<float>(helperClassName, "getEffectsVolume");
     }
 }
 
@@ -152,7 +152,7 @@ void AndroidJavaEngine::setEffectsVolume(float volume)
     }
     else
     {
-        JniHelper::callStaticVoidMethod(helperClassName, "setEffectsVolume", volume);
+        JniHelper::callStaticMethod<void>(helperClassName, "setEffectsVolume", volume);
     }
 }
 
@@ -176,7 +176,7 @@ unsigned int AndroidJavaEngine::playEffect(const char* filePath, bool loop,
     else
     {
         std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
-        int ret = JniHelper::callStaticIntMethod(helperClassName, "playEffect", fullPath, loop, pitch, pan, gain);
+        int ret = JniHelper::callStaticMethod<int>(helperClassName, "playEffect", fullPath, loop, pitch, pan, gain);
         return (unsigned int)ret;
     }
 }
@@ -189,7 +189,7 @@ void AndroidJavaEngine::pauseEffect(unsigned int soundID)
     }
     else
     {
-        JniHelper::callStaticVoidMethod(helperClassName, "pauseEffect", (int)soundID);
+        JniHelper::callStaticMethod<void>(helperClassName, "pauseEffect", (int)soundID);
     }
 }
 
@@ -201,7 +201,7 @@ void AndroidJavaEngine::resumeEffect(unsigned int soundID)
     }
     else
     {
-        JniHelper::callStaticVoidMethod(helperClassName, "resumeEffect", (int)soundID);
+        JniHelper::callStaticMethod<void>(helperClassName, "resumeEffect", (int)soundID);
     }
 }
 
@@ -214,7 +214,7 @@ void AndroidJavaEngine::stopEffect(unsigned int soundID)
     }
     else
     {
-        JniHelper::callStaticVoidMethod(helperClassName, "stopEffect", (int)soundID);
+        JniHelper::callStaticMethod<void>(helperClassName, "stopEffect", (int)soundID);
     }
 }
 
@@ -229,7 +229,7 @@ void AndroidJavaEngine::pauseAllEffects()
     }
     else
     {
-        JniHelper::callStaticVoidMethod(helperClassName, "pauseAllEffects");
+        JniHelper::callStaticMethod<void>(helperClassName, "pauseAllEffects");
     }
 }
 
@@ -244,7 +244,7 @@ void AndroidJavaEngine::resumeAllEffects()
     }
     else
     {
-        JniHelper::callStaticVoidMethod(helperClassName, "resumeAllEffects");
+        JniHelper::callStaticMethod<void>(helperClassName, "resumeAllEffects");
     }
 }
 
@@ -260,7 +260,7 @@ void AndroidJavaEngine::stopAllEffects()
     }
     else
     {
-        JniHelper::callStaticVoidMethod(helperClassName, "stopAllEffects");
+        JniHelper::callStaticMethod<void>(helperClassName, "stopAllEffects");
     }
 }
 
@@ -269,7 +269,7 @@ void AndroidJavaEngine::preloadEffect(const char* filePath)
     if (!_implementBaseOnAudioEngine)
     {
         std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
-        JniHelper::callStaticVoidMethod(helperClassName, "preloadEffect", fullPath);
+        JniHelper::callStaticMethod<void>(helperClassName, "preloadEffect", fullPath);
     }
     else
     {
@@ -282,7 +282,7 @@ void AndroidJavaEngine::unloadEffect(const char* filePath)
     if (!_implementBaseOnAudioEngine)
     {
         std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(filePath);
-        JniHelper::callStaticVoidMethod(helperClassName, "unloadEffect", fullPath);
+        JniHelper::callStaticMethod<void>(helperClassName, "unloadEffect", fullPath);
     }
     else
     {

@@ -42,7 +42,7 @@
 USING_NS_CC;
 static int _initialized = 0;
 
-static std::string className = "org/cocos2dx/lib/Cocos2dxLocalStorage";
+static const char* className = "org/cocos2dx/lib/Cocos2dxLocalStorage";
 
 static void splitFilename (std::string& str)
 {
@@ -63,7 +63,7 @@ void localStorageInit( const std::string& fullpath)
     {
         std::string strDBFilename = fullpath;
         splitFilename(strDBFilename);
-        if (JniHelper::callStaticBooleanMethod(className, "init", strDBFilename, "data")) {
+        if (JniHelper::callStaticMethod<bool>(className, "init", strDBFilename, "data")) {
             _initialized = 1;
         }
     }
@@ -72,7 +72,7 @@ void localStorageInit( const std::string& fullpath)
 void localStorageFree()
 {
     if (_initialized) {
-        JniHelper::callStaticVoidMethod(className, "destroy");
+        JniHelper::callStaticMethod<void>(className, "destroy");
         _initialized = 0;
     }
 }
@@ -81,7 +81,7 @@ void localStorageFree()
 void localStorageSetItem( const std::string& key, const std::string& value)
 {
     assert( _initialized );
-    JniHelper::callStaticVoidMethod(className, "setItem", key, value);
+    JniHelper::callStaticMethod<void>(className, "setItem", key, value);
 }
 
 /** gets an item from the LS */
@@ -120,14 +120,14 @@ bool localStorageGetItem( const std::string& key, std::string *outItem )
 void localStorageRemoveItem( const std::string& key )
 {
     assert( _initialized );
-    JniHelper::callStaticVoidMethod(className, "removeItem", key);
+    JniHelper::callStaticMethod<void>(className, "removeItem", key);
 }
 
 /** removes all items from the LS */
 void localStorageClear()
 {
     assert( _initialized );
-    JniHelper::callStaticVoidMethod(className, "clear");
+    JniHelper::callStaticMethod<void>(className, "clear");
 }
 
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

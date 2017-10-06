@@ -1466,7 +1466,7 @@ void EngineDataManager::setAnimationInterval(float interval, SetIntervalReason r
     updateFinalAnimationInterval();
 
     LOGD("JNI setAnimationInterval: %f", _animationInterval);
-    JniHelper::callStaticVoidMethod(CLASS_NAME_RENDERER, "setAnimationInterval", _animationInterval);
+    JniHelper::callStaticMethod<void>(CLASS_NAME_RENDERER, "setAnimationInterval", _animationInterval);
 
     if (_isSupported)
     {
