@@ -55,6 +55,13 @@ public class JNITest {
 		// Used to test garbage collection
 	}
 
+	public static void voidMethod5(int[] arr) {
+		StringBuilder message = new StringBuilder();
+		message.append("Called voidMethod5 with array = ");
+		message.append(arr.length);
+		Log.v(TAG, message.toString());
+	}
+
 	public static boolean booleanMethod(int n) {
 		boolean ret = n > 0;
 		StringBuilder message = new StringBuilder();
@@ -115,6 +122,12 @@ public class JNITest {
 		message.append("\nReturning ");
 		message.append(ret);
 		Log.v(TAG, message.toString());
+		return ret;
+	}
+
+	public static int[] arrayMethod() {
+		Log.v(TAG, "Called arrayMethod");
+		int[] ret = {1, 2, 3, 4, 5};
 		return ret;
 	}
 }

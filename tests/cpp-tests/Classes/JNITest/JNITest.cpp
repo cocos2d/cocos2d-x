@@ -56,13 +56,17 @@ JNITest::JNITest()
     std::string s3 = JniHelper::callStaticMethod<std::string>(classPath, "stringMethod", cstr, true);
     CC_ASSERT(s3 == "ZYX");
 
+    std::vector<int> vec = JniHelper::callStaticMethod<std::vector<int> >(classPath, "arrayMethod");
+    for (auto i : vec) {
+        CCLOG("%d\n", i);
+    }
+
     // should not crash
     for (int i = 0; i < 10000; i++) {
         JniHelper::callStaticMethod<void>(classPath, "voidMethod4", "ABCDEF");
     }
 
-    // should not compile
-    // JniHelper::callStaticMethod<void>(classPath, "voidMethod4", std::vector<int>());
+    JniHelper::callStaticMethod<void>(classPath, "voidMethod5", std::vector<int>({1, 2, 3, 4, 5}));
 }
 
 #endif
