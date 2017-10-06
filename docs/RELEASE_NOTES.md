@@ -67,6 +67,10 @@ LayerRadialGradient is similar to LayerColor, but will only draw color in a circ
 
 After updating to Xcode 8.0+, lua projects will crash on iOS simulator. It is a bug of luagit. In this version, the bug it is fixed. You can just update [luajit][7] if you don't want to update cocos2d-x.
 
+### Fix compiling error with iOS 11
+
+Before cocos2d-x v3.16, `CCFileUtils` uses `system()` to remove a directory. iOS 11 remove `system`, so will cause compiling error with iOS 11. This version fixes this issue. The corresponding PR for this issue is [here](https://github.com/cocos2d/cocos2d-x/pull/17921), you can apply this PR to fix it if you don't want to upgrade to v3.16.
+
 ### Cocos Studio
 
 coocs2d-x v3.15 updates flatbuffer, which breaks compatibility of Cocos Studio. In this version, we revert flatbuffer and Cocos Studio reader.
