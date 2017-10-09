@@ -39,7 +39,7 @@ Android tool version tested in this version:
 - fix compling error with iOS 11
 - use prebuit bullet to improve compiling speed
 - remove supporting of Windows 10 metro, Windows Phones and Tizen
-- update to Spine v3.5.35 and support sckeleton batching in web engine
+- update to Spine v3.5.35 and support skeleton batching in web engine
 
 ## Highlights in detail
 
@@ -81,7 +81,7 @@ If you don't want to update cocos2d-x, you can replace flatbuffer and Cocos Stud
 
 As bullet is not needed for most developers, so we use prebuilt bullet. It will speed up compiling speed, and we will continue to use more prebuilt 3rd party libraries, such as 3d particles, Box2D and so on to speed up compiling speed.
 
-We also fix many warnings too in this version. As some warnings are imported by 3rd party libaries, so we can not treat warnings as error, but we will continue to achive it.
+We also fix many warnings too in this version. As some warnings are imported by 3rd party libaries, so we can not treat warnings as error, but we will continue to achieve it.
 
 ### Remove some platforms support
 
