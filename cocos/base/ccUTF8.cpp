@@ -378,13 +378,19 @@ void StringUTF8::replace(const std::string& newStr)
     }
 }
 
-std::string StringUTF8::getAsCharSequence() const
+std::string StringUTF8::getAsCharSequence(std::size_t pos/* = 0*/, std::size_t len/* = (std::size_t)-1*/) const
 {
     std::string charSequence;
-
-    for (auto& charUtf8 : _str)
+    size_t maxLen = _str.size() - pos;
+    if (len == (size_t)-1 || len > maxLen)
     {
-        charSequence.append(charUtf8._char);
+        len = maxLen;
+    }
+
+    len += pos;
+    while (pos < len)
+    {
+        charSequence.append(_str[pos++]._char);
     }
 
     return charSequence;

@@ -196,7 +196,7 @@ public:
     struct CharUTF8
     {
         std::string _char;
-        bool isAnsi() { return _char.size() == 1; }
+        bool isAnsi() const { return _char.size() == 1; }
     };
     typedef std::vector<CharUTF8> CharUTF8Store;
 
@@ -207,13 +207,14 @@ public:
     std::size_t length() const;
     void replace(const std::string& newStr);
 
-    std::string getAsCharSequence() const;
+    std::string getAsCharSequence(std::size_t pos = 0, std::size_t len = (std::size_t)-1) const;
 
     bool deleteChar(std::size_t pos);
     bool insert(std::size_t pos, const std::string& insertStr);
     bool insert(std::size_t pos, const StringUTF8& insertStr);
 
     CharUTF8Store& getString() { return _str; }
+    const CharUTF8Store& getString() const { return _str; }
 
 private:
     CharUTF8Store _str;
