@@ -8,7 +8,6 @@
         "README.cmake", 
         "README.md", 
         "build/android-build.py", 
-        "build/cocos2d-win10.sln", 
         "build/cocos2d-win32.sln", 
         "build/cocos2d_libs.xcodeproj/project.pbxproj", 
         "build/cocos2d_tests.xcodeproj/project.pbxproj", 

@@ -11,12 +11,7 @@
                "proj.win32/PROJECT_NAME.vcxproj.filters",
                "proj.win32/PROJECT_NAME.vcxproj.user",
                "proj.win32/PROJECT_NAME.sln",
-               "proj.ios_mac/PROJECT_NAME.xcodeproj",
-               "proj.win10/PROJECT_NAME.sln",
-               "proj.win10/App/PROJECT_NAME.vcxproj",
-               "proj.win10/App/PROJECT_NAME.vcxproj.filters",
-               "proj.win10/App/PROJECT_NAME_TemporaryKey.pfx",
-	            "proj.tizen/shared/res/PROJECT_NAME.png"
+               "proj.ios_mac/PROJECT_NAME.xcodeproj"
             ]
          },
          "project_replace_project_name":{
@@ -38,13 +33,7 @@
                "proj.ios_mac/ios/main.m",
                "proj.ios_mac/ios/Prefix.pch",
                "proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
-               "proj.win10/PROJECT_NAME.sln",
-               "proj.win10/App/PROJECT_NAME.vcxproj",
-               "proj.win10/App/PROJECT_NAME.vcxproj.filters",
-               "proj.win10/App/Package.appxmanifest",
-               "CMakeLists.txt",
-               "proj.tizen/.project",
-               "proj.tizen/tizen-manifest.xml"
+               "CMakeLists.txt"
             ]
          },
          "project_replace_package_name":{
@@ -52,8 +41,7 @@
             "files":[
                "proj.android/AndroidManifest.xml",
                "proj.android-studio/app/build.gradle",
-               "proj.android-studio/app/AndroidManifest.xml",
-	       "proj.tizen/tizen-manifest.xml"
+               "proj.android-studio/app/AndroidManifest.xml"
             ]
          },
          "project_replace_mac_bundleid": {
@@ -95,11 +83,6 @@
                "file_path": "proj.android-studio/app/AndroidManifest.xml",
                "pattern": "android:screenOrientation=\\\".*\\\"",
                "replace_string": "android:screenOrientation=\"portrait\""
-            },
-            {
-               "file_path": "proj.win10/App/Package.appxmanifest",
-               "pattern": "Rotation Preference=\\\"landscape",
-               "replace_string": "Rotation Preference=\"portrait"
             }
          ]
       }
