@@ -34,7 +34,7 @@
 
 - 更好地支持 [`creator_to_cocos2dx`][1] 这个Cocos Creator的插件
 - 新增 __LayerRadiaGradientLayer__
-- 支持__Android Studio 2.3.3__
+- 支持 __Android Studio 2.3.3__
 - 修复lua工程在Xcode 8.0+模拟器崩溃问题
 - 回退CocosStudio的reader和flatbuffer
 - 修复iOS 11编译错误
@@ -46,7 +46,8 @@
 
 ### 更好地支持 [`creator_to_cocos2dx`][1]
 
-[`creator_to_cocos2dx`][1]是一个[Cocos Creator][2]的插件。该插件用于导出Creator创建的场景内容给cocos2d-x的C++/Lua工程使用。下文的__插件__就是指这个插件。
+[`creator_to_cocos2dx`][1]是一个[Cocos Creator][2]的插件。该插件用于导出Creator创建的场景内容给cocos2d-x的C++/Lua工程使用。下文的 
+ __插件__ 就是指这个插件。
 
 通过使用该插件，可以把[Cocos Creator][2]当成cocos2d-x的场景编辑器。该插件目前支持[这些特性](3)，会持续支持其他新的特性。有些特性只在v3.16+版本支持，比如RichText img标签。
 
