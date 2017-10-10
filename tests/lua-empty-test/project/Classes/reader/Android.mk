@@ -36,12 +36,21 @@ LOCAL_ARM_MODE := arm
 LOCAL_SRC_FILES := $(cpp_src) \
 lua-bindings/creator_reader_bindings.cpp \
 lua-bindings/reader/lua_creator_reader_auto.cpp \
-lua-bindings/reader/lua_creator_reader_manual.cpp
+lua-bindings/reader/lua_creator_reader_manual.cpp \
+lua-bindings/dragonbones/lua_dragonbones_manual.cpp \
+lua-bindings/dragonbones/lua_dragonbones_auto.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/.
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/. \
                     $(LOCAL_PATH)/collider \
-                    $(LOCAL_PATH)/animation
+                    $(LOCAL_PATH)/animation \
+                    $(LOCAL_PATH)/dragonbones/cocos2dx \
+                    $(LOCAL_PATH)/dragonbones/armature \
+                    $(LOCAL_PATH)/dragonbones/animation \
+                    $(LOCAL_PATH)/dragonbones/events \
+                    $(LOCAL_PATH)/dragonbones/factories \
+                    $(LOCAL_PATH)/dragonbones/core \
+                    $(LOCAL_PATH)/dragonbones/geom
 LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
 LOCAL_STATIC_LIBRARIES += dragonbones_static
 include $(BUILD_STATIC_LIBRARY)
