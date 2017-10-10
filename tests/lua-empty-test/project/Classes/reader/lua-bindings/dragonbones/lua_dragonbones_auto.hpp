@@ -97,4 +97,33 @@ int register_all_creator_dragonbones(lua_State* tolua_S);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #endif // __creator_dragonbones_h__
