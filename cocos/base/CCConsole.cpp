@@ -140,16 +140,16 @@ namespace {
               The _vsnprintf behavior is compatible API which always return -1 when buffer isn't enough at VS2013/2015/2017
               Yes, The vsnprintf is more efficient implemented by MSVC 19.0 or later, AND it's also standard-compliant, see reference: http://www.cplusplus.com/reference/cstdio/vsnprintf/
 	    */
-            nret = vsnprintf(buf, bufferSize - 3, format, args);
+            nret = vsnprintf(buf, bufferSize - 2, format, args);
             if (nret >= 0)
             { // VS2015/2017
-                if (nret <= bufferSize - 3)
+                if (nret <= bufferSize - 2)
                 {// success, so don't need to realloc
                     break;
                 }
                 else
                 {
-                    bufferSize = nret + 3;
+                    bufferSize = nret + 2;
                     delete[] buf;
                 }
             }
