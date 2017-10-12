@@ -8436,7 +8436,7 @@ int lua_cocos2dx_extension_ScrollView_hasVisibleParents(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_extension_ScrollView_getDirection(lua_State* tolua_S)
+int lua_cocos2dx_extension_ScrollView_setSwallowTouches(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::extension::ScrollView* cobj = nullptr;
@@ -8456,29 +8456,32 @@ int lua_cocos2dx_extension_ScrollView_getDirection(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_ScrollView_getDirection'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_ScrollView_setSwallowTouches'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
+    if (argc == 1) 
     {
+        bool arg0;
+
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.ScrollView:setSwallowTouches");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_ScrollView_getDirection'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_ScrollView_setSwallowTouches'", nullptr);
             return 0;
         }
-        int ret = (int)cobj->getDirection();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        cobj->setSwallowTouches(arg0);
+        lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:getDirection",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:setSwallowTouches",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_ScrollView_getDirection'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_ScrollView_setSwallowTouches'.",&tolua_err);
 #endif
 
     return 0;
@@ -9631,6 +9634,53 @@ int lua_cocos2dx_extension_ScrollView_minContainerOffset(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_extension_ScrollView_getDirection(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::extension::ScrollView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ScrollView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::extension::ScrollView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_ScrollView_getDirection'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_ScrollView_getDirection'", nullptr);
+            return 0;
+        }
+        int ret = (int)cobj->getDirection();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ScrollView:getDirection",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_ScrollView_getDirection'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_extension_ScrollView_setZoomScale(lua_State* tolua_S)
 {
     int argc = 0;
@@ -9808,7 +9858,7 @@ int lua_register_cocos2dx_extension_ScrollView(lua_State* tolua_S)
         tolua_function(tolua_S,"updateTweenAction",lua_cocos2dx_extension_ScrollView_updateTweenAction);
         tolua_function(tolua_S,"setMaxScale",lua_cocos2dx_extension_ScrollView_setMaxScale);
         tolua_function(tolua_S,"hasVisibleParents",lua_cocos2dx_extension_ScrollView_hasVisibleParents);
-        tolua_function(tolua_S,"getDirection",lua_cocos2dx_extension_ScrollView_getDirection);
+        tolua_function(tolua_S,"setSwallowTouches",lua_cocos2dx_extension_ScrollView_setSwallowTouches);
         tolua_function(tolua_S,"getContainer",lua_cocos2dx_extension_ScrollView_getContainer);
         tolua_function(tolua_S,"setMinScale",lua_cocos2dx_extension_ScrollView_setMinScale);
         tolua_function(tolua_S,"getZoomScale",lua_cocos2dx_extension_ScrollView_getZoomScale);
@@ -9832,6 +9882,7 @@ int lua_register_cocos2dx_extension_ScrollView(lua_State* tolua_S)
         tolua_function(tolua_S,"isTouchMoved",lua_cocos2dx_extension_ScrollView_isTouchMoved);
         tolua_function(tolua_S,"isNodeVisible",lua_cocos2dx_extension_ScrollView_isNodeVisible);
         tolua_function(tolua_S,"minContainerOffset",lua_cocos2dx_extension_ScrollView_minContainerOffset);
+        tolua_function(tolua_S,"getDirection",lua_cocos2dx_extension_ScrollView_getDirection);
         tolua_function(tolua_S,"setZoomScale",lua_cocos2dx_extension_ScrollView_setZoomScale);
         tolua_function(tolua_S,"create", lua_cocos2dx_extension_ScrollView_create);
     tolua_endmodule(tolua_S);

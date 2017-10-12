@@ -87,6 +87,12 @@ namespace cocos2d {
 
                 void setBounces(bool bounces);
 
+                void setOpacityWebView(float opacity);
+        
+                float getOpacityWebView() const;
+        
+                void setBackgroundTransparent;
+
                 Evas_Object* _ewkWin;
                 Evas_Object* _ewkView;
             private:

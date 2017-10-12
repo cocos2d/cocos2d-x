@@ -23,6 +23,26 @@ static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 JSClass  *jsb_cocos2d_experimental_ui_WebView_class;
 JSObject *jsb_cocos2d_experimental_ui_WebView_prototype;
 
+bool js_cocos2dx_experimental_webView_WebView_setOpacityWebView(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::experimental::ui::WebView* cobj = (cocos2d::experimental::ui::WebView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_experimental_webView_WebView_setOpacityWebView : Invalid Native Object");
+    if (argc == 1) {
+        double arg0 = 0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_experimental_webView_WebView_setOpacityWebView : Error processing arguments");
+        cobj->setOpacityWebView(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_experimental_webView_WebView_setOpacityWebView : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_experimental_webView_WebView_canGoBack(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -239,6 +259,22 @@ bool js_cocos2dx_experimental_webView_WebView_evaluateJS(JSContext *cx, uint32_t
     JS_ReportError(cx, "js_cocos2dx_experimental_webView_WebView_evaluateJS : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_experimental_webView_WebView_setBackgroundTransparent(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::experimental::ui::WebView* cobj = (cocos2d::experimental::ui::WebView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_experimental_webView_WebView_setBackgroundTransparent : Invalid Native Object");
+    if (argc == 0) {
+        cobj->setBackgroundTransparent();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_experimental_webView_WebView_setBackgroundTransparent : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_experimental_webView_WebView_getOnJSCallback(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -307,6 +343,24 @@ bool js_cocos2dx_experimental_webView_WebView_stopLoading(JSContext *cx, uint32_
     }
 
     JS_ReportError(cx, "js_cocos2dx_experimental_webView_WebView_stopLoading : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_experimental_webView_WebView_getOpacityWebView(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::experimental::ui::WebView* cobj = (cocos2d::experimental::ui::WebView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_experimental_webView_WebView_getOpacityWebView : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getOpacityWebView();
+        JS::RootedValue jsret(cx);
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_experimental_webView_WebView_getOpacityWebView : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_experimental_webView_WebView_reload(JSContext *cx, uint32_t argc, jsval *vp)
@@ -414,6 +468,7 @@ void js_register_cocos2dx_experimental_webView_WebView(JSContext *cx, JS::Handle
     };
 
     static JSFunctionSpec funcs[] = {
+        JS_FN("setOpacityWebView", js_cocos2dx_experimental_webView_WebView_setOpacityWebView, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("canGoBack", js_cocos2dx_experimental_webView_WebView_canGoBack, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadHTMLString", js_cocos2dx_experimental_webView_WebView_loadHTMLString, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("goForward", js_cocos2dx_experimental_webView_WebView_goForward, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -424,10 +479,12 @@ void js_register_cocos2dx_experimental_webView_WebView(JSContext *cx, JS::Handle
         JS_FN("loadURL", js_cocos2dx_experimental_webView_WebView_loadURL, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBounces", js_cocos2dx_experimental_webView_WebView_setBounces, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("evaluateJS", js_cocos2dx_experimental_webView_WebView_evaluateJS, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setBackgroundTransparent", js_cocos2dx_experimental_webView_WebView_setBackgroundTransparent, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getOnJSCallback", js_cocos2dx_experimental_webView_WebView_getOnJSCallback, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("canGoForward", js_cocos2dx_experimental_webView_WebView_canGoForward, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getOnShouldStartLoading", js_cocos2dx_experimental_webView_WebView_getOnShouldStartLoading, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("stopLoading", js_cocos2dx_experimental_webView_WebView_stopLoading, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getOpacityWebView", js_cocos2dx_experimental_webView_WebView_getOpacityWebView, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("reload", js_cocos2dx_experimental_webView_WebView_reload, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setJavascriptInterfaceScheme", js_cocos2dx_experimental_webView_WebView_setJavascriptInterfaceScheme, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getOnDidFinishLoading", js_cocos2dx_experimental_webView_WebView_getOnDidFinishLoading, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),

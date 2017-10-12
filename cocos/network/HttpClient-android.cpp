@@ -676,6 +676,14 @@ void HttpClient::processResponse(HttpResponse* response, char* responseMessage)
 
     responseCode = urlConnection.getResponseCode();
 
+    if (0 == responseCode)
+    {
+       response->setSucceed(false);
+       response->setErrorBuffer("connect failed");
+       response->setResponseCode(-1);
+       return;
+    }
+
     char* headers = urlConnection.getResponseHeaders();
     if (nullptr != headers)
     {

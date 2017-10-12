@@ -243,7 +243,64 @@ public:
      * @return A margin in float.
      */
     float getItemsMargin()const;
-    
+
+    /**
+     * Change padding with left, top, right, and bottom padding.
+     * @param l Left padding in float.
+     * @param t Top margin in float.
+     * @param r Right margin in float.
+     * @param b Bottom margin in float.
+     */
+    void setPadding(float l, float t, float r, float b);
+
+    /**
+     * Change padding with left padding
+     * @param l Left padding in float.
+     */
+    void setLeftPadding(float l);
+
+    /**
+     * Change padding with top padding
+     * @param t Top padding in float
+     */
+    void setTopPadding(float t);
+
+    /**
+     * Change padding with right padding
+     * @param r Right padding in float
+     */
+    void setRightPadding(float r);
+
+    /**
+     * Change padding with bottom padding
+     * @param b Bottom padding in float
+     */
+    void setBottomPadding(float b);
+
+    /**
+     * Get the left padding in ListView
+     * @return Left padding in float
+     */
+    float getLeftPadding() const;
+
+    /**
+     * Get the top padding in ListView
+     * @return Top padding in float
+     */
+    float getTopPadding() const;
+
+    /**
+     * Get the right padding in ListView
+     * @return Right padding in float
+     */
+    float getRightPadding() const;
+
+    /**
+     * Get the bottom padding in ListView
+     * @return Bottom padding in float
+     */
+    float getBottomPadding() const;
+
     /**
      * Set the time in seconds to scroll between items.
      * Subsequent calls of function 'scrollToItem', will take 'time' seconds for scrolling.
@@ -441,7 +498,12 @@ protected:
     bool _magneticAllowedOutOfBoundary;
     
     float _itemsMargin;
-    
+
+    float _leftPadding;
+    float _topPadding;
+    float _rightPadding;
+    float _bottomPadding;
+
     float _scrollTime;
     
     ssize_t _curSelectedIndex;

@@ -15,6 +15,7 @@ public:
     bool init() override;
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 protected:
     cocos2d::ui::RichText* _richText;
@@ -28,6 +29,7 @@ public:
     bool init() override;
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 protected:
     cocos2d::ui::RichText* _richText;
@@ -41,6 +43,7 @@ public:
     bool init() override;
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 protected:
     cocos2d::ui::RichText* _richText;
@@ -54,6 +57,7 @@ public:
     bool init() override;
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 protected:
     cocos2d::ui::RichText* _richText;
@@ -67,6 +71,7 @@ public:
     bool init() override;
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 protected:
     cocos2d::ui::RichText* _richText;
@@ -80,6 +85,7 @@ public:
     bool init() override;
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 protected:
     cocos2d::ui::RichText* _richText;
@@ -93,6 +99,7 @@ public:
     bool init() override;
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 protected:
     cocos2d::ui::RichText* _richText;
@@ -106,6 +113,7 @@ public:
     bool init() override;
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 protected:
     cocos2d::ui::RichText* _richText;
@@ -119,6 +127,7 @@ public:
     bool init() override;
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 protected:
     cocos2d::ui::RichText* _richText;
@@ -132,7 +141,8 @@ public:
     bool init() override;
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
-    
+    void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+
 protected:
     cocos2d::ui::RichText* _richText;
 };
@@ -145,6 +155,7 @@ public:
     bool init() override;
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 protected:
     cocos2d::ui::RichText* _richText;
@@ -158,6 +169,7 @@ public:
     bool init() override;
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+    void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 protected:
     cocos2d::ui::RichText* _richText;
@@ -182,7 +194,8 @@ public:
     bool init() override;
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
-    
+    void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+
 protected:
     cocos2d::ui::RichText* _richText;
 };
@@ -195,7 +208,8 @@ public:
     bool init() override;
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
-    
+    void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+
 protected:
     cocos2d::ui::RichText* _richText;
 };
@@ -208,7 +222,8 @@ public:
     bool init() override;
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
-    
+    void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+
 protected:
     cocos2d::ui::RichText* _richText;
 };
@@ -221,7 +236,8 @@ public:
     bool init() override;
     void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     void switchWrapMode(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
-    
+    void switchAlignment(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+
 protected:
     cocos2d::ui::RichText* _richText;
 };

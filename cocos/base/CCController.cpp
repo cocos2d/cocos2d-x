@@ -25,7 +25,7 @@
 
 #include "base/CCController.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventController.h"
@@ -46,6 +46,19 @@ Controller* Controller::getControllerByTag(int tag)
     }
     return nullptr;
 }
+
+Controller* Controller::getControllerByDeviceId(int deviceId)
+{
+    for (auto controller : Controller::s_allController)
+    {
+        if (controller->_deviceId == deviceId)
+        {
+            return controller;
+        }
+    }
+    return nullptr;
+}
+
 
 void Controller::init()
 {
@@ -112,4 +125,4 @@ void Controller::onAxisEvent(int axisCode, float value, bool isAnalog)
 
 NS_CC_END
 
-#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)

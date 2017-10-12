@@ -95,10 +95,10 @@ THE SOFTWARE.
  * 0.5 seconds, means that the FPS number will be updated every 0.5 seconds.
  * Having a bigger number means a more reliable FPS.
 
- * Default value: 0.1f
+ * Default value: 0.5f
  */
 #ifndef CC_DIRECTOR_STATS_INTERVAL
-#define CC_DIRECTOR_STATS_INTERVAL (0.1f)
+#define CC_DIRECTOR_STATS_INTERVAL (0.5f)
 #endif
 
 /** @def CC_DIRECTOR_FPS_POSITION
@@ -396,6 +396,13 @@ THE SOFTWARE.
  */
 #ifndef CC_ENABLE_PREMULTIPLIED_ALPHA
 # define CC_ENABLE_PREMULTIPLIED_ALPHA 1
+#endif
+
+/** @def CC_STRIP_FPS
+ * Whether to strip FPS related data and functions, such as cc_fps_images_png
+ */
+#ifndef CC_STRIP_FPS
+#define CC_STRIP_FPS 0
 #endif
 
 #endif // __CCCONFIG_H__

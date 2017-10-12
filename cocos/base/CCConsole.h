@@ -181,6 +181,9 @@ public:
      */
     void setBindAddress(const std::string &address);
 
+    /** Checks whether the server for console is bound with ipv6 address */
+    bool isIpv6Server() const;
+
 protected:
     // Main Loop
     void loop();
@@ -247,6 +250,7 @@ protected:
 
     bool _running;
     bool _endThread;
+    bool _isIpv6Server;
 
     std::map<std::string, Command> _commands;
 

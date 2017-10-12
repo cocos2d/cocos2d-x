@@ -267,6 +267,11 @@ public:
     static const char* SHADER_3D_TERRAIN;
     
     /**
+     Built in shader for LayerRadialGradient
+     */
+    static const char* SHADER_LAYER_RADIAL_GRADIENT;
+    
+    /**
      Built in shader for camera clear
      */
     static const char* SHADER_CAMERA_CLEAR;

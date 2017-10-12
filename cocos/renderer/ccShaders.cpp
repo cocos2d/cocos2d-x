@@ -95,4 +95,8 @@ NS_CC_BEGIN
 // ETC1 ALPHA support
 #include "renderer/ccShader_ETC1AS_PositionTextureColor.frag"
 #include "renderer/ccShader_ETC1AS_PositionTextureGray.frag"
+
+#include "renderer/ccShader_Position.vert"
+#include "renderer/ccShader_LayerRadialGradient.frag"
+
 NS_CC_END

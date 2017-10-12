@@ -40,6 +40,16 @@ public class AppActivity extends Cocos2dxActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Workaround in https://stackoverflow.com/questions/16283079/re-launch-of-activity-on-home-button-but-only-the-first-time/16447508
+        if (!isTaskRoot()) {
+            // Android launched another instance of the root activity into an existing task
+            //  so just quietly finish and go away, dropping the user back into the activity
+            //  at the top of the stack (ie: the last state of this task)
+            // Don't need to finish it again since it's finished in super.onCreate .
+            return;
+        }
+        // DO OTHER INITIALIZATION BELOW
+
         app = this;
     }
 
@@ -75,6 +85,47 @@ public class AppActivity extends Cocos2dxActivity {
                 alertDialog.show();
             }
         });
+    }
+    public static void showAlertDialog(final String title, final String message, final boolean logicSwitch) {
+        app.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AlertDialog alertDialog = new AlertDialog.Builder(app).create();
+                alertDialog.setTitle(title);
+                alertDialog.setMessage(message);
+                alertDialog.setCancelable(true);
+                alertDialog.setIcon(R.mipmap.ic_launcher);
+                String buttonStr = "it's false";
+                if (logicSwitch)
+                {
+                	buttonStr = "it's true";
+                }
+                alertDialog.setButton(buttonStr, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        app.runOnGLThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                Cocos2dxJavascriptJavaBridge.evalString("cc.log(\"Javascript Java bridge!\")");
+                            }
+                        });
+                    }
+                });
+                alertDialog.show();
+            }
+        });
+    }
+
+    public static String getUtfStr() {
+        final String utf8Str = "you will see emotion:💝";
+        app.runOnGLThread(new Runnable() {
+            @Override
+            public void run() {
+
+                Cocos2dxJavascriptJavaBridge.evalString("cc.log(\"" + utf8Str + "\")");
+            }
+        });
+        return utf8Str;
     }
 
 }

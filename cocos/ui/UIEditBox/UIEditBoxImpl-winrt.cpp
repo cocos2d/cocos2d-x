@@ -38,6 +38,8 @@
 #define XAML_TOP_PADDING 0.0f
 #endif
 
+#define EDIT_BOX_PADDING 5.0f
+
 namespace cocos2d {
 
   namespace ui {
@@ -207,11 +209,13 @@ namespace cocos2d {
         canvas->SetLeft(_textBox, _rect.X);
         canvas->SetTop(_textBox, _rect.Y - XAML_TOP_PADDING);
 
+		_setTexVerticalAlignment(_textBox);
+		_setPadding(_textBox);
+	
         // Finally, insert it into the XAML scene hierarchy and make the containing canvas visible
         canvas->Children->InsertAt(0, _textBox);
         canvas->Background = ref new Media::SolidColorBrush();
         canvas->Visibility = Visibility::Visible;
-
         _keydownToken = _textBox->KeyDown += ref new Windows::UI::Xaml::Input::KeyEventHandler(this, &cocos2d::ui::EditBoxWinRT::onKeyDown);
         _focusToken = _textBox->GotFocus += ref new Windows::UI::Xaml::RoutedEventHandler(this, &cocos2d::ui::EditBoxWinRT::onGotFocus);
         _unfocusToken = _textBox->LostFocus += ref new Windows::UI::Xaml::RoutedEventHandler(this, &cocos2d::ui::EditBoxWinRT::onLostFocus);
@@ -291,6 +295,21 @@ namespace cocos2d {
       }
     }
 
+	void EditBoxWinRT::_setTexVerticalAlignment(Windows::UI::Xaml::Controls::Control^ textBox) {
+		textBox->VerticalAlignment = _multiline ? VerticalAlignment::Top : VerticalAlignment::Center;
+	}
+
+	void EditBoxWinRT::_setPadding(Windows::UI::Xaml::Controls::Control^ editBox)
+	{
+		float padding = EDIT_BOX_PADDING*cocos2d::Director::getInstance()->getOpenGLView()->getScaleX();
+		if (_multiline) {
+			editBox->Padding = Thickness(padding, padding, 0.0f, 0.0f);
+		}
+		else {
+			editBox->Padding = Thickness(padding, 0.0f, 0.0f, 0.0f);
+		}
+	}
+
     void EditBoxWinRT::setInputScope(TextBox^ textBox)
     {
       InputScope^ inputScope = ref new InputScope;
@@ -336,15 +355,17 @@ namespace cocos2d {
       _initialText = text;
       // If already editing
       if (_isEditing) {
-        m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([this]() {
-          auto textBox = static_cast<TextBox^>(_textBox);
-          unsigned int currentStart = textBox->SelectionStart;
-          bool cursorAtEnd = currentStart == textBox->Text->Length();
-          textBox->Text = _initialText;
-          if (cursorAtEnd || currentStart > textBox->Text->Length()) {
-            currentStart = textBox->Text->Length();
-          }
-          textBox->Select(currentStart, 0);
+		  m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new Windows::UI::Core::DispatchedHandler([this]() {
+			  if (!_password) {
+				  auto textBox = static_cast<TextBox^>(_textBox);
+				  unsigned int currentStart = textBox->SelectionStart;
+				  bool cursorAtEnd = currentStart == textBox->Text->Length();
+				  textBox->Text = _initialText;
+				  if (cursorAtEnd || currentStart > textBox->Text->Length()) {
+					  currentStart = textBox->Text->Length();
+				  }
+				  textBox->Select(currentStart, 0);
+			  }
         }));
       }
     }

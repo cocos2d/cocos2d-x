@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 #include <cmath>
 #include <stdlib.h>
-#include <openssl/md5.h>
+#include "md5/md5.h"
 
 #include "base/CCDirector.h"
 #include "base/CCAsyncTaskPool.h"
@@ -138,7 +138,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
                 startedCapture = false;
             };
 
-            AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, mainThread, nullptr, [image, outputFile]()
+            AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, std::move(mainThread), nullptr, [image, outputFile]()
             {
                 succeedSaveToFile = image->saveToFile(outputFile);
                 delete image;
@@ -411,17 +411,33 @@ Node* findChild(Node* levelRoot, int tag)
 
 std::string getFileMD5Hash(const std::string &filename)
 {
-    unsigned char digest[MD5_DIGEST_LENGTH];
-    Data d;
-    FileUtils::getInstance()->getContents(filename, &d);
+    Data data;
+    FileUtils::getInstance()->getContents(filename, &data);
 
-    MD5(d.getBytes(), d.getSize(), (unsigned char*)&digest);
+    return getDataMD5Hash(data);
+}
 
-    std::string mdString;
-    mdString.reserve(32);
-    for(int i = 0; i < 16; i++)
-        sprintf(&mdString[i*2], "%02x", (unsigned int)digest[i]);
-    return mdString;
+std::string getDataMD5Hash(const Data &data)
+{
+    static const unsigned int MD5_DIGEST_LENGTH = 16;
+
+    if (data.isNull())
+    {
+        return std::string();
+    }
+
+    md5_state_t state;
+    md5_byte_t digest[MD5_DIGEST_LENGTH];
+    char hexOutput[(MD5_DIGEST_LENGTH << 1) + 1] = { 0 };
+
+    md5_init(&state);
+    md5_append(&state, (const md5_byte_t *)data.getBytes(), (int)data.getSize());
+    md5_finish(&state, digest);
+
+    for (int di = 0; di < 16; ++di)
+        sprintf(hexOutput + di * 2, "%02x", digest[di]);
+
+    return hexOutput;
 }
 
 }

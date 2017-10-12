@@ -22,18 +22,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "platform/CCPlatformConfig.h"
+#pragma once
 
-#ifndef __AUDIO_ENGINE_H_
-#define __AUDIO_ENGINE_H_
+#include "platform/CCPlatformConfig.h"
+#include "platform/CCPlatformMacros.h"
+#include "audio/include/Export.h"
 
 #include <functional>
 #include <list>
 #include <string>
 #include <unordered_map>
-
-#include "platform/CCPlatformMacros.h"
-#include "audio/include/Export.h"
 
 #ifdef ERROR
 #undef ERROR
@@ -45,7 +43,7 @@
  */
 
 NS_CC_BEGIN
-    namespace experimental{
+namespace experimental {
 
 /**
  * @class AudioProfile
@@ -294,6 +292,21 @@ public:
      */
     static void preload(const std::string& filePath, std::function<void(bool isSuccess)> callback);
 
+    /**
+     * Gets playing audio count.
+     */
+    static int getPlayingAudioCount();
+    
+    /**
+     * Whether to enable playing audios
+     * @note If it's disabled, current playing audios will be stopped and the later 'preload', 'play2d' methods will take no effects.
+     */
+    static void setEnabled(bool isEnabled);
+    /**
+     * Check whether AudioEngine is enabled.
+     */
+    static bool isEnabled();
+    
 protected:
     static void addTask(const std::function<void()>& task);
     static void remove(int audioID);
@@ -323,13 +336,13 @@ protected:
         float duration;
         AudioState state;
 
-        AudioInfo()
-            : profileHelper(nullptr)
-            , duration(TIME_UNKNOWN)
-            , state(AudioState::INITIALIZING)
-        {
-
-        }
+        AudioInfo();
+        ~AudioInfo();
+    private:
+        AudioInfo(const AudioInfo& info);
+        AudioInfo(AudioInfo&& info);
+        AudioInfo& operator=(const AudioInfo& info);
+        AudioInfo& operator=(AudioInfo&& info);
     };
 
     //audioID,audioAttribute
@@ -350,13 +363,13 @@ protected:
     class AudioEngineThreadPool;
     static AudioEngineThreadPool* s_threadPool;
     
+    static bool _isEnabled;
+    
     friend class AudioEngineImpl;
 };
 
-}
+} // namespace experimental {
 NS_CC_END
 
 // end group
 /// @}
-
-#endif // __AUDIO_ENGINE_H_

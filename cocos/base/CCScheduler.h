@@ -50,14 +50,10 @@ class CC_DLL Timer : public Ref
 protected:
     Timer();
 public:
-    /** get interval in seconds */
-    float getInterval() const { return _interval; }
-    /** set interval in seconds */
-    void setInterval(float interval) { _interval = interval; }
-    
     void setupTimerWithInterval(float seconds, unsigned int repeat, float delay);
     void setAborted() { _aborted = true; }
     bool isAborted() const { return _aborted; }
+    bool isExhausted() const;
     
     virtual void trigger(float dt) = 0;
     virtual void cancel() = 0;
@@ -66,7 +62,6 @@ public:
     void update(float dt);
     
 protected:
-    
     Scheduler* _scheduler; // weak ref
     float _elapsed;
     bool _runForever;
@@ -368,7 +363,7 @@ public:
      @return True if the specified callback is invoked, false if not.
      @since v3.0.0
      */
-    bool isScheduled(const std::string& key, void *target);
+    bool isScheduled(const std::string& key, const void *target) const;
     
     /** Checks whether a selector for a given target is scheduled.
      @param selector The selector to be checked.
@@ -376,7 +371,7 @@ public:
      @return True if the specified selector is invoked, false if not.
      @since v3.0
      */
-    bool isScheduled(SEL_SCHEDULE selector, Ref *target);
+    bool isScheduled(SEL_SCHEDULE selector, const Ref *target) const;
     
     /////////////////////////////////////
     
@@ -431,7 +426,7 @@ public:
      @since v3.0
      @js NA
      */
-    void performFunctionInCocosThread( const std::function<void()> &function);
+    void performFunctionInCocosThread(std::function<void()> function);
     
     /**
      * Remove all pending functions queued to be performed with Scheduler::performFunctionInCocosThread

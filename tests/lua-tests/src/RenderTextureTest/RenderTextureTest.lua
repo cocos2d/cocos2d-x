@@ -104,13 +104,16 @@ local function RenderTextureSave()
     -- Save Image menu
     cc.MenuItemFont:setFontSize(16)
     local item1 = cc.MenuItemFont:create("Save Image")
+    item1:setAnchorPoint(1, 1)
+    item1:setPosition(VisibleRect:rightTop().x, VisibleRect:rightTop().y)
     item1:registerScriptTapHandler(saveImage)
     local item2 = cc.MenuItemFont:create("Clear")
+    item2:setAnchorPoint(1, 1)
+    item2:setPosition(VisibleRect:rightTop().x, VisibleRect:rightTop().y - item1:getContentSize().height)
     item2:registerScriptTapHandler(clearImage)
     local menu = cc.Menu:create(item1, item2)
     ret:addChild(menu)
-    menu:alignItemsVertically()
-    menu:setPosition(cc.p(VisibleRect:rightTop().x - 80, VisibleRect:rightTop().y - 30))
+    menu:setPosition(0, 0)
     return ret
 end
 

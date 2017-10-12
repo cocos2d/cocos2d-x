@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<manifest xmlns="http://tizen.org/ns/packages" api-version="2.3" package="org.cocos2d-x.cpp-empty-test" version="1.0.0">
-    <profile name="mobile"/>
-    <ui-application appid="org.cocos2d-x.cpp-empty-test" exec="cpp-empty-test" multiple="false" nodisplay="false" taskmanage="true" type="capp">
-        <label>cpp-empty-test</label>
-        <icon>cpp-empty-test.png</icon>
-    </ui-application>
-</manifest>

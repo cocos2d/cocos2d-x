@@ -53,7 +53,8 @@ public:
     @param interval The time, which expressed in second in second, between current frame and next.
     */
     virtual void setAnimationInterval(float interval) override;
-    
+    virtual void setAnimationInterval(float interval, SetIntervalReason reason) override;
+
     /**
     @brief  Run the message loop.
     * @js NA

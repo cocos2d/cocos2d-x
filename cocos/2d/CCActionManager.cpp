@@ -423,6 +423,17 @@ size_t ActionManager::getNumberOfRunningActionsInTargetByTag(const Node *target,
     return count;
 }
 
+ssize_t ActionManager::getNumberOfRunningActions() const
+{
+    ssize_t count = 0;
+    struct _hashElement* element = nullptr;
+    struct _hashElement* tmp = nullptr;
+    HASH_ITER(hh, _targets, element, tmp)
+    {
+        count += (element->actions ? element->actions->num : 0);
+    }
+    return count;
+}
 
 // main loop
 void ActionManager::update(float dt)

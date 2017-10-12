@@ -85,6 +85,12 @@ namespace cocos2d {
                 virtual void setVisible(bool visible);
 
                 void setBounces(bool bounces);
+                
+                void setOpacityWebView(float opacity);
+                
+                float getOpacityWebView()const;
+                
+                void setBackgroundTransparent();
 
                 static bool shouldStartLoading(const int viewTag, const std::string &url);
                 static void didFinishLoading(const int viewTag, const std::string &url);

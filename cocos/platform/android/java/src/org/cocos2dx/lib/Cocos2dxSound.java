@@ -52,6 +52,7 @@ public class Cocos2dxSound {
     private SoundPool mSoundPool;
     private float mLeftVolume;
     private float mRightVolume;
+    private boolean mIsAudioFocus = true;
 
     // sound path and stream ids map
     // a file may be played many times at the same time
@@ -255,6 +256,13 @@ public class Cocos2dxSound {
 
         this.mLeftVolume = this.mRightVolume = volume;
 
+        if (!mIsAudioFocus)
+            return;
+
+        setEffectsVolumeInternal(mLeftVolume, mRightVolume);
+    }
+
+    private void setEffectsVolumeInternal(float left, float right) {
         synchronized (mLockPathStreamIDsMap) {
             // change the volume of playing sounds
             if (!this.mPathStreamIDsMap.isEmpty()) {
@@ -262,7 +270,7 @@ public class Cocos2dxSound {
                 while (iter.hasNext()) {
                     final Entry<String, ArrayList<Integer>> entry = iter.next();
                     for (final int steamID : entry.getValue()) {
-                        this.mSoundPool.setVolume(steamID, this.mLeftVolume, this.mRightVolume);
+                        this.mSoundPool.setVolume(steamID, left, right);
                     }
                 }
             }
@@ -344,6 +352,14 @@ public class Cocos2dxSound {
 
     public void onEnterForeground(){
         this.mSoundPool.autoResume();
+    }
+
+    void setAudioFocus(boolean isFocus) {
+        mIsAudioFocus = isFocus;
+        float leftVolume = mIsAudioFocus ? mLeftVolume : 0.0f;
+        float rightVolume = mIsAudioFocus ? mRightVolume : 0.0f;
+
+        setEffectsVolumeInternal(leftVolume, rightVolume);
     }
 
     // ===========================================================

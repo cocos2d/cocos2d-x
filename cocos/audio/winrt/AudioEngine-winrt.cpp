@@ -38,6 +38,8 @@ AudioEngineImpl::AudioEngineImpl()
 
 AudioEngineImpl::~AudioEngineImpl()
 {
+    auto scheduler = cocos2d::Director::getInstance()->getScheduler();
+    scheduler->unschedule(schedule_selector(AudioEngineImpl::update), this);
     _audioCaches.clear();
 }
 

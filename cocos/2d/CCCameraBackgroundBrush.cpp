@@ -84,12 +84,26 @@ CameraBackgroundSkyBoxBrush* CameraBackgroundBrush::createSkyboxBrush(const std:
 CameraBackgroundDepthBrush::CameraBackgroundDepthBrush()
 : _depth(0.f)
 , _clearColor(GL_FALSE)
+, _vao(0)
+, _vertexBuffer(0)
+, _indexBuffer(0)
 {
     
 }
 CameraBackgroundDepthBrush::~CameraBackgroundDepthBrush()
 {
+    glDeleteBuffers(1, &_vertexBuffer);
+    glDeleteBuffers(1, &_indexBuffer);
     
+    _vertexBuffer = 0;
+    _indexBuffer = 0;
+    
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        glDeleteVertexArrays(1, &_vao);
+        GL::bindVAO(0);
+        _vao = 0;
+    }
 }
 
 CameraBackgroundDepthBrush* CameraBackgroundDepthBrush::create(float depth)
@@ -126,6 +140,43 @@ bool CameraBackgroundDepthBrush::init()
     _quad.br.texCoords = Tex2F(1,0);
     _quad.tl.texCoords = Tex2F(0,1);
     _quad.tr.texCoords = Tex2F(1,1);
+    
+    auto supportVAO = Configuration::getInstance()->supportsShareableVAO();
+    if (supportVAO)
+    {
+        glGenVertexArrays(1, &_vao);
+        GL::bindVAO(_vao);
+    }
+
+    glGenBuffers(1, &_vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(_quad), &_quad, GL_STATIC_DRAW);
+    
+    GLshort indices[6] = {0, 1, 2, 3, 2, 1};
+    glGenBuffers(1, &_indexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    
+    if (supportVAO)
+    {
+        // vertices
+        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof( V3F_C4B_T2F, vertices));
+
+        // colors
+        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof( V3F_C4B_T2F, colors));
+
+        // tex coords
+        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof( V3F_C4B_T2F, texCoords));
+    }
+
+    if (supportVAO)
+        GL::bindVAO(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     return true;
 }
 
@@ -151,25 +202,35 @@ void CameraBackgroundDepthBrush::drawBackground(Camera* /*camera*/)
     
     _glProgramState->setUniformFloat("depth", _depth);
     _glProgramState->apply(Mat4::IDENTITY);
-    GLshort indices[6] = {0, 1, 2, 3, 2, 1};
     
+    auto supportVAO = Configuration::getInstance()->supportsShareableVAO();
+    if (supportVAO)
+        GL::bindVAO(_vao);
+    else
     {
-        GL::bindVAO(0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        
+        glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
         GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-        
+
         // vertices
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), &_quad.tl.vertices);
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, vertices));
         
         // colors
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), &_quad.tl.colors);
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, colors));
         
         // tex coords
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), &_quad.tl.texCoords);
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, texCoords));
         
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+    }
+    
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, nullptr);
+    
+    if (supportVAO)
+        GL::bindVAO(0);
+    else
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
     }
     
     
@@ -221,6 +282,13 @@ bool CameraBackgroundColorBrush::init()
 void CameraBackgroundColorBrush::setColor(const Color4F& color)
 {
     _quad.bl.colors = _quad.br.colors = _quad.tl.colors = _quad.tr.colors = Color4B(color);
+    
+    if (_vertexBuffer)
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(_quad), &_quad, GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
 }
 
 CameraBackgroundColorBrush* CameraBackgroundColorBrush::create(const Color4F& color, float depth)

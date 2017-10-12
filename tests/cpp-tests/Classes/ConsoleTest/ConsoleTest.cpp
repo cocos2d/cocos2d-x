@@ -112,12 +112,11 @@ std::string ConsoleCustomCommand::subtitle() const
 ConsoleUploadFile::ConsoleUploadFile()
 {
     std::srand ((unsigned)time(nullptr));
-    int _id = rand()%100000;
+    int id = rand()%100000;
     char buf[32];
-    sprintf(buf, "%d", _id);
-    _target_file_name = std::string("grossini") + buf;
+    sprintf(buf, "%d", id);
+    _targetFileName = std::string("grossini") + buf + ".png";
 
-    _src_file_path = FileUtils::getInstance()->fullPathForFilename(s_pathGrossini);
     std::thread t = std::thread( &ConsoleUploadFile::uploadFile, this);
     t.detach();
 }
@@ -135,6 +134,14 @@ ConsoleUploadFile::~ConsoleUploadFile()
 
 void ConsoleUploadFile::uploadFile()
 {
+    Data srcFileData = FileUtils::getInstance()->getDataFromFile(s_pathGrossini);
+    if (srcFileData.isNull())
+    {
+        CCLOGERROR("ConsoleUploadFile: could not open file %s", s_pathGrossini);
+    }
+
+    std::string targetFileName = _targetFileName;
+
     struct addrinfo hints;
     struct addrinfo *result, *rp;
     int sfd, s;
@@ -142,7 +149,7 @@ void ConsoleUploadFile::uploadFile()
     /* Obtain address(es) matching host/port */
 
     memset(&hints, 0, sizeof(struct addrinfo));
-    hints.ai_family = AF_INET;    /* Allow IPv4 or IPv6 */
+    hints.ai_family = AF_UNSPEC;    /* Allow IPv4 or IPv6 */
     hints.ai_socktype = SOCK_STREAM; /* stream socket */
     hints.ai_flags = 0;
     hints.ai_protocol = 0;          /* Any protocol */
@@ -152,10 +159,16 @@ void ConsoleUploadFile::uploadFile()
     WSAStartup(MAKEWORD(2, 2),&wsaData);
 #endif
 
-    s = getaddrinfo("localhost", "5678", &hints, &result);
+    std::string nodeName;
+    if (Director::getInstance()->getConsole()->isIpv6Server())
+        nodeName = "::1";
+    else
+        nodeName = "localhost";
+
+    s = getaddrinfo(nodeName.c_str(), "5678", &hints, &result);
     if (s != 0) 
     {
-       CCLOG("ConsoleUploadFile: getaddrinfo error");
+        CCLOG("ConsoleUploadFile: getaddrinfo error");
         return;
     }
 
@@ -187,38 +200,45 @@ void ConsoleUploadFile::uploadFile()
 
     freeaddrinfo(result);           /* No longer needed */
 
-    
-    FILE* fp = fopen(_src_file_path.c_str(), "rb");
-    if(!fp)
-    {
-        CCLOG("ConsoleUploadFile: could not open file %s", _src_file_path.c_str());
-        return;
-    }
-    
     std::string tmp = "upload";
 
     tmp += " ";
-    tmp += _target_file_name;
+    tmp += targetFileName;
     tmp += " ";
-    char cmd[512];
+    char cmd[512] = {0};
 
     strcpy(cmd, tmp.c_str());
     send(sfd,cmd,strlen(cmd),0);
+
+    size_t offset = 0;
+    auto readBuffer = [&offset](char* buf, size_t bytes, const Data& data) -> ssize_t {
+        if (offset >= data.getSize())
+            return 0;
+        ssize_t actualReadBytes = (offset + bytes) > data.getSize() ? (data.getSize() - offset) : bytes;
+        if (actualReadBytes > 0)
+        {
+            memcpy(buf, data.getBytes() + offset, actualReadBytes);
+            offset += actualReadBytes;
+        }
+        return actualReadBytes;
+    };
+
     while(true)
     {
         char buffer[3], *out;
         unsigned char *in;
         in = (unsigned char *)buffer;
         // copy the file into the buffer:
-        size_t ret = fread(buffer, 1, 3, fp);
+        ssize_t ret = readBuffer(buffer, 3, srcFileData);
         if (ret > 0)
         {
-            base64Encode(in, (unsigned int)ret, &out);
-            send(sfd, out, 4, 0);
+            int len = base64Encode(in, (unsigned int)ret, &out);
+            send(sfd, out, len, 0);
             free(out);
             if(ret < 3)
             {
                 //eof
+                log("Reach the end, total send: %d bytes", (int)offset);
                 break;
             }
         }
@@ -230,16 +250,16 @@ void ConsoleUploadFile::uploadFile()
     }
     char l = '\n';
     send(sfd, &l, 1, 0);
-    // terminate
-    fclose (fp);
-   
+
+    // Sleep 1s to wait server to receive all data.
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-        closesocket(sfd);
-        WSACleanup();
+    closesocket(sfd);
+    WSACleanup();
 #else
-        close(sfd);
+    close(sfd);
 #endif
-    return;
 }
 
 std::string ConsoleUploadFile::title() const
@@ -253,6 +273,6 @@ std::string ConsoleUploadFile::subtitle() const
     
     std::string writablePath = sharedFileUtils->getWritablePath();
 
-    return "file uploaded to:" + writablePath + _target_file_name;
+    return "file uploaded to:" + writablePath + _targetFileName;
 }
 

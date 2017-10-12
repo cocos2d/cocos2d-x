@@ -71,6 +71,19 @@
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
 
 --------------------------------
+-- List all files recursively in a directory, async off the main cocos thread.<br>
+-- param dirPath The path of the directory, it could be a relative or an absolute path.<br>
+-- param callback The callback to be called once the list operation is complete. <br>
+-- Will be called on the main cocos thread.<br>
+-- js NA<br>
+-- lua NA
+-- @function [parent=#FileUtils] listFilesRecursivelyAsync 
+-- @param self
+-- @param #string dirPath
+-- @param #function callback
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+        
+--------------------------------
 -- Checks whether the path is an absolute path.<br>
 -- note On Android, if the parameter passed in is relative to "assets/", this method will treat it as an absolute path.<br>
 -- Also on Blackberry, path starts with "app/native/Resources/" is treated as an absolute path.<br>
@@ -413,13 +426,15 @@
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
 
 --------------------------------
--- List all files recursively in a directory.<br>
+-- List all files in a directory async, off of the main cocos thread.<br>
 -- param dirPath The path of the directory, it could be a relative or an absolute path.<br>
--- return File paths in a string vector
--- @function [parent=#FileUtils] listFilesRecursively 
+-- param callback The callback to be called once the list operation is complete. Will be called on the main cocos thread.<br>
+-- js NA<br>
+-- lua NA
+-- @function [parent=#FileUtils] listFilesAsync 
 -- @param self
 -- @param #string dirPath
--- @param #array_table files
+-- @param #function callback
 -- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
@@ -428,6 +443,16 @@
 -- @function [parent=#FileUtils] getWritablePath 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- List all files recursively in a directory.<br>
+-- param dirPath The path of the directory, it could be a relative or an absolute path.<br>
+-- return File paths in a string vector
+-- @function [parent=#FileUtils] listFilesRecursively 
+-- @param self
+-- @param #string dirPath
+-- @param #array_table files
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
 -- Destroys the instance of FileUtils.

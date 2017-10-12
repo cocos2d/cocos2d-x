@@ -31,6 +31,7 @@ bool js_cocos2dx_audioengine_AudioEngine_stopAll(JSContext *cx, uint32_t argc, j
 bool js_cocos2dx_audioengine_AudioEngine_pause(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_audioengine_AudioEngine_end(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_audioengine_AudioEngine_getMaxAudioInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_audioengine_AudioEngine_isEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_audioengine_AudioEngine_getCurrentTime(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_audioengine_AudioEngine_setMaxAudioInstance(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_audioengine_AudioEngine_isLoop(JSContext *cx, uint32_t argc, jsval *vp);
@@ -38,6 +39,7 @@ bool js_cocos2dx_audioengine_AudioEngine_pauseAll(JSContext *cx, uint32_t argc, 
 bool js_cocos2dx_audioengine_AudioEngine_uncacheAll(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_audioengine_AudioEngine_setVolume(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_audioengine_AudioEngine_preload(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_audioengine_AudioEngine_setEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_audioengine_AudioEngine_play2d(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_audioengine_AudioEngine_getState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_audioengine_AudioEngine_resume(JSContext *cx, uint32_t argc, jsval *vp);
@@ -47,6 +49,7 @@ bool js_cocos2dx_audioengine_AudioEngine_setLoop(JSContext *cx, uint32_t argc, j
 bool js_cocos2dx_audioengine_AudioEngine_getDefaultProfile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_audioengine_AudioEngine_setFinishCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_audioengine_AudioEngine_getProfile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_audioengine_AudioEngine_getPlayingAudioCount(JSContext *cx, uint32_t argc, jsval *vp);
 
 #endif // __cocos2dx_audioengine_h__
 #endif //#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)

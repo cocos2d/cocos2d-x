@@ -66,11 +66,14 @@ public:
 
 private:
     void _play2d(AudioCache *cache, int audioID);
+    ALuint findValidSource();
+
+    static ALvoid myAlSourceNotificationCallback(ALuint sid, ALuint notificationID, ALvoid* userData);
 
     ALuint _alSources[MAX_AUDIOINSTANCES];
 
     //source,used
-    std::unordered_map<ALuint, bool> _alSourceUsed;
+    std::list<ALuint> _unusedSourcesPool;
 
     //filePath,bufferInfo
     std::unordered_map<std::string, AudioCache> _audioCaches;

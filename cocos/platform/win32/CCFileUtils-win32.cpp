@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "platform/win32/CCFileUtils-win32.h"
 #include "platform/win32/CCUtils-win32.h"
 #include "platform/CCCommon.h"
+#include "tinydir/tinydir.h"
 #include <Shlobj.h>
 #include <cstdlib>
 #include <regex>
@@ -217,6 +218,91 @@ std::string FileUtilsWin32::getFullPathForDirectoryAndFilename(const std::string
     std::string unixFilename = convertPathFormatToUnixStyle(strFilename);
 
     return FileUtils::getFullPathForDirectoryAndFilename(unixDirectory, unixFilename);
+}
+
+void FileUtilsWin32::listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const
+{
+    std::string fullpath = fullPathForFilename(dirPath);
+    if (isDirectoryExist(fullpath))
+    {
+        tinydir_dir dir;
+        std::wstring fullpathstr = StringUtf8ToWideChar(fullpath);
+
+        if (tinydir_open(&dir, &fullpathstr[0]) != -1)
+        {
+            while (dir.has_next)
+            {
+                tinydir_file file;
+                if (tinydir_readfile(&dir, &file) == -1)
+                {
+                    // Error getting file
+                    break;
+                }
+                std::string fileName = StringWideCharToUtf8(file.name);
+
+                if (fileName != "." && fileName != "..")
+                {
+                    std::string filepath = StringWideCharToUtf8(file.path);
+                    if (file.is_dir)
+                    {
+                        filepath.append("/");
+                        files->push_back(filepath);
+                        listFilesRecursively(filepath, files);
+                    }
+                    else
+                    {
+                        files->push_back(filepath);
+                    }
+                }
+
+                if (tinydir_next(&dir) == -1)
+                {
+                    // Error getting next file
+                    break;
+                }
+            }
+        }
+        tinydir_close(&dir);
+    }
+}
+
+std::vector<std::string> FileUtilsWin32::listFiles(const std::string& dirPath) const
+{
+    std::string fullpath = fullPathForFilename(dirPath);
+    std::vector<std::string> files;
+    if (isDirectoryExist(fullpath))
+    {
+        tinydir_dir dir;
+        std::wstring fullpathstr = StringUtf8ToWideChar(fullpath);
+
+        if (tinydir_open(&dir, &fullpathstr[0]) != -1)
+        {
+            while (dir.has_next)
+            {
+                tinydir_file file;
+                if (tinydir_readfile(&dir, &file) == -1)
+                {
+                    // Error getting file
+                    break;
+                }
+
+                std::string filepath = StringWideCharToUtf8(file.path);
+                if (file.is_dir)
+                {
+                    filepath.append("/");
+                }
+                files.push_back(filepath);
+
+                if (tinydir_next(&dir) == -1)
+                {
+                    // Error getting next file
+                    break;
+                }
+            }
+        }
+        tinydir_close(&dir);
+    }
+    return files;
 }
 
 string FileUtilsWin32::getWritablePath() const

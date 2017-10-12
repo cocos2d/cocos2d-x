@@ -2,64 +2,100 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Cocos2d-x 3.15 Release Notes](#cocos2d-x-315-release-notes)
+- [Cocos2d-x 3.16 Release Notes](#cocos2d-x-316-release-notes)
 - [Misc Information](#misc-information)
-- [v3.15](#v315)
+- [v3.16](#v316)
   - [Highlights](#highlights)
-  - [Feature in detail](#feature-in-detail)
-    - [Full Android Studio supports](#full-android-studio-supports)
-    - [Audio engine improve on Android](#audio-engine-improve-on-android)
-    - [Remove support for Windows 8.1 store and phone](#remove-support-for-windows-81-store-and-phone)
-    - [Remove linux 32-bit support](#remove-linux-32-bit-support)
+  - [Highlights in detail](#highlights-in-detail)
+    - [Better support [`creator_to_cocos2dx`][1]](#better-support-creator_to_cocos2dx1)
+    - [LayerRaidalGradient](#layerraidalgradient)
+    - [Lua app crashed on iOS simulator with Xcode 8.0+](#lua-app-crashed-on-ios-simulator-with-xcode-80)
+    - [Cocos Studio](#cocos-studio)
+    - [Improve compiling speed](#improve-compiling-speed)
+    - [Remove some platforms support](#remove-some-platforms-support)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Cocos2d-x 3.15 Release Notes #
+# Cocos2d-x 3.16 Release Notes #
 
 # Misc Information
 
 * [Full Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 
-# v3.15
+# v3.16
+
+Android tool version tested in this version:
+
+- Android Studio 2.3.3
+- NDK r14
 
 ## Highlights
 
-* full Android Studio supports: include editing, compiling and debugging c++ codes
-* use [tremolo](http://wss.co.uk/pinknoise/tremolo/) to decode audio files on Android: high performance and more adaptable to different Android devices
-* WebSockets and SocketIO supports SSL
-* AssetsManagerEx is more stable
-* update Spine runtime to v3.5.35
-* update flatbuffer to v1.5
-* remove support for Windows 8.1 store and phone
-* update OpenSSL to v1.1.0
-* remove linux 32-bit support
+- better support [`creator_to_cocos2dx`][1] creator plugin
+- add __LayerRadiaGradientLayer__
+- update to support Android Studio 2.3.3
+- fix the issue that lua projects will crash on iOS simulator with Xcode 8.0+
+- revert CocosStudio reader and flatbuffer
+- fix compling error with iOS 11
+- use prebuit bullet to improve compiling speed
+- remove supporting of Windows 10 metro, Windows Phones and Tizen
+- update to Spine v3.5.35 and support skeleton batching in web engine
 
-## Feature in detail
+## Highlights in detail
 
-### Full Android Studio supports
+### Better support [`creator_to_cocos2dx`][1]
 
-Since v3.15, can use Android Studio 2.3+ to edit, compile and debug c++ codes. What you need to do is just use Android Studio to open `proj.android-studio`(such as `tests/cpp-empty-test/proj.android-studio`), then click run menu button to run on Android devices or simulators.
+[`creator_to_cocos2dx`][1] is a [Cocos Creator][2] plugin that will export Scene information created by [Cocos Creator][2] for cocos2d-x C++/Lua projects. We mention it as __plugin__ following.
 
-![android-studio-support.png](todo)
+With this plugin, you can use [Cocos Creator][2] as Scene editor for cocos2d-x. Curretly, the plugin supports [these features](3), and will continue to add more features. As you can see, RichText img tag support only works in cocos2d-x v3.16+ because of cocos2d-x's limitation. So cocos2d-x will continue to be improved to support more [Cocos Creator][2] features.
 
-### Audio engine improve on Android
+More detail information and usage please refer to plugin's [the README][1]. You are appreciated if you can use it and give feedback.
 
-Before v3.15, new Audio engine uses OpenSL ES to decode and play audio files. But many Android device manufacturers modify OpenSL ES decoding codes which cause issues. [This thread](http://discuss.cocos2d-x.org/t/android-audio-decoding-issues-discussion/34610) lists many issues caused by it.
+![][4]
+__Scene effect in cocos creator__
 
-In order to fix these issues, we decide to use a 3rd party audio decoding library. [tremolo](http://wss.co.uk/pinknoise/tremolo/) which is used by Android have good performance and stability. We finally choose to use it. What's exciting is what, after using `tremolo`, the audio engine's performance is highly improved too.
+![][5]
+__Scene effect in cocos2d-x__
 
-![audio performance](https://raw.githubusercontent.com/minggo/Pictures/master/AudioDecodingPerfTest.png)  
+### LayerRaidalGradient
 
-### Remove support for Windows 8.1 store and phone
+LayerRadialGradient is similar to LayerColor, but will only draw color in a circle.
 
-MS guys maintain Windows 8.1. They think there is not need to support it, so they remove the support.
+![][6]
 
-### Remove linux 32-bit support
+### Lua app crashed on iOS simulator with Xcode 8.0+
 
-Most PC are 64-bit, so we decide to remove linux 32-bit support. By remove 32-bit linux support, cocos2d-x zip file is more less, and we can have more resource on more important things.
+After updating to Xcode 8.0+, lua projects will crash on iOS simulator. It is a bug of luagit. In this version, the bug it is fixed. You can just update [luajit][7] if you don't want to update cocos2d-x.
 
-If you need linux 32-bit support, you can build the 3rd party libraries through [cocos2d-x-3rd-party-libs-src repo](https://github.com/cocos2d/cocos2d-x-3rd-party-libs-src) by yourself.
+### Fix compiling error with iOS 11
 
-## misc
+Before cocos2d-x v3.16, `CCFileUtils` uses `system()` to remove a directory. iOS 11 remove `system`, so will cause compiling error with iOS 11. This version fixes this issue. The corresponding PR for this issue is [here](https://github.com/cocos2d/cocos2d-x/pull/17921), you can apply this PR to fix it if you don't want to upgrade to v3.16.
 
-[Android SDK Tools 25.3.0+](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017) remove ant scripts and `android` tool, this leads to that cant not use cocos command to generate apk files. Currently, cocos command will do nothing if using SDK Tools 25.3.0+. We may remove eclipse project support in future as Google focus on Android Studio.
+### Cocos Studio
+
+coocs2d-x v3.15 updates flatbuffer, which breaks compatibility of Cocos Studio. In this version, we revert flatbuffer and Cocos Studio reader.
+
+If you don't want to update cocos2d-x, you can replace flatbuffer and Cocos Studio reader shift in this version.
+
+### Improve compiling speed
+
+As bullet is not needed for most developers, so we use prebuilt bullet. It will speed up compiling speed, and we will continue to use more prebuilt 3rd party libraries, such as 3d particles, Box2D and so on to speed up compiling speed.
+
+We also fix many warnings too in this version. As some warnings are imported by 3rd party libaries, so we can not treat warnings as error, but we will continue to achieve it.
+
+### Remove some platforms support
+
+As we are lack of human resources, so we remove some platforms.
+
+MS maintians Win10 related platform, but it doesn't continue to maintain it. So we remove it. Which means cocos2d-x based games can not run on Win10 metro mode and Windows Phones, but you can run it in Win32 mode.
+
+Tizen platform is removed too because of huaman resources.
+
+
+[1]: https://github.com/cocos2d/creator_to_cocos2dx
+[2]: http://cocos2d-x.org/creator
+[3]: https://github.com/cocos2d/creator_to_cocos2dx#limitations
+[4]: https://raw.githubusercontent.com/minggo/Pictures/master/creator-ui-effect.png
+[5]: https://raw.githubusercontent.com/minggo/Pictures/master/cocos2dx-ui-effect.png
+[6]: https://raw.githubusercontent.com/minggo/Pictures/master/layerradialgradient.png
+[7]: https://github.com/cocos2d/cocos2d-x-3rd-party-libs-bin/tree/v3/lua/luajit/prebuilt/ios "luajit.a"

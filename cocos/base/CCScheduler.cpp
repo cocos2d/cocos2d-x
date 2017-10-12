@@ -80,17 +80,17 @@ Timer::Timer()
 , _interval(0.0f)
 , _aborted(false)
 {
-
 }
 
 void Timer::setupTimerWithInterval(float seconds, unsigned int repeat, float delay)
 {
-	_elapsed = -1;
-	_interval = seconds;
-	_delay = delay;
-	_useDelay = (_delay > 0.0f) ? true : false;
-	_repeat = repeat;
-	_runForever = (_repeat == CC_REPEAT_FOREVER) ? true : false;
+    _elapsed = -1;
+    _interval = seconds;
+    _delay = delay;
+    _useDelay = (_delay > 0.0f) ? true : false;
+    _repeat = repeat;
+    _runForever = (_repeat == CC_REPEAT_FOREVER) ? true : false;
+    _timesExecuted = 0;
 }
 
 void Timer::update(float dt)
@@ -112,12 +112,12 @@ void Timer::update(float dt)
         {
             return;
         }
+        _timesExecuted += 1; // important to increment before call trigger
         trigger(_delay);
         _elapsed = _elapsed - _delay;
-        _timesExecuted += 1;
         _useDelay = false;
         // after delay, the rest time should compare with interval
-        if (!_runForever && _timesExecuted > _repeat)
+        if (isExhausted())
         {    //unschedule timer
             cancel();
             return;
@@ -128,11 +128,11 @@ void Timer::update(float dt)
     float interval = (_interval > 0) ? _interval : _elapsed;
     while ((_elapsed >= interval) && !_aborted)
     {
+        _timesExecuted += 1; // important to increment before call trigger
         trigger(interval);
         _elapsed -= interval;
-        _timesExecuted += 1;
 
-        if (!_runForever && _timesExecuted > _repeat)
+        if (isExhausted())
         {
             cancel();
             break;
@@ -143,6 +143,11 @@ void Timer::update(float dt)
             break;
         }
     }
+}
+
+bool Timer::isExhausted() const
+{
+    return !_runForever && _timesExecuted > _repeat;
 }
 
 // TimerTargetSelector
@@ -312,12 +317,12 @@ void Scheduler::schedule(const ccSchedulerFunc& callback, void *target, float in
         {
             TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
 
-            if (timer && key == timer->getKey())
+            if (timer && !timer->isExhausted() && key == timer->getKey())
             {
-                CCLOG("CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), interval);
-                timer->setInterval(interval);
+                CCLOG("CCScheduler#schedule. Reiniting timer with interval %.4f, repeat %u, delay %.4f", interval, repeat, delay);
+                timer->setupTimerWithInterval(interval, repeat, delay);
                 return;
-            }        
+            }
         }
         ccArrayEnsureExtraCapacity(element->timers, 1);
     }
@@ -495,7 +500,7 @@ void Scheduler::schedulePerFrame(const ccSchedulerFunc& callback, void *target, 
     }
 }
 
-bool Scheduler::isScheduled(const std::string& key, void *target)
+bool Scheduler::isScheduled(const std::string& key, const void *target) const
 {
     CCASSERT(!key.empty(), "Argument key must not be empty");
     CCASSERT(target, "Argument target must be non-nullptr");
@@ -512,22 +517,18 @@ bool Scheduler::isScheduled(const std::string& key, void *target)
     {
         return false;
     }
-    else
+    
+    for (int i = 0; i < element->timers->num; ++i)
     {
-        for (int i = 0; i < element->timers->num; ++i)
-        {
-            TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
-            
-            if (timer && key == timer->getKey())
-            {
-                return true;
-            }
-        }
+        TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
         
-        return false;
+        if (timer && !timer->isExhausted() && key == timer->getKey())
+        {
+            return true;
+        }
     }
     
-    return false;  // should never get here
+    return false;
 }
 
 void Scheduler::removeUpdateFromHash(struct _listEntry *entry)
@@ -734,11 +735,11 @@ bool Scheduler::isTargetPaused(void *target)
     }
     
     // We should check update selectors if target does not have custom selectors
-	tHashUpdateEntry *elementUpdate = nullptr;
-	HASH_FIND_PTR(_hashForUpdates, &target, elementUpdate);
-	if ( elementUpdate )
+    tHashUpdateEntry *elementUpdate = nullptr;
+    HASH_FIND_PTR(_hashForUpdates, &target, elementUpdate);
+    if ( elementUpdate )
     {
-		return elementUpdate->entry->paused;
+        return elementUpdate->entry->paused;
     }
     
     return false;  // should never get here
@@ -803,13 +804,10 @@ void Scheduler::resumeTargets(const std::set<void*>& targetsToResume)
     }
 }
 
-void Scheduler::performFunctionInCocosThread(const std::function<void ()> &function)
+void Scheduler::performFunctionInCocosThread(std::function<void ()> function)
 {
-    _performMutex.lock();
-
-    _functionsToPerform.push_back(function);
-
-    _performMutex.unlock();
+    std::lock_guard<std::mutex> lock(_performMutex);
+    _functionsToPerform.push_back(std::move(function));
 }
 
 void Scheduler::removeAllFunctionsToBePerformedInCocosThread()
@@ -943,13 +941,12 @@ void Scheduler::update(float dt)
     if( !_functionsToPerform.empty() ) {
         _performMutex.lock();
         // fixed #4123: Save the callback functions, they must be invoked after '_performMutex.unlock()', otherwise if new functions are added in callback, it will cause thread deadlock.
-        auto temp = _functionsToPerform;
-        _functionsToPerform.clear();
+        auto temp = std::move(_functionsToPerform);
         _performMutex.unlock();
-        for( const auto &function : temp ) {
+        
+        for (const auto &function : temp) {
             function();
         }
-        
     }
 }
 
@@ -985,10 +982,10 @@ void Scheduler::schedule(SEL_SCHEDULE selector, Ref *target, float interval, uns
         {
             TimerTargetSelector *timer = dynamic_cast<TimerTargetSelector*>(element->timers->arr[i]);
             
-            if (timer && selector == timer->getSelector())
+            if (timer && !timer->isExhausted() && selector == timer->getSelector())
             {
-                CCLOG("CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), interval);
-                timer->setInterval(interval);
+                CCLOG("CCScheduler#schedule. Reiniting timer with interval %.4f, repeat %u, delay %.4f", interval, repeat, delay);
+                timer->setupTimerWithInterval(interval, repeat, delay);
                 return;
             }
         }
@@ -1006,7 +1003,7 @@ void Scheduler::schedule(SEL_SCHEDULE selector, Ref *target, float interval, boo
     this->schedule(selector, target, interval, CC_REPEAT_FOREVER, 0.0f, paused);
 }
 
-bool Scheduler::isScheduled(SEL_SCHEDULE selector, Ref *target)
+bool Scheduler::isScheduled(SEL_SCHEDULE selector, const Ref *target) const
 {
     CCASSERT(selector, "Argument selector must be non-nullptr");
     CCASSERT(target, "Argument target must be non-nullptr");
@@ -1023,22 +1020,18 @@ bool Scheduler::isScheduled(SEL_SCHEDULE selector, Ref *target)
     {
         return false;
     }
-    else
+
+    for (int i = 0; i < element->timers->num; ++i)
     {
-        for (int i = 0; i < element->timers->num; ++i)
-        {
-            TimerTargetSelector *timer = dynamic_cast<TimerTargetSelector*>(element->timers->arr[i]);
-            
-            if (timer && selector == timer->getSelector())
-            {
-                return true;
-            }
-        }
+        TimerTargetSelector *timer = dynamic_cast<TimerTargetSelector*>(element->timers->arr[i]);
         
-        return false;
+        if (timer && !timer->isExhausted() && selector == timer->getSelector())
+        {
+            return true;
+        }
     }
     
-    return false;  // should never get here
+    return false;
 }
 
 void Scheduler::unschedule(SEL_SCHEDULE selector, Ref *target)
@@ -1060,7 +1053,7 @@ void Scheduler::unschedule(SEL_SCHEDULE selector, Ref *target)
             
             if (timer && selector == timer->getSelector())
             {
-                if (timer == element->currentTimer && (! timer->isAborted()))
+                if (timer == element->currentTimer && !timer->isAborted())
                 {
                     timer->retain();
                     timer->setAborted();
