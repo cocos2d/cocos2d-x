@@ -81,6 +81,8 @@
 		<string>res/fonts/Thonburi.ttf</string>
 		<string>res/fonts/ThonburiBold.ttf</string>
 	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>

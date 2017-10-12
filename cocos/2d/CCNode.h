@@ -163,15 +163,15 @@ public:
      *
      * @param localZOrder The local Z order value.
      */
-    virtual void setLocalZOrder(int localZOrder);
+    virtual void setLocalZOrder(std::int32_t localZOrder);
 
-    CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(int localZOrder) { setLocalZOrder(localZOrder); }
+    CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(std::int32_t localZOrder) { setLocalZOrder(localZOrder); }
     
     /* 
      Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
      @js NA
      */
-    virtual void _setLocalZOrder(int z);
+    virtual void _setLocalZOrder(std::int32_t z);
 
     /** !!! ONLY FOR INTERNAL USE
     * Sets the arrival order when this node has a same ZOrder with other children.
@@ -193,9 +193,9 @@ public:
      * @return The local (relative to its siblings) Z order.
      */
 
-    virtual int getLocalZOrder() const { return _localZOrder; }
+    virtual std::int32_t getLocalZOrder() const { return _localZOrder; }
 
-    CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
+    CC_DEPRECATED_ATTRIBUTE virtual std::int32_t getZOrder() const { return getLocalZOrder(); }
 
     /**
      Defines the order in which the nodes are renderer.
@@ -947,11 +947,11 @@ public:
         static_assert(std::is_base_of<Node, _T>::value, "Node::sortNodes: Only accept derived of Node!");
 #if CC_64BITS
         std::sort(std::begin(nodes), std::end(nodes), [](_T* n1, _T* n2) {
-            return (n1->_localZOrderAndArrival < n2->_localZOrderAndArrival);
+            return (n1->_localZOrder$Arrival < n2->_localZOrder$Arrival);
         });
 #else
-        std::stable_sort(std::begin(nodes), std::end(nodes), [](_T* n1, _T* n2) {
-            return n1->_localZOrder < n2->_localZOrder;
+        std::sort(std::begin(nodes), std::end(nodes), [](_T* n1, _T* n2) {
+            return (n1->_localZOrder == n2->_localZOrder && n1->_orderOfArrival < n2->_orderOfArrival) || n1->_localZOrder < n2->_localZOrder;
         });
 #endif
     }
@@ -1940,12 +1940,27 @@ protected:
     mutable bool _additionalTransformDirty; ///< transform dirty ?
     bool _transformUpdated;         ///< Whether or not the Transform object was updated since the last frame
 
-    std::int64_t _localZOrderAndArrival; /// cache, for 64bits compress optimize.
-    int _localZOrder; /// < Local order (relative to its siblings) used to sort the node
+#if CC_LITTLE_ENDIAN
+    union {
+        struct {
+            std::uint32_t _orderOfArrival;
+            std::int32_t _localZOrder;
+        };
+        std::int64_t _localZOrder$Arrival;
+    };
+#else
+    union {
+        struct {
+            std::int32_t _localZOrder;
+            std::uint32_t _orderOfArrival;
+        };
+        std::int64_t _localZOrder$Arrival;
+    };
+#endif
 
     float _globalZOrder;            ///< Global order used to sort the node
 
-    static unsigned int s_globalOrderOfArrival;
+    static std::uint32_t s_globalOrderOfArrival;
 
     Vector<Node*> _children;        ///< array of children nodes
     Node *_parent;                  ///< weak reference to parent node

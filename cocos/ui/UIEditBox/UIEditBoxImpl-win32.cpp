@@ -372,7 +372,7 @@ namespace ui {
         bool conversionResult = cocos2d::StringUtils::UTF16ToUTF8(wstrResult, utf8Result);
         if (!conversionResult)
         {
-            CCLOG("warning, editbox input text convertion error.");
+            CCLOG("warning, editbox input text conversion error.");
         }
         return std::move(utf8Result);
     }
