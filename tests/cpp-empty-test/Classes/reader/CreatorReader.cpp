@@ -29,6 +29,7 @@
 #include "ui/PageView.h"
 #include "collider/Collider.h"
 
+#include <vector>
 
 using namespace cocos2d;
 using namespace creator;
@@ -47,9 +48,20 @@ namespace {
             for(const auto fbProp: *fbPropList) {
                 const auto fbFrame = fbProp->frame();
                 const auto fbValue = fbProp->value();
-                proplist.push_back(
-                                   {fbFrame,
-                                       fbValue
+                
+                const auto fbCurveType = fbProp->curveType();
+                std::string curveType = fbCurveType ? fbCurveType->c_str() : "";
+                
+                const auto fbCurveData = fbProp->curveData();
+                std::vector<float> curveData;
+                if (fbCurveData)
+                    for (const auto& value : *fbCurveData)
+                        curveData.push_back(value);
+                    
+                proplist.push_back({fbFrame,
+                                    fbValue,
+                                    curveData,
+                                    curveType
                                    });
             }
         }
@@ -62,9 +74,20 @@ namespace {
             for(const auto fbProp: *fbPropList) {
                 const auto fbFrame = fbProp->frame();
                 const auto fbValue = fbProp->value();
-                proplist.push_back(
-                                   {fbFrame,
-                                       cocos2d::Vec2(fbValue->x(), fbValue->y())
+                
+                const auto fbCurveType = fbProp->curveType();
+                std::string curveType = fbCurveType ? fbCurveType->c_str() : "";
+                
+                const auto fbCurveData = fbProp->curveData();
+                std::vector<float> curveData;
+                if (fbCurveData)
+                    for (const auto& value : *fbCurveData)
+                        curveData.push_back(value);
+                
+                proplist.push_back({fbFrame,
+                                    cocos2d::Vec2(fbValue->x(), fbValue->y()),
+                                    curveData,
+                                    curveType
                                    });
             }
         }
@@ -77,9 +100,20 @@ namespace {
             for(const auto fbProp: *fbPropList) {
                 const auto fbFrame = fbProp->frame();
                 const auto fbValue = fbProp->value();
-                proplist.push_back(
-                                   {fbFrame,
-                                       cocos2d::Color3B(fbValue->r(), fbValue->g(), fbValue->b())
+                
+                const auto fbCurveType = fbProp->curveType();
+                std::string curveType = fbCurveType ? fbCurveType->c_str() : "";
+                
+                const auto fbCurveData = fbProp->curveData();
+                std::vector<float> curveData;
+                if (fbCurveData)
+                    for (const auto& value : *fbCurveData)
+                        curveData.push_back(value);
+                
+                proplist.push_back({fbFrame,
+                                    cocos2d::Color3B(fbValue->r(), fbValue->g(), fbValue->b()),
+                                    curveData,
+                                    curveType
                                    });
             }
         }
@@ -451,6 +485,9 @@ void CreatorReader::parseNodeAnimation(cocos2d::Node* node, const buffers::Node*
             
             const auto& name = fbAnimationClip->name();
             animClip->setName(name->str());
+            
+            const auto& wrapMode = fbAnimationClip->wrapMode();
+            animClip->setWrapMode(static_cast<AnimationClip::WrapMode>(wrapMode));
             
             // is it defalut animation clip?
             if (hasDefaultAnimclip && name->str() == animRef->defaultClip()->str())
