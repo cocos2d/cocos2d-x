@@ -820,6 +820,10 @@
 		466A32AA1F54FFAE0037FF69 /* RichtextStringVisitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466A32651F54FFAE0037FF69 /* RichtextStringVisitor.cpp */; };
 		466A32AD1F5500AF0037FF69 /* DragonBonesHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466A32AB1F5500AF0037FF69 /* DragonBonesHandler.cpp */; };
 		466A32AE1F5500AF0037FF69 /* DragonBonesHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466A32AB1F5500AF0037FF69 /* DragonBonesHandler.cpp */; };
+		46D87A281F8F3A9D003CB8C4 /* Easing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D87A261F8F3A9D003CB8C4 /* Easing.cpp */; };
+		46D87A291F8F3A9D003CB8C4 /* Easing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D87A261F8F3A9D003CB8C4 /* Easing.cpp */; };
+		46D87A2C1F8F5719003CB8C4 /* Bezier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D87A2A1F8F5719003CB8C4 /* Bezier.cpp */; };
+		46D87A2D1F8F5719003CB8C4 /* Bezier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D87A2A1F8F5719003CB8C4 /* Bezier.cpp */; };
 		46FB70271F7CD230008D4175 /* Android.mk in Resources */ = {isa = PBXBuildFile; fileRef = 46FB6FAC1F7CD230008D4175 /* Android.mk */; };
 		46FB70281F7CD230008D4175 /* Android.mk in Resources */ = {isa = PBXBuildFile; fileRef = 46FB6FAC1F7CD230008D4175 /* Android.mk */; };
 		46FB70291F7CD230008D4175 /* AnimateClip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FB6FAE1F7CD230008D4175 /* AnimateClip.cpp */; };
@@ -2620,6 +2624,10 @@
 		466A32AB1F5500AF0037FF69 /* DragonBonesHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DragonBonesHandler.cpp; sourceTree = "<group>"; };
 		466A32AC1F5500AF0037FF69 /* DragonBonesHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragonBonesHandler.h; sourceTree = "<group>"; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
+		46D87A261F8F3A9D003CB8C4 /* Easing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Easing.cpp; sourceTree = "<group>"; };
+		46D87A271F8F3A9D003CB8C4 /* Easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Easing.h; sourceTree = "<group>"; };
+		46D87A2A1F8F5719003CB8C4 /* Bezier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bezier.cpp; sourceTree = "<group>"; };
+		46D87A2B1F8F5719003CB8C4 /* Bezier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bezier.h; sourceTree = "<group>"; };
 		46FB6FAC1F7CD230008D4175 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		46FB6FAE1F7CD230008D4175 /* AnimateClip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimateClip.cpp; sourceTree = "<group>"; };
 		46FB6FAF1F7CD230008D4175 /* AnimateClip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimateClip.h; sourceTree = "<group>"; };
@@ -5126,6 +5134,10 @@
 				466A32051F54FFAE0037FF69 /* AnimationClipProperties.h */,
 				466A32061F54FFAE0037FF69 /* AnimationManager.cpp */,
 				466A32071F54FFAE0037FF69 /* AnimationManager.h */,
+				46D87A261F8F3A9D003CB8C4 /* Easing.cpp */,
+				46D87A271F8F3A9D003CB8C4 /* Easing.h */,
+				46D87A2A1F8F5719003CB8C4 /* Bezier.cpp */,
+				46D87A2B1F8F5719003CB8C4 /* Bezier.h */,
 			);
 			path = animation;
 			sourceTree = "<group>";
@@ -7373,6 +7385,7 @@
 			files = (
 				466A326D1F54FFAE0037FF69 /* AnimationManager.cpp in Sources */,
 				466A32A91F54FFAE0037FF69 /* RichtextStringVisitor.cpp in Sources */,
+				46D87A281F8F3A9D003CB8C4 /* Easing.cpp in Sources */,
 				466A32731F54FFAE0037FF69 /* Contract.cpp in Sources */,
 				466A327F1F54FFAE0037FF69 /* TimelineState.cpp in Sources */,
 				466A32991F54FFAE0037FF69 /* ArmatureData.cpp in Sources */,
@@ -7402,6 +7415,7 @@
 				466A32831F54FFAE0037FF69 /* Armature.cpp in Sources */,
 				466A32851F54FFAE0037FF69 /* Bone.cpp in Sources */,
 				466A329D1F54FFAE0037FF69 /* FrameData.cpp in Sources */,
+				46D87A2C1F8F5719003CB8C4 /* Bezier.cpp in Sources */,
 				466A32AD1F5500AF0037FF69 /* DragonBonesHandler.cpp in Sources */,
 				466A32891F54FFAE0037FF69 /* CCArmatureDisplay.cpp in Sources */,
 				466A328F1F54FFAE0037FF69 /* CCTextureData.cpp in Sources */,
@@ -7470,6 +7484,7 @@
 				466A32741F54FFAE0037FF69 /* Contract.cpp in Sources */,
 				466A32961F54FFAE0037FF69 /* BaseFactory.cpp in Sources */,
 				466A32701F54FFAE0037FF69 /* Collider.cpp in Sources */,
+				46D87A291F8F3A9D003CB8C4 /* Easing.cpp in Sources */,
 				466A327E1F54FFAE0037FF69 /* AnimationState.cpp in Sources */,
 				466A32A61F54FFAE0037FF69 /* TextureData.cpp in Sources */,
 				466A329E1F54FFAE0037FF69 /* FrameData.cpp in Sources */,
@@ -7495,6 +7510,7 @@
 				466A32A41F54FFAE0037FF69 /* JSONDataParser.cpp in Sources */,
 				1AC358C118CEC1BF00F37B72 /* AppDelegate.cpp in Sources */,
 				466A32921F54FFAE0037FF69 /* BaseObject.cpp in Sources */,
+				46D87A2D1F8F5719003CB8C4 /* Bezier.cpp in Sources */,
 				466A329A1F54FFAE0037FF69 /* ArmatureData.cpp in Sources */,
 				466A326A1F54FFAE0037FF69 /* AnimateClip.cpp in Sources */,
 				466A32881F54FFAE0037FF69 /* Slot.cpp in Sources */,
