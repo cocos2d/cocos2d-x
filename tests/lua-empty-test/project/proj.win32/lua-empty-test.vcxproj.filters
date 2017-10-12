@@ -129,6 +129,12 @@
     <ClCompile Include="..\Classes\reader\ui\RichtextStringVisitor.cpp">
       <Filter>Classes\reader</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\reader\animation\Bezier.cpp">
+      <Filter>Classes\reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\reader\animation\Easing.cpp">
+      <Filter>Classes\reader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h">
@@ -318,6 +324,12 @@
       <Filter>Classes\reader</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\reader\ui\RichtextStringVisitor.h">
+      <Filter>Classes\reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\reader\animation\Bezier.h">
+      <Filter>Classes\reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\reader\animation\Easing.h">
       <Filter>Classes\reader</Filter>
     </ClInclude>
   </ItemGroup>

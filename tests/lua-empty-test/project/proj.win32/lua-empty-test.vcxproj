@@ -173,6 +173,8 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\reader\animation\AnimateClip.cpp" />
     <ClCompile Include="..\Classes\reader\animation\AnimationClip.cpp" />
     <ClCompile Include="..\Classes\reader\animation\AnimationManager.cpp" />
+    <ClCompile Include="..\Classes\reader\animation\Bezier.cpp" />
+    <ClCompile Include="..\Classes\reader\animation\Easing.cpp" />
     <ClCompile Include="..\Classes\reader\collider\Collider.cpp" />
     <ClCompile Include="..\Classes\reader\collider\ColliderManager.cpp" />
     <ClCompile Include="..\Classes\reader\collider\Contract.cpp" />
@@ -216,6 +218,8 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\reader\animation\AnimationClip.h" />
     <ClInclude Include="..\Classes\reader\animation\AnimationClipProperties.h" />
     <ClInclude Include="..\Classes\reader\animation\AnimationManager.h" />
+    <ClInclude Include="..\Classes\reader\animation\Bezier.h" />
+    <ClInclude Include="..\Classes\reader\animation\Easing.h" />
     <ClInclude Include="..\Classes\reader\collider\Collider.h" />
     <ClInclude Include="..\Classes\reader\collider\ColliderManager.h" />
     <ClInclude Include="..\Classes\reader\collider\Contract.h" />

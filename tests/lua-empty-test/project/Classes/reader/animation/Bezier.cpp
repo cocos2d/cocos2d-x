@@ -25,12 +25,17 @@
 #include "Bezier.h"
 
 #include <cmath>
+#include <algorithm>
+
+#define _USE_MATH_DEFINES
+#include <math.h>
+#undef _USE_MATH_DEFINES
 
 NS_CCR_BEGIN
 
 namespace
 {
-    float tau = 2 * M_PI;
+    float tau = static_cast<float>(2 * M_PI);
     
     float crt (float v)
     {
