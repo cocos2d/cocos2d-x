@@ -81,7 +81,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)tests\lua-empty-test\project\Classes\reader;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\collider;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\animation;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\dragonbones\cocos2dx;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\dragonbones\armature;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\dragonbones\animation;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\dragonbones\events;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\dragonbones\factories;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\dragonbones\core;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\dragonbones\geom;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_DEBUG;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USRLUASTATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -131,7 +131,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
       <ProxyFileName>lua-empty-test_p.c</ProxyFileName>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)external\lua\lua;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)tests\lua-empty-test\project\Classes\reader;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\collider;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\animation;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\dragonbones\cocos2dx;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\dragonbones\armature;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\dragonbones\animation;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\dragonbones\events;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\dragonbones\factories;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\dragonbones\core;$(EngineRoot)tests\lua-empty-test\project\Classes\reader\dragonbones\geom;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;NDEBUG;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USRLUASTATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -170,11 +170,108 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\reader\animation\AnimateClip.cpp" />
+    <ClCompile Include="..\Classes\reader\animation\AnimationClip.cpp" />
+    <ClCompile Include="..\Classes\reader\animation\AnimationManager.cpp" />
+    <ClCompile Include="..\Classes\reader\collider\Collider.cpp" />
+    <ClCompile Include="..\Classes\reader\collider\ColliderManager.cpp" />
+    <ClCompile Include="..\Classes\reader\collider\Contract.cpp" />
+    <ClCompile Include="..\Classes\reader\collider\Intersection.cpp" />
+    <ClCompile Include="..\Classes\reader\CreatorReader.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\animation\Animation.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\animation\AnimationState.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\animation\TimelineState.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\animation\WorldClock.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\armature\Armature.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\armature\Bone.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\armature\Slot.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\cocos2dx\CCArmatureDisplay.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\cocos2dx\CCFactory.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\cocos2dx\CCSlot.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\cocos2dx\CCTextureData.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\core\BaseObject.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\events\EventObject.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\factories\BaseFactory.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\model\AnimationData.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\model\ArmatureData.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\model\DragonBonesData.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\model\FrameData.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\model\TimelineData.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\parsers\DataParser.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\parsers\JSONDataParser.cpp" />
+    <ClCompile Include="..\Classes\reader\dragonbones\textures\TextureData.cpp" />
+    <ClCompile Include="..\Classes\reader\lua-bindings\creator_reader_bindings.cpp" />
+    <ClCompile Include="..\Classes\reader\lua-bindings\dragonbones\lua_dragonbones_auto.cpp" />
+    <ClCompile Include="..\Classes\reader\lua-bindings\dragonbones\lua_dragonbones_manual.cpp" />
+    <ClCompile Include="..\Classes\reader\lua-bindings\reader\lua_creator_reader_auto.cpp" />
+    <ClCompile Include="..\Classes\reader\lua-bindings\reader\lua_creator_reader_manual.cpp" />
+    <ClCompile Include="..\Classes\reader\ui\PageView.cpp" />
+    <ClCompile Include="..\Classes\reader\ui\RichtextStringVisitor.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\lua_module_register.h" />
+    <ClInclude Include="..\Classes\reader\animation\AnimateClip.h" />
+    <ClInclude Include="..\Classes\reader\animation\AnimationClip.h" />
+    <ClInclude Include="..\Classes\reader\animation\AnimationClipProperties.h" />
+    <ClInclude Include="..\Classes\reader\animation\AnimationManager.h" />
+    <ClInclude Include="..\Classes\reader\collider\Collider.h" />
+    <ClInclude Include="..\Classes\reader\collider\ColliderManager.h" />
+    <ClInclude Include="..\Classes\reader\collider\Contract.h" />
+    <ClInclude Include="..\Classes\reader\collider\Intersection.h" />
+    <ClInclude Include="..\Classes\reader\CreatorReader.h" />
+    <ClInclude Include="..\Classes\reader\CreatorReader_generated.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\animation\Animation.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\animation\AnimationState.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\animation\BaseTimelineState.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\animation\IAnimateble.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\animation\TimelineState.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\animation\WorldClock.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\armature\Armature.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\armature\Bone.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\armature\IArmatureDisplay.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\armature\Slot.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\armature\TransformObject.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\cocos2dx\CCArmatureDisplay.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\cocos2dx\CCDragonBonesHeaders.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\cocos2dx\CCFactory.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\cocos2dx\CCSlot.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\cocos2dx\CCTextureData.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\core\BaseObject.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\core\DragonBones.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\DragonBonesHeaders.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\events\EventObject.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\factories\BaseFactory.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\geom\ColorTransform.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\geom\Matrix.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\geom\Point.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\geom\Rectangle.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\geom\Transform.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\model\AnimationData.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\model\ArmatureData.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\model\DragonBonesData.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\model\FrameData.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\model\TimelineData.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\parsers\DataParser.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\parsers\JSONDataParser.h" />
+    <ClInclude Include="..\Classes\reader\dragonbones\textures\TextureData.h" />
+    <ClInclude Include="..\Classes\reader\flatbuffers\code_generators.h" />
+    <ClInclude Include="..\Classes\reader\flatbuffers\flatbuffers.h" />
+    <ClInclude Include="..\Classes\reader\flatbuffers\grpc.h" />
+    <ClInclude Include="..\Classes\reader\flatbuffers\hash.h" />
+    <ClInclude Include="..\Classes\reader\flatbuffers\idl.h" />
+    <ClInclude Include="..\Classes\reader\flatbuffers\reflection.h" />
+    <ClInclude Include="..\Classes\reader\flatbuffers\reflection_generated.h" />
+    <ClInclude Include="..\Classes\reader\flatbuffers\util.h" />
+    <ClInclude Include="..\Classes\reader\lua-bindings\creator_reader_bindings.hpp" />
+    <ClInclude Include="..\Classes\reader\lua-bindings\dragonbones\lua_dragonbones_auto.hpp" />
+    <ClInclude Include="..\Classes\reader\lua-bindings\dragonbones\lua_dragonbones_manual.hpp" />
+    <ClInclude Include="..\Classes\reader\lua-bindings\reader\lua_creator_reader_auto.hpp" />
+    <ClInclude Include="..\Classes\reader\lua-bindings\reader\lua_creator_reader_manual.hpp" />
+    <ClInclude Include="..\Classes\reader\Macros.h" />
+    <ClInclude Include="..\Classes\reader\ui\PageView.h" />
+    <ClInclude Include="..\Classes\reader\ui\RichtextStringVisitor.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
