@@ -52,20 +52,21 @@ public:
     //
     virtual void update(float dt) override;
     
-CC_CONSTRUCTOR_ACCESS:
+private:
     AnimateClip();
     bool initWithAnimationClip(cocos2d::Node* rootTarget, AnimationClip* clip);
     void doUpdate(const AnimProperties& animProperties) const;
     cocos2d::Node* getTarget(const std::string &path) const;
-
+    float computeElapse() const;
 
     AnimationClip* _clip;
     
     float _elapsed;
-    float _duration;
     cocos2d::Node *_rootTarget;
     
     AnimateEndCallback _endCallback;
+    bool _needStop;
+    float _durationToStop;
 };
 
 NS_CCR_END

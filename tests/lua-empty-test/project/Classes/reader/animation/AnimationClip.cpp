@@ -109,7 +109,7 @@ void AnimationClip::addAnimProperties(const AnimProperties& properties)
     _animPropertiesVec.push_back(properties);
 }
 
-const std::vector<AnimProperties>& AnimationClip::getAnimPropertiesVec() const
+const std::vector<AnimProperties>& AnimationClip::getAnimProperties() const
 {
     return _animPropertiesVec;
 }

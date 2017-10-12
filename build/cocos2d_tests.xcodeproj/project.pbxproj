@@ -824,6 +824,10 @@
 		46D87A291F8F3A9D003CB8C4 /* Easing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D87A261F8F3A9D003CB8C4 /* Easing.cpp */; };
 		46D87A2C1F8F5719003CB8C4 /* Bezier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D87A2A1F8F5719003CB8C4 /* Bezier.cpp */; };
 		46D87A2D1F8F5719003CB8C4 /* Bezier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D87A2A1F8F5719003CB8C4 /* Bezier.cpp */; };
+		46D87A321F8F6663003CB8C4 /* Bezier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D87A2E1F8F6663003CB8C4 /* Bezier.cpp */; };
+		46D87A331F8F6663003CB8C4 /* Bezier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D87A2E1F8F6663003CB8C4 /* Bezier.cpp */; };
+		46D87A341F8F6663003CB8C4 /* Easing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D87A301F8F6663003CB8C4 /* Easing.cpp */; };
+		46D87A351F8F6663003CB8C4 /* Easing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D87A301F8F6663003CB8C4 /* Easing.cpp */; };
 		46FB70271F7CD230008D4175 /* Android.mk in Resources */ = {isa = PBXBuildFile; fileRef = 46FB6FAC1F7CD230008D4175 /* Android.mk */; };
 		46FB70281F7CD230008D4175 /* Android.mk in Resources */ = {isa = PBXBuildFile; fileRef = 46FB6FAC1F7CD230008D4175 /* Android.mk */; };
 		46FB70291F7CD230008D4175 /* AnimateClip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FB6FAE1F7CD230008D4175 /* AnimateClip.cpp */; };
@@ -2628,6 +2632,10 @@
 		46D87A271F8F3A9D003CB8C4 /* Easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Easing.h; sourceTree = "<group>"; };
 		46D87A2A1F8F5719003CB8C4 /* Bezier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bezier.cpp; sourceTree = "<group>"; };
 		46D87A2B1F8F5719003CB8C4 /* Bezier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bezier.h; sourceTree = "<group>"; };
+		46D87A2E1F8F6663003CB8C4 /* Bezier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bezier.cpp; sourceTree = "<group>"; };
+		46D87A2F1F8F6663003CB8C4 /* Bezier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bezier.h; sourceTree = "<group>"; };
+		46D87A301F8F6663003CB8C4 /* Easing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Easing.cpp; sourceTree = "<group>"; };
+		46D87A311F8F6663003CB8C4 /* Easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Easing.h; sourceTree = "<group>"; };
 		46FB6FAC1F7CD230008D4175 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		46FB6FAE1F7CD230008D4175 /* AnimateClip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimateClip.cpp; sourceTree = "<group>"; };
 		46FB6FAF1F7CD230008D4175 /* AnimateClip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimateClip.h; sourceTree = "<group>"; };
@@ -5358,6 +5366,10 @@
 		46FB6FAD1F7CD230008D4175 /* animation */ = {
 			isa = PBXGroup;
 			children = (
+				46D87A2E1F8F6663003CB8C4 /* Bezier.cpp */,
+				46D87A2F1F8F6663003CB8C4 /* Bezier.h */,
+				46D87A301F8F6663003CB8C4 /* Easing.cpp */,
+				46D87A311F8F6663003CB8C4 /* Easing.h */,
 				46FB6FAE1F7CD230008D4175 /* AnimateClip.cpp */,
 				46FB6FAF1F7CD230008D4175 /* AnimateClip.h */,
 				46FB6FB01F7CD230008D4175 /* AnimationClip.cpp */,
@@ -7442,6 +7454,7 @@
 				46FB70531F7CD230008D4175 /* EventObject.cpp in Sources */,
 				46FB708C1F7DF25A008D4175 /* lua_dragonbones_manual.cpp in Sources */,
 				46FB703D1F7CD230008D4175 /* AnimationState.cpp in Sources */,
+				46D87A341F8F6663003CB8C4 /* Easing.cpp in Sources */,
 				46FB70651F7CD230008D4175 /* TextureData.cpp in Sources */,
 				46FB704B1F7CD230008D4175 /* CCFactory.cpp in Sources */,
 				46FB70331F7CD230008D4175 /* Contract.cpp in Sources */,
@@ -7464,6 +7477,7 @@
 				46FB705D1F7CD230008D4175 /* FrameData.cpp in Sources */,
 				46FB707B1F7CD230008D4175 /* lua_creator_reader_auto.cpp in Sources */,
 				46FB70451F7CD230008D4175 /* Bone.cpp in Sources */,
+				46D87A321F8F6663003CB8C4 /* Bezier.cpp in Sources */,
 				46FB704F1F7CD230008D4175 /* CCTextureData.cpp in Sources */,
 				46FB702D1F7CD230008D4175 /* AnimationManager.cpp in Sources */,
 				46FB703B1F7CD230008D4175 /* Animation.cpp in Sources */,
@@ -7527,6 +7541,7 @@
 				46FB70801F7CD230008D4175 /* PageView.cpp in Sources */,
 				46FB708B1F7DF25A008D4175 /* lua_dragonbones_auto.cpp in Sources */,
 				46FB70521F7CD230008D4175 /* BaseObject.cpp in Sources */,
+				46D87A331F8F6663003CB8C4 /* Bezier.cpp in Sources */,
 				46FB70641F7CD230008D4175 /* JSONDataParser.cpp in Sources */,
 				46FB702E1F7CD230008D4175 /* AnimationManager.cpp in Sources */,
 				46FB70381F7CD230008D4175 /* CreatorReader.cpp in Sources */,
@@ -7542,6 +7557,7 @@
 				46FB70301F7CD230008D4175 /* Collider.cpp in Sources */,
 				46FB707A1F7CD230008D4175 /* creator_reader_bindings.cpp in Sources */,
 				46FB704E1F7CD230008D4175 /* CCSlot.cpp in Sources */,
+				46D87A351F8F6663003CB8C4 /* Easing.cpp in Sources */,
 				46FB70461F7CD230008D4175 /* Bone.cpp in Sources */,
 				46FB703E1F7CD230008D4175 /* AnimationState.cpp in Sources */,
 				46FB707C1F7CD230008D4175 /* lua_creator_reader_auto.cpp in Sources */,

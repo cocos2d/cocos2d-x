@@ -24,8 +24,11 @@
 #pragma once
 
 #include "cocos2d.h"
-
 #include "Macros.h"
+
+#include <vector>
+#include <string>
+
 
 NS_CCR_BEGIN
 
@@ -33,84 +36,112 @@ struct AnimPropRotation
 {
     float frame;
     float value;
+    std::vector<float> curveData;
+    std::string curveType;
 };
 
 struct AnimPropPosition
 {
     float frame;
     cocos2d::Vec2 value;
+    std::vector<float> curveData;
+    std::string curveType;
 };
 
 struct AnimPropPositionX
 {
     float frame;
     float value;
+    std::vector<float> curveData;
+    std::string curveType;
 };
 
 struct AnimPropPositionY
 {
     float frame;
     float value;
+    std::vector<float> curveData;
+    std::string curveType;
 };
 
 struct AnimPropScaleX
 {
     float frame;
     float value;
+    std::vector<float> curveData;
+    std::string curveType;
 };
 
 struct AnimPropScaleY
 {
     float frame;
     float value;
+    std::vector<float> curveData;
+    std::string curveType;
 };
 
 struct AnimPropWidth
 {
     float frame;
     float value;
+    std::vector<float> curveData;
+    std::string curveType;
 };
 
 struct AnimPropHeight
 {
     float frame;
     float value;
+    std::vector<float> curveData;
+    std::string curveType;
 };
 
 struct AnimPropColor
 {
     float frame;
     cocos2d::Color3B value;
+    std::vector<float> curveData;
+    std::string curveType;
 };
 
 struct AnimPropOpacity
 {
     float frame;
     float value;
+    std::vector<float> curveData;
+    std::string curveType;
 };
 
 struct AnimPropAnchorX
 {
     float frame;
     float value;
+    std::vector<float> curveData;
+    std::string curveType;
 };
 
 struct AnimPropAnchorY
 {
     float frame;
     float value;
+    std::vector<float> curveData;
+    std::string curveType;
 };
 
 struct AnimPropSkewX
 {
     float frame;
     float value;
+    std::vector<float> curveData;
+    std::string curveType;
 };
 
 struct AnimPropSkewY
 {
     float frame;
     float value;
+    std::vector<float> curveData;
+    std::string curveType;
 };
 
 struct AnimProperties

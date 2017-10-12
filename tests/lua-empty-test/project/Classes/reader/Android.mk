@@ -4,6 +4,8 @@ cpp_src := \
 animation/AnimateClip.cpp \
 animation/AnimationClip.cpp \
 animation/AnimationManager.cpp \
+animation/Easing.cpp \
+animation/Bezier.cpp \
 collider/Collider.cpp \
 collider/ColliderManager.cpp \
 collider/Contract.cpp \

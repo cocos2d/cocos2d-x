@@ -56,9 +56,9 @@ public:
     WrapMode getWrapMode() const;
 
     void addAnimProperties(const AnimProperties& properties);
-    const std::vector<AnimProperties>& getAnimPropertiesVec() const;
-
-protected:
+    const std::vector<AnimProperties>& getAnimProperties() const;
+    
+private:
     AnimationClip();
 
     std::string _name;
