@@ -27,6 +27,7 @@
 #include "platform/CCCommon.h"
 #include "base/CCConsole.h"
 #include "ConvertUTF.h"
+#include <limits>
 
 NS_CC_BEGIN
 
@@ -378,11 +379,21 @@ void StringUTF8::replace(const std::string& newStr)
     }
 }
 
-std::string StringUTF8::getAsCharSequence(std::size_t pos/* = 0*/, std::size_t len/* = (std::size_t)-1*/) const
+std::string StringUTF8::getAsCharSequence() const
+{
+    return getAsCharSequence(0, std::numeric_limits<std::size_t>::max());
+}
+
+std::string StringUTF8::getAsCharSequence(std::size_t pos) const
+{
+    return getAsCharSequence(pos, std::numeric_limits<std::size_t>::max());
+}
+
+std::string StringUTF8::getAsCharSequence(std::size_t pos, std::size_t len) const
 {
     std::string charSequence;
     size_t maxLen = _str.size() - pos;
-    if (len == (size_t)-1 || len > maxLen)
+    if (len > maxLen)
     {
         len = maxLen;
     }

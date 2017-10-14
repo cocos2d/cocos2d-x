@@ -207,7 +207,9 @@ public:
     std::size_t length() const;
     void replace(const std::string& newStr);
 
-    std::string getAsCharSequence(std::size_t pos = 0, std::size_t len = (std::size_t)-1) const;
+    std::string getAsCharSequence() const;
+    std::string getAsCharSequence(std::size_t pos) const;
+    std::string getAsCharSequence(std::size_t pos, std::size_t len) const;
 
     bool deleteChar(std::size_t pos);
     bool insert(std::size_t pos, const std::string& insertStr);
