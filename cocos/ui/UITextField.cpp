@@ -139,29 +139,6 @@ void UICCTextField::insertText(const char*  text, size_t len)
         }
     }
     TextFieldTTF::insertText(input_text.c_str(), len);
-    
-    // password
-    if (this->isSecureTextEntry())
-    {
-        if (TextFieldTTF::getCharCount() > 0)
-        {
-            setPasswordText(getString());
-        }
-    }
-}
-
-void UICCTextField::deleteBackward()
-{
-    TextFieldTTF::deleteBackward();
-    
-    if (TextFieldTTF::getCharCount() > 0)
-    {
-        // password
-        if (this->isSecureTextEntry())
-        {
-            setPasswordText(_inputText);
-        }
-    }
 }
 
 void UICCTextField::openIME()
