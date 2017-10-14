@@ -662,7 +662,7 @@ const std::string& TextFieldTTF::getString() const
 void TextFieldTTF::setPlaceHolder(const std::string& text)
 {
     _placeHolder = text;
-    if (_inputText.empty())
+    if (_inputText.empty() && !_isAttachWithIME)
     {
         Label::setTextColor(_colorSpaceHolder);
         Label::setString(_placeHolder);
