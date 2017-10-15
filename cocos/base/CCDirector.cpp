@@ -231,7 +231,7 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_eventDispatcher);
     
     Configuration::destroyInstance();
-    ObjectFactory destroyInstance();
+    ObjectFactory::destroyInstance();
 
     s_SharedDirector = nullptr;
 }
