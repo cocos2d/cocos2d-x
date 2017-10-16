@@ -291,17 +291,28 @@ void TextureCache::loadImage()
             _sleepCondition.wait(signal);
             continue;
         }
-
-        // load image
-        asyncStruct->loadSuccess = asyncStruct->image.initWithImageFileThreadSafe(asyncStruct->filename);
-
-        // ETC1 ALPHA supports.
-        if (asyncStruct->loadSuccess && asyncStruct->image.getFileType() == Image::Format::ETC && !s_etc1AlphaFileSuffix.empty())
-        { // check whether alpha texture exists & load it
-            auto alphaFile = asyncStruct->filename + s_etc1AlphaFileSuffix;
-            if (FileUtils::getInstance()->isFileExist(alphaFile))
-                asyncStruct->imageAlpha.initWithImageFileThreadSafe(alphaFile);
+        
+        if (!asyncStruct->loadSuccess) {
+            // load image
+            asyncStruct->loadSuccess = asyncStruct->image.initWithImageFileThreadSafe(asyncStruct->filename);
+        
+            // ETC1 ALPHA supports.
+            if (asyncStruct->loadSuccess && asyncStruct->image.getFileType() == Image::Format::ETC && !s_etc1AlphaFileSuffix.empty())
+            { // check whether alpha texture exists & load it
+                auto alphaFile = asyncStruct->filename + s_etc1AlphaFileSuffix;
+                if (FileUtils::getInstance()->isFileExist(alphaFile))
+                    asyncStruct->imageAlpha.initWithImageFileThreadSafe(alphaFile);
+            }
         }
+        
+        if (asyncStruct->loadSuccess) {
+            for (auto request : _requestQueue) {
+                if (request->filename == asyncStruct->filename) {
+                    request->loadSuccess = true;
+                }
+            }   
+        }
+        
         // push the asyncStruct to response queue
         _responseMutex.lock();
         _responseQueue.push_back(asyncStruct);
