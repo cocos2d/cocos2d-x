@@ -196,7 +196,7 @@ public:
     struct CharUTF8
     {
         std::string _char;
-        bool isAnsi() const { return _char.size() == 1; }
+        bool isASCII() const { return _char.size() == 1; }
     };
     typedef std::vector<CharUTF8> CharUTF8Store;
 
