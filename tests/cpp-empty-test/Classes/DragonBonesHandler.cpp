@@ -118,6 +118,7 @@ DragonBonesHandler::DragonBonesHandler(cocos2d::Scene* scene)
 
 void DragonBonesHandler::update(float dt)
 {
+    Node::update(dt);
     updatePosition();
     updateAnim();
     updateAttack();

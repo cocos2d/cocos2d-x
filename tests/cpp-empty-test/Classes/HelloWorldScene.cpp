@@ -127,6 +127,7 @@ void HelloWorld::handleAnimationButtonClick(cocos2d::Scene* scene)
         
         auto grossini_dance_08_2 = utils::findChild<cocos2d::Sprite*>(HelloWorld::g_currentScene, "grossini_dance_08_2");
         auto animationManager = HelloWorld::g_reader->getAnimationManager();
+        animationManager->retain();
         grossini_dance_08_2->runAction(Sequence::create(DelayTime::create(3),
                                                         CallFunc::create([=]() {
             animationManager->pauseAnimationClip(grossini_dance_08_2, "Animation2");
@@ -134,6 +135,7 @@ void HelloWorld::handleAnimationButtonClick(cocos2d::Scene* scene)
                                                         DelayTime::create(1),
                                                         CallFunc::create([=]() {
             animationManager->resumeAnimationClip(grossini_dance_08_2, "Animation2");
+            animationManager->release();
                                                         }),
                                                         nullptr));
     });
