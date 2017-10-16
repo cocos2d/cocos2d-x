@@ -522,6 +522,7 @@ void UserDefault::deleteValueForKey(const char* key)
     // if node not exist, don't need to delete
     if (!node)
     {
+        CC_SAFE_DELETE(doc);
         return;
     }
 
