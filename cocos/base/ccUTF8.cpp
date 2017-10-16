@@ -392,14 +392,14 @@ std::string StringUTF8::getAsCharSequence(std::size_t pos) const
 std::string StringUTF8::getAsCharSequence(std::size_t pos, std::size_t len) const
 {
     std::string charSequence;
-    size_t maxLen = _str.size() - pos;
+    std::size_t maxLen = _str.size() - pos;
     if (len > maxLen)
     {
         len = maxLen;
     }
 
-    len += pos;
-    while (pos < len)
+    std::size_t endPos = len + pos;
+    while (pos < endPos)
     {
         charSequence.append(_str[pos++]._char);
     }
