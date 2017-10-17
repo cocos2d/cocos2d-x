@@ -417,7 +417,7 @@ static BOOL configured = FALSE;
     if ((self = [super init])) {
    
          [[NSNotificationCenter defaultCenter] addObserver: self
-         selector:    NSSelectorFromString(@"handleInterruption")
+         selector:    NSSelectorFromString(@"handleInterruption:")
          name:        AVAudioSessionInterruptionNotification
          object:      [AVAudioSession sharedInstance]];
     
