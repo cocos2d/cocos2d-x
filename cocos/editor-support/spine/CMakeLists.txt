@@ -38,6 +38,9 @@ set(COCOS_SPINE_SRC
   editor-support/spine/VertexAttachment.c
   editor-support/spine/extension.c
   editor-support/spine/spine-cocos2dx.cpp
+  editor-support/spine/Color.c
+  editor-support/spine/Triangulator.c
+  editor-support/spine/SkeletonClipping.c
 )
 
 include_directories( editor-support )
