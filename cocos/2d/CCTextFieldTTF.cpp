@@ -382,14 +382,17 @@ void TextFieldTTF::setCursorFromPoint(const Vec2 &point, const Camera* camera)
             int latterPosition = 0;
             for (; latterPosition < _lengthOfString; ++latterPosition)
             {
-                if (_lettersInfo[latterPosition].valid)
+                if (_lettersInfo[latterPosition].valid && _lettersInfo[latterPosition].atlasIndex >= 0)
                 {
                     auto sprite = getLetter(latterPosition);
-                    rect.size = sprite->getContentSize();
-                    if (isScreenPointInRect(point, camera, sprite->getWorldToNodeTransform(), rect, nullptr))
+                    if (sprite)
                     {
-                        setCursorPosition(latterPosition);
-                        break;
+                        rect.size = sprite->getContentSize();
+                        if (isScreenPointInRect(point, camera, sprite->getWorldToNodeTransform(), rect, nullptr))
+                        {
+                            setCursorPosition(latterPosition);
+                            break;
+                        }
                     }
                 }
             }
