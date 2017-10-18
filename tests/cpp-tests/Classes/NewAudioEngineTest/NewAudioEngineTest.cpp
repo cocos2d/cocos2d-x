@@ -32,6 +32,7 @@ using namespace cocos2d::experimental;
 
 AudioEngineTests::AudioEngineTests()
 {
+    ADD_TEST_CASE(AudioIssueMaxInstanceTest);
     ADD_TEST_CASE(AudioIssue11143Test);
     ADD_TEST_CASE(AudioControlTest);
     ADD_TEST_CASE(AudioLoadTest);
@@ -651,12 +652,59 @@ std::string LargeAudioFileTest::title() const
     return "Test large audio file";
 }
 
+bool AudioIssueMaxInstanceTest::init()
+{
+    if (AudioEngineTestDemo::init())
+    {
+        auto& layerSize = this->getContentSize();
+        
+        auto playItem = TextButton::create("play", [](TextButton* button){
+            float diff = 0.05f;
+            
+            AudioEngine::play2d("background.wav", true);
+            
+            for(int i = 0; i < 200; i++){
+                float delay = diff * (i + 1);
+                int j = i % 10 + 81;
+                
+                char buff1[255];
+                snprintf(buff1, sizeof(buff1), "k%d", i);
+                std::string key = buff1;
+                
+                char buff2[255];
+                snprintf(buff2, sizeof(buff2), "audio/SoundEffectsFX009/FX0%d.mp3", j);
+                std::string path = buff2;
+                
+                button->scheduleOnce([path](float dt){
+                    AudioEngine::play2d(path);
+                }, delay, key);
+            }
+        });
+        playItem->setPosition(layerSize.width * 0.5f, layerSize.height * 0.5f);
+        addChild(playItem);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+std::string AudioIssueMaxInstanceTest::title() const
+{
+    return "Max instance exceeded issue test";
+}
+
+std::string AudioIssueMaxInstanceTest::subtitle() const
+{
+    return "There shouldn't be any blank break in sound.\nBackground music shouldn't stop.";
+}
+
 bool AudioIssue11143Test::init()
 {
     if (AudioEngineTestDemo::init())
     {
         auto& layerSize = this->getContentSize();
-
+        
         auto playItem = TextButton::create("play", [](TextButton* button){
             AudioEngine::play2d("audio/SoundEffectsFX009/FX082.mp3", true);
             AudioEngine::stopAll();
@@ -668,14 +716,14 @@ bool AudioIssue11143Test::init()
                 AudioEngine::stop(audioId);
                 AudioEngine::play2d("audio/SoundEffectsFX009/FX083.mp3");
             }, 0.3f, key);
-
+            
         });
         playItem->setPosition(layerSize.width * 0.5f, layerSize.height * 0.5f);
         addChild(playItem);
-
+        
         return true;
     }
-
+    
     return false;
 }
 

@@ -31,6 +31,7 @@
 #ifndef SPINE_SKELETONBINARY_H_
 #define SPINE_SKELETONBINARY_H_
 
+#include <spine/dll.h>
 #include <spine/Attachment.h>
 #include <spine/AttachmentLoader.h>
 #include <spine/SkeletonData.h>
@@ -48,12 +49,12 @@ typedef struct spSkeletonBinary {
 	const char* const error;
 } spSkeletonBinary;
 
-spSkeletonBinary* spSkeletonBinary_createWithLoader (spAttachmentLoader* attachmentLoader);
-spSkeletonBinary* spSkeletonBinary_create (spAtlas* atlas);
-void spSkeletonBinary_dispose (spSkeletonBinary* self);
+SP_API spSkeletonBinary* spSkeletonBinary_createWithLoader (spAttachmentLoader* attachmentLoader);
+SP_API spSkeletonBinary* spSkeletonBinary_create (spAtlas* atlas);
+SP_API void spSkeletonBinary_dispose (spSkeletonBinary* self);
 
-spSkeletonData* spSkeletonBinary_readSkeletonData (spSkeletonBinary* self, const unsigned char* binary, const int length);
-spSkeletonData* spSkeletonBinary_readSkeletonDataFile (spSkeletonBinary* self, const char* path);
+SP_API spSkeletonData* spSkeletonBinary_readSkeletonData (spSkeletonBinary* self, const unsigned char* binary, const int length);
+SP_API spSkeletonData* spSkeletonBinary_readSkeletonDataFile (spSkeletonBinary* self, const char* path);
 
 #ifdef SPINE_SHORT_NAMES
 typedef spSkeletonBinary SkeletonBinary;

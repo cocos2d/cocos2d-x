@@ -210,11 +210,34 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             profileHelper = &_audioPathProfileHelperMap[profile->name];
             profileHelper->profile = *profile;
         }
+
+//        if (_audioIDInfoMap.size() >= _maxInstances) {
+//            log("Fail to play %s cause by limited max instance of AudioEngine",filePath.c_str());
+//            break;
+//        }
         
         if (_audioIDInfoMap.size() >= _maxInstances) {
-            log("Fail to play %s cause by limited max instance of AudioEngine",filePath.c_str());
-            break;
+            double oldestTimestamp = std::numeric_limits<double>::max();
+            int oldestId = INVALID_AUDIO_ID;
+            std::string ofilePath;
+            for(auto it = _audioIDInfoMap.begin(); it != _audioIDInfoMap.end(); ++it){
+                if(it->second.timestamp < oldestTimestamp && !it->second.loop){
+                    oldestId = it->first;
+                    oldestTimestamp = it->second.timestamp;
+                    ofilePath = *it->second.filePath;
+                }
+            }
+            
+            if(oldestId == INVALID_AUDIO_ID){
+                log("Fail to play %s cause by limited max instance of AudioEngine", filePath.c_str());
+                break;
+            }
+            
+            log("Max instance limit of AudioEngine exceeded. Stopping the oldest sound with id: %d and path: %s", oldestId, ofilePath.c_str());
+            
+            AudioEngine::stop(oldestId);
         }
+
         if (profileHelper)
         {
              if(profileHelper->profile.maxInstances != 0 && profileHelper->audioIDs.size() >= profileHelper->profile.maxInstances){
@@ -247,6 +270,7 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             audioRef.volume = volume;
             audioRef.loop = loop;
             audioRef.filePath = &it->first;
+            audioRef.timestamp = utils::gettime();
 
             if (profileHelper) {
                 profileHelper->lastPlayTime = utils::gettime();

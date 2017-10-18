@@ -3813,6 +3813,30 @@
 		A0E749F81BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */; };
 		A0E749F91BA8FD7F001A8332 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */; };
 		A0E749FA1BA8FD7F001A8332 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */; };
+		AE4D6BFD1F8E09300014D256 /* ClippingAttachment.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BEE1F8E092A0014D256 /* ClippingAttachment.c */; };
+		AE4D6BFE1F8E09300014D256 /* ClippingAttachment.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BEE1F8E092A0014D256 /* ClippingAttachment.c */; };
+		AE4D6BFF1F8E09300014D256 /* ClippingAttachment.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BEE1F8E092A0014D256 /* ClippingAttachment.c */; };
+		AE4D6C001F8E09300014D256 /* Array.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BF21F8E092C0014D256 /* Array.c */; };
+		AE4D6C011F8E09300014D256 /* Array.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BF21F8E092C0014D256 /* Array.c */; };
+		AE4D6C021F8E09300014D256 /* Array.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BF21F8E092C0014D256 /* Array.c */; };
+		AE4D6C031F8E09300014D256 /* Triangulator.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BF31F8E092C0014D256 /* Triangulator.c */; };
+		AE4D6C041F8E09300014D256 /* Triangulator.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BF31F8E092C0014D256 /* Triangulator.c */; };
+		AE4D6C051F8E09300014D256 /* Triangulator.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BF31F8E092C0014D256 /* Triangulator.c */; };
+		AE4D6C061F8E09300014D256 /* SkeletonClipping.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BF41F8E092D0014D256 /* SkeletonClipping.c */; };
+		AE4D6C071F8E09300014D256 /* SkeletonClipping.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BF41F8E092D0014D256 /* SkeletonClipping.c */; };
+		AE4D6C081F8E09300014D256 /* SkeletonClipping.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BF41F8E092D0014D256 /* SkeletonClipping.c */; };
+		AE4D6C091F8E09300014D256 /* PointAttachment.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BF81F8E092E0014D256 /* PointAttachment.c */; };
+		AE4D6C0A1F8E09300014D256 /* PointAttachment.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BF81F8E092E0014D256 /* PointAttachment.c */; };
+		AE4D6C0B1F8E09300014D256 /* PointAttachment.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BF81F8E092E0014D256 /* PointAttachment.c */; };
+		AE4D6C0C1F8E09300014D256 /* VertexEffect.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BF91F8E092E0014D256 /* VertexEffect.c */; };
+		AE4D6C0D1F8E09300014D256 /* VertexEffect.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BF91F8E092E0014D256 /* VertexEffect.c */; };
+		AE4D6C0E1F8E09300014D256 /* VertexEffect.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BF91F8E092E0014D256 /* VertexEffect.c */; };
+		AE4D6C0F1F8E09300014D256 /* Color.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BFA1F8E092F0014D256 /* Color.c */; };
+		AE4D6C101F8E09300014D256 /* Color.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BFA1F8E092F0014D256 /* Color.c */; };
+		AE4D6C111F8E09300014D256 /* Color.c in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BFA1F8E092F0014D256 /* Color.c */; };
+		AE4D6C121F8E09300014D256 /* SkeletonTwoColorBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BFC1F8E092F0014D256 /* SkeletonTwoColorBatch.cpp */; };
+		AE4D6C131F8E09300014D256 /* SkeletonTwoColorBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BFC1F8E092F0014D256 /* SkeletonTwoColorBatch.cpp */; };
+		AE4D6C141F8E09300014D256 /* SkeletonTwoColorBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AE4D6BFC1F8E092F0014D256 /* SkeletonTwoColorBatch.cpp */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
 		B21770401977ECE6009EE11B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703F1977ECE6009EE11B /* OpenGL.framework */; };
@@ -5909,6 +5933,22 @@
 		A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-common.cpp"; sourceTree = "<group>"; };
 		A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-common.h"; sourceTree = "<group>"; };
+		AE4D6BED1F8E092A0014D256 /* Array.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Array.h; sourceTree = "<group>"; };
+		AE4D6BEE1F8E092A0014D256 /* ClippingAttachment.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ClippingAttachment.c; sourceTree = "<group>"; };
+		AE4D6BEF1F8E092A0014D256 /* SkeletonClipping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SkeletonClipping.h; sourceTree = "<group>"; };
+		AE4D6BF01F8E092B0014D256 /* Triangulator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Triangulator.h; sourceTree = "<group>"; };
+		AE4D6BF11F8E092B0014D256 /* Color.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
+		AE4D6BF21F8E092C0014D256 /* Array.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Array.c; sourceTree = "<group>"; };
+		AE4D6BF31F8E092C0014D256 /* Triangulator.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Triangulator.c; sourceTree = "<group>"; };
+		AE4D6BF41F8E092D0014D256 /* SkeletonClipping.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SkeletonClipping.c; sourceTree = "<group>"; };
+		AE4D6BF51F8E092D0014D256 /* SkeletonTwoColorBatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SkeletonTwoColorBatch.h; sourceTree = "<group>"; };
+		AE4D6BF61F8E092E0014D256 /* PointAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointAttachment.h; sourceTree = "<group>"; };
+		AE4D6BF71F8E092E0014D256 /* ClippingAttachment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ClippingAttachment.h; sourceTree = "<group>"; };
+		AE4D6BF81F8E092E0014D256 /* PointAttachment.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PointAttachment.c; sourceTree = "<group>"; };
+		AE4D6BF91F8E092E0014D256 /* VertexEffect.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = VertexEffect.c; sourceTree = "<group>"; };
+		AE4D6BFA1F8E092F0014D256 /* Color.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Color.c; sourceTree = "<group>"; };
+		AE4D6BFB1F8E092F0014D256 /* VertexEffect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VertexEffect.h; sourceTree = "<group>"; };
+		AE4D6BFC1F8E092F0014D256 /* SkeletonTwoColorBatch.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SkeletonTwoColorBatch.cpp; sourceTree = "<group>"; };
 		B20564AA1A6E5744001C1B6E /* ccShader_PositionColorTextureAsPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorTextureAsPointsize.vert; sourceTree = "<group>"; };
 		B217703B1977ECB4009EE11B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B217703D1977ECC1009EE11B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -7578,6 +7618,22 @@
 		1AD71D7C180E26E600808F54 /* spine */ = {
 			isa = PBXGroup;
 			children = (
+				AE4D6BF21F8E092C0014D256 /* Array.c */,
+				AE4D6BED1F8E092A0014D256 /* Array.h */,
+				AE4D6BEE1F8E092A0014D256 /* ClippingAttachment.c */,
+				AE4D6BF71F8E092E0014D256 /* ClippingAttachment.h */,
+				AE4D6BFA1F8E092F0014D256 /* Color.c */,
+				AE4D6BF11F8E092B0014D256 /* Color.h */,
+				AE4D6BF81F8E092E0014D256 /* PointAttachment.c */,
+				AE4D6BF61F8E092E0014D256 /* PointAttachment.h */,
+				AE4D6BF41F8E092D0014D256 /* SkeletonClipping.c */,
+				AE4D6BEF1F8E092A0014D256 /* SkeletonClipping.h */,
+				AE4D6BFC1F8E092F0014D256 /* SkeletonTwoColorBatch.cpp */,
+				AE4D6BF51F8E092D0014D256 /* SkeletonTwoColorBatch.h */,
+				AE4D6BF31F8E092C0014D256 /* Triangulator.c */,
+				AE4D6BF01F8E092B0014D256 /* Triangulator.h */,
+				AE4D6BF91F8E092E0014D256 /* VertexEffect.c */,
+				AE4D6BFB1F8E092F0014D256 /* VertexEffect.h */,
 				503341961D9DC7B400770EC7 /* kvec.h */,
 				503341971D9DC7B400770EC7 /* SkeletonBinary.c */,
 				503341981D9DC7B400770EC7 /* SkeletonBinary.h */,
@@ -12207,6 +12263,7 @@
 				B665E4261AA80A6600DDB1C5 /* CCPUUtil.cpp in Sources */,
 				15AE1B6319AADA9900C27E9E /* UICheckBox.cpp in Sources */,
 				15EFA211198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */,
+				AE4D6C011F8E09300014D256 /* Array.c in Sources */,
 				15FB208F1AE7C57D00C31518 /* advancing_front.cc in Sources */,
 				50ABBEB71925AB6F00A911A9 /* ccUTF8.cpp in Sources */,
 				B665E2621AA80A6500DDB1C5 /* CCPUDoExpireEventHandler.cpp in Sources */,
@@ -12332,6 +12389,7 @@
 				15AE181019AAD2F700C27E9E /* CCAnimation3D.cpp in Sources */,
 				1A01C68418F57BE800EFE3A6 /* CCArray.cpp in Sources */,
 				B6DD2FDD1B04825B00E47F5F /* DetourObstacleAvoidance.cpp in Sources */,
+				AE4D6C071F8E09300014D256 /* SkeletonClipping.c in Sources */,
 				1A570112180BC8EE0088DEC7 /* CCDrawNode.cpp in Sources */,
 				15AE186D19AAD31D00C27E9E /* SimpleAudioEngine_objc.m in Sources */,
 				1A57011B180BC90D0088DEC7 /* CCGrabber.cpp in Sources */,
@@ -12470,6 +12528,7 @@
 				B665E3FE1AA80A6600DDB1C5 /* CCPUSphereCollider.cpp in Sources */,
 				A045F6DC1BA816A1005076C7 /* CCCameraBackgroundBrush.cpp in Sources */,
 				B665E25A1AA80A6500DDB1C5 /* CCPUDoEnableComponentEventHandler.cpp in Sources */,
+				AE4D6C0A1F8E09300014D256 /* PointAttachment.c in Sources */,
 				A0E749F71BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp in Sources */,
 				B6DD2FB31B04825B00E47F5F /* RecastDump.cpp in Sources */,
 				15AE1BD019AAE01E00C27E9E /* CCControlHuePicker.cpp in Sources */,
@@ -12498,6 +12557,7 @@
 				5020A1FE1D49912500E80C72 /* SkeletonRenderer.cpp in Sources */,
 				50F965511CD0360000ADE813 /* CCVRGenericRenderer.cpp in Sources */,
 				B60C5BD419AC68B10056FBDE /* CCBillBoard.cpp in Sources */,
+				AE4D6C0D1F8E09300014D256 /* VertexEffect.c in Sources */,
 				15AE199619AAD39600C27E9E /* ListViewReader.cpp in Sources */,
 				50ABC0191926664800A911A9 /* CCSAXParser.cpp in Sources */,
 				15AE189219AAD33D00C27E9E /* CCLayerGradientLoader.cpp in Sources */,
@@ -12555,6 +12615,7 @@
 				294D7D941D0E67B4002CE7B7 /* CCDevice-apple.mm in Sources */,
 				1A5702EE180BCE750088DEC7 /* CCTMXLayer.cpp in Sources */,
 				15AE1BD619AAE01E00C27E9E /* CCControlSlider.cpp in Sources */,
+				AE4D6BFE1F8E09300014D256 /* ClippingAttachment.c in Sources */,
 				468A14E61EF223B700ECA675 /* idl_gen_cpp.cpp in Sources */,
 				B665E3A21AA80A6500DDB1C5 /* CCPUPositionEmitterTranslator.cpp in Sources */,
 				B665E39E1AA80A6500DDB1C5 /* CCPUPositionEmitter.cpp in Sources */,
@@ -12762,6 +12823,7 @@
 				B665E2BA1AA80A6500DDB1C5 /* CCPUForceFieldAffectorTranslator.cpp in Sources */,
 				299754F4193EC95400A54AC3 /* ObjectFactory.cpp in Sources */,
 				15AE1A7E19AAD40300C27E9E /* b2DistanceJoint.cpp in Sources */,
+				AE4D6C041F8E09300014D256 /* Triangulator.c in Sources */,
 				15AE190919AAD35000C27E9E /* CCDecorativeDisplay.cpp in Sources */,
 				B665E40E1AA80A6600DDB1C5 /* CCPUTechniqueTranslator.cpp in Sources */,
 				5020A2161D49912500E80C72 /* spine-cocos2dx.cpp in Sources */,
@@ -12772,6 +12834,7 @@
 				5033419C1D9DC7B400770EC7 /* SkeletonBinary.c in Sources */,
 				5020A1D41D49912500E80C72 /* RegionAttachment.c in Sources */,
 				50ABC00D1926664800A911A9 /* CCFileUtils.cpp in Sources */,
+				AE4D6C131F8E09300014D256 /* SkeletonTwoColorBatch.cpp in Sources */,
 				50ABBE4D1925AB6F00A911A9 /* CCEventCustom.cpp in Sources */,
 				15AE1A6819AAD40300C27E9E /* b2WorldCallbacks.cpp in Sources */,
 				B5668D7D1B3838E4003CBD5E /* UIScrollViewBar.cpp in Sources */,
@@ -12816,6 +12879,7 @@
 				15AE189619AAD33D00C27E9E /* CCMenuItemImageLoader.cpp in Sources */,
 				B665E23E1AA80A6500DDB1C5 /* CCPUCircleEmitterTranslator.cpp in Sources */,
 				15AE1BB719AADFEF00C27E9E /* WebSocket.cpp in Sources */,
+				AE4D6C101F8E09300014D256 /* Color.c in Sources */,
 				5020A20A1D49912500E80C72 /* Slot.c in Sources */,
 				B665E20A1AA80A6500DDB1C5 /* CCPUBaseColliderTranslator.cpp in Sources */,
 				B665E3E61AA80A6600DDB1C5 /* CCPUSineForceAffectorTranslator.cpp in Sources */,
@@ -12903,6 +12967,7 @@
 				507B3A011C31BDD30067B53E /* CCPrimitiveCommand.cpp in Sources */,
 				507B3A021C31BDD30067B53E /* UIScrollViewBar.cpp in Sources */,
 				507B3A031C31BDD30067B53E /* CCPUOnCountObserver.cpp in Sources */,
+				AE4D6C141F8E09300014D256 /* SkeletonTwoColorBatch.cpp in Sources */,
 				507B3A041C31BDD30067B53E /* CDOpenALSupport.m in Sources */,
 				507B3A061C31BDD30067B53E /* SimpleAudioEngine_objc.m in Sources */,
 				507B3A071C31BDD30067B53E /* CCMesh.cpp in Sources */,
@@ -12963,6 +13028,8 @@
 				5020A1AC1D49912500E80C72 /* IkConstraint.c in Sources */,
 				507B3A531C31BDD30067B53E /* CCController-apple.mm in Sources */,
 				507B3A541C31BDD30067B53E /* CCBReader.cpp in Sources */,
+				AE4D6BFF1F8E09300014D256 /* ClippingAttachment.c in Sources */,
+				AE4D6C0E1F8E09300014D256 /* VertexEffect.c in Sources */,
 				507B3A551C31BDD30067B53E /* CCArmatureDefine.cpp in Sources */,
 				507B3A561C31BDD30067B53E /* CCPUOnRandomObserverTranslator.cpp in Sources */,
 				5020A1D61D49912500E80C72 /* RegionAttachment.c in Sources */,
@@ -12999,6 +13066,7 @@
 				507B3A7B1C31BDD30067B53E /* CCEventListenerTouch.cpp in Sources */,
 				507B3A7C1C31BDD30067B53E /* b2RopeJoint.cpp in Sources */,
 				507B3A7E1C31BDD30067B53E /* DetourTileCache.cpp in Sources */,
+				AE4D6C051F8E09300014D256 /* Triangulator.c in Sources */,
 				507B3A801C31BDD30067B53E /* b2CircleShape.cpp in Sources */,
 				507B3A811C31BDD30067B53E /* CCSprite3D.cpp in Sources */,
 				507B3A821C31BDD30067B53E /* CCEventKeyboard.cpp in Sources */,
@@ -13336,7 +13404,10 @@
 				507B3C0B1C31BDD30067B53E /* CCParallaxNode.cpp in Sources */,
 				507B3C0C1C31BDD30067B53E /* CCPUAlignAffector.cpp in Sources */,
 				507B3C0D1C31BDD30067B53E /* b2TimeOfImpact.cpp in Sources */,
+				AE4D6C081F8E09300014D256 /* SkeletonClipping.c in Sources */,
+				AE4D6C111F8E09300014D256 /* Color.c in Sources */,
 				507B3C0F1C31BDD30067B53E /* CCComponent.cpp in Sources */,
+				AE4D6C0B1F8E09300014D256 /* PointAttachment.c in Sources */,
 				507B3C101C31BDD30067B53E /* UIDeprecated.cpp in Sources */,
 				507B3C121C31BDD30067B53E /* pvr.cpp in Sources */,
 				507B3C131C31BDD30067B53E /* CCFrustum.cpp in Sources */,
@@ -13421,6 +13492,7 @@
 				507B3C731C31BDD30067B53E /* CCPUAffectorTranslator.cpp in Sources */,
 				507B3C741C31BDD30067B53E /* CCPUPlaneColliderTranslator.cpp in Sources */,
 				507B3C761C31BDD30067B53E /* UIPageViewIndicator.cpp in Sources */,
+				AE4D6C021F8E09300014D256 /* Array.c in Sources */,
 				503D4F651CE29D4E0054A2D1 /* CCVRDistortionMesh.cpp in Sources */,
 				507B3C771C31BDD30067B53E /* CCPUColorAffector.cpp in Sources */,
 				507B3C781C31BDD30067B53E /* CCPUBaseForceAffector.cpp in Sources */,
@@ -13611,6 +13683,7 @@
 				15AE185C19AAD31200C27E9E /* CDOpenALSupport.m in Sources */,
 				15AE186119AAD31200C27E9E /* SimpleAudioEngine_objc.m in Sources */,
 				15AE182519AAD2F700C27E9E /* CCMesh.cpp in Sources */,
+				AE4D6C121F8E09300014D256 /* SkeletonTwoColorBatch.cpp in Sources */,
 				1A41ABC31DF00CEC00B5584C /* AudioDecoder.mm in Sources */,
 				B665E4071AA80A6600DDB1C5 /* CCPUSphereSurfaceEmitter.cpp in Sources */,
 				503DD8EE1926736A00CD74DD /* CCImage-ios.mm in Sources */,
@@ -13671,6 +13744,8 @@
 				B665E2E31AA80A6500DDB1C5 /* CCPULineAffectorTranslator.cpp in Sources */,
 				15AE1AB619AAD40300C27E9E /* b2ContactSolver.cpp in Sources */,
 				292DB13E19B4574100A80320 /* UIEditBox.cpp in Sources */,
+				AE4D6BFD1F8E09300014D256 /* ClippingAttachment.c in Sources */,
+				AE4D6C0C1F8E09300014D256 /* VertexEffect.c in Sources */,
 				3E6176681960F89B00DE83F5 /* CCController-apple.mm in Sources */,
 				15AE18B219AAD33D00C27E9E /* CCBReader.cpp in Sources */,
 				15AE193C19AAD35100C27E9E /* CCArmatureDefine.cpp in Sources */,
@@ -13707,6 +13782,7 @@
 				15AE18B919AAD33D00C27E9E /* CCControlButtonLoader.cpp in Sources */,
 				50ABBE761925AB6F00A911A9 /* CCEventListenerTouch.cpp in Sources */,
 				15AE1AD219AAD40300C27E9E /* b2RopeJoint.cpp in Sources */,
+				AE4D6C031F8E09300014D256 /* Triangulator.c in Sources */,
 				B6DD2FEE1B04825B00E47F5F /* DetourTileCache.cpp in Sources */,
 				15AE1A4919AAD3D500C27E9E /* b2CircleShape.cpp in Sources */,
 				15AE184119AAD2F700C27E9E /* CCSprite3D.cpp in Sources */,
@@ -14044,7 +14120,10 @@
 				1A570301180BCE890088DEC7 /* CCParallaxNode.cpp in Sources */,
 				B665E1FF1AA80A6500DDB1C5 /* CCPUAlignAffector.cpp in Sources */,
 				15AE1A4519AAD3D500C27E9E /* b2TimeOfImpact.cpp in Sources */,
+				AE4D6C061F8E09300014D256 /* SkeletonClipping.c in Sources */,
+				AE4D6C0F1F8E09300014D256 /* Color.c in Sources */,
 				1A57030D180BCF190088DEC7 /* CCComponent.cpp in Sources */,
+				AE4D6C091F8E09300014D256 /* PointAttachment.c in Sources */,
 				15AE1B8F19AADA9A00C27E9E /* UIDeprecated.cpp in Sources */,
 				5020A1691D49912500E80C72 /* AtlasAttachmentLoader.c in Sources */,
 				464AD6E6197EBB1400E502D8 /* pvr.cpp in Sources */,
@@ -14129,6 +14208,7 @@
 				B665E2171AA80A6500DDB1C5 /* CCPUBeamRender.cpp in Sources */,
 				50ABBDA81925AB4100A911A9 /* CCRenderCommand.cpp in Sources */,
 				B665E1FB1AA80A6500DDB1C5 /* CCPUAffectorTranslator.cpp in Sources */,
+				AE4D6C001F8E09300014D256 /* Array.c in Sources */,
 				B665E3931AA80A6500DDB1C5 /* CCPUPlaneColliderTranslator.cpp in Sources */,
 				B5A738971BB0051F00BAAEF8 /* UIPageViewIndicator.cpp in Sources */,
 				5020A1B71D49912500E80C72 /* Json.c in Sources */,

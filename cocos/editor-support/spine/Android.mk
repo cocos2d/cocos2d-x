@@ -45,11 +45,20 @@ TransformConstraint.c \
 TransformConstraintData.c \
 VertexAttachment.c \
 extension.c \
+Array.c \
+ClippingAttachment.c \
+Color.c \
+PointAttachment.c \
+SkeletonClipping.c \
+SkeletonTwoColorBatch.cpp \
+Triangulator.c \
+VertexEffect.c \
 spine-cocos2dx.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/..
+# LOCAL_C_INCLUDES := $(LOCAL_PATH)/include-all
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
 
