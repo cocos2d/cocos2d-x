@@ -744,9 +744,14 @@ void CreatorReader::parseRichText(cocos2d::ui::RichText* richText, const buffers
     }
     
     // should do it after richText->initWithXML
+    richText->ignoreContentAdaptWithSize(false);
+    
     const auto& maxWidth = richTextBuffer->maxWidth();
     if (maxWidth > 0)
-        richText->ignoreContentAdaptWithSize(false);
+    {
+        const auto& contentSize = richText->getContentSize();
+        richText->setContentSize(cocos2d::Size(maxWidth, contentSize.height));
+    }
 }
 
 cocos2d::ParticleSystemQuad* CreatorReader::createParticle(const buffers::Particle* particleBuffer) const
