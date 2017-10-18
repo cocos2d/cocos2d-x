@@ -155,8 +155,8 @@ void HelloWorld::handleDragonbones(cocos2d::Scene* scene)
 
 void HelloWorld::handleButtonsClick(cocos2d::Scene* scene)
 {
-    HelloWorld::handleButtonClick(scene, "label", "creator/scenes/label/CreatorLabels.ccreator");
-    HelloWorld::handleButtonClick(scene, "mask", "creator/scenes/mask/Mask.ccreator");
+    HelloWorld::handleButtonClick(scene, "label", "creator/scenes/Label/CreatorLabels.ccreator");
+    HelloWorld::handleButtonClick(scene, "mask", "creator/scenes/Mask/Mask.ccreator");
     HelloWorld::handleButtonClick(scene, "pageview", "creator/scenes/pageview/pageview.ccreator");
     HelloWorld::handleButtonClick(scene, "prefab", "creator/scenes/prefab/prefab-test.ccreator");
     HelloWorld::handleButtonClick(scene, "richtext", "creator/scenes/richtext/CreatorRichtext.ccreator");
