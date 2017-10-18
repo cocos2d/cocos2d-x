@@ -35,7 +35,7 @@ NS_CCR_BEGIN
 
 namespace
 {
-    float tau = static_cast<float>(2 * M_PI);
+    float tau = 2 * M_PI;
     
     float crt (float v)
     {
