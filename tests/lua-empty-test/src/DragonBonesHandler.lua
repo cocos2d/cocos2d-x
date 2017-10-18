@@ -243,7 +243,7 @@ function DragonBonesHandler:jump()
     end
 
     self._isJumpingA = true
-    self._armature:getAnimation():fadeIn('jump_1', -1, -1, 0, NORMALIZE_MOVE_SPEED)
+    self._armature:getAnimation():fadeIn('jump_1', -1, -1, 0, NORMAL_ANIMATION_GROUP)
     self._walkState = nil
 end
 
