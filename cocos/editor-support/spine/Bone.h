@@ -31,6 +31,7 @@
 #ifndef SPINE_BONE_H_
 #define SPINE_BONE_H_
 
+#include <spine/dll.h>
 #include <spine/BoneData.h>
 
 #ifdef __cplusplus
@@ -73,30 +74,30 @@ struct spBone {
 #endif
 };
 
-void spBone_setYDown (int/*bool*/yDown);
-int/*bool*/spBone_isYDown ();
+SP_API void spBone_setYDown (int/*bool*/yDown);
+SP_API int/*bool*/spBone_isYDown ();
 
 /* @param parent May be 0. */
-spBone* spBone_create (spBoneData* data, struct spSkeleton* skeleton, spBone* parent);
-void spBone_dispose (spBone* self);
+SP_API spBone* spBone_create (spBoneData* data, struct spSkeleton* skeleton, spBone* parent);
+SP_API void spBone_dispose (spBone* self);
 
-void spBone_setToSetupPose (spBone* self);
+SP_API void spBone_setToSetupPose (spBone* self);
 
-void spBone_updateWorldTransform (spBone* self);
-void spBone_updateWorldTransformWith (spBone* self, float x, float y, float rotation, float scaleX, float scaleY, float shearX, float shearY);
+SP_API void spBone_updateWorldTransform (spBone* self);
+SP_API void spBone_updateWorldTransformWith (spBone* self, float x, float y, float rotation, float scaleX, float scaleY, float shearX, float shearY);
 
-float spBone_getWorldRotationX (spBone* self);
-float spBone_getWorldRotationY (spBone* self);
-float spBone_getWorldScaleX (spBone* self);
-float spBone_getWorldScaleY (spBone* self);
+SP_API float spBone_getWorldRotationX (spBone* self);
+SP_API float spBone_getWorldRotationY (spBone* self);
+SP_API float spBone_getWorldScaleX (spBone* self);
+SP_API float spBone_getWorldScaleY (spBone* self);
 
-float spBone_worldToLocalRotationX (spBone* self);
-float spBone_worldToLocalRotationY (spBone* self);
-void spBone_rotateWorld (spBone* self, float degrees);
-void spBone_updateAppliedTransform (spBone* self);
+SP_API void spBone_updateAppliedTransform (spBone* self);
 
-void spBone_worldToLocal (spBone* self, float worldX, float worldY, float* localX, float* localY);
-void spBone_localToWorld (spBone* self, float localX, float localY, float* worldX, float* worldY);
+SP_API void spBone_worldToLocal (spBone* self, float worldX, float worldY, float* localX, float* localY);
+SP_API void spBone_localToWorld (spBone* self, float localX, float localY, float* worldX, float* worldY);
+SP_API float spBone_worldToLocalRotation (spBone* self, float worldRotation);
+SP_API float spBone_localToWorldRotation (spBone* self, float localRotation);
+SP_API void spBone_rotateWorld (spBone* self, float degrees);
 
 #ifdef SPINE_SHORT_NAMES
 typedef spBone Bone;
@@ -111,12 +112,12 @@ typedef spBone Bone;
 #define Bone_getWorldRotationY(...) spBone_getWorldRotationY(__VA_ARGS__)
 #define Bone_getWorldScaleX(...) spBone_getWorldScaleX(__VA_ARGS__)
 #define Bone_getWorldScaleY(...) spBone_getWorldScaleY(__VA_ARGS__)
-#define Bone_worldToLocalRotationX(...) spBone_worldToLocalRotationX(__VA_ARGS__)
-#define Bone_worldToLocalRotationY(...) spBone_worldToLocalRotationY(__VA_ARGS__)
-#define Bone_rotateWorld(...) spBone_rotateWorld(__VA_ARGS__)
 #define Bone_updateAppliedTransform(...) spBone_updateAppliedTransform(__VA_ARGS__)
 #define Bone_worldToLocal(...) spBone_worldToLocal(__VA_ARGS__)
 #define Bone_localToWorld(...) spBone_localToWorld(__VA_ARGS__)
+#define Bone_worldToLocalRotation(...) spBone_worldToLocalRotation(__VA_ARGS__)
+#define Bone_localToWorldRotation(...) spBone_localToWorldRotation(__VA_ARGS__)
+#define Bone_rotateWorld(...) spBone_rotateWorld(__VA_ARGS__)
 #endif
 
 #ifdef __cplusplus

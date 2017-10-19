@@ -31,6 +31,7 @@
 #ifndef SPINE_PATHCONSTRAINTDATA_H_
 #define SPINE_PATHCONSTRAINTDATA_H_
 
+#include <spine/dll.h>
 #include <spine/BoneData.h>
 #include <spine/SlotData.h>
 
@@ -80,8 +81,8 @@ typedef struct spPathConstraintData {
 #endif
 } spPathConstraintData;
 
-spPathConstraintData* spPathConstraintData_create (const char* name);
-void spPathConstraintData_dispose (spPathConstraintData* self);
+SP_API spPathConstraintData* spPathConstraintData_create (const char* name);
+SP_API void spPathConstraintData_dispose (spPathConstraintData* self);
 
 #ifdef SPINE_SHORT_NAMES
 typedef spPathConstraintData PathConstraintData;
