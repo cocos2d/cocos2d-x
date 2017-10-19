@@ -202,7 +202,6 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     Color4F _color;
-    BlendFunc _blendFunc;
 };
 
 class TextureCube;

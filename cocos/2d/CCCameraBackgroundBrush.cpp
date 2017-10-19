@@ -281,7 +281,7 @@ bool CameraBackgroundColorBrush::init()
 
 void CameraBackgroundColorBrush::drawBackground(Camera* camera)
 {
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    GL::blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED.src, BlendFunc::ALPHA_NON_PREMULTIPLIED.dst);
 
     CameraBackgroundDepthBrush::drawBackground(camera);
 }
@@ -289,15 +289,6 @@ void CameraBackgroundColorBrush::drawBackground(Camera* camera)
 void CameraBackgroundColorBrush::setColor(const Color4F& color)
 {
     _quad.bl.colors = _quad.br.colors = _quad.tl.colors = _quad.tr.colors = Color4B(color);
-    
-    if (color.a != 1.f)
-    {
-        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
-    }
-    else
-    {
-        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-    }
     
     if (_vertexBuffer)
     {
