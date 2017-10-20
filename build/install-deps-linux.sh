@@ -17,8 +17,8 @@ DEPENDS+=' libxmu-dev'
 DEPENDS+=' libglu1-mesa-dev'
 DEPENDS+=' libgl2ps-dev'
 DEPENDS+=' libxi-dev'
-DEPENDS+=' gcc-4.9'
-DEPENDS+=' g++-4.9'
+DEPENDS+=' gcc'
+DEPENDS+=' g++'
 DEPENDS+=' libzip-dev'
 DEPENDS+=' libpng12-dev'
 DEPENDS+=' libcurl4-gnutls-dev'
@@ -43,12 +43,6 @@ if [ -n "$MISSING" ]; then
     echo -e $TXTCOLOR_GREEN"Missing packages: $MISSING.\nYou may be asked for your password for package installation."$TXTCOLOR_DEFAULT
     sudo apt-get --force-yes --yes install $MISSING > /dev/null
 fi
-
-sudo update-alternatives --remove-all gcc
-sudo update-alternatives --remove-all g++
-
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 60
-sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 60
 
 echo "Cocos uses GCC Version: `gcc --version`"
 echo "Cocos uses G++ Version: `g++ --version`"
