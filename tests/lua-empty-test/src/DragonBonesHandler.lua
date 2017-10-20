@@ -175,6 +175,8 @@ function DragonBonesHandler:onExit()
 
     local scheduler = cc.Director:getInstance():getScheduler()
     scheduler:unscheduleScriptEntry(self.scheduleEntry)
+
+    ccdb.CCFactory:destroyInstance()
 end
 
 function DragonBonesHandler:animationEventHandler(event)
@@ -412,7 +414,7 @@ function DragonBonesHandler:switchWeaponL()
         self._weaponLIndex = 1
     end
     local newWeaponName = WEAPON_L_LIST[self._weaponLIndex]
-    self._weaponL = ccdb.CCFactory.factory:buildArmature(newWeaponName)
+    self._weaponL = ccdb.CCFactory:getInstance():buildArmature(newWeaponName)
     self._armature:getSlot('weapon_l'):setChildArmature(self._weaponL)
 
     self._weaponL:getDisplay():addEvent(ccdb.EventObject.FRAME_EVENT, generateFrameEventHandler(self))
@@ -426,7 +428,7 @@ function DragonBonesHandler:switchWeaponR()
         self._weaponRIndex = 1
     end
     local newWeaponName = WEAPON_R_LIST[self._weaponRIndex]
-    self._weaponR = ccdb.CCFactory.factory:buildArmature(newWeaponName)
+    self._weaponR = ccdb.CCFactory:getInstance():buildArmature(newWeaponName)
     self._armature:getSlot('weapon_r'):setChildArmature(self._weaponR)
 
     self._weaponR:getDisplay():addEvent(ccdb.EventObject.FRAME_EVENT, generateFrameEventHandler(self))
@@ -437,8 +439,8 @@ function DragonBonesHandler:fire(pos)
     firePoint.x = firePoint.x + math.random() * 2 - 1
     firePoint.y = firePoint.y + math.random() * 2 - 1
 
-    local armature = ccdb.CCFactory.factory:buildArmature('bullet_01')
-    local effect = ccdb.CCFactory.factory:buildArmature('fireEffect_01')
+    local armature = ccdb.CCFactory:getInstance():buildArmature('bullet_01')
+    local effect = ccdb.CCFactory:getInstance():buildArmature('fireEffect_01')
 
     local radian = nil
     if self._faceDir < 0 then

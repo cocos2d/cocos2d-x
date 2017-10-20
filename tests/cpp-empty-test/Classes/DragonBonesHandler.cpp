@@ -150,6 +150,8 @@ void DragonBonesHandler::onExit()
     Node::onExit();
     // since `CCArmatureDisplay` reset EventDispacher, so we should remove event listener manually
     cocos2d::Director::getInstance()->getEventDispatcher()->removeEventListenersForTarget(_armatureDisplay);
+    
+    dragonBones::CCFactory::destroyInstance();
 }
 
 void DragonBonesHandler::animationEventHandler(dragonBones::EventObject* event)
@@ -404,7 +406,7 @@ void DragonBonesHandler::switchWeaponL()
     
     _weaponLIndex = (_weaponLIndex + 1) % DragonBonesHandler::WEAPON_L_LIST.size();
     auto newWeaponName = DragonBonesHandler::WEAPON_L_LIST[_weaponLIndex];
-    _weaponL = dragonBones::CCFactory::factory.buildArmature(newWeaponName);
+    _weaponL = dragonBones::CCFactory::getInstance()->buildArmature(newWeaponName);
     _armature->getSlot("weapon_l")->setChildArmature(_weaponL);
     
     static_cast<CCArmatureDisplay*>(_weaponL->_display)->addEvent(dragonBones::EventObject::FRAME_EVENT, CC_CALLBACK_1(DragonBonesHandler::frameEventHandler, this));
@@ -416,7 +418,7 @@ void DragonBonesHandler::switchWeaponR()
     
     _weaponRIndex = (_weaponRIndex + 1) % DragonBonesHandler::WEAPON_R_LIST.size();
     auto newWeaponName = DragonBonesHandler::WEAPON_R_LIST[_weaponRIndex];
-    _weaponR = dragonBones::CCFactory::factory.buildArmature(newWeaponName);
+    _weaponR = dragonBones::CCFactory::getInstance()->buildArmature(newWeaponName);
     _armature->getSlot("weapon_r")->setChildArmature(_weaponR);
     
     static_cast<CCArmatureDisplay*>(_weaponR->_display)->addEvent(dragonBones::EventObject::FRAME_EVENT, CC_CALLBACK_1(DragonBonesHandler::frameEventHandler, this));
@@ -428,8 +430,8 @@ void DragonBonesHandler::fire(const cocos2d::Vec2& pos)
     firePoint.x += cocos2d::random(0, 1) * 2 - 1;
     firePoint.y += cocos2d::random(0, 1) * 2 - 1;
     
-    auto armature = dragonBones::CCFactory::factory.buildArmature("bullet_01");
-    auto effect = dragonBones::CCFactory::factory.buildArmature("fireEffect_01");
+    auto armature = dragonBones::CCFactory::getInstance()->buildArmature("bullet_01");
+    auto effect = dragonBones::CCFactory::getInstance()->buildArmature("fireEffect_01");
     auto radian = _faceDir < 0 ? M_PI - _animRadian : _animRadian;
     auto bullet = std::make_shared<DragonBoneBullet>(_parent, armature, effect, radian + cocos2d::random(0, 1) * 0.02f - 0.01f, 40, firePoint);
     addBullet(bullet);

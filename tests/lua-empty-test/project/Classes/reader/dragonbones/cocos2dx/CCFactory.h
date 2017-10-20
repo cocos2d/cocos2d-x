@@ -10,7 +10,11 @@ DRAGONBONES_NAMESPACE_BEGIN
 class CCFactory : public BaseFactory
 {
 public:
-    static CCFactory factory;
+    static CCFactory* getInstance();
+    static void destroyInstance();
+
+private:
+    static CCFactory *s_factory;
 
 public:
     CCFactory();

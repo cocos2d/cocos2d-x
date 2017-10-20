@@ -1,6 +1,5 @@
 #include "lua-bindings/dragonbones/lua_dragonbones_auto.hpp"
 #include "CCArmatureDisplay.h"
-#include "Armature.h"
 #include "Slot.h"
 #include "Animation.h"
 #include "AnimationState.h"
@@ -5989,6 +5988,74 @@ int lua_creator_dragonbones_CCFactory_loadDragonBonesData(lua_State* tolua_S)
 
     return 0;
 }
+int lua_creator_dragonbones_CCFactory_destroyInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccdb.CCFactory",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_creator_dragonbones_CCFactory_destroyInstance'", nullptr);
+            return 0;
+        }
+        dragonBones::CCFactory::destroyInstance();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccdb.CCFactory:destroyInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_creator_dragonbones_CCFactory_destroyInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_creator_dragonbones_CCFactory_getInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccdb.CCFactory",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_creator_dragonbones_CCFactory_getInstance'", nullptr);
+            return 0;
+        }
+        dragonBones::CCFactory* ret = dragonBones::CCFactory::getInstance();
+        object_to_luaval<dragonBones::CCFactory>(tolua_S, "ccdb.CCFactory",(dragonBones::CCFactory*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccdb.CCFactory:getInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_creator_dragonbones_CCFactory_getInstance'.",&tolua_err);
+#endif
+    return 0;
+}
 int lua_creator_dragonbones_CCFactory_constructor(lua_State* tolua_S)
 {
     int argc = 0;
@@ -6043,6 +6110,8 @@ int lua_register_creator_dragonbones_CCFactory(lua_State* tolua_S)
         tolua_function(tolua_S,"loadTextureAtlasData",lua_creator_dragonbones_CCFactory_loadTextureAtlasData);
         tolua_function(tolua_S,"parseTextureAtlasData",lua_creator_dragonbones_CCFactory_parseTextureAtlasData);
         tolua_function(tolua_S,"loadDragonBonesData",lua_creator_dragonbones_CCFactory_loadDragonBonesData);
+        tolua_function(tolua_S,"destroyInstance", lua_creator_dragonbones_CCFactory_destroyInstance);
+        tolua_function(tolua_S,"getInstance", lua_creator_dragonbones_CCFactory_getInstance);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(dragonBones::CCFactory).name();
     g_luaType[typeName] = "ccdb.CCFactory";

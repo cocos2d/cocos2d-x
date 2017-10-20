@@ -696,30 +696,6 @@ static void extendWorldClock(lua_State* L)
 }
 
 /*************************************************
- extend CCFactory
- *************************************************/
-
-static int lua_CCFactory_factory_get(lua_State* L)
-{
-    if (nullptr == L)
-        return 0;
-    
-    object_to_luaval(L, "ccdb.CCFactory", &dragonBones::CCFactory::factory);
-    return 1;
-}
-
-static void extendCCFactory(lua_State* L)
-{
-    lua_pushstring(L, "ccdb.CCFactory");
-    lua_rawget(L, LUA_REGISTRYINDEX);
-    if (lua_istable(L,-1))
-    {
-        tolua_variable(L, "factory", lua_CCFactory_factory_get, NULL);
-    }
-    lua_pop(L, 1);
-}
-
-/*************************************************
  extend Bone
  *************************************************/
 
@@ -957,7 +933,6 @@ int register_all_creator_dragonbones_manual(lua_State* L)
     extendSlot(L);
     extendAnimationState(L);
     extendWorldClock(L);
-    extendCCFactory(L);
     extendBone(L);
     extendTransform(L);
     
