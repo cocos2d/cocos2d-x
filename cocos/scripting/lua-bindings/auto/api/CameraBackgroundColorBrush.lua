@@ -31,6 +31,13 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
+-- Draw background
+-- @function [parent=#CameraBackgroundColorBrush] drawBackground 
+-- @param self
+-- @param #cc.Camera camera
+-- @return CameraBackgroundColorBrush#CameraBackgroundColorBrush self (return value: cc.CameraBackgroundColorBrush)
+        
+--------------------------------
 -- 
 -- @function [parent=#CameraBackgroundColorBrush] init 
 -- @param self
