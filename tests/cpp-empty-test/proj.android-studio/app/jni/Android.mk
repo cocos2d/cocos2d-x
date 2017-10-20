@@ -1,7 +1,6 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
-path := $(LOCAL_PATH)
 
 LOCAL_MODULE := cpp_empty_test_shared
 
@@ -26,5 +25,4 @@ include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,.)
 
-$(call import-add-path, $(path)/../../../Classes/)
-$(call import-module, reader)
+$(call import-module, tests/cpp-empty-test/Classes/reader)

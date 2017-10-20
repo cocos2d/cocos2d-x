@@ -1,7 +1,6 @@
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
-path := $(LOCAL_PATH)
 
 LOCAL_MODULE := lua_empty_test_shared
 
@@ -21,5 +20,4 @@ LOCAL_STATIC_LIBRARIES += creator_reader_lua
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,scripting/lua-bindings/proj.android)
-$(call import-add-path, $(path)/../../Classes/)
-$(call import-module, reader)
+$(clal import-module,tets/lua-empty-test/project/Classes)
