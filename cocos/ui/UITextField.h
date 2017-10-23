@@ -79,7 +79,6 @@ public:
                                            const char * delText,
                                            size_t nLen) override;
     void insertText(const char* text, size_t len) override;
-    void deleteBackward() override;
     
     /**
      * Open up the IME.
