@@ -20,4 +20,4 @@ LOCAL_STATIC_LIBRARIES += creator_reader_lua
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,scripting/lua-bindings/proj.android)
-$(clal import-module,tets/lua-empty-test/project/Classes)
+$(call import-module,tests/lua-empty-test/project/Classes/reader)

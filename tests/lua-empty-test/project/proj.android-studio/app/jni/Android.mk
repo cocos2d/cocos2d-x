@@ -22,4 +22,4 @@ include $(BUILD_SHARED_LIBRARY)
 $(call import-module,scripting/lua-bindings/proj.android)
 
 $(call import-add-path, $(path)/../../../Classes/)
-$(clal import-module,tets/lua-empty-test/project/Classes)
+$(call import-module,tests/lua-empty-test/project/Classes/reader)
