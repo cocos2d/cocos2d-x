@@ -60,6 +60,7 @@ THE SOFTWARE.
 #include "base/CCAutoreleasePool.h"
 #include "base/CCConfiguration.h"
 #include "base/CCAsyncTaskPool.h"
+#include "base/ObjectFactory.h"
 #include "platform/CCApplication.h"
 
 #if CC_ENABLE_SCRIPT_BINDING
@@ -230,6 +231,7 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_eventDispatcher);
     
     Configuration::destroyInstance();
+    ObjectFactory::destroyInstance();
 
     s_SharedDirector = nullptr;
 }

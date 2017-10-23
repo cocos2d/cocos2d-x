@@ -267,4 +267,18 @@ public:
     virtual void onEnter() override;
 };
 
+class BackgroundColorBrushTest : public CameraBaseTest
+{
+public:
+    CREATE_FUNC(BackgroundColorBrushTest);
+    BackgroundColorBrushTest(void);
+    virtual ~BackgroundColorBrushTest(void);
+    
+    // overrides
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    virtual void onEnter() override;
+};
+
 #endif

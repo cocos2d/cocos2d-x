@@ -4,14 +4,14 @@
 cocos2d-x
 =========
 
-|  |iOS|Mac|Linux|Win32|Android|Tizen|
-| ----|----|----- | ---|----|------|---|
-|v3|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=ios)](http://45.56.80.45:8080/job/daily-build-v3/node=ios)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=mac)](http://45.56.80.45:8080/job/daily-build-v3/node=mac)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=linux)](http://45.56.80.45:8080/job/daily-build-v3/node=linux)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=win32_bak)](http://45.56.80.45:8080/job/daily-build-v3/node=win32_bak)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=android)](http://45.56.80.45:8080/job/daily-build-v3/node=android)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=tizen-daily-build/node=tizen_mac)](http://45.56.80.45:8080/job/tizen-daily-build/node=tizen_mac/)|
+|  |iOS|Mac|Linux|Win32|Android|
+| ----|----|----- | ---|----|------|
+|v3|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=ios)](http://45.56.80.45:8080/job/daily-build-v3/node=ios)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=mac)](http://45.56.80.45:8080/job/daily-build-v3/node=mac)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=linux)](http://45.56.80.45:8080/job/daily-build-v3/node=linux)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=win32_bak)](http://45.56.80.45:8080/job/daily-build-v3/node=win32_bak)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=android)](http://45.56.80.45:8080/job/daily-build-v3/node=android)
 
 
 [cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
 It is based on [cocos2d-iphone][2], but instead of using Objective-C, it uses C++.
-It works on iOS, Android, Tizen, Windows Phone and Store Apps, OS X, Windows, Linux and Web platforms.
+It works on iOS, Android, OS X, Windows, Linux and Web platforms.
 
 **Cocos2d-x Framework Architecture**:
 
@@ -75,17 +75,6 @@ You can also create a JS project or Lua project with `-l js` or `-l lua`.
 
     $ cocos run -p mac
 
-### Build and run a new project for Tizen ###
-
-There are two ways to build and run Tizen project:
-
-* use cocos console(can not work on 32-bit Windows currently)
-  ```
-  cocos run -p tizen
-  ```
-* use Tizen IDE, can refer to [this doc](http://cocos2d-x.org/docs/installation/Tizen/index.html ) for detail usage
-
-
 ### Build and run a new project for Linux ###
 
 If you never run cocos2d-x on Linux, you need to install all dependencies by the
@@ -106,20 +95,6 @@ Run
 ### Build and run new project for win32 ###
 
     $ cocos run -p win32
-
-### Build and run new project for Windows 8.1/10.0 and Windows Phone 8.1/10.0 ###
-
-    $ cocos new MyGame -p com.your_company.mygame -l cpp -d projects
-
-* Visual Studio 2013 Update 4 or later is required for Windows 8.1 Universal Apps
-
-* Visual Studio 2015 (Release version) and Windows 10.0 (Release version) are required for Windows 10.0 Universal Windows Platform (UWP) Apps. RC versions of Visual Studio and Windows 10 are no longer supported.
-
-Starting with Cocos2d-x v3.3, you can create Windows 8.1 Universal Apps (Windows Store and Windows Phone 8.1).
-Starting with Cocos2d-x v3.8 you can create Windows 10.0 UWP Apps (Windows Store and Windows Phone 10.0).
-Starting with Cocos2d-x v3.6 there will no longer be support for Windows Phone 8.0.
-
-See more info on how to install and create games on Windows RT (Windows and Windows Phone 8.1) at http://msopentech.github.io/cocos2d-x/
 
 ### Build and run new project for web ###
 
@@ -182,18 +157,14 @@ Build Requirements
 * or Ubuntu 12.10+, CMake 2.6+
 * or Windows 7+, VS 2013+
 * Python 2.7.5
-* NDK r11+ is required to build Android games
-* Android Studio 2.3+ to build Android games
-* Tizen SDK 2.3+ is required to build Tizen games
-* Windows Phone/Store 10.0 VS 2015
+* NDK r11+ is required to build Android games(tested with r14)
+* Android Studio 2.3.3+ to build Android games(tested with 2.3.3)
 * JRE or JDK 1.6+ is required for web publishing
 
 Runtime Requirements
 --------------------
-  * iOS 7.0+ for iPhone / iPad games
-  * Android 2.3.3+ for Android games
-  * Tizen 2.3+ or 2.4+ for Tizen games
-  * Windows 10.0 for Windows Phone/Store 10.0  games
+  * iOS 6.0+ for iPhone / iPad games
+  * Android 2.3.3+ for Android
   * OS X v10.9+ for Mac games
   * Windows 7+ for Win games
   * Modern browsers and IE 9+ for web games
@@ -249,23 +220,15 @@ $ bin/lua-empty-test/lua-empty-test
 
 Open the `cocos2d-x/build/cocos2d-win32.sln`
 
-* For Windows 10.0 Universal Windows Platform (UWP) Apps (Phone and Store)
-
-Open the `cocos2d-x/build/cocos2d-win10.sln`
-
 * For Android
 
 ```
 $ cd cocos2d-x/build
-$ python ./android-build.py cpp-empty-test -p 13
+$ python ./android-build.py cpp-empty-test -p 14
 $ adb install ../tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
 ```
 
-Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 13.
-
-* For Tizen
-
-Please refer to this [guide](http://cocos2d-x.org/docs/installation/Tizen/index.html ).
+Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 14.
 
 Learning Resources
 --------------------------------

@@ -127,6 +127,12 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
                 y = -tmp;
             }
 
+            // Invert axes for reverse landscape and reverse portrait
+            int rotation =  Cocos2dxHelper.getActivity().getWindowManager().getDefaultDisplay().getRotation();
+            if (rotation == Surface.ROTATION_180 || rotation == Surface.ROTATION_270) {
+                x = -x;
+                y = -y;
+            }
 
             Cocos2dxGLSurfaceView.queueAccelerometer(x,y,z,sensorEvent.timestamp);
 
