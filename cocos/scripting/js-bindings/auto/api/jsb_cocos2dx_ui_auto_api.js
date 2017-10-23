@@ -4492,14 +4492,6 @@ getInsertText : function (
 },
 
 /**
- * @method deleteBackward
- */
-deleteBackward : function (
-)
-{
-},
-
-/**
  * @method setInsertText
  * @param {bool} arg0
  */
