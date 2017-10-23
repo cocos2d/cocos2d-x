@@ -61,16 +61,18 @@ local function handleAnimatoinButtonClick(scene)
 	local button = findChild(scene, 'animation', 'ccui.Button')
 	button:addClickEventListener(function (sender)
 		replaceScene('creator/scenes/animation/CreatorAnim.ccreator')
-		local grossini_dance_08_02 = findChild(currentScene, 'grossini_dance_08_02', 'cc.Sprite')
+		local grossini_dance_08_2 = findChild(currentScene, 'grossini_dance_08_2', 'cc.Sprite')
 		local animationManager = currentReader:getAnimationManager()
-		grossini_dance_08_02:runAction(cc.Sequence:create(cc.DelayTime:create(3),
+		animationManager:retain()
+		grossini_dance_08_2:runAction(cc.Sequence:create(cc.DelayTime:create(3),
 			                                              cc.CallFunc:create(function()
-			                                              	    animationManager:pauseAnimationClip(grossini_dance_08_02, 'Animation2')
-			                                              	end)),
+			                                              	    animationManager:pauseAnimationClip(grossini_dance_08_2, 'Animation2')
+			                                              	end),
 		                                                  cc.DelayTime:create(1),
 		                                                  cc.CallFunc:create(function()
-		                                                  	animationManager:resumeAnimationClip(grossini_dance_08_02, 'Animation2')
-		                                                  end))
+		                                                  	animationManager:resumeAnimationClip(grossini_dance_08_2, 'Animation2')
+		                                                  	animationManager:release()
+		                                                  end)))
 	end)
 end
 
