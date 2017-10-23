@@ -10929,22 +10929,6 @@ bool js_cocos2dx_ui_UICCTextField_getInsertText(JSContext *cx, uint32_t argc, js
     JS_ReportError(cx, "js_cocos2dx_ui_UICCTextField_getInsertText : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_ui_UICCTextField_deleteBackward(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::ui::UICCTextField* cobj = (cocos2d::ui::UICCTextField *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_UICCTextField_deleteBackward : Invalid Native Object");
-    if (argc == 0) {
-        cobj->deleteBackward();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_ui_UICCTextField_deleteBackward : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_ui_UICCTextField_setInsertText(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -11359,7 +11343,6 @@ void js_register_cocos2dx_ui_UICCTextField(JSContext *cx, JS::HandleObject globa
         JS_FN("getAttachWithIME", js_cocos2dx_ui_UICCTextField_getAttachWithIME, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onTextFieldDeleteBackward", js_cocos2dx_ui_UICCTextField_onTextFieldDeleteBackward, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getInsertText", js_cocos2dx_ui_UICCTextField_getInsertText, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("deleteBackward", js_cocos2dx_ui_UICCTextField_deleteBackward, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setInsertText", js_cocos2dx_ui_UICCTextField_setInsertText, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getDetachWithIME", js_cocos2dx_ui_UICCTextField_getDetachWithIME, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCharCount", js_cocos2dx_ui_UICCTextField_getCharCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
