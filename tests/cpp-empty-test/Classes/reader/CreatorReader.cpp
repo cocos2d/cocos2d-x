@@ -30,6 +30,8 @@
 #include "collider/Collider.h"
 
 #include <vector>
+#include <cmath>
+#include <algorithm>
 
 using namespace cocos2d;
 using namespace creator;
@@ -730,7 +732,7 @@ void CreatorReader::parseRichText(cocos2d::ui::RichText* richText, const buffers
     const auto& fontSize = richTextBuffer->fontSize();
     richText->setFontSize(fontSize);
     const auto& fontFilename = richTextBuffer->fontFilename();
-    if (fontFilename) richText->setFontFace(fontFilename->str());
+    richText->setFontFace(fontFilename->str());
     
     const auto& text = richTextBuffer->text();
     if (text)
@@ -741,8 +743,20 @@ void CreatorReader::parseRichText(cocos2d::ui::RichText* richText, const buffers
         parser.parseIntrusive(const_cast<char*>(text->c_str()), text->Length());
         
         richText->initWithXML(visitor.getOutput());
+        
+        // FIXME: content width from Creator is not correct
+        // so should recompute it here
+        
+        const auto& rawString = visitor.getRawString();
+        auto maxFontSize = visitor.getMaxFontSize();
+        int finalFontSize = std::max(static_cast<float>(maxFontSize), fontSize);
+        auto label = cocos2d::Label::createWithSystemFont(rawString, fontFilename->str(), finalFontSize);
+        
+        auto realContentSize = label->getContentSize();
+        auto finalWidth = std::max(realContentSize.width, richText->getContentSize().width);
+        richText->setContentSize(cocos2d::Size(finalWidth, richText->getContentSize().height));
     }
-    
+        
     // should do it after richText->initWithXML
     richText->ignoreContentAdaptWithSize(false);
     

@@ -543,7 +543,7 @@ CC_CONSTRUCTOR_ACCESS:
 
     bool initWithXML(const std::string& xml, const ValueMap& defaults = ValueMap(), const OpenUrlHandler& handleOpenUrl = nullptr);
 
-protected:
+public:
     virtual void adaptRenderers() override;
 
     virtual void initRenderer() override;

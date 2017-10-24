@@ -40,7 +40,9 @@ public:
     virtual void endElement(void *ctx, const char *name) override;
     virtual void textHandler(void *ctx, const char *s, size_t len) override;
     
-    std::string getOutput() const;
+    const std::string& getOutput() const;
+    const std::string& getRawString() const;
+    int getMaxFontSize() const;
     
 private:
     
@@ -51,9 +53,12 @@ private:
     const static std::string COLOR_FLAG;
     const static std::string SIZE_FLAG;
     const static std::string IMG_FLAG;
+    const static std::string BR_FLAG;
     const static std::map<std::string, std::string> COLOR_MAP;
     
     std::string _outputXML;
+    std::string _rawString;
+    int _maxFontSize;
     std::stack<bool> _addFontEndFlags;
 };
 

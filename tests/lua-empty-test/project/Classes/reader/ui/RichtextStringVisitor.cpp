@@ -1,11 +1,15 @@
 
 #include "RichtextStringVisitor.h"
 
+#include <stdlib.h>
+#include <algorithm>
+
 NS_CCR_BEGIN
 
 const std::string RichtextStringVisitor::COLOR_FLAG = "color=";
 const std::string RichtextStringVisitor::SIZE_FLAG = "size=";
 const std::string RichtextStringVisitor::IMG_FLAG = "img";
+const std::string RichtextStringVisitor::BR_FLAG = "br";
 
 const std::map<std::string, std::string> RichtextStringVisitor::COLOR_MAP = {
     {"white", "#ffffff"},
@@ -27,6 +31,9 @@ const std::map<std::string, std::string> RichtextStringVisitor::COLOR_MAP = {
 };
 
 RichtextStringVisitor::RichtextStringVisitor()
+: _maxFontSize(0)
+, _rawString("")
+, _outputXML("")
 {}
 
 void RichtextStringVisitor::startElement(void *ctx, const char *name, const char **atts)
@@ -53,6 +60,9 @@ void RichtextStringVisitor::startElement(void *ctx, const char *name, const char
         _outputXML.append(nameStr.substr(SIZE_FLAG.length()));
         _outputXML.append("\">");
         _addFontEndFlags.push(true);
+        
+        int fontSize = atoi(name + 5);
+        _maxFontSize = std::max(fontSize, _maxFontSize);
     }
     else
     {
@@ -96,20 +106,35 @@ void RichtextStringVisitor::endElement(void *ctx, const char *name)
         _outputXML.append(name);
         _outputXML.append(">");
     }
-        
+    
+    if (BR_FLAG == name)
+    {
+        _rawString.append("\n");
+    }
 }
 
 void RichtextStringVisitor::textHandler(void *ctx, const char *s, size_t len)
 {
     std::string content(s, len);
     _outputXML.append(content);
+    
+    _rawString.append(content);
 }
 
-std::string RichtextStringVisitor::getOutput() const
+const std::string& RichtextStringVisitor::getOutput() const
 {
     return _outputXML;
 }
 
+const std::string& RichtextStringVisitor::getRawString() const
+{
+    return _rawString;
+}
+
+int RichtextStringVisitor::getMaxFontSize() const
+{
+    return _maxFontSize;
+}
 
 std::string RichtextStringVisitor::convertColorString2Hex(const std::string& colorString) const
 {
