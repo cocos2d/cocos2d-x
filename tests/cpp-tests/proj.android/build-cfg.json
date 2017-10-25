@@ -1,9 +1,4 @@
 {
-    "ndk_module_path" :[
-        "../../..",
-        "../../../cocos",
-        "../../../external"
-    ],
     "copy_resources": [
         {
             "from": "../Resources",
