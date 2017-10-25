@@ -88,8 +88,10 @@ void AnimationManager::runAnimationClip(cocos2d::Node *target, AnimationClip* an
 {
     auto animate = AnimateClip::createWithAnimationClip(target, animationClip);
     animate->retain();
+    this->retain();
     animate->setCallbackForEndevent([=]() {
         removeAnimateClip(target, animationClip->getName());
+        this->release();
     });
     
     animate->startAnimate();
