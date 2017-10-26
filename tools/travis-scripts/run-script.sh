@@ -66,16 +66,16 @@ function build_android()
     popd
 
     # build lua-tests
-    src_dir=$dst_dir
-    dst_dir=$COCOS2DX_ROOT/tests/lua-tests/project/proj.android/obj/
-    mkdir $dst_dir
-    cp -a $src_dir/* $dst_dir
+    # src_dir=$dst_dir
+    # dst_dir=$COCOS2DX_ROOT/tests/lua-tests/project/proj.android/obj/
+    # mkdir $dst_dir
+    # cp -a $src_dir/* $dst_dir
     pushd $COCOS2DX_ROOT/tests/lua-tests
     cocos compile -p android
     popd
 
     # build js-tests
-    src_dir=$dst_dir
+    src_dir=$COCOS2DX_ROOT/tests/lua-tests/project/proj.android/obj/
     dst_dir=$COCOS2DX_ROOT/tests/js-tests/project/proj.android/obj/
     mkdir $dst_dir
     cp -a $src_dir/* $dst_dir

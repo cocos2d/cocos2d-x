@@ -150,4 +150,5 @@ LOCAL_STATIC_LIBRARIES := cocos2dx_static
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-module,cocos)
+$(call import-add-path, $(LOCAL_PATH)/../../../../..)
+$(call import-module, cocos)

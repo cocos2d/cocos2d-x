@@ -21,5 +21,5 @@ LOCAL_EXPORT_CFLAGS := -DCOCOS2D_DEBUG=2 -DCOCOS2D_JAVASCRIPT
 
 include $(BUILD_SHARED_LIBRARY)
 
-
-$(call import-module, scripting/js-bindings/proj.android)
+$(call import-add-path, $(LOCAL_PATH)/../../../cocos2d-x)
+$(call import-module, cocos/scripting/js-bindings/proj.android)
