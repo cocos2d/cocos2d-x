@@ -28,6 +28,7 @@
 
 #include <vector>
 #include <unordered_map>
+#include <unordered_set>
 
 #include "base/CCRef.h"
 #include "renderer/CCRenderCommand.h"
@@ -45,7 +46,7 @@ class GroupCommandManager : public Ref
 public:
     int getGroupID();
     void releaseGroupID(int groupID);
-
+    std::unordered_set<int>& getUsedIDS() { return _usedIDs; }
 protected:
     friend class Renderer;
     GroupCommandManager();
@@ -53,6 +54,7 @@ protected:
     bool init();
     std::unordered_map<int, bool> _groupMapping;
     std::vector<int> _unusedIDs;
+    std::unordered_set<int> _usedIDs;
 };
 
 /**
