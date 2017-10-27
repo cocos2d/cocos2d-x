@@ -48,7 +48,7 @@ public:
 
 	virtual void update (float deltaTime) override;
 	virtual void draw (cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t transformFlags) override;
-    virtual void drawDebug (cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t transformFlags);
+	virtual void drawDebug (cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t transformFlags);
 	virtual cocos2d::Rect getBoundingBox () const override;
 	virtual void onEnter () override;
 	virtual void onExit () override;
@@ -64,6 +64,9 @@ public:
 
 	void setDebugBonesEnabled(bool enabled);
 	bool getDebugBonesEnabled() const;
+	
+	void setDebugMeshesEnabled(bool enabled);
+	bool getDebugMeshesEnabled() const;
 
 	// --- Convenience methods for common Skeleton_* functions.
 	void updateWorldTransform ();
@@ -91,12 +94,20 @@ public:
 	bool setAttachment (const std::string& slotName, const std::string& attachmentName);
 	/* @param attachmentName May be 0 for no attachment. */
 	bool setAttachment (const std::string& slotName, const char* attachmentName);
+	
+	/* Enables/disables two color tinting for this instance. May break batching */
+	void setTwoColorTint(bool enabled);
+	/* Whether two color tinting is enabled */
+	bool isTwoColorTint();
+	
+	/* Sets the vertex effect to be used, set to 0 to disable vertex effects */
+	void setVertexEffect(spVertexEffect* effect);
 
     // --- BlendProtocol
-    virtual void setBlendFunc (const cocos2d::BlendFunc& blendFunc)override;
-    virtual const cocos2d::BlendFunc& getBlendFunc () const override;
-    virtual void setOpacityModifyRGB (bool value) override;
-    virtual bool isOpacityModifyRGB () const override;
+	virtual void setBlendFunc (const cocos2d::BlendFunc& blendFunc)override;
+	virtual const cocos2d::BlendFunc& getBlendFunc () const override;
+	virtual void setOpacityModifyRGB (bool value) override;
+	virtual bool isOpacityModifyRGB () const override;
 
 CC_CONSTRUCTOR_ACCESS:
 	SkeletonRenderer ();
@@ -109,15 +120,15 @@ CC_CONSTRUCTOR_ACCESS:
 	void initWithData (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
 	void initWithJsonFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
 	void initWithJsonFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
-    void initWithBinaryFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
-    void initWithBinaryFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
+	void initWithBinaryFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
+	void initWithBinaryFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
 
 	virtual void initialize ();
-
+	void setupGLProgramState();
 protected:
 	void setSkeletonData (spSkeletonData* skeletonData, bool ownsSkeletonData);
 	virtual AttachmentVertices* getAttachmentVertices (spRegionAttachment* attachment) const;
-	virtual AttachmentVertices* getAttachmentVertices (spMeshAttachment* attachment) const;
+	virtual AttachmentVertices* getAttachmentVertices (spMeshAttachment* attachment) const;	
 
 	bool _ownsSkeletonData;
 	spAtlas* _atlas;
@@ -130,6 +141,9 @@ protected:
 	float _timeScale;
 	bool _debugSlots;
 	bool _debugBones;
+	bool _debugMeshes;
+	spSkeletonClipping* _clipper;
+	spVertexEffect* _effect;
 };
 
 }
