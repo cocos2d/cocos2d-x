@@ -83,7 +83,19 @@ public:
      * @param texType    @see `Widget::TextureResType`
      */
     void loadTexture(const std::string& fileName, TextureResType texType = TextureResType::LOCAL);
-
+    
+    /**
+     * Sets image internal scale.
+     * @return internal image scale.
+     */
+    void setImageScale(float scale);
+    
+    /**
+     * Get image internal scale.
+     * @param scale image internal scale
+     */
+    float getImageScale() const;
+    
     //override methods.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
     virtual std::string getDescription() const override;
@@ -123,6 +135,7 @@ protected:
     Size _imageTextureSize;
     bool _imageRendererAdaptDirty;
     std::string _textureFile;
+    float _imageScale;
 };
 
 }

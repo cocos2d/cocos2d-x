@@ -44,7 +44,8 @@ _textureFile(""),
 _imageRenderer(nullptr),
 _imageTexType(TextureResType::LOCAL),
 _imageTextureSize(_contentSize),
-_imageRendererAdaptDirty(true)
+_imageRendererAdaptDirty(true),
+_imageScale(1.0f)
 {
 
 }
@@ -163,8 +164,8 @@ void TileImageView::updatePoly()
     auto rectHeight = originalContentSize.height;
     
     //build quads
-    auto hRepeat = getContentSize().width / rectWidth;
-    auto vRepeat = getContentSize().height / rectHeight;
+    auto hRepeat = (getContentSize().width / _imageScale) / rectWidth;
+    auto vRepeat = (getContentSize().height / _imageScale) / rectHeight;
     
     float offsetLeft = offsets.x / CC_CONTENT_SCALE_FACTOR();
     float offsetTop = offsets.y / CC_CONTENT_SCALE_FACTOR();
@@ -199,7 +200,7 @@ void TileImageView::updatePoly()
             V3F_C4B_T2F &quad_tl = sliceVertices[quadIndex + 2];
             V3F_C4B_T2F &quad_tr = sliceVertices[quadIndex + 3];
             
-            quadIndex += vertsStep;;
+            quadIndex += vertsStep;
             
             quad_bl.colors = color4;
             quad_br.colors = color4;
@@ -211,24 +212,11 @@ void TileImageView::updatePoly()
             float x2 = rectWidth * fminf(hindex + (1 - roRight), hRepeat);
             float y2 = rectHeight * fminf(vindex + (1 - roTop), vRepeat);
             
-            
             if(x2 < x1)
                 x2 = x1;
             
             if(y2 < y1)
                 y2 = y1;
-            
-            if(_flippedY)
-            {
-                y1 = getContentSize().height - y1;
-                y2 = getContentSize().height - y2;
-            }
-            
-            if(_flippedX)
-            {
-                x1 = getContentSize().width - x1;
-                x2 = getContentSize().width - x2;
-            }
             
             quad_bl.vertices = cocos2d::Vec3(x1, y1, 0);
             quad_br.vertices = cocos2d::Vec3(x2, y1, 0);
@@ -333,7 +321,7 @@ void TileImageView::setupTexture()
     _dirty = true;
     this->updateChildrenDisplayedRGBA();
 
-    updateContentSizeWithTextureSize(_imageTextureSize);
+    updateContentSizeWithTextureSize(_imageTextureSize  / _imageScale);
     _imageRendererAdaptDirty = true;
 }
 
@@ -373,8 +361,8 @@ Node* TileImageView::getVirtualRenderer()
 
 void TileImageView::imageTextureScaleChangedWithSize()
 {
-    _imageRenderer->setContentSize(_contentSize);
-    
+    _imageRenderer->setScale(_imageScale);
+    _imageRenderer->setContentSize(_contentSize / _imageScale);
     _imageRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
@@ -399,6 +387,7 @@ void TileImageView::copySpecialProperties(Widget *widget)
         {
             loadTexture(imageSprite->getSpriteFrame());
         }
+        setImageScale(imageView->_imageScale);
     }
 }
 
@@ -420,6 +409,20 @@ void TileImageView::setGLProgramState(cocos2d::GLProgramState* glProgramState)
 {
     Widget::setGLProgramState(glProgramState);
     _imageRenderer->setGLProgramState(glProgramState);
+}
+    
+void TileImageView::setImageScale(float scale)
+{
+    if(_imageScale != scale)
+    {
+        _imageScale = scale;
+        _imageRendererAdaptDirty = true;
+    }
+}
+
+float TileImageView::getImageScale() const
+{
+    return _imageScale;
 }
 
 }
