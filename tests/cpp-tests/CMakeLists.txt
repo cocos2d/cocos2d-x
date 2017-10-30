@@ -175,6 +175,7 @@ if(USE_BOX2D)
     Classes/Box2DTestBed/Test.cpp
     Classes/Box2DTestBed/TestEntries.cpp
     )
+  include_directories(${Box2D_INCLUDE_DIRS})
 endif()
 
 if(USE_BULLET)

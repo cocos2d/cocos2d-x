@@ -47,20 +47,12 @@ macro (BuildModules)
 	  endif()
 	endif(USE_CHIPMUNK)
 
-	# Box2d (not prebuilded, exists as source)
+	# Box2d
 	if(USE_BOX2D)
-	  if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
-	    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/Box2D)
-	    set(Box2D_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/box2d/include)
-	    set(Box2D_LIBRARIES box2d)
-	  else()
-	    find_package(Box2D REQUIRED CONFIG)
-	    # actually Box2D in next line is not a library, it is target exported from Box2DConfig.cmake
-	    set(Box2D_LIBRARIES Box2D)
-	  endif()
+	  if(USE_PREBUILT_LIBS)
+	    cocos_find_package(box2d Box2D REQUIRED)
+	  endif(USE_PREBUILT_LIBS)
 	  message(STATUS "Box2D include dirs: ${Box2D_INCLUDE_DIRS}")
-	elseif(BUILD_BOX2D)
-	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/Box2D)
 	endif(USE_BOX2D)
 
 	# Bullet
