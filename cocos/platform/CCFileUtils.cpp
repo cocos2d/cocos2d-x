@@ -997,15 +997,7 @@ void FileUtils::addSearchPath(const std::string &searchpath,const bool front)
         _searchPathArray.insert(_searchPathArray.begin(), path);
     } else {
         _originalSearchPaths.push_back(searchpath);
-
-        if (!_searchPathArray.empty() && _searchPathArray[_searchPathArray.size()-1] == _defaultResRootPath)
-        {
-            _searchPathArray.insert(_searchPathArray.begin() + _searchPathArray.size() -1, path);
-        }
-        else
-        {
-            _searchPathArray.push_back(path);
-        }
+        _searchPathArray.push_back(path);
     }
 }
 
