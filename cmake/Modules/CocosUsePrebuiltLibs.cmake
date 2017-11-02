@@ -24,6 +24,9 @@ set(_Box2D_inc_paths  include)
 set(_Box2D_libs box2d libbox2d)
 set(_Box2D_prefix Box2D)
 
+set(_glfw3_inc glfw3.h glfw3native.h)
+set(_glfw3_libs glfw3 libglfw3)
+
 set(_curl_inc curl/curl.h)
 # order: curl, ssl, crypto
 set(_curl_libs curl libcurl_imp libcurl ssl libeay32 ssleay32 crypto)
@@ -143,7 +146,7 @@ if(MSVC)
 endif()
 
 if(LINUX)
-  list(APPEND all_prebuilt_libs fmod)
+  list(APPEND all_prebuilt_libs fmod glfw3)
 endif()
 
 if(ANDROID)
