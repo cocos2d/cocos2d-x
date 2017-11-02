@@ -54,6 +54,4 @@ echo "Cocos uses GCC Version: `gcc --version`"
 echo "Cocos uses G++ Version: `g++ --version`"
 echo "Cocos uses ld Version: `ld --version`"
 echo "Cocos uses /usr/bin/ld Version: `/usr/bin/ld --version`"
-# install glfw
-../tools/travis-scripts/install_glfw.sh
 
