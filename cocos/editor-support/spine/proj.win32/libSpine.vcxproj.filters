@@ -11,6 +11,42 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\SkeletonJson.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SkeletonRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SkeletonTwoColorBatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Skin.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Slot.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SlotData.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\spine-cocos2dx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TransformConstraint.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TransformConstraintData.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Triangulator.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\VertexAttachment.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\VertexEffect.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\Animation.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -18,6 +54,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\AnimationStateData.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Array.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Atlas.c">
@@ -44,7 +83,13 @@
     <ClCompile Include="..\BoundingBoxAttachment.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\ClippingAttachment.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\Cocos2dAttachmentLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Color.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Event.c">
@@ -77,6 +122,9 @@
     <ClCompile Include="..\PathConstraintData.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\PointAttachment.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\RegionAttachment.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -95,38 +143,53 @@
     <ClCompile Include="..\SkeletonBounds.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\SkeletonClipping.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\SkeletonData.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SkeletonJson.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SkeletonRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Skin.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Slot.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SlotData.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\spine-cocos2dx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\TransformConstraint.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\TransformConstraintData.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\VertexAttachment.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\SkeletonJson.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SkeletonRenderer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SkeletonTwoColorBatch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Skin.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Slot.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SlotData.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\spine-cocos2dx.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TransformConstraint.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\TransformConstraintData.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Triangulator.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VertexAttachment.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\VertexEffect.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\Animation.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -134,6 +197,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\AnimationStateData.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Array.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Atlas.h">
@@ -160,7 +226,16 @@
     <ClInclude Include="..\BoundingBoxAttachment.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\ClippingAttachment.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\Cocos2dAttachmentLoader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Color.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dll.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Event.h">
@@ -181,6 +256,9 @@
     <ClInclude Include="..\Json.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\kvec.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\MeshAttachment.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -191,6 +269,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\PathConstraintData.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PointAttachment.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\RegionAttachment.h">
@@ -211,37 +292,10 @@
     <ClInclude Include="..\SkeletonBounds.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\SkeletonClipping.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\SkeletonData.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SkeletonJson.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SkeletonRenderer.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Skin.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Slot.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SlotData.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\spine.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\spine-cocos2dx.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\TransformConstraint.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\TransformConstraintData.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\VertexAttachment.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
