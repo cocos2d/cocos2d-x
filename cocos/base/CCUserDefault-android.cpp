@@ -43,7 +43,7 @@ THE SOFTWARE.
 #include "tinyxml2.h"
 #endif
 
-static const std::string helperClassName = "org/cocos2dx/lib/Cocos2dxHelper";
+static const char* helperClassName = "org/cocos2dx/lib/Cocos2dxHelper";
 
 using namespace std;
 NS_CC_BEGIN
@@ -192,7 +192,7 @@ bool UserDefault::getBoolForKey(const char* pKey, bool defaultValue)
     }
 #endif
 
-    return JniHelper::callStaticBooleanMethod(helperClassName, "getBoolForKey", pKey, defaultValue);
+    return JniHelper::callStaticMethod<bool>(helperClassName, "getBoolForKey", pKey, defaultValue);
 }
 
 int UserDefault::getIntegerForKey(const char* pKey)
@@ -228,7 +228,7 @@ int UserDefault::getIntegerForKey(const char* pKey, int defaultValue)
     }
 #endif
 
-	return JniHelper::callStaticIntMethod(helperClassName, "getIntegerForKey", pKey, defaultValue);
+	return JniHelper::callStaticMethod<int>(helperClassName, "getIntegerForKey", pKey, defaultValue);
 }
 
 float UserDefault::getFloatForKey(const char* pKey)
@@ -264,7 +264,7 @@ float UserDefault::getFloatForKey(const char* pKey, float defaultValue)
     }
 #endif
 
-    return JniHelper::callStaticFloatMethod(helperClassName, "getFloatForKey", pKey, defaultValue);
+    return JniHelper::callStaticMethod<float>(helperClassName, "getFloatForKey", pKey, defaultValue);
 }
 
 double  UserDefault::getDoubleForKey(const char* pKey)
@@ -300,7 +300,7 @@ double UserDefault::getDoubleForKey(const char* pKey, double defaultValue)
     }
 #endif
 
-	return JniHelper::callStaticDoubleMethod(helperClassName, "getDoubleForKey", pKey, defaultValue);
+	return JniHelper::callStaticMethod<double>(helperClassName, "getDoubleForKey", pKey, defaultValue);
 }
 
 std::string UserDefault::getStringForKey(const char* pKey)
@@ -336,7 +336,7 @@ string UserDefault::getStringForKey(const char* pKey, const std::string & defaul
     }
 #endif
 
-    return JniHelper::callStaticStringMethod(helperClassName, "getStringForKey", pKey, defaultValue);
+    return JniHelper::callStaticMethod<std::string>(helperClassName, "getStringForKey", pKey, defaultValue);
 }
 
 Data UserDefault::getDataForKey(const char* pKey)
@@ -384,7 +384,7 @@ Data UserDefault::getDataForKey(const char* pKey, const Data& defaultValue)
     char * encodedDefaultData = NULL;
     unsigned int encodedDefaultDataLen = !defaultValue.isNull() ? base64Encode(defaultValue.getBytes(), defaultValue.getSize(), &encodedDefaultData) : 0;
 
-    string encodedStr = JniHelper::callStaticStringMethod(helperClassName, "getStringForKey", pKey, (const char*)encodedDefaultData);
+    string encodedStr = JniHelper::callStaticMethod<std::string>(helperClassName, "getStringForKey", pKey, (const char*)encodedDefaultData);
 
     if (encodedDefaultData)
         free(encodedDefaultData);
@@ -412,7 +412,7 @@ void UserDefault::setBoolForKey(const char* pKey, bool value)
     deleteNodeByKey(pKey);
 #endif
 
-    JniHelper::callStaticVoidMethod(helperClassName, "setBoolForKey", pKey, value);
+    JniHelper::callStaticMethod<void>(helperClassName, "setBoolForKey", pKey, value);
 }
 
 void UserDefault::setIntegerForKey(const char* pKey, int value)
@@ -421,7 +421,7 @@ void UserDefault::setIntegerForKey(const char* pKey, int value)
     deleteNodeByKey(pKey);
 #endif
 
-    JniHelper::callStaticVoidMethod(helperClassName, "setIntegerForKey", pKey, value);
+    JniHelper::callStaticMethod<void>(helperClassName, "setIntegerForKey", pKey, value);
 }
 
 void UserDefault::setFloatForKey(const char* pKey, float value)
@@ -430,7 +430,7 @@ void UserDefault::setFloatForKey(const char* pKey, float value)
     deleteNodeByKey(pKey);
 #endif
 
-    JniHelper::callStaticVoidMethod(helperClassName, "setFloatForKey", pKey, value);
+    JniHelper::callStaticMethod<void>(helperClassName, "setFloatForKey", pKey, value);
 }
 
 void UserDefault::setDoubleForKey(const char* pKey, double value)
@@ -439,7 +439,7 @@ void UserDefault::setDoubleForKey(const char* pKey, double value)
     deleteNodeByKey(pKey);
 #endif
 
-    JniHelper::callStaticVoidMethod(helperClassName, "setDoubleForKey", pKey, value);
+    JniHelper::callStaticMethod<void>(helperClassName, "setDoubleForKey", pKey, value);
 }
 
 void UserDefault::setStringForKey(const char* pKey, const std::string& value)
@@ -448,7 +448,7 @@ void UserDefault::setStringForKey(const char* pKey, const std::string& value)
     deleteNodeByKey(pKey);
 #endif
 
-    JniHelper::callStaticVoidMethod(helperClassName, "setStringForKey", pKey, value);
+    JniHelper::callStaticMethod<void>(helperClassName, "setStringForKey", pKey, value);
 }
 
 void UserDefault::setDataForKey(const char* pKey, const Data& value)
@@ -463,7 +463,7 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value)
 
     CCLOG("SET DATA ENCODED: --%s", encodedData);
 
-    JniHelper::callStaticVoidMethod(helperClassName, "setStringForKey", pKey, (const char*)encodedData);
+    JniHelper::callStaticMethod<void>(helperClassName, "setStringForKey", pKey, (const char*)encodedData);
 
     if (encodedData)
         free(encodedData);
@@ -499,7 +499,7 @@ void UserDefault::initXMLFilePath()
     if (! _isFilePathInitialized)
     {
         // UserDefault.xml is stored in /data/data/<package-path>/ before v2.1.2
-        std::string packageName = JniHelper::callStaticStringMethod(helperClassName, "getCocos2dxPackageName");
+        std::string packageName = JniHelper::callStaticMethod<std::string>(helperClassName, "getCocos2dxPackageName");
         _filePath += "/data/data/" + packageName + "/" + XML_FILE_NAME;
         _isFilePathInitialized = true;
     }
@@ -529,7 +529,7 @@ void UserDefault::deleteValueForKey(const char* key)
         CCLOG("the key is invalid");
     }
 
-    JniHelper::callStaticVoidMethod(helperClassName, "deleteValueForKey", key);
+    JniHelper::callStaticMethod<void>(helperClassName, "deleteValueForKey", key);
 
     flush();
 }

@@ -37,7 +37,7 @@
 #include "platform/CCFileUtils.h"
 #include "ui/UIHelper.h"
 
-static const std::string className = "org/cocos2dx/lib/Cocos2dxWebViewHelper";
+static const char* className = "org/cocos2dx/lib/Cocos2dxWebViewHelper";
 
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,"",__VA_ARGS__)
 
@@ -131,7 +131,7 @@ namespace {
 
 int createWebViewJNI() {
     cocos2d::JniMethodInfo t;
-    if (cocos2d::JniHelper::getStaticMethodInfo(t, className.c_str(), "createWebView", "()I")) {
+    if (cocos2d::JniHelper::getStaticMethodInfo(t, className, "createWebView", "()I")) {
         // LOGD("error: %s,%d",__func__,__LINE__);
         jint viewTag = t.env->CallStaticIntMethod(t.classID, t.methodID);
         t.env->DeleteLocalRef(t.classID);
@@ -169,17 +169,17 @@ namespace cocos2d {
             }
 
             WebViewImpl::~WebViewImpl() {
-                JniHelper::callStaticVoidMethod(className, "removeWebView", _viewTag);
+                JniHelper::callStaticMethod<void>(className, "removeWebView", _viewTag);
                 s_WebViewImpls.erase(_viewTag);
             }
 
             void WebViewImpl::loadData(const Data &data, const std::string &MIMEType, const std::string &encoding, const std::string &baseURL) {
                 std::string dataString(reinterpret_cast<char *>(data.getBytes()), static_cast<unsigned int>(data.getSize()));
-                JniHelper::callStaticVoidMethod(className, "setJavascriptInterfaceScheme", _viewTag, dataString, MIMEType, encoding, baseURL);
+                JniHelper::callStaticMethod<void>(className, "setJavascriptInterfaceScheme", _viewTag, dataString, MIMEType, encoding, baseURL);
             }
 
             void WebViewImpl::loadHTMLString(const std::string &string, const std::string &baseURL) {
-                JniHelper::callStaticVoidMethod(className, "loadHTMLString", _viewTag, string, getFixedBaseUrl(baseURL));
+                JniHelper::callStaticMethod<void>(className, "loadHTMLString", _viewTag, string, getFixedBaseUrl(baseURL));
             }
 
             void WebViewImpl::loadURL(const std::string &url) {
@@ -187,48 +187,48 @@ namespace cocos2d {
             }
 
             void WebViewImpl::loadURL(const std::string &url, bool cleanCachedData) {
-                JniHelper::callStaticVoidMethod(className, "loadUrl", _viewTag, url, cleanCachedData);
+                JniHelper::callStaticMethod<void>(className, "loadUrl", _viewTag, url, cleanCachedData);
             }
 
             void WebViewImpl::loadFile(const std::string &fileName) {
                 auto fullPath = getUrlStringByFileName(fileName);
-                JniHelper::callStaticVoidMethod(className, "loadFile", _viewTag, fullPath);
+                JniHelper::callStaticMethod<void>(className, "loadFile", _viewTag, fullPath);
             }
 
             void WebViewImpl::stopLoading() {
-                JniHelper::callStaticVoidMethod(className, "stopLoading", _viewTag);
+                JniHelper::callStaticMethod<void>(className, "stopLoading", _viewTag);
             }
 
             void WebViewImpl::reload() {
-                JniHelper::callStaticVoidMethod(className, "reload", _viewTag);
+                JniHelper::callStaticMethod<void>(className, "reload", _viewTag);
             }
 
             bool WebViewImpl::canGoBack() {
-                return JniHelper::callStaticBooleanMethod(className, "canGoBack", _viewTag);
+                return JniHelper::callStaticMethod<bool>(className, "canGoBack", _viewTag);
             }
 
             bool WebViewImpl::canGoForward() {
-                return JniHelper::callStaticBooleanMethod(className, "canGoForward", _viewTag);
+                return JniHelper::callStaticMethod<bool>(className, "canGoForward", _viewTag);
             }
 
             void WebViewImpl::goBack() {
-                JniHelper::callStaticVoidMethod(className, "goBack", _viewTag);
+                JniHelper::callStaticMethod<void>(className, "goBack", _viewTag);
             }
 
             void WebViewImpl::goForward() {
-                JniHelper::callStaticVoidMethod(className, "goForward", _viewTag);
+                JniHelper::callStaticMethod<void>(className, "goForward", _viewTag);
             }
 
             void WebViewImpl::setJavascriptInterfaceScheme(const std::string &scheme) {
-                JniHelper::callStaticVoidMethod(className, "setJavascriptInterfaceScheme", _viewTag, scheme);
+                JniHelper::callStaticMethod<void>(className, "setJavascriptInterfaceScheme", _viewTag, scheme);
             }
 
             void WebViewImpl::evaluateJS(const std::string &js) {
-                JniHelper::callStaticVoidMethod(className, "evaluateJS", _viewTag, js);
+                JniHelper::callStaticMethod<void>(className, "evaluateJS", _viewTag, js);
             }
 
             void WebViewImpl::setScalesPageToFit(const bool scalesPageToFit) {
-                JniHelper::callStaticVoidMethod(className, "setScalesPageToFit", _viewTag, scalesPageToFit);
+                JniHelper::callStaticMethod<void>(className, "setScalesPageToFit", _viewTag, scalesPageToFit);
             }
 
             bool WebViewImpl::shouldStartLoading(const int viewTag, const std::string &url) {
@@ -276,27 +276,27 @@ namespace cocos2d {
             void WebViewImpl::draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) {
                 if (flags & cocos2d::Node::FLAGS_TRANSFORM_DIRTY) {
                     auto uiRect = cocos2d::ui::Helper::convertBoundingBoxToScreen(_webView);
-                    JniHelper::callStaticVoidMethod(className, "setWebViewRect", _viewTag, 
+                    JniHelper::callStaticMethod<void>(className, "setWebViewRect", _viewTag, 
                                                     (int)uiRect.origin.x, (int)uiRect.origin.y,
                                                     (int)uiRect.size.width, (int)uiRect.size.height);
                 }
             }
 
             void WebViewImpl::setVisible(bool visible) {
-                JniHelper::callStaticVoidMethod(className, "setVisible", _viewTag, visible);
+                JniHelper::callStaticMethod<void>(className, "setVisible", _viewTag, visible);
             }
             
             void WebViewImpl::setOpacityWebView(const float opacity){
-                JniHelper::callStaticVoidMethod(className, "setOpacityWebView", _viewTag, opacity);
+                JniHelper::callStaticMethod<void>(className, "setOpacityWebView", _viewTag, opacity);
             };
             
             
             float WebViewImpl::getOpacityWebView()const{
-                return JniHelper::callStaticFloatMethod(className, "getOpacityWebView", _viewTag);
+                return JniHelper::callStaticMethod<float>(className, "getOpacityWebView", _viewTag);
             };
             
             void WebViewImpl::setBackgroundTransparent(){
-                JniHelper::callStaticVoidMethod(className, "setBackgroundTransparent", _viewTag);
+                JniHelper::callStaticMethod<void>(className, "setBackgroundTransparent", _viewTag);
             };
 
             void WebViewImpl::setBounces(bool bounces) {
