@@ -94,7 +94,8 @@ static float toColor (const char* value, int index) {
 	char *error;
 	int color;
 
-	if (strlen(value) / 2 < index) return -1;
+	if (index >= strlen(value) / 2)
+        return -1;
 	value += index * 2;
 
 	digits[0] = *value;
