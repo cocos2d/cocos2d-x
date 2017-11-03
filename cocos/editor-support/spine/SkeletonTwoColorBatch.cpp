@@ -336,8 +336,8 @@ void SkeletonTwoColorBatch::reset() {
 
 TwoColorTrianglesCommand* SkeletonTwoColorBatch::nextFreeCommand() {
 	if (_commandsPool.size() <= _nextFreeCommand) {
-		unsigned int newSize = _commandsPool.size() * 2 + 1;
-		for (int i = _commandsPool.size();  i < newSize; i++) {
+		size_t newSize = _commandsPool.size() * 2 + 1;
+		for (size_t i = _commandsPool.size();  i < newSize; i++) {
 			_commandsPool.push_back(new TwoColorTrianglesCommand());
 		}
 	}

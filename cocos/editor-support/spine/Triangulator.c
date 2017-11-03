@@ -152,8 +152,9 @@ spShortArray* spTriangulator_triangulate(spTriangulator* self, spFloatArray* ver
 	spShortArray_ensureCapacity(triangles, MAX(0, vertexCount - 2) << 2);
 
 	while (vertexCount > 3) {
-		int previous = vertexCount - 1, i = 0, next = 1;
+		int previous = vertexCount - 1, next = 1;
 		int previousIndex, nextIndex;
+        i = 0;
 		while (1) {
 			if (!isConcave[i]) {
 				int p1 = indices[previous] << 1, p2 = indices[i] << 1, p3 = indices[next] << 1;
