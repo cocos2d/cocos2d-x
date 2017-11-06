@@ -152,6 +152,7 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
 }
 
 - (void)setVisible:(bool)visible {
+    if (!self.uiWebView) {[self setupWebView];}
     self.uiWebView.hidden = !visible;
 }
 
@@ -160,6 +161,7 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
 }
 
 - (void)setOpacityWebView:(float)opacity {
+    if (!self.uiWebView) {[self setupWebView];}
     self.uiWebView.alpha=opacity;
     [self.uiWebView setOpaque:NO];
 }
@@ -169,6 +171,8 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
 }
 
 -(void) setBackgroundTransparent{
+    if (!self.uiWebView) {[self setupWebView];}
+    [self.uiWebView setOpaque:NO];
     [self.uiWebView setBackgroundColor:[UIColor clearColor]];
 }
 
