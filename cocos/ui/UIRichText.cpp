@@ -1355,6 +1355,7 @@ void RichText::formatText()
     {
         this->removeAllProtectedChildren();
         _elementRenders.clear();
+        _defaultHeights.clear();
         if (_ignoreSize)
         {
             addNewLine();
@@ -1714,8 +1715,15 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
             str.erase(str.begin(), str.begin() + rightStart);
             currentText = utf8Text.getAsCharSequence();
 
-            addNewLine();
+            if (!currentText.empty())
+            {
+                addNewLine();
+                _defaultHeights.back() = fontSize;
+            }
         }
+
+        addNewLine();
+        _defaultHeights.back() = fontSize;
     }
 }
 
@@ -1759,11 +1767,13 @@ void RichText::addNewLine()
 {
     _leftSpaceWidth = _customSize.width;
     _elementRenders.emplace_back();
+    _defaultHeights.emplace_back();
 }
     
 void RichText::formatRenderers()
 {
     float verticalSpace = _defaults[KEY_VERTICAL_SPACE].asFloat();
+    float fontSize = _defaults[KEY_FONT_SIZE].asFloat();
 
     if (_ignoreSize)
     {
@@ -1783,7 +1793,7 @@ void RichText::formatRenderers()
                 Size iSize = iter->getContentSize();
                 newContentSizeWidth += iSize.width;
                 nextPosX += iSize.width;
-                maxY = MAX(maxY, iSize.height);
+                maxY = std::max(maxY, iSize.height);
             }
             nextPosY -= maxY;
             rowWidthPairs.emplace_back(&element, nextPosX);
@@ -1794,6 +1804,13 @@ void RichText::formatRenderers()
     }
     else
     {
+        // erase empty rears
+        while (_elementRenders.back().empty())
+        {
+            _elementRenders.pop_back();
+        }
+
+        // calculate real height
         float newContentSizeHeight = 0.0f;
         std::vector<float> maxHeights(_elementRenders.size());
         
@@ -1803,13 +1820,18 @@ void RichText::formatRenderers()
             float maxHeight = 0.0f;
             for (auto& iter : row)
             {
-                maxHeight = MAX(iter->getContentSize().height, maxHeight);
+                maxHeight = std::max(iter->getContentSize().height, maxHeight);
+            }
+            if (row.empty())
+            {
+                maxHeight = std::max(fontSize, _defaultHeights[i]);
             }
             maxHeights[i] = maxHeight;
             newContentSizeHeight += maxHeights[i] + (i != 0 ? verticalSpace : 0.0f);
         }
         _customSize.height = newContentSizeHeight;
 
+        // align renders
         float nextPosY = _customSize.height;
         for (size_t i=0, size = _elementRenders.size(); i<size; i++)
         {
@@ -1829,6 +1851,7 @@ void RichText::formatRenderers()
     }
     
     _elementRenders.clear();
+    _defaultHeights.clear();
     
     if (_ignoreSize)
     {
