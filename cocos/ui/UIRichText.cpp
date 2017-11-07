@@ -1512,6 +1512,8 @@ namespace {
     int getNextWordPos(const StringUtils::StringUTF8& text, int idx)
     {
         const StringUtils::StringUTF8::CharUTF8Store& str = text.getString();
+        if (idx + 1 >= static_cast<int>(str.size()))
+            return static_cast<int>(str.size());
         auto it = std::find_if(str.begin() + idx + 1, str.end(), isUTF8CharWrappable);
         return static_cast<int>(it - str.begin());
     }
@@ -1579,7 +1581,8 @@ namespace {
                     idx = newidx;
                     continue;
                 }
-                return idx;
+                // protruded ? undo add, or quite fit
+                return (textRendererWidth > originalLeftSpaceWidth ? idx : newidx);
             }
         }
 
