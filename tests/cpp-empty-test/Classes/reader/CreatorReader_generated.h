@@ -116,6 +116,8 @@ struct ColorRGB;
 
 struct ColorRGBA;
 
+struct LabelOutline;
+
 enum FontType {
   FontType_System = 0,
   FontType_BMFont = 1,
@@ -1122,7 +1124,8 @@ struct Label FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_FONTSIZE = 16,
     VT_FONTTYPE = 18,
     VT_OVERFLOWTYPE = 20,
-    VT_ENABLEWRAP = 22
+    VT_ENABLEWRAP = 22,
+    VT_OUTLINE = 24
   };
   const Node *node() const { return GetPointer<const Node *>(VT_NODE); }
   const flatbuffers::String *labelText() const { return GetPointer<const flatbuffers::String *>(VT_LABELTEXT); }
@@ -1134,6 +1137,7 @@ struct Label FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   FontType fontType() const { return static_cast<FontType>(GetField<int8_t>(VT_FONTTYPE, 0)); }
   LabelOverflowType overflowType() const { return static_cast<LabelOverflowType>(GetField<int8_t>(VT_OVERFLOWTYPE, 0)); }
   bool enableWrap() const { return GetField<uint8_t>(VT_ENABLEWRAP, 0) != 0; }
+  const LabelOutline *outline() const { return GetPointer<const LabelOutline *>(VT_OUTLINE); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_NODE) &&
@@ -1149,6 +1153,8 @@ struct Label FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<int8_t>(verifier, VT_FONTTYPE) &&
            VerifyField<int8_t>(verifier, VT_OVERFLOWTYPE) &&
            VerifyField<uint8_t>(verifier, VT_ENABLEWRAP) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_OUTLINE) &&
+           verifier.VerifyTable(outline()) &&
            verifier.EndTable();
   }
 };
@@ -1166,10 +1172,11 @@ struct LabelBuilder {
   void add_fontType(FontType fontType) { fbb_.AddElement<int8_t>(Label::VT_FONTTYPE, static_cast<int8_t>(fontType), 0); }
   void add_overflowType(LabelOverflowType overflowType) { fbb_.AddElement<int8_t>(Label::VT_OVERFLOWTYPE, static_cast<int8_t>(overflowType), 0); }
   void add_enableWrap(bool enableWrap) { fbb_.AddElement<uint8_t>(Label::VT_ENABLEWRAP, static_cast<uint8_t>(enableWrap), 0); }
+  void add_outline(flatbuffers::Offset<LabelOutline> outline) { fbb_.AddOffset(Label::VT_OUTLINE, outline); }
   LabelBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   LabelBuilder &operator=(const LabelBuilder &);
   flatbuffers::Offset<Label> Finish() {
-    auto o = flatbuffers::Offset<Label>(fbb_.EndTable(start_, 10));
+    auto o = flatbuffers::Offset<Label>(fbb_.EndTable(start_, 11));
     return o;
   }
 };
@@ -1184,8 +1191,10 @@ inline flatbuffers::Offset<Label> CreateLabel(flatbuffers::FlatBufferBuilder &_f
     float fontSize = 0.0f,
     FontType fontType = FontType_System,
     LabelOverflowType overflowType = LabelOverflowType_None,
-    bool enableWrap = false) {
+    bool enableWrap = false,
+    flatbuffers::Offset<LabelOutline> outline = 0) {
   LabelBuilder builder_(_fbb);
+  builder_.add_outline(outline);
   builder_.add_fontSize(fontSize);
   builder_.add_fontName(fontName);
   builder_.add_lineHeight(lineHeight);
@@ -1209,8 +1218,9 @@ inline flatbuffers::Offset<Label> CreateLabelDirect(flatbuffers::FlatBufferBuild
     float fontSize = 0.0f,
     FontType fontType = FontType_System,
     LabelOverflowType overflowType = LabelOverflowType_None,
-    bool enableWrap = false) {
-  return CreateLabel(_fbb, node, labelText ? _fbb.CreateString(labelText) : 0, horizontalAlignment, verticalAlignment, lineHeight, fontName ? _fbb.CreateString(fontName) : 0, fontSize, fontType, overflowType, enableWrap);
+    bool enableWrap = false,
+    flatbuffers::Offset<LabelOutline> outline = 0) {
+  return CreateLabel(_fbb, node, labelText ? _fbb.CreateString(labelText) : 0, horizontalAlignment, verticalAlignment, lineHeight, fontName ? _fbb.CreateString(fontName) : 0, fontSize, fontType, overflowType, enableWrap, outline);
 }
 
 struct RichText FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
@@ -3877,6 +3887,43 @@ inline flatbuffers::Offset<AnimPropSkewY> CreateAnimPropSkewYDirect(flatbuffers:
     const char *curveType = nullptr,
     const std::vector<float> *curveData = nullptr) {
   return CreateAnimPropSkewY(_fbb, frame, value, curveType ? _fbb.CreateString(curveType) : 0, curveData ? _fbb.CreateVector<float>(*curveData) : 0);
+}
+
+struct LabelOutline FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_COLOR = 4,
+    VT_WIDTH = 6
+  };
+  const ColorRGBA *color() const { return GetStruct<const ColorRGBA *>(VT_COLOR); }
+  float width() const { return GetField<float>(VT_WIDTH, 0.0f); }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<ColorRGBA>(verifier, VT_COLOR) &&
+           VerifyField<float>(verifier, VT_WIDTH) &&
+           verifier.EndTable();
+  }
+};
+
+struct LabelOutlineBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_color(const ColorRGBA *color) { fbb_.AddStruct(LabelOutline::VT_COLOR, color); }
+  void add_width(float width) { fbb_.AddElement<float>(LabelOutline::VT_WIDTH, width, 0.0f); }
+  LabelOutlineBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  LabelOutlineBuilder &operator=(const LabelOutlineBuilder &);
+  flatbuffers::Offset<LabelOutline> Finish() {
+    auto o = flatbuffers::Offset<LabelOutline>(fbb_.EndTable(start_, 2));
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<LabelOutline> CreateLabelOutline(flatbuffers::FlatBufferBuilder &_fbb,
+    const ColorRGBA *color = 0,
+    float width = 0.0f) {
+  LabelOutlineBuilder builder_(_fbb);
+  builder_.add_width(width);
+  builder_.add_color(color);
+  return builder_.Finish();
 }
 
 inline bool VerifyAnyNode(flatbuffers::Verifier &verifier, const void *union_obj, AnyNode type) {

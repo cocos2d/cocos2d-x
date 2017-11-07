@@ -715,6 +715,14 @@ void CreatorReader::parseLabel(cocos2d::Label* label, const buffers::Label* labe
     label->setHorizontalAlignment(static_cast<cocos2d::TextHAlignment>(horizontalA));
     label->setOverflow(static_cast<cocos2d::Label::Overflow>(overflowType));
     label->enableWrap(enableWrap);
+
+    const auto& outline = labelBuffer->outline();
+    if (outline)
+    {
+        const auto& color = outline->color();
+        label->enableOutline(cocos2d::Color4B(color->r(), color->g(), color->b(), color->a()),
+                             outline->width());
+    }
 }
 
 cocos2d::ui::RichText* CreatorReader::createRichText(const buffers::RichText* richTextBuffer) const
