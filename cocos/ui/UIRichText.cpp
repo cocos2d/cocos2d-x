@@ -1652,11 +1652,27 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
     // split text by \n
     std::stringstream ss(text);
     std::string currentText;
+    size_t realLines = 0;
     while (std::getline(ss, currentText, '\n'))
     {
+        if (realLines > 0)
+        {
+            addNewLine();
+            _defaultHeights.back() = fontSize;
+        }
+        ++realLines;
+
+        size_t splitParts = 0;
         StringUtils::StringUTF8 utf8Text(currentText);
         while (!currentText.empty())
         {
+            if (splitParts > 0)
+            {
+                addNewLine();
+                _defaultHeights.back() = fontSize;
+            }
+            ++splitParts;
+
             Label* textRenderer = fileExist ? Label::createWithTTF(currentText, fontName, fontSize)
                 : Label::createWithSystemFont(currentText, fontName, fontSize);
 
@@ -1714,16 +1730,7 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
             // erase the chars which are processed
             str.erase(str.begin(), str.begin() + rightStart);
             currentText = utf8Text.getAsCharSequence();
-
-            if (!currentText.empty())
-            {
-                addNewLine();
-                _defaultHeights.back() = fontSize;
-            }
         }
-
-        addNewLine();
-        _defaultHeights.back() = fontSize;
     }
 }
 
