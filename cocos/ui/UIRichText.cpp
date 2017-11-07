@@ -1355,7 +1355,7 @@ void RichText::formatText()
     {
         this->removeAllProtectedChildren();
         _elementRenders.clear();
-        _defaultHeights.clear();
+        _lineHeights.clear();
         if (_ignoreSize)
         {
             addNewLine();
@@ -1665,7 +1665,7 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
         if (realLines > 0)
         {
             addNewLine();
-            _defaultHeights.back() = fontSize;
+            _lineHeights.back() = fontSize;
         }
         ++realLines;
 
@@ -1676,7 +1676,7 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
             if (splitParts > 0)
             {
                 addNewLine();
-                _defaultHeights.back() = fontSize;
+                _lineHeights.back() = fontSize;
             }
             ++splitParts;
 
@@ -1781,7 +1781,7 @@ void RichText::addNewLine()
 {
     _leftSpaceWidth = _customSize.width;
     _elementRenders.emplace_back();
-    _defaultHeights.emplace_back();
+    _lineHeights.emplace_back();
 }
     
 void RichText::formatRenderers()
@@ -1836,12 +1836,16 @@ void RichText::formatRenderers()
             {
                 maxHeight = std::max(iter->getContentSize().height, maxHeight);
             }
+
+            // gap for empty line, if _lineHeights[i] == 0, use current RichText's fontSize
             if (row.empty())
             {
-                maxHeight = std::max(fontSize, _defaultHeights[i]);
+                maxHeight = (_lineHeights[i] != 0.0f ? _lineHeights[i] : fontSize);
             }
             maxHeights[i] = maxHeight;
-            newContentSizeHeight += maxHeights[i] + (i != 0 ? verticalSpace : 0.0f);
+
+            // vertical space except for first line
+            newContentSizeHeight += (i != 0 ? maxHeight + verticalSpace : maxHeight);
         }
         _customSize.height = newContentSizeHeight;
 
@@ -1851,7 +1855,7 @@ void RichText::formatRenderers()
         {
             Vector<Node*>& row = _elementRenders[i];
             float nextPosX = 0.0f;
-            nextPosY -= maxHeights[i] + (i != 0 ? verticalSpace : 0.0f);
+            nextPosY -= (i != 0 ? maxHeights[i] + verticalSpace : maxHeights[i]);
             for (auto& iter : row)
             {
                 iter->setAnchorPoint(Vec2::ZERO);
@@ -1865,7 +1869,7 @@ void RichText::formatRenderers()
     }
     
     _elementRenders.clear();
-    _defaultHeights.clear();
+    _lineHeights.clear();
     
     if (_ignoreSize)
     {
