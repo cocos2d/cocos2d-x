@@ -1501,6 +1501,9 @@ namespace {
 
     int getPrevWordPos(const StringUtils::StringUTF8& text, int idx)
     {
+        if (idx <= 0)
+            return -1;
+
         // start from idx-1
         const StringUtils::StringUTF8::CharUTF8Store& str = text.getString();
         auto it = std::find_if(str.rbegin() + (str.size() - idx + 1), str.rend(), isUTF8CharWrappable);
@@ -1514,6 +1517,7 @@ namespace {
         const StringUtils::StringUTF8::CharUTF8Store& str = text.getString();
         if (idx + 1 >= static_cast<int>(str.size()))
             return static_cast<int>(str.size());
+
         auto it = std::find_if(str.begin() + idx + 1, str.end(), isUTF8CharWrappable);
         return static_cast<int>(it - str.begin());
     }
