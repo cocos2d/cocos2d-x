@@ -1638,6 +1638,10 @@ namespace {
                     --leftLength;
                     break;
                 }
+                else if (originalLeftSpaceWidth == textRendererWidth)  // quite fit
+                {
+                    break;
+                }
             }
         }
 
@@ -1818,12 +1822,6 @@ void RichText::formatRenderers()
     }
     else
     {
-        // erase empty rears
-        while (_elementRenders.back().empty())
-        {
-            _elementRenders.pop_back();
-        }
-
         // calculate real height
         float newContentSizeHeight = 0.0f;
         std::vector<float> maxHeights(_elementRenders.size());
