@@ -67,6 +67,23 @@ public class Cocos2dxWebView extends WebView {
 
         this.setWebViewClient(new Cocos2dxWebViewClient());
         this.setWebChromeClient(new WebChromeClient());
+        
+        // handle the key event
+        this.setOnKeyListener(new OnKeyListener() 
+        {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event)
+            {
+                if (keyCode == KeyEvent.KEYCODE_BACK)
+                {
+                    Cocos2dxGLSurfaceView.getInstance().onKeyDown(keyCode, KeyEvent);
+
+                    return true;
+                }
+
+                return false;
+            }
+        });
     }
 
     public void setJavascriptInterfaceScheme(String scheme) {
