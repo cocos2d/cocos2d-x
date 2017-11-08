@@ -76,9 +76,9 @@ public class Cocos2dxWebView extends WebView {
             {
                 if (keyCode == KeyEvent.KEYCODE_BACK)
                 {
-                    Cocos2dxGLSurfaceView.getInstance().onKeyDown(keyCode, KeyEvent)
+                    Cocos2dxGLSurfaceView.getInstance().onKeyDown(keyCode, KeyEvent);
 
-                    return true
+                    return true;
                 }
 
                 return false;
