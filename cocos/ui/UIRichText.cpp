@@ -1355,6 +1355,7 @@ void RichText::formatText()
     {
         this->removeAllProtectedChildren();
         _elementRenders.clear();
+        _lineHeights.clear();
         if (_ignoreSize)
         {
             addNewLine();
@@ -1492,115 +1493,162 @@ void RichText::formatText()
     }
 }
 
-static int getPrevWord(const std::string& text, int idx)
-{
-    // start from idx-1
-    for (int i=idx-1; i>=0; --i)
+namespace {
+    inline bool isUTF8CharWrappable(const StringUtils::StringUTF8::CharUTF8& ch)
     {
-		if (!std::isalnum(text[i], std::locale()))
-            return i;
-    }
-    return -1;
-}
-
-static bool isWrappable(const std::string& text)
-{
-    for (size_t i = 0, size = text.length(); i < size; ++i)
-    {
-        if (!std::isalnum(text[i], std::locale()))
-            return true;
-    }
-    return false;
-}
-
-int RichText::findSplitPositionForWord(cocos2d::Label* label, const std::string& text)
-{
-    auto originalLeftSpaceWidth = _leftSpaceWidth + label->getContentSize().width;
-
-    bool startingNewLine = (_customSize.width == originalLeftSpaceWidth);
-    if (!isWrappable(text))
-    {
-        if (startingNewLine)
-            return (int) text.length();
-        return 0;
+        return (!ch.isASCII() || !std::isalnum(ch._char[0], std::locale()));
     }
 
-    for(int idx = (int)text.size()-1; idx >=0; )
+    int getPrevWordPos(const StringUtils::StringUTF8& text, int idx)
     {
-        int newidx = getPrevWord(text, idx);
-        if (newidx >=0)
+        if (idx <= 0)
+            return -1;
+
+        // start from idx-1
+        const StringUtils::StringUTF8::CharUTF8Store& str = text.getString();
+        auto it = std::find_if(str.rbegin() + (str.size() - idx + 1), str.rend(), isUTF8CharWrappable);
+        if (it == str.rend())
+            return -1;
+        return static_cast<int>(it.base() - str.begin());
+    }
+
+    int getNextWordPos(const StringUtils::StringUTF8& text, int idx)
+    {
+        const StringUtils::StringUTF8::CharUTF8Store& str = text.getString();
+        if (idx + 1 >= static_cast<int>(str.size()))
+            return static_cast<int>(str.size());
+
+        auto it = std::find_if(str.begin() + idx + 1, str.end(), isUTF8CharWrappable);
+        return static_cast<int>(it - str.begin());
+    }
+
+    bool isWrappable(const StringUtils::StringUTF8& text)
+    {
+        const StringUtils::StringUTF8::CharUTF8Store& str = text.getString();
+        return std::any_of(str.begin(), str.end(), isUTF8CharWrappable);
+    }
+
+    int findSplitPositionForWord(Label* label, const StringUtils::StringUTF8& text, float leftSpaceWidth, float newLineWidth)
+    {
+        float textRendererWidth = label->getContentSize().width;
+        float originalLeftSpaceWidth = leftSpaceWidth + textRendererWidth;
+
+        bool startingNewLine = (newLineWidth == originalLeftSpaceWidth);
+        if (!isWrappable(text))
+            return (startingNewLine ? static_cast<int>(text.length()) : 0);
+
+        float overstepPercent = (-leftSpaceWidth) / textRendererWidth;
+        size_t stringLength = text.length();
+
+        // rough estimate
+        int leftLength = stringLength * (1.0f - overstepPercent);
+
+        // The adjustment of the new line position
+        int idx = getNextWordPos(text, leftLength);
+        std::string leftStr = text.getAsCharSequence(0, idx);
+        label->setString(leftStr);
+        textRendererWidth = label->getContentSize().width;
+        if (originalLeftSpaceWidth < textRendererWidth)  // Have protruding
         {
-            idx = newidx;
-            auto leftStr = Helper::getSubStringOfUTF8String(text, 0, idx);
-            label->setString(leftStr);
-            if (label->getContentSize().width <= originalLeftSpaceWidth)
-                return idx;
+            while (1)
+            {
+                // try to erase a word
+                int newidx = getPrevWordPos(text, idx);
+                if (newidx >= 0)
+                {
+                    leftStr = text.getAsCharSequence(0, newidx);
+                    label->setString(leftStr);
+                    textRendererWidth = label->getContentSize().width;
+                    if (textRendererWidth <= originalLeftSpaceWidth)  // is fitted
+                        return newidx;
+                    idx = newidx;
+                    continue;
+                }
+                // newidx < 0 means no prev word
+                return (startingNewLine ? idx : 0);
+            }
         }
-        else
+        else if (textRendererWidth < originalLeftSpaceWidth)  // A wide margin
         {
-            if (startingNewLine)
-                return idx;
-            return 0;
-        }
-    }
-
-    // no spaces... return the original label + size
-    label->setString(text);
-    return (int)text.size();
-}
-
-
-int RichText::findSplitPositionForChar(cocos2d::Label* label, const std::string& text)
-{
-    float textRendererWidth = label->getContentSize().width;
-
-    float overstepPercent = (-_leftSpaceWidth) / textRendererWidth;
-    std::string curText = text;
-    size_t stringLength = StringUtils::getCharacterCountInUTF8String(text);
-
-    // rough estimate
-    int leftLength = stringLength * (1.0f - overstepPercent);
-
-    // The adjustment of the new line position
-    auto originalLeftSpaceWidth = _leftSpaceWidth + textRendererWidth;
-    auto leftStr = Helper::getSubStringOfUTF8String(curText, 0, leftLength);
-    label->setString(leftStr);
-    auto leftWidth = label->getContentSize().width;
-    if (originalLeftSpaceWidth < leftWidth) {
-        // Have protruding
-        for (;;) {
-            leftLength--;
-            leftStr = Helper::getSubStringOfUTF8String(curText, 0, leftLength);
-            label->setString(leftStr);
-            leftWidth = label->getContentSize().width;
-            if (leftWidth <= originalLeftSpaceWidth) {
-                break;
-            }
-            else if (leftLength <= 0) {
-                break;
+            while (1)
+            {
+                // try to append a word
+                int newidx = getNextWordPos(text, idx);
+                leftStr = text.getAsCharSequence(0, newidx);
+                label->setString(leftStr);
+                textRendererWidth = label->getContentSize().width;
+                if (textRendererWidth < originalLeftSpaceWidth)
+                {
+                    // the whole string is tested
+                    if (newidx == static_cast<int>(text.length()))
+                        return newidx;
+                    idx = newidx;
+                    continue;
+                }
+                // protruded ? undo add, or quite fit
+                return (textRendererWidth > originalLeftSpaceWidth ? idx : newidx);
             }
         }
-    }
-    else if (leftWidth < originalLeftSpaceWidth) {
-        // A wide margin
-        for (;;) {
-            leftLength++;
-            leftStr = Helper::getSubStringOfUTF8String(curText, 0, leftLength);
-            label->setString(leftStr);
-            leftWidth = label->getContentSize().width;
-            if (originalLeftSpaceWidth < leftWidth) {
-                leftLength--;
-                break;
-            }
-            else if (static_cast<int>(stringLength) <= leftLength) {
-                break;
-            }
-        }
+
+        return idx;
     }
 
-    if (leftLength < 0)
-        leftLength = (int)text.size()-1;
-    return leftLength;
+    int findSplitPositionForChar(Label* label, const StringUtils::StringUTF8& text, float leftSpaceWidth, float newLineWidth)
+    {
+        float textRendererWidth = label->getContentSize().width;
+        float originalLeftSpaceWidth = leftSpaceWidth + textRendererWidth;
+
+        bool startingNewLine = (newLineWidth == originalLeftSpaceWidth);
+
+        float overstepPercent = (-leftSpaceWidth) / textRendererWidth;
+        int stringLength = static_cast<int>(text.length());
+
+        // rough estimate
+        int leftLength = stringLength * (1.0f - overstepPercent);
+
+        // The adjustment of the new line position
+        std::string leftStr = text.getAsCharSequence(0, leftLength);
+        label->setString(leftStr);
+        textRendererWidth = label->getContentSize().width;
+        if (originalLeftSpaceWidth < textRendererWidth)  // Have protruding
+        {
+            while (leftLength-- > 0)
+            {
+                // try to erase a char
+                auto& ch = text.getString().at(leftLength);
+                leftStr.erase(leftStr.end() - ch._char.length(), leftStr.end());
+                label->setString(leftStr);
+                textRendererWidth = label->getContentSize().width;
+                if (textRendererWidth <= originalLeftSpaceWidth)  // is fitted
+                    break;
+            }
+        }
+        else if (textRendererWidth < originalLeftSpaceWidth)  // A wide margin
+        {
+            while (leftLength < stringLength)
+            {
+                // try to append a char
+                auto& ch = text.getString().at(leftLength);
+                ++leftLength;
+                leftStr.append(ch._char);
+                label->setString(leftStr);
+                textRendererWidth = label->getContentSize().width;
+                if (originalLeftSpaceWidth < textRendererWidth)  // protruded, undo add
+                {
+                    --leftLength;
+                    break;
+                }
+                else if (originalLeftSpaceWidth == textRendererWidth)  // quite fit
+                {
+                    break;
+                }
+            }
+        }
+
+        if (leftLength <= 0)
+            return (startingNewLine) ? 1 : 0;
+        return leftLength;
+    }
 }
 
 void RichText::handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize, const Color3B &color,
@@ -1609,110 +1657,94 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
                                   const Color3B& shadowColor, const cocos2d::Size& shadowOffset, int shadowBlurRadius,
                                   const Color3B& glowColor)
 {
-    auto fileExist = FileUtils::getInstance()->isFileExist(fontName);
-    Label* textRenderer = nullptr;
-    if (fileExist)
-    {
-        textRenderer = Label::createWithTTF(text, fontName, fontSize);
-    } 
-    else
-    {
-        textRenderer = Label::createWithSystemFont(text, fontName, fontSize);
-    }
-    if (flags & RichElementText::ITALICS_FLAG)
-        textRenderer->enableItalics();
-    if (flags & RichElementText::BOLD_FLAG)
-        textRenderer->enableBold();
-    if (flags & RichElementText::UNDERLINE_FLAG)
-        textRenderer->enableUnderline();
-    if (flags & RichElementText::STRIKETHROUGH_FLAG)
-        textRenderer->enableStrikethrough();
-    if (flags & RichElementText::URL_FLAG)
-        textRenderer->addComponent(ListenerComponent::create(textRenderer,
-                                                             url,
-                                                             std::bind(&RichText::openUrl, this, std::placeholders::_1)));
-    if (flags & RichElementText::OUTLINE_FLAG) {
-        textRenderer->enableOutline(Color4B(outlineColor), outlineSize);
-    }
-    if (flags & RichElementText::SHADOW_FLAG) {
-        textRenderer->enableShadow(Color4B(shadowColor), shadowOffset, shadowBlurRadius);
-    }
-    if (flags & RichElementText::GLOW_FLAG) {
-        textRenderer->enableGlow(Color4B(glowColor));
-    }
+    bool fileExist = FileUtils::getInstance()->isFileExist(fontName);
+    RichText::WrapMode wrapMode = static_cast<RichText::WrapMode>(_defaults.at(KEY_WRAP_MODE).asInt());
 
-    float textRendererWidth = textRenderer->getContentSize().width;
-    _leftSpaceWidth -= textRendererWidth;
-    if (_leftSpaceWidth < 0.0f)
+    // split text by \n
+    std::stringstream ss(text);
+    std::string currentText;
+    size_t realLines = 0;
+    while (std::getline(ss, currentText, '\n'))
     {
-        int leftLength = 0;
-        if (static_cast<RichText::WrapMode>(_defaults.at(KEY_WRAP_MODE).asInt()) == WRAP_PER_WORD)
-            leftLength = findSplitPositionForWord(textRenderer, text);
-        else
-            leftLength = findSplitPositionForChar(textRenderer, text);
-
-        //The minimum cut length is 1, otherwise will cause the infinite loop.
-//        if (0 == leftLength) leftLength = 1;
-        std::string leftWords = Helper::getSubStringOfUTF8String(text, 0, leftLength);
-        int rightStart = leftLength;
-        if (std::isspace(text[rightStart], std::locale()))
-            rightStart++;
-        std::string cutWords = Helper::getSubStringOfUTF8String(text, rightStart, text.length() - leftLength);
-        if (leftLength > 0)
+        if (realLines > 0)
         {
-            Label* leftRenderer = nullptr;
-            if (fileExist)
-            {
-                leftRenderer = Label::createWithTTF(Helper::getSubStringOfUTF8String(leftWords, 0, leftLength), fontName, fontSize);
-            }
-            else
-            {
-                leftRenderer = Label::createWithSystemFont(Helper::getSubStringOfUTF8String(leftWords, 0, leftLength), fontName, fontSize);
-            }
-            if (leftRenderer)
-            {
-                leftRenderer->setColor(color);
-                leftRenderer->setOpacity(opacity);
-                pushToContainer(leftRenderer);
-
-                if (flags & RichElementText::ITALICS_FLAG)
-                    leftRenderer->enableItalics();
-                if (flags & RichElementText::BOLD_FLAG)
-                    leftRenderer->enableBold();
-                if (flags & RichElementText::UNDERLINE_FLAG)
-                    leftRenderer->enableUnderline();
-                if (flags & RichElementText::STRIKETHROUGH_FLAG)
-                    leftRenderer->enableStrikethrough();
-                if (flags & RichElementText::URL_FLAG)
-                    leftRenderer->addComponent(ListenerComponent::create(leftRenderer,
-                                                                         url,
-                                                                         std::bind(&RichText::openUrl, this, std::placeholders::_1)));
-                if (flags & RichElementText::OUTLINE_FLAG) {
-                    leftRenderer->enableOutline(Color4B(outlineColor), outlineSize);
-                }
-                if (flags & RichElementText::SHADOW_FLAG) {
-                    leftRenderer->enableShadow(Color4B(shadowColor), shadowOffset, shadowBlurRadius);
-                }
-                if (flags & RichElementText::GLOW_FLAG) {
-                    leftRenderer->enableGlow(Color4B(glowColor));
-                }
-            }
+            addNewLine();
+            _lineHeights.back() = fontSize;
         }
+        ++realLines;
 
-        addNewLine();
-        handleTextRenderer(cutWords, fontName, fontSize, color, opacity, flags, url,
-                           outlineColor, outlineSize,
-                           shadowColor, shadowOffset, shadowBlurRadius,
-                           glowColor);
-    }
-    else
-    {
-        textRenderer->setColor(color);
-        textRenderer->setOpacity(opacity);
-        pushToContainer(textRenderer);
+        size_t splitParts = 0;
+        StringUtils::StringUTF8 utf8Text(currentText);
+        while (!currentText.empty())
+        {
+            if (splitParts > 0)
+            {
+                addNewLine();
+                _lineHeights.back() = fontSize;
+            }
+            ++splitParts;
+
+            Label* textRenderer = fileExist ? Label::createWithTTF(currentText, fontName, fontSize)
+                : Label::createWithSystemFont(currentText, fontName, fontSize);
+
+            if (flags & RichElementText::ITALICS_FLAG)
+                textRenderer->enableItalics();
+            if (flags & RichElementText::BOLD_FLAG)
+                textRenderer->enableBold();
+            if (flags & RichElementText::UNDERLINE_FLAG)
+                textRenderer->enableUnderline();
+            if (flags & RichElementText::STRIKETHROUGH_FLAG)
+                textRenderer->enableStrikethrough();
+            if (flags & RichElementText::URL_FLAG)
+                textRenderer->addComponent(ListenerComponent::create(textRenderer,
+                                                                     url,
+                                                                     std::bind(&RichText::openUrl, this, std::placeholders::_1)));
+            if (flags & RichElementText::OUTLINE_FLAG)
+                textRenderer->enableOutline(Color4B(outlineColor), outlineSize);
+            if (flags & RichElementText::SHADOW_FLAG)
+                textRenderer->enableShadow(Color4B(shadowColor), shadowOffset, shadowBlurRadius);
+            if (flags & RichElementText::GLOW_FLAG)
+                textRenderer->enableGlow(Color4B(glowColor));
+
+            textRenderer->setColor(color);
+            textRenderer->setOpacity(opacity);
+
+            float textRendererWidth = textRenderer->getContentSize().width;
+            _leftSpaceWidth -= textRendererWidth;
+
+            // no splitting
+            if (_leftSpaceWidth >= 0.0f)
+            {
+                pushToContainer(textRenderer);
+                break;
+            }
+
+            int leftLength = 0;
+            if (wrapMode == WRAP_PER_WORD)
+                leftLength = findSplitPositionForWord(textRenderer, utf8Text, _leftSpaceWidth, _customSize.width);
+            else
+                leftLength = findSplitPositionForChar(textRenderer, utf8Text, _leftSpaceWidth, _customSize.width);
+
+            // split string
+            if (leftLength > 0)
+            {
+                textRenderer->setString(utf8Text.getAsCharSequence(0, leftLength));
+                pushToContainer(textRenderer);
+            }
+
+            // skip spaces
+            StringUtils::StringUTF8::CharUTF8Store& str = utf8Text.getString();
+            int rightStart = leftLength;
+            while (rightStart < (int)str.size() && str[rightStart].isASCII() && std::isspace(str[rightStart]._char[0], std::locale()))
+                ++rightStart;
+
+            // erase the chars which are processed
+            str.erase(str.begin(), str.begin() + rightStart);
+            currentText = utf8Text.getAsCharSequence();
+        }
     }
 }
-    
+
 void RichText::handleImageRenderer(const std::string& filePath, const Color3B &/*color*/, GLubyte /*opacity*/, int width, int height, const std::string& url)
 {
     Sprite* imageRenderer = Sprite::create(filePath);
@@ -1753,10 +1785,14 @@ void RichText::addNewLine()
 {
     _leftSpaceWidth = _customSize.width;
     _elementRenders.emplace_back();
+    _lineHeights.emplace_back();
 }
     
 void RichText::formatRenderers()
 {
+    float verticalSpace = _defaults[KEY_VERTICAL_SPACE].asFloat();
+    float fontSize = _defaults[KEY_FONT_SIZE].asFloat();
+
     if (_ignoreSize)
     {
         float newContentSizeWidth = 0.0f;
@@ -1775,7 +1811,7 @@ void RichText::formatRenderers()
                 Size iSize = iter->getContentSize();
                 newContentSizeWidth += iSize.width;
                 nextPosX += iSize.width;
-                maxY = MAX(maxY, iSize.height);
+                maxY = std::max(maxY, iSize.height);
             }
             nextPosY -= maxY;
             rowWidthPairs.emplace_back(&element, nextPosX);
@@ -1786,6 +1822,7 @@ void RichText::formatRenderers()
     }
     else
     {
+        // calculate real height
         float newContentSizeHeight = 0.0f;
         std::vector<float> maxHeights(_elementRenders.size());
         
@@ -1795,19 +1832,28 @@ void RichText::formatRenderers()
             float maxHeight = 0.0f;
             for (auto& iter : row)
             {
-                maxHeight = MAX(iter->getContentSize().height, maxHeight);
+                maxHeight = std::max(iter->getContentSize().height, maxHeight);
+            }
+
+            // gap for empty line, if _lineHeights[i] == 0, use current RichText's fontSize
+            if (row.empty())
+            {
+                maxHeight = (_lineHeights[i] != 0.0f ? _lineHeights[i] : fontSize);
             }
             maxHeights[i] = maxHeight;
-            newContentSizeHeight += maxHeights[i];
+
+            // vertical space except for first line
+            newContentSizeHeight += (i != 0 ? maxHeight + verticalSpace : maxHeight);
         }
-        
+        _customSize.height = newContentSizeHeight;
+
+        // align renders
         float nextPosY = _customSize.height;
         for (size_t i=0, size = _elementRenders.size(); i<size; i++)
         {
             Vector<Node*>& row = _elementRenders[i];
             float nextPosX = 0.0f;
-            nextPosY -= (maxHeights[i] + _defaults.at(KEY_VERTICAL_SPACE).asFloat());
-            
+            nextPosY -= (i != 0 ? maxHeights[i] + verticalSpace : maxHeights[i]);
             for (auto& iter : row)
             {
                 iter->setAnchorPoint(Vec2::ZERO);
@@ -1821,6 +1867,7 @@ void RichText::formatRenderers()
     }
     
     _elementRenders.clear();
+    _lineHeights.clear();
     
     if (_ignoreSize)
     {
