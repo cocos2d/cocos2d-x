@@ -44,7 +44,7 @@ NS_CC_BEGIN
     {\
         if (ptr)\
         {\
-            const_cast<Ref*>(static_cast<const Ref*>(ptr))->retain();\
+            ptr->retain();\
         }\
     \
     }   while (0);
@@ -55,7 +55,7 @@ NS_CC_BEGIN
     {\
         if (ptr)\
         {\
-            const_cast<Ref*>(static_cast<const Ref*>(ptr))->release();\
+            ptr->release();\
         }\
     \
     }   while (0);
@@ -66,7 +66,7 @@ NS_CC_BEGIN
     {\
         if (ptr)\
         {\
-            const_cast<Ref*>(static_cast<const Ref*>(ptr))->release();\
+            ptr->release();\
             ptr = nullptr;\
         }\
     \
@@ -265,9 +265,6 @@ public:
     
 private:
     T * _ptr;
-
-    // NOTE: We can ensure T is derived from cocos2d::Ref at compile time here.
-    static_assert(std::is_base_of<Ref, typename std::remove_const<T>::type>::value, "T must be derived from Ref");
 };
 
 template <class T> inline
