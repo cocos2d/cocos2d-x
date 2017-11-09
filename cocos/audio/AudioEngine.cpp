@@ -210,11 +210,6 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
             profileHelper = &_audioPathProfileHelperMap[profile->name];
             profileHelper->profile = *profile;
         }
-
-//        if (_audioIDInfoMap.size() >= _maxInstances) {
-//            log("Fail to play %s cause by limited max instance of AudioEngine",filePath.c_str());
-//            break;
-//        }
         
         if (_audioIDInfoMap.size() >= _maxInstances) {
             double oldestTimestamp = std::numeric_limits<double>::max();
