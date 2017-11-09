@@ -40,6 +40,9 @@ using std::vector;
 
 namespace spine {
 
+static std::unordered_map<std::string, spSkeletonData*> skeletonDataMap;
+static std::vector<spAtlas*> atlases;
+
 typedef struct _TrackEntryListeners {
     StartListener startListener;
     InterruptListener interruptListener;
@@ -69,6 +72,27 @@ static _TrackEntryListeners* getListeners (spTrackEntry* entry) {
     
 //
 
+SkeletonAnimation* SkeletonAnimation::createWithJsonFileCached (const std::string& skeletonDataFile, const std::string& atlasFile, float scale) {
+    spSkeletonData* skeletonData = NULL;
+    auto iterator = skeletonDataMap.find(skeletonDataFile);
+    if (iterator == skeletonDataMap.end()) {
+        spAtlas* _atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
+        spAttachmentLoader* _attachmentLoader = SUPER(Cocos2dAttachmentLoader_create(_atlas));
+        spSkeletonJson* json = spSkeletonJson_createWithLoader(_attachmentLoader);
+        json->scale = scale;
+        skeletonData = spSkeletonJson_readSkeletonDataFile(json, skeletonDataFile.c_str());
+        CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data.");
+        spSkeletonJson_dispose(json);
+        skeletonDataMap.insert({skeletonDataFile,skeletonData});
+        atlases.push_back(_atlas);
+    }
+    else
+        skeletonData = iterator->second;
+    
+    SkeletonAnimation* node = createWithData(skeletonData, false);
+    return node;
+}
+    
 SkeletonAnimation* SkeletonAnimation::createWithData (spSkeletonData* skeletonData, bool ownsSkeletonData) {
 	SkeletonAnimation* node = new SkeletonAnimation();
 	node->initWithData(skeletonData, ownsSkeletonData);
@@ -104,6 +128,18 @@ SkeletonAnimation* SkeletonAnimation::createWithBinaryFile (const std::string& s
 	node->initWithBinaryFile(skeletonBinaryFile, atlas, scale);
 	node->autorelease();
 	return node;
+}
+
+void SkeletonAnimation::cleanupCache() {
+    for ( auto it = skeletonDataMap.begin(); it != skeletonDataMap.end(); ++it ) {
+        spSkeletonData_dispose( it->second );
+    }
+    
+    for( auto atlas : atlases )
+        spAtlas_dispose(atlas);
+    
+    skeletonDataMap.clear();
+    atlases.clear();
 }
 
 
