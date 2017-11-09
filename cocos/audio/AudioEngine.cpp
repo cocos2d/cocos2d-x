@@ -236,7 +236,7 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
         if (profileHelper)
         {
              if(profileHelper->profile.maxInstances != 0 && profileHelper->audioIDs.size() >= profileHelper->profile.maxInstances){
-                 log("Fail to play %s cause by limited max instance of AudioProfile",filePath.c_str());
+                 log("Fail to play %s cause by limited max instance of AudioProfile", filePath.c_str());
                  break;
              }
              if (profileHelper->profile.minDelay > TIME_DELAY_PRECISION) {
