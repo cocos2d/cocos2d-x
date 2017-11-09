@@ -62,7 +62,8 @@ int Node::__attachedNodeCount = 0;
 // MARK: Constructor, Destructor, Init
 
 Node::Node()
-: _rotationX(0.0f)
+: _isRelativeToWorld(false)
+, _rotationX(0.0f)
 , _rotationY(0.0f)
 , _rotationZ_X(0.0f)
 , _rotationZ_Y(0.0f)
@@ -229,6 +230,16 @@ std::string Node::getDescription() const
 }
 
 // MARK: getters / setters
+
+bool Node::isRelativeToWorld() const
+{
+    return _isRelativeToWorld;
+}
+
+void Node::setIsRelativeToWorld(bool isRelativeToWorld)
+{
+    _isRelativeToWorld = isRelativeToWorld;
+}
 
 float Node::getSkewX() const
 {
@@ -1714,7 +1725,17 @@ const Mat4& Node::getNodeToParentTransform() const
         //move to anchor point first, then rotate
         Mat4::createTranslation(x, y, z, &translation);
         
-        Mat4::createRotation(_rotationQuat, &_transform);
+        _transform = Mat4::IDENTITY;
+
+        if (_isRelativeToWorld && _parent)
+        {
+            _transform = _transform * _parent->getWorldToNodeTransform();
+        }
+
+        Mat4 rotation;
+        Mat4::createRotation(_rotationQuat, &rotation);
+
+        _transform = _transform * rotation;
         
         if (_rotationZ_X != _rotationZ_Y)
         {
