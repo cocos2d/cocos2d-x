@@ -149,6 +149,27 @@ public:
     /// @name Setters & Getters for Graphic Properties
 
     /**
+     * Returns whether the node's transformations are relative to the world
+     * or not.
+     *
+     * @see `setIsRelativeToWorld(bool)`
+     *
+     * @return Whether the node's transformations are relative to the world
+     * or not.
+     */
+    virtual bool isRelativeToWorld() const;
+    
+    /**
+     * This allows making the node transformations relative to the world
+     * instead of relative to the parent node. By default all nodes are
+     * relative to the parent node.
+     *
+     * @param isRelativeToWorld Whether the node's transformations must be
+     * interpreted as relative to the world or not.
+     */
+    virtual void setIsRelativeToWorld(bool isRelativeToWorld);
+
+    /**
      LocalZOrder is the 'key' used to sort the node relative to its siblings.
 
      The Node's parent will sort all its children based on the LocalZOrder value.
@@ -1900,6 +1921,8 @@ private:
     void addChildHelper(Node* child, int localZOrder, int tag, const std::string &name, bool setTag);
     
 protected:
+
+    bool _isRelativeToWorld;
 
     float _rotationX;               ///< rotation on the X-axis
     float _rotationY;               ///< rotation on the Y-axis
