@@ -163,7 +163,7 @@ using namespace cocos2d::experimental::ui;
 {
     if (self.moviePlayer != nullptr)
     {
-        _currentTime = self.moviePlayer.player.currentTime;
+        _currentTime = [self.moviePlayer.player currentTime];
         _paused = true;
         [self.moviePlayer.player pause];
     }
