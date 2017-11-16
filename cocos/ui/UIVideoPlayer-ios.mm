@@ -36,6 +36,7 @@ using namespace cocos2d::experimental::ui;
 #include "platform/CCFileUtils.h"
 
 #include <AVKit/AVPlayerViewController.h>
+#include <AVFoundation/AVPlayer.h>
 #include <CoreGraphics/CGGeometry.h>
 
 @interface UIVideoViewWrapperIos : NSObject
@@ -190,7 +191,7 @@ using namespace cocos2d::experimental::ui;
 {
     if (self.moviePlayer != nullptr)
     {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:self.moviePlayer.player.currentItem];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:[self.moviePlayer.player currentItem]];
         
         // It is more reasonable to invoke `stop` here, but because `stop` will invoke `destroyMoviePlayer` to real stop the video
         // so inoke `pause` here.
@@ -217,7 +218,7 @@ using namespace cocos2d::experimental::ui;
     auto eaglview = (CCEAGLView *) view->getEAGLView();
     [eaglview addSubview:self.moviePlayer.view];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:self.moviePlayer.player.currentItem];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoFinished:) name:AVPlayerItemDidPlayToEndTimeNotification object:[self.moviePlayer.player currentItem]];
 }
 
 -(void) initializeURL:(int)urlType url:(std::string&)url
