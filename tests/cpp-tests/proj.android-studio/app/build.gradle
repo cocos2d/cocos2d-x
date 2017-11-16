@@ -31,6 +31,7 @@ android {
         java.srcDir "src"
         res.srcDir "res"
         manifest.srcFile "AndroidManifest.xml"
+        assets.srcDir "../../Resources"
     }
 
     externalNativeBuild {
@@ -77,8 +78,6 @@ android {
             debuggable true
             jniDebuggable true
             renderscriptDebuggable true
-            minifyEnabled true
-            useProguard false
             externalNativeBuild {
                 ndkBuild {
                     arguments 'NDK_DEBUG=1'
