@@ -69,6 +69,11 @@ public:
     static jobject classloader;
     static std::function<void()> classloaderCallback;
 
+
+    /**
+    @brief Check whether there are proper JniMethodInfo
+    @report error if the condition is not satisfied 
+    */
     template <typename... Ts>
     static void callStaticVoidMethod(const std::string& className, 
                                      const std::string& methodName, 
@@ -85,6 +90,10 @@ public:
         }
     }
 
+    /**
+    @brief Check whether there are proper JniMethodInfo
+    @return true if there are proper JniMethodInfo; otherwise false & report Error.
+    */
     template <typename... Ts>
     static bool callStaticBooleanMethod(const std::string& className, 
                                         const std::string& methodName, 
@@ -103,6 +112,10 @@ public:
         return (jret == JNI_TRUE);
     }
 
+    /**
+    @brief Check whether there are proper JniMethodInfo
+    @return 1 if there are proper JniMethodInfo; otherwise 0 & report Error.
+    */
     template <typename... Ts>
     static int callStaticIntMethod(const std::string& className, 
                                    const std::string& methodName, 
@@ -121,6 +134,10 @@ public:
         return ret;
     }
 
+    /**
+    @brief Check whether there are proper JniMethodInfo
+    @return 1.0 if there are proper JniMethodInfo; otherwise 0.0 & report Error.
+    */
     template <typename... Ts>
     static float callStaticFloatMethod(const std::string& className, 
                                        const std::string& methodName, 
@@ -139,6 +156,10 @@ public:
         return ret;
     }
 
+    /**
+    @brief Check whether there are proper JniMethodInfo in FloatArray
+    @return address of JniMethodInfo if there are proper JniMethodInfo; otherwise nullptr & report Error.
+    */
     template <typename... Ts>
     static float* callStaticFloatArrayMethod(const std::string& className, 
                                        const std::string& methodName, 
@@ -166,6 +187,10 @@ public:
         return nullptr;
     }
 
+    /**
+    @brief Check whether there are proper JniMethodInfo
+    @return JniMethodInfo of Vec3 type if there are proper JniMethodInfo; otherwise garbage Vec3 & report Error.
+    */
     template <typename... Ts>
     static Vec3 callStaticVec3Method(const std::string& className, 
                                        const std::string& methodName, 
@@ -192,6 +217,10 @@ public:
         return ret;
     }
 
+    /**
+    @brief Check whether there are proper JniMethodInfo
+    @return 1.0 if there are proper JniMethodInfo; otherwise 0.0 & report Error.
+    */
     template <typename... Ts>
     static double callStaticDoubleMethod(const std::string& className, 
                                          const std::string& methodName, 
@@ -210,6 +239,10 @@ public:
         return ret;
     }
 
+    /**
+    @brief Check whether there are proper JniMethodInfo
+    @return JniMethodInfo of string type if there are proper JniMethodInfo; otherwise garbage of string type & report Error.
+    */
     template <typename... Ts>
     static std::string callStaticStringMethod(const std::string& className, 
                                               const std::string& methodName, 
