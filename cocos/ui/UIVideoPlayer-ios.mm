@@ -37,6 +37,7 @@ using namespace cocos2d::experimental::ui;
 
 #include <AVKit/AVPlayerViewController.h>
 #include <AVFoundation/AVPlayer.h>
+#include <AVFoundation/AVPlayerItem.h>
 #include <CoreGraphics/CGGeometry.h>
 
 @interface UIVideoViewWrapperIos : NSObject
