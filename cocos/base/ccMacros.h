@@ -296,6 +296,9 @@ CC_ASSERT(__gl_error_code == GL_NO_ERROR, "Error"); \
   #endif
 #else
   #include <sys/param.h>
+  #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    #include <sys/endian.h>
+  #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
   #if ((defined(__LITTLE_ENDIAN__) && !defined(__BIG_ENDIAN__)) || \
          (defined(__BYTE_ORDER) && __BYTE_ORDER == __LITTLE_ENDIAN)) 
     #define CC_LITTLE_ENDIAN 1
