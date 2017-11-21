@@ -222,10 +222,10 @@
 		1A78A5541D1A3D0F00B61B27 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
 		1A78A5551D1A3D1500B61B27 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
 		1A7C8EA81FC3C91C00CE8036 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A7C8EA71FC3C91C00CE8036 /* Images.xcassets */; };
-		1A7C8EAA1FC3C93400CE8036 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A7C8EA91FC3C93400CE8036 /* Images.xcassets */; };
-		1A7C8EAC1FC3C95400CE8036 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A7C8EAB1FC3C95400CE8036 /* Images.xcassets */; };
-		1A7C8EAE1FC3C96800CE8036 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A7C8EAD1FC3C96800CE8036 /* Images.xcassets */; };
-		1A7C8EB01FC3C97C00CE8036 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A7C8EAF1FC3C97B00CE8036 /* Images.xcassets */; };
+		1A7C8EB51FC3CAE500CE8036 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A7C8EA91FC3C93400CE8036 /* Images.xcassets */; };
+		1A7C8EB61FC3CAFF00CE8036 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A7C8EAB1FC3C95400CE8036 /* Images.xcassets */; };
+		1A7C8EB81FC3CB0E00CE8036 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A7C8EAD1FC3C96800CE8036 /* Images.xcassets */; };
+		1A7C8EB91FC3CB1D00CE8036 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A7C8EAF1FC3C97B00CE8036 /* Images.xcassets */; };
 		1AAF534D180E2F4E000584C8 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
 		1AAF5400180E39D4000584C8 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
 		1ABCA28718CD91510087CE3A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
@@ -5491,16 +5491,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1A7C8EAA1FC3C93400CE8036 /* Images.xcassets in Resources */,
-				1A7C8EAC1FC3C95400CE8036 /* Images.xcassets in Resources */,
 				1AE4C2251F6BC470009C71D2 /* LaunchScreen.storyboard in Resources */,
 				1A7C8EA81FC3C91C00CE8036 /* Images.xcassets in Resources */,
-				1A7C8EAE1FC3C96800CE8036 /* Images.xcassets in Resources */,
 				1AE4C2261F6BC470009C71D2 /* LaunchScreenBackground.png in Resources */,
 				185664831B42407B009EF2AE /* script in Resources */,
 				1856648E1B42407B009EF2AE /* src in Resources */,
 				1856648F1B42407B009EF2AE /* project.json in Resources */,
-				1A7C8EB01FC3C97C00CE8036 /* Images.xcassets in Resources */,
 				185664901B42407B009EF2AE /* main.js in Resources */,
 				185664911B42407B009EF2AE /* res in Resources */,
 			);
@@ -5538,6 +5534,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AE4C21D1F6BC0B0009C71D2 /* LaunchScreenBackground.png in Resources */,
+				1A7C8EB51FC3CAE500CE8036 /* Images.xcassets in Resources */,
 				1AC3590418CEC1FB00F37B72 /* bang.png in Resources */,
 				1AC3590A18CEC1FB00F37B72 /* ipadhd in Resources */,
 				1AC3590C18CEC1FB00F37B72 /* iphone in Resources */,
@@ -5552,6 +5549,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AE4C2291F6BC51E009C71D2 /* LaunchScreen.storyboard in Resources */,
+				1A7C8EB81FC3CB0E00CE8036 /* Images.xcassets in Resources */,
 				1AE4C22A1F6BC520009C71D2 /* LaunchScreenBackground.png in Resources */,
 				1AC35D2A18CEDE7200F37B72 /* res in Resources */,
 				1AC35D2C18CEDE7200F37B72 /* src in Resources */,
@@ -5650,6 +5648,7 @@
 				3E2BDAFF19C5E5B40055CDCD /* audio in Resources */,
 				1AC35DEB18CEE65B00F37B72 /* CocosBuilderExample.ccbproj in Resources */,
 				1AC35DCA18CEE65200F37B72 /* animations in Resources */,
+				1A7C8EB91FC3CB1D00CE8036 /* Images.xcassets in Resources */,
 				1AC35DF418CEE65B00F37B72 /* effect1.raw in Resources */,
 				1AC35DD918CEE65200F37B72 /* Shaders in Resources */,
 				1AC35DCF18CEE65200F37B72 /* configs in Resources */,
@@ -5947,6 +5946,7 @@
 				1ACF6A531E4C52660033C137 /* cacert.pem in Resources */,
 				1AC35D0518CED84500F37B72 /* Shaders in Resources */,
 				1AC35CD318CED84500F37B72 /* background.ogg in Resources */,
+				1A7C8EB61FC3CAFF00CE8036 /* Images.xcassets in Resources */,
 				3E2BDB0119C5E5D40055CDCD /* background.wav in Resources */,
 				1AC35CCB18CED84500F37B72 /* animations in Resources */,
 				3EA0FB5E191B92F100B170C8 /* cocosvideo.mp4 in Resources */,
@@ -7360,6 +7360,7 @@
 		185663EB1B4155DD009EF2AE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-js-tests";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -7392,6 +7393,7 @@
 		185663EC1B4155DD009EF2AE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-js-tests";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -7494,6 +7496,7 @@
 		1A0EE41118CDF775004CD58F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-cpp-empty-test";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -7513,6 +7516,7 @@
 		1A0EE41218CDF775004CD58F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-cpp-empty-test";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -7533,6 +7537,7 @@
 		1A0EE47C18CDF799004CD58F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-lua-empty-test";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -7562,6 +7567,7 @@
 		1A0EE47D18CDF799004CD58F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-lua-empty-test";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -7631,6 +7637,7 @@
 		1ABCA2F218CD93590087CE3A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-lua-tests";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -7660,6 +7667,7 @@
 		1ABCA2F318CD93590087CE3A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-lua-tests";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8159,6 +8167,7 @@
 		A07A52271783A1D20073F6A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-cpp-tests";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
@@ -8186,6 +8195,7 @@
 		A07A52281783A1D20073F6A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-cpp-tests";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
