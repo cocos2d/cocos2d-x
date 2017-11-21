@@ -17,6 +17,8 @@
 		1AF87B9D1F6F7C80007BE51C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1AF87B9B1F6F7C7B007BE51C /* LaunchScreen.storyboard */; };
 		1AF87B9E1F6F7C80007BE51C /* LaunchScreenBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AF87B9C1F6F7C7C007BE51C /* LaunchScreenBackground.png */; };
 		294D0D681D0D56F400F7F5D4 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 294D0D671D0D56F400F7F5D4 /* CoreText.framework */; };
+		46A57F391FC3B681001DFCA8 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A57F381FC3B680001DFCA8 /* AVKit.framework */; };
+		46A57F3B1FC3B687001DFCA8 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A57F3A1FC3B687001DFCA8 /* CoreMedia.framework */; };
 		46EFD4681F6A809E00164EE0 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46EFD4671F6A809E00164EE0 /* GameController.framework */; };
 		502380DC17EBB88200990C9B /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 502380DB17EBB88200990C9B /* libcurl.dylib */; };
 		5091731A17ECDF7A00D62437 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 5091731417ECDF7A00D62437 /* Icon-29.png */; };
@@ -158,6 +160,8 @@
 		1AF87B9B1F6F7C7B007BE51C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ios/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1AF87B9C1F6F7C7C007BE51C /* LaunchScreenBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = LaunchScreenBackground.png; path = ios/LaunchScreenBackground.png; sourceTree = "<group>"; };
 		294D0D671D0D56F400F7F5D4 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
+		46A57F381FC3B680001DFCA8 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.1.sdk/System/Library/Frameworks/AVKit.framework; sourceTree = DEVELOPER_DIR; };
+		46A57F3A1FC3B687001DFCA8 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.1.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
 		46EFD4671F6A809E00164EE0 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		502380DB17EBB88200990C9B /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		5091731417ECDF7A00D62437 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-29.png"; path = "ios/Icon-29.png"; sourceTree = "<group>"; };
@@ -242,6 +246,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46A57F3B1FC3B687001DFCA8 /* CoreMedia.framework in Frameworks */,
+				46A57F391FC3B681001DFCA8 /* AVKit.framework in Frameworks */,
 				294D0D681D0D56F400F7F5D4 /* CoreText.framework in Frameworks */,
 				9FA3AE461BE9BBCA00FC9645 /* GameController.framework in Frameworks */,
 				ED545A821B68A21500C3958E /* libiconv.dylib in Frameworks */,
@@ -345,6 +351,8 @@
 		A92275401517C094001B78AA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				46A57F3A1FC3B687001DFCA8 /* CoreMedia.framework */,
+				46A57F381FC3B680001DFCA8 /* AVKit.framework */,
 				46EFD4671F6A809E00164EE0 /* GameController.framework */,
 				294D0D671D0D56F400F7F5D4 /* CoreText.framework */,
 				9FA3AE451BE9BBCA00FC9645 /* GameController.framework */,

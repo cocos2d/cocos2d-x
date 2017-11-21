@@ -743,6 +743,10 @@
 		463D7E7F1D227CAB00EA6BD1 /* Bug-15776.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463D7E7A1D227C3800EA6BD1 /* Bug-15776.cpp */; };
 		46A57F181FBAE727001DFCA8 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A57F171FBAE727001DFCA8 /* AVKit.framework */; };
 		46A57F1A1FBAE72F001DFCA8 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A57F191FBAE72F001DFCA8 /* CoreMedia.framework */; };
+		46A57F2B1FC3B452001DFCA8 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A57F171FBAE727001DFCA8 /* AVKit.framework */; };
+		46A57F2E1FC3B498001DFCA8 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A57F191FBAE72F001DFCA8 /* CoreMedia.framework */; };
+		46A57F2F1FC3B5EC001DFCA8 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A57F171FBAE727001DFCA8 /* AVKit.framework */; };
+		46A57F301FC3B5F2001DFCA8 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A57F191FBAE72F001DFCA8 /* CoreMedia.framework */; };
 		4B5C5BA81CA1147300D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
 		4B5C5BA91CA1147F00D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
 		4B5C5BAB1CA1149900D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5C5BAA1CA1149900D55A14 /* Security.framework */; };
@@ -2343,6 +2347,7 @@
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		46A57F171FBAE727001DFCA8 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.1.sdk/System/Library/Frameworks/AVKit.framework; sourceTree = DEVELOPER_DIR; };
 		46A57F191FBAE72F001DFCA8 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.1.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
+		46A57F2C1FC3B479001DFCA8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.1.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
 		4B5C5BAA1CA1149900D55A14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		4B5C5BB41CA114DB00D55A14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		500D1CD11CF4A48B00535D35 /* Bug-15594.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-15594.cpp"; sourceTree = "<group>"; };
@@ -2591,6 +2596,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46A57F301FC3B5F2001DFCA8 /* CoreMedia.framework in Frameworks */,
+				46A57F2F1FC3B5EC001DFCA8 /* AVKit.framework in Frameworks */,
 				C8DE9E491F0EAECD00B48C6B /* GameController.framework in Frameworks */,
 				294D7D8F1D0E50B2002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BB11CA114C700D55A14 /* Security.framework in Frameworks */,
@@ -2720,6 +2727,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46A57F2E1FC3B498001DFCA8 /* CoreMedia.framework in Frameworks */,
+				46A57F2B1FC3B452001DFCA8 /* AVKit.framework in Frameworks */,
 				294D7D8B1D0E509A002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BAD1CA114AC00D55A14 /* Security.framework in Frameworks */,
 				52B47A351A53A43A004E4C60 /* Security.framework in Frameworks */,
@@ -4500,6 +4509,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				46A57F2C1FC3B479001DFCA8 /* CoreData.framework */,
 				46A57F191FBAE72F001DFCA8 /* CoreMedia.framework */,
 				46A57F171FBAE727001DFCA8 /* AVKit.framework */,
 				C8DE9E481F0EAECD00B48C6B /* GameController.framework */,
