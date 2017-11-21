@@ -3,13 +3,13 @@ import org.apache.tools.ant.taskdefs.condition.Os
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion PROP_SDK_VERSION.toInteger()
+    compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
     buildToolsVersion '27.0.1'
 
     defaultConfig {
         applicationId "org.cocos2dx.performance_tests"
         minSdkVersion PROP_MIN_SDK_VERSION
-        targetSdkVersion PROP_SDK_VERSION
+        targetSdkVersion PROP_TARGET_SDK_VERSION
         versionCode 1
         versionName "1.0"
 
@@ -19,7 +19,7 @@ android {
                     // skip the NDK Build step if PROP_NDK_MODE is none
                     targets 'cocos2dcpp'
                     arguments 'NDK_TOOLCHAIN_VERSION=clang'
-                    arguments 'APP_PLATFORM=android-' + PROP_MIN_SDK_VERSION
+                    arguments 'APP_PLATFORM=android-' + PROP_APP_PLATFORM
                     arguments '-j' + Runtime.runtime.availableProcessors()
                     abiFilters.addAll(PROP_APP_ABI.split(':').collect { it as String })
                 }
