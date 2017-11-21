@@ -41,8 +41,10 @@ if [ -n "$MISSING" ]; then
     TXTCOLOR_DEFAULT="\033[0;m"
     TXTCOLOR_GREEN="\033[0;32m"
     echo -e $TXTCOLOR_GREEN"Missing packages: $MISSING.\nYou may be asked for your password for package installation."$TXTCOLOR_DEFAULT
-    sudo apt-get --force-yes --yes install $MISSING > /dev/null
+    sudo apt-get install --allow-change-held-packages $MISSING -y > /dev/null
 fi
+
+
 
 sudo update-alternatives --remove-all gcc
 sudo update-alternatives --remove-all g++
