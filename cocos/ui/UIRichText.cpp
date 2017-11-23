@@ -1528,26 +1528,17 @@ namespace {
         return std::any_of(str.begin(), str.end(), isUTF8CharWrappable);
     }
 
-    int findSplitPositionForWord(Label* label, const StringUtils::StringUTF8& text, float leftSpaceWidth, float newLineWidth)
+    int findSplitPositionForWord(Label* label, const StringUtils::StringUTF8& text, int estimatedIdx, float originalLeftSpaceWidth, float newLineWidth)
     {
-        float textRendererWidth = label->getContentSize().width;
-        float originalLeftSpaceWidth = leftSpaceWidth + textRendererWidth;
-
         bool startingNewLine = (newLineWidth == originalLeftSpaceWidth);
         if (!isWrappable(text))
             return (startingNewLine ? static_cast<int>(text.length()) : 0);
 
-        float overstepPercent = (-leftSpaceWidth) / textRendererWidth;
-        size_t stringLength = text.length();
-
-        // rough estimate
-        int leftLength = stringLength * (1.0f - overstepPercent);
-
         // The adjustment of the new line position
-        int idx = getNextWordPos(text, leftLength);
+        int idx = getNextWordPos(text, estimatedIdx);
         std::string leftStr = text.getAsCharSequence(0, idx);
         label->setString(leftStr);
-        textRendererWidth = label->getContentSize().width;
+        float textRendererWidth = label->getContentSize().width;
         if (originalLeftSpaceWidth < textRendererWidth)  // Have protruding
         {
             while (1)
@@ -1593,23 +1584,17 @@ namespace {
         return idx;
     }
 
-    int findSplitPositionForChar(Label* label, const StringUtils::StringUTF8& text, float leftSpaceWidth, float newLineWidth)
+    int findSplitPositionForChar(Label* label, const StringUtils::StringUTF8& text, int estimatedIdx, float originalLeftSpaceWidth, float newLineWidth)
     {
-        float textRendererWidth = label->getContentSize().width;
-        float originalLeftSpaceWidth = leftSpaceWidth + textRendererWidth;
-
         bool startingNewLine = (newLineWidth == originalLeftSpaceWidth);
 
-        float overstepPercent = (-leftSpaceWidth) / textRendererWidth;
         int stringLength = static_cast<int>(text.length());
-
-        // rough estimate
-        int leftLength = stringLength * (1.0f - overstepPercent);
+        int leftLength = estimatedIdx;
 
         // The adjustment of the new line position
         std::string leftStr = text.getAsCharSequence(0, leftLength);
         label->setString(leftStr);
-        textRendererWidth = label->getContentSize().width;
+        float textRendererWidth = label->getContentSize().width;
         if (originalLeftSpaceWidth < textRendererWidth)  // Have protruding
         {
             while (leftLength-- > 0)
@@ -1654,7 +1639,7 @@ namespace {
 void RichText::handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize, const Color3B &color,
                                   GLubyte opacity, uint32_t flags, const std::string& url,
                                   const Color3B& outlineColor, int outlineSize ,
-                                  const Color3B& shadowColor, const cocos2d::Size& shadowOffset, int shadowBlurRadius,
+                                  const Color3B& shadowColor, const Size& shadowOffset, int shadowBlurRadius,
                                   const Color3B& glowColor)
 {
     bool fileExist = FileUtils::getInstance()->isFileExist(fontName);
@@ -1709,21 +1694,32 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
             textRenderer->setColor(color);
             textRenderer->setOpacity(opacity);
 
+            // textRendererWidth will get 0.0f, when we've got glError: 0x0501 in Label::getContentSize
+            // It happens when currentText is very very long so that can't generate a texture
             float textRendererWidth = textRenderer->getContentSize().width;
-            _leftSpaceWidth -= textRendererWidth;
 
             // no splitting
-            if (_leftSpaceWidth >= 0.0f)
+            if (textRendererWidth > 0.0f && _leftSpaceWidth >= textRendererWidth)
             {
+                _leftSpaceWidth -= textRendererWidth;
                 pushToContainer(textRenderer);
                 break;
             }
 
+            // rough estimate
+            // when textRendererWidth == 0.0f, use fontSize as the rough estimate of width for each char,
+            //  (_leftSpaceWidth / fontSize) means how many chars can be aligned in leftSpaceWidth.
+            int estimatedIdx = 0;
+            if (textRendererWidth > 0.0f)
+                estimatedIdx = static_cast<int>(_leftSpaceWidth / textRendererWidth * utf8Text.length());
+            else
+                estimatedIdx = static_cast<int>(_leftSpaceWidth / fontSize);
+
             int leftLength = 0;
             if (wrapMode == WRAP_PER_WORD)
-                leftLength = findSplitPositionForWord(textRenderer, utf8Text, _leftSpaceWidth, _customSize.width);
+                leftLength = findSplitPositionForWord(textRenderer, utf8Text, estimatedIdx, _leftSpaceWidth, _customSize.width);
             else
-                leftLength = findSplitPositionForChar(textRenderer, utf8Text, _leftSpaceWidth, _customSize.width);
+                leftLength = findSplitPositionForChar(textRenderer, utf8Text, estimatedIdx, _leftSpaceWidth, _customSize.width);
 
             // split string
             if (leftLength > 0)
@@ -1962,7 +1958,7 @@ void RichText::ignoreContentAdaptWithSize(bool ignore)
         Widget::ignoreContentAdaptWithSize(ignore);
     }
 }
-    
+
 std::string RichText::getDescription() const
 {
     return "RichText";

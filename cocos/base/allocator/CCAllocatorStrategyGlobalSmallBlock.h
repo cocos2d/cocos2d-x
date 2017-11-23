@@ -32,7 +32,7 @@
  Do not use Console::log or any other methods that use NEW inside of this
  allocator. Failure to do so will result in recursive memory allocation.
  ****************************************************************************/
-
+#include <string.h>
 #include "base/allocator/CCAllocatorMacros.h"
 #include "base/allocator/CCAllocatorBase.h"
 #include "base/allocator/CCAllocatorGlobal.h"

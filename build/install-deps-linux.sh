@@ -58,8 +58,7 @@ if [ -n "$MISSING" ]; then
         sudo apt-get install --allow-change-held-packages $MISSING -y > /dev/null
     else
         sudo apt-get install --force-yes --yes $MISSING > /dev/null
-    fi  
-
+    fi 
 fi
 
 

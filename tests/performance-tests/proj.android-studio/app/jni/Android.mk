@@ -42,6 +42,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES := cocos3d_static
 
 include $(BUILD_SHARED_LIBRARY)
 
+$(call import-add-path, $(LOCAL_PATH)/../../../../..)
 $(call import-module, cocos)
 
 # _COCOS_LIB_IMPORT_ANDROID_BEGIN
