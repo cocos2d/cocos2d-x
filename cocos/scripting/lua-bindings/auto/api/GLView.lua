@@ -43,6 +43,12 @@
 -- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
+-- Gets safe area rectangle
+-- @function [parent=#GLView] getSafeAreaRect 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
 -- 
 -- @function [parent=#GLView] getVR 
 -- @param self
