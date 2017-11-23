@@ -2411,6 +2411,16 @@ bool
 },
 
 /**
+ * @method getSafeAreaRect
+ * @return {rect_object}
+ */
+getSafeAreaRect : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method getVR
  * @return {cc.VRIRenderer}
  */
@@ -2772,6 +2782,16 @@ float
 },
 
 /**
+ * @method getDeltaTime
+ * @return {float}
+ */
+getDeltaTime : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getContentScaleFactor
  * @return {float}
  */
@@ -2792,13 +2812,13 @@ getWinSizeInPixels : function (
 },
 
 /**
- * @method getDeltaTime
- * @return {float}
+ * @method getSafeAreaRect
+ * @return {rect_object}
  */
-getDeltaTime : function (
+getSafeAreaRect : function (
 )
 {
-    return 0;
+    return cc.Rect;
 },
 
 /**
