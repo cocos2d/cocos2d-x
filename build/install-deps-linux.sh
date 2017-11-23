@@ -3,7 +3,7 @@
 # Change directory to the location of this script
 echo "This Shell Script will install dependencies for cocos2d-x" 
 echo "if you execute this shell more than once it will get errors when building libGLFW.so"
-echo -n "Is this a good question (y/n)? "
+echo -n "Are you continue? (y/n) "
 read answer
 if echo "$answer" | grep -iq "^y" ;then
     echo "It will take few minutes"
