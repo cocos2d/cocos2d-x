@@ -19,11 +19,11 @@ function install_android_ndk()
         HOST_NAME="linux"
     fi
 
-    NDK_URL= https://dl.google.com/android/repository/android-ndk-r16-linux-x86_64.zip
+    NDK_URL=https://dl.google.com/android/repository/android-ndk-r16-linux-x86_64.zip
 
     curl -O $NDK_URL
     echo "Decompress ndk r16 ..."
-    unzip ./$FILE_NAME -d . > /dev/null
+    unzip ./$NDK_URL -d . > /dev/null
     # Rename ndk
     mv android-ndk-r16 android-ndk
 }
