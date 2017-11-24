@@ -1026,6 +1026,16 @@ void Widget::interceptTouchEvent(cocos2d::ui::Widget::TouchEventType event, coco
         widgetParent->interceptTouchEvent(event,sender,touch);
         widgetParent->_hittedByCamera = nullptr;
     }
+    
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        WidgetInterceptData data((int)event, sender, touch, this);
+        ScriptEvent scriptEvent(kWidgetEvent, &data);
+        if (ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent))
+            return;
+    }
+#endif
 
 }
 

@@ -572,6 +572,8 @@ public:
 
     bool handleKeyboardEvent(void* nativeObj, cocos2d::EventKeyboard::KeyCode keyCode, bool isPressed, cocos2d::Event* event);
     bool handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widgetLoseFocus, cocos2d::ui::Widget* widgetGetFocus);
+    
+    bool handleWidgetInterceptTouchEvent(void* nativeObj, int touchType, cocos2d::ui::Widget* sender, cocos2d::Touch* touch);
 
     void restartVM();
 };

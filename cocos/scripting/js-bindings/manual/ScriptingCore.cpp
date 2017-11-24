@@ -1623,6 +1623,28 @@ bool ScriptingCore::handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widge
     return ret;
 }
 
+bool ScriptingCore::handleWidgetInterceptTouchEvent(void* nativeObj, int touchType, cocos2d::ui::Widget* sender, cocos2d::Touch* touch)
+{
+    JSAutoCompartment ac(_cx, _global->get());
+    
+    js_proxy_t * p = jsb_get_native_proxy(nativeObj);
+    if (nullptr == p)
+        return false;
+    
+    js_type_class_t *typeClassWidget = js_get_type_from_native<cocos2d::ui::Widget>(sender);
+    js_type_class_t *typeClassTouch = js_get_type_from_native<cocos2d::Touch>(touch);
+    
+    jsval args[3] = {
+        int32_to_jsval(_cx, (int32_t)touchType),
+        OBJECT_TO_JSVAL(jsb_get_or_create_weak_jsobject(_cx, sender, typeClassWidget, "cocos2d::ui::Widget")),
+        OBJECT_TO_JSVAL(jsb_get_or_create_weak_jsobject(_cx, touch, typeClassTouch, "cocos2d::Touch"))
+    };
+    
+    bool ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "interceptTouchEvent", 3, args);
+    
+    return ret;
+}
+
 
 int ScriptingCore::executeCustomTouchesEvent(EventTouch::EventCode eventType,
                                        const std::vector<Touch*>& touches, JSObject *obj)
@@ -1734,6 +1756,12 @@ int ScriptingCore::sendEvent(ScriptEvent* evt)
         case kComponentEvent:
             {
                 return handleComponentEvent(evt->data);
+            }
+            break;
+        case kWidgetEvent:
+            {
+                WidgetInterceptData* data = (WidgetInterceptData*)evt->data;
+                return handleWidgetInterceptTouchEvent(data->nativeObject, data->touchType, static_cast<cocos2d::ui::Widget*>(data->sender), data->touch);
             }
             break;
         default:
