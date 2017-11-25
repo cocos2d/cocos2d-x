@@ -438,7 +438,6 @@ Label::~Label()
     if (_fontAtlas)
     {
         Node::removeAllChildrenWithCleanup(true);
-        CC_SAFE_RELEASE_NULL(_reusedLetter);
         _batchNodes.clear();
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
     }
@@ -447,6 +446,7 @@ Label::~Label()
 
     CC_SAFE_RELEASE_NULL(_textSprite);
     CC_SAFE_RELEASE_NULL(_shadowNode);
+    CC_SAFE_RELEASE_NULL(_reusedLetter);
 }
 
 void Label::reset()
