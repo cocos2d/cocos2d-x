@@ -53,13 +53,13 @@ function build_android()
 
     # build cpp-empty-test
     pushd $COCOS2DX_ROOT/tests/cpp-empty-test
-    cocos compile -p android
+    cocos compile -p android --android-studio
     popd
 
     # build cpp-tests
-    src_dir=$COCOS2DX_ROOT/tests/cpp-empty-test/proj.android/obj/
-    dst_dir=$COCOS2DX_ROOT/tests/cpp-tests/proj.android/obj/
-    mkdir $dst_dir
+    src_dir=$COCOS2DX_ROOT/tests/cpp-empty-test/proj.android-studio/app/build/intermediates/ndkBuild
+    dst_dir=$COCOS2DX_ROOT/tests/cpp-tests/proj.android-studio/app/build/intermediates/ndkBuild
+    mkdir -p $dst_dir
     cp -a $src_dir/* $dst_dir
     pushd $COCOS2DX_ROOT/tests/cpp-tests
     cocos compile -p android
@@ -75,9 +75,9 @@ function build_android()
     popd
 
     # build js-tests
-    src_dir=$COCOS2DX_ROOT/tests/lua-tests/project/proj.android/obj/
-    dst_dir=$COCOS2DX_ROOT/tests/js-tests/project/proj.android/obj/
-    mkdir $dst_dir
+    src_dir=$COCOS2DX_ROOT/tests/lua-tests/project/proj.android-studio/app/build/intermediates/ndkBuild
+    dst_dir=$COCOS2DX_ROOT/tests/js-tests/project/proj.android-studio/app/build/intermediates/ndkBuild
+    mkdir -p $dst_dir
     cp -a $src_dir/* $dst_dir
     pushd $COCOS2DX_ROOT/tests/js-tests
     cocos compile -p android
