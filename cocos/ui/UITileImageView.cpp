@@ -187,10 +187,6 @@ void TileImageView::updatePoly()
     
     V3F_C4B_T2F* sliceVertices = new (std::nothrow) V3F_C4B_T2F[quadsCount * vertsStep];
     
-    auto displayedColor = getDisplayedColor();
-    auto displayedOpacity = getDisplayedOpacity();
-    Color4B color4( displayedColor.r, displayedColor.g, displayedColor.b, displayedOpacity );
-    
     int quadIndex = 0;
     for (int hindex = 0; hindex < ceilf(hRepeat); ++hindex) {
         for (int vindex = 0; vindex < ceilf(vRepeat); ++vindex) {
@@ -202,10 +198,10 @@ void TileImageView::updatePoly()
             
             quadIndex += vertsStep;
             
-            quad_bl.colors = color4;
-            quad_br.colors = color4;
-            quad_tl.colors = color4;
-            quad_tr.colors = color4;
+            quad_bl.colors = Color4B::WHITE;
+            quad_br.colors = Color4B::WHITE;
+            quad_tl.colors = Color4B::WHITE;
+            quad_tr.colors = Color4B::WHITE;
             
             float x1 = rectWidth * hindex + offsetLeft;
             float y1 = rectHeight * vindex + offsetBottom;
@@ -264,6 +260,9 @@ void TileImageView::updatePoly()
     PolygonInfo polygonInfo;
     polygonInfo.setTriangles(triangles);
     _imageRenderer->setPolygonInfo(polygonInfo);
+    
+    _imageRenderer->setColor(getDisplayedColor());
+    _imageRenderer->setOpacity(getDisplayedOpacity());
 }
 
 void TileImageView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
