@@ -62,7 +62,7 @@ function build_android()
     mkdir -p $dst_dir
     cp -a $src_dir/* $dst_dir
     pushd $COCOS2DX_ROOT/tests/cpp-tests
-    cocos compile -p android
+    cocos compile -p android --android-studio
     popd
 
     # build lua-tests
@@ -71,7 +71,7 @@ function build_android()
     # mkdir $dst_dir
     # cp -a $src_dir/* $dst_dir
     pushd $COCOS2DX_ROOT/tests/lua-tests
-    cocos compile -p android
+    cocos compile -p android --android-studio
     popd
 
     # build js-tests
@@ -80,7 +80,7 @@ function build_android()
     mkdir -p $dst_dir
     cp -a $src_dir/* $dst_dir
     pushd $COCOS2DX_ROOT/tests/js-tests
-    cocos compile -p android
+    cocos compile -p android --android-studio
     popd
 }
 
