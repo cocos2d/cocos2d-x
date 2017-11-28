@@ -46,6 +46,20 @@ UICCTextField::~UICCTextField()
 {
 }
 
+UICCTextField * UICCTextField::create()
+{
+    UICCTextField *pRet = new (std::nothrow) UICCTextField();
+    
+    if(pRet)
+    {
+        pRet->autorelease();
+        return pRet;
+    }
+    CC_SAFE_DELETE(pRet);
+    
+    return nullptr;
+}
+
 UICCTextField * UICCTextField::create(const std::string& placeholder, const std::string& fontName, float fontSize)
 {
     UICCTextField *pRet = new (std::nothrow) UICCTextField();
@@ -332,7 +346,7 @@ void TextField::onEnter()
 
 void TextField::initRenderer()
 {
-    _textFieldRenderer = UICCTextField::create("input words here", "Thonburi", 20);
+    _textFieldRenderer = UICCTextField::create();
     addProtectedChild(_textFieldRenderer, TEXTFIELD_RENDERER_Z, -1);
 }
 

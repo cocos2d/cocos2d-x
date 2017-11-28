@@ -59,6 +59,13 @@ public:
     virtual void onEnter() override;
     
     /**
+     *@brief Create an empty UICCTextField.
+     
+     *@return A UICCTextField instance.
+     */
+    static UICCTextField* create();
+    
+    /**
      * Create a UICCTextField instance with a placeholder, a fontName and a fontSize.
      *@param placeholder Placeholder in string.
      *@param fontName Font name in string.
