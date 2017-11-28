@@ -31,7 +31,7 @@ NS_CC_BEGIN
 
 GroupCommandManager::GroupCommandManager()
 {
-
+    init();
 }
 
 GroupCommandManager::~GroupCommandManager()
@@ -43,6 +43,7 @@ bool GroupCommandManager::init()
 {
     //0 is the default render group
     _groupMapping[0] = true;
+    _usedIDs.insert(0);
     return true;
 }
 
@@ -54,6 +55,7 @@ int GroupCommandManager::getGroupID()
         int groupID = *_unusedIDs.rbegin();
         _unusedIDs.pop_back();
         _groupMapping[groupID] = true;
+        _usedIDs.insert(groupID);
         return groupID;
     }
 
@@ -61,20 +63,23 @@ int GroupCommandManager::getGroupID()
 //    int newID = _groupMapping.size();
     int newID = Director::getInstance()->getRenderer()->createRenderQueue();
     _groupMapping[newID] = true;
-
+    _usedIDs.insert(newID);
     return newID;
 }
 
 void GroupCommandManager::releaseGroupID(int groupID)
 {
-    _groupMapping[groupID] = false;
-    _unusedIDs.push_back(groupID);
+    if (groupID > 0) {
+        _groupMapping[groupID] = false;
+        _usedIDs.erase(groupID);
+        _unusedIDs.push_back(groupID);
+    }
 }
 
 GroupCommand::GroupCommand()
 {
     _type = RenderCommand::Type::GROUP_COMMAND;
-    _renderQueueID = Director::getInstance()->getRenderer()->getGroupCommandManager()->getGroupID();
+    _renderQueueID = -1;
 }
 
 void GroupCommand::init(float globalOrder)

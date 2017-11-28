@@ -640,9 +640,8 @@ void Renderer::render()
     {
         //Process render commands
         //1. Sort render commands based on ID
-        for (auto &renderqueue : _renderGroups)
-        {
-            renderqueue.sort();
+        for (auto renderQueueID : _groupCommandManager->getUsedIDS()) {
+            _renderGroups[renderQueueID].sort();
         }
         visitRenderQueue(_renderGroups[0]);
     }
@@ -653,16 +652,9 @@ void Renderer::render()
 void Renderer::clean()
 {
     // Clear render group
-    for (size_t j = 0, size = _renderGroups.size() ; j < size; j++)
-    {
-        //commands are owned by nodes
-        // for (const auto &cmd : _renderGroups[j])
-        // {
-        //     cmd->releaseToCommandPool();
-        // }
-        _renderGroups[j].clear();
+    for (auto renderQueueID : _groupCommandManager->getUsedIDS()) {
+        _renderGroups[renderQueueID].clear();
     }
-
     // Clear batch commands
     _queuedTriangleCommands.clear();
     _filledVertex = 0;
