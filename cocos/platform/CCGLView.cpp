@@ -91,7 +91,7 @@ namespace {
 }
 
 //default context attributions are set as follows
-GLContextAttrs GLView::_glContextAttrs = {5, 6, 5, 0, 16, 0};
+GLContextAttrs GLView::_glContextAttrs = {8, 8, 8, 8, 24, 8};
 
 void GLView::setGLContextAttrs(GLContextAttrs& glContextAttrs)
 {
