@@ -18,6 +18,7 @@ matrix:
       android:
         components:
           - android-14
+          - build-tools-27.0.1
     # mac
     - os: osx
       env: BUILD_TARGET=mac
