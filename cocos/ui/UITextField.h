@@ -59,9 +59,9 @@ public:
     virtual void onEnter() override;
     
     /**
-     *@brief Create an empty UICCTextField.
-     
-     *@return A UICCTextField instance.
+     * @brief Create an empty UICCTextField.
+     *
+     * @return A UICCTextField instance.
      */
     static UICCTextField* create();
     
