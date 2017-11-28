@@ -174,9 +174,9 @@ namespace ui {
 
     void EditBoxImplWin::setNativeFont(const char * pFontName, int fontSize)
     {
-        //not implemented yet
+        float factor = Director::getInstance()->getContentScaleFactor();
         this->_fontSize = fontSize;
-        HFONT hFont = CreateFontW(fontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
+        HFONT hFont = CreateFontW(static_cast<int>(fontSize * factor), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
             CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, TEXT("Arial"));
 
         SendMessage(hwndEdit,             // Handle of edit control
