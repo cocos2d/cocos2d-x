@@ -37,13 +37,9 @@ UICCTextField * UICCTextField::create()
     UICCTextField *ret = new (std::nothrow) UICCTextField();
 
     if(ret)
-    {
         ret->autorelease();
-        return ret;
-    }
-    CC_SAFE_DELETE(ret);
 
-    return nullptr;
+    return ret;
 }
     
 UICCTextField::UICCTextField()
