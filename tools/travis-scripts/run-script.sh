@@ -39,6 +39,16 @@ function build_ios()
 
 function build_android()
 {
+
+    #replace NDK to r16
+    # the NDK is used to generate binding codes, should use r16 when fix binding codes with r16
+    cd $HOME/bin
+    curl -O https://dl.google.com/android/repository/android-ndk-r16-linux-x86_64.zip
+    unzip ./android-ndk-r16-linux-x86_64.zip > /dev/null
+    rm -rf ./android-ndk
+    mkdir android-ndk
+    mv android-ndk-r16 android-ndk
+
     # Build all samples
     echo "Building Android samples ..."
     export COCOS_CONSOLE_ROOT=$COCOS2DX_ROOT/tools/cocos2d-console/bin

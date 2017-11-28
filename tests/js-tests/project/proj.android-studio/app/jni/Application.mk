@@ -1,4 +1,4 @@
-APP_STL := gnustl_static
+APP_STL := c++_static
 
 # Uncomment this line to compile to armeabi-v7a, your application will run faster but support less devices
 #APP_ABI := armeabi-v7a
