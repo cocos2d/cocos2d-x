@@ -4669,14 +4669,14 @@ bool
 
 /**
  * @method create
- * @param {String} arg0
- * @param {String} arg1
- * @param {float} arg2
- * @return {ccui.UICCTextField}
- */
-create : function (
-str, 
-str, 
+* @param {String} str
+* @param {String} str
+* @param {float} float
+* @return {ccui.UICCTextField|ccui.UICCTextField}
+*/
+create : function(
+str,
+str,
 float 
 )
 {
