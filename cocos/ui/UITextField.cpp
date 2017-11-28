@@ -32,6 +32,16 @@ NS_CC_BEGIN
 
 namespace ui {
 
+UICCTextField * UICCTextField::create()
+{
+    UICCTextField *ret = new (std::nothrow) UICCTextField();
+
+    if(ret)
+        ret->autorelease();
+
+    return ret;
+}
+    
 UICCTextField::UICCTextField()
 : _maxLengthEnabled(false)
 , _maxLength(0)
@@ -332,7 +342,7 @@ void TextField::onEnter()
 
 void TextField::initRenderer()
 {
-    _textFieldRenderer = UICCTextField::create("input words here", "Thonburi", 20);
+    _textFieldRenderer = UICCTextField::create();
     addProtectedChild(_textFieldRenderer, TEXTFIELD_RENDERER_Z, -1);
 }
 
