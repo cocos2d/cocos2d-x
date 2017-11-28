@@ -47,6 +47,13 @@ class CC_GUI_DLL UICCTextField: public TextFieldTTF, public TextFieldDelegate
 {
 public:
     /**
+     * @brief Create an empty UICCTextField.
+     *
+     * @return A UICCTextField instance.
+     */
+    static UICCTextField* create();
+    
+    /**
      * Default constructor
      */
     UICCTextField();
@@ -57,13 +64,6 @@ public:
     ~UICCTextField();
     
     virtual void onEnter() override;
-    
-    /**
-     * @brief Create an empty UICCTextField.
-     *
-     * @return A UICCTextField instance.
-     */
-    static UICCTextField* create();
     
     /**
      * Create a UICCTextField instance with a placeholder, a fontName and a fontSize.

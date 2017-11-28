@@ -32,6 +32,20 @@ NS_CC_BEGIN
 
 namespace ui {
 
+UICCTextField * UICCTextField::create()
+{
+    UICCTextField *ret = new (std::nothrow) UICCTextField();
+
+    if(ret)
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+
+    return nullptr;
+}
+    
 UICCTextField::UICCTextField()
 : _maxLengthEnabled(false)
 , _maxLength(0)
@@ -44,20 +58,6 @@ UICCTextField::UICCTextField()
 
 UICCTextField::~UICCTextField()
 {
-}
-
-UICCTextField * UICCTextField::create()
-{
-    UICCTextField *pRet = new (std::nothrow) UICCTextField();
-    
-    if(pRet)
-    {
-        pRet->autorelease();
-        return pRet;
-    }
-    CC_SAFE_DELETE(pRet);
-    
-    return nullptr;
 }
 
 UICCTextField * UICCTextField::create(const std::string& placeholder, const std::string& fontName, float fontSize)
