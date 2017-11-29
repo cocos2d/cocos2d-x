@@ -152,27 +152,27 @@ public class Cocos2dxHelper {
 				Log.d(TAG, "android version is lower than 17");
 			}
 
-		nativeSetAudioDeviceInfo(isSupportLowLatency, sampleRate, bufferSizeInFrames);
+			nativeSetAudioDeviceInfo(isSupportLowLatency, sampleRate, bufferSizeInFrames);
 
-		final ApplicationInfo applicationInfo = activity.getApplicationInfo();
+			final ApplicationInfo applicationInfo = activity.getApplicationInfo();
             
-		Cocos2dxHelper.sPackageName = applicationInfo.packageName;
+			Cocos2dxHelper.sPackageName = applicationInfo.packageName;
 
-		Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(activity);
-		Cocos2dxHelper.sAssetManager = activity.getAssets();
-		Cocos2dxHelper.nativeSetContext((Context)activity, Cocos2dxHelper.sAssetManager);
+			Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(activity);
+			Cocos2dxHelper.sAssetManager = activity.getAssets();
+			Cocos2dxHelper.nativeSetContext((Context)activity, Cocos2dxHelper.sAssetManager);
     
-		Cocos2dxBitmap.setContext(activity);
+			Cocos2dxBitmap.setContext(activity);
 
-		Cocos2dxHelper.sVibrateService = (Vibrator)activity.getSystemService(Context.VIBRATOR_SERVICE);
+			Cocos2dxHelper.sVibrateService = (Vibrator)activity.getSystemService(Context.VIBRATOR_SERVICE);
 
-		sInited = true;
+			sInited = true;
             
-		//Enhance API modification begin
-		Intent serviceIntent = new Intent(IGameTuningService.class.getName());
-		serviceIntent.setPackage("com.enhance.gameservice");
-		boolean suc = activity.getApplicationContext().bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE);
-		//Enhance API modification end
+			//Enhance API modification begin
+			Intent serviceIntent = new Intent(IGameTuningService.class.getName());
+			serviceIntent.setPackage("com.enhance.gameservice");
+			boolean suc = activity.getApplicationContext().bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE);
+			//Enhance API modification end
 		}
 	}
     
