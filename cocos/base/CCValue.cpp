@@ -48,6 +48,18 @@ Value::Value(unsigned char v)
     _field.byteVal = v;
 }
 
+Value::Value(short v)
+: _type(Type::SHORT)
+{
+    _field.shortVal = v;
+}
+
+Value::Value(unsigned short v)
+: _type(Type::UNSIGNED_SHORT)
+{
+    _field.unsignedShortVal = v;
+}
+
 Value::Value(int v)
 : _type(Type::INTEGER)
 {
@@ -60,6 +72,30 @@ Value::Value(unsigned int v)
     _field.unsignedVal = v;
 }
 
+Value::Value(long v)
+: _type(Type::LONG)
+{
+    _field.longVal = v;
+}
+
+Value::Value(unsigned long v)
+: _type(Type::UNSIGNED_LONG)
+{
+    _field.unsignedLongVal = v;
+}
+
+Value::Value(long long v)
+: _type(Type::LONG_LONG)
+{
+    _field.longLongVal = v;
+}
+
+Value::Value(unsigned long long v)
+: _type(Type::UNSIGNED_LONG_LONG)
+{
+    _field.unsignedLongLongVal = v;
+}
+
 Value::Value(float v)
 : _type(Type::FLOAT)
 {
@@ -70,6 +106,12 @@ Value::Value(double v)
 : _type(Type::DOUBLE)
 {
     _field.doubleVal = v;
+}
+
+Value::Value(long double v)
+: _type(Type::LONG_DOUBLE)
+{
+    _field.longDoubleVal = v;
 }
 
 Value::Value(bool v)
@@ -163,17 +205,38 @@ Value& Value::operator= (const Value& other)
             case Type::BYTE:
                 _field.byteVal = other._field.byteVal;
                 break;
+            case Type::SHORT:
+                _field.shortVal = other._field.shortVal;
+                break;
+            case Type::UNSIGNED_SHORT:
+                _field.unsignedShortVal = other._field.unsignedShortVal;
+                break;
             case Type::INTEGER:
                 _field.intVal = other._field.intVal;
                 break;
             case Type::UNSIGNED:
                 _field.unsignedVal = other._field.unsignedVal;
                 break;
+            case Type::LONG:
+                _field.longVal = other._field.longVal;
+                break;
+            case Type::UNSIGNED_LONG:
+                _field.unsignedLongVal = other._field.unsignedLongVal;
+                break;
+            case Type::LONG_LONG:
+                _field.longLongVal = other._field.longLongVal;
+                break;
+            case Type::UNSIGNED_LONG_LONG:
+                _field.unsignedLongLongVal = other._field.unsignedLongLongVal;
+                break;
             case Type::FLOAT:
                 _field.floatVal = other._field.floatVal;
                 break;
             case Type::DOUBLE:
                 _field.doubleVal = other._field.doubleVal;
+                break;
+            case Type::LONG_DOUBLE:
+                _field.longDoubleVal = other._field.longDoubleVal;
                 break;
             case Type::BOOLEAN:
                 _field.boolVal = other._field.boolVal;
@@ -223,17 +286,38 @@ Value& Value::operator= (Value&& other)
             case Type::BYTE:
                 _field.byteVal = other._field.byteVal;
                 break;
+            case Type::SHORT:
+                _field.shortVal = other._field.shortVal;
+                break;
+            case Type::UNSIGNED_SHORT:
+                _field.unsignedShortVal = other._field.unsignedShortVal;
+                break;
             case Type::INTEGER:
                 _field.intVal = other._field.intVal;
                 break;
             case Type::UNSIGNED:
                 _field.unsignedVal = other._field.unsignedVal;
                 break;
+            case Type::LONG:
+                _field.longVal = other._field.longVal;
+                break;
+            case Type::UNSIGNED_LONG:
+                _field.unsignedLongVal = other._field.unsignedLongVal;
+                break;
+            case Type::LONG_LONG:
+                _field.longLongVal = other._field.longLongVal;
+                break;
+            case Type::UNSIGNED_LONG_LONG:
+                _field.unsignedLongLongVal = other._field.unsignedLongLongVal;
+                break;
             case Type::FLOAT:
                 _field.floatVal = other._field.floatVal;
                 break;
             case Type::DOUBLE:
                 _field.doubleVal = other._field.doubleVal;
+                break;
+            case Type::LONG_DOUBLE:
+                _field.longDoubleVal = other._field.longDoubleVal;
                 break;
             case Type::BOOLEAN:
                 _field.boolVal = other._field.boolVal;
@@ -269,6 +353,20 @@ Value& Value::operator= (unsigned char v)
     return *this;
 }
 
+Value& Value::operator= (short v)
+{
+    reset(Type::SHORT);
+    _field.shortVal = v;
+    return *this;
+}
+
+Value& Value::operator= (unsigned short v)
+{
+    reset(Type::UNSIGNED_SHORT);
+    _field.unsignedShortVal = v;
+    return *this;
+}
+
 Value& Value::operator= (int v)
 {
     reset(Type::INTEGER);
@@ -283,6 +381,36 @@ Value& Value::operator= (unsigned int v)
     return *this;
 }
 
+Value& Value::operator= (long v)
+{
+    reset(Type::LONG);
+    _field.longVal = v;
+    return *this;
+}
+
+
+Value& Value::operator= (unsigned long v)
+{
+    reset(Type::UNSIGNED_LONG);
+    _field.unsignedLongVal = v;
+    return *this;
+}
+
+Value& Value::operator= (long long v)
+{
+    reset(Type::LONG_LONG);
+    _field.longLongVal = v;
+    return *this;
+}
+
+
+Value& Value::operator= (unsigned long long v)
+{
+    reset(Type::UNSIGNED_LONG_LONG);
+    _field.unsignedLongLongVal = v;
+    return *this;
+}
+
 Value& Value::operator= (float v)
 {
     reset(Type::FLOAT);
@@ -294,6 +422,13 @@ Value& Value::operator= (double v)
 {
     reset(Type::DOUBLE);
     _field.doubleVal = v;
+    return *this;
+}
+
+Value& Value::operator= (long double v)
+{
+    reset(Type::LONG_DOUBLE);
+    _field.longDoubleVal = v;
     return *this;
 }
 
@@ -381,13 +516,20 @@ bool Value::operator== (const Value& v) const
     if (this->isNull()) return true;
     switch (_type)
     {
-        case Type::BYTE:    return v._field.byteVal     == this->_field.byteVal;
-        case Type::INTEGER: return v._field.intVal      == this->_field.intVal;
-        case Type::UNSIGNED:return v._field.unsignedVal == this->_field.unsignedVal;
-        case Type::BOOLEAN: return v._field.boolVal     == this->_field.boolVal;
-        case Type::STRING:  return *v._field.strVal     == *this->_field.strVal;
-        case Type::FLOAT:   return std::abs(v._field.floatVal  - this->_field.floatVal)  <= FLT_EPSILON;
-        case Type::DOUBLE:  return std::abs(v._field.doubleVal - this->_field.doubleVal) <= DBL_EPSILON;
+        case Type::BYTE:                return v._field.byteVal             == this->_field.byteVal;
+        case Type::SHORT:               return v._field.shortVal            == this->_field.shortVal;
+        case Type::UNSIGNED_SHORT:      return v._field.unsignedShortVal    == this->_field.unsignedShortVal;
+        case Type::INTEGER:             return v._field.intVal              == this->_field.intVal;
+        case Type::UNSIGNED:            return v._field.unsignedVal         == this->_field.unsignedVal;
+        case Type::LONG:                return v._field.longVal             == this->_field.longVal;
+        case Type::UNSIGNED_LONG:       return v._field.unsignedLongVal     == this->_field.unsignedLongVal;
+        case Type::LONG_LONG:           return v._field.longLongVal         == this->_field.longLongVal;
+        case Type::UNSIGNED_LONG_LONG:  return v._field.unsignedLongLongVal == this->_field.unsignedLongLongVal;
+        case Type::BOOLEAN:             return v._field.boolVal             == this->_field.boolVal;
+        case Type::STRING:              return *v._field.strVal             == *this->_field.strVal;
+        case Type::FLOAT:               return std::abs(v._field.floatVal       - this->_field.floatVal)        <= FLT_EPSILON;
+        case Type::DOUBLE:              return std::abs(v._field.doubleVal      - this->_field.doubleVal)       <= DBL_EPSILON;
+        case Type::LONG_DOUBLE:         return std::abs(v._field.longDoubleVal  - this->_field.longDoubleVal)   <= LDBL_EPSILON;
         case Type::VECTOR:
         {
             const auto &v1 = *(this->_field.vectorVal);
@@ -443,251 +585,1052 @@ unsigned char Value::asByte() const
 {
     CCASSERT(_type != Type::VECTOR && _type != Type::MAP && _type != Type::INT_KEY_MAP, "Only base type (bool, string, float, double, int) could be converted");
 
-    if (_type == Type::BYTE)
+    switch ( _type )
     {
-        return _field.byteVal;
+        case Type::BYTE:
+            return _field.byteVal;
+            break;
+            
+        case Type::SHORT:
+            return static_cast<unsigned char>(_field.shortVal);
+            break;
+            
+        case Type::UNSIGNED_SHORT:
+            return static_cast<unsigned char>(_field.unsignedShortVal);
+            break;
+            
+        case Type::INTEGER:
+            return static_cast<unsigned char>(_field.intVal);
+            break;
+            
+        case Type::UNSIGNED:
+            return static_cast<unsigned char>(_field.unsignedVal);
+            break;
+            
+        case Type::LONG:
+            return static_cast<unsigned char>(_field.longVal);
+            break;
+            
+        case Type::UNSIGNED_LONG:
+            return static_cast<unsigned char>(_field.unsignedLongVal);
+            break;
+    
+        case Type::LONG_LONG:
+            return static_cast<unsigned char>(_field.longLongVal);
+            break;
+            
+        case Type::UNSIGNED_LONG_LONG:
+            return static_cast<unsigned char>(_field.unsignedLongLongVal);
+            break;
+            
+        case Type::STRING:
+            return static_cast<unsigned char>(atoi(_field.strVal->c_str()));
+            break;
+            
+        case Type::FLOAT:
+            return static_cast<unsigned char>(_field.floatVal);
+            break;
+            
+        case Type::DOUBLE:
+            return static_cast<unsigned char>(_field.doubleVal);
+            break;
+            
+        case Type::LONG_DOUBLE:
+            return static_cast<unsigned char>(_field.longDoubleVal);
+            break;
+            
+        case Type::BOOLEAN:
+            return _field.boolVal ? 1 : 0;
+            break;
+            
+        case Type::NONE:
+        case Type::VECTOR:
+        case Type::MAP:
+        case Type::INT_KEY_MAP:
+            return 0;
+            break;
     }
+}
 
-    if (_type == Type::INTEGER)
+short Value::asShort() const
+{
+    CCASSERT(_type != Type::VECTOR && _type != Type::MAP && _type != Type::INT_KEY_MAP, "Only base type (bool, string, float, double, int) could be converted");
+    
+    switch ( _type )
     {
-        return static_cast<unsigned char>(_field.intVal);
+        case Type::BYTE:
+            return static_cast<short>(_field.byteVal);
+            break;
+            
+        case Type::SHORT:
+            return _field.shortVal;
+            break;
+            
+        case Type::UNSIGNED_SHORT:
+        {
+            CCASSERT(_field.unsignedShortVal < SHRT_MAX, "Can only convert values < SHRT_MAX");
+            return (short)_field.unsignedShortVal;
+            break;
+        }
+            
+        case Type::INTEGER:
+        {
+            CCASSERT(_field.intVal < SHRT_MAX, "Can only convert values < SHRT_MAX");
+            return (short)_field.intVal;
+            break;
+        }
+            
+        case Type::UNSIGNED:
+        {
+            CCASSERT(_field.unsignedVal < SHRT_MAX, "Can only convert values < SHRT_MAX");
+            return (short)_field.unsignedVal;
+            break;
+        }
+            
+        case Type::LONG:
+        {
+            CCASSERT(_field.longVal < SHRT_MAX, "Can only convert values < SHRT_MAX");
+            return (short)_field.longVal;
+            break;
+        }
+            
+        case Type::UNSIGNED_LONG:
+        {
+            CCASSERT(_field.unsignedLongVal < SHRT_MAX, "Can only convert values < SHRT_MAX");
+            return (short)_field.unsignedLongVal;
+            break;
+        }
+            
+        case Type::LONG_LONG:
+        {
+            CCASSERT(_field.longLongVal < SHRT_MAX, "Can only convert values < SHRT_MAX");
+            return (short)_field.longLongVal;
+            break;
+        }
+        case Type::UNSIGNED_LONG_LONG:
+        {
+            CCASSERT(_field.unsignedLongLongVal < SHRT_MAX, "Can only convert values < SHRT_MAX");
+            return (short)_field.unsignedLongLongVal;
+            break;
+        }
+            
+        case Type::STRING:
+            return static_cast<short>(atoi(_field.strVal->c_str()));
+            break;
+            
+        case Type::FLOAT:
+            return static_cast<short>(_field.floatVal);
+            break;
+            
+        case Type::DOUBLE:
+            return static_cast<short>(_field.doubleVal);
+            break;
+            
+        case Type::LONG_DOUBLE:
+            return static_cast<short>(_field.longDoubleVal);
+            break;
+            
+        case Type::BOOLEAN:
+            return _field.boolVal ? 1 : 0;
+            break;
+            
+        case Type::NONE:
+        case Type::VECTOR:
+        case Type::MAP:
+        case Type::INT_KEY_MAP:
+            return 0;
+            break;
     }
+}
 
-    if (_type == Type::UNSIGNED)
+unsigned short Value::asUnsignedShort() const
+{
+    CCASSERT(_type != Type::VECTOR && _type != Type::MAP && _type != Type::INT_KEY_MAP, "Only base type (bool, string, float, double, int) could be converted");
+    
+    switch ( _type )
     {
-        return static_cast<unsigned char>(_field.unsignedVal);
+        case Type::BYTE:
+            return static_cast<unsigned short>(_field.byteVal);
+            break;
+            
+        case Type::SHORT:
+        {
+            CCASSERT(_field.shortVal >= 0, "Only values >= 0 can be converted to unsigned short");
+            return static_cast<unsigned short>(_field.shortVal);
+            break;
+        }
+            
+        case Type::UNSIGNED_SHORT:
+            return _field.unsignedShortVal;
+            break;
+            
+        case Type::INTEGER:
+        {
+            CCASSERT(_field.intVal >= 0, "Only values >= 0 can be converted to unsigned short");
+            CCASSERT(_field.intVal < USHRT_MAX, "Can only convert values < USHRT_MAX");
+            return (unsigned short)_field.intVal;
+            break;
+        }
+            
+        case Type::UNSIGNED:
+        {
+            CCASSERT(_field.unsignedVal < USHRT_MAX, "Can only convert values < USHRT_MAX");
+            return (unsigned short)_field.unsignedVal;
+            break;
+        }
+            
+        case Type::LONG:
+        {
+            CCASSERT(_field.longVal >= 0, "Only values >= 0 can be converted to unsigned short");
+            CCASSERT(_field.longVal < USHRT_MAX, "Can only convert values < USHRT_MAX");
+            return (unsigned short)_field.longVal;
+            break;
+        }
+            
+        case Type::UNSIGNED_LONG:
+        {
+            CCASSERT(_field.unsignedLongVal < USHRT_MAX, "Can only convert values < USHRT_MAX");
+            return (unsigned short)_field.unsignedLongVal;
+            break;
+        }
+            
+        case Type::LONG_LONG:
+        {
+            CCASSERT(_field.longLongVal >= 0, "Only values >= 0 can be converted to unsigned short");
+            CCASSERT(_field.longLongVal < USHRT_MAX, "Can only convert values < USHRT_MAX");
+            return (unsigned short)_field.longLongVal;
+            break;
+        }
+        case Type::UNSIGNED_LONG_LONG:
+        {
+            CCASSERT(_field.unsignedLongLongVal < USHRT_MAX, "Can only convert values < USHRT_MAX");
+            return (unsigned short)_field.unsignedLongLongVal;
+            break;
+        }
+            
+        case Type::STRING:
+            return static_cast<unsigned short>(atoi(_field.strVal->c_str()));
+            break;
+            
+        case Type::FLOAT:
+            return static_cast<unsigned short>(_field.floatVal);
+            break;
+            
+        case Type::DOUBLE:
+            return static_cast<unsigned short>(_field.doubleVal);
+            break;
+            
+        case Type::LONG_DOUBLE:
+            return static_cast<unsigned short>(_field.longDoubleVal);
+            break;
+            
+        case Type::BOOLEAN:
+            return _field.boolVal ? 1u : 0u;
+            break;
+            
+        case Type::NONE:
+        case Type::VECTOR:
+        case Type::MAP:
+        case Type::INT_KEY_MAP:
+            return 0u;
+            break;
     }
-
-    if (_type == Type::STRING)
-    {
-        return static_cast<unsigned char>(atoi(_field.strVal->c_str()));
-    }
-
-    if (_type == Type::FLOAT)
-    {
-        return static_cast<unsigned char>(_field.floatVal);
-    }
-
-    if (_type == Type::DOUBLE)
-    {
-        return static_cast<unsigned char>(_field.doubleVal);
-    }
-
-    if (_type == Type::BOOLEAN)
-    {
-        return _field.boolVal ? 1 : 0;
-    }
-
-    return 0;
 }
 
 int Value::asInt() const
 {
     CCASSERT(_type != Type::VECTOR && _type != Type::MAP && _type != Type::INT_KEY_MAP, "Only base type (bool, string, float, double, int) could be converted");
-    if (_type == Type::INTEGER)
+    
+    switch ( _type )
     {
-        return _field.intVal;
+        case Type::BYTE:
+            return static_cast<int>(_field.byteVal);
+            break;
+            
+        case Type::SHORT:
+            return static_cast<int>(_field.shortVal);
+            break;
+            
+        case Type::UNSIGNED_SHORT:
+            return static_cast<int>(_field.unsignedShortVal);
+            break;
+            
+        case Type::INTEGER:
+            return _field.intVal;
+            break;
+            
+        case Type::UNSIGNED:
+        {
+            CCASSERT(_field.unsignedVal < INT_MAX, "Can only convert values < INT_MAX");
+            return (int)_field.unsignedVal;
+            break;
+        }
+            
+        case Type::LONG:
+        {
+            CCASSERT(_field.longVal < INT_MAX, "Can only convert values < INT_MAX");
+            return (int)_field.longVal;
+            break;
+        }
+            
+        case Type::UNSIGNED_LONG:
+        {
+            CCASSERT(_field.unsignedLongVal < INT_MAX, "Can only convert values < INT_MAX");
+            return (int)_field.unsignedLongVal;
+            break;
+        }
+            
+        case Type::LONG_LONG:
+        {
+            CCASSERT(_field.longLongVal < INT_MAX, "Can only convert values < INT_MAX");
+            return (int)_field.longLongVal;
+            break;
+        }
+            
+        case Type::UNSIGNED_LONG_LONG:
+        {
+            CCASSERT(_field.unsignedLongLongVal < INT_MAX, "Can only convert values < INT_MAX");
+            return (int)_field.unsignedLongLongVal;
+            break;
+        }
+            
+        case Type::STRING:
+            return atoi(_field.strVal->c_str());
+            break;
+            
+        case Type::FLOAT:
+            return static_cast<int>(_field.floatVal);
+            break;
+            
+        case Type::DOUBLE:
+            return static_cast<int>(_field.doubleVal);
+            break;
+            
+        case Type::LONG_DOUBLE:
+            return static_cast<int>(_field.longDoubleVal);
+            break;
+            
+        case Type::BOOLEAN:
+            return _field.boolVal ? 1 : 0;
+            break;
+            
+        case Type::NONE:
+        case Type::VECTOR:
+        case Type::MAP:
+        case Type::INT_KEY_MAP:
+            return 0;
+            break;
     }
-
-    if (_type == Type::UNSIGNED)
-    {
-        CCASSERT(_field.unsignedVal < INT_MAX, "Can only convert values < INT_MAX");
-        return (int)_field.unsignedVal;
-    }
-
-    if (_type == Type::BYTE)
-    {
-        return _field.byteVal;
-    }
-
-    if (_type == Type::STRING)
-    {
-        return atoi(_field.strVal->c_str());
-    }
-
-    if (_type == Type::FLOAT)
-    {
-        return static_cast<int>(_field.floatVal);
-    }
-
-    if (_type == Type::DOUBLE)
-    {
-        return static_cast<int>(_field.doubleVal);
-    }
-
-    if (_type == Type::BOOLEAN)
-    {
-        return _field.boolVal ? 1 : 0;
-    }
-
-    return 0;
 }
-
 
 unsigned int Value::asUnsignedInt() const
 {
     CCASSERT(_type != Type::VECTOR && _type != Type::MAP && _type != Type::INT_KEY_MAP, "Only base type (bool, string, float, double, int) could be converted");
-    if (_type == Type::UNSIGNED)
+    
+    switch ( _type )
     {
-        return _field.unsignedVal;
+        case Type::BYTE:
+            return static_cast<unsigned int>(_field.byteVal);
+            break;
+            
+        case Type::SHORT:
+        {
+            CCASSERT(_field.shortVal >= 0, "Only values >= 0 can be converted to unsigned");
+            return (unsigned int)_field.shortVal;
+            break;
+        }
+            
+        case Type::UNSIGNED_SHORT:
+            return static_cast<unsigned int>(_field.unsignedShortVal);
+            break;
+            
+        case Type::INTEGER:
+        {
+            CCASSERT(_field.intVal >= 0, "Only values >= 0 can be converted to unsigned");
+            return (unsigned int)_field.intVal;
+            break;
+        }
+            
+        case Type::UNSIGNED:
+            return _field.unsignedVal;
+            break;
+            
+        case Type::LONG:
+        {
+            CCASSERT(_field.longVal >= 0, "Only values >= 0 can be converted to unsigned");
+            CCASSERT(_field.longVal < UINT_MAX, "Can only convert values < UINT_MAX");
+            return (unsigned int)_field.longVal;
+            break;
+        }
+            
+        case Type::UNSIGNED_LONG:
+        {
+            CCASSERT(_field.unsignedLongVal < UINT_MAX, "Can only convert values < UINT_MAX");
+            return (unsigned int)_field.unsignedLongVal;
+            break;
+        }
+            
+        case Type::LONG_LONG:
+        {
+            CCASSERT(_field.longLongVal >= 0, "Only values >= 0 can be converted to unsigned");
+            CCASSERT(_field.longLongVal < UINT_MAX, "Can only convert values < UINT_MAX");
+            return (unsigned int)_field.longLongVal;
+            break;
+        }
+            
+        case Type::UNSIGNED_LONG_LONG:
+        {
+            CCASSERT(_field.unsignedLongLongVal < UINT_MAX, "Can only convert values < UINT_MAX");
+            return (unsigned int)_field.unsignedLongLongVal;
+            break;
+        }
+            
+        case Type::STRING:
+            return static_cast<unsigned int>(strtoul(_field.strVal->c_str(), nullptr, 10));
+            break;
+            
+        case Type::FLOAT:
+            return static_cast<unsigned int>(_field.floatVal);
+            break;
+            
+        case Type::DOUBLE:
+            return static_cast<unsigned int>(_field.doubleVal);
+            break;
+            
+        case Type::LONG_DOUBLE:
+            return static_cast<unsigned int>(_field.longDoubleVal);
+            break;
+            
+        case Type::BOOLEAN:
+            return _field.boolVal ? 1u : 0u;
+            break;
+            
+        case Type::NONE:
+        case Type::VECTOR:
+        case Type::MAP:
+        case Type::INT_KEY_MAP:
+            return 0u;
+            break;
     }
+}
 
-    if (_type == Type::INTEGER)
+long Value::asLong() const
+{
+    CCASSERT(_type != Type::VECTOR && _type != Type::MAP && _type != Type::INT_KEY_MAP, "Only base type (bool, string, float, double, int) could be converted");
+    
+    switch ( _type )
     {
-        CCASSERT(_field.intVal >= 0, "Only values >= 0 can be converted to unsigned");
-        return static_cast<unsigned int>(_field.intVal);
+        case Type::BYTE:
+            return static_cast<long>(_field.byteVal);
+            break;
+            
+        case Type::SHORT:
+            return static_cast<long>(_field.shortVal);
+            break;
+            
+        case Type::UNSIGNED_SHORT:
+            return static_cast<long>(_field.unsignedShortVal);
+            break;
+            
+        case Type::INTEGER:
+            return static_cast<long>(_field.intVal);
+            break;
+            
+        case Type::UNSIGNED:
+            return static_cast<long>(_field.unsignedVal);
+            break;
+            
+        case Type::LONG:
+            return _field.longVal;
+            break;
+            
+        case Type::UNSIGNED_LONG:
+        {
+            CCASSERT(_field.unsignedLongVal < LONG_MAX, "Can only convert values < LONG_MAX");
+            return (long)_field.unsignedLongVal;
+            break;
+        }
+            
+        case Type::LONG_LONG:
+        {
+            CCASSERT(_field.longLongVal < LONG_MAX, "Can only convert values < LONG_MAX");
+            return (long)_field.longLongVal;
+            break;
+        }
+            
+        case Type::UNSIGNED_LONG_LONG:
+        {
+            CCASSERT(_field.unsignedLongLongVal < LONG_MAX, "Can only convert values < LONG_MAX");
+            return (long)_field.unsignedLongLongVal;
+            break;
+        }
+            
+        case Type::STRING:
+            return strtol(_field.strVal->c_str(), nullptr, 10);
+            break;
+            
+        case Type::FLOAT:
+            return static_cast<long>(_field.floatVal);
+            break;
+            
+        case Type::DOUBLE:
+            return static_cast<long>(_field.doubleVal);
+            break;
+            
+        case Type::LONG_DOUBLE:
+            return static_cast<long>(_field.longDoubleVal);
+            break;
+            
+        case Type::BOOLEAN:
+            return _field.boolVal ? 1l : 0l;
+            break;
+            
+        case Type::NONE:
+        case Type::VECTOR:
+        case Type::MAP:
+        case Type::INT_KEY_MAP:
+            return 0l;
+            break;
     }
+}
 
-    if (_type == Type::BYTE)
+unsigned long Value::asUnsignedLong() const
+{
+    CCASSERT(_type != Type::VECTOR && _type != Type::MAP && _type != Type::INT_KEY_MAP, "Only base type (bool, string, float, double, int) could be converted");
+    
+    switch ( _type )
     {
-        return static_cast<unsigned int>(_field.byteVal);
+        case Type::BYTE:
+            return static_cast<unsigned long>(_field.byteVal);
+            break;
+            
+        case Type::SHORT:
+        {
+            CCASSERT(_field.shortVal >= 0, "Only values >= 0 can be converted to unsigned long");
+            return (unsigned long)_field.shortVal;
+            break;
+        }
+            
+        case Type::UNSIGNED_SHORT:
+            return static_cast<unsigned long>(_field.unsignedShortVal);
+            break;
+            
+        case Type::INTEGER:
+        {
+            CCASSERT(_field.intVal >= 0, "Only values >= 0 can be converted to unsigned long");
+            return (unsigned long)_field.intVal;
+            break;
+        }
+            
+        case Type::UNSIGNED:
+            return static_cast<unsigned long>(_field.unsignedVal);
+            break;
+            
+        case Type::LONG:
+        {
+            CCASSERT(_field.longVal >= 0, "Only values >= 0 can be converted to unsigned long");
+            return (long)_field.longVal;
+            break;
+        }
+            
+        case Type::UNSIGNED_LONG:
+            return _field.unsignedLongVal;
+            break;
+            
+        case Type::LONG_LONG:
+        {
+            CCASSERT(_field.longLongVal >= 0, "Only values >= 0 can be converted to unsigned long");
+            CCASSERT(_field.longLongVal < LONG_MAX, "Can only convert values < LONG_MAX");
+            return (unsigned long)_field.longLongVal;
+            break;
+        }
+            
+        case Type::UNSIGNED_LONG_LONG:
+        {
+            CCASSERT(_field.unsignedLongLongVal >= 0, "Only values >= 0 can be converted to unsigned long");
+            CCASSERT(_field.unsignedLongLongVal < LONG_MAX, "Can only convert values < LONG_MAX");
+            return (unsigned long)_field.unsignedLongLongVal;
+            break;
+        }
+            
+        case Type::STRING:
+            return strtoul(_field.strVal->c_str(), nullptr, 10);
+            break;
+            
+        case Type::FLOAT:
+            return static_cast<unsigned long>(_field.floatVal);
+            break;
+            
+        case Type::DOUBLE:
+            return static_cast<unsigned long>(_field.doubleVal);
+            break;
+            
+        case Type::LONG_DOUBLE:
+            return static_cast<unsigned long>(_field.longDoubleVal);
+            break;
+            
+        case Type::BOOLEAN:
+            return _field.boolVal ? 1ul : 0ul;
+            break;
+            
+        case Type::NONE:
+        case Type::VECTOR:
+        case Type::MAP:
+        case Type::INT_KEY_MAP:
+            return 0ul;
+            break;
     }
+}
 
-    if (_type == Type::STRING)
+long long Value::asLongLong() const
+{
+    CCASSERT(_type != Type::VECTOR && _type != Type::MAP && _type != Type::INT_KEY_MAP, "Only base type (bool, string, float, double, int) could be converted");
+    
+    switch ( _type )
     {
-        // NOTE: strtoul is required (need to augment on unsupported platforms)
-        return static_cast<unsigned int>(strtoul(_field.strVal->c_str(), nullptr, 10));
+        case Type::BYTE:
+            return static_cast<long long>(_field.byteVal);
+            break;
+            
+        case Type::SHORT:
+            return static_cast<long long>(_field.shortVal);
+            break;
+            
+        case Type::UNSIGNED_SHORT:
+            return static_cast<long long>(_field.unsignedShortVal);
+            break;
+            
+        case Type::INTEGER:
+            return static_cast<long long>(_field.intVal);
+            break;
+            
+        case Type::UNSIGNED:
+            return static_cast<long long>(_field.unsignedVal);
+            break;
+            
+        case Type::LONG:
+            return static_cast<long long>(_field.longVal);
+            break;
+            
+        case Type::UNSIGNED_LONG:
+            return static_cast<long long>(_field.unsignedLongVal);
+            break;
+            
+        case Type::LONG_LONG:
+            return _field.longLongVal;
+            break;
+            
+        case Type::UNSIGNED_LONG_LONG:
+        {
+            CCASSERT(_field.unsignedLongLongVal < LLONG_MAX, "Can only convert values < LLONG_MAX");
+            return (long long)_field.unsignedLongLongVal;
+            break;
+        }
+            
+        case Type::STRING:
+            return strtoll(_field.strVal->c_str(), nullptr, 10);
+            break;
+            
+        case Type::FLOAT:
+            return static_cast<long long>(_field.floatVal);
+            break;
+            
+        case Type::DOUBLE:
+            return static_cast<long long>(_field.doubleVal);
+            break;
+            
+        case Type::LONG_DOUBLE:
+            return static_cast<long long>(_field.longDoubleVal);
+            break;
+            
+        case Type::BOOLEAN:
+            return _field.boolVal ? 1ll : 0ll;
+            break;
+            
+        case Type::NONE:
+        case Type::VECTOR:
+        case Type::MAP:
+        case Type::INT_KEY_MAP:
+            return 0ll;
+            break;
     }
+}
 
-    if (_type == Type::FLOAT)
+unsigned long long Value::asUnsignedLongLong() const
+{
+    CCASSERT(_type != Type::VECTOR && _type != Type::MAP && _type != Type::INT_KEY_MAP, "Only base type (bool, string, float, double, int) could be converted");
+    
+    switch ( _type )
     {
-        return static_cast<unsigned int>(_field.floatVal);
+        case Type::BYTE:
+            return static_cast<unsigned long long>(_field.byteVal);
+            break;
+            
+        case Type::SHORT:
+        {
+            CCASSERT(_field.shortVal >= 0, "Only values >= 0 can be converted to unsigned long long");
+            return (unsigned long long)_field.shortVal;
+            break;
+        }
+            
+        case Type::UNSIGNED_SHORT:
+            return static_cast<unsigned long long>(_field.unsignedShortVal);
+            break;
+            
+        case Type::INTEGER:
+        {
+            CCASSERT(_field.intVal >= 0, "Only values >= 0 can be converted to unsigned long long");
+            return (unsigned long long)_field.intVal;
+            break;
+        }
+            
+        case Type::UNSIGNED:
+            return static_cast<unsigned long long>(_field.unsignedVal);
+            break;
+            
+        case Type::LONG:
+        {
+            CCASSERT(_field.longVal >= 0, "Only values >= 0 can be converted to unsigned long long");
+            return (long long)_field.longVal;
+            break;
+        }
+            
+        case Type::UNSIGNED_LONG:
+            return static_cast<unsigned long long>(_field.unsignedLongVal);
+            break;
+            
+        case Type::LONG_LONG:
+        {
+            CCASSERT(_field.longLongVal >= 0, "Only values >= 0 can be converted to unsigned long long");
+            CCASSERT(_field.longLongVal < LLONG_MAX, "Can only convert values < LLONG_MAX");
+            return (unsigned long long)_field.longLongVal;
+            break;
+        }
+            
+        case Type::UNSIGNED_LONG_LONG:
+            return _field.unsignedLongLongVal;
+            break;
+            
+        case Type::STRING:
+            return strtoull(_field.strVal->c_str(), nullptr, 10);
+            break;
+            
+        case Type::FLOAT:
+            return static_cast<unsigned long long>(_field.floatVal);
+            break;
+            
+        case Type::DOUBLE:
+            return static_cast<unsigned long long>(_field.doubleVal);
+            break;
+            
+        case Type::LONG_DOUBLE:
+            return static_cast<unsigned long long>(_field.longDoubleVal);
+            break;
+            
+        case Type::BOOLEAN:
+            return _field.boolVal ? 1ull : 0ull;
+            break;
+            
+        case Type::NONE:
+        case Type::VECTOR:
+        case Type::MAP:
+        case Type::INT_KEY_MAP:
+            return 0ull;
+            break;
     }
-
-    if (_type == Type::DOUBLE)
-    {
-        return static_cast<unsigned int>(_field.doubleVal);
-    }
-
-    if (_type == Type::BOOLEAN)
-    {
-        return _field.boolVal ? 1u : 0u;
-    }
-
-    return 0u;
 }
 
 float Value::asFloat() const
 {
     CCASSERT(_type != Type::VECTOR && _type != Type::MAP && _type != Type::INT_KEY_MAP, "Only base type (bool, string, float, double, int) could be converted");
-    if (_type == Type::FLOAT)
+    
+    switch ( _type )
     {
-        return _field.floatVal;
+        case Type::BYTE:
+            return static_cast<float>(_field.byteVal);
+            break;
+            
+        case Type::SHORT:
+            return static_cast<float>(_field.shortVal);
+            break;
+            
+        case Type::UNSIGNED_SHORT:
+            return static_cast<float>(_field.unsignedShortVal);
+            break;
+            
+        case Type::INTEGER:
+            return static_cast<float>(_field.intVal);
+            break;
+            
+        case Type::UNSIGNED:
+            return static_cast<float>(_field.unsignedVal);
+            break;
+            
+        case Type::LONG:
+            return static_cast<float>(_field.longVal);
+            break;
+            
+        case Type::UNSIGNED_LONG:
+            return static_cast<float>(_field.unsignedLongVal);
+            break;
+            
+        case Type::LONG_LONG:
+            return static_cast<float>(_field.longLongVal);
+            break;
+            
+        case Type::UNSIGNED_LONG_LONG:
+            return static_cast<float>(_field.unsignedLongLongVal);
+            break;
+            
+        case Type::STRING:
+            return utils::atof(_field.strVal->c_str());
+            break;
+            
+        case Type::FLOAT:
+            return _field.floatVal;
+            break;
+            
+        case Type::DOUBLE:
+        {
+            CCASSERT(_field.doubleVal < FLT_MAX, "Can only convert values < FLT_MAX");
+            return static_cast<float>(_field.doubleVal);
+            break;
+        }
+        
+        case Type::LONG_DOUBLE:
+        {
+            CCASSERT(_field.longDoubleVal < FLT_MAX, "Can only convert values < FLT_MAX");
+            return static_cast<float>(_field.longDoubleVal);
+            break;
+        }
+            
+        case Type::BOOLEAN:
+            return _field.boolVal ? 1.0f : 0.0f;
+            break;
+            
+        case Type::NONE:
+        case Type::VECTOR:
+        case Type::MAP:
+        case Type::INT_KEY_MAP:
+            return 0.0f;
+            break;
     }
-
-    if (_type == Type::BYTE)
-    {
-        return static_cast<float>(_field.byteVal);
-    }
-
-    if (_type == Type::STRING)
-    {
-        return utils::atof(_field.strVal->c_str());
-    }
-
-    if (_type == Type::INTEGER)
-    {
-        return static_cast<float>(_field.intVal);
-    }
-
-    if (_type == Type::UNSIGNED)
-    {
-        return static_cast<float>(_field.unsignedVal);
-    }
-
-    if (_type == Type::DOUBLE)
-    {
-        return static_cast<float>(_field.doubleVal);
-    }
-
-    if (_type == Type::BOOLEAN)
-    {
-        return _field.boolVal ? 1.0f : 0.0f;
-    }
-
-    return 0.0f;
 }
 
 double Value::asDouble() const
 {
     CCASSERT(_type != Type::VECTOR && _type != Type::MAP && _type != Type::INT_KEY_MAP, "Only base type (bool, string, float, double, int) could be converted");
-    if (_type == Type::DOUBLE)
+    
+    switch ( _type )
     {
-        return _field.doubleVal;
+        case Type::BYTE:
+            return static_cast<double>(_field.byteVal);
+            break;
+            
+        case Type::SHORT:
+            return static_cast<double>(_field.shortVal);
+            break;
+            
+        case Type::UNSIGNED_SHORT:
+            return static_cast<double>(_field.unsignedShortVal);
+            break;
+            
+        case Type::INTEGER:
+            return static_cast<double>(_field.intVal);
+            break;
+            
+        case Type::UNSIGNED:
+            return static_cast<double>(_field.unsignedVal);
+            break;
+            
+        case Type::LONG:
+            return static_cast<double>(_field.longVal);
+            break;
+            
+        case Type::UNSIGNED_LONG:
+            return static_cast<double>(_field.unsignedLongVal);
+            break;
+            
+        case Type::LONG_LONG:
+            return static_cast<double>(_field.longLongVal);
+            break;
+            
+        case Type::UNSIGNED_LONG_LONG:
+            return static_cast<double>(_field.unsignedLongLongVal);
+            break;
+            
+        case Type::STRING:
+            return utils::atof(_field.strVal->c_str());
+            break;
+            
+        case Type::FLOAT:
+            return static_cast<double>(_field.floatVal);
+            break;
+            
+        case Type::DOUBLE:
+            return _field.doubleVal;
+            break;
+            
+        case Type::LONG_DOUBLE:
+        {
+            CCASSERT(_field.longDoubleVal < DBL_MAX, "Can only convert values < DBL_MAX");
+            return static_cast<double>(_field.longDoubleVal);
+            break;
+        }
+        
+        case Type::BOOLEAN:
+            return _field.boolVal ? 1.0 : 0.0;
+            break;
+            
+        case Type::NONE:
+        case Type::VECTOR:
+        case Type::MAP:
+        case Type::INT_KEY_MAP:
+            return 0.0;
+            break;
     }
+}
 
-    if (_type == Type::BYTE)
+long double Value::asLongDouble() const
+{
+    CCASSERT(_type != Type::VECTOR && _type != Type::MAP && _type != Type::INT_KEY_MAP, "Only base type (bool, string, float, double, int) could be converted");
+    
+    switch ( _type )
     {
-        return static_cast<double>(_field.byteVal);
+        case Type::BYTE:
+            return static_cast<long double>(_field.byteVal);
+            break;
+            
+        case Type::SHORT:
+            return static_cast<long double>(_field.shortVal);
+            break;
+            
+        case Type::UNSIGNED_SHORT:
+            return static_cast<long double>(_field.unsignedShortVal);
+            break;
+            
+        case Type::INTEGER:
+            return static_cast<long double>(_field.intVal);
+            break;
+            
+        case Type::UNSIGNED:
+            return static_cast<long double>(_field.unsignedVal);
+            break;
+            
+        case Type::LONG:
+            return static_cast<long double>(_field.longVal);
+            break;
+            
+        case Type::UNSIGNED_LONG:
+            return static_cast<long double>(_field.unsignedLongVal);
+            break;
+            
+        case Type::LONG_LONG:
+            return static_cast<long double>(_field.longLongVal);
+            break;
+            
+        case Type::UNSIGNED_LONG_LONG:
+            return static_cast<long double>(_field.unsignedLongLongVal);
+            break;
+            
+        case Type::STRING:
+            return static_cast<long double>(utils::atof(_field.strVal->c_str()));
+            break;
+            
+        case Type::FLOAT:
+            return static_cast<long double>(_field.floatVal);
+            break;
+            
+        case Type::DOUBLE:
+            return static_cast<long double>(_field.doubleVal);
+            break;
+            
+        case Type::LONG_DOUBLE:
+            return _field.longDoubleVal;
+            break;
+            
+        case Type::BOOLEAN:
+            return _field.boolVal ? 1.0l : 0.0l;
+            break;
+            
+        case Type::NONE:
+        case Type::VECTOR:
+        case Type::MAP:
+        case Type::INT_KEY_MAP:
+            return 0.0l;
+            break;
     }
-
-    if (_type == Type::STRING)
-    {
-        return static_cast<double>(utils::atof(_field.strVal->c_str()));
-    }
-
-    if (_type == Type::INTEGER)
-    {
-        return static_cast<double>(_field.intVal);
-    }
-
-    if (_type == Type::UNSIGNED)
-    {
-        return static_cast<double>(_field.unsignedVal);
-    }
-
-    if (_type == Type::FLOAT)
-    {
-        return static_cast<double>(_field.floatVal);
-    }
-
-    if (_type == Type::BOOLEAN)
-    {
-        return _field.boolVal ? 1.0 : 0.0;
-    }
-
-    return 0.0;
 }
 
 bool Value::asBool() const
 {
     CCASSERT(_type != Type::VECTOR && _type != Type::MAP && _type != Type::INT_KEY_MAP, "Only base type (bool, string, float, double, int) could be converted");
-    if (_type == Type::BOOLEAN)
+    
+    switch ( _type )
     {
-        return _field.boolVal;
+        case Type::BYTE:
+            return _field.byteVal != 0;
+            break;
+            
+        case Type::SHORT:
+            return _field.shortVal != 0;
+            break;
+            
+        case Type::UNSIGNED_SHORT:
+            return _field.unsignedShortVal != 0;
+            break;
+            
+        case Type::INTEGER:
+            return _field.intVal != 0;
+            break;
+            
+        case Type::UNSIGNED:
+            return _field.unsignedVal != 0;
+            break;
+            
+        case Type::LONG:
+            return _field.longVal != 0;
+            break;
+            
+        case Type::UNSIGNED_LONG:
+            return _field.unsignedLongVal != 0;
+            break;
+            
+        case Type::LONG_LONG:
+            return _field.longLongVal != 0;
+            break;
+            
+        case Type::UNSIGNED_LONG_LONG:
+            return _field.unsignedLongLongVal != 0;
+            break;
+            
+        case Type::STRING:
+            return (*_field.strVal == "0" || *_field.strVal == "false") ? false : true;
+            break;
+            
+        case Type::FLOAT:
+            return _field.floatVal != 0.0f;
+            break;
+            
+        case Type::DOUBLE:
+            return _field.doubleVal != 0.0f;
+            break;
+            
+        case Type::LONG_DOUBLE:
+            return _field.longDoubleVal != 0.0f;
+            break;
+            
+        case Type::BOOLEAN:
+            return _field.boolVal;
+            break;
+            
+        case Type::NONE:
+        case Type::VECTOR:
+        case Type::MAP:
+        case Type::INT_KEY_MAP:
+            return false;
+            break;
     }
-
-    if (_type == Type::BYTE)
-    {
-        return _field.byteVal == 0 ? false : true;
-    }
-
-    if (_type == Type::STRING)
-    {
-        return (*_field.strVal == "0" || *_field.strVal == "false") ? false : true;
-    }
-
-    if (_type == Type::INTEGER)
-    {
-        return _field.intVal == 0 ? false : true;
-    }
-
-    if (_type == Type::UNSIGNED)
-    {
-        return _field.unsignedVal == 0 ? false : true;
-    }
-
-    if (_type == Type::FLOAT)
-    {
-        return _field.floatVal == 0.0f ? false : true;
-    }
-
-    if (_type == Type::DOUBLE)
-    {
-        return _field.doubleVal == 0.0 ? false : true;
-    }
-
-    return false;
 }
 
 std::string Value::asString() const
@@ -706,11 +1649,29 @@ std::string Value::asString() const
         case Type::BYTE:
             ret << _field.byteVal;
             break;
+        case Type::SHORT:
+            ret << _field.shortVal;
+            break;
+        case Type::UNSIGNED_SHORT:
+            ret << _field.unsignedShortVal;
+            break;
         case Type::INTEGER:
             ret << _field.intVal;
             break;
         case Type::UNSIGNED:
             ret << _field.unsignedVal;
+            break;
+        case Type::LONG:
+            ret << _field.longVal;
+            break;
+        case Type::UNSIGNED_LONG:
+            ret << _field.unsignedLongVal;
+            break;
+        case Type::LONG_LONG:
+            ret << _field.longLongVal;
+            break;
+        case Type::UNSIGNED_LONG_LONG:
+            ret << _field.unsignedLongLongVal;
             break;
         case Type::FLOAT:
             ret << std::fixed << std::setprecision( 7 )<< _field.floatVal;
@@ -718,10 +1679,18 @@ std::string Value::asString() const
         case Type::DOUBLE:
             ret << std::fixed << std::setprecision( 16 ) << _field.doubleVal;
             break;
+        case Type::LONG_DOUBLE:
+            ret << std::fixed << std::setprecision( 32 ) << _field.longDoubleVal;
+            break;
         case Type::BOOLEAN:
             ret << (_field.boolVal ? "true" : "false");
             break;
-        default:
+            
+        case Type::NONE:
+        case Type::VECTOR:
+        case Type::MAP:
+        case Type::INT_KEY_MAP:
+        case Type::STRING:
             break;
     }
     return ret.str();
@@ -827,10 +1796,17 @@ static std::string visit(const Value& v, int depth)
     {
         case Value::Type::NONE:
         case Value::Type::BYTE:
+        case Value::Type::SHORT:
+        case Value::Type::UNSIGNED_SHORT:
         case Value::Type::INTEGER:
         case Value::Type::UNSIGNED:
+        case Value::Type::LONG:
+        case Value::Type::UNSIGNED_LONG:
+        case Value::Type::LONG_LONG:
+        case Value::Type::UNSIGNED_LONG_LONG:
         case Value::Type::FLOAT:
         case Value::Type::DOUBLE:
+        case Value::Type::LONG_DOUBLE:
         case Value::Type::BOOLEAN:
         case Value::Type::STRING:
             ret << v.asString() << "\n";
@@ -867,17 +1843,38 @@ void Value::clear()
         case Type::BYTE:
             _field.byteVal = 0;
             break;
+        case Type::SHORT:
+            _field.shortVal = 0;
+            break;
+        case Type::UNSIGNED_SHORT:
+            _field.unsignedShortVal = 0u;
+            break;
         case Type::INTEGER:
             _field.intVal = 0;
             break;
         case Type::UNSIGNED:
             _field.unsignedVal = 0u;
             break;
+        case Type::LONG:
+            _field.longVal = 0l;
+            break;
+        case Type::UNSIGNED_LONG:
+            _field.unsignedLongVal = 0ul;
+            break;
+        case Type::LONG_LONG:
+            _field.longLongVal = 0ll;
+            break;
+        case Type::UNSIGNED_LONG_LONG:
+            _field.unsignedLongLongVal = 0ull;
+            break;
         case Type::FLOAT:
             _field.floatVal = 0.0f;
             break;
         case Type::DOUBLE:
             _field.doubleVal = 0.0;
+            break;
+        case Type::LONG_DOUBLE:
+            _field.longDoubleVal = 0.0l;
             break;
         case Type::BOOLEAN:
             _field.boolVal = false;

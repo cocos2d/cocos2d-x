@@ -63,17 +63,38 @@ public:
     /** Create a Value by an unsigned char value. */
     explicit Value(unsigned char v);
     
+    /** Create a Value by a short value. */
+    explicit Value(short v);
+    
+    /** Create a Value by a unsigned short value. */
+    explicit Value(unsigned short v);
+    
     /** Create a Value by an integer value. */
     explicit Value(int v);
 
     /** Create a Value by an unsigned value. */
     explicit Value(unsigned int v);
+    
+    /** Create a Value by an long value. */
+    explicit Value(long v);
+    
+    /** Create a Value by an unsigned long value. */
+    explicit Value(unsigned long v);
+    
+    /** Create a Value by an long long value. */
+    explicit Value(long long v);
+    
+    /** Create a Value by an unsigned long long value. */
+    explicit Value(unsigned long long v);
 
     /** Create a Value by a float value. */
     explicit Value(float v);
     
     /** Create a Value by a double value. */
     explicit Value(double v);
+    
+    /** Create a Value by a long double value. */
+    explicit Value(long double v);
     
     /** Create a Value by a bool value. */
     explicit Value(bool v);
@@ -114,14 +135,28 @@ public:
 
     /** Assignment operator, assign from unsigned char to Value. */
     Value& operator= (unsigned char v);
+    /** Assignment operator, assign from short to Value. */
+    Value& operator= (short v);
+    /** Assignment operator, assign from unsigned short to Value. */
+    Value& operator= (unsigned short v);
     /** Assignment operator, assign from integer to Value. */
     Value& operator= (int v);
-    /** Assignment operator, assign from integer to Value. */
+    /** Assignment operator, assign from unsigned integer to Value. */
     Value& operator= (unsigned int v);
+    /** Assignment operator, assign from long to Value. */
+    Value& operator= (long v);
+    /** Assignment operator, assign from unsigned long to Value. */
+    Value& operator= (unsigned long v);
+    /** Assignment operator, assign from long long to Value. */
+    Value& operator= (long long v);
+    /** Assignment operator, assign from unsigned long long to Value. */
+    Value& operator= (unsigned long long v);
     /** Assignment operator, assign from float to Value. */
     Value& operator= (float v);
     /** Assignment operator, assign from double to Value. */
     Value& operator= (double v);
+    /** Assignment operator, assign from long double to Value. */
+    Value& operator= (long double v);
     /** Assignment operator, assign from bool to Value. */
     Value& operator= (bool v);
     /** Assignment operator, assign from char* to Value. */
@@ -155,14 +190,28 @@ public:
 
     /** Gets as a byte value. Will convert to unsigned char if possible, or will trigger assert error. */
     unsigned char asByte() const;
+    /** Gets as a short value. Will convert to short if possible, or will trigger assert error. */
+    short asShort() const;
+    /** Gets as a unsigned short value. Will convert to unsigned short if possible, or will trigger assert error. */
+    unsigned short asUnsignedShort() const;
     /** Gets as an integer value. Will convert to integer if possible, or will trigger assert error. */
     int asInt() const;
     /** Gets as an unsigned value. Will convert to unsigned if possible, or will trigger assert error. */
     unsigned int asUnsignedInt() const;
+    /** Gets as a long value. Will convert to long if possible, or will trigger assert error. */
+    long asLong() const;
+    /** Gets as an unsigned long value. Will convert to unsigned long if possible, or will trigger assert error. */
+    unsigned long asUnsignedLong() const;
+    /** Gets as an long long value. Will convert to long long if possible, or will trigger assert error. */
+    long long asLongLong() const;
+    /** Gets as an unsigned long long value. Will convert to unsigned long long if possible, or will trigger assert error. */
+    unsigned long long asUnsignedLongLong() const;
     /** Gets as a float value. Will convert to float if possible, or will trigger assert error. */
     float asFloat() const;
     /** Gets as a double value. Will convert to double if possible, or will trigger assert error. */
     double asDouble() const;
+    /** Gets as a long double value. Will convert to long double if possible, or will trigger assert error. */
+    long double asLongDouble() const;
     /** Gets as a bool value. Will convert to bool if possible, or will trigger assert error. */
     bool asBool() const;
     /** Gets as a string value. Will convert to string if possible, or will trigger assert error. */
@@ -196,14 +245,28 @@ public:
         NONE = 0,
         /// wrap byte
         BYTE,
+        /// wrap short,
+        SHORT,
+        /// wrap unsigned short,
+        UNSIGNED_SHORT,
         /// wrap integer
         INTEGER,
         /// wrap unsigned
         UNSIGNED,
+        /// wrap long
+        LONG,
+        /// wrap unsigned long
+        UNSIGNED_LONG,
+        /// wrap long long
+        LONG_LONG,
+        /// wrap unsigned long long
+        UNSIGNED_LONG_LONG,
         /// wrap float
         FLOAT,
         /// wrap double
         DOUBLE,
+        /// wrap long double
+        LONG_DOUBLE,
         /// wrap bool
         BOOLEAN,
         /// wrap string
@@ -229,10 +292,17 @@ private:
     union
     {
         unsigned char byteVal;
+        short shortVal;
+        unsigned short unsignedShortVal;
         int intVal;
         unsigned int unsignedVal;
+        long longVal;
+        unsigned long unsignedLongVal;
+        long long longLongVal;
+        unsigned long long unsignedLongLongVal;
         float floatVal;
         double doubleVal;
+        long double longDoubleVal;
         bool boolVal;
 
         std::string* strVal;
