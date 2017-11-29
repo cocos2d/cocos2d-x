@@ -46,7 +46,6 @@ function build_android()
     curl -O https://dl.google.com/android/repository/android-ndk-r16-linux-x86_64.zip
     unzip ./android-ndk-r16-linux-x86_64.zip > /dev/null
     rm -rf ./android-ndk
-    mkdir android-ndk
     mv android-ndk-r16 android-ndk
 
     # Build all samples
