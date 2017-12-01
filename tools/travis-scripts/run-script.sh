@@ -56,20 +56,18 @@ function build_android()
     export COCOS_X_ROOT=$COCOS2DX_ROOT
     export PATH=$ANT_ROOT:$ANDROID_SDK_ROOT:$COCOS_CONSOLE_ROOT:$PATH
 
-    cd $COCOS2DX_ROOT/build
-
     # share the obj folder to speed up building
 
     # build cpp-empty-test
-    pushd $COCOS2DX_ROOT/tests/cpp-empty-test
-    cocos compile -p android --android-studio
-    popd
+    # pushd $COCOS2DX_ROOT/tests/cpp-empty-test
+    # cocos compile -p android --android-studio
+    # popd
 
     # build cpp-tests
-    src_dir=$COCOS2DX_ROOT/tests/cpp-empty-test/proj.android-studio/app/build/intermediates/ndkBuild
-    dst_dir=$COCOS2DX_ROOT/tests/cpp-tests/proj.android-studio/app/build/intermediates/ndkBuild
-    mkdir -p $dst_dir
-    cp -a $src_dir/* $dst_dir
+    # src_dir=$COCOS2DX_ROOT/tests/cpp-empty-test/proj.android-studio/app/build/intermediates/ndkBuild
+    # dst_dir=$COCOS2DX_ROOT/tests/cpp-tests/proj.android-studio/app/build/intermediates/ndkBuild
+    # mkdir -p $dst_dir
+    # cp -a $src_dir/* $dst_dir
     pushd $COCOS2DX_ROOT/tests/cpp-tests
     cocos compile -p android --android-studio
     popd
@@ -84,10 +82,10 @@ function build_android()
     popd
 
     # build js-tests
-    src_dir=$COCOS2DX_ROOT/tests/lua-tests/project/proj.android-studio/app/build/intermediates/ndkBuild
-    dst_dir=$COCOS2DX_ROOT/tests/js-tests/project/proj.android-studio/app/build/intermediates/ndkBuild
-    mkdir -p $dst_dir
-    cp -a $src_dir/* $dst_dir
+    # src_dir=$COCOS2DX_ROOT/tests/lua-tests/project/proj.android-studio/app/build/intermediates/ndkBuild
+    # dst_dir=$COCOS2DX_ROOT/tests/js-tests/project/proj.android-studio/app/build/intermediates/ndkBuild
+    # mkdir -p $dst_dir
+    # cp -a $src_dir/* $dst_dir
     pushd $COCOS2DX_ROOT/tests/js-tests
     cocos compile -p android --android-studio
     popd
