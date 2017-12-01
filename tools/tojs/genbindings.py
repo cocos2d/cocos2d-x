@@ -161,20 +161,21 @@ def main():
         tojs_root = '%s/tools/tojs' % project_root
         output_dir = '%s/cocos/scripting/js-bindings/auto' % project_root
 
-        cmd_args = {'cocos2dx.ini': ('cocos2d-x', 'jsb_cocos2dx_auto'),
-                    'cocos2dx_audioengine.ini': ('cocos2dx_audioengine', 'jsb_cocos2dx_audioengine_auto'),
-                    'cocos2dx_extension.ini': ('cocos2dx_extension', 'jsb_cocos2dx_extension_auto'),
-                    'cocos2dx_network.ini': ('cocos2dx_network', 'jsb_cocos2dx_network_auto'),
-                    'cocos2dx_builder.ini': ('cocos2dx_builder', 'jsb_cocos2dx_builder_auto'),
-                    'cocos2dx_ui.ini': ('cocos2dx_ui', 'jsb_cocos2dx_ui_auto'),
+        cmd_args = {
+                    # 'cocos2dx.ini': ('cocos2d-x', 'jsb_cocos2dx_auto'),
+                    # 'cocos2dx_audioengine.ini': ('cocos2dx_audioengine', 'jsb_cocos2dx_audioengine_auto'),
+                    # 'cocos2dx_extension.ini': ('cocos2dx_extension', 'jsb_cocos2dx_extension_auto'),
+                    # 'cocos2dx_network.ini': ('cocos2dx_network', 'jsb_cocos2dx_network_auto'),
+                    # 'cocos2dx_builder.ini': ('cocos2dx_builder', 'jsb_cocos2dx_builder_auto'),
+                    # 'cocos2dx_ui.ini': ('cocos2dx_ui', 'jsb_cocos2dx_ui_auto'),
                     'cocos2dx_studio.ini': ('cocos2dx_studio', 'jsb_cocos2dx_studio_auto'),
-                    'cocos2dx_spine.ini': ('cocos2dx_spine', 'jsb_cocos2dx_spine_auto'),
-                    'cocos2dx_3d.ini': ('cocos2dx_3d', 'jsb_cocos2dx_3d_auto'),
-                    'cocos2dx_3d_ext.ini': ('cocos2dx_3d_extension', 'jsb_cocos2dx_3d_extension_auto'),
-                    'cocos2dx_experimental_webView.ini': ('cocos2dx_experimental_webView', 'jsb_cocos2dx_experimental_webView_auto'),
-                    'cocos2dx_experimental_video.ini': ('cocos2dx_experimental_video', 'jsb_cocos2dx_experimental_video_auto'),
-                    'cocos2dx_physics3d.ini': ('cocos2dx_physics3d', 'jsb_cocos2dx_physics3d_auto'),
-                    'cocos2dx_navmesh.ini': ('cocos2dx_navmesh', 'jsb_cocos2dx_navmesh_auto'),
+                    # 'cocos2dx_spine.ini': ('cocos2dx_spine', 'jsb_cocos2dx_spine_auto'),
+                    # 'cocos2dx_3d.ini': ('cocos2dx_3d', 'jsb_cocos2dx_3d_auto'),
+                    # 'cocos2dx_3d_ext.ini': ('cocos2dx_3d_extension', 'jsb_cocos2dx_3d_extension_auto'),
+                    # 'cocos2dx_experimental_webView.ini': ('cocos2dx_experimental_webView', 'jsb_cocos2dx_experimental_webView_auto'),
+                    # 'cocos2dx_experimental_video.ini': ('cocos2dx_experimental_video', 'jsb_cocos2dx_experimental_video_auto'),
+                    # 'cocos2dx_physics3d.ini': ('cocos2dx_physics3d', 'jsb_cocos2dx_physics3d_auto'),
+                    # 'cocos2dx_navmesh.ini': ('cocos2dx_navmesh', 'jsb_cocos2dx_navmesh_auto'),
                     }
         target = 'spidermonkey'
         generator_py = '%s/generator.py' % cxx_generator_root
@@ -183,6 +184,7 @@ def main():
             cfg = '%s/%s' % (tojs_root, key)
             print 'Generating bindings for %s...' % (key[:-4])
             command = '%s %s %s -s %s -t %s -o %s -n %s' % (python_bin, generator_py, cfg, args[0], target, output_dir, args[1])
+            print(command)
             _run_cmd(command)
 
         # if platform == 'win32':
