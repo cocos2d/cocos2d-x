@@ -90,7 +90,7 @@ function build_android()
     # should uncomon it when building time not exceed time limit
     # pushd $COCOS2DX_ROOT/tests/js-tests
     # cocos compile -p android --android-studio
-    popd
+    # popd
 }
 
 function genernate_binding_codes()
