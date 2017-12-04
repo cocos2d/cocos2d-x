@@ -2733,20 +2733,20 @@ pause : function (
 
 /**
  * @method pushProjectionMatrix
- * @param {unsigned long} arg0
+ * @param {unsigned int} arg0
  */
 pushProjectionMatrix : function (
-long 
+int 
 )
 {
 },
 
 /**
  * @method popProjectionMatrix
- * @param {unsigned long} arg0
+ * @param {unsigned int} arg0
  */
 popProjectionMatrix : function (
-long 
+int 
 )
 {
 },
@@ -2763,10 +2763,10 @@ eventdispatcher
 
 /**
  * @method loadProjectionIdentityMatrix
- * @param {unsigned long} arg0
+ * @param {unsigned int} arg0
  */
 loadProjectionIdentityMatrix : function (
-long 
+int 
 )
 {
 },
@@ -3028,11 +3028,11 @@ scheduler
 /**
  * @method multiplyProjectionMatrix
  * @param {mat4_object} arg0
- * @param {unsigned long} arg1
+ * @param {unsigned int} arg1
  */
 multiplyProjectionMatrix : function (
 mat4, 
-long 
+int 
 )
 {
 },
@@ -3310,21 +3310,21 @@ getVisibleSize : function (
 /**
  * @method loadProjectionMatrix
  * @param {mat4_object} arg0
- * @param {unsigned long} arg1
+ * @param {unsigned int} arg1
  */
 loadProjectionMatrix : function (
 mat4, 
-long 
+int 
 )
 {
 },
 
 /**
  * @method initProjectionMatrixStack
- * @param {unsigned long} arg0
+ * @param {unsigned int} arg0
  */
 initProjectionMatrixStack : function (
-long 
+int 
 )
 {
 },
@@ -7738,11 +7738,11 @@ event
 
 /**
  * @method hasEventListener
- * @param {std::basic_string<char>} arg0
+ * @param {String} arg0
  * @return {bool}
  */
 hasEventListener : function (
-basic_string<char> 
+str 
 )
 {
     return false;
@@ -10955,7 +10955,7 @@ node
  * @method getNumberOfRunningActionsInTargetByTag
  * @param {cc.Node} arg0
  * @param {int} arg1
- * @return {unsigned long}
+ * @return {unsigned int}
  */
 getNumberOfRunningActionsInTargetByTag : function (
 node, 
@@ -15064,6 +15064,14 @@ isEnabled : function (
 },
 
 /**
+ * @method alignItemsHorizontally
+ */
+alignItemsHorizontally : function (
+)
+{
+},
+
+/**
  * @method alignItemsHorizontallyWithPadding
  * @param {float} arg0
  */
@@ -15079,14 +15087,6 @@ float
  */
 alignItemsVerticallyWithPadding : function (
 float 
-)
-{
-},
-
-/**
- * @method alignItemsHorizontally
- */
-alignItemsHorizontally : function (
 )
 {
 },
@@ -22862,7 +22862,7 @@ cc.TextFieldTTF = {
 
 /**
  * @method getCharCount
- * @return {unsigned long}
+ * @return {unsigned int}
  */
 getCharCount : function (
 )
@@ -23024,10 +23024,10 @@ getPlaceHolder : function (
 
 /**
  * @method setCursorPosition
- * @param {unsigned long} arg0
+ * @param {unsigned int} arg0
  */
 setCursorPosition : function (
-long 
+int 
 )
 {
 },

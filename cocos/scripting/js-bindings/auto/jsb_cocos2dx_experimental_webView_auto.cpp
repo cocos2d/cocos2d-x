@@ -319,7 +319,7 @@ bool js_cocos2dx_experimental_webView_WebView_getOnShouldStartLoading(JSContext 
     cocos2d::experimental::ui::WebView* cobj = (cocos2d::experimental::ui::WebView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_experimental_webView_WebView_getOnShouldStartLoading : Invalid Native Object");
     if (argc == 0) {
-        std::function<bool (cocos2d::experimental::ui::WebView *, const std::basic_string<char> &)> ret = cobj->getOnShouldStartLoading();
+        std::function<bool (cocos2d::experimental::ui::WebView *, const std::string&)> ret = cobj->getOnShouldStartLoading();
         JS::RootedValue jsret(cx);
         #pragma warning NO CONVERSION FROM NATIVE FOR std::function;
         args.rval().set(jsret);
