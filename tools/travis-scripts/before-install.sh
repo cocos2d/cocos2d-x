@@ -64,7 +64,7 @@ function install_linux_environment()
     echo "which ld: `which ld`"
     sudo rm /usr/bin/ld
     popd
-    bash $COCOS2DX_ROOT/build/install-deps-linux.sh
+    echo -e "y" | bash $COCOS2DX_ROOT/build/install-deps-linux.sh
 }
 
 function download_deps()
