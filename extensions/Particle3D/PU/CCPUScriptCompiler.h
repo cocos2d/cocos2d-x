@@ -28,6 +28,9 @@
 #include "base/CCRef.h"
 #include "extensions/Particle3D/PU/CCPUScriptParser.h"
 
+#include <list>
+#include <unordered_map>
+
 NS_CC_BEGIN
 
 /** This enum holds the types of the possible abstract nodes */
@@ -74,7 +77,7 @@ public:
 class CC_DLL PUObjectAbstractNode : public PUAbstractNode
 {
 private:
-    std::map<std::string,std::string> _env;
+    std::unordered_map<std::string,std::string> _env;
 public:
     std::string name, cls;
     std::vector<std::string> bases;
@@ -93,7 +96,7 @@ public:
     void addVariable(const std::string &name);
     void setVariable(const std::string &name, const std::string &value);
     std::pair<bool,std::string> getVariable(const std::string &name) const;
-    const std::map<std::string,std::string> &getVariables() const;
+    const std::unordered_map<std::string,std::string> &getVariables() const;
 };
 
 /** This abstract node represents a script property */
@@ -134,7 +137,7 @@ private:
     bool isNameExcluded(const std::string &cls, PUAbstractNode *parent);
     
 public:
-    typedef std::map<std::string,unsigned int> IdMap;
+    typedef std::unordered_map<std::string,unsigned int> IdMap;
     
     static PUScriptCompiler* Instance();
 
@@ -144,7 +147,7 @@ public:
     
     void convertToAST(const PUConcreteNodeList &nodes,PUAbstractNodeList &aNodes);
     
-    std::map<std::string,std::string> env;
+    std::unordered_map<std::string,std::string> env;
     
 private:
     PUScriptCompiler();
@@ -154,7 +157,7 @@ private:
     void visit(PUConcreteNode *node);
 private:
     
-    std::map<std::string, PUAbstractNodeList> _compiledScripts;
+    std::unordered_map<std::string, PUAbstractNodeList> _compiledScripts;
     PUAbstractNode *_current;
     PUAbstractNodeList *_nodes;
     PUParticleSystem3D *_PUParticleSystem3D;
