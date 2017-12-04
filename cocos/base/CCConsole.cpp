@@ -345,9 +345,9 @@ Console::Command::Command(Command&& o)
 
 Console::Command::~Command()
 {
-    for (auto iter : _subCommands)
+    for (const auto& e : _subCommands)
     {
-        delete iter.second;
+        delete e.second;
     }
 }
 
@@ -404,7 +404,7 @@ void Console::Command::addSubCommand(const Command& subCmd)
     if (iter != _subCommands.end())
     {
         delete iter->second;
-        iter->second = nullptr;
+        _subCommands.erase(iter);
     }
 
     Command* cmd = new (std::nothrow) Command();
@@ -424,10 +424,10 @@ const Console::Command* Console::Command::getSubCommand(const std::string& subCm
 
 void Console::Command::delSubCommand(const std::string& subCmdName)
 {
-    auto it = _subCommands.find(subCmdName);
-    if(it != _subCommands.end()) {
-        delete it->second;
-        _subCommands.erase(it);
+    auto iter = _subCommands.find(subCmdName);
+    if (iter != _subCommands.end()) {
+        delete iter->second;
+        _subCommands.erase(iter);
     }
 }
 
@@ -626,13 +626,20 @@ void Console::stop()
 void Console::addCommand(const Command& cmd)
 {
     Command* newCommand = new (std::nothrow) Command(cmd);
+    auto iter = _commands.find(cmd.getName());
+    if (iter != _commands.end())
+    {
+        delete iter->second;
+        _commands.erase(iter);
+    }
     _commands[cmd.getName()] = newCommand;
 }
 
 void Console::addSubCommand(const std::string& cmdName, const Command& subCmd)
 {
     auto it = _commands.find(cmdName);
-    if(it != _commands.end()) {
+    if (it != _commands.end())
+    {
         auto& cmd = it->second;
         addSubCommand(*cmd, subCmd);
     }
