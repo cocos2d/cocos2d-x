@@ -51,12 +51,9 @@ function build_android()
     # Build all samples
     echo "Building Android samples ..."
     export COCOS_CONSOLE_ROOT=$COCOS2DX_ROOT/tools/cocos2d-console/bin
-    export ANT_ROOT=/usr/bin
     export ANDROID_SDK_ROOT=/usr/local/android-sdk
     export COCOS_X_ROOT=$COCOS2DX_ROOT
-    export PATH=$ANT_ROOT:$ANDROID_SDK_ROOT:$COCOS_CONSOLE_ROOT:$PATH
-
-    # share the obj folder to speed up building
+    export PATH=$ANDROID_SDK_ROOT:$COCOS_CONSOLE_ROOT:$PATH
 
     # build cpp-empty-test
     # pushd $COCOS2DX_ROOT/tests/cpp-empty-test
@@ -64,32 +61,19 @@ function build_android()
     # popd
 
     # build cpp-tests
-    # src_dir=$COCOS2DX_ROOT/tests/cpp-empty-test/proj.android-studio/app/build/intermediates/ndkBuild
-    # dst_dir=$COCOS2DX_ROOT/tests/cpp-tests/proj.android-studio/app/build/intermediates/ndkBuild
-    # mkdir -p $dst_dir
-    # cp -a $src_dir/* $dst_dir
     pushd $COCOS2DX_ROOT/tests/cpp-tests
-    cocos compile -p android --android-studio
+    cocos compile -p android
     popd
 
     # build lua-tests
-    # src_dir=$dst_dir
-    # dst_dir=$COCOS2DX_ROOT/tests/lua-tests/project/proj.android/obj/
-    # mkdir $dst_dir
-    # cp -a $src_dir/* $dst_dir
     pushd $COCOS2DX_ROOT/tests/lua-tests
-    cocos compile -p android --android-studio
+    cocos compile -p android
     popd
 
     # build js-tests
-    # src_dir=$COCOS2DX_ROOT/tests/lua-tests/project/proj.android-studio/app/build/intermediates/ndkBuild
-    # dst_dir=$COCOS2DX_ROOT/tests/js-tests/project/proj.android-studio/app/build/intermediates/ndkBuild
-    # mkdir -p $dst_dir
-    # cp -a $src_dir/* $dst_dir
-
     # should uncomon it when building time not exceed time limit
     # pushd $COCOS2DX_ROOT/tests/js-tests
-    # cocos compile -p android --android-studio
+    # cocos compile -p android
     # popd
 }
 
