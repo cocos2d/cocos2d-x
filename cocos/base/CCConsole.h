@@ -110,7 +110,7 @@ public:
     };
     
     /** Command Struct */
-    class Command
+    class CC_DLL Command
     {
     public:
         using Callback = std::function<void(int fd, const std::string& args)>;
