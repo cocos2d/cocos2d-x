@@ -1417,6 +1417,15 @@ bool jsval_to_ssize( JSContext *cx, JS::HandleValue vp, ssize_t* size)
     return ret;
 }
 
+bool jsval_to_size( JSContext *cx, JS::HandleValue vp, size_t* size)
+{
+    bool ret = false;
+    uint32_t sizeUint32 = 0;
+    ret = jsval_to_uint32(cx, vp, &sizeUint32);
+    *size = sizeUint32;
+    return ret;
+}
+
 bool jsval_to_std_vector_string( JSContext *cx, JS::HandleValue vp, std::vector<std::string>* ret)
 {
     JS::RootedObject jsobj(cx);
@@ -2768,6 +2777,12 @@ jsval ssize_to_jsval(JSContext *cx, ssize_t v)
 {
     CCASSERT(v < INT_MAX, "The size should not bigger than 32 bit (int32_t).");
     return int32_to_jsval(cx, static_cast<int>(v));
+}
+
+jsval size_to_jsval(JSContext *cx, size_t v)
+{
+    CCASSERT(v < UINT_MAX, "The size should not bigger than 32 bit (int32_t).");
+    return uint32_to_jsval(cx, static_cast<uint32_t>(v));
 }
 
 jsval std_vector_string_to_jsval( JSContext *cx, const std::vector<std::string>& v)
