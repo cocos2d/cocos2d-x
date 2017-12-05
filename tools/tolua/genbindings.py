@@ -97,7 +97,7 @@ def main():
 
     if os.path.isdir(x64_gcc_toolchain_path):
         gcc_toolchain_path = x64_gcc_toolchain_path
-    elif os.path.isdir(x86_llvm_path):
+    elif os.path.isdir(x86_gcc_toolchain_path):
         gcc_toolchain_path = x86_gcc_toolchain_path
     else:
         print 'gcc toolchain not found!'
