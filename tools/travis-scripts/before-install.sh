@@ -24,9 +24,9 @@ function install_android_ndk()
     # the NDK is used to generate binding codes, should use r16 when fix binding codes with r16
     echo "Download ${FILE_NAME} ..."
     curl -O https://dl.google.com/android/repository/${FILE_NAME}
-    sudo chmod +x ./$FILE_NAME
     echo "Decompress ${FILE_NAME} ..."
-    ./$FILE_NAME > /dev/null
+    unzip ./${FILE_NAME} > /dev/null
+
     # Rename ndk
     mv android-ndk-r16 android-ndk
 }
