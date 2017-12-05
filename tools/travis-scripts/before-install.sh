@@ -19,16 +19,16 @@ function install_android_ndk()
         HOST_NAME="linux"
     fi
 
-    FILE_NAME=android-ndk-r10d-${HOST_NAME}-x86_64.bin
+    FILE_NAME=android-ndk-r16-${HOST_NAME}-x86_64.zip
 
     # the NDK is used to generate binding codes, should use r16 when fix binding codes with r16
     echo "Download ${FILE_NAME} ..."
-    curl -O http://dl.google.com/android/ndk/${FILE_NAME}
+    curl -O https://dl.google.com/android/repository/${FILE_NAME}
     sudo chmod +x ./$FILE_NAME
     echo "Decompress ${FILE_NAME} ..."
     ./$FILE_NAME > /dev/null
     # Rename ndk
-    mv android-ndk-r10d android-ndk
+    mv android-ndk-r16 android-ndk
 }
 
 function install_linux_environment()
