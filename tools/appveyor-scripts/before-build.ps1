@@ -36,19 +36,20 @@ function Download-Deps
 
 function Download-NDK
 {
-	$url = "http://dl.google.com/android/ndk/android-ndk-r10d-windows-x86.exe"
-    $output = "$env:APPVEYOR_BUILD_FOLDER/../android-ndk-r10d-windows-x86.exe"
+	$url = "https://dl.google.com/android/repository/android-ndk-r16-windows-x86.zip"
+    $output = "$env:APPVEYOR_BUILD_FOLDER/../android-ndk-r16-windows-x86.zip"
     Write-Host "downloading $url"
 	Download-Url $url $output
 	Write-Host "finish downloading $url"
 
 	Write-Host "installing NDK"
-	Push-Location "$env:APPVEYOR_BUILD_FOLDER/../"
-	& $output > $null
-	Pop-Location
+	$zipfile = $output
+    $output = $env:APPVEYOR_BUILD_FOLDER/../
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    [System.IO.Compression.ZipFile]::ExtractToDirectory($zipfile, $output)
 	Write-Host "finish installing NDK"
     
-    $env:NDK_ROOT = "$env:APPVEYOR_BUILD_FOLDER/../android-ndk-r10d"
+    $env:NDK_ROOT = "$env:APPVEYOR_BUILD_FOLDER/../android-ndk-r16"
     Write-Host "set environment NDK_ROOT to $env:NDK_ROOT"
 }
 
