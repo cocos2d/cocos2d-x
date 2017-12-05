@@ -37,7 +37,6 @@
 #include "extensions/Particle3D/PU/CCPUObserverTranslator.h"
 #include "extensions/Particle3D/PU/CCPUBehaviourTranslator.h"
 
-using namespace std;
 NS_CC_BEGIN
 class PUMaterialCache;
 class PUTranslateManager
