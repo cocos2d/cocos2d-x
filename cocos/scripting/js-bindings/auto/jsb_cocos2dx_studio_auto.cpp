@@ -4758,7 +4758,7 @@ bool js_cocos2dx_studio_ArmatureDataManager_getAnimationDatas(JSContext *cx, uin
     cocostudio::ArmatureDataManager* cobj = (cocostudio::ArmatureDataManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ArmatureDataManager_getAnimationDatas : Invalid Native Object");
     if (argc == 0) {
-        const cocos2d::Map<std::string,cocostudio::AnimationData *>& ret = cobj->getAnimationDatas();
+        const cocos2d::Map<std::string, cocostudio::AnimationData *>& ret = cobj->getAnimationDatas();
         JS::RootedValue jsret(cx);
         jsret = ccmap_string_key_to_jsval(cx, ret);
         args.rval().set(jsret);
@@ -5074,7 +5074,7 @@ bool js_cocos2dx_studio_ArmatureDataManager_getArmatureDatas(JSContext *cx, uint
     cocostudio::ArmatureDataManager* cobj = (cocostudio::ArmatureDataManager *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ArmatureDataManager_getArmatureDatas : Invalid Native Object");
     if (argc == 0) {
-        const cocos2d::Map<std::string,cocostudio::ArmatureData *>& ret = cobj->getArmatureDatas();
+        const cocos2d::Map<std::string, cocostudio::ArmatureData *>& ret = cobj->getArmatureDatas();
         JS::RootedValue jsret(cx);
         jsret = ccmap_string_key_to_jsval(cx, ret);
         args.rval().set(jsret);
@@ -5847,7 +5847,7 @@ bool js_cocos2dx_studio_Armature_getBoneDic(JSContext *cx, uint32_t argc, jsval 
     cocostudio::Armature* cobj = (cocostudio::Armature *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_Armature_getBoneDic : Invalid Native Object");
     if (argc == 0) {
-        const cocos2d::Map<std::string,cocostudio::Bone *>& ret = cobj->getBoneDic();
+        const cocos2d::Map<std::string, cocostudio::Bone *>& ret = cobj->getBoneDic();
         JS::RootedValue jsret(cx);
         jsret = ccmap_string_key_to_jsval(cx, ret);
         args.rval().set(jsret);
@@ -12276,7 +12276,7 @@ bool js_cocos2dx_studio_SkeletonNode_changeSkins(JSContext *cx, uint32_t argc, j
 
     do {
         if (argc == 1) {
-            std::map<std::string,std::string> arg0;
+            std::map<std::string, std::string> arg0;
             ok &= jsval_to_std_map_string_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
             cobj->changeSkins(arg0);
@@ -12298,7 +12298,7 @@ bool js_cocos2dx_studio_SkeletonNode_addSkinGroup(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_SkeletonNode_addSkinGroup : Invalid Native Object");
     if (argc == 2) {
         std::string arg0;
-        std::map<std::string,std::string> arg1;
+        std::map<std::string, std::string> arg1;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         ok &= jsval_to_std_map_string_string(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_SkeletonNode_addSkinGroup : Error processing arguments");
@@ -12318,7 +12318,7 @@ bool js_cocos2dx_studio_SkeletonNode_getAllSubBonesMap(JSContext *cx, uint32_t a
     cocostudio::timeline::SkeletonNode* cobj = (cocostudio::timeline::SkeletonNode *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_SkeletonNode_getAllSubBonesMap : Invalid Native Object");
     if (argc == 0) {
-        const cocos2d::Map<std::string,cocostudio::timeline::BoneNode *>& ret = cobj->getAllSubBonesMap();
+        const cocos2d::Map<std::string, cocostudio::timeline::BoneNode *>& ret = cobj->getAllSubBonesMap();
         JS::RootedValue jsret(cx);
         jsret = ccmap_string_key_to_jsval(cx, ret);
         args.rval().set(jsret);

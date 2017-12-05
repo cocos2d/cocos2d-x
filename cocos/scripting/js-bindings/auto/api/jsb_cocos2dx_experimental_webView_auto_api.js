@@ -73,7 +73,7 @@ bool
 getOnDidFailLoading : function (
 )
 {
-    return std::function<void (cocos2d::experimental::ui::WebView , std::string&)>;
+    return std::function<void (cocos2d::experimental::ui::WebView , std::basic_string<char> &)>;
 },
 
 /**
@@ -133,7 +133,7 @@ setBackgroundTransparent : function (
 getOnJSCallback : function (
 )
 {
-    return std::function<void (cocos2d::experimental::ui::WebView , std::string&)>;
+    return std::function<void (cocos2d::experimental::ui::WebView , std::basic_string<char> &)>;
 },
 
 /**
@@ -153,7 +153,7 @@ canGoForward : function (
 getOnShouldStartLoading : function (
 )
 {
-    return std::function<bool (cocos2d::experimental::ui::WebView , std::string&)>;
+    return std::function<bool (cocos2d::experimental::ui::WebView , std::basic_string<char> &)>;
 },
 
 /**
@@ -199,7 +199,7 @@ str
 getOnDidFinishLoading : function (
 )
 {
-    return std::function<void (cocos2d::experimental::ui::WebView , std::string&)>;
+    return std::function<void (cocos2d::experimental::ui::WebView , std::basic_string<char> &)>;
 },
 
 /**

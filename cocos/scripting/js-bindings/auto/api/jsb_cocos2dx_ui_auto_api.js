@@ -4469,13 +4469,13 @@ getAttachWithIME : function (
  * @method onTextFieldDeleteBackward
  * @param {cc.TextFieldTTF} arg0
  * @param {char} arg1
- * @param {unsigned int} arg2
+ * @param {unsigned long} arg2
  * @return {bool}
  */
 onTextFieldDeleteBackward : function (
 textfieldttf, 
 char, 
-int 
+long 
 )
 {
     return false;
@@ -4513,7 +4513,7 @@ getDetachWithIME : function (
 
 /**
  * @method getCharCount
- * @return {unsigned int}
+ * @return {unsigned long}
  */
 getCharCount : function (
 )
@@ -4562,11 +4562,11 @@ isPasswordEnabled : function (
 /**
  * @method insertText
  * @param {char} arg0
- * @param {unsigned int} arg1
+ * @param {unsigned long} arg1
  */
 insertText : function (
 char, 
-int 
+long 
 )
 {
 },
@@ -4585,13 +4585,13 @@ str
  * @method onTextFieldInsertText
  * @param {cc.TextFieldTTF} arg0
  * @param {char} arg1
- * @param {unsigned int} arg2
+ * @param {unsigned long} arg2
  * @return {bool}
  */
 onTextFieldInsertText : function (
 textfieldttf, 
 char, 
-int 
+long 
 )
 {
     return false;
@@ -4967,10 +4967,10 @@ bool
 
 /**
  * @method setCursorPosition
- * @param {unsigned int} arg0
+ * @param {unsigned long} arg0
  */
 setCursorPosition : function (
-int 
+long 
 )
 {
 },
@@ -5602,14 +5602,14 @@ ccui.Helper = {
 /**
  * @method getSubStringOfUTF8String
  * @param {String} arg0
- * @param {unsigned int} arg1
- * @param {unsigned int} arg2
+ * @param {unsigned long} arg1
+ * @param {unsigned long} arg2
  * @return {String}
  */
 getSubStringOfUTF8String : function (
 str, 
-int, 
-int 
+long, 
+long 
 )
 {
     return ;
@@ -8079,7 +8079,7 @@ int
 
 /**
  * @method getTabCount
- * @return {unsigned int}
+ * @return {unsigned long}
  */
 getTabCount : function (
 )
