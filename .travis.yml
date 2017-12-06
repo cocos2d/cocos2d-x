@@ -22,7 +22,7 @@ matrix:
           export GH_EMAIL=$GH_EMAIL;
           export BUILD_TARGET=linux;
           export GEN_BINDING_AND_COCOSFILE=true;
-          tools/travis-scripts/run-script.sh;
+          tools/travis-scripts/run-script.sh;"
 
       before_install:
         - docker run -d --name ubuntu-test -v $(pwd):/travis ubuntu:latest tail -f /dev/null
@@ -43,7 +43,7 @@ matrix:
           export GH_EMAIL=$GH_EMAIL;
           export BUILD_TARGET=linux;
           export GEN_BINDING_AND_COCOSFILE=true;
-          tools/travis-scripts/before-install.sh;
+          tools/travis-scripts/before-install.sh;"
     # android
     # - os: linux
     #   services:
