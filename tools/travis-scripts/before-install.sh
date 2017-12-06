@@ -8,6 +8,11 @@ COCOS2DX_ROOT="$DIR"/../..
 HOST_NAME=""
 
 echo "HOME dir: $HOME"
+echo "COCOS2DX_ROOT: $COCOS2DX_ROOT"
+echo "BUILD_TARGET: $BUILD_TARGET"
+echo "TRAVIS_OS_NAME: $TRAVIS_OS_NAME"
+echo "TRAVIS_PULL_REQUEST: $TRAVIS_PULL_REQUEST"
+echo "GEN_BINDING_AND_COCOSFILE: $GEN_BINDING_AND_COCOSFILE"
 echo "GCC Version: `gcc --version`"
 
 function install_android_ndk()
@@ -78,6 +83,7 @@ function download_deps()
     pushd $COCOS2DX_ROOT
     python download-deps.py -r=yes
     popd
+    echo "Downloading cocos2d-x dependence finished!"
 }
 
 function install_android_environment()
@@ -100,6 +106,7 @@ function install_python_module_for_osx()
 # set up environment according os and target
 function install_environement_for_pull_request()
 {
+    echo "Building pull request ..."
     # use NDK's clang to generate binding codes
     install_android_ndk
     download_deps
@@ -122,6 +129,7 @@ function install_environement_for_pull_request()
 # should generate binding codes & cocos_files.json after merging
 function install_environement_for_after_merge()
 {
+    echo "Building merge commit ..."
     install_android_ndk
     download_deps
 
