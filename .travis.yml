@@ -13,7 +13,7 @@ matrix:
       sudo: required
       language: cpp
       script:
-        # - tools/travis-scripts/run-script.sh
+        - tools/travis-scripts/run-script.sh
         # - docker exec -it ubuntu-test bash -c "cd /travis;
         #   export TRAVIS_OS_NAME=$TRAVIS_OS_NAME;
         #   export TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST;
@@ -45,24 +45,36 @@ matrix:
         #   export BUILD_TARGET=linux;
         #   export GEN_BINDING_AND_COCOSFILE=true;
         #   tools/travis-scripts/before-install.sh;"
-        # - tools/travis-scripts/before-install.sh
+        - echo Installing libstdc++6 ...
+        - sudo apt-get install -y libstdc++6
+        - echo Installing libstdc++6 finished
         - echo libclang dependence ...
         - ldd tools/bindings-generator/libclang/libclang.so
         - echo .........
         - dpkg-query -W libstdc++6
+        - ls -l /usr/lib/x86_64-linux-gnu/libstdc*
         - echo libstdc++.so.6 information ...
         - strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
-        - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-        - sudo apt-get update
-        - sudo apt-get install -y gcc-4.9 g++-4.9 libstdc++6 build-essential
-        - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 60
-        - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 60
-        - echo 22222 libclang dependence ...
-        - ldd tools/bindings-generator/libclang/libclang.so
-        - dpkg-query -W libstdc++6
-        - echo .........
-        - echo 2222 libstdc++.so.6 information ...
-        - strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
+        - tools/travis-scripts/before-install.sh
+        # - echo libclang dependence ...
+        # - ldd tools/bindings-generator/libclang/libclang.so
+        # - echo .........
+        # - dpkg-query -W libstdc++6
+        # - ls -l /usr/lib/x86_64-linux-gnu/libstdc*
+        # - echo libstdc++.so.6 information ...
+        # - strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
+        # - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+        # - sudo apt-get update
+        # - sudo apt-get install -y gcc-4.9 g++-4.9 libstdc++6 build-essential
+        # - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 60
+        # - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 60
+        # - echo 22222 libclang dependence ...
+        # - ldd tools/bindings-generator/libclang/libclang.so
+        # - dpkg-query -W libstdc++6
+        # - ls -l /usr/lib/x86_64-linux-gnu/libstdc*
+        # - echo .........
+        # - echo 2222 libstdc++.so.6 information ...
+        # - strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
 
     # android
     # - os: linux
