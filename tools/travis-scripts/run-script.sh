@@ -84,10 +84,14 @@ function genernate_binding_codes()
     ./genbindings.py
     popd
 
-    echo "Create auto-generated jsbinding glue codes."
-    pushd "$COCOS2DX_ROOT/tools/tojs"
-    ./genbindings.py
-    popd
+    # We don't support building js projects for linux platform,
+    # therefore, don't generate js-binding code for it.
+    if [ $TRAVIS_OS_NAME != "linux" ]; then
+        echo "Create auto-generated jsbinding glue codes."
+        pushd "$COCOS2DX_ROOT/tools/tojs"
+        ./genbindings.py
+        popd
+    fi
 }
 
 function generate_pull_request_for_binding_codes_and_cocosfiles()

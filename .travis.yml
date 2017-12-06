@@ -12,6 +12,38 @@ matrix:
         - secure: M5lyDs0qai15mWHzJdkh0WPfVJJmVZu6SWtYULxatukGPXVwoQvmEtYAwAW+iz6aM+tXksQ/mk6nW5L8UFbHm+n6yrsa5bZU9sGXjilPE8p8bLFYDmIbPRazU+E6pBP3J2CDoAm0XnWkiYQ8feTxKTo6ysLnHAEjyaHTw0+Q1GM=
       sudo: required
       language: cpp
+      script:
+        - docker exec -it ubuntu-test bash -c "cd /travis;
+          export TRAVIS_OS_NAME=$TRAVIS_OS_NAME;
+          export TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST;
+          export TRAVIS_BRANCH=$TRAVIS_BRANCH;
+          export GH_USER=$GH_USER;
+          export GH_PASSWORD=$GH_PASSWORD;
+          export GH_EMAIL=$GH_EMAIL;
+          export BUILD_TARGET=linux;
+          export GEN_BINDING_AND_COCOSFILE=true;
+          tools/travis-scripts/run-script.sh;
+
+        before_install:
+        - docker run -d --name ubuntu-test -v $(pwd):/travis ubuntu:latest tail -f /dev/null
+        - docker ps
+        - docker exec -it ubuntu-test bash -c "apt-get update > /dev/null;
+          echo Install linux dependence packages, please wait ...;
+          apt-get install -y curl unzip python python-pip build-essential gcc g++ cmake > /dev/null;
+          apt-get install -y libx11-dev libxmu-dev libglu1-mesa-dev libgl2ps-dev libxi-dev > /dev/null;
+          apt-get install -y libzip-dev libpng12-dev libcurl4-gnutls-dev libfontconfig1-dev > /dev/null;
+          apt-get install -y libsqlite3-dev libglew-dev libssl-dev libgtk-3-dev binutils > /dev/null;
+          pip install PyYAML Cheetah > /dev/null;
+          cd /travis;
+          export TRAVIS_OS_NAME=$TRAVIS_OS_NAME;
+          export TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST;
+          export TRAVIS_BRANCH=$TRAVIS_BRANCH;
+          export GH_USER=$GH_USER;
+          export GH_PASSWORD=$GH_PASSWORD;
+          export GH_EMAIL=$GH_EMAIL;
+          export BUILD_TARGET=linux;
+          export GEN_BINDING_AND_COCOSFILE=true;
+          tools/travis-scripts/before-install.sh;
     # android
     # - os: linux
     #   services:
@@ -36,41 +68,6 @@ matrix:
     #   osx_image: xcode8.3
     #   sudo: required
 
-script:
-- docker exec -t ubuntu-test bash -c "cd /travis;
-  export TRAVIS_OS_NAME=$TRAVIS_OS_NAME;
-  export TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST;
-  export TRAVIS_BRANCH=$TRAVIS_BRANCH;
-  export GH_USER=$GH_USER;
-  export GH_PASSWORD=$GH_PASSWORD;
-  export GH_EMAIL=$GH_EMAIL;
-  export BUILD_TARGET=linux;
-  export GEN_BINDING_AND_COCOSFILE=true;
-  bash tools/travis-scripts/run-script.sh;
-  exit $?"
-before_install:
-- docker run -d --name ubuntu-test -v $(pwd):/travis ubuntu:latest tail -f /dev/null
-- docker ps
-- docker exec -t ubuntu-test bash -c "apt-get update > /dev/null;
-  echo Install linux dependence packages, please wait ...;
-  apt-get install -y curl unzip python python-pip build-essential gcc g++ cmake > /dev/null;
-  apt-get install -y libx11-dev libxmu-dev libglu1-mesa-dev libgl2ps-dev libxi-dev > /dev/null;
-  apt-get install -y libzip-dev libpng12-dev libcurl4-gnutls-dev libfontconfig1-dev > /dev/null;
-  apt-get install -y libsqlite3-dev libglew-dev libssl-dev libgtk-3-dev binutils > /dev/null;
-  pip install PyYAML Cheetah > /dev/null;
-  cd /travis;
-  export TRAVIS_OS_NAME=$TRAVIS_OS_NAME;
-  export TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST;
-  export TRAVIS_BRANCH=$TRAVIS_BRANCH;
-  export GH_USER=$GH_USER;
-  export GH_PASSWORD=$GH_PASSWORD;
-  export GH_EMAIL=$GH_EMAIL;
-  export BUILD_TARGET=linux;
-  export GEN_BINDING_AND_COCOSFILE=true;
-  bash tools/travis-scripts/before-install.sh;
-  exit_val=$?;
-  echo before-install.sh exits with:$exit_val;
-  exit $exit_val"
 
 cache:
   bundler: true
