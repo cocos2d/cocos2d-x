@@ -7,6 +7,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 HOST_NAME=""
 
+echo "HOME dir: $HOME"
+
 function install_android_ndk()
 {
     mkdir -p $HOME/bin
