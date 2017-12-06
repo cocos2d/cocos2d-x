@@ -13,7 +13,7 @@ matrix:
       sudo: required
       language: cpp
       script:
-        - tools/travis-scripts/run-script.sh
+        # - tools/travis-scripts/run-script.sh
         # - docker exec -it ubuntu-test bash -c "cd /travis;
         #   export TRAVIS_OS_NAME=$TRAVIS_OS_NAME;
         #   export TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST;
@@ -45,7 +45,12 @@ matrix:
         #   export BUILD_TARGET=linux;
         #   export GEN_BINDING_AND_COCOSFILE=true;
         #   tools/travis-scripts/before-install.sh;"
-        - tools/travis-scripts/before-install.sh
+        # - tools/travis-scripts/before-install.sh
+        - echo libclang dependence ...
+        - ldd /tools/bindings-generator/libclang/libclang.so
+        - echo .........
+        - echo libstdc++.so.6 information ...
+        - strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
     # android
     # - os: linux
     #   services:
