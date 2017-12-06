@@ -137,7 +137,7 @@ function install_android_environment()
     sudo rm -rf /usr/lib/gcc/x86_64-linux-gnu/4.8/libstdc++*
 
     echo Checking error_category ...
-    nm -D /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep _ZNKSt3_V214error_category10_M_messageB5cxx11Ei
+    nm -D /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep error_category
     echo After Checking error_category
 
     echo log libstdc++6 information after installing new package ...
