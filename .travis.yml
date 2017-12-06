@@ -2,8 +2,6 @@ matrix:
   include:
     # linux
     - os: linux
-      # services:
-      # - docker
       env: 
         - BUILD_TARGET=linux 
         - GEN_BINDING_AND_COCOSFILE=true
@@ -12,97 +10,32 @@ matrix:
         - secure: M5lyDs0qai15mWHzJdkh0WPfVJJmVZu6SWtYULxatukGPXVwoQvmEtYAwAW+iz6aM+tXksQ/mk6nW5L8UFbHm+n6yrsa5bZU9sGXjilPE8p8bLFYDmIbPRazU+E6pBP3J2CDoAm0XnWkiYQ8feTxKTo6ysLnHAEjyaHTw0+Q1GM=
       sudo: required
       language: cpp
-      script:
-        - tools/travis-scripts/run-script.sh
-        # - docker exec -it ubuntu-test bash -c "cd /travis;
-        #   export TRAVIS_OS_NAME=$TRAVIS_OS_NAME;
-        #   export TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST;
-        #   export TRAVIS_BRANCH=$TRAVIS_BRANCH;
-        #   export GH_USER=$GH_USER;
-        #   export GH_PASSWORD=$GH_PASSWORD;
-        #   export GH_EMAIL=$GH_EMAIL;
-        #   export BUILD_TARGET=linux;
-        #   export GEN_BINDING_AND_COCOSFILE=true;
-        #   tools/travis-scripts/run-script.sh;"
-
-      before_install:
-        # - docker run -d --name ubuntu-test -v $(pwd):/travis ubuntu:latest tail -f /dev/null
-        # - docker ps
-        # - docker exec -it ubuntu-test bash -c "apt-get update > /dev/null;
-        #   echo Install linux dependence packages, please wait ...;
-        #   apt-get install -y curl unzip python python-pip build-essential gcc g++ cmake > /dev/null;
-        #   apt-get install -y libx11-dev libxmu-dev libglu1-mesa-dev libgl2ps-dev libxi-dev > /dev/null;
-        #   apt-get install -y libzip-dev libpng12-dev libcurl4-gnutls-dev libfontconfig1-dev > /dev/null;
-        #   apt-get install -y libsqlite3-dev libglew-dev libssl-dev libgtk-3-dev binutils > /dev/null;
-        #   pip install PyYAML Cheetah > /dev/null;
-        #   cd /travis;
-        #   export TRAVIS_OS_NAME=$TRAVIS_OS_NAME;
-        #   export TRAVIS_PULL_REQUEST=$TRAVIS_PULL_REQUEST;
-        #   export TRAVIS_BRANCH=$TRAVIS_BRANCH;
-        #   export GH_USER=$GH_USER;
-        #   export GH_PASSWORD=$GH_PASSWORD;
-        #   export GH_EMAIL=$GH_EMAIL;
-        #   export BUILD_TARGET=linux;
-        #   export GEN_BINDING_AND_COCOSFILE=true;
-        #   tools/travis-scripts/before-install.sh;"
-        #install g++-4.9
-        - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y > /dev/null
-        - sudo apt-get update
-        - echo Installing libstdc++6 ...
-        - sudo apt-get install -y libstdc++6
-        - echo Installing libstdc++6 finished
-        - echo libclang dependence ...
-        - ldd tools/bindings-generator/libclang/libclang.so
-        - echo .........
-        - dpkg-query -W libstdc++6
-        - ls -l /usr/lib/x86_64-linux-gnu/libstdc*
-        - echo libstdc++.so.6 information ...
-        - strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
-        - tools/travis-scripts/before-install.sh
-        # - echo libclang dependence ...
-        # - ldd tools/bindings-generator/libclang/libclang.so
-        # - echo .........
-        # - dpkg-query -W libstdc++6
-        # - ls -l /usr/lib/x86_64-linux-gnu/libstdc*
-        # - echo libstdc++.so.6 information ...
-        # - strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
-        # - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-        # - sudo apt-get update
-        # - sudo apt-get install -y gcc-4.9 g++-4.9 libstdc++6 build-essential
-        # - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 60
-        # - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 60
-        # - echo 22222 libclang dependence ...
-        # - ldd tools/bindings-generator/libclang/libclang.so
-        # - dpkg-query -W libstdc++6
-        # - ls -l /usr/lib/x86_64-linux-gnu/libstdc*
-        # - echo .........
-        # - echo 2222 libstdc++.so.6 information ...
-        # - strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
-
     # android
-    # - os: linux
-    #   services:
-    #   - docker
-    #   env: BUILD_TARGET=android
-    #   language: android
-    #   sudo: required
-    #   android:
-    #     components:
-    #       - android-14
-    #       - build-tools-27.0.1
-    # # mac
-    # - os: osx
-    #   env: BUILD_TARGET=mac
-    #   language: cpp
-    #   osx_image: xcode8.3
-    #   sudo: required
-    # # iOS
-    # - os: osx
-    #   env: BUILD_TARGET=ios
-    #   language: cpp
-    #   osx_image: xcode8.3
-    #   sudo: required
+    - os: linux
+      env: BUILD_TARGET=android
+      language: android
+      sudo: required
+      android:
+        components:
+          - android-14
+          - build-tools-27.0.1
+    # mac
+    - os: osx
+      env: BUILD_TARGET=mac
+      language: cpp
+      osx_image: xcode8.3
+      sudo: required
+    # iOS
+    - os: osx
+      env: BUILD_TARGET=ios
+      language: cpp
+      osx_image: xcode8.3
+      sudo: required
 
+script:
+- tools/travis-scripts/run-script.sh
+before_install:
+- tools/travis-scripts/before-install.sh
 
 cache:
   bundler: true
