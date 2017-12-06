@@ -128,8 +128,8 @@ function install_android_environment()
 
     sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y > /dev/null
     sudo apt-get update
-    echo Installing the latest version of libstdc++6
-    sudo apt-get install -y libstdc++6
+    echo Installing the latest version of libstdc++6 libtinfo5
+    sudo apt-get install -y libstdc++6 libtinfo5
 
     echo log libstdc++6 information after installing new package ...
     # print some log for libstdc++6
