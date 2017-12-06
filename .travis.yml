@@ -44,9 +44,9 @@ before_install:
 - docker run -d --name ubuntu-test -v $(pwd):/travis ubuntu:latest tail -f /dev/null
 - docker ps
 - docker exec -t ubuntu-test bash -c "apt-get update;
-  echo '#!/bin/bash' > /bin/sudo
-  echo '$@' >> /bin/sudo
-  chmod +x /bin/sudo
+  echo '#!/bin/bash' > /bin/sudo;
+  echo '$@' >> /bin/sudo;
+  chmod +x /bin/sudo;
   apt-get install -y curl unzip python python-pip build-essential gcc g++ cmake bc;
   pip install PyYAML Cheetah;
   cd /travis;
