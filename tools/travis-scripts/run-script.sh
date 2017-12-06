@@ -161,6 +161,7 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
 
 function run_pull_request()
 {
+    echo "Building pull request ..."
     # need to generate binding codes for all targets
     genernate_binding_codes
 
@@ -185,6 +186,7 @@ function run_pull_request()
 
 function run_after_merge()
 {
+    echo "Building merge commit ..."
     # Re-generation of the javascript bindings can perform push of the new
     # version back to github.  We don't do this for pull requests, or if
     # GH_USER/GH_EMAIL/GH_PASSWORD environment variables are not set correctly

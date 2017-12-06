@@ -46,6 +46,8 @@ before_install:
   apt-get install -y curl unzip python python-pip build-essential gcc g++ cmake;
   pip install PyYAML Cheetah;
   cd /travis;
+  export BUILD_TARGET=linux;
+  export GEN_BINDING_AND_COCOSFILE=true
   bash tools/travis-scripts/before-install.sh"
 
 cache:
