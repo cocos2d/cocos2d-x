@@ -7,14 +7,6 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 HOST_NAME=""
 
-echo "HOME dir: $HOME"
-echo "COCOS2DX_ROOT: $COCOS2DX_ROOT"
-echo "BUILD_TARGET: $BUILD_TARGET"
-echo "TRAVIS_OS_NAME: $TRAVIS_OS_NAME"
-echo "TRAVIS_PULL_REQUEST: $TRAVIS_PULL_REQUEST"
-echo "GEN_BINDING_AND_COCOSFILE: $GEN_BINDING_AND_COCOSFILE"
-echo "GCC Version: `gcc --version`"
-
 function install_android_ndk()
 {
     mkdir -p $HOME/bin
