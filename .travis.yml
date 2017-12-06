@@ -24,7 +24,7 @@ matrix:
           export GEN_BINDING_AND_COCOSFILE=true;
           tools/travis-scripts/run-script.sh;
 
-        before_install:
+      before_install:
         - docker run -d --name ubuntu-test -v $(pwd):/travis ubuntu:latest tail -f /dev/null
         - docker ps
         - docker exec -it ubuntu-test bash -c "apt-get update > /dev/null;
