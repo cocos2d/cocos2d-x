@@ -138,6 +138,7 @@ function install_android_environment()
 
     echo Checking error_category ...
     nm -D /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep error_category
+    nm -D /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep cxx11
     echo After Checking error_category
 
     echo log libstdc++6 information after installing new package ...
