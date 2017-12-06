@@ -2,6 +2,8 @@ matrix:
   include:
     # linux
     - os: linux
+      services:
+      - docker
       env: 
         - BUILD_TARGET=linux 
         - GEN_BINDING_AND_COCOSFILE=true
@@ -11,31 +13,37 @@ matrix:
       sudo: required
       language: cpp
     # android
-    - os: linux
-      env: BUILD_TARGET=android
-      language: android
-      sudo: required
-      android:
-        components:
-          - android-14
-          - build-tools-27.0.1
-    # mac
-    - os: osx
-      env: BUILD_TARGET=mac
-      language: cpp
-      osx_image: xcode8.3
-      sudo: required
-    # iOS
-    - os: osx
-      env: BUILD_TARGET=ios
-      language: cpp
-      osx_image: xcode8.3
-      sudo: required
+    # - os: linux
+    #   services:
+    #   - docker
+    #   env: BUILD_TARGET=android
+    #   language: android
+    #   sudo: required
+    #   android:
+    #     components:
+    #       - android-14
+    #       - build-tools-27.0.1
+    # # mac
+    # - os: osx
+    #   env: BUILD_TARGET=mac
+    #   language: cpp
+    #   osx_image: xcode8.3
+    #   sudo: required
+    # # iOS
+    # - os: osx
+    #   env: BUILD_TARGET=ios
+    #   language: cpp
+    #   osx_image: xcode8.3
+    #   sudo: required
 
 script:
-- tools/travis-scripts/run-script.sh
+- docker exec -t ubuntu-test bash -c "cd /travis;
+  bash tools/travis-scripts/run-script.sh"
 before_install:
-- tools/travis-scripts/before-install.sh
+- docker run -d --name ubuntu-test -v $(pwd):/travis ubuntu:latest tail -f /dev/null
+- docker ps
+- docker exec -t ubuntu-test bash -c "apt-get update;
+  bash tools/travis-scripts/before-install.sh"
 
 cache:
   bundler: true
