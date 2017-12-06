@@ -48,6 +48,9 @@ before_install:
   echo '$@' >> /bin/sudo;
   chmod +x /bin/sudo;
   apt-get install -y curl unzip python python-pip build-essential gcc g++ cmake bc;
+  apt-get install libx11-dev libxmu-dev libglu1-mesa-dev libgl2ps-dev libxi-dev;
+  apt-get install libzip-dev libpng12-dev libcurl4-gnutls-dev libfontconfig1-dev;
+  apt-get install libsqlite3-dev libglew-dev libssl-dev libgtk-3-dev binutils;
   pip install PyYAML Cheetah;
   cd /travis;
   export TRAVIS_OS_NAME=$TRAVIS_OS_NAME;

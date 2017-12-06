@@ -72,9 +72,9 @@ function install_linux_environment()
     # echo "which ld: `which ld`"
     # sudo rm /usr/bin/ld
     # popd
-    echo "Installing linux dependence packages ..."
-    echo -e "y" | bash $COCOS2DX_ROOT/build/install-deps-linux.sh
-    echo "Installing linux dependence packages finished!"
+    # echo "Installing linux dependence packages ..."
+    # echo -e "y" | bash $COCOS2DX_ROOT/build/install-deps-linux.sh
+    # echo "Installing linux dependence packages finished!"
 }
 
 function download_deps()

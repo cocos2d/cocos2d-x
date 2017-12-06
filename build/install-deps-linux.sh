@@ -27,8 +27,8 @@ DEPENDS+=' libxmu-dev'
 DEPENDS+=' libglu1-mesa-dev'
 DEPENDS+=' libgl2ps-dev'
 DEPENDS+=' libxi-dev'
-# DEPENDS+=' gcc-4.9'
-# DEPENDS+=' g++-4.9'
+DEPENDS+=' gcc-4.9'
+DEPENDS+=' g++-4.9'
 DEPENDS+=' libzip-dev'
 DEPENDS+=' libpng12-dev'
 DEPENDS+=' libcurl4-gnutls-dev'
@@ -63,11 +63,11 @@ fi
 
 
 
-# sudo update-alternatives --remove-all gcc
-# sudo update-alternatives --remove-all g++
+sudo update-alternatives --remove-all gcc
+sudo update-alternatives --remove-all g++
 
-# sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 60
-# sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 60
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 60
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 60
 
 echo "Cocos uses GCC Version: `gcc --version`"
 echo "Cocos uses G++ Version: `g++ --version`"
