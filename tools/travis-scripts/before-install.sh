@@ -8,6 +8,7 @@ COCOS2DX_ROOT="$DIR"/../..
 HOST_NAME=""
 
 echo "HOME dir: $HOME"
+echo "GCC Version: `gcc --version`"
 
 function install_android_ndk()
 {
