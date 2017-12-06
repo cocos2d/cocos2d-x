@@ -92,7 +92,7 @@ function genernate_binding_codes()
 
     # We don't support building js projects for linux platform,
     # therefore, don't generate js-binding code for it.
-    if [ $TRAVIS_OS_NAME != "linux" ]; then
+    if [ $TRAVIS_OS_NAME != "linux" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
         echo "Create auto-generated jsbinding glue codes."
         pushd "$COCOS2DX_ROOT/tools/tojs"
         ./genbindings.py
