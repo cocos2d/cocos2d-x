@@ -38,7 +38,8 @@ matrix:
 
 script:
 - docker exec -t ubuntu-test bash -c "cd /travis;
-  bash tools/travis-scripts/run-script.sh"
+  bash tools/travis-scripts/run-script.sh;
+  exit $?"
 before_install:
 - docker run -d --name ubuntu-test -v $(pwd):/travis ubuntu:latest tail -f /dev/null
 - docker ps
@@ -47,8 +48,9 @@ before_install:
   pip install PyYAML Cheetah;
   cd /travis;
   export BUILD_TARGET=linux;
-  export GEN_BINDING_AND_COCOSFILE=true
-  bash tools/travis-scripts/before-install.sh"
+  export GEN_BINDING_AND_COCOSFILE=true;
+  bash tools/travis-scripts/before-install.sh;
+  exit $?"
 
 cache:
   bundler: true
