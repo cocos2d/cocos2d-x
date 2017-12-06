@@ -41,18 +41,23 @@ function install_android_ndk()
 
 function install_linux_environment()
 {
+    echo install_linux_environment
+    apt-cache policy libstdc++6
+
     sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y > /dev/null
     sudo apt-get update
     sudo apt-get install -y libx11-dev libxmu-dev libglu1-mesa-dev libgl2ps-dev
-    sudo apt-get install -y libxi-dev gcc g++ libzip-dev libpng12-dev libcurl4-gnutls-dev
+    sudo apt-get install -y libxi-dev gcc-7 g++-7 libzip-dev libpng12-dev libcurl4-gnutls-dev
     sudo apt-get install -y libfontconfig1-dev libsqlite3-dev libglew-dev libssl-dev
     sudo apt-get install -y libgtk-3-dev binutils cmake libstdc++6
 
     sudo update-alternatives --remove-all gcc
     sudo update-alternatives --remove-all g++
 
-    # sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7.2 60
-    # sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7.2 60
+    ls /usr/bin/gcc*
+
+    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 60
+    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 60
 
     echo "Cocos uses GCC Version: `gcc --version`"
     echo "Cocos uses G++ Version: `g++ --version`"
@@ -60,6 +65,7 @@ function install_linux_environment()
     echo "Cocos uses /usr/bin/ld Version: `/usr/bin/ld --version`"
 
     # print some log for libstdc++6
+    apt-cache policy libstdc++6
     strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
     ls -l /usr/lib/x86_64-linux-gnu/libstdc++*
     dpkg-query -W libstdc++6
