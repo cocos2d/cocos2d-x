@@ -152,3 +152,5 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
         install_environement_for_after_merge
     fi 
 fi
+
+echo "before-install.sh execution finished!"

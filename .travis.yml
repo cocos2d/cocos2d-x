@@ -44,6 +44,7 @@ before_install:
 - docker run -d --name ubuntu-test -v $(pwd):/travis ubuntu:latest tail -f /dev/null
 - docker ps
 - docker exec -t ubuntu-test bash -c "apt-get update > /dev/null;
+  echo "Install linux dependence packages, please wait ..."
   apt-get install -y curl unzip python python-pip build-essential gcc g++ cmake > /dev/null;
   apt-get install -y libx11-dev libxmu-dev libglu1-mesa-dev libgl2ps-dev libxi-dev > /dev/null;
   apt-get install -y libzip-dev libpng12-dev libcurl4-gnutls-dev libfontconfig1-dev > /dev/null;
@@ -59,7 +60,9 @@ before_install:
   export BUILD_TARGET=linux;
   export GEN_BINDING_AND_COCOSFILE=true;
   bash tools/travis-scripts/before-install.sh;
-  exit $?"
+  exit_val=$?
+  echo "before-install.sh exits with:$exit_val"
+  exit $exit_val"
 
 cache:
   bundler: true
