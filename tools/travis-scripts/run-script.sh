@@ -166,6 +166,11 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
 function run_pull_request()
 {
     echo "Building pull request ..."
+
+    # print some log for libstdc++6
+    strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
+    dpkg-query -W libstdc++6
+
     # need to generate binding codes for all targets
     genernate_binding_codes
 

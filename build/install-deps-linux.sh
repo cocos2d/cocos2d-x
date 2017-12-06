@@ -38,6 +38,7 @@ DEPENDS+=' libglew-dev'
 DEPENDS+=' libssl-dev'
 DEPENDS+=' libgtk-3-dev'
 DEPENDS+=' binutils'
+DEPENDS+=' libstdc++6'
 
 MISSING=
 echo "Checking for missing packages ..."
