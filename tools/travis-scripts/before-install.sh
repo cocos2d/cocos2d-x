@@ -46,13 +46,14 @@ function install_linux_environment()
 
     sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y > /dev/null
     sudo apt-get update
+
+    echo check libstdc++6
+    apt-cache policy libstdc++6
+
     sudo apt-get install -y libx11-dev libxmu-dev libglu1-mesa-dev libgl2ps-dev
     sudo apt-get install -y libxi-dev gcc-7 g++-7 libzip-dev libpng12-dev libcurl4-gnutls-dev
     sudo apt-get install -y libfontconfig1-dev libsqlite3-dev libglew-dev libssl-dev
     sudo apt-get install -y libgtk-3-dev binutils cmake libstdc++6
-
-    sudo update-alternatives --remove-all gcc
-    sudo update-alternatives --remove-all g++
 
     ls /usr/bin/gcc*
 
