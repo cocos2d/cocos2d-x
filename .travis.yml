@@ -19,18 +19,18 @@ matrix:
         components:
           - android-14
           - build-tools-27.0.1
-    # mac
-    - os: osx
-      env: BUILD_TARGET=mac
-      language: cpp
-      osx_image: xcode8.3
-      sudo: required
-    # iOS
-    - os: osx
-      env: BUILD_TARGET=ios
-      language: cpp
-      osx_image: xcode8.3
-      sudo: required
+    # # mac
+    # - os: osx
+    #   env: BUILD_TARGET=mac
+    #   language: cpp
+    #   osx_image: xcode8.3
+    #   sudo: required
+    # # iOS
+    # - os: osx
+    #   env: BUILD_TARGET=ios
+    #   language: cpp
+    #   osx_image: xcode8.3
+    #   sudo: required
 
 script:
 - tools/travis-scripts/run-script.sh
