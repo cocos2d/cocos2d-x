@@ -43,7 +43,8 @@ before_install:
 - docker run -d --name ubuntu-test -v $(pwd):/travis ubuntu:latest tail -f /dev/null
 - docker ps
 - docker exec -t ubuntu-test bash -c "apt-get update;
-  apt-get install -y curl unzip python;
+  apt-get install -y curl unzip python python-pip build-essential gcc g++ cmake;
+  pip install PyYAML Cheetah;
   cd /travis;
   bash tools/travis-scripts/before-install.sh"
 
