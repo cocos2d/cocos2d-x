@@ -126,27 +126,27 @@ function install_android_environment()
     dpkg-query -W libstdc++6
     ldd $COCOS2DX_ROOT/tools/bindings-generator/libclang/libclang.so
 
-    sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y > /dev/null
-    sudo apt-get update
-    echo Installing the latest version of libstdc++6 libtinfo5
-    sudo apt-get install -y libstdc++6 libtinfo5
+    # sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y > /dev/null
+    # sudo apt-get update
+    # echo Installing the latest version of libstdc++6 libtinfo5
+    # sudo apt-get install -y libstdc++6 libtinfo5
 
-    echo "find libstd++ ..."
-    find /lib -name "libstd*"
-    find /usr/lib -name "libstd*"
-    sudo rm -rf /usr/lib/gcc/x86_64-linux-gnu/4.8/libstdc++*
+    # echo "find libstd++ ..."
+    # find /lib -name "libstd*"
+    # find /usr/lib -name "libstd*"
+    # sudo rm -rf /usr/lib/gcc/x86_64-linux-gnu/4.8/libstdc++*
 
-    echo Checking error_category ...
-    nm -D /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep error_category
-    nm -D /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep cxx11
-    echo After Checking error_category
+    # echo Checking error_category ...
+    # nm -D /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep error_category
+    # nm -D /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep cxx11
+    # echo After Checking error_category
 
-    echo log libstdc++6 information after installing new package ...
-    # print some log for libstdc++6
-    strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
-    ls -l /usr/lib/x86_64-linux-gnu/libstdc++*
-    dpkg-query -W libstdc++6
-    ldd $COCOS2DX_ROOT/tools/bindings-generator/libclang/libclang.so
+    # echo log libstdc++6 information after installing new package ...
+    # # print some log for libstdc++6
+    # strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
+    # ls -l /usr/lib/x86_64-linux-gnu/libstdc++*
+    # dpkg-query -W libstdc++6
+    # ldd $COCOS2DX_ROOT/tools/bindings-generator/libclang/libclang.so
     
     # todo: cocos should add parameter to avoid promt
     sudo mkdir $HOME/.cocos
