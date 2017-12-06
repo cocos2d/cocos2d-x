@@ -145,6 +145,9 @@ protected:
     dragonBones::CCArmatureDisplay* createArmatureDisplay(const buffers::DragonBones* dragonBonesBuffer) const;
     void parseArmatureDisplay(dragonBones::CCArmatureDisplay* armatureDisplay, const buffers::DragonBones* dragonBonesBuffer) const;
     
+    cocos2d::MotionStreak* createMotionStreak(const buffers::MotionStreak* motionStreakBuffer) const;
+    void parseMotionStreak(cocos2d::MotionStreak* motionStreak, const buffers::MotionStreak* motionStreakBuffer) const;
+    
     void setupSpriteFrames();
     void setupCollisionMatrix();
 

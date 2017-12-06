@@ -142,4 +142,6 @@ handleButtonClick = function (scene)
     end
 
     handleDragonbonesButtonClick(scene)
+
+    handleNormalButtonClick(scene, 'motionstreak', 'creator/scenes/motionstreak/motionstreak.ccreator')
 end

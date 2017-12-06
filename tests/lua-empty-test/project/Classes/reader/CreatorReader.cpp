@@ -303,9 +303,10 @@ cocos2d::Node* CreatorReader::createTree(const buffers::NodeTree* tree) const
 
     const void* buffer = tree->object();
     buffers::AnyNode bufferType = tree->object_type();
-    bool treat_child_as_label = false;
+    bool parsing_button = false;
     
-    switch (static_cast<int>(bufferType)) {
+    switch (static_cast<int>(bufferType))
+    {
         case buffers::AnyNode_NONE:
             break;
         case buffers::AnyNode_Node:
@@ -337,7 +338,7 @@ cocos2d::Node* CreatorReader::createTree(const buffers::NodeTree* tree) const
             break;
         case buffers::AnyNode_Button:
             node = createButton(static_cast<const buffers::Button*>(buffer));
-            treat_child_as_label = true;
+            parsing_button = true;
             break;
         case buffers::AnyNode_EditBox:
             node = createEditBox(static_cast<const buffers::EditBox*>(buffer));
@@ -373,25 +374,31 @@ cocos2d::Node* CreatorReader::createTree(const buffers::NodeTree* tree) const
         case buffers::AnyNode_DragonBones:
             node = createArmatureDisplay(static_cast<const buffers::DragonBones*>(buffer));
             break;
+        case buffers::AnyNode_MotionStreak:
+            node = createMotionStreak(static_cast<const buffers::MotionStreak*>(buffer));
+            break;
     }
 
     // recursively add its children
     const auto& children = tree->children();
-    for(const auto& childBuffer: *children) {
+    for(const auto& childBuffer: *children)
+    {
         cocos2d::Node* child = createTree(childBuffer);
-        if (child && node)  {
-            if (!treat_child_as_label) {
-                // every node should do this
-                node->addChild(child);
-                adjustPosition(child);
-            } else {
-                // except if for Buttons
+        if (child && node)
+        {
+            // should adjust child's position except Button's label
+            if (parsing_button && dynamic_cast<cocos2d::Label*>(child) != nullptr)
+            {
                 auto button = static_cast<cocos2d::ui::Button*>(node);
                 auto label = static_cast<cocos2d::Label*>(child);
                 button->setTitleLabel(label);
             }
+            else
+            {
+                node->addChild(child);
+                adjustPosition(child);
+            }
         }
-    
     }
 
     return node;
@@ -1278,6 +1285,70 @@ void CreatorReader::parseMask(cocos2d::ClippingNode* mask, const buffers::Mask* 
         mask->setStencil(stencil);
         mask->setAlphaThreshold(alphaThreshold);
     }
+}
+
+cocos2d::MotionStreak* CreatorReader::createMotionStreak(const buffers::MotionStreak* motionStreakBuffer) const
+{
+    const auto& timeToFade = motionStreakBuffer->timeToFade();
+    const auto& minSeg = motionStreakBuffer->minSeg();
+    const auto& strokeWidth = motionStreakBuffer->strokeWidth();
+    
+    const auto& color = motionStreakBuffer->strokeColor();
+    const cocos2d::Color3B strokeColor(color->r(), color->g(), color->b());
+    
+    const auto& imagePath = motionStreakBuffer->texturePath();
+    
+    auto motionStreak = cocos2d::MotionStreak::create(timeToFade, minSeg, strokeWidth, strokeColor, imagePath->c_str());
+    parseMotionStreak(motionStreak, motionStreakBuffer);
+    
+    return motionStreak;
+}
+
+void CreatorReader::parseMotionStreak(cocos2d::MotionStreak* motionStreak, const buffers::MotionStreak* motionStreakBuffer) const
+{
+    const auto& nodeBuffer = motionStreakBuffer->node();
+    
+    // can not reuse parseNode because MotionStreak::setOpacity will cause assert error
+    // parseNode(motionStreak, nodeBuffer);
+    {
+        auto node = motionStreak;
+        const auto& globalZOrder = nodeBuffer->globalZOrder();
+        node->setGlobalZOrder(globalZOrder);
+        const auto& localZOrder = nodeBuffer->localZOrder();
+        node->setLocalZOrder(localZOrder);
+        const auto& name = nodeBuffer->name();
+        if (name) node->setName(name->str());
+        const auto& anchorPoint = nodeBuffer->anchorPoint();
+        if (anchorPoint) node->setAnchorPoint(cocos2d::Vec2(anchorPoint->x(), anchorPoint->y()));
+        const auto& color = nodeBuffer->color();
+        if (color) node->setColor(cocos2d::Color3B(color->r(), color->g(), color->b()));
+        const auto& cascadeOpacityEnabled = nodeBuffer->cascadeOpacityEnabled();
+        node->setCascadeOpacityEnabled(cascadeOpacityEnabled);
+        const auto& opacityModifyRGB = nodeBuffer->opacityModifyRGB();
+        node->setOpacityModifyRGB(opacityModifyRGB);
+        const auto position = nodeBuffer->position();
+        if (position) node->setPosition(cocos2d::Vec2(position->x(), position->y()));
+        node->setRotationSkewX(nodeBuffer->rotationSkewX());
+        node->setRotationSkewY(nodeBuffer->rotationSkewY());
+        node->setScaleX(nodeBuffer->scaleX());
+        node->setScaleY(nodeBuffer->scaleY());
+        node->setSkewX(nodeBuffer->skewX());
+        node->setSkewY(nodeBuffer->skewY());
+        const auto& tag = nodeBuffer->tag();
+        node->setTag(tag);
+        const auto contentSize = nodeBuffer->contentSize();
+        if (contentSize) node->setContentSize(cocos2d::Size(contentSize->w(), contentSize->h()));
+        const auto enabled = nodeBuffer->enabled();
+        node->setVisible(enabled);
+        
+        // animation?
+        parseNodeAnimation(node, nodeBuffer);
+        
+        parseColliders(node, nodeBuffer);
+    }
+    
+    const auto& fastMode = motionStreakBuffer->fastMode();
+    motionStreak->setFastMode(fastMode);
 }
 
 /*=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
