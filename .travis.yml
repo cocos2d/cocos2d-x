@@ -45,6 +45,9 @@ matrix:
         #   export BUILD_TARGET=linux;
         #   export GEN_BINDING_AND_COCOSFILE=true;
         #   tools/travis-scripts/before-install.sh;"
+        #install g++-4.9
+        - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y > /dev/null
+        - sudo apt-get update
         - echo Installing libstdc++6 ...
         - sudo apt-get install -y libstdc++6
         - echo Installing libstdc++6 finished
