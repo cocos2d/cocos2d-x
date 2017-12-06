@@ -39,8 +39,8 @@ function install_android_ndk()
     mv android-ndk-r16 android-ndk
 }
 
-function install_linux_environment()
-{
+# function install_linux_environment()
+# {
     # mkdir -p $HOME/bin
     # pushd $HOME/bin
 
@@ -75,7 +75,7 @@ function install_linux_environment()
     # echo "Installing linux dependence packages ..."
     # echo -e "y" | bash $COCOS2DX_ROOT/build/install-deps-linux.sh
     # echo "Installing linux dependence packages finished!"
-}
+# }
 
 function download_deps()
 {
@@ -112,9 +112,9 @@ function install_environement_for_pull_request()
     download_deps
 
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
-        if [ "$BUILD_TARGET" == "linux" ]; then
-            install_linux_environment
-        fi
+        # if [ "$BUILD_TARGET" == "linux" ]; then
+        #     install_linux_environment
+        # fi
 
         if [ "$BUILD_TARGET" == "android" ]; then
             install_android_environment
