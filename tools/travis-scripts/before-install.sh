@@ -134,7 +134,7 @@ function install_android_environment()
     echo "find libstd++ ..."
     find /lib -name "libstd*"
     find /usr/lib -name "libstd*"
-    rm -rf /usr/lib/gcc/x86_64-linux-gnu/4.8/libstdc++*
+    sudo rm -rf /usr/lib/gcc/x86_64-linux-gnu/4.8/libstdc++*
 
     echo log libstdc++6 information after installing new package ...
     # print some log for libstdc++6
