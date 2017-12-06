@@ -131,6 +131,11 @@ function install_android_environment()
     echo Installing the latest version of libstdc++6 libtinfo5
     sudo apt-get install -y libstdc++6 libtinfo5
 
+    echo "find libstd++ ..."
+    find /lib -name "libstd*"
+    find /usr/lib -name "libstd*"
+    rm -rf /usr/lib/gcc/x86_64-linux-gnu/4.8/libstdc++*
+
     echo log libstdc++6 information after installing new package ...
     # print some log for libstdc++6
     strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
