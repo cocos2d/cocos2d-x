@@ -60,6 +60,8 @@ struct PageViewBackground;
 
 struct PageView;
 
+struct MotionStreak;
+
 struct SpineSkeleton;
 
 struct AnimationRef;
@@ -334,12 +336,13 @@ enum AnyNode {
   AnyNode_PageView = 19,
   AnyNode_Mask = 20,
   AnyNode_DragonBones = 21,
+  AnyNode_MotionStreak = 22,
   AnyNode_MIN = AnyNode_NONE,
-  AnyNode_MAX = AnyNode_DragonBones
+  AnyNode_MAX = AnyNode_MotionStreak
 };
 
 inline const char **EnumNamesAnyNode() {
-  static const char *names[] = { "NONE", "Scene", "Sprite", "Label", "Particle", "TileMap", "Node", "Button", "ProgressBar", "ScrollView", "CreatorScene", "EditBox", "RichText", "SpineSkeleton", "VideoPlayer", "WebView", "Slider", "Toggle", "ToggleGroup", "PageView", "Mask", "DragonBones", nullptr };
+  static const char *names[] = { "NONE", "Scene", "Sprite", "Label", "Particle", "TileMap", "Node", "Button", "ProgressBar", "ScrollView", "CreatorScene", "EditBox", "RichText", "SpineSkeleton", "VideoPlayer", "WebView", "Slider", "Toggle", "ToggleGroup", "PageView", "Mask", "DragonBones", "MotionStreak", nullptr };
   return names;
 }
 
@@ -431,6 +434,10 @@ template<> struct AnyNodeTraits<Mask> {
 
 template<> struct AnyNodeTraits<DragonBones> {
   static const AnyNode enum_value = AnyNode_DragonBones;
+};
+
+template<> struct AnyNodeTraits<MotionStreak> {
+  static const AnyNode enum_value = AnyNode_MotionStreak;
 };
 
 inline bool VerifyAnyNode(flatbuffers::Verifier &verifier, const void *union_obj, AnyNode type);
@@ -2453,6 +2460,86 @@ inline flatbuffers::Offset<PageView> CreatePageViewDirect(flatbuffers::FlatBuffe
   return CreatePageView(_fbb, node, inertia, bounceEnabled, direction, indicator, pages ? _fbb.CreateVector<flatbuffers::Offset<PageViewPage>>(*pages) : 0, background);
 }
 
+struct MotionStreak FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_NODE = 4,
+    VT_TIMETOFADE = 6,
+    VT_MINSEG = 8,
+    VT_STROKEWIDTH = 10,
+    VT_STROKECOLOR = 12,
+    VT_TEXTUREPATH = 14,
+    VT_FASTMODE = 16
+  };
+  const Node *node() const { return GetPointer<const Node *>(VT_NODE); }
+  float timeToFade() const { return GetField<float>(VT_TIMETOFADE, 0.0f); }
+  float minSeg() const { return GetField<float>(VT_MINSEG, 0.0f); }
+  float strokeWidth() const { return GetField<float>(VT_STROKEWIDTH, 0.0f); }
+  const ColorRGB *strokeColor() const { return GetStruct<const ColorRGB *>(VT_STROKECOLOR); }
+  const flatbuffers::String *texturePath() const { return GetPointer<const flatbuffers::String *>(VT_TEXTUREPATH); }
+  bool fastMode() const { return GetField<uint8_t>(VT_FASTMODE, 0) != 0; }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_NODE) &&
+           verifier.VerifyTable(node()) &&
+           VerifyField<float>(verifier, VT_TIMETOFADE) &&
+           VerifyField<float>(verifier, VT_MINSEG) &&
+           VerifyField<float>(verifier, VT_STROKEWIDTH) &&
+           VerifyField<ColorRGB>(verifier, VT_STROKECOLOR) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_TEXTUREPATH) &&
+           verifier.Verify(texturePath()) &&
+           VerifyField<uint8_t>(verifier, VT_FASTMODE) &&
+           verifier.EndTable();
+  }
+};
+
+struct MotionStreakBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_node(flatbuffers::Offset<Node> node) { fbb_.AddOffset(MotionStreak::VT_NODE, node); }
+  void add_timeToFade(float timeToFade) { fbb_.AddElement<float>(MotionStreak::VT_TIMETOFADE, timeToFade, 0.0f); }
+  void add_minSeg(float minSeg) { fbb_.AddElement<float>(MotionStreak::VT_MINSEG, minSeg, 0.0f); }
+  void add_strokeWidth(float strokeWidth) { fbb_.AddElement<float>(MotionStreak::VT_STROKEWIDTH, strokeWidth, 0.0f); }
+  void add_strokeColor(const ColorRGB *strokeColor) { fbb_.AddStruct(MotionStreak::VT_STROKECOLOR, strokeColor); }
+  void add_texturePath(flatbuffers::Offset<flatbuffers::String> texturePath) { fbb_.AddOffset(MotionStreak::VT_TEXTUREPATH, texturePath); }
+  void add_fastMode(bool fastMode) { fbb_.AddElement<uint8_t>(MotionStreak::VT_FASTMODE, static_cast<uint8_t>(fastMode), 0); }
+  MotionStreakBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  MotionStreakBuilder &operator=(const MotionStreakBuilder &);
+  flatbuffers::Offset<MotionStreak> Finish() {
+    auto o = flatbuffers::Offset<MotionStreak>(fbb_.EndTable(start_, 7));
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<MotionStreak> CreateMotionStreak(flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<Node> node = 0,
+    float timeToFade = 0.0f,
+    float minSeg = 0.0f,
+    float strokeWidth = 0.0f,
+    const ColorRGB *strokeColor = 0,
+    flatbuffers::Offset<flatbuffers::String> texturePath = 0,
+    bool fastMode = false) {
+  MotionStreakBuilder builder_(_fbb);
+  builder_.add_texturePath(texturePath);
+  builder_.add_strokeColor(strokeColor);
+  builder_.add_strokeWidth(strokeWidth);
+  builder_.add_minSeg(minSeg);
+  builder_.add_timeToFade(timeToFade);
+  builder_.add_node(node);
+  builder_.add_fastMode(fastMode);
+  return builder_.Finish();
+}
+
+inline flatbuffers::Offset<MotionStreak> CreateMotionStreakDirect(flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<Node> node = 0,
+    float timeToFade = 0.0f,
+    float minSeg = 0.0f,
+    float strokeWidth = 0.0f,
+    const ColorRGB *strokeColor = 0,
+    const char *texturePath = nullptr,
+    bool fastMode = false) {
+  return CreateMotionStreak(_fbb, node, timeToFade, minSeg, strokeWidth, strokeColor, texturePath ? _fbb.CreateString(texturePath) : 0, fastMode);
+}
+
 struct SpineSkeleton FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_NODE = 4,
@@ -3950,6 +4037,7 @@ inline bool VerifyAnyNode(flatbuffers::Verifier &verifier, const void *union_obj
     case AnyNode_PageView: return verifier.VerifyTable(reinterpret_cast<const PageView *>(union_obj));
     case AnyNode_Mask: return verifier.VerifyTable(reinterpret_cast<const Mask *>(union_obj));
     case AnyNode_DragonBones: return verifier.VerifyTable(reinterpret_cast<const DragonBones *>(union_obj));
+    case AnyNode_MotionStreak: return verifier.VerifyTable(reinterpret_cast<const MotionStreak *>(union_obj));
     default: return false;
   }
 }

@@ -174,4 +174,6 @@ void HelloWorld::handleButtonsClick(cocos2d::Scene* scene)
     HelloWorld::handleColliderButtonClick(scene);
     HelloWorld::handleVideoButtonClick(scene);
     HelloWorld::handleDragonbones(scene);
+    
+    HelloWorld::handleButtonClick(scene, "motionstreak", "creator/scenes/motionstreak/motionstreak.ccreator");
 }
