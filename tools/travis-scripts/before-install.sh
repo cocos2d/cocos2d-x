@@ -119,11 +119,19 @@ function download_deps()
 
 function install_android_environment()
 {
+    # print some log for libstdc++6
+    echo log libstdc++6 information before installing new package ...
+    strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
+    ls -l /usr/lib/x86_64-linux-gnu/libstdc++*
+    dpkg-query -W libstdc++6
+    ldd $COCOS2DX_ROOT/tools/bindings-generator/libclang/libclang.so
+
     sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y > /dev/null
     sudo apt-get update
     echo Installing the latest version of libstdc++6
     sudo apt-get install -y libstdc++6
 
+    echo log libstdc++6 information after installing new package ...
     # print some log for libstdc++6
     strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
     ls -l /usr/lib/x86_64-linux-gnu/libstdc++*
