@@ -44,15 +44,15 @@ function install_linux_environment()
     sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y > /dev/null
     sudo apt-get update
     sudo apt-get install -y libx11-dev libxmu-dev libglu1-mesa-dev libgl2ps-dev
-    sudo apt-get install -y libxi-dev gcc-7.2 g++-7.2 libzip-dev libpng12-dev libcurl4-gnutls-dev
+    sudo apt-get install -y libxi-dev gcc g++ libzip-dev libpng12-dev libcurl4-gnutls-dev
     sudo apt-get install -y libfontconfig1-dev libsqlite3-dev libglew-dev libssl-dev
     sudo apt-get install -y libgtk-3-dev binutils cmake libstdc++6
 
     sudo update-alternatives --remove-all gcc
     sudo update-alternatives --remove-all g++
 
-    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7.2 60
-    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7.2 60
+    # sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7.2 60
+    # sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7.2 60
 
     echo "Cocos uses GCC Version: `gcc --version`"
     echo "Cocos uses G++ Version: `g++ --version`"
@@ -140,9 +140,6 @@ function install_python_module_for_osx()
 function install_environement_for_pull_request()
 {
     echo "Building pull request ..."
-    # use NDK's clang to generate binding codes
-    install_android_ndk
-    download_deps
 
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
         if [ "$BUILD_TARGET" == "linux" ]; then
@@ -157,6 +154,10 @@ function install_environement_for_pull_request()
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
         install_python_module_for_osx
     fi
+
+    # use NDK's clang to generate binding codes
+    install_android_ndk
+    download_deps
 }
 
 # should generate binding codes & cocos_files.json after merging
