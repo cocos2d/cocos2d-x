@@ -33,9 +33,10 @@ matrix:
     #   sudo: required
 
 script:
-- export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu
 - tools/travis-scripts/run-script.sh
 before_install:
+- find /lib -name "libstd*"
+- find /usr/lib -name "libstd*"
 - tools/travis-scripts/before-install.sh
 
 cache:
