@@ -232,7 +232,7 @@ fi
 # - generate cocos_files.json for template
 if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     # only one job need to send PR, linux virtual machine has better performance
-    if [ $TRAVIS_OS_NAME == "linux" ] && [ $GEN_BINDING_AND_COCOSFILE == "true" ]; then
+    if [ $TRAVIS_OS_NAME == "linux" ] && [ x$GEN_BINDING_AND_COCOSFILE == x"true" ]; then
         run_after_merge
     fi
 fi
