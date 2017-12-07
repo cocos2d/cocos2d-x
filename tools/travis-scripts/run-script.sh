@@ -70,7 +70,7 @@ function build_android()
 
 function genernate_binding_codes()
 {
-    if [ $TRAVIS_OS_NAME == "linux" ]
+    if [ $TRAVIS_OS_NAME == "linux" ]; then
         # print some log for libstdc++6
         strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
         ls -l /usr/lib/x86_64-linux-gnu/libstdc++*
