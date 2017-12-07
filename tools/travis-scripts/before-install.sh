@@ -19,16 +19,16 @@ function install_android_ndk()
         HOST_NAME="linux"
     fi
 
-    FILE_NAME=android-ndk-r10d-${HOST_NAME}-x86_64.bin
+    FILE_NAME=android-ndk-r16-${HOST_NAME}-x86_64.zip
 
     # the NDK is used to generate binding codes, should use r16 when fix binding codes with r16
     echo "Download ${FILE_NAME} ..."
-    curl -O http://dl.google.com/android/ndk/${FILE_NAME}
-    sudo chmod +x ./$FILE_NAME
+    curl -O https://dl.google.com/android/repository/${FILE_NAME}
     echo "Decompress ${FILE_NAME} ..."
-    ./$FILE_NAME > /dev/null
+    unzip ./${FILE_NAME} > /dev/null
+
     # Rename ndk
-    mv android-ndk-r10d android-ndk
+    mv android-ndk-r16 android-ndk
 }
 
 function install_linux_environment()
@@ -64,7 +64,9 @@ function install_linux_environment()
     echo "which ld: `which ld`"
     sudo rm /usr/bin/ld
     popd
+    echo "Installing linux dependence packages ..."
     echo -e "y" | bash $COCOS2DX_ROOT/build/install-deps-linux.sh
+    echo "Installing linux dependence packages finished!"
 }
 
 function download_deps()
@@ -73,12 +75,11 @@ function download_deps()
     pushd $COCOS2DX_ROOT
     python download-deps.py -r=yes
     popd
+    echo "Downloading cocos2d-x dependence finished!"
 }
 
 function install_android_environment()
 {
-    sudo apt-get install ant -y
-    
     # todo: cocos should add parameter to avoid promt
     sudo mkdir $HOME/.cocos
     sudo touch $HOME/.cocos/local_cfg.json
@@ -95,9 +96,7 @@ function install_python_module_for_osx()
 # set up environment according os and target
 function install_environement_for_pull_request()
 {
-    # use NDK's clang to generate binding codes
-    install_android_ndk
-    download_deps
+    echo "Building pull request ..."
 
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
         if [ "$BUILD_TARGET" == "linux" ]; then
@@ -112,11 +111,16 @@ function install_environement_for_pull_request()
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
         install_python_module_for_osx
     fi
+
+    # use NDK's clang to generate binding codes
+    install_android_ndk
+    download_deps
 }
 
 # should generate binding codes & cocos_files.json after merging
 function install_environement_for_after_merge()
 {
+    echo "Building merge commit ..."
     install_android_ndk
     download_deps
 
@@ -139,3 +143,5 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
         install_environement_for_after_merge
     fi 
 fi
+
+echo "before-install.sh execution finished!"

@@ -39,15 +39,6 @@ function build_ios()
 
 function build_android()
 {
-
-    #replace NDK to r16
-    # the NDK is used to generate binding codes, should use r16 when fix binding codes with r16
-    cd $HOME/bin
-    curl -O https://dl.google.com/android/repository/android-ndk-r16-linux-x86_64.zip
-    unzip ./android-ndk-r16-linux-x86_64.zip > /dev/null
-    rm -rf ./android-ndk
-    mv android-ndk-r16 android-ndk
-
     # Build all samples
     echo "Building Android samples ..."
     export COCOS_CONSOLE_ROOT=$COCOS2DX_ROOT/tools/cocos2d-console/bin
@@ -79,6 +70,14 @@ function build_android()
 
 function genernate_binding_codes()
 {
+    if [ $TRAVIS_OS_NAME == "linux" ]; then
+        # print some log for libstdc++6
+        strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
+        ls -l /usr/lib/x86_64-linux-gnu/libstdc++*
+        dpkg-query -W libstdc++6
+        ldd $COCOS2DX_ROOT/tools/bindings-generator/libclang/libclang.so
+    fi
+
     # set environment variables needed by binding codes
 
     which python
@@ -93,10 +92,14 @@ function genernate_binding_codes()
     ./genbindings.py
     popd
 
-    echo "Create auto-generated jsbinding glue codes."
-    pushd "$COCOS2DX_ROOT/tools/tojs"
-    ./genbindings.py
-    popd
+    # We don't support building js projects for linux platform,
+    # therefore, don't generate js-binding code for it.
+    if [ $TRAVIS_OS_NAME != "linux" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+        echo "Create auto-generated jsbinding glue codes."
+        pushd "$COCOS2DX_ROOT/tools/tojs"
+        ./genbindings.py
+        popd
+    fi
 }
 
 function generate_pull_request_for_binding_codes_and_cocosfiles()
@@ -170,6 +173,8 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
 
 function run_pull_request()
 {
+    echo "Building pull request ..."
+
     # need to generate binding codes for all targets
     genernate_binding_codes
 
@@ -194,6 +199,7 @@ function run_pull_request()
 
 function run_after_merge()
 {
+    echo "Building merge commit ..."
     # Re-generation of the javascript bindings can perform push of the new
     # version back to github.  We don't do this for pull requests, or if
     # GH_USER/GH_EMAIL/GH_PASSWORD environment variables are not set correctly
