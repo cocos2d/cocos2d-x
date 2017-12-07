@@ -2595,7 +2595,7 @@ bool js_cocos2dx_Node__setLocalZOrder(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node__setLocalZOrder : Invalid Native Object");
     if (argc == 1) {
-        int arg0 = 0;
+        int32_t arg0 = 0;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node__setLocalZOrder : Error processing arguments");
         cobj->_setLocalZOrder(arg0);
@@ -4119,7 +4119,7 @@ bool js_cocos2dx_Node_getLocalZOrder(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_getLocalZOrder : Invalid Native Object");
     if (argc == 0) {
-        int ret = cobj->getLocalZOrder();
+        int32_t ret = cobj->getLocalZOrder();
         JS::RootedValue jsret(cx);
         jsret = int32_to_jsval(cx, ret);
         args.rval().set(jsret);
@@ -4635,7 +4635,7 @@ bool js_cocos2dx_Node_setLocalZOrder(JSContext *cx, uint32_t argc, jsval *vp)
     cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_setLocalZOrder : Invalid Native Object");
     if (argc == 1) {
-        int arg0 = 0;
+        int32_t arg0 = 0;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_setLocalZOrder : Error processing arguments");
         cobj->setLocalZOrder(arg0);
@@ -6769,8 +6769,8 @@ bool js_cocos2dx_Director_pushProjectionMatrix(JSContext *cx, uint32_t argc, jsv
     cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_pushProjectionMatrix : Invalid Native Object");
     if (argc == 1) {
-        unsigned long arg0 = 0;
-        ok &= jsval_to_ulong(cx, args.get(0), &arg0);
+        size_t arg0 = 0;
+        ok &= jsval_to_size(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_pushProjectionMatrix : Error processing arguments");
         cobj->pushProjectionMatrix(arg0);
         args.rval().setUndefined();
@@ -6789,8 +6789,8 @@ bool js_cocos2dx_Director_popProjectionMatrix(JSContext *cx, uint32_t argc, jsva
     cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_popProjectionMatrix : Invalid Native Object");
     if (argc == 1) {
-        unsigned long arg0 = 0;
-        ok &= jsval_to_ulong(cx, args.get(0), &arg0);
+        size_t arg0 = 0;
+        ok &= jsval_to_size(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_popProjectionMatrix : Error processing arguments");
         cobj->popProjectionMatrix(arg0);
         args.rval().setUndefined();
@@ -6837,8 +6837,8 @@ bool js_cocos2dx_Director_loadProjectionIdentityMatrix(JSContext *cx, uint32_t a
     cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_loadProjectionIdentityMatrix : Invalid Native Object");
     if (argc == 1) {
-        unsigned long arg0 = 0;
-        ok &= jsval_to_ulong(cx, args.get(0), &arg0);
+        size_t arg0 = 0;
+        ok &= jsval_to_size(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_loadProjectionIdentityMatrix : Error processing arguments");
         cobj->loadProjectionIdentityMatrix(arg0);
         args.rval().setUndefined();
@@ -7375,9 +7375,9 @@ bool js_cocos2dx_Director_multiplyProjectionMatrix(JSContext *cx, uint32_t argc,
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_multiplyProjectionMatrix : Invalid Native Object");
     if (argc == 2) {
         cocos2d::Mat4 arg0;
-        unsigned long arg1 = 0;
+        size_t arg1 = 0;
         ok &= jsval_to_matrix(cx, args.get(0), &arg0);
-        ok &= jsval_to_ulong(cx, args.get(1), &arg1);
+        ok &= jsval_to_size(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_multiplyProjectionMatrix : Error processing arguments");
         cobj->multiplyProjectionMatrix(arg0, arg1);
         args.rval().setUndefined();
@@ -7947,9 +7947,9 @@ bool js_cocos2dx_Director_loadProjectionMatrix(JSContext *cx, uint32_t argc, jsv
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_loadProjectionMatrix : Invalid Native Object");
     if (argc == 2) {
         cocos2d::Mat4 arg0;
-        unsigned long arg1 = 0;
+        size_t arg1 = 0;
         ok &= jsval_to_matrix(cx, args.get(0), &arg0);
-        ok &= jsval_to_ulong(cx, args.get(1), &arg1);
+        ok &= jsval_to_size(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_loadProjectionMatrix : Error processing arguments");
         cobj->loadProjectionMatrix(arg0, arg1);
         args.rval().setUndefined();
@@ -7968,8 +7968,8 @@ bool js_cocos2dx_Director_initProjectionMatrixStack(JSContext *cx, uint32_t argc
     cocos2d::Director* cobj = (cocos2d::Director *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Director_initProjectionMatrixStack : Invalid Native Object");
     if (argc == 1) {
-        unsigned long arg0 = 0;
-        ok &= jsval_to_ulong(cx, args.get(0), &arg0);
+        size_t arg0 = 0;
+        ok &= jsval_to_size(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Director_initProjectionMatrixStack : Error processing arguments");
         cobj->initProjectionMatrixStack(arg0);
         args.rval().setUndefined();
@@ -18093,7 +18093,7 @@ bool js_cocos2dx_Properties_getPath(JSContext *cx, uint32_t argc, jsval *vp)
         const char* arg0 = nullptr;
         std::string* arg1 = nullptr;
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
-        #pragma warning NO CONVERSION TO NATIVE FOR std::string*
+        #pragma warning NO CONVERSION TO NATIVE FOR basic_string*
 		ok = false;
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Properties_getPath : Error processing arguments");
         bool ret = cobj->getPath(arg0, arg1);
@@ -18889,13 +18889,13 @@ bool js_cocos2dx_FileUtils_getStringFromFile(JSContext *cx, uint32_t argc, jsval
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
-            std::function<void (std::basic_string<char>)> arg1;
+            std::function<void (std::string)> arg1;
             do {
 			    if(JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
 			    {
 			        JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
 			        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1), args.thisv()));
-			        auto lambda = [=](std::basic_string<char> larg0) -> void {
+			        auto lambda = [=](std::string larg0) -> void {
 			            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 			            jsval largv[1];
 			            largv[0] = std_string_to_jsval(cx, larg0);
@@ -20191,7 +20191,7 @@ bool js_cocos2dx_FileUtils_listFilesRecursively(JSContext *cx, uint32_t argc, js
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_FileUtils_listFilesRecursively : Invalid Native Object");
     if (argc == 2) {
         std::string arg0;
-        std::vector<std::basic_string<char>, std::allocator<std::basic_string<char> > >* arg1 = nullptr;
+        std::vector<std::string>* arg1 = nullptr;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         do {
             if (args.get(1).isNull()) { arg1 = nullptr; break; }
@@ -20199,7 +20199,7 @@ bool js_cocos2dx_FileUtils_listFilesRecursively(JSContext *cx, uint32_t argc, js
             js_proxy_t *jsProxy;
             JS::RootedObject tmpObj(cx, args.get(1).toObjectOrNull());
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg1 = (std::vector<std::basic_string<char>, std::allocator<std::basic_string<char> > >*)(jsProxy ? jsProxy->ptr : NULL);
+            arg1 = (std::vector<std::string>*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_FileUtils_listFilesRecursively : Error processing arguments");
@@ -30959,9 +30959,9 @@ bool js_cocos2dx_ActionManager_getNumberOfRunningActionsInTargetByTag(JSContext 
         } while (0);
         ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ActionManager_getNumberOfRunningActionsInTargetByTag : Error processing arguments");
-        unsigned long ret = cobj->getNumberOfRunningActionsInTargetByTag(arg0, arg1);
+        size_t ret = cobj->getNumberOfRunningActionsInTargetByTag(arg0, arg1);
         JS::RootedValue jsret(cx);
-        jsret = ulong_to_jsval(cx, ret);
+        jsret = size_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
     }
@@ -41898,6 +41898,22 @@ bool js_cocos2dx_Menu_isEnabled(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Menu_isEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_Menu_alignItemsHorizontally(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Menu* cobj = (cocos2d::Menu *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Menu_alignItemsHorizontally : Invalid Native Object");
+    if (argc == 0) {
+        cobj->alignItemsHorizontally();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Menu_alignItemsHorizontally : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_Menu_alignItemsHorizontallyWithPadding(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -41936,22 +41952,6 @@ bool js_cocos2dx_Menu_alignItemsVerticallyWithPadding(JSContext *cx, uint32_t ar
     }
 
     JS_ReportError(cx, "js_cocos2dx_Menu_alignItemsVerticallyWithPadding : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_Menu_alignItemsHorizontally(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Menu* cobj = (cocos2d::Menu *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Menu_alignItemsHorizontally : Invalid Native Object");
-    if (argc == 0) {
-        cobj->alignItemsHorizontally();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Menu_alignItemsHorizontally : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_Menu_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -42008,9 +42008,9 @@ void js_register_cocos2dx_Menu(JSContext *cx, JS::HandleObject global) {
         JS_FN("setEnabled", js_cocos2dx_Menu_setEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("alignItemsVertically", js_cocos2dx_Menu_alignItemsVertically, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isEnabled", js_cocos2dx_Menu_isEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("alignItemsHorizontally", js_cocos2dx_Menu_alignItemsHorizontally, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("alignItemsHorizontallyWithPadding", js_cocos2dx_Menu_alignItemsHorizontallyWithPadding, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("alignItemsVerticallyWithPadding", js_cocos2dx_Menu_alignItemsVerticallyWithPadding, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("alignItemsHorizontally", js_cocos2dx_Menu_alignItemsHorizontally, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_cocos2dx_Menu_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
@@ -62956,9 +62956,9 @@ bool js_cocos2dx_TextFieldTTF_getCharCount(JSContext *cx, uint32_t argc, jsval *
     cocos2d::TextFieldTTF* cobj = (cocos2d::TextFieldTTF *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TextFieldTTF_getCharCount : Invalid Native Object");
     if (argc == 0) {
-        unsigned long ret = cobj->getCharCount();
+        size_t ret = cobj->getCharCount();
         JS::RootedValue jsret(cx);
-        jsret = ulong_to_jsval(cx, ret);
+        jsret = size_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
     }
@@ -63309,8 +63309,8 @@ bool js_cocos2dx_TextFieldTTF_setCursorPosition(JSContext *cx, uint32_t argc, js
     cocos2d::TextFieldTTF* cobj = (cocos2d::TextFieldTTF *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TextFieldTTF_setCursorPosition : Invalid Native Object");
     if (argc == 1) {
-        unsigned long arg0 = 0;
-        ok &= jsval_to_ulong(cx, args.get(0), &arg0);
+        size_t arg0 = 0;
+        ok &= jsval_to_size(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TextFieldTTF_setCursorPosition : Error processing arguments");
         cobj->setCursorPosition(arg0);
         args.rval().setUndefined();

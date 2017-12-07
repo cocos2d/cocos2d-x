@@ -162,7 +162,7 @@
 -- @param self
 -- @param #cc.Node target
 -- @param #int tag
--- @return unsigned long#unsigned long ret (return value: unsigned long)
+-- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
 -- js ctor
