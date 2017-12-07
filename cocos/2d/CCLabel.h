@@ -567,6 +567,14 @@ public:
      */
     float getAdditionalKerning() const;
 
+    /**
+     * Trims leading and trailing spaces on new lines.
+     *
+     * @warning Not support system font.
+     */
+    virtual void setTrimLineSpacesEnabled(bool enabled);
+    virtual bool isTrimLineSpacesEnabled() const;
+
     FontAtlas* getFontAtlas() { return _fontAtlas; }
 
     virtual const BlendFunc& getBlendFunc() const override { return _blendFunc; }
@@ -780,6 +788,8 @@ protected:
     bool _boldEnabled;
     DrawNode* _underlineNode;
     bool _strikethroughEnabled;
+
+    bool _trimLineSpaces;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);
