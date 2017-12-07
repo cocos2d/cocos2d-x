@@ -14,8 +14,8 @@
 -- @function [parent=#Helper] getSubStringOfUTF8String 
 -- @param self
 -- @param #string str
--- @param #unsigned long start
--- @param #unsigned long length
+-- @param #unsigned int start
+-- @param #unsigned int length
 -- @return string#string ret (return value: string)
         
 --------------------------------
