@@ -70,11 +70,13 @@ function build_android()
 
 function genernate_binding_codes()
 {
-    # print some log for libstdc++6
-    strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
-    ls -l /usr/lib/x86_64-linux-gnu/libstdc++*
-    dpkg-query -W libstdc++6
-    ldd $COCOS2DX_ROOT/tools/bindings-generator/libclang/libclang.so
+    if [ $TRAVIS_OS_NAME == "linux" ]
+        # print some log for libstdc++6
+        strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
+        ls -l /usr/lib/x86_64-linux-gnu/libstdc++*
+        dpkg-query -W libstdc++6
+        ldd $COCOS2DX_ROOT/tools/bindings-generator/libclang/libclang.so
+    fi
 
     # set environment variables needed by binding codes
 
