@@ -72,7 +72,6 @@ namespace ui {
 
     EditBoxImplWin::EditBoxImplWin(EditBox* pEditText)
         : EditBoxImplCommon(pEditText),
-        _fontSize(40),
         _changedTextManually(false),
         _hasFocus(false)
     {
@@ -174,9 +173,8 @@ namespace ui {
 
     void EditBoxImplWin::setNativeFont(const char * pFontName, int fontSize)
     {
-        //not implemented yet
-        this->_fontSize = fontSize;
-        HFONT hFont = CreateFontW(fontSize, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
+        auto glView = Director::getInstance()->getOpenGLView();
+        HFONT hFont = CreateFontW(static_cast<int>(fontSize * glView->getScaleX()), 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
             CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, TEXT("Arial"));
 
         SendMessage(hwndEdit,             // Handle of edit control
