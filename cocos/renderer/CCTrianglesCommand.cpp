@@ -103,7 +103,7 @@ void TrianglesCommand::generateMaterialID()
     // NOTE: Initialize hashMe struct to make the value of padding bytes be filled with zero.
     // It's important since XXH32 below will also consider the padding bytes which probably 
     // are set to random values by different compilers.
-    memset(&hashMe, 0, sizeof(*hashMe)); 
+    memset(&hashMe, 0, sizeof(hashMe)); 
 
     hashMe.textureId = _textureID;
     hashMe.blendSrc = _blendType.src;
