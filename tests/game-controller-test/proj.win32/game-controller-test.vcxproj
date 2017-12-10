@@ -104,8 +104,7 @@
     </PreLinkEvent>
     <PreBuildEvent>
       <Command>xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
-xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y
-xcopy "D:\bamtang\git\cocos2d-x\tests\game-controller-test\Resources\ipadhd" "$(OutDir)" /D /E /I /F /Y</Command>
+xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy files</Message>
