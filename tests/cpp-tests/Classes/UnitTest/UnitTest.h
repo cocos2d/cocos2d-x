@@ -71,4 +71,13 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class ResizableBufferAdapterTest : public UnitTestDemo
+{
+public:
+    CREATE_FUNC(ResizableBufferAdapterTest);
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
+
 #endif /* __UNIT_TEST__ */
