@@ -52,6 +52,7 @@ UnitTests::UnitTests()
     ADD_TEST_CASE(UTFConversionTest);
     ADD_TEST_CASE(UIHelperSubStringTest);
     ADD_TEST_CASE(ParseUriTest);
+    ADD_TEST_CASE(ResizableBufferAdapterTest);
 #ifdef UNIT_TEST_FOR_OPTIMIZED_MATH_UTIL
     ADD_TEST_CASE(MathUtilTest);
 #endif
@@ -1664,3 +1665,29 @@ std::string MathUtilTest::subtitle() const
 {
     return "MathUtilTest";
 }
+
+// ResizableBufferAdapterTest
+
+void ResizableBufferAdapterTest::onEnter()
+{
+    UnitTestDemo::onEnter();
+
+    Data data;
+    ResizableBufferAdapter<Data> buffer(&data);
+
+    FileUtils::getInstance()->getContents("effect1.wav", &buffer);
+    EXPECT_EQ(data.getSize(), 10026);
+
+    FileUtils::getInstance()->getContents("effect2.ogg", &buffer);
+    EXPECT_EQ(data.getSize(), 4278);
+
+    FileUtils::getInstance()->getContents("effect1.wav", &buffer);
+    EXPECT_EQ(data.getSize(), 10026);
+}
+
+std::string ResizableBufferAdapterTest::subtitle() const
+{
+    return "ResiziableBufferAdapter<Data> Test";
+}
+
+
