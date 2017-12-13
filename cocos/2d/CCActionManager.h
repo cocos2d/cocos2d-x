@@ -140,6 +140,12 @@ public:
      * @js NA
      */
     virtual ssize_t getNumberOfRunningActionsInTarget(const Node *target) const;
+    
+    /** Returns the numbers of actions that are running in all targets.
+     * @return  The numbers of actions that are running in all target.
+     * @js NA
+     */
+    virtual ssize_t getNumberOfRunningActions() const;
 
     /** @deprecated Use getNumberOfRunningActionsInTarget() instead.
      */

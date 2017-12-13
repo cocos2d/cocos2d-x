@@ -9,6 +9,16 @@ var ccui = ccui || {};
 ccui.WebView = {
 
 /**
+ * @method setOpacityWebView
+ * @param {float} arg0
+ */
+setOpacityWebView : function (
+float 
+)
+{
+},
+
+/**
  * @method canGoBack
  * @return {bool}
  */
@@ -63,7 +73,7 @@ bool
 getOnDidFailLoading : function (
 )
 {
-    return std::function<void (cocos2d::experimental::ui::WebView , std::basic_string<char> &)>;
+    return std::function<void (cocos2d::experimental::ui::WebView , std::string&)>;
 },
 
 /**
@@ -109,13 +119,21 @@ str
 },
 
 /**
+ * @method setBackgroundTransparent
+ */
+setBackgroundTransparent : function (
+)
+{
+},
+
+/**
  * @method getOnJSCallback
  * @return {function}
  */
 getOnJSCallback : function (
 )
 {
-    return std::function<void (cocos2d::experimental::ui::WebView , std::basic_string<char> &)>;
+    return std::function<void (cocos2d::experimental::ui::WebView , std::string&)>;
 },
 
 /**
@@ -135,7 +153,7 @@ canGoForward : function (
 getOnShouldStartLoading : function (
 )
 {
-    return std::function<bool (cocos2d::experimental::ui::WebView , std::basic_string<char> &)>;
+    return std::function<bool (cocos2d::experimental::ui::WebView , std::string&)>;
 },
 
 /**
@@ -144,6 +162,16 @@ getOnShouldStartLoading : function (
 stopLoading : function (
 )
 {
+},
+
+/**
+ * @method getOpacityWebView
+ * @return {float}
+ */
+getOpacityWebView : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -171,7 +199,7 @@ str
 getOnDidFinishLoading : function (
 )
 {
-    return std::function<void (cocos2d::experimental::ui::WebView , std::basic_string<char> &)>;
+    return std::function<void (cocos2d::experimental::ui::WebView , std::string&)>;
 },
 
 /**

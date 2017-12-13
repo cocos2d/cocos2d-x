@@ -129,7 +129,7 @@ public:
     virtual void setNativeMaxLength(int maxLength) {};
 
 
-private:
+protected:
     void         initInactiveLabels(const Size& size);
     void         setInactiveText(const char* pText);
     void         refreshLabelAlignment();
@@ -157,6 +157,7 @@ private:
     
     int   _maxLength;
     Size _contentSize;
+    bool _editingMode;
 };
 
 

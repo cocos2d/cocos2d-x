@@ -8,6 +8,8 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIconFile</key>
+	<string>Icon-57.png</string>
 	<key>CFBundleIdentifier</key>
 	<string>org.cocos2dx.hellojavascript</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -22,6 +24,8 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -37,44 +41,6 @@
 	<array>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
-	</array>
-	<key>CFBundleIconFile</key>
-	<string>Icon-57.png</string>
-	<key>CFBundleIconFiles</key>
-	<array>
-		<string>Icon-29</string>
-		<string>Icon-40</string>
-		<string>Icon-50</string>
-		<string>Icon-57</string>
-		<string>Icon-58</string>
-		<string>Icon-72</string>
-		<string>Icon-76</string>
-		<string>Icon-80</string>
-		<string>Icon-87</string>
-		<string>Icon-100</string>
-		<string>Icon-114</string>
-		<string>Icon-120</string>
-		<string>Icon-144</string>
-		<string>Icon-152</string>
-		<string>Icon-180</string>
-	</array>
-	<key>CFBundleIconFiles~ipad</key>
-	<array>
-		<string>Icon-29</string>
-		<string>Icon-40</string>
-		<string>Icon-50</string>
-		<string>Icon-57</string>
-		<string>Icon-58</string>
-		<string>Icon-72</string>
-		<string>Icon-76</string>
-		<string>Icon-80</string>
-		<string>Icon-87</string>
-		<string>Icon-100</string>
-		<string>Icon-114</string>
-		<string>Icon-120</string>
-		<string>Icon-144</string>
-		<string>Icon-152</string>
-		<string>Icon-180</string>
 	</array>
 </dict>
 </plist>

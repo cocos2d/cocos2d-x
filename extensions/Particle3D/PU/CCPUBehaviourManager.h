@@ -31,7 +31,6 @@
 #include "extensions/Particle3D/PU/CCPUBehaviour.h"
 #include "extensions/Particle3D/PU/CCPUSlaveBehaviourTranslator.h"
 
-using namespace std;
 NS_CC_BEGIN
 
 class PUBehaviourManager

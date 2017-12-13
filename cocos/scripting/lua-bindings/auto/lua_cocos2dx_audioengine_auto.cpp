@@ -341,6 +341,40 @@ int lua_cocos2dx_audioengine_AudioEngine_getMaxAudioInstance(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_cocos2dx_audioengine_AudioEngine_isEnabled(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_audioengine_AudioEngine_isEnabled'", nullptr);
+            return 0;
+        }
+        bool ret = cocos2d::experimental::AudioEngine::isEnabled();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.AudioEngine:isEnabled",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_audioengine_AudioEngine_isEnabled'.",&tolua_err);
+#endif
+    return 0;
+}
 int lua_cocos2dx_audioengine_AudioEngine_getCurrentTime(lua_State* tolua_S)
 {
     int argc = 0;
@@ -607,6 +641,42 @@ int lua_cocos2dx_audioengine_AudioEngine_preload(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_audioengine_AudioEngine_preload'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_audioengine_AudioEngine_setEnabled(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        bool arg0;
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "ccexp.AudioEngine:setEnabled");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_audioengine_AudioEngine_setEnabled'", nullptr);
+            return 0;
+        }
+        cocos2d::experimental::AudioEngine::setEnabled(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.AudioEngine:setEnabled",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_audioengine_AudioEngine_setEnabled'.",&tolua_err);
 #endif
     return 0;
 }
@@ -995,6 +1065,40 @@ int lua_cocos2dx_audioengine_AudioEngine_getProfile(lua_State* tolua_S)
 #endif
     return 0;
 }
+int lua_cocos2dx_audioengine_AudioEngine_getPlayingAudioCount(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccexp.AudioEngine",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_audioengine_AudioEngine_getPlayingAudioCount'", nullptr);
+            return 0;
+        }
+        int ret = cocos2d::experimental::AudioEngine::getPlayingAudioCount();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.AudioEngine:getPlayingAudioCount",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_audioengine_AudioEngine_getPlayingAudioCount'.",&tolua_err);
+#endif
+    return 0;
+}
 static int lua_cocos2dx_audioengine_AudioEngine_finalize(lua_State* tolua_S)
 {
     printf("luabindings: finalizing LUA object (AudioEngine)");
@@ -1015,6 +1119,7 @@ int lua_register_cocos2dx_audioengine_AudioEngine(lua_State* tolua_S)
         tolua_function(tolua_S,"stopAll", lua_cocos2dx_audioengine_AudioEngine_stopAll);
         tolua_function(tolua_S,"pause", lua_cocos2dx_audioengine_AudioEngine_pause);
         tolua_function(tolua_S,"getMaxAudioInstance", lua_cocos2dx_audioengine_AudioEngine_getMaxAudioInstance);
+        tolua_function(tolua_S,"isEnabled", lua_cocos2dx_audioengine_AudioEngine_isEnabled);
         tolua_function(tolua_S,"getCurrentTime", lua_cocos2dx_audioengine_AudioEngine_getCurrentTime);
         tolua_function(tolua_S,"setMaxAudioInstance", lua_cocos2dx_audioengine_AudioEngine_setMaxAudioInstance);
         tolua_function(tolua_S,"isLoop", lua_cocos2dx_audioengine_AudioEngine_isLoop);
@@ -1022,6 +1127,7 @@ int lua_register_cocos2dx_audioengine_AudioEngine(lua_State* tolua_S)
         tolua_function(tolua_S,"uncacheAll", lua_cocos2dx_audioengine_AudioEngine_uncacheAll);
         tolua_function(tolua_S,"setVolume", lua_cocos2dx_audioengine_AudioEngine_setVolume);
         tolua_function(tolua_S,"preload", lua_cocos2dx_audioengine_AudioEngine_preload);
+        tolua_function(tolua_S,"setEnabled", lua_cocos2dx_audioengine_AudioEngine_setEnabled);
         tolua_function(tolua_S,"play2d", lua_cocos2dx_audioengine_AudioEngine_play2d);
         tolua_function(tolua_S,"getState", lua_cocos2dx_audioengine_AudioEngine_getState);
         tolua_function(tolua_S,"resume", lua_cocos2dx_audioengine_AudioEngine_resume);
@@ -1031,6 +1137,7 @@ int lua_register_cocos2dx_audioengine_AudioEngine(lua_State* tolua_S)
         tolua_function(tolua_S,"setLoop", lua_cocos2dx_audioengine_AudioEngine_setLoop);
         tolua_function(tolua_S,"getDefaultProfile", lua_cocos2dx_audioengine_AudioEngine_getDefaultProfile);
         tolua_function(tolua_S,"getProfile", lua_cocos2dx_audioengine_AudioEngine_getProfile);
+        tolua_function(tolua_S,"getPlayingAudioCount", lua_cocos2dx_audioengine_AudioEngine_getPlayingAudioCount);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::experimental::AudioEngine).name();
     g_luaType[typeName] = "ccexp.AudioEngine";

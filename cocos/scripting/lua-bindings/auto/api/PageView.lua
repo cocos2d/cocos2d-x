@@ -23,6 +23,22 @@
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
+-- brief Set opacity of page indicator's index nodes.<br>
+-- param opacity New indicator node opacity.
+-- @function [parent=#PageView] setIndicatorIndexNodesOpacity 
+-- @param self
+-- @param #unsigned char opacity
+-- @return PageView#PageView self (return value: ccui.PageView)
+        
+--------------------------------
+-- brief Set opacity of page indicator's selected index.<br>
+-- param color New opacity for selected (current) index.
+-- @function [parent=#PageView] setIndicatorSelectedIndexOpacity 
+-- @param self
+-- @param #unsigned char opacity
+-- @return PageView#PageView self (return value: ccui.PageView)
+        
+--------------------------------
 -- brief Remove all pages of the PageView.
 -- @function [parent=#PageView] removeAllPages 
 -- @param self
@@ -53,7 +69,7 @@
         
 --------------------------------
 -- brief Set color of page indicator's selected index.<br>
--- param color Space between nodes in pixel.
+-- param color New color for selected (current) index.
 -- @function [parent=#PageView] setIndicatorSelectedIndexColor 
 -- @param self
 -- @param #color3b_table color
@@ -113,6 +129,13 @@
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
+-- brief Get the opacity of page indicator's selected index.<br>
+-- return opacity
+-- @function [parent=#PageView] getIndicatorSelectedIndexOpacity 
+-- @param self
+-- @return unsigned char#unsigned char ret (return value: unsigned char)
+        
+--------------------------------
 -- @overload self, int, float         
 -- @overload self, int         
 -- @function [parent=#PageView] scrollToPage
@@ -140,11 +163,18 @@
 
 --------------------------------
 -- brief Set color of page indicator's index nodes.<br>
--- param color Space between nodes in pixel.
+-- param color New indicator node color.
 -- @function [parent=#PageView] setIndicatorIndexNodesColor 
 -- @param self
 -- @param #color3b_table color
 -- @return PageView#PageView self (return value: ccui.PageView)
+        
+--------------------------------
+-- brief Get the opacity of page indicator's index nodes.<br>
+-- return opacity
+-- @function [parent=#PageView] getIndicatorIndexNodesOpacity 
+-- @param self
+-- @return unsigned char#unsigned char ret (return value: unsigned char)
         
 --------------------------------
 -- brief Get the page indicator's position as anchor point.<br>

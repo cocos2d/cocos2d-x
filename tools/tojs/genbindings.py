@@ -75,32 +75,37 @@ def main():
         print 'Your platform is not supported!'
         sys.exit(1)
 
-    if platform == 'win32':
-        x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.6/prebuilt', '%s' % cur_platform))
-        if not os.path.exists(x86_llvm_path):
-            x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.5/prebuilt', '%s' % cur_platform))
-        if not os.path.exists(x86_llvm_path):
-            x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm/prebuilt', '%s' % cur_platform))
-    else:
-        x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.6/prebuilt', '%s-%s' % (cur_platform, 'x86')))
-        if not os.path.exists(x86_llvm_path):
-            x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.5/prebuilt', '%s-%s' % (cur_platform, 'x86')))
-        if not os.path.exists(x86_llvm_path):
-            x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm/prebuilt', '%s-%s' % (cur_platform, 'x86')))
 
-    x64_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.6/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
+    x86_llvm_path = ""
+    x64_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
     if not os.path.exists(x64_llvm_path):
-        x64_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.5/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
-    if not os.path.exists(x64_llvm_path):
-        x64_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
+        x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm/prebuilt', '%s' % (cur_platform)))
+    if not os.path.exists(x86_llvm_path):
+        x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm/prebuilt', '%s-%s' % (cur_platform, 'x86')))
 
-    if os.path.isdir(x86_llvm_path):
-        llvm_path = x86_llvm_path
-    elif os.path.isdir(x64_llvm_path):
+    if os.path.isdir(x64_llvm_path):
         llvm_path = x64_llvm_path
+    elif os.path.isdir(x86_llvm_path):
+        llvm_path = x86_llvm_path
     else:
         print 'llvm toolchain not found!'
         print 'path: %s or path: %s are not valid! ' % (x86_llvm_path, x64_llvm_path)
+        sys.exit(1)
+
+    x86_gcc_toolchain_path = ""
+    x64_gcc_toolchain_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/arm-linux-androideabi-4.9/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
+    if not os.path.exists(x64_gcc_toolchain_path):
+        x86_gcc_toolchain_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/arm-linux-androideabi-4.9/prebuilt', '%s' % (cur_platform)))
+    if not os.path.exists(x86_gcc_toolchain_path):
+        x86_gcc_toolchain_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/arm-linux-androideabi-4.9/prebuilt', '%s-%s' % (cur_platform, 'x86')))
+
+    if os.path.isdir(x64_gcc_toolchain_path):
+        gcc_toolchain_path = x64_gcc_toolchain_path
+    elif os.path.isdir(x86_gcc_toolchain_path):
+        gcc_toolchain_path = x86_gcc_toolchain_path
+    else:
+        print 'gcc toolchain not found!'
+        print 'path: %s or path: %s are not valid! ' % (x64_gcc_toolchain_path, x86_gcc_toolchain_path)
         sys.exit(1)
 
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -112,23 +117,12 @@ def main():
     config = ConfigParser.ConfigParser()
     config.set('DEFAULT', 'androidndkdir', ndk_root)
     config.set('DEFAULT', 'clangllvmdir', llvm_path)
+    config.set('DEFAULT', 'gcc_toolchain_dir', gcc_toolchain_path)
     config.set('DEFAULT', 'cocosdir', cocos_root)
     config.set('DEFAULT', 'jsbdir', jsb_root)
     config.set('DEFAULT', 'cxxgeneratordir', cxx_generator_root)
     config.set('DEFAULT', 'extra_flags', '')
     
-    if '3.' in llvm_path:
-        if '3.6' in llvm_path:
-            config.set('DEFAULT', 'clang_include', 'lib/clang/3.6/include')
-        else:
-            config.set('DEFAULT', 'clang_include', 'lib/clang/3.5/include')
-    else:
-        config.set('DEFAULT', 'clang_include', 'lib64/clang/3.8/include')
-
-    # To fix parse error on windows, we must difine __WCHAR_MAX__ and undefine __MINGW32__ .
-    if platform == 'win32':
-        config.set('DEFAULT', 'extra_flags', '-D__WCHAR_MAX__=0x7fffffff -U__MINGW32__')
-
     conf_ini_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'userconf.ini'))
 
     print 'generating userconf.ini...'
@@ -150,7 +144,8 @@ def main():
         tojs_root = '%s/tools/tojs' % project_root
         output_dir = '%s/cocos/scripting/js-bindings/auto' % project_root
 
-        cmd_args = {'cocos2dx.ini': ('cocos2d-x', 'jsb_cocos2dx_auto'),
+        cmd_args = {
+                    'cocos2dx.ini': ('cocos2d-x', 'jsb_cocos2dx_auto'),
                     'cocos2dx_audioengine.ini': ('cocos2dx_audioengine', 'jsb_cocos2dx_audioengine_auto'),
                     'cocos2dx_extension.ini': ('cocos2dx_extension', 'jsb_cocos2dx_extension_auto'),
                     'cocos2dx_network.ini': ('cocos2dx_network', 'jsb_cocos2dx_network_auto'),
@@ -172,6 +167,7 @@ def main():
             cfg = '%s/%s' % (tojs_root, key)
             print 'Generating bindings for %s...' % (key[:-4])
             command = '%s %s %s -s %s -t %s -o %s -n %s' % (python_bin, generator_py, cfg, args[0], target, output_dir, args[1])
+            print(command)
             _run_cmd(command)
 
         # if platform == 'win32':

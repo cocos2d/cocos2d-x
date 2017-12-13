@@ -175,12 +175,14 @@ if(USE_BOX2D)
     Classes/Box2DTestBed/Test.cpp
     Classes/Box2DTestBed/TestEntries.cpp
     )
+  include_directories(${Box2D_INCLUDE_DIRS})
 endif()
 
 if(USE_BULLET)
   list(APPEND TESTS_SRC
     Classes/Physics3DTest/Physics3DTest.cpp
     )
+  include_directories(${BULLET_INCLUDE_DIRS})
 endif()
 
 set (EXTENDED_TESTS_SRC

@@ -42,7 +42,10 @@ void FontAtlasCache::purgeCachedData()
     auto atlasMapCopy = _atlasMap;
     for (auto&& atlas : atlasMapCopy)
     {
-        atlas.second->purgeTexturesAtlas();
+        auto refCount = atlas.second->getReferenceCount();
+        atlas.second->release();
+        if (refCount != 1)
+            atlas.second->purgeTexturesAtlas();
     }
     _atlasMap.clear();
 }
@@ -83,10 +86,7 @@ FontAtlas* FontAtlasCache::getFontAtlasTTF(const _ttfConfig* config)
         }
     }
     else
-    {
-        _atlasMap[atlasName]->retain();
         return _atlasMap[atlasName];
-    }
 
     return nullptr;
 }
@@ -114,10 +114,7 @@ FontAtlas* FontAtlasCache::getFontAtlasFNT(const std::string& fontFileName, cons
         }
     }
     else
-    {
-        _atlasMap[atlasName]->retain();
         return _atlasMap[atlasName];
-    }
     
     return nullptr;
 }
@@ -142,10 +139,7 @@ FontAtlas* FontAtlasCache::getFontAtlasCharMap(const std::string& plistFile)
         }
     }
     else
-    {
-        _atlasMap[atlasName]->retain();
         return _atlasMap[atlasName];
-    }
 
     return nullptr;
 }
@@ -172,10 +166,7 @@ FontAtlas* FontAtlasCache::getFontAtlasCharMap(Texture2D* texture, int itemWidth
         }
     }
     else
-    {
-        _atlasMap[atlasName]->retain();
         return _atlasMap[atlasName];
-    }
 
     return nullptr;
 }
@@ -202,10 +193,7 @@ FontAtlas* FontAtlasCache::getFontAtlasCharMap(const std::string& charMapFile, i
         }
     }
     else
-    {
-        _atlasMap[atlasName]->retain();
         return _atlasMap[atlasName];
-    }
 
     return nullptr;
 }

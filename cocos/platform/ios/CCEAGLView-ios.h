@@ -82,19 +82,20 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  */
 @interface CCEAGLView : UIView <UIKeyInput, UITextInput, UITextInputTraits>
 {
-    id                        <CCESRenderer> renderer_;    
-    EAGLContext                *context_; // weak ref
+    id<CCESRenderer>        renderer_;
+    EAGLContext             *context_; // weak ref
 
     NSString                *pixelformat_;
-    GLuint                    depthFormat_;
+    GLuint                  depthFormat_;
     BOOL                    preserveBackbuffer_;
 
-    CGSize                    size_;
+    CGSize                  size_;
+    CGRect                  safeArea_;
     BOOL                    discardFramebufferSupported_;
 
     //fsaa addition
     BOOL                    multisampling_;
-    unsigned int               requestedSamples_;
+    unsigned int            requestedSamples_;
     BOOL                    isUseUITextField;
 @private
     NSString *              markedText_;

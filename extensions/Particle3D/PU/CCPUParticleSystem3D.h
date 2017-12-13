@@ -215,7 +215,7 @@ class CC_DLL PUParticleSystem3D : public ParticleSystem3D
 {
 public:
 
-    typedef std::map<std::string, ParticlePool> ParticlePoolMap;
+    typedef std::unordered_map<std::string, ParticlePool> ParticlePoolMap;
 
     static const float DEFAULT_WIDTH;
     static const float DEFAULT_HEIGHT;

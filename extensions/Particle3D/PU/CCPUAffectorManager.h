@@ -56,7 +56,6 @@
 #include "extensions/Particle3D/PU/CCPUVelocityMatchingAffectorTranslator.h"
 #include "extensions/Particle3D/PU/CCPUVortexAffectorTranslator.h"
 
-using namespace std;
 NS_CC_BEGIN
 
 class PUAffectorManager

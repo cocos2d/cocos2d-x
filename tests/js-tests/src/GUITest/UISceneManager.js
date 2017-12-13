@@ -411,6 +411,12 @@
                 }
             },
             {
+                title: "UILayoutTest_Layout_Scaled_Widget",
+                func: function () {
+                    return new UILayoutTest_Layout_Scaled_Widget();
+                }
+            },
+            {
                 title: "UILayoutComponent_Berth_Test",
                 func: function () {
                     return new UILayoutComponent_Berth_Test();
@@ -726,6 +732,7 @@
         ctor: function(){
             TestScene.prototype.ctor.call(this);
 
+            global.UISceneManager.getInstance().ctor();
             var menu = new cc.Menu();
             menu.x = 0;
             menu.y = 0;

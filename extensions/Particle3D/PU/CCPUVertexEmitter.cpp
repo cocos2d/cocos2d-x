@@ -322,7 +322,7 @@ NS_CC_BEGIN
 //	@remarks
 //		Use objectspace for the vectors and only transform as soon as a particle is emitted.
 //	*/
-//	list<Vec3>::iterator iterator = mSpawnPositionList.end();
+//	std::list<Vec3>::iterator iterator = mSpawnPositionList.end();
 //	Vec3 start = startVector;
 //	if (lengthIncrement > 0.0f)
 //	{

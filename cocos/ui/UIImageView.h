@@ -41,7 +41,7 @@ namespace ui {
 /**
  * @brief A widget to display images.
  */
-class CC_GUI_DLL ImageView : public Widget
+class CC_GUI_DLL ImageView : public Widget , public cocos2d::BlendProtocol
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -117,6 +117,24 @@ public:
      * @see `setCapInsets(const Rect&)`
      */
     const Rect& getCapInsets()const;
+    
+    /**
+     * Sets the source blending function.
+     *
+     * @param blendFunc A structure with source and destination factor to specify pixel arithmetic. e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.
+     * @js NA
+     * @lua NA
+     */
+    virtual void setBlendFunc(const BlendFunc &blendFunc) override;
+    
+    /**
+     * Returns the blending function that is currently being used.
+     *
+     * @return A BlendFunc structure with source and destination factor which specified pixel arithmetic.
+     * @js NA
+     * @lua NA
+     */
+    virtual const BlendFunc &getBlendFunc() const override;
 
     //override methods.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;

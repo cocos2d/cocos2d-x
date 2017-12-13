@@ -123,85 +123,88 @@ namespace {
     {
     }
 #endif
-    
-    void _log(const char *format, va_list args)
-    {
-        int bufferSize = MAX_LOG_LENGTH;
-        char* buf = nullptr;
-        
-        do
-        {
-            buf = new (std::nothrow) char[bufferSize];
-            if (buf == nullptr)
-                return; // not enough memory
-            
-            int ret = vsnprintf(buf, bufferSize - 3, format, args);
-            if (ret < 0)
-            {
-                bufferSize *= 2;
-                
-                delete [] buf;
-            }
-            else
-                break;
-            
-        } while (true);
-        
-        strcat(buf, "\n");
-        
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-        __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info", "%s", buf);
-        
-#elif CC_TARGET_PLATFORM ==  CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-        
-        int pos = 0;
-        int len = strlen(buf);
-        char tempBuf[MAX_LOG_LENGTH + 1] = { 0 };
-        WCHAR wszBuf[MAX_LOG_LENGTH + 1] = { 0 };
-        
-        do
-        {
-            std::copy(buf + pos, buf + pos + MAX_LOG_LENGTH, tempBuf);
-            
-            tempBuf[MAX_LOG_LENGTH] = 0;
-            
-            MultiByteToWideChar(CP_UTF8, 0, tempBuf, -1, wszBuf, sizeof(wszBuf));
-            OutputDebugStringW(wszBuf);
-            WideCharToMultiByte(CP_ACP, 0, wszBuf, -1, tempBuf, sizeof(tempBuf), nullptr, FALSE);
-            printf("%s", tempBuf);
-            
-            pos += MAX_LOG_LENGTH;
-            
-        } while (pos < len);
-        SendLogToWindow(buf);
-        fflush(stdout);
-#else
-        // Linux, Mac, iOS, etc
-        fprintf(stdout, "%s", buf);
-        fflush(stdout);
-#endif
-        
-        Director::getInstance()->getConsole()->log(buf);
-        delete [] buf;
-    }
-}
-
-// FIXME: Deprecated
-void CCLog(const char * format, ...)
-{
-    va_list args;
-    va_start(args, format);
-    _log(format, args);
-    va_end(args);
 }
 
 void log(const char * format, ...)
 {
+    int bufferSize = MAX_LOG_LENGTH;
+    char* buf = nullptr;
+    int nret = 0;
     va_list args;
-    va_start(args, format);
-    _log(format, args);
-    va_end(args);
+    do
+    {
+        buf = new (std::nothrow) char[bufferSize];
+        if (buf == nullptr)
+            return;
+        /*
+        pitfall: The behavior of vsnprintf between VS2013 and VS2015/2017 is different
+        VS2013 or Unix-Like System will return -1 when buffer not enough, but VS2015/2017 will return the actural needed length for buffer at this station
+        The _vsnprintf behavior is compatible API which always return -1 when buffer isn't enough at VS2013/2015/2017
+        Yes, The vsnprintf is more efficient implemented by MSVC 19.0 or later, AND it's also standard-compliant, see reference: http://www.cplusplus.com/reference/cstdio/vsnprintf/
+        */
+        va_start(args, format);
+        nret = vsnprintf(buf, bufferSize - 3, format, args);
+        va_end(args);
+
+        if (nret >= 0)
+        { // VS2015/2017
+            if (nret <= bufferSize - 3)
+            {// success, so don't need to realloc
+                break;
+            }
+            else
+            {
+                bufferSize = nret + 3;
+                delete[] buf;
+            }
+        }
+        else // < 0
+        {	// VS2013 or Unix-like System(GCC)
+            bufferSize *= 2;
+            delete[] buf;
+        }
+    } while (true);
+    buf[nret] = '\n';
+    buf[++nret] = '\0';
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info", "%s", buf);
+
+#elif CC_TARGET_PLATFORM ==  CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+
+    int pos = 0;
+    int len = nret;
+    char tempBuf[MAX_LOG_LENGTH + 1] = { 0 };
+    WCHAR wszBuf[MAX_LOG_LENGTH + 1] = { 0 };
+
+    do
+    {
+        std::copy(buf + pos, buf + pos + MAX_LOG_LENGTH, tempBuf);
+
+        tempBuf[MAX_LOG_LENGTH] = 0;
+
+        MultiByteToWideChar(CP_UTF8, 0, tempBuf, -1, wszBuf, sizeof(wszBuf));
+        OutputDebugStringW(wszBuf);
+        WideCharToMultiByte(CP_ACP, 0, wszBuf, -1, tempBuf, sizeof(tempBuf), nullptr, FALSE);
+        printf("%s", tempBuf);
+
+        pos += MAX_LOG_LENGTH;
+
+    } while (pos < len);
+    SendLogToWindow(buf);
+    fflush(stdout);
+#else
+    // Linux, Mac, iOS, etc
+    fprintf(stdout, "%s", buf);
+    fflush(stdout);
+#endif
+
+    Director::getInstance()->getConsole()->log(buf);
+    delete[] buf;
 }
+
+// FIXME: Deprecated
+// void CCLog(const char * format, ...);
 
 //
 //  Utility code
@@ -308,42 +311,134 @@ const std::string& Console::Utility::getPrompt()
 // Command code
 //
 
-void Console::Command::addCallback(const Callback& callback_)
+Console::Command::Command()
+: _callback(nullptr)
 {
-    callback = callback_;
+
+}
+
+Console::Command::Command(const std::string& name, const std::string& help)
+: _name(name)
+, _help(help)
+, _callback(nullptr)
+{
+
+}
+
+Console::Command::Command(const std::string& name, const std::string& help, const Callback& callback)
+: _name(name)
+, _help(help)
+, _callback(callback)
+{
+
+}
+
+Console::Command::Command(const Command& o)
+{
+    *this = o;
+}
+
+Console::Command::Command(Command&& o)
+{
+    *this = std::move(o);
+}
+
+Console::Command::~Command()
+{
+    for (const auto& e : _subCommands)
+    {
+        delete e.second;
+    }
+}
+
+Console::Command& Console::Command::operator=(const Command& o)
+{
+    if (this != &o)
+    {
+        _name = o._name;
+        _help = o._help;
+        _callback = o._callback;
+
+        for (const auto& e : _subCommands)
+            delete e.second;
+
+        _subCommands.clear();
+        for (const auto& e : o._subCommands)
+        {
+            Command* subCommand = e.second;
+            auto newCommand = new (std::nothrow) Command(*subCommand);
+            _subCommands[e.first] = newCommand;
+        }
+    }
+
+    return *this;
+}
+
+Console::Command& Console::Command::operator=(Command&& o)
+{
+    if (this != &o)
+    {
+        _name = std::move(o._name);
+        _help = std::move(o._help);
+        _callback = std::move(o._callback);
+        o._callback = nullptr;
+
+        for (const auto& e : _subCommands)
+            delete e.second;
+
+        _subCommands.clear();
+        _subCommands = std::move(o._subCommands);
+    }
+
+    return *this;
+}
+
+void Console::Command::addCallback(const Callback& callback)
+{
+    _callback = callback;
 }
 
 void Console::Command::addSubCommand(const Command& subCmd)
 {
-    subCommands[subCmd.name] = subCmd;
+    auto iter = _subCommands.find(subCmd._name);
+    if (iter != _subCommands.end())
+    {
+        delete iter->second;
+        _subCommands.erase(iter);
+    }
+
+    Command* cmd = new (std::nothrow) Command();
+    *cmd = subCmd;
+    _subCommands[subCmd._name] = cmd;
 }
 
 const Console::Command* Console::Command::getSubCommand(const std::string& subCmdName) const
 {
-    auto it = subCommands.find(subCmdName);
-    if(it != subCommands.end()) {
+    auto it = _subCommands.find(subCmdName);
+    if(it != _subCommands.end()) {
         auto& subCmd = it->second;
-        return &subCmd;
+        return subCmd;
     }
     return nullptr;
 }
 
 void Console::Command::delSubCommand(const std::string& subCmdName)
 {
-    auto it = subCommands.find(subCmdName);
-    if(it != subCommands.end()) {
-        subCommands.erase(it);
+    auto iter = _subCommands.find(subCmdName);
+    if (iter != _subCommands.end()) {
+        delete iter->second;
+        _subCommands.erase(iter);
     }
 }
 
 void Console::Command::commandHelp(int fd, const std::string& /*args*/)
 {
-    if (! help.empty()) {
-        Console::Utility::mydprintf(fd, "%s\n", help.c_str());
+    if (! _help.empty()) {
+        Console::Utility::mydprintf(fd, "%s\n", _help.c_str());
     }
     
-    if (! subCommands.empty()) {
-        sendHelp(fd, subCommands, "");
+    if (! _subCommands.empty()) {
+        sendHelp(fd, _subCommands, "");
     }
 }
 
@@ -363,18 +458,18 @@ void Console::Command::commandGeneric(int fd, const std::string& args)
     }
     
     // find sub command
-    auto it = subCommands.find(key);
-    if (it != subCommands.end()) {
+    auto it = _subCommands.find(key);
+    if (it != _subCommands.end()) {
         auto subCmd = it->second;
-        if (subCmd.callback) {
-            subCmd.callback(fd, args);
+        if (subCmd->_callback) {
+            subCmd->_callback(fd, args);
         }
         return;
     }
     
     // can not find
-    if (callback) {
-        callback(fd, args);
+    if (_callback) {
+        _callback(fd, args);
     }
 }
 
@@ -410,6 +505,9 @@ Console::Console()
 Console::~Console()
 {
     stop();
+
+    for (auto& e : _commands)
+        delete e.second;
 }
 
 bool Console::listenOnTCP(int port)
@@ -527,21 +625,29 @@ void Console::stop()
 
 void Console::addCommand(const Command& cmd)
 {
-    _commands[cmd.name] = cmd;
+    Command* newCommand = new (std::nothrow) Command(cmd);
+    auto iter = _commands.find(cmd.getName());
+    if (iter != _commands.end())
+    {
+        delete iter->second;
+        _commands.erase(iter);
+    }
+    _commands[cmd.getName()] = newCommand;
 }
 
 void Console::addSubCommand(const std::string& cmdName, const Command& subCmd)
 {
     auto it = _commands.find(cmdName);
-    if(it != _commands.end()) {
+    if (it != _commands.end())
+    {
         auto& cmd = it->second;
-        addSubCommand(cmd, subCmd);
+        addSubCommand(*cmd, subCmd);
     }
 }
 
 void Console::addSubCommand(Command& cmd, const Command& subCmd)
 {
-    cmd.subCommands[subCmd.name] = subCmd;
+    cmd.addSubCommand(subCmd);
 }
 
 const Console::Command* Console::getCommand(const std::string& cmdName)
@@ -549,7 +655,7 @@ const Console::Command* Console::getCommand(const std::string& cmdName)
     auto it = _commands.find(cmdName);
     if(it != _commands.end()) {
         auto& cmd = it->second;
-        return &cmd;
+        return cmd;
     }
     return nullptr;
 }
@@ -559,7 +665,7 @@ const Console::Command* Console::getSubCommand(const std::string& cmdName, const
     auto it = _commands.find(cmdName);
     if(it != _commands.end()) {
         auto& cmd = it->second;
-        return getSubCommand(cmd, subCmdName);
+        return getSubCommand(*cmd, subCmdName);
     }
     return nullptr;
 }
@@ -573,6 +679,7 @@ void Console::delCommand(const std::string& cmdName)
 {
     auto it = _commands.find(cmdName);
     if(it != _commands.end()) {
+        delete it->second;
         _commands.erase(it);
     }
 }
@@ -582,7 +689,7 @@ void Console::delSubCommand(const std::string& cmdName, const std::string& subCm
     auto it = _commands.find(cmdName);
     if(it != _commands.end()) {
         auto& cmd = it->second;
-        delSubCommand(cmd, subCmdName);
+        delSubCommand(*cmd, subCmdName);
     }
 }
 
@@ -852,7 +959,7 @@ bool Console::parseCommand(int fd)
             
         }
         auto cmd = it->second;
-        cmd.commandGeneric(fd, args2);
+        cmd->commandGeneric(fd, args2);
     }else if(strcmp(buf, "\r\n") != 0) {
         const char err[] = "Unknown command. Type 'help' for options\n";
         Console::Utility::sendToConsole(fd, err, strlen(err));
@@ -1477,21 +1584,21 @@ void Console::printFileUtils(int fd)
     Console::Utility::sendPrompt(fd);
 }
 
-void Console::sendHelp(int fd, const std::map<std::string, Command>& commands, const char* msg)
+void Console::sendHelp(int fd, const std::unordered_map<std::string, Command*>& commands, const char* msg)
 {
     Console::Utility::sendToConsole(fd, msg, strlen(msg));
     for(auto& it : commands)
     {
         auto command = it.second;
-        if (command.help.empty()) continue;
+        if (command->getHelp().empty()) continue;
         
-        Console::Utility::mydprintf(fd, "\t%s", command.name.c_str());
-        ssize_t tabs = strlen(command.name.c_str()) / 8;
+        Console::Utility::mydprintf(fd, "\t%s", command->getName().c_str());
+        ssize_t tabs = strlen(command->getName().c_str()) / 8;
         tabs = 3 - tabs;
         for(int j=0;j<tabs;j++){
             Console::Utility::mydprintf(fd, "\t");
         }
-        Console::Utility::mydprintf(fd,"%s\n", command.help.c_str());
+        Console::Utility::mydprintf(fd,"%s\n", command->getHelp().c_str());
     }
 }
 

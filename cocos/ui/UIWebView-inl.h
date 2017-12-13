@@ -147,6 +147,19 @@ namespace experimental{
                 _impl->setVisible(visible);
             }
         }
+        
+        void WebView::setOpacityWebView(float opacity){
+            _impl->setOpacityWebView(opacity);
+        }
+        
+        float WebView::getOpacityWebView() const{
+            return _impl->getOpacityWebView();
+        }
+        
+        void WebView::setBackgroundTransparent()
+        {
+            _impl->setBackgroundTransparent();
+        };
 
         void WebView::onEnter()
         {

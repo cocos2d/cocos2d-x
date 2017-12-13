@@ -75,6 +75,8 @@ public:
     virtual void swapBuffers() override;
     virtual void setIMEKeyboardState(bool bOpen) override;
 
+    virtual Rect getSafeAreaRect() const override;
+
 protected:
     GLViewImpl();
     virtual ~GLViewImpl();

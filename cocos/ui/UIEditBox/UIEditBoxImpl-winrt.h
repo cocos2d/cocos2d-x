@@ -72,6 +72,8 @@ namespace ui {
     void removeTextBox();
     void setInputScope(TextBox^ textBox);
     void _setTextHorizontalAlignment(TextBox^ textBox);
+	void _setTexVerticalAlignment(Windows::UI::Xaml::Controls::Control^ textBox);
+	void _setPadding(Windows::UI::Xaml::Controls::Control^ editBox);
 
     // Properties
     Windows::Foundation::Rect _rect;

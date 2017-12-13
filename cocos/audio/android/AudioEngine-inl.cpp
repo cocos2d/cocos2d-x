@@ -23,6 +23,8 @@
  ****************************************************************************/
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
+#define LOG_TAG "AudioEngineImpl"
+
 #include "audio/android/AudioEngine-inl.h"
 
 #include <unistd.h>
@@ -210,7 +212,7 @@ void AudioEngineImpl::onEnterBackground(EventCustom* event)
         if (dynamic_cast<UrlAudioPlayer*>(player) != nullptr
             && player->getState() == IAudioPlayer::State::PLAYING)
         {
-            _urlAudioPlayersNeedResume.push_back(player);
+            _urlAudioPlayersNeedResume.emplace(e.first, player);
             player->pause();
         }
     }
@@ -226,9 +228,9 @@ void AudioEngineImpl::onEnterForeground(EventCustom* event)
     }
 
     // resume UrlAudioPlayers
-    for (auto&& player : _urlAudioPlayersNeedResume)
+    for (auto&& iter : _urlAudioPlayersNeedResume)
     {
-        player->resume();
+        iter.second->resume();
     }
     _urlAudioPlayersNeedResume.clear();
 }
@@ -261,7 +263,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
             player->setId(audioId);
             _audioPlayers.insert(std::make_pair(audioId, player));
 
-            player->setPlayEventCallback([this, player](IAudioPlayer::State state){
+            player->setPlayEventCallback([this, player, filePath](IAudioPlayer::State state){
 
                 if (state != IAudioPlayer::State::OVER && state != IAudioPlayer::State::STOPPED)
                 {
@@ -270,12 +272,18 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
                 }
 
                 int id = player->getId();
-                std::string filePath = *AudioEngine::_audioIDInfoMap[id].filePath;
 
                 ALOGV("Removing player id=%d, state:%d", id, (int)state);
 
                 AudioEngine::remove(id);
-                _audioPlayers.erase(id);
+                if (_audioPlayers.find(id) != _audioPlayers.end())
+                {
+                    _audioPlayers.erase(id);
+                }
+                if (_urlAudioPlayersNeedResume.find(id) != _urlAudioPlayersNeedResume.end())
+                {
+                    _urlAudioPlayersNeedResume.erase(id);
+                }
 
                 auto iter = _callbackMap.find(id);
                 if (iter != _callbackMap.end())

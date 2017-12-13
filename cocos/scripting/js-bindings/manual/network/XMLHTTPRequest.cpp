@@ -248,6 +248,7 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sen
                 callback.set(_onloadendCallback);
                 _notify(callback, JS::HandleValueArray::empty());
             }
+            _clearCallbacks();
             return;
         }
     }
@@ -291,6 +292,7 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sen
         callback.set(_onloadendCallback);
         _notify(callback, JS::HandleValueArray::empty());
     }
+    _clearCallbacks();
 }
 /**
  * @brief   Send out request and fire callback when done.
@@ -301,6 +303,27 @@ void MinXmlHttpRequest::_sendRequest(JSContext *cx)
     _httpRequest->setResponseCallback(this, httpresponse_selector(MinXmlHttpRequest::handle_requestResponse));
     cocos2d::network::HttpClient::getInstance()->sendImmediate(_httpRequest);
     _httpRequest->release();
+}
+
+#define REMOVE_CALLBACK(x) \
+if (x)\
+{ \
+    JS::RootedValue callback(_cx); \
+    callback.set(OBJECT_TO_JSVAL(x)); \
+    js_remove_object_root(callback); \
+    x = nullptr; \
+} \
+
+void MinXmlHttpRequest::_clearCallbacks()
+{ 
+    JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
+    REMOVE_CALLBACK(_onreadystateCallback)
+    REMOVE_CALLBACK(_onloadstartCallback)
+    REMOVE_CALLBACK(_onabortCallback)
+    REMOVE_CALLBACK(_onerrorCallback)
+    REMOVE_CALLBACK(_onloadCallback)
+    REMOVE_CALLBACK(_onloadendCallback)
+    REMOVE_CALLBACK(_ontimeoutCallback)
 }
 
 MinXmlHttpRequest::MinXmlHttpRequest()
@@ -352,49 +375,7 @@ MinXmlHttpRequest::MinXmlHttpRequest(JSContext *cx)
  */
 MinXmlHttpRequest::~MinXmlHttpRequest()
 {
-    JS::RootedValue callback(_cx);
-    if (_onreadystateCallback)
-    {
-        callback.set(OBJECT_TO_JSVAL(_onreadystateCallback));
-        js_remove_object_root(callback);
-    }
-    if (_onloadstartCallback)
-    {
-        callback.set(OBJECT_TO_JSVAL(_onloadstartCallback));
-        js_remove_object_root(callback);
-    }
-    if (_onabortCallback)
-    {
-        callback.set(OBJECT_TO_JSVAL(_onabortCallback));
-        js_remove_object_root(callback);
-    }
-    if (_onerrorCallback)
-    {
-        callback.set(OBJECT_TO_JSVAL(_onerrorCallback));
-        js_remove_object_root(callback);
-    }
-    if (_onloadCallback)
-    {
-        callback.set(OBJECT_TO_JSVAL(_onloadCallback));
-        js_remove_object_root(callback);
-    }
-    if (_onloadendCallback)
-    {
-        callback.set(OBJECT_TO_JSVAL(_onloadendCallback));
-        js_remove_object_root(callback);
-    }
-    if (_ontimeoutCallback)
-    {
-        callback.set(OBJECT_TO_JSVAL(_ontimeoutCallback));
-        js_remove_object_root(callback);
-    }
-
-    if (_httpRequest)
-    {
-        // We don't need to release _httpRequest here since it will be released in the http callback.
-//        _httpRequest->release();
-    }
-
+    _clearCallbacks();
     CC_SAFE_FREE(_data);
     CC_SAFE_RELEASE_NULL(_scheduler);
 }
@@ -890,6 +871,7 @@ void MinXmlHttpRequest::update(float dt)
         {
             JS::RootedObject callback(_cx, _ontimeoutCallback);
             _notify(callback, JS::HandleValueArray::empty());
+            _clearCallbacks();
         }
         _elapsedTime = 0;
         _readyState = UNSENT;
@@ -916,6 +898,7 @@ JS_BINDED_FUNC_IMPL(MinXmlHttpRequest, abort)
     {
         JS::RootedObject callback(cx, _onabortCallback);
         _notify(callback, JS::HandleValueArray::empty());
+        _clearCallbacks();
     }
 
     return true;

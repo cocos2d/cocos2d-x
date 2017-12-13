@@ -31,6 +31,7 @@
 #ifndef SPINE_TRANSFORMCONSTRAINTDATA_H_
 #define SPINE_TRANSFORMCONSTRAINTDATA_H_
 
+#include <spine/dll.h>
 #include <spine/BoneData.h>
 
 #ifdef __cplusplus
@@ -45,6 +46,8 @@ typedef struct spTransformConstraintData {
 	spBoneData* target;
 	float rotateMix, translateMix, scaleMix, shearMix;
 	float offsetRotation, offsetX, offsetY, offsetScaleX, offsetScaleY, offsetShearY;
+	int /*boolean*/ relative;
+	int /*boolean*/ local;
 
 #ifdef __cplusplus
 	spTransformConstraintData() :
@@ -61,13 +64,15 @@ typedef struct spTransformConstraintData {
 		offsetY(0),
 		offsetScaleX(0),
 		offsetScaleY(0),
-		offsetShearY(0) {
+		offsetShearY(0),
+		relative(0),
+		local(0) {
 	}
 #endif
 } spTransformConstraintData;
 
-spTransformConstraintData* spTransformConstraintData_create (const char* name);
-void spTransformConstraintData_dispose (spTransformConstraintData* self);
+SP_API spTransformConstraintData* spTransformConstraintData_create (const char* name);
+SP_API void spTransformConstraintData_dispose (spTransformConstraintData* self);
 
 #ifdef SPINE_SHORT_NAMES
 typedef spTransformConstraintData TransformConstraintData;

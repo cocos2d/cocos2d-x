@@ -2,6 +2,7 @@
 #define COCOS2DX_SCRIPT_LUA_COCOS2DX_SUPPORT_PLATFORM_ANDROID_LUA_JAVA_BRIDGE_H
 
 #include <jni.h>
+#include <string.h>
 #include <string>
 #include <vector>
 

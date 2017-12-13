@@ -69,7 +69,7 @@ UrlAudioPlayer::UrlAudioPlayer(SLEngineItf engineItf, SLObjectItf outputMixObjec
 
     __playerContainerMutex.lock();
     __playerContainer.push_back(this);
-    ALOGV("Current UrlAudioPlayer instance count: %d", __playerContainer.size());
+    ALOGV("Current UrlAudioPlayer instance count: %d", (int)__playerContainer.size());
     __playerContainerMutex.unlock();
 
     _callerThreadId = callerThreadUtils->getCallerThreadId();

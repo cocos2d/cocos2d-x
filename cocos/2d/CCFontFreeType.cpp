@@ -63,6 +63,7 @@ FontFreeType * FontFreeType::create(const std::string &fontName, float fontSize,
         delete tempFont;
         return nullptr;
     }
+    tempFont->autorelease();
     return tempFont;
 }
 
@@ -219,7 +220,7 @@ FontAtlas * FontFreeType::createFontAtlas()
                 _fontAtlas->prepareLetterDefinitions(utf32);
             }
         }
-        this->autorelease();
+//        this->autorelease();
     }
     
     return _fontAtlas;

@@ -130,11 +130,10 @@ void RenderTexture::listenToForeground(EventCustom* /*event*/)
     glGenFramebuffers(1, &_FBO);
     glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
     
-    _texture->setAliasTexParameters();
-    
-    if ( _textureCopy )
+    _texture->setAntiAliasTexParameters();
+    if(_textureCopy)
     {
-        _textureCopy->setAliasTexParameters();
+        _textureCopy->setAntiAliasTexParameters();
     }
     
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture->getName(), 0);
@@ -320,7 +319,11 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         // check if it worked (probably worth doing :) )
         CCASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Could not attach texture to framebuffer");
 
-        _texture->setAliasTexParameters();
+        _texture->setAntiAliasTexParameters();
+        if(_textureCopy)
+        {
+            _textureCopy->setAntiAliasTexParameters();
+        }
 
         // retained
         setSprite(Sprite::createWithTexture(_texture));

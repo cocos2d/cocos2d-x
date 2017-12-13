@@ -37,7 +37,6 @@
 
 #include "audio/apple/AudioDecoder.h"
 
-#define VERY_VERY_VERBOSE_LOGGING
 #ifdef VERY_VERY_VERBOSE_LOGGING
 #define ALOGVV ALOGV
 #else

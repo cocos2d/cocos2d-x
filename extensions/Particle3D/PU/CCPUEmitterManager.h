@@ -38,7 +38,6 @@
 #include "extensions/Particle3D/PU/CCPUSlaveEmitterTranslator.h"
 #include "extensions/Particle3D/PU/CCPUSphereSurfaceEmitterTranslator.h"
 
-using namespace std;
 NS_CC_BEGIN
 
 class PUEmitterManager

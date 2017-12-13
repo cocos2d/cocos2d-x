@@ -282,4 +282,14 @@ public:
     virtual bool init() override;
 };
 
+class UIButtonScale9ChangeSpriteFrame: public UIScene
+{
+public:
+    CREATE_FUNC(UIButtonScale9ChangeSpriteFrame);
+    
+    UIButtonScale9ChangeSpriteFrame();
+    
+    virtual bool init() override;
+};
+
 #endif /* defined(__TestCpp__UIButtonTest__) */

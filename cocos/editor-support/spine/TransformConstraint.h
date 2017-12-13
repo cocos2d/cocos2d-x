@@ -31,6 +31,7 @@
 #ifndef SPINE_TRANSFORMCONSTRAINT_H_
 #define SPINE_TRANSFORMCONSTRAINT_H_
 
+#include <spine/dll.h>
 #include <spine/TransformConstraintData.h>
 #include <spine/Bone.h>
 
@@ -61,10 +62,10 @@ typedef struct spTransformConstraint {
 #endif
 } spTransformConstraint;
 
-spTransformConstraint* spTransformConstraint_create (spTransformConstraintData* data, const struct spSkeleton* skeleton);
-void spTransformConstraint_dispose (spTransformConstraint* self);
+SP_API spTransformConstraint* spTransformConstraint_create (spTransformConstraintData* data, const struct spSkeleton* skeleton);
+SP_API void spTransformConstraint_dispose (spTransformConstraint* self);
 
-void spTransformConstraint_apply (spTransformConstraint* self);
+SP_API void spTransformConstraint_apply (spTransformConstraint* self);
 
 #ifdef SPINE_SHORT_NAMES
 typedef spTransformConstraint TransformConstraint;
