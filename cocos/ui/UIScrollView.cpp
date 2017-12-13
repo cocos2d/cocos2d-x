@@ -510,6 +510,9 @@ void ScrollView::stopScroll()
         }
 
         _scrolling = false;
+        _bePressed = false;
+
+        startBounceBackIfNeeded();
 
         dispatchEvent(SCROLLVIEW_EVENT_SCROLLING_ENDED, EventType::SCROLLING_ENDED);
     }
@@ -953,6 +956,9 @@ void ScrollView::handlePressLogic(Touch* /*touch*/)
 
 void ScrollView::handleMoveLogic(Touch *touch)
 {
+    if (!_bePressed)
+        return;
+
     Vec3 currPt, prevPt;
     if(!calculateCurrAndPrevTouchPoints(touch, &currPt, &prevPt))
     {
@@ -968,6 +974,9 @@ void ScrollView::handleMoveLogic(Touch *touch)
 
 void ScrollView::handleReleaseLogic(Touch *touch)
 {
+    if (!_bePressed)
+        return;
+
     // Gather the last touch information when released
     {
         Vec3 currPt, prevPt;
