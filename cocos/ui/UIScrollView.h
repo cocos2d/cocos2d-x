@@ -161,9 +161,19 @@ public:
     Layout* getInnerContainer()const;
 
     /**
+     * Immediately stops inner container scroll (auto scrolling is not affected).
+     */
+    virtual void stopScroll();
+
+    /**
      * Immediately stops inner container scroll initiated by any of the "scrollTo*" member functions
      */
     virtual void stopAutoScroll();
+
+    /**
+     * Immediately stops inner container scroll if any.
+     */
+    virtual void stopOverallScroll();
 
     /**
      * Scroll inner container to bottom boundary of scrollview.
@@ -568,6 +578,11 @@ public:
      * @lua NA
      */
     virtual void onEnter() override;
+
+    /**
+     * @lua NA
+     */
+    virtual void onExit() override;
 
     /**
      *  When a widget is in a layout, you could call this method to get the next focused widget within a specified direction.

@@ -116,6 +116,20 @@ void ScrollView::onEnter()
     scheduleUpdate();
 }
 
+void ScrollView::onExit()
+{
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+            return;
+    }
+#endif
+
+    Layout::onExit();
+    stopOverallScroll();
+}
+
 bool ScrollView::init()
 {
     if (Layout::init())
@@ -482,12 +496,54 @@ void ScrollView::startAutoScroll(const Vec2& deltaMove, float timeInSec, bool at
     }
 }
 
+void ScrollView::stopScroll()
+{
+    if (_scrolling)
+    {
+        if (_verticalScrollBar != nullptr)
+        {
+            _verticalScrollBar->onTouchEnded();
+        }
+        if (_horizontalScrollBar != nullptr)
+        {
+            _horizontalScrollBar->onTouchEnded();
+        }
+
+        _scrolling = false;
+        _bePressed = false;
+
+        startBounceBackIfNeeded();
+
+        dispatchEvent(SCROLLVIEW_EVENT_SCROLLING_ENDED, EventType::SCROLLING_ENDED);
+    }
+}
+
 void ScrollView::stopAutoScroll()
 {
-    _autoScrolling = false;
-    _autoScrollAttenuate = true;
-    _autoScrollTotalTime = 0;
-    _autoScrollAccumulatedTime = 0;
+    if (_autoScrolling)
+    {
+        if (_verticalScrollBar != nullptr)
+        {
+            _verticalScrollBar->onTouchEnded();
+        }
+        if (_horizontalScrollBar != nullptr)
+        {
+            _horizontalScrollBar->onTouchEnded();
+        }
+
+        _autoScrolling = false;
+        _autoScrollAttenuate = true;
+        _autoScrollTotalTime = 0;
+        _autoScrollAccumulatedTime = 0;
+
+        dispatchEvent(SCROLLVIEW_EVENT_AUTOSCROLL_ENDED, EventType::AUTOSCROLL_ENDED);
+    }
+}
+
+void ScrollView::stopOverallScroll()
+{
+    stopScroll();
+    stopAutoScroll();
 }
 
 bool ScrollView::isNecessaryAutoScrollBrake()
@@ -900,6 +956,9 @@ void ScrollView::handlePressLogic(Touch* /*touch*/)
 
 void ScrollView::handleMoveLogic(Touch *touch)
 {
+    if (!_bePressed)
+        return;
+
     Vec3 currPt, prevPt;
     if(!calculateCurrAndPrevTouchPoints(touch, &currPt, &prevPt))
     {
@@ -915,6 +974,9 @@ void ScrollView::handleMoveLogic(Touch *touch)
 
 void ScrollView::handleReleaseLogic(Touch *touch)
 {
+    if (!_bePressed)
+        return;
+
     // Gather the last touch information when released
     {
         Vec3 currPt, prevPt;
