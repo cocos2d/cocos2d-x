@@ -96,6 +96,19 @@
         
 --------------------------------
 -- 
+-- @function [parent=#RichText] getHorizontalAlignment 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- 
+-- @function [parent=#RichText] setHorizontalAlignment 
+-- @param self
+-- @param #int a
+-- @return RichText#RichText self (return value: ccui.RichText)
+        
+--------------------------------
+-- 
 -- @function [parent=#RichText] setAnchorTextDel 
 -- @param self
 -- @param #bool enable

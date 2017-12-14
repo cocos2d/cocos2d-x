@@ -168,6 +168,38 @@ public:
 private:
 };
 
+class PauseResumeTargetTest2 : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(PauseResumeTargetTest2);
+    PauseResumeTargetTest2();
+    virtual ~PauseResumeTargetTest2();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+private:
+    cocos2d::Sprite* _touchableSprite;
+    cocos2d::MenuItemFont* _itemPauseTouch;
+    cocos2d::MenuItemFont* _itemResumeTouch;
+    cocos2d::MenuItemFont* _itemAddToScene;
+    cocos2d::MenuItemFont* _itemRemoveFromScene;
+};
+
+class PauseResumeTargetTest3 : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(PauseResumeTargetTest3);
+    PauseResumeTargetTest3();
+    virtual ~PauseResumeTargetTest3();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+private:
+    cocos2d::Sprite* _touchableSprite;
+};
+
 class Issue4129 : public EventDispatcherTestDemo
 {
 public:

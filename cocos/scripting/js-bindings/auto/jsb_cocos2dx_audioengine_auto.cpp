@@ -333,6 +333,21 @@ bool js_cocos2dx_audioengine_AudioEngine_getMaxAudioInstance(JSContext *cx, uint
     return false;
 }
 
+bool js_cocos2dx_audioengine_AudioEngine_isEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+
+        bool ret = cocos2d::experimental::AudioEngine::isEnabled();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_audioengine_AudioEngine_isEnabled : wrong number of arguments");
+    return false;
+}
+
 bool js_cocos2dx_audioengine_AudioEngine_getCurrentTime(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -484,6 +499,22 @@ bool js_cocos2dx_audioengine_AudioEngine_preload(JSContext *cx, uint32_t argc, j
     JS_ReportError(cx, "js_cocos2dx_audioengine_AudioEngine_preload : wrong number of arguments");
     return false;
 }
+bool js_cocos2dx_audioengine_AudioEngine_setEnabled(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_audioengine_AudioEngine_setEnabled : Error processing arguments");
+        cocos2d::experimental::AudioEngine::setEnabled(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_audioengine_AudioEngine_setEnabled : wrong number of arguments");
+    return false;
+}
+
 bool js_cocos2dx_audioengine_AudioEngine_play2d(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -669,14 +700,14 @@ bool js_cocos2dx_audioengine_AudioEngine_setFinishCallback(JSContext *cx, uint32
     bool ok = true;
     if (argc == 2) {
         int arg0 = 0;
-        std::function<void (int, const std::basic_string<char> &)> arg1;
+        std::function<void (int, const std::string&)> arg1;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         do {
 		    if(JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
 		    {
 		        JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1), args.thisv()));
-		        auto lambda = [=](int larg0, const std::basic_string<char> & larg1) -> void {
+		        auto lambda = [=](int larg0, const std::string& larg1) -> void {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
 		            largv[0] = int32_to_jsval(cx, larg0);
@@ -745,6 +776,21 @@ bool js_cocos2dx_audioengine_AudioEngine_getProfile(JSContext *cx, uint32_t argc
     JS_ReportError(cx, "js_cocos2dx_audioengine_AudioEngine_getProfile : wrong number of arguments");
     return false;
 }
+bool js_cocos2dx_audioengine_AudioEngine_getPlayingAudioCount(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+
+        int ret = cocos2d::experimental::AudioEngine::getPlayingAudioCount();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_audioengine_AudioEngine_getPlayingAudioCount : wrong number of arguments");
+    return false;
+}
+
 
 void js_register_cocos2dx_audioengine_AudioEngine(JSContext *cx, JS::HandleObject global) {
     jsb_cocos2d_experimental_AudioEngine_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -776,6 +822,7 @@ void js_register_cocos2dx_audioengine_AudioEngine(JSContext *cx, JS::HandleObjec
         JS_FN("pause", js_cocos2dx_audioengine_AudioEngine_pause, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("end", js_cocos2dx_audioengine_AudioEngine_end, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMaxAudioInstance", js_cocos2dx_audioengine_AudioEngine_getMaxAudioInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isEnabled", js_cocos2dx_audioengine_AudioEngine_isEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCurrentTime", js_cocos2dx_audioengine_AudioEngine_getCurrentTime, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMaxAudioInstance", js_cocos2dx_audioengine_AudioEngine_setMaxAudioInstance, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isLoop", js_cocos2dx_audioengine_AudioEngine_isLoop, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -783,6 +830,7 @@ void js_register_cocos2dx_audioengine_AudioEngine(JSContext *cx, JS::HandleObjec
         JS_FN("uncacheAll", js_cocos2dx_audioengine_AudioEngine_uncacheAll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setVolume", js_cocos2dx_audioengine_AudioEngine_setVolume, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("preload", js_cocos2dx_audioengine_AudioEngine_preload, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setEnabled", js_cocos2dx_audioengine_AudioEngine_setEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("play2d", js_cocos2dx_audioengine_AudioEngine_play2d, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getState", js_cocos2dx_audioengine_AudioEngine_getState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("resume", js_cocos2dx_audioengine_AudioEngine_resume, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -792,6 +840,7 @@ void js_register_cocos2dx_audioengine_AudioEngine(JSContext *cx, JS::HandleObjec
         JS_FN("getDefaultProfile", js_cocos2dx_audioengine_AudioEngine_getDefaultProfile, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFinishCallback", js_cocos2dx_audioengine_AudioEngine_setFinishCallback, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getProfile", js_cocos2dx_audioengine_AudioEngine_getProfile, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getPlayingAudioCount", js_cocos2dx_audioengine_AudioEngine_getPlayingAudioCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 

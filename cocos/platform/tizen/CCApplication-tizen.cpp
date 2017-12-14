@@ -500,6 +500,11 @@ void Application::setAnimationInterval(float interval)
     ecore_animator_frametime_set(interval);
 }
 
+void Application::setAnimationInterval(float interval, SetIntervalReason reason)
+{
+    setAnimationInterval(interval);
+}
+
 void Application::setResourceRootPath(const std::string& rootResDir)
 {
     _resourceRootPath = rootResDir;

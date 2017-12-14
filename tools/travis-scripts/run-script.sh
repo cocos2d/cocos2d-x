@@ -23,26 +23,18 @@ function build_mac()
 {
     NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
 
-    if [ $BUILD_CPP == 'true' ]; then
-        xctool -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "cpp-empty-test Mac" -jobs $NUM_OF_CORES -arch x86_64 -sdk macosx10.11  build
-        xctool -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "cpp-tests Mac" -jobs $NUM_OF_CORES -arch x86_64 -sdk macosx10.11  build
-    else
-        xctool -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "lua-tests Mac" -jobs $NUM_OF_CORES -arch x86_64 -sdk macosx10.11  build
-        xctool -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "js-tests Mac" -jobs $NUM_OF_CORES -arch x86_64 -sdk macosx10.11  build
-    fi
+    xcodebuild -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "build all tests Mac" -jobs $NUM_OF_CORES -arch x86_64 build | xcpretty
+    ##xcpretty has a bug, some xcodebuid fails return value would be treated as 0.
+    xcodebuild -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "build all tests Mac" -jobs $NUM_OF_CORES -arch x86_64 build
 }
 
 function build_ios()
 {
     NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
 
-    if [ $BUILD_CPP == 'true' ]; then
-        xctool -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "cpp-empty-test iOS" -jobs $NUM_OF_CORES -arch i386 -sdk iphonesimulator9.3  build
-        xctool -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "cpp-tests iOS" -jobs $NUM_OF_CORES -arch i386 -sdk iphonesimulator9.3  build
-    else
-        xctool -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "lua-tests iOS" -jobs $NUM_OF_CORES -arch i386 -sdk iphonesimulator9.3  build
-        xctool -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "js-tests iOS" -jobs $NUM_OF_CORES -arch i386 -sdk iphonesimulator9.3  build
-    fi
+    xcodebuild -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "build all tests iOS" -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build | xcpretty
+    #the following commands must not be removed
+    xcodebuild -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "build all tests iOS" -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build
 }
 
 function build_android()
@@ -50,52 +42,45 @@ function build_android()
     # Build all samples
     echo "Building Android samples ..."
     export COCOS_CONSOLE_ROOT=$COCOS2DX_ROOT/tools/cocos2d-console/bin
-    export ANT_ROOT=/usr/bin
     export ANDROID_SDK_ROOT=/usr/local/android-sdk
     export COCOS_X_ROOT=$COCOS2DX_ROOT
-    export PATH=$ANT_ROOT:$ANDROID_SDK_ROOT:$COCOS_CONSOLE_ROOT:$PATH
-
-    cd $COCOS2DX_ROOT/build
-
-    # share the obj folder to speed up building
+    export PATH=$ANDROID_SDK_ROOT:$COCOS_CONSOLE_ROOT:$PATH
 
     # build cpp-empty-test
-    pushd $COCOS2DX_ROOT/tests/cpp-empty-test
-    cocos compile -p android
-    popd
+    # pushd $COCOS2DX_ROOT/tests/cpp-empty-test
+    # cocos compile -p android --android-studio
+    # popd
 
     # build cpp-tests
-    src_dir=$COCOS2DX_ROOT/tests/cpp-empty-test/proj.android/obj/
-    dst_dir=$COCOS2DX_ROOT/tests/cpp-tests/proj.android/obj/
-    mkdir $dst_dir
-    cp -a $src_dir/* $dst_dir
     pushd $COCOS2DX_ROOT/tests/cpp-tests
     cocos compile -p android
     popd
 
     # build lua-tests
-    src_dir=$dst_dir
-    dst_dir=$COCOS2DX_ROOT/tests/lua-tests/project/proj.android/obj/
-    mkdir $dst_dir
-    cp -a $src_dir/* $dst_dir
     pushd $COCOS2DX_ROOT/tests/lua-tests
     cocos compile -p android
     popd
 
     # build js-tests
-    src_dir=$dst_dir
-    dst_dir=$COCOS2DX_ROOT/tests/js-tests/project/proj.android/obj/
-    mkdir $dst_dir
-    cp -a $src_dir/* $dst_dir
-    pushd $COCOS2DX_ROOT/tests/js-tests
-    cocos compile -p android
-    popd
+    # should uncomon it when building time not exceed time limit
+    # pushd $COCOS2DX_ROOT/tests/js-tests
+    # cocos compile -p android
+    # popd
 }
 
 function genernate_binding_codes()
 {
+    if [ $TRAVIS_OS_NAME == "linux" ]; then
+        # print some log for libstdc++6
+        strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
+        ls -l /usr/lib/x86_64-linux-gnu/libstdc++*
+        dpkg-query -W libstdc++6
+        ldd $COCOS2DX_ROOT/tools/bindings-generator/libclang/libclang.so
+    fi
+
     # set environment variables needed by binding codes
 
+    which python
 
     export NDK_ROOT=$HOME/bin/android-ndk
     export PYTHON_BIN=/usr/bin/python
@@ -107,10 +92,14 @@ function genernate_binding_codes()
     ./genbindings.py
     popd
 
-    echo "Create auto-generated jsbinding glue codes."
-    pushd "$COCOS2DX_ROOT/tools/tojs"
-    ./genbindings.py
-    popd
+    # We don't support building js projects for linux platform,
+    # therefore, don't generate js-binding code for it.
+    if [ $TRAVIS_OS_NAME != "linux" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+        echo "Create auto-generated jsbinding glue codes."
+        pushd "$COCOS2DX_ROOT/tools/tojs"
+        ./genbindings.py
+        popd
+    fi
 }
 
 function generate_pull_request_for_binding_codes_and_cocosfiles()
@@ -184,6 +173,8 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
 
 function run_pull_request()
 {
+    echo "Building pull request ..."
+
     # need to generate binding codes for all targets
     genernate_binding_codes
 
@@ -208,6 +199,7 @@ function run_pull_request()
 
 function run_after_merge()
 {
+    echo "Building merge commit ..."
     # Re-generation of the javascript bindings can perform push of the new
     # version back to github.  We don't do this for pull requests, or if
     # GH_USER/GH_EMAIL/GH_PASSWORD environment variables are not set correctly
@@ -240,7 +232,7 @@ fi
 # - generate cocos_files.json for template
 if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     # only one job need to send PR, linux virtual machine has better performance
-    if [ $TRAVIS_OS_NAME == "linux" ] && [ $GEN_BINDING_AND_COCOSFILE == "true" ]; then
+    if [ $TRAVIS_OS_NAME == "linux" ] && [ x$GEN_BINDING_AND_COCOSFILE == x"true" ]; then
         run_after_merge
     fi
 fi

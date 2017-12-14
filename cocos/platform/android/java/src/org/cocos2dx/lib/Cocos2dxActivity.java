@@ -33,22 +33,20 @@ import android.media.AudioManager;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager.OnActivityResultListener;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.ViewGroup;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 
 import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLDisplay;
+import javax.microedition.khronos.egl.EGLContext;
 
 public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelperListener {
     // ===========================================================
@@ -69,163 +67,12 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     private Cocos2dxWebViewHelper mWebViewHelper = null;
     private Cocos2dxEditBoxHelper mEditBoxHelper = null;
     private boolean hasFocus = false;
+    private boolean showVirtualButton = false;
 
     public Cocos2dxGLSurfaceView getGLSurfaceView(){
         return  mGLSurfaceView;
     }
 
-    public class Cocos2dxEGLConfigChooser implements GLSurfaceView.EGLConfigChooser
-    {
-        protected int[] configAttribs;
-        public Cocos2dxEGLConfigChooser(int redSize, int greenSize, int blueSize, int alphaSize, int depthSize, int stencilSize)
-        {
-            configAttribs = new int[] {redSize, greenSize, blueSize, alphaSize, depthSize, stencilSize};
-        }
-        public Cocos2dxEGLConfigChooser(int[] attribs)
-        {
-            configAttribs = attribs;
-        }
-
-        private int findConfigAttrib(EGL10 egl, EGLDisplay display,
-                EGLConfig config, int attribute, int defaultValue) {
-            int[] value = new int[1];
-            if (egl.eglGetConfigAttrib(display, config, attribute, value)) {
-                return value[0];
-            }
-            return defaultValue;
-        }
-
-        class ConfigValue implements Comparable<ConfigValue> {
-
-            public EGLConfig config = null;
-            public int[] configAttribs = null;
-            public int value = 0;
-            private void calcValue() {
-                // depth factor 29bit and [6,12)bit
-                if (configAttribs[4] > 0) {
-                    value = value + (1 << 29) + ((configAttribs[4]%64) << 6);
-                }
-                // stencil factor 28bit and [0, 6)bit
-                if (configAttribs[5] > 0) {
-                    value = value + (1 << 28) + ((configAttribs[5]%64));
-                }
-                // alpha factor 30bit and [24, 28)bit
-                if (configAttribs[3] > 0) {
-                    value = value + (1 << 30) + ((configAttribs[3]%16) << 24);
-                }
-                // green factor [20, 24)bit
-                if (configAttribs[1] > 0) {
-                    value = value + ((configAttribs[1]%16) << 20);
-                }
-                // blue factor [16, 20)bit
-                if (configAttribs[2] > 0) {
-                    value = value + ((configAttribs[2]%16) << 16);
-                }
-                // red factor [12, 16)bit
-                if (configAttribs[0] > 0) {
-                    value = value + ((configAttribs[0]%16) << 12);
-                }
-            }
-
-            public ConfigValue(int[] attribs) {
-                configAttribs = attribs;
-                calcValue();
-            }
-
-            public ConfigValue(EGL10 egl, EGLDisplay display, EGLConfig config) {
-                this.config = config;
-                configAttribs = new int[6];
-                configAttribs[0] = findConfigAttrib(egl, display, config, EGL10.EGL_RED_SIZE, 0);
-                configAttribs[1] = findConfigAttrib(egl, display, config, EGL10.EGL_GREEN_SIZE, 0);
-                configAttribs[2] = findConfigAttrib(egl, display, config, EGL10.EGL_BLUE_SIZE, 0);
-                configAttribs[3] = findConfigAttrib(egl, display, config, EGL10.EGL_ALPHA_SIZE, 0);
-                configAttribs[4] = findConfigAttrib(egl, display, config, EGL10.EGL_DEPTH_SIZE, 0);
-                configAttribs[5] = findConfigAttrib(egl, display, config, EGL10.EGL_STENCIL_SIZE, 0);
-                calcValue();
-            }
-
-            @Override
-            public int compareTo(ConfigValue another) {
-                if (value < another.value) {
-                    return -1;
-                } else if (value > another.value) {
-                    return 1;
-                } else {
-                    return 0;
-                }
-            }
-
-            @Override
-            public String toString() {
-                return "{ color: " + configAttribs[3] + configAttribs[2] + configAttribs[1] + configAttribs[0] +
-                        "; depth: " + configAttribs[4] + "; stencil: " + configAttribs[5] + ";}";
-            }
-        }
-
-        @Override
-        public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display) 
-        {
-            int[] EGLattribs = {
-                    EGL10.EGL_RED_SIZE, configAttribs[0],
-                    EGL10.EGL_GREEN_SIZE, configAttribs[1],
-                    EGL10.EGL_BLUE_SIZE, configAttribs[2],
-                    EGL10.EGL_ALPHA_SIZE, configAttribs[3],
-                    EGL10.EGL_DEPTH_SIZE, configAttribs[4],
-                    EGL10.EGL_STENCIL_SIZE,configAttribs[5],
-                    EGL10.EGL_RENDERABLE_TYPE, 4, //EGL_OPENGL_ES2_BIT
-                    EGL10.EGL_NONE
-            };
-            EGLConfig[] configs = new EGLConfig[1];
-            int[] numConfigs = new int[1];
-            boolean eglChooseResult = egl.eglChooseConfig(display, EGLattribs, configs, 1, numConfigs);
-            if (eglChooseResult && numConfigs[0] > 0)
-            {
-                return configs[0];
-            }
-
-            // there's no config match the specific configAttribs, we should choose a closest one
-            int[] EGLV2attribs = {
-                    EGL10.EGL_RENDERABLE_TYPE, 4, //EGL_OPENGL_ES2_BIT
-                    EGL10.EGL_NONE
-            };
-            eglChooseResult = egl.eglChooseConfig(display, EGLV2attribs, null, 0, numConfigs);
-            if(eglChooseResult && numConfigs[0] > 0) {
-                int num = numConfigs[0];
-                ConfigValue[] cfgVals = new ConfigValue[num];
-
-                // convert all config to ConfigValue
-                configs = new EGLConfig[num];
-                egl.eglChooseConfig(display, EGLV2attribs, configs, num, numConfigs);
-                for (int i = 0; i < num; ++i) {
-                    cfgVals[i] = new ConfigValue(egl, display, configs[i]);
-                }
-
-                ConfigValue e = new ConfigValue(configAttribs);
-                // bin search
-                int lo = 0;
-                int hi = num;
-                int mi;
-                while (lo < hi - 1) {
-                    mi = (lo + hi) / 2;
-                    if (e.compareTo(cfgVals[mi]) < 0) {
-                        hi = mi;
-                    } else {
-                        lo = mi;
-                    }
-                }
-                if (lo != num - 1) {
-                    lo = lo + 1;
-                }
-                Log.w("cocos2d", "Can't find EGLConfig match: " + e + ", instead of closest one:" + cfgVals[lo]);
-                return cfgVals[lo].config;
-            }
-
-            Log.e(DEVICE_POLICY_SERVICE, "Can not select an EGLConfig for rendering.");
-            return null;
-        }
-
-    }
-    
     public static Context getContext() {
         return sContext;
     }
@@ -239,7 +86,11 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
             }
         });
     }
-    
+
+    public void setEnableVirtualButton(boolean value) {
+        this.showVirtualButton = value;
+    }
+
     protected void onLoadNativeLibraries() {
         try {
             ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
@@ -258,6 +109,16 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Workaround in https://stackoverflow.com/questions/16283079/re-launch-of-activity-on-home-button-but-only-the-first-time/16447508
+        if (!isTaskRoot()) {
+            // Android launched another instance of the root activity into an existing task
+            //  so just quietly finish and go away, dropping the user back into the activity
+            //  at the top of the stack (ie: the last state of this task)
+            finish();
+            Log.w(TAG, "[Workaround] Ignore the activity started from icon!");
+            return;
+        }
 
         this.hideVirtualButton();
 
@@ -286,12 +147,15 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         Window window = this.getWindow();
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
+        // Audio configuration
         this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+        Cocos2dxEngineDataManager.init(this, mGLSurfaceView);
     }
 
     //native method,call GLViewImpl::getGLContextAttrs() to get the OpenGL ES context attributions
     private static native int[] getGLContextAttrs();
-    
+
     // ===========================================================
     // Getter & Setter
     // ===========================================================
@@ -304,8 +168,11 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     protected void onResume() {
     	Log.d(TAG, "onResume()");
         super.onResume();
+        Cocos2dxAudioFocusManager.registerAudioFocusListener(this);
         this.hideVirtualButton();
        	resumeIfHasFocus();
+
+        Cocos2dxEngineDataManager.resume();
     }
     
     @Override
@@ -329,13 +196,18 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     protected void onPause() {
     	Log.d(TAG, "onPause()");
         super.onPause();
+        Cocos2dxAudioFocusManager.unregisterAudioFocusListener(this);
         Cocos2dxHelper.onPause();
         mGLSurfaceView.onPause();
+        Cocos2dxEngineDataManager.pause();
     }
     
     @Override
     protected void onDestroy() {
+        Cocos2dxAudioFocusManager.unregisterAudioFocusListener(this);
         super.onDestroy();
+
+        Cocos2dxEngineDataManager.destroy();
     }
 
     @Override
@@ -410,6 +282,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         //this line is need on some device if we specify an alpha bits
         if(this.mGLContextAttrs[3] > 0) glSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
 
+        // use custom EGLConfigureChooser
         Cocos2dxEGLConfigChooser chooser = new Cocos2dxEGLConfigChooser(this.mGLContextAttrs);
         glSurfaceView.setEGLConfigChooser(chooser);
 
@@ -417,6 +290,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     }
 
     protected void hideVirtualButton() {
+        if (showVirtualButton) {
+            return;
+        }
 
         if (Build.VERSION.SDK_INT >= 19) {
             // use reflection to remove dependence of API level
@@ -448,7 +324,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         }
     }
 
-   private final static boolean isAndroidEmulator() {
+   private static boolean isAndroidEmulator() {
       String model = Build.MODEL;
       Log.d(TAG, "model=" + model);
       String product = Build.PRODUCT;
@@ -464,4 +340,73 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     // ===========================================================
     // Inner and Anonymous Classes
     // ===========================================================
+
+    private class Cocos2dxEGLConfigChooser implements GLSurfaceView.EGLConfigChooser
+    {
+        private int[] mConfigAttributes;
+        private  final int EGL_OPENGL_ES2_BIT = 0x04;
+        private  final int EGL_OPENGL_ES3_BIT = 0x40;
+        public Cocos2dxEGLConfigChooser(int redSize, int greenSize, int blueSize, int alphaSize, int depthSize, int stencilSize)
+        {
+            mConfigAttributes = new int[] {redSize, greenSize, blueSize, alphaSize, depthSize, stencilSize};
+        }
+        public Cocos2dxEGLConfigChooser(int[] attributes)
+        {
+            mConfigAttributes = attributes;
+        }
+
+        @Override
+        public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display)
+        {
+            int[][] EGLAttributes = {
+                {
+                    // GL ES 2 with user set
+                    EGL10.EGL_RED_SIZE, mConfigAttributes[0],
+                    EGL10.EGL_GREEN_SIZE, mConfigAttributes[1],
+                    EGL10.EGL_BLUE_SIZE, mConfigAttributes[2],
+                    EGL10.EGL_ALPHA_SIZE, mConfigAttributes[3],
+                    EGL10.EGL_DEPTH_SIZE, mConfigAttributes[4],
+                    EGL10.EGL_STENCIL_SIZE, mConfigAttributes[5],
+                    EGL10.EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
+                    EGL10.EGL_NONE
+                },
+                {
+                     // GL ES 2 with user set
+                     EGL10.EGL_RED_SIZE, mConfigAttributes[0],
+                     EGL10.EGL_GREEN_SIZE, mConfigAttributes[1],
+                     EGL10.EGL_BLUE_SIZE, mConfigAttributes[2],
+                     EGL10.EGL_ALPHA_SIZE, mConfigAttributes[3],
+                     EGL10.EGL_DEPTH_SIZE, mConfigAttributes[4] >= 24 ? 16 : mConfigAttributes[4],
+                     EGL10.EGL_STENCIL_SIZE, mConfigAttributes[5],
+                     EGL10.EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
+                     EGL10.EGL_NONE
+                },
+                {
+                    // GL ES 2 by default
+                    EGL10.EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
+                    EGL10.EGL_NONE
+                }
+            };
+
+            EGLConfig result = null;
+            for (int[] eglAtribute : EGLAttributes) {
+                result = this.doChooseConfig(egl, display, eglAtribute);
+                if (result != null)
+                    return result;
+            }
+
+            Log.e(DEVICE_POLICY_SERVICE, "Can not select an EGLConfig for rendering.");
+            return null;
+        }
+
+        private EGLConfig doChooseConfig(EGL10 egl, EGLDisplay display, int[] attributes) {
+            EGLConfig[] configs = new EGLConfig[1];
+            int[] matchedConfigNum = new int[1];
+            boolean result = egl.eglChooseConfig(display, attributes, configs, 1, matchedConfigNum);
+            if (result && matchedConfigNum[0] > 0) {
+                return configs[0];
+            }
+            return null;
+        }
+    }
 }

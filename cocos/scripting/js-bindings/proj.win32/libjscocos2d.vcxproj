@@ -17,6 +17,7 @@
     <ClCompile Include="..\auto\jsb_cocos2dx_audioengine_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_builder_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_extension_auto.cpp" />
+    <ClCompile Include="..\auto\jsb_cocos2dx_network_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_navmesh_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_physics3d_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_spine_auto.cpp" />
@@ -48,6 +49,7 @@
     <ClCompile Include="..\manual\network\jsb_socketio.cpp" />
     <ClCompile Include="..\manual\network\jsb_websocket.cpp" />
     <ClCompile Include="..\manual\network\XMLHTTPRequest.cpp" />
+    <ClCompile Include="..\manual\network\js_network_manual.cpp" />
     <ClCompile Include="..\manual\physics3d\jsb_cocos2dx_physics3d_manual.cpp" />
     <ClCompile Include="..\manual\ScriptingCore.cpp" />
     <ClCompile Include="..\manual\spine\jsb_cocos2dx_spine_manual.cpp" />
@@ -60,6 +62,7 @@
     <ClInclude Include="..\auto\jsb_cocos2dx_audioengine_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_builder_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_extension_auto.hpp" />
+    <ClInclude Include="..\auto\jsb_cocos2dx_network_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_navmesh_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_physics3d_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_spine_auto.hpp" />
@@ -98,6 +101,7 @@
     <ClInclude Include="..\manual\network\jsb_socketio.h" />
     <ClInclude Include="..\manual\network\jsb_websocket.h" />
     <ClInclude Include="..\manual\network\XMLHTTPRequest.h" />
+    <ClInclude Include="..\manual\network\js_network_manual.h" />
     <ClInclude Include="..\manual\physics3d\jsb_cocos2dx_physics3d_manual.h" />
     <ClInclude Include="..\manual\ScriptingCore.h" />
     <ClInclude Include="..\manual\spidermonkey_specifics.h" />
@@ -123,6 +127,8 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v141_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -132,6 +138,8 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v141_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -164,7 +172,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_LIB;COCOS2D_DEBUG=1;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_USRJSSTATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)extensions;$(EngineRoot)external;$(ProjectDir)..\auto;$(ProjectDir)..\manual;$(ProjectDir)..\manual\cocostudio;$(ProjectDir)..\manual\navmesh;$(ProjectDir)..\manual\spine;$(ProjectDir)..\..\..\..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)extensions;$(EngineRoot)external;$(ProjectDir)..\auto;$(ProjectDir)..\manual;$(ProjectDir)..\manual\cocostudio;$(ProjectDir)..\manual\navmesh;$(ProjectDir)..\manual\spine;$(ProjectDir)..\..\..\..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include;$(EngineRoot)external\bullet\include;$(EngineRoot)external\bullet\include\bullet;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4068;4101;4800;4251;4244;4099;4083;4700;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
@@ -190,7 +198,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\spidermonkey\prebuilt\win32\*.*" 
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_LIB;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_USRJSSTATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)extensions;$(EngineRoot)external;$(ProjectDir)..\auto;$(ProjectDir)..\manual;$(ProjectDir)..\manual\cocostudio;$(ProjectDir)..\manual\navmesh;$(ProjectDir)..\manual\spine;$(ProjectDir)..\..\..\..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..;$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)extensions;$(EngineRoot)external;$(ProjectDir)..\auto;$(ProjectDir)..\manual;$(ProjectDir)..\manual\cocostudio;$(ProjectDir)..\manual\navmesh;$(ProjectDir)..\manual\spine;$(ProjectDir)..\..\..\..\external\spidermonkey\include\win32;$(EngineRoot)external\chipmunk\include;$(EngineRoot)external\bullet\include;$(EngineRoot)external\bullet\include\bullet;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4068;4101;4800;4251;4244;4099;4083;4700;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DebugInformationFormat>None</DebugInformationFormat>

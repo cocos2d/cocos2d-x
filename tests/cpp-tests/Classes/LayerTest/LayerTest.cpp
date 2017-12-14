@@ -1,5 +1,6 @@
 #include "LayerTest.h"
 #include "../testResource.h"
+#include "../cocos/ui/UIText.h"
 
 USING_NS_CC;
 
@@ -28,6 +29,7 @@ LayerTests::LayerTests()
     ADD_TEST_CASE(LayerBug3162A);
     ADD_TEST_CASE(LayerBug3162B);
     ADD_TEST_CASE(LayerColorOccludeBug);
+    ADD_TEST_CASE(LayerRadialGradientTest);
 }
 
 // Cascading support extensions
@@ -869,4 +871,165 @@ void LayerColorOccludeBug::onExit()
 {
     LayerTest::onExit();
     Director::getInstance()->setDepthTest(false);
+}
+
+// LayerRadialGradient
+
+std::string LayerRadialGradientTest::title() const
+{
+    return "LayerRadialGradient test";
+}
+
+void LayerRadialGradientTest::onEnter()
+{
+    LayerTest::onEnter();
+    
+    _currentSeletedItemIndex = 0;
+    
+    auto director = Director::getInstance();
+    director->setClearColor(Color4F(0, 0, 0, 0));
+    auto origin = director->getVisibleOrigin();
+    auto size = director->getVisibleSize();
+    Vec2 center(origin.x + size.width/2 + 50, origin.y + size.height/2);
+    float radius = (size.height - 50) / 2;
+    _layer = LayerRadialGradient::create(Color4B(145, 106, 209, 140), Color4B(0, 0, 0, 0), radius, center, 1.0f);
+    addChild(_layer);
+    
+    auto scaleSlider = LayerRadialGradientTest::createSlider();
+    scaleSlider->setPosition(Vec2(50, 130));
+    addChild(scaleSlider);
+    
+    auto listview = createListView();
+    listview->setPosition(Vec2(100, 150));
+    addChild(listview);
+}
+
+cocos2d::ui::Slider* LayerRadialGradientTest::createSlider()
+{
+    auto slider = ui::Slider::create();
+    slider->setTouchEnabled(true);
+    slider->loadBarTexture("cocosui/sliderTrack.png");
+    slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+    slider->addEventListener(CC_CALLBACK_2(LayerRadialGradientTest::sliderCallback, this));
+    slider->setRotation(90);
+    slider->setTag(101);
+    slider->setPercent(50);
+    
+    return slider;
+}
+
+void LayerRadialGradientTest::listviewCallback(cocos2d::Ref* sender, cocos2d::ui::ListView::EventType type)
+{
+    // clear all text to white
+    auto listview = static_cast<cocos2d::ui::ListView*>(sender);
+    for (auto &item : listview->getItems())
+        static_cast<cocos2d::ui::Text*>(item)->setColor(cocos2d::Color3B::WHITE);
+    
+    _currentSeletedItemIndex = (int)listview->getCurSelectedIndex();
+    listview->getItem(_currentSeletedItemIndex)->setColor(cocos2d::Color3B::RED);
+    
+    int percent = 100;
+    auto slider = static_cast<cocos2d::ui::Slider*>(getChildByTag(101));
+    switch (_currentSeletedItemIndex)
+    {
+        case 0:
+            // scale
+             slider->setPercent(_layer->getScaleX() / 2 * percent);
+            break;
+        case 1:
+            // skewx
+            slider->setPercent(_layer->getSkewX() / 90 * percent);
+            break;
+        case 2:
+            // skewy
+            slider->setPercent(_layer->getSkewY() / 90 * percent);
+            break;
+        case 3:
+            // expand
+            slider->setPercent(_layer->getExpand() * percent);
+            break;
+        case 4:
+            // radius
+            slider->setPercent(_layer->getRadius() / 300 * percent);
+            break;
+            
+        default:
+            break;
+    }
+}
+
+void LayerRadialGradientTest::sliderCallback(cocos2d::Ref* sender, cocos2d::ui::Slider::EventType type)
+{
+    auto slider = static_cast<cocos2d::ui::Slider*>(sender);
+    float percent = slider->getPercent() / 100.f;
+    switch (_currentSeletedItemIndex)
+    {
+        case 0:
+            // scale
+            _layer->setScale(percent * 2);
+            CCLOG("scale is %f", percent * 2);
+            break;
+        case 1:
+            // skewx
+            _layer->setSkewX(90 * percent);
+            CCLOG("SkewX is %f", 90 * percent);
+            break;
+        case 2:
+            // skewy
+            _layer->setSkewY(90 * percent);
+            CCLOG("SkewY is %f", 90 * percent);
+            break;
+        case 3:
+            // expand
+            _layer->setExpand(percent);
+            CCLOG("expand is %f", percent);
+            break;
+        case 4:
+            // radius
+            _layer->setRadius(300 * percent);
+            CCLOG("radius is %f", 300 * percent);
+            break;
+        default:
+            break;
+    }
+}
+
+cocos2d::ui::ListView* LayerRadialGradientTest::createListView()
+{
+    auto listview = cocos2d::ui::ListView::create();
+    
+    auto scale = cocos2d::ui::Text::create();
+    scale->setString("scale[0-2]");
+    scale->setColor(cocos2d::Color3B::RED); // default seleted item
+    scale->setTouchEnabled(true);
+    listview->pushBackCustomItem(scale);
+    
+    auto skewx = cocos2d::ui::Text::create();
+    skewx->setString("skewx[0-90]");
+    skewx->setTouchEnabled(true);
+    listview->pushBackCustomItem(skewx);
+    
+    auto skewy = cocos2d::ui::Text::create();
+    skewy->setString("skewy[0-90]");
+    skewy->setTouchEnabled(true);
+    listview->pushBackCustomItem(skewy);
+    
+    auto expand = cocos2d::ui::Text::create();
+    expand->setString("expand[0-1]");
+    expand->setTouchEnabled(true);
+    listview->pushBackCustomItem(expand);
+    
+    auto radius = cocos2d::ui::Text::create();
+    radius->setString("radius[0-300]");
+    radius->setTouchEnabled(true);
+    listview->pushBackCustomItem(radius);
+    
+    listview->setContentSize(scale->getContentSize() * 5);
+    listview->setCurSelectedIndex(0);
+    listview->setTouchEnabled(true);
+    listview->addEventListener((ui::ListView::ccListViewCallback)CC_CALLBACK_2(LayerRadialGradientTest::listviewCallback, this));
+    listview->setTag(100);
+    
+    return listview;
 }

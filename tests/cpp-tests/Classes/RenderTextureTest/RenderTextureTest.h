@@ -77,7 +77,7 @@ private:
     cocos2d::CustomCommand _renderCmds[4];
     void onBeforeClear();
     void onBeforeStencil();
-    void onBeforDraw();
+    void onBeforeDraw();
     void onAfterDraw();
     
 private:

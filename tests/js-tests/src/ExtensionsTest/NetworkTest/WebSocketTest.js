@@ -107,7 +107,7 @@ var WebSocketTestLayer = cc.Layer.extend({
 
         var self = this;
 
-        this._wsiSendText = new WebSocket("wss://echo.websocket.org", ["protocol2", "protocol1"]);
+        this._wsiSendText = new WebSocket("wss://echo.websocket.org");
         this._wsiSendText.onopen = function(evt) {
              self._sendTextStatus.setString("Opened, url: " + self._wsiSendText.url + ", protocol: " + self._wsiSendText.protocol);
         };
@@ -135,7 +135,7 @@ var WebSocketTestLayer = cc.Layer.extend({
         };
 
 
-       this._wsiSendBinary = new WebSocket("ws://echo.websocket.org", ["protocol3"]);
+       this._wsiSendBinary = new WebSocket("ws://echo.websocket.org");
        this._wsiSendBinary.binaryType = "arraybuffer";
        this._wsiSendBinary.onopen = function(evt) {
            self._sendBinaryStatus.setString("Opened, url: " + self._wsiSendBinary.url + ", protocol: " + self._wsiSendBinary.protocol);

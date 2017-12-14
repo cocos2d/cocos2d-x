@@ -218,6 +218,7 @@ navmesh/CCNavMeshObstacle.cpp \
 navmesh/CCNavMeshUtils.cpp \
 ../external/ConvertUTF/ConvertUTFWrapper.cpp \
 ../external/ConvertUTF/ConvertUTF.c \
+../external/md5/md5.c \
 ../external/tinyxml2/tinyxml2.cpp \
 ../external/unzip/ioapi_mem.cpp \
 ../external/unzip/ioapi.cpp \
@@ -271,6 +272,7 @@ LOCAL_STATIC_LIBRARIES += cocos_tiff_static
 LOCAL_STATIC_LIBRARIES += cocos_webp_static
 LOCAL_STATIC_LIBRARIES += cocos_chipmunk_static
 LOCAL_STATIC_LIBRARIES += cocos_zlib_static
+LOCAL_STATIC_LIBRARIES += cocos_ssl_static
 LOCAL_STATIC_LIBRARIES += recast_static
 LOCAL_STATIC_LIBRARIES += bullet_static
 
@@ -308,6 +310,8 @@ LOCAL_STATIC_LIBRARIES += audioengine_static
 
 include $(BUILD_STATIC_LIBRARY)
 #==============================================================
+$(call import-add-path,$(LOCAL_PATH))
+$(call import-add-path,$(LOCAL_PATH)/../external)
 $(call import-module,android/cpufeatures)
 $(call import-module,freetype2/prebuilt/android)
 $(call import-module,platform/android)
@@ -325,8 +329,8 @@ $(call import-module,editor-support/spine)
 $(call import-module,network)
 $(call import-module,ui)
 $(call import-module,extensions)
-$(call import-module,Box2D)
-$(call import-module,bullet)
+$(call import-module,Box2D/prebuilt/android)
+$(call import-module,bullet/prebuilt/android)
 $(call import-module,recast)
 # $(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)

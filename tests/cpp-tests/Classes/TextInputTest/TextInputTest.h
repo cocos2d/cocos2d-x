@@ -16,7 +16,7 @@ class KeyboardNotificationLayer : public TestCase, public cocos2d::IMEDelegate
 public:
     KeyboardNotificationLayer();
     virtual std::string title() const override;
-    virtual void onClickTrackNode(bool bClicked) = 0;
+    virtual void onClickTrackNode(bool bClicked, const cocos2d::Vec2& touchPos) = 0;
 
     virtual void keyboardWillShow(cocos2d::IMEKeyboardNotificationInfo& info)override;
 
@@ -38,7 +38,7 @@ public:
     CREATE_FUNC(TextFieldTTFDefaultTest);
     // KeyboardNotificationLayer
     virtual std::string subtitle() const override;
-    virtual void onClickTrackNode(bool bClicked) override;
+    virtual void onClickTrackNode(bool bClicked, const cocos2d::Vec2& touchPos) override;
 
     // Layer
     virtual void onEnter() override;
@@ -61,7 +61,7 @@ public:
 
     // KeyboardNotificationLayer
     virtual std::string subtitle() const override;
-    virtual void onClickTrackNode(bool bClicked) override;
+    virtual void onClickTrackNode(bool bClicked, const cocos2d::Vec2& touchPos) override;
 
     // Layer
     virtual void onEnter() override;
@@ -85,6 +85,22 @@ public:
     CREATE_FUNC(TextFieldTTFSecureTextEntryTest);
     
     virtual std::string subtitle() const override;
+    // Layer
+    virtual void onEnter() override;
+};
+
+//////////////////////////////////////////////////////////////////////////
+// TextFieldTTSetCursorFromPoint for test TextFieldTTF setCursorFromPoint.
+//////////////////////////////////////////////////////////////////////////
+
+class TextFieldTTSetCursorFromPoint : public KeyboardNotificationLayer
+{
+public:
+    CREATE_FUNC(TextFieldTTSetCursorFromPoint);
+    // KeyboardNotificationLayer
+    virtual std::string subtitle() const override;
+    virtual void onClickTrackNode(bool bClicked, const cocos2d::Vec2& touchPos) override;
+
     // Layer
     virtual void onEnter() override;
 };

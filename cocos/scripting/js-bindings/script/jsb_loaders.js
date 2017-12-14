@@ -65,13 +65,13 @@ cc.loader.register(["json", "ExportJson"], cc._jsonLoader);
 
 cc._imgLoader = {
     load : function(realUrl, url, res, cb){
-        cc.loader.loadImg(realUrl, function(err, img){
+        cc.loader.loadImg(realUrl, function(err, tex){
             if(err) {
                 cb && cb(err);
                 return;
             }
-            cc.loader.cache[url] = img;
-            cb && cb(null, img);
+            cc.loader.cache[url] = tex;
+            cb && cb(null, tex);
         });
     }
 };

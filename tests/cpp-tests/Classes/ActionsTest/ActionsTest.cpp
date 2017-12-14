@@ -92,6 +92,8 @@ ActionsTests::ActionsTests()
     ADD_TEST_CASE(ActionFloatTest);
     ADD_TEST_CASE(Issue14936_1);
     ADD_TEST_CASE(Issue14936_2);
+    ADD_TEST_CASE(SequenceWithFinalInstant);
+    ADD_TEST_CASE(Issue18003);
 }
 
 std::string ActionsDemo::title() const
@@ -2336,6 +2338,7 @@ void Issue14936_1::onEnter() {
     auto visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
 
     _count = 0;
+
     auto counterLabel = Label::createWithTTF("0", "fonts/Marker Felt.ttf", 16.0f);
     counterLabel->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
     addChild(counterLabel);
@@ -2394,3 +2397,138 @@ std::string ActionFloatTest::subtitle() const
 }
 
 
+
+//------------------------------------------------------------------
+//
+// SequenceWithFinalInstant
+//
+//------------------------------------------------------------------
+void SequenceWithFinalInstant::onEnter()
+{
+    TestCase::onEnter();
+
+    _manager = new cocos2d::ActionManager();
+    
+    _target = cocos2d::Node::create();
+    _target->setActionManager( _manager );
+    _target->retain();
+    _target->onEnter();
+
+    bool called( false );
+    const auto f
+      ( [ &called ]() -> void
+        {
+          cocos2d::log("Callback called.");
+          called = true;
+        } );
+    
+    const auto action =
+      cocos2d::Sequence::create
+      (cocos2d::DelayTime::create(0.05),
+       cocos2d::CallFunc::create(f),
+       nullptr);
+
+    _target->runAction(action);
+    _manager->update(0);
+    _manager->update(0.05 - FLT_EPSILON);
+
+    if ( action->isDone() && !called )
+        assert(false);
+    
+    _manager->update(FLT_EPSILON);
+
+    if ( action->isDone() && !called )
+        assert(false);
+}
+
+void SequenceWithFinalInstant::onExit()
+{
+    TestCase::onExit();
+    _target->onExit();
+    _target->release();
+    _manager->release();
+}
+
+std::string SequenceWithFinalInstant::subtitle() const
+{
+    return "Instant action should not crash";
+}
+
+//------------------------------------------------------------------
+//
+// Issue18003
+//
+//------------------------------------------------------------------
+
+void Issue18003::onEnter()
+{
+    TestCase::onEnter();
+    
+    _manager = new ActionManager();
+    
+    _target = Node::create();
+    _target->setActionManager(_manager);
+    _target->retain();
+    _target->onEnter();
+    
+    // instant action + interval action
+    
+    const auto f
+    ( []() -> void
+     {
+         // do nothing
+     });
+    
+    auto action = Sequence::create(CallFunc::create(f),
+                                   DelayTime::create(1),
+                                   nullptr);
+    
+    _target->runAction(action);
+    _manager->update(0);
+    _manager->update(2);
+    
+    assert(action->isDone());
+    
+    _target->stopAction(action);
+    
+    // instant action + instant action
+    action = Sequence::create(CallFunc::create(f),
+                              CallFunc::create(f),
+                              nullptr);
+    _target->runAction(action);
+    _manager->update(0);
+    _manager->update(1);
+    assert(action->isDone());
+    _target->stopAction(action);
+    
+    // interval action + instant action
+    action = Sequence::create(DelayTime::create(1),
+                              CallFunc::create(f),
+                              nullptr);
+    _target->runAction(action);
+    _manager->update(0);
+    _manager->update(2);
+    assert(action->isDone());
+    _target->stopAction(action);
+    
+    // interval action + interval action
+    action = Sequence::create(DelayTime::create(1), DelayTime::create(1), nullptr);
+    _target->runAction(action);
+    _manager->update(0);
+    _manager->update(3);
+    assert(action->isDone());
+    _target->stopAction(action);
+}
+
+void Issue18003::onExit()
+{
+    TestCase::onExit();
+    _target->onExit();
+    _target->release();
+    _manager->release();
+}
+
+std::string Issue18003::subtitle() const
+{
+    return "issue18003: should not crash";
+}

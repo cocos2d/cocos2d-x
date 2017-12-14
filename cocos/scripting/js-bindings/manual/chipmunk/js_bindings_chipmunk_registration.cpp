@@ -67,6 +67,7 @@ void jsb_register_chipmunk(JSContext* cx, JS::HandleObject object)
     JS_DefineFunction(cx, chipmunk, "momentForSegment", JSB_cpMomentForSegment, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE);
 
     JS::RootedObject space(cx, JSB_cpSpace_object);
+    JS_DefineFunction(cx, space, "segmentQuery", JSB_cpSpace_segmentQuery, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE);
     JS_DefineFunction(cx, space, "segmentQueryFirst", JSB_cpSpace_segmentQueryFirst, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE);
     JS_DefineFunction(cx, space, "pointQueryNearest", JSB_cpSpace_pointQueryNearest, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE);
 

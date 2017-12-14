@@ -480,10 +480,8 @@ char* Properties::trimWhiteSpace(char *str)
         return str;
     }
 
-    char *end;
-
     // Trim leading space.
-    while (isspace(*str))
+    while (*str != '\0' && isspace(*str))
         str++;
 
     // All spaces?
@@ -493,7 +491,7 @@ char* Properties::trimWhiteSpace(char *str)
     }
 
     // Trim trailing space.
-    end = str + strlen(str) - 1;
+    char *end = str + strlen(str) - 1;
     while (end > str && isspace(*end))
         end--;
 

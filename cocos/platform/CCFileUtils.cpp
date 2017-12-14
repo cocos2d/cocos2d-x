@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "platform/CCSAXParser.h"
 //#include "base/ccUtils.h"
 
-#include "tinyxml2.h"
+#include "tinyxml2/tinyxml2.h"
 #ifdef MINIZIP_FROM_SYSTEM
 #include <minizip/unzip.h>
 #else // from our embedded sources
@@ -129,7 +129,7 @@ public:
         return _rootArray;
     }
 
-    void startElement(void *ctx, const char *name, const char **atts)
+    void startElement(void *ctx, const char *name, const char **atts) override
     {
         const std::string sName(name);
         if( sName == "dict" )
@@ -218,7 +218,7 @@ public:
         }
     }
 
-    void endElement(void *ctx, const char *name)
+    void endElement(void *ctx, const char *name) override
     {
         SAXState curState = _stateStack.empty() ? SAX_DICT : _stateStack.top();
         const std::string sName((char*)name);
@@ -859,7 +859,13 @@ std::string FileUtils::fullPathFromRelativeFile(const std::string &filename, con
 
 void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
 {
+    if (_searchResolutionsOrderArray == searchResolutionsOrder)
+    {
+        return;
+    }
+
     bool existDefault = false;
+
     _fullPathCache.clear();
     _searchResolutionsOrderArray.clear();
     for(const auto& iter : searchResolutionsOrder)
@@ -907,41 +913,64 @@ const std::vector<std::string>& FileUtils::getSearchPaths() const
     return _searchPathArray;
 }
 
+const std::vector<std::string>& FileUtils::getOriginalSearchPaths() const
+{
+    return _originalSearchPaths;
+}
+
 void FileUtils::setWritablePath(const std::string& writablePath)
 {
     _writablePath = writablePath;
 }
 
+const std::string& FileUtils::getDefaultResourceRootPath() const
+{
+    return _defaultResRootPath;
+}
+
 void FileUtils::setDefaultResourceRootPath(const std::string& path)
 {
-    _defaultResRootPath = path;
+    if (_defaultResRootPath != path)
+    {
+        _fullPathCache.clear();
+        _defaultResRootPath = path;
+        if (!_defaultResRootPath.empty() && _defaultResRootPath[_defaultResRootPath.length()-1] != '/')
+        {
+            _defaultResRootPath += '/';
+        }
+
+        // Updates search paths
+        setSearchPaths(_originalSearchPaths);
+    }
 }
 
 void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 {
     bool existDefaultRootPath = false;
+    _originalSearchPaths = searchPaths;
 
     _fullPathCache.clear();
     _searchPathArray.clear();
-    for (const auto& iter : searchPaths)
+
+    for (const auto& path : _originalSearchPaths)
     {
         std::string prefix;
-        std::string path;
+        std::string fullPath;
 
-        if (!isAbsolutePath(iter))
+        if (!isAbsolutePath(path))
         { // Not an absolute path
             prefix = _defaultResRootPath;
         }
-        path = prefix + (iter);
+        fullPath = prefix + path;
         if (!path.empty() && path[path.length()-1] != '/')
         {
-            path += "/";
+            fullPath += "/";
         }
         if (!existDefaultRootPath && path == _defaultResRootPath)
         {
             existDefaultRootPath = true;
         }
-        _searchPathArray.push_back(path);
+        _searchPathArray.push_back(fullPath);
     }
 
     if (!existDefaultRootPath)
@@ -962,9 +991,12 @@ void FileUtils::addSearchPath(const std::string &searchpath,const bool front)
     {
         path += "/";
     }
+
     if (front) {
+        _originalSearchPaths.insert(_originalSearchPaths.begin(), searchpath);
         _searchPathArray.insert(_searchPathArray.begin(), path);
     } else {
+        _originalSearchPaths.push_back(searchpath);
         _searchPathArray.push_back(path);
     }
 }
@@ -1126,6 +1158,24 @@ void FileUtils::getFileSize(const std::string &filepath, std::function<void(long
     }, std::move(callback));
 }
 
+void FileUtils::listFilesAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const
+{
+    auto fullPath = fullPathForFilename(dirPath);
+    performOperationOffthread([fullPath]() {
+        return FileUtils::getInstance()->listFiles(fullPath);
+    }, std::move(callback));
+}
+
+void FileUtils::listFilesRecursivelyAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const
+{
+    auto fullPath = fullPathForFilename(dirPath);
+    performOperationOffthread([fullPath]() {
+        std::vector<std::string> retval;
+        FileUtils::getInstance()->listFilesRecursively(fullPath, &retval);
+        return retval;
+    }, std::move(callback));
+}
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 // windows os implement should override in platform specific FileUtiles class
 bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
@@ -1176,11 +1226,29 @@ long FileUtils::getFileSize(const std::string &filepath)
     return 0;
 }
 
+std::vector<std::string> FileUtils::listFiles(const std::string& dirPath) const
+{
+    CCASSERT(false, "FileUtils not support listFiles");
+    return std::vector<std::string>();
+}
+
+void FileUtils::listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const
+{
+    CCASSERT(false, "FileUtils not support listFilesRecursively");
+    return;
+}
+
 #else
+#include "tinydir/tinydir.h"
 // default implements for unix like os
 #include <sys/types.h>
 #include <errno.h>
 #include <dirent.h>
+
+// android doesn't have ftw.h
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+#include <ftw.h>
+#endif
 
 bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
 {
@@ -1255,8 +1323,31 @@ bool FileUtils::createDirectory(const std::string& path)
     return true;
 }
 
+namespace
+{
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+    int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf)
+    {
+        int rv = remove(fpath);
+        
+        if (rv)
+            perror(fpath);
+        
+        return rv;
+    }
+#endif
+}
+
 bool FileUtils::removeDirectory(const std::string& path)
 {
+#if !defined(CC_TARGET_OS_TVOS)
+
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+    if (nftw(path.c_str(), unlink_cb, 64, FTW_DEPTH | FTW_PHYS) == -1)
+        return false;
+    else
+        return true;
+#else
     std::string command = "rm -r ";
     // Path may include space.
     command += "\"" + path + "\"";
@@ -1264,6 +1355,11 @@ bool FileUtils::removeDirectory(const std::string& path)
         return true;
     else
         return false;
+#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+
+#else
+    return false;
+#endif // !defined(CC_TARGET_OS_TVOS)
 }
 
 bool FileUtils::removeFile(const std::string &path)
@@ -1304,7 +1400,6 @@ std::string FileUtils::getSuitableFOpen(const std::string& filenameUtf8) const
     return filenameUtf8;
 }
 
-
 long FileUtils::getFileSize(const std::string &filepath)
 {
     CCASSERT(!filepath.empty(), "Invalid path");
@@ -1332,6 +1427,92 @@ long FileUtils::getFileSize(const std::string &filepath)
         return (long)(info.st_size);
     }
 }
+
+std::vector<std::string> FileUtils::listFiles(const std::string& dirPath) const
+{
+    std::vector<std::string> files;
+    std::string fullpath = fullPathForFilename(dirPath);
+    if (isDirectoryExist(fullpath))
+    {
+        tinydir_dir dir;
+        std::string fullpathstr = fullpath;
+
+        if (tinydir_open(&dir, &fullpathstr[0]) != -1)
+        {
+            while (dir.has_next)
+            {
+                tinydir_file file;
+                if (tinydir_readfile(&dir, &file) == -1)
+                {
+                    // Error getting file
+                    break;
+                }
+                std::string filepath = file.path;
+
+                if (file.is_dir)
+                {
+                    filepath.append("/");
+                }
+                files.push_back(filepath);
+
+                if (tinydir_next(&dir) == -1)
+                {
+                    // Error getting next file
+                    break;
+                }
+            }
+        }
+        tinydir_close(&dir);
+    }
+    return files;
+}
+
+void FileUtils::listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const
+{
+    std::string fullpath = fullPathForFilename(dirPath);
+    if (isDirectoryExist(fullpath))
+    {
+        tinydir_dir dir;
+        std::string fullpathstr = fullpath;
+
+        if (tinydir_open(&dir, &fullpathstr[0]) != -1)
+        {
+            while (dir.has_next)
+            {
+                tinydir_file file;
+                if (tinydir_readfile(&dir, &file) == -1)
+                {
+                    // Error getting file
+                    break;
+                }
+                std::string fileName = file.name;
+
+                if (fileName != "." && fileName != "..")
+                {
+                    std::string filepath = file.path;
+                    if (file.is_dir)
+                    {
+                        filepath.append("/");
+                        files->push_back(filepath);
+                        listFilesRecursively(filepath, files);
+                    }
+                    else
+                    {
+                        files->push_back(filepath);
+                    }
+                }
+
+                if (tinydir_next(&dir) == -1)
+                {
+                    // Error getting next file
+                    break;
+                }
+            }
+        }
+        tinydir_close(&dir);
+    }
+}
+
 #endif
 
 //////////////////////////////////////////////////////////////////////////

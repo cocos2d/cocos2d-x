@@ -123,6 +123,16 @@ public:
     CREATE_FUNC(UILayoutTest_Layout_Relative_Location);
 };
 
+class UILayoutTest_Layout_Scaled_Widget : public UIScene
+{
+public:
+    UILayoutTest_Layout_Scaled_Widget();
+    ~UILayoutTest_Layout_Scaled_Widget();
+    virtual bool init() override;
+    
+    CREATE_FUNC(UILayoutTest_Layout_Scaled_Widget);
+};
+
 class UILayoutComponentTest : public UIScene
 {
 public:

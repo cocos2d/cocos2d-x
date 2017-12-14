@@ -389,7 +389,7 @@ Data UserDefault::getDataForKey(const char* pKey, const Data& defaultValue)
     if (encodedDefaultData)
         free(encodedDefaultData);
 
-    CCLOG("ENCODED STRING: --%s--%d", encodedStr.c_str(), encodedStr.length());
+    CCLOG("ENCODED STRING: --%s--%d", encodedStr.c_str(), (int)encodedStr.length());
 
     unsigned char * decodedData = NULL;
     int decodedDataLen = base64Decode((unsigned char*)encodedStr.c_str(), (unsigned int)encodedStr.length(), &decodedData);

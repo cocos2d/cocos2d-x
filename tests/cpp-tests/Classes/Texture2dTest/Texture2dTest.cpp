@@ -2012,18 +2012,6 @@ void TexturePVRv3Premult::transformSprite(cocos2d::Sprite *sprite)
 }
 
 // Implementation of ETC1
-
-/*
-class TextureETC1 : public TextureDemo
-{
-public:
-    TextureETC1();
-    
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-};
- */
-
 TextureETC1::TextureETC1()
 {
     auto sprite = Sprite::create("Images/ETC1.pkm");
@@ -2041,7 +2029,46 @@ std::string TextureETC1::title() const
 
 std::string TextureETC1::subtitle() const
 {
-    return "only supported on android";
+    bool isSupportETCHardwareDecode = Configuration::getInstance()->supportsETC();
+    Application::Platform platform = Application::getInstance()->getTargetPlatform();
+    std::string ret;
+
+    static std::unordered_map<int, const char*> platformMap = {
+        {(int)Application::Platform::OS_WINDOWS, "Windows"},
+        {(int)Application::Platform::OS_LINUX, "Linux"},
+        {(int)Application::Platform::OS_MAC, "macOS"},
+        {(int)Application::Platform::OS_ANDROID, "Android"},
+        {(int)Application::Platform::OS_IPHONE, "iPhone"},
+        {(int)Application::Platform::OS_IPAD, "iPad"},
+        {(int)Application::Platform::OS_BLACKBERRY, "BlackBerry"},
+        {(int)Application::Platform::OS_NACL, "NativeClient"},
+        {(int)Application::Platform::OS_EMSCRIPTEN, "Emscripten"},
+        {(int)Application::Platform::OS_TIZEN, "Tizen"},
+        {(int)Application::Platform::OS_WINRT, "WinRT"},
+        {(int)Application::Platform::OS_WP8, "Windows Phone 8"}
+    };
+
+    if (isSupportETCHardwareDecode)
+    {
+        ret += "Hardware decode ETC1 on ";
+
+    }
+    else
+    {
+        ret += "Software decode ETC1 on ";
+    }
+
+    auto iter = platformMap.find((int)platform);
+    if (iter != platformMap.end())
+    {
+        ret += iter->second;
+    }
+    else
+    {
+        ret += "Unknown Platform";
+    }
+
+    return ret;
 }
 
 //Implement of S3TC Dxt1

@@ -138,7 +138,7 @@ var UITextTest_TTF = UIMainLayer.extend({
 });
 
 //2015-01-14
-var UITextTest_IgnoreConentSize = UIMainLayer.extend({
+var UITextTest_IgnoreContentSize = UIMainLayer.extend({
 
     init: function(){
         if(this._super()){

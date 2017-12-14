@@ -72,6 +72,7 @@ public:
     void uncacheAll();
     void preload(const std::string& filePath, const std::function<void(bool)>& callback);
 
+    void setAudioFocusForAllPlayers(bool isFocus);
 private:
 
     void onEnterBackground(EventCustom* event);
@@ -89,7 +90,7 @@ private:
     std::unordered_map<int, std::function<void (int, const std::string &)>> _callbackMap;
 
     // UrlAudioPlayers which need to resumed while entering foreground
-    std::vector<IAudioPlayer*> _urlAudioPlayersNeedResume;
+    std::unordered_map<int, IAudioPlayer*> _urlAudioPlayersNeedResume;
 
     AudioPlayerProvider* _audioPlayerProvider;
     EventListener* _onPauseListener;

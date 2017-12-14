@@ -10,7 +10,7 @@ UITextTests::UITextTests()
     ADD_TEST_CASE(UITextTest_LineWrap);
     ADD_TEST_CASE(UILabelTest_Effect);
     ADD_TEST_CASE(UITextTest_TTF);
-    ADD_TEST_CASE(UITextTest_IgnoreConentSize);
+    ADD_TEST_CASE(UITextTest_IgnoreContentSize);
     ADD_TEST_CASE(UITextTest_Clone);
     ADD_TEST_CASE(Issue16073Test);
 }
@@ -220,9 +220,9 @@ bool UITextTest_TTF::init()
     return false;
 }
 
-// UITextTest_IgnoreConentSize
+// UITextTest_IgnoreContentSize
 
-bool UITextTest_IgnoreConentSize::init()
+bool UITextTest_IgnoreContentSize::init()
 {
     if (UIScene::init())
     {
@@ -266,7 +266,7 @@ bool UITextTest_IgnoreConentSize::init()
     return false;
 }
 
-// UITextTest_IgnoreConentSize
+// UITextTest_IgnoreContentSize
 
 bool UITextTest_Clone::init()
 {

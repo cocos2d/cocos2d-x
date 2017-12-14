@@ -55,6 +55,13 @@ public:
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
+class ParseUriTest : public UnitTestDemo
+{
+public:
+    CREATE_FUNC(ParseUriTest);
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
 
 class MathUtilTest : public UnitTestDemo
 {
@@ -63,5 +70,14 @@ public:
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
+
+class ResizableBufferAdapterTest : public UnitTestDemo
+{
+public:
+    CREATE_FUNC(ResizableBufferAdapterTest);
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
 
 #endif /* __UNIT_TEST__ */

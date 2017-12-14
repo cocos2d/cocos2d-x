@@ -104,13 +104,16 @@ local function RenderTextureSave()
     -- Save Image menu
     cc.MenuItemFont:setFontSize(16)
     local item1 = cc.MenuItemFont:create("Save Image")
+    item1:setAnchorPoint(1, 1)
+    item1:setPosition(VisibleRect:rightTop().x, VisibleRect:rightTop().y)
     item1:registerScriptTapHandler(saveImage)
     local item2 = cc.MenuItemFont:create("Clear")
+    item2:setAnchorPoint(1, 1)
+    item2:setPosition(VisibleRect:rightTop().x, VisibleRect:rightTop().y - item1:getContentSize().height)
     item2:registerScriptTapHandler(clearImage)
     local menu = cc.Menu:create(item1, item2)
     ret:addChild(menu)
-    menu:alignItemsVertically()
-    menu:setPosition(cc.p(VisibleRect:rightTop().x - 80, VisibleRect:rightTop().y - 30))
+    menu:setPosition(0, 0)
     return ret
 end
 
@@ -522,7 +525,7 @@ end
 -- int diff = offsetof( V3F_C4B_T2F, vertices)
 -- glVertexAttribPointer(kcc.VertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff))
 
--- -- texCoods
+-- -- texCoords
 -- diff = offsetof( V3F_C4B_T2F, texCoords)
 -- glVertexAttribPointer(kcc.VertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff))
 

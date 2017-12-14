@@ -337,15 +337,12 @@ Offset<NodeTree> FlatBuffersSerialize::createNodeTree(const tinyxml2::XMLElement
     if (classname == "ProjectNode")
     {
         auto reader = ProjectNodeReader::getInstance();
-        auto tempOptions = reader->createOptionsWithFlatBuffers(objectData, _builder);
-        
-        options = CreateOptions(*_builder, *(Offset<WidgetOptions>*)(&tempOptions));
+        options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
     }
     else if (classname == "SimpleAudio")
     {
         auto reader = ComAudioReader::getInstance();
-        auto tempOptions = reader->createOptionsWithFlatBuffers(objectData, _builder);
-        options = CreateOptions(*_builder, *(Offset<WidgetOptions>*)(&tempOptions));
+        options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
     }
     else
     {
@@ -355,8 +352,7 @@ Offset<NodeTree> FlatBuffersSerialize::createNodeTree(const tinyxml2::XMLElement
         NodeReaderProtocol* reader = dynamic_cast<NodeReaderProtocol*>(ObjectFactory::getInstance()->createObject(readername));
         if (reader != nullptr)
         {
-            auto tempOptions = reader->createOptionsWithFlatBuffers(objectData, _builder);
-            options = CreateOptions(*_builder, *(Offset<WidgetOptions>*)(&tempOptions));
+            options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
         }
     }
     
@@ -1426,14 +1422,12 @@ Offset<NodeTree> FlatBuffersSerialize::createNodeTreeForSimulator(const tinyxml2
     if (classname == "ProjectNode")
     {
         auto projectNodeOptions = createProjectNodeOptionsForSimulator(objectData);
-        options = CreateOptions(*_builder, *(Offset<WidgetOptions>*)(&projectNodeOptions));
+        options = CreateOptions(*_builder, *(Offset<Table>*)(&projectNodeOptions));
     }
     else if (classname == "SimpleAudio")
     {
         auto reader = ComAudioReader::getInstance();
-        auto tempOptions = reader->createOptionsWithFlatBuffers(objectData, _builder);
-        
-        options = CreateOptions(*_builder, *(Offset<WidgetOptions>*)(&tempOptions));
+        options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
     }
     else
     {
@@ -1443,9 +1437,7 @@ Offset<NodeTree> FlatBuffersSerialize::createNodeTreeForSimulator(const tinyxml2
         NodeReaderProtocol* reader = dynamic_cast<NodeReaderProtocol*>(ObjectFactory::getInstance()->createObject(readername));
         if (reader != nullptr)
         {
-            auto tempOptions = reader->createOptionsWithFlatBuffers(objectData, _builder);
-            
-            options = CreateOptions(*_builder, *(Offset<WidgetOptions>*)(&tempOptions));
+            options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
         }
     }
     

@@ -55,7 +55,7 @@ struct CC_DLL Particle3D
     float depth;//Own depth
     
     //user defined property
-    std::map<std::string, void*> userDefs;
+    std::unordered_map<std::string, void*> userDefs;
 };
 
 template<typename T>

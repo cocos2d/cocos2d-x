@@ -236,6 +236,7 @@ bool Camera::initPerspective(float fieldOfView, float aspectRatio, float nearPla
     Mat4::createPerspective(_fieldOfView, _aspectRatio, _nearPlane, _farPlane, &_projection);
     _viewProjectionDirty = true;
     _frustumDirty = true;
+    _type = Type::PERSPECTIVE;
     
     return true;
 }
@@ -249,6 +250,7 @@ bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float f
     Mat4::createOrthographicOffCenter(0, _zoom[0], 0, _zoom[1], _nearPlane, _farPlane, &_projection);
     _viewProjectionDirty = true;
     _frustumDirty = true;
+    _type = Type::ORTHOGRAPHIC;
     
     return true;
 }

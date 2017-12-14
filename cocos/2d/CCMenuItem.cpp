@@ -474,7 +474,10 @@ void MenuItemSprite::setNormalImage(Node* image)
         }
 
         _normalImage = image;
-        this->setContentSize(_normalImage->getContentSize());
+        if (_normalImage != nullptr)
+        {
+            this->setContentSize(_normalImage->getContentSize());
+        }
         this->updateImagesVisibility();
     }
 }

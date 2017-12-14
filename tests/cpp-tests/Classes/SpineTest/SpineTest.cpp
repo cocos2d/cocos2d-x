@@ -42,19 +42,15 @@ using namespace spine;
 SpineTests::SpineTests()
 {
     ADD_TEST_CASE(BatchingExample);
+    ADD_TEST_CASE(CoinExample);
     ADD_TEST_CASE(GoblinsExample);
-    ADD_TEST_CASE(GoblinsExampleBinary);
     ADD_TEST_CASE(RaptorExample);
-    ADD_TEST_CASE(RaptorExampleBinary);
     ADD_TEST_CASE(SpineboyExample);
-    ADD_TEST_CASE(SpineboyExampleBinary);
     ADD_TEST_CASE(TankExample);
-    ADD_TEST_CASE(TankExampleBinary);
 }
 
 SpineTestLayer::SpineTestLayer()
 : _title("")
-, _useBinary(false)
 {}
 
 std::string SpineTestLayer::title() const
@@ -79,7 +75,7 @@ bool BatchingExample::init () {
     // Load the skeleton data.
     spSkeletonJson* json = spSkeletonJson_createWithLoader(_attachmentLoader);
     json->scale = 0.6f; // Resizes skeleton data to 60% of the size it was in Spine.
-    _skeletonData = spSkeletonJson_readSkeletonDataFile(json, "spine/spineboy.json");
+    _skeletonData = spSkeletonJson_readSkeletonDataFile(json, "spine/spineboy-ess.json");
     CCASSERT(_skeletonData, json->error ? json->error : "Error reading skeleton data file.");
     spSkeletonJson_dispose(json);
     
@@ -103,6 +99,7 @@ bool BatchingExample::init () {
                                        RandomHelper::random_int(xMin, xMax),
                                        RandomHelper::random_int(yMin, yMax)
                                        ));
+        skeletonNode->setScale(0.8);
         addChild(skeletonNode);
     }
     
@@ -118,35 +115,37 @@ BatchingExample::~BatchingExample () {
     spAtlas_dispose(_atlas);
 }
 
+// CoinExample
+
+bool CoinExample::init () {
+    if (!SpineTestLayer::init()) return false;
+    
+    _title = "CoinExample";
+    
+    skeletonNode = SkeletonAnimation::createWithJsonFile("spine/coin-pro.json", "spine/coin.atlas", 1.f);
+    skeletonNode->setAnimation(0, "rotate", true);
+    
+    skeletonNode->setPosition(Vec2(_contentSize.width / 2, 100));
+    addChild(skeletonNode);
+    
+    return true;
+}
+
 // GoblinsExample
 
 bool GoblinsExample::init () {
     if (!SpineTestLayer::init()) return false;
     
-    if (_useBinary)
-    {
-        _title = "GoblinsExampleBinary";
-        skeletonNode = SkeletonAnimation::createWithBinaryFile("spine/goblins.skel", "spine/goblins.atlas", 1.5f);
-    }
-    else
-    {
-        _title = "GoblinsExample";
-        skeletonNode = SkeletonAnimation::createWithJsonFile("spine/goblins_mesh.json", "spine/goblins.atlas", 1.5f);
-    }
+    _title = "GoblinsExample";
+    
+    skeletonNode = SkeletonAnimation::createWithJsonFile("spine/goblins-pro.json", "spine/goblins.atlas", 1.5f);
     skeletonNode->setAnimation(0, "walk", true);
     skeletonNode->setSkin("goblin");
     
     skeletonNode->setPosition(Vec2(_contentSize.width / 2, 20));
+    skeletonNode->setScale(0.6);
     addChild(skeletonNode);
     return true;
-}
-
-// GoblinsExampleBinary
-
-bool GoblinsExampleBinary::init()
-{
-    _useBinary = true;
-    return GoblinsExample::init();
 }
 
 // RaptorExample
@@ -154,33 +153,17 @@ bool GoblinsExampleBinary::init()
 bool RaptorExample::init () {
     if (!SpineTestLayer::init()) return false;
     
-    if (_useBinary)
-    {
-        _title = _title = "RaptorExampleBinary";
-        skeletonNode = SkeletonAnimation::createWithBinaryFile("spine/raptor.skel", "spine/raptor.atlas", 0.5f);
-    }
-    else
-    {
-        _title = "RaptorExample";
-        skeletonNode = SkeletonAnimation::createWithJsonFile("spine/raptor.json", "spine/raptor.atlas", 0.5f);
-    }
+    _title = "RaptorExample";
+    skeletonNode = SkeletonAnimation::createWithJsonFile("spine/raptor-pro.json", "spine/raptor.atlas", 0.5f);
     
     skeletonNode->setAnimation(0, "walk", true);
     skeletonNode->setAnimation(1, "empty", false);
     skeletonNode->addAnimation(1, "gungrab", false, 2);
     
     skeletonNode->setPosition(Vec2(_contentSize.width / 2, 20));
+    skeletonNode->setScale(0.6);
     addChild(skeletonNode);
     return true;
-}
-
-// RaptorExampleBinary
-
-bool RaptorExampleBinary::init()
-{
-    _useBinary = true;
-    
-    return RaptorExample::init();
 }
 
 // SpineboyExample
@@ -188,17 +171,8 @@ bool RaptorExampleBinary::init()
 bool SpineboyExample::init () {
     if (!SpineTestLayer::init()) return false;
     
-    if (_useBinary)
-    {
-        _title = "SpineboyExampleBinary";
-        skeletonNode = SkeletonAnimation::createWithBinaryFile("spine/spineboy.skel", "spine/spineboy.atlas", 0.6f);
-    }
-    else
-    {
-        _title = "SpineboyExample";
-        skeletonNode = SkeletonAnimation::createWithJsonFile("spine/spineboy.json", "spine/spineboy.atlas", 0.6f);
-    }
-    
+    _title = "SpineboyExample";
+    skeletonNode = SkeletonAnimation::createWithJsonFile("spine/spineboy-ess.json", "spine/spineboy.atlas", 0.6f);
     skeletonNode->setStartListener( [] (spTrackEntry* entry) {
         log("%d start: %s", entry->trackIndex, entry->animation->name);
     });
@@ -232,6 +206,7 @@ bool SpineboyExample::init () {
     // skeletonNode->runAction(RepeatForever::create(Sequence::create(FadeOut::create(1), FadeIn::create(1), DelayTime::create(5), NULL)));
     
     skeletonNode->setPosition(Vec2(_contentSize.width / 2, 20));
+    skeletonNode->setScale(0.8);
     addChild(skeletonNode);
     
     scheduleUpdate();
@@ -244,40 +219,18 @@ void SpineboyExample::update (float deltaTime) {
     // Director::getInstance()->replaceScene(SpineboyExample::scene());
 }
 
-// SpineboyExampleBinary
-
-bool SpineboyExampleBinary::init()
-{
-    _useBinary = true;
-    return SpineboyExample::init();
-}
-
 // TankExample
 
 bool TankExample::init () {
     if (!SpineTestLayer::init()) return false;
     
-    if (_useBinary)
-    {
-        _title = "TankExampleBinary";
-        skeletonNode = SkeletonAnimation::createWithBinaryFile("spine/tank.skel", "spine/tank.atlas", 0.5f);
-    }
-    else
-    {
-        _title = "TankExample";
-        skeletonNode = SkeletonAnimation::createWithJsonFile("spine/tank.json", "spine/tank.atlas", 0.5f);
-    }
+    _title = "TankExample";
+    skeletonNode = SkeletonAnimation::createWithJsonFile("spine/tank-pro.json", "spine/tank.atlas", 0.5f);
     skeletonNode->setAnimation(0, "drive", true);
     
     skeletonNode->setPosition(Vec2(_contentSize.width / 2 + 400, 20));
+    skeletonNode->setScale(0.8);
     addChild(skeletonNode);
     
     return true;
-}
-
-// TankExampleBinary
-bool TankExampleBinary::init()
-{
-    _useBinary = true;
-    return TankExample::init();
 }

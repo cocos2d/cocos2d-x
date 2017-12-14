@@ -68,6 +68,8 @@ public:
 
     virtual float getVolume() const override;
 
+    virtual void setAudioFocus(bool isFocus) override;
+
     virtual void setLoop(bool isLoop) override;
 
     virtual bool isLoop() const override;
@@ -97,6 +99,8 @@ private:
 
     void playEventCallback(SLPlayItf caller, SLuint32 playEvent);
 
+    void setVolumeToSLPlayer(float volume);
+
 private:
     SLEngineItf _engineItf;
     SLObjectItf _outputMixObj;
@@ -115,6 +119,7 @@ private:
     float _volume;
     float _duration;
     bool _isLoop;
+    bool _isAudioFocus;
     State _state;
 
     PlayEventCallback _playEventCallback;

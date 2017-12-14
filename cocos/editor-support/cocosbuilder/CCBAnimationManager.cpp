@@ -724,7 +724,7 @@ Sequence*  CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* chann
         auto& keyVal = keyframe->getValue().asValueVector();
         std::string soundFile = keyVal[0].asString();
     
-        float pitch, pan, gain;
+        float pitch = 0.0f, pan = 0.0f, gain = 0.0f;
         ss << keyVal[1].asString();
         ss >> pitch;
         ss.flush();

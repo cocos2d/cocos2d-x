@@ -184,9 +184,9 @@ function Sprite3DWithSkinTest.addNewSpriteWithCoords(parent,x,y)
         end
         animate:setTag(110)
         animate:setQuality(Sprite3DWithSkinTest._animateQuality)
-        local repeat = cc.RepeatForever:create(animate)
-        repeat:setTag(110)
-        sprite:runAction(repeat)
+        local repeatAction = cc.RepeatForever:create(animate)
+        repeatAction:setTag(110)
+        sprite:runAction(repeatAction)
     end
 end
 

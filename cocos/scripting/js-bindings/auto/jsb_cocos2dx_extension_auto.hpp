@@ -248,7 +248,7 @@ bool js_cocos2dx_extension_ScrollView_setZoomScaleInDuration(JSContext *cx, uint
 bool js_cocos2dx_extension_ScrollView_updateTweenAction(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_setMaxScale(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_hasVisibleParents(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_extension_ScrollView_getDirection(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_ScrollView_setSwallowTouches(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_getContainer(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_setMinScale(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_getZoomScale(JSContext *cx, uint32_t argc, jsval *vp);
@@ -272,6 +272,7 @@ bool js_cocos2dx_extension_ScrollView_setBounceable(JSContext *cx, uint32_t argc
 bool js_cocos2dx_extension_ScrollView_isTouchMoved(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_isNodeVisible(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_minContainerOffset(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_ScrollView_getDirection(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_setZoomScale(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_ScrollView_ScrollView(JSContext *cx, uint32_t argc, jsval *vp);
@@ -350,9 +351,13 @@ void js_cocos2dx_extension_AssetsManagerEx_finalize(JSContext *cx, JSObject *obj
 void js_register_cocos2dx_extension_AssetsManagerEx(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx_extension(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_extension_AssetsManagerEx_getState(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManagerEx_getMaxConcurrentTask(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_AssetsManagerEx_checkUpdate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManagerEx_setVerifyCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_AssetsManagerEx_getStoragePath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_AssetsManagerEx_update(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManagerEx_setVersionCompareHandle(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_extension_AssetsManagerEx_setMaxConcurrentTask(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_AssetsManagerEx_getLocalManifest(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_AssetsManagerEx_getRemoteManifest(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_extension_AssetsManagerEx_downloadFailedAssets(JSContext *cx, uint32_t argc, jsval *vp);

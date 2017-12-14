@@ -17,7 +17,7 @@
 -- js NA
 -- @function [parent=#Director] pushProjectionMatrix 
 -- @param self
--- @param #unsigned long index
+-- @param #unsigned int index
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
@@ -26,7 +26,7 @@
 -- js NA
 -- @function [parent=#Director] popProjectionMatrix 
 -- @param self
--- @param #unsigned long index
+-- @param #unsigned int index
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
@@ -44,7 +44,7 @@
 -- js NA
 -- @function [parent=#Director] loadProjectionIdentityMatrix 
 -- @param self
--- @param #unsigned long index
+-- @param #unsigned int index
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
@@ -56,6 +56,12 @@
 -- @param self
 -- @param #float scaleFactor
 -- @return Director#Director self (return value: cc.Director)
+        
+--------------------------------
+-- 
+-- @function [parent=#Director] getDeltaTime 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- Gets content scale factor.<br>
@@ -71,10 +77,10 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- 
--- @function [parent=#Director] getDeltaTime 
+-- Returns safe area rectangle of the OpenGL view in points.
+-- @function [parent=#Director] getSafeAreaRect 
 -- @param self
--- @return float#float ret (return value: float)
+-- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
 --  Sets the OpenGL default values.<br>
@@ -155,11 +161,13 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- 
--- @function [parent=#Director] mainLoop 
+-- @overload self, float         
+-- @overload self         
+-- @function [parent=#Director] mainLoop
 -- @param self
+-- @param #float dt
 -- @return Director#Director self (return value: cc.Director)
-        
+
 --------------------------------
 --  Enables/disables OpenGL depth test. 
 -- @function [parent=#Director] setDepthTest 
@@ -231,7 +239,7 @@
 -- @function [parent=#Director] multiplyProjectionMatrix 
 -- @param self
 -- @param #mat4_table mat
--- @param #unsigned long index
+-- @param #unsigned int index
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
@@ -472,7 +480,7 @@
 -- @function [parent=#Director] loadProjectionMatrix 
 -- @param self
 -- @param #mat4_table mat
--- @param #unsigned long index
+-- @param #unsigned int index
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
@@ -481,7 +489,7 @@
 -- js NA
 -- @function [parent=#Director] initProjectionMatrixStack 
 -- @param self
--- @param #unsigned long stackCount
+-- @param #unsigned int stackCount
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------

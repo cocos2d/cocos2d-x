@@ -16,7 +16,7 @@ function SpineTestLayerNormal:ctor()
 end
 
 function SpineTestLayerNormal:init()
-  local skeletonNode = sp.SkeletonAnimation:create("spine/spineboy.json", "spine/spineboy.atlas", 0.6)
+  local skeletonNode = sp.SkeletonAnimation:create("spine/spineboy-ess.json", "spine/spineboy.atlas", 0.6)
   skeletonNode:setScale(0.5)
 
   skeletonNode:registerSpineEventHandler(function (event)
@@ -98,7 +98,7 @@ function SpineTestLayerFFD:ctor()
 end
 
 function SpineTestLayerFFD:init()
-  skeletonNode = sp.SkeletonAnimation:create("spine/goblins_mesh.json", "spine/goblins.atlas", 1.5)
+  skeletonNode = sp.SkeletonAnimation:create("spine/goblins-pro.json", "spine/goblins.atlas", 1.5)
   skeletonNode:setAnimation(0, "walk", true)
   skeletonNode:setSkin("goblin")
     

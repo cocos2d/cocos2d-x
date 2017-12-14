@@ -6,7 +6,7 @@
     <link rel="icon" type="image/GIF" href="res/favicon.ico"/>
 
     <meta name="viewport"
-        content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1,target-densitydpi=device-dpi"/>
+        content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1"/>
 
     <!--https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html-->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -90,25 +90,6 @@ canvas {
 <body>
 <script src="res/loading.js"></script>
 <canvas id="gameCanvas" width="480" height="720"></canvas>
-<script>
-    (function () {
-        var nav = window.navigator;
-        var ua = nav.userAgent.toLowerCase();
-        var uaResult = /android (\d+(?:\.\d+)+)/i.exec(ua) || /android (\d+(?:\.\d+)+)/i.exec(nav.platform);
-        if (uaResult) {
-            var browserCheck = ua.match(/(qzone|micromessenger|qq)(mobile)?(browser)?\/?([\d.]+)/i);
-            if (browserCheck) {
-                var browserVersion = parseFloat(browserCheck[4] || 0);
-                if (browserVersion < 6.2) {
-                    var gameCanvas = document.getElementById("gameCanvas");
-                    var ctx = gameCanvas.getContext('2d');
-                    ctx.fillStyle = '#000000';
-                    ctx.fillRect(0, 0, 1, 1);
-                }
-            }
-        }
-    })();
-</script>
 <script src="frameworks/cocos2d-html5/CCBoot.js"></script>
 <script cocos src="main.js"></script>
 </body>

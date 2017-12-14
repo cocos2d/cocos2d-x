@@ -236,7 +236,7 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
 {
     //the offset use to translating texture
     _cylinder_texture_offset = 0;
-    _shining_duraion = 0;
+    _shining_duration = 0;
     Size visibleSize = Director::getInstance()->getVisibleSize();
 
     //use custom camera
@@ -299,18 +299,18 @@ void Sprite3DUVAnimationTest::cylinderUpdate(float dt)
     _cylinder_texture_offset = (_cylinder_texture_offset >1) ? 0 : _cylinder_texture_offset;
     if(fade_in)
     {
-        _shining_duraion += 0.5*dt;
-        if(_shining_duraion>1) fade_in = false;
+        _shining_duration += 0.5 * dt;
+        if (_shining_duration > 1) fade_in = false;
     }
     else
     {
-        _shining_duraion -= 0.5*dt;
-        if(_shining_duraion<0) fade_in = true;
+        _shining_duration -= 0.5 * dt;
+        if (_shining_duration < 0) fade_in = true;
     }
 
     //pass the result to shader
     _state->setUniformFloat("offset",_cylinder_texture_offset);
-    _state->setUniformFloat("duration",_shining_duraion);
+    _state->setUniformFloat("duration", _shining_duration);
 }
 
 //------------------------------------------------------------------
@@ -896,7 +896,7 @@ Sprite3DWithSkinTest::Sprite3DWithSkinTest()
     listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithSkinTest::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
-    // swich animation quality. In fact, you can set the sprite3d out of frustum to Animate3DQuality::QUALITY_NONE, it can save a lot of cpu time
+    // switch animation quality. In fact, you can set the sprite3d out of frustum to Animate3DQuality::QUALITY_NONE, it can save a lot of cpu time
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(15);
     _animateQuality = (int)Animate3DQuality::QUALITY_LOW;
@@ -950,9 +950,9 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
         animate->setSpeed(inverse ? -speed : speed);
         animate->setTag(110);
         animate->setQuality((Animate3DQuality)_animateQuality);
-        auto repeate = RepeatForever::create(animate);
-        repeate->setTag(110);
-        sprite->runAction(repeate);
+        auto repeat = RepeatForever::create(animate);
+        repeat->setTag(110);
+        sprite->runAction(repeat);
     }
 }
 
@@ -2547,24 +2547,6 @@ Sprite3DNormalMappingTest::Sprite3DNormalMappingTest()
         addChild(sprite);
     }
 
-    float radius = 100.0;
-
-    PointLight* light = PointLight::create(Vec3(0.0, 0.0, 0.0), Color3B(255, 255, 255), 1000);
-    light->runAction(RepeatForever::create(Sequence::create(CallFuncN::create([radius](Node *node){
-        static float angle = 0.0;
-        static bool reverseDir = false;
-        node->setPosition3D(Vec3(radius * cos(angle), 0.0f, radius * sin(angle)));
-        if (reverseDir){
-            angle -= 0.01f;
-            if (angle < 0.0)
-                reverseDir = false;
-        }
-        else{
-            angle += 0.01f;
-            if (3.14159 < angle)
-                reverseDir = true;
-        }
-    }), nullptr)));
     //setup camera
     auto camera = Camera::createPerspective(60.0, s.width / s.height, 1.0f, 1000.f);
     camera->setCameraFlag(CameraFlag::USER1);
@@ -2572,7 +2554,31 @@ Sprite3DNormalMappingTest::Sprite3DNormalMappingTest()
     camera->lookAt(Vec3(0.f, 0.f, 0.f));
     addChild(camera);
 
+    PointLight* light = PointLight::create(Vec3(0.0, 0.0, 0.0), Color3B(255, 255, 255), 1000);
+    light->setTag(100);
     addChild(light);
+    
+    scheduleUpdate();
+}
+
+void Sprite3DNormalMappingTest::update(float dt)
+{
+    static float angle = 0.0f;
+    static bool reverseDir = false;
+    static float radius = 100.0f;
+    
+    auto light = static_cast<PointLight*>(getChildByTag(100));
+    light->setPosition3D(Vec3(radius * cos(angle), 0.0f, radius * sin(angle)));
+    if (reverseDir){
+        angle -= 0.01f;
+        if (angle < 0.0)
+            reverseDir = false;
+    }
+    else{
+        angle += 0.01f;
+        if (3.14159 < angle)
+            reverseDir = true;
+    }
 }
 
 Sprite3DNormalMappingTest::~Sprite3DNormalMappingTest()

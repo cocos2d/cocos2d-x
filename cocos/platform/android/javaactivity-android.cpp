@@ -46,6 +46,8 @@ THE SOFTWARE.
 
 void cocos_android_app_init(JNIEnv* env) __attribute__((weak));
 
+void cocos_audioengine_focus_change(int focusChange);
+
 using namespace cocos2d;
 
 extern "C"
@@ -56,21 +58,20 @@ extern "C"
 #if __ANDROID_API__ > 19
 #include <signal.h>
 #include <dlfcn.h>
-  typedef __sighandler_t (*bsd_signal_func_t)(int, __sighandler_t);
-  bsd_signal_func_t bsd_signal_func = NULL;
+    typedef __sighandler_t (*bsd_signal_func_t)(int, __sighandler_t);
+    bsd_signal_func_t bsd_signal_func = NULL;
 
-  __sighandler_t bsd_signal(int s, __sighandler_t f) {
-    if (bsd_signal_func == NULL) {
-      // For now (up to Android 7.0) this is always available 
-      bsd_signal_func = (bsd_signal_func_t) dlsym(RTLD_DEFAULT, "bsd_signal");
+    __sighandler_t bsd_signal(int s, __sighandler_t f) {
+        if (bsd_signal_func == NULL) {
+            // For now (up to Android 7.0) this is always available 
+            bsd_signal_func = (bsd_signal_func_t) dlsym(RTLD_DEFAULT, "bsd_signal");
 
-      if (bsd_signal_func == NULL) {
-        __android_log_assert("", "bsd_signal_wrapper", "bsd_signal symbol not found!");
-      }
+            if (bsd_signal_func == NULL) {
+                __android_log_assert("", "bsd_signal_wrapper", "bsd_signal symbol not found!");
+            }
+        }
+        return bsd_signal_func(s, f);
     }
-
-    return bsd_signal_func(s, f);
-  }
 #endif // __ANDROID_API__ > 19
 
 JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved)
@@ -121,6 +122,11 @@ JNIEXPORT jintArray Java_org_cocos2dx_lib_Cocos2dxActivity_getGLContextAttrs(JNI
         env->SetIntArrayRegion(glContextAttrsJava, 0, 6, tmp); 
     
     return glContextAttrsJava;
+}
+
+JNIEXPORT void Java_org_cocos2dx_lib_Cocos2dxAudioFocusManager_nativeOnAudioFocusChange(JNIEnv* env, jobject thiz, jint focusChange)
+{
+    cocos_audioengine_focus_change(focusChange);
 }
 
 JNIEXPORT void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnSurfaceChanged(JNIEnv*  env, jobject thiz, jint w, jint h)

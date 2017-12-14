@@ -435,7 +435,7 @@ namespace
         int offset;
     }tImageSource;
  
-#ifdef CC_USE_PNG
+#if CC_USE_PNG
     static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t length)
     {
         tImageSource* isource = (tImageSource*)png_get_io_ptr(png_ptr);
@@ -1097,7 +1097,6 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         }
         // update info
         png_read_update_info(png_ptr, info_ptr);
-        bit_depth = png_get_bit_depth(png_ptr, info_ptr);
         color_type = png_get_color_type(png_ptr, info_ptr);
 
         switch (color_type)
@@ -2222,7 +2221,6 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
         FILE *fp;
         png_structp png_ptr;
         png_infop info_ptr;
-        png_colorp palette;
         png_bytep *row_pointers;
 
         fp = fopen(FileUtils::getInstance()->getSuitableFOpen(filePath).c_str(), "wb");
@@ -2263,10 +2261,7 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
             png_set_IHDR(png_ptr, info_ptr, _width, _height, 8, PNG_COLOR_TYPE_RGB,
                 PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
         }
-
-        palette = (png_colorp)png_malloc(png_ptr, PNG_MAX_PALETTE_LENGTH * sizeof (png_color));
-        png_set_PLTE(png_ptr, info_ptr, palette, PNG_MAX_PALETTE_LENGTH);
-
+        
         png_write_info(png_ptr, info_ptr);
 
         png_set_packing(png_ptr);
@@ -2346,9 +2341,6 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
         }
 
         png_write_end(png_ptr, info_ptr);
-
-        png_free(png_ptr, palette);
-        palette = nullptr;
 
         png_destroy_write_struct(&png_ptr, &info_ptr);
 

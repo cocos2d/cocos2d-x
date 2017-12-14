@@ -31,6 +31,8 @@
 #ifndef SPINE_ATTACHMENT_H_
 #define SPINE_ATTACHMENT_H_
 
+#include <spine/dll.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -42,7 +44,9 @@ typedef enum {
 	SP_ATTACHMENT_BOUNDING_BOX,
 	SP_ATTACHMENT_MESH,
 	SP_ATTACHMENT_LINKED_MESH,
-	SP_ATTACHMENT_PATH
+	SP_ATTACHMENT_PATH,
+	SP_ATTACHMENT_POINT,
+	SP_ATTACHMENT_CLIPPING
 } spAttachmentType;
 
 typedef struct spAttachment {

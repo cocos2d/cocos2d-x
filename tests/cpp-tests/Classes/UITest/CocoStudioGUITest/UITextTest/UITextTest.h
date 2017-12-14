@@ -63,10 +63,10 @@ public:
     virtual bool init() override;
 };
 
-class UITextTest_IgnoreConentSize : public UIScene
+class UITextTest_IgnoreContentSize : public UIScene
 {
 public:
-    CREATE_FUNC(UITextTest_IgnoreConentSize);
+    CREATE_FUNC(UITextTest_IgnoreContentSize);
 
     virtual bool init() override;
 };

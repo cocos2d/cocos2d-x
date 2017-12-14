@@ -234,14 +234,14 @@ namespace ui {
          * @js ctor
          * @lua new
          */
-        EditBox(void);
+        EditBox();
             
         /**
          * Destructor.
          * @js NA
          * @lua NA
          */
-        virtual ~EditBox(void);
+        virtual ~EditBox();
             
         /**
          * Init edit box with specified size. This method should be invoked right after constructor.
@@ -309,13 +309,13 @@ namespace ui {
          * @js NA
          * @lua NA
          */
-        void unregisterScriptEditBoxHandler(void);
+        void unregisterScriptEditBoxHandler();
         /**
          * get a script Handler
          * @js NA
          * @lua NA
          */
-        int  getScriptEditBoxHandler(void){ return _scriptEditBoxHandler ;}
+        int  getScriptEditBoxHandler(){ return _scriptEditBoxHandler ;}
             
 #endif // #if CC_ENABLE_SCRIPT_BINDING
             
@@ -329,7 +329,7 @@ namespace ui {
          * Get the text entered in the edit box.
          * @return The text entered in the edit box.
          */
-        const char* getText(void) const;
+        const char* getText() const;
             
         /**
          * Set the font. Only system font is allowed.
@@ -430,7 +430,7 @@ namespace ui {
          * Get a text in the edit box that acts as a placeholder when an
          * edit box is empty.
          */
-        const char* getPlaceHolder(void) const;
+        const char* getPlaceHolder() const;
 
         /**
          * Set the input mode of the edit box.
@@ -514,12 +514,12 @@ namespace ui {
          * @js NA
          * @lua NA
          */
-        virtual void onEnter(void) override;
+        virtual void onEnter() override;
         /**
          * @js NA
          * @lua NA
          */
-        virtual void onExit(void) override;
+        virtual void onExit() override;
         /**
          * @js NA
          * @lua NA

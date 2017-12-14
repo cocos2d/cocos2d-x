@@ -165,7 +165,7 @@ public:
      *
      * @return The frame size of EGL view.
      */
-    virtual const Size& getFrameSize() const;
+    virtual Size getFrameSize() const;
 
     /**
      * Set the frame size of EGL view.
@@ -238,6 +238,11 @@ public:
      * @return The visible rectangle of opengl viewport.
      */
     virtual Rect getVisibleRect() const;
+
+    /**
+     * Gets safe area rectangle
+     */
+    virtual Rect getSafeAreaRect() const;
 
     /**
      * Set the design resolution size.

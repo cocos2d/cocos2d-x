@@ -70,35 +70,43 @@ bool AudioDecoderOgg::decodeToPcm()
     // header
     auto vi = ov_info(&vf, -1);
 
-    uint32_t uiPCMSamples = (uint32_t) ov_pcm_total(&vf, -1);
+    uint32_t pcmSamples = (uint32_t) ov_pcm_total(&vf, -1);
 
-    uint32_t bufferSize = uiPCMSamples * vi->channels * sizeof(short);
-    char* pvPCMBuffer = (char*)malloc(bufferSize);
-    memset(pvPCMBuffer, 0, bufferSize);
+    uint32_t bufferSize = pcmSamples * vi->channels * sizeof(short);
+    char* pcmBuffer = (char*)malloc(bufferSize);
+    memset(pcmBuffer, 0, bufferSize);
 
     int currentSection = 0;
     long curPos = 0;
     long readBytes = 0;
-    // decode
-    do {
-        readBytes = ov_read(&vf, pvPCMBuffer + curPos, 4096, &currentSection);
+
+    do
+    {
+        readBytes = ov_read(&vf, pcmBuffer + curPos, 4096, &currentSection);
         curPos += readBytes;
     } while (readBytes > 0);
 
-    _result.pcmBuffer->insert(_result.pcmBuffer->end(), pvPCMBuffer, pvPCMBuffer + bufferSize);
-    _result.numChannels = vi->channels;
-    _result.sampleRate = vi->rate;
-    _result.bitsPerSample = SL_PCMSAMPLEFORMAT_FIXED_16;
-    _result.containerSize = SL_PCMSAMPLEFORMAT_FIXED_16;
-    _result.channelMask = vi->channels == 1 ? SL_SPEAKER_FRONT_CENTER : (SL_SPEAKER_FRONT_LEFT | SL_SPEAKER_FRONT_RIGHT);
-    _result.endianness = SL_BYTEORDER_LITTLEENDIAN;
-    _result.numFrames = uiPCMSamples;
-    _result.duration = 1.0f * uiPCMSamples / vi->rate;
+    if (curPos > 0)
+    {
+        _result.pcmBuffer->insert(_result.pcmBuffer->end(), pcmBuffer, pcmBuffer + bufferSize);
+        _result.numChannels = vi->channels;
+        _result.sampleRate = vi->rate;
+        _result.bitsPerSample = SL_PCMSAMPLEFORMAT_FIXED_16;
+        _result.containerSize = SL_PCMSAMPLEFORMAT_FIXED_16;
+        _result.channelMask = vi->channels == 1 ? SL_SPEAKER_FRONT_CENTER : (SL_SPEAKER_FRONT_LEFT | SL_SPEAKER_FRONT_RIGHT);
+        _result.endianness = SL_BYTEORDER_LITTLEENDIAN;
+        _result.numFrames = pcmSamples;
+        _result.duration = 1.0f * pcmSamples / vi->rate;
+    }
+    else
+    {
+        ALOGE("ov_read returns 0 byte!");
+    }
 
     ov_clear(&vf);
-    free(pvPCMBuffer);
+    free(pcmBuffer);
 
-    return true;
+    return (curPos > 0);
 }
 
 }} // namespace cocos2d { namespace experimental {

@@ -172,7 +172,7 @@ protected:
     JS::Heap<JS::Value> _jsCallback;
     JS::Heap<JS::Value> _jsThisObj;
     JS::Heap<JS::Value> _extraData;
-    bool _rooted;
+    void* _cppOwner;
 };
 
 

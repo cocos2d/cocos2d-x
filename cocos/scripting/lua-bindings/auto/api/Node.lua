@@ -1221,6 +1221,12 @@
 -- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
+-- Gets count of nodes those are attached to scene graph.
+-- @function [parent=#Node] getAttachedNodeCount 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
 -- 
 -- @function [parent=#Node] Node 
 -- @param self

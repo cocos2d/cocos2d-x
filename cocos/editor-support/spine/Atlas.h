@@ -31,6 +31,8 @@
 #ifndef SPINE_ATLAS_H_
 #define SPINE_ATLAS_H_
 
+#include <spine/dll.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -79,8 +81,8 @@ struct spAtlasPage {
 	spAtlasPage* next;
 };
 
-spAtlasPage* spAtlasPage_create (spAtlas* atlas, const char* name);
-void spAtlasPage_dispose (spAtlasPage* self);
+SP_API spAtlasPage* spAtlasPage_create (spAtlas* atlas, const char* name);
+SP_API void spAtlasPage_dispose (spAtlasPage* self);
 
 #ifdef SPINE_SHORT_NAMES
 typedef spAtlasFormat AtlasFormat;
@@ -130,8 +132,8 @@ struct spAtlasRegion {
 	spAtlasRegion* next;
 };
 
-spAtlasRegion* spAtlasRegion_create ();
-void spAtlasRegion_dispose (spAtlasRegion* self);
+SP_API spAtlasRegion* spAtlasRegion_create ();
+SP_API void spAtlasRegion_dispose (spAtlasRegion* self);
 
 #ifdef SPINE_SHORT_NAMES
 typedef spAtlasRegion AtlasRegion;
@@ -149,13 +151,13 @@ struct spAtlas {
 };
 
 /* Image files referenced in the atlas file will be prefixed with dir. */
-spAtlas* spAtlas_create (const char* data, int length, const char* dir, void* rendererObject);
+SP_API spAtlas* spAtlas_create (const char* data, int length, const char* dir, void* rendererObject);
 /* Image files referenced in the atlas file will be prefixed with the directory containing the atlas file. */
-spAtlas* spAtlas_createFromFile (const char* path, void* rendererObject);
-void spAtlas_dispose (spAtlas* atlas);
+SP_API spAtlas* spAtlas_createFromFile (const char* path, void* rendererObject);
+SP_API void spAtlas_dispose (spAtlas* atlas);
 
 /* Returns 0 if the region was not found. */
-spAtlasRegion* spAtlas_findRegion (const spAtlas* self, const char* name);
+SP_API spAtlasRegion* spAtlas_findRegion (const spAtlas* self, const char* name);
 
 #ifdef SPINE_SHORT_NAMES
 typedef spAtlas Atlas;

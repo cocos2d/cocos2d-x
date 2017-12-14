@@ -196,6 +196,7 @@ public:
 
     void setTouchEnabled(bool enabled);
 	bool isTouchEnabled() const;
+    void setSwallowTouches(bool needSwallow);
     bool isDragging() const {return _dragging;}
     bool isTouchMoved() const { return _touchMoved; }
     bool isBounceable() const { return _bounceable; }

@@ -60,6 +60,7 @@ _bePressed(false),
 _childFocusCancelOffsetInInch(MOVE_INCH),
 _touchMovePreviousTimestamp(0),
 _touchTotalTimeThreshold(0.5f),
+_scrolling(false),
 _autoScrolling(false),
 _autoScrollAttenuate(true),
 _autoScrollTotalTime(0),
@@ -113,6 +114,20 @@ void ScrollView::onEnter()
 
     Layout::onEnter();
     scheduleUpdate();
+}
+
+void ScrollView::onExit()
+{
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (ScriptEngineManager::sendNodeEventToJSExtended(this, kNodeOnExit))
+            return;
+    }
+#endif
+
+    Layout::onExit();
+    stopOverallScroll();
 }
 
 bool ScrollView::init()
@@ -481,12 +496,54 @@ void ScrollView::startAutoScroll(const Vec2& deltaMove, float timeInSec, bool at
     }
 }
 
+void ScrollView::stopScroll()
+{
+    if (_scrolling)
+    {
+        if (_verticalScrollBar != nullptr)
+        {
+            _verticalScrollBar->onTouchEnded();
+        }
+        if (_horizontalScrollBar != nullptr)
+        {
+            _horizontalScrollBar->onTouchEnded();
+        }
+
+        _scrolling = false;
+        _bePressed = false;
+
+        startBounceBackIfNeeded();
+
+        dispatchEvent(SCROLLVIEW_EVENT_SCROLLING_ENDED, EventType::SCROLLING_ENDED);
+    }
+}
+
 void ScrollView::stopAutoScroll()
 {
-    _autoScrolling = false;
-    _autoScrollAttenuate = true;
-    _autoScrollTotalTime = 0;
-    _autoScrollAccumulatedTime = 0;
+    if (_autoScrolling)
+    {
+        if (_verticalScrollBar != nullptr)
+        {
+            _verticalScrollBar->onTouchEnded();
+        }
+        if (_horizontalScrollBar != nullptr)
+        {
+            _horizontalScrollBar->onTouchEnded();
+        }
+
+        _autoScrolling = false;
+        _autoScrollAttenuate = true;
+        _autoScrollTotalTime = 0;
+        _autoScrollAccumulatedTime = 0;
+
+        dispatchEvent(SCROLLVIEW_EVENT_AUTOSCROLL_ENDED, EventType::AUTOSCROLL_ENDED);
+    }
+}
+
+void ScrollView::stopOverallScroll()
+{
+    stopScroll();
+    stopAutoScroll();
 }
 
 bool ScrollView::isNecessaryAutoScrollBrake()
@@ -750,6 +807,18 @@ void ScrollView::scrollToPercentBothDirection(const Vec2& percent, float timeInS
     float w = _innerContainer->getContentSize().width - _contentSize.width;
     startAutoScrollToDestination(Vec2(-(percent.x * w / 100.0f), minY + percent.y * h / 100.0f), timeInSec, attenuated);
 }
+    
+float ScrollView::getScrolledPercentVertical() const {
+    const float minY = getContentSize().height - getInnerContainerSize().height;
+    return (1.f - getInnerContainerPosition().y / minY)*100.f;
+}
+float ScrollView::getScrolledPercentHorizontal() const {
+    const float minX = getContentSize().width - getInnerContainerSize().width;
+    return getInnerContainerPosition().x / minX * 100.f;
+}
+Vec2 ScrollView::getScrolledPercentBothDirection() const {
+    return {getScrolledPercentHorizontal(), getScrolledPercentVertical()};
+}
 
 void ScrollView::jumpToBottom()
 {
@@ -887,6 +956,9 @@ void ScrollView::handlePressLogic(Touch* /*touch*/)
 
 void ScrollView::handleMoveLogic(Touch *touch)
 {
+    if (!_bePressed)
+        return;
+
     Vec3 currPt, prevPt;
     if(!calculateCurrAndPrevTouchPoints(touch, &currPt, &prevPt))
     {
@@ -902,6 +974,9 @@ void ScrollView::handleMoveLogic(Touch *touch)
 
 void ScrollView::handleReleaseLogic(Touch *touch)
 {
+    if (!_bePressed)
+        return;
+
     // Gather the last touch information when released
     {
         Vec3 currPt, prevPt;
@@ -932,6 +1007,10 @@ void ScrollView::handleReleaseLogic(Touch *touch)
     if(_horizontalScrollBar != nullptr)
     {
         _horizontalScrollBar->onTouchEnded();
+    }
+    
+    if ( _scrolling ) {
+        processScrollingEndedEvent();
     }
 }
 
@@ -1080,7 +1159,16 @@ void ScrollView::processScrollEvent(MoveDirection dir, bool bounce)
 
 void ScrollView::processScrollingEvent()
 {
+    if ( !_scrolling ) {
+        _scrolling = true;
+        dispatchEvent(SCROLLVIEW_EVENT_SCROLLING_BEGAN, EventType::SCROLLING_BEGAN);
+    }
     dispatchEvent(SCROLLVIEW_EVENT_SCROLLING, EventType::SCROLLING);
+}
+    
+void ScrollView::processScrollingEndedEvent() {
+    _scrolling = false;
+    dispatchEvent(SCROLLVIEW_EVENT_SCROLLING_ENDED, EventType::SCROLLING_ENDED);
 }
 
 void ScrollView::dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType)
@@ -1412,6 +1500,7 @@ void ScrollView::copySpecialProperties(Widget *widget)
         _touchMoveDisplacements = scrollView->_touchMoveDisplacements;
         _touchMoveTimeDeltas = scrollView->_touchMoveTimeDeltas;
         _touchMovePreviousTimestamp = scrollView->_touchMovePreviousTimestamp;
+        _scrolling = scrollView->_scrolling;
         _autoScrolling = scrollView->_autoScrolling;
         _autoScrollAttenuate = scrollView->_autoScrollAttenuate;
         _autoScrollStartPosition = scrollView->_autoScrollStartPosition;

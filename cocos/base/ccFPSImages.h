@@ -23,20 +23,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __BASE_CCFPSIMAGES__H
-#define __BASE_CCFPSIMAGES__H
+#pragma once
+
+#include "base/ccConfig.h"
+
 /// @cond DO_NOT_SHOW
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+#if !CC_STRIP_FPS
 extern unsigned char cc_fps_images_png[];
-unsigned int cc_fps_images_len(void);
+unsigned int cc_fps_images_len();
+#endif
 
 #ifdef __cplusplus
 }
 #endif
 
 /// @endcond
-#endif // __BASE_CCFPSIMAGES__H

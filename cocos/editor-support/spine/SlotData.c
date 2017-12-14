@@ -36,16 +36,14 @@ spSlotData* spSlotData_create (const int index, const char* name, spBoneData* bo
 	CONST_CAST(int, self->index) = index;
 	MALLOC_STR(self->name, name);
 	CONST_CAST(spBoneData*, self->boneData) = boneData;
-	self->r = 1;
-	self->g = 1;
-	self->b = 1;
-	self->a = 1;
+	spColor_setFromFloats(&self->color, 1, 1, 1, 1);
 	return self;
 }
 
 void spSlotData_dispose (spSlotData* self) {
 	FREE(self->name);
 	FREE(self->attachmentName);
+	FREE(self->darkColor);
 	FREE(self);
 }
 

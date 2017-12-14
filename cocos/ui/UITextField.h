@@ -47,6 +47,13 @@ class CC_GUI_DLL UICCTextField: public TextFieldTTF, public TextFieldDelegate
 {
 public:
     /**
+     * @brief Create an empty UICCTextField.
+     *
+     * @return A UICCTextField instance.
+     */
+    static UICCTextField* create();
+    
+    /**
      * Default constructor
      */
     UICCTextField();
@@ -79,7 +86,6 @@ public:
                                            const char * delText,
                                            size_t nLen) override;
     void insertText(const char* text, size_t len) override;
-    void deleteBackward() override;
     
     /**
      * Open up the IME.

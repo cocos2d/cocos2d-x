@@ -661,6 +661,9 @@ protected:
     void updatePoly();
     void updateStretchFactor();
 
+    virtual void flipX();
+    virtual void flipY();
+
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //

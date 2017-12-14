@@ -59,6 +59,8 @@ public:
         return nullptr;
     }
 
+    virtual void startWithTarget(Node *target) override;
+    
     virtual bool isDone() const override;
     /**
      * @param dt In seconds.
@@ -68,6 +70,9 @@ public:
      * @param time In seconds.
      */
     virtual void update(float time) override;
+
+private:
+    bool _done;
 };
 
 /** @class Show

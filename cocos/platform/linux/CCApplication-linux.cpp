@@ -113,6 +113,11 @@ void Application::setAnimationInterval(float interval)
     _animationInterval = interval*1000.0f;
 }
 
+void Application::setAnimationInterval(float interval, SetIntervalReason reason)
+{
+    setAnimationInterval(interval);
+}
+
 void Application::setResourceRootPath(const std::string& rootResDir)
 {
     _resourceRootPath = rootResDir;
@@ -143,7 +148,7 @@ std::string Application::getVersion()
 
 bool Application::openURL(const std::string &url)
 {
-    std::string op = std::string("xdg-open ").append(url);
+    std::string op = std::string("xdg-open '").append(url).append("'");
     return system(op.c_str()) == 0;
 }
 

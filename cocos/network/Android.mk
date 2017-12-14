@@ -11,7 +11,8 @@ LOCAL_SRC_FILES := HttpClient-android.cpp \
 SocketIO.cpp \
 WebSocket.cpp \
 CCDownloader.cpp \
-CCDownloader-android.cpp
+CCDownloader-android.cpp \
+Uri.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
 

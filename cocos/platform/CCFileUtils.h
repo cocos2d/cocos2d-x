@@ -103,7 +103,8 @@ class ResizableBufferAdapter<Data> : public ResizableBuffer {
 public:
     explicit ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
     virtual void resize(size_t size) override {
-        if (static_cast<size_t>(_buffer->getSize()) < size) {
+        size_t oldSize = static_cast<size_t>(_buffer->getSize());
+        if (oldSize != size) {
             auto old = _buffer->getBytes();
             void* buffer = realloc(old, size);
             if (buffer)
@@ -443,6 +444,11 @@ public:
     virtual void setSearchPaths(const std::vector<std::string>& searchPaths);
 
     /**
+     * Get default resource root path.
+     */
+    const std::string& getDefaultResourceRootPath() const;
+
+    /**
      * Set default resource root path.
      */
     void setDefaultResourceRootPath(const std::string& path);
@@ -457,11 +463,20 @@ public:
     /**
      *  Gets the array of search paths.
      *
-     *  @return The array of search paths.
+     *  @return The array of search paths which may contain the prefix of default resource root path. 
+     *  @note In best practise, getter function should return the value of setter function passes in.
+     *        But since we should not break the compatibility, we keep using the old logic. 
+     *        Therefore, If you want to get the original search paths, please call 'getOriginalSearchPaths()' instead.
      *  @see fullPathForFilename(const char*).
      *  @lua NA
      */
     virtual const std::vector<std::string>& getSearchPaths() const;
+
+    /**
+     *  Gets the original search path array set by 'setSearchPaths' or 'addSearchPath'.
+     *  @return The array of the original search paths
+     */
+    virtual const std::vector<std::string>& getOriginalSearchPaths() const;
 
     /**
      *  Gets the writable path.
@@ -670,12 +685,12 @@ public:
     virtual bool isDirectoryExist(const std::string& dirPath) const;
 
     /**
-    *  Checks whether the absoulate path is a directory, async off of the main cocos thread.
-    *
-    * @param dirPath The path of the directory, it must be an absolute path
-    * @param callback that will accept a boolean, true if the file exists, false otherwise. 
-    * Callback will happen on the main cocos thread.
-    */
+     *  Checks whether the absoulate path is a directory, async off of the main cocos thread.
+     *
+     * @param dirPath The path of the directory, it must be an absolute path
+     * @param callback that will accept a boolean, true if the file exists, false otherwise. 
+     * Callback will happen on the main cocos thread.
+     */
     virtual void isDirectoryExist(const std::string& fullPath, std::function<void(bool)> callback);
 
     /**
@@ -788,16 +803,53 @@ public:
      */
     virtual void getFileSize(const std::string &filepath, std::function<void(long)> callback);
 
+    /**
+     *  List all files in a directory.
+     *
+     *  @param dirPath The path of the directory, it could be a relative or an absolute path.
+     *  @return File paths in a string vector
+     */
+    virtual std::vector<std::string> listFiles(const std::string& dirPath) const;
+
+    /**
+     * List all files in a directory async, off of the main cocos thread.
+     *
+     * @param dirPath The path of the directory, it could be a relative or an absolute path.
+     * @param callback The callback to be called once the list operation is complete. Will be called on the main cocos thread.
+     * @js NA
+     * @lua NA
+     */
+    virtual void listFilesAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const;
+    
+    /**
+     *  List all files recursively in a directory.
+     *
+     *  @param dirPath The path of the directory, it could be a relative or an absolute path.
+     *  @return File paths in a string vector
+     */
+    virtual void listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const;
+
+    /**
+    *  List all files recursively in a directory, async off the main cocos thread.
+    *
+    *  @param dirPath The path of the directory, it could be a relative or an absolute path.
+    *  @param callback The callback to be called once the list operation is complete. 
+    *          Will be called on the main cocos thread.
+    * @js NA
+    * @lua NA
+    */
+    virtual void listFilesRecursivelyAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const;
+
     /** Returns the full path cache. */
     const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
 
     /**
-    *  Gets the new filename from the filename lookup dictionary.
-    *  It is possible to have a override names.
-    *  @param filename The original filename.
-    *  @return The new filename after searching in the filename lookup dictionary.
-    *          If the original filename wasn't in the dictionary, it will return the original filename.
-    */
+     *  Gets the new filename from the filename lookup dictionary.
+     *  It is possible to have a override names.
+     *  @param filename The original filename.
+     *  @return The new filename after searching in the filename lookup dictionary.
+     *          If the original filename wasn't in the dictionary, it will return the original filename.
+     */
     virtual std::string getNewFilename(const std::string &filename) const;
 
 protected:
@@ -872,6 +924,11 @@ protected:
      * The lower index of the element in this vector, the higher priority for this search path.
      */
     std::vector<std::string> _searchPathArray;
+
+    /**
+     * The search paths which was set by 'setSearchPaths' / 'addSearchPath'.
+     */
+    std::vector<std::string> _originalSearchPaths;
 
     /**
      *  The default root path of resources.

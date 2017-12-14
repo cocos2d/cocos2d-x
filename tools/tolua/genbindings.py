@@ -75,27 +75,38 @@ def main():
         print 'Your platform is not supported!'
         sys.exit(1)
 
-    if platform == 'win32':
-        x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s' % cur_platform))
-        if not os.path.exists(x86_llvm_path):
-            x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.3/prebuilt', '%s' % cur_platform))
-    else:
-        x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s-%s' % (cur_platform, 'x86')))
-        if not os.path.exists(x86_llvm_path):
-            x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.3/prebuilt', '%s-%s' % (cur_platform, 'x86')))
-
-    x64_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.4/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
+    x86_llvm_path = ""
+    x64_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
     if not os.path.exists(x64_llvm_path):
-        x64_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm-3.3/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
+        x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm/prebuilt', '%s' % (cur_platform)))
+    if not os.path.exists(x86_llvm_path):
+        x86_llvm_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/llvm/prebuilt', '%s-%s' % (cur_platform, 'x86')))
 
-    if os.path.isdir(x86_llvm_path):
-        llvm_path = x86_llvm_path
-    elif os.path.isdir(x64_llvm_path):
+    if os.path.isdir(x64_llvm_path):
         llvm_path = x64_llvm_path
+    elif os.path.isdir(x86_llvm_path):
+        llvm_path = x86_llvm_path
     else:
         print 'llvm toolchain not found!'
         print 'path: %s or path: %s are not valid! ' % (x86_llvm_path, x64_llvm_path)
         sys.exit(1)
+
+    x86_gcc_toolchain_path = ""
+    x64_gcc_toolchain_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/arm-linux-androideabi-4.9/prebuilt', '%s-%s' % (cur_platform, 'x86_64')))
+    if not os.path.exists(x64_gcc_toolchain_path):
+        x86_gcc_toolchain_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/arm-linux-androideabi-4.9/prebuilt', '%s' % (cur_platform)))
+    if not os.path.exists(x86_gcc_toolchain_path):
+        x86_gcc_toolchain_path = os.path.abspath(os.path.join(ndk_root, 'toolchains/arm-linux-androideabi-4.9/prebuilt', '%s-%s' % (cur_platform, 'x86')))
+
+    if os.path.isdir(x64_gcc_toolchain_path):
+        gcc_toolchain_path = x64_gcc_toolchain_path
+    elif os.path.isdir(x86_gcc_toolchain_path):
+        gcc_toolchain_path = x86_gcc_toolchain_path
+    else:
+        print 'gcc toolchain not found!'
+        print 'path: %s or path: %s are not valid! ' % (x64_gcc_toolchain_path, x86_gcc_toolchain_path)
+        sys.exit(1)
+
 
     project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
     cocos_root = os.path.abspath(os.path.join(project_root, ''))
@@ -105,18 +116,10 @@ def main():
     config = ConfigParser.ConfigParser()
     config.set('DEFAULT', 'androidndkdir', ndk_root)
     config.set('DEFAULT', 'clangllvmdir', llvm_path)
+    config.set('DEFAULT', 'gcc_toolchain_dir', gcc_toolchain_path)
     config.set('DEFAULT', 'cocosdir', cocos_root)
     config.set('DEFAULT', 'cxxgeneratordir', cxx_generator_root)
     config.set('DEFAULT', 'extra_flags', '')
-    
-    if '3.4' in llvm_path:
-        config.set('DEFAULT', 'clang_version', '3.4')
-    else:
-        config.set('DEFAULT', 'clang_version', '3.3')
-
-    # To fix parse error on windows, we must difine __WCHAR_MAX__ and undefine __MINGW32__ .
-    if platform == 'win32':
-        config.set('DEFAULT', 'extra_flags', '-D__WCHAR_MAX__=0x7fffffff -U__MINGW32__')
 
     conf_ini_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'userconf.ini'))
 

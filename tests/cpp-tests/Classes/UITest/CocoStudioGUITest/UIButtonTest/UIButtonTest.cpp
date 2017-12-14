@@ -23,6 +23,7 @@ UIButtonTests::UIButtonTests()
     ADD_TEST_CASE(Issue12249);
     ADD_TEST_CASE(Issue17116);
     ADD_TEST_CASE(UIButtonWithPolygonInfo);
+    ADD_TEST_CASE(UIButtonScale9ChangeSpriteFrame);
 }
 
 // UIButtonTest
@@ -1240,3 +1241,36 @@ bool UIButtonWithPolygonInfo::init()
     }
     return false;
 }
+
+UIButtonScale9ChangeSpriteFrame::UIButtonScale9ChangeSpriteFrame()
+{
+}
+
+bool UIButtonScale9ChangeSpriteFrame::init()
+{
+    if (UIScene::init())
+    {
+        ImageView* sprite = ImageView::create("Images/blocks.png");
+        sprite->setScale9Enabled(true);
+        sprite->setCapInsets(Rect(32, 32, 32, 32));
+        sprite->setContentSize(Size(96 * 1.5, 96));
+        sprite->setNormalizedPosition(Vec2(0.2, 0.5));
+        this->addChild(sprite);
+        
+        auto button = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
+        button->setScale9Enabled(true);
+        button->setContentSize(Size(100, 50));
+        button->setNormalizedPosition(Vec2(0.6, 0.5));
+        button->setTitleText("Press me");
+        addChild(button);
+        
+        button->addClickEventListener([sprite](Ref* button){
+            sprite->loadTexture("Images/blocks9.png");
+        });
+
+        
+        return true;
+    }
+    return false;
+}
+
