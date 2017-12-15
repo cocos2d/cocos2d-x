@@ -216,6 +216,16 @@ void Node::cleanup()
     this->stopAllActions();
     // timers
     this->unscheduleAllCallbacks();
+
+    // NOTE: Although it was correct that removing event listeners associated with current node in Node::cleanup.
+    // But it broke the compatibility to the versions before v3.16 .
+    // User code may call `node->removeFromParent(true)` which will trigger node's cleanup method, when the node 
+    // is added to scene again, event listeners like EventListenerTouchOneByOne will be lost. 
+    // In fact, user's code should use `node->removeFromParent(false)` in order not to do a cleanup and just remove node
+    // from its parent. For more discussion about why we revert this change is at https://github.com/cocos2d/cocos2d-x/issues/18104.
+    // We need to consider more before we want to correct the old and wrong logic code.
+    // For now, compatiblity is the most important for our users.
+//    _eventDispatcher->removeEventListenersForTarget(this);
     
     for( const auto &child: _children)
         child->cleanup();
