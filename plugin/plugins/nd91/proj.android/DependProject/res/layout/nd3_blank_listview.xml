@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.nd.commplatform.widget.NdListBlankView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+ >
+  <TextView
+  android:id="@+id/nd3_empty_listview_txt"
+  android:text="@string/nd3_list_item_loading"
+  android:textColor="@color/nd3_black"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_margin="@dimen/nd3_margin_size"
+  android:layout_alignParentTop="true"/>
+ 
+  <TextView
+  android:id="@+id/nd3_empty_listview_no_data_txt"
+  android:textColor="@color/nd3_black"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_centerInParent="true"
+  android:visibility="gone"/>
+</com.nd.commplatform.widget.NdListBlankView>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <LinearLayout
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="fill_parent"
+   android:layout_height="wrap_content"
+   android:orientation="vertical">
+		<RadioGroup
+		  android:layout_width="fill_parent"
+		  android:layout_height="wrap_content"
+		  android:id="@+id/nd_rank_time_type_group_portrait"
+		  android:orientation="horizontal">
+		  	    <RadioButton  
+				    android:id="@+id/nd_rank_time_type_today_btn" 
+				    android:background="@drawable/nd3_rank_choice_left_btn_bg"
+				    android:button="@null"
+				    android:layout_height="wrap_content" 
+				    android:layout_width="0dip"
+				    android:text="@string/nd_leaderboard_scope_time_today"
+				    android:textColor="@color/nd3_btn_font_color"
+				    android:gravity="center"
+				    android:layout_weight="1"
+				    />
+				    <RadioButton  
+				    android:id="@+id/nd_rank_time_type_week_btn" 
+				    android:background="@drawable/nd3_rank_choice_middle_btn_bg"
+				    android:button="@null"
+				    android:layout_height="wrap_content" 
+				    android:layout_width="0dip"
+				    android:text="@string/nd_leaderboard_scope_time_week"
+				    android:textColor="@color/nd3_btn_font_color"
+				    android:gravity="center"
+				    android:layout_weight="1"
+				    />
+				 <RadioButton  
+				 	android:id="@+id/nd_rank_time_type_all_btn"  
+				 	android:background="@drawable/nd3_rank_choice_right_btn_bg"
+				 	android:button="@null" 
+				 	android:layout_height="wrap_content"
+				 	android:layout_width="0dip"
+				 	android:text="@string/nd_leaderboard_scope_time_all"
+				 	android:textColor="@color/nd3_btn_font_color"
+				 	android:gravity="center"
+				 	android:layout_weight="1"/>
+		  </RadioGroup>  
+	
+	
+  <RelativeLayout
+  android:id="@+id/nd3_leaderboard_self"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:background="@drawable/nd3_bk1"
+  android:layout_marginTop="@dimen/nd3_margin_size"
+  android:layout_marginBottom="@dimen/nd3_margin_size">
+  
+	  <ImageView
+	  android:id="@+id/nd3_user_image"
+	  android:layout_width="@dimen/nd3_image_size"
+	  android:layout_height="@dimen/nd3_image_size"
+	  android:layout_alignParentLeft="true"
+	  android:layout_alignParentTop="true"
+	  android:scaleType="fitXY"
+	  android:layout_margin="@dimen/nd3_margin_size"
+	  />
+  
+	  <RelativeLayout
+	  android:layout_width="fill_parent"
+	  android:layout_height="wrap_content"
+	  android:layout_alignParentTop="true"
+	  android:layout_toRightOf="@id/nd3_user_image">
+		  <TextView
+		  android:id="@+id/nd3_user_name_txt"
+		  android:layout_width="fill_parent"
+		  android:layout_height="wrap_content"
+		  android:layout_alignParentLeft="true"
+	      android:layout_alignParentTop="true"
+		  style="@style/nd3_textview_1"/>
+		  
+		  <TextView
+		  android:id="@+id/nd3_user_content"
+		  android:layout_width="0dip"
+		  android:layout_height="wrap_content"
+		  android:layout_alignParentLeft="true"
+		  android:layout_toLeftOf="@+id/nd_rank_user_type_group_landscape"
+		  android:layout_below="@id/nd3_user_name_txt"
+		  android:layout_alignWithParentIfMissing="true"
+		  style="@style/nd3_textview_2"/>
+		  
+		   
+		<RadioGroup
+		  android:layout_width="wrap_content"
+		  android:layout_height="wrap_content"
+		  android:layout_alignParentRight="true"
+		  android:layout_alignTop="@id/nd3_user_content"
+		  android:id="@+id/nd_rank_user_type_group_landscape"
+		  android:orientation="horizontal"
+		  android:layout_margin="@dimen/nd3_margin_size">
+		  <RadioButton  
+				    android:id="@+id/nd3_all_rank_btn_landscape" 
+				    android:background="@drawable/nd_leaderboard_left_btn_bg"
+				    android:button="@null"
+				    android:layout_height="30dip" 
+				    android:layout_width="60dip"
+				    android:text="@string/nd_leaderboard_all_player"
+				    android:textColor="@color/nd3_black"
+				    android:gravity="center"
+				    />
+				 <RadioButton  
+				 	android:id="@+id/nd3_friend_rank_btn_landscape" 
+				 	android:background="@drawable/nd_leaderboard_right_btn_bg"
+				 	android:button="@null" 
+				 	android:layout_height="30dip"
+				 	android:layout_width="60dip"
+				 	android:text="@string/nd_leaderboard_friend_player"
+				 	android:textColor="@color/nd3_black"
+				 	android:gravity="center"/>
+		  </RadioGroup>  
+	  </RelativeLayout>
+   </RelativeLayout>
+ </LinearLayout>
+   
+  
+

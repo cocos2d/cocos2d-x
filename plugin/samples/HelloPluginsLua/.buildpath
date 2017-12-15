@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry kind="lib" path="src"/>
+	<buildpathentry kind="con" path="org.eclipse.koneki.ldt.ExecutionEnvironmentContainer/cocos2dx/3.2"/>
+	<buildpathentry kind="con" path="org.eclipse.koneki.ldt.ExecutionEnvironmentContainer/lua/5.1"/>
+</buildpath>

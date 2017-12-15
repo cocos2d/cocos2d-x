@@ -1,0 +1,57 @@
+{
+    "init_cfg":{
+       "isLandscape": true,
+       "name": "HelloPluginsLua",
+       "width": 960,
+       "height": 640,
+       "entry": "src/main.lua",
+       "consolePort": 6010
+    },
+    "simulator_screen_size": [
+        {
+            "title": "iPhone 3Gs (480x320)",
+            "width": 480,
+            "height": 320
+        },
+        {
+            "title": "iPhone 4 (960x640)",
+            "width": 960,
+            "height": 640
+        },
+        {
+            "title": "iPhone 5 (1136x640)",
+            "width": 1136,
+            "height": 640
+        },
+        {
+            "title": "iPad (1024x768)",
+            "width": 1024,
+            "height": 768
+        },
+        {
+            "title": "iPad Retina (2048x1536)",
+            "width": 2048,
+            "height": 1536
+        },
+        {
+            "title": "Android (800x480)",
+            "width": 800,
+            "height": 480
+        },
+        {
+            "title": "Android (854x480)",
+            "width": 854,
+            "height": 480
+        },
+        {
+            "title": "Android (1280x720)",
+            "width": 1280,
+            "height": 720
+        },
+        {
+            "title": "Android (1920x1080)",
+            "width": 1920,
+            "height": 1080
+        }
+    ]
+}

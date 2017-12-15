@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+    
+    <!-- 游戏开发商信息 -->
+    <LinearLayout  
+    	android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:orientation ="horizontal"
+		android:background="@drawable/nd3_bk1"
+		style="@style/nd3_option_margin_padding_style"
+		android:layout_marginTop="@dimen/nd3_option_margin_top" 
+		android:gravity="left">
+		<ImageView 
+			android:id="@+id/nd_app_image"
+			android:layout_width="48dip"
+			android:layout_height="48dip"
+			android:layout_gravity="center_vertical"
+			android:layout_marginRight="20dip"
+			android:scaleType="centerInside"
+			/>
+	    <LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:orientation ="vertical"  
+			>
+			<TextView 
+			android:id="@+id/nd3_appname"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			style="@style/nd3_option_textview_style"  
+			android:gravity="left" />
+			<TextView 
+			android:id="@+id/nd3_appversion"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			style="@style/nd3_option_textview_style" 
+			android:layout_marginTop="@dimen/nd_about_size"
+			android:gravity="left"/>
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content" 
+				android:orientation ="horizontal"
+				android:layout_marginTop="@dimen/nd_about_size"  
+				>
+				<TextView 
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/nd3_company_title"
+				style="@style/nd3_option_textview_style" 
+				android:gravity="left"/>
+								
+				<TextView 
+				android:id="@+id/nd3_company"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				style="@style/nd3_option_textview_style" 
+				android:gravity="left"/>
+			</LinearLayout>
+			
+			<TextView 
+			android:id="@+id/nd3_debug"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			style="@style/nd3_option_textview_style" 
+			android:gravity="left"
+			android:text="@string/nd_debug_model"
+			android:layout_marginTop="@dimen/nd_about_size"
+			android:visibility="gone"/>
+		</LinearLayout>	
+	</LinearLayout>
+	 
+	
+	<!-- 91社区信息 -->
+	<LinearLayout  
+    	android:layout_width="fill_parent"
+		android:layout_height="wrap_content" 
+		android:orientation ="horizontal"
+		android:background="@drawable/nd3_bk1"
+		style="@style/nd3_option_margin_padding_style"
+		android:gravity="left"
+		>
+		<ImageView  
+			android:layout_width="48dip"
+			android:layout_height="48dip"
+			android:src="@drawable/nd_logo48" 
+			android:layout_marginRight="20dip"
+			android:layout_gravity="center_vertical"
+			android:scaleType="centerInside"
+			/>
+	    <LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+			android:orientation ="vertical" 
+			>
+			<TextView 
+			android:id="@+id/nd3_sdkname"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			style="@style/nd3_option_textview_style"
+			android:gravity="left" 
+			/>
+			<TextView 
+			android:id="@+id/nd3_sdkversion"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			style="@style/nd3_option_textview_style"
+			android:layout_marginTop="@dimen/nd_about_size"
+			android:gravity="left" />
+			<TextView 
+			android:id="@+id/nd3_sdkcompany"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			style="@style/nd3_option_textview_style"
+			android:layout_marginTop="@dimen/nd_about_size"
+			android:gravity="left" />
+		</LinearLayout>
+    </LinearLayout> 
+</LinearLayout>

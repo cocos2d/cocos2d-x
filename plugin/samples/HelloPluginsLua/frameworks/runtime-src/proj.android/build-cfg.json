@@ -1,0 +1,32 @@
+{
+    "ndk_module_path" :[
+        "../../../../../..",
+        "../../../../../../cocos/",
+        "../../../../../../external",
+        "../../../../../../cocos/scripting",
+        "../../../../../../plugin/publish"
+    ],
+    "copy_resources": [
+        {
+            "from": "../../../src",
+            "to": "src",
+            "exclude": [
+                "*.gz"
+            ]
+        }
+    ],
+    "must_copy_resources": [
+        {
+            "from": "../../../../../../cocos/scripting/lua-bindings/script/",
+            "to": "src/cocos"
+        },
+        {
+            "from": "../../../../../luabindings/script/",
+            "to": "src/cocos/lua_plugin"
+        },
+        {
+            "from": "../../../config.json",
+            "to": ""
+        }
+    ]
+}

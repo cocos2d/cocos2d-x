@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifestConfig xmlns:android="http://schemas.android.com/apk/res/android">
+    <applicationCfg keyword="com.facebook.ads.InterstitialAdActivity">
+        <activity android:name="com.facebook.ads.InterstitialAdActivity"
+             android:configChanges="keyboardHidden|orientation|screenSize"/>
+    </applicationCfg>
+
+    <permissionCfg>
+        <uses-permission android:name="android.permission.INTERNET"/>
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    </permissionCfg>
+</manifestConfig> 

@@ -1,0 +1,28 @@
+plugin-x authors & contributors
+
+Plugin Developers:
+    natural-law
+
+Developers:
+
+    nickflick
+        Import of Android IAP.
+        Created template class for Android IAP bindings
+
+    martell
+        Reimport of Android IAP for better v3 Support
+        Bind Android IAP to Cocos2dActivity.java for handling successful purchase
+
+    ntotani
+        Add social and user protocol to factory
+	Create Lua bindings
+
+    thomasaw
+        Fix ad placement on iOS 8
+    
+    giuslape
+        Facebook Ads plugin
+
+   please add more here :)
+
+Cocos2d-x can not grow so fast without the active community.

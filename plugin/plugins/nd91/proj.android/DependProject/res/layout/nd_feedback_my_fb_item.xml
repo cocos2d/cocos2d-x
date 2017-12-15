@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+	android:layout_height="60dip" 
+	android:layout_margin="@dimen/nd3_margin_size" 
+	>
+    
+    <LinearLayout 
+        android:layout_width="0dip"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:layout_weight="1"
+		android:layout_margin="5dip">
+        <TextView 
+            android:id="@+id/nd_title"
+            android:layout_width="fill_parent"
+			android:layout_height="0dip" 
+			android:textColor="@color/nd3_black"
+			android:textSize="16dip"
+			android:textStyle="bold"
+			android:singleLine="true" 
+			android:layout_weight="1" />
+        <TextView 
+            android:id="@+id/nd_time"
+            android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textColor="@color/nd_font_color"
+			android:textSize="12dip"
+			android:textStyle="bold"  />
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="wrap_content"
+		android:layout_height="fill_parent"
+		android:layout_gravity="center"
+		android:layout_margin="5dip">
+        <TextView 
+            android:id="@+id/nd_pj"
+            android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/nd_font_color"
+			android:textSize="16dip" 
+			android:layout_gravity="center"/>
+        <ImageView  
+	        android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content" 
+	    	android:scaleType="fitCenter"
+	    	android:src="@drawable/nd3_switch_image"
+	    	android:layout_gravity="center"/>
+    </LinearLayout>
+</LinearLayout>

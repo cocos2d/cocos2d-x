@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.cocos2dx.HelloPluginsLua" android:installLocation="auto" android:versionCode="1" android:versionName="1.0">
+
+    <uses-sdk android:minSdkVersion="9" />
+    <uses-feature android:glEsVersion="0x00020000" />
+
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+					 
+        
+        <meta-data android:name="android.app.lib_name" android:value="cocos2dlua" />
+					  
+        <activity android:configChanges="orientation" android:label="@string/app_name" android:name="org.cocos2dx.HelloPluginsLua.AppActivity" android:screenOrientation="landscape" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" android:name="com.google.ads.AdActivity" />
+    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id" />
+    <meta-data android:name="PluginUser" android:value="UserFacebook" />
+    <meta-data android:name="PluginShare" android:value="ShareFacebook" />
+
+    <activity android:name="com.facebook.LoginActivity" />
+    	<provider android:authorities="com.facebook.app.NativeAppCallContentProvider284667701726875"
+                android:name="com.facebook.NativeAppCallContentProvider"
+                android:exported="true"/>
+    </application>
+
+    <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true" android:xlargeScreens="true" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />  
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />  
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />  
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />  
+    
+  	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+ 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+</manifest>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="nd3_sdk_error_not_found">未知错误码：</string>
+
+    <string name="nd3_sdk_error_unknown">未知错误</string>
+    <string name="nd3_sdk_error_network_fail">网络连接错误</string>
+    <string name="nd3_sdk_error_package_invalid">数据包不全、丢失或无效</string>
+    <string name="nd3_sdk_error_sessionid_invalid">SessionId（用户的会话标识）无效</string>
+    <string name="nd3_sdk_error_param">参数值错误或非法，请检查参数值是否有效</string>
+    <string name="nd3_sdk_error_client_app_id_invalid">无效的应用ID接入</string>
+    <string name="nd3_sdk_error_network_error">网络请求发生错误</string>
+    <string name="nd3_sdk_error_app_key_invalid">该用户未授权接入（AppKey无效）</string>
+    <string name="nd3_sdk_error_no_sim">未检测到SIM卡</string>
+    <string name="nd3_sdk_error_server_return_error">服务器处理发生错误，请求无法完成</string>
+    <string name="nd3_sdk_error_has_not_login">未登录</string>
+    <string name="nd3_sdk_error_account_invalid">账号格式不合法，合法账号为4－70个字符，仅允许小写字母及数字，支持邮箱注册</string>
+    <string name="nd3_sdk_error_password_invalid">密码格式不合法，密码不能为空，长度为6－12个字符，由字母和数字组成，大小写敏感</string>
+    <string name="nd3_sdk_error_login_fail">登录失败</string>
+    <string name="nd3_sdk_error_account_not_exist">账号不存在或停用</string>
+    <string name="nd3_sdk_error_account_password_error">账号密码错误</string>
+    <string name="nd3_sdk_error_too_much_account_registed">该手机或号码已经注册了n个账号</string>
+    <string name="nd3_sdk_error_regist_fail">注册失败</string>
+    <string name="nd3_sdk_error_account_has_exist">该91通行证账号已经被注册</string>
+    <string name="nd3_sdk_error_verify_account_fail">账号验证失败</string>
+    <string name="nd3_sdk_error_nickname_invalid">昵称不合法，合法昵称由1－16个非空字符构成，请勿使用敏感词汇</string>
+    <string name="nd3_sdk_error_new_password_invalid">新密码格式非法，密码不能为空，长度为6－12个字符，由字母和数字组成，大小写敏感</string>
+    <string name="nd3_sdk_error_old_password_invalid">请输入正确的原密码</string>
+    <string name="nd3_sdk_error_old_password_error">请输入正确的原密码</string>
+    <string name="nd3_sdk_error_has_set_phone_num">该用户已经设定了手机号码</string>
+    <string name="nd3_sdk_error_phone_has_registed">该手机号已经被注册</string>
+    <string name="nd3_sdk_error_phone_send_repeated">指定时间内不能重复发送（手机注册短信验证码）</string>
+    <string name="nd3_sdk_error_phone_verify_code_invalid">手机短信验证码无效</string>
+    <string name="nd3_sdk_error_true_name_invalid">真实姓名不合法</string>
+    <string name="nd3_sdk_error_emotion_length_too_long">心情长度太长，不能超过140个字符</string>
+    <string name="nd3_sdk_error_emotion_content_invalid">内容不合法</string>
+    <string name="nd3_sdk_error_permission_not_enough">他（她）已不是您的好友，禁止当前操作！</string>
+    <string name="nd3_sdk_error_image_size_too_large">发送的图片数据超过了服务器允许的大小</string>
+    <string name="nd3_sdk_error_image_data_invalid">发送的图片数据内容不合法</string>
+    <string name="nd3_sdk_error_photo_not_changed">头像没有变更</string>
+    <string name="nd3_sdk_error_no_custom_photo">该用户没有自定义头像</string>
+    <string name="nd3_sdk_error_app_not_exist">该应用不存在</string>
+    <string name="nd3_sdk_error_icon_not_changed">图标没有变更</string>
+    <string name="nd3_sdk_error_no_custom_app_icon">无自定义图标</string>
+    <string name="nd3_sdk_error_pay_password_error">支付密码错误</string>
+    <string name="nd3_sdk_error_pay_account_not_actived">该账号未在商城开户</string>
+    <string name="nd3_sdk_error_pay_password_not_set">支付密码未设置</string>
+    <string name="nd3_sdk_error_pay_password_not_verify">支付密码未验证</string>
+    <string name="nd3_sdk_error_balance_not_enough">余额不足</string>
+    <string name="nd3_sdk_error_order_serial_duplicate">订单号重复</string>
+    <string name="nd3_sdk_error_page_required_not_valid">页码超过范围</string>
+    <string name="nd3_sdk_error_recharge_money_invalid">充值面额非法</string>
+    <string name="nd3_sdk_error_sms_recharge_account_invalid">短信支付账号无效</string>
+    <string name="nd3_sdk_error_no_phone_num">没有手机号码，账号未绑定手机号</string>
+    <string name="nd3_sdk_error_recharge_card_number_error">充值卡卡号无效</string>
+    <string name="nd3_sdk_error_recharge_card_password_error">充值卡密码无效</string>
+    <string name="nd3_sdk_error_recharge_card_type_not_support">充值卡类型不支持</string>
+    <string name="nd3_sdk_error_user_not_exist">该用户不存在</string>
+    <string name="nd3_sdk_error_friend_not_exist">该好友不存在</string>
+    <string name="nd3_sdk_error_not_allowed_to_be_added">用户不允许被添加好友</string>
+    <string name="nd3_sdk_error_already_be_your_friend">用户已经是您的好友</string>
+    <string name="nd3_sdk_error_note_length_invalid">备注长度不合法</string>
+    <string name="nd3_sdk_error_arrive_max_friend_num">您或对方已经到达好友个数上限</string>
+    <string name="nd3_sdk_error_app_id_invalid">应用Id不合法</string>
+    <string name="nd3_sdk_error_activity_type_invalid">动态类型不合法</string>
+    <string name="nd3_sdk_error_msg_not_exist">没有该条消息</string>
+    <string name="nd3_sdk_error_content_length_invalid">内容长度不合法</string>
+    <string name="nd3_sdk_error_not_allowed_to_send_msg">发送者被禁止发消息</string>
+    <string name="nd3_sdk_error_can_not_send_msg_to_self">不能给自己发送短消息</string>
+    <string name="nd3_sdk_error_client_tag">该标签为客户端标签</string>
+    <string name="nd3_sdk_error_invalid_command_tag">无效的标签指令</string>
+    <string name="nd3_sdk_error_invalid_content_tag">无效的标签文本</string>
+    <string name="nd3_sdk_error_custom_tag_arg_not_enough">自定义标签参数不足</string>
+    <string name="nd3_sdk_error_custom_tag_arg_not_invalid">自定义标签参数无效</string>
+    <string name="nd3_sdk_error_feedback_id_invalid">反馈类型无效</string>
+    <string name="nd3_sdk_error_too_much_account_logined">您手机卡登录账号个数已达上限</string>
+    <string name="nd3_sdk_error_app_unpass_checked">业务系统未通过审核</string>
+    <string name="nd3_sdk_error_act_unpermisstion_access">接口不允许调用</string>
+    <string name="nd3_sdk_error_ignore_upload">相同的通讯录已经上传，忽略此次上传</string>
+    
+     
+    <string name="nd3_sdk_error_cancel">取消操作</string>
+    <string name="nd3_sdk_error_param_invalid">参数无效</string>
+    <string name="nd3_sdk_error_icon_unexist">该图标不存在</string>
+    <string name="nd3_sdk_error_modeid_invalid">模板ID无效</string>
+    <string name="nd3_sdk_error_mode_param_invalid">模板参数无效</string>
+    <string name="nd3_sdk_error_pay_failure">支付失败</string>
+    <string name="nd3_sdk_error_cancel_pay">取消支付</string>
+    <string name="nd3_sdk_error_leadbroad_unexist">该排行榜不存在</string>
+    <string name="nd3_sdk_error_leadbroad_list_unexist">用户排行列表不存在</string>
+    <string name="nd3_sdk_error_unplay_friend">该用户没有好友在玩</string>
+    <string name="nd3_sdk_error_achive_unexist">成就不存在</string>
+    <string name="nd3_sdk_error_unbind_thirdaccount">用户没有绑定第三方账号</string>
+    <string name="nd3_sdk_error_repeat_share_content">分享内容重复</string>
+    <string name="nd3_sdk_error_unexist_order">无此订单</string>
+    <string name="nd3_sdk_error_substitue_uncurrent_user">该代付订单的代付人不是当前用户</string>
+    <string name="nd3_sdk_error_nonfriend">对方不是你的好友</string>
+    <string name="nd3_sdk_error_nonfriend_thirdaccount">该第三方账号没有好友</string>
+    <string name="nd3_sdk_error_binded_thirdplatform">已经绑定指定类型的第三方账号</string>
+    <string name="nd3_sdk_error_binded_other_91account">第三方账号已经绑定其他91账号</string>
+    <string name="nd3_sdk_error_binded_91account">已经绑定91账号</string>
+    <string name="nd3_sdk_error_miss_third_login_info">第三方登陆信息丢失</string>
+    <string name="nd3_sdk_error_unabled_check_thirdacc_password">无法验证第三方账号密码</string>
+    <string name="nd3_sdk_error_third_bind_91acc_exception">第三方账号绑定的91账号异常(停用等)</string>
+    
+    
+    
+    <string name="nd_sdk_error_product_cate_invalid">商品类型无效</string>
+    <string name="nd_sdk_error_fee_type_invalid">计费类型无效</string>
+    
+    <string name="nd_sdk_error_info_unexists">该第三方信息不存在</string>
+    <string name="nd_sdk_error_can_not_unbind">不能解除当前登录的第三方账号的绑定</string>
+    <string name="nd_sdk_error_not_match_account">当前登录的第三方账号与已绑定的第三方账号不符</string>
+    
+    
+    
+    <string name="nd_sdk_error_resend">重复发送</string>
+    <string name="nd_sdk_error_time_out">支付超时,请稍后重试</string>
+    <string name="nd_sdk_error_use_valid">虚拟物品使用标志无效</string>
+    <string name="nd_sdk_error_goods_id_valid">商品ID无效</string>
+    <string name="nd_sdk_error_sdk_valid">无效的平台SDK版本号</string>
+    
+    <string name="nd_sdk_error_mPhoto_too_large">图片大小不能超过1M</string>
+    
+    <string name="nd_sdk_error_phoneno_invalid">手机号码格式无效</string>
+    <string name="nd_sdk_error_rebind">重复绑定，账号已经绑定手机号</string>
+    <string name="nd_sdk_error_has_bind">手机号已经绑定其他账号</string>
+    <!-- <string name="nd_sdk_error_unbind">手机号码未绑定</string> -->
+    <string name="nd_sdk_error_phoneno_inconstistent">手机号码与绑定手机号码不一致</string>
+    <string name="nd_sdk_error_smscode_error">短信验证码错误</string>
+    <string name="nd_sdk_error_smscode_expired">短信验证码过期</string>
+    <string name="nd_sdk_error_unbind_phone">账号未绑定任何手机号</string>
+    <string name="nd_sdk_error_not_verified">未通过手机号码验证</string>
+    <string name="nd_sdk_error_un_condition">不符合抽奖条件</string>
+    <string name="nd_sdk_error_lotteryed">已经抽过奖</string> 
+    <string name="nd_sdk_error_send_too_more">短信发送次数过多</string>
+    <string name="nd_sdk_error_vip_cant_find">VIP用户无法使用手机号码找回密码 </string> 
+    <string name="nd_sdk_error_phoneno_before">手机号码前后不一致 </string>
+    
+    <string name="nd_sdk_error_contloginbyguest">有关联的91账号，不能以游客方式登录 </string>
+    <string name="nd_sdk_error_unneet_official">非游客登录状态 </string>
+    <string name="nd_sdk_error_uin_unvalid">Uin不合法 </string>    
+    <string name="nd_sdk_error_uin_unvalid_account">账号无效(可能是保留账号) </string>
+    <string name="nd_sdk_error_uin_token_unvalid">自动登录凭据失效，请重新输入密码登录</string>
+     
+</resources>

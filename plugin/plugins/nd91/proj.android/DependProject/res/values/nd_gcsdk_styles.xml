@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 靓点推荐-主标题 -->
+    <style name="nd_gcsdk_project_main_title">
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+    
+    <!-- 靓点推荐-副标题 -->
+    <style name="nd_gcsdk_project_sub_title">
+        <item name="android:textColor">#7fffffff</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+    
+    <!-- 靓点推荐-标签 -->
+    <style name="nd_gcsdk_project_label">
+        <item name="android:layout_width">50dip</item>
+        <item name="android:layout_height">21dip</item>
+        <item name="android:textColor">#ff8b8b8b</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/nd_gcsdk_label_bg</item>
+    </style>
+
+</resources>

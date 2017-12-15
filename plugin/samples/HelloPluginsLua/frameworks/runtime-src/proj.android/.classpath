@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/protocols/android/libPluginProtocol.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/admob/android/GoogleAdMobAdsSdk.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/admob/android/libPluginAdmob.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/twitter/android/libPluginSocialTwitter.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/twitter/android/signpost-commonshttp4-1.2.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/twitter/android/signpost-core-1.2.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/twitter/android/signpost-jetty6-1.2.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/twitter/android/twitter4j-core-android-3.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/facebook/android/android-support-v4.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/facebook/android/bolts.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/facebook/android/facebooksdk.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/facebook/android/libPluginFacebook.jar"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>

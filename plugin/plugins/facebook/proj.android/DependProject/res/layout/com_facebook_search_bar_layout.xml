@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/com_facebook_search_bar_view"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:background="@color/com_facebook_picker_search_bar_background"
+        >
+    <EditText
+            android:id="@+id/com_facebook_picker_search_text"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="5dp"
+            android:singleLine="true"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:textSize="16dp"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/com_facebook_picker_search_bar_text"
+            android:background="@color/com_facebook_picker_search_bar_background"
+            android:drawableLeft="@drawable/com_facebook_picker_magnifier"
+            android:drawablePadding="5dp"
+            android:imeOptions="actionDone"
+            />
+</LinearLayout>
