@@ -408,14 +408,14 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 					if (!vertices) {
 						if (weighted) {
 							deform2 = tempDeform;
-							memset(deform, 0, sizeof(float) * deformLength);
+							memset(deform2, 0, sizeof(float) * deformLength);
 						} else
 							deform2 = attachment->vertices;
 					} else {
 						int v, start = Json_getInt(valueMap, "offset", 0);
 						Json* vertex;
 						deform2 = tempDeform;
-						memset(deform, 0, sizeof(float) * start);
+						memset(deform2, 0, sizeof(float) * start);
 						if (self->scale == 1) {
 							for (vertex = vertices->child, v = start; vertex; vertex = vertex->next, ++v)
 								deform2[v] = vertex->valueFloat;
@@ -423,7 +423,7 @@ static spAnimation* _spSkeletonJson_readAnimation (spSkeletonJson* self, Json* r
 							for (vertex = vertices->child, v = start; vertex; vertex = vertex->next, ++v)
 								deform2[v] = vertex->valueFloat * self->scale;
 						}
-						memset(deform + v, 0, sizeof(float) * (deformLength - v));
+						memset(deform2 + v, 0, sizeof(float) * (deformLength - v));
 						if (!weighted) {
 							float* verticesAttachment = attachment->vertices;
 							for (v = 0; v < deformLength; ++v)
