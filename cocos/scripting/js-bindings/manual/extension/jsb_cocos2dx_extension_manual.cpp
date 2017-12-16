@@ -301,7 +301,7 @@ private:
         jsval dataVal = OBJECT_TO_JSVAL(p->obj);
 
         JS::RootedObject obj(cx, _JSTableViewDataSource);
-        JSAutoCompartment ac(cx, obj);
+        // JSAutoCompartment ac(cx, obj);
 
         if (JS_HasProperty(cx, obj, jsFunctionName.c_str(), &hasAction) && hasAction)
         {
@@ -334,7 +334,7 @@ private:
         dataVal[1] = ssize_to_jsval(cx,idx);
 
         JS::RootedObject obj(cx, _JSTableViewDataSource);
-        JSAutoCompartment ac(cx, obj);
+        // JSAutoCompartment ac(cx, obj);
 
         if (JS_HasProperty(cx, obj, jsFunctionName.c_str(), &hasAction) && hasAction)
         {
@@ -938,7 +938,7 @@ void __JSDownloaderDelegator::onError()
         JS::RootedValue callback(_cx, OBJECT_TO_JSVAL(_jsCallback));
         if (!callback.isNull()) {
             JS::RootedObject global(_cx, ScriptingCore::getInstance()->getGlobalObject());
-            JSAutoCompartment ac(_cx, global);
+            // JSAutoCompartment ac(_cx, global);
 
             jsval succeed = BOOLEAN_TO_JSVAL(false);
             JS::RootedValue retval(_cx);
@@ -954,7 +954,7 @@ void __JSDownloaderDelegator::onSuccess(Texture2D *tex)
     //Director::getInstance()->getScheduler()->performFunctionInCocosThread([this, tex]
     {
         JS::RootedObject global(_cx, ScriptingCore::getInstance()->getGlobalObject());
-        JSAutoCompartment ac(_cx, global);
+        // JSAutoCompartment ac(_cx, global);
 
         jsval valArr[2];
         if (tex)

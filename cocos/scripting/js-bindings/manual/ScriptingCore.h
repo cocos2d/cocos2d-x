@@ -84,6 +84,7 @@ private:
     JSContext *_cx;
     JS::PersistentRootedObject *_global;
     JS::PersistentRootedObject *_debugGlobal;
+    JSCompartment *_oldCompartment;
     SimpleRunLoop* _runLoop;
     bool _jsInited;
     bool _needCleanup;
@@ -555,6 +556,8 @@ public:
 private:
     void string_report(JS::HandleValue val);
     void initRegister();
+
+    JSObject* newGlobalObject(JSContext* cx, bool debug);
 
 public:
     int handleNodeEvent(void* data);
