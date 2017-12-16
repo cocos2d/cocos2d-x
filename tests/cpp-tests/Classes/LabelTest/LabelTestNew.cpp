@@ -568,7 +568,7 @@ LabelFNTMultiLineAlignment::LabelFNTMultiLineAlignment()
     auto size = Director::getInstance()->getWinSize();
 
     // create and initialize a Label
-    this->_labelShouldRetain = Label::createWithBMFont("fonts/markerFelt.fnt", LongSentencesExample, TextHAlignment::CENTER, size.width/1.5);
+    this->_labelShouldRetain = Label::createWithBMFont("fonts/markerFelt.fnt", "", TextHAlignment::CENTER, size.width/1.5);
     this->_labelShouldRetain->retain();
 
     this->_arrowsBarShouldRetain = Sprite::create("Images/arrowsBar.png");
@@ -583,8 +583,6 @@ LabelFNTMultiLineAlignment::LabelFNTMultiLineAlignment()
     auto stringMenu    = Menu::create(longSentences, lineBreaks, mixed, nullptr);
     stringMenu->alignItemsVertically();
 
-    longSentences->setColor(Color3B::RED);
-    _lastSentenceItem = longSentences;
     longSentences->setTag(LongSentences);
     lineBreaks->setTag(LineBreaks);
     mixed->setTag(Mixed);
@@ -597,8 +595,6 @@ LabelFNTMultiLineAlignment::LabelFNTMultiLineAlignment()
     auto alignmentMenu = Menu::create(left, center, right, nullptr);
     alignmentMenu->alignItemsHorizontallyWithPadding(alignmentItemPadding);
 
-    center->setColor(Color3B::RED);
-    _lastAlignmentItem = center;
     left->setTag(LeftAlign);
     center->setTag(CenterAlign);
     right->setTag(RightAlign);
@@ -612,10 +608,12 @@ LabelFNTMultiLineAlignment::LabelFNTMultiLineAlignment()
     this->_arrowsBarShouldRetain->setScaleX(arrowsWidth / this->_arrowsBarShouldRetain->getContentSize().width);
     this->_arrowsBarShouldRetain->setPosition(Vec2(((ArrowsMax + ArrowsMin) / 2) * size.width, this->_labelShouldRetain->getPosition().y));
 
-    this->snapArrowsToEdge();
-
     stringMenu->setPosition(Vec2(size.width/2, size.height - menuItemPaddingCenter));
     alignmentMenu->setPosition(Vec2(size.width/2, menuItemPaddingCenter+15));
+
+    this->selectSentenceItem(longSentences);
+    this->selectAlignmentItem(center);
+    this->snapArrowsToEdge();
 
     this->addChild(this->_labelShouldRetain);
     this->addChild(this->_arrowsBarShouldRetain);
@@ -641,40 +639,17 @@ std::string LabelFNTMultiLineAlignment::subtitle() const
     return "";
 }
 
-void LabelFNTMultiLineAlignment::stringChanged(cocos2d::Ref *sender)
+void LabelFNTMultiLineAlignment::selectAlignmentItem(cocos2d::MenuItemFont * item)
 {
-    auto item = (MenuItemFont*)sender;
-    item->setColor(Color3B::RED);
-    this->_lastAlignmentItem->setColor(Color3B::WHITE);
-    this->_lastAlignmentItem = item;
-
-    switch(item->getTag())
+    if (this->_lastAlignmentItem && this->_lastAlignmentItem != item)
     {
-    case LongSentences:
-        this->_labelShouldRetain->setString(LongSentencesExample);
-        break;
-    case LineBreaks:
-        this->_labelShouldRetain->setString(LineBreaksExample);
-        break;
-    case Mixed:
-        this->_labelShouldRetain->setString(MixedExample);
-        break;
-
-    default:
-        break;
+        this->_lastAlignmentItem->setColor(Color3B::WHITE);
     }
 
-    this->snapArrowsToEdge();
-}
-
-void LabelFNTMultiLineAlignment::alignmentChanged(cocos2d::Ref *sender)
-{
-    auto item = static_cast<MenuItemFont*>(sender);
-    item->setColor(Color3B::RED);
-    this->_lastAlignmentItem->setColor(Color3B::WHITE);
     this->_lastAlignmentItem = item;
+    item->setColor(Color3B::RED);
 
-    switch(item->getTag())
+    switch (item->getTag())
     {
     case LeftAlign:
         this->_labelShouldRetain->setAlignment(TextHAlignment::LEFT);
@@ -689,6 +664,49 @@ void LabelFNTMultiLineAlignment::alignmentChanged(cocos2d::Ref *sender)
     default:
         break;
     }
+}
+
+void LabelFNTMultiLineAlignment::selectSentenceItem(cocos2d::MenuItemFont* item)
+{
+    if (this->_lastSentenceItem && this->_lastSentenceItem != item)
+    {
+        this->_lastSentenceItem->setColor(Color3B::WHITE);
+    }
+
+    this->_lastSentenceItem = item;
+    item->setColor(Color3B::RED);
+
+    switch (item->getTag())
+    {
+    case LongSentences:
+        this->_labelShouldRetain->setString(LongSentencesExample);
+        break;
+    case LineBreaks:
+        this->_labelShouldRetain->setString(LineBreaksExample);
+        break;
+    case Mixed:
+        this->_labelShouldRetain->setString(MixedExample);
+        break;
+
+    default:
+        break;
+    }
+}
+
+void LabelFNTMultiLineAlignment::stringChanged(cocos2d::Ref *sender)
+{
+    auto item = (MenuItemFont*)sender;
+
+    selectSentenceItem(item);
+
+    this->snapArrowsToEdge();
+}
+
+void LabelFNTMultiLineAlignment::alignmentChanged(cocos2d::Ref *sender)
+{
+    auto item = static_cast<MenuItemFont*>(sender);
+
+    selectAlignmentItem(item);
 
     this->snapArrowsToEdge();
 }

@@ -152,13 +152,16 @@ public:
     void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void selectAlignmentItem(cocos2d::MenuItemFont* item);
+    void selectSentenceItem(cocos2d::MenuItemFont* item);
 
-public:
-    cocos2d::Label* _labelShouldRetain;
-    cocos2d::Sprite* _arrowsBarShouldRetain;
-    cocos2d::Sprite* _arrowsShouldRetain;
-    cocos2d::MenuItemFont *_lastSentenceItem, *_lastAlignmentItem;
-    bool _drag;
+protected:
+    cocos2d::Label* _labelShouldRetain = nullptr;
+    cocos2d::Sprite* _arrowsBarShouldRetain = nullptr;
+    cocos2d::Sprite* _arrowsShouldRetain = nullptr;
+    cocos2d::MenuItemFont *_lastSentenceItem = nullptr;
+    cocos2d::MenuItemFont *_lastAlignmentItem = nullptr;
+    bool _drag = false;
 };
 
 class LabelFNTUNICODELanguages : public AtlasDemoNew
