@@ -1,37 +1,9 @@
 $python = "C:\\Python27\\python.exe"
 
-function Download-Url
-{
-	param([string]$url, [string]$output)
-
-	(New-Object Net.WebClient).DownloadFile($url, $output)
-}
-
-function LS
-{
-	param([string]$path)
-
-	Get-ChildItem $path | get-acl
-}
-
 function Download-Deps
 {
-    $json = Get-Content -Raw -Path "$env:APPVEYOR_BUILD_FOLDER/external/config.json" | ConvertFrom-Json
-    $version = $json.version
-    $url = "https://github.com/cocos2d/cocos2d-x-3rd-party-libs-bin/archive/$version.zip"
-    $output = "$env:APPVEYOR_BUILD_FOLDER/$version.zip"
-    Write-Host "downloading $url"
-    Download-Url $url $output
-    Write-Host "finish downloading $url"
-
-    Write-Host "unzip $url"
-    $zipfile = $output
-    $output = $env:APPVEYOR_BUILD_FOLDER
-    Add-Type -AssemblyName System.IO.Compression.FileSystem
-    [System.IO.Compression.ZipFile]::ExtractToDirectory($zipfile, $output)
-    $file_subffix = $version.Substring(1)
-    Copy-Item -Path "$output/cocos2d-x-3rd-party-libs-bin-$file_subffix/*" -Destination "$env:APPVEYOR_BUILD_FOLDER/external" -Recurse
-    Write-Host "finish unziping $url"
+    Write-Host "Download-Deps"
+    & $python $env:APPVEYOR_BUILD_FOLDER\download-deps.py --remove-download=False
 }
 
 function Download-NDK
