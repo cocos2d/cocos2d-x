@@ -22,13 +22,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Node3DReader.h"
+#include "editor-support/cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
 
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/CSParse3DBinary_generated.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/CSParse3DBinary_generated.h"
 
-#include "cocostudio/FlatBuffersSerialize.h"
-#include "cocostudio/WidgetReader/NodeReader/NodeReader.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
+#include "editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -56,7 +56,7 @@ namespace cocostudio
     {
         if (!_instanceNode3DReader)
         {
-            _instanceNode3DReader = new Node3DReader();
+            _instanceNode3DReader = new (std::nothrow) Node3DReader();
         }
         
         return _instanceNode3DReader;
@@ -359,13 +359,13 @@ namespace cocostudio
             child = child->NextSiblingElement();
         }
         
-        Vector3 postion3D(position.x, position.y, position.z);
+        Vector3 position3D(position.x, position.y, position.z);
         Vector3 rotation3D(rotation.x, rotation.y, rotation.z);
         Vector3 scale3D(scale.x, scale.y, scale.z);
 
         auto options = CreateNode3DOption(*builder,
                                            nodeOptions,
-                                           &postion3D,
+                                           &position3D,
                                            &rotation3D,
                                            &scale3D,
                                            cameraMask

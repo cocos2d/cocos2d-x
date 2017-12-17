@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -64,7 +64,7 @@ public:
     /**
      * create Animate3D
      * @param animation used to generate animate3D
-     * @param formTime 
+     * @param fromTime
      * @param duration Time the Animate3D lasts
      * @return Animate3D created using animate
      */

@@ -1,8 +1,8 @@
 #import "LuaObjectCBridgeTest.h"
 
 #include "cocos2d.h"
-#include "CCLuaEngine.h"
-#include "CCLuaBridge.h"
+#include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/CCLuaBridge.h"
 
 using namespace cocos2d;
 
@@ -71,6 +71,10 @@ static LuaObjectCBridgeTest* s_instance = nil;
         stack->pushString("success");
         stack->executeFunction(1);
     }
+}
+
++(void) printLuaTableToDictionary:(NSDictionary *)dict{
+    NSLog(@"lua to OC data is :%@",dict);
 }
 
 - (id)init

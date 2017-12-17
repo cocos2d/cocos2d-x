@@ -2,7 +2,7 @@
  * Copyright (c) 2008 Radu Gruian
  * Copyright (c) 2011 Vit Valentin
  * Copyright (c) 2012 cocos2d-x.org
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -88,7 +88,7 @@ public:
      * @js NA
      * @param controlPoint A control point.
      */
-    void addControlPoint(Vec2 controlPoint);
+    void addControlPoint(const Vec2& controlPoint);
 
     /** Inserts a controlPoint at index.
      *
@@ -96,7 +96,7 @@ public:
      * @param controlPoint A control point.
      * @param index Insert the point to array in index.
      */
-    void insertControlPoint(Vec2 &controlPoint, ssize_t index);
+    void insertControlPoint(const Vec2& controlPoint, ssize_t index);
 
     /** Replaces an existing controlPoint at index.
      *
@@ -104,7 +104,7 @@ public:
      * @param controlPoint A control point.
      * @param index Replace the point to array in index.
      */
-    void replaceControlPoint(Vec2 &controlPoint, ssize_t index);
+    void replaceControlPoint(const Vec2& controlPoint, ssize_t index);
 
     /** Get the value of a controlPoint at a given index.
      *
@@ -112,7 +112,7 @@ public:
      * @param index Get the point in index.
      * @return A Vec2.
      */
-    Vec2 getControlPointAtIndex(ssize_t index);
+    const Vec2& getControlPointAtIndex(ssize_t index) const;
 
     /** Deletes a control point at a given index
      *
@@ -147,14 +147,14 @@ public:
     /**
      * @js NA
      */
-    const std::vector<Vec2*>* getControlPoints() const;
+    const std::vector<Vec2>& getControlPoints() const;
     /**
      * @js NA
      */
-    void setControlPoints(std::vector<Vec2*> *controlPoints);
+    void setControlPoints(std::vector<Vec2> controlPoints);
 private:
     /** Array that contains the control points. */
-    std::vector<Vec2*> *_controlPoints;
+    std::vector<Vec2> _controlPoints;
 };
 
 /** @class CardinalSplineTo
@@ -173,7 +173,7 @@ public:
      * @code
      * When this function bound to js or lua,the input params are changed.
      * In js: var create(var t,var table)
-     * In lua: lcaol create(local t, local table)
+     * In lua: local create(local t, local table)
      * @endcode
      */
     static CardinalSplineTo* create(float duration, PointArray* points, float tension);
@@ -200,17 +200,17 @@ public:
      *
      * @param newPos The new position.
      */
-    virtual void updatePosition(Vec2 &newPos);
+    virtual void updatePosition(const Vec2 &newPos);
     /** Return a PointArray.
      *
      * @return A PointArray.
      */
-    inline PointArray* getPoints() { return _points; }
+    PointArray* getPoints() { return _points; }
     /**
      * @js NA
      * @lua NA
      */
-    inline void setPoints(PointArray* points)
+    void setPoints(PointArray* points)
     {
         CC_SAFE_RETAIN(points);
         CC_SAFE_RELEASE(_points);
@@ -232,8 +232,8 @@ protected:
     PointArray *_points;
     float _deltaT;
     float _tension;
-    Vec2	_previousPosition;
-    Vec2	_accumulatedDiff;
+    Vec2 _previousPosition;
+    Vec2 _accumulatedDiff;
 };
 
 /** @class CardinalSplineBy
@@ -249,7 +249,7 @@ public:
      * @code
      * When this function bound to js or lua,the input params are changed.
      * In js: var create(var t,var table).
-     * In lua: lcaol create(local t, local table).
+     * In lua: local create(local t, local table).
      * @param duration In seconds.
      * @param point An PointArray.
      * @param tension Goodness of fit.
@@ -261,7 +261,7 @@ public:
 
     // Overrides
     virtual void startWithTarget(Node *target) override;
-    virtual void updatePosition(Vec2 &newPos) override;
+    virtual void updatePosition(const Vec2 &newPos) override;
     virtual CardinalSplineBy *clone() const override;
     virtual CardinalSplineBy* reverse() const override;
 
@@ -285,7 +285,7 @@ public:
      * @code
      * When this function bound to js or lua,the input params are changed.
      * In js: var create(var dt,var table).
-     * In lua: lcaol create(local dt, local table).
+     * In lua: local create(local dt, local table).
      * @endcode
      */
     static CatmullRomTo* create(float dt, PointArray* points);
@@ -318,7 +318,7 @@ public:
      * @code
      * When this function bound to js or lua,the input params are changed.
      * In js: var create(var dt,var table).
-     * In lua: lcaol create(local dt, local table).
+     * In lua: local create(local dt, local table).
      * @endcode
      */
     static CatmullRomBy* create(float dt, PointArray* points);
@@ -337,7 +337,7 @@ public:
 };
 
 /** Returns the Cardinal Spline position for a given set of control points, tension and time */
-extern CC_DLL Vec2 ccCardinalSplineAt(Vec2 &p0, Vec2 &p1, Vec2 &p2, Vec2 &p3, float tension, float t);
+extern CC_DLL Vec2 ccCardinalSplineAt(const Vec2 &p0, const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, float tension, float t);
 
 // end of actions group
 /// @}

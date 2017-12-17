@@ -15,12 +15,18 @@
 -- draw the background
 -- @function [parent=#CameraBackgroundBrush] drawBackground 
 -- @param self
--- @param #cc.Camera camera
+-- @param #cc.Camera 
 -- @return CameraBackgroundBrush#CameraBackgroundBrush self (return value: cc.CameraBackgroundBrush)
         
 --------------------------------
 -- 
 -- @function [parent=#CameraBackgroundBrush] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#CameraBackgroundBrush] isValid 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         

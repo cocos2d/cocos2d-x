@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -322,7 +322,7 @@ NS_CC_BEGIN
 //	@remarks
 //		Use objectspace for the vectors and only transform as soon as a particle is emitted.
 //	*/
-//	list<Vec3>::iterator iterator = mSpawnPositionList.end();
+//	std::list<Vec3>::iterator iterator = mSpawnPositionList.end();
 //	Vec3 start = startVector;
 //	if (lengthIncrement > 0.0f)
 //	{

@@ -13,6 +13,20 @@ public:
     CREATE_FUNC(UITextAtlasTest);
 
     virtual bool init() override;
+    void printWidgetResources(cocos2d::Ref* sender);
+protected:
+    cocos2d::ui::TextAtlas* _textAtlas;
+};
+
+class UITextAtlasETC1ShadowTest : public UIScene
+{
+public:
+    CREATE_FUNC(UITextAtlasETC1ShadowTest);
+    
+    virtual bool init() override;
+    void printWidgetResources(cocos2d::Ref* sender);
+protected:
+    cocos2d::ui::TextAtlas* _textAtlas;
 };
 
 #endif /* defined(__TestCpp__UITextAtlasTest__) */

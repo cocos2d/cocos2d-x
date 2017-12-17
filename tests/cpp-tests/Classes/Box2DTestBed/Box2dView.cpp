@@ -160,7 +160,7 @@ void Box2DView::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 void Box2DView::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    CCASSERT(nullptr != director, "Director is null when setting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
@@ -212,12 +212,12 @@ void Box2DView::onTouchEnded(Touch* touch, Event* event)
 
 void Box2DView::onKeyPressed(EventKeyboard::KeyCode code, Event* event)
 {
-    log("Box2dView:onKeyPressed, keycode: %d", code);
+    log("Box2dView:onKeyPressed, keycode: %d", static_cast<int>(code));
     m_test->Keyboard(static_cast<unsigned char>(code));
 }
 
 void Box2DView::onKeyReleased(EventKeyboard::KeyCode code, Event* event)
 {
-    log("onKeyReleased, keycode: %d", code);
+    log("onKeyReleased, keycode: %d", static_cast<int>(code));
     m_test->KeyboardUp(static_cast<unsigned char>(code));
 }

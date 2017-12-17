@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -54,7 +54,7 @@ class MeshVertexData;
  * @js NA
  * @lua NA
  */
-class MeshIndexData : public Ref
+class CC_DLL MeshIndexData : public Ref
 {
 public:
     /** create  */
@@ -99,7 +99,7 @@ protected:
  * the MeshVertexData class.
  * @brief the MeshIndexData contain all of the vertices data which mesh need.
  */
-class MeshVertexData : public Ref
+class CC_DLL MeshVertexData : public Ref
 {
     friend class Sprite3D;
     friend class Mesh;

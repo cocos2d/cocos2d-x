@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,6 +25,7 @@ THE SOFTWARE.
 
 #include "Camera3DTest.h"
 #include "testResource.h"
+#include "ui/UISlider.h"
 
 USING_NS_CC;
 
@@ -43,6 +44,7 @@ Camera3DTests::Camera3DTests()
     ADD_TEST_CASE(FogTestDemo);
     ADD_TEST_CASE(CameraArcBallDemo);
     ADD_TEST_CASE(CameraFrameBufferTest);
+    ADD_TEST_CASE(BackgroundColorBrushTest);
 }
 
 //------------------------------------------------------------------
@@ -56,7 +58,7 @@ CameraRotationTest::CameraRotationTest()
     auto s = Director::getInstance()->getWinSize();
     
     _camControlNode = Node::create();
-    _camControlNode->setNormalizedPosition(Vec2(.5,.5));
+    _camControlNode->setPositionNormalized(Vec2(.5,.5));
     addChild(_camControlNode);
 
     _camNode = Node::create();
@@ -444,8 +446,6 @@ void Camera3DTestDemo::move3D(float elapsedTime)
         Vec3 offset = newFaceDir * 25.0f * elapsedTime;
         curPos+=offset;
         _sprite3D->setPosition3D(curPos);
-        offset.x=offset.x;
-        offset.z=offset.z;
         if(_cameraType==CameraType::ThirdPerson)
         {
             Vec3 cameraPos= _camera->getPosition3D();
@@ -734,7 +734,7 @@ void CameraCullingDemo::onEnter()
     addChild(layer3D,0);
     _layer3D=layer3D;
     
-    // swich camera
+    // switch camera
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(20);
     
@@ -894,7 +894,7 @@ void CameraCullingDemo::addSpriteCallback(Ref* sender)
     
     // update sprite number
     char szText[16];
-    sprintf(szText,"%ld sprits",_layer3D->getChildrenCount());
+    sprintf(szText,"%ld sprits", static_cast<long>(_layer3D->getChildrenCount()));
     _labelSprite3DCount->setString(szText);
 }
 
@@ -922,7 +922,7 @@ void CameraCullingDemo::delSpriteCallback(Ref* sender)
     
     // update sprite number
     char szText[16];
-    sprintf(szText,"%ld sprits",_layer3D->getChildrenCount());
+    sprintf(szText,"%ld sprits", static_cast<long>(_layer3D->getChildrenCount()));
     _labelSprite3DCount->setString(szText);
 }
 
@@ -1013,7 +1013,7 @@ void CameraArcBallDemo::onEnter()
     listener->onTouchesMoved = CC_CALLBACK_2(CameraArcBallDemo::onTouchsMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-    // swich camera
+    // switch camera
     MenuItemFont::setFontName("fonts/arial.ttf");
     MenuItemFont::setFontSize(20);
     
@@ -1164,7 +1164,6 @@ void CameraArcBallDemo::updateCameraTransform()
     Mat4::createTranslation(_center, &center);
     Mat4 result = center * rot * trans;
     _camera->setNodeToParentTransform(result);
-
 }
 
 void CameraArcBallDemo::switchOperateCallback(Ref* sender)
@@ -1231,7 +1230,7 @@ void FogTestDemo::onEnter()
     listener->onTouchesMoved = CC_CALLBACK_2(FogTestDemo::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-    // swich fog type
+    // switch fog type
     TTFConfig ttfConfig("fonts/arial.ttf", 20);
     
     auto label1 = Label::createWithTTF(ttfConfig,"Linear ");
@@ -1454,7 +1453,7 @@ void CameraFrameBufferTest::onEnter()
     fbo->attachRenderTarget(rt);
     fbo->attachDepthStencilTarget(rtDS);
     auto sprite = Sprite::createWithTexture(fbo->getRenderTarget()->getTexture());
-    sprite->setScale(0.3);
+    sprite->setScale(0.3f);
     sprite->runAction(RepeatForever::create(RotateBy::create(1, 90)));
     sprite->setPosition(size.width/2, size.height/2);
     addChild(sprite);
@@ -1477,4 +1476,86 @@ void CameraFrameBufferTest::onEnter()
     camera->setFrameBufferObject(fbo);
     fbo->setClearColor(Color4F(1,1,1,1));
     addChild(camera);
+}
+
+BackgroundColorBrushTest::BackgroundColorBrushTest()
+{
+}
+
+BackgroundColorBrushTest::~BackgroundColorBrushTest()
+{
+}
+
+std::string BackgroundColorBrushTest::title() const
+{
+    return "CameraBackgroundColorBrush Test";
+}
+
+std::string BackgroundColorBrushTest::subtitle() const
+{
+    return "right side object colored by CameraBG";
+}
+
+void BackgroundColorBrushTest::onEnter()
+{
+    CameraBaseTest::onEnter();
+    
+    auto s = Director::getInstance()->getWinSize();
+    
+    {
+        // 1st Camera
+        auto camera = Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
+        camera->setPosition3D(Vec3(0, 0, 200));
+        camera->lookAt(Vec3::ZERO);
+        camera->setDepth(-2);
+        camera->setCameraFlag(CameraFlag::USER1);
+        addChild(camera);
+        
+        // 3D model
+        auto model = Sprite3D::create("Sprite3DTest/boss1.obj");
+        model->setScale(4);
+        model->setPosition3D(Vec3(20, 0, 0));
+        model->setTexture("Sprite3DTest/boss.png");
+        model->setCameraMask(static_cast<unsigned short>(CameraFlag::USER1));
+        addChild(model);
+        model->runAction(RepeatForever::create(RotateBy::create(1.f, Vec3(10, 20, 30))));
+    }
+    
+    {
+        auto base = Node::create();
+        base->setContentSize(s);
+        base->setCameraMask(static_cast<unsigned short>(CameraFlag::USER2));
+        addChild(base);
+        
+        // 2nd Camera
+        auto camera = Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
+        auto colorBrush = CameraBackgroundBrush::createColorBrush(Color4F(.1f, .1f, 1.f, .5f), 1.f);
+        camera->setBackgroundBrush(colorBrush);
+        camera->setPosition3D(Vec3(0, 0, 200));
+        camera->lookAt(Vec3::ZERO);
+        camera->setDepth(-1);
+        camera->setCameraFlag(CameraFlag::USER2);
+        base->addChild(camera);
+        
+        // for alpha setting
+        auto slider = ui::Slider::create();
+        slider->loadBarTexture("cocosui/sliderTrack.png");
+        slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+        slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+        slider->setPosition(Vec2(s.width/2, s.height/4));
+        slider->setPercent(50);
+        slider->addEventListener([slider, colorBrush](Ref*, ui::Slider::EventType){
+            colorBrush->setColor(Color4F(.1f, .1f, 1.f, (float)slider->getPercent()/100.f));
+        });
+        addChild(slider);
+        
+        // 3D model for 2nd camera
+        auto model = Sprite3D::create("Sprite3DTest/boss1.obj");
+        model->setScale(4);
+        model->setPosition3D(Vec3(-20, 0, 0));
+        model->setTexture("Sprite3DTest/boss.png");
+        model->setCameraMask(static_cast<unsigned short>(CameraFlag::USER2));
+        base->addChild(model);
+        model->runAction(RepeatForever::create(RotateBy::create(1.f, Vec3(10, 20, 30))));
+    }
 }

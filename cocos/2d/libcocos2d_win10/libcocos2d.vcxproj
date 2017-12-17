@@ -27,6 +27,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\extensions\assets-manager\AssetsManager.cpp" />
+    <ClCompile Include="..\..\..\extensions\assets-manager\AssetsManagerEx.cpp" />
+    <ClCompile Include="..\..\..\extensions\assets-manager\CCEventAssetsManagerEx.cpp" />
+    <ClCompile Include="..\..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.cpp" />
+    <ClCompile Include="..\..\..\extensions\assets-manager\Manifest.cpp" />
     <ClCompile Include="..\..\..\extensions\ExtensionDeprecated.cpp" />
     <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCControl.cpp" />
     <ClCompile Include="..\..\..\extensions\GUI\CCControlExtension\CCControlButton.cpp" />
@@ -230,6 +235,32 @@
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_go.cpp" />
     <ClCompile Include="..\..\..\external\flatbuffers\idl_gen_text.cpp" />
     <ClCompile Include="..\..\..\external\flatbuffers\idl_parser.cpp" />
+    <ClCompile Include="..\..\..\external\md5\md5.c">
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsWinRT>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ForcedIncludeFiles>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</CompileAsWinRT>
+      <CompileAsWinRT Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsWinRT>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ForcedIncludeFiles>
+    </ClCompile>
     <ClCompile Include="..\..\..\external\poly2tri\common\shapes.cc" />
     <ClCompile Include="..\..\..\external\poly2tri\sweep\advancing_front.cc" />
     <ClCompile Include="..\..\..\external\poly2tri\sweep\cdt.cc" />
@@ -276,6 +307,7 @@
     <ClCompile Include="..\..\3d\CCMesh.cpp" />
     <ClCompile Include="..\..\3d\CCMeshSkin.cpp" />
     <ClCompile Include="..\..\3d\CCMeshVertexIndexData.cpp" />
+    <ClCompile Include="..\..\3d\CCMotionStreak3D.cpp" />
     <ClCompile Include="..\..\3d\CCOBB.cpp" />
     <ClCompile Include="..\..\3d\CCObjLoader.cpp" />
     <ClCompile Include="..\..\3d\CCPlane.cpp" />
@@ -409,6 +441,7 @@
     </ClCompile>
     <ClCompile Include="..\..\base\CCIMEDispatcher.cpp" />
     <ClCompile Include="..\..\base\CCNinePatchImageParser.cpp" />
+    <ClCompile Include="..\..\base\CCStencilStateManager.cpp" />
     <ClCompile Include="..\..\base\CCNS.cpp" />
     <ClCompile Include="..\..\base\CCProfiling.cpp" />
     <ClCompile Include="..\..\base\CCProperties.cpp" />
@@ -502,6 +535,7 @@
     <ClCompile Include="..\..\editor-support\cocostudio\CocoStudio.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\DictionaryHelper.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\FlatBuffersSerialize.cpp" />
+    <ClCompile Include="..\..\editor-support\cocostudio\LocalizationManager.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\TriggerBase.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\TriggerMng.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\TriggerObj.cpp" />
@@ -514,6 +548,7 @@
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.cpp" />
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.cpp" />
@@ -531,6 +566,7 @@
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.cpp" />
+    <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\TextAtlasReader\TextAtlasReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.cpp" />
     <ClCompile Include="..\..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.cpp" />
@@ -552,10 +588,13 @@
     <ClCompile Include="..\..\navmesh\CCNavMeshDebugDraw.cpp" />
     <ClCompile Include="..\..\navmesh\CCNavMeshObstacle.cpp" />
     <ClCompile Include="..\..\navmesh\CCNavMeshUtils.cpp" />
+    <ClCompile Include="..\..\network\CCDownloader-curl.cpp" />
+    <ClCompile Include="..\..\network\CCDownloader.cpp" />
     <ClCompile Include="..\..\network\HttpClient-winrt.cpp" />
     <ClCompile Include="..\..\network\HttpConnection-winrt.cpp" />
     <ClCompile Include="..\..\network\HttpCookie.cpp" />
     <ClCompile Include="..\..\network\SocketIO.cpp" />
+    <ClCompile Include="..\..\network\Uri.cpp" />
     <ClCompile Include="..\..\network\WebSocket.cpp" />
     <ClCompile Include="..\..\physics3d\CCPhysics3D.cpp" />
     <ClCompile Include="..\..\physics3d\CCPhysics3DComponent.cpp" />
@@ -565,11 +604,9 @@
     <ClCompile Include="..\..\physics3d\CCPhysics3DShape.cpp" />
     <ClCompile Include="..\..\physics3d\CCPhysics3DWorld.cpp" />
     <ClCompile Include="..\..\physics3d\CCPhysicsSprite3D.cpp" />
-    <ClCompile Include="..\..\physics\CCComponentPhysics2d.cpp" />
     <ClCompile Include="..\..\physics\CCPhysicsBody.cpp" />
     <ClCompile Include="..\..\physics\CCPhysicsContact.cpp" />
     <ClCompile Include="..\..\physics\CCPhysicsJoint.cpp" />
-    <ClCompile Include="..\..\physics\CCPhysicsManager.cpp" />
     <ClCompile Include="..\..\physics\CCPhysicsShape.cpp" />
     <ClCompile Include="..\..\physics\CCPhysicsWorld.cpp" />
     <ClCompile Include="..\..\platform\CCFileUtils.cpp" />
@@ -632,6 +669,7 @@
     <ClCompile Include="..\..\ui\UIButton.cpp" />
     <ClCompile Include="..\..\ui\UIAbstractCheckButton.cpp" />
     <ClCompile Include="..\..\ui\UICheckBox.cpp" />
+    <ClCompile Include="..\..\ui\UIEditBox\UIEditBoxImpl-common.cpp" />
     <ClCompile Include="..\..\ui\UIRadioButton.cpp" />
     <ClCompile Include="..\..\ui\UIDeprecated.cpp" />
     <ClCompile Include="..\..\ui\UIEditBox\UIEditBox.cpp" />
@@ -646,18 +684,24 @@
     <ClCompile Include="..\..\ui\UIListView.cpp" />
     <ClCompile Include="..\..\ui\UILoadingBar.cpp" />
     <ClCompile Include="..\..\ui\UIPageView.cpp" />
+    <ClCompile Include="..\..\ui\UIPageViewIndicator.cpp" />
     <ClCompile Include="..\..\ui\UIRelativeBox.cpp" />
     <ClCompile Include="..\..\ui\UIRichText.cpp" />
     <ClCompile Include="..\..\ui\UIScale9Sprite.cpp" />
     <ClCompile Include="..\..\ui\UIScrollView.cpp" />
     <ClCompile Include="..\..\ui\UIScrollViewBar.cpp" />
     <ClCompile Include="..\..\ui\UISlider.cpp" />
+    <ClCompile Include="..\..\ui\UITabControl.cpp" />
     <ClCompile Include="..\..\ui\UIText.cpp" />
     <ClCompile Include="..\..\ui\UITextAtlas.cpp" />
     <ClCompile Include="..\..\ui\UITextBMFont.cpp" />
     <ClCompile Include="..\..\ui\UITextField.cpp" />
     <ClCompile Include="..\..\ui\UIVBox.cpp" />
     <ClCompile Include="..\..\ui\UIWidget.cpp" />
+    <ClCompile Include="..\..\vr\CCVRDistortion.cpp" />
+    <ClCompile Include="..\..\vr\CCVRDistortionMesh.cpp" />
+    <ClCompile Include="..\..\vr\CCVRGenericHeadTracker.cpp" />
+    <ClCompile Include="..\..\vr\CCVRGenericRenderer.cpp" />
     <ClCompile Include="..\CCAction.cpp" />
     <ClCompile Include="..\CCActionCamera.cpp" />
     <ClCompile Include="..\CCActionCatmullRom.cpp" />
@@ -731,6 +775,11 @@
     <ClCompile Include="..\CCTweenFunction.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\extensions\assets-manager\AssetsManager.h" />
+    <ClInclude Include="..\..\..\extensions\assets-manager\AssetsManagerEx.h" />
+    <ClInclude Include="..\..\..\extensions\assets-manager\CCEventAssetsManagerEx.h" />
+    <ClInclude Include="..\..\..\extensions\assets-manager\CCEventListenerAssetsManagerEx.h" />
+    <ClInclude Include="..\..\..\extensions\assets-manager\Manifest.h" />
     <ClInclude Include="..\..\..\extensions\cocos-ext.h" />
     <ClInclude Include="..\..\..\extensions\ExtensionDeprecated.h" />
     <ClInclude Include="..\..\..\extensions\ExtensionExport.h" />
@@ -909,6 +958,43 @@
     <ClInclude Include="..\..\..\external\flatbuffers\flatbuffers.h" />
     <ClInclude Include="..\..\..\external\flatbuffers\idl.h" />
     <ClInclude Include="..\..\..\external\flatbuffers\util.h" />
+    <ClInclude Include="..\..\..\external\json\allocators.h" />
+    <ClInclude Include="..\..\..\external\json\document-wrapper.h" />
+    <ClInclude Include="..\..\..\external\json\document.h" />
+    <ClInclude Include="..\..\..\external\json\encodedstream.h" />
+    <ClInclude Include="..\..\..\external\json\encodings.h" />
+    <ClInclude Include="..\..\..\external\json\error\en.h" />
+    <ClInclude Include="..\..\..\external\json\error\error.h" />
+    <ClInclude Include="..\..\..\external\json\filereadstream.h" />
+    <ClInclude Include="..\..\..\external\json\filewritestream.h" />
+    <ClInclude Include="..\..\..\external\json\fwd.h" />
+    <ClInclude Include="..\..\..\external\json\internal\biginteger.h" />
+    <ClInclude Include="..\..\..\external\json\internal\diyfp.h" />
+    <ClInclude Include="..\..\..\external\json\internal\dtoa.h" />
+    <ClInclude Include="..\..\..\external\json\internal\ieee754.h" />
+    <ClInclude Include="..\..\..\external\json\internal\itoa.h" />
+    <ClInclude Include="..\..\..\external\json\internal\meta.h" />
+    <ClInclude Include="..\..\..\external\json\internal\pow10.h" />
+    <ClInclude Include="..\..\..\external\json\internal\regex.h" />
+    <ClInclude Include="..\..\..\external\json\internal\stack.h" />
+    <ClInclude Include="..\..\..\external\json\internal\strfunc.h" />
+    <ClInclude Include="..\..\..\external\json\internal\strtod.h" />
+    <ClInclude Include="..\..\..\external\json\internal\swap.h" />
+    <ClInclude Include="..\..\..\external\json\istreamwrapper.h" />
+    <ClInclude Include="..\..\..\external\json\memorybuffer.h" />
+    <ClInclude Include="..\..\..\external\json\memorystream.h" />
+    <ClInclude Include="..\..\..\external\json\msinttypes\inttypes.h" />
+    <ClInclude Include="..\..\..\external\json\msinttypes\stdint.h" />
+    <ClInclude Include="..\..\..\external\json\ostreamwrapper.h" />
+    <ClInclude Include="..\..\..\external\json\pointer.h" />
+    <ClInclude Include="..\..\..\external\json\prettywriter.h" />
+    <ClInclude Include="..\..\..\external\json\rapidjson.h" />
+    <ClInclude Include="..\..\..\external\json\reader.h" />
+    <ClInclude Include="..\..\..\external\json\schema.h" />
+    <ClInclude Include="..\..\..\external\json\stream.h" />
+    <ClInclude Include="..\..\..\external\json\stringbuffer.h" />
+    <ClInclude Include="..\..\..\external\json\writer.h" />
+    <ClInclude Include="..\..\..\external\md5\md5.h" />
     <ClInclude Include="..\..\..\external\poly2tri\common\shapes.h" />
     <ClInclude Include="..\..\..\external\poly2tri\common\utils.h" />
     <ClInclude Include="..\..\..\external\poly2tri\poly2tri.h" />
@@ -935,6 +1021,7 @@
     <ClInclude Include="..\..\3d\CCMesh.h" />
     <ClInclude Include="..\..\3d\CCMeshSkin.h" />
     <ClInclude Include="..\..\3d\CCMeshVertexIndexData.h" />
+    <ClInclude Include="..\..\3d\CCMotionStreak3D.h" />
     <ClInclude Include="..\..\3d\CCOBB.h" />
     <ClInclude Include="..\..\3d\CCObjLoader.h" />
     <ClInclude Include="..\..\3d\CCPlane.h" />
@@ -999,6 +1086,7 @@
     <ClInclude Include="..\..\base\ccMacros.h" />
     <ClInclude Include="..\..\base\CCMap.h" />
     <ClInclude Include="..\..\base\CCNinePatchImageParser.h" />
+    <ClInclude Include="..\..\base\CCStencilStateManager.h" />
     <ClInclude Include="..\..\base\CCNS.h" />
     <ClInclude Include="..\..\base\CCProfiling.h" />
     <ClInclude Include="..\..\base\CCProperties.h" />
@@ -1111,6 +1199,7 @@
     <ClInclude Include="..\..\editor-support\cocostudio\CSParseBinary_generated.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\DictionaryHelper.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\FlatBuffersSerialize.h" />
+    <ClInclude Include="..\..\editor-support\cocostudio\LocalizationManager.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\TriggerBase.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\TriggerMng.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\TriggerObj.h" />
@@ -1124,6 +1213,7 @@
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\GameNode3DReader\GameNode3DReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\ImageViewReader\ImageViewReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\LayoutReader\LayoutReader.h" />
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\Light3DReader\Light3DReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\ListViewReader\ListViewReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\LoadingBarReader\LoadingBarReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.h" />
@@ -1142,6 +1232,8 @@
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\SliderReader\SliderReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\SpriteReader\SpriteReader.h" />
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TabControlReader\CSTabControl_generated.h" />
+    <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TabControlReader\TabControlReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TextAtlasReader\TextAtlasReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.h" />
     <ClInclude Include="..\..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.h" />
@@ -1166,12 +1258,16 @@
     <ClInclude Include="..\..\navmesh\CCNavMeshDebugDraw.h" />
     <ClInclude Include="..\..\navmesh\CCNavMeshObstacle.h" />
     <ClInclude Include="..\..\navmesh\CCNavMeshUtils.h" />
+    <ClInclude Include="..\..\network\CCDownloader-curl.h" />
+    <ClInclude Include="..\..\network\CCDownloader.h" />
+    <ClInclude Include="..\..\network\CCIDownloaderImpl.h" />
     <ClInclude Include="..\..\network\HttpClient.h" />
     <ClInclude Include="..\..\network\HttpConnection-winrt.h" />
     <ClInclude Include="..\..\network\HttpCookie.h" />
     <ClInclude Include="..\..\network\HttpRequest.h" />
     <ClInclude Include="..\..\network\HttpResponse.h" />
     <ClInclude Include="..\..\network\SocketIO.h" />
+    <ClInclude Include="..\..\network\Uri.h" />
     <ClInclude Include="..\..\network\WebSocket.h" />
     <ClInclude Include="..\..\physics3d\CCPhysics3D.h" />
     <ClInclude Include="..\..\physics3d\CCPhysics3DComponent.h" />
@@ -1181,12 +1277,10 @@
     <ClInclude Include="..\..\physics3d\CCPhysics3DShape.h" />
     <ClInclude Include="..\..\physics3d\CCPhysics3DWorld.h" />
     <ClInclude Include="..\..\physics3d\CCPhysicsSprite3D.h" />
-    <ClInclude Include="..\..\physics\CCComponentPhysics2d.h" />
     <ClInclude Include="..\..\physics\CCPhysicsBody.h" />
     <ClInclude Include="..\..\physics\CCPhysicsContact.h" />
     <ClInclude Include="..\..\physics\CCPhysicsHelper.h" />
     <ClInclude Include="..\..\physics\CCPhysicsJoint.h" />
-    <ClInclude Include="..\..\physics\CCPhysicsManager.h" />
     <ClInclude Include="..\..\physics\CCPhysicsShape.h" />
     <ClInclude Include="..\..\physics\CCPhysicsWorld.h" />
     <ClInclude Include="..\..\platform\CCApplication.h" />
@@ -1208,7 +1302,6 @@
     <ClInclude Include="..\..\platform\winrt\CCFreeTypeFont.h" />
     <ClInclude Include="..\..\platform\winrt\CCGL.h" />
     <ClInclude Include="..\..\platform\winrt\CCGLViewImpl-winrt.h" />
-    <ClInclude Include="..\..\platform\winrt\CCGL_Angle.h" />
     <ClInclude Include="..\..\platform\winrt\CCPlatformDefine-winrt.h" />
     <ClInclude Include="..\..\platform\winrt\CCPrecompiledShaders.h" />
     <ClInclude Include="..\..\platform\winrt\CCPThreadWinRT.h" />
@@ -1224,6 +1317,12 @@
     <ClInclude Include="..\..\renderer\CCBatchCommand.h" />
     <ClInclude Include="..\..\renderer\CCCustomCommand.h" />
     <ClInclude Include="..\..\renderer\CCTextureCube.h" />
+    <ClInclude Include="..\..\ui\UIEditBox\UIEditBoxImpl-common.h" />
+    <ClInclude Include="..\..\ui\UITabControl.h" />
+    <ClInclude Include="..\..\vr\CCVRDistortion.h" />
+    <ClInclude Include="..\..\vr\CCVRDistortionMesh.h" />
+    <ClInclude Include="..\..\vr\CCVRGenericHeadTracker.h" />
+    <ClInclude Include="..\..\vr\CCVRGenericRenderer.h" />
     <ClInclude Include="..\CCAutoPolygon.h" />
     <ClInclude Include="..\CCCameraBackgroundBrush.h" />
     <ClInclude Include="..\renderer\CCFrameBuffer.h" />
@@ -1353,6 +1452,7 @@
     <ClInclude Include="..\CCTweenFunction.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\3d\CCAnimationCurve.inl" />
     <None Include="..\..\base\CCController-iOS.mm" />
     <None Include="..\..\base\CCUserDefault-apple.mm" />
     <None Include="..\..\math\Mat4.inl" />
@@ -1410,9 +1510,6 @@
     <ProjectReference Include="..\..\..\external\Box2D\proj-win10\libbox2d.vcxproj">
       <Project>{0c32d479-46d5-46c3-9aa9-0a8ff8320516}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\external\bullet\proj.win10\libbullet.vcxproj">
-      <Project>{ecee1119-ce2e-4f7e-83a8-1932ea48e893}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\external\recast\proj.win10\librecast.vcxproj">
       <Project>{f551524d-8a70-4b2f-a7c2-28ae61150022}</Project>
     </ProjectReference>
@@ -1437,35 +1534,35 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -1507,34 +1604,34 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.15_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.15_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.15_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>false</LinkIncremental>
-    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.15_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.15_Windows_10.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
-    <TargetName>libcocos2d_v3.9_Windows_10.0</TargetName>
+    <TargetName>libcocos2d_v3.15_Windows_10.0</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -1544,7 +1641,7 @@
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_DEBUG;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -1563,7 +1660,7 @@
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -1583,7 +1680,7 @@
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_DEBUG;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -1602,7 +1699,7 @@
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -1622,7 +1719,7 @@
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_DEBUG;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -1641,7 +1738,7 @@
       <PreprocessorDefinitions>_USRDLL;_LIB;COCOS2DXWIN32_EXPORTS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
       <DisableSpecificWarnings>4458;4459;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <AdditionalIncludeDirectories>$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\platform\winrt;$(EngineRoot)external\win10-specific\zlib\include;$(EngineRoot)external\freetype2\include\win10\freetype2;$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;$(EngineRoot)external\win10-specific\OggDecoder\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

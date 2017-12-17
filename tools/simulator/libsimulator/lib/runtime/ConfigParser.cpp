@@ -1,9 +1,7 @@
-
-#include "json/document.h"
-#include "json/filestream.h"
+#include "ConfigParser.h"
+#include "json/filereadstream.h"
 #include "json/stringbuffer.h"
 #include "json/writer.h"
-#include "ConfigParser.h"
 #include "FileServer.h"
 
 // ConfigParser
@@ -43,7 +41,7 @@ void ConfigParser::readConfig(const string &filepath)
   
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     // revert search path
-    searchPathArray.erase(searchPathArray.end() - 1);
+    searchPathArray.erase(searchPathArray.begin());
     FileUtils::getInstance()->setSearchPaths(searchPathArray);
 #endif
 

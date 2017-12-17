@@ -629,7 +629,7 @@ local function TMXOrthoObjectsTest()
     local drawNode = cc.DrawNode:create()
     map:addChild(drawNode, 10)
 
-    --------cclog("---: Iterating over all the group objets")
+    --------cclog("---: Iterating over all the group objects")
     local  group   = map:getObjectGroup("Object Group 1")
     local  objects = group:getObjects()
 
@@ -782,7 +782,7 @@ local function TMXIsoZorder()
         -- if tamara < 96, z=3
         -- if tamara < 144,z=2
 
-        local newZ = 4 - (p.y / 48)
+        local newZ = 4 - math.floor((p.y / 48))
         newZ = math.max(newZ,0)
 
         map:reorderChild(m_tamara, newZ)
@@ -1236,6 +1236,8 @@ function TileMapTestMain()
         TMXBug987,
         TMXBug787
     }
+    Helper.index = 1
+    
     scene:addChild(TileMapTest())
     scene:addChild(CreateBackMenuItem())
     return scene

@@ -145,7 +145,7 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Sets the font of the label, changes the label to a BMFont if neccessary.<br>
+-- Sets the font of the label, changes the label to a BMFont if necessary.<br>
 -- param fntFile The name of the font to change to<br>
 -- param state The state that uses the specified fntFile. The values are described<br>
 -- in "CCControlState".
@@ -197,7 +197,7 @@
         
 --------------------------------
 --  Adjust the background image. YES by default. If the property is set to NO, the<br>
--- background will use the prefered size of the background image. 
+-- background will use the preferred size of the background image. 
 -- @function [parent=#ControlButton] doesAdjustBackgroundImage 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -286,6 +286,7 @@
 -- @param self
 -- @param #cc.Node label
 -- @param #ccui.Scale9Sprite backgroundSprite
+-- @param #bool adjustBackGroundSize
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -309,11 +310,12 @@
 -- @overload self         
 -- @overload self, cc.Node, ccui.Scale9Sprite         
 -- @overload self, string, string, float         
+-- @overload self, cc.Node, ccui.Scale9Sprite, bool         
 -- @function [parent=#ControlButton] create
 -- @param self
--- @param #string title
--- @param #string fontName
--- @param #float fontSize
+-- @param #cc.Node label
+-- @param #ccui.Scale9Sprite backgroundSprite
+-- @param #bool adjustBackGroundSize
 -- @return ControlButton#ControlButton ret (return value: cc.ControlButton)
 
 --------------------------------

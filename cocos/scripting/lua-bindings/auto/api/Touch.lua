@@ -33,6 +33,13 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
+--  Returns the current touch force for 3d touch.<br>
+-- return The current touch force for 3d touch.
+-- @function [parent=#Touch] getCurrentForce 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 --  Returns the start touch location in OpenGL coordinates.<br>
 -- return The start touch location in OpenGL coordinates.
 -- @function [parent=#Touch] getStartLocation 
@@ -49,16 +56,23 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
---  Set the touch infomation. It always used to monitor touch event.<br>
--- param id A given id<br>
--- param x A given x coordinate.<br>
--- param y A given y coordinate.
--- @function [parent=#Touch] setTouchInfo 
+-- @overload self, int, float, float, float, float         
+-- @overload self, int, float, float         
+-- @function [parent=#Touch] setTouchInfo
 -- @param self
 -- @param #int id
 -- @param #float x
 -- @param #float y
+-- @param #float force
+-- @param #float maxForce
 -- @return Touch#Touch self (return value: cc.Touch)
+
+--------------------------------
+--  Returns the maximum touch force for 3d touch.<br>
+-- return The maximum touch force for 3d touch.
+-- @function [parent=#Touch] getMaxForce 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 --  Returns the current touch location in screen coordinates.<br>

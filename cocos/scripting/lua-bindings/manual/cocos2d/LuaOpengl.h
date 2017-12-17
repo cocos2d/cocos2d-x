@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -47,7 +47,7 @@ class GLNode:public cocos2d::Node
 {
 public:
     /**
-     * Destrutor.
+     * Destructor.
      *
      * @lua NA
      * @js NA

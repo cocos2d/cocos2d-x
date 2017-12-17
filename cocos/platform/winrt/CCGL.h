@@ -37,12 +37,16 @@ THE SOFTWARE.
 #include "GLES2/gl2.h"
 #include "GLES2/gl2ext.h"
 #include "GLES3/gl3.h"
-#include "GLES3/gl3ext.h"
 
+#define glClearDepth                glClearDepthf
+#define glDeleteVertexArrays        glDeleteVertexArraysOES
+#define glGenVertexArrays           glGenVertexArraysOES
+#define glBindVertexArray           glBindVertexArrayOES
 #define glMapBuffer                 glMapBufferOES
+#define glUnmapBuffer               glUnmapBufferOES
 
-#else
-#include "CCGL_Angle.h"
+#define GL_WRITE_ONLY               GL_WRITE_ONLY_OES
+
 #endif
 
 

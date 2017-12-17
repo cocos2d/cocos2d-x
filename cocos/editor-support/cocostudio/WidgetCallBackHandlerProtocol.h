@@ -25,8 +25,8 @@
 #ifndef __cocos2d_libs__WidgetCallBackHandlerProtocol__
 #define __cocos2d_libs__WidgetCallBackHandlerProtocol__
 
-#include "cocos2d.h"
-#include "cocostudio/CocosStudioExport.h"
+
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include "ui/UIWidget.h"
 
 namespace cocostudio {
@@ -37,9 +37,9 @@ namespace cocostudio {
         WidgetCallBackHandlerProtocol() {};
         virtual ~WidgetCallBackHandlerProtocol() {};
         
-        virtual cocos2d::ui::Widget::ccWidgetTouchCallback onLocateTouchCallback(const std::string &callBackName){ return nullptr; };
-        virtual cocos2d::ui::Widget::ccWidgetClickCallback onLocateClickCallback(const std::string &callBackName){ return nullptr; };
-        virtual cocos2d::ui::Widget::ccWidgetEventCallback onLocateEventCallback(const std::string &callBackName){ return nullptr; };
+        virtual cocos2d::ui::Widget::ccWidgetTouchCallback onLocateTouchCallback(const std::string& callBackName);
+        virtual cocos2d::ui::Widget::ccWidgetClickCallback onLocateClickCallback(const std::string& callBackName);
+        virtual cocos2d::ui::Widget::ccWidgetEventCallback onLocateEventCallback(const std::string& callBackName);
     };
 
 }

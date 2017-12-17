@@ -33,7 +33,7 @@ void AnimationCurve<componentSize>::evaluate(float time, float* dst, EvaluateTyp
         break;
         case EvaluateType::INT_NEAR:
         {
-            float* src = fabs(t) > 0.5f ? toValue : fromValue;
+            float* src = std::abs(t) > 0.5f ? toValue : fromValue;
             memcpy(dst, src, _componentSizeByte);
         }
         break;
@@ -46,7 +46,10 @@ void AnimationCurve<componentSize>::evaluate(float time, float* dst, EvaluateTyp
             else
                 Quaternion::slerp(Quaternion(toValue), Quaternion(fromValue), t, &quat);
             
-            dst[0] = quat.x, dst[1] = quat.y, dst[2] = quat.z, dst[3] = quat.w;
+            dst[0] = quat.x;
+            dst[1] = quat.y;
+            dst[2] = quat.z;
+            dst[3] = quat.w;
         }
         break;
         case EvaluateType::INT_USER_FUNCTION:

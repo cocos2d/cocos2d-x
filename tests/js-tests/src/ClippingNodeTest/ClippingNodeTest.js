@@ -705,7 +705,7 @@ var arrayOfClippingNodeTest = [
 ];
 
 
-if (!cc.sys.isNative && ("opengl" in cc.sys.capabilities)) {
+if (!cc.sys.isNative && cc._renderType !== cc.game.RENDER_TYPE_CANVAS) {
     arrayOfClippingNodeTest.push(
         ShapeInvertedTest,
         SpriteNoAlphaTest,

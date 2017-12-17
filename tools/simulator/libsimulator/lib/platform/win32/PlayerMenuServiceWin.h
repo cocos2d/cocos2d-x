@@ -8,10 +8,11 @@
 #include "cocos2d.h"
 #include "stdafx.h"
 #include "PlayerMenuServiceProtocol.h"
+#include "SimulatorExport.h"
 
 PLAYER_NS_BEGIN
 
-class PlayerMenuItemWin : public PlayerMenuItem
+class CC_LIBSIM_DLL PlayerMenuItemWin : public PlayerMenuItem
 {
 public:
     static PlayerMenuItemWin *create(const std::string &menuId, const std::string &title);
@@ -34,7 +35,7 @@ protected:
     friend class PlayerMenuServiceWin;
 };
 
-class PlayerMenuServiceWin : public PlayerMenuServiceProtocol
+class CC_LIBSIM_DLL PlayerMenuServiceWin : public PlayerMenuServiceProtocol
 {
 public:
     PlayerMenuServiceWin(HWND hwnd);

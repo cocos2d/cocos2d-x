@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -232,7 +232,7 @@ void Animation3DCache::removeUnusedAnimation()
         if (itor->second->getReferenceCount() == 1)
         {
             itor->second->release();
-            _animations.erase(itor++);
+            itor = _animations.erase(itor);
         }
         else
             ++itor;

@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -32,7 +32,7 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 
 ****************************************************************************/
 #include "2d/CCLabelBMFont.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 #include "2d/CCSprite.h"
 
 #if CC_LABELBMFONT_DEBUG_DRAW

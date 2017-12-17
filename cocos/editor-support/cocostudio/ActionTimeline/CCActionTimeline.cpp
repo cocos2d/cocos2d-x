@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCActionTimeline.h"
+#include "editor-support/cocostudio/ActionTimeline/CCActionTimeline.h"
 
-#include "cocostudio/CCComExtensionData.h"
+#include "editor-support/cocostudio/CCComExtensionData.h"
 
 USING_NS_CC;
 
@@ -441,4 +441,13 @@ void ActionTimeline::stepToFrame(int frameIndex)
     }
 }
 
+void ActionTimeline::start()
+{
+    gotoFrameAndPlay(0);
+}
+
+void ActionTimeline::stop()
+{
+    pause();
+}
 NS_TIMELINE_END

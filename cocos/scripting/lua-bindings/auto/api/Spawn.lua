@@ -5,6 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
+-- @function [parent=#Spawn] init 
+-- @param self
+-- @param #array_table arrayOfActions
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  initializes the Spawn action with the 2 actions to spawn 
 -- @function [parent=#Spawn] initWithTwoActions 
 -- @param self

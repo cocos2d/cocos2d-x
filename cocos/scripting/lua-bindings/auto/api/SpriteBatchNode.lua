@@ -39,7 +39,7 @@
 -- warning Removing a child from a SpriteBatchNode is very slow.
 -- @function [parent=#SpriteBatchNode] removeChildAtIndex 
 -- @param self
--- @param #long index
+-- @param #int index
 -- @param #bool doCleanup
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
@@ -69,7 +69,7 @@
 -- @param self
 -- @param #cc.Sprite sprite
 -- @param #int z
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  Increase the Atlas Capacity. 
@@ -84,7 +84,7 @@
 -- @function [parent=#SpriteBatchNode] lowestAtlasIndexInChild 
 -- @param self
 -- @param #cc.Sprite sprite
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- lua NA
@@ -98,7 +98,7 @@
 -- @function [parent=#SpriteBatchNode] initWithTexture 
 -- @param self
 -- @param #cc.Texture2D tex
--- @param #long capacity
+-- @param #int capacity
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -110,6 +110,15 @@
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
+--  reserves capacity for the batch node.<br>
+-- If the current capacity is bigger, nothing happens.<br>
+-- otherwise, a new capacity is allocated 
+-- @function [parent=#SpriteBatchNode] reserveCapacity 
+-- @param self
+-- @param #int newCapacity
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
+        
+--------------------------------
 -- js NA
 -- @function [parent=#SpriteBatchNode] removeAllChildrenWithCleanup 
 -- @param self
@@ -118,12 +127,12 @@
         
 --------------------------------
 --  Inserts a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.<br>
--- This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.<br>
+-- This method should be called only when you are dealing with very big AtlasSprite and when most of the Sprite won't be updated.<br>
 -- For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont).
 -- @function [parent=#SpriteBatchNode] insertQuadFromSprite 
 -- @param self
 -- @param #cc.Sprite sprite
--- @param #long index
+-- @param #int index
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
@@ -135,7 +144,7 @@
 -- @function [parent=#SpriteBatchNode] initWithFile 
 -- @param self
 -- @param #string fileImage
--- @param #long capacity
+-- @param #int capacity
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -157,8 +166,8 @@
 -- @function [parent=#SpriteBatchNode] rebuildIndexInOrder 
 -- @param self
 -- @param #cc.Sprite parent
--- @param #long index
--- @return long#long ret (return value: long)
+-- @param #int index
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  Returns the TextureAtlas object. <br>
@@ -174,7 +183,7 @@
 -- @function [parent=#SpriteBatchNode] highestAtlasIndexInChild 
 -- @param self
 -- @param #cc.Sprite sprite
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  Creates a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.<br>
@@ -186,7 +195,7 @@
 -- @function [parent=#SpriteBatchNode] create 
 -- @param self
 -- @param #string fileImage
--- @param #long capacity
+-- @param #int capacity
 -- @return SpriteBatchNode#SpriteBatchNode ret (return value: cc.SpriteBatchNode)
         
 --------------------------------
@@ -198,7 +207,7 @@
 -- @function [parent=#SpriteBatchNode] createWithTexture 
 -- @param self
 -- @param #cc.Texture2D tex
--- @param #long capacity
+-- @param #int capacity
 -- @return SpriteBatchNode#SpriteBatchNode ret (return value: cc.SpriteBatchNode)
         
 --------------------------------

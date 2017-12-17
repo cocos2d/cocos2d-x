@@ -340,6 +340,7 @@ function TouchableSpriteWithFixedPriority:onEnter()
         self:setColor(cc.c3b(255, 255, 255))
         if self._removeListenerOnTouchEnded then
             eventDispatcher:removeEventListener(self._listener)
+            self._listener = nil
         end
 
     end
@@ -360,8 +361,10 @@ function TouchableSpriteWithFixedPriority:onEnter()
 end
 
 function TouchableSpriteWithFixedPriority:onExit()
-    local eventDispatcher = self:getEventDispatcher()
-    eventDispatcher:removeEventListener(self._listener)
+    if self._listener ~= nil then
+        local eventDispatcher = self:getEventDispatcher()
+        eventDispatcher:removeEventListener(self._listener)
+    end
 end
 
 function TouchableSpriteWithFixedPriority:setPriority(fixedPriority)
@@ -748,9 +751,9 @@ function SpriteAccelerationEventTest:onEnter()
         target:setPosition(cc.p(ptNowX , ptNowY))
     end
 
-    local listerner  = cc.EventListenerAcceleration:create(accelerometerListener)
+    local listener = cc.EventListenerAcceleration:create(accelerometerListener)
 
-    self:getEventDispatcher():addEventListenerWithSceneGraphPriority(listerner,sprite)
+    self:getEventDispatcher():addEventListenerWithSceneGraphPriority(listener, sprite)
 end
 
 function SpriteAccelerationEventTest:onExit()
@@ -818,7 +821,16 @@ function RemoveAndRetainNodeTest:onEnter()
         local target = event:getCurrentTarget()
         local posX,posY = target:getPosition()
         local delta = touch:getDelta()
-        target:setPosition(cc.p(posX + delta.x, posY + delta.y))
+        local force = touch:getCurrentForce()
+        local maxForce = touch:getMaxForce()
+        if force > 0.0 and (force / maxForce) > 0.8 then
+            local origin = cc.Director:getInstance():getVisibleOrigin()
+            local size = cc.Director:getInstance():getVisibleSize()
+            target:setPosition(cc.p(origin.x + size.width/2, origin.y + size.height/2))
+            print(string.format("3D touch detected, reset to default position. force = %f, max force = %f", force, maxForce))
+        else
+            target:setPosition(cc.p(posX + delta.x, posY + delta.y))
+        end
     end
 
     local function onTouchEnded(touch,event)
@@ -837,7 +849,7 @@ function RemoveAndRetainNodeTest:onEnter()
     local function retainSprite()
         self._spriteSaved = true
         self._sprite:retain()
-        self._sprite:removeFromParent()
+        self._sprite:removeFromParent(false)
     end
 
     local function releaseSprite()

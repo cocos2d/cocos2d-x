@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  Copyright (c) 2013      Surith Thekkiam
 
  http://www.cocos2d-x.org
@@ -130,6 +130,10 @@ var S9BatchNodeBasic = S9SpriteTestDemo.extend({
         cc.log("this..addChild");
 
         cc.log("... S9BatchNodeBasic done.");
+
+        var moveBy = cc.moveBy(1, cc.p(80, 80));
+        var moveByBack = moveBy.reverse();
+        blocks.runAction(cc.sequence(moveBy,moveByBack));
     }
 });
 
@@ -159,6 +163,10 @@ var S9FrameNameSpriteSheet = S9SpriteTestDemo.extend({
         cc.log("this..addChild");
 
         cc.log("... S9FrameNameSpriteSheet done.");
+
+        var moveBy = cc.moveBy(1, cc.p(80, 80));
+        var moveByBack = moveBy.reverse();
+        blocks.runAction(cc.sequence(moveBy,moveByBack));
     }
 });
 
@@ -514,18 +522,19 @@ var S9FrameNameSpriteSheetRotatedInsetsScaled = S9SpriteTestDemo.extend({
 
 var S9SpriteActionTest = S9SpriteTestDemo.extend({
 
-    _title:"Scale9Sprite from sprite sheet",
-    _subtitle:"Test Action for ccui.scale9Sprite : Rotate + Scale + Translate",
+    _title:"Test Action for Scale9Sprite : Rotate + Scale + Translate",
 
     ctor:function() {
         this._super();
 
-        var blocks = new cc.Scale9Sprite('blocks9.png');
+        var blocks_with_insets = new cc.Scale9Sprite('blocks9.png');
 
-        blocks.x = winSize.width / 2;
-        blocks.y = winSize.height / 2;
+        blocks_with_insets.x = winSize.width / 2;
+        blocks_with_insets.y = winSize.height / 2;
+        blocks_with_insets.width = 96 * 4;
+        blocks_with_insets.height = 96 * 2;
 
-        this.addChild(blocks);
+        this.addChild(blocks_with_insets);
 
         var delay = cc.delayTime(0.25);
 
@@ -538,9 +547,103 @@ var S9SpriteActionTest = S9SpriteTestDemo.extend({
         var moveBy = cc.moveBy(1, cc.p(80, 80));
         var moveByBack = moveBy.reverse();
 
-        blocks.runAction(cc.sequence(rotateBy, delay, rotateByBack));
-        blocks.runAction(cc.sequence(ScaleTo, delay.clone(), ScaleToBack));
-        blocks.runAction(cc.sequence(moveBy,moveByBack));
+        blocks_with_insets.runAction(cc.sequence(rotateBy, delay, rotateByBack));
+        blocks_with_insets.runAction(cc.sequence(ScaleTo, delay.clone(), ScaleToBack));
+        blocks_with_insets.runAction(cc.sequence(moveBy,moveByBack));
+    }
+});
+
+var S9SpriteColorOpacityTest = S9SpriteTestDemo.extend({
+    _title:"Test color/opacity cascade for Scale9Sprite (red with 128 opacity)",
+
+    ctor:function() {
+        this._super();
+
+        this.setCascadeColorEnabled(true);
+        this.setCascadeOpacityEnabled(true);
+        this.setOpacity(128);
+        this.setColor(cc.color(255, 0, 0));
+
+        var blocks = new cc.Scale9Sprite('blocks9.png');
+        blocks.x = winSize.width / 2 - 100;
+        blocks.y = winSize.height / 2;
+        this.addChild(blocks);
+
+        var batchNode = new cc.SpriteBatchNode("Images/blocks9.png");
+        var blocks2 = new cc.Scale9Sprite();
+        blocks2.updateWithBatchNode(batchNode, cc.rect(0, 0, 96, 96), false, cc.rect(0, 0, 96, 96));
+        blocks2.x = winSize.width / 2 + 100;
+        blocks2.y = winSize.height / 2;
+        this.addChild(blocks2);
+    }
+});
+
+var S9SpriteOpacityWithFadeActionsTest = S9SpriteTestDemo.extend({
+    _title:"Test opacity cascade for Scale9Sprite with fade actions\n(fade to opacity 144, then fadeOut, then fadeIn)",
+
+    ctor:function() {
+        this._super();
+
+        var colorLayer = new cc.LayerColor(cc.color(144,144,144));
+        colorLayer.setContentSize(winSize.width / 2, winSize.height / 2);
+        colorLayer.x = winSize.width / 4;
+        colorLayer.y = winSize.height / 4;
+
+        colorLayer.setCascadeOpacityEnabled(true);
+
+        var blocks = new ccui.Scale9Sprite('blocks9.png');
+        blocks.x = winSize.width / 4;
+        blocks.y = winSize.height / 4;
+
+        colorLayer.addChild(blocks);
+
+        var fadeToAction = cc.fadeTo(1, 144);
+        var delay = cc.delayTime(0.5);
+        var fadeOutAction = cc.fadeOut(0.8);
+        var fadeInAction = cc.fadeIn(0.8);
+
+        colorLayer.runAction(cc.sequence(fadeToAction, delay, fadeOutAction, delay.clone(), fadeInAction));
+
+        this.addChild(colorLayer);
+    }
+});
+
+
+var S9SpriteRenderingTypeToggleTest = S9SpriteTestDemo.extend({
+    _title:"Test Toggle Scale9Sprite RenderingType",
+
+    ctor:function() {
+        this._super();
+
+
+        var blocks = new ccui.Scale9Sprite('blocks9.png');
+        blocks.x = winSize.width / 2;
+        blocks.y = winSize.height / 2 + 50;
+
+        blocks.width = blocks.width * 2;
+
+
+        var button = this._button = new ccui.Button();
+        button.setTouchEnabled(true);
+        button.x = winSize.width / 2.0;
+        button.y = winSize.height / 2.0 - 50;
+        button.setTitleText("Toggle SIMPLE");
+        button.addTouchEventListener(function (sender, type) {
+            if(type === ccui.Widget.TOUCH_ENDED) {
+                if(blocks.getRenderingType() === ccui.Scale9Sprite.RenderingType.SLICED) {
+                    blocks.setRenderingType(ccui.Scale9Sprite.RenderingType.SIMPLE);
+                    button.setTitleText("Toggle SLICED");
+                } else {
+                    blocks.setRenderingType(ccui.Scale9Sprite.RenderingType.SLICED);
+                    button.setTitleText("Toggle SIMPLE");
+                }
+            }
+        } , this);
+
+        this.addChild(button);
+
+
+        this.addChild(blocks);
     }
 });
 
@@ -553,7 +656,6 @@ var S9SpriteTestScene = TestScene.extend({
         director.runScene(this);
     }
 });
-
 //
 // Flow control
 //
@@ -571,7 +673,10 @@ var arrayOfS9SpriteTest = [
     S9FrameNameSpriteSheetRotatedInsets,
     S9FrameNameSpriteSheetRotatedInsetsScaled,
     S9_TexturePacker,
-    S9SpriteActionTest
+    S9SpriteActionTest,
+    S9SpriteColorOpacityTest,
+    S9SpriteOpacityWithFadeActionsTest,
+    S9SpriteRenderingTypeToggleTest
 ];
 
 var nextS9SpriteTest = function () {

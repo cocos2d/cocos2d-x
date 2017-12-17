@@ -40,8 +40,10 @@ public:
     virtual bool init() override;
     void selectedEvent(cocos2d::Ref* sender,cocos2d::ui::CheckBox::EventType type);
     
+    void printWidgetResources(cocos2d::Ref* sender);
 protected:
     cocos2d::ui::Text* _displayValueLabel;
+    cocos2d::ui::CheckBox* _checkBox;
 };
 
 class UICheckBoxDefaultBehaviorTest : public UIScene

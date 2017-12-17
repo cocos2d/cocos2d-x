@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -48,7 +48,7 @@ public:
 
     /** Get the indication whether pre- and postprocessing must be done.
     */
-    const bool getPrePost(void) const {return _prePost;};
+    bool getPrePost() const {return _prePost;};
 
     /** Set the indication whether pre- and postprocessing must be done.
     */

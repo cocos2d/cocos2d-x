@@ -32,7 +32,7 @@ bool Bug914Layer::init()
             layer->setContentSize(Size(i*100, i*100));
             layer->setPosition(size.width/2, size.height/2);
             layer->setAnchorPoint(Vec2(0.5f, 0.5f));
-            layer->ignoreAnchorPointForPosition(false);
+            layer->setIgnoreAnchorPointForPosition(false);
             addChild(layer, -1-i);
         }
 

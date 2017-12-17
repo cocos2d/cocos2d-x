@@ -361,6 +361,12 @@ SpriteBlur::~SpriteBlur()
 SpriteBlur* SpriteBlur::create(const char *pszFileName)
 {
     SpriteBlur* pRet = new (std::nothrow) SpriteBlur();
+    if (pRet)
+    {
+        bool result = pRet->initWithFile("");
+        log("Test call Sprite::initWithFile with bad file name result is : %s", result ? "true" : "false");
+    }
+
     if (pRet && pRet->initWithFile(pszFileName))
     {
         pRet->autorelease();
@@ -396,15 +402,14 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
 
 void SpriteBlur::initGLProgram()
 {
-    GLchar * fragSource = nullptr;
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    fragSource = (GLchar*) String::createWithContentsOfFile(
-                                FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh").c_str())->getCString();  
+    std::string fragSource = FileUtils::getInstance()->getStringFromFile(
+        FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh"));
 #else
-    fragSource = (GLchar*)String::createWithContentsOfFile(
-								FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur_winrt.fsh").c_str())->getCString();
+    std::string fragSource = FileUtils::getInstance()->getStringFromFile(
+        FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur_winrt.fsh"));
 #endif
-    auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource);
+    auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource.data());
 
     auto glProgramState = GLProgramState::getOrCreateWithGLProgram(program);
     setGLProgramState(glProgramState);
@@ -568,13 +573,16 @@ void ShaderRetroEffect::update(float dt)
     for (int i = 0; i < letterCount; ++i)
     {
         auto sprite = _label->getLetter(i);
-        auto oldPosition = sprite->getPosition();
-        sprite->setPosition(Vec2( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
-        
-        // add fabs() to prevent negative scaling
-        float scaleY = ( sinf( _accum * 2 + i/2.0 + 0.707) );
-        
-        sprite->setScaleY(scaleY);
+        if (sprite != nullptr)
+        {
+            auto oldPosition = sprite->getPosition();
+            sprite->setPosition(Vec2( oldPosition.x, sinf( _accum * 2 + i/2.0) * 20  ));
+            
+            // add fabs() to prevent negative scaling
+            float scaleY = ( sinf( _accum * 2 + i/2.0 + 0.707) );
+            
+            sprite->setScaleY(scaleY);
+        }
     }
 }
 
@@ -749,9 +757,9 @@ void ShaderMultiTexture::changeTexture(Ref*)
         "Images/grossinis_sister1.png",
         "Images/grossinis_sister2.png"
     };
-    auto textrue = Director::getInstance()->getTextureCache()->addImage(textureFiles[_changedTextureId++ % textureFilesCount]);
+    auto texture = Director::getInstance()->getTextureCache()->addImage(textureFiles[_changedTextureId++ % textureFilesCount]);
     Sprite* right = dynamic_cast<Sprite*>(getChildByTag(rightSpriteTag));
-    right->setTexture(textrue);
+    right->setTexture(texture);
     auto programState = _sprite->getGLProgramState();
     programState->setUniformTexture("u_texture1", right->getTexture());
 }

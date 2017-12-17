@@ -23,7 +23,7 @@
  */
 
 
-#import "CDAudioManager.h"
+#import "audio/ios/CDAudioManager.h"
 
 NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 
@@ -61,7 +61,7 @@ NSString * const kCDN_AudioManagerInitialised = @"kCDN_AudioManagerInitialised";
 }    
 
 -(void) load:(NSString*) filePath {
-    //We have alread loaded a file previously,  check if we are being asked to load the same file
+    //We have already loaded a file previously, check if we are being asked to load the same file
     if (state == kLAS_Init || ![filePath isEqualToString:audioSourceFilePath]) {
         CDLOGINFO(@"Denshion::CDLongAudioSource - Loading new audio source %@",filePath);
         //New file
@@ -329,11 +329,17 @@ static BOOL configured = FALSE;
     configured = TRUE;
 }    
 
--(BOOL) isOtherAudioPlaying {
+-(BOOL) isOtherAudioPlaying
+{
+    // AudioSessionGetProperty removed from tvOS 9.1
+#if defined(CC_TARGET_OS_TVOS)
+    return false;
+#else
     UInt32 isPlaying = 0;
     UInt32 varSize = sizeof(isPlaying);
     AudioSessionGetProperty (kAudioSessionProperty_OtherAudioIsPlaying, &varSize, &isPlaying);
     return (isPlaying != 0);
+#endif
 }
 
 -(void) setMode:(tAudioManagerMode) mode {
@@ -409,10 +415,11 @@ static BOOL configured = FALSE;
 
 - (id) init: (tAudioManagerMode) mode {
     if ((self = [super init])) {
-        
-        //Initialise the audio session 
-        AVAudioSession* session = [AVAudioSession sharedInstance];
-        session.delegate = self;
+   
+         [[NSNotificationCenter defaultCenter] addObserver: self
+         selector:    NSSelectorFromString(@"handleInterruption:")
+         name:        AVAudioSessionInterruptionNotification
+         object:      [AVAudioSession sharedInstance]];
     
         _mode = mode;
         backgroundMusicCompletionSelector = nil;
@@ -482,7 +489,7 @@ static BOOL configured = FALSE;
 //determine ringer switch state
 -(BOOL) isDeviceMuted {
 
-#if TARGET_IPHONE_SIMULATOR
+#if TARGET_IPHONE_SIMULATOR || defined(CC_TARGET_OS_TVOS)
     //Calling audio route stuff on the simulator causes problems
     return NO;
 #else    
@@ -627,7 +634,7 @@ static BOOL configured = FALSE;
 - (void) applicationWillResignActive {
     _resigned = YES;
     
-    //Set the audio sesssion to one that allows sharing so that other audio won't be clobbered on resume
+    //Set the audio session to one that allows sharing so that other audio won't be clobbered on resume
     [self audioSessionSetCategory:AVAudioSessionCategoryAmbient];
     
     switch (_resignBehavior) {
@@ -635,15 +642,17 @@ static BOOL configured = FALSE;
         case kAMRBStopPlay:
             
             for( CDLongAudioSource *audioSource in audioSourceChannels) {
-                if (audioSource.isPlaying) {
-                    audioSource->systemPaused = YES;
-                    audioSource->systemPauseLocation = audioSource.audioSourcePlayer.currentTime;
-                    [audioSource stop];
-                } else {
-                    //Music is either paused or stopped, if it is paused it will be restarted
-                    //by OS so we will stop it.
-                    audioSource->systemPaused = NO;
-                    [audioSource stop];
+                if (!audioSource->systemPaused) {
+                    if (audioSource.isPlaying) {
+                        audioSource->systemPaused = YES;
+                        audioSource->systemPauseLocation = audioSource.audioSourcePlayer.currentTime;
+                        [audioSource pause];
+                    } else {
+                        //Music is either paused or stopped, if it is paused it will be restarted
+                        //by OS so we will stop it.
+                        audioSource->systemPaused = NO;
+                        [audioSource stop];
+                    }
                 }
             }
             break;
@@ -719,26 +728,30 @@ static BOOL configured = FALSE;
     if (backgroundMusicCompletionSelector != nil) {
         [backgroundMusicCompletionListener performSelector:backgroundMusicCompletionSelector];
     }    
-}    
-
--(void) beginInterruption {
-    CDLOGINFO(@"Denshion::CDAudioManager - begin interruption");
-    [self audioSessionInterrupted];
 }
 
--(void) endInterruption {
-    CDLOGINFO(@"Denshion::CDAudioManager - end interruption");
-    [self audioSessionResumed];
+- (void) handleInterruption:(NSNotification*) notification {
+    if (notification.name != AVAudioSessionInterruptionNotification ||
+        notification.userInfo == nil)
+        return;
+    
+    NSDictionary *interuptionDict = notification.userInfo;
+    NSInteger interuptionType = [[interuptionDict valueForKey:AVAudioSessionInterruptionTypeKey] integerValue];
+    // decide what to do based on interruption type here...
+    switch (interuptionType) {
+        case AVAudioSessionInterruptionTypeBegan:
+            [self audioSessionInterrupted];
+            break;
+            
+        case AVAudioSessionInterruptionTypeEnded:
+            [self audioSessionResumed];
+            break;
+            
+        default:
+            NSLog(@"Audio Session Interruption Notification case default.");
+            break;
+    }
 }
-
-#if __CC_PLATFORM_IOS >= 40000
--(void) endInterruptionWithFlags:(NSUInteger)flags {
-    CDLOGINFO(@"Denshion::CDAudioManager - interruption ended with flags %i",flags);
-    if (flags == AVAudioSessionInterruptionFlags_ShouldResume) {
-        [self audioSessionResumed];
-    }    
-}
-#endif
 
 -(void)audioSessionInterrupted 
 { 

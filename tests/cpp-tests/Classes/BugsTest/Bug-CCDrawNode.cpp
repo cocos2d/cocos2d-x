@@ -14,7 +14,7 @@ bool BugDrawNodeLayer::init()
     if (BugsTestBase::init())
     {
         auto size = Director::getInstance()->getWinSize();
-        auto testSprite = Sprite::create("cocosui/CloseNormal.png");
+        auto testSprite = Sprite::create("Images/close.png");
         BlendFunc blend;
         blend.src = GL_ZERO;
         blend.dst = GL_ONE_MINUS_SRC_ALPHA;

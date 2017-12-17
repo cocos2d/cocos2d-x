@@ -5,6 +5,8 @@ LOCAL_MODULE := cocostudio_static
 
 LOCAL_MODULE_FILENAME := libcocostudio
 
+LOCAL_ARM_MODE := arm
+
 LOCAL_SRC_FILES := CCActionFrame.cpp \
 CCActionFrameEasing.cpp \
 CCActionManagerEx.cpp \
@@ -34,6 +36,7 @@ CCComController.cpp \
 CCComRender.cpp \
 CCInputDelegate.cpp \
 DictionaryHelper.cpp \
+LocalizationManager.cpp \
 CCSGUIReader.cpp \
 CCSSceneReader.cpp \
 TriggerBase.cpp \
@@ -68,6 +71,7 @@ WidgetReader/Particle3DReader/Particle3DReader.cpp \
 WidgetReader/SkeletonReader/BoneNodeReader.cpp \
 WidgetReader/SkeletonReader/SkeletonNodeReader.cpp \
 WidgetReader/GameNode3DReader/GameNode3DReader.cpp \
+WidgetReader/Light3DReader/Light3DReader.cpp \
 ActionTimeline/CCActionTimelineCache.cpp \
 ActionTimeline/CCFrame.cpp \
 ActionTimeline/CCTimeLine.cpp \
@@ -80,6 +84,7 @@ ActionTimeline/CCSkinNode.cpp \
 FlatBuffersSerialize.cpp \
 WidgetCallBackHandlerProtocol.cpp \
 WidgetReader/ArmatureNodeReader/ArmatureNodeReader.cpp \
+WidgetReader/TabControlReader/TabControlReader.cpp \
 CCComExtensionData.cpp \
 CocoStudio.cpp
 

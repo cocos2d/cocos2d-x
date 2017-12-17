@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -60,7 +60,7 @@ public:
     /**called by rendering framework, will send the data to GLPipeline.*/
     void draw();
     
-    /**Get the start index of primtive.*/
+    /**Get the start index of primitive.*/
     int getStart() const { return _start; }
     /**Get the number of vertices or indices used for drawing.*/
     int getCount() const { return _count; }

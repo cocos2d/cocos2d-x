@@ -1,11 +1,14 @@
 
 
-#include "LoadingBarReader.h"
+#include "editor-support/cocostudio/WidgetReader/LoadingBarReader/LoadingBarReader.h"
 
 #include "ui/UILoadingBar.h"
-#include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/FlatBuffersSerialize.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "platform/CCFileUtils.h"
+
+#include "editor-support/cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -79,7 +82,7 @@ namespace cocostudio
             else if (key == P_TextureData){
                 
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
-                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -259,6 +262,11 @@ namespace cocostudio
                 {
                     fileExist = true;
                 }
+                else if (SpriteFrameCache::getInstance()->getSpriteFrameByName(imageFileName))
+                {
+                    fileExist = true;
+                    imageFileNameType = 1;
+                }
                 else
                 {
                     errorFilePath = imageFileName;
@@ -303,12 +311,6 @@ namespace cocostudio
         {
             loadingBar->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
         }
-        //else
-        //{
-        //    auto label = Label::create();
-        //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-        //    loadingBar->addChild(label);
-        //}
         
         int direction = options->direction();
         loadingBar->setDirection(LoadingBar::Direction(direction));

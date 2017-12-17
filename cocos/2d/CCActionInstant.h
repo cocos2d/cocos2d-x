@@ -2,7 +2,7 @@
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2011      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -41,7 +41,7 @@ NS_CC_BEGIN
 /** @class ActionInstant
 * @brief Instant actions are immediate actions. They don't have a duration like the IntervalAction actions.
 **/
-class CC_DLL ActionInstant : public FiniteTimeAction //<NSCopying>
+class CC_DLL ActionInstant : public FiniteTimeAction
 {
 public:
     //
@@ -59,6 +59,8 @@ public:
         return nullptr;
     }
 
+    virtual void startWithTarget(Node *target) override;
+    
     virtual bool isDone() const override;
     /**
      * @param dt In seconds.
@@ -68,6 +70,9 @@ public:
      * @param time In seconds.
      */
     virtual void update(float time) override;
+
+private:
+    bool _done;
 };
 
 /** @class Show
@@ -276,7 +281,7 @@ private:
 /** @class Place
 * @brief Places the node in a certain position.
 */
-class CC_DLL Place : public ActionInstant //<NSCopying>
+class CC_DLL Place : public ActionInstant
 {
 public:
 
@@ -315,16 +320,16 @@ private:
 /** @class CallFunc
 * @brief Calls a 'callback'.
 */
-class CC_DLL CallFunc : public ActionInstant //<NSCopying>
+class CC_DLL CallFunc : public ActionInstant
 {
 public:
     /** Creates the action with the callback of type std::function<void()>.
      This is the preferred way to create the callback.
-     * When this funtion bound in js or lua ,the input param will be changed.
+     * When this function bound in js or lua ,the input param will be changed.
      * In js: var create(var func, var this, var [data]) or var create(var func).
      * In lua:local create(local funcID).
      *
-     * @param func  A callback function need to be excuted.
+     * @param func  A callback function need to be executed.
      * @return  An autoreleased CallFunc object.
      */
     static CallFunc * create(const std::function<void()>& func);
@@ -347,7 +352,7 @@ public:
      *
      * @return The selector target.
      */
-    inline Ref* getTargetCallback()
+    Ref* getTargetCallback()
     {
         return _selectorTarget;
     }
@@ -356,7 +361,7 @@ public:
      *
      * @param sel The selector target.
      */
-    inline void setTargetCallback(Ref* sel)
+    void setTargetCallback(Ref* sel)
     {
         if (sel != _selectorTarget)
         {
@@ -422,7 +427,7 @@ public:
     /** Creates the action with the callback of type std::function<void()>.
      This is the preferred way to create the callback.
      *
-     * @param func  A callback function need to be excuted.
+     * @param func  A callback function need to be executed.
      * @return  An autoreleased CallFuncN object.
      */
     static CallFuncN * create(const std::function<void(Node*)>& func);
@@ -474,7 +479,7 @@ public:
     /** Creates the action with the callback and the data to pass as an argument.
      *
      * @param target    A certain target.
-     * @param selector  The callback need to be excuted.
+     * @param selector  The callback need to be executed.
      * @param d Data, is void* type.
      * @return An autoreleased __CCCallFuncND object.
      */
@@ -516,7 +521,7 @@ public:
         typedef void (Ref::*SEL_CallFuncO)(Ref*);
      *
      * @param target    A certain target.
-     * @param selector  The callback need to be excuted.
+     * @param selector  The callback need to be executed.
      * @param object    An object as the callback's first argument.
      * @return An autoreleased __CCCallFuncO object.
      */

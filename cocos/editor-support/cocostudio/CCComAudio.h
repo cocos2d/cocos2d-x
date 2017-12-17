@@ -1,5 +1,5 @@
 ﻿/****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,13 +25,14 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCCOMAUDIO_H__
 #define __CC_EXTENTIONS_CCCOMAUDIO_H__
 
-#include "CCComBase.h"
+#include "editor-support/cocostudio/CCComBase.h"
+#include "base/CCProtocols.h"
 #include "2d/CCComponent.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
-class CC_STUDIO_DLL ComAudio : public cocos2d::Component
+    class CC_STUDIO_DLL ComAudio : public cocos2d::Component, public cocos2d::PlayableProtocol
 {
     DECLARE_CLASS_COMPONENT_INFO
 public:
@@ -74,6 +75,9 @@ public:
 
     virtual bool serialize(void* r) override;
 public:
+    /**
+    * @lua endToLua
+    */
     void end();
     void preloadBackgroundMusic(const char* pszFilePath);
     void playBackgroundMusic(const char* pszFilePath, bool bLoop);
@@ -105,11 +109,22 @@ public:
     const char* getFile();
     void setLoop(bool bLoop);
     bool isLoop();
+    
+    /// @{
+    /// @name implement Playable Protocol
+    // play the effect sound path in _filePath
+    virtual void start() override;
+    // stop the effect sound which started with latest start()
+    virtual void stop() override;
+    /// @} end of PlayableProtocol
+
 private:
     std::string _filePath;
     bool _loop;
+
+    unsigned int _startedSoundId; // !playing sound id from start(), not playEffect
 };
 
 }
 
-#endif  // __FUNDATION__CCCOMPONENT_H__
+#endif  // __CC_EXTENTIONS_CCCOMAUDIO_H__

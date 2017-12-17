@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  Copyright (c) 2014 GamePlay3D team
  
  http://www.cocos2d-x.org
@@ -111,7 +111,7 @@ public:
      * incoming pixel's depth value and the depth value already in the depth buffer.
      * If the compare function passes, the new pixel will be drawn.
      *
-     * The intial depth compare function is DEPTH_LESS.
+     * The initial depth compare function is DEPTH_LESS.
      */
     enum DepthFunction
     {

@@ -9,6 +9,8 @@ TextInputTests::TextInputTests()
 {
     ADD_TEST_CASE(TextFieldTTFDefaultTest);
     ADD_TEST_CASE(TextFieldTTFActionTest);
+    ADD_TEST_CASE(TextFieldTTFSecureTextEntryTest);
+    ADD_TEST_CASE(TextFieldTTSetCursorFromPoint);
 }
 
 static Rect getRect(Node * node)
@@ -109,7 +111,7 @@ void KeyboardNotificationLayer::onTouchEnded(Touch  *touch, Event  *event)
     Rect rect;
     rect.size = _trackNode->getContentSize();
     auto clicked = isScreenPointInRect(endPos, Camera::getVisitingCamera(), _trackNode->getWorldToNodeTransform(), rect, nullptr);
-    this->onClickTrackNode(clicked);
+    this->onClickTrackNode(clicked, endPos);
     CCLOG("----------------------------------");
 }
 
@@ -122,7 +124,7 @@ std::string TextFieldTTFDefaultTest::subtitle() const
     return "TextFieldTTF with default behavior test";
 }
 
-void TextFieldTTFDefaultTest::onClickTrackNode(bool bClicked)
+void TextFieldTTFDefaultTest::onClickTrackNode(bool bClicked, const Vec2& touchPos)
 {
     auto pTextField = (TextFieldTTF*)_trackNode;
     if (bClicked)
@@ -153,12 +155,12 @@ void TextFieldTTFDefaultTest::onEnter()
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)    
     // on android, TextFieldTTF cannot auto adjust its position when soft-keyboard pop up
-    // so we had to set a higher position to make it visable
+    // so we had to set a higher position to make it visible
     pTextField->setPosition(Vec2(s.width / 2, s.height/2 + 50));
 #else
     pTextField->setPosition(Vec2(s.width / 2, s.height / 2));
 #endif
-
+    
     _trackNode = pTextField;
 }
 
@@ -171,7 +173,7 @@ std::string TextFieldTTFActionTest::subtitle() const
     return "CCTextFieldTTF with action and char limit test";
 }
 
-void TextFieldTTFActionTest::onClickTrackNode(bool bClicked)
+void TextFieldTTFActionTest::onClickTrackNode(bool bClicked, const Vec2& touchPos)
 {
     auto pTextField = (TextFieldTTF*)_trackNode;
     if (bClicked)
@@ -339,4 +341,90 @@ bool TextFieldTTFActionTest::onDraw(TextFieldTTF * sender)
 void TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction(Node * node)
 {
     this->removeChild(node, true);
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+// implement TextFieldTTFSecureTextEntryTest
+//////////////////////////////////////////////////////////////////////////
+
+std::string TextFieldTTFSecureTextEntryTest::subtitle() const
+{
+    return "TextFieldTTF with SecureTextEntry test";
+}
+
+void TextFieldTTFSecureTextEntryTest::onEnter()
+{
+    KeyboardNotificationLayer::onEnter();
+    
+    // add TextFieldTTF
+    auto s = Director::getInstance()->getWinSize();
+    
+    auto pTextField = TextFieldTTF::textFieldWithPlaceHolder("<click here for input>",
+                                                             FONT_NAME,
+                                                             FONT_SIZE);
+    addChild(pTextField);
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // on android, TextFieldTTF cannot auto adjust its position when soft-keyboard pop up
+    // so we had to set a higher position to make it visible
+    pTextField->setPosition(Vec2(s.width / 2, s.height/2 + 50));
+#else
+    pTextField->setPosition(Vec2(s.width / 2, s.height / 2));
+#endif
+    pTextField->setSecureTextEntry(true);
+    
+    _trackNode = pTextField;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// implement TextFieldTTSetCursorFromPoint
+//////////////////////////////////////////////////////////////////////////
+
+std::string TextFieldTTSetCursorFromPoint::subtitle() const
+{
+    return "TextFieldTTF with setCursorFromPoint test";
+}
+
+void TextFieldTTSetCursorFromPoint::onClickTrackNode(bool bClicked, const Vec2& touchPos)
+{
+    auto pTextField = (TextFieldTTF*)_trackNode;
+    if (bClicked)
+    {
+        // TextFieldTTFTest be clicked
+        CCLOG("TextFieldTTSetCursorFromPoint:TextFieldTTF attachWithIME");
+        pTextField->attachWithIME();
+
+        // Set new position cursor
+        pTextField->setCursorFromPoint(touchPos, Camera::getVisitingCamera());
+    }
+    else
+    {
+        // TextFieldTTFTest not be clicked
+        CCLOG("TextFieldTTSetCursorFromPoint:TextFieldTTF detachWithIME");
+        pTextField->detachWithIME();
+    }
+}
+
+void TextFieldTTSetCursorFromPoint::onEnter()
+{
+    KeyboardNotificationLayer::onEnter();
+
+    // add TextFieldTTF
+    auto s = Director::getInstance()->getWinSize();
+
+    auto pTextField = TextFieldTTF::textFieldWithPlaceHolder("<click here for input>",
+        FONT_NAME,
+        FONT_SIZE);
+    addChild(pTextField);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // on android, TextFieldTTF cannot auto adjust its position when soft-keyboard pop up
+    // so we had to set a higher position to make it visible
+    pTextField->setPosition(Vec2(s.width / 2, s.height / 2 + 50));
+#else
+    pTextField->setPosition(Vec2(s.width / 2, s.height / 2));
+#endif
+
+    _trackNode = pTextField;
 }

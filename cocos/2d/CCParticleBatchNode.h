@@ -4,7 +4,7 @@
  * Copyright (c) 2010-2012 cocos2d-x.org
  * Copyright (c) 2011      Zynga Inc.
  * Copyright (c) 2011      Marco Tillemans
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * http://www.cocos2d-x.org
  *
@@ -112,13 +112,13 @@ public:
      *
      * @return The texture atlas used for drawing the quads.
      */
-    inline TextureAtlas* getTextureAtlas() const { return _textureAtlas; };
+    TextureAtlas* getTextureAtlas() const { return _textureAtlas; }
     
     /** Sets the texture atlas used for drawing the quads.
      *
      * @param atlas The texture atlas used for drawing the quads.
      */
-    inline void setTextureAtlas(TextureAtlas* atlas) { _textureAtlas = atlas; };
+    void setTextureAtlas(TextureAtlas* atlas) { _textureAtlas = atlas; }
     
     // Overrides
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;

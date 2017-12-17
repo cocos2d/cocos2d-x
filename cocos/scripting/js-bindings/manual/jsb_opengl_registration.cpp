@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Zynga Inc.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,17 +21,17 @@
  * THE SOFTWARE.
  */
 
-#include "js_bindings_config.h"
-#include "js_bindings_core.h"
+#include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/manual/js_bindings_core.h"
 #include "jsfriendapi.h"
-#include "cocos2d_specifics.hpp"
-#include "jsb_opengl_manual.h"
-#include "js_bindings_opengl.h"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/jsb_opengl_manual.h"
+#include "scripting/js-bindings/manual/js_bindings_opengl.h"
 
 //#include "jsb_opengl_functions_registration.h"
 
 // system
-#include "jsb_opengl_functions.h"
+#include "scripting/js-bindings/manual/jsb_opengl_functions.h"
 
 void JSB_register_opengl(JSContext *_cx, JS::HandleObject object)
 {

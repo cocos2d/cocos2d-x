@@ -26,8 +26,8 @@
  ****************************************************************************/
 
 #import <UIKit/UIKit.h>
-#import "CCUITextInput.h"
-#include "UIEditBoxImpl-ios.h"
+#import "ui/UIEditBox/iOS/CCUITextInput.h"
+#include "ui/UIEditBox/UIEditBoxImpl-ios.h"
 
 
 @interface UIEditBoxImplIOS_objc : NSObject <UITextFieldDelegate, UITextViewDelegate>
@@ -39,22 +39,26 @@
 @property (nonatomic, assign) cocos2d::ui::EditBox::InputFlag dataInputMode;
 @property (nonatomic, assign) cocos2d::ui::EditBox::KeyboardReturnType keyboardReturnType;
 @property (nonatomic, readonly, getter = isEditState) BOOL editState;
+@property (nonatomic, readwrite) BOOL returnPressed;
 
 - (instancetype)initWithFrame:(CGRect)frameRect editBox:(void *)editBox;
 - (void)doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)distance;
 
 - (NSString *)getDefaultFontName;
+- (cocos2d::ui::EditBoxDelegate::EditBoxEndAction)getEndAction;
 
 - (void)setInputMode:(cocos2d::ui::EditBox::InputMode)inputMode;
 - (void)setInputFlag:(cocos2d::ui::EditBox::InputFlag)flag;
 - (void)setReturnType:(cocos2d::ui::EditBox::KeyboardReturnType)returnType;
+- (void)setTextHorizontalAlignment:(cocos2d::TextHAlignment)alignment;
 
 - (void)setPlaceHolder:(NSString *)text;
+- (void)setPlaceholderFont:(UIFont *)font;
+- (void)setPlaceholderTextColor:(UIColor *)color;
 - (void)setVisible:(BOOL)visible;
 - (void)setTextColor:(UIColor*)color;
 - (void)setFont:(UIFont *)font;
-- (void)setPosition:(CGPoint)pos;
-- (void)setContentSize:(CGSize)size;
+- (void)updateFrame:(CGRect)rect;
 
 - (void)openKeyboard;
 - (void)closeKeyboard;

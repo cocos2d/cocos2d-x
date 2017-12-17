@@ -18,6 +18,13 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+--  replaces the current Label node with a new one 
+-- @function [parent=#Button] setTitleLabel 
+-- @param self
+-- @param #cc.Label label
+-- @return Button#Button self (return value: ccui.Button)
+        
+--------------------------------
 -- Change the font size of button's title<br>
 -- param size Title font size in float.
 -- @function [parent=#Button] setTitleFontSize 
@@ -26,11 +33,23 @@
 -- @return Button#Button self (return value: ccui.Button)
         
 --------------------------------
+-- 
+-- @function [parent=#Button] resetPressedRender 
+-- @param self
+-- @return Button#Button self (return value: ccui.Button)
+        
+--------------------------------
 -- Enable scale9 renderer.<br>
 -- param enable Set to true will use scale9 renderer, false otherwise.
 -- @function [parent=#Button] setScale9Enabled 
 -- @param self
 -- @param #bool enable
+-- @return Button#Button self (return value: ccui.Button)
+        
+--------------------------------
+-- 
+-- @function [parent=#Button] resetDisabledRender 
+-- @param self
 -- @return Button#Button self (return value: ccui.Button)
         
 --------------------------------
@@ -48,6 +67,12 @@
 -- @function [parent=#Button] getRendererClicked 
 -- @param self
 -- @return Scale9Sprite#Scale9Sprite ret (return value: ccui.Scale9Sprite)
+        
+--------------------------------
+-- 
+-- @function [parent=#Button] getDisabledFile 
+-- @param self
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- brief Return a zoom scale<br>
@@ -70,6 +95,18 @@
 -- @function [parent=#Button] setTitleColor 
 -- @param self
 -- @param #color3b_table color
+-- @return Button#Button self (return value: ccui.Button)
+        
+--------------------------------
+-- 
+-- @function [parent=#Button] getNormalFile 
+-- @param self
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
+        
+--------------------------------
+-- 
+-- @function [parent=#Button] resetNormalRender 
+-- @param self
 -- @return Button#Button self (return value: ccui.Button)
         
 --------------------------------
@@ -212,6 +249,18 @@
 -- @param self
 -- @param #rect_table capInsets
 -- @return Button#Button self (return value: ccui.Button)
+        
+--------------------------------
+-- 
+-- @function [parent=#Button] getPressedFile 
+-- @param self
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
+        
+--------------------------------
+--  returns the current Label being used 
+-- @function [parent=#Button] getTitleLabel 
+-- @param self
+-- @return Label#Label ret (return value: cc.Label)
         
 --------------------------------
 -- Query the font size of button title<br>

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -38,7 +38,7 @@ PUOnEventFlagObserver::PUOnEventFlagObserver(void) :
 {
 }
 //-----------------------------------------------------------------------
-bool PUOnEventFlagObserver::observe (PUParticle3D* particle, float timeElapsed)
+bool PUOnEventFlagObserver::observe (PUParticle3D* particle, float /*timeElapsed*/)
 {
     if (!particle)
         return false;

@@ -1,9 +1,8 @@
-#include "lua_cocos2dx_physics3d_auto.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_physics3d_auto.hpp"
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
-#include "CCPhysics3D.h"
-#include "tolua_fix.h"
-#include "LuaBasicConversions.h"
-
+#include "physics3d/CCPhysics3D.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
 int lua_cocos2dx_physics3d_Physics3DShape_getbtShape(lua_State* tolua_S)
 {
@@ -3898,7 +3897,7 @@ int lua_cocos2dx_physics3d_Physics3DComponent_getPhysics3DComponentName(lua_Stat
             return 0;
         }
         std::string& ret = cocos2d::Physics3DComponent::getPhysics3DComponentName();
-        tolua_pushcppstring(tolua_S,ret);
+        lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.Physics3DComponent:getPhysics3DComponentName",argc, 0);

@@ -8,6 +8,7 @@ DEFINE_TEST_SUITE(PerformceParticleTests);
 class ParticleMainScene : public TestCase
 {
 public:
+    ParticleMainScene();
     virtual bool init() override;
     virtual void initWithSubTest(int subtest, int particles);
 

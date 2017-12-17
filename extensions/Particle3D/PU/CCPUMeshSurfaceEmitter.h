@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -133,7 +133,7 @@ public:
     /** Destructor **/
     ~MeshInfo (void);
 
-    /** Generate a random number. The ´high?argument determines that numbers are 
+    /** Generate a random number. The high argument determines that numbers are 
         returned between [0..high] **/
     float getGaussianRandom (float high, float cutoff = 4);
 
@@ -147,7 +147,7 @@ public:
     const PUTriangle& getTriangle (size_t triangleIndex);
 
     /** Get a random triangle (index) from the mesh. */
-    const size_t getRandomTriangleIndex (void);
+    size_t getRandomTriangleIndex();
     
     /** Get triangle number */
     size_t getTriangleCount() const { return _triangles.size(); }
@@ -196,9 +196,9 @@ public:
     /** Returns the type op distribution.
     @remarks
         There are several ways to emit particles on the surface of a mesh. This attribute indicates
-        the type of distrubution on the surface.
+        the type of distribution on the surface.
     */
-    const MeshInfo::MeshSurfaceDistribution getDistribution (void) const;
+    MeshInfo::MeshSurfaceDistribution getDistribution() const;
 
     /** Set the type of particle distribution on the surface of a mesh.
     */

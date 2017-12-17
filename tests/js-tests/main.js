@@ -27,7 +27,7 @@
 
 /**
  * A brief explanation for "project.json":
- * Here is the content of project.json file, this is the global configuration for your game, you can modify it to customize some behavior.
+ * Here is the content ofproject.json file, this is the global configuration for your game, you can modify it to customize some behavior.
  * The detail of each field is under it.
  {
     "debugMode"     : 1,
@@ -45,6 +45,11 @@
 
     "frameRate"     : 60,
     // "frameRate" set the wanted frame rate for your game, but the real fps depends on your game implementation and the running environment.
+    
+    "noCache"       : false,
+    // "noCache" set whether your resources will be loaded with a timestamp suffix in the url.
+    // In this way, your resources will be force updated even if the browser holds a cache of it.
+    // It's very useful for mobile browser debugging.
 
     "id"            : "gameCanvas",
     // "gameCanvas" sets the id of your canvas element on the web page, it's useful only on web.
@@ -80,7 +85,7 @@
  *
  */
 
-if(cc.sys){
+if (cc.sys && cc.sys.isNative) {
     var scene3SearchPaths = cc.sys.localStorage.getItem("Scene3SearchPaths");
     if (scene3SearchPaths)
         jsb.fileUtils.setSearchPaths(JSON.parse(scene3SearchPaths));
@@ -117,6 +122,10 @@ cc.game.onStart = function(){
     }
     else
     {
+        cc.view.enableRetina(true);
+        cc.view.setOrientation(cc.ORIENTATION_LANDSCAPE);
+        cc.view.setDesignResolutionSize(800, 450, cc.ResolutionPolicy.SHOW_ALL);
+        cc.view.resizeWithBrowserSize(true);
         // js-test use cpptest resource in debug mode , and in the release mode, console will copy the resource into the res dir
         // so the respath will modify to res,
         if (cc.game.config[cc.game.CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {

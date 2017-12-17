@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -94,13 +94,13 @@ public:
      * Query TGA image info.
      *@return The TGA image info.
      */
-    inline struct sImageTGA* getTGAInfo() const { return _TGAInfo; };
+    struct sImageTGA* getTGAInfo() const { return _TGAInfo; }
 
     /**
      * Set the TGA image info for TileMapAtlas
      *@param TGAInfo The TGA info in sImageTGA.
      */
-    inline void setTGAInfo(struct sImageTGA* TGAInfo) { _TGAInfo = TGAInfo; };
+    void setTGAInfo(struct sImageTGA* TGAInfo) { _TGAInfo = TGAInfo; }
 
 protected:
     void loadTGAfile(const std::string& file);

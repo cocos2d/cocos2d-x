@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,26 +22,12 @@
 
 sp.ANIMATION_EVENT_TYPE = {
 	START: 0,
-	END: 1,
-	COMPLETE: 2,
-	EVENT: 3
+    INTERRUPT: 1,
+	END: 2,
+	COMPLETE: 3,
+    DISPOSE: 4,
+	EVENT: 5
 };
-
-sp.SkeletonAnimation.prototype._ctor = function(skeletonDataFile, atlasFile, scale) {
-	if(atlasFile) {
-        if (isNaN(scale)) {
-            scale = 1;
-        }
-        
-        this.initWithFile(skeletonDataFile, atlasFile, scale);
-        this.initialize();
-
-        this._target = null;
-        this._callback = null;
-	}
-};
-
-sp.SkeletonAnimation.extend = cc.Class.extend;
 
 // Temporary solution before upgrade the Spine API
 sp.SkeletonAnimation.prototype.setAnimationListener = function (target, callback) {

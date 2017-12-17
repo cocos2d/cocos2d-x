@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "platform/CCPlatformMacros.h"
 #include <float.h>
 #include <BaseTsd.h>
+#include <cmath>
 
 #ifndef __SSIZE_T
 #define __SSIZE_T
@@ -45,12 +46,10 @@ typedef SSIZE_T ssize_t;
     #define _USE_MATH_DEFINES       // make M_PI can be use
 #endif
 
-#if !defined(isnan)
-    #define isnan   _isnan
-#endif
-
+#if _MSC_VER < 1900
 #ifndef snprintf
 #define snprintf _snprintf
+#endif
 #endif
 
 #include <math.h>

@@ -5,7 +5,7 @@
  * the API should work with objects like WebGLTexture, WebGLBuffer, WebGLRenderBuffer, WebGLFramebuffer, WebGLProgram, WebGLShader.
  * OpenGL ES 2.0 doesn't have "objects" concepts: Instead it uses ids (GLints). So, these objects are emulated in this thin wrapper.
  *
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -79,7 +79,7 @@ gl.deleteTexture = function(texture) {
     gl._deleteTexture(texture_id);
 };
 
-gl.deleteBuffer = function(bufer) {
+gl.deleteBuffer = function(buffer) {
     var buffer_id = buffer.buffer_id;
     // Accept numbers too. eg: gl.deleteBuffer(0)
     if( typeof buffer === 'number' )
@@ -88,7 +88,7 @@ gl.deleteBuffer = function(bufer) {
     gl._deleteBuffer(buffer_id);
 };
 
-gl.deleteRenderbuffer = function(bufer) {
+gl.deleteRenderbuffer = function(buffer) {
     var buffer_id = buffer.renderbuffer_id;
     // Accept numbers too. eg: gl.deleteRenderbuffer(0)
     if( typeof buffer === 'number' )
@@ -97,7 +97,7 @@ gl.deleteRenderbuffer = function(bufer) {
     gl._deleteRenderbuffer(renderbuffer_id);
 };
 
-gl.deleteFramebuffer = function(bufer) {
+gl.deleteFramebuffer = function(buffer) {
     var buffer_id = buffer.framebuffer_id;
     // Accept numbers too. eg: gl.deleteFramebuffer(0)
     if( typeof buffer === 'number' )

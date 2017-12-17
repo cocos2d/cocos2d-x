@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -42,10 +42,20 @@ cc.GLNode = cc.GLNode || cc.Node.extend({
     },
     init:function(){
         this._renderCmd._needDraw = true;
+        this._renderCmd._matrix = new cc.math.Matrix4();
+        this._renderCmd._matrix.identity();
         this._renderCmd.rendering =  function(ctx){
+            var wt = this._worldTransform;
+            this._matrix.mat[0] = wt.a;
+            this._matrix.mat[4] = wt.c;
+            this._matrix.mat[12] = wt.tx;
+            this._matrix.mat[1] = wt.b;
+            this._matrix.mat[5] = wt.d;
+            this._matrix.mat[13] = wt.ty;
+
             cc.kmGLMatrixMode(cc.KM_GL_MODELVIEW);
             cc.kmGLPushMatrix();
-            cc.kmGLLoadMatrix(this._stackMatrix);
+            cc.kmGLLoadMatrix(this._matrix);
 
             this._node.draw(ctx);
 
@@ -458,7 +468,8 @@ var GLNodeCCAPITest = OpenGLTestLayer.extend({
 
                 this.shader.use();
                 this.shader.setUniformsForBuiltins();
-                cc.glEnableVertexAttribs( cc.VERTEX_ATTRIB_FLAG_COLOR | cc.VERTEX_ATTRIB_FLAG_POSITION);
+                gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_COLOR);
+                gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
 
                 // Draw fullscreen Square
                 gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexPositionBuffer);
@@ -604,7 +615,7 @@ var ShaderNode = cc.GLNode.extend({
         this.shader.setUniformLocationF32( this.uniformCenter, centerx, centery);
         this.shader.setUniformLocationF32( this.uniformResolution, 256, 256);
 
-        cc.glEnableVertexAttribs( cc.VERTEX_ATTRIB_FLAG_POSITION );
+        gl.enableVertexAttribArray( cc.VERTEX_ATTRIB_POSITION );
 
         // Draw fullscreen Square
         gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexPositionBuffer);
@@ -905,7 +916,7 @@ var ShaderOutlineEffect = OpenGLTestLayer.extend({
             }else{
                 this.sprite.shaderProgram = this.shader;
             }
-                                     
+
             this.addChild(this.sprite);
 
             this.scheduleUpdate();
@@ -1054,7 +1065,6 @@ var GLGetActiveTest = OpenGLTestLayer.extend({
         var p = this.sprite.shaderProgram.getProgram();
         ret.push( gl.getActiveAttrib( p, 0 ) );
         ret.push( gl.getActiveUniform( p, 0 ) );
-        ret.push( gl.getAttachedShaders( p ) );
         return JSON.stringify(ret);
     }
 });
@@ -1088,7 +1098,8 @@ var TexImage2DTest = OpenGLTestLayer.extend({
                 this.shader.setUniformsForBuiltins();
 
                 gl.bindTexture(gl.TEXTURE_2D, this.my_texture);
-                cc.glEnableVertexAttribs( cc.VERTEX_ATTRIB_FLAG_TEX_COORDS | cc.VERTEX_ATTRIB_FLAG_POSITION);
+                gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
+                gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_TEX_COORDS);
 
                 // Draw fullscreen Square
                 gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVertexPositionBuffer);

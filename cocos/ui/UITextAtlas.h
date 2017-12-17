@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -36,6 +36,7 @@ NS_CC_BEGIN
  */
 
 class Label;
+struct CC_DLL ResourceData;
 
 namespace ui {
     
@@ -138,6 +139,9 @@ public:
      * @js NA
      */
     virtual void adaptRenderers() override;
+
+    ResourceData getRenderFile();
+
 protected:
     virtual void initRenderer() override;
     virtual void onSizeChanged() override;

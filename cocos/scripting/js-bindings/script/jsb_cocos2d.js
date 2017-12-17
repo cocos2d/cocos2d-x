@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@
 
 // CCConfig.js
 //
-cc.ENGINE_VERSION = "Cocos2d-JS v3.8";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.16";
 
 cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
 cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
@@ -128,7 +128,8 @@ cc.MENU_STATE_TRACKING_TOUCH = 1;
 cc.MENU_HANDLER_PRIORITY = -128;
 cc.DEFAULT_PADDING = 5;
 
-cc.Scheduler.PRIORITY_SYSTEM    = -2147483648;
+cc.Scheduler.PRIORITY_SYSTEM = -2147483648;
+cc.Scheduler.PRIORITY_NON_SYSTEM = cc.Scheduler.PRIORITY_SYSTEM + 1;
 
 var _Class = cc.Texture2D;
 
@@ -228,8 +229,6 @@ cc.DISABLE_TAG = 8803;
 cc.stencilBits = -1;           //CCClippingNode.js
 
 cc.g_NumberOfDraws = 0;        //CCDirector.js
-
-cc.PRIORITY_NON_SYSTEM = cc.PRIORITY_SYSTEM + 1;          //CCScheduler.js
 
 cc.s_globalOrderOfArrival = 1;
 
@@ -615,7 +614,7 @@ cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
 
 
 //
-// Basic sturcture : Point
+// Basic structure : Point
 //
 cc.p = function( x, y )
 {
@@ -948,7 +947,7 @@ cc._g = function( x, y )
 };
 
 //
-// Basic sturcture : Size
+// Basic structure : Size
 //
 cc.size = function(w,h)
 {
@@ -1089,7 +1088,7 @@ cc.RectZero = function () {
     return cc.rect(0, 0, 0, 0);
 };
 
-// Basic sturcture : Color
+// Basic structure : Color
 cc.Color = function (r, g, b, a) {
     this.r = r || 0;
     this.g = g || 0;
@@ -1101,7 +1100,7 @@ cc.Color = function (r, g, b, a) {
  * Generate a color object based on multiple forms of parameters
  * @example
  *
- * // 1. All channels seperately as parameters
+ * // 1. All channels separately as parameters
  * var color1 = cc.color(255, 255, 255, 255);
  *
  * // 2. Convert a hex string to a color
@@ -1591,16 +1590,11 @@ cc.Touch.prototype.getLocationY = function(){
 cc.Director.EVENT_PROJECTION_CHANGED = "director_projection_changed";
 cc.Director.EVENT_AFTER_DRAW = "director_after_draw";
 cc.Director.EVENT_AFTER_VISIT = "director_after_visit";
+cc.Director.EVENT_BEFORE_UPDATE = "director_before_update";
 cc.Director.EVENT_AFTER_UPDATE = "director_after_update";
+cc.Director.EVENT_BEFORE_SCENE_LAUNCH = "director_before_scene_launch";
 
-cc.Director.prototype.runScene = function(scene){
-    if (!this.getRunningScene()) {
-        this.runWithScene(scene);
-    }
-    else {
-        this.replaceScene(scene);
-    }
-};
+cc.Director.prototype.runScene = cc.Director.prototype.replaceScene;
 
 cc.visibleRect = {
     topLeft:cc.p(0,0),
@@ -1700,7 +1694,7 @@ cc.arrayVerifyType = function (arr, type) {
 };
 
 /**
- * Searches for the first occurance of object and removes it. If object is not found the function has no effect.
+ * Searches for the first occurrence of object and removes it. If object is not found the function has no effect.
  * @function
  * @param {Array} arr Source Array
  * @param {*} delObj  remove object
@@ -1774,9 +1768,14 @@ cc.cardinalSplineAt = function (p0, p1, p2, p3, tension, t) {
 };
 
 cc._DrawNode = cc.DrawNode;
+cc._DrawNode.prototype.drawPoly = function (verts, fillColor, borderWidth, borderColor) {
+    cc._DrawNode.prototype.drawPolygon.call(this, verts, verts.length, fillColor, borderWidth, borderColor);
+}
 cc.DrawNode = cc._DrawNode.extend({
     _drawColor: cc.color(255, 255, 255, 255),
     _lineWidth: 1,
+
+    release: function () {},
 
     setLineWidth: function (width) {
         this._lineWidth = width;
@@ -2567,13 +2566,21 @@ cc.Layer.prototype.isBaked = function() {return false;};
 //
 cc.RenderTexture.prototype._beginWithClear = cc.RenderTexture.prototype.beginWithClear;
 cc.RenderTexture.prototype.beginWithClear = function(r, g, b, a, depthValue, stencilValue) {
-    arguments[0] /= 255;
-    arguments[1] /= 255;
-    arguments[2] /= 255;
-    arguments[3] /= 255;
-    this._beginWithClear.apply(this, arguments);
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    a /= 255;
+    this._beginWithClear(r, g, b, a, depthValue, stencilValue);
 };
 
+cc.RenderTexture.prototype._clear = cc.RenderTexture.prototype.clear;
+cc.RenderTexture.prototype.clear = function(r, g, b, a) {
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    a /= 255;
+    this._clear(r, g, b, a);
+};
 
 //
 // Texture2D setTexParameters
@@ -2592,11 +2599,18 @@ cc.Texture2D.prototype.setTexParameters = function (texParams, magFilter, wrapS,
     this._setTexParameters(minFilter, magFilter, wrapS, wrapT);
 };
 
-cc.Texture2D.prototype.handleLoadedTexture = function (premultipled) {};
+cc.Texture2D.prototype.handleLoadedTexture = function (premultiplied) {};
 
+// 
+// MenuItem setCallback support target
+//
+cc.MenuItem.prototype._setCallback = cc.MenuItem.prototype.setCallback;
+cc.MenuItem.prototype.setCallback = function (callback, target) {
+    this._setCallback(callback.bind(target));
+};
 
 //
-// MenuItemImage support sprite frame name as paramter
+// MenuItemImage support sprite frame name as parameter
 //
 var _p = cc.MenuItemImage.prototype;
 _p._setNormalSpriteFrame = _p.setNormalSpriteFrame;
@@ -2606,23 +2620,43 @@ _p.setNormalSpriteFrame = function(frame) {
     if (frame[0] == "#") 
         frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
     this._setNormalSpriteFrame(frame);
-}
+};
 _p.setSelectedSpriteFrame = function(frame) {
     if (frame[0] == "#") 
         frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
     this._setSelectedSpriteFrame(frame);
-}
+};
 _p.setDisabledSpriteFrame = function(frame) {
     if (frame[0] == "#") 
         frame = cc.spriteFrameCache.getSpriteFrame(frame.substr(1));
     this._setDisabledSpriteFrame(frame);
-}
+};
 
 cc.MenuItemToggle.prototype.selectedItem = cc.MenuItemToggle.prototype.getSelectedItem;
 
 
+// playMusic searchPaths
+if (cc.sys.os === cc.sys.OS_ANDROID && cc.audioEngine) {
+    cc.audioEngine._playMusic = cc.audioEngine.playMusic;
+    cc.audioEngine.playMusic = function () {
+        var args = arguments;
+        var searchPaths = jsb.fileUtils.getSearchPaths();
+        var path = args[0];
+        searchPaths.some(function (item) {
+            var temp = item + '/' + path;
+            var exists = jsb.fileUtils.isFileExist(temp);
+            if (exists) {
+                path = temp;
+                return true;
+            }
+        });
+        args[0] = path;
+        cc.audioEngine._playMusic.apply(cc.audioEngine, args);
+    };
+}
+
 //
-// LabelTTF setDimensions support two parameters
+// LabelTTF API wrappers
 //
 cc.LabelTTF.prototype._setDimensions = cc.LabelTTF.prototype.setDimensions;
 cc.LabelTTF.prototype.setDimensions = function (dim, height) {
@@ -2630,6 +2664,25 @@ cc.LabelTTF.prototype.setDimensions = function (dim, height) {
         dim = {width: dim, height: height};
     }
     this._setDimensions(dim);
+};
+
+cc.LabelTTF.prototype._enableShadow = cc.LabelTTF.prototype.enableShadow;
+cc.LabelTTF.prototype.enableShadow = function (shadowColor, offset, blurRadius) {
+    var opacity = 1;
+    this._enableShadow(offset, opacity, blurRadius);
+};
+
+cc.LabelTTF.prototype.setDrawMode = function () {};
+
+
+//
+// Label overflow
+//
+cc.Label.Overflow = {
+    NONE: 0,
+    CLAMP: 1,
+    SHRINK: 2,
+    RESIZE_HEIGHT: 3
 };
 
 
@@ -2647,7 +2700,39 @@ _p.setBoundingHeight = _p.setHeight;
 //
 _p = cc.Scheduler.prototype;
 _p.unscheduleUpdateForTarget = _p.unscheduleUpdate;
-_p.unscheduleAllCallbacksForTarget = _p.unscheduleAllForTarget;
+_p.unscheduleAllCallbacksForTarget = function (target) {
+    this.unschedule(target.__instanceId + "", target);
+};
+_p._schedule = _p.schedule;
+_p.schedule = function (callback, target, interval, repeat, delay, paused, key) {
+    var isSelector = false;
+    if(typeof callback !== "function"){
+        var selector = callback;
+        isSelector = true;
+    }
+    if(isSelector === false){
+        //callback, target, interval, repeat, delay, paused, key
+        //callback, target, interval, paused, key
+        if(arguments.length === 4 || arguments.length === 5) {
+            key = delay;
+            paused = repeat;
+            delay = 0;
+            repeat = cc.REPEAT_FOREVER;
+        }
+    }else{
+        //selector, target, interval, repeat, delay, paused
+        //selector, target, interval, paused
+        if(arguments.length === 4){
+            paused = repeat;
+            repeat = cc.REPEAT_FOREVER;
+            delay = 0;
+        }
+    }
+    if (key === undefined) {
+        key = target.__instanceId + "";
+    }
+    this._schedule(callback, target, interval, repeat, delay, paused, key);
+};
 
 
 cc._NodeGrid = cc.NodeGrid;
@@ -2719,18 +2804,38 @@ cc.GLProgram.prototype.setUniformLocationWithMatrix2fv = function(){
     var tempArray = Array.prototype.slice.call(arguments);
     tempArray = Array.prototype.concat.call(tempArray, 2);
     this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
-}
+};
 
 cc.GLProgram.prototype.setUniformLocationWithMatrix3fv = function(){
     var tempArray = Array.prototype.slice.call(arguments);
     tempArray = Array.prototype.concat.call(tempArray, 3);
     this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
-}
+};
 cc.GLProgram.prototype.setUniformLocationWithMatrix4fv = function(){
     var tempArray = Array.prototype.slice.call(arguments);
     tempArray = Array.prototype.concat.call(tempArray, 4);
     this.setUniformLocationWithMatrixfvUnion.apply(this, tempArray);
-}
+};
+
+var jsbSetUniformCallback = cc.GLProgramState.prototype.setUniformCallback;
+cc.GLProgramState.prototype.setUniformCallback = function (uniform, callback) {
+    jsbSetUniformCallback.call(this, uniform, callback);
+};
+
+
+//
+// Script Component
+//
+cc._ComponentJS = cc.ComponentJS;
+cc._ComponentJS.extend = cc.Class.extend;
+cc.ComponentJS = function (filename) {
+    var comp = cc._ComponentJS.create(filename);
+    var res = comp.getScriptObject();
+    return res;
+};
+cc.ComponentJS.extend = function (prop) {
+    return cc._ComponentJS.extend(prop);
+};
 
 
 //

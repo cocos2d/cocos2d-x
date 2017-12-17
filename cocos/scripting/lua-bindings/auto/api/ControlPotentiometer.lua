@@ -41,7 +41,7 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
---  Factorize the event dispath into these methods. 
+--  Factorize the event dispatch into these methods. 
 -- @function [parent=#ControlPotentiometer] potentiometerBegan 
 -- @param self
 -- @param #vec2_table location

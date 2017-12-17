@@ -160,7 +160,7 @@ To guarantee uniqueness, they should be based on the full path in a project's so
 #pragma once
 ```
 
-We are cosidering using `#pragma once` as well, although we haven't determined yet if it is supported in all our target platforms.
+We are considering using `#pragma once` as well, although we haven't determined yet if it is supported in all our target platforms.
 
 ## Forward Declarations
 
@@ -177,7 +177,7 @@ You may forward declare ordinary classes in order to avoid unnecessary `#include
 
 * It can be difficult to determine the correct form of a forward declaration in the presence of features like templates, typedefs, default parameters, and using declarations.
 * It can be difficult to determine whether a forward declaration or a full #include is needed for a given piece of code, particularly when implicit conversion operations are involved. In extreme cases, replacing an #include with a forward declaration can silently change the meaning of code.
-* Forward declaring multiple symbols from a header can be more verbose than simply #includeing the header.
+* Forward declaring multiple symbols from a header can be more verbose than simply `#include`ing the header.
 * Forward declarations of functions and templates can prevent the header owners from making otherwise-compatible changes to their APIs; for example, widening a parameter type, or adding a template parameter with a default value.
 * Forward declaring symbols from namespace std:: usually yields undefined behavior.
 * Structuring code to enable forward declarations (e.g. using pointer members instead of object members) can make the code slower and more complex.
@@ -629,7 +629,7 @@ We require all single argument constructors to be explicit. Always put explicit 
 
 The exception is copy constructors, which, in the rare cases when we allow them, should probably not be explicit. Classes that are intended to be transparent wrappers around other classes are also exceptions. Such exceptions should be clearly marked with comments.
 
-Finally, constructors that take only an initializer_list may be non-explicit. This is to permit construction of your type using the assigment form for brace init lists (i.e. `MyType m = {1, 2}` ).
+Finally, constructors that take only an initializer_list may be non-explicit. This is to permit construction of your type using the assignment form for brace init lists (i.e. `MyType m = {1, 2}` ).
 
 ## Copy Constructors
 
@@ -860,7 +860,7 @@ Within each section, the declarations generally should be in the following order
 * Constructors
 * Destructor
 * Methods, including static methods
-* overriden methods (must have the `override` keyword as suffix)
+* overridden methods (must have the `override` keyword as suffix)
 * Data Members (except `static const` data members)
 
 Friend declarations should always be in the private section, and the `DISALLOW_COPY_AND_ASSIGN` macro invocation should be at the end of the private: section. It should be the last thing in the class. See Copy Constructors.

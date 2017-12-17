@@ -1,4 +1,4 @@
-/* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* -*- indent-tabs-mode: nil; js-indent-level: 2 -*- */
 /* vim: set ft=javascript ts=2 et sw=2 tw=80: */
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -6,78 +6,16 @@
 
 "use strict";
 
+// const { Cc, Ci, Cu } = require("chrome");
+// const Services = require("Services");
+// const { ActorPool, appendExtraActors, createExtraActors } = require("devtools/server/actors/common");
+// const { DebuggerServer } = require("devtools/server/main");
+
+// loader.lazyGetter(this, "ppmm", () => {
+//   return Cc["@mozilla.org/parentprocessmessagemanager;1"].getService(Ci.nsIMessageBroadcaster);
+// });
+
 /* Root actor for the remote debugging protocol. */
-
-/**
- * Methods shared between RootActor and BrowserTabActor.
- */
-
-/**
- * Populate |this._extraActors| as specified by |aFactories|, reusing whatever
- * actors are already there. Add all actors in the final extra actors table to
- * |aPool|.
- *
- * The root actor and the tab actor use this to instantiate actors that other
- * parts of the browser have specified with DebuggerServer.addTabActor antd
- * DebuggerServer.addGlobalActor.
- *
- * @param aFactories
- *     An object whose own property names are the names of properties to add to
- *     some reply packet (say, a tab actor grip or the "listTabs" response
- *     form), and whose own property values are actor constructor functions, as
- *     documented for addTabActor and addGlobalActor.
- *
- * @param this
- *     The BrowserRootActor or BrowserTabActor with which the new actors will
- *     be associated. It should support whatever API the |aFactories|
- *     constructor functions might be interested in, as it is passed to them.
- *     For the sake of CommonCreateExtraActors itself, it should have at least
- *     the following properties:
- *
- *     - _extraActors
- *        An object whose own property names are factory table (and packet)
- *        property names, and whose values are no-argument actor constructors,
- *        of the sort that one can add to an ActorPool.
- *
- *     - conn
- *        The DebuggerServerConnection in which the new actors will participate.
- *
- *     - actorID
- *        The actor's name, for use as the new actors' parentID.
- */
-function CommonCreateExtraActors(aFactories, aPool) {
-  // Walk over global actors added by extensions.
-  for (let name in aFactories) {
-    let actor = this._extraActors[name];
-    if (!actor) {
-      actor = aFactories[name].bind(null, this.conn, this);
-      actor.prototype = aFactories[name].prototype;
-      actor.parentID = this.actorID;
-      this._extraActors[name] = actor;
-    }
-    aPool.addActor(actor);
-  }
-}
-
-/**
- * Append the extra actors in |this._extraActors|, constructed by a prior call
- * to CommonCreateExtraActors, to |aObject|.
- *
- * @param aObject
- *     The object to which the extra actors should be added, under the
- *     property names given in the |aFactories| table passed to
- *     CommonCreateExtraActors.
- *
- * @param this
- *     The BrowserRootActor or BrowserTabActor whose |_extraActors| table we
- *     should use; see above.
- */
-function CommonAppendExtraActors(aObject) {
-  for (let name in this._extraActors) {
-    let actor = this._extraActors[name];
-    aObject[name] = actor.actorID;
-  }
-}
 
 /**
  * Create a remote debugging protocol root actor.
@@ -96,6 +34,11 @@ function CommonAppendExtraActors(aObject) {
  *       list's elements as its tab actors, and sending 'tabListChanged'
  *       notifications when the live list's contents change. One actor in
  *       this list must have a true '.selected' property.
+ *
+ *     - addonList: a live list (see below) of addon actors. If present, the
+ *       new root actor supports the 'listAddons' request, providing the live
+ *       list's elements as its addon actors, and sending 'addonListchanged'
+ *       notifications when the live list's contents change.
  *
  *     - globalActorFactories: an object |A| describing further actors to
  *       attach to the 'listTabs' reply. This is the type accumulated by
@@ -118,9 +61,7 @@ function CommonAppendExtraActors(aObject) {
  * list of actors, and also notifies its clients of changes to the list. A
  * live list's interface is two properties:
  *
- * - iterator: a method that returns an iterator. A for-of loop will call
- *             this method to obtain an iterator for the loop, so if LL is
- *             a live list, one can simply write 'for (i of LL) ...'.
+ * - getList: a method that returns a promise to the contents of the list.
  *
  * - onListChanged: a handler called, with no arguments, when the set of
  *             values the iterator would produce has changed since the last
@@ -148,17 +89,91 @@ function CommonAppendExtraActors(aObject) {
  * actually produce any actors until they are reached in the course of
  * iteration: alliterative lazy live lists.
  */
+
 function RootActor(aConnection, aParameters) {
   this.conn = aConnection;
   this._parameters = aParameters;
   this._onTabListChanged = this.onTabListChanged.bind(this);
   this._onAddonListChanged = this.onAddonListChanged.bind(this);
   this._extraActors = {};
+
+  this._globalActorPool = new ActorPool(this.conn);
+  this.conn.addActorPool(this._globalActorPool);
+
+  this._chromeActor = null;
 }
 
 RootActor.prototype = {
   constructor: RootActor,
   applicationType: "browser",
+
+  traits: {
+    sources: true,
+    // Whether the inspector actor allows modifying outer HTML.
+    editOuterHTML: true,
+    // Whether the inspector actor allows modifying innerHTML and inserting
+    // adjacent HTML.
+    pasteHTML: true,
+    // Whether the server-side highlighter actor exists and can be used to
+    // remotely highlight nodes (see server/actors/highlighters.js)
+    highlightable: true,
+    // Which custom highlighter does the server-side highlighter actor supports?
+    // (see server/actors/highlighters.js)
+    customHighlighters: true,
+    // Whether the inspector actor implements the getImageDataFromURL
+    // method that returns data-uris for image URLs. This is used for image
+    // tooltips for instance
+    urlToImageDataResolver: true,
+    networkMonitor: true,
+    // Whether the storage inspector actor to inspect cookies, etc.
+    storageInspector: true,
+    // Whether storage inspector is read only
+    storageInspectorReadOnly: true,
+    // Whether conditional breakpoints are supported
+    conditionalBreakpoints: true,
+    // Whether the server supports full source actors (breakpoints on
+    // eval scripts, etc)
+    debuggerSourceActors: true,
+    bulk: true,
+    // Whether the style rule actor implements the modifySelector method
+    // that modifies the rule's selector
+    selectorEditable: true,
+    // Whether the page style actor implements the addNewRule method that
+    // adds new rules to the page
+    addNewRule: true,
+    // Whether the dom node actor implements the getUniqueSelector method
+    getUniqueSelector: true,
+    // Whether the director scripts are supported
+    directorScripts: true,
+    // Whether the debugger server supports
+    // blackboxing/pretty-printing (not supported in Fever Dream yet)
+    noBlackBoxing: false,
+    noPrettyPrinting: false,
+    // Whether the page style actor implements the getUsedFontFaces method
+    // that returns the font faces used on a node
+    getUsedFontFaces: true,
+    // Trait added in Gecko 38, indicating that all features necessary for
+    // grabbing allocations from the MemoryActor are available for the performance tool
+    memoryActorAllocations: true,
+    // Added in Gecko 40, indicating that the backend isn't stupid about
+    // sending resumption packets on tab navigation.
+    noNeedToFakeResumptionOnNavigation: true,
+    // Added in Firefox 40. Indicates that the backend supports registering custom
+    // commands through the WebConsoleCommands API.
+    webConsoleCommands: true,
+    // Whether root actor exposes tab actors
+    // if allowChromeProcess is true, you can fetch a ChromeActor instance
+    // to debug chrome and any non-content ressource via getProcess request
+    // if allocChromeProcess is defined, but not true, it means that root actor
+    // no longer expose tab actors, but also that getProcess forbids
+    // exposing actors for security reasons
+    get allowChromeProcess() {
+      return DebuggerServer.allowChromeProcess;
+    },
+    // Whether or not `getProfile()` supports specifying a `startTime`
+    // and `endTime` to filter out samples. Fx40+
+    profilerDataFilterable: true,
+  },
 
   /**
    * Return a 'hello' packet as specified by the Remote Debugging Protocol.
@@ -169,22 +184,9 @@ RootActor.prototype = {
       applicationType: this.applicationType,
       /* This is not in the spec, but it's used by tests. */
       testConnectionPrefix: this.conn.prefix,
-      traits: {
-        sources: true,
-        editOuterHTML: true
-      }
+      traits: this.traits
     };
   },
-
-  /**
-   * This is true for the root actor only, used by some child actors
-   */
-  get isRootActor() true,
-
-  /**
-   * The (chrome) window, for use by child actors
-   */
-  get window() Services.wm.getMostRecentWindow(DebuggerServer.chromeWindowType),
 
   /**
    * Disconnects the actor from the browser window.
@@ -201,6 +203,11 @@ RootActor.prototype = {
       this._parameters.onShutdown();
     }
     this._extraActors = null;
+    this.conn = null;
+    this._tabActorPool = null;
+    this._globalActorPool = null;
+    this._parameters = null;
+    this._chromeActor = null;
   },
 
   /* The 'listTabs' request and the 'tabListChanged' notification. */
@@ -235,10 +242,12 @@ RootActor.prototype = {
         newActorPool.addActor(tabActor);
         tabActorList.push(tabActor);
       }
-
       /* DebuggerServer.addGlobalActor support: create actors. */
-      this._createExtraActors(this._parameters.globalActorFactories, newActorPool);
-
+      if (!this._globalActorPool) {
+        this._globalActorPool = new ActorPool(this.conn);
+        this.conn.addActorPool(this._globalActorPool);
+      }
+      // this._createExtraActors(this._parameters.globalActorFactories, this._globalActorPool);
       /*
        * Drop the old actorID -> actor map. Actors that still mattered were
        * added to the new map; others will go away.
@@ -252,11 +261,16 @@ RootActor.prototype = {
       let reply = {
         "from": this.actorID,
         "selected": selected || 0,
-        "tabs": [actor.form() for (actor of tabActorList)],
+        "tabs": tabActorList.map(actor => actor.form())
       };
 
+      /* If a root window is accessible, include its URL. */
+      if (this.url) {
+        reply.url = this.url;
+      }
+
       /* DebuggerServer.addGlobalActor support: name actors in 'listTabs' reply. */
-      this._appendExtraActors(reply);
+      // this._appendExtraActors(reply);
 
       /*
        * Now that we're actually going to report the contents of tabList to
@@ -266,6 +280,33 @@ RootActor.prototype = {
       tabList.onListChanged = this._onTabListChanged;
 
       return reply;
+    });
+  },
+
+  onGetTab: function (options) {
+    let tabList = this._parameters.tabList;
+    if (!tabList) {
+      return { error: "noTabs",
+               message: "This root actor has no browser tabs." };
+    }
+    if (!this._tabActorPool) {
+      this._tabActorPool = new ActorPool(this.conn);
+      this.conn.addActorPool(this._tabActorPool);
+    }
+    return tabList.getTab(options)
+                  .then(tabActor => {
+      tabActor.parentID = this.actorID;
+      this._tabActorPool.addActor(tabActor);
+
+      return { tab: tabActor.form() };
+    }, error => {
+      if (error.error) {
+        // Pipe expected errors as-is to the client
+        return error;
+      } else {
+        return { error: "noTab",
+                 message: "Unexpected error while calling getTab(): " + error };
+      }
     });
   },
 
@@ -298,7 +339,7 @@ RootActor.prototype = {
 
       return {
         "from": this.actorID,
-        "addons": [addonActor.form() for (addonActor of addonActors)]
+        "addons": addonActors.map(addonActor => addonActor.form())
       };
     });
   },
@@ -308,78 +349,96 @@ RootActor.prototype = {
     this._parameters.addonList.onListChanged = null;
   },
 
+  onListProcesses: function () {
+    let processes = [];
+    for (let i = 0; i < ppmm.childCount; i++) {
+      processes.push({
+        id: i, // XXX: may not be a perfect id, but process message manager doesn't expose anything...
+        parent: i == 0, // XXX Weak, but appear to be stable
+        tabCount: undefined, // TODO: exposes process message manager on frameloaders in order to compute this
+      });
+    }
+    return { processes: processes };
+  },
+
+  onGetProcess: function (aRequest) {
+    if (!DebuggerServer.allowChromeProcess) {
+      return { error: "forbidden",
+               message: "You are not allowed to debug chrome." };
+    }
+    if (("id" in aRequest) && typeof(aRequest.id) != "number") {
+      return { error: "wrongParameter",
+               message: "getProcess requires a valid `id` attribute." };
+    }
+    // If the request doesn't contains id parameter or id is 0
+    // (id == 0, based on onListProcesses implementation)
+    if ((!("id" in aRequest)) || aRequest.id === 0) {
+      if (!this._chromeActor) {
+        // Create a ChromeActor for the parent process
+        let { ChromeActor } = require("devtools/server/actors/chrome");
+        this._chromeActor = new ChromeActor(this.conn);
+        this._globalActorPool.addActor(this._chromeActor);
+      }
+
+      return { form: this._chromeActor.form() };
+    } else {
+      let mm = ppmm.getChildAt(aRequest.id);
+      if (!mm) {
+        return { error: "noProcess",
+                 message: "There is no process with id '" + aRequest.id + "'." };
+      }
+      return DebuggerServer.connectToContent(this.conn, mm)
+                           .then(form => ({ form }));
+    }
+  },
+
   /* This is not in the spec, but it's used by tests. */
   onEcho: function (aRequest) {
     /*
      * Request packets are frozen. Copy aRequest, so that
      * DebuggerServerConnection.onPacket can attach a 'from' property.
      */
-    return JSON.parse(JSON.stringify(aRequest));
+    return Cu.cloneInto(aRequest, {});
+  },
+
+  onProtocolDescription: function () {
+    return require("devtools/server/protocol").dumpProtocolSpec();
   },
 
   /* Support for DebuggerServer.addGlobalActor. */
-  _createExtraActors: CommonCreateExtraActors,
-  _appendExtraActors: CommonAppendExtraActors,
-
-  /* ThreadActor hooks. */
+  // _createExtraActors: createExtraActors,
+  // _appendExtraActors: appendExtraActors,
 
   /**
-   * Prepare to enter a nested event loop by disabling debuggee events.
+   * Remove the extra actor (added by DebuggerServer.addGlobalActor or
+   * DebuggerServer.addTabActor) name |aName|.
    */
-  preNest: function() {
-    // Disable events in all open windows.
-    let e = windowMediator.getEnumerator(null);
-    while (e.hasMoreElements()) {
-      let win = e.getNext();
-      let windowUtils = win.QueryInterface(Ci.nsIInterfaceRequestor)
-                           .getInterface(Ci.nsIDOMWindowUtils);
-      windowUtils.suppressEventHandling(true);
-      windowUtils.suspendTimeouts();
+  removeActorByName: function(aName) {
+    if (aName in this._extraActors) {
+      const actor = this._extraActors[aName];
+      if (this._globalActorPool.has(actor)) {
+        this._globalActorPool.removeActor(actor);
+      }
+      if (this._tabActorPool) {
+        // Iterate over TabActor instances to also remove tab actors
+        // created during listTabs for each document.
+        this._tabActorPool.forEach(tab => {
+          tab.removeActorByName(aName);
+        });
+      }
+      delete this._extraActors[aName];
     }
-  },
-
-  /**
-   * Prepare to exit a nested event loop by enabling debuggee events.
-   */
-  postNest: function(aNestData) {
-    // Enable events in all open windows.
-    let e = windowMediator.getEnumerator(null);
-    while (e.hasMoreElements()) {
-      let win = e.getNext();
-      let windowUtils = win.QueryInterface(Ci.nsIInterfaceRequestor)
-                           .getInterface(Ci.nsIDOMWindowUtils);
-      windowUtils.resumeTimeouts();
-      windowUtils.suppressEventHandling(false);
-    }
-  },
-
-  /* ChromeDebuggerActor hooks. */
-
-  /**
-   * Add the specified actor to the default actor pool connection, in order to
-   * keep it alive as long as the server is. This is used by breakpoints in the
-   * thread and chrome debugger actors.
-   *
-   * @param actor aActor
-   *        The actor object.
-   */
-  addToParentPool: function(aActor) {
-    this.conn.addActor(aActor);
-  },
-
-  /**
-   * Remove the specified actor from the default actor pool.
-   *
-   * @param BreakpointActor aActor
-   *        The actor object.
-   */
-  removeFromParentPool: function(aActor) {
-    this.conn.removeActor(aActor);
-  }
-}
+   }
+};
 
 RootActor.prototype.requestTypes = {
   "listTabs": RootActor.prototype.onListTabs,
+  "getTab": RootActor.prototype.onGetTab,
   "listAddons": RootActor.prototype.onListAddons,
-  "echo": RootActor.prototype.onEcho
+  "listProcesses": RootActor.prototype.onListProcesses,
+  "getProcess": RootActor.prototype.onGetProcess,
+  "echo": RootActor.prototype.onEcho,
+  "protocolDescription": RootActor.prototype.onProtocolDescription
 };
+
+// exports.RootActor = RootActor;

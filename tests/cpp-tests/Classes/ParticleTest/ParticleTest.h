@@ -321,7 +321,7 @@ class PremultipliedAlphaTest : public ParticleDemo
 public:
     CREATE_FUNC(PremultipliedAlphaTest);
     virtual void onEnter() override;
-    void readdPaticle(float delta);
+    void readdParticle(float delta);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -377,6 +377,24 @@ class ParticleIssue12310 : public ParticleDemo
 public:
     CREATE_FUNC(ParticleIssue12310);
     virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
+class DemoPause : public ParticleDemo
+{
+public:
+    CREATE_FUNC(DemoPause);
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+    void pauseEmitter(float time);
+};
+
+class ParticleSpriteFrame : public ParticleDemo
+{
+public:
+    CREATE_FUNC(ParticleSpriteFrame);
+    virtual void onEnter() override;
+    virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
 

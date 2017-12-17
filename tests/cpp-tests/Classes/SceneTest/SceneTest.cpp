@@ -83,7 +83,7 @@ void SceneTestLayer1::onPushSceneTran(Ref* sender)
 void SceneTestLayer1::onQuit(Ref* sender)
 {
     //getCocosApp()->exit();
-    //CCDirector::getInstance()->poscene();
+    //Director::getInstance()->popScene();
 
     //// HA HA... no more terminate on sdk v3.0
     //// http://developer.apple.com/iphone/library/qa/qa2008/qa1561.html
@@ -163,7 +163,7 @@ bool SceneTestLayer3::init()
         auto s = Director::getInstance()->getWinSize();
 
         auto item0 = MenuItemFont::create("Touch to pushScene (self)", CC_CALLBACK_1(SceneTestLayer3::item0Clicked, this));
-        auto item1 = MenuItemFont::create("Touch to poscene", CC_CALLBACK_1(SceneTestLayer3::item1Clicked, this));
+        auto item1 = MenuItemFont::create("Touch to popScene", CC_CALLBACK_1(SceneTestLayer3::item1Clicked, this));
         auto item2 = MenuItemFont::create("Touch to popToRootScene", CC_CALLBACK_1(SceneTestLayer3::item2Clicked, this));
         auto item3 = MenuItemFont::create("Touch to popToSceneStackLevel(2)", CC_CALLBACK_1(SceneTestLayer3::item3Clicked, this));
 

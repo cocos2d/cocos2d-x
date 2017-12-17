@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -34,12 +34,14 @@ THE SOFTWARE.
  */
 NS_CC_BEGIN
 
+struct CC_DLL ResourceData;
+
 namespace ui {
     class Scale9Sprite;
 /**
  * @brief A widget to display images.
  */
-class CC_GUI_DLL ImageView : public Widget
+class CC_GUI_DLL ImageView : public Widget , public cocos2d::BlendProtocol
 {
     
     DECLARE_CLASS_GUI_INFO
@@ -115,13 +117,35 @@ public:
      * @see `setCapInsets(const Rect&)`
      */
     const Rect& getCapInsets()const;
+    
+    /**
+     * Sets the source blending function.
+     *
+     * @param blendFunc A structure with source and destination factor to specify pixel arithmetic. e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.
+     * @js NA
+     * @lua NA
+     */
+    virtual void setBlendFunc(const BlendFunc &blendFunc) override;
+    
+    /**
+     * Returns the blending function that is currently being used.
+     *
+     * @return A BlendFunc structure with source and destination factor which specified pixel arithmetic.
+     * @js NA
+     * @lua NA
+     */
+    virtual const BlendFunc &getBlendFunc() const override;
 
     //override methods.
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
     virtual std::string getDescription() const override;
     virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
-    
+
+    ResourceData getRenderFile();
+
+    virtual void setGLProgram(GLProgram* glProgram) override;
+    virtual void setGLProgramState(cocos2d::GLProgramState* glProgramState) override;
 CC_CONSTRUCTOR_ACCESS:
     //initializes state of widget.
     virtual bool init() override;
@@ -146,6 +170,7 @@ protected:
     TextureResType _imageTexType;
     Size _imageTextureSize;
     bool _imageRendererAdaptDirty;
+    std::string _textureFile;
 };
 
 }

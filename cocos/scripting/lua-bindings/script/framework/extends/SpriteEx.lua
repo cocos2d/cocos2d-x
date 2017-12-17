@@ -1,6 +1,6 @@
 --[[
 
-Copyright (c) 2011-2014 chukong-inc.com
+Copyright (c) 2014-2017 Chukong Technologies Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ local Sprite = cc.Sprite
 function Sprite:playAnimationOnce(animation, args)
     local actions = {}
 
-    local showDelay = args.showDelay or 0
+    local showDelay = args.showDelay
     if showDelay then
         self:setVisible(false)
         actions[#actions + 1] = cc.DelayTime:create(showDelay)

@@ -1,6 +1,6 @@
 #include "lua_test_bindings.h"
 #include "cocos2d.h"
-#include "LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
 NS_CC_BEGIN
 

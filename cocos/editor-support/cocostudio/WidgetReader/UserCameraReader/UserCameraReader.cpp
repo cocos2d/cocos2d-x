@@ -22,13 +22,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "UserCameraReader.h"
+#include "base/CCDirector.h"
+#include "2d/CCCamera.h"
+#include "platform/CCFileUtils.h"
+#include "editor-support/cocostudio/WidgetReader/UserCameraReader/UserCameraReader.h"
 
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/CSParse3DBinary_generated.h"
-#include "cocostudio/FlatBuffersSerialize.h"
-#include "cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
-#include "cocostudio/WidgetReader/GameNode3DReader/GameNode3DReader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/CSParse3DBinary_generated.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
+#include "editor-support/cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
+#include "editor-support/cocostudio/WidgetReader/GameNode3DReader/GameNode3DReader.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -56,7 +59,7 @@ namespace cocostudio
     {
         if (!_instanceUserCameraReader)
         {
-            _instanceUserCameraReader = new UserCameraReader();
+            _instanceUserCameraReader = new (std::nothrow) UserCameraReader();
         }
         
         return _instanceUserCameraReader;
@@ -206,7 +209,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        leftResourceType = getResourceType(value);;
+                        leftResourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
@@ -237,7 +240,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        rightResourceType = getResourceType(value);;
+                        rightResourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
@@ -268,7 +271,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        upResourceType = getResourceType(value);;
+                        upResourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
@@ -299,7 +302,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        downResourceType = getResourceType(value);;
+                        downResourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
@@ -330,7 +333,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        forwardResourceType = getResourceType(value);;
+                        forwardResourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {
@@ -361,7 +364,7 @@ namespace cocostudio
                     }
                     else if (name == "Type")
                     {
-                        backResourceType = getResourceType(value);;
+                        backResourceType = getResourceType(value);
                     }
                     else if (name == "Plist")
                     {

@@ -15,9 +15,6 @@
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\lua_module_register.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\lua_test_bindings.h">
       <Filter>Classes</Filter>
     </ClInclude>

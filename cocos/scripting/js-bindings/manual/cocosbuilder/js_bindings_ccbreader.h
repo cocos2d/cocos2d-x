@@ -1,7 +1,7 @@
 /*
  * Created by Rohan Kuruvilla on 14/08/2012.
  * Copyright (c) 2012 Zynga Inc.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,8 +25,8 @@
 #ifndef __JS_BINDINGS_CCBREADER_H__
 #define __JS_BINDINGS_CCBREADER_H__
 
-#include "cocosbuilder_specifics.hpp"
-#include "cocosbuilder/CocosBuilder.h"
+#include "scripting/js-bindings/manual/cocosbuilder/cocosbuilder_specifics.hpp"
+#include "editor-support/cocosbuilder/CocosBuilder.h"
 
 class CCBScriptCallbackProxy:  public cocos2d::Layer
 , public cocosbuilder::CCBSelectorResolver

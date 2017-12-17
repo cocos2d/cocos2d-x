@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -54,7 +54,7 @@ PUBoxCollider::~PUBoxCollider()
 {
 }
 //-----------------------------------------------------------------------
-const float PUBoxCollider::getWidth() const
+float PUBoxCollider::getWidth() const
 {
     return _width;
 }
@@ -64,7 +64,7 @@ void PUBoxCollider::setWidth(const float width)
     _width = width;
 }
 //-----------------------------------------------------------------------
-const float PUBoxCollider::getHeight() const
+float PUBoxCollider::getHeight() const
 {
     return _height;
 }
@@ -74,7 +74,7 @@ void PUBoxCollider::setHeight(const float height)
     _height = height;
 }
 //-----------------------------------------------------------------------
-const float PUBoxCollider::getDepth() const
+float PUBoxCollider::getDepth() const
 {
     return _depth;
 }
@@ -194,7 +194,7 @@ bool PUBoxCollider::isSmallestValue(float value, const Vec3& particlePosition)
         value <= value6);
 }
 
-void PUBoxCollider::updatePUAffector( PUParticle3D *particle, float deltaTime )
+void PUBoxCollider::updatePUAffector( PUParticle3D *particle, float /*deltaTime*/ )
 {
     //for (auto iter : _particleSystem->getParticles())
     {

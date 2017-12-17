@@ -25,10 +25,13 @@ EventDispatcherTests::EventDispatcherTests()
     ADD_TEST_CASE(GlobalZTouchTest);
     ADD_TEST_CASE(StopPropagationTest);
     ADD_TEST_CASE(PauseResumeTargetTest);
+    ADD_TEST_CASE(PauseResumeTargetTest2);
+    ADD_TEST_CASE(PauseResumeTargetTest3);
     ADD_TEST_CASE(Issue4129);
     ADD_TEST_CASE(Issue4160);
     ADD_TEST_CASE(DanglingNodePointersTest);
     ADD_TEST_CASE(RegisterAndUnregisterWhileEventHanldingTest);
+    ADD_TEST_CASE(WindowEventsTest);
     ADD_TEST_CASE(Issue8194);
     ADD_TEST_CASE(Issue9898)
 }
@@ -168,35 +171,37 @@ protected:
     , _removeListenerOnTouchEnded(false)
     {
     }
-    
-public:
-    void onEnter() override
+
+    virtual bool init() override
     {
-        Sprite::onEnter();
-        
+        if (!Sprite::init())
+            return false;
+
         auto listener = EventListenerTouchOneByOne::create();
         listener->setSwallowTouches(true);
         
-        listener->onTouchBegan = [=](Touch* touch, Event* event){
-            
+        listener->onTouchBegan = [this](Touch* touch, Event* event){
             Vec2 locationInNode = this->convertToNodeSpace(touch->getLocation());
             Size s = this->getContentSize();
             Rect rect = Rect(0, 0, s.width, s.height);
             
             if (rect.containsPoint(locationInNode))
             {
+                log("TouchableSprite: onTouchBegan ...");
                 this->setColor(Color3B::RED);
                 return true;
             }
             return false;
         };
         
-        listener->onTouchEnded = [=](Touch* touch, Event* event){
+        listener->onTouchEnded = [this](Touch* touch, Event* event){
+            log("TouchableSprite: onTouchEnded ...");
             this->setColor(Color3B::WHITE);
             
             if (_removeListenerOnTouchEnded)
             {
-                _eventDispatcher->removeEventListener(listener);
+                _eventDispatcher->removeEventListener(_listener);
+                _listener = nullptr;
             }
         };
         
@@ -210,15 +215,19 @@ public:
         }
 
         _listener = listener;
+        return true;
     }
     
-    void onExit() override
+    virtual void onExit() override
     {
-        _eventDispatcher->removeEventListener(_listener);
+        if (_listener != nullptr && _fixedPriority != 0)
+        {
+            _eventDispatcher->removeEventListener(_listener);
+        }
         
         Sprite::onExit();
     }
-
+public:
     void removeListenerOnTouchEnded(bool toRemove) { _removeListenerOnTouchEnded = toRemove; };
     
     inline EventListener* getListener() { return _listener; };
@@ -570,7 +579,7 @@ void RemoveAndRetainNodeTest::onEnter()
                                      CallFunc::create([this](){
                                         _spriteSaved = true;
                                         _sprite->retain();
-                                        _sprite->removeFromParent();
+                                        _sprite->removeFromParentAndCleanup(false);
                                      }),
                                      DelayTime::create(5.0f),
                                      CallFunc::create([this](){
@@ -952,9 +961,8 @@ StopPropagationTest::StopPropagationTest()
     };
     
     auto keyboardEventListener = EventListenerKeyboard::create();
-    keyboardEventListener->onKeyPressed = [](EventKeyboard::KeyCode key, Event* event){
+    keyboardEventListener->onKeyPressed = [](EventKeyboard::KeyCode /*key*/, Event* event){
         auto target = static_cast<Sprite*>(event->getCurrentTarget());
-        CC_UNUSED_PARAM(target);
         CCASSERT(target->getTag() == TAG_BLUE_SPRITE || target->getTag() == TAG_BLUE_SPRITE2, "Yellow blocks shouldn't response event.");
         // Stop propagation, so yellow blocks will not be able to receive event.
         event->stopPropagation();
@@ -1100,6 +1108,155 @@ std::string PauseResumeTargetTest::subtitle() const
     return "Yellow block uses fixed priority";
 }
 
+// PauseResumeTargetTest2
+PauseResumeTargetTest2::PauseResumeTargetTest2()
+{
+    MenuItemFont::getFontSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    Size size = Director::getInstance()->getVisibleSize();
+
+    _touchableSprite = TouchableSprite::create();
+    _touchableSprite->retain();
+    _touchableSprite->setTexture("Images/CyanSquare.png");
+    _touchableSprite->setPosition(origin+Vec2(size.width/2, size.height/2) + Vec2(-80, 40));
+    addChild(_touchableSprite);
+
+    _itemPauseTouch = MenuItemFont::create("pauseTouch", [=](Ref* sender){
+        _itemPauseTouch->setEnabled(false);
+        _itemResumeTouch->setEnabled(true);
+
+        _eventDispatcher->pauseEventListenersForTarget(_touchableSprite);
+    });
+
+    _itemPauseTouch->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
+    _itemPauseTouch->setPosition(VisibleRect::right() + Vec2(-150, 0));
+
+    _itemResumeTouch = MenuItemFont::create("resumeTouch", [=](Ref* sender){
+        _itemPauseTouch->setEnabled(true);
+        _itemResumeTouch->setEnabled(false);
+
+        _eventDispatcher->resumeEventListenersForTarget(_touchableSprite);
+    });
+
+    _itemResumeTouch->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
+    _itemResumeTouch->setPosition(VisibleRect::right() + Vec2(0, 0));
+
+    _itemAddToScene = MenuItemFont::create("addToScene", [=](Ref* sender){
+        _itemAddToScene->setEnabled(false);
+        _itemRemoveFromScene->setEnabled(true);
+
+        this->addChild(_touchableSprite);
+    });
+
+    _itemAddToScene->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
+    _itemAddToScene->setPosition(VisibleRect::right() + Vec2(-150, -50));
+
+    _itemRemoveFromScene = MenuItemFont::create("removeFromScene", [=](Ref* sender){
+        _itemAddToScene->setEnabled(true);
+        _itemRemoveFromScene->setEnabled(false);
+        _touchableSprite->removeFromParentAndCleanup(false);
+    });
+
+    _itemRemoveFromScene->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
+    _itemRemoveFromScene->setPosition(VisibleRect::right() + Vec2(0, -50));
+
+    _itemAddToScene->setEnabled(false);
+    _itemResumeTouch->setEnabled(false);
+
+    _itemPauseTouch->setFontSizeObj(20);
+    _itemResumeTouch->setFontSizeObj(20);
+    _itemAddToScene->setFontSizeObj(20);
+    _itemRemoveFromScene->setFontSizeObj(20);
+
+    auto menu = Menu::create(_itemPauseTouch, _itemResumeTouch, _itemAddToScene, _itemRemoveFromScene, nullptr);
+    menu->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+    menu->setPosition(Vec2::ZERO);
+
+    addChild(menu);
+}
+
+PauseResumeTargetTest2::~PauseResumeTargetTest2()
+{
+    _touchableSprite->release();
+}
+
+std::string PauseResumeTargetTest2::title() const
+{
+    return "PauseResumeTargetTest2";
+}
+
+std::string PauseResumeTargetTest2::subtitle() const
+{
+    return "";
+}
+
+// PauseResumeTargetTest3
+PauseResumeTargetTest3::PauseResumeTargetTest3()
+{
+    MenuItemFont::getFontSize();
+    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+    Size size = Director::getInstance()->getVisibleSize();
+
+    _touchableSprite = Sprite::create("Images/CyanSquare.png");
+    _touchableSprite->setPosition(origin+Vec2(size.width/2, size.height/2) + Vec2(-80, 40));
+    addChild(_touchableSprite);
+
+    auto item = MenuItemFont::create("addListener", [=](Ref* sender){
+
+        MenuItemFont* senderItem = static_cast<MenuItemFont*>(sender);
+        senderItem->setEnabled(false);
+
+        auto listener = EventListenerTouchOneByOne::create();
+        listener->setSwallowTouches(true);
+
+        listener->onTouchBegan = [=](Touch* touch, Event* event){
+            Vec2 locationInNode = _touchableSprite->convertToNodeSpace(touch->getLocation());
+            Size s = _touchableSprite->getContentSize();
+            Rect rect = Rect(0, 0, s.width, s.height);
+
+            if (rect.containsPoint(locationInNode))
+            {
+                log("TouchableSprite: onTouchBegan ...");
+                _touchableSprite->setColor(Color3B::RED);
+                return true;
+            }
+            return false;
+        };
+
+        listener->onTouchEnded = [this](Touch* touch, Event* event){
+            log("TouchableSprite: onTouchEnded ...");
+            _touchableSprite->setColor(Color3B::WHITE);
+        };
+
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, _touchableSprite);
+        _eventDispatcher->pauseEventListenersForTarget(_touchableSprite);
+    });
+
+    item->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
+    item->setPosition(VisibleRect::right());
+
+    auto menu = Menu::create(item, nullptr);
+    menu->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
+    menu->setPosition(Vec2::ZERO);
+
+    addChild(menu);
+}
+
+PauseResumeTargetTest3::~PauseResumeTargetTest3()
+{
+
+}
+
+std::string PauseResumeTargetTest3::title() const
+{
+    return "PauseResumeTargetTest3";
+}
+
+std::string PauseResumeTargetTest3::subtitle() const
+{
+    return "Sprite should not be touchable";
+}
+
 // Issue4129
 Issue4129::Issue4129()
 : _bugFixed(false)
@@ -1108,7 +1265,7 @@ Issue4129::Issue4129()
         
         auto label = Label::createWithSystemFont("Yeah, this issue was fixed.", "", 20);
         label->setAnchorPoint(Vec2(0, 0.5f));
-        label->setPosition(Vec2(VisibleRect::left()));
+        label->setPosition(Vec2(VisibleRect::left() + Vec2(0, 30)));
         this->addChild(label);
         
         // After test, remove it.
@@ -1370,6 +1527,39 @@ std::string RegisterAndUnregisterWhileEventHanldingTest::subtitle() const
 {
     return  "Tap the square multiple times - should not crash!";
 }
+
+//
+WindowEventsTest::WindowEventsTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    auto dispatcher = Director::getInstance()->getEventDispatcher();
+    dispatcher->addCustomEventListener(GLViewImpl::EVENT_WINDOW_RESIZED, [](EventCustom* event) {
+        // TODO: need to create resizeable window
+        log("<<< WINDOW RESIZED! >>> ");
+    });
+    dispatcher->addCustomEventListener(GLViewImpl::EVENT_WINDOW_FOCUSED, [](EventCustom* event) {
+        log("<<< WINDOW FOCUSED! >>> ");
+    });
+    dispatcher->addCustomEventListener(GLViewImpl::EVENT_WINDOW_UNFOCUSED, [](EventCustom* event) {
+        log("<<< WINDOW BLURRED! >>> ");
+    });
+#endif
+}
+
+std::string WindowEventsTest::title() const
+{
+    return "WindowEventsTest";
+}
+
+std::string WindowEventsTest::subtitle() const
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    return  "Resize and Switch to another window and back. Read Logs.";
+#else
+    return  "Unsupported platform.";
+#endif
+}
+
 
 // https://github.com/cocos2d/cocos2d-x/issues/8194
 Issue8194::Issue8194()

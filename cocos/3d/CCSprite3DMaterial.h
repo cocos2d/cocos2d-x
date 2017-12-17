@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -29,6 +29,7 @@
 #include <unordered_map>
 #include "base/ccTypes.h"
 #include "renderer/CCMaterial.h"
+#include "3d/CCBundle3DData.h"
 
 NS_CC_BEGIN
 
@@ -89,6 +90,8 @@ public:
      * @return Created material
      */
     static Sprite3DMaterial* createWithGLStateProgram(GLProgramState* programState);
+    
+    void setTexture(Texture2D* tex, NTextureData::Usage usage);
     
     /**
      * Create all build in materials

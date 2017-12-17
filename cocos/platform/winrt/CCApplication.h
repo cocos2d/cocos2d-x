@@ -49,20 +49,27 @@ public:
     int run();
 
     /**
-    @brief    Get current applicaiton instance.
+    @brief    Get current application instance.
     @return Current application instance pointer.
     */
     static Application* getInstance();
 
     /* override functions */
-    virtual void setAnimationInterval(float interval);
-    virtual LanguageType getCurrentLanguage();
-    virtual const char * getCurrentLanguageCode();
+    virtual void setAnimationInterval(float interval) override;
+    virtual void setAnimationInterval(float interval, SetIntervalReason reason) override;
+
+    virtual LanguageType getCurrentLanguage() override;
+    virtual const char * getCurrentLanguageCode() override;
 
     /**
      @brief Get target platform
      */
     virtual Platform getTargetPlatform() override;
+
+    /**
+     @brief Get application version
+     */
+    virtual std::string getVersion() override;
     
     /**
      @brief Open url in default browser

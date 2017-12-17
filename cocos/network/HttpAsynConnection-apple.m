@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -25,7 +25,7 @@
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
-#import "HttpAsynConnection-apple.h"
+#import "network/HttpAsynConnection-apple.h"
 
 @interface HttpAsynConnection ()
 
@@ -35,18 +35,18 @@
 
 @implementation HttpAsynConnection
 
-@synthesize srcURL;
-@synthesize sslFile;
-@synthesize responseHeader;
-@synthesize responseData;
-@synthesize getDataTime;
-@synthesize responseCode;
-@synthesize statusString;
-@synthesize responseError;
-@synthesize connError;
-@synthesize conn;
-@synthesize finish;
-@synthesize runLoop;
+@synthesize srcURL = srcURL;
+@synthesize sslFile = sslFile;
+@synthesize responseHeader = responseHeader;
+@synthesize responseData = responseData;
+@synthesize getDataTime = getDataTime;
+@synthesize responseCode = responseCode;
+@synthesize statusString = statusString;
+@synthesize responseError = responseError;
+@synthesize connError = connError;
+@synthesize conn = conn;
+@synthesize finish = finish;
+@synthesize runLoop = runLoop;
 
 - (void)dealloc
 {
@@ -141,7 +141,7 @@
 }
 
 /**
- * This delegate methodis called if the connection cannot be established to the server.  
+ * This delegate method is called if the connection cannot be established to the server.  
  * The error object will have a description of the error
  **/
 - (void)connection:(NSURLConnection *)connection 
@@ -187,13 +187,19 @@
         CFDataRef errDataRef = SecTrustCopyExceptions(serverTrust);
         SecTrustSetExceptions(serverTrust, errDataRef);
         SecTrustEvaluate(serverTrust, &trustResult);
-        [(id)errDataRef release];
+        CFRelease(errDataRef);
     }
     [certData release];
-    [(id)certArrayRef release];
-    [(id)certArrayRef release];
+    if (cert)
+    {
+        CFRelease(cert);
+    }
+    if (certArrayRef) 
+    {
+        CFRelease(certArrayRef);
+    }
     //Did our custom trust chain evaluate successfully?
-    return trustResult = kSecTrustResultUnspecified || trustResult == kSecTrustResultProceed;    
+    return trustResult == kSecTrustResultUnspecified || trustResult == kSecTrustResultProceed;    
 }
 
 - (void) connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge

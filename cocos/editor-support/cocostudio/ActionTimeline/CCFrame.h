@@ -31,8 +31,8 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 #include "2d/CCSprite.h"
 #include "2d/CCTweenFunction.h"
-#include "CCTimelineMacro.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/ActionTimeline/CCTimelineMacro.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 NS_TIMELINE_BEGIN
 
@@ -260,7 +260,10 @@ public:
     inline cocos2d::Point getAnchorPoint() const { return _anchorPoint; }
 
 protected:
-    cocos2d::Point _anchorPoint;
+    virtual void onApply(float percent) override;
+
+    cocos2d::Vec2 _betweenAnchorPoint;
+    cocos2d::Vec2 _anchorPoint;
 };
 
 
@@ -410,7 +413,27 @@ public:
 protected:
     cocos2d::BlendFunc  _blendFunc;
 };
-NS_TIMELINE_END
 
+class CC_STUDIO_DLL PlayableFrame : public Frame
+{
+public:
+    static PlayableFrame* create();
+    
+    PlayableFrame();
+    
+    virtual void onEnter(Frame* nextFrame, int currentFrameINdex) override;
+    virtual Frame* clone() override;
+
+    inline std::string getPlayableAct() const { return _playableAct; }
+    // @param playact, express the interface in PlayableProtocol, should be "start"  or "stop"
+    inline void setPlayableAct(std::string playact) { _playableAct = playact; }
+
+    static const std::string PLAYABLE_EXTENTION;
+private:
+    std::string _playableAct;  // express the interface in PlayableProtocol
+    static const std::string START_ACT;
+    static const std::string STOP_ACT;
+};
+NS_TIMELINE_END
 
 #endif /*__CCFRAME_H__*/

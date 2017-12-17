@@ -25,9 +25,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#import "CCUIEditBoxIOS.h"
-#import "CCUISingleLineTextField.h"
-#import "CCUIMultilineTextField.h"
+#import "ui/UIEditBox/iOS/CCUIEditBoxIOS.h"
+#import "ui/UIEditBox/iOS/CCUISingleLineTextField.h"
+#import "ui/UIEditBox/iOS/CCUIMultilineTextField.h"
 
 #import "platform/ios/CCEAGLView-ios.h"
 #include "base/CCDirector.h"
@@ -57,7 +57,7 @@
         _editState = NO;
         self.frameRect = frameRect;
         self.editBox = editBox;
-        self.dataInputMode = cocos2d::ui::EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS;
+        self.dataInputMode = cocos2d::ui::EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS;
         self.keyboardReturnType = cocos2d::ui::EditBox::KeyboardReturnType::DEFAULT;
         
         [self createMultiLineTextField];
@@ -93,6 +93,8 @@
     textInput.ccui_text = _textInput.ccui_text ?: @"";
     textInput.ccui_placeholder = _textInput.ccui_placeholder ?: @"";
     textInput.ccui_font = _textInput.ccui_font ?: [UIFont systemFontOfSize:self.frameRect.size.height*2/3];
+    textInput.ccui_placeholderFont = _textInput.ccui_placeholderFont ?: textInput.ccui_font;
+    textInput.ccui_placeholderTextColor = _textInput.ccui_placeholderTextColor ?: [UIColor lightGrayColor];
     
     [_textInput resignFirstResponder];
     [_textInput removeFromSuperview];
@@ -133,6 +135,16 @@
 - (void)setTextColor:(UIColor*)color
 {
     self.textInput.ccui_textColor = color;
+}
+
+- (void)setPlaceholderFont:(UIFont *)font
+{
+    self.textInput.ccui_placeholderFont = font;
+}
+
+- (void)setPlaceholderTextColor:(UIColor *)color
+{
+    self.textInput.ccui_placeholderTextColor = color;
 }
 
 - (void)setInputMode:(cocos2d::ui::EditBox::InputMode)inputMode
@@ -198,12 +210,16 @@
             self.textInput.autocapitalizationType = UITextAutocapitalizationTypeSentences;
             break;
             
-        case cocos2d::ui::EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS:
+        case cocos2d::ui::EditBox::InputFlag::INITIAL_CAPS_ALL_CHARACTERS:
             self.textInput.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
             break;
             
         case cocos2d::ui::EditBox::InputFlag::SENSITIVE:
             self.textInput.autocorrectionType = UITextAutocorrectionTypeNo;
+            break;
+            
+        case cocos2d::ui::EditBox::InputFlag::LOWERCASE_ALL_CHARACTERS:
+            self.textInput.autocapitalizationType = UITextAutocapitalizationTypeNone;
             break;
             
         default:
@@ -235,10 +251,19 @@
             self.textInput.returnKeyType = UIReturnKeyGo;
             break;
             
+        case cocos2d::ui::EditBox::KeyboardReturnType::NEXT:
+            self.textInput.returnKeyType = UIReturnKeyNext;
+            break;
+
         default:
             self.textInput.returnKeyType = UIReturnKeyDefault;
             break;
     }
+}
+
+- (void)setTextHorizontalAlignment:(cocos2d::TextHAlignment)alignment
+{
+    self.textInput.ccui_alignment = static_cast<NSTextAlignment>(alignment);
 }
 
 - (void)setText:(NSString *)text
@@ -261,6 +286,21 @@
     return self.textInput.ccui_font.fontName ?: @"";
 }
 
+- (cocos2d::ui::EditBoxDelegate::EditBoxEndAction)getEndAction
+{
+    cocos2d::ui::EditBoxDelegate::EditBoxEndAction action = cocos2d::ui::EditBoxDelegate::EditBoxEndAction::UNKNOWN;
+    if (self.returnPressed) {
+        if (self.keyboardReturnType == cocos2d::ui::EditBox::KeyboardReturnType::NEXT) {
+            action = cocos2d::ui::EditBoxDelegate::EditBoxEndAction::TAB_TO_NEXT;
+        } else if (self.keyboardReturnType == cocos2d::ui::EditBox::KeyboardReturnType::GO ||
+                   self.keyboardReturnType == cocos2d::ui::EditBox::KeyboardReturnType::SEND ||
+                   self.keyboardReturnType == cocos2d::ui::EditBox::KeyboardReturnType::SEARCH) {
+            action = cocos2d::ui::EditBoxDelegate::EditBoxEndAction::RETURN;
+        }
+    }
+    return action;
+}
+
 - (void)setPlaceHolder:(NSString *)text
 {
     self.textInput.ccui_placeholder = text;
@@ -274,18 +314,12 @@
     [eaglview doAnimationWhenKeyboardMoveWithDuration:duration distance:distance];
 }
 
-- (void)setPosition:(CGPoint)pos
-{
-    // TODO: Handle anchor point?
-    CGRect frame = self.textInput.frame;
-    frame.origin = pos;
-    self.textInput.frame = frame;
-}
-
-- (void)setContentSize:(CGSize)size
+- (void)updateFrame:(CGRect)rect
 {
     CGRect frame = self.textInput.frame;
-    frame.size = size;
+    frame.origin = rect.origin;
+    frame.size = rect.size;
+    
     self.textInput.frame = frame;
 }
 
@@ -307,6 +341,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)sender
 {
     if (sender == self.textInput) {
+        self.returnPressed = YES;
         [sender resignFirstResponder];
     }
     return NO;
@@ -326,6 +361,7 @@
 {
     CCLOG("textFieldShouldBeginEditing...");
     _editState = YES;
+    _returnPressed = NO;
     
     auto view = cocos2d::Director::getInstance()->getOpenGLView();
     CCEAGLView *eaglview = (CCEAGLView *) view->getEAGLView();
@@ -338,14 +374,14 @@
     return YES;
 }
 
-- (BOOL)textViewShouldEndEditing:(UITextView *)textView;
+- (BOOL)textViewShouldEndEditing:(UITextView *)textView
 {
     CCLOG("textFieldShouldEndEditing...");
     _editState = NO;
     getEditBoxImplIOS()->refreshInactiveText();
-    
+
     const char* inputText = [textView.text UTF8String];
-    getEditBoxImplIOS()->editBoxEditingDidEnd(inputText);
+    getEditBoxImplIOS()->editBoxEditingDidEnd(inputText, [self getEndAction]);
     
     return YES;
 }
@@ -375,12 +411,14 @@
 - (void)textViewDidChange:(UITextView *)textView
 {
     int maxLength = getEditBoxImplIOS()->getMaxLength();
-    if (textView.text.length > maxLength) {
-        textView.text = [textView.text substringToIndex:maxLength];
+    if (textView.markedTextRange == nil) {
+        if (textView.text.length > maxLength) {
+            textView.text = [textView.text substringToIndex:maxLength];
+        }
+        
+        const char* inputText = [textView.text UTF8String];
+        getEditBoxImplIOS()->editBoxEditingChanged(inputText);
     }
-    
-    const char* inputText = [textView.text UTF8String];
-    getEditBoxImplIOS()->editBoxEditingChanged(inputText);
 }
 
 
@@ -391,12 +429,14 @@
 - (void)textChanged:(UITextField *)textField
 {
     int maxLength = getEditBoxImplIOS()->getMaxLength();
-    if (textField.text.length > maxLength) {
-        textField.text = [textField.text substringToIndex:maxLength];
+    if (textField.markedTextRange == nil) {
+        if (textField.text.length > maxLength) {
+            textField.text = [textField.text substringToIndex:maxLength];
+        }
+        
+        const char* inputText = [textField.text UTF8String];
+        getEditBoxImplIOS()->editBoxEditingChanged(inputText);
     }
-    
-    const char* inputText = [textField.text UTF8String];
-    getEditBoxImplIOS()->editBoxEditingChanged(inputText);
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)sender        // return NO to disallow editing.
@@ -420,8 +460,8 @@
     CCLOG("textFieldShouldEndEditing...");
     _editState = NO;
     const char* inputText = [sender.text UTF8String];
-    
-    getEditBoxImplIOS()->editBoxEditingDidEnd(inputText);
+
+    getEditBoxImplIOS()->editBoxEditingDidEnd(inputText, [self getEndAction]);
     
     return YES;
 }

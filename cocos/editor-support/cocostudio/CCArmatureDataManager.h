@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,9 +25,9 @@ THE SOFTWARE.
 #ifndef __CCARMATUREDATAMANAGER_H__
 #define __CCARMATUREDATAMANAGER_H__
 
-#include "cocostudio/CCArmatureDefine.h"
-#include "cocostudio/CCDatas.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCArmatureDefine.h"
+#include "editor-support/cocostudio/CCDatas.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
 
@@ -48,7 +48,7 @@ public:
     /** @deprecated Use getInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static ArmatureDataManager *sharedArmatureDataManager() { return ArmatureDataManager::getInstance(); }
 
-    /** @deprecated Use destoryInstance() instead */
+    /** @deprecated Use destroyInstance() instead */
     CC_DEPRECATED_ATTRIBUTE static void purge() { ArmatureDataManager::destroyInstance(); };
     
     static ArmatureDataManager *getInstance();
@@ -163,7 +163,7 @@ public:
 
 
     /**
-     *    @brief    Juge whether or not need auto load sprite file
+     *    @brief    Judge whether or not need auto load sprite file
      */
     bool isAutoLoadSpriteFile();
 
@@ -177,7 +177,7 @@ protected:
     RelativeData *getRelativeData(const std::string& configFilePath);
 private:
     /**
-     *    @brief    save amature datas
+     *    @brief    save armature datas
      *  @key    std::string
      *  @value    ArmatureData *
      */

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -28,7 +28,7 @@
 
 /// @cond DO_NOT_SHOW
 
-#include "CCFont.h"
+#include "2d/CCFont.h"
 
 #include <string>
 #include <ft2build.h>
@@ -53,8 +53,8 @@ class CC_DLL FontFreeType : public Font
 public:
     static const int DistanceMapSpread;
 
-    static FontFreeType* create(const std::string &fontName, int fontSize, GlyphCollection glyphs, 
-        const char *customGlyphs,bool distanceFieldEnabled = false,int outline = 0);
+    static FontFreeType* create(const std::string &fontName, float fontSize, GlyphCollection glyphs,
+        const char *customGlyphs,bool distanceFieldEnabled = false, float outline = 0);
 
     static void shutdownFreeType();
 
@@ -66,30 +66,34 @@ public:
 
     FT_Encoding getEncoding() const { return _encoding; }
 
-    int* getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const override;
+    int* getHorizontalKerningForTextUTF32(const std::u32string& text, int &outNumLetters) const override;
     
-    unsigned char* getGlyphBitmap(unsigned short theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance);
+    unsigned char* getGlyphBitmap(uint64_t theChar, long &outWidth, long &outHeight, Rect &outRect,int &xAdvance);
     
     int getFontAscender() const;
+    const char* getFontFamily() const;
 
     virtual FontAtlas* createFontAtlas() override;
     virtual int getFontMaxHeight() const override { return _lineHeight; }
+
+    static void releaseFont(const std::string &fontName);
+
 private:
     static const char* _glyphASCII;
     static const char* _glyphNEHE;
     static FT_Library _FTlibrary;
     static bool _FTInitialized;
 
-    FontFreeType(bool distanceFieldEnabled = false, int outline = 0);
+    FontFreeType(bool distanceFieldEnabled = false, float outline = 0);
     virtual ~FontFreeType();
 
-    bool createFontObject(const std::string &fontName, int fontSize);
+    bool createFontObject(const std::string &fontName, float fontSize);
 
     bool initFreeType();
     FT_Library getFTLibrary();
     
-    int getHorizontalKerningForChars(unsigned short firstChar, unsigned short secondChar) const;
-    unsigned char* getGlyphBitmapWithOutline(unsigned short code, FT_BBox &bbox);
+    int getHorizontalKerningForChars(uint64_t firstChar, uint64_t secondChar) const;
+    unsigned char* getGlyphBitmapWithOutline(uint64_t code, FT_BBox &bbox);
 
     void setGlyphCollection(GlyphCollection glyphs, const char* customGlyphs = nullptr);
     const char* getGlyphCollection() const;

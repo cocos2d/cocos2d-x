@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -39,7 +39,7 @@ struct AgentUserData
 
 NavMeshTests::NavMeshTests()
 {
-#if CC_USE_NAVMESH == 0
+#if ( CC_USE_NAVMESH == 0 ) || ( CC_USE_PHYSICS == 0 )
     ADD_TEST_CASE(NavMeshDisabled);
 #else
     ADD_TEST_CASE(NavMeshBasicTestDemo);
@@ -47,7 +47,7 @@ NavMeshTests::NavMeshTests()
 #endif
 };
 
-#if CC_USE_NAVMESH == 0
+#if ( CC_USE_NAVMESH == 0 ) || ( CC_USE_PHYSICS == 0 )
 void NavMeshDisabled::onEnter()
 {
     TTFConfig ttfConfig("fonts/arial.ttf", 16);

@@ -3,7 +3,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include  "tolua_fix.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
 #ifdef __cplusplus
 }
 #endif
@@ -71,18 +71,14 @@ static int lua_cocos2dx_deleteDownloadDir(lua_State* L)
         if (!tolua_isstring(L, 1, 0, &tolua_err)) goto tolua_lerror;
 #endif
         std::string pathToSave = tolua_tostring(L, 1, "");
-        
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-        std::string command = "rm -r ";
-        // Path may include space.
-        command += "\"" + pathToSave + "\"";
-        system(command.c_str());
-#else
-        std::string command = "rd /s /q ";
-        // Path may include space.
-        command += "\"" + pathToSave + "\"";
-        system(command.c_str());
+
+#if CC_TARGET_OS_TVOS
+        // Not implemented. "system" is not present on tvOS
+        CCLOG("'lua_cocos2dx_deleteDownloadDir' not implemented on tvOS");
+        return 0;
 #endif
+
+        FileUtils::getInstance()->removeDirectory(pathToSave);
         return 0;
     }
     
@@ -117,18 +113,7 @@ static int lua_cocos2dx_addSearchPath(lua_State* L)
 #endif
         std::string pathToSave = tolua_tostring(L, 1, "");
         bool before           = tolua_toboolean(L, 2, 0);
-        std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
-        if (before)
-        {
-            searchPaths.insert(searchPaths.begin(), pathToSave);
-        }
-        else
-        {
-            searchPaths.push_back(pathToSave);
-        }
-        
-        FileUtils::getInstance()->setSearchPaths(searchPaths);
-        
+        FileUtils::getInstance()->addSearchPath(pathToSave, before);
         return 0;
     }
     CCLOG("'addSearchPath' function wrong number of arguments: %d, was expecting %d\n", argc, 2);

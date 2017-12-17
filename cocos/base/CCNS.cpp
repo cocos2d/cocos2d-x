@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies
+Copyright (c) 2013-2017 Chukong Technologies
 
 http://www.cocos2d-x.org
 
@@ -131,9 +131,9 @@ Rect RectFromString(const std::string& str)
 
         // split the string with ','
         strArray pointInfo;
-        CC_BREAK_IF(!splitWithForm(pointStr.c_str(), pointInfo));
+        CC_BREAK_IF(!splitWithForm(pointStr, pointInfo));
         strArray sizeInfo;
-        CC_BREAK_IF(!splitWithForm(sizeStr.c_str(), sizeInfo));
+        CC_BREAK_IF(!splitWithForm(sizeStr, sizeInfo));
 
         float x = (float) utils::atof(pointInfo[0].c_str());
         float y = (float) utils::atof(pointInfo[1].c_str());

@@ -76,7 +76,7 @@
         
 --------------------------------
 -- create capsule shape<br>
--- param radius The radius of casule.<br>
+-- param radius The radius of capsule.<br>
 -- param height The height (cylinder part).
 -- @function [parent=#Physics3DShape] createCapsule 
 -- @param self

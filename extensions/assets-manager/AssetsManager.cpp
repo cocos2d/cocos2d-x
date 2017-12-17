@@ -63,11 +63,12 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
 , _isDownloading(false)
 , _shouldDeleteDelegateWhenExit(false)
 {
+    checkStoragePath();
     // convert downloader error code to AssetsManager::ErrorCode
-    _downloader->onTaskError = [this](const DownloadTask& task,
+    _downloader->onTaskError = [this](const DownloadTask& /*task*/,
                                       int errorCode,
-                                      int errorCodeInternal,
-                                      const std::string& errorStr)
+                                      int /*errorCodeInternal*/,
+                                      const std::string& /*errorStr*/)
     {
         _isDownloading = false;
         
@@ -81,7 +82,7 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
     
     // progress callback
     _downloader->onTaskProgress = [this](const DownloadTask& task,
-                                         int64_t bytesReceived,
+                                         int64_t /*bytesReceived*/,
                                          int64_t totalBytesReceived,
                                          int64_t totalBytesExpected)
     {
@@ -102,7 +103,7 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
     };
     
     // get version from version file when get data success
-    _downloader->onDataTaskSuccess = [this](const DownloadTask& task,
+    _downloader->onDataTaskSuccess = [this](const DownloadTask& /*task*/,
                                             std::vector<unsigned char>& data)
     {
         // store version info to member _version
@@ -145,11 +146,11 @@ AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* v
         
         // start download;
         const string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
-        _downloader->createDownloadFileTask(_packageUrl, _storagePath);
+        _downloader->createDownloadFileTask(_packageUrl, outFileName);
     };
     
     // after download package, do uncompress operation
-    _downloader->onFileTaskSuccess = [this](const DownloadTask& task)
+    _downloader->onFileTaskSuccess = [this](const DownloadTask& /*task*/)
     {
         downloadAndUncompress();
     };
@@ -253,14 +254,14 @@ void AssetsManager::downloadAndUncompress()
 void AssetsManager::update()
 {
     // all operation in checkUpdate, nothing need to do
-    // keep this function for compatiblity
+    // keep this function for compatibility
 }
 
 bool AssetsManager::uncompress()
 {
     // Open the zip file
     string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
-    unzFile zipfile = unzOpen(outFileName.c_str());
+    unzFile zipfile = unzOpen(FileUtils::getInstance()->getSuitableFOpen(outFileName).c_str());
     if (! zipfile)
     {
         CCLOG("can not open downloaded zip file %s", outFileName.c_str());
@@ -308,8 +309,8 @@ bool AssetsManager::uncompress()
         const size_t filenameLength = strlen(fileName);
         if (fileName[filenameLength-1] == '/')
         {
-            // Entry is a direcotry, so create it.
-            // If the directory exists, it will failed scilently.
+            // Entry is a directory, so create it.
+            // If the directory exists, it will failed silently.
             if (!FileUtils::getInstance()->createDirectory(fullPath))
             {
                 CCLOG("can not create directory %s", fullPath.c_str());
@@ -489,7 +490,7 @@ AssetsManager* AssetsManager::create(const char* packageUrl, const char* version
     class DelegateProtocolImpl : public AssetsManagerDelegateProtocol 
     {
     public :
-        DelegateProtocolImpl(ErrorCallback aErrorCallback, ProgressCallback aProgressCallback, SuccessCallback aSuccessCallback)
+        DelegateProtocolImpl(ErrorCallback& aErrorCallback, ProgressCallback& aProgressCallback, SuccessCallback& aSuccessCallback)
         : errorCallback(aErrorCallback), progressCallback(aProgressCallback), successCallback(aSuccessCallback)
         {}
 

@@ -1,9 +1,18 @@
 
 --------------------------------
 -- @module ImageView
--- @extend Widget
+-- @extend Widget,BlendProtocol
 -- @parent_module ccui
 
+--------------------------------
+-- Returns the blending function that is currently being used.<br>
+-- return A BlendFunc structure with source and destination factor which specified pixel arithmetic.<br>
+-- js NA<br>
+-- lua NA
+-- @function [parent=#ImageView] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+        
 --------------------------------
 -- Load texture for imageview.<br>
 -- param fileName   file name of texture.<br>
@@ -12,6 +21,16 @@
 -- @param self
 -- @param #string fileName
 -- @param #int texType
+-- @return ImageView#ImageView self (return value: ccui.ImageView)
+        
+--------------------------------
+-- Sets the source blending function.<br>
+-- param blendFunc A structure with source and destination factor to specify pixel arithmetic. e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.<br>
+-- js NA<br>
+-- lua NA
+-- @function [parent=#ImageView] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
 -- @return ImageView#ImageView self (return value: ccui.ImageView)
         
 --------------------------------
@@ -46,6 +65,12 @@
 -- @param self
 -- @param #rect_table capInsets
 -- @return ImageView#ImageView self (return value: ccui.ImageView)
+        
+--------------------------------
+-- 
+-- @function [parent=#ImageView] getRenderFile 
+-- @param self
+-- @return ResourceData#ResourceData ret (return value: cc.ResourceData)
         
 --------------------------------
 -- Get ImageView's capInsets size.<br>
@@ -85,9 +110,10 @@
         
 --------------------------------
 -- 
--- @function [parent=#ImageView] init 
+-- @function [parent=#ImageView] ignoreContentAdaptWithSize 
 -- @param self
--- @return bool#bool ret (return value: bool)
+-- @param #bool ignore
+-- @return ImageView#ImageView self (return value: ccui.ImageView)
         
 --------------------------------
 -- 
@@ -97,16 +123,29 @@
         
 --------------------------------
 -- 
--- @function [parent=#ImageView] getVirtualRendererSize 
+-- @function [parent=#ImageView] init 
 -- @param self
--- @return size_table#size_table ret (return value: size_table)
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
--- @function [parent=#ImageView] ignoreContentAdaptWithSize 
+-- @function [parent=#ImageView] setGLProgram 
 -- @param self
--- @param #bool ignore
+-- @param #cc.GLProgram glProgram
 -- @return ImageView#ImageView self (return value: ccui.ImageView)
+        
+--------------------------------
+-- 
+-- @function [parent=#ImageView] setGLProgramState 
+-- @param self
+-- @param #cc.GLProgramState glProgramState
+-- @return ImageView#ImageView self (return value: ccui.ImageView)
+        
+--------------------------------
+-- 
+-- @function [parent=#ImageView] getVirtualRendererSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
 -- Default constructor<br>

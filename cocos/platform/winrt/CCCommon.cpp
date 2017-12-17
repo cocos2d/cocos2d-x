@@ -24,7 +24,8 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "platform/CCCommon.h"
 #include "platform/CCStdC.h"
-#include "CCWinRTUtils.h"
+#include "platform/winrt/CCGLViewImpl-winrt.h"
+#include "platform/winrt/CCWinRTUtils.h"
 
 #if defined(VLD_DEBUG_MEMORY)
 #include <vld.h>

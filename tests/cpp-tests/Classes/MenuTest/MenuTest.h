@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -50,10 +50,10 @@ public:
     ~MenuLayerMainMenu();
 
 public:
-    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
-    void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
-    void onTouchCancelled(cocos2d::Touch* touch, cocos2d::Event* event);
-    void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
+    bool touchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
+    void touchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
+    void touchCancelled(cocos2d::Touch* touch, cocos2d::Event* event);
+    void touchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
 
     void allowTouches(float dt);
     void menuCallback(cocos2d::Ref* sender);

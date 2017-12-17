@@ -7,7 +7,7 @@
 --------------------------------
 -- brief Initializes an action with the number of times that the current grid will be reused.<br>
 -- param times Specify times the grid will be reused.<br>
--- return If the initialization sucess, return true; otherwise, return false.
+-- return If the initialization success, return true; otherwise, return false.
 -- @function [parent=#ReuseGrid] initWithTimes 
 -- @param self
 -- @param #int times

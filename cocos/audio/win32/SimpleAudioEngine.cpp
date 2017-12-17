@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,13 +22,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "SimpleAudioEngine.h"
+#include "audio/include/SimpleAudioEngine.h"
 
 #include <map>
 #include <cstdlib>
 
-#include "MciPlayer.h"
-#include "cocos2d.h"
+#include "audio/win32/MciPlayer.h"
+#include "platform/CCFileUtils.h"
+
 USING_NS_CC;
 
 using namespace std;
@@ -77,13 +78,11 @@ void SimpleAudioEngine::end()
 {
     sharedMusic().Close();
 
-    EffectList::iterator p = sharedList().begin();
-    while (p != sharedList().end())
+    for (auto& iter : sharedList())
     {
-        delete p->second;
-        p->second = NULL;
-        p++;
-    }   
+        delete iter.second;
+        iter.second = nullptr;
+    }
     sharedList().clear();
     return;
 }
@@ -172,7 +171,7 @@ void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
     int nRet = 0;
-    do 
+    do
     {
         BREAK_IF(! pszFilePath);
 
@@ -203,10 +202,9 @@ void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
 
 void SimpleAudioEngine::pauseAllEffects()
 {
-    EffectList::iterator iter;
-    for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+    for (auto& iter : sharedList())
     {
-        iter->second->Pause();
+        iter.second->Pause();
     }
 }
 
@@ -221,19 +219,17 @@ void SimpleAudioEngine::resumeEffect(unsigned int nSoundId)
 
 void SimpleAudioEngine::resumeAllEffects()
 {
-    EffectList::iterator iter;
-    for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+    for (auto& iter : sharedList())
     {
-        iter->second->Resume();
+        iter.second->Resume();
     }
 }
 
 void SimpleAudioEngine::stopAllEffects()
 {
-    EffectList::iterator iter;
-    for (iter = sharedList().begin(); iter != sharedList().end(); iter++)
+    for (auto& iter : sharedList())
     {
-        iter->second->Stop();
+        iter.second->Stop();
     }
 }
 
@@ -250,9 +246,9 @@ void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
     if (p != sharedList().end())
     {
         delete p->second;
-        p->second = NULL;
+        p->second = nullptr;
         sharedList().erase(nID);
-    }    
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////

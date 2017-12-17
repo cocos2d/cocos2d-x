@@ -7,9 +7,9 @@
 #include "2d/CCActionEase.h"
 
 #include "extensions/ExtensionMacros.h"
-#include "CCBSequence.h"
-#include "CCBKeyframe.h"
-#include "CCBSequenceProperty.h"
+#include "editor-support/cocosbuilder/CCBSequence.h"
+#include "editor-support/cocosbuilder/CCBKeyframe.h"
+#include "editor-support/cocosbuilder/CCBSequenceProperty.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
 
 namespace cocosbuilder {
@@ -112,7 +112,7 @@ public:
     cocos2d::Sequence* actionForCallbackChannel(CCBSequenceProperty* channel);
     cocos2d::Sequence* actionForSoundChannel(CCBSequenceProperty* channel);
 
-	// return -1 if timeline not exsit
+	// return -1 if timeline not exist
     int getSequenceId(const char* pSequenceName);
     
     // get timeline duration
@@ -124,7 +124,7 @@ private:
     
     CCBSequence* getSequence(int nSequenceId);
     cocos2d::ActionInterval* getAction(CCBKeyframe *pKeyframe0, CCBKeyframe *pKeyframe1, const std::string& propName, cocos2d::Node *pNode);
-    void setAnimatedProperty(const std::string& propName,cocos2d::Node *pNode, const cocos2d::Value& value, Ref* obj, float fTweenDuraion);
+    void setAnimatedProperty(const std::string& propName, cocos2d::Node *pNode, const cocos2d::Value& value, Ref* obj, float fTweenDuration);
     void setFirstFrame(cocos2d::Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);
     cocos2d::ActionInterval* getEaseAction(cocos2d::ActionInterval *pAction, CCBKeyframe::EasingType easingType, float fEasingOpt);
     void runAction(cocos2d::Node *pNode, CCBSequenceProperty *pSeqProp, float fTweenDuration);

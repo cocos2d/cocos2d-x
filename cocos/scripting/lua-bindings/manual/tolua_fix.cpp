@@ -1,7 +1,7 @@
 
-#include "tolua_fix.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "base/CCRef.h"
-#include "LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 #include <stdlib.h>
 
 using namespace cocos2d;
@@ -208,7 +208,7 @@ TOLUA_API void toluafix_remove_function_by_refid(lua_State* L, int refid)
     // luaL_unref(L, LUA_REGISTRYINDEX, refid);
 }
 
-// check lua value is funciton
+// check lua value is function
 TOLUA_API int toluafix_isfunction(lua_State* L, int lo, const char* type, int def, tolua_Error* err)
 {
     if (lua_gettop(L) >= abs(lo) && lua_isfunction(L, lo))

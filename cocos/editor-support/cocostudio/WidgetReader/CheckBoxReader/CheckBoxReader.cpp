@@ -1,11 +1,13 @@
 
 
-#include "CheckBoxReader.h"
+#include "editor-support/cocostudio/WidgetReader/CheckBoxReader/CheckBoxReader.h"
 
 #include "ui/UICheckBox.h"
-#include "cocostudio/CocoLoader.h"
-#include "cocostudio/CSParseBinary_generated.h"
-#include "cocostudio/FlatBuffersSerialize.h"
+#include "platform/CCFileUtils.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "editor-support/cocostudio/CocoLoader.h"
+#include "editor-support/cocostudio/CSParseBinary_generated.h"
+#include "editor-support/cocostudio/FlatBuffersSerialize.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -60,7 +62,6 @@ namespace cocostudio
         for (int i = 0; i < cocoNode->GetChildNum(); ++i) {
             std::string key = stChildArray[i].GetName(cocoLoader);
             std::string value = stChildArray[i].GetValue(cocoLoader);
-//            CCLOG("key = %s, index : %d", key.c_str(), i);
             //read all basic properties of widget
             CC_BASIC_PROPERTY_BINARY_READER
             //read all color related properties of widget
@@ -69,7 +70,7 @@ namespace cocostudio
             else if (key == P_BackGroundBoxData){
                 
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
-                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -78,7 +79,7 @@ namespace cocostudio
                 checkBox->loadTextureBackGround(backgroundValue, imageFileNameType);
             }else if(key == P_BackGroundBoxSelectedData){
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
-                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -87,7 +88,7 @@ namespace cocostudio
                 checkBox->loadTextureBackGroundSelected(backgroundValue, imageFileNameType);
             }else if(key == P_FrontCrossData){
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
-                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -96,7 +97,7 @@ namespace cocostudio
                 checkBox->loadTextureFrontCross(backgroundValue, imageFileNameType);
             }else if(key == P_BackGroundBoxDisabledData){
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
-                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -105,7 +106,7 @@ namespace cocostudio
                 checkBox->loadTextureBackGroundDisabled(backgroundValue, imageFileNameType);
             }else if (key == P_FrontCrossDisabledData){
                 stExpCocoNode *backGroundChildren = stChildArray[i].GetChildArray(cocoLoader);
-                std::string resType = backGroundChildren[2].GetValue(cocoLoader);;
+                std::string resType = backGroundChildren[2].GetValue(cocoLoader);
                 
                 Widget::TextureResType imageFileNameType = (Widget::TextureResType)valueToInt(resType);
                 
@@ -491,12 +492,6 @@ namespace cocostudio
         {
             checkBox->loadTextureBackGround(backGroundTexturePath, (Widget::TextureResType)backGroundType);
         }
-        //else
-        //{
-        //    auto label = Label::create();
-        //    label->setString(__String::createWithFormat("%s missed", backGroundErrorFilePath.c_str())->getCString());
-        //    checkBox->addChild(label);
-        //}
         
         //load background selected image
         bool backGroundSelectedfileExist = false;
@@ -556,12 +551,6 @@ namespace cocostudio
         {
             checkBox->loadTextureBackGroundSelected(backGroundSelectedTexturePath, (Widget::TextureResType)backGroundSelectedType);
         }
-        //else
-        //{
-        //    auto label = Label::create();
-        //    label->setString(__String::createWithFormat("%s missed", backGroundSelectedErrorFilePath.c_str())->getCString());
-        //    checkBox->addChild(label);
-        //}
         
         //load frontCross image
         bool frontCrossFileExist = false;
@@ -621,12 +610,6 @@ namespace cocostudio
         {
             checkBox->loadTextureFrontCross(frontCrossFileName, (Widget::TextureResType)frontCrossType);
         }
-        //else
-        //{
-        //    auto label = Label::create();
-        //    label->setString(__String::createWithFormat("%s missed", frontCrossErrorFilePath.c_str())->getCString());
-        //    checkBox->addChild(label);
-        //}
         
         //load backGroundBoxDisabledData
         bool backGroundBoxDisabledFileExist = false;
@@ -686,12 +669,6 @@ namespace cocostudio
         {
             checkBox->loadTextureBackGroundDisabled(backGroundDisabledFileName, (Widget::TextureResType)backGroundDisabledType);
         }
-        //else
-        //{
-        //    auto label = Label::create();
-        //    label->setString(__String::createWithFormat("%s missed", backGroundBoxDisabledErrorFilePath.c_str())->getCString());
-        //    checkBox->addChild(label);
-        //}
         
         ///load frontCrossDisabledData
         bool frontCrossDisabledFileExist = false;
@@ -751,12 +728,6 @@ namespace cocostudio
         {
             checkBox->loadTextureFrontCrossDisabled(frontCrossDisabledFileName, (Widget::TextureResType)frontCrossDisabledType);
         }
-        //else
-        //{
-        //    auto label = Label::create();
-        //    label->setString(__String::createWithFormat("%s missed", frontCrossDisabledErrorFilePath.c_str())->getCString());
-        //    checkBox->addChild(label);
-        //}
         
         bool selectedstate = options->selectedState() != 0;
         checkBox->setSelected(selectedstate);

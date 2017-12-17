@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -43,6 +43,9 @@ NS_CC_BEGIN
  * 
  * It supports the following base types:
  * bool, int, float, double, string
+ *
+ * @warning: On windows, linux, use XML to store data, which means there are some limitations of
+ * the key string, for example, `/` is not valid.
  */
 class CC_DLL UserDefault
 {
@@ -227,11 +230,11 @@ public:
     * If you don't want to system default implementation after setting delegate, you can just pass nullptr
     * to this function.
     *
-    * @warm It will delete previous delegate
+    * @warning It will delete previous delegate
     */
     static void setDelegate(UserDefault *delegate);
 
-    /** @deprecated Use getInstace() instead.
+    /** @deprecated Use getInstance() instead.
      * @js NA
      * @lua NA
      */

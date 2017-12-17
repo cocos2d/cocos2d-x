@@ -1,6 +1,6 @@
 /**
  Copyright 2013 BlackBerry Inc.
- Copyright (c) 2015 Chukong Technologies
+ Copyright (c) 2015-2017 Chukong Technologies
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
  This file was modified to fit the cocos2d-x project
  */
 
-#include "CCVertexAttribBinding.h"
+#include "renderer/CCVertexAttribBinding.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/ccGLStateCache.h"
 #include "platform/CCGL.h"
@@ -37,14 +37,16 @@ std::string s_attributeNames[] = {
     GLProgram::ATTRIBUTE_NAME_TEX_COORD3,
     GLProgram::ATTRIBUTE_NAME_NORMAL,
     GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT,
-    GLProgram::ATTRIBUTE_NAME_BLEND_INDEX
+    GLProgram::ATTRIBUTE_NAME_BLEND_INDEX,
+    GLProgram::ATTRIBUTE_NAME_TANGENT,
+    GLProgram::ATTRIBUTE_NAME_BINORMAL
 };
 
 static GLuint __maxVertexAttribs = 0;
 static std::vector<VertexAttribBinding*> __vertexAttribBindingCache;
 
 VertexAttribBinding::VertexAttribBinding() :
-    _handle(0), _attributes(), _meshIndexData(nullptr), _glProgramState(nullptr)
+    _handle(0), _meshIndexData(nullptr), _glProgramState(nullptr), _attributes()
 {
 }
 
@@ -109,7 +111,7 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, GLProgramState* glP
         if (__maxVertexAttribs <= 0)
         {
             CCLOGERROR("The maximum number of vertex attributes supported by OpenGL on the current device is 0 or less.");
-            return NULL;
+            return false;
         }
     }
 
@@ -141,9 +143,6 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, GLProgramState* glP
     // VAO hardware
     if (Configuration::getInstance()->supportsShareableVAO())
     {
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
         glGenVertexArrays(1, &_handle);
         GL::bindVAO(_handle);
         glBindBuffer(GL_ARRAY_BUFFER, meshVertexData->getVertexBuffer()->getVBO());
@@ -164,6 +163,8 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, GLProgramState* glP
         }
 
         GL::bindVAO(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
     return true;

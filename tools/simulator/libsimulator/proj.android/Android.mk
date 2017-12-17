@@ -5,6 +5,8 @@ LOCAL_MODULE := cocos2d_simulator_static
 
 LOCAL_MODULE_FILENAME := libsimulator
 
+LOCAL_ARM_MODE := arm
+
 LOCAL_SRC_FILES := \
 ../lib/protobuf-lite/google/protobuf/io/coded_stream.cc \
 ../lib/protobuf-lite/google/protobuf/stubs/common.cc \

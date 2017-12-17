@@ -130,7 +130,7 @@ The difference between _Release Candidate__ and _Final_ is that RC has less test
 
 Many cocos2d-x users might want to try and use the RC releases for production.
 
-RC versions ARE feature freeze. No new features, no matter how small they are, MUST be added in RC versions, because as the name implies, it is a _Release Candiate_.
+RC versions ARE feature freeze. No new features, no matter how small they are, MUST be added in RC versions, because as the name implies, it is a _Release Candidate_.
 
 
 ### Final

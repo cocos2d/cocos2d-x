@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -253,7 +253,12 @@ var TouchAllAtOnce = EventTest.extend({
             var touch = touches[i];
             var pos = touch.getLocation();
             var id = touch.getID();
-            cc.log("Touch #" + i + ". onTouchesMoved at: " + pos.x + " " + pos.y + " Id:" + id);
+            var force = 0, maxForce = 0;
+            if (touch.getCurrentForce) {
+                force = touch.getCurrentForce();
+                maxForce = touch.getMaxForce();
+            }
+            cc.log("Touch #" + i + ". onTouchesMoved at: " + pos.x + " " + pos.y + " Id:" + id + " current force:" + force + " maximum postible force:" + maxForce);
             target.update_id(id, pos);
         }
     },
@@ -364,7 +369,7 @@ var MouseTest = EventTest.extend({
 
         if( 'mouse' in cc.sys.capabilities ) {
             cc.eventManager.addListener({
-                 event: cc.EventListener.MOUSE,
+                event: cc.EventListener.MOUSE,
                 onMouseDown: function(event){
                     var pos = event.getLocation(), target = event.getCurrentTarget();
                     if(event.getButton() === cc.EventMouse.BUTTON_RIGHT)

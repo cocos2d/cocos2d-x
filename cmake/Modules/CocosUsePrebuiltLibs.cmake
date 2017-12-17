@@ -2,12 +2,34 @@
 
 # START CONFIG
 
-set(_chipmunk_inc chipmunk.h)
-set(_chipmunk_inc_paths chipmunk)
-set(_chipmunk_libs chipmunk libchipmunk)
+set(_chipmunk_inc chipmunk/chipmunk.h)
+set(_chipmunk_inc_paths include)
+if(WINDOWS)
+    if (${MSVC_VERSION} EQUAL 1900 OR ${MSVC_VERSION} GREATER 1900)
+        set(_chipmunk_libs chipmunk libchipmunk-2015)
+    else()
+        set(_chipmunk_libs chipmunk libchipmunk)
+    endif(${MSVC_VERSION})
+else()
+    set(_chipmunk_libs chipmunk libchipmunk)
+endif(WINDOWS)
+
+set(_bullet_inc bullet/Bullet-C-Api.h BulletCollision/btBulletCollisionCommon.h)
+set(_bullet_inc_paths  bullet)
+# sequence is important
+set(_bullet_libs BulletDynamics libBulletDynamics BulletCollision libBulletCollision BulletMultiThreaded libBulletMultiThreaded LinearMath libLinearMath MiniCL libMiniCL)
+
+set(_Box2D_inc Box2D/Box2D.h)
+set(_Box2D_inc_paths  include)
+set(_Box2D_libs box2d libbox2d)
+set(_Box2D_prefix Box2D)
+
+set(_glfw3_inc glfw3.h glfw3native.h)
+set(_glfw3_libs glfw3 libglfw3)
 
 set(_curl_inc curl/curl.h)
-set(_curl_libs crypto ssl libeay32 ssleay32 curl libcurl_imp libcurl)
+# order: curl, ssl, crypto
+set(_curl_libs curl libcurl_imp libcurl ssl libeay32 ssleay32 crypto)
 
 set(_freetype2_prefix FREETYPE)
 set(_freetype2_inc ft2build.h freetype/freetype.h)
@@ -15,13 +37,37 @@ set(_freetype2_inc_paths freetype2)
 set(_freetype2_libs freetype freetype250)
 
 set(_jpeg_inc jpeglib.h)
-set(_jpeg_libs jpeg libjpeg)
+if(WINDOWS)
+    if (${MSVC_VERSION} EQUAL 1900 OR ${MSVC_VERSION} GREATER 1900)
+        set(_jpeg_libs jpeg libjpeg-2015)
+    else()
+        set(_jpeg_libs jpeg libjpeg)
+    endif(${MSVC_VERSION})
+else()
+    set(_jpeg_libs jpeg libjpeg)
+endif(WINDOWS)
 
 set(_png_inc png.h)
-set(_png_libs png libpng)
+if(WINDOWS)
+    if (${MSVC_VERSION} EQUAL 1900 OR ${MSVC_VERSION} GREATER 1900)
+        set(_png_libs png libpng-2015)
+    else()
+        set(_png_libs png libpng)
+    endif(${MSVC_VERSION})
+else()
+    set(_png_libs png libpng)
+endif(WINDOWS)
 
 set(_tiff_inc tiff.h)
-set(_tiff_libs tiff libtiff)
+if(WINDOWS)
+    if (${MSVC_VERSION} EQUAL 1900 OR ${MSVC_VERSION} GREATER 1900)
+        set(_tiff_libs tiff libtiff-2015)
+    else()
+        set(_tiff_libs tiff libtiff)
+    endif(${MSVC_VERSION})
+else()
+    set(_tiff_libs tiff libtiff)
+endif(WINDOWS)
 
 set(_webp_inc decode.h)
 set(_webp_libs webp libwebp)
@@ -29,8 +75,19 @@ set(_webp_libs webp libwebp)
 set(_websockets_inc libwebsockets.h)
 set(_websockets_libs websockets libwebsockets)
 
+set(_openssl_inc openssl/ssl.h)
+set(_openssl_libs ssl crypto)
+
 set(_glfw3_inc glfw3.h)
-set(_glfw3_libs glfw3 libglfw3)
+if(WINDOWS)
+    if (${MSVC_VERSION} EQUAL 1900 OR ${MSVC_VERSION} GREATER 1900)
+        set(_glfw3_libs glfw3-2015 libglfw3)
+    else()
+        set(_glfw3_libs glfw3 libglfw3)
+    endif(${MSVC_VERSION})
+else()
+    set(_glfw3_libs glfw3 libglfw3)
+endif(WINDOWS)
 
 set(_sqlite3_inc sqlite3.h)
 set(_sqlite3_libs sqlite3)
@@ -60,9 +117,9 @@ set(_OpenalSoft_libs OpenAL32)
 set(_zlib_inc zlib.h)
 set(_zlib_libs z libzlib libz)
 
-set(_fmod_prefix FMODEX)
-set(_fmod_inc fmod.h)
-set(_fmod_libs fmodex fmodex64 fmodexL fmodexL64)
+set(_fmod_prefix FMOD)
+set(_fmod_inc fmod.hpp)
+set(_fmod_libs fmod fmod64 fmod fmod64)
 
 set(all_prebuilt_libs
   chipmunk
@@ -73,6 +130,9 @@ set(all_prebuilt_libs
   tiff
   webp
   websockets
+  openssl
+  bullet
+  Box2D
 )
 
 
@@ -86,8 +146,13 @@ if(MSVC)
 endif()
 
 if(LINUX)
-  list(APPEND all_prebuilt_libs fmod)
+  list(APPEND all_prebuilt_libs fmod glfw3)
 endif()
+
+if(ANDROID)
+  list(APPEND all_prebuilt_libs zlib)
+endif()
+
 
 # END CONFIG
 
@@ -135,6 +200,7 @@ foreach(_lib ${all_prebuilt_libs})
       #message(STATUS "${_lib} ${_prefix}_INCLUDE_DIRS: ${${_prefix}_INCLUDE_DIRS}")
 
       set(lib_dir_candidates
+        ${_root}/prebuilt/${PLATFORM_FOLDER}/${ANDROID_ABI}
         ${_root}/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
         ${_root}/prebuilt/${PLATFORM_FOLDER}
         ${_root}/prebuilt/${PLATFORM_FOLDER}/release-lib
@@ -158,7 +224,7 @@ foreach(_lib ${all_prebuilt_libs})
       if(libs)
         set(${_prefix}_LIBRARIES ${libs} CACHE STRING "Libraries to link for ${_prefix}" FORCE)
       endif()
-      #message(STATUS "${_lib} ${_prefix}_LIBRARIES: ${${_prefix}_LIBRARIES}")
+      message(STATUS "${_lib} ${_prefix}_LIBRARIES: ${${_prefix}_LIBRARIES}")
 
       if(${_prefix}_LIBRARIES AND ${_prefix}_INCLUDE_DIRS)
         set(${_prefix}_FOUND YES)

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2015 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -22,19 +22,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#pragma once
 
-#ifndef __AUDIO_ENGINE_H_
-#define __AUDIO_ENGINE_H_
+#include "platform/CCPlatformConfig.h"
+#include "platform/CCPlatformMacros.h"
+#include "audio/include/Export.h"
 
 #include <functional>
 #include <list>
 #include <string>
 #include <unordered_map>
-
-#include "platform/CCPlatformMacros.h"
-#include "Export.h"
 
 #ifdef ERROR
 #undef ERROR
@@ -46,7 +43,7 @@
  */
 
 NS_CC_BEGIN
-    namespace experimental{
+namespace experimental {
 
 /**
  * @class AudioProfile
@@ -66,7 +63,7 @@ public:
     double minDelay;
     
     /**
-     * Defautl constructor
+     * Default constructor
      *
      * @lua new
      */
@@ -96,7 +93,7 @@ public:
     enum class AudioState
     {
         ERROR  = -1,
-        INITIALZING,
+        INITIALIZING,
         PLAYING,
         PAUSED
     };
@@ -111,6 +108,7 @@ public:
      * Release objects relating to AudioEngine.
      *
      * @warning It must be called before the application exit.
+     * @lua endToLua
      */
     static void end();
     
@@ -294,6 +292,21 @@ public:
      */
     static void preload(const std::string& filePath, std::function<void(bool isSuccess)> callback);
 
+    /**
+     * Gets playing audio count.
+     */
+    static int getPlayingAudioCount();
+    
+    /**
+     * Whether to enable playing audios
+     * @note If it's disabled, current playing audios will be stopped and the later 'preload', 'play2d' methods will take no effects.
+     */
+    static void setEnabled(bool isEnabled);
+    /**
+     * Check whether AudioEngine is enabled.
+     */
+    static bool isEnabled();
+    
 protected:
     static void addTask(const std::function<void()>& task);
     static void remove(int audioID);
@@ -323,13 +336,13 @@ protected:
         float duration;
         AudioState state;
 
-        AudioInfo()
-            : profileHelper(nullptr)
-            , duration(TIME_UNKNOWN)
-            , state(AudioState::INITIALZING)
-        {
-
-        }
+        AudioInfo();
+        ~AudioInfo();
+    private:
+        AudioInfo(const AudioInfo& info);
+        AudioInfo(AudioInfo&& info);
+        AudioInfo& operator=(const AudioInfo& info);
+        AudioInfo& operator=(AudioInfo&& info);
     };
 
     //audioID,audioAttribute
@@ -350,14 +363,13 @@ protected:
     class AudioEngineThreadPool;
     static AudioEngineThreadPool* s_threadPool;
     
+    static bool _isEnabled;
+    
     friend class AudioEngineImpl;
 };
 
-}
+} // namespace experimental {
 NS_CC_END
 
 // end group
 /// @}
-
-#endif // __AUDIO_ENGINE_H_
-#endif

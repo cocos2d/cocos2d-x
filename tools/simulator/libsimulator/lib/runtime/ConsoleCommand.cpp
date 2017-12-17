@@ -25,8 +25,8 @@ THE SOFTWARE.
 #include "Runtime.h"
 #include "ConfigParser.h"
 #include "ConsoleCommand.h"
-#include "json/document.h"
-#include "json/filestream.h"
+#include "json/document-wrapper.h"
+#include "json/filereadstream.h"
 #include "json/stringbuffer.h"
 
 #include "RuntimeProtocol.h"
@@ -211,14 +211,16 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
             } else if(strcmp(strcmd.c_str(), "shutdownapp") == 0)
             {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-                extern void shutDownApp();
-                shutDownApp();
+#include <windows.h>
+                auto glview = dynamic_cast<GLViewImpl*> (Director::getInstance()->getOpenGLView());
+                HWND hWnd = glview->getWin32Window();
+                ::SendMessage(hWnd, WM_CLOSE, NULL, NULL);
 #else
                 exit(0);
 #endif
             } else if(strcmp(strcmd.c_str(), "getplatform") == 0)
             {
-                string platform="UNKNOW";
+                string platform="UNKNOWN";
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
                 platform = "WIN32";
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)

@@ -15,13 +15,14 @@
 -- Creates a PhysicsShapeBox with specified value.<br>
 -- param   size Size contains this box's width and height.<br>
 -- param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.<br>
--- param   offset A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.<br>
+-- param   offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.<br>
 -- return  An autoreleased PhysicsShapeBox object pointer.
 -- @function [parent=#PhysicsShapeBox] create 
 -- @param self
 -- @param #size_table size
 -- @param #cc.PhysicsMaterial material
 -- @param #vec2_table offset
+-- @param #float radius
 -- @return PhysicsShapeBox#PhysicsShapeBox ret (return value: cc.PhysicsShapeBox)
         
 --------------------------------

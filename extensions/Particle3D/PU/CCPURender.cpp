@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -41,6 +41,9 @@
 
 NS_CC_BEGIN
 
+void PURender::updateRender(PUParticle3D* /*particle*/, float /*deltaTime*/, bool /*firstParticle*/)
+{}
+
 void PURender::copyAttributesTo( PURender *render )
 {
     Particle3DRender::copyAttributesTo(render);
@@ -58,6 +61,7 @@ PUParticle3DQuadRender* PUParticle3DQuadRender::create(const std::string& texFil
     auto ret = new (std::nothrow) PUParticle3DQuadRender();
     if (ret && ret->initRender(texFile))
     {
+        ret->_texFile = texFile;
         ret->autorelease();
     }
     else
@@ -524,6 +528,14 @@ PUParticle3DModelRender* PUParticle3DModelRender::clone()
     return mr;
 }
 
+void PUParticle3DModelRender::reset()
+{
+    for (auto iter : _spriteList){
+        iter->release();
+    }
+    _spriteList.clear();
+}
+
 
 PUParticle3DEntityRender::PUParticle3DEntityRender()
     : _meshCommand(nullptr)
@@ -561,9 +573,10 @@ bool PUParticle3DEntityRender::initRender( const std::string &texFile )
         if (tex)
         {
             _texture = tex;
-            _texFile = texFile;
             glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_PARTICLE_TEXTURE);
         }
+        else
+            _texture = nullptr;
     }
     auto glProgramState = GLProgramState::create(glProgram);
     glProgramState->retain();
@@ -590,6 +603,11 @@ bool PUParticle3DEntityRender::initRender( const std::string &texFile )
 void PUParticle3DEntityRender::copyAttributesTo(PUParticle3DEntityRender *render)
 {
     PURender::copyAttributesTo(render);
+}
+
+void PUParticle3DEntityRender::reset()
+{
+    this->initRender(_texFile);
 }
 
 PUParticle3DBoxRender::PUParticle3DBoxRender()
@@ -866,7 +884,6 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
         _indexBuffer->updateIndices(&_indices[0], index/* * sizeof(unsigned short)*/, 0);
 
         GLuint texId = (_texture ? _texture->getName() : 0);
-
         _stateBlock->setBlendFunc(particleSystem->getBlendFunc());
         _meshCommand->init(
                            0,

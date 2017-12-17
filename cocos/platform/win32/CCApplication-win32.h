@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -56,7 +56,7 @@ public:
     int run();
 
     /**
-    @brief    Get current applicaiton instance.
+    @brief    Get current application instance.
     @return Current application instance pointer.
     */
     static Application* getInstance();
@@ -65,7 +65,9 @@ public:
     CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
     
     /* override functions */
-    virtual void setAnimationInterval(float interval);
+    virtual void setAnimationInterval(float interval) override;
+    virtual void setAnimationInterval(float interval, SetIntervalReason reason) override;
+
     virtual LanguageType getCurrentLanguage();
 
     virtual const char * getCurrentLanguageCode();
@@ -75,6 +77,11 @@ public:
      */
     virtual Platform getTargetPlatform();
     
+    /**
+    @brief Get application version
+    */
+    virtual std::string getVersion() override;
+
     /**
      @brief Open url in default browser
      @param String with url to open.

@@ -9,9 +9,7 @@
 #include "ChipmunkTest/ChipmunkTest.h"
 #include "ClippingNodeTest/ClippingNodeTest.h"
 #endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "NewAudioEngineTest/NewAudioEngineTest.h"
-#endif
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPEN)
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 // bada don't support libcurl
@@ -19,6 +17,12 @@
 #include "CurlTest/CurlTest.h"
 #endif
 #endif
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "JNITest/JNITest.h"
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#include "WindowTest/WindowTest.h"
 #endif
 
 // sort them alphabetically. thanks
@@ -32,7 +36,6 @@
 #include "Camera3DTest/Camera3DTest.h"
 #include "ClickAndMoveTest/ClickAndMoveTest.h"
 #include "CocosDenshionTest/CocosDenshionTest.h"
-#include "CocosStudio3DTest/CocosStudio3DTest.h"
 #include "ConfigurationTest/ConfigurationTest.h"
 #include "ConsoleTest/ConsoleTest.h"
 #include "CurrentLanguageTest/CurrentLanguageTest.h"
@@ -53,7 +56,7 @@
 #include "MaterialSystemTest/MaterialSystemTest.h"
 #include "MenuTest/MenuTest.h"
 #include "MotionStreakTest/MotionStreakTest.h"
-#include "MutiTouchTest/MutiTouchTest.h"
+#include "MultiTouchTest/MultiTouchTest.h"
 #include "NavMeshTest/NavMeshTest.h"
 #include "NewEventDispatcherTest/NewEventDispatcherTest.h"
 #include "NewRendererTest/NewRendererTest.h"
@@ -89,6 +92,8 @@
 #include "UnitTest/UnitTest.h"
 #include "UserDefaultTest/UserDefaultTest.h"
 #include "VibrateTest/VibrateTest.h"
+#include "VRTest/VRTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
+#include "SpriteFrameCacheTest/SpriteFrameCacheTest.h"
 
 #endif

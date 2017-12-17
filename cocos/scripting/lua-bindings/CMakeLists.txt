@@ -7,26 +7,7 @@ include_directories(
   ${cocos_root}/external/xxtea
   ${cocos_root}/external
   ${cocos_root}/cocos
-  ${cocos_root}/cocos/ui
-  ${cocos_root}/cocos/2d
-  ${cocos_root}/cocos/3d
-  ${cocos_root}/cocos/base
-  ${cocos_root}/cocos/editor-support/spine
-  ${cocos_root}/cocos/editor-support/cocostudio
-  ${cocos_root}/cocos/editor-support/cocostudio/ActionTimeline
-  ${cocos_root}/cocos/editor-support/cocosbuilder
   ${cocos_root}/cocos/editor-support
-  ${cocos_root}/cocos/platform
-  ${cocos_root}/cocos/audio/include
-  ${cocos_root}/cocos/physics3d
-  ${cocos_root}/cocos/navmesh
-  manual
-  manual/extension
-  manual/cocostudio
-  manual/ui
-  manual/cocos2d
-  manual/navmesh
-  auto
 )
 
 file(GLOB lua_cocos2d_source_files
@@ -63,7 +44,7 @@ elseif(UNIX)
     # because we have -std=c99
     add_definitions(-D_POSIX_C_SOURCE=200809L)
     if(LINUX)
-        add_definitions(-D_BSD_SOURCE)
+        add_definitions(-D_BSD_SOURCE -D_DEFAULT_SOURCE)
     endif()
     if(APPLE)
         add_definitions(-D_DARWIN_C_SOURCE)
@@ -83,7 +64,9 @@ set(lua_bindings_manual_files
     manual/CCLuaValue.cpp
     manual/Cocos2dxLuaLoader.cpp
     manual/LuaBasicConversions.cpp
+    manual/lua_module_register.cpp
     manual/tolua_fix.cpp
+    manual/CCComponentLua.cpp
     manual/cocos2d/LuaOpengl.cpp
     manual/cocos2d/LuaScriptHandlerMgr.cpp
     manual/cocos2d/lua_cocos2dx_deprecated.cpp
@@ -136,10 +119,14 @@ set(lua_bindings_auto_files
     )
 
 if(MACOSX)
-    set(lua_bindings_manual_files 
+    set(lua_bindings_manual_files
         ${lua_bindings_manual_files}
         manual/platform/ios/CCLuaObjcBridge.mm
         )
+endif()
+
+if(USE_BULLET)
+  include_directories(${BULLET_INCLUDE_DIRS})
 endif()
 
 set(lua_bindings_files ${lua_cocos2d_source_files} ${lua_bindings_manual_files} ${lua_bindings_auto_files})

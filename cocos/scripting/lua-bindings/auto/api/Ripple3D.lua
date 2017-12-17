@@ -76,7 +76,7 @@
 -- param radius Specify the radius of the ripple effect.<br>
 -- param waves Specify the waves count of the ripple effect.<br>
 -- param amplitude Specify the amplitude of the ripple effect.<br>
--- return If the creation sucess, return a pointer of Ripple3D action; otherwise, return nil.
+-- return If the creation success, return a pointer of Ripple3D action; otherwise, return nil.
 -- @function [parent=#Ripple3D] create 
 -- @param self
 -- @param #float duration

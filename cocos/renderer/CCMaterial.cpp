@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -105,10 +105,6 @@ bool Material::initWithGLProgramState(cocos2d::GLProgramState *state)
 
 bool Material::initWithFile(const std::string& validfilename)
 {
-    Data data = FileUtils::getInstance()->getDataFromFile(validfilename);
-    char* bytes = (char*)data.getBytes();
-    bytes[data.getSize()-1]='\0';
-
     // Warning: properties is not a "Ref" object, must be manually deleted
     Properties* properties = Properties::createNonRefCounted(validfilename);
 
@@ -423,8 +419,8 @@ std::string Material::getName() const
 
 Material::Material()
 : _name("")
-, _target(nullptr)
 , _currentTechnique(nullptr)
+, _target(nullptr)
 {
 }
 

@@ -257,6 +257,11 @@
 
 
 --------------------------------------------------------
+-- the ccs PlayableFrame
+-- @field [parent=#ccs] PlayableFrame#PlayableFrame PlayableFrame preloaded module
+
+
+--------------------------------------------------------
 -- the ccs Timeline
 -- @field [parent=#ccs] Timeline#Timeline Timeline preloaded module
 

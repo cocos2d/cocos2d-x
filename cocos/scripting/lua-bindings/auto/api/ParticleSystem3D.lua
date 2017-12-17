@@ -43,6 +43,12 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- return particle render
+-- @function [parent=#ParticleSystem3D] getRender 
+-- @param self
+-- @return Particle3DRender#Particle3DRender ret (return value: cc.Particle3DRender)
+        
+--------------------------------
 -- set emitter for particle system, can set your own particle emitter
 -- @function [parent=#ParticleSystem3D] setEmitter 
 -- @param self

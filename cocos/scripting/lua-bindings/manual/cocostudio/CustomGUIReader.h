@@ -1,7 +1,7 @@
 #ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_CUSTOM_GUI_READER_H
 #define COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_CUSTOM_GUI_READER_H
 
-#include "cocostudio/WidgetReader/WidgetReader.h"
+#include "editor-support/cocostudio/WidgetReader/WidgetReader.h"
 
 USING_NS_CC;
 

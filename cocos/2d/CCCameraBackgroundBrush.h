@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -102,9 +102,11 @@ public:
     /**
      * draw the background
      */
-    virtual void drawBackground(Camera* camera) {}
-    
-CC_CONSTRUCTOR_ACCESS:
+    virtual void drawBackground(Camera* /*camera*/) {}
+
+    virtual bool isValid() { return true; }
+
+CC_CONSTRUCTOR_ACCESS :
     CameraBackgroundBrush();
     virtual ~CameraBackgroundBrush();
 
@@ -156,6 +158,9 @@ protected:
     GLboolean _clearColor;
     
     V3F_C4B_T2F_Quad _quad;
+    GLuint      _vao;
+    GLuint      _vertexBuffer;
+    GLuint      _indexBuffer;
 };
 
 /**
@@ -177,6 +182,11 @@ public:
      * @return Created brush
      */
     static CameraBackgroundColorBrush* create(const Color4F& color, float depth);
+    
+    /**
+     * Draw background
+     */
+    virtual void drawBackground(Camera* camera) override;
     
     /**
      * Set clear color
@@ -227,7 +237,7 @@ public:
      */
     static CameraBackgroundSkyBoxBrush* create();
     /**
-     * Set skybox texutre 
+     * Set skybox texture 
      * @param texture Skybox texture
      */
     void setTexture(TextureCube*  texture);
@@ -236,8 +246,13 @@ public:
      * Draw background
      */
     virtual void drawBackground(Camera* camera) override;
-    
-CC_CONSTRUCTOR_ACCESS:
+
+    bool isActived() const;
+    void setActived(bool actived);
+    virtual void setTextureValid(bool valid);
+    virtual bool isValid()override;
+
+CC_CONSTRUCTOR_ACCESS :
     CameraBackgroundSkyBoxBrush();
     virtual ~CameraBackgroundSkyBoxBrush();
     
@@ -258,6 +273,10 @@ protected:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     EventListenerCustom* _backToForegroundListener;
 #endif
+
+private:
+    bool _actived;
+    bool _textureValid;
 };
 
 NS_CC_END

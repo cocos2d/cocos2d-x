@@ -6,8 +6,8 @@ PLAYER_NS_BEGIN
 
 PlayerWin::PlayerWin()
     : PlayerProtocol()
-    , _messageBoxService(nullptr)
     , _menuService(nullptr)
+    , _messageBoxService(nullptr)
     , _editboxService(nullptr)
     , _taskService(nullptr)
     , _hwnd(NULL)

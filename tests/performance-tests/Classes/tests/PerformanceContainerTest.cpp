@@ -80,7 +80,7 @@ bool PerformanceContainerScene::init()
 void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
 {
     _type = 0;
-    //srand(time());
+    //std::srand(time());
     auto s = Director::getInstance()->getWinSize();
 
     lastRenderedCount = 0;
@@ -97,7 +97,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
 		updateQuantityOfNodes();
         updateProfilerName();
         CC_PROFILER_PURGE_ALL();
-        srand(0);
+        std::srand(0);
 	});
     decrease->setColor(Color3B(0,200,20));
     _decrease = decrease;
@@ -111,7 +111,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
 		updateQuantityOfNodes();
         updateProfilerName();
         CC_PROFILER_PURGE_ALL();
-        srand(0);
+        std::srand(0);
 	});
     increase->setColor(Color3B(0,200,20));
     _increase = increase;
@@ -378,7 +378,7 @@ void TemplateVectorPerfTest::generateTestFunctions()
         { "replace",     [=](){
             Vector<Node*> nodeVector = createVector();
             
-            srand((unsigned)time(nullptr));
+            std::srand((unsigned)time(nullptr));
             ssize_t index = rand() % quantityOfNodes;
             
             CC_PROFILER_START(this->profilerName());
@@ -601,7 +601,7 @@ void ArrayPerfTest::generateTestFunctions()
         { "setObject",     [=](){
             __Array* nodeVector = createArray();
             
-            srand((unsigned)time(nullptr));
+            std::srand((unsigned)time(nullptr));
             ssize_t index = rand() % quantityOfNodes;
             
             CC_PROFILER_START(this->profilerName());

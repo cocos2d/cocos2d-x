@@ -1,6 +1,6 @@
 /**
  Copyright 2013 BlackBerry Inc.
- Copyright (c) 2015 Chukong Technologies
+ Copyright (c) 2015-2017 Chukong Technologies
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ class Vec2;
 class Vec3;
 class Vec4;
 class Mat4;
-class Data;
+class Quaternion;
 class Data;
 
 
@@ -159,8 +159,6 @@ class Data;
  */
 class CC_DLL Properties
 {
-    friend class Game;
-
 public:
 
     /**
@@ -521,7 +519,7 @@ public:
     static bool parseAxisAngle(const char* str, Quaternion* out);
 
     /**
-     * Atempts to parse the specified string as an RGB color value.
+     * Attempts to parse the specified string as an RGB color value.
      *
      * @param str The string to parse.
      * @param out The value to populate if successful.
@@ -531,7 +529,7 @@ public:
     static bool parseColor(const char* str, Vec3* out);
 
     /**
-     * Atempts to parse the specified string as an RGBA color value.
+     * Attempts to parse the specified string as an RGBA color value.
      *
      * @param str The string to parse.
      * @param out The value to populate if successful.

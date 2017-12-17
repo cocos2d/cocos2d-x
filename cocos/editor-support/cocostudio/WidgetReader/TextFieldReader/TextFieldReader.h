@@ -25,8 +25,8 @@
 #ifndef __TestCpp__TextFieldReader__
 #define __TestCpp__TextFieldReader__
 
-#include "cocostudio/WidgetReader/WidgetReader.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/WidgetReader/WidgetReader.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio
 {

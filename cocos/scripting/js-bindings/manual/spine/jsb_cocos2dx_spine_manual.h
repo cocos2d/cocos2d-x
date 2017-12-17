@@ -1,6 +1,6 @@
 /*
  * Created by ucchen on 2/12/14.
- * Copyright (c) 2014 Chukong Technologies Inc.
+ * Copyright (c) 2014-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 #define __jsb_cocos2dx_spine_manual__
 
 #include "jsapi.h"
-#include "spine/spine-cocos2dx.h"
+#include "editor-support/spine/spine-cocos2dx.h"
 
 void register_all_cocos2dx_spine_manual(JSContext* cx, JS::HandleObject global);
 

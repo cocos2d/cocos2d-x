@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.cocos2dx.lib">
 
-    <application android:allowBackup="true" android:label="libcocos2dx">
+    <application android:allowBackup="true">
 
     </application>
 

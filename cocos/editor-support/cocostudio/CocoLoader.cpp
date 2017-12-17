@@ -1,4 +1,4 @@
-#include "CocoLoader.h"
+#include "editor-support/cocostudio/CocoLoader.h"
 #include "zlib.h"
 
 using namespace std;
@@ -177,7 +177,7 @@ bool	CocoLoader::ReadCocoBinBuff(char* pBinBuff)
 	pTempBuff += sizeof(stCocoFileHeader);
 	char*   pStartAddr = m_pMemoryBuff = pTempBuff;
     
-	char*	pDestBuff = new char[m_pFileHeader->m_nDataSize];
+	char*	pDestBuff = new (std::nothrow) char[m_pFileHeader->m_nDataSize];
 	if (m_pFileHeader->m_nCompressSize > 0)
 	{
 		uLongf		dwSrcSize  = m_pFileHeader->m_nCompressSize;

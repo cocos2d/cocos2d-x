@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -159,7 +159,7 @@ public:
     bool getObserveUntilEvent(void) const;
 
     /** Sets the value of mObserveUntilEvent. This value determines whether observation must be continued
-        after an event ocurred and the event handlers are called.
+        after an event occurred and the event handlers are called.
     */
     void setObserveUntilEvent(bool observeUntilEvent);
 
@@ -213,8 +213,8 @@ protected:
     // Particle type to be observed. Default is that all particles are observed.
     PUParticle3D::ParticleType _particleTypeToObserve;
 
-    /** Determines whether mParticleTypeToObserve is set. If ´true? only that particles of the specified type
-        are observed. If ´false?(= default), all particles are observed.
+    /** Determines whether mParticleTypeToObserve is set. If true only that particles of the specified type
+        are observed. If false (= default), all particles are observed.
     */
     bool _particleTypeToObserveSet;
 

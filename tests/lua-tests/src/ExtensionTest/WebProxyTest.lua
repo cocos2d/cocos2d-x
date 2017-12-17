@@ -85,18 +85,22 @@ local function WebSocketTestLayer()
     toMainMenu:setPosition(cc.p(0, 0))
     layer:addChild(toMainMenu,10)
 
-    wsSendText   = cc.WebSocket:create("ws://echo.websocket.org")
-    wsSendBinary = cc.WebSocket:create("ws://echo.websocket.org")
-    wsError      = cc.WebSocket:create("ws://invalid.url.com")
+    wsSendText   = cc.WebSocket:create("wss://echo.websocket.org", {"myprotocol_1", "myprotocol_2"}, "cacert.pem")
+    wsSendBinary = cc.WebSocket:create("ws://echo.websocket.org", {"hello"}, "cacert.pem")
+    wsError      = cc.WebSocket:create("ws://invalid.url.com", {"invalid_protocol"})
 
     local function wsSendTextOpen(strData)
-        sendTextStatus:setString("Send Text WS was opened.")
+        if sendTextStatus ~= nil then
+            sendTextStatus:setString("Send Text WS was opened, url:" .. wsSendText.url .. ", protocol: " .. wsSendText.protocol)
+        end
     end
 
     local function wsSendTextMessage(strData)
         receiveTextTimes= receiveTextTimes + 1
-        local strInfo= "response text msg: "..strData..", "..receiveTextTimes    
-        sendTextStatus:setString(strInfo)
+        local strInfo= "response text msg: "..strData..", "..receiveTextTimes
+        if sendTextStatus ~= nil then
+            sendTextStatus:setString(strInfo)
+        end
     end
 
     local function wsSendTextClose(strData)
@@ -107,10 +111,15 @@ local function WebSocketTestLayer()
 
     local function wsSendTextError(strData)
         print("sendText Error was fired")
+        if sendTextStatus ~= nil then
+            sendTextStatus:setString("sendText Error was fired")
+        end
     end
 
     local function wsSendBinaryOpen(strData)
-        sendBinaryStatus:setString("Send Binary WS was opened.")
+        if sendBinaryStatus ~= nil then
+            sendBinaryStatus:setString("Send Binary WS was opened, url:" .. wsSendBinary.url .. ", protocol: " .. wsSendBinary.protocol)
+        end
     end
 
     local function wsSendBinaryMessage(paramTable)
@@ -126,7 +135,9 @@ local function WebSocketTestLayer()
         end
         receiveBinaryTimes = receiveBinaryTimes + 1
         strInfo = strInfo..receiveBinaryTimes
-        sendBinaryStatus:setString(strInfo)
+        if sendBinaryStatus ~= nil then
+            sendBinaryStatus:setString(strInfo)
+        end
     end
 
     local function wsSendBinaryClose(strData)
@@ -137,6 +148,9 @@ local function WebSocketTestLayer()
 
     local function wsSendBinaryError(strData)
         print("sendBinary Error was fired")
+        if sendBinaryStatus ~= nil then
+            sendBinaryStatus:setString("sendBinary Error was fired")
+        end
     end
 
     local function wsErrorOpen(strData)
@@ -148,7 +162,9 @@ local function WebSocketTestLayer()
 
     local function wsErrorError(strData)
         print("Error was fired")
-        errorStatus:setString("an error was fired")
+        if errorStatus ~= nil then
+            errorStatus:setString("an error was fired")
+        end
     end
 
     local function wsErrorClose(strData)
@@ -181,12 +197,15 @@ local function WebSocketTestLayer()
     local function OnExit(strEventName)
         if "exit" == strEventName then
             if nil ~= wsSendText  then
+                sendTextStatus = nil
                 wsSendText:close()
             end
             if nil ~= wsSendBinary then
+                sendBinaryStatus = nil
                 wsSendBinary:close()
             end
             if nil ~=  wsError     then
+                errorStatus = nil
                 wsError:close()
             end
         end

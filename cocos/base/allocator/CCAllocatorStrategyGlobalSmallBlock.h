@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2015 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  Author: Justin Graham (https://github.com/mannewalis)
  
  http://www.cocos2d-x.org
@@ -32,7 +32,7 @@
  Do not use Console::log or any other methods that use NEW inside of this
  allocator. Failure to do so will result in recursive memory allocation.
  ****************************************************************************/
-
+#include <string.h>
 #include "base/allocator/CCAllocatorMacros.h"
 #include "base/allocator/CCAllocatorBase.h"
 #include "base/allocator/CCAllocatorGlobal.h"
@@ -164,7 +164,7 @@ public:
             } \
             break;
             
-        void* address;
+        void* address = nullptr;
         
         switch (adjusted_size)
         {

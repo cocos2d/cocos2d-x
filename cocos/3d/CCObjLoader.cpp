@@ -1,7 +1,7 @@
 //
 // Copyright 2012-2015, Syoyo Fujita.
 //
-// Licensed under 2-clause BSD liecense.
+// Licensed under 2-clause BSD license.
 //
 
 //
@@ -17,7 +17,7 @@
 //                 Parse transmittance material parameter correctly.
 // version 0.9.5 : Parse multiple group name.
 //                 Add support of specifying the base path to load material file.
-// version 0.9.4 : Initial suupport of group tag(g)
+// version 0.9.4 : Initial support of group tag(g)
 // version 0.9.3 : Fix parsing triple 'x/y/z'
 // version 0.9.2 : Add more .mtl load support
 // version 0.9.1 : Add initial .mtl load support
@@ -38,7 +38,7 @@
 #include "platform/CCFileUtils.h"
 #include "base/ccUtils.h"
 
-#include "CCObjLoader.h"
+#include "3d/CCObjLoader.h"
 
 namespace tinyobj {
     
@@ -372,7 +372,7 @@ namespace tinyobj {
         }
         
         // Flatten vertices and indices
-        for (size_t i = 0; i < faceGroup.size(); i++) {
+        for (size_t i = 0, size = faceGroup.size(); i < size; ++i) {
             const std::vector<vertex_index> &face = faceGroup[i];
             
             vertex_index i0 = face[0];
@@ -414,7 +414,7 @@ namespace tinyobj {
     
     static std::string& replacePathSeperator(std::string& path)
     {
-        for (std::string::size_type i = 0; i < path.size(); i++) {
+        for (std::string::size_type i = 0, size = path.size(); i < size; ++i) {
             if (path[i] == '\\')
                 path[i] = '/';
         }
@@ -572,7 +572,7 @@ namespace tinyobj {
             if (token[0] == 'T' && token[1] == 'r' && isSpace(token[2])) {
                 token += 2;
                 // Invert value of Tr(assume Tr is in range [0, 1])
-                material.dissolve = 1.0 - parseFloat(token);
+                material.dissolve = 1.0f - parseFloat(token);
                 continue;
             }
             
@@ -640,13 +640,16 @@ namespace tinyobj {
             filepath = matId;
         }
         
+        std::string err = "";
+        
         std::istringstream matIStream(cocos2d::FileUtils::getInstance()->getStringFromFile(filepath));
-        std::string err = LoadMtl(matMap, materials, matIStream);
         if (!matIStream) {
             std::stringstream ss;
             ss << "WARN: Material file [ " << filepath << " ] not found. Created a default material.";
             err += ss.str();
         }
+        err += LoadMtl(matMap, materials, matIStream);
+
         return err;
     }
     
@@ -762,9 +765,12 @@ namespace tinyobj {
                 token += strspn(token, " \t");
                 
                 std::vector<vertex_index> face;
+                auto first = static_cast<int>(v.size() / 3);
+                auto second = static_cast<int>(vn.size() / 3);
+                auto third = static_cast<int>(vt.size() / 2);
                 while (!isNewLine(token[0])) {
                     vertex_index vi =
-                    parseTriple(token, static_cast<int>(v.size() / 3), static_cast<int>(vn.size() / 3), static_cast<int>(vt.size() / 2));
+                    parseTriple(token, first, second, third);
                     face.push_back(vi);
                     size_t n = strspn(token, " \t\r");
                     token += n;

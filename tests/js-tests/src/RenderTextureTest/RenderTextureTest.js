@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -132,7 +132,7 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
 
     saveCB:function (sender) {
         if(!cc.sys.isNative){
-            cc.log("RenderTexture's saveToFile doesn't suppport on HTML5");
+            cc.log("RenderTexture's saveToFile doesn't support on HTML5");
             return;
         }
         var namePNG = "image-" + this._counter + ".png";
@@ -147,17 +147,17 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
     },
 
     clearCB:function (sender) {
-        this._target.clear(Math.random(), Math.random(), Math.random(), 1);
+        this._target.clear(Math.random() * 255, Math.random() * 255, Math.random() * 255, 255);
     },
 
     drawInLocation:function (location) {
         var distance = cc.pDistance(location, this._lastLocation);
 
         if (distance > 1) {
-            var locLastLocation = this._lastLocation;
+            var locLastLocation = this._lastLocation, i;
             this._target.begin();
             this._brushs = [];
-            for(var i = 0; i < distance; ++i) {
+            for(i = 0; i < distance; ++i) {
                 var diffX = locLastLocation.x - location.x;
                 var diffY = locLastLocation.y - location.y;
                 var delta = i / distance;
@@ -170,10 +170,11 @@ var RenderTextureSave = RenderTextureBaseLayer.extend({
                     scale: Math.random() + 0.25,
                     opacity: 20
                 });
+                sprite.parent = this;
                 sprite.retain();
                 this._brushs.push(sprite);
             }
-            for (var i = 0; i < distance; i++) {
+            for (i = 0; i < distance; i++) {
                 this._brushs[i].visit();
             }
             this._target.end();
@@ -530,8 +531,6 @@ var RenderTextureTargetNode = RenderTextureBaseLayer.extend({
 
         renderTexture.x = winSize.width / 2;
         renderTexture.y = winSize.height / 2;
-        //      [renderTexture setPosition:cc.p(s.width, s.height)];
-        //      renderTexture.scale = 2;
 
         /* add the sprites to the render texture */
         renderTexture.addChild(this._sprite1);
@@ -673,7 +672,7 @@ var arrayOfRenderTextureTest = [
     Issue1464
 ];
 
-if(('opengl' in cc.sys.capabilities) && (!cc.sys.isNative) ){
+if(('opengl' in cc.sys.capabilities) && cc._renderType === cc.game.RENDER_TYPE_WEBGL && (!cc.sys.isNative) ){
     arrayOfRenderTextureTest.push(RenderTextureIssue937);
     arrayOfRenderTextureTest.push(RenderTextureZbuffer);
     arrayOfRenderTextureTest.push(RenderTextureTestDepthStencil);

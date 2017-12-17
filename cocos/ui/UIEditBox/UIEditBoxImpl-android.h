@@ -30,7 +30,7 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 
-#include "UIEditBoxImpl-common.h"
+#include "ui/UIEditBox/UIEditBoxImpl-common.h"
 
 NS_CC_BEGIN
 
@@ -63,20 +63,17 @@ public:
     virtual void setNativeInputMode(EditBox::InputMode inputMode) override;
     virtual void setNativeInputFlag(EditBox::InputFlag inputFlag) override;
     virtual void setNativeReturnType(EditBox::KeyboardReturnType returnType)override;
+    virtual void setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment);
     virtual void setNativeText(const char* pText) override;
     virtual void setNativePlaceHolder(const char* pText) override;
     virtual void setNativeVisible(bool visible) override;
     virtual void updateNativeFrame(const Rect& rect) override;
-    virtual void setNativeContentSize(const Size& size) override {};
     virtual const char* getNativeDefaultFontName() override;
     virtual void nativeOpenKeyboard() override;
     virtual void nativeCloseKeyboard() override;
-    virtual void setNativeMaxLength(int maxLength);
-
+    virtual void setNativeMaxLength(int maxLength) override;
     
 private:
-    virtual void doAnimationWhenKeyboardMove(float duration, float distance)override {}
-
     int _editBoxIndex;
 };
 

@@ -75,7 +75,7 @@ end
 function Helper.initWithLayer(layer)
     Helper.currentLayer = layer
 
-    local size = cc.Director:getInstance():getWinSize()
+    local size = cc.Director:getInstance():getOpenGLView():getVisibleRect()
     Helper.titleLabel = cc.Label:createWithTTF("", s_arialPath, 28)
     Helper.titleLabel:setAnchorPoint(cc.p(0.5, 0.5))
     layer:addChild(Helper.titleLabel, 1)
@@ -99,9 +99,9 @@ function Helper.initWithLayer(layer)
     menu:addChild(item2)
     menu:addChild(item3)
     menu:setPosition(cc.p(0, 0))
-    item1:setPosition(cc.p(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    item2:setPosition(cc.p(size.width / 2, item2:getContentSize().height / 2))
-    item3:setPosition(cc.p(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    item1:setPosition(cc.p(size.width / 2 - item2:getContentSize().width * 2, size.y + item2:getContentSize().height / 2))
+    item2:setPosition(cc.p(size.width / 2, size.y + item2:getContentSize().height / 2))
+    item3:setPosition(cc.p(size.width / 2 + item2:getContentSize().width * 2, size.y + item2:getContentSize().height / 2))
     layer:addChild(menu, 1)
 
     local background = cc.Layer:create()
@@ -124,11 +124,11 @@ function CreateBackMenuItem()
     local MenuItem = cc.MenuItemLabel:create(label)
     MenuItem:registerScriptTapHandler(MainMenuCallback)
 
-    local s = cc.Director:getInstance():getWinSize()
+    local s = cc.Director:getInstance():getOpenGLView():getVisibleRect()
     local Menu = cc.Menu:create()
     Menu:addChild(MenuItem)
     Menu:setPosition(0, 0)
-    MenuItem:setPosition(s.width - 50, 25)
+    MenuItem:setPosition(s.width - 50, s.y + 25)
 
     return Menu
 end
@@ -179,16 +179,18 @@ function TestCastScene.newScene()
 end
 
 function TestCastScene.initWithLayer(scene)
-    local size = cc.Director:getInstance():getWinSize()
+    local size = cc.Director:getInstance():getVisibleSize()
+    local origin = cc.Director:getInstance():getVisibleOrigin()
+
     TestCastScene.titleLabel = cc.Label:createWithTTF("", s_arialPath, 28)
     TestCastScene.titleLabel:setAnchorPoint(cc.p(0.5, 0.5))
     scene:addChild(TestCastScene.titleLabel, 1)
-    TestCastScene.titleLabel:setPosition(size.width / 2, size.height - 50)
+    TestCastScene.titleLabel:setPosition(origin.x + size.width / 2, origin.y + size.height - 50)
 
     TestCastScene.subtitleLabel = cc.Label:createWithTTF("", s_thonburiPath, 16)
     TestCastScene.subtitleLabel:setAnchorPoint(cc.p(0.5, 0.5))
     scene:addChild(TestCastScene.subtitleLabel, 1)
-    TestCastScene.subtitleLabel:setPosition(size.width / 2, size.height - 80)
+    TestCastScene.subtitleLabel:setPosition(origin.x + size.width / 2, origin.y + size.height - 80)
 
     -- menu
     local item1 = cc.MenuItemImage:create(s_pPathB1, s_pPathB2)
@@ -197,15 +199,15 @@ function TestCastScene.initWithLayer(scene)
     item1:registerScriptTapHandler(TestCastScene.backAction)
     item2:registerScriptTapHandler(TestCastScene.restartAction)
     item3:registerScriptTapHandler(TestCastScene.nextAction)
-
+    
     local menu = cc.Menu:create()
     menu:addChild(item1)
     menu:addChild(item2)
     menu:addChild(item3)
     menu:setPosition(cc.p(0, 0))
-    item1:setPosition(cc.p(size.width / 2 - item2:getContentSize().width * 2, item2:getContentSize().height / 2))
-    item2:setPosition(cc.p(size.width / 2, item2:getContentSize().height / 2))
-    item3:setPosition(cc.p(size.width / 2 + item2:getContentSize().width * 2, item2:getContentSize().height / 2))
+    item1:setPosition(cc.p(origin.x + size.width / 2 - item2:getContentSize().width * 2, origin.y + size.height + item2:getContentSize().height / 2))
+    item2:setPosition(cc.p(origin.x + size.width / 2, origin.y + size.height + item2:getContentSize().height / 2))
+    item3:setPosition(cc.p(origin.x + size.width / 2 + item2:getContentSize().width * 2, origin.y + size.height + item2:getContentSize().height / 2))
     scene:addChild(menu, 1)
 
     local background = cc.Layer:create()

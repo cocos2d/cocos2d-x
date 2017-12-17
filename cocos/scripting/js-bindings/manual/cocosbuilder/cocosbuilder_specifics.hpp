@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Zynga Inc.
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,26 +24,28 @@
 #ifndef __JS_COCOSBUILDER_SPECIFICS_H__
 #define __JS_COCOSBUILDER_SPECIFICS_H__
 
-#include "../cocos2d_specifics.hpp"
+#include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 
 class JSCCBAnimationWrapper: public JSCallbackWrapper 
 {
 public:
-    JSCCBAnimationWrapper() {}
-    virtual ~JSCCBAnimationWrapper() {}
+    JSCCBAnimationWrapper(JS::HandleValue owner) : JSCallbackWrapper(owner) {}
     
-    void animationCompleteCallback() 
+    void animationCompleteCallback()
     {
-                
-        if(!_jsCallback.isNullOrUndefined()  && !_jsThisObj.isNullOrUndefined()) 
+        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+        JS::RootedValue callback(cx, getJSCallbackFunc());
+        JS::RootedValue thisObj(cx, getJSCallbackThis());
+        if(!callback.isNullOrUndefined()  && !thisObj.isNullOrUndefined())
         {
 
-            JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
             JS::RootedValue retval(cx);
 
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             
-            JS_CallFunctionValue(cx, JS::RootedObject(cx, _jsThisObj.toObjectOrNull()), JS::RootedValue(cx, _jsCallback), JS::HandleValueArray::empty(), &retval);
+            JS::RootedObject jsThis(cx, thisObj.toObjectOrNull());
+            JS::RootedValue jsCallback(cx, callback);
+            JS_CallFunctionValue(cx, jsThis, jsCallback, JS::HandleValueArray::empty(), &retval);
         }
     }
     

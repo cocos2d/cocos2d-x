@@ -1,40 +1,54 @@
-language: cpp
-env:
-  matrix:
-  - GEN_BINDING=YES
-  - GEN_COCOS_FILES=YES
- # - PLATFORM=mac-ios PUSH_TO_MAC=YES
- # - PLATFORM=linux DEBUG=1 CC_COMPILER=gcc CXX_COMPILER=g++
-  # Disable clang build on linux temporarily since we're using "-stdlib=libc++ " which wasn't installed on travis machine.
-  # - PLATFORM=linux DEBUG=1 CC_COMPILER=clang CXX_COMPILER=clang++
-  # Since switching to C++11 only the ARM version of the nactive client
-  # port currently builds.  TODO(sbc): Re-enable all architectures.
-  # Disabled travis-ci build for native client port since it doesn't support std::thread, std::mutex.
-  # - PLATFORM=nacl DEBUG=1 NACL_ARCH=arm
-#  - PLATFORM=android
-  # - PLATFORM=emscripten DEBUG=1
-  global:
-  - secure: |-
-      cHXOjAda+t2tmBVuVAiQfvhDN+unToO6hX1rc3dJeGDOk4rlQnylJacjA7o/
-      enkWeHagbW2Ja4h7BxQz4h7dada8zEbIbEMK4VEHx6AWwQM+GIEqkJPv5g8k
-      4P20MLpX4XyUwm/16btpnqgXlyd8Q3Zjh3Vui/5/VzwPnxUQEho=
-  - secure: |-
-      U/JsyiSR9q+8wX1arfciy3BdbMQaKmgt48/9tiU7P2RQJ/FR2AHGq85sNGI/
-      ZUxN4JPLGALEvkFMo4NYyJDUcsdRHZX3vbp5xbSSRaBigqJIj3HDxtlPVf2m
-      /W2GzcfNNX1ACO18hSWH0d2yFlF263ZmvudzQIfqTESfjGQBzwA=
-  - secure: |-
-      Wsngwo3jlZtvuPfr3RNhqrz/liNIhKYnlw4KYJO90gMQ9ZQKRTlMv2BMiPw/
-      9lV+vgJQDRcFe7dKwtC86vk10EU7Ym2bhVmhMxi/AlmJXgavjmPVdizRT7rh
-      X2Ry/Nb6hGRkH3WS0T3D/KG1+e7lP/TMB9bvo6/locLJ2A6Z1YI=
-  - secure: PGMnEvysYv9Mnjrof05v9MU41ZlVO7A7SQb4oLuYqhBf0stvZUVEF4fmkOcXRPAd4Cg41aAbtE8RyGaqIFaKHtjHFtTdisM9XVXqL+eMfv5L+8nFCk4S5Fi/ohglO+FBJ9X/NLfAfRZmlwJR+UedU5AJwqlQbKraNkyv/FmDMUc=
+matrix:
+  include:
+    # linux
+    - os: linux
+      env: 
+        - BUILD_TARGET=linux 
+        - GEN_BINDING_AND_COCOSFILE=true
+        - secure: Xn48eX1TD6DAPcVPU+a+CD3b/BKGVCHk555zl8rZiLq4GH4rWSES23rKcY8uz/X9GizETWYQK2luNvph4/BA29XEZ7l+Q0V9AZwrahWPzCuDBgxSPAr4KlETGM9I3xEvRIKBeddko7JTFHZCcNsItPRA0CovndQzdKE6texm13A=
+        - secure: M31OQaUIBV13aUMylPs2PieKThGs+ED0tj9SKbCKGKxwojl+N2ZhlS53D4Zqoj1ru/3P1X0pPeYvV0uVfM2dpEwRF4BmYVZQSrOKgjK1VfbcN5luWSeuAvq0LNGT99Ao02sKLbcHINiQ4axylPPgsY6+X/aoJNuKqBTQyaaVAo8=
+        - secure: M5lyDs0qai15mWHzJdkh0WPfVJJmVZu6SWtYULxatukGPXVwoQvmEtYAwAW+iz6aM+tXksQ/mk6nW5L8UFbHm+n6yrsa5bZU9sGXjilPE8p8bLFYDmIbPRazU+E6pBP3J2CDoAm0XnWkiYQ8feTxKTo6ysLnHAEjyaHTw0+Q1GM=
+      sudo: required
+      language: cpp
+    # android
+    - os: linux
+      env: BUILD_TARGET=android
+      language: android
+      sudo: required
+      android:
+        components:
+          - android-14
+          - build-tools-27.0.1
+    # mac
+    - os: osx
+      env: BUILD_TARGET=mac
+      language: cpp
+      osx_image: xcode8.3
+      sudo: required
+    # iOS
+    - os: osx
+      env: BUILD_TARGET=ios
+      language: cpp
+      osx_image: xcode8.3
+      sudo: required
+
 script:
-- export CC=$CC_COMPILER
-- export CXX=$CXX_COMPILER
 - tools/travis-scripts/run-script.sh
 before_install:
 - tools/travis-scripts/before-install.sh
 
-# whitelist
+cache:
+  bundler: true
+
+notifications:
+  email: false
+
+# blocklist
 branches:
-  only:
-    - v3
+  except:
+  - v1
+  - v2
+  - v4-develop
+  - v3-doc
+  - v3.11_backup
+  - v35-for-tizen

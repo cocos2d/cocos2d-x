@@ -1,4 +1,4 @@
-#include "CCLabelBMFontLoader.h"
+#include "editor-support/cocosbuilder/CCLabelBMFontLoader.h"
 
 using namespace cocos2d;
 

@@ -8,7 +8,7 @@
 -- initialize heightMap data 
 -- @function [parent=#Terrain] initHeightMap 
 -- @param self
--- @param #char heightMap
+-- @param #string heightMap
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -44,7 +44,7 @@
 -- reset the heightmap data.
 -- @function [parent=#Terrain] resetHeightMap 
 -- @param self
--- @param #char heightMap
+-- @param #string heightMap
 -- @return Terrain#Terrain self (return value: cc.Terrain)
         
 --------------------------------

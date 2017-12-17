@@ -31,4 +31,23 @@ public:
     void doStep(float delta);
 };
 
+class ForceTouchTest : public TestCase
+{
+public:
+    CREATE_FUNC(ForceTouchTest);
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    
+protected:
+    ForceTouchTest();
+    virtual ~ForceTouchTest();
+
+    cocos2d::Label * _infoLabel;
+};
+
 #endif

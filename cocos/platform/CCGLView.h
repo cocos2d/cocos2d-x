@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -86,6 +86,10 @@ struct GLContextAttrs
 
 NS_CC_BEGIN
 
+class Scene;
+class Renderer;
+class VRIRenderer;
+
 /**
  * @addtogroup platform
  * @{
@@ -106,7 +110,10 @@ public:
      */
     virtual ~GLView();
 
-    /** Force destroying EGL view, subclass must implement this method. */
+    /** Force destroying EGL view, subclass must implement this method. 
+     *
+     * @lua endToLua
+     */
     virtual void end() = 0;
 
     /** Get whether opengl render system is ready, subclass must implement this method. */
@@ -158,7 +165,7 @@ public:
      *
      * @return The frame size of EGL view.
      */
-    virtual const Size& getFrameSize() const;
+    virtual Size getFrameSize() const;
 
     /**
      * Set the frame size of EGL view.
@@ -173,7 +180,7 @@ public:
      * 
      * @param zoomFactor The zoom factor for frame.
      */
-    virtual void setFrameZoomFactor(float zoomFactor) {}
+    virtual void setFrameZoomFactor(float /*zoomFactor*/) {}
     
     /** Get zoom factor for frame. This methods are for
      * debugging big resolution (e.g.new ipad) app on desktop.
@@ -187,7 +194,7 @@ public:
      *
      * @param isVisible Hide or Show the mouse cursor if there is one.
      */
-    virtual void setCursorVisible(bool isVisible) {}
+    virtual void setCursorVisible(bool /*isVisible*/) {}
 
     /** Get retina factor.
      *
@@ -196,7 +203,7 @@ public:
     virtual int getRetinaFactor() const { return 1; }
 
     /** Only works on ios platform. Set Content Scale of the Factor. */
-    virtual bool setContentScaleFactor(float scaleFactor) { return false; }
+    virtual bool setContentScaleFactor(float /*scaleFactor*/) { return false; }
     
     /** Only works on ios platform. Get Content Scale of the Factor. */
     virtual float getContentScaleFactor() const { return 1.0; }
@@ -231,6 +238,11 @@ public:
      * @return The visible rectangle of opengl viewport.
      */
     virtual Rect getVisibleRect() const;
+
+    /**
+     * Gets safe area rectangle
+     */
+    virtual Rect getSafeAreaRect() const;
 
     /**
      * Set the design resolution size.
@@ -313,6 +325,17 @@ public:
      * @param ys The points of y.
      */
     virtual void handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[]);
+
+    /** Touch events are handled by default; if you want to customize your handlers, please override this function.
+     *
+     * @param num The number of touch.
+     * @param ids The identity of the touch.
+     * @param xs The points of x.
+     * @param ys The points of y.
+     * @param fs The force of 3d touches.
+     # @param ms The maximum force of 3d touches
+     */
+    virtual void handleTouchesMove(int num, intptr_t ids[], float xs[], float ys[], float fs[], float ms[]);
     
     /** Touch events are handled by default; if you want to customize your handlers, please override this function.
      *
@@ -373,7 +396,20 @@ public:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     virtual id getCocoaWindow() = 0;
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) */
-    
+
+    /**
+     * Renders a Scene with a Renderer
+     * This method is called directly by the Director
+     */
+    void renderScene(Scene* scene, Renderer* renderer);
+
+    /**
+     * Sets a VR renderer. 
+     * if `vrrenderer` is `nullptr` VR will be disabled
+     */
+    void setVR(VRIRenderer* vrrenderer);
+    VRIRenderer* getVR() const;
+
 protected:
     void updateDesignResolutionSize();
     
@@ -391,6 +427,9 @@ protected:
     float _scaleX;
     float _scaleY;
     ResolutionPolicy _resolutionPolicy;
+
+    // VR stuff
+    VRIRenderer* _vrImpl;
 };
 
 // end of platform group

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -34,10 +34,10 @@
 NS_CC_BEGIN
 
 NavMeshDebugDraw::NavMeshDebugDraw()
-: _primitiveType(GL_POINTS)
-, _dirtyBuffer(true)
-, _currentPrimitive(nullptr)
+: _currentPrimitive(nullptr)
+, _primitiveType(GL_POINTS)
 , _currentDepthMask(true)
+, _dirtyBuffer(true)
 {
     _stateBlock = RenderState::StateBlock::create();
     _stateBlock->setCullFace(true);
@@ -53,7 +53,7 @@ NavMeshDebugDraw::NavMeshDebugDraw()
     glGenBuffers(1, &_vbo);
 }
 
-void NavMeshDebugDraw::vertex(const float x, const float y, const float z, unsigned int color, const float u, const float v)
+void NavMeshDebugDraw::vertex(const float /*x*/, const float /*y*/, const float /*z*/, unsigned int /*color*/, const float /*u*/, const float /*v*/)
 {
 
 }
@@ -93,7 +93,7 @@ void NavMeshDebugDraw::depthMask(bool state)
 void NavMeshDebugDraw::begin(duDebugDrawPrimitives prim, float size /*= 1.0f*/)
 {
     if (_currentPrimitive) return;
-    _currentPrimitive = new Primitive;
+    _currentPrimitive = new (std::nothrow) Primitive;
     _currentPrimitive->type = getPrimitiveType(prim);
     _currentPrimitive->depthMask = _currentDepthMask;
     _currentPrimitive->start = _vertices.size();
@@ -134,7 +134,7 @@ GLenum NavMeshDebugDraw::getPrimitiveType(duDebugDrawPrimitives prim)
     }
 }
 
-void NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, uint32_t flags)
+void NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, uint32_t /*flags*/)
 {
     _program->use();
     _program->setUniformsForBuiltins(transform);
@@ -148,11 +148,11 @@ void NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, uint32_t fl
         _dirtyBuffer = false;
     }
     for (auto &iter : _primitiveList){
+        if (iter->type == GL_POINTS)
+            continue;
+        
         _stateBlock->setDepthWrite(iter->depthMask);
-        if (iter->type == GL_POINTS){
-            //glPointSize(iter->size);
-        }
-        else if (iter->type == GL_LINES){
+        if (iter->type == GL_LINES){
             glLineWidth(iter->size);
         }
         _stateBlock->bind();

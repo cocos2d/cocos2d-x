@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module ParticleSystem
--- @extend Node,TextureProtocol
+-- @extend Node,TextureProtocol,PlayableProtocol
 -- @parent_module cc
 
 --------------------------------
@@ -70,6 +70,13 @@
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
+-- / @} end of PlayableProtocol
+-- @function [parent=#ParticleSystem] setSourcePositionCompatible 
+-- @param self
+-- @param #bool sourcePositionCompatible
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
 --  Gets the start spin variance of each particle.<br>
 -- return The start spin variance of each particle.
 -- @function [parent=#ParticleSystem] getStartSpinVar 
@@ -130,11 +137,17 @@
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
---  Gets the garvity.<br>
+--  Gets the gravity.<br>
 -- return The gravity.
 -- @function [parent=#ParticleSystem] getGravity 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#ParticleSystem] resumeEmissions 
+-- @param self
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
 --  Gets the tangential acceleration.<br>
@@ -157,6 +170,12 @@
 -- @function [parent=#ParticleSystem] getSpeed 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#ParticleSystem] pauseEmissions 
+-- @param self
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
 --  Gets the angle of each particle. <br>
@@ -218,7 +237,7 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
---  Call the update mathod with no time..
+--  Call the update method with no time..
 -- @function [parent=#ParticleSystem] updateWithNoTime 
 -- @param self
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
@@ -381,6 +400,12 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- 
+-- @function [parent=#ParticleSystem] getResourceFile 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 --  Gets the number of degrees to rotate a particle around the source pos per second.<br>
 -- return The number of degrees to rotate a particle around the source pos per second.
 -- @function [parent=#ParticleSystem] getRotatePerSecond 
@@ -408,6 +433,12 @@
 -- @function [parent=#ParticleSystem] setSourcePosition 
 -- @param self
 -- @param #vec2_table pos
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
+-- 
+-- @function [parent=#ParticleSystem] stop 
+-- @param self
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
@@ -454,6 +485,12 @@
 -- @function [parent=#ParticleSystem] setRotationIsDir 
 -- @param self
 -- @param #bool t
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
+-- / @{/ @name implement Playable Protocol
+-- @function [parent=#ParticleSystem] start 
+-- @param self
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
@@ -549,6 +586,13 @@
 -- @function [parent=#ParticleSystem] getLife 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+--  Are the emissions paused<br>
+-- return True if the emissions are paused, else false
+-- @function [parent=#ParticleSystem] isPaused 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 --  Sets the speed variance.<br>
@@ -701,6 +745,12 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- 
+-- @function [parent=#ParticleSystem] isSourcePositionCompatible 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Gets the maximum particles of the system.<br>
 -- return The maximum particles of the system.
 -- @function [parent=#ParticleSystem] getTotalParticles 
@@ -761,6 +811,12 @@
 -- @param self
 -- @param #int numberOfParticles
 -- @return ParticleSystem#ParticleSystem ret (return value: cc.ParticleSystem)
+        
+--------------------------------
+--  Gets all ParticleSystem references
+-- @function [parent=#ParticleSystem] getAllParticleSystems 
+-- @param self
+-- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- 

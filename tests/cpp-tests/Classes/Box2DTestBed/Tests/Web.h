@@ -107,7 +107,7 @@ public:
 			jd.bodyA = m_bodies[0];
 			jd.bodyB = m_bodies[1];
 			jd.localAnchorA.Set(0.5f, 0.0f);
-			jd.localAnchorB.Set(-0.5f, 0.0f);;
+			jd.localAnchorB.Set(-0.5f, 0.0f);
 			p1 = jd.bodyA->GetWorldPoint(jd.localAnchorA);
 			p2 = jd.bodyB->GetWorldPoint(jd.localAnchorB);
 			d = p2 - p1;

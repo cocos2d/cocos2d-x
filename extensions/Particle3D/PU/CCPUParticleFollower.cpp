@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -66,7 +66,7 @@ void PUParticleFollower::setMinDistance(float minDistance)
     _minDistance = minDistance;
 }
 
-void PUParticleFollower::updatePUAffector( PUParticle3D *particle, float deltaTime )
+void PUParticleFollower::updatePUAffector( PUParticle3D *particle, float /*deltaTime*/ )
 {
     //_first = true;
     //for (auto iter : _particleSystem->getParticles())
@@ -91,7 +91,7 @@ void PUParticleFollower::updatePUAffector( PUParticle3D *particle, float deltaTi
     }
 }
 
-void PUParticleFollower::firstParticleUpdate( PUParticle3D *particle, float deltaTime )
+void PUParticleFollower::firstParticleUpdate( PUParticle3D* /*particle*/, float /*deltaTime*/ )
 {
     _first = true;
 }

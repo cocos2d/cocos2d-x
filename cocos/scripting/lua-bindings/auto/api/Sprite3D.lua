@@ -42,6 +42,12 @@
 -- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
+-- Get meshes used in sprite 3d
+-- @function [parent=#Sprite3D] getMeshes 
+-- @param self
+-- @return array_table#array_table ret (return value: array_table)
+        
+--------------------------------
 -- remove all attach nodes
 -- @function [parent=#Sprite3D] removeAllAttachNode 
 -- @param self
@@ -66,7 +72,7 @@
 --  get mesh count 
 -- @function [parent=#Sprite3D] getMeshCount 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 -- get Mesh by index

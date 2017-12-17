@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -50,13 +50,13 @@ public:
     */
     virtual bool observe (PUParticle3D* particle, float timeElapsed) override;
 
-    /** The _processParticle() function is overridden, because we don´t observe an individual particle.
-        even if there isn´t a particle left anymore (and that is the situation we want to validate).
+    /** The _processParticle() function is overridden, because we don't observe an individual particle.
+        even if there isn't a particle left anymore (and that is the situation we want to validate).
     */
     virtual void updateObserver(PUParticle3D* particle, float timeElapsed, bool firstParticle) override;
 
     /** Instead of the _processParticle(), the _postProcessParticles() is used because it is called
-        even if there isn´t a particle left anymore (and that is the situation we want to validate).
+        even if there isn't a particle left anymore (and that is the situation we want to validate).
     */
     virtual void postUpdateObserver(float timeElapsed) override;
 
@@ -64,7 +64,7 @@ CC_CONSTRUCTOR_ACCESS:
     PUOnClearObserver(void) : PUObserver(),
         _continue(false)
     {
-    };
+    }
     virtual ~PUOnClearObserver(void) {};
 
 protected:

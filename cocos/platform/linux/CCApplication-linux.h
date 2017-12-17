@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2011      Laschweinski
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -53,7 +53,8 @@ public:
      @brief Callback by Director for limit FPS.
      @param interval    The time, which expressed in second in second, between current frame and next.
      */
-    void setAnimationInterval(float interval);
+    virtual void setAnimationInterval(float interval) override;
+    virtual void setAnimationInterval(float interval, SetIntervalReason reason) override;
 
     /**
      @brief Run the message loop.
@@ -61,7 +62,7 @@ public:
     int run();
 
     /**
-     @brief Get current applicaiton instance.
+     @brief Get current application instance.
      @return Current application instance pointer.
      */
     static Application* getInstance();
@@ -70,20 +71,25 @@ public:
     CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
     
     /* override functions */
-    virtual LanguageType getCurrentLanguage();
+    virtual LanguageType getCurrentLanguage() override;
 
     /**
     @brief Get current language iso 639-1 code
     @return Current language iso 639-1 code
     */
-    virtual const char * getCurrentLanguageCode();
+    virtual const char * getCurrentLanguageCode() override;
     
-  /**
-   @brief Open url in default browser
-   @param String with url to open.
-   @return true if the resource located by the URL was successfully opened; otherwise false.
-   */
-  virtual bool openURL(const std::string &url);
+    /**
+    @brief Get application version
+    */
+    virtual std::string getVersion() override;
+
+    /**
+     @brief Open url in default browser
+     @param String with url to open.
+     @return true if the resource located by the URL was successfully opened; otherwise false.
+     */
+    virtual bool openURL(const std::string &url) override;
 
 
     /**
@@ -101,7 +107,7 @@ public:
     /**
      @brief Get target platform
      */
-    virtual Platform getTargetPlatform();
+    virtual Platform getTargetPlatform() override;
 protected:
     long       _animationInterval;  //micro second
     std::string _resourceRootPath;

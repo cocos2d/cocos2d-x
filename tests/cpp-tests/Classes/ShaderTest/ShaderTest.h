@@ -106,8 +106,8 @@ public:
     ShaderRetroEffect();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    bool init() override;
-    void update(float dt) override;
+    virtual bool init() override;
+    virtual void update(float dt) override;
 protected:
     cocos2d::Label* _label;
     float           _accum;

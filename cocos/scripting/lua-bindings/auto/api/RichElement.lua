@@ -5,6 +5,13 @@
 -- @parent_module ccui
 
 --------------------------------
+-- 
+-- @function [parent=#RichElement] equalType 
+-- @param self
+-- @param #int type
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- brief Initialize a rich element with different arguments.<br>
 -- param tag A integer tag value.<br>
 -- param color A color in @see `Color3B`.<br>
@@ -16,6 +23,13 @@
 -- @param #color3b_table color
 -- @param #unsigned char opacity
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#RichElement] setColor 
+-- @param self
+-- @param #color3b_table color
+-- @return RichElement#RichElement self (return value: ccui.RichElement)
         
 --------------------------------
 -- brief Default constructor.<br>

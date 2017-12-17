@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -287,6 +287,7 @@
         });
     });
 
-    load.registerParser("timeline", "*", parser);
+    load.registerParser("timeline", "0.*", parser);
+    load.registerParser("timeline", "1.*", parser);
 
 })(ccs._load, ccs._parser);

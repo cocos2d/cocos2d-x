@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,8 +25,8 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
-#include "CCApplication-android.h"
-#include "CCGLViewImpl-android.h"
+#include "platform/android/CCApplication-android.h"
+#include "platform/android/CCGLViewImpl-android.h"
 #include "base/CCDirector.h"
 #include "base/CCEventCustom.h"
 #include "base/CCEventType.h"
@@ -36,7 +36,9 @@ THE SOFTWARE.
 #include "renderer/ccGLStateCache.h"
 #include "2d/CCDrawingPrimitives.h"
 #include "platform/android/jni/JniHelper.h"
+#include "network/CCDownloader-android.h"
 #include <android/log.h>
+#include <android/api-level.h>
 #include <jni.h>
 
 #define  LOG_TAG    "main"
@@ -44,10 +46,33 @@ THE SOFTWARE.
 
 void cocos_android_app_init(JNIEnv* env) __attribute__((weak));
 
+void cocos_audioengine_focus_change(int focusChange);
+
 using namespace cocos2d;
 
 extern "C"
 {
+
+// ndk break compatibility, refer to https://github.com/cocos2d/cocos2d-x/issues/16267 for detail information
+// should remove it when using NDK r13 since NDK r13 will add back bsd_signal()
+#if __ANDROID_API__ > 19
+#include <signal.h>
+#include <dlfcn.h>
+    typedef __sighandler_t (*bsd_signal_func_t)(int, __sighandler_t);
+    bsd_signal_func_t bsd_signal_func = NULL;
+
+    __sighandler_t bsd_signal(int s, __sighandler_t f) {
+        if (bsd_signal_func == NULL) {
+            // For now (up to Android 7.0) this is always available 
+            bsd_signal_func = (bsd_signal_func_t) dlsym(RTLD_DEFAULT, "bsd_signal");
+
+            if (bsd_signal_func == NULL) {
+                __android_log_assert("", "bsd_signal_wrapper", "bsd_signal symbol not found!");
+            }
+        }
+        return bsd_signal_func(s, f);
+    }
+#endif // __ANDROID_API__ > 19
 
 JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved)
 {
@@ -81,6 +106,7 @@ JNIEXPORT void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, j
         director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
         director->setGLDefaultValues();
     }
+    cocos2d::network::_preloadJavaDownloaderClass();
 }
 
 JNIEXPORT jintArray Java_org_cocos2dx_lib_Cocos2dxActivity_getGLContextAttrs(JNIEnv*  env, jobject thiz)
@@ -96,6 +122,11 @@ JNIEXPORT jintArray Java_org_cocos2dx_lib_Cocos2dxActivity_getGLContextAttrs(JNI
         env->SetIntArrayRegion(glContextAttrsJava, 0, 6, tmp); 
     
     return glContextAttrsJava;
+}
+
+JNIEXPORT void Java_org_cocos2dx_lib_Cocos2dxAudioFocusManager_nativeOnAudioFocusChange(JNIEnv* env, jobject thiz, jint focusChange)
+{
+    cocos_audioengine_focus_change(focusChange);
 }
 
 JNIEXPORT void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnSurfaceChanged(JNIEnv*  env, jobject thiz, jint w, jint h)

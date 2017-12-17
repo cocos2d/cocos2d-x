@@ -343,10 +343,10 @@ void HoleDemo::setup()
     
     _outerClipper = ClippingNode::create();
     _outerClipper->retain();
-    AffineTransform tranform = AffineTransform::IDENTITY;
-    tranform = AffineTransformScale(tranform, target->getScale(), target->getScale());
+    AffineTransform transform = AffineTransform::IDENTITY;
+    transform = AffineTransformScale(transform, target->getScale(), target->getScale());
 
-    _outerClipper->setContentSize( SizeApplyAffineTransform(target->getContentSize(), tranform));
+    _outerClipper->setContentSize(SizeApplyAffineTransform(target->getContentSize(), transform));
     _outerClipper->setAnchorPoint( Vec2(0.5, 0.5) );
     _outerClipper->setPosition(Vec2(this->getContentSize()) * 0.5f);
     _outerClipper->runAction(RepeatForever::create(RotateBy::create(1, 45)));
@@ -581,7 +581,7 @@ void RawStencilBufferTest::draw(Renderer *renderer, const Mat4 &transform, uint3
         ++iter;
         
         Director* director = Director::getInstance();
-        CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+        CCASSERT(nullptr != director, "Director is null when setting matrix stack");
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
         
         _modelViewTransform = this->transform(transform);
@@ -822,14 +822,14 @@ void RawStencilBufferTest6::setup()
     RawStencilBufferTestAlphaTest::setup();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     auto winPoint = Vec2(Director::getInstance()->getWinSize());
-    //by default, glReadPixels will pack data with 4 bytes allignment
+    //by default, glReadPixels will pack data with 4 bytes alignment
     unsigned char bits[4] = {0,0,0,0};
     glStencilMask(~0);
     glClearStencil(0);
     glClear(GL_STENCIL_BUFFER_BIT);
     glFlush();
     glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
-    auto clearToZeroLabel = Label::createWithTTF(String::createWithFormat("00=%02x", bits[0])->getCString(), "fonts/arial.ttf", 20);
+    auto clearToZeroLabel = Label::createWithTTF(StringUtils::format("00=%02x", bits[0]), "fonts/arial.ttf", 20);
     clearToZeroLabel->setPosition((winPoint.x / 3) * 1, winPoint.y - 10);
     this->addChild(clearToZeroLabel);
     glStencilMask(0x0F);
@@ -837,7 +837,7 @@ void RawStencilBufferTest6::setup()
     glClear(GL_STENCIL_BUFFER_BIT);
     glFlush();
     glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
-    auto clearToMaskLabel = Label::createWithTTF(String::createWithFormat("0a=%02x", bits[0])->getCString(), "fonts/arial.ttf", 20);
+    auto clearToMaskLabel = Label::createWithTTF(StringUtils::format("0a=%02x", bits[0]), "fonts/arial.ttf", 20);
     clearToMaskLabel->setPosition((winPoint.x / 3) * 2, winPoint.y - 10);
     this->addChild(clearToMaskLabel);
 #endif

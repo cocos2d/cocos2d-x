@@ -8,7 +8,7 @@
 --  Returns the number of Passes in the Technique 
 -- @function [parent=#Technique] getPassCount 
 -- @param self
--- @return long#long ret (return value: long)
+-- @return int#int ret (return value: int)
         
 --------------------------------
 --  Returns a new clone of the Technique 
@@ -40,7 +40,7 @@
 --  Returns the Pass at given index 
 -- @function [parent=#Technique] getPassByIndex 
 -- @param self
--- @param #long index
+-- @param #int index
 -- @return Pass#Pass ret (return value: cc.Pass)
         
 --------------------------------

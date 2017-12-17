@@ -53,6 +53,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#MenuItemToggle] cleanup 
+-- @param self
+-- @return MenuItemToggle#MenuItemToggle self (return value: cc.MenuItemToggle)
+        
+--------------------------------
+-- 
 -- @function [parent=#MenuItemToggle] activate 
 -- @param self
 -- @return MenuItemToggle#MenuItemToggle self (return value: cc.MenuItemToggle)

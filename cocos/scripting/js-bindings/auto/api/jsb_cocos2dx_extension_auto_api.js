@@ -548,11 +548,13 @@ getCurrentTitle : function(
  * @method initWithLabelAndBackgroundSprite
  * @param {cc.Node} arg0
  * @param {ccui.Scale9Sprite} arg1
+ * @param {bool} arg2
  * @return {bool}
  */
 initWithLabelAndBackgroundSprite : function (
 node, 
-scale9sprite 
+scale9sprite, 
+bool 
 )
 {
     return false;
@@ -582,15 +584,15 @@ state
 
 /**
  * @method create
-* @param {ccui.Scale9Sprite|cc.Node|String} scale9sprite
-* @param {ccui.Scale9Sprite|String} scale9sprite
-* @param {float} float
-* @return {cc.ControlButton|cc.ControlButton|cc.ControlButton|cc.ControlButton}
+* @param {ccui.Scale9Sprite|cc.Node|String|cc.Node} scale9sprite
+* @param {ccui.Scale9Sprite|String|ccui.Scale9Sprite} scale9sprite
+* @param {float|bool} float
+* @return {cc.ControlButton|cc.ControlButton|cc.ControlButton|cc.ControlButton|cc.ControlButton}
 */
 create : function(
-str,
-str,
-float 
+node,
+scale9sprite,
+bool 
 )
 {
     return cc.ControlButton;
@@ -1857,13 +1859,13 @@ hasVisibleParents : function (
 },
 
 /**
- * @method getDirection
- * @return {cc.ScrollView::Direction}
+ * @method setSwallowTouches
+ * @param {bool} arg0
  */
-getDirection : function (
+setSwallowTouches : function (
+bool 
 )
 {
-    return 0;
 },
 
 /**
@@ -1939,11 +1941,9 @@ direction
 },
 
 /**
- * @method setBounceable
- * @param {bool} arg0
+ * @method stopAnimatedContentOffset
  */
-setBounceable : function (
-bool 
+stopAnimatedContentOffset : function (
 )
 {
 },
@@ -2061,6 +2061,16 @@ maxContainerOffset : function (
 },
 
 /**
+ * @method setBounceable
+ * @param {bool} arg0
+ */
+setBounceable : function (
+bool 
+)
+{
+},
+
+/**
  * @method isTouchMoved
  * @return {bool}
  */
@@ -2090,6 +2100,16 @@ minContainerOffset : function (
 )
 {
     return cc.Vec2;
+},
+
+/**
+ * @method getDirection
+ * @return {cc.ScrollView::Direction}
+ */
+getDirection : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -2144,7 +2164,7 @@ reset : function (
 
 /**
  * @method getIdx
- * @return {long}
+ * @return {int}
  */
 getIdx : function (
 )
@@ -2154,10 +2174,10 @@ getIdx : function (
 
 /**
  * @method setIdx
- * @param {long} arg0
+ * @param {int} arg0
  */
 setIdx : function (
-long 
+int 
 )
 {
 },
@@ -2190,10 +2210,10 @@ cc.TableView = {
 
 /**
  * @method updateCellAtIndex
- * @param {long} arg0
+ * @param {int} arg0
  */
 updateCellAtIndex : function (
-long 
+int 
 )
 {
 },
@@ -2238,10 +2258,10 @@ getVerticalFillOrder : function (
 
 /**
  * @method removeCellAtIndex
- * @param {long} arg0
+ * @param {int} arg0
  */
 removeCellAtIndex : function (
-long 
+int 
 )
 {
 },
@@ -2280,21 +2300,21 @@ reloadData : function (
 
 /**
  * @method insertCellAtIndex
- * @param {long} arg0
+ * @param {int} arg0
  */
 insertCellAtIndex : function (
-long 
+int 
 )
 {
 },
 
 /**
  * @method cellAtIndex
- * @param {long} arg0
+ * @param {int} arg0
  * @return {cc.TableViewCell}
  */
 cellAtIndex : function (
-long 
+int 
 )
 {
     return cc.TableViewCell;
@@ -2528,9 +2548,29 @@ getState : function (
 },
 
 /**
+ * @method getMaxConcurrentTask
+ * @return {int}
+ */
+getMaxConcurrentTask : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method checkUpdate
  */
 checkUpdate : function (
+)
+{
+},
+
+/**
+ * @method setVerifyCallback
+ * @param {function} arg0
+ */
+setVerifyCallback : function (
+func 
 )
 {
 },
@@ -2549,6 +2589,26 @@ getStoragePath : function (
  * @method update
  */
 update : function (
+)
+{
+},
+
+/**
+ * @method setVersionCompareHandle
+ * @param {function} arg0
+ */
+setVersionCompareHandle : function (
+func 
+)
+{
+},
+
+/**
+ * @method setMaxConcurrentTask
+ * @param {int} arg0
+ */
+setMaxConcurrentTask : function (
+int 
 )
 {
 },
@@ -2614,34 +2674,6 @@ str
  * @class EventListenerAssetsManagerEx
  */
 cc.EventListenerAssetsManager = {
-
-/**
- * @method init
- * @param {cc.AssetsManagerEx} arg0
- * @param {function} arg1
- * @return {bool}
- */
-init : function (
-assetsmanagerex, 
-func 
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {cc.AssetsManagerEx} arg0
- * @param {function} arg1
- * @return {cc.EventListenerAssetsManagerEx}
- */
-create : function (
-assetsmanagerex, 
-func 
-)
-{
-    return cc.EventListenerAssetsManagerEx;
-},
 
 /**
  * @method EventListenerAssetsManagerEx

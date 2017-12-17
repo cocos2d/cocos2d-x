@@ -7,9 +7,15 @@
 #include "2d/CCNode.h"
 #include "base/CCData.h"
 #include "base/CCMap.h"
-#include "CCBSequence.h"
+#include "editor-support/cocosbuilder/CCBSequence.h"
 #include "extensions/GUI/CCControlExtension/CCControl.h"
-#include "cocosbuilder/CCBAnimationManager.h"
+#include "editor-support/cocosbuilder/CCBAnimationManager.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#ifdef ABSOLUTE
+#undef ABSOLUTE
+#endif
+#endif
 
 #define CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(T, METHOD) static T * METHOD() { \
     T * ptr = new (std::nothrow) T(); \

@@ -2,7 +2,7 @@
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -71,19 +71,29 @@ TransitionScene * TransitionScene::create(float t, Scene *scene)
 
 bool TransitionScene::initWithDuration(float t, Scene *scene)
 {
-    CCASSERT( scene != nullptr, "Argument scene must be non-nil");
+    CCASSERT(scene != nullptr, "Argument scene must be non-nil");
 
     if (Scene::init())
     {
         _duration = t;
 
         // retain
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+        if (sEngine)
+        {
+            sEngine->retainScriptObject(this, scene);
+        }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
         _inScene = scene;
         _inScene->retain();
         _outScene = Director::getInstance()->getRunningScene();
         if (_outScene == nullptr)
         {
             _outScene = Scene::create();
+            // just change its state is running that can run actions later
+            // issue: https://github.com/cocos2d/cocos2d-x/issues/17442
+            _outScene->onEnter();
         }
         _outScene->retain();
 
@@ -136,10 +146,8 @@ void TransitionScene::finish()
     this->schedule(CC_SCHEDULE_SELECTOR(TransitionScene::setNewScene), 0);
 }
 
-void TransitionScene::setNewScene(float dt)
+void TransitionScene::setNewScene(float /*dt*/)
 {    
-    CC_UNUSED_PARAM(dt);
-
     this->unschedule(CC_SCHEDULE_SELECTOR(TransitionScene::setNewScene));
     
     // Before replacing, save the "send cleanup to scene"
@@ -147,6 +155,13 @@ void TransitionScene::setNewScene(float dt)
     _isSendCleanupToScene = director->isSendCleanupToScene();
     
     director->replaceScene(_inScene);
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
+    if (sEngine)
+    {
+        sEngine->releaseScriptObject(this, _inScene);
+    }
+#endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     
     // issue #267
     _outScene->setVisible(true);
@@ -202,6 +217,11 @@ void TransitionScene::onExit()
     // _inScene should not receive the onEnter callback
     // only the onEnterTransitionDidFinish
     _inScene->onEnterTransitionDidFinish();
+
+#if CC_ENABLE_SCRIPT_BINDING
+    if (ScriptEngineManager::getInstance()->getScriptEngine())
+        ScriptEngineManager::getInstance()->getScriptEngine()->garbageCollect();
+#endif // CC_ENABLE_SCRIPT_BINDING
 }
 
 // custom cleanup
@@ -283,7 +303,7 @@ void TransitionRotoZoom:: onEnter()
     _inScene->setAnchorPoint(Vec2(0.5f, 0.5f));
     _outScene->setAnchorPoint(Vec2(0.5f, 0.5f));
 
-    ActionInterval *rotozoom = (ActionInterval*)(Sequence::create
+    auto rotozoom = Sequence::create
     (
         Spawn::create
         (
@@ -293,7 +313,7 @@ void TransitionRotoZoom:: onEnter()
         ),
         DelayTime::create(_duration/2),
         nullptr
-    ));
+    );
 
     _outScene->runAction(rotozoom);
     _inScene->runAction
@@ -343,8 +363,8 @@ void TransitionJumpZoom::onEnter()
     ActionInterval *scaleIn = ScaleTo::create(_duration/4, 1.0f);
     ActionInterval *scaleOut = ScaleTo::create(_duration/4, 0.5f);
 
-    ActionInterval *jumpZoomOut = (ActionInterval*)(Sequence::create(scaleOut, jump, nullptr));
-    ActionInterval *jumpZoomIn = (ActionInterval*)(Sequence::create(jump, scaleIn, nullptr));
+    auto jumpZoomOut = Sequence::create(scaleOut, jump, nullptr);
+    auto jumpZoomIn = Sequence::create(jump, scaleIn, nullptr);
 
     ActionInterval *delay = DelayTime::create(_duration/2);
 
@@ -530,7 +550,7 @@ void TransitionSlideInL::onEnter()
     ActionInterval *out = this->action();
 
     ActionInterval* inAction = easeActionWithAction(in);
-    ActionInterval* outAction = (ActionInterval*)Sequence::create
+    ActionInterval* outAction = Sequence::create
     (
         easeActionWithAction(out),
         CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
@@ -761,7 +781,6 @@ void TransitionFlipX::onEnter()
 {
     TransitionSceneOriented::onEnter();
 
-    ActionInterval *inA, *outA;
     _inScene->setVisible(false);
 
     float inDeltaZ, inAngleZ;
@@ -782,7 +801,7 @@ void TransitionFlipX::onEnter()
         outAngleZ = 0;
     }
 
-    inA = (ActionInterval*)Sequence::create
+    auto inA = Sequence::create
         (
             DelayTime::create(_duration/2),
             Show::create(),
@@ -791,7 +810,7 @@ void TransitionFlipX::onEnter()
             nullptr
         );
 
-    outA = (ActionInterval *)Sequence::create
+    auto outA = Sequence::create
         (
             OrbitCamera::create(_duration/2, 1, 0, outAngleZ, outDeltaZ, 0, 0),
             Hide::create(),
@@ -831,7 +850,6 @@ void TransitionFlipY::onEnter()
 {
     TransitionSceneOriented::onEnter();
 
-    ActionInterval *inA, *outA;
     _inScene->setVisible(false);
 
     float inDeltaZ, inAngleZ;
@@ -852,7 +870,7 @@ void TransitionFlipY::onEnter()
         outAngleZ = 0;
     }
 
-    inA = (ActionInterval*)Sequence::create
+    auto inA = Sequence::create
         (
             DelayTime::create(_duration/2),
             Show::create(),
@@ -860,7 +878,7 @@ void TransitionFlipY::onEnter()
             CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
             nullptr
         );
-    outA = (ActionInterval*)Sequence::create
+    auto outA = Sequence::create
         (
             OrbitCamera::create(_duration/2, 1, 0, outAngleZ, outDeltaZ, 90, 0),
             Hide::create(),
@@ -902,7 +920,6 @@ void TransitionFlipAngular::onEnter()
 {
     TransitionSceneOriented::onEnter();
 
-    ActionInterval *inA, *outA;
     _inScene->setVisible(false);
 
     float inDeltaZ, inAngleZ;
@@ -923,7 +940,7 @@ void TransitionFlipAngular::onEnter()
         outAngleZ = 0;
     }
 
-    inA = (ActionInterval *)Sequence::create
+    auto inA = Sequence::create
         (
             DelayTime::create(_duration/2),
             Show::create(),
@@ -931,7 +948,7 @@ void TransitionFlipAngular::onEnter()
             CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
             nullptr
         );
-    outA = (ActionInterval *)Sequence::create
+    auto outA = Sequence::create
         (
             OrbitCamera::create(_duration/2, 1, 0, outAngleZ, outDeltaZ, 45, 0),
             Hide::create(),
@@ -971,7 +988,6 @@ void TransitionZoomFlipX::onEnter()
 {
     TransitionSceneOriented::onEnter();
 
-    ActionInterval *inA, *outA;
     _inScene->setVisible(false);
 
     float inDeltaZ, inAngleZ;
@@ -990,7 +1006,7 @@ void TransitionZoomFlipX::onEnter()
         outDeltaZ = -90;
         outAngleZ = 0;
     }
-    inA = (ActionInterval *)Sequence::create
+    auto inA = Sequence::create
         (
             DelayTime::create(_duration/2),
             Spawn::create
@@ -1003,7 +1019,7 @@ void TransitionZoomFlipX::onEnter()
             CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
             nullptr
         );
-    outA = (ActionInterval *)Sequence::create
+    auto outA = Sequence::create
         (
             Spawn::create
             (
@@ -1050,7 +1066,6 @@ void TransitionZoomFlipY::onEnter()
 {
     TransitionSceneOriented::onEnter();
 
-    ActionInterval *inA, *outA;
     _inScene->setVisible(false);
 
     float inDeltaZ, inAngleZ;
@@ -1068,7 +1083,7 @@ void TransitionZoomFlipY::onEnter()
         outAngleZ = 0;
     }
 
-    inA = (ActionInterval *)Sequence::create
+    auto inA = Sequence::create
         (
             DelayTime::create(_duration/2),
             Spawn::create
@@ -1082,7 +1097,7 @@ void TransitionZoomFlipY::onEnter()
             nullptr
         );
 
-    outA = (ActionInterval *)Sequence::create
+    auto outA = Sequence::create
         (
             Spawn::create
             (
@@ -1129,7 +1144,6 @@ void TransitionZoomFlipAngular::onEnter()
 {
     TransitionSceneOriented::onEnter();
 
-    ActionInterval *inA, *outA;
     _inScene->setVisible(false);
 
     float inDeltaZ, inAngleZ;
@@ -1149,7 +1163,7 @@ void TransitionZoomFlipAngular::onEnter()
         outAngleZ = 0;
     }
 
-    inA = (ActionInterval *)Sequence::create
+    auto inA = Sequence::create
         (
             DelayTime::create(_duration/2),
             Spawn::create
@@ -1163,7 +1177,7 @@ void TransitionZoomFlipAngular::onEnter()
             CallFunc::create(CC_CALLBACK_0(TransitionScene::finish,this)),
             nullptr
         );
-    outA = (ActionInterval *)Sequence::create
+    auto outA = Sequence::create
         (
             Spawn::create
             (
@@ -1246,7 +1260,7 @@ void TransitionFade :: onEnter()
     addChild(l, 2, kSceneFade);
     Node* f = getChildByTag(kSceneFade);
 
-    ActionInterval* a = (ActionInterval *)Sequence::create
+    auto a = Sequence::create
         (
             FadeIn::create(_duration/2),
             CallFunc::create(CC_CALLBACK_0(TransitionScene::hideOutShowIn,this)),
@@ -1286,7 +1300,7 @@ TransitionCrossFade* TransitionCrossFade::create(float t, Scene* scene)
     return nullptr;
 }
 
-void TransitionCrossFade::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void TransitionCrossFade::draw(Renderer* /*renderer*/, const Mat4 &/*transform*/, uint32_t /*flags*/)
 {
     // override draw since both scenes (textures) are rendered in 1 scene
 }
@@ -1331,12 +1345,9 @@ void TransitionCrossFade::onEnter()
 
     // create blend functions
 
-    BlendFunc blend1 = {GL_ONE, GL_ONE}; // inScene will lay on background and will not be used with alpha
-    BlendFunc blend2 = {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}; // we are going to blend outScene via alpha 
-
     // set blendfunctions
-    inTexture->getSprite()->setBlendFunc(blend1);
-    outTexture->getSprite()->setBlendFunc(blend2);    
+    inTexture->getSprite()->setBlendFunc(BlendFunc::DISABLE);
+    outTexture->getSprite()->setBlendFunc(BlendFunc::ALPHA_PREMULTIPLIED);    
 
     // add render textures to the layer
     layer->addChild(inTexture);
@@ -1490,7 +1501,7 @@ void TransitionSplitCols::onEnter()
     _gridProxy->onEnter();
 
     ActionInterval* split = action();
-    ActionInterval* seq = (ActionInterval*)Sequence::create
+    auto seq = Sequence::create
     (
         split,
         CallFunc::create(CC_CALLBACK_0(TransitionSplitCols::switchTargetToInscene,this)),

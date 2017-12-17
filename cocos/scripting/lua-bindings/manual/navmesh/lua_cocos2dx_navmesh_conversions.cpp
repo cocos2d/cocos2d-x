@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,11 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "lua_cocos2dx_navmesh_conversions.h"
+#include "scripting/lua-bindings/manual/navmesh/lua_cocos2dx_navmesh_conversions.h"
 #include "base/ccConfig.h"
 #if CC_USE_NAVMESH
 
-#include "LuaBasicConversions.h"
+#include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 #include "navmesh/CCNavMeshAgent.h"
 
 #if COCOS2D_DEBUG >=1

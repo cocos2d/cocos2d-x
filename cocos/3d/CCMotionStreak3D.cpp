@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2011      ForzeField Studios S.L.
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -104,7 +104,7 @@ bool MotionStreak3D::initWithFade(float fade, float minSeg, float stroke, const 
 {
     Node::setPosition(Vec2::ZERO);
     setAnchorPoint(Vec2::ZERO);
-    ignoreAnchorPointForPosition(true);
+    setIgnoreAnchorPointForPosition(true);
     _startingPositionInitialized = false;
 
     _positionR.setZero();
@@ -127,7 +127,7 @@ bool MotionStreak3D::initWithFade(float fade, float minSeg, float stroke, const 
     _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
     // shader state
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, texture));
 
     setTexture(texture);
     setColor(color);
@@ -160,6 +160,12 @@ void MotionStreak3D::setPosition3D(const Vec3& position)
     }
     _positionR = position;
 }
+
+void MotionStreak3D::setRotation3D(const Vec3& /*rotation*/)
+{}
+
+void MotionStreak3D::setRotationQuat(const Quaternion& /*quat*/)
+{}
 
 const Vec2& MotionStreak3D::getPosition() const
 {
@@ -241,7 +247,7 @@ const BlendFunc& MotionStreak3D::getBlendFunc(void) const
     return _blendFunc;
 }
 
-void MotionStreak3D::setOpacity(GLubyte opacity)
+void MotionStreak3D::setOpacity(GLubyte /*opacity*/)
 {
     CCASSERT(false, "Set opacity no supported");
 }
@@ -252,9 +258,8 @@ GLubyte MotionStreak3D::getOpacity(void) const
     return 0;
 }
 
-void MotionStreak3D::setOpacityModifyRGB(bool bValue)
+void MotionStreak3D::setOpacityModifyRGB(bool /*bValue*/)
 {
-    CC_UNUSED_PARAM(bValue);
 }
 
 bool MotionStreak3D::isOpacityModifyRGB(void) const
@@ -376,7 +381,7 @@ void MotionStreak3D::reset()
     _nuPoints = 0;
 }
 
-void MotionStreak3D::onDraw(const Mat4 &transform, uint32_t flags)
+void MotionStreak3D::onDraw(const Mat4 &transform, uint32_t /*flags*/)
 {  
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);

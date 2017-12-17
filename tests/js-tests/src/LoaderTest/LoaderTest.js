@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -49,18 +49,18 @@ var LoaderTestLayer = BaseTestLayer.extend({
             bg.y = winSize.height/2;
         });
 
-        cc.loader.load([s_Cowboy_plist, s_Cowboy_png], function(err, results){
+        cc.loader.load([s_ghostsPlist, s_ghosts], function(err, results){
             if(err){
-                cc.log("Failed to load %s, %s .", s_Cowboy_plist, s_Cowboy_png);
+                cc.log("Failed to load %s, %s .", s_ghostsPlist, s_ghosts);
                 return;
             }
 
-            cc.log(s_Cowboy_plist + "--->");
+            cc.log(s_ghostsPlist + "--->");
             cc.log(results[0]);
-            cc.log(s_Cowboy_png + "--->");
+            cc.log(s_ghosts + "--->");
             cc.log(results[1]);
-            cc.spriteFrameCache.addSpriteFrames(s_Cowboy_plist);
-            var frame = new cc.Sprite("#testAnimationResource/1.png");
+            cc.spriteFrameCache.addSpriteFrames(s_ghostsPlist);
+            var frame = new cc.Sprite("#sister1.gif");
             self.addChild(frame);
             frame.x = winSize.width/4;
             frame.y = winSize.height/4;
@@ -78,11 +78,10 @@ var LoaderTestLayer = BaseTestLayer.extend({
 
         cc.loader.loadAliases(str, function(){
             var sprite = new cc.Sprite("grossini.bmp");
-            self.addChild( sprite );
+            self.addChild( sprite, 100);
             sprite.x = winSize.width/2;
             sprite.y = winSize.height/2;
         });
-
     },
 
     onNextCallback: function(){
@@ -98,22 +97,23 @@ var LoaderCycleLayer = BaseTestLayer.extend({
 
     ctor: function(){
         BaseTestLayer.prototype.ctor.call(this);
-        var index = 0;
 
         var winSize = cc.director.getWinSize();
-        var t = this,
-            cb = function(num){
-                var labelTTF = new cc.LabelTTF(num + " file failed");
-                labelTTF.x = index++*100 + winSize.width - 150;
-                labelTTF.y = winSize.height / 2 - 20;
-                if(num === 1)
-                    labelTTF.setColor(cc.color.GREEN);
-                else
-                    labelTTF.setColor(cc.color.RED);
-                t.addChild(labelTTF);
-                if(index < 4)
-                    t.test(cb);
-            };
+
+        var resultTTF = new cc.LabelTTF("result: unknown");
+        resultTTF.x = winSize.width / 2;
+        resultTTF.y = winSize.height / 2;
+        this.addChild(resultTTF);
+
+        var cb = function(num){
+            if(num === 1) {
+                resultTTF.setColor(cc.color.GREEN);
+                resultTTF.setString("result: success");
+            } else {
+                resultTTF.setColor(cc.color.RED);
+                resultTTF.setString("result: failed");
+            }
+        };
         this.createInfo();
         this.regLoad();
         this.test(cb);
@@ -132,7 +132,7 @@ var LoaderCycleLayer = BaseTestLayer.extend({
         });
         cc.loader.register(["_test2"], {
             load: function(realUrl, url, res, cb){
-                cb && cb({});
+                cb && cb({}, null);
                 return null;
             }
         });
@@ -161,24 +161,6 @@ var LoaderCycleLayer = BaseTestLayer.extend({
         this.addChild(info1);
         this.addChild(info2);
         this.addChild(info3);
-
-        var info4 = new cc.LabelTTF("test 1");
-        info4.x = winSize.width / 2 - 50;
-        info4.y = winSize.height / 2;
-        var info5 = new cc.LabelTTF("test 2");
-        info5.x = winSize.width / 2 - 150;
-        info5.y = winSize.height / 2;
-        var info6 = new cc.LabelTTF("test 3");
-        info6.x = winSize.width / 2 + 50;
-        info6.y = winSize.height / 2;
-        var info7 = new cc.LabelTTF("test 4");
-        info7.x = winSize.width / 2 + 150;
-        info7.y = winSize.height / 2;
-
-        this.addChild(info4);
-        this.addChild(info5);
-        this.addChild(info6);
-        this.addChild(info7);
     },
 
     test: function(cb){
@@ -202,13 +184,13 @@ var LoaderCycleLayer = BaseTestLayer.extend({
     },
 
     onRestartCallback: function(){
-        var parent = this._parent;
+        var parent = this.getParent();
         parent.removeChild(this);
         parent.addChild(new LoaderCycleLayer());
     },
 
     onBackCallback: function(){
-        var parent = this._parent;
+        var parent = this.getParent();
         parent.removeChild(this);
         parent.addChild(new LoaderTestLayer());
     }

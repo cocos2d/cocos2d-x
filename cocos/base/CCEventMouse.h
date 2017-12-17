@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -29,15 +29,6 @@
 #include "base/CCEvent.h"
 #include "math/CCGeometry.h"
 
-#define MOUSE_BUTTON_LEFT       0
-#define MOUSE_BUTTON_RIGHT      1
-#define MOUSE_BUTTON_MIDDLE     2
-#define MOUSE_BUTTON_4          3
-#define MOUSE_BUTTON_5          4
-#define MOUSE_BUTTON_6          5
-#define MOUSE_BUTTON_7          6
-#define MOUSE_BUTTON_8          7
-
 /**
  * @addtogroup base
  * @{
@@ -64,6 +55,20 @@ public:
         MOUSE_SCROLL,
     };
 
+    enum class MouseButton
+    {
+      BUTTON_UNSET   = -1,
+      BUTTON_LEFT    =  0,
+      BUTTON_RIGHT   =  1,
+      BUTTON_MIDDLE  =  2,
+      BUTTON_4       =  3,
+      BUTTON_5       =  4,
+      BUTTON_6       =  5,
+      BUTTON_7       =  6,
+      BUTTON_8       =  7
+    };
+
+
     /** Constructor.
      *
      * @param mouseEventCode A given mouse event type.
@@ -76,17 +81,17 @@ public:
      * @param scrollX The scroll data of x axis.
      * @param scrollY The scroll data of y axis.
      */
-    inline void setScrollData(float scrollX, float scrollY) { _scrollX = scrollX; _scrollY = scrollY; };
+    void setScrollData(float scrollX, float scrollY) { _scrollX = scrollX; _scrollY = scrollY; }
     /** Get mouse scroll data of x axis.
      * 
      * @return The scroll data of x axis.
      */
-    inline float getScrollX() const { return _scrollX; };
+    float getScrollX() const { return _scrollX; }
     /** Get mouse scroll data of y axis.
      *
      * @return The scroll data of y axis.
      */
-    inline float getScrollY() const { return _scrollY; };
+    float getScrollY() const { return _scrollY; }
 
     /** Set the cursor position.
      *
@@ -94,7 +99,7 @@ public:
      * @param y The y coordinate of cursor position.
      * @js setLocation
      */
-    inline void setCursorPosition(float x, float y) { 
+    void setCursorPosition(float x, float y) { 
         _x = x;
         _y = y;
         _prevPoint = _point;
@@ -112,25 +117,25 @@ public:
      * @param button a given mouse button.
      * @js setButton
      */
-    inline void setMouseButton(int button) { _mouseButton = button; };
+    void setMouseButton(MouseButton button) { _mouseButton = button; }
     /** Get mouse button.
      *
      * @return The mouse button.
      * @js getButton
      */
-    inline int getMouseButton() const { return _mouseButton; };
+    MouseButton getMouseButton() const { return _mouseButton; }
     /** Get the cursor position of x axis.
      *
      * @return The x coordinate of cursor position.
      * @js getLocationX
      */
-    inline float getCursorX() const { return _x; };
+    float getCursorX() const { return _x; }
     /** Get the cursor position of y axis.
      *
      * @return The y coordinate of cursor position.
      * @js getLocationY
      */
-    inline float getCursorY() const { return _y; };
+    float getCursorY() const { return _y; }
 
     /** Returns the current touch location in OpenGL coordinates.
      *
@@ -175,7 +180,7 @@ public:
 
 private:
     MouseEventType _mouseEventType;
-    int _mouseButton;
+    MouseButton _mouseButton;
     float _x;
     float _y;
     float _scrollX;

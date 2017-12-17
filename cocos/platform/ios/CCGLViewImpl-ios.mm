@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -28,11 +28,11 @@
 
 #import <UIKit/UIKit.h>
 
-#include "CCEAGLView-ios.h"
-#include "CCDirectorCaller-ios.h"
-#include "CCGLViewImpl-ios.h"
-#include "CCSet.h"
+#include "platform/ios/CCEAGLView-ios.h"
+#include "platform/ios/CCDirectorCaller-ios.h"
+#include "platform/ios/CCGLViewImpl-ios.h"
 #include "base/CCTouch.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -46,7 +46,7 @@ GLViewImpl* GLViewImpl::createWithEAGLView(void *eaglview)
         ret->autorelease();
         return ret;
     }
-
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
@@ -57,18 +57,18 @@ GLViewImpl* GLViewImpl::create(const std::string& viewName)
         ret->autorelease();
         return ret;
     }
-
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
-GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+GLViewImpl* GLViewImpl::createWithRect(const std::string& viewName, const Rect& rect, float frameZoomFactor)
 {
     auto ret = new (std::nothrow) GLViewImpl;
     if(ret && ret->initWithRect(viewName, rect, frameZoomFactor)) {
         ret->autorelease();
         return ret;
     }
-
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
@@ -79,7 +79,7 @@ GLViewImpl* GLViewImpl::createWithFullScreen(const std::string& viewName)
         ret->autorelease();
         return ret;
     }
-
+    CC_SAFE_DELETE(ret);
     return nullptr;
 }
 
@@ -130,7 +130,7 @@ bool GLViewImpl::initWithEAGLView(void *eaglview)
     return true;
 }
 
-bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float frameZoomFactor)
+bool GLViewImpl::initWithRect(const std::string& viewName, const Rect& rect, float frameZoomFactor)
 {
     CGRect r = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
     convertAttrs();
@@ -142,7 +142,10 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
                                      multiSampling: NO
                                    numberOfSamples: 0];
 
+    // Not available on tvOS
+#if !defined(CC_TARGET_OS_TVOS)
     [eaglview setMultipleTouchEnabled:YES];
+#endif
 
     _screenSize.width = _designResolutionSize.width = [eaglview getWidth];
     _screenSize.height = _designResolutionSize.height = [eaglview getHeight];
@@ -225,6 +228,53 @@ void GLViewImpl::setIMEKeyboardState(bool open)
     }
 }
 
+Rect GLViewImpl::getSafeAreaRect() const
+{
+    CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 110000
+    float version = [[UIDevice currentDevice].systemVersion floatValue];
+    if (version >= 11.0f)
+    {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wpartial-availability"
+        UIEdgeInsets safeAreaInsets = eaglview.safeAreaInsets;
+#pragma clang diagnostic pop
+
+        // Multiply contentScaleFactor since safeAreaInsets return points.
+        safeAreaInsets.left *= eaglview.contentScaleFactor;
+        safeAreaInsets.right *= eaglview.contentScaleFactor;
+        safeAreaInsets.top *= eaglview.contentScaleFactor;
+        safeAreaInsets.bottom *= eaglview.contentScaleFactor;
+
+        // Get leftBottom and rightTop point in UI coordinates
+        Vec2 leftBottom = Vec2(safeAreaInsets.left, _screenSize.height - safeAreaInsets.bottom);
+        Vec2 rightTop = Vec2(_screenSize.width - safeAreaInsets.right, safeAreaInsets.top);
+
+        // Convert a point from UI coordinates to which in design resolution coordinate.
+        leftBottom.x = (leftBottom.x - _viewPortRect.origin.x) / _scaleX,
+        leftBottom.y = (leftBottom.y - _viewPortRect.origin.y) / _scaleY;
+        rightTop.x = (rightTop.x - _viewPortRect.origin.x) / _scaleX,
+        rightTop.y = (rightTop.y - _viewPortRect.origin.y) / _scaleY;
+
+        // Adjust points to make them inside design resolution
+        leftBottom.x = MAX(leftBottom.x, 0);
+        leftBottom.y = MIN(leftBottom.y, _designResolutionSize.height);
+        rightTop.x = MIN(rightTop.x, _designResolutionSize.width);
+        rightTop.y = MAX(rightTop.y, 0);
+
+        // Convert to GL coordinates
+        leftBottom = Director::getInstance()->convertToGL(leftBottom);
+        rightTop = Director::getInstance()->convertToGL(rightTop);
+
+        return Rect(leftBottom.x, leftBottom.y, rightTop.x - leftBottom.x, rightTop.y - leftBottom.y);
+    }
+#endif
+
+    // If running on iOS devices lower than 11.0, return visiable rect instead.
+    return GLView::getSafeAreaRect();
+}
+
 NS_CC_END
 
-#endif // CC_PLATFOR_IOS
+#endif // CC_PLATFORM_IOS

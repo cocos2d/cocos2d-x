@@ -22,7 +22,7 @@ bool Bug1159Layer::init()
 
         auto sprite_a = LayerColor::create(Color4B(255, 0, 0, 255), 700, 700);
         sprite_a->setAnchorPoint(Vec2(0.5f, 0.5f));
-        sprite_a->ignoreAnchorPointForPosition(false);
+        sprite_a->setIgnoreAnchorPointForPosition(false);
         sprite_a->setPosition(0.0f, s.height/2);
         addChild(sprite_a);
 
@@ -33,7 +33,7 @@ bool Bug1159Layer::init()
 
         auto sprite_b = LayerColor::create(Color4B(0, 0, 255, 255), 400, 400);
         sprite_b->setAnchorPoint(Vec2(0.5f, 0.5f));
-        sprite_b->ignoreAnchorPointForPosition(false);
+        sprite_b->setIgnoreAnchorPointForPosition(false);
         sprite_b->setPosition(s.width/2, s.height/2);
         addChild(sprite_b);
 

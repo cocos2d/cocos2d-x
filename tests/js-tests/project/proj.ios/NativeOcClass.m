@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,7 @@
 +(int)callNativeWithAdd:(NSNumber *)num1 and:(NSNumber *)num2{
     return [num1 intValue]+[num2 intValue];
 }
-#if TARGET_OS_IPHONE
+#if TARGET_OS_IPHONE && !TARGET_OS_TV
 +(BOOL)callNativeUIWithTitle:(NSString *) title andContent:(NSString *)content{
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:content delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
     [alertView show];
@@ -61,6 +61,23 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:title message:content delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"it's false", nil];
         [alertView show];
     } 
+    return true;
+}
+#elif TARGET_OS_IPHONE && TARGET_OS_TV
++(BOOL)callNativeUIWithTitle:(NSString *) title andContent:(NSString *)content{
+
+//    UIAlertController* alert = [UIAlertController
+//                                alertControllerWithTitle:title
+//                                message:content
+//                                preferredStyle:UIAlertControllerStyleAlert];
+//
+//    [self presentViewController:alert animated:YES completion:nil];
+    return true;
+}
+
++(BOOL)callNativeUIWithTitle:(NSString *) title andContent:(NSString *)content addBool:(BOOL)logicSwitch
+{
+    // Not implemented
     return true;
 }
 #elif TARGET_OS_MAC

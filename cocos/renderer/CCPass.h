@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -57,13 +57,13 @@ public:
     GLProgramState* getGLProgramState() const;
 
     /** Binds the GLProgramState and the RenderState.
-     This method must be called before call the actuall draw call.
+     This method must be called before call the actual draw call.
      */
     void bind(const Mat4& modelView);
     void bind(const Mat4& modelView, bool bindAttributes);
 
     /** Unbinds the Pass.
-     This method must be called AFTER calling the actuall draw call
+     This method must be called AFTER calling the actual draw call
      */
     void unbind();
 

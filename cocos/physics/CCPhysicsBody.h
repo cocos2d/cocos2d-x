@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -56,7 +56,7 @@ const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
  * A body affect by physics.
  *
  * It can attach one or more shapes.
- * If you create body with createXXX, it will automatically compute mass and moment with density your specified(which is PHYSICSBODY_MATERIAL_DEFAULT by default, and the density value is 0.1f), and it based on the formular: mass = density * area.
+ * If you create body with createXXX, it will automatically compute mass and moment with density your specified(which is PHYSICSBODY_MATERIAL_DEFAULT by default, and the density value is 0.1f), and it based on the formula: mass = density * area.
  * If you create body with createEdgeXXX, the mass and moment will be PHYSICS_INFINITY by default. And it's a static body.
  * You can change mass and moment with setMass() and setMoment(). And you can change the body to be dynamic or static by use function setDynamic().
  */
@@ -96,7 +96,7 @@ public:
      *
      * @param   radius A float number, it is the circle's radius.
      * @param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
-     * @param   offset A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.
+     * @param   offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.
      * @return  An autoreleased PhysicsBody object pointer.
      */
     static PhysicsBody* createCircle(float radius, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
@@ -105,7 +105,7 @@ public:
      *
      * @param   size Size contains this box's width and height.
      * @param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
-     * @param   offset A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.
+     * @param   offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.
      * @return  An autoreleased PhysicsBody object pointer.
      */
     static PhysicsBody* createBox(const Size& size, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
@@ -114,9 +114,9 @@ public:
      * @brief Create a body contains a polygon shape.
      *
      * @param   points Points is an array of Vec2 structs defining a convex hull with a clockwise winding.
-     * @param   count An interger number, contains the count of the points array.
+     * @param   count An integer number, contains the count of the points array.
      * @param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
-     * @param   offset A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.
+     * @param   offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.
      * @return  An autoreleased PhysicsBody object pointer.
      */
     static PhysicsBody* createPolygon(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
@@ -137,7 +137,7 @@ public:
      * @param   size Size contains this box's width and height.
      * @param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
      * @param   border It's a edge's border width.
-     * @param   offset A Vec2 object, it is the offset from the body’s center of gravity in body local coordinates.
+     * @param   offset A Vec2 object, it is the offset from the body's center of gravity in body local coordinates.
      * @return  An autoreleased PhysicsBody object pointer.
      */
     static PhysicsBody* createEdgeBox(const Size& size, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1, const Vec2& offset = Vec2::ZERO);
@@ -146,7 +146,7 @@ public:
      * Create a body contains a EdgePolygon shape.
      *
      * @param   points Points is an array of Vec2 structs defining a convex hull with a clockwise winding.
-     * @param   count An interger number, contains the count of the points array.
+     * @param   count An integer number, contains the count of the points array.
      * @param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
      * @param   border It's a edge's border width.
      * @return  An autoreleased PhysicsBody object pointer.
@@ -157,7 +157,7 @@ public:
      * Create a body contains a EdgeChain shape.
      *
      * @param   points A Vec2 object pointer, it contains an array of points.
-     * @param   count An interger number, contains the count of the points array.
+     * @param   count An integer number, contains the count of the points array.
      * @param   material A PhysicsMaterial object, the default value is PHYSICSSHAPE_MATERIAL_DEFAULT.
      * @param   border It's a edge's border width.
      * @return  An autoreleased PhysicsBody object pointer.
@@ -198,12 +198,19 @@ public:
      * 
      * @return A Vector<PhysicsShape*> object contains PhysicsShape pointer.
      */
-    inline const Vector<PhysicsShape*>& getShapes() const { return _shapes; }
+    const Vector<PhysicsShape*>& getShapes() const { return _shapes; }
+
+    /**
+     * Get the first shape of the body shapes.
+     *
+     * @return The first shape in this body.
+     */
+    PhysicsShape* getFirstShape() const { return _shapes.size() >= 1 ? _shapes.at(0) : nullptr; }
 
     /** 
      * get the shape of the body.
      *
-     * @param   tag   An interger number that identifies a PhysicsShape object.
+     * @param   tag   An integer number that identifies a PhysicsShape object.
      * @return A PhysicsShape object pointer or nullptr if no shapes were found.
      */
     PhysicsShape* getShape(int tag) const;
@@ -212,7 +219,7 @@ public:
      * Applies a continuous force to body.
      * 
      * @param force The force is applies to this body.
-     * @param offset A Vec2 object, it is the offset from the body’s center of gravity in world coordinates.
+     * @param offset A Vec2 object, it is the offset from the body's center of gravity in world coordinates.
      */
     virtual void applyForce(const Vec2& force, const Vec2& offset = Vec2::ZERO);
 
@@ -225,7 +232,7 @@ public:
      * Applies a immediate force to body.
      *
      * @param impulse The impulse is applies to this body.
-     * @param offset A Vec2 object, it is the offset from the body’s center of gravity in world coordinates.
+     * @param offset A Vec2 object, it is the offset from the body's center of gravity in world coordinates.
      */
     virtual void applyImpulse(const Vec2& impulse, const Vec2& offset = Vec2::ZERO);
     
@@ -278,10 +285,10 @@ public:
     void removeFromWorld();
     
     /** get the world body added to. */
-    inline PhysicsWorld* getWorld() const { return _world; }
+    PhysicsWorld* getWorld() const { return _world; }
 
     /** get all joints the body have */
-    inline const std::vector<PhysicsJoint*>& getJoints() const { return _joints; }
+    const std::vector<PhysicsJoint*>& getJoints() const { return _joints; }
     
     /** get the node the body set to. */
     Node* getNode() const { return _owner; }
@@ -290,23 +297,23 @@ public:
      * A mask that defines which categories this physics body belongs to.
      * 
      * Every physics body in a scene can be assigned to up to 32 different categories, each corresponding to a bit in the bit mask. You define the mask values used in your game. In conjunction with the collisionBitMask and contactTestBitMask properties, you define which physics bodies interact with each other and when your game is notified of these interactions.
-     * @param bitmask An interger number, the default value is 0xFFFFFFFF (all bits set).
+     * @param bitmask An integer number, the default value is 0xFFFFFFFF (all bits set).
      */
     void setCategoryBitmask(int bitmask);
     
     /** 
      * A mask that defines which categories of bodies cause intersection notifications with this physics body.
      *
-     * When two bodies share the same space, each body’s category mask is tested against the other body’s contact mask by performing a logical AND operation. If either comparison results in a non-zero value, an PhysicsContact object is created and passed to the physics world’s delegate. For best performance, only set bits in the contacts mask for interactions you are interested in.
-     * @param bitmask An interger number, the default value is 0x00000000 (all bits cleared).
+     * When two bodies share the same space, each body's category mask is tested against the other body's contact mask by performing a logical AND operation. If either comparison results in a non-zero value, an PhysicsContact object is created and passed to the physics world’s delegate. For best performance, only set bits in the contacts mask for interactions you are interested in.
+     * @param bitmask An integer number, the default value is 0x00000000 (all bits cleared).
      */
     void setContactTestBitmask(int bitmask);
     
     /**
      * A mask that defines which categories of physics bodies can collide with this physics body.
      *
-     * When two physics bodies contact each other, a collision may occur. This body’s collision mask is compared to the other body’s category mask by performing a logical AND operation. If the result is a non-zero value, then this body is affected by the collision. Each body independently chooses whether it wants to be affected by the other body. For example, you might use this to avoid collision calculations that would make negligible changes to a body’s velocity.
-     * @param bitmask An interger number, the default value is 0xFFFFFFFF (all bits set).
+     * When two physics bodies contact each other, a collision may occur. This body's collision mask is compared to the other body's category mask by performing a logical AND operation. If the result is a non-zero value, then this body is affected by the collision. Each body independently chooses whether it wants to be affected by the other body. For example, you might use this to avoid collision calculations that would make negligible changes to a body's velocity.
+     * @param bitmask An integer number, the default value is 0xFFFFFFFF (all bits set).
      */
     void setCollisionBitmask(int bitmask);
     
@@ -369,7 +376,7 @@ public:
      *
      * A dynamic body will effect with gravity.
      */
-    inline bool isDynamic() const { return _dynamic; }
+    bool isDynamic() const { return _dynamic; }
     /**
      * @brief Set dynamic to body.
      * 
@@ -385,7 +392,7 @@ public:
     void setMass(float mass);
     
     /** Get the body mass. */
-    inline float getMass() const { return _mass; }
+    float getMass() const { return _mass; }
 
     /**
      * @brief Add mass to body.
@@ -406,7 +413,7 @@ public:
     void setMoment(float moment);
     
     /** Get the body moment of inertia. */
-    inline float getMoment() const { return _moment; }
+    float getMoment() const { return _moment; }
     
     /**
      * @brief Add moment of inertia to body.
@@ -420,7 +427,7 @@ public:
     void addMoment(float moment);
     
     /** get linear damping. */
-    inline float getLinearDamping() const { return _linearDamping; }
+    float getLinearDamping() const { return _linearDamping; }
     
     /** 
      * Set linear damping.
@@ -428,10 +435,10 @@ public:
      * it is used to simulate fluid or air friction forces on the body.
      * @param damping The value is 0.0f to 1.0f.
      */
-    inline void setLinearDamping(float damping) { _linearDamping = damping; updateDamping(); }
+    void setLinearDamping(float damping) { _linearDamping = damping; updateDamping(); }
     
     /** Get angular damping. */
-    inline float getAngularDamping() const { return _angularDamping; }
+    float getAngularDamping() const { return _angularDamping; }
 
     /**
      * Set angular damping.
@@ -439,7 +446,7 @@ public:
      * It is used to simulate fluid or air friction forces on the body.
      * @param damping The value is 0.0f to 1.0f.
      */
-    inline void setAngularDamping(float damping) { _angularDamping = damping; updateDamping(); }
+    void setAngularDamping(float damping) { _angularDamping = damping; updateDamping(); }
     
     /** Whether the body is at rest. */
     bool isResting() const;
@@ -455,22 +462,22 @@ public:
     virtual void setEnabled(bool enable) override;
     
     /** Whether the body can rotation. */
-    inline bool isRotationEnabled() const { return _rotationEnabled; }
+    bool isRotationEnabled() const { return _rotationEnabled; }
     
     /** Set the body is allow rotation or not */
     void setRotationEnable(bool enable);
     
-    /** Whether this physics body is affected by the physics world’s gravitational force. */
-    inline bool isGravityEnabled() const { return _gravityEnabled; }
+    /** Whether this physics body is affected by the physics world's gravitational force. */
+    bool isGravityEnabled() const { return _gravityEnabled; }
     
     /** Set the body is affected by the physics world's gravitational force or not. */
     void setGravityEnable(bool enable);
     
     /** Get the body's tag. */
-    inline int getTag() const { return _tag; }
+    int getTag() const { return _tag; }
     
     /** set the body's tag. */
-    inline void setTag(int tag) { _tag = tag; }
+    void setTag(int tag) { _tag = tag; }
     
     /** Convert the world point to local. */
     Vec2 world2Local(const Vec2& point);
@@ -502,7 +509,7 @@ protected:
     
     void removeJoint(PhysicsJoint* joint);
 
-    inline void updateDamping() { _isDamping = _linearDamping != 0.0f ||  _angularDamping != 0.0f; }
+    void updateDamping() { _isDamping = _linearDamping != 0.0f ||  _angularDamping != 0.0f; }
 
     void addToPhysicsWorld();
     void removeFromPhysicsWorld();
@@ -524,6 +531,8 @@ protected:
     float _area;
     float _density;
     float _moment;
+    float _velocityLimit;
+    float _angularVelocityLimit;
     bool _isDamping;
     float _linearDamping;
     float _angularDamping;

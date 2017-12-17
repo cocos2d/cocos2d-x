@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCActionTimelineNode.h"
-#include "CSLoader.h"
+#include "editor-support/cocostudio/ActionTimeline/CCActionTimelineNode.h"
+#include "editor-support/cocostudio/ActionTimeline/CSLoader.h"
 
 USING_NS_CC;
 

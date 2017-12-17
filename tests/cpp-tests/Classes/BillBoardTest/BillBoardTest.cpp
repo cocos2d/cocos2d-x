@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -48,7 +48,7 @@ BillBoardTests::BillBoardTests()
 BillBoardRotationTest::BillBoardRotationTest()
 {
     auto root = Sprite3D::create();
-    root->setNormalizedPosition(Vec2(.5,.25));
+    root->setPositionNormalized(Vec2(.5,.25));
     addChild(root);
     
     auto model = Sprite3D::create("Sprite3DTest/orc.c3b");
@@ -119,13 +119,13 @@ BillBoardTest::BillBoardTest()
     
     auto layer3D=Layer::create();
     addChild(layer3D,0);
-    _layerBillBorad=layer3D;
+    _layerBillBoard = layer3D;
     auto s = Director::getInstance()->getWinSize();
     if (_camera == nullptr)
     {
         _camera=Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 500);
         _camera->setCameraFlag(CameraFlag::USER1);
-        _layerBillBorad->addChild(_camera);
+        _layerBillBoard->addChild(_camera);
     }
 
     //Create rotating billboards
@@ -139,7 +139,7 @@ BillBoardTest::BillBoardTest()
         billboard->setOpacity(CCRANDOM_0_1() * 128 + 128);
         _billboards.push_back(billboard);
         layer->addChild(billboard);
-        _layerBillBorad->addChild(layer);
+        _layerBillBoard->addChild(layer);
         layer->runAction( RepeatForever::create( RotateBy::create( CCRANDOM_0_1() * 10, Vec3(0.0f, 45.0f, 0.0f) ) ) );
     }
 
@@ -158,20 +158,20 @@ BillBoardTest::BillBoardTest()
         sprite3d->setScale(2.0f);
         sprite3d->addChild(billboard);
         sprite3d->runAction( RepeatForever::create( RotateBy::create( 10.0f, Vec3(0.0f, 360.0f, 0.0f) ) ) );
-        _layerBillBorad->addChild(sprite3d);
+        _layerBillBoard->addChild(sprite3d);
     }
 
-    addNewBillBoradWithCoords(Vec3(20,5,0));
-    addNewBillBoradWithCoords(Vec3(60,5,0));
-    addNewBillBoradWithCoords(Vec3(100,5,0));
-    addNewBillBoradWithCoords(Vec3(140,5,0));
-    addNewBillBoradWithCoords(Vec3(180,5,0));
+    addNewBillBoardWithCoords(Vec3(20,5,0));
+    addNewBillBoardWithCoords(Vec3(60,5,0));
+    addNewBillBoardWithCoords(Vec3(100,5,0));
+    addNewBillBoardWithCoords(Vec3(140,5,0));
+    addNewBillBoardWithCoords(Vec3(180,5,0));
     
-    addNewAniBillBoradWithCoords(Vec3(-20,0,0));
-    addNewAniBillBoradWithCoords(Vec3(-60,0,0));
-    addNewAniBillBoradWithCoords(Vec3(-100,0,0));
-    addNewAniBillBoradWithCoords(Vec3(-140,0,0));
-    addNewAniBillBoradWithCoords(Vec3(-180,0,0));
+    addNewAniBillBoardWithCoords(Vec3(-20,0,0));
+    addNewAniBillBoardWithCoords(Vec3(-60,0,0));
+    addNewAniBillBoardWithCoords(Vec3(-100,0,0));
+    addNewAniBillBoardWithCoords(Vec3(-140,0,0));
+    addNewAniBillBoardWithCoords(Vec3(-180,0,0));
     
     _camera->setPosition3D(Vec3(0, 100, 230));
     _camera->lookAt(Vec3(0,0,0), Vec3(0,1,0));
@@ -186,7 +186,7 @@ BillBoardTest::BillBoardTest()
     menuItem1->setPosition( Vec2( s.width-80, VisibleRect::top().y-160) );
     menuItem2->setPosition( Vec2( s.width-80, VisibleRect::top().y-190) );
     addChild(menu, 0);
-    _layerBillBorad->setCameraMask(2);
+    _layerBillBoard->setCameraMask(2);
     
     label1 = Label::createWithTTF(ttfConfig,"Point Oriented");
     menuItem1 = MenuItemLabel::create(label1,CC_CALLBACK_1(BillBoardTest::menuCallback_orientedPoint,this) );
@@ -232,28 +232,28 @@ std::string BillBoardTest::subtitle() const
 {
     return "";
 }
-void BillBoardTest::addNewBillBoradWithCoords(Vec3 p)
+void BillBoardTest::addNewBillBoardWithCoords(Vec3 p)
 {
     std::string imgs[3] = {"Images/Icon.png", "Images/r2.png"};
     for (unsigned int i = 0; i < 10; ++i)
     {
-        auto billborad = BillBoard::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5)]);
-        billborad->setScale(0.5f);
-        billborad->setPosition3D(Vec3(p.x, p.y,  -150.0f + 30 * i));
-        billborad->setOpacity(CCRANDOM_0_1() * 128 + 128);
+        auto billboard = BillBoard::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5)]);
+        billboard->setScale(0.5f);
+        billboard->setPosition3D(Vec3(p.x, p.y, -150.0f + 30 * i));
+        billboard->setOpacity(CCRANDOM_0_1() * 128 + 128);
         
-        _layerBillBorad->addChild(billborad);
-        _billboards.push_back(billborad);
+        _layerBillBoard->addChild(billboard);
+        _billboards.push_back(billboard);
     }
 }
-void BillBoardTest::addNewAniBillBoradWithCoords(Vec3 p)
+void BillBoardTest::addNewAniBillBoardWithCoords(Vec3 p)
 {
     for (unsigned int i = 0; i < 10; ++i)
     {
         auto billboardAni = BillBoard::create("Images/grossini.png");
         billboardAni->setScale(0.5f);
         billboardAni->setPosition3D(Vec3(p.x, p.y,  -150.0f + 30 * i));
-        _layerBillBorad->addChild(billboardAni);
+        _layerBillBoard->addChild(billboardAni);
 
         auto animation = Animation::create();
         for( int i=1;i<15;i++)

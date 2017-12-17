@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysics3D.h"
+#include "physics3d/CCPhysics3D.h"
 
 #if CC_USE_3D_PHYSICS
 
@@ -32,7 +32,7 @@ NS_CC_BEGIN
 
 PhysicsSprite3D* PhysicsSprite3D::create(const std::string &modelPath, Physics3DRigidBodyDes* rigidDes, const cocos2d::Vec3& translateInPhysics, const cocos2d::Quaternion& rotInPhsyics)
 {
-    auto ret = new PhysicsSprite3D();
+    auto ret = new (std::nothrow) PhysicsSprite3D();
     if (ret && ret->initWithFile(modelPath))
     {
         auto obj = Physics3DRigidBody::create(rigidDes);

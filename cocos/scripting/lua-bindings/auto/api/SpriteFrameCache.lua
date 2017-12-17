@@ -5,6 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
+-- @function [parent=#SpriteFrameCache] reloadTexture 
+-- @param self
+-- @param #string plist
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Adds multiple Sprite Frames from a plist file content. The texture will be associated with the created sprite frames. <br>
 -- js NA<br>
 -- lua addSpriteFrames<br>

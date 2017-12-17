@@ -267,4 +267,14 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class PhysicsIssue15932 : public PhysicsDemo
+{
+public:
+    CREATE_FUNC(PhysicsIssue15932);
+
+    void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 #endif // #if CC_USE_PHYSICS

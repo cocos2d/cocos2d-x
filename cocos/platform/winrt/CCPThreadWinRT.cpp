@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
-#include "CCPThreadWinRT.h"
+#include "platform/winrt/CCPThreadWinRT.h"
 
 NS_CC_BEGIN
 

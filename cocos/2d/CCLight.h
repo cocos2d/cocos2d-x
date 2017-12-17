@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -245,7 +245,7 @@ public:
      *
      * @param outerAngle The angle of spot light (in radians).
      */
-    void setOuterAngle(float angle);
+    void setOuterAngle(float outerAngle);
     
     /**
      * Returns the outer angle of the spot light (in radians).

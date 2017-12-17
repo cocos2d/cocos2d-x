@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "targetver.h"
+#include "platform/winrt/targetver.h"
 
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN

@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -237,7 +237,7 @@ var AsyncLoadSprite3DTest = Sprite3DTestDemo.extend({
         this._super();
 
         var label = new cc.LabelTTF("AsyncLoad Sprite3D", "Arial", 15);
-        var item = new cc.MenuItemLabel(label, this. menuCallback_asyncLoadSprite, this);
+        var item = new cc.MenuItemLabel(label, this.menuCallback_asyncLoadSprite, this);
 
         var s = cc.winSize;
         item.setPosition(s.width / 2, s.height / 2);
@@ -251,11 +251,16 @@ var AsyncLoadSprite3DTest = Sprite3DTestDemo.extend({
         this.addChild(node);
 
         this.menuCallback_asyncLoadSprite();
+
+        this.asyncPool = null;
     },
 
     menuCallback_asyncLoadSprite:function(sender){
+        if (!this.asyncPool) {
+            this.asyncPool = cc.AsyncTaskPool.getInstance();
+        }
         //Note that you must stop the tasks before leaving the scene.
-        cc.AsyncTaskPool.getInstance().stopTasks(cc.AsyncTaskPool.TaskType.TASK_IO);
+        this.asyncPool.stopTasks(cc.AsyncTaskPool.TaskType.TASK_IO);
 
         var node = this.getChildByTag(101);
         node.removeAllChildren(); // remove all loaded sprites
@@ -266,7 +271,6 @@ var AsyncLoadSprite3DTest = Sprite3DTestDemo.extend({
         for(var i = 0; i < this._path.length; ++i){
             jsb.Sprite3D.createAsync(this._path[i], this.asyncLoad_Callback, this, i);
         }
-
     },
 
     asyncLoad_Callback:function(sprite, data){
@@ -316,7 +320,7 @@ var Sprite3DWithSkinTest = Sprite3DTestDemo.extend({
             if(rand2 < 0.33)
                 speed = animate.getSpeed() + Math.random();
             else if(rand2 < 0.66)            
-                spped = animate.getSpeed() - 0.5 * Math.random();
+                speed = animate.getSpeed() - 0.5 * Math.random();
 
             animate.setSpeed(inverse ? -speed : speed);
             sprite.runAction(new cc.RepeatForever(animate));
@@ -602,7 +606,7 @@ var Sprite3DReskinTest = (function(){
 })();
 
 var Sprite3DWithOBBPerformanceTest = Sprite3DTestDemo.extend({
-    _title:"OBB Collison Performance Test",
+    _title:"OBB Collision Performance Test",
     _subtitle:"",
     _drawOBB:null,
     _drawDebug:null,
@@ -1149,7 +1153,7 @@ var Sprite3DWithSkinOutlineTest = Sprite3DTestDemo.extend({
             if(rand2 < 0.33)
                 speed = animate.getSpeed() + Math.random();
             else if(rand2 < 0.66)            
-                spped = animate.getSpeed() - 0.5 * Math.random();
+                speed = animate.getSpeed() - 0.5 * Math.random();
 
             animate.setSpeed(inverse ? -speed : speed);
             sprite.runAction(new cc.RepeatForever(animate));
@@ -1230,7 +1234,7 @@ var Sprite3DUVAnimationTest = Sprite3DTestDemo.extend({
     _title:"Testing UV Animation",
     _subtitle:"",
     _cylinder_texture_offset:0,
-    _shining_duraion:0,
+    _shining_duration:0,
     _state:null,
     fade_in:true,
 
@@ -1257,7 +1261,7 @@ var Sprite3DUVAnimationTest = Sprite3DTestDemo.extend({
         cylinder.setGLProgramState(this._state);
 
         this._state.setUniformFloat("offset", this._cylinder_texture_offset);
-        this._state.setUniformFloat("duration", this._shining_duraion);
+        this._state.setUniformFloat("duration", this._shining_duration);
 
         //pass mesh's attribute to shader
         var offset = 0;
@@ -1288,18 +1292,18 @@ var Sprite3DUVAnimationTest = Sprite3DTestDemo.extend({
         this._cylinder_texture_offset = this._cylinder_texture_offset > 1 ? 0 : this._cylinder_texture_offset;
 
         if(this.fade_in){
-            this._shining_duraion += 0.5 * dt;
-            if(this._shining_duraion > 1)
+            this._shining_duration += 0.5 * dt;
+            if(this._shining_duration > 1)
                 this.fade_in = false;
         }else{
-            this._shining_duraion -= 0.5 * dt;
-            if(this._shining_duraion < 0)
+            this._shining_duration -= 0.5 * dt;
+            if(this._shining_duration < 0)
                 this.fade_in = true;
         }
 
         //pass the result to shader
         this._state.setUniformFloat("offset", this._cylinder_texture_offset);
-        this._state.setUniformFloat("duration", this._shining_duraion);
+        this._state.setUniformFloat("duration", this._shining_duration);
     }
 });
 
@@ -1592,7 +1596,6 @@ var Sprite3DCubeMapTest = Sprite3DTestDemo.extend({
         var skybox = jsb.Skybox.create();
         skybox.setTexture(textureCube);
         this.addChild(skybox);
-        skybox.setScale(700);
 
         this.addChild(camera);
         this.setCameraMask(2);
@@ -1610,6 +1613,70 @@ var Sprite3DCubeMapTest = Sprite3DTestDemo.extend({
         }
     }
 });
+
+var Sprite3DNormalMappingTest = Sprite3DTestDemo.extend({
+                                                        
+    _title:"NormalMapping Test",
+    _subtitle:"",
+    _angle:0.0,
+    _reverseDir:false,
+    _radius:100,
+    _light:null,
+    _TAG_GROSSINI:10,
+    ctor:function(){
+    this._super();
+ 
+    var visibleSize = cc.director.getVisibleSize();
+    var sphere1 = new jsb.Sprite3D("Sprite3DTest/sphere.c3b");
+    sphere1.setPosition3D(cc.math.vec3(-30, 0, 0));
+    sphere1.setRotation3D(cc.math.vec3(90, 0, 0));
+    sphere1.setScale(2);
+    sphere1.setCameraMask(2);
+    sphere1.setTexture("Sprite3DTest/brickwork-texture.jpg");
+    this.addChild(sphere1);
+ 
+    var sphere2 = new jsb.Sprite3D("Sprite3DTest/sphere_bumped.c3b");
+    sphere2.setPosition3D(cc.math.vec3(30, 0, 0));
+    sphere2.setRotation3D(cc.math.vec3(90, 0, 0));
+    sphere2.setScale(20);
+    sphere2.setCameraMask(2);
+    sphere2.setTexture("Sprite3DTest/brickwork-texture.jpg");
+    this.addChild(sphere2);
+ 
+    _light = new jsb.PointLight(cc.math.vec3(0, 0, 0), cc.color(255, 255, 255), 1000);
+ 
+                                                        
+    var camera = new cc.Camera(cc.Camera.Mode.PERSPECTIVE, 60, visibleSize.width/visibleSize.height, 1, 1000);
+    camera.setCameraFlag(cc.CameraFlag.USER1);
+    camera.setPosition3D(cc.math.vec3(0, 0, 100));
+    camera.lookAt(cc.math.vec3(0,0,0));
+    this.addChild(camera);
+    this.addChild(_light, 1, this._TAG_GROSSINI);
+    var angleReverseDir = cc.callFunc(function(){
+                                      
+                                      if(this._reverseDir){
+                                      this._angle -= 0.01;
+                                      if(this._angle < 0.0)
+                                      {
+                                      this._reverseDir = false;
+                                      }
+                                      }
+                                      else{
+                                      this._angle += 0.01;
+                                      if(3.14159 < this._angle)
+                                      {
+                                      this._reverseDir = true;
+                                      }
+                                      }
+                                      this.getChildByTag(this._TAG_GROSSINI).setPosition3D(cc.math.vec3(this._radius * Math.cos(this._angle), 0, this._radius * Math.sin(this._angle)));
+                                      
+                                      }, this);
+    var seq1 = cc.sequence(angleReverseDir);
+    _light.runAction(cc.repeatForever(seq1));
+    
+    }
+});
+
 //
 // Flow control
 //
@@ -1640,6 +1707,7 @@ if (cc.sys.os !== cc.sys.OS_WP8 || cc.sys.os !== cc.sys.OS_WINRT) {
         Sprite3DUVAnimationTest,
         Sprite3DFakeShadowTest,
         Sprite3DBasicToonShaderTest,
+        Sprite3DNormalMappingTest
     ]);
 }
 

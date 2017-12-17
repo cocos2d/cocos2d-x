@@ -1,5 +1,5 @@
 ﻿/****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,9 +25,9 @@ THE SOFTWARE.
 #ifndef __ActionMANAGER_H__
 #define __ActionMANAGER_H__
 
-#include "cocostudio/CCActionObject.h"
-#include "cocostudio/DictionaryHelper.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CCActionObject.h"
+#include "editor-support/cocostudio/DictionaryHelper.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 
 namespace cocostudio {
     
@@ -81,7 +81,7 @@ public:
     *
     * @param jsonName  UI file name
     *
-    * @param actionName  action name in teh UIfile.
+    * @param actionName  action name in the UIfile.
     *
     * @return  ActionObject which named as the param name
     */
@@ -92,7 +92,7 @@ public:
     *
     * @param jsonName  UI file name
     *
-    * @param actionName  action name in teh UIfile.
+    * @param actionName  action name in the UIfile.
     *
     * @param func ui action call back
     */
@@ -103,14 +103,14 @@ public:
     *
     * @param jsonName  UI file name
     *
-    * @param actionName  action name in teh UIfile.
+    * @param actionName  action name in the UIfile.
     *
     * @return  ActionObject which named as the param name
     */
     ActionObject* stopActionByName(const char* jsonName,const char* actionName);
 
-    /*init properties with json dictionay*/
-    void initWithDictionary(const char* jsonName,const rapidjson::Value &dic, Ref* root);
+    /*init properties with json dictionary*/
+    void initWithDictionary(const char* jsonName,const rapidjson::Value &dic, Ref* root, int version = 1600);
     void initWithBinary(const char* file, Ref* root,  CocoLoader* cocoLoader, stExpCocoNode*    pCocoNode);
 
     /**
@@ -119,8 +119,11 @@ public:
     */
     void releaseActions();
 
+    int getStudioVersionNumber() const;
+
 protected:
     std::unordered_map<std::string, cocos2d::Vector<ActionObject*>> _actionDic;
+    int _studioVersionNumber;
 };
 
 }

@@ -2,6 +2,7 @@
 #define COCOS2DX_SCRIPT_LUA_COCOS2DX_SUPPORT_PLATFORM_ANDROID_LUA_JAVA_BRIDGE_H
 
 #include <jni.h>
+#include <string.h>
 #include <string>
 #include <vector>
 
@@ -38,7 +39,7 @@ public:
     ///@cond
     /**
      * Bind callStaticMethod of LuaJavaBridge to Lua.
-     * In current mechanism,we could call LuaJavaBridge.callStaticMethod(className, methodName, args) in Lua directly.
+     * In current mechanism, we could call LuaJavaBridge.callStaticMethod(className, methodName, args) in Lua directly.
      * Meanwhile the callStaticMethod of LuaObjcBridge binding function is wrapped in the luaj.lua
      */
     static void luaopen_luaj(lua_State *L);
@@ -57,10 +58,10 @@ public:
 
     /**
      * Release a reference count for the Lua functionId, If the reference count is still greater than 0,save this reference in the Lua table named luaj_function_id_retain.
-     * Otherwise, remove the refrence about this functionId in the luaj_function_id table and the luaj_function_id_retain table by set the corresponding value nil. 
+     * Otherwise, remove the reference about this functionId in the luaj_function_id table and the luaj_function_id_retain table by set the corresponding value nil. 
      * 
      * @param functionId the id of Lua function.
-     * @return the reference count of the functionId if the luaj_function_id table, the luaj_function_id_retain table and the corresponding value for functionId exists a reference count for the Lua functionId is still greater than 0,and otherwise return 0.
+     * @return the reference count of the functionId if the luaj_function_id table, the luaj_function_id_retain table and the corresponding value for functionId exists a reference count for the Lua functionId is still greater than 0, and otherwise return 0.
      *
      * @lua NA
      * @js NA
@@ -72,7 +73,7 @@ public:
      * 
      * @param functionId the values corresponding to the Lua function.
      * @param arg the string pointer point to the argument.
-     * @return a number value returned frome the Lua function when call sucessfully, otherwise return -1 or the opposite number for one of the three numbers LUA_ERRRUN,LUA_ERRMEM and LUA_ERRERR.
+     * @return a number value returned from the Lua function when call successfully, otherwise return -1 or the opposite number for one of the three numbers LUA_ERRRUN, LUA_ERRMEM and LUA_ERRERR.
      *
      * @lua NA
      * @js NA
@@ -84,7 +85,7 @@ public:
      * 
      * @param functionName the name of global function.
      * @param arg the string pointer point to the argument.
-     * @return a number value returned frome the Lua function when call sucessfully, otherwise return -1 or the opposite number for one of the three numbers LUA_ERRRUN,LUA_ERRMEM and LUA_ERRERR.
+     * @return a number value returned from the Lua function when call successfully, otherwise return -1 or the opposite number for one of the three numbers LUA_ERRRUN, LUA_ERRMEM and LUA_ERRERR.
      *
      * @lua NA
      * @js NA

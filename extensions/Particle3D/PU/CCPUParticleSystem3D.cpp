@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -448,6 +448,11 @@ void PUParticleSystem3D::forceUpdate( float delta )
 
     prepared();
 
+    Vec3 currentPos = getDerivedPosition();
+    _latestPositionDiff = currentPos - _latestPosition;
+    _latestPosition = currentPos;
+    _latestOrientation = getDerivedOrientation();
+
     if (!_emitters.empty()){
         emitParticles(delta);
         preUpdator(delta);
@@ -455,10 +460,6 @@ void PUParticleSystem3D::forceUpdate( float delta )
         postUpdator(delta);
     }
 
-    Vec3 currentPos = getDerivedPosition();
-    _latestPositionDiff = currentPos - _latestPosition;
-    _latestPosition = currentPos;
-    _latestOrientation = getDerivedOrientation();
     _timeElapsedSinceStart += delta;
 }
 
@@ -730,7 +731,7 @@ void PUParticleSystem3D::emitParticles( float elapsedTime )
 
 }
 
-const float PUParticleSystem3D::getDefaultWidth( void ) const
+float PUParticleSystem3D::getDefaultWidth() const
 {
     return _defaultWidth;
 }
@@ -740,7 +741,7 @@ void PUParticleSystem3D::setDefaultWidth( const float width )
     _defaultWidth = width;
 }
 
-const float PUParticleSystem3D::getDefaultHeight( void ) const
+float PUParticleSystem3D::getDefaultHeight() const
 {
     return _defaultHeight;
 }
@@ -750,7 +751,7 @@ void PUParticleSystem3D::setDefaultHeight( const float height )
     _defaultHeight = height;
 }
 
-const float PUParticleSystem3D::getDefaultDepth( void ) const
+float PUParticleSystem3D::getDefaultDepth() const
 {
     return _defaultDepth;
 }
@@ -1010,7 +1011,7 @@ void PUParticleSystem3D::initParticleForExpiration( PUParticle3D* particle, floa
         it->particleExpired(this, particle);
     }
     ///** Externs are also called to perform expiration activities. If needed, affectors and emitters may be added, but at the moment
-    //	there is no reason for (and we don´t want to waste cpu resources).
+    //	there is no reason for (and we don't want to waste cpu resources).
     //*/
     //if (!mExterns.empty())
     //{
@@ -1047,6 +1048,8 @@ void PUParticleSystem3D::convertToUnixStylePath( std::string &path )
     for (auto &iter : path){
         if (iter == '\\') iter = '/';
     }
+#else
+    CC_UNUSED_PARAM(path);
 #endif
 }
 
@@ -1306,7 +1309,7 @@ bool PUParticleSystem3D::makeParticleLocal( PUParticle3D* particle )
     return true;
 }
 
-void PUParticleSystem3D::processMotion( PUParticle3D* particle, float timeElapsed, const Vec3 &scl, bool firstParticle )
+void PUParticleSystem3D::processMotion( PUParticle3D* particle, float timeElapsed, const Vec3 &scl, bool /*firstParticle*/ )
 {
     if (particle->isFreezed())
     return;

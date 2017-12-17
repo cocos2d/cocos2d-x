@@ -7,7 +7,7 @@
 --------------------------------
 -- brief Initializes the action with the number columns and the duration.<br>
 -- param duration Specify the duration of the SplitCols action. It's a value in seconds.<br>
--- param cols Specify the columns count should be splited.<br>
+-- param cols Specify the columns count should be split.<br>
 -- return If the creation success, return true; otherwise, return false.
 -- @function [parent=#SplitCols] initWithDuration 
 -- @param self
@@ -18,7 +18,7 @@
 --------------------------------
 -- brief Create the action with the number of columns and the duration.<br>
 -- param duration Specify the duration of the SplitCols action. It's a value in seconds.<br>
--- param cols Specify the columns count should be splited.<br>
+-- param cols Specify the columns count should be split.<br>
 -- return If the creation success, return a pointer of SplitCols action; otherwise, return nil.
 -- @function [parent=#SplitCols] create 
 -- @param self

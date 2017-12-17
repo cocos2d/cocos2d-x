@@ -1,9 +1,9 @@
 
-#include "Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.h"
+#include "scripting/lua-bindings/manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.h"
 
 #include <android/log.h>
 
-#include "CCLuaJavaBridge.h"
+#include "scripting/lua-bindings/manual/platform/android/CCLuaJavaBridge.h"
 
 #include "base/ccUTF8.h"
 

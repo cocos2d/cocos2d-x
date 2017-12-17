@@ -57,20 +57,6 @@ getDuration : function (
 },
 
 /**
- * @method create
- * @param {String} arg0
- * @param {String} arg1
- * @return {cc.Animation3D}
- */
-create : function (
-str, 
-str 
-)
-{
-    return cc.Animation3D;
-},
-
-/**
  * @method Animation3D
  * @constructor
  */
@@ -433,26 +419,6 @@ BillBoard : function (
 jsb.Mesh = {
 
 /**
- * @method setTexture
-* @param {cc.Texture2D|String} texture2d
-*/
-setTexture : function(
-str 
-)
-{
-},
-
-/**
- * @method getTexture
- * @return {cc.Texture2D}
- */
-getTexture : function (
-)
-{
-    return cc.Texture2D;
-},
-
-/**
  * @method getSkin
  * @return {cc.MeshSkin}
  */
@@ -584,7 +550,7 @@ str
 
 /**
  * @method getIndexCount
- * @return {long}
+ * @return {int}
  */
 getIndexCount : function (
 )
@@ -604,7 +570,7 @@ meshindexdata
 
 /**
  * @method getMeshVertexAttribCount
- * @return {long}
+ * @return {int}
  */
 getMeshVertexAttribCount : function (
 )
@@ -772,7 +738,7 @@ int
 
 /**
  * @method getRootCount
- * @return {long}
+ * @return {int}
  */
 getRootCount : function (
 )
@@ -794,7 +760,7 @@ bone3d
 
 /**
  * @method getBoneCount
- * @return {long}
+ * @return {int}
  */
 getBoneCount : function (
 )
@@ -979,6 +945,16 @@ int
 },
 
 /**
+ * @method getMeshes
+ * @return {Array}
+ */
+getMeshes : function (
+)
+{
+    return new Array();
+},
+
+/**
  * @method addMesh
  * @param {cc.Mesh} arg0
  */
@@ -1036,7 +1012,7 @@ materialdatas
 
 /**
  * @method getMeshCount
- * @return {long}
+ * @return {int}
  */
 getMeshCount : function (
 )
@@ -1329,11 +1305,11 @@ jsb.Terrain = {
 
 /**
  * @method initHeightMap
- * @param {char} arg0
+ * @param {String} arg0
  * @return {bool}
  */
 initHeightMap : function (
-char 
+str 
 )
 {
     return false;
@@ -1373,10 +1349,10 @@ map
 
 /**
  * @method resetHeightMap
- * @param {char} arg0
+ * @param {String} arg0
  */
 resetHeightMap : function (
-char 
+str 
 )
 {
 },

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -42,8 +42,8 @@ BatchCommand::BatchCommand()
 
 void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags)
 {
-    CCASSERT(shader, "shader cannot be nill");
-    CCASSERT(textureAtlas, "textureAtlas cannot be nill");
+    CCASSERT(shader, "shader cannot be null");
+    CCASSERT(textureAtlas, "textureAtlas cannot be null");
     
     RenderCommand::init(globalOrder, modelViewTransform, flags);
     _textureID = textureAtlas->getTexture()->getName();

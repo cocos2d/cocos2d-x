@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2015 Chukong Technologies Inc.
+Copyright (c) 2015-2017 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CCSKINNODE_H__
 
 #include "2d/CCNode.h"
-#include "CCTimelineMacro.h"
+#include "editor-support/cocostudio/ActionTimeline/CCTimelineMacro.h"
 
 
 NS_TIMELINE_BEGIN

@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "cocostudio/CCComController.h"
+#include "editor-support/cocostudio/CCComController.h"
 #include "2d/CCNode.h"
 
 namespace cocostudio {
@@ -69,7 +69,7 @@ void ComController::onRemove()
 {
 }
 
-void ComController::update(float delta)
+void ComController::update(float /*delta*/)
 {
 }
 

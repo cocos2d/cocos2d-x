@@ -27,6 +27,13 @@ bool TableViewTest::init()
     this->addChild(tableView);
     tableView->reloadData();
 
+    auto testNode = Node::create();
+    testNode->setName("testNode");
+    tableView->addChild(testNode);
+    tableView->removeChild(testNode, true);
+    CCAssert(nullptr == tableView->getChildByName("testNode"), "The added child has been removed!");
+
+
 	tableView = TableView::create(this, Size(60, 250));
 	tableView->setDirection(ScrollView::Direction::VERTICAL);
 	tableView->setPosition(Vec2(winSize.width-150,winSize.height/2-120));
@@ -40,7 +47,7 @@ bool TableViewTest::init()
 
 void TableViewTest::tableCellTouched(TableView* table, TableViewCell* cell)
 {
-    CCLOG("cell touched at index: %ld", cell->getIdx());
+    CCLOG("cell touched at index: %ld", static_cast<long>(cell->getIdx()));
 }
 
 Size TableViewTest::tableCellSizeForIndex(TableView *table, ssize_t idx)
@@ -53,7 +60,7 @@ Size TableViewTest::tableCellSizeForIndex(TableView *table, ssize_t idx)
 
 TableViewCell* TableViewTest::tableCellAtIndex(TableView *table, ssize_t idx)
 {
-    auto string = StringUtils::format("%ld", idx);
+    auto string = StringUtils::format("%ld", static_cast<long>(idx));
     TableViewCell *cell = table->dequeueCell();
     if (!cell) {
         cell = new (std::nothrow) CustomTableViewCell();

@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -43,7 +43,7 @@ class Controller;
  * @param Controller event listener.
  * @js NA
  */
-class EventListenerController : public EventListener
+class CC_DLL EventListenerController : public EventListener
 {
 public:
     static const std::string LISTENER_ID;

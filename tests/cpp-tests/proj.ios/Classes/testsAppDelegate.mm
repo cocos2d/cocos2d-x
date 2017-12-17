@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -59,11 +59,15 @@ static AppDelegate s_sharedApplication;
                                        multiSampling: NO
                                      numberOfSamples: 0 ];
 
+#if !defined(CC_TARGET_OS_TVOS)
     [eaglView setMultipleTouchEnabled:YES];
+#endif
 
-    // Use RootViewController manage CCEAGLView 
+    // Use RootViewController manage CCEAGLView
     viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+#if !defined(CC_TARGET_OS_TVOS)
     viewController.wantsFullScreenLayout = YES;
+#endif
     viewController.view = eaglView;
 
     // Set RootViewController to window
@@ -79,8 +83,10 @@ static AppDelegate s_sharedApplication;
     }
     
     [window makeKeyAndVisible];
-    
+
+#if !defined(CC_TARGET_OS_TVOS)
     [[UIApplication sharedApplication] setStatusBarHidden:true];
+#endif
     
     // IMPORTANT: Setting the GLView should be done after creating the RootViewController
     cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView(eaglView);
@@ -97,7 +103,7 @@ static AppDelegate s_sharedApplication;
      Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
      Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
      */
-    //We don't need to call this method any more. It will interupt user defined game pause&resume logic
+    //We don't need to call this method any more. It will interrupt user defined game pause&resume logic
 //    cocos2d::Director::getInstance()->pause();
 }
 
@@ -105,7 +111,7 @@ static AppDelegate s_sharedApplication;
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
-    //We don't need to call this method any more. It will interupt user defined game pause&resume logic
+    //We don't need to call this method any more. It will interrupt user defined game pause&resume logic
 //    cocos2d::Director::getInstance()->resume();
 }
 

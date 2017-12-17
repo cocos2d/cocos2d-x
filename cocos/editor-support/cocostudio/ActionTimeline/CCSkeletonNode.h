@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2015 Chukong Technologies Inc.
+Copyright (c) 2015-2017 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
 
@@ -25,12 +25,12 @@ THE SOFTWARE.
 #ifndef __CCSKELETONNODE_H__
 #define  __CCSKELETONNODE_H__
 
-#include "CCTimelineMacro.h"
+#include "editor-support/cocostudio/ActionTimeline/CCTimelineMacro.h"
 #include "renderer/CCRenderer.h"
-#include "cocostudio/CocosStudioExport.h"
+#include "editor-support/cocostudio/CocosStudioExport.h"
 #include "base/CCMap.h"
 
-#include "CCBoneNode.h"
+#include "editor-support/cocostudio/ActionTimeline/CCBoneNode.h"
 
 NS_TIMELINE_BEGIN
 
@@ -111,7 +111,6 @@ private:
     cocos2d::CustomCommand         _batchBoneCommand;
 
     void batchDrawAllSubBones(const cocos2d::Mat4 &transform);
-    void batchSubBone(BoneNode* bone);
 };
 
 NS_TIMELINE_END

@@ -33,7 +33,7 @@ public:
 		m_worldExtent = 15.0f;
 		m_proxyExtent = 0.5f;
 
-		srand(888);
+        std::srand(888);
 
 		for (int32 i = 0; i < e_actorCount; ++i)
 		{

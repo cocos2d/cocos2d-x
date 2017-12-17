@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "renderer/CCFrameBuffer.h"
+#include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
 #include "base/CCEventCustom.h"
 #include "base/CCEventListenerCustom.h"
@@ -139,8 +140,8 @@ RenderTarget::~RenderTarget()
 }
 
 RenderTargetRenderBuffer::RenderTargetRenderBuffer()
-: _colorBuffer(0)
-, _format(GL_RGBA4)
+: _format(GL_RGBA4)
+, _colorBuffer(0)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 , _reBuildRenderBufferListener(nullptr)
 #endif
@@ -314,6 +315,7 @@ FrameBuffer* FrameBuffer::getOrCreateDefaultFBO(GLView* view)
     return _defaultFBO;
 }
 
+    
 void FrameBuffer::applyDefaultFBO()
 {
     if(_defaultFBO)
@@ -380,13 +382,14 @@ bool FrameBuffer::init(uint8_t fid, unsigned int width, unsigned int height)
 }
 
 FrameBuffer::FrameBuffer()
-: _clearColor(Color4F(0, 0, 0, 1))
+: _fbo(0)
+, _previousFBO(0)
+, _fboBindingDirty(true)
+, _clearColor(Color4F(0, 0, 0, 1))
 , _clearDepth(1.0)
 , _clearStencil(0)
-, _fbo(0)
 , _rt(nullptr)
 , _rtDepthStencil(nullptr)
-, _fboBindingDirty(true)
 , _isDefault(false)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 , _dirtyFBOListener(nullptr)
@@ -397,7 +400,6 @@ FrameBuffer::FrameBuffer()
 
 FrameBuffer::~FrameBuffer()
 {
-    if(!isDefaultFBO())
     {
         CC_SAFE_RELEASE_NULL(_rt);
         CC_SAFE_RELEASE_NULL(_rtDepthStencil);
@@ -407,6 +409,8 @@ FrameBuffer::~FrameBuffer()
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         Director::getInstance()->getEventDispatcher()->removeEventListener(_dirtyFBOListener);
 #endif
+        if (isDefaultFBO())
+            _defaultFBO = nullptr;
     }
 }
 
@@ -417,7 +421,7 @@ void FrameBuffer::clearFBO()
     glClearDepth(_clearDepth);
     glClearStencil(_clearStencil);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
-    applyDefaultFBO();
+    restoreFBO();
 }
 
 void FrameBuffer::attachRenderTarget(RenderTargetBase* rt)
@@ -442,7 +446,9 @@ void FrameBuffer::attachRenderTarget(RenderTargetBase* rt)
 void FrameBuffer::applyFBO()
 {
     CHECK_GL_ERROR_DEBUG();
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, (GLint*)&_previousFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+//    CCASSERT(_fbo==0 || _fbo != _previousFBO, "calling applyFBO without restoring the previous one");
     CHECK_GL_ERROR_DEBUG();
     if(_fboBindingDirty && !isDefaultFBO())
     {
@@ -464,6 +470,11 @@ void FrameBuffer::applyFBO()
         CCLOG("FrameBuffer Status Error %d", (int)glCheckFramebufferStatus(GL_FRAMEBUFFER));
     }
     CHECK_GL_ERROR_DEBUG();
+}
+
+void FrameBuffer::restoreFBO()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, _previousFBO);
 }
 
 void FrameBuffer::attachDepthStencilTarget(RenderTargetDepthStencil* rt)

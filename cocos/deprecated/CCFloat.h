@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2015 Chukong Technologies
+ Copyright (c) 2013-2017 Chukong Technologies
  
  http://www.cocos2d-x.org
  
@@ -45,7 +45,7 @@ public:
 
     static __Float* create(float v)
     {
-        __Float* pRet = new __Float(v);
+        __Float* pRet = new (std::nothrow) __Float(v);
         if (pRet)
         {
             pRet->autorelease();
@@ -56,7 +56,7 @@ public:
     /* override functions */
     virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
     
-    __Float* clone() const
+    virtual __Float* clone() const override
     {
         return __Float::create(_value);
     }

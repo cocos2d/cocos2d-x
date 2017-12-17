@@ -26,18 +26,17 @@ THE SOFTWARE.
 #ifndef __CC_EGLVIEWIMPL_WINRT_H__
 #define __CC_EGLVIEWIMPL_WINRT_H__
 
-#include "CCStdC.h"
+#include "platform/winrt/CCStdC.h"
 #include "platform/CCCommon.h"
+#include "platform/winrt/Keyboard-winrt.h"
 #include "platform/CCGLView.h"
-#include "InputEvent.h"
-
+#include "base/CCEventKeyboard.h"
 
 #include <agile.h>
 #include <concurrent_queue.h>
 #include <string>
 #include <memory>
 #include <wrl/client.h>
-#include <Keyboard-winrt.h>
 
 NS_CC_BEGIN
 
@@ -174,7 +173,7 @@ private:
 	bool m_windowClosed;
 	bool m_windowVisible;
     // PointerReleased for mouse not send button id, need save in PointerPressed last button
-    MouseButton _lastMouseButtonPressed;
+    EventMouse::MouseButton _lastMouseButtonPressed;
 
     bool m_running;
 	bool m_initialized;

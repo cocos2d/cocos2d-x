@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright 2014 Chukong Technologies Inc.
+Copyright (c) 2014-2017 Chukong Technologies Inc.
  
 http://www.cocos2d-x.org
  
@@ -61,15 +61,17 @@ class CC_DLL UniformValue
     friend class GLProgramState;
 public:
     /**
-     Construtor. The Uniform and Glprogram will be nullptr.
+     Constructor. The Uniform and Glprogram will be nullptr.
      */
     UniformValue();
     /**
-     Construtor with uniform and glprogram.
+     Constructor with uniform and glprogram.
      @param uniform Uniform to apply the value.
      @param glprogram Specify the owner GLProgram of this uniform and uniform value.
      */
     UniformValue(Uniform *uniform, GLProgram* glprogram);
+
+    UniformValue(const UniformValue& o);
 
     /**Destructor.*/
     ~UniformValue();
@@ -101,11 +103,22 @@ public:
      Set texture to uniform value.
      @param textureId The texture handle.
      @param textureUnit The binding texture unit to be used in shader.
+     @deprecated please use setTexture(Texture2D* texture, GLuint textureUnit) instead,
+                 Passing a `textureId` may trigger texture lost issue (https://github.com/cocos2d/cocos2d-x/issues/16871).
     */
-    void setTexture(GLuint textureId, GLuint textureUnit);
+    CC_DEPRECATED_ATTRIBUTE void setTexture(GLuint textureId, GLuint textureUnit);
+
+    /**
+     Set texture to uniform value.
+     @param texture The texture.
+     @param textureUnit The binding texture unit to be used in shader.
+     */
+    void setTexture(Texture2D* texture, GLuint textureUnit);
     
     /**Apply the uniform value to openGL pipeline.*/
     void apply();
+
+    UniformValue& operator=(const UniformValue& o);
 
 protected:
 
@@ -134,8 +147,9 @@ protected:
         float v4Value[4];
         float matrixValue[16];
         struct {
-            GLuint textureId;
+            GLuint textureId; // textureId will be deprecated since we use 'texture->getName()' to get textureId.
             GLuint textureUnit;
+            Texture2D* texture;
         } tex;
         struct {
             const float* pointer;
@@ -241,7 +255,6 @@ class CC_DLL GLProgramState : public Ref
 {
     friend class GLProgramStateCache;
 public:
-
     /** returns a new instance of GLProgramState for a given GLProgram */
     static GLProgramState* create(GLProgram* glprogram);
 
@@ -250,6 +263,9 @@ public:
 
     /** gets-or-creates an instance of GLProgramState for a given GLProgramName */
     static GLProgramState* getOrCreateWithGLProgramName(const std::string& glProgramName );
+
+    /** gets-or-creates an instance of GLProgramState for the given GLProgramName & texture */
+    static GLProgramState* getOrCreateWithGLProgramName(const std::string& glProgramName, Texture2D* texture);
 
     /** gets-or-creates an instance of GLProgramState for given shaders */
     static GLProgramState* getOrCreateWithShaders(const std::string& vertexShader, const std::string& fragShader, const std::string& compileTimeDefines);
@@ -262,6 +278,7 @@ public:
      @param modelView The applied modelView matrix to shader.
      */
     void apply(const Mat4& modelView);
+
     /**
      Apply GLProgram, and built in uniforms.
      @param modelView The applied modelView matrix to shader.
@@ -314,7 +331,11 @@ public:
     void setUniformMat4(const std::string& uniformName, const Mat4& value);
     void setUniformCallback(const std::string& uniformName, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(const std::string& uniformName, Texture2D *texture);
-    void setUniformTexture(const std::string& uniformName, GLuint textureId);
+    /**
+     * @deprecated, please use setUniformTexture(const std::string& uniformName, Texture2D *texture) instead,
+     * Passing a `textureId` may trigger texture lost issue (https://github.com/cocos2d/cocos2d-x/issues/16871).
+     */
+    CC_DEPRECATED_ATTRIBUTE void setUniformTexture(const std::string& uniformName, GLuint textureId);
     /**@}*/
     
     /** @{
@@ -332,7 +353,11 @@ public:
     void setUniformMat4(GLint uniformLocation, const Mat4& value);
     void setUniformCallback(GLint uniformLocation, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(GLint uniformLocation, Texture2D *texture);
-    void setUniformTexture(GLint uniformLocation, GLuint textureId);
+    /**
+     * @deprecated, please use setUniformTexture(GLint uniformLocation, Texture2D *texture) instead,
+     * Passing a `textureId` may trigger texture lost issue (https://github.com/cocos2d/cocos2d-x/issues/16871).
+     */
+    CC_DEPRECATED_ATTRIBUTE void setUniformTexture(GLint uniformLocation, GLuint textureId);
     /**@}*/
 
     /** 
@@ -366,7 +391,7 @@ public:
      * to an enumeration value. If it matches to one of the predefined strings, it will create a
      * callback to get the correct value at runtime.
      *
-     * @param name The name of the material parameter to store an auto-binding for.
+     * @param uniformName The name of the material parameter to store an auto-binding for.
      * @param autoBinding A string matching one of the built-in AutoBinding enum constants.
      */
     void setParameterAutoBinding(const std::string& uniformName, const std::string& autoBinding);
@@ -393,7 +418,7 @@ public:
      * auto bindings found in the GLProgramState::AutoBinding enumeration.
      *
      * When an instance of a class that extends AutoBindingResolver is created, it is automatically
-     * registered as a custom auto binding handler. Likewise, it is automatically deregistered
+     * registered as a custom auto binding handler. Likewise, it is automatically unregistered
      * on destruction.
      *
      * @script{ignore}
@@ -411,7 +436,7 @@ public:
          * Called when an unrecognized uniform variable is encountered
          * during material loading.
          *
-         * Implemenations of this method should do a string comparison on the passed
+         * Implementations of this method should do a string comparison on the passed
          * in name parameter and decide whether or not they should handle the
          * parameter. If the parameter is not handled, false should be returned so
          * that other auto binding resolvers get a chance to handle the parameter.
@@ -422,7 +447,7 @@ public:
          * @param uniformName Name of the uniform
          * @param autoBinding Name of the auto binding to be resolved.
          *
-         * @return True if the auto binding is handled and the associated parmeter is
+         * @return True if the auto binding is handled and the associated parameter is
          *      bound, false otherwise.
          */
         virtual bool resolveAutoBinding(GLProgramState* glProgramState, Node* node, const std::string& uniformName, const std::string& autoBinding) = 0;
@@ -437,7 +462,7 @@ public:
 
 protected:
     GLProgramState();
-    ~GLProgramState();
+    virtual ~GLProgramState();
     bool init(GLProgram* program);
     void resetGLProgram();
     void updateUniformsAndAttributes();

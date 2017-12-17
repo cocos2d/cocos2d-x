@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -151,7 +151,7 @@ var EffectAdvanceTextLayer = cc.Layer.extend({
 
 var Effect1 = EffectAdvanceTextLayer.extend({
     title:function () {
-        return "Lens + Waves3d and OrbitCamera";
+        return "Lens + Waves3d";
     },
 
     onEnter:function () {
@@ -303,11 +303,6 @@ var Effect5 = EffectAdvanceTextLayer.extend({
 
         var bg = this.getChildByTag(EffectsAdvancedTest.TAG_BACKGROUND);
         bg.runAction(stopEffect);
-    },
-
-    onExit:function () {
-        this._super();
-        cc.director.setProjection(cc.Director.PROJECTION_3D);
     }
 });
 

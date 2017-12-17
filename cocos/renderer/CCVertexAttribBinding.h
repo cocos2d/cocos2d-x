@@ -1,6 +1,6 @@
 /**
  Copyright 2013 BlackBerry Inc.
- Copyright (c) 2015 Chukong Technologies
+ Copyright (c) 2015-2017 Chukong Technologies
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ class VertexAttribValue;
  * arrays, since it is slower than the server-side VAOs used by OpenGL
  * (when creating a VertexAttribBinding between a Mesh and Effect).
  */
-class VertexAttribBinding : public Ref
+class CC_DLL VertexAttribBinding : public Ref
 {
 public:
 

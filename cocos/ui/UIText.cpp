@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -309,7 +309,6 @@ void Text::labelScaleChangedWithSize()
 {
     if (_ignoreSize)
     {
-        _labelRenderer->setDimensions(0,0);
         _labelRenderer->setScale(1.0f);
         _normalScaleValueX = _normalScaleValueY = 1.0f;
     }
@@ -373,6 +372,43 @@ void Text::disableEffect(LabelEffect effect)
     }
 }
 
+bool Text::isShadowEnabled() const
+{
+    return _labelRenderer->isShadowEnabled();
+}
+Size Text::getShadowOffset() const
+{
+    return _labelRenderer->getShadowOffset();
+}
+float Text::getShadowBlurRadius() const
+{
+    return _labelRenderer->getShadowBlurRadius();
+}
+Color4B Text::getShadowColor() const
+{
+    Color4F effect = _labelRenderer->getShadowColor();
+    return Color4B(effect.r * 255, effect.g * 255, effect.b * 255, effect.a * 255);
+}
+
+int Text::getOutlineSize() const
+{
+    return _labelRenderer->getOutlineSize();
+}
+LabelEffect Text::getLabelEffectType() const
+{
+    return _labelRenderer->getLabelEffectType();
+}
+Color4B Text::getEffectColor() const
+{
+    Color4F effect = _labelRenderer->getEffectColor();
+    return Color4B(effect.r * 255, effect.g * 255, effect.b * 255, effect.a * 255);
+}
+
+Sprite * Text::getLetter(int lettetIndex)
+{
+    return _labelRenderer->getLetter(lettetIndex);
+}
+
 Widget* Text::createCloneInstance()
 {
     return Text::create();
@@ -392,6 +428,20 @@ void Text::copySpecialProperties(Widget *widget)
         setTextVerticalAlignment(label->_labelRenderer->getVerticalAlignment());
         setTextAreaSize(label->_labelRenderer->getDimensions());
         setContentSize(label->getContentSize());
+
+        LabelEffect effectType = label->getLabelEffectType();
+        if (effectType == LabelEffect::GLOW)
+        {
+            enableGlow(label->getEffectColor());
+        }
+        else if (effectType == LabelEffect::OUTLINE)
+        {
+            enableOutline(label->getEffectColor(),label->getOutlineSize());
+        }
+        if (label->isShadowEnabled())
+        {
+            enableShadow(label->getShadowColor(),label->getShadowOffset(),label->getShadowBlurRadius());
+        }
     }
 }
 

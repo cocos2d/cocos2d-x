@@ -22,13 +22,7 @@
                "proj.ios_mac/HelloJavascript.xcodeproj/xcuserdata",
                "proj.win32/Debug.win32",
                "proj.win32/Release.win32",
-               "proj.win32/HelloJavascript.sdf",
-               "proj.win8.1-universal/HelloJavascript.sdf",
-               "proj.win8.1-universal/HelloJavascript.v12.suo",
-               "proj.win8.1-universal/ipch",
-               "proj.win8.1-universal/Debug",
-               "proj.win8.1-universal/Release",
-               "proj.win8.1-universal/ARM"
+               "proj.win32/HelloJavascript.sdf"
             ]
          },
          "append_x_engine":{
@@ -42,14 +36,7 @@
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
                "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
-               "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj",
-               "frameworks/runtime-src/proj.win8.1-universal/PROJECT_NAME.sln",
-               "frameworks/runtime-src/proj.win8.1-universal/App.Shared/PROJECT_NAME.Shared.vcxitems",
-               "frameworks/runtime-src/proj.win8.1-universal/App.Shared/PROJECT_NAME.Shared.vcxitems.filters",               
-               "frameworks/runtime-src/proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj",
-               "frameworks/runtime-src/proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj.filters",
-               "frameworks/runtime-src/proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj",
-               "frameworks/runtime-src/proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj.filters"
+               "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj"
           ]
          },
          "project_replace_project_name":{
@@ -70,15 +57,6 @@
                "frameworks/runtime-src/proj.ios_mac/ios/main.m",
                "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
-               "frameworks/runtime-src/proj.win8.1-universal/PROJECT_NAME.sln",
-               "frameworks/runtime-src/proj.win8.1-universal/App.Shared/PROJECT_NAME.Shared.vcxitems",
-               "frameworks/runtime-src/proj.win8.1-universal/App.Shared/PROJECT_NAME.Shared.vcxitems.filters",               
-               "frameworks/runtime-src/proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj",
-               "frameworks/runtime-src/proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj.filters",
-               "frameworks/runtime-src/proj.win8.1-universal/App.Windows/Package.appxmanifest",
-               "frameworks/runtime-src/proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj",
-               "frameworks/runtime-src/proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj.filters",
-               "frameworks/runtime-src/proj.win8.1-universal/App.WindowsPhone/Package.appxmanifest",
                "frameworks/runtime-src/Classes/AppDelegate.cpp"
             ]
          },
@@ -134,16 +112,6 @@
                "file_path": "frameworks/runtime-src/proj.android-studio/app/AndroidManifest.xml",
                "pattern": "android:screenOrientation=\\\".*\\\"",
                "replace_string": "android:screenOrientation=\"portrait\""
-            },
-            {
-               "file_path": "frameworks/runtime-src/proj.win8.1-universal/App.Windows/Package.appxmanifest",
-               "pattern": "Rotation Preference=\\\"landscape",
-               "replace_string": "Rotation Preference=\"portrait"
-            },
-            {
-               "file_path": "frameworks/runtime-src/proj.win8.1-universal/App.WindowsPhone/Package.appxmanifest",
-               "pattern": "Rotation Preference=\\\"landscape",
-               "replace_string": "Rotation Preference=\"portrait"
             }
          ]
       }

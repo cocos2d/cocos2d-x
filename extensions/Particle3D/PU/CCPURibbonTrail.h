@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2015-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -30,6 +30,7 @@
 #include "math/CCMath.h"
 #include "extensions/Particle3D/PU/CCPUBillboardChain.h"
 #include <vector>
+#include <unordered_map>
 
 NS_CC_BEGIN
 
@@ -75,11 +76,11 @@ public:
     virtual float getTrailLength(void) const { return _trailLength; }
 
     /** @copydoc BillboardChain::setMaxChainElements */
-    void setMaxChainElements(size_t maxElements);
+    void setMaxChainElements(size_t maxElements) override;
     /** @copydoc BillboardChain::setNumberOfChains */
     virtual void setNumberOfChains(size_t numChains) override;
     /** @copydoc BillboardChain::clearChain */
-    void clearChain(size_t chainIndex);
+    void clearChain(size_t chainIndex) override;
 
     /** Set the starting ribbon colour for a given segment. 
     @param chainIndex The index of the chain
@@ -163,7 +164,7 @@ protected:
 
     // fast lookup node->chain index
     // we use positional map too because that can be useful
-    typedef std::map<const Node*, size_t> NodeToChainSegmentMap;
+    typedef std::unordered_map<const Node*, size_t> NodeToChainSegmentMap;
     NodeToChainSegmentMap _nodeToSegMap;
 
     /// Total length of trail in world units

@@ -27,7 +27,7 @@
 --------------------------------
 -- brief Create the action with duration.<br>
 -- param duration Specify the duration of the FilpX3D action. It's a value in seconds.<br>
--- return If the creation sucess, return a pointer of FilpX3D action; otherwise, return nil.
+-- return If the creation success, return a pointer of FilpX3D action; otherwise, return nil.
 -- @function [parent=#FlipX3D] create 
 -- @param self
 -- @param #float duration

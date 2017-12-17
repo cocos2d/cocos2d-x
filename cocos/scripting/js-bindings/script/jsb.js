@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2017 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
  */
 
 //
-// Javascript Bindigns helper file
+// JavaScript Bindings helper file
 //
 
 // DO NOT ALTER THE ORDER
@@ -79,7 +79,7 @@ if (cc.BuilderAnimationManager) {
     require('script/jsb_cocosbuilder.js');
 }
 
-if (jsb.fileUtils.isFileExist('jsb_pluginx.js')) {
+if (jsb.fileUtils.isFileExist('jsb_pluginx.js') || jsb.fileUtils.isFileExist('jsb_pluginx.jsc')) {
     if (cc.sys.os == cc.sys.OS_IOS || cc.sys.os == cc.sys.OS_ANDROID) {
         require('jsb_pluginx.js');
     }

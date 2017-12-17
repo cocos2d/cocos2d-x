@@ -1,67 +1,78 @@
 
 --------------------------------
 -- @module PageView
--- @extend Layout
+-- @extend ListView
 -- @parent_module ccui
 
 --------------------------------
--- brief Query the custom scroll threshold of the PageView.<br>
--- return Custom scroll threshold in float.
--- @function [parent=#PageView] getCustomScrollThreshold 
+-- brief Set space between page indicator's index nodes.<br>
+-- param spaceBetweenIndexNodes Space between nodes in pixel.
+-- @function [parent=#PageView] setIndicatorSpaceBetweenIndexNodes 
 -- @param self
--- @return float#float ret (return value: float)
-        
---------------------------------
--- Gets current displayed page index.<br>
--- return current page index.
--- @function [parent=#PageView] getCurPageIndex 
--- @param self
--- @return long#long ret (return value: long)
-        
---------------------------------
--- Changes scroll direction of PageView<br>
--- see `Direction`<br>
--- param direction Scroll direction enum.<br>
--- since v3.8
--- @function [parent=#PageView] setDirection 
--- @param self
--- @param #int direction
+-- @param #float spaceBetweenIndexNodes
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- Add a widget as a page of PageView in a given index.<br>
--- param widget    Widget to be added to pageview.<br>
--- param pageIdx   A given index.<br>
--- param forceCreate   If `forceCreate` is true and `widget` isn't exists, pageview would create a default page and add it.
--- @function [parent=#PageView] addWidgetToPage 
+-- Insert a page into PageView at a given index.<br>
+-- param page  Page to be inserted.<br>
+-- param idx   A given index.
+-- @function [parent=#PageView] insertPage 
 -- @param self
--- @param #ccui.Widget widget
--- @param #long pageIdx
--- @param #bool forceCreate
+-- @param #ccui.Widget page
+-- @param #int idx
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- brief Query whether use user defined scroll page threshold or not.<br>
--- return True if using custom scroll threshold, false otherwise.
--- @function [parent=#PageView] isUsingCustomScrollThreshold 
+-- brief Set opacity of page indicator's index nodes.<br>
+-- param opacity New indicator node opacity.
+-- @function [parent=#PageView] setIndicatorIndexNodesOpacity 
 -- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- Jump to a page with a given index without scrolling.<br>
--- This is the different between scrollToPage.<br>
--- param index A given index in PageView. Index start from 0 to pageCount -1.
--- @function [parent=#PageView] setCurPageIndex 
--- @param self
--- @param #long index
+-- @param #unsigned char opacity
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- Remove a page of PageView.<br>
--- param page  Page to be removed.
--- @function [parent=#PageView] removePage 
+-- brief Set opacity of page indicator's selected index.<br>
+-- param color New opacity for selected (current) index.
+-- @function [parent=#PageView] setIndicatorSelectedIndexOpacity 
 -- @param self
--- @param #ccui.Layout page
+-- @param #unsigned char opacity
+-- @return PageView#PageView self (return value: ccui.PageView)
+        
+--------------------------------
+-- brief Remove all pages of the PageView.
+-- @function [parent=#PageView] removeAllPages 
+-- @param self
+-- @return PageView#PageView self (return value: ccui.PageView)
+        
+--------------------------------
+-- 
+-- @function [parent=#PageView] setAutoScrollStopEpsilon 
+-- @param self
+-- @param #float epsilon
+-- @return PageView#PageView self (return value: ccui.PageView)
+        
+--------------------------------
+-- brief Set scale of page indicator's index nodes.<br>
+-- param indexNodesScale Scale of index nodes.
+-- @function [parent=#PageView] setIndicatorIndexNodesScale 
+-- @param self
+-- @param #float indexNodesScale
+-- @return PageView#PageView self (return value: ccui.PageView)
+        
+--------------------------------
+-- brief Toggle page indicator enabled.<br>
+-- param enabled True if enable page indicator, false otherwise.
+-- @function [parent=#PageView] setIndicatorEnabled 
+-- @param self
+-- @param #bool enabled
+-- @return PageView#PageView self (return value: ccui.PageView)
+        
+--------------------------------
+-- brief Set color of page indicator's selected index.<br>
+-- param color New color for selected (current) index.
+-- @function [parent=#PageView] setIndicatorSelectedIndexColor 
+-- @param self
+-- @param #color3b_table color
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
@@ -73,85 +84,158 @@
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- brief Set using user defined scroll page threshold or not.<br>
--- If you set it to false, then the default scroll threshold is pageView.width / 2<br>
--- param flag True if using custom scroll threshold, false otherwise.
--- @function [parent=#PageView] setUsingCustomScrollThreshold 
+-- brief Get the page indicator's position.<br>
+-- return positionAsAnchorPoint
+-- @function [parent=#PageView] getIndicatorPosition 
 -- @param self
--- @param #bool flag
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- Jump to a page with a given index without scrolling.<br>
+-- This is the different between scrollToPage.<br>
+-- param index A given index in PageView. Index start from 0 to pageCount -1.
+-- @function [parent=#PageView] setCurrentPageIndex 
+-- @param self
+-- @param #int index
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- brief If you don't specify the value, the pageView will turn page when scrolling at the half width of a page.<br>
--- param threshold  A threshold in float.
--- @function [parent=#PageView] setCustomScrollThreshold 
+-- brief Get the color of page indicator's index nodes.<br>
+-- return color
+-- @function [parent=#PageView] getIndicatorIndexNodesColor 
 -- @param self
--- @param #float threshold
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
+        
+--------------------------------
+-- brief Get the color of page indicator's selected index.<br>
+-- return color
+-- @function [parent=#PageView] getIndicatorSelectedIndexColor 
+-- @param self
+-- @return color3b_table#color3b_table ret (return value: color3b_table)
+        
+--------------------------------
+-- brief Get scale of page indicator's index nodes.<br>
+-- return indexNodesScale
+-- @function [parent=#PageView] getIndicatorIndexNodesScale 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- brief Set the page indicator's position in page view.<br>
+-- param position The position in page view
+-- @function [parent=#PageView] setIndicatorPosition 
+-- @param self
+-- @param #vec2_table position
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- Insert a page into PageView at a given index.<br>
--- param page  Page to be inserted.<br>
--- param idx   A given index.
--- @function [parent=#PageView] insertPage 
+-- brief Get the opacity of page indicator's selected index.<br>
+-- return opacity
+-- @function [parent=#PageView] getIndicatorSelectedIndexOpacity 
 -- @param self
--- @param #ccui.Layout page
+-- @return unsigned char#unsigned char ret (return value: unsigned char)
+        
+--------------------------------
+-- @overload self, int, float         
+-- @overload self, int         
+-- @function [parent=#PageView] scrollToPage
+-- @param self
 -- @param #int idx
+-- @param #float time
+-- @return PageView#PageView self (return value: ccui.PageView)
+
+--------------------------------
+-- brief Set the page indicator's position using anchor point.<br>
+-- param positionAsAnchorPoint The position as anchor point.
+-- @function [parent=#PageView] setIndicatorPositionAsAnchorPoint 
+-- @param self
+-- @param #vec2_table positionAsAnchorPoint
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- Query scroll direction of PageView.<br>
--- see `Direction`<br>
--- since v3.8<br>
--- return PageView scroll direction.
--- @function [parent=#PageView] getDirection 
+-- @overload self, int, float         
+-- @overload self, int         
+-- @function [parent=#PageView] scrollToItem
+-- @param self
+-- @param #int idx
+-- @param #float time
+-- @return PageView#PageView self (return value: ccui.PageView)
+
+--------------------------------
+-- brief Set color of page indicator's index nodes.<br>
+-- param color New indicator node color.
+-- @function [parent=#PageView] setIndicatorIndexNodesColor 
+-- @param self
+-- @param #color3b_table color
+-- @return PageView#PageView self (return value: ccui.PageView)
+        
+--------------------------------
+-- brief Get the opacity of page indicator's index nodes.<br>
+-- return opacity
+-- @function [parent=#PageView] getIndicatorIndexNodesOpacity 
+-- @param self
+-- @return unsigned char#unsigned char ret (return value: unsigned char)
+        
+--------------------------------
+-- brief Get the page indicator's position as anchor point.<br>
+-- return positionAsAnchorPoint
+-- @function [parent=#PageView] getIndicatorPositionAsAnchorPoint 
+-- @param self
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- Gets current displayed page index.<br>
+-- return current page index.
+-- @function [parent=#PageView] getCurrentPageIndex 
 -- @param self
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- Scroll to a page with a given index.<br>
--- param idx   A given index in the PageView. Index start from 0 to pageCount -1.
--- @function [parent=#PageView] scrollToPage 
+-- Remove a page of PageView.<br>
+-- param page  Page to be removed.
+-- @function [parent=#PageView] removePage 
 -- @param self
--- @param #long idx
+-- @param #ccui.Widget page
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- brief Get a page at a given index<br>
--- param index A given index.<br>
--- return A layout pointer in PageView container.
--- @function [parent=#PageView] getPage 
+-- sets texture for index nodes.<br>
+-- param fileName   File name of texture.<br>
+-- param resType    @see TextureResType .
+-- @function [parent=#PageView] setIndicatorIndexNodesTexture 
 -- @param self
--- @param #long index
--- @return Layout#Layout ret (return value: ccui.Layout)
+-- @param #string texName
+-- @param #int texType
+-- @return PageView#PageView self (return value: ccui.PageView)
+        
+--------------------------------
+-- brief Query page indicator state.<br>
+-- return True if page indicator is enabled, false otherwise.
+-- @function [parent=#PageView] getIndicatorEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Remove a page at a given index of PageView.<br>
 -- param index  A given index.
 -- @function [parent=#PageView] removePageAtIndex 
 -- @param self
--- @param #long index
+-- @param #int index
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- brief Get all the pages in the PageView.<br>
--- return A vector of Layout pionters.
--- @function [parent=#PageView] getPages 
+-- brief Get the space between page indicator's index nodes.<br>
+-- return spaceBetweenIndexNodes
+-- @function [parent=#PageView] getIndicatorSpaceBetweenIndexNodes 
 -- @param self
--- @return array_table#array_table ret (return value: array_table)
-        
---------------------------------
--- brief Remove all pages of the PageView.
--- @function [parent=#PageView] removeAllPages 
--- @param self
--- @return PageView#PageView self (return value: ccui.PageView)
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- Insert a page into the end of PageView.<br>
 -- param page Page to be inserted.
 -- @function [parent=#PageView] addPage 
 -- @param self
--- @param #ccui.Layout page
+-- @param #ccui.Widget page
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
@@ -169,21 +253,8 @@
         
 --------------------------------
 -- 
--- @function [parent=#PageView] getLayoutType 
+-- @function [parent=#PageView] doLayout 
 -- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
--- 
--- @function [parent=#PageView] getDescription 
--- @param self
--- @return string#string ret (return value: string)
-        
---------------------------------
--- 
--- @function [parent=#PageView] update 
--- @param self
--- @param #float dt
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
@@ -194,9 +265,17 @@
         
 --------------------------------
 -- 
--- @function [parent=#PageView] setLayoutType 
+-- @function [parent=#PageView] getDescription 
 -- @param self
--- @param #int type
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- Changes direction<br>
+-- Direction Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll.<br>
+-- param direction Set the page view's scroll direction.
+-- @function [parent=#PageView] setDirection 
+-- @param self
+-- @param #int direction
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------

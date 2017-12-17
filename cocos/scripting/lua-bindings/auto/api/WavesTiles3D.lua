@@ -5,7 +5,7 @@
 -- @parent_module cc
 
 --------------------------------
--- brief Set the ampliture rate of the effect.<br>
+-- brief Set the amplitude rate of the effect.<br>
 -- param amplitudeRate The value of amplitude rate will be set.
 -- @function [parent=#WavesTiles3D] setAmplitudeRate 
 -- @param self

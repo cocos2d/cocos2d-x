@@ -23,10 +23,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "InputEvent.h"
-#include "CCWinRTUtils.h"
-#include "CCGLViewImpl-winrt.h"
+#include "platform/winrt/InputEvent.h"
+#include "platform/winrt/CCWinRTUtils.h"
+#include "platform/winrt/CCGLViewImpl-winrt.h"
 #include "base/CCEventAcceleration.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCIMEDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -164,6 +167,24 @@ void UIEditBoxEvent::execute()
     {
         m_handler.Get()->Invoke(m_sender.Get(), m_text.Get());
     }
+}
+
+UIEditBoxEndEvent::UIEditBoxEndEvent(Platform::Object^ sender, Platform::String^ text, int action, Windows::Foundation::EventHandler<cocos2d::EndEventArgs^>^ handle)
+  : m_sender(sender)
+  , m_text(text)
+  , m_action(action)
+  , m_handler(handle)
+{
+
+}
+
+void UIEditBoxEndEvent::execute()
+{
+  if (m_handler.Get())
+  {
+    auto args = ref new EndEventArgs(m_action, m_text.Get());
+    m_handler.Get()->Invoke(m_sender.Get(), args);
+  }
 }
 
 NS_CC_END

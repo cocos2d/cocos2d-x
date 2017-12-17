@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2015 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -27,7 +27,8 @@
 
 #include "platform/CCPlatformConfig.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) && !defined(CC_PLATFORM_OS_TVOS)
+
 
 
 #include "ui/UIWidget.h"
@@ -88,11 +89,18 @@ public:
     void loadHTMLString(const std::string &string, const std::string &baseURL = "");
 
     /**
-     * Loads the given URL.
+     * Loads the given URL. It doesn't clean cached data.
      *
      * @param url Content URL.
      */
     void loadURL(const std::string &url);
+
+    /**
+     * Loads the given URL with cleaning cached data or not.
+     * @param url Content URL.
+     * @cleanCachedData Whether to clean cached data.
+     */
+    void loadURL(const std::string &url, bool cleanCachedData);
 
     /**
      * Loads the given fileName.
@@ -149,7 +157,7 @@ public:
      * Call before a web view begins loading.
      *
      * @param callback The web view that is about to load new content.
-     * @return YES if the web view should begin loading content; otherwise, NO .
+     * @return YES if the web view should begin loading content; otherwise, NO.
      */
     void setOnShouldStartLoading(const std::function<bool(WebView *sender, const std::string &url)>& callback);
     
@@ -197,12 +205,33 @@ public:
      */
     ccWebViewCallback getOnJSCallback()const;
 
+    /**
+     * Set whether the webview bounces at end of scroll of WebView.
+     */
+    void setBounces(bool bounce);
+
     virtual void draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) override;
 
     /**
      * Toggle visibility of WebView.
      */
     virtual void setVisible(bool visible) override;
+    /**
+     * SetOpacity of webview.
+     */
+    virtual void setOpacityWebView(float opacity);
+    
+    /**
+     * getOpacity of webview.
+     */
+    virtual float getOpacityWebView() const;
+    
+    /**
+     * set the background transparent
+     */
+    virtual void setBackgroundTransparent();
+    virtual void onEnter() override;
+    virtual void onExit() override;
     
 protected:
     virtual cocos2d::ui::Widget* createCloneInstance() override;

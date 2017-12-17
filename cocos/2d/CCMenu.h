@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2017 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -92,7 +92,7 @@ public:
 
     /**
      * Creates a Menu with it's item, then use addChild() to add 
-     * other items. It is used for script, it can't init with undetermined
+     * other items. It is used for script, it can't be initialized with undetermined
      * number of variables.
      * @js NA
      */
@@ -142,16 +142,17 @@ public:
     void alignItemsInRowsWithArray(const ValueVector& columns);
 
     /**
-     * Determines if the menu is enable.
+     * Determines if the menu is enabled.
      * @see `setEnabled(bool)`.
      * @return whether the menu is enabled or not.
      */
     virtual bool isEnabled() const { return _enabled; }
 
     /**
-     * Set whether the menu is visible.
+     * Set whether the menu is visible. If set false, interacting with the menu
+     * will have no effect.
      * The default value is true, a menu is default to visible.
-     *@param value true if menu is enable, false if menu is disable.
+     *@param value true if menu is to be enabled, false if menu is to be disabled.
      */
     virtual void setEnabled(bool value) { _enabled = value; };
 
@@ -170,8 +171,8 @@ public:
     
     virtual void onEnter() override;
     virtual void onExit() override;
-    virtual void setOpacityModifyRGB(bool bValue) override {CC_UNUSED_PARAM(bValue);}
-    virtual bool isOpacityModifyRGB(void) const override { return false;}
+    virtual void setOpacityModifyRGB(bool value) override;
+    virtual bool isOpacityModifyRGB(void) const override;
 
     virtual std::string getDescription() const override;
 
