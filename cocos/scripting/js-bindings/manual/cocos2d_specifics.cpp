@@ -806,7 +806,13 @@ static bool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
         bool ok = ret->initWithFunction([=](Node* sender){
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             JS::RootedValue jsvalThis(cx, tmpCobj->getJSCallbackThis());
-            JS::RootedObject thisObj(cx, jsvalThis.toObjectOrNull());
+
+            JS::RootedObject thisObj(cx);
+            if (jsvalThis.isObject())
+            {
+                thisObj.set(jsvalThis.toObjectOrNull());
+            }
+
             JS::RootedValue jsvalCallback(cx, tmpCobj->getJSCallbackFunc());
             JS::RootedValue jsvalExtraData(cx, tmpCobj->getJSExtraData());
 
