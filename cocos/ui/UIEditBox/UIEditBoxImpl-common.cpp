@@ -144,12 +144,12 @@ void EditBoxImplCommon::setInactiveText(const char* pText)
         _label->setString(pText);
     }
     // Clip the text width to fit to the text box
-    float fMaxWidth = _editBox->getContentSize().width;
-    float fMaxHeight = _editBox->getContentSize().height;
+    const auto& editBoxSize = _editBox->getContentSize();
+    const auto maxSize = applyPadding(cocos2d::Size(editBoxSize.width, editBoxSize.height));
     Size labelSize = _label->getContentSize();
-    if(labelSize.width > fMaxWidth || labelSize.height > fMaxHeight)
+    if(labelSize.width > maxSize.width || labelSize.height > maxSize.height)
     {
-        _label->setDimensions(fMaxWidth, fMaxHeight);
+        _label->setDimensions(maxSize.width, maxSize.height);
     }
 }
     
@@ -201,7 +201,7 @@ void EditBoxImplCommon::setInputMode(EditBox::InputMode inputMode)
 {
     _editBoxInputMode = inputMode;
     this->setNativeInputMode(inputMode);
-    this->placeInactiveLabels(_editBox->getContentSize());
+    this->placeInactiveLabels(applyPadding(_editBox->getContentSize()));
 }
 
 void EditBoxImplCommon::setMaxLength(int maxLength)
@@ -282,9 +282,9 @@ void EditBoxImplCommon::setVisible(bool visible)
 
 void EditBoxImplCommon::setContentSize(const Size& size)
 {
-    _contentSize = size;
-    CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
-    placeInactiveLabels(size);
+    _contentSize = applyPadding(size);
+    CCLOG("[Edit text] content size = (%f, %f)", _contentSize.width, _contentSize.height);
+    placeInactiveLabels(_contentSize);
 }
 
 void EditBoxImplCommon::draw(Renderer* /*renderer*/, const Mat4& /*transform*/, uint32_t flags)
@@ -411,6 +411,11 @@ void EditBoxImplCommon::editBoxEditingChanged(const std::string& text)
 }
 
 
+}
+
+Size ui::EditBoxImplCommon::applyPadding(const Size& sizeToCorrect) const {
+  constexpr auto paddingLeftRight = CC_EDIT_BOX_PADDING * 2;
+  return Size(sizeToCorrect.width - paddingLeftRight, sizeToCorrect.height);
 }
 
 NS_CC_END
