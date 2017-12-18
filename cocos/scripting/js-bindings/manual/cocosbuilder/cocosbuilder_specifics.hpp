@@ -29,7 +29,7 @@
 class JSCCBAnimationWrapper: public JSCallbackWrapper 
 {
 public:
-    JSCCBAnimationWrapper(JS::HandleValue owner) : JSCallbackWrapper(owner) {}
+    JSCCBAnimationWrapper() {}
     
     void animationCompleteCallback()
     {

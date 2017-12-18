@@ -121,6 +121,22 @@ static void ReportException(JSContext *cx)
     }
 }
 
+static void onGarbageCollect(JSRuntime* rt, JSGCStatus status, void* data)
+{
+    /* We finalize any pending toggle refs before doing any garbage collection,
+     * so that we can collect the JS wrapper objects, and in order to minimize
+     * the chances of objects having a pending toggle up queued when they are
+     * garbage collected. */
+    if (status == JSGC_BEGIN)
+    {
+        CCLOG("onGarbageCollect begin, native->js map: %d, js->native map: %d", (int)_native_js_global_map.size(), (int)_js_native_global_map.size());
+    }
+    else if (status == JSGC_END)
+    {
+        CCLOG("onGarbageCollect end, native->js map: %d, js->native map: %d", (int)_native_js_global_map.size(), (int)_js_native_global_map.size());
+    }
+}
+
 static void executeJSFunctionFromReservedSpot(JSContext *cx, JS::HandleObject obj,
                                               const JS::HandleValueArray& dataVal, JS::MutableHandleValue retval) {
 
@@ -638,7 +654,9 @@ void ScriptingCore::createGlobalContext() {
     JS_SetGCZeal(this->_cx, 2, JS_DEFAULT_ZEAL_FREQ);
 #endif
 
-    _global = new (std::nothrow) JS::PersistentRootedObject(_rt, NewGlobalObject(_cx));
+    JS_SetGCCallback(_rt, onGarbageCollect, nullptr);
+
+    _global = new (std::nothrow) JS::PersistentRootedObject(_rt, newGlobalObject(_cx, false));
     JS::RootedObject global(_cx, _global->get());
 
     // Removed in Firefox v34
@@ -911,6 +929,7 @@ void ScriptingCore::cleanup()
         JS_DestroyContext(_cx);
         _cx = NULL;
     }
+
     if (_rt)
     {
         JS_DestroyRuntime(_rt);
@@ -1761,6 +1780,11 @@ bool ScriptingCore::isObjectValid(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     if (argc == 1) {
+        if (!args[0].isObject())
+        {
+            args.rval().setBoolean(false);
+            return true;
+        }
         JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
         js_proxy_t *proxy = jsb_get_js_proxy(tmpObj);
         if (proxy && proxy->ptr) {
@@ -2084,7 +2108,7 @@ void ScriptingCore::enableDebugger(unsigned int port)
 
         JS_SetDebugMode(_cx, true);
 
-        _debugGlobal = new (std::nothrow) JS::PersistentRootedObject(_cx, NewGlobalObject(_cx, true));
+        _debugGlobal = new (std::nothrow) JS::PersistentRootedObject(_cx, newGlobalObject(_cx, true));
         // Adds the debugger object to root, otherwise it may be collected by GC.
         //AddObjectRoot(_cx, &_debugGlobal.ref()); no need, it's persistent rooted now
         //JS_WrapObject(_cx, &_debugGlobal.ref()); Not really needed, JS_WrapObject makes a cross-compartment wrapper for the given JS object
@@ -2131,7 +2155,17 @@ JSObject* ScriptingCore::newGlobalObject(JSContext* cx, bool debug)
         return nullptr;
     }
 
-    _oldCompartment = JS_EnterCompartment(cx, glob);
+    JSCompartment* oldDebugCompartment = nullptr;
+
+    if (!debug)
+    {
+        _oldCompartment = JS_EnterCompartment(cx, glob);
+    }
+    else
+    {
+        oldDebugCompartment = JS_EnterCompartment(cx, glob);
+    }
+
 
     bool ok = true;
     ok = JS_InitStandardClasses(cx, glob);
@@ -2143,6 +2177,11 @@ JSObject* ScriptingCore::newGlobalObject(JSContext* cx, bool debug)
         return nullptr;
 
     JS_FireOnNewGlobalObject(cx, glob);
+
+    if (debug)
+    {
+        JS_LeaveCompartment(cx, oldDebugCompartment);
+    }
 
     return glob;
 }
@@ -2373,9 +2412,7 @@ JSObject* jsb_get_or_create_weak_jsobject(JSContext *cx, void *native, js_type_c
     JS::RootedValue flagVal(cx, OBJECT_TO_JSVAL(flag));
     JS_SetProperty(cx, jsObj, "__cppCreated", flagVal);
 
-#if ! CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-    JS::AddNamedObjectRoot(cx, &proxy->obj, debug);
-#else
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     js_add_FinalizeHook(cx, jsObj, false);
 #if COCOS2D_DEBUG > 1
     if (debug != nullptr)
