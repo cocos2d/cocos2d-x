@@ -50,13 +50,11 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Scroll inner container to both direction percent position of scrollview.<br>
--- param percent A value between 0 and 100.<br>
+-- Scroll inner container to bottom boundary of scrollview.<br>
 -- param timeInSec Time in seconds.<br>
 -- param attenuated Whether scroll speed attenuate or not.
--- @function [parent=#ScrollView] scrollToPercentBothDirection 
+-- @function [parent=#ScrollView] scrollToBottom 
 -- @param self
--- @param #vec2_table percent
 -- @param #float timeInSec
 -- @param #bool attenuated
 -- @return ScrollView#ScrollView self (return value: ccui.ScrollView)
@@ -141,9 +139,15 @@
 -- @return ScrollView#ScrollView self (return value: ccui.ScrollView)
         
 --------------------------------
--- Move inner container to top boundary of scrollview.
--- @function [parent=#ScrollView] jumpToTop 
+-- Scroll inner container to both direction percent position of scrollview.<br>
+-- param percent A value between 0 and 100.<br>
+-- param timeInSec Time in seconds.<br>
+-- param attenuated Whether scroll speed attenuate or not.
+-- @function [parent=#ScrollView] scrollToPercentBothDirection 
 -- @param self
+-- @param #vec2_table percent
+-- @param #float timeInSec
+-- @param #bool attenuated
 -- @return ScrollView#ScrollView self (return value: ccui.ScrollView)
         
 --------------------------------
@@ -161,6 +165,12 @@
 -- @function [parent=#ScrollView] getInnerContainerPosition 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- Move inner container to top boundary of scrollview.
+-- @function [parent=#ScrollView] jumpToTop 
+-- @param self
+-- @return ScrollView#ScrollView self (return value: ccui.ScrollView)
         
 --------------------------------
 -- return How far the scroll view is scrolled in the vertical axis
@@ -200,10 +210,10 @@
 -- @return ScrollView#ScrollView self (return value: ccui.ScrollView)
         
 --------------------------------
--- return Whether the ScrollView is currently scrolling because of a bounceback or inertia slowdown.
--- @function [parent=#ScrollView] isAutoScrolling 
+-- Immediately stops inner container scroll (auto scrolling is not affected).
+-- @function [parent=#ScrollView] stopScroll 
 -- @param self
--- @return bool#bool ret (return value: bool)
+-- @return ScrollView#ScrollView self (return value: ccui.ScrollView)
         
 --------------------------------
 -- brief Set the horizontal scroll bar position from left-bottom corner.<br>
@@ -237,14 +247,6 @@
 -- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
--- brief Set the scroll bar's width<br>
--- param width The scroll bar's width
--- @function [parent=#ScrollView] setScrollBarWidth 
--- @param self
--- @param #float width
--- @return ScrollView#ScrollView self (return value: ccui.ScrollView)
-        
---------------------------------
 -- Move inner container to top and left boundary of scrollview.
 -- @function [parent=#ScrollView] jumpToTopLeft 
 -- @param self
@@ -254,6 +256,12 @@
 -- brief Query scroll bar state.<br>
 -- return True if scroll bar is enabled, false otherwise.
 -- @function [parent=#ScrollView] isScrollBarEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- return Whether the ScrollView is currently scrolling because of a bounceback or inertia slowdown.
+-- @function [parent=#ScrollView] isAutoScrolling 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
@@ -340,6 +348,12 @@
 -- @return ScrollView#ScrollView self (return value: ccui.ScrollView)
         
 --------------------------------
+-- Immediately stops inner container scroll if any.
+-- @function [parent=#ScrollView] stopOverallScroll 
+-- @param self
+-- @return ScrollView#ScrollView self (return value: ccui.ScrollView)
+        
+--------------------------------
 -- Scroll inner container to vertical percent position of scrollview.<br>
 -- param percent A value between 0 and 100.<br>
 -- param timeInSec Time in seconds.<br>
@@ -352,13 +366,11 @@
 -- @return ScrollView#ScrollView self (return value: ccui.ScrollView)
         
 --------------------------------
--- Scroll inner container to bottom boundary of scrollview.<br>
--- param timeInSec Time in seconds.<br>
--- param attenuated Whether scroll speed attenuate or not.
--- @function [parent=#ScrollView] scrollToBottom 
+-- brief Set the scroll bar's width<br>
+-- param width The scroll bar's width
+-- @function [parent=#ScrollView] setScrollBarWidth 
 -- @param self
--- @param #float timeInSec
--- @param #bool attenuated
+-- @param #float width
 -- @return ScrollView#ScrollView self (return value: ccui.ScrollView)
         
 --------------------------------
