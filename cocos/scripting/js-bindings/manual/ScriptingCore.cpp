@@ -129,11 +129,11 @@ static void onGarbageCollect(JSRuntime* rt, JSGCStatus status, void* data)
      * garbage collected. */
     if (status == JSGC_BEGIN)
     {
-        CCLOG("onGarbageCollect begin, native->js map: %d, js->native map: %d", (int)_native_js_global_map.size(), (int)_js_native_global_map.size());
+        CCLOGINFO("onGarbageCollect begin, native->js map: %d, js->native map: %d", (int)_native_js_global_map.size(), (int)_js_native_global_map.size());
     }
     else if (status == JSGC_END)
     {
-        CCLOG("onGarbageCollect end, native->js map: %d, js->native map: %d", (int)_native_js_global_map.size(), (int)_js_native_global_map.size());
+        CCLOGINFO("onGarbageCollect end, native->js map: %d, js->native map: %d", (int)_native_js_global_map.size(), (int)_js_native_global_map.size());
     }
 }
 
