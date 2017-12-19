@@ -303,7 +303,6 @@ private:
         jsval dataVal = OBJECT_TO_JSVAL(p->obj);
 
         JS::RootedObject obj(cx, _JSTableViewDataSource);
-        // JSAutoCompartment ac(cx, obj);
 
         if (JS_HasProperty(cx, obj, jsFunctionName.c_str(), &hasAction) && hasAction)
         {
@@ -336,7 +335,6 @@ private:
         dataVal[1] = ssize_to_jsval(cx,idx);
 
         JS::RootedObject obj(cx, _JSTableViewDataSource);
-        // JSAutoCompartment ac(cx, obj);
 
         if (JS_HasProperty(cx, obj, jsFunctionName.c_str(), &hasAction) && hasAction)
         {
@@ -928,50 +926,42 @@ void JSDownloaderDelegator::download()
 
 void JSDownloaderDelegator::onError()
 {
-//    Director::getInstance()->getScheduler()->performFunctionInCocosThread([this]
-//    {
-        JS::RootedValue callback(_cx, *_jsCallback);
-        if (!callback.isNull()) {
-            JS::RootedObject global(_cx, ScriptingCore::getInstance()->getGlobalObject());
-            // JSAutoCompartment ac(_cx, global);
+    JS::RootedValue callback(_cx, *_jsCallback);
+    if (!callback.isNull()) {
+        JS::RootedObject global(_cx, ScriptingCore::getInstance()->getGlobalObject());
 
-            jsval succeed = BOOLEAN_TO_JSVAL(false);
-            JS::RootedValue retval(_cx);
-            JS_CallFunctionValue(_cx, global, callback, JS::HandleValueArray::fromMarkedLocation(1, &succeed), &retval);
-        }
-        release();
-//    });
+        jsval succeed = BOOLEAN_TO_JSVAL(false);
+        JS::RootedValue retval(_cx);
+        JS_CallFunctionValue(_cx, global, callback, JS::HandleValueArray::fromMarkedLocation(1, &succeed), &retval);
+    }
+    release();
 }
 
 void JSDownloaderDelegator::onSuccess(Texture2D *tex)
 {
     CCASSERT(tex, "JSDownloaderDelegator::onSuccess must make sure tex not null!");
-    //Director::getInstance()->getScheduler()->performFunctionInCocosThread([this, tex]
+    JS::RootedObject global(_cx, ScriptingCore::getInstance()->getGlobalObject());
+
+    jsval valArr[2];
+    if (tex)
     {
-        JS::RootedObject global(_cx, ScriptingCore::getInstance()->getGlobalObject());
-        // JSAutoCompartment ac(_cx, global);
+        valArr[0] = BOOLEAN_TO_JSVAL(true);
+        JS::RootedObject jsobj(_cx, js_get_or_create_jsobject<Texture2D>(_cx, tex));
+        valArr[1] = OBJECT_TO_JSVAL(jsobj);
+    }
+    else
+    {
+        valArr[0] = BOOLEAN_TO_JSVAL(false);
+        valArr[1] = JSVAL_NULL;
+    }
 
-        jsval valArr[2];
-        if (tex)
-        {
-            valArr[0] = BOOLEAN_TO_JSVAL(true);
-            JS::RootedObject jsobj(_cx, js_get_or_create_jsobject<Texture2D>(_cx, tex));
-            valArr[1] = OBJECT_TO_JSVAL(jsobj);
-        }
-        else
-        {
-            valArr[0] = BOOLEAN_TO_JSVAL(false);
-            valArr[1] = JSVAL_NULL;
-        }
-
-        JS::RootedValue callback(_cx, *_jsCallback);
-        if (!callback.isNull())
-        {
-            JS::RootedValue retval(_cx);
-            JS_CallFunctionValue(_cx, global, callback, JS::HandleValueArray::fromMarkedLocation(2, valArr), &retval);
-        }
-        release();
-    }//);
+    JS::RootedValue callback(_cx, *_jsCallback);
+    if (!callback.isNull())
+    {
+        JS::RootedValue retval(_cx);
+        JS_CallFunctionValue(_cx, global, callback, JS::HandleValueArray::fromMarkedLocation(2, valArr), &retval);
+    }
+    release();
 }
 
 // jsb.loadRemoteImg(url, function(succeed, result) {})
