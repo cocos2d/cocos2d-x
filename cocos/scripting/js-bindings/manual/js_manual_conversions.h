@@ -82,7 +82,6 @@ public:
     JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval, JS::HandleValue owner);
     ~JSFunctionWrapper();
 
-    void setOwner(JSContext* cx, JS::HandleValue owner);
     bool invoke(unsigned int argc, jsval *argv, JS::MutableHandleValue rval);
     bool invoke(JS::HandleValueArray args, JS::MutableHandleValue rval);
 private:

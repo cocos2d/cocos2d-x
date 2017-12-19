@@ -815,10 +815,6 @@ bool js_cocos2dx_extension_EventListenerAssetsManagerEx_create(JSContext *cx, ui
         if (ret) {
             JS::RootedObject jsobj(cx, js_get_or_create_jsobject<cocos2d::extension::EventListenerAssetsManagerEx>(cx, ret));
             jsret = OBJECT_TO_JSVAL(jsobj);
-            if (wrapper)
-            {
-                wrapper->setOwner(cx, jsret);
-            }
         } else {
             jsret = JS::NullValue();
         }
