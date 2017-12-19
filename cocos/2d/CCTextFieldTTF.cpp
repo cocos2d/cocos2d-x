@@ -566,7 +566,8 @@ void TextFieldTTF::makeStringSupportCursor(std::string& displayText)
         if (displayText.empty())
         {
             // \b - Next char not change x position
-            displayText.push_back((char)TextFormatter::NextCharNoChangeX);
+            if (_currentLabelType == LabelType::TTF)
+                displayText.push_back((char) TextFormatter::NextCharNoChangeX);
             displayText.push_back(_cursorChar);
         }
         else
@@ -581,7 +582,8 @@ void TextFieldTTF::makeStringSupportCursor(std::string& displayText)
             }
             std::string cursorChar;
             // \b - Next char not change x position
-            cursorChar.push_back((char)TextFormatter::NextCharNoChangeX);
+            if (_currentLabelType == LabelType::TTF)
+                cursorChar.push_back((char)TextFormatter::NextCharNoChangeX);
             cursorChar.push_back(_cursorChar);
             stringUTF8.insert(_cursorPosition, cursorChar);
 
@@ -679,28 +681,21 @@ const std::string& TextFieldTTF::getPlaceHolder() const
 
 void TextFieldTTF::setCursorEnabled(bool enabled)
 {
-    if (_currentLabelType == LabelType::TTF)
+    if (_cursorEnabled != enabled)
     {
-        if (_cursorEnabled != enabled)
+        _cursorEnabled = enabled;
+        if (_cursorEnabled)
         {
-            _cursorEnabled = enabled;
-            if (_cursorEnabled)
-            {
-                _cursorPosition = _charCount;
-
+            _cursorPosition = _charCount;
+            if (_currentLabelType == LabelType::TTF)
                 scheduleUpdate();
-            }
-            else
-            {
-                _cursorPosition = 0;
-
-                unscheduleUpdate();
-            }
         }
-    }
-    else
-    {
-        CCLOG("TextFieldTTF cursor worked only LabelType::TTF");
+        else
+        {
+            _cursorPosition = 0;
+            if (_currentLabelType == LabelType::TTF)
+                unscheduleUpdate();
+        }
     }
 }
 
