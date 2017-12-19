@@ -74,6 +74,10 @@
 #define TRACE_DEBUGGER_SERVER(...)
 #endif // #if COCOS2D_DEBUG
 
+#if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+#error "The functionality of JS controls C++ object's lifecycle isn't stable enough, please don't enable it now."
+#endif
+
 #define BYTE_CODE_FILE_EXT ".jsc"
 
 using namespace cocos2d;
