@@ -31,8 +31,10 @@
 
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
+#include "network/CCDownloader.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCTextureCube.h"
+#include "renderer/CCTexture2D.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -827,50 +829,54 @@ bool js_cocos2dx_extension_EventListenerAssetsManagerEx_create(JSContext *cx, ui
     return false;
 }
 
-__JSDownloaderDelegator::__JSDownloaderDelegator(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleObject callback)
+class JSDownloaderDelegator : cocos2d::Ref
+{
+public:
+    void download();
+
+    static JSDownloaderDelegator *create(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleValue callback);
+
+protected:
+    JSDownloaderDelegator(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleValue callback);
+    ~JSDownloaderDelegator();
+
+    void startDownload();
+
+private:
+    void onSuccess(cocos2d::Texture2D *tex);
+    void onError();
+    std::shared_ptr<cocos2d::network::Downloader> _downloader;
+    std::string _url;
+    JSContext *_cx;
+    JS::PersistentRootedValue* _jsCallback;
+    JS::PersistentRootedObject* _obj;
+};
+
+JSDownloaderDelegator::JSDownloaderDelegator(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleValue callback)
 : _cx(cx)
 , _url(url)
 {
-    _obj = obj;
-    _jsCallback = callback;
-
-    JS::RootedValue target(cx, OBJECT_TO_JSVAL(obj));
-    if (!target.isNullOrUndefined())
-    {
-        js_add_object_root(target);
-    }
-    target.set(OBJECT_TO_JSVAL(callback));
-    if (!target.isNullOrUndefined())
-    {
-        js_add_object_root(target);
-    }
+    _obj = new (std::nothrow) JS::PersistentRootedObject(cx, obj);
+    _jsCallback = new (std::nothrow) JS::PersistentRootedValue(cx, callback);
 }
 
-__JSDownloaderDelegator::~__JSDownloaderDelegator()
+JSDownloaderDelegator::~JSDownloaderDelegator()
 {
-    JS::RootedValue target(_cx, OBJECT_TO_JSVAL(_obj));
-    if (!target.isNullOrUndefined())
-    {
-        js_remove_object_root(target);
-    }
-    target.set(OBJECT_TO_JSVAL(_jsCallback));
-    if (!target.isNullOrUndefined())
-    {
-        js_remove_object_root(target);
-    }
+    CC_SAFE_DELETE(_obj);
+    CC_SAFE_DELETE(_jsCallback);
 
-    _downloader->onTaskError = (nullptr);
-    _downloader->onDataTaskSuccess = (nullptr);
+    _downloader->onTaskError = nullptr;
+    _downloader->onDataTaskSuccess = nullptr;
 }
 
-__JSDownloaderDelegator *__JSDownloaderDelegator::create(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleObject callback)
+JSDownloaderDelegator *JSDownloaderDelegator::create(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleValue callback)
 {
-    __JSDownloaderDelegator *delegate = new (std::nothrow) __JSDownloaderDelegator(cx, obj, url, callback);
+    JSDownloaderDelegator *delegate = new (std::nothrow) JSDownloaderDelegator(cx, obj, url, callback);
     delegate->autorelease();
     return delegate;
 }
 
-void __JSDownloaderDelegator::startDownload()
+void JSDownloaderDelegator::startDownload()
 {
     if (auto texture = Director::getInstance()->getTextureCache()->getTextureForKey(_url))
     {
@@ -918,24 +924,17 @@ void __JSDownloaderDelegator::startDownload()
     }
 }
 
-void __JSDownloaderDelegator::download()
+void JSDownloaderDelegator::download()
 {
     retain();
     startDownload();
 }
 
-void __JSDownloaderDelegator::downloadAsync()
+void JSDownloaderDelegator::onError()
 {
-    retain();
-    auto t = std::thread(&__JSDownloaderDelegator::startDownload, this);
-    t.detach();
-}
-
-void __JSDownloaderDelegator::onError()
-{
-    Director::getInstance()->getScheduler()->performFunctionInCocosThread([this]
-    {
-        JS::RootedValue callback(_cx, OBJECT_TO_JSVAL(_jsCallback));
+//    Director::getInstance()->getScheduler()->performFunctionInCocosThread([this]
+//    {
+        JS::RootedValue callback(_cx, *_jsCallback);
         if (!callback.isNull()) {
             JS::RootedObject global(_cx, ScriptingCore::getInstance()->getGlobalObject());
             // JSAutoCompartment ac(_cx, global);
@@ -945,12 +944,12 @@ void __JSDownloaderDelegator::onError()
             JS_CallFunctionValue(_cx, global, callback, JS::HandleValueArray::fromMarkedLocation(1, &succeed), &retval);
         }
         release();
-    });
+//    });
 }
 
-void __JSDownloaderDelegator::onSuccess(Texture2D *tex)
+void JSDownloaderDelegator::onSuccess(Texture2D *tex)
 {
-    CCASSERT(tex, "__JSDownloaderDelegator::onSuccess must make sure tex not null!");
+    CCASSERT(tex, "JSDownloaderDelegator::onSuccess must make sure tex not null!");
     //Director::getInstance()->getScheduler()->performFunctionInCocosThread([this, tex]
     {
         JS::RootedObject global(_cx, ScriptingCore::getInstance()->getGlobalObject());
@@ -969,7 +968,7 @@ void __JSDownloaderDelegator::onSuccess(Texture2D *tex)
             valArr[1] = JSVAL_NULL;
         }
 
-        JS::RootedValue callback(_cx, OBJECT_TO_JSVAL(_jsCallback));
+        JS::RootedValue callback(_cx, *_jsCallback);
         if (!callback.isNull())
         {
             JS::RootedValue retval(_cx);
@@ -989,10 +988,8 @@ bool js_load_remote_image(JSContext *cx, uint32_t argc, jsval *vp)
         std::string url;
         bool ok = jsval_to_std_string(cx, args.get(0), &url);
         JSB_PRECONDITION2(ok, cx, false, "js_load_remote_image : Error processing arguments");
-        JS::RootedObject callback(cx, args.get(1).toObjectOrNull());
-
-        __JSDownloaderDelegator *delegate = __JSDownloaderDelegator::create(cx, obj, url, callback);
-        delegate->downloadAsync();
+        JSDownloaderDelegator *delegate = JSDownloaderDelegator::create(cx, obj, url, args[1]);
+        delegate->download();
 
         args.rval().setUndefined();
         return true;
