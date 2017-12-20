@@ -3038,13 +3038,11 @@ isInertiaScrollEnabled : function (
 },
 
 /**
- * @method scrollToPercentBothDirection
- * @param {vec2_object} arg0
- * @param {float} arg1
- * @param {bool} arg2
+ * @method scrollToBottom
+ * @param {float} arg0
+ * @param {bool} arg1
  */
-scrollToPercentBothDirection : function (
-vec2, 
+scrollToBottom : function (
 float, 
 bool 
 )
@@ -3152,9 +3150,15 @@ jumpToTopRight : function (
 },
 
 /**
- * @method jumpToTop
+ * @method scrollToPercentBothDirection
+ * @param {vec2_object} arg0
+ * @param {float} arg1
+ * @param {bool} arg2
  */
-jumpToTop : function (
+scrollToPercentBothDirection : function (
+vec2, 
+float, 
+bool 
 )
 {
 },
@@ -3177,6 +3181,14 @@ getInnerContainerPosition : function (
 )
 {
     return cc.Vec2;
+},
+
+/**
+ * @method jumpToTop
+ */
+jumpToTop : function (
+)
+{
 },
 
 /**
@@ -3230,13 +3242,11 @@ float
 },
 
 /**
- * @method isAutoScrolling
- * @return {bool}
+ * @method stopScroll
  */
-isAutoScrolling : function (
+stopScroll : function (
 )
 {
-    return false;
 },
 
 /**
@@ -3280,16 +3290,6 @@ getScrollBarColor : function (
 },
 
 /**
- * @method setScrollBarWidth
- * @param {float} arg0
- */
-setScrollBarWidth : function (
-float 
-)
-{
-},
-
-/**
  * @method jumpToTopLeft
  */
 jumpToTopLeft : function (
@@ -3302,6 +3302,16 @@ jumpToTopLeft : function (
  * @return {bool}
  */
 isScrollBarEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isAutoScrolling
+ * @return {bool}
+ */
+isAutoScrolling : function (
 )
 {
     return false;
@@ -3418,6 +3428,14 @@ vec2
 },
 
 /**
+ * @method stopOverallScroll
+ */
+stopOverallScroll : function (
+)
+{
+},
+
+/**
  * @method scrollToPercentVertical
  * @param {float} arg0
  * @param {float} arg1
@@ -3432,13 +3450,11 @@ bool
 },
 
 /**
- * @method scrollToBottom
+ * @method setScrollBarWidth
  * @param {float} arg0
- * @param {bool} arg1
  */
-scrollToBottom : function (
-float, 
-bool 
+setScrollBarWidth : function (
+float 
 )
 {
 },
