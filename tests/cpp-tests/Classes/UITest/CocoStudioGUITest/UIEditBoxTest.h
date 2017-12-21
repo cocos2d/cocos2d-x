@@ -72,4 +72,12 @@ protected:
     cocos2d::Node* _editEmailParent;
 };
 
+class UIEditBoxTestTextHorizontalAlignment : public UIScene
+{
+public:
+    CREATE_FUNC(UIEditBoxTestTextHorizontalAlignment);
+    
+    virtual bool init() override;
+};
+
 #endif /* defined(__cocos2d_tests__UIEditBoxTest__) */
