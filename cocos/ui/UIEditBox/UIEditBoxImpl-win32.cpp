@@ -222,19 +222,13 @@ namespace ui {
         switch (alignment)
         {
         case TextHAlignment::LEFT:
-            style |= ES_LEFT;
-            style &= ~ES_CENTER;
-            style &= ~ES_RIGHT;
+            style = (style & ~ES_CENTER & ~ES_RIGHT) | ES_LEFT;
             break;
         case TextHAlignment::CENTER:
-            style &= ~ES_LEFT;
-            style |= ES_CENTER;
-            style &= ~ES_RIGHT;
+            style = (style & ~ES_LEFT & ~ES_RIGHT) | ES_CENTER;
             break;
         case TextHAlignment::RIGHT:
-            style &= ~ES_LEFT;
-            style &= ~ES_CENTER;
-            style |= ES_RIGHT;
+            style = (style & ~ES_LEFT & ~ES_CENTER) | ES_RIGHT;
             break;
         }
         ::SetWindowLongW(_hwndEdit, GWL_STYLE, style);
