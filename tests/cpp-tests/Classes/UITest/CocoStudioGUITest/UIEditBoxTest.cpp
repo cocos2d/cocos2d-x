@@ -33,6 +33,7 @@ UIEditBoxTests::UIEditBoxTests()
 {
     ADD_TEST_CASE(UIEditBoxTest);
     ADD_TEST_CASE(UIEditBoxTestToggleVisibility);
+    ADD_TEST_CASE(UIEditBoxTestTextHorizontalAlignment);
 }
 
 // UIEditBoxTest
@@ -173,6 +174,7 @@ void UIEditBoxTest::editBoxReturn(ui::EditBox* editBox)
     }
 }
 
+// UIEditBoxTestToggleVisibility
 
 bool UIEditBoxTestToggleVisibility::init()
 {
@@ -301,4 +303,69 @@ void UIEditBoxTestToggleVisibility::editBoxReturn(ui::EditBox* editBox)
     {
         _TTFShowEditReturn->setString("Email EditBox return !");
     }
+}
+
+// UIEditBoxTestTextHorizontalAlignment
+
+bool UIEditBoxTestTextHorizontalAlignment::init()
+{
+    if (UIScene::init())
+    {
+        auto glview = Director::getInstance()->getOpenGLView();
+        auto visibleOrigin = glview->getVisibleOrigin();
+        auto visibleSize = glview->getVisibleSize();
+
+        auto pBg = Sprite::create("Images/HelloWorld.png");
+        pBg->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
+        addChild(pBg);
+
+        auto editBoxSize = Size(visibleSize.width - 100, visibleSize.height * 0.1);
+
+        // top
+        std::string pNormalSprite = "extensions/green_edit.png";
+        ui::EditBox* editName = ui::EditBox::create(editBoxSize + Size(0,40), ui::Scale9Sprite::create(pNormalSprite));
+        editName->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-50, visibleOrigin.y+visibleSize.height*3/4));
+        editName->setFontColor(Color3B::RED);
+        editName->setPlaceHolder("Name:");
+        editName->setPlaceholderFontColor(Color3B::WHITE);
+        editName->setMaxLength(8);
+        editName->setFontSize(editBoxSize.height/2);
+        editName->setTextHorizontalAlignment(TextHAlignment::LEFT);
+        editName->setText("v👐👊💝");
+        editName->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
+        addChild(editName);
+
+        // middle
+        ui::EditBox* editPassword = ui::EditBox::create(editBoxSize, "extensions/orange_edit.png");
+        editPassword->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-50, visibleOrigin.y+visibleSize.height/2));
+        editPassword->setFontColor(Color3B::GREEN);
+        editPassword->setPlaceHolder("Password:");
+        editPassword->setMaxLength(6);
+        editPassword->setInputFlag(ui::EditBox::InputFlag::PASSWORD);
+        editPassword->setInputMode(ui::EditBox::InputMode::SINGLE_LINE);
+        editPassword->setFontSize(editBoxSize.height/2);
+        editPassword->setTextHorizontalAlignment(TextHAlignment::CENTER);
+        addChild(editPassword);
+
+        // bottom
+        // Add an intermediate Node to test scaling and content size relative to world
+        Node* editEmailParent = Node::create();
+//        _editEmailParent->setScale(0.5);
+        editEmailParent->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-50, visibleOrigin.y+visibleSize.height/4));
+        addChild(editEmailParent);
+
+        auto bottomButtonSize = Size(editBoxSize.width, editBoxSize.height + 10);
+        ui::EditBox* editEmail = ui::EditBox::create(bottomButtonSize, "extensions/yellow_edit.png");
+        editEmail->setPlaceHolder("Email:");
+        editEmail->setInputMode(ui::EditBox::InputMode::EMAIL_ADDRESS);
+        editEmail->setVisible(true);
+        editEmailParent->addChild(editEmail);
+        //It is required to use setFontSize and setContentSize after adding it to the hierarchy, so that native EditBox get the right size
+        editEmail->setFontSize(30);
+        editEmail->setContentSize(bottomButtonSize);
+        editEmail->setTextHorizontalAlignment(TextHAlignment::RIGHT);
+
+        return true;
+    }
+    return false;
 }
