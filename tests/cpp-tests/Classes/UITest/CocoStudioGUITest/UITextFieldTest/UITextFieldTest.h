@@ -104,6 +104,21 @@ protected:
     cocos2d::ui::Text* _displayValueLabel;
 };
 
+class UITextFieldTest_BMFont : public UIScene
+{
+public:
+    CREATE_FUNC(UITextFieldTest_BMFont);
+    
+    UITextFieldTest_BMFont();
+    ~UITextFieldTest_BMFont();
+    virtual bool init() override;
+    void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType type);
+    
+protected:
+    
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
 class UITextFieldTest_PlaceHolderColor : public UIScene
 {
 public:

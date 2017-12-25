@@ -279,6 +279,7 @@ protected:
     void makeStringSupportCursor(std::string& displayText);
     void updateCursorDisplayText();
     void setAttachWithIME(bool isAttachWithIME);
+    void setTextColorInternally(const Color4B& color);
 
 private:
     class LengthStack;
