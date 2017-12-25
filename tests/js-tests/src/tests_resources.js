@@ -705,7 +705,7 @@ var g_spine = [
     "spine/sprite.png",
     "spine/goblins.png",
     "spine/goblins.atlas",
-    "spine/goblins_mesh.json"
+    "spine/goblins-pro.json"
 ];
 
 if (!cc.sys.isNative) {
