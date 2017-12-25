@@ -1000,8 +1000,6 @@ bool Label::setTTFConfigInternal(const TTFConfig& ttfConfig)
 
     if (_fontConfig.italics)
         this->enableItalics();
-    if (_fontConfig.bold)
-        this->enableBold();
     if (_fontConfig.underline)
         this->enableUnderline();
     if (_fontConfig.strikethrough)
@@ -1149,7 +1147,16 @@ void Label::enableItalics()
 
 void Label::enableBold()
 {
-    if (!_boldEnabled)
+    if (_currentLabelType == LabelType::TTF) 
+    {
+        // use freetype to support bold only for ttf
+        if (_fontConfig.bold == false)
+        {
+            _fontConfig.bold = true;
+            setTTFConfig(_fontConfig);
+        }
+    }
+    else if (!_boldEnabled)
     {
         // bold is implemented with outline
         enableShadow(Color4B::WHITE, Size(0.9f, 0), 0);
@@ -1221,7 +1228,15 @@ void Label::disableEffect(LabelEffect effect)
             setRotationSkewX(0);
             break;
         case cocos2d::LabelEffect::BOLD:
-            if (_boldEnabled) {
+            if (_currentLabelType == LabelType::TTF) // only for ttf
+            {
+                if (_fontConfig.bold == true)
+                {
+                    _fontConfig.bold = false;
+                    setTTFConfig(_fontConfig);
+                }
+            }
+            else if (_boldEnabled) {
                 _boldEnabled = false;
                 _additionalKerning -= 1;
                 disableEffect(LabelEffect::SHADOW);
