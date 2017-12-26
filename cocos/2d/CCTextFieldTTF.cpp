@@ -570,7 +570,7 @@ void TextFieldTTF::makeStringSupportCursor(std::string& displayText)
         if (displayText.empty())
         {
             // \b - Next char not change x position
-            if (_currentLabelType == LabelType::TTF)
+            if (_currentLabelType == LabelType::TTF || _currentLabelType == LabelType::BMFONT)
                 displayText.push_back((char) TextFormatter::NextCharNoChangeX);
             displayText.push_back(_cursorChar);
         }
@@ -586,7 +586,7 @@ void TextFieldTTF::makeStringSupportCursor(std::string& displayText)
             }
             std::string cursorChar;
             // \b - Next char not change x position
-            if (_currentLabelType == LabelType::TTF)
+            if (_currentLabelType == LabelType::TTF || _currentLabelType == LabelType::BMFONT)
                 cursorChar.push_back((char)TextFormatter::NextCharNoChangeX);
             cursorChar.push_back(_cursorChar);
             stringUTF8.insert(_cursorPosition, cursorChar);
@@ -702,7 +702,7 @@ void TextFieldTTF::setCursorEnabled(bool enabled)
     
     _cursorPosition = 0;
     if (_currentLabelType == LabelType::TTF || _currentLabelType == LabelType::BMFONT) {
-            unscheduleUpdate();
+        unscheduleUpdate();
     }
 }
 

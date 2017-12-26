@@ -469,7 +469,9 @@ void TextField::setFontName(const std::string& name)
 {
     if(FileUtils::getInstance()->isFileExist(name))
     {
-        if (name.find(".fnt") != std::string::npos) {
+        std::string lcName = name;
+        std::transform(lcName.begin(), lcName.end(), lcName.begin(), ::tolower);
+        if(lcName.substr(lcName.length() - 4) == ".fnt") {
             _textFieldRenderer->setBMFontFilePath(name);
             _fontType = FontType::BMFONT;
         }
