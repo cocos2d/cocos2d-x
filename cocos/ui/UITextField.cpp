@@ -316,6 +316,20 @@ TextField* TextField::create(const std::string &placeholder, const std::string &
     return nullptr;
 }
     
+TextField* TextField::createWithBMFont(const std::string &placeholder, const std::string &fontName)
+{
+    TextField* widget = new (std::nothrow) TextField();
+    if (widget && widget->init())
+    {
+        widget->setFontName(fontName);
+        widget->setPlaceHolder(placeholder);
+        widget->autorelease();
+        return widget;
+    }
+    CC_SAFE_DELETE(widget);
+    return nullptr;
+}
+    
 bool TextField::init()
 {
     if (Widget::init())

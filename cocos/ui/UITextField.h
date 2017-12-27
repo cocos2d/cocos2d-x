@@ -300,6 +300,15 @@ public:
                              int fontSize);
     
     /**
+     * @brief Create a TextField with a placeholder and a font name.
+     *
+     * @param placeholder The placeholder string.
+     * @param fontName The font name.
+     * @return A TextField instance.
+     */
+    static TextField* createWithBMFont(const std::string& placeholder, const std::string& fontName);
+    
+    /**
      * @brief Set the touch size
      * The touch size is used for @see `hitTest`.
      * @param size A delimitation zone.

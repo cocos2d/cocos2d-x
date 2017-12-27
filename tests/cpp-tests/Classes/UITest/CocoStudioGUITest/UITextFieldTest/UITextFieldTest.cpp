@@ -446,7 +446,7 @@ bool UITextFieldTest_BMFont::init()
         _uiLayer->addChild(alert);
         
         // Create the textfield
-        TextField* textField = TextField::create("input words here","fonts/bitmapFontTest3.fnt",14);
+        TextField* textField = TextField::createWithBMFont("input words here","fonts/bitmapFontTest3.fnt");
         textField->setCursorEnabled(true);
         textField->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         textField->addEventListener(CC_CALLBACK_2(UITextFieldTest_BMFont::textFieldEvent, this));
