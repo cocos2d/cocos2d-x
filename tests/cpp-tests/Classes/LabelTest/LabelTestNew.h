@@ -805,6 +805,19 @@ public:
     cocos2d::Label* _label2a;
 };
 
+class LabelBoldAndOutline : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelBoldAndOutline);
+
+    LabelBoldAndOutline();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    cocos2d::Label* _label1a;
+    cocos2d::Label* _label2a;
+};
+
 class LabelUnderline : public AtlasDemoNew
 {
 public:

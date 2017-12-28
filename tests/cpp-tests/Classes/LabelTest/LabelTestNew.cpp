@@ -105,6 +105,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelUnderlineMultiline);
     ADD_TEST_CASE(LabelItalics);
     ADD_TEST_CASE(LabelBold);
+    ADD_TEST_CASE(LabelBoldAndOutline);
 
     ADD_TEST_CASE(LabelLocalizationTest);
 
@@ -3003,6 +3004,68 @@ std::string LabelBold::subtitle() const
 
 ///
 
+LabelBoldAndOutline::LabelBoldAndOutline()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    // LabelSystemFont
+    _label1a = Label::createWithSystemFont("System Font Text", "Arial", 30);
+    _label1a->setPosition(Vec2(s.width/2, s.height*2/3));
+    _label1a->enableBold();
+    _label1a->enableOutline(Color4B::BLUE, 2);
+    addChild(_label1a);
+
+    // LabelTTF
+    TTFConfig ttfConfig("fonts/arial.ttf",24);
+    ttfConfig.bold = true;
+    ttfConfig.outlineSize = 2;
+    _label2a = Label::createWithTTF(ttfConfig, "TTF Font Text", TextHAlignment::CENTER,s.width);
+    addChild(_label2a);
+    _label2a->setPosition(Vec2(s.width/2, s.height*1/2));
+    _label2a->enableOutline(Color4B::BLUE);
+
+    auto menuItem = MenuItemFont::create("switch bold", [&](cocos2d::Ref* sender) {
+        if(_label2a->getTTFConfig().bold){
+            _label2a->disableEffect(LabelEffect::BOLD);
+            _label1a->disableEffect(LabelEffect::BOLD);
+        }
+        else
+        {
+            _label2a->enableBold();
+            _label1a->enableBold();
+        }
+    });
+    menuItem->setFontSizeObj(12);
+    auto menuItem2 = MenuItemFont::create("switch outline", [&](cocos2d::Ref* sender) {
+        if(_label2a->getTTFConfig().outlineSize > 0){
+            _label2a->disableEffect(LabelEffect::OUTLINE);
+            _label1a->disableEffect(LabelEffect::OUTLINE);
+        }
+        else
+        {
+            _label2a->enableOutline(Color4B::BLUE, 2);
+            _label1a->enableOutline(Color4B::BLUE, 2);
+        }
+    });
+    menuItem2->setFontSizeObj(12);
+    menuItem2->setPosition(0.0, s.height * 0.1f);
+    auto menu = Menu::create(menuItem, menuItem2, nullptr);
+    addChild(menu);
+    menu->setPosition(s.width * 0.9, s.height * 0.3f);
+}
+
+std::string LabelBoldAndOutline::title() const
+{
+    return "Testing Bold and Outline";
+}
+
+std::string LabelBoldAndOutline::subtitle() const
+{
+    return "";
+}
+
+///
+
 LabelUnderline::LabelUnderline()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -3435,5 +3498,3 @@ std::string LabelIssue17902::subtitle() const
 {
     return "";
 }
-
-

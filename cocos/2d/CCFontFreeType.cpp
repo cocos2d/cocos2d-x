@@ -58,7 +58,7 @@ FontFreeType * FontFreeType::create(const std::string &fontName, float fontSize,
 
     if (bold)
     {
-        tempFont->_boldSize = CC_CONTENT_SCALE_FACTOR() * 64;
+        tempFont->_boldSize = static_cast<int>(64.f * CC_CONTENT_SCALE_FACTOR());
     }
 
     if (!tempFont)
@@ -179,7 +179,7 @@ bool FontFreeType::createFontObject(const std::string &fontName, float fontSize)
 
     // set the requested font size
     int dpi = 72;
-    int fontSizePoints = (int)(64.f * fontSize * CC_CONTENT_SCALE_FACTOR());
+    int fontSizePoints = static_cast<int>(64.f * fontSize * CC_CONTENT_SCALE_FACTOR());
     if (FT_Set_Char_Size(face, fontSizePoints, fontSizePoints, dpi, dpi))
         return false;
     
