@@ -126,9 +126,9 @@ void ActionInterval::step(float dt)
     }
     
     
-    float updateDt = MAX (0,                                  // needed for rewind. elapsed could be negative
-                           MIN(1, _elapsed / _duration)
-                           );
+    float updateDt = std::max(0.0f,                                  // needed for rewind. elapsed could be negative
+                              std::min(1.0f, _elapsed / _duration)
+                              );
 
     if (sendUpdateEventToScript(updateDt, this)) return;
     
