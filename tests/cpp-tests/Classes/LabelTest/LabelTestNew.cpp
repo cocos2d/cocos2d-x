@@ -1188,6 +1188,14 @@ LabelOutlineAndGlowTest::LabelOutlineAndGlowTest()
     label4->setTextColor( Color4B::RED );
     label4->enableOutline(Color4B::BLUE);
     addChild(label4);
+
+    ttfConfig.outlineSize = 3;
+    auto label5 = Label::createWithTTF(ttfConfig,"Outline and Bold", TextHAlignment::CENTER, size.width);
+    label5->setPosition( Vec2(size.width/2, size.height*0.24) );
+    label5->setTextColor( Color4B::RED );
+    label5->enableOutline(Color4B::BLUE);
+    label5->enableBold();
+    addChild(label5);
 }
 
 std::string LabelOutlineAndGlowTest::title() const
@@ -1197,7 +1205,7 @@ std::string LabelOutlineAndGlowTest::title() const
 
 std::string LabelOutlineAndGlowTest::subtitle() const
 {
-    return "Testing outline and glow of label";
+    return "Testing outline, glow and bold of label";
 }
 
 LabelShadowTest::LabelShadowTest()
