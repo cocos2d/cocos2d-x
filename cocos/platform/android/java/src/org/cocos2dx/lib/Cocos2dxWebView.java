@@ -50,7 +50,7 @@ public class Cocos2dxWebView extends WebView {
         this.mJSScheme = "";
 
         this.setFocusable(true);
-        this.setFocusableInTouchMode(true);
+        this.setFocusableInTouchMode(false);
 
         this.getSettings().setSupportZoom(false);
 
