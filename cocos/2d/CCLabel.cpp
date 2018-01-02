@@ -1000,8 +1000,6 @@ bool Label::setTTFConfigInternal(const TTFConfig& ttfConfig)
 
     if (_fontConfig.italics)
         this->enableItalics();
-    if (_fontConfig.bold)
-        this->enableBold();
     if (_fontConfig.underline)
         this->enableUnderline();
     if (_fontConfig.strikethrough)
@@ -1149,22 +1147,22 @@ void Label::enableItalics()
 
 void Label::enableBold()
 {
-    if (!_boldEnabled)
+    if (_currentLabelType == LabelType::TTF) 
     {
-        _boldEnabled = true;
-        if (_currentLabelType == LabelType::TTF && _fontConfig.bold == false)
+        // use freetype to support bold only for ttf
+        if (_fontConfig.bold == false)
         {
-            // use freetype to support bold only for ttf
             _fontConfig.bold = true;
             setTTFConfig(_fontConfig);
         }
-        else
-        {
-            // bold is implemented with outline
-            enableShadow(Color4B::WHITE, Size(0.9f, 0), 0);
-            // add one to kerning
-            setAdditionalKerning(_additionalKerning+1);
-        }
+    }
+    else if (!_boldEnabled)
+    {
+        // bold is implemented with outline
+        enableShadow(Color4B::WHITE, Size(0.9f, 0), 0);
+        // add one to kerning
+        setAdditionalKerning(_additionalKerning+1);
+        _boldEnabled = true;
     }
 }
 
@@ -1230,18 +1228,18 @@ void Label::disableEffect(LabelEffect effect)
             setRotationSkewX(0);
             break;
         case cocos2d::LabelEffect::BOLD:
-            if (_boldEnabled) {
-                _boldEnabled = false;
-                if (_currentLabelType == LabelType::TTF)
+            if (_currentLabelType == LabelType::TTF) // only for ttf
+            {
+                if (_fontConfig.bold == true)
                 {
-                    _fontConfig.bold = false; // only for ttf
+                    _fontConfig.bold = false;
                     setTTFConfig(_fontConfig);
                 }
-                else
-                {
-                    _additionalKerning -= 1;
-                    disableEffect(LabelEffect::SHADOW);
-                }
+            }
+            else if (_boldEnabled) {
+                _boldEnabled = false;
+                _additionalKerning -= 1;
+                disableEffect(LabelEffect::SHADOW);
             }
             break;
         case cocos2d::LabelEffect::UNDERLINE:
@@ -1548,8 +1546,7 @@ void Label::onDraw(const Mat4& transform, bool /*transformUpdated*/)
 
     if (_shadowEnabled)
     {
-        // freetype api to support bold when TTF
-        if (_boldEnabled && (_currentLabelType != LabelType::TTF))
+        if (_boldEnabled)
             onDrawShadow(glprogram, _textColorF);
         else
             onDrawShadow(glprogram, _shadowColor4F);

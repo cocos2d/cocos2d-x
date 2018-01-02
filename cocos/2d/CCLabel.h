@@ -777,6 +777,7 @@ protected:
     Overflow _overflow;
     float _originalFontSize;
 
+    // TTF font enable flag is _fontConfig.bold
     bool _boldEnabled;
     DrawNode* _underlineNode;
     bool _strikethroughEnabled;
