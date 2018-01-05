@@ -63,6 +63,7 @@ public:
     virtual void setNativeInputMode(EditBox::InputMode inputMode) override;
     virtual void setNativeInputFlag(EditBox::InputFlag inputFlag) override;
     virtual void setNativeReturnType(EditBox::KeyboardReturnType returnType)override;
+    virtual void setNativeKeyboardAppearance(EditBox::KeyboardAppearance keyboardAppearance) override;
     virtual void setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment) override;
     virtual void setNativeText(const char* pText) override;
     virtual void setNativePlaceHolder(const char* pText) override;

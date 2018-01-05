@@ -261,6 +261,15 @@
     }
 }
 
+- (void)setKeyboardAppearance:(cocos2d::ui::EditBox::KeyboardAppearance)keyboardAppearance
+{
+    UIKeyboardAppearance uiKeyboardAppearance = UIKeyboardAppearance::UIKeyboardAppearanceDefault;
+    if (keyboardAppearance == cocos2d::ui::EditBox::KeyboardAppearance::DARK) {
+        uiKeyboardAppearance = UIKeyboardAppearanceDark;
+    }
+    [self.textInput setKeyboardAppearance:uiKeyboardAppearance];
+}
+
 - (void)setTextHorizontalAlignment:(cocos2d::TextHAlignment)alignment
 {
     self.textInput.ccui_alignment = static_cast<NSTextAlignment>(alignment);

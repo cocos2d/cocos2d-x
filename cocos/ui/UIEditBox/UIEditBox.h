@@ -210,6 +210,15 @@ namespace ui {
              */
             LOWERCASE_ALL_CHARACTERS
         };
+        
+        /**
+         * @brief The EditBox::KeyboardAppearance defines the keyboard's appearance
+         * while the edit box is active.
+         */
+        enum class KeyboardAppearance {
+            DEFAULT,
+            DARK
+        };
             
         /**
          * create a edit box with size.
@@ -483,7 +492,19 @@ namespace ui {
          * @return One of the EditBox::KeyboardReturnType constants.
          */
         KeyboardReturnType getReturnType() const;
-
+        
+        /**
+         * Set the keyboard appearance that is to be applied to the edit box.
+         * @param keyboardAppearance One of the EditBox::KeyboardAppearance constants.
+         */
+        void setKeyboardAppearance(KeyboardAppearance keyboardAppearance);
+        
+        /**
+         * Get the keyboard appearance that is to be applied to the edit box.
+         * @return One of the EditBox::KeyboardAppearance constants.
+         */
+        KeyboardAppearance getKeyboardAppearance() const;
+        
         /**
          * Set the text horizontal alignment.
          */
