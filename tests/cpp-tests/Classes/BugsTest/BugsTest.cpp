@@ -13,6 +13,7 @@
 #include "Bug-CCDrawNode.h"
 #include "Bug-15594.h"
 #include "Bug-15776.h"
+#include "Bug-18609.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "Bug-14327.h"
@@ -20,6 +21,7 @@
 
 BugsTests::BugsTests()
 {
+    ADD_TEST_CASE(Bug18609Layer);
     ADD_TEST_CASE(Bug350Layer);
     ADD_TEST_CASE(Bug422Layer);
     ADD_TEST_CASE(Bug458Layer);

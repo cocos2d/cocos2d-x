@@ -36,6 +36,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../../Classes/BugsTest/Bug-12847.cpp \
 ../../../Classes/BugsTest/Bug-15594.cpp \
 ../../../Classes/BugsTest/Bug-15776.cpp \
+../../../Classes/BugsTest/Bug-18609.cpp \
 ../../../Classes/BugsTest/Bug-Child.cpp \
 ../../../Classes/BugsTest/BugsTest.cpp \
 ../../../Classes/Camera3DTest/Camera3DTest.cpp \
