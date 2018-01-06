@@ -34,6 +34,10 @@
 
 static const int CC_EDIT_BOX_PADDING = 5;
 
+static cocos2d::Size applyPadding(const cocos2d::Size& sizeToCorrect) {
+    return cocos2d::Size(sizeToCorrect.width - CC_EDIT_BOX_PADDING * 2, sizeToCorrect.height);
+}
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #define PASSWORD_CHAR "*"
 #else
@@ -410,10 +414,6 @@ void EditBoxImplCommon::editBoxEditingChanged(const std::string& text)
 }
 
 
-}
-
-Size ui::EditBoxImplCommon::applyPadding(const Size& sizeToCorrect) const {
-  return Size(sizeToCorrect.width - CC_EDIT_BOX_PADDING * 2, sizeToCorrect.height);
 }
 
 NS_CC_END
