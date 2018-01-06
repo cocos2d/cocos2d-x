@@ -217,6 +217,7 @@ void EditBoxImplCommon::setTextHorizontalAlignment(cocos2d::TextHAlignment align
 {
     _alignment = alignment;
     this->setNativeTextHorizontalAlignment(alignment);
+    refreshLabelAlignment();
 }
 
 void EditBoxImplCommon::setInputFlag(EditBox::InputFlag inputFlag)
