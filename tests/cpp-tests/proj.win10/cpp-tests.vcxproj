@@ -308,6 +308,7 @@
     <ClInclude Include="..\Classes\BugsTest\Bug-1159.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-1174.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-350.h" />
+    <ClInclude Include="..\Classes\BugsTest\Bug-18609.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-422.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-458\Bug-458.h" />
     <ClInclude Include="..\Classes\BugsTest\Bug-458\QuestionContainerSprite.h" />
@@ -474,6 +475,7 @@
     <ClCompile Include="..\Classes\BugsTest\Bug-1159.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-1174.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-350.cpp" />
+    <ClCompile Include="..\Classes\BugsTest\Bug-18609.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-422.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-458\Bug-458.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-458\QuestionContainerSprite.cpp" />

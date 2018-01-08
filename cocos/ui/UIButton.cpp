@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include "ui/UIButton.h"
 #include "ui/UIScale9Sprite.h"
 #include "2d/CCLabel.h"
+#include "2d/CCSpriteFrameCache.h"
 #include "2d/CCSprite.h"
 #include "2d/CCActionInterval.h"
 #include "platform/CCFileUtils.h"
@@ -255,6 +256,7 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
     _normalFileName = normal;
     _normalTexType = texType;
     bool textureLoaded = true;
+    SpriteFrame* frm = NULL;
     if (normal.empty())
     {
         _buttonNormalRenderer->resetRender();
@@ -268,7 +270,9 @@ void Button::loadTextureNormal(const std::string& normal,TextureResType texType)
             _buttonNormalRenderer->initWithFile(normal);
             break;
         case TextureResType::PLIST:
-            _buttonNormalRenderer->initWithSpriteFrameName(normal);
+            // _buttonNormalRenderer->initWithSpriteFrameName(normal);
+            frm = SpriteFrameCache::getInstance()->getSpriteFrameByName(normal);
+            _buttonNormalRenderer->setSpriteFrame(frm);
             break;
         default:
             break;
@@ -313,6 +317,7 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
     _clickedFileName = selected;
     _pressedTexType = texType;
     bool textureLoaded = true;
+    SpriteFrame* frm = NULL;
     if (selected.empty())
     {
         _buttonClickedRenderer->resetRender();
@@ -326,7 +331,9 @@ void Button::loadTexturePressed(const std::string& selected,TextureResType texTy
             _buttonClickedRenderer->initWithFile(selected);
             break;
         case TextureResType::PLIST:
-            _buttonClickedRenderer->initWithSpriteFrameName(selected);
+            // _buttonClickedRenderer->initWithSpriteFrameName(selected);
+            frm = SpriteFrameCache::getInstance()->getSpriteFrameByName(selected);
+            _buttonClickedRenderer->setSpriteFrame(frm);
             break;
         default:
             break;
@@ -356,6 +363,7 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
     _disabledFileName = disabled;
     _disabledTexType = texType;
     bool textureLoaded = true;
+    SpriteFrame* frm = NULL;
     if (disabled.empty())
     {
         _buttonDisabledRenderer->resetRender();
@@ -369,7 +377,9 @@ void Button::loadTextureDisabled(const std::string& disabled,TextureResType texT
             _buttonDisabledRenderer->initWithFile(disabled);
             break;
         case TextureResType::PLIST:
-            _buttonDisabledRenderer->initWithSpriteFrameName(disabled);
+            // _buttonDisabledRenderer->initWithSpriteFrameName(disabled);
+            frm = SpriteFrameCache::getInstance()->getSpriteFrameByName(disabled);
+            _buttonDisabledRenderer->setSpriteFrame(frm);
             break;
         default:
             break;
