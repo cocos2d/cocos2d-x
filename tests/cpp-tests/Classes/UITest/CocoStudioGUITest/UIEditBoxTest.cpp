@@ -319,7 +319,7 @@ bool UIEditBoxTestTextHorizontalAlignment::init() {
   
     const auto createEditBox = [this, editBoxSize, visibleOrigin, visibleSize](const std::string& text,
                                       const TextHAlignment alignment,
-                                      const uint position_y) {
+                                      const int position_y) {
         ui::EditBox* editbox = ui::EditBox::create(editBoxSize + Size(0,40), ui::Scale9Sprite::create("extensions/green_edit.png"));
         editbox->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-50, position_y));
         editbox->setFontColor(Color3B::RED);
