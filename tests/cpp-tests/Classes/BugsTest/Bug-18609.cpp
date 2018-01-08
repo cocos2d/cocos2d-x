@@ -8,7 +8,7 @@ Bug18609Layer::Bug18609Layer() {
   ZipUtils::setPvrEncryptionKeyPart(2, 0x51ce7d9e);
   ZipUtils::setPvrEncryptionKeyPart(3, 0x3e26102b);
   SpriteFrameCache::getInstance()->addSpriteFramesWithFile("Images/bugs/18609.plist","Images/bugs/18609.pvr.ccz");
-  SpriteFrame *spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("grossini.png");
+  // SpriteFrame *spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("grossini.png");
   // auto img = Sprite::create();
   auto img = ui::Button::create();
   img->setTag(2);
