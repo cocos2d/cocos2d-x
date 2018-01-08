@@ -102,6 +102,19 @@ macro (BuildModules)
 	message(STATUS "TinyXML2 include dirs: ${TinyXML2_INCLUDE_DIRS}")
 
 	cocos_find_package(ZLIB ZLIB REQUIRED)
+	
+	if(ANDROID)
+	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/android-specific/pvmp3dec)
+	  set(PVMP3DEC_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/android-specific/pvmp3dec/include ${CMAKE_CURRENT_SOURCE_DIR}/external/android-specific/pvmp3dec/src)
+	  set(PVMP3DEC_LIBRARIES pvmp3dec)
+	  message(STATUS "pvmp3dec include dirs: ${PVMP3DEC_INCLUDE_DIRS}")
+	  
+	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/android-specific/tremolo)
+	  set(TREMOLO_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/android-specific/tremolo)
+	  set(TREMOLO_LIBRARIES tremolo)
+	  message(STATUS "Tremolo include dirs: ${TREMOLO_INCLUDE_DIRS}")
+	endif()
+
 	# minizip (we try to migrate to minizip from https://github.com/nmoinvaz/minizip)
 	# only msys2 currently provides package for this variant, all other
 	# dists have packages from zlib, thats very old for us.

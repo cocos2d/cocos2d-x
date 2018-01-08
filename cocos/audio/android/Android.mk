@@ -43,7 +43,8 @@ LOCAL_EXPORT_LDLIBS := -lOpenSLES
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../include \
                     $(LOCAL_PATH)/../.. \
                     $(LOCAL_PATH)/../../platform/android \
-                    $(LOCAL_PATH)/../../../external/android-specific
+                    $(LOCAL_PATH)/../../../external/android-specific \
+                    $(LOCAL_PATH)/../../../external/android-specific/tremolo
 
 LOCAL_STATIC_LIBRARIES += libvorbisidec libpvmp3dec
 include $(BUILD_STATIC_LIBRARY)

@@ -26,7 +26,7 @@ THE SOFTWARE.
 
 #include "audio/android/AudioDecoder.h"
 
-#include "tremolo/Tremolo/ivorbisfile.h"
+#include "Tremolo/ivorbisfile.h"
 
 namespace cocos2d { namespace experimental {
 

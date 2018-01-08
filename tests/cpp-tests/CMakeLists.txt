@@ -25,7 +25,7 @@ elseif(LINUX)
 elseif(ANDROID)
   set(PLATFORM_SRC
           Classes/JNITest/JNITest.cpp
-          proj.android/jni/main.cpp)
+          proj.android/app/jni/main.cpp)
   set(RES_PREFIX "/Resources")
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )

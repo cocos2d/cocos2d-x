@@ -30,6 +30,8 @@ if(WIN32) # Win32
 elseif(APPLE)# osx or ios
   set(PLATFORM_FOLDER mac)
   set(PLATFORM_SRC manual/platform/ios/JavaScriptObjCBridge.mm)
+elseif(ANDROID)
+  set(PLATFORM_FOLDER android)
 else() # Assume Linux
   set(PLATFORM_FOLDER linux)
 endif()
@@ -96,7 +98,9 @@ add_library(jscocos2d STATIC
 
 find_library(SPIDERMONKEY_LIBRARY NAMES js_static mozjs HINTS
   ${cocos_root}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+  ${cocos_root}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ANDROID_ABI}
   ${cocos_root}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}
+  NO_CMAKE_FIND_ROOT_PATH
 )
 
 message("SPIDERMONKEY_LIBRARY: ${SPIDERMONKEY_LIBRARY}")

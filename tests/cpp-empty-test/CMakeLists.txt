@@ -25,7 +25,7 @@
 set(APP_NAME cpp-empty-test)
 
 if(ANDROID)
-  set(PLATFORM_SRC proj.android/jni/main.cpp)
+  set(PLATFORM_SRC proj.android/app/jni/main.cpp)
   set(RES_PREFIX "/Resources")
 elseif(WINDOWS)
   set(PLATFORM_SRC proj.win32/main.cpp)
