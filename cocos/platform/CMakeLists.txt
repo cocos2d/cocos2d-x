@@ -84,6 +84,7 @@ set(COCOS2DX_ANDROID_STATIC
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp
   platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp
+  platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp
 
 )
 

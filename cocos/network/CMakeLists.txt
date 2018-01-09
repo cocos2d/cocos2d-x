@@ -10,30 +10,33 @@ else()
 endif()
 
 if(ANDROID)
-   set(COCOS_NETWORK_PLATFORM_SRC
-        network/CCDownloader-android.cpp
-        )
-elseif(MACOSX)
-   set(COCOS_NETWORK_PLATFORM_SRC
-        network/CCDownloader-apple.mm
-        )
-endif()
-
-set(COCOS_NETWORK_SRC
-    ${COCOS_NETWORK_PLATFORM_SRC}
+  set(COCOS_NETWORK_SRC
+    network/HttpClient-android.cpp
+    network/SocketIO.cpp
+    network/WebSocket.cpp
+    network/CCDownloader.cpp
+    network/CCDownloader-android.cpp
+    network/Uri.cpp
+  )
+else()
+  set(COCOS_NETWORK_SRC
     network/HttpClient.cpp
     network/SocketIO.cpp
     network/WebSocket.cpp
     network/CCDownloader.cpp
     network/CCDownloader-curl.cpp
     network/Uri.cpp
-)
-
+  )
+endif()
 
 if(MSVC)
   set(COCOS_NETWORK_LINK 
     libcurl_imp 
     ${PLATFORM_LINK}
+  )
+elseif(ANDROID)
+  set(COCOS_NETWORK_LINK
+    ${PLATFORM_LINK} 
   )
 else()
   set(COCOS_NETWORK_LINK 

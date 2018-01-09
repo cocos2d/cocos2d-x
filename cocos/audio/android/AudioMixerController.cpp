@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "audio/android/Track.h"
 #include "audio/android/OpenSLHelper.h"
 
+#include <stdlib.h>
 #include <algorithm>
 
 namespace cocos2d { namespace experimental {
