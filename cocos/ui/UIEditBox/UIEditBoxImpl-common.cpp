@@ -34,6 +34,10 @@
 
 static const int CC_EDIT_BOX_PADDING = 5;
 
+static cocos2d::Size applyPadding(const cocos2d::Size& sizeToCorrect) {
+    return cocos2d::Size(sizeToCorrect.width - CC_EDIT_BOX_PADDING * 2, sizeToCorrect.height);
+}
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #define PASSWORD_CHAR "*"
 #else
@@ -144,8 +148,7 @@ void EditBoxImplCommon::setInactiveText(const char* pText)
         _label->setString(pText);
     }
     // Clip the text width to fit to the text box
-    const auto& editBoxSize = _editBox->getContentSize();
-    const auto maxSize = applyPadding(cocos2d::Size(editBoxSize.width, editBoxSize.height));
+    const auto maxSize = applyPadding(_editBox->getContentSize());
     Size labelSize = _label->getContentSize();
     if(labelSize.width > maxSize.width || labelSize.height > maxSize.height)
     {
@@ -214,6 +217,7 @@ void EditBoxImplCommon::setTextHorizontalAlignment(cocos2d::TextHAlignment align
 {
     _alignment = alignment;
     this->setNativeTextHorizontalAlignment(alignment);
+    refreshLabelAlignment();
 }
 
 void EditBoxImplCommon::setInputFlag(EditBox::InputFlag inputFlag)
@@ -411,11 +415,6 @@ void EditBoxImplCommon::editBoxEditingChanged(const std::string& text)
 }
 
 
-}
-
-Size ui::EditBoxImplCommon::applyPadding(const Size& sizeToCorrect) const {
-  constexpr auto paddingLeftRight = CC_EDIT_BOX_PADDING * 2;
-  return Size(sizeToCorrect.width - paddingLeftRight, sizeToCorrect.height);
 }
 
 NS_CC_END
