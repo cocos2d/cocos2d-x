@@ -18,6 +18,16 @@ if(ANDROID)
     network/CCDownloader-android.cpp
     network/Uri.cpp
   )
+elseif(MACOSX)
+  set(COCOS_NETWORK_SRC
+    network/CCDownloader-apple.mm
+    network/HttpClient.cpp
+    network/SocketIO.cpp
+    network/WebSocket.cpp
+    network/CCDownloader.cpp
+    network/CCDownloader-curl.cpp
+    network/Uri.cpp
+  )
 else()
   set(COCOS_NETWORK_SRC
     network/HttpClient.cpp
