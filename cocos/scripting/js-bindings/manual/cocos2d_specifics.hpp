@@ -158,8 +158,8 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject obj);
 class JSCallbackWrapper: public cocos2d::Ref {
 public:
     JSCallbackWrapper();
-    JSCallbackWrapper(JS::HandleValue owner);
     virtual ~JSCallbackWrapper();
+
     void setJSCallbackFunc(JS::HandleValue callback);
     void setJSCallbackThis(JS::HandleValue thisObj);
     void setJSExtraData(JS::HandleValue data);
@@ -168,19 +168,17 @@ public:
     const jsval getJSCallbackThis() const;
     const jsval getJSExtraData() const;
 protected:
-    JS::Heap<JS::Value> _owner;
-    JS::Heap<JS::Value> _jsCallback;
-    JS::Heap<JS::Value> _jsThisObj;
-    JS::Heap<JS::Value> _extraData;
-    void* _cppOwner;
+    JS::PersistentRootedValue* _jsCallback;
+    JS::PersistentRootedValue* _jsThisObj;
+    JS::PersistentRootedValue* _extraData;
 };
 
 
-class JSScheduleWrapper: public JSCallbackWrapper {
-
+class JSScheduleWrapper: public JSCallbackWrapper
+{
 public:
     JSScheduleWrapper();
-    JSScheduleWrapper(JS::HandleValue owner);
+    virtual ~JSScheduleWrapper();
 
     static void setTargetForSchedule(JS::HandleValue sched, JSScheduleWrapper *target);
     static JSBinding::Array* getTargetForSchedule(JS::HandleValue sched);
@@ -216,7 +214,7 @@ public:
 
 protected:
     Ref* _pTarget;
-    JS::Heap<JSObject*> _pPureJSTarget;
+    JS::PersistentRootedObject* _pPureJSTarget;
     int _priority;
     bool _isUpdateSchedule;
 };
