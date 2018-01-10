@@ -596,9 +596,9 @@ bool LabelFNTMultiLineAlignment::init()
 
     MenuItemFont::setFontSize(30);
 
-    auto left   = MenuItemFont::create("Left", CC_CALLBACK_1(LabelFNTMultiLineAlignment::alignmentChanged, this));
+    auto left = MenuItemFont::create("Left", CC_CALLBACK_1(LabelFNTMultiLineAlignment::alignmentChanged, this));
     auto center = MenuItemFont::create("Center", CC_CALLBACK_1(LabelFNTMultiLineAlignment::alignmentChanged, this));
-    auto right  = MenuItemFont::create("Right", CC_CALLBACK_1(LabelFNTMultiLineAlignment::alignmentChanged, this));
+    auto right = MenuItemFont::create("Right", CC_CALLBACK_1(LabelFNTMultiLineAlignment::alignmentChanged, this));
 
     auto alignmentMenu = Menu::create(left, center, right, nullptr);
     alignmentMenu->alignItemsHorizontallyWithPadding(alignmentItemPadding);
