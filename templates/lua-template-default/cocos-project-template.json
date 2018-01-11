@@ -148,8 +148,7 @@
                 "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
                 "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
                 "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
-                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj",
-                "frameworks/runtime-src/proj.tizen/shared/res/PROJECT_NAME.png"
+                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj"
             ]
         },
         "project_replace_project_name": {
@@ -162,28 +161,18 @@
                 "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
                 "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
                 "frameworks/runtime-src/proj.win32/main.cpp",
-                "frameworks/runtime-src/proj.android/.project",
-                "frameworks/runtime-src/proj.android/AndroidManifest.xml",
-                "frameworks/runtime-src/proj.android/build.xml",
-                "frameworks/runtime-src/proj.android/res/values/strings.xml",
-                "frameworks/runtime-src/proj.android-studio/settings.gradle",
-                "frameworks/runtime-src/proj.android-studio/app/res/values/strings.xml",
+                "frameworks/runtime-src/proj.android/settings.gradle",
+                "frameworks/runtime-src/proj.android/app/res/values/strings.xml",
                 "frameworks/runtime-src/proj.ios_mac/ios/main.m",
                 "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
                 "frameworks/runtime-src/proj.ios_mac/mac/SimulatorApp.mm",
-                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
-                "frameworks/runtime-src/proj.tizen/.project",
-                "frameworks/runtime-src/proj.tizen/tizen-manifest.xml"
-            ]
+                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj"            ]
         },
         "project_replace_package_name": {
             "src_package_name": "org.cocos2dx.hellolua",
             "files": [
-                "frameworks/runtime-src/proj.android/AndroidManifest.xml",
-                "frameworks/runtime-src/proj.android-studio/app/build.gradle",
-                "frameworks/runtime-src/proj.android-studio/app/AndroidManifest.xml",
-		"frameworks/runtime-src/proj.tizen/tizen-manifest.xml"
-            ]
+                "frameworks/runtime-src/proj.android/app/build.gradle",
+                "frameworks/runtime-src/proj.android/app/AndroidManifest.xml"            ]
         },
         "project_replace_mac_bundleid": {
             "src_bundle_id": "org.cocos2dx.hellolua",
@@ -226,12 +215,7 @@
                 "replace_string": "UIInterfaceOrientationPortraitUpsideDown"
             },
             {
-                "file_path": "frameworks/runtime-src/proj.android/AndroidManifest.xml",
-                "pattern": "android:screenOrientation=\\\".*\\\"",
-                "replace_string": "android:screenOrientation=\"portrait\""
-            },
-            {
-                "file_path": "frameworks/runtime-src/proj.android-studio/app/AndroidManifest.xml",
+                "file_path": "frameworks/runtime-src/proj.android/app/AndroidManifest.xml",
                 "pattern": "android:screenOrientation=\\\".*\\\"",
                 "replace_string": "android:screenOrientation=\"portrait\""
             }
