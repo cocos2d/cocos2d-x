@@ -25,7 +25,7 @@ android {
             else if (PROP_NDK_MODE == 'cmake') {
                 cmake {
                     arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", \
-                              "-DBUILD_CPP_EMPTY_TEST=FALSE", "-DBUILD_CPP_TEST=FALSE", "-DBUILD_LUA_LIBS=TRUE", "-DBUILD_JS_LIBS=FALSE", "-DUSE_CHIPMUNK=TRUE", "-DUSE_BULLET=TRUE"
+                              "-DBUILD_CPP_EMPTY_TEST=FALSE", "-DBUILD_CPP_TESTS=FALSE", "-DBUILD_LUA_LIBS=TRUE", "-DBUILD_JS_LIBS=FALSE", "-DUSE_CHIPMUNK=TRUE", "-DUSE_BULLET=TRUE"
                     cppFlags "-frtti -fexceptions"
                 }
             }

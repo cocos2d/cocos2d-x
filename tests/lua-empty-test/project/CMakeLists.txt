@@ -19,6 +19,9 @@ elseif(MACOSX OR APPLE)
     cocos_mark_resources(FILES ${COCOS_SCRIPTS} BASEDIR ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script RESOURCEBASE Resources/src/cocos)
     
     list(APPEND SAMPLE_SRC ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS})
+elseif(ANDROID)
+    set(PLATFORM_SRC proj.android/app/jni/main.cpp)
+    set(RES_PREFIX "/Resources")
 endif()
 
 include_directories(
@@ -28,8 +31,15 @@ include_directories(
   ../../../external/lua/tolua
 )
 
-# add the executable
-add_executable(${APP_NAME} ${SAMPLE_SRC})
+if(ANDROID)
+    add_library(${APP_NAME} SHARED ${SAMPLE_SRC})
+    IF(CMAKE_BUILD_TYPE MATCHES RELEASE)
+        ADD_CUSTOM_COMMAND(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
+    ENDIF()
+else()
+    # add the executable
+    add_executable(${APP_NAME} ${SAMPLE_SRC})
+endif()
 
 target_link_libraries(${APP_NAME} cocos2d luacocos2d)
 
