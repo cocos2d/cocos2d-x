@@ -14,15 +14,26 @@ android {
         versionName "1.0"
 
         externalNativeBuild {
-            ndkBuild {
-                if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE.compareTo('none') != 0) {
+            if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE == 'ndk') {
+                ndkBuild {
                     // skip the NDK Build step if PROP_NDK_MODE is none
                     targets 'lua_tests'
                     arguments 'NDK_TOOLCHAIN_VERSION=clang'
                     arguments '-j' + Runtime.runtime.availableProcessors()
-                    abiFilters.addAll(PROP_APP_ABI.split(':').collect { it as String })
                 }
             }
+            else if (PROP_NDK_MODE == 'cmake') {
+                cmake {
+                    arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", \
+                              "-DBUILD_CPP_EMPTY_TEST=FALSE", "-DBUILD_CPP_TEST=FALSE", "-DBUILD_LUA_LIBS=TRUE", "-DBUILD_JS_LIBS=FALSE", "-DUSE_CHIPMUNK=TRUE", "-DUSE_BULLET=TRUE"
+                    cppFlags "-frtti -fexceptions"
+                }
+            }
+        }
+
+        ndk {
+            abiFilters = []
+            abiFilters.addAll(PROP_APP_ABI.split(':').collect{it as String})
         }
     }
 
