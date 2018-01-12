@@ -123,6 +123,14 @@ if(MACOSX)
         ${lua_bindings_manual_files}
         manual/platform/ios/CCLuaObjcBridge.mm
         )
+elseif(ANDROID)
+    set(lua_bindings_manual_files
+        ${lua_bindings_manual_files}
+        manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.cpp
+        manual/platform/android/CCLuaJavaBridge.cpp
+        auto/lua_cocos2dx_experimental_webview_auto.cpp
+        manual/ui/lua_cocos2dx_experimental_webview_manual.cpp
+        )
 endif()
 
 if(USE_BULLET)
