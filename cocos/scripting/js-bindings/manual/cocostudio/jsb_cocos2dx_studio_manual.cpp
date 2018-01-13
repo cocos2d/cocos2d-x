@@ -28,7 +28,7 @@
 
 class JSArmatureWrapper: public JSCallbackWrapper {
 public:
-    JSArmatureWrapper(JS::HandleValue owner) : JSCallbackWrapper(owner) {};
+    JSArmatureWrapper(){};
 
     void movementCallbackFunc(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const std::string& movementID);
     void frameCallbackFunc(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
@@ -117,7 +117,7 @@ static bool js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(JSContext *cx
             return true;
         }
         else if (argc == 1 || argc == 2) {
-            JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper(args.thisv());
+            JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper();
             tmpObj->autorelease();
 
             auto userDict = static_cast<JSBinding::DictionaryRef*>(cobj->getUserObject());
@@ -164,7 +164,7 @@ static bool js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(JSContext *cx, u
             return true;
         }
         else if (argc == 1 || argc == 2) {
-            JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper(args.thisv());
+            JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper();
             tmpObj->autorelease();
 
             auto dict = static_cast<JSBinding::DictionaryRef*>(cobj->getUserObject());
@@ -206,7 +206,7 @@ static bool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint32
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 3) {
-        JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper(args.thisv());
+        JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper();
         tmpObj->autorelease();
 
         tmpObj->setJSCallbackFunc(args.get(1));
@@ -221,7 +221,7 @@ static bool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint32
     }
 
     if(argc == 5){
-        JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper(args.thisv());
+        JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper();
         tmpObj->autorelease();
 
         tmpObj->setJSCallbackFunc(args.get(3));

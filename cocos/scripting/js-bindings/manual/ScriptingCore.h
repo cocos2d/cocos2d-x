@@ -84,6 +84,7 @@ private:
     JSContext *_cx;
     JS::PersistentRootedObject *_global;
     JS::PersistentRootedObject *_debugGlobal;
+    JSCompartment *_oldCompartment;
     SimpleRunLoop* _runLoop;
     bool _jsInited;
     bool _needCleanup;
@@ -556,6 +557,8 @@ private:
     void string_report(JS::HandleValue val);
     void initRegister();
 
+    JSObject* newGlobalObject(JSContext* cx, bool debug);
+
 public:
     int handleNodeEvent(void* data);
     int handleActionEvent(void* data);
@@ -576,7 +579,6 @@ public:
     void restartVM();
 };
 
-JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
 
 bool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
 bool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);

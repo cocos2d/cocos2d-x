@@ -601,7 +601,7 @@ void js_add_object_reference(JS::HandleValue owner, JS::HandleValue target)
     ScriptingCore *engine = ScriptingCore::getInstance();
     JSContext *cx = engine->getGlobalContext();
     JS::RootedObject global(cx, engine->getGlobalObject());
-    JSAutoCompartment(cx, global);
+
     JS::RootedObject jsbObj(cx);
     get_or_create_js_obj(cx, global, "jsb", &jsbObj);
     JS::RootedValue jsbVal(cx, OBJECT_TO_JSVAL(jsbObj));
@@ -627,7 +627,7 @@ void js_remove_object_reference(JS::HandleValue owner, JS::HandleValue target)
     ScriptingCore *engine = ScriptingCore::getInstance();
     JSContext *cx = engine->getGlobalContext();
     JS::RootedObject global(cx, engine->getGlobalObject());
-    JSAutoCompartment(cx, global);
+
     JS::RootedObject ownerObj(cx, owner.toObjectOrNull());
     JS::RootedObject targetObj(cx, target.toObjectOrNull());
     
@@ -657,7 +657,7 @@ void js_add_object_root(JS::HandleValue target)
     ScriptingCore *engine = ScriptingCore::getInstance();
     JSContext *cx = engine->getGlobalContext();
     JS::RootedObject global(cx, engine->getGlobalObject());
-    JSAutoCompartment(cx, global);
+
     JS::RootedObject jsbObj(cx);
     get_or_create_js_obj(cx, global, "jsb", &jsbObj);
     JS::RootedValue jsbVal(cx, OBJECT_TO_JSVAL(jsbObj));
@@ -687,7 +687,6 @@ void js_remove_object_root(JS::HandleValue target)
     ScriptingCore *engine = ScriptingCore::getInstance();
     JSContext *cx = engine->getGlobalContext();
     JS::RootedObject global(cx, engine->getGlobalObject());
-    JSAutoCompartment(cx, global);
 
     JS::RootedObject jsbObj(cx);
     get_or_create_js_obj(cx, global, "jsb", &jsbObj);
@@ -711,138 +710,68 @@ void js_remove_object_root(JS::HandleValue target)
 }
 
 JSCallbackWrapper::JSCallbackWrapper()
-: _cppOwner(nullptr)
+: _jsCallback(nullptr)
+, _jsThisObj(nullptr)
+, _extraData(nullptr)
 {
-    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-
-    JS::RootedObject root(cx);
-    get_or_create_js_obj("jsb._root", &root);
-    JS::RootedValue valRoot(cx, OBJECT_TO_JSVAL(root));
-    _owner = valRoot;
-}
-
-JSCallbackWrapper::JSCallbackWrapper(JS::HandleValue owner)
-: _cppOwner(nullptr)
-{
-    _owner = owner;
-    
-    JS::RootedObject ownerObj(ScriptingCore::getInstance()->getGlobalContext(), owner.toObjectOrNull());
-    js_proxy *t = jsb_get_js_proxy(ownerObj);
-    if (t) {
-        _cppOwner = t->ptr;
-    }
 }
 
 JSCallbackWrapper::~JSCallbackWrapper()
 {
-    ScriptingCore* sc = ScriptingCore::getInstance();
-    JSContext* cx = sc->getGlobalContext();
-    JSAutoCompartment(cx, sc->getGlobalObject());
-    
-    JS::RootedValue ownerVal(cx, _owner);
-    if (sc->getFinalizing() || ownerVal.isNullOrUndefined())
-    {
-        return;
-    }
-    js_proxy *t;
-    if (_cppOwner != nullptr)
-    {
-        JS::RootedObject ownerObj(cx, ownerVal.toObjectOrNull());
-        t = jsb_get_js_proxy(ownerObj);
-        // Owner already released, no need to do the following release anymore, gc will take care of everything
-        if (t == nullptr || _cppOwner != t->ptr)
-        {
-            return;
-        }
-    }
-
-    JS::RootedValue target(cx, _jsCallback);
-    if (!target.isNullOrUndefined())
-    {
-        js_remove_object_reference(ownerVal, target);
-    }
-    target.set(_jsThisObj);
-    if (!target.isNullOrUndefined())
-    {
-        js_remove_object_reference(ownerVal, target);
-    }
-    target.set(_extraData);
-    if (!target.isNullOrUndefined())
-    {
-        js_remove_object_reference(ownerVal, target);
-    }
+    CC_SAFE_DELETE(_jsCallback);
+    CC_SAFE_DELETE(_jsThisObj);
+    CC_SAFE_DELETE(_extraData);
 }
 
-void JSCallbackWrapper::setJSCallbackFunc(JS::HandleValue func) {
-    if (!func.isNullOrUndefined())
-    {
-        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS::RootedValue ownerVal(cx, _owner);
-        if (!ownerVal.isNullOrUndefined())
-        {
-            JSAutoCompartment(cx, &ownerVal.toObject());
-            JS::RootedValue target(cx, _jsCallback);
-            if (!target.isNullOrUndefined())
-            {
-                js_remove_object_reference(ownerVal, target);
-            }
-            js_add_object_reference(ownerVal, func);
-        }
-        _jsCallback = func;
-    }
+void JSCallbackWrapper::setJSCallbackFunc(JS::HandleValue func)
+{
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+    CC_SAFE_DELETE(_jsCallback);
+    _jsCallback = new (std::nothrow) JS::PersistentRootedValue(cx, func);
 }
 
-void JSCallbackWrapper::setJSCallbackThis(JS::HandleValue thisObj) {
-    if (!thisObj.isNullOrUndefined())
-    {
-        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS::RootedValue ownerVal(cx, _owner);
-        if (!ownerVal.isNullOrUndefined())
-        {
-            JSAutoCompartment(cx, &ownerVal.toObject());
-            JS::RootedValue target(cx, _jsThisObj);
-            if (!target.isNullOrUndefined())
-            {
-                js_remove_object_reference(ownerVal, target);
-            }
-            js_add_object_reference(ownerVal, thisObj);
-        }
-        _jsThisObj = thisObj;
-    }
+void JSCallbackWrapper::setJSCallbackThis(JS::HandleValue thisObj)
+{
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+    CC_SAFE_DELETE(_jsThisObj);
+    _jsThisObj = new (std::nothrow) JS::PersistentRootedValue(cx, thisObj);
 }
 
-void JSCallbackWrapper::setJSExtraData(JS::HandleValue data) {
-    if (!data.isNullOrUndefined())
-    {
-        JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
-        JS::RootedValue ownerVal(cx, _owner);
-        if (!ownerVal.isNullOrUndefined())
-        {
-            JSAutoCompartment(cx, &ownerVal.toObject());
-            JS::RootedValue target(cx, _extraData);
-            if (!target.isNullOrUndefined())
-            {
-                js_remove_object_reference(ownerVal, target);
-            }
-            js_add_object_reference(ownerVal, data);
-        }
-        _extraData = data;
-    }
+void JSCallbackWrapper::setJSExtraData(JS::HandleValue data)
+{
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+    CC_SAFE_DELETE(_extraData);
+    _extraData = new (std::nothrow) JS::PersistentRootedValue(cx, data);
 }
 
 const jsval JSCallbackWrapper::getJSCallbackFunc() const
 {
-    return _jsCallback;
+    if (_jsCallback != nullptr)
+    {
+        return _jsCallback->get();
+    }
+
+    return JS::NullValue();
 }
 
 const jsval JSCallbackWrapper::getJSCallbackThis() const
 {
-    return _jsThisObj;
+    if (_jsThisObj != nullptr)
+    {
+        return _jsThisObj->get();
+    }
+
+    return JS::NullValue();
 }
 
 const jsval JSCallbackWrapper::getJSExtraData() const
 {
-    return _extraData;
+    if (_extraData != nullptr)
+    {
+        return _extraData->get();
+    }
+
+    return JS::NullValue();
 }
 
 // cc.CallFunc.create( func, this, [data])
@@ -858,7 +787,7 @@ static bool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
         JS::RootedObject jsobj(cx, jsb_ref_create_jsobject(cx, ret, typeClass, "cocos2d::CallFuncN"));
 
         JS::RootedValue retVal(cx, OBJECT_TO_JSVAL(jsobj));
-        std::shared_ptr<JSCallbackWrapper> tmpCobj(new JSCallbackWrapper(retVal));
+        std::shared_ptr<JSCallbackWrapper> tmpCobj(new JSCallbackWrapper());
 
         JS::RootedValue callback(cx, args.get(0));
         tmpCobj->setJSCallbackFunc(callback);
@@ -876,7 +805,13 @@ static bool js_callFunc(JSContext *cx, uint32_t argc, jsval *vp)
         bool ok = ret->initWithFunction([=](Node* sender){
             JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
             JS::RootedValue jsvalThis(cx, tmpCobj->getJSCallbackThis());
-            JS::RootedObject thisObj(cx, jsvalThis.toObjectOrNull());
+
+            JS::RootedObject thisObj(cx);
+            if (jsvalThis.isObject())
+            {
+                thisObj.set(jsvalThis.toObjectOrNull());
+            }
+
             JS::RootedValue jsvalCallback(cx, tmpCobj->getJSCallbackFunc());
             JS::RootedValue jsvalExtraData(cx, tmpCobj->getJSExtraData());
 
@@ -930,7 +865,7 @@ bool js_cocos2dx_CallFunc_initWithFunction(JSContext *cx, uint32_t argc, jsval *
         CallFuncN *action = (cocos2d::CallFuncN *)(proxy ? proxy->ptr : nullptr);
         JSB_PRECONDITION2(action, cx, false, "Invalid Native Object");
 
-        std::shared_ptr<JSCallbackWrapper> tmpCobj(new JSCallbackWrapper(args.thisv()));
+        std::shared_ptr<JSCallbackWrapper> tmpCobj(new JSCallbackWrapper());
 
         JS::RootedValue callback(cx, args.get(0));
         tmpCobj->setJSCallbackFunc(callback);
@@ -980,24 +915,20 @@ bool js_cocos2dx_CallFunc_initWithFunction(JSContext *cx, uint32_t argc, jsval *
 }
 
 JSScheduleWrapper::JSScheduleWrapper()
-: JSCallbackWrapper()
-, _pTarget(nullptr)
+: _pTarget(nullptr)
 , _priority(0)
 , _isUpdateSchedule(false)
+, _pPureJSTarget(nullptr)
 {
-    _pPureJSTarget = nullptr;
 }
 
-JSScheduleWrapper::JSScheduleWrapper(JS::HandleValue owner)
-: JSCallbackWrapper(owner)
-, _pTarget(nullptr)
-, _priority(0)
-, _isUpdateSchedule(false)
+JSScheduleWrapper::~JSScheduleWrapper()
 {
-    _pPureJSTarget = nullptr;
+    CC_SAFE_DELETE(_pPureJSTarget);
 }
 
-void JSScheduleWrapper::setTargetForSchedule(JS::HandleValue sched, JSScheduleWrapper *target) {
+void JSScheduleWrapper::setTargetForSchedule(JS::HandleValue sched, JSScheduleWrapper *target)
+{
     do {
         JSObject* jsfunc = sched.toObjectOrNull();
         auto targetArray = getTargetForSchedule(sched);
@@ -1016,13 +947,13 @@ void JSScheduleWrapper::setTargetForSchedule(JS::HandleValue sched, JSScheduleWr
     } while(0);
 }
 
-JSBinding::Array* JSScheduleWrapper::getTargetForSchedule(JS::HandleValue sched) {
+JSBinding::Array* JSScheduleWrapper::getTargetForSchedule(JS::HandleValue sched)
+{
     schedFunc_proxy_t *t = nullptr;
     JSObject *o = sched.toObjectOrNull();
     HASH_FIND_PTR(_schedFunc_target_ht, &o, t);
     return t != nullptr ? t->targets : nullptr;
 }
-
 
 void JSScheduleWrapper::setTargetForJSObject(JS::HandleObject jsTargetObj, JSScheduleWrapper *target)
 {
@@ -1323,12 +1254,14 @@ void JSScheduleWrapper::setTarget(Ref* pTarget)
 
 void JSScheduleWrapper::setPureJSTarget(JS::HandleObject pPureJSTarget)
 {
-    _pPureJSTarget = pPureJSTarget;
+    JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
+    CC_SAFE_DELETE(_pPureJSTarget);
+    _pPureJSTarget = new JS::PersistentRootedObject(cx, pPureJSTarget);
 }
 
 JSObject* JSScheduleWrapper::getPureJSTarget()
 {
-    return _pPureJSTarget;
+    return _pPureJSTarget->get();
 }
 
 void JSScheduleWrapper::setPriority(int priority)
@@ -1467,7 +1400,7 @@ bool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
 
         if (!bFound)
         {
-            tmpCobj = new (std::nothrow) JSScheduleWrapper(thisValue);
+            tmpCobj = new (std::nothrow) JSScheduleWrapper();
             tmpCobj->autorelease();
             tmpCobj->setJSCallbackThis(thisValue);
             tmpCobj->setJSCallbackFunc(args.get(0));
@@ -1565,7 +1498,7 @@ bool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
 
         if (!bFound)
         {
-            tmpCobj = new (std::nothrow) JSScheduleWrapper(thisValue);
+            tmpCobj = new (std::nothrow) JSScheduleWrapper();
             tmpCobj->autorelease();
             tmpCobj->setJSCallbackThis(thisValue);
             tmpCobj->setJSCallbackFunc(args.get(0));
@@ -1641,7 +1574,7 @@ bool js_cocos2dx_CCNode_scheduleUpdateWithPriority(JSContext *cx, uint32_t argc,
 
         if (!bFound)
         {
-            tmpCobj = new (std::nothrow) JSScheduleWrapper(JS::NullHandleValue);
+            tmpCobj = new (std::nothrow) JSScheduleWrapper();
             tmpCobj->autorelease();
             tmpCobj->setJSCallbackThis(thisValue);
             tmpCobj->setJSCallbackFunc(jsUpdateFunc);
@@ -1744,7 +1677,7 @@ bool js_cocos2dx_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp)
 
         if (!bFound)
         {
-            tmpCobj = new (std::nothrow) JSScheduleWrapper(JS::NullHandleValue);
+            tmpCobj = new (std::nothrow) JSScheduleWrapper();
             tmpCobj->autorelease();
             tmpCobj->setJSCallbackThis(thisValue);
             tmpCobj->setJSCallbackFunc(jsUpdateFunc);
@@ -1861,7 +1794,7 @@ bool js_CCScheduler_scheduleUpdateForTarget(JSContext *cx, uint32_t argc, jsval 
 
         if (!bFound)
         {
-            tmpCObj = new (std::nothrow) JSScheduleWrapper(args.thisv());
+            tmpCObj = new (std::nothrow) JSScheduleWrapper();
             tmpCObj->autorelease();
             tmpCObj->setJSCallbackThis(args.get(0));
             tmpCObj->setJSCallbackFunc(jsUpdateFunc);
@@ -1989,7 +1922,7 @@ bool js_CCScheduler_scheduleCallbackForTarget(JSContext *cx, uint32_t argc, jsva
 
         if (!bFound)
         {
-            tmpCObj = new (std::nothrow) JSScheduleWrapper(args.thisv());
+            tmpCObj = new (std::nothrow) JSScheduleWrapper();
             tmpCObj->autorelease();
             tmpCObj->setJSCallbackThis(args.get(0));
             tmpCObj->setJSCallbackFunc(args.get(1));
@@ -2660,6 +2593,9 @@ bool js_cocos2dx_ActionInterval_repeat(JSContext *cx, uint32_t argc, jsval *vp)
 
         cocos2d::Repeat* action = new (std::nothrow) cocos2d::Repeat;
         action->initWithAction(cobj, timesInt);
+#if !CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        action->autorelease();
+#endif
         jsb_ref_rebind(cx, obj, proxy, cobj, action, "cocos2d::Repeat");
 
         args.rval().set(OBJECT_TO_JSVAL(obj));
@@ -2681,7 +2617,9 @@ bool js_cocos2dx_ActionInterval_repeatForever(JSContext *cx, uint32_t argc, jsva
     if (argc == 0) {
         cocos2d::RepeatForever* action = new (std::nothrow) cocos2d::RepeatForever;
         action->initWithAction(cobj);
-
+#if !CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        action->autorelease();
+#endif
         jsb_ref_rebind(cx, jsobj, proxy, cobj, action, "cocos2d::RepeatForever");
         args.rval().set(OBJECT_TO_JSVAL(jsobj));
         return true;
@@ -2712,6 +2650,9 @@ bool js_cocos2dx_ActionInterval_speed(JSContext *cx, uint32_t argc, jsval *vp)
 
         cocos2d::Speed* action = new (std::nothrow) cocos2d::Speed;
         action->initWithAction(cobj, speed);
+#if !CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+        action->autorelease();
+#endif
         jsb_ref_rebind(cx, obj, proxy, cobj, action, "cocos2d::Speed");
 
         args.rval().set(OBJECT_TO_JSVAL(obj));
@@ -2762,6 +2703,12 @@ enum ACTION_TAG {
 
 bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
 {
+    if (argc == 0)
+    {
+        JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
+        return false;
+    }
+
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject jsobj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(jsobj);
@@ -2772,19 +2719,19 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
     JS::RootedObject tmp(cx);
     JS::RootedValue jsTag(cx);
     JS::RootedValue jsParam(cx);
-    double tag;
-    double parameter;
+    double tag = 0.0;
+    double parameter = 0.0;
 
-    for (uint32_t i = 0; i < argc; i++)
+    do
     {
-        JS::RootedValue vpi(cx, args.get(i));
+        JS::RootedValue vpi(cx, args[0]);
         bool ok = vpi.isObject() &&
         JS_ValueToObject(cx, vpi, &tmp) &&
         JS_GetProperty(cx, tmp, "tag", &jsTag) &&
         JS::ToNumber(cx, jsTag, &tag);
         JS_GetProperty(cx, tmp, "param", &jsParam) && JS::ToNumber(cx, jsParam, &parameter);
         bool hasParam = (parameter == parameter);
-        if (!ok) continue;
+        if (!ok) break;
 
         ok = true;
         if (tag == EASE_IN)
@@ -3003,7 +2950,7 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
             ok &= JS::ToNumber(cx, jsParam3, &parameter3);
             ok &= JS_GetProperty(cx, tmp, "param4", &jsParam4);
             ok &= JS::ToNumber(cx, jsParam4, &parameter4);
-            if (!ok) continue;
+            if (!ok) break;
 
             auto tmpaction = new (std::nothrow) cocos2d::EaseBezierAction;
             tmpaction->initWithAction(oldAction);
@@ -3011,14 +2958,19 @@ bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
             newAction = tmpaction;
         }
         else
-            continue;
+        {
+            break;
+        }
 
         if (!ok || !newAction) {
             JS_ReportError(cx, "js_cocos2dx_ActionInterval_easing : Invalid action: At least one action was expecting parameter");
             return false;
         }
-    }
+    } while (false);
 
+#if !CC_ENABLE_GC_FOR_NATIVE_OBJECTS
+    newAction->autorelease();
+#endif
     // Unbind existing proxy binding with cobj, and rebind with the new action
     jsb_ref_rebind(cx, jsobj, proxy, oldAction, newAction, "cocos2d::EaseAction");
 

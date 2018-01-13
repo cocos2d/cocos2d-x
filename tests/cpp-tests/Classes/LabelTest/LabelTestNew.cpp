@@ -43,6 +43,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelFNTMultiLine);
     ADD_TEST_CASE(LabelFNTRetina);
     ADD_TEST_CASE(LabelFNTMultiLineAlignment);
+    ADD_TEST_CASE(LabelFNTMultiLineAlignmentUNICODE);
     ADD_TEST_CASE(LabelFNTUNICODELanguages);
     ADD_TEST_CASE(LabelFNTBounds);
     ADD_TEST_CASE(LabelFNTandTTFEmpty);
@@ -556,8 +557,13 @@ std::string LabelFNTGlyphDesigner::subtitle() const
 static float alignmentItemPadding  = 50;
 static float menuItemPaddingCenter = 50;
 
-LabelFNTMultiLineAlignment::LabelFNTMultiLineAlignment()
+bool LabelFNTMultiLineAlignment::init()
 {
+    if (!AtlasDemoNew::init())
+    {
+        return false;
+    }
+
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesBegan = CC_CALLBACK_2(LabelFNTMultiLineAlignment::onTouchesBegan, this);
     listener->onTouchesMoved = CC_CALLBACK_2(LabelFNTMultiLineAlignment::onTouchesMoved, this);
@@ -568,13 +574,10 @@ LabelFNTMultiLineAlignment::LabelFNTMultiLineAlignment()
     auto size = Director::getInstance()->getWinSize();
 
     // create and initialize a Label
-    this->_labelShouldRetain = Label::createWithBMFont("fonts/markerFelt.fnt", LongSentencesExample, TextHAlignment::CENTER, size.width/1.5);
-    this->_labelShouldRetain->retain();
+    this->_label = Label::createWithBMFont("fonts/markerFelt.fnt", "", TextHAlignment::CENTER, size.width/1.5);
 
-    this->_arrowsBarShouldRetain = Sprite::create("Images/arrowsBar.png");
-    this->_arrowsBarShouldRetain->retain();
-    this->_arrowsShouldRetain = Sprite::create("Images/arrows.png");
-    this->_arrowsShouldRetain->retain();
+    this->_arrowsBar = Sprite::create("Images/arrowsBar.png");
+    this->_arrows = Sprite::create("Images/arrows.png");
 
     MenuItemFont::setFontSize(20);
     auto longSentences = MenuItemFont::create("Long Flowing Sentences", CC_CALLBACK_1(LabelFNTMultiLineAlignment::stringChanged, this));
@@ -583,52 +586,50 @@ LabelFNTMultiLineAlignment::LabelFNTMultiLineAlignment()
     auto stringMenu    = Menu::create(longSentences, lineBreaks, mixed, nullptr);
     stringMenu->alignItemsVertically();
 
-    longSentences->setColor(Color3B::RED);
-    _lastSentenceItem = longSentences;
     longSentences->setTag(LongSentences);
     lineBreaks->setTag(LineBreaks);
     mixed->setTag(Mixed);
+
+    _menuItems.push_back(longSentences);
+    _menuItems.push_back(lineBreaks);
+    _menuItems.push_back(mixed);
 
     MenuItemFont::setFontSize(30);
 
     auto left = MenuItemFont::create("Left", CC_CALLBACK_1(LabelFNTMultiLineAlignment::alignmentChanged, this));
     auto center = MenuItemFont::create("Center", CC_CALLBACK_1(LabelFNTMultiLineAlignment::alignmentChanged, this));
     auto right = MenuItemFont::create("Right", CC_CALLBACK_1(LabelFNTMultiLineAlignment::alignmentChanged, this));
+
     auto alignmentMenu = Menu::create(left, center, right, nullptr);
     alignmentMenu->alignItemsHorizontallyWithPadding(alignmentItemPadding);
 
-    center->setColor(Color3B::RED);
-    _lastAlignmentItem = center;
     left->setTag(LeftAlign);
     center->setTag(CenterAlign);
     right->setTag(RightAlign);
 
     // position the label on the center of the screen
-    this->_labelShouldRetain->setPosition(Vec2(size.width/2, size.height/2));
+    this->_label->setPosition(Vec2(size.width/2, size.height/2));
 
-    this->_arrowsBarShouldRetain->setVisible(false);
+    this->_arrowsBar->setVisible(false);
 
     float arrowsWidth = (ArrowsMax - ArrowsMin) * size.width;
-    this->_arrowsBarShouldRetain->setScaleX(arrowsWidth / this->_arrowsBarShouldRetain->getContentSize().width);
-    this->_arrowsBarShouldRetain->setPosition(Vec2(((ArrowsMax + ArrowsMin) / 2) * size.width, this->_labelShouldRetain->getPosition().y));
-
-    this->snapArrowsToEdge();
+    this->_arrowsBar->setScaleX(arrowsWidth / this->_arrowsBar->getContentSize().width);
+    this->_arrowsBar->setPosition(Vec2(((ArrowsMax + ArrowsMin) / 2) * size.width, this->_label->getPosition().y));
 
     stringMenu->setPosition(Vec2(size.width/2, size.height - menuItemPaddingCenter));
     alignmentMenu->setPosition(Vec2(size.width/2, menuItemPaddingCenter+15));
 
-    this->addChild(this->_labelShouldRetain);
-    this->addChild(this->_arrowsBarShouldRetain);
-    this->addChild(this->_arrowsShouldRetain);
+    this->selectSentenceItem(longSentences);
+    this->selectAlignmentItem(center);
+    this->snapArrowsToEdge();
+
+    this->addChild(this->_label);
+    this->addChild(this->_arrowsBar);
+    this->addChild(this->_arrows);
     this->addChild(stringMenu);
     this->addChild(alignmentMenu);
-}
 
-LabelFNTMultiLineAlignment::~LabelFNTMultiLineAlignment()
-{
-    this->_labelShouldRetain->release();
-    this->_arrowsBarShouldRetain->release();
-    this->_arrowsShouldRetain->release();
+    return true;
 }
 
 std::string LabelFNTMultiLineAlignment::title() const
@@ -641,28 +642,75 @@ std::string LabelFNTMultiLineAlignment::subtitle() const
     return "";
 }
 
-void LabelFNTMultiLineAlignment::stringChanged(cocos2d::Ref *sender)
+void LabelFNTMultiLineAlignment::selectAlignmentItem(cocos2d::MenuItemFont * item)
 {
-    auto item = (MenuItemFont*)sender;
-    item->setColor(Color3B::RED);
-    this->_lastAlignmentItem->setColor(Color3B::WHITE);
-    this->_lastAlignmentItem = item;
-
-    switch(item->getTag())
+    if (this->_lastAlignmentItem && this->_lastAlignmentItem != item)
     {
-    case LongSentences:
-        this->_labelShouldRetain->setString(LongSentencesExample);
+        this->_lastAlignmentItem->setColor(Color3B::WHITE);
+    }
+
+    this->_lastAlignmentItem = item;
+    item->setColor(Color3B::RED);
+
+    switch (item->getTag())
+    {
+    case LeftAlign:
+        this->_label->setAlignment(TextHAlignment::LEFT);
         break;
-    case LineBreaks:
-        this->_labelShouldRetain->setString(LineBreaksExample);
+    case CenterAlign:
+        this->_label->setAlignment(TextHAlignment::CENTER);
         break;
-    case Mixed:
-        this->_labelShouldRetain->setString(MixedExample);
+    case RightAlign:
+        this->_label->setAlignment(TextHAlignment::RIGHT);
         break;
 
     default:
         break;
     }
+}
+
+void LabelFNTMultiLineAlignment::selectSentenceItem(cocos2d::MenuItemFont* item)
+{
+    if (this->_lastSentenceItem && this->_lastSentenceItem != item)
+    {
+        this->_lastSentenceItem->setColor(Color3B::WHITE);
+    }
+
+    this->_lastSentenceItem = item;
+    item->setColor(Color3B::RED);
+
+    auto str = this->getItemString(item);
+    this->_label->setString(str);
+}
+
+std::string LabelFNTMultiLineAlignment::getItemString(cocos2d::MenuItemFont* item)
+{
+    std::string str;
+
+    switch (item->getTag())
+    {
+    case LongSentences:
+        str = LongSentencesExample;
+        break;
+    case LineBreaks:
+        str = LineBreaksExample;
+        break;
+    case Mixed:
+        str = MixedExample;
+        break;
+
+    default:
+        break;
+    }
+
+    return str;
+}
+
+void LabelFNTMultiLineAlignment::stringChanged(cocos2d::Ref *sender)
+{
+    auto item = (MenuItemFont*)sender;
+
+    selectSentenceItem(item);
 
     this->snapArrowsToEdge();
 }
@@ -670,25 +718,8 @@ void LabelFNTMultiLineAlignment::stringChanged(cocos2d::Ref *sender)
 void LabelFNTMultiLineAlignment::alignmentChanged(cocos2d::Ref *sender)
 {
     auto item = static_cast<MenuItemFont*>(sender);
-    item->setColor(Color3B::RED);
-    this->_lastAlignmentItem->setColor(Color3B::WHITE);
-    this->_lastAlignmentItem = item;
 
-    switch(item->getTag())
-    {
-    case LeftAlign:
-        this->_labelShouldRetain->setAlignment(TextHAlignment::LEFT);
-        break;
-    case CenterAlign:
-        this->_labelShouldRetain->setAlignment(TextHAlignment::CENTER);
-        break;
-    case RightAlign:
-        this->_labelShouldRetain->setAlignment(TextHAlignment::RIGHT);
-        break;
-
-    default:
-        break;
-    }
+    selectAlignmentItem(item);
 
     this->snapArrowsToEdge();
 }
@@ -698,10 +729,10 @@ void LabelFNTMultiLineAlignment::onTouchesBegan(const std::vector<Touch*>& touch
     auto touch = touches[0];
     auto location = touch->getLocationInView();
 
-    if (this->_arrowsShouldRetain->getBoundingBox().containsPoint(location))
+    if (this->_arrows->getBoundingBox().containsPoint(location))
     {
         _drag = true;
-        this->_arrowsBarShouldRetain->setVisible(true);
+        this->_arrowsBar->setVisible(true);
     }
 }
 
@@ -710,7 +741,7 @@ void LabelFNTMultiLineAlignment::onTouchesEnded(const std::vector<Touch*>& touch
     _drag = false;
     this->snapArrowsToEdge();
 
-    this->_arrowsBarShouldRetain->setVisible(false);
+    this->_arrowsBar->setVisible(false);
 }
 
 void LabelFNTMultiLineAlignment::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
@@ -725,24 +756,83 @@ void LabelFNTMultiLineAlignment::onTouchesMoved(const std::vector<Touch*>& touch
 
     auto winSize = Director::getInstance()->getWinSize();
 
-    this->_arrowsShouldRetain->setPosition(Vec2(MAX(MIN(location.x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
-        this->_arrowsShouldRetain->getPosition().y));
+    this->_arrows->setPosition(Vec2(MAX(MIN(location.x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
+        this->_arrows->getPosition().y));
 
-    float labelWidth = fabs(this->_arrowsShouldRetain->getPosition().x - this->_labelShouldRetain->getPosition().x) * 2;
+    float labelWidth = fabs(this->_arrows->getPosition().x - this->_label->getPosition().x) * 2;
 
-    this->_labelShouldRetain->setMaxLineWidth(labelWidth);
+    this->_label->setMaxLineWidth(labelWidth);
 }
 
 void LabelFNTMultiLineAlignment::snapArrowsToEdge()
 {
-    this->_arrowsShouldRetain->setPosition(Vec2(this->_labelShouldRetain->getPosition().x + this->_labelShouldRetain->getContentSize().width/2,
-        this->_labelShouldRetain->getPosition().y));
+    this->_arrows->setPosition(Vec2(this->_label->getPosition().x + this->_label->getContentSize().width/2,
+        this->_label->getPosition().y));
+}
+
+/// LabelFNTMultiLineAlignmentUNICODE
+
+bool LabelFNTMultiLineAlignmentUNICODE::init()
+{
+    if (!LabelFNTMultiLineAlignment::init())
+    {
+        return false;
+    }
+
+    this->_menuItems[0]->setString("French");
+    this->_menuItems[1]->setString("Spanish");
+    this->_menuItems[2]->setString("Ukrainian");
+
+    auto ttfConfig = this->_label->getTTFConfig();
+    ttfConfig.fontSize = 20;
+    ttfConfig.fontFilePath = "fonts/tahoma.ttf";
+    this->_label->setTTFConfig(ttfConfig);
+
+    this->selectSentenceItem(this->_menuItems[0]);
+    this->snapArrowsToEdge();
+
+    return true;
+}
+
+std::string LabelFNTMultiLineAlignmentUNICODE::title() const
+{
+    return "";
+}
+
+std::string LabelFNTMultiLineAlignmentUNICODE::subtitle() const
+{
+    return "";
+}
+
+std::string LabelFNTMultiLineAlignmentUNICODE::getItemString(cocos2d::MenuItemFont* item)
+{
+    std::string str;
+
+    auto strings = FileUtils::getInstance()->getValueMapFromFile("strings/LabelFNTMultiLineAlignmentUNICODE.xml");
+
+    switch (item->getTag())
+    {
+    case LongSentences:
+        str = strings["french"].asString();
+        break;
+    case LineBreaks:
+        str = strings["spanish"].asString();
+        break;
+    case Mixed:
+        str = strings["ukrainian"].asString();
+        break;
+
+    default:
+        break;
+    }
+
+    return str;
 }
 
 /// BMFontUnicodeNew
 LabelFNTUNICODELanguages::LabelFNTUNICODELanguages()
 {
-    auto strings = FileUtils::getInstance()->getValueMapFromFile("fonts/strings.xml");
+    auto strings = FileUtils::getInstance()->getValueMapFromFile("strings/LabelFNTUNICODELanguages.xml");
     std::string chinese  = strings["chinese1"].asString();
     std::string russian  = strings["russian"].asString();
     std::string spanish  = strings["spanish"].asString();

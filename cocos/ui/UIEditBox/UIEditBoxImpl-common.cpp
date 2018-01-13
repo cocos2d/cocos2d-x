@@ -34,6 +34,10 @@
 
 static const int CC_EDIT_BOX_PADDING = 5;
 
+static cocos2d::Size applyPadding(const cocos2d::Size& sizeToCorrect) {
+    return cocos2d::Size(sizeToCorrect.width - CC_EDIT_BOX_PADDING * 2, sizeToCorrect.height);
+}
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #define PASSWORD_CHAR "*"
 #else
@@ -144,12 +148,11 @@ void EditBoxImplCommon::setInactiveText(const char* pText)
         _label->setString(pText);
     }
     // Clip the text width to fit to the text box
-    float fMaxWidth = _editBox->getContentSize().width;
-    float fMaxHeight = _editBox->getContentSize().height;
+    const auto maxSize = applyPadding(_editBox->getContentSize());
     Size labelSize = _label->getContentSize();
-    if(labelSize.width > fMaxWidth || labelSize.height > fMaxHeight)
+    if(labelSize.width > maxSize.width || labelSize.height > maxSize.height)
     {
-        _label->setDimensions(fMaxWidth, fMaxHeight);
+        _label->setDimensions(maxSize.width, maxSize.height);
     }
 }
     
@@ -201,7 +204,7 @@ void EditBoxImplCommon::setInputMode(EditBox::InputMode inputMode)
 {
     _editBoxInputMode = inputMode;
     this->setNativeInputMode(inputMode);
-    this->placeInactiveLabels(_editBox->getContentSize());
+    this->placeInactiveLabels(applyPadding(_editBox->getContentSize()));
 }
 
 void EditBoxImplCommon::setMaxLength(int maxLength)
@@ -214,6 +217,7 @@ void EditBoxImplCommon::setTextHorizontalAlignment(cocos2d::TextHAlignment align
 {
     _alignment = alignment;
     this->setNativeTextHorizontalAlignment(alignment);
+    refreshLabelAlignment();
 }
 
 void EditBoxImplCommon::setInputFlag(EditBox::InputFlag inputFlag)
@@ -282,9 +286,9 @@ void EditBoxImplCommon::setVisible(bool visible)
 
 void EditBoxImplCommon::setContentSize(const Size& size)
 {
-    _contentSize = size;
-    CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
-    placeInactiveLabels(size);
+    _contentSize = applyPadding(size);
+    CCLOG("[Edit text] content size = (%f, %f)", _contentSize.width, _contentSize.height);
+    placeInactiveLabels(_contentSize);
 }
 
 void EditBoxImplCommon::draw(Renderer* /*renderer*/, const Mat4& /*transform*/, uint32_t flags)

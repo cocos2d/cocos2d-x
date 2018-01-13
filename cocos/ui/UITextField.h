@@ -694,7 +694,8 @@ private:
     enum class FontType
     {
         SYSTEM,
-        TTF
+        TTF,
+        BMFONT
     };
 
     std::string _fontName;

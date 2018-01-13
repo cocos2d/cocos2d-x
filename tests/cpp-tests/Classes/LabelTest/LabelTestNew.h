@@ -142,8 +142,7 @@ class LabelFNTMultiLineAlignment : public AtlasDemoNew
 public:
     CREATE_FUNC(LabelFNTMultiLineAlignment);
 
-    LabelFNTMultiLineAlignment();
-    ~LabelFNTMultiLineAlignment();
+    virtual bool init() override;
     void snapArrowsToEdge();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -152,13 +151,30 @@ public:
     void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void selectAlignmentItem(cocos2d::MenuItemFont* item);
+    void selectSentenceItem(cocos2d::MenuItemFont* item);
+    virtual std::string getItemString(cocos2d::MenuItemFont* item);
 
+protected:
+    cocos2d::Label* _label = nullptr;
+    cocos2d::Sprite* _arrowsBar = nullptr;
+    cocos2d::Sprite* _arrows = nullptr;
+    std::vector<cocos2d::MenuItemFont*> _menuItems;
+    cocos2d::MenuItemFont *_lastSentenceItem = nullptr;
+    cocos2d::MenuItemFont *_lastAlignmentItem = nullptr;
+    bool _drag = false;
+};
+
+class LabelFNTMultiLineAlignmentUNICODE : public LabelFNTMultiLineAlignment
+{
 public:
-    cocos2d::Label* _labelShouldRetain;
-    cocos2d::Sprite* _arrowsBarShouldRetain;
-    cocos2d::Sprite* _arrowsShouldRetain;
-    cocos2d::MenuItemFont *_lastSentenceItem, *_lastAlignmentItem;
-    bool _drag;
+    CREATE_FUNC(LabelFNTMultiLineAlignmentUNICODE);
+
+    bool init() override;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual std::string getItemString(cocos2d::MenuItemFont* item) override;
 };
 
 class LabelFNTUNICODELanguages : public AtlasDemoNew

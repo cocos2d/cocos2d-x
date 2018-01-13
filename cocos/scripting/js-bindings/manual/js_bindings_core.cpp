@@ -141,12 +141,12 @@ void jsb_del_c_proxy_for_jsobject( JSObject *jsobj )
     CCASSERT(proxy, "Invalid proxy for JSObject");
     JS_SetPrivate(jsobj, NULL);
 
-    free(proxy);
+    delete(proxy);
 }
 
 void jsb_set_c_proxy_for_jsobject( JSObject *jsobj, void *handle, unsigned long flags)
 {
-    struct jsb_c_proxy_s *proxy = (struct jsb_c_proxy_s*) malloc(sizeof(*proxy));
+    struct jsb_c_proxy_s *proxy = new (std::nothrow) (struct jsb_c_proxy_s);
     CCASSERT(proxy, "No memory for proxy");
 
     proxy->handle = handle;
