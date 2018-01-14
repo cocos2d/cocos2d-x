@@ -8,11 +8,19 @@ $env:ANDROID_NDK_HOME=$env:APPVEYOR_BUILD_FOLDER + "\..\android-ndk-r16b"
 $env:ANDROID_SDK_ROOT=$env:APPVEYOR_BUILD_FOLDER + "\..\android-sdk"
 $env:NDK_ROOT=$env:APPVEYOR_BUILD_FOLDER + "\..\android-ndk-r16b"
 
+function PushAndroidArtifacts
+{
+    # https://www.appveyor.com/docs/packaging-artifacts/
+    $root = Resolve-Path app\build\outputs\apk; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName to-publish }
+}
+
+
 If ($env:build_type -eq "android_cpp_tests") {
     Write-Host "Build tests\cpp-tests"
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tests\cpp-tests\proj.android\
     & ./gradlew build
     if ($lastexitcode -ne 0) {throw}
+    PushAndroidArtifacts
     Pop-Location
 
 } elseif ($env:build_type -eq "android_cpp_empty_test") {
@@ -20,6 +28,7 @@ If ($env:build_type -eq "android_cpp_tests") {
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tests\cpp-empty-test\proj.android\
     & ./gradlew build
     if ($lastexitcode -ne 0) {throw}
+    PushAndroidArtifacts
     Pop-Location
 
 } elseif ($env:build_type -eq "android_cocos_new_test") {
@@ -31,6 +40,7 @@ If ($env:build_type -eq "android_cpp_tests") {
     Push-Location $env:APPVEYOR_BUILD_FOLDER\cocos_new_test\proj.android\
     & ./gradlew build
     if ($lastexitcode -ne 0) {throw}
+    PushAndroidArtifacts
     Pop-Location
 # TODO: uncomment when fixed
 # } elseif ($env:build_type -eq "android_gen_libs") {
