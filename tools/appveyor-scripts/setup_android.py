@@ -11,8 +11,10 @@ import subprocess
 import tempfile
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
+
+COCOS2D_X = os.path.abspath(os.path.join(DIR_PATH, "../.."))
 # ROOT_DIR/cocos2d-x
-ROOT_DIR = os.path.abspath(os.path.join(DIR_PATH, "../../.."))
+ROOT_DIR = os.path.abspath(os.path.join(COCOS2D_X, ".."))
 
 ANDROID_NDK = os.path.join(ROOT_DIR, "android-ndk-r16b")
 ANDROID_SDK = os.path.join(ROOT_DIR, "android-sdk")
@@ -102,7 +104,7 @@ def export_environment():
         myfile.write("export ANDROID_SDK_ROOT=" + ANDROID_SDK + "\n")
         myfile.write("export NDK_ROOT=" + ANDROID_NDK + "\n")
 
-    with open(os.path.join(ROOT_DIR, "environment.ps1"), "a")  as myfile:
+    with open(os.path.join(ROOT_DIR, "environment.ps1"), "a") as myfile:
         myfile.write("$env:ANDROID_HOME=\"" + ANDROID_SDK + "\"\n")
         myfile.write("$env:ANDROID_NDK_HOME=\"" + ANDROID_NDK + "\"\n")
         myfile.write("$env:ANDROID_SDK_ROOT=\"" + ANDROID_SDK + "\"\n")
@@ -110,7 +112,7 @@ def export_environment():
 
 
 def main():
-    run(sys.executable + " download-deps.py --remove-download=False")
+    run(sys.executable + " " + os.path.join(COCOS2D_X, "download-deps.py") + " --remove-download=False")
     install_android_ndk()
     install_android_sdk_tools()
     install_android_sdk()
