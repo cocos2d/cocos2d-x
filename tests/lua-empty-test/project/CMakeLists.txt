@@ -27,9 +27,11 @@ endif()
 include_directories(
   Classes
   ../../../cocos/scripting/lua-bindings/manual
-  ../../../external/lua/lua
+  ../../../external/lua/luajit/include
   ../../../external/lua/tolua
 )
+
+include_directories(${LUAJIT_INCLUDE_DIRS})
 
 if(ANDROID)
     add_library(${APP_NAME} SHARED ${SAMPLE_SRC})
@@ -39,9 +41,11 @@ if(ANDROID)
 else()
     # add the executable
     add_executable(${APP_NAME} ${SAMPLE_SRC})
+
 endif()
 
-target_link_libraries(${APP_NAME} cocos2d luacocos2d)
+# need review
+target_link_libraries(${APP_NAME} luacocos2d cocos2d)
 
 if(MACOSX OR APPLE)
   set_target_properties(${APP_NAME} PROPERTIES

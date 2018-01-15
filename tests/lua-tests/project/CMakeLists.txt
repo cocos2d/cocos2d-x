@@ -31,12 +31,20 @@ include_directories(
   Classes
   ../../../cocos/scripting/lua-bindings/manual
   ../../../cocos/scripting/lua-bindings/auto
-  ../../../external/lua/lua
   ../../../external/lua/tolua
 )
 
-# add the executable
-add_executable(${APP_NAME} ${SAMPLE_SRC})
+include_directories(${LUAJIT_INCLUDE_DIRS})
+
+if(ANDROID)
+    add_library(${APP_NAME} SHARED ${SAMPLE_SRC})
+    IF(CMAKE_BUILD_TYPE MATCHES RELEASE)
+        ADD_CUSTOM_COMMAND(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
+    ENDIF()
+else()
+    # add the executable
+    add_executable(${APP_NAME} ${SAMPLE_SRC})
+endif()
 
 target_link_libraries(${APP_NAME} luacocos2d cocos2d)
 
