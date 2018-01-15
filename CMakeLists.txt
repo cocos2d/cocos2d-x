@@ -113,7 +113,7 @@ if(BUILD_LUA_LIBS)
 
   # build lua tests
   if(BUILD_LUA_TESTS)
-    # add_subdirectory(tests/lua-tests/project)
+    add_subdirectory(tests/lua-tests/project)
     add_subdirectory(tests/lua-empty-test/project)
   endif(BUILD_LUA_TESTS)
 

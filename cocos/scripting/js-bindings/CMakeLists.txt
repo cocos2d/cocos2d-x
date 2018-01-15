@@ -32,6 +32,7 @@ elseif(APPLE)# osx or ios
   set(PLATFORM_SRC manual/platform/ios/JavaScriptObjCBridge.mm)
 elseif(ANDROID)
   set(PLATFORM_FOLDER android)
+  set(PLATFORM_SRC manual/platform/android/CCJavascriptJavaBridge.cpp)
 else() # Assume Linux
   set(PLATFORM_FOLDER linux)
 endif()
@@ -86,6 +87,7 @@ set(JSBINDING_SRC
 include_directories(
   ${cocos_root}/external/spidermonkey/include/${PLATFORM_FOLDER}
   ${cocos_root}/cocos
+  ${cocos_root}/cocos/platform/${PLATFORM_FOLDER}
   ${cocos_root}/cocos/editor-support
   ${cocos_root}/extensions
   ${cocos_root}/external
@@ -105,6 +107,7 @@ find_library(SPIDERMONKEY_LIBRARY NAMES js_static mozjs HINTS
 
 message("SPIDERMONKEY_LIBRARY: ${SPIDERMONKEY_LIBRARY}")
 
+# should change to cocos_use_pkg() about,sqlite3 or set some flag
 target_link_libraries(jscocos2d
   sqlite3
   ${SPIDERMONKEY_LIBRARY}
