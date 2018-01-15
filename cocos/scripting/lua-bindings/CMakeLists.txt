@@ -146,15 +146,17 @@ endif()
 
 set(lua_bindings_files ${lua_cocos2d_source_files} ${lua_bindings_manual_files} ${lua_bindings_auto_files})
 
-message("use prebuild libs value " "${USE_PREBUILT_LIBS}")
-message("find luajit value " "${LUAJIT_FOUND}")
-message("find luajit include " "${LUAJIT_INCLUDE_DIRS}")
+# message("use prebuild libs value " "${USE_PREBUILT_LIBS}")
+# message("find luajit value " "${LUAJIT_FOUND}")
+# message("find luajit include " "${LUAJIT_INCLUDE_DIRS}")
 # cocos_find_package(LUAJIT LUAJIT REQUIRED)
 # cocos_use_pkg(cocos2d, luajit)
-include_directories(${LUAJIT_INCLUDE_DIRS})
+# include_directories(${LUAJIT_INCLUDE_DIRS})
 
 add_library(luacocos2d ${lua_bindings_files})
-target_link_libraries(luacocos2d luajit cocos2d)
+target_link_libraries(luacocos2d cocos2d)
+
+cocos_use_pkg(luacocos2d LUAJIT)
 
 set_target_properties(luacocos2d
     PROPERTIES

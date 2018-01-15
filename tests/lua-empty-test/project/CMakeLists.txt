@@ -41,11 +41,9 @@ if(ANDROID)
 else()
     # add the executable
     add_executable(${APP_NAME} ${SAMPLE_SRC})
-
 endif()
 
-# need review
-target_link_libraries(${APP_NAME} luacocos2d cocos2d)
+target_link_libraries(${APP_NAME} cocos2d luacocos2d)
 
 if(MACOSX OR APPLE)
   set_target_properties(${APP_NAME} PROPERTIES
