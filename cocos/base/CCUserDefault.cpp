@@ -57,25 +57,40 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
 
     do 
     {
-         tinyxml2::XMLDocument* xmlDoc = new (std::nothrow) tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument* xmlDoc = new (std::nothrow) tinyxml2::XMLDocument();
         *doc = xmlDoc;
+        *rootNode = nullptr;
 
         std::string xmlBuffer = FileUtils::getInstance()->getStringFromFile(UserDefault::getInstance()->getXMLFilePath());
 
-        if (xmlBuffer.empty())
+        if (!xmlBuffer.empty())
         {
-            CCLOG("can not read xml file");
-            break;
-        }
-        xmlDoc->Parse(xmlBuffer.c_str(), xmlBuffer.size());
+            xmlDoc->Parse(xmlBuffer.c_str(), xmlBuffer.size());
 
-        // get root node
-        *rootNode = xmlDoc->RootElement();
+            // get root node
+            *rootNode = xmlDoc->RootElement();
+        }
+
         if (nullptr == *rootNode)
         {
-            CCLOG("read root node error");
-            break;
+            if (!xmlDoc->FirstChild())
+            {
+                tinyxml2::XMLDeclaration *pDeclaration = xmlDoc->NewDeclaration(nullptr);
+                if (nullptr != pDeclaration)
+                {
+                    xmlDoc->LinkEndChild(pDeclaration);
+                }
+            }
+
+            tinyxml2::XMLElement *pRootEle = xmlDoc->NewElement(USERDEFAULT_ROOT_NAME);
+            if (nullptr != pRootEle)
+            {
+                xmlDoc->LinkEndChild(pRootEle);
+            }
+
+            *rootNode = pRootEle;
         }
+
         // find the node
         curNode = (*rootNode)->FirstChildElement();
         while (nullptr != curNode)
@@ -95,7 +110,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
 
 static void setValueForKey(const char* pKey, const char* pValue)
 {
-     tinyxml2::XMLElement* rootNode;
+    tinyxml2::XMLElement* rootNode;
     tinyxml2::XMLDocument* doc;
     tinyxml2::XMLElement* node;
     // check the params
