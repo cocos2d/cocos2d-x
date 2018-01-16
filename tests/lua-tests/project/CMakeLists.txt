@@ -33,7 +33,7 @@ endif()
 include_directories(
   Classes
   ../../../cocos/scripting/lua-bindings/manual
-  ../../../cocos/scripting/lua-bindings/auto
+#   ../../../cocos/scripting/lua-bindings/auto
   ../../../external/lua/tolua
 )
 
@@ -49,7 +49,7 @@ else()
     add_executable(${APP_NAME} ${SAMPLE_SRC})
 endif()
 
-target_link_libraries(${APP_NAME} luacocos2d cocos2d)
+target_link_libraries(${APP_NAME} luacocos2d)
 
 if(MACOSX OR APPLE)
   set_target_properties(${APP_NAME} PROPERTIES

@@ -145,7 +145,7 @@ elseif(MACOSX OR APPLE)
   )
 
 elseif(ANDROID)
-  set(PLATFORM_SPECIFIC_LIBS GLESv1_CM GLESv2 EGL log android OpenSLES)
+  set(PLATFORM_SPECIFIC_LIBS GLESv2 EGL log android OpenSLES)
   include(../cmake/AndroidNdkModules.cmake)
   android_ndk_import_module_cpufeatures()
   cocos_use_pkg(cocos2dInternal TREMOLO)
