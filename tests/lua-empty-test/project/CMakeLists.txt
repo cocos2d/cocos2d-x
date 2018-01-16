@@ -20,7 +20,7 @@ elseif(MACOSX OR APPLE)
     
     list(APPEND SAMPLE_SRC ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS})
 elseif(ANDROID)
-    set(PLATFORM_SRC proj.android/app/jni/main.cpp)
+    list(APPEND SAMPLE_SRC proj.android/app/jni/main.cpp)
     set(RES_PREFIX "/Resources")
 endif()
 

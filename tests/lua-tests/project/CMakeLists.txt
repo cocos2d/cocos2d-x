@@ -25,6 +25,9 @@ elseif(MACOSX)
     cocos_mark_resources(FILES ${TEST_RESOURCES} BASEDIR ${CMAKE_SOURCE_DIR}/tests/cpp-tests/Resources RESOURCEBASE Resources/res)
 
     list(APPEND SAMPLE_SRC ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS} ${TEST_RESOURCES})
+elseif(ANDROID)
+    list(APPEND SAMPLE_SRC proj.android/app/jni/main.cpp)
+    set(RES_PREFIX "/Resources")
 endif()
 
 include_directories(
