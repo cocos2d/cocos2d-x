@@ -153,11 +153,11 @@ Main features
 Build Requirements
 ------------------
 
-* Mac OS X 10.7+, Xcode 7+
+* Mac OS X 10.7+, Xcode 8+
 * or Ubuntu 12.10+, CMake 2.6+
-* or Windows 7+, VS 2013+
+* or Windows 7+, VS 2015
 * Python 2.7.5
-* NDK r11+ is required to build Android games(tested with r14)
+* NDK r16+ is required to build Android games
 * Android Studio 2.3.3+ to build Android games(tested with 2.3.3)
 * JRE or JDK 1.6+ is required for web publishing
 
