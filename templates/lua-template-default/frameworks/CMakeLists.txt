@@ -51,6 +51,7 @@ endif(USE_BULLET)
 # libcocos2d
 set(BUILD_CPP_EMPTY_TEST OFF CACHE BOOL "turn off build cpp-empty-test")
 set(BUILD_CPP_TESTS OFF CACHE BOOL "turn off build cpp-tests")
+set(BUILD_LUA_EMPTY_TEST OFF CACHE BOOL "turn off build lua-empty-test")
 set(BUILD_LUA_TESTS OFF CACHE BOOL "turn off build lua-tests")
 set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js related targets")
 add_subdirectory(${COCOS2D_ROOT})
@@ -96,10 +97,14 @@ else()
   endif()
 endif(MSVC)
 
-set(GAME_SRC
-  runtime-src/proj.linux/main.cpp
-  runtime-src/Classes/AppDelegate.cpp
+set(GAME_SRC runtime-src/Classes/AppDelegate.cpp
 )
+
+if(ANDROID)
+  list(APPEND GAME_SRC runtime-src/proj.android/app/jni/hellolua/main.cpp)
+elseif(LINUX)
+  list(APPEND GAME_SRC runtime-src/proj.linux/main.cpp)
+endif()
 
 
 include_directories(
@@ -109,16 +114,23 @@ include_directories(
   runtime-src/Classes
   ${COCOS2D_ROOT}/cocos
   ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/manual
-  ${COCOS2D_ROOT}/external/lua/lua
+  ${COCOS2D_ROOT}/external/lua/luajit/include
   ${COCOS2D_ROOT}/external/
   ${COCOS2D_ROOT}/external/lua/tolua
   ${COCOS2D_ROOT}/cocos/audio/include
 )
 
-# add the executable
-add_executable(${APP_NAME} ${GAME_SRC})
+if(ANDROID)
+    add_library(${APP_NAME} SHARED ${GAME_SRC})
+    IF(CMAKE_BUILD_TYPE MATCHES RELEASE)
+        ADD_CUSTOM_COMMAND(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
+    ENDIF()
+else()
+  # add the executable
+  add_executable(${APP_NAME} ${GAME_SRC})
+endif(ANDROID)
 
-target_link_libraries(${APP_NAME} cocos2d luacocos2d)
+target_link_libraries(${APP_NAME} luacocos2d)
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 
