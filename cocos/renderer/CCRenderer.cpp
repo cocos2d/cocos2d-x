@@ -347,17 +347,17 @@ void Renderer::mapBuffers()
 
 void Renderer::addCommand(RenderCommand* command)
 {
-    int renderQueue =_commandGroupStack.top();
-    addCommand(command, renderQueue);
+    int renderQueueID =_commandGroupStack.top();
+    addCommand(command, renderQueueID);
 }
 
-void Renderer::addCommand(RenderCommand* command, int renderQueue)
+void Renderer::addCommand(RenderCommand* command, int renderQueueID)
 {
     CCASSERT(!_isRendering, "Cannot add command while rendering");
-    CCASSERT(renderQueue >=0, "Invalid render queue");
+    CCASSERT(renderQueueID >=0, "Invalid render queue");
     CCASSERT(command->getType() != RenderCommand::Type::UNKNOWN_COMMAND, "Invalid Command Type");
 
-    _renderGroups[renderQueue].push_back(command);
+    _renderGroups[renderQueueID].push_back(command);
 }
 
 void Renderer::pushGroup(int renderQueueID)
