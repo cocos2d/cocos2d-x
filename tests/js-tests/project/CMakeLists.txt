@@ -32,6 +32,11 @@ else()
   )
 endif()
 
+if(APPLE)
+  # fix js-tests compile error, for temp
+  set_property(TARGET ${APP_NAME} APPEND_STRING PROPERTY COMPILE_FLAGS "-fObjc")
+endif(APPLE)
+
 set(SAMPLE_SRC
   Classes/AppDelegate.cpp
   Classes/js_DrawNode3D_bindings.cpp
