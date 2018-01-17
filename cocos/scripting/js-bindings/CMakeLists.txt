@@ -37,6 +37,16 @@ else() # Assume Linux
   set(PLATFORM_FOLDER linux)
 endif()
 
+if(ANDROID OR IOS)
+  set(PLATFORM_SRC
+    auto/jsb_cocos2dx_experimental_webView_auto.cpp
+    manual/experimental/jsb_cocos2dx_experimental_webView_manual.cpp
+    auto/jsb_cocos2dx_experimental_video_auto.cpp
+    manual/experimental/jsb_cocos2dx_experimental_video_manual.cpp
+    ${PLATFORM_SRC}
+  )
+endif()
+
 set(JSBINDING_SRC
   auto/jsb_cocos2dx_auto.cpp
   auto/jsb_cocos2dx_audioengine_auto.cpp
@@ -107,12 +117,14 @@ find_library(SPIDERMONKEY_LIBRARY NAMES js_static mozjs HINTS
 
 message("SPIDERMONKEY_LIBRARY: ${SPIDERMONKEY_LIBRARY}")
 
+cocos_use_pkg(jscocos2d SQLITE3)
+
 # should change to cocos_use_pkg() about,sqlite3 or set some flag
 target_link_libraries(jscocos2d
-  sqlite3
   ${SPIDERMONKEY_LIBRARY}
-  xxhash
 )
+
+cocos_use_pkg(jscocos2d xxhash)
 
 set_target_properties(jscocos2d
     PROPERTIES
