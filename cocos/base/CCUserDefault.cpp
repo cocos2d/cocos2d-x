@@ -73,22 +73,23 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
 
         if (nullptr == *rootNode)
         {
+            // try to insert xml declaration
             if (!xmlDoc->FirstChild())
             {
-                tinyxml2::XMLDeclaration *pDeclaration = xmlDoc->NewDeclaration(nullptr);
-                if (nullptr != pDeclaration)
+                tinyxml2::XMLDeclaration *xmlDeclaration = xmlDoc->NewDeclaration(nullptr);
+                if (nullptr != xmlDeclaration)
                 {
-                    xmlDoc->LinkEndChild(pDeclaration);
+                    xmlDoc->LinkEndChild(xmlDeclaration);
                 }
             }
 
-            tinyxml2::XMLElement *pRootEle = xmlDoc->NewElement(USERDEFAULT_ROOT_NAME);
-            if (nullptr != pRootEle)
-            {
-                xmlDoc->LinkEndChild(pRootEle);
-            }
+            // create root element
+            tinyxml2::XMLElement *rootEle = xmlDoc->NewElement(USERDEFAULT_ROOT_NAME);
+            if (nullptr == rootEle)
+                break;
 
-            *rootNode = pRootEle;
+            xmlDoc->LinkEndChild(rootEle);
+            *rootNode = rootEle;
         }
 
         // find the node
