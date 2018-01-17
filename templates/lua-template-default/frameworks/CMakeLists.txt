@@ -103,6 +103,9 @@ else()
   endif()
 endif(MSVC)
 
+# need review
+include_directories(runtime-src/Classes)
+
 set(GAME_SRC runtime-src/Classes/AppDelegate.cpp
 )
 

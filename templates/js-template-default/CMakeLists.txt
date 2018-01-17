@@ -36,7 +36,7 @@ if(CMAKE_VERSION VERSION_GREATER 3.1)
     cmake_policy(SET CMP0054 NEW)
 endif()
 
-set(APP_NAME MyGame)
+set(APP_NAME cocos2djs)
 project (${APP_NAME})
 
 # define some variables
@@ -100,6 +100,8 @@ set(CMAKE_CURRENT_SOURCE_DIR ${COCOS2D_X_ROOT})
 include(BuildModules)
 BuildModules()
 set(CMAKE_CURRENT_SOURCE_DIR ${PREV_CMAKE_CURRENT_SOURCE_DIR})
+
+include_directories(${RUNTIME_SRC_ROOT}/Classes)
 
 set(GAME_SRC ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp
 )
