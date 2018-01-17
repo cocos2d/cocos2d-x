@@ -4,9 +4,9 @@
 cocos2d-x
 =========
 
-|  |iOS|Mac|Linux|Win32|Android|
-| ----|----|----- | ---|----|------|
-|v3|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=ios)](http://45.56.80.45:8080/job/daily-build-v3/node=ios)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=mac)](http://45.56.80.45:8080/job/daily-build-v3/node=mac)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=linux)](http://45.56.80.45:8080/job/daily-build-v3/node=linux)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=win32_bak)](http://45.56.80.45:8080/job/daily-build-v3/node=win32_bak)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=android)](http://45.56.80.45:8080/job/daily-build-v3/node=android)
+|Win32|Others|
+| ----|------|
+[![Build status](https://ci.appveyor.com/api/projects/status/nlgirox464j6ldg5/branch/v3?svg=true)](https://ci.appveyor.com/project/minggo/cocos2d-x/branch/v3)|[![Build Status](https://travis-ci.org/cocos2d/cocos2d-x.svg?branch=v3)](https://travis-ci.org/cocos2d/cocos2d-x)
 
 
 [cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
