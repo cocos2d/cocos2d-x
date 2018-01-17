@@ -124,10 +124,7 @@ else()
   )
 endif(ANDROID)
 
-target_link_libraries(${APP_NAME}
-  jscocos2d
-  cocos2d
-)
+target_link_libraries(${APP_NAME} jscocos2d)
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 
