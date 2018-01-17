@@ -1,4 +1,4 @@
-set(APP_NAME lua-tests)
+set(APP_NAME lua_tests)
 
 set(SAMPLE_SRC
     Classes/AppDelegate.cpp
@@ -25,20 +25,31 @@ elseif(MACOSX)
     cocos_mark_resources(FILES ${TEST_RESOURCES} BASEDIR ${CMAKE_SOURCE_DIR}/tests/cpp-tests/Resources RESOURCEBASE Resources/res)
 
     list(APPEND SAMPLE_SRC ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS} ${TEST_RESOURCES})
+elseif(ANDROID)
+    list(APPEND SAMPLE_SRC proj.android/app/jni/main.cpp)
+    set(RES_PREFIX "/Resources")
 endif()
 
 include_directories(
   Classes
   ../../../cocos/scripting/lua-bindings/manual
-  ../../../cocos/scripting/lua-bindings/auto
-  ../../../external/lua/lua
+#   ../../../cocos/scripting/lua-bindings/auto
   ../../../external/lua/tolua
 )
 
-# add the executable
-add_executable(${APP_NAME} ${SAMPLE_SRC})
+include_directories(${LUAJIT_INCLUDE_DIRS})
 
-target_link_libraries(${APP_NAME} luacocos2d cocos2d)
+if(ANDROID)
+    add_library(${APP_NAME} SHARED ${SAMPLE_SRC})
+    IF(CMAKE_BUILD_TYPE MATCHES RELEASE)
+        ADD_CUSTOM_COMMAND(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
+    ENDIF()
+else()
+    # add the executable
+    add_executable(${APP_NAME} ${SAMPLE_SRC})
+endif()
+
+target_link_libraries(${APP_NAME} luacocos2d)
 
 if(MACOSX OR APPLE)
   set_target_properties(${APP_NAME} PROPERTIES

@@ -22,15 +22,24 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
-set(APP_NAME js-tests)
+set(APP_NAME js_tests)
 
 if(WIN32)
 
+elseif(ANDROID)
+  set(PLATFORM_SRC
+    proj.android/app/jni/main.cpp
+  )
 else()
   set(PLATFORM_SRC
     proj.linux/main.cpp
   )
 endif()
+
+if(APPLE)
+  # fix js-tests compile error, for temp
+  set_property(TARGET ${APP_NAME} APPEND_STRING PROPERTY COMPILE_FLAGS "-fObjc")
+endif(APPLE)
 
 set(SAMPLE_SRC
   Classes/AppDelegate.cpp
@@ -50,15 +59,19 @@ include_directories(
   ../../../external/chipmunk/include/chipmunk
 )
 
-# add the executable
-add_executable(${APP_NAME}
-  ${SAMPLE_SRC}
-)
+if(ANDROID)
+    add_library(${APP_NAME} SHARED ${SAMPLE_SRC})
+    IF(CMAKE_BUILD_TYPE MATCHES RELEASE)
+        ADD_CUSTOM_COMMAND(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
+    ENDIF()
+else()
+  # add the executable
+  add_executable(${APP_NAME}
+    ${SAMPLE_SRC}
+  )
+endif(ANDROID)
 
-target_link_libraries(${APP_NAME}
-  jscocos2d
-  cocos2d
-)
+target_link_libraries(${APP_NAME} jscocos2d)
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
 

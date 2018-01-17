@@ -25,7 +25,7 @@ cmake_policy(SET CMP0017 NEW)
 
 cmake_minimum_required(VERSION 2.8)
 
-set(APP_NAME HelloLua)
+set(APP_NAME cocos2dlua)
 project (${APP_NAME})
 
 set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d-x)
@@ -51,6 +51,7 @@ endif(USE_BULLET)
 # libcocos2d
 set(BUILD_CPP_EMPTY_TEST OFF CACHE BOOL "turn off build cpp-empty-test")
 set(BUILD_CPP_TESTS OFF CACHE BOOL "turn off build cpp-tests")
+set(BUILD_LUA_EMPTY_TEST OFF CACHE BOOL "turn off build lua-empty-test")
 set(BUILD_LUA_TESTS OFF CACHE BOOL "turn off build lua-tests")
 set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js related targets")
 add_subdirectory(${COCOS2D_ROOT})
@@ -91,15 +92,28 @@ else()
   set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
-  if(CLANG)
+  set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -s")
+  set(CMAKE_EXE_LINKER_FLAGS_MINSIZEREL "${CMAKE_EXE_LINKER_FLAGS_MINSIZEREL} -s")
+  if(CLANG AND NOT ANDROID)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+  endif()
+  if(CLANG AND ANDROID AND ANDROID_ARM_MODE STREQUAL thumb AND ANDROID_ABI STREQUAL armeabi)
+    string(REPLACE "-mthumb" "-marm" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
+    string(REPLACE "-mthumb" "-marm" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
   endif()
 endif(MSVC)
 
-set(GAME_SRC
-  runtime-src/proj.linux/main.cpp
-  runtime-src/Classes/AppDelegate.cpp
+# need review
+include_directories(runtime-src/Classes)
+
+set(GAME_SRC runtime-src/Classes/AppDelegate.cpp
 )
+
+if(ANDROID)
+  list(APPEND GAME_SRC runtime-src/proj.android/app/jni/hellolua/main.cpp)
+elseif(LINUX)
+  list(APPEND GAME_SRC runtime-src/proj.linux/main.cpp)
+endif()
 
 
 include_directories(
@@ -109,16 +123,23 @@ include_directories(
   runtime-src/Classes
   ${COCOS2D_ROOT}/cocos
   ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/manual
-  ${COCOS2D_ROOT}/external/lua/lua
+  ${COCOS2D_ROOT}/external/lua/luajit/include
   ${COCOS2D_ROOT}/external/
   ${COCOS2D_ROOT}/external/lua/tolua
   ${COCOS2D_ROOT}/cocos/audio/include
 )
 
-# add the executable
-add_executable(${APP_NAME} ${GAME_SRC})
+if(ANDROID)
+    add_library(${APP_NAME} SHARED ${GAME_SRC})
+    IF(CMAKE_BUILD_TYPE MATCHES RELEASE)
+        ADD_CUSTOM_COMMAND(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
+    ENDIF()
+else()
+  # add the executable
+  add_executable(${APP_NAME} ${GAME_SRC})
+endif(ANDROID)
 
-target_link_libraries(${APP_NAME} cocos2d luacocos2d)
+target_link_libraries(${APP_NAME} luacocos2d)
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 

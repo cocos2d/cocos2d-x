@@ -84,6 +84,7 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_NETWORK_SRC}
     ${COCOS_EDITOR_SUPPORT_SRC}
     ${COCOS_EXTENSIONS_SRC}
+    ${COCOS_STORAGE_SRC}
     )
 
   #todo: provide prebuild versions of the xx libs for all platforms
@@ -115,21 +116,18 @@ elseif(LINUX)
 elseif(MACOSX OR APPLE)
   cocos_use_pkg(cocos2dInternal GLFW3)
 
- INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
+  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
 
- FIND_LIBRARY(COCOA_LIBRARY Cocoa)
- FIND_LIBRARY(OPENGL_LIBRARY OpenGL )
- FIND_LIBRARY(AUDIOTOOLBOX_LIBRARY AudioToolbox)
- FIND_LIBRARY(OPENAL_LIBRARY OpenAL )
- FIND_LIBRARY(QUARTZCORE_LIBRARY QuartzCore )
- FIND_LIBRARY(APPLICATIONSERVICES_LIBRARY ApplicationServices)
- FIND_LIBRARY(IOKIT_LIBRARY IOKit)
- FIND_LIBRARY(FOUNDATION_LIBRARY Foundation)
- FIND_LIBRARY(ICONV_LIBRARY iconv)
- FIND_LIBRARY(GAME_CONTROLLER GameController)
- 
-  # fix js-tests compile error, for temp
-  set_property(TARGET ${APP_NAME} APPEND_STRING PROPERTY COMPILE_FLAGS "-fObjc")
+  FIND_LIBRARY(COCOA_LIBRARY Cocoa)
+  FIND_LIBRARY(OPENGL_LIBRARY OpenGL )
+  FIND_LIBRARY(AUDIOTOOLBOX_LIBRARY AudioToolbox)
+  FIND_LIBRARY(OPENAL_LIBRARY OpenAL )
+  FIND_LIBRARY(QUARTZCORE_LIBRARY QuartzCore )
+  FIND_LIBRARY(APPLICATIONSERVICES_LIBRARY ApplicationServices)
+  FIND_LIBRARY(IOKIT_LIBRARY IOKit)
+  FIND_LIBRARY(FOUNDATION_LIBRARY Foundation)
+  FIND_LIBRARY(ICONV_LIBRARY iconv)
+  FIND_LIBRARY(GAME_CONTROLLER GameController)
 
   set(PLATFORM_SPECIFIC_LIBS
     ${COCOA_LIBRARY}
@@ -145,7 +143,7 @@ elseif(MACOSX OR APPLE)
   )
 
 elseif(ANDROID)
-  set(PLATFORM_SPECIFIC_LIBS GLESv1_CM GLESv2 EGL log android OpenSLES)
+  set(PLATFORM_SPECIFIC_LIBS GLESv2 EGL log android OpenSLES)
   include(../cmake/AndroidNdkModules.cmake)
   android_ndk_import_module_cpufeatures()
   cocos_use_pkg(cocos2dInternal TREMOLO)

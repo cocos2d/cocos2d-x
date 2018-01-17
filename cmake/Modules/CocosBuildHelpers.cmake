@@ -39,6 +39,7 @@ endfunction()
 # cocos_find_package(pkg args...)
 # works same as find_package, but do additional care to properly find
 # prebuilt libs for cocos
+# need review
 macro(cocos_find_package pkg_name pkg_prefix)
   if(NOT USE_PREBUILT_LIBS OR NOT ${pkg_prefix}_FOUND)
     find_package(${pkg_name} ${ARGN})
