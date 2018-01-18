@@ -12276,8 +12276,16 @@ bool js_cocos2dx_studio_SkeletonNode_changeSkins(JSContext *cx, uint32_t argc, j
 
     do {
         if (argc == 1) {
-            std::map<std::string, std::string> arg0;
-            ok &= jsval_to_std_map_string_string(cx, args.get(0), &arg0);
+            std::unordered_map<std::string, std::string> arg0;
+            do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
+                if (!args.get(0).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (const std::unordered_map<std::string, std::string>&)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
             if (!ok) { ok = true; break; }
             cobj->changeSkins(arg0);
             args.rval().setUndefined();
@@ -12298,9 +12306,17 @@ bool js_cocos2dx_studio_SkeletonNode_addSkinGroup(JSContext *cx, uint32_t argc, 
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_SkeletonNode_addSkinGroup : Invalid Native Object");
     if (argc == 2) {
         std::string arg0;
-        std::map<std::string, std::string> arg1;
+        std::unordered_map<std::string, std::string> arg1;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= jsval_to_std_map_string_string(cx, args.get(1), &arg1);
+        do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JS::RootedObject tmpObj(cx, args.get(1).toObjectOrNull());
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (std::unordered_map<std::string, std::string>)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+        } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_SkeletonNode_addSkinGroup : Error processing arguments");
         cobj->addSkinGroup(arg0, arg1);
         args.rval().setUndefined();

@@ -27,7 +27,6 @@ THE SOFTWARE.
 #ifndef __CC_FAST_TMX_LAYER_H__
 #define __CC_FAST_TMX_LAYER_H__
 
-#include <map>
 #include <unordered_map>
 #include "2d/CCNode.h"
 #include "2d/CCTMXXMLParser.h"

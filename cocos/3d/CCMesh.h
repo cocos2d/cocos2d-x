@@ -237,7 +237,7 @@ protected:
     void setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigned int lightmask);
     void bindMeshCommand();
 
-    std::unordered_map<NTextureData::Usage, Texture2D*> _textures; //textures that submesh is using
+    std::map<NTextureData::Usage, Texture2D*> _textures; //textures that submesh is using
     MeshSkin*           _skin;     //skin
     bool                _visible; // is the submesh visible
     bool                _isTransparent; // is this mesh transparent, it is a property of material in fact

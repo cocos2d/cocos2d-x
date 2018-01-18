@@ -31,6 +31,8 @@ THE SOFTWARE.
 #include "3d/CCBundleReader.h"
 #include "base/CCData.h"
 
+#include <unordered_map>
+
 #define BUNDLE_TYPE_SCENE               1
 #define BUNDLE_TYPE_NODE                2
 #define BUNDLE_TYPE_ANIMATIONS          3
@@ -90,7 +92,7 @@ static const char* AABBS = "aabb";
 
 NS_CC_BEGIN
 
-void getChildMap(std::unordered_map<int, std::vector<int> >& map, SkinData* skinData, const rapidjson::Value& val)
+static void getChildMap(std::unordered_map<int, std::vector<int> >& map, SkinData* skinData, const rapidjson::Value& val)
 {
     if (!skinData)
         return;

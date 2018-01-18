@@ -31,7 +31,7 @@
 #include "3d/CCAABB.h"
 
 #include <vector>
-#include <map>
+#include <unordered_map>
  
 NS_CC_BEGIN
 
