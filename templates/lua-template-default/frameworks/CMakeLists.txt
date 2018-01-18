@@ -114,11 +114,16 @@ elseif(LINUX)
   list(APPEND GAME_SRC runtime-src/proj.linux/main.cpp)
 endif()
 
+if(LINUX)
+  include_directories(
+    /usr/include
+    /usr/include/GLFW
+    /usr/local/include/GLFW
+  )
+endif(LINUX)
 
+# Todo solve bug, libGLESv1: STS_GLApi : DTS is not allowed for Package : org.cocos2dx.hellolua
 include_directories(
-  /usr/include
-  /usr/include/GLFW
-  /usr/local/include/GLFW
   runtime-src/Classes
   ${COCOS2D_ROOT}/cocos
   ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/manual

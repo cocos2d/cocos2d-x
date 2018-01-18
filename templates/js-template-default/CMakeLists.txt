@@ -113,6 +113,7 @@ elseif(LINUX)
 endif()
 
 # jsbinding library
+add_subdirectory(${COCOS2D_X_ROOT}/cocos)
 add_subdirectory(${COCOS2D_X_ROOT}/cocos/scripting/js-bindings)
 
 if(ANDROID)

@@ -98,7 +98,8 @@ set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js related targets")
 add_subdirectory(${COCOS2D_ROOT})
 
 if(ANDROID)
-    set(PLATFORM_SPECIFIC_SRC proj.android/app/jni/main.cpp)
+    # hellocpp folder need review
+    set(PLATFORM_SPECIFIC_SRC proj.android/app/jni/hellocpp/main.cpp)
     set(RES_PREFIX "/Resources")
 elseif(WINDOWS)
     set(PLATFORM_SPECIFIC_SRC proj.win32/main.cpp)
