@@ -437,7 +437,7 @@ void Scheduler::priorityIn(tListEntry **list, const ccSchedulerFunc& callback, v
     }
 
     // update hash entry for quick access
-    tHashUpdateEntry *hashElement = new (std::nothrow) tHashUpdateEntry;
+    tHashUpdateEntry *hashElement = (tHashUpdateEntry *)calloc(sizeof(*hashElement), 1);
     hashElement->target = target;
     hashElement->list = list;
     hashElement->entry = listElement;
@@ -458,7 +458,7 @@ void Scheduler::appendIn(_listEntry **list, const ccSchedulerFunc& callback, voi
     DL_APPEND(*list, listElement);
 
     // update hash entry for quicker access
-    tHashUpdateEntry *hashElement = new (std::nothrow) tHashUpdateEntry;
+    tHashUpdateEntry *hashElement = (tHashUpdateEntry *)calloc(sizeof(*hashElement), 1);
     hashElement->target = target;
     hashElement->list = list;
     hashElement->entry = listElement;
