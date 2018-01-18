@@ -1,5 +1,29 @@
 include(CMakeParseArguments)
 
+# copy libs to static libs folder
+# error function, have bug
+function(cocos_put_static_libs lib_target lib_dir)
+  add_custom_command(TARGET ${lib_target}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy ${lib_dir}/lib${lib_target}.a ${COCOS_STATIC_LIBS_PATH}/lib${lib_target}.a
+    COMMENT "${TARGET_NAME} POST_BUILD ..."
+    )
+endfunction()
+
+# lib_name eg. cocos/cocosjs
+macro(cocos_find_static_libs lib_name)
+  # only search COCOS_STATIC_LIBS_PATH
+  MESSAGE( STATUS "cocos static library path: ${COCOS_STATIC_LIBS_PATH}")
+  FIND_LIBRARY(LIB_FOUND ${lib_name} PATHS ${COCOS_STATIC_LIBS_PATH} DOC "using cocos static library: lib${lib_name}.a" NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
+  # need review
+  if(${LIB_FOUND} STREQUAL LIB_FOUND-NOTFOUND)
+    set(FIND_COCOS_STATIC_LIBS OFF)
+  else()
+    set(FIND_COCOS_STATIC_LIBS ON)
+    MESSAGE( STATUS "using cocos static library: ${LIB_FOUND}")
+  endif()
+endmacro()
+
 macro(pre_build TARGET_NAME)
   add_custom_target( ${TARGET_NAME}_PRE_BUILD ALL )
 

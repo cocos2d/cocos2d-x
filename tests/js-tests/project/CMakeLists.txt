@@ -36,11 +36,6 @@ else()
   )
 endif()
 
-if(APPLE)
-  # fix js-tests compile error, for temp
-  set_property(TARGET ${APP_NAME} APPEND_STRING PROPERTY COMPILE_FLAGS "-fObjc")
-endif(APPLE)
-
 set(SAMPLE_SRC
   Classes/AppDelegate.cpp
   Classes/js_DrawNode3D_bindings.cpp
@@ -78,6 +73,11 @@ set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
 set_target_properties(${APP_NAME} PROPERTIES
      RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
 
+
+if(APPLE)
+  # fix js-tests compile error, for temp
+  set_property(TARGET ${APP_NAME} APPEND_STRING PROPERTY COMPILE_FLAGS "-fObjc")
+endif(APPLE)
 
 if(LINUX)
     set(RES_PREFIX "/Resources")

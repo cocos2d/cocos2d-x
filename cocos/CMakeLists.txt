@@ -230,3 +230,6 @@ set_target_properties(cocos2d
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     VERSION "${COCOS2D_X_VERSION}"
 )
+
+# add output to COCOS_STATIC_LIBS_PATH
+# cocos_put_static_libs(cocos2d "${CMAKE_BINARY_DIR}/lib")

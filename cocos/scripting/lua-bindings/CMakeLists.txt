@@ -163,3 +163,6 @@ set_target_properties(luacocos2d
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
+
+# add output to COCOS_STATIC_LIBS_PATH
+# cocos_put_static_libs(luacocos2d "${CMAKE_BINARY_DIR}/lib")
