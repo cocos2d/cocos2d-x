@@ -114,17 +114,16 @@ if(USE_COCOS_STATIC_LIBS)
     # if find, not build libs
     MESSAGE(WARNING "use static libs: ${NEED_LIB_NAME}")
   else()
-    # give warning info, not change build libs flag
-    MESSAGE(FATAL_ERROR "[ USE_COCOS_STATIC_LIBS=ON ], but cam't find static libs: ${NEED_LIB_NAME}")
+    # give error info, try to use static lib but can't find, stop cmake
+    MESSAGE(FATAL_ERROR "[ USE_COCOS_STATIC_LIBS=ON ], but can't find static libs: ${NEED_LIB_NAME}")
   endif(FIND_COCOS_STATIC_LIBS)
 
 endif(USE_COCOS_STATIC_LIBS)
 
-# Cocos2d-x Library
 if(BUILD_CPP_LIBS)
-  # if use static lib, not build libluacocos2d.a
+  # if use static lib, not build libcocos2d.a
   if(NOT USE_COCOS_STATIC_LIBS)
-    # libcocos2d.a
+    # target cpp lib, the base of cocos2d-x
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cocos)
   endif(NOT USE_COCOS_STATIC_LIBS)
 
@@ -136,7 +135,7 @@ if(BUILD_CPP_LIBS)
   # build cpp-tests
   if(BUILD_CPP_TESTS)
     add_subdirectory(tests/cpp-tests)
-endif(BUILD_CPP_TESTS)
+  endif(BUILD_CPP_TESTS)
 
 endif(BUILD_CPP_LIBS)
 
@@ -144,6 +143,9 @@ endif(BUILD_CPP_LIBS)
 if(BUILD_LUA_LIBS)
   # if use static lib, not build libluacocos2d.a
   if(NOT USE_COCOS_STATIC_LIBS)
+    # lua depend on cpp lib
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cocos)
+    # target lua lib
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cocos/scripting/lua-bindings)
   endif(NOT USE_COCOS_STATIC_LIBS)
   # build lua empty test
@@ -162,6 +164,9 @@ endif(BUILD_LUA_LIBS)
 if(BUILD_JS_LIBS)
   # if use static lib, not build libjscocos2d.a
   if(NOT USE_COCOS_STATIC_LIBS)
+    # js depend on cpp lib
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cocos)
+    # target lua lib
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cocos/scripting/js-bindings)
   endif(NOT USE_COCOS_STATIC_LIBS)
   # build js tests

@@ -48,12 +48,11 @@ if(USE_BULLET)
 endif(USE_BULLET)
 
 
-# libcocos2d
-set(BUILD_CPP_EMPTY_TEST OFF CACHE BOOL "turn off build cpp-empty-test")
-set(BUILD_CPP_TESTS OFF CACHE BOOL "turn off build cpp-tests")
+# lua lib
+set(BUILD_CPP_LIBS OFF CACHE BOOL "turn off cpp related targets")
+set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js related targets")
 set(BUILD_LUA_EMPTY_TEST OFF CACHE BOOL "turn off build lua-empty-test")
 set(BUILD_LUA_TESTS OFF CACHE BOOL "turn off build lua-tests")
-set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js related targets")
 add_subdirectory(${COCOS2D_ROOT})
 
 

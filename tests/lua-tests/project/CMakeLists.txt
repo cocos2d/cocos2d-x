@@ -33,7 +33,7 @@ endif()
 include_directories(
   Classes
   ../../../cocos/scripting/lua-bindings/manual
-#   ../../../cocos/scripting/lua-bindings/auto
+#   ../../../cocos/scripting/lua-bindings/auto # need review
   ../../../external/lua/tolua
 )
 

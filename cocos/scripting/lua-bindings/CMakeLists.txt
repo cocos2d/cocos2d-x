@@ -98,7 +98,7 @@ set(lua_bindings_manual_files
     manual/spine/LuaSkeletonAnimation.cpp
     manual/ui/lua_cocos2dx_experimental_video_manual.cpp
     manual/ui/lua_cocos2dx_ui_manual.cpp
-    # android.mk not this, need review
+    # android.mk not include this, need review
     # manual/video/lua_cocos2dx_experimental_video_manual.cpp
     manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
     manual/physics3d/lua_cocos2dx_physics3d_manual.cpp
@@ -146,13 +146,6 @@ endif()
 
 set(lua_bindings_files ${lua_cocos2d_source_files} ${lua_bindings_manual_files} ${lua_bindings_auto_files})
 
-# message("use prebuild libs value " "${USE_PREBUILT_LIBS}")
-# message("find luajit value " "${LUAJIT_FOUND}")
-# message("find luajit include " "${LUAJIT_INCLUDE_DIRS}")
-# cocos_find_package(LUAJIT LUAJIT REQUIRED)
-# cocos_use_pkg(cocos2d, luajit)
-# include_directories(${LUAJIT_INCLUDE_DIRS})
-
 add_library(luacocos2d ${lua_bindings_files})
 target_link_libraries(luacocos2d cocos2d)
 
@@ -164,5 +157,3 @@ set_target_properties(luacocos2d
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
 
-# add output to COCOS_STATIC_LIBS_PATH
-# cocos_put_static_libs(luacocos2d "${CMAKE_BINARY_DIR}/lib")

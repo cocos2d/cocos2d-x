@@ -137,6 +137,3 @@ set_target_properties(jscocos2d
 if(USE_BULLET)
   include_directories(${BULLET_INCLUDE_DIRS})
 endif()
-
-# add output to COCOS_STATIC_LIBS_PATH
-# cocos_put_static_libs(jscocos2d "${CMAKE_BINARY_DIR}/lib")
