@@ -204,7 +204,7 @@ public class Cocos2dxEditBoxHelper {
                             editBox.endAction = Cocos2dxEditBox.kEndActionNext;
                             Cocos2dxEditBoxHelper.closeKeyboardOnUiThread(index);
                             return true;
-                        } else if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_SEARCH) {
+                        } else if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_GO) {
                             editBox.endAction = Cocos2dxEditBox.kEndActionReturn;
                             Cocos2dxEditBoxHelper.closeKeyboardOnUiThread(index);
                         }
