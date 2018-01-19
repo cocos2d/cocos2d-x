@@ -288,6 +288,8 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     glfwWindowHint(GLFW_ALPHA_BITS,_glContextAttrs.alphaBits);
     glfwWindowHint(GLFW_DEPTH_BITS,_glContextAttrs.depthBits);
     glfwWindowHint(GLFW_STENCIL_BITS,_glContextAttrs.stencilBits);
+    
+    glfwWindowHint(GLFW_SAMPLES, _glContextAttrs.multisamplingCount);
 
     int neededWidth = rect.size.width * _frameZoomFactor;
     int neededHeight = rect.size.height * _frameZoomFactor;
@@ -360,6 +362,9 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
 
     // Enable point size by default.
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+    
+    if(_glContextAttrs.multisamplingCount > 0)
+        glEnable(GL_MULTISAMPLE);
 
 //    // GLFW v3.2 no longer emits "onGLFWWindowSizeFunCallback" at creation time. Force default viewport:
 //    setViewPortInPoints(0, 0, neededWidth, neededHeight);

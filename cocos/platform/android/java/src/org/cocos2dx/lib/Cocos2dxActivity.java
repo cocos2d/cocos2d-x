@@ -347,9 +347,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         private int[] mConfigAttributes;
         private  final int EGL_OPENGL_ES2_BIT = 0x04;
         private  final int EGL_OPENGL_ES3_BIT = 0x40;
-        public Cocos2dxEGLConfigChooser(int redSize, int greenSize, int blueSize, int alphaSize, int depthSize, int stencilSize)
+        public Cocos2dxEGLConfigChooser(int redSize, int greenSize, int blueSize, int alphaSize, int depthSize, int stencilSize, int multisamplingCount)
         {
-            mConfigAttributes = new int[] {redSize, greenSize, blueSize, alphaSize, depthSize, stencilSize};
+            mConfigAttributes = new int[] {redSize, greenSize, blueSize, alphaSize, depthSize, stencilSize, multisamplingCount};
         }
         public Cocos2dxEGLConfigChooser(int[] attributes)
         {
@@ -368,17 +368,34 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
                     EGL10.EGL_ALPHA_SIZE, mConfigAttributes[3],
                     EGL10.EGL_DEPTH_SIZE, mConfigAttributes[4],
                     EGL10.EGL_STENCIL_SIZE, mConfigAttributes[5],
+                    EGL10.EGL_SAMPLE_BUFFERS, (mConfigAttributes[6] > 0) ? 1 : 0,
+                    EGL10.EGL_SAMPLES, mConfigAttributes[6],
                     EGL10.EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
                     EGL10.EGL_NONE
                 },
                 {
-                     // GL ES 2 with user set
+                     // GL ES 2 with user set 16 bit depth buffer
                      EGL10.EGL_RED_SIZE, mConfigAttributes[0],
                      EGL10.EGL_GREEN_SIZE, mConfigAttributes[1],
                      EGL10.EGL_BLUE_SIZE, mConfigAttributes[2],
                      EGL10.EGL_ALPHA_SIZE, mConfigAttributes[3],
                      EGL10.EGL_DEPTH_SIZE, mConfigAttributes[4] >= 24 ? 16 : mConfigAttributes[4],
                      EGL10.EGL_STENCIL_SIZE, mConfigAttributes[5],
+                     EGL10.EGL_SAMPLE_BUFFERS, (mConfigAttributes[6] > 0) ? 1 : 0,
+                     EGL10.EGL_SAMPLES, mConfigAttributes[6],
+                     EGL10.EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
+                     EGL10.EGL_NONE
+                },
+                {
+                     // GL ES 2 with user set 16 bit depth buffer without multisampling
+                     EGL10.EGL_RED_SIZE, mConfigAttributes[0],
+                     EGL10.EGL_GREEN_SIZE, mConfigAttributes[1],
+                     EGL10.EGL_BLUE_SIZE, mConfigAttributes[2],
+                     EGL10.EGL_ALPHA_SIZE, mConfigAttributes[3],
+                     EGL10.EGL_DEPTH_SIZE, mConfigAttributes[4] >= 24 ? 16 : mConfigAttributes[4],
+                     EGL10.EGL_STENCIL_SIZE, mConfigAttributes[5],
+                     EGL10.EGL_SAMPLE_BUFFERS, 0,
+                     EGL10.EGL_SAMPLES, 0,
                      EGL10.EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
                      EGL10.EGL_NONE
                 },
