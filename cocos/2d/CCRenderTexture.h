@@ -327,6 +327,7 @@ protected:
     Texture2D* _textureCopy;    // a copy of _texture
     Image*     _UITextureImage;
     Texture2D::PixelFormat _pixelFormat;
+    GLuint _depthAndStencilFormat;
     
     // code for "auto" update
     GLbitfield   _clearFlags;
@@ -363,6 +364,8 @@ protected:
     void onClearDepth();
 
     void onSaveToFile(const std::string& fileName, bool isRGBA = true);
+
+    void setupDepthAndStencil(int powW, int powH);
     
     Mat4 _oldTransMatrix, _oldProjMatrix;
     Mat4 _transformMatrix, _projectionMatrix;
