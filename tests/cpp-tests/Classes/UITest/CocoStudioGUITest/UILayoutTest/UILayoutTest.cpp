@@ -18,6 +18,7 @@ UILayoutTests::UILayoutTests()
     ADD_TEST_CASE(UILayoutComponentTest);
     ADD_TEST_CASE(UILayoutComponent_Berth_Test);
     ADD_TEST_CASE(UILayoutComponent_Berth_Stretch_Test);
+    ADD_TEST_CASE(UILayout_Clipping_Test);
 }
 
 // UILayoutTest
@@ -928,6 +929,61 @@ bool UILayoutComponent_Berth_Stretch_Test::init()
 
         ui::Helper::doLayout(_baseLayer);
 
+        return true;
+    }
+    return false;
+}
+
+bool UILayout_Clipping_Test::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        // Add the alert
+        Text* alert = Text::create("Left & Right must look same", "fonts/Marker Felt.ttf", 30 );
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+                                widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
+        
+        _uiLayer->addChild(alert);
+        
+        Layout* layout1 = Layout::create();
+        layout1->setClippingEnabled(true);
+        layout1->setContentSize(Size(widgetSize.width/4, widgetSize.height/3));
+        layout1->setClippingType(cocos2d::ui::Layout::ClippingType::SCISSOR);
+        layout1->setPosition(Vec2(widgetSize.width / 4.0f, widgetSize.height / 2.0f ));
+        layout1->setAnchorPoint(Vec2(0.5, 0.5));
+        _uiLayer->addChild(layout1);
+        
+        Layout* sublayout1 = Layout::create();
+        sublayout1->setClippingEnabled(true);
+        sublayout1->setBackGroundImage("cocosui/Hello.png");
+        sublayout1->setContentSize(Size(widgetSize.width/6, widgetSize.width/2));
+        sublayout1->setClippingType(cocos2d::ui::Layout::ClippingType::STENCIL);
+        sublayout1->setPosition(Vec2(widgetSize.width / 8.0f + widgetSize.width / 16.0f, widgetSize.height / 6.0f ));
+        sublayout1->setAnchorPoint(Vec2(0.5, 0.5));
+        sublayout1->runAction(RepeatForever::create(Sequence::createWithTwoActions(MoveBy::create(2, Vec2(-widgetSize.width/8, 0)), MoveBy::create(2, Vec2(widgetSize.width/8, 0)))));
+        layout1->addChild(sublayout1);
+        
+        Layout* layout2 = Layout::create();
+        layout2->setClippingEnabled(true);
+        layout2->setContentSize(Size(widgetSize.width/4, widgetSize.height/3));
+        layout2->setClippingType(cocos2d::ui::Layout::ClippingType::SCISSOR);
+        layout2->setPosition(Vec2(widgetSize.width *3.0f / 4.0f, widgetSize.height / 2.0f ));
+        layout2->setAnchorPoint(Vec2(0.5, 0.5));
+        _uiLayer->addChild(layout2);
+        
+        Layout* sublayout2 = Layout::create();
+        sublayout2->setClippingEnabled(true);
+        sublayout2->setBackGroundImage("cocosui/Hello.png");
+        sublayout2->setContentSize(Size(widgetSize.width/6, widgetSize.width/2));
+        sublayout2->setClippingType(cocos2d::ui::Layout::ClippingType::SCISSOR);
+        sublayout2->setPosition(Vec2(widgetSize.width / 8.0f + widgetSize.width / 16.0f, widgetSize.height / 6.0f ));
+        sublayout2->setAnchorPoint(Vec2(0.5, 0.5));
+        sublayout2->runAction(RepeatForever::create(Sequence::createWithTwoActions(MoveBy::create(2, Vec2(-widgetSize.width/8, 0)), MoveBy::create(2, Vec2(widgetSize.width/8, 0)))));
+        layout2->addChild(sublayout2);
+        
         return true;
     }
     return false;
