@@ -227,7 +227,7 @@ void drawCircle( const Vec2& center, float radius, float angle, unsigned int seg
 
     const float coef = 2.0f * (float)M_PI/segments;
 
-    GLfloat *vertices = (GLfloat*)calloc( sizeof(GLfloat)*2*(segments+2), 1);
+    GLfloat *vertices = (GLfloat*)calloc( 2*(segments+2), sizeof(GLfloat));
     if( ! vertices )
         return;
 
@@ -267,7 +267,7 @@ void drawSolidCircle( const Vec2& center, float radius, float angle, unsigned in
     
     const float coef = 2.0f * (float)M_PI/segments;
     
-    GLfloat *vertices = (GLfloat*)calloc( sizeof(GLfloat)*2*(segments+2), 1);
+    GLfloat *vertices = (GLfloat*)calloc( 2*(segments+2), sizeof(GLfloat));
     if( ! vertices )
         return;
     

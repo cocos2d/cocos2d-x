@@ -325,7 +325,8 @@ void Director::drawScene()
         _renderer->clearDrawStats();
         
         //render the scene
-        _openGLView->renderScene(_runningScene, _renderer);
+        if(_openGLView)
+            _openGLView->renderScene(_runningScene, _renderer);
         
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
@@ -1065,7 +1066,8 @@ void Director::reset()
     _runningScene = nullptr;
     _nextScene = nullptr;
 
-    _eventDispatcher->dispatchEvent(_eventResetDirector);
+    if (_eventDispatcher)
+        _eventDispatcher->dispatchEvent(_eventResetDirector);
     
     // cleanup scheduler
     getScheduler()->unscheduleAll();
@@ -1372,8 +1374,10 @@ void Director::createStatsLabel()
     getFPSImageData(&data, &dataLength);
 
     Image* image = new (std::nothrow) Image();
-    bool isOK = image->initWithImageData(data, dataLength);
+    bool isOK = image ? image->initWithImageData(data, dataLength) : false;
     if (! isOK) {
+        if(image)
+            delete image;
         CCLOGERROR("%s", "Fails: init fps_images");
         return;
     }

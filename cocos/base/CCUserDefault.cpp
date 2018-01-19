@@ -490,22 +490,21 @@ bool UserDefault::createXMLFile()
     }  
     tinyxml2::XMLDeclaration *pDeclaration = pDoc->NewDeclaration(nullptr);  
     if (nullptr==pDeclaration)  
-    {  
+    {
+        delete pDoc;
         return false;  
     }  
     pDoc->LinkEndChild(pDeclaration); 
     tinyxml2::XMLElement *pRootEle = pDoc->NewElement(USERDEFAULT_ROOT_NAME);  
     if (nullptr==pRootEle)  
-    {  
+    {
+        delete pDoc;
         return false;  
     }  
     pDoc->LinkEndChild(pRootEle);  
     bRet = tinyxml2::XML_SUCCESS == pDoc->SaveFile(FileUtils::getInstance()->getSuitableFOpen(_filePath).c_str());
 
-    if(pDoc)
-    {
-        delete pDoc;
-    }
+    delete pDoc;
 
     return bRet;
 }

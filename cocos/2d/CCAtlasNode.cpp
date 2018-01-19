@@ -86,13 +86,14 @@ bool AtlasNode::initWithTexture(Texture2D* texture, int tileWidth, int tileHeigh
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
     _textureAtlas = new (std::nothrow) TextureAtlas();
-    _textureAtlas->initWithTexture(texture, itemsToRender);
 
     if (! _textureAtlas)
     {
         CCLOG("cocos2d: Could not initialize AtlasNode. Invalid Texture.");
         return false;
     }
+    
+    _textureAtlas->initWithTexture(texture, itemsToRender);
 
     this->updateBlendFunc();
     this->updateOpacityModifyRGB();
