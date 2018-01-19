@@ -2444,6 +2444,16 @@ getTextColor : function (
 },
 
 /**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
  * @method setTextVerticalAlignment
  * @param {cc.TextVAlignment} arg0
  */
@@ -2681,6 +2691,16 @@ int
 )
 {
     return cc.Sprite;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
 },
 
 /**
