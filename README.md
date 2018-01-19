@@ -163,7 +163,7 @@ Build Requirements
 
 Runtime Requirements
 --------------------
-  * iOS 6.0+ for iPhone / iPad games
+  * iOS 8.0+ for iPhone / iPad games
   * Android 2.3.3+ for Android
   * OS X v10.9+ for Mac games
   * Windows 7+ for Win games
