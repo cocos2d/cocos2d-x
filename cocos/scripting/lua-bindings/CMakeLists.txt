@@ -1,4 +1,4 @@
-set(cocos_root ${Cocos2d-X_SOURCE_DIR})
+set(cocos_root ${COCOS2DX_ROOT_PATH})
 
 include_directories(
   ${cocos_root}/external/lua

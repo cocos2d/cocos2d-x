@@ -1,4 +1,15 @@
 macro (BuildModules)
+
+	# header files third libiary needed, such as tinyxml2.h
+	include_directories(
+		${COCOS2DX_ROOT_PATH}
+		${COCOS2DX_ROOT_PATH}/cocos
+		${COCOS2DX_ROOT_PATH}/deprecated
+		${COCOS2DX_ROOT_PATH}/cocos/platform
+		${COCOS2DX_ROOT_PATH}/extensions
+		${COCOS2DX_ROOT_PATH}/external
+	)
+
 	# desktop platforms
 	if(LINUX OR MACOSX OR WINDOWS)
 	  cocos_find_package(OpenGL OPENGL REQUIRED)
@@ -56,7 +67,7 @@ macro (BuildModules)
 	  message(STATUS "Box2D include dirs: ${Box2D_INCLUDE_DIRS}")
 	  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=1)
 	elseif(BUILD_BOX2D)
-	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/Box2D)
+	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/Box2D ${ENGINE_BINARY_PATH}/external/Box2D)
 	  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=1)
 	else()
 	  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=0)
@@ -78,8 +89,8 @@ macro (BuildModules)
 	# Recast (not prebuilded, exists as source)
 	if(USE_RECAST)
 	  if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
-	    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/recast)
-	    set(RECAST_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/recast)
+	    add_subdirectory(${COCOS2DX_ROOT_PATH}/external/recast ${ENGINE_BINARY_PATH}/external/recast)
+	    set(RECAST_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/recast)
 	    set(RECAST_LIBRARIES recast)
 	  else()
 	    cocos_find_package(recast RECAST REQUIRED)
@@ -93,8 +104,8 @@ macro (BuildModules)
 
 	# Tinyxml2 (not prebuilded, exists as source)
 	if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
-	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2)
-	  set(TinyXML2_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2)
+	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/tinyxml2 ${ENGINE_BINARY_PATH}/external/tinyxml2)
+	  set(TinyXML2_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/tinyxml2)
 	  set(TinyXML2_LIBRARIES tinyxml2)
 	else()
 	  cocos_find_package(TinyXML2 TinyXML2 REQUIRED)
@@ -104,13 +115,13 @@ macro (BuildModules)
 	cocos_find_package(ZLIB ZLIB REQUIRED)
 	
 	if(ANDROID)
-	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/android-specific/pvmp3dec)
-	  set(PVMP3DEC_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/android-specific/pvmp3dec/include ${CMAKE_CURRENT_SOURCE_DIR}/external/android-specific/pvmp3dec/src)
+	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/android-specific/pvmp3dec ${ENGINE_BINARY_PATH}/external/android-specific/pvmp3dec)
+	  set(PVMP3DEC_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/android-specific/pvmp3dec/include ${COCOS2DX_ROOT_PATH}/external/android-specific/pvmp3dec/src)
 	  set(PVMP3DEC_LIBRARIES pvmp3dec)
 	  message(STATUS "pvmp3dec include dirs: ${PVMP3DEC_INCLUDE_DIRS}")
 	  
-	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/android-specific/tremolo)
-	  set(TREMOLO_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/android-specific/tremolo)
+	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/android-specific/tremolo ${ENGINE_BINARY_PATH}/external/android-specific/tremolo)
+	  set(TREMOLO_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/android-specific/tremolo)
 	  set(TREMOLO_LIBRARIES tremolo)
 	  message(STATUS "Tremolo include dirs: ${TREMOLO_INCLUDE_DIRS}")
 	endif()
@@ -123,8 +134,8 @@ macro (BuildModules)
 	if(USE_PREBUILT_LIBS OR NOT MINGW OR USE_SOURCES_EXTERNAL)
 	  #TODO: hack! should be in external/unzip/CMakeLists.txt
 	  include_directories(${ZLIB_INCLUDE_DIRS})
-	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/unzip)
-	  set(MINIZIP_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/unzip ${ZLIB_INCLUDE_DIRS})
+	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/unzip ${ENGINE_BINARY_PATH}/external/unzip)
+	  set(MINIZIP_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/unzip ${ZLIB_INCLUDE_DIRS})
 	  set(MINIZIP_LIBRARIES unzip ${ZLIB_LIBRARIES})
 	  message(STATUS "MINIZIP include dirs: ${MINIZIP_INCLUDE_DIRS}")
 	else()
@@ -166,8 +177,8 @@ macro (BuildModules)
 
 	# flatbuffers
 	if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
-	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/flatbuffers)
-	  set(FLATBUFFERS_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external)
+	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/flatbuffers ${ENGINE_BINARY_PATH}/external/flatbuffers)
+	  set(FLATBUFFERS_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external)
 	  message(STATUS "Flatbuffers include dirs: ${FLATBUFFERS_INCLUDE_DIRS}")
 	else()
 	  cocos_find_package(flatbuffers flatbuffers REQUIRED)
@@ -175,8 +186,8 @@ macro (BuildModules)
 
 	# xxhash
 	if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
-	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash)
-	  set(XXHASH_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash)
+	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/xxhash ${ENGINE_BINARY_PATH}/external/xxhash)
+	  set(XXHASH_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/xxhash)
 	  set(XXHASH_LIBRARIES xxhash)
 	else()
 	  cocos_find_package(xxhash xxhash REQUIRED)

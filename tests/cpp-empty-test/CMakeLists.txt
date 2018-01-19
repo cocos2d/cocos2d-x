@@ -21,8 +21,28 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 # ****************************************************************************/
+cmake_minimum_required(VERSION 3.1)
+
+project(cpp_empty_test)
 
 set(APP_NAME cpp_empty_test)
+
+# define some variables
+set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
+set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
+set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
+
+message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
+message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
+
+# works before libcocos2d
+include(CocosBuildSet)
+CocosBuildSet()
+
+# add engine directory, get cocos libiary
+set(BUILD_LUA_LIBS OFF)
+set(BUILD_JS_LIBS OFF)
+add_subdirectory(${COCOS2DX_ROOT_PATH} ${ENGINE_BINARY_PATH}/cocos2dx)
 
 if(ANDROID)
   set(PLATFORM_SRC proj.android/app/jni/main.cpp)

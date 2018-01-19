@@ -22,7 +22,7 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
-set(cocos_root ../../..)
+set(cocos_root ${COCOS2DX_ROOT_PATH})
 
 #platform
 if(WIN32) # Win32

@@ -1,3 +1,4 @@
+# the default behavior of build module
 macro (SelectModule)
   set(USE_WEBP_DEFAULT ON)
   if(WINRT OR WP8)
@@ -9,27 +10,15 @@ macro (SelectModule)
     set(USE_PREBUILT_LIBS_DEFAULT OFF)
   endif()
 
-  # use cocos static lib
+  # opition for using cocos prebuild lib, not done
   set(USE_COCOS_STATIC_LIBS_DEFAULT OFF)
 
-  set(BUILD_CPP_LIBS_DEFAULT ON)
-  set(BUILD_CPP_EMPTY_TEST_DEFAULT ON)
-  set(BUILD_CPP_TESTS_DEFAULT ON)
   set(BUILD_LUA_LIBS_DEFAULT ON)
-  set(BUILD_LUA_EMPTY_TEST_DEFAULT ON)
-  set(BUILD_LUA_TESTS_DEFAULT ON)
   set(BUILD_JS_LIBS_DEFAULT ON)
-  set(BUILD_JS_TESTS_DEFAULT ON)
   # TODO: fix test samples for MSVC
   if(MSVC)
-    set(BUILD_CPP_LIBS_DEFAULT ON)
-    set(BUILD_CPP_EMPTY_TEST_DEFAULT OFF)
-    set(BUILD_CPP_TESTS_DEFAULT OFF)
     set(BUILD_LUA_LIBS_DEFAULT OFF)
-    set(BUILD_LUA_EMPTY_TEST_DEFAULT OFF)
-    set(BUILD_LUA_TESTS_DEFAULT OFF)
     set(BUILD_JS_LIBS_DEFAULT OFF)
-    set(BUILD_JS_TESTS_DEFAULT OFF)
   endif()
   
   set(USE_SOURCES_EXTERNAL_DEFAULT OFF)
@@ -50,14 +39,8 @@ macro (SelectModule)
   option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
   option(BUILD_BOX2D "Build box2d external without using it for physics library" OFF)
   option(USE_COCOS_STATIC_LIBS "use cocos static libraries, return error if not find" ${USE_COCOS_STATIC_LIBS_DEFAULT})
-  option(BUILD_CPP_LIBS "Build cpp libraries" ${BUILD_CPP_LIBS_DEFAULT})
-  option(BUILD_CPP_TESTS "Build TestCpp samples" ${BUILD_CPP_TESTS_DEFAULT})
-  option(BUILD_CPP_EMPTY_TEST "Build TestCpp samples" ${BUILD_CPP_EMPTY_TEST_DEFAULT})
   option(BUILD_LUA_LIBS "Build lua libraries" ${BUILD_LUA_LIBS_DEFAULT})
-  option(BUILD_LUA_EMPTY_TEST "Build TestLua samples" ${BUILD_LUA_EMPTY_TEST_DEFAULT})
-  option(BUILD_LUA_TESTS "Build TestLua samples" ${BUILD_LUA_TESTS_DEFAULT})
   option(BUILD_JS_LIBS "Build js libraries" ${BUILD_JS_LIBS_DEFAULT})
-  option(BUILD_JS_TESTS "Build TestJS samples" ${BUILD_JS_TESTS_DEFAULT})
   option(USE_PREBUILT_LIBS "Use prebuilt libraries in external directory" ${USE_PREBUILT_LIBS_DEFAULT})
   option(USE_SOURCES_EXTERNAL "Use sources in external directory (automatically ON when USE_PREBUILT_LIBS is ON)" ${USE_SOURCES_EXTERNAL_DEFAULT})
 

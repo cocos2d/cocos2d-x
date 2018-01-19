@@ -24,154 +24,43 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
-cmake_minimum_required(VERSION 3.1)
-# It ensures that when Find*.cmake files included from cmake's Modules dir
-# include another *.cmake file with relative path, that file will be included
-# also from cmake's Modules dir, to not clash with per-project files.
-cmake_policy(SET CMP0017 NEW)
-
-# Use new behaviour with cmake >= 3.1:
-# Only interpret if() arguments as variables or keywords when unquoted.
-if(CMAKE_VERSION VERSION_GREATER 3.1)
-    cmake_policy(SET CMP0054 NEW)
-endif()
-
-project (Cocos2d-X)
+# this file only build engine libiary, not pull other project
 
 # The version number
-set(COCOS2D_X_VERSION 3.13)
+set(COCOS2D_X_VERSION 3.17)
 
-# define some variables
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
-set(COCOS_EXTERNAL_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external)
-set(COCOS_STATIC_LIBS_PATH ${PROJECT_SOURCE_DIR}/prebuilt)
-
-# architecture
-if (CMAKE_SIZEOF_VOID_P EQUAL 8)
-  set(ARCH_DIR "64-bit")
-elseif (CMAKE_SIZEOF_VOID_P EQUAL 4)
-  set(ARCH_DIR "32-bit")
-else()
-  message(FATAL_ERROR "Unsupported architecture, CMake will exit")
-  return()
-endif()
-# CMAKE_BUILD_TYPE has precedence over DEBUG_MODE
-# Still supporting DEBUG_MODE for backwards compatibility
-if (NOT CMAKE_BUILD_TYPE)
-  if(DEBUG_MODE)
-    set(CMAKE_BUILD_TYPE DEBUG)
-  else(DEBUG_MODE)
-    set(CMAKE_BUILD_TYPE RELEASE)
-  endif(DEBUG_MODE)
-endif(NOT CMAKE_BUILD_TYPE)
-
-include(CocosBuildHelpers)
-
-message(${BUILDING_STRING})
-
-# SelectModule() is a macro to select building modules
-include(SelectModule)
-SelectModule()
-
-# set compiler options
-include(SetCompilerOptions)
-SetCompilerOptions()
-
-if (CMAKE_FIND_ROOT_PATH AND USE_PREBUILT_LIBS)
-  # Adds cocos2d-x external folder to the list of valid include/library paths when cross-compiling and using prebuilds
-  set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${COCOS_EXTERNAL_DIR})
-endif ()
-
-include_directories(
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/cocos
-  ${CMAKE_CURRENT_SOURCE_DIR}/deprecated
-  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform
-  ${CMAKE_CURRENT_SOURCE_DIR}/extensions
-  ${CMAKE_CURRENT_SOURCE_DIR}/external
-)
-
-if(USE_PREBUILT_LIBS)
-  include(CocosUsePrebuiltLibs)
-endif()
-
-include(BuildModules)
-BuildModules()
-
+# feature, not finish
 if(USE_COCOS_STATIC_LIBS)
-  # set the staic lib name needed to build
+  # set the staic lib name needed to find
   if(BUILD_CPP_LIBS)
-    SET(NEED_LIB_NAME cocos2d)
+    SET(NEED_LIB cocos2d)
   elseif(BUILD_LUA_LIBS)
-    set(NEED_LIB_NAME luacocos2d)
+    set(NEED_LIB luacocos2d)
   elseif(BUILD_JS_LIBS)
-    set(NEED_LIB_NAME jscocos2d)
+    set(NEED_LIB jscocos2d)
   endif()
 
   # find static libs, for COCOS_STATIC_LIBS_PATH
-  cocos_find_static_libs(${NEED_LIB_NAME})
+  cocos_find_static_libs(${NEED_LIB})
   if(FIND_COCOS_STATIC_LIBS)
-    # if find, not build libs
-    MESSAGE(WARNING "use static libs: ${NEED_LIB_NAME}")
+    MESSAGE(STATUS "use cocos prebuilt libs: ${NEED_LIB}")
   else()
-    # give error info, try to use static lib but can't find, stop cmake
-    MESSAGE(FATAL_ERROR "[ USE_COCOS_STATIC_LIBS=ON ], but can't find static libs: ${NEED_LIB_NAME}")
+    MESSAGE(FATAL_ERROR "[ USE_COCOS_STATIC_LIBS=ON ], but can't find cocos prebuilt libs: ${NEED_LIB}")
+    return()
   endif(FIND_COCOS_STATIC_LIBS)
 
+else()
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cocos ${ENGINE_BINARY_PATH}/cocos2dx/cocos)
+
+  ## Lua lib
+  if(BUILD_LUA_LIBS)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cocos/scripting/lua-bindings ${ENGINE_BINARY_PATH}/cocos2dx/lua-bindings)
+  endif(BUILD_LUA_LIBS)
+
+  ## JS lib
+  if(BUILD_JS_LIBS)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cocos/scripting/js-bindings ${ENGINE_BINARY_PATH}/cocos2dx/js-bindings)
+  endif(BUILD_JS_LIBS)
 endif(USE_COCOS_STATIC_LIBS)
 
-if(BUILD_CPP_LIBS)
-  # if use static lib, not build libcocos2d.a
-  if(NOT USE_COCOS_STATIC_LIBS)
-    # target cpp lib, the base of cocos2d-x
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cocos)
-  endif(NOT USE_COCOS_STATIC_LIBS)
 
-  # build cpp-empty-test
-  if(BUILD_CPP_EMPTY_TEST)
-    add_subdirectory(tests/cpp-empty-test)
-  endif(BUILD_CPP_EMPTY_TEST)
-
-  # build cpp-tests
-  if(BUILD_CPP_TESTS)
-    add_subdirectory(tests/cpp-tests)
-  endif(BUILD_CPP_TESTS)
-
-endif(BUILD_CPP_LIBS)
-
-## Lua
-if(BUILD_LUA_LIBS)
-  # if use static lib, not build libluacocos2d.a
-  if(NOT USE_COCOS_STATIC_LIBS)
-    # lua depend on cpp lib
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cocos)
-    # target lua lib
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cocos/scripting/lua-bindings)
-  endif(NOT USE_COCOS_STATIC_LIBS)
-  # build lua empty test
-  if(BUILD_LUA_EMPTY_TEST)
-    add_subdirectory(tests/lua-empty-test/project)
-  endif(BUILD_LUA_EMPTY_TEST)
-
-  # build lua tests
-  if(BUILD_LUA_TESTS)
-    add_subdirectory(tests/lua-tests/project)
-  endif(BUILD_LUA_TESTS)
-
-endif(BUILD_LUA_LIBS)
-
-## JS
-if(BUILD_JS_LIBS)
-  # if use static lib, not build libjscocos2d.a
-  if(NOT USE_COCOS_STATIC_LIBS)
-    # js depend on cpp lib
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cocos)
-    # target lua lib
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cocos/scripting/js-bindings)
-  endif(NOT USE_COCOS_STATIC_LIBS)
-  # build js tests
-  if(BUILD_JS_TESTS)
-    add_subdirectory(tests/js-tests/project)
-  endif(BUILD_JS_TESTS)
-
-endif(BUILD_JS_LIBS)
