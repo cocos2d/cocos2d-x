@@ -57,25 +57,41 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
 
     do 
     {
-         tinyxml2::XMLDocument* xmlDoc = new (std::nothrow) tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument* xmlDoc = new (std::nothrow) tinyxml2::XMLDocument();
         *doc = xmlDoc;
+        *rootNode = nullptr;
 
         std::string xmlBuffer = FileUtils::getInstance()->getStringFromFile(UserDefault::getInstance()->getXMLFilePath());
 
-        if (xmlBuffer.empty())
+        if (!xmlBuffer.empty())
         {
-            CCLOG("can not read xml file");
-            break;
-        }
-        xmlDoc->Parse(xmlBuffer.c_str(), xmlBuffer.size());
+            xmlDoc->Parse(xmlBuffer.c_str(), xmlBuffer.size());
 
-        // get root node
-        *rootNode = xmlDoc->RootElement();
+            // get root node
+            *rootNode = xmlDoc->RootElement();
+        }
+
         if (nullptr == *rootNode)
         {
-            CCLOG("read root node error");
-            break;
+            // try to insert xml declaration
+            if (!xmlDoc->FirstChild())
+            {
+                tinyxml2::XMLDeclaration *xmlDeclaration = xmlDoc->NewDeclaration(nullptr);
+                if (nullptr != xmlDeclaration)
+                {
+                    xmlDoc->LinkEndChild(xmlDeclaration);
+                }
+            }
+
+            // create root element
+            tinyxml2::XMLElement *rootEle = xmlDoc->NewElement(USERDEFAULT_ROOT_NAME);
+            if (nullptr == rootEle)
+                break;
+
+            xmlDoc->LinkEndChild(rootEle);
+            *rootNode = rootEle;
         }
+
         // find the node
         curNode = (*rootNode)->FirstChildElement();
         while (nullptr != curNode)
@@ -95,7 +111,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
 
 static void setValueForKey(const char* pKey, const char* pValue)
 {
-     tinyxml2::XMLElement* rootNode;
+    tinyxml2::XMLElement* rootNode;
     tinyxml2::XMLDocument* doc;
     tinyxml2::XMLElement* node;
     // check the params
