@@ -11,7 +11,7 @@ macro (SelectModule)
   endif()
 
   # opition for using cocos prebuild lib, not done
-  set(USE_COCOS_STATIC_LIBS_DEFAULT OFF)
+  set(USE_COCOS_PREBUILT_LIBS_DEFAULT OFF)
 
   set(BUILD_LUA_LIBS_DEFAULT ON)
   set(BUILD_JS_LIBS_DEFAULT ON)
@@ -38,9 +38,10 @@ macro (SelectModule)
   option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
   option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
   option(BUILD_BOX2D "Build box2d external without using it for physics library" OFF)
-  option(USE_COCOS_STATIC_LIBS "use cocos static libraries, return error if not find" ${USE_COCOS_STATIC_LIBS_DEFAULT})
+  option(USE_COCOS_PREBUILT_LIBS "use cocos static libraries, return error if not find" ${USE_COCOS_PREBUILT_LIBS_DEFAULT})
   option(BUILD_LUA_LIBS "Build lua libraries" ${BUILD_LUA_LIBS_DEFAULT})
   option(BUILD_JS_LIBS "Build js libraries" ${BUILD_JS_LIBS_DEFAULT})
+  # need review
   option(USE_PREBUILT_LIBS "Use prebuilt libraries in external directory" ${USE_PREBUILT_LIBS_DEFAULT})
   option(USE_SOURCES_EXTERNAL "Use sources in external directory (automatically ON when USE_PREBUILT_LIBS is ON)" ${USE_SOURCES_EXTERNAL_DEFAULT})
 

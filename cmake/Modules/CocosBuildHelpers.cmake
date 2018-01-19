@@ -5,16 +5,16 @@ include(CMakeParseArguments)
 function(cocos_put_static_libs lib_target lib_dir)
   add_custom_command(TARGET ${lib_target}
     POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy ${lib_dir}/lib${lib_target}.a ${COCOS_STATIC_LIBS_PATH}/lib${lib_target}.a
+    COMMAND ${CMAKE_COMMAND} -E copy ${lib_dir}/lib${lib_target}.a ${COCOS_PREBUILT_LIBS_PATH}/lib${lib_target}.a
     COMMENT "${TARGET_NAME} POST_BUILD ..."
     )
 endfunction()
 
 # lib_name eg cocos2d/cocos2djs
 macro(cocos_find_static_libs lib_name)
-  # only search COCOS_STATIC_LIBS_PATH
-  MESSAGE( STATUS "cocos static library path: ${COCOS_STATIC_LIBS_PATH}")
-  FIND_LIBRARY(LIB_FOUND ${lib_name} PATHS ${COCOS_STATIC_LIBS_PATH} DOC "using cocos static library: lib${lib_name}.a" NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
+  # only search COCOS_PREBUILT_LIBS_PATH
+  MESSAGE( STATUS "cocos static library path: ${COCOS_PREBUILT_LIBS_PATH}")
+  FIND_LIBRARY(LIB_FOUND ${lib_name} PATHS ${COCOS_PREBUILT_LIBS_PATH} DOC "using cocos static library: lib${lib_name}.a" NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
   # set flag
   if(${LIB_FOUND} STREQUAL LIB_FOUND-NOTFOUND)
     set(FIND_COCOS_STATIC_LIBS OFF)

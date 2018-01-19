@@ -1,3 +1,4 @@
+include_directories(editor-support)
 
 set(COCOS_SPINE_SRC
 editor-support/spine/Animation.c
@@ -47,5 +48,3 @@ editor-support/spine/VertexEffect.c
 editor-support/spine/extension.c
 editor-support/spine/spine-cocos2dx.cpp
 )
-
-include_directories( editor-support )

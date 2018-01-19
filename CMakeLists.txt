@@ -30,22 +30,22 @@
 set(COCOS2D_X_VERSION 3.17)
 
 # feature, not finish
-if(USE_COCOS_STATIC_LIBS)
+if(USE_COCOS_PREBUILT_LIBS)
   # set the staic lib name needed to find
   if(BUILD_CPP_LIBS)
-    SET(NEED_LIB cocos2d)
+    set(NEED_LIB cocos2d)
   elseif(BUILD_LUA_LIBS)
     set(NEED_LIB luacocos2d)
   elseif(BUILD_JS_LIBS)
     set(NEED_LIB jscocos2d)
   endif()
 
-  # find static libs, for COCOS_STATIC_LIBS_PATH
+  # find static libs, for COCOS_PREBUILT_LIBS_PATH
   cocos_find_static_libs(${NEED_LIB})
   if(FIND_COCOS_STATIC_LIBS)
     MESSAGE(STATUS "use cocos prebuilt libs: ${NEED_LIB}")
   else()
-    MESSAGE(FATAL_ERROR "[ USE_COCOS_STATIC_LIBS=ON ], but can't find cocos prebuilt libs: ${NEED_LIB}")
+    MESSAGE(FATAL_ERROR "[ USE_COCOS_PREBUILT_LIBS=ON ], but can't find cocos prebuilt libs: ${NEED_LIB}")
     return()
   endif(FIND_COCOS_STATIC_LIBS)
 
@@ -61,6 +61,6 @@ else()
   if(BUILD_JS_LIBS)
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cocos/scripting/js-bindings ${ENGINE_BINARY_PATH}/cocos2dx/js-bindings)
   endif(BUILD_JS_LIBS)
-endif(USE_COCOS_STATIC_LIBS)
+endif(USE_COCOS_PREBUILT_LIBS)
 
 

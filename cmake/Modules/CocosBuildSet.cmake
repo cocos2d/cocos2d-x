@@ -1,7 +1,7 @@
 macro(CocosBuildSet)
     # works before libcocos2d
     set(COCOS_EXTERNAL_DIR ${COCOS2DX_ROOT_PATH}/external)
-    set(COCOS_STATIC_LIBS_PATH ${COCOS2DX_ROOT_PATH}/prebuilt)
+    set(COCOS_PREBUILT_LIBS_PATH ${COCOS2DX_ROOT_PATH}/prebuilt)
 
     message(STATUS "COCOS_EXTERNAL_DIR:" ${COCOS_EXTERNAL_DIR})
 
@@ -15,7 +15,7 @@ macro(CocosBuildSet)
     if(CMAKE_VERSION VERSION_GREATER 3.1)
         cmake_policy(SET CMP0054 NEW)
     endif()
-    
+
     # architecture
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
         set(ARCH_DIR "64-bit")
