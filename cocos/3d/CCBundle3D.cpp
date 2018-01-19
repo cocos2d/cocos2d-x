@@ -31,6 +31,8 @@ THE SOFTWARE.
 #include "3d/CCBundleReader.h"
 #include "base/CCData.h"
 
+#include <unordered_map>
+
 #define BUNDLE_TYPE_SCENE               1
 #define BUNDLE_TYPE_NODE                2
 #define BUNDLE_TYPE_ANIMATIONS          3
@@ -90,7 +92,7 @@ static const char* AABBS = "aabb";
 
 NS_CC_BEGIN
 
-void getChildMap(std::map<int, std::vector<int> >& map, SkinData* skinData, const rapidjson::Value& val)
+static void getChildMap(std::unordered_map<int, std::vector<int> >& map, SkinData* skinData, const rapidjson::Value& val)
 {
     if (!skinData)
         return;
@@ -298,7 +300,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
             }
             
             //split into submesh according to material
-            std::map<int, std::vector<unsigned short> > subMeshMap;
+            std::unordered_map<int, std::vector<unsigned short> > subMeshMap;
             for (size_t k = 0, size = mesh.material_ids.size(); k < size; ++k) {
                 int id = mesh.material_ids[k];
                 size_t idx = k * 3;

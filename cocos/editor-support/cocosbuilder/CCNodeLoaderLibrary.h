@@ -7,7 +7,7 @@ namespace cocosbuilder {
 
 class NodeLoader;
 
-typedef std::map<std::string, NodeLoader *> NodeLoaderMap;
+typedef std::unordered_map<std::string, NodeLoader *> NodeLoaderMap;
 typedef std::pair<std::string, NodeLoader *> NodeLoaderMapEntry;
 
 class CC_DLL NodeLoaderLibrary : public cocos2d::Ref

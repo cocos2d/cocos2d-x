@@ -33,6 +33,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include <fstream>
 #include <sstream>
 #include "platform/CCFileUtils.h"
@@ -421,7 +422,7 @@ namespace tinyobj {
         return path;
     }
     
-    std::string LoadMtl(std::map<std::string, int> &material_map,
+    std::string LoadMtl(std::unordered_map<std::string, int> &material_map,
                         std::vector<material_t> &materials,
                         std::istream &inStream) {
         std::stringstream err;
@@ -631,7 +632,7 @@ namespace tinyobj {
     
     std::string MaterialFileReader::operator()(const std::string &matId,
                                                std::vector<material_t> &materials,
-                                               std::map<std::string, int> &matMap) {
+                                               std::unordered_map<std::string, int> &matMap) {
         std::string filepath;
         
         if (!m_mtlBasePath.empty()) {
@@ -688,7 +689,7 @@ namespace tinyobj {
         std::string name;
         
         // material
-        std::map<std::string, int> material_map;
+        std::unordered_map<std::string, int> material_map;
         std::map<vertex_index, unsigned int> vertexCache;
         int material = -1;
         

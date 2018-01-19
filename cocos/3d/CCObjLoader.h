@@ -31,7 +31,7 @@ namespace tinyobj {
         std::string diffuse_texname;
         std::string specular_texname;
         std::string normal_texname;
-        std::map<std::string, std::string> unknown_parameter;
+        std::unordered_map<std::string, std::string> unknown_parameter;
     } material_t;
     
     typedef struct {
@@ -54,7 +54,7 @@ namespace tinyobj {
         
         virtual std::string operator()(const std::string &matId,
                                        std::vector<material_t> &materials,
-                                       std::map<std::string, int> &matMap) = 0;
+                                       std::unordered_map<std::string, int> &matMap) = 0;
     };
     
     class MaterialFileReader : public MaterialReader {
@@ -64,7 +64,7 @@ namespace tinyobj {
         virtual ~MaterialFileReader() {}
         virtual std::string operator()(const std::string &matId,
                                        std::vector<material_t> &materials,
-                                       std::map<std::string, int> &matMap);
+                                       std::unordered_map<std::string, int> &matMap);
         
     private:
         std::string m_mtlBasePath;
@@ -88,7 +88,7 @@ namespace tinyobj {
     
     /// Loads materials into std::map
     /// Returns an empty string if successful
-    std::string LoadMtl(std::map<std::string, int> &material_map,
+    std::string LoadMtl(std::unordered_map<std::string, int> &material_map,
                         std::vector<material_t> &materials, std::istream &inStream);
 }
 

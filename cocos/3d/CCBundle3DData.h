@@ -31,7 +31,7 @@
 #include "3d/CCAABB.h"
 
 #include <vector>
-#include <map>
+#include <unordered_map>
  
 NS_CC_BEGIN
 
@@ -228,7 +228,7 @@ struct SkinData
     std::vector<Mat4>        nodeBoneOriginMatrices; // original bone transform, for node bone
     
     //bone child info, both skinbone and node bone
-    std::map<int, std::vector<int> > boneChild;//key parent, value child
+    std::unordered_map<int, std::vector<int> > boneChild;//key parent, value child
     int                              rootBoneIndex;
     void resetData()
     {
@@ -293,7 +293,7 @@ struct SkinData
 */
 struct MaterialData
 {
-    std::map<int, std::string> texturePaths; //submesh id, texture path
+    std::unordered_map<int, std::string> texturePaths; //submesh id, texture path
     void resetData()
     {
         texturePaths.clear();
@@ -404,9 +404,9 @@ public:
     };
 
 public:
-    std::map<std::string, std::vector<Vec3Key>> _translationKeys;
-    std::map<std::string, std::vector<QuatKey>> _rotationKeys;
-    std::map<std::string, std::vector<Vec3Key>> _scaleKeys;
+    std::unordered_map<std::string, std::vector<Vec3Key>> _translationKeys;
+    std::unordered_map<std::string, std::vector<QuatKey>> _rotationKeys;
+    std::unordered_map<std::string, std::vector<Vec3Key>> _scaleKeys;
     
     float _totalTime;
 

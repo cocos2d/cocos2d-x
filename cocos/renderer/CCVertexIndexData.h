@@ -176,7 +176,7 @@ protected:
     /**
     Streams in the VertexData.
     */
-    std::map<int, BufferAttribute> _vertexStreams;
+    std::unordered_map<int, BufferAttribute> _vertexStreams;
 };
 
 NS_CC_END

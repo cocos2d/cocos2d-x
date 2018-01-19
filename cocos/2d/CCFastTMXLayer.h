@@ -27,7 +27,6 @@ THE SOFTWARE.
 #ifndef __CC_FAST_TMX_LAYER_H__
 #define __CC_FAST_TMX_LAYER_H__
 
-#include <map>
 #include <unordered_map>
 #include "2d/CCNode.h"
 #include "2d/CCTMXXMLParser.h"
@@ -317,7 +316,7 @@ protected:
     Texture2D *_texture;
     
     /** container for sprite children. map<index, pair<sprite, gid> > */
-    std::map<int, std::pair<Sprite*, int> > _spriteContainer;
+    std::unordered_map<int, std::pair<Sprite*, int> > _spriteContainer;
 
     //GLuint _buffersVBO; //0: vertex, 1: indices
 
@@ -339,7 +338,7 @@ protected:
 #else
     std::vector<GLushort> _indices;
 #endif
-    std::map<int/*vertexZ*/, int/*offset to _indices by quads*/> _indicesVertexZOffsets;
+    std::unordered_map<int/*vertexZ*/, int/*offset to _indices by quads*/> _indicesVertexZOffsets;
     std::unordered_map<int/*vertexZ*/, int/*number to quads*/> _indicesVertexZNumber;
     std::vector<PrimitiveCommand> _renderCommands;
     bool _dirty;
