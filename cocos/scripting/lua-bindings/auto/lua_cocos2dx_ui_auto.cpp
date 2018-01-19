@@ -11821,6 +11821,53 @@ int lua_cocos2dx_ui_Text_getTextColor(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_Text_getBlendFunc(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::Text* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.Text",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::Text*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Text_getBlendFunc'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Text_getBlendFunc'", nullptr);
+            return 0;
+        }
+        const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
+        blendfunc_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Text:getBlendFunc",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Text_getBlendFunc'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_Text_setTextVerticalAlignment(lua_State* tolua_S)
 {
     int argc = 0;
@@ -12958,6 +13005,56 @@ int lua_cocos2dx_ui_Text_getLetter(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_Text_setBlendFunc(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::Text* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.Text",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::Text*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Text_setBlendFunc'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::BlendFunc arg0;
+
+        ok &= luaval_to_blendfunc(tolua_S, 2, &arg0, "ccui.Text:setBlendFunc");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Text_setBlendFunc'", nullptr);
+            return 0;
+        }
+        cobj->setBlendFunc(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Text:setBlendFunc",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Text_setBlendFunc'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_Text_getTextVerticalAlignment(lua_State* tolua_S)
 {
     int argc = 0;
@@ -13243,6 +13340,7 @@ int lua_register_cocos2dx_ui_Text(lua_State* tolua_S)
         tolua_function(tolua_S,"disableEffect",lua_cocos2dx_ui_Text_disableEffect);
         tolua_function(tolua_S,"getLabelEffectType",lua_cocos2dx_ui_Text_getLabelEffectType);
         tolua_function(tolua_S,"getTextColor",lua_cocos2dx_ui_Text_getTextColor);
+        tolua_function(tolua_S,"getBlendFunc",lua_cocos2dx_ui_Text_getBlendFunc);
         tolua_function(tolua_S,"setTextVerticalAlignment",lua_cocos2dx_ui_Text_setTextVerticalAlignment);
         tolua_function(tolua_S,"setFontName",lua_cocos2dx_ui_Text_setFontName);
         tolua_function(tolua_S,"setTouchScaleChangeEnabled",lua_cocos2dx_ui_Text_setTouchScaleChangeEnabled);
@@ -13266,6 +13364,7 @@ int lua_register_cocos2dx_ui_Text(lua_State* tolua_S)
         tolua_function(tolua_S,"setTextColor",lua_cocos2dx_ui_Text_setTextColor);
         tolua_function(tolua_S,"enableGlow",lua_cocos2dx_ui_Text_enableGlow);
         tolua_function(tolua_S,"getLetter",lua_cocos2dx_ui_Text_getLetter);
+        tolua_function(tolua_S,"setBlendFunc",lua_cocos2dx_ui_Text_setBlendFunc);
         tolua_function(tolua_S,"getTextVerticalAlignment",lua_cocos2dx_ui_Text_getTextVerticalAlignment);
         tolua_function(tolua_S,"getTextAreaSize",lua_cocos2dx_ui_Text_getTextAreaSize);
         tolua_function(tolua_S,"setTextHorizontalAlignment",lua_cocos2dx_ui_Text_setTextHorizontalAlignment);
