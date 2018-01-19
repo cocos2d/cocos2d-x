@@ -282,7 +282,7 @@ void SkeletonNode::onDraw(const cocos2d::Mat4 &transform, uint32_t /*flags*/)
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 8);
 }
 
-void SkeletonNode::changeSkins(const std::unordered_map<std::string, std::string>& boneSkinNameMap)
+void SkeletonNode::changeSkins(const std::map<std::string, std::string>& boneSkinNameMap)
 {
     for (auto &boneskin : boneSkinNameMap)
     {
@@ -316,7 +316,7 @@ const cocos2d::Map<std::string, BoneNode*>& SkeletonNode::getAllSubBonesMap() co
     return _subBonesMap;
 }
 
-void SkeletonNode::addSkinGroup(std::string groupName, std::unordered_map<std::string, std::string> boneSkinNameMap)
+void SkeletonNode::addSkinGroup(std::string groupName, std::map<std::string, std::string> boneSkinNameMap)
 {
     _skinGroupMap.emplace(groupName, boneSkinNameMap);
 }

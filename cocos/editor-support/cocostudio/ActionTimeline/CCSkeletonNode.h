@@ -55,7 +55,7 @@ public:
     *@brief: change displays 
     *@param: boneSkinNameMap, map <name of bone, name of skin to display which added to bone>
     */
-    void changeSkins(const std::unordered_map<std::string, std::string>& boneSkinNameMap);
+    void changeSkins(const std::map<std::string, std::string>& boneSkinNameMap);
 
     /**
     *@brief: change displays
@@ -68,7 +68,7 @@ public:
     *@param: groupName, key
     *@param: boneSkinNameMap, map <name of bone, name of skin to display which added to bone>
     */
-    void addSkinGroup(std::string groupName, std::unordered_map<std::string, std::string> boneSkinNameMap);
+    void addSkinGroup(std::string groupName, std::map<std::string, std::string> boneSkinNameMap);
 
     cocos2d::Rect getBoundingBox() const override;
 
@@ -93,7 +93,7 @@ private:
     cocos2d::Color4F       _squareColors[8];
     cocos2d::Vec3          _noMVPVertices[8];
 
-    std::unordered_map<std::string, std::unordered_map<std::string, std::string> > _skinGroupMap; // map< suit name, map< bone name, skin name> >
+    std::map<std::string, std::map<std::string, std::string> > _skinGroupMap; // map< suit name, map< bone name, skin name> >
     CC_DISALLOW_COPY_AND_ASSIGN(SkeletonNode);
 
 
