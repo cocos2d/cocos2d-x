@@ -23,9 +23,9 @@
 # ****************************************************************************/
 cmake_minimum_required(VERSION 3.1)
 
-project(cpp_empty_test)
-
 set(APP_NAME cpp_empty_test)
+
+project(${APP_NAME})
 
 # define some variables
 set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)

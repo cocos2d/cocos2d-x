@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(cpp_test)
-
 set(APP_NAME cpp_tests)
+
+project(${APP_NAME})
 
 # define some variables
 set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
@@ -20,15 +20,6 @@ CocosBuildSet()
 set(BUILD_LUA_LIBS OFF)
 set(BUILD_JS_LIBS OFF)
 add_subdirectory(${COCOS2DX_ROOT_PATH} ${ENGINE_BINARY_PATH}/cocos2dx)
-
-# Use same method as in cocos library
-if(LINUX)
-  foreach(_pkg FONTCONFIG GTK3)
-    cocos_find_package(${_pkg} ${_pkg} REQUIRED)
-  endforeach()
-endif()
-cocos_find_package(FREETYPE FREETYPE REQUIRED)
-cocos_find_package(CURL CURL REQUIRED)
 
 if(WIN32)
   set(PLATFORM_SRC proj.win32/main.cpp)
@@ -51,6 +42,15 @@ elseif(ANDROID)
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
+
+# Use same method as in cocos library
+if(LINUX)
+  foreach(_pkg FONTCONFIG GTK3)
+    cocos_find_package(${_pkg} ${_pkg} REQUIRED)
+  endforeach()
+endif()
+cocos_find_package(FREETYPE FREETYPE REQUIRED)
+cocos_find_package(CURL CURL REQUIRED)
 
 set(TESTS_SRC
   Classes/ActionManagerTest/ActionManagerTest.cpp

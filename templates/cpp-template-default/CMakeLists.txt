@@ -29,76 +29,26 @@ cmake_minimum_required(VERSION 3.1)
 set(APP_NAME MyGame)
 project (${APP_NAME})
 
-set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
+# define some variables
+# set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
+# engine path changed, after cocos new
+set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cocos2d)
+set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
+set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${COCOS2D_ROOT}/cmake/Modules/")
-include(CocosBuildHelpers)
+message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
+message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
 
+# works before libcocos2d
+include(CocosBuildSet)
+CocosBuildSet()
 
-# Some macro definitions
-if(WINDOWS)
-  if(BUILD_SHARED_LIBS)
-    ADD_DEFINITIONS (-D_USRDLL -D_EXPORT_DLL_ -D_USEGUIDLL -D_USREXDLL -D_USRSTUDIODLL)
-  else()
-    ADD_DEFINITIONS (-DCC_STATIC)
-  endif()
-
-  ADD_DEFINITIONS (-DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32 -D_WIN32)
-  set(PLATFORM_FOLDER win32)
-elseif(MACOSX OR APPLE)
-  ADD_DEFINITIONS (-DCC_TARGET_OS_MAC)
-  ADD_DEFINITIONS (-DUSE_FILE32API)
-  set(PLATFORM_FOLDER mac)
-elseif(LINUX)
-  ADD_DEFINITIONS(-DLINUX)
-  set(PLATFORM_FOLDER linux)
-elseif(ANDROID)
-  ADD_DEFINITIONS (-DUSE_FILE32API)
-  set(PLATFORM_FOLDER android)
-else()
-  message( FATAL_ERROR "Unsupported platform, CMake will exit" )
-endif()
-
-
-# Compiler options
-if(MSVC)
-  if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-  	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:msvcrt /NODEFAULTLIB:libcmt")
-  else()
-	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt")
-  endif()
-  ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
-                  -wd4251 -wd4244 -wd4334 -wd4005 -wd4820 -wd4710
-                  -wd4514 -wd4056 -wd4996 -wd4099)
-else()
-  if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-	ADD_DEFINITIONS(-DCOCOS2D_DEBUG=1)
-  endif()
-  set(CMAKE_C_FLAGS_DEBUG "-g -Wall")
-  set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
-  set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -s")
-  set(CMAKE_EXE_LINKER_FLAGS_MINSIZEREL "${CMAKE_EXE_LINKER_FLAGS_MINSIZEREL} -s")
-  if(CLANG AND NOT ANDROID)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-  endif()
-  if(CLANG AND ANDROID AND ANDROID_ARM_MODE STREQUAL thumb AND ANDROID_ABI STREQUAL armeabi)
-    string(REPLACE "-mthumb" "-marm" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
-    string(REPLACE "-mthumb" "-marm" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-  endif()
-
-endif(MSVC)
-
-# libcocos2d
-set(BUILD_CPP_EMPTY_TEST OFF CACHE BOOL "turn off build cpp-empty-test")
-set(BUILD_CPP_TESTS OFF CACHE BOOL "turn off build cpp-tests")
-set(BUILD_LUA_LIBS OFF CACHE BOOL "turn off build lua related targets")
-set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js related targets")
-add_subdirectory(${COCOS2D_ROOT})
+# add engine directory, get cocos libiary
+set(BUILD_LUA_LIBS OFF CACHE BOOL "turn off build lua libiary")
+set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js libiary")
+add_subdirectory(${COCOS2DX_ROOT_PATH} ${ENGINE_BINARY_PATH}/cocos2dx)
 
 if(ANDROID)
-    # hellocpp folder need review
     set(PLATFORM_SPECIFIC_SRC proj.android/app/jni/hellocpp/main.cpp)
     set(RES_PREFIX "/Resources")
 elseif(WINDOWS)
@@ -142,37 +92,37 @@ else()
 endif()
 
 include_directories(
-	/usr/local/include/GLFW
-	/usr/include/GLFW
-	${COCOS2D_ROOT}
-	${COCOS2D_ROOT}/cocos
-	${COCOS2D_ROOT}/external
-	${COCOS2D_ROOT}/cocos/platform
-	${COCOS2D_ROOT}/cocos/audio/include/
+	${COCOS2DX_ROOT_PATH}/cocos/audio/include/
 	Classes
 )
-if ( WINDOWS )
+
+if (WINDOWS)
     include_directories(
-            ${COCOS2D_ROOT}/external/glfw3/include/${PLATFORM_FOLDER}
-            ${COCOS2D_ROOT}/external/${PLATFORM_FOLDER}-specific/gles/include/OGLES
+        ${COCOS2DX_ROOT_PATH}/external/glfw3/include/${PLATFORM_FOLDER}
+        ${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/gles/include/OGLES
     )
-elseif ( MACOSX OR APPLE )
+elseif (MACOSX OR APPLE)
     include_directories(
-            ${COCOS2D_ROOT}/external/glfw3/include/mac
+        ${COCOS2DX_ROOT_PATH}/external/glfw3/include/mac
     )
-endif ()
+elseif(LINUX)
+    include_directories(
+        /usr/local/include/GLFW
+        /usr/include/GLFW
+    )
+endif(WINDOWS)
 
 set(GAME_SRC
-        ${PLATFORM_SPECIFIC_SRC}
-        Classes/AppDelegate.cpp
-        Classes/HelloWorldScene.cpp
-        )
+    ${PLATFORM_SPECIFIC_SRC}
+    Classes/AppDelegate.cpp
+    Classes/HelloWorldScene.cpp
+)
 
 set(GAME_HEADERS
-        ${PLATFORM_SPECIFIC_HEADERS}
-        Classes/AppDelegate.h
-        Classes/HelloWorldScene.h
-        )
+    ${PLATFORM_SPECIFIC_HEADERS}
+    Classes/AppDelegate.h
+    Classes/HelloWorldScene.h
+)
 
 # add the executable
 if(ANDROID)
@@ -200,15 +150,15 @@ if(MSVC)
 	    
     # create a list of dlls to copy
 	file(GLOB THIRD_PARTY_DLLS
-		"${COCOS2D_ROOT}/external/${PLATFORM_FOLDER}-specific/gles/prebuilt/glew32.dll"
-		"${COCOS2D_ROOT}/external/${PLATFORM_FOLDER}-specific/zlib/prebuilt/zlib1.dll"
-		"${COCOS2D_ROOT}/external/${PLATFORM_FOLDER}-specific/OggDecoder/prebuilt/libogg.dll"
-		"${COCOS2D_ROOT}/external/${PLATFORM_FOLDER}-specific/OggDecoder/prebuilt/libvorbis.dll"
-		"${COCOS2D_ROOT}/external/${PLATFORM_FOLDER}-specific/OggDecoder/prebuilt/libvorbisfile.dll"
-		"${COCOS2D_ROOT}/external/${PLATFORM_FOLDER}-specific/MP3Decoder/prebuilt/libmpg123.dll"
-		"${COCOS2D_ROOT}/external/${PLATFORM_FOLDER}-specific/OpenalSoft/prebuilt/OpenAL32.dll"
-		"${COCOS2D_ROOT}/external/${PLATFORM_FOLDER}-specific/icon/prebuilt/iconv.dll"
-		"${COCOS2D_ROOT}/external/tiff/prebuilt/${PLATFORM_FOLDER}/libtiff.dll"
+		"${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/gles/prebuilt/glew32.dll"
+		"${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/zlib/prebuilt/zlib1.dll"
+		"${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/OggDecoder/prebuilt/libogg.dll"
+		"${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/OggDecoder/prebuilt/libvorbis.dll"
+		"${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/OggDecoder/prebuilt/libvorbisfile.dll"
+		"${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/MP3Decoder/prebuilt/libmpg123.dll"
+		"${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/OpenalSoft/prebuilt/OpenAL32.dll"
+		"${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/icon/prebuilt/iconv.dll"
+		"${COCOS2DX_ROOT_PATH}/external/tiff/prebuilt/${PLATFORM_FOLDER}/libtiff.dll"
 	)
 	
 	list(SORT THIRD_PARTY_DLLS)

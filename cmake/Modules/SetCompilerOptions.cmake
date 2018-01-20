@@ -99,6 +99,11 @@ macro (SetCompilerOptions)
 
 	# Compiler options
 	if(MSVC)
+		if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+			set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:msvcrt /NODEFAULTLIB:libcmt")
+		else()
+			set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt")
+		endif()
 	  add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
 	                  -wd4251 -wd4244 -wd4334 -wd4005 -wd4820 -wd4710
 	                  -wd4514 -wd4056 -wd4996 -wd4099)
@@ -111,13 +116,20 @@ macro (SetCompilerOptions)
 	  endforeach()
 
 	else()
+		if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+			ADD_DEFINITIONS(-DCOCOS2D_DEBUG=1)
+		endif()
 	  set(CMAKE_C_FLAGS_DEBUG "-g -Wall")
 	  set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
-	  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99 -fPIC")
+	  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -fPIC")
 	  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations -Wno-reorder -Wno-invalid-offsetof -fPIC")
 	  if(CLANG AND NOT ANDROID)
 	    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-	  endif()
+		endif()
+		if(CLANG AND ANDROID AND ANDROID_ARM_MODE STREQUAL thumb AND ANDROID_ABI STREQUAL armeabi)
+			string(REPLACE "-mthumb" "-marm" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
+			string(REPLACE "-mthumb" "-marm" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+  	endif()
 	endif(MSVC)
 
 	# Some macro definitions
