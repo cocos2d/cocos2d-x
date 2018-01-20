@@ -24,7 +24,7 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
-# this file only build engine libiary, not pull other project
+# this file only build engine library, not pull other project
 
 # The version number
 set(COCOS2D_X_VERSION 3.17)

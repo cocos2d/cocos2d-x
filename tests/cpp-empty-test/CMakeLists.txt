@@ -39,7 +39,7 @@ message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
 include(CocosBuildSet)
 CocosBuildSet()
 
-# add engine directory, get cocos libiary
+# add engine directory, get cocos library
 set(BUILD_LUA_LIBS OFF)
 set(BUILD_JS_LIBS OFF)
 add_subdirectory(${COCOS2DX_ROOT_PATH} ${ENGINE_BINARY_PATH}/cocos2dx)
