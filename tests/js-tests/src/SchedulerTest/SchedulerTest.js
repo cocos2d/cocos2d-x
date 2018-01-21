@@ -479,6 +479,65 @@ var RescheduleCallback = SchedulerTestLayer.extend({
 });
 
 /*
+    SchedulerIssueWithReschedule
+    https://github.com/cocos2d/cocos2d-html5/pull/3478
+*/
+var SchedulerIssueWithReschedule = SchedulerTestLayer.extend({
+    _verified : false,
+    _counter  : 0,
+
+    onEnter:function () {
+        this._super();
+
+        var self = this;
+        var widgetSize = this.getContentSize();
+     
+        var status_text = new ccui.Text("Checking..", "Thonburi", 25);
+        status_text.setColor(cc.color(255, 255, 255));
+        status_text.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
+        this.addChild(status_text);
+        
+        // schedule(callback, interval, repeat, delay, paused, key);
+        this.schedule(this.onSchedUpdate, 0.1, 0, 0, false);
+        
+        this.schedule(function (dt) {
+            if (self._verified)
+            {
+                cc.log("SchedulerIssueWithReschedule - test OK");
+                status_text.setString("OK");
+                status_text.setColor(cc.color(0, 255, 0));
+            }
+            else
+            {
+                cc.log("SchedulerIssueWithReschedule - test failed!");
+                status_text.setString("Failed");
+                status_text.setColor(cc.color(255, 0, 0));
+            }
+ 
+        }, 0.5, 0, 0, false);
+    },
+    title:function () {
+        return "Issue with Reschedule";
+    },
+    subtitle:function () {
+        return "Test reschedule with same callback and repeat count";
+    },
+
+    onSchedUpdate:function (dt) {
+        if (this._counter == 0) {
+            cc.log("SchedulerIssueWithReschedule - first timer");
+            this.schedule(this.onSchedUpdate, 0.1, 0, 0, false);
+        }
+        else {
+            cc.log("SchedulerIssueWithReschedule - second timer. OK");
+            this._verified = true;
+        }
+
+        this._counter += 1;
+    }
+});
+
+/*
     ScheduleUsingSchedulerTest
 */
 var ScheduleUsingSchedulerTest = SchedulerTestLayer.extend({
@@ -729,6 +788,7 @@ var arrayOfSchedulerTest = [
     SchedulerUpdateAndCustom,
     SchedulerUpdateFromCustom,
     RescheduleCallback,
+    SchedulerIssueWithReschedule,
     ScheduleUsingSchedulerTest,
     unScheduleAndRepeatTest
 ];
