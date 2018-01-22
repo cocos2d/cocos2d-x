@@ -2,10 +2,10 @@ cmake_minimum_required(VERSION 3.1)
 
 set(APP_NAME lua_empty_test)
 
-project(${APP_NAME})
-
 # default build, not build when build engine and all tests
 if(NOT DEFINED BUILD_ENGINE_DONE)
+
+    project(${APP_NAME})
     # define some variables
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
@@ -46,23 +46,32 @@ elseif(MACOSX OR APPLE)
 elseif(ANDROID)
     list(APPEND SAMPLE_SRC proj.android/app/jni/main.cpp)
     set(RES_PREFIX "/Resources")
+elseif(IOS)
+    set(PLATFORM_SRC
+        proj.ios/main.m
+        proj.ios/AppController.mm
+        proj.ios/RootViewController.mm
+        )
+    include_directories(proj.ios)
+elseif(MACOSX OR APPLE)
+    set(PLATFORM_SRC proj.mac/main.cpp)
 endif()
 
 include_directories(
-  Classes
-  ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/auto
-  ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
-  ${COCOS2DX_ROOT_PATH}/external/lua/luajit/include
-  ${COCOS2DX_ROOT_PATH}/external/lua/tolua
-)
+    Classes
+    ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/auto
+    ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
+    ${COCOS2DX_ROOT_PATH}/external/lua/luajit/include
+    ${COCOS2DX_ROOT_PATH}/external/lua/tolua
+    )
 
 include_directories(${LUAJIT_INCLUDE_DIRS})
 
 if(ANDROID)
     add_library(${APP_NAME} SHARED ${SAMPLE_SRC})
-    IF(CMAKE_BUILD_TYPE MATCHES RELEASE)
-        ADD_CUSTOM_COMMAND(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
-    ENDIF()
+    if(CMAKE_BUILD_TYPE MATCHES RELEASE)
+        add_custom_command(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
+    endif()
 else()
     # add the executable
     add_executable(${APP_NAME} ${SAMPLE_SRC})
@@ -83,9 +92,9 @@ else()
     set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
 
     pre_build(${APP_NAME}
-      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}${RES_PREFIX}/res
-      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}${RES_PREFIX}/src
-      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/ ${APP_BIN_DIR}${RES_PREFIX}/src/cocos
-      )
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}${RES_PREFIX}/res
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}${RES_PREFIX}/src
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/cocos/scripting/lua-bindings/script/ ${APP_BIN_DIR}${RES_PREFIX}/src/cocos
+        )
 
 endif()

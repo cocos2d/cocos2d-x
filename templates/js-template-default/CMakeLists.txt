@@ -70,13 +70,15 @@ if(ANDROID)
   list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.android/app/jni/hellojavascript/main.cpp)
 elseif(LINUX)
   list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
+elseif(MACOSX)
+  list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.cpp)
 endif()
 
 if(ANDROID)
     add_library(${APP_NAME} SHARED ${GAME_SRC})
-    IF(CMAKE_BUILD_TYPE MATCHES RELEASE)
-        ADD_CUSTOM_COMMAND(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
-    ENDIF()
+    if(CMAKE_BUILD_TYPE MATCHES RELEASE)
+        add_custom_command(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
+    endif()
 else()
   add_executable(${APP_NAME}
     ${GAME_SRC}

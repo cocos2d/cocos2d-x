@@ -20,7 +20,7 @@ elseif(LINUX)
   set(COCOS_UI_SPECIFIC_SRC
       ui/UIEditBox/UIEditBoxImpl-linux.cpp
       )
-ELSEIF(ANDROID)
+elseif(ANDROID)
     set(COCOS_UI_SPECIFIC_SRC
         ui/UIEditBox/UIEditBoxImpl-android.cpp
         ui/UIVideoPlayer-android.cpp

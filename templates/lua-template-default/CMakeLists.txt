@@ -27,9 +27,9 @@ set(APP_NAME cocos2dlua)
 project(${APP_NAME})
 
 # define some variables
-set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
+# set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
 # engine path changed, after cocos new
-# set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/cocos2d-x)
+set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/cocos2d-x)
 set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
 set(RUNTIME_SRC_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/runtime-src)
@@ -53,6 +53,8 @@ if(ANDROID)
   list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.android/app/jni/hellolua/main.cpp)
 elseif(LINUX)
   list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
+elseif(MACOSX)
+  list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.m)
 endif()
 
 if(LINUX)
@@ -78,9 +80,9 @@ include_directories(
 
 if(ANDROID)
     add_library(${APP_NAME} SHARED ${GAME_SRC})
-    IF(CMAKE_BUILD_TYPE MATCHES RELEASE)
-        ADD_CUSTOM_COMMAND(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
-    ENDIF()
+    if(CMAKE_BUILD_TYPE MATCHES RELEASE)
+        add_custom_command(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
+    endif()
 else()
   # add the executable
   add_executable(${APP_NAME} ${GAME_SRC})

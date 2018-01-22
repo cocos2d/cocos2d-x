@@ -17,7 +17,7 @@ if(WINDOWS)
         audio/win32/AudioDecoderOgg.cpp
     )
 
-ELSEIF(ANDROID)
+elseif(ANDROID)
     set(COCOS_AUDIO_PLATFORM_SRC
        audio/android/cddSimpleAudioEngine.cpp
        audio/android/ccdandroidUtils.cpp

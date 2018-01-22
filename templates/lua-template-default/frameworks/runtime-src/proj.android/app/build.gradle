@@ -53,7 +53,7 @@ android {
         }
         else if (PROP_NDK_MODE == 'cmake') {
             cmake {
-                path "../../../CMakeLists.txt"
+                path "../../../../CMakeLists.txt"
             }
         }
     }
