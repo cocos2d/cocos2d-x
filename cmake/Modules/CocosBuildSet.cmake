@@ -12,6 +12,10 @@ macro(CocosBuildSet)
 
     # Use new behaviour with cmake >= 3.1:
     # Only interpret if() arguments as variables or keywords when unquoted.
+    cmake_policy(SET CMP0054 NEW)
+    
+    # Use new behaviour with cmake >= 3.1:
+    # Only interpret if() arguments as variables or keywords when unquoted.
     if(CMAKE_VERSION VERSION_GREATER 3.1)
         cmake_policy(SET CMP0054 NEW)
     endif()
@@ -45,12 +49,12 @@ macro(CocosBuildSet)
     include(SetCompilerOptions)
     SetCompilerOptions()
 
-    if(CMAKE_FIND_ROOT_PATH AND USE_PREBUILT_LIBS)
+    if(CMAKE_FIND_ROOT_PATH AND USE_EXTERNAL_PREBUILT_LIBS)
         # Adds cocos2d-x external folder to the list of valid include/library paths when cross-compiling and using prebuilds
         set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${COCOS_EXTERNAL_DIR})
     endif()
 
-    if(USE_PREBUILT_LIBS)
+    if(USE_EXTERNAL_PREBUILT_LIBS)
         include(CocosUsePrebuiltLibs)
     endif()
 

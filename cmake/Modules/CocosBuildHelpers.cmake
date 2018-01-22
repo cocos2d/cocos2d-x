@@ -65,7 +65,7 @@ endfunction()
 # prebuilt libs for cocos
 # need review
 macro(cocos_find_package pkg_name pkg_prefix)
-  if(NOT USE_PREBUILT_LIBS OR NOT ${pkg_prefix}_FOUND)
+  if(NOT USE_EXTERNAL_PREBUILT_LIBS OR NOT ${pkg_prefix}_FOUND)
     find_package(${pkg_name} ${ARGN})
   endif()
   if(NOT ${pkg_prefix}_INCLUDE_DIRS AND ${pkg_prefix}_INCLUDE_DIR)

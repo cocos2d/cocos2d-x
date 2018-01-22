@@ -61,9 +61,9 @@ macro (BuildModules)
 
 	# Box2d
 	if(USE_BOX2D)
-	  if(USE_PREBUILT_LIBS)
+	  if(USE_EXTERNAL_PREBUILT_LIBS)
 	    cocos_find_package(box2d Box2D REQUIRED)
-	  endif(USE_PREBUILT_LIBS)
+	  endif(USE_EXTERNAL_PREBUILT_LIBS)
 	  message(STATUS "Box2D include dirs: ${Box2D_INCLUDE_DIRS}")
 	  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=1)
 	elseif(BUILD_BOX2D)
@@ -75,7 +75,7 @@ macro (BuildModules)
 
 	# Bullet
 	if(USE_BULLET)
-	  if(USE_PREBUILT_LIBS)
+	  if(USE_EXTERNAL_PREBUILT_LIBS)
 	    cocos_find_package(bullet BULLET REQUIRED)
 	  endif()
 	  add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=1)
@@ -88,7 +88,7 @@ macro (BuildModules)
 
 	# Recast (not prebuilded, exists as source)
 	if(USE_RECAST)
-	  if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
+	  if(USE_EXTERNAL_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
 	    add_subdirectory(${COCOS2DX_ROOT_PATH}/external/recast ${ENGINE_BINARY_PATH}/external/recast)
 	    set(RECAST_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/recast)
 	    set(RECAST_LIBRARIES recast)
@@ -103,7 +103,7 @@ macro (BuildModules)
 	endif(USE_RECAST)
 
 	# Tinyxml2 (not prebuilded, exists as source)
-	if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
+	if(USE_EXTERNAL_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
 	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/tinyxml2 ${ENGINE_BINARY_PATH}/external/tinyxml2)
 	  set(TinyXML2_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/tinyxml2)
 	  set(TinyXML2_LIBRARIES tinyxml2)
@@ -131,7 +131,7 @@ macro (BuildModules)
 	# dists have packages from zlib, thats very old for us.
 	# moreover our embedded version modified to quick provide
 	# functionality needed by cocos.
-	if(USE_PREBUILT_LIBS OR NOT MINGW OR USE_SOURCES_EXTERNAL)
+	if(USE_EXTERNAL_PREBUILT_LIBS OR NOT MINGW OR USE_SOURCES_EXTERNAL)
 	  #TODO: hack! should be in external/unzip/CMakeLists.txt
 	  include_directories(${ZLIB_INCLUDE_DIRS})
 	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/unzip ${ENGINE_BINARY_PATH}/external/unzip)
@@ -171,12 +171,12 @@ macro (BuildModules)
 	
 	cocos_find_package(WEBSOCKETS WEBSOCKETS REQUIRED)
 	cocos_find_package(CURL CURL REQUIRED)
-	if(NOT USE_PREBUILT_LIBS)
+	if(NOT USE_EXTERNAL_PREBUILT_LIBS)
 	  cocos_find_package(OpenSSL OPENSSL REQUIRED)
 	endif()
 
 	# flatbuffers
-	if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
+	if(USE_EXTERNAL_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
 	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/flatbuffers ${ENGINE_BINARY_PATH}/external/flatbuffers)
 	  set(FLATBUFFERS_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external)
 	  message(STATUS "Flatbuffers include dirs: ${FLATBUFFERS_INCLUDE_DIRS}")
@@ -185,7 +185,7 @@ macro (BuildModules)
 	endif()
 
 	# xxhash
-	if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
+	if(USE_EXTERNAL_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
 	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/xxhash ${ENGINE_BINARY_PATH}/external/xxhash)
 	  set(XXHASH_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/xxhash)
 	  set(XXHASH_LIBRARIES xxhash)

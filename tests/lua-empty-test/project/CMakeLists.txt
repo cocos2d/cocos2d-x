@@ -1,4 +1,28 @@
+cmake_minimum_required(VERSION 3.1)
+
 set(APP_NAME lua_empty_test)
+
+project(${APP_NAME})
+
+# default build, not build when build engine and all tests
+if(NOT DEFINED BUILD_ENGINE_DONE)
+    # define some variables
+    set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
+    set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
+    set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
+
+    message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
+    message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
+    
+    # works before libcocos2d
+    include(CocosBuildSet)
+    CocosBuildSet()
+
+    # add engine directory, get cocos library
+    set(BUILD_LUA_LIBS ON)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH})
+
+endif(NOT DEFINED BUILD_ENGINE_DONE)
 
 set(SAMPLE_SRC Classes/AppDelegate.cpp)
 
@@ -26,9 +50,10 @@ endif()
 
 include_directories(
   Classes
-  ../../../cocos/scripting/lua-bindings/manual
-  ../../../external/lua/luajit/include
-  ../../../external/lua/tolua
+  ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/auto
+  ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
+  ${COCOS2DX_ROOT_PATH}/external/lua/luajit/include
+  ${COCOS2DX_ROOT_PATH}/external/lua/tolua
 )
 
 include_directories(${LUAJIT_INCLUDE_DIRS})
