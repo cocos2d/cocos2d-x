@@ -21,8 +21,30 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 # ****************************************************************************/
+cmake_minimum_required(VERSION 3.1)
 
 set(APP_NAME js_tests)
+
+project(${APP_NAME})
+
+# default build, not build when build engine and all tests
+if(NOT DEFINED BUILD_ENGINE_DONE)
+    # define some variables
+    set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
+    set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
+    set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
+
+    message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
+    message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
+    # works before libcocos2d
+    include(CocosBuildSet)
+    CocosBuildSet()
+
+    # add engine directory, get cocos library
+    set(BUILD_LUA_LIBS OFF)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH})
+    
+endif(NOT DEFINED BUILD_ENGINE_DONE)
 
 if(WIN32)
 
@@ -45,13 +67,13 @@ set(SAMPLE_SRC
 
 include_directories(
   Classes
-  ../../../cocos/scripting/js-bindings/auto
-  ../../../cocos/scripting/js-bindings/manual
-  ../../../cocos/base
-  ../../../cocos/editor-support
-  ../../../cocos/audio/include
-  ../../../external/spidermonkey/include/${PLATFORM_FOLDER}
-  ../../../external/chipmunk/include/chipmunk
+  ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/auto
+  ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/manual
+  ${COCOS2DX_ROOT_PATH}/cocos/base
+  ${COCOS2DX_ROOT_PATH}/cocos/editor-support
+  ${COCOS2DX_ROOT_PATH}/cocos/audio/include
+  ${COCOS2DX_ROOT_PATH}/external/spidermonkey/include/${PLATFORM_FOLDER}
+  ${COCOS2DX_ROOT_PATH}/external/chipmunk/include/chipmunk
 )
 
 if(ANDROID)
@@ -73,11 +95,11 @@ set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
 set_target_properties(${APP_NAME} PROPERTIES
      RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
 
-
-if(APPLE)
-  # fix js-tests compile error, for temp
-  set_property(TARGET ${APP_NAME} APPEND_STRING PROPERTY COMPILE_FLAGS "-fObjc")
-endif(APPLE)
+# need review
+# if(APPLE)
+#   # fix js-tests compile error, for temp
+#   set_property(TARGET ${APP_NAME} APPEND_STRING PROPERTY COMPILE_FLAGS "-fObjc")
+# endif(APPLE)
 
 if(LINUX)
     set(RES_PREFIX "/Resources")

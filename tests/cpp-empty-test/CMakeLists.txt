@@ -27,22 +27,26 @@ set(APP_NAME cpp_empty_test)
 
 project(${APP_NAME})
 
-# define some variables
-set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
-set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
-set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
+# default build, not build when build engine and all tests
+if(NOT DEFINED BUILD_ENGINE_DONE)
+    # define some variables
+    set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
+    set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
+    set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
 
-message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
-message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
+    message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
+    message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
+    
+    # works before libcocos2d
+    include(CocosBuildSet)
+    CocosBuildSet()
 
-# works before libcocos2d
-include(CocosBuildSet)
-CocosBuildSet()
+    # add engine directory, get cocos library
+    set(BUILD_LUA_LIBS OFF)
+    set(BUILD_JS_LIBS OFF)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH})
 
-# add engine directory, get cocos library
-set(BUILD_LUA_LIBS OFF)
-set(BUILD_JS_LIBS OFF)
-add_subdirectory(${COCOS2DX_ROOT_PATH} ${ENGINE_BINARY_PATH}/cocos2dx)
+endif(NOT DEFINED BUILD_ENGINE_DONE)
 
 if(ANDROID)
   set(PLATFORM_SRC proj.android/app/jni/main.cpp)

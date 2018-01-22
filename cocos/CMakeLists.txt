@@ -24,9 +24,10 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
-# this CMakeLists is to generate libcocos2d.a
-
-# works on libcocos2d
+# this CMakeLists is to generate Cocos2d-x Engine Library
+# build libcocos2d
+# build luacocos2d if BUILD_LUA_LIBS=ON
+# build jscocos2d if BUILD_JS_LIBS=ON
 
 if(WINDOWS)
   ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
@@ -230,3 +231,12 @@ set_target_properties(cocos2d
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     VERSION "${COCOS2D_X_VERSION}"
 )
+
+## Lua bindings lib
+if(BUILD_LUA_LIBS OR BUILD_ALL_TESTS)
+  add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings ${ENGINE_BINARY_PATH}/cocos/lua-bindings)
+endif(BUILD_LUA_LIBS OR BUILD_ALL_TESTS)
+## JS bindings lib
+if(BUILD_JS_LIBS OR BUILD_ALL_TESTS)
+  add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings ${ENGINE_BINARY_PATH}/cocos/js-bindings)
+endif(BUILD_JS_LIBS OR BUILD_ALL_TESTS)

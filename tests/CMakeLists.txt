@@ -24,39 +24,20 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
-# use engine library
-# build tests project if BUILD_ALL_TESTS=ON
+# build all test projects, it need the engine library
 
 cmake_minimum_required(VERSION 3.1)
-# project name
-project(Cocos2d-x)
-# The version number
-set(COCOS2D_X_VERSION 3.17)
-# cocos2dx root path
-set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
-set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
-# cocos2dx binary files path when cmake build
-set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
+# library have been build, on ../CMakeLists.txt
+set(BUILD_ENGINE_DONE ON)
 
-message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
-message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
+# all engine all tests project
+add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/cpp-empty-test ${ENGINE_BINARY_PATH}/tests/cpp-empty-test)
 
-# works before build libcocos2d
-include(CocosBuildSet)
-CocosBuildSet()
+add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/cpp-tests ${ENGINE_BINARY_PATH}/tests/cpp-tests)
 
-# feature: use cocos prebuilt library, need to do
-if(USE_COCOS_PREBUILT_LIBS)
-    # use prebuilt library, not build
-else(USE_COCOS_PREBUILT_LIBS)
-    # build engine library
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos)
+add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/js-tests/project ${ENGINE_BINARY_PATH}/tests/js-tests)
 
-endif(USE_COCOS_PREBUILT_LIBS)
+# add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/lua-empty-test/project ${ENGINE_BINARY_PATH}/tests/lua-empty-test)
 
-# build engine all tests project
-if(BUILD_ALL_TESTS)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/tests ${ENGINE_BINARY_PATH}/tests)
-endif(BUILD_ALL_TESTS)
-
+# add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/lua-tests/project ${ENGINE_BINARY_PATH}/tests/lua-test)
