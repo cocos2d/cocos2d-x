@@ -31,7 +31,7 @@ cmake_minimum_required(VERSION 3.1)
 # library have been build, on ../CMakeLists.txt
 set(BUILD_ENGINE_DONE ON)
 
-# all engine all tests project
+# add engine all tests project
 add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/cpp-empty-test ${ENGINE_BINARY_PATH}/tests/cpp-empty-test)
 
 add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/cpp-tests ${ENGINE_BINARY_PATH}/tests/cpp-tests)

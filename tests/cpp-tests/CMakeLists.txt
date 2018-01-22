@@ -19,8 +19,6 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     CocosBuildSet()
 
     # add engine directory, get cocos library
-    set(BUILD_LUA_LIBS OFF)
-    set(BUILD_JS_LIBS OFF)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH})
 
 endif(NOT DEFINED BUILD_ENGINE_DONE)

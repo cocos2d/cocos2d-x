@@ -56,6 +56,7 @@ else(USE_COCOS_PREBUILT_LIBS)
 endif(USE_COCOS_PREBUILT_LIBS)
 
 # build engine all tests project
+set(BUILD_ALL_TESTS ON)
 if(BUILD_ALL_TESTS)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/tests ${ENGINE_BINARY_PATH}/tests)
 endif(BUILD_ALL_TESTS)

@@ -233,6 +233,7 @@ set_target_properties(cocos2d
 )
 
 ## Lua bindings lib
+option(BUILD_ALL_TESTS OFF)
 if(BUILD_LUA_LIBS OR BUILD_ALL_TESTS)
   add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings ${ENGINE_BINARY_PATH}/cocos/lua-bindings)
 endif(BUILD_LUA_LIBS OR BUILD_ALL_TESTS)
