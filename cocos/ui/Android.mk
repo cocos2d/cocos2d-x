@@ -24,6 +24,7 @@ UIAbstractCheckButton.cpp \
 UICheckBox.cpp \
 UIRadioButton.cpp \
 UIImageView.cpp \
+UITileImageView.cpp \
 UIText.cpp \
 UITextAtlas.cpp \
 UITextBMFont.cpp \

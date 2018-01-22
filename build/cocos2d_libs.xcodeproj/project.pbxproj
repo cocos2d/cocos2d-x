@@ -3587,6 +3587,12 @@
 		A0E749F81BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */; };
 		A0E749F91BA8FD7F001A8332 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */; };
 		A0E749FA1BA8FD7F001A8332 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */; };
+		A5BC425D1EB8BF0A00A237E8 /* UITileImageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5BC425B1EB8BF0A00A237E8 /* UITileImageView.cpp */; };
+		A5BC425E1EB8BF0A00A237E8 /* UITileImageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5BC425B1EB8BF0A00A237E8 /* UITileImageView.cpp */; };
+		A5BC425F1EB8BF0A00A237E8 /* UITileImageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5BC425B1EB8BF0A00A237E8 /* UITileImageView.cpp */; };
+		A5BC42601EB8BF0A00A237E8 /* UITileImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = A5BC425C1EB8BF0A00A237E8 /* UITileImageView.h */; };
+		A5BC42611EB8BF0A00A237E8 /* UITileImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = A5BC425C1EB8BF0A00A237E8 /* UITileImageView.h */; };
+		A5BC42621EB8BF0A00A237E8 /* UITileImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = A5BC425C1EB8BF0A00A237E8 /* UITileImageView.h */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
 		B21770401977ECE6009EE11B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703F1977ECE6009EE11B /* OpenGL.framework */; };
@@ -5610,6 +5616,8 @@
 		A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0E749F51BA8FD7F001A8332 /* UIEditBoxImpl-common.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-common.cpp"; sourceTree = "<group>"; };
 		A0E749F61BA8FD7F001A8332 /* UIEditBoxImpl-common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-common.h"; sourceTree = "<group>"; };
+		A5BC425B1EB8BF0A00A237E8 /* UITileImageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITileImageView.cpp; sourceTree = "<group>"; };
+		A5BC425C1EB8BF0A00A237E8 /* UITileImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITileImageView.h; sourceTree = "<group>"; };
 		B20564AA1A6E5744001C1B6E /* ccShader_PositionColorTextureAsPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorTextureAsPointsize.vert; sourceTree = "<group>"; };
 		B217703B1977ECB4009EE11B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B217703D1977ECC1009EE11B /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -7603,6 +7611,8 @@
 				2905FA1018CF08D100240AA3 /* UITextBMFont.h */,
 				2905FA1118CF08D100240AA3 /* UITextField.cpp */,
 				2905FA1218CF08D100240AA3 /* UITextField.h */,
+				A5BC425B1EB8BF0A00A237E8 /* UITileImageView.cpp */,
+				A5BC425C1EB8BF0A00A237E8 /* UITileImageView.h */,
 				2905F9F018CF08D000240AA3 /* UIButton.cpp */,
 				2905F9F118CF08D000240AA3 /* UIButton.h */,
 				B5CE6DBC1B3BF2B1002B0419 /* UIAbstractCheckButton.cpp */,
@@ -9236,6 +9246,7 @@
 				50ABBDB71925AB4100A911A9 /* CCTexture2D.h in Headers */,
 				C5F516181C8216C60013B695 /* CSTabControl_generated.h in Headers */,
 				50ABBE811925AB6F00A911A9 /* CCEventType.h in Headers */,
+				A5BC42601EB8BF0A00A237E8 /* UITileImageView.h in Headers */,
 				B665E2B81AA80A6500DDB1C5 /* CCPUForceFieldAffector.h in Headers */,
 				1A57008F180BC5A10088DEC7 /* CCActionTiledGrid.h in Headers */,
 				15AE19A319AAD39600C27E9E /* TextBMFontReader.h in Headers */,
@@ -10407,6 +10418,7 @@
 				507B3FA41C31BDD30067B53E /* CCBKeyframe.h in Headers */,
 				507B3FA51C31BDD30067B53E /* CCLayerGradientLoader.h in Headers */,
 				507B3FA71C31BDD30067B53E /* CCPUOnPositionObserverTranslator.h in Headers */,
+				A5BC42621EB8BF0A00A237E8 /* UITileImageView.h in Headers */,
 				507B3FA91C31BDD30067B53E /* CCComponentContainer.h in Headers */,
 				507B3FAB1C31BDD30067B53E /* CCTextureCube.h in Headers */,
 				507B3FAD1C31BDD30067B53E /* CCPULineEmitterTranslator.h in Headers */,
@@ -11219,6 +11231,7 @@
 				15AE18C419AAD33D00C27E9E /* CCLayerGradientLoader.h in Headers */,
 				B665E3511AA80A6500DDB1C5 /* CCPUOnPositionObserverTranslator.h in Headers */,
 				1A570313180BCF190088DEC7 /* CCComponentContainer.h in Headers */,
+				A5BC42611EB8BF0A00A237E8 /* UITileImageView.h in Headers */,
 				A045F6D91BA81577005076C7 /* CCTextureCube.h in Headers */,
 				B665E2F51AA80A6500DDB1C5 /* CCPULineEmitterTranslator.h in Headers */,
 				1A087AEB1860400400196EF5 /* edtaa3func.h in Headers */,
@@ -11843,6 +11856,7 @@
 				50FC3FA91D74C2D1001C936A /* CCEventListenerController.cpp in Sources */,
 				1A5701DE180BCB8C0088DEC7 /* CCLayer.cpp in Sources */,
 				15AE1B5919AADA9900C27E9E /* UIText.cpp in Sources */,
+				A5BC425D1EB8BF0A00A237E8 /* UITileImageView.cpp in Sources */,
 				15B3707C19EE414C00ABE682 /* CCEventAssetsManagerEx.cpp in Sources */,
 				3EACC9A419F5014D00EB3C5E /* CCLight.cpp in Sources */,
 				B677B0D51B18492D006762CB /* CCNavMeshObstacle.cpp in Sources */,
@@ -12778,6 +12792,7 @@
 				507B3C5A1C31BDD30067B53E /* DetourAlloc.cpp in Sources */,
 				507B3C5B1C31BDD30067B53E /* CCPUSphereCollider.cpp in Sources */,
 				507B3C5C1C31BDD30067B53E /* CCParticleSystemQuadLoader.cpp in Sources */,
+				A5BC425F1EB8BF0A00A237E8 /* UITileImageView.cpp in Sources */,
 				507B3C601C31BDD30067B53E /* CCPUBoxEmitterTranslator.cpp in Sources */,
 				507B3C611C31BDD30067B53E /* CCTransformHelp.cpp in Sources */,
 				468A14E51EF223B700ECA675 /* flatc.cpp in Sources */,
@@ -13448,6 +13463,7 @@
 				15AE1B8019AADA9A00C27E9E /* UITextAtlas.cpp in Sources */,
 				15AE195919AAD35100C27E9E /* CCProcessBase.cpp in Sources */,
 				B6DD2FB81B04825B00E47F5F /* DetourAlloc.cpp in Sources */,
+				A5BC425E1EB8BF0A00A237E8 /* UITileImageView.cpp in Sources */,
 				B665E3FF1AA80A6600DDB1C5 /* CCPUSphereCollider.cpp in Sources */,
 				15AE18D319AAD33D00C27E9E /* CCParticleSystemQuadLoader.cpp in Sources */,
 				B665E2371AA80A6500DDB1C5 /* CCPUBoxEmitterTranslator.cpp in Sources */,

@@ -5,6 +5,7 @@
 #include "UIRadioButtonTest/UIRadioButtonTest.h"
 #include "UISliderTest/UISliderTest.h"
 #include "UIImageViewTest/UIImageViewTest.h"
+#include "UITileImageViewTest/UITileImageViewTest.h"
 #include "UILoadingBarTest/UILoadingBarTest.h"
 #include "UITextAtlasTest/UITextAtlasTest.h"
 #include "UITextTest/UITextTest.h"
@@ -45,6 +46,7 @@ GUIDynamicCreateTests::GUIDynamicCreateTests()
     addTest("Slider Test", [](){ return new (std::nothrow) UISliderTests; });
    
     addTest("ImageView Test", [](){ return new (std::nothrow) UIImageViewTests; });
+    addTest("TileImageView Test", [](){ return new (std::nothrow) UITileImageViewTests; });
     addTest("LoadingBar Test", [](){ return new (std::nothrow) UILoadingBarTests; });
     addTest("TextAtlas Test", [](){ return new (std::nothrow) UITextAtlasTests; });
     

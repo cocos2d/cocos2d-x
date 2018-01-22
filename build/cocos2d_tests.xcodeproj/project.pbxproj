@@ -1154,6 +1154,9 @@
 		A0BD49FF1AFAFEE50046CCE3 /* Scene3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A0BD49FC1AFAFEE50046CCE3 /* Scene3DTest.cpp */; };
 		A5030C3519D059DA000E78E7 /* OpenURLTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */; };
 		A5030C3619D059DA000E78E7 /* OpenURLTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */; };
+		A5BC42691EB8EAEA00A237E8 /* UITileImageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5BC42671EB8EAEA00A237E8 /* UITileImageViewTest.cpp */; };
+		A5BC426A1EB8EAEA00A237E8 /* UITileImageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5BC42671EB8EAEA00A237E8 /* UITileImageViewTest.cpp */; };
+		A5BC426B1EB8EAEA00A237E8 /* UITileImageViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5BC42671EB8EAEA00A237E8 /* UITileImageViewTest.cpp */; };
 		B2507B6B192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		B2507B6C192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		B5CE6DD11B3C08F8002B0419 /* UIRadioButtonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5CE6DCD1B3C08F8002B0419 /* UIRadioButtonTest.cpp */; };
@@ -2321,6 +2324,8 @@
 		A0BD49FD1AFAFEE50046CCE3 /* Scene3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scene3DTest.h; sourceTree = "<group>"; };
 		A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenURLTest.cpp; path = OpenURLTest/OpenURLTest.cpp; sourceTree = "<group>"; };
 		A5030C3419D059DA000E78E7 /* OpenURLTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenURLTest.h; path = OpenURLTest/OpenURLTest.h; sourceTree = "<group>"; };
+		A5BC42671EB8EAEA00A237E8 /* UITileImageViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UITileImageViewTest.cpp; path = UITileImageViewTest/UITileImageViewTest.cpp; sourceTree = "<group>"; };
+		A5BC42681EB8EAEA00A237E8 /* UITileImageViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UITileImageViewTest.h; path = UITileImageViewTest/UITileImageViewTest.h; sourceTree = "<group>"; };
 		B2507B6A192589AF00FA4972 /* Shaders3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders3D; path = "../tests/cpp-tests/Resources/Shaders3D"; sourceTree = "<group>"; };
 		B5CE6DCD1B3C08F8002B0419 /* UIRadioButtonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRadioButtonTest.cpp; sourceTree = "<group>"; };
 		B5CE6DCE1B3C08F8002B0419 /* UIRadioButtonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRadioButtonTest.h; sourceTree = "<group>"; };
@@ -4437,6 +4442,7 @@
 				29080D3E191B595E0066F8DF /* UICheckBoxTest */,
 				29080D43191B595E0066F8DF /* UIFocusTest */,
 				29080D46191B595E0066F8DF /* UIImageViewTest */,
+				A5BC42661EB8EABA00A237E8 /* UITileImageViewTest */,
 				29080D4B191B595E0066F8DF /* UILayoutTest */,
 				29080D50191B595E0066F8DF /* UIListViewTest */,
 				29080D55191B595E0066F8DF /* UILoadingBarTest */,
@@ -4707,6 +4713,15 @@
 				A5030C3419D059DA000E78E7 /* OpenURLTest.h */,
 			);
 			name = OpenURLTest;
+			sourceTree = "<group>";
+		};
+		A5BC42661EB8EABA00A237E8 /* UITileImageViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				A5BC42671EB8EAEA00A237E8 /* UITileImageViewTest.cpp */,
+				A5BC42681EB8EAEA00A237E8 /* UITileImageViewTest.h */,
+			);
+			name = UITileImageViewTest;
 			sourceTree = "<group>";
 		};
 		B5CE6DCC1B3C08F8002B0419 /* UIRadioButtonTest */ = {
@@ -6353,6 +6368,7 @@
 				29080DE3191B595E0066F8DF /* UIWidgetAddNodeTest.cpp in Sources */,
 				1AC35C1518CECF0C00F37B72 /* MenuTest.cpp in Sources */,
 				1AC35C6718CECF0C00F37B72 /* UserDefaultTest.cpp in Sources */,
+				A5BC42691EB8EAEA00A237E8 /* UITileImageViewTest.cpp in Sources */,
 				1AC35C2118CECF0C00F37B72 /* ParallaxTest.cpp in Sources */,
 				1AC35C6B18CECF0C00F37B72 /* ZwoptexTest.cpp in Sources */,
 				1AC35C7018CECF0C00F37B72 /* VibrateTest.cpp in Sources */,
@@ -6521,6 +6537,7 @@
 				507B417B1C31BEA60067B53E /* QuestionContainerSprite.cpp in Sources */,
 				504C949E1D1C51BE00E4E9B3 /* VRTest.cpp in Sources */,
 				507B417C1C31BEA60067B53E /* DrawPrimitivesTest.cpp in Sources */,
+				A5BC426B1EB8EAEA00A237E8 /* UITileImageViewTest.cpp in Sources */,
 				507B417D1C31BEA60067B53E /* UITextFieldTest.cpp in Sources */,
 				507B417E1C31BEA60067B53E /* MotionStreakTest.cpp in Sources */,
 				507B417F1C31BEA60067B53E /* AllocatorTest.cpp in Sources */,
@@ -6805,6 +6822,7 @@
 				27C5CE021C6E0470000CA4B3 /* SpriteFrameCacheTest.cpp in Sources */,
 				29080DE0191B595E0066F8DF /* UITextTest.cpp in Sources */,
 				1AC35C0218CECF0C00F37B72 /* TableViewTestScene.cpp in Sources */,
+				A5BC426A1EB8EAEA00A237E8 /* UITileImageViewTest.cpp in Sources */,
 				1AC35C4C18CECF0C00F37B72 /* ShaderTest2.cpp in Sources */,
 				1AC35C6618CECF0C00F37B72 /* UnitTest.cpp in Sources */,
 				1AC35B4018CECF0C00F37B72 /* Bug-458.cpp in Sources */,

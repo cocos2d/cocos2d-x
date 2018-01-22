@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "ui/UICheckBox.h"
 #include "ui/UIRadioButton.h"
 #include "ui/UIImageView.h"
+#include "ui/UITileImageView.h"
 #include "ui/UIText.h"
 #include "ui/UITextAtlas.h"
 #include "ui/UILoadingBar.h"

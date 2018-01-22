@@ -203,6 +203,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIFocusTest\UIFocusTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.cpp" />
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UITileImageViewTest\UITileImageViewTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UILayoutTest\UILayoutTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UIListViewTest\UIListViewTest.cpp" />
     <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.cpp" />
@@ -342,6 +343,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIFocusTest\UIFocusTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.h" />
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UITileImageViewTest\UITileImageViewTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UILayoutTest\UILayoutTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UIListViewTest\UIListViewTest.h" />
     <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.h" />

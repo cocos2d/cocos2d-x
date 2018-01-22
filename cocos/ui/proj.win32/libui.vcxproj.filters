@@ -39,6 +39,9 @@
     <ClInclude Include="..\UIImageView.h">
       <Filter>UIWidgets</Filter>
     </ClInclude>
+    <ClInclude Include="..\UITileImageView.h">
+      <Filter>UIWidgets</Filter>
+    </ClInclude>
     <ClInclude Include="..\UISlider.h">
       <Filter>UIWidgets</Filter>
     </ClInclude>
@@ -141,6 +144,9 @@
       <Filter>UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\UIImageView.cpp">
+      <Filter>UIWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\UITileImageView.cpp">
       <Filter>UIWidgets</Filter>
     </ClCompile>
     <ClCompile Include="..\UISlider.cpp">
