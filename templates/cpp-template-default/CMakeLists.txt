@@ -26,6 +26,7 @@
 cmake_minimum_required(VERSION 3.1)
 
 set(APP_NAME MyGame)
+
 project (${APP_NAME})
 
 # define some variables
@@ -33,18 +34,12 @@ project (${APP_NAME})
 # engine path changed, after cocos new
 set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cocos2d)
 set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
-set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
-
-message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
-message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
 
 # works before libcocos2d
 include(CocosBuildSet)
 CocosBuildSet()
 
 # add engine directory, get cocos library
-set(BUILD_LUA_LIBS OFF CACHE BOOL "turn off build lua library")
-set(BUILD_JS_LIBS OFF CACHE BOOL "turn off build js library")
 add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH})
 
 if(ANDROID)

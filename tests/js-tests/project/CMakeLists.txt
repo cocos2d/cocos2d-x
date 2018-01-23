@@ -25,24 +25,20 @@ cmake_minimum_required(VERSION 3.1)
 
 set(APP_NAME js_tests)
 
+project(${APP_NAME})
+
 # default build, not build when build engine and all tests
 if(NOT DEFINED BUILD_ENGINE_DONE)
-
-    project(${APP_NAME})
     # define some variables
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
-    set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
 
-    message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
-    message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
     # works before libcocos2d
     include(CocosBuildSet)
     CocosBuildSet()
-
     # add engine directory, get cocos library
     set(BUILD_JS_LIBS ON)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH})
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/core)
     
 endif(NOT DEFINED BUILD_ENGINE_DONE)
 
@@ -67,24 +63,25 @@ elseif(IOS)
 elseif(MACOSX OR APPLE)
     set(PLATFORM_SRC proj.mac/main.cpp)
 
-    set(APP_RESOURCES_MAIN
+    # need review
+    set(APP_MAIN
     ../main.js
     ../project.json
     )
-    cocos_mark_resources(FILES ${APP_RESOURCES_MAIN} BASEDIR .. RESOURCEBASE Resources)
-    file(GLOB_RECURSE APP_RESOURCES ../res/*)
-    cocos_mark_resources(FILES ${APP_RESOURCES_JS} BASEDIR ../resjs RESOURCEBASE Resources/resjs)
-    file(GLOB_RECURSE APP_SCRIPTS ../src/*)
-    cocos_mark_resources(FILES ${APP_RESOURCES} BASEDIR ../res RESOURCEBASE Resources/res)
-    file(GLOB_RECURSE APP_RESOURCES_JS ../resjs/*)
-    set(APP_RESOURCES ${APP_RESOURCES_MAIN} ${APP_RESOURCES_JS} ${APP_RESOURCES})
+    cocos_mark_resources(FILES ${APP_MAIN} BASEDIR .. RESOURCEBASE Resources)
+    file(GLOB_RECURSE APP_RESJS ../resjs/*)
+    cocos_mark_resources(FILES ${APP_RESJS} BASEDIR ../resjs RESOURCEBASE Resources/res)
 
+    file(GLOB_RECURSE APP_RESOURCES ../res/*)
+    cocos_mark_resources(FILES ${APP_RESOURCES} BASEDIR ../res RESOURCEBASE Resources/res)
+    file(GLOB_RECURSE APP_SCRIPTS ../src/*)
     cocos_mark_resources(FILES ${APP_SCRIPTS} BASEDIR ../src RESOURCEBASE Resources/src)
     file(GLOB_RECURSE TEST_RESOURCES ${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources/*)
     cocos_mark_resources(FILES ${TEST_RESOURCES} BASEDIR ${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources RESOURCEBASE Resources/res)
     file(GLOB_RECURSE COCOS_SCRIPTS ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/script/*)
-    cocos_mark_resources(FILES ${COCOS_SCRIPTS} BASEDIR ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/script RESOURCEBASE Resources/src/cocos)
-    list(APPEND PLATFORM_SRC ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS} ${TEST_RESOURCES})
+    cocos_mark_resources(FILES ${COCOS_SCRIPTS} BASEDIR ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/script RESOURCEBASE Resources/script)
+    
+    list(APPEND PLATFORM_SRC ${APP_MAIN} ${APP_RESJS} ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS} ${TEST_RESOURCES})
 endif()
 
 set(SAMPLE_SRC

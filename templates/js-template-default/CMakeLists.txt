@@ -35,12 +35,7 @@ project(${APP_NAME})
 # engine path changed, after cocos new
 set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/cocos2d-x)
 set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
-set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
 set(RUNTIME_SRC_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/runtime-src)
-
-
-message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
-message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
 
 # works before libcocos2d
 include(CocosBuildSet)

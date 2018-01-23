@@ -2,22 +2,17 @@ cmake_minimum_required(VERSION 3.1)
 
 set(APP_NAME lua_empty_test)
 
+project(${APP_NAME})
+
 # default build, not build when build engine and all tests
 if(NOT DEFINED BUILD_ENGINE_DONE)
-
-    project(${APP_NAME})
     # define some variables
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
-    set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
-
-    message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
-    message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
     
     # works before libcocos2d
     include(CocosBuildSet)
     CocosBuildSet()
-
     # add engine directory, get cocos library
     set(BUILD_LUA_LIBS ON)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH})

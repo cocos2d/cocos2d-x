@@ -54,7 +54,7 @@ if(USE_COCOS_PREBUILT_LIBS)
     # use prebuilt library, not build
 else(USE_COCOS_PREBUILT_LIBS)
     # build engine library
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 
 endif(USE_COCOS_PREBUILT_LIBS)
 
