@@ -24,8 +24,7 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
-# use engine library
-# build tests project if BUILD_ALL_TESTS=ON
+# build engine library and all tests
 
 cmake_minimum_required(VERSION 3.1)
 # project name

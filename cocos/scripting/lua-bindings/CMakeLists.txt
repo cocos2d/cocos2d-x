@@ -17,7 +17,6 @@ if(ANDROID)
 endif()
 
 file(GLOB lua_cocos2d_source_files
-    #"${cocos_root}/external/lua/lua/*.c" change to use luajit
     "${cocos_root}/external/lua/tolua/*.c"
     "${cocos_root}/external/xxtea/xxtea.cpp"
     )
