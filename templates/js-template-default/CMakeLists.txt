@@ -43,7 +43,7 @@ CocosBuildSet()
 
 # add engine directory, get cocos library
 set(BUILD_JS_LIBS ON)
-add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH})
+add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 
 include_directories(
   ${COCOS2DX_ROOT_PATH}

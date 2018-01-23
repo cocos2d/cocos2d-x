@@ -40,7 +40,7 @@ include(CocosBuildSet)
 CocosBuildSet()
 
 # add engine directory, get cocos library
-add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH})
+add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 
 if(ANDROID)
     set(PLATFORM_SPECIFIC_SRC proj.android/app/jni/hellocpp/main.cpp)
