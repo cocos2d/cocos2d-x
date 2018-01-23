@@ -26,8 +26,6 @@
 
 # build all test projects, it need the engine library
 
-cmake_minimum_required(VERSION 3.1)
-
 # library have been build, on ../CMakeLists.txt
 set(BUILD_ENGINE_DONE ON)
 

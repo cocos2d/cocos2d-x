@@ -29,6 +29,9 @@
 # build luacocos2d if BUILD_LUA_LIBS=ON
 # build jscocos2d if BUILD_JS_LIBS=ON
 
+# The version number
+set(COCOS2D_X_VERSION 3.17)
+
 if(WINDOWS)
   ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 endif()

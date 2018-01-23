@@ -27,19 +27,12 @@
 # build engine library and all tests
 
 cmake_minimum_required(VERSION 3.1)
-# project name
+
 project(Cocos2d-x)
-# The version number
-set(COCOS2D_X_VERSION 3.17)
+
 # cocos2dx root path
 set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
-
-# cocos2dx binary files path when cmake build
-set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
-
-message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
-message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
 
 # works before build libcocos2d
 include(CocosBuildSet)
