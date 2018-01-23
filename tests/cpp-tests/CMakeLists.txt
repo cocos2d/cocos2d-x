@@ -245,6 +245,7 @@ else()
 endif()
 
 target_link_libraries(${APP_NAME} cocos2d)
+add_dependencies(${APP_NAME} cocos2d)
 
 if(LINUX)
     foreach(_pkg FONTCONFIG GTK3)

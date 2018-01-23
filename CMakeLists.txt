@@ -46,6 +46,9 @@ message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
 include(CocosBuildSet)
 CocosBuildSet()
 
+# set ON to build all test project, will also build jscocos2d and luacocos2d library
+set(BUILD_ALL_TESTS ON)
+
 # feature: use cocos prebuilt library, need to do
 if(USE_COCOS_PREBUILT_LIBS)
     # use prebuilt library, not build
@@ -56,7 +59,6 @@ else(USE_COCOS_PREBUILT_LIBS)
 endif(USE_COCOS_PREBUILT_LIBS)
 
 # build engine all tests project
-set(BUILD_ALL_TESTS ON)
 if(BUILD_ALL_TESTS)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/tests ${ENGINE_BINARY_PATH}/tests)
 endif(BUILD_ALL_TESTS)

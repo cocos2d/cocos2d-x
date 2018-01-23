@@ -148,6 +148,7 @@ set(lua_bindings_files ${lua_cocos2d_source_files} ${lua_bindings_manual_files} 
 
 add_library(luacocos2d ${lua_bindings_files})
 target_link_libraries(luacocos2d cocos2d)
+add_dependencies(luacocos2d cocos2d)
 
 cocos_use_pkg(luacocos2d LUAJIT)
 

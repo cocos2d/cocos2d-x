@@ -127,6 +127,7 @@ target_link_libraries(jscocos2d
 cocos_use_pkg(jscocos2d xxhash)
 
 target_link_libraries(jscocos2d cocos2d)
+add_dependencies(jscocos2d cocos2d)
 
 set_target_properties(jscocos2d
     PROPERTIES

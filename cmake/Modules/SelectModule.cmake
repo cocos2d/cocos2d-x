@@ -1,5 +1,8 @@
 # the default behavior of build module
 macro (SelectModule)
+
+  option(BUILD_ALL_TESTS OFF)
+
   set(USE_WEBP_DEFAULT ON)
   if(WINRT OR WP8)
     set(USE_WEBP_DEFAULT OFF)

@@ -12,7 +12,8 @@ macro (BuildModules)
 
 	# desktop platforms
 	if(LINUX OR MACOSX OR WINDOWS)
-	  cocos_find_package(OpenGL OPENGL REQUIRED)
+		cocos_find_package(OpenGL OPENGL REQUIRED)
+		cocos_find_package(SQLite3 SQLITE3 REQUIRED)
 
 	  if(LINUX OR WINDOWS)
 	    cocos_find_package(GLEW GLEW REQUIRED)
@@ -28,7 +29,6 @@ macro (BuildModules)
 	    find_package(Threads REQUIRED)
 	    set(THREADS_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
 
-	    cocos_find_package(SQLite3 SQLITE3 REQUIRED)
 	    cocos_find_package(FMOD FMOD REQUIRED)
 	    cocos_find_package(Fontconfig FONTCONFIG REQUIRED)
 	    cocos_find_package(GTK3 GTK3 REQUIRED)
