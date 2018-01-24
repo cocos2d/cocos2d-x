@@ -38,20 +38,15 @@ set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 include(CocosBuildSet)
 CocosBuildSet()
 
-# set ON to build all test project, will also build jscocos2d and luacocos2d library
-set(BUILD_ALL_TESTS ON)
-
-# feature: use cocos prebuilt library, need to do
+# TODO: use cocos prebuilt library
 if(USE_COCOS_PREBUILT_LIBS)
     # use prebuilt library, not build
 else(USE_COCOS_PREBUILT_LIBS)
     # build engine library
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 
-endif(USE_COCOS_PREBUILT_LIBS)
-
-# build engine all tests project
-if(BUILD_ALL_TESTS)
+    # build engine all tests project
     add_subdirectory(${COCOS2DX_ROOT_PATH}/tests ${ENGINE_BINARY_PATH}/tests)
-endif(BUILD_ALL_TESTS)
+
+endif(USE_COCOS_PREBUILT_LIBS)
 
