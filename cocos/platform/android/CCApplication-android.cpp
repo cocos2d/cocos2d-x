@@ -111,8 +111,7 @@ const char * Application::getCurrentLanguageCode()
 
 LanguageType Application::getCurrentLanguage()
 {
-    std::string languageName = JniHelper::callStaticStringMethod(helperClassName, "getCurrentLanguage");
-    const char* pLanguageName = languageName.c_str();
+    const char* pLanguageName = getCurrentLanguageCode();
     LanguageType ret = LanguageType::ENGLISH;
 
     if (0 == strcmp("zh", pLanguageName))
@@ -190,6 +189,10 @@ LanguageType Application::getCurrentLanguage()
     else if (0 == strcmp("bg", pLanguageName))
     {
         ret = LanguageType::BULGARIAN;
+    }
+    else if (0 == strcmp("be", pLanguageName))
+    {
+        ret = LanguageType::BELARUSIAN;
     }
     return ret;
 }
