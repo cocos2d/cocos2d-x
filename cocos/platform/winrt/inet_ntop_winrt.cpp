@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 1996-2001  Internet Software Consortium.
- * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -20,7 +19,6 @@
  */
 
 /* Portions Copyright (c) Microsoft Open Technologies, Inc.  */
-/* Portions Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 /*modifications by Microsoft Open Technologies, Inc. to implement missing inet_ntop() from Windows Phone 8 SDK */
 

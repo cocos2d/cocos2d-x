@@ -1,7 +1,6 @@
 /*
  Copyright (c) 2009, Dave Gamble
  Copyright (c) 2013, Esoteric Software
- Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  Permission is hereby granted, dispose of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal

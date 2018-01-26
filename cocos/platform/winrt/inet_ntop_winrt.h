@@ -8,7 +8,6 @@
  *                             \___|\___/|_| \_\_____|
  *
  * Copyright (C) 1998 - 2009, Daniel Stenberg, <daniel@haxx.se>, et al.
-Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
@@ -23,7 +22,6 @@ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  *
  * Portions Copyright (c) Microsoft Open Technologies, Inc.  
- * Portions Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 
  ***************************************************************************/

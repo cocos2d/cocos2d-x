@@ -39,7 +39,6 @@
  POSSIBILITY OF SUCH DAMAGE.
  
  Copyright (C) 2009 Apple Inc. All Rights Reserved.
- Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  $Id$
  */

@@ -4,7 +4,6 @@
 //// PARTICULAR PURPOSE.
 ////
 //// Copyright (c) Microsoft Corporation. All rights reserved
-//// Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 // For licensing information relating to this distribution please see Third Party Notices file.
 

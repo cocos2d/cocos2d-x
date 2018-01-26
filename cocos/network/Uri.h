@@ -1,7 +1,6 @@
 /*
  * Copyright 2017 Facebook, Inc.
  * Copyright (c) 2017 Chukong Technologies
- * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

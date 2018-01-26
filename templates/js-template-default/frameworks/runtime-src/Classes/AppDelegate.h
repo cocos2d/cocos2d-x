@@ -4,7 +4,6 @@
 //
 //  Created by Rohan Kuruvilla on 06/08/2012.
 //  Copyright __MyCompanyName__ 2012. All rights reserved.
-//  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 //
 
 #ifndef  _APP_DELEGATE_H_

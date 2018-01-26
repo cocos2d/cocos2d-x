@@ -5,7 +5,6 @@
  @Title
  
  @Copyright    Copyright (C) 2000 - 2008 by Imagination Technologies Limited.
-Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  @Platform     ANSI compatible
  
