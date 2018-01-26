@@ -1,5 +1,6 @@
 //
 // Copyright 2012-2015, Syoyo Fujita.
+// Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 //
 // Licensed under 2-clause BSD license.
 //

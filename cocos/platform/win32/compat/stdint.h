@@ -2,6 +2,7 @@
 // Based on ISO/IEC 9899:TC2 Committee draft (May 6, 2005) WG14/N1124
 //
 //  Copyright (c) 2006-2008 Alexander Chemeris
+//  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are met:

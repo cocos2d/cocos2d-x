@@ -5,6 +5,7 @@
 //
 //  Created by Greg Woods on 4/5/11.
 //  Copyright 2011 Westlake Design. All rights reserved.
+//  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 //
 
 #include "Bug-1159.h"

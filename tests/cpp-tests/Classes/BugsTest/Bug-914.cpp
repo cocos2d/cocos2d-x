@@ -4,6 +4,7 @@
 //
 //  Created by Wylan Werth on 7/5/10.
 //  Copyright BanditBear Games 2010. All rights reserved.
+//  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 //
 
 // Import the interfaces

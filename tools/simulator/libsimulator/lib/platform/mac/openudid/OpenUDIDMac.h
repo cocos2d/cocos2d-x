@@ -4,6 +4,7 @@
 //
 //  initiated by Yann Lechelle (cofounder @Appsfire) on 8/28/11.
 //  Copyright 2011 OpenUDID.org
+//  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 //
 //  Main branches
 //      iOS code: https://github.com/ylechelle/OpenUDID
