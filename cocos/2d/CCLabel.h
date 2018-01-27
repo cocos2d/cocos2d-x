@@ -81,13 +81,6 @@ typedef struct _ttfConfig
     }
 } TTFConfig;
 
-enum class TextFormatter : char
-{
-    NewLine = '\n',
-    CarriageReturn = '\r',
-    NextCharNoChangeX = '\b'
-};
-
 class Sprite;
 class SpriteBatchNode;
 class DrawNode;
@@ -639,6 +632,7 @@ protected:
     };
 
     virtual void setFontAtlas(FontAtlas* atlas, bool distanceFieldEnabled = false, bool useA8Shader = false);
+    bool getFontLetterDef(char32_t character, FontLetterDefinition& letterDef) const;
 
     void computeStringNumLines();
 
@@ -676,8 +670,8 @@ protected:
     bool isHorizontalClamped(float letterPositionX, int lineIndex);
     void restoreFontSize();
     void updateLetterSpriteScale(Sprite* sprite);
-    int getFirstCharLen(const std::u32string& utf32Text, int startIndex, int textLen);
-    int getFirstWordLen(const std::u32string& utf32Text, int startIndex, int textLen);
+    int getFirstCharLen(const std::u32string& utf32Text, int startIndex, int textLen) const;
+    int getFirstWordLen(const std::u32string& utf32Text, int startIndex, int textLen) const;
 
     void reset();
 
