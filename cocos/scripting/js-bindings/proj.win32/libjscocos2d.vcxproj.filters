@@ -176,6 +176,7 @@
     <ClCompile Include="..\manual\js_module_register.cpp">
       <Filter>manual</Filter>
     </ClCompile>
+    <ClCompile Include="..\precheader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\auto\jsb_cocos2dx_auto.hpp">
@@ -331,5 +332,6 @@
     <ClInclude Include="..\manual\js-BindingsExport.h">
       <Filter>manual</Filter>
     </ClInclude>
+    <ClInclude Include="..\precheader.h" />
   </ItemGroup>
 </Project>
