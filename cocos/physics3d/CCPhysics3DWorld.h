@@ -36,7 +36,7 @@
 class btDynamicsWorld;
 class btDefaultCollisionConfiguration;
 class btCollisionDispatcher;
-class btDbvtBroadphase;
+struct btDbvtBroadphase;
 class btSequentialImpulseConstraintSolver;
 class btGhostPairCallback;
 class btRigidBody;

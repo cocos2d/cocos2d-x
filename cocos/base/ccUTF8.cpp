@@ -50,10 +50,10 @@ std::string format(const char* format, ...)
     va_end(args);
 
     if (nret >= 0) {
-        if (nret < buffer.length()) {
+        if (nret < (int)buffer.length()) {
             buffer.resize(nret);
         }
-        else if (nret > buffer.length()) { // VS2015/2017 or later Visual Studio Version
+        else if (nret > (int)buffer.length()) { // VS2015/2017 or later Visual Studio Version
             buffer.resize(nret);
 
             va_start(args, format);
