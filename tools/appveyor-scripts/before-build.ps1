@@ -1,3 +1,4 @@
+Set-PSDebug -Trace 1
 $python = "C:\\Python27\\python.exe"
 
 function Download-Deps
@@ -47,7 +48,7 @@ function Update-SubModule
 {
     Push-Location $env:APPVEYOR_BUILD_FOLDER
     & git submodule init
-    & git submodule update --recursive
+    & git submodule update --recursive --depth=1
     Pop-Location
 }
 
@@ -59,8 +60,9 @@ If ($env:build_type -eq "windows32") {
     Download-Deps
     Download-NDK
     Generate-Binding-Codes
-}
-Else {
+} elseif ($env:build_type -like "android*") {
     & $python -u .\tools\appveyor-scripts\setup_android.py
     if ($lastexitcode -ne 0) {throw}
+} else {
+    Download-Deps
 }
