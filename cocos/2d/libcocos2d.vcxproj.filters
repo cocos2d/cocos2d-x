@@ -2000,6 +2000,7 @@
     <ClCompile Include="..\base\CCController-linux-win32.cpp" />
     <ClCompile Include="..\base\CCEventController.cpp" />
     <ClCompile Include="..\base\CCEventListenerController.cpp" />
+    <ClCompile Include="..\precheader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -3911,6 +3912,7 @@
     <ClInclude Include="..\base\CCController.h" />
     <ClInclude Include="..\base\CCEventController.h" />
     <ClInclude Include="..\base\CCEventListenerController.h" />
+    <ClInclude Include="..\precheader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">
