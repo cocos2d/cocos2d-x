@@ -76,6 +76,7 @@ _clippingRect(Rect::ZERO),
 _clippingParent(nullptr),
 _clippingRectDirty(true),
 _stencilStateManager(new StencilStateManager()),
+_alignment(Alignment::LEFT),
 _doLayoutDirty(true),
 _isInterceptTouch(false),
 _loopFocus(false),
@@ -1906,6 +1907,19 @@ void Layout::setCameraMask(unsigned short mask, bool applyChildren)
     if (_clippingStencil){
         _clippingStencil->setCameraMask(mask, applyChildren);
     }
+}
+
+void Layout::setAlignment(Layout::Alignment alignment)
+{
+    if (_alignment != alignment) {
+        _alignment = alignment;
+        _doLayoutDirty = true;
+    }
+}
+
+Layout::Alignment Layout::getAlignment() const
+{
+    return _alignment;
 }
     
 ResourceData Layout::getRenderFile()

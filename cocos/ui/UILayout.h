@@ -92,6 +92,24 @@ public:
      *
      */
     virtual void doLayout() = 0;
+
+    /**
+     * Alignment of the items. Used only in linear layouts.
+     */
+    enum class Alignment
+    {
+        LEFT = 0,
+        TOP = 0,
+        CENTER = 1,
+        RIGHT = 2,
+        BOTTOM = 2
+    };
+
+    /**
+     * Get the alignment of the contained items. Used only in linear layouts.
+     * @return The current alignment.
+     */
+    virtual Alignment getAlignment() const = 0;
 };
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
@@ -462,6 +480,18 @@ public:
      */
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
 
+    /**
+     * Set the alignment of the contained items. Used only in linear layouts.
+     * @param alignment Alignment to set
+     */
+    virtual void setAlignment(Alignment alignment);
+
+    /**
+     * Get the alignment of the contained items. Used only in linear layouts.
+     * @return The current alignment.
+     */
+    virtual Alignment getAlignment() const override;
+
     ResourceData getRenderFile();
 
 CC_CONSTRUCTOR_ACCESS:
@@ -643,6 +673,8 @@ protected:
     CustomCommand _afterVisitCmdStencil;
     CustomCommand _beforeVisitCmdScissor;
     CustomCommand _afterVisitCmdScissor;
+
+    Alignment _alignment;
     
     bool _doLayoutDirty;
     bool _isInterceptTouch;
