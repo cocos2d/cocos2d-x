@@ -57,6 +57,11 @@ function(cocos_mark_resources)
             MACOSX_PACKAGE_LOCATION "${opt_RESOURCEBASE}/${RES_LOC}"
             HEADER_FILE_ONLY 1
             )
+
+        if(XCODE OR VS)
+            string(REPLACE "/" "\\" ide_source_group "${opt_RESOURCEBASE}/${RES_LOC}")
+            source_group("${ide_source_group}" FILES ${RES_FILE})
+        endif()
     endforeach()
 endfunction()
 

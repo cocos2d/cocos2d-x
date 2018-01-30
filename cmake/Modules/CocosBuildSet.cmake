@@ -44,6 +44,13 @@ macro(CocosBuildSet)
         endif(DEBUG_MODE)
     endif(NOT CMAKE_BUILD_TYPE)
 
+    # Define other useful variables not defined by CMake
+    if(CMAKE_GENERATOR STREQUAL Xcode)
+        set (XCODE TRUE)
+    elseif(CMAKE_GENERATOR MATCHES Visual)
+        set (VS TRUE)
+    endif()
+
     include(CocosBuildHelpers)
 
     # SelectModule() is a macro to select building modules
