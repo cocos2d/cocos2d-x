@@ -68,7 +68,7 @@ endfunction()
 # mark the files in the sub dir of CMAKE_CURRENT_DIR
 function(cocos_mark_code_files cocos_target)
 
-  message(STATUS "cocos_mark_source_files: ${cocos_target}")
+  message(STATUS "cocos_mark_code_files: ${cocos_target}")
   set(root_dir ${CMAKE_CURRENT_SOURCE_DIR})
   set(group_base "Source Files")
 

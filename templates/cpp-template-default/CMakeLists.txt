@@ -25,22 +25,26 @@
 
 cmake_minimum_required(VERSION 3.1)
 
-set(APP_NAME MyGame)
+set(APP_NAME HelloCpp)
 
 project (${APP_NAME})
 
-# define some variables
-# set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
-# engine path changed, after cocos new
-set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cocos2d)
-set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
+# default build, not build when build engine and all tests
+if(NOT DEFINED BUILD_ENGINE_DONE)
+    # define some variables
+    # set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
+    # engine path changed, after cocos new
+    set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cocos2d)
+    set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
-# works before libcocos2d
-include(CocosBuildSet)
-CocosBuildSet()
+    # works before libcocos2d
+    include(CocosBuildSet)
+    CocosBuildSet()
 
-# add engine directory, get cocos library
-add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
+    # add engine directory, get cocos library
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
+endif(NOT DEFINED BUILD_ENGINE_DONE)
+
 
 if(ANDROID)
     set(PLATFORM_SPECIFIC_SRC proj.android/app/jni/hellocpp/main.cpp)

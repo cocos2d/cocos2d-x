@@ -65,8 +65,8 @@ elseif(MACOSX OR APPLE)
 
     # need review
     set(APP_MAIN
-    ../main.js
-    ../project.json
+        ../main.js
+        ../project.json
     )
     cocos_mark_resources(FILES ${APP_MAIN} BASEDIR .. RESOURCEBASE Resources)
     file(GLOB_RECURSE APP_RESJS ../resjs/*)
@@ -129,7 +129,6 @@ else()
 
 endif()
 
-# need cocos_mark_resources, when build on mac, refer to lua project
 if(MACOSX OR APPLE)
     set_target_properties(${APP_NAME} PROPERTIES
         MACOSX_BUNDLE 1
