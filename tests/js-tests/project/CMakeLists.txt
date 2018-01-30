@@ -151,3 +151,7 @@ else(MACOSX OR APPLE)
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../project.json ${APP_BIN_DIR}${RES_PREFIX}/project.json
         )
 endif(MACOSX OR APPLE)
+
+if(XCODE OR VS)
+    cocos_mark_code_files(${APP_NAME})
+endif()

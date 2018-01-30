@@ -129,3 +129,6 @@ else()
 
 endif()
 
+if(XCODE OR VS)
+    cocos_mark_code_files(${APP_NAME})
+endif()

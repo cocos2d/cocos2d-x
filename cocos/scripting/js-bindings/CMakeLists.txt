@@ -138,3 +138,7 @@ set_target_properties(jscocos2d
 if(USE_BULLET)
   include_directories(${BULLET_INCLUDE_DIRS})
 endif()
+
+if(XCODE OR VS)
+    cocos_mark_code_files("jscocos2d")
+endif()

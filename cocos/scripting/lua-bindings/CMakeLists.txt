@@ -157,3 +157,7 @@ set_target_properties(luacocos2d
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
 
+if(XCODE OR VS)
+    cocos_mark_code_files("luacocos2d")
+endif()
+

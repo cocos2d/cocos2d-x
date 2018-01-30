@@ -102,7 +102,7 @@ set(TESTS_SRC
     Classes/LabelTest/LabelTestNew.cpp
     Classes/LayerTest/LayerTest.cpp
     Classes/LightTest/LightTest.cpp
-    Classes/MaterialSystemTest/MaterialSystemTest
+    Classes/MaterialSystemTest/MaterialSystemTest.cpp
     Classes/MenuTest/MenuTest.cpp
     Classes/MotionStreakTest/MotionStreakTest.cpp
     Classes/MultiTouchTest/MultiTouchTest.cpp
@@ -270,5 +270,5 @@ else()
 endif()
 
 if(XCODE OR VS)
-    cocos_mark_source_files(${APP_NAME})
+    cocos_mark_code_files(${APP_NAME})
 endif()

@@ -245,3 +245,7 @@ endif()
 if(BUILD_JS_LIBS OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
   add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings ${ENGINE_BINARY_PATH}/cocos/js-bindings)
 endif()
+
+if(XCODE OR VS)
+    cocos_mark_code_files("cocos2dInternal")
+endif()
