@@ -44,6 +44,7 @@ set(TESTS_SRC
   Classes/BugsTest/Bug-1159.cpp
   Classes/BugsTest/Bug-1174.cpp
   Classes/BugsTest/Bug-350.cpp
+  Classes/BugsTest/Bug-18609.cpp
   Classes/BugsTest/Bug-422.cpp
   Classes/BugsTest/Bug-458/Bug-458.cpp
   Classes/BugsTest/Bug-458/QuestionContainerSprite.cpp
@@ -236,9 +237,8 @@ ELSEIF(ANDROID)
 else()
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
     set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
-    
+
     pre_build(${APP_NAME}
       COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}${RES_PREFIX}
       )
 endif()
-
