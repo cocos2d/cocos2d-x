@@ -8,11 +8,13 @@ environment:
   PYTHON_VERSION: "2.7.13"
   PYTHON_ARCH: "32"
   matrix:
-#    - build_type: android_cpp_empty_test
-    - build_type: android_cpp_tests
-#    - build_type: android_cocos_new_test
-#    - build_type: android_gen_libs
+    - build_type: windows32_cocos_new_test
     - build_type: windows32
+    - build_type: android_cpp_tests
+    - build_type: android_cocos_new_test
+#    - build_type: android_cpp_empty_test
+#    - build_type: android_gen_libs
+
 
 platform:
   - x86
@@ -35,4 +37,6 @@ branches:
   - v3.11_backup
   - v35-for-tizen
 
-clone_depth: 50
+clone_depth: 1
+
+test: off

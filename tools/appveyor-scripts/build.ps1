@@ -1,3 +1,4 @@
+Set-PSDebug -Trace 1
 $python = "C:\\Python27\\python.exe"
 
 Write-Host "Set environment"
@@ -48,8 +49,25 @@ If ($env:build_type -eq "android_cpp_tests") {
 #     & $python -u tools\cocos2d-console\bin\cocos.py gen-libs -p android -m release --ap android-15 --app-abi armeabi-v7a --agreement n
 #     if ($lastexitcode -ne 0) {throw}
 
+} elseif ($env:build_type -eq "windows32_cocos_new_test") {
+    Write-Host "Create new project windows32_cocos_new_test"
+    & $python -u tools\cocos2d-console\bin\cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
+    if ($lastexitcode -ne 0) {throw}
+
+    & msbuild $env:APPVEYOR_BUILD_FOLDER\cocos_new_test\proj.win32\cocos_new_test.sln /t:Build /p:Platform="Win32" /p:Configuration="Release" /m /consoleloggerparameters:"PerformanceSummary;NoSummary"
+    if ($lastexitcode -ne 0) {throw}
+
+    & 7z a release_win32.7z $env:APPVEYOR_BUILD_FOLDER\cocos_new_test\proj.win32\Release.win32\
+    if ($lastexitcode -ne 0) {throw}
+
+    Push-AppveyorArtifact release_win32.7z
 }
 Else {
-    & msbuild $env:APPVEYOR_BUILD_FOLDER\build\cocos2d-win32.sln /t:Build /p:Platform="Win32" /p:Configuration="Release" /m
+    & msbuild $env:APPVEYOR_BUILD_FOLDER\build\cocos2d-win32.sln /t:Build /p:Platform="Win32" /p:Configuration="Release" /m /consoleloggerparameters:"PerformanceSummary;NoSummary"
+
     if ($lastexitcode -ne 0) {throw}
+    & 7z a release_win32.7z $env:APPVEYOR_BUILD_FOLDER\build\Release.win32\
+    if ($lastexitcode -ne 0) {throw}
+
+    Push-AppveyorArtifact release_win32.7z
 }
