@@ -272,6 +272,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\BugsTest\Bug-1159.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-1174.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-350.cpp" />
+    <ClCompile Include="..\Classes\BugsTest\Bug-18609.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-422.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-624.cpp" />
     <ClCompile Include="..\Classes\BugsTest\Bug-886.cpp" />
