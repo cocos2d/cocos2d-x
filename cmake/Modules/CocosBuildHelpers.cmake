@@ -65,6 +65,34 @@ function(cocos_mark_resources)
     endforeach()
 endfunction()
 
+# mark the files in the sub dir of CMAKE_CURRENT_DIR
+function(cocos_mark_source_files cocos_target)
+
+  message(STATUS "cocos_mark_source_files: ${cocos_target}")
+  set(root_dir ${CMAKE_CURRENT_SOURCE_DIR})
+  set(file_base "Source Files")
+
+  get_property(file_dirs TARGET ${cocos_target} PROPERTY INCLUDE_DIRECTORIES)
+  # cmake docs: v3.63, exist filter
+  list(FILTER file_dirs INCLUDE REGEX "^${CMAKE_CURRENT_SOURCE_DIR}")
+
+  foreach(single_dir ${file_dirs})
+    file(GLOB_RECURSE file_list "${single_dir}/*")
+    foreach(single_file ${file_list})
+      # get relative_path
+      get_filename_component(abs_path ${single_file} ABSOLUTE)
+      file(RELATIVE_PATH relative_path_with_name ${root_dir} ${abs_path})
+      get_filename_component(relative_path ${relative_path_with_name} PATH)
+      # set source_group, consider sub source group 
+      string(REPLACE "/" "\\" ide_file_group "${file_base}/${relative_path}")
+      source_group("${ide_file_group}" FILES ${single_file})
+
+    endforeach()
+
+  endforeach()
+  
+endfunction()
+
 # cocos_find_package(pkg args...)
 # works same as find_package, but do additional care to properly find
 # prebuilt libs for cocos

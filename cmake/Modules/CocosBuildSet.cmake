@@ -46,6 +46,7 @@ macro(CocosBuildSet)
 
     # Define other useful variables not defined by CMake
     if(CMAKE_GENERATOR STREQUAL Xcode)
+        cmake_minimum_required(VERSION 3.7)
         set (XCODE TRUE)
     elseif(CMAKE_GENERATOR MATCHES Visual)
         set (VS TRUE)

@@ -268,3 +268,7 @@ else()
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}${RES_PREFIX}
         )
 endif()
+
+if(XCODE OR VS)
+    cocos_mark_source_files(${APP_NAME})
+endif()
