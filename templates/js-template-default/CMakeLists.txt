@@ -77,10 +77,6 @@ elseif(LINUX)
 elseif(MACOSX)
     list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.cpp)
 
-    set(MACOSX_BUNDLE_BUNDLE_NAME "\${PRODUCT_NAME}")
-    set(MACOSX_BUNDLE_INFO_PLIST ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Info.plist)
-    set(MACOSX_BUNDLE_ICON_FILE Icon)
-
     file(GLOB_RECURSE RES_ICON ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns)
     cocos_mark_resources(FILES ${RES_ICON} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
     # need review
@@ -129,7 +125,7 @@ if(MACOSX OR APPLE)
         MACOSX_BUNDLE 1
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
-
+    cocos_pak_macos()
 # need cocos_mark_resources, when build on mac, refer to lua project
 else(MACOSX OR APPLE)
     pre_build(${APP_NAME}

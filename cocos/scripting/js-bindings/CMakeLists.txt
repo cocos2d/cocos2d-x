@@ -124,6 +124,13 @@ target_link_libraries(jscocos2d
   ${SPIDERMONKEY_LIBRARY}
 )
 
+if(MACOSX OR APPLE)
+  FIND_LIBRARY(GAME_CONTROLLER GameController)
+  target_link_libraries(jscocos2d
+  ${GAME_CONTROLLER}
+  )
+endif()
+
 cocos_use_pkg(jscocos2d xxhash)
 
 target_link_libraries(jscocos2d cocos2d)

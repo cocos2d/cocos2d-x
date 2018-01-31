@@ -64,6 +64,8 @@ elseif(MACOSX OR APPLE)
     list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.m)
 
     # need review
+    file(GLOB_RECURSE RES_ICON ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns)
+    cocos_mark_resources(FILES ${RES_ICON} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
     file(GLOB_RECURSE APP_RESOURCES res/*)
     cocos_mark_resources(FILES ${APP_RESOURCES} BASEDIR res RESOURCEBASE Resources/res)
     file(GLOB_RECURSE APP_SCRIPTS src/*)
@@ -71,7 +73,7 @@ elseif(MACOSX OR APPLE)
     file(GLOB_RECURSE COCOS_SCRIPTS ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/*)
     cocos_mark_resources(FILES ${COCOS_SCRIPTS} BASEDIR ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script RESOURCEBASE Resources/script)
     
-    list(APPEND GAME_SRC ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS})
+    list(APPEND GAME_SRC ${RES_ICON} ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS})
 endif()
 
 if(LINUX)
@@ -117,7 +119,8 @@ if(MACOSX OR APPLE)
         MACOSX_BUNDLE 1
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
-
+    # cocos_pak_macos(INFO_PLIST ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Info.plist)
+    set(MACOSX_BUNDLE_INFO_PLIST ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Info.plist)
 # need cocos_mark_resources, when build on mac, refer to lua project
 else(MACOSX OR APPLE)
     pre_build(${APP_NAME}

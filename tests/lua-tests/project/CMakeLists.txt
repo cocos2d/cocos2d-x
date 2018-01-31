@@ -34,6 +34,8 @@ elseif(WINDOWS)
 elseif(MACOSX)
     set(SAMPLE_SRC ${SAMPLE_SRC} proj.ios_mac/mac/main.cpp)
 
+    file(GLOB_RECURSE RES_ICON ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns)
+    cocos_mark_resources(FILES ${RES_ICON} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
     file(GLOB_RECURSE APP_RESOURCES ../res/*)
     cocos_mark_resources(FILES ${APP_RESOURCES} BASEDIR ../res RESOURCEBASE Resources/res)
     file(GLOB_RECURSE APP_SCRIPTS ../src/*)
@@ -43,7 +45,7 @@ elseif(MACOSX)
     file(GLOB_RECURSE TEST_RESOURCES ${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources/*)
     cocos_mark_resources(FILES ${TEST_RESOURCES} BASEDIR ${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources RESOURCEBASE Resources/res)
 
-    list(APPEND SAMPLE_SRC ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS} ${TEST_RESOURCES})
+    list(APPEND SAMPLE_SRC ${RES_ICON} ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS} ${TEST_RESOURCES})
 elseif(ANDROID)
     list(APPEND SAMPLE_SRC proj.android/app/jni/main.cpp)
     set(RES_PREFIX "/Resources")
@@ -83,7 +85,7 @@ if(MACOSX OR APPLE)
         MACOSX_BUNDLE 1
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
-
+    cocos_pak_macos()
 else()
 
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")

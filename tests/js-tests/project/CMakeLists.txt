@@ -69,6 +69,8 @@ elseif(MACOSX OR APPLE)
         ../project.json
     )
     cocos_mark_resources(FILES ${APP_MAIN} BASEDIR .. RESOURCEBASE Resources)
+    file(GLOB_RECURSE RES_ICON proj.mac/Icon.icns)
+    cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.mac)
     file(GLOB_RECURSE APP_RESJS ../resjs/*)
     cocos_mark_resources(FILES ${APP_RESJS} BASEDIR ../resjs RESOURCEBASE Resources/res)
 
@@ -81,7 +83,7 @@ elseif(MACOSX OR APPLE)
     file(GLOB_RECURSE COCOS_SCRIPTS ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/script/*)
     cocos_mark_resources(FILES ${COCOS_SCRIPTS} BASEDIR ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/script RESOURCEBASE Resources/script)
     
-    list(APPEND PLATFORM_SRC ${APP_MAIN} ${APP_RESJS} ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS} ${TEST_RESOURCES})
+    list(APPEND PLATFORM_SRC ${APP_MAIN} ${RES_ICON} ${APP_RESJS} ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS} ${TEST_RESOURCES})
 endif()
 
 set(SAMPLE_SRC
@@ -132,8 +134,9 @@ endif()
 if(MACOSX OR APPLE)
     set_target_properties(${APP_NAME} PROPERTIES
         MACOSX_BUNDLE 1
-        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
-
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+        )
+    cocos_pak_macos()
 else(MACOSX OR APPLE)
     pre_build(${APP_NAME}
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}${RES_PREFIX}/script

@@ -130,7 +130,7 @@ macro(cocos_pak_macos)
   set(MACOSX_BUNDLE_LONG_VERSION_STRING ${COCOS_APP_LONG_VERSION_STRING})
   set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${COCOS_APP_SHORT_VERSION_STRING})
 
-  message("cocos package: ${MACOSX_BUNDLE_BUNDLE_NAME}, plist file: ${MACOSX_BUNDLE_INFO_PLIST}")
+  message("cocos package: ${APP_NAME}, plist file: ${MACOSX_BUNDLE_INFO_PLIST}")
 endmacro(cocos_pak_macos)
 
 
