@@ -59,7 +59,9 @@ elseif(MACOSX OR APPLE)
 
     file(GLOB_RECURSE RES_FILES Resources/*)
     cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
-    list(APPEND PLATFORM_SRC ${RES_FILES})
+    file(GLOB_RECURSE RES_ICON proj.mac/Icon.icns)
+    cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.mac)
+    list(APPEND PLATFORM_SRC ${RES_FILES} ${RES_ICON})
 
 elseif(LINUX)
     set(PLATFORM_SRC proj.linux/main.cpp)
@@ -116,7 +118,7 @@ elseif(MACOSX OR APPLE)
         MACOSX_BUNDLE 1
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
-
+    cocos_pak_macos(BUNDLE_NAME "Cpp Empty Test")
 else()
 
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")

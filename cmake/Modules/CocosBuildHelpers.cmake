@@ -65,7 +65,7 @@ function(cocos_mark_resources)
     endforeach()
 endfunction()
 
-# mark the files in the sub dir of CMAKE_CURRENT_DIR
+# mark the files in the sub dir of CMAKE_CURRENT_SOURCE_DIR
 function(cocos_mark_code_files cocos_target)
 
   message(STATUS "cocos_mark_code_files: ${cocos_target}")
@@ -86,6 +86,53 @@ function(cocos_mark_code_files cocos_target)
   endforeach()
   
 endfunction()
+
+# if cc_variable not set, then set it cc_value
+macro(cocos_fake_set cc_variable cc_value)
+  if(NOT DEFINED ${cc_variable})
+    set(${cc_variable} ${cc_value})
+  endif()
+endmacro()
+
+# macos package, need review
+macro(cocos_pak_macos)
+  set(oneValueArgs
+    INFO_PLIST 
+    BUNDLE_NAME
+    BUNDLE_VERSION
+    COPYRIGHT
+    GUI_IDENTIFIER
+    ICON_FILE
+    INFO_STRING
+    LONG_VERSION_STRING
+    SHORT_VERSION_STRING
+  )
+  set(multiValueArgs)
+  cmake_parse_arguments(COCOS_APP "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  # set default value
+  cocos_fake_set(COCOS_APP_INFO_PLIST "MacOSXBundleInfo.plist.in")
+  cocos_fake_set(COCOS_APP_BUNDLE_NAME "\${PRODUCT_NAME}")
+  cocos_fake_set(COCOS_APP_BUNDLE_VERSION "1")
+  cocos_fake_set(COCOS_APP_COPYRIGHT "Copyright © 2018. All rights reserved.")
+  cocos_fake_set(COCOS_APP_GUI_IDENTIFIER "org.cocos2dx.${APP_NAME}")
+  cocos_fake_set(COCOS_APP_ICON_FILE "Icon")
+  cocos_fake_set(COCOS_APP_INFO_STRING "cocos2d-x app")
+  cocos_fake_set(COCOS_APP_LONG_VERSION_STRING "1.0.0")
+  cocos_fake_set(COCOS_APP_SHORT_VERSION_STRING "1.0")
+  # set bundle info
+  set(MACOSX_BUNDLE_INFO_PLIST ${COCOS_APP_INFO_PLIST})
+  set(MACOSX_BUNDLE_BUNDLE_NAME ${COCOS_APP_BUNDLE_NAME})
+  set(MACOSX_BUNDLE_BUNDLE_VERSION ${COCOS_APP_BUNDLE_VERSION})
+  set(MACOSX_BUNDLE_COPYRIGHT ${COCOS_APP_COPYRIGHT})
+  set(MACOSX_BUNDLE_GUI_IDENTIFIER ${COCOS_APP_GUI_IDENTIFIER})
+  set(MACOSX_BUNDLE_ICON_FILE ${COCOS_APP_ICON_FILE})
+  set(MACOSX_BUNDLE_INFO_STRING ${COCOS_APP_INFO_STRING})
+  set(MACOSX_BUNDLE_LONG_VERSION_STRING ${COCOS_APP_LONG_VERSION_STRING})
+  set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${COCOS_APP_SHORT_VERSION_STRING})
+
+  message("cocos package: ${MACOSX_BUNDLE_BUNDLE_NAME}, plist file: ${MACOSX_BUNDLE_INFO_PLIST}")
+endmacro(cocos_pak_macos)
+
 
 # cocos_find_package(pkg args...)
 # works same as find_package, but do additional care to properly find

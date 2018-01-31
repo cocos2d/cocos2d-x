@@ -65,14 +65,6 @@ elseif(IOS)
 
 elseif(MACOSX OR APPLE)
     set(PLATFORM_SPECIFIC_SRC proj.ios_mac/mac/main.cpp)
-    
-    set(MACOSX_BUNDLE_BUNDLE_NAME "\${PRODUCT_NAME}")
-    set(MACOSX_BUNDLE_INFO_PLIST proj.ios_mac/mac/Info.plist)
-    set(MACOSX_BUNDLE_ICON_FILE Icon)
-    set(MACOSX_BUNDLE_GUI_IDENTIFIER org.cocos2dx.hellocpp)
-    set(MACOSX_BUNDLE_SHORT_VERSION_STRING 1.0)
-    set(MACOSX_BUNDLE_BUNDLE_VERSION 1)
-    set(MACOSX_BUNDLE_COPYRIGHT "Copyright © 2017. All rights reserved.")
 
     file(GLOB_RECURSE RES_FILES Resources/*)
     cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
@@ -180,8 +172,8 @@ elseif(MACOSX OR APPLE)
             LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/$<CONFIG>"
             ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/$<CONFIG>"
             RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/$<CONFIG>"
-            )
-
+        )
+    cocos_pak_macos(BUNDLE_NAME "Cpp Hello Test")
 else()
 
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
