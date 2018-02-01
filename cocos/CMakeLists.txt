@@ -120,30 +120,45 @@ elseif(LINUX)
 elseif(MACOSX OR APPLE)
   cocos_use_pkg(cocos2dInternal GLFW3)
 
-  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
+  if(NOT IOS)
+    include_directories(/System/Library/Frameworks )
+    find_library(COCOA_LIBRARY Cocoa)
+    find_library(OPENGL_LIBRARY OpenGL )
+    find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox)
+    find_library(OPENAL_LIBRARY OpenAL )
+    find_library(QUARTZCORE_LIBRARY QuartzCore )
+    find_library(APPLICATIONSERVICES_LIBRARY ApplicationServices)
+    find_library(IOKIT_LIBRARY IOKit)
+    find_library(FOUNDATION_LIBRARY Foundation)
+    find_library(ICONV_LIBRARY iconv)
 
-  FIND_LIBRARY(COCOA_LIBRARY Cocoa)
-  FIND_LIBRARY(OPENGL_LIBRARY OpenGL )
-  FIND_LIBRARY(AUDIOTOOLBOX_LIBRARY AudioToolbox)
-  FIND_LIBRARY(OPENAL_LIBRARY OpenAL )
-  FIND_LIBRARY(QUARTZCORE_LIBRARY QuartzCore )
-  FIND_LIBRARY(APPLICATIONSERVICES_LIBRARY ApplicationServices)
-  FIND_LIBRARY(IOKIT_LIBRARY IOKit)
-  FIND_LIBRARY(FOUNDATION_LIBRARY Foundation)
-  FIND_LIBRARY(ICONV_LIBRARY iconv)
-
-  set(PLATFORM_SPECIFIC_LIBS
-    ${COCOA_LIBRARY}
-    ${OPENGL_LIBRARY}
-    ${OPENAL_LIBRARY}
-    ${AUDIOTOOLBOX_LIBRARY}
-    ${QUARTZCORE_LIBRARY}
-    ${APPLICATIONSERVICES_LIBRARY}
-    ${IOKIT_LIBRARY}
-    ${FOUNDATION_LIBRARY}
-    ${ICONV_LIBRARY}
-  )
-
+    set(PLATFORM_SPECIFIC_LIBS
+      ${COCOA_LIBRARY}
+      ${OPENGL_LIBRARY}
+      ${OPENAL_LIBRARY}
+      ${AUDIOTOOLBOX_LIBRARY}
+      ${QUARTZCORE_LIBRARY}
+      ${APPLICATIONSERVICES_LIBRARY}
+      ${IOKIT_LIBRARY}
+      ${FOUNDATION_LIBRARY}
+      ${ICONV_LIBRARY}
+    )
+  else()
+    # Locate system libraries on iOS
+    find_library(UIKIT UIKit)
+    find_library(MOBILECORESERVICES MobileCoreServices)
+    find_library(CFNETWORK CFNetwork)
+    find_library(SYSTEMCONFIGURATION SystemConfiguration)
+    find_library(FOUNDATION_LIBRARY Foundation)
+    set(PLATFORM_SPECIFIC_LIBS
+      ${UIKIT}
+      ${MOBILECORESERVICES}
+      ${CFNETWORK}
+      ${SYSTEMCONFIGURATION}
+      ${FOUNDATION_LIBRARY}
+    )
+  endif()
+  
 elseif(ANDROID)
   set(PLATFORM_SPECIFIC_LIBS GLESv2 EGL log android OpenSLES)
   include(../cmake/AndroidNdkModules.cmake)

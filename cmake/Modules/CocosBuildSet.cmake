@@ -1,3 +1,11 @@
+# Disable in-source builds to prevent source tree corruption.
+if(" ${CMAKE_SOURCE_DIR}" STREQUAL " ${CMAKE_BINARY_DIR}")
+  message(FATAL_ERROR "
+        FATAL: In-source builds are not allowed.
+            You should create a separate directory for build files.
+        ")
+endif()
+
 macro(CocosBuildSet)
 
     # It ensures that when Find*.cmake files included from cmake's Modules dir
@@ -25,11 +33,12 @@ macro(CocosBuildSet)
     message(STATUS "COCOS_EXTERNAL_DIR:" ${COCOS_EXTERNAL_DIR})
     message(STATUS "ENGINE_BINARY_PATH:" ${ENGINE_BINARY_PATH})
     
-    if(IOS)
+    # if(IOS)
         # temp test 
-        set(IOS_ARCH "armv7")
-        include(${COCOS2DX_ROOT_PATH}/cmake/platforms/ios/Toolchain-iPhoneSimulator_Xcode.cmake)
-    endif(IOS)
+        set(IOS_PLATFORM "SIMULATOR64")
+        include(${COCOS2DX_ROOT_PATH}/cmake/ios.toolchain.cmake)
+        
+    # endif(IOS)
     
     # architecture
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)

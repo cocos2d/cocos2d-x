@@ -112,7 +112,10 @@ macro (BuildModules)
 	endif()
 	message(STATUS "TinyXML2 include dirs: ${TinyXML2_INCLUDE_DIRS}")
 
-	cocos_find_package(ZLIB ZLIB REQUIRED)
+	# need review
+	if(NOT IOS)
+		cocos_find_package(ZLIB ZLIB REQUIRED)
+	endif()
 
 	if(ANDROID)
 	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/android-specific/pvmp3dec ${ENGINE_BINARY_PATH}/external/android-specific/pvmp3dec)

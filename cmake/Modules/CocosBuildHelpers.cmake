@@ -137,6 +137,11 @@ macro(cocos_pak_xcode cocos_target)
 endmacro()
 
 
+# This little macro lets you set any XCode specific property, from ios.toolchain.cmake
+macro (set_xcode_property TARGET XCODE_PROPERTY XCODE_VALUE)
+	set_property (TARGET ${TARGET} PROPERTY XCODE_ATTRIBUTE_${XCODE_PROPERTY} ${XCODE_VALUE})
+endmacro (set_xcode_property)
+
 # cocos_find_package(pkg args...)
 # works same as find_package, but do additional care to properly find
 # prebuilt libs for cocos
