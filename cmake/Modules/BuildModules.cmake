@@ -113,7 +113,7 @@ macro (BuildModules)
 	message(STATUS "TinyXML2 include dirs: ${TinyXML2_INCLUDE_DIRS}")
 
 	cocos_find_package(ZLIB ZLIB REQUIRED)
-	
+
 	if(ANDROID)
 	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/android-specific/pvmp3dec ${ENGINE_BINARY_PATH}/external/android-specific/pvmp3dec)
 	  set(PVMP3DEC_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/android-specific/pvmp3dec/include ${COCOS2DX_ROOT_PATH}/external/android-specific/pvmp3dec/src)

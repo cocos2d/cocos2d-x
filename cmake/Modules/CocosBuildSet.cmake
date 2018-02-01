@@ -26,18 +26,18 @@ macro(CocosBuildSet)
     message(STATUS "ENGINE_BINARY_PATH:" ${ENGINE_BINARY_PATH})
     
     if(IOS)
-        include(${COCOS2DX_ROOT_PATH}/cmake/ios.toolchain.cmake)
+        # temp test 
+        set(IOS_ARCH "armv7")
+        include(${COCOS2DX_ROOT_PATH}/cmake/platforms/ios/Toolchain-iPhoneSimulator_Xcode.cmake)
     endif(IOS)
     
-
     # architecture
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
         set(ARCH_DIR "64-bit")
     elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
         set(ARCH_DIR "32-bit")
     else()
-        message(FATAL_ERROR "Unsupported architecture, CMake will exit")
-        return()
+        message(WARN "CMAKE_SIZEOF_VOID_P: ${CMAKE_SIZEOF_VOID_P}")
     endif()
     # CMAKE_BUILD_TYPE has precedence over DEBUG_MODE
     # Still supporting DEBUG_MODE for backwards compatibility
