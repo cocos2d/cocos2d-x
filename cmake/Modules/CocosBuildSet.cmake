@@ -25,6 +25,11 @@ macro(CocosBuildSet)
     message(STATUS "COCOS_EXTERNAL_DIR:" ${COCOS_EXTERNAL_DIR})
     message(STATUS "ENGINE_BINARY_PATH:" ${ENGINE_BINARY_PATH})
     
+    if(IOS)
+        include(${COCOS2DX_ROOT_PATH}/cmake/ios.toolchain.cmake)
+    endif(IOS)
+    
+
     # architecture
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
         set(ARCH_DIR "64-bit")

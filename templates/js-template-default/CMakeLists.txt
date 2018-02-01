@@ -125,7 +125,7 @@ if(MACOSX OR APPLE)
         MACOSX_BUNDLE 1
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
-    cocos_pak_macos()
+    cocos_pak_xcode(${APP_NAME})
 # need cocos_mark_resources, when build on mac, refer to lua project
 else(MACOSX OR APPLE)
     pre_build(${APP_NAME}

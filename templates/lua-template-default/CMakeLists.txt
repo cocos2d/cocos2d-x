@@ -119,7 +119,7 @@ if(MACOSX OR APPLE)
         MACOSX_BUNDLE 1
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
-    cocos_pak_macos(INFO_PLIST "${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Info.plist")
+    cocos_pak_xcode(${APP_NAME} INFO_PLIST "${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Info.plist")
     # set(MACOSX_BUNDLE_INFO_PLIST ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Info.plist)
 # need cocos_mark_resources, when build on mac, refer to lua project
 else(MACOSX OR APPLE)

@@ -169,12 +169,9 @@ if(MSVC)
 elseif(MACOSX OR APPLE)
     set_target_properties(${APP_NAME} PROPERTIES
             MACOSX_BUNDLE 1
-            # need research
-            # LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/$<CONFIG>"
-            # ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib/$<CONFIG>"
             RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
-    cocos_pak_macos(BUNDLE_NAME "Cpp Hello Test")
+    cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "Cpp Hello Test")
 else()
 
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")

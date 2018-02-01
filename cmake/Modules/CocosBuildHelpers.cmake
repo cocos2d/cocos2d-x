@@ -95,7 +95,7 @@ macro(cocos_fake_set cc_variable cc_value)
 endmacro()
 
 # macos package, need review
-macro(cocos_pak_macos)
+macro(cocos_pak_xcode cocos_target)
   set(oneValueArgs
     INFO_PLIST 
     BUNDLE_NAME
@@ -120,7 +120,10 @@ macro(cocos_pak_macos)
   cocos_fake_set(COCOS_APP_LONG_VERSION_STRING "1.0.0")
   cocos_fake_set(COCOS_APP_SHORT_VERSION_STRING "1.0")
   # set bundle info
-  set(MACOSX_BUNDLE_INFO_PLIST ${COCOS_APP_INFO_PLIST})
+  set_target_properties(${cocos_target}
+    PROPERTIES
+    MACOSX_BUNDLE_INFO_PLIST ${COCOS_APP_INFO_PLIST}
+  )
   set(MACOSX_BUNDLE_BUNDLE_NAME ${COCOS_APP_BUNDLE_NAME})
   set(MACOSX_BUNDLE_BUNDLE_VERSION ${COCOS_APP_BUNDLE_VERSION})
   set(MACOSX_BUNDLE_COPYRIGHT ${COCOS_APP_COPYRIGHT})
@@ -130,8 +133,8 @@ macro(cocos_pak_macos)
   set(MACOSX_BUNDLE_LONG_VERSION_STRING ${COCOS_APP_LONG_VERSION_STRING})
   set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${COCOS_APP_SHORT_VERSION_STRING})
 
-  message("cocos package: ${APP_NAME}, plist file: ${MACOSX_BUNDLE_INFO_PLIST}")
-endmacro(cocos_pak_macos)
+  message("cocos package: ${cocos_target}, plist file: ${COCOS_APP_INFO_PLIST}")
+endmacro()
 
 
 # cocos_find_package(pkg args...)

@@ -259,7 +259,7 @@ if(MACOSX OR APPLE)
         MACOSX_BUNDLE 1
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
-    cocos_pak_macos(BUNDLE_NAME "Tests Cpp" INFO_STRING "test project for cpp")
+    cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "Tests Cpp" INFO_STRING "test project for cpp")
 elseif(ANDROID)
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
     set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")

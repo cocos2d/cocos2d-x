@@ -143,7 +143,7 @@ if(MACOSX OR APPLE)
         MACOSX_BUNDLE 1
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
-    cocos_pak_macos()
+    cocos_pak_xcode(${APP_NAME})
 else(MACOSX OR APPLE)
     pre_build(${APP_NAME}
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}${RES_PREFIX}/script
