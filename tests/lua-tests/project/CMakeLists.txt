@@ -34,8 +34,8 @@ elseif(WINDOWS)
 elseif(MACOSX)
     set(SAMPLE_SRC ${SAMPLE_SRC} proj.ios_mac/mac/main.cpp)
 
-    file(GLOB_RECURSE RES_ICON ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns)
-    cocos_mark_resources(FILES ${RES_ICON} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
+    file(GLOB_RECURSE RES_ICON proj.ios_mac/mac/Icon.icns)
+    cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.ios_mac/mac)
     file(GLOB_RECURSE APP_RESOURCES ../res/*)
     cocos_mark_resources(FILES ${APP_RESOURCES} BASEDIR ../res RESOURCEBASE Resources/res)
     file(GLOB_RECURSE APP_SCRIPTS ../src/*)
@@ -49,7 +49,7 @@ elseif(MACOSX)
 elseif(ANDROID)
     list(APPEND SAMPLE_SRC proj.android/app/jni/main.cpp)
     set(RES_PREFIX "/Resources")
-elseif(IOS OR MACOSX OR APPLE)
+elseif(IOS)
     set(PLATFORM_SRC
         proj.ios_mac/main.m
         proj.ios_mac/AppController.mm
@@ -79,6 +79,12 @@ endif()
 
 target_link_libraries(${APP_NAME} luacocos2d)
 add_dependencies(${APP_NAME} luacocos2d)
+
+# need research, it should be added to all macos project?
+if(MACOSX OR APPLE)
+  # fix js-tests compile error, for temp
+  set_property(TARGET ${APP_NAME} APPEND_STRING PROPERTY COMPILE_FLAGS "-fobjc-arc")
+endif()
 
 if(MACOSX OR APPLE)
   set_target_properties(${APP_NAME} PROPERTIES
