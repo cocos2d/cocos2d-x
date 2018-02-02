@@ -117,11 +117,11 @@ elseif(LINUX)
   foreach(_pkg OPENGL GLEW GLFW3 FMOD FONTCONFIG THREADS GTK3)
     cocos_use_pkg(cocos2dInternal ${_pkg})
   endforeach()
-elseif(MACOSX OR APPLE)
-  cocos_use_pkg(cocos2dInternal GLFW3)
+elseif(APPLE)
 
-  if(NOT IOS)
-    include_directories(/System/Library/Frameworks )
+  include_directories(/System/Library/Frameworks )
+  if(MACOSX)
+    cocos_use_pkg(cocos2dInternal GLFW3)
     find_library(COCOA_LIBRARY Cocoa)
     find_library(OPENGL_LIBRARY OpenGL )
     find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox)
@@ -143,19 +143,30 @@ elseif(MACOSX OR APPLE)
       ${FOUNDATION_LIBRARY}
       ${ICONV_LIBRARY}
     )
-  else()
+  elseif(IOS)
     # Locate system libraries on iOS
-    find_library(UIKIT UIKit)
-    find_library(MOBILECORESERVICES MobileCoreServices)
-    find_library(CFNETWORK CFNetwork)
-    find_library(SYSTEMCONFIGURATION SystemConfiguration)
+    find_library(UIKIT_LIBRARY UIKit)
     find_library(FOUNDATION_LIBRARY Foundation)
+    find_library(OPENAL_LIBRARY OpenAL )
+    find_library(OPENGLES_LIBRARY OpenGLES )
+    find_library(QUARTZCORE_LIBRARY QuartzCore )
+    # library cpp-empty-test needed
+    find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox)
+    find_library(CORE_TEXT_LIBRARY CoreText)
+    find_library(SECURITY_LIBRARY Security)
+    find_library(CORE_GRAPHICS_LIBRARY CoreGraphics)
+    find_library(AV_FOUNDATION_LIBRARY AVFoundation)
     set(PLATFORM_SPECIFIC_LIBS
-      ${UIKIT}
-      ${MOBILECORESERVICES}
-      ${CFNETWORK}
-      ${SYSTEMCONFIGURATION}
+      ${UIKIT_LIBRARY}
       ${FOUNDATION_LIBRARY}
+      ${OPENAL_LIBRARY}
+      ${OPENGLES_LIBRARY}
+      ${QUARTZCORE_LIBRARY}
+      ${AUDIOTOOLBOX_LIBRARY}
+      ${CORE_TEXT_LIBRARY}
+      ${SECURITY_LIBRARY}
+      ${CORE_GRAPHICS_LIBRARY}
+      ${AV_FOUNDATION_LIBRARY}
     )
   endif()
   

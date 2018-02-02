@@ -59,7 +59,7 @@ if(ANDROID)
     list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.android/app/jni/hellolua/main.cpp)
 elseif(LINUX)
     list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
-elseif(MACOSX OR APPLE)
+elseif(APPLE)
 
     list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.m)
 
@@ -114,7 +114,7 @@ set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 set_target_properties(${APP_NAME} PROPERTIES
      RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
 
-if(MACOSX OR APPLE)
+if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES
         MACOSX_BUNDLE 1
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
@@ -122,7 +122,7 @@ if(MACOSX OR APPLE)
     cocos_pak_xcode(${APP_NAME} INFO_PLIST "${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Info.plist")
     # set(MACOSX_BUNDLE_INFO_PLIST ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Info.plist)
 # need cocos_mark_resources, when build on mac, refer to lua project
-else(MACOSX OR APPLE)
+else()
     pre_build(${APP_NAME}
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}/Resources/res
@@ -138,4 +138,4 @@ else(MACOSX OR APPLE)
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/physics3d ${APP_BIN_DIR}/Resources
         )
 
-endif(MACOSX OR APPLE)
+endif()

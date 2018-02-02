@@ -30,6 +30,7 @@
 #include "audio/apple/AudioEngine-inl.h"
 
 #import <OpenAL/alc.h>
+#import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
 #include "audio/include/AudioEngine.h"

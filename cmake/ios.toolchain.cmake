@@ -47,8 +47,8 @@ endif (CMAKE_UNAME)
 
 # Force the compilers to Clang for iOS
 include (CMakeForceCompiler)
-# set(CMAKE_C_COMPILER /usr/bin/clang Clang)
-# set(CMAKE_CXX_COMPILER /usr/bin/clang++ Clang)
+set(CMAKE_C_COMPILER /usr/bin/clang Clang)
+set(CMAKE_CXX_COMPILER /usr/bin/clang++ Clang)
 set(CMAKE_AR ar CACHE FILEPATH "" FORCE)
 
 # Skip the platform compiler checks for cross compiling

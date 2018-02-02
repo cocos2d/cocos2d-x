@@ -124,11 +124,13 @@ set(lua_bindings_auto_files
     auto/lua_cocos2dx_navmesh_auto.cpp
     )
 
-if(MACOSX)
-    set(lua_bindings_manual_files
+if(APPLE)
+    if(IOS)
+        set(lua_bindings_manual_files
         ${lua_bindings_manual_files}
         manual/platform/ios/CCLuaObjcBridge.mm
         )
+    endif()
 elseif(ANDROID)
     set(lua_bindings_manual_files
         ${lua_bindings_manual_files}

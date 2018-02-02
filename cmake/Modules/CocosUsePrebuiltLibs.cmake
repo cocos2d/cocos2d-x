@@ -158,7 +158,6 @@ if(ANDROID)
   list(APPEND all_prebuilt_libs zlib)
 endif()
 
-
 # END CONFIG
 
 foreach(_lib ${all_prebuilt_libs})

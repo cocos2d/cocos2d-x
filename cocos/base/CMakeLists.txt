@@ -1,5 +1,5 @@
 
-if(MACOSX OR APPLE)
+if(APPLE)
   set(COCOS_BASE_SPECIFIC_SRC
     base/CCUserDefault-apple.mm
     base/CCController-apple.mm

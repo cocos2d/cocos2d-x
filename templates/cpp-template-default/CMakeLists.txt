@@ -63,14 +63,18 @@ elseif(IOS)
             proj.ios_mac/ios/RootViewController.mm
             )
 
-elseif(MACOSX OR APPLE)
-    set(PLATFORM_SPECIFIC_SRC proj.ios_mac/mac/main.cpp)
-
+elseif(APPLE)
     file(GLOB_RECURSE RES_FILES Resources/*)
     cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
-    file(GLOB_RECURSE RES_ICON proj.ios_mac/mac/Icon.icns)
-    cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.ios_mac/mac)
 
+    if(MACOSX)
+        set(PLATFORM_SPECIFIC_SRC proj.ios_mac/mac/main.cpp)
+
+        file(GLOB_RECURSE RES_ICON proj.ios_mac/mac/Icon.icns)
+        cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.ios_mac/mac)
+    elseif(IOS)
+
+    endif()
     list(APPEND PLATFORM_SPECIFIC_SRC ${RES_FILES} ${RES_ICON})
 
 elseif(LINUX)
@@ -91,10 +95,12 @@ if (WINDOWS)
         ${COCOS2DX_ROOT_PATH}/external/glfw3/include/${PLATFORM_FOLDER}
         ${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/gles/include/OGLES
     )
-elseif (MACOSX OR APPLE)
-    include_directories(
-        ${COCOS2DX_ROOT_PATH}/external/glfw3/include/mac
-    )
+elseif (APPLE)
+    if（MACOSX)
+        include_directories(
+            ${COCOS2DX_ROOT_PATH}/external/glfw3/include/mac
+        )
+    endif()
 elseif(LINUX)
     include_directories(
         /usr/local/include/GLFW
@@ -166,7 +172,7 @@ if(MSVC)
     set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS"
 									RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
 
-elseif(MACOSX OR APPLE)
+elseif(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES
             MACOSX_BUNDLE 1
             RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"

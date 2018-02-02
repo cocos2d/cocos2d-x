@@ -120,14 +120,14 @@ else()
     set(RES_PREFIX "")
 endif()
 
-if(MACOSX OR APPLE)
+if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES
         MACOSX_BUNDLE 1
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
     cocos_pak_xcode(${APP_NAME})
 # need cocos_mark_resources, when build on mac, refer to lua project
-else(MACOSX OR APPLE)
+else()
     pre_build(${APP_NAME}
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}${RES_PREFIX}/script
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}${RES_PREFIX}/res
@@ -141,4 +141,4 @@ else(MACOSX OR APPLE)
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/project.json ${APP_BIN_DIR}${RES_PREFIX}/project.json
         )
 
-endif(MACOSX OR APPLE)
+endif()

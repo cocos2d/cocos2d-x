@@ -124,7 +124,7 @@ target_link_libraries(jscocos2d
   ${SPIDERMONKEY_LIBRARY}
 )
 
-if(MACOSX OR APPLE)
+if(APPLE)
   FIND_LIBRARY(GAME_CONTROLLER GameController)
   target_link_libraries(jscocos2d
   ${GAME_CONTROLLER}

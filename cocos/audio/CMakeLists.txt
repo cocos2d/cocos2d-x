@@ -57,25 +57,44 @@ elseif(LINUX)
         audio/linux/AudioEngine-linux.cpp
     )
 
-elseif(MACOSX)
-    # split it in _C and non C
-    # because C files needs to be compiled with C compiler and not C++
-    # compiler
-    set(COCOS_AUDIO_PLATFORM_SRC_C
-        audio/mac/CDAudioManager.m
-        audio/mac/CDOpenALSupport.m
-        audio/mac/CocosDenshion.m
-        audio/mac/SimpleAudioEngine_objc.m
-    )
+elseif(APPLE)
+    # common
     set(COCOS_AUDIO_PLATFORM_SRC
-        ${COCOS_AUDIO_PLATFORM_SRC_C}
         audio/apple/AudioCache.mm
         audio/apple/AudioDecoder.mm
         audio/apple/AudioEngine-inl.mm
         audio/apple/AudioPlayer.mm
-        audio/mac/SimpleAudioEngine.mm
-        audio/mac/CDXMacOSXSupport.mm
     )
+    # split it in _C and non C
+    # because C files needs to be compiled with C compiler and not C++
+    # compiler
+    if(MACOSX)
+        set(COCOS_AUDIO_PLATFORM_SRC_C
+            audio/mac/CDAudioManager.m
+            audio/mac/CDOpenALSupport.m
+            audio/mac/CocosDenshion.m
+            audio/mac/SimpleAudioEngine_objc.m
+        )
+        set(COCOS_AUDIO_PLATFORM_SRC
+            ${COCOS_AUDIO_PLATFORM_SRC_C}
+            ${COCOS_AUDIO_PLATFORM_SRC}
+            audio/mac/SimpleAudioEngine.mm
+            audio/mac/CDXMacOSXSupport.mm
+        )
+    elseif(IOS)
+        set(COCOS_AUDIO_PLATFORM_SRC_C
+            audio/ios/CDAudioManager.m
+            audio/ios/CDOpenALSupport.m
+            audio/ios/CocosDenshion.m
+            audio/ios/SimpleAudioEngine_objc.m
+        )
+        set(COCOS_AUDIO_PLATFORM_SRC
+            ${COCOS_AUDIO_PLATFORM_SRC_C}
+            ${COCOS_AUDIO_PLATFORM_SRC}
+            audio/ios/SimpleAudioEngine.mm
+        )
+    endif()
+
     set_source_files_properties(
         ${COCOS_AUDIO_PLATFORM_SRC_C}
         PROPERTIES LANGUAGE C
