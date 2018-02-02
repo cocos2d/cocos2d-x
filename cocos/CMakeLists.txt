@@ -130,7 +130,6 @@ elseif(APPLE)
     find_library(APPLICATIONSERVICES_LIBRARY ApplicationServices)
     find_library(IOKIT_LIBRARY IOKit)
     find_library(FOUNDATION_LIBRARY Foundation)
-    find_library(ICONV_LIBRARY iconv)
 
     set(PLATFORM_SPECIFIC_LIBS
       ${COCOA_LIBRARY}
@@ -156,6 +155,8 @@ elseif(APPLE)
     find_library(SECURITY_LIBRARY Security)
     find_library(CORE_GRAPHICS_LIBRARY CoreGraphics)
     find_library(AV_FOUNDATION_LIBRARY AVFoundation)
+    find_library(ICONV_LIBRARY iconv)
+    find_library(Z_LIBRARY z)
     set(PLATFORM_SPECIFIC_LIBS
       ${UIKIT_LIBRARY}
       ${FOUNDATION_LIBRARY}
@@ -167,6 +168,8 @@ elseif(APPLE)
       ${SECURITY_LIBRARY}
       ${CORE_GRAPHICS_LIBRARY}
       ${AV_FOUNDATION_LIBRARY}
+      ${ICONV_LIBRARY}
+      ${Z_LIBRARY}
     )
   endif()
   

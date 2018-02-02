@@ -47,21 +47,24 @@ if(ANDROID)
 elseif(WINDOWS)
     set(PLATFORM_SRC proj.win32/main.cpp)
     set(RES_PREFIX "")
-elseif(IOS)
-    set(PLATFORM_SRC
-        proj.ios/main.m
-        proj.ios/AppController.mm
-        proj.ios/RootViewController.mm
-    )
-
-elseif(MACOSX OR APPLE)
-    set(PLATFORM_SRC proj.mac/main.cpp)
-
+elseif(APPLE)
     file(GLOB_RECURSE RES_FILES Resources/*)
     cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
-    file(GLOB_RECURSE RES_ICON proj.mac/Icon.icns)
-    cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.mac)
-    list(APPEND PLATFORM_SRC ${RES_FILES} ${RES_ICON})
+    if(IOS)
+        set(PLATFORM_SRC
+            proj.ios/main.m
+            proj.ios/AppController.mm
+            proj.ios/RootViewController.mm
+        )
+    elseif(MACOSX)
+        set(PLATFORM_SRC proj.mac/main.cpp)
+
+        file(GLOB_RECURSE RES_ICON proj.mac/Icon.icns)
+        cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.mac)
+        list(APPEND PLATFORM_SRC ${RES_FILES} ${RES_ICON})
+    endif()
+
+
 
 elseif(LINUX)
     set(PLATFORM_SRC proj.linux/main.cpp)
@@ -113,12 +116,13 @@ if(MSVC)
     set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:WINDOWS")
     set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
 
-elseif(MACOSX OR APPLE)
+elseif(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES
         MACOSX_BUNDLE 1
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
     cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "Cpp Empty Test")
+    
 else()
 
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
