@@ -56,6 +56,11 @@ elseif(APPLE)
             proj.ios/AppController.mm
             proj.ios/RootViewController.mm
         )
+        file(GLOB_RECURSE RES_LS proj.ios/LaunchScreen.storyboard)
+        cocos_mark_resources(FILES ${RES_LS} BASEDIR proj.ios)
+        file(GLOB_RECURSE RES_LSBG proj.ios/LaunchScreenBackground.png)
+        cocos_mark_resources(FILES ${RES_LSBG} BASEDIR proj.ios)
+        list(APPEND PLATFORM_SRC ${RES_FILES} ${RES_LS} ${RES_LSBG})
     elseif(MACOSX)
         set(PLATFORM_SRC proj.mac/main.cpp)
 
@@ -121,7 +126,11 @@ elseif(APPLE)
         MACOSX_BUNDLE 1
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
-    cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "Cpp Empty Test")
+    if(MACOSX)
+        cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "Cpp Empty Test")
+    elseif(IOS)
+        cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
+    endif()
     
 else()
 
