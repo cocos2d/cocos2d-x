@@ -58,6 +58,7 @@ elseif(APPLE)
       platform/ios/CCDevice-ios.mm
       platform/ios/CCDirectorCaller-ios.mm
       platform/ios/CCEAGLView-ios.mm
+      platform/ios/CCES2Renderer-ios.m
       platform/ios/CCGLViewImpl-ios.mm
       platform/ios/CCImage-ios.mm
       ${COCOS_PLATFORM_SPECIFIC_SRC}
