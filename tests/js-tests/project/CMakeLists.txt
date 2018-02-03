@@ -52,25 +52,32 @@ elseif(LINUX)
     set(PLATFORM_SRC
         proj.linux/main.cpp
         )
-elseif(IOS)
-    set(PLATFORM_SRC
-        proj.ios/main.m
-        proj.ios/NativeOcClass.m
-        proj.ios/AppController.mm
-        proj.ios/RootViewController.mm
-        )
-    include_directories(proj.ios)
-elseif(MACOSX OR APPLE)
-    set(PLATFORM_SRC proj.mac/main.cpp)
+elseif(APPLE)
 
-    # need review
+    if(IOS)
+        set(IOS_SRC
+            proj.ios/main.m
+            proj.ios/NativeOcClass.m
+            proj.ios/AppController.mm
+            proj.ios/RootViewController.mm
+            )
+        file(GLOB_RECURSE RES_LS proj.ios/LaunchScreen.storyboard)
+        cocos_mark_resources(FILES ${RES_LS} BASEDIR proj.ios)
+        file(GLOB_RECURSE RES_LSBG proj.ios/LaunchScreenBackground.png)
+        cocos_mark_resources(FILES ${RES_LSBG} BASEDIR proj.ios)
+        set(APPLE_SRC ${IOS_SRC} ${RES_LS} ${RES_LSBG})
+    elseif(MACOSX)
+        set(MAC_SRC proj.mac/main.cpp)
+        file(GLOB_RECURSE RES_ICON proj.mac/Icon.icns)
+        cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.mac)
+        set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
+    endif()
+
     set(APP_MAIN
         ../main.js
         ../project.json
     )
     cocos_mark_resources(FILES ${APP_MAIN} BASEDIR .. RESOURCEBASE Resources)
-    file(GLOB_RECURSE RES_ICON proj.mac/Icon.icns)
-    cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.mac)
     file(GLOB_RECURSE APP_RESJS ../resjs/*)
     cocos_mark_resources(FILES ${APP_RESJS} BASEDIR ../resjs RESOURCEBASE Resources/res)
 
@@ -83,7 +90,7 @@ elseif(MACOSX OR APPLE)
     file(GLOB_RECURSE COCOS_SCRIPTS ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/script/*)
     cocos_mark_resources(FILES ${COCOS_SCRIPTS} BASEDIR ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/script RESOURCEBASE Resources/script)
     
-    list(APPEND PLATFORM_SRC ${APP_MAIN} ${RES_ICON} ${APP_RESJS} ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS} ${TEST_RESOURCES})
+    set(PLATFORM_SRC ${APPLE_SRC} ${APP_MAIN} ${APP_RESJS} ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS} ${TEST_RESOURCES})
 endif()
 
 set(SAMPLE_SRC
@@ -132,10 +139,10 @@ else()
 endif()
 
 # need research, it should be added to all macos project?
-if(MACOSX OR APPLE)
-  # fix js-tests compile error, for temp
-  set_property(TARGET ${APP_NAME} APPEND_STRING PROPERTY COMPILE_FLAGS "-fobjc-arc")
-endif()
+# if(MACOSX OR APPLE)
+#   # fix js-tests compile error, for temp
+#   set_property(TARGET ${APP_NAME} APPEND_STRING PROPERTY COMPILE_FLAGS "-fobjc-arc")
+# endif()
 
 
 if(MACOSX OR APPLE)
@@ -143,8 +150,12 @@ if(MACOSX OR APPLE)
         MACOSX_BUNDLE 1
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
-    cocos_pak_xcode(${APP_NAME})
-else(MACOSX OR APPLE)
+    if(MACOSX)
+        cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "JS Tests")
+    elseif(IOS)
+        cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
+    endif()
+else()
     pre_build(${APP_NAME}
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}${RES_PREFIX}/script
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}${RES_PREFIX}/res
@@ -159,7 +170,7 @@ else(MACOSX OR APPLE)
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../main.js ${APP_BIN_DIR}${RES_PREFIX}/main.js
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../project.json ${APP_BIN_DIR}${RES_PREFIX}/project.json
         )
-endif(MACOSX OR APPLE)
+endif()
 
 if(XCODE OR VS)
     cocos_mark_code_files(${APP_NAME})

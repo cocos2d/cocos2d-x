@@ -56,26 +56,28 @@ elseif(WINDOWS)
             proj.win32/resource.h
             )
     set(RES_PREFIX "")
-elseif(IOS)
-    set(PLATFORM_SPECIFIC_SRC
-            proj.ios_mac/ios/main.m
-            proj.ios_mac/ios/AppController.mm
-            proj.ios_mac/ios/RootViewController.mm
-            )
-
 elseif(APPLE)
     file(GLOB_RECURSE RES_FILES Resources/*)
     cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
+    if(IOS)
+        set(IOS_SRC
+            proj.ios_mac/ios/main.m
+            proj.ios_mac/ios/AppController.mm
+            proj.ios_mac/ios/RootViewController.mm
+        )
+        file(GLOB_RECURSE RES_LS proj.ios_mac/ios/LaunchScreen.storyboard)
+        cocos_mark_resources(FILES ${RES_LS} BASEDIR proj.ios_mac/ios)
+        file(GLOB_RECURSE RES_LSBG proj.ios_mac/ios/LaunchScreenBackground.png)
+        cocos_mark_resources(FILES ${RES_LSBG} BASEDIR proj.ios_mac/ios)
+        set(APPLE_SRC ${IOS_SRC} ${RES_LS} ${RES_LSBG})
+    elseif(MACOSX)
+        set(MAC_SRC proj.ios_mac/mac/main.cpp)
 
-    if(MACOSX)
-        set(PLATFORM_SPECIFIC_SRC proj.ios_mac/mac/main.cpp)
-
-        file(GLOB_RECURSE RES_ICON proj.ios_mac/mac/Icon.icns)
-        cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.ios_mac/mac)
-    elseif(IOS)
-
+        file(GLOB_RECURSE RES_ICON proj..ios_mac/mac/Icon.icns)
+        cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj..ios_mac/mac)
+        set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
     endif()
-    list(APPEND PLATFORM_SPECIFIC_SRC ${RES_FILES} ${RES_ICON})
+    set(PLATFORM_SPECIFIC_SRC ${RES_FILES} ${APPLE_SRC})
 
 elseif(LINUX)
     set(PLATFORM_SPECIFIC_SRC proj.linux/main.cpp)
@@ -96,7 +98,7 @@ if (WINDOWS)
         ${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/gles/include/OGLES
     )
 elseif (APPLE)
-    if（MACOSX)
+    if (MACOSX)
         include_directories(
             ${COCOS2DX_ROOT_PATH}/external/glfw3/include/mac
         )
@@ -177,7 +179,11 @@ elseif(APPLE)
             MACOSX_BUNDLE 1
             RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
-    cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "Cpp Hello Test")
+    if(MACOSX)
+        cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "Cpp Hello Test")
+    elseif(IOS)
+        cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
+    endif()
 else()
 
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
@@ -188,4 +194,8 @@ else()
             COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources $<TARGET_FILE_DIR:${APP_NAME}>${RES_PREFIX}
             )
 
+endif()
+
+if(XCODE OR VS)
+    cocos_mark_code_files(${APP_NAME})
 endif()
