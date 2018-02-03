@@ -18,7 +18,7 @@ if(ANDROID)
     network/CCDownloader-android.cpp
     network/Uri.cpp
   )
-elseif(MACOSX)
+elseif(MACOSX OR IOS)
   set(COCOS_NETWORK_SRC
     network/CCDownloader-apple.mm
     network/HttpClient.cpp

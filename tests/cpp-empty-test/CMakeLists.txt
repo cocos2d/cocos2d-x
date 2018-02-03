@@ -51,7 +51,7 @@ elseif(APPLE)
     file(GLOB_RECURSE RES_FILES Resources/*)
     cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
     if(IOS)
-        set(PLATFORM_SRC
+        set(IOS_SRC
             proj.ios/main.m
             proj.ios/AppController.mm
             proj.ios/RootViewController.mm
@@ -60,16 +60,15 @@ elseif(APPLE)
         cocos_mark_resources(FILES ${RES_LS} BASEDIR proj.ios)
         file(GLOB_RECURSE RES_LSBG proj.ios/LaunchScreenBackground.png)
         cocos_mark_resources(FILES ${RES_LSBG} BASEDIR proj.ios)
-        list(APPEND PLATFORM_SRC ${RES_FILES} ${RES_LS} ${RES_LSBG})
+        set(APPLE_SRC ${IOS_SRC} ${RES_LS} ${RES_LSBG})
     elseif(MACOSX)
-        set(PLATFORM_SRC proj.mac/main.cpp)
+        set(MAC_SRC proj.mac/main.cpp)
 
         file(GLOB_RECURSE RES_ICON proj.mac/Icon.icns)
         cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.mac)
-        list(APPEND PLATFORM_SRC ${RES_FILES} ${RES_ICON})
+        set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
     endif()
-
-
+    set(PLATFORM_SRC ${RES_FILES} ${APPLE_SRC})
 
 elseif(LINUX)
     set(PLATFORM_SRC proj.linux/main.cpp)

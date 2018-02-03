@@ -22,15 +22,28 @@ endif(NOT DEFINED BUILD_ENGINE_DONE)
 if(WIN32)
     set(PLATFORM_SRC proj.win32/main.cpp)
     set(RES_PREFIX "")
-elseif(MACOSX)
-    set(PLATFORM_SRC proj.mac/main.cpp)
-
+elseif(APPLE)
     file(GLOB_RECURSE RES_FILES Resources/*)
     cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
-    file(GLOB_RECURSE RES_ICON proj.mac/Icon.icns)
-    cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.mac)
-    list(APPEND PLATFORM_SRC ${RES_FILES} ${RES_ICON})
+    if(IOS)
+        set(IOS_SRC
+        proj.ios/main.m
+        proj.ios/Classes/testsAppDelegate.mm
+        proj.ios/Classes/RootViewController.mm
+    )
+    file(GLOB_RECURSE RES_LS proj.ios/LaunchScreen.storyboard)
+    cocos_mark_resources(FILES ${RES_LS} BASEDIR proj.ios)
+    file(GLOB_RECURSE RES_LSBG proj.ios/LaunchScreenBackground.png)
+    cocos_mark_resources(FILES ${RES_LSBG} BASEDIR proj.ios)
+    set(APPLE_SRC ${IOS_SRC} ${RES_LS} ${RES_LSBG})
+    elseif(MACOSX)
+        set(MAC_SRC proj.mac/main.cpp)
 
+        file(GLOB_RECURSE RES_ICON proj.mac/Icon.icns)
+        cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.mac)
+        set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
+    endif()
+    set(PLATFORM_SRC ${RES_FILES} ${APPLE_SRC})
 elseif(LINUX)
     set(PLATFORM_SRC proj.linux/main.cpp)
     set(RES_PREFIX "/Resources")
@@ -176,12 +189,13 @@ set(TESTS_SRC
     Classes/ZwoptexTest/ZwoptexTest.cpp
     Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp
     Classes/controller.cpp
-    Classes/VRTest/VRTest.cpp
-    Classes/VRTest/VRTest.h
+    # need review
+    # Classes/VRTest/VRTest.cpp
+    # Classes/VRTest/VRTest.h
     ${PLATFORM_SRC}
     )
 
-if(ANDROID)
+if(ANDROID OR IOS)
     list(APPEND TESTS_SRC
         Classes/UITest/CocoStudioGUITest/UIVideoPlayerTest/UIVideoPlayerTest.cpp
         Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.cpp
@@ -257,12 +271,17 @@ foreach(pkg FREETYPE CURL)
     cocos_use_pkg(${APP_NAME} ${pkg})
 endforeach()
 
-if(MACOSX OR APPLE)
+if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES
         MACOSX_BUNDLE 1
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
-    cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "Tests Cpp" INFO_STRING "test project for cpp")
+    if(MACOSX)
+        cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "Tests Cpp" INFO_STRING "test project for cpp")
+    elseif(IOS)
+        cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
+    endif()
+    
 elseif(ANDROID)
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
     set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")

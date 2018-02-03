@@ -150,6 +150,7 @@ elseif(APPLE)
     find_library(OPENGLES_LIBRARY OpenGLES )
     find_library(QUARTZCORE_LIBRARY QuartzCore )
     find_library(CORE_MOTION_LIBRARY CoreMotion)
+    find_library(MEDIA_PLAYER_LIBRARY MediaPlayer)
     # library cpp-empty-test needed
     find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox)
     find_library(CORE_TEXT_LIBRARY CoreText)
@@ -165,6 +166,7 @@ elseif(APPLE)
       ${OPENGLES_LIBRARY}
       ${QUARTZCORE_LIBRARY}
       ${CORE_MOTION_LIBRARY}
+      ${MEDIA_PLAYER_LIBRARY}
       ${AUDIOTOOLBOX_LIBRARY}
       ${CORE_TEXT_LIBRARY}
       ${SECURITY_LIBRARY}
