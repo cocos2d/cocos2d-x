@@ -76,7 +76,7 @@ elseif(APPLE)
         set(MAC_SRC 
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.m
             # it needed tools/simulator, but not existed cmake files
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/SimulatorApp.mm
+            # ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/SimulatorApp.mm
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/ConsoleWindowController.m
             )
         file(GLOB_RECURSE RES_ICON ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns)
