@@ -23,7 +23,7 @@
 # ****************************************************************************/
 cmake_minimum_required(VERSION 3.1)
 
-set(APP_NAME HelloLua)
+set(APP_NAME TemplateLua)
 if(ANDROID)
   set(APP_NAME cocos2dlua)
 endif(ANDROID)
@@ -73,10 +73,26 @@ elseif(APPLE)
         cocos_mark_resources(FILES ${RES_LSBG} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios)
         set(APPLE_SRC ${IOS_SRC} ${RES_LS} ${RES_LSBG})
     elseif(MACOSX)
-        set(MAC_SRC ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.m)
+        set(MAC_SRC 
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.m
+            # it needed tools/simulator, but not existed cmake files
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/SimulatorApp.mm
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/ConsoleWindowController.m
+            )
         file(GLOB_RECURSE RES_ICON ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns)
         cocos_mark_resources(FILES ${RES_ICON} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
-        set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
+        # special for lua-template
+        file(GLOB_RECURSE RES_MAIN_BASE ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Base.lproj/MainMenu.xib)
+        cocos_mark_resources(FILES ${RES_MAIN_BASE} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
+        file(GLOB_RECURSE RES_MAIN_EN ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/en.lproj/MainMenu.xib)
+        cocos_mark_resources(FILES ${RES_MAIN_EN} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
+        file(GLOB_RECURSE RES_MAIN_ZH ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/zh-Hans.lproj/MainMenu.xib)
+        cocos_mark_resources(FILES ${RES_MAIN_ZH} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
+        file(GLOB_RECURSE RES_CONSOLE ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/ConsoleWindow.xib)
+        cocos_mark_resources(FILES ${RES_CONSOLE} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
+        set(APPLE_SRC ${MAC_SRC} ${RES_ICON} ${RES_MAIN_BASE} ${RES_MAIN_EN} ${RES_MAIN_ZH} ${RES_CONSOLE})
+        # xib -> nib, need mark resources
+        set(APPLE_RES_UI ${RES_MAIN_BASE} ${RES_MAIN_EN} ${RES_MAIN_ZH} ${RES_CONSOLE})
     endif()
 
     file(GLOB_RECURSE APP_RESOURCES res/*)
@@ -133,7 +149,10 @@ if(APPLE)
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
     if(MACOSX)
-        cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "LuaTestsApp")
+        set_target_properties(${APP_NAME} PROPERTIES
+        RESOURCE "${APPLE_RES_UI}"
+        )
+        cocos_pak_xcode(${APP_NAME} INFO_PLIST "MacOSXBundleInfo.LuaTemplate.plist.in" BUNDLE_NAME "LuaTestsApp")
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()

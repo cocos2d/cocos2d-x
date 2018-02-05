@@ -26,7 +26,7 @@
 
 cmake_minimum_required(VERSION 3.1)
 
-set(APP_NAME HelloJS)
+set(APP_NAME TemplateJS)
 if(ANDROID)
     set(APP_NAME cocos2djs)
 endif(ANDROID)
