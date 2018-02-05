@@ -30,8 +30,21 @@ if(WIN32) # Win32
 elseif(APPLE)# osx or ios
   set(PLATFORM_FOLDER mac)
   set(PLATFORM_SRC manual/platform/ios/JavaScriptObjCBridge.mm)
+elseif(ANDROID)
+  set(PLATFORM_FOLDER android)
+  set(PLATFORM_SRC manual/platform/android/CCJavascriptJavaBridge.cpp)
 else() # Assume Linux
   set(PLATFORM_FOLDER linux)
+endif()
+
+if(ANDROID OR IOS)
+  set(PLATFORM_SRC
+    auto/jsb_cocos2dx_experimental_webView_auto.cpp
+    manual/experimental/jsb_cocos2dx_experimental_webView_manual.cpp
+    auto/jsb_cocos2dx_experimental_video_auto.cpp
+    manual/experimental/jsb_cocos2dx_experimental_video_manual.cpp
+    ${PLATFORM_SRC}
+  )
 endif()
 
 set(JSBINDING_SRC
@@ -84,6 +97,7 @@ set(JSBINDING_SRC
 include_directories(
   ${cocos_root}/external/spidermonkey/include/${PLATFORM_FOLDER}
   ${cocos_root}/cocos
+  ${cocos_root}/cocos/platform/${PLATFORM_FOLDER}
   ${cocos_root}/cocos/editor-support
   ${cocos_root}/extensions
   ${cocos_root}/external
@@ -96,16 +110,23 @@ add_library(jscocos2d STATIC
 
 find_library(SPIDERMONKEY_LIBRARY NAMES js_static mozjs HINTS
   ${cocos_root}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+  ${cocos_root}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ANDROID_ABI}
   ${cocos_root}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}
+  NO_CMAKE_FIND_ROOT_PATH
 )
 
 message("SPIDERMONKEY_LIBRARY: ${SPIDERMONKEY_LIBRARY}")
 
+cocos_use_pkg(jscocos2d SQLITE3)
+
+# should change to cocos_use_pkg() about,sqlite3 or set some flag
 target_link_libraries(jscocos2d
-  sqlite3
   ${SPIDERMONKEY_LIBRARY}
-  xxhash
 )
+
+cocos_use_pkg(jscocos2d xxhash)
+
+target_link_libraries(jscocos2d cocos2d)
 
 set_target_properties(jscocos2d
     PROPERTIES

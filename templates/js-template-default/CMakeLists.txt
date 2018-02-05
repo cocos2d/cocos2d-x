@@ -36,7 +36,7 @@ if(CMAKE_VERSION VERSION_GREATER 3.1)
     cmake_policy(SET CMP0054 NEW)
 endif()
 
-set(APP_NAME MyGame)
+set(APP_NAME cocos2djs)
 project (${APP_NAME})
 
 # define some variables
@@ -101,26 +101,32 @@ include(BuildModules)
 BuildModules()
 set(CMAKE_CURRENT_SOURCE_DIR ${PREV_CMAKE_CURRENT_SOURCE_DIR})
 
-if(WIN32)
-else()
-  set(GAME_SRC
-    ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp
-    ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp
-  )
-endif()
+include_directories(${RUNTIME_SRC_ROOT}/Classes)
 
+set(GAME_SRC ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp
+)
+
+if(ANDROID)
+  list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.android/app/jni/hellojavascript/main.cpp)
+elseif(LINUX)
+  list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
+endif()
 
 # jsbinding library
 add_subdirectory(${COCOS2D_X_ROOT}/cocos/scripting/js-bindings)
 
-add_executable(${APP_NAME}
-  ${GAME_SRC}
-)
+if(ANDROID)
+    add_library(${APP_NAME} SHARED ${GAME_SRC})
+    IF(CMAKE_BUILD_TYPE MATCHES RELEASE)
+        ADD_CUSTOM_COMMAND(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
+    ENDIF()
+else()
+  add_executable(${APP_NAME}
+    ${GAME_SRC}
+  )
+endif(ANDROID)
 
-target_link_libraries(${APP_NAME}
-  jscocos2d
-  cocos2d
-)
+target_link_libraries(${APP_NAME} jscocos2d)
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 

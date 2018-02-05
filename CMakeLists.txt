@@ -111,10 +111,14 @@ endif(BUILD_CPP_TESTS)
 if(BUILD_LUA_LIBS)
     add_subdirectory(cocos/scripting/lua-bindings)
 
+  # build lua empty test
+  if(BUILD_LUA_EMPTY_TEST)
+    add_subdirectory(tests/lua-empty-test/project)
+  endif(BUILD_LUA_EMPTY_TEST)
+
   # build lua tests
   if(BUILD_LUA_TESTS)
     add_subdirectory(tests/lua-tests/project)
-    add_subdirectory(tests/lua-empty-test/project)
   endif(BUILD_LUA_TESTS)
 
 endif(BUILD_LUA_LIBS)

@@ -1,17 +1,23 @@
 set(cocos_root ${Cocos2d-X_SOURCE_DIR})
 
 include_directories(
-  ${cocos_root}/external/lua/tolua
-  ${cocos_root}/external/lua/lua
   ${cocos_root}/external/lua
+  ${cocos_root}/external/lua/tolua
   ${cocos_root}/external/xxtea
   ${cocos_root}/external
   ${cocos_root}/cocos
   ${cocos_root}/cocos/editor-support
 )
 
+if(ANDROID)
+    include_directories(
+        manual/platform/android
+        manual/platform/android/jni
+        )
+endif()
+
 file(GLOB lua_cocos2d_source_files
-    "${cocos_root}/external/lua/lua/*.c"
+    #"${cocos_root}/external/lua/lua/*.c" change to use luajit
     "${cocos_root}/external/lua/tolua/*.c"
     "${cocos_root}/external/xxtea/xxtea.cpp"
     )
@@ -40,10 +46,10 @@ if(WINDOWS)
     list(APPEND lua_cocos2d_source_files
         ${cocos_root}/external/lua/luasocket/wsocket.c
         )
-elseif(UNIX)
+elseif(UNIX OR ANDROID)
     # because we have -std=c99
     add_definitions(-D_POSIX_C_SOURCE=200809L)
-    if(LINUX)
+    if(LINUX OR ANDROID)
         add_definitions(-D_BSD_SOURCE -D_DEFAULT_SOURCE)
     endif()
     if(APPLE)
@@ -92,7 +98,8 @@ set(lua_bindings_manual_files
     manual/spine/LuaSkeletonAnimation.cpp
     manual/ui/lua_cocos2dx_experimental_video_manual.cpp
     manual/ui/lua_cocos2dx_ui_manual.cpp
-    manual/video/lua_cocos2dx_experimental_video_manual.cpp
+    # android.mk not this, need review
+    # manual/video/lua_cocos2dx_experimental_video_manual.cpp
     manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
     manual/physics3d/lua_cocos2dx_physics3d_manual.cpp
     manual/navmesh/lua_cocos2dx_navmesh_conversions.cpp
@@ -123,6 +130,14 @@ if(MACOSX)
         ${lua_bindings_manual_files}
         manual/platform/ios/CCLuaObjcBridge.mm
         )
+elseif(ANDROID)
+    set(lua_bindings_manual_files
+        ${lua_bindings_manual_files}
+        manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.cpp
+        manual/platform/android/CCLuaJavaBridge.cpp
+        auto/lua_cocos2dx_experimental_webview_auto.cpp
+        manual/ui/lua_cocos2dx_experimental_webview_manual.cpp
+        )
 endif()
 
 if(USE_BULLET)
@@ -131,8 +146,18 @@ endif()
 
 set(lua_bindings_files ${lua_cocos2d_source_files} ${lua_bindings_manual_files} ${lua_bindings_auto_files})
 
+# message("use prebuild libs value " "${USE_PREBUILT_LIBS}")
+# message("find luajit value " "${LUAJIT_FOUND}")
+# message("find luajit include " "${LUAJIT_INCLUDE_DIRS}")
+# cocos_find_package(LUAJIT LUAJIT REQUIRED)
+# cocos_use_pkg(cocos2d, luajit)
+# include_directories(${LUAJIT_INCLUDE_DIRS})
+
 add_library(luacocos2d ${lua_bindings_files})
 target_link_libraries(luacocos2d cocos2d)
+
+cocos_use_pkg(luacocos2d LUAJIT)
+
 set_target_properties(luacocos2d
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"

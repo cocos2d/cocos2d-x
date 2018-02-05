@@ -63,7 +63,9 @@ include(editor-support/spine/CMakeLists.txt)
 set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_SPINE_SRC})
 endif(BUILD_EDITOR_SPINE)
 
+if(BUILD_EXTENSIONS)
 include(../extensions/CMakeLists.txt)
+endif(BUILD_EXTENSIONS)
 
 set(COCOS_SRC cocos2d.cpp
     ${COCOS_2D_SRC}
@@ -82,6 +84,7 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_NETWORK_SRC}
     ${COCOS_EDITOR_SUPPORT_SRC}
     ${COCOS_EXTENSIONS_SRC}
+    ${COCOS_STORAGE_SRC}
     )
 
   #todo: provide prebuild versions of the xx libs for all platforms
@@ -102,7 +105,7 @@ if(WINDOWS)
   foreach(_pkg OPENGL GLEW GLFW3 VORBIS MPG123 OPENAL)
     cocos_use_pkg(cocos2dInternal ${_pkg})
   endforeach()
-  list(APPEND PLATFORM_SPECIFIC_LIBS ws2_32 winmm version)
+  list(APPEND PLATFORM_SPECIFIC_LIBS ws2_32 winmm Version Iphlpapi)
   if(MINGW)
     list(APPEND PLATFORM_SPECIFIC_LIBS shlwapi version)
   endif()
@@ -113,17 +116,18 @@ elseif(LINUX)
 elseif(MACOSX OR APPLE)
   cocos_use_pkg(cocos2dInternal GLFW3)
 
- INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
+  INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
 
- FIND_LIBRARY(COCOA_LIBRARY Cocoa)
- FIND_LIBRARY(OPENGL_LIBRARY OpenGL )
- FIND_LIBRARY(AUDIOTOOLBOX_LIBRARY AudioToolbox)
- FIND_LIBRARY(OPENAL_LIBRARY OpenAL )
- FIND_LIBRARY(QUARTZCORE_LIBRARY QuartzCore )
- FIND_LIBRARY(APPLICATIONSERVICES_LIBRARY ApplicationServices)
- FIND_LIBRARY(IOKIT_LIBRARY IOKit)
- FIND_LIBRARY(FOUNDATION_LIBRARY Foundation)
- FIND_LIBRARY(ICONV_LIBRARY iconv)
+  FIND_LIBRARY(COCOA_LIBRARY Cocoa)
+  FIND_LIBRARY(OPENGL_LIBRARY OpenGL )
+  FIND_LIBRARY(AUDIOTOOLBOX_LIBRARY AudioToolbox)
+  FIND_LIBRARY(OPENAL_LIBRARY OpenAL )
+  FIND_LIBRARY(QUARTZCORE_LIBRARY QuartzCore )
+  FIND_LIBRARY(APPLICATIONSERVICES_LIBRARY ApplicationServices)
+  FIND_LIBRARY(IOKIT_LIBRARY IOKit)
+  FIND_LIBRARY(FOUNDATION_LIBRARY Foundation)
+  FIND_LIBRARY(ICONV_LIBRARY iconv)
+  FIND_LIBRARY(GAME_CONTROLLER GameController)
 
   set(PLATFORM_SPECIFIC_LIBS
     ${COCOA_LIBRARY}
@@ -135,20 +139,29 @@ elseif(MACOSX OR APPLE)
     ${IOKIT_LIBRARY}
     ${FOUNDATION_LIBRARY}
     ${ICONV_LIBRARY}
+    ${GAME_CONTROLLER}
   )
 
 elseif(ANDROID)
-  set(PLATFORM_SPECIFIC_LIBS GLESv1_CM GLESv2 EGL log android OpenSLES)
-  get_filename_component(__module_path "${CMAKE_TOOLCHAIN_FILE}" DIRECTORY)
-  include(${__module_path}/AndroidNdkModules.cmake)
+  set(PLATFORM_SPECIFIC_LIBS GLESv2 EGL log android OpenSLES)
+  include(../cmake/AndroidNdkModules.cmake)
   android_ndk_import_module_cpufeatures()
+  cocos_use_pkg(cocos2dInternal TREMOLO)
+  cocos_use_pkg(cocos2dInternal PVMP3DEC)
+  include_directories(../external/android-specific/tremolo)
+  include_directories(../external/android-specific/pvmp3dec/include)
+  include_directories(../external/android-specific/pvmp3dec/src)
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS CURL OPENSSL FLATBUFFERS XXHASH)
+foreach(pkg ZLIB MINIZIP TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS XXHASH)
   cocos_use_pkg(cocos2dInternal ${pkg})
 endforeach()
+
+if(NOT EMSCRIPTEN)
+  cocos_use_pkg(cocos2dInternal OPENSSL)
+endif()
 
 if(LINUX)
   set(glfw_other_linker_flags X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m)
@@ -156,11 +169,32 @@ endif(LINUX)
 
 target_link_libraries(cocos2dInternal ${PLATFORM_SPECIFIC_LIBS} ${glfw_other_linker_flags})
 
+if(USE_JPEG)
+  add_definitions(-DCC_USE_JPEG=1)
+  cocos_use_pkg(cocos2dInternal JPEG)
+else()
+  add_definitions(-DCC_USE_JPEG=0)
+endif()
+
 if(USE_WEBP)
   add_definitions(-DCC_USE_WEBP=1)
   cocos_use_pkg(cocos2dInternal WEBP)
 else()
   add_definitions(-DCC_USE_WEBP=0)
+endif()
+
+if(USE_TIFF)
+  add_definitions(-DCC_USE_TIFF=1)
+  cocos_use_pkg(cocos2dInternal TIFF)
+else()
+  add_definitions(-DCC_USE_TIFF=0)
+endif()
+
+if(USE_PNG)
+  add_definitions(-DCC_USE_PNG=1)
+  cocos_use_pkg(cocos2dInternal PNG)
+else()
+  add_definitions(-DCC_USE_PNG=0)
 endif()
 
 if(USE_CHIPMUNK)

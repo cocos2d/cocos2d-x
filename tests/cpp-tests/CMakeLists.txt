@@ -1,4 +1,4 @@
-set(APP_NAME cpp-tests)
+set(APP_NAME cpp_tests)
 
 # Use same method as in cocos library
 if(LINUX)
@@ -25,7 +25,7 @@ elseif(LINUX)
 elseif(ANDROID)
   set(PLATFORM_SRC
           Classes/JNITest/JNITest.cpp
-          proj.android/jni/main.cpp)
+          proj.android/app/jni/main.cpp)
   set(RES_PREFIX "/Resources")
 else()
   message( FATAL_ERROR "Unsupported platform, CMake will exit" )
@@ -156,6 +156,13 @@ set(TESTS_SRC
   Classes/VRTest/VRTest.h
   ${PLATFORM_SRC}
 )
+
+if(ANDROID)
+  list(APPEND TESTS_SRC
+    Classes/UITest/CocoStudioGUITest/UIVideoPlayerTest/UIVideoPlayerTest.cpp
+    Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.cpp
+    )
+endif()
 
 if(WIN32 OR MACOSX OR LINUX)
   list(APPEND TESTS_SRC
