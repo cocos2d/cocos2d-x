@@ -120,60 +120,56 @@ elseif(LINUX)
 elseif(APPLE)
 
   include_directories(/System/Library/Frameworks )
+  find_library(ICONV_LIBRARY iconv)
+  find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox)
+  find_library(FOUNDATION_LIBRARY Foundation)
+  find_library(OPENAL_LIBRARY OpenAL )
+  find_library(QUARTZCORE_LIBRARY QuartzCore )
+  set(COCOS_APPLE_LIBS
+    ${OPENAL_LIBRARY}
+    ${AUDIOTOOLBOX_LIBRARY}
+    ${QUARTZCORE_LIBRARY}
+    ${FOUNDATION_LIBRARY}
+    ${ICONV_LIBRARY}
+)
+
   if(MACOSX)
     cocos_use_pkg(cocos2dInternal GLFW3)
     find_library(COCOA_LIBRARY Cocoa)
     find_library(OPENGL_LIBRARY OpenGL )
-    find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox)
-    find_library(OPENAL_LIBRARY OpenAL )
-    find_library(QUARTZCORE_LIBRARY QuartzCore )
     find_library(APPLICATIONSERVICES_LIBRARY ApplicationServices)
     find_library(IOKIT_LIBRARY IOKit)
-    find_library(FOUNDATION_LIBRARY Foundation)
+    
 
     set(PLATFORM_SPECIFIC_LIBS
       ${COCOA_LIBRARY}
       ${OPENGL_LIBRARY}
-      ${OPENAL_LIBRARY}
-      ${AUDIOTOOLBOX_LIBRARY}
-      ${QUARTZCORE_LIBRARY}
       ${APPLICATIONSERVICES_LIBRARY}
       ${IOKIT_LIBRARY}
-      ${FOUNDATION_LIBRARY}
-      ${ICONV_LIBRARY}
+      ${COCOS_APPLE_LIBS}
     )
   elseif(IOS)
     # Locate system libraries on iOS
     find_library(UIKIT_LIBRARY UIKit)
-    find_library(FOUNDATION_LIBRARY Foundation)
-    find_library(OPENAL_LIBRARY OpenAL )
     find_library(OPENGLES_LIBRARY OpenGLES )
-    find_library(QUARTZCORE_LIBRARY QuartzCore )
     find_library(CORE_MOTION_LIBRARY CoreMotion)
     find_library(MEDIA_PLAYER_LIBRARY MediaPlayer)
-    # library cpp-empty-test needed
-    find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox)
     find_library(CORE_TEXT_LIBRARY CoreText)
     find_library(SECURITY_LIBRARY Security)
     find_library(CORE_GRAPHICS_LIBRARY CoreGraphics)
     find_library(AV_FOUNDATION_LIBRARY AVFoundation)
-    find_library(ICONV_LIBRARY iconv)
     find_library(Z_LIBRARY z)
     set(PLATFORM_SPECIFIC_LIBS
       ${UIKIT_LIBRARY}
-      ${FOUNDATION_LIBRARY}
-      ${OPENAL_LIBRARY}
       ${OPENGLES_LIBRARY}
-      ${QUARTZCORE_LIBRARY}
       ${CORE_MOTION_LIBRARY}
       ${MEDIA_PLAYER_LIBRARY}
-      ${AUDIOTOOLBOX_LIBRARY}
       ${CORE_TEXT_LIBRARY}
       ${SECURITY_LIBRARY}
       ${CORE_GRAPHICS_LIBRARY}
       ${AV_FOUNDATION_LIBRARY}
-      ${ICONV_LIBRARY}
       ${Z_LIBRARY}
+      ${COCOS_APPLE_LIBS}
     )
   endif()
   
