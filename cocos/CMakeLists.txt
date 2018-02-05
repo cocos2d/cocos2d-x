@@ -32,6 +32,8 @@
 # The version number
 set(COCOS2D_X_VERSION 3.17)
 
+set(COCOS_CORE_LIB cocos2d)
+
 if(WINDOWS)
   ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 endif()
@@ -95,9 +97,9 @@ set(COCOS_SRC cocos2d.cpp
   include_directories(../external/xxtea)
   include_directories(../external/clipper)
 
-add_library(cocos2dInternal ${COCOS_SRC})
+add_library(${COCOS_CORE_LIB} ${COCOS_SRC})
 
-set_target_properties(cocos2dInternal
+set_target_properties(${COCOS_CORE_LIB}
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
@@ -107,7 +109,7 @@ set_target_properties(cocos2dInternal
 set(PLATFORM_SPECIFIC_LIBS)
 if(WINDOWS)
   foreach(_pkg OPENGL GLEW GLFW3 VORBIS MPG123 OPENAL)
-    cocos_use_pkg(cocos2dInternal ${_pkg})
+    cocos_use_pkg(${COCOS_CORE_LIB} ${_pkg})
   endforeach()
   list(APPEND PLATFORM_SPECIFIC_LIBS ws2_32 winmm Version Iphlpapi)
   if(MINGW)
@@ -115,7 +117,7 @@ if(WINDOWS)
   endif()
 elseif(LINUX)
   foreach(_pkg OPENGL GLEW GLFW3 FMOD FONTCONFIG THREADS GTK3)
-    cocos_use_pkg(cocos2dInternal ${_pkg})
+    cocos_use_pkg(${COCOS_CORE_LIB} ${_pkg})
   endforeach()
 elseif(APPLE)
 
@@ -134,7 +136,7 @@ elseif(APPLE)
 )
 
   if(MACOSX)
-    cocos_use_pkg(cocos2dInternal GLFW3)
+    cocos_use_pkg(${COCOS_CORE_LIB} GLFW3)
     find_library(COCOA_LIBRARY Cocoa)
     find_library(OPENGL_LIBRARY OpenGL )
     find_library(APPLICATIONSERVICES_LIBRARY ApplicationServices)
@@ -177,8 +179,8 @@ elseif(ANDROID)
   set(PLATFORM_SPECIFIC_LIBS GLESv2 EGL log android OpenSLES)
   include(../cmake/AndroidNdkModules.cmake)
   android_ndk_import_module_cpufeatures()
-  cocos_use_pkg(cocos2dInternal TREMOLO)
-  cocos_use_pkg(cocos2dInternal PVMP3DEC)
+  cocos_use_pkg(${COCOS_CORE_LIB} TREMOLO)
+  cocos_use_pkg(${COCOS_CORE_LIB} PVMP3DEC)
   include_directories(../external/android-specific/tremolo)
   include_directories(../external/android-specific/pvmp3dec/include)
   include_directories(../external/android-specific/pvmp3dec/src)
@@ -187,77 +189,71 @@ else()
 endif()
 
 foreach(pkg ZLIB MINIZIP TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS XXHASH)
-  cocos_use_pkg(cocos2dInternal ${pkg})
+  cocos_use_pkg(${COCOS_CORE_LIB} ${pkg})
 endforeach()
 
 if(NOT EMSCRIPTEN)
-  cocos_use_pkg(cocos2dInternal OPENSSL)
+  cocos_use_pkg(${COCOS_CORE_LIB} OPENSSL)
 endif()
 
 if(LINUX)
   set(glfw_other_linker_flags X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m)
 endif(LINUX)
 
-target_link_libraries(cocos2dInternal ${PLATFORM_SPECIFIC_LIBS} ${glfw_other_linker_flags})
+target_link_libraries(${COCOS_CORE_LIB} ${PLATFORM_SPECIFIC_LIBS} ${glfw_other_linker_flags})
 
 if(USE_JPEG)
   add_definitions(-DCC_USE_JPEG=1)
-  cocos_use_pkg(cocos2dInternal JPEG)
+  cocos_use_pkg(${COCOS_CORE_LIB} JPEG)
 else()
   add_definitions(-DCC_USE_JPEG=0)
 endif()
 
 if(USE_WEBP)
   add_definitions(-DCC_USE_WEBP=1)
-  cocos_use_pkg(cocos2dInternal WEBP)
+  cocos_use_pkg(${COCOS_CORE_LIB} WEBP)
 else()
   add_definitions(-DCC_USE_WEBP=0)
 endif()
 
 if(USE_TIFF)
   add_definitions(-DCC_USE_TIFF=1)
-  cocos_use_pkg(cocos2dInternal TIFF)
+  cocos_use_pkg(${COCOS_CORE_LIB} TIFF)
 else()
   add_definitions(-DCC_USE_TIFF=0)
 endif()
 
 if(USE_PNG)
   add_definitions(-DCC_USE_PNG=1)
-  cocos_use_pkg(cocos2dInternal PNG)
+  cocos_use_pkg(${COCOS_CORE_LIB} PNG)
 else()
   add_definitions(-DCC_USE_PNG=0)
 endif()
 
 if(USE_CHIPMUNK)
-  cocos_use_pkg(cocos2dInternal CHIPMUNK)
+  cocos_use_pkg(${COCOS_CORE_LIB} CHIPMUNK)
 endif()
 
 if(USE_BOX2D)
-  cocos_use_pkg(cocos2dInternal Box2D)
+  cocos_use_pkg(${COCOS_CORE_LIB} Box2D)
 endif()
 
 if(USE_BULLET)
-  cocos_use_pkg(cocos2dInternal BULLET)
+  cocos_use_pkg(${COCOS_CORE_LIB} BULLET)
 endif()
 
 if(USE_RECAST)
-  cocos_use_pkg(cocos2dInternal RECAST)
+  cocos_use_pkg(${COCOS_CORE_LIB} RECAST)
 endif()
-
-ADD_LIBRARY(cocos2d cc_dummy.c)
 
 if(ANDROID)
-  target_link_libraries(cocos2d -Wl,-whole-archive cocos2dxandroid_static -Wl,-no-whole-archive)
-  target_link_libraries(cocos2d cocos2dInternal cpufeatures)
+  target_link_libraries(${COCOS_CORE_LIB} -Wl,-whole-archive cocos2dxandroid -Wl,-no-whole-archive)
+  target_link_libraries(${COCOS_CORE_LIB} cpufeatures)
 elseif(LINUX)
-  target_link_libraries(cocos2d cocos2dInternal dl)
-else()
-  target_link_libraries(cocos2d cocos2dInternal)
+  target_link_libraries(${COCOS_CORE_LIB} dl)
 endif()
 
-add_dependencies(cocos2d cocos2dInternal)
-
-set_target_properties(cocos2d
+set_target_properties(${COCOS_CORE_LIB}
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
@@ -274,5 +270,5 @@ if(BUILD_JS_LIBS OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
 endif()
 
 if(XCODE OR VS)
-    cocos_mark_code_files("cocos2dInternal")
+    cocos_mark_code_files("${COCOS_CORE_LIB}")
 endif()

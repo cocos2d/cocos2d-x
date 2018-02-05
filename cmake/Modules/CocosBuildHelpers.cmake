@@ -67,9 +67,16 @@ endfunction()
 
 # mark the files in the sub dir of CMAKE_CURRENT_SOURCE_DIR
 function(cocos_mark_code_files cocos_target)
+  set(oneValueArgs GROUPBASE)
+  cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  if(NOT opt_GROUPBASE)
+    set(root_dir ${CMAKE_CURRENT_SOURCE_DIR})
+  else()
+    set(root_dir ${opt_GROUPBASE})
+    message(STATUS "target ${cocos_target} code group base is: ${root_dir}")
+  endif()
 
   message(STATUS "cocos_mark_code_files: ${cocos_target}")
-  set(root_dir ${CMAKE_CURRENT_SOURCE_DIR})
   set(group_base "Source Files")
 
   get_property(file_list TARGET ${cocos_target} PROPERTY SOURCES)
