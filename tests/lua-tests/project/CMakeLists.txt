@@ -31,11 +31,28 @@ if(LINUX)
 elseif(WINDOWS)
     list(APPEND SAMPLE_SRC proj.win32/main.cpp)
     set(RES_PREFIX "")
-elseif(MACOSX)
-    set(SAMPLE_SRC ${SAMPLE_SRC} proj.ios_mac/mac/main.cpp)
+elseif(APPLE)
 
-    file(GLOB_RECURSE RES_ICON proj.ios_mac/mac/Icon.icns)
-    cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.ios_mac/mac)
+    if(IOS)
+        set(IOS_SRC
+            proj.ios_mac/ios/main.m
+            proj.ios_mac/ios/LuaObjectCBridgeTest.mm
+            proj.ios_mac/ios/AppController.mm
+            proj.ios_mac/ios/RootViewController.mm
+            )
+        file(GLOB_RECURSE RES_LS proj.ios_mac/ios/LaunchScreen.storyboard)
+        cocos_mark_resources(FILES ${RES_LS} BASEDIR proj.ios_mac/ios)
+        file(GLOB_RECURSE RES_LSBG proj.ios_mac/ios/LaunchScreenBackground.png)
+        cocos_mark_resources(FILES ${RES_LSBG} BASEDIR proj.ios_mac/ios)
+        set(APPLE_SRC ${IOS_SRC} ${RES_LS} ${RES_LSBG})
+    elseif(MACOSX)
+        set(MAC_SRC ${MAC_SRC} proj.ios_mac/mac/main.cpp)
+        file(GLOB_RECURSE RES_ICON proj.ios_mac/mac/Icon.icns)
+        cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.ios_mac/mac)
+        set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
+    endif()
+
+ 
     file(GLOB_RECURSE APP_RESOURCES ../res/*)
     cocos_mark_resources(FILES ${APP_RESOURCES} BASEDIR ../res RESOURCEBASE Resources/res)
     file(GLOB_RECURSE APP_SCRIPTS ../src/*)
@@ -45,17 +62,10 @@ elseif(MACOSX)
     file(GLOB_RECURSE TEST_RESOURCES ${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources/*)
     cocos_mark_resources(FILES ${TEST_RESOURCES} BASEDIR ${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources RESOURCEBASE Resources/res)
 
-    list(APPEND SAMPLE_SRC ${RES_ICON} ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS} ${TEST_RESOURCES})
+    list(APPEND SAMPLE_SRC ${APPLE_SRC} ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS} ${TEST_RESOURCES})
 elseif(ANDROID)
     list(APPEND SAMPLE_SRC proj.android/app/jni/main.cpp)
     set(RES_PREFIX "/Resources")
-elseif(IOS)
-    set(PLATFORM_SRC
-        proj.ios_mac/main.m
-        proj.ios_mac/AppController.mm
-        proj.ios_mac/RootViewController.mm
-        )
-    include_directories(proj.ios_mac)
 endif()
 
 include_directories(
@@ -80,18 +90,17 @@ endif()
 target_link_libraries(${APP_NAME} luacocos2d)
 add_dependencies(${APP_NAME} luacocos2d)
 
-# need research, it should be added to all macos project?
-if(MACOSX OR APPLE)
-  # fix js-tests compile error, for temp
-  set_property(TARGET ${APP_NAME} APPEND_STRING PROPERTY COMPILE_FLAGS "-fobjc-arc")
-endif()
-
-if(MACOSX OR APPLE)
+if(APPLE)
   set_target_properties(${APP_NAME} PROPERTIES
         MACOSX_BUNDLE 1
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
-    cocos_pak_xcode(${APP_NAME})
+    if(MACOSX)
+        cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "LuaTestsApp")
+    elseif(IOS)
+        cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
+    endif()
+    
 else()
 
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")

@@ -129,6 +129,8 @@ if(APPLE)
         set(lua_bindings_manual_files
         ${lua_bindings_manual_files}
         manual/platform/ios/CCLuaObjcBridge.mm
+        auto/lua_cocos2dx_experimental_webview_auto.cpp
+        manual/ui/lua_cocos2dx_experimental_webview_manual.cpp
         )
     endif()
 elseif(ANDROID)

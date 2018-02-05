@@ -138,13 +138,6 @@ else()
 
 endif()
 
-# need research, it should be added to all macos project?
-# if(MACOSX OR APPLE)
-#   # fix js-tests compile error, for temp
-#   set_property(TARGET ${APP_NAME} APPEND_STRING PROPERTY COMPILE_FLAGS "-fobjc-arc")
-# endif()
-
-
 if(MACOSX OR APPLE)
     set_target_properties(${APP_NAME} PROPERTIES
         MACOSX_BUNDLE 1

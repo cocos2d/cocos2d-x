@@ -74,12 +74,26 @@ if(ANDROID)
     list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.android/app/jni/hellojavascript/main.cpp)
 elseif(LINUX)
     list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
-elseif(MACOSX)
-    list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.cpp)
+elseif(APPLE)
 
-    file(GLOB_RECURSE RES_ICON ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns)
-    cocos_mark_resources(FILES ${RES_ICON} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
-    # need review
+    if(IOS)
+        set(IOS_SRC
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/main.m
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/AppController.mm
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/RootViewController.mm
+            )
+        file(GLOB_RECURSE RES_LS ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreen.storyboard)
+        cocos_mark_resources(FILES ${RES_LS} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios)
+        file(GLOB_RECURSE RES_LSBG ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreenBackground.png)
+        cocos_mark_resources(FILES ${RES_LSBG} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios)
+        set(APPLE_SRC ${IOS_SRC} ${RES_LS} ${RES_LSBG})
+    elseif(MACOSX)
+        set(MAC_SRC ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.cpp)
+        file(GLOB_RECURSE RES_ICON ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns)
+        cocos_mark_resources(FILES ${RES_ICON} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
+        set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
+    endif()
+
     set(APP_MAIN
         main.js
         project.json
@@ -93,7 +107,7 @@ elseif(MACOSX)
     file(GLOB_RECURSE COCOS_SCRIPTS ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/script/*)
     cocos_mark_resources(FILES ${COCOS_SCRIPTS} BASEDIR ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/script RESOURCEBASE Resources/script)
     
-    list(APPEND GAME_SRC ${RES_ICON} ${APP_MAIN} ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS})
+    list(APPEND GAME_SRC ${APPLE_SRC} ${APP_MAIN} ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS})
 endif()
 
 if(ANDROID)
@@ -105,7 +119,7 @@ else()
     add_executable(${APP_NAME}
         ${GAME_SRC}
     )
-endif(ANDROID)
+endif()
 
 target_link_libraries(${APP_NAME} jscocos2d)
 
@@ -125,7 +139,11 @@ if(APPLE)
         MACOSX_BUNDLE 1
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
         )
-    cocos_pak_xcode(${APP_NAME})
+    if(MACOSX)
+        cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "LuaTestsApp")
+    elseif(IOS)
+        cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
+    endif()
 # need cocos_mark_resources, when build on mac, refer to lua project
 else()
     pre_build(${APP_NAME}
