@@ -188,7 +188,7 @@ elseif(APPLE)
     endif()
 else()
 
-    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
+    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
 
     set_target_properties(${APP_NAME} PROPERTIES
             RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
