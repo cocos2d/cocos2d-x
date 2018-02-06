@@ -326,6 +326,7 @@ bool js_cocos2dx_ui_Text_getString(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Text_disableEffect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Text_getLabelEffectType(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Text_getTextColor(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Text_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Text_setTextVerticalAlignment(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Text_setFontName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Text_setTouchScaleChangeEnabled(JSContext *cx, uint32_t argc, jsval *vp);
@@ -349,6 +350,7 @@ bool js_cocos2dx_ui_Text_getShadowColor(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_ui_Text_setTextColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Text_enableGlow(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Text_getLetter(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ui_Text_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Text_getTextVerticalAlignment(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Text_getTextAreaSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_ui_Text_setTextHorizontalAlignment(JSContext *cx, uint32_t argc, jsval *vp);

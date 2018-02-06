@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -38,6 +39,7 @@ NS_CC_BEGIN
 
 void* GLViewImpl::_pixelFormat = kEAGLColorFormatRGB565;
 int GLViewImpl::_depthFormat = GL_DEPTH_COMPONENT16;
+int GLViewImpl::_multisamplingCount = 0;
 
 GLViewImpl* GLViewImpl::createWithEAGLView(void *eaglview)
 {
@@ -106,6 +108,8 @@ void GLViewImpl::convertAttrs()
     {
         CCASSERT(0, "Unsupported format for depth and stencil buffers. Using default");
     }
+    
+    _multisamplingCount = _glContextAttrs.multisamplingCount;
 }
 
 GLViewImpl::GLViewImpl()
