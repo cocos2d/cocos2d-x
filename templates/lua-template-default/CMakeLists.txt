@@ -105,25 +105,12 @@ elseif(APPLE)
     list(APPEND GAME_SRC ${APPLE_SRC} ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS})
 endif()
 
-if(LINUX)
-    include_directories(
-        /usr/include
-        /usr/include/GLFW
-        /usr/local/include/GLFW
-    )
-endif(LINUX)
-
-# Todo solve bug, libGLESv1: STS_GLApi : DTS is not allowed for Package : org.cocos2dx.hellolua
 include_directories(
     ${RUNTIME_SRC_ROOT}/Classes
-    ${COCOS2DX_ROOT_PATH}/
-    ${COCOS2DX_ROOT_PATH}/cocos
     ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/auto
     ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
     ${COCOS2DX_ROOT_PATH}/external/lua/luajit/include
-    ${COCOS2DX_ROOT_PATH}/external/
     ${COCOS2DX_ROOT_PATH}/external/lua/tolua
-    ${COCOS2DX_ROOT_PATH}/cocos/audio/include
 )
 
 if(ANDROID)
@@ -162,17 +149,9 @@ else()
     
     pre_build(${APP_NAME}
         COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}/Resources/res
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}/Resources/src
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/cocos2d ${APP_BIN_DIR}/Resources
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/cocosdenshion ${APP_BIN_DIR}/Resources
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/cocosbuilder ${APP_BIN_DIR}/Resources
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/cocostudio ${APP_BIN_DIR}/Resources
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/extension ${APP_BIN_DIR}/Resources
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/network ${APP_BIN_DIR}/Resources
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/ui ${APP_BIN_DIR}/Resources
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/3d ${APP_BIN_DIR}/Resources
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/physics3d ${APP_BIN_DIR}/Resources
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/res ${APP_BIN_DIR}/Resources/res
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src ${APP_BIN_DIR}/Resources/src
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/ ${APP_BIN_DIR}/Resources/src/cocos
         )
 
 endif()
