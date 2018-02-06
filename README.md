@@ -4,9 +4,9 @@
 cocos2d-x
 =========
 
-|  |iOS|Mac|Linux|Win32|Android|
-| ----|----|----- | ---|----|------|
-|v3|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=ios)](http://45.56.80.45:8080/job/daily-build-v3/node=ios)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=mac)](http://45.56.80.45:8080/job/daily-build-v3/node=mac)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=linux)](http://45.56.80.45:8080/job/daily-build-v3/node=linux)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=win32_bak)](http://45.56.80.45:8080/job/daily-build-v3/node=win32_bak)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=android)](http://45.56.80.45:8080/job/daily-build-v3/node=android)
+|Win32|Others|
+| ----|------|
+[![Build status](https://ci.appveyor.com/api/projects/status/nlgirox464j6ldg5/branch/v3?svg=true)](https://ci.appveyor.com/project/minggo/cocos2d-x/branch/v3)|[![Build Status](https://travis-ci.org/cocos2d/cocos2d-x.svg?branch=v3)](https://travis-ci.org/cocos2d/cocos2d-x)
 
 
 [cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
@@ -153,17 +153,17 @@ Main features
 Build Requirements
 ------------------
 
-* Mac OS X 10.7+, Xcode 7+
+* Mac OS X 10.7+, Xcode 8+
 * or Ubuntu 12.10+, CMake 2.6+
-* or Windows 7+, VS 2013+
+* or Windows 7+, VS 2015
 * Python 2.7.5
-* NDK r11+ is required to build Android games(tested with r14)
+* NDK r16+ is required to build Android games
 * Android Studio 2.3.3+ to build Android games(tested with 2.3.3)
 * JRE or JDK 1.6+ is required for web publishing
 
 Runtime Requirements
 --------------------
-  * iOS 6.0+ for iPhone / iPad games
+  * iOS 8.0+ for iPhone / iPad games
   * Android 2.3.3+ for Android
   * OS X v10.9+ for Mac games
   * Windows 7+ for Win games
@@ -296,4 +296,3 @@ Contact us
 [9]: http://discuss.cocos2d-x.org "http://discuss.cocos2d-x.org"
 [10]: http://www.twitter.com/cocos2dx "http://www.twitter.com/cocos2dx"
 [11]: http://t.sina.com.cn/cocos2dx "http://t.sina.com.cn/cocos2dx"
-[12]: https://webchat.freenode.net/ "https://webchat.freenode.net/"

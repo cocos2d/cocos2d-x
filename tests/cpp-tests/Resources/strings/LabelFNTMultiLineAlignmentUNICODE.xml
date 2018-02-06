@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>french</key>
+	<string>Loin, très loin, au delà des monts Mots, à mille lieues des pays Voyellie et Consonnia, demeurent les Bolos Bolos</string>
+	<key>spanish</key>
+	<string>Muy lejos, más allá de las montañas de palabras, alejados de los países de las vocales y las consonantes, viven</string>
+	<key>ukrainian</key>
+	<string>Далеко-далеко за словесними горами в країні голосних і приголосних живуть рибні тексти. Далеко від усіх живуть вони в буквених будинках</string>
+</dict>
+</plist>

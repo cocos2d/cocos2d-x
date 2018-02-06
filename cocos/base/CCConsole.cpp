@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -530,7 +531,11 @@ bool Console::listenOnTCP(int port)
 #endif
 
     if ( (n = getaddrinfo(nullptr, serv, &hints, &res)) != 0) {
-        fprintf(stderr,"net_listen error for %s: %s", serv, gai_strerror(n));
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+        fprintf(stderr, "net_listen error for %s: %s", serv, gai_strerrorA(n));
+#else
+        fprintf(stderr, "net_listen error for %s: %s", serv, gai_strerror(n));
+#endif
         return false;
     }
 

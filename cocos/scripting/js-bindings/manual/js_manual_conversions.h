@@ -1,7 +1,8 @@
 /*
  * Created by Rohan Kuruvilla
  * Copyright (c) 2012 Zynga Inc.
- * Copyright (c) 2013-2017 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -82,16 +83,13 @@ public:
     JSFunctionWrapper(JSContext* cx, JS::HandleObject jsthis, JS::HandleValue fval, JS::HandleValue owner);
     ~JSFunctionWrapper();
 
-    void setOwner(JSContext* cx, JS::HandleValue owner);
     bool invoke(unsigned int argc, jsval *argv, JS::MutableHandleValue rval);
     bool invoke(JS::HandleValueArray args, JS::MutableHandleValue rval);
 private:
     JSContext *_cx;
-    JS::Heap<JSObject*> _jsthis;
-    JS::Heap<JS::Value> _fval;
-    JS::Heap<JS::Value> _owner;
-    void* _cppOwner;
-
+    JS::PersistentRootedObject* _jsthis;
+    JS::PersistentRootedValue* _fval;
+private:
     CC_DISALLOW_COPY_AND_ASSIGN(JSFunctionWrapper);
 };
 

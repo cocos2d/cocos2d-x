@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012 Zynga Inc.
- * Copyright (c) 2013-2017 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -116,9 +117,7 @@ JSAutoCompartment ac(cx, obj)
 #define JSB_ENSURE_AUTOCOMPARTMENT(cx, obj)
 #endif
 
-#define JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET \
-JSAutoCompartment __jsb_ac(ScriptingCore::getInstance()->getGlobalContext(), ScriptingCore::getInstance()->getGlobalObject());
-
+#define JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 
 /** @def JSB_INCLUDE_SYSTEM
  Whether or not it should include bindings for system components like LocalStorage

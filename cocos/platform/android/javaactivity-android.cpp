@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -114,12 +115,12 @@ JNIEXPORT jintArray Java_org_cocos2dx_lib_Cocos2dxActivity_getGLContextAttrs(JNI
     cocos2d::Application::getInstance()->initGLContextAttrs(); 
     GLContextAttrs _glContextAttrs = GLView::getGLContextAttrs();
     
-    int tmp[6] = {_glContextAttrs.redBits, _glContextAttrs.greenBits, _glContextAttrs.blueBits,
-                           _glContextAttrs.alphaBits, _glContextAttrs.depthBits, _glContextAttrs.stencilBits};
+    int tmp[7] = {_glContextAttrs.redBits, _glContextAttrs.greenBits, _glContextAttrs.blueBits,
+                           _glContextAttrs.alphaBits, _glContextAttrs.depthBits, _glContextAttrs.stencilBits, _glContextAttrs.multisamplingCount};
 
 
-    jintArray glContextAttrsJava = env->NewIntArray(6);
-        env->SetIntArrayRegion(glContextAttrsJava, 0, 6, tmp); 
+    jintArray glContextAttrsJava = env->NewIntArray(7);
+        env->SetIntArrayRegion(glContextAttrsJava, 0, 7, tmp);
     
     return glContextAttrsJava;
 }
