@@ -131,6 +131,8 @@ if(ANDROID)
     if(CMAKE_BUILD_TYPE MATCHES RELEASE)
         add_custom_command(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
     endif()
+    target_link_libraries(${APP_NAME} -Wl,-whole-archive cocos2d_android -Wl,-no-whole-archive)
+    add_dependencies(${APP_NAME} cocos2d_android)
 else()
     # add the executable
     add_executable(${APP_NAME} ${GAME_SRC})
