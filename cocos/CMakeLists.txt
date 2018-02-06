@@ -247,7 +247,6 @@ if(USE_RECAST)
 endif()
 
 if(ANDROID)
-  target_link_libraries(${COCOS_CORE_LIB} -Wl,-whole-archive cocos2dxandroid -Wl,-no-whole-archive)
   target_link_libraries(${COCOS_CORE_LIB} cpufeatures)
 elseif(LINUX)
   target_link_libraries(${COCOS_CORE_LIB} dl)

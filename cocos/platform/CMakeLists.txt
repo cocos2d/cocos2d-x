@@ -84,7 +84,8 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
 )
 
 elseif(ANDROID)
-
+# need move to COCOS2DX_ANDROID_STATIC?
+# need refactor
 set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/android/CCApplication-android.cpp
   platform/android/CCCommon-android.cpp
@@ -106,9 +107,9 @@ set(COCOS2DX_ANDROID_STATIC
 
 )
 
-add_library(cocos2dxandroid STATIC ${COCOS2DX_ANDROID_STATIC})
-set_property(TARGET cocos2dxandroid PROPERTY POSITION_INDEPENDENT_CODE TRUE)
-set_target_properties(cocos2dxandroid
+add_library(cocos2d_android STATIC ${COCOS2DX_ANDROID_STATIC})
+set_property(TARGET cocos2d_android PROPERTY POSITION_INDEPENDENT_CODE TRUE)
+set_target_properties(cocos2d_android
   PROPERTIES
   ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
   LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
