@@ -26,6 +26,10 @@
 cmake_minimum_required(VERSION 3.1)
 
 set(APP_NAME TemplateCpp)
+if(ANDROID)
+    # the share library name for Android, it's value depend on AndroidManifest.xml
+    set(APP_NAME MyGame)
+endif(ANDROID)
 
 project (${APP_NAME})
 

@@ -28,9 +28,9 @@ cmake_minimum_required(VERSION 3.1)
 
 set(APP_NAME TemplateJS)
 if(ANDROID)
+    # the share library name for Android, it's value depend on AndroidManifest.xml
     set(APP_NAME cocos2djs)
 endif(ANDROID)
-
 
 project(${APP_NAME})
 

@@ -52,7 +52,7 @@ see the Gradle properties: `PROP_NDK_MODE`, it control the way of build Native
 # android cmake support
 # uncomment it, native code will build by cmake
 # keep comment, native code will build by ndkBuild
-PROP_NDK_MODE=cmake
+# PROP_NDK_MODE=cmake
 ```
 
 #### TODO
