@@ -27,10 +27,6 @@
 cmake_minimum_required(VERSION 3.1)
 
 set(APP_NAME TemplateJS)
-if(ANDROID)
-    # the share library name for Android, it's value depend on AndroidManifest.xml
-    set(APP_NAME cocos2djs)
-endif(ANDROID)
 
 project(${APP_NAME})
 
@@ -53,6 +49,10 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 endif(NOT DEFINED BUILD_ENGINE_DONE)
 
+if(ANDROID)
+    # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
+    set(APP_NAME cocos2djs)
+endif(ANDROID)
 
 include_directories(
     ${COCOS2DX_ROOT_PATH}
@@ -142,7 +142,6 @@ if(APPLE)
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()
-# need cocos_mark_resources, when build on mac, refer to lua project
 else()
 
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")

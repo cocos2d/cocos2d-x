@@ -26,10 +26,6 @@
 cmake_minimum_required(VERSION 3.1)
 
 set(APP_NAME TemplateCpp)
-if(ANDROID)
-    # the share library name for Android, it's value depend on AndroidManifest.xml
-    set(APP_NAME MyGame)
-endif(ANDROID)
 
 project (${APP_NAME})
 
@@ -49,6 +45,10 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 endif(NOT DEFINED BUILD_ENGINE_DONE)
 
+if(ANDROID)
+    # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
+    set(APP_NAME MyGame)
+endif(ANDROID)
 
 if(ANDROID)
     set(PLATFORM_SPECIFIC_SRC proj.android/app/jni/hellocpp/main.cpp)

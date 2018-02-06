@@ -24,10 +24,6 @@
 cmake_minimum_required(VERSION 3.1)
 
 set(APP_NAME TemplateLua)
-if(ANDROID)
-  # the share library name for Android, it's value depend on AndroidManifest.xml
-  set(APP_NAME cocos2dlua)
-endif(ANDROID)
 
 project(${APP_NAME})
 
@@ -51,6 +47,10 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
 
 endif(NOT DEFINED BUILD_ENGINE_DONE)
 
+if(ANDROID)
+  # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
+  set(APP_NAME cocos2dlua)
+endif(ANDROID)
 
 set(GAME_SRC ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp
 )
