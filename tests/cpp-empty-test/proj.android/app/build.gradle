@@ -14,11 +14,13 @@ android {
         versionName "1.0"
 
         externalNativeBuild {
+            // do ndk build if no property PROP_NDK_MODE or it's value equal 'ndk'
+            // do cmake build if property PROP_NDK_MODE's value equal 'cmake'
             if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE == 'ndk') {
                 ndkBuild {
-                    // skip the NDK Build step if PROP_NDK_MODE is none
                     targets 'cpp_empty_test'
                     arguments 'NDK_TOOLCHAIN_VERSION=clang'
+                    arguments 'APP_PLATFORM=android-' + PROP_APP_PLATFORM
                     arguments '-j' + Runtime.runtime.availableProcessors()
                 }
             }
@@ -44,9 +46,10 @@ android {
     }
 
     externalNativeBuild {
+        // do ndk build if no property PROP_NDK_MODE or it's value equal 'ndk'
+        // do cmake build if property PROP_NDK_MODE's value equal 'cmake'
         if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE == 'ndk') {
             ndkBuild {
-                // skip the NDK Build step if PROP_NDK_MODE is none
                 path "jni/Android.mk"
             }
         }

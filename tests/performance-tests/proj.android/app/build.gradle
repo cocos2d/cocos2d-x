@@ -19,6 +19,7 @@ android {
                     // skip the NDK Build step if PROP_NDK_MODE is none
                     targets 'cocos2dcpp'
                     arguments 'NDK_TOOLCHAIN_VERSION=clang'
+                    arguments 'APP_PLATFORM=android-' + PROP_APP_PLATFORM
                     arguments '-j' + Runtime.runtime.availableProcessors()
                     abiFilters.addAll(PROP_APP_ABI.split(':').collect { it as String })
                 }
