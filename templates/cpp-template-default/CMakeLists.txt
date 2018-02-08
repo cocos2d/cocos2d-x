@@ -149,7 +149,7 @@ target_link_libraries(${APP_NAME} cocos2d)
 
 if(MSVC)
 
-	set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${PLATFORM_FOLDER}/$<CONFIG>")
+	set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/$<CONFIG>")
 
     #get our resources
     add_custom_command(TARGET ${APP_NAME} PRE_BUILD

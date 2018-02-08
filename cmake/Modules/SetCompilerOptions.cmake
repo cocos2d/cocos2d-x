@@ -100,7 +100,7 @@ macro (SetCompilerOptions)
 
 	# Compiler options
 	if(MSVC)
-		if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+		if(CMAKE_BUILD_TYPE STREQUAL "DEBUG")
 			set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:msvcrt /NODEFAULTLIB:libcmt")
 		else()
 			set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt")
