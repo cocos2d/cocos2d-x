@@ -24,29 +24,29 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
-# build engine library and all tests
+# build all test projects, it need the engine library
 
-cmake_minimum_required(VERSION 3.1)
+# library have been build, on ../CMakeLists.txt
+set(BUILD_ENGINE_DONE ON)
 
-project(Cocos2d-x)
+# add engine all tests project
+add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/cpp-empty-test ${ENGINE_BINARY_PATH}/tests/cpp-empty-test)
 
-# cocos2dx root path
-set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
-set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
+add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/cpp-tests ${ENGINE_BINARY_PATH}/tests/cpp-tests)
 
-# works before build libcocos2d
-include(CocosBuildSet)
-CocosBuildSet()
+add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/js-tests/project ${ENGINE_BINARY_PATH}/tests/js-tests)
 
-# TODO: use cocos prebuilt library
-if(USE_COCOS_PREBUILT_LIBS)
-    # use prebuilt library, not build
-else(USE_COCOS_PREBUILT_LIBS)
-    # build engine library
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
+add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/lua-empty-test/project ${ENGINE_BINARY_PATH}/tests/lua-empty-test)
 
-    # build engine all tests project
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/tests ${ENGINE_BINARY_PATH}/tests)
+# run on xcode failed, reason might be get GLView failed, but on mac command line, it's success
+add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/lua-tests/project ${ENGINE_BINARY_PATH}/tests/lua-test)
 
-endif(USE_COCOS_PREBUILT_LIBS)
+# temp feature: add engine all template project, as the test project, it make template project test easier
+add_subdirectory(${COCOS2DX_ROOT_PATH}/templates/cpp-template-default ${ENGINE_BINARY_PATH}/template/cpp-template-default)
+
+add_subdirectory(${COCOS2DX_ROOT_PATH}/templates/js-template-default ${ENGINE_BINARY_PATH}/template/js-template-default)
+
+# run on mac failed, for it need libsimulator(not cmake files)
+add_subdirectory(${COCOS2DX_ROOT_PATH}/templates/lua-template-default ${ENGINE_BINARY_PATH}/template/lua-template-default)
+
 

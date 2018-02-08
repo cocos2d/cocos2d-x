@@ -4,7 +4,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
-    buildToolsVersion '27.0.1'
+    buildToolsVersion PROP_BUILD_TOOLS_VERSION
 
     defaultConfig {
         applicationId "org.cocos2dx.hellolua"
@@ -14,16 +14,26 @@ android {
         versionName "1.0"
 
         externalNativeBuild {
-            ndkBuild {
-                if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE.compareTo('none') != 0) {
+            if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE == 'ndk') {
+                ndkBuild {
                     // skip the NDK Build step if PROP_NDK_MODE is none
                     targets 'cocos2dlua'
                     arguments 'NDK_TOOLCHAIN_VERSION=clang'
-                    arguments 'APP_PLATFORM=android-' + PROP_APP_PLATFORM
                     arguments '-j' + Runtime.runtime.availableProcessors()
-                    abiFilters.addAll(PROP_APP_ABI.split(':').collect { it as String })
                 }
             }
+            else if (PROP_NDK_MODE == 'cmake') {
+                cmake {
+                    arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", \
+                              "-DUSE_CHIPMUNK=TRUE", "-DUSE_BULLET=TRUE"
+                    cppFlags "-frtti -fexceptions"
+                }
+            }
+        }
+
+        ndk {
+            abiFilters = []
+            abiFilters.addAll(PROP_APP_ABI.split(':').collect{it as String})
         }
     }
 
@@ -35,10 +45,15 @@ android {
     }
 
     externalNativeBuild {
-        ndkBuild {
-            if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE.compareTo('none') != 0) {
+        if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE == 'ndk') {
+            ndkBuild {
                 // skip the NDK Build step if PROP_NDK_MODE is none
                 path "jni/Android.mk"
+            }
+        }
+        else if (PROP_NDK_MODE == 'cmake') {
+            cmake {
+                path "../../../../CMakeLists.txt"
             }
         }
     }

@@ -45,10 +45,10 @@ if (CMAKE_UNAME)
 	string (REGEX REPLACE "^([0-9]+)\\.([0-9]+).*$" "\\1" DARWIN_MAJOR_VERSION "${CMAKE_HOST_SYSTEM_VERSION}")
 endif (CMAKE_UNAME)
 
-# Force the compilers to gcc for iOS
+# Force the compilers to Clang for iOS
 include (CMakeForceCompiler)
-CMAKE_FORCE_C_COMPILER (/usr/bin/clang Apple)
-CMAKE_FORCE_CXX_COMPILER (/usr/bin/clang++ Apple)
+set(CMAKE_C_COMPILER /usr/bin/clang Clang)
+set(CMAKE_CXX_COMPILER /usr/bin/clang++ Clang)
 set(CMAKE_AR ar CACHE FILEPATH "" FORCE)
 
 # Skip the platform compiler checks for cross compiling
@@ -68,9 +68,8 @@ set (CMAKE_C_OSX_CURRENT_VERSION_FLAG "-current_version ")
 set (CMAKE_CXX_OSX_COMPATIBILITY_VERSION_FLAG "${CMAKE_C_OSX_COMPATIBILITY_VERSION_FLAG}")
 set (CMAKE_CXX_OSX_CURRENT_VERSION_FLAG "${CMAKE_C_OSX_CURRENT_VERSION_FLAG}")
 
-# Hidden visibilty is required for cxx on iOS 
 set (CMAKE_C_FLAGS_INIT "")
-set (CMAKE_CXX_FLAGS_INIT "-fvisibility=hidden -fvisibility-inlines-hidden -isysroot ${CMAKE_OSX_SYSROOT}")
+set (CMAKE_CXX_FLAGS_INIT "")
 
 set (CMAKE_C_LINK_FLAGS "-Wl,-search_paths_first ${CMAKE_C_LINK_FLAGS}")
 set (CMAKE_CXX_LINK_FLAGS "-Wl,-search_paths_first ${CMAKE_CXX_LINK_FLAGS}")
@@ -96,20 +95,33 @@ if (NOT DEFINED IOS_PLATFORM)
 endif (NOT DEFINED IOS_PLATFORM)
 set (IOS_PLATFORM ${IOS_PLATFORM} CACHE STRING "Type of iOS Platform")
 
+# Setup building for arm64 or not
+if (NOT DEFINED BUILD_ARM64)
+    set (BUILD_ARM64 true)
+endif (NOT DEFINED BUILD_ARM64)
+set (BUILD_ARM64 ${BUILD_ARM64} CACHE STRING "Build arm64 arch or not")
+
 # Check the platform selection and setup for developer root
-if (${IOS_PLATFORM} STREQUAL "OS")
+if (IOS_PLATFORM STREQUAL "OS")
 	set (IOS_PLATFORM_LOCATION "iPhoneOS.platform")
 
 	# This causes the installers to properly locate the output libraries
 	set (CMAKE_XCODE_EFFECTIVE_PLATFORMS "-iphoneos")
-elseif (${IOS_PLATFORM} STREQUAL "SIMULATOR")
+elseif (IOS_PLATFORM STREQUAL "SIMULATOR")
+    set (SIMULATOR true)
 	set (IOS_PLATFORM_LOCATION "iPhoneSimulator.platform")
 
 	# This causes the installers to properly locate the output libraries
 	set (CMAKE_XCODE_EFFECTIVE_PLATFORMS "-iphonesimulator")
-else (${IOS_PLATFORM} STREQUAL "OS")
+elseif (IOS_PLATFORM STREQUAL "SIMULATOR64")
+    set (SIMULATOR true)
+	set (IOS_PLATFORM_LOCATION "iPhoneSimulator.platform")
+
+	# This causes the installers to properly locate the output libraries
+	set (CMAKE_XCODE_EFFECTIVE_PLATFORMS "-iphonesimulator")
+else ()
 	message (FATAL_ERROR "Unsupported IOS_PLATFORM value selected. Please choose OS or SIMULATOR")
-endif (${IOS_PLATFORM} STREQUAL "OS")
+endif ()
 
 # Setup iOS developer location unless specified manually with CMAKE_IOS_DEVELOPER_ROOT
 # Note Xcode 4.3 changed the installation location, choose the most recent one available
@@ -142,12 +154,13 @@ set (CMAKE_IOS_SDK_ROOT ${CMAKE_IOS_SDK_ROOT} CACHE PATH "Location of the select
 set (CMAKE_OSX_SYSROOT ${CMAKE_IOS_SDK_ROOT} CACHE PATH "Sysroot used for iOS support")
 
 # set the architecture for iOS 
-# NOTE: Currently both ARCHS_STANDARD_32_BIT and ARCHS_UNIVERSAL_IPHONE_OS set armv7 only, so set both manually
-if (${IOS_PLATFORM} STREQUAL "OS")
-	set (IOS_ARCH armv6 armv7)
-else (${IOS_PLATFORM} STREQUAL "OS")
-	set (IOS_ARCH i386)
-endif (${IOS_PLATFORM} STREQUAL "OS")
+if (IOS_PLATFORM STREQUAL "OS")
+    set (IOS_ARCH armv7 armv7s arm64)
+elseif (IOS_PLATFORM STREQUAL "SIMULATOR")
+    set (IOS_ARCH i386)
+elseif (IOS_PLATFORM STREQUAL "SIMULATOR64")
+    set (IOS_ARCH x86_64)
+endif ()
 
 set (CMAKE_OSX_ARCHITECTURES ${IOS_ARCH} CACHE string  "Build architecture for iOS")
 
@@ -190,4 +203,3 @@ macro (find_host_package)
 	set (CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 	set (CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 endmacro (find_host_package)
-

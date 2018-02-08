@@ -7,24 +7,40 @@ if(WINDOWS)
   set(COCOS_UI_SPECIFIC_SRC
       ui/UIEditBox/UIEditBoxImpl-win32.cpp
       )
-elseif(MACOSX)
-  set(COCOS_UI_SPECIFIC_SRC
-      ui/UIEditBox/UIEditBoxImpl-mac.mm
-      ui/UIEditBox/Mac/CCUIEditBoxMac.mm
-      ui/UIEditBox/Mac/CCUIMultilineTextField.m
-      ui/UIEditBox/Mac/CCUIPasswordTextField.m
-      ui/UIEditBox/Mac/CCUISingleLineTextField.m
-      ui/UIEditBox/Mac/CCUITextFieldFormatter.m
-      )
+elseif(APPLE)
+  if(MACOSX)
+    set(COCOS_UI_SPECIFIC_SRC
+        ui/UIEditBox/UIEditBoxImpl-mac.mm
+        ui/UIEditBox/Mac/CCUIEditBoxMac.mm
+        ui/UIEditBox/Mac/CCUIMultilineTextField.m
+        ui/UIEditBox/Mac/CCUIPasswordTextField.m
+        ui/UIEditBox/Mac/CCUISingleLineTextField.m
+        ui/UIEditBox/Mac/CCUITextFieldFormatter.m
+        )
+  elseif(IOS)
+      set(COCOS_UI_SPECIFIC_SRC
+        ui/UIWebView.mm
+        ui/UIVideoPlayer-ios.mm
+        ui/UIWebViewImpl-ios.mm
+        ui/UIEditBox/UIEditBoxImpl-ios.mm
+        ui/UIEditBox/iOS/CCUIEditBoxIOS.mm
+        ui/UIEditBox/iOS/CCUIMultilineTextField.mm
+        ui/UIEditBox/iOS/CCUISingleLineTextField.mm
+        ui/UIEditBox/iOS/UITextField+CCUITextInput.mm
+        ui/UIEditBox/iOS/UITextView+CCUITextInput.mm
+        )
+    endif()
 elseif(LINUX)
   set(COCOS_UI_SPECIFIC_SRC
       ui/UIEditBox/UIEditBoxImpl-linux.cpp
       )
-ELSEIF(ANDROID)
+elseif(ANDROID)
     set(COCOS_UI_SPECIFIC_SRC
         ui/UIEditBox/UIEditBoxImpl-android.cpp
         ui/UIVideoPlayer-android.cpp
         ui/UIWebViewImpl-android.cpp
+        # it's special for android, not a common file
+        ui/UIWebView.cpp
     )
 endif()
 
@@ -60,7 +76,6 @@ set(COCOS_UI_SRC
   ui/UITextBMFont.cpp
   ui/UITextField.cpp
   ui/UIVBox.cpp
-  ui/UIWebView.cpp
   ui/UIWidget.cpp
   ui/UIEditBox/UIEditBox.cpp
   ui/UILayoutComponent.cpp

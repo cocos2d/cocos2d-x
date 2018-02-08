@@ -1,7 +1,19 @@
 macro (BuildModules)
+
+	# header files third libiary needed, such as tinyxml2.h
+	include_directories(
+		${COCOS2DX_ROOT_PATH}
+		${COCOS2DX_ROOT_PATH}/cocos
+		${COCOS2DX_ROOT_PATH}/deprecated
+		${COCOS2DX_ROOT_PATH}/cocos/platform
+		${COCOS2DX_ROOT_PATH}/extensions
+		${COCOS2DX_ROOT_PATH}/external
+	)
+
 	# desktop platforms
 	if(LINUX OR MACOSX OR WINDOWS)
-	  cocos_find_package(OpenGL OPENGL REQUIRED)
+		cocos_find_package(OpenGL OPENGL REQUIRED)
+		cocos_find_package(SQLite3 SQLITE3 REQUIRED)
 
 	  if(LINUX OR WINDOWS)
 	    cocos_find_package(GLEW GLEW REQUIRED)
@@ -17,7 +29,6 @@ macro (BuildModules)
 	    find_package(Threads REQUIRED)
 	    set(THREADS_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
 
-	    cocos_find_package(SQLite3 SQLITE3 REQUIRED)
 	    cocos_find_package(FMOD FMOD REQUIRED)
 	    cocos_find_package(Fontconfig FONTCONFIG REQUIRED)
 	    cocos_find_package(GTK3 GTK3 REQUIRED)
@@ -42,100 +53,150 @@ macro (BuildModules)
 
 	# Chipmunk
 	if(USE_CHIPMUNK)
-	  if(USE_PREBUILT_LIBS)
-	    cocos_find_package(Chipmunk CHIPMUNK REQUIRED)
-	  endif()
+	  cocos_find_package(Chipmunk CHIPMUNK REQUIRED)
+	  add_definitions(-DCC_ENABLE_CHIPMUNK_INTEGRATION=1)
+	else(USE_CHIPMUNK)
+	  add_definitions(-DCC_USE_PHYSICS=0)
 	endif(USE_CHIPMUNK)
 
 	# Box2d
 	if(USE_BOX2D)
-	  if(USE_PREBUILT_LIBS)
+	  if(USE_EXTERNAL_PREBUILT_LIBS)
 	    cocos_find_package(box2d Box2D REQUIRED)
-	  endif(USE_PREBUILT_LIBS)
+	  endif(USE_EXTERNAL_PREBUILT_LIBS)
 	  message(STATUS "Box2D include dirs: ${Box2D_INCLUDE_DIRS}")
+	  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=1)
+	elseif(BUILD_BOX2D)
+	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/Box2D ${ENGINE_BINARY_PATH}/external/Box2D)
+	  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=1)
+	else()
+	  add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=0)
 	endif(USE_BOX2D)
 
 	# Bullet
 	if(USE_BULLET)
-	  if(USE_PREBUILT_LIBS)
+	  if(USE_EXTERNAL_PREBUILT_LIBS)
 	    cocos_find_package(bullet BULLET REQUIRED)
 	  endif()
+	  add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=1)
+	  add_definitions(-DCC_USE_PHYSICS=1)
 	  message(STATUS "Bullet include dirs: ${BULLET_INCLUDE_DIRS}")
+	else(USE_BULLET)
+	  add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=0)
+	  add_definitions(-DCC_USE_3D_PHYSICS=0)
 	endif(USE_BULLET)
 
 	# Recast (not prebuilded, exists as source)
 	if(USE_RECAST)
-	  if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
-	    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/recast)
-	    set(RECAST_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/recast)
+	  if(USE_EXTERNAL_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
+	    add_subdirectory(${COCOS2DX_ROOT_PATH}/external/recast ${ENGINE_BINARY_PATH}/external/recast)
+	    set(RECAST_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/recast)
 	    set(RECAST_LIBRARIES recast)
 	  else()
 	    cocos_find_package(recast RECAST REQUIRED)
 	    set(RECAST_LIBRARIES recast)
 	  endif()
 	  message(STATUS "Recast include dirs: ${RECAST_INCLUDE_DIRS}")
+	  add_definitions(-DCC_USE_NAVMESH=1)
+	else(USE_RECAST)
+	  add_definitions(-DCC_USE_NAVMESH=0)
 	endif(USE_RECAST)
 
 	# Tinyxml2 (not prebuilded, exists as source)
-	if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
-	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2)
-	  set(TinyXML2_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/tinyxml2)
+	if(USE_EXTERNAL_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
+	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/tinyxml2 ${ENGINE_BINARY_PATH}/external/tinyxml2)
+	  set(TinyXML2_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/tinyxml2)
 	  set(TinyXML2_LIBRARIES tinyxml2)
 	else()
 	  cocos_find_package(TinyXML2 TinyXML2 REQUIRED)
 	endif()
 	message(STATUS "TinyXML2 include dirs: ${TinyXML2_INCLUDE_DIRS}")
 
-	# libjpeg
-	cocos_find_package(JPEG JPEG REQUIRED)
-	cocos_find_package(ZLIB ZLIB REQUIRED)
+	# need review
+	if(NOT IOS)
+		cocos_find_package(ZLIB ZLIB REQUIRED)
+	endif()
+	if(IOS)
+		cocos_find_package(SQLite3 SQLITE3 REQUIRED)
+	endif(IOS)
+
+	if(ANDROID)
+	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/android-specific/pvmp3dec ${ENGINE_BINARY_PATH}/external/android-specific/pvmp3dec)
+	  set(PVMP3DEC_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/android-specific/pvmp3dec/include ${COCOS2DX_ROOT_PATH}/external/android-specific/pvmp3dec/src)
+	  set(PVMP3DEC_LIBRARIES pvmp3dec)
+	  message(STATUS "pvmp3dec include dirs: ${PVMP3DEC_INCLUDE_DIRS}")
+	  
+	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/android-specific/tremolo ${ENGINE_BINARY_PATH}/external/android-specific/tremolo)
+	  set(TREMOLO_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/android-specific/tremolo)
+	  set(TREMOLO_LIBRARIES tremolo)
+	  message(STATUS "Tremolo include dirs: ${TREMOLO_INCLUDE_DIRS}")
+	endif()
 
 	# minizip (we try to migrate to minizip from https://github.com/nmoinvaz/minizip)
 	# only msys2 currently provides package for this variant, all other
 	# dists have packages from zlib, thats very old for us.
 	# moreover our embedded version modified to quick provide
 	# functionality needed by cocos.
-	if(USE_PREBUILT_LIBS OR NOT MINGW)
+	if(USE_EXTERNAL_PREBUILT_LIBS OR NOT MINGW OR USE_SOURCES_EXTERNAL)
 	  #TODO: hack! should be in external/unzip/CMakeLists.txt
 	  include_directories(${ZLIB_INCLUDE_DIRS})
-	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/unzip)
-	  set(MINIZIP_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/unzip ${ZLIB_INCLUDE_DIRS})
+	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/unzip ${ENGINE_BINARY_PATH}/external/unzip)
+	  set(MINIZIP_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/unzip ${ZLIB_INCLUDE_DIRS})
 	  set(MINIZIP_LIBRARIES unzip ${ZLIB_LIBRARIES})
 	  message(STATUS "MINIZIP include dirs: ${MINIZIP_INCLUDE_DIRS}")
 	else()
 	  cocos_find_package(MINIZIP MINIZIP REQUIRED)
 	  # double check that we have needed functions
 	  include(CheckLibraryExists)
-	  check_library_exists(${MINIZIP_LIBRARIES} "unzGoToFirstFile2" "" MINIZIP_HAS_GOTOFIRSTFILE2)
-	  if(NOT MINIZIP_HAS_GOTOFIRSTFILE2)
-	    message(FATAL_ERROR "Minizip library on you system very old. Please use recent version from https://github.com/nmoinvaz/minizip or enable USE_PREBUILT_LIBS")
-	    return()
-	  endif()
+	  add_definitions(-DMINIZIP_FROM_SYSTEM)
 	endif()
+	
+	# Jpeg
+	if(USE_JPEG)
+	  cocos_find_package(JPEG JPEG REQUIRED)
+	  add_definitions(-DCC_USE_JPEG=1)
+	else(USE_JPEG)
+	  add_definitions(-DCC_USE_JPEG=0)
+	endif(USE_JPEG)
 
-	cocos_find_package(PNG PNG REQUIRED)
-	cocos_find_package(TIFF TIFF REQUIRED)
+	# Tiff
+	if(USE_TIFF)
+	  cocos_find_package(TIFF TIFF REQUIRED)
+	  add_definitions(-DCC_USE_TIFF=1)
+	else(USE_TIFF)
+	  add_definitions(-DCC_USE_TIFF=0)
+	endif(USE_TIFF)
+
+	# Png
+	if(USE_PNG)
+		cocos_find_package(PNG PNG REQUIRED)
+	  add_definitions(-DCC_USE_PNG=1)
+	else(USE_PNG)
+      add_definitions(-DCC_USE_PNG=0)
+	endif(USE_PNG)
+	
 	cocos_find_package(WEBSOCKETS WEBSOCKETS REQUIRED)
 	cocos_find_package(CURL CURL REQUIRED)
+	if(NOT USE_EXTERNAL_PREBUILT_LIBS)
+	  cocos_find_package(OpenSSL OPENSSL REQUIRED)
+	endif()
 
 	# flatbuffers
-	if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
-	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/flatbuffers)
-	  set(FLATBUFFERS_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external)
+	if(USE_EXTERNAL_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
+	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/flatbuffers ${ENGINE_BINARY_PATH}/external/flatbuffers)
+	  set(FLATBUFFERS_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external)
 	  message(STATUS "Flatbuffers include dirs: ${FLATBUFFERS_INCLUDE_DIRS}")
 	else()
 	  cocos_find_package(flatbuffers flatbuffers REQUIRED)
 	endif()
 
 	# xxhash
-	if(USE_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
-	  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash)
-	  set(XXHASH_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash)
+	if(USE_EXTERNAL_PREBUILT_LIBS OR USE_SOURCES_EXTERNAL)
+	  add_subdirectory(${COCOS2DX_ROOT_PATH}/external/xxhash ${ENGINE_BINARY_PATH}/external/xxhash)
+	  set(XXHASH_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/xxhash)
 	  set(XXHASH_LIBRARIES xxhash)
 	else()
 	  cocos_find_package(xxhash xxhash REQUIRED)
 	endif()
 
-	# libcocos2d.a
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cocos)
 endmacro(BuildModules)

@@ -4,7 +4,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
-    buildToolsVersion '27.0.1'
+    buildToolsVersion PROP_BUILD_TOOLS_VERSION
 
     defaultConfig {
         applicationId "org.cocos2dx.LuaGameControllerTest"
@@ -19,7 +19,6 @@ android {
                     // skip the NDK Build step if PROP_NDK_MODE is none
                     targets 'lua_game_controller'
                     arguments 'NDK_TOOLCHAIN_VERSION=clang'
-                    arguments 'APP_PLATFORM=android-' + PROP_APP_PLATFORM
                     arguments '-j' + Runtime.runtime.availableProcessors()
                     abiFilters.addAll(PROP_APP_ABI.split(':').collect { it as String })
                 }
