@@ -50,6 +50,8 @@ macro(CocosBuildSet)
             set(CMAKE_BUILD_TYPE RELEASE)
         endif(DEBUG_MODE)
     endif(NOT CMAKE_BUILD_TYPE)
+    # ignore the difference between Debug and DEBUG
+    string(TOUPPER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE)
 
     # Define other useful variables not defined by CMake
     if(CMAKE_GENERATOR STREQUAL Xcode)

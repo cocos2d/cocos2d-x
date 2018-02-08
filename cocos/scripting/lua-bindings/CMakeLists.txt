@@ -41,7 +41,7 @@ if(WINDOWS)
     if(MINGW)
         add_definitions(-DLUASOCKET_INET_ATON -DLUASOCKET_INET_PTON)
     endif()
-    add_definitions(-DWIN32 -D_WINDOWS)
+    add_definitions(-D_USRLUASTATIC)
     list(APPEND lua_cocos2d_source_files
         ${cocos_root}/external/lua/luasocket/wsocket.c
         )
