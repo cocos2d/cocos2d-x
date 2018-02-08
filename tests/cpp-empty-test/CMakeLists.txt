@@ -107,24 +107,27 @@ add_dependencies(${APP_NAME} cocos2d)
 
 if(MSVC)
 
+    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/$<CONFIG>")
+
     #get our resources
     add_custom_command(TARGET ${APP_NAME} PRE_BUILD
-                      COMMAND ${CMAKE_COMMAND} -E copy_directory
-                          ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${CMAKE_CURRENT_BINARY_DIR})
+            COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR})
+
     #get our dlls
     add_custom_command(TARGET ${APP_NAME} PRE_BUILD
                       COMMAND ${CMAKE_COMMAND} -E copy
                       ${CMAKE_CURRENT_SOURCE_DIR}/../../external/win32-specific/gles/prebuilt/glew32.dll 
-                      ${CMAKE_CURRENT_BINARY_DIR})
+                      ${APP_BIN_DIR})
 
     add_custom_command(TARGET ${APP_NAME} PRE_BUILD
                       COMMAND ${CMAKE_COMMAND} -E copy
                       ${CMAKE_CURRENT_SOURCE_DIR}/../../external/win32-specific/zlib/prebuilt/zlib1.dll 
-                      ${CMAKE_CURRENT_BINARY_DIR})
+                      ${APP_BIN_DIR})
 
     #Visual Studio Defaults to wrong type
-    set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:WINDOWS")
-    set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
+    set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS"
+    RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
 
 elseif(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES

@@ -2,6 +2,9 @@
 
 # START CONFIG
 
+# record all the prebuilt libs which found for specific platform
+set(COCOS_EXTERNAL_LIBS)
+
 # lib location is debug folder or release folder
 string(TOLOWER ${CMAKE_BUILD_TYPE} BUILD_TYPE_FOLDER)
 

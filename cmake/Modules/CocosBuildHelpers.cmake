@@ -39,6 +39,12 @@ macro(pre_build TARGET_NAME)
   add_dependencies(${TARGET_NAME} ${TARGET_NAME}_PRE_BUILD)
 endmacro()
 
+# copy res before target build
+function(cocos_copy_target_res)
+  set(oneValueArgs COPY_TO)
+  set(multiValueArgs FILES FOLDERS)
+endfunction(cocos_target_copy)
+
 function(cocos_mark_resources)
     set(oneValueArgs BASEDIR RESOURCEBASE)
     set(multiValueArgs FILES)
