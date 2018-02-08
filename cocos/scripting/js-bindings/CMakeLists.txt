@@ -108,7 +108,8 @@ add_library(jscocos2d STATIC
   ${JSBINDING_SRC}
 )
 
-find_library(SPIDERMONKEY_LIBRARY NAMES js_static mozjs HINTS
+# need refactor, "mozjs-33" is quite unfriendly
+find_library(SPIDERMONKEY_LIBRARY NAMES js_static mozjs-33 HINTS
   ${cocos_root}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
   ${cocos_root}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ANDROID_ABI}
   ${cocos_root}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}
