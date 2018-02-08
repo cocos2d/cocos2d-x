@@ -108,7 +108,7 @@ set_target_properties(${COCOS_CORE_LIB}
 
 set(PLATFORM_SPECIFIC_LIBS)
 if(WINDOWS)
-  foreach(_pkg OPENGL GLEW GLFW3 VORBIS MPG123 OPENAL)
+  foreach(_pkg OPENGL GLEW GLFW3 VORBIS MPG123 OPENAL SQLITE3)
     cocos_use_pkg(${COCOS_CORE_LIB} ${_pkg})
   endforeach()
   list(APPEND PLATFORM_SPECIFIC_LIBS ws2_32 winmm Version Iphlpapi)

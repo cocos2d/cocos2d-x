@@ -50,19 +50,23 @@ if(ANDROID)
     set(APP_NAME MyGame)
 endif(ANDROID)
 
+if(XCODE OR VS)
+    file(GLOB_RECURSE RES_FILES Resources/*)
+    cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
+endif()
+
 if(ANDROID)
     set(PLATFORM_SPECIFIC_SRC proj.android/app/jni/hellocpp/main.cpp)
     set(RES_PREFIX "/Resources")
 elseif(WINDOWS)
-    set(PLATFORM_SPECIFIC_SRC proj.win32/main.cpp)
+    set(WINDOWS_SRC proj.win32/main.cpp)
     set(PLATFORM_SPECIFIC_HEADERS
             proj.win32/main.h
             proj.win32/resource.h
             )
     set(RES_PREFIX "")
+    set(PLATFORM_SPECIFIC_SRC ${RES_FILES} ${WINDOWS_SRC})
 elseif(APPLE)
-    file(GLOB_RECURSE RES_FILES Resources/*)
-    cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
     if(IOS)
         set(IOS_SRC
             proj.ios_mac/ios/main.m

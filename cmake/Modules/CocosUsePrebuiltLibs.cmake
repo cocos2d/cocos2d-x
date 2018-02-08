@@ -2,10 +2,13 @@
 
 # START CONFIG
 
+# lib location is debug folder or release folder
+string(TOLOWER ${CMAKE_BUILD_TYPE} BUILD_TYPE_FOLDER)
+
 set(_chipmunk_inc chipmunk/chipmunk.h)
 set(_chipmunk_inc_paths include)
 if(WINDOWS)
-    if (${MSVC_VERSION} EQUAL 1900 OR ${MSVC_VERSION} GREATER 1900)
+    if (MSVC)
         set(_chipmunk_libs chipmunk libchipmunk libchipmunk-2015)
     else()
         set(_chipmunk_libs chipmunk libchipmunk)
@@ -18,7 +21,7 @@ set(_bullet_inc bullet/Bullet-C-Api.h BulletCollision/btBulletCollisionCommon.h)
 set(_bullet_inc_paths  bullet)
 # sequence is important
 set(_bullet_libs BulletDynamics libBulletDynamics BulletCollision libBulletCollision BulletMultiThreaded libBulletMultiThreaded LinearMath libLinearMath MiniCL libMiniCL)
-if (${MSVC_VERSION} EQUAL 1900 OR ${MSVC_VERSION} GREATER 1900)
+if (MSVC)
   set(_bullet_libs bullet libbullet)
 endif()
 
@@ -41,7 +44,7 @@ set(_freetype2_libs freetype freetype250)
 
 set(_jpeg_inc jpeglib.h)
 if(WINDOWS)
-    if (${MSVC_VERSION} EQUAL 1900 OR ${MSVC_VERSION} GREATER 1900)
+    if (MSVC)
         set(_jpeg_libs jpeg libjpeg libjpeg-2015)
     else()
         set(_jpeg_libs jpeg libjpeg)
@@ -52,7 +55,7 @@ endif(WINDOWS)
 
 set(_png_inc png.h)
 if(WINDOWS)
-    if (${MSVC_VERSION} EQUAL 1900 OR ${MSVC_VERSION} GREATER 1900)
+    if (MSVC)
         set(_png_libs png libpng libpng-2015)
     else()
         set(_png_libs png libpng)
@@ -63,7 +66,7 @@ endif(WINDOWS)
 
 set(_tiff_inc tiff.h)
 if(WINDOWS)
-    if (${MSVC_VERSION} EQUAL 1900 OR ${MSVC_VERSION} GREATER 1900)
+    if (MSVC)
         set(_tiff_libs tiff libtiff libtiff-2015)
     else()
         set(_tiff_libs tiff libtiff)
@@ -80,7 +83,7 @@ set(_websockets_libs websockets libwebsockets)
 
 set(_openssl_inc openssl/ssl.h)
 set(_openssl_libs ssl crypto)
-if (${MSVC_VERSION} EQUAL 1900 OR ${MSVC_VERSION} GREATER 1900)
+if (MSVC)
   set(_openssl_libs ssl crypto libssl libcrypto)
 endif()
 
@@ -119,7 +122,7 @@ set(_fmod_libs fmod fmod64 fmod fmod64)
 set(_luajit_prefix LUAJIT)
 set(_luajit_inc lua.hpp)
 set(_luajit_libs luajit)
-if (${MSVC_VERSION} EQUAL 1900 OR ${MSVC_VERSION} GREATER 1900)
+if (MSVC)
   set(_luajit_libs lua51)
 endif()
 
@@ -205,8 +208,8 @@ foreach(_lib ${all_prebuilt_libs})
 
       set(lib_dir_candidates
         ${_root}/prebuilt/${PLATFORM_FOLDER}
-        ${_root}/prebuilt/${PLATFORM_FOLDER}/release
-        ${_root}/prebuilt/${PLATFORM_FOLDER}/release-lib
+        ${_root}/prebuilt/${PLATFORM_FOLDER}/${BUILD_TYPE_FOLDER}
+        ${_root}/prebuilt/${PLATFORM_FOLDER}/${BUILD_TYPE_FOLDER}-lib
         ${_root}/prebuilt/${ARCH_DIR}
         ${_root}/libraries/${PLATFORM_FOLDER}
         ${_root}/prebuilt

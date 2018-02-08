@@ -41,15 +41,19 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
 
 endif(NOT DEFINED BUILD_ENGINE_DONE)
 
+if(XCODE OR VS)
+    file(GLOB_RECURSE RES_FILES Resources/*)
+    cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
+endif()
+
 if(ANDROID)
     set(PLATFORM_SRC proj.android/app/jni/main.cpp)
     set(RES_PREFIX "/Resources")
 elseif(WINDOWS)
-    set(PLATFORM_SRC proj.win32/main.cpp)
+    set(WINDOWS_SRC proj.win32/main.cpp)
     set(RES_PREFIX "")
+    set(PLATFORM_SRC ${RES_FILES} ${WINDOWS_SRC})
 elseif(APPLE)
-    file(GLOB_RECURSE RES_FILES Resources/*)
-    cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
     if(IOS)
         set(IOS_SRC
             proj.ios/main.m
