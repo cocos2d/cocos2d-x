@@ -117,6 +117,9 @@ set(_OpenalSoft_libs OpenAL32)
 
 set(_zlib_inc zlib.h)
 set(_zlib_libs z libzlib libz)
+if (MSVC)
+  set(_zlib_libs libzlib)
+endif()
 
 set(_fmod_prefix FMOD)
 set(_fmod_inc fmod.hpp)
@@ -206,45 +209,51 @@ foreach(_lib ${all_prebuilt_libs})
       endforeach()
       if(include_dirs)
         set(${_prefix}_INCLUDE_DIRS ${include_dirs} CACHE PATH "Path to includes for ${_prefix}" FORCE)
-      endif()
-      message(STATUS "${_lib} ${_prefix}_INCLUDE_DIRS: ${${_prefix}_INCLUDE_DIRS}")
+        message(STATUS "${_lib} ${_prefix}_INCLUDE_DIRS: ${${_prefix}_INCLUDE_DIRS}")
+        # don't find lib, if not find include in once ${_root} search
+        set(lib_dir_candidates
+          ${_root}/prebuilt/${PLATFORM_FOLDER}
+          ${_root}/prebuilt/${PLATFORM_FOLDER}/${BUILD_TYPE_FOLDER}
+          ${_root}/prebuilt/${PLATFORM_FOLDER}/${BUILD_TYPE_FOLDER}-lib
+          ${_root}/libraries/${PLATFORM_FOLDER}
+          ${_root}/prebuilt
+          )
+        if(ANDROID_ABI)
+          list(APPEND lib_dir_candidates ${_root}/prebuilt/${PLATFORM_FOLDER}/${ANDROID_ABI})
+        endif()
+        if(ARCH_DIR)
+          list(APPEND lib_dir_candidates ${_root}/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR})
+          list(APPEND lib_dir_candidates ${_root}/prebuilt/${ARCH_DIR})
+        endif()
+        set(libs)
+        foreach(_dir ${lib_dir_candidates})
+          if(EXISTS ${_dir})
+            # find all libs
+            foreach(_lib_name ${_${_lib}_libs})
+              unset(_lib_tmp CACHE)
+              find_library(_lib_tmp ${_lib_name} PATHS ${_dir} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
+              if(_lib_tmp)
+                list(APPEND libs ${_lib_tmp})
+              endif()
+            endforeach()
+          endif(EXISTS ${_dir})
+        endforeach()
+        if(libs)
+          set(${_prefix}_LIBRARIES ${libs} CACHE STRING "Libraries to link for ${_prefix}" FORCE)
+        endif()
+        message(STATUS "${_lib} ${_prefix}_LIBRARIES: ${${_prefix}_LIBRARIES}")
 
-      set(lib_dir_candidates
-        ${_root}/prebuilt/${PLATFORM_FOLDER}
-        ${_root}/prebuilt/${PLATFORM_FOLDER}/${BUILD_TYPE_FOLDER}
-        ${_root}/prebuilt/${PLATFORM_FOLDER}/${BUILD_TYPE_FOLDER}-lib
-        ${_root}/prebuilt/${ARCH_DIR}
-        ${_root}/libraries/${PLATFORM_FOLDER}
-        ${_root}/prebuilt
-        )
-      if(ANDROID_ABI)
-        list(APPEND lib_dir_candidates ${_root}/prebuilt/${PLATFORM_FOLDER}/${ANDROID_ABI})
+        if(${_prefix}_LIBRARIES AND ${_prefix}_INCLUDE_DIRS)
+          set(${_prefix}_FOUND YES)
+          list(APPEND COCOS_EXTERNAL_LIBS ${${_prefix}_LIBRARIES})
+        endif()
       endif()
-      if(ARCH_DIR)
-        list(APPEND lib_dir_candidates ${_root}/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR})
-      endif()
-      set(libs)
-      foreach(_dir ${lib_dir_candidates})
-        if(EXISTS ${_dir})
-          # find all libs
-          foreach(_lib_name ${_${_lib}_libs})
-            unset(_lib_tmp CACHE)
-            find_library(_lib_tmp ${_lib_name} PATHS ${_dir} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
-            if(_lib_tmp)
-              list(APPEND libs ${_lib_tmp})
-            endif()
-          endforeach()
-        endif(EXISTS ${_dir})
-      endforeach()
-      if(libs)
-        set(${_prefix}_LIBRARIES ${libs} CACHE STRING "Libraries to link for ${_prefix}" FORCE)
-      endif()
-      message(STATUS "${_lib} ${_prefix}_LIBRARIES: ${${_prefix}_LIBRARIES}")
-
-      if(${_prefix}_LIBRARIES AND ${_prefix}_INCLUDE_DIRS)
-        set(${_prefix}_FOUND YES)
-      endif()
-      
     endif(EXISTS ${_root})
   endforeach()
 endforeach()
+
+message(STATUS "-------all founded external libs below:-----------")
+foreach(cc_ext_lib ${COCOS_EXTERNAL_LIBS})
+  message(STATUS "found external lib: ${cc_ext_lib}")
+endforeach(cc_ext_lib ${COCOS_EXTERNAL_LIBS})
+message(STATUS "-------all founded external libs upon-----------")

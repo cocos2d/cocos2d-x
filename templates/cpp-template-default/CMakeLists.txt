@@ -149,13 +149,11 @@ target_link_libraries(${APP_NAME} cocos2d)
 
 if(MSVC)
 
-	set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/$<CONFIG>")
-
-    #get our resources
-    add_custom_command(TARGET ${APP_NAME} PRE_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_directory
-            ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR})
-	    
+    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/$<CONFIG>")
+    #Visual Studio Defaults to wrong type
+    set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS"
+                                    RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
+                                    
     # create a list of dlls to copy
 	file(GLOB THIRD_PARTY_DLLS
 		"${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/gles/prebuilt/glew32.dll"
@@ -168,21 +166,7 @@ if(MSVC)
 		"${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/icon/prebuilt/iconv.dll"
 		"${COCOS2DX_ROOT_PATH}/external/tiff/prebuilt/${PLATFORM_FOLDER}/libtiff.dll"
 	)
-	
-	list(SORT THIRD_PARTY_DLLS)
-
-	# do the copying
-	foreach( file_i ${THIRD_PARTY_DLLS})
-		add_custom_command(TARGET ${APP_NAME} PRE_BUILD
-			COMMAND ${CMAKE_COMMAND} -E copy
-			${file_i} 
-			${APP_BIN_DIR}
-		)
-	endforeach( file_i )
-
-    #Visual Studio Defaults to wrong type
-    set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS"
-									RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources FILES ${THIRD_PARTY_DLLS})
 
 elseif(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES

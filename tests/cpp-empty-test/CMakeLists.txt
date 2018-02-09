@@ -108,26 +108,15 @@ add_dependencies(${APP_NAME} cocos2d)
 if(MSVC)
 
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/$<CONFIG>")
-
-    #get our resources
-    add_custom_command(TARGET ${APP_NAME} PRE_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_directory
-            ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR})
-
-    #get our dlls
-    add_custom_command(TARGET ${APP_NAME} PRE_BUILD
-                      COMMAND ${CMAKE_COMMAND} -E copy
-                      ${CMAKE_CURRENT_SOURCE_DIR}/../../external/win32-specific/gles/prebuilt/glew32.dll 
-                      ${APP_BIN_DIR})
-
-    add_custom_command(TARGET ${APP_NAME} PRE_BUILD
-                      COMMAND ${CMAKE_COMMAND} -E copy
-                      ${CMAKE_CURRENT_SOURCE_DIR}/../../external/win32-specific/zlib/prebuilt/zlib1.dll 
-                      ${APP_BIN_DIR})
-
     #Visual Studio Defaults to wrong type
     set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS"
     RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
+    
+	file(GLOB THIRD_PARTY_DLLS
+        "${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/gles/prebuilt/glew32.dll"
+        "${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/zlib/prebuilt/zlib1.dll"
+    )
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources FILES ${THIRD_PARTY_DLLS})
 
 elseif(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES

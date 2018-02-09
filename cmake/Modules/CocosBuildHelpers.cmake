@@ -40,10 +40,27 @@ macro(pre_build TARGET_NAME)
 endmacro()
 
 # copy res before target build
-function(cocos_copy_target_res)
+function(cocos_copy_target_res cocos_target)
   set(oneValueArgs COPY_TO)
   set(multiValueArgs FILES FOLDERS)
-endfunction(cocos_target_copy)
+  cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  	# copy files
+	foreach(cc_file ${opt_FILES})
+    add_custom_command(TARGET ${cocos_target} PRE_BUILD
+      COMMAND ${CMAKE_COMMAND} -E copy
+      ${cc_file} 
+      ${opt_COPY_TO}
+    )
+  endforeach()
+  # copy folders
+  foreach(cc_folder ${opt_FOLDERS})
+    add_custom_command(TARGET ${cocos_target} PRE_BUILD
+      COMMAND ${CMAKE_COMMAND} -E copy_directory
+      ${cc_folder} 
+      ${opt_COPY_TO}
+    )
+  endforeach()
+endfunction()
 
 function(cocos_mark_resources)
     set(oneValueArgs BASEDIR RESOURCEBASE)
