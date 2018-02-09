@@ -111,12 +111,10 @@ if(MSVC)
     #Visual Studio Defaults to wrong type
     set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS"
     RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
-    
-	file(GLOB THIRD_PARTY_DLLS
-        "${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/gles/prebuilt/glew32.dll"
-        "${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/zlib/prebuilt/zlib1.dll"
-    )
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources FILES ${THIRD_PARTY_DLLS})
+
+    set(DLL_EXT_LIB_NAMES gles zlib)
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR} EXT_LIB_NAMES ${DLL_EXT_LIB_NAMES})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources)
 
 elseif(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES

@@ -44,10 +44,10 @@ function(cocos_copy_target_res cocos_target)
   set(oneValueArgs COPY_TO)
   set(multiValueArgs FILES FOLDERS)
   cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-  	# copy files
+    # copy files
 	foreach(cc_file ${opt_FILES})
     add_custom_command(TARGET ${cocos_target} PRE_BUILD
-      COMMAND ${CMAKE_COMMAND} -E copy
+      COMMAND ${CMAKE_COMMAND} -E copy_if_different
       ${cc_file} 
       ${opt_COPY_TO}
     )
@@ -60,6 +60,33 @@ function(cocos_copy_target_res cocos_target)
       ${opt_COPY_TO}
     )
   endforeach()
+endfunction()
+
+# copy dll before target build, copy it if find dll in ${COCOS_EXTERNAL_LIBS}
+# cocos_target: the target app that needed dlls
+# COPY_TO: destination dir
+# EXT_LIB_NAMES: get dll through lib name
+function(cocos_copy_target_dll cocos_target)
+  set(oneValueArgs COPY_TO)
+  set(multiValueArgs EXT_LIB_NAMES)
+  cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  # copy files
+  foreach(target_dll_lib ${opt_EXT_LIB_NAMES})
+    foreach(prebuilt_lib ${all_prebuilt_libs})
+      if(${target_dll_lib} STREQUAL ${prebuilt_lib})
+        list(APPEND all_target_dlls ${${_${target_dll_lib}_prefix}_DLLS})
+      endif()
+    endforeach()
+  endforeach()
+  
+  message(STATUS "TARGET: ${cocos_target} need DLL is: ${all_target_dlls}")
+  foreach(single_target_dll ${all_target_dlls} )
+      add_custom_command(TARGET ${cocos_target} PRE_BUILD
+      COMMAND ${CMAKE_COMMAND} -E copy_if_different
+      ${all_target_dlls} 
+      ${opt_COPY_TO}
+    )
+  endforeach(single_target_dll)
 endfunction()
 
 function(cocos_mark_resources)
