@@ -71,6 +71,7 @@ function(cocos_copy_target_dll cocos_target)
   set(multiValueArgs EXT_LIB_NAMES)
   cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
   # copy files
+  set(all_target_dlls)
   foreach(target_dll_lib ${opt_EXT_LIB_NAMES})
     foreach(prebuilt_lib ${all_prebuilt_libs})
       if(${target_dll_lib} STREQUAL ${prebuilt_lib})

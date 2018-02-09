@@ -156,7 +156,7 @@ if(MSVC)
 
     set(DLL_EXT_LIB_NAMES gles zlib)
     cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR} EXT_LIB_NAMES ${DLL_EXT_LIB_NAMES})
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources FILES ${THIRD_PARTY_DLLS})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources FILES)
 
 elseif(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES

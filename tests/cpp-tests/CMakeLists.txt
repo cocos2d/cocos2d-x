@@ -19,12 +19,14 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
 
 endif(NOT DEFINED BUILD_ENGINE_DONE)
 
-if(WIN32)
-    set(PLATFORM_SRC proj.win32/main.cpp)
+file(GLOB_RECURSE RES_FILES Resources/*)
+cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
+
+if(WINDOWS)
+    set(WINDOWS_SRC proj.win32/main.cpp)
     set(RES_PREFIX "")
+    set(PLATFORM_SRC ${RES_FILES} ${WINDOWS_SRC})
 elseif(APPLE)
-    file(GLOB_RECURSE RES_FILES Resources/*)
-    cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
     if(IOS)
         set(IOS_SRC
         proj.ios/main.m
@@ -206,6 +208,9 @@ if(WIN32 OR MACOSX OR LINUX)
     list(APPEND TESTS_SRC
         Classes/WindowTest/WindowTest.cpp
         )
+    list(APPEND TESTS_SRC
+        Classes/BugsTest/Bug-14327.cpp
+        )
 endif()
 
 if(USE_CHIPMUNK)
@@ -287,6 +292,14 @@ if(APPLE)
 elseif(ANDROID)
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
     set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
+elseif(MSVC)
+    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/$<CONFIG>")
+    #Visual Studio Defaults to wrong type
+    set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS"
+                                    RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
+
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR} EXT_LIB_NAMES ${all_prebuilt_libs})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources)
 else()
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
     set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
