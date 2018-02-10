@@ -518,7 +518,10 @@ LanguageType getLanguageTypeByISO2(const char* code)
     {
         ret = LanguageType::BULGARIAN;
     }
-
+    else if (strncmp(code, "be", 2) == 0)
+    {
+        ret = LanguageType::BELARUSIAN;
+    }
     return ret;
 }
 

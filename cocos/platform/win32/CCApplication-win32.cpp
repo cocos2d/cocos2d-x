@@ -236,6 +236,9 @@ LanguageType Application::getCurrentLanguage()
         case LANG_BULGARIAN:
             ret = LanguageType::BULGARIAN;
             break;
+        case LANG_BELARUSIAN:
+            ret = LanguageType::BELARUSIAN;
+            break;
     }
     
     return ret;
