@@ -62,6 +62,40 @@ function(cocos_copy_target_res cocos_target)
   endforeach()
 endfunction()
 
+# out var all_depend_libs
+function(get_target_depends_ext_libs cocos_target all_depend_libs_var)
+  get_target_property(${cocos_target}_depend_libs ${cocos_target} LINK_LIBRARIES)
+  message(STATUS "------------------------${cocos_target}_depend_libs:${${cocos_target}_depend_libs}")
+  set(all_depend_ext_libs)
+  set(targets_unsearch ${cocos_target})
+  # targets_unsearch, target need find ext libs
+  set(have_searched_targets)
+  set(need_search_targets)
+  while(true)
+    foreach(tmp_target ${targets_unsearch})
+      message(STATUS "-----------------------for-targets_unsearch:${targets_unsearch}")
+      get_target_property(tmp_depend_libs ${tmp_target} LINK_LIBRARIES)
+      list(REMOVE_ITEM targets_unsearch ${tmp_target})
+      foreach(depend_lib ${tmp_depend_libs})
+        if(EXISTS ${depend_lib})
+          list(APPEND all_depend_ext_libs ${depend_lib})
+        elseif(TARGET ${depend_lib})
+          list(APPEND targets_unsearch ${depend_lib})
+          message(STATUS "-----------------------append-targets_unsearch:${targets_unsearch}")
+        endif()
+      endforeach()
+      message(STATUS "-----------for-final-targets_unsearch:${targets_unsearch}")
+    endforeach()
+    list(LENGTH targets_unsearch targets_unsearch_size)
+    if(targets_unsearch_size LESS 1)
+      break()
+    endif()
+  endwhile(true)
+  
+  message("-------------${cocos_target}_depend_ext_libs:${all_depend_ext_libs}")
+  set(${all_depend_libs_var} ${all_depend_ext_libs} PARENT_SCOPE)
+endfunction(get_target_depends_ext_libs)
+
 # copy dll before target build, copy it if find dll in ${COCOS_EXTERNAL_LIBS}
 # cocos_target: the target app that needed dlls
 # COPY_TO: destination dir
@@ -88,6 +122,22 @@ function(cocos_copy_target_dll cocos_target)
       ${opt_COPY_TO}
     )
   endforeach(single_target_dll)
+endfunction()
+
+# find dlls in a dir of LIB_ABS_PATH located, and save the dlls into out_put_dlls
+function(cocos_find_dlls_for_lib out_put_dlls)
+  set(oneValueArgs LIB_ABS_PATH)
+  cmake_parse_arguments(opt "" "${oneValueArgs}"  "${multiValueArgs}" ${ARGN})
+  message(STATUS "opt_LIB_ABS_PATH:${opt_LIB_ABS_PATH}")
+  get_filename_component(lib_dir ${opt_LIB_ABS_PATH} DIRECTORY)
+  file(GLOB lib_dir_files "${lib_dir}/*")
+  set(cc_dlls)
+  foreach(dir_file ${lib_dir_files})
+    if(${dir_file} MATCHES "dll$")
+      list(APPEND cc_dlls ${dir_file})
+    endif()
+  endforeach()
+  set(${out_put_dlls} ${cc_dlls} PARENT_SCOPE)
 endfunction()
 
 function(cocos_mark_resources)
