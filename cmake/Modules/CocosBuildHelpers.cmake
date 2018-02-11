@@ -62,6 +62,30 @@ function(cocos_copy_target_res cocos_target)
   endforeach()
 endfunction()
 
+# FILES: files in one dir, not include sub-dir
+# FOLDERS: folders need to mark
+# RES_TO: pak res to source group of IDE
+# res_return: all res files mraked
+function(cocos_mark_multi_resources res_return)
+  set(oneValueArgs RES_TO)
+  set(multiValueArgs FILES FOLDERS)
+  cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+
+  set(tmp_files_ret)
+  foreach(cc_file ${opt_FILES})
+    get_filename_component(file_dir ${cc_file} DIRECTORY)
+    cocos_mark_resources(FILES ${cc_file} BASEDIR ${file_dir} RESOURCEBASE ${opt_RES_TO})
+  endforeach()
+  list(APPEND tmp_files_ret ${opt_FILES})
+
+  foreach(cc_folder ${opt_FOLDERS})
+    file(GLOB_RECURSE folder_files "${cc_folder}/*")
+    list(APPEND tmp_files_ret ${folder_files})
+    cocos_mark_resources(FILES ${folder_files} BASEDIR ${cc_folder} RESOURCEBASE ${opt_RES_TO})
+  endforeach()
+  set(${res_return} ${tmp_files_ret} PARENT_SCOPE)
+endfunction()
+
 # out var all_depend_libs
 function(get_target_depends_ext_libs cocos_target all_depend_libs_var)
   set(all_depend_ext_libs)

@@ -43,30 +43,32 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
 endif(NOT DEFINED BUILD_ENGINE_DONE)
 
 if(APPLE OR VS)
-    set(APP_MAIN
-    ../main.js
-    ../project.json
+    set(res_main_files
+        "${CMAKE_CURRENT_SOURCE_DIR}/../main.js"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../project.json" 
     )
-    cocos_mark_resources(FILES ${APP_MAIN} BASEDIR .. RESOURCEBASE Resources)
-    file(GLOB_RECURSE APP_RESJS ../resjs/*)
-    cocos_mark_resources(FILES ${APP_RESJS} BASEDIR ../resjs RESOURCEBASE Resources/res)
-
-    file(GLOB_RECURSE APP_RESOURCES ../res/*)
-    cocos_mark_resources(FILES ${APP_RESOURCES} BASEDIR ../res RESOURCEBASE Resources/res)
-    file(GLOB_RECURSE APP_SCRIPTS ../src/*)
-    cocos_mark_resources(FILES ${APP_SCRIPTS} BASEDIR ../src RESOURCEBASE Resources/src)
-    file(GLOB_RECURSE TEST_RESOURCES ${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources/*)
-    cocos_mark_resources(FILES ${TEST_RESOURCES} BASEDIR ${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources RESOURCEBASE Resources/res)
-    file(GLOB_RECURSE COCOS_SCRIPTS ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/script/*)
-    cocos_mark_resources(FILES ${COCOS_SCRIPTS} BASEDIR ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/script RESOURCEBASE Resources/script)
-
-    set(RES_FILES ${APP_MAIN} ${APP_RESJS} ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS} ${TEST_RESOURCES})
+    set(res_res_folders 
+        "${CMAKE_CURRENT_SOURCE_DIR}/../resjs" 
+        "${CMAKE_CURRENT_SOURCE_DIR}/../res" 
+        "${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources"
+    )
+    set(res_src_folders
+        "${CMAKE_CURRENT_SOURCE_DIR}/../src"
+    )
+    set(res_script_folders
+        "${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/script"
+    )
+    cocos_mark_multi_resources(res_main RES_TO "Resources" FILES ${res_main_files})
+    cocos_mark_multi_resources(res_res RES_TO "Resources/res" FOLDERS ${res_res_folders})
+    cocos_mark_multi_resources(res_src RES_TO "Resources/src" FOLDERS ${res_src_folders})
+    cocos_mark_multi_resources(res_script RES_TO "Resources/script" FOLDERS ${res_script_folders})
+    set(cc_common_res ${res_main} ${res_res} ${res_src} ${res_script})
 endif()
 
 if(WIN32)
     set(WINDOWS_SRC proj.win32/main.cpp)
     set(RES_PREFIX "")
-    set(PLATFORM_SRC ${RES_FILES} ${WINDOWS_SRC})
+    set(PLATFORM_SRC ${cc_common_res} ${WINDOWS_SRC})
 elseif(ANDROID)
     set(PLATFORM_SRC
         proj.android/app/jni/main.cpp
@@ -96,7 +98,7 @@ elseif(APPLE)
         set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
     endif()
 
-    set(PLATFORM_SRC ${RES_FILES} ${APPLE_SRC})
+    set(PLATFORM_SRC ${cc_common_res} ${APPLE_SRC})
 endif()
 
 set(SAMPLE_SRC
@@ -158,24 +160,9 @@ elseif(MSVC)
     RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
 
     cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
-    set(res_main_files
-        "${CMAKE_CURRENT_SOURCE_DIR}/../main.js"
-        "${CMAKE_CURRENT_SOURCE_DIR}/../project.json" 
-    )
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FILES ${res_main_files})
-    set(res_res_folders 
-        "${CMAKE_CURRENT_SOURCE_DIR}/../resjs" 
-        "${CMAKE_CURRENT_SOURCE_DIR}/../res" 
-        "${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources"
-    )
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR}/res FOLDERS ${res_res_folders})
-    set(res_src_folders
-        "${CMAKE_CURRENT_SOURCE_DIR}/../src"
-    )
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR}/src FOLDERS ${res_src_folders})
-    set(res_script_folders
-        "${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/script"
-    )
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR}/script FOLDERS ${res_script_folders})
 else()
 

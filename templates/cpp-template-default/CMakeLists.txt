@@ -51,8 +51,10 @@ if(ANDROID)
 endif(ANDROID)
 
 if(APPLE OR VS)
-    file(GLOB_RECURSE RES_FILES Resources/*)
-    cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
+    set(res_res_folders 
+        "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
+    )
+    cocos_mark_multi_resources(cc_common_res RES_TO "Resources" FOLDERS ${res_res_folders})
 endif()
 
 if(ANDROID)
@@ -64,8 +66,7 @@ elseif(WINDOWS)
             proj.win32/main.h
             proj.win32/resource.h
             )
-    set(RES_PREFIX "")
-    set(PLATFORM_SPECIFIC_SRC ${RES_FILES} ${WINDOWS_SRC})
+    set(PLATFORM_SPECIFIC_SRC ${cc_common_res} ${WINDOWS_SRC})
 elseif(APPLE)
     if(IOS)
         set(IOS_SRC
@@ -85,7 +86,7 @@ elseif(APPLE)
         cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.ios_mac/mac)
         set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
     endif()
-    set(PLATFORM_SPECIFIC_SRC ${RES_FILES} ${APPLE_SRC})
+    set(PLATFORM_SPECIFIC_SRC ${cc_common_res} ${APPLE_SRC})
 
 elseif(LINUX)
     set(PLATFORM_SPECIFIC_SRC proj.linux/main.cpp)
