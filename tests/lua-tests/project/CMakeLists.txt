@@ -23,14 +23,29 @@ set(SAMPLE_SRC
     Classes/AppDelegate.cpp
     Classes/lua_assetsmanager_test_sample.cpp
     Classes/lua_test_bindings.cpp
+)
+if(APPLE OR VS)
+    set(res_res_folders 
+        "${CMAKE_CURRENT_SOURCE_DIR}/../res" 
+        "${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources"
     )
+    set(res_src_folders
+        "${CMAKE_CURRENT_SOURCE_DIR}/../src"
+    )
+    set(res_script_folders
+        "${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script"
+    )
+    cocos_mark_multi_resources(res_res RES_TO "Resources/res" FOLDERS ${res_res_folders})
+    cocos_mark_multi_resources(res_src RES_TO "Resources/src" FOLDERS ${res_src_folders})
+    cocos_mark_multi_resources(res_script RES_TO "Resources/src/cocos" FOLDERS ${res_script_folders})
+    set(cc_common_res ${res_res} ${res_src} ${res_script})
+endif()
 
 if(LINUX)
     set(SAMPLE_SRC ${SAMPLE_SRC} proj.linux/main.cpp)
     set(RES_PREFIX "/Resources")
 elseif(WINDOWS)
-    list(APPEND SAMPLE_SRC proj.win32/main.cpp)
-    set(RES_PREFIX "")
+    list(APPEND SAMPLE_SRC proj.win32/main.cpp ${cc_common_res})
 elseif(APPLE)
 
     if(IOS)
@@ -52,19 +67,7 @@ elseif(APPLE)
         set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
     endif()
 
- 
-    file(GLOB_RECURSE APP_RESOURCES ../res/*)
-    # need review, Resources/res -> Resources
-    cocos_mark_resources(FILES ${APP_RESOURCES} BASEDIR ../res RESOURCEBASE Resources)
-    file(GLOB_RECURSE APP_SCRIPTS ../src/*)
-    cocos_mark_resources(FILES ${APP_SCRIPTS} BASEDIR ../src RESOURCEBASE Resources/src)
-    file(GLOB_RECURSE COCOS_SCRIPTS ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/*)
-    cocos_mark_resources(FILES ${COCOS_SCRIPTS} BASEDIR ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script RESOURCEBASE Resources/src/cocos)
-    file(GLOB_RECURSE TEST_RESOURCES ${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources/*)
-    # need review
-    cocos_mark_resources(FILES ${TEST_RESOURCES} BASEDIR ${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources RESOURCEBASE Resources)
-
-    list(APPEND SAMPLE_SRC ${APPLE_SRC} ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS} ${TEST_RESOURCES})
+    list(APPEND SAMPLE_SRC ${APPLE_SRC} ${cc_common_res})
 elseif(ANDROID)
     list(APPEND SAMPLE_SRC proj.android/app/jni/main.cpp)
     set(RES_PREFIX "/Resources")
@@ -104,7 +107,16 @@ if(APPLE)
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()
-    
+elseif(MSVC)
+    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/$<CONFIG>")
+    #Visual Studio Defaults to wrong type
+    set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS"
+    RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
+
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR}/res FOLDERS ${res_res_folders})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR}/src FOLDERS ${res_src_folders})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR}/src/cocos FOLDERS ${res_script_folders})
 else()
 
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
