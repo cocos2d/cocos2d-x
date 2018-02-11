@@ -45,6 +45,7 @@ if(LINUX)
     set(SAMPLE_SRC ${SAMPLE_SRC} proj.linux/main.cpp)
     set(RES_PREFIX "/Resources")
 elseif(WINDOWS)
+    add_definitions(-D_USRLUASTATIC)
     list(APPEND SAMPLE_SRC proj.win32/main.cpp ${cc_common_res})
 elseif(APPLE)
 
