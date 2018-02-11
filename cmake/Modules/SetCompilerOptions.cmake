@@ -108,7 +108,8 @@ macro (SetCompilerOptions)
 	  add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
 	                  -wd4251 -wd4244 -wd4334 -wd4005 -wd4820 -wd4710
 	                  -wd4514 -wd4056 -wd4996 -wd4099)
-
+		# multi thread compile opition
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
 	  # Use inline debug info (/Z7) format. Or internal error may occur.
 	  # Errors looks like: "xmemory0(592): error C3130: Internal Compiler Error: failed to write injected code block to PDB"
 	  foreach(lang C CXX)

@@ -19,8 +19,10 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
 
 endif(NOT DEFINED BUILD_ENGINE_DONE)
 
-file(GLOB_RECURSE RES_FILES Resources/*)
-cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
+if(APPLE OR VS)
+    file(GLOB_RECURSE RES_FILES Resources/*)
+    cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
+endif()
 
 if(WINDOWS)
     set(WINDOWS_SRC proj.win32/main.cpp)

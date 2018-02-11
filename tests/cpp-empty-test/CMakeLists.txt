@@ -41,7 +41,7 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
 
 endif(NOT DEFINED BUILD_ENGINE_DONE)
 
-if(XCODE OR VS)
+if(APPLE OR VS)
     file(GLOB_RECURSE RES_FILES Resources/*)
     cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
 endif()
@@ -112,8 +112,7 @@ if(MSVC)
     set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS"
     RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
 
-    set(DLL_EXT_LIB_NAMES gles zlib)
-    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR} EXT_LIB_NAMES ${DLL_EXT_LIB_NAMES})
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources)
 
 elseif(APPLE)

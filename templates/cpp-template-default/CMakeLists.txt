@@ -50,7 +50,7 @@ if(ANDROID)
     set(APP_NAME MyGame)
 endif(ANDROID)
 
-if(XCODE OR VS)
+if(APPLE OR VS)
     file(GLOB_RECURSE RES_FILES Resources/*)
     cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
 endif()

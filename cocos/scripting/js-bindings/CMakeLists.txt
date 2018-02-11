@@ -27,6 +27,7 @@ set(cocos_root ${COCOS2DX_ROOT_PATH})
 #platform
 if(WIN32) # Win32
   set(PLATFORM_FOLDER win32)
+  add_definitions(-D_USRJSSTATIC)
 elseif(APPLE)# osx or ios
   set(PLATFORM_FOLDER mac)
   set(PLATFORM_SRC manual/platform/ios/JavaScriptObjCBridge.mm)
