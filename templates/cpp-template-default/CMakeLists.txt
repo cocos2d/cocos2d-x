@@ -154,9 +154,7 @@ if(MSVC)
     set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS"
                                     RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
 
-    set(DLL_EXT_LIB_NAMES gles zlib)
-    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR} EXT_LIB_NAMES ${DLL_EXT_LIB_NAMES})
-    get_target_depends_ext_libs(${APP_NAME})
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources FILES)
 
 elseif(APPLE)
