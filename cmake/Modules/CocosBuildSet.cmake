@@ -6,6 +6,10 @@ if(" ${CMAKE_SOURCE_DIR}" STREQUAL " ${CMAKE_BINARY_DIR}")
         ")
 endif()
 
+if(DEFINED CMAKE_TOOLCHAIN_FILE)
+    message(STATUS "using toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
+endif()
+
 macro(CocosBuildSet)
 
     # It ensures that when Find*.cmake files included from cmake's Modules dir

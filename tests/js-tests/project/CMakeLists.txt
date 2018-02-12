@@ -27,20 +27,17 @@ set(APP_NAME js_tests)
 
 project(${APP_NAME})
 
-# default build, not build when build engine and all tests
 if(NOT DEFINED BUILD_ENGINE_DONE)
     # define some variables
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
-    # works before libcocos2d
     include(CocosBuildSet)
     CocosBuildSet()
-    # add engine directory, get cocos library
+    
     set(BUILD_JS_LIBS ON)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-    
-endif(NOT DEFINED BUILD_ENGINE_DONE)
+endif()
 
 if(APPLE OR VS)
     set(res_main_files

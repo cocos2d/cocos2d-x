@@ -29,22 +29,6 @@ set(APP_NAME TemplateCpp)
 
 project (${APP_NAME})
 
-# default build, not build when build engine and all tests
-if(NOT DEFINED BUILD_ENGINE_DONE)
-    # define some variables
-    # set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
-    # engine path changed, after cocos new
-    set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cocos2d)
-    set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
-
-    # works before libcocos2d
-    include(CocosBuildSet)
-    CocosBuildSet()
-
-    # add engine directory, get cocos library
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-endif(NOT DEFINED BUILD_ENGINE_DONE)
-
 set(common_code_files
     Classes/AppDelegate.cpp
     Classes/HelloWorldScene.cpp
@@ -54,6 +38,17 @@ set(common_header_files
     Classes/AppDelegate.h
     Classes/HelloWorldScene.h
 )
+
+if(NOT DEFINED BUILD_ENGINE_DONE)
+    # set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
+    set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cocos2d)
+    set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
+
+    include(CocosBuildSet)
+    CocosBuildSet()
+    
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
+endif()
 
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml

@@ -27,19 +27,15 @@ set(APP_NAME cpp_empty_test)
 
 project(${APP_NAME})
 
-# default build, not build when build engine and all tests
 if(NOT DEFINED BUILD_ENGINE_DONE)
-    # define some variables
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
-    # works before libcocos2d
     include(CocosBuildSet)
     CocosBuildSet()
-    # add engine directory, get cocos library
+    
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-
-endif(NOT DEFINED BUILD_ENGINE_DONE)
+endif()
 
 set(common_code_files
     Classes/AppDelegate.cpp

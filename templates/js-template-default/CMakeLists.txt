@@ -32,22 +32,17 @@ project(${APP_NAME})
 
 set(RUNTIME_SRC_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/runtime-src)
 
-# default build, not build when build engine and all tests
 if(NOT DEFINED BUILD_ENGINE_DONE)
-    # define some variables
     # set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
-    # engine path changed, after cocos new
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/cocos2d-x)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
-    # works before libcocos2d
     include(CocosBuildSet)
     CocosBuildSet()
-
-    # add engine directory, get cocos library
+    
     set(BUILD_JS_LIBS ON)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-endif(NOT DEFINED BUILD_ENGINE_DONE)
+endif()
 
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
