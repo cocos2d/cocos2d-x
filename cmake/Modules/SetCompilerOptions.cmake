@@ -100,17 +100,18 @@ macro (SetCompilerOptions)
 
 	# Compiler options
 	if(MSVC)
-		if(CMAKE_BUILD_TYPE STREQUAL "DEBUG")
-			set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:msvcrt /NODEFAULTLIB:libcmt")
-		else()
-			set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libcmt")
-		endif()
-	  add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
+
+		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /MDd")
+		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} /MD")
+		set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} /NODEFAULTLIB:msvcrt /NODEFAULTLIB:libcmt")
+		set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} /NODEFAULTLIB:libcmt")
+
+		add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
 	                  -wd4251 -wd4244 -wd4334 -wd4005 -wd4820 -wd4710
 	                  -wd4514 -wd4056 -wd4996 -wd4099)
-		# multi thread compile opition
+		# multi thread compile option
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
-	  # Use inline debug info (/Z7) format. Or internal error may occur.
+	  # Use inline Debug info (/Z7) format. Or internal error may occur.
 	  # Errors looks like: "xmemory0(592): error C3130: Internal Compiler Error: failed to write injected code block to PDB"
 	  foreach(lang C CXX)
 	    string(REGEX REPLACE "/Z[iI7]" "" CMAKE_${lang}_FLAGS_DEBUG "${CMAKE_${lang}_FLAGS_DEBUG}")
@@ -118,7 +119,7 @@ macro (SetCompilerOptions)
 	  endforeach()
 
 	else()
-		if(CMAKE_BUILD_TYPE STREQUAL "DEBUG")
+		if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 			ADD_DEFINITIONS(-DCOCOS2D_DEBUG=1)
 		endif()
 	  set(CMAKE_C_FLAGS_DEBUG "-g -Wall")

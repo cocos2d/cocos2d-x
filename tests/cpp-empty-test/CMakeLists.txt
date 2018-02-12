@@ -94,7 +94,7 @@ set(SAMPLE_SRC
 
 if(ANDROID)
     add_library(${APP_NAME} SHARED ${SAMPLE_SRC})
-    if(CMAKE_BUILD_TYPE MATCHES RELEASE)
+    if(CMAKE_BUILD_TYPE MATCHES Release)
         add_custom_command(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
     endif()
     target_link_libraries(${APP_NAME} -Wl,-whole-archive cocos2d_android -Wl,-no-whole-archive)

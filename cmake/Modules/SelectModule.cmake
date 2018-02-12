@@ -11,7 +11,7 @@ macro (SelectModule)
     set(USE_PREBUILT_LIBS_DEFAULT OFF)
   endif()
 
-  # opition for using cocos prebuild lib, not done
+  # option for using cocos prebuild lib, not done
   set(USE_COCOS_PREBUILT_LIBS_DEFAULT OFF)
 
   set(BUILD_LUA_LIBS_DEFAULT OFF)
@@ -28,7 +28,7 @@ macro (SelectModule)
   option(USE_TIFF "Use TIFF codec" ON)
   option(USE_JPEG "Use JPEG codec" ON)
   option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
-  option(DEBUG_MODE "Debug or release?" ON)
+  option(DEBUG_MODE "Debug or Release?" ON)
   option(BUILD_EXTENSIONS "Build extension library" ON)
   option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
   option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)

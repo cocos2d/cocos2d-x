@@ -45,19 +45,22 @@ macro(CocosBuildSet)
     # Still supporting DEBUG_MODE for backwards compatibility
     if(NOT CMAKE_BUILD_TYPE)
         if(DEBUG_MODE)
-            set(CMAKE_BUILD_TYPE DEBUG)
+            set(CMAKE_BUILD_TYPE Debug)
         else(DEBUG_MODE)
-            set(CMAKE_BUILD_TYPE RELEASE)
+            set(CMAKE_BUILD_TYPE Release)
         endif(DEBUG_MODE)
     endif(NOT CMAKE_BUILD_TYPE)
-    # ignore the difference between Debug and DEBUG
-    string(TOUPPER ${CMAKE_BUILD_TYPE} CMAKE_BUILD_TYPE)
 
     # Define other useful variables not defined by CMake
     if(CMAKE_GENERATOR STREQUAL Xcode)
         set (XCODE TRUE)
     elseif(CMAKE_GENERATOR MATCHES Visual)
         set (VS TRUE)
+    endif()
+
+    # make configurations type keep same to cmake build type. prevent use generate debug project but switch release mode in IDE
+    if(CMAKE_GENERATOR)
+        set(CMAKE_CONFIGURATION_TYPES "${CMAKE_BUILD_TYPE}" CACHE STRING "Reset the configurations to what we need" FORCE)
     endif()
 
     include(CocosBuildHelpers)
