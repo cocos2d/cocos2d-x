@@ -79,6 +79,8 @@ macro(CocosBuildSet)
     endif()
 
     if(WINDOWS)
+        # folder much targets
+        set_property(GLOBAL PROPERTY USE_FOLDERS ON)
         # not support other compile tools except MSVC for now
         if(MSVC)
             if (${MSVC_VERSION} EQUAL 1900 OR ${MSVC_VERSION} GREATER 1900)

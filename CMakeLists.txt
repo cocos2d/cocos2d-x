@@ -48,5 +48,10 @@ else(USE_COCOS_PREBUILT_LIBS)
     # build engine all tests project
     add_subdirectory(${COCOS2DX_ROOT_PATH}/tests ${ENGINE_BINARY_PATH}/tests)
 
+    # # new feature after CMake 3.6, support set startup project, not success!
+    # if(CMAKE_VERSION VERSION_GREATER "3.6")
+    #     set_property(DIRECTORY ${COCOS2DX_ROOT_PATH}/tests/cpp-tests PROPERTY VS_STARTUP_PROJECT cpp_tests)
+    # endif()
+
 endif(USE_COCOS_PREBUILT_LIBS)
 

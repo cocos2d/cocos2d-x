@@ -257,6 +257,7 @@ set_target_properties(${COCOS_CORE_LIB}
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     VERSION "${COCOS2D_X_VERSION}"
+    FOLDER "CoreLibs"
 )
 
 ## Lua bindings lib
