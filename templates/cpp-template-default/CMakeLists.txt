@@ -45,6 +45,16 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 endif(NOT DEFINED BUILD_ENGINE_DONE)
 
+set(common_code_files
+    Classes/AppDelegate.cpp
+    Classes/HelloWorldScene.cpp
+)
+
+set(common_header_files
+    Classes/AppDelegate.h
+    Classes/HelloWorldScene.h
+)
+
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
     set(APP_NAME MyGame)
@@ -69,24 +79,26 @@ elseif(WINDOWS)
     set(PLATFORM_SPECIFIC_SRC ${cc_common_res} ${WINDOWS_SRC})
 elseif(APPLE)
     if(IOS)
-        set(IOS_SRC
+        set(ios_code_files
             proj.ios_mac/ios/main.m
             proj.ios_mac/ios/AppController.mm
             proj.ios_mac/ios/RootViewController.mm
         )
-        file(GLOB_RECURSE RES_LS proj.ios_mac/ios/LaunchScreen.storyboard)
-        cocos_mark_resources(FILES ${RES_LS} BASEDIR proj.ios_mac/ios)
-        file(GLOB_RECURSE RES_LSBG proj.ios_mac/ios/LaunchScreenBackground.png)
-        cocos_mark_resources(FILES ${RES_LSBG} BASEDIR proj.ios_mac/ios)
-        set(APPLE_SRC ${IOS_SRC} ${RES_LS} ${RES_LSBG})
+        set(ios_res_files
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/LaunchScreen.storyboard
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/LaunchScreenBackground.png
+        )
+        cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
+        set(apple_src_files ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(MAC_SRC proj.ios_mac/mac/main.cpp)
-
-        file(GLOB_RECURSE RES_ICON proj.ios_mac/mac/Icon.icns)
-        cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.ios_mac/mac)
-        set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
+        set(mac_code_files proj.ios_mac/mac/main.cpp)
+        set(mac_res_files
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Icon.icns
+        )
+        cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
+        set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
-    set(PLATFORM_SPECIFIC_SRC ${cc_common_res} ${APPLE_SRC})
+    set(PLATFORM_SPECIFIC_SRC ${cc_common_res} ${apple_src_files})
 
 elseif(LINUX)
     set(PLATFORM_SPECIFIC_SRC proj.linux/main.cpp)
@@ -121,14 +133,12 @@ endif(WINDOWS)
 
 set(GAME_SRC
     ${PLATFORM_SPECIFIC_SRC}
-    Classes/AppDelegate.cpp
-    Classes/HelloWorldScene.cpp
+    ${common_code_files}
 )
 
 set(GAME_HEADERS
     ${PLATFORM_SPECIFIC_HEADERS}
-    Classes/AppDelegate.h
-    Classes/HelloWorldScene.h
+    ${common_code_files}
 )
 
 # add the executable

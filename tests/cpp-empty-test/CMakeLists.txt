@@ -41,6 +41,11 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
 
 endif(NOT DEFINED BUILD_ENGINE_DONE)
 
+set(common_code_files
+    Classes/AppDelegate.cpp
+    Classes/HelloWorldScene.cpp
+)
+
 if(APPLE OR VS)
     set(res_res_folders 
         "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
@@ -49,35 +54,36 @@ if(APPLE OR VS)
 endif()
 
 if(ANDROID)
-    set(PLATFORM_SRC proj.android/app/jni/main.cpp)
+    set(platform_code_files proj.android/app/jni/main.cpp)
     set(RES_PREFIX "/Resources")
 elseif(WINDOWS)
     set(WINDOWS_SRC proj.win32/main.cpp)
-    set(RES_PREFIX "")
-    set(PLATFORM_SRC ${cc_common_res} ${WINDOWS_SRC})
+    set(platform_code_files ${cc_common_res} ${WINDOWS_SRC})
 elseif(APPLE)
     if(IOS)
-        set(IOS_SRC
+        set(ios_code_files
             proj.ios/main.m
             proj.ios/AppController.mm
             proj.ios/RootViewController.mm
         )
-        file(GLOB_RECURSE RES_LS proj.ios/LaunchScreen.storyboard)
-        cocos_mark_resources(FILES ${RES_LS} BASEDIR proj.ios)
-        file(GLOB_RECURSE RES_LSBG proj.ios/LaunchScreenBackground.png)
-        cocos_mark_resources(FILES ${RES_LSBG} BASEDIR proj.ios)
-        set(APPLE_SRC ${IOS_SRC} ${RES_LS} ${RES_LSBG})
+        set(ios_res_files
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreen.storyboard
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreenBackground.png
+        )
+        cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
+        set(apple_src_files ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(MAC_SRC proj.mac/main.cpp)
-
-        file(GLOB_RECURSE RES_ICON proj.mac/Icon.icns)
-        cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.mac)
-        set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
+        set(mac_code_files proj.mac/main.cpp)
+        set(mac_res_files
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Icon.icns
+        )
+        cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
+        set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
-    set(PLATFORM_SRC ${cc_common_res} ${APPLE_SRC})
+        set(platform_code_files ${cc_common_res} ${apple_src_files})
 
 elseif(LINUX)
-    set(PLATFORM_SRC proj.linux/main.cpp)
+    set(platform_code_files proj.linux/main.cpp)
     set(RES_PREFIX "/Resources")
 else()
     message( FATAL_ERROR "Unsupported platform, CMake will exit" )
@@ -86,14 +92,13 @@ endif()
 
 include_directories(Classes)
 
-set(SAMPLE_SRC
-    ${PLATFORM_SRC}
-    Classes/AppDelegate.cpp
-    Classes/HelloWorldScene.cpp
+set(all_code_files
+    ${platform_code_files}
+    ${common_code_files}
 )
 
 if(ANDROID)
-    add_library(${APP_NAME} SHARED ${SAMPLE_SRC})
+    add_library(${APP_NAME} SHARED ${all_code_files})
     if(CMAKE_BUILD_TYPE MATCHES Release)
         add_custom_command(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
     endif()
@@ -101,7 +106,7 @@ if(ANDROID)
     add_dependencies(${APP_NAME} cocos2d_android)
 else()
     # add the executable
-    add_executable(${APP_NAME} ${SAMPLE_SRC})
+    add_executable(${APP_NAME} ${all_code_files})
 endif()
 
 target_link_libraries(${APP_NAME} cocos2d)

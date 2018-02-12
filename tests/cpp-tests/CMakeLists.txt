@@ -32,24 +32,26 @@ if(WINDOWS)
     set(PLATFORM_SRC ${cc_common_res} ${WINDOWS_SRC})
 elseif(APPLE)
     if(IOS)
-        set(IOS_SRC
-        proj.ios/main.m
-        proj.ios/Classes/testsAppDelegate.mm
-        proj.ios/Classes/RootViewController.mm
-    )
-    file(GLOB_RECURSE RES_LS proj.ios/LaunchScreen.storyboard)
-    cocos_mark_resources(FILES ${RES_LS} BASEDIR proj.ios)
-    file(GLOB_RECURSE RES_LSBG proj.ios/LaunchScreenBackground.png)
-    cocos_mark_resources(FILES ${RES_LSBG} BASEDIR proj.ios)
-    set(APPLE_SRC ${IOS_SRC} ${RES_LS} ${RES_LSBG})
+        set(ios_code_files
+            proj.ios/main.m
+            proj.ios/Classes/testsAppDelegate.mm
+            proj.ios/Classes/RootViewController.mm
+        )
+        set(ios_res_files
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreen.storyboard
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreenBackground.png
+        )
+        cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
+        set(apple_src_files ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(MAC_SRC proj.mac/main.cpp)
-
-        file(GLOB_RECURSE RES_ICON proj.mac/Icon.icns)
-        cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.mac)
-        set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
+        set(mac_code_files proj.mac/main.cpp)
+        set(mac_res_files
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Icon.icns
+        )
+        cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
+        set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
-    set(PLATFORM_SRC ${cc_common_res} ${APPLE_SRC})
+    set(PLATFORM_SRC ${cc_common_res} ${apple_src_files})
 elseif(LINUX)
     set(PLATFORM_SRC proj.linux/main.cpp)
     set(RES_PREFIX "/Resources")
