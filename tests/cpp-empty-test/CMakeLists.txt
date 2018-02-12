@@ -50,11 +50,11 @@ if(APPLE OR VS)
 endif()
 
 if(ANDROID)
-    set(platform_code_files proj.android/app/jni/main.cpp)
+    set(platform_specific_src proj.android/app/jni/main.cpp)
     set(RES_PREFIX "/Resources")
 elseif(WINDOWS)
-    set(WINDOWS_SRC proj.win32/main.cpp)
-    set(platform_code_files ${cc_common_res} ${WINDOWS_SRC})
+    set(windows_src proj.win32/main.cpp)
+    set(platform_specific_src ${cc_common_res} ${windows_src})
 elseif(APPLE)
     if(IOS)
         set(ios_code_files
@@ -76,20 +76,20 @@ elseif(APPLE)
         cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
         set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
-        set(platform_code_files ${cc_common_res} ${apple_src_files})
+        set(platform_specific_src ${cc_common_res} ${apple_src_files})
 
 elseif(LINUX)
-    set(platform_code_files proj.linux/main.cpp)
+    set(platform_specific_src proj.linux/main.cpp)
     set(RES_PREFIX "/Resources")
 else()
-    message( FATAL_ERROR "Unsupported platform, CMake will exit" )
+    message(FATAL_ERROR "Unsupported platform, CMake will exit" )
 
 endif()
 
 include_directories(Classes)
 
 set(all_code_files
-    ${platform_code_files}
+    ${platform_specific_src}
     ${common_code_files}
 )
 

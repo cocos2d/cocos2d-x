@@ -63,15 +63,15 @@ if(APPLE OR VS)
 endif()
 
 if(ANDROID)
-    set(PLATFORM_SPECIFIC_SRC proj.android/app/jni/hellocpp/main.cpp)
+    set(platform_specific_src proj.android/app/jni/hellocpp/main.cpp)
     set(RES_PREFIX "/Resources")
 elseif(WINDOWS)
-    set(WINDOWS_SRC proj.win32/main.cpp)
-    set(PLATFORM_SPECIFIC_HEADERS
+    set(windows_src proj.win32/main.cpp)
+    set(platform_specific_header
             proj.win32/main.h
             proj.win32/resource.h
             )
-    set(PLATFORM_SPECIFIC_SRC ${cc_common_res} ${WINDOWS_SRC})
+    set(platform_specific_src ${cc_common_res} ${windows_src})
 elseif(APPLE)
     if(IOS)
         set(ios_code_files
@@ -93,13 +93,13 @@ elseif(APPLE)
         cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
         set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
-    set(PLATFORM_SPECIFIC_SRC ${cc_common_res} ${apple_src_files})
+    set(platform_specific_src ${cc_common_res} ${apple_src_files})
 
 elseif(LINUX)
-    set(PLATFORM_SPECIFIC_SRC proj.linux/main.cpp)
+    set(platform_specific_src proj.linux/main.cpp)
     set(RES_PREFIX "/Resources")
 else()
-    message( FATAL_ERROR "Unsupported platform, CMake will exit" )
+    message(FATAL_ERROR "Unsupported platform, CMake will exit" )
 
 endif()
 
@@ -126,28 +126,28 @@ elseif(LINUX)
     )
 endif(WINDOWS)
 
-set(GAME_SRC
-    ${PLATFORM_SPECIFIC_SRC}
+set(all_code_src
+    ${platform_specific_src}
     ${common_code_files}
 )
 
-set(GAME_HEADERS
-    ${PLATFORM_SPECIFIC_HEADERS}
+set(all_code_header
+    ${platform_specific_header}
     ${common_code_files}
 )
 
 # add the executable
 if(ANDROID)
-    add_library(${APP_NAME} SHARED ${GAME_SRC} ${GAME_HEADERS})
+    add_library(${APP_NAME} SHARED ${all_code_src} ${all_code_header})
     if(CMAKE_BUILD_TYPE STREQUAL "Release")
         add_custom_command(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
     endif()
     target_link_libraries(${APP_NAME} -Wl,-whole-archive cocos2d_android -Wl,-no-whole-archive)
     add_dependencies(${APP_NAME} cocos2d_android)
 elseif(MSVC)
-	add_executable(${APP_NAME} ${GAME_SRC} ${GAME_HEADERS} proj.win32/game.rc)
+	add_executable(${APP_NAME} ${all_code_src} ${all_code_header} proj.win32/game.rc)
 else()
-    add_executable(${APP_NAME} ${GAME_SRC} ${GAME_HEADERS})
+    add_executable(${APP_NAME} ${all_code_src} ${all_code_header})
 endif()
 
 target_link_libraries(${APP_NAME} cocos2d)

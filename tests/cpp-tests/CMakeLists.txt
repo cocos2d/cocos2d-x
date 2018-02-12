@@ -22,9 +22,9 @@ if(APPLE OR VS)
 endif()
 
 if(WINDOWS)
-    set(WINDOWS_SRC proj.win32/main.cpp)
+    set(windows_src proj.win32/main.cpp)
     set(RES_PREFIX "")
-    set(PLATFORM_SRC ${cc_common_res} ${WINDOWS_SRC})
+    set(platform_specific_src ${cc_common_res} ${windows_src})
 elseif(APPLE)
     if(IOS)
         set(ios_code_files
@@ -46,18 +46,18 @@ elseif(APPLE)
         cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
         set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
-    set(PLATFORM_SRC ${cc_common_res} ${apple_src_files})
+    set(platform_specific_src ${cc_common_res} ${apple_src_files})
 elseif(LINUX)
-    set(PLATFORM_SRC proj.linux/main.cpp)
+    set(platform_specific_src proj.linux/main.cpp)
     set(RES_PREFIX "/Resources")
 elseif(ANDROID)
-    set(PLATFORM_SRC
+    set(platform_specific_src
           Classes/JNITest/JNITest.cpp
           proj.android/app/jni/main.cpp)
     set(RES_PREFIX "/Resources")
 elseif(IOS)
     # need check 
-    set(PLATFORM_SRC proj.ios/main.m)
+    set(platform_specific_src proj.ios/main.m)
 else()
     message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
@@ -195,7 +195,7 @@ set(TESTS_SRC
     # need review
     # Classes/VRTest/VRTest.cpp
     # Classes/VRTest/VRTest.h
-    ${PLATFORM_SRC}
+    ${platform_specific_src}
     )
 
 if(ANDROID OR IOS)
