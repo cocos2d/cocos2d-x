@@ -234,7 +234,7 @@ endif()
 
 if(USE_BULLET)
     list(APPEND TESTS_SRC
-        Classes/Physics3DTest/Physics3DTest.cpp
+            Classes/Physics3DTest/Physics3DTest.cpp
         )
     include_directories(${BULLET_INCLUDE_DIRS})
 endif()
@@ -258,59 +258,30 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/cocos/editor-support
     )
 
-if(ANDROID)
-    add_library(${APP_NAME} SHARED ${TESTS_SRC} ${EXTENDED_TESTS_SRC})
-    if(CMAKE_BUILD_TYPE MATCHES Release)
-        add_custom_command(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
-    endif()
-    target_link_libraries(${APP_NAME} -Wl,-whole-archive cocos2d_android -Wl,-no-whole-archive)
-    add_dependencies(${APP_NAME} cocos2d_android)
-else()
-    # add the executable
-    add_executable(${APP_NAME} ${TESTS_SRC} ${EXTENDED_TESTS_SRC})
-endif()
-
-target_link_libraries(${APP_NAME} cocos2d)
-add_dependencies(${APP_NAME} cocos2d)
-
-if(LINUX)
-    foreach(_pkg FONTCONFIG GTK3)
-        cocos_use_pkg(${APP_NAME} ${_pkg})
-    endforeach()
-endif()
-foreach(pkg FREETYPE CURL)
-    cocos_use_pkg(${APP_NAME} ${pkg})
-endforeach()
-
+# mark app complie info and libs info
+set(cocos_app_src 
+    ${TESTS_SRC}
+    ${EXTENDED_TESTS_SRC}
+    )
+cocos_mark_app(${APP_NAME} 
+        APP_SRC "${cocos_app_src}"
+        DEPEND_COMMON_LIBS "cocos2d"
+        DEPEND_ANDROID_LIBS "cocos2d_android"
+        COMMON_USE_PKGS "FREETYPE" "CURL"
+        LINUX_USE_PKGS "FONTCONFIG" "GTK3"
+    )
+# mark app resources
 if(APPLE)
-    set_target_properties(${APP_NAME} PROPERTIES
-        MACOSX_BUNDLE 1
-        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-        )
     if(MACOSX)
         cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "Tests Cpp" INFO_STRING "test project for cpp")
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()
-    
-elseif(ANDROID)
-    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
-    set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
 elseif(MSVC)
-    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/$<CONFIG>")
-    #Visual Studio Defaults to wrong type
-    set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS"
-                                    RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
-
     cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources)
-else()
-    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
-    set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
-
-    pre_build(${APP_NAME}
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}${RES_PREFIX}
-        )
+elseif(LINUX)
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources)
 endif()
 
 if(XCODE OR VS)

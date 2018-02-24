@@ -208,6 +208,51 @@ function(cocos_mark_code_files cocos_target)
   
 endfunction()
 
+# APP_SRC app needed all src files
+# DEPEND_COMMON_LIBS the app needed libs for all platforms
+# DEPEND_ANDROID_LIBS the app needed libs only for android platform
+macro(cocos_mark_app app_name)
+  set(multiValueArgs APP_SRC DEPEND_COMMON_LIBS DEPEND_ANDROID_LIBS COMMON_USE_PKGS LINUX_USE_PKGS)
+  cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+   
+  if(ANDROID)
+    add_library(${app_name} SHARED ${opt_APP_SRC})
+    foreach(android_lib ${opt_DEPEND_ANDROID_LIBS})
+      target_link_libraries(${app_name} -Wl,-whole-archive ${android_lib} -Wl,-no-whole-archive)
+      add_dependencies(${app_name} ${android_lib})
+    endforeach()
+  else()
+    add_executable(${app_name} ${opt_APP_SRC})
+  endif()
+  # set target PROPERTIES, depend different platforms
+  if(APPLE)
+    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
+    set_target_properties(${app_name} PROPERTIES MACOSX_BUNDLE 1
+    )
+  elseif(MSVC)
+    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/$<CONFIG>")
+    #Visual Studio Defaults to wrong type
+    set_target_properties(${app_name} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
+  else()
+    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
+  endif()
+  set_target_properties(${app_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
+  # link commom libs
+  # TODO: unify link library to cocos_use_pkg, include pre-built cocos libs
+  foreach(common_lib ${opt_DEPEND_COMMON_LIBS})
+    target_link_libraries(${app_name} ${common_lib})
+    add_dependencies(${app_name} ${common_lib})
+  endforeach()
+  if(LINUX)
+    foreach(_pkg ${opt_LINUX_USE_PKGS})
+      cocos_use_pkg(${app_name} ${_pkg})
+    endforeach()
+  endif()
+  foreach(_pkg ${opt_COMMON_USE_PKGS})
+      cocos_use_pkg(${app_name} ${_pkg})
+  endforeach()
+endmacro()
+
 # if cc_variable not set, then set it cc_value
 macro(cocos_fake_set cc_variable cc_value)
   if(NOT DEFINED ${cc_variable})
