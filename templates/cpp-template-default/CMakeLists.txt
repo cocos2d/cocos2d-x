@@ -29,21 +29,26 @@ set(APP_NAME TemplateCpp)
 
 project (${APP_NAME})
 
-# default build, not build when build engine and all tests
+set(common_code_files
+    Classes/AppDelegate.cpp
+    Classes/HelloWorldScene.cpp
+)
+
+set(common_header_files
+    Classes/AppDelegate.h
+    Classes/HelloWorldScene.h
+)
+
 if(NOT DEFINED BUILD_ENGINE_DONE)
-    # define some variables
     # set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
-    # engine path changed, after cocos new
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cocos2d)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
-    # works before libcocos2d
     include(CocosBuildSet)
     CocosBuildSet()
-
-    # add engine directory, get cocos library
+    
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-endif(NOT DEFINED BUILD_ENGINE_DONE)
+endif()
 
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
@@ -58,41 +63,43 @@ if(APPLE OR VS)
 endif()
 
 if(ANDROID)
-    set(PLATFORM_SPECIFIC_SRC proj.android/app/jni/hellocpp/main.cpp)
+    set(platform_specific_src proj.android/app/jni/hellocpp/main.cpp)
     set(RES_PREFIX "/Resources")
 elseif(WINDOWS)
-    set(WINDOWS_SRC proj.win32/main.cpp)
-    set(PLATFORM_SPECIFIC_HEADERS
+    set(windows_src proj.win32/main.cpp)
+    set(platform_specific_header
             proj.win32/main.h
             proj.win32/resource.h
             )
-    set(PLATFORM_SPECIFIC_SRC ${cc_common_res} ${WINDOWS_SRC})
+    set(platform_specific_src ${cc_common_res} ${windows_src})
 elseif(APPLE)
     if(IOS)
-        set(IOS_SRC
+        set(ios_code_files
             proj.ios_mac/ios/main.m
             proj.ios_mac/ios/AppController.mm
             proj.ios_mac/ios/RootViewController.mm
         )
-        file(GLOB_RECURSE RES_LS proj.ios_mac/ios/LaunchScreen.storyboard)
-        cocos_mark_resources(FILES ${RES_LS} BASEDIR proj.ios_mac/ios)
-        file(GLOB_RECURSE RES_LSBG proj.ios_mac/ios/LaunchScreenBackground.png)
-        cocos_mark_resources(FILES ${RES_LSBG} BASEDIR proj.ios_mac/ios)
-        set(APPLE_SRC ${IOS_SRC} ${RES_LS} ${RES_LSBG})
+        set(ios_res_files
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/LaunchScreen.storyboard
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/LaunchScreenBackground.png
+        )
+        cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
+        set(apple_src_files ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(MAC_SRC proj.ios_mac/mac/main.cpp)
-
-        file(GLOB_RECURSE RES_ICON proj.ios_mac/mac/Icon.icns)
-        cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.ios_mac/mac)
-        set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
+        set(mac_code_files proj.ios_mac/mac/main.cpp)
+        set(mac_res_files
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Icon.icns
+        )
+        cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
+        set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
-    set(PLATFORM_SPECIFIC_SRC ${cc_common_res} ${APPLE_SRC})
+    set(platform_specific_src ${cc_common_res} ${apple_src_files})
 
 elseif(LINUX)
-    set(PLATFORM_SPECIFIC_SRC proj.linux/main.cpp)
+    set(platform_specific_src proj.linux/main.cpp)
     set(RES_PREFIX "/Resources")
 else()
-    message( FATAL_ERROR "Unsupported platform, CMake will exit" )
+    message(FATAL_ERROR "Unsupported platform, CMake will exit" )
 
 endif()
 
@@ -119,30 +126,28 @@ elseif(LINUX)
     )
 endif(WINDOWS)
 
-set(GAME_SRC
-    ${PLATFORM_SPECIFIC_SRC}
-    Classes/AppDelegate.cpp
-    Classes/HelloWorldScene.cpp
+set(all_code_src
+    ${platform_specific_src}
+    ${common_code_files}
 )
 
-set(GAME_HEADERS
-    ${PLATFORM_SPECIFIC_HEADERS}
-    Classes/AppDelegate.h
-    Classes/HelloWorldScene.h
+set(all_code_header
+    ${platform_specific_header}
+    ${common_code_files}
 )
 
 # add the executable
 if(ANDROID)
-    add_library(${APP_NAME} SHARED ${GAME_SRC} ${GAME_HEADERS})
+    add_library(${APP_NAME} SHARED ${all_code_src} ${all_code_header})
     if(CMAKE_BUILD_TYPE STREQUAL "Release")
         add_custom_command(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
     endif()
     target_link_libraries(${APP_NAME} -Wl,-whole-archive cocos2d_android -Wl,-no-whole-archive)
     add_dependencies(${APP_NAME} cocos2d_android)
 elseif(MSVC)
-	add_executable(${APP_NAME} ${GAME_SRC} ${GAME_HEADERS} proj.win32/game.rc)
+	add_executable(${APP_NAME} ${all_code_src} ${all_code_header} proj.win32/game.rc)
 else()
-    add_executable(${APP_NAME} ${GAME_SRC} ${GAME_HEADERS})
+    add_executable(${APP_NAME} ${all_code_src} ${all_code_header})
 endif()
 
 target_link_libraries(${APP_NAME} cocos2d)

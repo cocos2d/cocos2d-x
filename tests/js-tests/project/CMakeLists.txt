@@ -27,20 +27,17 @@ set(APP_NAME js_tests)
 
 project(${APP_NAME})
 
-# default build, not build when build engine and all tests
 if(NOT DEFINED BUILD_ENGINE_DONE)
     # define some variables
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
-    # works before libcocos2d
     include(CocosBuildSet)
     CocosBuildSet()
-    # add engine directory, get cocos library
+    
     set(BUILD_JS_LIBS ON)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-    
-endif(NOT DEFINED BUILD_ENGINE_DONE)
+endif()
 
 if(APPLE OR VS)
     set(res_main_files
@@ -80,25 +77,28 @@ elseif(LINUX)
 elseif(APPLE)
 
     if(IOS)
-        set(IOS_SRC
+        set(ios_code_files
             proj.ios/main.m
             proj.ios/NativeOcClass.m
             proj.ios/AppController.mm
             proj.ios/RootViewController.mm
             )
-        file(GLOB_RECURSE RES_LS proj.ios/LaunchScreen.storyboard)
-        cocos_mark_resources(FILES ${RES_LS} BASEDIR proj.ios)
-        file(GLOB_RECURSE RES_LSBG proj.ios/LaunchScreenBackground.png)
-        cocos_mark_resources(FILES ${RES_LSBG} BASEDIR proj.ios)
-        set(APPLE_SRC ${IOS_SRC} ${RES_LS} ${RES_LSBG})
+        set(ios_res_files
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreen.storyboard
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreenBackground.png
+        )
+        cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
+        set(apple_src_files ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(MAC_SRC proj.mac/main.cpp)
-        file(GLOB_RECURSE RES_ICON proj.mac/Icon.icns)
-        cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.mac)
-        set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
+        set(mac_code_files proj.mac/main.cpp)
+        set(mac_res_files
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Icon.icns
+        )
+        cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
+        set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
 
-    set(PLATFORM_SRC ${cc_common_res} ${APPLE_SRC})
+    set(PLATFORM_SRC ${cc_common_res} ${apple_src_files})
 endif()
 
 set(SAMPLE_SRC

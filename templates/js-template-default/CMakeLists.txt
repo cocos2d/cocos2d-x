@@ -32,22 +32,17 @@ project(${APP_NAME})
 
 set(RUNTIME_SRC_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/runtime-src)
 
-# default build, not build when build engine and all tests
 if(NOT DEFINED BUILD_ENGINE_DONE)
-    # define some variables
     # set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
-    # engine path changed, after cocos new
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/cocos2d-x)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
-    # works before libcocos2d
     include(CocosBuildSet)
     CocosBuildSet()
-
-    # add engine directory, get cocos library
+    
     set(BUILD_JS_LIBS ON)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-endif(NOT DEFINED BUILD_ENGINE_DONE)
+endif()
 
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
@@ -102,26 +97,28 @@ elseif(ANDROID)
 elseif(LINUX)
     list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
 elseif(APPLE)
-
     if(IOS)
-        set(IOS_SRC
+        set(ios_code_files
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/main.m
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/AppController.mm
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/RootViewController.mm
-            )
-        file(GLOB_RECURSE RES_LS ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreen.storyboard)
-        cocos_mark_resources(FILES ${RES_LS} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios)
-        file(GLOB_RECURSE RES_LSBG ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreenBackground.png)
-        cocos_mark_resources(FILES ${RES_LSBG} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios)
-        set(APPLE_SRC ${IOS_SRC} ${RES_LS} ${RES_LSBG})
+        )
+        set(ios_res_files
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreen.storyboard
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreenBackground.png
+        )
+        cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
+        set(apple_src_files ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(MAC_SRC ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.cpp)
-        file(GLOB_RECURSE RES_ICON ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns)
-        cocos_mark_resources(FILES ${RES_ICON} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
-        set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
+        set(mac_code_files ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.cpp)
+        set(mac_res_files
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns
+        )
+        cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
+        set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
     
-    list(APPEND GAME_SRC ${APPLE_SRC} ${cc_common_res})
+    list(APPEND GAME_SRC ${apple_src_files} ${cc_common_res})
 endif()
 
 if(ANDROID)
