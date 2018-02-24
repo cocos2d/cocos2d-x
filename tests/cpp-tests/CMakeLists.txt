@@ -267,6 +267,7 @@ cocos_mark_app(${APP_NAME}
         COMMON_USE_PKGS "FREETYPE" "CURL"
         LINUX_USE_PKGS "FONTCONFIG" "GTK3"
     )
+    
 # mark app resources
 if(APPLE)
     if(MACOSX)
@@ -276,11 +277,8 @@ if(APPLE)
     endif()
 elseif(MSVC)
     cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources)
-elseif(LINUX)
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources)
 endif()
 
-if(XCODE OR VS)
-    cocos_mark_code_files(${APP_NAME})
+if(LINUX OR MSVC)
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources)
 endif()

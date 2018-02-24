@@ -233,7 +233,7 @@ macro(cocos_mark_app app_name)
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/$<CONFIG>")
     #Visual Studio Defaults to wrong type
     set_target_properties(${app_name} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
-  else()
+  else(LINUX)
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
   endif()
   set_target_properties(${app_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
@@ -251,6 +251,10 @@ macro(cocos_mark_app app_name)
   foreach(_pkg ${opt_COMMON_USE_PKGS})
       cocos_use_pkg(${app_name} ${_pkg})
   endforeach()
+  # auto mark code files for IDE when mark app
+  if(XCODE OR VS)
+    cocos_mark_code_files(${APP_NAME})
+  endif()
 endmacro()
 
 # if cc_variable not set, then set it cc_value

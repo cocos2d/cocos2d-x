@@ -95,10 +95,11 @@ set(all_code_files
 
 # mark app complie info and libs info
 cocos_mark_app(${APP_NAME} 
-        APP_SRC ${SAMPLE_SRC}
+        APP_SRC "${all_code_files}"
         DEPEND_COMMON_LIBS "cocos2d"
         DEPEND_ANDROID_LIBS "cocos2d_android"
     )
+
 # mark app resources
 if(APPLE)
     if(MACOSX)
@@ -108,11 +109,8 @@ if(APPLE)
     endif()
 elseif(MSVC)
     cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources)   
-elseif(LINUX)
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources)
 endif()
 
-if(XCODE OR VS)
-    cocos_mark_code_files(${APP_NAME})
+if(LINUX OR MSVC)
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources)
 endif()

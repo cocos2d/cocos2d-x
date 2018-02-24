@@ -66,7 +66,10 @@ if(ANDROID)
     set(platform_specific_src proj.android/app/jni/hellocpp/main.cpp)
     set(RES_PREFIX "/Resources")
 elseif(WINDOWS)
-    set(windows_src proj.win32/main.cpp)
+    set(windows_src
+            proj.win32/main.cpp
+            proj.win32/game.rc
+        )
     set(platform_specific_header
             proj.win32/main.h
             proj.win32/resource.h
@@ -136,55 +139,28 @@ set(all_code_header
     ${common_code_files}
 )
 
-# add the executable
-if(ANDROID)
-    add_library(${APP_NAME} SHARED ${all_code_src} ${all_code_header})
-    if(CMAKE_BUILD_TYPE STREQUAL "Release")
-        add_custom_command(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
-    endif()
-    target_link_libraries(${APP_NAME} -Wl,-whole-archive cocos2d_android -Wl,-no-whole-archive)
-    add_dependencies(${APP_NAME} cocos2d_android)
-elseif(MSVC)
-	add_executable(${APP_NAME} ${all_code_src} ${all_code_header} proj.win32/game.rc)
-else()
-    add_executable(${APP_NAME} ${all_code_src} ${all_code_header})
-endif()
-
-target_link_libraries(${APP_NAME} cocos2d)
-
-
-if(MSVC)
-
-    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/$<CONFIG>")
-    #Visual Studio Defaults to wrong type
-    set_target_properties(${APP_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS"
-                                    RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
-
-    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources FILES)
-
-elseif(APPLE)
-    set_target_properties(${APP_NAME} PROPERTIES
-            MACOSX_BUNDLE 1
-            RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-        )
+# mark app complie info and libs info
+set(cocos_app_src 
+    ${all_code_src}
+    ${all_code_header}
+    )
+cocos_mark_app(${APP_NAME} 
+        APP_SRC "${cocos_app_src}"
+        DEPEND_COMMON_LIBS "cocos2d"
+        DEPEND_ANDROID_LIBS "cocos2d_android"
+    )
+    
+# mark app resources
+if(APPLE)
     if(MACOSX)
         cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "Cpp Hello Test")
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()
-else()
-
-    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
-
-    set_target_properties(${APP_NAME} PROPERTIES
-            RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
-    add_custom_command(TARGET ${APP_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources $<TARGET_FILE_DIR:${APP_NAME}>${RES_PREFIX}
-            )
-
+elseif(MSVC)
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
 endif()
 
-if(XCODE OR VS)
-    cocos_mark_code_files(${APP_NAME})
+if(LINUX OR MSVC)
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources FILES)
 endif()
