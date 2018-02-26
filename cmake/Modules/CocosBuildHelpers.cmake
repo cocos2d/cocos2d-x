@@ -1,28 +1,30 @@
 include(CMakeParseArguments)
 
-# copy libs to static libs folder
-# error function, have bug
-function(cocos_put_static_libs lib_target lib_dir)
+# copy libs to prebuilt libs folder
+function(cocos_copy_prebuilt_lib lib_target)
+  get_target_property(lib_dir ${lib_target} ARCHIVE_OUTPUT_DIRECTORY)
   add_custom_command(TARGET ${lib_target}
     POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy ${lib_dir}/lib${lib_target}.a ${COCOS_PREBUILT_LIBS_PATH}/lib${lib_target}.a
+    COMMAND ${CMAKE_COMMAND} -E copy
+    "${lib_dir}/lib${lib_target}.a"
+    "${COCOS_PREBUILT_LIBS_PATH}/${PLATFORM_FOLDER}/lib${lib_target}.a"
     COMMENT "${TARGET_NAME} POST_BUILD ..."
     )
 endfunction()
 
 # lib_name eg cocos2d/cocos2djs
-macro(cocos_find_static_libs lib_name)
+function(cocos_find_prebuilt_libs lib_target lib_ret)
   # only search COCOS_PREBUILT_LIBS_PATH
-  MESSAGE( STATUS "cocos static library path: ${COCOS_PREBUILT_LIBS_PATH}")
-  FIND_LIBRARY(LIB_FOUND ${lib_name} PATHS ${COCOS_PREBUILT_LIBS_PATH} DOC "using cocos static library: lib${lib_name}.a" NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
+  find_library(tmp_lib ${lib_target} PATHS ${COCOS_PREBUILT_LIBS_PATH}/${PLATFORM_FOLDER} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
   # set flag
-  if(${LIB_FOUND} STREQUAL LIB_FOUND-NOTFOUND)
-    set(FIND_COCOS_STATIC_LIBS OFF)
+  if(tmp_lib)
+    message(STATUS "find cocos prebuilt library: ${tmp_lib}")
   else()
-    set(FIND_COCOS_STATIC_LIBS ON)
-    MESSAGE( STATUS "using cocos static library: ${LIB_FOUND}")
+    message(FATAL_ERROR "can't find cocos prebuilt library: ${lib_target}:${tmp_lib}")
   endif()
-endmacro()
+  set(${lib_ret} ${tmp_lib} PARENT_SCOPE)
+  unset(tmp_lib CACHE)
+endfunction()
 
 macro(pre_build TARGET_NAME)
   add_custom_target( ${TARGET_NAME}_PRE_BUILD ALL )
@@ -101,6 +103,7 @@ function(get_target_depends_ext_libs cocos_target all_depend_libs_var)
         if(EXISTS ${depend_lib})
           list(APPEND all_depend_ext_libs ${depend_lib})
         elseif(TARGET ${depend_lib})
+          list(APPEND all_depend_ext_libs ${depend_lib})
           list(APPEND targets_unsearch ${depend_lib})
         endif()
       endforeach()
@@ -238,11 +241,29 @@ macro(cocos_mark_app app_name)
   endif()
   set_target_properties(${app_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
   # link commom libs
-  # TODO: unify link library to cocos_use_pkg, include pre-built cocos libs
-  foreach(common_lib ${opt_DEPEND_COMMON_LIBS})
-    target_link_libraries(${app_name} ${common_lib})
-    add_dependencies(${app_name} ${common_lib})
-  endforeach()
+  if(USE_COCOS_PREBUILT_LIBS)
+    
+    foreach(_pkg ${opt_DEPEND_COMMON_LIBS})
+      cocos_use_pkg(${app_name} ${_${_pkg}_prefix})
+      get_target_depends_ext_libs(${_pkg} all_depend_libs)
+      message(STATUS "_____________${_pkg}: ${all_depend_libs}____________")
+      foreach(depend_lib ${all_depend_libs})
+        if(EXISTS ${depend_lib})
+          target_link_libraries(${app_name} ${depend_lib})
+          message(STATUS "_______EXISTS: ${depend_lib}____________")
+        else()
+          cocos_use_pkg(${app_name} ${_${depend_lib}_prefix})
+          message(STATUS "_______ELSE: ${depend_lib}:${_${depend_lib}_prefix}___________")
+        endif()
+      endforeach()
+    endforeach()
+  elseif()
+    foreach(common_lib ${opt_DEPEND_COMMON_LIBS})
+      target_link_libraries(${app_name} ${common_lib})
+      add_dependencies(${app_name} ${common_lib})
+    endforeach()
+  endif()
+  
   if(LINUX)
     foreach(_pkg ${opt_LINUX_USE_PKGS})
       cocos_use_pkg(${app_name} ${_pkg})

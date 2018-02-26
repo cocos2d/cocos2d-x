@@ -99,13 +99,6 @@ set(COCOS_SRC cocos2d.cpp
 
 add_library(${COCOS_CORE_LIB} ${COCOS_SRC})
 
-set_target_properties(${COCOS_CORE_LIB}
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    VERSION "${COCOS2D_X_VERSION}"
-)
-
 set(PLATFORM_SPECIFIC_LIBS)
 if(WINDOWS)
   foreach(_pkg OPENGL GLEW GLFW3 VORBIS MPG123 OPENAL SQLITE3)
@@ -259,6 +252,10 @@ set_target_properties(${COCOS_CORE_LIB}
     VERSION "${COCOS2D_X_VERSION}"
     FOLDER "CoreLibs"
 )
+
+if(GEN_COCOS_PREBUILT_LIBS)
+  cocos_copy_prebuilt_lib(cocos2d)
+endif()
 
 ## Lua bindings lib
 if(BUILD_LUA_LIBS OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))

@@ -38,20 +38,10 @@ set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 include(CocosBuildSet)
 CocosBuildSet()
 
-# TODO: use cocos prebuilt library
-if(USE_COCOS_PREBUILT_LIBS)
-    # use prebuilt library, not build
-else(USE_COCOS_PREBUILT_LIBS)
-    # build engine library
+if(GEN_COCOS_PREBUILT_LIBS)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-
-    # build engine all tests project
+else()
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/tests ${ENGINE_BINARY_PATH}/tests)
-
-    # # new feature after CMake 3.6, support set startup project, not success!
-    # if(CMAKE_VERSION VERSION_GREATER "3.6")
-    #     set_property(DIRECTORY ${COCOS2DX_ROOT_PATH}/tests/cpp-tests PROPERTY VS_STARTUP_PROJECT cpp_tests)
-    # endif()
-
-endif(USE_COCOS_PREBUILT_LIBS)
+endif()
 

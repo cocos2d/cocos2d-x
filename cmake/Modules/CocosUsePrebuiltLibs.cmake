@@ -273,3 +273,37 @@ foreach(_lib ${all_prebuilt_libs})
     endif(EXISTS ${_root})
   endforeach()
 endforeach()
+
+# use engine prebuilt libs
+if(USE_COCOS_PREBUILT_LIBS)
+  # tinyxml2/xxhash/unzip/recast/flatbuffers
+  set(_tinyxml2_prefix TinyXML2)
+  cocos_find_prebuilt_libs(tinyxml2 TinyXML2_LIBRARIES)
+  set(_xxhash_prefix XXHASH)
+  cocos_find_prebuilt_libs(xxhash XXHASH_LIBRARIES)
+  set(_unzip_prefix MINIZIP)
+  cocos_find_prebuilt_libs(unzip MINIZIP_LIBRARIES)
+  set(_recast_prefix RECAST)
+  cocos_find_prebuilt_libs(recast RECAST_LIBRARIES)
+  set(_flatbuffers_prefix FLATBUFFERS)
+  cocos_find_prebuilt_libs(flatbuffers FLATBUFFERS_LIBRARIES)
+
+  set(_cocos2d_prefix COCOS2D)
+  set(COCOS2D_INCLUDE_DIRS
+    ${COCOS2DX_ROOT_PATH}
+    ${COCOS2DX_ROOT_PATH}/cocos
+    ${COCOS2DX_ROOT_PATH}/deprecated
+    ${COCOS2DX_ROOT_PATH}/cocos/platform
+    ${COCOS2DX_ROOT_PATH}/extensions
+    ${COCOS2DX_ROOT_PATH}/external
+  )
+  cocos_find_prebuilt_libs(cocos2d COCOS2D_LIBRARIES)
+endif(USE_COCOS_PREBUILT_LIBS)
+
+# set(_jscocos2d_libs jscocos2d)
+
+# set(_luacocos2d_libs luacocos2d)
+
+
+
+
