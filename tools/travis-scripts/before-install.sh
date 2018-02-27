@@ -129,6 +129,23 @@ function install_environement_for_after_merge()
     fi
 }
 
+if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
+    download_deps
+    python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py
+    exit 0
+fi
+
+if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
+    download_deps
+    echo -e "y" | bash $COCOS2DX_ROOT/build/install-deps-linux.sh
+    exit 0
+fi
+
+if [ "$BUILD_TARGET" == "mac_cocos_new_test" ]; then
+    download_deps
+    exit 0
+fi
+
 # build pull request
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
     install_environement_for_pull_request

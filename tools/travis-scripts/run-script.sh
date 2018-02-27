@@ -222,6 +222,45 @@ function run_after_merge()
     generate_pull_request_for_binding_codes_and_cocosfiles
 }
 
+if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
+    source ../environment.sh
+    pushd $COCOS2DX_ROOT
+    python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
+    popd
+    pushd $COCOS2DX_ROOT/cocos_new_test/proj.android
+    ./gradlew build
+    popd
+    exit 0
+fi
+
+if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
+    pushd $COCOS2DX_ROOT
+    python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
+    popd
+    CPU_CORES=`grep -c ^processor /proc/cpuinfo`
+    echo "Building tests ..."
+    cd $COCOS2DX_ROOT/cocos_new_test
+    mkdir -p linux-build
+    cd linux-build
+    cmake ..
+    echo "cpu cores: ${CPU_CORES}"
+    make -j${CPU_CORES}
+    exit 0
+fi
+
+if [ "$BUILD_TARGET" == "mac_cocos_new_test" ]; then
+    pushd $COCOS2DX_ROOT
+    python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
+    popd
+
+    NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
+
+    xcodebuild -project $COCOS2DX_ROOT/proj.ios_mac/cocos_new_test.xcodeproj -scheme "build all tests Mac" -jobs $NUM_OF_CORES -arch x86_64 build | xcpretty
+    ##xcpretty has a bug, some xcodebuid fails return value would be treated as 0.
+    xcodebuild -project $COCOS2DX_ROOT/proj.ios_mac/cocos_new_test.xcodeproj -scheme "build all tests Mac" -jobs $NUM_OF_CORES -arch x86_64 build
+    exit 0
+fi
+
 # build pull request
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
     run_pull_request
