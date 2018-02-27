@@ -121,6 +121,10 @@ set(_fmod_prefix FMOD)
 set(_fmod_inc fmod.hpp)
 set(_fmod_libs fmod fmod64 fmod fmod64)
 
+set(_luajit_prefix LUAJIT)
+set(_luajit_inc lua.hpp)
+set(_luajit_libs luajit)
+
 set(all_prebuilt_libs
   chipmunk
   curl
@@ -133,6 +137,7 @@ set(all_prebuilt_libs
   openssl
   bullet
   Box2D
+  luajit
 )
 
 
@@ -153,7 +158,6 @@ if(ANDROID)
   list(APPEND all_prebuilt_libs zlib)
 endif()
 
-
 # END CONFIG
 
 foreach(_lib ${all_prebuilt_libs})
@@ -167,6 +171,8 @@ foreach(_lib ${all_prebuilt_libs})
   set(roots
     ${COCOS_EXTERNAL_DIR}/${_lib}
     ${COCOS_EXTERNAL_DIR}/${PLATFORM_FOLDER}-specific/${_lib}
+    #lua/luajit
+    ${COCOS_EXTERNAL_DIR}/lua/${_lib}
     )
   foreach(_root ${roots})
     if(EXISTS ${_root})
@@ -187,7 +193,7 @@ foreach(_lib ${all_prebuilt_libs})
           endif()
           foreach(_inc_name ${_${_lib}_inc})
             unset(_inc_tmp CACHE)
-            find_path(_inc_tmp ${_inc_name} PATH_SUFFIXES ${_suffixes} PATHS ${_dir} NO_DEFAULT_PATH)
+            find_path(_inc_tmp ${_inc_name} PATH_SUFFIXES ${_suffixes} PATHS ${_dir} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
             if(_inc_tmp)
               list(APPEND include_dirs ${_inc_tmp})
             endif()
@@ -197,7 +203,7 @@ foreach(_lib ${all_prebuilt_libs})
       if(include_dirs)
         set(${_prefix}_INCLUDE_DIRS ${include_dirs} CACHE PATH "Path to includes for ${_prefix}" FORCE)
       endif()
-      #message(STATUS "${_lib} ${_prefix}_INCLUDE_DIRS: ${${_prefix}_INCLUDE_DIRS}")
+      message(STATUS "${_lib} ${_prefix}_INCLUDE_DIRS: ${${_prefix}_INCLUDE_DIRS}")
 
       set(lib_dir_candidates
         ${_root}/prebuilt/${PLATFORM_FOLDER}/${ANDROID_ABI}
@@ -214,7 +220,7 @@ foreach(_lib ${all_prebuilt_libs})
           # find all libs
           foreach(_lib_name ${_${_lib}_libs})
             unset(_lib_tmp CACHE)
-            find_library(_lib_tmp ${_lib_name} PATHS ${_dir} NO_DEFAULT_PATH)
+            find_library(_lib_tmp ${_lib_name} PATHS ${_dir} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
             if(_lib_tmp)
               list(APPEND libs ${_lib_tmp})
             endif()

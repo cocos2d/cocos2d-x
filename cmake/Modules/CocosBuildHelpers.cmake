@@ -1,5 +1,29 @@
 include(CMakeParseArguments)
 
+# copy libs to static libs folder
+# error function, have bug
+function(cocos_put_static_libs lib_target lib_dir)
+  add_custom_command(TARGET ${lib_target}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy ${lib_dir}/lib${lib_target}.a ${COCOS_PREBUILT_LIBS_PATH}/lib${lib_target}.a
+    COMMENT "${TARGET_NAME} POST_BUILD ..."
+    )
+endfunction()
+
+# lib_name eg cocos2d/cocos2djs
+macro(cocos_find_static_libs lib_name)
+  # only search COCOS_PREBUILT_LIBS_PATH
+  MESSAGE( STATUS "cocos static library path: ${COCOS_PREBUILT_LIBS_PATH}")
+  FIND_LIBRARY(LIB_FOUND ${lib_name} PATHS ${COCOS_PREBUILT_LIBS_PATH} DOC "using cocos static library: lib${lib_name}.a" NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
+  # set flag
+  if(${LIB_FOUND} STREQUAL LIB_FOUND-NOTFOUND)
+    set(FIND_COCOS_STATIC_LIBS OFF)
+  else()
+    set(FIND_COCOS_STATIC_LIBS ON)
+    MESSAGE( STATUS "using cocos static library: ${LIB_FOUND}")
+  endif()
+endmacro()
+
 macro(pre_build TARGET_NAME)
   add_custom_target( ${TARGET_NAME}_PRE_BUILD ALL )
 
@@ -33,14 +57,104 @@ function(cocos_mark_resources)
             MACOSX_PACKAGE_LOCATION "${opt_RESOURCEBASE}/${RES_LOC}"
             HEADER_FILE_ONLY 1
             )
+
+        if(XCODE OR VS)
+            string(REPLACE "/" "\\" ide_source_group "${opt_RESOURCEBASE}/${RES_LOC}")
+            source_group("${ide_source_group}" FILES ${RES_FILE})
+        endif()
     endforeach()
 endfunction()
+
+# mark the files in the sub dir of CMAKE_CURRENT_SOURCE_DIR
+function(cocos_mark_code_files cocos_target)
+  set(oneValueArgs GROUPBASE)
+  cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  if(NOT opt_GROUPBASE)
+    set(root_dir ${CMAKE_CURRENT_SOURCE_DIR})
+  else()
+    set(root_dir ${opt_GROUPBASE})
+    message(STATUS "target ${cocos_target} code group base is: ${root_dir}")
+  endif()
+
+  message(STATUS "cocos_mark_code_files: ${cocos_target}")
+  set(group_base "Source Files")
+
+  get_property(file_list TARGET ${cocos_target} PROPERTY SOURCES)
+
+  foreach(single_file ${file_list})
+    # get relative_path
+    get_filename_component(abs_path ${single_file} ABSOLUTE)
+    file(RELATIVE_PATH relative_path_with_name ${root_dir} ${abs_path})
+    get_filename_component(relative_path ${relative_path_with_name} PATH)
+    # set source_group, consider sub source group 
+    string(REPLACE "/" "\\" ide_file_group "${group_base}/${relative_path}")
+    source_group("${ide_file_group}" FILES ${single_file})
+
+  endforeach()
+  
+endfunction()
+
+# if cc_variable not set, then set it cc_value
+macro(cocos_fake_set cc_variable cc_value)
+  if(NOT DEFINED ${cc_variable})
+    set(${cc_variable} ${cc_value})
+  endif()
+endmacro()
+
+# macos package, need review
+macro(cocos_pak_xcode cocos_target)
+  set(oneValueArgs
+    INFO_PLIST 
+    BUNDLE_NAME
+    BUNDLE_VERSION
+    COPYRIGHT
+    GUI_IDENTIFIER
+    ICON_FILE
+    INFO_STRING
+    LONG_VERSION_STRING
+    SHORT_VERSION_STRING
+  )
+  set(multiValueArgs)
+  cmake_parse_arguments(COCOS_APP "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  # set default value
+  cocos_fake_set(COCOS_APP_INFO_PLIST "MacOSXBundleInfo.plist.in")
+  cocos_fake_set(COCOS_APP_BUNDLE_NAME "\${PRODUCT_NAME}")
+  cocos_fake_set(COCOS_APP_BUNDLE_VERSION "1")
+  cocos_fake_set(COCOS_APP_COPYRIGHT "Copyright © 2018. All rights reserved.")
+  cocos_fake_set(COCOS_APP_GUI_IDENTIFIER "org.cocos2dx.${APP_NAME}")
+  cocos_fake_set(COCOS_APP_ICON_FILE "Icon")
+  cocos_fake_set(COCOS_APP_INFO_STRING "cocos2d-x app")
+  cocos_fake_set(COCOS_APP_LONG_VERSION_STRING "1.0.0")
+  cocos_fake_set(COCOS_APP_SHORT_VERSION_STRING "1.0")
+  # set bundle info
+  set_target_properties(${cocos_target}
+    PROPERTIES
+    MACOSX_BUNDLE_INFO_PLIST ${COCOS_APP_INFO_PLIST}
+  )
+  set(MACOSX_BUNDLE_BUNDLE_NAME ${COCOS_APP_BUNDLE_NAME})
+  set(MACOSX_BUNDLE_BUNDLE_VERSION ${COCOS_APP_BUNDLE_VERSION})
+  set(MACOSX_BUNDLE_COPYRIGHT ${COCOS_APP_COPYRIGHT})
+  set(MACOSX_BUNDLE_GUI_IDENTIFIER ${COCOS_APP_GUI_IDENTIFIER})
+  set(MACOSX_BUNDLE_ICON_FILE ${COCOS_APP_ICON_FILE})
+  set(MACOSX_BUNDLE_INFO_STRING ${COCOS_APP_INFO_STRING})
+  set(MACOSX_BUNDLE_LONG_VERSION_STRING ${COCOS_APP_LONG_VERSION_STRING})
+  set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${COCOS_APP_SHORT_VERSION_STRING})
+
+  message("cocos package: ${cocos_target}, plist file: ${COCOS_APP_INFO_PLIST}")
+endmacro()
+
+
+# This little macro lets you set any XCode specific property, from ios.toolchain.cmake
+macro (set_xcode_property TARGET XCODE_PROPERTY XCODE_VALUE)
+	set_property (TARGET ${TARGET} PROPERTY XCODE_ATTRIBUTE_${XCODE_PROPERTY} ${XCODE_VALUE})
+endmacro (set_xcode_property)
 
 # cocos_find_package(pkg args...)
 # works same as find_package, but do additional care to properly find
 # prebuilt libs for cocos
+# need review
 macro(cocos_find_package pkg_name pkg_prefix)
-  if(NOT USE_PREBUILT_LIBS OR NOT ${pkg_prefix}_FOUND)
+  if(NOT USE_EXTERNAL_PREBUILT_LIBS OR NOT ${pkg_prefix}_FOUND)
     find_package(${pkg_name} ${ARGN})
   endif()
   if(NOT ${pkg_prefix}_INCLUDE_DIRS AND ${pkg_prefix}_INCLUDE_DIR)
@@ -104,60 +218,3 @@ function(cocos_use_pkg target pkg)
   endif()
 endfunction()
 
-#cmake has some strange defaults, this should help us a lot
-#Please use them everywhere
-
-#WINDOWS 	= 	Windows Desktop
-#WINRT 		= 	Windows RT
-#WP8 	  	= 	Windows Phone 8
-#ANDROID    =	Android
-#IOS		=	iOS
-#MACOSX		=	MacOS X
-#LINUX      =   Linux
-
-if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-  if(WINRT)
-    set(SYSTEM_STRING "Windows RT")
-  elseif(WP8)
-    set(SYSTEM_STRING "Windows Phone 8")
-  else()
-    set(WINDOWS TRUE)
-    set(SYSTEM_STRING "Windows Desktop")
-  endif()
-elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-  if(ANDROID)
-    set(SYSTEM_STRING "Android")
-  else()
-    set(LINUX TRUE)
-    set(SYSTEM_STRING "Linux")
-  endif()
-elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  if(IOS)
-    set(SYSTEM_STRING "IOS")
-  else()
-    set(MACOSX TRUE)
-    set(APPLE TRUE)
-    set(SYSTEM_STRING "Mac OSX")
-  endif()
-endif()
-
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  set(COMPILER_STRING ${CMAKE_CXX_COMPILER_ID})
-  set(CLANG TRUE)
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-  if(MINGW)
-    set(COMPILER_STRING "Mingw GCC")
-  else()
-    set(COMPILER_STRING "GCC")
-  endif()
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
-  set(COMPILER_STRING "${CMAKE_CXX_COMPILER_ID} C++")
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-  set(COMPILER_STRING "Visual Studio C++")
-endif()
-
-if(CMAKE_CROSSCOMPILING)
-  set(BUILDING_STRING "It appears you are cross compiling for ${SYSTEM_STRING} with ${COMPILER_STRING}")
-else()
-  set(BUILDING_STRING "It appears you are building natively for ${SYSTEM_STRING} with ${COMPILER_STRING}")
-endif()

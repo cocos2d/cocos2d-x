@@ -290,7 +290,7 @@ namespace ui {
         * get tab header's width
         * @return header's width
         */
-        float getHeaderWidth() const { return _headerWidth; }
+        float getHeaderWidth() const { return (float)_headerWidth; }
 
         /**
         * set header height, affect all tab

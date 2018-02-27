@@ -28,13 +28,14 @@
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
+#import <UIKit/UIKit.h>
+
 #include "platform/CCDevice.h"
 #include "base/ccTypes.h"
-#include "platform/apple/CCDevice-apple.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventAcceleration.h"
 #include "base/CCDirector.h"
-#import <UIKit/UIKit.h>
+#include "platform/apple/CCDevice-apple.h"
 
 // Accelerometer
 #if !defined(CC_TARGET_OS_TVOS)

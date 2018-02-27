@@ -1,6 +1,4 @@
-
 set(COCOS_CCB_SRC
-
   editor-support/cocosbuilder/CCBAnimationManager.cpp
   editor-support/cocosbuilder/CCBFileLoader.cpp
   editor-support/cocosbuilder/CCBKeyframe.cpp
@@ -23,5 +21,4 @@ set(COCOS_CCB_SRC
   editor-support/cocosbuilder/CCScale9SpriteLoader.cpp
   editor-support/cocosbuilder/CCScrollViewLoader.cpp
   editor-support/cocosbuilder/CCSpriteLoader.cpp
-
 )

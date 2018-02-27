@@ -126,7 +126,7 @@ public:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         addTest("Vibrate", []() { return new VibrateTests(); });
 #endif
-        addTest("VR Test", []() { return new VRTests(); });
+//        addTest("VR Test", []() { return new VRTests(); });
         addTest("Zwoptex", []() { return new ZwoptexTests(); });
         addTest("SpriteFrameCache", []() { return new SpriteFrameCacheTests(); });
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)

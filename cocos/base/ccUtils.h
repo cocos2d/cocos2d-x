@@ -180,6 +180,14 @@ namespace utils
     *  @return The md5 hash for the data
     */
     CC_DLL std::string getDataMD5Hash(const Data &data);
+
+    /**
+    @brief Converts language iso 639-1 code to LanguageType enum.
+    @return LanguageType enum.
+    * @js NA
+    * @lua NA
+    */
+    CC_DLL LanguageType getLanguageTypeByISO2(const char* code);
 }
 
 NS_CC_END
