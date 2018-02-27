@@ -38,10 +38,6 @@ set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 include(CocosBuildSet)
 CocosBuildSet()
 
-if(GEN_COCOS_PREBUILT_LIBS)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-else()
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/tests ${ENGINE_BINARY_PATH}/tests)
-endif()
+add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
+add_subdirectory(${COCOS2DX_ROOT_PATH}/tests ${ENGINE_BINARY_PATH}/tests)
 

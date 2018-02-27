@@ -97,12 +97,12 @@ set(COCOS_SRC cocos2d.cpp
   include_directories(../external/xxtea)
   include_directories(../external/clipper)
 
-add_library(${COCOS_CORE_LIB} ${COCOS_SRC})
+add_library(cocos2d ${COCOS_SRC})
 
 set(PLATFORM_SPECIFIC_LIBS)
 if(WINDOWS)
   foreach(_pkg OPENGL GLEW GLFW3 VORBIS MPG123 OPENAL SQLITE3)
-    cocos_use_pkg(${COCOS_CORE_LIB} ${_pkg})
+    cocos_use_pkg(cocos2d ${_pkg})
   endforeach()
   list(APPEND PLATFORM_SPECIFIC_LIBS ws2_32 winmm Version Iphlpapi)
   if(MINGW)
@@ -110,7 +110,7 @@ if(WINDOWS)
   endif()
 elseif(LINUX)
   foreach(_pkg OPENGL GLEW GLFW3 FMOD FONTCONFIG THREADS GTK3)
-    cocos_use_pkg(${COCOS_CORE_LIB} ${_pkg})
+    cocos_use_pkg(cocos2d ${_pkg})
   endforeach()
 elseif(APPLE)
 
@@ -129,7 +129,7 @@ elseif(APPLE)
 )
 
   if(MACOSX)
-    cocos_use_pkg(${COCOS_CORE_LIB} GLFW3)
+    cocos_use_pkg(cocos2d GLFW3)
     find_library(COCOA_LIBRARY Cocoa)
     find_library(OPENGL_LIBRARY OpenGL )
     find_library(APPLICATIONSERVICES_LIBRARY ApplicationServices)
@@ -172,8 +172,8 @@ elseif(ANDROID)
   set(PLATFORM_SPECIFIC_LIBS GLESv2 EGL log android OpenSLES)
   include(../cmake/AndroidNdkModules.cmake)
   android_ndk_import_module_cpufeatures()
-  cocos_use_pkg(${COCOS_CORE_LIB} TREMOLO)
-  cocos_use_pkg(${COCOS_CORE_LIB} PVMP3DEC)
+  cocos_use_pkg(cocos2d TREMOLO)
+  cocos_use_pkg(cocos2d PVMP3DEC)
   include_directories(../external/android-specific/tremolo)
   include_directories(../external/android-specific/pvmp3dec/include)
   include_directories(../external/android-specific/pvmp3dec/src)
@@ -182,80 +182,76 @@ else()
 endif()
 
 foreach(pkg ZLIB MINIZIP TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS XXHASH)
-  cocos_use_pkg(${COCOS_CORE_LIB} ${pkg})
+  cocos_use_pkg(cocos2d ${pkg})
 endforeach()
 
 if(NOT EMSCRIPTEN)
-  cocos_use_pkg(${COCOS_CORE_LIB} OPENSSL)
+  cocos_use_pkg(cocos2d OPENSSL)
 endif()
 
 if(LINUX)
   set(glfw_other_linker_flags X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m)
 endif(LINUX)
 
-target_link_libraries(${COCOS_CORE_LIB} ${PLATFORM_SPECIFIC_LIBS} ${glfw_other_linker_flags})
+target_link_libraries(cocos2d ${PLATFORM_SPECIFIC_LIBS} ${glfw_other_linker_flags})
 
 if(USE_JPEG)
   add_definitions(-DCC_USE_JPEG=1)
-  cocos_use_pkg(${COCOS_CORE_LIB} JPEG)
+  cocos_use_pkg(cocos2d JPEG)
 else()
   add_definitions(-DCC_USE_JPEG=0)
 endif()
 
 if(USE_WEBP)
   add_definitions(-DCC_USE_WEBP=1)
-  cocos_use_pkg(${COCOS_CORE_LIB} WEBP)
+  cocos_use_pkg(cocos2d WEBP)
 else()
   add_definitions(-DCC_USE_WEBP=0)
 endif()
 
 if(USE_TIFF)
   add_definitions(-DCC_USE_TIFF=1)
-  cocos_use_pkg(${COCOS_CORE_LIB} TIFF)
+  cocos_use_pkg(cocos2d TIFF)
 else()
   add_definitions(-DCC_USE_TIFF=0)
 endif()
 
 if(USE_PNG)
   add_definitions(-DCC_USE_PNG=1)
-  cocos_use_pkg(${COCOS_CORE_LIB} PNG)
+  cocos_use_pkg(cocos2d PNG)
 else()
   add_definitions(-DCC_USE_PNG=0)
 endif()
 
 if(USE_CHIPMUNK)
-  cocos_use_pkg(${COCOS_CORE_LIB} CHIPMUNK)
+  cocos_use_pkg(cocos2d CHIPMUNK)
 endif()
 
 if(USE_BOX2D)
-  cocos_use_pkg(${COCOS_CORE_LIB} Box2D)
+  cocos_use_pkg(cocos2d Box2D)
 endif()
 
 if(USE_BULLET)
-  cocos_use_pkg(${COCOS_CORE_LIB} BULLET)
+  cocos_use_pkg(cocos2d BULLET)
 endif()
 
 if(USE_RECAST)
-  cocos_use_pkg(${COCOS_CORE_LIB} RECAST)
+  cocos_use_pkg(cocos2d RECAST)
 endif()
 
 if(ANDROID)
-  target_link_libraries(${COCOS_CORE_LIB} cpufeatures)
+  target_link_libraries(cocos2d cpufeatures)
 elseif(LINUX)
-  target_link_libraries(${COCOS_CORE_LIB} dl)
+  target_link_libraries(cocos2d dl)
 endif()
 
-set_target_properties(${COCOS_CORE_LIB}
+set_target_properties(cocos2d
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     VERSION "${COCOS2D_X_VERSION}"
     FOLDER "CoreLibs"
 )
-
-if(GEN_COCOS_PREBUILT_LIBS)
-  cocos_copy_prebuilt_lib(cocos2d)
-endif()
 
 ## Lua bindings lib
 if(BUILD_LUA_LIBS OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
@@ -267,5 +263,18 @@ if(BUILD_JS_LIBS OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
 endif()
 
 if(XCODE OR VS)
-    cocos_mark_code_files("${COCOS_CORE_LIB}")
+    cocos_mark_code_files("cocos2d")
+endif()
+
+# set custom target: prebuilt_libs, to copy all libs to prebuilt libs folder
+if(GEN_COCOS_PREBUILT_LIBS)
+  add_custom_target(prebuilt_libs ALL)
+  add_dependencies(prebuilt_libs cocos2d jscocos2d luacocos2d)
+  add_custom_command(TARGET "prebuilt_libs"
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${CMAKE_BINARY_DIR}/lib"
+    "${COCOS_PREBUILT_LIBS_PATH}/${PLATFORM_FOLDER}"
+    COMMENT "copy library directory:${CMAKE_BINARY_DIR}/lib to directory:${COCOS_PREBUILT_LIBS_PATH}/${PLATFORM_FOLDER}"
+  )
 endif()
