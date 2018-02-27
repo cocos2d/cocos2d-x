@@ -30,7 +30,6 @@ macro(CocosBuildSet)
     # some useful variables for every one cocos project
     set(COCOS_EXTERNAL_DIR ${COCOS2DX_ROOT_PATH}/external)
     set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
-    set(COCOS_PREBUILT_LIBS_PATH ${COCOS2DX_ROOT_PATH}/prebuilt)
 
     message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
     message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
@@ -96,6 +95,10 @@ macro(CocosBuildSet)
             message(FATAL_ERROR "please using Windows MSVC compile cocos2d-x project, support other compile tools not yet" )
         endif()
     endif()
+
+    # prebuilt libs path
+    set(COCOS_PREBUILT_LIBS_PATH ${COCOS2DX_ROOT_PATH}/prebuilt/${PLATFORM_FOLDER}/${CMAKE_BUILD_TYPE})
+    message(STATUS "COCOS_PREBUILT_LIBS_PATH:" ${COCOS_PREBUILT_LIBS_PATH})
 
     if(USE_EXTERNAL_PREBUILT_LIBS)
         include(CocosUsePrebuiltLibs)

@@ -1,26 +1,14 @@
 include(CMakeParseArguments)
 
-# copy libs to prebuilt libs folder
-function(cocos_copy_prebuilt_lib lib_target)
-  get_target_property(lib_dir ${lib_target} ARCHIVE_OUTPUT_DIRECTORY)
-  add_custom_command(TARGET ${lib_target}
-    POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy
-    "${lib_dir}/lib${lib_target}.a"
-    "${COCOS_PREBUILT_LIBS_PATH}/${PLATFORM_FOLDER}/lib${lib_target}.a"
-    COMMENT "${TARGET_NAME} POST_BUILD ..."
-    )
-endfunction()
-
 # lib_name eg cocos2d/cocos2djs
 function(cocos_find_prebuilt_libs lib_target lib_ret)
   # only search COCOS_PREBUILT_LIBS_PATH
-  find_library(tmp_lib ${lib_target} PATHS ${COCOS_PREBUILT_LIBS_PATH}/${PLATFORM_FOLDER} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
+  find_library(tmp_lib ${lib_target} PATHS ${COCOS_PREBUILT_LIBS_PATH} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
   # set flag
   if(tmp_lib)
     message(STATUS "find cocos prebuilt library: ${tmp_lib}")
   else()
-    message(FATAL_ERROR "can't find cocos prebuilt library: ${lib_target}:${tmp_lib}")
+    message(WARNING "can't find cocos prebuilt library: ${lib_target}")
   endif()
   set(${lib_ret} ${tmp_lib} PARENT_SCOPE)
   unset(tmp_lib CACHE)
@@ -248,11 +236,11 @@ macro(cocos_mark_app app_name)
       message(STATUS "_____________${_pkg}: ${all_depend_libs}____________")
       foreach(depend_lib ${all_depend_libs})
         if(EXISTS ${depend_lib})
-          target_link_libraries(${app_name} ${depend_lib})
           message(STATUS "_______EXISTS: ${depend_lib}____________")
+          target_link_libraries(${app_name} ${depend_lib})
         else()
-          cocos_use_pkg(${app_name} ${_${depend_lib}_prefix})
           message(STATUS "_______ELSE: ${depend_lib}:${_${depend_lib}_prefix}___________")
+          cocos_use_pkg(${app_name} ${_${depend_lib}_prefix})
         endif()
       endforeach()
     endforeach()

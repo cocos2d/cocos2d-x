@@ -274,7 +274,7 @@ if(GEN_COCOS_PREBUILT_LIBS)
     POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     "${CMAKE_BINARY_DIR}/lib"
-    "${COCOS_PREBUILT_LIBS_PATH}/${PLATFORM_FOLDER}"
-    COMMENT "copy library directory:${CMAKE_BINARY_DIR}/lib to directory:${COCOS_PREBUILT_LIBS_PATH}/${PLATFORM_FOLDER}"
+    "${COCOS_PREBUILT_LIBS_PATH}"
+    COMMENT "copy library directory:${CMAKE_BINARY_DIR}/lib to directory:${COCOS_PREBUILT_LIBS_PATH}"
   )
 endif()
