@@ -253,28 +253,28 @@ set_target_properties(cocos2d
     FOLDER "CoreLibs"
 )
 
-## Lua bindings lib
-if(BUILD_LUA_LIBS OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
-  add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings ${ENGINE_BINARY_PATH}/cocos/lua-bindings)
-endif()
-## JS bindings lib
-if(BUILD_JS_LIBS OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
-  add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings ${ENGINE_BINARY_PATH}/cocos/js-bindings)
-endif()
-
-if(XCODE OR VS)
-    cocos_mark_code_files("cocos2d")
-endif()
-
 # set custom target: prebuilt_libs, to copy all libs to prebuilt libs folder
-if(GEN_COCOS_PREBUILT_LIBS)
-  add_custom_target(prebuilt_libs ALL)
-  add_dependencies(prebuilt_libs cocos2d jscocos2d luacocos2d)
-  add_custom_command(TARGET "prebuilt_libs"
+add_custom_target(prebuilt_libs ALL)
+add_dependencies(prebuilt_libs cocos2d)
+add_custom_command(TARGET "prebuilt_libs"
     POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     "${CMAKE_BINARY_DIR}/lib"
     "${COCOS_PREBUILT_LIBS_PATH}"
     COMMENT "copy library directory:${CMAKE_BINARY_DIR}/lib to directory:${COCOS_PREBUILT_LIBS_PATH}"
-  )
+)
+
+## Lua bindings lib
+if(BUILD_LUA_LIBS OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
+  add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings ${ENGINE_BINARY_PATH}/cocos/lua-bindings)
+  add_dependencies(prebuilt_libs luacocos2d)
+endif()
+## JS bindings lib
+if(BUILD_JS_LIBS OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
+  add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings ${ENGINE_BINARY_PATH}/cocos/js-bindings)
+  add_dependencies(prebuilt_libs jscocos2d)
+endif()
+
+if(XCODE OR VS)
+    cocos_mark_code_files("cocos2d")
 endif()

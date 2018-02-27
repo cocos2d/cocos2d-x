@@ -294,6 +294,15 @@ if(USE_COCOS_PREBUILT_LIBS)
   cocos_find_prebuilt_libs(jscocos2d JSCOCOS2D_LIBRARIES)
   set(_luacocos2d_prefix LUACOCOS2D)
   cocos_find_prebuilt_libs(luacocos2d LUACOCOS2D_LIBRARIES)
+  if(ANDROID)
+    set(_cocos2d_android_prefix ANDROID_COCOS2D_LIBRARIES)
+    cocos_find_prebuilt_libs(cocos2d_android ANDROID_COCOS2D_LIBRARIES)
+    # TREMOLO PVMP3DEC
+    set(_tremolo_prefix TREMOLO)
+    cocos_find_prebuilt_libs(tremolo TREMOLO_LIBRARIES)
+    set(_pvmp3dec_prefix PVMP3DEC)
+    cocos_find_prebuilt_libs(pvmp3dec PVMP3DEC_LIBRARIES)
+  endif()
 endif(USE_COCOS_PREBUILT_LIBS)
 
 
