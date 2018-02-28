@@ -47,7 +47,9 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     include(CocosBuildSet)
     CocosBuildSet()
     
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
+    if(NOT USE_COCOS_PREBUILT_LIBS)
+        add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
+    endif()
 endif()
 
 if(ANDROID)
@@ -64,7 +66,6 @@ endif()
 
 if(ANDROID)
     set(platform_specific_src proj.android/app/jni/hellocpp/main.cpp)
-    set(RES_PREFIX "/Resources")
 elseif(WINDOWS)
     set(windows_src
             proj.win32/main.cpp
@@ -100,7 +101,6 @@ elseif(APPLE)
 
 elseif(LINUX)
     set(platform_specific_src proj.linux/main.cpp)
-    set(RES_PREFIX "/Resources")
 else()
     message(FATAL_ERROR "Unsupported platform, CMake will exit" )
 

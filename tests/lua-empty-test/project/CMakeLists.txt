@@ -35,7 +35,6 @@ endif()
 
 if(LINUX)
     set(SAMPLE_SRC ${SAMPLE_SRC} proj.linux/main.cpp)
-    set(RES_PREFIX "/Resources")
 elseif(WINDOWS)
     add_definitions(-D_USRLUASTATIC)
     list(APPEND SAMPLE_SRC proj.win32/main.cpp ${cc_common_res})
@@ -65,7 +64,6 @@ elseif(APPLE)
     list(APPEND SAMPLE_SRC ${cc_common_res} ${apple_src_files})
 elseif(ANDROID)
     list(APPEND SAMPLE_SRC proj.android/app/jni/main.cpp)
-    set(RES_PREFIX "/Resources")
 endif()
 
 include_directories(

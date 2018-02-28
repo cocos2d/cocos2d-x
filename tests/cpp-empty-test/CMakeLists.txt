@@ -53,7 +53,6 @@ endif()
 
 if(ANDROID)
     set(platform_specific_src proj.android/app/jni/main.cpp)
-    set(RES_PREFIX "/Resources")
 elseif(WINDOWS)
     set(windows_src proj.win32/main.cpp)
     set(platform_specific_src ${cc_common_res} ${windows_src})
@@ -82,7 +81,6 @@ elseif(APPLE)
 
 elseif(LINUX)
     set(platform_specific_src proj.linux/main.cpp)
-    set(RES_PREFIX "/Resources")
 else()
     message(FATAL_ERROR "Unsupported platform, CMake will exit" )
 

@@ -11,7 +11,9 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     include(CocosBuildSet)
     CocosBuildSet()
     
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
+    if(NOT USE_COCOS_PREBUILT_LIBS)
+        add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
+    endif()
 endif()
 
 if(APPLE OR VS)
@@ -23,7 +25,6 @@ endif()
 
 if(WINDOWS)
     set(windows_src proj.win32/main.cpp)
-    set(RES_PREFIX "")
     set(platform_specific_src ${cc_common_res} ${windows_src})
 elseif(APPLE)
     if(IOS)
@@ -49,12 +50,10 @@ elseif(APPLE)
     set(platform_specific_src ${cc_common_res} ${apple_src_files})
 elseif(LINUX)
     set(platform_specific_src proj.linux/main.cpp)
-    set(RES_PREFIX "/Resources")
 elseif(ANDROID)
     set(platform_specific_src
           Classes/JNITest/JNITest.cpp
           proj.android/app/jni/main.cpp)
-    set(RES_PREFIX "/Resources")
 elseif(IOS)
     # need check 
     set(platform_specific_src proj.ios/main.m)

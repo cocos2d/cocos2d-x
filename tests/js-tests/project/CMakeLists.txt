@@ -64,7 +64,6 @@ endif()
 
 if(WIN32)
     set(WINDOWS_SRC proj.win32/main.cpp)
-    set(RES_PREFIX "")
     set(PLATFORM_SRC ${cc_common_res} ${WINDOWS_SRC})
 elseif(ANDROID)
     set(PLATFORM_SRC
