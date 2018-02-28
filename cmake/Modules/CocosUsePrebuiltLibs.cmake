@@ -276,17 +276,6 @@ endforeach()
 
 # use engine prebuilt libs
 if(USE_COCOS_PREBUILT_LIBS)
-  # tinyxml2/xxhash/unzip/recast/flatbuffers
-  set(_tinyxml2_prefix TinyXML2)
-  cocos_find_prebuilt_libs(tinyxml2 TinyXML2_LIBRARIES)
-  set(_xxhash_prefix XXHASH)
-  cocos_find_prebuilt_libs(xxhash XXHASH_LIBRARIES)
-  set(_unzip_prefix MINIZIP)
-  cocos_find_prebuilt_libs(unzip MINIZIP_LIBRARIES)
-  set(_recast_prefix RECAST)
-  cocos_find_prebuilt_libs(recast RECAST_LIBRARIES)
-  set(_flatbuffers_prefix FLATBUFFERS)
-  cocos_find_prebuilt_libs(flatbuffers FLATBUFFERS_LIBRARIES)
   # cocos2d/jscocos2d/luacocos2d
   set(_cocos2d_prefix COCOS2D)
   cocos_find_prebuilt_libs(cocos2d COCOS2D_LIBRARIES)
@@ -297,11 +286,6 @@ if(USE_COCOS_PREBUILT_LIBS)
   if(ANDROID)
     set(_cocos2d_android_prefix ANDROID_COCOS2D_LIBRARIES)
     cocos_find_prebuilt_libs(cocos2d_android ANDROID_COCOS2D_LIBRARIES)
-    # TREMOLO PVMP3DEC
-    set(_tremolo_prefix TREMOLO)
-    cocos_find_prebuilt_libs(tremolo TREMOLO_LIBRARIES)
-    set(_pvmp3dec_prefix PVMP3DEC)
-    cocos_find_prebuilt_libs(pvmp3dec PVMP3DEC_LIBRARIES)
   endif()
 endif(USE_COCOS_PREBUILT_LIBS)
 
