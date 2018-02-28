@@ -1,141 +1,195 @@
-# confim the libs, prepare to link
-set(PLATFORM_SPECIFIC_LIBS)
-# confim the prebuilt libs, prepare to use
-set(PREBUILT_SPECIFIC_LIBS)
+macro(cocos2d_depend_libs)
+  # confim the libs, prepare to link
+  set(PLATFORM_SPECIFIC_LIBS)
+  # confim the prebuilt libs, prepare to use
+  set(PREBUILT_SPECIFIC_LIBS)
 
-if(WINDOWS)
-  foreach(_pkg OPENGL GLEW GLFW3 VORBIS MPG123 OPENAL SQLITE3)
+  if(WINDOWS)
+    foreach(_pkg OPENGL GLEW GLFW3 VORBIS MPG123 OPENAL SQLITE3)
+      list(APPEND PREBUILT_SPECIFIC_LIBS ${_pkg})
+    endforeach()
+    list(APPEND PLATFORM_SPECIFIC_LIBS ws2_32 winmm Version Iphlpapi)
+    if(MINGW)
+      list(APPEND PLATFORM_SPECIFIC_LIBS shlwapi version)
+    endif()
+  elseif(LINUX)
+    list(APPEND PLATFORM_SPECIFIC_LIBS dl)
+    foreach(_pkg OPENGL GLEW GLFW3 FMOD FONTCONFIG THREADS GTK3)
+      list(APPEND PREBUILT_SPECIFIC_LIBS ${_pkg})
+    endforeach()
+  elseif(ANDROID)
+    list(APPEND PLATFORM_SPECIFIC_LIBS GLESv2 EGL log android OpenSLES)
+    list(APPEND PREBUILT_SPECIFIC_LIBS TREMOLO PVMP3DEC CPUFEATURES)
+  elseif(APPLE)
+
+    include_directories(/System/Library/Frameworks )
+    find_library(ICONV_LIBRARY iconv)
+    find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox)
+    find_library(FOUNDATION_LIBRARY Foundation)
+    find_library(OPENAL_LIBRARY OpenAL )
+    find_library(QUARTZCORE_LIBRARY QuartzCore )
+    set(COCOS_APPLE_LIBS
+      ${OPENAL_LIBRARY}
+      ${AUDIOTOOLBOX_LIBRARY}
+      ${QUARTZCORE_LIBRARY}
+      ${FOUNDATION_LIBRARY}
+      ${ICONV_LIBRARY}
+  )
+
+    if(MACOSX)
+      list(APPEND PREBUILT_SPECIFIC_LIBS GLFW3)
+
+      find_library(COCOA_LIBRARY Cocoa)
+      find_library(OPENGL_LIBRARY OpenGL )
+      find_library(APPLICATIONSERVICES_LIBRARY ApplicationServices)
+      find_library(IOKIT_LIBRARY IOKit)
+      list(APPEND PLATFORM_SPECIFIC_LIBS
+        ${COCOA_LIBRARY}
+        ${OPENGL_LIBRARY}
+        ${APPLICATIONSERVICES_LIBRARY}
+        ${IOKIT_LIBRARY}
+        ${COCOS_APPLE_LIBS}
+      )
+    elseif(IOS)
+      # Locate system libraries on iOS
+      find_library(UIKIT_LIBRARY UIKit)
+      find_library(OPENGLES_LIBRARY OpenGLES )
+      find_library(CORE_MOTION_LIBRARY CoreMotion)
+      find_library(MEDIA_PLAYER_LIBRARY MediaPlayer)
+      find_library(CORE_TEXT_LIBRARY CoreText)
+      find_library(SECURITY_LIBRARY Security)
+      find_library(CORE_GRAPHICS_LIBRARY CoreGraphics)
+      find_library(AV_FOUNDATION_LIBRARY AVFoundation)
+      find_library(Z_LIBRARY z)
+      list(APPEND PLATFORM_SPECIFIC_LIBS
+        ${UIKIT_LIBRARY}
+        ${OPENGLES_LIBRARY}
+        ${CORE_MOTION_LIBRARY}
+        ${MEDIA_PLAYER_LIBRARY}
+        ${CORE_TEXT_LIBRARY}
+        ${SECURITY_LIBRARY}
+        ${CORE_GRAPHICS_LIBRARY}
+        ${AV_FOUNDATION_LIBRARY}
+        ${Z_LIBRARY}
+        ${COCOS_APPLE_LIBS}
+      )
+    endif()
+  else()
+      message(FATAL_ERROR "Unsupported platform, CMake will exit" )
+  endif()
+
+  # ZLIB? need review - Z_LIBRARY on iOS
+  foreach(_pkg ZLIB MINIZIP TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS XXHASH)
     list(APPEND PREBUILT_SPECIFIC_LIBS ${_pkg})
   endforeach()
-  list(APPEND PLATFORM_SPECIFIC_LIBS ws2_32 winmm Version Iphlpapi)
-  if(MINGW)
-    list(APPEND PLATFORM_SPECIFIC_LIBS shlwapi version)
+
+  if(NOT EMSCRIPTEN)
+    list(APPEND PREBUILT_SPECIFIC_LIBS OPENSSL)
   endif()
-elseif(LINUX)
-  list(APPEND PLATFORM_SPECIFIC_LIBS dl)
-  foreach(_pkg OPENGL GLEW GLFW3 FMOD FONTCONFIG THREADS GTK3)
-    list(APPEND PREBUILT_SPECIFIC_LIBS ${_pkg})
+
+  # need review, which lib need glfw_other_linker_flags?
+  # if(LINUX)
+  #   set(glfw_other_linker_flags X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m)
+  # endif(LINUX)
+
+  # target_link_libraries(cocos2d ${PLATFORM_SPECIFIC_LIBS} ${glfw_other_linker_flags})
+
+  if(USE_JPEG)
+    add_definitions(-DCC_USE_JPEG=1)
+    list(APPEND PREBUILT_SPECIFIC_LIBS JPEG)
+  else()
+    add_definitions(-DCC_USE_JPEG=0)
+  endif()
+
+  if(USE_WEBP)
+    add_definitions(-DCC_USE_WEBP=1)
+    list(APPEND PREBUILT_SPECIFIC_LIBS WEBP)
+  else()
+    add_definitions(-DCC_USE_WEBP=0)
+  endif()
+
+  if(USE_TIFF)
+    add_definitions(-DCC_USE_TIFF=1)
+    list(APPEND PREBUILT_SPECIFIC_LIBS TIFF)
+  else()
+    add_definitions(-DCC_USE_TIFF=0)
+  endif()
+
+  if(USE_PNG)
+    add_definitions(-DCC_USE_PNG=1)
+    list(APPEND PREBUILT_SPECIFIC_LIBS PNG)
+  else()
+    add_definitions(-DCC_USE_PNG=0)
+  endif()
+
+  if(USE_CHIPMUNK)
+    list(APPEND PREBUILT_SPECIFIC_LIBS CHIPMUNK)
+  endif()
+
+  if(USE_BOX2D)
+    list(APPEND PREBUILT_SPECIFIC_LIBS Box2D)
+  endif()
+
+  if(USE_BULLET)
+    list(APPEND PREBUILT_SPECIFIC_LIBS BULLET)
+  endif()
+
+  if(USE_RECAST)
+    list(APPEND PREBUILT_SPECIFIC_LIBS RECAST)
+  endif()
+endmacro()
+
+macro(target_use_cocos2d_depend_libs target)
+  cocos2d_depend_libs()
+  message(STATUS "${target} prepare to link: ${PLATFORM_SPECIFIC_LIBS}")
+  message(STATUS "${target} prepare to use: ${PREBUILT_SPECIFIC_LIBS}")
+  foreach(platform_lib ${PLATFORM_SPECIFIC_LIBS})
+    target_link_libraries(${target} ${platform_lib})
   endforeach()
-elseif(ANDROID)
-  list(APPEND PLATFORM_SPECIFIC_LIBS GLESv2 EGL log android OpenSLES)
-  list(APPEND PREBUILT_SPECIFIC_LIBS TREMOLO PVMP3DEC CPUFEATURES)
-elseif(APPLE)
+  foreach(prebuilt_lib ${PREBUILT_SPECIFIC_LIBS})
+    cocos_use_pkg(${target} ${prebuilt_lib})
+  endforeach()
+endmacro()
 
-  include_directories(/System/Library/Frameworks )
-  find_library(ICONV_LIBRARY iconv)
-  find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox)
-  find_library(FOUNDATION_LIBRARY Foundation)
-  find_library(OPENAL_LIBRARY OpenAL )
-  find_library(QUARTZCORE_LIBRARY QuartzCore )
-  set(COCOS_APPLE_LIBS
-    ${OPENAL_LIBRARY}
-    ${AUDIOTOOLBOX_LIBRARY}
-    ${QUARTZCORE_LIBRARY}
-    ${FOUNDATION_LIBRARY}
-    ${ICONV_LIBRARY}
-)
+macro(jscocos2d_depend_libs)
+  set(PLATFORM_SPECIFIC_LIBS)
+  set(PREBUILT_SPECIFIC_LIBS)
 
-  if(MACOSX)
-    list(APPEND PREBUILT_SPECIFIC_LIBS GLFW3)
-
-    find_library(COCOA_LIBRARY Cocoa)
-    find_library(OPENGL_LIBRARY OpenGL )
-    find_library(APPLICATIONSERVICES_LIBRARY ApplicationServices)
-    find_library(IOKIT_LIBRARY IOKit)
-    list(APPEND PLATFORM_SPECIFIC_LIBS
-      ${COCOA_LIBRARY}
-      ${OPENGL_LIBRARY}
-      ${APPLICATIONSERVICES_LIBRARY}
-      ${IOKIT_LIBRARY}
-      ${COCOS_APPLE_LIBS}
-    )
-  elseif(IOS)
-    # Locate system libraries on iOS
-    find_library(UIKIT_LIBRARY UIKit)
-    find_library(OPENGLES_LIBRARY OpenGLES )
-    find_library(CORE_MOTION_LIBRARY CoreMotion)
-    find_library(MEDIA_PLAYER_LIBRARY MediaPlayer)
-    find_library(CORE_TEXT_LIBRARY CoreText)
-    find_library(SECURITY_LIBRARY Security)
-    find_library(CORE_GRAPHICS_LIBRARY CoreGraphics)
-    find_library(AV_FOUNDATION_LIBRARY AVFoundation)
-    find_library(Z_LIBRARY z)
-    list(APPEND PLATFORM_SPECIFIC_LIBS
-      ${UIKIT_LIBRARY}
-      ${OPENGLES_LIBRARY}
-      ${CORE_MOTION_LIBRARY}
-      ${MEDIA_PLAYER_LIBRARY}
-      ${CORE_TEXT_LIBRARY}
-      ${SECURITY_LIBRARY}
-      ${CORE_GRAPHICS_LIBRARY}
-      ${AV_FOUNDATION_LIBRARY}
-      ${Z_LIBRARY}
-      ${COCOS_APPLE_LIBS}
-    )
+  list(APPEND PREBUILT_SPECIFIC_LIBS SPIDERMONKEY XXHASH SQLITE3)
+  if(APPLE)
+    find_library(GAME_CONTROLLER GameController)
+    list(APPEND PLATFORM_SPECIFIC_LIBS ${GAME_CONTROLLER})
   endif()
-else()
-    message(FATAL_ERROR "Unsupported platform, CMake will exit" )
-endif()
 
-# ZLIB? need review - Z_LIBRARY on iOS
-foreach(_pkg ZLIB MINIZIP TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS XXHASH)
-  list(APPEND PREBUILT_SPECIFIC_LIBS ${_pkg})
-endforeach()
+  if(USE_BULLET)
+    list(APPEND PREBUILT_SPECIFIC_LIBS BULLET)
+  endif()
+endmacro()
 
-if(NOT EMSCRIPTEN)
-  list(APPEND PREBUILT_SPECIFIC_LIBS OPENSSL)
-endif()
+macro(target_use_jscocos2d_depend_libs target)
+  jscocos2d_depend_libs()
+  message(STATUS "jscocos2d_depend_libs ${target} prepare to link: ${PLATFORM_SPECIFIC_LIBS}")
+  message(STATUS "jscocos2d_depend_libs ${target} prepare to use: ${PREBUILT_SPECIFIC_LIBS}")
+  foreach(platform_lib ${PLATFORM_SPECIFIC_LIBS})
+    target_link_libraries(${target} ${platform_lib})
+  endforeach()
+  foreach(prebuilt_lib ${PREBUILT_SPECIFIC_LIBS})
+    cocos_use_pkg(${target} ${prebuilt_lib})
+  endforeach()
+endmacro()
 
-# need review, which lib need glfw_other_linker_flags?
-# if(LINUX)
-#   set(glfw_other_linker_flags X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m)
-# endif(LINUX)
+macro(luacocos2d_depend_libs)
+  set(PLATFORM_SPECIFIC_LIBS)
+  set(PREBUILT_SPECIFIC_LIBS)
 
-# target_link_libraries(cocos2d ${PLATFORM_SPECIFIC_LIBS} ${glfw_other_linker_flags})
+endmacro()
 
-if(USE_JPEG)
-  add_definitions(-DCC_USE_JPEG=1)
-  list(APPEND PREBUILT_SPECIFIC_LIBS JPEG)
-else()
-  add_definitions(-DCC_USE_JPEG=0)
-endif()
-
-if(USE_WEBP)
-  add_definitions(-DCC_USE_WEBP=1)
-  list(APPEND PREBUILT_SPECIFIC_LIBS WEBP)
-else()
-  add_definitions(-DCC_USE_WEBP=0)
-endif()
-
-if(USE_TIFF)
-  add_definitions(-DCC_USE_TIFF=1)
-  list(APPEND PREBUILT_SPECIFIC_LIBS TIFF)
-else()
-  add_definitions(-DCC_USE_TIFF=0)
-endif()
-
-if(USE_PNG)
-  add_definitions(-DCC_USE_PNG=1)
-  list(APPEND PREBUILT_SPECIFIC_LIBS PNG)
-else()
-  add_definitions(-DCC_USE_PNG=0)
-endif()
-
-if(USE_CHIPMUNK)
-  list(APPEND PREBUILT_SPECIFIC_LIBS CHIPMUNK)
-endif()
-
-if(USE_BOX2D)
-  list(APPEND PREBUILT_SPECIFIC_LIBS Box2D)
-endif()
-
-if(USE_BULLET)
-  list(APPEND PREBUILT_SPECIFIC_LIBS BULLET)
-endif()
-
-if(USE_RECAST)
-  list(APPEND PREBUILT_SPECIFIC_LIBS RECAST)
-endif()
-
-message(STATUS "prepare to link platforms libs: ${PLATFORM_SPECIFIC_LIBS}")
-message(STATUS "prepare to use prebuilt libs: ${PREBUILT_SPECIFIC_LIBS}")
+macro(target_use_luacocos2d_depend_libs target)
+  luacocos2d_depend_libs()
+  foreach(platform_lib ${PLATFORM_SPECIFIC_LIBS})
+    target_link_libraries(${target} ${platform_lib})
+  endforeach()
+  foreach(prebuilt_lib ${PREBUILT_SPECIFIC_LIBS})
+    cocos_use_pkg(${target} ${prebuilt_lib})
+  endforeach()
+endmacro()

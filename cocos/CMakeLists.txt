@@ -99,15 +99,9 @@ set(COCOS_SRC cocos2d.cpp
 
 add_library(cocos2d ${COCOS_SRC})
 
+# use necessary external libs and system libs
 include(CocosUseLibs)
-foreach(platform_lib ${PLATFORM_SPECIFIC_LIBS})
-  target_link_libraries(cocos2d ${platform_lib})
-endforeach()
-foreach(prebuilt_lib ${PREBUILT_SPECIFIC_LIBS})
-  cocos_use_pkg(cocos2d ${prebuilt_lib})
-endforeach()
-
-
+target_use_cocos2d_depend_libs(cocos2d)
 
 set_target_properties(cocos2d
     PROPERTIES

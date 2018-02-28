@@ -97,11 +97,6 @@ set(JSBINDING_SRC
 
 include_directories(
   ${cocos_root}/external/spidermonkey/include/${PLATFORM_FOLDER}
-  ${cocos_root}/cocos
-  ${cocos_root}/cocos/platform/${PLATFORM_FOLDER}
-  ${cocos_root}/cocos/editor-support
-  ${cocos_root}/extensions
-  ${cocos_root}/external
   ${CHIPMUNK_INCLUDE_DIRS}
 )
 
@@ -109,34 +104,12 @@ add_library(jscocos2d STATIC
   ${JSBINDING_SRC}
 )
 
-# need refactor, "mozjs-33" is quite unfriendly
-find_library(SPIDERMONKEY_LIBRARY NAMES js_static mozjs-33 HINTS
-  ${cocos_root}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-  ${cocos_root}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ANDROID_ABI}
-  ${cocos_root}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}
-  NO_CMAKE_FIND_ROOT_PATH
-)
-
-message("SPIDERMONKEY_LIBRARY: ${SPIDERMONKEY_LIBRARY}")
-
-cocos_use_pkg(jscocos2d SQLITE3)
-
-# should change to cocos_use_pkg() about,sqlite3 or set some flag
-target_link_libraries(jscocos2d
-  ${SPIDERMONKEY_LIBRARY}
-)
-
-if(APPLE)
-  FIND_LIBRARY(GAME_CONTROLLER GameController)
-  target_link_libraries(jscocos2d
-  ${GAME_CONTROLLER}
-  )
-endif()
-
-cocos_use_pkg(jscocos2d xxhash)
-
 target_link_libraries(jscocos2d cocos2d)
 add_dependencies(jscocos2d cocos2d)
+
+# use necessary external libs and system libs
+include(CocosUseLibs)
+target_use_jscocos2d_depend_libs(jscocos2d)
 
 set_target_properties(jscocos2d
     PROPERTIES
@@ -144,10 +117,6 @@ set_target_properties(jscocos2d
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     FOLDER "CoreLibs"
 )
-
-if(USE_BULLET)
-  include_directories(${BULLET_INCLUDE_DIRS})
-endif()
 
 if(XCODE OR VS)
     cocos_mark_code_files("jscocos2d")

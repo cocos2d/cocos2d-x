@@ -83,6 +83,10 @@ cocos_mark_app(${APP_NAME}
     DEPEND_ANDROID_LIBS "cocos2d_android"
 )
 
+if(USE_COCOS_PREBUILT_LIBS)
+    target_use_luacocos2d_depend_libs(${APP_NAME})
+endif()
+
 # mark app resources
 if(APPLE)
     if(MACOSX)

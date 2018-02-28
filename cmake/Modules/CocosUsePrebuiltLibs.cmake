@@ -296,6 +296,18 @@ if(USE_COCOS_PREBUILT_LIBS)
   endif()
 endif(USE_COCOS_PREBUILT_LIBS)
 
+# spidermonkey, need uniform with other prebuilts
+if(BUILD_JS_LIBS)
+  set(_spidermonkey_prefix SPIDERMONKEY)
+  set(SPIDERMONKEY_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/spidermonkey/include/${PLATFORM_FOLDER})
+  find_library(SPIDERMONKEY_LIBRARIES NAMES js_static mozjs-33 HINTS
+    ${COCOS2DX_ROOT_PATH}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+    ${COCOS2DX_ROOT_PATH}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ANDROID_ABI}
+    ${COCOS2DX_ROOT_PATH}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}
+    NO_CMAKE_FIND_ROOT_PATH
+  )
+  message("SPIDERMONKEY_LIBRARIES: ${SPIDERMONKEY_LIBRARIES}")
+endif(BUILD_JS_LIBS)
 
 
 

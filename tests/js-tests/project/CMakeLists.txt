@@ -121,9 +121,13 @@ include_directories(
 # mark app complie info and libs info
 cocos_mark_app(${APP_NAME} 
     APP_SRC "${SAMPLE_SRC}"
-    DEPEND_COMMON_LIBS "jscocos2d"
+    DEPEND_COMMON_LIBS "cocos2d" "jscocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"
 )
+
+if(USE_COCOS_PREBUILT_LIBS)
+    target_use_jscocos2d_depend_libs(${APP_NAME})
+endif()
 
 # mark app resources
 if(APPLE)
