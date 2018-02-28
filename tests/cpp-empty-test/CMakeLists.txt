@@ -34,7 +34,9 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     include(CocosBuildSet)
     CocosBuildSet()
     
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
+    if(NOT USE_COCOS_PREBUILT_LIBS)
+        add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
+    endif()
 endif()
 
 set(common_code_files
@@ -100,10 +102,11 @@ cocos_mark_app(${APP_NAME}
         DEPEND_ANDROID_LIBS "cocos2d_android"
     )
 
-if(ANDROID)
+# android have different way to generate prebuilt libs by set: GEN_PREBUILT_LIBS ON
+if(GEN_PREBUILT_LIBS AND ANDROID)
     # tmp, generate prebuilt libs
     add_dependencies(${APP_NAME} prebuilt_libs)
-endif(ANDROID)
+endif()
 
 # mark app resources
 if(APPLE)

@@ -167,26 +167,24 @@ macro (BuildModules)
   # dists have packages from zlib, thats very old for us.
   # moreover our embedded version modified to quick provide
   # functionality needed by cocos.
-  if(NOT USE_COCOS_PREBUILT_LIBS)
-    if(USE_EXTERNAL_PREBUILT_LIBS OR NOT MINGW OR USE_SOURCES_EXTERNAL)
-      set(_unzip_prefix MINIZIP)
-      include_directories(${ZLIB_INCLUDE_DIRS})
-      set(MINIZIP_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/unzip ${ZLIB_INCLUDE_DIRS})
-      if(USE_COCOS_PREBUILT_LIBS)
-        cocos_find_prebuilt_libs(unzip MINIZIP_LIBRARIES)
-        set(MINIZIP_LIBRARIES ${MINIZIP_LIBRARIES} ${ZLIB_LIBRARIES})
-      else()
-        add_subdirectory(${COCOS2DX_ROOT_PATH}/external/unzip ${ENGINE_BINARY_PATH}/external/unzip)
-        set(MINIZIP_LIBRARIES unzip ${ZLIB_LIBRARIES})
-      endif()
-      #TODO: hack! should be in external/unzip/CMakeLists.txt, need review
-      message(STATUS "MINIZIP include dirs: ${MINIZIP_INCLUDE_DIRS}")
+  if(USE_EXTERNAL_PREBUILT_LIBS OR NOT MINGW OR USE_SOURCES_EXTERNAL)
+    set(_unzip_prefix MINIZIP)
+    include_directories(${ZLIB_INCLUDE_DIRS})
+    set(MINIZIP_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/unzip ${ZLIB_INCLUDE_DIRS})
+    if(USE_COCOS_PREBUILT_LIBS)
+      cocos_find_prebuilt_libs(unzip MINIZIP_LIBRARIES)
     else()
-      cocos_find_package(MINIZIP MINIZIP REQUIRED)
-      # double check that we have needed functions
-      include(CheckLibraryExists)
-      add_definitions(-DMINIZIP_FROM_SYSTEM)
+      add_subdirectory(${COCOS2DX_ROOT_PATH}/external/unzip ${ENGINE_BINARY_PATH}/external/unzip)
+      # set(MINIZIP_LIBRARIES unzip ${ZLIB_LIBRARIES})
+      set(MINIZIP_LIBRARIES unzip)
     endif()
+    #TODO: hack! should be in external/unzip/CMakeLists.txt, need review
+    message(STATUS "MINIZIP include dirs: ${MINIZIP_INCLUDE_DIRS}")
+  else()
+    cocos_find_package(MINIZIP MINIZIP REQUIRED)
+    # double check that we have needed functions
+    include(CheckLibraryExists)
+    add_definitions(-DMINIZIP_FROM_SYSTEM)
   endif()
   
   # Jpeg
