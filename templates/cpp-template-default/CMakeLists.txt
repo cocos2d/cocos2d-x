@@ -133,7 +133,7 @@ cocos_mark_app(${APP_NAME}
     )
 
 if(GEN_COCOS_PREBUILT)
-    add_dependencies(${APP_NAME} prebuilt_libs)
+    add_dependencies(${APP_NAME} prebuilt)
 endif()
 
 # mark app resources

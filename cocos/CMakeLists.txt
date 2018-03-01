@@ -126,17 +126,21 @@ if(GEN_COCOS_PREBUILT)
         "${COCOS_PREBUILT_PATH}"
         COMMENT "copy library directory:${CMAKE_BINARY_DIR}/lib to directory:${COCOS_PREBUILT_PATH}"
     )
+    if(USE_LUACOCOS2D)
+        add_dependencies(prebuilt luacocos2d)
+    endif()
+    if(USE_JSCOCOS2D)
+        add_dependencies(prebuilt jscocos2d)
+    endif()
 endif()
 
 ## Lua bindings lib
 if(USE_LUACOCOS2D OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
   add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings ${ENGINE_BINARY_PATH}/cocos/lua-bindings)
-  add_dependencies(prebuilt luacocos2d)
 endif()
 ## JS bindings lib
 if(USE_JSCOCOS2D OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
   add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings ${ENGINE_BINARY_PATH}/cocos/js-bindings)
-  add_dependencies(prebuilt jscocos2d)
 endif()
 
 if(XCODE OR VS)
