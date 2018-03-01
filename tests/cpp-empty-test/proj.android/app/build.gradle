@@ -32,7 +32,7 @@ android {
                     // set "-DGEN_COCOS_PREBUILT=ON" and "-DUSE_COCOS_PREBUILT=OFF" to generate prebuilt,  this way build cocos2d-x libs
                     // set "-DGEN_COCOS_PREBUILT=OFF" and "-DUSE_COCOS_PREBUILT=ON" to use prebuilt, this way not build cocos2d-x libs
                     //arguments "-DCOCOS_PREBUILT_ROOT=/Users/laptop/cocos-prebuilt"
-                    //arguments "-DGEN_COCOS_PREBUILT=OFF", "-DUSE_COCOS_PREBUILT=OFF"
+                    //arguments "-DGEN_COCOS_PREBUILT=OFF", "-DUSE_COCOS_PREBUILT=ON"
                 }
             }
         }
