@@ -141,11 +141,6 @@ if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
     exit 0
 fi
 
-if [ "$BUILD_TARGET" == "mac_cocos_new_test" ]; then
-    download_deps
-    exit 0
-fi
-
 # build pull request
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
     install_environement_for_pull_request

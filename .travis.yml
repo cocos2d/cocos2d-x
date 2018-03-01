@@ -39,11 +39,6 @@ matrix:
       env: BUILD_TARGET=linux_cocos_new_test
       language: cpp
       sudo: required
-    - os: osx
-      env: BUILD_TARGET=mac_cocos_new_test
-      language: cpp
-      osx_image: xcode8.3
-      sudo: required
 
 script:
 - tools/travis-scripts/run-script.sh
