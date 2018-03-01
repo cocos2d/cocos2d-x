@@ -37,7 +37,7 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     include(CocosBuildSet)
     CocosBuildSet()
     
-    set(BUILD_LUA_LIBS ON)
+    set(USE_LUACOCOS2D ON)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 endif()
 

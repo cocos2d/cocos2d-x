@@ -280,12 +280,12 @@ if(USE_COCOS_PREBUILT_LIBS)
   set(_cocos2d_prefix COCOS2D)
   cocos_find_prebuilt_libs(cocos2d COCOS2D_LIBRARIES)
 
-  if(BUILD_JS_LIBS OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
+  if(USE_JSCOCOS2D OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
     set(_jscocos2d_prefix JSCOCOS2D)
     cocos_find_prebuilt_libs(jscocos2d JSCOCOS2D_LIBRARIES)
   endif()
 
-  if(BUILD_LUA_LIBS OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
+  if(USE_LUACOCOS2D OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
     set(_luacocos2d_prefix LUACOCOS2D)
     cocos_find_prebuilt_libs(luacocos2d LUACOCOS2D_LIBRARIES)
   endif()
@@ -297,7 +297,7 @@ if(USE_COCOS_PREBUILT_LIBS)
 endif(USE_COCOS_PREBUILT_LIBS)
 
 # spidermonkey, need uniform with other prebuilts
-if(BUILD_JS_LIBS)
+if(USE_JSCOCOS2D)
   set(_spidermonkey_prefix SPIDERMONKEY)
   set(SPIDERMONKEY_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/spidermonkey/include/${PLATFORM_FOLDER})
   find_library(SPIDERMONKEY_LIBRARIES NAMES js_static mozjs-33 HINTS
@@ -307,7 +307,7 @@ if(BUILD_JS_LIBS)
     NO_CMAKE_FIND_ROOT_PATH
   )
   message("SPIDERMONKEY_LIBRARIES: ${SPIDERMONKEY_LIBRARIES}")
-endif(BUILD_JS_LIBS)
+endif(USE_JSCOCOS2D)
 
 
 

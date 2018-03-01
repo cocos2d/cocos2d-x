@@ -95,9 +95,12 @@ set(JSBINDING_SRC
   ${PLATFORM_SRC}
 )
 
+# if(USE_CHIPMUNK)
+#     include_directories(${CHIPMUNK_INCLUDE_DIRS})
+# endif()
 include_directories(
+  ${cocos_root}/cocos/platform/${PLATFORM_FOLDER}
   ${cocos_root}/external/spidermonkey/include/${PLATFORM_FOLDER}
-  ${CHIPMUNK_INCLUDE_DIRS}
 )
 
 add_library(jscocos2d STATIC
@@ -108,7 +111,6 @@ target_link_libraries(jscocos2d cocos2d)
 add_dependencies(jscocos2d cocos2d)
 
 # use necessary external libs and system libs
-include(CocosUseLibs)
 target_use_jscocos2d_depend_libs(jscocos2d)
 
 set_target_properties(jscocos2d

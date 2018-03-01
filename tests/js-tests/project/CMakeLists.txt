@@ -36,7 +36,7 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     CocosBuildSet()
     
     if(NOT USE_COCOS_PREBUILT_LIBS)
-        set(BUILD_JS_LIBS ON)
+        set(USE_JSCOCOS2D ON)
         add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
     endif()
 endif()
@@ -49,7 +49,7 @@ if(APPLE OR VS)
     set(res_res_folders 
         "${CMAKE_CURRENT_SOURCE_DIR}/../resjs" 
         "${CMAKE_CURRENT_SOURCE_DIR}/../res" 
-        "${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources"
+        # "${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources"
     )
     set(res_src_folders
         "${CMAKE_CURRENT_SOURCE_DIR}/../src"
@@ -121,9 +121,9 @@ include_directories(
     )
 
 # mark app complie info and libs info
-cocos_mark_app(${APP_NAME} 
+cocos_mark_app(${APP_NAME}
     APP_SRC "${SAMPLE_SRC}"
-    DEPEND_COMMON_LIBS "cocos2d" "jscocos2d"
+    DEPEND_COMMON_LIBS "jscocos2d" "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"
 )
 

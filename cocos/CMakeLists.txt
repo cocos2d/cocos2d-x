@@ -26,8 +26,8 @@
 
 # this CMakeLists is to generate Cocos2d-x Engine Library
 # build libcocos2d
-# build luacocos2d if BUILD_LUA_LIBS=ON
-# build jscocos2d if BUILD_JS_LIBS=ON
+# build luacocos2d if USE_LUACOCOS2D=ON
+# build jscocos2d if USE_JSCOCOS2D=ON
 
 # The version number
 set(COCOS2D_X_VERSION 3.17)
@@ -123,12 +123,12 @@ add_custom_command(TARGET "prebuilt_libs"
 )
 
 ## Lua bindings lib
-if(BUILD_LUA_LIBS OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
+if(USE_LUACOCOS2D OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
   add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings ${ENGINE_BINARY_PATH}/cocos/lua-bindings)
   add_dependencies(prebuilt_libs luacocos2d)
 endif()
 ## JS bindings lib
-if(BUILD_JS_LIBS OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
+if(USE_JSCOCOS2D OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
   add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings ${ENGINE_BINARY_PATH}/cocos/js-bindings)
   add_dependencies(prebuilt_libs jscocos2d)
 endif()
