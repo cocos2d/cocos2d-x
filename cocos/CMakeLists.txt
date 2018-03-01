@@ -108,18 +108,22 @@ set_target_properties(cocos2d
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     VERSION "${COCOS2D_X_VERSION}"
-    FOLDER "CoreLibs"
+    FOLDER "Internal"
 )
 
 # set custom target: prebuilt_libs, to copy all libs to prebuilt libs folder
 add_custom_target(prebuilt_libs ALL)
 add_dependencies(prebuilt_libs cocos2d)
+set_target_properties(prebuilt_libs
+    PROPERTIES
+    FOLDER "Internal"
+)
 add_custom_command(TARGET "prebuilt_libs"
     POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     "${CMAKE_BINARY_DIR}/lib"
-    "${COCOS_PREBUILT_LIBS_PATH}"
-    COMMENT "copy library directory:${CMAKE_BINARY_DIR}/lib to directory:${COCOS_PREBUILT_LIBS_PATH}"
+    "${COCOS_PREBUILT_PATH}"
+    COMMENT "copy library directory:${CMAKE_BINARY_DIR}/lib to directory:${COCOS_PREBUILT_PATH}"
 )
 
 ## Lua bindings lib

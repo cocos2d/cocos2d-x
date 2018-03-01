@@ -275,7 +275,7 @@ foreach(_lib ${all_prebuilt_libs})
 endforeach()
 
 # use engine prebuilt libs
-if(USE_COCOS_PREBUILT_LIBS)
+if(USE_COCOS_PREBUILT)
   # cocos2d/jscocos2d/luacocos2d
   set(_cocos2d_prefix COCOS2D)
   cocos_find_prebuilt_libs(cocos2d COCOS2D_LIBRARIES)
@@ -294,7 +294,7 @@ if(USE_COCOS_PREBUILT_LIBS)
     set(_cocos2d_android_prefix ANDROID_COCOS2D)
     cocos_find_prebuilt_libs(cocos2d_android ANDROID_COCOS2D_LIBRARIES)
   endif()
-endif(USE_COCOS_PREBUILT_LIBS)
+endif(USE_COCOS_PREBUILT)
 
 # spidermonkey, need uniform with other prebuilts
 if(USE_JSCOCOS2D OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))

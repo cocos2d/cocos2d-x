@@ -34,7 +34,7 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     include(CocosBuildSet)
     CocosBuildSet()
     
-    if(NOT USE_COCOS_PREBUILT_LIBS)
+    if(NOT USE_COCOS_PREBUILT)
         add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
     endif()
 endif()
@@ -100,7 +100,7 @@ cocos_mark_app(${APP_NAME}
         DEPEND_ANDROID_LIBS "cocos2d_android"
     )
 
-if(GEN_COCOS_PREBUILT_LIBS)
+if(GEN_COCOS_PREBUILT)
     add_dependencies(${APP_NAME} prebuilt_libs)
 endif()
 

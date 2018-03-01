@@ -27,7 +27,7 @@ android {
                     targets "lua_empty_test"
                     arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", \
                               "-DUSE_CHIPMUNK=TRUE", "-DUSE_BULLET=TRUE", "-DUSE_LUACOCOS2D=TRUE"
-                    arguments "-DGEN_COCOS_PREBUILT_LIBS=ON", "-DUSE_COCOS_PREBUILT_LIBS=OFF"
+                    arguments "-DGEN_COCOS_PREBUILT=ON", "-DUSE_COCOS_PREBUILT=OFF"
                     cppFlags "-frtti -fexceptions"
                 }
             }
