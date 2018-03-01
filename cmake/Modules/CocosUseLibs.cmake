@@ -181,7 +181,7 @@ endmacro()
 macro(luacocos2d_depend_libs)
   set(PLATFORM_SPECIFIC_LIBS)
   set(PREBUILT_SPECIFIC_LIBS)
-
+  list(APPEND PREBUILT_SPECIFIC_LIBS LUAJIT)
 endmacro()
 
 macro(target_use_luacocos2d_depend_libs target)

@@ -100,9 +100,7 @@ cocos_mark_app(${APP_NAME}
         DEPEND_ANDROID_LIBS "cocos2d_android"
     )
 
-# android have different way to generate prebuilt libs by set: GEN_PREBUILT_LIBS ON
-if(GEN_PREBUILT_LIBS AND ANDROID)
-    # tmp, generate prebuilt libs
+if(GEN_COCOS_PREBUILT_LIBS)
     add_dependencies(${APP_NAME} prebuilt_libs)
 endif()
 

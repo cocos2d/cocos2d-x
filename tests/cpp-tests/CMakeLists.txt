@@ -61,15 +61,6 @@ else()
     message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-# Use same method as in cocos library
-if(LINUX)
-    foreach(_pkg FONTCONFIG GTK3)
-        cocos_find_package(${_pkg} ${_pkg} REQUIRED)
-    endforeach()
-endif()
-cocos_find_package(FREETYPE FREETYPE REQUIRED)
-cocos_find_package(CURL CURL REQUIRED)
-
 set(TESTS_SRC
     Classes/ActionManagerTest/ActionManagerTest.cpp
     Classes/ActionsEaseTest/ActionsEaseTest.cpp
@@ -266,7 +257,11 @@ cocos_mark_app(${APP_NAME}
         COMMON_USE_PKGS "FREETYPE" "CURL"
         LINUX_USE_PKGS "FONTCONFIG" "GTK3"
     )
-    
+
+if(GEN_COCOS_PREBUILT_LIBS)
+    add_dependencies(${APP_NAME} prebuilt_libs)
+endif()
+
 # mark app resources
 if(APPLE)
     if(MACOSX)

@@ -11,6 +11,7 @@ macro (SelectModule)
     set(USE_EXTERNAL_PREBUILT_LIBS_DEFAULT OFF)
   endif()
 
+  set(GEN_COCOS_PREBUILT_LIBS_DEFAULT OFF)
   set(USE_COCOS_PREBUILT_LIBS_DEFAULT OFF)
 
   set(BUILD_LUA_LIBS_DEFAULT OFF)
@@ -35,9 +36,9 @@ macro (SelectModule)
   option(BUILD_BOX2D "Build box2d external without using it for physics library" OFF)
   option(BUILD_LUA_LIBS "Build lua libraries" ${BUILD_LUA_LIBS_DEFAULT})
   option(BUILD_JS_LIBS "Build js libraries" ${BUILD_JS_LIBS_DEFAULT})
-  # need review
   option(USE_EXTERNAL_PREBUILT_LIBS "Use prebuilt libraries in external directory" ${USE_EXTERNAL_PREBUILT_LIBS_DEFAULT})
-  option(USE_COCOS_PREBUILT_LIBS "use cocos static libraries, return error if not find" ${USE_COCOS_PREBUILT_LIBS_DEFAULT})
+  option(GEN_COCOS_PREBUILT_LIBS "generate cocos static libraries, put libraries into prebuilt folder in cocos root" ${GEN_COCOS_PREBUILT_LIBS_DEFAULT})
+  option(USE_COCOS_PREBUILT_LIBS "use cocos static libraries, return warning if not find" ${USE_COCOS_PREBUILT_LIBS_DEFAULT})
   option(USE_SOURCES_EXTERNAL "Use sources in external directory (automatically ON when USE_EXTERNAL_PREBUILT_LIBS is ON)" ${USE_SOURCES_EXTERNAL_DEFAULT})
 
   if(USE_EXTERNAL_PREBUILT_LIBS AND MINGW)

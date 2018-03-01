@@ -35,8 +35,10 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     include(CocosBuildSet)
     CocosBuildSet()
     
-    set(BUILD_JS_LIBS ON)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
+    if(NOT USE_COCOS_PREBUILT_LIBS)
+        set(BUILD_JS_LIBS ON)
+        add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
+    endif()
 endif()
 
 if(APPLE OR VS)
@@ -127,6 +129,10 @@ cocos_mark_app(${APP_NAME}
 
 if(USE_COCOS_PREBUILT_LIBS)
     target_use_jscocos2d_depend_libs(${APP_NAME})
+endif()
+
+if(GEN_COCOS_PREBUILT_LIBS)
+    add_dependencies(${APP_NAME} prebuilt_libs)
 endif()
 
 # mark app resources
