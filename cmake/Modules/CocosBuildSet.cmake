@@ -76,7 +76,7 @@ macro(CocosBuildSet)
     include(SetCompilerOptions)
     SetCompilerOptions()
 
-    if(CMAKE_FIND_ROOT_PATH AND USE_EXTERNAL_PREBUILT_LIBS)
+    if(CMAKE_FIND_ROOT_PATH AND USE_EXTERNAL_PREBUILT)
         # Adds cocos2d-x external folder to the list of valid include/library paths when cross-compiling and using prebuilds
         set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${COCOS_EXTERNAL_DIR})
     endif()
@@ -130,7 +130,7 @@ macro(CocosBuildSet)
         endif()
     endif()
 
-    if(USE_EXTERNAL_PREBUILT_LIBS)
+    if(USE_EXTERNAL_PREBUILT)
         include(CocosPickLibs)
     endif()
 

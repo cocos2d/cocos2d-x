@@ -1,7 +1,7 @@
 include(CMakeParseArguments)
 
 # lib_name eg cocos2d/cocos2djs
-function(cocos_find_prebuilt_libs lib_target lib_ret)
+function(cocos_find_prebuilt lib_target lib_ret)
   # only search COCOS_PREBUILT_PATH
   set(search_path ${COCOS_PREBUILT_PATH})
   if(XCODE OR VS)
@@ -327,7 +327,7 @@ endmacro (set_xcode_property)
 # prebuilt libs for cocos
 # need review
 macro(cocos_find_package pkg_name pkg_prefix)
-  if(NOT USE_EXTERNAL_PREBUILT_LIBS OR NOT ${pkg_prefix}_FOUND)
+  if(NOT USE_EXTERNAL_PREBUILT OR NOT ${pkg_prefix}_FOUND)
     find_package(${pkg_name} ${ARGN})
   endif()
   if(NOT ${pkg_prefix}_INCLUDE_DIRS AND ${pkg_prefix}_INCLUDE_DIR)
