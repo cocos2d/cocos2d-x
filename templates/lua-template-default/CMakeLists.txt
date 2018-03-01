@@ -37,8 +37,10 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     include(CocosBuildSet)
     CocosBuildSet()
     
-    set(USE_LUACOCOS2D ON)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
+    if(NOT USE_COCOS_PREBUILT_LIBS)
+        set(USE_LUACOCOS2D ON)
+        add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
+    endif()
 endif()
 
 if(ANDROID)
@@ -122,10 +124,18 @@ include_directories(
 
 # mark app complie info and libs info
 cocos_mark_app(${APP_NAME} 
-    APP_SRC "${SAMPLE_SRC}"
-    DEPEND_COMMON_LIBS "luacocos2d"
+    APP_SRC "${GAME_SRC}"
+    DEPEND_COMMON_LIBS "luacocos2d" "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"
 )
+
+if(USE_COCOS_PREBUILT_LIBS)
+    target_use_luacocos2d_depend_libs(${APP_NAME})
+endif()
+
+if(GEN_COCOS_PREBUILT_LIBS)
+    add_dependencies(${APP_NAME} prebuilt_libs)
+endif()
 
 # mark app resources
 if(APPLE)

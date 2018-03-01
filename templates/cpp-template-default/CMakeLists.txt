@@ -111,24 +111,6 @@ include_directories(
 	Classes
 )
 
-if (WINDOWS)
-    include_directories(
-        ${COCOS2DX_ROOT_PATH}/external/glfw3/include/${PLATFORM_FOLDER}
-        ${COCOS2DX_ROOT_PATH}/external/${PLATFORM_FOLDER}-specific/gles/include/OGLES
-    )
-elseif (APPLE)
-    if (MACOSX)
-        include_directories(
-            ${COCOS2DX_ROOT_PATH}/external/glfw3/include/mac
-        )
-    endif()
-elseif(LINUX)
-    include_directories(
-        /usr/local/include/GLFW
-        /usr/include/GLFW
-    )
-endif(WINDOWS)
-
 set(all_code_src
     ${platform_specific_src}
     ${common_code_files}
@@ -149,7 +131,11 @@ cocos_mark_app(${APP_NAME}
         DEPEND_COMMON_LIBS "cocos2d"
         DEPEND_ANDROID_LIBS "cocos2d_android"
     )
-    
+
+if(GEN_COCOS_PREBUILT_LIBS)
+    add_dependencies(${APP_NAME} prebuilt_libs)
+endif()
+
 # mark app resources
 if(APPLE)
     if(MACOSX)

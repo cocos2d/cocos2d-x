@@ -1,4 +1,4 @@
-# CocosUsePrebuiltLibs - sets external libs variables to link with
+# CocosPickLibs - sets external libs variables to link with
 
 # START CONFIG
 
@@ -297,7 +297,7 @@ if(USE_COCOS_PREBUILT_LIBS)
 endif(USE_COCOS_PREBUILT_LIBS)
 
 # spidermonkey, need uniform with other prebuilts
-if(USE_JSCOCOS2D)
+if(USE_JSCOCOS2D OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
   set(_spidermonkey_prefix SPIDERMONKEY)
   set(SPIDERMONKEY_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/spidermonkey/include/${PLATFORM_FOLDER})
   find_library(SPIDERMONKEY_LIBRARIES NAMES js_static mozjs-33 HINTS
@@ -307,7 +307,7 @@ if(USE_JSCOCOS2D)
     NO_CMAKE_FIND_ROOT_PATH
   )
   message("SPIDERMONKEY_LIBRARIES: ${SPIDERMONKEY_LIBRARIES}")
-endif(USE_JSCOCOS2D)
+endif()
 
 
 
