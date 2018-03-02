@@ -147,6 +147,8 @@ if(APPLE)
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()
+elseif(MSVC)
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
 endif()
 
 if(LINUX OR MSVC)

@@ -40,7 +40,7 @@ function(cocos_copy_target_res cocos_target)
   set(multiValueArgs FILES FOLDERS)
   cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
     # copy files
-  foreach(cc_file ${opt_FILES})
+	foreach(cc_file ${opt_FILES})
     add_custom_command(TARGET ${cocos_target} PRE_BUILD
       COMMAND ${CMAKE_COMMAND} -E copy_if_different
       ${cc_file} 
@@ -79,6 +79,55 @@ function(cocos_mark_multi_resources res_return)
     cocos_mark_resources(FILES ${folder_files} BASEDIR ${cc_folder} RESOURCEBASE ${opt_RES_TO})
   endforeach()
   set(${res_return} ${tmp_files_ret} PARENT_SCOPE)
+endfunction()
+
+# out var all_depend_dlls_var
+function(get_target_depends_ext_dlls cocos_target all_depend_dlls_var)
+  set(all_depend_ext_dlls)
+  set(targets_prepare_search ${cocos_target})
+  # targets_prepare_search, target need find ext libs
+  set(have_searched_targets)
+  set(need_search_targets)
+  while(true)
+    foreach(tmp_target ${targets_prepare_search})
+      get_target_property(tmp_depend_libs ${tmp_target} LINK_LIBRARIES)
+      list(REMOVE_ITEM targets_prepare_search ${tmp_target})
+      foreach(depend_lib ${tmp_depend_libs})
+        if(TARGET ${depend_lib})
+          get_target_property(tmp_dlls ${depend_lib} DEPEND_DLLS)
+          if(NOT tmp_dlls)
+            list(APPEND all_depend_ext_dlls ${tmp_dlls})
+          endif()
+          list(APPEND targets_prepare_search ${depend_lib})
+        endif()
+      endforeach()
+    endforeach()
+    list(LENGTH targets_prepare_search targets_prepare_search_size)
+    if(targets_prepare_search_size LESS 1)
+      break()
+    endif()
+  endwhile(true)
+  
+  set(${all_depend_dlls_var} ${all_depend_ext_dlls} PARENT_SCOPE)
+endfunction()
+
+# cocos_target: the target app that needed dlls
+# COPY_TO: destination dir
+function(cocos_copy_target_dll cocos_target)
+  set(oneValueArgs COPY_TO)
+  cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  get_target_depends_ext_dlls(${cocos_target} all_depend_dlls)
+  # remove repeat items
+  list(REMOVE_DUPLICATES all_depend_dlls)
+  message("${cocos_target} depend all external libs:${all_depend_dlls}")
+  message(STATUS "TARGET: ${cocos_target} need DLL is: ${all_depend_dlls}")
+  foreach(single_target_dll ${all_depend_dlls} )
+      add_custom_command(TARGET ${cocos_target} PRE_BUILD
+      COMMAND ${CMAKE_COMMAND} -E copy_if_different
+      ${all_depend_dlls}
+      ${opt_COPY_TO}
+    )
+  endforeach(single_target_dll)
 endfunction()
 
 # find dlls in a dir of LIB_ABS_PATH located, and save the dlls into out_put_dlls
@@ -266,7 +315,7 @@ endmacro()
 
 # This little macro lets you set any XCode specific property, from ios.toolchain.cmake
 macro (set_xcode_property TARGET XCODE_PROPERTY XCODE_VALUE)
-  set_property (TARGET ${TARGET} PROPERTY XCODE_ATTRIBUTE_${XCODE_PROPERTY} ${XCODE_VALUE})
+	set_property (TARGET ${TARGET} PROPERTY XCODE_ATTRIBUTE_${XCODE_PROPERTY} ${XCODE_VALUE})
 endmacro (set_xcode_property)
 
 # cocos_find_package(pkg args...)
@@ -336,24 +385,19 @@ function(cocos_use_pkg target pkg)
     # message(STATUS "${pkg} add definitions: ${_defs}")
   endif()
 
-  if(MSVC)
-    set(_dlls)
-    if(NOT _dlls)
-      set(_dlls ${${prefix}_DLLS})
-    endif()
-    get_target_property(app_dir ${target} RUNTIME_OUTPUT_DIRECTORY)
-    if(_dlls)
-      if(app_dir)
-          # message(STATUS "${pkg} add dlls: ${_dlls}")
-          foreach(single_dll ${_dlls} )
-            add_custom_command(TARGET ${target} PRE_BUILD
-              COMMAND ${CMAKE_COMMAND} -E copy_if_different
-              ${single_dll} 
-              ${app_dir}
-            )
-          endforeach()
-      endif()
+  set(_dlls)
+  if(NOT _dlls)
+    set(_dlls ${${prefix}_DLLS})
+  endif()
+  if(_dlls)
+    if(MSVC)
+        # message(STATUS "${target} add depend dlls: ${_dlls}")
+        set_target_properties(${target}
+          PROPERTIES
+          DEPEND_DLLS ${_dlls}
+        )
     endif()
   endif()
+
 endfunction()
 

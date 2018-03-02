@@ -233,6 +233,10 @@ endif()
         else()
             message(FATAL_ERROR "using Windows MSVC generate cocos2d-x project, MSVC_VERSION:${MSVC_VERSION} too low" )
         endif()
+        define_property(TARGET
+            PROPERTY DEPEND_DLLS
+            BRIEF_DOCS "save depend dlls of a target"
+        )
     else()
         message(FATAL_ERROR "please using Windows MSVC compile cocos2d-x project, support other compile tools not yet" )
     endif()
