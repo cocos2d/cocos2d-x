@@ -122,7 +122,6 @@ macro (BuildModules)
     endif()
     message(STATUS "TinyXML2 include dirs: ${TinyXML2_INCLUDE_DIRS}")
 
-  # need review
   if(NOT IOS)
     cocos_find_package(ZLIB ZLIB REQUIRED)
   endif()
@@ -151,7 +150,6 @@ macro (BuildModules)
     endif()
     message(STATUS "Tremolo include dirs: ${TREMOLO_INCLUDE_DIRS}")
     
-    #need review, what's the meaning of cpufeatures? and need improve
     set(_cpufeatures_prefix CPUFEATURES)
     if(USE_COCOS_PREBUILT)
       cocos_find_prebuilt(cpufeatures CPUFEATURES_LIBRARIES)
@@ -178,7 +176,6 @@ macro (BuildModules)
       # set(MINIZIP_LIBRARIES unzip ${ZLIB_LIBRARIES})
       set(MINIZIP_LIBRARIES unzip)
     endif()
-    #TODO: hack! should be in external/unzip/CMakeLists.txt, need review
     message(STATUS "MINIZIP include dirs: ${MINIZIP_INCLUDE_DIRS}")
   else()
     cocos_find_package(MINIZIP MINIZIP REQUIRED)

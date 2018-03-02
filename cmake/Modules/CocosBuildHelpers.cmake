@@ -40,7 +40,7 @@ function(cocos_copy_target_res cocos_target)
   set(multiValueArgs FILES FOLDERS)
   cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
     # copy files
-	foreach(cc_file ${opt_FILES})
+  foreach(cc_file ${opt_FILES})
     add_custom_command(TARGET ${cocos_target} PRE_BUILD
       COMMAND ${CMAKE_COMMAND} -E copy_if_different
       ${cc_file} 
@@ -80,6 +80,7 @@ function(cocos_mark_multi_resources res_return)
   endforeach()
   set(${res_return} ${tmp_files_ret} PARENT_SCOPE)
 endfunction()
+
 # find dlls in a dir of LIB_ABS_PATH located, and save the dlls into out_put_dlls
 function(cocos_find_dlls_for_lib out_put_dlls)
   set(oneValueArgs LIB_ABS_PATH)
@@ -220,7 +221,7 @@ macro(cocos_fake_set cc_variable cc_value)
   endif()
 endmacro()
 
-# macos package, need review
+# macos package, need review, might improve plist, not use template?
 macro(cocos_pak_xcode cocos_target)
   set(oneValueArgs
     INFO_PLIST 
@@ -265,13 +266,12 @@ endmacro()
 
 # This little macro lets you set any XCode specific property, from ios.toolchain.cmake
 macro (set_xcode_property TARGET XCODE_PROPERTY XCODE_VALUE)
-	set_property (TARGET ${TARGET} PROPERTY XCODE_ATTRIBUTE_${XCODE_PROPERTY} ${XCODE_VALUE})
+  set_property (TARGET ${TARGET} PROPERTY XCODE_ATTRIBUTE_${XCODE_PROPERTY} ${XCODE_VALUE})
 endmacro (set_xcode_property)
 
 # cocos_find_package(pkg args...)
 # works same as find_package, but do additional care to properly find
 # prebuilt libs for cocos
-# need review
 macro(cocos_find_package pkg_name pkg_prefix)
   if(NOT USE_EXTERNAL_PREBUILT OR NOT ${pkg_prefix}_FOUND)
     find_package(${pkg_name} ${ARGN})

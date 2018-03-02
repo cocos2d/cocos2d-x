@@ -44,26 +44,21 @@ macro(CocosBuildSet)
     else()
         message(WARN "CMAKE_SIZEOF_VOID_P: ${CMAKE_SIZEOF_VOID_P}")
     endif()
-    # CMAKE_BUILD_TYPE has precedence over DEBUG_MODE
-    # Still supporting DEBUG_MODE for backwards compatibility
-    if(NOT CMAKE_BUILD_TYPE)
-        if(DEBUG_MODE)
-            set(CMAKE_BUILD_TYPE Debug)
-        else(DEBUG_MODE)
-            set(CMAKE_BUILD_TYPE Release)
-        endif(DEBUG_MODE)
-    endif(NOT CMAKE_BUILD_TYPE)
+
+    # Debug or Release, set Debug as default value
+    if(NOT DEFINED CMAKE_BUILD_TYPE)
+        set(CMAKE_BUILD_TYPE Debug)
+    endif()
+    # make configurations type keep same to cmake build type. prevent use generate debug project but switch release mode in IDE
+    if(CMAKE_GENERATOR)
+        set(CMAKE_CONFIGURATION_TYPES "${CMAKE_BUILD_TYPE}" CACHE STRING "Reset the configurations to what we need" FORCE)
+    endif()
 
     # Define other useful variables not defined by CMake
     if(CMAKE_GENERATOR STREQUAL Xcode)
         set (XCODE TRUE)
     elseif(CMAKE_GENERATOR MATCHES Visual)
         set (VS TRUE)
-    endif()
-
-    # make configurations type keep same to cmake build type. prevent use generate debug project but switch release mode in IDE
-    if(CMAKE_GENERATOR)
-        set(CMAKE_CONFIGURATION_TYPES "${CMAKE_BUILD_TYPE}" CACHE STRING "Reset the configurations to what we need" FORCE)
     endif()
 
     include(CocosBuildHelpers)

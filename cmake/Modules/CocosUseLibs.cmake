@@ -13,7 +13,8 @@ macro(cocos2d_depend_libs)
       list(APPEND PLATFORM_SPECIFIC_LIBS shlwapi version)
     endif()
   elseif(LINUX)
-    list(APPEND PLATFORM_SPECIFIC_LIBS dl)
+    # need review those libs: X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m
+    list(APPEND PLATFORM_SPECIFIC_LIBS dl X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m)
     foreach(_pkg OPENGL GLEW GLFW3 FMOD FONTCONFIG THREADS GTK3)
       list(APPEND PREBUILT_SPECIFIC_LIBS ${_pkg})
     endforeach()
@@ -78,7 +79,6 @@ macro(cocos2d_depend_libs)
       message(FATAL_ERROR "Unsupported platform, CMake will exit" )
   endif()
 
-  # ZLIB? need review - Z_LIBRARY on iOS
   foreach(_pkg ZLIB MINIZIP TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS XXHASH)
     list(APPEND PREBUILT_SPECIFIC_LIBS ${_pkg})
   endforeach()
@@ -87,7 +87,7 @@ macro(cocos2d_depend_libs)
     list(APPEND PREBUILT_SPECIFIC_LIBS OPENSSL)
   endif()
 
-  # need review, which lib need glfw_other_linker_flags?
+  # need review, which lib need glfw_other_linker_flags? it's libs?
   # if(LINUX)
   #   set(glfw_other_linker_flags X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m)
   # endif(LINUX)
