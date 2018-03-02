@@ -39,7 +39,7 @@ macro (BuildModules)
       cocos_find_package(MPG123 MPG123 REQUIRED)
       cocos_find_package(OpenAL OPENAL REQUIRED)
       # because FindOpenAL.cmake set include dir for '#include <al.h>' for portability (not for '#include <AL/al.h>'
-        set(OPENAL_DEFINITIONS "-DOPENAL_PLAIN_INCLUDES")
+      set(OPENAL_DEFINITIONS "-DOPENAL_PLAIN_INCLUDES")
     endif()
   endif(LINUX OR MACOSX OR WINDOWS)
 
