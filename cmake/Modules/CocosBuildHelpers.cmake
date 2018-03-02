@@ -230,10 +230,12 @@ macro(cocos_mark_app app_name)
     )
   elseif(MSVC)
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/$<CONFIG>")
+    set(APP_RES_DIR "${APP_BIN_DIR}")
     #Visual Studio Defaults to wrong type
     set_target_properties(${app_name} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
   else(LINUX)
     set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
+    set(APP_RES_DIR "${APP_BIN_DIR}/Resources")
   endif()
   set_target_properties(${app_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
   # link commom libs

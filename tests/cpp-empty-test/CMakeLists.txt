@@ -44,10 +44,10 @@ set(common_code_files
     Classes/HelloWorldScene.cpp
 )
 
+set(res_res_folders 
+    "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
+)
 if(APPLE OR VS)
-    set(res_res_folders 
-        "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
-    )
     cocos_mark_multi_resources(cc_common_res RES_TO "Resources" FOLDERS ${res_res_folders})
 endif()
 
@@ -116,5 +116,5 @@ elseif(MSVC)
 endif()
 
 if(LINUX OR MSVC)
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FOLDERS ${CMAKE_CURRENT_SOURCE_DIR}/Resources)
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${res_res_folders})
 endif()

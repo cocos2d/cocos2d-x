@@ -66,20 +66,21 @@ include_directories(${RUNTIME_SRC_ROOT}/Classes)
 
 set(GAME_SRC ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp
 )
+
+set(res_main_files
+    "${CMAKE_CURRENT_SOURCE_DIR}/main.js"
+    "${CMAKE_CURRENT_SOURCE_DIR}/project.json" 
+)
+set(res_res_folders 
+    "${CMAKE_CURRENT_SOURCE_DIR}/res" 
+)
+set(res_src_folders
+    "${CMAKE_CURRENT_SOURCE_DIR}/src"
+)
+set(res_script_folders
+    "${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/script"
+)
 if(APPLE OR VS)
-    set(res_main_files
-        "${CMAKE_CURRENT_SOURCE_DIR}/main.js"
-        "${CMAKE_CURRENT_SOURCE_DIR}/project.json" 
-    )
-    set(res_res_folders 
-        "${CMAKE_CURRENT_SOURCE_DIR}/res" 
-    )
-    set(res_src_folders
-        "${CMAKE_CURRENT_SOURCE_DIR}/src"
-    )
-    set(res_script_folders
-        "${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/script"
-    )
     cocos_mark_multi_resources(res_main RES_TO "Resources" FILES ${res_main_files})
     cocos_mark_multi_resources(res_res RES_TO "Resources/res" FOLDERS ${res_res_folders})
     cocos_mark_multi_resources(res_src RES_TO "Resources/src" FOLDERS ${res_src_folders})
@@ -150,9 +151,9 @@ elseif(MSVC)
 endif()
 
 if(LINUX OR MSVC)
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR} FILES ${res_main_files})
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR}/res FOLDERS ${res_res_folders})
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR}/src FOLDERS ${res_src_folders})
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR}/script FOLDERS ${res_script_folders})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FILES ${res_main_files})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/res FOLDERS ${res_res_folders})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/src FOLDERS ${res_src_folders})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/script FOLDERS ${res_script_folders})
 endif()
 

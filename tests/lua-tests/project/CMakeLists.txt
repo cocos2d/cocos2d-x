@@ -22,17 +22,18 @@ set(SAMPLE_SRC
     Classes/lua_assetsmanager_test_sample.cpp
     Classes/lua_test_bindings.cpp
 )
+
+set(res_res_folders 
+    "${CMAKE_CURRENT_SOURCE_DIR}/../res" 
+    "${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources"
+)
+set(res_src_folders
+    "${CMAKE_CURRENT_SOURCE_DIR}/../src"
+)
+set(res_script_folders
+    "${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script"
+)
 if(APPLE OR VS)
-    set(res_res_folders 
-        "${CMAKE_CURRENT_SOURCE_DIR}/../res" 
-        "${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources"
-    )
-    set(res_src_folders
-        "${CMAKE_CURRENT_SOURCE_DIR}/../src"
-    )
-    set(res_script_folders
-        "${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script"
-    )
     cocos_mark_multi_resources(res_res RES_TO "Resources/res" FOLDERS ${res_res_folders})
     cocos_mark_multi_resources(res_src RES_TO "Resources/src" FOLDERS ${res_src_folders})
     cocos_mark_multi_resources(res_script RES_TO "Resources/src/cocos" FOLDERS ${res_script_folders})
@@ -108,7 +109,7 @@ elseif(MSVC)
 endif()
 
 if(LINUX OR MSVC)
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR}/res FOLDERS ${res_res_folders})
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR}/src FOLDERS ${res_src_folders})
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_BIN_DIR}/src/cocos FOLDERS ${res_script_folders})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/res FOLDERS ${res_res_folders})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/src FOLDERS ${res_src_folders})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/src/cocos FOLDERS ${res_script_folders})
 endif()
