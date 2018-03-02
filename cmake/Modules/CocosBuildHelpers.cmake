@@ -40,11 +40,12 @@ function(cocos_copy_target_res cocos_target)
   set(multiValueArgs FILES FOLDERS)
   cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
     # copy files
-	foreach(cc_file ${opt_FILES})
+  foreach(cc_file ${opt_FILES})
+    get_filename_component(file_name ${cc_file} NAME)
     add_custom_command(TARGET ${cocos_target} PRE_BUILD
       COMMAND ${CMAKE_COMMAND} -E copy_if_different
-      ${cc_file} 
-      ${opt_COPY_TO}
+      ${cc_file}
+      "${opt_COPY_TO}/${file_name}"
     )
   endforeach()
   # copy folders
