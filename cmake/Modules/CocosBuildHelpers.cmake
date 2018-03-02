@@ -336,20 +336,23 @@ function(cocos_use_pkg target pkg)
     # message(STATUS "${pkg} add definitions: ${_defs}")
   endif()
 
-  set(_dlls)
-  if(NOT _dlls)
-    set(_dlls ${${prefix}_DLLS})
-  endif()
-  if(_dlls)
-    if(MSVC)
-        # message(STATUS "${pkg} add dlls: ${_dlls}")
-        foreach(single_dll ${_dlls} )
-          add_custom_command(TARGET ${target} PRE_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            ${single_dll} 
-            ${APP_BIN_DIR}
-          )
-        endforeach()
+  if(MSVC)
+    set(_dlls)
+    if(NOT _dlls)
+      set(_dlls ${${prefix}_DLLS})
+    endif()
+    get_target_property(app_dir ${target} RUNTIME_OUTPUT_DIRECTORY)
+    if(_dlls)
+      if(app_dir)
+          # message(STATUS "${pkg} add dlls: ${_dlls}")
+          foreach(single_dll ${_dlls} )
+            add_custom_command(TARGET ${target} PRE_BUILD
+              COMMAND ${CMAKE_COMMAND} -E copy_if_different
+              ${single_dll} 
+              ${app_dir}
+            )
+          endforeach()
+      endif()
     endif()
   endif()
 endfunction()
