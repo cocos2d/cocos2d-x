@@ -50,8 +50,6 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     if(NOT USE_COCOS_PREBUILT)
         add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
     endif()
-elseif(MSVC)
-    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
 endif()
 
 if(ANDROID)

@@ -235,7 +235,8 @@ endif()
         endif()
         define_property(TARGET
             PROPERTY DEPEND_DLLS
-            BRIEF_DOCS "save depend dlls of a target"
+            BRIEF_DOCS "depend dlls of a target"
+            FULL_DOCS "use to save depend dlls of a target"
         )
     else()
         message(FATAL_ERROR "please using Windows MSVC compile cocos2d-x project, support other compile tools not yet" )

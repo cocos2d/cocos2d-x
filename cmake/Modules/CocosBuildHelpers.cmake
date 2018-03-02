@@ -92,13 +92,17 @@ function(get_target_depends_ext_dlls cocos_target all_depend_dlls_var)
     foreach(tmp_target ${targets_prepare_search})
       get_target_property(tmp_depend_libs ${tmp_target} LINK_LIBRARIES)
       list(REMOVE_ITEM targets_prepare_search ${tmp_target})
+      # target itself use_cocos_pkg
+      list(APPEND tmp_depend_libs ${tmp_target})
       foreach(depend_lib ${tmp_depend_libs})
         if(TARGET ${depend_lib})
           get_target_property(tmp_dlls ${depend_lib} DEPEND_DLLS)
-          if(NOT tmp_dlls)
+          if(tmp_dlls)
             list(APPEND all_depend_ext_dlls ${tmp_dlls})
           endif()
-          list(APPEND targets_prepare_search ${depend_lib})
+          if(NOT (depend_lib STREQUAL tmp_target))
+            list(APPEND targets_prepare_search ${depend_lib})
+          endif()
         endif()
       endforeach()
     endforeach()
@@ -119,8 +123,7 @@ function(cocos_copy_target_dll cocos_target)
   get_target_depends_ext_dlls(${cocos_target} all_depend_dlls)
   # remove repeat items
   list(REMOVE_DUPLICATES all_depend_dlls)
-  message("${cocos_target} depend all external libs:${all_depend_dlls}")
-  message(STATUS "TARGET: ${cocos_target} need DLL is: ${all_depend_dlls}")
+  message(STATUS "prepare to copy external dlls for ${cocos_target}:${all_depend_dlls}")
   foreach(single_target_dll ${all_depend_dlls} )
       add_custom_command(TARGET ${cocos_target} PRE_BUILD
       COMMAND ${CMAKE_COMMAND} -E copy_if_different
@@ -391,9 +394,15 @@ function(cocos_use_pkg target pkg)
   endif()
   if(_dlls)
     if(MSVC)
-        # message(STATUS "${target} add depend dlls: ${_dlls}")
-        set_target_properties(${target}
-          PROPERTIES
+        # message(STATUS "${target} add dll: ${_dlls}")
+        get_property(pre_dlls
+          TARGET  ${target}
+          PROPERTY DEPEND_DLLS)
+        if(pre_dlls)
+          set(_dlls ${pre_dlls} ${_dlls})
+        endif()
+        set_property(TARGET ${target}
+          PROPERTY
           DEPEND_DLLS ${_dlls}
         )
     endif()
