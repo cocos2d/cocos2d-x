@@ -80,60 +80,6 @@ function(cocos_mark_multi_resources res_return)
   endforeach()
   set(${res_return} ${tmp_files_ret} PARENT_SCOPE)
 endfunction()
-
-# out var all_depend_libs
-function(get_target_depends_ext_libs cocos_target all_depend_libs_var)
-  set(all_depend_ext_libs)
-  set(targets_unsearch ${cocos_target})
-  # targets_unsearch, target need find ext libs
-  set(have_searched_targets)
-  set(need_search_targets)
-  while(true)
-    foreach(tmp_target ${targets_unsearch})
-      get_target_property(tmp_depend_libs ${tmp_target} LINK_LIBRARIES)
-      list(REMOVE_ITEM targets_unsearch ${tmp_target})
-      foreach(depend_lib ${tmp_depend_libs})
-        if(EXISTS ${depend_lib})
-          list(APPEND all_depend_ext_libs ${depend_lib})
-        elseif(TARGET ${depend_lib})
-          list(APPEND all_depend_ext_libs ${depend_lib})
-          list(APPEND targets_unsearch ${depend_lib})
-        endif()
-      endforeach()
-    endforeach()
-    list(LENGTH targets_unsearch targets_unsearch_size)
-    if(targets_unsearch_size LESS 1)
-      break()
-    endif()
-  endwhile(true)
-  
-  # message("${cocos_target} depend all external libs:${all_depend_ext_libs}")
-  set(${all_depend_libs_var} ${all_depend_ext_libs} PARENT_SCOPE)
-endfunction()
-
-# cocos_target: the target app that needed dlls
-# COPY_TO: destination dir
-function(cocos_copy_target_dll cocos_target)
-  set(oneValueArgs COPY_TO)
-  cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-  get_target_depends_ext_libs(${cocos_target} all_depend_libs)
-  set(all_target_dlls)
-  foreach(depend_lib ${all_depend_libs})
-    cocos_find_dlls_for_lib(_dll_tmp LIB_ABS_PATH ${depend_lib})
-    list(APPEND all_target_dlls ${_dll_tmp})
-  endforeach()
-  # remove repeat items
-  list(REMOVE_DUPLICATES all_target_dlls)
-  message(STATUS "TARGET: ${cocos_target} need DLL is: ${all_target_dlls}")
-  foreach(single_target_dll ${all_target_dlls} )
-      add_custom_command(TARGET ${cocos_target} PRE_BUILD
-      COMMAND ${CMAKE_COMMAND} -E copy_if_different
-      ${all_target_dlls} 
-      ${opt_COPY_TO}
-    )
-  endforeach(single_target_dll)
-endfunction()
-
 # find dlls in a dir of LIB_ABS_PATH located, and save the dlls into out_put_dlls
 function(cocos_find_dlls_for_lib out_put_dlls)
   set(oneValueArgs LIB_ABS_PATH)
@@ -388,6 +334,23 @@ function(cocos_use_pkg target pkg)
   if(_defs)
     add_definitions(${_defs})
     # message(STATUS "${pkg} add definitions: ${_defs}")
+  endif()
+
+  set(_dlls)
+  if(NOT _dlls)
+    set(_dlls ${${prefix}_DLLS})
+  endif()
+  if(_dlls)
+    if(MSVC)
+        # message(STATUS "${pkg} add dlls: ${_dlls}")
+        foreach(single_dll ${_dlls} )
+          add_custom_command(TARGET ${target} PRE_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            ${single_dll} 
+            ${APP_BIN_DIR}
+          )
+        endforeach()
+    endif()
   endif()
 endfunction()
 

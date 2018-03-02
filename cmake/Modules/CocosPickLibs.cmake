@@ -135,6 +135,13 @@ if (MSVC)
   set(_luajit_libs lua51)
 endif()
 
+set(_spidermonkey_prefix SPIDERMONKEY)
+set(_spidermonkey_inc jsapi.h)
+set(_spidermonkey_libs js_static)
+if (MSVC)
+  set(_spidermonkey_libs mozjs-33)
+endif()
+
 set(all_prebuilt_libs
   chipmunk
   curl
@@ -148,6 +155,7 @@ set(all_prebuilt_libs
   bullet
   Box2D
   luajit
+  spidermonkey
 )
 
 
@@ -296,18 +304,6 @@ if(USE_COCOS_PREBUILT)
   endif()
 endif(USE_COCOS_PREBUILT)
 
-# spidermonkey, need uniform with other prebuilts
-if(USE_JSCOCOS2D OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
-  set(_spidermonkey_prefix SPIDERMONKEY)
-  set(SPIDERMONKEY_INCLUDE_DIRS ${COCOS2DX_ROOT_PATH}/external/spidermonkey/include/${PLATFORM_FOLDER})
-  find_library(SPIDERMONKEY_LIBRARIES NAMES js_static mozjs-33 HINTS
-    ${COCOS2DX_ROOT_PATH}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
-    ${COCOS2DX_ROOT_PATH}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ANDROID_ABI}
-    ${COCOS2DX_ROOT_PATH}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}
-    NO_CMAKE_FIND_ROOT_PATH
-  )
-  message("SPIDERMONKEY_LIBRARIES: ${SPIDERMONKEY_LIBRARIES}")
-endif()
 
 
 
