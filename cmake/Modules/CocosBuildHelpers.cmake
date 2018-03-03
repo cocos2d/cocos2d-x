@@ -226,11 +226,11 @@ macro(cocos_mark_app app_name)
   endif()
   # set target PROPERTIES, depend different platforms
   if(APPLE)
-    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}")
+    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
     set_target_properties(${app_name} PROPERTIES MACOSX_BUNDLE 1
     )
   elseif(MSVC)
-    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}/${APP_NAME}")
+    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/$<CONFIG>")
     set(APP_RES_DIR "${APP_BIN_DIR}")
     #Visual Studio Defaults to wrong type
     set_target_properties(${app_name} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
