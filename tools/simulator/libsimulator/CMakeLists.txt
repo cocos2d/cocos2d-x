@@ -24,9 +24,13 @@
 
 set(SIMULATOR_LIB_PATH ${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator/lib)
 
-# add define for mac os GLFW_EXPOSE_NATIVE_NSGL
 if(MACOSX)
+    # add define for mac os GLFW_EXPOSE_NATIVE_NSGL
     add_definitions(-DGLFW_EXPOSE_NATIVE_NSGL)
+elseif(WINDOWS)
+    add_definitions(-DUNICODE -D_UNICODE)
+    add_definitions(-D_USRLIBSIMSTATIC -DGLFW_EXPOSE_NATIVE_WIN32 -D_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS)
+    include_directories(${SIMULATOR_LIB_PATH}/../proj.win32)
 endif()
 
 if(WIN32)
@@ -56,18 +60,7 @@ elseif(MACOSX)
     )
 endif()
 
-set(SIMELATOR_SRC
-    ${SIMULATOR_LIB_PATH}/network/CCHTTPRequest.cpp
-    ${SIMULATOR_LIB_PATH}/ProjectConfig/ProjectConfig.cpp
-    ${SIMULATOR_LIB_PATH}/ProjectConfig/SimulatorConfig.cpp
-    ${SIMULATOR_LIB_PATH}/AppEvent.cpp
-    ${SIMULATOR_LIB_PATH}/AppLang.cpp
-    ${SIMULATOR_LIB_PATH}/PlayerMenuServiceProtocol.cpp
-    ${SIMULATOR_LIB_PATH}/PlayerProtocol.cpp
-    ${SIMULATOR_LIB_PATH}/PlayerServiceProtocol.cpp
-    ${SIMULATOR_LIB_PATH}/PlayerSettings.cpp
-    ${SIMULATOR_LIB_PATH}/PlayerTaskServiceProtocol.cpp
-    ${SIMULATOR_LIB_PATH}/PlayerUtils.cpp
+set(PROTOBUF_SRC
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/extension_set.cc
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/generated_message_util.cc
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/io/coded_stream.cc
@@ -81,6 +74,20 @@ set(SIMELATOR_SRC
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/once.cc
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/stringprintf.cc
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/wire_format_lite.cc
+)
+
+set(SIMELATOR_SRC
+    ${SIMULATOR_LIB_PATH}/network/CCHTTPRequest.cpp
+    ${SIMULATOR_LIB_PATH}/ProjectConfig/ProjectConfig.cpp
+    ${SIMULATOR_LIB_PATH}/ProjectConfig/SimulatorConfig.cpp
+    ${SIMULATOR_LIB_PATH}/AppEvent.cpp
+    ${SIMULATOR_LIB_PATH}/AppLang.cpp
+    ${SIMULATOR_LIB_PATH}/PlayerMenuServiceProtocol.cpp
+    ${SIMULATOR_LIB_PATH}/PlayerProtocol.cpp
+    ${SIMULATOR_LIB_PATH}/PlayerServiceProtocol.cpp
+    ${SIMULATOR_LIB_PATH}/PlayerSettings.cpp
+    ${SIMULATOR_LIB_PATH}/PlayerTaskServiceProtocol.cpp
+    ${SIMULATOR_LIB_PATH}/PlayerUtils.cpp
     ${SIMULATOR_LIB_PATH}/runtime/ConfigParser.cpp
     ${SIMULATOR_LIB_PATH}/runtime/ConnectWaitLayer.cpp
     ${SIMULATOR_LIB_PATH}/runtime/ConsoleCommand.cpp
@@ -95,6 +102,7 @@ set(SIMELATOR_SRC
     ${SIMULATOR_LIB_PATH}/runtime/RuntimeProtocol.cpp
     ${SIMULATOR_LIB_PATH}/runtime/Shine_png.cpp
     ${SIMULATOR_LIB_PATH}/runtime/VisibleRect.cpp
+    ${PROTOBUF_SRC}
     ${PLATFORM_SRC}
 )
 
@@ -110,18 +118,14 @@ add_library(simulator STATIC
   ${SIMELATOR_SRC}
 )
 
-set(simulator_depend_libs)
 if(MACOSX)
     include_directories(/System/Library/Frameworks)
     find_library(APPKIT_LIBRARY AppKit)
-    list(APPEND simulator_depend_libs ${APPKIT_LIBRARY})
+    target_link_libraries(simulator ${APPKIT_LIBRARY})
 elseif(WINDOWS)
-    # TODO
+    cocos_use_pkg(simulator TinyXML2)
+    cocos_use_pkg(simulator CURL)
 endif()
-
-foreach(depend_lib ${simulator_depend_libs})
-    target_link_libraries(simulator ${depend_lib})
-endforeach()
 
 set_target_properties(simulator
     PROPERTIES

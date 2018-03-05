@@ -72,8 +72,13 @@ if(ANDROID)
 elseif(LINUX)
     list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
 elseif(WINDOWS)
-    add_definitions(-D_USRLUASTATIC)
-    list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.win32/main.cpp ${cc_common_res})
+    add_definitions(-D_USRLUASTATIC -D_USRLIBSIMSTATIC)
+    list(APPEND GAME_SRC
+        ${RUNTIME_SRC_ROOT}/proj.win32/stdafx.cpp
+        ${RUNTIME_SRC_ROOT}/proj.win32/main.cpp
+        ${RUNTIME_SRC_ROOT}/proj.win32/SimulatorWin.cpp
+        ${cc_common_res}
+    )
 elseif(APPLE)
 
     if(IOS)
