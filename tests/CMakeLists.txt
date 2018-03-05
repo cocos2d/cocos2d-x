@@ -47,6 +47,6 @@ add_subdirectory(${COCOS2DX_ROOT_PATH}/templates/cpp-template-default ${ENGINE_B
 add_subdirectory(${COCOS2DX_ROOT_PATH}/templates/js-template-default ${ENGINE_BINARY_PATH}/template/js-template-default)
 
 # # run on mac/win failed, for it need libsimulator(not cmake files), need to do next
-# add_subdirectory(${COCOS2DX_ROOT_PATH}/templates/lua-template-default ${ENGINE_BINARY_PATH}/template/lua-template-default)
+add_subdirectory(${COCOS2DX_ROOT_PATH}/templates/lua-template-default ${ENGINE_BINARY_PATH}/template/lua-template-default)
 
 

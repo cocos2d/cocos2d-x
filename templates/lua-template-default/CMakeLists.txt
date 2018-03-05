@@ -91,8 +91,7 @@ elseif(APPLE)
     elseif(MACOSX)
         set(MAC_SRC 
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.m
-            # it needed tools/simulator, but not existed cmake files
-            # ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/SimulatorApp.mm
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/SimulatorApp.mm
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/ConsoleWindowController.m
             )
         file(GLOB_RECURSE RES_ICON ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns)
@@ -121,6 +120,9 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/external/lua/luajit/include
     ${COCOS2DX_ROOT_PATH}/external/lua/tolua
 )
+if(MACOSX OR WINDOWS)
+    include_directories(${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator/lib)
+endif()
 
 # mark app complie info and libs info
 cocos_mark_app(${APP_NAME} 
@@ -128,13 +130,20 @@ cocos_mark_app(${APP_NAME}
     DEPEND_COMMON_LIBS "luacocos2d" "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"
 )
-
+if(MACOSX OR WINDOWS)
+    target_link_libraries(${APP_NAME} simulator)
+    add_dependencies(${APP_NAME} simulator)
+endif()
 if(USE_COCOS_PREBUILT)
     target_use_luacocos2d_depend_libs(${APP_NAME})
 endif()
 
 if(GEN_COCOS_PREBUILT)
     add_dependencies(${APP_NAME} prebuilt)
+endif()
+
+if(MACOSX OR WINDOWS)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator ${ENGINE_BINARY_PATH}/simulator/libsimulator)
 endif()
 
 # mark app resources
