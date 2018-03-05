@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-
+#import <AppKit/AppKit.h>
 #include "PlayerFileDialogServiceMac.h"
 
 #include "glfw3.h"

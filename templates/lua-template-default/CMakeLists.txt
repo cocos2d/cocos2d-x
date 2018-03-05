@@ -120,8 +120,10 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/external/lua/luajit/include
     ${COCOS2DX_ROOT_PATH}/external/lua/tolua
 )
+
 if(MACOSX OR WINDOWS)
     include_directories(${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator/lib)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator ${ENGINE_BINARY_PATH}/simulator/libsimulator)
 endif()
 
 # mark app complie info and libs info
@@ -140,10 +142,9 @@ endif()
 
 if(GEN_COCOS_PREBUILT)
     add_dependencies(${APP_NAME} prebuilt)
-endif()
-
-if(MACOSX OR WINDOWS)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator ${ENGINE_BINARY_PATH}/simulator/libsimulator)
+    if(MACOS OR WINDOWS)
+        add_dependencies(prebuilt simulator)
+    endif()
 endif()
 
 # mark app resources

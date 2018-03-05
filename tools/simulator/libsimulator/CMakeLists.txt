@@ -24,6 +24,11 @@
 
 set(SIMULATOR_LIB_PATH ${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator/lib)
 
+# add define for mac os GLFW_EXPOSE_NATIVE_NSGL
+if(MACOSX)
+    add_definitions(-DGLFW_EXPOSE_NATIVE_NSGL)
+endif()
+
 if(WIN32)
     set(PLATFORM_SRC
         ${SIMULATOR_LIB_PATH}/../proj.win32/Runtime_win32.cpp
@@ -37,7 +42,7 @@ if(WIN32)
         ${SIMULATOR_LIB_PATH}/platform/win32/PlayerWin.cpp
         # ${SIMULATOR_LIB_PATH}/platform/win32/SimulatorWin.cpp
     )
-elseif(APPLE)
+elseif(MACOSX)
     set(PLATFORM_SRC
         ${SIMULATOR_LIB_PATH}/platform/mac/DeviceEx-mac.mm
         ${SIMULATOR_LIB_PATH}/platform/mac/PlayerEditBoxServiceMac.mm
@@ -97,6 +102,7 @@ include_directories(
     ${SIMULATOR_LIB_PATH}
     ${SIMULATOR_LIB_PATH}/platform/${PLATFORM_FOLDER}
     ${SIMULATOR_LIB_PATH}/protobuf-lite
+    ${SIMULATOR_LIB_PATH}/runtime
     ${COCOS2DX_ROOT_PATH}/cocos/editor-support
 )
 
@@ -104,11 +110,18 @@ add_library(simulator STATIC
   ${SIMELATOR_SRC}
 )
 
-# target_link_libraries(jscocos2d cocos2d)
-# add_dependencies(jscocos2d cocos2d)
+set(simulator_depend_libs)
+if(MACOSX)
+    include_directories(/System/Library/Frameworks)
+    find_library(APPKIT_LIBRARY AppKit)
+    list(APPEND simulator_depend_libs ${APPKIT_LIBRARY})
+elseif(WINDOWS)
+    # TODO
+endif()
 
-# # use necessary external libs and system libs
-# target_use_jscocos2d_depend_libs(jscocos2d)
+foreach(depend_lib ${simulator_depend_libs})
+    target_link_libraries(simulator ${depend_lib})
+endforeach()
 
 set_target_properties(simulator
     PROPERTIES
