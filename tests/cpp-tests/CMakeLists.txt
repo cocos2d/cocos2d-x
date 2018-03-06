@@ -258,10 +258,6 @@ cocos_mark_app(${APP_NAME}
         LINUX_USE_PKGS "FONTCONFIG" "GTK3"
     )
 
-if(GEN_COCOS_PREBUILT)
-    add_dependencies(${APP_NAME} prebuilt)
-endif()
-
 # mark app resources
 if(APPLE)
     if(MACOSX)

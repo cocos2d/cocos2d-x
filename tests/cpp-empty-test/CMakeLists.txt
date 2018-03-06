@@ -100,10 +100,6 @@ cocos_mark_app(${APP_NAME}
         DEPEND_ANDROID_LIBS "cocos2d_android"
     )
 
-if(GEN_COCOS_PREBUILT)
-    add_dependencies(${APP_NAME} prebuilt)
-endif()
-
 # mark app resources
 if(APPLE)
     if(MACOSX)

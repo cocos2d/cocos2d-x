@@ -131,13 +131,7 @@ cocos_mark_app(${APP_NAME}
     DEPEND_ANDROID_LIBS "cocos2d_android"
 )
 
-if(GEN_COCOS_PREBUILT)
-    add_dependencies(${APP_NAME} prebuilt)
-endif()
 
-if(USE_COCOS_PREBUILT)
-    target_use_jscocos2d_depend_libs(${APP_NAME})
-endif()
 
 # mark app resources
 if(APPLE)

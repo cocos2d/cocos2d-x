@@ -137,17 +137,6 @@ cocos_mark_app(${APP_NAME}
     DEPEND_WINDOWS_LIBS "simulator"
 )
 
-if(USE_COCOS_PREBUILT)
-    target_use_luacocos2d_depend_libs(${APP_NAME})
-    if(MACOSX OR WINDOWS)
-        target_use_simulator_depend_libs(${APP_NAME})
-    endif(MACOSX OR WINDOWS)
-endif()
-
-if(GEN_COCOS_PREBUILT)
-    add_dependencies(${APP_NAME} prebuilt)
-endif()
-
 # mark app resources
 if(APPLE)
     if(MACOSX)

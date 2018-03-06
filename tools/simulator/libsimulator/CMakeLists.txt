@@ -118,7 +118,6 @@ add_library(simulator STATIC
   ${SIMELATOR_SRC}
 )
 
-include(CocosUseLibs)
 target_use_simulator_depend_libs(simulator)
 
 set_target_properties(simulator
