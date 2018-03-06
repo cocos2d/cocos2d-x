@@ -29,18 +29,7 @@ set(APP_NAME TemplateCpp)
 
 project (${APP_NAME})
 
-set(common_code_files
-    Classes/AppDelegate.cpp
-    Classes/HelloWorldScene.cpp
-)
-
-set(common_header_files
-    Classes/AppDelegate.h
-    Classes/HelloWorldScene.h
-)
-
 if(NOT DEFINED BUILD_ENGINE_DONE)
-    # set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cocos2d)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
@@ -52,20 +41,26 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     endif()
 endif()
 
+include_directories(
+    ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
+    Classes
+)
+# add cross-platforms source files and header files 
+set(common_code_files
+    Classes/AppDelegate.cpp
+    Classes/HelloWorldScene.cpp
+)
+set(common_header_files
+    Classes/AppDelegate.h
+    Classes/HelloWorldScene.h
+)
+# add platform specific source files, save to platform_specific_src
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
     set(APP_NAME MyGame)
-endif(ANDROID)
-
-set(res_res_folders 
-    "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
-)
-if(APPLE OR VS)
-    cocos_mark_multi_resources(cc_common_res RES_TO "Resources" FOLDERS ${res_res_folders})
-endif()
-
-if(ANDROID)
     set(platform_specific_src proj.android/app/jni/hellocpp/main.cpp)
+elseif(LINUX)
+    set(platform_specific_src proj.linux/main.cpp)
 elseif(WINDOWS)
     set(windows_src
             proj.win32/main.cpp
@@ -74,7 +69,7 @@ elseif(WINDOWS)
     set(platform_specific_header
             proj.win32/main.h
             proj.win32/resource.h
-            )
+        )
     set(platform_specific_src ${cc_common_res} ${windows_src})
 elseif(APPLE)
     if(IOS)
@@ -98,51 +93,41 @@ elseif(APPLE)
         set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
     set(platform_specific_src ${cc_common_res} ${apple_src_files})
-
-elseif(LINUX)
-    set(platform_specific_src proj.linux/main.cpp)
 else()
     message(FATAL_ERROR "Unsupported platform, CMake will exit" )
 
 endif()
 
-include_directories(
-	${COCOS2DX_ROOT_PATH}/cocos/audio/include/
-	Classes
-)
-
-set(all_code_src
-    ${platform_specific_src}
-    ${common_code_files}
-)
-
-set(all_code_header
-    ${platform_specific_header}
-    ${common_code_files}
-)
-
 # mark app complie info and libs info
 set(cocos_app_src 
-    ${all_code_src}
-    ${all_code_header}
-    )
+    ${common_header_files}
+    ${common_code_files}
+    ${common_header_files}
+    ${common_code_files}
+)
 cocos_mark_app(${APP_NAME} 
-        APP_SRC "${cocos_app_src}"
-        DEPEND_COMMON_LIBS "cocos2d"
-        DEPEND_ANDROID_LIBS "cocos2d_android"
-    )
+    APP_SRC "${cocos_app_src}"
+    DEPEND_COMMON_LIBS "cocos2d"
+    DEPEND_ANDROID_LIBS "cocos2d_android"
+)
 
-# mark app resources
 if(APPLE)
     if(MACOSX)
         cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "Cpp Hello Test")
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()
-elseif(MSVC)
+elseif(WINDOWS)
     cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
 endif()
 
-if(LINUX OR MSVC)
+# mark app resources
+set(res_res_folders 
+    "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
+)
+if(APPLE OR VS)
+    cocos_mark_multi_resources(cc_common_res RES_TO "Resources" FOLDERS ${res_res_folders})
+endif()
+if(LINUX OR WINDOWS)
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${res_res_folders})
 endif()

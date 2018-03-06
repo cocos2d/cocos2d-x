@@ -33,7 +33,6 @@ project(${APP_NAME})
 set(RUNTIME_SRC_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/runtime-src)
 
 if(NOT DEFINED BUILD_ENGINE_DONE)
-    # set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/cocos2d-x)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
@@ -46,27 +45,7 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     endif(NOT USE_COCOS_PREBUILT)
 endif()
 
-if(ANDROID)
-    # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
-    set(APP_NAME cocos2djs)
-endif(ANDROID)
-
-include_directories(
-    ${COCOS2DX_ROOT_PATH}
-    ${COCOS2DX_ROOT_PATH}/cocos
-    ${COCOS2DX_ROOT_PATH}/deprecated
-    ${COCOS2DX_ROOT_PATH}/cocos/platform
-    ${COCOS2DX_ROOT_PATH}/extensions
-    ${COCOS2DX_ROOT_PATH}/external
-    ${COCOS2DX_ROOT_PATH}/external/spidermonkey/include/${PLATFORM_FOLDER}
-    ${COCOS2DX_ROOT_PATH}/cocos/editor-support
-)
-
-include_directories(${RUNTIME_SRC_ROOT}/Classes)
-
-set(GAME_SRC ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp
-)
-
+# script and source files info, not need to compile
 set(res_main_files
     "${CMAKE_CURRENT_SOURCE_DIR}/main.js"
     "${CMAKE_CURRENT_SOURCE_DIR}/project.json" 
@@ -88,17 +67,29 @@ if(APPLE OR VS)
     set(cc_common_res ${res_main} ${res_res} ${res_src} ${res_script})
 endif()
 
-if(WINDOWS)
+# sources need to compile info, include dirs and source files
+include_directories(
+    ${RUNTIME_SRC_ROOT}/Classes
+    ${COCOS2DX_ROOT_PATH}/cocos/editor-support
+    ${COCOS2DX_ROOT_PATH}/external/spidermonkey/include/${PLATFORM_FOLDER}
+)
+
+set(GAME_SRC ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp)
+
+
+if(ANDROID)
+    # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
+    set(APP_NAME cocos2djs)
+    list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.android/app/jni/hellojavascript/main.cpp)
+elseif(LINUX)
+    list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
+elseif(WINDOWS)
     set(WINDOWS_SRC ${RUNTIME_SRC_ROOT}/proj.win32/main.cpp)
     set(PLATFORM_SPECIFIC_HEADERS
         ${RUNTIME_SRC_ROOT}/proj.win32/main.h
         ${RUNTIME_SRC_ROOT}/proj.win32/resource.h
     )
     list(APPEND GAME_SRC ${WINDOWS_SRC} ${PLATFORM_SPECIFIC_HEADERS} ${cc_common_res})
-elseif(ANDROID)
-    list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.android/app/jni/hellojavascript/main.cpp)
-elseif(LINUX)
-    list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
 elseif(APPLE)
     if(IOS)
         set(ios_code_files
@@ -131,20 +122,18 @@ cocos_mark_app(${APP_NAME}
     DEPEND_ANDROID_LIBS "cocos2d_android"
 )
 
-
-
-# mark app resources
+# mark app resources, resource will be copy auto after mark
 if(APPLE)
     if(MACOSX)
         cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "LuaTestsApp")
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()
-elseif(MSVC)
+elseif(WINDOWS)
     cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
 endif()
-
-if(LINUX OR MSVC)
+# copy resource on linux or WINDOWS
+if(LINUX OR WINDOWS)
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FILES ${res_main_files})
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/res FOLDERS ${res_res_folders})
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/src FOLDERS ${res_src_folders})

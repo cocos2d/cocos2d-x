@@ -39,7 +39,7 @@ else()
   )
 endif()
 
-if(MSVC)
+if(WINDOWS)
   set(COCOS_NETWORK_LINK 
     libcurl_imp 
     ${PLATFORM_LINK}

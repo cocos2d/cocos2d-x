@@ -30,7 +30,6 @@ project(${APP_NAME})
 set(RUNTIME_SRC_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/runtime-src)
 
 if(NOT DEFINED BUILD_ENGINE_DONE)
-    # set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/cocos2d-x)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
@@ -44,14 +43,7 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     endif()
 endif()
 
-if(ANDROID)
-  # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
-  set(APP_NAME cocos2dlua)
-endif(ANDROID)
-
-set(GAME_SRC ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp
-)
-
+# script and source files info, not need to compile
 set(res_res_folders 
     "${CMAKE_CURRENT_SOURCE_DIR}/res" 
 )
@@ -69,6 +61,23 @@ if(APPLE OR VS)
 endif()
 
 if(ANDROID)
+  
+endif(ANDROID)
+
+# sources need to compile info, include dirs and source files
+include_directories(
+    ${RUNTIME_SRC_ROOT}/Classes
+    ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/auto
+    ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
+    ${COCOS2DX_ROOT_PATH}/external/lua/luajit/include
+    ${COCOS2DX_ROOT_PATH}/external/lua/tolua
+    ${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator/lib
+)
+set(GAME_SRC ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp
+)
+if(ANDROID)
+    # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
+    set(APP_NAME cocos2dlua)
     list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.android/app/jni/hellolua/main.cpp)
 elseif(LINUX)
     list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
@@ -81,7 +90,6 @@ elseif(WINDOWS)
         ${cc_common_res}
     )
 elseif(APPLE)
-
     if(IOS)
         set(ios_code_files
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/main.m
@@ -119,15 +127,6 @@ elseif(APPLE)
     list(APPEND GAME_SRC ${APPLE_SRC} ${cc_common_res})
 endif()
 
-include_directories(
-    ${RUNTIME_SRC_ROOT}/Classes
-    ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/auto
-    ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
-    ${COCOS2DX_ROOT_PATH}/external/lua/luajit/include
-    ${COCOS2DX_ROOT_PATH}/external/lua/tolua
-    ${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator/lib
-)
-
 # mark app complie info and libs info
 cocos_mark_app(${APP_NAME} 
     APP_SRC "${GAME_SRC}"
@@ -147,11 +146,11 @@ if(APPLE)
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()
-elseif(MSVC)
+elseif(WINDOWS)
     cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
 endif()
-
-if(LINUX OR MSVC)
+# copy resource on linux or WINDOWS
+if(LINUX OR WINDOWS)
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/res FOLDERS ${res_res_folders})
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/src FOLDERS ${res_src_folders})
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/src/cocos FOLDERS ${res_script_folders})
