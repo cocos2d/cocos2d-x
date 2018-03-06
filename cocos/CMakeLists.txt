@@ -132,15 +132,22 @@ if(GEN_COCOS_PREBUILT)
     if(USE_JSCOCOS2D)
         add_dependencies(prebuilt jscocos2d)
     endif()
+    if(USE_SIMULATOR AND (MACOSX OR WINDOWS))
+        add_dependencies(prebuilt simulator)
+    endif()
 endif()
 
 ## Lua bindings lib
-if(USE_LUACOCOS2D OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
+if(USE_LUACOCOS2D)
   add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings ${ENGINE_BINARY_PATH}/cocos/lua-bindings)
 endif()
 ## JS bindings lib
-if(USE_JSCOCOS2D OR (CMAKE_PROJECT_NAME STREQUAL Cocos2d-x))
+if(USE_JSCOCOS2D)
   add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings ${ENGINE_BINARY_PATH}/cocos/js-bindings)
+endif()
+# simulator
+if(USE_SIMULATOR AND (MACOSX OR WINDOWS))
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator ${ENGINE_BINARY_PATH}/cocos/libsimulator)
 endif()
 
 if(XCODE OR VS)

@@ -36,9 +36,10 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
 
     include(CocosBuildSet)
     CocosBuildSet()
-    
+
     if(NOT USE_COCOS_PREBUILT)
         set(USE_LUACOCOS2D ON)
+        set(USE_SIMULATOR ON)
         add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
     endif()
 endif()
@@ -72,8 +73,13 @@ if(ANDROID)
 elseif(LINUX)
     list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
 elseif(WINDOWS)
-    add_definitions(-D_USRLUASTATIC)
-    list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.win32/main.cpp ${cc_common_res})
+    add_definitions(-D_USRLUASTATIC -D_USRLIBSIMSTATIC)
+    list(APPEND GAME_SRC
+        ${RUNTIME_SRC_ROOT}/proj.win32/stdafx.cpp
+        ${RUNTIME_SRC_ROOT}/proj.win32/main.cpp
+        ${RUNTIME_SRC_ROOT}/proj.win32/SimulatorWin.cpp
+        ${cc_common_res}
+    )
 elseif(APPLE)
 
     if(IOS)
@@ -89,10 +95,9 @@ elseif(APPLE)
         cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
         set(APPLE_RES_UI ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(MAC_SRC 
+        set(MAC_SRC
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.m
-            # it needed tools/simulator, but not existed cmake files
-            # ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/SimulatorApp.mm
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/SimulatorApp.mm
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/ConsoleWindowController.m
             )
         file(GLOB_RECURSE RES_ICON ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns)
@@ -120,6 +125,7 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
     ${COCOS2DX_ROOT_PATH}/external/lua/luajit/include
     ${COCOS2DX_ROOT_PATH}/external/lua/tolua
+    ${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator/lib
 )
 
 # mark app complie info and libs info
@@ -127,10 +133,15 @@ cocos_mark_app(${APP_NAME}
     APP_SRC "${GAME_SRC}"
     DEPEND_COMMON_LIBS "luacocos2d" "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"
+    DEPEND_MACOSX_LIBS "simulator"
+    DEPEND_WINDOWS_LIBS "simulator"
 )
 
 if(USE_COCOS_PREBUILT)
     target_use_luacocos2d_depend_libs(${APP_NAME})
+    if(MACOSX OR WINDOWS)
+        target_use_simulator_depend_libs(${APP_NAME})
+    endif(MACOSX OR WINDOWS)
 endif()
 
 if(GEN_COCOS_PREBUILT)
@@ -141,7 +152,7 @@ endif()
 if(APPLE)
     if(MACOSX)
         set_target_properties(${APP_NAME} PROPERTIES
-        RESOURCE "${APPLE_RES_UI}"
+            RESOURCE "${APPLE_RES_UI}"
         )
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "MacOSXBundleInfo.LuaTemplate.plist.in" BUNDLE_NAME "LuaTestsApp")
     elseif(IOS)

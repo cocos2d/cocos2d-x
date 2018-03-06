@@ -208,7 +208,15 @@ endfunction()
 # DEPEND_COMMON_LIBS the app needed libs for all platforms
 # DEPEND_ANDROID_LIBS the app needed libs only for android platform
 macro(cocos_mark_app app_name)
-  set(multiValueArgs APP_SRC DEPEND_COMMON_LIBS DEPEND_ANDROID_LIBS COMMON_USE_PKGS LINUX_USE_PKGS)
+  set(multiValueArgs 
+    APP_SRC
+    DEPEND_COMMON_LIBS 
+    DEPEND_ANDROID_LIBS 
+    COMMON_USE_PKGS 
+    LINUX_USE_PKGS 
+    DEPEND_MACOSX_LIBS 
+    DEPEND_WINDOWS_LIBS
+  )
   cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
    
   if(ANDROID)
@@ -239,6 +247,12 @@ macro(cocos_mark_app app_name)
     set(APP_RES_DIR "${APP_BIN_DIR}/Resources")
   endif()
   set_target_properties(${app_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
+
+  if(MACOSX)
+    list(APPEND opt_DEPEND_COMMON_LIBS ${opt_DEPEND_MACOSX_LIBS})
+  elseif(WINDOWS)
+    list(APPEND opt_DEPEND_COMMON_LIBS ${opt_DEPEND_WINDOWS_LIBS})
+  endif()
   # link commom libs
   if(USE_COCOS_PREBUILT)
     foreach(common_lib ${opt_DEPEND_COMMON_LIBS})

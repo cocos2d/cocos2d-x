@@ -26,6 +26,7 @@
 #ifndef __PLAYER_MessageBoxServiceMac_h
 #define __PLAYER_MessageBoxServiceMac_h
 
+#import <AppKit/AppKit.h>
 #include <vector>
 
 #include "PlayerMacros.h"
