@@ -10,14 +10,11 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     
     include(CocosBuildSet)
     CocosBuildSet()
-    
     if(NOT USE_COCOS_PREBUILT)
         set(USE_LUACOCOS2D ON)
         add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
     endif()
 endif()
-
-set(SAMPLE_SRC Classes/AppDelegate.cpp)
 
 set(res_res_folders 
     "${CMAKE_CURRENT_SOURCE_DIR}/../res" 
@@ -35,13 +32,16 @@ if(APPLE OR VS)
     set(cc_common_res ${res_res} ${res_src} ${res_script})
 endif()
 
-if(LINUX)
+set(SAMPLE_SRC Classes/AppDelegate.cpp)
+
+if(ANDROID)
+    list(APPEND SAMPLE_SRC proj.android/app/jni/main.cpp)
+elseif(LINUX)
     set(SAMPLE_SRC ${SAMPLE_SRC} proj.linux/main.cpp)
 elseif(WINDOWS)
     add_definitions(-D_USRLUASTATIC)
     list(APPEND SAMPLE_SRC proj.win32/main.cpp ${cc_common_res})
 elseif(APPLE)
-
     if(IOS)
         set(ios_code_files
             proj.ios/main.m
@@ -62,10 +62,7 @@ elseif(APPLE)
         cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
         set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
-
     list(APPEND SAMPLE_SRC ${cc_common_res} ${apple_src_files})
-elseif(ANDROID)
-    list(APPEND SAMPLE_SRC proj.android/app/jni/main.cpp)
 endif()
 
 include_directories(

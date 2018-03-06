@@ -35,7 +35,6 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
 
     include(CocosBuildSet)
     CocosBuildSet()
-
     if(NOT USE_COCOS_PREBUILT)
         set(USE_LUACOCOS2D ON)
         set(USE_SIMULATOR ON)
@@ -60,10 +59,6 @@ if(APPLE OR VS)
     set(cc_common_res ${res_res} ${res_src} ${res_script})
 endif()
 
-if(ANDROID)
-  
-endif(ANDROID)
-
 # sources need to compile info, include dirs and source files
 include_directories(
     ${RUNTIME_SRC_ROOT}/Classes
@@ -73,8 +68,7 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/external/lua/tolua
     ${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator/lib
 )
-set(GAME_SRC ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp
-)
+set(GAME_SRC ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp)
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
     set(APP_NAME cocos2dlua)
@@ -107,7 +101,7 @@ elseif(APPLE)
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.m
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/SimulatorApp.mm
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/ConsoleWindowController.m
-            )
+        )
         file(GLOB_RECURSE RES_ICON ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns)
         cocos_mark_resources(FILES ${RES_ICON} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
         # special for lua-template
@@ -123,8 +117,9 @@ elseif(APPLE)
         # xib -> nib, need mark resources
         set(APPLE_RES_UI ${RES_MAIN_BASE} ${RES_MAIN_EN} ${RES_MAIN_ZH} ${RES_CONSOLE})
     endif()
-    
     list(APPEND GAME_SRC ${APPLE_SRC} ${cc_common_res})
+else()
+    message(FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
 # mark app complie info and libs info

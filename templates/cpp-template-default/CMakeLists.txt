@@ -35,7 +35,6 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
 
     include(CocosBuildSet)
     CocosBuildSet()
-    
     if(NOT USE_COCOS_PREBUILT)
         add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
     endif()
@@ -63,13 +62,13 @@ elseif(LINUX)
     set(platform_specific_src proj.linux/main.cpp)
 elseif(WINDOWS)
     set(windows_src
-            proj.win32/main.cpp
-            proj.win32/game.rc
-        )
+        proj.win32/main.cpp
+        proj.win32/game.rc
+    )
     set(platform_specific_header
-            proj.win32/main.h
-            proj.win32/resource.h
-        )
+        proj.win32/main.h
+        proj.win32/resource.h
+    )
     set(platform_specific_src ${cc_common_res} ${windows_src})
 elseif(APPLE)
     if(IOS)
@@ -95,7 +94,6 @@ elseif(APPLE)
     set(platform_specific_src ${cc_common_res} ${apple_src_files})
 else()
     message(FATAL_ERROR "Unsupported platform, CMake will exit" )
-
 endif()
 
 # mark app complie info and libs info

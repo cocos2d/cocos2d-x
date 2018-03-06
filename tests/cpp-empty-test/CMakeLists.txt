@@ -33,7 +33,6 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
 
     include(CocosBuildSet)
     CocosBuildSet()
-    
     if(NOT USE_COCOS_PREBUILT)
         add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
     endif()
@@ -53,6 +52,8 @@ endif()
 
 if(ANDROID)
     set(platform_specific_src proj.android/app/jni/main.cpp)
+elseif(LINUX)
+    set(platform_specific_src proj.linux/main.cpp)
 elseif(WINDOWS)
     set(windows_src proj.win32/main.cpp)
     set(platform_specific_src ${cc_common_res} ${windows_src})
@@ -78,12 +79,8 @@ elseif(APPLE)
         set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
         set(platform_specific_src ${cc_common_res} ${apple_src_files})
-
-elseif(LINUX)
-    set(platform_specific_src proj.linux/main.cpp)
 else()
     message(FATAL_ERROR "Unsupported platform, CMake will exit" )
-
 endif()
 
 include_directories(Classes)
@@ -95,10 +92,10 @@ set(all_code_files
 
 # mark app complie info and libs info
 cocos_mark_app(${APP_NAME} 
-        APP_SRC "${all_code_files}"
-        DEPEND_COMMON_LIBS "cocos2d"
-        DEPEND_ANDROID_LIBS "cocos2d_android"
-    )
+    APP_SRC "${all_code_files}"
+    DEPEND_COMMON_LIBS "cocos2d"
+    DEPEND_ANDROID_LIBS "cocos2d_android"
+)
 
 # mark app resources
 if(APPLE)

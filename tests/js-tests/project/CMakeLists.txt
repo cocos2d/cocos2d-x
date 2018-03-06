@@ -34,7 +34,6 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
 
     include(CocosBuildSet)
     CocosBuildSet()
-    
     if(NOT USE_COCOS_PREBUILT)
         set(USE_JSCOCOS2D ON)
         add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
@@ -65,19 +64,14 @@ if(APPLE OR VS)
     set(cc_common_res ${res_main} ${res_res} ${res_src} ${res_script})
 endif()
 
-if(WIN32)
+if(WINDOWS)
     set(WINDOWS_SRC proj.win32/main.cpp)
     set(PLATFORM_SRC ${cc_common_res} ${WINDOWS_SRC})
 elseif(ANDROID)
-    set(PLATFORM_SRC
-        proj.android/app/jni/main.cpp
-        )
+    set(PLATFORM_SRC proj.android/app/jni/main.cpp)
 elseif(LINUX)
-    set(PLATFORM_SRC
-        proj.linux/main.cpp
-        )
+    set(PLATFORM_SRC proj.linux/main.cpp)
 elseif(APPLE)
-
     if(IOS)
         set(ios_code_files
             proj.ios/main.m
@@ -99,7 +93,6 @@ elseif(APPLE)
         cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
         set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
-
     set(PLATFORM_SRC ${cc_common_res} ${apple_src_files})
 endif()
 

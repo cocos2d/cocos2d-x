@@ -10,7 +10,6 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     
     include(CocosBuildSet)
     CocosBuildSet()
-    
     if(NOT USE_COCOS_PREBUILT)
         set(USE_LUACOCOS2D ON)
         add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
@@ -40,7 +39,9 @@ if(APPLE OR VS)
     set(cc_common_res ${res_res} ${res_src} ${res_script})
 endif()
 
-if(LINUX)
+if(ANDROID)
+    list(APPEND SAMPLE_SRC proj.android/app/jni/main.cpp)
+elseif(LINUX)
     set(SAMPLE_SRC ${SAMPLE_SRC} proj.linux/main.cpp)
 elseif(WINDOWS)
     add_definitions(-D_USRLUASTATIC)
@@ -67,10 +68,7 @@ elseif(APPLE)
         cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
         set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
-
     list(APPEND SAMPLE_SRC ${apple_src_files} ${cc_common_res})
-elseif(ANDROID)
-    list(APPEND SAMPLE_SRC proj.android/app/jni/main.cpp)
 endif()
 
 include_directories(
@@ -78,7 +76,7 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
     ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/auto
     ${COCOS2DX_ROOT_PATH}/external/lua/tolua
-    )
+)
 
 include_directories(${LUAJIT_INCLUDE_DIRS})
 

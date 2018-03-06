@@ -10,7 +10,6 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     
     include(CocosBuildSet)
     CocosBuildSet()
-    
     if(NOT USE_COCOS_PREBUILT)
         add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
     endif()
@@ -232,31 +231,29 @@ set(EXTENDED_TESTS_SRC
     Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
     )
 
-if(LINUX)
-
-else()
+if(NOT LINUX)
     list(APPEND EXTENDED_TESTS_SRC
         Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp
-        )
+    )
 endif()
 
 include_directories(
     Classes
     ${COCOS2DX_ROOT_PATH}/cocos/editor-support
-    )
+)
 
 # mark app complie info and libs info
 set(cocos_app_src 
     ${TESTS_SRC}
     ${EXTENDED_TESTS_SRC}
-    )
-cocos_mark_app(${APP_NAME} 
-        APP_SRC "${cocos_app_src}"
-        DEPEND_COMMON_LIBS "cocos2d"
-        DEPEND_ANDROID_LIBS "cocos2d_android"
-        COMMON_USE_PKGS "FREETYPE" "CURL"
-        LINUX_USE_PKGS "FONTCONFIG" "GTK3"
-    )
+)
+cocos_mark_app(${APP_NAME}
+    APP_SRC "${cocos_app_src}"
+    DEPEND_COMMON_LIBS "cocos2d"
+    DEPEND_ANDROID_LIBS "cocos2d_android"
+    COMMON_USE_PKGS "FREETYPE" "CURL"
+    LINUX_USE_PKGS "FONTCONFIG" "GTK3"
+)
 
 # mark app resources
 if(APPLE)
