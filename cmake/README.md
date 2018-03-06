@@ -1,7 +1,14 @@
 
-## CMake Build Instructions
+## CMake Instructions
 
-Depending on your host system your Generator flag -G may be different
+CMake is an open-source, cross-platform family of tools designed to build, test and package software. CMake is used to control the software compilation process using simple platform and compiler independent configuration files, and generate native makefiles and workspaces that can be used in the compiler environment of your choice.
+
+* Useful Links
+
+    1. Official website: [cmake.org](https://cmake.org/)
+    1. Documentation [cmake.org/documentation](https://cmake.org/documentation/)
+
+## Using CMake in Cocos2d-x
 
 Typical -G options
 For using gcc and clang from a makefile

@@ -40,6 +40,14 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     endif()
 endif()
 
+# mark app resources
+set(res_res_folders 
+    "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
+)
+if(APPLE OR VS)
+    cocos_mark_multi_resources(cc_common_res RES_TO "Resources" FOLDERS ${res_res_folders})
+endif()
+
 include_directories(
     ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
     Classes
@@ -97,7 +105,8 @@ else()
 endif()
 
 # mark app complie info and libs info
-set(cocos_app_src 
+set(cocos_app_src
+    ${platform_specific_src}
     ${common_header_files}
     ${common_code_files}
     ${common_header_files}
@@ -119,13 +128,6 @@ elseif(WINDOWS)
     cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
 endif()
 
-# mark app resources
-set(res_res_folders 
-    "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
-)
-if(APPLE OR VS)
-    cocos_mark_multi_resources(cc_common_res RES_TO "Resources" FOLDERS ${res_res_folders})
-endif()
 if(LINUX OR WINDOWS)
     cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${res_res_folders})
 endif()
