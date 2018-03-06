@@ -54,7 +54,6 @@ elseif(ANDROID)
           Classes/JNITest/JNITest.cpp
           proj.android/app/jni/main.cpp)
 elseif(IOS)
-    # need check 
     set(platform_specific_src proj.ios/main.m)
 else()
     message( FATAL_ERROR "Unsupported platform, CMake will exit" )
@@ -181,7 +180,6 @@ set(TESTS_SRC
     Classes/ZwoptexTest/ZwoptexTest.cpp
     Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp
     Classes/controller.cpp
-    # need review
     # Classes/VRTest/VRTest.cpp
     # Classes/VRTest/VRTest.h
     ${platform_specific_src}

@@ -97,7 +97,7 @@ set(lua_bindings_manual_files
     manual/spine/LuaSkeletonAnimation.cpp
     manual/ui/lua_cocos2dx_experimental_video_manual.cpp
     manual/ui/lua_cocos2dx_ui_manual.cpp
-    # android.mk not include this, need review
+    # android.mk not include this
     # manual/video/lua_cocos2dx_experimental_video_manual.cpp
     manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
     manual/physics3d/lua_cocos2dx_physics3d_manual.cpp
