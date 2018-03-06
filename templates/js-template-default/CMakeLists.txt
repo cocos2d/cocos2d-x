@@ -83,6 +83,7 @@ elseif(LINUX)
     list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
 elseif(WINDOWS)
     set(WINDOWS_SRC ${RUNTIME_SRC_ROOT}/proj.win32/main.cpp)
+    list(APPEND WINDOWS_SRC ${RUNTIME_SRC_ROOT}/proj.win32/game.rc)
     set(PLATFORM_SPECIFIC_HEADERS
         ${RUNTIME_SRC_ROOT}/proj.win32/main.h
         ${RUNTIME_SRC_ROOT}/proj.win32/resource.h

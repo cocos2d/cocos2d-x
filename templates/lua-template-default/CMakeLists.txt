@@ -78,6 +78,7 @@ elseif(LINUX)
 elseif(WINDOWS)
     add_definitions(-D_USRLUASTATIC -D_USRLIBSIMSTATIC)
     list(APPEND GAME_SRC
+        ${RUNTIME_SRC_ROOT}/proj.win32/game.rc
         ${RUNTIME_SRC_ROOT}/proj.win32/stdafx.cpp
         ${RUNTIME_SRC_ROOT}/proj.win32/main.cpp
         ${RUNTIME_SRC_ROOT}/proj.win32/SimulatorWin.cpp
