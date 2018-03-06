@@ -293,6 +293,9 @@ if(USE_COCOS_PREBUILT)
 
   set(_luacocos2d_prefix LUACOCOS2D)
   cocos_find_prebuilt(luacocos2d LUACOCOS2D_LIBRARIES)
+  
+  set(_simulator_prefix SIMULATOR)
+  cocos_find_prebuilt(simulator SIMULATOR_LIBRARIES)
 
   if(ANDROID)
     set(_cocos2d_android_prefix ANDROID_COCOS2D)

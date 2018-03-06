@@ -118,14 +118,8 @@ add_library(simulator STATIC
   ${SIMELATOR_SRC}
 )
 
-if(MACOSX)
-    include_directories(/System/Library/Frameworks)
-    find_library(APPKIT_LIBRARY AppKit)
-    target_link_libraries(simulator ${APPKIT_LIBRARY})
-elseif(WINDOWS)
-    cocos_use_pkg(simulator TinyXML2)
-    cocos_use_pkg(simulator CURL)
-endif()
+include(CocosUseLibs)
+target_use_simulator_depend_libs(simulator)
 
 set_target_properties(simulator
     PROPERTIES

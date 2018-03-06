@@ -36,9 +36,10 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
 
     include(CocosBuildSet)
     CocosBuildSet()
-    
+
     if(NOT USE_COCOS_PREBUILT)
         set(USE_LUACOCOS2D ON)
+        set(USE_SIMULATOR ON)
         add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
     endif()
 endif()
@@ -94,7 +95,7 @@ elseif(APPLE)
         cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
         set(APPLE_RES_UI ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(MAC_SRC 
+        set(MAC_SRC
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.m
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/SimulatorApp.mm
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/ConsoleWindowController.m
@@ -124,39 +125,34 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
     ${COCOS2DX_ROOT_PATH}/external/lua/luajit/include
     ${COCOS2DX_ROOT_PATH}/external/lua/tolua
+    ${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator/lib
 )
-
-if(MACOSX OR WINDOWS)
-    include_directories(${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator/lib)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator ${ENGINE_BINARY_PATH}/simulator/libsimulator)
-endif()
 
 # mark app complie info and libs info
 cocos_mark_app(${APP_NAME} 
     APP_SRC "${GAME_SRC}"
     DEPEND_COMMON_LIBS "luacocos2d" "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"
+    DEPEND_MACOSX_LIBS "simulator"
+    DEPEND_WINDOWS_LIBS "simulator"
 )
-if(MACOSX OR WINDOWS)
-    target_link_libraries(${APP_NAME} simulator)
-    add_dependencies(${APP_NAME} simulator)
-endif()
+
 if(USE_COCOS_PREBUILT)
     target_use_luacocos2d_depend_libs(${APP_NAME})
+    if(MACOSX OR WINDOWS)
+        target_use_simulator_depend_libs(${APP_NAME})
+    endif(MACOSX OR WINDOWS)
 endif()
 
 if(GEN_COCOS_PREBUILT)
     add_dependencies(${APP_NAME} prebuilt)
-    if(MACOS OR WINDOWS)
-        add_dependencies(prebuilt simulator)
-    endif()
 endif()
 
 # mark app resources
 if(APPLE)
     if(MACOSX)
         set_target_properties(${APP_NAME} PROPERTIES
-        RESOURCE "${APPLE_RES_UI}"
+            RESOURCE "${APPLE_RES_UI}"
         )
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "MacOSXBundleInfo.LuaTemplate.plist.in" BUNDLE_NAME "LuaTestsApp")
     elseif(IOS)
