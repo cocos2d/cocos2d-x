@@ -97,9 +97,11 @@ function install_python_module_for_osx()
 function upgrade_openssl_for_osx()
 {
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    brew update && brew upgrade
+    brew update
     brew install openssl
-    brew link --force openssl
+    ln -s /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib /usr/local/lib/
+    ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
+    ln -s /usr/local/Cellar/openssl/1.0.2n/bin/openssl /usr/local/bin/openssl
     echo "macOS SSL: `openssl version`"
     echo "python SSL: `python -c "import ssl; print ssl.OPENSSL_VERSION"`"
 }
