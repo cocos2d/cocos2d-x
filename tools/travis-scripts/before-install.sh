@@ -91,7 +91,8 @@ function install_python_module_for_osx()
     sudo easy_install pip
     sudo -H pip install PyYAML
     sudo -H pip install Cheetah
-    echo "`python --version`"
+    sudo -H pip install pyOpenSSL --upgrade
+    echo `python --version`
     echo "SSL version: `python -c "import ssl; print ssl.OPENSSL_VERSION"`"
 }
 
