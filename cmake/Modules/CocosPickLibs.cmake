@@ -286,20 +286,20 @@ endforeach()
 if(USE_COCOS_PREBUILT)
   # cocos2d/jscocos2d/luacocos2d
   set(_cocos2d_prefix COCOS2D)
-  cocos_find_prebuilt(cocos2d COCOS2D_LIBRARIES)
+  cocos_find_prebuilt_lib_by_name(cocos2d COCOS2D_LIBRARIES)
 
   set(_jscocos2d_prefix JSCOCOS2D)
-  cocos_find_prebuilt(jscocos2d JSCOCOS2D_LIBRARIES)
+  cocos_find_prebuilt_lib_by_name(jscocos2d JSCOCOS2D_LIBRARIES)
 
   set(_luacocos2d_prefix LUACOCOS2D)
-  cocos_find_prebuilt(luacocos2d LUACOCOS2D_LIBRARIES)
+  cocos_find_prebuilt_lib_by_name(luacocos2d LUACOCOS2D_LIBRARIES)
   
   set(_simulator_prefix SIMULATOR)
-  cocos_find_prebuilt(simulator SIMULATOR_LIBRARIES)
+  cocos_find_prebuilt_lib_by_name(simulator SIMULATOR_LIBRARIES)
 
   if(ANDROID)
     set(_cocos2d_android_prefix ANDROID_COCOS2D)
-    cocos_find_prebuilt(cocos2d_android ANDROID_COCOS2D_LIBRARIES)
+    cocos_find_prebuilt_lib_by_name(cocos2d_android ANDROID_COCOS2D_LIBRARIES)
   endif()
 endif(USE_COCOS_PREBUILT)
 

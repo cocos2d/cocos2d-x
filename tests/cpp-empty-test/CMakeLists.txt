@@ -91,7 +91,7 @@ set(all_code_files
 )
 
 # mark app complie info and libs info
-cocos_mark_app(${APP_NAME} 
+cocos_build_app(${APP_NAME} 
     APP_SRC "${all_code_files}"
     DEPEND_COMMON_LIBS "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"

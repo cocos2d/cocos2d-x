@@ -39,7 +39,7 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     include(CocosBuildSet)
     CocosBuildSet()
     if(NOT USE_COCOS_PREBUILT)
-        set(USE_JSCOCOS2D ON)
+        set(BUILD_JS_LIBS ON)
         add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
     endif(NOT USE_COCOS_PREBUILT)
 endif()
@@ -116,7 +116,7 @@ else()
 endif()
 
 # mark app complie info and libs info
-cocos_mark_app(${APP_NAME} 
+cocos_build_app(${APP_NAME} 
     APP_SRC "${GAME_SRC}"
     DEPEND_COMMON_LIBS "jscocos2d" "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"

@@ -26,8 +26,8 @@
 
 # this CMakeLists is to generate Cocos2d-x Engine Library
 # build libcocos2d
-# build luacocos2d if USE_LUACOCOS2D=ON
-# build jscocos2d if USE_JSCOCOS2D=ON
+# build luacocos2d if BUILD_LUA_LIBS=ON
+# build jscocos2d if BUILD_JS_LIBS=ON
 
 # The version number
 set(COCOS2D_X_VERSION 3.17)
@@ -126,10 +126,10 @@ if(GEN_COCOS_PREBUILT)
         "${COCOS_PREBUILT_PATH}"
         COMMENT "copy library directory:${CMAKE_BINARY_DIR}/lib to directory:${COCOS_PREBUILT_PATH}"
     )
-    if(USE_LUACOCOS2D)
+    if(BUILD_LUA_LIBS)
         add_dependencies(prebuilt luacocos2d)
     endif()
-    if(USE_JSCOCOS2D)
+    if(BUILD_JS_LIBS)
         add_dependencies(prebuilt jscocos2d)
     endif()
     if(USE_SIMULATOR AND (MACOSX OR WINDOWS))
@@ -138,11 +138,11 @@ if(GEN_COCOS_PREBUILT)
 endif()
 
 ## Lua bindings lib
-if(USE_LUACOCOS2D)
+if(BUILD_LUA_LIBS)
   add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings ${ENGINE_BINARY_PATH}/cocos/lua-bindings)
 endif()
 ## JS bindings lib
-if(USE_JSCOCOS2D)
+if(BUILD_JS_LIBS)
   add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings ${ENGINE_BINARY_PATH}/cocos/js-bindings)
 endif()
 # simulator

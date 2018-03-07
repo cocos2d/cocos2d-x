@@ -245,7 +245,7 @@ set(cocos_app_src
     ${TESTS_SRC}
     ${EXTENDED_TESTS_SRC}
 )
-cocos_mark_app(${APP_NAME}
+cocos_build_app(${APP_NAME}
     APP_SRC "${cocos_app_src}"
     DEPEND_COMMON_LIBS "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"

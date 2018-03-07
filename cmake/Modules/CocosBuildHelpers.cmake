@@ -1,40 +1,24 @@
 include(CMakeParseArguments)
 
-# lib_name eg cocos2d/cocos2djs
-function(cocos_find_prebuilt lib_target lib_ret)
-  # only search COCOS_PREBUILT_PATH
+# find a prebuilt lib by `lib_name` and save the result in `lib_out`
+function(cocos_find_prebuilt_lib_by_name lib_name lib_out)
   set(search_path ${COCOS_PREBUILT_PATH})
   if(XCODE OR VS)
     set(search_path ${COCOS_PREBUILT_PATH}/${CMAKE_BUILD_TYPE})
   endif()
   message(STATUS "search_path cocos prebuilt library: ${search_path}")
-  find_library(tmp_lib ${lib_target} PATHS ${search_path} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
-  # set flag
-  if(tmp_lib)
-    message(STATUS "find cocos prebuilt library: ${tmp_lib}")
+  find_library(found_lib ${lib_name} PATHS ${search_path} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
+
+  if(found_lib)
+    message(STATUS "find cocos prebuilt library: ${found_lib}")
   else()
-    message(STATUS "can't find cocos prebuilt library: ${lib_target}")
+    message(STATUS "can't find cocos prebuilt library: ${lib_name}")
   endif()
-  set(${lib_ret} ${tmp_lib} PARENT_SCOPE)
-  unset(tmp_lib CACHE)
+  set(${lib_out} ${found_lib} PARENT_SCOPE)
+  unset(found_lib CACHE)
 endfunction()
 
-macro(pre_build TARGET_NAME)
-  add_custom_target( ${TARGET_NAME}_PRE_BUILD ALL )
-
-  add_custom_command(
-    TARGET ${TARGET_NAME}_PRE_BUILD
-    ${ARGN}
-    PRE_BUILD
-    COMMENT "${TARGET_NAME}_PRE_BUILD ..."
-    )
-
-  add_custom_target(${TARGET_NAME}_CORE_PRE_BUILD)
-  add_dependencies(${TARGET_NAME}_PRE_BUILD ${TARGET_NAME}_CORE_PRE_BUILD)
-  add_dependencies(${TARGET_NAME} ${TARGET_NAME}_PRE_BUILD)
-endmacro()
-
-# copy res before target build
+# copy resource `FILES` and `FOLDERS` to `COPY_TO` folder before `cocos_target` build
 function(cocos_copy_target_res cocos_target)
   set(oneValueArgs COPY_TO)
   set(multiValueArgs FILES FOLDERS)
@@ -58,32 +42,30 @@ function(cocos_copy_target_res cocos_target)
   endforeach()
 endfunction()
 
-# FILES: files in one dir, not include sub-dir
-# FOLDERS: folders need to mark
-# RES_TO: pak res to source group of IDE
-# res_return: all res files mraked
-function(cocos_mark_multi_resources res_return)
+# mark `FILES` and files in `FOLDERS` as resource files, the destination is `RES_TO` folder
+# save all marked files in `res_out`
+function(cocos_mark_multi_resources res_out)
   set(oneValueArgs RES_TO)
   set(multiValueArgs FILES FOLDERS)
   cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
-  set(tmp_files_ret)
+  set(tmp_file_list)
   foreach(cc_file ${opt_FILES})
     get_filename_component(file_dir ${cc_file} DIRECTORY)
     cocos_mark_resources(FILES ${cc_file} BASEDIR ${file_dir} RESOURCEBASE ${opt_RES_TO})
   endforeach()
-  list(APPEND tmp_files_ret ${opt_FILES})
+  list(APPEND tmp_file_list ${opt_FILES})
 
   foreach(cc_folder ${opt_FOLDERS})
     file(GLOB_RECURSE folder_files "${cc_folder}/*")
-    list(APPEND tmp_files_ret ${folder_files})
+    list(APPEND tmp_file_list ${folder_files})
     cocos_mark_resources(FILES ${folder_files} BASEDIR ${cc_folder} RESOURCEBASE ${opt_RES_TO})
   endforeach()
-  set(${res_return} ${tmp_files_ret} PARENT_SCOPE)
+  set(${res_out} ${tmp_file_list} PARENT_SCOPE)
 endfunction()
 
-# out var all_depend_dlls_var
-function(get_target_depends_ext_dlls cocos_target all_depend_dlls_var)
+# get `cocos_target` depend all dlls, save the result in `all_depend_dlls_out`
+function(get_target_depends_ext_dlls cocos_target all_depend_dlls_out)
   set(all_depend_ext_dlls)
   set(targets_prepare_search ${cocos_target})
   # targets_prepare_search, target need find ext libs
@@ -113,11 +95,10 @@ function(get_target_depends_ext_dlls cocos_target all_depend_dlls_var)
     endif()
   endwhile(true)
   
-  set(${all_depend_dlls_var} ${all_depend_ext_dlls} PARENT_SCOPE)
+  set(${all_depend_dlls_out} ${all_depend_ext_dlls} PARENT_SCOPE)
 endfunction()
 
-# cocos_target: the target app that needed dlls
-# COPY_TO: destination dir
+# copy the `cocos_target` needed dlls into `COPY_TO` folder
 function(cocos_copy_target_dll cocos_target)
   set(oneValueArgs COPY_TO)
   cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
@@ -134,8 +115,8 @@ function(cocos_copy_target_dll cocos_target)
   endforeach(single_target_dll)
 endfunction()
 
-# find dlls in a dir of LIB_ABS_PATH located, and save the dlls into out_put_dlls
-function(cocos_find_dlls_for_lib out_put_dlls)
+# find dlls in a dir which `LIB_ABS_PATH` located, and save the result in `dlls_out`
+function(cocos_find_dlls_for_lib dlls_out)
   set(oneValueArgs LIB_ABS_PATH)
   cmake_parse_arguments(opt "" "${oneValueArgs}"  "${multiValueArgs}" ${ARGN})
   get_filename_component(lib_dir ${opt_LIB_ABS_PATH} DIRECTORY)
@@ -146,9 +127,10 @@ function(cocos_find_dlls_for_lib out_put_dlls)
       list(APPEND cc_dlls ${dir_file})
     endif()
   endforeach()
-  set(${out_put_dlls} ${cc_dlls} PARENT_SCOPE)
+  set(${dlls_out} ${cc_dlls} PARENT_SCOPE)
 endfunction()
 
+# mark `FILES` as resources, files will be put into sub-dir tree depend on its absolute path
 function(cocos_mark_resources)
     set(oneValueArgs BASEDIR RESOURCEBASE)
     set(multiValueArgs FILES)
@@ -175,7 +157,7 @@ function(cocos_mark_resources)
     endforeach()
 endfunction()
 
-# mark the files in the sub dir of CMAKE_CURRENT_SOURCE_DIR
+# mark the code sources of `cocos_target` into sub-dir tree
 function(cocos_mark_code_files cocos_target)
   set(oneValueArgs GROUPBASE)
   cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
@@ -204,10 +186,10 @@ function(cocos_mark_code_files cocos_target)
   
 endfunction()
 
-# APP_SRC app needed all src files
-# DEPEND_COMMON_LIBS the app needed libs for all platforms
-# DEPEND_ANDROID_LIBS the app needed libs only for android platform
-macro(cocos_mark_app app_name)
+# build a cocos application
+# hrough compile the files `APP_SRC`, link the libs in `*LIBS`, use the packages in `*.PKGS`
+# this method hide the link lib details, those is prebuilt libs or not
+macro(cocos_build_app app_name)
   set(multiValueArgs 
     APP_SRC
     DEPEND_COMMON_LIBS 
@@ -301,7 +283,7 @@ macro(cocos_fake_set cc_variable cc_value)
   endif()
 endmacro()
 
-# macos package, need review, might improve plist, not use template?
+# generate macOS app package infomations, need improve for example, the using of info.plist
 macro(cocos_pak_xcode cocos_target)
   set(oneValueArgs
     INFO_PLIST 
@@ -349,9 +331,7 @@ macro (set_xcode_property TARGET XCODE_PROPERTY XCODE_VALUE)
 	set_property (TARGET ${TARGET} PROPERTY XCODE_ATTRIBUTE_${XCODE_PROPERTY} ${XCODE_VALUE})
 endmacro (set_xcode_property)
 
-# cocos_find_package(pkg args...)
 # works same as find_package, but do additional care to properly find
-# prebuilt libs for cocos
 macro(cocos_find_package pkg_name pkg_prefix)
   if(NOT USE_EXTERNAL_PREBUILT OR NOT ${pkg_prefix}_FOUND)
     find_package(${pkg_name} ${ARGN})

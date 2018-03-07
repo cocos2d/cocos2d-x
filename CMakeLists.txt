@@ -39,8 +39,8 @@ include(CocosBuildSet)
 CocosBuildSet()
 
 # default tests include lua, js test project, so we set those option on to build libs
-set(USE_LUACOCOS2D ON)
-set(USE_JSCOCOS2D ON)
+set(BUILD_LUA_LIBS ON)
+set(BUILD_JS_LIBS ON)
 set(USE_SIMULATOR ON)
 
 if(NOT USE_COCOS_PREBUILT)
