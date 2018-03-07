@@ -103,6 +103,8 @@ function upgrade_openssl_for_osx()
     ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
     ln -s /usr/local/Cellar/openssl/1.0.2n/bin/openssl /usr/local/bin/openssl
     echo "macOS SSL: `openssl version`"
+    brew install python2 --with-brewed-openssl
+    ln -s /usr/local/opt/python@2/bin/python2 /usr/local/bin/python
     echo "python SSL: `python -c "import ssl; print ssl.OPENSSL_VERSION"`"
 }
 
@@ -122,8 +124,8 @@ function install_environement_for_pull_request()
     fi
 
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-        install_python_module_for_osx
         upgrade_openssl_for_osx
+        install_python_module_for_osx
     fi
 
     # use NDK's clang to generate binding codes
@@ -139,8 +141,8 @@ function install_environement_for_after_merge()
     download_deps
 
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-        install_python_module_for_osx
         upgrade_openssl_for_osx
+        install_python_module_for_osx
     fi
 }
 
