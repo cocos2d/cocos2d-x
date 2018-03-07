@@ -91,9 +91,17 @@ function install_python_module_for_osx()
     sudo easy_install pip
     sudo -H pip install PyYAML
     sudo -H pip install Cheetah
-    sudo -H pip install pyOpenSSL --upgrade
-    echo `python --version`
-    echo "SSL version: `python -c "import ssl; print ssl.OPENSSL_VERSION"`"
+}
+
+# fix error, URLError: <urlopen error [SSL: TLSV1_ALERT_PROTOCOL_VERSION]
+function upgrade_openssl_for_osx()
+{
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    brew update && brew upgrade
+    brew install openssl
+    brew link --force openssl
+    echo "macOS SSL: `openssl version`"
+    echo "python SSL: `python -c "import ssl; print ssl.OPENSSL_VERSION"`"
 }
 
 # set up environment according os and target
@@ -113,6 +121,7 @@ function install_environement_for_pull_request()
 
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
         install_python_module_for_osx
+        upgrade_openssl_for_osx
     fi
 
     # use NDK's clang to generate binding codes
@@ -129,6 +138,7 @@ function install_environement_for_after_merge()
 
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
         install_python_module_for_osx
+        upgrade_openssl_for_osx
     fi
 }
 
