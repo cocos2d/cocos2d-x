@@ -54,7 +54,7 @@ function build_android()
     popd
 
     # build lua-tests
-    pushd $COCOS2DX_ROOT/tests/lua-tests/proj.android
+    pushd $COCOS2DX_ROOT/tests/lua-tests/project/proj.android
     ./gradlew build
     popd
 
