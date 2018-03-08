@@ -74,6 +74,7 @@ NS_CC_BEGIN
 extern const char* cocos2dVersion(void);
 
 #define PROMPT  "> "
+#define DEFAULT_COMMAND_SEPARATOR '|'
 
 static const size_t SEND_BUFSIZ = 512;
 
@@ -485,6 +486,7 @@ Console::Console()
 , _isIpv6Server(false)
 , _sendDebugStrings(false)
 , _bindAddress("")
+, _commandSeparator(DEFAULT_COMMAND_SEPARATOR)
 {
     createCommandAllocator();
     createCommandConfig();
@@ -534,7 +536,7 @@ bool Console::listenOnTCP(int port)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
         fprintf(stderr, "net_listen error for %s: %s", serv, gai_strerrorA(n));
 #else
-        fprintf(stderr, "net_listen error for %s: %s", serv, gai_strerror(n));
+        fprintf(stderr,"net_listen error for %s: %s", serv, gai_strerror(n));
 #endif
         return false;
     }
@@ -937,17 +939,26 @@ bool Console::parseCommand(int fd)
         }
     }
     std::string cmdLine;
-    
-    std::vector<std::string> args;
     cmdLine = std::string(buf);
+    auto commands = Console::Utility::split(cmdLine, _commandSeparator);
+    try {
+        for(auto command : commands) {
+            performCommand(fd, Console::Utility::trim(command));
+        }
+    } catch (const std::runtime_error& e) {
+        Console::Utility::sendToConsole(fd, e.what(), strlen(e.what()));
+    }
     
-    args = Console::Utility::split(cmdLine, ' ');
-    if(args.empty())
-    {
-        const char err[] = "Unknown command. Type 'help' for options\n";
-        Console::Utility::sendToConsole(fd, err, strlen(err));
-        Console::Utility::sendPrompt(fd);
-        return true;
+    
+    Console::Utility::sendPrompt(fd);
+    
+    return true;
+}
+
+void Console::performCommand(int fd, const std::string& command) {
+    std::vector<std::string> args = Console::Utility::split(command, ' ');
+    if(args.empty()) {
+        throw std::runtime_error("Unknown command. Type 'help' for options\n");
     }
     
     auto it = _commands.find(Console::Utility::trim(args[0]));
@@ -965,13 +976,9 @@ bool Console::parseCommand(int fd)
         }
         auto cmd = it->second;
         cmd->commandGeneric(fd, args2);
-    }else if(strcmp(buf, "\r\n") != 0) {
-        const char err[] = "Unknown command. Type 'help' for options\n";
-        Console::Utility::sendToConsole(fd, err, strlen(err));
+    } else {
+        throw std::runtime_error("Unknown command " + command + ". Type 'help' for options\n");
     }
-    Console::Utility::sendPrompt(fd);
-    
-    return true;
 }
 
 void Console::addClient()

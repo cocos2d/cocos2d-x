@@ -6,6 +6,10 @@ if(" ${CMAKE_SOURCE_DIR}" STREQUAL " ${CMAKE_BINARY_DIR}")
         ")
 endif()
 
+if(DEFINED CMAKE_TOOLCHAIN_FILE)
+    message(STATUS "using toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
+endif()
+
 macro(CocosBuildSet)
 
     # It ensures that when Find*.cmake files included from cmake's Modules dir
@@ -26,37 +30,12 @@ macro(CocosBuildSet)
     # some useful variables for every one cocos project
     set(COCOS_EXTERNAL_DIR ${COCOS2DX_ROOT_PATH}/external)
     set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
-    set(COCOS_PREBUILT_LIBS_PATH ${COCOS2DX_ROOT_PATH}/prebuilt)
 
     message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
     message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
     message(STATUS "COCOS_EXTERNAL_DIR:" ${COCOS_EXTERNAL_DIR})
     message(STATUS "ENGINE_BINARY_PATH:" ${ENGINE_BINARY_PATH})
-    
-    # architecture
-    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(ARCH_DIR "64-bit")
-    elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
-        set(ARCH_DIR "32-bit")
-    else()
-        message(WARN "CMAKE_SIZEOF_VOID_P: ${CMAKE_SIZEOF_VOID_P}")
-    endif()
-    # CMAKE_BUILD_TYPE has precedence over DEBUG_MODE
-    # Still supporting DEBUG_MODE for backwards compatibility
-    if(NOT CMAKE_BUILD_TYPE)
-        if(DEBUG_MODE)
-            set(CMAKE_BUILD_TYPE DEBUG)
-        else(DEBUG_MODE)
-            set(CMAKE_BUILD_TYPE RELEASE)
-        endif(DEBUG_MODE)
-    endif(NOT CMAKE_BUILD_TYPE)
 
-    # Define other useful variables not defined by CMake
-    if(CMAKE_GENERATOR STREQUAL Xcode)
-        set (XCODE TRUE)
-    elseif(CMAKE_GENERATOR MATCHES Visual)
-        set (VS TRUE)
-    endif()
 
     include(CocosBuildHelpers)
 
@@ -68,15 +47,12 @@ macro(CocosBuildSet)
     include(SetCompilerOptions)
     SetCompilerOptions()
 
-    if(CMAKE_FIND_ROOT_PATH AND USE_EXTERNAL_PREBUILT_LIBS)
-        # Adds cocos2d-x external folder to the list of valid include/library paths when cross-compiling and using prebuilds
-        set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${COCOS_EXTERNAL_DIR})
+    # collect prebuilt libraries
+    if(USE_EXTERNAL_PREBUILT OR USE_COCOS_PREBUILT)
+        include(CocosPickLibs)
     endif()
 
-    if(USE_EXTERNAL_PREBUILT_LIBS)
-        include(CocosUsePrebuiltLibs)
-    endif()
-
+    # compile source libraries, find prebuilt package
     include(BuildModules)
     BuildModules()
 endmacro(CocosBuildSet)

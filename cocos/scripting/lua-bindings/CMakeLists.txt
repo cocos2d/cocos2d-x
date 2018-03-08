@@ -41,7 +41,7 @@ if(WINDOWS)
     if(MINGW)
         add_definitions(-DLUASOCKET_INET_ATON -DLUASOCKET_INET_PTON)
     endif()
-    add_definitions(-DWIN32 -D_WINDOWS)
+    add_definitions(-D_USRLUASTATIC)
     list(APPEND lua_cocos2d_source_files
         ${cocos_root}/external/lua/luasocket/wsocket.c
         )
@@ -97,7 +97,7 @@ set(lua_bindings_manual_files
     manual/spine/LuaSkeletonAnimation.cpp
     manual/ui/lua_cocos2dx_experimental_video_manual.cpp
     manual/ui/lua_cocos2dx_ui_manual.cpp
-    # android.mk not include this, need review
+    # android.mk not include this
     # manual/video/lua_cocos2dx_experimental_video_manual.cpp
     manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
     manual/physics3d/lua_cocos2dx_physics3d_manual.cpp
@@ -157,12 +157,14 @@ add_library(luacocos2d ${lua_bindings_files})
 target_link_libraries(luacocos2d cocos2d)
 add_dependencies(luacocos2d cocos2d)
 
-cocos_use_pkg(luacocos2d LUAJIT)
+# use necessary external libs and system libs
+target_use_luacocos2d_depend_libs(luacocos2d)
 
 set_target_properties(luacocos2d
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+    FOLDER "Internal"
 )
 
 if(XCODE OR VS)

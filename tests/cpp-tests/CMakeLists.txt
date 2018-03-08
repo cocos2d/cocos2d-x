@@ -4,69 +4,60 @@ set(APP_NAME cpp_tests)
 
 project(${APP_NAME})
 
-# default build, not build when build engine and all tests
 if(NOT DEFINED BUILD_ENGINE_DONE)
-    # define some variables
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
-    set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
     
-    # works before libcocos2d
     include(CocosBuildSet)
     CocosBuildSet()
-    # add engine directory, get cocos library
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-
-endif(NOT DEFINED BUILD_ENGINE_DONE)
-
-if(WIN32)
-    set(PLATFORM_SRC proj.win32/main.cpp)
-    set(RES_PREFIX "")
-elseif(APPLE)
-    file(GLOB_RECURSE RES_FILES Resources/*)
-    cocos_mark_resources(FILES ${RES_FILES} BASEDIR Resources)
-    if(IOS)
-        set(IOS_SRC
-        proj.ios/main.m
-        proj.ios/Classes/testsAppDelegate.mm
-        proj.ios/Classes/RootViewController.mm
-    )
-    file(GLOB_RECURSE RES_LS proj.ios/LaunchScreen.storyboard)
-    cocos_mark_resources(FILES ${RES_LS} BASEDIR proj.ios)
-    file(GLOB_RECURSE RES_LSBG proj.ios/LaunchScreenBackground.png)
-    cocos_mark_resources(FILES ${RES_LSBG} BASEDIR proj.ios)
-    set(APPLE_SRC ${IOS_SRC} ${RES_LS} ${RES_LSBG})
-    elseif(MACOSX)
-        set(MAC_SRC proj.mac/main.cpp)
-
-        file(GLOB_RECURSE RES_ICON proj.mac/Icon.icns)
-        cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.mac)
-        set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
+    if(NOT USE_COCOS_PREBUILT)
+        add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
     endif()
-    set(PLATFORM_SRC ${RES_FILES} ${APPLE_SRC})
+endif()
+
+set(res_res_folders 
+    "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
+)
+if(APPLE OR VS)
+    cocos_mark_multi_resources(cc_common_res RES_TO "Resources" FOLDERS ${res_res_folders})
+endif()
+
+if(WINDOWS)
+    set(windows_src proj.win32/main.cpp)
+    set(platform_specific_src ${cc_common_res} ${windows_src})
+elseif(APPLE)
+    if(IOS)
+        set(ios_code_files
+            proj.ios/main.m
+            proj.ios/Classes/testsAppDelegate.mm
+            proj.ios/Classes/RootViewController.mm
+        )
+        set(ios_res_files
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreen.storyboard
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreenBackground.png
+        )
+        cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
+        set(apple_src_files ${ios_code_files} ${ios_res_files})
+    elseif(MACOSX)
+        set(mac_code_files proj.mac/main.cpp)
+        set(mac_res_files
+            ${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Icon.icns
+        )
+        cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
+        set(apple_src_files ${mac_res_files} ${mac_code_files})
+    endif()
+    set(platform_specific_src ${cc_common_res} ${apple_src_files})
 elseif(LINUX)
-    set(PLATFORM_SRC proj.linux/main.cpp)
-    set(RES_PREFIX "/Resources")
+    set(platform_specific_src proj.linux/main.cpp)
 elseif(ANDROID)
-    set(PLATFORM_SRC
+    set(platform_specific_src
           Classes/JNITest/JNITest.cpp
           proj.android/app/jni/main.cpp)
-    set(RES_PREFIX "/Resources")
 elseif(IOS)
-    # need check 
-    set(PLATFORM_SRC proj.ios/main.m)
+    set(platform_specific_src proj.ios/main.m)
 else()
     message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
-
-# Use same method as in cocos library
-if(LINUX)
-    foreach(_pkg FONTCONFIG GTK3)
-        cocos_find_package(${_pkg} ${_pkg} REQUIRED)
-    endforeach()
-endif()
-cocos_find_package(FREETYPE FREETYPE REQUIRED)
-cocos_find_package(CURL CURL REQUIRED)
 
 set(TESTS_SRC
     Classes/ActionManagerTest/ActionManagerTest.cpp
@@ -189,10 +180,9 @@ set(TESTS_SRC
     Classes/ZwoptexTest/ZwoptexTest.cpp
     Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp
     Classes/controller.cpp
-    # need review
     # Classes/VRTest/VRTest.cpp
     # Classes/VRTest/VRTest.h
-    ${PLATFORM_SRC}
+    ${platform_specific_src}
     )
 
 if(ANDROID OR IOS)
@@ -205,6 +195,9 @@ endif()
 if(WIN32 OR MACOSX OR LINUX)
     list(APPEND TESTS_SRC
         Classes/WindowTest/WindowTest.cpp
+        )
+    list(APPEND TESTS_SRC
+        Classes/BugsTest/Bug-14327.cpp
         )
 endif()
 
@@ -225,7 +218,7 @@ endif()
 
 if(USE_BULLET)
     list(APPEND TESTS_SRC
-        Classes/Physics3DTest/Physics3DTest.cpp
+            Classes/Physics3DTest/Physics3DTest.cpp
         )
     include_directories(${BULLET_INCLUDE_DIRS})
 endif()
@@ -236,66 +229,41 @@ set(EXTENDED_TESTS_SRC
     Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
     )
 
-if(LINUX)
-
-else()
+if(NOT LINUX)
     list(APPEND EXTENDED_TESTS_SRC
         Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp
-        )
+    )
 endif()
 
 include_directories(
     Classes
     ${COCOS2DX_ROOT_PATH}/cocos/editor-support
-    )
+)
 
-if(ANDROID)
-    add_library(${APP_NAME} SHARED ${TESTS_SRC} ${EXTENDED_TESTS_SRC})
-    if(CMAKE_BUILD_TYPE MATCHES RELEASE)
-        add_custom_command(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
-    endif()
-    target_link_libraries(${APP_NAME} -Wl,-whole-archive cocos2d_android -Wl,-no-whole-archive)
-    add_dependencies(${APP_NAME} cocos2d_android)
-else()
-    # add the executable
-    add_executable(${APP_NAME} ${TESTS_SRC} ${EXTENDED_TESTS_SRC})
-endif()
+# mark app complie info and libs info
+set(cocos_app_src 
+    ${TESTS_SRC}
+    ${EXTENDED_TESTS_SRC}
+)
+cocos_build_app(${APP_NAME}
+    APP_SRC "${cocos_app_src}"
+    DEPEND_COMMON_LIBS "cocos2d"
+    DEPEND_ANDROID_LIBS "cocos2d_android"
+    COMMON_USE_PKGS "FREETYPE" "CURL"
+    LINUX_USE_PKGS "FONTCONFIG" "GTK3"
+)
 
-target_link_libraries(${APP_NAME} cocos2d)
-add_dependencies(${APP_NAME} cocos2d)
-
-if(LINUX)
-    foreach(_pkg FONTCONFIG GTK3)
-        cocos_use_pkg(${APP_NAME} ${_pkg})
-    endforeach()
-endif()
-foreach(pkg FREETYPE CURL)
-    cocos_use_pkg(${APP_NAME} ${pkg})
-endforeach()
-
+# mark app resources
 if(APPLE)
-    set_target_properties(${APP_NAME} PROPERTIES
-        MACOSX_BUNDLE 1
-        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-        )
     if(MACOSX)
         cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "Tests Cpp" INFO_STRING "test project for cpp")
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()
-    
-elseif(ANDROID)
-    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
-    set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
-else()
-    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
-    set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
-
-    pre_build(${APP_NAME}
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}${RES_PREFIX}
-        )
+elseif(WINDOWS)
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
 endif()
 
-if(XCODE OR VS)
-    cocos_mark_code_files(${APP_NAME})
+if(LINUX OR WINDOWS)
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${res_res_folders})
 endif()

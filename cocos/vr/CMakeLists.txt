@@ -1,4 +1,3 @@
-# need review
 set(COCOS_VR_SRC)
 if(NOT IOS)
     set(COCOS_VR_SRC

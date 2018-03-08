@@ -160,3 +160,6 @@ tests/lua-tests/project/proj.tizen/res/
 
 # Ignore static libraries
 *.a
+
+# Ignore the CMake build folder, such as ios-build/linux-build
+*-build/
