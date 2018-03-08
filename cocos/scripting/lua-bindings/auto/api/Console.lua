@@ -39,6 +39,13 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- 
+-- @function [parent=#Console] setCommandSeparator 
+-- @param self
+-- @param #char var
+-- @return Console#Console self (return value: cc.Console)
+        
+--------------------------------
 -- set bind address<br>
 -- address : 127.0.0.1
 -- @function [parent=#Console] setBindAddress 
