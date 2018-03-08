@@ -34,8 +34,6 @@ cmake .. -G"Visual Studio 15 2017" -Tv141
 
 Execute `cmake --build .` to compile, or open `Cocos2d-x.sln` in Explorer to use the generated project. 
 
-Execute `cmake --build` to see the build menu.
-
 ### Generate macOS Project
 
 ```sh
@@ -56,7 +54,7 @@ open Cocos2d-x.xcodeproj
 
 ### CMake in Android Studio
 
-We use the Gradle to Android Applacition, and Gradle use CMake to build the native part, see the [property](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/gradle.properties#L38): `PROP_NDK_MODE`, it control the way of native build
+We use the Gradle to Android applacition, and Gradle use cmake to build the native code, see the [property](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/gradle.properties#L38): `PROP_NDK_MODE`, it control the way of native build
 
 ```sh
 # android cmake support
@@ -69,9 +67,9 @@ If you want to add cmake build arguments, please add it at [externalNativeBuild]
 
 ## Prebuilt Feature
 
-To solve the probelm compiling engine sources spends too long time, we add the feature of pre-builds libs. Using this feature you only need build engine sources once for a specific environment.
+To solve the problem that compiling engine sources spends too long time, we add the feature of pre-builds libs. Using this feature you only need build engine sources once for a specific environment.
 
-This is a example of build libs once, and use it in next build:
+### Next is a example of build libs once, and use it in next build:
 
 ```sh
 cocos new -l cpp -p my.pack.app1 test_app1
@@ -86,7 +84,7 @@ make TemplateCpp
 open bin/TemplateCpp.app
 ```
 
-add `-DUSE_COCOS_PREBUILT=ON` to use prebuilt libs.
+add `-DUSE_COCOS_PREBUILT=ON` to use prebuilt libs in another cmake build.
 
 ```sh
 cocos new -l cpp -p my.pack.app2 test_app2
@@ -97,7 +95,7 @@ open bin/TemplateCpp.app
 ```
 > Any other cpp project can use prebuilt in this way
 
-Using this feature on Android exists a little difference, for CMake can't find system environment when build in Gradle. so you need to [supply a path](https://github.com/cocos2d/cocos2d-x/blob/c087be314c2c56a757bf66163b173746b5d6ad34/tests/cpp-empty-test/proj.android/app/build.gradle#L34) as the location of prebuilt libs.
+Using this feature on Android exists a little difference, for CMake can't find system environment when build in Gradle. So you need to [supply a path](https://github.com/cocos2d/cocos2d-x/blob/c087be314c2c56a757bf66163b173746b5d6ad34/tests/cpp-empty-test/proj.android/app/build.gradle#L34) as the location of prebuilt libs.
 
 ## Build Options
 
@@ -136,7 +134,7 @@ Using this feature on Android exists a little difference, for CMake can't find s
 
 1. Any options in [SelectModule.cmake](./Modules/SelectModule.cmake) can be set manually. Do it if you know what you're doing.
 
-## Links
+## Useful Links
 
 * Official website: [cmake.org](https://cmake.org/)
 
