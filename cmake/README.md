@@ -3,13 +3,11 @@
 
 CMake is an open-source, cross-platform family of tools designed to build, test and package software. CMake is used to control the software compilation process using simple platform and compiler independent configuration files, and generate native makefiles and workspaces that can be used in the compiler environment of your choice.
 
-## In Cocos2d-x
-
-1. CMake in Cocos2d-x support platform iOS, Android, macOS, Linux, Win32.
+## Requirement
 
 1. Open your terminal, input `cmake --version`, if the cmake version is lower than 3.1, please upgrade
 
-2. You should use out-of-source build, that is said you need to create a different directory from `$cocos2dx_root` to execute cmake command.
+2. You should use out-of-source build, that is said you need to create a different directory from `cocos2d-x` to execute cmake command.
 
 ## Step by Step
 
@@ -65,7 +63,7 @@ PROP_NDK_MODE=cmake
 
 If you want to add cmake build arguments, please add it at [externalNativeBuild](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/app/build.gradle#L25) block of [app/build.gradle] file.
 
-## Prebuilt Feature
+## Prebuilt feature
 
 To solve the problem that compiling engine sources spends too long time, we add the feature of pre-builds libs. Using this feature you only need build engine sources once for a specific environment.
 
@@ -77,14 +75,16 @@ mkdir app1_build && cd app1_build
 cmake ../test_app1 -DGEN_COCOS_PREBUILT=ON
 make prebuilt
 ```
-close option `GEN_COCOS_PREBUILT` and open `USE_COCOS_PREBUILT` to use prebuilt in the same project
+
+Close option `GEN_COCOS_PREBUILT` and open `USE_COCOS_PREBUILT` to use prebuilt in the same project
+
 ```sh
 cmake ../test_app1 -DGEN_COCOS_PREBUILT=OFF -DUSE_COCOS_PREBUILT=ON
 make TemplateCpp
 open bin/TemplateCpp.app
 ```
 
-add `-DUSE_COCOS_PREBUILT=ON` to use prebuilt libs in another cmake build.
+Add `-DUSE_COCOS_PREBUILT=ON` to use prebuilt libs in another cmake build.
 
 ```sh
 cocos new -l cpp -p my.pack.app2 test_app2

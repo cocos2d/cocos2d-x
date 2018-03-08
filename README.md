@@ -114,11 +114,10 @@ Using CMake
 --------------------------------
 
 Now Cocos2d-x support another project build method, it's CMake! CMake have great benefits when cross-platform compiling. The most sample way to use is:
-```
-$ cd cocos2d-x
-$ mkdir cmake-build && cd cmake-build
-$ cmake ..
-```
+
+    $ cd cocos2d-x
+    $ mkdir cmake-build && cd cmake-build
+    $ cmake ..
 
 Documentations and samples
 -------------
