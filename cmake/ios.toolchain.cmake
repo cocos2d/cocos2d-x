@@ -91,7 +91,7 @@ endif (NOT DEFINED CMAKE_INSTALL_NAME_TOOL)
 
 # Setup iOS platform unless specified manually with IOS_PLATFORM
 if (NOT DEFINED IOS_PLATFORM)
-	set (IOS_PLATFORM "OS")
+	set (IOS_PLATFORM "SIMULATOR64")
 endif (NOT DEFINED IOS_PLATFORM)
 set (IOS_PLATFORM ${IOS_PLATFORM} CACHE STRING "Type of iOS Platform")
 

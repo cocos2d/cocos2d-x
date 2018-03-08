@@ -230,6 +230,18 @@ $ adb install ../tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
 
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 14.
 
+Using CMake
+--------------------------------
+
+Now Cocos2d-x support another project build method, it's CMake! CMake have great benefits when cross-platform compiling. The most sample way to use is:
+```
+$ cd cocos2d-x
+$ mkdir cmake-build && cd cmake-build
+$ cmake ..
+```
+
+* [Detail CMake Guide](https://github.com/cocos2d/cocos2d-x/blob/v3/cmake/README.md)
+
 Learning Resources
 --------------------------------
 

@@ -1,23 +1,103 @@
 
-# CMake
+# CMake Guide
 
 CMake is an open-source, cross-platform family of tools designed to build, test and package software. CMake is used to control the software compilation process using simple platform and compiler independent configuration files, and generate native makefiles and workspaces that can be used in the compiler environment of your choice.
 
-### Links
-
-* Official website: [cmake.org](https://cmake.org/)
-
-* Documentation: [cmake.org/documentation](https://cmake.org/documentation/)
-
-* CMake FAQ: [Wiki/CMake_FAQ](https://cmake.org/Wiki/CMake_FAQ)
-
-## CMake in Cocos2d-x
+## In Cocos2d-x
 
 1. CMake in Cocos2d-x support platform iOS, Android, macOS, Linux, Win32.
 
 1. Open your terminal, input `cmake --version`, if the cmake version is lower than 3.1, please upgrade
 
 2. You should use out-of-source build, that is said you need to create a different directory from `$cocos2dx_root` to execute cmake command.
+
+## Step by Step
+
+### Build in Linux
+
+```sh
+cd cocos2d-x
+mkdir linux-build && cd linux-build
+cmake ..
+make
+``` 
+
+Execute `make help` to see all build targets, `make <target>` build specified target
+
+### Generate Visual Studio project
+
+```sh
+cd cocos2d-x
+mkdir win32-build && cd win32-build
+cmake .. -G"Visual Studio 15 2017" -Tv141
+```
+
+Execute `cmake --build .` to compile, or open `Cocos2d-x.sln` in Explorer to use the generated project. 
+
+Execute `cmake --build` to see the build menu.
+
+### Generate macOS Project
+
+```sh
+cd cocos2d-x
+mkdir mac-build && cd msc-build
+cmake .. -GXcode
+open Cocos2d-x.xcodeproj
+```
+
+### Generate iOS Project
+
+```sh
+cd cocos2d-x
+mkdir ios-build && cd ios-build
+cmake .. -GXcode -DCMAKE_TOOLCHAIN_FILE=../cmake/ios.toolchain.cmake
+open Cocos2d-x.xcodeproj
+```
+
+### CMake in Android Studio
+
+We use the Gradle to Android Applacition, and Gradle use CMake to build the native part, see the [property](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/gradle.properties#L38): `PROP_NDK_MODE`, it control the way of native build
+
+```sh
+# android cmake support
+# uncomment it, native code will build by cmake
+# keep comment, native code will build by ndkBuild
+PROP_NDK_MODE=cmake
+```
+
+If you want to add cmake build arguments, please add it at [externalNativeBuild](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/app/build.gradle#L25) block of [app/build.gradle] file.
+
+## Prebuilt Feature
+
+To solve the probelm compiling engine sources spends too long time, we add the feature of pre-builds libs. Using this feature you only need build engine sources once for a specific environment.
+
+This is a example of build libs once, and use it in next build:
+
+```sh
+cocos new -l cpp -p my.pack.app1 test_app1
+mkdir app1_build && cd app1_build
+cmake ../test_app1 -DGEN_COCOS_PREBUILT=ON
+make prebuilt
+```
+close option `GEN_COCOS_PREBUILT` and open `USE_COCOS_PREBUILT` to use prebuilt in the same project
+```sh
+cmake ../test_app1 -DGEN_COCOS_PREBUILT=OFF -DUSE_COCOS_PREBUILT=ON
+make TemplateCpp
+open bin/TemplateCpp.app
+```
+
+add `-DUSE_COCOS_PREBUILT=ON` to use prebuilt libs.
+
+```sh
+cocos new -l cpp -p my.pack.app2 test_app2
+mkdir app2_build && cd app2_build
+cmake ../test_app2 -DUSE_COCOS_PREBUILT=ON
+make TemplateCpp
+open bin/TemplateCpp.app
+```
+> Any other cpp project can use prebuilt in this way
+
+Using this feature on Android exists a little difference, for CMake can't find system environment when build in Gradle. so you need to [supply a path](https://github.com/cocos2d/cocos2d-x/blob/c087be314c2c56a757bf66163b173746b5d6ad34/tests/cpp-empty-test/proj.android/app/build.gradle#L34) as the location of prebuilt libs.
 
 ## Build Options
 
@@ -52,67 +132,14 @@ CMake is an open-source, cross-platform family of tools designed to build, test 
 
 1. __`COCOS_PREBUILT_ROOT`__, a path means the prebuilt libraries root location, it's not optional for Android Project on Android Studio, optional for other supported platforms. the default value is $cocos2dx_root/prebuilt if the cmake can access to cocos2d-x environment variable. for example
 
-    * `arguments "-DCOCOS_PREBUILT_ROOT=/Users/laptop/cocos-prebuilt"` set this value on [app/build.gradle](./../tests/cpp-empty-test/proj.android/app/build.gradle)
+    * `arguments "-DCOCOS_PREBUILT_ROOT=/Users/laptop/cocos-prebuilt"` set this value on [cmake block](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/app/build.gradle#L31) of build.gradle file.
 
 1. Any options in [SelectModule.cmake](./Modules/SelectModule.cmake) can be set manually. Do it if you know what you're doing.
 
-## Build Examples
+## Links
 
-### build specified target in Linux
+* Official website: [cmake.org](https://cmake.org/)
 
-```sh
-mkdir linux-build
-cd linux-build
-cmake $cocos2dx_root
-make cpp_empty_test
-``` 
+* Documentation: [cmake.org/documentation](https://cmake.org/documentation/)
 
-execute `make help` in generated make project to see all build targets
-
-### MSVC build on Terminal or Visual Studio
-
-```sh
-cmake -H"..\cocos2d-x\" -Bmsvc_build -G"Visual Studio 15 2017" -Tv141 -DCMAKE_BUILD_TYPE=Debug
-```
-
-execute `cmake --build ./msvc_build` or open `Cocos2d-x.sln` in Explorer to use the generated native project.
-
-### using CMake in Android Studio
-
-see the Gradle properties: `PROP_NDK_MODE`, it control the way of native build
-
-```sh
-# android cmake support
-# uncomment it, native code will build by cmake
-# keep comment, native code will build by ndkBuild
-PROP_NDK_MODE=cmake
-```
-
-add cmake arguments in `externalNativeBuild/cmake` block of [app/build.gradle](./../tests/cpp-empty-test/proj.android/app/build.gradle) file.
-
-### Generate Xcode macOS Project
-
-```sh
-cmake -H$COCOS_TEMPLATES_ROOT/.. -Bbuild_mac -GXcode
-cd build_mac
-open Cocos2d-x.xcodeproj
-```
-
-### Generate Xcode iOS Project
-
-```sh
-cd build_ios
-cmake -DCMAKE_TOOLCHAIN_FILE=$COCOS_TEMPLATES_ROOT/../cmake/ios.toolchain.cmake -DIOS_PLATFORM=SIMULATOR64 -H$COCOS_TEMPLATES_ROOT/.. -Bbuild_ios_sim64 -GXcode
-cd build_ios_sim64
-open Cocos2d-x.xcodeproj
-```
-
-## TODO
-
-1. better support package iOS/MacOS App
-1. improve and refactor
-1. support MinGW on Windows
-
-## Issues
-
-1. info.plist always been generated when `cmake -GXcode`, it's bad friendly to custom info.plist
+* CMake FAQ: [Wiki/CMake_FAQ](https://cmake.org/Wiki/CMake_FAQ)
