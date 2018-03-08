@@ -26,7 +26,7 @@
 
 # build all test projects, it need the engine library
 
-# library have been build, on ../CMakeLists.txt
+# library have been build, on ../CMakeLists.txt, uesed to prevent tests project build engine lib again
 set(BUILD_ENGINE_DONE ON)
 
 # add engine all tests project
@@ -46,7 +46,7 @@ add_subdirectory(${COCOS2DX_ROOT_PATH}/templates/cpp-template-default ${ENGINE_B
 
 add_subdirectory(${COCOS2DX_ROOT_PATH}/templates/js-template-default ${ENGINE_BINARY_PATH}/template/js-template-default)
 
-# run on mac failed, for it need libsimulator(not cmake files)
+# TODO run on mac/win didn't perfect, need to check later
 add_subdirectory(${COCOS2DX_ROOT_PATH}/templates/lua-template-default ${ENGINE_BINARY_PATH}/template/lua-template-default)
 
 

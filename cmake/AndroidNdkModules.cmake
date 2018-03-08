@@ -32,6 +32,11 @@ macro(android_ndk_import_module_cpufeatures)
         include_directories(${ANDROID_NDK}/sources/android/cpufeatures)      
         add_library(cpufeatures ${ANDROID_NDK}/sources/android/cpufeatures/cpu-features.c)
         target_link_libraries(cpufeatures dl)
+        set_target_properties(cpufeatures
+            PROPERTIES
+            ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+            LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+        )
     endif()
 endmacro()
 
