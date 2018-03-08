@@ -9,26 +9,7 @@ HOST_NAME=""
 
 function install_android_ndk()
 {
-    mkdir -p $HOME/bin
-    cd $HOME/bin
-
-    # Download android ndk
-    if [ "$TRAVIS_OS_NAME" = "osx" ]; then
-        HOST_NAME="darwin"
-    else
-        HOST_NAME="linux"
-    fi
-
-    FILE_NAME=android-ndk-r16-${HOST_NAME}-x86_64.zip
-
-    # the NDK is used to generate binding codes, should use r16 when fix binding codes with r16
-    echo "Download ${FILE_NAME} ..."
-    curl -O https://dl.google.com/android/repository/${FILE_NAME}
-    echo "Decompress ${FILE_NAME} ..."
-    unzip ./${FILE_NAME} > /dev/null
-
-    # Rename ndk
-    mv android-ndk-r16 android-ndk
+    python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py
 }
 
 function install_linux_environment()

@@ -41,10 +41,7 @@ function build_android()
 {
     # Build all samples
     echo "Building Android samples ..."
-    export COCOS_CONSOLE_ROOT=$COCOS2DX_ROOT/tools/cocos2d-console/bin
-    export ANDROID_SDK_ROOT=/usr/local/android-sdk
-    export COCOS_X_ROOT=$COCOS2DX_ROOT
-    export PATH=$ANDROID_SDK_ROOT:$COCOS_CONSOLE_ROOT:$PATH
+    source ../environment.sh
 
     # build cpp-empty-test
     # pushd $COCOS2DX_ROOT/tests/cpp-empty-test
