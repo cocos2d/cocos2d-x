@@ -79,7 +79,7 @@ function genernate_binding_codes()
 
     which python
 
-    export NDK_ROOT=$HOME/bin/android-ndk
+    source ../environment.sh
     export PYTHON_BIN=/usr/bin/python
 
     # Generate binding glue codes
