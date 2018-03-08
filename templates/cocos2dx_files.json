@@ -4060,6 +4060,7 @@
         "tools/simulator/frameworks/runtime-src/proj.win32/stdafx.cpp", 
         "tools/simulator/frameworks/runtime-src/proj.win32/stdafx.h", 
         "tools/simulator/frameworks/runtime-src/proj.win32/targetver.h", 
+        "tools/simulator/libsimulator/CMakeLists.txt", 
         "tools/simulator/libsimulator/lib/AppEvent.cpp", 
         "tools/simulator/libsimulator/lib/AppEvent.h", 
         "tools/simulator/libsimulator/lib/AppLang.cpp", 
