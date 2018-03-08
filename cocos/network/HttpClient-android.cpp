@@ -714,7 +714,7 @@ void HttpClient::processResponse(HttpResponse* response, char* responseMessage)
     char *messageInfo = urlConnection.getResponseMessage();
     if (messageInfo)
     {
-        strcpy(responseMessage, messageInfo);
+        strncpy(responseMessage, messageInfo, RESPONSE_BUFFER_SIZE-1);
         free(messageInfo);
     }
 
