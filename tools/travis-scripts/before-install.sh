@@ -154,6 +154,7 @@ fi
 
 if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
     download_deps
+    install_linux_environment
     echo -e "y" | bash $COCOS2DX_ROOT/build/install-deps-linux.sh
     exit 0
 fi

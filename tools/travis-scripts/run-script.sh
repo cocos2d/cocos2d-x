@@ -52,13 +52,13 @@ function build_android()
     # popd
 
     # build cpp-tests
-    pushd $COCOS2DX_ROOT/tests/cpp-tests
-    cocos compile -p android
+    pushd $COCOS2DX_ROOT/tests/cpp-tests/proj.android
+    ./gradlew build
     popd
 
     # build lua-tests
-    pushd $COCOS2DX_ROOT/tests/lua-tests
-    cocos compile -p android
+    pushd $COCOS2DX_ROOT/tests/lua-tests/proj.android
+    ./gradlew build
     popd
 
     # build js-tests
