@@ -110,6 +110,15 @@ Or you can publish your game to `publish/html5/` folder:
 
     $ cocos run -p web -m release [--advanced]
 
+Using CMake
+--------------------------------
+
+Now Cocos2d-x support another project build method, it's CMake! CMake have great benefits when cross-platform compiling. The most sample way to use is:
+
+    $ cd cocos2d-x
+    $ mkdir cmake-build && cd cmake-build
+    $ cmake ..
+
 Documentations and samples
 -------------
 * [All Docs in a single place!](http://cocos2d-x.org/docs/)
@@ -229,6 +238,8 @@ $ adb install ../tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
 ```
 
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 14.
+
+* [Detail CMake Guide](cmake/README.md)
 
 Learning Resources
 --------------------------------
