@@ -67,7 +67,9 @@ If you want to add cmake build arguments, please add it at [externalNativeBuild]
 
 To solve the problem that compiling engine sources spends too long time, we add the feature of pre-builds libs. Using this feature you only need build engine sources once for a specific environment.
 
-### Next is a example of build libs once, and use it in next build:
+### Example
+
+This is an example of build cpp libs once, and use it in different cpp project.
 
 ```sh
 cocos new -l cpp -p my.pack.app1 test_app1

@@ -37,7 +37,7 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     CocosBuildSet()
     if(NOT USE_COCOS_PREBUILT)
         set(BUILD_LUA_LIBS ON)
-        set(USE_SIMULATOR ON)
+        set(BUILD_SIMU_LIB ON)
         add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
     endif()
 endif()
@@ -96,7 +96,8 @@ elseif(APPLE)
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreenBackground.png
         )
         cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
-        set(APPLE_RES_UI ${ios_code_files} ${ios_res_files})
+        set(APPLE_SRC ${ios_code_files} ${ios_res_files})
+        set(APPLE_RES_UI ${ios_res_files})
     elseif(MACOSX)
         set(MAC_SRC
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.m
