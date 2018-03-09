@@ -169,22 +169,54 @@ function(cocos_mark_code_files cocos_target)
   endif()
 
   message(STATUS "cocos_mark_code_files: ${cocos_target}")
-  set(group_base "Source Files")
 
   get_property(file_list TARGET ${cocos_target} PROPERTY SOURCES)
 
+  get_headers_by_sources(app_headers CC_SOURCES ${file_list})
+  list(APPEND file_list ${app_headers})
   foreach(single_file ${file_list})
-    # get relative_path
-    get_filename_component(abs_path ${single_file} ABSOLUTE)
-    file(RELATIVE_PATH relative_path_with_name ${root_dir} ${abs_path})
-    get_filename_component(relative_path ${relative_path_with_name} PATH)
-    # set source_group, consider sub source group 
-    string(REPLACE "/" "\\" ide_file_group "${group_base}/${relative_path}")
-    source_group("${ide_file_group}" FILES ${single_file})
-
+    source_group_single_file(${single_file} GROUP_TO "Source Files" BASE_PATH "${root_dir}")
   endforeach()
-  
+
 endfunction()
+
+# get headers from `CC_SOURCES` save result in `headers_out`
+function(get_headers_by_sources headers_out)
+  set(multiValueArgs CC_SOURCES)
+  cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+
+  set(header_file_list)
+  foreach(single_source ${opt_CC_SOURCES})
+    # "\\..*$" <-> [.cpp, .mm, .m ...]
+    string(REGEX REPLACE "\\..*$" ".h" tmp_header ${single_source})
+    get_filename_component(header_abs_path ${tmp_header} ABSOLUTE)
+    if(EXISTS ${header_abs_path})
+      if((header_abs_path MATCHES ".*.h$") OR (header_abs_path MATCHES ".*.hpp$"))
+        list(APPEND header_file_list ${header_abs_path})
+          set_source_files_properties(${header_abs_path} PROPERTIES
+            HEADER_FILE_ONLY 1
+          )
+      endif()
+    endif()
+  endforeach()
+  set(${headers_out} ${header_file_list} PARENT_SCOPE)
+endfunction()
+
+
+# source group one file
+# cut the `single_file` absolute path from `BASE_PATH`, then mark file to `GROUP_TO`
+function(source_group_single_file single_file)
+  set(oneValueArgs GROUP_TO BASE_PATH)
+  cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  # get relative_path
+  get_filename_component(abs_path ${single_file} ABSOLUTE)
+  file(RELATIVE_PATH relative_path_with_name ${opt_BASE_PATH} ${abs_path})
+  get_filename_component(relative_path ${relative_path_with_name} PATH)
+  # set source_group, consider sub source group 
+  string(REPLACE "/" "\\" ide_file_group "${opt_GROUP_TO}/${relative_path}")
+  source_group("${ide_file_group}" FILES ${single_file})
+endfunction()
+
 
 # build a cocos application
 # hrough compile the files `APP_SRC`, link the libs in `*LIBS`, use the packages in `*.PKGS`
@@ -201,6 +233,9 @@ macro(cocos_build_app app_name)
   )
   cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
    
+  get_headers_by_sources(app_headers CC_SOURCES ${opt_APP_SRC})
+  list(APPEND opt_APP_SRC ${app_headers})
+
   if(ANDROID)
     add_library(${app_name} SHARED ${opt_APP_SRC})
     foreach(android_lib ${opt_DEPEND_ANDROID_LIBS})

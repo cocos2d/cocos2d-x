@@ -153,6 +153,9 @@ endif()
 
 set(lua_bindings_files ${lua_cocos2d_source_files} ${lua_bindings_manual_files} ${lua_bindings_auto_files})
 
+get_headers_by_sources(cc_headers CC_SOURCES ${lua_bindings_files})
+list(APPEND lua_bindings_files ${cc_headers})
+
 add_library(luacocos2d ${lua_bindings_files})
 target_link_libraries(luacocos2d cocos2d)
 add_dependencies(luacocos2d cocos2d)

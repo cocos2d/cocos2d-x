@@ -97,6 +97,9 @@ set(COCOS_SRC cocos2d.cpp
   include_directories(../external/xxtea)
   include_directories(../external/clipper)
 
+get_headers_by_sources(cc_headers CC_SOURCES ${COCOS_SRC})
+list(APPEND COCOS_SRC ${cc_headers})
+
 add_library(cocos2d ${COCOS_SRC})
 
 # use necessary external libs and system libs

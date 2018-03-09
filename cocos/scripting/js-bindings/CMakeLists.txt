@@ -103,6 +103,9 @@ include_directories(
   ${cocos_root}/external/spidermonkey/include/${PLATFORM_FOLDER}
 )
 
+get_headers_by_sources(cc_headers CC_SOURCES ${JSBINDING_SRC})
+list(APPEND JSBINDING_SRC ${cc_headers})
+
 add_library(jscocos2d STATIC
   ${JSBINDING_SRC}
 )
