@@ -202,7 +202,6 @@ function(get_headers_by_sources headers_out)
   set(${headers_out} ${header_file_list} PARENT_SCOPE)
 endfunction()
 
-
 # source group one file
 # cut the `single_file` absolute path from `BASE_PATH`, then mark file to `GROUP_TO`
 function(source_group_single_file single_file)
@@ -217,11 +216,10 @@ function(source_group_single_file single_file)
   source_group("${ide_file_group}" FILES ${single_file})
 endfunction()
 
-
 # build a cocos application
 # hrough compile the files `APP_SRC`, link the libs in `*LIBS`, use the packages in `*.PKGS`
 # this method hide the link lib details, those is prebuilt libs or not
-macro(cocos_build_app app_name)
+function(cocos_build_app app_name)
   set(multiValueArgs 
     APP_SRC
     DEPEND_COMMON_LIBS 
@@ -309,7 +307,7 @@ macro(cocos_build_app app_name)
   if(GEN_COCOS_PREBUILT)
     add_dependencies(${APP_NAME} prebuilt)
   endif()
-endmacro()
+endfunction()
 
 # if cc_variable not set, then set it cc_value
 macro(cocos_fake_set cc_variable cc_value)
@@ -360,11 +358,10 @@ macro(cocos_pak_xcode cocos_target)
   message("cocos package: ${cocos_target}, plist file: ${COCOS_APP_INFO_PLIST}")
 endmacro()
 
-
 # This little macro lets you set any XCode specific property, from ios.toolchain.cmake
-macro (set_xcode_property TARGET XCODE_PROPERTY XCODE_VALUE)
+function(set_xcode_property TARGET XCODE_PROPERTY XCODE_VALUE)
 	set_property (TARGET ${TARGET} PROPERTY XCODE_ATTRIBUTE_${XCODE_PROPERTY} ${XCODE_VALUE})
-endmacro (set_xcode_property)
+endfunction(set_xcode_property)
 
 # works same as find_package, but do additional care to properly find
 macro(cocos_find_package pkg_name pkg_prefix)
