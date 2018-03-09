@@ -241,7 +241,7 @@ if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
     cd linux-build
     cmake ..
     echo "cpu cores: ${CPU_CORES}"
-    make -j${CPU_CORES}
+    make -j${CPU_CORES} VERBOSE=1
     exit 0
 fi
 
