@@ -16,7 +16,7 @@ function build_linux()
     cd linux-build
     cmake ../..
     echo "cpu cores: ${CPU_CORES}"
-    make -j${CPU_CORES}
+    make -j${CPU_CORES} VERBOSE=1
 }
 
 function build_mac()
