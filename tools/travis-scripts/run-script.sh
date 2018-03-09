@@ -50,12 +50,12 @@ function build_android()
 
     # build cpp-tests
     pushd $COCOS2DX_ROOT/tests/cpp-tests/proj.android
-    ./gradlew build
+    ./gradlew assembleDebug
     popd
 
     # build lua-tests
     pushd $COCOS2DX_ROOT/tests/lua-tests/project/proj.android
-    ./gradlew build
+    ./gradlew assembleDebug
     popd
 
     # build js-tests
