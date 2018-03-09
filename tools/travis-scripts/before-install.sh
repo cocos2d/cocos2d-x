@@ -9,7 +9,11 @@ HOST_NAME=""
 
 function install_android_ndk()
 {
-    python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py
+    if [ "$BUILD_TARGET" == "android" ]; then
+        python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py
+    else
+        python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py --ndk_only
+    fi
 }
 
 function install_linux_environment()
@@ -128,7 +132,6 @@ function install_environement_for_after_merge()
 }
 
 if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
-    download_deps
     python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py
     exit 0
 fi
@@ -136,7 +139,6 @@ fi
 if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
     download_deps
     install_linux_environment
-    echo -e "y" | bash $COCOS2DX_ROOT/build/install-deps-linux.sh
     exit 0
 fi
 
