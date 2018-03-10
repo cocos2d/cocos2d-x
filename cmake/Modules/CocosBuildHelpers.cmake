@@ -109,7 +109,7 @@ function(cocos_copy_target_dll cocos_target)
   foreach(single_target_dll ${all_depend_dlls} )
       add_custom_command(TARGET ${cocos_target} PRE_BUILD
       COMMAND ${CMAKE_COMMAND} -E copy_if_different
-      ${all_depend_dlls}
+      ${single_target_dll}
       ${opt_COPY_TO}
     )
   endforeach(single_target_dll)
