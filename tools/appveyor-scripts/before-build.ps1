@@ -7,24 +7,6 @@ function Download-Deps
     & $python $env:APPVEYOR_BUILD_FOLDER\download-deps.py --remove-download=False
 }
 
-function Download-NDK
-{
-    $url = "https://dl.google.com/android/repository/android-ndk-r16-windows-x86.zip"
-    $output = "$env:APPVEYOR_BUILD_FOLDER/../android-ndk-r16-windows-x86.zip"
-    Write-Host "downloading $url"
-    Start-FileDownload $url $output
-    Write-Host "finish downloading $url"
-
-    Write-Host "installing NDK"
-    Push-Location $env:APPVEYOR_BUILD_FOLDER/../
-    $zipfile = $output
-    Invoke-Expression "7z.exe x $zipfile"
-    Write-Host "finish installing NDK"
-    Pop-Location
-    $env:NDK_ROOT = "$env:APPVEYOR_BUILD_FOLDER/../android-ndk-r16"
-    Write-Host "set environment NDK_ROOT to $env:NDK_ROOT"
-}
-
 function Generate-Binding-Codes
 {
 
@@ -58,7 +40,7 @@ $python = "C:\\Python27\\python.exe"
 
 If ($env:build_type -eq "windows32") {
     Download-Deps
-    Download-NDK
+    & $python -u .\tools\appveyor-scripts\setup_android.py --ndk_only
     Generate-Binding-Codes
 } elseif ($env:build_type -like "android*") {
     & $python -u .\tools\appveyor-scripts\setup_android.py
