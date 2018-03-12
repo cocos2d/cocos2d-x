@@ -80,6 +80,10 @@ elseif(WINDOWS)
     set(platform_specific_src ${cc_common_res} ${windows_src})
 elseif(APPLE)
     if(IOS)
+        set(ios_header_files
+            proj.ios_mac/ios/AppController.h
+            proj.ios_mac/ios/RootViewController.h
+        )
         set(ios_code_files
             proj.ios_mac/ios/main.m
             proj.ios_mac/ios/AppController.mm
@@ -90,7 +94,7 @@ elseif(APPLE)
             ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/LaunchScreenBackground.png
         )
         cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
-        set(apple_src_files ${ios_code_files} ${ios_res_files})
+        set(apple_src_files ${ios_code_files} ${ios_res_files} ${ios_header_files})
     elseif(MACOSX)
         set(mac_code_files proj.ios_mac/mac/main.cpp)
         set(mac_res_files

@@ -38,6 +38,12 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     endif()
 endif()
 
+set(GAME_HEADER
+    Classes/AppMacros.h
+    Classes/HelloWorldScene.h
+    Classes/AppDelegate.h
+)
+
 set(common_code_files
     Classes/AppDelegate.cpp
     Classes/HelloWorldScene.cpp
@@ -55,10 +61,17 @@ if(ANDROID)
 elseif(LINUX)
     set(platform_specific_src proj.linux/main.cpp)
 elseif(WINDOWS)
+    list(APPEND GAME_HEADER
+        proj.win32/main.h
+    )
     set(windows_src proj.win32/main.cpp)
     set(platform_specific_src ${cc_common_res} ${windows_src})
 elseif(APPLE)
     if(IOS)
+        list(APPEND GAME_HEADER
+            proj.ios/AppController.h
+            proj.ios/RootViewController.h
+        )
         set(ios_code_files
             proj.ios/main.m
             proj.ios/AppController.mm
@@ -83,9 +96,8 @@ else()
     message(FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
-include_directories(Classes)
-
 set(all_code_files
+    ${GAME_HEADER}
     ${platform_specific_src}
     ${common_code_files}
 )

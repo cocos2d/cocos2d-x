@@ -16,6 +16,11 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     endif()
 endif()
 
+set(GAME_HEADER
+    Classes/AppDelegate.h
+    Classes/lua_test_bindings.h
+    Classes/lua_assetsmanager_test_sample.h
+)
 set(SAMPLE_SRC
     Classes/AppDelegate.cpp
     Classes/lua_assetsmanager_test_sample.cpp
@@ -45,9 +50,18 @@ elseif(LINUX)
     set(SAMPLE_SRC ${SAMPLE_SRC} proj.linux/main.cpp)
 elseif(WINDOWS)
     add_definitions(-D_USRLUASTATIC)
+    list(APPEND GAME_HEADER
+        proj.win32/main.h
+        proj.win32/resource.h
+    )
     list(APPEND SAMPLE_SRC proj.win32/main.cpp ${cc_common_res})
 elseif(APPLE)
     if(IOS)
+        list(APPEND GAME_HEADER
+            proj.ios_mac/ios/AppController.h
+            proj.ios_mac/ios/LuaObjectCBridgeTest.h
+            proj.ios_mac/ios/RootViewController.h
+        )
         set(ios_code_files
             proj.ios_mac/ios/main.m
             proj.ios_mac/ios/LuaObjectCBridgeTest.mm
@@ -61,7 +75,13 @@ elseif(APPLE)
         cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
         set(apple_src_files ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(mac_code_files proj.ios_mac/mac/main.cpp)
+        list(APPEND GAME_HEADER
+            proj.ios_mac/mac/LuaObjectCBridgeTest.h
+        )
+        set(mac_code_files 
+            proj.ios_mac/mac/main.cpp
+            proj.ios_mac/mac/LuaObjectCBridgeTest.mm
+        )
         set(mac_res_files
             ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Icon.icns
         )
@@ -72,7 +92,6 @@ elseif(APPLE)
 endif()
 
 include_directories(
-    Classes
     ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
     ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/auto
     ${COCOS2DX_ROOT_PATH}/external/lua/tolua
@@ -80,9 +99,10 @@ include_directories(
 
 include_directories(${LUAJIT_INCLUDE_DIRS})
 
+set(APP_SRC ${GAME_HEADER} ${SAMPLE_SRC})
 # mark app complie info and libs info
 cocos_build_app(${APP_NAME} 
-    APP_SRC "${SAMPLE_SRC}"
+    APP_SRC "${APP_SRC}"
     DEPEND_COMMON_LIBS "luacocos2d" "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"
 )

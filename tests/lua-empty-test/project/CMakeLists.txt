@@ -32,6 +32,10 @@ if(APPLE OR VS)
     set(cc_common_res ${res_res} ${res_src} ${res_script})
 endif()
 
+set(GAME_HEADER 
+    Classes/AppDelegate.h
+    Classes/lua_module_register.h
+)
 set(SAMPLE_SRC Classes/AppDelegate.cpp)
 
 if(ANDROID)
@@ -40,9 +44,14 @@ elseif(LINUX)
     set(SAMPLE_SRC ${SAMPLE_SRC} proj.linux/main.cpp)
 elseif(WINDOWS)
     add_definitions(-D_USRLUASTATIC)
+    list(APPEND GAME_HEADER proj.win32/main.h)
     list(APPEND SAMPLE_SRC proj.win32/main.cpp ${cc_common_res})
 elseif(APPLE)
     if(IOS)
+        list(APPEND GAME_HEADER
+            proj.ios/AppController.h
+            proj.ios/RootViewController.h
+        )
         set(ios_code_files
             proj.ios/main.m
             proj.ios/AppController.mm
@@ -66,18 +75,18 @@ elseif(APPLE)
 endif()
 
 include_directories(
-    Classes
     ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/auto
     ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
     ${COCOS2DX_ROOT_PATH}/external/lua/luajit/include
     ${COCOS2DX_ROOT_PATH}/external/lua/tolua
-    )
+)
 
 include_directories(${LUAJIT_INCLUDE_DIRS})
 
+set(APP_SRC ${GAME_HEADER} ${SAMPLE_SRC})
 # mark app complie info and libs info
 cocos_build_app(${APP_NAME} 
-    APP_SRC "${SAMPLE_SRC}"
+    APP_SRC "${APP_SRC}"
     DEPEND_COMMON_LIBS "luacocos2d" "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"
 )

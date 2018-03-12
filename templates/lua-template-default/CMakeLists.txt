@@ -68,6 +68,7 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/external/lua/tolua
     ${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator/lib
 )
+set(GAME_HEADER ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.h)
 set(GAME_SRC ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp)
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
@@ -77,6 +78,13 @@ elseif(LINUX)
     list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
 elseif(WINDOWS)
     add_definitions(-D_USRLUASTATIC -D_USRLIBSIMSTATIC)
+    list(APPEND GAME_HEADER
+        ${RUNTIME_SRC_ROOT}/proj.win32/main.h
+        ${RUNTIME_SRC_ROOT}/proj.win32/stdafx.h
+        ${RUNTIME_SRC_ROOT}/proj.win32/SimulatorWin.h
+        ${RUNTIME_SRC_ROOT}/proj.win32/targetver.h
+        ${RUNTIME_SRC_ROOT}/proj.win32/resource.h
+    )
     list(APPEND GAME_SRC
         ${RUNTIME_SRC_ROOT}/proj.win32/game.rc
         ${RUNTIME_SRC_ROOT}/proj.win32/stdafx.cpp
@@ -86,6 +94,10 @@ elseif(WINDOWS)
     )
 elseif(APPLE)
     if(IOS)
+        list(APPEND GAME_HEADER
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/AppController.h
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/RootViewController.h
+        )
         set(ios_code_files
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/main.m
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/AppController.mm
@@ -99,6 +111,10 @@ elseif(APPLE)
         set(APPLE_SRC ${ios_code_files} ${ios_res_files})
         set(APPLE_RES_UI ${ios_res_files})
     elseif(MACOSX)
+        list(APPEND GAME_HEADER
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/SimulatorApp.h
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/ConsoleWindowController.h
+        )
         set(MAC_SRC
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.m
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/SimulatorApp.mm
@@ -124,9 +140,11 @@ else()
     message(FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
+set(APP_SRC ${GAME_HEADER} ${GAME_SRC})
+
 # mark app complie info and libs info
 cocos_build_app(${APP_NAME} 
-    APP_SRC "${GAME_SRC}"
+    APP_SRC "${APP_SRC}"
     DEPEND_COMMON_LIBS "luacocos2d" "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"
     DEPEND_MACOSX_LIBS "simulator"

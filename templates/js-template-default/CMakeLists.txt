@@ -74,6 +74,7 @@ include_directories(
 )
 
 set(GAME_SRC ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp)
+set(GAME_HEADER ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.h)
 
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
@@ -84,13 +85,17 @@ elseif(LINUX)
 elseif(WINDOWS)
     set(WINDOWS_SRC ${RUNTIME_SRC_ROOT}/proj.win32/main.cpp)
     list(APPEND WINDOWS_SRC ${RUNTIME_SRC_ROOT}/proj.win32/game.rc)
-    set(PLATFORM_SPECIFIC_HEADERS
+    list(APPEND GAME_HEADER
         ${RUNTIME_SRC_ROOT}/proj.win32/main.h
         ${RUNTIME_SRC_ROOT}/proj.win32/resource.h
     )
-    list(APPEND GAME_SRC ${WINDOWS_SRC} ${PLATFORM_SPECIFIC_HEADERS} ${cc_common_res})
+    list(APPEND GAME_SRC ${WINDOWS_SRC} ${cc_common_res})
 elseif(APPLE)
     if(IOS)
+        list(APPEND GAME_HEADER
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/AppController.h
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/RootViewController.h
+        )
         set(ios_code_files
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/main.m
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/AppController.mm
@@ -115,9 +120,11 @@ else()
     message(FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
+set(APP_SRC ${GAME_HEADER} ${GAME_SRC})
+
 # mark app complie info and libs info
 cocos_build_app(${APP_NAME} 
-    APP_SRC "${GAME_SRC}"
+    APP_SRC "${APP_SRC}"
     DEPEND_COMMON_LIBS "jscocos2d" "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"
 )

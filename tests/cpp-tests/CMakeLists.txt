@@ -5,7 +5,7 @@ set(APP_NAME cpp_tests)
 project(${APP_NAME})
 
 if(NOT DEFINED BUILD_ENGINE_DONE)
-    set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
+    set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/.    ..)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
     
     include(CocosBuildSet)
@@ -22,11 +22,20 @@ if(APPLE OR VS)
     cocos_mark_multi_resources(cc_common_res RES_TO "Resources" FOLDERS ${res_res_folders})
 endif()
 
+set(GAME_HEADER)
+
 if(WINDOWS)
+    list(APPEND GAME_HEADER
+        proj.win32/main.h
+    )
     set(windows_src proj.win32/main.cpp)
     set(platform_specific_src ${cc_common_res} ${windows_src})
 elseif(APPLE)
     if(IOS)
+        list(APPEND GAME_HEADER
+            proj.ios/Classes/testsAppDelegate.h
+            proj.ios/Classes/RootViewController.h
+        )
         set(ios_code_files
             proj.ios/main.m
             proj.ios/Classes/testsAppDelegate.mm
@@ -50,14 +59,150 @@ elseif(APPLE)
 elseif(LINUX)
     set(platform_specific_src proj.linux/main.cpp)
 elseif(ANDROID)
+    list(APPEND GAME_HEADER
+        Classes/JNITest/JNITest.h
+    )
     set(platform_specific_src
-          Classes/JNITest/JNITest.cpp
-          proj.android/app/jni/main.cpp)
+        Classes/JNITest/JNITest.cpp
+        proj.android/app/jni/main.cpp
+    )
 elseif(IOS)
     set(platform_specific_src proj.ios/main.m)
 else()
     message( FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
+
+list(APPEND GAME_HEADER
+    Classes/ActionsEaseTest/ActionsEaseTest.h
+    Classes/ParallaxTest/ParallaxTest.h
+    Classes/testBasic.h
+    Classes/ZwoptexTest/ZwoptexTest.h
+    Classes/precheader.h
+    Classes/CurlTest/CurlTest.h
+    Classes/UnitTest/UnitTest.h
+    Classes/UnitTest/RefPtrTest.h
+    Classes/ConfigurationTest/ConfigurationTest.h
+    Classes/PhysicsTest/PhysicsTest.h
+    Classes/CurrentLanguageTest/CurrentLanguageTest.h
+    Classes/AppDelegate.h
+    Classes/LabelTest/LabelTestNew.h
+    Classes/LabelTest/LabelTest.h
+    Classes/Particle3DTest/Particle3DTest.h
+    Classes/AllocatorTest/AllocatorTest.h
+    Classes/VibrateTest/VibrateTest.h
+    Classes/ClippingNodeTest/ClippingNodeTest.h
+    Classes/UserDefaultTest/UserDefaultTest.h
+    Classes/tests.h
+    Classes/DataVisitorTest/DataVisitorTest.h
+    Classes/NewAudioEngineTest/NewAudioEngineTest.h
+    Classes/BugsTest/Bug-422.h
+    Classes/BugsTest/Bug-CCDrawNode.h
+    Classes/BugsTest/BugsTest.h
+    Classes/BugsTest/Bug-12847.h
+    Classes/BugsTest/Bug-899.h
+    Classes/BugsTest/Bug-1159.h
+    Classes/BugsTest/Bug-350.h
+    Classes/BugsTest/Bug-15594.h
+    Classes/BugsTest/Bug-914.h
+    Classes/BugsTest/Bug-624.h
+    Classes/BugsTest/Bug-458/QuestionContainerSprite.h
+    Classes/BugsTest/Bug-458/Bug-458.h
+    Classes/BugsTest/Bug-886.h
+    Classes/BugsTest/Bug-Child.h
+    Classes/BugsTest/Bug-15776.h
+    Classes/BugsTest/Bug-1174.h
+    Classes/ActionsTest/ActionsTest.h
+    Classes/TouchesTest/TouchesTest.h
+    Classes/TouchesTest/Ball.h
+    Classes/TouchesTest/Paddle.h
+    Classes/ActionManagerTest/ActionManagerTest.h
+    Classes/ClickAndMoveTest/ClickAndMoveTest.h
+    Classes/MaterialSystemTest/MaterialSystemTest.h
+    Classes/IntervalTest/IntervalTest.h
+    Classes/TileMapTest/TileMapTest2.h
+    Classes/TileMapTest/TileMapTest.h
+    Classes/NewEventDispatcherTest/NewEventDispatcherTest.h
+    Classes/ActionsProgressTest/ActionsProgressTest.h
+    Classes/RotateWorldTest/RotateWorldTest.h
+    Classes/Camera3DTest/Camera3DTest.h
+    Classes/TextInputTest/TextInputTest.h
+    Classes/Texture2dTest/Texture2dTest.h
+    Classes/TerrainTest/TerrainTest.h
+    Classes/controller.h
+    Classes/TransitionsTest/TransitionsTest.h
+    Classes/TextureCacheTest/TextureCacheTest.h
+    Classes/MotionStreakTest/MotionStreakTest.h
+    Classes/ExtensionsTest/AssetsManagerExTest/AssetsManagerExTest.h
+    Classes/ExtensionsTest/ExtensionsTest.h
+    Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.h
+    Classes/ExtensionsTest/TableViewTest/TableViewTestScene.h
+    Classes/ExtensionsTest/NetworkTest/WebSocketTest.h
+    Classes/ExtensionsTest/NetworkTest/SocketIOTest.h
+    Classes/ExtensionsTest/NetworkTest/HttpClientTest.h
+    Classes/Sprite3DTest/Sprite3DTest.h
+    Classes/Sprite3DTest/DrawNode3D.h
+    Classes/BaseTest.h
+    Classes/SceneTest/SceneTest.h
+    Classes/ReleasePoolTest/ReleasePoolTest.h
+    Classes/CocosDenshionTest/CocosDenshionTest.h
+    Classes/InputTest/MouseTest.h
+    Classes/SpineTest/SpineTest.h
+    Classes/Scene3DTest/Scene3DTest.h
+    Classes/ParticleTest/ParticleTest.h
+    Classes/EffectsTest/EffectsTest.h
+    Classes/UITest/UITest.h
+    Classes/UITest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest.h
+    Classes/UITest/CocoStudioGUITest/CocosGUIScene.h
+    Classes/UITest/CocoStudioGUITest/UITabControlTest/UITabControlTest.h
+    Classes/UITest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.h
+    Classes/UITest/CocoStudioGUITest/UITextBMFontTest/UITextBMFontTest.h
+    Classes/UITest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.h
+    Classes/UITest/CocoStudioGUITest/UISliderTest/UISliderTest.h
+    Classes/UITest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.h
+    Classes/UITest/CocoStudioGUITest/UIEditBoxTest.h
+    Classes/UITest/CocoStudioGUITest/UIRichTextTest/UIRichTextTest.h
+    Classes/UITest/CocoStudioGUITest/UIScene.h
+    Classes/UITest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.h
+    Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest.h
+    Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.h
+    Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.h
+    Classes/UITest/CocoStudioGUITest/UIListViewTest/UIListViewTest.h
+    Classes/UITest/CocoStudioGUITest/UISceneManager.h
+    Classes/UITest/CocoStudioGUITest/UIRadioButtonTest/UIRadioButtonTest.h
+    Classes/UITest/CocoStudioGUITest/UILayoutTest/UILayoutTest.h
+    Classes/UITest/CocoStudioGUITest/UITextAtlasTest/UITextAtlasTest.h
+    Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.h
+    Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.h
+    Classes/UITest/CocoStudioGUITest/UITextTest/UITextTest.h
+    Classes/DrawPrimitivesTest/DrawPrimitivesTest.h
+    Classes/BillBoardTest/BillBoardTest.h
+    Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.h
+    Classes/EffectsAdvancedTest/EffectsAdvancedTest.h
+    Classes/NavMeshTest/NavMeshTest.h
+    Classes/SchedulerTest/SchedulerTest.h
+    Classes/MultiTouchTest/MultiTouchTest.h
+    Classes/testResource.h
+    Classes/ShaderTest/ShaderTest.vsh.h
+    Classes/ShaderTest/shaderTest.psh.h
+    Classes/ShaderTest/ShaderTest.h
+    Classes/ShaderTest/ShaderTest2.h
+    Classes/NewRendererTest/NewRendererTest.h
+    Classes/SpritePolygonTest/SpritePolygonTest.h
+    Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.h
+    Classes/ChipmunkTest/ChipmunkTest.h
+    Classes/NodeTest/NodeTest.h
+    Classes/FileUtilsTest/FileUtilsTest.h
+    Classes/RenderTextureTest/RenderTextureTest.h
+    Classes/LayerTest/LayerTest.h
+    Classes/SpriteTest/SpriteTest.h
+    Classes/FontTest/FontTest.h
+    Classes/LightTest/LightTest.h
+    Classes/VisibleRect.h
+    Classes/DownloaderTest/DownloaderTest.h
+    Classes/OpenURLTest/OpenURLTest.h
+    Classes/ConsoleTest/ConsoleTest.h
+    Classes/MenuTest/MenuTest.h
+)
 
 set(TESTS_SRC
     Classes/ActionManagerTest/ActionManagerTest.cpp
@@ -101,6 +246,8 @@ set(TESTS_SRC
     Classes/ExtensionsTest/AssetsManagerExTest/AssetsManagerExTest.cpp
     Classes/ExtensionsTest/ExtensionsTest.cpp
     Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
+    Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
+    Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
     Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp
     Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp
     Classes/FileUtilsTest/FileUtilsTest.cpp
@@ -186,19 +333,25 @@ set(TESTS_SRC
     )
 
 if(ANDROID OR IOS)
+    list(APPEND GAME_HEADER
+        Classes/UITest/CocoStudioGUITest/UIVideoPlayerTest/UIVideoPlayerTest.h
+        Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.h
+    )
     list(APPEND TESTS_SRC
         Classes/UITest/CocoStudioGUITest/UIVideoPlayerTest/UIVideoPlayerTest.cpp
         Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.cpp
-        )
+    )
 endif()
 
 if(WIN32 OR MACOSX OR LINUX)
+    list(APPEND GAME_HEADER
+        Classes/WindowTest/WindowTest.h
+        Classes/BugsTest/Bug-14327.h
+    )
     list(APPEND TESTS_SRC
         Classes/WindowTest/WindowTest.cpp
-        )
-    list(APPEND TESTS_SRC
         Classes/BugsTest/Bug-14327.cpp
-        )
+    )
 endif()
 
 if(USE_CHIPMUNK)
@@ -206,6 +359,62 @@ if(USE_CHIPMUNK)
 endif()
 
 if(USE_BOX2D)
+    list(APPEND GAME_HEADER
+        Classes/Box2DTest/Box2dTest.cpp
+        Classes/Box2DTestBed/Test.h
+        Classes/Box2DTestBed/Tests/Chain.h
+        Classes/Box2DTestBed/Tests/Confined.h
+        Classes/Box2DTestBed/Tests/PolyCollision.h
+        Classes/Box2DTestBed/Tests/EdgeTest.h
+        Classes/Box2DTestBed/Tests/ApplyForce.h
+        Classes/Box2DTestBed/Tests/Gears.h
+        Classes/Box2DTestBed/Tests/SliderCrank.h
+        Classes/Box2DTestBed/Tests/ContinuousTest.h
+        Classes/Box2DTestBed/Tests/Revolute.h
+        Classes/Box2DTestBed/Tests/TheoJansen.h
+        Classes/Box2DTestBed/Tests/Bridge.h
+        Classes/Box2DTestBed/Tests/CollisionProcessing.h
+        Classes/Box2DTestBed/Tests/DistanceTest.h
+        Classes/Box2DTestBed/Tests/PolyShapes.h
+        Classes/Box2DTestBed/Tests/TimeOfImpact.h
+        Classes/Box2DTestBed/Tests/ConveyorBelt.h
+        Classes/Box2DTestBed/Tests/Tiles.h
+        Classes/Box2DTestBed/Tests/BulletTest.h
+        Classes/Box2DTestBed/Tests/MotorJoint.h
+        Classes/Box2DTestBed/Tests/Car.h
+        Classes/Box2DTestBed/Tests/Mobile.h
+        Classes/Box2DTestBed/Tests/VaryingFriction.h
+        Classes/Box2DTestBed/Tests/Rope.h
+        Classes/Box2DTestBed/Tests/SensorTest.h
+        Classes/Box2DTestBed/Tests/Pyramid.h
+        Classes/Box2DTestBed/Tests/VaryingRestitution.h
+        Classes/Box2DTestBed/Tests/RopeJoint.h
+        Classes/Box2DTestBed/Tests/VerticalStack.h
+        Classes/Box2DTestBed/Tests/MobileBalanced.h
+        Classes/Box2DTestBed/Tests/CompoundShapes.h
+        Classes/Box2DTestBed/Tests/CollisionFiltering.h
+        Classes/Box2DTestBed/Tests/Pulleys.h
+        Classes/Box2DTestBed/Tests/Breakable.h
+        Classes/Box2DTestBed/Tests/BodyTypes.h
+        Classes/Box2DTestBed/Tests/DumpShell.h
+        Classes/Box2DTestBed/Tests/ShapeEditing.h
+        Classes/Box2DTestBed/Tests/SphereStack.h
+        Classes/Box2DTestBed/Tests/OneSidedPlatform.h
+        Classes/Box2DTestBed/Tests/AddPair.h
+        Classes/Box2DTestBed/Tests/Pinball.h
+        Classes/Box2DTestBed/Tests/Tumbler.h
+        Classes/Box2DTestBed/Tests/RayCast.h
+        Classes/Box2DTestBed/Tests/ConvexHull.h
+        Classes/Box2DTestBed/Tests/EdgeShapes.h
+        Classes/Box2DTestBed/Tests/Prismatic.h
+        Classes/Box2DTestBed/Tests/Dominos.h
+        Classes/Box2DTestBed/Tests/Web.h
+        Classes/Box2DTestBed/Tests/CharacterCollision.h
+        Classes/Box2DTestBed/Tests/DynamicTreeTest.h
+        Classes/Box2DTestBed/Tests/Cantilever.h
+        Classes/Box2DTestBed/Box2dView.h
+        Classes/Box2DTestBed/GLES-Render.h
+    )
     list(APPEND TESTS_SRC
         Classes/Box2DTest/Box2dTest.cpp
         Classes/Box2DTestBed/Box2dView.cpp
@@ -217,33 +426,29 @@ if(USE_BOX2D)
 endif()
 
 if(USE_BULLET)
+    list(APPEND GAME_HEADER
+        Classes/Physics3DTest/Physics3DTest.h
+    )
     list(APPEND TESTS_SRC
-            Classes/Physics3DTest/Physics3DTest.cpp
-        )
+        Classes/Physics3DTest/Physics3DTest.cpp
+    )
     include_directories(${BULLET_INCLUDE_DIRS})
 endif()
 
-set(EXTENDED_TESTS_SRC
-    Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
-    Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
-    Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
-    )
-
 if(NOT LINUX)
-    list(APPEND EXTENDED_TESTS_SRC
+    list(APPEND TESTS_SRC
         Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp
     )
 endif()
 
 include_directories(
-    Classes
     ${COCOS2DX_ROOT_PATH}/cocos/editor-support
 )
 
 # mark app complie info and libs info
-set(cocos_app_src 
+set(cocos_app_src
+    ${GAME_HEADER}
     ${TESTS_SRC}
-    ${EXTENDED_TESTS_SRC}
 )
 cocos_build_app(${APP_NAME}
     APP_SRC "${cocos_app_src}"

@@ -64,7 +64,12 @@ if(APPLE OR VS)
     set(cc_common_res ${res_main} ${res_res} ${res_src} ${res_script})
 endif()
 
+set(GAME_HEADER)
 if(WINDOWS)
+    list(APPEND GAME_HEADER
+        proj.win32/main.h
+        proj.win32/resource.h
+    )
     set(WINDOWS_SRC proj.win32/main.cpp)
     set(PLATFORM_SRC ${cc_common_res} ${WINDOWS_SRC})
 elseif(ANDROID)
@@ -73,6 +78,11 @@ elseif(LINUX)
     set(PLATFORM_SRC proj.linux/main.cpp)
 elseif(APPLE)
     if(IOS)
+        list(APPEND GAME_HEADER
+            proj.ios/AppController.h
+            proj.ios/NativeOcClass.h
+            proj.ios/RootViewController.h
+        )
         set(ios_code_files
             proj.ios/main.m
             proj.ios/NativeOcClass.m
@@ -96,15 +106,19 @@ elseif(APPLE)
     set(PLATFORM_SRC ${cc_common_res} ${apple_src_files})
 endif()
 
+list(APPEND GAME_HEADER
+    Classes/AppDelegate.h
+    Classes/js_Effect3D_bindings.h
+    Classes/js_DrawNode3D_bindings.h
+)
 set(SAMPLE_SRC
     Classes/AppDelegate.cpp
     Classes/js_DrawNode3D_bindings.cpp
     Classes/js_Effect3D_bindings.cpp
     ${PLATFORM_SRC}
-    )
+)
 
 include_directories(
-    Classes
     ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/auto
     ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/manual
     ${COCOS2DX_ROOT_PATH}/cocos/base
@@ -112,11 +126,13 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/cocos/audio/include
     ${COCOS2DX_ROOT_PATH}/external/spidermonkey/include/${PLATFORM_FOLDER}
     ${COCOS2DX_ROOT_PATH}/external/chipmunk/include/chipmunk
-    )
+)
+
+set(APP_SRC ${GAME_HEADER} ${SAMPLE_SRC})
 
 # mark app complie info and libs info
 cocos_build_app(${APP_NAME}
-    APP_SRC "${SAMPLE_SRC}"
+    APP_SRC "${APP_SRC}"
     DEPEND_COMMON_LIBS "jscocos2d" "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"
 )
