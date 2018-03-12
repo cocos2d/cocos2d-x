@@ -73,6 +73,26 @@ if(BUILD_EXTENSIONS)
 include(../extensions/CMakeLists.txt)
 endif(BUILD_EXTENSIONS)
 
+set(COCOS_HEADER cocos2d.h
+    ${COCOS_2D_HEADER}
+    ${COCOS_3D_HEADER}
+    ${COCOS_PLATFORM_HEADER}
+    ${COCOS_PHYSICS_HEADER}
+    ${COCOS_PHYSICS3D_HEADER}
+    ${COCOS_MATH_HEADER}
+    ${COCOS_NAVMESH_HEADER}
+    ${COCOS_RENDERER_HEADER}
+    ${COCOS_VR_HEADER}
+    ${COCOS_BASE_HEADER}
+    ${COCOS_AUDIO_HEADER}
+    ${COCOS_UI_HEADER}
+    ${COCOS_DEPRECATED_HEADER}
+    ${COCOS_NETWORK_HEADER}
+    ${COCOS_EDITOR_SUPPORT_HEADER}
+    ${COCOS_EXTENSIONS_HEADER}
+    ${COCOS_STORAGE_HEADER}
+)
+
 set(COCOS_SRC cocos2d.cpp
     ${COCOS_2D_SRC}
     ${COCOS_3D_SRC}
@@ -91,14 +111,13 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_EDITOR_SUPPORT_SRC}
     ${COCOS_EXTENSIONS_SRC}
     ${COCOS_STORAGE_SRC}
-    )
+)
 
-  #todo: provide prebuild versions of the xx libs for all platforms
-  include_directories(../external/xxtea)
-  include_directories(../external/clipper)
+#todo: provide prebuild versions of the xx libs for all platforms
+include_directories(../external/xxtea)
+include_directories(../external/clipper)
 
-get_headers_by_sources(cc_headers CC_SOURCES ${COCOS_SRC})
-list(APPEND COCOS_SRC ${cc_headers})
+list(APPEND COCOS_SRC ${COCOS_HEADER})
 
 add_library(cocos2d ${COCOS_SRC})
 

@@ -16,6 +16,81 @@ elseif(LINUX)
   )
 endif()
 
+set(COCOS_BASE_HEADER
+  base/pvr.h
+  base/CCValue.h
+  base/CCEventListenerMouse.h
+  base/atitc.h
+  base/utlist.h
+  base/CCEventTouch.h
+  base/CCData.h
+  base/ccMacros.h
+  base/CCEventAcceleration.h
+  base/CCEventListenerKeyboard.h
+  base/CCController.h
+  base/CCTouch.h
+  base/base64.h
+  base/CCEventListenerController.h
+  base/s3tc.h
+  base/etc1.h
+  base/CCGameController.h
+  base/CCConsole.h
+  base/CCEvent.h
+  base/ccTypes.h
+  base/CCAsyncTaskPool.h
+  base/ccRandom.h
+  base/CCRef.h
+  base/CCProfiling.h
+  base/ObjectFactory.h
+  base/CCProperties.h
+  base/CCVector.h
+  base/CCEventCustom.h
+  base/CCEventKeyboard.h
+  base/CCNinePatchImageParser.h
+  base/CCEventListenerCustom.h
+  base/CCEventDispatcher.h
+  base/uthash.h
+  base/ccUtils.h
+  base/CCEventController.h
+  base/CCRefPtr.h
+  base/CCDirector.h
+  base/CCEventListenerFocus.h
+  base/CCUserDefault.h
+  base/ccConfig.h
+  base/ccFPSImages.h
+  base/ZipUtils.h
+  base/CCMap.h
+  base/ccUTF8.h
+  base/CCScriptSupport.h
+  base/allocator/CCAllocatorBase.h
+  base/allocator/CCAllocatorDiagnostics.h
+  base/allocator/CCAllocatorMacros.h
+  base/allocator/CCAllocatorMutex.h
+  base/allocator/CCAllocatorStrategyGlobalSmallBlock.h
+  base/allocator/CCAllocatorStrategyDefault.h
+  base/allocator/CCAllocatorStrategyPool.h
+  base/allocator/CCAllocatorGlobal.h
+  base/allocator/CCAllocatorStrategyFixedBlock.h
+  base/CCEventFocus.h
+  base/CCConfiguration.h
+  base/CCProtocols.h
+  base/TGAlib.h
+  base/CCDataVisitor.h
+  base/CCEventMouse.h
+  base/CCIMEDelegate.h
+  base/CCNS.h
+  base/CCAutoreleasePool.h
+  base/CCStencilStateManager.h
+  base/CCEventListenerTouch.h
+  base/CCEventListenerAcceleration.h
+  base/firePngData.h
+  base/ccCArray.h
+  base/CCEventListener.h
+  base/CCScheduler.h
+  base/CCEventType.h
+  base/CCIMEDispatcher.h
+)
+
 set(COCOS_BASE_SRC
   base/CCAsyncTaskPool.cpp
   base/CCAutoreleasePool.cpp
