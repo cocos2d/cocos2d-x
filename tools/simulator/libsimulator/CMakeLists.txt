@@ -114,9 +114,6 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/cocos/editor-support
 )
 
-get_headers_by_sources(cc_headers CC_SOURCES ${SIMULATOR_SRC})
-list(APPEND SIMULATOR_SRC ${cc_headers})
-
 add_library(simulator STATIC
   ${SIMULATOR_SRC}
 )
