@@ -49,8 +49,8 @@ if(APPLE OR VS)
 endif()
 
 include_directories(
-    ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
     Classes
+    ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
 )
 # add cross-platforms source files and header files 
 set(common_code_files

@@ -102,6 +102,8 @@ set(all_code_files
     ${common_code_files}
 )
 
+include_directories(Classes)
+
 # mark app complie info and libs info
 cocos_build_app(${APP_NAME} 
     APP_SRC "${all_code_files}"

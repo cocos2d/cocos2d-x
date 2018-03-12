@@ -5,7 +5,7 @@ set(APP_NAME cpp_tests)
 project(${APP_NAME})
 
 if(NOT DEFINED BUILD_ENGINE_DONE)
-    set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/.    ..)
+    set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../..)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
     
     include(CocosBuildSet)
@@ -442,6 +442,7 @@ if(NOT LINUX)
 endif()
 
 include_directories(
+    Classes
     ${COCOS2DX_ROOT_PATH}/cocos/editor-support
 )
 

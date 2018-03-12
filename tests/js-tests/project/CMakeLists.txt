@@ -119,6 +119,7 @@ set(SAMPLE_SRC
 )
 
 include_directories(
+    Classes
     ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/auto
     ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/manual
     ${COCOS2DX_ROOT_PATH}/cocos/base

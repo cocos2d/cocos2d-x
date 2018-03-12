@@ -92,6 +92,7 @@ elseif(APPLE)
 endif()
 
 include_directories(
+    Classes
     ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
     ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/auto
     ${COCOS2DX_ROOT_PATH}/external/lua/tolua
