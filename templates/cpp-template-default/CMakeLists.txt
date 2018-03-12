@@ -40,12 +40,15 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     endif()
 endif()
 
-# mark app resources
-set(res_res_folders 
+# record sources, headers, resources...
+set(GAME_SOURCE)
+set(GAME_HEADER)
+
+list(APPEND GAME_RES_FOLDER 
     "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
 )
 if(APPLE OR VS)
-    cocos_mark_multi_resources(cc_common_res RES_TO "Resources" FOLDERS ${res_res_folders})
+    cocos_mark_multi_resources(common_res_files RES_TO "Resources" FOLDERS ${GAME_RES_FOLDER})
 endif()
 
 include_directories(
@@ -53,71 +56,74 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
 )
 # add cross-platforms source files and header files 
-set(common_code_files
+list(APPEND GAME_SOURCE
     Classes/AppDelegate.cpp
     Classes/HelloWorldScene.cpp
 )
-set(common_header_files
+list(APPEND GAME_HEADER
     Classes/AppDelegate.h
     Classes/HelloWorldScene.h
 )
-# add platform specific source files, save to platform_specific_src
+
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
     set(APP_NAME MyGame)
-    set(platform_specific_src proj.android/app/jni/hellocpp/main.cpp)
-elseif(LINUX)
-    set(platform_specific_src proj.linux/main.cpp)
-elseif(WINDOWS)
-    set(windows_src
-        proj.win32/main.cpp
-        proj.win32/game.rc
+    list(APPEND GAME_SOURCE
+        proj.android/app/jni/hellocpp/main.cpp
     )
-    set(platform_specific_header
+elseif(LINUX)
+    list(APPEND GAME_SOURCE
+        proj.linux/main.cpp
+    )
+elseif(WINDOWS)
+    list(APPEND GAME_HEADER
         proj.win32/main.h
         proj.win32/resource.h
     )
-    set(platform_specific_src ${cc_common_res} ${windows_src})
+    list(APPEND GAME_SOURCE
+        proj.win32/main.cpp
+        proj.win32/game.rc
+        ${common_res_files}
+    )
 elseif(APPLE)
     if(IOS)
-        set(ios_header_files
+        list(APPEND GAME_HEADER
             proj.ios_mac/ios/AppController.h
             proj.ios_mac/ios/RootViewController.h
         )
-        set(ios_code_files
+        list(APPEND GAME_SOURCE
             proj.ios_mac/ios/main.m
             proj.ios_mac/ios/AppController.mm
             proj.ios_mac/ios/RootViewController.mm
         )
-        set(ios_res_files
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/LaunchScreen.storyboard
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/LaunchScreenBackground.png
+        set(GAME_SRC_IOS
+            proj.ios_mac/ios/LaunchScreen.storyboard
+            proj.ios_mac/ios/LaunchScreenBackground.png
         )
-        cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
-        set(apple_src_files ${ios_code_files} ${ios_res_files} ${ios_header_files})
+        cocos_mark_multi_resources(apple_src_files RES_TO "Resources" FILES ${GAME_SRC_IOS})
+        list(APPEND GAME_SOURCE ${apple_src_files})
     elseif(MACOSX)
-        set(mac_code_files proj.ios_mac/mac/main.cpp)
-        set(mac_res_files
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Icon.icns
+        list(APPEND GAME_SOURCE
+            proj.ios_mac/mac/main.cpp
         )
-        cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
-        set(apple_src_files ${mac_res_files} ${mac_code_files})
+        set(GAME_SRC_MAC
+            proj.ios_mac/mac/Icon.icns
+        )
+        cocos_mark_multi_resources(apple_src_files RES_TO "Resources" FILES ${GAME_SRC_MAC})
+        list(APPEND GAME_SOURCE ${apple_src_files})
     endif()
-    set(platform_specific_src ${cc_common_res} ${apple_src_files})
+    list(APPEND GAME_SOURCE ${common_res_files})
 else()
     message(FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
 # mark app complie info and libs info
-set(cocos_app_src
-    ${platform_specific_src}
-    ${common_header_files}
-    ${common_code_files}
-    ${common_header_files}
-    ${common_code_files}
+set(APP_SRC
+    ${GAME_SOURCE}
+    ${GAME_HEADER}
 )
 cocos_build_app(${APP_NAME} 
-    APP_SRC "${cocos_app_src}"
+    APP_SRC "${APP_SRC}"
     DEPEND_COMMON_LIBS "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"
 )
@@ -133,5 +139,5 @@ elseif(WINDOWS)
 endif()
 
 if(LINUX OR WINDOWS)
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${res_res_folders})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
 endif()

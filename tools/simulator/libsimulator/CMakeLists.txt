@@ -76,7 +76,7 @@ set(PROTOBUF_SRC
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/wire_format_lite.cc
 )
 
-set(SIMELATOR_SRC
+set(SIMULATOR_SRC
     ${SIMULATOR_LIB_PATH}/network/CCHTTPRequest.cpp
     ${SIMULATOR_LIB_PATH}/ProjectConfig/ProjectConfig.cpp
     ${SIMULATOR_LIB_PATH}/ProjectConfig/SimulatorConfig.cpp
@@ -114,11 +114,11 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/cocos/editor-support
 )
 
-get_headers_by_sources(cc_headers CC_SOURCES ${SIMELATOR_SRC})
-list(APPEND SIMELATOR_SRC ${cc_headers})
+get_headers_by_sources(cc_headers CC_SOURCES ${SIMULATOR_SRC})
+list(APPEND SIMULATOR_SRC ${cc_headers})
 
 add_library(simulator STATIC
-  ${SIMELATOR_SRC}
+  ${SIMULATOR_SRC}
 )
 
 target_use_simulator_depend_libs(simulator)

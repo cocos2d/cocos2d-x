@@ -51,8 +51,9 @@ function(cocos_mark_multi_resources res_out)
 
   set(tmp_file_list)
   foreach(cc_file ${opt_FILES})
-    get_filename_component(file_dir ${cc_file} DIRECTORY)
-    cocos_mark_resources(FILES ${cc_file} BASEDIR ${file_dir} RESOURCEBASE ${opt_RES_TO})
+    get_filename_component(cc_file_abs ${cc_file} ABSOLUTE)
+    get_filename_component(file_dir ${cc_file_abs} DIRECTORY)
+    cocos_mark_resources(FILES ${cc_file_abs} BASEDIR ${file_dir} RESOURCEBASE ${opt_RES_TO})
   endforeach()
   list(APPEND tmp_file_list ${opt_FILES})
 
