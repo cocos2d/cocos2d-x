@@ -1,9 +1,4 @@
-
-if(WINDOWS)
-  set(COCOS_NETWORK_HEADER
-    network/HttpConnection-winrt.h
-  )
-elseif(ANDROID)
+if(ANDROID)
   set(COCOS_NETWORK_HEADER
     network/CCDownloader-android.h
   )

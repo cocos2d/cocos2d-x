@@ -6,15 +6,15 @@ set(COCOS_AUDIO_SRC
 if(WINDOWS)
 
     set(COCOS_AUDIO_PLATFORM_HEADER
-        audio/win32AudioDecoderManager.h
-        audio/win32AudioDecoder.h
-        audio/win32MciPlayer.h
-        audio/win32AudioPlayer.h
-        audio/win32AudioDecoderOgg.h
-        audio/win32AudioMacros.h
-        audio/win32AudioEngine-win32.h
-        audio/win32AudioDecoderMp3.h
-        audio/win32AudioCache.h
+        audio/win32/AudioDecoderManager.h
+        audio/win32/AudioDecoder.h
+        audio/win32/MciPlayer.h
+        audio/win32/AudioPlayer.h
+        audio/win32/AudioDecoderOgg.h
+        audio/win32/AudioMacros.h
+        audio/win32/AudioEngine-win32.h
+        audio/win32/AudioDecoderMp3.h
+        audio/win32/AudioCache.h
     )
 
     set(COCOS_AUDIO_PLATFORM_SRC
