@@ -119,9 +119,7 @@ if(APPLE)
             MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Info.plist"
         )
     elseif(IOS)
-        set_target_properties(${APP_NAME} PROPERTIES
-            MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/Info.plist"
-        )
+        cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()
 elseif(WINDOWS)
     cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
