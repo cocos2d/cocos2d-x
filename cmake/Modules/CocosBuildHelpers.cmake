@@ -281,6 +281,9 @@ function(cocos_build_app app_name)
   if(GEN_COCOS_PREBUILT)
     add_dependencies(${APP_NAME} prebuilt)
   endif()
+
+  set(APP_BIN_DIR ${APP_BIN_DIR} PARENT_SCOPE)
+  set(APP_RES_DIR ${APP_RES_DIR} PARENT_SCOPE)
 endfunction()
 
 # if cc_variable not set, then set it cc_value
