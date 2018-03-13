@@ -74,10 +74,15 @@ elseif(APPLE)
         list(APPEND GAME_HEADER
             proj.ios_mac/mac/LuaObjectCBridgeTest.h
         )
+        set(APP_UI_RES
+            proj.ios_mac/mac/en.lproj/MainMenu.xib
+            proj.ios_mac/mac/Icon.icns
+            proj.ios_mac/mac/Info.plist
+        )
         list(APPEND GAME_SOURCE
             proj.ios_mac/mac/main.cpp
             proj.ios_mac/mac/LuaObjectCBridgeTest.mm
-            proj.ios_mac/mac/Icon.icns
+            ${APP_UI_RES}
         )
     endif()
     list(APPEND GAME_SOURCE ${cc_common_res})
@@ -102,8 +107,11 @@ cocos_build_app(${APP_NAME}
 
 # mark app resources
 if(APPLE)
+    set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)
-        cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "LuaTestsApp")
+        set_target_properties(${APP_NAME} PROPERTIES
+            MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Info.plist"
+        )
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()

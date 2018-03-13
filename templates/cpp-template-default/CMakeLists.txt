@@ -99,9 +99,14 @@ elseif(APPLE)
             proj.ios_mac/ios/LaunchScreenBackground.png
         )
     elseif(MACOSX)
+        set(APP_UI_RES
+            proj.ios_mac/mac/Icon.icns
+            proj.ios_mac/mac/Info.plist
+        )
         list(APPEND GAME_SOURCE
             proj.ios_mac/mac/main.cpp
-            proj.ios_mac/mac/Icon.icns
+            proj.ios_mac/mac/Prefix.pch
+            ${APP_UI_RES}
         )
     endif()
     list(APPEND GAME_SOURCE ${common_res_files})
@@ -119,8 +124,11 @@ cocos_build_app(${APP_NAME}
 )
 
 if(APPLE)
+    set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)
-        cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "Cpp Hello Test")
+        set_target_properties(${APP_NAME} PROPERTIES
+            MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Info.plist"
+        )
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()

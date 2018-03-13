@@ -105,9 +105,14 @@ elseif(APPLE)
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreenBackground.png
         )
     elseif(MACOSX)
+        set(APP_UI_RES
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Info.plist
+        )
         list(APPEND GAME_SOURCE
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.cpp
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Prefix.pch
+            ${APP_UI_RES}
         )
     endif()
     list(APPEND GAME_SOURCE ${cc_common_res})
@@ -124,8 +129,11 @@ cocos_build_app(${APP_NAME}
 
 # mark app resources, resource will be copy auto after mark
 if(APPLE)
+    set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)
-        cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "LuaTestsApp")
+        set_target_properties(${APP_NAME} PROPERTIES
+            MACOSX_BUNDLE_INFO_PLIST "${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Info.plist"
+        )
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()

@@ -63,9 +63,16 @@ elseif(APPLE)
             proj.ios/LaunchScreenBackground.png
         )
     elseif(MACOSX)
+        set(APP_UI_RES
+            proj.mac/Icon.icns
+            proj.mac/Info.plist
+            proj.mac/en.lproj/MainMenu.xib
+            proj.mac/en.lproj/InfoPlist.strings
+        )
         list(APPEND GAME_SOURCE
             proj.mac/main.cpp
-            proj.mac/Icon.icns
+            proj.mac/HelloLua_Prefix.pch
+            ${APP_UI_RES}
         )
     endif()
     list(APPEND GAME_SOURCE ${cc_common_res})
@@ -91,8 +98,11 @@ cocos_build_app(${APP_NAME}
 
 # mark app resources
 if(APPLE)
+    set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)
-        cocos_pak_xcode(${APP_NAME})
+        set_target_properties(${APP_NAME} PROPERTIES
+            MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Info.plist"
+        )
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()
