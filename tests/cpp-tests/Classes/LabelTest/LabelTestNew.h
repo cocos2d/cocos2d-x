@@ -728,6 +728,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelWrapNoBreakSpaceTest : public LabelLayoutBaseTest
+{
+public:
+    CREATE_FUNC(LabelWrapNoBreakSpaceTest);
+
+    LabelWrapNoBreakSpaceTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class LabelShrinkByWordTest : public LabelLayoutBaseTest
 {
 public:

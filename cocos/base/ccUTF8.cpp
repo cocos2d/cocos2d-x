@@ -51,10 +51,10 @@ std::string format(const char* format, ...)
     va_end(args);
 
     if (nret >= 0) {
-        if (nret < buffer.length()) {
+        if ((unsigned int)nret < buffer.length()) {
             buffer.resize(nret);
         }
-        else if (nret > buffer.length()) { // VS2015/2017 or later Visual Studio Version
+        else if ((unsigned int)nret > buffer.length()) { // VS2015/2017 or later Visual Studio Version
             buffer.resize(nret);
 
             va_start(args, format);
