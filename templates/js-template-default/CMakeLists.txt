@@ -66,6 +66,10 @@ if(APPLE OR VS)
     set(cc_common_res ${res_main} ${res_res} ${res_src} ${res_script})
 endif()
 
+# record sources, headers
+set(GAME_SOURCE ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp)
+set(GAME_HEADER ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.h)
+
 # sources need to compile info, include dirs and source files
 include_directories(
     ${RUNTIME_SRC_ROOT}/Classes
@@ -73,15 +77,12 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/external/spidermonkey/include/${PLATFORM_FOLDER}
 )
 
-set(GAME_SRC ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp)
-set(GAME_HEADER ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.h)
-
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
     set(APP_NAME cocos2djs)
-    list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.android/app/jni/hellojavascript/main.cpp)
+    list(APPEND GAME_SOURCE ${RUNTIME_SRC_ROOT}/proj.android/app/jni/hellojavascript/main.cpp)
 elseif(LINUX)
-    list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
+    list(APPEND GAME_SOURCE ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
 elseif(WINDOWS)
     set(WINDOWS_SRC ${RUNTIME_SRC_ROOT}/proj.win32/main.cpp)
     list(APPEND WINDOWS_SRC ${RUNTIME_SRC_ROOT}/proj.win32/game.rc)
@@ -89,38 +90,30 @@ elseif(WINDOWS)
         ${RUNTIME_SRC_ROOT}/proj.win32/main.h
         ${RUNTIME_SRC_ROOT}/proj.win32/resource.h
     )
-    list(APPEND GAME_SRC ${WINDOWS_SRC} ${cc_common_res})
+    list(APPEND GAME_SOURCE ${WINDOWS_SRC} ${cc_common_res})
 elseif(APPLE)
     if(IOS)
         list(APPEND GAME_HEADER
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/AppController.h
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/RootViewController.h
         )
-        set(ios_code_files
+        list(APPEND GAME_SOURCE
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/main.m
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/AppController.mm
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/RootViewController.mm
-        )
-        set(ios_res_files
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreen.storyboard
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreenBackground.png
         )
-        cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
-        set(apple_src_files ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(mac_code_files ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.cpp)
-        set(mac_res_files
+        list(APPEND GAME_SOURCE
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.cpp
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns
         )
-        cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
-        set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
-    list(APPEND GAME_SRC ${apple_src_files} ${cc_common_res})
-else()
-    message(FATAL_ERROR "Unsupported platform, CMake will exit" )
+    list(APPEND GAME_SOURCE ${cc_common_res})
 endif()
 
-set(APP_SRC ${GAME_HEADER} ${GAME_SRC})
+set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
 
 # mark app complie info and libs info
 cocos_build_app(${APP_NAME} 

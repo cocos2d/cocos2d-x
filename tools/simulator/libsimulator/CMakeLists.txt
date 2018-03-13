@@ -44,7 +44,7 @@ if(WIN32)
         ${SIMULATOR_LIB_PATH}/platform/win32/PlayerFileDialogServiceWin.h
         ${SIMULATOR_LIB_PATH}/platform/win32/PlayerTaskServiceWin.h
     )
-    set(PLATFORM_SRC
+    set(PLATFORM_SOURCE
         ${SIMULATOR_LIB_PATH}/../proj.win32/Runtime_win32.cpp
         ${SIMULATOR_LIB_PATH}/../proj.win32/stdafx.cpp
         ${SIMULATOR_LIB_PATH}/platform/win32/DeviceEx-win32.cpp
@@ -65,7 +65,7 @@ elseif(MACOSX)
         ${SIMULATOR_LIB_PATH}/platform/mac/PlayerTaskServiceMac.h
         ${SIMULATOR_LIB_PATH}/platform/mac/PlayerFileDialogServiceMac.h
     )
-    set(PLATFORM_SRC
+    set(PLATFORM_SOURCE
         ${SIMULATOR_LIB_PATH}/platform/mac/DeviceEx-mac.mm
         ${SIMULATOR_LIB_PATH}/platform/mac/PlayerEditBoxServiceMac.mm
         ${SIMULATOR_LIB_PATH}/platform/mac/PlayerFileDialogServiceMac.mm
@@ -108,7 +108,7 @@ set(PROTOBUF_HEADER
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/wire_format_lite.h
 )
 
-set(PROTOBUF_SRC
+set(PROTOBUF_SOURCE
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/extension_set.cc
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/generated_message_util.cc
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/io/coded_stream.cc
@@ -159,7 +159,7 @@ set(SIMULATOR_HEADER
     ${PLATFORM_HEADER}
 )
 
-set(SIMULATOR_SRC
+set(SIMULATOR_SOURCE
     ${SIMULATOR_LIB_PATH}/network/CCHTTPRequest.cpp
     ${SIMULATOR_LIB_PATH}/ProjectConfig/ProjectConfig.cpp
     ${SIMULATOR_LIB_PATH}/ProjectConfig/SimulatorConfig.cpp
@@ -185,8 +185,8 @@ set(SIMULATOR_SRC
     ${SIMULATOR_LIB_PATH}/runtime/RuntimeProtocol.cpp
     ${SIMULATOR_LIB_PATH}/runtime/Shine_png.cpp
     ${SIMULATOR_LIB_PATH}/runtime/VisibleRect.cpp
-    ${PROTOBUF_SRC}
-    ${PLATFORM_SRC}
+    ${PROTOBUF_SOURCE}
+    ${PLATFORM_SOURCE}
 )
 
 include_directories(
@@ -197,10 +197,10 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/cocos/editor-support
 )
 
-set(LIB_SRC ${SIMULATOR_SRC} ${SIMULATOR_HEADER})
+set(LIB_SOURCE ${SIMULATOR_SOURCE} ${SIMULATOR_HEADER})
 
 add_library(simulator STATIC
-  ${LIB_SRC}
+  ${LIB_SOURCE}
 )
 
 target_use_simulator_depend_libs(simulator)

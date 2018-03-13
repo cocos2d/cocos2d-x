@@ -64,18 +64,27 @@ if(APPLE OR VS)
     set(cc_common_res ${res_main} ${res_res} ${res_src} ${res_script})
 endif()
 
+# record sources, headers...
+set(GAME_SOURCE)
 set(GAME_HEADER)
-if(WINDOWS)
+
+if(ANDROID)
+    list(APPEND GAME_SOURCE
+        proj.android/app/jni/main.cpp
+    )
+elseif(LINUX)
+    list(APPEND GAME_SOURCE
+        proj.linux/main.cpp
+    )
+elseif(WINDOWS)
     list(APPEND GAME_HEADER
         proj.win32/main.h
         proj.win32/resource.h
     )
-    set(WINDOWS_SRC proj.win32/main.cpp)
-    set(PLATFORM_SRC ${cc_common_res} ${WINDOWS_SRC})
-elseif(ANDROID)
-    set(PLATFORM_SRC proj.android/app/jni/main.cpp)
-elseif(LINUX)
-    set(PLATFORM_SRC proj.linux/main.cpp)
+    list(APPEND GAME_SOURCE
+        proj.win32/main.cpp
+        ${cc_common_res}
+    )
 elseif(APPLE)
     if(IOS)
         list(APPEND GAME_HEADER
@@ -83,27 +92,21 @@ elseif(APPLE)
             proj.ios/NativeOcClass.h
             proj.ios/RootViewController.h
         )
-        set(ios_code_files
+        list(APPEND GAME_SOURCE
             proj.ios/main.m
             proj.ios/NativeOcClass.m
             proj.ios/AppController.mm
             proj.ios/RootViewController.mm
-            )
-        set(ios_res_files
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreen.storyboard
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreenBackground.png
+            proj.ios/LaunchScreen.storyboard
+            proj.ios/LaunchScreenBackground.png
         )
-        cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
-        set(apple_src_files ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(mac_code_files proj.mac/main.cpp)
-        set(mac_res_files
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Icon.icns
+        list(APPEND GAME_SOURCE
+            proj.mac/main.cpp
+            proj.mac/Icon.icns
         )
-        cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
-        set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
-    set(PLATFORM_SRC ${cc_common_res} ${apple_src_files})
+    list(APPEND GAME_SOURCE ${cc_common_res})
 endif()
 
 list(APPEND GAME_HEADER
@@ -111,11 +114,10 @@ list(APPEND GAME_HEADER
     Classes/js_Effect3D_bindings.h
     Classes/js_DrawNode3D_bindings.h
 )
-set(SAMPLE_SRC
+list(APPEND GAME_SOURCE
     Classes/AppDelegate.cpp
     Classes/js_DrawNode3D_bindings.cpp
     Classes/js_Effect3D_bindings.cpp
-    ${PLATFORM_SRC}
 )
 
 include_directories(
@@ -129,7 +131,7 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/external/chipmunk/include/chipmunk
 )
 
-set(APP_SRC ${GAME_HEADER} ${SAMPLE_SRC})
+set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
 
 # mark app complie info and libs info
 cocos_build_app(${APP_NAME}

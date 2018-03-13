@@ -44,10 +44,10 @@ endif()
 set(GAME_SOURCE)
 set(GAME_HEADER)
 
-list(APPEND GAME_RES_FOLDER 
+set(GAME_RES_FOLDER 
     "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
 )
-if(APPLE OR VS)
+if(APPLE OR WINDOWS)
     cocos_mark_multi_resources(common_res_files RES_TO "Resources" FOLDERS ${GAME_RES_FOLDER})
 endif()
 
@@ -95,26 +95,16 @@ elseif(APPLE)
             proj.ios_mac/ios/main.m
             proj.ios_mac/ios/AppController.mm
             proj.ios_mac/ios/RootViewController.mm
-        )
-        set(GAME_SRC_IOS
             proj.ios_mac/ios/LaunchScreen.storyboard
             proj.ios_mac/ios/LaunchScreenBackground.png
         )
-        cocos_mark_multi_resources(apple_src_files RES_TO "Resources" FILES ${GAME_SRC_IOS})
-        list(APPEND GAME_SOURCE ${apple_src_files})
     elseif(MACOSX)
         list(APPEND GAME_SOURCE
             proj.ios_mac/mac/main.cpp
-        )
-        set(GAME_SRC_MAC
             proj.ios_mac/mac/Icon.icns
         )
-        cocos_mark_multi_resources(apple_src_files RES_TO "Resources" FILES ${GAME_SRC_MAC})
-        list(APPEND GAME_SOURCE ${apple_src_files})
     endif()
     list(APPEND GAME_SOURCE ${common_res_files})
-else()
-    message(FATAL_ERROR "Unsupported platform, CMake will exit" )
 endif()
 
 # mark app complie info and libs info

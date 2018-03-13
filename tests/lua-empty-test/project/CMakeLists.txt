@@ -32,46 +32,43 @@ if(APPLE OR VS)
     set(cc_common_res ${res_res} ${res_src} ${res_script})
 endif()
 
+# record sources, headers...
+set(GAME_SOURCE
+    Classes/AppDelegate.cpp
+)
 set(GAME_HEADER 
     Classes/AppDelegate.h
     Classes/lua_module_register.h
 )
-set(SAMPLE_SRC Classes/AppDelegate.cpp)
 
 if(ANDROID)
-    list(APPEND SAMPLE_SRC proj.android/app/jni/main.cpp)
+    list(APPEND GAME_SOURCE proj.android/app/jni/main.cpp)
 elseif(LINUX)
-    set(SAMPLE_SRC ${SAMPLE_SRC} proj.linux/main.cpp)
+    list(APPEND GAME_SOURCE proj.linux/main.cpp)
 elseif(WINDOWS)
     add_definitions(-D_USRLUASTATIC)
     list(APPEND GAME_HEADER proj.win32/main.h)
-    list(APPEND SAMPLE_SRC proj.win32/main.cpp ${cc_common_res})
+    list(APPEND GAME_SOURCE proj.win32/main.cpp ${cc_common_res})
 elseif(APPLE)
     if(IOS)
         list(APPEND GAME_HEADER
             proj.ios/AppController.h
             proj.ios/RootViewController.h
         )
-        set(ios_code_files
+        list(APPEND GAME_SOURCE
             proj.ios/main.m
             proj.ios/AppController.mm
             proj.ios/RootViewController.mm
+            proj.ios/LaunchScreen.storyboard
+            proj.ios/LaunchScreenBackground.png
         )
-        set(ios_res_files
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreen.storyboard
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreenBackground.png
-        )
-        cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
-        set(apple_src_files ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(mac_code_files proj.mac/main.cpp)
-        set(mac_res_files
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Icon.icns
+        list(APPEND GAME_SOURCE
+            proj.mac/main.cpp
+            proj.mac/Icon.icns
         )
-        cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
-        set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
-    list(APPEND SAMPLE_SRC ${cc_common_res} ${apple_src_files})
+    list(APPEND GAME_SOURCE ${cc_common_res})
 endif()
 
 include_directories(
@@ -84,7 +81,7 @@ include_directories(
 
 include_directories(${LUAJIT_INCLUDE_DIRS})
 
-set(APP_SRC ${GAME_HEADER} ${SAMPLE_SRC})
+set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
 # mark app complie info and libs info
 cocos_build_app(${APP_NAME} 
     APP_SRC "${APP_SRC}"

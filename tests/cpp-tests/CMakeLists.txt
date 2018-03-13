@@ -15,61 +15,57 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     endif()
 endif()
 
-set(res_res_folders 
+# record sources, headers, resources...
+set(GAME_SOURCE)
+set(GAME_HEADER)
+
+set(GAME_RES_FOLDER 
     "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
 )
 if(APPLE OR VS)
-    cocos_mark_multi_resources(cc_common_res RES_TO "Resources" FOLDERS ${res_res_folders})
+    cocos_mark_multi_resources(cc_common_res RES_TO "Resources" FOLDERS ${GAME_RES_FOLDER})
 endif()
 
-set(GAME_HEADER)
-
-if(WINDOWS)
+if(ANDROID)
+    list(APPEND GAME_HEADER
+        Classes/JNITest/JNITest.h
+    )
+    list(APPEND GAME_SOURCE
+        Classes/JNITest/JNITest.cpp
+        proj.android/app/jni/main.cpp
+    )
+elseif(LINUX)
+    list(APPEND GAME_SOURCE
+        proj.linux/main.cpp
+    )
+elseif(WINDOWS)
     list(APPEND GAME_HEADER
         proj.win32/main.h
     )
-    set(windows_src proj.win32/main.cpp)
-    set(platform_specific_src ${cc_common_res} ${windows_src})
+    list(APPEND GAME_SOURCE
+        proj.win32/main.cpp
+        ${cc_common_res}
+    )
 elseif(APPLE)
     if(IOS)
         list(APPEND GAME_HEADER
             proj.ios/Classes/testsAppDelegate.h
             proj.ios/Classes/RootViewController.h
         )
-        set(ios_code_files
+        list(APPEND GAME_SOURCE
             proj.ios/main.m
             proj.ios/Classes/testsAppDelegate.mm
             proj.ios/Classes/RootViewController.mm
+            proj.ios/LaunchScreen.storyboard
+            proj.ios/LaunchScreenBackground.png
         )
-        set(ios_res_files
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreen.storyboard
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreenBackground.png
-        )
-        cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
-        set(apple_src_files ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(mac_code_files proj.mac/main.cpp)
-        set(mac_res_files
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Icon.icns
+        list(APPEND GAME_SOURCE
+            proj.mac/main.cpp
+            proj.mac/Icon.icns
         )
-        cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
-        set(apple_src_files ${mac_res_files} ${mac_code_files})
     endif()
-    set(platform_specific_src ${cc_common_res} ${apple_src_files})
-elseif(LINUX)
-    set(platform_specific_src proj.linux/main.cpp)
-elseif(ANDROID)
-    list(APPEND GAME_HEADER
-        Classes/JNITest/JNITest.h
-    )
-    set(platform_specific_src
-        Classes/JNITest/JNITest.cpp
-        proj.android/app/jni/main.cpp
-    )
-elseif(IOS)
-    set(platform_specific_src proj.ios/main.m)
-else()
-    message( FATAL_ERROR "Unsupported platform, CMake will exit" )
+    list(APPEND GAME_SOURCE ${cc_common_res})
 endif()
 
 list(APPEND GAME_HEADER
@@ -204,7 +200,7 @@ list(APPEND GAME_HEADER
     Classes/MenuTest/MenuTest.h
 )
 
-set(TESTS_SRC
+list(APPEND GAME_SOURCE
     Classes/ActionManagerTest/ActionManagerTest.cpp
     Classes/ActionsEaseTest/ActionsEaseTest.cpp
     Classes/ActionsProgressTest/ActionsProgressTest.cpp
@@ -329,7 +325,6 @@ set(TESTS_SRC
     Classes/controller.cpp
     # Classes/VRTest/VRTest.cpp
     # Classes/VRTest/VRTest.h
-    ${platform_specific_src}
     )
 
 if(ANDROID OR IOS)
@@ -337,7 +332,7 @@ if(ANDROID OR IOS)
         Classes/UITest/CocoStudioGUITest/UIVideoPlayerTest/UIVideoPlayerTest.h
         Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.h
     )
-    list(APPEND TESTS_SRC
+    list(APPEND GAME_SOURCE
         Classes/UITest/CocoStudioGUITest/UIVideoPlayerTest/UIVideoPlayerTest.cpp
         Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.cpp
     )
@@ -348,7 +343,7 @@ if(WIN32 OR MACOSX OR LINUX)
         Classes/WindowTest/WindowTest.h
         Classes/BugsTest/Bug-14327.h
     )
-    list(APPEND TESTS_SRC
+    list(APPEND GAME_SOURCE
         Classes/WindowTest/WindowTest.cpp
         Classes/BugsTest/Bug-14327.cpp
     )
@@ -415,13 +410,13 @@ if(USE_BOX2D)
         Classes/Box2DTestBed/Box2dView.h
         Classes/Box2DTestBed/GLES-Render.h
     )
-    list(APPEND TESTS_SRC
+    list(APPEND GAME_SOURCE
         Classes/Box2DTest/Box2dTest.cpp
         Classes/Box2DTestBed/Box2dView.cpp
         Classes/Box2DTestBed/GLES-Render.cpp
         Classes/Box2DTestBed/Test.cpp
         Classes/Box2DTestBed/TestEntries.cpp
-        )
+    )
     include_directories(${Box2D_INCLUDE_DIRS})
 endif()
 
@@ -429,14 +424,14 @@ if(USE_BULLET)
     list(APPEND GAME_HEADER
         Classes/Physics3DTest/Physics3DTest.h
     )
-    list(APPEND TESTS_SRC
+    list(APPEND GAME_SOURCE
         Classes/Physics3DTest/Physics3DTest.cpp
     )
     include_directories(${BULLET_INCLUDE_DIRS})
 endif()
 
 if(NOT LINUX)
-    list(APPEND TESTS_SRC
+    list(APPEND GAME_SOURCE
         Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp
     )
 endif()
@@ -447,12 +442,12 @@ include_directories(
 )
 
 # mark app complie info and libs info
-set(cocos_app_src
+set(APP_SRC
     ${GAME_HEADER}
-    ${TESTS_SRC}
+    ${GAME_SOURCE}
 )
 cocos_build_app(${APP_NAME}
-    APP_SRC "${cocos_app_src}"
+    APP_SRC "${APP_SRC}"
     DEPEND_COMMON_LIBS "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"
     COMMON_USE_PKGS "FREETYPE" "CURL"
@@ -471,5 +466,5 @@ elseif(WINDOWS)
 endif()
 
 if(LINUX OR WINDOWS)
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${res_res_folders})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
 endif()
