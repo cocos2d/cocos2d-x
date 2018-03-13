@@ -34,6 +34,16 @@ elseif(WINDOWS)
 endif()
 
 if(WIN32)
+    set(PLATFORM_HEADER
+        ${SIMULATOR_LIB_PATH}/../proj.win32/stdafx.h
+        ${SIMULATOR_LIB_PATH}/../proj.win32/targetver.h
+        ${SIMULATOR_LIB_PATH}/platform/win32/PlayerMessageBoxServiceWin.h
+        ${SIMULATOR_LIB_PATH}/platform/win32/PlayerMenuServiceWin.h
+        ${SIMULATOR_LIB_PATH}/platform/win32/PlayerWin.h
+        ${SIMULATOR_LIB_PATH}/platform/win32/PlayerEditBoxServiceWin.h
+        ${SIMULATOR_LIB_PATH}/platform/win32/PlayerFileDialogServiceWin.h
+        ${SIMULATOR_LIB_PATH}/platform/win32/PlayerTaskServiceWin.h
+    )
     set(PLATFORM_SRC
         ${SIMULATOR_LIB_PATH}/../proj.win32/Runtime_win32.cpp
         ${SIMULATOR_LIB_PATH}/../proj.win32/stdafx.cpp
@@ -44,9 +54,17 @@ if(WIN32)
         ${SIMULATOR_LIB_PATH}/platform/win32/PlayerMessageBoxServiceWin.cpp
         ${SIMULATOR_LIB_PATH}/platform/win32/PlayerTaskServiceWin.cpp
         ${SIMULATOR_LIB_PATH}/platform/win32/PlayerWin.cpp
-        # ${SIMULATOR_LIB_PATH}/platform/win32/SimulatorWin.cpp
     )
 elseif(MACOSX)
+    set(PLATFORM_HEADER
+        ${SIMULATOR_LIB_PATH}/platform/mac/openudid/OpenUDIDMac.h
+        ${SIMULATOR_LIB_PATH}/platform/mac/PlayerMessageBoxServiceMac.h
+        ${SIMULATOR_LIB_PATH}/platform/mac/PlayerEditBoxServiceMac.h
+        ${SIMULATOR_LIB_PATH}/platform/mac/PlayerMac.h
+        ${SIMULATOR_LIB_PATH}/platform/mac/PlayerMenuServiceMac.h
+        ${SIMULATOR_LIB_PATH}/platform/mac/PlayerTaskServiceMac.h
+        ${SIMULATOR_LIB_PATH}/platform/mac/PlayerFileDialogServiceMac.h
+    )
     set(PLATFORM_SRC
         ${SIMULATOR_LIB_PATH}/platform/mac/DeviceEx-mac.mm
         ${SIMULATOR_LIB_PATH}/platform/mac/PlayerEditBoxServiceMac.mm
@@ -59,6 +77,36 @@ elseif(MACOSX)
         ${SIMULATOR_LIB_PATH}/platform/mac/openudid/OpenUDIDMac.m
     )
 endif()
+
+set(PROTOBUF_HEADER
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/stl_util.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/atomicops_internals_arm_gcc.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/template_util.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/atomicops_internals_macosx.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/stringprintf.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/atomicops.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/atomicops_internals_x86_gcc.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/atomicops_internals_x86_msvc.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/atomicops_internals_generic_gcc.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/common.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/platform_macros.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/once.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/type_traits.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/atomicops_internals_atomicword_compat.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/map-util.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/hash.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/repeated_field.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/io/zero_copy_stream_impl.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/io/coded_stream_inl.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/io/zero_copy_stream_impl_lite.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/io/zero_copy_stream.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/io/coded_stream.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/wire_format_lite_inl.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/extension_set.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/message_lite.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/generated_message_util.h
+    ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/wire_format_lite.h
+)
 
 set(PROTOBUF_SRC
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/extension_set.cc
@@ -74,6 +122,41 @@ set(PROTOBUF_SRC
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/once.cc
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/stringprintf.cc
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/wire_format_lite.cc
+)
+
+set(SIMULATOR_HEADER
+    ${SIMULATOR_LIB_PATH}/cocos2dx_extra.h
+    ${SIMULATOR_LIB_PATH}/AppLang.h
+    ${SIMULATOR_LIB_PATH}/PlayerMenuServiceProtocol.h
+    ${SIMULATOR_LIB_PATH}/DeviceEx.h
+    ${SIMULATOR_LIB_PATH}/SimulatorExport.h
+    ${SIMULATOR_LIB_PATH}/network/CCHTTPRequestDelegate.h
+    ${SIMULATOR_LIB_PATH}/network/CCHTTPRequest.h
+    ${SIMULATOR_LIB_PATH}/runtime/Widget_mac.h
+    ${SIMULATOR_LIB_PATH}/runtime/FileServer.h
+    ${SIMULATOR_LIB_PATH}/runtime/ConfigParser.h
+    ${SIMULATOR_LIB_PATH}/runtime/ConsoleCommand.h
+    ${SIMULATOR_LIB_PATH}/runtime/RuntimeCCSImpl.h
+    ${SIMULATOR_LIB_PATH}/runtime/Runtime.h
+    ${SIMULATOR_LIB_PATH}/runtime/ResData.h
+    ${SIMULATOR_LIB_PATH}/runtime/ConnectWaitLayer.h
+    ${SIMULATOR_LIB_PATH}/runtime/RuntimeProtocol.h
+    ${SIMULATOR_LIB_PATH}/runtime/Protos.pb.h
+    ${SIMULATOR_LIB_PATH}/runtime/VisibleRect.h
+    ${SIMULATOR_LIB_PATH}/PlayerSettings.h
+    ${SIMULATOR_LIB_PATH}/PlayerEditBoxServiceProtocol.h
+    ${SIMULATOR_LIB_PATH}/PlayerMessageBoxServiceProtocol.h
+    ${SIMULATOR_LIB_PATH}/AppEvent.h
+    ${SIMULATOR_LIB_PATH}/PlayerProtocol.h
+    ${SIMULATOR_LIB_PATH}/PlayerMacros.h
+    ${SIMULATOR_LIB_PATH}/PlayerFileDialogServiceProtocol.h
+    ${SIMULATOR_LIB_PATH}/ProjectConfig/SimulatorConfig.h
+    ${SIMULATOR_LIB_PATH}/ProjectConfig/ProjectConfig.h
+    ${SIMULATOR_LIB_PATH}/PlayerServiceProtocol.h
+    ${SIMULATOR_LIB_PATH}/PlayerUtils.h
+    ${SIMULATOR_LIB_PATH}/PlayerTaskServiceProtocol.h
+    ${PROTOBUF_HEADER}
+    ${PLATFORM_HEADER}
 )
 
 set(SIMULATOR_SRC
@@ -114,8 +197,10 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/cocos/editor-support
 )
 
+set(LIB_SRC ${SIMULATOR_SRC} ${SIMULATOR_HEADER})
+
 add_library(simulator STATIC
-  ${SIMULATOR_SRC}
+  ${LIB_SRC}
 )
 
 target_use_simulator_depend_libs(simulator)

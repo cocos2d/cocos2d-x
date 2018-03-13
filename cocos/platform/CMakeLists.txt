@@ -108,11 +108,11 @@ elseif(LINUX)
     /usr/local/include/GLFW
   )
   set(COCOS_PLATFORM_SPECIFIC_HEADER
-    platform/CCApplication-linux.h
-    platform/CCGL-linux.h
-    platform/CCStdC-linux.h
-    platform/CCFileUtils-linux.h
-    platform/CCPlatformDefine-linux.h
+    platform/linux/CCApplication-linux.h
+    platform/linux/CCGL-linux.h
+    platform/linux/CCStdC-linux.h
+    platform/linux/CCFileUtils-linux.h
+    platform/linux/CCPlatformDefine-linux.h
     platform/desktop/CCGLViewImpl-desktop.h
   )
   set(COCOS_PLATFORM_SPECIFIC_SRC
