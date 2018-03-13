@@ -81,7 +81,7 @@ function install_python_module_for_osx()
 function install_latest_python_pyenv()
 {
     python -V
-    pyenv init
+    eval "$(pyenv init -)"
     pyenv install 2.7.14
     pyenv global 2.7.14
     python -V
