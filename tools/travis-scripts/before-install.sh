@@ -78,19 +78,12 @@ function install_python_module_for_osx()
     sudo -H pip install Cheetah
 }
 
-# fix error, URLError: <urlopen error [SSL: TLSV1_ALERT_PROTOCOL_VERSION]
-function upgrade_openssl_for_osx()
+function install_latest_python_pyenv()
 {
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    brew update
-    brew upgrade openssl
-    ln -s /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib /usr/local/lib/
-    ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
-    ln -s /usr/local/Cellar/openssl/1.0.2n/bin/openssl /usr/local/bin/openssl
-    echo "macOS SSL: `openssl version`"
-    brew install python2 --with-brewed-openssl
-    ln -s /usr/local/opt/python@2/bin/python2 /usr/local/bin/python
-    echo "python SSL: `python -c "import ssl; print ssl.OPENSSL_VERSION"`"
+    python -V
+    pyenv install 2.7.14
+    pyenv global 2.7.14
+    python -V
 }
 
 # set up environment according os and target
@@ -109,7 +102,7 @@ function install_environement_for_pull_request()
     fi
 
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-        upgrade_openssl_for_osx
+        install_latest_python_pyenv
         install_python_module_for_osx
     fi
 
@@ -121,14 +114,14 @@ function install_environement_for_pull_request()
 # should generate binding codes & cocos_files.json after merging
 function install_environement_for_after_merge()
 {
+    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+        install_latest_python_pyenv
+        install_python_module_for_osx
+    fi
+
     echo "Building merge commit ..."
     install_android_ndk
     download_deps
-
-    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-        upgrade_openssl_for_osx
-        install_python_module_for_osx
-    fi
 }
 
 if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
