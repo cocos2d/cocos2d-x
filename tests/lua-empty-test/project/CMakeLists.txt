@@ -55,12 +55,19 @@ elseif(APPLE)
             proj.ios/AppController.h
             proj.ios/RootViewController.h
         )
+        set(APP_UI_RES
+            proj.ios/Info.plist
+            proj.ios/exportoptions.plist
+            proj.ios/LaunchScreen.storyboard
+            proj.ios/LaunchScreenBackground.png
+            proj.ios/Images.xcassets
+        )
         list(APPEND GAME_SOURCE
             proj.ios/main.m
             proj.ios/AppController.mm
             proj.ios/RootViewController.mm
-            proj.ios/LaunchScreen.storyboard
-            proj.ios/LaunchScreenBackground.png
+            proj.ios/HelloLua_Prefix.pch
+            ${APP_UI_RES}
         )
     elseif(MACOSX)
         set(APP_UI_RES
@@ -104,7 +111,9 @@ if(APPLE)
             MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Info.plist"
         )
     elseif(IOS)
-        cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
+        set_target_properties(${APP_NAME} PROPERTIES
+            MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/Info.plist"
+        )
     endif()
 elseif(WINDOWS)
     cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
