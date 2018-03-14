@@ -109,7 +109,6 @@ function upgrade_openssl_for_osx()
     brew unlink python
     brew install python2
     echo "new python: `ls -l /usr/local/bin | grep python`"
-    ln -s /usr/local/opt/python@2/bin/python2 /usr/local/bin/python
     echo "python SSL: `python -c "import ssl; print ssl.OPENSSL_VERSION"`"
 }
 
