@@ -78,13 +78,21 @@ function install_python_module_for_osx()
     sudo -H pip install Cheetah
 }
 
-function install_latest_python_pyenv()
+# fix error, URLError: <urlopen error [SSL: TLSV1_ALERT_PROTOCOL_VERSION]
+function upgrade_openssl_for_osx()
 {
-    python -V
-    eval "$(pyenv init -)"
-    pyenv install 2.7.14
-    pyenv global 2.7.14
-    python -V
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    brew update
+    brew upgrade openssl
+    ln -s /usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib /usr/local/lib/
+    ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
+    ln -s /usr/local/opt/openssl/bin/openssl /usr/local/bin/openssl
+    echo "macOS SSL: `openssl version`"
+
+    brew unlink python
+    brew install python2
+    echo "python link: `ls -l /usr/local/bin/python`"
+    echo "python SSL: `python -c "import ssl; print ssl.OPENSSL_VERSION"`"
 }
 
 # set up environment according os and target
@@ -103,7 +111,7 @@ function install_environement_for_pull_request()
     fi
 
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-        install_latest_python_pyenv
+        upgrade_openssl_for_osx
         install_python_module_for_osx
     fi
 
@@ -116,7 +124,7 @@ function install_environement_for_pull_request()
 function install_environement_for_after_merge()
 {
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-        install_latest_python_pyenv
+        upgrade_openssl_for_osx
         install_python_module_for_osx
     fi
 

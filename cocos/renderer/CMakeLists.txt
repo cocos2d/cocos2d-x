@@ -1,3 +1,34 @@
+set(COCOS_RENDERER_HEADER
+  renderer/CCTextureCache.h
+  renderer/CCRenderer.h
+  renderer/CCMaterial.h
+  renderer/ccGLStateCache.h
+  renderer/CCRenderCommandPool.h
+  renderer/ccShaders.h
+  renderer/CCMeshCommand.h
+  renderer/CCGLProgramStateCache.h
+  renderer/CCRenderCommand.h
+  renderer/CCTextureCube.h
+  renderer/CCGLProgram.h
+  renderer/CCGLProgramCache.h
+  renderer/CCTextureAtlas.h
+  renderer/CCGroupCommand.h
+  renderer/CCVertexAttribBinding.h
+  renderer/CCVertexIndexBuffer.h
+  renderer/CCVertexIndexData.h
+  renderer/CCPrimitive.h
+  renderer/CCTexture2D.h
+  renderer/CCCustomCommand.h
+  renderer/CCFrameBuffer.h
+  renderer/CCQuadCommand.h
+  renderer/CCTechnique.h
+  renderer/CCPrimitiveCommand.h
+  renderer/CCGLProgramState.h
+  renderer/CCTrianglesCommand.h
+  renderer/CCBatchCommand.h
+  renderer/CCPass.h
+  renderer/CCRenderState.h
+)
 
 set(COCOS_RENDERER_SRC
   renderer/CCBatchCommand.cpp

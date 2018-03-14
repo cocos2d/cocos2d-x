@@ -116,6 +116,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue9500Test);
     ADD_TEST_CASE(LabelWrapByWordTest);
     ADD_TEST_CASE(LabelWrapByCharTest);
+    ADD_TEST_CASE(LabelWrapNoBreakSpaceTest);
     ADD_TEST_CASE(LabelShrinkByWordTest);
     ADD_TEST_CASE(LabelShrinkByCharTest);
     ADD_TEST_CASE(LabelResizeTest);
@@ -2539,6 +2540,30 @@ std::string LabelWrapByCharTest::subtitle() const
 {
     return "";
 }
+
+/////////////////////////////////////////////////
+
+LabelWrapNoBreakSpaceTest::LabelWrapNoBreakSpaceTest()
+{
+    _label->setLineBreakWithoutSpace(false);
+    const char* no_break_space_utf8 = "\xC2\xA0"; // 0xA0 - no-break space
+    auto str = StringUtils::format("The price is $%s1.25", no_break_space_utf8);
+    _label->setString(str);
+    _label->setVerticalAlignment(TextVAlignment::TOP);
+    _label->setOverflow(Label::Overflow::RESIZE_HEIGHT);
+}
+
+std::string LabelWrapNoBreakSpaceTest::title() const
+{
+    return "Wrap Test: No break space";
+}
+
+std::string LabelWrapNoBreakSpaceTest::subtitle() const
+{
+    return "";
+}
+
+/////////////////////////////////////////////////
 
 LabelShrinkByWordTest::LabelShrinkByWordTest()
 {

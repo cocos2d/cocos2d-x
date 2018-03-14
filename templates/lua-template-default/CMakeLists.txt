@@ -37,7 +37,7 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     CocosBuildSet()
     if(NOT USE_COCOS_PREBUILT)
         set(BUILD_LUA_LIBS ON)
-        set(USE_SIMULATOR ON)
+        set(BUILD_SIMU_LIB ON)
         add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
     endif()
 endif()
@@ -59,6 +59,9 @@ if(APPLE OR VS)
     set(cc_common_res ${res_res} ${res_src} ${res_script})
 endif()
 
+# record sources, headers
+set(GAME_HEADER ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.h)
+set(GAME_SOURCE ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp)
 # sources need to compile info, include dirs and source files
 include_directories(
     ${RUNTIME_SRC_ROOT}/Classes
@@ -68,16 +71,22 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/external/lua/tolua
     ${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator/lib
 )
-set(GAME_SRC ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp)
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
     set(APP_NAME cocos2dlua)
-    list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.android/app/jni/hellolua/main.cpp)
+    list(APPEND GAME_SOURCE ${RUNTIME_SRC_ROOT}/proj.android/app/jni/hellolua/main.cpp)
 elseif(LINUX)
-    list(APPEND GAME_SRC ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
+    list(APPEND GAME_SOURCE ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
 elseif(WINDOWS)
     add_definitions(-D_USRLUASTATIC -D_USRLIBSIMSTATIC)
-    list(APPEND GAME_SRC
+    list(APPEND GAME_HEADER
+        ${RUNTIME_SRC_ROOT}/proj.win32/main.h
+        ${RUNTIME_SRC_ROOT}/proj.win32/stdafx.h
+        ${RUNTIME_SRC_ROOT}/proj.win32/SimulatorWin.h
+        ${RUNTIME_SRC_ROOT}/proj.win32/targetver.h
+        ${RUNTIME_SRC_ROOT}/proj.win32/resource.h
+    )
+    list(APPEND GAME_SOURCE
         ${RUNTIME_SRC_ROOT}/proj.win32/game.rc
         ${RUNTIME_SRC_ROOT}/proj.win32/stdafx.cpp
         ${RUNTIME_SRC_ROOT}/proj.win32/main.cpp
@@ -86,46 +95,54 @@ elseif(WINDOWS)
     )
 elseif(APPLE)
     if(IOS)
-        set(ios_code_files
+        list(APPEND GAME_HEADER
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/AppController.h
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/RootViewController.h
+        )
+        set(APP_UI_RES
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/Info.plist
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/exportoptions.plist
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreen.storyboard
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreenBackground.png
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/Images.xcassets
+        )
+        list(APPEND GAME_SOURCE
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/main.m
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/AppController.mm
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/RootViewController.mm
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/Prefix.pch
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/build-cfg.json
+            ${APP_UI_RES}
         )
-        set(ios_res_files
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreen.storyboard
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreenBackground.png
-        )
-        cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
-        set(APPLE_RES_UI ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(MAC_SRC
+        list(APPEND GAME_HEADER
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/SimulatorApp.h
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/ConsoleWindowController.h
+        )
+        set(APP_UI_RES
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Base.lproj/MainMenu.xib
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/en.lproj/MainMenu.xib
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/zh-Hans.lproj/MainMenu.xib
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/ConsoleWindow.xib
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Info.plist
+        )
+        list(APPEND GAME_SOURCE
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.m
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/SimulatorApp.mm
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/ConsoleWindowController.m
+            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Prefix.pch
+            ${APP_UI_RES}
         )
-        file(GLOB_RECURSE RES_ICON ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns)
-        cocos_mark_resources(FILES ${RES_ICON} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
-        # special for lua-template
-        file(GLOB_RECURSE RES_MAIN_BASE ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Base.lproj/MainMenu.xib)
-        cocos_mark_resources(FILES ${RES_MAIN_BASE} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
-        file(GLOB_RECURSE RES_MAIN_EN ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/en.lproj/MainMenu.xib)
-        cocos_mark_resources(FILES ${RES_MAIN_EN} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
-        file(GLOB_RECURSE RES_MAIN_ZH ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/zh-Hans.lproj/MainMenu.xib)
-        cocos_mark_resources(FILES ${RES_MAIN_ZH} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
-        file(GLOB_RECURSE RES_CONSOLE ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/ConsoleWindow.xib)
-        cocos_mark_resources(FILES ${RES_CONSOLE} BASEDIR ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac)
-        set(APPLE_SRC ${MAC_SRC} ${RES_ICON} ${RES_MAIN_BASE} ${RES_MAIN_EN} ${RES_MAIN_ZH} ${RES_CONSOLE})
-        # xib -> nib, need mark resources
-        set(APPLE_RES_UI ${RES_MAIN_BASE} ${RES_MAIN_EN} ${RES_MAIN_ZH} ${RES_CONSOLE})
     endif()
-    list(APPEND GAME_SRC ${APPLE_SRC} ${cc_common_res})
-else()
-    message(FATAL_ERROR "Unsupported platform, CMake will exit" )
+    list(APPEND GAME_SOURCE ${cc_common_res})
 endif()
+
+set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
 
 # mark app complie info and libs info
 cocos_build_app(${APP_NAME} 
-    APP_SRC "${GAME_SRC}"
+    APP_SRC "${APP_SRC}"
     DEPEND_COMMON_LIBS "luacocos2d" "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"
     DEPEND_MACOSX_LIBS "simulator"
@@ -134,11 +151,11 @@ cocos_build_app(${APP_NAME}
 
 # mark app resources
 if(APPLE)
+    set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)
         set_target_properties(${APP_NAME} PROPERTIES
-            RESOURCE "${APPLE_RES_UI}"
+            MACOSX_BUNDLE_INFO_PLIST "${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Info.plist"
         )
-        cocos_pak_xcode(${APP_NAME} INFO_PLIST "MacOSXBundleInfo.LuaTemplate.plist.in" BUNDLE_NAME "LuaTestsApp")
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()

@@ -92,8 +92,14 @@ public final class Cocos2dxBitmap {
         int length = text.length();
 
         while(index < length) {
-            index += paint.breakText(text, index, length, true, maxWidth, null);
-            lineCount++;
+            final int charsToAdvance = paint.breakText(text, index, length, true, maxWidth, null);
+            if(charsToAdvance == 0) {
+                index++;
+            }
+            else {
+                index += charsToAdvance;
+                lineCount++;
+            }
         }
 
         float actualHeight = (Math.abs(paint.ascent()) + Math.abs(paint.descent()));

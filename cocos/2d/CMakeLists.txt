@@ -5,6 +5,82 @@ include_directories(
   ../external/poly2tri/sweep
 )
 
+set(COCOS_2D_HEADER
+
+  2d/CCActionPageTurn3D.h
+  2d/CCActionTween.h
+  2d/CCGrid.h
+  2d/CCSpriteFrameCache.h
+  2d/CCTMXTiledMap.h
+  2d/CCLayer.h
+  2d/CCActionCamera.h
+  2d/CCLabelTTF.h
+  2d/CCParticleExamples.h
+  2d/CCSprite.h
+  2d/CCNode.h
+  2d/CCComponentContainer.h
+  2d/CCActionProgressTimer.h
+  2d/CCTweenFunction.h
+  2d/CCLight.h
+  2d/CCAutoPolygon.h
+  2d/CCFontAtlas.h
+  2d/CCAtlasNode.h
+  2d/CCClippingNode.h
+  2d/CCRenderTexture.h
+  2d/CCActionInterval.h
+  2d/CCTMXXMLParser.h
+  2d/CCActionInstant.h
+  2d/CCLabel.h
+  2d/CCComponent.h
+  2d/CCLabelAtlas.h
+  2d/CCActionCatmullRom.h
+  2d/CCActionGrid.h
+  2d/CCDrawingPrimitives.h
+  2d/CCParticleBatchNode.h
+  2d/CCClippingRectangleNode.h
+  2d/CCActionEase.h
+  2d/CCScene.h
+  2d/CCProtectedNode.h
+  2d/CCTextFieldTTF.h
+  2d/CCAnimationCache.h
+  2d/CCFastTMXLayer.h
+  2d/CCFontAtlasCache.h
+  2d/CCFont.h
+  2d/CCParticleSystemQuad.h
+  2d/CCActionGrid3D.h
+  2d/CCCameraBackgroundBrush.h
+  2d/CCFastTMXTiledMap.h
+  2d/CCLabelTextFormatter.h
+  2d/CCMenuItem.h
+  2d/CCLabelBMFont.h
+  2d/CCFontFNT.h
+  2d/CCSpriteBatchNode.h
+  2d/CCTransitionProgress.h
+  2d/CCSpriteFrame.h
+  2d/CCTMXObjectGroup.h
+  2d/CCAnimation.h
+  2d/CCNodeGrid.h
+  2d/CCFontFreeType.h
+  2d/CCGLBufferedNode.h
+  2d/CCAction.h
+  2d/CCTransition.h
+  2d/CCTransitionPageTurn.h
+  2d/CCFontCharMap.h
+  2d/CCParticleSystem.h
+  2d/CCProgressTimer.h
+  2d/CCTileMapAtlas.h
+  2d/CCActionTiledGrid.h
+  2d/CCActionManager.h
+  2d/CCMotionStreak.h
+  2d/CCMenu.h
+  2d/CCDrawNode.h
+  2d/CCTMXLayer.h
+  2d/CCCamera.h
+  2d/CCParallaxNode.h
+  2d/CCGrabber.h
+
+)
+
 set(COCOS_2D_SRC
 
   2d/CCActionCamera.cpp

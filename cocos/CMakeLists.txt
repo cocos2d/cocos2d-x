@@ -55,23 +55,43 @@ include(audio/CMakeLists.txt)
 include(storage/CMakeLists.txt)
 
 if(BUILD_EDITOR_COCOSBUILDER)
-include(editor-support/cocosbuilder/CMakeLists.txt)
-set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_CCB_SRC})
+    include(editor-support/cocosbuilder/CMakeLists.txt)
+    set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_CCB_SRC} ${COCOS_CCB_HEADER})
 endif(BUILD_EDITOR_COCOSBUILDER)
 
 if(BUILD_EDITOR_COCOSTUDIO)
-include(editor-support/cocostudio/CMakeLists.txt)
-set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_CS_SRC})
+    include(editor-support/cocostudio/CMakeLists.txt)
+    set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_CS_SRC} ${COCOS_CS_HEADER})
 endif(BUILD_EDITOR_COCOSTUDIO)
 
 if(BUILD_EDITOR_SPINE)
 include(editor-support/spine/CMakeLists.txt)
-set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_SPINE_SRC})
+    set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_SPINE_SRC} ${COCOS_SPINE_HEADER})
 endif(BUILD_EDITOR_SPINE)
 
 if(BUILD_EXTENSIONS)
 include(../extensions/CMakeLists.txt)
 endif(BUILD_EXTENSIONS)
+
+set(COCOS_HEADER cocos2d.h
+    ${COCOS_2D_HEADER}
+    ${COCOS_3D_HEADER}
+    ${COCOS_PLATFORM_HEADER}
+    ${COCOS_PHYSICS_HEADER}
+    ${COCOS_PHYSICS3D_HEADER}
+    ${COCOS_MATH_HEADER}
+    ${COCOS_NAVMESH_HEADER}
+    ${COCOS_RENDERER_HEADER}
+    ${COCOS_VR_HEADER}
+    ${COCOS_BASE_HEADER}
+    ${COCOS_AUDIO_HEADER}
+    ${COCOS_UI_HEADER}
+    ${COCOS_DEPRECATED_HEADER}
+    ${COCOS_NETWORK_HEADER}
+    ${COCOS_EDITOR_SUPPORT_HEADER}
+    ${COCOS_EXTENSIONS_HEADER}
+    ${COCOS_STORAGE_HEADER}
+)
 
 set(COCOS_SRC cocos2d.cpp
     ${COCOS_2D_SRC}
@@ -91,11 +111,13 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_EDITOR_SUPPORT_SRC}
     ${COCOS_EXTENSIONS_SRC}
     ${COCOS_STORAGE_SRC}
-    )
+)
 
-  #todo: provide prebuild versions of the xx libs for all platforms
-  include_directories(../external/xxtea)
-  include_directories(../external/clipper)
+#todo: provide prebuild versions of the xx libs for all platforms
+include_directories(../external/xxtea)
+include_directories(../external/clipper)
+
+list(APPEND COCOS_SRC ${COCOS_HEADER})
 
 add_library(cocos2d ${COCOS_SRC})
 
@@ -132,7 +154,7 @@ if(GEN_COCOS_PREBUILT)
     if(BUILD_JS_LIBS)
         add_dependencies(prebuilt jscocos2d)
     endif()
-    if(USE_SIMULATOR AND (MACOSX OR WINDOWS))
+    if(BUILD_SIMU_LIB AND (MACOSX OR WINDOWS))
         add_dependencies(prebuilt simulator)
     endif()
 endif()
@@ -146,7 +168,7 @@ if(BUILD_JS_LIBS)
   add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings ${ENGINE_BINARY_PATH}/cocos/js-bindings)
 endif()
 # simulator
-if(USE_SIMULATOR AND (MACOSX OR WINDOWS))
+if(BUILD_SIMU_LIB AND (MACOSX OR WINDOWS))
     add_subdirectory(${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator ${ENGINE_BINARY_PATH}/cocos/libsimulator)
 endif()
 
