@@ -9,7 +9,7 @@ HOST_NAME=""
 
 function install_android_ndk()
 {
-    if [ "$BUILD_TARGET" == "android" ]; then
+    if [ "$BUILD_TARGET" == "android" ] || [ "$BUILD_TARGET" == "android_lua" ] ; then
         python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py
     else
         python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py --ndk_only
@@ -105,7 +105,7 @@ function install_environement_for_pull_request()
             install_linux_environment
         fi
 
-        if [ "$BUILD_TARGET" == "android" ]; then
+        if [ "$BUILD_TARGET" == "android" ] || [ "$BUILD_TARGET" == "android_lua" ] ; then
             install_android_environment
         fi
     fi

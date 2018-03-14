@@ -15,6 +15,11 @@ matrix:
       env: BUILD_TARGET=android
       language: android
       sudo: required
+    # android_lua
+    - os: linux
+      env: BUILD_TARGET=android_lua
+      language: android
+      sudo: required
     # mac
     - os: osx
       env: BUILD_TARGET=mac

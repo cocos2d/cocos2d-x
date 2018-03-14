@@ -53,16 +53,24 @@ function build_android()
     ./gradlew assembleDebug
     popd
 
-    # build lua-tests
-    pushd $COCOS2DX_ROOT/tests/lua-tests/project/proj.android
-    ./gradlew assembleDebug
-    popd
-
     # build js-tests
     # should uncomon it when building time not exceed time limit
     # pushd $COCOS2DX_ROOT/tests/js-tests
     # cocos compile -p android
     # popd
+}
+
+function build_android_lua()
+{
+    # Build all samples
+    echo "Building Android samples lua ..."
+    source ../environment.sh
+
+    # build lua-tests
+    pushd $COCOS2DX_ROOT/tests/lua-tests/project/proj.android
+    ./gradlew assembleDebug
+    popd
+
 }
 
 function genernate_binding_codes()
@@ -186,6 +194,11 @@ function run_pull_request()
     # android
     if [ $BUILD_TARGET == 'android' ]; then
         build_android
+    fi
+
+    # android_lua
+    if [ $BUILD_TARGET == 'android_lua' ]; then
+        build_android_lua
     fi
 
     if [ $BUILD_TARGET == 'mac' ]; then
