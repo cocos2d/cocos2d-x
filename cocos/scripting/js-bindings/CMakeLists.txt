@@ -31,7 +31,7 @@ elseif(APPLE)# osx or ios
   set(PLATFORM_HEADER manual/platform/ios/JavaScriptObjCBridge.h)
   set(PLATFORM_SRC manual/platform/ios/JavaScriptObjCBridge.mm)
 elseif(ANDROID)
-  set(PLATFORM_HEADER manual/platform/ios/CCJavascriptJavaBridge.h)
+  set(PLATFORM_HEADER manual/platform/android/CCJavascriptJavaBridge.h)
   set(PLATFORM_SRC manual/platform/android/CCJavascriptJavaBridge.cpp)
 endif()
 
