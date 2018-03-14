@@ -44,8 +44,6 @@
         "cmake/Modules/FindWebP.cmake", 
         "cmake/Modules/Findflatbuffers.cmake", 
         "cmake/Modules/Findxxhash.cmake", 
-        "cmake/Modules/MacOSXBundleInfo.LuaTemplate.plist.in", 
-        "cmake/Modules/MacOSXBundleInfo.plist.in", 
         "cmake/Modules/SelectLibraryConfigurations.cmake", 
         "cmake/Modules/SelectModule.cmake", 
         "cmake/Modules/SetCompilerOptions.cmake", 
