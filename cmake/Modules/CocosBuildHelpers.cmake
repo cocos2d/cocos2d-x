@@ -51,8 +51,9 @@ function(cocos_mark_multi_resources res_out)
 
   set(tmp_file_list)
   foreach(cc_file ${opt_FILES})
-    get_filename_component(file_dir ${cc_file} DIRECTORY)
-    cocos_mark_resources(FILES ${cc_file} BASEDIR ${file_dir} RESOURCEBASE ${opt_RES_TO})
+    get_filename_component(cc_file_abs ${cc_file} ABSOLUTE)
+    get_filename_component(file_dir ${cc_file_abs} DIRECTORY)
+    cocos_mark_resources(FILES ${cc_file_abs} BASEDIR ${file_dir} RESOURCEBASE ${opt_RES_TO})
   endforeach()
   list(APPEND tmp_file_list ${opt_FILES})
 
@@ -109,7 +110,7 @@ function(cocos_copy_target_dll cocos_target)
   foreach(single_target_dll ${all_depend_dlls} )
       add_custom_command(TARGET ${cocos_target} PRE_BUILD
       COMMAND ${CMAKE_COMMAND} -E copy_if_different
-      ${all_depend_dlls}
+      ${single_target_dll}
       ${opt_COPY_TO}
     )
   endforeach(single_target_dll)
@@ -169,27 +170,33 @@ function(cocos_mark_code_files cocos_target)
   endif()
 
   message(STATUS "cocos_mark_code_files: ${cocos_target}")
-  set(group_base "Source Files")
 
   get_property(file_list TARGET ${cocos_target} PROPERTY SOURCES)
 
   foreach(single_file ${file_list})
-    # get relative_path
-    get_filename_component(abs_path ${single_file} ABSOLUTE)
-    file(RELATIVE_PATH relative_path_with_name ${root_dir} ${abs_path})
-    get_filename_component(relative_path ${relative_path_with_name} PATH)
-    # set source_group, consider sub source group 
-    string(REPLACE "/" "\\" ide_file_group "${group_base}/${relative_path}")
-    source_group("${ide_file_group}" FILES ${single_file})
-
+    source_group_single_file(${single_file} GROUP_TO "Source Files" BASE_PATH "${root_dir}")
   endforeach()
-  
+
+endfunction()
+
+# source group one file
+# cut the `single_file` absolute path from `BASE_PATH`, then mark file to `GROUP_TO`
+function(source_group_single_file single_file)
+  set(oneValueArgs GROUP_TO BASE_PATH)
+  cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  # get relative_path
+  get_filename_component(abs_path ${single_file} ABSOLUTE)
+  file(RELATIVE_PATH relative_path_with_name ${opt_BASE_PATH} ${abs_path})
+  get_filename_component(relative_path ${relative_path_with_name} PATH)
+  # set source_group, consider sub source group 
+  string(REPLACE "/" "\\" ide_file_group "${opt_GROUP_TO}/${relative_path}")
+  source_group("${ide_file_group}" FILES ${single_file})
 endfunction()
 
 # build a cocos application
 # hrough compile the files `APP_SRC`, link the libs in `*LIBS`, use the packages in `*.PKGS`
 # this method hide the link lib details, those is prebuilt libs or not
-macro(cocos_build_app app_name)
+function(cocos_build_app app_name)
   set(multiValueArgs 
     APP_SRC
     DEPEND_COMMON_LIBS 
@@ -200,7 +207,7 @@ macro(cocos_build_app app_name)
     DEPEND_WINDOWS_LIBS
   )
   cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-   
+
   if(ANDROID)
     add_library(${app_name} SHARED ${opt_APP_SRC})
     foreach(android_lib ${opt_DEPEND_ANDROID_LIBS})
@@ -274,7 +281,10 @@ macro(cocos_build_app app_name)
   if(GEN_COCOS_PREBUILT)
     add_dependencies(${APP_NAME} prebuilt)
   endif()
-endmacro()
+
+  set(APP_BIN_DIR ${APP_BIN_DIR} PARENT_SCOPE)
+  set(APP_RES_DIR ${APP_RES_DIR} PARENT_SCOPE)
+endfunction()
 
 # if cc_variable not set, then set it cc_value
 macro(cocos_fake_set cc_variable cc_value)
@@ -325,11 +335,10 @@ macro(cocos_pak_xcode cocos_target)
   message("cocos package: ${cocos_target}, plist file: ${COCOS_APP_INFO_PLIST}")
 endmacro()
 
-
 # This little macro lets you set any XCode specific property, from ios.toolchain.cmake
-macro (set_xcode_property TARGET XCODE_PROPERTY XCODE_VALUE)
+function(set_xcode_property TARGET XCODE_PROPERTY XCODE_VALUE)
 	set_property (TARGET ${TARGET} PROPERTY XCODE_ATTRIBUTE_${XCODE_PROPERTY} ${XCODE_VALUE})
-endmacro (set_xcode_property)
+endfunction(set_xcode_property)
 
 # works same as find_package, but do additional care to properly find
 macro(cocos_find_package pkg_name pkg_prefix)

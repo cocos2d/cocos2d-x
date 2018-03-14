@@ -64,44 +64,74 @@ if(APPLE OR VS)
     set(cc_common_res ${res_main} ${res_res} ${res_src} ${res_script})
 endif()
 
-if(WINDOWS)
-    set(WINDOWS_SRC proj.win32/main.cpp)
-    set(PLATFORM_SRC ${cc_common_res} ${WINDOWS_SRC})
-elseif(ANDROID)
-    set(PLATFORM_SRC proj.android/app/jni/main.cpp)
+# record sources, headers...
+set(GAME_SOURCE)
+set(GAME_HEADER)
+
+if(ANDROID)
+    list(APPEND GAME_SOURCE
+        proj.android/app/jni/main.cpp
+    )
 elseif(LINUX)
-    set(PLATFORM_SRC proj.linux/main.cpp)
+    list(APPEND GAME_SOURCE
+        proj.linux/main.cpp
+    )
+elseif(WINDOWS)
+    list(APPEND GAME_HEADER
+        proj.win32/main.h
+        proj.win32/resource.h
+    )
+    list(APPEND GAME_SOURCE
+        proj.win32/main.cpp
+        ${cc_common_res}
+    )
 elseif(APPLE)
     if(IOS)
-        set(ios_code_files
+        list(APPEND GAME_HEADER
+            proj.ios/AppController.h
+            proj.ios/NativeOcClass.h
+            proj.ios/RootViewController.h
+        )
+        set(APP_UI_RES
+            proj.ios/Info.plist
+            proj.ios/exportoptions.plist
+            proj.ios/LaunchScreen.storyboard
+            proj.ios/LaunchScreenBackground.png
+            proj.ios/Images.xcassets
+        )
+        list(APPEND GAME_SOURCE
             proj.ios/main.m
             proj.ios/NativeOcClass.m
             proj.ios/AppController.mm
             proj.ios/RootViewController.mm
-            )
-        set(ios_res_files
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreen.storyboard
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreenBackground.png
+            ${APP_UI_RES}
         )
-        cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
-        set(apple_src_files ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(mac_code_files proj.mac/main.cpp)
-        set(mac_res_files
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Icon.icns
+        set(APP_UI_RES
+            proj.mac/Icon.icns
+            proj.mac/Test_Info.plist
+            proj.mac/Test_Prefix.pch
+            proj.mac/en.lproj/MainMenu.xib
+            proj.mac/en.lproj/InfoPlist.strings
         )
-        cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
-        set(apple_src_files ${mac_res_files} ${mac_code_files})
+        list(APPEND GAME_SOURCE
+            proj.mac/main.cpp
+            ${APP_UI_RES}
+        )
     endif()
-    set(PLATFORM_SRC ${cc_common_res} ${apple_src_files})
+    list(APPEND GAME_SOURCE ${cc_common_res})
 endif()
 
-set(SAMPLE_SRC
+list(APPEND GAME_HEADER
+    Classes/AppDelegate.h
+    Classes/js_Effect3D_bindings.h
+    Classes/js_DrawNode3D_bindings.h
+)
+list(APPEND GAME_SOURCE
     Classes/AppDelegate.cpp
     Classes/js_DrawNode3D_bindings.cpp
     Classes/js_Effect3D_bindings.cpp
-    ${PLATFORM_SRC}
-    )
+)
 
 include_directories(
     Classes
@@ -112,19 +142,24 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/cocos/audio/include
     ${COCOS2DX_ROOT_PATH}/external/spidermonkey/include/${PLATFORM_FOLDER}
     ${COCOS2DX_ROOT_PATH}/external/chipmunk/include/chipmunk
-    )
+)
+
+set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
 
 # mark app complie info and libs info
 cocos_build_app(${APP_NAME}
-    APP_SRC "${SAMPLE_SRC}"
+    APP_SRC "${APP_SRC}"
     DEPEND_COMMON_LIBS "jscocos2d" "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"
 )
 
 # mark app resources
 if(APPLE)
+    set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)
-        cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "JS Tests")
+        set_target_properties(${APP_NAME} PROPERTIES
+            MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Test_Info.plist"
+        )
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()

@@ -13,29 +13,29 @@ if(ANDROID)
     include_directories(
         manual/platform/android
         manual/platform/android/jni
-        )
+    )
 endif()
 
 file(GLOB lua_cocos2d_source_files
     "${cocos_root}/external/lua/tolua/*.c"
     "${cocos_root}/external/xxtea/xxtea.cpp"
-    )
+)
 
 list(APPEND lua_cocos2d_source_files
-        ${cocos_root}/external/lua/luasocket/luasocket.c
-        ${cocos_root}/external/lua/luasocket/timeout.c
-        ${cocos_root}/external/lua/luasocket/buffer.c
-        ${cocos_root}/external/lua/luasocket/io.c
-        ${cocos_root}/external/lua/luasocket/auxiliar.c
-        ${cocos_root}/external/lua/luasocket/options.c
-        ${cocos_root}/external/lua/luasocket/inet.c
-        ${cocos_root}/external/lua/luasocket/except.c
-        ${cocos_root}/external/lua/luasocket/select.c
-        ${cocos_root}/external/lua/luasocket/tcp.c
-        ${cocos_root}/external/lua/luasocket/udp.c
-        ${cocos_root}/external/lua/luasocket/mime.c
-        ${cocos_root}/external/lua/luasocket/luasocket_scripts.c
-	)
+    ${cocos_root}/external/lua/luasocket/luasocket.c
+    ${cocos_root}/external/lua/luasocket/timeout.c
+    ${cocos_root}/external/lua/luasocket/buffer.c
+    ${cocos_root}/external/lua/luasocket/io.c
+    ${cocos_root}/external/lua/luasocket/auxiliar.c
+    ${cocos_root}/external/lua/luasocket/options.c
+    ${cocos_root}/external/lua/luasocket/inet.c
+    ${cocos_root}/external/lua/luasocket/except.c
+    ${cocos_root}/external/lua/luasocket/select.c
+    ${cocos_root}/external/lua/luasocket/tcp.c
+    ${cocos_root}/external/lua/luasocket/udp.c
+    ${cocos_root}/external/lua/luasocket/mime.c
+    ${cocos_root}/external/lua/luasocket/luasocket_scripts.c
+)
 
 if(WINDOWS)
     if(MINGW)
@@ -61,6 +61,42 @@ elseif(UNIX OR ANDROID)
         ${cocos_root}/external/lua/luasocket/usocket.c
         )
 endif()
+
+set(lua_bindings_manual_headers
+    manual/CCComponentLua.h
+    manual/3d/lua_cocos2dx_3d_manual.h
+    manual/cocosbuilder/CCBProxy.h
+    manual/cocosbuilder/lua_cocos2dx_cocosbuilder_manual.h
+    manual/CCLuaStack.h
+    manual/CCLuaEngine.h
+    manual/lua_module_register.h
+    manual/CCLuaBridge.h
+    manual/extension/lua_cocos2dx_extension_manual.h
+    manual/LuaBasicConversions.h
+    manual/spine/LuaSkeletonAnimation.h
+    manual/platform/ios/CCLuaObjcBridge.h
+    manual/network/lua_cocos2dx_network_manual.h
+    manual/network/lua_xml_http_request.h
+    manual/network/Lua_web_socket.h
+    manual/network/lua_extensions.h
+    manual/audioengine/lua_cocos2dx_audioengine_manual.h
+    manual/Lua-BindingsExport.h
+    manual/tolua_fix.h
+    manual/navmesh/lua_cocos2dx_navmesh_manual.h
+    manual/navmesh/lua_cocos2dx_navmesh_conversions.h
+    manual/cocos2d/lua_cocos2dx_deprecated.h
+    manual/cocos2d/LuaOpengl.h
+    manual/cocos2d/LuaScriptHandlerMgr.h
+    manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.h
+    manual/Cocos2dxLuaLoader.h
+    manual/CCLuaValue.h
+    manual/physics3d/lua_cocos2dx_physics3d_manual.h
+    manual/cocostudio/lua-cocos-studio-conversions.h
+    manual/cocostudio/CustomGUIReader.h
+    manual/ui/lua_cocos2dx_ui_manual.hpp
+    manual/ui/lua_cocos2dx_experimental_video_manual.hpp
+    manual/controller/lua_cocos2dx_controller_manual.hpp
+)
 
 set(lua_bindings_manual_files
     manual/CCLuaBridge.cpp
@@ -97,13 +133,31 @@ set(lua_bindings_manual_files
     manual/spine/LuaSkeletonAnimation.cpp
     manual/ui/lua_cocos2dx_experimental_video_manual.cpp
     manual/ui/lua_cocos2dx_ui_manual.cpp
-    # android.mk not include this
-    # manual/video/lua_cocos2dx_experimental_video_manual.cpp
     manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
     manual/physics3d/lua_cocos2dx_physics3d_manual.cpp
     manual/navmesh/lua_cocos2dx_navmesh_conversions.cpp
     manual/navmesh/lua_cocos2dx_navmesh_manual.cpp
     )
+
+set(lua_bindings_auto_headers
+    auto/lua_cocos2dx_cocosdenshion_auto.hpp
+    auto/lua_cocos2dx_audioengine_auto.hpp
+    auto/lua_cocos2dx_3d_auto.hpp
+    auto/lua_cocos2dx_controller_auto.hpp
+    auto/lua_cocos2dx_spine_auto.hpp
+    auto/lua_cocos2dx_experimental_webview_auto.hpp
+    auto/lua_cocos2dx_studio_auto.hpp
+    auto/lua_cocos2dx_auto.hpp
+    auto/lua_cocos2dx_experimental_video_auto.hpp
+    auto/lua_cocos2dx_navmesh_auto.hpp
+    auto/lua_cocos2dx_csloader_auto.hpp
+    auto/lua_cocos2dx_experimental_auto.hpp
+    auto/lua_cocos2dx_physics3d_auto.hpp
+    auto/lua_cocos2dx_ui_auto.hpp
+    auto/lua_cocos2dx_physics_auto.hpp
+    auto/lua_cocos2dx_extension_auto.hpp
+    auto/lua_cocos2dx_cocosbuilder_auto.hpp
+)
 
 set(lua_bindings_auto_files
     auto/lua_cocos2dx_3d_auto.cpp
@@ -126,32 +180,59 @@ set(lua_bindings_auto_files
 
 if(APPLE)
     # CCLuaObjcBridge.mm needed by ios and mac
+    set(lua_bindings_manual_headers
+        ${lua_bindings_manual_headers}
+        manual/platform/ios/CCLuaObjcBridge.h
+    )
     set(lua_bindings_manual_files
         ${lua_bindings_manual_files}
         manual/platform/ios/CCLuaObjcBridge.mm
     )
     if(IOS)
+        set(lua_bindings_manual_headers
+            ${lua_bindings_manual_headers}
+            auto/lua_cocos2dx_experimental_webview_auto.hpp
+            manual/ui/lua_cocos2dx_experimental_webview_manual.hpp
+        )
         set(lua_bindings_manual_files
-        ${lua_bindings_manual_files}
-        auto/lua_cocos2dx_experimental_webview_auto.cpp
-        manual/ui/lua_cocos2dx_experimental_webview_manual.cpp
+            ${lua_bindings_manual_files}
+            auto/lua_cocos2dx_experimental_webview_auto.cpp
+            manual/ui/lua_cocos2dx_experimental_webview_manual.cpp
         )
     endif()
 elseif(ANDROID)
+    set(lua_bindings_manual_headers
+        ${lua_bindings_manual_headers}
+        manual/platform/android/CCLuaJavaBridge.h
+        manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.h
+        auto/lua_cocos2dx_experimental_webview_auto.hpp
+        manual/ui/lua_cocos2dx_experimental_webview_manual.hpp
+    )
     set(lua_bindings_manual_files
         ${lua_bindings_manual_files}
         manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.cpp
         manual/platform/android/CCLuaJavaBridge.cpp
         auto/lua_cocos2dx_experimental_webview_auto.cpp
         manual/ui/lua_cocos2dx_experimental_webview_manual.cpp
-        )
+    )
 endif()
 
 if(USE_BULLET)
   include_directories(${BULLET_INCLUDE_DIRS})
 endif()
 
-set(lua_bindings_files ${lua_cocos2d_source_files} ${lua_bindings_manual_files} ${lua_bindings_auto_files})
+set(lua_bindings_files
+    ${lua_cocos2d_source_files}
+    ${lua_bindings_manual_files}
+    ${lua_bindings_auto_files}
+)
+set(lua_bindings_headers
+    ${lua_cocos2d_source_headers}
+    ${lua_bindings_manual_headers}
+    ${lua_bindings_auto_headers}
+)
+
+list(APPEND lua_bindings_files ${lua_bindings_headers})
 
 add_library(luacocos2d ${lua_bindings_files})
 target_link_libraries(luacocos2d cocos2d)

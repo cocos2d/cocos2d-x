@@ -1,15 +1,7 @@
-
-if(WINDOWS)
-  set(PLATFORM_LINK websockets)
-elseif(LINUX)
-  set(PLATFORM_LINK websockets ssl crypto)
-elseif(ANDROID)
-  set(PLATFORM_LINK websockets)
-else()
-  set(PLATFORM_LINK websockets)
-endif()
-
 if(ANDROID)
+  set(COCOS_NETWORK_HEADER
+    network/CCDownloader-android.h
+  )
   set(COCOS_NETWORK_SRC
     network/HttpClient-android.cpp
     network/SocketIO.cpp
@@ -18,7 +10,11 @@ if(ANDROID)
     network/CCDownloader-android.cpp
     network/Uri.cpp
   )
-elseif(MACOSX OR IOS)
+elseif(APPLE)
+  set(COCOS_NETWORK_HEADER
+    network/CCDownloader-apple.h
+    network/HttpAsynConnection-apple.h
+  )
   set(COCOS_NETWORK_SRC
     network/CCDownloader-apple.mm
     network/HttpClient.cpp
@@ -39,18 +35,16 @@ else()
   )
 endif()
 
-if(WINDOWS)
-  set(COCOS_NETWORK_LINK 
-    libcurl_imp 
-    ${PLATFORM_LINK}
-  )
-elseif(ANDROID)
-  set(COCOS_NETWORK_LINK
-    ${PLATFORM_LINK} 
-  )
-else()
-  set(COCOS_NETWORK_LINK 
-    curl
-    ${PLATFORM_LINK} 
-  )
-endif()
+set(COCOS_NETWORK_HEADER
+    ${COCOS_NETWORK_HEADER}
+    network/CCDownloader-curl.h
+    network/CCIDownloaderImpl.h
+    network/CCDownloader.h
+    network/WebSocket.h
+    network/Uri.h
+    network/SocketIO.h
+    network/HttpClient.h
+    network/HttpResponse.h
+    network/HttpRequest.h
+    network/HttpCookie.h
+)

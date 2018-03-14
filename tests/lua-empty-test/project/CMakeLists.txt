@@ -32,37 +32,57 @@ if(APPLE OR VS)
     set(cc_common_res ${res_res} ${res_src} ${res_script})
 endif()
 
-set(SAMPLE_SRC Classes/AppDelegate.cpp)
+# record sources, headers...
+set(GAME_SOURCE
+    Classes/AppDelegate.cpp
+)
+set(GAME_HEADER 
+    Classes/AppDelegate.h
+    Classes/lua_module_register.h
+)
 
 if(ANDROID)
-    list(APPEND SAMPLE_SRC proj.android/app/jni/main.cpp)
+    list(APPEND GAME_SOURCE proj.android/app/jni/main.cpp)
 elseif(LINUX)
-    set(SAMPLE_SRC ${SAMPLE_SRC} proj.linux/main.cpp)
+    list(APPEND GAME_SOURCE proj.linux/main.cpp)
 elseif(WINDOWS)
     add_definitions(-D_USRLUASTATIC)
-    list(APPEND SAMPLE_SRC proj.win32/main.cpp ${cc_common_res})
+    list(APPEND GAME_HEADER proj.win32/main.h)
+    list(APPEND GAME_SOURCE proj.win32/main.cpp ${cc_common_res})
 elseif(APPLE)
     if(IOS)
-        set(ios_code_files
+        list(APPEND GAME_HEADER
+            proj.ios/AppController.h
+            proj.ios/RootViewController.h
+        )
+        set(APP_UI_RES
+            proj.ios/Info.plist
+            proj.ios/exportoptions.plist
+            proj.ios/LaunchScreen.storyboard
+            proj.ios/LaunchScreenBackground.png
+            proj.ios/Images.xcassets
+        )
+        list(APPEND GAME_SOURCE
             proj.ios/main.m
             proj.ios/AppController.mm
             proj.ios/RootViewController.mm
+            proj.ios/HelloLua_Prefix.pch
+            ${APP_UI_RES}
         )
-        set(ios_res_files
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreen.storyboard
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreenBackground.png
-        )
-        cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
-        set(apple_src_files ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(mac_code_files proj.mac/main.cpp)
-        set(mac_res_files
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Icon.icns
+        set(APP_UI_RES
+            proj.mac/Icon.icns
+            proj.mac/Info.plist
+            proj.mac/en.lproj/MainMenu.xib
+            proj.mac/en.lproj/InfoPlist.strings
         )
-        cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
-        set(apple_src_files ${mac_res_files} ${mac_code_files})
+        list(APPEND GAME_SOURCE
+            proj.mac/main.cpp
+            proj.mac/HelloLua_Prefix.pch
+            ${APP_UI_RES}
+        )
     endif()
-    list(APPEND SAMPLE_SRC ${cc_common_res} ${apple_src_files})
+    list(APPEND GAME_SOURCE ${cc_common_res})
 endif()
 
 include_directories(
@@ -71,21 +91,25 @@ include_directories(
     ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
     ${COCOS2DX_ROOT_PATH}/external/lua/luajit/include
     ${COCOS2DX_ROOT_PATH}/external/lua/tolua
-    )
+)
 
 include_directories(${LUAJIT_INCLUDE_DIRS})
 
+set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
 # mark app complie info and libs info
 cocos_build_app(${APP_NAME} 
-    APP_SRC "${SAMPLE_SRC}"
+    APP_SRC "${APP_SRC}"
     DEPEND_COMMON_LIBS "luacocos2d" "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"
 )
 
 # mark app resources
 if(APPLE)
+    set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)
-        cocos_pak_xcode(${APP_NAME})
+        set_target_properties(${APP_NAME} PROPERTIES
+            MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Info.plist"
+        )
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()

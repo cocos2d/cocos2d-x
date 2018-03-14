@@ -38,57 +38,83 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     endif()
 endif()
 
-set(common_code_files
+# record sources, headers, resources...
+set(GAME_SOURCE)
+set(GAME_HEADER)
+
+set(GAME_RES_FOLDER 
+    "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
+)
+if(APPLE OR VS)
+    cocos_mark_multi_resources(cc_common_res RES_TO "Resources" FOLDERS ${GAME_RES_FOLDER})
+endif()
+
+list(APPEND GAME_HEADER
+    Classes/AppMacros.h
+    Classes/HelloWorldScene.h
+    Classes/AppDelegate.h
+)
+list(APPEND GAME_SOURCE
     Classes/AppDelegate.cpp
     Classes/HelloWorldScene.cpp
 )
 
-set(res_res_folders 
-    "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
-)
-if(APPLE OR VS)
-    cocos_mark_multi_resources(cc_common_res RES_TO "Resources" FOLDERS ${res_res_folders})
-endif()
-
 if(ANDROID)
-    set(platform_specific_src proj.android/app/jni/main.cpp)
+    list(APPEND GAME_SOURCE
+        proj.android/app/jni/main.cpp
+    )
 elseif(LINUX)
-    set(platform_specific_src proj.linux/main.cpp)
+    list(APPEND GAME_SOURCE
+        proj.linux/main.cpp
+    )
 elseif(WINDOWS)
-    set(windows_src proj.win32/main.cpp)
-    set(platform_specific_src ${cc_common_res} ${windows_src})
+    list(APPEND GAME_HEADER
+        proj.win32/main.h
+    )
+    list(APPEND GAME_SOURCE
+        proj.win32/main.cpp
+        ${cc_common_res}
+    )
 elseif(APPLE)
     if(IOS)
-        set(ios_code_files
+        list(APPEND GAME_HEADER
+            proj.ios/AppController.h
+            proj.ios/RootViewController.h
+        )
+        set(APP_UI_RES
+            proj.ios/Info.plist
+            proj.ios/exportoptions.plist
+            proj.ios/LaunchScreen.storyboard
+            proj.ios/LaunchScreenBackground.png
+            proj.ios/Images.xcassets
+        )
+        list(APPEND GAME_SOURCE
             proj.ios/main.m
             proj.ios/AppController.mm
             proj.ios/RootViewController.mm
+            ${APP_UI_RES}
         )
-        set(ios_res_files
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreen.storyboard
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios/LaunchScreenBackground.png
-        )
-        cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
-        set(apple_src_files ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(mac_code_files proj.mac/main.cpp)
-        set(mac_res_files
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Icon.icns
+        set(APP_UI_RES
+            proj.mac/Icon.icns
+            proj.mac/Info.plist
+            proj.mac/en.lproj/MainMenu.xib
+            proj.mac/en.lproj/InfoPlist.strings
         )
-        cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
-        set(apple_src_files ${mac_res_files} ${mac_code_files})
+        list(APPEND GAME_SOURCE
+            proj.mac/main.cpp
+            ${APP_UI_RES}
+        )
     endif()
-        set(platform_specific_src ${cc_common_res} ${apple_src_files})
-else()
-    message(FATAL_ERROR "Unsupported platform, CMake will exit" )
+    list(APPEND GAME_SOURCE ${cc_common_res})
 endif()
 
-include_directories(Classes)
-
 set(all_code_files
-    ${platform_specific_src}
-    ${common_code_files}
+    ${GAME_HEADER}
+    ${GAME_SOURCE}
 )
+
+include_directories(Classes)
 
 # mark app complie info and libs info
 cocos_build_app(${APP_NAME} 
@@ -99,8 +125,11 @@ cocos_build_app(${APP_NAME}
 
 # mark app resources
 if(APPLE)
+    set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)
-        cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "Cpp Empty Test")
+        set_target_properties(${APP_NAME} PROPERTIES
+            MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Info.plist"
+        )
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()
@@ -109,5 +138,5 @@ elseif(WINDOWS)
 endif()
 
 if(LINUX OR WINDOWS)
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${res_res_folders})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
 endif()

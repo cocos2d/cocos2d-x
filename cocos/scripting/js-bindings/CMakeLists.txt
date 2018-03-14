@@ -26,29 +26,87 @@ set(cocos_root ${COCOS2DX_ROOT_PATH})
 
 #platform
 if(WIN32) # Win32
-  set(PLATFORM_FOLDER win32)
   add_definitions(-D_USRJSSTATIC)
 elseif(APPLE)# osx or ios
-  set(PLATFORM_FOLDER mac)
+  set(PLATFORM_HEADER manual/platform/ios/JavaScriptObjCBridge.h)
   set(PLATFORM_SRC manual/platform/ios/JavaScriptObjCBridge.mm)
 elseif(ANDROID)
-  set(PLATFORM_FOLDER android)
+  set(PLATFORM_HEADER manual/platform/android/CCJavascriptJavaBridge.h)
   set(PLATFORM_SRC manual/platform/android/CCJavascriptJavaBridge.cpp)
-else() # Assume Linux
-  set(PLATFORM_FOLDER linux)
 endif()
 
 if(ANDROID OR IOS)
+  set(PLATFORM_HEADER 
+    ${PLATFORM_HEADER}
+    auto/jsb_cocos2dx_experimental_webView_auto.hpp
+    manual/experimental/jsb_cocos2dx_experimental_webView_manual.h
+    auto/jsb_cocos2dx_experimental_video_auto.hpp
+    manual/experimental/jsb_cocos2dx_experimental_video_manual.h
+  )
   set(PLATFORM_SRC
+    ${PLATFORM_SRC}
     auto/jsb_cocos2dx_experimental_webView_auto.cpp
     manual/experimental/jsb_cocos2dx_experimental_webView_manual.cpp
     auto/jsb_cocos2dx_experimental_video_auto.cpp
     manual/experimental/jsb_cocos2dx_experimental_video_manual.cpp
-    ${PLATFORM_SRC}
   )
 endif()
 
+set(JSBINDING_HEADER
+  ${PLATFORM_HEADER}
+  auto/jsb_cocos2dx_extension_auto.hpp
+  auto/jsb_cocos2dx_builder_auto.hpp
+  auto/jsb_cocos2dx_physics3d_auto.hpp
+  auto/jsb_cocos2dx_ui_auto.hpp
+  auto/jsb_cocos2dx_spine_auto.hpp
+  auto/jsb_cocos2dx_auto.hpp
+  auto/jsb_cocos2dx_studio_auto.hpp
+  auto/jsb_cocos2dx_navmesh_auto.hpp
+  auto/jsb_cocos2dx_audioengine_auto.hpp
+  auto/js_bindings_chipmunk_functions_registration.h
+  auto/js_bindings_chipmunk_auto_classes.h
+  auto/js_bindings_chipmunk_auto_classes_registration.h
+  auto/jsb_cocos2dx_network_auto.hpp
+  auto/jsb_cocos2dx_3d_auto.hpp
+  auto/jsb_cocos2dx_3d_extension_auto.hpp
+  auto/js_bindings_chipmunk_functions.h
+  manual/js_bindings_core.h
+  manual/js_module_register.h
+  manual/ui/jsb_cocos2dx_ui_manual.h
+  manual/3d/jsb_cocos2dx_3d_manual.h
+  manual/cocosbuilder/js_bindings_ccbreader.h
+  manual/js_manual_conversions.h
+  manual/extension/jsb_cocos2dx_extension_manual.h
+  manual/spine/jsb_cocos2dx_spine_manual.h
+  manual/jsb_opengl_registration.h
+  manual/jsb_opengl_manual.h
+  manual/network/jsb_websocket.h
+  manual/network/js_network_manual.h
+  manual/network/XMLHTTPRequest.h
+  manual/network/jsb_socketio.h
+  manual/component/CCComponentJS.h
+  manual/navmesh/jsb_cocos2dx_navmesh_conversions.h
+  manual/navmesh/jsb_cocos2dx_navmesh_manual.h
+  manual/jsb_helper.h
+  manual/js_bindings_opengl.h
+  manual/chipmunk/js_bindings_chipmunk_manual.h
+  manual/chipmunk/js_bindings_chipmunk_registration.h
+  manual/js_bindings_config.h
+  manual/ScriptingCore.h
+  manual/localstorage/js_bindings_system_functions.h
+  manual/localstorage/js_bindings_system_functions_registration.h
+  manual/localstorage/js_bindings_system_registration.h
+  manual/js-BindingsExport.h
+  manual/physics3d/jsb_cocos2dx_physics3d_manual.h
+  manual/jsb_opengl_functions.h
+  manual/cocostudio/jsb_cocos2dx_studio_conversions.h
+  manual/cocostudio/jsb_cocos2dx_studio_manual.h
+  manual/jsb_event_dispatcher_manual.h
+  manual/spidermonkey_specifics.h
+)
+
 set(JSBINDING_SRC
+  ${PLATFORM_SRC}
   auto/jsb_cocos2dx_auto.cpp
   auto/jsb_cocos2dx_audioengine_auto.cpp
   auto/jsb_cocos2dx_builder_auto.cpp
@@ -91,17 +149,14 @@ set(JSBINDING_SRC
   manual/physics3d/jsb_cocos2dx_physics3d_manual.cpp
   manual/navmesh/jsb_cocos2dx_navmesh_conversions.cpp
   manual/navmesh/jsb_cocos2dx_navmesh_manual.cpp
-  ${cocos_root}/cocos/storage/local-storage/LocalStorage.cpp
-  ${PLATFORM_SRC}
 )
 
-# if(USE_CHIPMUNK)
-#     include_directories(${CHIPMUNK_INCLUDE_DIRS})
-# endif()
 include_directories(
   ${cocos_root}/cocos/platform/${PLATFORM_FOLDER}
   ${cocos_root}/external/spidermonkey/include/${PLATFORM_FOLDER}
 )
+
+list(APPEND JSBINDING_SRC ${JSBINDING_HEADER} ${PLATFORM_HEADER})
 
 add_library(jscocos2d STATIC
   ${JSBINDING_SRC}

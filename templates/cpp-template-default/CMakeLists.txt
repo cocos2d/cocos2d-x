@@ -40,87 +40,102 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     endif()
 endif()
 
-# mark app resources
-set(res_res_folders 
+# record sources, headers, resources...
+set(GAME_SOURCE)
+set(GAME_HEADER)
+
+set(GAME_RES_FOLDER 
     "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
 )
-if(APPLE OR VS)
-    cocos_mark_multi_resources(cc_common_res RES_TO "Resources" FOLDERS ${res_res_folders})
+if(APPLE OR WINDOWS)
+    cocos_mark_multi_resources(common_res_files RES_TO "Resources" FOLDERS ${GAME_RES_FOLDER})
 endif()
 
 include_directories(
-    ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
     Classes
+    ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
 )
 # add cross-platforms source files and header files 
-set(common_code_files
+list(APPEND GAME_SOURCE
     Classes/AppDelegate.cpp
     Classes/HelloWorldScene.cpp
 )
-set(common_header_files
+list(APPEND GAME_HEADER
     Classes/AppDelegate.h
     Classes/HelloWorldScene.h
 )
-# add platform specific source files, save to platform_specific_src
+
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
     set(APP_NAME MyGame)
-    set(platform_specific_src proj.android/app/jni/hellocpp/main.cpp)
-elseif(LINUX)
-    set(platform_specific_src proj.linux/main.cpp)
-elseif(WINDOWS)
-    set(windows_src
-        proj.win32/main.cpp
-        proj.win32/game.rc
+    list(APPEND GAME_SOURCE
+        proj.android/app/jni/hellocpp/main.cpp
     )
-    set(platform_specific_header
+elseif(LINUX)
+    list(APPEND GAME_SOURCE
+        proj.linux/main.cpp
+    )
+elseif(WINDOWS)
+    list(APPEND GAME_HEADER
         proj.win32/main.h
         proj.win32/resource.h
     )
-    set(platform_specific_src ${cc_common_res} ${windows_src})
+    list(APPEND GAME_SOURCE
+        proj.win32/main.cpp
+        proj.win32/game.rc
+        ${common_res_files}
+    )
 elseif(APPLE)
     if(IOS)
-        set(ios_code_files
+        list(APPEND GAME_HEADER
+            proj.ios_mac/ios/AppController.h
+            proj.ios_mac/ios/RootViewController.h
+        )
+        set(APP_UI_RES
+            proj.ios_mac/ios/Info.plist
+            proj.ios_mac/ios/exportoptions.plist
+            proj.ios_mac/ios/LaunchScreen.storyboard
+            proj.ios_mac/ios/LaunchScreenBackground.png
+            proj.ios_mac/ios/Images.xcassets
+        )
+        list(APPEND GAME_SOURCE
             proj.ios_mac/ios/main.m
             proj.ios_mac/ios/AppController.mm
             proj.ios_mac/ios/RootViewController.mm
+            proj.ios_mac/ios/Prefix.pch
+            ${APP_UI_RES}
         )
-        set(ios_res_files
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/LaunchScreen.storyboard
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/ios/LaunchScreenBackground.png
-        )
-        cocos_mark_multi_resources(ios_res_files RES_TO "Resources" FILES ${ios_res_files})
-        set(apple_src_files ${ios_code_files} ${ios_res_files})
     elseif(MACOSX)
-        set(mac_code_files proj.ios_mac/mac/main.cpp)
-        set(mac_res_files
-            ${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Icon.icns
+        set(APP_UI_RES
+            proj.ios_mac/mac/Icon.icns
+            proj.ios_mac/mac/Info.plist
         )
-        cocos_mark_multi_resources(mac_res_files RES_TO "Resources" FILES ${mac_res_files})
-        set(apple_src_files ${mac_res_files} ${mac_code_files})
+        list(APPEND GAME_SOURCE
+            proj.ios_mac/mac/main.cpp
+            proj.ios_mac/mac/Prefix.pch
+            ${APP_UI_RES}
+        )
     endif()
-    set(platform_specific_src ${cc_common_res} ${apple_src_files})
-else()
-    message(FATAL_ERROR "Unsupported platform, CMake will exit" )
+    list(APPEND GAME_SOURCE ${common_res_files})
 endif()
 
 # mark app complie info and libs info
-set(cocos_app_src
-    ${platform_specific_src}
-    ${common_header_files}
-    ${common_code_files}
-    ${common_header_files}
-    ${common_code_files}
+set(APP_SRC
+    ${GAME_SOURCE}
+    ${GAME_HEADER}
 )
 cocos_build_app(${APP_NAME} 
-    APP_SRC "${cocos_app_src}"
+    APP_SRC "${APP_SRC}"
     DEPEND_COMMON_LIBS "cocos2d"
     DEPEND_ANDROID_LIBS "cocos2d_android"
 )
 
 if(APPLE)
+    set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)
-        cocos_pak_xcode(${APP_NAME} BUNDLE_NAME "Cpp Hello Test")
+        set_target_properties(${APP_NAME} PROPERTIES
+            MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.ios_mac/mac/Info.plist"
+        )
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
     endif()
@@ -129,5 +144,5 @@ elseif(WINDOWS)
 endif()
 
 if(LINUX OR WINDOWS)
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${res_res_folders})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
 endif()

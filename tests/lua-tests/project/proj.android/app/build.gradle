@@ -26,7 +26,7 @@ android {
                 cmake {
                     targets 'lua_tests'
                     arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", \
-                              "-DUSE_CHIPMUNK=TRUE", "-DUSE_BULLET=TRUE", "-DUSE_LUACOCOS2D=TRUE"
+                              "-DUSE_CHIPMUNK=TRUE", "-DUSE_BULLET=TRUE", "-DBUILD_LUA_LIBS=TRUE"
                     cppFlags "-frtti -fexceptions"
                     // prebuilt root must be defined as a directory which you have right to access or create if you use prebuilt
                     // set "-DGEN_COCOS_PREBUILT=ON" and "-DUSE_COCOS_PREBUILT=OFF" to generate prebuilt,  this way build cocos2d-x libs
