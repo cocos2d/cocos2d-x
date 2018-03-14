@@ -103,11 +103,12 @@ function upgrade_openssl_for_osx()
     ln -s /usr/local/opt/openssl/lib/libssl.1.0.0.dylib /usr/local/lib/
     ln -s /usr/local/opt/openssl/bin/openssl /usr/local/bin/openssl
     echo "macOS SSL: `openssl version`"
+    # see 
+    echo "old python: `ll /usr/local/bin | grep python`"
     # brew install python2 --with-brewed-openssl
-    brew uninstall --force python
-    brew uninstall --force python@2
-    brew uninstall --force python@3
+    brew unlink python
     brew install python2
+    echo "new python: `ll /usr/local/bin | grep python`"
     ln -s /usr/local/opt/python@2/bin/python2 /usr/local/bin/python
     echo "python SSL: `python -c "import ssl; print ssl.OPENSSL_VERSION"`"
 }
