@@ -928,7 +928,7 @@ bool Label::updateQuads()
                 }
                 if (py - letterDef.height * _bmfontScale < _tailoredBottomY)
                 {
-                    _reusedRect.size.height = (py < _tailoredBottomY) ? 0.f : (py - _tailoredBottomY);
+                    _reusedRect.size.height = (py < _tailoredBottomY) ? 0.f : (py - _tailoredBottomY) / _bmfontScale;
                 }
             }
 
