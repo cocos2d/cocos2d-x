@@ -15,10 +15,11 @@ matrix:
       env: BUILD_TARGET=android
       language: android
       sudo: required
-      android:
-        components:
-          - android-14
-          - build-tools-27.0.1
+    # android_lua
+    - os: linux
+      env: BUILD_TARGET=android_lua
+      language: android
+      sudo: required
     # mac
     - os: osx
       env: BUILD_TARGET=mac
@@ -30,6 +31,14 @@ matrix:
       env: BUILD_TARGET=ios
       language: cpp
       osx_image: xcode8.3
+      sudo: required
+    - os: linux
+      env: BUILD_TARGET=android_cocos_new_test
+      language: cpp
+      sudo: required
+    - os: linux
+      env: BUILD_TARGET=linux_cocos_new_test
+      language: cpp
       sudo: required
 
 script:

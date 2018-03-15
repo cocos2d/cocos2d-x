@@ -16,7 +16,7 @@ function build_linux()
     cd linux-build
     cmake ../..
     echo "cpu cores: ${CPU_CORES}"
-    make -j${CPU_CORES}
+    make -j${CPU_CORES} VERBOSE=1
 }
 
 function build_mac()
@@ -41,10 +41,7 @@ function build_android()
 {
     # Build all samples
     echo "Building Android samples ..."
-    export COCOS_CONSOLE_ROOT=$COCOS2DX_ROOT/tools/cocos2d-console/bin
-    export ANDROID_SDK_ROOT=/usr/local/android-sdk
-    export COCOS_X_ROOT=$COCOS2DX_ROOT
-    export PATH=$ANDROID_SDK_ROOT:$COCOS_CONSOLE_ROOT:$PATH
+    source ../environment.sh
 
     # build cpp-empty-test
     # pushd $COCOS2DX_ROOT/tests/cpp-empty-test
@@ -52,13 +49,8 @@ function build_android()
     # popd
 
     # build cpp-tests
-    pushd $COCOS2DX_ROOT/tests/cpp-tests
-    cocos compile -p android
-    popd
-
-    # build lua-tests
-    pushd $COCOS2DX_ROOT/tests/lua-tests
-    cocos compile -p android
+    pushd $COCOS2DX_ROOT/tests/cpp-tests/proj.android
+    ./gradlew assembleDebug
     popd
 
     # build js-tests
@@ -66,6 +58,19 @@ function build_android()
     # pushd $COCOS2DX_ROOT/tests/js-tests
     # cocos compile -p android
     # popd
+}
+
+function build_android_lua()
+{
+    # Build all samples
+    echo "Building Android samples lua ..."
+    source ../environment.sh
+
+    # build lua-tests
+    pushd $COCOS2DX_ROOT/tests/lua-tests/project/proj.android
+    ./gradlew assembleDebug
+    popd
+
 }
 
 function genernate_binding_codes()
@@ -82,7 +87,7 @@ function genernate_binding_codes()
 
     which python
 
-    export NDK_ROOT=$HOME/bin/android-ndk
+    source ../environment.sh
     export PYTHON_BIN=/usr/bin/python
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
         export PYTHON_BIN=/usr/local/bin/python
@@ -191,6 +196,11 @@ function run_pull_request()
         build_android
     fi
 
+    # android_lua
+    if [ $BUILD_TARGET == 'android_lua' ]; then
+        build_android_lua
+    fi
+
     if [ $BUILD_TARGET == 'mac' ]; then
         build_mac
     fi
@@ -224,6 +234,32 @@ function run_after_merge()
     genernate_binding_codes
     generate_pull_request_for_binding_codes_and_cocosfiles
 }
+
+if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
+    source ../environment.sh
+    pushd $COCOS2DX_ROOT
+    python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
+    popd
+    pushd $COCOS2DX_ROOT/cocos_new_test/proj.android
+    ./gradlew build
+    popd
+    exit 0
+fi
+
+if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
+    pushd $COCOS2DX_ROOT
+    python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
+    popd
+    CPU_CORES=`grep -c ^processor /proc/cpuinfo`
+    echo "Building tests ..."
+    cd $COCOS2DX_ROOT/cocos_new_test
+    mkdir -p linux-build
+    cd linux-build
+    cmake ..
+    echo "cpu cores: ${CPU_CORES}"
+    make -j${CPU_CORES} VERBOSE=1
+    exit 0
+fi
 
 # build pull request
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
