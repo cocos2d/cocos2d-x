@@ -15,9 +15,6 @@ function Generate-Binding-Codes
     & pip install PyYAML Cheetah
     Write-Host "generating binding codes"
 
-    $env:PYTHON_BIN = $python
-    Write-Host "set environment viriable PYTHON_BIN to $env:PYTHON_BIN"
-
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tools\tolua
     & $python $env:APPVEYOR_BUILD_FOLDER\tools\tolua\genbindings.py
     Pop-Location
@@ -37,15 +34,12 @@ function Update-SubModule
 
 Update-SubModule
 
-$python = "C:\\Python27\\python.exe"
+Download-Deps
 
 If ($env:build_type -eq "windows32") {
-    Download-Deps
     & $python -u .\tools\appveyor-scripts\setup_android.py --ndk_only
     Generate-Binding-Codes
 } elseif ($env:build_type -like "android*") {
     & $python -u .\tools\appveyor-scripts\setup_android.py
     if ($lastexitcode -ne 0) {throw}
-} else {
-    Download-Deps
 }

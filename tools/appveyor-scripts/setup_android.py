@@ -110,7 +110,6 @@ def export_environment(ndk_only):
 
 def main(ndk_only):
     if not ndk_only:
-        run(sys.executable + " " + os.path.join(COCOS2D_X, "download-deps.py") + " --remove-download=False")
         install_android_sdk_tools()
         install_android_sdk()
     install_android_ndk()

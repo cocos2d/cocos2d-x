@@ -88,10 +88,6 @@ function genernate_binding_codes()
     which python
 
     source ../environment.sh
-    export PYTHON_BIN=/usr/bin/python
-    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-        export PYTHON_BIN=/usr/local/bin/python
-    fi
 
     # Generate binding glue codes
 
