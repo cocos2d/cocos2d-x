@@ -78,11 +78,11 @@
 
 - (CGRect)textRectForBounds:(CGRect)bounds
 {
-    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
-    
-    float padding = CC_EDIT_BOX_PADDING * glview->getScaleX() / glview->getContentScaleFactor();
-    return CGRectInset(bounds, padding, padding);
+    auto capsOn = (self.rightViewMode == UITextFieldViewModeWhileEditing) && self.rightView;
+    auto rightPadding = capsOn ? self.rightView.frame.size.width : 0.0f;
+    return CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width - rightPadding, bounds.size.height);
 }
+
 
 - (CGRect)editingRectForBounds:(CGRect)bounds
 {
