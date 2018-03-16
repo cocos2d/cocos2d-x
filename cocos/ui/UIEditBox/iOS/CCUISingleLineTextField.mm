@@ -29,8 +29,9 @@
 #import "ui/UIEditBox/iOS/CCUITextInput.h"
 
 #include "base/CCDirector.h"
+#include <algorithm>
 
-#define RIGHT_VIEW_PADDING 5
+#define RIGHT_VIEW_PADDING 5.0f
 /**
  * http://stackoverflow.com/questions/18244790/changing-uitextfield-placeholder-font
  */
@@ -89,10 +90,21 @@
 - (CGRect)textRectForBounds:(CGRect)bounds
 {
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
-    auto originPadding = CC_EDIT_BOX_PADDING * glview->getScaleX() / glview->getContentScaleFactor();
+    float padding = CC_EDIT_BOX_PADDING * glview->getScaleX() / glview->getContentScaleFactor();
+  
     auto capsOn = (self.rightViewMode == UITextFieldViewModeWhileEditing) && self.rightView;
-    auto rightPadding = capsOn ? self.rightView.frame.size.width + RIGHT_VIEW_PADDING : 0.0f;
-    return CGRectMake(bounds.origin.x + originPadding, bounds.origin.y + originPadding, bounds.size.width - rightPadding, bounds.size.height);
+    // Need to pad rect size to account for right image view
+    float rightPadding = padding;
+    if(capsOn){
+      // Need to pad rect on right to account for right image view
+      rightPadding = std::max(padding, (float)self.rightView.frame.size.width + RIGHT_VIEW_PADDING);
+    }
+  
+    auto originX = bounds.origin.x + padding;
+    auto originY = bounds.origin.y + padding;
+    auto width = bounds.size.width - padding - rightPadding;
+    auto height = bounds.size.height - 2.0f * padding;
+    return CGRectMake(originX, originY, width, height);
 }
 
 
