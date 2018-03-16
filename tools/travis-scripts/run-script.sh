@@ -93,7 +93,7 @@ function genernate_binding_codes()
 
     echo "Create auto-generated luabinding glue codes."
     pushd "$COCOS2DX_ROOT/tools/tolua"
-    ./genbindings.py
+    python ./genbindings.py
     popd
 
     # We don't support building js projects for linux platform,
@@ -101,7 +101,7 @@ function genernate_binding_codes()
     if [ $TRAVIS_OS_NAME != "linux" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
         echo "Create auto-generated jsbinding glue codes."
         pushd "$COCOS2DX_ROOT/tools/tojs"
-        ./genbindings.py
+        python ./genbindings.py
         popd
     fi
 }
