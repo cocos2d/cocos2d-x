@@ -30,6 +30,7 @@
 
 #include "base/CCDirector.h"
 
+#define RIGHT_VIEW_PADDING 5
 /**
  * http://stackoverflow.com/questions/18244790/changing-uitextfield-placeholder-font
  */
@@ -76,11 +77,22 @@
     [[self placeholder] drawInRect:rect withAttributes:attributes];
 }
 
+- (CGRect)rightViewRectForBounds:(CGRect)bounds
+{
+    auto rightViewOriginX = bounds.origin.x + bounds.size.width - self.rightView.frame.size.width - RIGHT_VIEW_PADDING;
+  
+    // Always center aligned
+    auto rightViewOriginY = bounds.origin.y + bounds.size.height * 0.5f - self.rightView.frame.size.height * 0.5f;
+    return CGRectMake(rightViewOriginX, rightViewOriginY, self.rightView.frame.size.width , self.rightView.frame.size.height);
+}
+
 - (CGRect)textRectForBounds:(CGRect)bounds
 {
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    auto originPadding = CC_EDIT_BOX_PADDING * glview->getScaleX() / glview->getContentScaleFactor();
     auto capsOn = (self.rightViewMode == UITextFieldViewModeWhileEditing) && self.rightView;
-    auto rightPadding = capsOn ? self.rightView.frame.size.width : 0.0f;
-    return CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width - rightPadding, bounds.size.height);
+    auto rightPadding = capsOn ? self.rightView.frame.size.width + RIGHT_VIEW_PADDING : 0.0f;
+    return CGRectMake(bounds.origin.x + originPadding, bounds.origin.y + originPadding, bounds.size.width - rightPadding, bounds.size.height);
 }
 
 
