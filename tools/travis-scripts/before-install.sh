@@ -65,8 +65,8 @@ function download_deps()
 
 function install_python_module_for_osx()
 {
-    sudo -H pip install PyYAML
-    sudo -H pip install Cheetah
+    pip install PyYAML
+    sudo pip install Cheetah
 }
 
 function install_latest_python()
