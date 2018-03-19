@@ -47,7 +47,7 @@ std::string format(const char* format, ...)
     std::string buffer(CC_VSNPRINTF_BUFFER_LENGTH, '\0');
 
     va_start(args, format);
-    int nret = vsnprintf(&buffer.front(), buffer.length(), format, args);
+    int nret = vsnprintf(&buffer.front(), buffer.length() + 1, format, args);
     va_end(args);
 
     if (nret >= 0) {
@@ -58,7 +58,7 @@ std::string format(const char* format, ...)
             buffer.resize(nret);
 
             va_start(args, format);
-            nret = vsnprintf(&buffer.front(), buffer.length(), format, args);
+            nret = vsnprintf(&buffer.front(), buffer.length() + 1, format, args);
             va_end(args);
 
             assert(nret == buffer.length());
@@ -70,7 +70,7 @@ std::string format(const char* format, ...)
             buffer.resize(buffer.length() * 3 / 2);
 
             va_start(args, format);
-            nret = vsnprintf(&buffer.front(), buffer.length(), format, args);
+            nret = vsnprintf(&buffer.front(), buffer.length() + 1, format, args);
             va_end(args);
 
         } while (nret < 0);
