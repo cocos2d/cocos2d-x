@@ -83,21 +83,18 @@ function genernate_binding_codes()
         ldd $COCOS2DX_ROOT/tools/bindings-generator/libclang/libclang.so
     fi
 
-    # set environment variables needed by binding codes
-
+    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+        eval "$(pyenv init -)"
+    fi
     which python
 
     source ../environment.sh
-    export PYTHON_BIN=/usr/bin/python
-    if [ "$TRAVIS_OS_NAME" == "osx" ]; then
-        export PYTHON_BIN=/usr/local/bin/python
-    fi
 
     # Generate binding glue codes
 
     echo "Create auto-generated luabinding glue codes."
     pushd "$COCOS2DX_ROOT/tools/tolua"
-    ./genbindings.py
+    python ./genbindings.py
     popd
 
     # We don't support building js projects for linux platform,
@@ -105,7 +102,7 @@ function genernate_binding_codes()
     if [ $TRAVIS_OS_NAME != "linux" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
         echo "Create auto-generated jsbinding glue codes."
         pushd "$COCOS2DX_ROOT/tools/tojs"
-        ./genbindings.py
+        python ./genbindings.py
         popd
     fi
 }
