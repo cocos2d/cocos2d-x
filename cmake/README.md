@@ -36,7 +36,7 @@ Execute `cmake --build .` to compile, or open `Cocos2d-x.sln` in Explorer to use
 
 ```sh
 cd cocos2d-x
-mkdir mac-build && cd msc-build
+mkdir mac-build && cd mac-build
 cmake .. -GXcode
 open Cocos2d-x.xcodeproj
 ```
