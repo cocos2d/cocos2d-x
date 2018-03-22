@@ -939,7 +939,7 @@ bool Label::updateQuads()
                     if(_overflow == Overflow::CLAMP){
                         _reusedRect.size.width = 0;
                     }else if(_overflow == Overflow::SHRINK){
-                        if (_contentSize.width > letterDef.width) {
+                        if (_contentSize.width > letterDef.width || getRenderingFontSize() > 1) {
                             ret = false;
                             break;
                         }else{
