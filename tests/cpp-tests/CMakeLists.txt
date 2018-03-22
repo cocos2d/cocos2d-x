@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 
-set(APP_NAME cpp_tests)
+set(APP_NAME cpp-tests)
 
 project(${APP_NAME})
 
@@ -27,6 +27,8 @@ if(APPLE OR VS)
 endif()
 
 if(ANDROID)
+    # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
+    set(APP_NAME cpp_tests)
     list(APPEND GAME_HEADER
         Classes/JNITest/JNITest.h
     )

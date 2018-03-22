@@ -23,7 +23,7 @@
 # ****************************************************************************/
 cmake_minimum_required(VERSION 3.1)
 
-set(APP_NAME js_tests)
+set(APP_NAME js-tests)
 
 project(${APP_NAME})
 
@@ -69,6 +69,8 @@ set(GAME_SOURCE)
 set(GAME_HEADER)
 
 if(ANDROID)
+    # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
+    set(APP_NAME js_tests)
     list(APPEND GAME_SOURCE
         proj.android/app/jni/main.cpp
     )
