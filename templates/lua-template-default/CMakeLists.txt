@@ -100,8 +100,6 @@ elseif(APPLE)
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/RootViewController.h
         )
         set(APP_UI_RES
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/Info.plist
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/exportoptions.plist
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreen.storyboard
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreenBackground.png
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/Images.xcassets

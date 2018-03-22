@@ -58,8 +58,6 @@ elseif(APPLE)
             proj.ios/RootViewController.h
         )
         set(APP_UI_RES
-            proj.ios/Info.plist
-            proj.ios/exportoptions.plist
             proj.ios/LaunchScreen.storyboard
             proj.ios/LaunchScreenBackground.png
             proj.ios/Images.xcassets
