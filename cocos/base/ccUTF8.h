@@ -178,7 +178,20 @@ CC_DLL bool isUnicodeSpace(char32_t ch);
  *
  */
 CC_DLL bool isCJKUnicode(char32_t ch);
-
+    
+/**
+ *  @brief Whether the character is a non-breaking character.
+ *  @param ch    The unicode character.
+ *  @returns     Whether the character is a non-breaking character.
+ *
+ *  @see https://en.wikipedia.org/wiki/Space_(punctuation)#Spaces_in_Unicode
+ *  @see https://en.wikipedia.org/wiki/Non-breaking_space
+ *  @see https://en.wikipedia.org/wiki/Figure_space
+ *  @see https://en.wikipedia.org/wiki/Word_joiner
+ *
+ */
+CC_DLL bool isUnicodeNonBreaking(char32_t ch);
+    
 /**
  *  @brief Returns the length of the string in characters.
  *  @param utf8 An UTF-8 encoded string.

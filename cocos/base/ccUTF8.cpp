@@ -158,7 +158,15 @@ bool isCJKUnicode(char32_t ch)
         || (ch >= 0x31C0 && ch <= 0x4DFF)   // Other extensions
         || (ch >= 0x1f004 && ch <= 0x1f682);// Emoji
 }
-
+    
+bool isUnicodeNonBreaking(char32_t ch)
+{
+    return ch == 0x00A0   // Non-Breaking Space
+    || ch == 0x202F       // Narrow Non-Breaking Space
+    || ch == 0x2007       // Figure Space
+    || ch == 0x2060;      // Word Joiner
+}
+    
 void trimUTF16Vector(std::vector<char16_t>& str)
 {
     int len = static_cast<int>(str.size());
