@@ -2,6 +2,7 @@ matrix:
   include:
     # linux
     - os: linux
+      dist: xenial
       env: 
         - BUILD_TARGET=linux 
         - GEN_BINDING_AND_COCOSFILE=true
@@ -12,11 +13,13 @@ matrix:
       language: cpp
     # android
     - os: linux
+      dist: xenial
       env: BUILD_TARGET=android
       language: android
       sudo: required
     # android_lua
     - os: linux
+      dist: xenial
       env: BUILD_TARGET=android_lua
       language: android
       sudo: required
@@ -33,10 +36,12 @@ matrix:
       osx_image: xcode8.3
       sudo: required
     - os: linux
+      dist: xenial
       env: BUILD_TARGET=android_cocos_new_test
       language: cpp
       sudo: required
     - os: linux
+      dist: xenial
       env: BUILD_TARGET=linux_cocos_new_test
       language: cpp
       sudo: required

@@ -9,14 +9,12 @@ CPU_CORES=4
 
 function build_linux()
 {
-    CPU_CORES=`grep -c ^processor /proc/cpuinfo`
     echo "Building tests ..."
     cd $COCOS2DX_ROOT/build
     mkdir -p linux-build
     cd linux-build
     cmake ../..
-    echo "cpu cores: ${CPU_CORES}"
-    make -j${CPU_CORES} VERBOSE=1
+    cmake --build .
 }
 
 function build_mac()
@@ -75,14 +73,6 @@ function build_android_lua()
 
 function genernate_binding_codes()
 {
-    if [ $TRAVIS_OS_NAME == "linux" ]; then
-        # print some log for libstdc++6
-        strings /usr/lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBC
-        ls -l /usr/lib/x86_64-linux-gnu/libstdc++*
-        dpkg-query -W libstdc++6
-        ldd $COCOS2DX_ROOT/tools/bindings-generator/libclang/libclang.so
-    fi
-
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
         eval "$(pyenv init -)"
     fi
@@ -247,14 +237,12 @@ if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
     pushd $COCOS2DX_ROOT
     python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
     popd
-    CPU_CORES=`grep -c ^processor /proc/cpuinfo`
-    echo "Building tests ..."
+
     cd $COCOS2DX_ROOT/cocos_new_test
     mkdir -p linux-build
     cd linux-build
     cmake ..
-    echo "cpu cores: ${CPU_CORES}"
-    make -j${CPU_CORES} VERBOSE=1
+    cmake --build .
     exit 0
 fi
 
