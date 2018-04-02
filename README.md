@@ -49,7 +49,7 @@ Download stable versions
 How to start a new game
 -----------------------
 
-1. Download the code from [cocos2d download site][4]
+1. Download the code from [cocos2d download site][4] or clone this repo (instructions above)
 2. Run `setup.py`
 3. Run the `cocos` script
 
@@ -65,8 +65,8 @@ You can also create a JS project or Lua project with `-l js` or `-l lua`.
 
 ### Build and run a new project for Android ###
 
-    $ cocos run -p android -j 4
-
+Cocos2d-x supports Android Studio. Simple open the `proj.android` directory from within the Android Studio environment. More information can be found in our [documentation](http://www.cocos2d-x.org/docs/cocos2d-x/en/installation/Android-Studio.html).
+   
 ### Build and run a new project for iOS ###
 
     $ cocos run -p ios
@@ -113,7 +113,7 @@ Or you can publish your game to `publish/html5/` folder:
 Using CMake
 --------------------------------
 
-Now Cocos2d-x support another project build method, it's CMake! CMake have great benefits when cross-platform compiling. The most sample way to use is:
+Cocos2d-x supports CMake, a cross-platform build system. Example usage:
 
     $ cd cocos2d-x
     $ mkdir cmake-build && cd cmake-build
