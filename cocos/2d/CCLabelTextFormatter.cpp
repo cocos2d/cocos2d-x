@@ -236,7 +236,7 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
                     nextLetterX += _horizontalKernings[letterIndex + 1];
                 nextLetterX += letterDef.xAdvance * _bmfontScale + _additionalKerning;
 
-                tokenRight = nextLetterX / contentScaleFactor;
+                tokenRight = letterX + (letterDef.xAdvance - letterDef.offsetX) * _bmfontScale / contentScaleFactor;
             }
             nextChangeSize = true;
 
@@ -317,7 +317,7 @@ bool Label::isHorizontalClamp()
         {
             auto& letterDef = _fontAtlas->_letterDefinitions[_lettersInfo[ctr].utf32Char];
 
-            auto px = _lettersInfo[ctr].positionX + letterDef.width/2 * _bmfontScale;
+            auto px = _lettersInfo[ctr].positionX + (letterDef.xAdvance - letterDef.offsetX) * _bmfontScale / CC_CONTENT_SCALE_FACTOR();
             auto lineIndex = _lettersInfo[ctr].lineIndex;
 
             if(_labelWidth > 0.f){

@@ -932,14 +932,14 @@ bool Label::updateQuads()
             }
 
             auto lineIndex = _lettersInfo[ctr].lineIndex;
-            auto px = _lettersInfo[ctr].positionX + letterDef.width/2 * _bmfontScale + _linesOffsetX[lineIndex];
+            auto px = _lettersInfo[ctr].positionX + (letterDef.xAdvance - letterDef.offsetX) * _bmfontScale / CC_CONTENT_SCALE_FACTOR();
 
             if(_labelWidth > 0.f){
                 if (this->isHorizontalClamped(px, lineIndex)) {
                     if(_overflow == Overflow::CLAMP){
                         _reusedRect.size.width = 0;
                     }else if(_overflow == Overflow::SHRINK){
-                        if (_contentSize.width > letterDef.width) {
+                        if (_contentSize.width > letterDef.width || getRenderingFontSize() > 1) {
                             ret = false;
                             break;
                         }else{
