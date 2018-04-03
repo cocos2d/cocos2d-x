@@ -91,7 +91,7 @@ endif (NOT DEFINED CMAKE_INSTALL_NAME_TOOL)
 
 # Setup iOS platform unless specified manually with IOS_PLATFORM
 if (NOT DEFINED IOS_PLATFORM)
-	set (IOS_PLATFORM "SIMULATOR64")
+	set (IOS_PLATFORM "OS")
 endif (NOT DEFINED IOS_PLATFORM)
 set (IOS_PLATFORM ${IOS_PLATFORM} CACHE STRING "Type of iOS Platform")
 
@@ -155,7 +155,8 @@ set (CMAKE_OSX_SYSROOT ${CMAKE_IOS_SDK_ROOT} CACHE PATH "Sysroot used for iOS su
 
 # set the architecture for iOS 
 if (IOS_PLATFORM STREQUAL "OS")
-    set (IOS_ARCH armv7 armv7s arm64)
+	# set (IOS_ARCH armv7 armv7s arm64)
+	set (IOS_ARCH armv7 arm64)
 elseif (IOS_PLATFORM STREQUAL "SIMULATOR")
     set (IOS_ARCH i386)
 elseif (IOS_PLATFORM STREQUAL "SIMULATOR64")
