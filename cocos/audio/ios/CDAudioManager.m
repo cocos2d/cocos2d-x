@@ -448,7 +448,6 @@ static BOOL configured = FALSE;
         
         //Add handler for bad al context messages, these are posted by the sound engine.
         [[NSNotificationCenter defaultCenter] addObserver:self    selector:@selector(badAlContextHandler) name:kCDN_BadAlContext object:nil];
-        
         [self setResignBehavior:kAMRBDoNothing autoHandle:TRUE];
     }    
     return self;        
