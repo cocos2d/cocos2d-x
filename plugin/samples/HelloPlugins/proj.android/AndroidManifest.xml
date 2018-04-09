@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.cocos2dx.HelloPlugins" android:versionCode="1" android:versionName="1.0">
+
+    <uses-sdk android:minSdkVersion="9" />
+    <uses-feature android:glEsVersion="0x00020000" />
+
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+
+        <!-- Tell NativeActivity the name of our .so -->
+        <meta-data android:name="android.app.lib_name"
+                   android:value="cocos2dcpp" />
+
+        <activity android:name=".AppActivity"
+                  android:label="@string/app_name"
+                  android:screenOrientation="landscape"
+                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+                  android:configChanges="orientation">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data android:value="50d2af93527015338b000052" android:name="UMENG_APPKEY"></meta-data>
+
+        <activity android:configChanges="orientation|keyboardHidden|navigation" android:launchMode="singleTask" android:name="com.nd.commplatform.activity.SNSControlCenterActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:windowBackground="@null" android:windowSoftInputMode="adjustPan" />
+        
+        <activity android:configChanges="orientation|keyboardHidden|navigation" android:launchMode="singleTask" android:name="com.nd.commplatform.activity.SNSLoginActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:windowBackground="@null" android:windowSoftInputMode="adjustPan" />
+        
+        <activity android:configChanges="orientation|keyboardHidden|navigation" android:name="com.nd.commplatform.activity.SNSAppPromotionActivity" android:theme="@android:style/Theme.NoTitleBar" android:windowBackground="@null" android:windowSoftInputMode="adjustPan" />
+        
+        <activity android:name="com.facebook.ads.InterstitialAdActivity" android:configChanges="keyboardHidden|orientation|screenSize"/>
+        
+        <service android:enabled="true" android:exported="false" android:name="com.nd.commplatform.service.NdDownloadService" android:process=":com.nd.commplatform.download" />
+        
+        <receiver android:exported="false" android:name="com.nd.commplatform.versionupdate.ND2VersionUpdateNotify" android:process="android.intent.nd.sns.commplatform.versionupdate" />
+        
+        <service android:exported="false" android:name="com.nd.commplatform.versionupdate.ND2VersionUpdateService" android:process="android.intent.nd.sns.commplatform.versionupdate" />
+        
+        <service android:enabled="true" android:exported="false" android:name="com.nd.commplatform.service.NdNewMessageNotification" />
+        <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" android:name="com.google.ads.AdActivity" />
+        <activity android:configChanges="orientation|keyboardHidden|navigation" android:name="com.qihoopay.insdk.activity.ContainerActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar">
+        </activity>
+        <activity android:configChanges="orientation|keyboardHidden|navigation|screenSize" android:name="com.qihoopay.insdk.activity.RemoteContainerActivity" android:process=":remote" android:theme="@android:style/Theme.Translucent.NoTitleBar">
+        </activity>
+
+        <activity android:name="com.flurry.android.FlurryFullscreenTakeoverActivity"
+             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode"
+             android:hardwareAccelerated="false" >
+        </activity>
+
+        <meta-data android:name="QHOPENSDK_APPID" android:value="102094835" />
+        <meta-data android:name="QHOPENSDK_APPKEY" android:value="8689e00460eabb1e66277eb4232fde6f" />
+        <meta-data android:name="QHOPENSDK_PRIVATEKEY" android:value="4e04fe9ac8e2a73cbb27ba52ac076eb9" />
+        <meta-data android:name="QHOPENSDK_CHANNEL" android:value="360PayDebug" />
+        <activity
+            android:name="cn.uc.gamesdk.view.SdkWebActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent"
+            android:windowSoftInputMode="adjustResize" >
+            <intent-filter>
+                <action android:name="cn.uc.gamesdk.sdkweb" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id" />
+        <meta-data android:name="PluginUser" android:value="UserFacebook" />
+        <meta-data android:name="PluginShare" android:value="ShareFacebook" />
+
+        <activity android:name="com.facebook.LoginActivity" />
+        <provider android:authorities="com.facebook.app.NativeAppCallContentProvider641876029265874"
+                  android:name="com.facebook.NativeAppCallContentProvider"
+                  android:exported="true"/>
+    </application>
+    <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true" />
+
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />   
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+</manifest>

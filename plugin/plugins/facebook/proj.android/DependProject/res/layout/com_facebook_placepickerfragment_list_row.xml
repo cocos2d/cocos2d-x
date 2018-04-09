@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2010-present Facebook.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:focusable="false">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:focusable="false"
+            >
+        <FrameLayout
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                >
+            <ViewStub
+                    android:id="@+id/com_facebook_picker_profile_pic_stub"
+                    android:inflatedId="@+id/com_facebook_picker_image"
+                    android:layout="@layout/com_facebook_picker_image"
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_width="@dimen/com_facebook_picker_place_image_size"
+                    android:layout_height="@dimen/com_facebook_picker_place_image_size" />
+        </FrameLayout>
+        <LinearLayout
+                android:orientation="vertical"
+                android:focusable="false"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1">
+            <TextView
+                    android:id="@+id/com_facebook_picker_title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:typeface="sans"
+                    android:textColor="#000000"
+                    android:lines="1"
+                    android:textSize="16sp"
+                    android:gravity="left|center_vertical"/>
+            <TextView
+                    android:id="@+id/picker_subtitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="#666666"
+                    android:lines="1"
+                    android:typeface="sans"
+                    android:textSize="12sp"
+                    android:gravity="left|center_vertical"/>
+        </LinearLayout>
+        <!--ViewStub
+                android:id="@+id/checkbox_stub"
+                android:inflatedId="@+id/picker_checkbox"
+                android:layout="@layout/checkbox_layout"
+                android:layout_width="23dip"
+                android:layout_height="23dip"
+                android:layout_marginRight="10dip"/-->
+    </LinearLayout>
+    <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/com_facebook_picker_divider_width"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/com_facebook_picker_default_separator_color"
+            />
+</RelativeLayout>

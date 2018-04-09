@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/protocols/android/libPluginProtocol.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/flurry/android/FlurryAgent.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/flurry/android/libPluginFlurry.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/umeng/android/libPluginUmeng.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/umeng/android/umeng_sdk.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/alipay/android/alipay_plugin.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/alipay/android/libPluginAlipay.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/nd91/android/libPluginNd91.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/googleplay/android/libIAPGooglePlay.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/nd91/android/NdComPlatform.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/admob/android/GoogleAdMobAdsSdk.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/admob/android/libPluginAdmob.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/twitter/android/libPluginSocialTwitter.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/twitter/android/signpost-commonshttp4-1.2.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/twitter/android/signpost-core-1.2.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/twitter/android/signpost-jetty6-1.2.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/twitter/android/twitter4j-core-android-3.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/weibo/android/libPluginSocialWeibo.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/weibo/android/weibosdk.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/qh360/android/360SDK.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/qh360/android/libPluginQH360.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/uc/android/libPluginUC.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/facebookads/android/AudienceNetwork.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/facebookads/android/libPluginFacebookAds.jar"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/facebook/android/android-support-v4.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/facebook/android/bolts.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/facebook/android/facebooksdk.jar"/>
+	<classpathentry exported="true" kind="lib" path="plugin-x/plugins/facebook/android/libPluginFacebook.jar"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>

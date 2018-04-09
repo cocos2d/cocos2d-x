@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2010-present Facebook.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<resources>
+    <string name="com_facebook_loginview_log_out_button">התנתק</string>
+    <string name="com_facebook_loginview_log_in_button">התחבר לפייסבוק</string>
+    <string name="com_facebook_loginview_logged_in_as">מחובר בשם: %1$s</string>
+    <string name="com_facebook_loginview_logged_in_using_facebook">מחובר באמצעות פייסבוק</string>
+    <string name="com_facebook_loginview_log_out_action">התנתק</string>
+    <string name="com_facebook_loginview_cancel_action">בטל</string>
+    <string name="com_facebook_logo_content_description">פייסבוק לוגו</string>
+    <string name="com_facebook_usersettingsfragment_log_in_button">התחבר&#8230;</string>
+    <string name="com_facebook_usersettingsfragment_logged_in">מחובר</string>
+    <string name="com_facebook_usersettingsfragment_not_logged_in">לא מחובר</string>
+    <string name="com_facebook_placepicker_subtitle_format">%1$s • %2$,d היו פה</string>
+    <string name="com_facebook_placepicker_subtitle_catetory_only_format">%1$s</string>
+    <string name="com_facebook_placepicker_subtitle_were_here_only_format">%1$,d היו פה</string>
+    <string name="com_facebook_picker_done_button_text">בצע</string>
+    <string name="com_facebook_choose_friends">בחר חברים</string>
+    <string name="com_facebook_nearby">קרוב אליי</string>
+    <string name="com_facebook_loading">..מעלה</string>
+    <string name="com_facebook_internet_permission_error_title">AndroidManifest שגיאת</string>
+    <string name="com_facebook_internet_permission_error_message">ההתחברות לתצוגת אתר דורשת אישור אינטרנט</string>
+    <string name="com_facebook_requesterror_web_login">.כדי לאפשר מחדש לאפליקציה להתחבר עם פייסבוק https://www.facebook.com או https://m.facebook.com אנא היכנס דרך</string>
+    <string name="com_facebook_requesterror_relogin">.האפליקציה אינה מחוברת לפייסבוק, אנא היכנס וחבר מחדש את האפליקציה</string>
+    <string name="com_facebook_requesterror_password_changed">.הסיסמה שלך בפייסבוק השתנתה, אנא חבר מחדש את האפליקציה עם פייסבוק</string>
+    <string name="com_facebook_requesterror_reconnect">.ארעה שגיאה בעת החיבור עם פייסבוק, חבר בבקשה מחדש את האפליקציה עם פייסבוק</string>
+    <string name="com_facebook_requesterror_permissions">.חיבור האפליקציה עם פייסבוק נכשל בשל הרשאות לא מספקות, אנא הענק הרשאות לאפליקציה בכדי שהפעולה תוכל להתבצע</string>
+    <string name="com_facebook_dialogloginactivity_ok_button">אישור</string>
+</resources>

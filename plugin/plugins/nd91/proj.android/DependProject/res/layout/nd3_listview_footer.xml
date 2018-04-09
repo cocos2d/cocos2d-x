@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:background="@color/nd3_list_view_divider">
+  <TextView
+  android:id="@+id/nd3_listview_footer_txt"
+  android:text="@string/nd3_list_view_more_record"
+  android:textColor="@color/nd3_black"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_margin="@dimen/nd3_margin_size"
+  android:layout_centerHorizontal="true"
+  android:layout_alignParentTop="true"/>
+  
+</RelativeLayout>

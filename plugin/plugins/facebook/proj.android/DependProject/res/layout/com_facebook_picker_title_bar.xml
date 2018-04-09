@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2010-present Facebook.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/com_facebook_picker_top_bar"
+                android:layout_width="fill_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/com_facebook_top_background"
+                android:gravity="right">
+    <Button
+            android:id="@+id/com_facebook_picker_done_button"
+            android:layout_width="wrap_content"
+            android:minWidth="55dp"
+            android:layout_height="48dp"
+            android:background="@drawable/com_facebook_top_button"
+            android:paddingLeft="5dip"
+            android:paddingRight="5dip"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            android:shadowColor="#66000000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:layout_alignParentRight="true"
+            />
+    <LinearLayout
+            android:id="@+id/com_facebook_picker_divider"
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="#40000000"
+            android:layout_alignLeft="@id/com_facebook_picker_done_button"/>
+    <TextView
+            android:id="@+id/com_facebook_picker_title"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:textSize="22sp"
+            android:textColor="#FFFFFF"
+            android:gravity="left|center_vertical"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:scaleType="center"
+            android:shadowColor="#66000000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="1"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_toLeftOf="@id/com_facebook_picker_divider"/>
+</RelativeLayout>

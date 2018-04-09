@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2010-present Facebook.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <color name="com_facebook_blue">#3B5998</color>
+    
+    <color name="com_facebook_usersettingsfragment_connected_text_color">#FFFFFF</color>
+    <color name="com_facebook_usersettingsfragment_connected_shadow_color">#000000</color>
+    <color name="com_facebook_usersettingsfragment_not_connected_text_color">#A6AED7</color>
+    <dimen name="com_facebook_usersettingsfragment_profile_picture_width">64dp</dimen>
+    <dimen name="com_facebook_usersettingsfragment_profile_picture_height">64dp</dimen>
+
+    <dimen name="com_facebook_loginview_padding_left">12dip</dimen>
+    <dimen name="com_facebook_loginview_padding_right">16dp</dimen>
+    <dimen name="com_facebook_loginview_padding_top">12dp</dimen>
+    <dimen name="com_facebook_loginview_padding_bottom">12dp</dimen>
+    <dimen name="com_facebook_loginview_compound_drawable_padding">12dp</dimen>
+    <color name="com_facebook_loginview_text_color">#FFFFFF</color>
+    <dimen name="com_facebook_loginview_text_size">16.0sp</dimen>
+
+    <dimen name="com_facebook_profilepictureview_preset_size_small">50dp</dimen>
+    <dimen name="com_facebook_profilepictureview_preset_size_normal">100dp</dimen>
+    <dimen name="com_facebook_profilepictureview_preset_size_large">180dp</dimen>
+    
+    <dimen name="com_facebook_tooltip_horizontal_padding">10dp</dimen>
+
+    <style name="com_facebook_loginview_default_style" parent="@android:style/Widget.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/com_facebook_button_blue</item>
+        <item name="android:textColor">@color/com_facebook_loginview_text_color</item>
+        <item name="android:textSize">@dimen/com_facebook_loginview_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingLeft">@dimen/com_facebook_loginview_padding_left</item>
+        <item name="android:gravity">center</item>
+    </style>
+    
+    <style name="com_facebook_loginview_silver_style" parent="@android:style/Widget.Button">
+        <item name="android:width">205dp</item>
+        <item name="android:height">44dp</item>
+        <item name="android:background">@drawable/com_facebook_loginbutton_silver</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#4B5164</item>
+        <item name="android:gravity">center</item>
+    </style>
+    
+    <style name="tooltip_bubble_text">
+	    <item name="android:textColor">@android:color/white</item>
+	    <item name="android:gravity">left</item>
+	    <item name="android:textSize">12sp</item>
+	    <item name="android:shadowDy">-1</item>
+	    <item name="android:shadowRadius">0.25</item>
+	    <item name="android:shadowColor">#40000000</item>
+    </style>
+</resources>

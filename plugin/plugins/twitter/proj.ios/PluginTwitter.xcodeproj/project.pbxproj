@@ -1,0 +1,343 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FAC2A8001777F9D400035D22 /* ShareTwitter.m in Sources */ = {isa = PBXBuildFile; fileRef = FAC2A7FF1777F9D400035D22 /* ShareTwitter.m */; };
+		FACAD88C1762C1B500D75ADE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAD88B1762C1B500D75ADE /* Foundation.framework */; };
+		FACAD8BA1762C61A00D75ADE /* FHSTwitterEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = FACAD8A51762C61A00D75ADE /* FHSTwitterEngine.m */; };
+		FACAD8BB1762C61A00D75ADE /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FACAD8A91762C61A00D75ADE /* NSString+URLEncoding.m */; };
+		FACAD8BC1762C61A00D75ADE /* Base64TranscoderFHS.c in Sources */ = {isa = PBXBuildFile; fileRef = FACAD8AB1762C61A00D75ADE /* Base64TranscoderFHS.c */; };
+		FACAD8BD1762C61A00D75ADE /* OAConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = FACAD8AE1762C61A00D75ADE /* OAConsumer.m */; };
+		FACAD8BE1762C61A00D75ADE /* OAHMAC_SHA1SignatureProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = FACAD8B01762C61A00D75ADE /* OAHMAC_SHA1SignatureProvider.m */; };
+		FACAD8BF1762C61A00D75ADE /* OAMutableURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FACAD8B21762C61A00D75ADE /* OAMutableURLRequest.m */; };
+		FACAD8C01762C61A00D75ADE /* OARequestParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = FACAD8B41762C61A00D75ADE /* OARequestParameter.m */; };
+		FACAD8C11762C61A00D75ADE /* OAServiceTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = FACAD8B61762C61A00D75ADE /* OAServiceTicket.m */; };
+		FACAD8C21762C61A00D75ADE /* OAToken.m in Sources */ = {isa = PBXBuildFile; fileRef = FACAD8B81762C61A00D75ADE /* OAToken.m */; };
+		FACAD8C41762C64100D75ADE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FACAD8C31762C64100D75ADE /* UIKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FACAD8861762C1B500D75ADE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		FAC2A7FE1777F9D400035D22 /* ShareTwitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareTwitter.h; sourceTree = "<group>"; };
+		FAC2A7FF1777F9D400035D22 /* ShareTwitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareTwitter.m; sourceTree = "<group>"; };
+		FACAD8881762C1B500D75ADE /* libPluginTwitter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPluginTwitter.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FACAD88B1762C1B500D75ADE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FACAD8A41762C61A00D75ADE /* FHSTwitterEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FHSTwitterEngine.h; sourceTree = "<group>"; };
+		FACAD8A51762C61A00D75ADE /* FHSTwitterEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FHSTwitterEngine.m; sourceTree = "<group>"; };
+		FACAD8A81762C61A00D75ADE /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
+		FACAD8A91762C61A00D75ADE /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
+		FACAD8AB1762C61A00D75ADE /* Base64TranscoderFHS.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Base64TranscoderFHS.c; sourceTree = "<group>"; };
+		FACAD8AC1762C61A00D75ADE /* Base64TranscoderFHS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64TranscoderFHS.h; sourceTree = "<group>"; };
+		FACAD8AD1762C61A00D75ADE /* OAConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAConsumer.h; sourceTree = "<group>"; };
+		FACAD8AE1762C61A00D75ADE /* OAConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAConsumer.m; sourceTree = "<group>"; };
+		FACAD8AF1762C61A00D75ADE /* OAHMAC_SHA1SignatureProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAHMAC_SHA1SignatureProvider.h; sourceTree = "<group>"; };
+		FACAD8B01762C61A00D75ADE /* OAHMAC_SHA1SignatureProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAHMAC_SHA1SignatureProvider.m; sourceTree = "<group>"; };
+		FACAD8B11762C61A00D75ADE /* OAMutableURLRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAMutableURLRequest.h; sourceTree = "<group>"; };
+		FACAD8B21762C61A00D75ADE /* OAMutableURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAMutableURLRequest.m; sourceTree = "<group>"; };
+		FACAD8B31762C61A00D75ADE /* OARequestParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OARequestParameter.h; sourceTree = "<group>"; };
+		FACAD8B41762C61A00D75ADE /* OARequestParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OARequestParameter.m; sourceTree = "<group>"; };
+		FACAD8B51762C61A00D75ADE /* OAServiceTicket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAServiceTicket.h; sourceTree = "<group>"; };
+		FACAD8B61762C61A00D75ADE /* OAServiceTicket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAServiceTicket.m; sourceTree = "<group>"; };
+		FACAD8B71762C61A00D75ADE /* OAToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAToken.h; sourceTree = "<group>"; };
+		FACAD8B81762C61A00D75ADE /* OAToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAToken.m; sourceTree = "<group>"; };
+		FACAD8B91762C61A00D75ADE /* OAuthConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAuthConsumer.h; sourceTree = "<group>"; };
+		FACAD8C31762C64100D75ADE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		FACAD8CB1762C76800D75ADE /* PluginTwitter-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PluginTwitter-Prefix.pch"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FACAD8851762C1B500D75ADE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FACAD8C41762C64100D75ADE /* UIKit.framework in Frameworks */,
+				FACAD88C1762C1B500D75ADE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FACAD87D1762C1B500D75ADE = {
+			isa = PBXGroup;
+			children = (
+				FAC2A7FE1777F9D400035D22 /* ShareTwitter.h */,
+				FAC2A7FF1777F9D400035D22 /* ShareTwitter.m */,
+				FACAD8CB1762C76800D75ADE /* PluginTwitter-Prefix.pch */,
+				FACAD8A31762C61A00D75ADE /* FHSTwitterEngine */,
+				FACAD88A1762C1B500D75ADE /* Frameworks */,
+				FACAD8891762C1B500D75ADE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FACAD8891762C1B500D75ADE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FACAD8881762C1B500D75ADE /* libPluginTwitter.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FACAD88A1762C1B500D75ADE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FACAD8C31762C64100D75ADE /* UIKit.framework */,
+				FACAD88B1762C1B500D75ADE /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FACAD8A31762C61A00D75ADE /* FHSTwitterEngine */ = {
+			isa = PBXGroup;
+			children = (
+				FACAD8A41762C61A00D75ADE /* FHSTwitterEngine.h */,
+				FACAD8A51762C61A00D75ADE /* FHSTwitterEngine.m */,
+				FACAD8A61762C61A00D75ADE /* OAuthConsumer */,
+			);
+			path = FHSTwitterEngine;
+			sourceTree = "<group>";
+		};
+		FACAD8A61762C61A00D75ADE /* OAuthConsumer */ = {
+			isa = PBXGroup;
+			children = (
+				FACAD8A71762C61A00D75ADE /* Categories */,
+				FACAD8AA1762C61A00D75ADE /* Crytpo */,
+				FACAD8AD1762C61A00D75ADE /* OAConsumer.h */,
+				FACAD8AE1762C61A00D75ADE /* OAConsumer.m */,
+				FACAD8AF1762C61A00D75ADE /* OAHMAC_SHA1SignatureProvider.h */,
+				FACAD8B01762C61A00D75ADE /* OAHMAC_SHA1SignatureProvider.m */,
+				FACAD8B11762C61A00D75ADE /* OAMutableURLRequest.h */,
+				FACAD8B21762C61A00D75ADE /* OAMutableURLRequest.m */,
+				FACAD8B31762C61A00D75ADE /* OARequestParameter.h */,
+				FACAD8B41762C61A00D75ADE /* OARequestParameter.m */,
+				FACAD8B51762C61A00D75ADE /* OAServiceTicket.h */,
+				FACAD8B61762C61A00D75ADE /* OAServiceTicket.m */,
+				FACAD8B71762C61A00D75ADE /* OAToken.h */,
+				FACAD8B81762C61A00D75ADE /* OAToken.m */,
+				FACAD8B91762C61A00D75ADE /* OAuthConsumer.h */,
+			);
+			path = OAuthConsumer;
+			sourceTree = "<group>";
+		};
+		FACAD8A71762C61A00D75ADE /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				FACAD8A81762C61A00D75ADE /* NSString+URLEncoding.h */,
+				FACAD8A91762C61A00D75ADE /* NSString+URLEncoding.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		FACAD8AA1762C61A00D75ADE /* Crytpo */ = {
+			isa = PBXGroup;
+			children = (
+				FACAD8AB1762C61A00D75ADE /* Base64TranscoderFHS.c */,
+				FACAD8AC1762C61A00D75ADE /* Base64TranscoderFHS.h */,
+			);
+			path = Crytpo;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FACAD8871762C1B500D75ADE /* PluginTwitter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FACAD8961762C1B500D75ADE /* Build configuration list for PBXNativeTarget "PluginTwitter" */;
+			buildPhases = (
+				FACAD8841762C1B500D75ADE /* Sources */,
+				FACAD8851762C1B500D75ADE /* Frameworks */,
+				FACAD8861762C1B500D75ADE /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PluginTwitter;
+			productName = PluginTwitter;
+			productReference = FACAD8881762C1B500D75ADE /* libPluginTwitter.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FACAD87F1762C1B500D75ADE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = zhangbin;
+			};
+			buildConfigurationList = FACAD8821762C1B500D75ADE /* Build configuration list for PBXProject "PluginTwitter" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = FACAD87D1762C1B500D75ADE;
+			productRefGroup = FACAD8891762C1B500D75ADE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FACAD8871762C1B500D75ADE /* PluginTwitter */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FACAD8841762C1B500D75ADE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FACAD8BA1762C61A00D75ADE /* FHSTwitterEngine.m in Sources */,
+				FACAD8BB1762C61A00D75ADE /* NSString+URLEncoding.m in Sources */,
+				FACAD8BC1762C61A00D75ADE /* Base64TranscoderFHS.c in Sources */,
+				FACAD8BD1762C61A00D75ADE /* OAConsumer.m in Sources */,
+				FACAD8BE1762C61A00D75ADE /* OAHMAC_SHA1SignatureProvider.m in Sources */,
+				FACAD8BF1762C61A00D75ADE /* OAMutableURLRequest.m in Sources */,
+				FACAD8C01762C61A00D75ADE /* OARequestParameter.m in Sources */,
+				FACAD8C11762C61A00D75ADE /* OAServiceTicket.m in Sources */,
+				FACAD8C21762C61A00D75ADE /* OAToken.m in Sources */,
+				FAC2A8001777F9D400035D22 /* ShareTwitter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		FACAD8941762C1B500D75ADE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		FACAD8951762C1B500D75ADE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FACAD8971762C1B500D75ADE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				DSTROOT = /tmp/PluginTwitter.dst;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PluginTwitter-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../protocols/platform/ios";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "arm64 armv7";
+			};
+			name = Debug;
+		};
+		FACAD8981762C1B500D75ADE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				DSTROOT = /tmp/PluginTwitter.dst;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PluginTwitter-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../protocols/platform/ios";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "arm64 armv7";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FACAD8821762C1B500D75ADE /* Build configuration list for PBXProject "PluginTwitter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FACAD8941762C1B500D75ADE /* Debug */,
+				FACAD8951762C1B500D75ADE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FACAD8961762C1B500D75ADE /* Build configuration list for PBXNativeTarget "PluginTwitter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FACAD8971762C1B500D75ADE /* Debug */,
+				FACAD8981762C1B500D75ADE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FACAD87F1762C1B500D75ADE /* Project object */;
+}

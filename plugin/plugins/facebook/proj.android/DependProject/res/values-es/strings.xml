@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2010-present Facebook.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<resources>
+    <string name="com_facebook_dialogloginactivity_ok_button">Aceptar</string>
+    <string name="com_facebook_loginview_log_out_button">Cerrar sesión</string>
+    <string name="com_facebook_loginview_log_in_button">Iniciar sesión con Facebook</string>
+    <string name="com_facebook_loginview_logged_in_as">Sesión iniciada como: %1$s</string>
+    <string name="com_facebook_loginview_logged_in_using_facebook">Sesión iniciada con Facebook</string>
+    <string name="com_facebook_loginview_log_out_action">Cerrar sesión</string>
+    <string name="com_facebook_loginview_cancel_action">Cancelar</string>
+    <string name="com_facebook_logo_content_description">Logo de Facebook</string>
+    <string name="com_facebook_usersettingsfragment_log_in_button">Iniciar sesión&#8230;</string>
+    <string name="com_facebook_usersettingsfragment_logged_in">Sesión iniciada</string>
+    <string name="com_facebook_usersettingsfragment_not_logged_in">No has iniciado sesión</string>
+    <string name="com_facebook_placepicker_subtitle_format">%1$s • %2$,d estuvieron aquí</string>
+    <string name="com_facebook_placepicker_subtitle_catetory_only_format">%1$s</string>
+    <string name="com_facebook_placepicker_subtitle_were_here_only_format">es:%1$,d estuvieron aquí</string>
+    <string name="com_facebook_picker_done_button_text">Aceptar</string>
+    <string name="com_facebook_choose_friends">Elige Amigos</string>
+    <string name="com_facebook_nearby">Cercano</string>
+    <string name="com_facebook_loading">Cargando</string>
+    <string name="com_facebook_internet_permission_error_title">Error de AndroidManifest</string>
+    <string name="com_facebook_internet_permission_error_message">WebView inicio de sesión requiere permiso INTERNET</string>
+    <string name="com_facebook_requesterror_web_login">Por favor, iniciar sesión a través https://www.facebook.com o https://m.facebook.com para volver a activar la aplicación para conectar con Facebook.</string>
+    <string name="com_facebook_requesterror_relogin">La aplicación no se conecta con Facebook, inicie sesión y volver a conectar esta aplicación.</string>
+    <string name="com_facebook_requesterror_password_changed">Su contraseña de Facebook ha cambiado, por favor vuelva a conectar la aplicación con Facebook.</string>
+    <string name="com_facebook_requesterror_reconnect">Se produjo un error al conectar con Facebook, por favor vuelva a conectar la aplicación con Facebook.</string>
+    <string name="com_facebook_requesterror_permissions">Una conexión de aplicación con Facebook falló debido a permisos insuficientes, por favor, conceda los permisos de aplicaciones para realizar la operación.</string>
+</resources>

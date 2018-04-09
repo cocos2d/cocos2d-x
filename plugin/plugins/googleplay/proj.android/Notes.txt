@@ -1,0 +1,79 @@
+/****************************************************************************
+Copyright (c) 2014 martell malone < martell malone at g mail dot com >
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*****************************************************************************/
+//This will be added into the samples later :)
+
+//For the to compile correctly you must do the following.
+/****************************************************************************
+
+-	From C++
+
+1. IAP class must be called with 
+
+	loadPlugin("IAPGooglePlay")
+
+2. Item must be in google format like so
+
+	pInfo["IAPId"] = "com.game.example.item1" 
+
+	// pInfo is of type TProductInfo
+
+3. The developer info must be specific to your app like so
+	
+	pPlayStoreInfo["GooglePlayAppKey"] = "Big long key from google :)"
+	s_pPlayStore->configDeveloperInfo(pPlayStoreInfo);
+
+	// s_pPlayStore is of type cocos2d::plugin::ProtocolIAP*
+
+*****************************************************************************/
+
+/*****************************************************************************
+
+- From Java
+
+// This must be added to the new Cocos2dxActivity.java classes in cocos2d-x 3.0 + recently added
+
+
+private static Set<OnActivityResultListener> onActivityResultListeners = new LinkedHashSet<OnActivityResultListener>();
+
+
+public static void addOnActivityResultListener(OnActivityResultListener listener) {
+    onActivityResultListeners.add(listener);
+}
+
+public static Set<OnActivityResultListener> getOnActivityResultListeners() {
+    return onActivityResultListeners;
+}
+
+
+
+ @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        for (OnActivityResultListener listener : Cocos2dxHelper.getOnActivityResultListeners()) {
+            listener.onActivityResult(requestCode, resultCode, data);
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+*****************************************************************************/
