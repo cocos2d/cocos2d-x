@@ -92,8 +92,6 @@ elseif(APPLE)
             proj.ios_mac/ios/RootViewController.h
         )
         set(APP_UI_RES
-            proj.ios_mac/ios/Info.plist
-            proj.ios_mac/ios/exportoptions.plist
             proj.ios_mac/ios/LaunchScreen.storyboard
             proj.ios_mac/ios/LaunchScreenBackground.png
             proj.ios_mac/ios/Images.xcassets
@@ -138,6 +136,7 @@ if(APPLE)
         )
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
+        set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
     endif()
 elseif(WINDOWS)
     cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})

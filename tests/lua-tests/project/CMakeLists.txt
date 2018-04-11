@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 
-set(APP_NAME lua_tests)
+set(APP_NAME lua-tests)
 
 project(${APP_NAME})
 
@@ -45,6 +45,8 @@ if(APPLE OR VS)
 endif()
 
 if(ANDROID)
+    # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
+    set(APP_NAME lua_tests)
     list(APPEND GAME_SOURCE proj.android/app/jni/main.cpp)
 elseif(LINUX)
     list(APPEND GAME_SOURCE proj.linux/main.cpp)
@@ -63,8 +65,6 @@ elseif(APPLE)
             proj.ios_mac/ios/RootViewController.h
         )
         set(APP_UI_RES
-            proj.ios_mac/ios/Info.plist
-            proj.ios_mac/ios/exportoptions.plist
             proj.ios_mac/ios/LaunchScreen.storyboard
             proj.ios_mac/ios/LaunchScreenBackground.png
             proj.ios_mac/ios/Images.xcassets
@@ -120,6 +120,7 @@ if(APPLE)
         )
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
+        set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon-${APP_NAME}")
     endif()
 elseif(WINDOWS)
     cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})

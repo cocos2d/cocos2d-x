@@ -36,7 +36,7 @@ Execute `cmake --build .` to compile, or open `Cocos2d-x.sln` in Explorer to use
 
 ```sh
 cd cocos2d-x
-mkdir mac-build && cd msc-build
+mkdir mac-build && cd mac-build
 cmake .. -GXcode
 open Cocos2d-x.xcodeproj
 ```
@@ -50,6 +50,8 @@ cmake .. -GXcode -DCMAKE_TOOLCHAIN_FILE=../cmake/ios.toolchain.cmake
 open Cocos2d-x.xcodeproj
 ```
 
+The default build is for iOS device, if you want to run on simulator, please add `-DIOS_PLATFORM=SIMULATOR` for architecture i386 or `-DIOS_PLATFORM=SIMULATOR64` for x86_64.
+
 ### CMake in Android Studio
 
 We use the Gradle to Android applacition, and Gradle use cmake to build the native code, see the [property](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/gradle.properties#L38): `PROP_NDK_MODE`, it control the way of native build
@@ -58,7 +60,7 @@ We use the Gradle to Android applacition, and Gradle use cmake to build the nati
 # android cmake support
 # uncomment it, native code will build by cmake
 # keep comment, native code will build by ndkBuild
-PROP_NDK_MODE=cmake
+#PROP_NDK_MODE=cmake
 ```
 
 If you want to add cmake build arguments, please add it at [externalNativeBuild](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/app/build.gradle#L25) block of [app/build.gradle] file.

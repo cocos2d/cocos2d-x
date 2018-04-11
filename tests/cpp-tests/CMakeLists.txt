@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 
-set(APP_NAME cpp_tests)
+set(APP_NAME cpp-tests)
 
 project(${APP_NAME})
 
@@ -27,6 +27,8 @@ if(APPLE OR VS)
 endif()
 
 if(ANDROID)
+    # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
+    set(APP_NAME cpp_tests)
     list(APPEND GAME_HEADER
         Classes/JNITest/JNITest.h
     )
@@ -53,8 +55,6 @@ elseif(APPLE)
             proj.ios/Classes/RootViewController.h
         )
         set(APP_UI_RES
-            proj.ios/Info.plist
-            proj.ios/exportoptions.plist
             proj.ios/LaunchScreen.storyboard
             proj.ios/LaunchScreenBackground.png
             proj.ios/Images.xcassets
@@ -477,6 +477,7 @@ if(APPLE)
         )
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
+        set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon-${APP_NAME}")
     endif()
 elseif(WINDOWS)
     cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})

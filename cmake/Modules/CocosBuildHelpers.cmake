@@ -333,6 +333,11 @@ macro(cocos_pak_xcode cocos_target)
   set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${COCOS_APP_SHORT_VERSION_STRING})
 
   message("cocos package: ${cocos_target}, plist file: ${COCOS_APP_INFO_PLIST}")
+
+  if(IOS)
+    set_xcode_property(${cocos_target} IPHONEOS_DEPLOYMENT_TARGET "8.0")
+    set_xcode_property(${cocos_target} ENABLE_BITCODE "NO")
+  endif()
 endmacro()
 
 # This little macro lets you set any XCode specific property, from ios.toolchain.cmake
