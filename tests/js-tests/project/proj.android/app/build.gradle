@@ -12,7 +12,7 @@ android {
         versionName "1.0"
 
         externalNativeBuild {
-            if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE == 'ndk') {
+            if (PROP_NDK_MODE == 'ndk') {
                 ndkBuild {
                     // skip the NDK Build step if PROP_NDK_MODE is none
                     targets 'js_tests'
@@ -48,7 +48,7 @@ android {
     }
 
     externalNativeBuild {
-        if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE == 'ndk') {
+        if (PROP_NDK_MODE == 'ndk') {
             ndkBuild {
                 // skip the NDK Build step if PROP_NDK_MODE is none
                 path "jni/Android.mk"
