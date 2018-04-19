@@ -724,7 +724,7 @@ var g_tilemaps = [
 
 var g_spine = [
     "spine/spineboy.atlas",
-    "spine/spineboy.json",
+    "spine/spineboy-ess.json",
     "spine/spineboy.png",
     "spine/sprite.png",
     "spine/goblins.png",
