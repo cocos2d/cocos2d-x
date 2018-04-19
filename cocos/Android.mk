@@ -240,6 +240,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
+                    $(LOCAL_PATH)/../external/bullet/include/bullet \
                     $(LOCAL_PATH)/../external/xxhash \
                     $(LOCAL_PATH)/../external/nslog \
                     $(LOCAL_PATH)/../external/poly2tri \
@@ -252,6 +253,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
+                    $(LOCAL_PATH)/../external/bullet/include/bullet \
                     $(LOCAL_PATH)/../external/edtaa3func \
                     $(LOCAL_PATH)/../external/xxhash \
                     $(LOCAL_PATH)/../external/ConvertUTF \
