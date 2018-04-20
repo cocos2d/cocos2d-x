@@ -217,17 +217,22 @@ std::string Console::Utility::_prompt(PROMPT);
 //TODO: these general utils should be in a separate class
 //
 // Trimming functions were taken from: http://stackoverflow.com/a/217605
-//
+// Since c++17, some parts of the standard library were removed, include "ptr_fun".
+
 // trim from start
 
 std::string& Console::Utility::ltrim(std::string& s) {
-    s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(std::isspace))));
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) {
+        return !std::isspace(ch);
+    }));
     return s;
 }
 
 // trim from end
 std::string& Console::Utility::rtrim(std::string& s) {
-    s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) {
+        return !std::isspace(ch);
+    }).base(), s.end());
     return s;
 }
 
