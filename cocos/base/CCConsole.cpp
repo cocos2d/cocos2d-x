@@ -236,6 +236,11 @@ std::string& Console::Utility::rtrim(std::string& s) {
     return s;
 }
 
+// trim from both ends
+std::string& Console::Utility::trim(std::string& s) {
+    return Console::Utility::ltrim(Console::Utility::rtrim(s));
+}
+
 std::vector<std::string>& Console::Utility::split(const std::string& s, char delim, std::vector<std::string>& elems) {
     std::stringstream ss(s);
     std::string item;
