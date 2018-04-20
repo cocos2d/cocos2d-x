@@ -60,8 +60,8 @@ We use the Gradle to Android applacition, and Gradle use cmake to build the nati
 # android native code build mode
 # none, native code will never be compiled.
 # cmake, native code will be compiled by CMakeLists.txt
-# ndk, native code will be compiled by Android.mk
-PROP_NDK_MODE=ndk
+# ndk-build, native code will be compiled by Android.mk
+PROP_BUILD_TYPE=ndk-build
 ```
 
 If you want to add cmake build arguments, please add it at [externalNativeBuild](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/app/build.gradle#L25) block of [app/build.gradle] file.
