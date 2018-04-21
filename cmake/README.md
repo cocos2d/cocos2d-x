@@ -57,7 +57,7 @@ The default build is for iOS device, if you want to run on simulator, please add
 We use the Gradle to Android applacition, and Gradle use cmake to build the native code, see the [property](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/gradle.properties#L38): `PROP_NDK_MODE`, it control the way of native build
 
 ```sh
-# android native code build mode
+# android native code build type
 # none, native code will never be compiled.
 # cmake, native code will be compiled by CMakeLists.txt
 # ndk-build, native code will be compiled by Android.mk
