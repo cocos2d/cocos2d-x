@@ -1110,7 +1110,7 @@ std::string LabelTTFCJKWrappingTest::subtitle() const
 //
 LabelTTFUnicodeNew::LabelTTFUnicodeNew()
 {
-    auto strings = FileUtils::getInstance()->getValueMapFromFile("fonts/strings.xml");
+    auto strings = FileUtils::getInstance()->getValueMapFromFile("strings/LabelFNTUNICODELanguages.xml");
     std::string chinese  = strings["chinese1"].asString();
     auto winSize = Director::getInstance()->getWinSize();
 
@@ -3014,9 +3014,9 @@ LabelRichText::LabelRichText()
     {
         richText2->ignoreContentAdaptWithSize(false);
         richText2->setContentSize(Size(400, 400));
+        richText2->setPosition(center);
 
         addChild(richText2);
-        richText2->setPosition(Vec2(200,0));
     }
 }
 
