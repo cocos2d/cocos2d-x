@@ -2547,10 +2547,10 @@ LabelWrapNoBreakSpaceTest::LabelWrapNoBreakSpaceTest()
 {
     _label->setLineBreakWithoutSpace(false);
     const char* no_break_space_utf8 = "\xC2\xA0"; // 0xA0 - no-break space
-    auto str = StringUtils::format("The price is $%s1.25", no_break_space_utf8);
+    auto str = StringUtils::format("The price is $%s1.25. \n\nthe space between \"$\" and \"1.25\" is a no break space.", no_break_space_utf8);
     _label->setString(str);
     _label->setVerticalAlignment(TextVAlignment::TOP);
-    _label->setOverflow(Label::Overflow::RESIZE_HEIGHT);
+    _label->setOverflow(Label::Overflow::CLAMP);
 }
 
 std::string LabelWrapNoBreakSpaceTest::title() const
