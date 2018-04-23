@@ -102,11 +102,14 @@ elseif(APPLE)
 
 elseif(LINUX)
 
+  if(NOT CMAKE_CROSSCOMPILING)
   include_directories(
     /usr/include
     /usr/include/GLFW
     /usr/local/include/GLFW
   )
+  endif(NOT CMAKE_CROSSCOMPILING)
+
   set(COCOS_PLATFORM_SPECIFIC_HEADER
     platform/linux/CCApplication-linux.h
     platform/linux/CCGL-linux.h
