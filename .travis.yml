@@ -1,5 +1,9 @@
 matrix:
   include:
+    - os: linux
+      env: BUILD_TARGET=android_gen_libs
+      language: cpp
+      sudo: required
     # linux
     - os: linux
       env: 

@@ -232,6 +232,14 @@ function run_after_merge()
     generate_pull_request_for_binding_codes_and_cocosfiles
 }
 
+if [ "$BUILD_TARGET" == "android_gen_libs" ]; then
+    source ../environment.sh
+    pushd $COCOS2DX_ROOT
+    python -u tools/cocos2d-console/bin/cocos.py gen-libs -p android -m release --ap android-15 --app-abi armeabi-v7a --agreement n
+    popd
+    exit 0
+fi
+
 if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
     source ../environment.sh
     pushd $COCOS2DX_ROOT
