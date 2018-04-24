@@ -15,8 +15,7 @@ android {
 
         externalNativeBuild {
             ndkBuild {
-                if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE.compareTo('none') != 0) {
-                    // skip the NDK Build step if PROP_NDK_MODE is none
+                if (PROP_BUILD_TYPE == 'ndk-build') {
                     targets 'lua_game_controller'
                     arguments 'NDK_TOOLCHAIN_VERSION=clang'
                     arguments '-j' + Runtime.runtime.availableProcessors()
@@ -34,8 +33,7 @@ android {
 
     externalNativeBuild {
         ndkBuild {
-            if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE.compareTo('none') != 0) {
-                // skip the NDK Build step if PROP_NDK_MODE is none
+            if (PROP_BUILD_TYPE == 'ndk-build') {
                 path "jni/Android.mk"
             }
         }

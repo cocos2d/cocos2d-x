@@ -9,9 +9,7 @@
     "linux_cfg": {
         "project_path": "project/proj.linux",
         "project_name": "lua-empty-test",
-        "cmake_path": "../../",
-        "build_dir": "../../build/linux-build",
-        "build_result_dir": "lua-empty-test"
+        "cmake_path": "project"
     }, 
     "ios_cfg": {
         "project_path": "../../build",

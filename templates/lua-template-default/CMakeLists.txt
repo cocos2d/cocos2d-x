@@ -28,18 +28,16 @@ set(APP_NAME TemplateLua)
 project(${APP_NAME})
 
 set(RUNTIME_SRC_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/runtime-src)
+set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/cocos2d-x)
+set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
-if(NOT DEFINED BUILD_ENGINE_DONE)
-    set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/cocos2d-x)
-    set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
+include(CocosBuildSet)
+CocosBuildSet()
 
-    include(CocosBuildSet)
-    CocosBuildSet()
-    if(NOT USE_COCOS_PREBUILT)
-        set(BUILD_LUA_LIBS ON)
-        set(BUILD_SIMU_LIB ON)
-        add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-    endif()
+if(NOT USE_COCOS_PREBUILT)
+    set(BUILD_LUA_LIBS ON)
+    set(BUILD_SIMU_LIB ON)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 endif()
 
 # script and source files info, not need to compile

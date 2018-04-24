@@ -29,15 +29,14 @@ set(APP_NAME TemplateCpp)
 
 project (${APP_NAME})
 
-if(NOT DEFINED BUILD_ENGINE_DONE)
-    set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cocos2d)
-    set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
+set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cocos2d)
+set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
-    include(CocosBuildSet)
-    CocosBuildSet()
-    if(NOT USE_COCOS_PREBUILT)
-        add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-    endif()
+include(CocosBuildSet)
+CocosBuildSet()
+
+if(NOT USE_COCOS_PREBUILT)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 endif()
 
 # record sources, headers, resources...
