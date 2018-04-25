@@ -140,6 +140,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue16717);
     ADD_TEST_CASE(LabelIssueLineGap);
     ADD_TEST_CASE(LabelIssue17902);
+    ADD_TEST_CASE(LabelLetterColorsTest);
 };
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
@@ -3567,4 +3568,35 @@ std::string LabelIssue17902::subtitle() const
     return "";
 }
 
+//
+// LabelLetterColorsTest
+//
+LabelLetterColorsTest::LabelLetterColorsTest() {
+    auto center = VisibleRect::center();
 
+    auto label = Label::createWithTTF("", "fonts/arial.ttf", 24);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+
+    label->setString("1\n2\n3");
+    setLetterColors(label, Color3B::RED);
+
+    label->setString("abcd\ne");  // Must not crash at here.
+}
+
+std::string LabelLetterColorsTest::title() const {
+    return "Test for letter colors";
+}
+
+std::string LabelLetterColorsTest::subtitle() const {
+    return "Should not crash!";
+}
+
+void LabelLetterColorsTest::setLetterColors(cocos2d::Label* label, const cocos2d::Color3B& color) {
+    int n = label->getStringLength();
+    for (int i = 0; i < n; ++i) {
+        Sprite* letter = label->getLetter(i);
+        if (letter != nullptr)
+            letter->setColor(color);
+    }
+}
