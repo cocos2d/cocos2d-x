@@ -46,7 +46,7 @@ If ($env:build_type -eq "android_cpp_tests") {
 # TODO: uncomment when fixed
 } elseif ($env:build_type -eq "android_gen_libs") {
     Write-Host "Build cocos gen-libs"
-    & $python -u tools\cocos2d-console\bin\cocos.py gen-libs -p android -m release --ap android-15 --app-abi armeabi-v7a --agreement n
+    & $python -u tools\cocos2d-console\bin\cocos.py gen-libs -p android -m release --ap android-22 --app-abi armeabi-v7a --agreement n
     if ($lastexitcode -ne 0) {throw}
 
 } elseif ($env:build_type -eq "windows32_cocos_new_test") {
