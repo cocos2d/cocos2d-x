@@ -125,6 +125,7 @@ if [ "$BUILD_TARGET" == "android_gen_libs" ]; then
 fi
 
 if [ "$BUILD_TARGET" == "android_gen_libs_mac" ]; then
+    install_latest_python
     download_deps
     python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py
     exit 0
