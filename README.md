@@ -294,7 +294,6 @@ Contact us
    * Forum: [http://discuss.cocos2d-x.org][9]
    * Twitter: [http://www.twitter.com/cocos2dx][10]
    * Weibo: [http://t.sina.com.cn/cocos2dx][11]
-   * IRC: [https://webchat.freenode.net/][12] (#cocos2d and #cocos2d-x channels)
 
 [1]: http://www.cocos2d-x.org "cocos2d-x"
 [2]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
