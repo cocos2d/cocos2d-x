@@ -326,7 +326,6 @@ bool UIEditBoxTestTextHorizontalAlignment::init() {
         editbox->setFontColor(Color3B::RED);
         editbox->setPlaceHolder(text.c_str());
         editbox->setPlaceholderFontColor(Color3B::WHITE);
-        editbox->setMaxLength(8);
         editbox->setFontSize(editBoxSize.height/2);
         editbox->setText(text.c_str());
         editbox->setTextHorizontalAlignment(alignment);
@@ -334,9 +333,9 @@ bool UIEditBoxTestTextHorizontalAlignment::init() {
         addChild(editbox);
     };
   
-    createEditBox("left alignment", TextHAlignment::LEFT, visibleOrigin.y+visibleSize.height*3/4);
-    createEditBox("center alignment", TextHAlignment::CENTER, visibleOrigin.y+visibleSize.height/2);
-    createEditBox("right alignment", TextHAlignment::RIGHT, visibleOrigin.y+visibleSize.height/4);
+    createEditBox("horizontal left text", TextHAlignment::LEFT, visibleOrigin.y+visibleSize.height*3/4);
+    createEditBox("horizontal center text", TextHAlignment::CENTER, visibleOrigin.y+visibleSize.height/2);
+    createEditBox("horizontal right text", TextHAlignment::RIGHT, visibleOrigin.y+visibleSize.height/4);
   
     return true;
 }

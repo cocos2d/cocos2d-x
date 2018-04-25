@@ -230,7 +230,7 @@ end
 
 local function ParticleReorder_onEnterOrExit(tag)
 	local scheduler = cc.Director:getInstance():getScheduler()
-	if tag == "enter" then
+	if tag == "enterTransitionFinish" then
 		ParticleReorder_entry = scheduler:scheduleScriptFunc(reorderParticles, 1.0, false)
 	elseif tag == "exit" then
         if ParticleReorder_entry ~= nil then
@@ -327,7 +327,7 @@ end
 
 local function ParticleBatchHybrid_onEnterOrExit(tag)
 	local scheduler = cc.Director:getInstance():getScheduler()
-	if tag == "enter" then
+	if tag == "enterTransitionFinish" then
 		ParticleBatchHybrid_entry = scheduler:scheduleScriptFunc(switchRender, 2.0, false)
 	elseif tag == "exit" then
         if ParticleBatchHybrid_entry ~= nil then
@@ -1240,7 +1240,7 @@ end
 
 local function Issue870_onEnterOrExit(tag)
 	local scheduler = cc.Director:getInstance():getScheduler()
-	if tag == "enter" then
+	if tag == "enterTransitionFinish" then
 		Issue870_entry = scheduler:scheduleScriptFunc(updateQuads, 2.0, false)
 	elseif tag == "exit" then
         if Issue870_entry ~= nil then
@@ -1362,7 +1362,7 @@ end
 
 local function AddAndDeleteParticleSystems_onEnterOrExit(tag)
 	local scheduler = cc.Director:getInstance():getScheduler()
-	if tag == "enter" then
+	if tag == "enterTransitionFinish" then
 		AddAndDeleteParticleSystems_entry = scheduler:scheduleScriptFunc(removeSystem, 2.0, false)
 	elseif tag == "exit" then
         if AddAndDeleteParticleSystems_entry ~= nil then
@@ -1427,7 +1427,7 @@ end
 
 local function ReorderParticleSystems_onEnterOrExit(tag)
 	local scheduler = cc.Director:getInstance():getScheduler()
-	if tag == "enter" then
+	if tag == "enterTransitionFinish" then
 		ReorderParticleSystems_entry = scheduler:scheduleScriptFunc(reorderSystem, 2.0, false)
 	elseif tag == "exit" then
         if ReorderParticleSystems_entry ~= nil then
