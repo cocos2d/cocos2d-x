@@ -97,7 +97,7 @@ struct DownloaderTest : public TestCase
         bg->addChild(btn, 10);
         
         // add a progress bar
-        auto bar = ui::LoadingBar::create("cocosui/UIEditorTest/UISlider/silder_progressBar.png");
+        auto bar = ui::LoadingBar::create("ccs-res/cocosui/sliderProgress.png");
         bar->setTag(TAG_PROGRESS_BAR);
         bar->ignoreContentAdaptWithSize(false);
         bar->setAnchorPoint(Vec2(0.5, 0));
@@ -320,7 +320,59 @@ struct DownloaderTest : public TestCase
     }
 };
 
+struct DownloaderMultiTask : public TestCase
+{
+    CREATE_FUNC(DownloaderMultiTask);
+
+    virtual std::string title() const override { return "Downloader Multi Task"; }
+    virtual std::string subtitle() const override { return "see the console output"; }
+
+    std::unique_ptr<network::Downloader> downloader;
+
+    DownloaderMultiTask()
+    {
+        network::DownloaderHints hints = {32, 50, ".going"};
+        downloader.reset(new network::Downloader(hints));
+    }
+
+    virtual void onEnter() override
+    {
+        TestCase::onEnter();
+        char path[256];
+        char name[64];
+        for(int i=0; i< 200;i++){
+            sprintf(name, "%d_%s", i, sNameList[0]);
+            sprintf(path, "%sCppTests/DownloaderTest/%s", FileUtils::getInstance()->getWritablePath().c_str(), name);
+            log("network task create: %s", name);
+            this->downloader->createDownloadFileTask(sURLList[0], path, name);
+        }
+/*
+        downloader->onTaskProgress = ([] (const network::DownloadTask& task, int64_t bytesReceived, int64_t totalBytesReceived, int64_t totalBytesExpected) {
+            log("network task progress: %s, bytesReceived: %lld, totalBytesReceived:%lld, totalBytesExpected:%lld"
+                , task.identifier.c_str()
+                , bytesReceived
+                , totalBytesReceived
+                , totalBytesExpected);
+        });
+*/
+
+        downloader->onFileTaskSuccess = ([] (const network::DownloadTask& task) {
+            log("network task success: %s", task.identifier.c_str());
+        });
+
+        downloader->onTaskError = ([] (const network::DownloadTask& task, int errorCode, int errorCodeInternal, const std::string& errorStr) {
+            log("network task failed : %s, identifier(%s) error code(%d), internal error code(%d) desc(%s)"
+                , task.requestURL.c_str()
+                , task.identifier.c_str()
+                , errorCode
+                , errorCodeInternal
+                , errorStr.c_str());
+        });
+    }
+};
+
 DownloaderTests::DownloaderTests()
 {
     ADD_TEST_CASE(DownloaderTest);
+    ADD_TEST_CASE(DownloaderMultiTask);
 };
