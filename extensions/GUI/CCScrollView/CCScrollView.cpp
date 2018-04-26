@@ -72,7 +72,8 @@ ScrollView::ScrollView()
 
 ScrollView::~ScrollView()
 {
-
+    _animatedScrollAction->release();
+    _animatedScrollAction = nullptr;
 }
 
 ScrollView* ScrollView::create(Size size, Node* container/* = nullptr*/)
