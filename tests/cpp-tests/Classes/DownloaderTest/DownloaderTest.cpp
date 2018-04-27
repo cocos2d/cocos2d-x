@@ -331,7 +331,8 @@ struct DownloaderMultiTask : public TestCase
 
     DownloaderMultiTask()
     {
-        network::DownloaderHints hints = {32, 50, ".going"};
+        // countOfMaxProcessingTasks 32
+        network::DownloaderHints hints = {32, 60, ".going"};
         downloader.reset(new network::Downloader(hints));
     }
 
@@ -340,28 +341,20 @@ struct DownloaderMultiTask : public TestCase
         TestCase::onEnter();
         char path[256];
         char name[64];
-        for(int i=0; i< 200;i++){
+        // add 64 download task at same time.
+        for(int i=0; i< 64;i++){
             sprintf(name, "%d_%s", i, sNameList[0]);
             sprintf(path, "%sCppTests/DownloaderTest/%s", FileUtils::getInstance()->getWritablePath().c_str(), name);
-            log("network task create: %s", name);
+            log("downloader task create: %s", name);
             this->downloader->createDownloadFileTask(sURLList[0], path, name);
         }
-/*
-        downloader->onTaskProgress = ([] (const network::DownloadTask& task, int64_t bytesReceived, int64_t totalBytesReceived, int64_t totalBytesExpected) {
-            log("network task progress: %s, bytesReceived: %lld, totalBytesReceived:%lld, totalBytesExpected:%lld"
-                , task.identifier.c_str()
-                , bytesReceived
-                , totalBytesReceived
-                , totalBytesExpected);
-        });
-*/
 
         downloader->onFileTaskSuccess = ([] (const network::DownloadTask& task) {
-            log("network task success: %s", task.identifier.c_str());
+            log("downloader task success: %s", task.identifier.c_str());
         });
 
         downloader->onTaskError = ([] (const network::DownloadTask& task, int errorCode, int errorCodeInternal, const std::string& errorStr) {
-            log("network task failed : %s, identifier(%s) error code(%d), internal error code(%d) desc(%s)"
+            log("downloader task failed : %s, identifier(%s) error code(%d), internal error code(%d) desc(%s)"
                 , task.requestURL.c_str()
                 , task.identifier.c_str()
                 , errorCode
