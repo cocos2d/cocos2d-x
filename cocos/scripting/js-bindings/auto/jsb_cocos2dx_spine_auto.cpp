@@ -2081,6 +2081,8 @@ void js_register_cocos2dx_spine_SkeletonAnimation(JSContext *cx, JS::HandleObjec
 void register_all_cocos2dx_spine(JSContext* cx, JS::HandleObject obj) {
     // Get the ns
     JS::RootedObject ns(cx);
+    // recreate SkeletonBatch singleton, ensure that EVENT_AFTER_DRAW_RESET_POSITION be regist every time on restart.
+    SkeletonBatch::destroyInstance();
     get_or_create_js_obj(cx, obj, "sp", &ns);
 
     js_register_cocos2dx_spine_SkeletonRenderer(cx, ns);
