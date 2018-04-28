@@ -19,9 +19,9 @@ macro (SelectModule)
   
   set(USE_EXTERNAL_SOURCES_DEFAULT OFF)
 
-  option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
-  option(USE_BOX2D "Use box2d for physics library" OFF)
-  option(USE_BULLET "Use bullet for physics3d library" ON)
+  option(USE_CHIPMUNK "Use chipmunk for physics library" OFF)
+  option(USE_BOX2D "Use box2d for physics library" ON)
+  option(USE_BULLET "Use bullet for physics3d library" OFF)
   option(USE_RECAST "Use Recast for navigation mesh" ON)
   option(USE_WEBP "Use WebP codec" ${USE_WEBP_DEFAULT})
   option(USE_PNG "Use PNG codec" ON)

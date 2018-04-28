@@ -55,8 +55,10 @@ public:
         addTest("Box2d - Basic", []() { return new (std::nothrow) Box2DTests(); });
         addTest("Box2d - TestBed", []() { return new (std::nothrow) Box2dTestBedSuite(); });
 #endif
-        addTest("Bugs", []() { return new BugsTests(); });
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
         addTest("Chipmunk", []() { return new ChipmunkTests(); });
+#endif
+        addTest("Bugs", []() { return new BugsTests(); });
         addTest("Click and Move", [](){return new ClickAndMoveTest(); });
         addTest("Configuration", []() { return new ConfigurationTests(); });
         addTest("Console", []() { return new ConsoleTests(); });

@@ -46,46 +46,6 @@ macro (BuildModules)
   # Freetype required on all platforms
   cocos_find_package(Freetype FREETYPE REQUIRED)
 
-  # WebP required if used
-  if(USE_WEBP)
-    cocos_find_package(WebP WEBP REQUIRED)
-  endif(USE_WEBP)
-
-  # Chipmunk
-  if(USE_CHIPMUNK)
-    cocos_find_package(Chipmunk CHIPMUNK REQUIRED)
-    add_definitions(-DCC_ENABLE_CHIPMUNK_INTEGRATION=1)
-  else(USE_CHIPMUNK)
-    add_definitions(-DCC_USE_PHYSICS=0)
-  endif(USE_CHIPMUNK)
-
-  # Box2d
-  if(USE_BOX2D)
-    if(USE_EXTERNAL_PREBUILT)
-      cocos_find_package(box2d Box2D REQUIRED)
-    endif(USE_EXTERNAL_PREBUILT)
-    message(STATUS "Box2D include dirs: ${Box2D_INCLUDE_DIRS}")
-    add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=1)
-  elseif(BUILD_BOX2D)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/external/Box2D ${ENGINE_BINARY_PATH}/external/Box2D)
-    add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=1)
-  else()
-    add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=0)
-  endif(USE_BOX2D)
-
-  # Bullet
-  if(USE_BULLET)
-    if(USE_EXTERNAL_PREBUILT)
-      cocos_find_package(bullet BULLET REQUIRED)
-    endif()
-    add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=1)
-    add_definitions(-DCC_USE_PHYSICS=1)
-    message(STATUS "Bullet include dirs: ${BULLET_INCLUDE_DIRS}")
-  else(USE_BULLET)
-    add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=0)
-    add_definitions(-DCC_USE_3D_PHYSICS=0)
-  endif(USE_BULLET)
-
   # Recast (not prebuilded, exists as source)
   if(USE_RECAST)
     if(USE_EXTERNAL_PREBUILT OR USE_EXTERNAL_SOURCES)

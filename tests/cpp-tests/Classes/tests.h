@@ -29,8 +29,10 @@
 #include "Box2DTest/Box2dTest.h"
 #include "Box2DTestBed/Box2dView.h"
 #endif
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
 #include "ChipmunkTest/ChipmunkTest.h"
+#endif
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
 #include "ClippingNodeTest/ClippingNodeTest.h"
 #endif
 #include "NewAudioEngineTest/NewAudioEngineTest.h"

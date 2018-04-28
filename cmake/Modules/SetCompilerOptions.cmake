@@ -92,40 +92,6 @@ macro (SetCompilerOptions)
   set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCOCOS2D_DEBUG=1")
   set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
 
-    # definitions for chipmunk
-  if (USE_CHIPMUNK)
-    add_definitions(-DCC_ENABLE_CHIPMUNK_INTEGRATION=1)
-    if (IOS OR MACOSX)
-      # without this chipmunk will try to use apple defined geometry types, that conflicts with cocos
-            add_definitions(-DCP_USE_CGPOINTS=0)
-    endif()
-  else()
-    add_definitions(-DCC_USE_PHYSICS=0)
-  endif()
-
-    # definitions for box2d
-  if (USE_BOX2D)
-    add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=1)
-  else()
-    add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=0)
-  endif()
-
-    # definitions for bullet
-  if (USE_BULLET)
-    add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=1)
-        add_definitions(-DCC_USE_3D_PHYSICS=1)
-  else()
-    add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=0)
-        add_definitions(-DCC_USE_3D_PHYSICS=0)
-  endif()
-
-    # definitions for recast
-  if (USE_RECAST)
-    add_definitions(-DCC_USE_NAVMESH=1)
-  else()
-    add_definitions(-DCC_USE_NAVMESH=0)
-  endif()
-
   # Compiler options
   if(MSVC)
 

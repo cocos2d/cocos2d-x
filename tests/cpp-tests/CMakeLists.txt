@@ -199,7 +199,6 @@ list(APPEND GAME_HEADER
     Classes/NewRendererTest/NewRendererTest.h
     Classes/SpritePolygonTest/SpritePolygonTest.h
     Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.h
-    Classes/ChipmunkTest/ChipmunkTest.h
     Classes/NodeTest/NodeTest.h
     Classes/FileUtilsTest/FileUtilsTest.h
     Classes/RenderTextureTest/RenderTextureTest.h
@@ -240,7 +239,6 @@ list(APPEND GAME_SOURCE
     Classes/BugsTest/Bug-Child.cpp
     Classes/BugsTest/BugsTest.cpp
     Classes/Camera3DTest/Camera3DTest.cpp
-    Classes/ChipmunkTest/ChipmunkTest.cpp
     Classes/ClickAndMoveTest/ClickAndMoveTest.cpp
     Classes/ClippingNodeTest/ClippingNodeTest.cpp
     Classes/CocosDenshionTest/CocosDenshionTest.cpp
@@ -365,6 +363,12 @@ endif()
 
 if(USE_CHIPMUNK)
     include_directories(${CHIPMUNK_INCLUDE_DIRS})
+    list(APPEND GAME_HEADER
+            Classes/ChipmunkTest/ChipmunkTest.h
+         )
+    list(APPEND GAME_SOURCE
+            Classes/ChipmunkTest/ChipmunkTest.cpp
+         )
 endif()
 
 if(USE_BOX2D)
