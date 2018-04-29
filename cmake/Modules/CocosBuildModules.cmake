@@ -111,7 +111,7 @@
      if(USE_COCOS_PREBUILT)
          cocos_find_prebuilt_lib_by_name(cpufeatures CPUFEATURES_LIBRARIES)
      else()
-         include(${CMAKE_MODULE_PATH}/../AndroidNdkModules.cmake)
+         include(AndroidNdkModules)
          android_ndk_import_module_cpufeatures()
          set(CPUFEATURES_LIBRARIES cpufeatures)
      endif()
