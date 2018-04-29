@@ -9,7 +9,6 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
     include(CocosBuildSet)
-    cocosbuildset()
     if(NOT USE_COCOS_PREBUILT)
         add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
     endif()
