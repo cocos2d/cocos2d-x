@@ -6,10 +6,6 @@ if(" ${CMAKE_SOURCE_DIR}" STREQUAL " ${CMAKE_BINARY_DIR}")
         ")
 endif()
 
-if(DEFINED CMAKE_TOOLCHAIN_FILE)
-    message(STATUS "using toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
-endif()
-
 # It ensures that when Find*.cmake files included from cmake's Modules dir
 # include another *.cmake file with relative path, that file will be included
 # also from cmake's Modules dir, to not clash with per-project files.
@@ -18,6 +14,11 @@ cmake_policy(SET CMP0017 NEW)
 # Use new behaviour with cmake >= 3.1:
 # Only interpret if() arguments as variables or keywords when unquoted.
 cmake_policy(SET CMP0054 NEW)
+
+# print the info of CMAKE_TOOLCHAIN_FILE, if defined it
+if(DEFINED CMAKE_TOOLCHAIN_FILE)
+    message(STATUS "using toolchain file: ${CMAKE_TOOLCHAIN_FILE}")
+endif()
 
 # some useful variables for every one cocos project
 set(COCOS_EXTERNAL_DIR ${COCOS2DX_ROOT_PATH}/external)
@@ -33,9 +34,12 @@ include(CocosBuildHelpers)
 
 # select building modules
 include(CocosSelectModule)
+
 # set common compiler options
 include(CocosCompileOptions)
+
 # collect prebuilt libraries
 include(CocosPickLibs)
+
 # compile source libraries
 include(CocosBuildModules)
