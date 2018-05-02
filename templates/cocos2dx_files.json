@@ -34,7 +34,7 @@
         "cmake/Modules/FindWebP.cmake", 
         "cmake/Modules/Findflatbuffers.cmake", 
         "cmake/Modules/Findxxhash.cmake", 
-        "cmake/Modules/iOSBundleInfo.plist.in",
+        "cmake/Modules/iOSBundleInfo.plist.in", 
         "cmake/README.md", 
         "cmake/ios.toolchain.cmake", 
         "cocos/2d/CCAction.cpp", 
