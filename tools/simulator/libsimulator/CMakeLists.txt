@@ -43,7 +43,7 @@ if(WIN32)
         ${SIMULATOR_LIB_PATH}/platform/win32/PlayerEditBoxServiceWin.h
         ${SIMULATOR_LIB_PATH}/platform/win32/PlayerFileDialogServiceWin.h
         ${SIMULATOR_LIB_PATH}/platform/win32/PlayerTaskServiceWin.h
-    )
+        )
     set(PLATFORM_SOURCE
         ${SIMULATOR_LIB_PATH}/../proj.win32/Runtime_win32.cpp
         ${SIMULATOR_LIB_PATH}/../proj.win32/stdafx.cpp
@@ -54,7 +54,7 @@ if(WIN32)
         ${SIMULATOR_LIB_PATH}/platform/win32/PlayerMessageBoxServiceWin.cpp
         ${SIMULATOR_LIB_PATH}/platform/win32/PlayerTaskServiceWin.cpp
         ${SIMULATOR_LIB_PATH}/platform/win32/PlayerWin.cpp
-    )
+        )
 elseif(MACOSX)
     set(PLATFORM_HEADER
         ${SIMULATOR_LIB_PATH}/platform/mac/openudid/OpenUDIDMac.h
@@ -64,7 +64,7 @@ elseif(MACOSX)
         ${SIMULATOR_LIB_PATH}/platform/mac/PlayerMenuServiceMac.h
         ${SIMULATOR_LIB_PATH}/platform/mac/PlayerTaskServiceMac.h
         ${SIMULATOR_LIB_PATH}/platform/mac/PlayerFileDialogServiceMac.h
-    )
+        )
     set(PLATFORM_SOURCE
         ${SIMULATOR_LIB_PATH}/platform/mac/DeviceEx-mac.mm
         ${SIMULATOR_LIB_PATH}/platform/mac/PlayerEditBoxServiceMac.mm
@@ -75,7 +75,7 @@ elseif(MACOSX)
         ${SIMULATOR_LIB_PATH}/platform/mac/PlayerTaskServiceMac.mm
         ${SIMULATOR_LIB_PATH}/platform/mac/Runtime_ios-mac.mm
         ${SIMULATOR_LIB_PATH}/platform/mac/openudid/OpenUDIDMac.m
-    )
+        )
 endif()
 
 set(PROTOBUF_HEADER
@@ -106,7 +106,7 @@ set(PROTOBUF_HEADER
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/message_lite.h
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/generated_message_util.h
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/wire_format_lite.h
-)
+    )
 
 set(PROTOBUF_SOURCE
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/extension_set.cc
@@ -122,7 +122,7 @@ set(PROTOBUF_SOURCE
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/once.cc
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/stubs/stringprintf.cc
     ${SIMULATOR_LIB_PATH}/protobuf-lite/google/protobuf/wire_format_lite.cc
-)
+    )
 
 set(SIMULATOR_HEADER
     ${SIMULATOR_LIB_PATH}/cocos2dx_extra.h
@@ -157,7 +157,7 @@ set(SIMULATOR_HEADER
     ${SIMULATOR_LIB_PATH}/PlayerTaskServiceProtocol.h
     ${PROTOBUF_HEADER}
     ${PLATFORM_HEADER}
-)
+    )
 
 set(SIMULATOR_SOURCE
     ${SIMULATOR_LIB_PATH}/network/CCHTTPRequest.cpp
@@ -187,30 +187,30 @@ set(SIMULATOR_SOURCE
     ${SIMULATOR_LIB_PATH}/runtime/VisibleRect.cpp
     ${PROTOBUF_SOURCE}
     ${PLATFORM_SOURCE}
-)
+    )
 
 include_directories(
-    ${SIMULATOR_LIB_PATH}
-    ${SIMULATOR_LIB_PATH}/platform/${PLATFORM_FOLDER}
-    ${SIMULATOR_LIB_PATH}/protobuf-lite
-    ${SIMULATOR_LIB_PATH}/runtime
-    ${COCOS2DX_ROOT_PATH}/cocos/editor-support
+        ${SIMULATOR_LIB_PATH}
+        ${SIMULATOR_LIB_PATH}/platform/${PLATFORM_FOLDER}
+        ${SIMULATOR_LIB_PATH}/protobuf-lite
+        ${SIMULATOR_LIB_PATH}/runtime
+        ${COCOS2DX_ROOT_PATH}/cocos/editor-support
 )
 
 set(LIB_SOURCE ${SIMULATOR_SOURCE} ${SIMULATOR_HEADER})
 
 add_library(simulator STATIC
-  ${LIB_SOURCE}
-)
+            ${LIB_SOURCE}
+            )
 
 target_use_simulator_depend_libs(simulator)
 
 set_target_properties(simulator
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    FOLDER "Internal"
-)
+                      PROPERTIES
+                      ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+                      LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+                      FOLDER "Internal"
+                      )
 
 if(XCODE OR VS)
     cocos_mark_code_files("simulator")

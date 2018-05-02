@@ -1,41 +1,41 @@
 set(cocos_root ${COCOS2DX_ROOT_PATH})
 
 include_directories(
-  ${cocos_root}/external/lua
-  ${cocos_root}/external/lua/tolua
-  ${cocos_root}/external/xxtea
-  ${cocos_root}/external
-  ${cocos_root}/cocos
-  ${cocos_root}/cocos/editor-support
+        ${cocos_root}/external/lua
+        ${cocos_root}/external/lua/tolua
+        ${cocos_root}/external/xxtea
+        ${cocos_root}/external
+        ${cocos_root}/cocos
+        ${cocos_root}/cocos/editor-support
 )
 
 if(ANDROID)
     include_directories(
-        manual/platform/android
-        manual/platform/android/jni
+            manual/platform/android
+            manual/platform/android/jni
     )
 endif()
 
 file(GLOB lua_cocos2d_source_files
-    "${cocos_root}/external/lua/tolua/*.c"
-    "${cocos_root}/external/xxtea/xxtea.cpp"
-)
+     "${cocos_root}/external/lua/tolua/*.c"
+     "${cocos_root}/external/xxtea/xxtea.cpp"
+     )
 
 list(APPEND lua_cocos2d_source_files
-    ${cocos_root}/external/lua/luasocket/luasocket.c
-    ${cocos_root}/external/lua/luasocket/timeout.c
-    ${cocos_root}/external/lua/luasocket/buffer.c
-    ${cocos_root}/external/lua/luasocket/io.c
-    ${cocos_root}/external/lua/luasocket/auxiliar.c
-    ${cocos_root}/external/lua/luasocket/options.c
-    ${cocos_root}/external/lua/luasocket/inet.c
-    ${cocos_root}/external/lua/luasocket/except.c
-    ${cocos_root}/external/lua/luasocket/select.c
-    ${cocos_root}/external/lua/luasocket/tcp.c
-    ${cocos_root}/external/lua/luasocket/udp.c
-    ${cocos_root}/external/lua/luasocket/mime.c
-    ${cocos_root}/external/lua/luasocket/luasocket_scripts.c
-)
+     ${cocos_root}/external/lua/luasocket/luasocket.c
+     ${cocos_root}/external/lua/luasocket/timeout.c
+     ${cocos_root}/external/lua/luasocket/buffer.c
+     ${cocos_root}/external/lua/luasocket/io.c
+     ${cocos_root}/external/lua/luasocket/auxiliar.c
+     ${cocos_root}/external/lua/luasocket/options.c
+     ${cocos_root}/external/lua/luasocket/inet.c
+     ${cocos_root}/external/lua/luasocket/except.c
+     ${cocos_root}/external/lua/luasocket/select.c
+     ${cocos_root}/external/lua/luasocket/tcp.c
+     ${cocos_root}/external/lua/luasocket/udp.c
+     ${cocos_root}/external/lua/luasocket/mime.c
+     ${cocos_root}/external/lua/luasocket/luasocket_scripts.c
+     )
 
 if(WINDOWS)
     if(MINGW)
@@ -43,8 +43,8 @@ if(WINDOWS)
     endif()
     add_definitions(-D_USRLUASTATIC)
     list(APPEND lua_cocos2d_source_files
-        ${cocos_root}/external/lua/luasocket/wsocket.c
-        )
+         ${cocos_root}/external/lua/luasocket/wsocket.c
+         )
 elseif(UNIX OR ANDROID)
     # because we have -std=c99
     add_definitions(-D_POSIX_C_SOURCE=200809L)
@@ -56,10 +56,10 @@ elseif(UNIX OR ANDROID)
     endif()
 
     list(APPEND lua_cocos2d_source_files
-        ${cocos_root}/external/lua/luasocket/serial.c
-        ${cocos_root}/external/lua/luasocket/unix.c
-        ${cocos_root}/external/lua/luasocket/usocket.c
-        )
+         ${cocos_root}/external/lua/luasocket/serial.c
+         ${cocos_root}/external/lua/luasocket/unix.c
+         ${cocos_root}/external/lua/luasocket/usocket.c
+         )
 endif()
 
 set(lua_bindings_manual_headers
@@ -96,7 +96,7 @@ set(lua_bindings_manual_headers
     manual/ui/lua_cocos2dx_ui_manual.hpp
     manual/ui/lua_cocos2dx_experimental_video_manual.hpp
     manual/controller/lua_cocos2dx_controller_manual.hpp
-)
+    )
 
 set(lua_bindings_manual_files
     manual/CCLuaBridge.cpp
@@ -157,7 +157,7 @@ set(lua_bindings_auto_headers
     auto/lua_cocos2dx_physics_auto.hpp
     auto/lua_cocos2dx_extension_auto.hpp
     auto/lua_cocos2dx_cocosbuilder_auto.hpp
-)
+    )
 
 set(lua_bindings_auto_files
     auto/lua_cocos2dx_3d_auto.cpp
@@ -183,22 +183,22 @@ if(APPLE)
     set(lua_bindings_manual_headers
         ${lua_bindings_manual_headers}
         manual/platform/ios/CCLuaObjcBridge.h
-    )
+        )
     set(lua_bindings_manual_files
         ${lua_bindings_manual_files}
         manual/platform/ios/CCLuaObjcBridge.mm
-    )
+        )
     if(IOS)
         set(lua_bindings_manual_headers
             ${lua_bindings_manual_headers}
             auto/lua_cocos2dx_experimental_webview_auto.hpp
             manual/ui/lua_cocos2dx_experimental_webview_manual.hpp
-        )
+            )
         set(lua_bindings_manual_files
             ${lua_bindings_manual_files}
             auto/lua_cocos2dx_experimental_webview_auto.cpp
             manual/ui/lua_cocos2dx_experimental_webview_manual.cpp
-        )
+            )
     endif()
 elseif(ANDROID)
     set(lua_bindings_manual_headers
@@ -207,30 +207,30 @@ elseif(ANDROID)
         manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.h
         auto/lua_cocos2dx_experimental_webview_auto.hpp
         manual/ui/lua_cocos2dx_experimental_webview_manual.hpp
-    )
+        )
     set(lua_bindings_manual_files
         ${lua_bindings_manual_files}
         manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.cpp
         manual/platform/android/CCLuaJavaBridge.cpp
         auto/lua_cocos2dx_experimental_webview_auto.cpp
         manual/ui/lua_cocos2dx_experimental_webview_manual.cpp
-    )
+        )
 endif()
 
 if(USE_BULLET)
-  include_directories(${BULLET_INCLUDE_DIRS})
+    include_directories(${BULLET_INCLUDE_DIRS})
 endif()
 
 set(lua_bindings_files
     ${lua_cocos2d_source_files}
     ${lua_bindings_manual_files}
     ${lua_bindings_auto_files}
-)
+    )
 set(lua_bindings_headers
     ${lua_cocos2d_source_headers}
     ${lua_bindings_manual_headers}
     ${lua_bindings_auto_headers}
-)
+    )
 
 list(APPEND lua_bindings_files ${lua_bindings_headers})
 
@@ -242,11 +242,11 @@ add_dependencies(luacocos2d cocos2d)
 target_use_luacocos2d_depend_libs(luacocos2d)
 
 set_target_properties(luacocos2d
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    FOLDER "Internal"
-)
+                      PROPERTIES
+                      ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+                      LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+                      FOLDER "Internal"
+                      )
 
 if(XCODE OR VS)
     cocos_mark_code_files("luacocos2d")

@@ -35,7 +35,7 @@ set(COCOS2D_X_VERSION 3.17)
 set(COCOS_CORE_LIB cocos2d)
 
 if(WINDOWS)
-  ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
+    add_definitions(-DUNICODE -D_UNICODE)
 endif()
 
 include(2d/CMakeLists.txt)
@@ -65,12 +65,12 @@ if(BUILD_EDITOR_COCOSTUDIO)
 endif(BUILD_EDITOR_COCOSTUDIO)
 
 if(BUILD_EDITOR_SPINE)
-include(editor-support/spine/CMakeLists.txt)
+    include(editor-support/spine/CMakeLists.txt)
     set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_SPINE_SRC} ${COCOS_SPINE_HEADER})
 endif(BUILD_EDITOR_SPINE)
 
 if(BUILD_EXTENSIONS)
-include(../extensions/CMakeLists.txt)
+    include(../extensions/CMakeLists.txt)
 endif(BUILD_EXTENSIONS)
 
 set(COCOS_HEADER cocos2d.h
@@ -91,7 +91,7 @@ set(COCOS_HEADER cocos2d.h
     ${COCOS_EDITOR_SUPPORT_HEADER}
     ${COCOS_EXTENSIONS_HEADER}
     ${COCOS_STORAGE_HEADER}
-)
+    )
 
 set(COCOS_SRC cocos2d.cpp
     ${COCOS_2D_SRC}
@@ -111,7 +111,7 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_EDITOR_SUPPORT_SRC}
     ${COCOS_EXTENSIONS_SRC}
     ${COCOS_STORAGE_SRC}
-)
+    )
 
 #todo: provide prebuild versions of the xx libs for all platforms
 include_directories(../external/xxtea)
@@ -126,28 +126,28 @@ include(CocosUseLibs)
 target_use_cocos2d_depend_libs(cocos2d)
 
 set_target_properties(cocos2d
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    VERSION "${COCOS2D_X_VERSION}"
-    FOLDER "Internal"
-)
+                      PROPERTIES
+                      ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+                      LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+                      VERSION "${COCOS2D_X_VERSION}"
+                      FOLDER "Internal"
+                      )
 
 # set custom target: prebuilt, to copy all libs to prebuilt libs folder
 if(GEN_COCOS_PREBUILT)
     add_custom_target(prebuilt ALL)
     add_dependencies(prebuilt cocos2d)
     set_target_properties(prebuilt
-        PROPERTIES
-        FOLDER "Internal"
-    )
+                          PROPERTIES
+                          FOLDER "Internal"
+                          )
     add_custom_command(TARGET "prebuilt"
-        POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${CMAKE_BINARY_DIR}/lib"
-        "${COCOS_PREBUILT_PATH}"
-        COMMENT "copy library directory:${CMAKE_BINARY_DIR}/lib to directory:${COCOS_PREBUILT_PATH}"
-    )
+                       POST_BUILD
+                       COMMAND ${CMAKE_COMMAND} -E copy_directory
+                       "${CMAKE_BINARY_DIR}/lib"
+                       "${COCOS_PREBUILT_PATH}"
+                       COMMENT "copy library directory:${CMAKE_BINARY_DIR}/lib to directory:${COCOS_PREBUILT_PATH}"
+                       )
     if(BUILD_LUA_LIBS)
         add_dependencies(prebuilt luacocos2d)
     endif()
@@ -161,11 +161,11 @@ endif()
 
 ## Lua bindings lib
 if(BUILD_LUA_LIBS)
-  add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings ${ENGINE_BINARY_PATH}/cocos/lua-bindings)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings ${ENGINE_BINARY_PATH}/cocos/lua-bindings)
 endif()
 ## JS bindings lib
 if(BUILD_JS_LIBS)
-  add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings ${ENGINE_BINARY_PATH}/cocos/js-bindings)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings ${ENGINE_BINARY_PATH}/cocos/js-bindings)
 endif()
 # simulator
 if(BUILD_SIMU_LIB AND (MACOSX OR WINDOWS))
