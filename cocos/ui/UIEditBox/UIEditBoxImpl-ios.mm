@@ -159,6 +159,11 @@ void EditBoxImplIOS::setNativeReturnType(EditBox::KeyboardReturnType returnType)
 {
     [_systemControl setReturnType:returnType];
 }
+    
+void EditBoxImplIOS::setNativeKeyboardAppearance(EditBox::KeyboardAppearance keyboardAppearance)
+{
+    [_systemControl setKeyboardAppearance:keyboardAppearance];
+}
 
 void EditBoxImplIOS::setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment)
 {

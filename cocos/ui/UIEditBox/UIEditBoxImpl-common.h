@@ -60,6 +60,7 @@ public:
     virtual void setInputMode(EditBox::InputMode inputMode) override;
     virtual void setInputFlag(EditBox::InputFlag inputFlag) override;
     virtual void setReturnType(EditBox::KeyboardReturnType returnType) override;
+    virtual void setKeyboardAppearance(EditBox::KeyboardAppearance) override;
     virtual void setText(const char* pText) override;
     virtual void setPlaceHolder(const char* pText) override;
     virtual void setVisible(bool visible) override;
@@ -82,6 +83,7 @@ public:
     virtual EditBox::InputMode getInputMode() override { return _editBoxInputMode; }
     virtual EditBox::InputFlag getInputFlag() override { return _editBoxInputFlag; }
     virtual EditBox::KeyboardReturnType getReturnType() override { return _keyboardReturnType; }
+    virtual EditBox::KeyboardAppearance getKeyboardAppearance() override { return _keyboardAppearance; }
     virtual TextHAlignment getTextHorizontalAlignment() override { return _alignment; }
 
     virtual void refreshInactiveText();
@@ -119,6 +121,7 @@ public:
     virtual void setNativeInputMode(EditBox::InputMode inputMode) = 0;
     virtual void setNativeInputFlag(EditBox::InputFlag inputFlag) = 0;
     virtual void setNativeReturnType(EditBox::KeyboardReturnType returnType) = 0;
+    virtual void setNativeKeyboardAppearance(EditBox::KeyboardAppearance) {}
     virtual void setNativeTextHorizontalAlignment(cocos2d::TextHAlignment alignment) = 0;
     virtual void setNativeText(const char* pText) = 0;
     virtual void setNativePlaceHolder(const char* pText) = 0;
@@ -143,6 +146,7 @@ protected:
     EditBox::InputFlag    _editBoxInputFlag;
     EditBox::KeyboardReturnType  _keyboardReturnType;
     cocos2d::TextHAlignment _alignment;
+    EditBox::KeyboardAppearance _keyboardAppearance;
 
     std::string _text;
     std::string _placeHolder;

@@ -419,6 +419,23 @@ EditBox::KeyboardReturnType EditBox::getReturnType() const
     return KeyboardReturnType::DEFAULT;
 }
 
+void EditBox::setKeyboardAppearance(EditBox::KeyboardAppearance keyboardAppearance)
+{
+    if (_editBoxImpl != nullptr)
+    {
+        _editBoxImpl->setKeyboardAppearance(keyboardAppearance);
+    }
+}
+
+EditBox::KeyboardAppearance EditBox::getKeyboardAppearance() const
+{
+    if (_editBoxImpl != nullptr)
+    {
+        return _editBoxImpl->getKeyboardAppearance();
+    }
+    return KeyboardAppearance::DEFAULT;
+}
+
 void EditBox::setTextHorizontalAlignment(TextHAlignment alignment)
 {
     if (_editBoxImpl != nullptr)

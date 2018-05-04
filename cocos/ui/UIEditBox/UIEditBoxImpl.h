@@ -57,6 +57,8 @@ namespace cocos2d {
             virtual int  getMaxLength() = 0;
             virtual void setTextHorizontalAlignment(TextHAlignment alignment) = 0;
             virtual void setReturnType(EditBox::KeyboardReturnType returnType) = 0;
+            virtual void setKeyboardAppearance(EditBox::KeyboardAppearance keyboardAppearance) = 0;
+            
             virtual bool isEditing() = 0;
             
             virtual void setText(const char* pText) = 0;
@@ -75,6 +77,7 @@ namespace cocos2d {
             virtual EditBox::InputMode getInputMode() = 0;
             virtual EditBox::InputFlag getInputFlag() = 0;
             virtual EditBox::KeyboardReturnType getReturnType() = 0;
+            virtual EditBox::KeyboardAppearance getKeyboardAppearance() = 0;
             virtual TextHAlignment getTextHorizontalAlignment() = 0;
 
             virtual void doAnimationWhenKeyboardMove(float duration, float distance) = 0;

@@ -56,6 +56,7 @@ EditBoxImplCommon::EditBoxImplCommon(EditBox* pEditText)
 , _editBoxInputMode(EditBox::InputMode::SINGLE_LINE)
 , _editBoxInputFlag(EditBox::InputFlag::INITIAL_CAPS_ALL_CHARACTERS)
 , _keyboardReturnType(EditBox::KeyboardReturnType::DEFAULT)
+, _keyboardAppearance(EditBox::KeyboardAppearance::DEFAULT)
 , _fontSize(-1)
 , _placeholderFontSize(-1)
 , _colText(Color3B::WHITE)
@@ -231,6 +232,11 @@ void EditBoxImplCommon::setReturnType(EditBox::KeyboardReturnType returnType)
 {
     _keyboardReturnType = returnType;
     this->setNativeReturnType(returnType);
+}
+    
+void EditBoxImplCommon::setKeyboardAppearance(EditBox::KeyboardAppearance keyboardAppearance) {
+    _keyboardAppearance = keyboardAppearance;
+    this->setNativeKeyboardAppearance(keyboardAppearance);
 }
     
 void EditBoxImplCommon::refreshInactiveText()
