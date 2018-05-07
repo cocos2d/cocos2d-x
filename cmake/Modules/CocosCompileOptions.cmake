@@ -47,13 +47,15 @@
  endif()
  message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
- # architecture
- if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-     set(ARCH_DIR "64-bit")
- elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
-     set(ARCH_DIR "32-bit")
- else()
-     message(WARN "CMAKE_SIZEOF_VOID_P: ${CMAKE_SIZEOF_VOID_P}")
+ # ARCH_DIR only useful for search linux prebuilt libs
+ if(LINUX)
+     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+         set(ARCH_DIR "64-bit")
+     elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
+         set(ARCH_DIR "32-bit")
+     else()
+         message(WARNING "CMAKE_SIZEOF_VOID_P: ${CMAKE_SIZEOF_VOID_P}")
+     endif()
  endif()
 
  if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
