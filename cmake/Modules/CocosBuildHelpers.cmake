@@ -334,9 +334,34 @@ macro(cocos_pak_xcode cocos_target)
 
     message("cocos package: ${cocos_target}, plist file: ${COCOS_APP_INFO_PLIST}")
 
+   cocos_config_app_xcode_property(${cocos_target})
+endmacro()
+
+# set Xcode property for application, include all depend target
+macro(cocos_config_app_xcode_property cocos_app)
+    cocos_config_target_xcode_property(${cocos_app})
+    # for example, cocos_target: cpp-tests link engine_lib: cocos2d
+    get_target_property(engine_libs ${cocos_app} LINK_LIBRARIES)
+    foreach(engine_lib ${engine_libs})
+        if(TARGET ${engine_lib})
+            cocos_config_target_xcode_property(${engine_lib})
+            # for example, engine_lib: cocos2d link external_lib: flatbuffers
+            get_target_property(external_libs ${engine_lib} LINK_LIBRARIES)
+            foreach(external_lib ${external_libs})
+                if(TARGET ${external_lib})
+                    cocos_config_target_xcode_property(${external_lib})
+                endif()
+            endforeach()
+        endif()
+    endforeach()
+endmacro()
+
+# custom Xcode property for iOS target
+macro(cocos_config_target_xcode_property cocos_target)
     if(IOS)
         set_xcode_property(${cocos_target} IPHONEOS_DEPLOYMENT_TARGET "8.0")
         set_xcode_property(${cocos_target} ENABLE_BITCODE "NO")
+        set_xcode_property(${cocos_target} ONLY_ACTIVE_ARCH "YES")
     endif()
 endmacro()
 
