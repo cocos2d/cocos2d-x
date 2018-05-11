@@ -1,3 +1,5 @@
+import org.gradle.internal.os.OperatingSystem;
+
 apply plugin: 'com.android.application'
 
 android {
@@ -104,7 +106,7 @@ android {
 }
 
 def getCocosCommandPath() {
-    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+    if (OperatingSystem.current().isWindows()) {
         return 'cocos.bat'
     }
     else {

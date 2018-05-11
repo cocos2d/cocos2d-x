@@ -1302,7 +1302,7 @@ std::string BMFontOneAtlas::subtitle() const
 /// BMFontUnicode
 BMFontUnicode::BMFontUnicode()
 {
-    auto strings = FileUtils::getInstance()->getValueMapFromFile("fonts/strings.xml");
+    auto strings = FileUtils::getInstance()->getValueMapFromFile("strings/LabelFNTUNICODELanguages.xml");
     std::string chinese  = strings["chinese1"].asString();
     std::string russian  = strings["russian"].asString();
     std::string spanish  = strings["spanish"].asString();
