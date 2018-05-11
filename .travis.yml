@@ -9,7 +9,7 @@ matrix:
       env: BUILD_TARGET=android_gen_libs
       language: cpp
       sudo: required
-    # linux
+    # linux2
     - os: linux
       env: 
         - BUILD_TARGET=linux 
