@@ -26,7 +26,6 @@ function(cocos_copy_res)
     # copy files
     foreach(cc_file ${opt_FILES})
         get_filename_component(file_name ${cc_file} NAME)
-        # https://stackoverflow.com/questions/34799916/cmake-copy-file-from-source-directory-to-binary-directory
         configure_file(${cc_file} "${opt_COPY_TO}/${file_name}" COPYONLY)
     endforeach()
     # copy folders files
@@ -106,13 +105,10 @@ function(cocos_copy_target_dll cocos_target)
     # remove repeat items
     list(REMOVE_DUPLICATES all_depend_dlls)
     message(STATUS "prepare to copy external dlls for ${cocos_target}:${all_depend_dlls}")
-    foreach(single_target_dll ${all_depend_dlls})
-        add_custom_command(TARGET ${cocos_target} PRE_BUILD
-                           COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                           ${single_target_dll}
-                           ${opt_COPY_TO}
-                           )
-    endforeach(single_target_dll)
+    foreach(cc_dll_file ${all_depend_dlls})
+        get_filename_component(cc_dll_name ${cc_dll_file} NAME)
+        configure_file(${cc_dll_file} "${opt_COPY_TO}/${cc_dll_name}" COPYONLY)
+    endforeach()
 endfunction()
 
 # find dlls in a dir which `LIB_ABS_PATH` located, and save the result in `dlls_out`
