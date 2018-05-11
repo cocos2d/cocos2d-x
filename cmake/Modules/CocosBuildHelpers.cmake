@@ -18,27 +18,26 @@ function(cocos_find_prebuilt_lib_by_name lib_name lib_out)
     unset(found_lib CACHE)
 endfunction()
 
-# copy resource `FILES` and `FOLDERS` to `COPY_TO` folder before `cocos_target` build
-function(cocos_copy_target_res cocos_target)
+# copy resource `FILES` and `FOLDERS` to `COPY_TO` folder
+function(cocos_copy_res)
     set(oneValueArgs COPY_TO)
     set(multiValueArgs FILES FOLDERS)
     cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
     # copy files
     foreach(cc_file ${opt_FILES})
         get_filename_component(file_name ${cc_file} NAME)
-        add_custom_command(TARGET ${cocos_target} PRE_BUILD
-                           COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                           ${cc_file}
-                           "${opt_COPY_TO}/${file_name}"
-                           )
+        # https://stackoverflow.com/questions/34799916/cmake-copy-file-from-source-directory-to-binary-directory
+        configure_file(${cc_file} "${opt_COPY_TO}/${file_name}" COPYONLY)
     endforeach()
-    # copy folders
+    # copy folders files
     foreach(cc_folder ${opt_FOLDERS})
-        add_custom_command(TARGET ${cocos_target} PRE_BUILD
-                           COMMAND ${CMAKE_COMMAND} -E copy_directory
-                           ${cc_folder}
-                           ${opt_COPY_TO}
-                           )
+        file(GLOB_RECURSE folder_files "${cc_folder}/*")
+        get_filename_component(folder_abs_path ${cc_folder} ABSOLUTE)
+        foreach(res_file ${folder_files})
+            get_filename_component(res_file_abs_path ${res_file} ABSOLUTE)
+            file(RELATIVE_PATH res_file_relat_path ${folder_abs_path} ${res_file_abs_path})
+            configure_file(${res_file} "${opt_COPY_TO}/${res_file_relat_path}" COPYONLY)
+        endforeach()
     endforeach()
 endfunction()
 
