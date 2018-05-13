@@ -54,6 +54,7 @@ RenderTexture::RenderTexture()
 , _textureCopy(0)
 , _UITextureImage(nullptr)
 , _pixelFormat(Texture2D::PixelFormat::RGBA8888)
+, _depthAndStencilFormat(0)
 , _clearFlags(0)
 , _clearColor(Color4F(0,0,0,0))
 , _clearDepth(0.0f)
@@ -61,7 +62,6 @@ RenderTexture::RenderTexture()
 , _autoDraw(false)
 , _sprite(nullptr)
 , _saveFileCallback(nullptr)
-, _depthAndStencilFormat(0)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Listen this event to save render texture before come to background.

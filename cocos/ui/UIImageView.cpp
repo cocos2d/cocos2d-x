@@ -41,11 +41,11 @@ ImageView::ImageView():
 _scale9Enabled(false),
 _prevIgnoreSize(true),
 _capInsets(Rect::ZERO),
-_textureFile(""),
 _imageRenderer(nullptr),
 _imageTexType(TextureResType::LOCAL),
 _imageTextureSize(_contentSize),
-_imageRendererAdaptDirty(true)
+_imageRendererAdaptDirty(true),
+_textureFile("")
 {
 
 }

@@ -105,12 +105,12 @@ GLContextAttrs GLView::getGLContextAttrs()
 }
 
 GLView::GLView()
-: _scaleX(1.0f)
+: _screenSize(0,0)
+, _designResolutionSize(0,0)
+, _scaleX(1.0f)
 , _scaleY(1.0f)
 , _resolutionPolicy(ResolutionPolicy::UNKNOWN)
 , _vrImpl(nullptr)
-, _designResolutionSize(0,0)
-, _screenSize(0,0)
 {
 }
 
