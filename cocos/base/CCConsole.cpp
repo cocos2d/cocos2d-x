@@ -485,13 +485,13 @@ void Console::Command::commandGeneric(int fd, const std::string& args)
 //
 
 Console::Console()
-: _listenfd(-1)
+: _commandSeparator(DEFAULT_COMMAND_SEPARATOR)
+, _listenfd(-1)
 , _running(false)
 , _endThread(false)
 , _isIpv6Server(false)
 , _sendDebugStrings(false)
 , _bindAddress("")
-, _commandSeparator(DEFAULT_COMMAND_SEPARATOR)
 {
     createCommandAllocator();
     createCommandConfig();

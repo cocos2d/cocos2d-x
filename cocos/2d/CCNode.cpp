@@ -75,6 +75,7 @@ Node::Node()
 , _normalizedPositionDirty(false)
 , _skewX(0.0f)
 , _skewY(0.0f)
+, _anchorPoint(0, 0)
 , _contentSize(Size::ZERO)
 , _contentSizeDirty(true)
 , _transformDirty(true)
@@ -111,14 +112,13 @@ Node::Node()
 , _cascadeColorEnabled(false)
 , _cascadeOpacityEnabled(false)
 , _cameraMask(1)
-#if CC_USE_PHYSICS
-, _physicsBody(nullptr)
-#endif
-, _anchorPoint(0, 0)
 , _onEnterCallback(nullptr)
 , _onExitCallback(nullptr)
 , _onEnterTransitionDidFinishCallback(nullptr)
 , _onExitTransitionDidStartCallback(nullptr)
+#if CC_USE_PHYSICS
+, _physicsBody(nullptr)
+#endif
 {
     // set default scheduler and actionManager
     _director = Director::getInstance();
