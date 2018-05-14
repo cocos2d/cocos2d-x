@@ -1,3 +1,55 @@
+cocos2d-x-3.17 May.21 2018
+
+[NEW]           CMake: expand support from Linux to all platforms
+
+[REFINE]        Engine: multisampling support
+[REFINE]        Label: support non-breaking characters
+[REFINE]        Label: support belarusian language
+[REFINE]        UI: add blend function for Text
+[REFENE]        UI: partial cursor support with system font in TextField
+[REFINE]        UI: support BMFont in TextField
+[REFINE]        UI: add ScrollView API to stop overall scroll
+[REFINE]        UI: improve EditBox on win32 platform
+[REFINE]        Lua: improve loader, support standerd Lua package require
+[REFINE]        Web: upgrade Spine Javascript runtime to v3.6.39
+[REFINE]        Windows: speed up build by supporting precompiled header
+[REFINE]        Windows: remove Visual Studio 2013 support
+[REFINE]        Android: remove ant project
+[REFINE]        Android: update NDK from r14 to r16
+[REFINE]        Android: update to support Android Studio 3.0.0
+[REFINE]        Andorid: improve Android.mk, not have to set NDK_MODULE_PATH in project settings
+[REFINE]        Linux: update GLFW to 3.2.1
+[REFINE]        Linux: provide prebuilt version of GLFW
+[REFINE]        Cocos Console: 
+[REFINE]        3rd:
+[REFINE]        3rd: upgrade Spine runtime to v3.6.39 
+
+
+
+[FIX]           Engine: CCConsole.cpp compile error with C++17 and clang
+[FIX]           Engine: TrianglesCommand hashing technique doesn't take padding into account
+[FIX]           Engine: default GLView bit depth is too low on desktop
+[FIX]           Engine: fix some warning issues
+[FIX]           RichText: issue caused by Label when its string is very long
+[FIX]           EditBox: right padding error
+[FIX]           TableView: button click event not response when the button is a cell
+[FIX]           Image: saveImageToPNG saves image in wrong PNG format
+[FIX]           JSB: memory leaks and crashes
+[FIX]           Audio: miss return value of onWavClose function
+[FIX]           Andorid: infinite loop when counting text lines on Android in some situations
+[FIX]           Android: crash when network error message is too long
+[FIX]           Android: JniHelper no longer thread safe
+[FIX]           Android: proguard-rules.pro error for tests project
+[FIX]           Andorid: some violations in Cocos2dxHelper.java lead to possible ANR
+[FIX]           Android: AppAcitivity is recreated which causes crash
+[FIX]           Android: Emulator blank screen 0x501 and 0x502 problems
+[FIX]           Android: Emulator stensil fix
+[FIX]           TextureCache: race condition resulting in deadlock infrequently
+[FIX]           RenderTexture: capture image loses quality
+[FIX]           RenderTexture: DepthAndStencil issue on Android 
+
+
+
 cocos2d-x-3.16 Oct.9 2017
 [NEW]           Add RadialGradientLayer
 [NEW]           Web: Add GLProgramState and upgrade web shader usage APIs
