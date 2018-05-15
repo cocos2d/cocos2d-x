@@ -2,9 +2,9 @@ cocos2d-x-3.17 May 2018
 
 [HIGHLIGHT]     Android: support Android Studio 3.0, NDK 16
 [HIGHLIGHT]     iOS: support full screen for iPhone X and uses Storyboard for launch screen
-[HIGHLIGHT]     CMake support all platforms, and support prebuilt engine libs
 [HIGHLIGHT]     3rd: upgrade Spine runtime to v3.6.39 
 [HIGHLIGHT]     3rd: upgrade GLFW to 3.2.1
+[HIGHLIGHT]     CMake support all platforms, and support prebuilt engine libs
 
 [NEW]           Engine: multisampling support
 [NEW]           Label: support non-breaking characters
@@ -13,13 +13,13 @@ cocos2d-x-3.17 May 2018
 [NEW]           UI: add ScrollView API to stop overall scroll
 [NEW]           iOS: add auto hide home indicator for iPhone X
 [NEW]           Andorid: add one more android return button types
-[NEW]           Android: add comments for cddandroidAndroidJavaEngine.h, Cocos2dxSound.java
 
+[REFINE]        Engine: support reading object.rotation attribute in TMX
+[REFINE]        Engine: make the sort behavior is same on 32bit and 64bit
 [REFINE]        Engine: static analize fixes
 [REFINE]        Engine: improve comments in ccConfig.h, JniHelper.h
 [REFINE]        Engine: remove plugin submodule
 [REFINE]        Engine: improve StringUtils::format implementation
-[REFINE]        Engine: support reading the object.rotation attribute in TMX
 [REFINE]        Label: don't count spaces at the end of line as part of the line width
 [REFENE]        UI: partial cursor support with system font in TextField
 [REFINE]        UI: support BMFont in TextField
@@ -32,10 +32,12 @@ cocos2d-x-3.17 May 2018
 [REFINE]        Windows: speed up build by supporting precompiled header
 [REFINE]        Windows: remove Visual Studio 2013 support
 [REFINE]        Windows: Windows 10 update compiler to PlatformToolset v141
+[REFINE]        iOS: uses Images.xcassets instead of several icon png files
 [REFINE]        Android: support Android Studio 3.0.0, switch to libc++, simplify PROP_* valuse, add default Proguard Config for cocos
 [REFINE]        Android: remove ant project
 [REFINE]        Android: update NDK from r14 to r16
 [REFINE]        Andorid: improve Android.mk, not have to set NDK_MODULE_PATH in project settings
+[REFINE]        Android: detail comments for cddandroidAndroidJavaEngine.h, Cocos2dxSound.java
 [REFINE]        Linux: provide prebuilt version of GLFW
 [REFINE]        cocos console: remove ant build support
 [REFINE]        cocos console: support building release APK without key information
@@ -46,12 +48,12 @@ cocos2d-x-3.17 May 2018
 [REFENE]        3rd: update Box2D to latest commit f655c603ba9d83
 [REFINE]        3rd: use prebuilt Box2D
 
-
-
+[FIX]           Engine: capture image loses quality when using RenderTexture
+[FIX]           Engine: RenderTexture DepthAndStencil issue on Android 
+[FIX]           Engine: race condition resulting in deadlock infrequently in TextureCache
 [FIX]           Engine: CCConsole.cpp compile error with C++17 and clang
 [FIX]           Engine: TrianglesCommand hashing technique doesn't take padding into account
 [FIX]           Engine: default GLView bit depth is too low on desktop
-[FIX]           Engine: fix some warning issues
 [FIX]           Engine: cocos2d::log va_list re-use bug
 [FIX]           Engine: cocos2d::Image::saveImageToPNG saves image in wrong PNG format
 [FIX]           Engine: CameraBackgroundColorBrush cannot use alpha
@@ -59,6 +61,7 @@ cocos2d-x-3.17 May 2018
 [FIX]           Engine: crash when the UserDefault.xml file is empty
 [FIX]           Engine: memory leak in ObjectFactory destroyInstance, UserDefault::deleteValueForKey
 [FIX]           Engine: replace ptr_fun with lambda, fix compile error with C++17 and clang
+[FIX]           Engine: fix some warning issues
 [FIX]           Label: memory leak when using TTF labels
 [FIX]           Label: memory leak in FontFreeType::create
 [FIX]           Label: Non-TTF Label Shadow issue, make it follow Label opacity
@@ -74,11 +77,15 @@ cocos2d-x-3.17 May 2018
 [FIX]           UI: crash when call TextFieldTTF::setCursorFromPoint
 [FIX]           UI: ListView, avoid of type overflow while list size calculation
 [FIX]           Audio: miss return value of onWavClose function
-[FIX]           Audio: miss #include <list> in apple/AudioEngine-inl.h
-[FIX]           Audio: wrong status  check in apple/AudioDecoder.mm
+[FIX]           Audio: wrong header include in mp3reader.cpp, apple/AudioEngine-inl.h
+[FIX]           Audio: wrong status check in apple/AudioDecoder.mm
 [FIX]           Lua: should set listener to null when unregister spine event handler
+[FIX]           Lua: event condition bugs on ParticleTest.lua
 [FIX]           JSB: some memory leaks and crashes
+[FIX]           JSB: miss GetterSetter define for the placeHolder of TextField
 [FIX]           Web: out-of-date submodule commmit of cocos2d-html5 repo
+[FIX]           Web: bugs for Performance Test for Spine on WebGL
+[FIX]           iOS: fix bug about delayed creation UIWebView on iOS
 [FIX]           Andorid: infinite loop when counting text lines on Android in some situations
 [FIX]           Android: crash when network error message is too long
 [FIX]           Android: JniHelper no longer thread safe
@@ -92,11 +99,6 @@ cocos2d-x-3.17 May 2018
 [FIX]           Android: issue with accelerometer on Android on reverse landscape/portrait
 [FIX]           WinRT: fix keyBoard bug when input chinese
 [FIX]           cocos console: fix archive issue with Xcode 9
-[FIX]           TextureCache: race condition resulting in deadlock infrequently
-[FIX]           RenderTexture: capture image loses quality
-[FIX]           RenderTexture: DepthAndStencil issue on Android 
-
-
 
 cocos2d-x-3.16 Oct.9 2017
 [NEW]           Add RadialGradientLayer
