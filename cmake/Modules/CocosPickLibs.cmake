@@ -203,15 +203,10 @@ foreach(_lib ${all_prebuilt_libs})
         if(EXISTS ${_root})
             set(include_dir_candidates
                 ${_root}/include
+                ${_root}/include/${ARCH_DIR}
                 ${_root}/include/${PLATFORM_FOLDER}
+                ${_root}/include/${PLATFORM_FOLDER}/${ARCH_DIR}
                 )
-            if(LINUX)
-                list(APPEND include_dir_candidates
-                    ${_root}/include/${ARCH_DIR}
-                    ${_root}/include/${PLATFORM_FOLDER}/${ARCH_DIR}
-                    )
-            endif()
-            
             set(include_dirs)
             foreach(_dir ${include_dir_candidates})
                 if(EXISTS ${_dir})
@@ -231,6 +226,7 @@ foreach(_lib ${all_prebuilt_libs})
                 endif(EXISTS ${_dir})
             endforeach()
             if(include_dirs)
+                list(REMOVE_DUPLICATES include_dirs)
                 set(${_prefix}_INCLUDE_DIRS ${include_dirs} CACHE PATH "Path to includes for ${_prefix}" FORCE)
                 message(STATUS "${_lib} ${_prefix}_INCLUDE_DIRS: ${${_prefix}_INCLUDE_DIRS}")
                 # don't find lib, if not find include in once ${_root} search
