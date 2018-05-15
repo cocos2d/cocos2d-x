@@ -1,24 +1,30 @@
 cocos2d-x-3.17 May 2018
 
-[NEW]           iOS: auto hide home indicator for iPhone X
-[NEW]           iOS: support full screen for iPhone X and uses Storyboard for launch screen
-[NEW]           CMake: expand support from Linux to all platforms
+[HIGHLIGHT]     Android: support Android Studio 3.0, NDK 16
+[HIGHLIGHT]     iOS: support full screen for iPhone X and uses Storyboard for launch screen
+[HIGHLIGHT]     CMake support all platforms, and support prebuilt engine libs
+[HIGHLIGHT]     3rd: upgrade Spine runtime to v3.6.39 
+[HIGHLIGHT]     3rd: upgrade GLFW to 3.2.1
 
+[NEW]           Engine: multisampling support
+[NEW]           Label: support non-breaking characters
+[NEW]           Label: support belarusian language
+[NEW]           UI: add blend function for Text
+[NEW]           UI: add ScrollView API to stop overall scroll
+[NEW]           iOS: add auto hide home indicator for iPhone X
+[NEW]           Andorid: add one more android return button types
+[NEW]           Android: add comments for cddandroidAndroidJavaEngine.h, Cocos2dxSound.java
 
-
-[REFINE]        Engine: multisampling support
 [REFINE]        Engine: static analize fixes
 [REFINE]        Engine: improve comments in ccConfig.h, JniHelper.h
 [REFINE]        Engine: remove plugin submodule
 [REFINE]        Engine: improve StringUtils::format implementation
-[REFINE]        Label: support non-breaking characters
-[REFINE]        Label: support belarusian language
-[REFINE]        UI: add blend function for Text
+[REFINE]        Engine: support reading the object.rotation attribute in TMX
+[REFINE]        Label: don't count spaces at the end of line as part of the line width
 [REFENE]        UI: partial cursor support with system font in TextField
 [REFINE]        UI: support BMFont in TextField
-[REFINE]        UI: add ScrollView API to stop overall scroll
 [REFINE]        UI: improve EditBox on win32 platform
-[REFINE]        UI: RichText improvements: automatically customize ContentSize to get the real height, refactor split algorithm
+[REFINE]        UI: RichText improvements, get the real height by automatically customize ContentSize, refactor split algorithm
 [REFINE]        UI: remove autorelease mark from UIWebViewWrapper and manage memory manually
 [REFINE]        Lua: implementation conversion Lua table to ObjC Dictionary
 [REFINE]        Lua: improve loader, support standerd Lua package require
@@ -30,30 +36,29 @@ cocos2d-x-3.17 May 2018
 [REFINE]        Android: remove ant project
 [REFINE]        Android: update NDK from r14 to r16
 [REFINE]        Andorid: improve Android.mk, not have to set NDK_MODULE_PATH in project settings
-[REFENE]        Andorid: add one more android return button types
-[REFINE]        Android: add comments for cddandroidAndroidJavaEngine.h, Cocos2dxSound.java
 [REFINE]        Linux: provide prebuilt version of GLFW
 [REFINE]        cocos console: remove ant build support
 [REFINE]        cocos console: support building release APK without key information
 [REFINE]        3rd: remove Visual Studio 2013 libs 
 [REFINE]        3rd: remove Android armeabi libs since it is deprecated and will be removed in r17
-[REFINE]        3rd: rebuild all Android libs with clang and libc++
+[REFINE]        3rd: rebuild all Android libs with clang in ndk-r16
 [REFINE]        3rd: cmake build support for partial libs
 [REFENE]        3rd: update Box2D to latest commit f655c603ba9d83
 [REFINE]        3rd: use prebuilt Box2D
-[REFINE]        3rd: upgrade Spine runtime to v3.6.39 
-[REFINE]        3rd: upgrade GLFW to 3.2.1
 
 
 
 [FIX]           Engine: CCConsole.cpp compile error with C++17 and clang
 [FIX]           Engine: TrianglesCommand hashing technique doesn't take padding into account
 [FIX]           Engine: default GLView bit depth is too low on desktop
-[FIX]           Engine: a crash bug when the UserDefault.xml file is empty
 [FIX]           Engine: fix some warning issues
 [FIX]           Engine: cocos2d::log va_list re-use bug
-[FIX]           Engine: memory leak: ObjectFactory destroyInstance, UserDefault::deleteValueForKey
+[FIX]           Engine: cocos2d::Image::saveImageToPNG saves image in wrong PNG format
 [FIX]           Engine: CameraBackgroundColorBrush cannot use alpha
+[FIX]           Engine: crash in Allocator if there are no allocated pages
+[FIX]           Engine: crash when the UserDefault.xml file is empty
+[FIX]           Engine: memory leak in ObjectFactory destroyInstance, UserDefault::deleteValueForKey
+[FIX]           Engine: replace ptr_fun with lambda, fix compile error with C++17 and clang
 [FIX]           Label: memory leak when using TTF labels
 [FIX]           Label: memory leak in FontFreeType::create
 [FIX]           Label: Non-TTF Label Shadow issue, make it follow Label opacity
@@ -68,24 +73,23 @@ cocos2d-x-3.17 May 2018
 [FIX]           UI: returning UNKNOWN event for return type key SEARCH/SEND in EditBox
 [FIX]           UI: crash when call TextFieldTTF::setCursorFromPoint
 [FIX]           UI: ListView, avoid of type overflow while list size calculation
-[FIX]           Image: saveImageToPNG saves image in wrong PNG format
-[FIX]           JSB: some memory leaks and crashes
-[FIX]           Web: out-of-date submodule commmit of cocos2d-html5 repo
 [FIX]           Audio: miss return value of onWavClose function
 [FIX]           Audio: miss #include <list> in apple/AudioEngine-inl.h
 [FIX]           Audio: wrong status  check in apple/AudioDecoder.mm
+[FIX]           Lua: should set listener to null when unregister spine event handler
+[FIX]           JSB: some memory leaks and crashes
+[FIX]           Web: out-of-date submodule commmit of cocos2d-html5 repo
 [FIX]           Andorid: infinite loop when counting text lines on Android in some situations
 [FIX]           Android: crash when network error message is too long
 [FIX]           Android: JniHelper no longer thread safe
 [FIX]           Android: proguard-rules.pro error for tests project
-[FIX]           Andorid: some violations in Cocos2dxHelper.java lead to possible ANR
+[FIX]           Andorid: some violations about I/O operation on UI thread, which may lead to ANR
 [FIX]           Android: AppAcitivity is recreated which causes crash
 [FIX]           Android: Emulator blank screen 0x501 and 0x502 problems
 [FIX]           Android: Emulator stensil fix
 [FIX]           Android: Fix endian detection (node render order)
 [FIX]           Android: issue with not stable 60 fps
 [FIX]           Android: issue with accelerometer on Android on reverse landscape/portrait
-[FIX]           iOS: 
 [FIX]           WinRT: fix keyBoard bug when input chinese
 [FIX]           cocos console: fix archive issue with Xcode 9
 [FIX]           TextureCache: race condition resulting in deadlock infrequently
