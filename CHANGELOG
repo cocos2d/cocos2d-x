@@ -1,8 +1,14 @@
 cocos2d-x-3.17 May.21 2018
 
+[NEW]           iOS: auto hide home indicator for iPhoneX
 [NEW]           CMake: expand support from Linux to all platforms
 
+
+
 [REFINE]        Engine: multisampling support
+[REFINE]        Engine: static analize fixes
+[REFINE]        Engine: improve comments in ccConfig.h, JniHelper.h
+[REFINE]        Engine: remove plugin submodule
 [REFINE]        Label: support non-breaking characters
 [REFINE]        Label: support belarusian language
 [REFINE]        UI: add blend function for Text
@@ -10,18 +16,22 @@ cocos2d-x-3.17 May.21 2018
 [REFINE]        UI: support BMFont in TextField
 [REFINE]        UI: add ScrollView API to stop overall scroll
 [REFINE]        UI: improve EditBox on win32 platform
+[REFINE]        UI: RichText improvements: automatically customize ContentSize to get the real height, refactor split algorithm
 [REFINE]        Lua: improve loader, support standerd Lua package require
 [REFINE]        Web: upgrade Spine Javascript runtime to v3.6.39
 [REFINE]        Windows: speed up build by supporting precompiled header
 [REFINE]        Windows: remove Visual Studio 2013 support
+[REFINE]        Windows: Windows 10 update compiler to PlatformToolset v141
+[REFINE]        Android: support Android Studio 3.0.0, switch to libc++, simplify PROP_* valuse, add default Proguard Config for cocos
 [REFINE]        Android: remove ant project
 [REFINE]        Android: update NDK from r14 to r16
-[REFINE]        Android: update to support Android Studio 3.0.0
 [REFINE]        Andorid: improve Android.mk, not have to set NDK_MODULE_PATH in project settings
+[REFENE]        Andorid: add one more android return button types
+[REFINE]        Android: add comments for cddandroidAndroidJavaEngine.h, Cocos2dxSound.java
 [REFINE]        Linux: update GLFW to 3.2.1
 [REFINE]        Linux: provide prebuilt version of GLFW
 [REFINE]        Cocos Console: 
-[REFINE]        3rd:
+[REFINE]        3rd: remove Visual Studio 2013 libs 
 [REFINE]        3rd: upgrade Spine runtime to v3.6.39 
 
 
@@ -29,13 +39,18 @@ cocos2d-x-3.17 May.21 2018
 [FIX]           Engine: CCConsole.cpp compile error with C++17 and clang
 [FIX]           Engine: TrianglesCommand hashing technique doesn't take padding into account
 [FIX]           Engine: default GLView bit depth is too low on desktop
+[FIX]           Engine: a crash bug when the UserDefault.xml file is empty
 [FIX]           Engine: fix some warning issues
-[FIX]           RichText: issue caused by Label when its string is very long
-[FIX]           EditBox: right padding error
-[FIX]           TableView: button click event not response when the button is a cell
+[FIX]           UI: RichText issue caused by Label when its string is very long
+[FIX]           UI: EditBox right padding error
+[FIX]           UI: win32 EditBox has wrong scale factor
+[FIX]           UI: TableView button click event not response when the button is a cell
+[FIX]           Label: memory leak when using TTF labels
+[FIX]           Label: memory leak in FontFreeType::create
 [FIX]           Image: saveImageToPNG saves image in wrong PNG format
-[FIX]           JSB: memory leaks and crashes
+[FIX]           JSB: some memory leaks and crashes
 [FIX]           Audio: miss return value of onWavClose function
+[FIX]           Audio: miss #include <list> in apple/AudioEngine-inl.h
 [FIX]           Andorid: infinite loop when counting text lines on Android in some situations
 [FIX]           Android: crash when network error message is too long
 [FIX]           Android: JniHelper no longer thread safe
@@ -44,6 +59,10 @@ cocos2d-x-3.17 May.21 2018
 [FIX]           Android: AppAcitivity is recreated which causes crash
 [FIX]           Android: Emulator blank screen 0x501 and 0x502 problems
 [FIX]           Android: Emulator stensil fix
+[FIX]           Android: Fix endian detection (node render order)
+[FIX]           Android: issue with not stable 60 fps
+[FIX]           iOS
+[FIX]           WinRT: fix keyBoard bug when input chinese
 [FIX]           TextureCache: race condition resulting in deadlock infrequently
 [FIX]           RenderTexture: capture image loses quality
 [FIX]           RenderTexture: DepthAndStencil issue on Android 
