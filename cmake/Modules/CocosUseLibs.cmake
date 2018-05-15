@@ -77,7 +77,7 @@ macro(cocos2d_depend_libs)
         endif()
     endif()
 
-    foreach(_pkg ZLIB MINIZIP TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS XXHASH SQLITE3)
+    foreach(_pkg ZLIB MINIZIP TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS XXHASH)
         list(APPEND PREBUILT_SPECIFIC_LIBS ${_pkg})
     endforeach()
 
