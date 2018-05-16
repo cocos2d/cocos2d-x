@@ -5,13 +5,10 @@
 - [Cocos2d-x 3.17 Release Notes](#cocos2d-x-317-release-notes)
   - [改动列表](#%E6%94%B9%E5%8A%A8%E5%88%97%E8%A1%A8)
   - [测试环境](#%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83)
-    - [Android](#android)
-    - [Windows](#windows)
-    - [Linux](#linux)
-  - [特性](#%E7%89%B9%E6%80%A7)
+  - [版本特性](#%E7%89%88%E6%9C%AC%E7%89%B9%E6%80%A7)
   - [详细介绍](#%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D)
     - [支持 iPhone X](#%E6%94%AF%E6%8C%81-iphone-x)
-    - [支持 Android Studio 3.0.0](#%E6%94%AF%E6%8C%81-android-studio-300)
+    - [支持 Android Studio 3.0](#%E6%94%AF%E6%8C%81-android-studio-30)
     - [CMake 支持全平台](#cmake-%E6%94%AF%E6%8C%81%E5%85%A8%E5%B9%B3%E5%8F%B0)
     - [升级第三方库](#%E5%8D%87%E7%BA%A7%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93)
     - [移除过时的内容](#%E7%A7%BB%E9%99%A4%E8%BF%87%E6%97%B6%E7%9A%84%E5%86%85%E5%AE%B9)
@@ -27,23 +24,23 @@
 
 ## 测试环境
 
-### Android 
+Android 
 
-- Android Studio 3.0.0
+- Android Studio 3.0
 - NDK r16
 
-### Windows
+Windows
 
 - Visual Studio 2015
 
-### Linux
+Linux
 
 - Ubuntu 16.04
 
-## 特性
+## 版本特性
 
 - 支持 iPhone X
-- 支持 Android Studio 3.0.0
+- 支持 Android Studio 3.0
 - CMake 支持全平台，支持预编译引擎库
 - 升级 Spine runtime 至 v3.6.39
 - 升级 GLFW 至 3.2.1，并提供预编译库
@@ -57,7 +54,7 @@
 
 自 iPhone X 流行，使用引擎的 iOS 开发者存在升级支持 iPhone X 的需求，该版本为开发者解决了这个问题。支持 iPhone X 全屏，启动屏幕改用 Storyboard，增加了一个获取 SafeArea 的接口，支持自动隐藏 Home 指示器。
 
-### 支持 Android Studio 3.0.0
+### 支持 Android Studio 3.0
 
 Android Studio 是一个成熟的，同时是 Google 官方支持的 Android 开发 IDE，引擎跟进支持。在支持 3.0 的过程中，同时将支持的 NDK 版本从 r14 升级到 r16。Gradle 工程配置方面，简化 Gradle 变量 PROP_*；将依赖声明中弃用的 compile 改为新的 implementation；增加用以削减 Release 包体积的 Proguard 配置。
 
