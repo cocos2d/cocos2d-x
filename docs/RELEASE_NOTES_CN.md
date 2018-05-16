@@ -12,7 +12,7 @@
     - [CMake 支持全平台](#cmake-%E6%94%AF%E6%8C%81%E5%85%A8%E5%B9%B3%E5%8F%B0)
     - [升级第三方库](#%E5%8D%87%E7%BA%A7%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93)
     - [移除过时的内容](#%E7%A7%BB%E9%99%A4%E8%BF%87%E6%97%B6%E7%9A%84%E5%86%85%E5%AE%B9)
-    - [bugs 修复，提高稳定性](#bugs-%E4%BF%AE%E5%A4%8D%E6%8F%90%E9%AB%98%E7%A8%B3%E5%AE%9A%E6%80%A7)
+    - [Bugs 修复，提高稳定性](#bugs-%E4%BF%AE%E5%A4%8D%E6%8F%90%E9%AB%98%E7%A8%B3%E5%AE%9A%E6%80%A7)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -29,13 +29,13 @@ Android
 - Android Studio 3.0
 - NDK r16
 
-Windows
-
-- Visual Studio 2015
-
 Linux
 
 - Ubuntu 16.04
+
+Windows
+
+- Visual Studio 2015
 
 ## 版本特性
 
