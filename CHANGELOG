@@ -12,6 +12,7 @@ cocos2d-x-3.17 May 2018
 [NEW]           UI: add blend function for Text
 [NEW]           UI: add ScrollView API to stop overall scroll
 [NEW]           iOS: add auto hide home indicator for iPhone X
+[NEW]           iOS: provides an interface for getting SafeArea
 [NEW]           Andorid: add one more android return button types
 
 [REFINE]        Engine: support reading object.rotation attribute in TMX
