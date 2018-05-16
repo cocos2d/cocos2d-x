@@ -1,15 +1,23 @@
 # Cocos2d-x 3.17 Release Notes #
 
-# 改动列表
+## 改动列表
 
 * [Full Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 
-# v3.17
+## 测试环境
 
-该版本使用如下的 Android 工具链进行测试：
+### Android 
 
 - Android Studio 3.0.0
 - NDK r16
+
+### Linux
+
+- Ubuntu 16.04
+
+### Windows
+
+- Visual Studio 2015
 
 ## 特性
 
