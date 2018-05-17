@@ -140,5 +140,5 @@ elseif(WINDOWS)
 endif()
 
 if(LINUX OR WINDOWS)
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
+    cocos_copy_res(COPY_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
 endif()
