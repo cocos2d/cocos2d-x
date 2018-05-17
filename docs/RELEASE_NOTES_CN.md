@@ -24,22 +24,10 @@
 
 ## 测试环境
 
-Android 
+该版本使用如下的 Android 工具链进行测试：
 
 - Android Studio 3.0
 - NDK r16
-
-iOS/macOS
-
-- Xcode 9, iOS Device
-
-Windows
-
-- Visual Studio 2015
-
-Linux
-
-- Ubuntu 16.04
 
 ## 版本特性
 
@@ -72,7 +60,7 @@ Android Studio 是一个成熟的，同时是 Google 官方支持的 Android 开
 
 ### CMake 支持全平台
 
-扩展 CMake 构建支持至全平台，包括 iOS、Android、macOS、Linux、Windows（VC++ compiler）。支持将引擎部分预编译，并在新的构建过程中重用预编译的引擎库。通过使用预编译库，可以极大的缩短工程的构建时间。
+扩展 CMake 构建支持至全平台，包括 iOS、Android、macOS、Linux、Windows（VC++ compiler）。支持将引擎部分预编译，并在新的构建过程中重用预编译的引擎库。通过使用预编译库，可以极大的缩短工程构建时间。
 
 详细的使用方法请参考 [CMake 文档](https://github.com/cocos2d/cocos2d-x/blob/v3/cmake/README.md)
 
@@ -86,9 +74,9 @@ Spine 骨骼动画在使用 Cocos2d-x 开发的游戏中被广泛使用，使用
 
 ### 移除过时的内容
 
-由于 Google 官方自 [Android SDK Tools 25.3.0](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017) 就已放弃 ant 支持，另一方面 Android Studio 已经足够完善，于是移除旧有的 ant 工程 `proj.android`，重命名原 Android Studio 工程 `proj.android-studio` 为 `proj.android`。[NDK r16](https://developer.android.com/ndk/guides/abis) 已弃用 armeabi，引擎跟进，默认的 Android 工程编译架构从 armeabi 改为 armeabi-v7a。
+由于 Google 官方自 [Android SDK Tools 25.3.0](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017) 就已放弃 ant 支持，另一方面 Android Studio 已经足够完善，可以移除旧有的 ant 工程 `proj.android`，在移除后重命名原 Android Studio 工程 `proj.android-studio` 为 `proj.android`。[NDK r16](https://developer.android.com/ndk/guides/abis) 已弃用 armeabi，引擎跟进，默认的 Android 工程编译架构从 armeabi 改为 armeabi-v7a。
 
-Visual Studio 2013 已经有一些历史了，移除支持。现存的工程配置适合于 Visual Studio 2015 ，如果需要使用 2017，可打开 2015 的工程配置文件，修改部分配置，或使用 CMake 的构建方式。
+在 Windows 平台，越来越多的开发者已经使用 Visual Studio 2015/2017 进行开发，移除对年代久远的 2013 的支持。现存的工程配置适合于 Visual Studio 2015 ，如果需要使用 2017，可打开 2015 的工程配置文件，修改部分配置，或使用 CMake 的构建方式。
 
 ### Bugs 修复，提高稳定性
 
