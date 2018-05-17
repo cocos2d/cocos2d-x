@@ -10,9 +10,9 @@
     - [added support for iPhone X](#added-support-for-iphone-x)
     - [added support Android Studio 3.0+](#added-support-android-studio-30)
     - [CMake is now supported on all platforms](#cmake-is-now-supported-on-all-platforms)
-    - [Upgrade 3rd-party libraries](#upgrade-3rd-party-libraries)
-    - [Remove Outdated](#remove-outdated)
-    - [stability improvements](#stability-improvements)
+    - [upgrade 3rd-party libraries](#upgrade-3rd-party-libraries)
+    - [remove outdated](#remove-outdated)
+    - [misc bugs fix and stability improvements](#misc-bugs-fix-and-stability-improvements)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -58,7 +58,7 @@ Android Studio is the only official IDE for Google's Android operating system, a
 
 CMake is now supported on all platforms, including Android(NDK), iOS, macOS, Windows (VC++ compiler), Linux. Supports precompile libraries for engine, and reuse precompiled libraries in new build process. You can greatly shorten project's build time by this way. For detailed usage, please refer to [CMake Doc](https://github.com/cocos2d/cocos2d-x/blob/v3/cmake/README.md)
 
-### Upgrade 3rd-party libraries
+### upgrade 3rd-party libraries
 
 Spine skeleton animation is widely used in games developed by Cocos2d-x, runing the material exported by newer Spine on older runtime existed some compatibility issues. Upgrade Spine runtime to 3.6.39 to solve these issues.
 
@@ -66,12 +66,12 @@ GLFW had issues when using GLFW to support joystick before GLFW was upgraded to 
 
 Each release comes with a specific version of third-party libraries. If you want to upgrade third-party libraries due to your project needs, please refer to: [3rd-party Doc](https://github.com/cocos2d/cocos2d-x-3rd-party-libs-src/blob/v3/README.md)
 
-### Remove Outdated
+### remove outdated
 
 Google officially deprecated ant build support since [Android SDK Tools 25.3.0](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017), on the other hand Android Studio is stable enough to let us remove the old ant build project `proj.android`, then we renamed the original Android Studio project `proj.android-studio` to `proj.android`, Another change, [armeabi](https://developer.android.com/ndk/guides/abis) have been deprecated at NDK r16, and will be removed in NDK r17, so engine follows. The default architecture is changed from `armeabi` to `armeabi-v7a`.
 
 Visual Studio 2015/2017 has served for a long time, just remove 2013 support. The existing win32 project files is quite suitable for 2015. If you hope to use 2017, you can open 2015 project file, and modify some of configurations, or use CMake build.
 
-### stability improvements
+### misc bugs fix and stability improvements
 
 This release contains more than 51 bugs fixed, 33 misc improvements, please refer to [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
