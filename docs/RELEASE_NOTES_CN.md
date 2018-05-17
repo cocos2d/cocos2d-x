@@ -29,17 +29,17 @@ Android
 - Android Studio 3.0
 - NDK r16
 
-Linux
+iOS/macOS
 
-- Ubuntu 16.04
+- Xcode 9, iOS Device
 
 Windows
 
 - Visual Studio 2015
 
-iOS/macOS
+Linux
 
-- Xcode 9, iOS Device
+- Ubuntu 16.04
 
 ## 版本特性
 
