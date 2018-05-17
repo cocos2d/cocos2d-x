@@ -20,7 +20,7 @@
 
 ## 改动列表
 
-* [Full Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
+- [Full Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 
 ## 测试环境
 
@@ -37,6 +37,10 @@ Windows
 
 - Visual Studio 2015
 
+iOS/macOS
+
+- Xcode 9, iOS Device
+
 ## 版本特性
 
 - 支持 iPhone X
@@ -52,9 +56,9 @@ Windows
 
 ### 支持 iPhone X
 
-自 iPhone X 流行，使用引擎的 iOS 开发者存在升级支持 iPhone X 的需求，该版本为开发者解决这个问题。支持 iPhone X 全屏，启动屏幕改用 Storyboard，增加获取 Safe Area 的接口，支持自动隐藏 Home 指示器。
+自 iPhone X 流行，使用引擎的 iOS 开发者存在升级支持 iPhone X 的需求，该版本为开发者提供解决。支持 iPhone X 全屏，启动屏幕改用 Storyboard，增加获取 Safe Area 的接口，支持自动隐藏 Home 指示器。
 
-在开发支持 iPhone X 的应用时，布局时最需要注意的就是 Safe Area，即下图浅蓝色区域：
+在开发支持 iPhone X 的应用时，布局时最需要注意的就是 Safe Area，横屏时即下图浅蓝色区域：
 
 <p align="center">
   <img width="400" src="https://raw.githubusercontent.com/cocos2d/cocos2d-x-docs/master/en/installation/iOS-img/iPhoneXSafeArea.png">
@@ -64,7 +68,7 @@ Windows
 
 ### 支持 Android Studio 3.0
 
-Android Studio 是一个成熟的，同时是 Google 官方支持的 Android 开发 IDE，引擎跟进支持。在支持 3.0 的过程中，同时将支持的 NDK 版本从 r14 升级到 r16。Gradle 工程配置方面，简化 Gradle 变量 PROP_*；将依赖声明中弃用的 compile 改为新的 implementation；增加用以削减 Release 包体积的 Proguard 配置。
+Android Studio 是一个成熟的，同时是 Google 官方支持的 Android 开发 IDE，引擎跟进支持。在支持 3.0 的过程中，同时将支持的 NDK 版本从 r14 升级到 r16。Gradle 工程配置方面，简化 Gradle 变量 PROP_*；将依赖声明中弃用的 `compile` 改为新的 `implementation`；增加用以削减 Release 包体积的 Proguard 配置。
 
 ### CMake 支持全平台
 
