@@ -52,15 +52,15 @@ Windows
 
 ### 支持 iPhone X
 
-自 iPhone X 流行，使用引擎的 iOS 开发者存在升级支持 iPhone X 的需求，该版本为开发者解决了这个问题。支持 iPhone X 全屏，启动屏幕改用 Storyboard，增加了一个获取 Safe Area 的接口，支持自动隐藏 Home 指示器。
+自 iPhone X 流行，使用引擎的 iOS 开发者存在升级支持 iPhone X 的需求，该版本为开发者解决这个问题。支持 iPhone X 全屏，启动屏幕改用 Storyboard，增加获取 Safe Area 的接口，支持自动隐藏 Home 指示器。
 
-在开发支持 iPhone X 的应用时，布局时最需要注意的就是 Safe Area，如图浅蓝色区域为布局的安全区域
+在开发支持 iPhone X 的应用时，布局时最需要注意的就是 Safe Area，即下图浅蓝色区域：
 
 <p align="center">
   <img width="400" src="https://raw.githubusercontent.com/cocos2d/cocos2d-x-docs/master/en/installation/iOS-img/iPhoneXSafeArea.png">
 </p>
 
-开发者可以简单的通过 `Rect safeArea = Director::getInstance()->getSafeAreaRect();`  获取 Safe Area 区域。
+开发者可以通过引擎提供的接口 `Director::getSafeAreaRect()`  获取 Safe Area 区域。
 
 ### 支持 Android Studio 3.0
 
@@ -76,17 +76,13 @@ Android Studio 是一个成熟的，同时是 Google 官方支持的 Android 开
 
 Spine 骨骼动画在使用 Cocos2d-x 开发的游戏中被广泛使用，使用新版的 Spine 导出的素材在老版本的 runtime 上运行存在一些兼容性问题，升级 Spine Runtime 至 3.6.39，解决这些问题。
 
-原 GLFW 版本是 3.2.0，在使用 GLFW 支持游戏手柄时存在问题，升级 GLFW 至 3.2.1 后解决，同时提供 GLFW 预编译库。
+原 GLFW 在使用 GLFW 支持游戏手柄时存在问题，升级 GLFW 至 3.2.1 后解决，同时提供 GLFW 预编译库。原 Box2D 版本 2.3.1 是 2014 年发布的版本，截至 2018 年初新的版本一直未发布，但官方仓库已经有一些 bugs 修复，根据社区的建议，升级 Box2D 至最新提交 f655c603ba9d83，同时提供 Box2D 的预编译库。
 
-原 Box2D 版本 2.3.1，2014 年发布的版本，截至 2018 年初新的版本一直未发布，但 GitHub 已经有一些 bugs 修复，根据社区的建议，升级 Box2D 至最新提交 f655c603ba9d83，同时提供 Box2D 的预编译库。
-
-每一次版本发布，都会附带着特定某个版本的第三方库，如果由于项目需要想升级第三方库，并且提供对应的预编译库，请参考: [第三方库文档](https://github.com/cocos2d/cocos2d-x-3rd-party-libs-src/blob/v3/README.md)
+每一次版本发布，都会附带特定版本的第三方库，如果由于项目需要想升级第三方库，请参考: [第三方库文档](https://github.com/cocos2d/cocos2d-x-3rd-party-libs-src/blob/v3/README.md)
 
 ### 移除过时的内容
 
-由于 Google 官方自 [Android SDK Tools 25.3.0](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017) 就已放弃 ant 支持，另一方面 Android Studio 已经足够完善，于是移除旧有的 ant 工程 `proj.android`，重命名原 Android Studio 工程 `proj.android-studio` 为 `proj.android`。
-
-[NDK r16](https://developer.android.com/ndk/guides/abis) 已弃用 armeabi，引擎跟进，默认的 Android 工程编译架构从 armeabi 改为 armeabi-v7a。
+由于 Google 官方自 [Android SDK Tools 25.3.0](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017) 就已放弃 ant 支持，另一方面 Android Studio 已经足够完善，于是移除旧有的 ant 工程 `proj.android`，重命名原 Android Studio 工程 `proj.android-studio` 为 `proj.android`。[NDK r16](https://developer.android.com/ndk/guides/abis) 已弃用 armeabi，引擎跟进，默认的 Android 工程编译架构从 armeabi 改为 armeabi-v7a。
 
 Visual Studio 2013 已经有一些历史了，移除支持。现存的工程配置适合于 Visual Studio 2015 ，如果需要使用 2017，可打开 2015 的工程配置文件，修改部分配置，或使用 CMake 的构建方式。
 
