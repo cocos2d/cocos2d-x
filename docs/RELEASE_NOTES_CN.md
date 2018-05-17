@@ -44,7 +44,7 @@
 
 ### 支持 iPhone X
 
-自 iPhone X 流行，使用引擎的 iOS 开发者存在升级支持 iPhone X 的需求，该版本为开发者提供解决。支持 iPhone X 全屏，启动屏幕改用 Storyboard，增加获取 Safe Area 的接口，支持自动隐藏 Home 指示器。
+自 iPhone X 流行，使用引擎的 iOS 开发者存在升级支持 iPhone X 的需求，该版本为开发者提供解决方案。支持 iPhone X 全屏，启动屏幕改用 Storyboard，增加获取 Safe Area 的接口，支持自动隐藏 Home 指示器。
 
 在开发支持 iPhone X 的应用时，布局时最需要注意的就是 Safe Area，横屏时即下图浅蓝色区域：
 
@@ -52,15 +52,15 @@
   <img width="400" src="https://raw.githubusercontent.com/cocos2d/cocos2d-x-docs/master/en/installation/iOS-img/iPhoneXSafeArea.png">
 </p>
 
-开发者可以通过引擎提供的接口 `Director::getSafeAreaRect()`  获取 Safe Area 区域。
+开发者可以通过引擎提供的接口 `Director::getSafeAreaRect()` 来轻松的获取 Safe Area 区域。
 
 ### 支持 Android Studio 3.0
 
-Android Studio 是一个成熟的，同时是 Google 官方支持的 Android 开发 IDE，引擎跟进支持。在支持 3.0 的过程中，同时将支持的 NDK 版本从 r14 升级到 r16。Gradle 工程配置方面，简化 Gradle 变量 PROP_*；将依赖声明中弃用的 `compile` 改为新的 `implementation`；增加用以削减 Release 包体积的 Proguard 配置。
+Android Studio 是一个成熟的，同时是 Google 官方支持的 Android 开发 IDE，引擎跟进支持。在支持 3.0 的过程中，同时将支持的 NDK 版本从 r14 升级到 r16。对 Gradle 工程配置也进行了诸多改进，简化 Gradle 变量 PROP_*；将依赖声明中弃用的 `compile` 改为新的 `implementation`；增加用以削减 Release 包体积的 Proguard 文件。
 
 ### CMake 支持全平台
 
-扩展 CMake 构建支持至全平台，包括 iOS、Android、macOS、Linux、Windows（VC++ compiler）。支持将引擎部分预编译，并在新的构建过程中重用预编译的引擎库。通过使用预编译库，可以极大的缩短工程构建时间。
+扩展 CMake 构建支持至全平台，包括 Android (NDK)、iOS、macOS、Linux、Windows（VC++ compiler）。支持将引擎部分进行预编译，并在新的构建过程中重用预编译的引擎库。通过使用预编译库，可以极大的缩短工程构建时间。
 
 详细的使用方法请参考 [CMake 文档](https://github.com/cocos2d/cocos2d-x/blob/v3/cmake/README.md)
 
@@ -76,7 +76,7 @@ Spine 骨骼动画在使用 Cocos2d-x 开发的游戏中被广泛使用，使用
 
 由于 Google 官方自 [Android SDK Tools 25.3.0](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017) 就已放弃 ant 支持，另一方面 Android Studio 已经足够完善，可以移除旧有的 ant 工程 `proj.android`，在移除后重命名原 Android Studio 工程 `proj.android-studio` 为 `proj.android`。[NDK r16](https://developer.android.com/ndk/guides/abis) 已弃用 armeabi，引擎跟进，默认的 Android 工程编译架构从 armeabi 改为 armeabi-v7a。
 
-在 Windows 平台，越来越多的开发者已经使用 Visual Studio 2015/2017 进行开发，移除对年代久远的 2013 的支持。现存的工程配置适合于 Visual Studio 2015 ，如果需要使用 2017，可打开 2015 的工程配置文件，修改部分配置，或使用 CMake 的构建方式。
+在 win32 平台，越来越多的开发者已经使用 Visual Studio 2015/2017 进行开发，移除对年代久远的 2013 的支持。现存的工程配置适合于 2015 ，如果需要使用 2017，可打开现有的 sln 文件，修改部分配置，或使用 CMake 的构建方式。
 
 ### Bugs 修复，提高稳定性
 
