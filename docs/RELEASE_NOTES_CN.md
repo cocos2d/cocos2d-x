@@ -56,7 +56,7 @@
 
 ### 支持 Android Studio 3.0
 
-Android Studio 是一个成熟的，同时是 Google 官方支持的 Android 开发 IDE，引擎跟进支持。在支持 3.0 的过程中，同时将支持的 NDK 版本从 r14 升级到 r16。对 Gradle 工程配置也进行了诸多改进，简化 Gradle 变量 PROP_*；将依赖声明中弃用的 `compile` 改为新的 `implementation`；增加用以削减 Release 包体积的 Proguard 文件。
+Android Studio 是一个成熟的，同时是 Google 官方支持的 Android 开发 IDE，引擎跟进支持。在支持 3.0 的过程中，同时将支持的 NDK 版本从 r14 升级到 r16。对 Gradle 工程配置也进行了诸多改进，包括简化 Gradle 变量 PROP_*，将依赖声明中弃用的 `compile` 改为新的 `implementation`，增加用以削减 Release 包体积的 Proguard 文件。
 
 ### CMake 支持全平台
 
