@@ -18,21 +18,16 @@
 
 # Cocos2d-x 3.17 Release Notes #
 
-## 改动列表
-
-- [Full Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
+Cocos2d-x 3.17 版本着重于工具链的更新，和稳定性的增强。
 
 ## 测试环境
 
-该版本使用如下的 Android 工具链进行测试：
-
-- Android Studio 3.0
-- NDK r16
+ Android 平台已使用 Android Studio (3.0, 3.1, 3.1.1) 和 NDK r16 进行测试。
 
 ## 版本特性
 
 - 支持 iPhone X
-- 支持 Android Studio 3.0
+- 支持 Android Studio 3.0+
 - CMake 支持全平台，支持预编译引擎库
 - 升级 Spine runtime 至 v3.6.39
 - 升级 GLFW 至 3.2.1，并提供预编译库
@@ -44,19 +39,19 @@
 
 ### 支持 iPhone X
 
-自 iPhone X 流行，使用引擎的 iOS 开发者存在升级支持 iPhone X 的需求，该版本为开发者提供解决方案。支持 iPhone X 全屏，启动屏幕改用 Storyboard，增加获取 Safe Area 的接口，支持自动隐藏 Home 指示器。
-
-在开发支持 iPhone X 的应用时，布局时最需要注意的就是 Safe Area，横屏时即下图浅蓝色区域：
+3.17 带来了对 iPhone X 的支持，包含支持全屏模式，支持自动隐藏 Home 指示器，改用 Storyboard 作为启动屏幕，和增加获取 Safe Area 的接口。在开发支持 iPhone X 的应用时，最需要了解清楚的就是 Safe Area：
 
 <p align="center">
   <img width="400" src="https://raw.githubusercontent.com/cocos2d/cocos2d-x-docs/master/en/installation/iOS-img/iPhoneXSafeArea.png">
 </p>
 
-开发者可以通过引擎提供的接口 `Director::getSafeAreaRect()` 来轻松的获取 Safe Area 区域。
+开发者可以通过调用 `Director::getSafeAreaRect()` 来获取 Safe Area 区域。
 
-### 支持 Android Studio 3.0
+### 支持 Android Studio 3.0+
 
-Android Studio 是一个成熟的，同时是 Google 官方支持的 Android 开发 IDE，引擎跟进支持。在支持 3.0 的过程中，同时将支持的 NDK 版本从 r14 升级到 r16。对 Gradle 工程配置也进行了诸多改进，包括简化 Gradle 变量 PROP_*，将依赖声明中弃用的 `compile` 改为新的 `implementation`，增加用以削减 Release 包体积的 Proguard 文件。
+Android Studio 是 Google 官方唯一支持的 Android 开发 IDE。
+
+本版本增加了对 Android Studio 3.0+ 的支持。在支持的过程中，同时将 NDK 版本从 r14 升级到 r16。对 Gradle 工程配置也进行了诸多改进，包括简化 Gradle 变量 PROP_*，将依赖声明中弃用的 `compile` 改为新的 `implementation`，增加用以削减 Release 包体积的 Proguard 文件。
 
 ### CMake 支持全平台
 
@@ -66,19 +61,21 @@ Android Studio 是一个成熟的，同时是 Google 官方支持的 Android 开
 
 ### 升级第三方库
 
-Spine 骨骼动画在使用 Cocos2d-x 开发的游戏中被广泛使用，使用新版的 Spine 导出的素材在老版本的 runtime 上运行存在一些兼容性问题，升级 Spine Runtime 至 3.6.39，解决这些问题。
+Spine 骨骼动画广泛用于 Cocos2d-x 开发的游戏，引擎跟进 Spine 的升级，升级 Runtime 至 3.6.39。
 
-原 GLFW 在使用 GLFW 支持游戏手柄时存在问题，升级 GLFW 至 3.2.1 后解决，同时提供 GLFW 预编译库。原 Box2D 版本 2.3.1 是 2014 年发布的版本，截至 2018 年初新的版本一直未发布，但官方仓库已经有一些 bugs 修复，根据社区的建议，升级 Box2D 至最新提交 f655c603ba9d83，同时提供 Box2D 的预编译库。
+升级 GLFW 至 3.2.1 以修复支持游戏手柄时存在的问题，同时提供 GLFW 预编译库。
 
-每一次版本发布，都会附带特定版本的第三方库，如果由于项目需要想升级第三方库，请参考: [第三方库文档](https://github.com/cocos2d/cocos2d-x-3rd-party-libs-src/blob/v3/README.md)
+社区希望引擎升级 Box2D，可 Box2D 的新版本迟迟未发布，根据反馈 GitHub 提交 f655c603ba9d83 是稳定的，升级 Box2D 至该提交，同时提供 Box2D 的预编译库。
+
+每一次版本发布，都会附带特定版本的第三方预编译库，如果由于项目需要想对第三方库进行定制，请参考: [第三方库文档](https://github.com/cocos2d/cocos2d-x-3rd-party-libs-src/blob/v3/README.md)
 
 ### 移除过时的内容
 
-由于 Google 官方自 [Android SDK Tools 25.3.0](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017) 就已放弃 ant 支持，另一方面 Android Studio 已经足够完善，可以移除旧有的 ant 工程 `proj.android`，在移除后重命名原 Android Studio 工程 `proj.android-studio` 为 `proj.android`。[NDK r16](https://developer.android.com/ndk/guides/abis) 已弃用 armeabi，引擎跟进，默认的 Android 工程编译架构从 armeabi 改为 armeabi-v7a。
+由于 Google 官方自 [Android SDK Tools 25.3.0](http://tools.android.com/recent/androidsdktoolsrevision2530feb2017) 就已放弃 ant 支持，另一方面 Android Studio 已经足够完善。旧有的 `proj.android` ant 工程已被移除，新的 `proj.android` 是 Android Studio 工程。[NDK r16](https://developer.android.com/ndk/guides/abis) 已弃用 armeabi，引擎调整默认的编译架构从 armeabi 为 armeabi-v7a。
 
-在 win32 平台，越来越多的开发者已经使用 Visual Studio 2015/2017 进行开发，移除对年代久远的 2013 的支持。现存的工程配置适合于 2015 ，如果需要使用 2017，可打开现有的 sln 文件，修改部分配置，或使用 CMake 的构建方式。
+在 win32 平台，越来越多的开发者已经使用 Visual Studio 2015/2017 进行开发，移除对年代久远的 2013 的支持。现存的工程配置适合于 2015 ，如果需要使用 2017，可打开现有的 sln 文件，调整配置，或使用 CMake。
 
 ### Bugs 修复，提高稳定性
 
-该版本包含 51 项 bugs 修复，33 项小改进，不再一一列举，详细请参考 [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)。
+该版本包含 51 项 bugs 修复和 33 项小改进，不再列举，请参考 [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)。
 
