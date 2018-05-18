@@ -241,7 +241,7 @@ $ adb install ../tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
 
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 14.
 
-Or import the project located at `tests/cpp-empty-test/proj.android` using Android Studio 3.0.0+ directly.
+Or you can import the project located at `tests/cpp-empty-test/proj.android` using Android Studio 3.0.0+.
 
 Learning Resources
 --------------------------------
@@ -274,13 +274,13 @@ Where to get help
 * [English Forums](http://discuss.cocos2d-x.org)
 * [中文社区](http://forum.cocos.com/c/cocos2d-x)
 * [Bug Tracker](https://github.com/cocos2d/cocos2d-x/issues)
+* [API Reference](http://cocos2d-x.org/docs/api-ref/index.html).
+* [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
+* [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 * IRC. We are in [Freenode](https://webchat.freenode.net/) in the _#cocos2d_ channel
 * `cpp-tests` project. This project is our basis for testing. Use this project to
 learn how we implement the functionality of the engine. This project is located in
 __cocos2d-x_root/build.__
-* [API Reference](http://cocos2d-x.org/docs/api-ref/index.html).
-* [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
-* [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 
 Contributing to the Project
 --------------------------------
