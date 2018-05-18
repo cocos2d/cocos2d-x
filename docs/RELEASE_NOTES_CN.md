@@ -3,12 +3,11 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Cocos2d-x 3.17 Release Notes](#cocos2d-x-317-release-notes)
-  - [改动列表](#%E6%94%B9%E5%8A%A8%E5%88%97%E8%A1%A8)
   - [测试环境](#%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83)
   - [版本特性](#%E7%89%88%E6%9C%AC%E7%89%B9%E6%80%A7)
   - [详细介绍](#%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D)
     - [支持 iPhone X](#%E6%94%AF%E6%8C%81-iphone-x)
-    - [支持 Android Studio 3.0](#%E6%94%AF%E6%8C%81-android-studio-30)
+    - [支持 Android Studio 3.0+](#%E6%94%AF%E6%8C%81-android-studio-30)
     - [CMake 支持全平台](#cmake-%E6%94%AF%E6%8C%81%E5%85%A8%E5%B9%B3%E5%8F%B0)
     - [升级第三方库](#%E5%8D%87%E7%BA%A7%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93)
     - [移除过时的内容](#%E7%A7%BB%E9%99%A4%E8%BF%87%E6%97%B6%E7%9A%84%E5%86%85%E5%AE%B9)
