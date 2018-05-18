@@ -119,6 +119,8 @@ Cocos2d-x supports CMake, a cross-platform build system. Example usage:
     $ mkdir cmake-build && cd cmake-build
     $ cmake ..
 
+* [Detail CMake Guide](cmake/README.md)
+
 Documentations and samples
 -------------
 * [All Docs in a single place!](http://cocos2d-x.org/docs/)
@@ -223,10 +225,7 @@ or
 $ bin/Debug/lua-empty-test/lua-empty-test
 ```
 
-      You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target,
-      you should make it to direct to a correct one. `install-deps-linux.sh` only has to be run once.
-
-      Just need to fix the soft links at `external/linux-specific/fmod/prebuilt/64-bit` path if a fmod link error occurs to you.
+> You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target, you should make it to direct to a correct one. `install-deps-linux.sh` only has to be run once.
 
 * For Windows
 
@@ -243,8 +242,6 @@ $ adb install ../tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 14.
 
 Or import the project located at `tests/cpp-empty-test/proj.android` using Android Studio 3.0.0+ directly.
-
-* [Detail CMake Guide](cmake/README.md)
 
 Learning Resources
 --------------------------------
@@ -274,7 +271,8 @@ You can see exactly what we are planning to do with the Cocos family of products
 Where to get help
 --------------------------------
 
-* [Forums](http://discuss.cocos2d-x.org)
+* [English Forums](http://discuss.cocos2d-x.org)
+* [中文社区](http://forum.cocos.com/c/cocos2d-x)
 * [Bug Tracker](https://github.com/cocos2d/cocos2d-x/issues)
 * IRC. We are in [Freenode](https://webchat.freenode.net/) in the _#cocos2d_ channel
 * `cpp-tests` project. This project is our basis for testing. Use this project to
