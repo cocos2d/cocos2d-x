@@ -357,6 +357,25 @@ public:
      */
     virtual void handleTouchesCancel(int num, intptr_t ids[], float xs[], float ys[]);
 
+    /** Set window icon (implemented for windows and linux).
+     *
+     * @param filename A path to image file, e.g., "icons/cusom.png". 
+     */
+    virtual void setIcon(const std::string& filename) const { return; };
+
+    /** Set window icon (implemented for windows and linux).
+     * Best icon (based on size) will be auto selected.
+     * 
+     * @param filelist The array contains icons.
+     */
+    virtual void setIcon(const std::vector<std::string>& filelist) const { return; };
+
+    /** Set default window icon (implemented for windows and linux).
+     * On windows it will use icon from .exe file (if included).
+     * On linux it will use default window icon.
+     */
+    virtual void setDefaultIcon() const { return; };
+
     /**
      * Get the opengl view port rectangle.
      *
