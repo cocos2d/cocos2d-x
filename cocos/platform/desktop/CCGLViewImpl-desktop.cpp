@@ -485,11 +485,14 @@ void GLViewImpl::setIcon(const std::vector<std::string>& filelist) const {
         images[i].width = icons[i]->getWidth();
         images[i].height = icons[i]->getHeight();
         images[i].pixels = icons[i]->getData();
-        CC_SAFE_DELETE(icons[i]);
     };
 
     GLFWwindow* window = this->getWindow();
     glfwSetWindowIcon(window, iconsCount, images);
+
+    for (auto& icon: icons) {
+        CC_SAFE_DELETE(icon);
+    }
 }
 
 void GLViewImpl::setDefaultIcon() const {
