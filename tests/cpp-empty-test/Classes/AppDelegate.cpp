@@ -56,10 +56,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     // Initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
+    auto fileutils = FileUtils::getInstance();
     if(!glview) {
         glview = GLViewImpl::create("Cpp Empty Test");
         director->setOpenGLView(glview);
     }
+    std::vector<std::string> icons;
+    fileutils->listFilesRecursively("icons", &icons);
+	glview->setIcon(icons);
 
     director->setOpenGLView(glview);
 
