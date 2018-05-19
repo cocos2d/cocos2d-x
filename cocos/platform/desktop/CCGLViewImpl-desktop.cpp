@@ -480,16 +480,19 @@ void GLViewImpl::setIcon(const std::vector<std::string>& filelist) const {
 
     if (icons.empty()) return; // No valid images
     size_t iconsCount = icons.size();
-    GLFWimage images[iconsCount];
+    auto images = new GLFWimage[iconsCount];
     for (size_t i = 0; i < iconsCount; i++) {
-        images[i].width = icons[i]->getWidth();
-        images[i].height = icons[i]->getHeight();
-        images[i].pixels = icons[i]->getData();
+		auto& image = images[i];
+		auto& icon = icons[i];
+        image.width = icon->getWidth();
+        image.height = icon->getHeight();
+        image.pixels = icon->getData();
     };
 
     GLFWwindow* window = this->getWindow();
     glfwSetWindowIcon(window, iconsCount, images);
 
+	CC_SAFE_DELETE(images);
     for (auto& icon: icons) {
         CC_SAFE_DELETE(icon);
     }
