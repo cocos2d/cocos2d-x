@@ -61,16 +61,22 @@ bool AppDelegate::applicationDidFinishLaunching()
         glview = GLViewImpl::create("Cpp Empty Test");
         director->setOpenGLView(glview);
     }
+
+    // Set window icon with best resolution (windows and linux)
     std::vector<std::string> icons;
+    // assert error when using listFilesRecursively on Windows 10
+    // refer to: https://github.com/cocos2d/cocos2d-x/issues/18835
+    // don't use listFiles as workaround (it will return directory itself)
+    // refer to: https://github.com/cocos2d/cocos2d-x/issues/18834
     fileutils->listFilesRecursively("icons", &icons);
-	glview->setIcon(icons);
+    glview->setIcon(icons);
 
     director->setOpenGLView(glview);
 
     // Set the design resolution
     glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::NO_BORDER);
 
-	Size frameSize = glview->getFrameSize();
+    Size frameSize = glview->getFrameSize();
     
     vector<string> searchPath;
 
@@ -80,12 +86,12 @@ bool AppDelegate::applicationDidFinishLaunching()
     // This can make sure that the resource's height could fit for the height of design resolution.
 
     // If the frame's height is larger than the height of medium resource size, select large resource.
-	if (frameSize.height > mediumResource.size.height)
-	{
+    if (frameSize.height > mediumResource.size.height)
+    {
         searchPath.push_back(largeResource.directory);
 
         director->setContentScaleFactor(MIN(largeResource.size.height/designResolutionSize.height, largeResource.size.width/designResolutionSize.width));
-	}
+    }
     // If the frame's height is larger than the height of small resource size, select medium resource.
     else if (frameSize.height > smallResource.size.height)
     {
@@ -94,7 +100,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         director->setContentScaleFactor(MIN(mediumResource.size.height/designResolutionSize.height, mediumResource.size.width/designResolutionSize.width));
     }
     // If the frame's height is smaller than the height of medium resource size, select small resource.
-	else
+    else
     {
         searchPath.push_back(smallResource.directory);
 
