@@ -237,6 +237,15 @@ if [ "$BUILD_TARGET" == "android_gen_libs" ]; then
     pushd $COCOS2DX_ROOT
     python -u tools/cocos2d-console/bin/cocos.py gen-libs -p android -m release --ap android-27 --app-abi armeabi-v7a:x86 --agreement n
     popd
+
+    pushd $COCOS2DX_ROOT
+    python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq1 cocos_new_test1
+    popd
+
+    pushd $COCOS2DX_ROOT
+    python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq2 cocos_new_test2
+    popd
+    
     exit 0
 fi
 
@@ -245,6 +254,15 @@ if [ "$BUILD_TARGET" == "android_gen_libs_mac" ]; then
     pushd $COCOS2DX_ROOT
     python -u tools/cocos2d-console/bin/cocos.py gen-libs -p android -m release --ap android-27 --app-abi armeabi-v7a:x86 --agreement n
     popd
+
+    pushd $COCOS2DX_ROOT
+    python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq1 cocos_new_test1
+    popd
+
+    pushd $COCOS2DX_ROOT
+    python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq2 cocos_new_test2
+    popd
+
     exit 0
 fi
 
