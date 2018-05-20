@@ -43,10 +43,17 @@ If ($env:build_type -eq "android_cpp_tests") {
     if ($lastexitcode -ne 0) {throw}
     PushAndroidArtifacts
     Pop-Location
-# TODO: uncomment when fixed
 } elseif ($env:build_type -eq "android_gen_libs") {
     Write-Host "Build cocos gen-libs"
     & $python -u tools\cocos2d-console\bin\cocos.py gen-libs -p android -m release --ap android-27 --app-abi armeabi-v7a:x86 --agreement n
+    if ($lastexitcode -ne 0) {throw}
+    
+    Write-Host "Create new project"
+    & $python -u tools\cocos2d-console\bin\cocos.py --agreement n new -l cpp -p my.pack.qqqq1 cocos_new_test1
+    if ($lastexitcode -ne 0) {throw}
+
+    Write-Host "Create new project"
+    & $python -u tools\cocos2d-console\bin\cocos.py --agreement n new -l cpp -p my.pack.qqqq2 cocos_new_test2
     if ($lastexitcode -ne 0) {throw}
 
 } elseif ($env:build_type -eq "windows32_cocos_new_test") {
