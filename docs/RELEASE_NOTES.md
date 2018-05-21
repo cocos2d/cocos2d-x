@@ -3,10 +3,8 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Cocos2d-x 3.17 Release Notes](#cocos2d-x-317-release-notes)
-  - [Misc Information](#misc-information)
-  - [Tested](#tested)
+  - [Android requirements](#android-requirements)
   - [Highlights](#highlights)
-  - [Highlights in detail](#highlights-in-detail)
     - [added support for iPhone X](#added-support-for-iphone-x)
     - [added support Android Studio 3.0+](#added-support-android-studio-30)
     - [CMake is now supported on all platforms](#cmake-is-now-supported-on-all-platforms)
