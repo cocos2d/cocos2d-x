@@ -1,3 +1,106 @@
+cocos2d-x-3.17 May.21 2018
+
+[HIGHLIGHT]     Android: support Android Studio 3.0, NDK 16
+[HIGHLIGHT]     iOS: support full screen for iPhone X and uses Storyboard for launch screen
+[HIGHLIGHT]     3rd: upgrade Spine runtime to v3.6.39 
+[HIGHLIGHT]     3rd: upgrade GLFW to 3.2.1
+[HIGHLIGHT]     CMake support all platforms, and support prebuilt engine libs
+
+[NEW]           Engine: multisampling support
+[NEW]           Label: support non-breaking characters
+[NEW]           Label: support belarusian language
+[NEW]           UI: add blend function for Text
+[NEW]           UI: add ScrollView API to stop overall scroll
+[NEW]           iOS: add auto hide home indicator for iPhone X
+[NEW]           iOS: provides an interface for getting SafeArea
+[NEW]           Andorid: add one more android return button types
+
+[REFINE]        Engine: support reading object.rotation attribute in TMX
+[REFINE]        Engine: make the sort behavior is same on 32bit and 64bit
+[REFINE]        Engine: static analize fixes
+[REFINE]        Engine: improve comments in ccConfig.h, JniHelper.h
+[REFINE]        Engine: remove plugin submodule
+[REFINE]        Engine: improve StringUtils::format implementation
+[REFINE]        Label: don't count spaces at the end of line as part of the line width
+[REFENE]        UI: partial cursor support with system font in TextField
+[REFINE]        UI: support BMFont in TextField
+[REFINE]        UI: improve EditBox on win32 platform
+[REFINE]        UI: RichText improvements, get the real height by automatically customize ContentSize, refactor split algorithm
+[REFINE]        UI: remove autorelease mark from UIWebViewWrapper and manage memory manually
+[REFINE]        Lua: implementation conversion Lua table to ObjC Dictionary
+[REFINE]        Lua: improve loader, support standerd Lua package require
+[REFINE]        Web: upgrade Spine Javascript runtime to v3.6.39
+[REFINE]        Windows: speed up build by supporting precompiled header
+[REFINE]        Windows: remove Visual Studio 2013 support
+[REFINE]        Windows: Windows 10 update compiler to PlatformToolset v141
+[REFINE]        iOS: uses Images.xcassets instead of several icon png files
+[REFINE]        Android: support Android Studio 3.0.0, switch to libc++, simplify PROP_* valuse, add default Proguard Config for cocos
+[REFINE]        Android: remove ant project
+[REFINE]        Android: update NDK from r14 to r16
+[REFINE]        Andorid: improve Android.mk, not have to set NDK_MODULE_PATH in project settings
+[REFINE]        Android: detail comments for cddandroidAndroidJavaEngine.h, Cocos2dxSound.java
+[REFINE]        Linux: provide prebuilt version of GLFW
+[REFINE]        cocos console: remove ant build support
+[REFINE]        cocos console: support building release APK without key information
+[REFINE]        3rd: remove Visual Studio 2013 libs 
+[REFINE]        3rd: remove Android armeabi libs since it is deprecated and will be removed in r17
+[REFINE]        3rd: rebuild all Android libs with clang in ndk-r16
+[REFINE]        3rd: cmake build support for partial libs
+[REFENE]        3rd: update Box2D to latest commit f655c603ba9d83
+[REFINE]        3rd: use prebuilt Box2D
+
+[FIX]           Engine: capture image loses quality when using RenderTexture
+[FIX]           Engine: RenderTexture DepthAndStencil issue on Android 
+[FIX]           Engine: race condition resulting in deadlock infrequently in TextureCache
+[FIX]           Engine: CCConsole.cpp compile error with C++17 and clang
+[FIX]           Engine: TrianglesCommand hashing technique doesn't take padding into account
+[FIX]           Engine: default GLView bit depth is too low on desktop
+[FIX]           Engine: cocos2d::log va_list re-use bug
+[FIX]           Engine: cocos2d::Image::saveImageToPNG saves image in wrong PNG format
+[FIX]           Engine: CameraBackgroundColorBrush cannot use alpha
+[FIX]           Engine: crash in Allocator if there are no allocated pages
+[FIX]           Engine: crash when the UserDefault.xml file is empty
+[FIX]           Engine: memory leak in ObjectFactory destroyInstance, UserDefault::deleteValueForKey
+[FIX]           Engine: replace ptr_fun with lambda, fix compile error with C++17 and clang
+[FIX]           Engine: fix some warning issues
+[FIX]           Label: memory leak when using TTF labels
+[FIX]           Label: memory leak in FontFreeType::create
+[FIX]           Label: Non-TTF Label Shadow issue, make it follow Label opacity
+[FIX]           UI: RichText issue caused by Label when its string is very long
+[FIX]           UI: EditBox right padding error
+[FIX]           UI: win32 EditBox has wrong scale factor
+[FIX]           UI: TableView button click event not response when the button is a cell
+[FIX]           UI: correct bugs with cursor in TextField
+[FIX]           UI: Android EditBox use 'setSelection' error when the text beyond the border
+[FIX]           UI: iOS EditBox will penetrate the underlying UI event
+[FIX]           UI: use setTextColor for EditBox placeholder
+[FIX]           UI: returning UNKNOWN event for return type key SEARCH/SEND in EditBox
+[FIX]           UI: crash when call TextFieldTTF::setCursorFromPoint
+[FIX]           UI: ListView, avoid of type overflow while list size calculation
+[FIX]           Audio: miss return value of onWavClose function
+[FIX]           Audio: wrong header include in mp3reader.cpp, apple/AudioEngine-inl.h
+[FIX]           Audio: wrong status check in apple/AudioDecoder.mm
+[FIX]           Lua: should set listener to null when unregister spine event handler
+[FIX]           Lua: event condition bugs on ParticleTest.lua
+[FIX]           JSB: some memory leaks and crashes
+[FIX]           JSB: miss GetterSetter define for the placeHolder of TextField
+[FIX]           Web: out-of-date submodule commmit of cocos2d-html5 repo
+[FIX]           Web: bugs for Performance Test for Spine on WebGL
+[FIX]           iOS: fix bug about delayed creation UIWebView on iOS
+[FIX]           Andorid: infinite loop when counting text lines on Android in some situations
+[FIX]           Android: crash when network error message is too long
+[FIX]           Android: JniHelper no longer thread safe
+[FIX]           Android: proguard-rules.pro error for tests project
+[FIX]           Andorid: some violations about I/O operation on UI thread, which may lead to ANR
+[FIX]           Android: AppAcitivity is recreated which causes crash
+[FIX]           Android: Emulator blank screen 0x501 and 0x502 problems
+[FIX]           Android: Emulator stensil fix
+[FIX]           Android: Fix endian detection (node render order)
+[FIX]           Android: issue with not stable 60 fps
+[FIX]           Android: issue with accelerometer on Android on reverse landscape/portrait
+[FIX]           WinRT: fix keyBoard bug when input chinese
+[FIX]           cocos console: fix archive issue with Xcode 9
+
 cocos2d-x-3.16 Oct.9 2017
 [NEW]           Add RadialGradientLayer
 [NEW]           Web: Add GLProgramState and upgrade web shader usage APIs

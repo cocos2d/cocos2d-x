@@ -226,6 +226,7 @@ foreach(_lib ${all_prebuilt_libs})
                 endif(EXISTS ${_dir})
             endforeach()
             if(include_dirs)
+                list(REMOVE_DUPLICATES include_dirs)
                 set(${_prefix}_INCLUDE_DIRS ${include_dirs} CACHE PATH "Path to includes for ${_prefix}" FORCE)
                 message(STATUS "${_lib} ${_prefix}_INCLUDE_DIRS: ${${_prefix}_INCLUDE_DIRS}")
                 # don't find lib, if not find include in once ${_root} search
