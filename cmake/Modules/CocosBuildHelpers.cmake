@@ -222,8 +222,9 @@ function(cocos_build_app app_name)
         set_target_properties(${app_name} PROPERTIES MACOSX_BUNDLE 1
                               )
     elseif(MSVC)
+        # only Debug and Release mode was supported when using MSVC.
         set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/$<CONFIG>")
-        set(APP_RES_DIR "${APP_BIN_DIR}")
+        set(APP_RES_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/${CMAKE_BUILD_TYPE}")
         #Visual Studio Defaults to wrong type
         set_target_properties(${app_name} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
     else(LINUX)
