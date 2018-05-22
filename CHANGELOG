@@ -13,7 +13,7 @@ cocos2d-x-3.17 May.21 2018
 [NEW]           UI: add ScrollView API to stop overall scroll
 [NEW]           iOS: add auto hide home indicator for iPhone X
 [NEW]           iOS: provides an interface for getting SafeArea
-[NEW]           Andorid: add one more android return button types
+[NEW]           Android: add one more android return button types
 
 [REFINE]        Engine: support reading object.rotation attribute in TMX
 [REFINE]        Engine: make the sort behavior is same on 32bit and 64bit
@@ -34,10 +34,10 @@ cocos2d-x-3.17 May.21 2018
 [REFINE]        Windows: remove Visual Studio 2013 support
 [REFINE]        Windows: Windows 10 update compiler to PlatformToolset v141
 [REFINE]        iOS: uses Images.xcassets instead of several icon png files
-[REFINE]        Android: support Android Studio 3.0.0, switch to libc++, simplify PROP_* valuse, add default Proguard Config for cocos
+[REFINE]        Android: support Android Studio 3.0.0, switch to libc++, simplify PROP_* values, add default Proguard Config for cocos
 [REFINE]        Android: remove ant project
 [REFINE]        Android: update NDK from r14 to r16
-[REFINE]        Andorid: improve Android.mk, not have to set NDK_MODULE_PATH in project settings
+[REFINE]        Android: improve Android.mk, not have to set NDK_MODULE_PATH in project settings
 [REFINE]        Android: detail comments for cddandroidAndroidJavaEngine.h, Cocos2dxSound.java
 [REFINE]        Linux: provide prebuilt version of GLFW
 [REFINE]        cocos console: remove ant build support
@@ -94,7 +94,7 @@ cocos2d-x-3.17 May.21 2018
 [FIX]           Andorid: some violations about I/O operation on UI thread, which may lead to ANR
 [FIX]           Android: AppAcitivity is recreated which causes crash
 [FIX]           Android: Emulator blank screen 0x501 and 0x502 problems
-[FIX]           Android: Emulator stensil fix
+[FIX]           Android: Emulator stencil fix
 [FIX]           Android: Fix endian detection (node render order)
 [FIX]           Android: issue with not stable 60 fps
 [FIX]           Android: issue with accelerometer on Android on reverse landscape/portrait
