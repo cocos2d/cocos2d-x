@@ -56,7 +56,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     // Initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
-    auto fileutils = FileUtils::getInstance();
     if(!glview) {
         glview = GLViewImpl::create("Cpp Empty Test");
         director->setOpenGLView(glview);
@@ -69,7 +68,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // don't use listFiles as workaround (it will return directory itself)
     // refer to: https://github.com/cocos2d/cocos2d-x/issues/18834
     std::vector<std::string> icons;
-    fileutils->listFilesRecursively("icons", &icons);
+    FileUtils::getInstance()->listFilesRecursively("icons", &icons);
     #else
     std::string icons = "icons/Icon-60@3x.png";
     #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) */
