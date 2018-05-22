@@ -39,9 +39,9 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 #include "base/ccUTF8.h"
 #include "2d/CCCamera.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#if CC_ICON_SET_SUPPORT
 #include "platform/CCImage.h"
-#endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) */
+#endif /* CC_ICON_SET_SUPPORT */
 
 NS_CC_BEGIN
 
@@ -460,7 +460,7 @@ void GLViewImpl::setIMEKeyboardState(bool /*bOpen*/)
 
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#if CC_ICON_SET_SUPPORT
 void GLViewImpl::setIcon(const std::string& filename) const {
     std::vector<std::string> vec = {filename};
     this->setIcon(vec);
@@ -482,8 +482,8 @@ void GLViewImpl::setIcon(const std::vector<std::string>& filelist) const {
     size_t iconsCount = icons.size();
     auto images = new GLFWimage[iconsCount];
     for (size_t i = 0; i < iconsCount; i++) {
-		auto& image = images[i];
-		auto& icon = icons[i];
+        auto& image = images[i];
+        auto& icon = icons[i];
         image.width = icon->getWidth();
         image.height = icon->getHeight();
         image.pixels = icon->getData();
@@ -492,7 +492,7 @@ void GLViewImpl::setIcon(const std::vector<std::string>& filelist) const {
     GLFWwindow* window = this->getWindow();
     glfwSetWindowIcon(window, iconsCount, images);
 
-	CC_SAFE_DELETE(images);
+    CC_SAFE_DELETE(images);
     for (auto& icon: icons) {
         CC_SAFE_DELETE(icon);
     }
@@ -502,7 +502,7 @@ void GLViewImpl::setDefaultIcon() const {
     GLFWwindow* window = this->getWindow();
     glfwSetWindowIcon(window, 0, nullptr);
 }
-#endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) */
+#endif /* CC_ICON_SET_SUPPORT */
 
 void GLViewImpl::setCursorVisible( bool isVisible )
 {

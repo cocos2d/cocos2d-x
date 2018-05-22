@@ -96,11 +96,11 @@ public:
     virtual void setFrameSize(float width, float height) override;
     virtual void setIMEKeyboardState(bool bOpen) override;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#if CC_ICON_SET_SUPPORT
     virtual void setIcon(const std::string& filename) const override;
     virtual void setIcon(const std::vector<std::string>& filelist) const override;
     virtual void setDefaultIcon() const override;
-#endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) */
+#endif /* CC_ICON_SET_SUPPORT */
 
     /*
      * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.

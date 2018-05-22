@@ -63,12 +63,16 @@ bool AppDelegate::applicationDidFinishLaunching()
     }
 
     // Set window icon with best resolution (windows and linux)
-    std::vector<std::string> icons;
+    #if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
     // assert error when using listFilesRecursively on Windows 10
     // refer to: https://github.com/cocos2d/cocos2d-x/issues/18835
     // don't use listFiles as workaround (it will return directory itself)
     // refer to: https://github.com/cocos2d/cocos2d-x/issues/18834
+    std::vector<std::string> icons;
     fileutils->listFilesRecursively("icons", &icons);
+    #else
+    std::string icons = "icons/Icon-60@3x.png";
+    #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) */
     glview->setIcon(icons);
 
     director->setOpenGLView(glview);
