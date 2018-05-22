@@ -1,17 +1,20 @@
-
 # CMake Guide
 
-CMake is an open-source, cross-platform family of tools designed to build, test and package software. CMake is used to control the software compilation process using simple platform and compiler independent configuration files, and generate native makefiles and workspaces that can be used in the compiler environment of your choice.
+CMake is an open-source, cross-platform family of tools designed to build, test and package software. CMake is used to control the software compilation process using simple platform and compiler independent configuration files, and generates native makefiles and workspaces that can be used in the compiler environment of your choice.
 
 ## Requirement
 
-1. Open your terminal, input `cmake --version`, if the cmake version is lower than 3.1, please upgrade
+1. Open your terminal and execute:
+  ```sh
+  cmake --version
+  ```
+if the CMake version is lower than 3.1, please upgrade.
 
-2. You should use out-of-source build, that is said you need to create a different directory from `cocos2d-x` to execute cmake command.
+2. You should use __out-of-source__ builds, this means you need to create a different directory than __cocos2d-x__ to execute the `cmake` command.
 
 ## Step by Step
 
-### Build in Linux
+### Linux
 
 ```sh
 cd cocos2d-x
@@ -22,7 +25,7 @@ make
 
 Execute `make help` to see all build targets, `make <target>` build specified target
 
-### Generate Visual Studio project
+### Generate Visual Studio projects
 
 ```sh
 cd cocos2d-x
@@ -30,7 +33,7 @@ mkdir win32-build && cd win32-build
 cmake .. -G"Visual Studio 15 2017" -Tv141
 ```
 
-Execute `cmake --build .` to compile, or open `Cocos2d-x.sln` in Explorer to use the generated project. 
+Execute `cmake --build .` to compile, or open __Cocos2d-x.sln__ in Explorer to use the generated project. 
 
 ### Generate macOS Project
 
@@ -50,11 +53,11 @@ cmake .. -GXcode -DCMAKE_TOOLCHAIN_FILE=../cmake/ios.toolchain.cmake
 open Cocos2d-x.xcodeproj
 ```
 
-The default build is for iOS device, if you want to run on simulator, please add `-DIOS_PLATFORM=SIMULATOR` for architecture i386 or `-DIOS_PLATFORM=SIMULATOR64` for x86_64.
+The default build is for running on actual iOS hardware, if you want to run in the simulator, please add `-DIOS_PLATFORM=SIMULATOR` for architecture i386 or `-DIOS_PLATFORM=SIMULATOR64` for x86_64.
 
-### CMake in Android Studio
+### Android Studio
 
-We use the Gradle to Android applacition, and Gradle use cmake to build the native code, see the [property](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/gradle.properties#L38): `PROP_NDK_MODE`, it control the way of native build
+We use the Gradle for Android applications, and Gradle use cmake to build the native code, see  [gradle.properties](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/gradle.properties#L38): `PROP_NDK_MODE`, it controls how native builds work.
 
 ```sh
 # android native code build type
@@ -64,15 +67,15 @@ We use the Gradle to Android applacition, and Gradle use cmake to build the nati
 PROP_BUILD_TYPE=ndk-build
 ```
 
-If you want to add cmake build arguments, please add it at [externalNativeBuild](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/app/build.gradle#L25) block of [app/build.gradle] file.
+If you want to add cmake build arguments, please add it at [external Native Build](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/app/build.gradle#L25) block of __app/build.gradle__ file.
 
-## Prebuilt feature
+## Prebuilt libraries feature
 
-To solve the problem that compiling engine sources spends too long time, we add the feature of pre-builds libs. Using this feature you only need build engine sources once for a specific environment.
+To solve long compilation times of the engine source code one can use prebuilt libraries. Using this feature you only need build engine sources once for a specific environment or again when the engine version changes and you wish to utilize the new version.
 
 ### Example
 
-This is an example of build cpp libs once, and use it in different cpp project.
+This is an example of building c++ libs once, and use them in different c++ projects.
 
 ```sh
 cocos new -l cpp -p my.pack.app1 test_app1
@@ -81,7 +84,7 @@ cmake ../test_app1 -DGEN_COCOS_PREBUILT=ON
 make prebuilt
 ```
 
-Close option `GEN_COCOS_PREBUILT` and open `USE_COCOS_PREBUILT` to use prebuilt in the same project
+Change option `GEN_COCOS_PREBUILT` and use instead `USE_COCOS_PREBUILT` to use prebuilt in the same project
 
 ```sh
 cmake ../test_app1 -DGEN_COCOS_PREBUILT=OFF -DUSE_COCOS_PREBUILT=ON
@@ -98,13 +101,14 @@ cmake ../test_app2 -DUSE_COCOS_PREBUILT=ON
 make TemplateCpp
 open bin/TemplateCpp.app
 ```
+
 > Any other cpp project can use prebuilt in this way
 
-Using this feature on Android exists a little difference, for CMake can't find system environment when build in Gradle. So you need to [supply a path](https://github.com/cocos2d/cocos2d-x/blob/c087be314c2c56a757bf66163b173746b5d6ad34/tests/cpp-empty-test/proj.android/app/build.gradle#L34) as the location of prebuilt libs.
+When using the prebuilt libraries on Android there is a small difference as CMake can't find system environment when built using Gradle. You need to [supply a path](https://github.com/cocos2d/cocos2d-x/blob/c087be314c2c56a757bf66163b173746b5d6ad34/tests/cpp-empty-test/proj.android/app/build.gradle#L34) as the location of prebuilt libs.
 
 ## Build Options
 
-### CMake Common
+### CMake Common Build Options
 
 1. __`-G`__, generate native build project you specified, for example
 
@@ -141,8 +145,8 @@ Using this feature on Android exists a little difference, for CMake can't find s
 
 ## Useful Links
 
-* Official website: [cmake.org](https://cmake.org/)
+* CMake Official website: [cmake.org](https://cmake.org/)
 
-* Documentation: [cmake.org/documentation](https://cmake.org/documentation/)
+* CMake Documentation: [cmake.org/documentation](https://cmake.org/documentation/)
 
 * CMake FAQ: [Wiki/CMake_FAQ](https://cmake.org/Wiki/CMake_FAQ)

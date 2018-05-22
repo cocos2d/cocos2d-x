@@ -326,6 +326,7 @@ bool UIEditBoxTestTextHorizontalAlignment::init() {
         editbox->setFontColor(Color3B::RED);
         editbox->setPlaceHolder(text.c_str());
         editbox->setPlaceholderFontColor(Color3B::WHITE);
+        editbox->setPlaceholderFontSize(editBoxSize.height/2);
         editbox->setFontSize(editBoxSize.height/2);
         editbox->setText(text.c_str());
         editbox->setTextHorizontalAlignment(alignment);

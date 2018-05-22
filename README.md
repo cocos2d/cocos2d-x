@@ -119,6 +119,8 @@ Cocos2d-x supports CMake, a cross-platform build system. Example usage:
     $ mkdir cmake-build && cd cmake-build
     $ cmake ..
 
+* [Detail CMake Guide](cmake/README.md)
+
 Documentations and samples
 -------------
 * [All Docs in a single place!](http://cocos2d-x.org/docs/)
@@ -163,17 +165,17 @@ Build Requirements
 ------------------
 
 * Mac OS X 10.7+, Xcode 8+
-* or Ubuntu 12.10+, CMake 2.6+
+* or Ubuntu 14.04+, CMake 3.1+
 * or Windows 7+, VS 2015
-* Python 2.7.5
+* Python 2.7.5+(NOT Python 3)
 * NDK r16+ is required to build Android games
-* Android Studio 2.3.3+ to build Android games(tested with 2.3.3)
+* Android Studio 3.0.0+ to build Android games(tested with 3.0.0)
 * JRE or JDK 1.6+ is required for web publishing
 
 Runtime Requirements
 --------------------
   * iOS 8.0+ for iPhone / iPad games
-  * Android 2.3.3+ for Android
+  * Android 3.0.0+ for Android
   * OS X v10.9+ for Mac games
   * Windows 7+ for Win games
   * Modern browsers and IE 9+ for web games
@@ -210,20 +212,20 @@ $ open cocos2d_tests.xcodeproj
 ```
 $ cd cocos2d-x/build
 $ ./install-deps-linux.sh
-$ cmake ..
-$ make
+$ mkdir linux-build
+$ cd linux-build
+$ cmake ../..
 ```
 
 Run Samples
 
 ```
-$ bin/cpp-empty-test/cpp-empty-test
+$ bin/Debug/cpp-empty-test/cpp-empty-test
 or
-$ bin/lua-empty-test/lua-empty-test
+$ bin/Debug/lua-empty-test/lua-empty-test
 ```
 
-      You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target,
-      you should make it to direct to a correct one. `install-deps-linux.sh` only has to be run once.
+> You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target, you should make it to direct to a correct one. `install-deps-linux.sh` only has to be run once.
 
 * For Windows
 
@@ -239,7 +241,7 @@ $ adb install ../tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
 
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 14.
 
-* [Detail CMake Guide](cmake/README.md)
+Or you can import the project located at `tests/cpp-empty-test/proj.android` using Android Studio 3.0.0+.
 
 Learning Resources
 --------------------------------
@@ -269,15 +271,16 @@ You can see exactly what we are planning to do with the Cocos family of products
 Where to get help
 --------------------------------
 
-* [Forums](http://discuss.cocos2d-x.org)
+* [English Forums](http://discuss.cocos2d-x.org)
+* [中文社区](http://forum.cocos.com/c/cocos2d-x)
 * [Bug Tracker](https://github.com/cocos2d/cocos2d-x/issues)
+* [API Reference](http://cocos2d-x.org/docs/api-ref/index.html).
+* [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
+* [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 * IRC. We are in [Freenode](https://webchat.freenode.net/) in the _#cocos2d_ channel
 * `cpp-tests` project. This project is our basis for testing. Use this project to
 learn how we implement the functionality of the engine. This project is located in
 __cocos2d-x_root/build.__
-* [API Reference](http://cocos2d-x.org/docs/api-ref/index.html).
-* [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
-* [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 
 Contributing to the Project
 --------------------------------
