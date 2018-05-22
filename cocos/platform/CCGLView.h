@@ -41,7 +41,7 @@ typedef void* id;
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) */
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-#define CC_ICON_SET_SUPPORT
+#define CC_ICON_SET_SUPPORT true
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) */
 
 /** There are some Resolution Policy for Adapt to the screen. */
