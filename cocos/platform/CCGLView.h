@@ -40,6 +40,10 @@ THE SOFTWARE.
 typedef void* id;
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) */
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#define CC_ICON_SET_SUPPORT true
+#endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) */
+
 /** There are some Resolution Policy for Adapt to the screen. */
 enum class ResolutionPolicy
 {
@@ -356,6 +360,25 @@ public:
      * @param ys The points of y.
      */
     virtual void handleTouchesCancel(int num, intptr_t ids[], float xs[], float ys[]);
+
+    /** Set window icon (implemented for windows and linux).
+     *
+     * @param filename A path to image file, e.g., "icons/cusom.png". 
+     */
+    virtual void setIcon(const std::string& filename) const {};
+
+    /** Set window icon (implemented for windows and linux).
+     * Best icon (based on size) will be auto selected.
+     * 
+     * @param filelist The array contains icons.
+     */
+    virtual void setIcon(const std::vector<std::string>& filelist) const {};
+
+    /** Set default window icon (implemented for windows and linux).
+     * On windows it will use icon from .exe file (if included).
+     * On linux it will use default window icon.
+     */
+    virtual void setDefaultIcon() const {};
 
     /**
      * Get the opengl view port rectangle.
