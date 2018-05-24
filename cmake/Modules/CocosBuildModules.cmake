@@ -113,6 +113,11 @@
      else()
          include(AndroidNdkModules)
          android_ndk_import_module_cpufeatures()
+         set_target_properties(cpufeatures
+                              PROPERTIES
+                              ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+                              LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+                              )
          set(CPUFEATURES_LIBRARIES cpufeatures)
      endif()
  endif()
