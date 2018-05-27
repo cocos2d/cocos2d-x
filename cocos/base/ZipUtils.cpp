@@ -24,14 +24,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-// FIXME: hack, must be included before ziputils
+#include "base/ZipUtils.h"
+
 #ifdef MINIZIP_FROM_SYSTEM
 #include <minizip/unzip.h>
 #else // from our embedded sources
 #include "unzip.h"
 #endif
-
-#include "base/ZipUtils.h"
 
 #include <zlib.h>
 #include <assert.h>
