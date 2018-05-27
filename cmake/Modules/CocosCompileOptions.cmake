@@ -58,6 +58,7 @@
      endif()
  endif()
 
+ # check and print compiler infos
  if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
      set(COMPILER_STRING ${CMAKE_CXX_COMPILER_ID})
      set(CLANG TRUE)
@@ -74,13 +75,11 @@
  else()
      set(COMPILER_STRING "${CMAKE_CXX_COMPILER_ID}")
  endif()
-
  if(CMAKE_CROSSCOMPILING)
      set(BUILDING_STRING "It appears you are cross compiling for ${SYSTEM_STRING} with ${COMPILER_STRING}")
  else()
      set(BUILDING_STRING "It appears you are building natively for ${SYSTEM_STRING} with ${COMPILER_STRING}")
  endif()
-
  message(STATUS ${BUILDING_STRING})
 
  # Set compiler options
@@ -122,11 +121,11 @@
      endif()
  endif(MSVC)
 
- # Set macro definitions
+ # Set common macro definitions
  if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-     # "COCOS2D_DEBUG" is common on all platforms
      add_definitions(-DCOCOS2D_DEBUG=1)
  endif()
+ # Set macro definitions for special platforms
  if(WINDOWS)
      if(BUILD_SHARED_LIBS)
          add_definitions(-D_USRDLL -D_EXPORT_DLL_ -D_USEGUIDLL -D_USREXDLL -D_USRSTUDIODLL)
