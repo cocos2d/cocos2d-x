@@ -58,6 +58,7 @@
      endif()
  endif()
 
+ # check and print compiler infos
  if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
      set(COMPILER_STRING ${CMAKE_CXX_COMPILER_ID})
      set(CLANG TRUE)
@@ -74,23 +75,17 @@
  else()
      set(COMPILER_STRING "${CMAKE_CXX_COMPILER_ID}")
  endif()
-
  if(CMAKE_CROSSCOMPILING)
      set(BUILDING_STRING "It appears you are cross compiling for ${SYSTEM_STRING} with ${COMPILER_STRING}")
  else()
      set(BUILDING_STRING "It appears you are building natively for ${SYSTEM_STRING} with ${COMPILER_STRING}")
  endif()
-
  message(STATUS ${BUILDING_STRING})
 
- set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCOCOS2D_DEBUG=1")
- set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
-
- # Compiler options
+ # Set compiler options
  if(MSVC)
-
-     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /MDd")
-     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} /MD")
+     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MDd")
+     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
      set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} /NODEFAULTLIB:msvcrt /NODEFAULTLIB:libcmt")
      set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} /NODEFAULTLIB:libcmt")
 
@@ -106,33 +101,37 @@
          string(REGEX REPLACE "/Z[iI7]" "" CMAKE_${lang}_FLAGS_DEBUG "${CMAKE_${lang}_FLAGS_DEBUG}")
          set(CMAKE_${lang}_FLAGS_DEBUG "${CMAKE_${lang}_FLAGS_DEBUG} /Z7")
      endforeach()
-
  else()
-     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-         add_definitions(-DCOCOS2D_DEBUG=1)
-     endif()
-     set(CMAKE_C_FLAGS_DEBUG "-g -Wall")
-     set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
+     set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -Wall")
+     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${CMAKE_C_FLAGS_DEBUG}")
      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -fPIC")
      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations -Wno-reorder -Wno-invalid-offsetof -fPIC")
      if(CLANG AND NOT ANDROID)
          set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
      endif()
-     if(CLANG AND ANDROID AND ANDROID_ARM_MODE STREQUAL thumb AND ANDROID_ABI STREQUAL armeabi)
-         string(REPLACE "-mthumb" "-marm" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
-         string(REPLACE "-mthumb" "-marm" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+     # specail options for android
+     if(ANDROID)
+         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fexceptions")
+         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsigned-char -fexceptions")
+         set(CMAKE_CXX_CREATE_SHARED_LIBRARY "${CMAKE_CXX_CREATE_SHARED_LIBRARY} -latomic")
+         if(CLANG AND ANDROID_ARM_MODE STREQUAL thumb AND ANDROID_ABI STREQUAL armeabi)
+             string(REPLACE "-mthumb" "-marm" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
+             string(REPLACE "-mthumb" "-marm" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
+         endif()
      endif()
  endif(MSVC)
 
- # Some macro definitions
+ # Set common macro definitions
+ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+     add_definitions(-DCOCOS2D_DEBUG=1)
+ endif()
+ # Set macro definitions for special platforms
  if(WINDOWS)
-
      if(BUILD_SHARED_LIBS)
          add_definitions(-D_USRDLL -D_EXPORT_DLL_ -D_USEGUIDLL -D_USREXDLL -D_USRSTUDIODLL)
      else()
          add_definitions(-DCC_STATIC)
      endif()
-
      add_definitions(-DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32 -D_WIN32)
      set(PLATFORM_FOLDER win32)
  elseif(APPLE)
@@ -141,27 +140,16 @@
          add_definitions(-DTARGET_OS_MAC)
          set(PLATFORM_FOLDER mac)
      elseif(IOS)
-         # TARGET_OS_IOS
-         # add_definitions(-DTARGET_OS_IPHONE)
+         add_definitions(-DTARGET_OS_IPHONE)
          add_definitions(-DTARGET_OS_IOS)
          set(PLATFORM_FOLDER ios)
      endif(MACOSX)
-
  elseif(LINUX)
      add_definitions(-DLINUX)
      set(PLATFORM_FOLDER linux)
  elseif(ANDROID)
      add_definitions(-DUSE_FILE32API)
      set(PLATFORM_FOLDER android)
-     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fexceptions")
-     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsigned-char -fexceptions")
-     set(CMAKE_CXX_CREATE_SHARED_LIBRARY "${CMAKE_CXX_CREATE_SHARED_LIBRARY} -latomic")
-
-     if(CLANG AND ANDROID_ARM_MODE STREQUAL thumb AND ANDROID_ABI STREQUAL armeabi)
-         string(REPLACE "-mthumb" "-marm" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
-         string(REPLACE "-mthumb" "-marm" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-     endif()
-
  else()
      message(FATAL_ERROR "Unsupported platform, CMake will exit")
      return()
@@ -172,6 +160,7 @@
      set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${COCOS_EXTERNAL_DIR})
  endif()
 
+ # extra config for windows
  if(WINDOWS)
      # folder much targets
      set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -194,11 +183,10 @@
      endif()
  endif()
 
- # check use prebuilt config
+ # check prebuilt config
  if(GEN_COCOS_PREBUILT AND USE_COCOS_PREBUILT)
      message(FATAL_ERROR "can't generate prebuilt libs and use prebuilt libs at the same time")
  endif()
-
  if(GEN_COCOS_PREBUILT OR USE_COCOS_PREBUILT)
      if(DEFINED COCOS_PREBUILT_ROOT)
          message(STATUS "pre-defined COCOS_PREBUILT_ROOT: ${COCOS_PREBUILT_ROOT}")
