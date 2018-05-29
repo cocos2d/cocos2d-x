@@ -68,7 +68,7 @@ protected:
     bool _loop;
     std::function<void (int, const std::string &)> _finishCallbak;
 
-    bool _isDestroyed;
+    std::atomic_bool _isDestroyed;
     bool _removeByAudioEngine;
     bool _ready;
     ALuint _alSource;
@@ -80,6 +80,7 @@ protected:
     std::thread* _rotateBufferThread;
     std::condition_variable _sleepCondition;
     std::mutex _sleepMutex;
+//    std::mutex _alBufferMutex;
     bool _timeDirty;
     std::atomic_bool _isRotateThreadExited;
     std::atomic_bool _needWakeupRotateThread;

@@ -35,6 +35,7 @@
 #include "platform/CCFileUtils.h"
 #include "audio/apple/AudioDecoder.h"
 
+#define VERY_VERY_VERBOSE_LOGGING 1
 #ifdef VERY_VERY_VERBOSE_LOGGING
 #define ALOGVV ALOGV
 #else
@@ -101,9 +102,8 @@ void AudioPlayer::destroy()
             }
         }
 
-        // Wait for play2d to be finished.
+        // keep mutually exclusive with "play2d"
         _play2dMutex.lock();
-        _play2dMutex.unlock();
 
         if (_streamingSource)
         {
@@ -124,6 +124,7 @@ void AudioPlayer::destroy()
                 ALOGVV("rotateBufferThread exited!");
             }
         }
+        _play2dMutex.unlock();
     } while(false);
 
     ALOGVV("Before alSourceStop");
@@ -164,6 +165,7 @@ bool AudioPlayer::play2d()
         alSourcef(_alSource, AL_GAIN, _volume);CHECK_AL_ERROR_DEBUG();
         alSourcei(_alSource, AL_LOOPING, AL_FALSE);CHECK_AL_ERROR_DEBUG();
 
+        // Data Race! "_queBufferFrames" read here
         if (_audioCache->_queBufferFrames == 0)
         {
             if (_loop) {
@@ -180,6 +182,10 @@ bool AudioPlayer::play2d()
             {
                 for (int index = 0; index < QUEUEBUFFER_NUM; ++index)
                 {
+                    /* Data Race!
+                        when read _audioCache by "alBufferData" in main thread
+                        _audioCache might be writen by "AudioCache::readDataTask" in sub-thread
+                     */
                     alBufferData(_bufferIds[index], _audioCache->_format, _audioCache->_queBuffers[index], _audioCache->_queBufferSize[index], _audioCache->_sampleRate);
                 }
                 CHECK_AL_ERROR_DEBUG();
