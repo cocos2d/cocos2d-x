@@ -187,18 +187,20 @@ void AnimationCache::parseVersion2(const ValueMap& animations)
 
 void AnimationCache::addAnimationsWithDictionary(const ValueMap& dictionary,const std::string& plist)
 {
-    if ( dictionary.find("animations") == dictionary.end() )
+    auto anisItr = dictionary.find("animations");
+    if (anisItr == dictionary.end() )
     {
         CCLOG("cocos2d: AnimationCache: No animations were found in provided dictionary.");
         return;
     }
     
-    const Value& animations = dictionary.at("animations");
+    const Value& animations = anisItr->second;
     unsigned int version = 1;
 
-    if( dictionary.find("properties") != dictionary.end() )
+    auto propsItr = dictionary.find("properties");
+    if(propsItr != dictionary.end() )
     {
-        const ValueMap& properties = dictionary.at("properties").asValueMap();
+        const ValueMap& properties = propsItr->second.asValueMap();
         version = properties.at("format").asInt();
         const ValueVector& spritesheets = properties.at("spritesheets").asValueVector();
 

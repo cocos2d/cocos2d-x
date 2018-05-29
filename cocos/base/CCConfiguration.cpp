@@ -334,7 +334,7 @@ const Value& Configuration::getValue(const std::string& key, const Value& defaul
 {
     auto iter = _valueDict.find(key);
     if (iter != _valueDict.cend())
-        return _valueDict.at(key);
+        return iter->second;
 
     return defaultValue;
 }
