@@ -81,7 +81,7 @@ protected:
     std::condition_variable _sleepCondition;
     std::mutex _sleepMutex;
     bool _timeDirty;
-    bool _isRotateThreadExited;
+    std::atomic_bool _isRotateThreadExited;
     std::atomic_bool _needWakeupRotateThread;
 
     std::mutex _play2dMutex;
