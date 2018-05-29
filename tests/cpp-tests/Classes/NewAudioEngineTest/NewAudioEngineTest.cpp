@@ -652,6 +652,44 @@ std::string LargeAudioFileTest::title() const
     return "Test large audio file";
 }
 
+bool AudioIssue18597Test::init()
+{
+    if (AudioEngineTestDemo::init())
+    {
+        //test case for https://github.com/cocos2d/cocos2d-x/issues/18597
+        this->schedule([=](float dt)
+                       {
+                           CCLOG("issues 18597 audio crash test");
+                           for (int i = 0; i< 6;++i)
+                           {
+                               auto id = AudioEngine::play2d("audio/MUS_BGM_Battle_Round1_v1.caf", true, 1.0f);
+                               this->runAction(Sequence::create(
+                                                                DelayTime::create(5.0f),
+                                                                CallFunc::create([=]()
+                                                                                 {
+                                                                                     AudioEngine::stop(id);
+                                                                                 }),
+                                                                nullptr
+                                                                ));
+                           }
+                       }, 2.0, 1000, 0.0, "audio test");
+
+        return true;
+    }
+
+    return false;
+}
+
+std::string AudioIssue18597Test::title() const
+{
+    return "Test for issue 18597";
+}
+
+std::string AudioIssue18597Test::subtitle() const
+{
+    return "no crash for more than 10 minutes";
+}
+
 bool AudioIssue11143Test::init()
 {
     if (AudioEngineTestDemo::init())

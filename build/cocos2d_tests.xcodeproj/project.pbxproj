@@ -2229,6 +2229,7 @@
 		3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIVideoPlayerTest.cpp; sourceTree = "<group>"; };
 		3EA0FB71191C844400B170C8 /* UIVideoPlayerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoPlayerTest.h; sourceTree = "<group>"; };
 		400308D720060F12000DFE6D /* strings */ = {isa = PBXFileReference; lastKnownFileType = folder; name = strings; path = "../tests/cpp-tests/Resources/strings"; sourceTree = "<group>"; };
+		409047A620BCFFBB0091DFF8 /* MUS_BGM_Battle_Round1_v1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MUS_BGM_Battle_Round1_v1.caf; sourceTree = "<group>"; };
 		460629771CDB4DBA00B44058 /* ccs-res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "ccs-res"; path = "../tests/cpp-tests/Resources/ccs-res"; sourceTree = "<group>"; };
 		463D7E781D227C3800EA6BD1 /* Bug-14327.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-14327.cpp"; sourceTree = "<group>"; };
 		463D7E791D227C3800EA6BD1 /* Bug-14327.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-14327.h"; sourceTree = "<group>"; };
@@ -3950,6 +3951,7 @@
 				3E2BDAD119BEA3E20055CDCD /* audio */,
 				C08689C018D370C90093E810 /* background.caf */,
 				1AC35CAC18CED84500F37B72 /* background.mp3 */,
+				409047A620BCFFBB0091DFF8 /* MUS_BGM_Battle_Round1_v1.caf */,
 				1AC35CAD18CED84500F37B72 /* background.ogg */,
 				3E2BDB0019C5E5D40055CDCD /* background.wav */,
 				1ACF6A511E4C52660033C137 /* cacert.pem */,
