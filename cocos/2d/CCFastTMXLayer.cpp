@@ -720,8 +720,9 @@ void TMXLayer::removeChild(Node* node, bool cleanup)
 // TMXLayer - Properties
 Value TMXLayer::getProperty(const std::string& propertyName) const
 {
-    if (_properties.find(propertyName) != _properties.end())
-        return _properties.at(propertyName);
+    auto propItr = _properties.find(propertyName);
+    if (propItr != _properties.end())
+        return propItr->second;
     
     return Value();
 }
