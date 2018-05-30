@@ -150,10 +150,10 @@ public:
     virtual bool isEnabled() const { return _enabled; }
 
     /**
-     * Set whether the menu is visible. If set false, interacting with the menu
+     * Set whether the menu is enabled. If set to false, interacting with the menu
      * will have no effect.
-     * The default value is true, a menu is default to visible.
-     *@param value true if menu is to be enabled, false if menu is to be disabled.
+     * The default value is true, a menu is enabled by default.
+     * @param value true if menu is to be enabled, false if menu is to be disabled.
      */
     virtual void setEnabled(bool value) { _enabled = value; };
 
