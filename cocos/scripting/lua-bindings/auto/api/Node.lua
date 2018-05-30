@@ -1117,7 +1117,7 @@
         
 --------------------------------
 -- Sorts the children array once before drawing, instead of every time when a child is added or reordered.<br>
--- This approach can improves the performance massively.<br>
+-- This approach can improve the performance massively.<br>
 -- note Don't call this manually unless a child added needs to be removed in the same frame.
 -- @function [parent=#Node] sortAllChildren 
 -- @param self
