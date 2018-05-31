@@ -148,8 +148,9 @@ AudioCache::~AudioCache()
         ALOGVV("id=%u, waiting readData thread to finish ...", _id);
         std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
-    //keep mutually exclusive with "readDataTask"
+    //wait for the 'readDataTask' task to exit
     _readDataTaskMutex.lock();
+    _readDataTaskMutex.unlock();
 
     if (_pcmData)
     {
@@ -187,7 +188,6 @@ AudioCache::~AudioCache()
             free(_queBuffers[index]);
         }
     }
-    _readDataTaskMutex.unlock();
     ALOGVV("~AudioCache() %p, id=%u, end", this, _id);
 }
 

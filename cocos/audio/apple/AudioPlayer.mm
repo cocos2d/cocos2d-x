@@ -102,8 +102,9 @@ void AudioPlayer::destroy()
             }
         }
 
-        // keep mutually exclusive with "play2d"
+        // Wait for play2d to be finished.
         _play2dMutex.lock();
+        _play2dMutex.unlock();
 
         if (_streamingSource)
         {
@@ -124,7 +125,6 @@ void AudioPlayer::destroy()
                 ALOGVV("rotateBufferThread exited!");
             }
         }
-        _play2dMutex.unlock();
     } while(false);
 
     ALOGVV("Before alSourceStop");
