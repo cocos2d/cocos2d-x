@@ -1822,7 +1822,7 @@ bool UIRichTextXMLSpace::init()
         _widget->addChild(button3);
 
         // RichText
-        _richText = RichText::createWithXML("words should be divided with space.<br /><br /><font color='#ffff00'>HELLO </font><font color='#ffff00'>WORLD</font><br /><br /><font color='#ff00ff'>HELLO</font><font color='#ff00ff'> WORLD</font>");
+        _richText = RichText::createWithXML("words should be divided with space.<br /><br /><font face='fonts/Marker Felt.ttf' color='#ffff00'>HELLO </font><font color='#ffff00'>WORLD</font><br /><br /><font color='#ff00ff'>HELLO</font><font face='fonts/Marker Felt.ttf' color='#ff00ff'> WORLD</font>");
 
         _richText->ignoreContentAdaptWithSize(false);
         _richText->setContentSize(Size(50, 100));
