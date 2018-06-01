@@ -444,6 +444,7 @@
 {
     CCLOG("textFieldShouldBeginEditing...");
     _editState = YES;
+    _returnPressed = NO;
     
     auto view = cocos2d::Director::getInstance()->getOpenGLView();
     CCEAGLView *eaglview = (CCEAGLView *)view->getEAGLView();
