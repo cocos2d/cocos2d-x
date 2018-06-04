@@ -1813,7 +1813,7 @@ void RichText::formatRenderers()
             for (auto& iter : element)
             {
                 iter->setAnchorPoint(Vec2::ZERO);
-                iter->setPosition(nextPosX, nextPosY);
+                iter->setPosition(nextPosX + iter->getPositionX(), nextPosY + iter->getPositionY());
                 this->addProtectedChild(iter, 1);
                 Size iSize = iter->getContentSize();
                 newContentSizeWidth += iSize.width;
@@ -1864,7 +1864,7 @@ void RichText::formatRenderers()
             for (auto& iter : row)
             {
                 iter->setAnchorPoint(Vec2::ZERO);
-                iter->setPosition(nextPosX, nextPosY);
+                iter->setPosition(nextPosX + iter->getPositionX(), nextPosY + iter->getPositionY());
                 this->addProtectedChild(iter, 1);
                 nextPosX += iter->getContentSize().width;
             }
