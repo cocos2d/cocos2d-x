@@ -74,6 +74,7 @@ AudioPlayer::~AudioPlayer()
     if (_streamingSource)
     {
         alDeleteBuffers(QUEUEBUFFER_NUM, _bufferIds);
+        CHECK_AL_ERROR_DEBUG();
     }
 }
 

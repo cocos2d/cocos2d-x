@@ -661,11 +661,11 @@ bool AudioIssue18597Test::init()
         this->schedule([=](float dt)
                        {
                            CCLOG("issues 18597 audio crash test");
-                           for (int i = 0; i< 6;++i)
+                           for (int i = 0; i< 2;++i)
                            {
                                auto id = AudioEngine::play2d("audio/MUS_BGM_Battle_Round1_v1.caf", true, 1.0f);
                                this->runAction(Sequence::create(
-                                                                DelayTime::create(5.0f),
+                                                                DelayTime::create(2.0f),
                                                                 CallFunc::create([=]()
                                                                                  {
                                                                                      AudioEngine::stop(id);
