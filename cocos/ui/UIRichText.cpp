@@ -1716,6 +1716,12 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
             else
                 estimatedIdx = static_cast<int>(_leftSpaceWidth / fontSize);
 
+            // estimatedIdx should never be less than 0
+            if (estimatedIdx < 0)
+            {
+                estimatedIdx = 0;
+            }
+            
             int leftLength = 0;
             if (wrapMode == WRAP_PER_WORD)
                 leftLength = findSplitPositionForWord(textRenderer, utf8Text, estimatedIdx, _leftSpaceWidth, _customSize.width);
@@ -1729,11 +1735,15 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
                 pushToContainer(textRenderer);
             }
 
-            // skip spaces
             StringUtils::StringUTF8::CharUTF8Store& str = utf8Text.getString();
             int rightStart = leftLength;
-            while (rightStart < (int)str.size() && str[rightStart].isASCII() && std::isspace(str[rightStart]._char[0], std::locale()))
-                ++rightStart;
+
+            if (flags & RichElementText::TRIM_TRAILING_WHITESPACE)
+            {
+                // skip spaces
+                while (rightStart < (int)str.size() && str[rightStart].isASCII() && std::isspace(str[rightStart]._char[0], std::locale()))
+                    ++rightStart;
+            }
 
             // erase the chars which are processed
             str.erase(str.begin(), str.begin() + rightStart);
@@ -1803,7 +1813,7 @@ void RichText::formatRenderers()
             for (auto& iter : element)
             {
                 iter->setAnchorPoint(Vec2::ZERO);
-                iter->setPosition(nextPosX, nextPosY);
+                iter->setPosition(nextPosX + iter->getPositionX(), nextPosY + iter->getPositionY());
                 this->addProtectedChild(iter, 1);
                 Size iSize = iter->getContentSize();
                 newContentSizeWidth += iSize.width;
@@ -1854,7 +1864,7 @@ void RichText::formatRenderers()
             for (auto& iter : row)
             {
                 iter->setAnchorPoint(Vec2::ZERO);
-                iter->setPosition(nextPosX, nextPosY);
+                iter->setPosition(nextPosX + iter->getPositionX(), nextPosY + iter->getPositionY());
                 this->addProtectedChild(iter, 1);
                 nextPosX += iter->getContentSize().width;
             }
