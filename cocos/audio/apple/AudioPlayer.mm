@@ -127,12 +127,12 @@ void AudioPlayer::destroy()
 
                 ALfloat alGainVaule = 1.0;
                 ALint bufferProcessed = 0;
-                long long stepTime = static_cast<long long>(QUEUEBUFFER_TIME_STEP * 1000);
+                alGetSourcei(_alSource, AL_BUFFERS_PROCESSED, &bufferProcessed);
                 while (bufferProcessed < QUEUEBUFFER_NUM) {
-                    // fade out, half volume every once loop
+                    // fade out, reduce volume every once loop
                     alGetSourcef(_alSource, AL_GAIN, &alGainVaule);
-                    alSourcef(_alSource, AL_GAIN, alGainVaule/2);
-                    std::this_thread::sleep_for(std::chrono::milliseconds(stepTime));
+                    alSourcef(_alSource, AL_GAIN, alGainVaule * 0.9);
+                    std::this_thread::sleep_for(std::chrono::milliseconds(10));
                     alGetSourcei(_alSource, AL_BUFFERS_PROCESSED, &bufferProcessed);
                 }
                 alSourceUnqueueBuffers(_alSource, QUEUEBUFFER_NUM, _bufferIds); CHECK_AL_ERROR_DEBUG();
