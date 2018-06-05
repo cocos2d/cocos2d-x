@@ -84,7 +84,6 @@ AudioEngine::AudioInfo::~AudioInfo()
 {
 }
 
-// AudioEngineThreadPool is used to load audio data
 class AudioEngine::AudioEngineThreadPool
 {
 public:
