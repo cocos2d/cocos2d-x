@@ -197,7 +197,6 @@ void AudioCache::readDataTask(unsigned int selfId)
     ALOGVV("readDataTask, cache id=%u", selfId);
 
     _readDataTaskMutex.lock();
-    // Data Race! write here, read by "AudioCache::addPlayCallback"
     _state = State::LOADING;
 
     AudioDecoder decoder;
@@ -215,7 +214,6 @@ void AudioCache::readDataTask(unsigned int selfId)
         uint32_t dataSize = totalFrames * bytesPerFrame;
         uint32_t remainingFrames = totalFrames;
         uint32_t adjustFrames = 0;
-        // Data Race! write here, read by "alBufferData"
         _format = channelCount > 1 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
         _sampleRate = (ALsizei)sampleRate;
         _duration = 1.0f * totalFrames / sampleRate;
@@ -316,7 +314,6 @@ void AudioCache::readDataTask(unsigned int selfId)
         }
         else
         {
-            // Data Race! write here, read "AudioPlayer::play2d"
             _queBufferFrames = sampleRate * QUEUEBUFFER_TIME_STEP;
             BREAK_IF_ERR_LOG(_queBufferFrames == 0, "_queBufferFrames == 0");
 
@@ -324,7 +321,6 @@ void AudioCache::readDataTask(unsigned int selfId)
 
             for (int index = 0; index < QUEUEBUFFER_NUM; ++index)
             {
-                // Data Race! write here, read by "alBufferData"
                 _queBuffers[index] = (char*)malloc(queBufferBytes);
                 _queBufferSize[index] = queBufferBytes;
 
@@ -360,7 +356,6 @@ void AudioCache::readDataTask(unsigned int selfId)
 void AudioCache::addPlayCallback(const std::function<void()>& callback)
 {
     std::lock_guard<std::mutex> lk(_playCallbackMutex);
-    // Data Race! "_state" read here
     switch (_state)
     {
         case State::INITIAL:

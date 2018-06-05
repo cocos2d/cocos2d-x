@@ -35,7 +35,6 @@
 #include "platform/CCFileUtils.h"
 #include "audio/apple/AudioDecoder.h"
 
-#define VERY_VERY_VERBOSE_LOGGING 1
 #ifdef VERY_VERY_VERBOSE_LOGGING
 #define ALOGVV ALOGV
 #else
@@ -74,7 +73,6 @@ AudioPlayer::~AudioPlayer()
     if (_streamingSource)
     {
         alDeleteBuffers(QUEUEBUFFER_NUM, _bufferIds);
-        CHECK_AL_ERROR_DEBUG();
     }
 }
 
@@ -160,7 +158,7 @@ void AudioPlayer::setCache(AudioCache* cache)
 bool AudioPlayer::play2d()
 {
     _play2dMutex.lock();
-    ALOGVV("AudioPlayer::play2d, _alSource: %u, id=%u", _alSource, _id);
+    ALOGVV("AudioPlayer::play2d, _alSource: %u", _alSource);
 
     /*********************************************************************/
     /*       Note that it may be in sub thread or in main thread.       **/
@@ -179,7 +177,6 @@ bool AudioPlayer::play2d()
         alSourcef(_alSource, AL_GAIN, _volume);CHECK_AL_ERROR_DEBUG();
         alSourcei(_alSource, AL_LOOPING, AL_FALSE);CHECK_AL_ERROR_DEBUG();
 
-        // Data Race! "_queBufferFrames" read here
         if (_audioCache->_queBufferFrames == 0)
         {
             if (_loop) {
@@ -196,10 +193,6 @@ bool AudioPlayer::play2d()
             {
                 for (int index = 0; index < QUEUEBUFFER_NUM; ++index)
                 {
-                    /* Data Race!
-                        when read _audioCache by "alBufferData" in main thread
-                        _audioCache might be writen by "AudioCache::readDataTask" in sub-thread
-                     */
                     alBufferData(_bufferIds[index], _audioCache->_format, _audioCache->_queBuffers[index], _audioCache->_queBufferSize[index], _audioCache->_sampleRate);
                 }
                 CHECK_AL_ERROR_DEBUG();
