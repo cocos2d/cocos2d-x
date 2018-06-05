@@ -334,7 +334,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
 
     } while(false);
 
-    ALOGV("Exit rotate buffer thread ...");
+    ALOGW("Exit rotate buffer thread ...");
     decoder.close();
     free(tmpBuffer);
     _isRotateThreadExited = true;
