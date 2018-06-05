@@ -129,6 +129,19 @@ void AudioPlayer::destroy()
     } while(false);
 
     ALOGVV("Before alSourceStop");
+    ALint sourceState = 0;
+    ALint bufferProcessed = 0;
+    alGetSourcei(_alSource, AL_SOURCE_STATE, &sourceState);
+    if (sourceState == AL_PLAYING) {
+        alGetSourcei(_alSource, AL_BUFFERS_PROCESSED, &bufferProcessed);
+        while (bufferProcessed < QUEUEBUFFER_NUM) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            alGetSourcei(_alSource, AL_BUFFERS_PROCESSED, &bufferProcessed);
+        }
+        for (int i=0; i< QUEUEBUFFER_NUM; i++) {
+            alSourceUnqueueBuffers(_alSource, 1, &_bufferIds[i]); CHECK_AL_ERROR_DEBUG();
+        }
+    }
     alSourceStop(_alSource); CHECK_AL_ERROR_DEBUG();
     ALOGVV("Before alSourcei");
     alSourcei(_alSource, AL_BUFFER, 0); CHECK_AL_ERROR_DEBUG();
