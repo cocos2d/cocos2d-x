@@ -80,7 +80,6 @@ protected:
     std::thread* _rotateBufferThread;
     std::condition_variable _sleepCondition;
     std::mutex _sleepMutex;
-//    std::mutex _alBufferMutex;
     bool _timeDirty;
     std::atomic_bool _isRotateThreadExited;
     std::atomic_bool _needWakeupRotateThread;
