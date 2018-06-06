@@ -116,8 +116,7 @@ public:
         URL_FLAG = 1 << 4,              /*!< url of anchor */
         OUTLINE_FLAG = 1 << 5,          /*!< outline effect */
         SHADOW_FLAG = 1 << 6,           /*!< shadow effect */
-        GLOW_FLAG = 1 << 7,             /*!< glow effect */
-        TRIM_TRAILING_WHITESPACE = 1 << 8       /*!< trim right side spaces */
+        GLOW_FLAG = 1 << 7              /*!< glow effect */
     };
     
     /**
