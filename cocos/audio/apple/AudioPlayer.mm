@@ -124,16 +124,24 @@ void AudioPlayer::destroy()
                 ALOGVV("rotateBufferThread exited!");
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+                // some specific OpenAL implement defects existed on iOS platform
                 // refer to: https://github.com/cocos2d/cocos2d-x/issues/18597
-                // some special OpenAL implementations existed on iOS platform, this can fix crash
+                auto beforeUnquene = std::chrono::steady_clock::now();
+                ALint sourceState;
                 ALint bufferProcessed = 0;
-                alGetSourcei(_alSource, AL_BUFFERS_PROCESSED, &bufferProcessed);
-                while (bufferProcessed < QUEUEBUFFER_NUM) {
-                    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+                alGetSourcei(_alSource, AL_SOURCE_STATE, &sourceState);
+                if (sourceState == AL_PLAYING) {
                     alGetSourcei(_alSource, AL_BUFFERS_PROCESSED, &bufferProcessed);
+                    while (bufferProcessed < QUEUEBUFFER_NUM) {
+                        std::this_thread::sleep_for(std::chrono::milliseconds(2));
+                        alGetSourcei(_alSource, AL_BUFFERS_PROCESSED, &bufferProcessed);
+                    }
+                    alSourceUnqueueBuffers(_alSource, QUEUEBUFFER_NUM, _bufferIds); CHECK_AL_ERROR_DEBUG();
                 }
-                alSourceUnqueueBuffers(_alSource, QUEUEBUFFER_NUM, _bufferIds); CHECK_AL_ERROR_DEBUG();
                 ALOGVV("UnqueueBuffers Before alSourceStop");
+                auto afterUnquene = std::chrono::steady_clock::now();
+                float extraSpend = std::chrono::duration_cast<std::chrono::microseconds>(afterUnquene - beforeUnquene).count() / 1000.0f;
+                CCLOG("UnqueueBuffers spend extra time: %3.2f ms", extraSpend);
 #endif
             }
         }
@@ -254,6 +262,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
 {
     char* tmpBuffer = nullptr;
     AudioDecoder decoder;
+    long long rotateSleepTime = static_cast<long long>(QUEUEBUFFER_TIME_STEP * 1000) / 2;
     do
     {
         BREAK_IF(!decoder.open(_audioCache->_fileFullPath.c_str()));
@@ -306,10 +315,9 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
                         }
                     }
                     /*
-                     While the
-                     source is playing, alSourceUnqueueBuffers can be called to remove buffers which have already
-                     played. Those buffers can then be filled with new data or discarded. New or refilled buffers can
-                     then be attached to the playing source using alSourceQueueBuffers. As long as there is always
+                     While the source is playing, alSourceUnqueueBuffers can be called to remove buffers which have
+                     already played. Those buffers can then be filled with new data or discarded. New or refilled buffers
+                     can then be attached to the playing source using alSourceQueueBuffers. As long as there is always
                      a new buffer to play in the queue, the source will continue to play.
                      */
                     ALuint bid;
@@ -326,7 +334,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
 
             if (!_needWakeupRotateThread)
             {
-                _sleepCondition.wait_for(lk,std::chrono::milliseconds(75));
+                _sleepCondition.wait_for(lk,std::chrono::milliseconds(rotateSleepTime));
             }
 
             _needWakeupRotateThread = false;
