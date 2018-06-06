@@ -1731,12 +1731,9 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
 
             // skip spaces
             StringUtils::StringUTF8::CharUTF8Store& str = utf8Text.getString();
-            int rightStart = leftLength;
-            while (rightStart < (int)str.size() && str[rightStart].isASCII() && std::isspace(str[rightStart]._char[0], std::locale()))
-                ++rightStart;
 
             // erase the chars which are processed
-            str.erase(str.begin(), str.begin() + rightStart);
+            str.erase(str.begin(), str.begin() + leftLength);
             currentText = utf8Text.getAsCharSequence();
         }
     }
