@@ -126,7 +126,6 @@ void AudioPlayer::destroy()
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
                 // some specific OpenAL implement defects existed on iOS platform
                 // refer to: https://github.com/cocos2d/cocos2d-x/issues/18597
-                auto beforeUnquene = std::chrono::steady_clock::now();
                 ALint sourceState;
                 ALint bufferProcessed = 0;
                 alGetSourcei(_alSource, AL_SOURCE_STATE, &sourceState);
@@ -139,9 +138,6 @@ void AudioPlayer::destroy()
                     alSourceUnqueueBuffers(_alSource, QUEUEBUFFER_NUM, _bufferIds); CHECK_AL_ERROR_DEBUG();
                 }
                 ALOGVV("UnqueueBuffers Before alSourceStop");
-                auto afterUnquene = std::chrono::steady_clock::now();
-                float extraSpend = std::chrono::duration_cast<std::chrono::microseconds>(afterUnquene - beforeUnquene).count() / 1000.0f;
-                CCLOG("UnqueueBuffers spend extra time: %3.2f ms", extraSpend);
 #endif
             }
         }
@@ -316,9 +312,9 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
                     }
                     /*
                      While the source is playing, alSourceUnqueueBuffers can be called to remove buffers which have
-                     already played. Those buffers can then be filled with new data or discarded. New or refilled buffers
-                     can then be attached to the playing source using alSourceQueueBuffers. As long as there is always
-                     a new buffer to play in the queue, the source will continue to play.
+                     already played. Those buffers can then be filled with new data or discarded. New or refilled
+                     buffers can then be attached to the playing source using alSourceQueueBuffers. As long as there is
+                     always a new buffer to play in the queue, the source will continue to play.
                      */
                     ALuint bid;
                     alSourceUnqueueBuffers(_alSource, 1, &bid);
