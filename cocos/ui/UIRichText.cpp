@@ -1729,7 +1729,6 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
                 pushToContainer(textRenderer);
             }
 
-            // skip spaces
             StringUtils::StringUTF8::CharUTF8Store& str = utf8Text.getString();
 
             // erase the chars which are processed
