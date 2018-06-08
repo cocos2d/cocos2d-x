@@ -155,6 +155,7 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
     float nextTokenY = 0.f;
     float longestLine = 0.f;
     float letterRight = 0.f;
+    float nextWhitespaceWidth = 0.f;
 
     auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
     float lineSpacing = _lineSpacing * contentScaleFactor;
@@ -186,6 +187,7 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
         float tokenLowestY = lowestY;
         float tokenRight = letterRight;
         float nextLetterX = nextTokenX;
+        float whitespaceWidth = nextWhitespaceWidth;
         bool newLine = false;
         for (int tmp = 0; tmp < tokenLen;++tmp)
         {
@@ -196,6 +198,7 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
                 recordPlaceholderInfo(letterIndex, character);
                 continue;
             }
+
             // \b - Next char not change x position
             if (character == StringUtils::UnicodeCharacters::NextCharNoChangeX)
             {
@@ -215,7 +218,8 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
             if (_enableWrap && _maxLineWidth > 0.f && nextTokenX > 0.f && letterX + letterDef.width * _bmfontScale > _maxLineWidth
                 && !StringUtils::isUnicodeSpace(character) && nextChangeSize)
             {
-                _linesWidth.push_back(letterRight);
+                _linesWidth.push_back(letterRight - whitespaceWidth);
+                nextWhitespaceWidth = 0.f;
                 letterRight = 0.f;
                 lineIndex++;
                 nextTokenX = 0.f;
@@ -232,13 +236,21 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
 
             if (nextChangeSize)
             {
+                float newLetterWidth = 0.f;
                 if (_horizontalKernings && letterIndex < textLen - 1)
-                    nextLetterX += _horizontalKernings[letterIndex + 1];
-                nextLetterX += letterDef.xAdvance * _bmfontScale + _additionalKerning;
+                    newLetterWidth = _horizontalKernings[letterIndex + 1];
+                newLetterWidth += letterDef.xAdvance * _bmfontScale + _additionalKerning;
 
-                if (tokenLen != 1 || !StringUtils::isUnicodeSpace(character))
+                nextLetterX += newLetterWidth;
+                tokenRight = nextLetterX / contentScaleFactor;
+
+                if (StringUtils::isUnicodeSpace(character))
                 {
-                    tokenRight = nextLetterX / contentScaleFactor;
+                    nextWhitespaceWidth += newLetterWidth / contentScaleFactor;
+                }
+                else
+                {
+                    nextWhitespaceWidth = 0;
                 }
             }
             nextChangeSize = true;
@@ -260,13 +272,24 @@ bool Label::multilineTextWrap(const std::function<int(const std::u32string&, int
             highestY = tokenHighestY;
         if (lowestY > tokenLowestY)
             lowestY = tokenLowestY;
-        if (longestLine < letterRight)
-            longestLine = letterRight;
 
         index += tokenLen;
     }
 
-    _linesWidth.push_back(letterRight);
+    if (_linesWidth.empty())
+    {
+        _linesWidth.push_back(letterRight);
+        longestLine = letterRight;
+    }
+    else
+    {
+        _linesWidth.push_back(letterRight - nextWhitespaceWidth);
+        for (auto && lineWidth : _linesWidth)
+        {
+            if (longestLine < lineWidth)
+                longestLine = lineWidth;
+        }
+    }
 
     _numberOfLines = lineIndex + 1;
     _textDesiredHeight = (_numberOfLines * _lineHeight * _bmfontScale) / contentScaleFactor;
