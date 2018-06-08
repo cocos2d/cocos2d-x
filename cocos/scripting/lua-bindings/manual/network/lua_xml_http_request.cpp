@@ -266,7 +266,7 @@ void LuaMinXmlHttpRequest::_setHttpRequestHeader()
         const char* second = it->second.c_str();
         size_t len = sizeof(char) * (strlen(first) + 3 + strlen(second));
         char* test = (char*) malloc(len);
-        if (test != NULL) //should check failure of malloc or it could be an undefined behaviour
+        if (test != nullptr) //should check failure of malloc or it could be an undefined behaviour
         {
             memset(test, 0,len);
         
