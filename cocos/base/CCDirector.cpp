@@ -376,6 +376,7 @@ void Director::calculateDeltaTime()
     {
         _deltaTime = 0;
         _nextDeltaTimeZero = false;
+        _lastUpdate = std::chrono::steady_clock::now();
     }
     else
     {
