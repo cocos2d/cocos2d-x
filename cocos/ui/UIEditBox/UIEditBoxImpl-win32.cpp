@@ -405,7 +405,7 @@ namespace ui {
                 ::ShowWindow(s_previousFocusWnd, SW_HIDE);
 
                 EditBoxImplWin* pThis = (EditBoxImplWin*)GetWindowLongPtrW(s_previousFocusWnd, GWLP_USERDATA);
-                if (!pThis->_hasFocus)
+                if (pThis!=nullptr && !pThis->_hasFocus)
                 {
                     if (pThis->_editingMode && !IsWindowVisible(s_previousFocusWnd))
                     {

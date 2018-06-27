@@ -215,13 +215,6 @@
 
 --------------------------------
 -- 
--- @function [parent=#RenderTexture] setGlobalZOrder 
--- @param self
--- @param #float globalZOrder
--- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
-        
---------------------------------
--- 
 -- @function [parent=#RenderTexture] draw 
 -- @param self
 -- @param #cc.Renderer renderer

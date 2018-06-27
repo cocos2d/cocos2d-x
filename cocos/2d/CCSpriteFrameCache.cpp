@@ -158,9 +158,10 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
     Size textureSize;
 
     // get the format
-    if (dictionary.find("metadata") != dictionary.end())
+    auto metaItr = dictionary.find("metadata");
+    if (metaItr != dictionary.end())
     {
-        ValueMap& metadataDict = dictionary["metadata"].asValueMap();
+        ValueMap& metadataDict = metaItr->second.asValueMap();
         format = metadataDict["format"].asInt();
 
         if(metadataDict.find("size") != metadataDict.end())

@@ -50,9 +50,9 @@ Configuration::Configuration()
 , _supportsBGRA8888(false)
 , _supportsDiscardFramebuffer(false)
 , _supportsShareableVAO(false)
+, _supportsOESMapBuffer(false)
 , _supportsOESDepth24(false)
 , _supportsOESPackedDepthStencil(false)
-, _supportsOESMapBuffer(false)
 , _maxSamplesAllowed(0)
 , _maxTextureUnits(0)
 , _glExtensions(nullptr)
@@ -334,7 +334,7 @@ const Value& Configuration::getValue(const std::string& key, const Value& defaul
 {
     auto iter = _valueDict.find(key);
     if (iter != _valueDict.cend())
-        return _valueDict.at(key);
+        return iter->second;
 
     return defaultValue;
 }

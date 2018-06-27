@@ -1,5 +1,3 @@
-import org.apache.tools.ant.taskdefs.condition.Os
-
 apply plugin: 'com.android.application'
 
 android {
@@ -14,15 +12,14 @@ android {
         versionName "1.0"
 
         externalNativeBuild {
-            if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE == 'ndk') {
+            if (PROP_BUILD_TYPE == 'ndk-build') {
                 ndkBuild {
-                    // skip the NDK Build step if PROP_NDK_MODE is none
                     targets 'cpp_tests'
                     arguments 'NDK_TOOLCHAIN_VERSION=clang'
                     arguments '-j' + Runtime.runtime.availableProcessors()
                 }
             }
-            else if (PROP_NDK_MODE == 'cmake') {
+            else if (PROP_BUILD_TYPE == 'cmake') {
                 cmake {
                     targets 'cpp_tests'
                     arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", \
@@ -50,13 +47,12 @@ android {
     }
 
     externalNativeBuild {
-        if (!project.hasProperty("PROP_NDK_MODE") || PROP_NDK_MODE == 'ndk') {
+        if (PROP_BUILD_TYPE == 'ndk-build') {
             ndkBuild {
-                // skip the NDK Build step if PROP_NDK_MODE is none
                 path "jni/Android.mk"
             }
         }
-        else if (PROP_NDK_MODE == 'cmake') {
+        else if (PROP_BUILD_TYPE == 'cmake') {
             cmake {
                 path "../../CMakeLists.txt"
             }

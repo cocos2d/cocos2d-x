@@ -31,33 +31,29 @@ set(APP_NAME TemplateJS)
 project(${APP_NAME})
 
 set(RUNTIME_SRC_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/runtime-src)
+set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/cocos2d-x)
+set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
-if(NOT DEFINED BUILD_ENGINE_DONE)
-    set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/cocos2d-x)
-    set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
-
-    include(CocosBuildSet)
-    CocosBuildSet()
-    if(NOT USE_COCOS_PREBUILT)
-        set(BUILD_JS_LIBS ON)
-        add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-    endif(NOT USE_COCOS_PREBUILT)
+include(CocosBuildSet)
+if(NOT USE_COCOS_PREBUILT)
+    set(BUILD_JS_LIBS ON)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 endif()
 
 # script and source files info, not need to compile
 set(res_main_files
     "${CMAKE_CURRENT_SOURCE_DIR}/main.js"
-    "${CMAKE_CURRENT_SOURCE_DIR}/project.json" 
-)
-set(res_res_folders 
-    "${CMAKE_CURRENT_SOURCE_DIR}/res" 
-)
+    "${CMAKE_CURRENT_SOURCE_DIR}/project.json"
+    )
+set(res_res_folders
+    "${CMAKE_CURRENT_SOURCE_DIR}/res"
+    )
 set(res_src_folders
     "${CMAKE_CURRENT_SOURCE_DIR}/src"
-)
+    )
 set(res_script_folders
     "${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/script"
-)
+    )
 if(APPLE OR VS)
     cocos_mark_multi_resources(res_main RES_TO "Resources" FILES ${res_main_files})
     cocos_mark_multi_resources(res_res RES_TO "Resources/res" FOLDERS ${res_res_folders})
@@ -72,9 +68,9 @@ set(GAME_HEADER ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.h)
 
 # sources need to compile info, include dirs and source files
 include_directories(
-    ${RUNTIME_SRC_ROOT}/Classes
-    ${COCOS2DX_ROOT_PATH}/cocos/editor-support
-    ${COCOS2DX_ROOT_PATH}/external/spidermonkey/include/${PLATFORM_FOLDER}
+        ${RUNTIME_SRC_ROOT}/Classes
+        ${COCOS2DX_ROOT_PATH}/cocos/editor-support
+        ${COCOS2DX_ROOT_PATH}/external/spidermonkey/include/${PLATFORM_FOLDER}
 )
 
 if(ANDROID)
@@ -87,38 +83,38 @@ elseif(WINDOWS)
     set(WINDOWS_SRC ${RUNTIME_SRC_ROOT}/proj.win32/main.cpp)
     list(APPEND WINDOWS_SRC ${RUNTIME_SRC_ROOT}/proj.win32/game.rc)
     list(APPEND GAME_HEADER
-        ${RUNTIME_SRC_ROOT}/proj.win32/main.h
-        ${RUNTIME_SRC_ROOT}/proj.win32/resource.h
-    )
+         ${RUNTIME_SRC_ROOT}/proj.win32/main.h
+         ${RUNTIME_SRC_ROOT}/proj.win32/resource.h
+         )
     list(APPEND GAME_SOURCE ${WINDOWS_SRC} ${cc_common_res})
 elseif(APPLE)
     if(IOS)
         list(APPEND GAME_HEADER
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/AppController.h
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/RootViewController.h
-        )
+             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/AppController.h
+             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/RootViewController.h
+             )
         set(APP_UI_RES
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreen.storyboard
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/LaunchScreenBackground.png
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/Images.xcassets
-        )
+            )
         list(APPEND GAME_SOURCE
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/main.m
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/AppController.mm
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/RootViewController.mm
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/Prefix.pch
-            ${APP_UI_RES}
-        )
+             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/main.m
+             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/AppController.mm
+             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/RootViewController.mm
+             ${RUNTIME_SRC_ROOT}/proj.ios_mac/ios/Prefix.pch
+             ${APP_UI_RES}
+             )
     elseif(MACOSX)
         set(APP_UI_RES
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Info.plist
-        )
+            )
         list(APPEND GAME_SOURCE
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.cpp
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Prefix.pch
-            ${APP_UI_RES}
-        )
+             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.cpp
+             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Prefix.pch
+             ${APP_UI_RES}
+             )
     endif()
     list(APPEND GAME_SOURCE ${cc_common_res})
 endif()
@@ -126,31 +122,31 @@ endif()
 set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
 
 # mark app complie info and libs info
-cocos_build_app(${APP_NAME} 
-    APP_SRC "${APP_SRC}"
-    DEPEND_COMMON_LIBS "jscocos2d" "cocos2d"
-    DEPEND_ANDROID_LIBS "cocos2d_android"
-)
+cocos_build_app(${APP_NAME}
+                APP_SRC "${APP_SRC}"
+                DEPEND_COMMON_LIBS "jscocos2d" "cocos2d"
+                DEPEND_ANDROID_LIBS "cocos2d_android"
+                )
 
 # mark app resources, resource will be copy auto after mark
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)
         set_target_properties(${APP_NAME} PROPERTIES
-            MACOSX_BUNDLE_INFO_PLIST "${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Info.plist"
-        )
+                              MACOSX_BUNDLE_INFO_PLIST "${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Info.plist"
+                              )
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
     endif()
 elseif(WINDOWS)
-    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_BIN_DIR})
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR})
 endif()
 # copy resource on linux or WINDOWS
 if(LINUX OR WINDOWS)
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FILES ${res_main_files})
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/res FOLDERS ${res_res_folders})
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/src FOLDERS ${res_src_folders})
-    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/script FOLDERS ${res_script_folders})
+    cocos_copy_res(COPY_TO ${APP_RES_DIR} FILES ${res_main_files})
+    cocos_copy_res(COPY_TO ${APP_RES_DIR}/res FOLDERS ${res_res_folders})
+    cocos_copy_res(COPY_TO ${APP_RES_DIR}/src FOLDERS ${res_src_folders})
+    cocos_copy_res(COPY_TO ${APP_RES_DIR}/script FOLDERS ${res_script_folders})
 endif()
 

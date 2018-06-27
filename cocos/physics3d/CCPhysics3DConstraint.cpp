@@ -32,9 +32,9 @@
 NS_CC_BEGIN
 
 Physics3DConstraint::Physics3DConstraint()
-: _bodyA(nullptr)
+: _constraint(nullptr)
+, _bodyA(nullptr)
 , _bodyB(nullptr)
-, _constraint(nullptr)
 , _type(Physics3DConstraint::ConstraintType::UNKNOWN)
 , _userData(nullptr)
 {
