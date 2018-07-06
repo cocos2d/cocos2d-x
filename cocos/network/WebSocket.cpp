@@ -545,7 +545,7 @@ void WsThreadHelper::sendMessageToWebSocketThread(WsMessage *msg)
 
 void WsThreadHelper::joinWebSocketThread()
 {
-    if (_subThreadInstance->joinable())
+    if (_subThreadInstance && _subThreadInstance->joinable())
     {
         _subThreadInstance->join();
     }
