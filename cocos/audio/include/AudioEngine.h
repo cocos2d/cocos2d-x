@@ -336,6 +336,7 @@ protected:
         bool loop;
         float duration;
         AudioState state;
+        double timestamp;
 
         AudioInfo();
         ~AudioInfo();
