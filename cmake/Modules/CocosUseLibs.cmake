@@ -29,12 +29,14 @@ macro(cocos2d_depend_libs)
         find_library(FOUNDATION_LIBRARY Foundation)
         find_library(OPENAL_LIBRARY OpenAL)
         find_library(QUARTZCORE_LIBRARY QuartzCore)
+        find_library(GAMECONTROLLER_LIBRARY GameController)
         set(COCOS_APPLE_LIBS
             ${OPENAL_LIBRARY}
             ${AUDIOTOOLBOX_LIBRARY}
             ${QUARTZCORE_LIBRARY}
             ${FOUNDATION_LIBRARY}
             ${ICONV_LIBRARY}
+            ${GAMECONTROLLER_LIBRARY}
             )
 
         if(MACOSX)
@@ -164,8 +166,6 @@ macro(jscocos2d_depend_libs)
 
     list(APPEND PREBUILT_SPECIFIC_LIBS SPIDERMONKEY)
     if(APPLE)
-        find_library(GAME_CONTROLLER GameController)
-        list(APPEND PLATFORM_SPECIFIC_LIBS ${GAME_CONTROLLER})
         list(APPEND PREBUILT_SPECIFIC_LIBS SQLITE3)
     endif()
 endmacro()
