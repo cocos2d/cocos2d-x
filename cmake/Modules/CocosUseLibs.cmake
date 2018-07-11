@@ -166,8 +166,6 @@ macro(jscocos2d_depend_libs)
 
     list(APPEND PREBUILT_SPECIFIC_LIBS SPIDERMONKEY)
     if(APPLE)
-        find_library(GAME_CONTROLLER GameController)
-        list(APPEND PLATFORM_SPECIFIC_LIBS ${GAME_CONTROLLER})
         list(APPEND PREBUILT_SPECIFIC_LIBS SQLITE3)
     endif()
 endmacro()
