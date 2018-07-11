@@ -55,6 +55,8 @@ class EventListenerCustom;
 namespace network {
 
 class WsThreadHelper;
+class WebSocketFrame;
+class WsDelegateWrapper;
 
 /**
  * WebSocket is wrapper of the libwebsockets-protocol, let the develop could call the websocket easily.
@@ -68,7 +70,7 @@ public:
      * @note This method has to be invoked on Cocos Thread
      */
     static void closeAllConnections();
-    
+
     /**
      * Constructor of WebSocket.
      *
@@ -88,11 +90,15 @@ public:
      */
     struct Data
     {
-        Data():bytes(nullptr), len(0), issued(0), isBinary(false), ext(nullptr){}
-        char* bytes;
-        ssize_t len, issued;
+        Data() = delete;
+        Data(const std::string &, bool);
+        Data(const unsigned char *, ssize_t len, bool);
+        Data(const Data &) = delete;
+        char* bytes{nullptr};
+        ssize_t len{0}, issued{0};
         bool isBinary;
-        void* ext;
+        void * ext{nullptr};
+        virtual ~Data();
     };
 
     /**
@@ -251,7 +257,7 @@ private:
     std::string _selectedProtocol;
 
     std::shared_ptr<std::atomic<bool>> _isDestroyed;
-    Delegate* _delegate;
+    WsDelegateWrapper* _delegate;
 
     std::mutex _closeMutex;
     std::condition_variable _closeCondition;
