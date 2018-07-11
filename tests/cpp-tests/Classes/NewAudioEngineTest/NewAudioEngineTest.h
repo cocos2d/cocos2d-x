@@ -161,6 +161,19 @@ public:
     virtual std::string title() const override;
 };
 
+class AudioIssue18597Test : public AudioEngineTestDemo
+{
+public:
+    CREATE_FUNC(AudioIssue18597Test);
+
+    float _time;
+
+    virtual bool init() override;
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class AudioIssue11143Test : public AudioEngineTestDemo
 {
 public:
