@@ -71,6 +71,7 @@ private:
     int _numChannels;
     int _sampleRate;
     int _bufferSizeInBytes;
+    bool _isInitialised;
 
     AudioMixerController* _controller;
 
