@@ -381,11 +381,14 @@ namespace cocos2d { namespace network {
             }
 
             static const long LOW_SPEED_LIMIT = 1;
-            static const long LOW_SPEED_TIME = 5;
+            static const long LOW_SPEED_TIME = 10;
             curl_easy_setopt(handle, CURLOPT_LOW_SPEED_LIMIT, LOW_SPEED_LIMIT);
             curl_easy_setopt(handle, CURLOPT_LOW_SPEED_TIME, LOW_SPEED_TIME);
 
-            static const int MAX_REDIRS = 2;
+            curl_easy_setopt(handle, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0);
+
+            static const int MAX_REDIRS = 5;
             if (MAX_REDIRS)
             {
                 curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, true);
@@ -518,7 +521,7 @@ namespace cocos2d { namespace network {
                         timeout.tv_sec = timeoutMS / 1000;
                         timeout.tv_usec = (timeoutMS % 1000) * 1000;
 
-                        rc = select(maxfd+1, &fdread, &fdwrite, &fdexcep, &timeout);
+                        rc = select(maxfd+1, &fdread, &fdwrite, &fdexcep, 50);
                     }
 
                     if (rc < 0)
