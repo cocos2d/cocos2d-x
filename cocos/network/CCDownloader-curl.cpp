@@ -511,7 +511,7 @@ namespace cocos2d { namespace network {
                     // do wait action
                     if(maxfd == -1)
                     {
-                        this_thread::sleep_for(chrono::milliseconds(timeoutMS));
+                        this_thread::sleep_for(chrono::milliseconds(50));
                         rc = 0;
                     }
                     else
@@ -521,7 +521,7 @@ namespace cocos2d { namespace network {
                         timeout.tv_sec = timeoutMS / 1000;
                         timeout.tv_usec = (timeoutMS % 1000) * 1000;
 
-                        rc = select(maxfd+1, &fdread, &fdwrite, &fdexcep, 50);
+                        rc = select(maxfd+1, &fdread, &fdwrite, &fdexcep, &timeout);
                     }
 
                     if (rc < 0)
