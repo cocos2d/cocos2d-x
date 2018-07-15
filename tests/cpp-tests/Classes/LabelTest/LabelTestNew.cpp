@@ -131,6 +131,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelUnderlineMultiline);
     ADD_TEST_CASE(LabelItalics);
     ADD_TEST_CASE(LabelBold);
+    ADD_TEST_CASE(LabelBoldAndOutline);
 
     ADD_TEST_CASE(LabelLocalizationTest);
 
@@ -1303,6 +1304,14 @@ LabelOutlineAndGlowTest::LabelOutlineAndGlowTest()
     label4->setTextColor( Color4B::RED );
     label4->enableOutline(Color4B::BLUE);
     addChild(label4);
+
+    ttfConfig.outlineSize = 3;
+    auto label5 = Label::createWithTTF(ttfConfig,"Outline and Bold", TextHAlignment::CENTER, size.width);
+    label5->setPosition( Vec2(size.width/2, size.height*0.24) );
+    label5->setTextColor( Color4B::RED );
+    label5->enableOutline(Color4B::BLUE);
+    label5->enableBold();
+    addChild(label5);
 }
 
 std::string LabelOutlineAndGlowTest::title() const
@@ -1312,7 +1321,7 @@ std::string LabelOutlineAndGlowTest::title() const
 
 std::string LabelOutlineAndGlowTest::subtitle() const
 {
-    return "Testing outline and glow of label";
+    return "Testing outline, glow and bold of label";
 }
 
 LabelShadowTest::LabelShadowTest()
@@ -3134,6 +3143,55 @@ std::string LabelBold::subtitle() const
 
 ///
 
+LabelBoldAndOutline::LabelBoldAndOutline()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    // LabelTTF
+    TTFConfig ttfConfig("fonts/arial.ttf", 24);
+    ttfConfig.bold = true;
+    _label2a = Label::createWithTTF(ttfConfig, "abcdefghijklmnopqrstuvwxyz\nABCDEFGHIGKLMNOPQRSTUVWXYZ", TextHAlignment::CENTER,s.width);
+    addChild(_label2a);
+    _label2a->setPosition(Vec2(s.width/2, s.height*1/2));
+
+    auto menuItem = MenuItemFont::create("enable/disable bold", [&](cocos2d::Ref* sender) {
+        if(_label2a->getTTFConfig().bold){
+            _label2a->disableEffect(LabelEffect::BOLD);
+        }
+        else
+        {
+            _label2a->enableBold();
+        }
+    });
+    menuItem->setFontSizeObj(12);
+    auto menuItem2 = MenuItemFont::create("enable/disable outline", [&](cocos2d::Ref* sender) {
+        if(_label2a->getTTFConfig().outlineSize > 0){
+            _label2a->disableEffect(LabelEffect::OUTLINE);
+        }
+        else
+        {
+            _label2a->enableOutline(Color4B::BLUE, 2);
+        }
+    });
+    menuItem2->setFontSizeObj(12);
+    menuItem2->setPosition(0.0, s.height * 0.1f);
+    auto menu = Menu::create(menuItem, menuItem2, nullptr);
+    addChild(menu);
+    menu->setPosition(s.width * 0.8, s.height * 0.3f);
+}
+
+std::string LabelBoldAndOutline::title() const
+{
+    return "Testing Bold and Outline";
+}
+
+std::string LabelBoldAndOutline::subtitle() const
+{
+    return "";
+}
+
+///
+
 LabelUnderline::LabelUnderline()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -3566,5 +3624,3 @@ std::string LabelIssue17902::subtitle() const
 {
     return "";
 }
-
-

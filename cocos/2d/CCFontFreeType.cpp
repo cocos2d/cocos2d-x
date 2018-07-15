@@ -26,6 +26,8 @@ THE SOFTWARE.
 
 #include "2d/CCFontFreeType.h"
 #include FT_BBOX_H
+#include FT_BITMAP_H
+#include FT_OUTLINE_H
 #include "edtaa3func.h"
 #include "2d/CCFontAtlas.h"
 #include "base/CCDirector.h"
@@ -50,9 +52,15 @@ typedef struct _DataRef
 
 static std::unordered_map<std::string, DataRef> s_cacheFontData;
 
-FontFreeType * FontFreeType::create(const std::string &fontName, float fontSize, GlyphCollection glyphs, const char *customGlyphs,bool distanceFieldEnabled /* = false */,float outline /* = 0 */)
+FontFreeType * FontFreeType::create(const std::string &fontName, float fontSize, GlyphCollection glyphs, const char *customGlyphs,
+    bool distanceFieldEnabled /* = false */,float outline /* = 0 */,bool bold /* = false */)
 {
     FontFreeType *tempFont =  new (std::nothrow) FontFreeType(distanceFieldEnabled,outline);
+
+    if (bold)
+    {
+        tempFont->_boldSize = static_cast<int>(64.f * CC_CONTENT_SCALE_FACTOR());
+    }
 
     if (!tempFont)
         return nullptr;
@@ -107,6 +115,7 @@ FontFreeType::FontFreeType(bool distanceFieldEnabled /* = false */, float outlin
 , _lineHeight(0)
 , _fontAtlas(nullptr)
 , _usedGlyphs(GlyphCollection::ASCII)
+, _boldSize(0)
 {
     if (outline > 0.0f)
     {
@@ -171,7 +180,7 @@ bool FontFreeType::createFontObject(const std::string &fontName, float fontSize)
 
     // set the requested font size
     int dpi = 72;
-    int fontSizePoints = (int)(64.f * fontSize * CC_CONTENT_SCALE_FACTOR());
+    int fontSizePoints = static_cast<int>(64.f * fontSize * CC_CONTENT_SCALE_FACTOR());
     if (FT_Set_Char_Size(face, fontSizePoints, fontSizePoints, dpi, dpi))
         return false;
     
@@ -310,6 +319,11 @@ unsigned char* FontFreeType::getGlyphBitmap(uint64_t theChar, long &outWidth, lo
                 break;
         }
 
+        if (_boldSize > 0)
+        {
+            FT_Bitmap_Embolden(getFTLibrary(), &_fontRef->glyph->bitmap, _boldSize, 0);
+        }
+
         auto& metrics = _fontRef->glyph->metrics;
         outRect.origin.x = metrics.horiBearingX >> 6;
         outRect.origin.y = -(metrics.horiBearingY >> 6);
@@ -353,7 +367,7 @@ unsigned char* FontFreeType::getGlyphBitmap(uint64_t theChar, long &outWidth, lo
             auto blendWidth = MAX(outlineMaxX, glyphMaxX) - blendImageMinX;
             auto blendHeight = blendImageMaxY - MIN(outlineMinY, glyphMinY);
 
-            outRect.origin.x = blendImageMinX;
+            outRect.origin.x = blendImageMinX + _outlineSize;
             outRect.origin.y = -blendImageMaxY + _outlineSize;
 
             unsigned char *blendImage = nullptr;
@@ -429,6 +443,12 @@ unsigned char * FontFreeType::getGlyphBitmapWithOutline(uint64_t theChar, FT_BBo
                 if (glyph->format == FT_GLYPH_FORMAT_OUTLINE)
                 {
                     FT_Outline *outline = &reinterpret_cast<FT_OutlineGlyph>(glyph)->outline;
+
+                    if (_boldSize > 0)
+                    {
+                        FT_Outline_EmboldenXY(outline, _boldSize, 0);
+                    }
+                    
                     FT_Glyph_Get_CBox(glyph,FT_GLYPH_BBOX_GRIDFIT,&bbox);
                     long width = (bbox.xMax - bbox.xMin)>>6;
                     long rows = (bbox.yMax - bbox.yMin)>>6;

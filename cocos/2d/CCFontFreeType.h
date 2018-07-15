@@ -55,7 +55,7 @@ public:
     static const int DistanceMapSpread;
 
     static FontFreeType* create(const std::string &fontName, float fontSize, GlyphCollection glyphs,
-        const char *customGlyphs,bool distanceFieldEnabled = false, float outline = 0);
+        const char *customGlyphs,bool distanceFieldEnabled = false, float outline = 0, bool bold = false);
 
     static void shutdownFreeType();
 
@@ -103,6 +103,7 @@ private:
     FT_Stroker _stroker;
     FT_Encoding _encoding;
 
+    int _boldSize;
     std::string _fontName;
     bool _distanceFieldEnabled;
     float _outlineSize;

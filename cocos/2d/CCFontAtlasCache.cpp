@@ -62,11 +62,11 @@ FontAtlas* FontAtlasCache::getFontAtlasTTF(const _ttfConfig* config)
 
     char tmp[ATLAS_MAP_KEY_BUFFER];
     if (useDistanceField) {
-        snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "df %.2f %d %s", config->fontSize, config->outlineSize,
-                 realFontFilename.c_str());
+        snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "df %.2f %d %s %d", config->fontSize, config->outlineSize,
+                 realFontFilename.c_str(), config->bold ? 1 : 0);
     } else {
-        snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "%.2f %d %s", config->fontSize, config->outlineSize,
-                 realFontFilename.c_str());
+        snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "%.2f %d %s %d", config->fontSize, config->outlineSize,
+                 realFontFilename.c_str(), config->bold ? 1 : 0);
     }
     std::string atlasName = tmp;
 
@@ -75,7 +75,7 @@ FontAtlas* FontAtlasCache::getFontAtlasTTF(const _ttfConfig* config)
     if ( it == _atlasMap.end() )
     {
         auto font = FontFreeType::create(realFontFilename, config->fontSize, config->glyphs,
-            config->customGlyphs, useDistanceField, config->outlineSize);
+            config->customGlyphs, useDistanceField, config->outlineSize, config->bold);
         if (font)
         {
             auto tempAtlas = font->createFontAtlas();
