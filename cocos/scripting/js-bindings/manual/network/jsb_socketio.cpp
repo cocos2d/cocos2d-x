@@ -225,19 +225,21 @@ bool js_cocos2dx_SocketIO_send(JSContext* cx, uint32_t argc, jsval* vp)
     SIOClient* cobj = (SIOClient *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
-    if (argc == 1)
+    if (argc >= 1)
     {
+        std::list<std::string> event_args;
         std::string payload;
         
-        do
+        for(int idx = 0; idx < argc; idx++)
         {
-            bool ok = jsval_to_std_string(cx, args.get(0), &payload);
+            bool ok = jsval_to_std_string(cx, args.get(idx), &payload);
             JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
-        } while (0);
+            event_args.push_back(payload);
+        }
 
         CCLOG("JSB SocketIO send mesage: %s", payload.c_str());
 
-        cobj->send(payload);
+        cobj->send(event_args);
         return true;
 
     }

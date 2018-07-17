@@ -257,11 +257,20 @@ public:
      * @param s message.
      */
     void send(const std::string& s);
+    void send(const std::list<std::string>& s);
+
+    template<typename ...Args>
+    void send(const std::list<std::string>& list, const std::string& s1, Args ...args)
+    {
+        list.push_front(s1);
+        send(list, args...);
+    }
 
     template<typename ...Args> 
     void send(const std::string& s1, Args ...args)
     {
-        emit("message", s1, args...);
+        std::list<std::string> list{s1};
+        send(list, args...);
     }
 
 

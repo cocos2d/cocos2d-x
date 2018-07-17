@@ -384,6 +384,7 @@ public:
     void disconnectFromEndpoint(const std::string& endpoint);
 
     void send(const std::string& endpoint, const std::string& s);
+    void send(const std::string& endpoint, const std::list<std::string>& s);
     void send(SocketIOPacket *packet);
     void emit(const std::string& endpoint, const std::string& eventname, const std::string& args);
     void emit(const std::string& endpoint, const std::string& eventname, const std::list<std::string>& args);
@@ -692,23 +693,32 @@ void SIOClientImpl::heartbeat(float /*dt*/)
 }
 
 
-void SIOClientImpl::send(const std::string& endpoint, const std::string& s)
+void SIOClientImpl::send(const std::string& endpoint, const std::list<std::string>& s)
 {
     switch (_version) {
     case SocketIOPacket::SocketIOVersion::V09x:
+    {
+        SocketIOPacket *packet = SocketIOPacket::createPacketWithType("message", _version);
+        packet->setEndpoint(endpoint);
+        for(auto &i : s) 
         {
-            SocketIOPacket *packet = SocketIOPacket::createPacketWithType("message", _version);
-            packet->setEndpoint(endpoint);
-            packet->addData(s);
-            this->send(packet);
-            break;
+            packet->addData(i);
         }
-    case SocketIOPacket::SocketIOVersion::V10x:
-        {
-            this->emit(endpoint, "message", s);
-            break;
-        }
+        this->send(packet);
+        break;
     }
+    case SocketIOPacket::SocketIOVersion::V10x:
+    {
+        this->emit(endpoint, "message", s);
+        break;
+    }
+    }
+}
+
+void SIOClientImpl::send(const std::string& endpoint, const std::string& s)
+{
+    std::list<std::string> t{s};
+    send(endpoint, t);
 }
 
 void SIOClientImpl::send(SocketIOPacket *packet)
@@ -1058,6 +1068,12 @@ void SIOClient::onConnect()
 }
 
 void SIOClient::send(const std::string& s)
+{
+    std::list<std::string> t{s};
+    send(t);
+}
+
+void SIOClient::send(const std::list<std::string>& s)
 {
     if (isConnected())
     {
