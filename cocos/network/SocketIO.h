@@ -258,11 +258,11 @@ public:
      */
     void send(const std::string& s);
 
-	template<typename ...Args> 
-	void send(const std::string& s1, Args ...args)
-	{
-		emit("message", s1, args...);
-	}
+    template<typename ...Args> 
+    void send(const std::string& s1, Args ...args)
+    {
+        emit("message", s1, args...);
+    }
 
 
     /**
@@ -272,13 +272,13 @@ public:
      */
     void emit(const std::string& eventname, const std::string& args);
 
-	template<typename ...Arg> 
-	void emit(const std::string& eventname, const std::string& arg1, Arg ...args)
-	{
-		std::list<std::string> arg_list;
-		arg_list.push_front(arg1);
-		emit(eventname, arg_list, args...);
-	}
+    template<typename ...Arg> 
+    void emit(const std::string& eventname, const std::string& arg1, Arg ...args)
+    {
+        std::list<std::string> arg_list;
+        arg_list.push_front(arg1);
+        emit(eventname, arg_list, args...);
+    }
 
     /**
      * Used to register a socket.io event callback.
@@ -305,14 +305,14 @@ public:
     }
 
 private:
-	void emit(const std::string& eventname, const std::list<std::string> &args);
+    void emit(const std::string& eventname, const std::list<std::string> &args);
 
-	template<typename ...Arg>
-	void emit(const std::string& eventname, std::list<std::string> &list, const std::string &arg, Arg ... remain)
-	{
-		list.push_front(arg);
-		emit(eventname, list, remain...);
-	}
+    template<typename ...Arg>
+    void emit(const std::string& eventname, std::list<std::string> &list, const std::string &arg, Arg ... remain)
+    {
+        list.push_front(arg);
+        emit(eventname, list, remain...);
+    }
 
 };
 
