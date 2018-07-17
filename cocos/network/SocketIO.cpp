@@ -385,9 +385,10 @@ public:
 
     void send(const std::string& endpoint, const std::string& s);
     void send(SocketIOPacket *packet);
-    void emit(const std::string& endpoint, const std::string& eventname, const std::string& args);
+	void emit(const std::string& endpoint, const std::string& eventname, const std::string& args);
+	void emit(const std::string& endpoint, const std::string& eventname, const std::list<std::string>& args);
 
-
+	friend class SIOClient;
 };
 
 
@@ -487,7 +488,7 @@ void SIOClientImpl::handshakeResponse(HttpClient* /*sender*/, HttpResponse *resp
     std::string sid = "";
     int heartbeat = 0, timeout = 0;
 
-    if (res.at(res.size() - 1) == '}') {
+    if (res.find("}") != std::string::npos) {
 
         CCLOGINFO("SIOClientImpl::handshake() Socket.IO 1.x detected");
         _version = SocketIOPacket::SocketIOVersion::V10x;
@@ -731,6 +732,20 @@ void SIOClientImpl::emit(const std::string& endpoint, const std::string& eventna
     packet->addData(args);
     this->send(packet);
 }
+
+void SIOClientImpl::emit(const std::string& endpoint, const std::string& eventname, const std::list<std::string>& args)
+{
+	CCLOGINFO("Emitting event \"%s\"", eventname.c_str());
+	SocketIOPacket *packet = SocketIOPacket::createPacketWithType("event", _version);
+	packet->setEndpoint(endpoint == "/" ? "" : endpoint);
+	packet->setEvent(eventname);
+	for (auto &arg : args) {
+		packet->addData(arg);
+	}
+	this->send(packet);
+}
+
+
 
 void SIOClientImpl::onOpen(WebSocket* /*ws*/)
 {
@@ -1021,7 +1036,7 @@ SIOClient::SIOClient(const std::string& path, SIOClientImpl* impl, SocketIO::SIO
 
 SIOClient::~SIOClient()
 {
-    if (_connected)
+    if (isConnected())
     {
         _socket->disconnectFromEndpoint(_path);
     }
@@ -1033,16 +1048,18 @@ void SIOClient::onOpen()
     {
         _socket->connectToEndpoint(_path);
     }
+
+	setConnected(true);
 }
 
 void SIOClient::onConnect()
 {
-    _connected = true;
+	setConnected(true);
 }
 
 void SIOClient::send(const std::string& s)
 {
-    if (_connected)
+    if (isConnected())
     {
         _socket->send(_path, s);
     }
@@ -1055,7 +1072,7 @@ void SIOClient::send(const std::string& s)
 
 void SIOClient::emit(const std::string& eventname, const std::string& args)
 {
-    if(_connected)
+    if(isConnected())
     {
         _socket->emit(_path, eventname, args);
     }
@@ -1066,10 +1083,23 @@ void SIOClient::emit(const std::string& eventname, const std::string& args)
 
 }
 
+void SIOClient::emit(const std::string& eventname, const std::list<std::string>& args)
+{
+	if (isConnected())
+	{
+		_socket->emit(_path, eventname, args);
+	}
+	else
+	{
+		_delegate->onError(this, "Client not yet connected");
+	}
+
+}
+
+
 void SIOClient::disconnect()
 {
-    _connected = false;
-
+	setConnected(false);
     _socket->disconnectFromEndpoint(_path);
 
     this->release();
@@ -1077,11 +1107,20 @@ void SIOClient::disconnect()
 
 void SIOClient::socketClosed()
 {
-    _connected = false;
-
+    setConnected(false);
     _delegate->onClose(this);
 
     this->release();
+}
+
+bool SIOClient::isConnected() 
+{
+	return _socket && _socket->_connected && _connected;
+}
+
+void SIOClient::setConnected(bool connected) 
+{
+	_connected = connected;
 }
 
 void SIOClient::on(const std::string& eventName, SIOEvent e)

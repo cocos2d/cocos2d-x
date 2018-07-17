@@ -223,6 +223,9 @@ private:
 
     friend class SIOClientImpl;
 
+	bool isConnected();
+	void setConnected(bool);
+
     /**
      * Constructor of SIOClient class.
      *
@@ -237,7 +240,6 @@ private:
      * Destructor of SIOClient class.
      */
     virtual ~SIOClient();
-
 public:
     /**
      * Get the delegate for the client
@@ -255,12 +257,29 @@ public:
      * @param s message.
      */
     void send(const std::string& s);
+
+	template<typename ...Args> 
+	void send(const std::string& s1, Args ...args)
+	{
+		emit("message", s1, args...);
+	}
+
+
     /**
      *  Emit the eventname and the args to the endpoint that _path point to.
      * @param eventname
      * @param args
      */
     void emit(const std::string& eventname, const std::string& args);
+
+	template<typename ...Arg> 
+	void emit(const std::string& eventname, const std::string& arg1, Arg ...args)
+	{
+		std::list<std::string> arg_list;
+		arg_list.push_front(arg1);
+		emit(eventname, arg_list, args...);
+	}
+
     /**
      * Used to register a socket.io event callback.
      * Event argument should be passed using CC_CALLBACK2(&Base::function, this).
@@ -284,6 +303,16 @@ public:
     {
         return _tag.c_str();
     }
+
+private:
+	void emit(const std::string& eventname, const std::list<std::string> &args);
+
+	template<typename ...Arg>
+	void emit(const std::string& eventname, std::list<std::string> &list, const std::string &arg, Arg ... remain)
+	{
+		list.push_front(arg);
+		emit(eventname, list, remain...);
+	}
 
 };
 
