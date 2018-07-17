@@ -62,6 +62,7 @@ in the onClose method the pointer should be set to NULL or used to connect to a 
 
 #include <string>
 #include <unordered_map>
+#include <list>
 #include "platform/CCPlatformMacros.h"
 #include "base/CCMap.h"
 
