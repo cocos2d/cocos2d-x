@@ -271,6 +271,7 @@ public:
      * @param args
      */
     void emit(const std::string& eventname, const std::string& args);
+    void emit(const std::string& eventname, const std::list<std::string> &args);
 
     template<typename ...Arg> 
     void emit(const std::string& eventname, const std::string& arg1, Arg ...args)
@@ -304,8 +305,8 @@ public:
         return _tag.c_str();
     }
 
+
 private:
-    void emit(const std::string& eventname, const std::list<std::string> &args);
 
     template<typename ...Arg>
     void emit(const std::string& eventname, std::list<std::string> &list, const std::string &arg, Arg ... remain)

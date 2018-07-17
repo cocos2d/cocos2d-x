@@ -1235,7 +1235,7 @@ SIOClient* SocketIO::connect(const std::string& uri, SocketIO::SIODelegate& dele
             return newC;
         }
     }
-
+ 
     return c;
 }
 

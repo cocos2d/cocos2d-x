@@ -255,24 +255,27 @@ bool js_cocos2dx_SocketIO_emit(JSContext* cx, uint32_t argc, jsval* vp)
     SIOClient* cobj = (SIOClient *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
-    if (argc == 2)
+    if (argc >= 2)
     {
         std::string eventName;
+
         do
         {
             bool ok = jsval_to_std_string(cx, args.get(0), &eventName);
             JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
         } while (0);
         
+        std::list<std::string> event_args;
         std::string payload;
-        do {
-            bool ok = jsval_to_std_string(cx, args.get(1), &payload);
+        for(int idx = 1; idx < argc; idx ++) {
+            bool ok = jsval_to_std_string(cx, args.get(idx), &payload);
             JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
-        } while (0);
+            event_args.push_back(payload);
+        }
 
         CCLOG("JSB SocketIO emit event '%s' with payload: %s", eventName.c_str(), payload.c_str());
 
-        cobj->emit(eventName, payload);
+        cobj->emit(eventName, event_args);
         return true;
     }
     JS_ReportError(cx, "JSB SocketIO.emit: Wrong number of arguments");
