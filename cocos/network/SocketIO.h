@@ -260,7 +260,7 @@ public:
     void send(const std::list<std::string>& s);
 
     template<typename ...Args>
-    void send(const std::list<std::string>& list, const std::string& s1, Args ...args)
+    void send(std::list<std::string>& list, const std::string& s1, Args ...args)
     {
         list.push_front(s1);
         send(list, args...);
