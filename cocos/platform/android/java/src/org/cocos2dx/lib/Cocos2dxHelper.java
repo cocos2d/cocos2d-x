@@ -100,6 +100,7 @@ public class Cocos2dxHelper {
     
     // The OBB file
     private static ZipResourceFile sOBBFile = null;
+    private static int expansionVersion = 1;
 
     // ===========================================================
     // Constructors
@@ -168,6 +169,12 @@ public class Cocos2dxHelper {
             serviceIntent.setPackage("com.enhance.gameservice");
             boolean suc = activity.getApplicationContext().bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE);
             //Enhance API modification end
+            
+            try {
+                Cocos2dxHelper.sOBBFile = APKExpansionSupport.getAPKExpansionZipFile(Cocos2dxActivity.getContext(), expansionVersion, 0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
     
@@ -176,47 +183,50 @@ public class Cocos2dxHelper {
     public static String getAssetsPath()
     {
         if (Cocos2dxHelper.sAssetsPath.equals("")) {
+            // try to open actual versionCode OBB first
+            try {
+                expansionVersion = Cocos2dxHelper.sActivity.getPackageManager().getPackageInfo(Cocos2dxHelper.sPackageName, 0).versionCode;
+            } catch (NameNotFoundException e) {
+                e.printStackTrace();
+            }
 
-            String pathToOBB = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/obb/" + Cocos2dxHelper.sPackageName;
-
-	    	// Listing all files inside the folder (pathToOBB) where OBB files are expected to be found.
-            String[] fileNames = new File(pathToOBB).list(new FilenameFilter() { // Using filter to pick up only main OBB file name.
-                public boolean accept(File dir, String name) {
-                    return name.startsWith("main.") && name.endsWith(".obb");  // It's possible to filter only by extension here to get path to patch OBB file also.
-                }
-            });
-
-            String fullPathToOBB = "";
-            if (fileNames != null && fileNames.length > 0)  // If there is at least 1 element inside the array with OBB file names, then we may think fileNames[0] will have desired main OBB file name.
-                fullPathToOBB = pathToOBB + "/" + fileNames[0];  // Composing full file name for main OBB file.
-
-            File obbFile = new File(fullPathToOBB);
+            String pathToOBB = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/obb/" + Cocos2dxHelper.sPackageName + "/main." + expansionVersion + "." + Cocos2dxHelper.sPackageName + ".obb";
+            File obbFile = new File(pathToOBB);
             if (obbFile.exists())
-                Cocos2dxHelper.sAssetsPath = fullPathToOBB;
-            else
-                Cocos2dxHelper.sAssetsPath = Cocos2dxHelper.sActivity.getApplicationInfo().sourceDir;
+                Cocos2dxHelper.sAssetsPath = pathToOBB;
+            else {
+
+                pathToOBB = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/obb/" + Cocos2dxHelper.sPackageName;
+
+                // Listing all files inside the folder (pathToOBB) where OBB files are expected to be found.
+                String[] fileNames = new File(pathToOBB).list(new FilenameFilter() { // Using filter to pick up only main OBB file name.
+                    public boolean accept(File dir, String name) {
+                        return name.startsWith("main.") && name.endsWith(".obb");  // It's possible to filter only by extension here to get path to patch OBB file also.
+                    }
+                });
+
+                String fullPathToOBB = "";
+                if (fileNames != null && fileNames.length > 0)  // If there is at least 1 element inside the array with OBB file names, then we may think fileNames[0] will have desired main OBB file name.
+                    fullPathToOBB = pathToOBB + "/" + fileNames[0];  // Composing full file name for main OBB file.
+
+                File foundObbFile = new File(fullPathToOBB);
+                if (foundObbFile.exists()) {
+                    Cocos2dxHelper.sAssetsPath = fullPathToOBB;
+
+                    // keep safe expansionVersion, we'll need it when opening the OBB file
+                    expansionVersion = Integer.parseInt(fileNames[0].split("\\.")[1]);
+                }
+                else
+                    Cocos2dxHelper.sAssetsPath = Cocos2dxHelper.sActivity.getApplicationInfo().sourceDir;
+            }
         }
         
         return Cocos2dxHelper.sAssetsPath;
     }
     
-    public static ZipResourceFile getObbFile() {
-        if (null == sOBBFile) {
-            int versionCode = 1;
-            try {
-                versionCode = Cocos2dxActivity.getContext().getPackageManager().getPackageInfo(Cocos2dxHelper.getCocos2dxPackageName(), 0).versionCode;
-            } catch (NameNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                sOBBFile = APKExpansionSupport.getAPKExpansionZipFile(Cocos2dxActivity.getContext(), versionCode, 0);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return sOBBFile;
+    public static ZipResourceFile getObbFile()
+    {
+        return Cocos2dxHelper.sOBBFile;
     }
     
     //Enhance API modification begin
