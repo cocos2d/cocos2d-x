@@ -755,8 +755,6 @@ void SIOClientImpl::emit(const std::string& endpoint, const std::string& eventna
     this->send(packet);
 }
 
-
-
 void SIOClientImpl::onOpen(WebSocket* /*ws*/)
 {
     _connected = true;
