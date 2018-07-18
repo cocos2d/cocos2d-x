@@ -1129,7 +1129,7 @@ void SIOClient::socketClosed()
     this->release();
 }
 
-bool SIOClient::isConnected() 
+bool SIOClient::isConnected() const
 {
     return _socket && _socket->_connected && _connected;
 }

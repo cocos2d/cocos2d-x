@@ -224,8 +224,8 @@ private:
 
     friend class SIOClientImpl;
 
-	bool isConnected();
-	void setConnected(bool);
+    bool isConnected() const;
+    void setConnected(bool);
 
     /**
      * Constructor of SIOClient class.
@@ -260,13 +260,6 @@ public:
     void send(const std::string& s);
     void send(const std::list<std::string>& s);
 
-    template<typename ...Args>
-    void send(std::list<std::string>& list, const std::string& s1, Args ...args)
-    {
-        list.push_front(s1);
-        send(list, args...);
-    }
-
     template<typename ...Args> 
     void send(const std::string& s1, Args ...args)
     {
@@ -286,9 +279,9 @@ public:
     template<typename ...Arg> 
     void emit(const std::string& eventname, const std::string& arg1, Arg ...args)
     {
-        std::list<std::string> arg_list;
-        arg_list.push_front(arg1);
-        emit(eventname, arg_list, args...);
+        std::list<std::string> argList;
+        argList.push_front(arg1);
+        emit(eventname, argList, args...);
     }
 
     /**
@@ -323,6 +316,13 @@ private:
     {
         list.push_front(arg);
         emit(eventname, list, remain...);
+    }
+
+    template<typename ...Args>
+    void send(std::list<std::string>& list, const std::string& s1, Args ...args)
+    {
+        list.push_front(s1);
+        send(list, args...);
     }
 
 };
