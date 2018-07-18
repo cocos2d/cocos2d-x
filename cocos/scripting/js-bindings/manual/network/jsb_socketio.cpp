@@ -227,7 +227,7 @@ bool js_cocos2dx_SocketIO_send(JSContext* cx, uint32_t argc, jsval* vp)
 
     if (argc >= 1)
     {
-        std::list<std::string> eventArgs;
+        std::vector<std::string> eventArgs;
         std::string payload;
         
         for(int idx = 0; idx < argc; idx++)
@@ -267,7 +267,7 @@ bool js_cocos2dx_SocketIO_emit(JSContext* cx, uint32_t argc, jsval* vp)
             JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
         } while (0);
         
-        std::list<std::string> eventArgs;
+        std::vector<std::string> eventArgs;
         std::string payload;
         for(int idx = 1; idx < argc; idx ++) {
             bool ok = jsval_to_std_string(cx, args.get(idx), &payload);

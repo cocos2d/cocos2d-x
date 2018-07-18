@@ -384,10 +384,10 @@ public:
     void disconnectFromEndpoint(const std::string& endpoint);
 
     void send(const std::string& endpoint, const std::string& s);
-    void send(const std::string& endpoint, const std::list<std::string>& s);
+    void send(const std::string& endpoint, const std::vector<std::string>& s);
     void send(SocketIOPacket *packet);
     void emit(const std::string& endpoint, const std::string& eventname, const std::string& args);
-    void emit(const std::string& endpoint, const std::string& eventname, const std::list<std::string>& args);
+    void emit(const std::string& endpoint, const std::string& eventname, const std::vector<std::string>& args);
 
     friend class SIOClient;
 };
@@ -693,7 +693,7 @@ void SIOClientImpl::heartbeat(float /*dt*/)
 }
 
 
-void SIOClientImpl::send(const std::string& endpoint, const std::list<std::string>& s)
+void SIOClientImpl::send(const std::string& endpoint, const std::vector<std::string>& s)
 {
     switch (_version) {
     case SocketIOPacket::SocketIOVersion::V09x:
@@ -717,7 +717,7 @@ void SIOClientImpl::send(const std::string& endpoint, const std::list<std::strin
 
 void SIOClientImpl::send(const std::string& endpoint, const std::string& s)
 {
-    std::list<std::string> t{s};
+    std::vector<std::string> t{s};
     send(endpoint, t);
 }
 
@@ -743,7 +743,7 @@ void SIOClientImpl::emit(const std::string& endpoint, const std::string& eventna
     this->send(packet);
 }
 
-void SIOClientImpl::emit(const std::string& endpoint, const std::string& eventname, const std::list<std::string>& args)
+void SIOClientImpl::emit(const std::string& endpoint, const std::string& eventname, const std::vector<std::string>& args)
 {
     CCLOGINFO("Emitting event \"%s\"", eventname.c_str());
     SocketIOPacket *packet = SocketIOPacket::createPacketWithType("event", _version);
@@ -1067,11 +1067,11 @@ void SIOClient::onConnect()
 
 void SIOClient::send(const std::string& s)
 {
-    std::list<std::string> t{s};
+    std::vector<std::string> t{s};
     send(t);
 }
 
-void SIOClient::send(const std::list<std::string>& s)
+void SIOClient::send(const std::vector<std::string>& s)
 {
     if (isConnected())
     {
@@ -1097,7 +1097,7 @@ void SIOClient::emit(const std::string& eventname, const std::string& args)
 
 }
 
-void SIOClient::emit(const std::string& eventname, const std::list<std::string>& args)
+void SIOClient::emit(const std::string& eventname, const std::vector<std::string>& args)
 {
     if (isConnected())
     {

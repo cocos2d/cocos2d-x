@@ -62,7 +62,7 @@ in the onClose method the pointer should be set to NULL or used to connect to a 
 
 #include <string>
 #include <unordered_map>
-#include <list>
+#include <vector>
 #include "platform/CCPlatformMacros.h"
 #include "base/CCMap.h"
 
@@ -258,14 +258,8 @@ public:
      * @param s message.
      */
     void send(const std::string& s);
-    void send(const std::list<std::string>& s);
+    void send(const std::vector<std::string>& s);
 
-    template<typename ...Args> 
-    void send(const std::string& s1, Args ...args)
-    {
-        std::list<std::string> list{s1};
-        send(list, args...);
-    }
 
 
     /**
@@ -274,15 +268,7 @@ public:
      * @param args
      */
     void emit(const std::string& eventname, const std::string& args);
-    void emit(const std::string& eventname, const std::list<std::string> &args);
-
-    template<typename ...Arg> 
-    void emit(const std::string& eventname, const std::string& arg1, Arg ...args)
-    {
-        std::list<std::string> argList;
-        argList.push_front(arg1);
-        emit(eventname, argList, args...);
-    }
+    void emit(const std::string& eventname, const std::vector<std::string> &args);
 
     /**
      * Used to register a socket.io event callback.
@@ -306,23 +292,6 @@ public:
     const char* getTag()
     {
         return _tag.c_str();
-    }
-
-
-private:
-
-    template<typename ...Arg>
-    void emit(const std::string& eventname, std::list<std::string> &list, const std::string &arg, Arg ... remain)
-    {
-        list.push_front(arg);
-        emit(eventname, list, remain...);
-    }
-
-    template<typename ...Args>
-    void send(std::list<std::string>& list, const std::string& s1, Args ...args)
-    {
-        list.push_front(s1);
-        send(list, args...);
     }
 
 };
