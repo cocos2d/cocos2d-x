@@ -54,9 +54,9 @@ const IndexBuffer* Primitive::getIndexData() const
 Primitive::Primitive()
 : _verts(nullptr)
 , _indices(nullptr)
-, _type(GL_POINTS)
 , _start(0)
 , _count(0)
+, _type(GL_POINTS)
 {
 }
 

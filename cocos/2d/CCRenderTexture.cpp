@@ -54,6 +54,7 @@ RenderTexture::RenderTexture()
 , _textureCopy(0)
 , _UITextureImage(nullptr)
 , _pixelFormat(Texture2D::PixelFormat::RGBA8888)
+, _depthAndStencilFormat(0)
 , _clearFlags(0)
 , _clearColor(Color4F(0,0,0,0))
 , _clearDepth(0.0f)
@@ -61,7 +62,6 @@ RenderTexture::RenderTexture()
 , _autoDraw(false)
 , _sprite(nullptr)
 , _saveFileCallback(nullptr)
-, _depthAndStencilFormat(0)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Listen this event to save render texture before come to background.
@@ -796,12 +796,6 @@ void RenderTexture::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
     }
 }
 
-void RenderTexture::setGlobalZOrder(float globalZOrder)
-{
-    Node::setGlobalZOrder(globalZOrder);
-    _sprite->setGlobalZOrder(globalZOrder);
-}
-
 void RenderTexture::begin()
 {
     Director* director = Director::getInstance();
@@ -836,8 +830,7 @@ void RenderTexture::begin()
     renderer->addCommand(&_groupCommand);
     renderer->pushGroup(_groupCommand.getRenderQueueID());
 
-    // Begine command should be the first command of the command group.
-    _beginCommand.init(INT_MIN);
+    _beginCommand.init(_globalZOrder);
     _beginCommand.func = CC_CALLBACK_0(RenderTexture::onBegin, this);
 
     Director::getInstance()->getRenderer()->addCommand(&_beginCommand);
@@ -845,8 +838,7 @@ void RenderTexture::begin()
 
 void RenderTexture::end()
 {
-    // End command should be the last command of the command group.
-    _endCommand.init(INT_MAX);
+    _endCommand.init(_globalZOrder);
     _endCommand.func = CC_CALLBACK_0(RenderTexture::onEnd, this);
 
     Director* director = Director::getInstance();

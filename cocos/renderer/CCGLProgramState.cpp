@@ -273,14 +273,17 @@ void UniformValue::setMat4(const Mat4& value)
 
 UniformValue& UniformValue::operator=(const UniformValue& o)
 {
-    _uniform = o._uniform;
-    _glprogram = o._glprogram;
-    _type = o._type;
-    _value = o._value;
-    
-    if (_uniform->type == GL_SAMPLER_2D)
+    if (this != &o)
     {
-        CC_SAFE_RETAIN(_value.tex.texture);
+        _uniform = o._uniform;
+        _glprogram = o._glprogram;
+        _type = o._type;
+        _value = o._value;
+
+        if (_uniform->type == GL_SAMPLER_2D)
+        {
+            CC_SAFE_RETAIN(_value.tex.texture);
+        }
     }
     return *this;
 }

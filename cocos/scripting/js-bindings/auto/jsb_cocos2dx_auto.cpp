@@ -6025,6 +6025,24 @@ bool js_cocos2dx_GLView_getViewPortRect(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_GLView_getViewPortRect : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_GLView_getScaleY(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::GLView* cobj = (cocos2d::GLView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLView_getScaleY : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getScaleY();
+        JS::RootedValue jsret(cx);
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_GLView_getScaleY : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_GLView_setContentScaleFactor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -6207,22 +6225,20 @@ bool js_cocos2dx_GLView_setCursorVisible(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_cocos2dx_GLView_setCursorVisible : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_GLView_getScaleY(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_GLView_setDefaultIcon(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::GLView* cobj = (cocos2d::GLView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLView_getScaleY : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLView_setDefaultIcon : Invalid Native Object");
     if (argc == 0) {
-        double ret = cobj->getScaleY();
-        JS::RootedValue jsret(cx);
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
+        cobj->setDefaultIcon();
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_GLView_getScaleY : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_cocos2dx_GLView_setDefaultIcon : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_GLView_getScaleX(JSContext *cx, uint32_t argc, jsval *vp)
@@ -6333,6 +6349,42 @@ bool js_cocos2dx_GLView_getDesignResolutionSize(JSContext *cx, uint32_t argc, js
     }
 
     JS_ReportError(cx, "js_cocos2dx_GLView_getDesignResolutionSize : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_GLView_setIcon(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    bool ok = true;
+    cocos2d::GLView* cobj = nullptr;
+
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx);
+    obj.set(args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocos2d::GLView *)(proxy ? proxy->ptr : nullptr);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLView_setIcon : Invalid Native Object");
+    do {
+        if (argc == 1) {
+            std::vector<std::string> arg0;
+            ok &= jsval_to_std_vector_string(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            cobj->setIcon(arg0);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 1) {
+            std::string arg0;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            cobj->setIcon(arg0);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_GLView_setIcon : wrong number of arguments");
     return false;
 }
 bool js_cocos2dx_GLView_windowShouldClose(JSContext *cx, uint32_t argc, jsval *vp)
@@ -6683,6 +6735,7 @@ void js_register_cocos2dx_GLView(JSContext *cx, JS::HandleObject global) {
     static JSFunctionSpec funcs[] = {
         JS_FN("setFrameSize", js_cocos2dx_GLView_setFrameSize, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getViewPortRect", js_cocos2dx_GLView_getViewPortRect, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getScaleY", js_cocos2dx_GLView_getScaleY, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setContentScaleFactor", js_cocos2dx_GLView_setContentScaleFactor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getContentScaleFactor", js_cocos2dx_GLView_getContentScaleFactor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setIMEKeyboardState", js_cocos2dx_GLView_setIMEKeyboardState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -6692,13 +6745,14 @@ void js_register_cocos2dx_GLView(JSContext *cx, JS::HandleObject global) {
         JS_FN("getViewName", js_cocos2dx_GLView_getViewName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isOpenGLReady", js_cocos2dx_GLView_isOpenGLReady, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setCursorVisible", js_cocos2dx_GLView_setCursorVisible, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getScaleY", js_cocos2dx_GLView_getScaleY, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setDefaultIcon", js_cocos2dx_GLView_setDefaultIcon, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getScaleX", js_cocos2dx_GLView_getScaleX, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getVisibleOrigin", js_cocos2dx_GLView_getVisibleOrigin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFrameSize", js_cocos2dx_GLView_getFrameSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFrameZoomFactor", js_cocos2dx_GLView_setFrameZoomFactor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getFrameZoomFactor", js_cocos2dx_GLView_getFrameZoomFactor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getDesignResolutionSize", js_cocos2dx_GLView_getDesignResolutionSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setIcon", js_cocos2dx_GLView_setIcon, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("windowShouldClose", js_cocos2dx_GLView_windowShouldClose, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDesignResolutionSize", js_cocos2dx_GLView_setDesignResolutionSize, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getResolutionPolicy", js_cocos2dx_GLView_getResolutionPolicy, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),

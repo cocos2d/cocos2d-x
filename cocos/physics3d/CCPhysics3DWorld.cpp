@@ -33,16 +33,16 @@
 NS_CC_BEGIN
 
 Physics3DWorld::Physics3DWorld()
-: _btPhyiscsWorld(nullptr)
+: _needCollisionChecking(false)
+, _collisionCheckingFlag(false)
+, _needGhostPairCallbackChecking(false)
+, _btPhyiscsWorld(nullptr)
 , _collisionConfiguration(nullptr)
 , _dispatcher(nullptr)
 , _broadphase(nullptr)
 , _solver(nullptr)
 , _ghostCallback(nullptr)
 , _debugDrawer(nullptr)
-, _needCollisionChecking(false)
-, _collisionCheckingFlag(false)
-, _needGhostPairCallbackChecking(false)
 {
     
 }

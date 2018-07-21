@@ -580,13 +580,14 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     }
     
 
-    if(_pixelFormatInfoTables.find(pixelFormat) == _pixelFormatInfoTables.end())
+    auto formatItr = _pixelFormatInfoTables.find(pixelFormat);
+    if(formatItr == _pixelFormatInfoTables.end())
     {
         CCLOG("cocos2d: WARNING: unsupported pixelformat: %lx", (unsigned long)pixelFormat );
         return false;
     }
 
-    const PixelFormatInfo& info = _pixelFormatInfoTables.at(pixelFormat);
+    const PixelFormatInfo& info = formatItr->second;
 
     if (info.compressed && !Configuration::getInstance()->supportsPVRTC()
                         && !Configuration::getInstance()->supportsETC()

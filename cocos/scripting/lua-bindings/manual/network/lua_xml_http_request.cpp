@@ -266,15 +266,18 @@ void LuaMinXmlHttpRequest::_setHttpRequestHeader()
         const char* second = it->second.c_str();
         size_t len = sizeof(char) * (strlen(first) + 3 + strlen(second));
         char* test = (char*) malloc(len);
-        memset(test, 0,len);
+        if (test != nullptr) //should check failure of malloc or it could be an undefined behaviour
+        {
+            memset(test, 0,len);
         
-        strcpy(test, first);
-        strcpy(test + strlen(first) , ": ");
-        strcpy(test + strlen(first) + 2, second);
+            strcpy(test, first);
+            strcpy(test + strlen(first) , ": ");
+            strcpy(test + strlen(first) + 2, second);
         
-        header.push_back(test);
+            header.push_back(test);
         
-        free(test);
+            free(test);
+        }
         
     }
     

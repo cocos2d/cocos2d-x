@@ -392,7 +392,7 @@ void WsThreadHelper::onSubThreadStarted()
     int log_level = LLL_ERR | LLL_WARN | LLL_NOTICE | LLL_INFO/* | LLL_DEBUG | LLL_PARSER | LLL_HEADER*/ | LLL_EXT | LLL_CLIENT | LLL_LATENCY;
     lws_set_log_level(log_level, printWebSocketLog);
 
-    memset(__defaultProtocols, 0, sizeof(2 * sizeof(struct lws_protocols)));
+    memset(__defaultProtocols, 0, 2 * sizeof(struct lws_protocols));
 
     __defaultProtocols[0].name = "";
     __defaultProtocols[0].callback = WebSocketCallbackWrapper::onSocketCallback;

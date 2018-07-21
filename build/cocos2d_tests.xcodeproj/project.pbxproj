@@ -696,6 +696,7 @@
 		3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		3EA0FB72191C844400B170C8 /* UIVideoPlayerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */; };
 		400308D820060F12000DFE6D /* strings in Resources */ = {isa = PBXBuildFile; fileRef = 400308D720060F12000DFE6D /* strings */; };
+		406023E5208DDFF5008F1C02 /* strings in Resources */ = {isa = PBXBuildFile; fileRef = 400308D720060F12000DFE6D /* strings */; };
 		460629781CDB4DBA00B44058 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
 		460629791CDB4DBA00B44058 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
 		463D7E7C1D227C5F00EA6BD1 /* Bug-14327.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463D7E781D227C3800EA6BD1 /* Bug-14327.cpp */; };
@@ -5963,6 +5964,7 @@
 				B61E90CC1B12B74B00BE69EA /* NavMesh in Resources */,
 				1AC35CEB18CED84500F37B72 /* fileLookup.plist in Resources */,
 				1AC35CFD18CED84500F37B72 /* music.mid in Resources */,
+				406023E5208DDFF5008F1C02 /* strings in Resources */,
 				1AC35D0718CED84500F37B72 /* spine in Resources */,
 				1AC35CD118CED84500F37B72 /* background.mp3 in Resources */,
 				1AC35CD918CED84500F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,

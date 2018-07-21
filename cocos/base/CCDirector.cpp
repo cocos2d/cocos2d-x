@@ -115,9 +115,9 @@ Director* Director::getInstance()
 }
 
 Director::Director()
-: _isStatusLabelUpdated(true)
+: _deltaTimePassedByCaller(false)
+, _isStatusLabelUpdated(true)
 , _invalid(true)
-, _deltaTimePassedByCaller(false)
 {
 }
 

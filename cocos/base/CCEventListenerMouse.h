@@ -24,11 +24,11 @@
 
  ****************************************************************************/
 
-#include "base/CCEventListener.h"
-#include "base/CCEventMouse.h"
-
 #ifndef __cocos2d_libs__CCMouseEventListener__
 #define __cocos2d_libs__CCMouseEventListener__
+
+#include "base/CCEventListener.h"
+#include "base/CCEventMouse.h"
 
 /**
  * @addtogroup base
