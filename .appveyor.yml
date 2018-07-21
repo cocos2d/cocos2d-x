@@ -11,7 +11,7 @@ environment:
     - build_type: windows32_cocos_new_test
     - build_type: windows32
     - build_type: android_cpp_tests
-    - build_type: android_cocos_new_test
+#    - build_type: android_cocos_new_test
 #    - build_type: android_cpp_empty_test
 #    - build_type: android_gen_libs
 
