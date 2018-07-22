@@ -70,17 +70,17 @@ If ($env:build_type -eq "android_cpp_tests") {
     Push-AppveyorArtifact release_win32.7z
 }
 Else {
-    & mkdir $env:APPVEYOR_BUILD_FOLDER\b
+    & mkdir $env:APPVEYOR_BUILD_FOLDER\win32_build
     if ($lastexitcode -ne 0) {throw}
 
-    Push-Location $env:APPVEYOR_BUILD_FOLDER\b
+    Push-Location $env:APPVEYOR_BUILD_FOLDER\win32_build
     & cmake -DCMAKE_BUILD_TYPE=Release ..
     if ($lastexitcode -ne 0) {throw}
 
     & cmake --build . --config Release
     if ($lastexitcode -ne 0) {throw}
 
-    & 7z a release_win32.7z $env:APPVEYOR_BUILD_FOLDER\b\bin\
+    & 7z a release_win32.7z $env:APPVEYOR_BUILD_FOLDER\win32_build\bin\
     if ($lastexitcode -ne 0) {throw}
 
     Push-AppveyorArtifact release_win32.7z
