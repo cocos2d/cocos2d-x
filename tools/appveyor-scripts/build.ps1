@@ -58,7 +58,7 @@ If ($env:build_type -eq "android_cpp_tests") {
     if ($lastexitcode -ne 0) {throw}
 
     Push-Location $env:APPVEYOR_BUILD_FOLDER\cocos_new_test\b
-    & cmake ..
+    & cmake -DCMAKE_BUILD_TYPE=Release ..
     if ($lastexitcode -ne 0) {throw}
 
     & cmake --build .
@@ -74,7 +74,7 @@ Else {
     if ($lastexitcode -ne 0) {throw}
 
     Push-Location $env:APPVEYOR_BUILD_FOLDER\b
-    & cmake ..
+    & cmake -DCMAKE_BUILD_TYPE=Release ..
     if ($lastexitcode -ne 0) {throw}
 
     & cmake --build .
