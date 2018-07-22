@@ -61,7 +61,7 @@ If ($env:build_type -eq "android_cpp_tests") {
     & cmake -DCMAKE_BUILD_TYPE=Release ..
     if ($lastexitcode -ne 0) {throw}
 
-    & cmake --build .
+    & cmake --build . --config Release
     if ($lastexitcode -ne 0) {throw}
 
     & 7z a release_win32.7z $env:APPVEYOR_BUILD_FOLDER\cocos_new_test\b\bin\
@@ -77,7 +77,7 @@ Else {
     & cmake -DCMAKE_BUILD_TYPE=Release ..
     if ($lastexitcode -ne 0) {throw}
 
-    & cmake --build .
+    & cmake --build . --config Release
     if ($lastexitcode -ne 0) {throw}
 
     & 7z a release_win32.7z $env:APPVEYOR_BUILD_FOLDER\b\bin\
