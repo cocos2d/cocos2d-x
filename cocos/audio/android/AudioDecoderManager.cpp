@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2016-2017 Chukong Technologies Inc.
 Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+Copyright (c) 2018 x-studio365 @HALX99.
 
 http://www.cocos2d-x.org
 
@@ -23,60 +24,50 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#pragma once
 
-#include "audio/android/IAudioPlayer.h"
-#include "audio/android/OpenSLHelper.h"
-#include "audio/android/PcmData.h"
+#include "audio/android/AudioDecoderManager.h"
+#include "audio/android/AudioDecoderOgg.h"
+#include "audio/android/AudioDecoderMp3.h"
+#include "audio/android/AudioMacros.h"
+#include "platform/CCFileUtils.h"
+#include "mpg123.h"
 
-#include <mutex>
-#include <condition_variable>
+#define LOG_TAG "AudioDecoderManager"
+#include "audio/android/log.h"
 
 namespace cocos2d { namespace experimental {
 
-class AudioMixerController;
+static bool __mp3Inited = false;
 
-class PcmAudioService
+bool AudioDecoderManager::init()
 {
-public:
-    inline int getChannelCount() const
-    { return _numChannels; };
+    return true;
+}
 
-    inline int getSampleRate() const
-    { return _sampleRate; };
+void AudioDecoderManager::destroy()
+{
+    AudioDecoderMp3::destroy();
+}
 
-private:
-    PcmAudioService(SLEngineItf engineItf, SLObjectItf outputMixObject);
+AudioDecoder* AudioDecoderManager::createDecoder(const char* path)
+{
+    std::string suffix = FileUtils::getInstance()->getFileExtension(path);
+    if (suffix == ".ogg")
+    {
+        return new (std::nothrow) AudioDecoderOgg();
+    }
+    else if (suffix == ".mp3")
+    {
+        return new (std::nothrow) AudioDecoderMp3();
+    }
 
-    virtual ~PcmAudioService();
+    return nullptr;
+}
 
-    bool init(AudioMixerController* controller, int numChannels, int sampleRate, int bufferSizeInBytes);
-
-    bool enqueue();
-
-    void bqFetchBufferCallback(SLAndroidSimpleBufferQueueItf bq);
-
-    void pause();
-    void resume();
-
-private:
-    SLEngineItf _engineItf;
-    SLObjectItf _outputMixObj;
-
-    SLObjectItf _playObj;
-    SLPlayItf _playItf;
-    SLVolumeItf _volumeItf;
-    SLAndroidSimpleBufferQueueItf _bufferQueueItf;
-
-    int _numChannels;
-    int _sampleRate;
-    int _bufferSizeInBytes;
-    bool _isInitialised;
-
-    AudioMixerController* _controller;
-
-    friend class SLPcmAudioPlayerCallbackProxy;
-    friend class AudioPlayerProvider;
-};
+void AudioDecoderManager::destroyDecoder(AudioDecoder* decoder)
+{
+    delete decoder;
+}
 
 }} // namespace cocos2d { namespace experimental {
+

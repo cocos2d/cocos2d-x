@@ -12,7 +12,7 @@ if(WINDOWS)
         audio/win32/AudioPlayer.h
         audio/win32/AudioDecoderOgg.h
         audio/win32/AudioMacros.h
-        audio/win32/AudioEngine-win32.h
+        audio/win32/AudioEngineImpl.h
         audio/win32/AudioDecoderMp3.h
         audio/win32/AudioCache.h
         )
@@ -21,7 +21,7 @@ if(WINDOWS)
         audio/win32/SimpleAudioEngine.cpp
         audio/win32/MciPlayer.cpp
         audio/win32/MciPlayer.h
-        audio/win32/AudioEngine-win32.cpp
+        audio/win32/AudioEngineImpl.cpp
         audio/win32/AudioCache.cpp
         audio/win32/AudioPlayer.cpp
         audio/win32/AudioDecoder.cpp
@@ -72,7 +72,7 @@ elseif(ANDROID)
         audio/android/jni/cddandroidAndroidJavaEngine.h
         audio/android/AudioMixerController.h
         audio/android/AudioResamplerCubic.h
-        audio/android/AudioEngine-inl.h
+        audio/android/AudioEngineImpl.h
         audio/android/IVolumeProvider.h
 
         )
@@ -81,7 +81,7 @@ elseif(ANDROID)
         audio/android/cddSimpleAudioEngine.cpp
         audio/android/ccdandroidUtils.cpp
         audio/android/jni/cddandroidAndroidJavaEngine.cpp
-        audio/android/AudioEngine-inl.cpp
+        audio/android/AudioEngineImpl.cpp
         audio/android/CCThreadPool.cpp
         audio/android/AssetFd.cpp
         audio/android/AudioDecoder.cpp
@@ -127,12 +127,12 @@ elseif(APPLE)
         audio/apple/AudioPlayer.h
         audio/apple/AudioMacros.h
         audio/apple/AudioCache.h
-        audio/apple/AudioEngine-inl.h
+        audio/apple/AudioEngineImpl.h
         )
     set(COCOS_AUDIO_PLATFORM_SRC
         audio/apple/AudioCache.mm
         audio/apple/AudioDecoder.mm
-        audio/apple/AudioEngine-inl.mm
+        audio/apple/AudioEngineImpl.mm
         audio/apple/AudioPlayer.mm
         )
     # split it in _C and non C

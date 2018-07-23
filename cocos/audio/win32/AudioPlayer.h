@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2014-2016 Chukong Technologies Inc.
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
-
+ Copyright (c) 2018 x-studio365 @HALX99.
  http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -59,6 +59,8 @@ public:
     float getTime() { return _currTime;}
     bool setLoop(bool loop);
 
+    bool isFinished() const;
+
 protected:
     void setCache(AudioCache* cache);
     void rotateBufferThread(int offsetFrame);
@@ -68,7 +70,7 @@ protected:
 
     float _volume;
     bool _loop;
-    std::function<void (int, const std::string &)> _finishCallbak;
+    std::function<void (uintptr_t, const std::string &)> _finishCallbak;
 
     bool _isDestroyed;
     bool _removeByAudioEngine;
@@ -87,8 +89,7 @@ protected:
 
     std::mutex _play2dMutex;
 
-    unsigned int _id;
-
+    uintptr_t _id;
     friend class AudioEngineImpl;
 };
 

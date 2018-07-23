@@ -1,113 +1,156 @@
 /****************************************************************************
-Copyright (c) 2016 Chukong Technologies Inc.
-Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ Copyright (c) 2016-2017 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ Copyright (c) 2018 x-studio365 @HALX99.
 
-http://www.cocos2d-x.org
+ http://www.cocos2d-x.org
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
-
-#define LOG_TAG "AudioDecoderOgg"
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
 
 #include "audio/android/AudioDecoderOgg.h"
+#include "audio/android/AudioMacros.h"
 #include "platform/CCFileUtils.h"
+
+#include "platform/android/CCFileUtils-android.h"
+#include <jni.h>
+#include <android/asset_manager.h>
+#include <android/asset_manager_jni.h>
+#include <unistd.h>
+#include <errno.h>
+
+#define LOG_TAG "AudioDecoderOgg"
+#include "audio/android/log.h"
 
 namespace cocos2d { namespace experimental {
 
-AudioDecoderOgg::AudioDecoderOgg()
-{
-    ALOGV("Create AudioDecoderOgg");
-}
-
-AudioDecoderOgg::~AudioDecoderOgg()
-{
-
-}
-
-int AudioDecoderOgg::fseek64Wrap(void* datasource, ogg_int64_t off, int whence)
-{
-    return AudioDecoder::fileSeek(datasource, (long)off, whence);
-}
-
-bool AudioDecoderOgg::decodeToPcm()
-{
-    _fileData = FileUtils::getInstance()->getDataFromFile(_url);
-    if (_fileData.isNull())
+    static AAsset*  ov_fopen_r(const char* path)
     {
+        AAssetManager* asMgr = FileUtilsAndroid::getAssetManager();
+        AAsset* asset = AAssetManager_open(FileUtilsAndroid::getAssetManager(), path, AASSET_MODE_UNKNOWN);
+        return asset;
+    };
+
+    static size_t ov_fread_r(void* buffer, size_t element_size, size_t element_count, void* handle)
+    {
+        return AAsset_read((AAsset*)handle, buffer, element_size * element_count);
+    }
+
+    static int ov_fseek_r(void * handle, ogg_int64_t offset, int whence)
+    {
+        auto n = AAsset_seek((AAsset*)handle, offset, whence);
+        return n >= 0 ? 0 : -1;
+    }
+    
+    static long ov_ftell_r(void * handle)
+    {
+        return AAsset_seek((AAsset*)handle, 0, SEEK_CUR);
+    }
+
+    static int ov_fclose_r(void* handle) {
+        AAsset_close((AAsset*)handle);
+        return 0;
+    }
+    
+    AudioDecoderOgg::AudioDecoderOgg()
+    {
+    }
+
+    AudioDecoderOgg::~AudioDecoderOgg()
+    {
+        close();
+    }
+
+    bool AudioDecoderOgg::open(const char* path)
+    {
+        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(path);
+        int iret = -1;
+        if(fullPath[0] != '/') {
+            off_t start = 0, length = 0;
+            std::string relativePath;
+            size_t position = fullPath.find("assets/");
+            if (0 == position)
+            {
+                // "assets/" is at the beginning of the path and we don't want it
+                relativePath = fullPath.substr(strlen("assets/"));
+            } else
+            {
+                relativePath = fullPath;
+            }
+            auto stream = ov_fopen_r(relativePath.c_str());
+            if(stream == nullptr) {
+                ALOGE("Trouble with ogg(1): %s\n", strerror(errno) );
+                return false;
+            }
+            
+            static ov_callbacks OV_CALLBACKS_AASSET = {
+                ov_fread_r,
+                ov_fseek_r,
+                ov_fclose_r,
+                ov_ftell_r
+            };
+            
+            iret = ov_open_callbacks(stream, &_vf, nullptr, 0, OV_CALLBACKS_AASSET);
+        }
+        else {
+            iret = ov_fopen(fullPath.c_str(), &_vf);
+        }
+        
+        if (0 == iret)
+        {
+            // header
+            vorbis_info* vi = ov_info(&_vf, -1);
+            _sampleRate = static_cast<uint32_t>(vi->rate);
+            _channelCount = vi->channels;
+            _bytesPerFrame = vi->channels * sizeof(short);
+            _totalFrames = static_cast<uint32_t>(ov_pcm_total(&_vf, -1));
+            _isOpened = true;
+            return true;
+        }
         return false;
     }
 
-    ov_callbacks callbacks;
-    callbacks.read_func = AudioDecoder::fileRead;
-    callbacks.seek_func = AudioDecoderOgg::fseek64Wrap;
-    callbacks.close_func = AudioDecoder::fileClose;
-    callbacks.tell_func = AudioDecoder::fileTell;
-
-    _fileCurrPos = 0;
-
-    OggVorbis_File vf;
-    int ret = ov_open_callbacks(this, &vf, NULL, 0, callbacks);
-    if (ret != 0)
+    void AudioDecoderOgg::close()
     {
-        ALOGE("Open file error, file: %s, ov_open_callbacks return %d", _url.c_str(), ret);
-        return false;
-    }
-    // header
-    auto vi = ov_info(&vf, -1);
-
-    uint32_t pcmSamples = (uint32_t) ov_pcm_total(&vf, -1);
-
-    uint32_t bufferSize = pcmSamples * vi->channels * sizeof(short);
-    char* pcmBuffer = (char*)malloc(bufferSize);
-    memset(pcmBuffer, 0, bufferSize);
-
-    int currentSection = 0;
-    long curPos = 0;
-    long readBytes = 0;
-
-    do
-    {
-        readBytes = ov_read(&vf, pcmBuffer + curPos, 4096, &currentSection);
-        curPos += readBytes;
-    } while (readBytes > 0);
-
-    if (curPos > 0)
-    {
-        _result.pcmBuffer->insert(_result.pcmBuffer->end(), pcmBuffer, pcmBuffer + bufferSize);
-        _result.numChannels = vi->channels;
-        _result.sampleRate = vi->rate;
-        _result.bitsPerSample = SL_PCMSAMPLEFORMAT_FIXED_16;
-        _result.containerSize = SL_PCMSAMPLEFORMAT_FIXED_16;
-        _result.channelMask = vi->channels == 1 ? SL_SPEAKER_FRONT_CENTER : (SL_SPEAKER_FRONT_LEFT | SL_SPEAKER_FRONT_RIGHT);
-        _result.endianness = SL_BYTEORDER_LITTLEENDIAN;
-        _result.numFrames = pcmSamples;
-        _result.duration = 1.0f * pcmSamples / vi->rate;
-    }
-    else
-    {
-        ALOGE("ov_read returns 0 byte!");
+        if (isOpened())
+        {
+            ov_clear(&_vf);
+            _isOpened = false;
+        }
     }
 
-    ov_clear(&vf);
-    free(pcmBuffer);
+    uint32_t AudioDecoderOgg::read(uint32_t framesToRead, char* pcmBuf)
+    {
+        int currentSection = 0;
+        int bytesToRead = framesToRead * _bytesPerFrame;
+        long bytesRead = ov_read(&_vf, pcmBuf, bytesToRead, 0, 2, 1, &currentSection);
+        return static_cast<uint32_t>(bytesRead / _bytesPerFrame);
+    }
 
-    return (curPos > 0);
-}
+    bool AudioDecoderOgg::seek(uint32_t frameOffset)
+    {
+        return 0 == ov_pcm_seek(&_vf, frameOffset);
+    }
+
+    uint32_t AudioDecoderOgg::tell() const
+    {
+        return static_cast<uint32_t>(ov_pcm_tell(const_cast<OggVorbis_File*>(&_vf)));
+    }
 
 }} // namespace cocos2d { namespace experimental {

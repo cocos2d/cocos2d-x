@@ -25,8 +25,7 @@
 // supports O_APPEND.  These calls have mutex-protected data structures
 // and so are NOT reentrant.  Do not use LOG in a signal handler.
 //
-#ifndef COCOS_CUTILS_LOG_H
-#define COCOS_CUTILS_LOG_H
+#pragma once
 
 #include <stdarg.h>
 #include <stdio.h>
@@ -565,4 +564,3 @@ int __android_log_buf_print(int bufID, int prio, const char *tag, const char *fm
 }
 #endif
 
-#endif /* COCOS_CUTILS_LOG_H */

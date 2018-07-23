@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  Copyright (c) 2018 x-studio365 @HALX99.
 
@@ -27,18 +27,20 @@
 #define LOG_TAG "AudioCache"
 
 #include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
-#include "audio/apple/AudioCache.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
-#import <Foundation/Foundation.h>
-#import <OpenAL/alc.h>
+#include "audio/android/AudioCache.h"
 #include <thread>
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
+#include <algorithm>
+#include <cmath>
+#include "audio/android/AudioDecoderManager.h"
+#include "audio/android/AudioDecoder.h"
+#include "audio/android/log.h"
 
-#include "audio/apple/AudioDecoder.h"
-
+#define VERY_VERY_VERBOSE_LOGGING
 #ifdef VERY_VERY_VERBOSE_LOGGING
 #define ALOGVV ALOGV
 #else
@@ -52,72 +54,14 @@ unsigned int __idIndex = 0;
 #define INVALID_AL_BUFFER_ID 0xFFFFFFFF
 #define PCMDATA_CACHEMAXSIZE 1048576
 
-typedef ALvoid	AL_APIENTRY	(*alBufferDataStaticProcPtr) (const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq);
-static ALvoid  alBufferDataStaticProc(const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq)
-{
-    static alBufferDataStaticProcPtr proc = nullptr;
-
-    if (proc == nullptr) {
-        proc = (alBufferDataStaticProcPtr) alcGetProcAddress(nullptr, (const ALCchar*) "alBufferDataStatic");
-    }
-
-    if (proc){
-        proc(bid, format, data, size, freq);
-    }
-
-    return;
-}
-
-@interface NSTimerWrapper : NSObject
-{
-    std::function<void()> _timeoutCallback;
-}
-
-@end
-
-@implementation NSTimerWrapper
-
--(id) initWithTimeInterval:(double) seconds callback:(const std::function<void()>&) cb
-{
-    if (self = [super init])
-    {
-        _timeoutCallback = cb;
-        NSTimer* timer = [NSTimer timerWithTimeInterval:seconds target: self selector:@selector(onTimeoutCallback:) userInfo:nil repeats:NO];
-        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
-    }
-
-    return self;
-}
-
--(void) onTimeoutCallback: (NSTimer*) timer
-{
-    if (_timeoutCallback != nullptr)
-    {
-        _timeoutCallback();
-        _timeoutCallback = nullptr;
-    }
-}
-
--(void) dealloc
-{
-    [super dealloc];
-}
-
-@end
-
-static void setTimeout(double seconds, const std::function<void()>& cb)
-{
-    [[[NSTimerWrapper alloc] initWithTimeInterval:seconds callback:cb] autorelease];
-}
-
 using namespace cocos2d;
 using namespace cocos2d::experimental;
 
 AudioCache::AudioCache()
-: _format(-1)
-, _duration(0.0f)
-, _totalFrames(0)
+: _totalFrames(0)
 , _framesRead(0)
+, _format(-1)
+, _duration(0.0f)
 , _alBufferId(INVALID_AL_BUFFER_ID)
 , _pcmData(nullptr)
 , _queBufferFrames(0)
@@ -166,20 +110,10 @@ AudioCache::~AudioCache()
         }
         else
         {
-            ALOGW("AudioCache (%p), id=%u, buffer isn't ready, state=%d", this, _id, _state);
+            ALOGW("AudioCache (%p), id=%u, buffer isn't ready, state=%d", this, _id, (int)_state);
         }
 
-        // fixed #17494: CrashIfClientProvidedBogusAudioBufferList
-        // We're using 'alBufferDataStaticProc' for speeding up
-        // the performance of playing audio without preload, but we need to manage the memory by ourself carefully.
-        // It's probably that '_pcmData' is freed before OpenAL finishes the audio render task,
-        // then 'CrashIfClientProvidedBogusAudioBufferList' may be triggered.
-        // 'cpp-tests/NewAudioEngineTest/AudioSwitchStateTest' can reproduce this issue without the following fix.
-        // The workaround is delaying 200ms to free pcm data.
-        char* data = _pcmData;
-        setTimeout(0.2, [data](){
-            free(data);
-        });
+        free(_pcmData);
     }
 
     if (_queBufferFrames > 0)
@@ -195,21 +129,21 @@ AudioCache::~AudioCache()
 void AudioCache::readDataTask(unsigned int selfId)
 {
     //Note: It's in sub thread
-    ALOGVV("readDataTask, cache id=%u", selfId);
+    ALOGVV("readDataTask begin, cache id=%u", selfId);
 
     _readDataTaskMutex.lock();
     _state = State::LOADING;
 
-    AudioDecoder decoder;
+    AudioDecoder* decoder = AudioDecoderManager::createDecoder(_fileFullPath.c_str());
     do
     {
-        if (!decoder.open(_fileFullPath.c_str()))
+        if (decoder == nullptr || !decoder->open(_fileFullPath.c_str()))
             break;
 
-        const uint32_t originalTotalFrames = decoder.getTotalFrames();
-        const uint32_t bytesPerFrame = decoder.getBytesPerFrame();
-        const uint32_t sampleRate = decoder.getSampleRate();
-        const uint32_t channelCount = decoder.getChannelCount();
+        const uint32_t originalTotalFrames = decoder->getTotalFrames();
+        const uint32_t bytesPerFrame = decoder->getBytesPerFrame();
+        const uint32_t sampleRate = decoder->getSampleRate();
+        const uint32_t channelCount = decoder->getChannelCount();
 
         uint32_t totalFrames = originalTotalFrames;
         uint32_t dataSize = totalFrames * bytesPerFrame;
@@ -224,41 +158,42 @@ void AudioCache::readDataTask(unsigned int selfId)
         if (dataSize <= PCMDATA_CACHEMAXSIZE)
         {
             uint32_t framesRead = 0;
-            const uint32_t framesToReadOnce = std::min(totalFrames, static_cast<uint32_t>(sampleRate * QUEUEBUFFER_TIME_STEP * QUEUEBUFFER_NUM));
+            const uint32_t framesToReadOnce = (std::min)(totalFrames, static_cast<uint32_t>(sampleRate * QUEUEBUFFER_TIME_STEP * QUEUEBUFFER_NUM));
 
-            BREAK_IF_ERR_LOG(!decoder.seek(totalFrames), "AudioDecoder::seek(%u) error", totalFrames);
-
-            char* tmpBuf = (char*)malloc(framesToReadOnce * bytesPerFrame);
             std::vector<char> adjustFrameBuf;
-            adjustFrameBuf.reserve(framesToReadOnce * bytesPerFrame);
 
-            // Adjust total frames by setting position to the end of frames and try to read more data.
-            // This is a workaround for https://github.com/cocos2d/cocos2d-x/issues/16938
-            do
+            if (decoder->seek(totalFrames))
             {
-                framesRead = decoder.read(framesToReadOnce, tmpBuf);
-                if (framesRead > 0)
+                char* tmpBuf = (char*)malloc(framesToReadOnce * bytesPerFrame);
+                adjustFrameBuf.reserve(framesToReadOnce * bytesPerFrame);
+
+                // Adjust total frames by setting position to the end of frames and try to read more data.
+                // This is a workaround for https://github.com/cocos2d/cocos2d-x/issues/16938
+                do
                 {
-                    adjustFrames += framesRead;
-                    adjustFrameBuf.insert(adjustFrameBuf.end(), tmpBuf, tmpBuf + framesRead * bytesPerFrame);
+                    framesRead = decoder->read(framesToReadOnce, tmpBuf);
+                    if (framesRead > 0)
+                    {
+                        adjustFrames += framesRead;
+                        adjustFrameBuf.insert(adjustFrameBuf.end(), tmpBuf, tmpBuf + framesRead * bytesPerFrame);
+                    }
+
+                } while (framesRead > 0);
+
+                if (adjustFrames > 0)
+                {
+                    ALOGV("Orignal total frames: %u, adjust frames: %u, current total frames: %u", totalFrames, adjustFrames, totalFrames + adjustFrames);
+                    totalFrames += adjustFrames;
+                    _totalFrames = remainingFrames = totalFrames;
                 }
 
-            } while (framesRead > 0);
+                // Reset dataSize
+                dataSize = totalFrames * bytesPerFrame;
 
-            if (adjustFrames > 0)
-            {
-                ALOGV("Orignal total frames: %u, adjust frames: %u, current total frames: %u", totalFrames, adjustFrames, totalFrames + adjustFrames);
-                totalFrames += adjustFrames;
-                _totalFrames = remainingFrames = totalFrames;
+                free(tmpBuf);
             }
-
-            // Reset dataSize
-            dataSize = totalFrames * bytesPerFrame;
-
-            free(tmpBuf);
-
             // Reset to frame 0
-            BREAK_IF_ERR_LOG(!decoder.seek(0), "AudioDecoder::seek(0) failed!");
+            BREAK_IF_ERR_LOG(!decoder->seek(0), "AudioDecoder::seek(0) failed!");
 
             _pcmData = (char*)malloc(dataSize);
             memset(_pcmData, 0x00, dataSize);
@@ -271,40 +206,37 @@ void AudioCache::readDataTask(unsigned int selfId)
             alGenBuffers(1, &_alBufferId);
             auto alError = alGetError();
             if (alError != AL_NO_ERROR) {
-                ALOGE("%s: attaching audio to buffer fail: %x", __PRETTY_FUNCTION__, alError);
+                ALOGE("%s: attaching audio to buffer fail: %x", __FUNCTION__, alError);
                 break;
             }
 
             if (*_isDestroyed)
                 break;
 
-            alBufferDataStaticProc(_alBufferId, _format, _pcmData, (ALsizei)dataSize, (ALsizei)sampleRate);
-
-            framesRead = decoder.readFixedFrames(std::min(framesToReadOnce, remainingFrames), _pcmData + _framesRead * bytesPerFrame);
+            framesRead = decoder->readFixedFrames((std::min)(framesToReadOnce, remainingFrames), _pcmData + _framesRead * bytesPerFrame);
             _framesRead += framesRead;
             remainingFrames -= framesRead;
 
             if (*_isDestroyed)
                 break;
 
-            _state = State::READY;
-
-            invokingPlayCallbacks();
-
             uint32_t frames = 0;
             while (!*_isDestroyed && _framesRead < originalTotalFrames)
             {
-                frames = std::min(framesToReadOnce, remainingFrames);
+                frames = (std::min)(framesToReadOnce, remainingFrames);
                 if (_framesRead + frames > originalTotalFrames)
                 {
                     frames = originalTotalFrames - _framesRead;
                 }
-                framesRead = decoder.read(frames, _pcmData + _framesRead * bytesPerFrame);
+                framesRead = decoder->read(frames, _pcmData + _framesRead * bytesPerFrame);
                 if (framesRead == 0)
                     break;
                 _framesRead += framesRead;
                 remainingFrames -= framesRead;
             }
+
+            if (*_isDestroyed)
+                break;
 
             if (_framesRead < originalTotalFrames)
             {
@@ -313,6 +245,10 @@ void AudioCache::readDataTask(unsigned int selfId)
             ALOGV("pcm buffer was loaded successfully, total frames: %u, total read frames: %u, adjust frames: %u, remainingFrames: %u", totalFrames, _framesRead, adjustFrames, remainingFrames);
 
             _framesRead += adjustFrames;
+
+            alBufferData(_alBufferId, _format, _pcmData, (ALsizei)dataSize, (ALsizei)sampleRate);
+
+            _state = State::READY;
         }
         else
         {
@@ -326,7 +262,7 @@ void AudioCache::readDataTask(unsigned int selfId)
                 _queBuffers[index] = (char*)malloc(queBufferBytes);
                 _queBufferSize[index] = queBufferBytes;
 
-                decoder.readFixedFrames(_queBufferFrames, _queBuffers[index]);
+                decoder->readFixedFrames(_queBufferFrames, _queBuffers[index]);
             }
 
             _state = State::READY;
@@ -334,13 +270,13 @@ void AudioCache::readDataTask(unsigned int selfId)
 
     } while (false);
 
-    decoder.close();
+    if (decoder != nullptr)
+    {
+        decoder->close();
+    }
 
-    //FIXME: Why to invoke play callback first? Should it be after 'load' callback?
-    invokingPlayCallbacks();
-    invokingLoadCallbacks();
+    AudioDecoderManager::destroyDecoder(decoder);
 
-    _isLoadingFinished = true;
     if (_state != State::READY)
     {
         _state = State::FAILED;
@@ -352,7 +288,13 @@ void AudioCache::readDataTask(unsigned int selfId)
         }
     }
 
+    //FIXME: Why to invoke play callback first? Should it be after 'load' callback?
+    invokingPlayCallbacks();
+    invokingLoadCallbacks();
+
+    _isLoadingFinished = true;
     _readDataTaskMutex.unlock();
+    ALOGVV("readDataTask end, cache id=%u", selfId);
 }
 
 void AudioCache::addPlayCallback(const std::function<void()>& callback)
@@ -373,7 +315,7 @@ void AudioCache::addPlayCallback(const std::function<void()>& callback)
             break;
 
         default:
-            ALOGE("Invalid state: %d", _state);
+            ALOGE("Invalid state: %d", (int)_state);
             break;
     }
 }
@@ -407,7 +349,7 @@ void AudioCache::addLoadCallback(const std::function<void(bool)>& callback)
             break;
 
         default:
-            ALOGE("Invalid state: %d", _state);
+            ALOGE("Invalid state: %d", (int)_state);
             break;
     }
 }

@@ -1,7 +1,8 @@
 /****************************************************************************
- Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  Copyright (c) 2018 x-studio365 @HALX99.
+
  http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,13 +23,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#define LOG_TAG "AudioEngineImpl"
+#define LOG_TAG "AudioEngine-Android"
 
 #include "platform/CCPlatformConfig.h"
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-
-#include "audio/win32/AudioEngineImpl.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#include "audio/android/log.h"
+#include "audio/android/AudioEngineImpl.h"
 
 #ifdef OPENAL_PLAIN_INCLUDES
 #include "alc.h"
@@ -41,68 +42,10 @@
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "platform/CCFileUtils.h"
-#include "audio/win32/AudioDecoderManager.h"
-
-#include <windows.h>
+#include "audio/android/AudioDecoderManager.h"
 
 // log, CCLOG aren't threadsafe, since we uses sub threads for parsing pcm data, threadsafe log output
 // is needed. Define the following macros (ALOGV, ALOGD, ALOGI, ALOGW, ALOGE) for threadsafe log output.
-
-//FIXME: Move _winLog, winLog to a separated file
-static void _winLog(const char *format, va_list args)
-{
-    static const int MAX_LOG_LENGTH = 16 * 1024;
-    int bufferSize = MAX_LOG_LENGTH;
-    char* buf = nullptr;
-
-    do
-    {
-        buf = new (std::nothrow) char[bufferSize];
-        if (buf == nullptr)
-            return; // not enough memory
-
-        int ret = vsnprintf(buf, bufferSize - 3, format, args);
-        if (ret < 0)
-        {
-            bufferSize *= 2;
-
-            delete[] buf;
-        }
-        else
-            break;
-
-    } while (true);
-
-    strcat(buf, "\n");
-
-    int pos = 0;
-    int len = strlen(buf);
-    char tempBuf[MAX_LOG_LENGTH + 1] = { 0 };
-    WCHAR wszBuf[MAX_LOG_LENGTH + 1] = { 0 };
-
-    do
-    {
-        std::copy(buf + pos, buf + pos + MAX_LOG_LENGTH, tempBuf);
-
-        tempBuf[MAX_LOG_LENGTH] = 0;
-
-        MultiByteToWideChar(CP_UTF8, 0, tempBuf, -1, wszBuf, sizeof(wszBuf));
-        OutputDebugStringW(wszBuf);
-
-        pos += MAX_LOG_LENGTH;
-
-    } while (pos < len);
-
-    delete[] buf;
-}
-
-void audioLog(const char * format, ...)
-{
-    va_list args;
-    va_start(args, format);
-    _winLog(format, args);
-    va_end(args);
-}
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;
@@ -527,6 +470,40 @@ void AudioEngineImpl::uncache(const std::string &filePath)
 void AudioEngineImpl::uncacheAll()
 {
     _audioCaches.clear();
+}
+
+// It's invoked from javaactivity-android.cpp
+// Audio focus values synchronized with which in cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxActivity.java
+static const int AUDIOFOCUS_GAIN = 0;
+static const int AUDIOFOCUS_LOST = 1;
+static const int AUDIOFOCUS_LOST_TRANSIENT = 2;
+static const int AUDIOFOCUS_LOST_TRANSIENT_CAN_DUCK = 3;
+void cocos_audioengine_focus_change(int focusChange)
+{
+    if (focusChange < AUDIOFOCUS_GAIN || focusChange > AUDIOFOCUS_LOST_TRANSIENT_CAN_DUCK)
+    {
+        CCLOGERROR("cocos_audioengine_focus_change: unknown value: %d", focusChange);
+        return;
+    }
+    CCLOG("cocos_audioengine_focus_change: %d", focusChange);
+    
+    // TODO: 
+    //~ __currentAudioFocus = focusChange;
+
+    //~ if (__impl == nullptr)
+    //~ {
+    //~     CCLOGWARN("cocos_audioengine_focus_change: AudioEngineImpl isn't ready!");
+    //~     return;
+    //~ }
+
+    //~ if (__currentAudioFocus == AUDIOFOCUS_GAIN)
+    //~ {
+    //~     __impl->setAudioFocusForAllPlayers(true);
+    //~ }
+    //~ else
+    //~ {
+    //~     __impl->setAudioFocusForAllPlayers(false);
+    //~ }
 }
 
 #endif
