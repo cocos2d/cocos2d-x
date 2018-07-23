@@ -67,7 +67,7 @@ AudioPlayer::AudioPlayer()
 
 AudioPlayer::~AudioPlayer()
 {
-    ALOGVV("~AudioPlayer() (%p), id=%u", this, _id);
+    ALOGVV("~AudioPlayer() (%p), id=%zu", this, _id);
     destroy();
 
     if (_streamingSource)
@@ -81,7 +81,7 @@ void AudioPlayer::destroy()
     if (_isDestroyed)
         return;
 
-    ALOGVV("AudioPlayer::destroy begin, id=%u", _id);
+    ALOGVV("AudioPlayer::destroy begin, id=%zu", _id);
 
     _isDestroyed = true;
 
@@ -91,7 +91,7 @@ void AudioPlayer::destroy()
         {
             if (_audioCache->_state == AudioCache::State::INITIAL)
             {
-                ALOGV("AudioPlayer::destroy, id=%u, cache isn't ready!", _id);
+                ALOGV("AudioPlayer::destroy, id=%zu, cache isn't ready!", _id);
                 break;
             }
 
@@ -151,7 +151,7 @@ void AudioPlayer::destroy()
     _removeByAudioEngine = true;
 
     _ready = false;
-    ALOGVV("AudioPlayer::destroy end, id=%u", _id);
+    ALOGVV("AudioPlayer::destroy end, id=%zu", _id);
 }
 
 void AudioPlayer::setCache(AudioCache* cache)
