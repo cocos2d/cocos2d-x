@@ -2,6 +2,7 @@
  Copyright (c) 2014-2016 Chukong Technologies Inc.
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  Copyright (c) 2018 x-studio365 @HALX99.
+
  http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -483,7 +484,7 @@ ALuint AudioEngineImpl::findValidSource()
 
 void AudioEngineImpl::setVolume(uintptr_t audioID,float volume)
 {
-    std::unique_lock<std::recursive_mutex> lck(_threadMutex);
+    std::unique_lock<std::mutex> lck(_threadMutex);
     auto iter = _audioPlayers.find(audioID);
     if(iter == _audioPlayers.end())
         return;
@@ -505,7 +506,7 @@ void AudioEngineImpl::setVolume(uintptr_t audioID,float volume)
 
 void AudioEngineImpl::setLoop(uintptr_t audioID, bool loop)
 {
-    std::unique_lock<std::recursive_mutex> lck(_threadMutex);
+    std::unique_lock<std::mutex> lck(_threadMutex);
     auto iter = _audioPlayers.find(audioID);
     if(iter == _audioPlayers.end())
         return;
@@ -537,7 +538,7 @@ void AudioEngineImpl::setLoop(uintptr_t audioID, bool loop)
 
 bool AudioEngineImpl::pause(uintptr_t audioID)
 {
-    std::unique_lock<std::recursive_mutex> lck(_threadMutex);
+    std::unique_lock<std::mutex> lck(_threadMutex);
     auto iter = _audioPlayers.find(audioID);
     if(iter == _audioPlayers.end())
         return true;
@@ -561,7 +562,7 @@ bool AudioEngineImpl::pause(uintptr_t audioID)
 bool AudioEngineImpl::resume(uintptr_t audioID)
 {
     bool ret = true;
-    std::unique_lock<std::recursive_mutex> lck(_threadMutex);
+    std::unique_lock<std::mutex> lck(_threadMutex);
     auto iter = _audioPlayers.find(audioID);
     if(iter == _audioPlayers.end())
         return true;
@@ -582,7 +583,7 @@ bool AudioEngineImpl::resume(uintptr_t audioID)
 
 void AudioEngineImpl::stop(uintptr_t audioID)
 {
-    std::unique_lock<std::recursive_mutex> lck(_threadMutex);
+    std::unique_lock<std::mutex> lck(_threadMutex);
     auto iter = _audioPlayers.find(audioID);
     if(iter == _audioPlayers.end())
         return;
@@ -673,7 +674,7 @@ bool AudioEngineImpl::setCurrentTime(uintptr_t audioID, float time)
 
 void AudioEngineImpl::setFinishCallback(uintptr_t audioID, const std::function<void (uintptr_t, const std::string &)> &callback)
 {
-    std::unique_lock<std::recursive_mutex> lck(_threadMutex);
+    std::unique_lock<std::mutex> lck(_threadMutex);
     auto iter = _audioPlayers.find(audioID);
     if(iter == _audioPlayers.end())
         return;
