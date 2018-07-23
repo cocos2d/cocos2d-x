@@ -155,7 +155,7 @@ void AudioCache::readDataTask(unsigned int selfId)
         if (dataSize <= PCMDATA_CACHEMAXSIZE)
         {
             uint32_t framesRead = 0;
-            const uint32_t framesToReadOnce = std::min(totalFrames, static_cast<uint32_t>(sampleRate * QUEUEBUFFER_TIME_STEP * QUEUEBUFFER_NUM));
+            const uint32_t framesToReadOnce = (std::min)(totalFrames, static_cast<uint32_t>(sampleRate * QUEUEBUFFER_TIME_STEP * QUEUEBUFFER_NUM));
 
             std::vector<char> adjustFrameBuf;
 
@@ -210,7 +210,7 @@ void AudioCache::readDataTask(unsigned int selfId)
             if (*_isDestroyed)
                 break;
 
-            framesRead = decoder->readFixedFrames(std::min(framesToReadOnce, remainingFrames), _pcmData + _framesRead * bytesPerFrame);
+            framesRead = decoder->readFixedFrames((std::min)(framesToReadOnce, remainingFrames), _pcmData + _framesRead * bytesPerFrame);
             _framesRead += framesRead;
             remainingFrames -= framesRead;
 
@@ -220,7 +220,7 @@ void AudioCache::readDataTask(unsigned int selfId)
             uint32_t frames = 0;
             while (!*_isDestroyed && _framesRead < originalTotalFrames)
             {
-                frames = std::min(framesToReadOnce, remainingFrames);
+                frames = (std::min)(framesToReadOnce, remainingFrames);
                 if (_framesRead + frames > originalTotalFrames)
                 {
                     frames = originalTotalFrames - _framesRead;

@@ -1,7 +1,8 @@
 /****************************************************************************
- Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  Copyright (c) 2018 x-studio365 @HALX99.
+
  http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,16 +27,20 @@
 #pragma once
 
 #include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
-#include "platform/CCPlatformMacros.h"
-#include "audio/apple/AudioMacros.h"
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
+#include <string>
 #include <condition_variable>
 #include <mutex>
-#include <string>
 #include <thread>
-#include <OpenAL/al.h>
+#ifdef OPENAL_PLAIN_INCLUDES
+#include <al.h>
+#else
+#include <AL/al.h>
+#endif
+#include "platform/CCPlatformMacros.h"
+// #include "object_pool.h"
 
 NS_CC_BEGIN
 namespace experimental{
@@ -43,7 +48,7 @@ namespace experimental{
 class AudioCache;
 class AudioEngineImpl;
 
-class AudioPlayer
+class CC_DLL AudioPlayer
 {
 public:
     AudioPlayer();
@@ -56,17 +61,19 @@ public:
     float getTime() { return _currTime;}
     bool setLoop(bool loop);
 
+    // DEFINE_OBJECT_POOL_ALLOCATION(AudioPlayer, 128)
+
+    bool isFinished() const;
 protected:
     void setCache(AudioCache* cache);
     void rotateBufferThread(int offsetFrame);
     bool play2d();
-    void wakeupRotateThread();
 
     AudioCache* _audioCache;
 
     float _volume;
     bool _loop;
-    std::function<void (int, const std::string &)> _finishCallbak;
+    std::function<void (uintptr_t, const std::string &)> _finishCallbak;
 
     bool _isDestroyed;
     bool _removeByAudioEngine;
@@ -76,22 +83,21 @@ protected:
     //play by circular buffer
     float _currTime;
     bool _streamingSource;
-    ALuint _bufferIds[QUEUEBUFFER_NUM];
+    ALuint _bufferIds[3];
     std::thread* _rotateBufferThread;
     std::condition_variable _sleepCondition;
     std::mutex _sleepMutex;
     bool _timeDirty;
     bool _isRotateThreadExited;
-    std::atomic_bool _needWakeupRotateThread;
 
     std::mutex _play2dMutex;
 
     uintptr_t _id;
-
     friend class AudioEngineImpl;
 };
 
 }
 NS_CC_END
 
-#endif
+#endif //CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+

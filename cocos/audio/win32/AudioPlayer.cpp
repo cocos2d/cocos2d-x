@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2014-2016 Chukong Technologies Inc.
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
-
+ Copyright (c) 2018 x-studio365 @HALX99.
  http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -45,7 +45,7 @@ using namespace cocos2d;
 using namespace cocos2d::experimental;
 
 namespace {
-unsigned int __idIndex = 0;
+    uintptr_t __idIndex = 0;
 }
 
 AudioPlayer::AudioPlayer()
@@ -71,7 +71,7 @@ AudioPlayer::~AudioPlayer()
 
     if (_streamingSource)
     {
-        alDeleteBuffers(3, _bufferIds);
+        alDeleteBuffers(QUEUEBUFFER_NUM, _bufferIds);
     }
 }
 
@@ -172,7 +172,7 @@ bool AudioPlayer::play2d()
         }
         else
         {
-            alGenBuffers(3, _bufferIds);
+            alGenBuffers(QUEUEBUFFER_NUM, _bufferIds);
 
             auto alError = alGetError();
             if (alError == AL_NO_ERROR)
@@ -198,6 +198,7 @@ bool AudioPlayer::play2d()
 
             if (_streamingSource)
             {
+                // To continuously stream audio from a source without interruption, buffer queuing is required.
                 alSourceQueueBuffers(_alSource, QUEUEBUFFER_NUM, _bufferIds);
                 CHECK_AL_ERROR_DEBUG();
                 _rotateBufferThread = new std::thread(&AudioPlayer::rotateBufferThread, this, _audioCache->_queBufferFrames * QUEUEBUFFER_NUM + 1);
@@ -242,6 +243,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
 {
     char* tmpBuffer = nullptr;
     AudioDecoder* decoder = AudioDecoderManager::createDecoder(_audioCache->_fileFullPath.c_str());
+    long long rotateSleepTime = static_cast<long long>(QUEUEBUFFER_TIME_STEP * 1000) / 2;
     do
     {
         BREAK_IF(decoder == nullptr || !decoder->open(_audioCache->_fileFullPath.c_str()));
@@ -306,7 +308,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
                 break;
             }
 
-            _sleepCondition.wait_for(lk,std::chrono::milliseconds(75));
+            _sleepCondition.wait_for(lk,std::chrono::milliseconds(rotateSleepTime));
         }
 
     } while(false);
@@ -320,6 +322,33 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
     free(tmpBuffer);
     _isRotateThreadExited = true;
     ALOGV("%s exited.\n", __FUNCTION__);
+}
+
+bool AudioPlayer::isFinished() const
+{
+    ALint sourceState;
+    alGetSourcei(_alSource, AL_SOURCE_STATE, &sourceState);
+    /* Make sure the source hasn't underrun */
+    if (sourceState != AL_PLAYING && sourceState != AL_PAUSED)
+    {
+        if (!_streamingSource || _isRotateThreadExited)
+            return true;
+
+        ALint queued;
+
+        /* If no buffers are queued, playback is finished */
+        alGetSourcei(_alSource, AL_BUFFERS_QUEUED, &queued);
+        if (queued == 0)
+            return true;
+
+        alSourcePlay(_alSource);
+        if (alGetError() != AL_NO_ERROR)
+        {
+            ALOGE("Error restarting playback\n");
+            return true;
+        }
+    }
+    return false;
 }
 
 bool AudioPlayer::setLoop(bool loop)

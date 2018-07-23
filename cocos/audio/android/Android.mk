@@ -7,33 +7,15 @@ LOCAL_MODULE := audioengine_static
 
 LOCAL_MODULE_FILENAME := libaudioengine
 
-LOCAL_SRC_FILES := AudioEngine-inl.cpp \
+LOCAL_SRC_FILES := AudioEngineImpl.cpp \
                    ../AudioEngine.cpp \
-                   CCThreadPool.cpp \
-                   AssetFd.cpp \
                    AudioDecoder.cpp \
-                   AudioDecoderProvider.cpp \
-                   AudioDecoderSLES.cpp \
                    AudioDecoderOgg.cpp \
                    AudioDecoderMp3.cpp \
-                   AudioDecoderWav.cpp \
-                   AudioPlayerProvider.cpp \
-                   AudioResampler.cpp \
-                   AudioResamplerCubic.cpp \
-                   PcmBufferProvider.cpp \
-                   PcmAudioPlayer.cpp \
-                   UrlAudioPlayer.cpp \
-                   PcmData.cpp \
-                   AudioMixerController.cpp \
-                   AudioMixer.cpp \
-                   PcmAudioService.cpp \
-                   Track.cpp \
-                   audio_utils/format.c \
-                   audio_utils/minifloat.cpp \
-                   audio_utils/primitives.c \
-                   utils/Utils.cpp \
-                   mp3reader.cpp \
-                   tinysndfile.cpp
+                   AudioCache.cpp \
+                   AudioDecoderManager.cpp \
+                   AudioPlayer.cpp \
+                   utils/Utils.cpp
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../include
@@ -43,10 +25,12 @@ LOCAL_EXPORT_LDLIBS := -lOpenSLES
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../include \
                     $(LOCAL_PATH)/../.. \
                     $(LOCAL_PATH)/../../platform/android \
-                    $(LOCAL_PATH)/../../../external/android-specific \
-                    $(LOCAL_PATH)/../../../external/android-specific/tremolo
+                    $(LOCAL_PATH)/../../../external/android-specific/OggDecoder/include \
+                    $(LOCAL_PATH)/../../../external/android-specific/MP3Decoder/include \
+                    $(LOCAL_PATH)/../../../external/android-specific/OpenalSoft/include
 
-LOCAL_STATIC_LIBRARIES += libvorbisidec libpvmp3dec
+LOCAL_SHARED_LIBRARIES += mpg123_shared openal_shared
+LOCAL_WHOLE_STATIC_LIBRARIES += cocos_ogg_static cocos_vorbis_static cocos_vorbisfile_static
 include $(BUILD_STATIC_LIBRARY)
 
 #SimpleAudioEngine
@@ -69,5 +53,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../include \
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-module,android-specific/tremolo)
-$(call import-module,android-specific/pvmp3dec)
+$(call import-module,android-specific/OggDecoder/prebuilt)
+$(call import-module,android-specific/MP3Decoder/prebuilt)
+$(call import-module,android-specific/OpenalSoft/prebuilt)

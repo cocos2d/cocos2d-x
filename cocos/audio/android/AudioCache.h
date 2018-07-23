@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2014-2017 Chukong Technologies Inc.
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  Copyright (c) 2018 x-studio365 @HALX99.
 
@@ -27,16 +27,20 @@
 #pragma once
 
 #include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
-#import <OpenAL/al.h>
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #include <string>
 #include <mutex>
 #include <vector>
-
+#include <memory>
+#ifdef OPENAL_PLAIN_INCLUDES
+#include <al.h>
+#else
+#include <AL/al.h>
+#endif
 #include "platform/CCPlatformMacros.h"
-#include "audio/apple/AudioMacros.h"
+#include "audio/android/AudioMacros.h"
 
 NS_CC_BEGIN
 namespace experimental{
@@ -44,7 +48,7 @@ namespace experimental{
 class AudioEngineImpl;
 class AudioPlayer;
 
-class AudioCache
+class CC_DLL AudioCache
 {
 public:
 
@@ -85,7 +89,7 @@ protected:
     char* _pcmData;
 
     /*Queue buffer related stuff
-     *  Streaming in openal when sizeInBytes greater then PCMDATA_CACHEMAXSIZE
+     *  Streaming in OpenAL when sizeInBytes greater then PCMDATA_CACHEMAXSIZE
      */
     char* _queBuffers[QUEUEBUFFER_NUM];
     ALsizei _queBufferSize[QUEUEBUFFER_NUM];

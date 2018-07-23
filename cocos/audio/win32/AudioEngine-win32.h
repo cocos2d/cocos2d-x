@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2014-2016 Chukong Technologies Inc.
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
-
+ Copyright (c) 2018 x-studio365 @HALX99.
  http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,12 +22,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#pragma once
+#ifndef __AUDIO_ENGINE_IMPL_H_
+#define __AUDIO_ENGINE_IMPL_H_
+
 #include "platform/CCPlatformConfig.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-
-#ifndef __AUDIO_ENGINE_INL_H_
-#define __AUDIO_ENGINE_INL_H_
 
 #include <unordered_map>
 
@@ -49,17 +50,17 @@ public:
     ~AudioEngineImpl();
 
     bool init();
-    int play2d(const std::string &fileFullPath ,bool loop ,float volume);
-    void setVolume(int audioID,float volume);
-    void setLoop(int audioID, bool loop);
-    bool pause(int audioID);
-    bool resume(int audioID);
-    void stop(int audioID);
+    uintptr_t play2d(const std::string &fileFullPath ,bool loop ,float volume);
+    void setVolume(uintptr_t audioID,float volume);
+    void setLoop(uintptr_t audioID, bool loop);
+    bool pause(uintptr_t audioID);
+    bool resume(uintptr_t audioID);
+    void stop(uintptr_t audioID);
     void stopAll();
-    float getDuration(int audioID);
-    float getCurrentTime(int audioID);
-    bool setCurrentTime(int audioID, float time);
-    void setFinishCallback(int audioID, const std::function<void (int, const std::string &)> &callback);
+    float getDuration(uintptr_t audioID);
+    float getCurrentTime(uintptr_t audioID);
+    bool setCurrentTime(uintptr_t audioID, float time);
+    void setFinishCallback(uintptr_t audioID, const std::function<void (uintptr_t, const std::string &)> &callback);
 
     void uncache(const std::string& filePath);
     void uncacheAll();
@@ -67,7 +68,7 @@ public:
     void update(float dt);
 
 private:
-    void _play2d(AudioCache *cache, int audioID);
+    void _play2d(AudioCache *cache, uintptr_t audioID);
 
     ALuint _alSources[MAX_AUDIOINSTANCES];
 
@@ -78,12 +79,15 @@ private:
     std::unordered_map<std::string, AudioCache> _audioCaches;
 
     //audioID,AudioInfo
-    std::unordered_map<int, AudioPlayer*>  _audioPlayers;
+    std::unordered_map<uintptr_t, AudioPlayer*>  _audioPlayers;
     std::mutex _threadMutex;
+
+    //finish callbacks
+    std::vector<std::function<void()>> _finishCallbacks;
 
     bool _lazyInitLoop;
 
-    int _currentAudioID;
+    uintptr_t _currentAudioID;
     Scheduler* _scheduler;
 };
 }
