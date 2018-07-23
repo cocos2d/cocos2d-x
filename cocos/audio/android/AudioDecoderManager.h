@@ -1,6 +1,7 @@
 /****************************************************************************
-Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2016-2017 Chukong Technologies Inc.
 Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+Copyright (c) 2018 HALX99.
 
 http://www.cocos2d-x.org
 
@@ -22,24 +23,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#pragma once
 
-#include "audio/android/audio_utils/include/audio_utils/minifloat.h"
+#pragma once
 
 namespace cocos2d { namespace experimental {
 
-class IVolumeProvider
+class AudioDecoder;
+
+class AudioDecoderManager
 {
 public:
-    // The provider implementation is responsible for validating that the return value is in range.
-    virtual gain_minifloat_packed_t getVolumeLR() = 0;
-
-protected:
-    IVolumeProvider()
-    { }
-
-    virtual ~IVolumeProvider()
-    { }
+    static bool init();
+    static void destroy();
+    static AudioDecoder* createDecoder(const char* path);
+    static void destroyDecoder(AudioDecoder* decoder);
 };
 
 }} // namespace cocos2d { namespace experimental {
+
