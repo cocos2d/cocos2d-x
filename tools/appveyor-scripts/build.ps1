@@ -19,7 +19,7 @@ function PushAndroidArtifacts
 If ($env:build_type -eq "android_cpp_tests") {
     Write-Host "Build tests\cpp-tests"
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tests\cpp-tests\proj.android\
-    & ./gradlew build
+    & ./gradlew assembleRelease
     if ($lastexitcode -ne 0) {throw}
     PushAndroidArtifacts
     Pop-Location
@@ -27,7 +27,7 @@ If ($env:build_type -eq "android_cpp_tests") {
 } elseif ($env:build_type -eq "android_cpp_empty_test") {
     Write-Host "Build tests\cpp-empty-test"
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tests\cpp-empty-test\proj.android\
-    & ./gradlew build
+    & ./gradlew assembleRelease
     if ($lastexitcode -ne 0) {throw}
     PushAndroidArtifacts
     Pop-Location
@@ -39,7 +39,7 @@ If ($env:build_type -eq "android_cpp_tests") {
 
     Write-Host "Build cocos_new_test"
     Push-Location $env:APPVEYOR_BUILD_FOLDER\cocos_new_test\proj.android\
-    & ./gradlew build
+    & ./gradlew assembleRelease
     if ($lastexitcode -ne 0) {throw}
     PushAndroidArtifacts
     Pop-Location
