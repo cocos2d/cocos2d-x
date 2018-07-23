@@ -71,7 +71,6 @@ If ($env:build_type -eq "android_cpp_tests") {
 }
 Else {
     & mkdir $env:APPVEYOR_BUILD_FOLDER\win32_build
-    # if ($lastexitcode -ne 0) {throw}
 
     Push-Location $env:APPVEYOR_BUILD_FOLDER\win32_build
     & cmake -DCMAKE_BUILD_TYPE=Release ..
