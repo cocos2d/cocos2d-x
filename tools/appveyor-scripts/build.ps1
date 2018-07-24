@@ -70,16 +70,10 @@ If ($env:build_type -eq "android_cpp_tests") {
     Push-AppveyorArtifact release_win32.7z
 }
 Else {
-    & mkdir $env:APPVEYOR_BUILD_FOLDER\win32_build
+    & msbuild $env:APPVEYOR_BUILD_FOLDER\build\cocos2d-win32.sln /t:Build /p:Platform="Win32" /p:Configuration="Release" /m /consoleloggerparameters:"PerformanceSummary;NoSummary"
 
-    Push-Location $env:APPVEYOR_BUILD_FOLDER\win32_build
-    & cmake -DCMAKE_BUILD_TYPE=Release ..
     if ($lastexitcode -ne 0) {throw}
-
-    & cmake --build . --config Release
-    if ($lastexitcode -ne 0) {throw}
-
-    & 7z a release_win32.7z $env:APPVEYOR_BUILD_FOLDER\win32_build\bin\
+    & 7z a release_win32.7z $env:APPVEYOR_BUILD_FOLDER\build\Release.win32\
     if ($lastexitcode -ne 0) {throw}
 
     Push-AppveyorArtifact release_win32.7z
