@@ -33,7 +33,6 @@ if(WINDOWS)
 elseif(ANDROID)
 
     set(COCOS_AUDIO_PLATFORM_HEADER
-        audio/android/cddSimpleAudioEngine.h
         audio/android/ccdandroidUtils.h
         audio/android/jni/cddandroidAndroidJavaEngine.h
         audio/android/utils/Utils.h
