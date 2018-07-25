@@ -54,10 +54,17 @@ If ($env:build_type -eq "android_cpp_tests") {
     & $python -u tools\cocos2d-console\bin\cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
     if ($lastexitcode -ne 0) {throw}
 
-    & msbuild $env:APPVEYOR_BUILD_FOLDER\cocos_new_test\proj.win32\cocos_new_test.sln /t:Build /p:Platform="Win32" /p:Configuration="Release" /m /consoleloggerparameters:"PerformanceSummary;NoSummary"
+    & mkdir $env:APPVEYOR_BUILD_FOLDER\cocos_new_test\b
     if ($lastexitcode -ne 0) {throw}
 
-    & 7z a release_win32.7z $env:APPVEYOR_BUILD_FOLDER\cocos_new_test\proj.win32\Release.win32\
+    Push-Location $env:APPVEYOR_BUILD_FOLDER\cocos_new_test\b
+    & cmake -DCMAKE_BUILD_TYPE=Release ..
+    if ($lastexitcode -ne 0) {throw}
+
+    & cmake --build . --config Release
+    if ($lastexitcode -ne 0) {throw}
+
+    & 7z a release_win32.7z $env:APPVEYOR_BUILD_FOLDER\cocos_new_test\b\bin\
     if ($lastexitcode -ne 0) {throw}
 
     Push-AppveyorArtifact release_win32.7z
