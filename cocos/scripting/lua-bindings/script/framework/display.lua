@@ -109,7 +109,7 @@ local function setConstants()
     display.right_bottom       = cc.p(display.right, display.bottom)
     display.right_center       = cc.p(display.right, display.cy)
     display.top_center         = cc.p(display.cx, display.top)
-    display.top_bottom         = cc.p(display.cx, display.bottom)
+    display.bottom_center      = cc.p(display.cx, display.bottom)
 
     printInfo(string.format("# display.sizeInPixels         = {width = %0.2f, height = %0.2f}", display.sizeInPixels.width, display.sizeInPixels.height))
     printInfo(string.format("# display.size                 = {width = %0.2f, height = %0.2f}", display.size.width, display.size.height))
@@ -134,7 +134,7 @@ local function setConstants()
     printInfo(string.format("# display.right_bottom         = {x = %0.2f, y = %0.2f}", display.right_bottom.x, display.right_bottom.y))
     printInfo(string.format("# display.right_center         = {x = %0.2f, y = %0.2f}", display.right_center.x, display.right_center.y))
     printInfo(string.format("# display.top_center           = {x = %0.2f, y = %0.2f}", display.top_center.x, display.top_center.y))
-    printInfo(string.format("# display.top_bottom           = {x = %0.2f, y = %0.2f}", display.top_bottom.x, display.top_bottom.y))
+    printInfo(string.format("# display.bottom_center        = {x = %0.2f, y = %0.2f}", display.bottom_center.x, display.bottom_center.y))
     printInfo("#")
 end
 
