@@ -83,7 +83,7 @@ def install_android_sdk():
     cmd1 = SDK_MANAGER + switches
     packages = [
         "platforms;android-27",
-        "build-tools;27.0.1",
+        "build-tools;27.0.3",
         "platform-tools",
         "tools"
     ]
