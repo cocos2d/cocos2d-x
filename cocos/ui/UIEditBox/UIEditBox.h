@@ -226,6 +226,14 @@ namespace ui {
          */
         static EditBox* create(const Size& size,
                                const std::string& normalImage,
+                               TextureResType texType);
+
+        /**
+         * create a edit box with size.
+         * @return An autorelease pointer of EditBox, you don't need to release it only if you retain it again.
+         */
+        static EditBox* create(const Size& size,
+                               const std::string& normalImage,
                                const std::string& pressedImage = "",
                                const std::string& disabledImage = "",
                                TextureResType texType = TextureResType::LOCAL);

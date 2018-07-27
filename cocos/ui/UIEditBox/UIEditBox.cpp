@@ -91,6 +91,12 @@ void EditBox::touchDownAction(Ref* /*sender*/, TouchEventType controlEvent)
 
 EditBox* EditBox::create(const Size& size,
                          const std::string& normalImage,
+                         TextureResType texType) {
+    return EditBox::create(size, normalImage, "", "", texType);
+}
+
+EditBox* EditBox::create(const Size& size,
+                         const std::string& normalImage,
                          const std::string& pressedImage /* = "" */,
                          const std::string& disabledImage /* = "" */,
                          TextureResType texType /* = TextureResType::LOCAL */)
