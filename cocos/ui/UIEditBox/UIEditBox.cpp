@@ -117,8 +117,14 @@ EditBox* EditBox::create(const Size& size,
 
 EditBox* EditBox::create(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *normalSprite, ui::Scale9Sprite* pressedSprite, Scale9Sprite* disabledSprite)
 {
-    EditBox* pRet = new (std::nothrow) EditBox();
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (push)
+#pragma warning (disable: 4996)
+#endif
 
+    EditBox* pRet = new (std::nothrow) EditBox();
     if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, normalSprite, pressedSprite, disabledSprite))
     {
         pRet->autorelease();
@@ -127,6 +133,12 @@ EditBox* EditBox::create(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *n
     {
         CC_SAFE_DELETE(pRet);
     }
+
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#pragma GCC diagnostic warning "-Wdeprecated-declarations"
+#elif _MSC_VER >= 1400 //vs 2005 or higher
+#pragma warning (pop)
+#endif
 
     return pRet;
 }
