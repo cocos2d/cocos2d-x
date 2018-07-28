@@ -37,6 +37,32 @@ function build_ios()
     xcodebuild -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "build all tests iOS" -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build
 }
 
+function build_mac_cmake()
+{
+    pushd $COCOS2DX_ROOT
+    python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
+    popd
+    cd $COCOS2DX_ROOT/cocos_new_test
+    mkdir -p mac_cmake_build
+    cd mac_cmake_build
+    cmake ..
+    cmake --build .
+    exit 0
+}
+
+function build_ios_cmake()
+{
+    pushd $COCOS2DX_ROOT
+    python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
+    popd
+    cd $COCOS2DX_ROOT/cocos_new_test
+    mkdir -p ios_cmake_build
+    cd ios_cmake_build
+    cmake .. -DCMAKE_TOOLCHAIN_FILE=$COCOS2DX_ROOT/cmake/ios.toolchain.cmake
+    cmake --build .
+    exit 0
+}
+
 function build_android()
 {
     # Build all samples
@@ -204,6 +230,14 @@ function run_pull_request()
 
     if [ $BUILD_TARGET == 'ios' ]; then
         build_ios
+    fi
+
+    if [ $BUILD_TARGET == 'mac_cmake' ]; then
+        build_mac_cmake
+    fi
+
+    if [ $BUILD_TARGET == 'ios_cmake' ]; then
+        build_ios_cmake
     fi
 }
 
