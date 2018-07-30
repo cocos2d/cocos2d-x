@@ -76,7 +76,7 @@ function build_android()
 
     # build cpp-tests
     pushd $COCOS2DX_ROOT/tests/cpp-tests/proj.android
-    ./gradlew assembleDebug
+    ./gradlew assembleRelease
     popd
 
     # build js-tests

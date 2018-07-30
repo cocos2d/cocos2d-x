@@ -19,7 +19,7 @@ function PushAndroidArtifacts
 If ($env:build_type -eq "android_cpp_tests") {
     Write-Host "Build tests\cpp-tests"
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tests\cpp-tests\proj.android\
-    & ./gradlew assembleRelease
+    & ./gradlew assembleDebug
     if ($lastexitcode -ne 0) {throw}
     PushAndroidArtifacts
     Pop-Location
