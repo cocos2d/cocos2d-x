@@ -157,6 +157,11 @@ public:
         _letterVisible = visible;
         updateColor();
     }
+
+    bool isVisible() const override
+    {
+        return _letterVisible;
+    }
     
     //LabelLetter doesn't need to draw directly.
     void draw(Renderer* /*renderer*/, const Mat4 & /*transform*/, uint32_t /*flags*/) override
