@@ -214,7 +214,6 @@ namespace ui {
          * create a edit box with size.
          * @return An autorelease pointer of EditBox, you don't need to release it only if you retain it again.
          */
-        CC_DEPRECATED_ATTRIBUTE
         static EditBox* create(const Size& size,
                                Scale9Sprite* normalSprite,
                                Scale9Sprite* pressedSprite = nullptr,
@@ -269,7 +268,6 @@ namespace ui {
          * @param normal9SpriteBg  background image of edit box.
          * @return Whether initialization is successfully or not.
          */
-        CC_DEPRECATED_ATTRIBUTE
         bool initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* normal9SpriteBg);
 
         /**
@@ -280,7 +278,6 @@ namespace ui {
          * @param disabledSprite  disabled state image of edit box.
          * @return Whether initialization is successfully or not.
          */
-        CC_DEPRECATED_ATTRIBUTE
         bool initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* normalSprite, Scale9Sprite* pressedSprite, Scale9Sprite* disabledSprite);
 
         /**
