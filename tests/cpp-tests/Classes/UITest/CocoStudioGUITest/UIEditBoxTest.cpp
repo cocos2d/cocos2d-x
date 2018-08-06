@@ -372,6 +372,7 @@ bool UIEditBoxTestPressedAndDisabled::init() {
     editbox->setFontSize(editBoxSize.height/2);
     editbox->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
     addChild(editbox);
+    editbox->setEnabled(false);
 
     editbox = ui::EditBox::create(editBoxSize + Size(0,40), "extensions/yellow_edit.png");
     editbox->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
@@ -382,6 +383,7 @@ bool UIEditBoxTestPressedAndDisabled::init() {
     editbox->setFontSize(editBoxSize.height/2);
     editbox->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
     addChild(editbox);
+    editbox->setEnabled(false);
 
     return true;
 }
