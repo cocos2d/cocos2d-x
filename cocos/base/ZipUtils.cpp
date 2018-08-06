@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
  
@@ -23,14 +24,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-// FIXME: hack, must be included before ziputils
+#include "base/ZipUtils.h"
+
 #ifdef MINIZIP_FROM_SYSTEM
 #include <minizip/unzip.h>
 #else // from our embedded sources
 #include "unzip.h"
 #endif
-
-#include "base/ZipUtils.h"
 
 #include <zlib.h>
 #include <assert.h>

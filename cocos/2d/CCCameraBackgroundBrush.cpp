@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -277,6 +278,13 @@ bool CameraBackgroundColorBrush::init()
     CameraBackgroundDepthBrush::init();
     this->_clearColor = GL_TRUE;
     return true;
+}
+
+void CameraBackgroundColorBrush::drawBackground(Camera* camera)
+{
+    GL::blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED.src, BlendFunc::ALPHA_NON_PREMULTIPLIED.dst);
+
+    CameraBackgroundDepthBrush::drawBackground(camera);
 }
 
 void CameraBackgroundColorBrush::setColor(const Color4F& color)

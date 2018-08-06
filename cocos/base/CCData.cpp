@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -61,15 +62,21 @@ Data::~Data()
 
 Data& Data::operator= (const Data& other)
 {
-    CCLOGINFO("In the copy assignment of Data.");
-    copy(other._bytes, other._size);
+    if (this != &other)
+    {
+        CCLOGINFO("In the copy assignment of Data.");
+        copy(other._bytes, other._size);
+    }
     return *this;
 }
 
 Data& Data::operator= (Data&& other)
 {
-    CCLOGINFO("In the move assignment of Data.");
-    move(other);
+    if (this != &other)
+    {
+        CCLOGINFO("In the move assignment of Data.");
+        move(other);
+    }
     return *this;
 }
 

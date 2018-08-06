@@ -4,7 +4,8 @@ Copyright (c) 2009      Jason Booth
 Copyright (c) 2009      Robert J Payne
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -157,9 +158,10 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
     Size textureSize;
 
     // get the format
-    if (dictionary.find("metadata") != dictionary.end())
+    auto metaItr = dictionary.find("metadata");
+    if (metaItr != dictionary.end())
     {
-        ValueMap& metadataDict = dictionary["metadata"].asValueMap();
+        ValueMap& metadataDict = metaItr->second.asValueMap();
         format = metadataDict["format"].asInt();
 
         if(metadataDict.find("size") != metadataDict.end())
@@ -542,7 +544,7 @@ void SpriteFrameCache::removeSpriteFramesFromDictionary(ValueMap& dictionary)
     if (dictionary["frames"].getType() != cocos2d::Value::Type::MAP)
         return;
 
-    ValueMap framesDict = dictionary["frames"].asValueMap();
+    const ValueMap& framesDict = dictionary["frames"].asValueMap();
     std::vector<std::string> keysToRemove;
 
     for (const auto& iter : framesDict)

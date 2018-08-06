@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -45,7 +46,6 @@ LoadingBar::LoadingBar():
 _direction(Direction::LEFT),
 _percent(100.0),
 _totalLength(0),
-_textureFile(""),
 _barRenderer(nullptr),
 _renderBarTexType(TextureResType::LOCAL),
 _barRendererTextureSize(Size::ZERO),
@@ -53,7 +53,8 @@ _originalRect(Rect::ZERO),
 _scale9Enabled(false),
 _prevIgnoreSize(true),
 _capInsets(Rect::ZERO),
-_barRendererAdaptDirty(true)
+_barRendererAdaptDirty(true),
+_textureFile("")
 {
 }
 

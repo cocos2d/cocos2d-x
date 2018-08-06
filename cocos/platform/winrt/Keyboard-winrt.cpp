@@ -1,6 +1,7 @@
 ﻿/****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 * Portions Copyright (c) Microsoft Open Technologies, Inc.
 * All Rights Reserved
@@ -223,11 +224,17 @@ void KeyBoardWinRT::ShowKeyboard(Platform::String^ text)
         {
             if (m_textBox == nullptr)
             {
+				m_useInputMethod = false;
                 m_textBox = ref new TextBox();
                 m_textBox->Opacity = 0.0;
                 m_textBox->Width = 1;
                 m_textBox->Height = 1;
                 m_textBox->TextChanged += ref new TextChangedEventHandler(this, &KeyBoardWinRT::OnTextChanged);
+				m_textBox->TextCompositionStarted += ref new Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::TextBox^,
+					Windows::UI::Xaml::Controls::TextCompositionStartedEventArgs^>(this, &KeyBoardWinRT::OnTextCompositionStarted);
+
+				m_textBox->TextCompositionEnded += ref new Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::TextBox^,
+					Windows::UI::Xaml::Controls::TextCompositionEndedEventArgs^>(this, &KeyBoardWinRT::OnTextCompositionEnded);
 #if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
                 // Need to use InputScopeNameValue::Search to prevent auto-capitalize
                 m_textBox->InputScope = ref new InputScope();
@@ -321,6 +328,9 @@ void KeyBoardWinRT::OnWinRTKeyboardEvent(WinRTKeyboardEventType type, KeyEventAr
 
 void KeyBoardWinRT::OnTextChanged(Platform::Object^ sender, TextChangedEventArgs^ args)
 {
+	if (m_useInputMethod) {
+		return;
+	}
     auto text = m_textBox->Text;
     if (text)
     {
@@ -330,6 +340,22 @@ void KeyBoardWinRT::OnTextChanged(Platform::Object^ sender, TextChangedEventArgs
     }
 }
 
+void KeyBoardWinRT::OnTextCompositionStarted(Windows::UI::Xaml::Controls::TextBox^, Windows::UI::Xaml::Controls::TextCompositionStartedEventArgs^ args)
+{
+	m_useInputMethod = true;
+}
+
+void KeyBoardWinRT::OnTextCompositionEnded(Windows::UI::Xaml::Controls::TextBox^, Windows::UI::Xaml::Controls::TextCompositionEndedEventArgs^ args)
+{
+	m_useInputMethod = false;
+	auto text = m_textBox->Text;
+	if (text)
+	{
+		std::shared_ptr<cocos2d::InputEvent> e(new cocos2d::KeyboardEvent(Cocos2dKeyEvent::Text, text));
+		cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(e);
+		m_textBox->Text = L"";
+	}
+}
 
 NS_CC_END
 

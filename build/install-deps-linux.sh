@@ -1,6 +1,16 @@
 #!/bin/bash
 
 # Change directory to the location of this script
+echo "This Shell Script will install dependencies for cocos2d-x" 
+echo "if you execute this shell more than once it will get errors when building libGLFW.so"
+echo -n "Are you continue? (y/n) "
+read answer
+if echo "$answer" | grep -iq "^y" ;then
+    echo "It will take few minutes"
+else
+    exit
+fi
+
 cd $(dirname ${BASH_SOURCE[0]})
 
 if [ ! $(command -v apt-get) ]; then
@@ -41,8 +51,17 @@ if [ -n "$MISSING" ]; then
     TXTCOLOR_DEFAULT="\033[0;m"
     TXTCOLOR_GREEN="\033[0;32m"
     echo -e $TXTCOLOR_GREEN"Missing packages: $MISSING.\nYou may be asked for your password for package installation."$TXTCOLOR_DEFAULT
-    sudo apt-get --force-yes --yes install $MISSING > /dev/null
+    CUR_APT_VERSION="$(apt --version | grep -o '[0-9].[0-9]')"
+    REQ_APT_VERSION="1.1"
+    if [ 1 -ge "$(echo "${CUR_APT_VERSION} >= ${REQ_APT_VERSION}" | bc)" ]
+    then
+        sudo apt-get install --allow-change-held-packages $MISSING -y > /dev/null
+    else
+        sudo apt-get install --force-yes --yes $MISSING > /dev/null
+    fi 
 fi
+
+
 
 sudo update-alternatives --remove-all gcc
 sudo update-alternatives --remove-all g++
@@ -54,6 +73,4 @@ echo "Cocos uses GCC Version: `gcc --version`"
 echo "Cocos uses G++ Version: `g++ --version`"
 echo "Cocos uses ld Version: `ld --version`"
 echo "Cocos uses /usr/bin/ld Version: `/usr/bin/ld --version`"
-# install glfw
-../tools/travis-scripts/install_glfw.sh
 

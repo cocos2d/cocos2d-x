@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2013 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -103,7 +104,8 @@ class ResizableBufferAdapter<Data> : public ResizableBuffer {
 public:
     explicit ResizableBufferAdapter(BufferType* buffer) : _buffer(buffer) {}
     virtual void resize(size_t size) override {
-        if (static_cast<size_t>(_buffer->getSize()) < size) {
+        size_t oldSize = static_cast<size_t>(_buffer->getSize());
+        if (oldSize != size) {
             auto old = _buffer->getBytes();
             void* buffer = realloc(old, size);
             if (buffer)

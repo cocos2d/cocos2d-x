@@ -25,7 +25,7 @@
 -- return the count of tabs
 -- @function [parent=#TabControl] getTabCount 
 -- @param self
--- @return unsigned long#unsigned long ret (return value: unsigned long)
+-- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
 -- 

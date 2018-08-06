@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -55,7 +56,7 @@ struct CC_DLL Particle3D
     float depth;//Own depth
     
     //user defined property
-    std::map<std::string, void*> userDefs;
+    std::unordered_map<std::string, void*> userDefs;
 };
 
 template<typename T>

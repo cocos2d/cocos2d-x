@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -441,6 +442,7 @@ void Scheduler::priorityIn(tListEntry **list, const ccSchedulerFunc& callback, v
     hashElement->target = target;
     hashElement->list = list;
     hashElement->entry = listElement;
+    memset(&hashElement->hh, 0, sizeof(hashElement->hh));
     HASH_ADD_PTR(_hashForUpdates, target, hashElement);
 }
 
@@ -461,6 +463,7 @@ void Scheduler::appendIn(_listEntry **list, const ccSchedulerFunc& callback, voi
     hashElement->target = target;
     hashElement->list = list;
     hashElement->entry = listElement;
+    memset(&hashElement->hh, 0, sizeof(hashElement->hh));
     HASH_ADD_PTR(_hashForUpdates, target, hashElement);
 }
 

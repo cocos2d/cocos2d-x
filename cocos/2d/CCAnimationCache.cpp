@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -186,18 +187,20 @@ void AnimationCache::parseVersion2(const ValueMap& animations)
 
 void AnimationCache::addAnimationsWithDictionary(const ValueMap& dictionary,const std::string& plist)
 {
-    if ( dictionary.find("animations") == dictionary.end() )
+    auto anisItr = dictionary.find("animations");
+    if (anisItr == dictionary.end() )
     {
         CCLOG("cocos2d: AnimationCache: No animations were found in provided dictionary.");
         return;
     }
     
-    const Value& animations = dictionary.at("animations");
+    const Value& animations = anisItr->second;
     unsigned int version = 1;
 
-    if( dictionary.find("properties") != dictionary.end() )
+    auto propsItr = dictionary.find("properties");
+    if(propsItr != dictionary.end() )
     {
-        const ValueMap& properties = dictionary.at("properties").asValueMap();
+        const ValueMap& properties = propsItr->second.asValueMap();
         version = properties.at("format").asInt();
         const ValueVector& spritesheets = properties.at("spritesheets").asValueVector();
 

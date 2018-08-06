@@ -2,7 +2,8 @@
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2010-2013 cocos2d-x.org
  Copyright (c) 2011      Zynga Inc.
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -256,7 +257,12 @@ public:
     /** Returns visible origin coordinate of the OpenGL view in points. */
     Vec2 getVisibleOrigin() const;
 
-    /** 
+    /**
+     * Returns safe area rectangle of the OpenGL view in points.
+     */
+    Rect getSafeAreaRect() const;
+
+    /**
      * Converts a screen coordinate to an OpenGL coordinate.
      * Useful to convert (multi) touch coordinates to the current layout (portrait or landscape).
      */

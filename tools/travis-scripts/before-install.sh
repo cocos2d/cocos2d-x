@@ -9,25 +9,11 @@ HOST_NAME=""
 
 function install_android_ndk()
 {
-    mkdir -p $HOME/bin
-    cd $HOME/bin
-
-    # Download android ndk
-    if [ "$TRAVIS_OS_NAME" = "osx" ]; then
-        HOST_NAME="darwin"
+    if [ "$BUILD_TARGET" == "android" ] || [ "$BUILD_TARGET" == "android_lua" ] ; then
+        python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py
     else
-        HOST_NAME="linux"
+        python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py --ndk_only
     fi
-
-    FILE_NAME=android-ndk-r10d-${HOST_NAME}-x86_64.bin
-
-    echo "Download ${FILE_NAME} ..."
-    curl -O http://dl.google.com/android/ndk/${FILE_NAME}
-    sudo chmod +x ./$FILE_NAME
-    echo "Decompress ${FILE_NAME} ..."
-    ./$FILE_NAME > /dev/null
-    # Rename ndk
-    mv android-ndk-r10d android-ndk
 }
 
 function install_linux_environment()
@@ -63,7 +49,9 @@ function install_linux_environment()
     echo "which ld: `which ld`"
     sudo rm /usr/bin/ld
     popd
-    bash $COCOS2DX_ROOT/build/install-deps-linux.sh
+    echo "Installing linux dependence packages ..."
+    echo -e "y" | bash $COCOS2DX_ROOT/build/install-deps-linux.sh
+    echo "Installing linux dependence packages finished!"
 }
 
 function download_deps()
@@ -72,57 +60,69 @@ function download_deps()
     pushd $COCOS2DX_ROOT
     python download-deps.py -r=yes
     popd
-}
-
-function install_android_environment()
-{
-    sudo apt-get install ant -y
-    
-    # todo: cocos should add parameter to avoid promt
-    sudo mkdir $HOME/.cocos
-    sudo touch $HOME/.cocos/local_cfg.json
-    echo '{"agreement_shown": true}' | sudo tee $HOME/.cocos/local_cfg.json
+    echo "Downloading cocos2d-x dependence finished!"
 }
 
 function install_python_module_for_osx()
 {
-    sudo easy_install pip
-    sudo pip install PyYAML
+    pip install PyYAML
     sudo pip install Cheetah
+}
+
+function install_latest_python()
+{
+    python -V
+    eval "$(pyenv init -)"
+    pyenv install 2.7.14
+    pyenv global 2.7.14
+    python -V
 }
 
 # set up environment according os and target
 function install_environement_for_pull_request()
 {
-    # use NDK's clang to generate binding codes
-    install_android_ndk
-    download_deps
+    echo "Building pull request ..."
 
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
         if [ "$BUILD_TARGET" == "linux" ]; then
             install_linux_environment
         fi
-
-        if [ "$BUILD_TARGET" == "android" ]; then
-            install_android_environment
-        fi
     fi
 
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+        install_latest_python
         install_python_module_for_osx
     fi
+
+    # use NDK's clang to generate binding codes
+    install_android_ndk
+    download_deps
 }
 
 # should generate binding codes & cocos_files.json after merging
 function install_environement_for_after_merge()
 {
-    install_android_ndk
-    download_deps
-
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+        install_latest_python
         install_python_module_for_osx
     fi
+
+    echo "Building merge commit ..."
+    install_android_ndk
+    download_deps
 }
+
+if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
+    download_deps
+    python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py
+    exit 0
+fi
+
+if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
+    download_deps
+    install_linux_environment
+    exit 0
+fi
 
 # build pull request
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
@@ -134,7 +134,9 @@ fi
 # - generate cocos_files.json for template
 if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     # only one job need to send PR, linux virtual machine has better performance
-    if [ $TRAVIS_OS_NAME == "linux" ] && [ $GEN_BINDING_AND_COCOSFILE == "true" ]; then
+    if [ $TRAVIS_OS_NAME == "linux" ] && [ x$GEN_BINDING_AND_COCOSFILE == x"true" ]; then
         install_environement_for_after_merge
     fi 
 fi
+
+echo "before-install.sh execution finished!"

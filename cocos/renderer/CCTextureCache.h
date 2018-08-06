@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -51,7 +52,7 @@ NS_CC_BEGIN
  * @{
  */
 /*
-* From version 3.0, TextureCache will never to treated as a singleton, it will be owned by director.
+* From version 3.0, TextureCache will never be treated as a singleton, it will be owned by director.
 * All call by TextureCache::getInstance() should be replaced by Director::getInstance()->getTextureCache().
 */
 

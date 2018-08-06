@@ -1,7 +1,8 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -2329,6 +2330,11 @@ var Issue1305 = ActionsDemo.extend({
     },
     onExit:function () {
         this._super();
+        if (this._spriteTmp)
+        {
+            this._spriteTmp.release();
+            this._spriteTmp = null;
+        }
     },
     onLog:function (pSender) {
         cc.log("This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
@@ -2336,8 +2342,12 @@ var Issue1305 = ActionsDemo.extend({
     onAddSprite:function (dt) {
         this._spriteTmp.x = 250;
 		this._spriteTmp.y = 250;
-        this.addChild(this._spriteTmp);
-        this._spriteTmp.release();
+        if (this._spriteTmp)
+        {
+            this.addChild(this._spriteTmp);
+            this._spriteTmp.release();
+            this._spriteTmp = null;
+        }
     },
     title:function () {
         return "Issue 1305";

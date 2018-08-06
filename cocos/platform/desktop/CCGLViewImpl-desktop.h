@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -94,6 +95,12 @@ public:
     virtual void swapBuffers() override;
     virtual void setFrameSize(float width, float height) override;
     virtual void setIMEKeyboardState(bool bOpen) override;
+
+#if CC_ICON_SET_SUPPORT
+    virtual void setIcon(const std::string& filename) const override;
+    virtual void setIcon(const std::vector<std::string>& filelist) const override;
+    virtual void setDefaultIcon() const override;
+#endif /* CC_ICON_SET_SUPPORT */
 
     /*
      * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.

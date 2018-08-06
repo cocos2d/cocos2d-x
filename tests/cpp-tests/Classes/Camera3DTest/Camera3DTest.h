@@ -1,5 +1,6 @@
 /****************************************************************************
 Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -263,6 +264,20 @@ public:
     virtual ~CameraFrameBufferTest(void);
     // overrides
     virtual std::string title() const override;
+    
+    virtual void onEnter() override;
+};
+
+class BackgroundColorBrushTest : public CameraBaseTest
+{
+public:
+    CREATE_FUNC(BackgroundColorBrushTest);
+    BackgroundColorBrushTest(void);
+    virtual ~BackgroundColorBrushTest(void);
+    
+    // overrides
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     
     virtual void onEnter() override;
 };

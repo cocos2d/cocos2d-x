@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
-    buildToolsVersion '25.0.0'
 
     defaultConfig {
         minSdkVersion PROP_MIN_SDK_VERSION
@@ -19,12 +18,12 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: '../java/libs', include: ['*.jar'])
+    implementation fileTree(dir: '../java/libs', include: ['*.jar'])
 }

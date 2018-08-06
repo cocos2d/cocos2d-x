@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -96,7 +97,7 @@ struct DownloaderTest : public TestCase
         bg->addChild(btn, 10);
         
         // add a progress bar
-        auto bar = ui::LoadingBar::create("cocosui/UIEditorTest/UISlider/silder_progressBar.png");
+        auto bar = ui::LoadingBar::create("ccs-res/cocosui/sliderProgress.png");
         bar->setTag(TAG_PROGRESS_BAR);
         bar->ignoreContentAdaptWithSize(false);
         bar->setAnchorPoint(Vec2(0.5, 0));
@@ -319,7 +320,52 @@ struct DownloaderTest : public TestCase
     }
 };
 
+struct DownloaderMultiTask : public TestCase
+{
+    CREATE_FUNC(DownloaderMultiTask);
+
+    virtual std::string title() const override { return "Downloader Multi Task"; }
+    virtual std::string subtitle() const override { return "see the console output"; }
+
+    std::unique_ptr<network::Downloader> downloader;
+
+    DownloaderMultiTask()
+    {
+        // countOfMaxProcessingTasks 32
+        network::DownloaderHints hints = {32, 60, ".going"};
+        downloader.reset(new network::Downloader(hints));
+    }
+
+    virtual void onEnter() override
+    {
+        TestCase::onEnter();
+        char path[256];
+        char name[64];
+        // add 64 download task at same time.
+        for(int i=0; i< 64;i++){
+            sprintf(name, "%d_%s", i, sNameList[0]);
+            sprintf(path, "%sCppTests/DownloaderTest/%s", FileUtils::getInstance()->getWritablePath().c_str(), name);
+            log("downloader task create: %s", name);
+            this->downloader->createDownloadFileTask(sURLList[0], path, name);
+        }
+
+        downloader->onFileTaskSuccess = ([] (const network::DownloadTask& task) {
+            log("downloader task success: %s", task.identifier.c_str());
+        });
+
+        downloader->onTaskError = ([] (const network::DownloadTask& task, int errorCode, int errorCodeInternal, const std::string& errorStr) {
+            log("downloader task failed : %s, identifier(%s) error code(%d), internal error code(%d) desc(%s)"
+                , task.requestURL.c_str()
+                , task.identifier.c_str()
+                , errorCode
+                , errorCodeInternal
+                , errorStr.c_str());
+        });
+    }
+};
+
 DownloaderTests::DownloaderTests()
 {
     ADD_TEST_CASE(DownloaderTest);
+    ADD_TEST_CASE(DownloaderMultiTask);
 };

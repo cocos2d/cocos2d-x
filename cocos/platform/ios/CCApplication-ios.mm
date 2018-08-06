@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -31,6 +32,7 @@
 
 #import "math/CCGeometry.h"
 #import "platform/ios/CCDirectorCaller-ios.h"
+#import "base/ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -109,26 +111,7 @@ LanguageType Application::getCurrentLanguage()
     NSDictionary* temp = [NSLocale componentsFromLocaleIdentifier:currentLanguage];
     NSString * languageCode = [temp objectForKey:NSLocaleLanguageCode];
 
-    if ([languageCode isEqualToString:@"zh"]) return LanguageType::CHINESE;
-    if ([languageCode isEqualToString:@"en"]) return LanguageType::ENGLISH;
-    if ([languageCode isEqualToString:@"fr"]) return LanguageType::FRENCH;
-    if ([languageCode isEqualToString:@"it"]) return LanguageType::ITALIAN;
-    if ([languageCode isEqualToString:@"de"]) return LanguageType::GERMAN;
-    if ([languageCode isEqualToString:@"es"]) return LanguageType::SPANISH;
-    if ([languageCode isEqualToString:@"nl"]) return LanguageType::DUTCH;
-    if ([languageCode isEqualToString:@"ru"]) return LanguageType::RUSSIAN;
-    if ([languageCode isEqualToString:@"ko"]) return LanguageType::KOREAN;
-    if ([languageCode isEqualToString:@"ja"]) return LanguageType::JAPANESE;
-    if ([languageCode isEqualToString:@"hu"]) return LanguageType::HUNGARIAN;
-    if ([languageCode isEqualToString:@"pt"]) return LanguageType::PORTUGUESE;
-    if ([languageCode isEqualToString:@"ar"]) return LanguageType::ARABIC;
-    if ([languageCode isEqualToString:@"nb"]) return LanguageType::NORWEGIAN;
-    if ([languageCode isEqualToString:@"pl"]) return LanguageType::POLISH;
-    if ([languageCode isEqualToString:@"tr"]) return LanguageType::TURKISH;
-    if ([languageCode isEqualToString:@"uk"]) return LanguageType::UKRAINIAN;
-    if ([languageCode isEqualToString:@"ro"]) return LanguageType::ROMANIAN;
-    if ([languageCode isEqualToString:@"bg"]) return LanguageType::BULGARIAN;
-    return LanguageType::ENGLISH;
+    return utils::getLanguageTypeByISO2([languageCode UTF8String]);
 
 }
 

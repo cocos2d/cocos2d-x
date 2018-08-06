@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -24,6 +25,7 @@
 
 #ifndef __cocos2d_libs__CCController__
 #define __cocos2d_libs__CCController__
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 )
 
 #include "platform/CCPlatformMacros.h"
 #include <string>
@@ -245,5 +247,5 @@ private:
 /// @}
 
 NS_CC_END
-
+#endif
 #endif /* defined(__cocos2d_libs__CCController__) */

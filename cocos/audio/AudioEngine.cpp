@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -371,6 +372,9 @@ void AudioEngine::stopAll()
 
 void AudioEngine::uncache(const std::string &filePath)
 {
+    if(!_audioEngineImpl){
+        return;
+    }
     auto audioIDsIter = _audioPathIDMap.find(filePath);
     if (audioIDsIter != _audioPathIDMap.end())
     {

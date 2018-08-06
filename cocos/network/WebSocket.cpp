@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -391,7 +392,7 @@ void WsThreadHelper::onSubThreadStarted()
     int log_level = LLL_ERR | LLL_WARN | LLL_NOTICE | LLL_INFO/* | LLL_DEBUG | LLL_PARSER | LLL_HEADER*/ | LLL_EXT | LLL_CLIENT | LLL_LATENCY;
     lws_set_log_level(log_level, printWebSocketLog);
 
-    memset(__defaultProtocols, 0, sizeof(2 * sizeof(struct lws_protocols)));
+    memset(__defaultProtocols, 0, 2 * sizeof(struct lws_protocols));
 
     __defaultProtocols[0].name = "";
     __defaultProtocols[0].callback = WebSocketCallbackWrapper::onSocketCallback;

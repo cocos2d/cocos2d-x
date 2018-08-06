@@ -1,5 +1,6 @@
 /****************************************************************************
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -50,13 +51,6 @@ _buttonClickedRenderer(nullptr),
 _buttonDisabledRenderer(nullptr),
 _titleRenderer(nullptr),
 _zoomScale(0.1f),
-_normalFileName(""),
-_clickedFileName(""),
-_disabledFileName(""),
-_normalTexType(TextureResType::LOCAL),
-_pressedTexType(TextureResType::LOCAL),
-_disabledTexType(TextureResType::LOCAL),
-_fontName(""),
 _prevIgnoreSize(true),
 _scale9Enabled(false),
 _pressedActionEnabled(false),
@@ -72,8 +66,15 @@ _disabledTextureLoaded(false),
 _normalTextureAdaptDirty(true),
 _pressedTextureAdaptDirty(true),
 _disabledTextureAdaptDirty(true),
+_normalFileName(""),
+_clickedFileName(""),
+_disabledFileName(""),
+_normalTexType(TextureResType::LOCAL),
+_pressedTexType(TextureResType::LOCAL),
+_disabledTexType(TextureResType::LOCAL),
 _fontSize(10),
-_type(FontType::SYSTEM)
+_type(FontType::SYSTEM),
+_fontName("")
 {
     setTouchEnabled(true);
 }

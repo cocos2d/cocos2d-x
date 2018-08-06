@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
 http://www.cocos2d-x.org
 
@@ -126,9 +127,9 @@ void ActionInterval::step(float dt)
     }
     
     
-    float updateDt = MAX (0,                                  // needed for rewind. elapsed could be negative
-                           MIN(1, _elapsed / _duration)
-                           );
+    float updateDt = std::max(0.0f,                                  // needed for rewind. elapsed could be negative
+                              std::min(1.0f, _elapsed / _duration)
+                              );
 
     if (sendUpdateEventToScript(updateDt, this)) return;
     
@@ -331,7 +332,7 @@ void Sequence::startWithTarget(Node *target)
         return;
     }
     if (_duration > FLT_EPSILON)
-        // fix #14936 - FLT_EPSILON (instant action) / very fast duration (0.001) leads to worng split, that leads to call instant action few times
+        // fix #14936 - FLT_EPSILON (instant action) / very fast duration (0.001) leads to wrong split, that leads to call instant action few times
         _split = _actions[0]->getDuration() > FLT_EPSILON ? _actions[0]->getDuration() / _duration : 0;
     
     ActionInterval::startWithTarget(target);
@@ -445,9 +446,7 @@ Repeat* Repeat::create(FiniteTimeAction *action, unsigned int times)
 
 bool Repeat::initWithAction(FiniteTimeAction *action, unsigned int times)
 {
-    float d = action->getDuration() * times;
-
-    if (action && ActionInterval::initWithDuration(d))
+    if (action && ActionInterval::initWithDuration(action->getDuration() * times))
     {
         _times = times;
         _innerAction = action;

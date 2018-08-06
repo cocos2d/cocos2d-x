@@ -3,7 +3,8 @@
  Copyright (c) 2009      Valentin Milea
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2011      Zynga Inc.
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -932,7 +933,7 @@ public:
 
     /**
      * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
-     * This approach can improves the performance massively.
+     * This approach can improve the performance massively.
      * @note Don't call this manually unless a child added needs to be removed in the same frame.
      */
     virtual void sortAllChildren();

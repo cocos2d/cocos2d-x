@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
 http://www.cocos2d-x.org
 
@@ -881,14 +882,14 @@ LayerRadialGradient::LayerRadialGradient()
 , _startColorRend(Color4F::BLACK)
 , _endColor(Color4B::BLACK)
 , _endColorRend(Color4F::BLACK)
+, _center(Vec2(0,0))
 , _radius(0.f)
 , _expand(0.f)
-, _center(Vec2(0,0))
+, _uniformLocationStartColor(0)
+, _uniformLocationEndColor(0)
 , _uniformLocationCenter(0)
 , _uniformLocationRadius(0)
 , _uniformLocationExpand(0)
-, _uniformLocationEndColor(0)
-, _uniformLocationStartColor(0)
 , _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 { }
 

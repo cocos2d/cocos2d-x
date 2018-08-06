@@ -21,68 +21,156 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 # ****************************************************************************/
+cmake_minimum_required(VERSION 3.1)
 
 set(APP_NAME js-tests)
 
-if(WIN32)
+project(${APP_NAME})
 
-else()
-  set(PLATFORM_SRC
-    proj.linux/main.cpp
-  )
+if(NOT DEFINED BUILD_ENGINE_DONE)
+    # define some variables
+    set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
+    set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
+
+    include(CocosBuildSet)
+    if(NOT USE_COCOS_PREBUILT)
+        set(BUILD_JS_LIBS ON)
+        add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
+    endif()
 endif()
 
-set(SAMPLE_SRC
-  Classes/AppDelegate.cpp
-  Classes/js_DrawNode3D_bindings.cpp
-  Classes/js_Effect3D_bindings.cpp
-  ${PLATFORM_SRC}
-)
+set(res_main_files
+    "${CMAKE_CURRENT_SOURCE_DIR}/../main.js"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../project.json"
+    )
+# "${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources"
+set(res_res_folders
+    "${CMAKE_CURRENT_SOURCE_DIR}/../resjs"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../res"
+    "${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources"
+    )
+set(res_src_folders
+    "${CMAKE_CURRENT_SOURCE_DIR}/../src"
+    )
+set(res_script_folders
+    "${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/script"
+    )
+if(APPLE OR VS)
+    cocos_mark_multi_resources(res_main RES_TO "Resources" FILES ${res_main_files})
+    cocos_mark_multi_resources(res_res RES_TO "Resources/res" FOLDERS ${res_res_folders})
+    cocos_mark_multi_resources(res_src RES_TO "Resources/src" FOLDERS ${res_src_folders})
+    cocos_mark_multi_resources(res_script RES_TO "Resources/script" FOLDERS ${res_script_folders})
+    set(cc_common_res ${res_main} ${res_res} ${res_src} ${res_script})
+endif()
+
+# record sources, headers...
+set(GAME_SOURCE)
+set(GAME_HEADER)
+
+if(ANDROID)
+    # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
+    set(APP_NAME js_tests)
+    list(APPEND GAME_SOURCE
+         proj.android/app/jni/main.cpp
+         )
+elseif(LINUX)
+    list(APPEND GAME_SOURCE
+         proj.linux/main.cpp
+         )
+elseif(WINDOWS)
+    list(APPEND GAME_HEADER
+         proj.win32/main.h
+         proj.win32/resource.h
+         )
+    list(APPEND GAME_SOURCE
+         proj.win32/main.cpp
+         ${cc_common_res}
+         )
+elseif(APPLE)
+    if(IOS)
+        list(APPEND GAME_HEADER
+             proj.ios/AppController.h
+             proj.ios/NativeOcClass.h
+             proj.ios/RootViewController.h
+             )
+        set(APP_UI_RES
+            proj.ios/LaunchScreen.storyboard
+            proj.ios/LaunchScreenBackground.png
+            proj.ios/Images.xcassets
+            )
+        list(APPEND GAME_SOURCE
+             proj.ios/main.m
+             proj.ios/NativeOcClass.m
+             proj.ios/AppController.mm
+             proj.ios/RootViewController.mm
+             ${APP_UI_RES}
+             )
+    elseif(MACOSX)
+        set(APP_UI_RES
+            proj.mac/Icon.icns
+            proj.mac/Test_Info.plist
+            proj.mac/Test_Prefix.pch
+            proj.mac/en.lproj/MainMenu.xib
+            proj.mac/en.lproj/InfoPlist.strings
+            )
+        list(APPEND GAME_SOURCE
+             proj.mac/main.cpp
+             ${APP_UI_RES}
+             )
+    endif()
+    list(APPEND GAME_SOURCE ${cc_common_res})
+endif()
+
+list(APPEND GAME_HEADER
+     Classes/AppDelegate.h
+     Classes/js_Effect3D_bindings.h
+     Classes/js_DrawNode3D_bindings.h
+     )
+list(APPEND GAME_SOURCE
+     Classes/AppDelegate.cpp
+     Classes/js_DrawNode3D_bindings.cpp
+     Classes/js_Effect3D_bindings.cpp
+     )
 
 include_directories(
-  Classes
-  ../../../cocos/scripting/js-bindings/auto
-  ../../../cocos/scripting/js-bindings/manual
-  ../../../cocos/base
-  ../../../cocos/editor-support
-  ../../../cocos/audio/include
-  ../../../external/spidermonkey/include/${PLATFORM_FOLDER}
-  ../../../external/chipmunk/include/chipmunk
+        Classes
+        ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/auto
+        ${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/manual
+        ${COCOS2DX_ROOT_PATH}/cocos/base
+        ${COCOS2DX_ROOT_PATH}/cocos/editor-support
+        ${COCOS2DX_ROOT_PATH}/cocos/audio/include
+        ${COCOS2DX_ROOT_PATH}/external/spidermonkey/include/${PLATFORM_FOLDER}
+        ${COCOS2DX_ROOT_PATH}/external/chipmunk/include/chipmunk
 )
 
-# add the executable
-add_executable(${APP_NAME}
-  ${SAMPLE_SRC}
-)
+set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
 
-target_link_libraries(${APP_NAME}
-  jscocos2d
-  cocos2d
-)
+# mark app complie info and libs info
+cocos_build_app(${APP_NAME}
+                APP_SRC "${APP_SRC}"
+                DEPEND_COMMON_LIBS "jscocos2d" "cocos2d"
+                DEPEND_ANDROID_LIBS "cocos2d_android"
+                )
 
-set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
-
-set_target_properties(${APP_NAME} PROPERTIES
-     RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
-
-
-if(LINUX)
-    set(RES_PREFIX "/Resources")
-else()
-    set(RES_PREFIX "")
+# mark app resources
+if(APPLE)
+    set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
+    if(MACOSX)
+        set_target_properties(${APP_NAME} PROPERTIES
+                              MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Test_Info.plist"
+                              )
+    elseif(IOS)
+        cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
+        set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon-${APP_NAME}")
+    endif()
+elseif(WINDOWS)
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR})
 endif()
 
-pre_build(${APP_NAME}
-  COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}${RES_PREFIX}/script
-  COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}${RES_PREFIX}/res
-  COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}${RES_PREFIX}/src
-  COMMAND ${CMAKE_COMMAND} -E remove ${APP_BIN_DIR}${RES_PREFIX}/*.js
-  COMMAND ${CMAKE_COMMAND} -E remove ${APP_BIN_DIR}${RES_PREFIX}/*.json
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../../cpp-tests/Resources ${APP_BIN_DIR}${RES_PREFIX}/res
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}${RES_PREFIX}/res
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../resjs ${APP_BIN_DIR}${RES_PREFIX}/res
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}${RES_PREFIX}/src
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../../../cocos/scripting/js-bindings/script ${APP_BIN_DIR}${RES_PREFIX}/script
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../main.js ${APP_BIN_DIR}${RES_PREFIX}/main.js
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../project.json ${APP_BIN_DIR}${RES_PREFIX}/project.json
-  )
+if(LINUX OR WINDOWS)
+    cocos_copy_res(COPY_TO ${APP_RES_DIR} FILES ${res_main_files})
+    cocos_copy_res(COPY_TO ${APP_RES_DIR}/res FOLDERS ${res_res_folders})
+    cocos_copy_res(COPY_TO ${APP_RES_DIR}/src FOLDERS ${res_src_folders})
+    cocos_copy_res(COPY_TO ${APP_RES_DIR}/script FOLDERS ${res_script_folders})
+endif()
+

@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 Copyright (c) 2011 HKASoftware
 
@@ -719,8 +720,9 @@ void TMXLayer::removeChild(Node* node, bool cleanup)
 // TMXLayer - Properties
 Value TMXLayer::getProperty(const std::string& propertyName) const
 {
-    if (_properties.find(propertyName) != _properties.end())
-        return _properties.at(propertyName);
+    auto propItr = _properties.find(propertyName);
+    if (propItr != _properties.end())
+        return propItr->second;
     
     return Value();
 }

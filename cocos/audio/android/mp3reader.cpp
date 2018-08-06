@@ -31,7 +31,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdint.h>
-#include <string>
+#include <string.h>
 #include <vector>
 #include "audio/android/cutils/log.h"
 

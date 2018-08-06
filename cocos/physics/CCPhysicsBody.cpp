@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -96,11 +97,11 @@ PhysicsBody::PhysicsBody()
 , _linearDamping(0.0f)
 , _angularDamping(0.0f)
 , _tag(0)
+, _massSetByUser(false)
+, _momentSetByUser(false)
 , _rotationOffset(0)
 , _recordedRotation(0.0f)
 , _recordedAngle(0.0)
-, _massSetByUser(false)
-, _momentSetByUser(false)
 , _recordScaleX(1.f)
 , _recordScaleY(1.f)
 {

@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -29,6 +30,7 @@
 #define __AUDIO_ENGINE_INL_H_
 
 #include <unordered_map>
+#include <list>
 
 #include "base/CCRef.h"
 #include "audio/apple/AudioCache.h"

@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -33,6 +34,7 @@ UIEditBoxTests::UIEditBoxTests()
 {
     ADD_TEST_CASE(UIEditBoxTest);
     ADD_TEST_CASE(UIEditBoxTestToggleVisibility);
+    ADD_TEST_CASE(UIEditBoxTestTextHorizontalAlignment);
 }
 
 // UIEditBoxTest
@@ -173,6 +175,7 @@ void UIEditBoxTest::editBoxReturn(ui::EditBox* editBox)
     }
 }
 
+// UIEditBoxTestToggleVisibility
 
 bool UIEditBoxTestToggleVisibility::init()
 {
@@ -301,4 +304,39 @@ void UIEditBoxTestToggleVisibility::editBoxReturn(ui::EditBox* editBox)
     {
         _TTFShowEditReturn->setString("Email EditBox return !");
     }
+}
+
+// UIEditBoxTestTextHorizontalAlignment
+
+bool UIEditBoxTestTextHorizontalAlignment::init() {
+    if (!UIScene::init()) {
+      return false;
+    }
+  
+    const auto glview = Director::getInstance()->getOpenGLView();
+    const auto visibleOrigin = glview->getVisibleOrigin();
+    const auto visibleSize = glview->getVisibleSize();
+    const auto editBoxSize = Size(visibleSize.width - 100, visibleSize.height * 0.1);
+  
+    const auto createEditBox = [this, editBoxSize, visibleOrigin, visibleSize](const std::string& text,
+                                      const TextHAlignment alignment,
+                                      const int position_y) {
+        ui::EditBox* editbox = ui::EditBox::create(editBoxSize + Size(0,40), ui::Scale9Sprite::create("extensions/green_edit.png"));
+        editbox->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-50, position_y));
+        editbox->setFontColor(Color3B::RED);
+        editbox->setPlaceHolder(text.c_str());
+        editbox->setPlaceholderFontColor(Color3B::WHITE);
+        editbox->setPlaceholderFontSize(editBoxSize.height/2);
+        editbox->setFontSize(editBoxSize.height/2);
+        editbox->setText(text.c_str());
+        editbox->setTextHorizontalAlignment(alignment);
+        editbox->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
+        addChild(editbox);
+    };
+  
+    createEditBox("horizontal left text", TextHAlignment::LEFT, visibleOrigin.y+visibleSize.height*3/4);
+    createEditBox("horizontal center text", TextHAlignment::CENTER, visibleOrigin.y+visibleSize.height/2);
+    createEditBox("horizontal right text", TextHAlignment::RIGHT, visibleOrigin.y+visibleSize.height/4);
+  
+    return true;
 }

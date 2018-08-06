@@ -21,9 +21,8 @@
         
 --------------------------------
 -- 
--- @function [parent=#SkeletonAnimation] setTrackEventListener 
+-- @function [parent=#SkeletonAnimation] setCompleteListener 
 -- @param self
--- @param #spTrackEntry entry
 -- @param #function listener
 -- @return SkeletonAnimation#SkeletonAnimation self (return value: sp.SkeletonAnimation)
         
@@ -43,6 +42,15 @@
 -- @param #spTrackEntry entry
 -- @param #function listener
 -- @return SkeletonAnimation#SkeletonAnimation self (return value: sp.SkeletonAnimation)
+        
+--------------------------------
+-- 
+-- @function [parent=#SkeletonAnimation] addEmptyAnimation 
+-- @param self
+-- @param #int trackIndex
+-- @param #float mixDuration
+-- @param #float delay
+-- @return spTrackEntry#spTrackEntry ret (return value: spTrackEntry)
         
 --------------------------------
 -- 
@@ -83,8 +91,17 @@
         
 --------------------------------
 -- 
--- @function [parent=#SkeletonAnimation] setCompleteListener 
+-- @function [parent=#SkeletonAnimation] setEmptyAnimation 
 -- @param self
+-- @param #int trackIndex
+-- @param #float mixDuration
+-- @return spTrackEntry#spTrackEntry ret (return value: spTrackEntry)
+        
+--------------------------------
+-- 
+-- @function [parent=#SkeletonAnimation] setTrackEventListener 
+-- @param self
+-- @param #spTrackEntry entry
 -- @param #function listener
 -- @return SkeletonAnimation#SkeletonAnimation self (return value: sp.SkeletonAnimation)
         
@@ -99,6 +116,13 @@
 -- @function [parent=#SkeletonAnimation] setInterruptListener 
 -- @param self
 -- @param #function listener
+-- @return SkeletonAnimation#SkeletonAnimation self (return value: sp.SkeletonAnimation)
+        
+--------------------------------
+-- 
+-- @function [parent=#SkeletonAnimation] setEmptyAnimations 
+-- @param self
+-- @param #float mixDuration
 -- @return SkeletonAnimation#SkeletonAnimation self (return value: sp.SkeletonAnimation)
         
 --------------------------------

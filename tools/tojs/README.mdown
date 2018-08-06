@@ -4,11 +4,11 @@ How to Use bindings-generator
 On Windows:
 ------------
 
-* Make sure that you have installed `android-ndk-r10c` or later.
+* Make sure that you have installed `android-ndk-r16` or later.
 * Download python2.7.3 (32bit) from (http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi).
 * Add the installed path of python (e.g. C:\Python27) to windows environment variable named 'PATH'.
 * Download pyyaml from http://pyyaml.org/download/pyyaml/PyYAML-3.11.win32-py2.7.exe and install it.
-* Download pyCheetah from https://raw.github.com/dumganhar/cocos2d-x/download/downloads/Cheetah.zip, unzip it to "C:\Python27\Lib\site-packages"
+* Download [Cheetah-2.4.4.tar.gz](https://pypi.python.org/packages/cd/b0/c2d700252fc251e91c08639ff41a8a5203b627f4e0a2ae18a6b662ab32ea/Cheetah-2.4.4.tar.gz#md5=853917116e731afbc8c8a43c37e6ddba), extract and install it by `python setup.py`.
 * Set environment variables (`NDK_ROOT`) and `PYTHON_BIN`
 * Go to "cocos2d-x/tools/tojs" folder, and run "genbindings.py". The generated codes will be under "cocos\scripting\auto-generated\js-bindings".
 
@@ -28,10 +28,10 @@ On MAC:
 	sudo pip install Cheetah
 </pre>
     
-* Download NDK 64bit r10c or later from [Android Ndk](https://developer.android.com/ndk/downloads/index.html)
+* Download NDK r16 or later from [Android Ndk](https://developer.android.com/ndk/downloads/index.html)
 * Run
 <pre>
-	export NDK_ROOT=/path/to/android-ndk-r10c
+	export NDK_ROOT=/path/to/android-ndk-r16
     ./genbindings.py
 </pre>
 
@@ -49,9 +49,9 @@ On Ubuntu Linux 12.04 64bit
 	sudo pip install PyYAML
 	sudo pip install Cheetah
 </pre>
-* Download NDK 64bit r10c or later from [Android Ndk](https://developer.android.com/ndk/downloads/index.html)
+* Download NDK r16 or later from [Android Ndk](https://developer.android.com/ndk/downloads/index.html)
 * Go to "cocos2d-x/tools/tojs", Run
 <pre>
-	export NDK_ROOT=/path/to/android-ndk-r10c
+	export NDK_ROOT=/path/to/android-ndk-r16
     ./genbindings.py
 </pre>

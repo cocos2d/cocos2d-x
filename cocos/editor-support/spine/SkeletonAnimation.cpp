@@ -168,6 +168,18 @@ spTrackEntry* SkeletonAnimation::addAnimation (int trackIndex, const std::string
 	return spAnimationState_addAnimation(_state, trackIndex, animation, loop, delay);
 }
 	
+spTrackEntry* SkeletonAnimation::setEmptyAnimation (int trackIndex, float mixDuration) {
+	return spAnimationState_setEmptyAnimation(_state, trackIndex, mixDuration);
+}
+
+void SkeletonAnimation::setEmptyAnimations (float mixDuration) {
+	spAnimationState_setEmptyAnimations(_state, mixDuration);
+}
+
+spTrackEntry* SkeletonAnimation::addEmptyAnimation (int trackIndex, float mixDuration, float delay) {
+	return spAnimationState_addEmptyAnimation(_state, trackIndex, mixDuration, delay);
+}
+
 spAnimation* SkeletonAnimation::findAnimation(const std::string& name) const {
 	return spSkeletonData_findAnimation(_skeleton->data, name.c_str());
 }

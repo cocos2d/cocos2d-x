@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -320,21 +321,25 @@ int tolua_Cocos2d_CCSkeletonAnimation_unregisterSpineEventHandler00(lua_State* t
             switch (eventType) {
                 case spEventType::SP_ANIMATION_START:
                     handlerType = ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_START;
+                    self->setStartListener(nullptr);
                     break;
                 case spEventType::SP_ANIMATION_INTERRUPT:
                     handlerType = ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_INTERRUPT;
                     break;
                 case spEventType::SP_ANIMATION_END:
                     handlerType = ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_END;
+                    self->setEndListener(nullptr);
                     break;
                 case spEventType::SP_ANIMATION_DISPOSE:
                     handlerType = ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_DISPOSE;
                     break;
                 case spEventType::SP_ANIMATION_COMPLETE:
                     handlerType = ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_COMPLETE;
+                    self->setCompleteListener(nullptr);
                     break;
                 case spEventType::SP_ANIMATION_EVENT:
                     handlerType = ScriptHandlerMgr::HandlerType::EVENT_SPINE_ANIMATION_EVENT;
+                    self->setEventListener(nullptr);
                     break;
                     
                 default:

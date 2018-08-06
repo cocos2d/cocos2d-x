@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010      cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -179,6 +180,14 @@ namespace utils
     *  @return The md5 hash for the data
     */
     CC_DLL std::string getDataMD5Hash(const Data &data);
+
+    /**
+    @brief Converts language iso 639-1 code to LanguageType enum.
+    @return LanguageType enum.
+    * @js NA
+    * @lua NA
+    */
+    CC_DLL LanguageType getLanguageTypeByISO2(const char* code);
 }
 
 NS_CC_END

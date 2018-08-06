@@ -4,9 +4,9 @@
 cocos2d-x
 =========
 
-|  |iOS|Mac|Linux|Win32|Android|
-| ----|----|----- | ---|----|------|
-|v3|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=ios)](http://45.56.80.45:8080/job/daily-build-v3/node=ios)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=mac)](http://45.56.80.45:8080/job/daily-build-v3/node=mac)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=linux)](http://45.56.80.45:8080/job/daily-build-v3/node=linux)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=win32_bak)](http://45.56.80.45:8080/job/daily-build-v3/node=win32_bak)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=android)](http://45.56.80.45:8080/job/daily-build-v3/node=android)
+|Win32|Others|
+| ----|------|
+[![Build status](https://ci.appveyor.com/api/projects/status/nlgirox464j6ldg5/branch/v3?svg=true)](https://ci.appveyor.com/project/minggo/cocos2d-x/branch/v3)|[![Build Status](https://travis-ci.org/cocos2d/cocos2d-x.svg?branch=v3)](https://travis-ci.org/cocos2d/cocos2d-x)
 
 
 [cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
@@ -49,7 +49,7 @@ Download stable versions
 How to start a new game
 -----------------------
 
-1. Download the code from [cocos2d download site][4]
+1. Download the code from [cocos2d download site][4] or clone this repo (instructions above)
 2. Run `setup.py`
 3. Run the `cocos` script
 
@@ -65,8 +65,8 @@ You can also create a JS project or Lua project with `-l js` or `-l lua`.
 
 ### Build and run a new project for Android ###
 
-    $ cocos run -p android -j 4
-
+Cocos2d-x supports Android Studio. Simple open the `proj.android` directory from within the Android Studio environment. More information can be found in our [documentation](http://www.cocos2d-x.org/docs/cocos2d-x/en/installation/Android-Studio.html).
+   
 ### Build and run a new project for iOS ###
 
     $ cocos run -p ios
@@ -109,6 +109,17 @@ Then you can run your game in a web browser:
 Or you can publish your game to `publish/html5/` folder:
 
     $ cocos run -p web -m release [--advanced]
+
+Using CMake
+--------------------------------
+
+Cocos2d-x supports CMake, a cross-platform build system. Example usage:
+
+    $ cd cocos2d-x
+    $ mkdir cmake-build && cd cmake-build
+    $ cmake ..
+
+* [Detail CMake Guide](cmake/README.md)
 
 Documentations and samples
 -------------
@@ -153,18 +164,18 @@ Main features
 Build Requirements
 ------------------
 
-* Mac OS X 10.7+, Xcode 7+
-* or Ubuntu 12.10+, CMake 2.6+
-* or Windows 7+, VS 2013+
-* Python 2.7.5
-* NDK r11+ is required to build Android games(tested with r14)
-* Android Studio 2.3.3+ to build Android games(tested with 2.3.3)
+* Mac OS X 10.7+, Xcode 8+
+* or Ubuntu 14.04+, CMake 3.1+
+* or Windows 7+, VS 2015
+* Python 2.7.5+(NOT Python 3)
+* NDK r16+ is required to build Android games
+* Android Studio 3.0.0+ to build Android games(tested with 3.0.0)
 * JRE or JDK 1.6+ is required for web publishing
 
 Runtime Requirements
 --------------------
-  * iOS 6.0+ for iPhone / iPad games
-  * Android 2.3.3+ for Android
+  * iOS 8.0+ for iPhone / iPad games
+  * Android 3.0.0+ for Android
   * OS X v10.9+ for Mac games
   * Windows 7+ for Win games
   * Modern browsers and IE 9+ for web games
@@ -201,20 +212,20 @@ $ open cocos2d_tests.xcodeproj
 ```
 $ cd cocos2d-x/build
 $ ./install-deps-linux.sh
-$ cmake ..
-$ make
+$ mkdir linux-build
+$ cd linux-build
+$ cmake ../..
 ```
 
 Run Samples
 
 ```
-$ bin/cpp-empty-test/cpp-empty-test
+$ bin/Debug/cpp-empty-test/cpp-empty-test
 or
-$ bin/lua-empty-test/lua-empty-test
+$ bin/Debug/lua-empty-test/lua-empty-test
 ```
 
-      You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target,
-      you should make it to direct to a correct one. `install-deps-linux.sh` only has to be run once.
+> You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target, you should make it to direct to a correct one. `install-deps-linux.sh` only has to be run once.
 
 * For Windows
 
@@ -229,6 +240,8 @@ $ adb install ../tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
 ```
 
 Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 14.
+
+Or you can import the project located at `tests/cpp-empty-test/proj.android` using Android Studio 3.0.0+.
 
 Learning Resources
 --------------------------------
@@ -258,15 +271,16 @@ You can see exactly what we are planning to do with the Cocos family of products
 Where to get help
 --------------------------------
 
-* [Forums](http://discuss.cocos2d-x.org)
+* [English Forums](http://discuss.cocos2d-x.org)
+* [中文社区](http://forum.cocos.com/c/cocos2d-x)
 * [Bug Tracker](https://github.com/cocos2d/cocos2d-x/issues)
+* [API Reference](http://cocos2d-x.org/docs/api-ref/index.html).
+* [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
+* [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 * IRC. We are in [Freenode](https://webchat.freenode.net/) in the _#cocos2d_ channel
 * `cpp-tests` project. This project is our basis for testing. Use this project to
 learn how we implement the functionality of the engine. This project is located in
 __cocos2d-x_root/build.__
-* [API Reference](http://cocos2d-x.org/docs/api-ref/index.html).
-* [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
-* [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 
 Contributing to the Project
 --------------------------------
@@ -283,7 +297,6 @@ Contact us
    * Forum: [http://discuss.cocos2d-x.org][9]
    * Twitter: [http://www.twitter.com/cocos2dx][10]
    * Weibo: [http://t.sina.com.cn/cocos2dx][11]
-   * IRC: [https://webchat.freenode.net/][12] (#cocos2d and #cocos2d-x channels)
 
 [1]: http://www.cocos2d-x.org "cocos2d-x"
 [2]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
@@ -296,4 +309,3 @@ Contact us
 [9]: http://discuss.cocos2d-x.org "http://discuss.cocos2d-x.org"
 [10]: http://www.twitter.com/cocos2dx "http://www.twitter.com/cocos2dx"
 [11]: http://t.sina.com.cn/cocos2dx "http://t.sina.com.cn/cocos2dx"
-[12]: https://webchat.freenode.net/ "https://webchat.freenode.net/"

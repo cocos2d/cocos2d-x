@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -164,12 +165,12 @@ void Controller::stopDiscoveryController()
 }
 
 Controller::Controller()
-: _controllerTag(TAG_UNSET)
+: _deviceId(0)
+, _controllerTag(TAG_UNSET)
 , _impl(new ControllerImpl(this))
 , _connectEvent(nullptr)
 , _keyEvent(nullptr)
 , _axisEvent(nullptr)
-, _deviceId(0)
 {
     init();
 }

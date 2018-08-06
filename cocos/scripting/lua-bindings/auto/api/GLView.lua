@@ -22,6 +22,13 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
+-- Get scale factor of the vertical direction.<br>
+-- return Scale factor of the vertical direction.
+-- @function [parent=#GLView] getScaleY 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 --  Only works on ios platform. Set Content Scale of the Factor. 
 -- @function [parent=#GLView] setContentScaleFactor 
 -- @param self
@@ -41,6 +48,12 @@
 -- @param self
 -- @param #bool open
 -- @return GLView#GLView self (return value: cc.GLView)
+        
+--------------------------------
+-- Gets safe area rectangle
+-- @function [parent=#GLView] getSafeAreaRect 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
 -- 
@@ -92,11 +105,12 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- Get scale factor of the vertical direction.<br>
--- return Scale factor of the vertical direction.
--- @function [parent=#GLView] getScaleY 
+--  Set default window icon (implemented for windows and linux).<br>
+-- On windows it will use icon from .exe file (if included).<br>
+-- On linux it will use default window icon.
+-- @function [parent=#GLView] setDefaultIcon 
 -- @param self
--- @return float#float ret (return value: float)
+-- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
 -- Get scale factor of the horizontal direction.<br>
@@ -137,6 +151,14 @@
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
         
+--------------------------------
+-- @overload self, array_table         
+-- @overload self, string         
+-- @function [parent=#GLView] setIcon
+-- @param self
+-- @param #string filename
+-- @return GLView#GLView self (return value: cc.GLView)
+
 --------------------------------
 --  When the window is closed, it will return false if the platforms is Ios or Android.<br>
 -- If the platforms is windows or Mac,it will return true.<br>

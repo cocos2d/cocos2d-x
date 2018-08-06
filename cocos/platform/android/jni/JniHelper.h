@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -69,6 +70,11 @@ public:
     static jobject classloader;
     static std::function<void()> classloaderCallback;
 
+
+    /**
+    @brief Call of Java static void method
+    @if no such method will log error
+    */
     template <typename... Ts>
     static void callStaticVoidMethod(const std::string& className, 
                                      const std::string& methodName, 
@@ -85,6 +91,10 @@ public:
         }
     }
 
+    /**
+    @brief Call of Java static boolean method
+    @return value from Java static boolean method if there are proper JniMethodInfo; otherwise false.
+    */
     template <typename... Ts>
     static bool callStaticBooleanMethod(const std::string& className, 
                                         const std::string& methodName, 
@@ -103,6 +113,10 @@ public:
         return (jret == JNI_TRUE);
     }
 
+    /**
+    @brief Call of Java static int method
+    @return value from Java static int method if there are proper JniMethodInfo; otherwise 0.
+    */
     template <typename... Ts>
     static int callStaticIntMethod(const std::string& className, 
                                    const std::string& methodName, 
@@ -121,6 +135,10 @@ public:
         return ret;
     }
 
+    /**
+    @brief Call of Java static float method
+    @return value from Java static float method if there are proper JniMethodInfo; otherwise 0.
+    */
     template <typename... Ts>
     static float callStaticFloatMethod(const std::string& className, 
                                        const std::string& methodName, 
@@ -139,6 +157,10 @@ public:
         return ret;
     }
 
+    /**
+    @brief Call of Java static float* method
+    @return address of JniMethodInfo if there are proper JniMethodInfo; otherwise nullptr.
+    */
     template <typename... Ts>
     static float* callStaticFloatArrayMethod(const std::string& className, 
                                        const std::string& methodName, 
@@ -166,6 +188,10 @@ public:
         return nullptr;
     }
 
+    /**
+    @brief Call of Java static Vec3 method
+    @return JniMethodInfo of Vec3 type if there are proper JniMethodInfo; otherwise Vec3(0, 0, 0).
+    */
     template <typename... Ts>
     static Vec3 callStaticVec3Method(const std::string& className, 
                                        const std::string& methodName, 
@@ -192,6 +218,10 @@ public:
         return ret;
     }
 
+    /**
+    @brief Call of Java static double method
+    @return value from Java static double method if there are proper JniMethodInfo; otherwise 0.
+    */
     template <typename... Ts>
     static double callStaticDoubleMethod(const std::string& className, 
                                          const std::string& methodName, 
@@ -210,6 +240,10 @@ public:
         return ret;
     }
 
+    /**
+    @brief Call of Java static string method
+    @return JniMethodInfo of string type if there are proper JniMethodInfo; otherwise empty string.
+    */
     template <typename... Ts>
     static std::string callStaticStringMethod(const std::string& className, 
                                               const std::string& methodName, 

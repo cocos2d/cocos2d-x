@@ -406,7 +406,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     if (isKeyboardShown_)
     {
         [self handleTouchesAfterKeyboardShow];
-        return;
     }
     
     UITouch* ids[IOS_MAX_TOUCHES_COUNT] = {0};

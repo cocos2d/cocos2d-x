@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2016-2017 Chukong Technologies Inc.
+ Copyright (c) 2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -40,10 +41,10 @@
 NS_CC_BEGIN
 
 VRGenericRenderer::VRGenericRenderer()
-: _vignetteEnabled(true)
-, _distortion(nullptr)
-, _leftDistortionMesh(nullptr)
+: _leftDistortionMesh(nullptr)
 , _rightDistortionMesh(nullptr)
+, _distortion(nullptr)
+, _vignetteEnabled(true)
 , _glProgramState(nullptr)
 {
     _headTracker = new VRGenericHeadTracker;

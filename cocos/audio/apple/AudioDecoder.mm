@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2016-2017 Chukong Technologies Inc.
+ Copyright (c) 2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -61,14 +62,14 @@ namespace cocos2d { namespace experimental {
             BREAK_IF_ERR_LOG(fileURL == nil, "Converting path to CFURLRef failed!");
 
             OSStatus status = ExtAudioFileOpenURL(fileURL, &_extRef);
-            BREAK_IF_ERR_LOG(status != noErr, "ExtAudioFileOpenURL FAILED, Error = %ld", (long)ret);
+            BREAK_IF_ERR_LOG(status != noErr, "ExtAudioFileOpenURL FAILED, Error = %d", status);
 
             AudioStreamBasicDescription	fileFormat;
             UInt32 propertySize = sizeof(fileFormat);
 
             // Get the audio data format
-            ret = ExtAudioFileGetProperty(_extRef, kExtAudioFileProperty_FileDataFormat, &propertySize, &fileFormat);
-            BREAK_IF_ERR_LOG(status != noErr, "ExtAudioFileGetProperty(kExtAudioFileProperty_FileDataFormat) FAILED, Error = %ld", (long)ret);
+            status = ExtAudioFileGetProperty(_extRef, kExtAudioFileProperty_FileDataFormat, &propertySize, &fileFormat);
+            BREAK_IF_ERR_LOG(status != noErr, "ExtAudioFileGetProperty(kExtAudioFileProperty_FileDataFormat) FAILED, Error = %d", status);
             BREAK_IF_ERR_LOG(fileFormat.mChannelsPerFrame > 2, "Unsupported Format, channel count is greater than stereo!");
 
             // Set the client format to 16 bit signed integer (native-endian) data
@@ -87,14 +88,14 @@ namespace cocos2d { namespace experimental {
             _outputFormat.mBytesPerPacket = _bytesPerFrame;
             _outputFormat.mBytesPerFrame = _bytesPerFrame;
 
-            ret = ExtAudioFileSetProperty(_extRef, kExtAudioFileProperty_ClientDataFormat, sizeof(_outputFormat), &_outputFormat);
-            BREAK_IF_ERR_LOG(status != noErr, "ExtAudioFileSetProperty FAILED, Error = %ld", (long)ret);
+            status = ExtAudioFileSetProperty(_extRef, kExtAudioFileProperty_ClientDataFormat, sizeof(_outputFormat), &_outputFormat);
+            BREAK_IF_ERR_LOG(status != noErr, "ExtAudioFileSetProperty FAILED, Error = %d", status);
 
             // Get the total frame count
             SInt64 totalFrames = 0;
             propertySize = sizeof(totalFrames);
-            ret = ExtAudioFileGetProperty(_extRef, kExtAudioFileProperty_FileLengthFrames, &propertySize, &totalFrames);
-            BREAK_IF_ERR_LOG(status != noErr, "ExtAudioFileGetProperty(kExtAudioFileProperty_FileLengthFrames) FAILED, Error = %ld", (long)ret);
+            status = ExtAudioFileGetProperty(_extRef, kExtAudioFileProperty_FileLengthFrames, &propertySize, &totalFrames);
+            BREAK_IF_ERR_LOG(status != noErr, "ExtAudioFileGetProperty(kExtAudioFileProperty_FileLengthFrames) FAILED, Error = %d", status);
             BREAK_IF_ERR_LOG(totalFrames <= 0, "Total frames is 0, it's an invalid audio file: %s", path);
             _totalFrames = static_cast<uint32_t>(totalFrames);
             _isOpened = true;

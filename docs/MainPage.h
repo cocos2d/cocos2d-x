@@ -25,6 +25,7 @@ This project is based on the famous <A HREF="http://www.cocos2d-iphone.org">"coc
 
 @section sec2 License
 Copyright (c) 2010-2012 cocos2d-x.org \n
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 \n
 Permission is hereby granted, free of charge, to any person obtaining a copy \n
 of this software and associated documentation files (the "Software"), to deal \n

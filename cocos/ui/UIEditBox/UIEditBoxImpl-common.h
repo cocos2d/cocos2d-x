@@ -2,6 +2,7 @@
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2012 James Chen
  Copyright (c) 2013-2015 zilongshanren
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
  
@@ -135,7 +136,7 @@ protected:
     void         refreshLabelAlignment();
     void         placeInactiveLabels(const Size& size);
     virtual void doAnimationWhenKeyboardMove(float duration, float distance)override {};
-
+  
     Label* _label;
     Label* _labelPlaceHolder;
     EditBox::InputMode    _editBoxInputMode;

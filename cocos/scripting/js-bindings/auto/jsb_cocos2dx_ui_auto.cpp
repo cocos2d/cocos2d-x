@@ -6195,6 +6195,24 @@ bool js_cocos2dx_ui_Text_getTextColor(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_ui_Text_getTextColor : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_ui_Text_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::Text* cobj = (cocos2d::ui::Text *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_getBlendFunc : Invalid Native Object");
+    if (argc == 0) {
+        const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
+        JS::RootedValue jsret(cx);
+        jsret = blendfunc_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_Text_getBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_ui_Text_setTextVerticalAlignment(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -6653,6 +6671,26 @@ bool js_cocos2dx_ui_Text_getLetter(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_ui_Text_getLetter : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_ui_Text_setBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::Text* cobj = (cocos2d::ui::Text *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Text_setBlendFunc : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::BlendFunc arg0;
+        ok &= jsval_to_blendfunc(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Text_setBlendFunc : Error processing arguments");
+        cobj->setBlendFunc(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_Text_setBlendFunc : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_ui_Text_getTextVerticalAlignment(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -6809,6 +6847,7 @@ void js_register_cocos2dx_ui_Text(JSContext *cx, JS::HandleObject global) {
         JS_FN("disableEffect", js_cocos2dx_ui_Text_disableEffect, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getLabelEffectType", js_cocos2dx_ui_Text_getLabelEffectType, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTextColor", js_cocos2dx_ui_Text_getTextColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getBlendFunc", js_cocos2dx_ui_Text_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTextVerticalAlignment", js_cocos2dx_ui_Text_setTextVerticalAlignment, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFontName", js_cocos2dx_ui_Text_setFontName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTouchScaleChangeEnabled", js_cocos2dx_ui_Text_setTouchScaleChangeEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -6832,6 +6871,7 @@ void js_register_cocos2dx_ui_Text(JSContext *cx, JS::HandleObject global) {
         JS_FN("setTextColor", js_cocos2dx_ui_Text_setTextColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("enableGlow", js_cocos2dx_ui_Text_enableGlow, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getLetter", js_cocos2dx_ui_Text_getLetter, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setBlendFunc", js_cocos2dx_ui_Text_setBlendFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTextVerticalAlignment", js_cocos2dx_ui_Text_getTextVerticalAlignment, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTextAreaSize", js_cocos2dx_ui_Text_getTextAreaSize, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTextHorizontalAlignment", js_cocos2dx_ui_Text_setTextHorizontalAlignment, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -7621,28 +7661,26 @@ bool js_cocos2dx_ui_ScrollView_isInertiaScrollEnabled(JSContext *cx, uint32_t ar
     JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_isInertiaScrollEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_ui_ScrollView_scrollToPercentBothDirection(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_ui_ScrollView_scrollToBottom(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::ui::ScrollView* cobj = (cocos2d::ui::ScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_scrollToPercentBothDirection : Invalid Native Object");
-    if (argc == 3) {
-        cocos2d::Vec2 arg0;
-        double arg1 = 0;
-        bool arg2;
-        ok &= jsval_to_vector2(cx, args.get(0), &arg0);
-        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !std::isnan(arg1);
-        arg2 = JS::ToBoolean(args.get(2));
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_scrollToPercentBothDirection : Error processing arguments");
-        cobj->scrollToPercentBothDirection(arg0, arg1, arg2);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_scrollToBottom : Invalid Native Object");
+    if (argc == 2) {
+        double arg0 = 0;
+        bool arg1;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
+        arg1 = JS::ToBoolean(args.get(1));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_scrollToBottom : Error processing arguments");
+        cobj->scrollToBottom(arg0, arg1);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_scrollToPercentBothDirection : wrong number of arguments: %d, was expecting %d", argc, 3);
+    JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_scrollToBottom : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
 bool js_cocos2dx_ui_ScrollView_getScrolledPercentBothDirection(JSContext *cx, uint32_t argc, jsval *vp)
@@ -7839,20 +7877,28 @@ bool js_cocos2dx_ui_ScrollView_jumpToTopRight(JSContext *cx, uint32_t argc, jsva
     JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_jumpToTopRight : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_ui_ScrollView_jumpToTop(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_ui_ScrollView_scrollToPercentBothDirection(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::ui::ScrollView* cobj = (cocos2d::ui::ScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_jumpToTop : Invalid Native Object");
-    if (argc == 0) {
-        cobj->jumpToTop();
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_scrollToPercentBothDirection : Invalid Native Object");
+    if (argc == 3) {
+        cocos2d::Vec2 arg0;
+        double arg1 = 0;
+        bool arg2;
+        ok &= jsval_to_vector2(cx, args.get(0), &arg0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !std::isnan(arg1);
+        arg2 = JS::ToBoolean(args.get(2));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_scrollToPercentBothDirection : Error processing arguments");
+        cobj->scrollToPercentBothDirection(arg0, arg1, arg2);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_jumpToTop : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_scrollToPercentBothDirection : wrong number of arguments: %d, was expecting %d", argc, 3);
     return false;
 }
 bool js_cocos2dx_ui_ScrollView_setInnerContainerSize(JSContext *cx, uint32_t argc, jsval *vp)
@@ -7891,6 +7937,22 @@ bool js_cocos2dx_ui_ScrollView_getInnerContainerPosition(JSContext *cx, uint32_t
     }
 
     JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_getInnerContainerPosition : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_ScrollView_jumpToTop(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::ScrollView* cobj = (cocos2d::ui::ScrollView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_jumpToTop : Invalid Native Object");
+    if (argc == 0) {
+        cobj->jumpToTop();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_jumpToTop : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ui_ScrollView_getScrolledPercentVertical(JSContext *cx, uint32_t argc, jsval *vp)
@@ -8016,22 +8078,20 @@ bool js_cocos2dx_ui_ScrollView_setScrollBarAutoHideTime(JSContext *cx, uint32_t 
     JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_setScrollBarAutoHideTime : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_ui_ScrollView_isAutoScrolling(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_ui_ScrollView_stopScroll(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::ui::ScrollView* cobj = (cocos2d::ui::ScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_isAutoScrolling : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_stopScroll : Invalid Native Object");
     if (argc == 0) {
-        bool ret = cobj->isAutoScrolling();
-        JS::RootedValue jsret(cx);
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
+        cobj->stopScroll();
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_isAutoScrolling : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_stopScroll : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ui_ScrollView_setScrollBarPositionFromCornerForHorizontal(JSContext *cx, uint32_t argc, jsval *vp)
@@ -8112,26 +8172,6 @@ bool js_cocos2dx_ui_ScrollView_getScrollBarColor(JSContext *cx, uint32_t argc, j
     JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_getScrollBarColor : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_ui_ScrollView_setScrollBarWidth(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::ui::ScrollView* cobj = (cocos2d::ui::ScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_setScrollBarWidth : Invalid Native Object");
-    if (argc == 1) {
-        double arg0 = 0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_setScrollBarWidth : Error processing arguments");
-        cobj->setScrollBarWidth(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_setScrollBarWidth : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
 bool js_cocos2dx_ui_ScrollView_jumpToTopLeft(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -8164,6 +8204,24 @@ bool js_cocos2dx_ui_ScrollView_isScrollBarEnabled(JSContext *cx, uint32_t argc, 
     }
 
     JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_isScrollBarEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_ScrollView_isAutoScrolling(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::ScrollView* cobj = (cocos2d::ui::ScrollView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_isAutoScrolling : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isAutoScrolling();
+        JS::RootedValue jsret(cx);
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_isAutoScrolling : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ui_ScrollView_jumpToBottomRight(JSContext *cx, uint32_t argc, jsval *vp)
@@ -8374,6 +8432,22 @@ bool js_cocos2dx_ui_ScrollView_jumpToPercentBothDirection(JSContext *cx, uint32_
     JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_jumpToPercentBothDirection : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_ui_ScrollView_stopOverallScroll(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::ScrollView* cobj = (cocos2d::ui::ScrollView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_stopOverallScroll : Invalid Native Object");
+    if (argc == 0) {
+        cobj->stopOverallScroll();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_stopOverallScroll : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_ui_ScrollView_scrollToPercentVertical(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -8398,26 +8472,24 @@ bool js_cocos2dx_ui_ScrollView_scrollToPercentVertical(JSContext *cx, uint32_t a
     JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_scrollToPercentVertical : wrong number of arguments: %d, was expecting %d", argc, 3);
     return false;
 }
-bool js_cocos2dx_ui_ScrollView_scrollToBottom(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_ui_ScrollView_setScrollBarWidth(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::ui::ScrollView* cobj = (cocos2d::ui::ScrollView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_scrollToBottom : Invalid Native Object");
-    if (argc == 2) {
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_ScrollView_setScrollBarWidth : Invalid Native Object");
+    if (argc == 1) {
         double arg0 = 0;
-        bool arg1;
         ok &= JS::ToNumber( cx, args.get(0), &arg0) && !std::isnan(arg0);
-        arg1 = JS::ToBoolean(args.get(1));
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_scrollToBottom : Error processing arguments");
-        cobj->scrollToBottom(arg0, arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_ScrollView_setScrollBarWidth : Error processing arguments");
+        cobj->setScrollBarWidth(arg0);
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_scrollToBottom : wrong number of arguments: %d, was expecting %d", argc, 2);
+    JS_ReportError(cx, "js_cocos2dx_ui_ScrollView_setScrollBarWidth : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_ui_ScrollView_getScrollBarOpacity(JSContext *cx, uint32_t argc, jsval *vp)
@@ -8750,7 +8822,7 @@ void js_register_cocos2dx_ui_ScrollView(JSContext *cx, JS::HandleObject global) 
         JS_FN("setScrollBarOpacity", js_cocos2dx_ui_ScrollView_setScrollBarOpacity, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setScrollBarEnabled", js_cocos2dx_ui_ScrollView_setScrollBarEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isInertiaScrollEnabled", js_cocos2dx_ui_ScrollView_isInertiaScrollEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("scrollToPercentBothDirection", js_cocos2dx_ui_ScrollView_scrollToPercentBothDirection, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("scrollToBottom", js_cocos2dx_ui_ScrollView_scrollToBottom, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getScrolledPercentBothDirection", js_cocos2dx_ui_ScrollView_getScrolledPercentBothDirection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getDirection", js_cocos2dx_ui_ScrollView_getDirection, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setScrollBarColor", js_cocos2dx_ui_ScrollView_setScrollBarColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -8761,22 +8833,23 @@ void js_register_cocos2dx_ui_ScrollView(JSContext *cx, JS::HandleObject global) 
         JS_FN("setDirection", js_cocos2dx_ui_ScrollView_setDirection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("scrollToTopLeft", js_cocos2dx_ui_ScrollView_scrollToTopLeft, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("jumpToTopRight", js_cocos2dx_ui_ScrollView_jumpToTopRight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("jumpToTop", js_cocos2dx_ui_ScrollView_jumpToTop, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("scrollToPercentBothDirection", js_cocos2dx_ui_ScrollView_scrollToPercentBothDirection, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setInnerContainerSize", js_cocos2dx_ui_ScrollView_setInnerContainerSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getInnerContainerPosition", js_cocos2dx_ui_ScrollView_getInnerContainerPosition, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("jumpToTop", js_cocos2dx_ui_ScrollView_jumpToTop, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getScrolledPercentVertical", js_cocos2dx_ui_ScrollView_getScrolledPercentVertical, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isBounceEnabled", js_cocos2dx_ui_ScrollView_isBounceEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("jumpToPercentVertical", js_cocos2dx_ui_ScrollView_jumpToPercentVertical, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addEventListener", js_cocos2dx_ui_ScrollView_addEventListener, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setScrollBarAutoHideTime", js_cocos2dx_ui_ScrollView_setScrollBarAutoHideTime, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isAutoScrolling", js_cocos2dx_ui_ScrollView_isAutoScrolling, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("stopScroll", js_cocos2dx_ui_ScrollView_stopScroll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setScrollBarPositionFromCornerForHorizontal", js_cocos2dx_ui_ScrollView_setScrollBarPositionFromCornerForHorizontal, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setInertiaScrollEnabled", js_cocos2dx_ui_ScrollView_setInertiaScrollEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setScrollBarAutoHideEnabled", js_cocos2dx_ui_ScrollView_setScrollBarAutoHideEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getScrollBarColor", js_cocos2dx_ui_ScrollView_getScrollBarColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setScrollBarWidth", js_cocos2dx_ui_ScrollView_setScrollBarWidth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("jumpToTopLeft", js_cocos2dx_ui_ScrollView_jumpToTopLeft, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isScrollBarEnabled", js_cocos2dx_ui_ScrollView_isScrollBarEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isAutoScrolling", js_cocos2dx_ui_ScrollView_isAutoScrolling, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("jumpToBottomRight", js_cocos2dx_ui_ScrollView_jumpToBottomRight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTouchTotalTimeThreshold", js_cocos2dx_ui_ScrollView_setTouchTotalTimeThreshold, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTouchTotalTimeThreshold", js_cocos2dx_ui_ScrollView_getTouchTotalTimeThreshold, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -8788,8 +8861,9 @@ void js_register_cocos2dx_ui_ScrollView(JSContext *cx, JS::HandleObject global) 
         JS_FN("isScrolling", js_cocos2dx_ui_ScrollView_isScrolling, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("scrollToLeft", js_cocos2dx_ui_ScrollView_scrollToLeft, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("jumpToPercentBothDirection", js_cocos2dx_ui_ScrollView_jumpToPercentBothDirection, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("stopOverallScroll", js_cocos2dx_ui_ScrollView_stopOverallScroll, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("scrollToPercentVertical", js_cocos2dx_ui_ScrollView_scrollToPercentVertical, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("scrollToBottom", js_cocos2dx_ui_ScrollView_scrollToBottom, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setScrollBarWidth", js_cocos2dx_ui_ScrollView_setScrollBarWidth, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getScrollBarOpacity", js_cocos2dx_ui_ScrollView_getScrollBarOpacity, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("scrollToBottomRight", js_cocos2dx_ui_ScrollView_scrollToBottomRight, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setScrollBarPositionFromCorner", js_cocos2dx_ui_ScrollView_setScrollBarPositionFromCorner, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -10888,7 +10962,7 @@ bool js_cocos2dx_ui_UICCTextField_onTextFieldDeleteBackward(JSContext *cx, uint3
     if (argc == 3) {
         cocos2d::TextFieldTTF* arg0 = nullptr;
         const char* arg1 = nullptr;
-        unsigned long arg2 = 0;
+        size_t arg2 = 0;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -10899,7 +10973,7 @@ bool js_cocos2dx_ui_UICCTextField_onTextFieldDeleteBackward(JSContext *cx, uint3
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
         } while (0);
         std::string arg1_tmp; ok &= jsval_to_std_string(cx, args.get(1), &arg1_tmp); arg1 = arg1_tmp.c_str();
-        ok &= jsval_to_ulong(cx, args.get(2), &arg2);
+        ok &= jsval_to_size(cx, args.get(2), &arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_UICCTextField_onTextFieldDeleteBackward : Error processing arguments");
         bool ret = cobj->onTextFieldDeleteBackward(arg0, arg1, arg2);
         JS::RootedValue jsret(cx);
@@ -10927,22 +11001,6 @@ bool js_cocos2dx_ui_UICCTextField_getInsertText(JSContext *cx, uint32_t argc, js
     }
 
     JS_ReportError(cx, "js_cocos2dx_ui_UICCTextField_getInsertText : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_ui_UICCTextField_deleteBackward(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::ui::UICCTextField* cobj = (cocos2d::ui::UICCTextField *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_UICCTextField_deleteBackward : Invalid Native Object");
-    if (argc == 0) {
-        cobj->deleteBackward();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_ui_UICCTextField_deleteBackward : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ui_UICCTextField_setInsertText(JSContext *cx, uint32_t argc, jsval *vp)
@@ -10991,9 +11049,9 @@ bool js_cocos2dx_ui_UICCTextField_getCharCount(JSContext *cx, uint32_t argc, jsv
     cocos2d::ui::UICCTextField* cobj = (cocos2d::ui::UICCTextField *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_UICCTextField_getCharCount : Invalid Native Object");
     if (argc == 0) {
-        unsigned long ret = cobj->getCharCount();
+        size_t ret = cobj->getCharCount();
         JS::RootedValue jsret(cx);
-        jsret = ulong_to_jsval(cx, ret);
+        jsret = size_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
     }
@@ -11085,9 +11143,9 @@ bool js_cocos2dx_ui_UICCTextField_insertText(JSContext *cx, uint32_t argc, jsval
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_UICCTextField_insertText : Invalid Native Object");
     if (argc == 2) {
         const char* arg0 = nullptr;
-        unsigned long arg1 = 0;
+        size_t arg1 = 0;
         std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
-        ok &= jsval_to_ulong(cx, args.get(1), &arg1);
+        ok &= jsval_to_size(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_UICCTextField_insertText : Error processing arguments");
         cobj->insertText(arg0, arg1);
         args.rval().setUndefined();
@@ -11128,7 +11186,7 @@ bool js_cocos2dx_ui_UICCTextField_onTextFieldInsertText(JSContext *cx, uint32_t 
     if (argc == 3) {
         cocos2d::TextFieldTTF* arg0 = nullptr;
         const char* arg1 = nullptr;
-        unsigned long arg2 = 0;
+        size_t arg2 = 0;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
@@ -11139,7 +11197,7 @@ bool js_cocos2dx_ui_UICCTextField_onTextFieldInsertText(JSContext *cx, uint32_t 
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
         } while (0);
         std::string arg1_tmp; ok &= jsval_to_std_string(cx, args.get(1), &arg1_tmp); arg1 = arg1_tmp.c_str();
-        ok &= jsval_to_ulong(cx, args.get(2), &arg2);
+        ok &= jsval_to_size(cx, args.get(2), &arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_UICCTextField_onTextFieldInsertText : Error processing arguments");
         bool ret = cobj->onTextFieldInsertText(arg0, arg1, arg2);
         JS::RootedValue jsret(cx);
@@ -11297,25 +11355,46 @@ bool js_cocos2dx_ui_UICCTextField_create(JSContext *cx, uint32_t argc, jsval *vp
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    if (argc == 3) {
-        std::string arg0;
-        std::string arg1;
-        double arg2 = 0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
-        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !std::isnan(arg2);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_UICCTextField_create : Error processing arguments");
-
-        auto ret = cocos2d::ui::UICCTextField::create(arg0, arg1, arg2);
-        js_type_class_t *typeClass = js_get_type_from_native<cocos2d::ui::UICCTextField>(ret);
-        JS::RootedObject jsret(cx, jsb_ref_autoreleased_create_jsobject(cx, ret, typeClass, "cocos2d::ui::UICCTextField"));
-        args.rval().set(OBJECT_TO_JSVAL(jsret));
-        return true;
-    }
+    
+    do {
+        if (argc == 3) {
+            std::string arg0;
+            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+            if (!ok) { ok = true; break; }
+            std::string arg1;
+            ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            double arg2 = 0;
+            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !std::isnan(arg2);
+            if (!ok) { ok = true; break; }
+            cocos2d::ui::UICCTextField* ret = cocos2d::ui::UICCTextField::create(arg0, arg1, arg2);
+            jsval jsret = JSVAL_NULL;
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::UICCTextField>(cx, (cocos2d::ui::UICCTextField*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    
+    do {
+        if (argc == 0) {
+            cocos2d::ui::UICCTextField* ret = cocos2d::ui::UICCTextField::create();
+            jsval jsret = JSVAL_NULL;
+            if (ret) {
+                jsret = OBJECT_TO_JSVAL(js_get_or_create_jsobject<cocos2d::ui::UICCTextField>(cx, (cocos2d::ui::UICCTextField*)ret));
+            } else {
+                jsret = JSVAL_NULL;
+            };
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
     JS_ReportError(cx, "js_cocos2dx_ui_UICCTextField_create : wrong number of arguments");
     return false;
 }
-
 bool js_cocos2dx_ui_UICCTextField_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -11359,7 +11438,6 @@ void js_register_cocos2dx_ui_UICCTextField(JSContext *cx, JS::HandleObject globa
         JS_FN("getAttachWithIME", js_cocos2dx_ui_UICCTextField_getAttachWithIME, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("onTextFieldDeleteBackward", js_cocos2dx_ui_UICCTextField_onTextFieldDeleteBackward, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getInsertText", js_cocos2dx_ui_UICCTextField_getInsertText, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("deleteBackward", js_cocos2dx_ui_UICCTextField_deleteBackward, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setInsertText", js_cocos2dx_ui_UICCTextField_setInsertText, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getDetachWithIME", js_cocos2dx_ui_UICCTextField_getDetachWithIME, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCharCount", js_cocos2dx_ui_UICCTextField_getCharCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -11381,7 +11459,7 @@ void js_register_cocos2dx_ui_UICCTextField(JSContext *cx, JS::HandleObject globa
     };
 
     static JSFunctionSpec st_funcs[] = {
-        JS_FN("create", js_cocos2dx_ui_UICCTextField_create, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("create", js_cocos2dx_ui_UICCTextField_create, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
@@ -11948,8 +12026,8 @@ bool js_cocos2dx_ui_TextField_setCursorPosition(JSContext *cx, uint32_t argc, js
     cocos2d::ui::TextField* cobj = (cocos2d::ui::TextField *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_setCursorPosition : Invalid Native Object");
     if (argc == 1) {
-        unsigned long arg0 = 0;
-        ok &= jsval_to_ulong(cx, args.get(0), &arg0);
+        size_t arg0 = 0;
+        ok &= jsval_to_size(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_TextField_setCursorPosition : Error processing arguments");
         cobj->setCursorPosition(arg0);
         args.rval().setUndefined();
@@ -13538,11 +13616,11 @@ bool js_cocos2dx_ui_Helper_getSubStringOfUTF8String(JSContext *cx, uint32_t argc
     bool ok = true;
     if (argc == 3) {
         std::string arg0;
-        unsigned long arg1 = 0;
-        unsigned long arg2 = 0;
+        unsigned int arg1 = 0;
+        unsigned int arg2 = 0;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= jsval_to_ulong(cx, args.get(1), &arg1);
-        ok &= jsval_to_ulong(cx, args.get(2), &arg2);
+        ok &= jsval_to_uint32(cx, args.get(1), &arg1);
+        ok &= jsval_to_uint32(cx, args.get(2), &arg2);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ui_Helper_getSubStringOfUTF8String : Error processing arguments");
 
         std::string ret = cocos2d::ui::Helper::getSubStringOfUTF8String(arg0, arg1, arg2);
@@ -15496,7 +15574,7 @@ bool js_cocos2dx_ui_RichText_initWithXML(JSContext *cx, uint32_t argc, jsval *vp
     if (argc == 3) {
         std::string arg0;
         cocos2d::ValueMap arg1;
-        std::function<void (const std::basic_string<char> &)> arg2;
+        std::function<void (const std::string&)> arg2;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         ok &= jsval_to_ccvaluemap(cx, args.get(1), &arg1);
         do {
@@ -15504,7 +15582,7 @@ bool js_cocos2dx_ui_RichText_initWithXML(JSContext *cx, uint32_t argc, jsval *vp
 		    {
 		        JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(2), args.thisv()));
-		        auto lambda = [=](const std::basic_string<char> & larg0) -> void {
+		        auto lambda = [=](const std::string& larg0) -> void {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[1];
 		            largv[0] = std_string_to_jsval(cx, larg0);
@@ -16120,7 +16198,7 @@ bool js_cocos2dx_ui_RichText_createWithXML(JSContext *cx, uint32_t argc, jsval *
     if (argc == 3) {
         std::string arg0;
         cocos2d::ValueMap arg1;
-        std::function<void (const std::basic_string<char> &)> arg2;
+        std::function<void (const std::string&)> arg2;
         ok &= jsval_to_std_string(cx, args.get(0), &arg0);
         ok &= jsval_to_ccvaluemap(cx, args.get(1), &arg1);
         do {
@@ -16128,7 +16206,7 @@ bool js_cocos2dx_ui_RichText_createWithXML(JSContext *cx, uint32_t argc, jsval *
 		    {
 		        JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(2), args.thisv()));
-		        auto lambda = [=](const std::basic_string<char> & larg0) -> void {
+		        auto lambda = [=](const std::string& larg0) -> void {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[1];
 		            largv[0] = std_string_to_jsval(cx, larg0);
@@ -20274,9 +20352,9 @@ bool js_cocos2dx_ui_TabControl_getTabCount(JSContext *cx, uint32_t argc, jsval *
     cocos2d::ui::TabControl* cobj = (cocos2d::ui::TabControl *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TabControl_getTabCount : Invalid Native Object");
     if (argc == 0) {
-        unsigned long ret = cobj->getTabCount();
+        size_t ret = cobj->getTabCount();
         JS::RootedValue jsret(cx);
-        jsret = ulong_to_jsval(cx, ret);
+        jsret = size_to_jsval(cx, ret);
         args.rval().set(jsret);
         return true;
     }

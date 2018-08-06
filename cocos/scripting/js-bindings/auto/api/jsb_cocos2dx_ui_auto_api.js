@@ -2444,6 +2444,16 @@ getTextColor : function (
 },
 
 /**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
  * @method setTextVerticalAlignment
  * @param {cc.TextVAlignment} arg0
  */
@@ -2681,6 +2691,16 @@ int
 )
 {
     return cc.Sprite;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
 },
 
 /**
@@ -3038,13 +3058,11 @@ isInertiaScrollEnabled : function (
 },
 
 /**
- * @method scrollToPercentBothDirection
- * @param {vec2_object} arg0
- * @param {float} arg1
- * @param {bool} arg2
+ * @method scrollToBottom
+ * @param {float} arg0
+ * @param {bool} arg1
  */
-scrollToPercentBothDirection : function (
-vec2, 
+scrollToBottom : function (
 float, 
 bool 
 )
@@ -3152,9 +3170,15 @@ jumpToTopRight : function (
 },
 
 /**
- * @method jumpToTop
+ * @method scrollToPercentBothDirection
+ * @param {vec2_object} arg0
+ * @param {float} arg1
+ * @param {bool} arg2
  */
-jumpToTop : function (
+scrollToPercentBothDirection : function (
+vec2, 
+float, 
+bool 
 )
 {
 },
@@ -3177,6 +3201,14 @@ getInnerContainerPosition : function (
 )
 {
     return cc.Vec2;
+},
+
+/**
+ * @method jumpToTop
+ */
+jumpToTop : function (
+)
+{
 },
 
 /**
@@ -3230,13 +3262,11 @@ float
 },
 
 /**
- * @method isAutoScrolling
- * @return {bool}
+ * @method stopScroll
  */
-isAutoScrolling : function (
+stopScroll : function (
 )
 {
-    return false;
 },
 
 /**
@@ -3280,16 +3310,6 @@ getScrollBarColor : function (
 },
 
 /**
- * @method setScrollBarWidth
- * @param {float} arg0
- */
-setScrollBarWidth : function (
-float 
-)
-{
-},
-
-/**
  * @method jumpToTopLeft
  */
 jumpToTopLeft : function (
@@ -3302,6 +3322,16 @@ jumpToTopLeft : function (
  * @return {bool}
  */
 isScrollBarEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isAutoScrolling
+ * @return {bool}
+ */
+isAutoScrolling : function (
 )
 {
     return false;
@@ -3418,6 +3448,14 @@ vec2
 },
 
 /**
+ * @method stopOverallScroll
+ */
+stopOverallScroll : function (
+)
+{
+},
+
+/**
  * @method scrollToPercentVertical
  * @param {float} arg0
  * @param {float} arg1
@@ -3432,13 +3470,11 @@ bool
 },
 
 /**
- * @method scrollToBottom
+ * @method setScrollBarWidth
  * @param {float} arg0
- * @param {bool} arg1
  */
-scrollToBottom : function (
-float, 
-bool 
+setScrollBarWidth : function (
+float 
 )
 {
 },
@@ -4469,13 +4505,13 @@ getAttachWithIME : function (
  * @method onTextFieldDeleteBackward
  * @param {cc.TextFieldTTF} arg0
  * @param {char} arg1
- * @param {unsigned long} arg2
+ * @param {unsigned int} arg2
  * @return {bool}
  */
 onTextFieldDeleteBackward : function (
 textfieldttf, 
 char, 
-long 
+int 
 )
 {
     return false;
@@ -4489,14 +4525,6 @@ getInsertText : function (
 )
 {
     return false;
-},
-
-/**
- * @method deleteBackward
- */
-deleteBackward : function (
-)
-{
 },
 
 /**
@@ -4521,7 +4549,7 @@ getDetachWithIME : function (
 
 /**
  * @method getCharCount
- * @return {unsigned long}
+ * @return {unsigned int}
  */
 getCharCount : function (
 )
@@ -4570,11 +4598,11 @@ isPasswordEnabled : function (
 /**
  * @method insertText
  * @param {char} arg0
- * @param {unsigned long} arg1
+ * @param {unsigned int} arg1
  */
 insertText : function (
 char, 
-long 
+int 
 )
 {
 },
@@ -4593,13 +4621,13 @@ str
  * @method onTextFieldInsertText
  * @param {cc.TextFieldTTF} arg0
  * @param {char} arg1
- * @param {unsigned long} arg2
+ * @param {unsigned int} arg2
  * @return {bool}
  */
 onTextFieldInsertText : function (
 textfieldttf, 
 char, 
-long 
+int 
 )
 {
     return false;
@@ -4677,14 +4705,14 @@ bool
 
 /**
  * @method create
- * @param {String} arg0
- * @param {String} arg1
- * @param {float} arg2
- * @return {ccui.UICCTextField}
- */
-create : function (
-str, 
-str, 
+* @param {String} str
+* @param {String} str
+* @param {float} float
+* @return {ccui.UICCTextField|ccui.UICCTextField}
+*/
+create : function(
+str,
+str,
 float 
 )
 {
@@ -4975,10 +5003,10 @@ bool
 
 /**
  * @method setCursorPosition
- * @param {unsigned long} arg0
+ * @param {unsigned int} arg0
  */
 setCursorPosition : function (
-long 
+int 
 )
 {
 },
@@ -5610,14 +5638,14 @@ ccui.Helper = {
 /**
  * @method getSubStringOfUTF8String
  * @param {String} arg0
- * @param {unsigned long} arg1
- * @param {unsigned long} arg2
+ * @param {unsigned int} arg1
+ * @param {unsigned int} arg2
  * @return {String}
  */
 getSubStringOfUTF8String : function (
 str, 
-long, 
-long 
+int, 
+int 
 )
 {
     return ;
@@ -8087,7 +8115,7 @@ int
 
 /**
  * @method getTabCount
- * @return {unsigned long}
+ * @return {unsigned int}
  */
 getTabCount : function (
 )

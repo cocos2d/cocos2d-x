@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -155,6 +156,11 @@ public:
     {
         _letterVisible = visible;
         updateColor();
+    }
+
+    bool isVisible() const override
+    {
+        return _letterVisible;
     }
     
     //LabelLetter doesn't need to draw directly.
@@ -1373,7 +1379,7 @@ void Label::updateContent()
         if (_fontAtlas)
         {
             _batchNodes.clear();
-
+            CC_SAFE_RELEASE_NULL(_reusedLetter);
             FontAtlasCache::releaseFontAtlas(_fontAtlas);
             _fontAtlas = nullptr;
         }
@@ -1505,7 +1511,7 @@ void Label::onDrawShadow(GLProgram* glProgram, const Color4F& shadowColor)
     {
         Color3B oldColor = _realColor;
         GLubyte oldOPacity = _displayedOpacity;
-        _displayedOpacity = shadowColor.a * 255;
+        _displayedOpacity = shadowColor.a * (oldOPacity / 255.0f) * 255;
         setColor(Color3B(shadowColor));
 
         glProgram->setUniformsForBuiltins(_shadowTransform);
@@ -1779,13 +1785,15 @@ Sprite* Label::getLetter(int letterIndex)
                 }
                 else
                 {
+                    this->updateBMFontScale();
                     letter = LabelLetter::createWithTexture(_fontAtlas->getTexture(textureID), uvRect);
                     letter->setTextureAtlas(_batchNodes.at(textureID)->getTextureAtlas());
                     letter->setAtlasIndex(letterInfo.atlasIndex);
-                    auto px = letterInfo.positionX + uvRect.size.width / 2 + _linesOffsetX[letterInfo.lineIndex];
-                    auto py = letterInfo.positionY - uvRect.size.height / 2 + _letterOffsetY;
+                    auto px = letterInfo.positionX + _bmfontScale * uvRect.size.width / 2 + _linesOffsetX[letterInfo.lineIndex];
+                    auto py = letterInfo.positionY - _bmfontScale * uvRect.size.height / 2 + _letterOffsetY;
                     letter->setPosition(px,py);
                     letter->setOpacity(_realOpacity);
+                    this->updateLetterSpriteScale(letter);
                 }
                 
                 addChild(letter);
@@ -1864,7 +1872,7 @@ void Label::computeStringNumLines()
     size_t stringLen = _utf32Text.length();
     for (size_t i = 0; i < stringLen - 1; ++i)
     {
-        if (_utf32Text[i] == (char32_t)TextFormatter::NewLine)
+        if (_utf32Text[i] == StringUtils::UnicodeCharacters::NewLine)
         {
             quantityOfLines++;
         }

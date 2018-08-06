@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -289,7 +290,7 @@ namespace ui {
         * get tab header's width
         * @return header's width
         */
-        float getHeaderWidth() const { return _headerWidth; }
+        float getHeaderWidth() const { return (float)_headerWidth; }
 
         /**
         * set header height, affect all tab

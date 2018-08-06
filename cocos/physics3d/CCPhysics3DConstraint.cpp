@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -31,9 +32,9 @@
 NS_CC_BEGIN
 
 Physics3DConstraint::Physics3DConstraint()
-: _bodyA(nullptr)
+: _constraint(nullptr)
+, _bodyA(nullptr)
 , _bodyB(nullptr)
-, _constraint(nullptr)
 , _type(Physics3DConstraint::ConstraintType::UNKNOWN)
 , _userData(nullptr)
 {

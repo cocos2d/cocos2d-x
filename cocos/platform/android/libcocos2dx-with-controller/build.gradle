@@ -1,11 +1,10 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion '25.0.0'
+    compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
 
     defaultConfig {
-        minSdkVersion 10
+        minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
         versionCode 1
         versionName "1.0"
@@ -26,6 +25,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: '../java/libs', include: ['*.jar'])
-    compile fileTree(dir: '../ControllerManualAdapter/libs', include: ['*.jar'])
+    implementation fileTree(dir: '../java/libs', include: ['*.jar'])
+    implementation fileTree(dir: '../ControllerManualAdapter/libs', include: ['*.jar'])
 }

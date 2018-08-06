@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -72,7 +73,7 @@ std::string BaseTestConsole::title() const
 ConsoleCustomCommand::ConsoleCustomCommand()
 {
     _console = Director::getInstance()->getConsole();
-    static struct Console::Command commands[] = {
+    static Console::Command commands[] = {
         {"hello", "This is just a user generated command", [](int fd, const std::string& args) {
             const char msg[] = "how are you?\nArguments passed: ";
             send(fd, msg, sizeof(msg),0);

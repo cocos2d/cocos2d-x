@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -96,6 +97,21 @@ public:
 
     UITextFieldTest_TrueTypeFont();
     ~UITextFieldTest_TrueTypeFont();
+    virtual bool init() override;
+    void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType type);
+    
+protected:
+    
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UITextFieldTest_BMFont : public UIScene
+{
+public:
+    CREATE_FUNC(UITextFieldTest_BMFont);
+    
+    UITextFieldTest_BMFont();
+    ~UITextFieldTest_BMFont();
     virtual bool init() override;
     void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType type);
     

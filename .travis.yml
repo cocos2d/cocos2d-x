@@ -10,14 +10,28 @@ matrix:
         - secure: M5lyDs0qai15mWHzJdkh0WPfVJJmVZu6SWtYULxatukGPXVwoQvmEtYAwAW+iz6aM+tXksQ/mk6nW5L8UFbHm+n6yrsa5bZU9sGXjilPE8p8bLFYDmIbPRazU+E6pBP3J2CDoAm0XnWkiYQ8feTxKTo6ysLnHAEjyaHTw0+Q1GM=
       sudo: required
       language: cpp
+    # mac_cmake
+    - os: osx
+      env: BUILD_TARGET=mac_cmake
+      language: cpp
+      osx_image: xcode8.3
+      sudo: required
+    # iOS_cmake
+    - os: osx
+      env: BUILD_TARGET=ios_cmake
+      language: cpp
+      osx_image: xcode8.3
+      sudo: required
     # android
     - os: linux
       env: BUILD_TARGET=android
       language: android
       sudo: required
-      android:
-        components:
-          - android-13
+    # android_lua
+    - os: linux
+      env: BUILD_TARGET=android_lua
+      language: android
+      sudo: required
     # mac
     - os: osx
       env: BUILD_TARGET=mac
@@ -29,6 +43,14 @@ matrix:
       env: BUILD_TARGET=ios
       language: cpp
       osx_image: xcode8.3
+      sudo: required
+    - os: linux
+      env: BUILD_TARGET=android_cocos_new_test
+      language: cpp
+      sudo: required
+    - os: linux
+      env: BUILD_TARGET=linux_cocos_new_test
+      language: cpp
       sudo: required
 
 script:
