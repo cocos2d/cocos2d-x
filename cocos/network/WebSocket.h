@@ -255,6 +255,7 @@ private:
 
     std::mutex _closeMutex;
     std::condition_variable _closeCondition;
+    std::vector<char*> _protocolNames;
 
     enum class CloseState
     {
