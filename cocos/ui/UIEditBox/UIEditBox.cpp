@@ -26,17 +26,42 @@
 
 #include "ui/UIEditBox/UIEditBox.h"
 #include "ui/UIEditBox/UIEditBoxImpl.h"
+#include "ui/UIHelper.h"
 
 NS_CC_BEGIN
 
 namespace ui {
 
+static const int NORMAL_RENDERER_Z = (-2);
+static const int PRESSED_RENDERER_Z = (-2);
+static const int DISABLED_RENDERER_Z = (-2);
+
 static const float CHECK_EDITBOX_POSITION_INTERVAL = 0.1f;
 
 EditBox::EditBox()
-: _editBoxImpl(nullptr)
+: _normalRenderer(nullptr)
+, _pressedRenderer(nullptr)
+, _disabledRenderer(nullptr)
+, _normalFileName("")
+, _pressedFileName("")
+, _disabledFileName("")
+, _normalTexType(TextureResType::LOCAL)
+, _pressedTexType(TextureResType::LOCAL)
+, _disabledTexType(TextureResType::LOCAL)
+, _capInsetsNormal(Rect::ZERO)
+, _capInsetsPressed(Rect::ZERO)
+, _capInsetsDisabled(Rect::ZERO)
+, _normalTextureSize(_contentSize)
+, _pressedTextureSize(_contentSize)
+, _disabledTextureSize(_contentSize)
+, _normalTextureLoaded(false)
+, _pressedTextureLoaded(false)
+, _disabledTextureLoaded(false)
+, _normalTextureAdaptDirty(true)
+, _pressedTextureAdaptDirty(true)
+, _disabledTextureAdaptDirty(true)
+, _editBoxImpl(nullptr)
 , _delegate(nullptr)
-, _backgroundSprite(nullptr)
 , _adjustHeight(0.f)
 #if CC_ENABLE_SCRIPT_BINDING
 , _scriptEditBoxHandler(0)
@@ -52,21 +77,32 @@ EditBox::~EditBox()
 #endif
 }
 
+void EditBox::openKeyboard() const
+{
+    _editBoxImpl->openKeyboard();
+}
 
 void EditBox::touchDownAction(Ref* /*sender*/, TouchEventType controlEvent)
 {
     if (controlEvent == Widget::TouchEventType::ENDED) {
-        _editBoxImpl->openKeyboard();
+        openKeyboard();
     }
 }
 
 EditBox* EditBox::create(const Size& size,
-                         const std::string& normalSprite,
-                        TextureResType texType /*= TextureResType::LOCAL*/)
+                         const std::string& normalImage,
+                         TextureResType texType) {
+    return EditBox::create(size, normalImage, "", "", texType);
+}
+
+EditBox* EditBox::create(const Size& size,
+                         const std::string& normalImage,
+                         const std::string& pressedImage /* = "" */,
+                         const std::string& disabledImage /* = "" */,
+                         TextureResType texType /* = TextureResType::LOCAL */)
 {
     EditBox* pRet = new (std::nothrow) EditBox();
-    
-    if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, normalSprite, texType))
+    if (pRet != nullptr && pRet->initWithSizeAndTexture(size, normalImage, pressedImage, disabledImage, texType))
     {
         pRet->autorelease();
     }
@@ -74,16 +110,15 @@ EditBox* EditBox::create(const Size& size,
     {
         CC_SAFE_DELETE(pRet);
     }
-    
+
     return pRet;
 }
-    
-    
-EditBox* EditBox::create(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *normalSprite, ui::Scale9Sprite* /*pressedSprite*/, Scale9Sprite* /*disabledSprite*/)
+
+
+EditBox* EditBox::create(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *normalSprite, ui::Scale9Sprite* pressedSprite, Scale9Sprite* disabledSprite)
 {
     EditBox* pRet = new (std::nothrow) EditBox();
-    
-    if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, normalSprite))
+    if (pRet != nullptr && pRet->initWithSizeAndBackgroundSprite(size, normalSprite, pressedSprite, disabledSprite))
     {
         pRet->autorelease();
     }
@@ -91,69 +126,316 @@ EditBox* EditBox::create(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *n
     {
         CC_SAFE_DELETE(pRet);
     }
-    
     return pRet;
 }
-    
-bool EditBox::initWithSizeAndBackgroundSprite(const cocos2d::Size &size, cocos2d::ui::Scale9Sprite *pNormal9SpriteBg)
+
+bool EditBox::initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* normal9SpriteBg)
+{
+    return initWithSizeAndBackgroundSprite(size, normal9SpriteBg, nullptr, nullptr);
+}
+
+bool EditBox::initWithSizeAndBackgroundSprite(const Size& size, Scale9Sprite* normalSprite, Scale9Sprite* pressedSprite, Scale9Sprite* disabledSprite)
 {
     if (Widget::init())
     {
         _editBoxImpl = __createSystemEditBox(this);
         _editBoxImpl->initWithSize(size);
         _editBoxImpl->setInputMode(EditBox::InputMode::ANY);
-        
-        _backgroundSprite = pNormal9SpriteBg;
-        
+
+        loadTextureNormal(normalSprite->getResourceName(), normalSprite->getResourceType() == 0 ? TextureResType::LOCAL : TextureResType::PLIST);
+        if (pressedSprite != nullptr)
+        {
+            loadTexturePressed(pressedSprite->getResourceName(), pressedSprite->getResourceType() == 0 ? TextureResType::LOCAL : TextureResType::PLIST);
+        }
+        if (disabledSprite != nullptr)
+        {
+            loadTexturePressed(disabledSprite->getResourceName(), disabledSprite->getResourceType() == 0 ? TextureResType::LOCAL : TextureResType::PLIST);
+        }
+
         this->setContentSize(size);
-        this->setPosition(Vec2(0, 0));
-        
-        _backgroundSprite->setPosition(Vec2(_contentSize.width/2, _contentSize.height/2));
-        _backgroundSprite->setContentSize(size);
-        this->addProtectedChild(_backgroundSprite);
-        
+
         this->setTouchEnabled(true);
-        
-        this->addTouchEventListener(CC_CALLBACK_2(EditBox::touchDownAction, this));
-        
+
         return true;
     }
     return false;
 }
-
 
 bool EditBox::initWithSizeAndBackgroundSprite(const Size& size,
-                                                        const std::string& pNormal9SpriteBg,
-                                                        TextureResType texType)
+                                              const std::string& pNormal9SpriteBg,
+                                              TextureResType texType)
+{
+    return initWithSizeAndTexture(size, pNormal9SpriteBg, "", "", texType);
+}
+
+bool EditBox::initWithSizeAndTexture(const Size& size,
+                                     const std::string& normalImage,
+                                     const std::string& pressedImage /* = "" */,
+                                     const std::string& disabledImage /* = "" */,
+                                     TextureResType texType /* = TextureResType::LOCAL */)
 {
     if (Widget::init())
     {
         _editBoxImpl = __createSystemEditBox(this);
         _editBoxImpl->initWithSize(size);
         _editBoxImpl->setInputMode(EditBox::InputMode::ANY);
-       
-        if (texType == Widget::TextureResType::LOCAL)
-        {
-            _backgroundSprite = Scale9Sprite::create(pNormal9SpriteBg);
-        }
-        else
-        {
-            _backgroundSprite = Scale9Sprite::createWithSpriteFrameName(pNormal9SpriteBg);
-        }
+
+        loadTextures(normalImage, pressedImage, disabledImage, texType);
+
         this->setContentSize(size);
-        this->setPosition(Vec2(0, 0));
-        
-        _backgroundSprite->setPosition(Vec2(_contentSize.width/2, _contentSize.height/2));
-        _backgroundSprite->setContentSize(size);
-        this->addProtectedChild(_backgroundSprite);
-        
         this->setTouchEnabled(true);
-        
-        this->addTouchEventListener(CC_CALLBACK_2(EditBox::touchDownAction, this));
-        
+
         return true;
     }
     return false;
+}
+
+void EditBox::initRenderer()
+{
+    _normalRenderer = Scale9Sprite::create();
+    _pressedRenderer = Scale9Sprite::create();
+    _disabledRenderer = Scale9Sprite::create();
+    _normalRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+    _pressedRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+    _disabledRenderer->setRenderingType(Scale9Sprite::RenderingType::SLICE);
+
+    addProtectedChild(_normalRenderer, NORMAL_RENDERER_Z, -1);
+    addProtectedChild(_pressedRenderer, PRESSED_RENDERER_Z, -1);
+    addProtectedChild(_disabledRenderer, DISABLED_RENDERER_Z, -1);
+}
+
+void EditBox::loadTextures(const std::string& normal,
+                           const std::string& pressed,
+                           const std::string& disabled,
+                           TextureResType texType)
+{
+    loadTextureNormal(normal, texType);
+    loadTexturePressed(pressed, texType);
+    loadTextureDisabled(disabled, texType);
+}
+
+void EditBox::loadTextureNormal(const std::string& normal,TextureResType texType)
+{
+    _normalFileName = normal;
+    _normalTexType = texType;
+    bool textureLoaded = true;
+    if (normal.empty())
+    {
+        _normalRenderer->resetRender();
+        textureLoaded = false;
+    }
+    else
+    {
+        switch (texType)
+        {
+            case TextureResType::LOCAL:
+                _normalRenderer->initWithFile(normal);
+                break;
+            case TextureResType::PLIST:
+                _normalRenderer->initWithSpriteFrameName(normal);
+                break;
+            default:
+                break;
+        }
+    }
+    //FIXME: https://github.com/cocos2d/cocos2d-x/issues/12249
+    if (!_ignoreSize && _customSize.equals(Size::ZERO)) {
+        _customSize = _normalRenderer->getContentSize();
+    }
+    this->setupNormalTexture(textureLoaded);
+}
+
+void EditBox::setupNormalTexture(bool textureLoaded)
+{
+    _normalTextureSize = _normalRenderer->getContentSize();
+
+    this->updateChildrenDisplayedRGBA();
+
+    _normalTextureLoaded = textureLoaded;
+    _normalTextureAdaptDirty = true;
+}
+
+void EditBox::loadTextureNormal(SpriteFrame* normalSpriteFrame)
+{
+    _normalRenderer->initWithSpriteFrame(normalSpriteFrame);
+    this->setupNormalTexture(nullptr != normalSpriteFrame);
+}
+
+void EditBox::loadTexturePressed(const std::string& pressed, TextureResType texType)
+{
+    _pressedFileName = pressed;
+    _pressedTexType = texType;
+    bool textureLoaded = true;
+    if (pressed.empty())
+    {
+        _pressedRenderer->resetRender();
+        textureLoaded = false;
+    }
+    else
+    {
+        switch (texType)
+        {
+            case TextureResType::LOCAL:
+                _pressedRenderer->initWithFile(pressed);
+                break;
+            case TextureResType::PLIST:
+                _pressedRenderer->initWithSpriteFrameName(pressed);
+                break;
+            default:
+                break;
+        }
+    }
+    this->setupPressedTexture(textureLoaded);
+}
+
+void EditBox::setupPressedTexture(bool textureLoaded)
+{
+    _pressedTextureSize = _pressedRenderer->getContentSize();
+
+    this->updateChildrenDisplayedRGBA();
+
+    _pressedTextureLoaded = textureLoaded;
+    _pressedTextureAdaptDirty = true;
+}
+
+void EditBox::loadTexturePressed(SpriteFrame* pressedSpriteFrame)
+{
+    _pressedRenderer->initWithSpriteFrame(pressedSpriteFrame);
+    this->setupPressedTexture(nullptr != pressedSpriteFrame);
+}
+
+void EditBox::loadTextureDisabled(const std::string& disabled,TextureResType texType)
+{
+    _disabledFileName = disabled;
+    _disabledTexType = texType;
+    bool textureLoaded = true;
+    if (disabled.empty())
+    {
+        _disabledRenderer->resetRender();
+        textureLoaded = false;
+    }
+    else
+    {
+        switch (texType)
+        {
+            case TextureResType::LOCAL:
+                _disabledRenderer->initWithFile(disabled);
+                break;
+            case TextureResType::PLIST:
+                _disabledRenderer->initWithSpriteFrameName(disabled);
+                break;
+            default:
+                break;
+        }
+    }
+    this->setupDisabledTexture(textureLoaded);
+}
+
+void EditBox::setupDisabledTexture(bool textureLoaded)
+{
+    _disabledTextureSize = _disabledRenderer->getContentSize();
+
+    this->updateChildrenDisplayedRGBA();
+
+    _disabledTextureLoaded = textureLoaded;
+    _disabledTextureAdaptDirty = true;
+}
+
+void EditBox::loadTextureDisabled(SpriteFrame* disabledSpriteFrame)
+{
+    _disabledRenderer->initWithSpriteFrame(disabledSpriteFrame);
+    this->setupDisabledTexture(nullptr != disabledSpriteFrame);
+}
+
+void EditBox::setCapInsets(const Rect &capInsets)
+{
+    setCapInsetsNormalRenderer(capInsets);
+    setCapInsetsPressedRenderer(capInsets);
+    setCapInsetsDisabledRenderer(capInsets);
+}
+
+void EditBox::setCapInsetsNormalRenderer(const Rect &capInsets)
+{
+    _capInsetsNormal = Helper::restrictCapInsetRect(capInsets, this->_normalTextureSize);
+    _normalRenderer->setCapInsets(_capInsetsNormal);
+}
+
+void EditBox::setCapInsetsPressedRenderer(const Rect &capInsets)
+{
+    _capInsetsPressed = Helper::restrictCapInsetRect(capInsets, this->_pressedTextureSize);
+    _pressedRenderer->setCapInsets(_capInsetsPressed);
+}
+
+void EditBox::setCapInsetsDisabledRenderer(const Rect &capInsets)
+{
+    _capInsetsDisabled = Helper::restrictCapInsetRect(capInsets, this->_disabledTextureSize);
+    _disabledRenderer->setCapInsets(_capInsetsDisabled);
+}
+
+const Rect& EditBox::getCapInsetsNormalRenderer() const
+{
+    return _capInsetsNormal;
+}
+
+const Rect& EditBox::getCapInsetsPressedRenderer() const
+{
+    return _capInsetsPressed;
+}
+
+const Rect& EditBox::getCapInsetsDisabledRenderer() const
+{
+    return _capInsetsDisabled;
+}
+
+void EditBox::onPressStateChangedToNormal()
+{
+    _normalRenderer->setVisible(true);
+    _pressedRenderer->setVisible(false);
+    _disabledRenderer->setVisible(false);
+    _normalRenderer->setState(Scale9Sprite::State::NORMAL);
+}
+
+void EditBox::onPressStateChangedToPressed()
+{
+    _normalRenderer->setState(Scale9Sprite::State::NORMAL);
+
+    if (_pressedTextureLoaded)
+    {
+        _normalRenderer->setVisible(false);
+        _pressedRenderer->setVisible(true);
+        _disabledRenderer->setVisible(false);
+    }
+    else
+    {
+        _normalRenderer->setVisible(true);
+        _pressedRenderer->setVisible(true);
+        _disabledRenderer->setVisible(false);
+    }
+}
+
+void EditBox::onPressStateChangedToDisabled()
+{
+    //if disabled resource is null
+    if (!_disabledTextureLoaded)
+    {
+        if (_normalTextureLoaded)
+        {
+            _normalRenderer->setState(Scale9Sprite::State::GRAY);
+        }
+    }
+    else
+    {
+        _normalRenderer->setVisible(false);
+        _disabledRenderer->setVisible(true);
+    }
+
+    _pressedRenderer->setVisible(false);
+}
+
+void EditBox::releaseUpEvent()
+{
+    Widget::releaseUpEvent();
+    openKeyboard();
 }
 
 void EditBox::setDelegate(EditBoxDelegate* pDelegate)
@@ -189,7 +471,7 @@ const char* EditBox::getText() const
 		if(pText != nullptr)
 			return pText;
     }
-    
+
     return "";
 }
 
@@ -463,14 +745,52 @@ void EditBox::setContentSize(const Size& size)
         _editBoxImpl->setContentSize(size);
     }
 }
-    
+
+void EditBox::onSizeChanged()
+{
+    Widget::onSizeChanged();
+    _normalTextureAdaptDirty = true;
+    _pressedTextureAdaptDirty = true;
+    _disabledTextureAdaptDirty = true;
+}
+
 void EditBox::adaptRenderers()
 {
-    if (_contentSizeDirty)
+    if (_normalTextureAdaptDirty)
     {
-        _backgroundSprite->setContentSize(_contentSize);
-        _backgroundSprite->setPosition(Vec2(_contentSize.width/2, _contentSize.height/2));
+        normalTextureScaleChangedWithSize();
+        _normalTextureAdaptDirty = false;
     }
+
+    if (_pressedTextureAdaptDirty)
+    {
+        pressedTextureScaleChangedWithSize();
+        _pressedTextureAdaptDirty = false;
+    }
+
+    if (_disabledTextureAdaptDirty)
+    {
+        disabledTextureScaleChangedWithSize();
+        _disabledTextureAdaptDirty = false;
+    }
+}
+
+void EditBox::normalTextureScaleChangedWithSize()
+{
+    _normalRenderer->setPreferredSize(_contentSize);
+    _normalRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
+}
+
+void EditBox::pressedTextureScaleChangedWithSize()
+{
+    _pressedRenderer->setPreferredSize(_contentSize);
+    _pressedRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
+}
+
+void EditBox::disabledTextureScaleChangedWithSize()
+{
+    _disabledRenderer->setPreferredSize(_contentSize);
+    _disabledRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
 }
 
 void EditBox::setAnchorPoint(const Vec2& anchorPoint)
@@ -505,7 +825,7 @@ void EditBox::onEnter()
             return;
     }
 #endif
-    
+
     Widget::onEnter();
     if (_editBoxImpl != nullptr)
     {
@@ -523,7 +843,6 @@ void EditBox::updatePosition(float dt)
     }
 }
 
-
 void EditBox::onExit()
 {
 #if CC_ENABLE_SCRIPT_BINDING
@@ -533,7 +852,7 @@ void EditBox::onExit()
             return;
     }
 #endif
-    
+
     Widget::onExit();
     if (_editBoxImpl != nullptr)
     {
@@ -562,11 +881,11 @@ void EditBox::keyboardWillShow(IMEKeyboardNotificationInfo& info)
         CCLOG("needn't to adjust view layout.");
         return;
     }
-    
+
     // assume keyboard at the bottom of screen, calculate the vertical adjustment.
     _adjustHeight = info.end.getMaxY() - rectTracked.getMinY();
     // CCLOG("CCEditBox:needAdjustVerticalPosition(%f)", _adjustHeight);
-    
+
     if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->doAnimationWhenKeyboardMove(info.duration, _adjustHeight);
@@ -575,7 +894,7 @@ void EditBox::keyboardWillShow(IMEKeyboardNotificationInfo& info)
 
 void EditBox::keyboardDidShow(IMEKeyboardNotificationInfo& /*info*/)
 {
-	
+
 }
 
 void EditBox::keyboardWillHide(IMEKeyboardNotificationInfo& info)
@@ -589,7 +908,7 @@ void EditBox::keyboardWillHide(IMEKeyboardNotificationInfo& info)
 
 void EditBox::keyboardDidHide(IMEKeyboardNotificationInfo& /*info*/)
 {
-	
+
 }
 
 #if CC_ENABLE_SCRIPT_BINDING
