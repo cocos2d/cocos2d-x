@@ -1400,6 +1400,7 @@ void RichText::formatText()
                         if (elmtText->_flags & RichElementText::GLOW_FLAG) {
                             label->enableGlow(Color4B(elmtText->_glowColor));
                         }
+                        label->setTextColor(Color4B(elmtText->_color));
                         elementRenderer = label;
                         break;
                     }
@@ -1423,6 +1424,7 @@ void RichText::formatText()
                             elementRenderer->addComponent(ListenerComponent::create(elementRenderer,
                                                                                     elmtImage->_url,
                                                                                     std::bind(&RichText::openUrl, this, std::placeholders::_1)));
+                            elementRenderer->setColor(element->_color);
                         }
                         break;
                     }
@@ -1430,6 +1432,7 @@ void RichText::formatText()
                     {
                         RichElementCustomNode* elmtCustom = static_cast<RichElementCustomNode*>(element);
                         elementRenderer = elmtCustom->_customNode;
+                        elementRenderer->setColor(element->_color);
                         break;
                     }
                     case RichElement::Type::NEWLINE:
@@ -1443,7 +1446,6 @@ void RichText::formatText()
 
                 if (elementRenderer)
                 {
-                    elementRenderer->setColor(element->_color);
                     elementRenderer->setOpacity(element->_opacity);
                     pushToContainer(elementRenderer);
                 }
@@ -1692,7 +1694,7 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
             if (flags & RichElementText::GLOW_FLAG)
                 textRenderer->enableGlow(Color4B(glowColor));
 
-            textRenderer->setColor(color);
+            textRenderer->setTextColor(Color4B(color));
             textRenderer->setOpacity(opacity);
 
             // textRendererWidth will get 0.0f, when we've got glError: 0x0501 in Label::getContentSize
