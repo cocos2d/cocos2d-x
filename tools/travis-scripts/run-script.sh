@@ -37,6 +37,32 @@ function build_ios()
     xcodebuild -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "build all tests iOS" -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build
 }
 
+function build_mac_cmake()
+{
+    pushd $COCOS2DX_ROOT
+    python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
+    popd
+    cd $COCOS2DX_ROOT/cocos_new_test
+    mkdir -p mac_cmake_build
+    cd mac_cmake_build
+    cmake ..
+    cmake --build .
+    exit 0
+}
+
+function build_ios_cmake()
+{
+    pushd $COCOS2DX_ROOT
+    python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
+    popd
+    cd $COCOS2DX_ROOT/cocos_new_test
+    mkdir -p ios_cmake_build
+    cd ios_cmake_build
+    cmake .. -DCMAKE_TOOLCHAIN_FILE=$COCOS2DX_ROOT/cmake/ios.toolchain.cmake -GXcode -DIOS_PLATFORM=SIMULATOR64
+    cmake --build .
+    exit 0
+}
+
 function build_android()
 {
     # Build all samples
@@ -50,7 +76,7 @@ function build_android()
 
     # build cpp-tests
     pushd $COCOS2DX_ROOT/tests/cpp-tests/proj.android
-    ./gradlew assembleDebug
+    ./gradlew assembleRelease
     popd
 
     # build js-tests
@@ -232,34 +258,43 @@ function run_after_merge()
     generate_pull_request_for_binding_codes_and_cocosfiles
 }
 
-if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
-    source ../environment.sh
-    pushd $COCOS2DX_ROOT
-    python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
-    popd
-    pushd $COCOS2DX_ROOT/cocos_new_test/proj.android
-    ./gradlew build
-    popd
-    exit 0
-fi
-
-if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
-    pushd $COCOS2DX_ROOT
-    python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
-    popd
-    CPU_CORES=`grep -c ^processor /proc/cpuinfo`
-    echo "Building tests ..."
-    cd $COCOS2DX_ROOT/cocos_new_test
-    mkdir -p linux-build
-    cd linux-build
-    cmake ..
-    echo "cpu cores: ${CPU_CORES}"
-    make -j${CPU_CORES} VERBOSE=1
-    exit 0
-fi
-
 # build pull request
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+    if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
+        source ../environment.sh
+        pushd $COCOS2DX_ROOT
+        python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
+        popd
+        pushd $COCOS2DX_ROOT/cocos_new_test/proj.android
+        ./gradlew build
+        popd
+        exit 0
+    fi
+
+    if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
+        pushd $COCOS2DX_ROOT
+        python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
+        popd
+        CPU_CORES=`grep -c ^processor /proc/cpuinfo`
+        echo "Building tests ..."
+        cd $COCOS2DX_ROOT/cocos_new_test
+        mkdir -p linux-build
+        cd linux-build
+        cmake ..
+        echo "cpu cores: ${CPU_CORES}"
+        make -j${CPU_CORES} VERBOSE=1
+        exit 0
+    fi
+    if [ $BUILD_TARGET == 'mac_cmake' ]; then
+        build_mac_cmake
+        exit 0
+    fi
+
+    if [ $BUILD_TARGET == 'ios_cmake' ]; then
+        build_ios_cmake
+        exit 0
+    fi
+
     run_pull_request
 fi
 

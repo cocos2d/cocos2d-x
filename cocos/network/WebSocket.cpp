@@ -570,6 +570,11 @@ WebSocket::~WebSocket()
         CC_SAFE_DELETE(__wsHelper);
     }
 
+    for(auto name:_protocolNames){
+        free(name);
+    }
+    free(_lwsProtocols);
+    
     Director::getInstance()->getEventDispatcher()->removeEventListener(_resetDirectorListener);
     
     *_isDestroyed = true;
@@ -601,6 +606,7 @@ bool WebSocket::init(const Delegate& delegate,
             _lwsProtocols[i].callback = WebSocketCallbackWrapper::onSocketCallback;
             size_t nameLen = protocols->at(i).length();
             char* name = (char*)malloc(nameLen + 1);
+            _protocolNames.push_back(name);
             name[nameLen] = '\0';
             strcpy(name, protocols->at(i).c_str());
             _lwsProtocols[i].name = name;
