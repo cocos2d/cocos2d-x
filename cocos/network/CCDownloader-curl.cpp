@@ -811,7 +811,7 @@ namespace cocos2d { namespace network {
                 coTask._fp = nullptr;
                 do
                 {
-                    if (0 == coTask._fileName.length())
+                    if (0 == coTask._fileName.length() || DownloadTask::ERROR_NO_ERROR != coTask._errCode)
                     {
                         break;
                     }

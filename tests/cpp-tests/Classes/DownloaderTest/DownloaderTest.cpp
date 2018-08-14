@@ -29,6 +29,7 @@
 #include "../testResource.h"
 
 #include "ui/UILoadingBar.h"
+#include "ui/UIButton.h"
 #include "network/CCDownloader.h"
 
 USING_NS_CC;
