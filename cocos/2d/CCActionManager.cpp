@@ -491,9 +491,11 @@ void ActionManager::update(float dt)
             deleteHashElement(_currentTarget);
             
             // check elt invalidated
-            tHashElement *element = nullptr;
-            HASH_FIND_PTR(_targets, &elt, element);
-            if (!element) break;
+            if (elt) {
+                tHashElement *element = nullptr;
+                HASH_FIND_PTR(_targets, &elt->target, element);
+                if (element != elt) break;
+            }
         }
         //if some node reference 'target', it's reference count >= 2 (issues #14050)
         else if (_currentTarget->target->getReferenceCount() == 1)
@@ -501,9 +503,11 @@ void ActionManager::update(float dt)
             deleteHashElement(_currentTarget);
             
             // check elt invalidated
-            tHashElement *element = nullptr;
-            HASH_FIND_PTR(_targets, &elt, element);
-            if (!element) break;
+            if (elt) {
+                tHashElement *element = nullptr;
+                HASH_FIND_PTR(_targets, &elt->target, element);
+                if (element != elt) break;
+            }
         }
     }
 
