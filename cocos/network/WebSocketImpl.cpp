@@ -174,22 +174,22 @@ namespace cocos2d
         */
         class NetCmd {
         public:
-            static NetCmd Open(WebSocketImpl *ws);
-            static NetCmd Close(WebSocketImpl *ws);
-            static NetCmd Write(WebSocketImpl *ws, const char *data, size_t len, bool isBinary);
+            static NetCmd Open(WebSocketImpl::Ptr ws);
+            static NetCmd Close(WebSocketImpl::Ptr ws);
+            static NetCmd Write(WebSocketImpl::Ptr ws, const char *data, size_t len, bool isBinary);
 
             NetCmd() {}
-            NetCmd(WebSocketImpl *ws, NetCmdType cmd, std::shared_ptr<NetDataPack> data) :ws(ws), cmd(cmd), data(data) {}
+            NetCmd(WebSocketImpl::Ptr ws, NetCmdType cmd, std::shared_ptr<NetDataPack> data) :ws(ws), cmd(cmd), data(data) {}
             NetCmd(const NetCmd &o) :ws(o.ws), cmd(o.cmd), data(o.data) {}
         public:
-            WebSocketImpl * ws{ nullptr };      //sender socket
+            WebSocketImpl::Ptr ws{ nullptr };      //sender socket
             NetCmdType cmd;                     //command type
             std::shared_ptr<NetDataPack> data;  //write data
         };
 
-        NetCmd NetCmd::Open(WebSocketImpl *ws) { return NetCmd(ws, NetCmdType::OPEN, nullptr); }
-        NetCmd NetCmd::Close(WebSocketImpl *ws) { return NetCmd(ws, NetCmdType::CLOSE, nullptr); }
-        NetCmd NetCmd::Write(WebSocketImpl *ws, const char *data, size_t len, bool isBinary)
+        NetCmd NetCmd::Open(WebSocketImpl::Ptr ws) { return NetCmd(ws, NetCmdType::OPEN, nullptr); }
+        NetCmd NetCmd::Close(WebSocketImpl::Ptr ws) { return NetCmd(ws, NetCmdType::CLOSE, nullptr); }
+        NetCmd NetCmd::Write(WebSocketImpl::Ptr ws, const char *data, size_t len, bool isBinary)
         {
             auto pack = std::make_shared<NetDataPack>(data, len, isBinary);
             return NetCmd(ws, NetCmdType::WRITE, pack);
@@ -424,7 +424,7 @@ namespace cocos2d
 
         void HelperLoop::before()
         {
-            CCLOG("[HelperLoop] thread start ... ");
+            CCLOG("[WSHelper] thread start ... ");
             _helper->reInitLibUV();
         }
 
@@ -435,7 +435,7 @@ namespace cocos2d
 
         void HelperLoop::after()
         {
-            CCLOG("[HelperLoop] thread quit!!! ... ");
+            CCLOG("[WSHelper] thread quit!!! ... ");
             _helper->clear();
         }
 
@@ -550,7 +550,7 @@ namespace cocos2d
             }
 
             _state = WebSocket::State::CONNECTING;
-            _helper->send("open", NetCmd::Open(this));
+            _helper->send("open", NetCmd::Open(this->shared_from_this()));
 
             return true;
         }
@@ -562,7 +562,7 @@ namespace cocos2d
                 _state == WebSocket::State::UNINITIALIZED
                 )
                 return;
-            _helper->send("close", NetCmd::Close(this));
+            _helper->send("close", NetCmd::Close(this->shared_from_this()));
         }
 
         void WebSocketImpl::sigCloseSync(int timeoutMS)
@@ -573,7 +573,7 @@ namespace cocos2d
                 )
                 return;
             _state = WebSocket::State::CLOSING;
-            _helper->send("close", NetCmd::Close(this));
+            _helper->send("close", NetCmd::Close(this->shared_from_this()));
             
             if (timeoutMS == 0)
             {
@@ -601,12 +601,12 @@ namespace cocos2d
 
         void WebSocketImpl::sigSend(const char *data, size_t len)
         {
-            _helper->send("send", NetCmd::Write(this, data, len, true));
+            _helper->send("send", NetCmd::Write(this->shared_from_this(), data, len, true));
         }
 
         void WebSocketImpl::sigSend(const std::string &msg)
         {
-            NetCmd cmd = NetCmd::Write(this, msg.data(), msg.length(), false);
+            NetCmd cmd = NetCmd::Write(this->shared_from_this(), msg.data(), msg.length(), false);
             _helper->send("send", cmd);
         }
 
