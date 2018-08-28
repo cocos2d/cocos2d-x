@@ -8138,7 +8138,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = "";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/Box2D/include";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/Box2D/include $(SRCROOT)/../external/uv/include";
 			};
 			name = Debug;
 		};
@@ -8146,7 +8146,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = "";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/Box2D/include";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/Box2D/include $(SRCROOT)/../external/uv/include";
 			};
 			name = Release;
 		};
@@ -8254,7 +8254,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/Box2D/include";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/Box2D/include $(SRCROOT)/../external/uv/include";
 			};
 			name = Debug;
 		};
@@ -8281,7 +8281,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocos2d-x.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/Box2D/include";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/Box2D/include $(SRCROOT)/../external/uv/include";
 			};
 			name = Release;
 		};

@@ -246,7 +246,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/poly2tri \
                     $(LOCAL_PATH)/../external/poly2tri/common \
                     $(LOCAL_PATH)/../external/poly2tri/sweep \
-                    $(LOCAL_PATH)/../external/clipper
+                    $(LOCAL_PATH)/../external/clipper \
+                    $(LOCAL_PATH)/../external/uv/include
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external \
@@ -261,7 +262,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/poly2tri \
                     $(LOCAL_PATH)/../external/poly2tri/common \
                     $(LOCAL_PATH)/../external/poly2tri/sweep \
-                    $(LOCAL_PATH)/../external/clipper
+                    $(LOCAL_PATH)/../external/clipper \
+                    $(LOCAL_PATH)/../external/uv/include
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
@@ -308,6 +310,8 @@ LOCAL_STATIC_LIBRARIES += cocosbuilder_static
 LOCAL_STATIC_LIBRARIES += cocos3d_static
 LOCAL_STATIC_LIBRARIES += spine_static
 LOCAL_STATIC_LIBRARIES += cocos_network_static
+LOCAL_STATIC_LIBRARIES += cocos_loop_static
+LOCAL_STATIC_LIBRARIES += uv_static
 LOCAL_STATIC_LIBRARIES += audioengine_static
 
 include $(BUILD_STATIC_LIBRARY)
@@ -329,6 +333,7 @@ $(call import-module,editor-support/cocosbuilder)
 $(call import-module,editor-support/cocostudio)
 $(call import-module,editor-support/spine)
 $(call import-module,network)
+$(call import-module,loop)
 $(call import-module,ui)
 $(call import-module,extensions)
 $(call import-module,Box2D/prebuilt/android)
@@ -336,5 +341,6 @@ $(call import-module,bullet/prebuilt/android)
 $(call import-module,recast)
 # $(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)
+$(call import-module,uv/prebuilt/android)
 $(call import-module,openssl/prebuilt/android)
 $(call import-module,flatbuffers)

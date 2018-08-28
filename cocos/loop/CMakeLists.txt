@@ -1,0 +1,14 @@
+set(COCOS_LOOP_HEADER  
+ loop/Loop.h
+ loop/Looper.h
+ loop/Finalizer.h
+ loop/Collections.h
+ loop/LoopEvent.h
+ loop/LoopRunable.h
+ loop/SeqItem.h
+ loop/ThreadLoop.h
+)
+set(COCOS_LOOP_SRC 
+loop/LoopRunable.cpp
+loop/ThreadLoop.cpp
+)

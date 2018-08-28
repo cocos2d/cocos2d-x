@@ -28,56 +28,25 @@ THE SOFTWARE.
 ****************************************************************************/
 
 
-#include "WebSocket.h"
+#pragma once
 
-#include "WebSocketImpl.h"
-
-#include <iostream>
-#include <vector>
+#include <cstdint>
 #include <string>
-
-#define CC_WS_CLOSE_TIMEOUT_MS 3000
-
 namespace cocos2d
 {
-    namespace network
+    namespace loop
     {
-        void WebSocket::closeAllConnections() { WebSocketImpl::closeAll(); }
+        template<typename T>
+        struct SeqItem {
+            SeqItem(uint64_t id, const std::string &name, T &data) : data(data), id(id), name(name) {}
+            SeqItem(uint64_t id, const std::string &name, T &&data) : data(data), id(id), name(name) {}
+            SeqItem(uint64_t id, T &data) : data(data), id(id) {}
+            SeqItem(uint64_t id, T &&data) : data(data), id(id) {}
+            SeqItem(const SeqItem &d) :data(d.data), id(d.id), name(d.name) {}
+            T data;
+            uint64_t id;
+            std::string name = "";
+        };
 
-        WebSocket::WebSocket() { impl = std::make_shared<WebSocketImpl>(this); }
-
-        WebSocket::~WebSocket() { impl->sigCloseAsync(); impl.reset(); }
-
-        bool WebSocket::init(const Delegate& delegate,
-            const std::string& url,
-            const std::vector<std::string>* protocols,
-            const std::string& caFilePath)
-        {
-            return impl->init(delegate, url, protocols, caFilePath);
-        }
-
-        void WebSocket::close() { impl->sigCloseSync(CC_WS_CLOSE_TIMEOUT_MS); }
-        void WebSocket::close(int timeoutMS) { impl->sigCloseSync(timeoutMS); }
-
-        void WebSocket::closeAsync() { impl->sigCloseAsync(); }
-
-        void WebSocket::send(const std::string &msg) { impl->sigSend(msg); }
-
-        void WebSocket::send(const unsigned char *data, size_t len) { impl->sigSend((const char *)data, len); }
-
-        WebSocket::State WebSocket::getReadyState()
-        {
-            return impl->_state;
-        }
-
-        const std::string &WebSocket::getUrl() const
-        {
-            return impl->_url;
-        }
-
-        const std::string& WebSocket::getProtocol() const
-        {
-            return impl->_joinedProtocols;
-        }
     }
 }

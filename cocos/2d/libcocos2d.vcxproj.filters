@@ -2001,6 +2001,9 @@
     <ClCompile Include="..\base\CCEventController.cpp" />
     <ClCompile Include="..\base\CCEventListenerController.cpp" />
     <ClCompile Include="..\precheader.cpp" />
+    <ClCompile Include="..\loop\LoopRunable.cpp" />
+    <ClCompile Include="..\loop\ThreadLoop.cpp" />
+    <ClCompile Include="..\network\WebSocketImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -3913,6 +3916,15 @@
     <ClInclude Include="..\base\CCEventController.h" />
     <ClInclude Include="..\base\CCEventListenerController.h" />
     <ClInclude Include="..\precheader.h" />
+    <ClInclude Include="..\loop\Collections.h" />
+    <ClInclude Include="..\loop\Finalizer.h" />
+    <ClInclude Include="..\loop\Loop.h" />
+    <ClInclude Include="..\loop\Looper.h" />
+    <ClInclude Include="..\loop\LoopEvent.h" />
+    <ClInclude Include="..\loop\LoopRunable.h" />
+    <ClInclude Include="..\loop\SeqItem.h" />
+    <ClInclude Include="..\loop\ThreadLoop.h" />
+    <ClInclude Include="..\network\WebSocketImpl.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">

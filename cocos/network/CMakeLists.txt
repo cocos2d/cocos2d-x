@@ -29,6 +29,7 @@ else()
         network/HttpClient.cpp
         network/SocketIO.cpp
         network/WebSocket.cpp
+        network/WebSocketImpl.cpp
         network/CCDownloader.cpp
         network/CCDownloader-curl.cpp
         network/Uri.cpp
@@ -41,6 +42,7 @@ set(COCOS_NETWORK_HEADER
     network/CCIDownloaderImpl.h
     network/CCDownloader.h
     network/WebSocket.h
+    network/WebSocketImpl.h
     network/Uri.h
     network/SocketIO.h
     network/HttpClient.h

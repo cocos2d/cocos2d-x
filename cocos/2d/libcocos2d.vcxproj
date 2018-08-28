@@ -68,6 +68,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>../../external/sqlite3/libraries/win32;$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\external\uv\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>../../external/sqlite3/libraries/win32;$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
@@ -113,7 +114,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)
 xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\external\bullet\prebuilt\win32\debug\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\external\Box2D\prebuilt\win32\debug\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"</Command>
+xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\external\uv\prebuilt\win32\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
@@ -125,7 +128,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
       <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
       <ModuleDefinitionFile>cocos2d.def</ModuleDefinitionFile>
-      <AdditionalDependencies>sqlite3.lib;libcurl.lib;websockets.lib;libcrypto.lib;libssl.lib;libmpg123.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;OpenAL32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>psapi.lib;iphlpapi.lib;userenv.lib;uv_a.lib;sqlite3.lib;libcurl.lib;websockets.lib;libcrypto.lib;libssl.lib;libmpg123.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;OpenAL32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -583,6 +586,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\WidgetReader.cpp" />
+    <ClCompile Include="..\loop\LoopRunable.cpp" />
+    <ClCompile Include="..\loop\ThreadLoop.cpp" />
     <ClCompile Include="..\math\CCAffineTransform.cpp" />
     <ClCompile Include="..\math\CCGeometry.cpp" />
     <ClCompile Include="..\math\CCVertex.cpp" />
@@ -604,6 +609,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
     <ClCompile Include="..\network\SocketIO.cpp" />
     <ClCompile Include="..\network\Uri.cpp" />
     <ClCompile Include="..\network\WebSocket.cpp" />
+    <ClCompile Include="..\network\WebSocketImpl.cpp" />
     <ClCompile Include="..\physics3d\CCPhysics3D.cpp" />
     <ClCompile Include="..\physics3d\CCPhysics3DComponent.cpp" />
     <ClCompile Include="..\physics3d\CCPhysics3DConstraint.cpp" />
@@ -1217,6 +1223,14 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\WidgetReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\WidgetReaderProtocol.h" />
+    <ClInclude Include="..\loop\Collections.h" />
+    <ClInclude Include="..\loop\Finalizer.h" />
+    <ClInclude Include="..\loop\Loop.h" />
+    <ClInclude Include="..\loop\Looper.h" />
+    <ClInclude Include="..\loop\LoopEvent.h" />
+    <ClInclude Include="..\loop\LoopRunable.h" />
+    <ClInclude Include="..\loop\SeqItem.h" />
+    <ClInclude Include="..\loop\ThreadLoop.h" />
     <ClInclude Include="..\math\CCAffineTransform.h" />
     <ClInclude Include="..\math\CCGeometry.h" />
     <ClInclude Include="..\math\CCMath.h" />
@@ -1243,6 +1257,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
     <ClInclude Include="..\network\SocketIO.h" />
     <ClInclude Include="..\network\Uri.h" />
     <ClInclude Include="..\network\WebSocket.h" />
+    <ClInclude Include="..\network\WebSocketImpl.h" />
     <ClInclude Include="..\physics3d\CCPhysics3D.h" />
     <ClInclude Include="..\physics3d\CCPhysics3DComponent.h" />
     <ClInclude Include="..\physics3d\CCPhysics3DConstraint.h" />
