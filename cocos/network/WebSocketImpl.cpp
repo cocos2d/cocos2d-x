@@ -708,10 +708,10 @@ namespace cocos2d
 
             auto useSSL = _uri.isSecure();
 
-            if (useSSL) {
+            if (useSSL && _caFile.length() == 0) {
                 //caFile must be provided once ssl is enabled.
                 //it can be downloaded from site https://curl.haxx.se/docs/caextract.html
-                CCASSERT(_caFile.length() > 0, "set `caFile` when using wss!");
+                CCLOGERROR("Set`caFile` when using wss!");
             }
 
             _caFullPath = searchCaPath(_caFile, useSSL);
