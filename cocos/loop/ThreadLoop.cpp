@@ -76,8 +76,8 @@ namespace cocos2d
             bool *inited = (bool*)uv_key_get(&__uvLoopInitedKey);
             if (inited == nullptr || false == *inited )
             {
-                auto *loopPtr = (uv_loop_t*)malloc(sizeof(uv_loop_t));
-                auto *initedPtr = new bool(true);
+                uv_loop_t *loopPtr = (uv_loop_t*)calloc(sizeof(uv_loop_t), 1);
+                bool *initedPtr = new bool(true);
                 if (loopPtr && initedPtr)
                 {
                     uv_loop_init(loopPtr);

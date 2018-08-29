@@ -337,7 +337,7 @@ namespace cocos2d
         {
             if (_lwsContext)
             {
-                lws_libuv_stop(_lwsContext);
+                //lws_libuv_stop_without_kill(_lwsContext, 0); //cause exception on mac
                 lws_context_destroy(_lwsContext);
                 _lwsContext = nullptr;
             }
