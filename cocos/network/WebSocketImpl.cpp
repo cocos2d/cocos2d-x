@@ -330,7 +330,7 @@ namespace cocos2d
             _looper->on("send", [this](NetCmd &ev) {this->handleCmdWrite(ev); });
             _looper->on("close", [this](NetCmd& ev) {this->handleCmdDisconnect(ev); });
 
-            _looper->run();
+            _looper->runSync();
         }
 
         void Helper::clear()
@@ -424,7 +424,7 @@ namespace cocos2d
 
         void HelperLoop::before()
         {
-            CCLOG("[WSHelper] thread start ... ");
+            //CCLOG("[WSHelper] thread started ... ");
             _helper->reInitLibUV();
         }
 
@@ -435,7 +435,7 @@ namespace cocos2d
 
         void HelperLoop::after()
         {
-            CCLOG("[WSHelper] thread quit!!! ... ");
+            //CCLOG("[WSHelper] thread quit!!! ... ");
             _helper->clear();
         }
 
@@ -513,7 +513,6 @@ namespace cocos2d
             if (isSecureURL(url) && caFile.length() == 0)
             {
                 CCLOGERROR("WebSocket url: `%s` uses SSL, which expects a caFile `%s`", url.c_str(), caFile.c_str());
-                return false;
             }
 
             _helper = Helper::fetch();

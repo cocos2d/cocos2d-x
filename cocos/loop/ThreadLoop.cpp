@@ -36,6 +36,7 @@ namespace cocos2d
     namespace loop
     {
 #if 0
+        //thread_local is not supported on iOS
         thread_local uv_loop_t *__uvLoop = nullptr;
         thread_local bool __uvLoopInited = false;
         

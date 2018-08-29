@@ -41,6 +41,7 @@ THE SOFTWARE.
 #include <iostream>
 #include <atomic>
 #include <cstdint>
+#include <memory>
 
 #include "uv.h"
 
@@ -51,7 +52,9 @@ THE SOFTWARE.
 #include "Finalizer.h"
 #include "SeqItem.h"
 
-#include <memory>
+//#include "platform/CCPlatformMacros.h"
+
+#define CC_LOOPER_THREAD_START_WAIT 3000
 
 namespace cocos2d
 {
@@ -94,7 +97,9 @@ namespace cocos2d
 
             void init();
 
-            void run();
+            void runSync(int waitMS = CC_LOOPER_THREAD_START_WAIT);
+            void runAsync();
+
             void asyncStop();
             bool syncStop();
             void join();
@@ -122,6 +127,8 @@ namespace cocos2d
             void handleEvent(const std::string &name, LoopEvent &ev);
             void handleFn(const std::function<void()> &fn);
 
+            bool _isCurrentThread() const;
+
             ThreadCategory _category;
             Loop *_loop;
             uv_loop_t *_uvLoop;
@@ -137,9 +144,11 @@ namespace cocos2d
 
             std::thread *_threadId = nullptr;
             int64_t _intervalMs;
-
+         
         public:
             uv_async_t _uvAsync;
+            std::condition_variable _waitThreadCV;
+            std::mutex _waitThreadMtx;
             friend class LoopMgr;
             friend void async_handle<LoopEvent>(uv_async_t * data);
         };
@@ -228,7 +237,6 @@ namespace cocos2d
         template<typename LoopEvent>
         void Looper<LoopEvent>::emit(const std::string &name, LoopEvent &event)
         {
-            assert(_initialized);
             _pendingEvents.pushBack(SeqItem<LoopEvent>(genSeq(), name, event));
             notify();
         }
@@ -240,6 +248,11 @@ namespace cocos2d
             return _uvLoop && _uvLoop == ThreadLoop::getThreadLoop();
         }
 
+        template<typename LoopEvent>
+        bool Looper<LoopEvent>::_isCurrentThread() const
+        {
+            return _uvLoop && _uvLoop == ThreadLoop::getThreadLoop();
+        }
 
         template<typename LoopEvent>
         Looper<LoopEvent> * Looper<LoopEvent>::getCurrentThread()
@@ -248,25 +261,38 @@ namespace cocos2d
         }
 
         template<typename LoopEvent>
-        void Looper<LoopEvent>::run()
+        void Looper<LoopEvent>::runAsync()
         {
             assert(!_threadId);
             assert(!_initialized); //call Looper<T>#init() before this
-
-            std::condition_variable cv;
-            std::mutex mtx;
-
             auto self = this->shared_from_this();
-
-            _threadId = new std::thread([self, &cv]() {
+            _threadId = new std::thread([self]() {
                 ThreadLoop::initThreadLoop();
                 self->init();
-                cv.notify_all();
+                self->onRun();
+            });
+        }
+
+        template<typename LoopEvent>
+        void Looper<LoopEvent>::runSync(int timeoutMS)
+        {
+            assert(!_threadId);
+            assert(!_initialized); //call Looper<T>#init() before this
+            auto self = this->shared_from_this();
+            
+            _threadId = new std::thread([self]() {
+                ThreadLoop::initThreadLoop();
+                self->init();
+                self->_waitThreadCV.notify_all();
                 self->onRun();
             });
 
-            std::unique_lock<std::mutex> lock(mtx);
-            cv.wait(lock);
+            std::unique_lock<std::mutex> lock(_waitThreadMtx);
+            auto waitStatus = _waitThreadCV.wait_for(lock, std::chrono::milliseconds(timeoutMS));
+            if(waitStatus == std::cv_status::timeout)
+            {
+                std::cerr << "[Looper] start loop timeout!" << std::endl;
+            }
         }
 
         template<typename LoopEvent>
@@ -279,12 +305,14 @@ namespace cocos2d
             Finalizer defer([tsk]() {
                 tsk->afterRun();
             });
+
             tsk->beforeRun();
 
             //handle events before thread start
-            //if (_isStopped) return;
-            //onNotify();
-            //if (_isStopped) return;
+            if (_isStopped) return;
+            onNotify();
+
+            if (_isStopped) return;
             tsk->run();
         }
 
@@ -386,7 +414,7 @@ namespace cocos2d
         template<typename LoopEvent>
         void Looper<LoopEvent>::notify()
         {
-            if (_isStopped) return;
+            if (_isStopped || !_initialized) return;
             uv_async_send(&_uvAsync);
         }
 
