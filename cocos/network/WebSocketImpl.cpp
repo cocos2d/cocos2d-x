@@ -508,7 +508,7 @@ namespace cocos2d
 
         bool WebSocketImpl::init(const WebSocket::Delegate &delegate, const std::string &url, const std::vector<std::string> *protocols, const std::string & caFile)
         {
-
+            CCASSERT(_state == WebSocket::State::UNINITIALIZED, "websocket should not be init twice!");
             CCASSERT(url.length() > 0, "url should not be empty!");
             if (isSecureURL(url) && caFile.length() == 0)
             {

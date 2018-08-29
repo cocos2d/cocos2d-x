@@ -83,6 +83,10 @@ namespace cocos2d
                     uv_key_set(&__uvLoopKey, loopPtr);
                     uv_key_set(&__uvLoopInitedKey, initedPtr);
                 }
+                else {
+                    if (loopPtr) free(loopPtr);
+                    if (initedPtr) delete initedPtr;
+                }
             }
         }
 
