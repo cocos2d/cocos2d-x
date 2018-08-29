@@ -35,6 +35,7 @@ namespace cocos2d
 {
     namespace loop
     {
+#if 0
         thread_local uv_loop_t *__uvLoop = nullptr;
         thread_local bool __uvLoopInited = false;
         
@@ -55,6 +56,42 @@ namespace cocos2d
         {   
             return __uvLoopInited ? __uvLoop : nullptr;
         }
+#else
+        uv_key_t __uvLoopKey;
+        uv_key_t __uvLoopInitedKey;
+        uv_once_t __uvLoopInitOnce;
 
+        static void doInit()
+        {
+            uv_key_create(&__uvLoopKey);
+            uv_key_create(&__uvLoopInitedKey);
+            uv_key_set(&__uvLoopKey, nullptr);
+            uv_key_set(&__uvLoopInitedKey, nullptr);
+        }
+
+        void ThreadLoop::initThreadLoop()
+        {
+            uv_once(&__uvLoopInitOnce, doInit);
+            bool *inited = (bool*)uv_key_get(&__uvLoopInitedKey);
+            if (inited == nullptr || false == *inited )
+            {
+                auto *loopPtr = (uv_loop_t*)malloc(sizeof(uv_loop_t));
+                auto *initedPtr = new bool(true);
+                if (loopPtr && initedPtr)
+                {
+                    uv_loop_init(loopPtr);
+                    uv_key_set(&__uvLoopKey, loopPtr);
+                    uv_key_set(&__uvLoopInitedKey, initedPtr);
+                }
+            }
+        }
+
+        uv_loop_t * ThreadLoop::getThreadLoop()
+        {
+            uv_once(&__uvLoopInitOnce, doInit);
+            bool *inited = (bool*)uv_key_get(&__uvLoopInitedKey);
+            return (inited && *inited) ? (uv_loop_t*)uv_key_get(&__uvLoopKey) : nullptr;
+        }
+#endif
     }
 }
