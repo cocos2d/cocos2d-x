@@ -69,6 +69,8 @@ namespace cocos2d
             T &front() { _TMP_CC_LOOP_TS_LOCK; return _data.front(); }
             T &back() { _TMP_CC_LOOP_TS_LOCK; return _data.back(); }
 
+            void clear() { _TMP_CC_LOOP_TS_LOCK; return _data.clear(); }
+
             size_t size() { return _data.size(); }
             std::recursive_mutex& getMutex() { return _mtx; }
             std::list<T> & getQueue() { return _data; }

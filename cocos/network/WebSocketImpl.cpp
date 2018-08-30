@@ -244,6 +244,7 @@ namespace cocos2d
             void handleCmdWrite(NetCmd &cmd);
 
             uv_loop_t * getUVLoop() { return _looper->getUVLoop(); }
+            std::shared_ptr<Looper<NetCmd> > getLooper() { return _looper; }
             void reInitLibUV();
 
         private:
@@ -839,7 +840,10 @@ namespace cocos2d
             auto self = this->shared_from_this();
             _helper->runInUI([self, wsi]() {
                 self->_delegate->onOpen(self->_ws);
-                lws_callback_on_writable(wsi);
+                //schedule writable
+                self->_helper->getLooper()->dispatch([wsi]() {
+                    lws_callback_on_writable(wsi);
+                });
             });
             return 0;
         }
@@ -864,6 +868,8 @@ namespace cocos2d
                 //no active websocket, quit netThread
                 Helper::drop();
             }
+
+            this->_helper.reset();
 
             return 0;
         }

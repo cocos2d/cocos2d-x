@@ -271,6 +271,7 @@ namespace cocos2d
                 self->init();
                 self->onRun();
             });
+            _threadId->detach();
         }
 
         template<typename LoopEvent>
@@ -286,6 +287,7 @@ namespace cocos2d
                 self->_waitThreadCV.notify_all();
                 self->onRun();
             });
+            _threadId->detach();
 
             std::unique_lock<std::mutex> lock(_waitThreadMtx);
             auto waitStatus = _waitThreadCV.wait_for(lock, std::chrono::milliseconds(timeoutMS));
@@ -344,6 +346,8 @@ namespace cocos2d
             _isStopped = true;
             onNotify();
             uv_stop(_uvLoop);
+            _pendingEvents.clear();
+            _pendingFns.clear();
         }
 
         template<typename LoopEvent>
