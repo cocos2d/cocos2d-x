@@ -50,8 +50,8 @@ THE SOFTWARE.
 using namespace cocos2d;
 using namespace cocos2d::loop;
 
-#define WS_RX_BUFFER_SIZE ((1 << 16) - 1)
-#define WS_REVERSED_RECEIVE_BUFFER_SIZE  (1 << 12)
+#define WS_RX_BUFFER_SIZE (1024 * 8)
+#define WS_REVERSED_RECEIVE_BUFFER_SIZE  (1024 * 16)
 
 /**
 * set _callbackInvokeFlags with CallbackInvoke flag, return if it's already set.
