@@ -39,6 +39,8 @@
 // member function with suffix "Proc" designed called in DownloaderCURL::_threadProc
 // member function without suffix designed called in main thread
 
+#define CC_DOWNLOADER_WAIT_DNS 50 //wait until DNS query done
+
 namespace cocos2d { namespace network {
     using namespace std;
 
@@ -511,7 +513,7 @@ namespace cocos2d { namespace network {
                     // do wait action
                     if(maxfd == -1)
                     {
-                        this_thread::sleep_for(chrono::milliseconds(50));
+                        this_thread::sleep_for(chrono::milliseconds(CC_DOWNLOADER_WAIT_DNS));
                         rc = 0;
                     }
                     else
