@@ -447,7 +447,7 @@ namespace cocos2d
 
         int WebSocketImpl::_protocolCounter = 1;
         std::mutex WebSocketImpl::_cachedSocketsMtx;
-        std::int64_t WebSocketImpl::_wsIdCounter = 1;
+        std::atomic_int64_t WebSocketImpl::_wsIdCounter{1};
         std::unordered_map<int64_t, WebSocketImpl::Ptr > WebSocketImpl::_cachedSockets;
 
         ///////friend function 
@@ -471,7 +471,7 @@ namespace cocos2d
         WebSocketImpl::WebSocketImpl(WebSocket *t)
         {
             _ws = t;
-            _wsId = _wsIdCounter++;
+            _wsId = _wsIdCounter.fetch_add(1);
             auto wsId = _wsId;
             _resetDirectorListener = Director::getInstance()
                 ->getEventDispatcher()
