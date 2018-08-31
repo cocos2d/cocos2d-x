@@ -34,7 +34,6 @@ THE SOFTWARE.
 #include <unordered_map>
 #include <vector>
 #include <string>
-#include <atomic>
 #include <list>
 #include <mutex>
 #include <functional>
@@ -56,7 +55,7 @@ namespace cocos2d
         {
         private:
             static int _protocolCounter;
-            static std::atomic_int64_t _wsIdCounter;
+            static int64_t _wsIdCounter;
         public:
             typedef std::shared_ptr<WebSocketImpl> Ptr;
 
