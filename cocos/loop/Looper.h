@@ -426,6 +426,8 @@ namespace cocos2d
 
             while (_pendingEvents.size() > 0 && _pendingFns.size() > 0)
             {
+                std::lock_guard<std::recursive_mutex> guardEvents(_pendingEvents.getMutex());
+                std::lock_guard<std::recursive_mutex> guardFns(_pendingFns.getMutex());
                 auto ev = _pendingEvents.front();
                 auto fn = _pendingFns.front();
                 if (ev.id < fn.id) {
