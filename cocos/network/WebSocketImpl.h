@@ -1,9 +1,4 @@
 /****************************************************************************
-Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2009      Valentin Milea
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
 Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
@@ -53,18 +48,20 @@ namespace cocos2d
         
         class WebSocketImpl : public std::enable_shared_from_this<WebSocketImpl>
         {
+        public:
+            typedef std::shared_ptr<WebSocketImpl> Ptr;
         private:
             static int _protocolCounter;
             static int64_t _wsIdCounter;
-        public:
-            typedef std::shared_ptr<WebSocketImpl> Ptr;
 
             static std::mutex _cachedSocketsMtx;
             static std::unordered_map<int64_t, Ptr > _cachedSockets;
             static void closeAll();
-
+        public:
             WebSocketImpl(WebSocket *);
             virtual ~WebSocketImpl();
+
+        private:
 
             bool init(const WebSocket::Delegate& delegate, const std::string &uri, const std::vector<std::string> *protocols = nullptr, const std::string &caFile = "");
             void sigCloseAsync();
@@ -73,8 +70,6 @@ namespace cocos2d
             void sigSend(const std::string &msg);
 
             int lwsCallback(struct lws *wsi, enum lws_callback_reasons reason, void*, void*, ssize_t);
-
-        private:
 
             std::string searchCaPath(const std::string &caFile, bool useSSL);
 
@@ -88,25 +83,23 @@ namespace cocos2d
             int netOnReadable(void *, size_t len);
             int netOnWritable();
 
-        public:
-            WebSocket::Delegate* _delegate;
+            WebSocket::Delegate* _delegate = nullptr;
             WebSocket *_ws = nullptr;
             WebSocket::State _state = WebSocket::State::UNINITIALIZED;
             std::shared_ptr<Helper> _helper;
 
-        private:
             std::string _url;
             Uri _uri;
             std::string _caFile;
             std::string _caFullPath;
             std::vector<std::string> _protocols;
-            std::string _joinedProtocols = "";
+            std::string _joinedProtocols;
             std::vector<uint8_t> _receiveBuffer;
-            //libwebsocket fiels
+            //libwebsocket fields
             lws *_wsi = nullptr;
             lws_vhost *_lwsHost = nullptr;
             lws_protocols *_lwsProtocols = nullptr;
-            int64_t _wsId;
+            int64_t _wsId = 0;
             std::list<std::shared_ptr<NetDataPack>> _sendBuffer;
 
             int32_t _callbackInvokeFlags = 0;
@@ -115,6 +108,8 @@ namespace cocos2d
 
             friend class Helper;
             friend class WebSocket;
+            friend int websocket_callback(lws *wsi, enum lws_callback_reasons reason, void *user, void *in, ssize_t len);
+            friend WebSocketImpl::Ptr findWs(int64_t wsId);
         };
     }
 }

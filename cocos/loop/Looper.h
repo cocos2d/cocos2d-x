@@ -1,10 +1,6 @@
 /****************************************************************************
-Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2009      Valentin Milea
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
 Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+
 
 http://www.cocos2d-x.org
 
@@ -460,7 +456,7 @@ namespace cocos2d
         template<typename LoopEvent>
         void Looper<LoopEvent>::setLocalData(const std::string &name, void *data)
         {
-            uv_key_t &key = _tlsKeyMap.onceInit(name, [](uv_key_t &k) {
+            uv_key_t &key = _tlsKeyMap.getOrInit(name, [](uv_key_t &k) {
                 uv_key_create(&k);
             });
             uv_key_set(&key, data);

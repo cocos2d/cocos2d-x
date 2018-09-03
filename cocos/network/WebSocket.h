@@ -232,6 +232,8 @@ public:
 
 private:
     std::shared_ptr<WebSocketImpl> impl;
+
+    friend class WebSocketImpl;
 };
 
 } // namespace network {

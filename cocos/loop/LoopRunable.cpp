@@ -1,9 +1,4 @@
 /****************************************************************************
-Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2009      Valentin Milea
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
 Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
@@ -44,8 +39,7 @@ namespace cocos2d
 
         void LoopRunable::beforeRun()
         {
-            if (_task)
-                _task->before();
+            if (_task) _task->before();
             _startTime = high_resolution_clock::now();
             _updateTimes = 1;
             scheduleTaskUpdate();
@@ -59,8 +53,7 @@ namespace cocos2d
 
         void LoopRunable::afterRun()
         {
-            if (_task)
-                _task->after();
+            if (_task) _task->after();
             uv_loop_close(_uvLoop);
         }
 
@@ -74,8 +67,7 @@ namespace cocos2d
         void LoopRunable::onTimer()
         {
             _updateTimes += 1;
-            if (_task)
-                _task->update((int)_intervalMS);
+            if (_task) _task->update((int)_intervalMS);
         }
 
         void LoopRunable::scheduleTaskUpdate()

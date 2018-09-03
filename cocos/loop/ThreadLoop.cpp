@@ -1,9 +1,4 @@
 /****************************************************************************
-Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2009      Valentin Milea
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
 Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
@@ -31,11 +26,13 @@ THE SOFTWARE.
 #include "ThreadLoop.h"
 #include <mutex>
 
+#define CC_LOOP_USE_THREAD_LOCAL 0
+
 namespace cocos2d
 {
     namespace loop
     {
-#if 0
+#if CC_LOOP_USE_THREAD_LOCAL
         //thread_local is not supported on iOS
         thread_local uv_loop_t *__uvLoop = nullptr;
         thread_local bool __uvLoopInited = false;
@@ -84,7 +81,8 @@ namespace cocos2d
                     uv_key_set(&__uvLoopKey, loopPtr);
                     uv_key_set(&__uvLoopInitedKey, initedPtr);
                 }
-                else {
+                else 
+                {
                     if (loopPtr) free(loopPtr);
                     if (initedPtr) delete initedPtr;
                 }

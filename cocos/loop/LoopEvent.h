@@ -1,9 +1,4 @@
 /****************************************************************************
-Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2009      Valentin Milea
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
 Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
@@ -38,19 +33,19 @@ namespace cocos2d
         class LoopEvent {
         public:
 
-            LoopEvent(const std::string &msg) :message(msg) {}
-            LoopEvent(const std::string &msg, void *data) :message(msg), data(data) {}
-            LoopEvent(const LoopEvent &e) :eventName(e.eventName), message(e.message), data(e.data) {}
-            LoopEvent(LoopEvent && e) : eventName(e.eventName), message(e.message), data(e.data) {
-                e.data = nullptr;
+            LoopEvent(const std::string &msg) :_message(msg) {}
+            LoopEvent(const std::string &msg, void *data) :_message(msg), _data(data) {}
+            LoopEvent(const LoopEvent &e) :_eventName(e._eventName), _message(e._message), _data(e._data) {}
+            LoopEvent(LoopEvent && e) : _eventName(e._eventName), _message(e._message), _data(e._data) {
+                e._data = nullptr;
             }
 
-            void setName(const char *name) { eventName = name; }
-            const std::string &getName() const { return eventName; }
+            void setName(const std::string &name) { _eventName = name; }
+            const std::string &getName() const { return _eventName; }
         private:
-            std::string eventName{ "[noname]" };
-            std::string message;
-            void *data{ nullptr };
+            std::string _eventName = "[noname]";
+            std::string _message;
+            void *_data = nullptr;
         };
 
     }

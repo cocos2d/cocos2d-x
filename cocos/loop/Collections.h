@@ -1,9 +1,4 @@
 /****************************************************************************
-Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2009      Valentin Milea
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
 Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
@@ -51,7 +46,6 @@ namespace cocos2d
 {
     namespace loop
     {
-
         template<typename T>
         class ThreadSafeQueue {
         public:
@@ -69,9 +63,9 @@ namespace cocos2d
             T &front() { _TMP_CC_LOOP_TS_LOCK; return _data.front(); }
             T &back() { _TMP_CC_LOOP_TS_LOCK; return _data.back(); }
 
-            void clear() { _TMP_CC_LOOP_TS_LOCK; return _data.clear(); }
+            void clear() { _TMP_CC_LOOP_TS_LOCK; _data.clear(); }
 
-            size_t size() { return _data.size(); }
+            size_t size() const { return _data.size(); }
             std::recursive_mutex& getMutex() { return _mtx; }
             std::list<T> & getQueue() { return _data; }
 
@@ -80,8 +74,6 @@ namespace cocos2d
             std::list<T> _data;
         };
 
-
-
         template<typename K, typename V>
         class ThreadSafeMap {
         public:
@@ -89,7 +81,7 @@ namespace cocos2d
             void insert(const K &key, V &value) { _TMP_CC_LOOP_TS_LOCK; _data.insert(std::make_pair(key, value)); }
             void erase(const K &key) { _TMP_CC_LOOP_TS_LOCK; _data.erase(key); }
             bool exists(const K &key) { _TMP_CC_LOOP_TS_LOCK; return _data.find(key) != _data.end(); }
-            V getOrBuild(const K &key, std::function<V(void)> crtFn)
+            V getOrBuild(const K &key,const std::function<V(void)>& crtFn)
             {
                 _TMP_CC_LOOP_TS_LOCK;
                 if (_data.find(key) == _data.end()) { //not found
@@ -97,7 +89,7 @@ namespace cocos2d
                 }
                 return _data[key];
             }
-            V &onceInit(const K &key, std::function<void(V&)> initFn)
+            V &getOrInit(const K &key,const std::function<void(V&)>& initFn)
             {
                 _TMP_CC_LOOP_TS_LOCK;
                 if (_data.find(key) == _data.end()) { //do init once
@@ -115,10 +107,10 @@ namespace cocos2d
         template<typename K, typename V>
         class ThreadSafeMapArray {
         public:
-            void add(const K&key, V &value) { _TMP_CC_LOOP_TS_LOCK; _data[key].push_back(value); }
+            void add(const K&key,const V &value) { _TMP_CC_LOOP_TS_LOCK; _data[key].push_back(value); }
             void clear(const K &key) { _TMP_CC_LOOP_TS_LOCK; _data[key].clear(); }
             std::vector<V>& get(const K&key) { _TMP_CC_LOOP_TS_LOCK; return _data[key]; }
-            void forEach(const K &key, std::function<void(V&)> iterFn)
+            void forEach(const K &key,const std::function<void(V&)>& iterFn)
             {
                 _TMP_CC_LOOP_TS_LOCK;
                 auto &list = _data[key];
@@ -132,8 +124,6 @@ namespace cocos2d
             std::unordered_map<K, std::vector<V> > _data;
             std::recursive_mutex _mtx;
         };
-
     }
 }
-
 #undef TS_LOCK
