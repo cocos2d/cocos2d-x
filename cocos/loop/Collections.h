@@ -60,8 +60,8 @@ namespace cocos2d
             void popBack() { _CC_LOOP_DEFINE_LOCK_GUARD_; _data.pop_back(); }
             T popFront() { _CC_LOOP_DEFINE_LOCK_GUARD_; assert(_data.size() > 0); T x = _data.front(); _data.pop_front(); return x; }
 
-            T &front() { _CC_LOOP_DEFINE_LOCK_GUARD_; return _data.front(); }
-            T &back() { _CC_LOOP_DEFINE_LOCK_GUARD_; return _data.back(); }
+            const T &front() { _CC_LOOP_DEFINE_LOCK_GUARD_; return _data.front(); }
+            const T &back() { _CC_LOOP_DEFINE_LOCK_GUARD_; return _data.back(); }
 
             void clear() { _CC_LOOP_DEFINE_LOCK_GUARD_; _data.clear(); }
 

@@ -149,10 +149,6 @@ namespace cocos2d
             friend void async_handle<LoopEvent>(uv_async_t * data);
         };
 
-
-
-        using namespace std::chrono;
-
         template<typename LoopEvent>
         static void async_handle(uv_async_t *handle)
         {
@@ -160,7 +156,6 @@ namespace cocos2d
             Looper<LoopEvent> *t = (Looper<LoopEvent> *)handle->data;
             t->onNotify();
         }
-
 
         //declare static field
         template<typename LoopEvent>

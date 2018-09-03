@@ -33,15 +33,14 @@ namespace cocos2d
     {
         template<typename T>
         struct SeqItem {
-            SeqItem(uint64_t id, const std::string &name, T &data) : data(data), id(id), name(name) {}
-            SeqItem(uint64_t id, const std::string &name, T &&data) : data(data), id(id), name(name) {}
-            SeqItem(uint64_t id, T &data) : data(data), id(id) {}
-            SeqItem(uint64_t id, T &&data) : data(data), id(id) {}
-            SeqItem(const SeqItem &d) :data(d.data), id(d.id), name(d.name) {}
-            T data;
-            uint64_t id;
-            std::string name = "";
+            SeqItem(uint64_t id, const std::string &name, T &data) : _data(data), _id(id), _name(name) {}
+            SeqItem(uint64_t id, const std::string &name, T &&data) : _data(data), _id(id), _name(name) {}
+            SeqItem(uint64_t id, T &data) : _data(data), _id(id) {}
+            SeqItem(uint64_t id, T &&data) : _data(data), _id(id) {}
+            SeqItem(const SeqItem &d) :_data(d._data), _id(d._id), _name(d._name) {}
+            T _data;
+            uint64_t _id = 0;
+            std::string _name;
         };
-
     }
 }

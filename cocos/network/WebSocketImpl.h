@@ -64,12 +64,13 @@ namespace cocos2d
         private:
 
             bool init(const WebSocket::Delegate& delegate, const std::string &uri, const std::vector<std::string> *protocols = nullptr, const std::string &caFile = "");
-            void sigCloseAsync();
-            void sigCloseSync(int timeoutMS = 3000);
-            void sigSend(const char *data, size_t len);
-            void sigSend(const std::string &msg);
+            void closeAsyncSig();
+            void closeSyncSig();
+            void closeSyncSig(int timeoutMS);
+            void sendSig(const char *data, size_t len);
+            void sendSig(const std::string &msg);
 
-            int lwsCallback(struct lws *wsi, enum lws_callback_reasons reason, void*, void*, ssize_t);
+            int onLWSCallback(struct lws *wsi, enum lws_callback_reasons reason, void*, void*, ssize_t);
 
             std::string searchCaPath(const std::string &caFile, bool useSSL);
 

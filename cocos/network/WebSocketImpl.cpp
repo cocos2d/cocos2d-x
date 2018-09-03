@@ -47,7 +47,7 @@ using namespace cocos2d::loop;
 
 #define WS_RX_BUFFER_SIZE (1024 * 8)
 #define WS_REVERSED_RECEIVE_BUFFER_SIZE  (1024 * 16)
-
+#define WS_CLOSE_DEFAULT_SYNC_WAIT_MS 3000
 /**
 * set _callbackInvokeFlags with CallbackInvoke flag, return if it's already set.
 */
@@ -198,7 +198,7 @@ namespace cocos2d
             int ret = 0;
             WebSocketImpl *ws = (WebSocketImpl*)lws_wsi_user(wsi);
             if (ws) {
-                ret = ws->lwsCallback(wsi, reason, user, in, len);
+                ret = ws->onLWSCallback(wsi, reason, user, in, len);
             }
             return ret;
         }
@@ -459,7 +459,7 @@ namespace cocos2d
             auto tmp(std::move(_cachedSockets));
             for (auto ws : tmp)
             {
-                ws.second->sigCloseSync();
+                ws.second->closeSyncSig();
             }
         }
 
@@ -472,7 +472,7 @@ namespace cocos2d
                 ->getEventDispatcher()
                 ->addCustomEventListener(Director::EVENT_RESET, [wsId](EventCustom*) {
                 auto ws = findWs(wsId);
-                if (ws) ws->sigCloseSync();
+                if (ws) ws->closeSyncSig();
             });
         }
 
@@ -521,8 +521,7 @@ namespace cocos2d
             _url = url;
             _uri = Uri::parse(url);
             _delegate = const_cast<WebSocket::Delegate*>(&delegate);
-            if (protocols)
-                _protocols = *protocols;
+            if (protocols) _protocols = *protocols;
             _caFile = caFile;
             _callbackInvokeFlags = 0;
 
@@ -550,7 +549,7 @@ namespace cocos2d
             return true;
         }
 
-        void WebSocketImpl::sigCloseAsync()
+        void WebSocketImpl::closeAsyncSig()
         {
             if (_state == WebSocket::State::CLOSED ||
                 _state == WebSocket::State::CLOSING ||
@@ -560,7 +559,13 @@ namespace cocos2d
             _helper->send("close", NetCmd::Close(this->shared_from_this()));
         }
 
-        void WebSocketImpl::sigCloseSync(int timeoutMS)
+
+        void WebSocketImpl::closeSyncSig()
+        {
+            closeSyncSig(WS_CLOSE_DEFAULT_SYNC_WAIT_MS);
+        }
+
+        void WebSocketImpl::closeSyncSig(int timeoutMS)
         {
             if (_state == WebSocket::State::CLOSED ||
                 _state == WebSocket::State::CLOSING ||
@@ -594,18 +599,18 @@ namespace cocos2d
             }
         }
 
-        void WebSocketImpl::sigSend(const char *data, size_t len)
+        void WebSocketImpl::sendSig(const char *data, size_t len)
         {
             _helper->send("send", NetCmd::Write(this->shared_from_this(), data, len, true));
         }
 
-        void WebSocketImpl::sigSend(const std::string &msg)
+        void WebSocketImpl::sendSig(const std::string &msg)
         {
             NetCmd cmd = NetCmd::Write(this->shared_from_this(), msg.data(), msg.length(), false);
             _helper->send("send", cmd);
         }
 
-        int WebSocketImpl::lwsCallback(struct lws *wsi, enum lws_callback_reasons reason, void *user, void *in, ssize_t len)
+        int WebSocketImpl::onLWSCallback(struct lws *wsi, enum lws_callback_reasons reason, void *user, void *in, ssize_t len)
         {
             int ret = 0;
             switch (reason)
@@ -798,7 +803,7 @@ namespace cocos2d
             if (bytesWrite < 0)
             {
                 //error 
-                sigCloseSync();
+                closeSyncSig();
             }
             else
             {

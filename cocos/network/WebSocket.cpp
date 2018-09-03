@@ -46,7 +46,7 @@ namespace cocos2d
 
         WebSocket::WebSocket() { impl = std::make_shared<WebSocketImpl>(this); }
 
-        WebSocket::~WebSocket() { impl->sigCloseAsync(); impl.reset(); }
+        WebSocket::~WebSocket() { impl->closeAsyncSig(); impl.reset(); }
 
         bool WebSocket::init(const Delegate& delegate,
             const std::string& url,
@@ -56,14 +56,14 @@ namespace cocos2d
             return impl->init(delegate, url, protocols, caFilePath);
         }
 
-        void WebSocket::close() { impl->sigCloseSync(CC_WS_CLOSE_TIMEOUT_MS); }
-        void WebSocket::close(int timeoutMS) { impl->sigCloseSync(timeoutMS); }
+        void WebSocket::close() { impl->closeSyncSig(CC_WS_CLOSE_TIMEOUT_MS); }
+        void WebSocket::close(int timeoutMS) { impl->closeSyncSig(timeoutMS); }
 
-        void WebSocket::closeAsync() { impl->sigCloseAsync(); }
+        void WebSocket::closeAsync() { impl->closeAsyncSig(); }
 
-        void WebSocket::send(const std::string &msg) { impl->sigSend(msg); }
+        void WebSocket::send(const std::string &msg) { impl->sendSig(msg); }
 
-        void WebSocket::send(const unsigned char *data, size_t len) { impl->sigSend((const char *)data, len); }
+        void WebSocket::send(const unsigned char *data, size_t len) { impl->sendSig((const char *)data, len); }
 
         WebSocket::State WebSocket::getReadyState()
         {

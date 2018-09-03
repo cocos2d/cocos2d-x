@@ -34,8 +34,11 @@ namespace cocos2d
     {
 #if CC_LOOP_USE_THREAD_LOCAL
         //thread_local is not supported on iOS
-        thread_local uv_loop_t *__uvLoop = nullptr;
-        thread_local bool __uvLoopInited = false;
+        namespace 
+        {
+            thread_local uv_loop_t *__uvLoop = nullptr;
+            thread_local bool __uvLoopInited = false;
+        }
         
         void ThreadLoop::initThreadLoop()
         {
@@ -55,9 +58,12 @@ namespace cocos2d
             return __uvLoopInited ? __uvLoop : nullptr;
         }
 #else
-        uv_key_t __uvLoopKey;
-        uv_key_t __uvLoopInitedKey;
-        uv_once_t __uvLoopInitOnce;
+        namespace
+        {
+            uv_key_t __uvLoopKey;
+            uv_key_t __uvLoopInitedKey;
+            uv_once_t __uvLoopInitOnce;
+        }
 
         static void doInit()
         {
