@@ -46,12 +46,12 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgramStateCache.h"
 #include "renderer/CCTextureCache.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
 #include "renderer/CCFrameBuffer.h"
 #include "2d/CCCamera.h"
 #include "base/CCUserDefault.h"
+#include "base/ccUtils.h"
 #include "base/ccFPSImages.h"
 #include "base/CCScheduler.h"
 #include "base/ccMacros.h"
@@ -721,7 +721,6 @@ void Director::setProjection(Projection projection)
     }
 
     _projection = projection;
-    GL::setProjectionMatrixDirty();
 
     _eventDispatcher->dispatchEvent(_eventProjectionChanged);
 }
@@ -752,11 +751,11 @@ void Director::setAlphaBlending(bool on)
 {
     if (on)
     {
-        GL::blendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+        utils::setBlending(CC_BLEND_SRC, CC_BLEND_DST);
     }
     else
     {
-        GL::blendFunc(GL_ONE, GL_ZERO);
+        utils::setBlending(GL_ONE, GL_ZERO);
     }
 
     CHECK_GL_ERROR_DEBUG();
@@ -1141,9 +1140,7 @@ void Director::reset()
     
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
-    
-    GL::invalidateStateCache();
-
+    resetMatrixStack();
     RenderState::finalize();
     
     destroyTextureCache();

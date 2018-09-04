@@ -28,7 +28,6 @@ THE SOFTWARE.
 #include "ui/UIScale9Sprite.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderState.h"
 #include "base/CCDirector.h"
 #include "2d/CCDrawingPrimitives.h"

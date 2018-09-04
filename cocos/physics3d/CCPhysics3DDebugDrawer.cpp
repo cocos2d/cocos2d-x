@@ -27,10 +27,10 @@
 #include "base/CCConfiguration.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
+#include "base/ccUtils.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramCache.h"
 
 #if CC_USE_3D_PHYSICS
@@ -134,7 +134,7 @@ void Physics3DDebugDrawer::drawImplementation( const Mat4 &transform, uint32_t /
     _program->setUniformsForBuiltins(transform);
     glEnable(GL_DEPTH_TEST);
 
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
     if (_dirty)
     {
@@ -144,11 +144,12 @@ void Physics3DDebugDrawer::drawImplementation( const Mat4 &transform, uint32_t /
     }
     if (Configuration::getInstance()->supportsShareableVAO())
     {
-        GL::bindVAO(_vao);
+        glBindVertexArray(_vao);
     }
     else
     {
-        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
+        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
 
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
         // vertex
@@ -175,7 +176,7 @@ void Physics3DDebugDrawer::init()
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         glGenVertexArrays(1, &_vao);
-        GL::bindVAO(_vao);
+        glBindVertexArray(_vao);
     }
 
     glGenBuffers(1, &_vbo);
@@ -192,7 +193,7 @@ void Physics3DDebugDrawer::init()
 
     if (Configuration::getInstance()->supportsShareableVAO())
     {
-        GL::bindVAO(0);
+        glBindVertexArray(0);
     }
 }
 

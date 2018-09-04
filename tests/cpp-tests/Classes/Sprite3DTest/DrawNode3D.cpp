@@ -50,7 +50,7 @@ DrawNode3D::~DrawNode3D()
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         glDeleteVertexArrays(1, &_vao);
-        GL::bindVAO(0);
+        glBindVertexArray(0);
         _vao = 0;
     }
 }
@@ -92,7 +92,7 @@ bool DrawNode3D::init()
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         glGenVertexArrays(1, &_vao);
-        GL::bindVAO(_vao);
+        glBindVertexArray(_vao);
     }
     
     glGenBuffers(1, &_vbo);
@@ -109,7 +109,7 @@ bool DrawNode3D::init()
     
     if (Configuration::getInstance()->supportsShareableVAO())
     {
-        GL::bindVAO(0);
+        glBindVertexArray(0);
     }
     
     CHECK_GL_ERROR_DEBUG();
@@ -143,7 +143,7 @@ void DrawNode3D::onDraw(const Mat4 &transform, uint32_t flags)
     glProgram->setUniformsForBuiltins(transform);
     glEnable(GL_DEPTH_TEST);
     RenderState::StateBlock::_defaultState->setDepthTest(true);
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
     if (_dirty)
     {
@@ -153,11 +153,12 @@ void DrawNode3D::onDraw(const Mat4 &transform, uint32_t flags)
     }
     if (Configuration::getInstance()->supportsShareableVAO())
     {
-        GL::bindVAO(_vao);
+        glBindVertexArray(_vao);
     }
     else
     {
-        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
 
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
         // vertex

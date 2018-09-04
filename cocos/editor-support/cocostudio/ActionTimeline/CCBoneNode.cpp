@@ -24,8 +24,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "base/CCDirector.h"
+#include "base/ccUtils.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 
@@ -485,13 +485,14 @@ void BoneNode::onDraw(const cocos2d::Mat4 &transform, uint32_t /*flags*/)
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 
-    cocos2d::GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION | cocos2d::GL::VERTEX_ATTRIB_FLAG_COLOR);
+    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION);
+    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
     glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
 
-    cocos2d::GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
