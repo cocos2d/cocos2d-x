@@ -148,6 +148,9 @@ if(MSVC)
     set(_spidermonkey_libs mozjs-33)
 endif()
 
+set(_uv_inc uv.h)
+set(_uv_libs uv_a libuv uv)
+
 set(all_prebuilt_libs
     chipmunk
     curl
@@ -162,6 +165,7 @@ set(all_prebuilt_libs
     Box2D
     luajit
     spidermonkey
+    uv
     )
 
 

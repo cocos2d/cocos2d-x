@@ -53,6 +53,7 @@ include(ui/CMakeLists.txt)
 include(network/CMakeLists.txt)
 include(audio/CMakeLists.txt)
 include(storage/CMakeLists.txt)
+include(loop/CMakeLists.txt)
 
 if(BUILD_EDITOR_COCOSBUILDER)
     include(editor-support/cocosbuilder/CMakeLists.txt)
@@ -91,6 +92,7 @@ set(COCOS_HEADER cocos2d.h
     ${COCOS_EDITOR_SUPPORT_HEADER}
     ${COCOS_EXTENSIONS_HEADER}
     ${COCOS_STORAGE_HEADER}
+    ${COCOS_LOOP_HEADER}
     )
 
 set(COCOS_SRC cocos2d.cpp
@@ -111,6 +113,7 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_EDITOR_SUPPORT_SRC}
     ${COCOS_EXTENSIONS_SRC}
     ${COCOS_STORAGE_SRC}
+    ${COCOS_LOOP_SRC}
     )
 
 #todo: provide prebuild versions of the xx libs for all platforms
