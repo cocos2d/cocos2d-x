@@ -90,7 +90,7 @@ namespace cocos2d
             void callDelegateOnMessage(const WebSocket::Data &data) { if (!_isWsDeleted) _delegate->onMessage(_ws, data); }
 
             long getSharedPtrUsedCount() { return this->shared_from_this().use_count(); }
-            void markDeleted() { this->_isWsDeleted = true;}
+            void markDeleted();
 
             WebSocket::Delegate* _delegate = nullptr;
             WebSocket *_ws = nullptr;

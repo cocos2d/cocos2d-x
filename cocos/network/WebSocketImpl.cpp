@@ -294,7 +294,7 @@ namespace cocos2d
         void Helper::drop()
         {
             // drop() 
-            //  ~> _looper#stop() 
+            //  ~> _looper#asyncStop()
             //  ~> Helper::after()
             //  ~> shared_ptr<Helper>::reset()
             //  ~> Helper::~Helper()
@@ -389,7 +389,7 @@ namespace cocos2d
 
         void Helper::handleCmdConnect(NetCmd &cmd)
         {
-            if (cmd.ws->_state != WebSocket::State::UNINITIALIZED) 
+            if (cmd.ws->_state != WebSocket::State::CONNECTING) 
                 return;
             cmd.ws->doConnect();
         }
@@ -421,11 +421,6 @@ namespace cocos2d
         int HelperLoop::update(int dtms)
         {
             //CCLOG("[HelperLoop] thread tick ... ");
-            LOCK_MTX(WebSocketImpl::_cachedSocketsMtx);
-            for (auto ws : WebSocketImpl::_cachedSockets)
-            {
-                CCLOG ("WS %d use count %d", ws.first, (int)ws.second->getSharedPtrUsedCount());
-            }
             return 0;
         }
 
@@ -474,10 +469,13 @@ namespace cocos2d
                 auto ws = findWs(wsId);
                 if (ws) ws->closeSyncSig();
             });
+            CCLOG("WebSocketImpl::WebSocketImpl(%d)", _wsId);
+
         }
 
         WebSocketImpl::~WebSocketImpl()
         {
+            CCLOG("WebSocketImpl::~WebSocketImpl(%d)", _wsId);
             {
                 LOCK_MTX(_cachedSocketsMtx);
                 _cachedSockets.erase(_wsId); //redundancy
@@ -500,6 +498,12 @@ namespace cocos2d
                 _wsi = nullptr;
             }
             Director::getInstance()->getEventDispatcher()->removeEventListener(_resetDirectorListener);
+        }
+
+        void WebSocketImpl::markDeleted() 
+        { 
+            CCLOG("WebSocketImpl(%d) mark deleted", _wsId);
+            this->_isWsDeleted = true; 
         }
 
         bool WebSocketImpl::init(const WebSocket::Delegate &delegate, const std::string &url, const std::vector<std::string> *protocols, const std::string & caFile)
@@ -557,6 +561,7 @@ namespace cocos2d
                 _state == WebSocket::State::UNINITIALIZED
                 )
                 return;
+            _state = WebSocket::State::CLOSING;
             _helper->send("close", NetCmd::Close(this->shared_from_this()));
         }
 
