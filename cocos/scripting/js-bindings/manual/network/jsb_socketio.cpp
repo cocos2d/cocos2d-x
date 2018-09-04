@@ -228,16 +228,16 @@ bool js_cocos2dx_SocketIO_send(JSContext* cx, uint32_t argc, jsval* vp)
     if (argc >= 1)
     {
         std::vector<std::string> eventArgs;
-        std::string getPayload;
+        std::string payload;
         
         for(int idx = 0; idx < argc; idx++)
         {
-            bool ok = jsval_to_std_string(cx, args.get(idx), &getPayload);
+            bool ok = jsval_to_std_string(cx, args.get(idx), &payload);
             JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
-            eventArgs.push_back(getPayload);
+            eventArgs.push_back(payload);
         }
 
-        CCLOG("JSB SocketIO send mesage: %s", getPayload.c_str());
+        CCLOG("JSB SocketIO send mesage: %s", payload.c_str());
 
         cobj->send(eventArgs);
         return true;
@@ -268,14 +268,14 @@ bool js_cocos2dx_SocketIO_emit(JSContext* cx, uint32_t argc, jsval* vp)
         } while (0);
         
         std::vector<std::string> eventArgs;
-        std::string getPayload;
+        std::string payload;
         for(int idx = 1; idx < argc; idx ++) {
-            bool ok = jsval_to_std_string(cx, args.get(idx), &getPayload);
+            bool ok = jsval_to_std_string(cx, args.get(idx), &payload);
             JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
-            eventArgs.push_back(getPayload);
+            eventArgs.push_back(payload);
         }
 
-        CCLOG("JSB SocketIO emit event '%s' with payload: %s", eventName.c_str(), getPayload.c_str());
+        CCLOG("JSB SocketIO emit event '%s' with payload: %s", eventName.c_str(), payload.c_str());
 
         cobj->emit(eventName, eventArgs);
         return true;
