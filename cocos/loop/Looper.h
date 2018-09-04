@@ -425,25 +425,25 @@ namespace cocos2d
                 std::lock_guard<std::recursive_mutex> guardFns(_pendingFns.getMutex());
                 auto ev = _pendingEvents.front();
                 auto fn = _pendingFns.front();
-                if (ev.id < fn.id) {
+                if (ev._id < fn._id) {
                     SeqItem<LoopEvent> item = _pendingEvents.popFront();
-                    handleEvent(item.name, item.data);
+                    handleEvent(item._name, item._data);
                 }
                 else {
                     auto &&fn = _pendingFns.popFront();
-                    handleFn(fn.data);
+                    handleFn(fn._data);
                 }
             }
 
             while (_pendingEvents.size() > 0)
             {
                 SeqItem<LoopEvent> item = _pendingEvents.popFront();
-                handleEvent(item.name, item.data);
+                handleEvent(item._name, item._data);
             }
             while (_pendingFns.size() > 0)
             {
                 auto fn = _pendingFns.popFront();
-                handleFn(fn.data);
+                handleFn(fn._data);
             }
             if (_forceStoped && !_isStopped) {
                 onStop();

@@ -120,48 +120,39 @@ namespace cocos2d
 
         class NetDataPack {
         public:
-            NetDataPack() {}
-            NetDataPack(const char *f, size_t l, bool isBinary) {
-                _buffer = (uint8_t*)calloc(1, l + LWS_PRE);
-                memcpy(_buffer + LWS_PRE, f, l);
-                _size = l;
+            //NetDataPack() {}
+            NetDataPack(const char *f, int l, bool isBinary):_buffer(l + LWS_PRE) {
+                CCASSERT(l > 0, "data size should > 0");
+                CCASSERT(f, "data should not be nullptr");
+                std::copy(f, f + l, _buffer.data() + LWS_PRE);
                 _remain = l;
-                _payload = _buffer + LWS_PRE;
+                _payload = _buffer.data() + LWS_PRE;
                 _isBinary = isBinary;
             }
 
             NetDataPack(const NetDataPack &) = delete; //non-copyable
             NetDataPack(NetDataPack&&) = delete;       //non-movable
 
-            ~NetDataPack() {
-                if (_buffer) {
-                    free(_buffer);
-                    _buffer = nullptr;
-                }
-                _size = 0;
-            }
-
-
-            size_t remain() { return _remain; }
-            uint8_t *payload() { return _payload; }
+            size_t getRemainCnt() { return _remain; }
+            uint8_t *getPayload() { return _payload; }
+            size_t getConsumedCnt() { return _consumed; }
+            bool isBinary() { return _isBinary; }
 
             void consume(size_t d)
             {
                 CCASSERT(d <= _remain, "data not enought!");
+                CCASSERT(d >= 0, "consume negative bytes of data");
                 _payload += d;
                 _remain -= d;
                 _consumed += d;
             }
 
-            size_t consumed() { return _consumed; }
-            bool isBinary() { return _isBinary; }
         private:
-            uint8_t *_buffer = nullptr;
+            std::vector<uint8_t> _buffer;
             uint8_t *_payload = nullptr;
-            size_t _size = 0;
-            size_t _remain = 0;
-            bool _isBinary = true;
             size_t _consumed = 0;
+            int _remain = 0;
+            bool _isBinary = true;
         };
 
         /**
@@ -787,18 +778,18 @@ namespace cocos2d
         void WebSocketImpl::doWrite(NetDataPack &pack)
         {
             const size_t bufferSize = WS_RX_BUFFER_SIZE;
-            const size_t frameSize = bufferSize > pack.remain() ? pack.remain() : bufferSize; //min
+            const size_t frameSize = bufferSize > pack.getRemainCnt() ? pack.getRemainCnt() : bufferSize; //min
 
             int writeProtocol = 0;
-            if (pack.consumed() == 0)
+            if (pack.getConsumedCnt() == 0)
                 writeProtocol |= (pack.isBinary() ? LWS_WRITE_BINARY : LWS_WRITE_TEXT);
             else
                 writeProtocol |= LWS_WRITE_CONTINUATION;
 
-            if (frameSize < pack.remain())
+            if (frameSize < pack.getRemainCnt())
                 writeProtocol |= LWS_WRITE_NO_FIN;
 
-            int bytesWrite = lws_write(_wsi, pack.payload(), frameSize, (lws_write_protocol)writeProtocol);
+            int bytesWrite = lws_write(_wsi, pack.getPayload(), frameSize, (lws_write_protocol)writeProtocol);
 
             if (bytesWrite < 0)
             {
@@ -918,7 +909,7 @@ namespace cocos2d
             }
 
             //pop sent packs
-            while (_sendBuffer.size() > 0 && _sendBuffer.front()->remain() == 0)
+            while (_sendBuffer.size() > 0 && _sendBuffer.front()->getRemainCnt() == 0)
             {
                 _sendBuffer.pop_front();
             }
@@ -926,7 +917,7 @@ namespace cocos2d
             if (_sendBuffer.size() > 0)
             {
                 auto &pack = _sendBuffer.front();
-                if (pack->remain() > 0) {
+                if (pack->getRemainCnt() > 0) {
                     doWrite(*pack);
                 }
             }

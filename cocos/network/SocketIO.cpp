@@ -781,9 +781,9 @@ void SIOClientImpl::onMessage(WebSocket* /*ws*/, const WebSocket::Data& data)
 {
     CCLOGINFO("SIOClientImpl::onMessage received: %s", data.bytes);
 
-    std::string payload = data.bytes;
-    int control = atoi(payload.substr(0, 1).c_str());
-    payload = payload.substr(1, payload.size() - 1);
+    std::string getPayload = data.bytes;
+    int control = atoi(getPayload.substr(0, 1).c_str());
+    getPayload = getPayload.substr(1, getPayload.size() - 1);
 
     SIOClient *c = nullptr;
 
@@ -795,35 +795,35 @@ void SIOClientImpl::onMessage(WebSocket* /*ws*/, const WebSocket::Data& data)
 
             std::string::size_type pos, pos2;
 
-            pos = payload.find(":");
+            pos = getPayload.find(":");
             if (pos != std::string::npos)
             {
-                payload.erase(0, pos + 1);
+                getPayload.erase(0, pos + 1);
             }
 
-            pos = payload.find(":");
+            pos = getPayload.find(":");
             if (pos != std::string::npos)
             {
-                msgid = atoi(payload.substr(0, pos + 1).c_str());
+                msgid = atoi(getPayload.substr(0, pos + 1).c_str());
             }
-            payload.erase(0, pos + 1);
+            getPayload.erase(0, pos + 1);
 
-            pos = payload.find(":");
+            pos = getPayload.find(":");
             if (pos != std::string::npos)
             {
-                endpoint = payload.substr(0, pos);
-                payload.erase(0, pos + 1);
+                endpoint = getPayload.substr(0, pos);
+                getPayload.erase(0, pos + 1);
             }
             else
             {
-                endpoint = payload;
+                endpoint = getPayload;
             }
 
             if (endpoint == "") endpoint = "/";
 
             c = getClient(endpoint);
 
-            s_data = payload;
+            s_data = getPayload;
 
             if (c == nullptr) CCLOGINFO("SIOClientImpl::onMessage client lookup returned nullptr");
 
@@ -832,13 +832,13 @@ void SIOClientImpl::onMessage(WebSocket* /*ws*/, const WebSocket::Data& data)
             case 0:
                 CCLOGINFO("Received Disconnect Signal for Endpoint: %s\n", endpoint.c_str());
                 disconnectFromEndpoint(endpoint);
-                c->fireEvent("disconnect", payload);
+                c->fireEvent("disconnect", getPayload);
                 break;
             case 1:
                 CCLOGINFO("Connected to endpoint: %s \n", endpoint.c_str());
                 if (c) {
                     c->onConnect();
-                    c->fireEvent("connect", payload);
+                    c->fireEvent("connect", getPayload);
                 }
                 break;
             case 2:
@@ -899,12 +899,12 @@ void SIOClientImpl::onMessage(WebSocket* /*ws*/, const WebSocket::Data& data)
                 break;
             case 2:
                 CCLOGINFO("Ping received, send pong");
-                payload = "3" + payload;
-                _ws->send(payload);
+                getPayload = "3" + getPayload;
+                _ws->send(getPayload);
                 break;
             case 3:
                 CCLOGINFO("Pong received");
-                if (payload == "probe")
+                if (getPayload == "probe")
                 {
                     CCLOGINFO("Request Update");
                     _ws->send("5");
@@ -912,25 +912,25 @@ void SIOClientImpl::onMessage(WebSocket* /*ws*/, const WebSocket::Data& data)
                 break;
             case 4:
             {
-                int control2 = payload.at(0) - '0';
+                int control2 = getPayload.at(0) - '0';
                 CCLOGINFO("Message code: [%i]", control2);
 
                 std::string endpoint = "";
 
-                std::string::size_type a = payload.find("/");
-                std::string::size_type b = payload.find("[");
+                std::string::size_type a = getPayload.find("/");
+                std::string::size_type b = getPayload.find("[");
 
                 if (b != std::string::npos)
                 {
                     if (a != std::string::npos && a < b)
                     {
                         //we have an endpoint and a payload
-                        endpoint = payload.substr(a, b - (a + 1));
+                        endpoint = getPayload.substr(a, b - (a + 1));
                     }
                 }
                 else if (a != std::string::npos) {
                     //we have an endpoint with no payload
-                    endpoint = payload.substr(a, payload.size() - a);
+                    endpoint = getPayload.substr(a, getPayload.size() - a);
                 }
 
                 // we didn't find and endpoint and we are in the default namespace
@@ -938,10 +938,10 @@ void SIOClientImpl::onMessage(WebSocket* /*ws*/, const WebSocket::Data& data)
 
                 c = getClient(endpoint);
 
-                payload = payload.substr(1);
+                getPayload = getPayload.substr(1);
 
-                if (endpoint != "/") payload = payload.substr(endpoint.size());
-                if (endpoint != "/" && payload != "") payload = payload.substr(1);
+                if (endpoint != "/") getPayload = getPayload.substr(endpoint.size());
+                if (endpoint != "/" && getPayload != "") getPayload = getPayload.substr(1);
 
                 switch (control2)
                 {
@@ -949,32 +949,32 @@ void SIOClientImpl::onMessage(WebSocket* /*ws*/, const WebSocket::Data& data)
                     CCLOGINFO("Socket Connected");
                     if (c) {
                         c->onConnect();
-                        c->fireEvent("connect", payload);
+                        c->fireEvent("connect", getPayload);
                     }
                     break;
                 case 1:
                     CCLOGINFO("Socket Disconnected");
                     disconnectFromEndpoint(endpoint);
-                    c->fireEvent("disconnect", payload);
+                    c->fireEvent("disconnect", getPayload);
                     break;
                 case 2:
                 {
-                    CCLOGINFO("Event Received (%s)", payload.c_str());
+                    CCLOGINFO("Event Received (%s)", getPayload.c_str());
 
-                    std::string::size_type payloadFirstSlashPos = payload.find("\"");
-                    std::string::size_type payloadSecondSlashPos = payload.substr(payloadFirstSlashPos + 1).find("\"");
+                    std::string::size_type payloadFirstSlashPos = getPayload.find("\"");
+                    std::string::size_type payloadSecondSlashPos = getPayload.substr(payloadFirstSlashPos + 1).find("\"");
 
-                    std::string eventname = payload.substr(payloadFirstSlashPos + 1,
+                    std::string eventname = getPayload.substr(payloadFirstSlashPos + 1,
                                                            payloadSecondSlashPos - payloadFirstSlashPos + 1);
 
                     CCLOGINFO("event name %s between %i and %i", eventname.c_str(),
                               payloadFirstSlashPos, payloadSecondSlashPos);
 
-                    payload = payload.substr(payloadSecondSlashPos + 4,
-                                             payload.size() - (payloadSecondSlashPos + 5));
+                    getPayload = getPayload.substr(payloadSecondSlashPos + 4,
+                                             getPayload.size() - (payloadSecondSlashPos + 5));
 
-                    if (c) c->fireEvent(eventname, payload);
-                    if (c) c->getDelegate()->onMessage(c, payload);
+                    if (c) c->fireEvent(eventname, getPayload);
+                    if (c) c->getDelegate()->onMessage(c, getPayload);
 
                 }
                 break;
@@ -983,7 +983,7 @@ void SIOClientImpl::onMessage(WebSocket* /*ws*/, const WebSocket::Data& data)
                     break;
                 case 4:
                     CCLOGERROR("Error");
-                    if (c) c->fireEvent("error", payload);
+                    if (c) c->fireEvent("error", getPayload);
                     break;
                 case 5:
                     CCLOGINFO("Binary Event");

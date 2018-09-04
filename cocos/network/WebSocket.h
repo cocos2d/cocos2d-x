@@ -201,8 +201,8 @@ public:
     
     /**
     *  @brief Closes the connection to server synchronously.
-    *  @note It's a synchronous method, it will not return until websocket thread exits.
-    *  @param waitTimoutMS return before timeout
+    *  @note It's a synchronous method, it will not return until websocket thread exits or timeout happends.
+    *  @param waitTimoutMS return before thread exits
     */
     void close(int waitTimoutMS);
 
