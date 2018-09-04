@@ -34,7 +34,7 @@ namespace cocos2d
         public:
             virtual ~Loop(){}
             virtual void before() {}
-            virtual void update(int dtMS) = 0;
+            virtual int update(int dtMS) = 0;
             virtual void after() {}
         };
 

@@ -101,6 +101,20 @@ namespace cocos2d
             bool *inited = (bool*)uv_key_get(&__uvLoopInitedKey);
             return (inited && *inited) ? (uv_loop_t*)uv_key_get(&__uvLoopKey) : nullptr;
         }
+
+        void ThreadLoop::closeLoop()
+        {
+            uv_loop_t *loop = getThreadLoop();
+            if (loop)
+            {
+                uv_stop(loop);
+                free(loop);
+                bool *inited = (bool*)uv_key_get(&__uvLoopInitedKey);
+                delete inited;
+                uv_key_set(&__uvLoopInitedKey, nullptr);
+                uv_key_set(&__uvLoopKey, nullptr);
+            }
+        }
 #endif
     }
 }

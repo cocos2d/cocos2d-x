@@ -60,14 +60,22 @@ namespace cocos2d
         static void timer_handle(uv_timer_t *timer)
         {
             LoopRunable *self = (LoopRunable*)timer->data;
-            self->onTimer();
-            self->scheduleTaskUpdate();
+            if (self->onTimer() < 0)
+            {
+                self->stop();
+            }
+            else
+            {
+                self->scheduleTaskUpdate();
+            }
         }
 
-        void LoopRunable::onTimer()
+        int LoopRunable::onTimer()
         {
             _updateTimes += 1;
-            if (_task) _task->update((int)_intervalMS);
+            if (_task) 
+                return _task->update((int)_intervalMS);
+            return -1;
         }
 
         void LoopRunable::scheduleTaskUpdate()
@@ -81,6 +89,11 @@ namespace cocos2d
             auto delay = duration_cast<milliseconds>(diff).count();
             assert(delay >= 0);
             uv_timer_start(&_uvTimer, timer_handle, delay, 0);
+        }
+
+        void LoopRunable::stop()
+        {
+            uv_stop(_uvLoop);
         }
     }
 }

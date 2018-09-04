@@ -297,6 +297,7 @@ namespace cocos2d
             assert(tsk);
             Finalizer defer([tsk]() {
                 tsk->afterRun();
+                ThreadLoop::closeLoop();
             });
 
             tsk->beforeRun();

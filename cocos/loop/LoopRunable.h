@@ -45,7 +45,8 @@ namespace cocos2d
             void run();
             void afterRun();
             void scheduleTaskUpdate();
-            void onTimer();
+            int onTimer();
+            void stop();
             time_point<high_resolution_clock> expectTime()
             {
                 return _startTime + milliseconds(_intervalMS * _updateTimes);

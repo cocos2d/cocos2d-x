@@ -35,6 +35,7 @@ namespace cocos2d
         public:
             static void initThreadLoop();
             static uv_loop_t * getThreadLoop();
+            static void closeLoop();
         };
     }
 }

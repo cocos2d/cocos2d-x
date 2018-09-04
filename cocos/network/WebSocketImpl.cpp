@@ -138,7 +138,7 @@ namespace cocos2d
             size_t getConsumedCnt() { return _consumed; }
             bool isBinary() { return _isBinary; }
 
-            void consume(size_t d)
+            void consume(int d)
             {
                 CCASSERT(d <= _remain, "data not enought!");
                 CCASSERT(d >= 0, "consume negative bytes of data");
@@ -259,7 +259,7 @@ namespace cocos2d
             HelperLoop(Helper *helper) :_helper(helper) {}
             void before() override;
             void after() override;
-            void update(int dtms) override;
+            int update(int dtms) override;
         private:
             Helper *_helper = nullptr;
         };
@@ -389,6 +389,8 @@ namespace cocos2d
 
         void Helper::handleCmdConnect(NetCmd &cmd)
         {
+            if (cmd.ws->_state != WebSocket::State::UNINITIALIZED) 
+                return;
             cmd.ws->doConnect();
         }
 
@@ -416,15 +418,15 @@ namespace cocos2d
             _helper->reInitLibUV();
         }
 
-        void HelperLoop::update(int dtms)
+        int HelperLoop::update(int dtms)
         {
             //CCLOG("[HelperLoop] thread tick ... ");
             LOCK_MTX(WebSocketImpl::_cachedSocketsMtx);
             for (auto ws : WebSocketImpl::_cachedSockets)
             {
-
-                CCLOG ("use count %d",(int)ws.second->getSharedPtrUsedCount());
+                CCLOG ("WS %d use count %d", ws.first, (int)ws.second->getSharedPtrUsedCount());
             }
+            return 0;
         }
 
         void HelperLoop::after()
@@ -509,6 +511,8 @@ namespace cocos2d
                 CCLOGERROR("WebSocket url: `%s` uses SSL, which expects a caFile `%s`", url.c_str(), caFile.c_str());
             }
 
+            _state = WebSocket::State::CONNECTING;
+
             _helper = Helper::fetch();
 
             {
@@ -541,7 +545,6 @@ namespace cocos2d
                 }
             }
 
-            _state = WebSocket::State::CONNECTING;
             _helper->send("open", NetCmd::Open(this->shared_from_this()));
 
             return true;
