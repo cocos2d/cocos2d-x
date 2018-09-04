@@ -46,7 +46,13 @@ namespace cocos2d
 
         WebSocket::WebSocket() { impl = std::make_shared<WebSocketImpl>(this); }
 
-        WebSocket::~WebSocket() { impl->closeAsyncSig(); impl.reset(); }
+        WebSocket::~WebSocket() 
+        {
+            CCLOG("WebSocket::~WebSocket() impl refcount %d", impl.use_count());
+            impl->markDeleted();
+            impl->closeAsyncSig();
+            impl.reset(); 
+        }
 
         bool WebSocket::init(const Delegate& delegate,
             const std::string& url,

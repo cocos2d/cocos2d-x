@@ -160,22 +160,23 @@ namespace cocos2d
         */
         class NetCmd {
         public:
-            static NetCmd Open(WebSocketImpl::Ptr ws);
-            static NetCmd Close(WebSocketImpl::Ptr ws);
-            static NetCmd Write(WebSocketImpl::Ptr ws, const char *data, size_t len, bool isBinary);
+            typedef std::shared_ptr<WebSocketImpl> Ptr;
+            static NetCmd Open(Ptr ws);
+            static NetCmd Close(Ptr ws);
+            static NetCmd Write(Ptr ws, const char *data, size_t len, bool isBinary);
 
             NetCmd() {}
-            NetCmd(WebSocketImpl::Ptr ws, NetCmdType cmd, std::shared_ptr<NetDataPack> data) :ws(ws), cmd(cmd), data(data) {}
+            NetCmd(Ptr ws, NetCmdType cmd, std::shared_ptr<NetDataPack> data) :ws(ws), cmd(cmd), data(data) {}
             NetCmd(const NetCmd &o) :ws(o.ws), cmd(o.cmd), data(o.data) {}
         public:
-            WebSocketImpl::Ptr ws{ nullptr };      //sender socket
+            Ptr ws;              //sender socket
             NetCmdType cmd;                     //command type
             std::shared_ptr<NetDataPack> data;  //write data
         };
 
-        NetCmd NetCmd::Open(WebSocketImpl::Ptr ws) { return NetCmd(ws, NetCmdType::OPEN, nullptr); }
-        NetCmd NetCmd::Close(WebSocketImpl::Ptr ws) { return NetCmd(ws, NetCmdType::CLOSE, nullptr); }
-        NetCmd NetCmd::Write(WebSocketImpl::Ptr ws, const char *data, size_t len, bool isBinary)
+        NetCmd NetCmd::Open(Ptr ws) { return NetCmd(ws, NetCmdType::OPEN, nullptr); }
+        NetCmd NetCmd::Close(Ptr ws) { return NetCmd(ws, NetCmdType::CLOSE, nullptr); }
+        NetCmd NetCmd::Write(Ptr ws, const char *data, size_t len, bool isBinary)
         {
             auto pack = std::make_shared<NetDataPack>(data, len, isBinary);
             return NetCmd(ws, NetCmdType::WRITE, pack);
@@ -307,7 +308,7 @@ namespace cocos2d
         {
             _loop = new HelperLoop(this);
 
-            _looper = std::make_shared<Looper<NetCmd> >(ThreadCategory::NET_THREAD, _loop, 5000);
+            _looper = std::make_shared<Looper<NetCmd> >(ThreadCategory::NET_THREAD, _loop, 1000);
 
             initProtocols();
             lws_context_creation_info  info = initCtxCreateInfo(_lwsDefaultProtocols, true);
@@ -418,6 +419,12 @@ namespace cocos2d
         void HelperLoop::update(int dtms)
         {
             //CCLOG("[HelperLoop] thread tick ... ");
+            LOCK_MTX(WebSocketImpl::_cachedSocketsMtx);
+            for (auto ws : WebSocketImpl::_cachedSockets)
+            {
+
+                CCLOG ("use count %d",(int)ws.second->getSharedPtrUsedCount());
+            }
         }
 
         void HelperLoop::after()
@@ -434,10 +441,10 @@ namespace cocos2d
         int WebSocketImpl::_protocolCounter = 1;
         std::mutex WebSocketImpl::_cachedSocketsMtx;
         std::int64_t WebSocketImpl::_wsIdCounter = 1;
-        std::unordered_map<int64_t, WebSocketImpl::Ptr > WebSocketImpl::_cachedSockets;
+        std::unordered_map<int64_t, WebSocketImpl::PTR > WebSocketImpl::_cachedSockets;
 
         ///////friend function 
-        static WebSocketImpl::Ptr findWs(int64_t wsId)
+        static  WebSocketImpl::PTR findWs(int64_t wsId)
         {
             LOCK_MTX(WebSocketImpl::_cachedSocketsMtx);
             auto it = WebSocketImpl::_cachedSockets.find(wsId);
@@ -809,7 +816,7 @@ namespace cocos2d
             auto self = this->shared_from_this();
 
             _helper->runInUI([self, ecode]() {
-                self->_delegate->onError(self->_ws, ecode);
+                self->callDelegateOnError(ecode);
                 if (self->_state == WebSocket::State::CONNECTING)
                 {
                     self->_state = WebSocket::State::CLOSED;
@@ -830,7 +837,7 @@ namespace cocos2d
             auto wsi = this->_wsi;
             auto self = this->shared_from_this();
             _helper->runInUI([self, wsi]() {
-                self->_delegate->onOpen(self->_ws);
+                self->callDelegateOnOpen();
                 //schedule writable
                 self->_helper->getLooper()->dispatch([wsi]() {
                     lws_callback_on_writable(wsi);
@@ -846,7 +853,7 @@ namespace cocos2d
             auto self = shared_from_this();
             auto wsid = _wsId;
             _helper->runInUI([self, wsid]() {
-                self->_delegate->onClose(self->_ws);
+                self->callDelegateOnClose();
             });
 
             {
@@ -891,7 +898,7 @@ namespace cocos2d
                 auto self = this->shared_from_this();
                 _helper->runInUI([rbuffCopy, self, isBinary]() {
                     WebSocket::Data data((char*)(rbuffCopy->data()), rbuffCopy->size(), isBinary);
-                    self->_delegate->onMessage(self->_ws, data);
+                    self->callDelegateOnMessage(data);
                 });
             }
             return 0;

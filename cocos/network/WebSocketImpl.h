@@ -49,13 +49,13 @@ namespace cocos2d
         class WebSocketImpl : public std::enable_shared_from_this<WebSocketImpl>
         {
         public:
-            typedef std::shared_ptr<WebSocketImpl> Ptr;
+            typedef std::shared_ptr<WebSocketImpl> PTR;
         private:
             static int _protocolCounter;
             static int64_t _wsIdCounter;
 
             static std::mutex _cachedSocketsMtx;
-            static std::unordered_map<int64_t, Ptr > _cachedSockets;
+            static std::unordered_map<int64_t, PTR > _cachedSockets;
             static void closeAll();
         public:
             WebSocketImpl(WebSocket *);
@@ -84,8 +84,17 @@ namespace cocos2d
             int netOnReadable(void *, size_t len);
             int netOnWritable();
 
+            void callDelegateOnOpen() { if (!_isWsDeleted) _delegate->onOpen(_ws);  }
+            void callDelegateOnClose() { if (!_isWsDeleted) _delegate->onClose(_ws); }
+            void callDelegateOnError(WebSocket::ErrorCode code) { if (!_isWsDeleted) _delegate->onError(_ws, code);  }
+            void callDelegateOnMessage(const WebSocket::Data &data) { if (!_isWsDeleted) _delegate->onMessage(_ws, data); }
+
+            long getSharedPtrUsedCount() { return this->shared_from_this().use_count(); }
+            void markDeleted() { this->_isWsDeleted = true;}
+
             WebSocket::Delegate* _delegate = nullptr;
             WebSocket *_ws = nullptr;
+            bool _isWsDeleted = false;
             WebSocket::State _state = WebSocket::State::UNINITIALIZED;
             std::shared_ptr<Helper> _helper;
 
@@ -110,7 +119,8 @@ namespace cocos2d
             friend class Helper;
             friend class WebSocket;
             friend int websocket_callback(lws *wsi, enum lws_callback_reasons reason, void *user, void *in, ssize_t len);
-            friend WebSocketImpl::Ptr findWs(int64_t wsId);
+            friend PTR findWs(int64_t wsId);
+            friend class HelperLoop;
         };
     }
 }
