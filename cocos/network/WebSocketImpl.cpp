@@ -847,9 +847,12 @@ namespace cocos2d
             _helper->runInUI([self, wsi]() {
                 self->callDelegateOnOpen();
                 //schedule writable
-                self->_helper->getLooper()->dispatch([wsi]() {
-                    lws_callback_on_writable(wsi);
-                });
+                if(self->_helper && self->_helper->getLooper())
+                {
+                    self->_helper->getLooper()->dispatch([wsi]() {
+                        lws_callback_on_writable(wsi);
+                    });
+                }
             });
             return 0;
         }
