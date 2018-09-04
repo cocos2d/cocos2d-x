@@ -1,8 +1,8 @@
 {
-    "version": "v3-deps-142",
+    "version": "v3-deps-144",
     "zip_file_size": "136974507",
     "repo_name": "cocos2d-x-3rd-party-libs-bin",
-    "repo_parent": "https://github.com/cocos2d/",
+    "repo_parent": "https://github.com/PatriceJiang/",
     "move_dirs": {
         "fbx-conv": "tools"
     }
