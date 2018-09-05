@@ -109,6 +109,10 @@
      if(CLANG AND NOT ANDROID)
          set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
      endif()
+     if(LINUX)
+         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -lrt")
+         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread -lrt")
+     endif()
      # specail options for android
      if(ANDROID)
          set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fexceptions")
