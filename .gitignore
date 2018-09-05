@@ -166,3 +166,5 @@ tests/lua-tests/project/proj.tizen/res/
 *-build/
 # Ignore the CLion build folder, such as cmake-build-debug
 cmake-build-*/
+.vs
+cmake_build*
