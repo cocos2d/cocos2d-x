@@ -185,7 +185,6 @@
         "cocos/2d/cocos2dx.props", 
         "cocos/2d/libcocos2d.vcxproj", 
         "cocos/2d/libcocos2d.vcxproj.filters", 
-        "cocos/2d/libcocos2d.vcxproj.user", 
         "cocos/2d/libcocos2d_win10/libcocos2d.vcxproj", 
         "cocos/2d/libcocos2d_win10/libcocos2d.vcxproj.filters", 
         "cocos/2d/win10_props/cocos2d_win10.props", 
@@ -3773,6 +3772,9 @@
         "external/uv/prebuilt/linux/i386/libuv_a.a", 
         "external/uv/prebuilt/mac/libuv_a.a", 
         "external/uv/prebuilt/mac/x86_64/libuv_a.a", 
+        "external/uv/prebuilt/tvos/arm64/libuv_a.a", 
+        "external/uv/prebuilt/tvos/libuv_a.a", 
+        "external/uv/prebuilt/tvos/x86_64/libuv_a.a", 
         "external/uv/prebuilt/win10/i386/uv.dll", 
         "external/uv/prebuilt/win10/i386/uv_a.lib", 
         "external/uv/prebuilt/win10/x64/uv.dll", 
@@ -4977,7 +4979,8 @@
         "tools/tojs/cocos2dx_spine.ini", 
         "tools/tojs/cocos2dx_studio.ini", 
         "tools/tojs/cocos2dx_ui.ini", 
-        "tools/tojs/genbindings.py"
+        "tools/tojs/genbindings.py", 
+        "tools/tojs/userconf.ini"
     ], 
     "lua": [
         "cocos/scripting/lua-bindings/CMakeLists.txt", 
@@ -5859,6 +5862,7 @@
         "tools/tolua/cocos2dx_spine.ini", 
         "tools/tolua/cocos2dx_studio.ini", 
         "tools/tolua/cocos2dx_ui.ini", 
-        "tools/tolua/genbindings.py"
+        "tools/tolua/genbindings.py", 
+        "tools/tolua/userconf.ini"
     ]
 }
