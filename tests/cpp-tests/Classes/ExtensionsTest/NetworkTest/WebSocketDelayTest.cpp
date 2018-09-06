@@ -161,7 +161,7 @@ void WebSocketDelayTest::onMessage(network::WebSocket* ws, const network::WebSoc
         log("%s", textStr.c_str());
         doReceiveText();
         memset(times, 0, 100);
-        snprintf(times, 100, "total delay %llf seconds", _totalDelayMircoSec/ 1000000.0);
+        snprintf(times, 100, "total delay %f seconds", (float)(_totalDelayMircoSec/ 1000000.0));
         _progressStatus->setString(times);
     }
 }
