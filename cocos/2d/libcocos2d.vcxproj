@@ -67,11 +67,11 @@
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>../../external/sqlite3/libraries/win32;$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>../../external/uv/prebuilt/win32;../../external/sqlite3/libraries/win32;$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
     <IncludePath>../../external/uv/include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LibraryPath>../../external/sqlite3/libraries/win32;$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>../../external/uv/prebuilt/win32;../../external/sqlite3/libraries/win32;$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
     <IncludePath>../../external/uv/include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -128,7 +128,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\uv\prebuilt\win32\*.*" "$(OutDir)"</Com
       <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
       <ModuleDefinitionFile>cocos2d.def</ModuleDefinitionFile>
-      <AdditionalDependencies>sqlite3.lib;libcurl.lib;websockets.lib;libcrypto.lib;libssl.lib;libmpg123.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;OpenAL32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>userenv.lib;psapi.lib;uv_a.lib;sqlite3.lib;libcurl.lib;websockets.lib;libcrypto.lib;libssl.lib;libmpg123.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;OpenAL32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -179,7 +179,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\openssl\prebuilt\win32\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\external\uv\prebuilt\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>sqlite3.lib;libcurl.lib;websockets.lib;libcrypto.lib;libssl.lib;libmpg123.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;OpenAL32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>uv_a.lib;userenv.lib;psapi.lib;sqlite3.lib;libcurl.lib;websockets.lib;libcrypto.lib;libssl.lib;libmpg123.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;OpenAL32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBCMTD.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -471,6 +471,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\uv\prebuilt\win32\*.*" "$(OutDir)"</Com
     <ClCompile Include="..\base\ccUtils.cpp" />
     <ClCompile Include="..\base\CCValue.cpp" />
     <ClCompile Include="..\base\etc1.cpp" />
+    <ClCompile Include="..\base\loop\LoopRunable.cpp" />
+    <ClCompile Include="..\base\loop\ThreadLoop.cpp" />
     <ClCompile Include="..\base\pvr.cpp" />
     <ClCompile Include="..\base\ObjectFactory.cpp" />
     <ClCompile Include="..\base\s3tc.cpp" />
@@ -608,6 +610,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\uv\prebuilt\win32\*.*" "$(OutDir)"</Com
     <ClCompile Include="..\network\SocketIO.cpp" />
     <ClCompile Include="..\network\Uri.cpp" />
     <ClCompile Include="..\network\WebSocket.cpp" />
+    <ClCompile Include="..\network\WebSocketImpl.cpp" />
     <ClCompile Include="..\physics3d\CCPhysics3D.cpp" />
     <ClCompile Include="..\physics3d\CCPhysics3DComponent.cpp" />
     <ClCompile Include="..\physics3d\CCPhysics3DConstraint.cpp" />
@@ -1084,6 +1087,14 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\uv\prebuilt\win32\*.*" "$(OutDir)"</Com
     <ClInclude Include="..\base\CCVector.h" />
     <ClInclude Include="..\base\etc1.h" />
     <ClInclude Include="..\base\firePngData.h" />
+    <ClInclude Include="..\base\loop\Collections.h" />
+    <ClInclude Include="..\base\loop\Finalizer.h" />
+    <ClInclude Include="..\base\loop\Loop.h" />
+    <ClInclude Include="..\base\loop\Looper.h" />
+    <ClInclude Include="..\base\loop\LoopEvent.h" />
+    <ClInclude Include="..\base\loop\LoopRunable.h" />
+    <ClInclude Include="..\base\loop\SeqItem.h" />
+    <ClInclude Include="..\base\loop\ThreadLoop.h" />
     <ClInclude Include="..\base\ObjectFactory.h" />
     <ClInclude Include="..\base\pvr.h" />
     <ClInclude Include="..\base\s3tc.h" />
@@ -1247,6 +1258,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\uv\prebuilt\win32\*.*" "$(OutDir)"</Com
     <ClInclude Include="..\network\SocketIO.h" />
     <ClInclude Include="..\network\Uri.h" />
     <ClInclude Include="..\network\WebSocket.h" />
+    <ClInclude Include="..\network\WebSocketImpl.h" />
     <ClInclude Include="..\physics3d\CCPhysics3D.h" />
     <ClInclude Include="..\physics3d\CCPhysics3DComponent.h" />
     <ClInclude Include="..\physics3d\CCPhysics3DConstraint.h" />
