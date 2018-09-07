@@ -325,11 +325,17 @@ CameraBackgroundSkyBoxBrush::CameraBackgroundSkyBoxBrush()
 , _texture(nullptr)
 , _actived(true)
 , _textureValid(true)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+, _backToForegroundListener(nullptr)
+#endif
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                             [this](EventCustom*)
                                                             {
+                                                                _vao = 0;
+                                                                _vertexBuffer = 0;
+                                                                _indexBuffer = 0;
                                                                 initBuffer();
                                                             }
                                                             );
@@ -353,6 +359,9 @@ CameraBackgroundSkyBoxBrush::~CameraBackgroundSkyBoxBrush()
         GL::bindVAO(0);
         _vao = 0;
     }
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 CameraBackgroundSkyBoxBrush* CameraBackgroundSkyBoxBrush::create(
