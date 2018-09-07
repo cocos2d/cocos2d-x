@@ -31,7 +31,7 @@
 #include <spine/extension.h>
 #include <algorithm>
 
-#include "ccUtils.h"
+#include "base/ccUtils.h"
 
 USING_NS_CC;
 #define EVENT_AFTER_DRAW_RESET_POSITION "director_after_draw"
