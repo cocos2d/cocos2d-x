@@ -329,6 +329,8 @@ protected:
     void ensureCapacityGLPoint(int count);
     void ensureCapacityGLLine(int count);
 
+    void setupBuffer();
+
     GLuint      _vao;
     GLuint      _vbo;
     GLuint      _vaoGLPoint;
