@@ -57,6 +57,9 @@ namespace cocos2d
             static std::mutex _cachedSocketsMtx;
             static std::unordered_map<int64_t, PTR > _cachedSockets;
             static void closeAll();
+            static int websocket_callback(lws *wsi, enum lws_callback_reasons reason, void *user, void *in, size_t len);
+            static PTR findWs(int64_t wsId);
+            
         public:
             WebSocketImpl(WebSocket *);
             virtual ~WebSocketImpl();
@@ -115,11 +118,9 @@ namespace cocos2d
             int32_t _callbackInvokeFlags = 0;
 
             EventListenerCustom* _resetDirectorListener = nullptr;
-
+        
             friend class Helper;
             friend class WebSocket;
-            friend int websocket_callback(lws *wsi, enum lws_callback_reasons reason, void *user, void *in, ssize_t len);
-            friend PTR findWs(int64_t wsId);
             friend class HelperLoop;
         };
     }

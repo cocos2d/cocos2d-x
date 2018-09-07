@@ -184,7 +184,7 @@ namespace cocos2d
 
         //////////////basic data type - end /////////////
 
-        static int websocket_callback(lws *wsi, enum lws_callback_reasons reason, void *user, void *in, ssize_t len)
+        int WebSocketImpl::websocket_callback(lws *wsi, enum lws_callback_reasons reason, void *user, void *in, size_t len)
         {
             if (wsi == nullptr) return 0;
             int ret = 0;
@@ -350,7 +350,7 @@ namespace cocos2d
             lws_protocols *p = &_lwsDefaultProtocols[0];
             p->name = "";
             p->rx_buffer_size = WS_RX_BUFFER_SIZE;
-            p->callback = (lws_callback_function*)&websocket_callback;
+            p->callback = (lws_callback_function*)WebSocketImpl::websocket_callback;
             p->id = (1ULL << 32) - 1ULL;
         }
 
@@ -441,8 +441,9 @@ namespace cocos2d
         std::int64_t WebSocketImpl::_wsIdCounter = 1;
         std::unordered_map<int64_t, WebSocketImpl::PTR > WebSocketImpl::_cachedSockets;
 
-        ///////friend function 
-        static  WebSocketImpl::PTR findWs(int64_t wsId)
+        ///////friend function
+        
+        WebSocketImpl::PTR WebSocketImpl::findWs(int64_t wsId)
         {
             LOCK_MTX(WebSocketImpl::_cachedSocketsMtx);
             auto it = WebSocketImpl::_cachedSockets.find(wsId);
@@ -544,7 +545,7 @@ namespace cocos2d
                     p->rx_buffer_size = WS_RX_BUFFER_SIZE;
                     p->per_session_data_size = 0;
                     p->user = this;
-                    p->callback = (lws_callback_function*)&websocket_callback;
+                    p->callback = WebSocketImpl::websocket_callback;
                     _joinedProtocols += _protocols[i];
                     if (i < size - 1) _joinedProtocols += ",";
                 }

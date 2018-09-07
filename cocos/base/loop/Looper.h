@@ -431,8 +431,8 @@ namespace cocos2d
                     handleEvent(item._name, item._data);
                 }
                 else {
-                    auto &&fn = _pendingFns.popFront();
-                    handleFn(fn._data);
+                    auto &&front = _pendingFns.popFront();
+                    handleFn(front._data);
                 }
             }
 
