@@ -10,6 +10,7 @@ LOCAL_ARM_MODE := arm
 LOCAL_SRC_FILES := HttpClient-android.cpp \
 SocketIO.cpp \
 WebSocket.cpp \
+WebSocketImpl.cpp \
 CCDownloader.cpp \
 CCDownloader-android.cpp \
 Uri.cpp
@@ -17,6 +18,6 @@ Uri.cpp
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
-LOCAL_STATIC_LIBRARIES += libwebsockets_static
+LOCAL_STATIC_LIBRARIES += libwebsockets_static 
 
 include $(BUILD_STATIC_LIBRARY)
