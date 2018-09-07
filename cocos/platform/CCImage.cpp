@@ -1149,6 +1149,11 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         {
             premultipliedAlpha();
         }
+        else
+        {
+            _hasPremultipliedAlpha = true;
+        }
+
 
         if (row_pointers != nullptr)
         {
