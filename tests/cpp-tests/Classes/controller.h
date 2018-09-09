@@ -62,6 +62,7 @@ public:
 
     void setCurrTestSuite(TestSuite* testSuite) { _testSuite = testSuite; }
     TestSuite* getCurrTestSuite() { return _testSuite; }
+    bool isAutoTestRunning() const { return !_stopAutoTest; }
 private:
     TestController();
 
@@ -73,7 +74,7 @@ private:
 
     void logEx(const char * format, ...);
 
-    bool _stopAutoTest;
+    std::atomic<bool> _stopAutoTest;
     bool _isRunInBackground;
 
     TestList* _rootTestList;
