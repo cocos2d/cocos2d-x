@@ -572,8 +572,8 @@ void GLViewImpl::setCursorVisible( bool isVisible )
 void GLViewImpl::setCustomCursor(int width, int height, unsigned char* little_endian_non_premult_rgba_32b_pixels)
 {
     GLFWimage image;
-    image.width = 32;
-    image.height = 32;
+    image.width = width;
+    image.height = height;
     image.pixels = little_endian_non_premult_rgba_32b_pixels;
     GLFWcursor* cursor = glfwCreateCursor(&image, 0, 0);
     glfwSetCursor(this->getWindow(), cursor);
