@@ -569,7 +569,7 @@ void GLViewImpl::setCursorVisible( bool isVisible )
         glfwSetInputMode(_mainWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 }
 
-void GLViewImpl::set_custom_cursor(int width, int height, unsigned char* little_endian_non_premult_rgba_32b_pixels)
+void GLViewImpl::setCustomCursor(int width, int height, unsigned char* little_endian_non_premult_rgba_32b_pixels)
 {
     GLFWimage image;
     image.width = 32;
@@ -579,12 +579,12 @@ void GLViewImpl::set_custom_cursor(int width, int height, unsigned char* little_
     glfwSetCursor(this->getWindow(), cursor);
 }
 
-void GLViewImpl::set_cursor_pos(double x_pos, double y_pos)
+void GLViewImpl::setCursorPos(double x_pos, double y_pos)
 {
     glfwSetCursorPos(_mainWindow, x_pos, y_pos);
 }
 
-const GLFWvidmode* GLViewImpl::get_possible_video_modes(int& count)
+const GLFWvidmode* GLViewImpl::getPossibleVideoModes(int& count)
 {
     auto monitor = glfwGetPrimaryMonitor();
     if (!monitor) {
@@ -594,7 +594,7 @@ const GLFWvidmode* GLViewImpl::get_possible_video_modes(int& count)
     return glfwGetVideoModes(monitor, &count);
 }
 
-void GLViewImpl::set_video_mode(GLFWvidmode* mode, bool is_fullscreen)
+void GLViewImpl::setVideoMode(GLFWvidmode* mode, bool is_fullscreen)
 {
     //if no monitor, it's windowed
     GLFWmonitor* monitor;
@@ -607,12 +607,12 @@ void GLViewImpl::set_video_mode(GLFWvidmode* mode, bool is_fullscreen)
     glfwSetWindowMonitor(_mainWindow, monitor, 100, 100, mode->width, mode->height, mode->refreshRate);
 }
 
-GLFWmonitor** GLViewImpl::get_monitors(int& monitor_count){
+GLFWmonitor** GLViewImpl::getMonitors(int& monitor_count){
     GLFWmonitor** monitors = glfwGetMonitors(&monitor_count);
     return monitors;
 };
 
-const GLFWvidmode* GLViewImpl::get_video_mode()
+const GLFWvidmode* GLViewImpl::getVideoMode()
 {
     auto monitor = glfwGetPrimaryMonitor();
     if (!monitor) {

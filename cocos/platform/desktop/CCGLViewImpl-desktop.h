@@ -111,13 +111,13 @@ public:
      */
     virtual void setCursorVisible(bool isVisible) override;
 
-    void set_custom_cursor(int width, int height, unsigned char* little_endian_non_premult_rgba_32b_pixels);
-    void set_cursor_pos(double x_pos, double y_pos);
-    const GLFWvidmode* get_possible_video_modes(int& count);
+    void setCustomCursor(int width, int height, unsigned char* little_endian_non_premult_rgba_32b_pixels);
+    void setCursorPos(double x_pos, double y_pos);
+    const GLFWvidmode* getPossibleVideoModes(int& count);
     //if is_fullscreen is false, we pass NULL as a monitor, as per glfw
-    void set_video_mode(GLFWvidmode* mode, bool is_fullscreen);
-    GLFWmonitor** get_monitors(int& monitor_count);
-    const GLFWvidmode* get_video_mode();
+    void setVideoMode(GLFWvidmode* mode, bool is_fullscreen);
+    GLFWmonitor** getMonitors(int& monitor_count);
+    const GLFWvidmode* getVideoMode();
     /** Retina support is disabled by default
      *  @note This method is only available on Mac.
      */
