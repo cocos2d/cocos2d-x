@@ -196,6 +196,59 @@ static keyCodeItem g_keyCodeStructArray[] = {
 //////////////////////////////////////////////////////////////////////////
 
 
+//from https://discuss.cocos2d-x.org/t/confine-mouse-cursor-to-window/34377/6
+void GLViewImpl::setCursorLock(const bool isLocked)
+{
+    // Return if window is null
+    if (_mainWindow == NULL)
+        return;
+
+    _cursorLocked = isLocked;
+    if (isLocked)
+    {
+        // Client rect area. This excludes border, caption, etc. Only gets the inner window area.
+        RECT clientRect;
+        GetClientRect(glfwGetWin32Window(_mainWindow), &clientRect);
+
+        // Rect to points.
+        POINT leftTop, rightBottomn;
+        leftTop.x = clientRect.left;
+        leftTop.y = clientRect.top;
+        rightBottomn.x = clientRect.right;
+        rightBottomn.y = clientRect.bottom;
+
+        // Since clientRect starts at (0, 0), we need to convert points to screen position.
+        HWND hwnd = glfwGetWin32Window(_mainWindow);
+        ClientToScreen(hwnd, &leftTop);
+        ClientToScreen(hwnd, &rightBottomn);
+
+        /*
+        // Note: Uncomment this block to include title bar to clien rect. This will let user move around window while Windowed mode.
+        if (!isFullscreen())
+        {
+        // Get caption height and apply to point
+        int captionHeight = (GetSystemMetrics(SM_CYFRAME) + GetSystemMetrics(SM_CYCAPTION) +
+        GetSystemMetrics(SM_CXPADDEDBORDER));
+        leftTop.y -= captionHeight;
+        }
+        */
+
+        // Set client Rect to screen point.
+        clientRect.left = leftTop.x;
+        clientRect.top = leftTop.y;
+        clientRect.right = rightBottomn.x;
+        clientRect.bottom = rightBottomn.y;
+
+        // Lock cursor in this area
+        ClipCursor(&clientRect);
+    }
+    else
+    {
+        // Disable lock
+        ClipCursor(NULL);
+    }
+}
+
 GLViewImpl::GLViewImpl(bool initglfw)
 : _captured(false)
 , _supportTouch(false)
@@ -207,6 +260,7 @@ GLViewImpl::GLViewImpl(bool initglfw)
 , _monitor(nullptr)
 , _mouseX(0.0f)
 , _mouseY(0.0f)
+, _cursorLocked(false)
 {
     _viewName = "cocos2dx";
     g_keyCodeMap.clear();
@@ -515,7 +569,60 @@ void GLViewImpl::setCursorVisible( bool isVisible )
         glfwSetInputMode(_mainWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 }
 
-void GLViewImpl::setFrameZoomFactor(float zoomFactor)
+void GLViewImpl::set_custom_cursor(int width, int height, unsigned char* little_endian_non_premult_rgba_32b_pixels)
+{
+    GLFWimage image;
+    image.width = 32;
+    image.height = 32;
+    image.pixels = little_endian_non_premult_rgba_32b_pixels;
+    GLFWcursor* cursor = glfwCreateCursor(&image, 0, 0);
+    glfwSetCursor(this->getWindow(), cursor);
+}
+
+void GLViewImpl::set_cursor_pos(double x_pos, double y_pos)
+{
+    glfwSetCursorPos(_mainWindow, x_pos, y_pos);
+}
+
+const GLFWvidmode* GLViewImpl::get_possible_video_modes(int& count)
+{
+    auto monitor = glfwGetPrimaryMonitor();
+    if (!monitor) {
+        CCLOG("cant get video mode, no monitor");
+        return NULL;
+    }
+    return glfwGetVideoModes(monitor, &count);
+}
+
+void GLViewImpl::set_video_mode(GLFWvidmode* mode, bool is_fullscreen)
+{
+    //if no monitor, it's windowed
+    GLFWmonitor* monitor;
+    if (is_fullscreen) {
+        monitor = glfwGetPrimaryMonitor();
+    } else {
+        monitor = NULL;
+    }
+
+    glfwSetWindowMonitor(_mainWindow, monitor, 100, 100, mode->width, mode->height, mode->refreshRate);
+}
+
+GLFWmonitor** GLViewImpl::get_monitors(int& monitor_count){
+    GLFWmonitor** monitors = glfwGetMonitors(&monitor_count);
+    return monitors;
+};
+
+const GLFWvidmode* GLViewImpl::get_video_mode()
+{
+    auto monitor = glfwGetPrimaryMonitor();
+    if (!monitor) {
+        CCLOG("cant get video mode, no monitor");
+        return NULL;
+    }
+    return glfwGetVideoMode(monitor);
+}
+
+    void GLViewImpl::setFrameZoomFactor(float zoomFactor)
 {
     CCASSERT(zoomFactor > 0.0f, "zoomFactor must be larger than 0");
 
@@ -854,6 +961,12 @@ void GLViewImpl::onGLFWCharCallback(GLFWwindow* /*window*/, unsigned int charact
 void GLViewImpl::onGLFWWindowPosCallback(GLFWwindow* /*window*/, int /*x*/, int /*y*/)
 {
     Director::getInstance()->setViewport();
+
+	if (_cursorLocked)
+	{
+		// Reset cursor lock when window move. 
+		setCursorLock(true);
+	}
 }
 
 void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
@@ -883,6 +996,12 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
         _retinaFactor = 1;
         glfwSetWindowSize(window, static_cast<int>(frameSizeW * _retinaFactor * _frameZoomFactor), static_cast<int>(frameSizeH * _retinaFactor * _frameZoomFactor));
     }
+
+	if (_cursorLocked)
+	{
+		// Reset cursor lock when frame buffer size changes
+		setCursorLock(true);
+	}
 }
 
 void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow* /*window*/, int width, int height)
@@ -898,6 +1017,12 @@ void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow* /*window*/, int width, 
         setDesignResolutionSize(baseDesignSize.width, baseDesignSize.height, baseResolutionPolicy);
         Director::getInstance()->setViewport();
         Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(GLViewImpl::EVENT_WINDOW_RESIZED, nullptr);
+
+	    if (_cursorLocked)
+	    {
+	    	  // Reset cursor lock when window size changes
+	          setCursorLock(true);
+	    }
     }
 }
 
@@ -918,6 +1043,11 @@ void GLViewImpl::onGLFWWindowFocusCallback(GLFWwindow* /*window*/, int focused)
     if (focused == GL_TRUE)
     {
         Director::getInstance()->getEventDispatcher()->dispatchCustomEvent(GLViewImpl::EVENT_WINDOW_FOCUSED, nullptr);
+        // Reset cursor lock when window gets focused back.
+        if (_cursorLocked)
+        {
+            setCursorLock(true);
+        }
     }
     else
     {

@@ -110,6 +110,14 @@ public:
      * Hide or Show the mouse cursor if there is one.
      */
     virtual void setCursorVisible(bool isVisible) override;
+
+    void set_custom_cursor(int width, int height, unsigned char* little_endian_non_premult_rgba_32b_pixels);
+    void set_cursor_pos(double x_pos, double y_pos);
+    const GLFWvidmode* get_possible_video_modes(int& count);
+    //if is_fullscreen is false, we pass NULL as a monitor, as per glfw
+    void set_video_mode(GLFWvidmode* mode, bool is_fullscreen);
+    GLFWmonitor** get_monitors(int& monitor_count);
+    const GLFWvidmode* get_video_mode();
     /** Retina support is disabled by default
      *  @note This method is only available on Mac.
      */
@@ -128,6 +136,11 @@ public:
     id getCocoaWindow() override { return glfwGetCocoaWindow(_mainWindow); }
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
+    /**
+    * Lock or Unlock the system cursor
+    */
+    void setCursorLock(const bool isLocked);
+
 protected:
     GLViewImpl(bool initglfw = true);
     virtual ~GLViewImpl();
@@ -137,6 +150,8 @@ protected:
     bool initWithFullscreen(const std::string& viewname, const GLFWvidmode &videoMode, GLFWmonitor *monitor);
 
     bool initGlew();
+
+    bool _cursorLocked;
 
     void updateFrameSize();
 
