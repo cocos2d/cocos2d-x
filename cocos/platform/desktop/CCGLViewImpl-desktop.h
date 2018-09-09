@@ -111,13 +111,24 @@ public:
      */
     virtual void setCursorVisible(bool isVisible) override;
 
+    /*
+     * The cursor image data is 32-bit, little-endian, non-premultiplied RGBA,
+     * i.e.  eight bits per channel. The pixels are arranged canonically as
+     * sequential rows, starting from the top-left corner.
+     */
     void setCustomCursor(int width, int height, unsigned char* little_endian_non_premult_rgba_32b_pixels);
+    /*
+     * The callback functions receives the cursor position, measured in screen
+     * coordinates but relative to the top-left corner of the window client
+     * area
+     */
     void setCursorPos(double x_pos, double y_pos);
+
     const GLFWvidmode* getPossibleVideoModes(int& count);
-    //if is_fullscreen is false, we pass NULL as a monitor, as per glfw
     void setVideoMode(GLFWvidmode* mode, bool is_fullscreen);
     GLFWmonitor** getMonitors(int& monitor_count);
     const GLFWvidmode* getVideoMode();
+
     /** Retina support is disabled by default
      *  @note This method is only available on Mac.
      */
