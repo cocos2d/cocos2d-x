@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include <condition_variable>
 #include <string>
 #include <thread>
+#include <atomic>
 
 class TestList;
 class TestSuite;
