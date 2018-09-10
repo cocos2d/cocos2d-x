@@ -3253,7 +3253,7 @@ bool js_cocos2dx_ccGLEnableVertexAttribs(JSContext *cx, uint32_t argc, jsval *vp
         ok &= jsval_to_uint32(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
 
-        glEnableVertexAttribs(arg0);
+        glEnableVertexAttribArray(arg0);
         args.rval().setUndefined();
         return true;
     }
