@@ -176,7 +176,8 @@ void CameraRotationTest::update(float dt)
 //
 //------------------------------------------------------------------
 Camera3DTestDemo::Camera3DTestDemo(void)
-: _incRot(nullptr)
+: _cameraType(CameraType::Free)
+, _incRot(nullptr)
 , _decRot(nullptr)
 , _camera(nullptr)
 , _bZoomOut(false)
