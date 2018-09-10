@@ -119,7 +119,11 @@ namespace cocos2d
             void onStop();
             void onRun();
 
+#if defined(__GNUC__)
+            uint64_t genSeq() { return __sync_fetch_and_add(&_eventFnSeq, (uint64_t) 1); }
+#else
             uint64_t genSeq() { return _eventFnSeq.fetch_add(1); }
+#endif
             void handleEvent(const std::string &name, LoopEvent &ev);
             void handleFn(const std::function<void()> &fn);
 
@@ -132,8 +136,12 @@ namespace cocos2d
             ThreadSafeMapArray<std::string, EventCF> _callbackMap;
             ThreadSafeQueue<SeqItem<LoopEvent>> _pendingEvents;
             ThreadSafeQueue<SeqItem<DispatchF>> _pendingFns;
-
+            
+#if defined(__GNUC__)
+            volatile uint64_t _eventFnSeq = 0;
+#else
             std::atomic_uint64_t _eventFnSeq{ 0 };
+#endif 
             bool _forceStoped = false;
             bool _isStopped = false;
             bool _initialized = false;
