@@ -1203,6 +1203,9 @@
 		ED545A771B68A1B600C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A721B68A1AC00C3958E /* libiconv.dylib */; };
 		ED545A781B68A1B800C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A721B68A1AC00C3958E /* libiconv.dylib */; };
 		ED545A791B68A1B900C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A721B68A1AC00C3958E /* libiconv.dylib */; };
+		ED95C36921411F0D00E06058 /* WebSocketDelayTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED95C36721411E4A00E06058 /* WebSocketDelayTest.cpp */; };
+		ED95C36A21411F0F00E06058 /* WebSocketDelayTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED95C36721411E4A00E06058 /* WebSocketDelayTest.cpp */; };
+		ED95C36B21411F1200E06058 /* WebSocketDelayTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED95C36721411E4A00E06058 /* WebSocketDelayTest.cpp */; };
 		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		FA94B0A31B8EF69A0074B261 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A721B68A1AC00C3958E /* libiconv.dylib */; };
 		FA94B0A41B8EF69A0074B261 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A331A534B2B004E4C60 /* Security.framework */; };
@@ -2351,6 +2354,8 @@
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		ED545A6C1B68A18300C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		ED545A721B68A1AC00C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
+		ED95C36721411E4A00E06058 /* WebSocketDelayTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocketDelayTest.cpp; sourceTree = "<group>"; };
+		ED95C36821411E4A00E06058 /* WebSocketDelayTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocketDelayTest.h; sourceTree = "<group>"; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		FA94B0B41B8EF69A0074B261 /* perf test 3.11 iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "perf test 3.11 iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA94B1C71B8EF76D0074B261 /* perf test 3.11 Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "perf test 3.11 Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3562,6 +3567,8 @@
 		1AC35A7D18CECF0B00F37B72 /* NetworkTest */ = {
 			isa = PBXGroup;
 			children = (
+				ED95C36721411E4A00E06058 /* WebSocketDelayTest.cpp */,
+				ED95C36821411E4A00E06058 /* WebSocketDelayTest.h */,
 				1AC35A7E18CECF0B00F37B72 /* HttpClientTest.cpp */,
 				1AC35A7F18CECF0B00F37B72 /* HttpClientTest.h */,
 				1AC35A8018CECF0B00F37B72 /* SocketIOTest.cpp */,
@@ -6384,6 +6391,7 @@
 				1AC35B5B18CECF0C00F37B72 /* CurlTest.cpp in Sources */,
 				1AC35BFF18CECF0C00F37B72 /* CustomTableViewCell.cpp in Sources */,
 				29080DDF191B595E0066F8DF /* UITextTest.cpp in Sources */,
+				ED95C36B21411F1200E06058 /* WebSocketDelayTest.cpp in Sources */,
 				3E9E75D0199324CB005B7047 /* Camera3DTest.cpp in Sources */,
 				29080DC1191B595E0066F8DF /* UIRichTextTest.cpp in Sources */,
 				1AC35B2B18CECF0C00F37B72 /* BaseTest.cpp in Sources */,
@@ -6570,6 +6578,7 @@
 				507B41B71C31BEA60067B53E /* Bug-899.cpp in Sources */,
 				507B41B81C31BEA60067B53E /* NewEventDispatcherTest.cpp in Sources */,
 				507B41BE1C31BEA60067B53E /* Test.cpp in Sources */,
+				ED95C36A21411F0F00E06058 /* WebSocketDelayTest.cpp in Sources */,
 				507B41BF1C31BEA60067B53E /* ParticleTest.cpp in Sources */,
 				507B41C01C31BEA60067B53E /* TouchesTest.cpp in Sources */,
 				507B41C21C31BEA60067B53E /* TransitionsTest.cpp in Sources */,
@@ -6748,6 +6757,7 @@
 				1AC35BF818CECF0C00F37B72 /* SocketIOTest.cpp in Sources */,
 				1AC35C5018CECF0C00F37B72 /* SpriteTest.cpp in Sources */,
 				3E2BDAD019BEA3410055CDCD /* NewAudioEngineTest.cpp in Sources */,
+				ED95C36921411F0D00E06058 /* WebSocketDelayTest.cpp in Sources */,
 				1AC35C0418CECF0C00F37B72 /* FileUtilsTest.cpp in Sources */,
 				1AC35B5C18CECF0C00F37B72 /* CurlTest.cpp in Sources */,
 				1AC35C0018CECF0C00F37B72 /* CustomTableViewCell.cpp in Sources */,

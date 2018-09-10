@@ -24,7 +24,6 @@
 
 #include "2d/CCDrawNode.h"
 #include "base/CCEventType.h"
-#include "base/ccUtils.h"
 #include "base/CCConfiguration.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgramState.h"
@@ -123,6 +122,15 @@ DrawNode::DrawNode(GLfloat lineWidth)
 , _defaultLineWidth(lineWidth)
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    // Need to listen the event only when not use batchnode, because it will use VBO
+    auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
+        /** listen the event that renderer was recreated on Android/WP8 */
+        this->setupBuffer();
+    });
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+#endif
 }
 
 DrawNode::~DrawNode()
@@ -199,16 +207,8 @@ void DrawNode::ensureCapacityGLLine(int count)
     }
 }
 
-bool DrawNode::init()
+void DrawNode::setupBuffer()
 {
-    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR));
-    
-    ensureCapacity(512);
-    ensureCapacityGLPoint(64);
-    ensureCapacityGLLine(256);
-    
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         glGenVertexArrays(1, &_vao);
@@ -225,7 +225,7 @@ bool DrawNode::init()
         // texcoord
         glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
-        
+
         glGenVertexArrays(1, &_vaoGLLine);
         glBindVertexArray(_vaoGLLine);
         glGenBuffers(1, &_vboGLLine);
@@ -240,7 +240,7 @@ bool DrawNode::init()
         // texcoord
         glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
-        
+
         glGenVertexArrays(1, &_vaoGLPoint);
         glBindVertexArray(_vaoGLPoint);
         glGenBuffers(1, &_vboGLPoint);
@@ -255,44 +255,46 @@ bool DrawNode::init()
         // Texture coord as pointsize
         glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
-        
+
         glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-        
+
     }
     else
     {
         glGenBuffers(1, &_vbo);
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
         glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)* _bufferCapacity, _buffer, GL_STREAM_DRAW);
-        
+
         glGenBuffers(1, &_vboGLLine);
         glBindBuffer(GL_ARRAY_BUFFER, _vboGLLine);
         glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLLine, _bufferGLLine, GL_STREAM_DRAW);
-        
+
         glGenBuffers(1, &_vboGLPoint);
         glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
         glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLPoint, _bufferGLPoint, GL_STREAM_DRAW);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
-    
+
     CHECK_GL_ERROR_DEBUG();
+}
+
+bool DrawNode::init()
+{
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR));
+    
+    ensureCapacity(512);
+    ensureCapacityGLPoint(64);
+    ensureCapacityGLLine(256);
+    
+    setupBuffer();
     
     _dirty = true;
     _dirtyGLLine = true;
-    _dirtyGLPoint = true;
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    // Need to listen the event only when not use batchnode, because it will use VBO
-    auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
-   /** listen the event that renderer was recreated on Android/WP8 */
-        this->init();
-    });
-
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-#endif
-    
+    _dirtyGLPoint = true; 
     return true;
 }
 
@@ -325,7 +327,7 @@ void DrawNode::onDraw(const Mat4 &transform, uint32_t /*flags*/)
     getGLProgramState()->apply(transform);
     auto glProgram = this->getGLProgram();
     glProgram->setUniformLocationWith1f(glProgram->getUniformLocation("u_alpha"), _displayedOpacity / 255.0);
-    utils::setBlending(_blendFunc.src, _blendFunc.dst);
+    glBlendFunc(_blendFunc.src, _blendFunc.dst);
 
     if (_dirty)
     {
@@ -372,7 +374,7 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t /*flags*/)
     glProgram->setUniformsForBuiltins(transform);
     glProgram->setUniformLocationWith1f(glProgram->getUniformLocation("u_alpha"), _displayedOpacity / 255.0);
 
-    utils::setBlending(_blendFunc.src, _blendFunc.dst);
+    glBlendFunc(_blendFunc.src, _blendFunc.dst);
 
     if (_dirtyGLLine)
     {
@@ -419,7 +421,7 @@ void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t /*flags*/)
     glProgram->setUniformsForBuiltins(transform);
     glProgram->setUniformLocationWith1f(glProgram->getUniformLocation("u_alpha"), _displayedOpacity / 255.0);
 
-    utils::setBlending(_blendFunc.src, _blendFunc.dst);
+    glBlendFunc(_blendFunc.src, _blendFunc.dst);
 
     if (_dirtyGLPoint)
     {

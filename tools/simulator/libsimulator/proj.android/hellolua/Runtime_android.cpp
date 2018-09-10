@@ -30,7 +30,7 @@
 using namespace std;
 using namespace cocos2d;
 
-static std::string className = "org/cocos2dx/lua/AppActivity";
+static std::string className = "org.cocos2dx.lua.AppActivity";
 
 void setActivityPathForAndroid(const std::string& path)
 {

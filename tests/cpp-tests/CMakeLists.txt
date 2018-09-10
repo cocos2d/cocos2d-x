@@ -146,6 +146,7 @@ list(APPEND GAME_HEADER
      Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.h
      Classes/ExtensionsTest/TableViewTest/TableViewTestScene.h
      Classes/ExtensionsTest/NetworkTest/WebSocketTest.h
+     Classes/ExtensionsTest/NetworkTest/WebSocketDelayTest.h
      Classes/ExtensionsTest/NetworkTest/SocketIOTest.h
      Classes/ExtensionsTest/NetworkTest/HttpClientTest.h
      Classes/Sprite3DTest/Sprite3DTest.h
@@ -254,6 +255,7 @@ list(APPEND GAME_SOURCE
      Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
      Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
      Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
+     Classes/ExtensionsTest/NetworkTest/WebSocketDelayTest.cpp
      Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp
      Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp
      Classes/FileUtilsTest/FileUtilsTest.cpp

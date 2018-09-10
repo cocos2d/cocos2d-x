@@ -47,7 +47,7 @@ extern "C" size_t __ctype_get_mb_cur_max(void) {
 }
 #endif
 
-static const std::string helperClassName = "org/cocos2dx/lib/Cocos2dxHelper";
+static const std::string helperClassName = "org.cocos2dx.lib.Cocos2dxHelper";
 
 NS_CC_BEGIN
 

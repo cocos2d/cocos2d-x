@@ -6,6 +6,7 @@
          ${COCOS2DX_ROOT_PATH}/cocos/platform
          ${COCOS2DX_ROOT_PATH}/extensions
          ${COCOS2DX_ROOT_PATH}/external
+         ${COCOS2DX_ROOT_PATH}/external/uv/include
  )
 
  # desktop platforms

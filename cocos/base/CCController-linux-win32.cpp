@@ -4424,6 +4424,38 @@ class CC_DLL ControllerImpl
 
 
 			// Prepare variables:
+			deviceName = "Xbox 360 Controller";
+			buttonInputMap.clear();
+			axisInputMap.clear();
+
+
+			// Map the controller inputs to Controller::Key codes
+			buttonInputMap[0] = Controller::Key::BUTTON_A;
+			buttonInputMap[2] = Controller::Key::BUTTON_X;
+			buttonInputMap[6] = Controller::Key::BUTTON_SELECT;
+			buttonInputMap[7] = Controller::Key::BUTTON_START;
+			buttonInputMap[13] = Controller::Key::BUTTON_DPAD_UP;
+			buttonInputMap[14] = Controller::Key::BUTTON_DPAD_DOWN;
+			buttonInputMap[11] = Controller::Key::BUTTON_DPAD_LEFT;
+			buttonInputMap[12] = Controller::Key::BUTTON_DPAD_RIGHT;
+			buttonInputMap[1] = Controller::Key::BUTTON_B;
+			buttonInputMap[3] = Controller::Key::BUTTON_Y;
+			buttonInputMap[4] = Controller::Key::BUTTON_LEFT_SHOULDER;
+			buttonInputMap[5] = Controller::Key::BUTTON_RIGHT_SHOULDER;
+			buttonInputMap[9] = Controller::Key::BUTTON_LEFT_THUMBSTICK;
+			buttonInputMap[10] = Controller::Key::BUTTON_RIGHT_THUMBSTICK;
+			axisInputMap[4] = Controller::Key::AXIS_LEFT_TRIGGER;
+			axisInputMap[5] = Controller::Key::AXIS_RIGHT_TRIGGER;
+			axisInputMap[0] = Controller::Key::JOYSTICK_LEFT_X;
+			axisInputMap[1] = Controller::Key::JOYSTICK_LEFT_Y;
+			axisInputMap[2] = Controller::Key::JOYSTICK_RIGHT_Y;
+			axisInputMap[3] = Controller::Key::JOYSTICK_RIGHT_X;
+
+
+			// Add the controller profile to the map
+			s_controllerProfiles.insert(std::make_pair(deviceName, std::make_pair(buttonInputMap, axisInputMap)));
+
+			// Prepare variables:
 			deviceName = "SL-6566";
 			buttonInputMap.clear();
 			axisInputMap.clear();
