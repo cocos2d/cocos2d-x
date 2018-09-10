@@ -396,14 +396,13 @@ namespace cocos2d
             else
             {
                 std::condition_variable cv;
-                std::mutex mtx;
-                std::unique_lock<std::mutex> lock(mtx);
-                _pendingFns.pushBack(SeqItem<DispatchF>(genSeq(), [&cv, &mtx, &fn]() {
-                    std::unique_lock<std::mutex> lock2(mtx);
+                _pendingFns.pushBack(SeqItem<DispatchF>(genSeq(), [&cv, &fn]() {
                     fn();
                     cv.notify_one();
                 }));
                 notify();
+                std::mutex mtx;
+                std::unique_lock<std::mutex> lock(mtx);
                 if (timeoutMS > 0)
                 {
                     cv.wait_for(lock, milliseconds(timeoutMS));
