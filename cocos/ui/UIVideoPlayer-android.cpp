@@ -38,7 +38,7 @@
 
 //-----------------------------------------------------------------------------------------------------------
 
-static const std::string videoHelperClassName = "org/cocos2dx/lib/Cocos2dxVideoHelper";
+static const std::string videoHelperClassName = "org.cocos2dx.lib.Cocos2dxVideoHelper";
 
 USING_NS_CC;
 

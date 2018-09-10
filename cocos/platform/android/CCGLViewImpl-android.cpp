@@ -111,7 +111,7 @@ bool GLViewImpl::isOpenGLReady()
 
 void GLViewImpl::end()
 {
-    JniHelper::callStaticVoidMethod("org/cocos2dx/lib/Cocos2dxHelper", "terminateProcess");
+    JniHelper::callStaticVoidMethod("org.cocos2dx.lib.Cocos2dxHelper", "terminateProcess");
 }
 
 void GLViewImpl::swapBuffers()
@@ -121,9 +121,9 @@ void GLViewImpl::swapBuffers()
 void GLViewImpl::setIMEKeyboardState(bool bOpen)
 {
     if (bOpen) {
-        JniHelper::callStaticVoidMethod("org/cocos2dx/lib/Cocos2dxGLSurfaceView", "openIMEKeyboard");
+        JniHelper::callStaticVoidMethod("org.cocos2dx.lib.Cocos2dxGLSurfaceView", "openIMEKeyboard");
     } else {
-        JniHelper::callStaticVoidMethod("org/cocos2dx/lib/Cocos2dxGLSurfaceView", "closeIMEKeyboard");
+        JniHelper::callStaticVoidMethod("org.cocos2dx.lib.Cocos2dxGLSurfaceView", "closeIMEKeyboard");
     }
 }
 
