@@ -40,6 +40,7 @@ THE SOFTWARE.
 #include "base/CCAsyncTaskPool.h"
 #include "base/CCScheduler.h"
 #include "base/CCDirector.h"
+#include "base/CCAtomic.h"
 
 NS_CC_BEGIN
 
@@ -861,43 +862,7 @@ protected:
      */
     FileUtils();
 
-    template<typename T> 
-    class Guard {
-    public:
-        Guard(std::shared_ptr<T> d, std::shared_ptr<std::recursive_mutex> mtx):_mtx(mtx), _data(d) { _mtx->lock(); }
-        Guard(const Guard &o) :_mtx(o._mtx), _data(o._data) { _mtx->lock(); }
-        Guard(Guard &&o) :_mtx(o._mtx), _data(o._data) { o._data = nullptr;  _mtx->lock(); }
-        virtual ~Guard() { _mtx->unlock(); }
-        operator bool() { return _data != nullptr; }
-        T * operator ->() { return _data.get(); }
-        const T * operator ->() const { return _data.get(); }
-        T& operator *() { return *_data.get(); }
-        const T& operator *() const { return *_data.get(); }
-    private:
-        std::shared_ptr<std::recursive_mutex> _mtx;
-        std::shared_ptr<T> _data = nullptr;
-    };
 
-    template<typename T>
-    class Atomic {
-    public:
-        Atomic(T *data){
-            _data = std::shared_ptr<T>(data);
-            _mtx = std::make_shared<std::recursive_mutex>();
-        }
-        virtual ~Atomic() {}
-        Guard<T> load() {
-            std::lock_guard<std::recursive_mutex> guard(*_mtx);
-            return Guard<T>(_data, _mtx);
-        }
-        const Guard<T> load() const{
-            std::lock_guard<std::recursive_mutex> guard(*_mtx);
-            return Guard<T>(_data, _mtx);
-        }
-    private:
-        std::shared_ptr<T> _data = nullptr;
-        std::shared_ptr<std::recursive_mutex> _mtx = nullptr;
-    };
 
     /**
      *  Initializes the instance of FileUtils. It will set _searchPathArray and _searchResolutionsOrderArray to default values.
@@ -958,18 +923,18 @@ protected:
      *  The vector contains resolution folders.
      *  The lower index of the element in this vector, the higher priority for this resolution directory.
      */
-    Atomic<std::vector<std::string> > _searchResolutionsOrderArray;
+    cocos2d::atomic::Atomic<std::vector<std::string> > _searchResolutionsOrderArray;
 
     /**
      * The vector contains search paths.
      * The lower index of the element in this vector, the higher priority for this search path.
      */
-    Atomic<std::vector<std::string> > _searchPathArray;
+    cocos2d::atomic::Atomic<std::vector<std::string> > _searchPathArray;
 
     /**
      * The search paths which was set by 'setSearchPaths' / 'addSearchPath'.
      */
-    Atomic<std::vector<std::string> > _originalSearchPaths;
+    cocos2d::atomic::Atomic<std::vector<std::string> > _originalSearchPaths;
 
     /**
      *  The default root path of resources.
@@ -978,18 +943,18 @@ protected:
      *  On Android, the default root path of resources will be assigned with "assets/" in FileUtilsAndroid::init().
      *  Similarly on Blackberry, we assign "app/native/Resources/" to this variable in FileUtilsBlackberry::init().
      */
-    Atomic<std::string> _defaultResRootPath;
+    cocos2d::atomic::Atomic<std::string> _defaultResRootPath;
 
     /**
      *  The full path cache. When a file is found, it will be added into this cache.
      *  This variable is used for improving the performance of file search.
      */
-    mutable Atomic<std::unordered_map<std::string, std::string> > _fullPathCache;
+    mutable cocos2d::atomic::Atomic<std::unordered_map<std::string, std::string> > _fullPathCache;
 
     /**
      * Writable path.
      */
-    Atomic<std::string> _writablePath;
+    cocos2d::atomic::Atomic<std::string> _writablePath;
 
     /**
      *  The singleton pointer of FileUtils.
