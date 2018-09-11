@@ -41,7 +41,6 @@ THE SOFTWARE.
 #include "2d/CCCamera.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramCache.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "base/CCDirector.h"
@@ -187,10 +186,11 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 
 void TMXLayer::onDraw(Primitive *primitive)
 {
-    GL::bindTexture2D(_texture->getName());
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _texture->getName());
     getGLProgramState()->apply(_modelViewTransform);
     
-    GL::bindVAO(0);
+    glBindVertexArray(0);
     primitive->draw();
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -292,7 +292,7 @@ void TMXLayer::updateTiles(const Rect& culledRect)
 
 void TMXLayer::updateVertexBuffer()
 {
-    GL::bindVAO(0);
+    glBindVertexArray(0);
     if(nullptr == _vData)
     {
         _vertexBuffer = VertexBuffer::create(sizeof(V3F_C4B_T2F), (int)_totalQuads.size() * 4);

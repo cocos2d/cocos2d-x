@@ -25,10 +25,10 @@
 
 
 #include "renderer/CCBatchCommand.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCGLProgram.h"
+#include "base/ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -70,8 +70,9 @@ void BatchCommand::execute()
     // Set material
     _shader->use();
     _shader->setUniformsForBuiltins(_mv);
-    GL::bindTexture2D(_textureID);
-    GL::blendFunc(_blendType.src, _blendType.dst);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _textureID);
+    utils::setBlending(_blendType.src, _blendType.dst);
 
     // Draw
     _textureAtlas->drawQuads();

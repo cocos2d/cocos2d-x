@@ -670,9 +670,6 @@
     <ClCompile Include="..\renderer\CCGLProgramStateCache.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="..\renderer\ccGLStateCache.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
     <ClCompile Include="..\renderer\CCGroupCommand.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
@@ -2416,9 +2413,6 @@
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCGLProgramStateCache.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\ccGLStateCache.h">
       <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCGroupCommand.h">

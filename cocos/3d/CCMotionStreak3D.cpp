@@ -28,8 +28,8 @@ THE SOFTWARE.
 #include "3d/CCMotionStreak3D.h"
 #include "math/CCVertex.h"
 #include "base/CCDirector.h"
+#include "base/ccUtils.h"
 #include "renderer/CCTextureCache.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgramState.h"
@@ -387,10 +387,13 @@ void MotionStreak3D::onDraw(const Mat4 &transform, uint32_t /*flags*/)
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 
-    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
-    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+    utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
-    GL::bindTexture2D( _texture->getName() );
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _texture->getName());
     
     glDisable(GL_CULL_FACE);
     RenderState::StateBlock::_defaultState->setCullFace(false);

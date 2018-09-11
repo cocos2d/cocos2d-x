@@ -27,7 +27,6 @@
 #include "base/CCStencilStateManager.h"
 #include "base/CCDirector.h"
 #include "renderer/CCGLProgramCache.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
@@ -89,7 +88,7 @@ void StencilStateManager::drawFullScreenQuadClearStencil()
     glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     

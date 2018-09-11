@@ -29,7 +29,6 @@
 #include "2d/CCClippingNode.h"
 #include "2d/CCDrawingPrimitives.h"
 #include "renderer/CCGLProgramCache.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
 #include "base/CCDirector.h"
