@@ -528,10 +528,10 @@ static tinyxml2::XMLElement* generateElementForArray(const ValueVector& array, t
 #else
 
 /* The subclass FileUtilsApple should override these two method. */
-ValueMap FileUtils::getValueMapFromFile(const std::string& /*filename*/) {return ValueMap();}
-ValueMap FileUtils::getValueMapFromData(const char* /*filedata*/, int /*filesize*/) {return ValueMap();}
-ValueVector FileUtils::getValueVectorFromFile(const std::string& /*filename*/) {return ValueVector();}
-bool FileUtils::writeToFile(const ValueMap& /*dict*/, const std::string &/*fullPath*/) {return false;}
+ValueMap FileUtils::getValueMapFromFile(const std::string& /*filename*/) const {return ValueMap();}
+ValueMap FileUtils::getValueMapFromData(const char* /*filedata*/, int /*filesize*/) const {return ValueMap();}
+ValueVector FileUtils::getValueVectorFromFile(const std::string& /*filename*/) const {return ValueVector();}
+bool FileUtils::writeToFile(const ValueMap& /*dict*/, const std::string &/*fullPath*/) const {return false;}
 
 #endif /* (CC_TARGET_PLATFORM != CC_PLATFORM_IOS) && (CC_TARGET_PLATFORM != CC_PLATFORM_MAC) */
 
@@ -1262,7 +1262,7 @@ bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
     return false;
 }
 
-bool FileUtils::createDirectory(const std::string& path)
+bool FileUtils::createDirectory(const std::string& path) const
 {
     CCASSERT(!path.empty(), "Invalid path");
 
@@ -1340,7 +1340,7 @@ namespace
 #endif
 }
 
-bool FileUtils::removeDirectory(const std::string& path)
+bool FileUtils::removeDirectory(const std::string& path) const
 {
 #if !defined(CC_TARGET_OS_TVOS)
 
@@ -1364,7 +1364,7 @@ bool FileUtils::removeDirectory(const std::string& path)
 #endif // !defined(CC_TARGET_OS_TVOS)
 }
 
-bool FileUtils::removeFile(const std::string &path)
+bool FileUtils::removeFile(const std::string &path) const
 {
     if (remove(path.c_str())) {
         return false;
@@ -1373,7 +1373,7 @@ bool FileUtils::removeFile(const std::string &path)
     }
 }
 
-bool FileUtils::renameFile(const std::string &oldfullpath, const std::string &newfullpath)
+bool FileUtils::renameFile(const std::string &oldfullpath, const std::string &newfullpath) const
 {
     CCASSERT(!oldfullpath.empty(), "Invalid path");
     CCASSERT(!newfullpath.empty(), "Invalid path");
@@ -1388,7 +1388,7 @@ bool FileUtils::renameFile(const std::string &oldfullpath, const std::string &ne
     return true;
 }
 
-bool FileUtils::renameFile(const std::string &path, const std::string &oldname, const std::string &name)
+bool FileUtils::renameFile(const std::string &path, const std::string &oldname, const std::string &name) const
 {
     CCASSERT(!path.empty(), "Invalid path");
     std::string oldPath = path + oldname;
@@ -1402,7 +1402,7 @@ std::string FileUtils::getSuitableFOpen(const std::string& filenameUtf8) const
     return filenameUtf8;
 }
 
-long FileUtils::getFileSize(const std::string &filepath)
+long FileUtils::getFileSize(const std::string &filepath) const
 {
     CCASSERT(!filepath.empty(), "Invalid path");
 
@@ -1546,11 +1546,11 @@ std::string FileUtils::getFileExtension(const std::string& filePath) const
     return fileExtension;
 }
 
-void FileUtils::valueMapCompact(ValueMap& /*valueMap*/)
+void FileUtils::valueMapCompact(ValueMap& /*valueMap*/) const
 {
 }
 
-void FileUtils::valueVectorCompact(ValueVector& /*valueVector*/)
+void FileUtils::valueVectorCompact(ValueVector& /*valueVector*/) const
 {
 }
 

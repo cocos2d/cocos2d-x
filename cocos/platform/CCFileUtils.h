@@ -959,8 +959,8 @@ protected:
     /**
      *  Remove null value key (for iOS)
      */
-    virtual void valueMapCompact(ValueMap& valueMap);
-    virtual void valueVectorCompact(ValueVector& valueVector);
+    virtual void valueMapCompact(ValueMap& valueMap) const;
+    virtual void valueVectorCompact(ValueVector& valueVector) const;
 
     template<typename T, typename R, typename ...ARGS>
     static void performOperationOffthread(T&& action, R&& callback, ARGS&& ...args)
