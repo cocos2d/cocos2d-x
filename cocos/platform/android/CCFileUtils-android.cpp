@@ -280,7 +280,7 @@ long FileUtilsAndroid::getFileSize(const std::string& filepath) const
     return size;
 }
 
-FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer)
+FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer) const
 {
     EngineDataManager::onBeforeReadFile();
 
