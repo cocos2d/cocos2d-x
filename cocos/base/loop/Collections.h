@@ -70,7 +70,7 @@ namespace cocos2d
             std::list<T> & getQueue() { return _data; }
 
         private:
-            std::recursive_mutex _mtx;
+            mutable std::recursive_mutex _mtx;
             std::list<T> _data;
         };
 
