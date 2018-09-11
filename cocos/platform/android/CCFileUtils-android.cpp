@@ -330,6 +330,24 @@ std::vector<std::string> FileUtilsAndroid::listFiles(const std::string& dirPath)
     AAssetDir_close(dir);
     return fileList;
 }
+<<<<<<< HEAD
+=======
+
+bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) const
+{
+    bool isDir = false;
+    if (nullptr == assetmanager) {
+        LOGD("... FileUtilsAndroid::assetmanager is nullptr");
+        return isDir;
+    }
+    auto *dir = AAssetManager_openDir(assetmanager, dirPath.c_string());
+    if(nullptr == dir) return isDir;
+
+    if(nullptr != AAssetDir_getNextFileName(dir)) isDir = true;
+    AAssetDir_close(dir);
+    return isDir;
+}
+>>>>>>> check isdirectory and append "/"
     
 
 FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer)
