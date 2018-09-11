@@ -30,6 +30,8 @@ THE SOFTWARE.
 #include <vector>
 #include <unordered_map>
 #include <type_traits>
+#include <mutex>
+#include <memory>
 
 #include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
@@ -421,7 +423,7 @@ public:
      *  @since v2.1
      *  @lua NA
      */
-    virtual const std::vector<std::string>& getSearchResolutionsOrder() const;
+    virtual const std::vector<std::string> getSearchResolutionsOrder() const;
 
     /**
      *  Sets the array of search paths.
@@ -447,7 +449,7 @@ public:
     /**
      * Get default resource root path.
      */
-    const std::string& getDefaultResourceRootPath() const;
+    const std::string getDefaultResourceRootPath() const;
 
     /**
      * Set default resource root path.
@@ -471,13 +473,13 @@ public:
      *  @see fullPathForFilename(const char*).
      *  @lua NA
      */
-    virtual const std::vector<std::string>& getSearchPaths() const;
+    virtual const std::vector<std::string> getSearchPaths() const;
 
     /**
      *  Gets the original search path array set by 'setSearchPaths' or 'addSearchPath'.
      *  @return The array of the original search paths
      */
-    virtual const std::vector<std::string>& getOriginalSearchPaths() const;
+    virtual const std::vector<std::string> getOriginalSearchPaths() const;
 
     /**
      *  Gets the writable path.
@@ -842,7 +844,7 @@ public:
     virtual void listFilesRecursivelyAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const;
 
     /** Returns the full path cache. */
-    const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
+    const std::unordered_map<std::string, std::string> getFullPathCache() const { return *_fullPathCache.load(); }
 
     /**
      *  Gets the new filename from the filename lookup dictionary.
@@ -858,6 +860,44 @@ protected:
      *  The default constructor.
      */
     FileUtils();
+
+    template<typename T> 
+    class Guard {
+    public:
+        Guard(std::shared_ptr<T> d, std::shared_ptr<std::recursive_mutex> mtx):_mtx(mtx), _data(d) { _mtx->lock(); }
+        Guard(const Guard &o) :_mtx(o._mtx), _data(o._data) { _mtx->lock(); }
+        Guard(Guard &&o) :_mtx(o._mtx), _data(o._data) { o._data = nullptr;  _mtx->lock(); }
+        virtual ~Guard() { _mtx->unlock(); }
+        operator bool() { return _data != nullptr; }
+        T * operator ->() { return _data.get(); }
+        const T * operator ->() const { return _data.get(); }
+        T& operator *() { return *_data.get(); }
+        const T& operator *() const { return *_data.get(); }
+    private:
+        std::shared_ptr<std::recursive_mutex> _mtx;
+        std::shared_ptr<T> _data = nullptr;
+    };
+
+    template<typename T>
+    class Atomic {
+    public:
+        Atomic(T *data){
+            _data = std::shared_ptr<T>(data);
+            _mtx = std::make_shared<std::recursive_mutex>();
+        }
+        virtual ~Atomic() {}
+        Guard<T> load() {
+            std::lock_guard<std::recursive_mutex> guard(*_mtx);
+            return Guard<T>(_data, _mtx);
+        }
+        const Guard<T> load() const{
+            std::lock_guard<std::recursive_mutex> guard(*_mtx);
+            return Guard<T>(_data, _mtx);
+        }
+    private:
+        std::shared_ptr<T> _data = nullptr;
+        std::shared_ptr<std::recursive_mutex> _mtx = nullptr;
+    };
 
     /**
      *  Initializes the instance of FileUtils. It will set _searchPathArray and _searchResolutionsOrderArray to default values.
@@ -918,18 +958,18 @@ protected:
      *  The vector contains resolution folders.
      *  The lower index of the element in this vector, the higher priority for this resolution directory.
      */
-    std::vector<std::string> _searchResolutionsOrderArray;
+    Atomic<std::vector<std::string> > _searchResolutionsOrderArray;
 
     /**
      * The vector contains search paths.
      * The lower index of the element in this vector, the higher priority for this search path.
      */
-    std::vector<std::string> _searchPathArray;
+    Atomic<std::vector<std::string> > _searchPathArray;
 
     /**
      * The search paths which was set by 'setSearchPaths' / 'addSearchPath'.
      */
-    std::vector<std::string> _originalSearchPaths;
+    Atomic<std::vector<std::string> > _originalSearchPaths;
 
     /**
      *  The default root path of resources.
@@ -938,18 +978,18 @@ protected:
      *  On Android, the default root path of resources will be assigned with "assets/" in FileUtilsAndroid::init().
      *  Similarly on Blackberry, we assign "app/native/Resources/" to this variable in FileUtilsBlackberry::init().
      */
-    std::string _defaultResRootPath;
+    Atomic<std::string> _defaultResRootPath;
 
     /**
      *  The full path cache. When a file is found, it will be added into this cache.
      *  This variable is used for improving the performance of file search.
      */
-    mutable std::unordered_map<std::string, std::string> _fullPathCache;
+    mutable Atomic<std::unordered_map<std::string, std::string> > _fullPathCache;
 
     /**
      * Writable path.
      */
-    std::string _writablePath;
+    Atomic<std::string> _writablePath;
 
     /**
      *  The singleton pointer of FileUtils.

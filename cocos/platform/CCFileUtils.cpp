@@ -552,7 +552,12 @@ void FileUtils::setDelegate(FileUtils *delegate)
 }
 
 FileUtils::FileUtils()
-    : _writablePath("")
+    : _writablePath(new std::string(""))
+    , _searchResolutionsOrderArray(new std::vector<std::string>())
+    , _searchPathArray(new std::vector<std::string>())
+    , _originalSearchPaths(new std::vector<std::string>())
+    , _defaultResRootPath(new std::string(""))
+    , _fullPathCache(new std::unordered_map<std::string, std::string>())
 {
 }
 
@@ -612,14 +617,16 @@ void FileUtils::writeDataToFile(Data data, const std::string& fullPath, std::fun
 
 bool FileUtils::init()
 {
-    _searchPathArray.push_back(_defaultResRootPath);
-    _searchResolutionsOrderArray.push_back("");
+    auto defautlRootPath = _defaultResRootPath.load();
+    auto searchPathArray = _searchPathArray.load();
+    searchPathArray->push_back(*defautlRootPath);
+    _searchResolutionsOrderArray.load()->push_back("");
     return true;
 }
 
 void FileUtils::purgeCachedEntries()
 {
-    _fullPathCache.clear();
+    _fullPathCache.load()->clear();
 }
 
 std::string FileUtils::getStringFromFile(const std::string& filename) const
@@ -817,10 +824,14 @@ std::string FileUtils::fullPathForFilename(const std::string &filename) const
     {
         return filename;
     }
+    //dead lock check
+    auto fullPathCache = _fullPathCache.load();
+    auto searchPathArray = _searchPathArray.load();
+    auto searchResolutionsOrderArray = _searchResolutionsOrderArray.load();
 
     // Already Cached ?
-    auto cacheIter = _fullPathCache.find(filename);
-    if(cacheIter != _fullPathCache.end())
+    auto cacheIter = fullPathCache->find(filename);
+    if(cacheIter != fullPathCache->end())
     {
         return cacheIter->second;
     }
@@ -830,16 +841,17 @@ std::string FileUtils::fullPathForFilename(const std::string &filename) const
 
     std::string fullpath;
 
-    for (const auto& searchIt : _searchPathArray)
+ 
+    for (const auto& searchIt : *searchPathArray)
     {
-        for (const auto& resolutionIt : _searchResolutionsOrderArray)
+        for (const auto& resolutionIt : *searchResolutionsOrderArray)
         {
             fullpath = this->getPathForFilename(newFilename, resolutionIt, searchIt);
 
             if (!fullpath.empty())
             {
                 // Using the filename passed in as key.
-                _fullPathCache.emplace(filename, fullpath);
+                fullPathCache->emplace(filename, fullpath);
                 return fullpath;
             }
 
@@ -861,15 +873,18 @@ std::string FileUtils::fullPathFromRelativeFile(const std::string &filename, con
 
 void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
 {
-    if (_searchResolutionsOrderArray == searchResolutionsOrder)
+    auto fullPathCache = _fullPathCache.load();
+    auto searchResolutionsOrderArray = _searchResolutionsOrderArray.load();
+
+    if (*searchResolutionsOrderArray == searchResolutionsOrder)
     {
         return;
     }
 
     bool existDefault = false;
 
-    _fullPathCache.clear();
-    _searchResolutionsOrderArray.clear();
+    fullPathCache->clear();
+    searchResolutionsOrderArray->clear();
     for(const auto& iter : searchResolutionsOrder)
     {
         std::string resolutionDirectory = iter;
@@ -883,110 +898,124 @@ void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& search
             resolutionDirectory += "/";
         }
 
-        _searchResolutionsOrderArray.push_back(resolutionDirectory);
+        searchResolutionsOrderArray->push_back(resolutionDirectory);
     }
 
     if (!existDefault)
     {
-        _searchResolutionsOrderArray.push_back("");
+        searchResolutionsOrderArray->push_back("");
     }
 }
 
 void FileUtils::addSearchResolutionsOrder(const std::string &order,const bool front)
 {
+    auto searchResolutionsOrderArray = _searchResolutionsOrderArray.load();
     std::string resOrder = order;
     if (!resOrder.empty() && resOrder[resOrder.length()-1] != '/')
         resOrder.append("/");
 
     if (front) {
-        _searchResolutionsOrderArray.insert(_searchResolutionsOrderArray.begin(), resOrder);
+        searchResolutionsOrderArray->insert(searchResolutionsOrderArray->begin(), resOrder);
     } else {
-        _searchResolutionsOrderArray.push_back(resOrder);
+        searchResolutionsOrderArray->push_back(resOrder);
     }
 }
 
-const std::vector<std::string>& FileUtils::getSearchResolutionsOrder() const
+const std::vector<std::string> FileUtils::getSearchResolutionsOrder() const
 {
-    return _searchResolutionsOrderArray;
+    return *_searchResolutionsOrderArray.load();
 }
 
-const std::vector<std::string>& FileUtils::getSearchPaths() const
+const std::vector<std::string> FileUtils::getSearchPaths() const
 {
-    return _searchPathArray;
+    return *_searchPathArray.load();
 }
 
-const std::vector<std::string>& FileUtils::getOriginalSearchPaths() const
+const std::vector<std::string> FileUtils::getOriginalSearchPaths() const
 {
-    return _originalSearchPaths;
+    return *_originalSearchPaths.load();
 }
 
 void FileUtils::setWritablePath(const std::string& writablePath)
 {
-    _writablePath = writablePath;
+    auto path = _writablePath.load();
+    *path = writablePath;
 }
 
-const std::string& FileUtils::getDefaultResourceRootPath() const
+const std::string FileUtils::getDefaultResourceRootPath() const
 {
-    return _defaultResRootPath;
+    return *_defaultResRootPath.load();
 }
 
 void FileUtils::setDefaultResourceRootPath(const std::string& path)
 {
-    if (_defaultResRootPath != path)
+    auto defaultResRootPath = _defaultResRootPath.load();
+    auto fullPathCache = _fullPathCache.load();
+    auto originalSearchPaths = _originalSearchPaths.load();
+    if (*defaultResRootPath != path)
     {
-        _fullPathCache.clear();
-        _defaultResRootPath = path;
-        if (!_defaultResRootPath.empty() && _defaultResRootPath[_defaultResRootPath.length()-1] != '/')
+        fullPathCache->clear();
+        *defaultResRootPath = path;
+        if (!defaultResRootPath->empty() && (*defaultResRootPath)[defaultResRootPath->length()-1] != '/')
         {
-            _defaultResRootPath += '/';
+            *defaultResRootPath += '/';
         }
 
         // Updates search paths
-        setSearchPaths(_originalSearchPaths);
+        setSearchPaths(*originalSearchPaths);
     }
 }
 
 void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 {
     bool existDefaultRootPath = false;
-    _originalSearchPaths = searchPaths;
 
-    _fullPathCache.clear();
-    _searchPathArray.clear();
+    auto defaultResRootPath = _defaultResRootPath.load();
+    auto fullPathCache = _fullPathCache.load();
+    auto originalSearchPaths = _originalSearchPaths.load();    
+    auto searchPathArray = _searchPathArray.load();
 
-    for (const auto& path : _originalSearchPaths)
+    *originalSearchPaths = searchPaths;
+
+    fullPathCache->clear();
+    searchPathArray->clear();
+
+    for (const auto& path : *originalSearchPaths)
     {
         std::string prefix;
         std::string fullPath;
 
         if (!isAbsolutePath(path))
         { // Not an absolute path
-            prefix = _defaultResRootPath;
+            prefix = *defaultResRootPath;
         }
         fullPath = prefix + path;
         if (!path.empty() && path[path.length()-1] != '/')
         {
             fullPath += "/";
         }
-        if (!existDefaultRootPath && path == _defaultResRootPath)
+        if (!existDefaultRootPath && path == *defaultResRootPath)
         {
             existDefaultRootPath = true;
         }
-        _searchPathArray.push_back(fullPath);
+        searchPathArray->push_back(fullPath);
     }
 
     if (!existDefaultRootPath)
     {
         //CCLOG("Default root path doesn't exist, adding it.");
-        _searchPathArray.push_back(_defaultResRootPath);
+        searchPathArray->push_back(*defaultResRootPath);
     }
 }
 
 void FileUtils::addSearchPath(const std::string &searchpath,const bool front)
 {
+    auto defaultResRootPath = _defaultResRootPath.load();
+    auto originalSearchPaths = _originalSearchPaths.load();
+    auto searchPathArray = _searchPathArray.load();
     std::string prefix;
     if (!isAbsolutePath(searchpath))
-        prefix = _defaultResRootPath;
+        prefix = *defaultResRootPath;
 
     std::string path = prefix + searchpath;
     if (!path.empty() && path[path.length()-1] != '/')
@@ -995,17 +1024,18 @@ void FileUtils::addSearchPath(const std::string &searchpath,const bool front)
     }
 
     if (front) {
-        _originalSearchPaths.insert(_originalSearchPaths.begin(), searchpath);
-        _searchPathArray.insert(_searchPathArray.begin(), path);
+        originalSearchPaths->insert(originalSearchPaths->begin(), searchpath);
+        searchPathArray->insert(searchPathArray->begin(), path);
     } else {
-        _originalSearchPaths.push_back(searchpath);
-        _searchPathArray.push_back(path);
+        originalSearchPaths->push_back(searchpath);
+        searchPathArray->push_back(path);
     }
 }
 
 void FileUtils::setFilenameLookupDictionary(const ValueMap& filenameLookupDict)
 {
-    _fullPathCache.clear();
+    auto fullPathCache = _fullPathCache.load();
+    fullPathCache->clear();
     _filenameLookupDict = filenameLookupDict;
 }
 
@@ -1078,28 +1108,32 @@ bool FileUtils::isDirectoryExist(const std::string& dirPath) const
 {
     CCASSERT(!dirPath.empty(), "Invalid path");
 
+    auto fullPathCache = _fullPathCache.load();
+    auto searchPathArray = _searchPathArray.load();
+    auto searchResolutionsOrderArray = _searchResolutionsOrderArray.load();
+
     if (isAbsolutePath(dirPath))
     {
         return isDirectoryExistInternal(dirPath);
     }
 
     // Already Cached ?
-    auto cacheIter = _fullPathCache.find(dirPath);
-    if( cacheIter != _fullPathCache.end() )
+    auto cacheIter = fullPathCache->find(dirPath);
+    if( cacheIter != fullPathCache->end() )
     {
         return isDirectoryExistInternal(cacheIter->second);
     }
 
     std::string fullpath;
-    for (const auto& searchIt : _searchPathArray)
+    for (const auto& searchIt : *searchPathArray)
     {
-        for (const auto& resolutionIt : _searchResolutionsOrderArray)
+        for (const auto& resolutionIt : *searchResolutionsOrderArray)
         {
             // searchPath + file_path + resourceDirectory
             fullpath = fullPathForFilename(searchIt + dirPath + resolutionIt);
             if (isDirectoryExistInternal(fullpath))
             {
-                _fullPathCache.emplace(dirPath, fullpath);
+                fullPathCache->emplace(dirPath, fullpath);
                 return true;
             }
         }

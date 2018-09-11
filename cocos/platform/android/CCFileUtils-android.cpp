@@ -254,7 +254,7 @@ bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath) const
     return false;
 }
 
-long FileUtilsAndroid::getFileSize(const std::string& filepath)
+long FileUtilsAndroid::getFileSize(const std::string& filepath) const
 {
     long size = FileUtils::getFileSize(filepath);
     if (size != -1) {
