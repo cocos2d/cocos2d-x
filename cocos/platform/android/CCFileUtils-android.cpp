@@ -91,7 +91,8 @@ FileUtilsAndroid::~FileUtilsAndroid()
 
 bool FileUtilsAndroid::init()
 {
-    _defaultResRootPath = ASSETS_FOLDER_NAME;
+    auto defaultResRootPath = _defaultResRootPath.load();
+    *defaultResRootPath = ASSETS_FOLDER_NAME;
     
     std::string assetsPath(getApkPath());
     if (assetsPath.find("/obb/") != std::string::npos)
@@ -162,14 +163,14 @@ bool FileUtilsAndroid::isFileExistInternal(const std::string& strFilePath) const
     }
 
     bool bFound = false;
-
+    auto defaultResRootPath = _defaultResRootPath.load();
     // Check whether file exists in apk.
     if (strFilePath[0] != '/')
     {
         const char* s = strFilePath.c_str();
 
         // Found "assets/" at the beginning of the path and we don't want it
-        if (strFilePath.find(_defaultResRootPath) == 0) s += _defaultResRootPath.length();
+        if (strFilePath.find(*defaultResRootPath) == 0) s += defaultResRootPath->length();
         
         if (obbfile && obbfile->fileExists(s))
         {
@@ -247,7 +248,7 @@ bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath) const
     // 1) Files in APK, e.g. assets/path/path/file.png
     // 2) Files not in APK, e.g. /data/data/org.cocos2dx.hellocpp/cache/path/path/file.png, or /sdcard/path/path/file.png.
     // So these two situations need to be checked on Android.
-    if (strPath[0] == '/' || strPath.find(_defaultResRootPath) == 0)
+    if (strPath[0] == '/' || strPath.find(*_defaultResRootPath.load()) == 0)
     {
         return true;
     }
@@ -260,13 +261,13 @@ long FileUtilsAndroid::getFileSize(const std::string& filepath) const
     if (size != -1) {
         return size;
     }
-    
+    auto defaultResRootPath = _defaultResRootPath.load();
     if (FileUtilsAndroid::assetmanager)
     {
         string relativePath = filepath;
-        if (filepath.find(_defaultResRootPath) == 0)
+        if (filepath.find(*defaultResRootPath) == 0)
         {
-            relativePath = filepath.substr(_defaultResRootPath.size());
+            relativePath = filepath.substr(defaultResRootPath->size());
         }
         
         AAsset* asset = AAssetManager_open(FileUtilsAndroid::assetmanager, relativePath.data(), AASSET_MODE_UNKNOWN);
