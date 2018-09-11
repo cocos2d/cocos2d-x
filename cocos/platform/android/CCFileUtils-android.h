@@ -72,12 +72,13 @@ public:
     virtual std::string getWritablePath() const override;
     virtual bool isAbsolutePath(const std::string& strPath) const override;
     
-    virtual long getFileSize(const std::string& filepath) const override;
-
+    virtual long getFileSize(const std::string& filepath) override;
+    virtual std::vector<std::string> listFiles(const std::string& dirPath) const override;
+    
 private:
     virtual bool isFileExistInternal(const std::string& strFilePath) const override;
     virtual bool isDirectoryExistInternal(const std::string& dirPath) const override;
-
+    
     static AAssetManager* assetmanager;
     static ZipFile* obbfile;
 };

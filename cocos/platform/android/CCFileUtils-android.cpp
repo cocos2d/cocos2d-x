@@ -289,7 +289,68 @@ long FileUtilsAndroid::getFileSize(const std::string& filepath) const
     return size;
 }
 
-FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer) const
+
+std::vector<std::string> FileUtilsAndroid::listFiles(const std::string& dirPath) const
+{
+    std::vector<std::string> fileList;
+    string fullPath = fullPathForFilename(dirPath);
+
+    static const std::string apkprefix("assets/");
+
+    if(isAbsolutePath(dirPath)) return FileUtils::listFiles(dirPath);
+
+    string relativePath = "";
+    size_t position = fullPath.find(apkprefix);
+    if (0 == position) {
+        // "assets/" is at the beginning of the path and we don't want it
+        relativePath += fullPath.substr(apkprefix.size());
+    } else {
+        relativePath = fullPath;
+    }
+
+    if(obbfile) obbfile->listFiles(relativePath);
+
+    if (nullptr == assetmanager) {
+        LOGD("... FileUtilsAndroid::assetmanager is nullptr");
+        return fileList;
+    }
+
+    auto *dir = AAssetManager_openDir(assetmanager, relativePath.c_str());
+    if(nullptr == dir) {
+        LOGD("... FileUtilsAndroid::failed to open dir %s", relativePath.c_str());
+        AAssetDir_close(dir);
+        return fileList;
+    }
+    const char *tmpDir = nullptr;
+    while((tmpDir = AAssetDir_getNextFileName(dir))!= nullptr)
+    {
+        string filepath(tmpDir);
+        if(isDirectoryExistInternal(filepath)) filepath += "/";
+        fileList.push_back(filepath);
+    }
+    AAssetDir_close(dir);
+    return fileList;
+}
+    
+
+
+bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) const
+{
+    bool isDir = false;
+    if (nullptr == assetmanager) {
+        LOGD("... FileUtilsAndroid::assetmanager is nullptr");
+        return isDir;
+    }
+    auto *dir = AAssetManager_openDir(assetmanager, dirPath.c_string());
+    if(nullptr == dir) return isDir;
+
+    if(nullptr != AAssetDir_getNextFileName(dir)) isDir = true;
+    AAssetDir_close(dir);
+    return isDir;
+}
+    
+
+FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer)
 {
     EngineDataManager::onBeforeReadFile();
 
