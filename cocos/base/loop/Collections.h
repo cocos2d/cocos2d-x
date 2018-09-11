@@ -65,7 +65,7 @@ namespace cocos2d
 
             void clear() { _CC_LOOP_DEFINE_LOCK_GUARD_; _data.clear(); }
 
-            size_t size() const { return _data.size(); }
+            size_t size() const { _CC_LOOP_DEFINE_LOCK_GUARD_; return _data.size(); }
             std::recursive_mutex& getMutex() { return _mtx; }
             std::list<T> & getQueue() { return _data; }
 
