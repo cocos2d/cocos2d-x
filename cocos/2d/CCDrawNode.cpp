@@ -33,6 +33,7 @@
 #include "base/CCEventDispatcher.h"
 #include "2d/CCActionCatmullRom.h"
 #include "platform/CCGL.h"
+#include "base/ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -327,7 +328,7 @@ void DrawNode::onDraw(const Mat4 &transform, uint32_t /*flags*/)
     getGLProgramState()->apply(transform);
     auto glProgram = this->getGLProgram();
     glProgram->setUniformLocationWith1f(glProgram->getUniformLocation("u_alpha"), _displayedOpacity / 255.0);
-    glBlendFunc(_blendFunc.src, _blendFunc.dst);
+    utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
     if (_dirty)
     {
@@ -374,7 +375,7 @@ void DrawNode::onDrawGLLine(const Mat4 &transform, uint32_t /*flags*/)
     glProgram->setUniformsForBuiltins(transform);
     glProgram->setUniformLocationWith1f(glProgram->getUniformLocation("u_alpha"), _displayedOpacity / 255.0);
 
-    glBlendFunc(_blendFunc.src, _blendFunc.dst);
+    utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
     if (_dirtyGLLine)
     {
@@ -421,7 +422,7 @@ void DrawNode::onDrawGLPoint(const Mat4 &transform, uint32_t /*flags*/)
     glProgram->setUniformsForBuiltins(transform);
     glProgram->setUniformLocationWith1f(glProgram->getUniformLocation("u_alpha"), _displayedOpacity / 255.0);
 
-    glBlendFunc(_blendFunc.src, _blendFunc.dst);
+    utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
     if (_dirtyGLPoint)
     {

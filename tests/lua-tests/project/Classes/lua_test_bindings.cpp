@@ -226,7 +226,7 @@ void DrawNode3D::onDraw(const Mat4 &transform, uint32_t flags)
     glProgram->use();
     glProgram->setUniformsForBuiltins(transform);
     glEnable(GL_DEPTH_TEST);
-    glBlendFunc(_blendFunc.src, _blendFunc.dst);
+    utils::setBlending(_blendFunc.src, _blendFunc.dst);
     
     if (_dirty)
     {
