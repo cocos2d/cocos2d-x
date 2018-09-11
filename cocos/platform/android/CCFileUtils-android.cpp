@@ -289,7 +289,6 @@ long FileUtilsAndroid::getFileSize(const std::string& filepath) const
     return size;
 }
 
-
 std::vector<std::string> FileUtilsAndroid::listFiles(const std::string& dirPath) const
 {
     std::vector<std::string> fileList;
@@ -330,23 +329,6 @@ std::vector<std::string> FileUtilsAndroid::listFiles(const std::string& dirPath)
     }
     AAssetDir_close(dir);
     return fileList;
-}
-    
-
-
-bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) const
-{
-    bool isDir = false;
-    if (nullptr == assetmanager) {
-        LOGD("... FileUtilsAndroid::assetmanager is nullptr");
-        return isDir;
-    }
-    auto *dir = AAssetManager_openDir(assetmanager, dirPath.c_string());
-    if(nullptr == dir) return isDir;
-
-    if(nullptr != AAssetDir_getNextFileName(dir)) isDir = true;
-    AAssetDir_close(dir);
-    return isDir;
 }
     
 
