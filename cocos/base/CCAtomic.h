@@ -36,7 +36,6 @@ namespace cocos2d {
         public:
             Guard(std::shared_ptr<T> d, std::shared_ptr<std::recursive_mutex> mtx) :_mtx(mtx), _data(d) { _mtx->lock(); }
             Guard(const Guard &o) :_mtx(o._mtx), _data(o._data) { _mtx->lock(); }
-            Guard(Guard &&o) :_mtx(o._mtx), _data(o._data) { o._data = nullptr;  _mtx->lock(); }
             virtual ~Guard() { _mtx->unlock(); }
             operator bool() { return _data != nullptr; }
             T * operator ->() { return _data.get(); }
