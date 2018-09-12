@@ -99,12 +99,13 @@ bool FileUtilsLinux::init()
 string FileUtilsLinux::getWritablePath() const
 {
     struct stat st;
-    stat(_writablePath.c_str(), &st);
+    auto writablePath = _writablePath.load();
+    stat(writablePath->c_str(), &st);
     if (!S_ISDIR(st.st_mode)) {
-        mkdir(_writablePath.c_str(), 0744);
+        mkdir(writablePath->c_str(), 0744);
     }
 
-    return _writablePath;
+    return *writablePath;
 }
 
 bool FileUtilsLinux::isFileExistInternal(const std::string& strFilePath) const
