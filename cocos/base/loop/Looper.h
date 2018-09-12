@@ -395,21 +395,21 @@ namespace cocos2d
             }
             else
             {
-                std::condition_variable cv;
-                _pendingFns.pushBack(SeqItem<DispatchF>(genSeq(), [&cv, &fn]() {
+                std::shared_ptr<std::condition_variable> cv = std::make_shared<std::condition_variable>();
+                _pendingFns.pushBack(SeqItem<DispatchF>(genSeq(), [cv, fn]() {
                     fn();
-                    cv.notify_one();
+                    cv->notify_one();
                 }));
                 notify();
                 std::mutex mtx;
                 std::unique_lock<std::mutex> lock(mtx);
                 if (timeoutMS > 0)
                 {
-                    cv.wait_for(lock, milliseconds(timeoutMS));
+                    cv->wait_for(lock, milliseconds(timeoutMS));
                 }
                 else
                 {
-                    cv.wait(lock);
+                    cv->wait(lock);
                 }
             }
         }

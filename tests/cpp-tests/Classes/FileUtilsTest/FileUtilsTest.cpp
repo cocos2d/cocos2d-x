@@ -81,6 +81,13 @@ void TestResolutionDirectories::onEnter()
         ret = sharedFileUtils->fullPathForFilename(filename);
         log("%s -> %s", filename.c_str(), ret.c_str());
     }
+
+    log(" == list files in fonts");
+    auto flist = sharedFileUtils->listFiles("test2.txt");
+    for (auto f : flist)
+    {
+        log("fonts/ -> %s", f.c_str());
+    }
 }
 
 void TestResolutionDirectories::onExit()
