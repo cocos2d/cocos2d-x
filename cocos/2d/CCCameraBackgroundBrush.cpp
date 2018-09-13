@@ -88,8 +88,21 @@ CameraBackgroundDepthBrush::CameraBackgroundDepthBrush()
 , _vao(0)
 , _vertexBuffer(0)
 , _indexBuffer(0)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    , _backToForegroundListener(nullptr)
+#endif
 {
-    
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*)
+        {
+            _vao = 0;
+            _vertexBuffer = 0;
+            _indexBuffer = 0;
+            initBuffer();
+        }
+    );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
 }
 CameraBackgroundDepthBrush::~CameraBackgroundDepthBrush()
 {
@@ -105,6 +118,9 @@ CameraBackgroundDepthBrush::~CameraBackgroundDepthBrush()
         glBindVertexArray(0);
         _vao = 0;
     }
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 CameraBackgroundDepthBrush* CameraBackgroundDepthBrush::create(float depth)
@@ -142,6 +158,12 @@ bool CameraBackgroundDepthBrush::init()
     _quad.tl.texCoords = Tex2F(0,1);
     _quad.tr.texCoords = Tex2F(1,1);
     
+    initBuffer();
+    return true;
+}
+
+void CameraBackgroundDepthBrush::initBuffer()
+{
     auto supportVAO = Configuration::getInstance()->supportsShareableVAO();
     if (supportVAO)
     {
@@ -178,7 +200,6 @@ bool CameraBackgroundDepthBrush::init()
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    return true;
 }
 
 void CameraBackgroundDepthBrush::drawBackground(Camera* /*camera*/)
