@@ -71,6 +71,7 @@ namespace ui {
 
     EditBoxImplWin::EditBoxImplWin(EditBox* pEditText)
         : EditBoxImplCommon(pEditText),
+        _hwndEdit(NULL),
         _changedTextManually(false),
         _hasFocus(false),
         _endAction(EditBoxDelegate::EditBoxEndAction::UNKNOWN)
@@ -405,7 +406,7 @@ namespace ui {
                 ::ShowWindow(s_previousFocusWnd, SW_HIDE);
 
                 EditBoxImplWin* pThis = (EditBoxImplWin*)GetWindowLongPtrW(s_previousFocusWnd, GWLP_USERDATA);
-                if (!pThis->_hasFocus)
+                if (pThis!=nullptr && !pThis->_hasFocus)
                 {
                     if (pThis->_editingMode && !IsWindowVisible(s_previousFocusWnd))
                     {

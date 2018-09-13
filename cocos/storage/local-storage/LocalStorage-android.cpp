@@ -43,7 +43,7 @@
 USING_NS_CC;
 static int _initialized = 0;
 
-static std::string className = "org/cocos2dx/lib/Cocos2dxLocalStorage";
+static std::string className = "org.cocos2dx.lib.Cocos2dxLocalStorage";
 
 static void splitFilename (std::string& str)
 {
@@ -91,7 +91,7 @@ bool localStorageGetItem( const std::string& key, std::string *outItem )
     assert( _initialized );
     JniMethodInfo t;
 
-    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "getItem", "(Ljava/lang/String;)Ljava/lang/String;"))
+    if (JniHelper::getStaticMethodInfo(t, className.c_str(), "getItem", "(Ljava/lang/String;)Ljava/lang/String;"))
     {
         jstring jkey = t.env->NewStringUTF(key.c_str());
         jstring jret = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID, jkey);

@@ -1,114 +1,124 @@
 cmake_minimum_required(VERSION 3.1)
 
-set(APP_NAME lua_empty_test)
+set(APP_NAME lua-empty-test)
 
 project(${APP_NAME})
 
-# default build, not build when build engine and all tests
 if(NOT DEFINED BUILD_ENGINE_DONE)
-    # define some variables
     set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../..)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
-    
-    # works before libcocos2d
+
     include(CocosBuildSet)
-    CocosBuildSet()
-    # add engine directory, get cocos library
-    set(BUILD_LUA_LIBS ON)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-
-endif(NOT DEFINED BUILD_ENGINE_DONE)
-
-set(SAMPLE_SRC Classes/AppDelegate.cpp)
-
-if(LINUX)
-    set(SAMPLE_SRC ${SAMPLE_SRC} proj.linux/main.cpp)
-    set(RES_PREFIX "/Resources")
-elseif(WINDOWS)
-    list(APPEND SAMPLE_SRC proj.win32/main.cpp)
-    set(RES_PREFIX "")
-elseif(APPLE)
-
-    if(IOS)
-        set(IOS_SRC
-            proj.ios/main.m
-            proj.ios/AppController.mm
-            proj.ios/RootViewController.mm
-            )
-        file(GLOB_RECURSE RES_LS proj.ios/LaunchScreen.storyboard)
-        cocos_mark_resources(FILES ${RES_LS} BASEDIR proj.ios)
-        file(GLOB_RECURSE RES_LSBG proj.ios/LaunchScreenBackground.png)
-        cocos_mark_resources(FILES ${RES_LSBG} BASEDIR proj.ios)
-        set(APPLE_SRC ${IOS_SRC} ${RES_LS} ${RES_LSBG})
-    elseif(MACOSX)
-        set(MAC_SRC proj.mac/main.cpp)
-        file(GLOB_RECURSE RES_ICON proj.mac/Icon.icns)
-        cocos_mark_resources(FILES ${RES_ICON} BASEDIR proj.mac)
-        set(APPLE_SRC ${MAC_SRC} ${RES_ICON})
+    if(NOT USE_COCOS_PREBUILT)
+        set(BUILD_LUA_LIBS ON)
+        add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
     endif()
+endif()
 
-    file(GLOB_RECURSE APP_RESOURCES ../res/*)
-    cocos_mark_resources(FILES ${APP_RESOURCES} BASEDIR ../res RESOURCEBASE Resources/res)
-    file(GLOB_RECURSE APP_SCRIPTS ../src/*)
-    cocos_mark_resources(FILES ${APP_SCRIPTS} BASEDIR ../src RESOURCEBASE Resources/src)
-    file(GLOB_RECURSE COCOS_SCRIPTS ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/*)
-    cocos_mark_resources(FILES ${COCOS_SCRIPTS} BASEDIR ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script RESOURCEBASE Resources/src/cocos)
+set(res_res_folders
+    "${CMAKE_CURRENT_SOURCE_DIR}/../res"
+    )
+set(res_src_folders
+    "${CMAKE_CURRENT_SOURCE_DIR}/../src"
+    )
+set(res_script_folders
+    "${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script"
+    )
+if(APPLE OR VS)
+    cocos_mark_multi_resources(res_res RES_TO "Resources/res" FOLDERS ${res_res_folders})
+    cocos_mark_multi_resources(res_src RES_TO "Resources/src" FOLDERS ${res_src_folders})
+    cocos_mark_multi_resources(res_script RES_TO "Resources/src/cocos" FOLDERS ${res_script_folders})
+    set(cc_common_res ${res_res} ${res_src} ${res_script})
+endif()
 
-    list(APPEND SAMPLE_SRC ${APPLE_SRC} ${APP_RESOURCES} ${APP_SCRIPTS} ${COCOS_SCRIPTS})
-elseif(ANDROID)
-    list(APPEND SAMPLE_SRC proj.android/app/jni/main.cpp)
-    set(RES_PREFIX "/Resources")
+# record sources, headers...
+set(GAME_SOURCE
+    Classes/AppDelegate.cpp
+    )
+set(GAME_HEADER
+    Classes/AppDelegate.h
+    Classes/lua_module_register.h
+    )
+
+if(ANDROID)
+    # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
+    set(APP_NAME lua_empty_test)
+    list(APPEND GAME_SOURCE proj.android/app/jni/main.cpp)
+elseif(LINUX)
+    list(APPEND GAME_SOURCE proj.linux/main.cpp)
+elseif(WINDOWS)
+    add_definitions(-D_USRLUASTATIC)
+    list(APPEND GAME_HEADER proj.win32/main.h)
+    list(APPEND GAME_SOURCE proj.win32/main.cpp ${cc_common_res})
+elseif(APPLE)
+    if(IOS)
+        list(APPEND GAME_HEADER
+             proj.ios/AppController.h
+             proj.ios/RootViewController.h
+             )
+        set(APP_UI_RES
+            proj.ios/LaunchScreen.storyboard
+            proj.ios/LaunchScreenBackground.png
+            proj.ios/Images.xcassets
+            )
+        list(APPEND GAME_SOURCE
+             proj.ios/main.m
+             proj.ios/AppController.mm
+             proj.ios/RootViewController.mm
+             proj.ios/HelloLua_Prefix.pch
+             ${APP_UI_RES}
+             )
+    elseif(MACOSX)
+        set(APP_UI_RES
+            proj.mac/Icon.icns
+            proj.mac/Info.plist
+            proj.mac/en.lproj/MainMenu.xib
+            proj.mac/en.lproj/InfoPlist.strings
+            )
+        list(APPEND GAME_SOURCE
+             proj.mac/main.cpp
+             proj.mac/HelloLua_Prefix.pch
+             ${APP_UI_RES}
+             )
+    endif()
+    list(APPEND GAME_SOURCE ${cc_common_res})
 endif()
 
 include_directories(
-    Classes
-    ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/auto
-    ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
-    ${COCOS2DX_ROOT_PATH}/external/lua/luajit/include
-    ${COCOS2DX_ROOT_PATH}/external/lua/tolua
-    )
+        Classes
+        ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/auto
+        ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
+        ${COCOS2DX_ROOT_PATH}/external/lua/luajit/include
+        ${COCOS2DX_ROOT_PATH}/external/lua/tolua
+)
 
 include_directories(${LUAJIT_INCLUDE_DIRS})
 
-if(ANDROID)
-    add_library(${APP_NAME} SHARED ${SAMPLE_SRC})
-    if(CMAKE_BUILD_TYPE MATCHES RELEASE)
-        add_custom_command(TARGET ${APP_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} lib${APP_NAME}.so)
-    endif()
-    target_link_libraries(${APP_NAME} -Wl,-whole-archive cocos2d_android -Wl,-no-whole-archive)
-    add_dependencies(${APP_NAME} cocos2d_android)
-else()
-    # add the executable
-    add_executable(${APP_NAME} ${SAMPLE_SRC})
-endif()
+set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
+# mark app complie info and libs info
+cocos_build_app(${APP_NAME}
+                APP_SRC "${APP_SRC}"
+                DEPEND_COMMON_LIBS "luacocos2d" "cocos2d"
+                DEPEND_ANDROID_LIBS "cocos2d_android"
+                )
 
-target_link_libraries(${APP_NAME} luacocos2d)
-add_dependencies(${APP_NAME} luacocos2d)
-
+# mark app resources
 if(APPLE)
-  set_target_properties(${APP_NAME} PROPERTIES
-      MACOSX_BUNDLE 1
-      RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-      )
+    set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)
-        cocos_pak_xcode(${APP_NAME})
+        set_target_properties(${APP_NAME} PROPERTIES
+                              MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/proj.mac/Info.plist"
+                              )
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
+        set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon-${APP_NAME}")
     endif()
-else()
-
-    set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}")
-
-    set_target_properties(${APP_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
-
-    pre_build(${APP_NAME}
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}${RES_PREFIX}/res
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}${RES_PREFIX}/src
-        COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/script/ ${APP_BIN_DIR}${RES_PREFIX}/src/cocos
-        )
-
+elseif(WINDOWS)
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR})
 endif()
 
-if(XCODE OR VS)
-    cocos_mark_code_files(${APP_NAME})
+if(LINUX OR WINDOWS)
+    cocos_copy_res(COPY_TO ${APP_RES_DIR}/res FOLDERS ${res_res_folders})
+    cocos_copy_res(COPY_TO ${APP_RES_DIR}/src FOLDERS ${res_src_folders})
+    cocos_copy_res(COPY_TO ${APP_RES_DIR}/src/cocos FOLDERS ${res_script_folders})
 endif()

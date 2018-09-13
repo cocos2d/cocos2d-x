@@ -7,33 +7,13 @@ function Download-Deps
     & $python $env:APPVEYOR_BUILD_FOLDER\download-deps.py --remove-download=False
 }
 
-function Download-NDK
-{
-    $url = "https://dl.google.com/android/repository/android-ndk-r16-windows-x86.zip"
-    $output = "$env:APPVEYOR_BUILD_FOLDER/../android-ndk-r16-windows-x86.zip"
-    Write-Host "downloading $url"
-    Start-FileDownload $url $output
-    Write-Host "finish downloading $url"
-
-    Write-Host "installing NDK"
-    Push-Location $env:APPVEYOR_BUILD_FOLDER/../
-    $zipfile = $output
-    Invoke-Expression "7z.exe x $zipfile"
-    Write-Host "finish installing NDK"
-    Pop-Location
-    $env:NDK_ROOT = "$env:APPVEYOR_BUILD_FOLDER/../android-ndk-r16"
-    Write-Host "set environment NDK_ROOT to $env:NDK_ROOT"
-}
-
 function Generate-Binding-Codes
 {
+    $env:NDK_ROOT=$env:APPVEYOR_BUILD_FOLDER + "\..\android-ndk-r16b"
 
     # install python module
     & pip install PyYAML Cheetah
     Write-Host "generating binding codes"
-
-    $env:PYTHON_BIN = $python
-    Write-Host "set environment viriable PYTHON_BIN to $env:PYTHON_BIN"
 
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tools\tolua
     & $python $env:APPVEYOR_BUILD_FOLDER\tools\tolua\genbindings.py
@@ -54,15 +34,12 @@ function Update-SubModule
 
 Update-SubModule
 
-$python = "C:\\Python27\\python.exe"
+Download-Deps
 
 If ($env:build_type -eq "windows32") {
-    Download-Deps
-    Download-NDK
+    & $python -u .\tools\appveyor-scripts\setup_android.py --ndk_only
     Generate-Binding-Codes
 } elseif ($env:build_type -like "android*") {
     & $python -u .\tools\appveyor-scripts\setup_android.py
     if ($lastexitcode -ne 0) {throw}
-} else {
-    Download-Deps
 }

@@ -2379,6 +2379,16 @@ getViewPortRect : function (
 },
 
 /**
+ * @method getScaleY
+ * @return {float}
+ */
+getScaleY : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setContentScaleFactor
  * @param {float} arg0
  * @return {bool}
@@ -2477,13 +2487,11 @@ bool
 },
 
 /**
- * @method getScaleY
- * @return {float}
+ * @method setDefaultIcon
  */
-getScaleY : function (
+setDefaultIcon : function (
 )
 {
-    return 0;
 },
 
 /**
@@ -2544,6 +2552,16 @@ getDesignResolutionSize : function (
 )
 {
     return cc.Size;
+},
+
+/**
+ * @method setIcon
+* @param {Array|String} array
+*/
+setIcon : function(
+str 
+)
+{
 },
 
 /**

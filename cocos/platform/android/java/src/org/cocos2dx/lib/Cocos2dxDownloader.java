@@ -307,6 +307,10 @@ public class Cocos2dxDownloader {
         // downloader._httpClient.setMaxRetriesAndTimeout(3, timeoutInSeconds * 1000);
         downloader._httpClient.allowRetryExceptionClass(javax.net.ssl.SSLException.class);
 
+        //disable url auto decode
+        //fix https://github.com/cocos2d/cocos2d-x/issues/18949
+        downloader._httpClient.setURLEncodingEnabled(false);
+
         downloader._tempFileNameSufix = tempFileNameSufix;
         downloader._countOfMaxProcessingTasks = countOfMaxProcessingTasks;
         return downloader;

@@ -47,18 +47,18 @@ std::string format(const char* format, ...)
     std::string buffer(CC_VSNPRINTF_BUFFER_LENGTH, '\0');
 
     va_start(args, format);
-    int nret = vsnprintf(&buffer.front(), buffer.length(), format, args);
+    int nret = vsnprintf(&buffer.front(), buffer.length() + 1, format, args);
     va_end(args);
 
     if (nret >= 0) {
-        if (nret < buffer.length()) {
+        if ((unsigned int)nret < buffer.length()) {
             buffer.resize(nret);
         }
-        else if (nret > buffer.length()) { // VS2015/2017 or later Visual Studio Version
+        else if ((unsigned int)nret > buffer.length()) { // VS2015/2017 or later Visual Studio Version
             buffer.resize(nret);
 
             va_start(args, format);
-            nret = vsnprintf(&buffer.front(), buffer.length(), format, args);
+            nret = vsnprintf(&buffer.front(), buffer.length() + 1, format, args);
             va_end(args);
 
             assert(nret == buffer.length());
@@ -70,7 +70,7 @@ std::string format(const char* format, ...)
             buffer.resize(buffer.length() * 3 / 2);
 
             va_start(args, format);
-            nret = vsnprintf(&buffer.front(), buffer.length(), format, args);
+            nret = vsnprintf(&buffer.front(), buffer.length() + 1, format, args);
             va_end(args);
 
         } while (nret < 0);
@@ -141,7 +141,7 @@ static void trimUTF32VectorFromIndex(std::vector<char32_t>& str, int index)
  * */
 bool isUnicodeSpace(char32_t ch)
 {
-    return  (ch >= 0x0009 && ch <= 0x000D) || ch == 0x0020 || ch == 0x0085 || ch == 0x1680
+    return  (ch >= 0x0009 && ch <= 0x000D) || ch == 0x0020 || ch == 0x0085 || ch == 0x00A0 || ch == 0x1680
     || (ch >= 0x2000 && ch <= 0x200A) || ch == 0x2028 || ch == 0x2029 || ch == 0x202F
     ||  ch == 0x205F || ch == 0x3000;
 }
@@ -158,7 +158,15 @@ bool isCJKUnicode(char32_t ch)
         || (ch >= 0x31C0 && ch <= 0x4DFF)   // Other extensions
         || (ch >= 0x1f004 && ch <= 0x1f682);// Emoji
 }
-
+    
+bool isUnicodeNonBreaking(char32_t ch)
+{
+    return ch == 0x00A0   // Non-Breaking Space
+    || ch == 0x202F       // Narrow Non-Breaking Space
+    || ch == 0x2007       // Figure Space
+    || ch == 0x2060;      // Word Joiner
+}
+    
 void trimUTF16Vector(std::vector<char16_t>& str)
 {
     int len = static_cast<int>(str.size());

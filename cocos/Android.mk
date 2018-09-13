@@ -185,7 +185,6 @@ renderer/CCTrianglesCommand.cpp \
 renderer/CCVertexAttribBinding.cpp \
 renderer/CCVertexIndexBuffer.cpp \
 renderer/CCVertexIndexData.cpp \
-renderer/ccGLStateCache.cpp \
 renderer/CCFrameBuffer.cpp \
 renderer/ccShaders.cpp \
 vr/CCVRDistortion.cpp \
@@ -240,18 +239,21 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
+                    $(LOCAL_PATH)/../external/bullet/include/bullet \
                     $(LOCAL_PATH)/../external/xxhash \
                     $(LOCAL_PATH)/../external/nslog \
                     $(LOCAL_PATH)/../external/poly2tri \
                     $(LOCAL_PATH)/../external/poly2tri/common \
                     $(LOCAL_PATH)/../external/poly2tri/sweep \
-                    $(LOCAL_PATH)/../external/clipper
+                    $(LOCAL_PATH)/../external/clipper \
+                    $(LOCAL_PATH)/../external/uv/include
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external \
                     $(LOCAL_PATH)/../external/tinyxml2 \
                     $(LOCAL_PATH)/../external/unzip \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
+                    $(LOCAL_PATH)/../external/bullet/include/bullet \
                     $(LOCAL_PATH)/../external/edtaa3func \
                     $(LOCAL_PATH)/../external/xxhash \
                     $(LOCAL_PATH)/../external/ConvertUTF \
@@ -259,7 +261,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/poly2tri \
                     $(LOCAL_PATH)/../external/poly2tri/common \
                     $(LOCAL_PATH)/../external/poly2tri/sweep \
-                    $(LOCAL_PATH)/../external/clipper
+                    $(LOCAL_PATH)/../external/clipper \
+                    $(LOCAL_PATH)/../external/uv/include
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \

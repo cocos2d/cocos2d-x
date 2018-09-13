@@ -158,9 +158,10 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
     Size textureSize;
 
     // get the format
-    if (dictionary.find("metadata") != dictionary.end())
+    auto metaItr = dictionary.find("metadata");
+    if (metaItr != dictionary.end())
     {
-        ValueMap& metadataDict = dictionary["metadata"].asValueMap();
+        ValueMap& metadataDict = metaItr->second.asValueMap();
         format = metadataDict["format"].asInt();
 
         if(metadataDict.find("size") != metadataDict.end())
@@ -543,7 +544,7 @@ void SpriteFrameCache::removeSpriteFramesFromDictionary(ValueMap& dictionary)
     if (dictionary["frames"].getType() != cocos2d::Value::Type::MAP)
         return;
 
-    ValueMap framesDict = dictionary["frames"].asValueMap();
+    const ValueMap& framesDict = dictionary["frames"].asValueMap();
     std::vector<std::string> keysToRemove;
 
     for (const auto& iter : framesDict)

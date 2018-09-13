@@ -55,16 +55,16 @@ _frontCrossDisabledTexType(TextureResType::LOCAL),
 _zoomScale(0.1f),
 _backgroundTextureScaleX(1.0),
 _backgroundTextureScaleY(1.0),
-_backGroundFileName(""),
-_backGroundSelectedFileName(""),
-_frontCrossFileName(""),
-_backGroundDisabledFileName(""),
-_frontCrossDisabledFileName(""),
 _backGroundBoxRendererAdaptDirty(true),
 _backGroundSelectedBoxRendererAdaptDirty(true),
 _frontCrossRendererAdaptDirty(true),
 _backGroundBoxDisabledRendererAdaptDirty(true),
-_frontCrossDisabledRendererAdaptDirty(true)
+_frontCrossDisabledRendererAdaptDirty(true),
+_backGroundFileName(""),
+_backGroundSelectedFileName(""),
+_frontCrossFileName(""),
+_backGroundDisabledFileName(""),
+_frontCrossDisabledFileName("")
 {
     setTouchEnabled(true);
 }
@@ -173,7 +173,8 @@ void AbstractCheckButton::loadTextureBackGroundSelected(const std::string& backG
 {
     _backGroundSelectedFileName = backGroundSelected;
     _isBackgroundSelectedTextureLoaded = !backGroundSelected.empty();
-
+    if (!_isBackgroundSelectedTextureLoaded) return;
+    
     _backGroundSelectedTexType = texType;
     switch (_backGroundSelectedTexType)
     {
@@ -236,6 +237,7 @@ void AbstractCheckButton::loadTextureBackGroundDisabled(const std::string& backG
 {
     _backGroundDisabledFileName = backGroundDisabled;
     _isBackgroundDisabledTextureLoaded = !backGroundDisabled.empty();
+    if (!_isBackgroundDisabledTextureLoaded) return;
 
     _backGroundDisabledTexType = texType;
     switch (_backGroundDisabledTexType)
@@ -269,6 +271,7 @@ void AbstractCheckButton::loadTextureFrontCrossDisabled(const std::string& front
 {
     _frontCrossDisabledFileName = frontCrossDisabled;
     _isFrontCrossDisabledTextureLoaded = !frontCrossDisabled.empty();
+    if (!_isFrontCrossDisabledTextureLoaded) return;
 
     _frontCrossDisabledTexType = texType;
     switch (_frontCrossDisabledTexType)

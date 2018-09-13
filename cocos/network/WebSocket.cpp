@@ -392,7 +392,7 @@ void WsThreadHelper::onSubThreadStarted()
     int log_level = LLL_ERR | LLL_WARN | LLL_NOTICE | LLL_INFO/* | LLL_DEBUG | LLL_PARSER | LLL_HEADER*/ | LLL_EXT | LLL_CLIENT | LLL_LATENCY;
     lws_set_log_level(log_level, printWebSocketLog);
 
-    memset(__defaultProtocols, 0, sizeof(2 * sizeof(struct lws_protocols)));
+    memset(__defaultProtocols, 0, 2 * sizeof(struct lws_protocols));
 
     __defaultProtocols[0].name = "";
     __defaultProtocols[0].callback = WebSocketCallbackWrapper::onSocketCallback;
@@ -570,6 +570,11 @@ WebSocket::~WebSocket()
         CC_SAFE_DELETE(__wsHelper);
     }
 
+    for(auto name:_protocolNames){
+        free(name);
+    }
+    free(_lwsProtocols);
+    
     Director::getInstance()->getEventDispatcher()->removeEventListener(_resetDirectorListener);
     
     *_isDestroyed = true;
@@ -601,6 +606,7 @@ bool WebSocket::init(const Delegate& delegate,
             _lwsProtocols[i].callback = WebSocketCallbackWrapper::onSocketCallback;
             size_t nameLen = protocols->at(i).length();
             char* name = (char*)malloc(nameLen + 1);
+            _protocolNames.push_back(name);
             name[nameLen] = '\0';
             strcpy(name, protocols->at(i).c_str());
             _lwsProtocols[i].name = name;

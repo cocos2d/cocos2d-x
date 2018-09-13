@@ -47,7 +47,7 @@ public:
 PcmAudioService::PcmAudioService(SLEngineItf engineItf, SLObjectItf outputMixObject)
         : _engineItf(engineItf), _outputMixObj(outputMixObject), _playObj(nullptr),
           _playItf(nullptr), _volumeItf(nullptr), _bufferQueueItf(nullptr), _numChannels(-1),
-          _sampleRate(-1), _bufferSizeInBytes(0), _controller(nullptr)
+          _sampleRate(-1), _bufferSizeInBytes(0), _controller(nullptr), _isInitialised(false)
 {
 }
 
@@ -175,19 +175,26 @@ bool PcmAudioService::init(AudioMixerController* controller, int numChannels, in
     r = (*_playItf)->SetPlayState(_playItf, SL_PLAYSTATE_PLAYING);
     SL_RETURN_VAL_IF_FAILED(r, false, "SetPlayState failed");
 
+    _isInitialised = true;
     return true;
 }
 
 void PcmAudioService::pause()
 {
-    SLresult r = (*_playItf)->SetPlayState(_playItf, SL_PLAYSTATE_PAUSED);
-    SL_RETURN_IF_FAILED(r, "PcmAudioService::pause failed");
+    if (_isInitialised)
+    {
+        SLresult r = (*_playItf)->SetPlayState(_playItf, SL_PLAYSTATE_PAUSED);
+        SL_RETURN_IF_FAILED(r, "PcmAudioService::pause failed");
+    }
 }
 
 void PcmAudioService::resume()
 {
-    SLresult r = (*_playItf)->SetPlayState(_playItf, SL_PLAYSTATE_PLAYING);
-    SL_RETURN_IF_FAILED(r, "PcmAudioService::resume failed");
+    if (_isInitialised)
+    {
+        SLresult r = (*_playItf)->SetPlayState(_playItf, SL_PLAYSTATE_PLAYING);
+        SL_RETURN_IF_FAILED(r, "PcmAudioService::resume failed");
+    }
 }
 
 }} // namespace cocos2d { namespace experimental {

@@ -9,6 +9,8 @@ import platform
 import sys
 import subprocess
 import tempfile
+import argparse
+
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
@@ -80,8 +82,8 @@ def install_android_sdk():
     switches = " --verbose --sdk_root=" + ANDROID_SDK + " "
     cmd1 = SDK_MANAGER + switches
     packages = [
-        "platforms;android-15",
-        "build-tools;25.0.0",
+        "platforms;android-27",
+        "build-tools;27.0.3",
         "platform-tools",
         "tools"
     ]
@@ -90,34 +92,32 @@ def install_android_sdk():
     run_with_yes(cmd)
 
 
-def export_environment():
-    # gradle
-    # os.environ["ANDROID_HOME"] = ANDROID_SDK
-    # os.environ["ANDROID_NDK_HOME"] = ANDROID_NDK
-    # # cocos gen-libs
-    # os.environ["ANDROID_SDK_ROOT"] = ANDROID_SDK
-    # os.environ["NDK_ROOT"] = ANDROID_NDK
-
+def export_environment(ndk_only):
     with open(os.path.join(ROOT_DIR, "environment.sh"), "a") as myfile:
-        myfile.write("export ANDROID_HOME=" + ANDROID_SDK + "\n")
+        if not ndk_only:
+            myfile.write("export ANDROID_HOME=" + ANDROID_SDK + "\n")
+            myfile.write("export ANDROID_SDK_ROOT=" + ANDROID_SDK + "\n")
         myfile.write("export ANDROID_NDK_HOME=" + ANDROID_NDK + "\n")
-        myfile.write("export ANDROID_SDK_ROOT=" + ANDROID_SDK + "\n")
         myfile.write("export NDK_ROOT=" + ANDROID_NDK + "\n")
 
     with open(os.path.join(ROOT_DIR, "environment.ps1"), "a") as myfile:
-        myfile.write("$env:ANDROID_HOME=\"" + ANDROID_SDK + "\"\n")
+        if not ndk_only:
+            myfile.write("$env:ANDROID_HOME=\"" + ANDROID_SDK + "\"\n")
+            myfile.write("$env:ANDROID_SDK_ROOT=\"" + ANDROID_SDK + "\"\n")
         myfile.write("$env:ANDROID_NDK_HOME=\"" + ANDROID_NDK + "\"\n")
-        myfile.write("$env:ANDROID_SDK_ROOT=\"" + ANDROID_SDK + "\"\n")
         myfile.write("$env:NDK_ROOT=\"" + ANDROID_NDK + "\"\n")
 
 
-def main():
-    run(sys.executable + " " + os.path.join(COCOS2D_X, "download-deps.py") + " --remove-download=False")
+def main(ndk_only):
+    if not ndk_only:
+        install_android_sdk_tools()
+        install_android_sdk()
     install_android_ndk()
-    install_android_sdk_tools()
-    install_android_sdk()
-    export_environment()
+    export_environment(ndk_only)
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='Install android sdk/ndk')
+    parser.add_argument("--ndk_only", help="increase output verbosity", action="store_true")
+    args = parser.parse_args()
+    main(args.ndk_only)

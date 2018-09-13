@@ -28,11 +28,9 @@ THE SOFTWARE.
 #define __SUPPORT_ZIPUTILS_H__
 /// @cond DO_NOT_SHOW
 
-#include <string>
-#include "platform/CCPlatformConfig.h"
 #include "platform/CCPlatformMacros.h"
-#include "platform/CCPlatformDefine.h"
 #include "platform/CCFileUtils.h"
+#include <string>
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCFileUtils-android.h"

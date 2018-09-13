@@ -728,6 +728,17 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelWrapNoBreakSpaceTest : public LabelLayoutBaseTest
+{
+public:
+    CREATE_FUNC(LabelWrapNoBreakSpaceTest);
+
+    LabelWrapNoBreakSpaceTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class LabelShrinkByWordTest : public LabelLayoutBaseTest
 {
 public:
@@ -967,6 +978,19 @@ public:
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+};
+
+class LabelLetterColorsTest : public AtlasDemoNew {
+public:
+    CREATE_FUNC(LabelLetterColorsTest);
+
+    LabelLetterColorsTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+private:
+    static void setLetterColors(cocos2d::Label* label, const cocos2d::Color3B& color);
 };
 
 #endif

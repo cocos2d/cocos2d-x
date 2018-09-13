@@ -524,7 +524,7 @@ protected:
     GLint _lightDirLocation;
     RenderState::StateBlock* _stateBlock;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _backToForegroundListener;
 #endif
 };

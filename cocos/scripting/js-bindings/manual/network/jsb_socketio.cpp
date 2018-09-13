@@ -225,19 +225,21 @@ bool js_cocos2dx_SocketIO_send(JSContext* cx, uint32_t argc, jsval* vp)
     SIOClient* cobj = (SIOClient *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
-    if (argc == 1)
+    if (argc >= 1)
     {
+        std::vector<std::string> eventArgs;
         std::string payload;
         
-        do
+        for(int idx = 0; idx < argc; idx++)
         {
-            bool ok = jsval_to_std_string(cx, args.get(0), &payload);
+            bool ok = jsval_to_std_string(cx, args.get(idx), &payload);
             JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
-        } while (0);
+            eventArgs.push_back(payload);
+        }
 
         CCLOG("JSB SocketIO send mesage: %s", payload.c_str());
 
-        cobj->send(payload);
+        cobj->send(eventArgs);
         return true;
 
     }
@@ -255,24 +257,27 @@ bool js_cocos2dx_SocketIO_emit(JSContext* cx, uint32_t argc, jsval* vp)
     SIOClient* cobj = (SIOClient *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
-    if (argc == 2)
+    if (argc >= 2)
     {
         std::string eventName;
+
         do
         {
             bool ok = jsval_to_std_string(cx, args.get(0), &eventName);
             JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
         } while (0);
         
+        std::vector<std::string> eventArgs;
         std::string payload;
-        do {
-            bool ok = jsval_to_std_string(cx, args.get(1), &payload);
+        for(int idx = 1; idx < argc; idx ++) {
+            bool ok = jsval_to_std_string(cx, args.get(idx), &payload);
             JSB_PRECONDITION2( ok, cx, false, "Error processing arguments");
-        } while (0);
+            eventArgs.push_back(payload);
+        }
 
         CCLOG("JSB SocketIO emit event '%s' with payload: %s", eventName.c_str(), payload.c_str());
 
-        cobj->emit(eventName, payload);
+        cobj->emit(eventName, eventArgs);
         return true;
     }
     JS_ReportError(cx, "JSB SocketIO.emit: Wrong number of arguments");

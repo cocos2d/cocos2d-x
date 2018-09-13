@@ -25,6 +25,7 @@
 #include "SchedulerTest.h"
 #include "../testResource.h"
 #include "ui/UIText.h"
+#include "controller.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -1268,7 +1269,8 @@ void SchedulerRemoveAllFunctionsToBePerformedInCocosThread::update(float dt) {
     Director::getInstance()->getScheduler()->performFunctionInCocosThread([this] () {
         _sprite->setVisible(false);
     });
-    Director::getInstance()->getScheduler()->removeAllFunctionsToBePerformedInCocosThread();
+    if(!TestController::getInstance()->isAutoTestRunning())
+        Director::getInstance()->getScheduler()->removeAllFunctionsToBePerformedInCocosThread();
 }
 
 std::string SchedulerRemoveAllFunctionsToBePerformedInCocosThread::title() const

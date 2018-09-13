@@ -35,6 +35,7 @@ UIEditBoxTests::UIEditBoxTests()
     ADD_TEST_CASE(UIEditBoxTest);
     ADD_TEST_CASE(UIEditBoxTestToggleVisibility);
     ADD_TEST_CASE(UIEditBoxTestTextHorizontalAlignment);
+    ADD_TEST_CASE(UIEditBoxTestPressedAndDisabled);
 }
 
 // UIEditBoxTest
@@ -326,7 +327,7 @@ bool UIEditBoxTestTextHorizontalAlignment::init() {
         editbox->setFontColor(Color3B::RED);
         editbox->setPlaceHolder(text.c_str());
         editbox->setPlaceholderFontColor(Color3B::WHITE);
-        editbox->setMaxLength(8);
+        editbox->setPlaceholderFontSize(editBoxSize.height/2);
         editbox->setFontSize(editBoxSize.height/2);
         editbox->setText(text.c_str());
         editbox->setTextHorizontalAlignment(alignment);
@@ -334,9 +335,55 @@ bool UIEditBoxTestTextHorizontalAlignment::init() {
         addChild(editbox);
     };
   
-    createEditBox("left alignment", TextHAlignment::LEFT, visibleOrigin.y+visibleSize.height*3/4);
-    createEditBox("center alignment", TextHAlignment::CENTER, visibleOrigin.y+visibleSize.height/2);
-    createEditBox("right alignment", TextHAlignment::RIGHT, visibleOrigin.y+visibleSize.height/4);
+    createEditBox("horizontal left text", TextHAlignment::LEFT, visibleOrigin.y+visibleSize.height*3/4);
+    createEditBox("horizontal center text", TextHAlignment::CENTER, visibleOrigin.y+visibleSize.height/2);
+    createEditBox("horizontal right text", TextHAlignment::RIGHT, visibleOrigin.y+visibleSize.height/4);
   
+    return true;
+}
+
+// UIEditBoxTestPressedAndDisabled
+bool UIEditBoxTestPressedAndDisabled::init() {
+    if (!UIScene::init()) {
+        return false;
+    }
+
+    auto glview = Director::getInstance()->getOpenGLView();
+    auto visibleOrigin = glview->getVisibleOrigin();
+    auto visibleSize = glview->getVisibleSize();
+    const auto editBoxSize = Size(visibleSize.width - 100, visibleSize.height * 0.1);
+
+    ui::EditBox* editbox = ui::EditBox::create(editBoxSize + Size(0,40), "extensions/yellow_edit.png", "extensions/orange_edit.png");
+    editbox->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height*3/4));
+    editbox->setFontColor(Color3B::GREEN);
+    editbox->setPlaceHolder("Test Pressed Image");
+    editbox->setPlaceholderFontColor(Color3B::WHITE);
+    editbox->setPlaceholderFontSize(editBoxSize.height/2);
+    editbox->setFontSize(editBoxSize.height/2);
+    editbox->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
+    addChild(editbox);
+
+    editbox = ui::EditBox::create(editBoxSize + Size(0,40), "extensions/yellow_edit.png", "extensions/orange_edit.png", "extensions/green_edit.png");
+    editbox->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
+    editbox->setFontColor(Color3B::GREEN);
+    editbox->setPlaceHolder("Test Disabled Image - green");
+    editbox->setPlaceholderFontColor(Color3B::WHITE);
+    editbox->setPlaceholderFontSize(editBoxSize.height/2);
+    editbox->setFontSize(editBoxSize.height/2);
+    editbox->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
+    addChild(editbox);
+    editbox->setEnabled(false);
+
+    editbox = ui::EditBox::create(editBoxSize + Size(0,40), "extensions/yellow_edit.png");
+    editbox->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/4));
+    editbox->setFontColor(Color3B::GREEN);
+    editbox->setPlaceHolder("Disabled Gray effect");
+    editbox->setPlaceholderFontColor(Color3B::WHITE);
+    editbox->setPlaceholderFontSize(editBoxSize.height/2);
+    editbox->setFontSize(editBoxSize.height/2);
+    editbox->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
+    addChild(editbox);
+    editbox->setEnabled(false);
+
     return true;
 }

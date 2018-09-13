@@ -31,8 +31,7 @@
 
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCPass.h"
-#include "renderer/ccGLStateCache.h"
-
+#include "base/ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -105,7 +104,11 @@ void RenderState::bind(Pass* pass)
     CC_ASSERT(pass);
 
     if (_texture)
-        GL::bindTexture2D(_texture->getName());
+    {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, _texture->getName());
+    }
+    
 
     // Get the combined modified state bits for our RenderState hierarchy.
     long stateOverrideBits = _state ? _state->_bits : 0;
@@ -246,7 +249,7 @@ void RenderState::StateBlock::bindNoRestore()
     }
     if ((_bits & RS_BLEND_FUNC) && (_blendSrc != _defaultState->_blendSrc || _blendDst != _defaultState->_blendDst))
     {
-        GL::blendFunc((GLenum)_blendSrc, (GLenum)_blendDst);
+        utils::setBlending((GLenum)_blendSrc, (GLenum)_blendDst);
         _defaultState->_blendSrc = _blendSrc;
         _defaultState->_blendDst = _blendDst;
     }
@@ -341,7 +344,7 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
     }
     if (!(stateOverrideBits & RS_BLEND_FUNC) && (_defaultState->_bits & RS_BLEND_FUNC))
     {
-        GL::blendFunc(GL_ONE, GL_ZERO);
+        utils::setBlending(GL_ONE, GL_ZERO);
         _defaultState->_bits &= ~RS_BLEND_FUNC;
         _defaultState->_blendSrc = RenderState::BLEND_ONE;
         _defaultState->_blendDst = RenderState::BLEND_ZERO;

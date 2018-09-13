@@ -116,6 +116,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue9500Test);
     ADD_TEST_CASE(LabelWrapByWordTest);
     ADD_TEST_CASE(LabelWrapByCharTest);
+    ADD_TEST_CASE(LabelWrapNoBreakSpaceTest);
     ADD_TEST_CASE(LabelShrinkByWordTest);
     ADD_TEST_CASE(LabelShrinkByCharTest);
     ADD_TEST_CASE(LabelResizeTest);
@@ -139,6 +140,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue16717);
     ADD_TEST_CASE(LabelIssueLineGap);
     ADD_TEST_CASE(LabelIssue17902);
+    ADD_TEST_CASE(LabelLetterColorsTest);
 };
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
@@ -1109,7 +1111,7 @@ std::string LabelTTFCJKWrappingTest::subtitle() const
 //
 LabelTTFUnicodeNew::LabelTTFUnicodeNew()
 {
-    auto strings = FileUtils::getInstance()->getValueMapFromFile("fonts/strings.xml");
+    auto strings = FileUtils::getInstance()->getValueMapFromFile("strings/LabelFNTUNICODELanguages.xml");
     std::string chinese  = strings["chinese1"].asString();
     auto winSize = Director::getInstance()->getWinSize();
 
@@ -2540,6 +2542,30 @@ std::string LabelWrapByCharTest::subtitle() const
     return "";
 }
 
+/////////////////////////////////////////////////
+
+LabelWrapNoBreakSpaceTest::LabelWrapNoBreakSpaceTest()
+{
+    _label->setLineBreakWithoutSpace(false);
+    const char* no_break_space_utf8 = "\xC2\xA0"; // 0xA0 - no-break space
+    auto str = StringUtils::format("The price is $%s1.25. \n\nthe space between \"$\" and \"1.25\" is a no break space.", no_break_space_utf8);
+    _label->setString(str);
+    _label->setVerticalAlignment(TextVAlignment::TOP);
+    _label->setOverflow(Label::Overflow::CLAMP);
+}
+
+std::string LabelWrapNoBreakSpaceTest::title() const
+{
+    return "Wrap Test: No break space";
+}
+
+std::string LabelWrapNoBreakSpaceTest::subtitle() const
+{
+    return "";
+}
+
+/////////////////////////////////////////////////
+
 LabelShrinkByWordTest::LabelShrinkByWordTest()
 {
     _label->setLineSpacing(5);
@@ -2989,9 +3015,9 @@ LabelRichText::LabelRichText()
     {
         richText2->ignoreContentAdaptWithSize(false);
         richText2->setContentSize(Size(400, 400));
+        richText2->setPosition(center);
 
         addChild(richText2);
-        richText2->setPosition(Vec2(200,0));
     }
 }
 
@@ -3542,4 +3568,35 @@ std::string LabelIssue17902::subtitle() const
     return "";
 }
 
+//
+// LabelLetterColorsTest
+//
+LabelLetterColorsTest::LabelLetterColorsTest() {
+    auto center = VisibleRect::center();
 
+    auto label = Label::createWithTTF("", "fonts/arial.ttf", 24);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+
+    label->setString("1\n2\n3");
+    setLetterColors(label, Color3B::RED);
+
+    label->setString("abcd\ne");  // Must not crash at here.
+}
+
+std::string LabelLetterColorsTest::title() const {
+    return "Test for letter colors";
+}
+
+std::string LabelLetterColorsTest::subtitle() const {
+    return "Should not crash!";
+}
+
+void LabelLetterColorsTest::setLetterColors(cocos2d::Label* label, const cocos2d::Color3B& color) {
+    int n = label->getStringLength();
+    for (int i = 0; i < n; ++i) {
+        Sprite* letter = label->getLetter(i);
+        if (letter != nullptr)
+            letter->setColor(color);
+    }
+}

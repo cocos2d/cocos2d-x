@@ -175,7 +175,6 @@ THE SOFTWARE.
 #include "renderer/CCVertexIndexBuffer.h"
 #include "renderer/CCVertexIndexData.h"
 #include "renderer/CCFrameBuffer.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/ccShaders.h"
 
 // physics

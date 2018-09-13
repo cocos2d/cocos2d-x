@@ -158,6 +158,11 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
                 ALOGD("AVAudioSessionInterruptionTypeEnded, application == UIApplicationStateActive, alcMakeContextCurrent(s_ALContext)");
                 NSError *error = nil;
                 [[AVAudioSession sharedInstance] setActive:YES error:&error];
+                if(error != nil){
+                    ALOGE("AVAudioSessionInterruptionTypeEnded, AVAudioSession setActive fail, %d",(int)error.code);
+                    return;
+                }
+                
                 alcMakeContextCurrent(s_ALContext);
                 if (Director::getInstance()->isPaused())
                 {
@@ -196,6 +201,10 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
                 return;
             }
             [[AVAudioSession sharedInstance] setActive:YES error:&error];
+            if(error != nil){
+                ALOGE("UIApplicationDidBecomeActiveNotification, AVAudioSession setActive fail, %d",(int)error.code);
+                return;
+            }
             alcMakeContextCurrent(s_ALContext);
         }
         else if (isAudioSessionInterrupted)
@@ -443,7 +452,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
 
 void AudioEngineImpl::_play2d(AudioCache *cache, int audioID)
 {
-    //Note: It may bn in sub thread or main thread :(
+    //Note: It maybe in sub thread or main thread :(
     if (!*cache->_isDestroyed && cache->_state == AudioCache::State::READY)
     {
         _threadMutex.lock();

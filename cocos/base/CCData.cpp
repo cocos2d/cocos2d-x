@@ -62,15 +62,21 @@ Data::~Data()
 
 Data& Data::operator= (const Data& other)
 {
-    CCLOGINFO("In the copy assignment of Data.");
-    copy(other._bytes, other._size);
+    if (this != &other)
+    {
+        CCLOGINFO("In the copy assignment of Data.");
+        copy(other._bytes, other._size);
+    }
     return *this;
 }
 
 Data& Data::operator= (Data&& other)
 {
-    CCLOGINFO("In the move assignment of Data.");
-    move(other);
+    if (this != &other)
+    {
+        CCLOGINFO("In the move assignment of Data.");
+        move(other);
+    }
     return *this;
 }
 

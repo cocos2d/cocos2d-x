@@ -25,10 +25,10 @@
 
 #include "renderer/CCPrimitiveCommand.h"
 
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
+#include "base/ccUtils.h"
 
 #include "base/CCDirector.h"
 
@@ -77,10 +77,11 @@ void PrimitiveCommand::init(float globalOrder, GLuint textureID, GLProgramState*
 void PrimitiveCommand::execute() const
 {
     //Set texture
-    GL::bindTexture2D(_textureID);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _textureID);
     
     //set blend mode
-    GL::blendFunc(_blendType.src, _blendType.dst);
+    utils::setBlending(_blendType.src, _blendType.dst);
     
     _glProgramState->apply(_mv);
     

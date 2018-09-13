@@ -40,7 +40,6 @@
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventType.h"
 #include "base/CCDirector.h"
-#include "renderer/ccGLStateCache.h"
 
 
 using namespace std;
