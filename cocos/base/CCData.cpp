@@ -82,7 +82,7 @@ Data& Data::operator= (Data&& other)
 
 void Data::move(Data& other)
 {
-    if( !isNull() && _bytes != other._bytes) clear();
+    clear();
     
     _bytes = other._bytes;
     _size = other._size;
@@ -108,22 +108,14 @@ ssize_t Data::getSize() const
 
 void Data::copy(const unsigned char* bytes, const ssize_t size)
 {
-    if (!isNull() && bytes != _bytes)
-    {
-        clear();
-    }
-    else
-    {
-        //do not free if bytes == _bytes
-        _bytes = nullptr;
-    }
+    clear();
 
     if (size > 0)
     {
+        _size = size;
         _bytes = (unsigned char*)malloc(sizeof(unsigned char) * _size);
         memcpy(_bytes, bytes, _size);
     }
-    _size = size;
 }
 
 void Data::fastSet(unsigned char* bytes, const ssize_t size)
