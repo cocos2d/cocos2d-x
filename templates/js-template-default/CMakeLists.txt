@@ -26,7 +26,7 @@
 
 cmake_minimum_required(VERSION 3.1)
 
-set(APP_NAME TemplateJS)
+set(APP_NAME HelloJavascript)
 
 project(${APP_NAME})
 

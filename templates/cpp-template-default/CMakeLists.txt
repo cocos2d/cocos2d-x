@@ -25,7 +25,7 @@
 
 cmake_minimum_required(VERSION 3.1)
 
-set(APP_NAME TemplateCpp)
+set(APP_NAME HelloCpp)
 
 project(${APP_NAME})
 
