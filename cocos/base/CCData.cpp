@@ -109,24 +109,17 @@ ssize_t Data::getSize() const
 ssize_t Data::copy(const unsigned char* bytes, const ssize_t size)
 {
     CCASSERT(size >= 0, "copy size should be non-negative");
+    CCASSERT(bytes, "bytes should not be nullptr");
 
     if (size <= 0) return 0;
 
     if (bytes != _bytes)
     {
         clear();
-    }
-    else
-    {
-        _size = size;
-        return _size;
-    }
-    
-    if (size > 0)
-    {
         _bytes = (unsigned char*)malloc(sizeof(unsigned char) * _size);
         memcpy(_bytes, bytes, _size);
     }
+
     _size = size;
     return _size;
 }
@@ -134,6 +127,7 @@ ssize_t Data::copy(const unsigned char* bytes, const ssize_t size)
 void Data::fastSet(unsigned char* bytes, const ssize_t size)
 {
     CCASSERT(size >= 0, "fastSet size should be non-negative");
+    CCASSERT(bytes, "bytes should not be nullptr");
     _bytes = bytes;
     _size = size;
 }
