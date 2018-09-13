@@ -134,7 +134,7 @@ void Data::fastSet(unsigned char* bytes, const ssize_t size)
 
 void Data::clear()
 {
-    if(!_bytes) free(_bytes);
+    if(_bytes) free(_bytes);
     _bytes = nullptr;
     _size = 0;
 }
