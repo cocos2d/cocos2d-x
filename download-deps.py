@@ -271,8 +271,8 @@ class CocosZipInstaller(object):
         if os.path.exists(fmod_path):
             os.unlink(os.path.join(fmod_path, "libfmod.so.6"))
             os.unlink(os.path.join(fmod_path, "libfmodL.so.6"))
-            os.symlink(os.path.join(fmod_path, "libfmod.so"), os.path.join(fmod_path, "libfmod.so.6"))
-            os.symlink(os.path.join(fmod_path, "libfmodL.so"), os.path.join(fmod_path, "libfmodL.so.6"))
+            os.symlink("libfmod.so", os.path.join(fmod_path, "libfmod.so.6"))
+            os.symlink("libfmodL.so", os.path.join(fmod_path, "libfmodL.so.6"))
         else:
             print("==> fmod directory not found `%s`, failed to fix fmod link!"%fmod_path)
 
