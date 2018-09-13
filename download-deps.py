@@ -260,6 +260,22 @@ class CocosZipInstaller(object):
         # remove external except 'config.json'
         delete_folder_except(external_folder, ['config.json'])
 
+    # rebuild link on linux
+    def fix_fmod_link(self, extract_dir):
+        import os
+        import platform
+        if platform.system() != "Linux":
+            return
+        print("==> Fix fmod link ... ")                        
+        fmod_path = os.path.join(extract_dir, "linux-specific/fmod/prebuilt/64-bit")
+        if os.path.exists(fmod_path):
+            os.unlink(os.path.join(fmod_path, "libfmod.so.6"))
+            os.unlink(os.path.join(fmod_path, "libfmodL.so.6"))
+            os.symlink(os.path.join(fmod_path, "libfmod.so"), os.path.join(fmod_path, "libfmod.so.6"))
+            os.symlink(os.path.join(fmod_path, "libfmodL.so"), os.path.join(fmod_path, "libfmodL.so.6"))
+        else:
+            print("==> fmod directory not found `%s`, failed to fix fmod link!"%fmod_path)
+
     def run(self, workpath, folder_for_extracting, remove_downloaded, force_update, download_only):
         if not force_update and not self.need_to_update():
             print("==> Not need to update!")
@@ -285,6 +301,7 @@ class CocosZipInstaller(object):
                     if os.path.exists(distDir):
                         shutil.rmtree(distDir)
                     shutil.move( os.path.join(folder_for_extracting, srcDir), distDir)
+            self.fix_fmod_link(folder_for_extracting)
             print("==> Cleaning...")
             if os.path.exists(self._extracted_folder_name):
                 shutil.rmtree(self._extracted_folder_name)
