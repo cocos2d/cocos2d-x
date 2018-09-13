@@ -99,7 +99,7 @@ bool FileUtilsAndroid::init()
     {
         obbfile = new ZipFile(assetsPath);
     }
-
+    _writablePath = getWritablePath();
     return FileUtils::init();
 }
 

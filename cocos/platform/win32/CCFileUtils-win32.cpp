@@ -309,10 +309,9 @@ std::vector<std::string> FileUtilsWin32::listFiles(const std::string& dirPath) c
 
 string FileUtilsWin32::getWritablePath() const
 {
-    auto writablePath = _writablePath.load();
-    if (writablePath->length())
+    if (_writablePath.length())
     {
-        return *writablePath;
+        return _writablePath;
     }
 
     // Get full path of executable, e.g. c:\Program Files (x86)\My Game Folder\MyGame.exe

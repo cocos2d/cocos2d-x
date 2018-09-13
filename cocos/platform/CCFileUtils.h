@@ -954,7 +954,7 @@ protected:
     /**
      * Writable path.
      */
-    cocos2d::atomic::Atomic<std::string> _writablePath;
+    std::string _writablePath = "";
 
     /**
      *  The singleton pointer of FileUtils.

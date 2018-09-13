@@ -68,7 +68,6 @@ bool FileUtilsLinux::init()
     // get application path
     char fullpath[256] = {0};
     auto defaultResRootPath = _defaultResRootPath.load();
-    auto writablePath = _writablePath.load();
     ssize_t length = readlink("/proc/self/exe", fullpath, sizeof(fullpath)-1);
 
     if (length <= 0) {
@@ -89,9 +88,9 @@ bool FileUtilsLinux::init()
     } else {
         xdgConfigPath  = xdg_config_path;
     }
-    *writablePath = xdgConfigPath;
-    *writablePath += appPath.substr(appPath.find_last_of("/"));
-    *writablePath += "/";
+    _writablePath = xdgConfigPath;
+    _writablePath += appPath.substr(appPath.find_last_of("/"));
+    _writablePath += "/";
 
     return FileUtils::init();
 }
@@ -99,13 +98,12 @@ bool FileUtilsLinux::init()
 string FileUtilsLinux::getWritablePath() const
 {
     struct stat st;
-    auto writablePath = _writablePath.load();
-    stat(writablePath->c_str(), &st);
+    stat(_writablePath.c_str(), &st);
     if (!S_ISDIR(st.st_mode)) {
-        mkdir(writablePath->c_str(), 0744);
+        mkdir(_writablePath.c_str(), 0744);
     }
 
-    return *writablePath;
+    return _writablePath;
 }
 
 bool FileUtilsLinux::isFileExistInternal(const std::string& strFilePath) const

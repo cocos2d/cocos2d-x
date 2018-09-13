@@ -552,8 +552,7 @@ void FileUtils::setDelegate(FileUtils *delegate)
 }
 
 FileUtils::FileUtils()
-    : _writablePath(new std::string(""))
-    , _searchResolutionsOrderArray(new std::vector<std::string>())
+    : _searchResolutionsOrderArray(new std::vector<std::string>())
     , _searchPathArray(new std::vector<std::string>())
     , _originalSearchPaths(new std::vector<std::string>())
     , _defaultResRootPath(new std::string(""))
@@ -938,8 +937,7 @@ const std::vector<std::string> FileUtils::getOriginalSearchPaths() const
 
 void FileUtils::setWritablePath(const std::string& writablePath)
 {
-    auto path = _writablePath.load();
-    *path = writablePath;
+    _writablePath = writablePath;
 }
 
 const std::string FileUtils::getDefaultResourceRootPath() const

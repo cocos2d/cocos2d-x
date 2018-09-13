@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include <mutex>
 #include <memory>
 
-
+#include "base/CCRef.h"
 
 namespace cocos2d {
     namespace atomic
@@ -69,6 +69,9 @@ namespace cocos2d {
         private:
             std::shared_ptr<T> _data = nullptr;
             std::shared_ptr<std::recursive_mutex> _mtx = nullptr;
+
+            //memory T should be managed by std::shared_ptr only, cocos2d::Ref would cause 
+            static_assert(!std::is_base_of<cocos2d::Ref, typename std::remove_const<T>::type>::value, "T should not be derived from cocos2d::Ref, it is not supported");
         };
     }
 }
