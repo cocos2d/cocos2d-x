@@ -31,37 +31,116 @@ THE SOFTWARE.
 namespace cocos2d {
     namespace atomic
     {
+        
+
+        /**
+        * Guard is a recursive_mutex wrap for pointer T*, provide RAII-style 
+        * mechanism for owning a mutex for the duration of a scoped block.
+        *
+        * It trys to call lock(), when a Guard object is created. 
+        * unlock() will be called when control leaves the scope and Guard will be destroyed.
+        * 
+        * Guard should be fetched by Atomic#load() only.
+        * 
+        * Operation to `T*` can be performed through `->` or `*`
+        */
         template<typename T>
         class Guard {
         public:
+            /**
+            * construct a Guard and acquire lock
+            * this should not be called manually
+            */
             Guard(std::shared_ptr<T> d, std::shared_ptr<std::recursive_mutex> mtx) :_mtx(mtx), _data(d) { _mtx->lock(); }
+
+            /**
+            * copy constructor of Guard and acquire lock
+            * this should not be called manually
+            */
             Guard(const Guard &o) :_mtx(o._mtx), _data(o._data) { _mtx->lock(); }
+
+            /**
+            * destructor of Guard, release unlock
+            */
             virtual ~Guard() { _mtx->unlock(); }
+
             operator bool() { return _data != nullptr; }
+
+            /**
+            * accquire inner pointer T*
+            */
             T * operator ->() { return _data.get(); }
+            
+            /**
+            * accquire inner pointer T*
+            */
             const T * operator ->() const { return _data.get(); }
+            
+            /**
+            * accquire inner data reference T&
+            */
             T& operator *() { return *_data.get(); }
+
+            /**
+            * accquire inner data reference T&
+            */
             const T& operator *() const { return *_data.get(); }
         private:
             std::shared_ptr<std::recursive_mutex> _mtx;
             std::shared_ptr<T> _data = nullptr;
         };
 
+        /**
+        * Atomic bind data `T*` with a `recursive_mutex` and enforce accquiring the
+        * lock before accessing data. 
+        * 
+        * here is an example that shows the usage
+        * ```
+        * Atomic<std::vector<std::string>> atomicVec(new std::vector<std::string>>());
+        * 
+        * //thread 1
+        * {
+        *     auto vecGuard = atomicVec.load();
+        *     vecGuard->push_back("a");
+        *     vecGuard->push_back("b");
+        * }
+        * //thread 2
+        * {
+        *     auto vecGuard = atomicVec.load();
+        *     for(auto str : *vecGuard)
+        *     {
+        *       //iter ... 
+        *     }
+        * }
+        * ```
+        */
         template<typename T>
         class Atomic {
         public:
+            /**
+            * Constructor of Atomic. 
+            * create a internal recursive_mutex used to protect data `T*`
+            */
             Atomic(T *data) {
                 _data = std::shared_ptr<T>(data);
                 _mtx = std::make_shared<std::recursive_mutex>();
             }
+
+            Atomic(const Atomic &a) : _data(a._data), _mtx(a._mtx) {}
+
+
             virtual ~Atomic() {}
             /**
-            * accquire Guard scope object
+            * Creates a Guard object and that is the only way to access internal data T*.
             */
             Guard<T> load() {
                 std::lock_guard<std::recursive_mutex> guard(*_mtx);
                 return Guard<T>(_data, _mtx);
             }
+
+            /**
+            * Creates a Guard object and that is the only way to access internal data T*.
+            */
             const Guard<T> load() const {
                 std::lock_guard<std::recursive_mutex> guard(*_mtx);
                 return Guard<T>(_data, _mtx);
