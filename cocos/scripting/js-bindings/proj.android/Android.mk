@@ -114,7 +114,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual \
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_js_android_static
 
-LOCAL_STATIC_LIBRARIES := cocos2dx_static
+LOCAL_STATIC_LIBRARIES := cc_static
 LOCAL_STATIC_LIBRARIES += cocos_localstorage_static
 
 include $(BUILD_STATIC_LIBRARY)

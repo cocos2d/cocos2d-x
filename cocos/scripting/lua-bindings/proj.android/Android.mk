@@ -186,7 +186,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_android_static
 
-LOCAL_STATIC_LIBRARIES := cocos2dx_static
+LOCAL_STATIC_LIBRARIES := cc_static
 
 include $(BUILD_STATIC_LIBRARY)
 

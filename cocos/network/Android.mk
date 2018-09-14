@@ -1,7 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocos_network_static
+LOCAL_MODULE := cc_net_static
 
 LOCAL_MODULE_FILENAME := libnetwork
 
@@ -16,7 +16,7 @@ Uri.cpp
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
 
-LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
+LOCAL_STATIC_LIBRARIES := cc_core
 LOCAL_STATIC_LIBRARIES += libwebsockets_static
 
 include $(BUILD_STATIC_LIBRARY)

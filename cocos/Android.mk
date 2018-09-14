@@ -2,9 +2,9 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocos2dx_internal_static
+LOCAL_MODULE := cc_core
 
-LOCAL_MODULE_FILENAME := libcocos2dxinternal
+LOCAL_MODULE_FILENAME := libcc_core
 
 LOCAL_ARM_MODE := arm
 
@@ -301,15 +301,15 @@ include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocos2dx_static
-LOCAL_MODULE_FILENAME := libcocos2d
+LOCAL_MODULE := cc_static
+LOCAL_MODULE_FILENAME := libcc
 
-LOCAL_STATIC_LIBRARIES := cocostudio_static
-LOCAL_STATIC_LIBRARIES += cocosbuilder_static
-LOCAL_STATIC_LIBRARIES += cocos3d_static
+LOCAL_STATIC_LIBRARIES := cs_static
+LOCAL_STATIC_LIBRARIES += ccb_static
+LOCAL_STATIC_LIBRARIES += c3d_static
 LOCAL_STATIC_LIBRARIES += spine_static
-LOCAL_STATIC_LIBRARIES += cocos_network_static
-LOCAL_STATIC_LIBRARIES += audioengine_static
+LOCAL_STATIC_LIBRARIES += cc_net_static
+LOCAL_STATIC_LIBRARIES += audio_static
 
 include $(BUILD_STATIC_LIBRARY)
 #==============================================================

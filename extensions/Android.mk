@@ -181,10 +181,10 @@ Particle3D/PU/CCPUBehaviourTranslator.cpp \
 Particle3D/PU/CCPUSlaveBehaviour.cpp \
 Particle3D/PU/CCPUSlaveBehaviourTranslator.cpp
 
-LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
+LOCAL_STATIC_LIBRARIES := cc_core
 LOCAL_STATIC_LIBRARIES += box2d_static
 LOCAL_STATIC_LIBRARIES += bullet_static
-LOCAL_STATIC_LIBRARIES += cocos_network_static
+LOCAL_STATIC_LIBRARIES += cc_net_static
 
 LOCAL_CXXFLAGS += -fexceptions
 

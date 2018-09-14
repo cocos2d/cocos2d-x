@@ -1,7 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocosbuilder_static
+LOCAL_MODULE := ccb_static
 
 LOCAL_MODULE_FILENAME := libcocosbuilder
 
