@@ -552,7 +552,8 @@ void FileUtils::setDelegate(FileUtils *delegate)
 }
 
 FileUtils::FileUtils()
-    : _searchResolutionsOrderArray(new std::vector<std::string>())
+    : _filenameLookupDict(new ValueMap())
+    , _searchResolutionsOrderArray(new std::vector<std::string>())
     , _searchPathArray(new std::vector<std::string>())
     , _originalSearchPaths(new std::vector<std::string>())
     , _defaultResRootPath(new std::string(""))
@@ -776,11 +777,11 @@ void FileUtils::writeValueVectorToFile(ValueVector vecData, const std::string& f
 std::string FileUtils::getNewFilename(const std::string &filename) const
 {
     std::string newFileName;
-
+    auto filenameLookupDict = _filenameLookupDict.load();
     // in Lookup Filename dictionary ?
-    auto iter = _filenameLookupDict.find(filename);
+    auto iter = filenameLookupDict->find(filename);
 
-    if (iter == _filenameLookupDict.end())
+    if (iter == filenameLookupDict->end())
     {
         newFileName = filename;
     }
@@ -1032,9 +1033,10 @@ void FileUtils::addSearchPath(const std::string &searchpath,const bool front)
 
 void FileUtils::setFilenameLookupDictionary(const ValueMap& filenameLookupDict)
 {
+    auto fld = _filenameLookupDict.load();
     auto fullPathCache = _fullPathCache.load();
     fullPathCache->clear();
-    _filenameLookupDict = filenameLookupDict;
+    *fld = filenameLookupDict;
 }
 
 void FileUtils::loadFilenameLookupDictionaryFromFile(const std::string &filename)

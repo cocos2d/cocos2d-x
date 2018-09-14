@@ -917,7 +917,7 @@ protected:
      *
      *  @since v2.1
      */
-    ValueMap _filenameLookupDict;
+    cocos2d::atomic::Atomic<ValueMap> _filenameLookupDict;
 
     /**
      *  The vector contains resolution folders.
