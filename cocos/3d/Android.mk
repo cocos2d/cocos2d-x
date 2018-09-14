@@ -4,7 +4,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := c3d_static
 LOCAL_ARM_MODE := arm
 
-LOCAL_MODULE_FILENAME := libcocos3d
+LOCAL_MODULE_FILENAME := libc3d
 
 LOCAL_SRC_FILES := \
 CCRay.cpp \

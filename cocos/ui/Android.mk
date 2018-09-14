@@ -1,7 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocos_ui_static
+LOCAL_MODULE := ccui_static
 
 LOCAL_MODULE_FILENAME := libui
 
@@ -49,6 +49,6 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../editor-support
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../editor-support
 
-LOCAL_STATIC_LIBRARIES := cocos_extension_static
+LOCAL_STATIC_LIBRARIES := cc_ets_static
 
 include $(BUILD_STATIC_LIBRARY)

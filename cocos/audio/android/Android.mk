@@ -5,7 +5,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := audio_static
 
-LOCAL_MODULE_FILENAME := libaudioengine
+LOCAL_MODULE_FILENAME := libaudio
 
 LOCAL_SRC_FILES := AudioEngine-inl.cpp \
                    ../AudioEngine.cpp \
@@ -52,9 +52,9 @@ include $(BUILD_STATIC_LIBRARY)
 #SimpleAudioEngine
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocosdenshion_static
+LOCAL_MODULE := ccds_static
 
-LOCAL_MODULE_FILENAME := libcocosdenshion
+LOCAL_MODULE_FILENAME := libccds
 
 LOCAL_SRC_FILES := cddSimpleAudioEngine.cpp \
                    ccdandroidUtils.cpp \
