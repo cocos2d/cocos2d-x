@@ -38,6 +38,8 @@ THE SOFTWARE.
 
 using namespace std;
 
+#define DECLARE_GUARD std::lock_guard<std::recursive_mutex> __guard__(_mutex)
+
 NS_CC_BEGIN
 
 #define CC_MAX_PATH  512
@@ -100,6 +102,7 @@ FileUtilsWin32::FileUtilsWin32()
 
 bool FileUtilsWin32::init()
 {
+    DECLARE_GUARD;
     _checkPath();
     _defaultResRootPath = s_resourcePath;
     return FileUtils::init();
@@ -136,6 +139,7 @@ long FileUtilsWin32::getFileSize(const std::string &filepath)
 
 bool FileUtilsWin32::isFileExistInternal(const std::string& strFilePath) const
 {
+    DECLARE_GUARD;
     if (strFilePath.empty())
     {
         return false;
@@ -308,6 +312,7 @@ std::vector<std::string> FileUtilsWin32::listFiles(const std::string& dirPath) c
 
 string FileUtilsWin32::getWritablePath() const
 {
+    DECLARE_GUARD;
     if (_writablePath.length())
     {
         return _writablePath;

@@ -37,6 +37,9 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "platform/CCSAXParser.h"
 
+
+#define DECLARE_GUARD std::lock_guard<std::recursive_mutex> __guard__(_mutex)
+
 NS_CC_BEGIN
 
 struct FileUtilsApple::IMPL {
@@ -231,6 +234,8 @@ FileUtils* FileUtils::getInstance()
 
 std::string FileUtilsApple::getWritablePath() const
 {
+    DECLARE_GUARD;
+
     auto writablePath = _writablePath.load();
     if (writablePath->length())
     {

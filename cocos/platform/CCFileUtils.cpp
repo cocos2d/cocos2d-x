@@ -42,6 +42,8 @@ THE SOFTWARE.
 #endif
 #include <sys/stat.h>
 
+#define DECLARE_GUARD std::lock_guard<std::recursive_mutex> __guard__(_mutex)
+
 NS_CC_BEGIN
 
 // Implement DictMaker
@@ -612,6 +614,7 @@ void FileUtils::writeDataToFile(Data data, const std::string& fullPath, std::fun
 
 bool FileUtils::init()
 {
+    DECLARE_GUARD;
     _searchPathArray.push_back(_defaultResRootPath);
     _searchResolutionsOrderArray.push_back("");
     return true;
@@ -619,6 +622,7 @@ bool FileUtils::init()
 
 void FileUtils::purgeCachedEntries()
 {
+    DECLARE_GUARD;
     _fullPathCache.clear();
 }
 
@@ -770,6 +774,8 @@ void FileUtils::writeValueVectorToFile(ValueVector vecData, const std::string& f
 std::string FileUtils::getNewFilename(const std::string &filename) const
 {
     std::string newFileName;
+    
+    DECLARE_GUARD;
 
     // in Lookup Filename dictionary ?
     auto iter = _filenameLookupDict.find(filename);
@@ -808,6 +814,9 @@ std::string FileUtils::getPathForFilename(const std::string& filename, const std
 
 std::string FileUtils::fullPathForFilename(const std::string &filename) const
 {
+    
+    DECLARE_GUARD;
+
     if (filename.empty())
     {
         return "";
@@ -861,6 +870,8 @@ std::string FileUtils::fullPathFromRelativeFile(const std::string &filename, con
 
 void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& searchResolutionsOrder)
 {
+    DECLARE_GUARD;
+
     if (_searchResolutionsOrderArray == searchResolutionsOrder)
     {
         return;
@@ -894,6 +905,9 @@ void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& search
 
 void FileUtils::addSearchResolutionsOrder(const std::string &order,const bool front)
 {
+    
+    DECLARE_GUARD;
+
     std::string resOrder = order;
     if (!resOrder.empty() && resOrder[resOrder.length()-1] != '/')
         resOrder.append("/");
@@ -905,33 +919,39 @@ void FileUtils::addSearchResolutionsOrder(const std::string &order,const bool fr
     }
 }
 
-const std::vector<std::string>& FileUtils::getSearchResolutionsOrder() const
+const std::vector<std::string> FileUtils::getSearchResolutionsOrder() const
 {
+    DECLARE_GUARD;
     return _searchResolutionsOrderArray;
 }
 
-const std::vector<std::string>& FileUtils::getSearchPaths() const
+const std::vector<std::string> FileUtils::getSearchPaths() const
 {
+    DECLARE_GUARD;
     return _searchPathArray;
 }
 
-const std::vector<std::string>& FileUtils::getOriginalSearchPaths() const
+const std::vector<std::string> FileUtils::getOriginalSearchPaths() const
 {
+    DECLARE_GUARD;
     return _originalSearchPaths;
 }
 
 void FileUtils::setWritablePath(const std::string& writablePath)
 {
+    DECLARE_GUARD;
     _writablePath = writablePath;
 }
 
-const std::string& FileUtils::getDefaultResourceRootPath() const
+const std::string FileUtils::getDefaultResourceRootPath() const
 {
+    DECLARE_GUARD;
     return _defaultResRootPath;
 }
 
 void FileUtils::setDefaultResourceRootPath(const std::string& path)
 {
+    DECLARE_GUARD;
     if (_defaultResRootPath != path)
     {
         _fullPathCache.clear();
@@ -948,6 +968,7 @@ void FileUtils::setDefaultResourceRootPath(const std::string& path)
 
 void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 {
+    DECLARE_GUARD;
     bool existDefaultRootPath = false;
     _originalSearchPaths = searchPaths;
 
@@ -984,6 +1005,7 @@ void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
 
 void FileUtils::addSearchPath(const std::string &searchpath,const bool front)
 {
+    DECLARE_GUARD;
     std::string prefix;
     if (!isAbsolutePath(searchpath))
         prefix = _defaultResRootPath;
@@ -1005,6 +1027,7 @@ void FileUtils::addSearchPath(const std::string &searchpath,const bool front)
 
 void FileUtils::setFilenameLookupDictionary(const ValueMap& filenameLookupDict)
 {
+    DECLARE_GUARD;
     _fullPathCache.clear();
     _filenameLookupDict = filenameLookupDict;
 }
@@ -1077,6 +1100,8 @@ bool FileUtils::isAbsolutePath(const std::string& path) const
 bool FileUtils::isDirectoryExist(const std::string& dirPath) const
 {
     CCASSERT(!dirPath.empty(), "Invalid path");
+    
+    DECLARE_GUARD;
 
     if (isAbsolutePath(dirPath))
     {

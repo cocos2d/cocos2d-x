@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include <vector>
 #include <unordered_map>
 #include <type_traits>
+#include <mutex>
 
 #include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
@@ -421,7 +422,7 @@ public:
      *  @since v2.1
      *  @lua NA
      */
-    virtual const std::vector<std::string>& getSearchResolutionsOrder() const;
+    virtual const std::vector<std::string> getSearchResolutionsOrder() const;
 
     /**
      *  Sets the array of search paths.
@@ -447,7 +448,7 @@ public:
     /**
      * Get default resource root path.
      */
-    const std::string& getDefaultResourceRootPath() const;
+    const std::string getDefaultResourceRootPath() const;
 
     /**
      * Set default resource root path.
@@ -471,13 +472,13 @@ public:
      *  @see fullPathForFilename(const char*).
      *  @lua NA
      */
-    virtual const std::vector<std::string>& getSearchPaths() const;
+    virtual const std::vector<std::string> getSearchPaths() const;
 
     /**
      *  Gets the original search path array set by 'setSearchPaths' or 'addSearchPath'.
      *  @return The array of the original search paths
      */
-    virtual const std::vector<std::string>& getOriginalSearchPaths() const;
+    virtual const std::vector<std::string> getOriginalSearchPaths() const;
 
     /**
      *  Gets the writable path.
@@ -842,7 +843,7 @@ public:
     virtual void listFilesRecursivelyAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const;
 
     /** Returns the full path cache. */
-    const std::unordered_map<std::string, std::string>& getFullPathCache() const { return _fullPathCache; }
+    const std::unordered_map<std::string, std::string> getFullPathCache() const { return _fullPathCache; }
 
     /**
      *  Gets the new filename from the filename lookup dictionary.
@@ -904,6 +905,13 @@ protected:
      *  @return The full path of the file, if the file can't be found, it will return an empty string.
      */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) const;
+
+
+    /**
+    * mutex used to protect fields. 
+    */
+    mutable std::recursive_mutex _mutex;
+
 
     /** Dictionary used to lookup filenames based on a key.
      *  It is used internally by the following methods:
