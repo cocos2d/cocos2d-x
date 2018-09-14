@@ -262,7 +262,7 @@ bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath) const
     return false;
 }
 
-long FileUtilsAndroid::getFileSize(const std::string& filepath)
+long FileUtilsAndroid::getFileSize(const std::string& filepath) const
 {
     DECLARE_GUARD;
     long size = FileUtils::getFileSize(filepath);
