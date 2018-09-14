@@ -1,3 +1,5 @@
+import org.gradle.internal.os.OperatingSystem
+
 apply plugin: 'com.android.application'
 
 android {
@@ -16,6 +18,17 @@ android {
                     targets 'cpp_empty_test'
                     arguments 'NDK_TOOLCHAIN_VERSION=clang'
                     arguments '-j' + Runtime.runtime.availableProcessors()
+
+                    def module_paths = [project.file("../../../..").absolutePath,
+                                        project.file("../../../../cocos").absolutePath,
+                                        project.file("../../../../external").absolutePath]
+                    if (OperatingSystem.current().isWindows()) {
+                        module_paths = module_paths.collect {it.replaceAll('\\\\', '/')}
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(";")
+                    }
+                    else {
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(':')
+                    }
                 }
             }
             else if (PROP_BUILD_TYPE == 'cmake') {
