@@ -169,7 +169,7 @@ bool FileUtilsWin32::isAbsolutePath(const std::string& strPath) const
 }
 
 
-FileUtils::Status FileUtilsWin32::getContents(const std::string& filename, ResizableBuffer* buffer)
+FileUtils::Status FileUtilsWin32::getContents(const std::string& filename, ResizableBuffer* buffer) const
 {
     if (filename.empty())
         return FileUtils::Status::NotExists;
@@ -364,7 +364,7 @@ string FileUtilsWin32::getWritablePath() const
     return convertPathFormatToUnixStyle(StringWideCharToUtf8(retPath));
 }
 
-bool FileUtilsWin32::renameFile(const std::string &oldfullpath, const std::string& newfullpath)
+bool FileUtilsWin32::renameFile(const std::string &oldfullpath, const std::string& newfullpath) const
 {
     CCASSERT(!oldfullpath.empty(), "Invalid path");
     CCASSERT(!newfullpath.empty(), "Invalid path");
@@ -391,7 +391,7 @@ bool FileUtilsWin32::renameFile(const std::string &oldfullpath, const std::strin
     }
 }
 
-bool FileUtilsWin32::renameFile(const std::string &path, const std::string &oldname, const std::string &name)
+bool FileUtilsWin32::renameFile(const std::string &path, const std::string &oldname, const std::string &name) const
 {
     CCASSERT(!path.empty(), "Invalid path");
     std::string oldPath = path + oldname;
@@ -404,7 +404,7 @@ bool FileUtilsWin32::renameFile(const std::string &path, const std::string &oldn
     return renameFile(_old, _new);
 }
 
-bool FileUtilsWin32::createDirectory(const std::string& dirPath)
+bool FileUtilsWin32::createDirectory(const std::string& dirPath) const
 {
     CCASSERT(!dirPath.empty(), "Invalid path");
 
@@ -461,7 +461,7 @@ bool FileUtilsWin32::createDirectory(const std::string& dirPath)
     return true;
 }
 
-bool FileUtilsWin32::removeFile(const std::string &filepath)
+bool FileUtilsWin32::removeFile(const std::string &filepath) const
 {
     std::regex pat("\\/");
     std::string win32path = std::regex_replace(filepath, pat, "\\");
@@ -477,7 +477,7 @@ bool FileUtilsWin32::removeFile(const std::string &filepath)
     }
 }
 
-bool FileUtilsWin32::removeDirectory(const std::string& dirPath)
+bool FileUtilsWin32::removeDirectory(const std::string& dirPath) const
 {
     std::wstring wpath = StringUtf8ToWideChar(dirPath);
     std::wstring files = wpath + L"*.*";
