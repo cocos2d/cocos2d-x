@@ -492,6 +492,7 @@ Console::Console()
 , _isIpv6Server(false)
 , _sendDebugStrings(false)
 , _bindAddress("")
+, _commandSeparator(DEFAULT_COMMAND_SEPARATOR)
 {
     createCommandAllocator();
     createCommandConfig();
