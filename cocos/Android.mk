@@ -313,8 +313,6 @@ LOCAL_STATIC_LIBRARIES += audioengine_static
 
 include $(BUILD_STATIC_LIBRARY)
 #==============================================================
-$(call import-add-path,$(LOCAL_PATH))
-$(call import-add-path,$(LOCAL_PATH)/../external)
 $(call import-module,android/cpufeatures)
 $(call import-module,freetype2/prebuilt/android)
 $(call import-module,platform/android)
