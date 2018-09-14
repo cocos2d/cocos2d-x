@@ -235,11 +235,9 @@ FileUtils* FileUtils::getInstance()
 std::string FileUtilsApple::getWritablePath() const
 {
     DECLARE_GUARD;
-
-    auto writablePath = _writablePath.load();
-    if (writablePath->length())
+    if (_writablePath.length())
     {
-        return *writablePath;
+        return _writablePath;
     }
 
     // save to document folder
