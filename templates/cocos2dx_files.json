@@ -382,6 +382,7 @@
         "cocos/audio/winrt/MediaStreamer.cpp", 
         "cocos/audio/winrt/MediaStreamer.h", 
         "cocos/audio/winrt/SimpleAudioEngine.cpp", 
+        "cocos/base/CCAtomic.h",
         "cocos/base/CCAsyncTaskPool.cpp", 
         "cocos/base/CCAsyncTaskPool.h", 
         "cocos/base/CCAutoreleasePool.cpp", 

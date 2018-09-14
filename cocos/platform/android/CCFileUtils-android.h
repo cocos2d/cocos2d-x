@@ -67,12 +67,12 @@ public:
 
     virtual std::string getNewFilename(const std::string &filename) const override;
 
-    virtual FileUtils::Status getContents(const std::string& filename, ResizableBuffer* buffer) override;
+    virtual FileUtils::Status getContents(const std::string& filename, ResizableBuffer* buffer) const override;
 
     virtual std::string getWritablePath() const override;
     virtual bool isAbsolutePath(const std::string& strPath) const override;
     
-    virtual long getFileSize(const std::string& filepath) override;
+    virtual long getFileSize(const std::string& filepath) const override;
 
 private:
     virtual bool isFileExistInternal(const std::string& strFilePath) const override;

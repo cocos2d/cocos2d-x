@@ -37,6 +37,7 @@ set(COCOS_BASE_HEADER
     base/CCConsole.h
     base/CCEvent.h
     base/ccTypes.h
+    base/CCAtomic.h
     base/CCAsyncTaskPool.h
     base/ccRandom.h
     base/CCRef.h
