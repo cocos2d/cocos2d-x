@@ -139,21 +139,22 @@ Rect GLViewImpl::getSafeAreaRect() const {
         deviceAspectRatio = safeAreaRect.size.width / safeAreaRect.size.height;
     }
 
-    float margin = DEFAULT_MARGIN_ANDROID / _scaleX;
+    float marginX = DEFAULT_MARGIN_ANDROID / _scaleX;
+    float marginY = DEFAULT_MARGIN_ANDROID / _scaleY;
 
     bool isScreenRound = JniHelper::callStaticBooleanMethod("org/cocos2dx/lib/Cocos2dxHelper", "isScreenRound");
     bool hasSoftKeys = JniHelper::callStaticBooleanMethod("org/cocos2dx/lib/Cocos2dxHelper", "hasSoftKeys");
     if(isScreenRound) {
         // edge screen (ex. Samsung Galaxy s7, s9, s9+, Note 9, Nokia 8 Sirocco, Sony Xperia XZ3, Oppo Find X...)
         if(safeAreaRect.size.width < safeAreaRect.size.height) {
-            safeAreaRect.origin.y += margin * 2.f;
-            safeAreaRect.size.height -= (margin * 2.f);
+            safeAreaRect.origin.y += marginY * 2.f;
+            safeAreaRect.size.height -= (marginY * 2.f);
 
-            safeAreaRect.origin.x += margin;
-            safeAreaRect.size.width -= (margin * 2.f);
+            safeAreaRect.origin.x += marginX;
+            safeAreaRect.size.width -= (marginX * 2.f);
         } else {
-            safeAreaRect.origin.y += margin;
-            safeAreaRect.size.height -= (margin * 2.f);
+            safeAreaRect.origin.y += marginY;
+            safeAreaRect.size.height -= (marginY * 2.f);
 
             // landscape: no changes with X-coords
         }
@@ -162,24 +163,24 @@ Rect GLViewImpl::getSafeAreaRect() const {
         // deviceAspectRatio more than 2 (@see "android.max_aspect" parameter in AndroidManifest.xml)
         float bottomMarginIfPortrait = 0;
         if(hasSoftKeys) {
-            bottomMarginIfPortrait = margin * 2.f;
+            bottomMarginIfPortrait = marginY * 2.f;
         }
 
         if(safeAreaRect.size.width < safeAreaRect.size.height) {
             // portrait: double margin space if device has soft menu
             safeAreaRect.origin.y += bottomMarginIfPortrait;
-            safeAreaRect.size.height -= (bottomMarginIfPortrait + margin);
+            safeAreaRect.size.height -= (bottomMarginIfPortrait + marginY);
         } else {
             // landscape: ignore double margin at the bottom in any cases
             // prepare signle margin for round corners
-            safeAreaRect.origin.y += margin;
-            safeAreaRect.size.height -= (margin * 2.f);
+            safeAreaRect.origin.y += marginY;
+            safeAreaRect.size.height -= (marginY * 2.f);
         }
     } else {
         if(hasSoftKeys && (safeAreaRect.size.width < safeAreaRect.size.height)) {
             // portrait: preserve only for soft system menu
-            safeAreaRect.origin.y += margin * 2.f;
-            safeAreaRect.size.height -= (margin * 2.f);
+            safeAreaRect.origin.y += marginY * 2.f;
+            safeAreaRect.size.height -= (marginY * 2.f);
         }
     }
 
