@@ -31,11 +31,9 @@
 #pragma once
 
 #include <string>
+#include <memory>
 #include <vector>
-#include <mutex>
-#include <memory>  // for std::shared_ptr
-#include <atomic>
-#include <condition_variable>
+#include <list>
 
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCStdC.h"
@@ -50,11 +48,11 @@ struct lws_vhost;
 
 NS_CC_BEGIN
 
-class EventListenerCustom;
 
 namespace network {
 
-class WsThreadHelper;
+
+class WebSocketImpl;
 
 /**
  * WebSocket is wrapper of the libwebsockets-protocol, let the develop could call the websocket easily.
@@ -88,11 +86,13 @@ public:
      */
     struct Data
     {
-        Data():bytes(nullptr), len(0), issued(0), isBinary(false), ext(nullptr){}
-        char* bytes;
-        ssize_t len, issued;
-        bool isBinary;
-        void* ext;
+        Data(){}
+        Data(char *data, size_t len, bool isBinary) :bytes(data), len(len), isBinary(isBinary){}
+        char* bytes = nullptr;
+        size_t len = 0;
+        size_t issued = 0;
+        bool isBinary = false;
+        void* ext = nullptr;
     };
 
     /**
@@ -110,10 +110,11 @@ public:
      */
     enum class State
     {
-        CONNECTING,  /** &lt; value 0 */
-        OPEN,        /** &lt; value 1 */
-        CLOSING,     /** &lt; value 2 */
-        CLOSED,      /** &lt; value 3 */
+        CONNECTING,      /** &lt; value 0 */
+        OPEN,            /** &lt; value 1 */
+        CLOSING,         /** &lt; value 2 */
+        CLOSED,          /** &lt; value 3 */
+        UNINITIALIZED    /** &lt; value 4 */
     };
 
     /**
@@ -190,7 +191,7 @@ public:
      *  @param len the size of binary string data.
      *  @lua sendstring
      */
-    void send(const unsigned char* binaryMsg, unsigned int len);
+    void send(const unsigned char* binaryMsg, size_t len);
 
     /**
      *  @brief Closes the connection to server synchronously.
@@ -198,6 +199,13 @@ public:
      */
     void close();
     
+    /**
+    *  @brief Closes the connection to server synchronously.
+    *  @note It's a synchronous method, it will not return until websocket thread exits or timeout happends.
+    *  @param waitTimoutMS return before thread exits
+    */
+    void close(int waitTimoutMS);
+
     /**
      *  @brief Closes the connection to server asynchronously.
      *  @note It's an asynchronous method, it just notifies websocket thread to exit and returns directly,
@@ -215,63 +223,17 @@ public:
     /**
      *  @brief Gets the URL of websocket connection.
      */
-    inline const std::string& getUrl() const { return _url; }
+    const std::string& getUrl() const;
 
     /**
      *  @brief Gets the protocol selected by websocket server.
      */
-    inline const std::string& getProtocol() const { return _selectedProtocol; }
+    const std::string& getProtocol() const;
 
 private:
+    std::shared_ptr<WebSocketImpl> impl;
 
-    // The following callback functions are invoked in websocket thread
-    void onClientOpenConnectionRequest();
-    int onSocketCallback(struct lws *wsi, int reason, void *in, ssize_t len);
-
-    int onClientWritable();
-    int onClientReceivedData(void* in, ssize_t len);
-    int onConnectionOpened();
-    int onConnectionError();
-    int onConnectionClosed();
-
-    struct lws_vhost* createVhost(struct lws_protocols* protocols, int& sslConnection);
-
-private:
-
-    std::mutex   _readyStateMutex;
-    State        _readyState;
-
-    std::string _url;
-
-    std::vector<char> _receivedData;
-
-    struct lws* _wsInstance;
-    struct lws_protocols* _lwsProtocols;
-    std::string _clientSupportedProtocols;
-    std::string _selectedProtocol;
-
-    std::shared_ptr<std::atomic<bool>> _isDestroyed;
-    Delegate* _delegate;
-
-    std::mutex _closeMutex;
-    std::condition_variable _closeCondition;
-    std::vector<char*> _protocolNames;
-
-    enum class CloseState
-    {
-        NONE,
-        SYNC_CLOSING,
-        SYNC_CLOSED,
-        ASYNC_CLOSING
-    };
-    CloseState _closeState;
-
-    std::string _caFilePath;
-
-    EventListenerCustom* _resetDirectorListener;
-
-    friend class WsThreadHelper;
-    friend class WebSocketCallbackWrapper;
+    friend class WebSocketImpl;
 };
 
 } // namespace network {

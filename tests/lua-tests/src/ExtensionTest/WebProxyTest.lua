@@ -87,7 +87,7 @@ local function WebSocketTestLayer()
 
     wsSendText   = cc.WebSocket:create("wss://echo.websocket.org", {"myprotocol_1", "myprotocol_2"}, "cacert.pem")
     wsSendBinary = cc.WebSocket:create("ws://echo.websocket.org", {"hello"}, "cacert.pem")
-    wsError      = cc.WebSocket:create("ws://invalid.url.com", {"invalid_protocol"})
+    wsError      = cc.WebSocket:create("ws://invalid.urlcomxxxxxx", {"invalid_protocol"})
 
     local function wsSendTextOpen(strData)
         if sendTextStatus ~= nil then

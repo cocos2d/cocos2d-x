@@ -89,6 +89,14 @@ set(COCOS_BASE_HEADER
     base/CCScheduler.h
     base/CCEventType.h
     base/CCIMEDispatcher.h
+    base/loop/Collections.h
+    base/loop/Finalizer.h
+    base/loop/Loop.h
+    base/loop/Looper.h
+    base/loop/LoopEvent.h
+    base/loop/LoopRunable.h
+    base/loop/SeqItem.h
+    base/loop/ThreadLoop.h
     )
 
 set(COCOS_BASE_SRC
@@ -146,6 +154,7 @@ set(COCOS_BASE_SRC
     base/etc1.cpp
     base/pvr.cpp
     base/s3tc.cpp
+    base/loop/LoopRunable.cpp
+    base/loop/ThreadLoop.cpp
     ${COCOS_BASE_SPECIFIC_SRC}
-
     )

@@ -160,6 +160,8 @@ base/ccUtils.cpp \
 base/etc1.cpp \
 base/pvr.cpp \
 base/s3tc.cpp \
+base/loop/LoopRunable.cpp \
+base/loop/ThreadLoop.cpp \
 renderer/CCBatchCommand.cpp \
 renderer/CCCustomCommand.cpp \
 renderer/CCGLProgram.cpp \

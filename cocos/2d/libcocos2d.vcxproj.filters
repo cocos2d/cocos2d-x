@@ -292,6 +292,9 @@
     <Filter Include="external\md5">
       <UniqueIdentifier>{d3d38486-e13f-47b4-96b0-51a7c78e6d69}</UniqueIdentifier>
     </Filter>
+    <Filter Include="base\loop">
+      <UniqueIdentifier>{fb0d98d3-2123-4309-a259-b3a3fc3724d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -1998,6 +2001,15 @@
     <ClCompile Include="..\base\CCEventController.cpp" />
     <ClCompile Include="..\base\CCEventListenerController.cpp" />
     <ClCompile Include="..\precheader.cpp" />
+    <ClCompile Include="..\network\WebSocketImpl.cpp">
+      <Filter>network\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\loop\LoopRunable.cpp">
+      <Filter>base\loop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\loop\ThreadLoop.cpp">
+      <Filter>base\loop</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -3907,6 +3919,33 @@
     <ClInclude Include="..\base\CCEventController.h" />
     <ClInclude Include="..\base\CCEventListenerController.h" />
     <ClInclude Include="..\precheader.h" />
+    <ClInclude Include="..\network\WebSocketImpl.h">
+      <Filter>network\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\loop\Loop.h">
+      <Filter>base\loop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\loop\Looper.h">
+      <Filter>base\loop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\loop\LoopEvent.h">
+      <Filter>base\loop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\loop\LoopRunable.h">
+      <Filter>base\loop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\loop\ThreadLoop.h">
+      <Filter>base\loop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\loop\SeqItem.h">
+      <Filter>base\loop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\loop\Finalizer.h">
+      <Filter>base\loop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\loop\Collections.h">
+      <Filter>base\loop</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\math\Mat4.inl">
