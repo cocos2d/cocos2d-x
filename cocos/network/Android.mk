@@ -1,7 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cc_net_static
+LOCAL_MODULE := ccnet
 
 LOCAL_MODULE_FILENAME := libnetwork
 

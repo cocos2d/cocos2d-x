@@ -2,9 +2,9 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocos2d_lua_android_static
+LOCAL_MODULE := cclua_android
 
-LOCAL_MODULE_FILENAME := libluacocos2dandroid
+LOCAL_MODULE_FILENAME := libluaccandroid
 
 LOCAL_ARM_MODE := arm
 
@@ -33,9 +33,9 @@ include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE    := cocos2d_lua_static
+LOCAL_MODULE    := cclua_static
 
-LOCAL_MODULE_FILENAME := libluacocos2d
+LOCAL_MODULE_FILENAME := libluacc
 
 LOCAL_ARM_MODE := arm
 
@@ -184,7 +184,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                            $(LOCAL_PATH)/../manual/navmesh \
                            $(LOCAL_PATH)/../../../..
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_android_static
+LOCAL_WHOLE_STATIC_LIBRARIES := cclua_android
 
 LOCAL_STATIC_LIBRARIES := cc_static
 

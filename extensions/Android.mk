@@ -1,7 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE    := cc_ets_static
+LOCAL_MODULE    := ccets
 
 LOCAL_MODULE_FILENAME := libextension
 
@@ -184,7 +184,7 @@ Particle3D/PU/CCPUSlaveBehaviourTranslator.cpp
 LOCAL_STATIC_LIBRARIES := cc_core
 LOCAL_STATIC_LIBRARIES += box2d_static
 LOCAL_STATIC_LIBRARIES += bullet_static
-LOCAL_STATIC_LIBRARIES += cc_net_static
+LOCAL_STATIC_LIBRARIES += ccnet
 
 LOCAL_CXXFLAGS += -fexceptions
 

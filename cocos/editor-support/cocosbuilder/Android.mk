@@ -1,7 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := ccb_static
+LOCAL_MODULE := ccb
 
 LOCAL_MODULE_FILENAME := libccb
 
@@ -36,6 +36,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/.. \
                     $(LOCAL_PATH)/../../2d \
                     
 
-LOCAL_STATIC_LIBRARIES := cc_ets_static
+LOCAL_STATIC_LIBRARIES := ccets
 
 include $(BUILD_STATIC_LIBRARY)

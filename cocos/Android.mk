@@ -279,7 +279,7 @@ LOCAL_STATIC_LIBRARIES += cocos_ssl_static
 LOCAL_STATIC_LIBRARIES += recast_static
 LOCAL_STATIC_LIBRARIES += bullet_static
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dxandroid_static
+LOCAL_WHOLE_STATIC_LIBRARIES := ccandroid
 LOCAL_WHOLE_STATIC_LIBRARIES += cpufeatures
 
 # define the macro to compile through support/zip_support/ioapi.c
@@ -304,12 +304,12 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := cc_static
 LOCAL_MODULE_FILENAME := libcc
 
-LOCAL_STATIC_LIBRARIES := ccs_static
-LOCAL_STATIC_LIBRARIES += ccb_static
-LOCAL_STATIC_LIBRARIES += c3d_static
-LOCAL_STATIC_LIBRARIES += spine_static
-LOCAL_STATIC_LIBRARIES += cc_net_static
-LOCAL_STATIC_LIBRARIES += audio_static
+LOCAL_STATIC_LIBRARIES := ccs
+LOCAL_STATIC_LIBRARIES += ccb
+LOCAL_STATIC_LIBRARIES += cc3d
+LOCAL_STATIC_LIBRARIES += ccnet
+LOCAL_STATIC_LIBRARIES += audio
+LOCAL_STATIC_LIBRARIES += spine
 
 include $(BUILD_STATIC_LIBRARY)
 #==============================================================

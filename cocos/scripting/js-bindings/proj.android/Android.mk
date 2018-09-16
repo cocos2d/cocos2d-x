@@ -2,9 +2,9 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocos2d_js_android_static
+LOCAL_MODULE := ccjs_android
 
-LOCAL_MODULE_FILENAME := libjscocos2dandroid
+LOCAL_MODULE_FILENAME := libjsccandroid
 
 LOCAL_ARM_MODE := arm
 
@@ -29,9 +29,9 @@ include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocos2d_js_static
+LOCAL_MODULE := ccjs_static
 
-LOCAL_MODULE_FILENAME := libjscocos2d
+LOCAL_MODULE_FILENAME := libjscc
 
 LOCAL_ARM_MODE := arm
 
@@ -112,10 +112,10 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual \
                            $(LOCAL_PATH)/../auto \
                            $(LOCAL_PATH)/../../../audio/include
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_js_android_static
+LOCAL_WHOLE_STATIC_LIBRARIES := ccjs_android
 
 LOCAL_STATIC_LIBRARIES := cc_static
-LOCAL_STATIC_LIBRARIES += cocos_localstorage_static
+LOCAL_STATIC_LIBRARIES += ccstorage
 
 include $(BUILD_STATIC_LIBRARY)
 

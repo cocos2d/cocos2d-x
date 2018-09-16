@@ -14,7 +14,7 @@ LOCAL_SRC_FILES := main.cpp \
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes \
                     $(LOCAL_PATH)/../../../../../../external/lua/tolua \
 
-LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES := cclua_static
 
 include $(BUILD_SHARED_LIBRARY)
 

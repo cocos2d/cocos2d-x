@@ -1,7 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := c3d_static
+LOCAL_MODULE := cc3d
 LOCAL_ARM_MODE := arm
 
 LOCAL_MODULE_FILENAME := libc3d

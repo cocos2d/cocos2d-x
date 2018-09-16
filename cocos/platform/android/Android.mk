@@ -2,7 +2,7 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocos2dxandroid_static
+LOCAL_MODULE := ccandroid
 
 LOCAL_MODULE_FILENAME := libccandroid
 
