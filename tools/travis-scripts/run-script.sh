@@ -63,7 +63,7 @@ function build_ios_cmake()
     exit 0
 }
 
-function build_android()
+function build_android_ndk-build()
 {
     # Build all samples
     echo "Building Android samples ..."
@@ -76,7 +76,7 @@ function build_android()
 
     # build cpp-tests
     pushd $COCOS2DX_ROOT/tests/cpp-tests/proj.android
-    ./gradlew assembleRelease
+   ./gradlew assembleRelease -DPROP_BUILD_TYPE=ndk-build
     popd
 
     # build js-tests
@@ -86,7 +86,19 @@ function build_android()
     # popd
 }
 
-function build_android_lua()
+function build_android_cmake()
+{
+    # Build all samples
+    echo "Building Android samples ..."
+    source ../environment.sh
+
+    # build cpp-tests
+    pushd $COCOS2DX_ROOT/tests/cpp-tests/proj.android
+   ./gradlew assembleRelease -DPROP_BUILD_TYPE=cmake
+    popd
+}
+
+function build_android_lua_ndk-build()
 {
     # Build all samples
     echo "Building Android samples lua ..."
@@ -94,7 +106,20 @@ function build_android_lua()
 
     # build lua-tests
     pushd $COCOS2DX_ROOT/tests/lua-tests/project/proj.android
-    ./gradlew assembleDebug
+    ./gradlew assembleDebug -DPROP_BUILD_TYPE=ndk-build
+    popd
+
+}
+
+function build_android_lua_cmake()
+{
+    # Build all samples
+    echo "Building Android samples lua ..."
+    source ../environment.sh
+
+    # build lua-tests
+    pushd $COCOS2DX_ROOT/tests/lua-tests/project/proj.android
+    ./gradlew assembleDebug -DPROP_BUILD_TYPE=cmake
     popd
 
 }
@@ -215,13 +240,23 @@ function run_pull_request()
     fi
 
     # android
-    if [ $BUILD_TARGET == 'android' ]; then
-        build_android
+    if [ $BUILD_TARGET == 'android_ndk-build' ]; then
+        build_android_ndk-build
+    fi
+
+    # android
+    if [ $BUILD_TARGET == 'android_cmake' ]; then
+        build_android_cmake
     fi
 
     # android_lua
-    if [ $BUILD_TARGET == 'android_lua' ]; then
-        build_android_lua
+    if [ $BUILD_TARGET == 'android_lua_ndk-build' ]; then
+        build_android_lua_ndk-build
+    fi
+
+    # android_lua
+    if [ $BUILD_TARGET == 'android_lua_cmake' ]; then
+        build_android_lua_cmake
     fi
 
     if [ $BUILD_TARGET == 'mac' ]; then

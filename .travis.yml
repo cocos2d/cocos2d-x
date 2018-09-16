@@ -22,14 +22,24 @@ matrix:
       language: cpp
       osx_image: xcode9.3
       sudo: required
-    # android
+    # android ndk-build
     - os: linux
-      env: BUILD_TARGET=android
+      env: BUILD_TARGET=android_ndk-build
       language: android
       sudo: required
-    # android_lua
+    # android_lua ndk-build
     - os: linux
-      env: BUILD_TARGET=android_lua
+      env: BUILD_TARGET=android_lua_ndk-build
+      language: android
+      sudo: required
+    # android cmake
+    - os: linux
+      env: BUILD_TARGET=android_cmake
+      language: android
+      sudo: required
+    # android_lua cmake
+    - os: linux
+      env: BUILD_TARGET=android_lua_cmake
       language: android
       sudo: required
     # mac
