@@ -3,7 +3,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := ccnet
 
-LOCAL_MODULE_FILENAME := libnetwork
+LOCAL_MODULE_FILENAME := libnet
 
 LOCAL_ARM_MODE := arm
 

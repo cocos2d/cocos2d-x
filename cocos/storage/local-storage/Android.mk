@@ -3,7 +3,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := ccstorage
 
-LOCAL_MODULE_FILENAME := liblocalstorage
+LOCAL_MODULE_FILENAME := libstorage
 
 LOCAL_ARM_MODE := arm
 
