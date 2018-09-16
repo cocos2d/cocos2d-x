@@ -21,7 +21,7 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -lz \
                        -landroid
 
-LOCAL_STATIC_LIBRARIES := spidermonkey_static
+LOCAL_STATIC_LIBRARIES := ext_spidermonkey
 
 include $(BUILD_STATIC_LIBRARY)
 

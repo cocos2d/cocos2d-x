@@ -268,16 +268,16 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
                        -landroid
 
-LOCAL_STATIC_LIBRARIES := cocos_freetype2_static
-LOCAL_STATIC_LIBRARIES += cocos_png_static
-LOCAL_STATIC_LIBRARIES += cocos_jpeg_static
-LOCAL_STATIC_LIBRARIES += cocos_tiff_static
-LOCAL_STATIC_LIBRARIES += cocos_webp_static
-LOCAL_STATIC_LIBRARIES += cocos_chipmunk_static
-LOCAL_STATIC_LIBRARIES += cocos_zlib_static
-LOCAL_STATIC_LIBRARIES += cocos_ssl_static
-LOCAL_STATIC_LIBRARIES += recast_static
-LOCAL_STATIC_LIBRARIES += bullet_static
+LOCAL_STATIC_LIBRARIES := ext_freetype2
+LOCAL_STATIC_LIBRARIES += ext_png
+LOCAL_STATIC_LIBRARIES += ext_jpeg
+LOCAL_STATIC_LIBRARIES += ext_tiff
+LOCAL_STATIC_LIBRARIES += ext_webp
+LOCAL_STATIC_LIBRARIES += ext_chipmunk 
+LOCAL_STATIC_LIBRARIES += ext_zlib
+LOCAL_STATIC_LIBRARIES += ext_ssl
+LOCAL_STATIC_LIBRARIES += ext_recast
+LOCAL_STATIC_LIBRARIES += ext_bullet
 
 LOCAL_WHOLE_STATIC_LIBRARIES := ccandroid
 LOCAL_WHOLE_STATIC_LIBRARIES += cpufeatures

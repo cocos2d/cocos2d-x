@@ -17,6 +17,6 @@ Uri.cpp
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)
 
 LOCAL_STATIC_LIBRARIES := cc_core
-LOCAL_STATIC_LIBRARIES += libwebsockets_static
+LOCAL_STATIC_LIBRARIES += ext_websockets
 
 include $(BUILD_STATIC_LIBRARY)
