@@ -38,6 +38,8 @@ THE SOFTWARE.
 
 using namespace std;
 
+#define DECLARE_GUARD std::lock_guard<std::recursive_mutex> mutexGuard(_mutex)
+
 NS_CC_BEGIN
 
 #define CC_MAX_PATH  512
@@ -100,6 +102,7 @@ FileUtilsWin32::FileUtilsWin32()
 
 bool FileUtilsWin32::init()
 {
+    DECLARE_GUARD;
     _checkPath();
     _defaultResRootPath = s_resourcePath;
     return FileUtils::init();
@@ -136,6 +139,7 @@ long FileUtilsWin32::getFileSize(const std::string &filepath)
 
 bool FileUtilsWin32::isFileExistInternal(const std::string& strFilePath) const
 {
+    DECLARE_GUARD;
     if (strFilePath.empty())
     {
         return false;
@@ -165,7 +169,7 @@ bool FileUtilsWin32::isAbsolutePath(const std::string& strPath) const
 }
 
 
-FileUtils::Status FileUtilsWin32::getContents(const std::string& filename, ResizableBuffer* buffer)
+FileUtils::Status FileUtilsWin32::getContents(const std::string& filename, ResizableBuffer* buffer) const
 {
     if (filename.empty())
         return FileUtils::Status::NotExists;
@@ -308,6 +312,7 @@ std::vector<std::string> FileUtilsWin32::listFiles(const std::string& dirPath) c
 
 string FileUtilsWin32::getWritablePath() const
 {
+    DECLARE_GUARD;
     if (_writablePath.length())
     {
         return _writablePath;
@@ -359,7 +364,7 @@ string FileUtilsWin32::getWritablePath() const
     return convertPathFormatToUnixStyle(StringWideCharToUtf8(retPath));
 }
 
-bool FileUtilsWin32::renameFile(const std::string &oldfullpath, const std::string& newfullpath)
+bool FileUtilsWin32::renameFile(const std::string &oldfullpath, const std::string& newfullpath) const
 {
     CCASSERT(!oldfullpath.empty(), "Invalid path");
     CCASSERT(!newfullpath.empty(), "Invalid path");
@@ -386,7 +391,7 @@ bool FileUtilsWin32::renameFile(const std::string &oldfullpath, const std::strin
     }
 }
 
-bool FileUtilsWin32::renameFile(const std::string &path, const std::string &oldname, const std::string &name)
+bool FileUtilsWin32::renameFile(const std::string &path, const std::string &oldname, const std::string &name) const
 {
     CCASSERT(!path.empty(), "Invalid path");
     std::string oldPath = path + oldname;
@@ -399,7 +404,7 @@ bool FileUtilsWin32::renameFile(const std::string &path, const std::string &oldn
     return renameFile(_old, _new);
 }
 
-bool FileUtilsWin32::createDirectory(const std::string& dirPath)
+bool FileUtilsWin32::createDirectory(const std::string& dirPath) const
 {
     CCASSERT(!dirPath.empty(), "Invalid path");
 
@@ -456,7 +461,7 @@ bool FileUtilsWin32::createDirectory(const std::string& dirPath)
     return true;
 }
 
-bool FileUtilsWin32::removeFile(const std::string &filepath)
+bool FileUtilsWin32::removeFile(const std::string &filepath) const
 {
     std::regex pat("\\/");
     std::string win32path = std::regex_replace(filepath, pat, "\\");
@@ -472,7 +477,7 @@ bool FileUtilsWin32::removeFile(const std::string &filepath)
     }
 }
 
-bool FileUtilsWin32::removeDirectory(const std::string& dirPath)
+bool FileUtilsWin32::removeDirectory(const std::string& dirPath) const
 {
     std::wstring wpath = StringUtf8ToWideChar(dirPath);
     std::wstring files = wpath + L"*.*";
