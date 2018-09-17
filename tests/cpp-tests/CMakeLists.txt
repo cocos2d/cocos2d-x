@@ -91,7 +91,6 @@ list(APPEND GAME_HEADER
      Classes/UnitTest/UnitTest.h
      Classes/UnitTest/RefPtrTest.h
      Classes/ConfigurationTest/ConfigurationTest.h
-     Classes/PhysicsTest/PhysicsTest.h
      Classes/CurrentLanguageTest/CurrentLanguageTest.h
      Classes/AppDelegate.h
      Classes/LabelTest/LabelTestNew.h
@@ -278,7 +277,6 @@ list(APPEND GAME_SOURCE
      Classes/ParallaxTest/ParallaxTest.cpp
      Classes/Particle3DTest/Particle3DTest.cpp
      Classes/ParticleTest/ParticleTest.cpp
-     Classes/PhysicsTest/PhysicsTest.cpp
      Classes/ReleasePoolTest/ReleasePoolTest.cpp
      Classes/RenderTextureTest/RenderTextureTest.cpp
      Classes/RotateWorldTest/RotateWorldTest.cpp
@@ -357,16 +355,6 @@ if(WIN32 OR MACOSX OR LINUX)
     list(APPEND GAME_SOURCE
          Classes/WindowTest/WindowTest.cpp
          Classes/BugsTest/Bug-14327.cpp
-         )
-endif()
-
-if(USE_CHIPMUNK)
-    include_directories(${CHIPMUNK_INCLUDE_DIRS})
-    list(APPEND GAME_HEADER
-         Classes/ChipmunkTest/ChipmunkTest.h
-         )
-    list(APPEND GAME_SOURCE
-         Classes/ChipmunkTest/ChipmunkTest.cpp
          )
 endif()
 
@@ -449,6 +437,19 @@ if(USE_BULLET)
     include_directories(${BULLET_INCLUDE_DIRS})
 endif()
 
+
+if(USE_CHIPMUNK)
+    include_directories(${CHIPMUNK_INCLUDE_DIRS})
+    list(APPEND GAME_HEADER
+         Classes/PhysicsTest/PhysicsTest.h
+         Classes/ChipmunkTest/ChipmunkTest.h
+         )
+    list(APPEND GAME_SOURCE
+         Classes/PhysicsTest/PhysicsTest.cpp
+         Classes/ChipmunkTest/ChipmunkTest.cpp
+         )
+endif()
+
 if(NOT LINUX)
     list(APPEND GAME_SOURCE
          Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp
@@ -472,7 +473,7 @@ cocos_build_app(${APP_NAME}
                 COMMON_USE_PKGS "FREETYPE" "CURL"
                 LINUX_USE_PKGS "FONTCONFIG" "GTK3"
                 )
-
+target_compile_definitions(${APP_NAME} PUBLIC CC_USE_PHYSICS=0)
 # mark app resources
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
