@@ -517,32 +517,6 @@ public:
     FileListContainer fileList;
 };
 
-namespace {
-    std::vector<std::string> splitFilePath(const std::string &path)
-    {
-        std::vector<std::string> ret;
-        const size_t len = path.length();
-        int pos;
-        size_t offset = 0;
-        do
-        {
-            pos = path.find('/', offset);
-            if(pos > offset){
-                ret.push_back(path.substr(offset,  pos - offset));
-                offset = static_cast<size_t>(pos + 1);
-            }else if(pos == offset)
-            {
-                offset += 1;
-            }
-        }
-        while(offset < len && pos >= 0);
-
-        if(offset < len) ret.push_back(path.substr(offset, len - offset));
-
-        return ret;
-    }
-}
-
 ZipFile *ZipFile::createWithBuffer(const void* buffer, uLong size)
 {
     ZipFile *zip = new (std::nothrow) ZipFile();
@@ -653,12 +627,14 @@ std::vector<std::string> ZipFile::listFiles(const std::string &pathname) const
         if(filename.substr(0, dirname.length()) == dirname)
         {
             std::string suffix = filename.substr(dirname.length());
-            const std::vector<std::string>& parts = splitFilePath(suffix);
-            if(parts.size() == 1)
+            auto pos = suffix.find("/");
+            if (pos == std::string::npos)
             {
                 fileSet.insert(suffix);
-            }else if(parts.size() > 1){
-                fileSet.insert(parts[0] + "/");
+            }
+            else {
+                //fileSet.insert(parts[0] + "/");
+                fileSet.insert(suffix.substr(0, pos + 1));
             }
         }
         it++;
