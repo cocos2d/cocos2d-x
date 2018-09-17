@@ -76,7 +76,7 @@ function build_android_ndk-build()
 
     # build cpp-tests
     pushd $COCOS2DX_ROOT/tests/cpp-tests/proj.android
-   ./gradlew assembleRelease -DPROP_BUILD_TYPE=ndk-build
+   ./gradlew assembleRelease -PPROP_BUILD_TYPE=ndk-build --parallel --info
     popd
 
     # build js-tests
@@ -94,7 +94,7 @@ function build_android_cmake()
 
     # build cpp-tests
     pushd $COCOS2DX_ROOT/tests/cpp-tests/proj.android
-   ./gradlew assembleRelease -DPROP_BUILD_TYPE=cmake
+   ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --parallel --info
     popd
 }
 
@@ -106,7 +106,7 @@ function build_android_lua_ndk-build()
 
     # build lua-tests
     pushd $COCOS2DX_ROOT/tests/lua-tests/project/proj.android
-    ./gradlew assembleDebug -DPROP_BUILD_TYPE=ndk-build
+    ./gradlew assembleDebug -PPROP_BUILD_TYPE=ndk-build --parallel --info
     popd
 
 }
@@ -119,7 +119,7 @@ function build_android_lua_cmake()
 
     # build lua-tests
     pushd $COCOS2DX_ROOT/tests/lua-tests/project/proj.android
-    ./gradlew assembleDebug -DPROP_BUILD_TYPE=cmake
+    ./gradlew assembleDebug -PPROP_BUILD_TYPE=cmake --parallel --info
     popd
 
 }
