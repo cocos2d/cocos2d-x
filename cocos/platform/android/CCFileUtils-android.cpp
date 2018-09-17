@@ -291,13 +291,13 @@ long FileUtilsAndroid::getFileSize(const std::string& filepath) const
 
 std::vector<std::string> FileUtilsAndroid::listFiles(const std::string& dirPath) const
 {
+
+    if(isAbsolutePath(dirPath)) return FileUtils::listFiles(dirPath);
+
     std::vector<std::string> fileList;
     string fullPath = fullPathForFilename(dirPath);
 
     static const std::string apkprefix("assets/");
-
-    if(isAbsolutePath(dirPath)) return FileUtils::listFiles(dirPath);
-
     string relativePath = "";
     size_t position = fullPath.find(apkprefix);
     if (0 == position) {
