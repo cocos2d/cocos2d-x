@@ -272,7 +272,7 @@ typedef struct unz_file_info_s unz_file_info;
          * @param dirname
          * @return
          */
-        const std::vector<std::string> listFiles(const std::string &pathname) const;
+        std::vector<std::string> listFiles(const std::string &pathname) const;
 
 
         /**

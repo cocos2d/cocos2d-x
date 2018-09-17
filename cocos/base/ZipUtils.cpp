@@ -636,7 +636,7 @@ bool ZipFile::fileExists(const std::string &fileName) const
     return ret;
 }
 
-const std::vector<std::string> ZipFile::listFiles(const std::string &pathname) const
+std::vector<std::string> ZipFile::listFiles(const std::string &pathname) const
 {
 
     // filter files which `filename.startsWith(pathname)`
