@@ -127,7 +127,7 @@ ssize_t Data::copy(const unsigned char* bytes, const ssize_t size)
 void Data::fastSet(unsigned char* bytes, const ssize_t size)
 {
     CCASSERT(size >= 0, "fastSet size should be non-negative");
-    CCASSERT(bytes, "bytes should not be nullptr");
+    //CCASSERT(bytes, "bytes should not be nullptr");
     _bytes = bytes;
     _size = size;
 }
