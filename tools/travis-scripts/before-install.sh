@@ -9,7 +9,10 @@ HOST_NAME=""
 
 function install_android_ndk()
 {
-    if [ "$BUILD_TARGET" == "android" ] || [ "$BUILD_TARGET" == "android_lua" ] ; then
+    if [ "$BUILD_TARGET" == "android_ndk-build" ]\
+        || [ "$BUILD_TARGET" == "android_lua_ndk-build" ]\
+        || [ "$BUILD_TARGET" == "android_cmake" ]\
+        || [ "$BUILD_TARGET" == "android_lua_cmake" ] ; then
         python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py
     else
         python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py --ndk_only

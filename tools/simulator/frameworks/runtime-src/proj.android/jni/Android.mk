@@ -4,7 +4,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := cocos2dlua_shared
 
-LOCAL_MODULE_FILENAME := libcocos2dlua
+LOCAL_MODULE_FILENAME := libcclua
 
 LOCAL_ARM_MODE := arm
 

@@ -16,9 +16,8 @@ LOCAL_SRC_FILES += main.cpp \
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../../Classes
 
-LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
+LOCAL_STATIC_LIBRARIES := cclua_static
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-add-path, $(LOCAL_PATH)/../../../../../..)
 $(call import-module, cocos/scripting/lua-bindings/proj.android)
