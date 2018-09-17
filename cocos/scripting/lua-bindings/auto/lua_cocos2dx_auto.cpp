@@ -33300,7 +33300,7 @@ int lua_cocos2dx_FileUtils_getDefaultResourceRootPath(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_FileUtils_getDefaultResourceRootPath'", nullptr);
             return 0;
         }
-        const std::string& ret = cobj->getDefaultResourceRootPath();
+        const std::string ret = cobj->getDefaultResourceRootPath();
         lua_pushlstring(tolua_S,ret.c_str(),ret.length());
         return 1;
     }
@@ -33494,7 +33494,7 @@ int lua_cocos2dx_FileUtils_getSearchPaths(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_FileUtils_getSearchPaths'", nullptr);
             return 0;
         }
-        const std::vector<std::string>& ret = cobj->getSearchPaths();
+        std::vector<std::string> ret = cobj->getSearchPaths();
         ccvector_std_string_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -33594,7 +33594,7 @@ int lua_cocos2dx_FileUtils_getOriginalSearchPaths(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_FileUtils_getOriginalSearchPaths'", nullptr);
             return 0;
         }
-        const std::vector<std::string>& ret = cobj->getOriginalSearchPaths();
+        std::vector<std::string> ret = cobj->getOriginalSearchPaths();
         ccvector_std_string_to_luaval(tolua_S, ret);
         return 1;
     }
@@ -34893,7 +34893,7 @@ int lua_cocos2dx_FileUtils_getSearchResolutionsOrder(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_FileUtils_getSearchResolutionsOrder'", nullptr);
             return 0;
         }
-        const std::vector<std::string>& ret = cobj->getSearchResolutionsOrder();
+        std::vector<std::string> ret = cobj->getSearchResolutionsOrder();
         ccvector_std_string_to_luaval(tolua_S, ret);
         return 1;
     }

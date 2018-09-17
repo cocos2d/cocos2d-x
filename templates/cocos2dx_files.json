@@ -3671,7 +3671,6 @@
         "external/recast/proj.win10/librecast.vcxproj.filters", 
         "external/recast/proj.win32/librecast.vcxproj", 
         "external/recast/proj.win32/librecast.vcxproj.filters", 
-        "external/sqlite3/Android.mk", 
         "external/sqlite3/include/sqlite3.h", 
         "external/sqlite3/include/sqlite3ext.h", 
         "external/sqlite3/libraries/win10/arm/sqlite3.dll", 
