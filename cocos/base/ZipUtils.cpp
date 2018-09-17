@@ -35,6 +35,7 @@
 #include <zlib.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <set>
 
 #include "base/CCData.h"
 #include "base/ccMacros.h"
@@ -516,6 +517,32 @@ public:
     FileListContainer fileList;
 };
 
+namespace {
+    std::vector<std::string> splitFilePath(const std::string &path)
+    {
+        std::vector<std::string> ret;
+        const size_t len = path.length();
+        int pos;
+        size_t offset = 0;
+        do
+        {
+            pos = path.find('/', offset);
+            if(pos > offset){
+                ret.push_back(path.substr(offset,  pos - offset));
+                offset = static_cast<size_t>(pos + 1);
+            }else if(pos == offset)
+            {
+                offset += 1;
+            }
+        }
+        while(offset < len && pos >= 0);
+
+        if(offset < len) ret.push_back(path.substr(offset, len - offset));
+
+        return ret;
+    }
+}
+
 ZipFile *ZipFile::createWithBuffer(const void* buffer, uLong size)
 {
     ZipFile *zip = new (std::nothrow) ZipFile();
@@ -607,6 +634,37 @@ bool ZipFile::fileExists(const std::string &fileName) const
     } while(false);
     
     return ret;
+}
+
+const std::vector<std::string> ZipFile::listFiles(const std::string &pathname) const
+{
+
+    // filter files which `filename.startsWith(pathname)`
+    // then make each path unique
+
+    std::set<std::string> fileSet;
+    ZipFilePrivate::FileListContainer::const_iterator it = _data->fileList.begin();
+    ZipFilePrivate::FileListContainer::const_iterator end = _data->fileList.end();
+    //ensure pathname ends with `/` as a directory
+    std::string dirname = pathname[pathname.length() -1] == '/' ? pathname : pathname + "/";
+    while(it != end)
+    {
+        const std::string &filename = it->first;
+        if(filename.substr(0, dirname.length()) == dirname)
+        {
+            std::string suffix = filename.substr(dirname.length());
+            const std::vector<std::string>& parts = splitFilePath(suffix);
+            if(parts.size() == 1)
+            {
+                fileSet.insert(suffix);
+            }else if(parts.size() > 1){
+                fileSet.insert(parts[0] + "/");
+            }
+        }
+        it++;
+    }
+
+    return std::vector<std::string>(fileSet.begin(), fileSet.end());
 }
 
 unsigned char *ZipFile::getFileData(const std::string &fileName, ssize_t *size)
