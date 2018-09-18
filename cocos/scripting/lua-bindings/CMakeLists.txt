@@ -1,25 +1,15 @@
 set(cocos_root ${COCOS2DX_ROOT_PATH})
 
 include_directories(
-        ${cocos_root}/external/lua
-        ${cocos_root}/external/lua/tolua
-        ${cocos_root}/external/xxtea
-        ${cocos_root}/external
         ${cocos_root}/cocos
         ${cocos_root}/cocos/editor-support
 )
-
 if(ANDROID)
     include_directories(
             manual/platform/android
             manual/platform/android/jni
     )
 endif()
-
-file(GLOB lua_cocos2d_source_files
-     "${cocos_root}/external/lua/tolua/*.c"
-     "${cocos_root}/external/xxtea/xxtea.cpp"
-     )
 
 list(APPEND lua_cocos2d_source_files
      ${cocos_root}/external/lua/luasocket/luasocket.c

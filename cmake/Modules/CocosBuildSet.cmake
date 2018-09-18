@@ -33,13 +33,11 @@ message(STATUS "ENGINE_BINARY_PATH:" ${ENGINE_BINARY_PATH})
 include(CocosBuildHelpers)
 
 # select building modules
-include(CocosSelectModule)
+# include(CocosSelectModule)
 
 # set common compiler options
 include(CocosCompileOptions)
 
-# collect prebuilt libraries
-include(CocosPickLibs)
 
 # compile source libraries
-include(CocosBuildModules)
+# include(CocosBuildModules)

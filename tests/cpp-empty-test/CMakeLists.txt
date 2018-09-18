@@ -21,7 +21,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 # ****************************************************************************/
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.6)
 
 set(APP_NAME cpp-empty-test)
 
@@ -113,15 +113,11 @@ set(all_code_files
     ${GAME_SOURCE}
     )
 
-include_directories(Classes)
+# mark app complie info
+add_executable(${APP_NAME} ${all_code_files})
+target_link_libraries(${APP_NAME} cocos2d)
 
-# mark app complie info and libs info
-cocos_build_app(${APP_NAME}
-                APP_SRC "${all_code_files}"
-                DEPEND_COMMON_LIBS "cocos2d"
-                DEPEND_ANDROID_LIBS "cocos2d_android"
-                )
-
+target_include_directories(${APP_NAME} PRIVATE Classes)
 # mark app resources
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
