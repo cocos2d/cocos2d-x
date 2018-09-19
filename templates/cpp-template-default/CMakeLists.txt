@@ -117,13 +117,14 @@ set(all_code_files
     )
 add_executable(${APP_NAME} ${all_code_files})
 
+target_link_libraries(${APP_NAME} cocos2d)
 target_include_directories(${APP_NAME}
         PRIVATE Classes
         PRIVATE ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
 )
 
-target_link_libraries(${APP_NAME} cocos2d)
-
+# mark app resources
+setup_cocos_app_config(${APP_NAME})
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)

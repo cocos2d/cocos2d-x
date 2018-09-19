@@ -470,6 +470,7 @@ target_include_directories(${APP_NAME}
 )
 
 # mark app resources
+setup_cocos_app_config(${APP_NAME})
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)
