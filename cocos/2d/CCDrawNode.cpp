@@ -962,6 +962,7 @@ void DrawNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t p
 {
     if (_isolated)
     {
+        //in isolate mode, draw use world coordinate directly
         Node::visit(renderer, Mat4::IDENTITY, parentFlags);
     }
     else
