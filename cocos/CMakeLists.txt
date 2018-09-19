@@ -128,6 +128,10 @@ target_include_directories(cocos2d
     PUBLIC ${COCOS2DX_ROOT_PATH}
     PUBLIC ${COCOS2DX_ROOT_PATH}/cocos
     PUBLIC ${COCOS2DX_ROOT_PATH}/extensions
+    INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/base
+    INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/editor-support
+    INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/audio/include
+    INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/platform/${PLATFORM_FOLDER}
 )
 
 set_target_properties(cocos2d

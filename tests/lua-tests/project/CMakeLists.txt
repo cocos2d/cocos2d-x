@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.6)
 
 set(APP_NAME lua-tests)
 
@@ -93,24 +93,14 @@ elseif(APPLE)
     list(APPEND GAME_SOURCE ${cc_common_res})
 endif()
 
-include_directories(
-        Classes
-        ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/manual
-        ${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings/auto
-        ${COCOS2DX_ROOT_PATH}/external/lua/tolua
-)
-
-include_directories(${LUAJIT_INCLUDE_DIRS})
-
 set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
-# mark app complie info and libs info
-cocos_build_app(${APP_NAME}
-                APP_SRC "${APP_SRC}"
-                DEPEND_COMMON_LIBS "luacocos2d" "cocos2d"
-                DEPEND_ANDROID_LIBS "cocos2d_android"
-                )
+add_executable(${APP_NAME} ${APP_SRC})
+
+target_link_libraries(${APP_NAME} luacocos2d)
+target_include_directories(${APP_NAME} PRIVATE Classes)
 
 # mark app resources
+setup_cocos_app_config(${APP_NAME})
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)
