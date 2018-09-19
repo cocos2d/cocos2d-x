@@ -119,6 +119,7 @@ DrawNode::DrawNode(GLfloat lineWidth)
 , _dirty(false)
 , _dirtyGLPoint(false)
 , _dirtyGLLine(false)
+, _isolated(false)
 , _lineWidth(lineWidth)
 , _defaultLineWidth(lineWidth)
 {
@@ -957,5 +958,16 @@ GLfloat DrawNode::getLineWidth()
     return this->_lineWidth;
 }
 
+void DrawNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+{
+    if (_isolated)
+    {
+        Node::visit(renderer, Mat4::IDENTITY, parentFlags);
+    }
+    else
+    {
+        Node::visit(renderer, parentTransform, parentFlags);
+    }
+}
 
 NS_CC_END

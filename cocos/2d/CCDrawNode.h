@@ -313,11 +313,21 @@ public:
     
     // Overrides
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+
+    void visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
     
     void setLineWidth(GLfloat lineWidth);
 
     // Get CocosStudio guide lines width.
     GLfloat getLineWidth();
+
+    /**
+    * When isolated is set, `visit()` will always get and identity as parent transform matrix.
+    * It's needed when DrawNode is used as absolute node without any effects from parent node.
+    */
+    void setIsolated(bool isolated) { _isolated = isolated; }
+
+    bool getIsolated() { return _isolated; }
 
 CC_CONSTRUCTOR_ACCESS:
     DrawNode(GLfloat lineWidth = DEFAULT_LINE_WIDTH);
@@ -360,6 +370,7 @@ protected:
     bool        _dirty;
     bool        _dirtyGLPoint;
     bool        _dirtyGLLine;
+    bool        _isolated;
     
     GLfloat         _lineWidth;
 
