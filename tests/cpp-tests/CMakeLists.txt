@@ -456,24 +456,19 @@ if(NOT LINUX)
          )
 endif()
 
-include_directories(
-        Classes
-        ${COCOS2DX_ROOT_PATH}/cocos/editor-support
-)
-
 # mark app complie info and libs info
-set(APP_SRC
+set(all_code_files
     ${GAME_HEADER}
     ${GAME_SOURCE}
     )
-cocos_build_app(${APP_NAME}
-                APP_SRC "${APP_SRC}"
-                DEPEND_COMMON_LIBS "cocos2d"
-                DEPEND_ANDROID_LIBS "cocos2d_android"
-                COMMON_USE_PKGS "FREETYPE" "CURL"
-                LINUX_USE_PKGS "FONTCONFIG" "GTK3"
-                )
-target_compile_definitions(${APP_NAME} PUBLIC CC_USE_PHYSICS=0)
+add_executable(${APP_NAME} ${all_code_files})
+
+target_link_libraries(${APP_NAME} cocos2d)
+target_include_directories(${APP_NAME}
+        PRIVATE Classes
+        PRIVATE ${COCOS2DX_ROOT_PATH}/cocos/editor-support
+)
+
 # mark app resources
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")

@@ -48,10 +48,6 @@ if(APPLE OR WINDOWS)
     cocos_mark_multi_resources(common_res_files RES_TO "Resources" FOLDERS ${GAME_RES_FOLDER})
 endif()
 
-include_directories(
-        Classes
-        ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
-)
 # add cross-platforms source files and header files 
 list(APPEND GAME_SOURCE
      Classes/AppDelegate.cpp
@@ -115,15 +111,18 @@ elseif(APPLE)
 endif()
 
 # mark app complie info and libs info
-set(APP_SRC
-    ${GAME_SOURCE}
+set(all_code_files
     ${GAME_HEADER}
+    ${GAME_SOURCE}
     )
-cocos_build_app(${APP_NAME}
-                APP_SRC "${APP_SRC}"
-                DEPEND_COMMON_LIBS "cocos2d"
-                DEPEND_ANDROID_LIBS "cocos2d_android"
-                )
+add_executable(${APP_NAME} ${all_code_files})
+
+target_include_directories(${APP_NAME}
+        PRIVATE Classes
+        PRIVATE ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
+)
+
+target_link_libraries(${APP_NAME} cocos2d)
 
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
