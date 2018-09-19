@@ -265,6 +265,16 @@ typedef struct unz_file_info_s unz_file_info;
         */
         bool fileExists(const std::string &fileName) const;
 
+
+        /**
+         * Get files and folders in pathname
+         *
+         * @param dirname
+         * @return
+         */
+        std::vector<std::string> listFiles(const std::string &pathname) const;
+
+
         /**
         * Get resource file data from a zip file.
         * @param fileName File name
