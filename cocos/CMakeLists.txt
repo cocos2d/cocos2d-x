@@ -121,8 +121,13 @@ add_library(cocos2d ${COCOS_SRC})
 add_subdirectory(${COCOS2DX_ROOT_PATH}/external ${ENGINE_BINARY_PATH}/external)
 target_link_libraries(cocos2d external)
 
+# use all platform related libs
+target_use_cocos2dx_depend(cocos2d)
+
 target_include_directories(cocos2d
+    PUBLIC ${COCOS2DX_ROOT_PATH}
     PUBLIC ${COCOS2DX_ROOT_PATH}/cocos
+    PRIVATE ${COCOS2DX_ROOT_PATH}/extensions
 )
 
 set_target_properties(cocos2d
