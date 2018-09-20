@@ -29,9 +29,7 @@ if(APPLE)# osx or ios
     set(PLATFORM_HEADER manual/platform/ios/JavaScriptObjCBridge.h)
     set(PLATFORM_SRC manual/platform/ios/JavaScriptObjCBridge.mm)
 elseif(ANDROID)
-    # tocheck, use "LOCAL_WHOLE_STATIC_LIBRARIES" for below 2 files? or crash sometimes maybe
-    set(PLATFORM_HEADER manual/platform/android/CCJavascriptJavaBridge.h)
-    set(PLATFORM_SRC manual/platform/android/CCJavascriptJavaBridge.cpp)
+    # refer to: cocos/scripting/js-bindings/proj.android
 endif()
 
 if(ANDROID OR IOS)
@@ -159,12 +157,17 @@ add_library(jscocos2d STATIC
 target_link_libraries(jscocos2d cocos2d)
 add_dependencies(jscocos2d cocos2d)
 
+if(ANDROID)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/proj.android)
+    target_link_libraries(jscocos2d js_android_spec)
+endif()
+
 target_include_directories(jscocos2d
         INTERFACE ${cocos_root}/cocos/scripting/js-bindings/auto
         INTERFACE ${cocos_root}/cocos/scripting/js-bindings/manual
 )
+
 # ignore unused-function on binding codes
-# tocheck, not effect?
 target_compile_options(jscocos2d PRIVATE 
     -Wno-deprecated
 )

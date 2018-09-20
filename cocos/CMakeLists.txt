@@ -121,7 +121,11 @@ add_library(cocos2d ${COCOS_SRC})
 add_subdirectory(${COCOS2DX_ROOT_PATH}/external ${ENGINE_BINARY_PATH}/external)
 target_link_libraries(cocos2d external)
 
-# use all platform related libs
+if(ANDROID)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/platform/android)
+    target_link_libraries(cocos2d cpp_android_spec)
+endif()
+# use all platform related system libs
 target_use_cocos2dx_depend(cocos2d)
 
 target_include_directories(cocos2d

@@ -141,16 +141,11 @@ if(APPLE)
 elseif(ANDROID)
     set(lua_bindings_manual_headers
         ${lua_bindings_manual_headers}
-        # tocheck, use "LOCAL_WHOLE_STATIC_LIBRARIES" for below 2 files? or crash sometimes maybe
-        manual/platform/android/CCLuaJavaBridge.h
-        manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.h
         auto/lua_cocos2dx_experimental_webview_auto.hpp
         manual/ui/lua_cocos2dx_experimental_webview_manual.hpp
         )
     set(lua_bindings_manual_files
         ${lua_bindings_manual_files}
-        manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.cpp
-        manual/platform/android/CCLuaJavaBridge.cpp
         auto/lua_cocos2dx_experimental_webview_auto.cpp
         manual/ui/lua_cocos2dx_experimental_webview_manual.cpp
         )
@@ -170,6 +165,11 @@ list(APPEND lua_bindings_files ${lua_bindings_headers})
 add_library(luacocos2d ${lua_bindings_files})
 target_link_libraries(luacocos2d cocos2d)
 add_dependencies(luacocos2d cocos2d)
+
+if(ANDROID)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/proj.android)
+    target_link_libraries(luacocos2d lua_android_spec)
+endif()
 
 target_include_directories(luacocos2d
     PRIVATE manual/platform/android

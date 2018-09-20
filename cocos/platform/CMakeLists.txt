@@ -22,7 +22,9 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
-if(WINDOWS)
+if(ANDROID)
+    # refer to target: cocos/platform/android/CMakeLists.txt
+elseif(WINDOWS)
     set(COCOS_PLATFORM_SPECIFIC_HEADER
         platform/win32/compat/stdint.h
         platform/win32/CCApplication-win32.h
@@ -126,55 +128,6 @@ elseif(LINUX)
         platform/linux/CCDevice-linux.cpp
         platform/desktop/CCGLViewImpl-desktop.cpp
         )
-
-elseif(ANDROID)
-
-    set(COCOS_PLATFORM_SPECIFIC_HEADER
-        platform/android/CCApplication-android.h
-        platform/android/CCStdC-android.h
-        platform/android/CCFileUtils-android.h
-        platform/android/CCEnhanceAPI-android.h
-        platform/android/CCPlatformDefine-android.h
-        platform/android/CCGLViewImpl-android.h
-        platform/android/jni/ProcessCpuTracker.h
-        platform/android/jni/JniHelper.h
-        platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.h
-        platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h
-        platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.h
-        platform/android/CCGL-android.h
-        )
-    # need move to COCOS2DX_ANDROID_SRC?
-    # need refactor
-    set(COCOS_PLATFORM_SPECIFIC_SRC
-        platform/android/CCApplication-android.cpp
-        platform/android/CCCommon-android.cpp
-        platform/android/CCGLViewImpl-android.cpp
-        platform/android/CCFileUtils-android.cpp
-        platform/android/CCEnhanceAPI-android.cpp
-        platform/android/jni/JniHelper.cpp
-        )
-
-    set(COCOS2DX_ANDROID_SRC
-        platform/android/CCDevice-android.cpp
-        platform/android/javaactivity-android.cpp
-        platform/android/jni/TouchesJni.cpp
-        platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp
-        platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp
-        platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp
-        platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp
-        platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp
-
-        )
-
-    add_library(cocos2d_android STATIC ${COCOS2DX_ANDROID_SRC})
-    set_property(TARGET cocos2d_android PROPERTY POSITION_INDEPENDENT_CODE TRUE)
-    set_target_properties(cocos2d_android
-                          PROPERTIES
-                          ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-                          LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-                          VERSION "${COCOS2D_X_VERSION}"
-                          )
-
 endif()
 
 set(COCOS_PLATFORM_HEADER
