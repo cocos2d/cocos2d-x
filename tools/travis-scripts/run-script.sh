@@ -39,10 +39,11 @@ function build_ios()
 
 function build_mac_cmake()
 {
-    pushd $COCOS2DX_ROOT
-    python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
-    popd
-    cd $COCOS2DX_ROOT/cocos_new_test
+    # pushd $COCOS2DX_ROOT
+    # python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
+    # popd
+    # cd $COCOS2DX_ROOT/cocos_new_test
+    cd $COCOS2DX_ROOT
     mkdir -p mac_cmake_build
     cd mac_cmake_build
     cmake ..
@@ -52,10 +53,11 @@ function build_mac_cmake()
 
 function build_ios_cmake()
 {
-    pushd $COCOS2DX_ROOT
-    python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
-    popd
-    cd $COCOS2DX_ROOT/cocos_new_test
+    # pushd $COCOS2DX_ROOT
+    # python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
+    # popd
+    # cd $COCOS2DX_ROOT/cocos_new_test
+    cd $COCOS2DX_ROOT
     mkdir -p ios_cmake_build
     cd ios_cmake_build
     cmake .. -DCMAKE_TOOLCHAIN_FILE=$COCOS2DX_ROOT/cmake/ios.toolchain.cmake -GXcode -DIOS_PLATFORM=SIMULATOR64
