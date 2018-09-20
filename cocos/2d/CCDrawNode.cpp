@@ -967,6 +967,8 @@ void DrawNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t p
     }
     else
     {
+
+
         Node::visit(renderer, parentTransform, parentFlags);
     }
 }

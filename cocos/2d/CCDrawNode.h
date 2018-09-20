@@ -314,7 +314,7 @@ public:
     // Overrides
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
-    void visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
+    virtual void visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
     
     void setLineWidth(GLfloat lineWidth);
 
@@ -327,7 +327,7 @@ public:
     */
     void setIsolated(bool isolated) { _isolated = isolated; }
 
-    bool getIsolated() { return _isolated; }
+    bool isIsolated() const { return _isolated; }
 
 CC_CONSTRUCTOR_ACCESS:
     DrawNode(GLfloat lineWidth = DEFAULT_LINE_WIDTH);
