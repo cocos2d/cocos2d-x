@@ -167,7 +167,7 @@ target_include_directories(jscocos2d
         INTERFACE ${cocos_root}/cocos/scripting/js-bindings/manual
 )
 
-# ignore unused-function on binding codes
+# ignore part warnings on binding codes. tocheck: not take effect?
 target_compile_options(jscocos2d PRIVATE 
     -Wno-deprecated
 )

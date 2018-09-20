@@ -190,7 +190,6 @@ endfunction()
 
 # setup a cocos application, include "APP_BIN_DIR", "APP_RES_DIR" config
 function(setup_cocos_app_config app_name)
-    cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
     # set target PROPERTIES, depend different platforms
     if(APPLE)
         set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")

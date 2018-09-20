@@ -25,12 +25,11 @@ add_library(${target_name} STATIC
   ${${target_name}_src}
 )
 
-target_include_directories(
+target_include_directories(${target_name}
+  PRIVATE ..
   PRIVATE ../..
 )
 # whole-archive JNI relatived codes
 set_property(TARGET ${target_name} PROPERTY INTERFACE_LINK_LIBRARIES
   -Wl,--whole-archive,$<TARGET_FILE:${target_name}>,--no-whole-archive)     
 
-
-target_include_directories()
