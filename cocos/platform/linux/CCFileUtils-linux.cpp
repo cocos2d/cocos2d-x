@@ -124,7 +124,7 @@ bool FileUtilsLinux::isFileExistInternal(const std::string& strFilePath) const
     }
 
     struct stat sts;
-    return (stat(strPath.c_str(), &sts) != -1) ? S_ISREG(sts.st_mode) : false;
+    return (stat(strPath.c_str(), &sts) == 0) && S_ISREG(sts.st_mode);
 }
 
 NS_CC_END
