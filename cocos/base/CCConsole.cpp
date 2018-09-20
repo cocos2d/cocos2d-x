@@ -790,8 +790,7 @@ void Console::loop()
                     ioctlsocket(fd, FIONREAD, &n);
 #else
                     int n = 0;
-                    int ctlRet = ioctl(fd, FIONREAD, &n);
-                    if(ctlRet < 0)
+                    if(ioctl(fd, FIONREAD, &n) < 0)
                     {
                         cocos2d::log("Abnormal error in ioctl()\n");
                         break;
