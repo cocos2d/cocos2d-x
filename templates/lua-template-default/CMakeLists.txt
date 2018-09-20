@@ -135,15 +135,13 @@ endif()
 set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
 
 # mark app complie info and libs info
-cocos_build_app(${APP_NAME}
-                APP_SRC "${APP_SRC}"
-                DEPEND_COMMON_LIBS "luacocos2d" "cocos2d"
-                DEPEND_ANDROID_LIBS "cocos2d_android"
-                DEPEND_MACOSX_LIBS "simulator"
-                DEPEND_WINDOWS_LIBS "simulator"
-                )
+add_executable(${APP_NAME} ${APP_SRC})
 
-# mark app resources
+target_link_libraries(${APP_NAME} jscocos2d)
+target_include_directories(PRIVATE ${RUNTIME_SRC_ROOT}/Classes)
+
+# mark app resources, resource will be copy auto after mark
+setup_cocos_app_config(${APP_NAME})
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)

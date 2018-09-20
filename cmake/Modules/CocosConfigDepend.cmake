@@ -27,6 +27,11 @@ macro(cocos2dx_depend)
             ${GAMECONTROLLER_LIBRARY}
             )
 
+        if(BUILD_JS_LIBS)
+            find_library(SQLITE3_LIBRARY SQLite3)
+            list(APPEND COCOS_APPLE_LIBS ${SQLITE3_LIBRARY})
+        endif()
+            
         if(MACOSX)
             list(APPEND PREBUILT_SPECIFIC_LIBS GLFW3)
 

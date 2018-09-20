@@ -163,7 +163,11 @@ target_include_directories(jscocos2d
         INTERFACE ${cocos_root}/cocos/scripting/js-bindings/auto
         INTERFACE ${cocos_root}/cocos/scripting/js-bindings/manual
 )
-
+# ignore unused-function on binding codes
+# tocheck, not effect?
+target_compile_options(jscocos2d PRIVATE 
+    -Wno-deprecated
+)
 if(WINDOWS)
     target_compile_definitions(jscocos2d _USRJSSTATIC)
 endif()

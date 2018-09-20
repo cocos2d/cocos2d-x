@@ -466,7 +466,6 @@ add_executable(${APP_NAME} ${all_code_files})
 target_link_libraries(${APP_NAME} cocos2d)
 target_include_directories(${APP_NAME}
         PRIVATE Classes
-        PRIVATE ${COCOS2DX_ROOT_PATH}/cocos/editor-support
 )
 
 # mark app resources
