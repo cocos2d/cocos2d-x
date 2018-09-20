@@ -114,7 +114,12 @@ set(all_code_files
     )
 
 # mark app complie info
-add_executable(${APP_NAME} ${all_code_files})
+if(NOT ANDROID)
+    add_executable(${APP_NAME} ${all_code_files})
+else()
+    add_library(${APP_NAME} SHARED ${all_code_files})
+endif()
+
 target_link_libraries(${APP_NAME} cocos2d)
 
 target_include_directories(${APP_NAME} PRIVATE Classes)

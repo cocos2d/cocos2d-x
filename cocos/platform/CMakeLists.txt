@@ -24,6 +24,13 @@
 
 if(ANDROID)
     # refer to target: cocos/platform/android/CMakeLists.txt
+    set(COCOS_PLATFORM_SPECIFIC_SRC
+        platform/android/CCApplication-android.cpp
+        platform/android/CCCommon-android.cpp
+        platform/android/CCGLViewImpl-android.cpp
+        platform/android/CCFileUtils-android.cpp
+        platform/android/CCEnhanceAPI-android.cpp
+    )
 elseif(WINDOWS)
     set(COCOS_PLATFORM_SPECIFIC_HEADER
         platform/win32/compat/stdint.h

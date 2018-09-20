@@ -5,20 +5,15 @@ set(target_name cpp_android_spec)
 project(${target_name})
 
 set(${target_name}_src
-  CCApplication-android.cpp
-  CCCommon-android.cpp
   CCDevice-android.cpp
-  CCGLViewImpl-android.cpp
-  CCFileUtils-android.cpp
   javaactivity-android.cpp
-  CCEnhanceAPI-android.cpp
+  jni/JniHelper.cpp
+  jni/TouchesJni.cpp
   jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp
   jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp
   jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp
   jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp
   jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp
-  jni/JniHelper.cpp
-  jni/TouchesJni.cpp
 )
 
 add_library(${target_name} STATIC
@@ -30,6 +25,6 @@ target_include_directories(${target_name}
   PRIVATE ../..
 )
 # whole-archive JNI relatived codes
-set_property(TARGET ${target_name} PROPERTY INTERFACE_LINK_LIBRARIES
-  -Wl,--whole-archive,$<TARGET_FILE:${target_name}>,--no-whole-archive)     
+set_target_properties(${target_name} PROPERTIES INTERFACE_LINK_LIBRARIES
+  -Wl,--whole-archive,$<TARGET_FILE:${target_name}>,-Wl,--no-whole-archive)     
 
