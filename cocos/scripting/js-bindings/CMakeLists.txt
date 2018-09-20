@@ -168,11 +168,13 @@ target_include_directories(jscocos2d
 )
 
 # ignore part warnings on binding codes. tocheck: not take effect?
-target_compile_options(jscocos2d PRIVATE 
-    -Wno-deprecated
-)
+
 if(WINDOWS)
-    target_compile_definitions(jscocos2d _USRJSSTATIC)
+    target_compile_definitions(jscocos2d PRIVATE _USRJSSTATIC)
+else()
+    target_compile_options(jscocos2d PRIVATE 
+        -Wno-deprecated
+    )
 endif()
 
 set_target_properties(jscocos2d
