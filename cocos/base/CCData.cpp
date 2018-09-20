@@ -116,8 +116,8 @@ ssize_t Data::copy(const unsigned char* bytes, const ssize_t size)
     if (bytes != _bytes)
     {
         clear();
-        _bytes = (unsigned char*)malloc(sizeof(unsigned char) * _size);
-        memcpy(_bytes, bytes, _size);
+        _bytes = (unsigned char*)malloc(sizeof(unsigned char) * size);
+        memcpy(_bytes, bytes, size);
     }
 
     _size = size;
