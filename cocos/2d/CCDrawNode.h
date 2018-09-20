@@ -322,8 +322,8 @@ public:
     GLfloat getLineWidth();
 
     /**
-    * When isolated is set, `visit()` will always get and identity as parent transform matrix.
-    * It's needed when DrawNode is used as absolute node without any effects from parent node.
+    * When isolated is set, the position of the node is no longer affected by parent nodes.
+    * Which means it will be drawn just like a root node.
     */
     void setIsolated(bool isolated) { _isolated = isolated; }
 
@@ -341,40 +341,40 @@ protected:
 
     void setupBuffer();
 
-    GLuint      _vao;
-    GLuint      _vbo;
-    GLuint      _vaoGLPoint;
-    GLuint      _vboGLPoint;
-    GLuint      _vaoGLLine;
-    GLuint      _vboGLLine;
+    GLuint      _vao = 0;
+    GLuint      _vbo = 0;
+    GLuint      _vaoGLPoint = 0;
+    GLuint      _vboGLPoint = 0;
+    GLuint      _vaoGLLine = 0;
+    GLuint      _vboGLLine = 0;
 
-    int         _bufferCapacity;
-    GLsizei     _bufferCount;
-    V2F_C4B_T2F *_buffer;
+    int         _bufferCapacity = 0;
+    GLsizei     _bufferCount = 0;
+    V2F_C4B_T2F *_buffer = nullptr;
     
-    int         _bufferCapacityGLPoint;
-    GLsizei     _bufferCountGLPoint;
-    V2F_C4B_T2F *_bufferGLPoint;
+    int         _bufferCapacityGLPoint = 0;
+    GLsizei     _bufferCountGLPoint = 0;
+    V2F_C4B_T2F *_bufferGLPoint = nullptr;
     Color4F     _pointColor;
-    int         _pointSize;
+    int         _pointSize = 0;
     
-    int         _bufferCapacityGLLine;
-    GLsizei     _bufferCountGLLine;
-    V2F_C4B_T2F *_bufferGLLine;
+    int         _bufferCapacityGLLine = 0;
+    GLsizei     _bufferCountGLLine = 0;
+    V2F_C4B_T2F *_bufferGLLine = nullptr;
 
     BlendFunc   _blendFunc;
     CustomCommand _customCommand;
     CustomCommand _customCommandGLPoint;
     CustomCommand _customCommandGLLine;
 
-    bool        _dirty;
-    bool        _dirtyGLPoint;
-    bool        _dirtyGLLine;
-    bool        _isolated;
+    bool        _dirty = false;
+    bool        _dirtyGLPoint = false;
+    bool        _dirtyGLLine = false;
+    bool        _isolated = false;
     
-    GLfloat         _lineWidth;
+    GLfloat         _lineWidth = 0.0f;
 
-    GLfloat  _defaultLineWidth;
+    GLfloat  _defaultLineWidth = 0.0f;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);
 };
