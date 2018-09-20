@@ -270,6 +270,7 @@ void PhysicsWorld::debugDraw()
     if (_debugDraw == nullptr)
     {
         _debugDraw = DrawNode::create();
+        _debugDraw->setIsolated(true);
         _debugDraw->retain();
         Director::getInstance()->getRunningScene()->addChild(_debugDraw);
     }

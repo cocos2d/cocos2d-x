@@ -101,25 +101,7 @@ static inline Tex2F __t(const Vec2 &v)
 // implementation of DrawNode
 
 DrawNode::DrawNode(GLfloat lineWidth)
-: _vao(0)
-, _vbo(0)
-, _vaoGLPoint(0)
-, _vboGLPoint(0)
-, _vaoGLLine(0)
-, _vboGLLine(0)
-, _bufferCapacity(0)
-, _bufferCount(0)
-, _buffer(nullptr)
-, _bufferCapacityGLPoint(0)
-, _bufferCountGLPoint(0)
-, _bufferGLPoint(nullptr)
-, _bufferCapacityGLLine(0)
-, _bufferCountGLLine(0)
-, _bufferGLLine(nullptr)
-, _dirty(false)
-, _dirtyGLPoint(false)
-, _dirtyGLLine(false)
-, _lineWidth(lineWidth)
+: _lineWidth(lineWidth)
 , _defaultLineWidth(lineWidth)
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
@@ -957,5 +939,17 @@ GLfloat DrawNode::getLineWidth()
     return this->_lineWidth;
 }
 
+void DrawNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+{
+    if (_isolated)
+    {
+        //ignore `parentTransform` from parent
+        Node::visit(renderer, Mat4::IDENTITY, parentFlags);
+    }
+    else
+    {
+        Node::visit(renderer, parentTransform, parentFlags);
+    }
+}
 
 NS_CC_END
