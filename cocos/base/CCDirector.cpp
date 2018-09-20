@@ -419,7 +419,8 @@ void Director::setOpenGLView(GLView *openGLView)
         _openGLView->retain();
 
         // set size
-        _winSizeInPoints = _openGLView->getDesignResolutionSize();
+//        _winSizeInPoints = _openGLView->getDesignResolutionSize();
+		_winSizeInPoints = _openGLView->getVisibleSize();
 
         _isStatusLabelUpdated = true;
 
@@ -796,7 +797,8 @@ Vec2 Director::convertToGL(const Vec2& uiPoint)
     // Calculate z=0 using -> transform*[0, 0, 0, 1]/w
     float zClip = transform.m[14]/transform.m[15];
 
-    Size glSize = _openGLView->getDesignResolutionSize();
+//    Size glSize = _openGLView->getDesignResolutionSize();
+	Size glSize = _openGLView->getVisibleSize();
     Vec4 clipCoord(2.0f*uiPoint.x/glSize.width - 1.0f, 1.0f - 2.0f*uiPoint.y/glSize.height, zClip, 1);
 
     Vec4 glCoord;
@@ -828,7 +830,8 @@ Vec2 Director::convertToUI(const Vec2& glPoint)
 	clipCoord.y = clipCoord.y / clipCoord.w;
 	clipCoord.z = clipCoord.z / clipCoord.w;
 
-    Size glSize = _openGLView->getDesignResolutionSize();
+//    Size glSize = _openGLView->getDesignResolutionSize();
+	Size glSize = _openGLView->getVisibleSize();
     float factor = 1.0f / glCoord.w;
     return Vec2(glSize.width * (clipCoord.x * 0.5f + 0.5f) * factor, glSize.height * (-clipCoord.y * 0.5f + 0.5f) * factor);
 }
@@ -841,6 +844,30 @@ const Size& Director::getWinSize(void) const
 Size Director::getWinSizeInPixels() const
 {
     return Size(_winSizeInPoints.width * _contentScaleFactor, _winSizeInPoints.height * _contentScaleFactor);
+}
+
+Size Director::getDesignSize() const
+{
+    if (_openGLView)
+    {
+        return _openGLView->getDesignResolutionSize();
+    }
+    else
+    {
+        return Size::ZERO;
+    }
+}
+
+Vec2 Director::getDesignOrigin() const
+{
+    if (_openGLView)
+    {
+        return _openGLView->getDesignOrigin();
+    }
+    else
+	{
+        return Vec2::ZERO;
+    }
 }
 
 Size Director::getVisibleSize() const
