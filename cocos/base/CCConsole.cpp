@@ -743,10 +743,10 @@ void Console::loop()
     FD_SET(_listenfd, &_read_set);
     _maxfd = _listenfd;
     
-    timeout.tv_sec = 0;
+    timeout.tv_sec = 1;
     
     /* 0.016 seconds. Wake up once per frame at 60PFS */
-    timeout.tv_usec = 16000;
+    timeout.tv_usec = 0;
     
     while(!_endThread) {
         
@@ -790,11 +790,18 @@ void Console::loop()
                     ioctlsocket(fd, FIONREAD, &n);
 #else
                     int n = 0;
-                    ioctl(fd, FIONREAD, &n);
+                    int ctlRet = ioctl(fd, FIONREAD, &n);
+                    if(ctlRet < 0)
+                    {
+                        cocos2d::log("Abnormal error in ioctl()\n");
+                        break;
+                    }
 #endif
                     if(n == 0)
                     {
                         //no data received, or fd is closed
+                        //fix #18620. readable and no pending data means that the fd is closed.
+                        to_remove.push_back(fd); 
                         continue;
                     }
                     
