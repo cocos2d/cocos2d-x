@@ -71,6 +71,11 @@ enum class ResolutionPolicy
      * aspect ratios.
      */
     FIXED_WIDTH,
+    /** The entire design size is visible in the specified area without distortion while maintaining the original
+     * aspect ratio of the application. No Borders appear. (Own policy)
+	 * https://discuss.cocos2d-x.org/t/multiresolution-how-to-show-all-without-black-borders/26508/11
+     */
+    COMPLETE_DESIGN,
 
     UNKNOWN,
 };
@@ -268,7 +273,14 @@ public:
      */
     virtual const Size&  getDesignResolutionSize() const;
 
-    /**
+	/**
+	 * Get the design origin point of opengl viewport.
+     *
+     * @return The design origin point of opengl viewport.
+     */
+	virtual Vec2 getDesignOrigin() const;
+   
+   /**
      * Set opengl view port rectangle with points.
      *
      * @param x Set the points of x.
