@@ -39,8 +39,6 @@ function build_ios()
 
 function build_mac_cmake()
 {
-    NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
-
     # pushd $COCOS2DX_ROOT
     # python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
     # popd
@@ -49,7 +47,7 @@ function build_mac_cmake()
     mkdir -p mac_cmake_build
     cd mac_cmake_build
     cmake ..
-    cmake --build . -- -jobs $NUM_OF_CORES
+    cmake --build .
     exit 0
 }
 
