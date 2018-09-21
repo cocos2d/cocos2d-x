@@ -3,7 +3,7 @@ macro(cocos2dx_depend)
     set(PLATFORM_SPECIFIC_LIBS)
 
     if(WINDOWS)
-        list(APPEND PLATFORM_SPECIFIC_LIBS ws2_32 userenv psapi winmm Version Iphlpapi)
+        list(APPEND PLATFORM_SPECIFIC_LIBS ws2_32 userenv psapi winmm Version Iphlpapi opengl32)
     elseif(LINUX)
         # need review those libs: X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m
         list(APPEND PLATFORM_SPECIFIC_LIBS dl X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m)
