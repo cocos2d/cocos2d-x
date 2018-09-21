@@ -12148,6 +12148,16 @@ color4f
 },
 
 /**
+ * @method setIsolated
+ * @param {bool} arg0
+ */
+setIsolated : function (
+bool 
+)
+{
+},
+
+/**
  * @method drawRect
 * @param {vec2_object|vec2_object} vec2
 * @param {vec2_object|vec2_object} vec2
@@ -12447,6 +12457,16 @@ float,
 color4f 
 )
 {
+},
+
+/**
+ * @method isIsolated
+ * @return {bool}
+ */
+isIsolated : function (
+)
+{
+    return false;
 },
 
 /**
