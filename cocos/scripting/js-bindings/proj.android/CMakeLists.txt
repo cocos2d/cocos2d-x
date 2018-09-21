@@ -13,7 +13,11 @@ add_library(${target_name} STATIC
   ${${target_name}_src}
 )
 
+get_target_property(spiderm_header ext_spidermonkey INTERFACE_INCLUDE_DIRECTORIES)
 target_include_directories(${target_name}
   PRIVATE ../../..
+  PRIVATE ../manual
+  PRIVATE ../manual/platform/android
+  PRIVATE ${spiderm_header}
 )
 

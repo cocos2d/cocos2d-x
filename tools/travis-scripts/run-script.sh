@@ -61,8 +61,10 @@ function build_ios_cmake()
     mkdir -p ios_cmake_build
     cd ios_cmake_build
     cmake .. -DCMAKE_TOOLCHAIN_FILE=$COCOS2DX_ROOT/cmake/ios.toolchain.cmake -GXcode -DIOS_PLATFORM=SIMULATOR64
-    # too much logs on console, save stdout print to file
-    cmake --build . > build_ios_cmake_stdout.log
+    # too much logs on console when "cmake --build ."
+    # cmake --build .
+    NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
+    xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build  | xcpretty
     exit 0
 }
 
@@ -122,6 +124,19 @@ function build_android_lua_cmake()
 
     # build lua-tests
     pushd $COCOS2DX_ROOT/tests/lua-tests/project/proj.android
+    ./gradlew assembleDebug -PPROP_BUILD_TYPE=cmake --parallel --info
+    popd
+
+}
+
+function build_android_js_cmake()
+{
+    # Build all samples
+    echo "Building Android samples js ..."
+    source ../environment.sh
+
+    # build lua-tests
+    pushd $COCOS2DX_ROOT/tests/js-tests/project/proj.android
     ./gradlew assembleDebug -PPROP_BUILD_TYPE=cmake --parallel --info
     popd
 
@@ -260,6 +275,11 @@ function run_pull_request()
     # android_lua
     if [ $BUILD_TARGET == 'android_lua_cmake' ]; then
         build_android_lua_cmake
+    fi
+
+    # android_js
+    if [ $BUILD_TARGET == 'android_js_cmake' ]; then
+        build_android_js_cmake
     fi
 
     if [ $BUILD_TARGET == 'mac' ]; then

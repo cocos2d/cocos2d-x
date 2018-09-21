@@ -14,7 +14,13 @@ add_library(${target_name} STATIC
   ${${target_name}_src}
 )
 
+get_target_property(lua_header ext_lua INTERFACE_INCLUDE_DIRECTORIES)
+get_target_property(tolua_header ext_tolua INTERFACE_INCLUDE_DIRECTORIES)
 target_include_directories(${target_name}
   PRIVATE ../../..
+  PRIVATE ../manual
+  PRIVATE ../manual/platform/android
+  PRIVATE ${lua_header}
+  PRIVATE ${tolua_header}
 )
 
