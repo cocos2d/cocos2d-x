@@ -744,8 +744,6 @@ void Console::loop()
     _maxfd = _listenfd;
     
     timeout.tv_sec = 1;
-    
-    /* 0.016 seconds. Wake up once per frame at 60PFS */
     timeout.tv_usec = 0;
     
     while(!_endThread) {
