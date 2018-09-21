@@ -157,11 +157,6 @@ add_library(jscocos2d STATIC
 target_link_libraries(jscocos2d cocos2d)
 add_dependencies(jscocos2d cocos2d)
 
-if(ANDROID)
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/proj.android)
-    target_link_libraries(jscocos2d js_android_spec)
-endif()
-
 target_include_directories(jscocos2d
         INTERFACE ${cocos_root}/cocos/scripting/js-bindings/auto
         INTERFACE ${cocos_root}/cocos/scripting/js-bindings/manual

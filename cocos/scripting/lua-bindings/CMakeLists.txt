@@ -166,11 +166,6 @@ add_library(luacocos2d ${lua_bindings_files})
 target_link_libraries(luacocos2d cocos2d)
 add_dependencies(luacocos2d cocos2d)
 
-if(ANDROID)
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/proj.android)
-    target_link_libraries(luacocos2d lua_android_spec)
-endif()
-
 target_include_directories(luacocos2d
     PRIVATE manual/platform/android
     PRIVATE manual/platform/android/jni

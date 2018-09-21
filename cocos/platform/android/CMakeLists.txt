@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.6)
 
+# need to whole-archive this lib
 set(target_name cpp_android_spec)
 
 project(${target_name})
@@ -23,8 +24,5 @@ add_library(${target_name} STATIC
 target_include_directories(${target_name}
   PRIVATE ..
   PRIVATE ../..
-)
-# whole-archive JNI relatived codes
-set_target_properties(${target_name} PROPERTIES INTERFACE_LINK_LIBRARIES
-  -Wl,--whole-archive,$<TARGET_FILE:${target_name}>,-Wl,--no-whole-archive)     
+)  
 
