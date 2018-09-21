@@ -178,7 +178,7 @@
              message(FATAL_ERROR "using Windows MSVC generate cocos2d-x project, MSVC_VERSION:${MSVC_VERSION} lower than needed")
          endif()
          define_property(TARGET
-                         PROPERTY DEPEND_DLLS
+                         PROPERTY CC_DEPEND_DLLS
                          BRIEF_DOCS "depend dlls of a target"
                          FULL_DOCS "use to save depend dlls of a target"
                          )

@@ -78,7 +78,7 @@ function(get_target_depends_ext_dlls cocos_target all_depend_dlls_out)
             list(APPEND tmp_depend_libs ${tmp_target})
             foreach(depend_lib ${tmp_depend_libs})
                 if(TARGET ${depend_lib})
-                    get_target_property(tmp_dlls ${depend_lib} DEPEND_DLLS)
+                    get_target_property(tmp_dlls ${depend_lib} CC_DEPEND_DLLS)
                     if(tmp_dlls)
                         list(APPEND all_depend_ext_dlls ${tmp_dlls})
                     endif()
@@ -106,6 +106,7 @@ function(cocos_copy_target_dll cocos_target)
     if(all_depend_dlls)
         list(REMOVE_DUPLICATES all_depend_dlls)
     endif()
+    # todo, add a option to enable/disable debug print
     message(STATUS "prepare to copy external dlls for ${cocos_target}:${all_depend_dlls}")
     foreach(cc_dll_file ${all_depend_dlls})
         get_filename_component(cc_dll_name ${cc_dll_file} NAME)
@@ -382,13 +383,13 @@ function(cocos_use_pkg target pkg)
             # message(STATUS "${target} add dll: ${_dlls}")
             get_property(pre_dlls
                          TARGET ${target}
-                         PROPERTY DEPEND_DLLS)
+                         PROPERTY CC_DEPEND_DLLS)
             if(pre_dlls)
                 set(_dlls ${pre_dlls} ${_dlls})
             endif()
             set_property(TARGET ${target}
                          PROPERTY
-                         DEPEND_DLLS ${_dlls}
+                         CC_DEPEND_DLLS ${_dlls}
                          )
         endif()
     endif()
