@@ -39,6 +39,8 @@ function build_ios()
 
 function build_mac_cmake()
 {
+    NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
+
     # pushd $COCOS2DX_ROOT
     # python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
     # popd
@@ -47,12 +49,14 @@ function build_mac_cmake()
     mkdir -p mac_cmake_build
     cd mac_cmake_build
     cmake ..
-    cmake --build .
+    cmake --build . -- -jobs $NUM_OF_CORES
     exit 0
 }
 
 function build_ios_cmake()
 {
+    NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
+
     # pushd $COCOS2DX_ROOT
     # python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
     # popd
@@ -63,8 +67,9 @@ function build_ios_cmake()
     cmake .. -DCMAKE_TOOLCHAIN_FILE=$COCOS2DX_ROOT/cmake/ios.toolchain.cmake -GXcode -DIOS_PLATFORM=SIMULATOR64
     # too much logs on console when "cmake --build ."
     # cmake --build .
-    NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
     xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build  | xcpretty
+    #the following commands must not be removed
+    xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build
     exit 0
 }
 
