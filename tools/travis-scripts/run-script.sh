@@ -61,7 +61,8 @@ function build_ios_cmake()
     mkdir -p ios_cmake_build
     cd ios_cmake_build
     cmake .. -DCMAKE_TOOLCHAIN_FILE=$COCOS2DX_ROOT/cmake/ios.toolchain.cmake -GXcode -DIOS_PLATFORM=SIMULATOR64
-    cmake --build .
+    # too much logs on console, save stdout print to file
+    cmake --build . > build_ios_cmake_stdout.log
     exit 0
 }
 
