@@ -144,7 +144,7 @@ else()
 endif()
 
 target_link_libraries(${APP_NAME} jscocos2d)
-target_include_directories(PRIVATE ${RUNTIME_SRC_ROOT}/Classes)
+target_include_directories(${APP_NAME} PRIVATE ${RUNTIME_SRC_ROOT}/Classes)
 
 # mark app resources, resource will be copy auto after mark
 setup_cocos_app_config(${APP_NAME})
