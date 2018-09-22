@@ -42,11 +42,12 @@ set(res_main_files
     "${CMAKE_CURRENT_SOURCE_DIR}/../main.js"
     "${CMAKE_CURRENT_SOURCE_DIR}/../project.json"
     )
+# to check, dumplicate copy on macOS sometime. why? 
 # "${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources"
 set(res_res_folders
     "${CMAKE_CURRENT_SOURCE_DIR}/../resjs"
     "${CMAKE_CURRENT_SOURCE_DIR}/../res"
-    # "${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources"
+    "${COCOS2DX_ROOT_PATH}/tests/cpp-tests/Resources"
     )
 set(res_src_folders
     "${CMAKE_CURRENT_SOURCE_DIR}/../src"

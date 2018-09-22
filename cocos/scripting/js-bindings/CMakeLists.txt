@@ -157,6 +157,9 @@ add_library(jscocos2d STATIC
 target_link_libraries(jscocos2d cocos2d)
 add_dependencies(jscocos2d cocos2d)
 
+get_target_property(js_ext_depend external CC_JS_DEPEND)
+target_link_libraries(jscocos2d ${js_ext_depend})
+
 target_include_directories(jscocos2d
         INTERFACE ${cocos_root}/cocos/scripting/js-bindings/auto
         INTERFACE ${cocos_root}/cocos/scripting/js-bindings/manual

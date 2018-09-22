@@ -166,6 +166,9 @@ add_library(luacocos2d ${lua_bindings_files})
 target_link_libraries(luacocos2d cocos2d)
 add_dependencies(luacocos2d cocos2d)
 
+get_target_property(lua_ext_depend external CC_LUA_DEPEND)
+target_link_libraries(luacocos2d ${lua_ext_depend})
+
 target_include_directories(luacocos2d
     PRIVATE manual/platform/android
     PRIVATE manual/platform/android/jni
