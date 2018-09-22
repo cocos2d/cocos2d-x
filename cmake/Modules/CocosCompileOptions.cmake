@@ -110,7 +110,7 @@
          set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
      endif()
      if(LINUX)
-         add_compile_definitions(_GNU_SOURCE)
+         add_definitions(-D_GNU_SOURCE)
          set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -lrt")
          set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread -lrt")
      endif()

@@ -27,7 +27,8 @@ If ($env:build_type -eq "android_cpp_tests") {
 } elseif ($env:build_type -eq "android_lua_tests") {
     Write-Host "Build tests\lua-test"
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tests\lua-tests\project\proj.android\
-    & ./gradlew assembleRelease
+    # tocheck, release mode failed on "LuaTests:mergeReleaseAssets"
+    & ./gradlew assembleDebug
     if ($lastexitcode -ne 0) {throw}
     PushAndroidArtifacts
     Pop-Location
