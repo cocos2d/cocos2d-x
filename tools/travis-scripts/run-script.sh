@@ -179,12 +179,33 @@ function genernate_binding_codes()
     fi
 }
 
+# generate cocos_files.json and check diff
+function update_cocos_files()
+{
+    COCOSFILE_PATH="$COCOS2DX_ROOT/templates/cocos2dx_files.json"
+    echo "Updates cocos_files.json"
+    $COCOS2DX_ROOT/tools/travis-scripts/generate-template-files.py
+    git diff FETCH_HEAD --stat --exit-code "$COCOSFILE_PATH"
+    COCOSFILE_DIFF_RETVAL=$?
+
+    if [ $LUA_DIFF_RETVAL -eq 0 ] && [ $JS_DIFF_RETVAL -eq 0 ] && [ $COCOSFILE_DIFF_RETVAL -eq 0 ]; then
+        echo
+        echo "No differences in generated files"
+        echo "Exiting with success."
+        echo
+        exit 0
+    else
+        echo
+        echo "Generated files differ from HEAD. Continuing."
+        echo
+    fi
+}
+
 function generate_pull_request_for_binding_codes_and_cocosfiles()
 {
     COCOS_ROBOT_REMOTE="https://${GH_USER}:${GH_PASSWORD}@github.com/${GH_USER}/cocos2d-x.git"
     LUA_AUTO_GENERATE_SCRIPT_PATH="$COCOS2DX_ROOT/cocos/scripting/lua-bindings/auto"
     JS_AUTO_GENERATE_SCRIPT_PATH="$COCOS2DX_ROOT/cocos/scripting/js-bindings/auto"
-    COCOSFILE_PATH="$COCOS2DX_ROOT/templates/cocos2dx_files.json"
     ELAPSEDSECS=`date +%s`
     COCOS_BRANCH="update_lua_bindings_$ELAPSEDSECS"
     COMMITTAG="[ci skip][AUTO]: updating luabinding & jsbinding & cocos_file.json automatically"
@@ -213,22 +234,7 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
     JS_DIFF_RETVAL=$?
 
     # generate cocos_files.json and check diff
-    echo "Updates cocos_files.json"
-    $COCOS2DX_ROOT/tools/travis-scripts/generate-template-files.py
-    git diff FETCH_HEAD --stat --exit-code "$COCOSFILE_PATH"
-    COCOSFILE_DIFF_RETVAL=$?
-
-    if [ $LUA_DIFF_RETVAL -eq 0 ] && [ $JS_DIFF_RETVAL -eq 0 ] && [ $COCOSFILE_DIFF_RETVAL -eq 0 ]; then
-        echo
-        echo "No differences in generated files"
-        echo "Exiting with success."
-        echo
-        exit 0
-    else
-        echo
-        echo "Generated files differ from HEAD. Continuing."
-        echo
-    fi
+    update_cocos_files
 
     # Exit on error
     set -e
@@ -324,6 +330,7 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
     if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
         source ../environment.sh
         pushd $COCOS2DX_ROOT
+        update_cocos_files
         python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
         popd
         pushd $COCOS2DX_ROOT/cocos_new_test/proj.android
@@ -334,7 +341,8 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
 
     if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
         pushd $COCOS2DX_ROOT
-        python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
+        update_cocos_files
+        python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l lua -p my.pack.qqqq cocos_new_test
         popd
         CPU_CORES=`grep -c ^processor /proc/cpuinfo`
         echo "Building tests ..."

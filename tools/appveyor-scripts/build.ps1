@@ -24,6 +24,14 @@ If ($env:build_type -eq "android_cpp_tests") {
     PushAndroidArtifacts
     Pop-Location
 
+} elseif ($env:build_type -eq "android_lua_tests") {
+    Write-Host "Build tests\lua-test"
+    Push-Location $env:APPVEYOR_BUILD_FOLDER\tests\lua-tests\project\proj.android\
+    & ./gradlew assembleRelease
+    if ($lastexitcode -ne 0) {throw}
+    PushAndroidArtifacts
+    Pop-Location
+
 } elseif ($env:build_type -eq "android_cpp_empty_test") {
     Write-Host "Build tests\cpp-empty-test"
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tests\cpp-empty-test\proj.android\
