@@ -182,6 +182,9 @@ function genernate_binding_codes()
 # generate cocos_files.json and check diff
 function update_cocos_files()
 {
+    # Don't exit on non-zero return value
+    set +e
+
     COCOSFILE_PATH="$COCOS2DX_ROOT/templates/cocos2dx_files.json"
     echo "Updates cocos_files.json"
     $COCOS2DX_ROOT/tools/travis-scripts/generate-template-files.py
@@ -199,6 +202,9 @@ function update_cocos_files()
         echo "Generated files differ from HEAD. Continuing."
         echo
     fi
+
+    # Exit on error
+    set -e
 }
 
 function generate_pull_request_for_binding_codes_and_cocosfiles()
