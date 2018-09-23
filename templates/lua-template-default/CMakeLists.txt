@@ -143,7 +143,7 @@ else()
     target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
 endif()
 
-target_link_libraries(${APP_NAME} jscocos2d)
+target_link_libraries(${APP_NAME} luacocos2d)
 target_include_directories(${APP_NAME} PRIVATE ${RUNTIME_SRC_ROOT}/Classes)
 
 # mark app resources, resource will be copy auto after mark
