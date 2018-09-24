@@ -48,7 +48,7 @@ function build_mac_cmake()
     cd $COCOS2DX_ROOT
     mkdir -p mac_cmake_build
     cd mac_cmake_build
-    cmake ..
+    cmake .. -GXcode
     # cmake --build .
     xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES build  | xcpretty
     #the following commands must not be removed

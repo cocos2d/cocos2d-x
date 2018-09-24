@@ -19,7 +19,7 @@ function PushAndroidArtifacts
 If ($env:build_type -eq "android_cpp_tests") {
     Write-Host "Build tests\cpp-tests"
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tests\cpp-tests\proj.android\
-    & ./gradlew assembleDebug -PPROP_BUILD_TYPE=ndk-build --parallel --info
+    & ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --parallel --info
     if ($lastexitcode -ne 0) {throw}
     PushAndroidArtifacts
     Pop-Location
@@ -28,7 +28,7 @@ If ($env:build_type -eq "android_cpp_tests") {
     Write-Host "Build tests\lua-test"
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tests\lua-tests\project\proj.android\
     # tocheck, release mode failed on "LuaTests:mergeReleaseAssets"
-    & ./gradlew assembleDebug -PPROP_BUILD_TYPE=cmake --parallel --info
+    & ./gradlew assembleDebug -PPROP_BUILD_TYPE=ndk-build --parallel --info
     if ($lastexitcode -ne 0) {throw}
     PushAndroidArtifacts
     Pop-Location
@@ -36,7 +36,7 @@ If ($env:build_type -eq "android_cpp_tests") {
 } elseif ($env:build_type -eq "android_cpp_empty_test") {
     Write-Host "Build tests\cpp-empty-test"
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tests\cpp-empty-test\proj.android\
-    & ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --parallel --info
+    & ./gradlew assembleRelease
     if ($lastexitcode -ne 0) {throw}
     PushAndroidArtifacts
     Pop-Location
@@ -62,7 +62,7 @@ If ($env:build_type -eq "android_cpp_tests") {
     Write-Host "Build tests project by cmake"
 
     & mkdir $env:APPVEYOR_BUILD_FOLDER\win32-build
-    if ($lastexitcode -ne 0) {throw}
+    # if ($lastexitcode -ne 0) {throw} # mkdir return no-zero
 
     Push-Location $env:APPVEYOR_BUILD_FOLDER\win32-build
     & cmake -DCMAKE_BUILD_TYPE=Release ..
@@ -75,6 +75,7 @@ If ($env:build_type -eq "android_cpp_tests") {
     if ($lastexitcode -ne 0) {throw}
 
     Push-AppveyorArtifact release_win32.7z
+    Pop-Location
 }
 Else {
     # default, windows32_sln_test
