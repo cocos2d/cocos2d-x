@@ -42,6 +42,11 @@ matrix:
       env: BUILD_TARGET=android_lua_cmake
       language: android
       sudo: required
+    # android_js cmake
+    - os: linux
+      env: BUILD_TARGET=android_js_cmake
+      language: android
+      sudo: required
     # mac
     - os: osx
       env: BUILD_TARGET=mac
