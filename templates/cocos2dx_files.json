@@ -1,8 +1,6 @@
 {
     "common": [
         ".appveyor.yml", 
-        ".vscode/c_cpp_properties.json", 
-        ".vscode/settings.json", 
         "AUTHORS", 
         "CHANGELOG", 
         "CMakeLists.txt", 
@@ -2355,6 +2353,7 @@
         "external/clipper/clipper.cpp", 
         "external/clipper/clipper.hpp", 
         "external/cmake/CocosExternalConfig.cmake", 
+        "external/config.json", 
         "external/curl/CMakeLists.txt", 
         "external/curl/include/android/curl/curl.h", 
         "external/curl/include/android/curl/curlbuild-arm32.h", 
@@ -2436,9 +2435,6 @@
         "external/edtaa3func/edtaa3func.cpp", 
         "external/edtaa3func/edtaa3func.h", 
         "external/empty.cpp", 
-        "external/fbx-conv/README.md", 
-        "external/fbx-conv/mac/fbx-conv", 
-        "external/fbx-conv/mac/libfbxsdk.dylib", 
         "external/flatbuffers/Android.mk", 
         "external/flatbuffers/CMakeLists.txt", 
         "external/flatbuffers/flatbuffers.h", 
@@ -4024,6 +4020,9 @@
         "tools/appveyor-scripts/setup_android.py", 
         "tools/coding-style/include-linter.py", 
         "tools/coding-style/tailing-spaces.py", 
+        "tools/fbx-conv/README.md", 
+        "tools/fbx-conv/mac/fbx-conv", 
+        "tools/fbx-conv/mac/libfbxsdk.dylib", 
         "tools/missing-tools.txt", 
         "tools/particle/convert_YCoordFlipped.py", 
         "tools/performance-analyze/README.md", 
@@ -5007,7 +5006,8 @@
         "tools/tojs/cocos2dx_spine.ini", 
         "tools/tojs/cocos2dx_studio.ini", 
         "tools/tojs/cocos2dx_ui.ini", 
-        "tools/tojs/genbindings.py"
+        "tools/tojs/genbindings.py", 
+        "tools/tojs/userconf.ini"
     ], 
     "lua": [
         "cocos/scripting/lua-bindings/CMakeLists.txt", 
@@ -5892,6 +5892,7 @@
         "tools/tolua/cocos2dx_spine.ini", 
         "tools/tolua/cocos2dx_studio.ini", 
         "tools/tolua/cocos2dx_ui.ini", 
-        "tools/tolua/genbindings.py"
+        "tools/tolua/genbindings.py", 
+        "tools/tolua/userconf.ini"
     ]
 }
