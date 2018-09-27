@@ -75,14 +75,36 @@ static Downloader *checkDownloader (lua_State *L) {
     return (Downloader *)ud;
 }
 
-static void newTaskTable(lua_State *L, std::shared_ptr<const DownloaderTask> &task)
+static void pushTaskTable(lua_State *L, const DownloaderTask &task)
 {
     lua_newtable(L);
-    set_field_string(L, "identifier", task->identifier.c_str());
-    set_field_string(L, "requestURL", task->requestURL.c_str());
-    set_field_string(L, "storagePath", task->storagePath.c_str());
+    set_field_string(L, "identifier", task.identifier.c_str());
+    set_field_string(L, "requestURL", task.requestURL.c_str());
+    set_field_string(L, "storagePath", task.storagePath.c_str());
 }
 
+
+static void saveCallback(lua_State *L, void *addr, const char *callbackName)
+{
+    //stack [fn]
+    lua_pushlightuserdata(L, (void*)downloader);    //stack fn, ud
+    lua_gettable(L, LUA_REGISTRYINDEX);             //stack fn, callbacks_tb
+    lua_pushstring(L, callBackName);                //stack fn, callbacks_tb, callbackName
+    lua_pushvalue(L, -3);                           //stack fn, callbacks_tb, callbackName, fn 
+    lua_settable(L, -3);                            //stack fn, callbacks_tb
+    lua_settop(1);                                  //stack 
+}
+
+static int getCallback(lua_State *L, void *addr, const char *callbackName)
+{
+    //stack []
+    lua_pushlightuserdata(L, (void*)downloader);    //stack ud
+    lua_gettable(L, LUA_REGISTRYINDEX);             //stack callbacks_tb
+    lua_pushstring(L, callBackName);                //stack callbacks_tb, callbackName
+    lua_gettable(L, -2);                            //stack callbacks_tb, callbackfn
+    lua_remove(L, -2);                              //stack callbackfn
+    return lua_isfunction(L, -1) ? 1 : 0;
+}
 
 static int lua_downloader_new(lua_State *L)
 {
@@ -111,6 +133,11 @@ static int lua_downloader_new(lua_State *L)
     luaL_getmetatable(L, "cc.Downloader.meta");
     lua_setmetatable(L, -2);
 
+    //register callback table
+    lua_pushlightuserdata(L, (void*)downloader);
+    lua_newtable(L);
+    lua_settable(L, LUA_REGISTRYINDEX);
+
     return 1;
 }
 
@@ -124,7 +151,7 @@ static int lua_downloader_createDownloadDataTask(lua_State *L)
     
     if(argc == 0 ) 
     {
-        luaL_error(L, "cc.Downloader.createDownloadDataTask argument number not required");
+        luaL_error(L, "cc.Downloader.createDownloadDataTask parameter error");
         return 0;
     }
 
@@ -132,7 +159,7 @@ static int lua_downloader_createDownloadDataTask(lua_State *L)
     if(arg >= 2) identifier = lua_tostring(L, 3);
     auto tsk = d->createDownloadDataTask(url, identifier);
 
-    newTaskTable(L, tsk);
+    pushTaskTable(L, *tsk);
     return 1;
 }
 
@@ -146,7 +173,7 @@ static int lua_downloader_createDownloadFileTask(lua_State *L)
     
     if(argc < 2 ) 
     {
-        luaL_error(L, "cc.Downloader.lua_downloader_createDownloadFileTask argument not enough!");
+        luaL_error(L, "cc.Downloader.createDownloadFileTask parameter not enough!");
         return 0;
     }
 
@@ -156,27 +183,122 @@ static int lua_downloader_createDownloadFileTask(lua_State *L)
 
     auto tsk = d->lua_downloader_createDownloadFileTask(url, storagePath, identifier);
 
-    newTaskTable(L, tsk);
+    pushTaskTable(L, *tsk);
     return 1;
 }
 static int lua_downloader_setOnFileTaskSuccess(lua_State *L)
 {
-    
+    Downloader *d = checkDownloader(L);
+    int argc = lua_gettop(L) - 1;
+    if(argc != 1){
+        luaL_error(L,"cc.Downloader.setOnFileTaskSuccess parameter error!" )
+        return 0;
+    }
+    luaL_argcheck(L, lua_isfunction(L, 2), 2, "should be a function");
+    saveCallback(L, d, "setOnFileTaskSuccess");
+
+    d->setOnFileTaskSuccess([d, L](const DownloaderTask &task) {
+        int ret = getCallback(L, d, "setOnFileTaskSuccess"); //stack callbackfn
+        if(ret)
+        {
+            pushTaskTable(L, task);                          //stack callbackfn, task
+            if(lua_pcall(L, 1, 0, 0) != 0)
+            {
+                luaL_error(L, "cc.Downloader.setOnFileTaskSuccess invoke callback error!");
+                return;
+            }
+        }else{
+            lua_pop(L, 1);                                   // remove callback or nil
+        }
+    });
+
+    return 0;
 }
 static int lua_downloader_setOnTaskProgress(lua_State *L)
 {
-    
+    Downloader *d = checkDownloader(L);
+    int argc = lua_gettop(L) - 1;
+    if(argc != 1){
+        luaL_error(L,"cc.Downloader.setOnTaskProgress parameter error!" )
+        return 0;
+    }
+    luaL_argcheck(L, lua_isfunction(L, 2), 2, "should be a function");
+    saveCallback(L, d, "setOnTaskProgress");
+
+    d->setOnTaskProgress([d, L](const DownloaderTask &task, 
+            int64_t bytesReceived,
+            int64_t totalBytesReceived,
+            int64_t totalBytesExpected) {
+        int ret = getCallback(L, d, "setOnTaskProgress"); //stack callbackfn
+        if(ret)
+        {
+            pushTaskTable(L, task);                          //stack callbackfn, task
+            lua_pushnumber(L, bytesReceived);
+            lua_pushnumber(L, totalBytesReceived);
+            lua_pushnumber(L, totalBytesExpected);
+            if(lua_pcall(L, 1, 0, 0) != 0)
+            {
+                luaL_error(L, "cc.Downloader.setOnTaskProgress invoke callback error!");
+                return;
+            }
+        }else{
+            lua_pop(L, 1);                                   // remove callback or nil
+        }
+    });
+
+    return 0;
 }
 static int lua_downloader_setOnTaskError(lua_State *L)
 {
-    
+    Downloader *d = checkDownloader(L);
+    int argc = lua_gettop(L) - 1;
+    if(argc != 1){
+        luaL_error(L,"cc.Downloader.setOnTaskError parameter error!" )
+        return 0;
+    }
+    luaL_argcheck(L, lua_isfunction(L, 2), 2, "should be a function");
+    saveCallback(L, d, "setOnTaskError");
+
+    d->setOnTaskError([d, L](const DownloaderTask &task, 
+            int errorCode,
+            int errorCodeInternal,
+            const std::string& errorSt) {
+        int ret = getCallback(L, d, "setOnTaskError"); //stack callbackfn
+        if(ret)
+        {
+            pushTaskTable(L, task);                          //stack callbackfn, task
+            lua_pushnumber(L, bytesReceived);
+            lua_pushnumber(L, errorCodeInternal);
+            lua_pushstring(L, errorSt.c_str());
+            if(lua_pcall(L, 1, 0, 0) != 0)
+            {
+                luaL_error(L, "cc.Downloader.setOnTaskError invoke callback error!");
+                return;
+            }
+        }else{
+            lua_pop(L, 1);                                   // remove callback or nil
+        }
+    });
+
+    return 0;
 }
 
+
+static const int lua_downloader_cleanup(lua_State *L)
+{
+    Downloader *d = checkDownloader(L);
+
+    //remove callback table
+    lua_pushlightuserdata(L, (void*)downloader);
+    lua_pushnil(L);
+    lua_settable(L, LUA_REGISTRYINDEX);
+}
 
 static const struct luaL_reg downloaderStaticFns[] = {
     {"new", lua_downloader_new},
     {nullptr, nullptr}
 };
+
 
 static const struct luaL_reg downloaderMemberFns[] = {
     {"createDownloadDataTask", lua_downloader_createDownloadDataTask},
@@ -184,6 +306,7 @@ static const struct luaL_reg downloaderMemberFns[] = {
     {"setOnFileTaskSuccess",lua_downloader_setOnFileTaskSuccess},
     {"setOnTaskProgress",lua_downloader_setOnTaskProgress},
     {"setOnTaskError",lua_downloader_setOnTaskError},
+    {"__gc", lua_downloader_cleanup},
     {nullptr, nullptr}
 };
 
