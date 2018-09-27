@@ -22,39 +22,54 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#include "scripting/lua-bindings/manual/network/lua_cocos2dx_network_manual.h"
-extern "C" {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-#include "scripting/lua-bindings/manual/network/lua_extensions.h"
-#endif
-}
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-#include "scripting/lua-bindings/manual/network/Lua_web_socket.h"
-#endif
-
-#include "scripting/lua-bindings/manual/network/lua_xml_http_request.h"
 #include "scripting/lua-bindings/manual/network/lua_downloader.h"
+#include "scripting/lua-bindings/manual/tolua_fix.h"
+#include "scripting/lua-bindings/manual/CCLuaStack.h"
+#include "scripting/lua-bindings/manual/CCLuaValue.h"
 #include "scripting/lua-bindings/manual/CCLuaEngine.h"
+#include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
+
+#include "network/CCDownloader.h"
+
+#include <unordered_map>
+#include <string>
+#include <sstream>
+
+using namespace cocos2d;
 
 
-int register_network_module(lua_State* L)
+static int lua_downloader_new(lua_State *L)
 {
-    lua_getglobal(L, "_G");
-    if (lua_istable(L,-1))//stack:...,_G,
-    {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        luaopen_lua_extensions(L);
-#endif
-        
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        tolua_web_socket_open(L);
-        register_web_socket_manual(L);
-#endif
-        
-        register_xml_http_request(L);
-        register_downloader(L);
+    Downloader *downloader = nullptr;
+    int argc = lua_gettop(L) - 1;
+    if(argc == 1) { 
+        //parse DownloaderHints
+        if(lua_is)
     }
-    lua_pop(L, 1);
-    
+}
+
+static const struct luaL_reg downloaderStaticFns[] = {
+    {"new", lua_downloader_new},
+    {nullptr, nullptr}
+};
+
+static const struct luaL_reg downloaderMemberFns[] = {
+    {"createDownloadDataTask", lua_downloader_createDownloadDataTask},
+    {"createDownloadFileTask", lua_downloader_createDownloadFileTask},
+    {"setOnFileTaskSuccess",lua_downloader_setOnFileTaskSuccess},
+    {"setOnTaskProgress",lua_downloader_setOnTaskProgress},
+    {"setOnTaskError",lua_downloader_setOnTaskError},
+    {nullptr, nullptr}
+};
+
+TOLUA_API int register_downloader(lua_State* L)
+{
+    luaL_newmetatable(L, "cc.Downloader.meta");
+    lua_pushstring(L, "__index");
+    lua_pushvalue(L, -2);  /* pushes the metatable */
+    lua_settable(L, -3);  /* metatable.__index = metatable */
+
+    luaL_openlib(L, nullptr, downloaderMemberFns, 0);
+    luaL_openlib(L, "cc.Downloader", downloaderStaticFns, 0);
     return 1;
 }
