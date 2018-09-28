@@ -303,7 +303,12 @@ static int lua_downloader_tostring(lua_State *L)
 }
 
 static const struct luaL_reg downloaderStaticFns[] = {
-    { "new", lua_downloader_new },
+    { "new", lua_downloader_new }, 
+    /* 
+     * cocos2d::Downloader is not a subclass of cocos2d::Ref, 
+     * `create()` is not provided.
+     */
+    //{ "create", lua_downloader_new },  
     { nullptr, nullptr }
     };
 
@@ -330,3 +335,4 @@ int register_downloader(lua_State* L)
     luaL_openlib(L, "cc.Downloader", downloaderStaticFns, 0);
     return 1;
 }
+
