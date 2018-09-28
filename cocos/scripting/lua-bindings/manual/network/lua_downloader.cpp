@@ -1,5 +1,4 @@
 /****************************************************************************
-Copyright (c) 2013-2016 Chukong Technologies Inc.
 Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
@@ -25,7 +24,7 @@ THE SOFTWARE.
 #include "lua_downloader.h"
 
 #include "network/CCDownloader.h"
-
+#include "lua_extensions.h"
 #include <iostream>
 
 #include <unordered_map>
@@ -84,18 +83,18 @@ static void pushTaskTable(lua_State *L, const DownloadTask &task)
 static void saveCallback(lua_State *L, void *addr, const char *callbackName)
 {
     //stack [fn]
-    lua_pushlightuserdata(L, (void*)addr);    //stack fn, ud
+    lua_pushlightuserdata(L, (void*)addr);          //stack fn, ud
     lua_gettable(L, LUA_REGISTRYINDEX);             //stack fn, callbacks_tb
     lua_pushstring(L, callbackName);                //stack fn, callbacks_tb, callbackName
     lua_pushvalue(L, -3);                           //stack fn, callbacks_tb, callbackName, fn 
     lua_settable(L, -3);                            //stack fn, callbacks_tb
-    lua_settop(L, 1);                                  //stack 
+    lua_pop(L, 2);                                  //stack 
 }
 
 static int getCallback(lua_State *L, void *addr, const char *callbackName)
 {
     //stack []
-    lua_pushlightuserdata(L, (void*)addr);    //stack ud
+    lua_pushlightuserdata(L, (void*)addr);          //stack ud
     lua_gettable(L, LUA_REGISTRYINDEX);             //stack callbacks_tb
     lua_pushstring(L, callbackName);                //stack callbacks_tb, callbackName
     lua_gettable(L, -2);                            //stack callbacks_tb, callbackfn
