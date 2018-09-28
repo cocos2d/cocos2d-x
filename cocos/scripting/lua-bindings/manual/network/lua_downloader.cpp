@@ -234,7 +234,7 @@ static int lua_downloader_setOnTaskProgress(lua_State *L)
             lua_pushnumber(L, bytesReceived);
             lua_pushnumber(L, totalBytesReceived);
             lua_pushnumber(L, totalBytesExpected);
-            if (lua_pcall(L, 1, 0, 0) != 0)
+            if (lua_pcall(L, 4, 0, 0) != 0)
             {
                 luaL_error(L, "cc.Downloader.setOnTaskProgress invoke callback error!");
                 return;
@@ -269,7 +269,7 @@ static int lua_downloader_setOnTaskError(lua_State *L)
             lua_pushnumber(L, errorCode);
             lua_pushnumber(L, errorCodeInternal);
             lua_pushstring(L, errorSt.c_str());
-            if (lua_pcall(L, 1, 0, 0) != 0)
+            if (lua_pcall(L, 4, 0, 0) != 0)
             {
                 luaL_error(L, "cc.Downloader.setOnTaskError invoke callback error!");
                 return;
