@@ -93,12 +93,11 @@ protected:
     class PlistFramesCache {
     public:
         PlistFramesCache() {}
-        void rememberFrame(const std::string &plist, const std::string &frame);
-        void forgetFrame(const std::string &plist, const std::string &frame);
+        void insertFrame(const std::string &plist, const std::string &frame);
         bool isPlistUsed(const std::string &plist) const;
-        bool dropFrame(const std::string &frame);
-        bool dropFrames(const std::vector<std::string> &frame);
-        bool dropPlist(const std::string &frame);
+        bool eraseFrame(const std::string &frame);
+        bool eraseFrames(const std::vector<std::string> &frame);
+        bool eraselist(const std::string &frame);
         void clear();
         bool hasFrame(const std::string &frame) const;
         inline bool hasPlist(const std::string &plist) const { return _plist2Frames.find(plist) != _plist2Frames.end(); }
