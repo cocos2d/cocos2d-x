@@ -484,7 +484,7 @@ void Label::reset()
     _bmFontPath = "";
     _systemFontDirty = false;
     _systemFont = "Helvetica";
-    _systemFontSize = 12;
+    _systemFontSize = CC_DEFAULT_FONT_LABEL_SIZE;
 
     if (_horizontalKernings)
     {
