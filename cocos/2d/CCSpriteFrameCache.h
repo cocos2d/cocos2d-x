@@ -32,6 +32,8 @@ THE SOFTWARE.
 #define __SPRITE_CCSPRITE_FRAME_CACHE_H__
 
 #include <set>
+#include <map>
+#include <unordered_map>
 #include <string>
 #include "2d/CCSpriteFrame.h"
 #include "base/CCRef.h"
@@ -87,6 +89,24 @@ class PolygonInfo;
  */
 class CC_DLL SpriteFrameCache : public Ref
 {
+protected:
+    class PlistFramesCache {
+    public:
+        PlistFramesCache() {}
+        void rememberFrame(const std::string &plist, const std::string &frame);
+        void forgetFrame(const std::string &plist, const std::string &frame);
+        bool isPlistUsed(const std::string &plist) const;
+        bool dropFrame(const std::string &frame);
+        bool dropFrames(const std::vector<std::string> &frame);
+        bool dropPlist(const std::string &frame);
+        void clear();
+        bool hasFrame(const std::string &frame) const;
+        inline bool hasPlist(const std::string &plist) const { return _plist2Frames.find(plist) != _plist2Frames.end(); }
+    private:
+        std::unordered_map<std::string, std::set<std::string>> _plist2Frames;
+        std::unordered_map<std::string, std::string> _frame2plist;
+    };
+
 public:
     /** Returns the shared instance of the Sprite Frame cache.
      *
@@ -246,11 +266,11 @@ protected:
 
     /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
      */
-    void addSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture);
+    void addSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture, const std::string &plist);
     
     /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
      */
-    void addSpriteFramesWithDictionary(ValueMap& dictionary, const std::string &texturePath);
+    void addSpriteFramesWithDictionary(ValueMap& dictionary, const std::string &texturePath, const std::string &plist);
     
     /** Removes multiple Sprite Frames from Dictionary.
     * @since v0.99.5
@@ -268,11 +288,11 @@ protected:
                                const std::vector<int> &triangleIndices,
                                PolygonInfo &polygonInfo);
 
-    void reloadSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture);
+    void reloadSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture, const std::string &plist);
 
     Map<std::string, SpriteFrame*> _spriteFrames;
     ValueMap _spriteFramesAliases;
-    std::set<std::string>*  _loadedFileNames;
+    PlistFramesCache _loadedPlistFiles;
 };
 
 // end of _2d group
