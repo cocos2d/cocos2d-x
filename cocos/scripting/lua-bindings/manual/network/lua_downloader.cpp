@@ -36,26 +36,32 @@ using namespace cocos2d::network;
 
 static int get_field_int(lua_State *L, const char *field, int def)
 {
+    int ret = def;
     lua_pushstring(L, field);
     lua_gettable(L, -2);
     if (lua_isnil(L, -1))
     {
         //luaL_error(L, "get_field_int: field '%s' no exists.", field);
-        return def;
+        return ret;
     }
-    return (int)lua_tointeger(L, -1);
+    ret = (int)lua_tointeger(L, -1);
+    lua_pop(L, 1);
+    return ret;
 }
 
 static std::string get_field_string(lua_State *L, const char *field, const char *def)
 {
+    std::string ret = def;
     lua_pushstring(L, field);
     lua_gettable(L, -2);
     if (lua_isnil(L, -1))
     {
         //luaL_error(L, "get_field_string: field '%s' no exists.", field);
-        return def;
+        return ret;
     }
-    return std::string(lua_tostring(L, -1));
+    ret = std::string(lua_tostring(L, -1));
+    lua_pop(L, 1);
+    return ret;
 }
 
 static void set_field_string(lua_State *L, const char *field, const char *value)
