@@ -114,10 +114,10 @@ static int lua_downloader_new(lua_State *L)
         }
         DownloaderHints hints;
         hints.countOfMaxProcessingTasks = get_field_int(L, "countOfMaxProcessingTasks", 6);
-        hints.timeoutInSeconds = get_field_int(L, "timeoutInSeconds", 45);
-        hints.tempFileNameSuffix = get_field_string(L, "tempFileNameSuffix", ".tmp");
+        hints.timeoutInSeconds          = get_field_int(L, "timeoutInSeconds", 45);
+        hints.tempFileNameSuffix        = get_field_string(L, "tempFileNameSuffix", ".tmp");
 
-        auto ptr = lua_newuserdata(L, sizeof(Downloader));
+        auto ptr   = lua_newuserdata(L, sizeof(Downloader));
         downloader = new (ptr) Downloader(hints);
     }
     else
@@ -261,7 +261,7 @@ static int lua_downloader_setOnTaskError(lua_State *L)
         int errorCode,
         int errorCodeInternal,
         const std::string& errorSt) {
-        int ret = getCallback(L, d, "setOnTaskError"); //stack callbackfn
+        int ret = getCallback(L, d, "setOnTaskError");       //stack callbackfn
         if (ret)
         {
             pushTaskTable(L, task);                          //stack callbackfn, task
@@ -270,6 +270,8 @@ static int lua_downloader_setOnTaskError(lua_State *L)
             lua_pushstring(L, errorSt.c_str());
             if (lua_pcall(L, 4, 0, 0) != 0)
             {
+                
+                lua_pop(L, 1);                                // remove callback or nil
                 luaL_error(L, "cc.Downloader.setOnTaskError invoke callback error!");
                 return;
             }
@@ -298,7 +300,7 @@ static int lua_downloader_cleanup(lua_State *L)
 
 static int lua_downloader_tostring(lua_State *L)
 {
-    lua_pushstring(L, "Downloader");
+    lua_pushstring(L, "[cc.Downloader]");
     return 1;
 }
 
@@ -316,11 +318,11 @@ static const struct luaL_reg downloaderStaticFns[] = {
 static const struct luaL_reg downloaderMemberFns[] = {
     { "createDownloadDataTask", lua_downloader_createDownloadDataTask },
     { "createDownloadFileTask", lua_downloader_createDownloadFileTask },
-    { "setOnFileTaskSuccess",lua_downloader_setOnFileTaskSuccess },
-    { "setOnTaskProgress",lua_downloader_setOnTaskProgress },
-    { "setOnTaskError",lua_downloader_setOnTaskError },
-    { "__gc", lua_downloader_cleanup },
-    { "__tostring", lua_downloader_tostring },
+    { "setOnFileTaskSuccess",   lua_downloader_setOnFileTaskSuccess },
+    { "setOnTaskProgress",      lua_downloader_setOnTaskProgress },
+    { "setOnTaskError",         lua_downloader_setOnTaskError },
+    { "__gc",                   lua_downloader_cleanup },
+    { "__tostring",             lua_downloader_tostring },
     { nullptr, nullptr }
 };
 
@@ -328,8 +330,8 @@ int register_downloader(lua_State* L)
 {
     luaL_newmetatable(L, "cc.Downloader");
     lua_pushstring(L, "__index");
-    lua_pushvalue(L, -2);  /* pushes the metatable */
-    lua_settable(L, -3);  /* metatable.__index = metatable */
+    lua_pushvalue(L, -2);    /* pushes the metatable */
+    lua_settable(L, -3);     /* metatable.__index = metatable */
 
     luaL_openlib(L, nullptr, downloaderMemberFns, 0);
     luaL_openlib(L, "cc.Downloader", downloaderStaticFns, 0);
