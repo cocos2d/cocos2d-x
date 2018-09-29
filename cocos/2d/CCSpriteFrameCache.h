@@ -90,6 +90,9 @@ class PolygonInfo;
 class CC_DLL SpriteFrameCache : public Ref
 {
 protected:
+    /**
+    * used to wrap plist & frame names & SpriteFrames
+    */
     class PlistFramesCache {
     public:
         PlistFramesCache() { }
@@ -97,22 +100,23 @@ protected:
             _spriteFrames.reserve(20); clear();
         }
         void insertFrame(const std::string &plist, const std::string &frame, SpriteFrame *frameObj);
-        bool isPlistUsed(const std::string &plist) const;
         bool eraseFrame(const std::string &frame);
         bool eraseFrames(const std::vector<std::string> &frame);
-        bool eraselist(const std::string &frame);
+        bool erasePlistIndex(const std::string &frame);
         void clear();
+
         bool hasFrame(const std::string &frame) const;
+        inline bool hasPlist(const std::string &plist) const { return _indexPlist2Frames.find(plist) != _indexPlist2Frames.end(); }
 
-        inline bool hasPlist(const std::string &plist) const { return _plist2Frames.find(plist) != _plist2Frames.end(); }
         inline SpriteFrame *at(const std::string &frame) { return _spriteFrames.at(frame); }
-
         inline Map<std::string, SpriteFrame*>& getSpriteFrames() { return _spriteFrames; }
+
+        bool isPlistUsed(const std::string &plist) const;
 
     private:
         Map<std::string, SpriteFrame*> _spriteFrames;
-        std::unordered_map<std::string, std::set<std::string>> _plist2Frames;
-        std::unordered_map<std::string, std::string> _frame2plist;
+        std::unordered_map<std::string, std::set<std::string>> _indexPlist2Frames;
+        std::unordered_map<std::string, std::string> _indexFrame2plist;
     };
 
 public:
