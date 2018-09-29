@@ -60,6 +60,15 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- Returns type of label<br>
+-- warning Not support system font.<br>
+-- return the type of label<br>
+-- since v3.18.0
+-- @function [parent=#Label] getLabelType 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
 --  Returns the text color of the Label.
 -- @function [parent=#Label] getTextColor 
 -- @param self
@@ -324,6 +333,12 @@
 -- @param self
 -- @param #float height
 -- @return Label#Label self (return value: cc.Label)
+        
+--------------------------------
+-- Returns font size
+-- @function [parent=#Label] getRenderingFontSize 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- Returns the line height of this Label.<br>
