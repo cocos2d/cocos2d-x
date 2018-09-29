@@ -92,16 +92,25 @@ class CC_DLL SpriteFrameCache : public Ref
 protected:
     class PlistFramesCache {
     public:
-        PlistFramesCache() {}
-        void insertFrame(const std::string &plist, const std::string &frame);
+        PlistFramesCache() { }
+        void init() {
+            _spriteFrames.reserve(20); clear();
+        }
+        void insertFrame(const std::string &plist, const std::string &frame, SpriteFrame *frameObj);
         bool isPlistUsed(const std::string &plist) const;
         bool eraseFrame(const std::string &frame);
         bool eraseFrames(const std::vector<std::string> &frame);
         bool eraselist(const std::string &frame);
         void clear();
         bool hasFrame(const std::string &frame) const;
+
         inline bool hasPlist(const std::string &plist) const { return _plist2Frames.find(plist) != _plist2Frames.end(); }
+        inline SpriteFrame *at(const std::string &frame) { return _spriteFrames.at(frame); }
+
+        inline Map<std::string, SpriteFrame*>& getSpriteFrames() { return _spriteFrames; }
+
     private:
+        Map<std::string, SpriteFrame*> _spriteFrames;
         std::unordered_map<std::string, std::set<std::string>> _plist2Frames;
         std::unordered_map<std::string, std::string> _frame2plist;
     };
@@ -289,9 +298,8 @@ protected:
 
     void reloadSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture, const std::string &plist);
 
-    Map<std::string, SpriteFrame*> _spriteFrames;
     ValueMap _spriteFramesAliases;
-    PlistFramesCache _loadedPlistFiles;
+    PlistFramesCache _spriteFramesCache;
 };
 
 // end of _2d group
