@@ -48,81 +48,12 @@ using namespace std;
 
 NS_CC_BEGIN
 
-void SpriteFrameCache::PlistFramesCache::insertFrame(const std::string &plist, const std::string &frame, SpriteFrame *spriteFrame) 
-{
-    _spriteFrames.insert(frame, spriteFrame);   //add SpriteFrame
-
-    _indexPlist2Frames[plist].insert(frame);    //insert index plist->[frameName]
-    _indexFrame2plist[frame] = plist;           //insert index frameName->plist
-}
-
-bool SpriteFrameCache::PlistFramesCache::isPlistUsed(const std::string &plist) const
-{
-    //plist loaded && not empty
-    auto it = _indexPlist2Frames.find(plist);
-    return it != _indexPlist2Frames.end() && !it->second.empty();
-}
-
-bool SpriteFrameCache::PlistFramesCache::eraseFrame(const std::string &frame)
-{
-    _spriteFrames.erase(frame);                             //drop SpriteFrame
-    auto itFrame = _indexFrame2plist.find(frame);
-    if (itFrame != _indexFrame2plist.end())
-    {
-        _indexPlist2Frames[itFrame->second].erase(frame);   //update index plist->[frameNames]
-        _indexFrame2plist.erase(itFrame);                   //update index frame->plist
-        return true;
-    }
-    return false;
-}
-
-bool SpriteFrameCache::PlistFramesCache::eraseFrames(const std::vector<std::string> &frames)
-{
-    if (frames.empty()) return false;
-
-    for (auto frame : frames)
-    {
-        _spriteFrames.erase(frame);                             //drop SpriteFrame
-        auto itPlist = _indexFrame2plist.find(frame);
-        if (itPlist != _indexFrame2plist.end()) {
-            _indexPlist2Frames[itPlist->second].erase(frame);   //update index plist->[frameNames]
-            _indexFrame2plist.erase(itPlist);                   //update index frameName->plist
-        }
-    }
-
-    return true;
-}
-
-bool SpriteFrameCache::PlistFramesCache::erasePlistIndex(const std::string &plist)
-{   
-
-    auto it = _indexPlist2Frames.find(plist);
-    if (it == _indexPlist2Frames.end()) return false;
-
-    auto &frames = it->second;
-    for (auto f : frames)
-    {
-        // !!do not!! call `_spriteFrames.erase(itr);` to erase SpriteFrame
-        // it shall be done by other procedure
-        _indexFrame2plist.erase(f);                             //erase plist frame frameName->plist
-    }
-    _indexPlist2Frames.erase(plist);                        //update index plist->[frameNames]
-    return true;
-}
-
-void SpriteFrameCache::PlistFramesCache::clear()
-{
-    _indexPlist2Frames.clear();
-    _indexFrame2plist.clear();
-    _spriteFrames.clear();
-}
-
-bool SpriteFrameCache::PlistFramesCache::hasFrame(const std::string &frame) const
-{
-    return _indexFrame2plist.find(frame) != _indexFrame2plist.end();
-}
-
-
+//SpriteFrameCache is not threadsafe, lock is not required.
+#if 0
+#define CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD std::lock_guard<std::mutex> lockGuard(_mutex)
+#else
+#define CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD (void)0
+#endif
 static SpriteFrameCache *_sharedSpriteFrameCache = nullptr;
 
 SpriteFrameCache* SpriteFrameCache::getInstance()
@@ -813,6 +744,104 @@ bool SpriteFrameCache::reloadTexture(const std::string& plist)
         CCLOG("cocos2d: SpriteFrameCache: Couldn't load texture");
     }
     return true;
+}
+
+
+void SpriteFrameCache::PlistFramesCache::insertFrame(const std::string &plist, const std::string &frame, SpriteFrame *spriteFrame)
+{
+    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
+    _spriteFrames.insert(frame, spriteFrame);   //add SpriteFrame
+
+    _indexPlist2Frames[plist].insert(frame);    //insert index plist->[frameName]
+    _indexFrame2plist[frame] = plist;           //insert index frameName->plist
+}
+
+bool SpriteFrameCache::PlistFramesCache::isPlistUsed(const std::string &plist) const
+{
+    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
+    //plist loaded && not empty
+    auto it = _indexPlist2Frames.find(plist);
+    return it != _indexPlist2Frames.end() && !it->second.empty();
+}
+
+bool SpriteFrameCache::PlistFramesCache::eraseFrame(const std::string &frame)
+{
+    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
+    _spriteFrames.erase(frame);                             //drop SpriteFrame
+    auto itFrame = _indexFrame2plist.find(frame);
+    if (itFrame != _indexFrame2plist.end())
+    {
+        _indexPlist2Frames[itFrame->second].erase(frame);   //update index plist->[frameNames]
+        _indexFrame2plist.erase(itFrame);                   //update index frame->plist
+        return true;
+    }
+    return false;
+}
+
+bool SpriteFrameCache::PlistFramesCache::eraseFrames(const std::vector<std::string> &frames)
+{
+    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
+    if (frames.empty()) return false;
+
+    for (auto frame : frames)
+    {
+        _spriteFrames.erase(frame);                             //drop SpriteFrame
+        auto itPlist = _indexFrame2plist.find(frame);
+        if (itPlist != _indexFrame2plist.end()) {
+            _indexPlist2Frames[itPlist->second].erase(frame);   //update index plist->[frameNames]
+            _indexFrame2plist.erase(itPlist);                   //update index frameName->plist
+        }
+    }
+
+    return true;
+}
+
+bool SpriteFrameCache::PlistFramesCache::erasePlistIndex(const std::string &plist)
+{
+    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
+    auto it = _indexPlist2Frames.find(plist);
+    if (it == _indexPlist2Frames.end()) return false;
+
+    auto &frames = it->second;
+    for (auto f : frames)
+    {
+        // !!do not!! call `_spriteFrames.erase(itr);` to erase SpriteFrame
+        // it shall be done by other procedure
+        _indexFrame2plist.erase(f);                             //erase plist frame frameName->plist
+    }
+    _indexPlist2Frames.erase(plist);                        //update index plist->[frameNames]
+    return true;
+}
+
+void SpriteFrameCache::PlistFramesCache::clear()
+{
+    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
+    _indexPlist2Frames.clear();
+    _indexFrame2plist.clear();
+    _spriteFrames.clear();
+}
+
+bool SpriteFrameCache::PlistFramesCache::hasFrame(const std::string &frame) const
+{
+    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
+    return _indexFrame2plist.find(frame) != _indexFrame2plist.end();
+}
+
+bool SpriteFrameCache::PlistFramesCache::hasPlist(const std::string &plist) const
+{
+    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
+    return _indexPlist2Frames.find(plist) != _indexPlist2Frames.end();
+}
+
+SpriteFrame * SpriteFrameCache::PlistFramesCache::at(const std::string &frame)
+{
+    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
+    return _spriteFrames.at(frame);
+}
+Map<std::string, SpriteFrame*>&  SpriteFrameCache::PlistFramesCache::getSpriteFrames()
+{
+    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
+    return _spriteFrames;
 }
 
 NS_CC_END

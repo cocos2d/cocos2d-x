@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include <set>
 #include <map>
 #include <unordered_map>
+#include <mutex>
 #include <string>
 #include "2d/CCSpriteFrame.h"
 #include "base/CCRef.h"
@@ -116,18 +117,19 @@ protected:
         */
         void clear();
 
-        bool hasFrame(const std::string &frame) const;
-        inline bool hasPlist(const std::string &plist) const { return _indexPlist2Frames.find(plist) != _indexPlist2Frames.end(); }
+        inline bool hasFrame(const std::string &frame) const;
+        inline bool hasPlist(const std::string &plist) const;
 
-        inline SpriteFrame *at(const std::string &frame) { return _spriteFrames.at(frame); }
-        inline Map<std::string, SpriteFrame*>& getSpriteFrames() { return _spriteFrames; }
+        inline SpriteFrame *at(const std::string &frame);
+        inline Map<std::string, SpriteFrame*>& getSpriteFrames();
 
-        bool isPlistUsed(const std::string &plist) const;
+        inline bool isPlistUsed(const std::string &plist) const;
 
     private:
         Map<std::string, SpriteFrame*> _spriteFrames;
         std::unordered_map<std::string, std::set<std::string>> _indexPlist2Frames;
         std::unordered_map<std::string, std::string> _indexFrame2plist;
+        mutable std::mutex _mutex;
     };
 
 public:
