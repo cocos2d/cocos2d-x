@@ -96,22 +96,18 @@ bool SpriteFrameCache::PlistFramesCache::eraseFrames(const std::vector<std::stri
 bool SpriteFrameCache::PlistFramesCache::erasePlistIndex(const std::string &plist)
 {   
 
-    //update index frameName->plist, 
-    //need iterate every pair
-    for (auto itr = _indexFrame2plist.begin(); itr != _indexFrame2plist.end();)
+    auto it = _indexPlist2Frames.find(plist);
+    if (it == _indexPlist2Frames.end()) return false;
+
+    auto &frames = it->second;
+    for (auto f : frames)
     {
-        if (itr->second == plist)
-        {
-            // !!!!do not!!!! call `_spriteFrames.erase(itr);` to erase SpriteFrame
-            // it is done by other procedure
-            itr = _indexFrame2plist.erase(itr);                 //erase plist frame frameName->plist
-        }
-        else
-        {
-            itr++;
-        }
+        // !!do not!! call `_spriteFrames.erase(itr);` to erase SpriteFrame
+        // it shall be done by other procedure
+        _indexFrame2plist.erase(f);                             //erase plist frame frameName->plist
     }
-    return _indexPlist2Frames.erase(plist) > 0;                 //update index plist->[frameNames]
+    _indexPlist2Frames.erase(plist);                        //update index plist->[frameNames]
+    return true;
 }
 
 void SpriteFrameCache::PlistFramesCache::clear()

@@ -99,10 +99,21 @@ protected:
         void init() {
             _spriteFrames.reserve(20); clear();
         }
+        /**  Record SpriteFrame with plist and frame name, add frame name 
+        *    and plist to index
+        */
         void insertFrame(const std::string &plist, const std::string &frame, SpriteFrame *frameObj);
+        /** Delete frame from cache, rebuild index
+        */
         bool eraseFrame(const std::string &frame);
+        /** Delete a list of frames from cache, rebuild index
+        */
         bool eraseFrames(const std::vector<std::string> &frame);
+        /** Delete frame from index and SpriteFrame is kept.
+        */
         bool erasePlistIndex(const std::string &frame);
+        /** Clear index and all SpriteFrames.
+        */
         void clear();
 
         bool hasFrame(const std::string &frame) const;
