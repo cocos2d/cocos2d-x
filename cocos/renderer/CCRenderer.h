@@ -258,8 +258,12 @@ protected:
     // the TriBatches
     TriBatchToDraw* _triBatchesToDraw;
 
+    // used as offset in in the process of concatenating triangles for batched drawing
     int _filledVertex;
     int _filledIndex;
+    // used for the flushing logic if vertex number is high and flushing is needed
+    int _filledVertex2;
+    int _filledIndex2;
 
     bool _glViewAssigned;
 

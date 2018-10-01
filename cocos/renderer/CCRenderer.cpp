@@ -38,14 +38,17 @@
 #include "renderer/CCTechnique.h"
 #include "renderer/CCPass.h"
 #include "renderer/CCRenderState.h"
+#include "renderer/ccGLStateCache.h"
 
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventType.h"
+#include "base/CCUserDefault.h"
 #include "2d/CCCamera.h"
 #include "2d/CCScene.h"
+#include "base/CCEventCustom.h"
 
 NS_CC_BEGIN
 
@@ -202,6 +205,8 @@ Renderer::Renderer()
 ,_triBatchesToDraw(nullptr)
 ,_filledVertex(0)
 ,_filledIndex(0)
+,_filledVertex2(0)
+,_filledIndex2(0)
 ,_glViewAssigned(false)
 ,_isRendering(false)
 ,_isDepthTestFor2D(false)
@@ -390,17 +395,21 @@ void Renderer::processRenderCommand(RenderCommand* command)
         auto cmd = static_cast<TrianglesCommand*>(command);
         
         // flush own queue when buffer is full
-        if(_filledVertex + cmd->getVertexCount() > VBO_SIZE || _filledIndex + cmd->getIndexCount() > INDEX_VBO_SIZE)
+        _filledIndex2 += cmd->getIndexCount();
+        _filledVertex2 += cmd->getVertexCount();
+        
+        if(_filledVertex2 >= VBO_SIZE - 1 || _filledIndex2 >= INDEX_VBO_SIZE - 1)
         {
-            CCASSERT(cmd->getVertexCount()>= 0 && cmd->getVertexCount() < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
-            CCASSERT(cmd->getIndexCount()>= 0 && cmd->getIndexCount() < INDEX_VBO_SIZE, "VBO for index is not big enough, please break the data down or use customized render command");
+            // flush the triangles
+            _filledIndex2 = 0;
+            _filledVertex2 = 0;
+        
+            // todo send Renderer::processRenderCommand type: TRIANGLES_COMMAND  cmd->getVertexCount() ,cmd->getIndexCount()  _filledVertex2, _filledIndex2, VBO_SIZE and INDEX_VBO_SIZE value
             drawBatchedTriangles();
         }
         
         // queue it
         _queuedTriangleCommands.push_back(cmd);
-        _filledIndex += cmd->getIndexCount();
-        _filledVertex += cmd->getVertexCount();
     }
     else if (RenderCommand::Type::MESH_COMMAND == commandType)
     {
@@ -667,6 +676,8 @@ void Renderer::clean()
     _queuedTriangleCommands.clear();
     _filledVertex = 0;
     _filledIndex = 0;
+    _filledIndex2 = 0;
+    _filledVertex2 = 0;
     _lastBatchedMeshCommand = nullptr;
 }
 
@@ -723,8 +734,8 @@ void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
         _indices[_filledIndex + i] = _filledVertex + indices[i];
     }
 
-    _filledVertex += cmd->getVertexCount();
     _filledIndex += cmd->getIndexCount();
+    _filledVertex += cmd->getVertexCount();
 }
 
 void Renderer::drawBatchedTriangles()
@@ -734,8 +745,6 @@ void Renderer::drawBatchedTriangles()
 
     CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_BATCH_TRIANGLES");
 
-    _filledVertex = 0;
-    _filledIndex = 0;
 
     /************** 1: Setup up vertices/indices *************/
 
@@ -751,6 +760,17 @@ void Renderer::drawBatchedTriangles()
     {
         auto currentMaterialID = cmd->getMaterialID();
         const bool batchable = !cmd->isSkipBatching();
+        
+        int _filledVertexTmp =  static_cast<int>(_filledVertex + cmd->getVertexCount());
+        int _filledIndexTmp  = static_cast<int>(_filledIndex   + cmd->getIndexCount());
+        
+        // -1 is needed because the indexing of the array start from 0
+        // check once again if the vertex index is in bounds
+        if (_filledIndexTmp >= INDEX_VBO_SIZE - 1 || _filledVertexTmp >= VBO_SIZE - 1)
+        {
+            // todo send send Renderer::drawBatchedTriangles()  1: Setup up vertices/indices  _filledVertex and _filledIndex,  cmd->getVertexCount(),  cmd->getIndexCount() value and if possible all the callstack
+            continue;
+        }
 
         fillVerticesAndIndices(cmd);
 
@@ -809,6 +829,11 @@ void Renderer::drawBatchedTriangles()
         // so most probably we won't have any benefit of using it
         glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * _filledVertex, nullptr, GL_STATIC_DRAW);
         void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+        GLenum err = glGetError();
+        if (err != GL_NO_ERROR)
+        {
+            UserDefault::getInstance()->setBoolForKey("IsExitInDrawBatchedTriangle", true);
+        }
         memcpy(buf, _verts, sizeof(_verts[0]) * _filledVertex);
         glUnmapBuffer(GL_ARRAY_BUFFER);
 
@@ -845,11 +870,18 @@ void Renderer::drawBatchedTriangles()
     /************** 3: Draw *************/
     for (int i=0; i<batchesTotal; ++i)
     {
-        CC_ASSERT(_triBatchesToDraw[i].cmd && "Invalid batch");
-        _triBatchesToDraw[i].cmd->useMaterial();
-        glDrawElements(GL_TRIANGLES, (GLsizei) _triBatchesToDraw[i].indicesToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (_triBatchesToDraw[i].offset*sizeof(_indices[0])) );
-        _drawnBatches++;
-        _drawnVertices += _triBatchesToDraw[i].indicesToDraw;
+        //CC_ASSERT(_triBatchesToDraw[i].cmd && "Invalid batch");
+        if(_triBatchesToDraw[i].cmd)
+        {
+            _triBatchesToDraw[i].cmd->useMaterial();
+            glDrawElements(GL_TRIANGLES, (GLsizei) _triBatchesToDraw[i].indicesToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (_triBatchesToDraw[i].offset*sizeof(_indices[0])) );
+            _drawnBatches++;
+            _drawnVertices += _triBatchesToDraw[i].indicesToDraw;
+        }
+        else
+        {
+            // todo send Renderer::drawBatchedTriangles()  3: Draw  _triBatchesToDraw[i].offset,_ triBatchesToDraw[i].indicesToDraw and  _filledVertex and _filledIndex value
+        }
     }
 
     /************** 4: Cleanup *************/
@@ -867,6 +899,8 @@ void Renderer::drawBatchedTriangles()
     _queuedTriangleCommands.clear();
     _filledVertex = 0;
     _filledIndex = 0;
+    _filledIndex2 = 0;
+    _filledVertex2 = 0;
 }
 
 void Renderer::flush()
