@@ -156,22 +156,21 @@ bool Button::createTitleRendererIfNull() {
     return false;
 }
 
-void Button::createTitleRenderer()
-{
-    _titleRenderer = Label::create();
-    _titleRenderer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-    addProtectedChild(_titleRenderer, TITLE_RENDERER_Z, -1);
+void Button::createTitleRenderer() {
+    setTitleLabel(Label::create());
 }
 
 /** replaces the current Label node with a new one */
 void Button::setTitleLabel(Label* label)
 {
     if (_titleRenderer != label) {
-        CC_SAFE_RELEASE(_titleRenderer);
+        if(_titleRenderer) {
+            removeProtectedChild(_titleRenderer);
+            _titleRenderer = nullptr;
+        }
+        
+        addProtectedChild(label, TITLE_RENDERER_Z, -1);
         _titleRenderer = label;
-        CC_SAFE_RETAIN(_titleRenderer);
-
-        addProtectedChild(_titleRenderer, TITLE_RENDERER_Z, -1);
         updateTitleLocation();
     }
 }
@@ -581,7 +580,8 @@ void Button::onPressStateChangedToDisabled()
 
 void Button::updateTitleLocation()
 {
-    _titleRenderer->setPosition(_contentSize.width * 0.5f, _contentSize.height * 0.5f);
+    _titleRenderer->setPosition(_contentSize/2);
+    _titleRenderer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
 }
 
 void Button::updateContentSize()
