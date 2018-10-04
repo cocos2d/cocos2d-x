@@ -19,7 +19,16 @@ function PushAndroidArtifacts
 If ($env:build_type -eq "android_cpp_tests") {
     Write-Host "Build tests\cpp-tests"
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tests\cpp-tests\proj.android\
-    & ./gradlew assembleDebug
+    & ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --parallel --info
+    if ($lastexitcode -ne 0) {throw}
+    PushAndroidArtifacts
+    Pop-Location
+
+} elseif ($env:build_type -eq "android_lua_tests") {
+    Write-Host "Build tests\lua-test"
+    Push-Location $env:APPVEYOR_BUILD_FOLDER\tests\lua-tests\project\proj.android\
+    # tocheck, release mode failed on "LuaTests:mergeReleaseAssets"
+    & ./gradlew assembleDebug -PPROP_BUILD_TYPE=ndk-build --parallel --info
     if ($lastexitcode -ne 0) {throw}
     PushAndroidArtifacts
     Pop-Location
@@ -39,7 +48,7 @@ If ($env:build_type -eq "android_cpp_tests") {
 
     Write-Host "Build cocos_new_test"
     Push-Location $env:APPVEYOR_BUILD_FOLDER\cocos_new_test\proj.android\
-    & ./gradlew assembleRelease
+    & ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --parallel --info
     if ($lastexitcode -ne 0) {throw}
     PushAndroidArtifacts
     Pop-Location
@@ -49,27 +58,27 @@ If ($env:build_type -eq "android_cpp_tests") {
 #     & $python -u tools\cocos2d-console\bin\cocos.py gen-libs -p android -m release --ap android-15 --app-abi armeabi-v7a --agreement n
 #     if ($lastexitcode -ne 0) {throw}
 
-} elseif ($env:build_type -eq "windows32_cocos_new_test") {
-    Write-Host "Create new project windows32_cocos_new_test"
-    & $python -u tools\cocos2d-console\bin\cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
-    if ($lastexitcode -ne 0) {throw}
+} elseif ($env:build_type -eq "windows32_cmake_test") {
+    Write-Host "Build tests project by cmake"
 
-    & mkdir $env:APPVEYOR_BUILD_FOLDER\cocos_new_test\b
-    if ($lastexitcode -ne 0) {throw}
+    & mkdir $env:APPVEYOR_BUILD_FOLDER\win32-build
+    # if ($lastexitcode -ne 0) {throw} # mkdir return no-zero
 
-    Push-Location $env:APPVEYOR_BUILD_FOLDER\cocos_new_test\b
+    Push-Location $env:APPVEYOR_BUILD_FOLDER\win32-build
     & cmake -DCMAKE_BUILD_TYPE=Release ..
     if ($lastexitcode -ne 0) {throw}
 
     & cmake --build . --config Release
     if ($lastexitcode -ne 0) {throw}
 
-    & 7z a release_win32.7z $env:APPVEYOR_BUILD_FOLDER\cocos_new_test\b\bin\
+    & 7z a release_win32.7z $env:APPVEYOR_BUILD_FOLDER\win32-build\bin\
     if ($lastexitcode -ne 0) {throw}
 
     Push-AppveyorArtifact release_win32.7z
+    Pop-Location
 }
 Else {
+    # default, windows32_sln_test
     & msbuild $env:APPVEYOR_BUILD_FOLDER\build\cocos2d-win32.sln /t:Build /p:Platform="Win32" /p:Configuration="Release" /m /consoleloggerparameters:"PerformanceSummary;NoSummary"
 
     if ($lastexitcode -ne 0) {throw}

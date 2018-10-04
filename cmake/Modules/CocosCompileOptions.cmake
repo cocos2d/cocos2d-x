@@ -110,6 +110,7 @@
          set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
      endif()
      if(LINUX)
+         add_definitions(-D_GNU_SOURCE)
          set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -lrt")
          set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread -lrt")
      endif()
@@ -177,11 +178,6 @@
          else()
              message(FATAL_ERROR "using Windows MSVC generate cocos2d-x project, MSVC_VERSION:${MSVC_VERSION} lower than needed")
          endif()
-         define_property(TARGET
-                         PROPERTY DEPEND_DLLS
-                         BRIEF_DOCS "depend dlls of a target"
-                         FULL_DOCS "use to save depend dlls of a target"
-                         )
      else()
          message(FATAL_ERROR "please using Windows MSVC compile cocos2d-x project, support other compile tools not yet")
      endif()
@@ -219,3 +215,21 @@
          message(FATAL_ERROR "can't find prebuilt libs location")
      endif()
  endif()
+
+# custom target property for dll collect
+define_property(TARGET
+    PROPERTY CC_DEPEND_DLLS
+    BRIEF_DOCS "depend dlls of a target"
+    FULL_DOCS "use to save depend dlls of a target"
+)
+# custom target property for lua/js link
+define_property(TARGET
+    PROPERTY CC_JS_DEPEND
+    BRIEF_DOCS "cocos2d js depend libs"
+    FULL_DOCS "use to save depend libs of cocos2d js project"
+) 
+define_property(TARGET
+    PROPERTY CC_LUA_DEPEND
+    BRIEF_DOCS "cocos2d lua depend libs"
+    FULL_DOCS "use to save depend libs of cocos2d lua project"
+) 

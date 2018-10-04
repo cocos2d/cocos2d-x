@@ -113,17 +113,27 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_STORAGE_SRC}
     )
 
-#todo: provide prebuild versions of the xx libs for all platforms
-include_directories(../external/xxtea)
-include_directories(../external/clipper)
-
 list(APPEND COCOS_SRC ${COCOS_HEADER})
 
 add_library(cocos2d ${COCOS_SRC})
 
-# use necessary external libs and system libs
-include(CocosUseLibs)
-target_use_cocos2d_depend_libs(cocos2d)
+# use external libs
+add_subdirectory(${COCOS2DX_ROOT_PATH}/external ${ENGINE_BINARY_PATH}/external)
+target_link_libraries(cocos2d external)
+
+# use all platform related system libs
+target_use_cocos2dx_depend(cocos2d)
+
+target_include_directories(cocos2d
+    PUBLIC ${COCOS2DX_ROOT_PATH}
+    PUBLIC ${COCOS2DX_ROOT_PATH}/cocos
+    PUBLIC ${COCOS2DX_ROOT_PATH}/extensions
+    PUBLIC ${COCOS2DX_ROOT_PATH}/cocos/platform
+    INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/base
+    INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/editor-support
+    INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/audio/include
+    INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/platform/${PLATFORM_FOLDER}
+)
 
 set_target_properties(cocos2d
                       PROPERTIES
@@ -133,32 +143,6 @@ set_target_properties(cocos2d
                       FOLDER "Internal"
                       )
 
-# set custom target: prebuilt, to copy all libs to prebuilt libs folder
-if(GEN_COCOS_PREBUILT)
-    add_custom_target(prebuilt ALL)
-    add_dependencies(prebuilt cocos2d)
-    set_target_properties(prebuilt
-                          PROPERTIES
-                          FOLDER "Internal"
-                          )
-    add_custom_command(TARGET "prebuilt"
-                       POST_BUILD
-                       COMMAND ${CMAKE_COMMAND} -E copy_directory
-                       "${CMAKE_BINARY_DIR}/lib"
-                       "${COCOS_PREBUILT_PATH}"
-                       COMMENT "copy library directory:${CMAKE_BINARY_DIR}/lib to directory:${COCOS_PREBUILT_PATH}"
-                       )
-    if(BUILD_LUA_LIBS)
-        add_dependencies(prebuilt luacocos2d)
-    endif()
-    if(BUILD_JS_LIBS)
-        add_dependencies(prebuilt jscocos2d)
-    endif()
-    if(BUILD_SIMU_LIB AND (MACOSX OR WINDOWS))
-        add_dependencies(prebuilt simulator)
-    endif()
-endif()
-
 ## Lua bindings lib
 if(BUILD_LUA_LIBS)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings ${ENGINE_BINARY_PATH}/cocos/lua-bindings)
@@ -166,10 +150,6 @@ endif()
 ## JS bindings lib
 if(BUILD_JS_LIBS)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings ${ENGINE_BINARY_PATH}/cocos/js-bindings)
-endif()
-# simulator
-if(BUILD_SIMU_LIB AND (MACOSX OR WINDOWS))
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator ${ENGINE_BINARY_PATH}/cocos/libsimulator)
 endif()
 
 if(XCODE OR VS)

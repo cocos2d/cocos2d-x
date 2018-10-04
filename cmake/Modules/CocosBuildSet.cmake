@@ -6,6 +6,14 @@ if(" ${CMAKE_SOURCE_DIR}" STREQUAL " ${CMAKE_BINARY_DIR}")
         ")
 endif()
 
+# print cmake debug info
+set(CMAKE_DEBUG_TARGET_PROPERTIES
+    # INCLUDE_DIRECTORIES
+    # COMPILE_DEFINITIONS
+    # POSITION_INDEPENDENT_CODE
+    # CONTAINER_SIZE_REQUIRED
+    # LIB_VERSION
+)
 # It ensures that when Find*.cmake files included from cmake's Modules dir
 # include another *.cmake file with relative path, that file will be included
 # also from cmake's Modules dir, to not clash with per-project files.
@@ -38,8 +46,4 @@ include(CocosSelectModule)
 # set common compiler options
 include(CocosCompileOptions)
 
-# collect prebuilt libraries
-include(CocosPickLibs)
-
-# compile source libraries
-include(CocosBuildModules)
+include(CocosConfigDepend)

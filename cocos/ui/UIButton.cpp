@@ -115,7 +115,7 @@ bool Button::init(const std::string &normalImage,
 {
 
     // invoke an overridden init() at first
-    if (!init()) {
+    if (!Widget::init()) {
         return false;
     }
 
