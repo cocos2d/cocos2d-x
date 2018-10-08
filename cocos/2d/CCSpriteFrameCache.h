@@ -32,9 +32,7 @@ THE SOFTWARE.
 #define __SPRITE_CCSPRITE_FRAME_CACHE_H__
 
 #include <set>
-#include <map>
 #include <unordered_map>
-#include <mutex>
 #include <string>
 #include "2d/CCSpriteFrame.h"
 #include "base/CCRef.h"
@@ -129,7 +127,6 @@ protected:
         Map<std::string, SpriteFrame*> _spriteFrames;
         std::unordered_map<std::string, std::set<std::string>> _indexPlist2Frames;
         std::unordered_map<std::string, std::string> _indexFrame2plist;
-        mutable std::mutex _mutex;
     };
 
 public:
