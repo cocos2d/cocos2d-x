@@ -771,19 +771,12 @@ bool SpriteFrameCache::PlistFramesCache::eraseFrame(const std::string &frame)
 
 bool SpriteFrameCache::PlistFramesCache::eraseFrames(const std::vector<std::string> &frames)
 {
-    if (frames.empty()) return false;
-
-    for (auto frame : frames)
+    auto ret = false;
+    for (const auto & frame : frames)
     {
-        _spriteFrames.erase(frame);                             //drop SpriteFrame
-        auto itPlist = _indexFrame2plist.find(frame);
-        if (itPlist != _indexFrame2plist.end()) {
-            _indexPlist2Frames[itPlist->second].erase(frame);   //update index plist->[frameNames]
-            _indexFrame2plist.erase(itPlist);                   //update index frameName->plist
-        }
+        ret |= eraseFrame(frame);
     }
-
-    return true;
+    return ret;
 }
 
 bool SpriteFrameCache::PlistFramesCache::erasePlistIndex(const std::string &plist)
