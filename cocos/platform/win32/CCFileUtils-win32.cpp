@@ -479,7 +479,12 @@ bool FileUtilsWin32::removeFile(const std::string &filepath) const
 
 bool FileUtilsWin32::removeDirectory(const std::string& dirPath) const
 {
-    std::wstring wpath = StringUtf8ToWideChar(dirPath);
+    std::string dirPathCopy = dirPath;
+    if (dirPath.length() > 0 && dirPath[dirPath.length() - 1] != '/' && dirPath[dirPath.length() - 1] != '\\')
+    {
+        dirPathCopy.append("/");
+    }
+    std::wstring wpath = StringUtf8ToWideChar(dirPathCopy);
     std::wstring files = wpath + L"*.*";
     WIN32_FIND_DATA wfd;
     HANDLE  search = FindFirstFileEx(files.c_str(), FindExInfoStandard, &wfd, FindExSearchNameMatch, NULL, 0);
