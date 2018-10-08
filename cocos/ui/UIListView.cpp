@@ -782,67 +782,67 @@ Widget* ListView::getBottommostItemInCurrentView() const
 
 void ListView::jumpToBottom()
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToBottom();
 }
 
 void ListView::jumpToTop()
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToTop();
 }
 
 void ListView::jumpToLeft()
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToLeft();
 }
 
 void ListView::jumpToRight()
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToRight();
 }
 
 void ListView::jumpToTopLeft()
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToTopLeft();
 }
 
 void ListView::jumpToTopRight()
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToTopRight();
 }
 
 void ListView::jumpToBottomLeft()
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToBottomLeft();
 }
 
 void ListView::jumpToBottomRight()
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToBottomRight();
 }
 
 void ListView::jumpToPercentVertical(float percent)
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToPercentVertical(percent);
 }
 
 void ListView::jumpToPercentHorizontal(float percent)
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToPercentHorizontal(percent);
 }
 
 void ListView::jumpToPercentBothDirection(const Vec2& percent)
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToPercentBothDirection(percent);
 }
 
@@ -915,7 +915,8 @@ void ListView::clipInvisibleItems() {
     }
     
     if(lowerBound > upperBound) {
-        std::swap(lowerBound, upperBound);
+        lowerBound = 0;
+        upperBound = _items.size() - 1;
     }
     
     if((_visibleBounds.first != lowerBound ) || (_visibleBounds.second != upperBound)) {
