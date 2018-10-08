@@ -79,6 +79,7 @@ LOCAL_SRC_FILES += ../manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.cpp
 #network
 LOCAL_SRC_FILES += ../manual/network/lua_cocos2dx_network_manual.cpp \
                    ../manual/network/lua_extensions.c \
+                   ../manual/network/lua_downloader.cpp \
                    ../manual/network/Lua_web_socket.cpp \
                    ../manual/network/lua_xml_http_request.cpp \
                    ../../../../external/lua/luasocket/auxiliar.c \
