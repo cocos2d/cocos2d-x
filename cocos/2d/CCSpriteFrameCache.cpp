@@ -48,12 +48,6 @@ using namespace std;
 
 NS_CC_BEGIN
 
-//SpriteFrameCache is not threadsafe, lock is not required.
-#if 0
-#define CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD std::lock_guard<std::mutex> lockGuard(_mutex)
-#else
-#define CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD (void)0
-#endif
 static SpriteFrameCache *_sharedSpriteFrameCache = nullptr;
 
 SpriteFrameCache* SpriteFrameCache::getInstance()
@@ -447,7 +441,7 @@ void SpriteFrameCache::addSpriteFrame(SpriteFrame* frame, const std::string& fra
 void SpriteFrameCache::removeSpriteFrames()
 {
     _spriteFramesAliases.clear();
-    _spriteFramesCache.clear(); //is drop texture cache required?
+    _spriteFramesCache.clear();
 }
 
 void SpriteFrameCache::removeUnusedSpriteFrames()
@@ -749,7 +743,6 @@ bool SpriteFrameCache::reloadTexture(const std::string& plist)
 
 void SpriteFrameCache::PlistFramesCache::insertFrame(const std::string &plist, const std::string &frame, SpriteFrame *spriteFrame)
 {
-    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
     _spriteFrames.insert(frame, spriteFrame);   //add SpriteFrame
 
     _indexPlist2Frames[plist].insert(frame);    //insert index plist->[frameName]
@@ -758,7 +751,6 @@ void SpriteFrameCache::PlistFramesCache::insertFrame(const std::string &plist, c
 
 bool SpriteFrameCache::PlistFramesCache::isPlistUsed(const std::string &plist) const
 {
-    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
     //plist loaded && not empty
     auto it = _indexPlist2Frames.find(plist);
     return it != _indexPlist2Frames.end() && !it->second.empty();
@@ -766,7 +758,6 @@ bool SpriteFrameCache::PlistFramesCache::isPlistUsed(const std::string &plist) c
 
 bool SpriteFrameCache::PlistFramesCache::eraseFrame(const std::string &frame)
 {
-    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
     _spriteFrames.erase(frame);                             //drop SpriteFrame
     auto itFrame = _indexFrame2plist.find(frame);
     if (itFrame != _indexFrame2plist.end())
@@ -780,7 +771,6 @@ bool SpriteFrameCache::PlistFramesCache::eraseFrame(const std::string &frame)
 
 bool SpriteFrameCache::PlistFramesCache::eraseFrames(const std::vector<std::string> &frames)
 {
-    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
     if (frames.empty()) return false;
 
     for (auto frame : frames)
@@ -798,24 +788,22 @@ bool SpriteFrameCache::PlistFramesCache::eraseFrames(const std::vector<std::stri
 
 bool SpriteFrameCache::PlistFramesCache::erasePlistIndex(const std::string &plist)
 {
-    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
     auto it = _indexPlist2Frames.find(plist);
     if (it == _indexPlist2Frames.end()) return false;
 
     auto &frames = it->second;
     for (auto f : frames)
     {
-        // !!do not!! call `_spriteFrames.erase(itr);` to erase SpriteFrame
-        // it shall be done by other procedure
+        // !!do not!! call `_spriteFrames.erase(f);` to erase SpriteFrame
+        // only erase index here
         _indexFrame2plist.erase(f);                             //erase plist frame frameName->plist
     }
-    _indexPlist2Frames.erase(plist);                        //update index plist->[frameNames]
+    _indexPlist2Frames.erase(plist);                            //update index plist->[frameNames]
     return true;
 }
 
 void SpriteFrameCache::PlistFramesCache::clear()
 {
-    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
     _indexPlist2Frames.clear();
     _indexFrame2plist.clear();
     _spriteFrames.clear();
@@ -823,24 +811,20 @@ void SpriteFrameCache::PlistFramesCache::clear()
 
 bool SpriteFrameCache::PlistFramesCache::hasFrame(const std::string &frame) const
 {
-    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
     return _indexFrame2plist.find(frame) != _indexFrame2plist.end();
 }
 
 bool SpriteFrameCache::PlistFramesCache::hasPlist(const std::string &plist) const
 {
-    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
     return _indexPlist2Frames.find(plist) != _indexPlist2Frames.end();
 }
 
 SpriteFrame * SpriteFrameCache::PlistFramesCache::at(const std::string &frame)
 {
-    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
     return _spriteFrames.at(frame);
 }
 Map<std::string, SpriteFrame*>&  SpriteFrameCache::PlistFramesCache::getSpriteFrames()
 {
-    CC_SPRITEFRAMECACHE_CACHE_LOCKGUARD;
     return _spriteFrames;
 }
 
