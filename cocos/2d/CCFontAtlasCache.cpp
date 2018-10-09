@@ -33,6 +33,8 @@
 #include "2d/CCLabel.h"
 #include "platform/CCFileUtils.h"
 
+#include <sstream>
+
 NS_CC_BEGIN
 
 std::unordered_map<std::string, FontAtlas *> FontAtlasCache::_atlasMap;
@@ -260,6 +262,56 @@ void FontAtlasCache::unloadFontAtlasTTF(const std::string& fontFileName)
         else
             item++;
     }
+}
+
+std::string FontAtlasCache::getCachedTextureInfo() {
+    std::stringstream ss;
+    char buf[4096];
+    unsigned totalBytes = 0;
+    
+    for(auto& atlasInfo : _atlasMap) {
+        const FontAtlas* atlas = atlasInfo.second;
+        if(!atlas) {
+            snprintf(buf, sizeof(buf) - 1, "\"%s\" <null>\n", atlasInfo.first.c_str());
+        } else {
+            auto& textures = atlas->getTextures();
+            Size totalSize;
+            unsigned bppTotal = 0;
+            unsigned atlasBytes = 0;
+            for(auto& tm : textures) {
+                Texture2D* texture = tm.second;
+                auto& textureSize = texture->getContentSizeInPixels();
+                auto bpp = texture->getBitsPerPixelForFormat();
+                
+                totalSize   = totalSize + textureSize;
+                bppTotal    += bpp;
+                atlasBytes  += textureSize.width * textureSize.height * bpp / 8;
+            }
+            
+            auto count = textures.size();
+            snprintf(buf, sizeof(buf) - 1, "\"%s\" rc=%u count=%lu %d x %d @ %ld bpp => %lu KB\n",
+                     atlasInfo.first.c_str(),
+                     atlas->getReferenceCount(),
+                     count,
+                     static_cast<int>(totalSize.width/count),
+                     static_cast<int>(totalSize.height/count),
+                     bppTotal/count,
+                     atlasBytes/count / 1024);
+            
+            totalBytes += atlasBytes;
+        }
+        
+        ss << buf;
+    }
+    
+    // output the tottal size
+    snprintf(buf, sizeof(buf) - 1, "FontAtlasCache dumpDebugInfo: %lu textures, for %.1fKB (%.2f MB)\n",
+             _atlasMap.size(),
+             totalBytes / 1024.0f,
+             totalBytes / (1024.0f*1024.0f));
+    ss << buf;
+    
+    return ss.str();
 }
 
 NS_CC_END

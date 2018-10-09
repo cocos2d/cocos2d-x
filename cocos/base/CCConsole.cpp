@@ -62,7 +62,9 @@
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "platform/CCPlatformConfig.h"
+#include "platform/CCDevice.h"
 #include "base/CCConfiguration.h"
+#include "2d/CCFontAtlasCache.h"
 #include "2d/CCScene.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCTextureCache.h"
@@ -1299,6 +1301,17 @@ void Console::commandResolution(int /*fd*/, const std::string& args)
 
 void Console::commandResolutionSubCommandEmpty(int fd, const std::string& /*args*/)
 {
+    static const char* fmt =
+    "Window Size       : <%d x %d> pt, <%d x %d> px,\n"
+    "Design resolution : %d x %d,\n"
+    "Design scale      : %.1f x %.1f,\n"
+    "DPI               : %d,\n"
+    "Physical size     : <%.1f x %.1f> cm, diagonal: %.1f cm,\n"
+    "Resolution Policy : %d,\n"
+    "Visible Rect      : origin: <%d x %d> size: <%d x %d>,\n"
+    "Safe Rect         : origin: <%d x %d> size: <%d x %d>\n";
+    
+    
     auto director = Director::getInstance();
     Size points = director->getWinSize();
     Size pixels = director->getWinSizeInPixels();
@@ -1306,22 +1319,25 @@ void Console::commandResolutionSubCommandEmpty(int fd, const std::string& /*args
     Size design = glview->getDesignResolutionSize();
     ResolutionPolicy res = glview->getResolutionPolicy();
     Rect visibleRect = glview->getVisibleRect();
+    Rect safeRect = director->getSafeAreaRect();
+    int dpi = Device::getDPI();
+    Vec2 scale(glview->getScaleX(), glview->getScaleY());
     
-    Console::Utility::mydprintf(fd, "Window Size:\n"
-              "\t%d x %d (points)\n"
-              "\t%d x %d (pixels)\n"
-              "\t%d x %d (design resolution)\n"
-              "Resolution Policy: %d\n"
-              "Visible Rect:\n"
-              "\torigin: %d x %d\n"
-              "\tsize: %d x %d\n",
-              (int)points.width, (int)points.height,
-              (int)pixels.width, (int)pixels.height,
-              (int)design.width, (int)design.height,
-              (int)res,
-              (int)visibleRect.origin.x, (int)visibleRect.origin.y,
-              (int)visibleRect.size.width, (int)visibleRect.size.height
-              );
+    Vec2 physSize = pixels/dpi * 2.54f;
+    
+    Console::Utility::mydprintf(fd, fmt,
+                                (int)points.width, (int)points.height,
+                                (int)pixels.width, (int)pixels.height,
+                                (int)design.width, (int)design.height,
+                                scale.x, scale.y,
+                                dpi,
+                                physSize.x, physSize.y, physSize.length(),
+                                (int)res,
+                                (int)visibleRect.origin.x, (int)visibleRect.origin.y,
+                                (int)visibleRect.size.width, (int)visibleRect.size.height,
+                                (int)safeRect.origin.x, (int)safeRect.origin.y,
+                                (int)safeRect.size.width, (int)safeRect.size.height
+                                );
 }
 
 void Console::commandSceneGraph(int fd, const std::string& /*args*/)
@@ -1335,6 +1351,9 @@ void Console::commandTextures(int fd, const std::string& /*args*/)
     Scheduler *sched = Director::getInstance()->getScheduler();
     sched->performFunctionInCocosThread( [=](){
         Console::Utility::mydprintf(fd, "%s", Director::getInstance()->getTextureCache()->getCachedTextureInfo().c_str());
+        
+        // Get information about the presence of textures atlas TTF-fonts
+        Console::Utility::mydprintf(fd, "%s", FontAtlasCache::getCachedTextureInfo().c_str());
         Console::Utility::sendPrompt(fd);
     });
 }
