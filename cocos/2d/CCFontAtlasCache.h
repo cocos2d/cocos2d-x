@@ -67,6 +67,11 @@ public:
     */
     static void unloadFontAtlasTTF(const std::string& fontFileName);
 
+    /**
+     Returns a string representation of information about the presence of TTF-font atlases textures in memory
+     @since 3.18
+     */
+    static std::string getCachedTextureInfo();
 private:
     static std::unordered_map<std::string, FontAtlas *> _atlasMap;
 };
