@@ -5,7 +5,7 @@
         "CHANGELOG", 
         "CMakeLists.txt", 
         "CONTRIBUTING.md", 
-        "README.md",
+        "README.md", 
         "build/android-build.py", 
         "build/cocos2d-win32.sln", 
         "build/cocos2d_libs.xcodeproj/project.pbxproj", 
@@ -5006,7 +5006,7 @@
         "tools/tojs/cocos2dx_spine.ini", 
         "tools/tojs/cocos2dx_studio.ini", 
         "tools/tojs/cocos2dx_ui.ini", 
-        "tools/tojs/genbindings.py",
+        "tools/tojs/genbindings.py", 
         "tools/tojs/userconf.ini"
     ], 
     "lua": [
