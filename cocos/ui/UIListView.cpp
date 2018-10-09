@@ -51,6 +51,7 @@ _listViewEventListener(nullptr),
 _listViewEventSelector(nullptr),
 _eventCallback(nullptr)
 {
+    _visibleBounds = std::make_pair(0, 0);
     this->setTouchEnabled(true);
 }
 
@@ -584,6 +585,10 @@ void ListView::doLayout()
     }
     updateInnerContainerSize();
     _innerContainer->forceDoLayout();
+    
+    // recalc invisible items immediately
+    clipInvisibleItems();
+    
     _innerContainerDoLayoutDirty = false;
 }
     
@@ -777,67 +782,67 @@ Widget* ListView::getBottommostItemInCurrentView() const
 
 void ListView::jumpToBottom()
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToBottom();
 }
 
 void ListView::jumpToTop()
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToTop();
 }
 
 void ListView::jumpToLeft()
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToLeft();
 }
 
 void ListView::jumpToRight()
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToRight();
 }
 
 void ListView::jumpToTopLeft()
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToTopLeft();
 }
 
 void ListView::jumpToTopRight()
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToTopRight();
 }
 
 void ListView::jumpToBottomLeft()
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToBottomLeft();
 }
 
 void ListView::jumpToBottomRight()
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToBottomRight();
 }
 
 void ListView::jumpToPercentVertical(float percent)
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToPercentVertical(percent);
 }
 
 void ListView::jumpToPercentHorizontal(float percent)
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToPercentHorizontal(percent);
 }
 
 void ListView::jumpToPercentBothDirection(const Vec2& percent)
 {
-    doLayout();
+    forceDoLayout();
     ScrollView::jumpToPercentBothDirection(percent);
 }
 
@@ -885,6 +890,42 @@ void ListView::scrollToItem(ssize_t itemIndex, const Vec2& positionRatioInView, 
     }
     Vec2 destination = calculateItemDestination(positionRatioInView, item, itemAnchorPoint);
     startAutoScrollToDestination(destination, timeInSec, true);
+}
+    
+void ListView::onInnerContainerPositionChanged() {
+    clipInvisibleItems();
+}
+    
+void ListView::clipInvisibleItems() {
+    if(_items.empty() || !isClippingEnabled()) {
+        return;
+    }
+    
+    ssize_t lowerBound = 0;
+    ssize_t upperBound = 0;
+    
+    if(_direction == ScrollView::Direction::HORIZONTAL) {
+        lowerBound = getIndex(getLeftmostItemInCurrentView());
+        upperBound = getIndex(getRightmostItemInCurrentView());
+    } else if (_direction == ScrollView::Direction::VERTICAL) {
+        lowerBound = getIndex(getTopmostItemInCurrentView());
+        upperBound = getIndex(getBottommostItemInCurrentView());
+    } else {
+        return;
+    }
+    
+    if(lowerBound > upperBound) {
+        lowerBound = 0;
+        upperBound = _items.size() - 1;
+    }
+    
+    if((_visibleBounds.first != lowerBound ) || (_visibleBounds.second != upperBound)) {
+        for(size_t i = 0 ; i < _items.size() ; i++) {
+            _items.at(i)->setVisible(lowerBound <= i && i <= upperBound);
+        }
+        
+        _visibleBounds = std::make_pair(lowerBound, upperBound);
+    }
 }
 
 ssize_t ListView::getCurSelectedIndex() const
