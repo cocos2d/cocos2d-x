@@ -244,6 +244,9 @@ void ScrollView::setInnerContainerPosition(const Vec2 &position)
         }
     }
     
+    // invoke callback event
+    onInnerContainerPositionChanged();
+    
     this->retain();
     if (_eventCallback)
     {
@@ -254,6 +257,10 @@ void ScrollView::setInnerContainerPosition(const Vec2 &position)
         _ccEventCallback(this, static_cast<int>(EventType::CONTAINER_MOVED));
     }
     this->release();
+}
+    
+void ScrollView::onInnerContainerPositionChanged() {
+    
 }
     
 const Vec2& ScrollView::getInnerContainerPosition() const

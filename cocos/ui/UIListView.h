@@ -488,6 +488,16 @@ protected:
     void startMagneticScroll();
     Vec2 calculateItemDestination(const Vec2& positionRatioInView, Widget* item, const Vec2& itemAnchorPoint);
     
+    virtual void onInnerContainerPositionChanged() override;
+    
+    /**
+     Computes visible objects within visible vieport and
+     proactively hides other objects out of ListView-sight
+     
+     @since v3.18
+     */
+    void clipInvisibleItems();
+    
 protected:
     Widget* _model;
     
@@ -506,6 +516,12 @@ protected:
     float _bottomPadding;
 
     float _scrollTime;
+    
+    /**
+     Represents the cached visible bounds within _items array
+     @see _items
+     */
+    std::pair<ssize_t, ssize_t> _visibleBounds;
     
     ssize_t _curSelectedIndex;
 

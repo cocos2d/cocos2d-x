@@ -665,6 +665,8 @@ protected:
     void dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType);
     
     void updateScrollBar(const Vec2& outOfBoundary);
+    
+    virtual void onInnerContainerPositionChanged();
 	
 protected:
     virtual float getAutoScrollStopEpsilon() const;
