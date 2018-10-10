@@ -281,11 +281,6 @@ private:
 
     static jstring convert(LocalRefMapType& localRefs, cocos2d::JniMethodInfo& t, const std::string& x);
 
-    // template <typename T>
-    // static T convert(LocalRefMapType& localRefs, cocos2d::JniMethodInfo&, T x) {
-    //     return x;
-    // }
-
     inline static jint      convert(LocalRefMapType&, cocos2d::JniMethodInfo&, int32_t value) { return static_cast<jint>(value);}
     inline static jlong     convert(LocalRefMapType&, cocos2d::JniMethodInfo&, int64_t value) { return static_cast<jlong>(value);}
     inline static jfloat    convert(LocalRefMapType&, cocos2d::JniMethodInfo&, float   value) { return static_cast<jfloat>(value);}
