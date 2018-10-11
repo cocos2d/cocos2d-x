@@ -1,23 +1,5 @@
 include(CMakeParseArguments)
 
-# find a prebuilt lib by `lib_name` and save the result in `lib_out`
-function(cocos_find_prebuilt_lib_by_name lib_name lib_out)
-    set(search_path ${COCOS_PREBUILT_PATH})
-    if(XCODE OR VS)
-        set(search_path ${COCOS_PREBUILT_PATH}/${CMAKE_BUILD_TYPE})
-    endif()
-    message(STATUS "search_path cocos prebuilt library: ${search_path}")
-    find_library(found_lib ${lib_name} PATHS ${search_path} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
-
-    if(found_lib)
-        message(STATUS "found cocos prebuilt library: ${found_lib}")
-    else()
-        message(STATUS "can't found cocos prebuilt library: ${lib_name}")
-    endif()
-    set(${lib_out} ${found_lib} PARENT_SCOPE)
-    unset(found_lib CACHE)
-endfunction()
-
 # copy resource `FILES` and `FOLDERS` to `COPY_TO` folder
 function(cocos_copy_res)
     set(oneValueArgs COPY_TO)
@@ -114,21 +96,6 @@ function(cocos_copy_target_dll cocos_target)
     endforeach()
 endfunction()
 
-# find dlls in a dir which `LIB_ABS_PATH` located, and save the result in `dlls_out`
-function(cocos_find_dlls_for_lib dlls_out)
-    set(oneValueArgs LIB_ABS_PATH)
-    cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-    get_filename_component(lib_dir ${opt_LIB_ABS_PATH} DIRECTORY)
-    file(GLOB lib_dir_files "${lib_dir}/*")
-    set(cc_dlls)
-    foreach(dir_file ${lib_dir_files})
-        if(${dir_file} MATCHES "dll$")
-            list(APPEND cc_dlls ${dir_file})
-        endif()
-    endforeach()
-    set(${dlls_out} ${cc_dlls} PARENT_SCOPE)
-endfunction()
-
 # mark `FILES` as resources, files will be put into sub-dir tree depend on its absolute path
 function(cocos_mark_resources)
     set(oneValueArgs BASEDIR RESOURCEBASE)
@@ -213,12 +180,6 @@ function(setup_cocos_app_config app_name)
     # auto mark code files for IDE when mark app
     if(XCODE OR VS)
         cocos_mark_code_files(${APP_NAME})
-    endif()
-
-    # generate prebuilt auto when build app if GEN_COCOS_PREBUILT=ON
-    # tocheck, do we really need prebuilt cocos2dx libs?
-    if(GEN_COCOS_PREBUILT)
-        add_dependencies(${APP_NAME} prebuilt)
     endif()
 
     set(APP_BIN_DIR ${APP_BIN_DIR} PARENT_SCOPE)
@@ -311,7 +272,7 @@ endfunction(set_xcode_property)
 
 # works same as find_package, but do additional care to properly find
 macro(cocos_find_package pkg_name pkg_prefix)
-    if(NOT USE_EXTERNAL_PREBUILT OR NOT ${pkg_prefix}_FOUND)
+    if(NOT ${pkg_prefix}_FOUND)
         find_package(${pkg_name} ${ARGN})
     endif()
     if(NOT ${pkg_prefix}_INCLUDE_DIRS AND ${pkg_prefix}_INCLUDE_DIR)

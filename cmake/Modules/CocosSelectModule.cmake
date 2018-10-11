@@ -1,10 +1,5 @@
-# the default behavior of using prebuilt
-set(GEN_COCOS_PREBUILT_DEFAULT OFF)
-set(USE_COCOS_PREBUILT_DEFAULT OFF)
-
 # the default behavior of build module
 set(USE_WEBP_DEFAULT ON)
-set(USE_EXTERNAL_PREBUILT_DEFAULT ON)
 set(BUILD_LUA_LIBS_DEFAULT OFF)
 set(BUILD_JS_LIBS_DEFAULT OFF)
 
@@ -24,6 +19,4 @@ option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
 option(BUILD_LUA_LIBS "Build lua libraries" ${BUILD_LUA_LIBS_DEFAULT})
 option(BUILD_JS_LIBS "Build js libraries" ${BUILD_JS_LIBS_DEFAULT})
-option(USE_EXTERNAL_PREBUILT "Use prebuilt libraries in external directory" ${USE_EXTERNAL_PREBUILT_DEFAULT})
-option(GEN_COCOS_PREBUILT "generate cocos static libraries, put libraries into prebuilt folder in cocos root" ${GEN_COCOS_PREBUILT_DEFAULT})
-option(USE_COCOS_PREBUILT "use cocos static libraries, return warning if not find" ${USE_COCOS_PREBUILT_DEFAULT})
+

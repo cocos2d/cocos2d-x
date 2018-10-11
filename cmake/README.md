@@ -69,42 +69,6 @@ PROP_BUILD_TYPE=cmake
 
 If you want to add cmake build arguments, please add it at [external Native Build](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/app/build.gradle#L25) block of __app/build.gradle__ file.
 
-## Prebuilt libraries feature
-
-To solve long compilation times of the engine source code one can use prebuilt libraries. Using this feature you only need build engine sources once for a specific environment or again when the engine version changes and you wish to utilize the new version.
-
-### Example
-
-This is an example of building c++ libs once, and use them in different c++ projects.
-
-```sh
-cocos new -l cpp -p my.pack.app1 test_app1
-mkdir app1_build && cd app1_build
-cmake ../test_app1 -DGEN_COCOS_PREBUILT=ON
-make prebuilt
-```
-
-Change option `GEN_COCOS_PREBUILT` and use instead `USE_COCOS_PREBUILT` to use prebuilt in the same project
-
-```sh
-cmake ../test_app1 -DGEN_COCOS_PREBUILT=OFF -DUSE_COCOS_PREBUILT=ON
-make TemplateCpp
-open bin/TemplateCpp.app
-```
-
-Add `-DUSE_COCOS_PREBUILT=ON` to use prebuilt libs in another cmake build.
-
-```sh
-cocos new -l cpp -p my.pack.app2 test_app2
-mkdir app2_build && cd app2_build
-cmake ../test_app2 -DUSE_COCOS_PREBUILT=ON
-make TemplateCpp
-open bin/TemplateCpp.app
-```
-
-> Any other cpp project can use prebuilt in this way
-
-When using the prebuilt libraries on Android there is a small difference as CMake can't find system environment when built using Gradle. You need to [supply a path](https://github.com/cocos2d/cocos2d-x/blob/c087be314c2c56a757bf66163b173746b5d6ad34/tests/cpp-empty-test/proj.android/app/build.gradle#L34) as the location of prebuilt libs.
 
 ## Build Options
 
@@ -126,22 +90,6 @@ When using the prebuilt libraries on Android there is a small difference as CMak
 1. __`--build  <dir>`__, build a CMake-generated project binary tree, for example
 
     * `cmake --build ./msvc_build`, cmake will sellect corresponding build tools.
-
-### Cocos2d-x Options
-
-1. __`GEN_COCOS_PREBUILT`__, control the project have the feature to generate pre-build libraries or not. Default value is `OFF`
-
-    * `-DGEN_COCOS_PREBUILT=ON`, will add target prebuilt, build this target will generate prebuilt libraries
-
-1. __`USE_COCOS_PREBUILT`__, control the project have the feature to use pre-build libraries or not. Default value is `OFF`
-
-    * `-DUSE_COCOS_PREBUILT=ON`, will disable libraries target, and make app target use prebuilt libraries
-
-1. __`COCOS_PREBUILT_ROOT`__, a path means the prebuilt libraries root location, it's not optional for Android Project on Android Studio, optional for other supported platforms. the default value is $cocos2dx_root/prebuilt if the cmake can access to cocos2d-x environment variable. for example
-
-    * `arguments "-DCOCOS_PREBUILT_ROOT=/Users/laptop/cocos-prebuilt"` set this value on [cmake block](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/app/build.gradle#L31) of build.gradle file.
-
-1. Any options in [SelectModule.cmake](./Modules/SelectModule.cmake) can be set manually. Do it if you know what you're doing.
 
 ## Useful Links
 
