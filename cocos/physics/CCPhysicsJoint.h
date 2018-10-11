@@ -56,7 +56,7 @@ class WriteCache;
  */
 class CC_DLL PhysicsJoint
 {
-public:
+protected:
     typedef std::function<void()> DelayTask;
 protected:
     PhysicsJoint();

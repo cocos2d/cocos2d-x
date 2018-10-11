@@ -36,32 +36,36 @@ NS_CC_BEGIN
 
 template<typename T>
 class Optional {
+
 public:
     Optional() {}
     Optional(T d) :_isSet(true), _data(d) {}
     Optional(const Optional &t) : _isSet(t._isSet), _data(t._data) {}
-    bool isNull() const { return !_isSet; }
-    bool isDefineded() const { return _isSet; }
-    bool isEmpty() const { return !_isSet; }
-    T get() const { CCASSERT(_isSet, "data should be set!"); return _data; }
-    void set(T d) { _isSet = true; _data = d; }
+
+    bool isNull()       const { return !_isSet; }
+    bool isDefineded()  const { return _isSet; }
+    bool isEmpty()      const { return !_isSet; }
+    T    get()          const { CCASSERT(_isSet, "data should be set!"); return _data; }
+    void set(T d)             { _isSet = true; _data = d; }
+
 private:
     bool _isSet = false;
     T _data;
 };
 
-struct WriteCache {
-    Optional<float> _min;
-    Optional<float> _max;
+class WriteCache {
+public:
+    Optional<Vec2>  _grooveA;
+    Optional<Vec2>  _grooveB;
     Optional<Vec2>  _anchr1;
     Optional<Vec2>  _anchr2;
+    Optional<float> _min;
+    Optional<float> _max;
     Optional<float> _distance;
     Optional<float> _restLength;
     Optional<float> _restAngle;
     Optional<float> _stiffness;
     Optional<float> _damping;
-    Optional<Vec2>  _grooveA;
-    Optional<Vec2>  _grooveB;
     Optional<float> _angle;
     Optional<float> _phase;
     Optional<float> _ratchet;
@@ -69,10 +73,21 @@ struct WriteCache {
     Optional<float> _rate;
 };
 
+#define likely(x) __builtin_expect ((x), 1)
+#define unlikely(x) __builtin_expect ((x), 0)
+
+#if (defined(__GNUC__) && __GNUC__ >= 4) || defined(__clang__)
+#define LIKELY(x)   (__builtin_expect((x), 1))
+#define UNLIKELY(x) (__builtin_expect((x), 0))
+#else
+#define LIKELY(x)   (x)
+#define UNLIKELY(x) (x)
+#endif
+
 
 #define CC_PJOINT_CACHE_READ(field)         \
     do {                                    \
-    if(_initDirty)                          \
+    if(UNLIKELY(_initDirty))                \
     {                                       \
         return _writeCache->field.get();    \
     }                                       \
@@ -82,7 +97,7 @@ struct WriteCache {
 
 #define CC_PJOINT_CACHE_WRITE2(field, method, arg, convertedArg)    \
     do {                                                            \
-    if(_initDirty)                                                  \
+    if(UNLIKELY(_initDirty))                                        \
     {                                                               \
         _writeCache->field.set(arg);                                \
         delay([this, arg]() {                                       \
