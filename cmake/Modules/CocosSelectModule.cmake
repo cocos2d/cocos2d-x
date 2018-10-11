@@ -1,5 +1,4 @@
 # the default behavior of build module
-set(USE_WEBP_DEFAULT ON)
 set(BUILD_LUA_LIBS_DEFAULT OFF)
 set(BUILD_JS_LIBS_DEFAULT OFF)
 
@@ -7,7 +6,7 @@ option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
 option(USE_BULLET "Use bullet for physics3d library" ON)
 option(USE_RECAST "Use Recast for navigation mesh" ON)
-option(USE_WEBP "Use WebP codec" ${USE_WEBP_DEFAULT})
+option(USE_WEBP "Use WebP codec" ON)
 option(USE_PNG "Use PNG codec" ON)
 option(USE_TIFF "Use TIFF codec" ON)
 option(USE_JPEG "Use JPEG codec" ON)

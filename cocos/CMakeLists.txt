@@ -30,7 +30,7 @@
 # build jscocos2d if BUILD_JS_LIBS=ON
 
 # The version number
-set(COCOS2D_X_VERSION 3.17)
+set(COCOS2D_X_VERSION 3.18)
 
 set(COCOS_CORE_LIB cocos2d)
 
