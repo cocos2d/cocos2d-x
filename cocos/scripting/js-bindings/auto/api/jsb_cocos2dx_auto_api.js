@@ -12586,6 +12586,16 @@ labeleffect
 },
 
 /**
+ * @method getLabelType
+ * @return {cc.Label::LabelType}
+ */
+getLabelType : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method getTextColor
  * @return {color4b_object}
  */
@@ -12957,6 +12967,16 @@ setLineSpacing : function (
 float 
 )
 {
+},
+
+/**
+ * @method getRenderingFontSize
+ * @return {float}
+ */
+getRenderingFontSize : function (
+)
+{
+    return 0;
 },
 
 /**

@@ -5569,6 +5569,8 @@
         "cocos/scripting/lua-bindings/manual/network/Lua_web_socket.h", 
         "cocos/scripting/lua-bindings/manual/network/lua_cocos2dx_network_manual.cpp", 
         "cocos/scripting/lua-bindings/manual/network/lua_cocos2dx_network_manual.h", 
+        "cocos/scripting/lua-bindings/manual/network/lua_downloader.cpp", 
+        "cocos/scripting/lua-bindings/manual/network/lua_downloader.h", 
         "cocos/scripting/lua-bindings/manual/network/lua_extensions.c", 
         "cocos/scripting/lua-bindings/manual/network/lua_extensions.h", 
         "cocos/scripting/lua-bindings/manual/network/lua_xml_http_request.cpp", 

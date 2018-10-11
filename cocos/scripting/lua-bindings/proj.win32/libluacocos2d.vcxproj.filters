@@ -300,6 +300,9 @@
     <ClCompile Include="..\manual\lua_module_register.cpp">
       <Filter>manual</Filter>
     </ClCompile>
+    <ClCompile Include="..\manual\network\lua_downloader.cpp">
+      <Filter>manual\network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\auto\lua_cocos2dx_auto.hpp">
@@ -529,6 +532,9 @@
     </ClInclude>
     <ClInclude Include="..\manual\Lua-BindingsExport.h">
       <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\network\lua_downloader.h">
+      <Filter>manual\network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -54802,6 +54802,53 @@ int lua_cocos2dx_Label_setTTFConfig(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Label_getLabelType(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Label* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Label*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getLabelType'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_getLabelType'", nullptr);
+            return 0;
+        }
+        int ret = (int)cobj->getLabelType();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Label:getLabelType",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Label_getLabelType'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Label_getTextColor(lua_State* tolua_S)
 {
     int argc = 0;
@@ -56785,6 +56832,53 @@ int lua_cocos2dx_Label_setLineSpacing(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Label_getRenderingFontSize(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Label* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Label",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Label*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Label_getRenderingFontSize'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_getRenderingFontSize'", nullptr);
+            return 0;
+        }
+        double ret = cobj->getRenderingFontSize();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Label:getRenderingFontSize",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Label_getRenderingFontSize'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Label_getLineHeight(lua_State* tolua_S)
 {
     int argc = 0;
@@ -58233,6 +58327,7 @@ int lua_register_cocos2dx_Label(lua_State* tolua_S)
         tolua_function(tolua_S,"getHeight",lua_cocos2dx_Label_getHeight);
         tolua_function(tolua_S,"disableEffect",lua_cocos2dx_Label_disableEffect);
         tolua_function(tolua_S,"setTTFConfig",lua_cocos2dx_Label_setTTFConfig);
+        tolua_function(tolua_S,"getLabelType",lua_cocos2dx_Label_getLabelType);
         tolua_function(tolua_S,"getTextColor",lua_cocos2dx_Label_getTextColor);
         tolua_function(tolua_S,"getBlendFunc",lua_cocos2dx_Label_getBlendFunc);
         tolua_function(tolua_S,"enableWrap",lua_cocos2dx_Label_enableWrap);
@@ -58269,6 +58364,7 @@ int lua_register_cocos2dx_Label(lua_State* tolua_S)
         tolua_function(tolua_S,"getSystemFontName",lua_cocos2dx_Label_getSystemFontName);
         tolua_function(tolua_S,"setVerticalAlignment",lua_cocos2dx_Label_setVerticalAlignment);
         tolua_function(tolua_S,"setLineSpacing",lua_cocos2dx_Label_setLineSpacing);
+        tolua_function(tolua_S,"getRenderingFontSize",lua_cocos2dx_Label_getRenderingFontSize);
         tolua_function(tolua_S,"getLineHeight",lua_cocos2dx_Label_getLineHeight);
         tolua_function(tolua_S,"getShadowColor",lua_cocos2dx_Label_getShadowColor);
         tolua_function(tolua_S,"getTTFConfig",lua_cocos2dx_Label_getTTFConfig);

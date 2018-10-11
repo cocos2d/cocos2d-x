@@ -40,6 +40,7 @@ NS_CC_BEGIN
  * @{
  */
 
+#define CC_DEFAULT_FONT_LABEL_SIZE  12
 
 /**
  * @struct TTFConfig
@@ -61,7 +62,7 @@ typedef struct _ttfConfig
     bool underline;
     bool strikethrough;
 
-    _ttfConfig(const std::string& filePath = "",float size = 12, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
+    _ttfConfig(const std::string& filePath = "",float size = CC_DEFAULT_FONT_LABEL_SIZE, const GlyphCollection& glyphCollection = GlyphCollection::DYNAMIC,
         const char *customGlyphCollection = nullptr, bool useDistanceField = false, int outline = 0,
                bool useItalics = false, bool useBold = false, bool useUnderline = false, bool useStrikethrough = false)
         : fontFilePath(filePath)
@@ -123,6 +124,14 @@ public:
          */
         RESIZE_HEIGHT
     };
+    
+    enum class LabelType {
+        TTF,
+        BMFONT,
+        CHARMAP,
+        STRING_TEXTURE
+    };
+    
     /// @name Creators
     /// @{
 
@@ -544,6 +553,20 @@ public:
 
     void setLineSpacing(float height);
     float getLineSpacing() const;
+    
+    /**
+     Returns type of label
+     
+     @warning Not support system font.
+     @return the type of label
+     @since v3.18.0
+     */
+    LabelType getLabelType() const { return _currentLabelType; }
+    
+    /**
+     Returns font size
+     */
+    float getRenderingFontSize()const;
 
     /**
      * Sets the additional kerning of the Label.
@@ -625,13 +648,6 @@ protected:
         int lineIndex;
     };
 
-    enum class LabelType {
-        TTF,
-        BMFONT,
-        CHARMAP,
-        STRING_TEXTURE
-    };
-
     virtual void setFontAtlas(FontAtlas* atlas, bool distanceFieldEnabled = false, bool useA8Shader = false);
     bool getFontLetterDef(char32_t character, FontLetterDefinition& letterDef) const;
 
@@ -647,7 +663,6 @@ protected:
     void shrinkLabelToContentSize(const std::function<bool(void)>& lambda);
     bool isHorizontalClamp();
     bool isVerticalClamp();
-    float getRenderingFontSize()const;
     void rescaleWithOriginalFontSize();
 
     void updateLabelLetters();

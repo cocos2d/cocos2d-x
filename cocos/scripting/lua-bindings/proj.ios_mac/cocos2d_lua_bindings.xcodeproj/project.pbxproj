@@ -436,6 +436,12 @@
 		BA0CBB5F1BB0756F00003364 /* CCComponentLua.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA0CBB5C1BB0756F00003364 /* CCComponentLua.cpp */; };
 		BA0CBB601BB0756F00003364 /* CCComponentLua.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0CBB5D1BB0756F00003364 /* CCComponentLua.h */; };
 		BA0CBB611BB0756F00003364 /* CCComponentLua.h in Headers */ = {isa = PBXBuildFile; fileRef = BA0CBB5D1BB0756F00003364 /* CCComponentLua.h */; };
+		ED1AA90B215DF5F3004ABA9F /* lua_downloader.h in Headers */ = {isa = PBXBuildFile; fileRef = ED1AA909215DF5F3004ABA9F /* lua_downloader.h */; };
+		ED1AA90C215DF5F3004ABA9F /* lua_downloader.h in Headers */ = {isa = PBXBuildFile; fileRef = ED1AA909215DF5F3004ABA9F /* lua_downloader.h */; };
+		ED1AA90D215DF5F3004ABA9F /* lua_downloader.h in Headers */ = {isa = PBXBuildFile; fileRef = ED1AA909215DF5F3004ABA9F /* lua_downloader.h */; };
+		ED1AA90E215DF5F3004ABA9F /* lua_downloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED1AA90A215DF5F3004ABA9F /* lua_downloader.cpp */; };
+		ED1AA90F215DF5F3004ABA9F /* lua_downloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED1AA90A215DF5F3004ABA9F /* lua_downloader.cpp */; };
+		ED1AA910215DF5F3004ABA9F /* lua_downloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED1AA90A215DF5F3004ABA9F /* lua_downloader.cpp */; };
 		F4FE0D5719ECD00100B8B12B /* luasocket_scripts.c in Sources */ = {isa = PBXBuildFile; fileRef = F4FE0D5519ECD00100B8B12B /* luasocket_scripts.c */; };
 		F4FE0D5819ECD00100B8B12B /* luasocket_scripts.c in Sources */ = {isa = PBXBuildFile; fileRef = F4FE0D5519ECD00100B8B12B /* luasocket_scripts.c */; };
 		F4FE0D5919ECD00100B8B12B /* luasocket_scripts.h in Headers */ = {isa = PBXBuildFile; fileRef = F4FE0D5619ECD00100B8B12B /* luasocket_scripts.h */; };
@@ -601,6 +607,8 @@
 		BA0CBB5C1BB0756F00003364 /* CCComponentLua.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComponentLua.cpp; sourceTree = "<group>"; };
 		BA0CBB5D1BB0756F00003364 /* CCComponentLua.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCComponentLua.h; sourceTree = "<group>"; };
 		C0D9BAFA1974D30000EC35BB /* liblua.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblua.a; path = ../../../../external/lua/lua/prebuilt/ios/liblua.a; sourceTree = "<group>"; };
+		ED1AA909215DF5F3004ABA9F /* lua_downloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_downloader.h; sourceTree = "<group>"; };
+		ED1AA90A215DF5F3004ABA9F /* lua_downloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_downloader.cpp; sourceTree = "<group>"; };
 		F4FE0D5519ECD00100B8B12B /* luasocket_scripts.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = luasocket_scripts.c; sourceTree = "<group>"; };
 		F4FE0D5619ECD00100B8B12B /* luasocket_scripts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luasocket_scripts.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -736,6 +744,8 @@
 		15C1BD001986526C00A46ACC /* network */ = {
 			isa = PBXGroup;
 			children = (
+				ED1AA90A215DF5F3004ABA9F /* lua_downloader.cpp */,
+				ED1AA909215DF5F3004ABA9F /* lua_downloader.h */,
 				15EFA694198B668C000C57D3 /* lua_cocos2dx_network_manual.cpp */,
 				15EFA695198B668C000C57D3 /* lua_cocos2dx_network_manual.h */,
 				15C1BD011986526C00A46ACC /* lua_extensions.c */,
@@ -1028,6 +1038,7 @@
 				155C7DF819A71C4400F08B25 /* lua_cocos2dx_cocosdenshion_manual.h in Headers */,
 				15415AAF19A71A53004F1E71 /* except.h in Headers */,
 				150906F319D556D1002C4D97 /* lua_cocos2dx_audioengine_manual.h in Headers */,
+				ED1AA90B215DF5F3004ABA9F /* lua_downloader.h in Headers */,
 				155C7E0419A71C6D00F08B25 /* lua_cocos2dx_cocosbuilder_manual.h in Headers */,
 				15415ACB19A71A53004F1E71 /* socket.h in Headers */,
 				15415ADF19A71A53004F1E71 /* usocket.h in Headers */,
@@ -1103,6 +1114,7 @@
 				15EFA64C198B3320000C57D3 /* tolua++.h in Headers */,
 				155C7DF919A71C4500F08B25 /* lua_cocos2dx_cocosdenshion_manual.h in Headers */,
 				15415AB019A71A53004F1E71 /* except.h in Headers */,
+				ED1AA90C215DF5F3004ABA9F /* lua_downloader.h in Headers */,
 				3E2BDB0B19C5E6100055CDCD /* lua_cocos2dx_audioengine_manual.h in Headers */,
 				155C7E0519A71C6F00F08B25 /* lua_cocos2dx_cocosbuilder_manual.h in Headers */,
 				15415ACC19A71A53004F1E71 /* socket.h in Headers */,
@@ -1178,6 +1190,7 @@
 				507B43201C31FA0C0067B53E /* tolua++.h in Headers */,
 				507B43211C31FA0C0067B53E /* lua_cocos2dx_cocosdenshion_manual.h in Headers */,
 				507B43221C31FA0C0067B53E /* except.h in Headers */,
+				ED1AA90D215DF5F3004ABA9F /* lua_downloader.h in Headers */,
 				507B43231C31FA0C0067B53E /* lua_cocos2dx_audioengine_manual.h in Headers */,
 				507B43241C31FA0C0067B53E /* lua_cocos2dx_cocosbuilder_manual.h in Headers */,
 				507B43251C31FA0C0067B53E /* socket.h in Headers */,
@@ -1331,6 +1344,7 @@
 				ADD1C0D51C196B9500733781 /* lua_module_register.cpp in Sources */,
 				15415AD519A71A53004F1E71 /* udp.c in Sources */,
 				150983D01B1C0554007F3818 /* lua_cocos2dx_navmesh_auto.cpp in Sources */,
+				ED1AA90E215DF5F3004ABA9F /* lua_downloader.cpp in Sources */,
 				15415ADD19A71A53004F1E71 /* usocket.c in Sources */,
 				15AC69DC1987710400D17520 /* tolua_push.c in Sources */,
 				15AC69DD1987710400D17520 /* tolua_to.c in Sources */,
@@ -1465,6 +1479,7 @@
 				15EFA629198B31FB000C57D3 /* lua_cocos2dx_physics_manual.cpp in Sources */,
 				15EFA62A198B31FB000C57D3 /* LuaScriptHandlerMgr.cpp in Sources */,
 				15EFA617198B2E2B000C57D3 /* lua_cocos2dx_experimental_auto.cpp in Sources */,
+				ED1AA90F215DF5F3004ABA9F /* lua_downloader.cpp in Sources */,
 				15EFA618198B2E2B000C57D3 /* lua_cocos2dx_auto.cpp in Sources */,
 				15EFA619198B2E2B000C57D3 /* lua_cocos2dx_physics_auto.cpp in Sources */,
 				15415AB219A71A53004F1E71 /* inet.c in Sources */,
@@ -1548,6 +1563,7 @@
 				507B43011C31FA0C0067B53E /* lua_cocos2dx_physics_manual.cpp in Sources */,
 				507B43021C31FA0C0067B53E /* LuaScriptHandlerMgr.cpp in Sources */,
 				507B43031C31FA0C0067B53E /* lua_cocos2dx_experimental_auto.cpp in Sources */,
+				ED1AA910215DF5F3004ABA9F /* lua_downloader.cpp in Sources */,
 				507B43041C31FA0C0067B53E /* lua_cocos2dx_auto.cpp in Sources */,
 				507B43051C31FA0C0067B53E /* lua_cocos2dx_physics_auto.cpp in Sources */,
 				507B43061C31FA0C0067B53E /* inet.c in Sources */,
