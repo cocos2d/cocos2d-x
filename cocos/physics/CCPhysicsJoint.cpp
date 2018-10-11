@@ -42,9 +42,10 @@ public:
     Optional(T d) :_isSet(true), _data(d) {}
     Optional(const Optional &t) : _isSet(t._isSet), _data(t._data) {}
 
-    bool isNull()       const { return !_isSet; }
-    bool isDefineded()  const { return _isSet; }
-    bool isEmpty()      const { return !_isSet; }
+    //bool isNull()       const { return !_isSet; }
+    //bool isDefineded()  const { return _isSet; }
+    //bool isEmpty()      const { return !_isSet; }
+
     T    get()          const { CCASSERT(_isSet, "data should be set!"); return _data; }
     void set(T d)             { _isSet = true; _data = d; }
 
@@ -72,9 +73,6 @@ public:
     Optional<float> _ratio;
     Optional<float> _rate;
 };
-
-#define likely(x) __builtin_expect ((x), 1)
-#define unlikely(x) __builtin_expect ((x), 0)
 
 #if (defined(__GNUC__) && __GNUC__ >= 4) || defined(__clang__)
 #define LIKELY(x)   (__builtin_expect((x), 1))
