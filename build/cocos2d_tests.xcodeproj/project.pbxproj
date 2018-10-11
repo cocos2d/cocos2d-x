@@ -7723,7 +7723,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/freetype2/include/mac/freetype2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/freetype2/include/mac/freetype2 $(SRCROOT)/../tests/cpp-tests/Classes";
 			};
 			name = Debug;
 		};
@@ -7739,7 +7739,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/freetype2/include/mac/freetype2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/freetype2/include/mac/freetype2 $(SRCROOT)/../tests/cpp-tests/Classes";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
