@@ -6,6 +6,7 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 HOST_NAME=""
+CURL=curl --retry 999 --retry-max-time 0
 
 function install_android_ndk()
 {
@@ -30,7 +31,7 @@ function install_linux_environment()
     CMAKE_VERSION="3.7.2"
     CMAKE_DOWNLOAD_URL="https://cmake.org/files/v3.7/cmake-${CMAKE_VERSION}.tar.gz"
     echo "Download ${CMAKE_DOWNLOAD_URL}"
-    curl -O ${CMAKE_DOWNLOAD_URL}
+    ${CURL} -O ${CMAKE_DOWNLOAD_URL}
     tar -zxf "cmake-${CMAKE_VERSION}.tar.gz"
     cd "cmake-${CMAKE_VERSION}"
     ./configure > /dev/null
@@ -43,7 +44,7 @@ function install_linux_environment()
     BINUTILS_VERSION="2.27"
     BINUTILS_URL="http://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.gz"
     echo "Download ${BINUTILS_URL}"
-    curl -O ${BINUTILS_URL}
+    ${CURL} -O ${BINUTILS_URL}
     tar -zxf "binutils-${BINUTILS_VERSION}.tar.gz"
     cd "binutils-${BINUTILS_VERSION}"
     ./configure > /dev/null
