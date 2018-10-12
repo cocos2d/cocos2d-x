@@ -1,6 +1,6 @@
 Set-PSDebug -Trace 1
 $python = "C:\\Python27\\python.exe"
-$git_retry = "$pyhon $env:APPVEYOR_BUILD_FOLDER\tools\appveyor-scripts\git_retry.py"
+$git_retry = "$pyhon $env:APPVEYOR_BUILD_FOLDER\tools\appveyor-scripts\git_retry.py --retry-count=99 --delay=3 --delay-factor=1"
 
 
 function Download-Deps
@@ -14,7 +14,7 @@ function Generate-Binding-Codes
     $env:NDK_ROOT=$env:APPVEYOR_BUILD_FOLDER + "\..\android-ndk-r16b"
 
     # install python module
-    & pip install PyYAML Cheetah
+    & pip install PyYAML Cheetah retry
     Write-Host "generating binding codes"
 
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tools\tolua
