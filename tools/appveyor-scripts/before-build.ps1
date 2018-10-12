@@ -1,6 +1,6 @@
 Set-PSDebug -Trace 1
 $python = "C:\\Python27\\python.exe"
-$git_retry = $pyhon $env:APPVEYOR_BUILD_FOLDER\tools\appveyor-scripts\git_retry.py
+$git_retry = "$pyhon $env:APPVEYOR_BUILD_FOLDER\tools\appveyor-scripts\git_retry.py"
 
 
 function Download-Deps
