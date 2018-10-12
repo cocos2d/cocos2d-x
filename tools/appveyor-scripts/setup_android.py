@@ -54,9 +54,23 @@ def unzip(zip_file, directory):
 
 
 def download(url, zip_file):
+    import time
     print("=" * 80)
     print("Download: " + url + ", file: " + zip_file)
-    urllib.urlretrieve(url, zip_file)
+    try_times = 0
+    max_try_times = 99
+    delay = 3
+    while(try_times < max_try_times):
+        try_times = try_times + 1
+        try:
+            if(try_times > 1):
+                print("Download: retry "+str(try_times)+" times")
+            urllib.urlretrieve(url, zip_file)
+            return
+        except Exception as err:
+            if(try_times == max_try_times):
+                raise err
+            time.sleep(delay)
 
 
 def install_android_ndk():
