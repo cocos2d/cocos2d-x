@@ -6,7 +6,7 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 HOST_NAME=""
-CURL=curl --retry 999 --retry-max-time 0
+CURL="curl --retry 999 --retry-max-time 0"
 
 function install_android_ndk()
 {
