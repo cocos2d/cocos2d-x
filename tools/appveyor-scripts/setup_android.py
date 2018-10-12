@@ -118,6 +118,6 @@ def main(ndk_only):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Install android sdk/ndk')
-    parser.add_argument("--ndk_only", help="increase output verbosity", action="store_true")
+    parser.add_argument("--ndk_only", help="Install ndk only", action="store_true")
     args = parser.parse_args()
     main(args.ndk_only)
