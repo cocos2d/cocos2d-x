@@ -10,7 +10,6 @@ import sys
 import subprocess
 import tempfile
 import argparse
-from retry import retry
 
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -54,7 +53,6 @@ def unzip(zip_file, directory):
         subprocess.check_output(cmd.split())
 
 
-@retry(Exception, tries=10, delay=3, backoff=2)
 def download(url, zip_file):
     print("=" * 80)
     print("Download: " + url + ", file: " + zip_file)
