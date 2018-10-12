@@ -32,9 +32,13 @@ endif()
 set(COCOS_EXTERNAL_DIR ${COCOS2DX_ROOT_PATH}/external)
 set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
 
+message(STATUS "PROJECT_NAME:" ${PROJECT_NAME})
+message(STATUS "PROJECT_SOURCE_DIR:" ${PROJECT_SOURCE_DIR})
 message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
 message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
 message(STATUS "COCOS_EXTERNAL_DIR:" ${COCOS_EXTERNAL_DIR})
+# delete binary dir if you hope a full clean re-build
+message(STATUS "PROJECT_BINARY_DIR:" ${PROJECT_BINARY_DIR})
 message(STATUS "ENGINE_BINARY_PATH:" ${ENGINE_BINARY_PATH})
 
 # include helper functions for cmake build

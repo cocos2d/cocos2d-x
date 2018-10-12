@@ -37,11 +37,6 @@ android {
                     arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang",
                             "-DANDROID_ARM_NEON=TRUE"
                     cppFlags "-frtti -fexceptions"
-                    // prebuilt root must be defined as a directory which you have right to access or create if you use prebuilt
-                    // set "-DGEN_COCOS_PREBUILT=ON" and "-DUSE_COCOS_PREBUILT=OFF" to generate prebuilt,  this way build cocos2d-x libs
-                    // set "-DGEN_COCOS_PREBUILT=OFF" and "-DUSE_COCOS_PREBUILT=ON" to use prebuilt, this way not build cocos2d-x libs
-                    //arguments "-DCOCOS_PREBUILT_ROOT=/Users/laptop/cocos-prebuilt"
-                    //arguments "-DGEN_COCOS_PREBUILT=OFF", "-DUSE_COCOS_PREBUILT=ON"
                 }
             }
         }
