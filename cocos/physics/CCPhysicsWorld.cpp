@@ -893,7 +893,9 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
     {
         return;
     }
-    
+
+    if(_preUpdateCallback) _preUpdateCallback(); //fix #11154
+
     if (userCall)
     {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
@@ -950,6 +952,8 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
     // Update physics position, should loop as the same sequence as node tree.
     // PhysicsWorld::afterSimulation() will depend on the sequence.
     afterSimulation(_scene, sceneToWorldTransform, 0.f);
+
+    if(_postUpdateCallback) _postUpdateCallback(); //fix #11154
 }
 
 PhysicsWorld* PhysicsWorld::construct(Scene* scene)
@@ -1031,6 +1035,16 @@ void PhysicsWorld::afterSimulation(Node *node, const Mat4& parentToWorldTransfor
 
     for (auto child : node->getChildren())
         afterSimulation(child, nodeToWorldTransform, nodeRotation);
+}
+
+void PhysicsWorld::setPostUpdateCallback(const std::function<void()> &callback)
+{
+    _postUpdateCallback = callback;
+}
+
+void PhysicsWorld::setPreUpdateCallback(const std::function<void()> &callback)
+{
+    _preUpdateCallback = callback;
 }
 
 NS_CC_END
