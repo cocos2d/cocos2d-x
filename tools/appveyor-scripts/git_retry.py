@@ -142,13 +142,12 @@ def main(args):
                          "one to have a constant (non-increasing) delay.")
   opts, args = parser.parse_args(args)
   # Configure logging verbosity
-  #if opts.verbose == 0:
-  # logging.getLogger().setLevel(logging.WARNING)
-  #elif opts.verbose == 1:
-  #  logging.getLogger().setLevel(logging.INFO)
-  #else:
-  #  logging.getLogger().setLevel(logging.DEBUG)
-  logging.getLogger().setLevel(logging.DEBUG)
+  if opts.verbose == 0:
+    logging.getLogger().setLevel(logging.WARNING)
+  elif opts.verbose == 1:
+    logging.getLogger().setLevel(logging.INFO)
+  else:
+    logging.getLogger().setLevel(logging.DEBUG)
   # Execute retries
   retry = GitRetry(
       retry_count=opts.retry_count,
