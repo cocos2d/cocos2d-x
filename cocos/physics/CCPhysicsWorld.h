@@ -315,12 +315,10 @@ public:
      */
     void setPreUpdateCallback(const std::function<void()> &callback);
 
-    
     /**
      * set the callback which invoked after update of each object in physics world.
      */
     void setPostUpdateCallback(const std::function<void()> &callback);
-
 
     /**
     * Get the debug draw mask.
@@ -379,7 +377,6 @@ protected:
     virtual void removeBodyOrDelay(PhysicsBody* body);
     virtual void updateBodies();
     virtual void updateJoints();
-
 
 protected:
     Vec2 _gravity;
