@@ -72,11 +72,25 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
+-- set the callback which invoked before update of each object in physics world.
+-- @function [parent=#PhysicsWorld] setPreUpdateCallback 
+-- @param self
+-- @param #function callback
+-- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
+        
+--------------------------------
 -- Get the auto step of this physics world.<br>
 -- return A bool object.
 -- @function [parent=#PhysicsWorld] isAutoStep 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- set the callback which invoked after update of each object in physics world.
+-- @function [parent=#PhysicsWorld] setPostUpdateCallback 
+-- @param self
+-- @param #function callback
+-- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
         
 --------------------------------
 -- @overload self, int         
