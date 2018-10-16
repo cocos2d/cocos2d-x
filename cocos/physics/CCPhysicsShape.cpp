@@ -106,6 +106,7 @@ void PhysicsShape::setMoment(float moment)
 
 void PhysicsShape::setMaterial(const PhysicsMaterial& material)
 {
+    _material = material;
     setDensity(material.density);
     setRestitution(material.restitution);
     setFriction(material.friction);
