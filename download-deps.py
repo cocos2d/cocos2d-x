@@ -252,7 +252,7 @@ class CocosZipInstaller(object):
                     print("==> Download file retry " + str(times_count))
                 self.download_file()
                 return
-            except urllib2.URLError as err:
+            except Exception as err:
                 if(times_count >= times):
                     raise err
                 sleep(delay)
