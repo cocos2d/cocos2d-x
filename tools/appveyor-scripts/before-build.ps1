@@ -14,7 +14,7 @@ function Generate-Binding-Codes
     $env:NDK_ROOT=$env:APPVEYOR_BUILD_FOLDER + "\..\android-ndk-r16b"
 
     # install python module
-    & pip install PyYAML Cheetah
+    & pip install PyYAML Cheetah retry
     Write-Host "generating binding codes"
 
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tools\tolua

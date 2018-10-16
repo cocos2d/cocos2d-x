@@ -71,6 +71,7 @@ function download_deps()
 function install_python_module_for_osx()
 {
     pip install PyYAML
+    pip install retry
     sudo pip install Cheetah
 }
 
