@@ -83,7 +83,7 @@ def install_android_sdk():
     cmd1 = SDK_MANAGER + switches
     packages = [
         "platforms;android-27",
-        "build-tools;27.0.3",
+        "build-tools;28.0.3",
         "platform-tools",
         "tools"
     ]
@@ -118,6 +118,6 @@ def main(ndk_only):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Install android sdk/ndk')
-    parser.add_argument("--ndk_only", help="increase output verbosity", action="store_true")
+    parser.add_argument("--ndk_only", help="Install ndk only", action="store_true")
     args = parser.parse_args()
     main(args.ndk_only)
