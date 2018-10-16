@@ -26,7 +26,6 @@ On MAC:
     sudo easy_install pip
     sudo pip install PyYAML
 	sudo pip install Cheetah
-	sudo pip install retry
 </pre>
     
 * Download NDK r16 or later from [Android Ndk](https://developer.android.com/ndk/downloads/index.html)
@@ -49,7 +48,6 @@ On Ubuntu Linux 12.04 64bit
 	sudo apt-get install python-pip
 	sudo pip install PyYAML
 	sudo pip install Cheetah
-	sudo pip install retry
 </pre>
 * Download NDK r16 or later from [Android Ndk](https://developer.android.com/ndk/downloads/index.html)
 * Go to "cocos2d-x/tools/tojs", Run

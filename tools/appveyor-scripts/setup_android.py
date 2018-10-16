@@ -55,6 +55,10 @@ def unzip(zip_file, directory):
 def download(url, zip_file):
     print("=" * 80)
     print("Download: " + url + ", file: " + zip_file)
+    try:
+        os.remove(zip_file)
+    except OSError:
+        pass
     urllib.urlretrieve(url, zip_file)
 
 
