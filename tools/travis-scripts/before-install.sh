@@ -10,6 +10,7 @@ CURL="curl --retry 999 --retry-max-time 0"
 
 function install_android_ndk()
 {
+    python -m pip install retry
     if [ "$BUILD_TARGET" == "android_ndk-build" ]\
         || [ "$BUILD_TARGET" == "android_lua_ndk-build" ]\
         || [ "$BUILD_TARGET" == "android_cmake" ]\
@@ -120,6 +121,7 @@ function install_environement_for_after_merge()
 
 if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
     download_deps
+    python -m pip install retry
     python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py
     exit 0
 fi
