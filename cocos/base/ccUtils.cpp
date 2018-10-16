@@ -418,15 +418,6 @@ std::string getFileMD5Hash(const std::string &filename)
     return getDataMD5Hash(data);
 }
 
-std::string getStringMD5Hash(const std::string &dataStr)
-{
-	Data data;
-	data.fastSet((unsigned char*)dataStr.c_str(), dataStr.size());
-	std::string md5Str = getDataMD5Hash(data);
-	data.fastSet(nullptr, NULL);
-	return md5Str;
-}
-
 std::string getDataMD5Hash(const Data &data)
 {
     static const unsigned int MD5_DIGEST_LENGTH = 16;
