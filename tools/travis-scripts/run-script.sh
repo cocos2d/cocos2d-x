@@ -7,6 +7,26 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 COCOS2DX_ROOT="$DIR"/../..
 CPU_CORES=4
 
+function do_retry()
+{
+	cmd=$@
+	retry_times=5
+	retry_wait=3
+	c=0
+	while [ $c -lt $((retry_times+1)) ]; do
+		c=$((c+1))
+		echo "Executing \"$cmd\", try $c"
+		$cmd && return $?
+		if [ ! $c -eq $retry_times ]; then
+			echo "Command failed, will retry in $retry_wait secs"
+			sleep $retry_wait
+		else
+			echo "Command failed, giving up."
+			return 1
+		fi
+	done
+}
+
 function build_linux()
 {
     CPU_CORES=`grep -c ^processor /proc/cpuinfo`
@@ -89,7 +109,7 @@ function build_android_ndk-build()
 
     # build cpp-tests
     pushd $COCOS2DX_ROOT/tests/cpp-tests/proj.android
-   ./gradlew assembleRelease -PPROP_BUILD_TYPE=ndk-build --parallel --info
+    do_retry ./gradlew assembleRelease -PPROP_BUILD_TYPE=ndk-build --parallel --info
     popd
 
     # build js-tests
@@ -107,7 +127,7 @@ function build_android_cmake()
 
     # build cpp-tests
     pushd $COCOS2DX_ROOT/tests/cpp-tests/proj.android
-   ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --parallel --info
+    do_retry ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --parallel --info
     popd
 }
 
@@ -119,7 +139,7 @@ function build_android_lua_ndk-build()
 
     # build lua-tests
     pushd $COCOS2DX_ROOT/tests/lua-tests/project/proj.android
-    ./gradlew assembleDebug -PPROP_BUILD_TYPE=ndk-build --parallel --info
+    do_retry ./gradlew assembleDebug -PPROP_BUILD_TYPE=ndk-build --parallel --info
     popd
 
 }
@@ -132,7 +152,7 @@ function build_android_lua_cmake()
 
     # build lua-tests
     pushd $COCOS2DX_ROOT/tests/lua-tests/project/proj.android
-    ./gradlew assembleDebug -PPROP_BUILD_TYPE=cmake --parallel --info
+    do_retry ./gradlew assembleDebug -PPROP_BUILD_TYPE=cmake --parallel --info
     popd
 
 }
@@ -145,7 +165,7 @@ function build_android_js_cmake()
 
     # build lua-tests
     pushd $COCOS2DX_ROOT/tests/js-tests/project/proj.android
-    ./gradlew assembleDebug -PPROP_BUILD_TYPE=cmake --parallel --info
+    do_retry ./gradlew assembleDebug -PPROP_BUILD_TYPE=cmake --parallel --info
     popd
 
 }
@@ -345,7 +365,7 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
         python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
         popd
         pushd $COCOS2DX_ROOT/cocos_new_test/proj.android
-        ./gradlew build
+        do_retry ./gradlew build
         popd
         exit 0
     fi
