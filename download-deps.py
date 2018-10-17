@@ -231,7 +231,7 @@ class CocosZipInstaller(object):
 
     def download_zip_file(self):
         if not os.path.isfile(self._filename):
-            self.download_file_with_retry(99, 3)
+            self.download_file_with_retry(5, 3)
         try:
             if not zipfile.is_zipfile(self._filename):
                 raise UnrecognizedFormat("%s is not a zip file" % (self._filename))
