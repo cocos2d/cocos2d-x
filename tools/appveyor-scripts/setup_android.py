@@ -10,7 +10,7 @@ import sys
 import subprocess
 import tempfile
 import argparse
-
+from retry import retry
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
@@ -52,13 +52,17 @@ def unzip(zip_file, directory):
         cmd = "unzip -d " + directory + " " + zip_file
         subprocess.check_output(cmd.split())
 
-
 def download(url, zip_file):
     print("=" * 80)
     print("Download: " + url + ", file: " + zip_file)
+    try:
+        os.remove(zip_file)
+    except OSError:
+        pass
     urllib.urlretrieve(url, zip_file)
 
 
+@retry(Exception, tries=5, delay=1, backoff=1)
 def install_android_ndk():
     file_name = "android-ndk-r16b-" + SYSTEM + "-x86_64.zip"
     url = "https://dl.google.com/android/repository/" + file_name
@@ -67,7 +71,7 @@ def install_android_ndk():
     download(url, zip_file)
     unzip(zip_file, ROOT_DIR)
 
-
+@retry(Exception, tries=5, delay=1, backoff=1)
 def install_android_sdk_tools():
     file_name = "sdk-tools-{system}-3859397.zip".format(
         system=platform.system().lower())
@@ -78,6 +82,7 @@ def install_android_sdk_tools():
     unzip(zip_file, os.path.join(ROOT_DIR, "sdk_tools"))
 
 
+@retry(Exception, tries=5, delay=1, backoff=1)
 def install_android_sdk():
     switches = " --verbose --sdk_root=" + ANDROID_SDK + " "
     cmd1 = SDK_MANAGER + switches
