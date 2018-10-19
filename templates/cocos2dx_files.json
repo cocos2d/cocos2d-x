@@ -4017,6 +4017,7 @@
         "licenses/LICENSE_zlib.txt", 
         "tools/appveyor-scripts/before-build.ps1", 
         "tools/appveyor-scripts/build.ps1", 
+        "tools/appveyor-scripts/git_retry.py", 
         "tools/appveyor-scripts/setup_android.py", 
         "tools/coding-style/include-linter.py", 
         "tools/coding-style/tailing-spaces.py", 
