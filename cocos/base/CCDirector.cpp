@@ -115,9 +115,6 @@ Director* Director::getInstance()
 }
 
 Director::Director()
-: _deltaTimePassedByCaller(false)
-, _isStatusLabelUpdated(true)
-, _invalid(true)
 {
 }
 
@@ -125,43 +122,11 @@ bool Director::init(void)
 {
     setDefaultValues();
 
-    // scenes
-    _runningScene = nullptr;
-    _nextScene = nullptr;
-
-    _notificationNode = nullptr;
-
     _scenesStack.reserve(15);
 
     // FPS
-    _accumDt = 0.0f;
-    _frameRate = 0.0f;
-    _FPSLabel = _drawnBatchesLabel = _drawnVerticesLabel = nullptr;
-    _totalFrames = 0;
     _lastUpdate = std::chrono::steady_clock::now();
     
-    _secondsPerFrame = 1.0f;
-    _frames = 0;
-
-    // paused ?
-    _paused = false;
-
-    // purge ?
-    _purgeDirectorInNextLoop = false;
-    
-    // restart ?
-    _restartDirectorInNextLoop = false;
-    
-    // invalid ?
-    _invalid = false;
-
-    _winSizeInPoints = Size::ZERO;
-
-    _openGLView = nullptr;
-    _defaultFBO = nullptr;
-    
-    _contentScaleFactor = 1.0f;
-
     _console = new (std::nothrow) Console;
 
     // scheduler
@@ -214,7 +179,6 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_notificationNode);
     CC_SAFE_RELEASE(_scheduler);
     CC_SAFE_RELEASE(_actionManager);
-    CC_SAFE_DELETE(_defaultFBO);
 
     CC_SAFE_RELEASE(_beforeSetNextScene);
     CC_SAFE_RELEASE(_afterSetNextScene);
@@ -437,9 +401,6 @@ void Director::setOpenGLView(GLView *openGLView)
         {
             _eventDispatcher->setEnabled(true);
         }
-        
-        _defaultFBO = experimental::FrameBuffer::getOrCreateDefaultFBO(_openGLView);
-        _defaultFBO->retain();
     }
 }
 
@@ -770,9 +731,6 @@ void Director::setDepthTest(bool on)
 void Director::setClearColor(const Color4F& clearColor)
 {
     _renderer->setClearColor(clearColor);
-    auto defaultFBO = experimental::FrameBuffer::getOrCreateDefaultFBO(_openGLView);
-    
-    if(defaultFBO) defaultFBO->setClearColor(clearColor);
 }
 
 static void GLToClipTransform(Mat4 *transformOut)
