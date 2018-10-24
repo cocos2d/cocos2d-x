@@ -678,13 +678,13 @@ std::string SpriteBatchNodeZOrder::subtitle() const
 
 SpriteBatchNodeReorder::SpriteBatchNodeReorder()
 {
-    auto a = __Array::createWithCapacity(10);
+    Vector<Sprite*> a;
     auto asmtest = SpriteBatchNode::create("animations/ghosts.png");
     
     for(int i=0; i<10; i++)
     {
         auto s1 = Sprite::createWithTexture(asmtest->getTexture(), Rect(0, 0, 50, 50));
-        a->addObject(s1);
+        a.pushBack(s1);
         asmtest->addChild(s1, 10);
     }
     
@@ -692,7 +692,7 @@ SpriteBatchNodeReorder::SpriteBatchNodeReorder()
     {
         if(i!=5)
         {
-            asmtest->reorderChild( static_cast<Node*>(a->getObjectAtIndex(i)), 9 );
+            asmtest->reorderChild( static_cast<Node*>(a.at(i)), 9 );
         }
     }
     

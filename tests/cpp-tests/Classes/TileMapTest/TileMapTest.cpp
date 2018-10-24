@@ -1362,10 +1362,10 @@ TMXOrthoFromXMLTest::TMXOrthoFromXMLTest()
     std::string resources = "TileMaps";        // partial paths are OK as resource paths.
     std::string file = resources + "/orthogonal-test1.tmx";
 
-    auto str = __String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(file.c_str()).c_str());
-    CCASSERT(str != nullptr, "Unable to open file");
+    auto fileUtils = FileUtils::getInstance();
+    std::string str = fileUtils->getStringFromFile(fileUtils->fullPathForFilename(file.c_str()));
 
-    auto map = TMXTiledMap::createWithXML(str->getCString() ,resources.c_str());
+    auto map = TMXTiledMap::createWithXML(str ,resources.c_str());
     addChild(map, 0, kTagTileMap);
 
     auto s = map->getContentSize();

@@ -309,13 +309,6 @@ THE SOFTWARE.
 #include "vr/CCVRGenericRenderer.h"
 
 
-// Deprecated
-// All deprecated features are include inside deprecated/CCDeprecated.h.
-// It is recommended that you just include what is needed.
-// eg. #include "deprecated/CCString.h" if you only need cocos2d::__String.
-#include "deprecated/CCDeprecated.h"
-
-
 NS_CC_BEGIN
 
 CC_DLL const char* cocos2dVersion();
