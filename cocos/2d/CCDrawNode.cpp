@@ -903,11 +903,6 @@ void DrawNode::drawTriangle(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, cons
     _dirty = true;
 }
 
-void DrawNode::drawQuadraticBezier(const Vec2& from, const Vec2& control, const Vec2& to, unsigned int segments, const Color4F &color)
-{
-    drawQuadBezier(from, control, to, segments, color);
-}
-
 void DrawNode::clear()
 {
     _bufferCount = 0;

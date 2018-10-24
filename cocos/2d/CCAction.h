@@ -355,12 +355,6 @@ public:
      * @param value Turn on/off boundary.
      */
     void setBoundarySet(bool value) { _boundarySet = value; }
-    
-    /** @deprecated Alter behavior - turn on/off boundary. 
-     *
-     * @param value Turn on/off boundary.
-     */
-    CC_DEPRECATED_ATTRIBUTE void setBoudarySet(bool value) { setBoundarySet(value); }
 
     //
     // Override

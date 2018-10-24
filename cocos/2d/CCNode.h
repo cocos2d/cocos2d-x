@@ -165,8 +165,6 @@ public:
      * @param localZOrder The local Z order value.
      */
     virtual void setLocalZOrder(std::int32_t localZOrder);
-
-    CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(std::int32_t localZOrder) { setLocalZOrder(localZOrder); }
     
     /* 
      Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
@@ -195,8 +193,6 @@ public:
      */
 
     virtual std::int32_t getLocalZOrder() const { return _localZOrder; }
-
-    CC_DEPRECATED_ATTRIBUTE virtual std::int32_t getZOrder() const { return getLocalZOrder(); }
 
     /**
      Defines the order in which the nodes are renderer.
@@ -451,7 +447,6 @@ public:
      * @js setVertexZ
      */
     virtual void setPositionZ(float positionZ);
-    CC_DEPRECATED_ATTRIBUTE virtual void setVertexZ(float vertexZ) { setPositionZ(vertexZ); }
 
     /**
      * Gets position Z coordinate of this node.
@@ -462,7 +457,6 @@ public:
      * @js getVertexZ
      */
     virtual float getPositionZ() const;
-    CC_DEPRECATED_ATTRIBUTE virtual float getVertexZ() const { return getPositionZ(); }
 
     /**
      * Changes the X skew angle of the node in degrees.
@@ -651,7 +645,6 @@ public:
      * @js setRotationX
      */
     virtual void setRotationSkewX(float rotationX);
-    CC_DEPRECATED_ATTRIBUTE virtual void setRotationX(float rotationX) { return setRotationSkewX(rotationX); }
 
     /**
      * Gets the X rotation (angle) of the node in degrees which performs a horizontal rotation skew.
@@ -662,7 +655,6 @@ public:
      * @js getRotationX 
      */
     virtual float getRotationSkewX() const;
-    CC_DEPRECATED_ATTRIBUTE virtual float getRotationX() const { return getRotationSkewX(); }
 
     /**
      * Sets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.
@@ -679,7 +671,6 @@ public:
      * @js setRotationY
      */
     virtual void setRotationSkewY(float rotationY);
-    CC_DEPRECATED_ATTRIBUTE virtual void setRotationY(float rotationY) { return setRotationSkewY(rotationY); }
 
     /**
      * Gets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.
@@ -690,16 +681,6 @@ public:
      * @js getRotationY
      */
     virtual float getRotationSkewY() const;
-    CC_DEPRECATED_ATTRIBUTE virtual float getRotationY() const { return getRotationSkewY(); }
-
-    /** @deprecated No longer needed
-    * @lua NA
-    */
-    CC_DEPRECATED_ATTRIBUTE void setGLServerState(int /*serverState*/) {}
-    /** @deprecated No longer needed
-    * @lua NA
-    */
-    CC_DEPRECATED_ATTRIBUTE int getGLServerState() const { return 0; }
 
     /**
      * Sets whether the anchor point will be (0,0) when you position this node.
@@ -710,7 +691,6 @@ public:
      * @param ignore    true if anchor point will be (0,0) when you position this node.
      */
     virtual void setIgnoreAnchorPointForPosition(bool ignore);
-    CC_DEPRECATED_ATTRIBUTE virtual void ignoreAnchorPointForPosition(bool ignore) { setIgnoreAnchorPointForPosition(ignore); }
     
     /**
      * Gets whether the anchor point will be (0,0) when you position this node.
@@ -1058,7 +1038,7 @@ public:
      * @return The GLProgram (shader) currently used for this node.
      */
     GLProgram* getGLProgram() const;
-    CC_DEPRECATED_ATTRIBUTE GLProgram* getShaderProgram() const { return getGLProgram(); }
+    
     /**
      * Sets the shader program for this node
      *
@@ -1071,7 +1051,6 @@ public:
      * @param glprogram The shader program.
      */
     virtual void setGLProgram(GLProgram *glprogram);
-    CC_DEPRECATED_ATTRIBUTE void setShaderProgram(GLProgram *glprogram) { setGLProgram(glprogram); }
     
     /**
      * Return the GLProgramState currently used for this node.
@@ -1196,9 +1175,6 @@ public:
      */
     virtual Rect getBoundingBox() const;
 
-    /** @deprecated Use getBoundingBox instead */
-    CC_DEPRECATED_ATTRIBUTE virtual Rect boundingBox() const { return getBoundingBox(); }
-
     /** Set event dispatcher for scene.
      *
      * @param dispatcher The event dispatcher of scene.
@@ -1307,10 +1283,6 @@ public:
      *         ones that are schedule to run with specific tag.
      */
     ssize_t getNumberOfRunningActionsByTag(int tag) const;
-
-
-    /** @deprecated Use getNumberOfRunningActions() instead */
-    CC_DEPRECATED_ATTRIBUTE ssize_t numberOfRunningActions() const { return getNumberOfRunningActions(); };
 
     /// @} end of Actions
 
@@ -1496,8 +1468,6 @@ public:
      */
     void unscheduleAllCallbacks();
 
-    CC_DEPRECATED_ATTRIBUTE void unscheduleAllSelectors() { unscheduleAllCallbacks(); }
-
     /**
      * Resumes all scheduled selectors, actions and event listeners.
      * This method is called internally by onEnter.
@@ -1508,17 +1478,6 @@ public:
      * This method is called internally by onExit.
      */
     virtual void pause(void);
-
-    /**
-     * Resumes all scheduled selectors, actions and event listeners.
-     * This method is called internally by onEnter.
-     */
-    CC_DEPRECATED_ATTRIBUTE void resumeSchedulerAndActions();
-    /**
-     * Pauses all scheduled selectors, actions and event listeners.
-     * This method is called internally by onExit.
-     */
-    CC_DEPRECATED_ATTRIBUTE void pauseSchedulerAndActions();
 
     /**
      * Update method will be called automatically every frame if "scheduleUpdate" is called, and the node is "live".
@@ -1579,9 +1538,6 @@ public:
      */
     virtual void setNodeToParentTransform(const Mat4& transform);
 
-    /** @deprecated use getNodeToParentTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE virtual AffineTransform nodeToParentTransform() const { return getNodeToParentAffineTransform(); }
-
     /**
      * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
      * The matrix is in Pixels.
@@ -1591,9 +1547,6 @@ public:
     virtual const Mat4& getParentToNodeTransform() const;
     virtual AffineTransform getParentToNodeAffineTransform() const;
 
-    /** @deprecated Use getParentToNodeTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE virtual AffineTransform parentToNodeTransform() const { return getParentToNodeAffineTransform(); }
-
     /**
      * Returns the world affine transform matrix. The matrix is in Pixels.
      *
@@ -1602,9 +1555,6 @@ public:
     virtual Mat4 getNodeToWorldTransform() const;
     virtual AffineTransform getNodeToWorldAffineTransform() const;
 
-    /** @deprecated Use getNodeToWorldTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE virtual AffineTransform nodeToWorldTransform() const { return getNodeToWorldAffineTransform(); }
-
     /**
      * Returns the inverse world affine transform matrix. The matrix is in Pixels.
      *
@@ -1612,9 +1562,6 @@ public:
      */
     virtual Mat4 getWorldToNodeTransform() const;
     virtual AffineTransform getWorldToNodeAffineTransform() const;
-
-    /** @deprecated Use getWorldToNodeTransform() instead */
-    CC_DEPRECATED_ATTRIBUTE virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeAffineTransform(); }
 
     /// @} end of Transformations
 

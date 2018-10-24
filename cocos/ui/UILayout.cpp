@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCRenderState.h"
 #include "base/CCDirector.h"
-#include "2d/CCDrawingPrimitives.h"
 #include "renderer/CCRenderer.h"
 #include "ui/UILayoutManager.h"
 #include "2d/CCDrawNode.h"

@@ -148,10 +148,6 @@ public:
      */
     virtual ssize_t getNumberOfRunningActions() const;
 
-    /** @deprecated Use getNumberOfRunningActionsInTarget() instead.
-     */
-    CC_DEPRECATED_ATTRIBUTE ssize_t numberOfRunningActionsInTarget(Node *target) const { return getNumberOfRunningActionsInTarget(target); }
-
 
     /** Returns the numbers of actions that are running in a
      *  certain target with a specific tag.
