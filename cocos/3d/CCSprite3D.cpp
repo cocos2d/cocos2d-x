@@ -930,15 +930,6 @@ Mesh* Sprite3D::getMesh() const
     return _meshes.at(0); 
 }
 
-MeshSkin* Sprite3D::getSkin() const
-{
-    for (const auto& it : _meshes) {
-        if (it->getSkin())
-            return it->getSkin();
-    }
-    return nullptr;
-}
-
 void Sprite3D::setForce2DQueue(bool force2D)
 {
     for (const auto &mesh : _meshes) {

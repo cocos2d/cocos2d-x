@@ -57,16 +57,6 @@ public:
      * @lua NA
      */
     virtual ~Clonable() {};
-
-    /** Returns a copy of the Ref.
-     * @deprecated Use clone() instead.
-     */
-    CC_DEPRECATED_ATTRIBUTE Ref* copy() const
-    {
-        // use "clone" instead
-        CC_ASSERT(false);
-        return nullptr;
-    }
 };
 
 /**

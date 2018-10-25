@@ -225,11 +225,6 @@ bool BillBoard::calculateBillboardTransform()
     return false;
 }
 
-bool BillBoard::calculateBillbaordTransform()
-{
-    return calculateBillboardTransform();
-}
-
 void BillBoard::draw(Renderer *renderer, const Mat4 &/*transform*/, uint32_t flags)
 {
     //FIXME: frustum culling here

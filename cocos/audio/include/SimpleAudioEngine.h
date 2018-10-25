@@ -63,12 +63,6 @@ public:
      */
     static SimpleAudioEngine* getInstance();
 
-    /**
-     * @deprecated Use `getInstance` instead.
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE static SimpleAudioEngine* sharedEngine() { return SimpleAudioEngine::getInstance(); }
 
     /**
      * Release the shared Engine object.

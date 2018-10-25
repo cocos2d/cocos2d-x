@@ -50,12 +50,6 @@ Profiler* Profiler::getInstance()
     return g_sSharedProfiler;
 }
 
-// FIXME:: deprecated
-Profiler* Profiler::sharedProfiler(void)
-{
-    return Profiler::getInstance();
-}
-
 ProfilingTimer* Profiler::createAndAddTimerWithName(const char* timerName)
 {
     ProfilingTimer *t = new (std::nothrow) ProfilingTimer();

@@ -74,9 +74,6 @@ public:
      */
     static void destroyInstance();
     
-    /** @deprecated Use method destroyInstance() instead. */
-    CC_DEPRECATED_ATTRIBUTE static void destoryInstance() { return destroyInstance(); }
-    
     /**
      * Stop tasks.
      *

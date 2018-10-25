@@ -1375,19 +1375,9 @@ void Sprite::setStretchEnabled(bool enabled)
     }
 }
 
-void Sprite::setStrechEnabled(bool enabled)
-{
-    setStretchEnabled(enabled);
-}
-
 bool Sprite::isStretchEnabled() const
 {
     return _stretchEnabled;
-}
-
-bool Sprite::isStrechEnabled() const
-{
-    return isStretchEnabled();
 }
 
 void Sprite::updateStretchFactor()

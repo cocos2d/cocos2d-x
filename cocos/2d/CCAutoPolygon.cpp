@@ -161,11 +161,6 @@ unsigned int PolygonInfo::getTrianglesCount() const
     return (unsigned int)triangles.indexCount/3;
 }
 
-unsigned int PolygonInfo::getTriaglesCount() const
-{
-    return getTrianglesCount();
-}
-
 float PolygonInfo::getArea() const
 {
     float area = 0;

@@ -809,21 +809,6 @@ void CCBAnimationManager::runAction(Node *pNode, CCBSequenceProperty *pSeqProp, 
     }
 }
 
-void CCBAnimationManager::runAnimations(const char *pName, float fTweenDuration)
-{
-    runAnimationsForSequenceNamedTweenDuration(pName, fTweenDuration);
-}
-
-void CCBAnimationManager::runAnimations(const char *pName)
-{
-    runAnimationsForSequenceNamed(pName);
-}
-    
-void CCBAnimationManager::runAnimations(int nSeqId, float fTweenDuraiton)
-{
-    runAnimationsForSequenceIdTweenDuration(nSeqId, fTweenDuraiton);
-}
-
 void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, float fTweenDuration)
 {
     CCASSERT(nSeqId != -1, "Sequence id couldn't be found");

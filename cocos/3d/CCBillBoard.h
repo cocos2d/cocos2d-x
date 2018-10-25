@@ -115,9 +115,6 @@ protected:
      * calculate a model matrix which keep original translate & scaling but always face to the camera
      */
     bool calculateBillboardTransform();
-
-    /** @deprecated Use calculateBillboardTransform instead. */
-    CC_DEPRECATED_ATTRIBUTE bool calculateBillbaordTransform();
     
     Mat4 _camWorldMat;
     Mat4 _mvTransform;
