@@ -478,15 +478,4 @@ bool StringUTF8::insert(std::size_t pos, const StringUTF8& insertStr)
 
 } //namespace StringUtils {
 
-namespace {
-    inline int wcslen_internal(const unsigned short* str)
-    {
-        if (str == nullptr)
-            return -1;
-        int i=0;
-        while(*str++) i++;
-        return i;
-    }
-}
-
 NS_CC_END

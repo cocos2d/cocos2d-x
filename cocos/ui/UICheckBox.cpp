@@ -118,7 +118,6 @@ void CheckBox::onTouchEnded(Touch *touch, Event *unusedEvent)
 void CheckBox::dispatchSelectChangedEvent(bool selected)
 {
     EventType eventType = (selected ? EventType::SELECTED : EventType::UNSELECTED);
-    CheckBoxEventType checkBoxEventType = (selected ? CHECKBOX_STATE_EVENT_SELECTED : CHECKBOX_STATE_EVENT_UNSELECTED);
     
     this->retain();
     if (_checkBoxEventCallback)
