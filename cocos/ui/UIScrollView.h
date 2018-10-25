@@ -361,14 +361,6 @@ public:
 
     /**
      * Add callback function which will be called  when scrollview event triggered.
-     * @deprecated Use @see `addEventListener` instead.
-     * @param target A pointer of `Ref*` type.
-     * @param selector A member function pointer with type of `SEL_ScrollViewEvent`.
-     */
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerScrollView(Ref* target, SEL_ScrollViewEvent selector);
-
-    /**
-     * Add callback function which will be called  when scrollview event triggered.
      * @param callback A callback function with type of `ccScrollViewCallback`.
      */
     virtual void addEventListener(const ccScrollViewCallback& callback);
@@ -712,18 +704,6 @@ protected:
     ScrollViewBar* _horizontalScrollBar;
     
     Ref* _scrollViewEventListener;
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
-    SEL_ScrollViewEvent _scrollViewEventSelector;
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (pop)
-#endif
     ccScrollViewCallback _eventCallback;
 };
 

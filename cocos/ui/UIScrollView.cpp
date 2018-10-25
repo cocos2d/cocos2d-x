@@ -76,7 +76,6 @@ _scrollBarEnabled(true),
 _verticalScrollBar(nullptr),
 _horizontalScrollBar(nullptr),
 _scrollViewEventListener(nullptr),
-_scrollViewEventSelector(nullptr),
 _eventCallback(nullptr)
 {
     setTouchEnabled(true);
@@ -88,7 +87,6 @@ ScrollView::~ScrollView()
     _verticalScrollBar = nullptr;
     _horizontalScrollBar = nullptr;
     _scrollViewEventListener = nullptr;
-    _scrollViewEventSelector = nullptr;
 }
 
 ScrollView* ScrollView::create()
@@ -1175,10 +1173,6 @@ void ScrollView::processScrollingEndedEvent() {
 void ScrollView::dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType)
 {
     this->retain();
-    if (_scrollViewEventListener && _scrollViewEventSelector)
-    {
-        (_scrollViewEventListener->*_scrollViewEventSelector)(this, scrollEventType);
-    }
     if (_eventCallback)
     {
         _eventCallback(this, eventType);
@@ -1188,12 +1182,6 @@ void ScrollView::dispatchEvent(ScrollviewEventType scrollEventType, EventType ev
         _ccEventCallback(this, static_cast<int>(eventType));
     }
     this->release();
-}
-
-void ScrollView::addEventListenerScrollView(Ref *target, SEL_ScrollViewEvent selector)
-{
-    _scrollViewEventListener = target;
-    _scrollViewEventSelector = selector;
 }
 
 void ScrollView::addEventListener(const ccScrollViewCallback& callback)
@@ -1514,7 +1502,6 @@ void ScrollView::copySpecialProperties(Widget *widget)
         setInertiaScrollEnabled(scrollView->_inertiaScrollEnabled);
         setBounceEnabled(scrollView->_bounceEnabled);
         _scrollViewEventListener = scrollView->_scrollViewEventListener;
-        _scrollViewEventSelector = scrollView->_scrollViewEventSelector;
         _eventCallback = scrollView->_eventCallback;
         _ccEventCallback = scrollView->_ccEventCallback;
         
