@@ -343,37 +343,6 @@ namespace ui {
                           const Rect& capInsets);
 
         /**
-         * @brief Initializes a 9-slice sprite with a sprite batchnode.
-         * Once the sprite is created, you can then call its "setContentSize:" method
-         * to resize the sprite will all it's 9-slice goodness interact.
-         * It respects the anchorPoint too.
-         *
-         * @deprecated Use @see `init` instead.
-         * @param batchnode A batch node pointer.
-         * @param rect A delimitation zone.
-         * @param rotated Whether the sprite in batch node is rotated or not.
-         * @param capInsets The values to use for the cap insets.
-         * @return True if initializes success, false otherwise.
-         */
-        CC_DEPRECATED(v3) virtual bool initWithBatchNode(SpriteBatchNode* batchnode,
-                                                         const Rect& rect,
-                                                         bool rotated,
-                                                         const Rect& capInsets);
-        /**
-         * @brief Initializes a 9-slice sprite with a sprite batch node.
-         * Once the sprite is created, you can then call its "setContentSize:" method
-         * to resize the sprite will all it's 9-slice goodness interact.
-         * It respects the anchorPoint too.
-         *
-         * @deprecated Use @see `init` instead.
-         * @param batchnode A batch node pointer.
-         * @param rect A delimitation zone.
-         * @param capInsets The values to use for the cap insets.
-         * @return True if initializes success, false otherwise.
-         */
-        CC_DEPRECATED(v3) virtual bool initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, const Rect& capInsets);
-
-        /**
          * Creates and returns a new sprite object with the specified cap insets.
          * You use this method to add cap insets to a sprite or to change the existing
          * cap insets of a sprite. In both cases, you get back a new image and the
@@ -418,22 +387,6 @@ namespace ui {
                                       const Vec2 &offset,
                                       const Size &originalSize,
                                       const Rect& capInsets);
-
-        /**
-         * @brief Update Scale9Sprite with a specified sprite.
-         *
-         * @deprecated Use @see `updateWithSprite` instead.
-         * @param batchnode A sprite batch pointer.
-         * @param originalRect A delimitation zone.
-         * @param rotated Whether the sprite is rotated or not.
-         * @param capInsets The Values to use for the cap insets.
-         * @return True if update success, false otherwise.
-         */
-        CC_DEPRECATED(v3) bool updateWithBatchNode(SpriteBatchNode* batchnode,
-                                                   const Rect& originalRect,
-                                                   bool rotated,
-                                                   const Rect& capInsets);
-
 
         /**
          * @brief Change inner sprite's sprite frame.

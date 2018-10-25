@@ -236,12 +236,6 @@ bool Scale9Sprite::init(Sprite* sprite, const Rect& origRect, bool rotated, cons
     return ret;
 }
 
-bool Scale9Sprite::initWithBatchNode(SpriteBatchNode *batchnode, const Rect &rect, bool rotated, const Rect &capInsets)
-{
-    auto sprite = Sprite::createWithTexture(batchnode->getTexture());
-    return init(sprite, rect, rotated, capInsets);
-}
-
 bool Scale9Sprite::initWithFile(const std::string& filename, const Rect& rect, const Rect& capInsets)
 {
     // calls super
@@ -257,23 +251,6 @@ bool Scale9Sprite::initWithFile(const std::string& filename, const Rect& rect, c
 
     setupSlice9(getTexture(), capInsets);
     return ret;
-}
-
-bool Scale9Sprite::initWithBatchNode(SpriteBatchNode *batchnode, const Rect &rect, const Rect &capInsets)
-{
-    auto sprite = Sprite::createWithTexture(batchnode->getTexture());
-    return init(sprite, rect, false, capInsets);
-}
-
-bool Scale9Sprite::updateWithBatchNode(SpriteBatchNode *batchnode, const Rect &originalRect, bool rotated, const Rect &capInsets)
-{
-    Sprite *sprite = Sprite::createWithTexture(batchnode->getTexture());
-    return updateWithSprite(sprite,
-                            originalRect,
-                            rotated,
-                            Vec2::ZERO,
-                            originalRect.size,
-                            capInsets);
 }
 
 bool Scale9Sprite::updateWithSprite(Sprite* sprite,
