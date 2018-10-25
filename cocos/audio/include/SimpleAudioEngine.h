@@ -63,7 +63,6 @@ public:
      */
     static SimpleAudioEngine* getInstance();
 
-
     /**
      * Release the shared Engine object.
      *
