@@ -117,17 +117,6 @@ public:
     virtual void setDirection(Direction direction) override;
 
     /**
-     * Add a widget as a page of PageView in a given index.
-     *
-     * @param widget    Widget to be added to pageview.
-     * @param pageIdx   A given index.
-     * @param forceCreate   If `forceCreate` is true and `widget` isn't exists, pageview would create a default page and add it.
-     *
-     * Since v3.9, this is deprecated. Use `insertPage(Widget* page, int idx)` instead.
-     */
-    CC_DEPRECATED_ATTRIBUTE void addWidgetToPage(Widget* widget, ssize_t pageIdx, bool forceCreate);
-    
-    /**
      * Insert a page into the end of PageView.
      *
      * @param page Page to be inserted.
@@ -194,14 +183,6 @@ public:
     /**
      * Gets current displayed page index.
      * @return current page index.
-     *
-     * Since v3.9, this is deprecated. Use `getCurrentPageIndex()` instead.
-     */
-    CC_DEPRECATED_ATTRIBUTE ssize_t getCurPageIndex() const;
-
-    /**
-     * Gets current displayed page index.
-     * @return current page index.
      */
     ssize_t getCurrentPageIndex();
 
@@ -210,44 +191,8 @@ public:
      * This is the different between scrollToPage.
      *
      * @param index A given index in PageView. Index start from 0 to pageCount -1.
-     *
-     * Since v3.9, this is deprecated. Use `setCurrentPageIndex()` instead.
-     */
-    CC_DEPRECATED_ATTRIBUTE void setCurPageIndex(ssize_t index);
-
-    /**
-     * Jump to a page with a given index without scrolling.
-     * This is the different between scrollToPage.
-     *
-     * @param index A given index in PageView. Index start from 0 to pageCount -1.
      */
     void setCurrentPageIndex(ssize_t index);
-
-    /**
-     * @brief Get all the pages in the PageView.
-     * @return A vector of Layout pointers.
-     *
-     * Since v3.9, this is obsolete. Use `Vector<Widget*>& ListView::getItems()` instead.
-     */
-    CC_DEPRECATED_ATTRIBUTE Vector<Layout*>& getPages();
-
-    /**
-     * @brief Get a page at a given index
-     *
-     * @param index A given index.
-     * @return A layout pointer in PageView container.
-     *
-     * Since v3.9, this is obsolete. Use `Widget* ListView::getItem(index)` instead.
-     */
-    CC_DEPRECATED_ATTRIBUTE Layout* getPage(ssize_t index);
-    
-    /**
-     * Add a page turn callback to PageView, then when one page is turning, the callback will be called.
-     *@deprecated Use `PageView::addEventListener` instead.
-     *@param target A pointer of `Ref*` type.
-     *@param selector A member function pointer with signature of `SEL_PageViewEvent`.
-     */
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerPageView(Ref *target, SEL_PageViewEvent selector);
 
     /**
      * @brief Add a page turn callback to PageView, then when one page is turning, the callback will be called.
@@ -454,19 +399,6 @@ protected:
 
     float _childFocusCancelOffset;
 
-    Ref* _pageViewEventListener;
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
-    SEL_PageViewEvent _pageViewEventSelector;
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (pop)
-#endif
     ccPageViewCallback _eventCallback;
     float _autoScrollStopEpsilon;
     ssize_t _previousPageIndex;
