@@ -179,21 +179,6 @@ public:
      @since v0.8
      */
     static Texture2D::PixelFormat getDefaultAlphaPixelFormat();
-    CC_DEPRECATED_ATTRIBUTE static Texture2D::PixelFormat defaultAlphaPixelFormat() { return Texture2D::getDefaultAlphaPixelFormat(); };
-
-    /** Treats (or not) PVR files as if they have alpha premultiplied.
-     
-     @param haveAlphaPremultiplied 
-     Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
-     possible load them as if they have (or not) the alpha channel premultiplied.
-
-     By default it is disabled.
-     
-     deprecated, please use Image::setPVRImagesHavePremultipliedAlpha() instead.
-
-     @since v0.99.5
-     */
-    CC_DEPRECATED_ATTRIBUTE static void PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied);
     
 public:
     /**
@@ -315,12 +300,6 @@ public:
     */
     void setTexParameters(const TexParams& texParams);
 
-    /**
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE void setTexParameters(const TexParams* texParams) { return setTexParameters(*texParams); };
-
     /** Sets antialias texture parameters:
     - GL_TEXTURE_MIN_FILTER = GL_LINEAR
     - GL_TEXTURE_MAG_FILTER = GL_LINEAR
@@ -352,19 +331,16 @@ public:
      @since v2.0
      */
     const char* getStringForFormat() const;
-    CC_DEPRECATED_ATTRIBUTE const char* stringForFormat() const { return getStringForFormat(); };
 
     /** Returns the bits-per-pixel of the in-memory OpenGL texture
     @since v1.0
     */
     unsigned int getBitsPerPixelForFormat() const;
-    CC_DEPRECATED_ATTRIBUTE unsigned int bitsPerPixelForFormat() const { return getBitsPerPixelForFormat(); };
 
     /** Helper functions that returns bits per pixels for a given format.
      @since v2.0
      */
     unsigned int getBitsPerPixelForFormat(Texture2D::PixelFormat format) const;
-    CC_DEPRECATED_ATTRIBUTE unsigned int bitsPerPixelForFormat(Texture2D::PixelFormat format) const { return getBitsPerPixelForFormat(format); };
 
     /** Get content size. */
     const Size& getContentSizeInPixels();

@@ -697,20 +697,6 @@ FileUtils::Status FileUtils::getContents(const std::string& filename, ResizableB
     return Status::OK;
 }
 
-unsigned char* FileUtils::getFileData(const std::string& filename, const char* mode, ssize_t *size) const
-{
-    CCASSERT(!filename.empty() && size != nullptr && mode != nullptr, "Invalid parameters.");
-    (void)(mode); // mode is unused, as we do not support text mode any more...
-
-    Data d;
-    if (getContents(filename, &d) != Status::OK) {
-        *size = 0;
-        return nullptr;
-    }
-
-    return d.takeBuffer(size);
-}
-
 unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, ssize_t *size) const
 {
     unsigned char * buffer = nullptr;

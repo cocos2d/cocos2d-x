@@ -62,7 +62,6 @@ public:
      @param flags to indicate that the command is using 3D rendering or not.
      */
     void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, Primitive* primitive, const Mat4& mv, uint32_t flags);
-    CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, Primitive* primitive,const Mat4& mv);
     
     /**Get the generated material ID.*/
     uint32_t getMaterialID() const { return _materialID; }

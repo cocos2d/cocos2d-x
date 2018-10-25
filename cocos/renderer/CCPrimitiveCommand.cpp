@@ -69,11 +69,6 @@ void PrimitiveCommand::init(float globalOrder, GLuint textureID, GLProgramState*
     }
 }
 
-void PrimitiveCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, Primitive* primitive,const Mat4& mv)
-{
-    init(globalOrder, textureID, glProgramState, blendType, primitive, mv, 0);
-}
-
 void PrimitiveCommand::execute() const
 {
     //Set texture

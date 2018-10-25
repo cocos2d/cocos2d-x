@@ -222,10 +222,6 @@ public:
     virtual void onSuccess() {};
 };
 
-// Deprecated declaration
-CC_DEPRECATED_ATTRIBUTE typedef AssetsManager CCAssetsManager;
-CC_DEPRECATED_ATTRIBUTE typedef AssetsManagerDelegateProtocol CCAssetsManagerDelegateProtocol;
-
 NS_CC_EXT_END;
 
 #endif /* defined(__AssetsManager__) */

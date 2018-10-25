@@ -98,18 +98,6 @@ void GLProgramCache::destroyInstance()
     CC_SAFE_RELEASE_NULL(_sharedGLProgramCache);
 }
 
-// FIXME: deprecated
-GLProgramCache* GLProgramCache::sharedShaderCache()
-{
-    return GLProgramCache::getInstance();
-}
-
-// FIXME: deprecated
-void GLProgramCache::purgeSharedShaderCache()
-{
-    GLProgramCache::destroyInstance();
-}
-
 GLProgramCache::GLProgramCache()
 : _programs()
 {

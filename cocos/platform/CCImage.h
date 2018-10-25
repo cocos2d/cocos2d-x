@@ -146,7 +146,6 @@ public:
     int               getNumberOfMipmaps()    { return _numberOfMipmaps; }
     MipmapInfo*       getMipmaps()            { return _mipmaps; }
     bool              hasPremultipliedAlpha() { return _hasPremultipliedAlpha; }
-    CC_DEPRECATED_ATTRIBUTE bool isPremultipliedAlpha() { return _hasPremultipliedAlpha; }
     std::string getFilePath() const { return _filePath; }
 
     int                      getBitPerPixel();

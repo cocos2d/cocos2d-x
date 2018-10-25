@@ -147,12 +147,6 @@ public:
      */
     static void setDelegate(FileUtils *delegate);
 
-    /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static FileUtils* sharedFileUtils() { return getInstance(); }
-
-    /** @deprecated Use destroyInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static void purgeFileUtils() { destroyInstance(); }
-
     /**
      *  The destructor of FileUtils.
      * @js NA
@@ -272,17 +266,6 @@ public:
         return getContents(filename, &buf);
     }
     virtual Status getContents(const std::string& filename, ResizableBuffer* buffer) const;
-
-    /**
-     *  Gets resource file data
-     *
-     *  @param[in]  filename The resource file name which contains the path.
-     *  @param[in]  mode The read mode of the file.
-     *  @param[out] size If the file read operation succeeds, it will be the data size, otherwise 0.
-     *  @return Upon success, a pointer to the data is returned, otherwise NULL.
-     *  @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
-     */
-    CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t *size) const;
 
     /**
      *  Gets resource file data from a zip file.

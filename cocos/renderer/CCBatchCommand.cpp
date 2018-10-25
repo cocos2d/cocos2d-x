@@ -56,11 +56,6 @@ void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendTyp
     _mv = modelViewTransform;
 }
 
-void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform)
-{
-    init(globalOrder, shader, blendType, textureAtlas, modelViewTransform, 0);
-}
-
 BatchCommand::~BatchCommand()
 {
 }

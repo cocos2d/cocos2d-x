@@ -238,18 +238,6 @@ public:
     }
     
     /**
-     * Set the target and related callback selector.
-     * When response come back, it would call (pTarget->*pSelector) to process something.
-     *
-     * @param pTarget the target object pointer.
-     * @param pSelector the callback function.
-     */
-    CC_DEPRECATED_ATTRIBUTE void setResponseCallback(Ref* pTarget, SEL_CallFuncND pSelector)
-    {
-        doSetResponseCallback(pTarget, (SEL_HttpResponse)pSelector);
-    }
-    
-    /**
      * Set the target and related callback selector of HttpRequest object.
      * When response come back, we would call (pTarget->*pSelector) to process response data.
      *
@@ -294,7 +282,6 @@ public:
         /** Destructor. */
         ~_prxy(){};
         operator SEL_HttpResponse() const { return _cb; }
-        CC_DEPRECATED_ATTRIBUTE operator SEL_CallFuncND()   const { return (SEL_CallFuncND) _cb; }
     protected:
         SEL_HttpResponse _cb;
     };

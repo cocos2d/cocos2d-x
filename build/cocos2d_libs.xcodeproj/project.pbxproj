@@ -855,10 +855,6 @@
 		292DB14E19B4574100A80320 /* UIEditBoxImpl-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 292DB13719B4574100A80320 /* UIEditBoxImpl-mac.mm */; };
 		292DB14F19B4574100A80320 /* UIEditBoxImpl-stub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB13819B4574100A80320 /* UIEditBoxImpl-stub.cpp */; };
 		292DB15019B4574100A80320 /* UIEditBoxImpl-stub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB13819B4574100A80320 /* UIEditBoxImpl-stub.cpp */; };
-		292DB15F19B461CA00A80320 /* ExtensionDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB15D19B461CA00A80320 /* ExtensionDeprecated.cpp */; };
-		292DB16019B461CA00A80320 /* ExtensionDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB15D19B461CA00A80320 /* ExtensionDeprecated.cpp */; };
-		292DB16119B461CA00A80320 /* ExtensionDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB15E19B461CA00A80320 /* ExtensionDeprecated.h */; };
-		292DB16219B461CA00A80320 /* ExtensionDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB15E19B461CA00A80320 /* ExtensionDeprecated.h */; };
 		29394CF019B01DBA00D2DE1A /* UIWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 29394CEC19B01DBA00D2DE1A /* UIWebView.h */; };
 		29394CF119B01DBA00D2DE1A /* UIWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 29394CEC19B01DBA00D2DE1A /* UIWebView.h */; };
 		29394CF219B01DBA00D2DE1A /* UIWebView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29394CED19B01DBA00D2DE1A /* UIWebView.mm */; };
@@ -1615,7 +1611,6 @@
 		507B3B0A1C31BDD30067B53E /* CCPUBillboardChain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E0E61AA80A6500DDB1C5 /* CCPUBillboardChain.cpp */; };
 		507B3B0C1C31BDD30067B53E /* CCFontFreeType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57018E180BCB590088DEC7 /* CCFontFreeType.cpp */; };
 		507B3B0D1C31BDD30067B53E /* CCPUTechniqueTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1DA1AA80A6500DDB1C5 /* CCPUTechniqueTranslator.cpp */; };
-		507B3B0E1C31BDD30067B53E /* ExtensionDeprecated.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB15D19B461CA00A80320 /* ExtensionDeprecated.cpp */; };
 		507B3B0F1C31BDD30067B53E /* ccTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBE071925AB6E00A911A9 /* ccTypes.cpp */; };
 		507B3B131C31BDD30067B53E /* CCPUDoFreezeEventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1081AA80A6500DDB1C5 /* CCPUDoFreezeEventHandler.cpp */; };
 		507B3B151C31BDD30067B53E /* CCLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570190180BCB590088DEC7 /* CCLabel.cpp */; };
@@ -1974,7 +1969,6 @@
 		507B3D461C31BDD30067B53E /* poly2tri.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB207D1AE7C57D00C31518 /* poly2tri.h */; };
 		507B3D481C31BDD30067B53E /* CCPhysicsBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A1706F1807CE7A005B8026 /* CCPhysicsBody.h */; };
 		507B3D491C31BDD30067B53E /* CCRef.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDFF1925AB6E00A911A9 /* CCRef.h */; };
-		507B3D4B1C31BDD30067B53E /* ExtensionDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB15E19B461CA00A80320 /* ExtensionDeprecated.h */; };
 		507B3D4C1C31BDD30067B53E /* CCGLProgramState.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD6D1925AB4100A911A9 /* CCGLProgramState.h */; };
 		507B3D4D1C31BDD30067B53E /* CCPhysicsWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A170781807CE7A005B8026 /* CCPhysicsWorld.h */; };
 		507B3D4E1C31BDD30067B53E /* ccShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD7C1925AB4100A911A9 /* ccShaders.h */; };
@@ -4243,8 +4237,6 @@
 		292DB13619B4574100A80320 /* UIEditBoxImpl-mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-mac.h"; sourceTree = "<group>"; };
 		292DB13719B4574100A80320 /* UIEditBoxImpl-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIEditBoxImpl-mac.mm"; sourceTree = "<group>"; };
 		292DB13819B4574100A80320 /* UIEditBoxImpl-stub.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-stub.cpp"; sourceTree = "<group>"; };
-		292DB15D19B461CA00A80320 /* ExtensionDeprecated.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExtensionDeprecated.cpp; sourceTree = "<group>"; };
-		292DB15E19B461CA00A80320 /* ExtensionDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionDeprecated.h; sourceTree = "<group>"; };
 		292F1A5B1A5151CE00E479F8 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		292F1A5C1A5151CE00E479F8 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
 		292F1A601A52447100E479F8 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../external/curl/prebuilt/mac/libcrypto.a; sourceTree = "<group>"; };
@@ -6744,8 +6736,6 @@
 			isa = PBXGroup;
 			children = (
 				B6C0BF4D1A6F733D00BCF15A /* Particle3D */,
-				292DB15D19B461CA00A80320 /* ExtensionDeprecated.cpp */,
-				292DB15E19B461CA00A80320 /* ExtensionDeprecated.h */,
 				46A167D21807AF4D005B8026 /* cocos-ext.h */,
 				46A168321807AF4E005B8026 /* ExtensionMacros.h */,
 				1AAF5350180E305F000584C8 /* assets-manager */,
@@ -8388,7 +8378,6 @@
 				50693C601B6BF2AE005C5820 /* CCDownloader.h in Headers */,
 				B677B0D31B18492D006762CB /* CCNavMeshDebugDraw.h in Headers */,
 				50ABBEC91925AB6F00A911A9 /* firePngData.h in Headers */,
-				292DB16119B461CA00A80320 /* ExtensionDeprecated.h in Headers */,
 				503DD8F51926B0DB00CD74DD /* CCIMEDelegate.h in Headers */,
 				3EACC9A619F5014D00EB3C5E /* CCLight.h in Headers */,
 				50ABBD5A1925AB0000A911A9 /* Vec2.h in Headers */,
@@ -8565,7 +8554,6 @@
 				507B3D461C31BDD30067B53E /* poly2tri.h in Headers */,
 				507B3D481C31BDD30067B53E /* CCPhysicsBody.h in Headers */,
 				507B3D491C31BDD30067B53E /* CCRef.h in Headers */,
-				507B3D4B1C31BDD30067B53E /* ExtensionDeprecated.h in Headers */,
 				507B3D4C1C31BDD30067B53E /* CCGLProgramState.h in Headers */,
 				507B3D4D1C31BDD30067B53E /* CCPhysicsWorld.h in Headers */,
 				507B3D4E1C31BDD30067B53E /* ccShaders.h in Headers */,
@@ -9274,7 +9262,6 @@
 				15FB208E1AE7C57D00C31518 /* poly2tri.h in Headers */,
 				46A170FD1807CECB005B8026 /* CCPhysicsBody.h in Headers */,
 				50ABBE9C1925AB6F00A911A9 /* CCRef.h in Headers */,
-				292DB16219B461CA00A80320 /* ExtensionDeprecated.h in Headers */,
 				50ABBD961925AB4100A911A9 /* CCGLProgramState.h in Headers */,
 				46A171061807CECB005B8026 /* CCPhysicsWorld.h in Headers */,
 				50ABBDB41925AB4100A911A9 /* ccShaders.h in Headers */,
@@ -10298,7 +10285,6 @@
 				15FB20971AE7C57D00C31518 /* sweep.cc in Sources */,
 				1A570210180BCBF40088DEC7 /* CCProgressTimer.cpp in Sources */,
 				501216941AC47393009A4BEA /* CCPass.cpp in Sources */,
-				292DB15F19B461CA00A80320 /* ExtensionDeprecated.cpp in Sources */,
 				292DB14D19B4574100A80320 /* UIEditBoxImpl-mac.mm in Sources */,
 				50ABBDB51925AB4100A911A9 /* CCTexture2D.cpp in Sources */,
 				3EACC9A019F5014D00EB3C5E /* CCCamera.cpp in Sources */,
@@ -10826,7 +10812,6 @@
 				507B3B0C1C31BDD30067B53E /* CCFontFreeType.cpp in Sources */,
 				468A14EB1EF223B700ECA675 /* idl_gen_fbs.cpp in Sources */,
 				507B3B0D1C31BDD30067B53E /* CCPUTechniqueTranslator.cpp in Sources */,
-				507B3B0E1C31BDD30067B53E /* ExtensionDeprecated.cpp in Sources */,
 				507B3B0F1C31BDD30067B53E /* ccTypes.cpp in Sources */,
 				468A14E81EF223B700ECA675 /* idl_gen_cpp.cpp in Sources */,
 				507B3B131C31BDD30067B53E /* CCPUDoFreezeEventHandler.cpp in Sources */,
@@ -11400,7 +11385,6 @@
 				B665E2271AA80A6500DDB1C5 /* CCPUBillboardChain.cpp in Sources */,
 				1A5701B6180BCB590088DEC7 /* CCFontFreeType.cpp in Sources */,
 				B665E40F1AA80A6600DDB1C5 /* CCPUTechniqueTranslator.cpp in Sources */,
-				292DB16019B461CA00A80320 /* ExtensionDeprecated.cpp in Sources */,
 				468A14EA1EF223B700ECA675 /* idl_gen_fbs.cpp in Sources */,
 				50ABBEAC1925AB6F00A911A9 /* ccTypes.cpp in Sources */,
 				B665E26B1AA80A6500DDB1C5 /* CCPUDoFreezeEventHandler.cpp in Sources */,

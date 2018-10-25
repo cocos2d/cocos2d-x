@@ -82,13 +82,6 @@ void EditBox::openKeyboard() const
     _editBoxImpl->openKeyboard();
 }
 
-void EditBox::touchDownAction(Ref* /*sender*/, TouchEventType controlEvent)
-{
-    if (controlEvent == Widget::TouchEventType::ENDED) {
-        openKeyboard();
-    }
-}
-
 EditBox* EditBox::create(const Size& size,
                          const std::string& normalImage,
                          TextureResType texType) {

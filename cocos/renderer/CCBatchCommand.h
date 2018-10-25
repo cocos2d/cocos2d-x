@@ -56,8 +56,6 @@ public:
     @param flags Indicate the render command should be rendered in 3D mode or not.
     */
     void init(float globalZOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags);
-    /*Deprecated function, you should call upper init function instead.*/
-    CC_DEPRECATED_ATTRIBUTE void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform);
 
     /**Execute the command, which will call openGL function to draw the texture atlas.*/
     void execute();
