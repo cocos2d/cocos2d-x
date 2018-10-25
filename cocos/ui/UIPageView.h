@@ -337,35 +337,6 @@ public:
      * @return indexNodesScale
      */
     float getIndicatorIndexNodesScale() const;
-    
-    /**
-     *@brief If you don't specify the value, the pageView will turn page when scrolling at the half width of a page.
-     *@param threshold  A threshold in float.
-     *@deprecated Since v3.9, this method has no effect.
-     */
-    CC_DEPRECATED_ATTRIBUTE void setCustomScrollThreshold(float threshold);
-
-    /**
-     *@brief Query the custom scroll threshold of the PageView.
-     *@return Custom scroll threshold in float.
-     *@deprecated Since v3.9, this method always returns 0.
-     */
-    CC_DEPRECATED_ATTRIBUTE float getCustomScrollThreshold()const;
-
-    /**
-     *@brief Set using user defined scroll page threshold or not.
-     * If you set it to false, then the default scroll threshold is pageView.width / 2
-     *@param flag True if using custom scroll threshold, false otherwise.
-     *@deprecated Since v3.9, this method has no effect.
-     */
-    CC_DEPRECATED_ATTRIBUTE void setUsingCustomScrollThreshold(bool flag);
-
-    /**
-     *@brief Query whether use user defined scroll page threshold or not.
-     *@return True if using custom scroll threshold, false otherwise.
-     *@deprecated Since v3.9, this method always returns false.
-     */
-    CC_DEPRECATED_ATTRIBUTE bool isUsingCustomScrollThreshold()const;
 
     void setAutoScrollStopEpsilon(float epsilon);
 

@@ -47,8 +47,6 @@ _bottomPadding(0.0f),
 _scrollTime(DEFAULT_TIME_IN_SEC_FOR_SCROLL_TO_ITEM),
 _curSelectedIndex(-1),
 _innerContainerDoLayoutDirty(true),
-_listViewEventListener(nullptr),
-_listViewEventSelector(nullptr),
 _eventCallback(nullptr)
 {
     this->setTouchEnabled(true);
@@ -56,8 +54,6 @@ _eventCallback(nullptr)
 
 ListView::~ListView()
 {
-    _listViewEventListener = nullptr;
-    _listViewEventSelector = nullptr;
     _items.clear();
     CC_SAFE_RELEASE(_model);
 }
@@ -557,11 +553,6 @@ void ListView::setDirection(Direction dir)
     }
     ScrollView::setDirection(dir);
 }
-    
-void ListView::refreshView()
-{
-    forceDoLayout();
-}
 
 void ListView::requestDoLayout()
 {
@@ -587,13 +578,6 @@ void ListView::doLayout()
     _innerContainerDoLayoutDirty = false;
 }
     
-void ListView::addEventListenerListView(Ref *target, SEL_ListViewEvent selector)
-{
-    _listViewEventListener = target;
-    _listViewEventSelector = selector;
-}
-
-    
 void ListView::addEventListener(const ccListViewCallback& callback)
 {
     _eventCallback = callback;
@@ -606,10 +590,6 @@ void ListView::selectedItemEvent(TouchEventType event)
     {
         case TouchEventType::BEGAN:
         {
-            if (_listViewEventListener && _listViewEventSelector)
-            {
-                (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECTEDITEM_START);
-            }
             if (_eventCallback) {
                 _eventCallback(this,EventType::ON_SELECTED_ITEM_START);
             }
@@ -621,10 +601,6 @@ void ListView::selectedItemEvent(TouchEventType event)
         break;
         default:
         {
-            if (_listViewEventListener && _listViewEventSelector)
-            {
-                (_listViewEventListener->*_listViewEventSelector)(this, LISTVIEW_ONSELECTEDITEM_END);
-            }
             if (_eventCallback) {
                 _eventCallback(this, EventType::ON_SELECTED_ITEM_END);
             }
@@ -937,8 +913,6 @@ void ListView::copySpecialProperties(Widget *widget)
         setItemModel(listViewEx->_model);
         setItemsMargin(listViewEx->_itemsMargin);
         setGravity(listViewEx->_gravity);
-        _listViewEventListener = listViewEx->_listViewEventListener;
-        _listViewEventSelector = listViewEx->_listViewEventSelector;
         _eventCallback = listViewEx->_eventCallback;
     }
 }

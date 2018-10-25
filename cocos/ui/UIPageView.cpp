@@ -172,26 +172,6 @@ void PageView::scrollToItem(ssize_t itemIndex, float time)
     ListView::scrollToItem(itemIndex, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE, time >= 0 ? time : _scrollTime);
 }
 
-void PageView::setCustomScrollThreshold(float /*threshold*/)
-{
-    CCLOG("PageView::setCustomScrollThreshold() has no effect!");
-}
-
-float PageView::getCustomScrollThreshold()const
-{
-    return 0;
-}
-
-void PageView::setUsingCustomScrollThreshold(bool /*flag*/)
-{
-    CCLOG("PageView::setUsingCustomScrollThreshold() has no effect!");
-}
-
-bool PageView::isUsingCustomScrollThreshold()const
-{
-    return false;
-}
-
 void PageView::setAutoScrollStopEpsilon(float epsilon)
 {
     _autoScrollStopEpsilon = epsilon;
