@@ -335,24 +335,30 @@ void Director::drawScene()
 
 void Director::calculateDeltaTime()
 {
+    auto now = std::chrono::steady_clock::now();
+
     // new delta time. Re-fixed issue #1277
     if (_nextDeltaTimeZero)
     {
         _deltaTime = 0;
         _nextDeltaTimeZero = false;
-        _lastUpdate = std::chrono::steady_clock::now();
     }
     else
     {
         // delta time may passed by invoke mainLoop(dt)
-        if (!_deltaTimePassedByCaller)
+        if (_deltaTimePassedByCaller)
         {
-            auto now = std::chrono::steady_clock::now();
-            _deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastUpdate).count() / 1000000.0f;
-            _lastUpdate = now;
+            _deltaTimePassedByCaller = false;
         }
+        else
+        {
+            _deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastUpdate).count() / 1000000.0f;
+        }
+
         _deltaTime = MAX(0, _deltaTime);
     }
+
+    _lastUpdate = now;
 
 #if COCOS2D_DEBUG
     // If we are debugging our code, prevent big delta time
