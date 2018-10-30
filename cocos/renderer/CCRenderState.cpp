@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  Copyright (c) 2014 GamePlay3D team
 
  http://www.cocos2d-x.org
@@ -30,8 +31,7 @@
 
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCPass.h"
-#include "renderer/ccGLStateCache.h"
-
+#include "base/ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -104,7 +104,11 @@ void RenderState::bind(Pass* pass)
     CC_ASSERT(pass);
 
     if (_texture)
-        GL::bindTexture2D(_texture->getName());
+    {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, _texture->getName());
+    }
+    
 
     // Get the combined modified state bits for our RenderState hierarchy.
     long stateOverrideBits = _state ? _state->_bits : 0;
@@ -245,7 +249,7 @@ void RenderState::StateBlock::bindNoRestore()
     }
     if ((_bits & RS_BLEND_FUNC) && (_blendSrc != _defaultState->_blendSrc || _blendDst != _defaultState->_blendDst))
     {
-        GL::blendFunc((GLenum)_blendSrc, (GLenum)_blendDst);
+        utils::setBlending((GLenum)_blendSrc, (GLenum)_blendDst);
         _defaultState->_blendSrc = _blendSrc;
         _defaultState->_blendDst = _blendDst;
     }
@@ -340,7 +344,7 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
     }
     if (!(stateOverrideBits & RS_BLEND_FUNC) && (_defaultState->_bits & RS_BLEND_FUNC))
     {
-        GL::blendFunc(GL_ONE, GL_ZERO);
+        utils::setBlending(GL_ONE, GL_ZERO);
         _defaultState->_bits &= ~RS_BLEND_FUNC;
         _defaultState->_blendSrc = RenderState::BLEND_ONE;
         _defaultState->_blendDst = RenderState::BLEND_ZERO;
@@ -455,26 +459,26 @@ static bool parseBoolean(const std::string& value)
     return (value.compare("true")==0);
 }
 
-static int parseInt(const std::string& value)
-{
-    // Android NDK 10 doesn't support std::stoi a/ std::stoul
-#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
-    return std::stoi(value);
-#else
-    return atoi(value.c_str());
-#endif
-}
-
-static unsigned int parseUInt(const std::string& value)
-{
-    // Android NDK 10 doesn't support std::stoi a/ std::stoul
-#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
-    return (unsigned int)std::stoul(value);
-#else
-    return (unsigned int)atoi(value.c_str());
-#endif
-
-}
+//static int parseInt(const std::string& value)
+//{
+//    // Android NDK 10 doesn't support std::stoi a/ std::stoul
+//#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
+//    return std::stoi(value);
+//#else
+//    return atoi(value.c_str());
+//#endif
+//}
+//
+//static unsigned int parseUInt(const std::string& value)
+//{
+//    // Android NDK 10 doesn't support std::stoi a/ std::stoul
+//#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
+//    return (unsigned int)std::stoul(value);
+//#else
+//    return (unsigned int)atoi(value.c_str());
+//#endif
+//
+//}
 
 static RenderState::Blend parseBlend(const std::string& value)
 {
@@ -576,61 +580,61 @@ static RenderState::FrontFace parseFrontFace(const std::string& value)
     }
 }
 
-static RenderState::StencilFunction parseStencilFunc(const std::string& value)
-{
-    // Convert string to uppercase for comparison
-    std::string upper(value);
-    std::transform(upper.begin(), upper.end(), upper.begin(), (int(*)(int))toupper);
-    if (upper == "NEVER")
-        return RenderState::STENCIL_NEVER;
-    else if (upper == "LESS")
-        return RenderState::STENCIL_LESS;
-    else if (upper == "EQUAL")
-        return RenderState::STENCIL_EQUAL;
-    else if (upper == "LEQUAL")
-        return RenderState::STENCIL_LEQUAL;
-    else if (upper == "GREATER")
-        return RenderState::STENCIL_GREATER;
-    else if (upper == "NOTEQUAL")
-        return RenderState::STENCIL_NOTEQUAL;
-    else if (upper == "GEQUAL")
-        return RenderState::STENCIL_GEQUAL;
-    else if (upper == "ALWAYS")
-        return RenderState::STENCIL_ALWAYS;
-    else
-    {
-        CCLOG("Unsupported stencil function value (%s). Will default to STENCIL_ALWAYS if errors are treated as warnings)", value.c_str());
-        return RenderState::STENCIL_ALWAYS;
-    }
-}
-
-static RenderState::StencilOperation parseStencilOp(const std::string& value)
-{
-    // Convert string to uppercase for comparison
-    std::string upper(value);
-    std::transform(upper.begin(), upper.end(), upper.begin(), (int(*)(int))toupper);
-    if (upper == "KEEP")
-        return RenderState::STENCIL_OP_KEEP;
-    else if (upper == "ZERO")
-        return RenderState::STENCIL_OP_ZERO;
-    else if (upper == "REPLACE")
-        return RenderState::STENCIL_OP_REPLACE;
-    else if (upper == "INCR")
-        return RenderState::STENCIL_OP_INCR;
-    else if (upper == "DECR")
-        return RenderState::STENCIL_OP_DECR;
-    else if (upper == "INVERT")
-        return RenderState::STENCIL_OP_INVERT;
-    else if (upper == "INCR_WRAP")
-        return RenderState::STENCIL_OP_INCR_WRAP;
-    else if (upper == "DECR_WRAP")
-        return RenderState::STENCIL_OP_DECR_WRAP;
-    else
-    {
-        CCLOG("Unsupported stencil operation value (%s). Will default to STENCIL_OP_KEEP if errors are treated as warnings)", value.c_str());
-        return RenderState::STENCIL_OP_KEEP;
-    }
-}
+//static RenderState::StencilFunction parseStencilFunc(const std::string& value)
+//{
+//    // Convert string to uppercase for comparison
+//    std::string upper(value);
+//    std::transform(upper.begin(), upper.end(), upper.begin(), (int(*)(int))toupper);
+//    if (upper == "NEVER")
+//        return RenderState::STENCIL_NEVER;
+//    else if (upper == "LESS")
+//        return RenderState::STENCIL_LESS;
+//    else if (upper == "EQUAL")
+//        return RenderState::STENCIL_EQUAL;
+//    else if (upper == "LEQUAL")
+//        return RenderState::STENCIL_LEQUAL;
+//    else if (upper == "GREATER")
+//        return RenderState::STENCIL_GREATER;
+//    else if (upper == "NOTEQUAL")
+//        return RenderState::STENCIL_NOTEQUAL;
+//    else if (upper == "GEQUAL")
+//        return RenderState::STENCIL_GEQUAL;
+//    else if (upper == "ALWAYS")
+//        return RenderState::STENCIL_ALWAYS;
+//    else
+//    {
+//        CCLOG("Unsupported stencil function value (%s). Will default to STENCIL_ALWAYS if errors are treated as warnings)", value.c_str());
+//        return RenderState::STENCIL_ALWAYS;
+//    }
+//}
+//
+//static RenderState::StencilOperation parseStencilOp(const std::string& value)
+//{
+//    // Convert string to uppercase for comparison
+//    std::string upper(value);
+//    std::transform(upper.begin(), upper.end(), upper.begin(), (int(*)(int))toupper);
+//    if (upper == "KEEP")
+//        return RenderState::STENCIL_OP_KEEP;
+//    else if (upper == "ZERO")
+//        return RenderState::STENCIL_OP_ZERO;
+//    else if (upper == "REPLACE")
+//        return RenderState::STENCIL_OP_REPLACE;
+//    else if (upper == "INCR")
+//        return RenderState::STENCIL_OP_INCR;
+//    else if (upper == "DECR")
+//        return RenderState::STENCIL_OP_DECR;
+//    else if (upper == "INVERT")
+//        return RenderState::STENCIL_OP_INVERT;
+//    else if (upper == "INCR_WRAP")
+//        return RenderState::STENCIL_OP_INCR_WRAP;
+//    else if (upper == "DECR_WRAP")
+//        return RenderState::STENCIL_OP_DECR_WRAP;
+//    else
+//    {
+//        CCLOG("Unsupported stencil operation value (%s). Will default to STENCIL_OP_KEEP if errors are treated as warnings)", value.c_str());
+//        return RenderState::STENCIL_OP_KEEP;
+//    }
+//}
 
 void RenderState::StateBlock::setState(const std::string& name, const std::string& value)
 {

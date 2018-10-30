@@ -1,12 +1,21 @@
+set(COCOS_PHYSICS3D_HEADER
+    physics3d/CCPhysics3DConstraint.h
+    physics3d/CCPhysics3DShape.h
+    physics3d/CCPhysics3D.h
+    physics3d/CCPhysics3DWorld.h
+    physics3d/CCPhysicsSprite3D.h
+    physics3d/CCPhysics3DObject.h
+    physics3d/CCPhysics3DComponent.h
+    physics3d/CCPhysics3DDebugDrawer.h
+    )
 
 set(COCOS_PHYSICS3D_SRC
-
-  physics3d/CCPhysics3D.cpp
-  physics3d/CCPhysics3DComponent.cpp
-  physics3d/CCPhysics3DConstraint.cpp
-  physics3d/CCPhysics3DDebugDrawer.cpp
-  physics3d/CCPhysics3DObject.cpp
-  physics3d/CCPhysics3DShape.cpp
-  physics3d/CCPhysics3DWorld.cpp
-  physics3d/CCPhysicsSprite3D.cpp
-)
+    physics3d/CCPhysics3D.cpp
+    physics3d/CCPhysics3DComponent.cpp
+    physics3d/CCPhysics3DConstraint.cpp
+    physics3d/CCPhysics3DDebugDrawer.cpp
+    physics3d/CCPhysics3DObject.cpp
+    physics3d/CCPhysics3DShape.cpp
+    physics3d/CCPhysics3DWorld.cpp
+    physics3d/CCPhysicsSprite3D.cpp
+    )

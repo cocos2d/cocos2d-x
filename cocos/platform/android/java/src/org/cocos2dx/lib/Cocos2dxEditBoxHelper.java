@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -204,7 +205,8 @@ public class Cocos2dxEditBoxHelper {
                             editBox.endAction = Cocos2dxEditBox.kEndActionNext;
                             Cocos2dxEditBoxHelper.closeKeyboardOnUiThread(index);
                             return true;
-                        } else if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        } else if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_GO) {
+                            editBox.endAction = Cocos2dxEditBox.kEndActionReturn;
                             Cocos2dxEditBoxHelper.closeKeyboardOnUiThread(index);
                         }
                         return false;
@@ -335,7 +337,7 @@ public class Cocos2dxEditBoxHelper {
                 if (editBox != null) {
                     editBox.setChangedTextProgrammatically(true);
                     editBox.setText(text);
-                    int position = text.length();
+                    int position = editBox.getText().length();
                     editBox.setSelection(position);
                 }
             }

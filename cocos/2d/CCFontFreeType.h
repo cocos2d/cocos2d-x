@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -72,6 +73,7 @@ public:
     
     int getFontAscender() const;
     const char* getFontFamily() const;
+    std::string getFontName() const { return _fontName; }
 
     virtual FontAtlas* createFontAtlas() override;
     virtual int getFontMaxHeight() const override { return _lineHeight; }

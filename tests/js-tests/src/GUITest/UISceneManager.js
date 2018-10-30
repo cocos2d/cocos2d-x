@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -732,6 +733,7 @@
         ctor: function(){
             TestScene.prototype.ctor.call(this);
 
+            global.UISceneManager.getInstance().ctor();
             var menu = new cc.Menu();
             menu.x = 0;
             menu.y = 0;

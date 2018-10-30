@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -461,6 +462,8 @@ void CaptureScreenTest::onCaptured(Ref*)
     Director::getInstance()->getTextureCache()->removeTextureForKey(_filename);
     removeChildByTag(childTag);
     _filename = "CaptureScreenTest.png";
+    // retain it to avoid crash caused by invoking afterCaptured 
+    this->retain();
     utils::captureScreen(CC_CALLBACK_2(CaptureScreenTest::afterCaptured, this), _filename);
 }
 
@@ -479,6 +482,9 @@ void CaptureScreenTest::afterCaptured(bool succeed, const std::string& outputFil
     {
         log("Capture screen failed.");
     }
+
+    // release it since it is retained in `CaptureScreenTest::onCaptured()`
+    this->release();
 }
 
 CaptureNodeTest::CaptureNodeTest()

@@ -1,8 +1,9 @@
-﻿/****************************************************************************
+/****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -45,12 +46,12 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgramStateCache.h"
 #include "renderer/CCTextureCache.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
 #include "renderer/CCFrameBuffer.h"
 #include "2d/CCCamera.h"
 #include "base/CCUserDefault.h"
+#include "base/ccUtils.h"
 #include "base/ccFPSImages.h"
 #include "base/CCScheduler.h"
 #include "base/ccMacros.h"
@@ -60,6 +61,7 @@ THE SOFTWARE.
 #include "base/CCAutoreleasePool.h"
 #include "base/CCConfiguration.h"
 #include "base/CCAsyncTaskPool.h"
+#include "base/ObjectFactory.h"
 #include "platform/CCApplication.h"
 
 #if CC_ENABLE_SCRIPT_BINDING
@@ -113,9 +115,6 @@ Director* Director::getInstance()
 }
 
 Director::Director()
-: _isStatusLabelUpdated(true)
-, _invalid(true)
-, _deltaTimePassedByCaller(false)
 {
 }
 
@@ -123,43 +122,11 @@ bool Director::init(void)
 {
     setDefaultValues();
 
-    // scenes
-    _runningScene = nullptr;
-    _nextScene = nullptr;
-
-    _notificationNode = nullptr;
-
     _scenesStack.reserve(15);
 
     // FPS
-    _accumDt = 0.0f;
-    _frameRate = 0.0f;
-    _FPSLabel = _drawnBatchesLabel = _drawnVerticesLabel = nullptr;
-    _totalFrames = 0;
     _lastUpdate = std::chrono::steady_clock::now();
     
-    _secondsPerFrame = 1.0f;
-    _frames = 0;
-
-    // paused ?
-    _paused = false;
-
-    // purge ?
-    _purgeDirectorInNextLoop = false;
-    
-    // restart ?
-    _restartDirectorInNextLoop = false;
-    
-    // invalid ?
-    _invalid = false;
-
-    _winSizeInPoints = Size::ZERO;
-
-    _openGLView = nullptr;
-    _defaultFBO = nullptr;
-    
-    _contentScaleFactor = 1.0f;
-
     _console = new (std::nothrow) Console;
 
     // scheduler
@@ -212,13 +179,13 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_notificationNode);
     CC_SAFE_RELEASE(_scheduler);
     CC_SAFE_RELEASE(_actionManager);
-    CC_SAFE_DELETE(_defaultFBO);
 
     CC_SAFE_RELEASE(_beforeSetNextScene);
     CC_SAFE_RELEASE(_afterSetNextScene);
     CC_SAFE_RELEASE(_eventBeforeUpdate);
     CC_SAFE_RELEASE(_eventAfterUpdate);
     CC_SAFE_RELEASE(_eventAfterDraw);
+    CC_SAFE_RELEASE(_eventBeforeDraw);
     CC_SAFE_RELEASE(_eventAfterVisit);
     CC_SAFE_RELEASE(_eventProjectionChanged);
     CC_SAFE_RELEASE(_eventResetDirector);
@@ -229,6 +196,7 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_eventDispatcher);
     
     Configuration::destroyInstance();
+    ObjectFactory::destroyInstance();
 
     s_SharedDirector = nullptr;
 }
@@ -322,7 +290,8 @@ void Director::drawScene()
         _renderer->clearDrawStats();
         
         //render the scene
-        _openGLView->renderScene(_runningScene, _renderer);
+        if(_openGLView)
+            _openGLView->renderScene(_runningScene, _renderer);
         
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
@@ -337,7 +306,9 @@ void Director::drawScene()
     
     if (_displayStats)
     {
+#if !CC_STRIP_FPS
         showStats();
+#endif
     }
     
     _renderer->render();
@@ -356,25 +327,27 @@ void Director::drawScene()
 
     if (_displayStats)
     {
+#if !CC_STRIP_FPS
         calculateMPF();
+#endif
     }
 }
 
 void Director::calculateDeltaTime()
 {
-    auto now = std::chrono::steady_clock::now();
-
     // new delta time. Re-fixed issue #1277
     if (_nextDeltaTimeZero)
     {
         _deltaTime = 0;
         _nextDeltaTimeZero = false;
+        _lastUpdate = std::chrono::steady_clock::now();
     }
     else
     {
         // delta time may passed by invoke mainLoop(dt)
         if (!_deltaTimePassedByCaller)
         {
+            auto now = std::chrono::steady_clock::now();
             _deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastUpdate).count() / 1000000.0f;
             _lastUpdate = now;
         }
@@ -428,9 +401,6 @@ void Director::setOpenGLView(GLView *openGLView)
         {
             _eventDispatcher->setEnabled(true);
         }
-        
-        _defaultFBO = experimental::FrameBuffer::getOrCreateDefaultFBO(_openGLView);
-        _defaultFBO->retain();
     }
 }
 
@@ -713,7 +683,6 @@ void Director::setProjection(Projection projection)
     }
 
     _projection = projection;
-    GL::setProjectionMatrixDirty();
 
     _eventDispatcher->dispatchEvent(_eventProjectionChanged);
 }
@@ -744,11 +713,11 @@ void Director::setAlphaBlending(bool on)
 {
     if (on)
     {
-        GL::blendFunc(CC_BLEND_SRC, CC_BLEND_DST);
+        utils::setBlending(CC_BLEND_SRC, CC_BLEND_DST);
     }
     else
     {
-        GL::blendFunc(GL_ONE, GL_ZERO);
+        utils::setBlending(GL_ONE, GL_ZERO);
     }
 
     CHECK_GL_ERROR_DEBUG();
@@ -762,9 +731,6 @@ void Director::setDepthTest(bool on)
 void Director::setClearColor(const Color4F& clearColor)
 {
     _renderer->setClearColor(clearColor);
-    auto defaultFBO = experimental::FrameBuffer::getOrCreateDefaultFBO(_openGLView);
-    
-    if(defaultFBO) defaultFBO->setClearColor(clearColor);
 }
 
 static void GLToClipTransform(Mat4 *transformOut)
@@ -857,6 +823,18 @@ Vec2 Director::getVisibleOrigin() const
     else
     {
         return Vec2::ZERO;
+    }
+}
+
+Rect Director::getSafeAreaRect() const
+{
+    if (_openGLView)
+    {
+        return _openGLView->getSafeAreaRect();
+    }
+    else
+    {
+        return Rect::ZERO;
     }
 }
 
@@ -1047,7 +1025,8 @@ void Director::reset()
     _runningScene = nullptr;
     _nextScene = nullptr;
 
-    _eventDispatcher->dispatchEvent(_eventResetDirector);
+    if (_eventDispatcher)
+        _eventDispatcher->dispatchEvent(_eventResetDirector);
     
     // cleanup scheduler
     getScheduler()->unscheduleAll();
@@ -1120,9 +1099,7 @@ void Director::reset()
     
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
-    
-    GL::invalidateStateCache();
-
+    resetMatrixStack();
     RenderState::finalize();
     
     destroyTextureCache();
@@ -1257,6 +1234,8 @@ void Director::updateFrameRate()
     _frameRate = 1.0f / _deltaTime;
 }
 
+#if !CC_STRIP_FPS
+
 // display the FPS using a LabelAtlas
 // updates the FPS every frame
 void Director::showStats()
@@ -1314,11 +1293,7 @@ void Director::calculateMPF()
     static float prevSecondsPerFrame = 0;
     static const float MPF_FILTER = 0.10f;
 
-    auto now = std::chrono::steady_clock::now();
-    
-    _secondsPerFrame = std::chrono::duration_cast<std::chrono::microseconds>(now - _lastUpdate).count() / 1000000.0f;
-
-    _secondsPerFrame = _secondsPerFrame * MPF_FILTER + (1-MPF_FILTER) * prevSecondsPerFrame;
+    _secondsPerFrame = _deltaTime * MPF_FILTER + (1-MPF_FILTER) * prevSecondsPerFrame;
     prevSecondsPerFrame = _secondsPerFrame;
 }
 
@@ -1356,8 +1331,10 @@ void Director::createStatsLabel()
     getFPSImageData(&data, &dataLength);
 
     Image* image = new (std::nothrow) Image();
-    bool isOK = image->initWithImageData(data, dataLength);
+    bool isOK = image ? image->initWithImageData(data, dataLength) : false;
     if (! isOK) {
+        if(image)
+            delete image;
         CCLOGERROR("%s", "Fails: init fps_images");
         return;
     }
@@ -1401,6 +1378,8 @@ void Director::createStatsLabel()
     _drawnBatchesLabel->setPosition(Vec2(0, height_spacing*1) + CC_DIRECTOR_STATS_POSITION);
     _FPSLabel->setPosition(Vec2(0, height_spacing*0)+CC_DIRECTOR_STATS_POSITION);
 }
+
+#endif // #if !CC_STRIP_FPS
 
 void Director::setContentScaleFactor(float scaleFactor)
 {

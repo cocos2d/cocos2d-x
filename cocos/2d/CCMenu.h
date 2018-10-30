@@ -1,7 +1,8 @@
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -149,10 +150,10 @@ public:
     virtual bool isEnabled() const { return _enabled; }
 
     /**
-     * Set whether the menu is visible. If set false, interacting with the menu
+     * Set whether the menu is enabled. If set to false, interacting with the menu
      * will have no effect.
-     * The default value is true, a menu is default to visible.
-     *@param value true if menu is to be enabled, false if menu is to be disabled.
+     * The default value is true, a menu is enabled by default.
+     * @param value true if menu is to be enabled, false if menu is to be disabled.
      */
     virtual void setEnabled(bool value) { _enabled = value; };
 

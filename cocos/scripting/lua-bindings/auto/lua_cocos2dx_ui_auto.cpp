@@ -10798,6 +10798,53 @@ int lua_register_cocos2dx_ui_RadioButtonGroup(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_ui_ImageView_getBlendFunc(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ImageView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ImageView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ImageView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ImageView_getBlendFunc'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ImageView_getBlendFunc'", nullptr);
+            return 0;
+        }
+        const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
+        blendfunc_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ImageView:getBlendFunc",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ImageView_getBlendFunc'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_ImageView_loadTexture(lua_State* tolua_S)
 {
     int argc = 0;
@@ -10861,6 +10908,56 @@ int lua_cocos2dx_ui_ImageView_loadTexture(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ImageView_loadTexture'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_ImageView_setBlendFunc(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ImageView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ImageView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ImageView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ImageView_setBlendFunc'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::BlendFunc arg0;
+
+        ok &= luaval_to_blendfunc(tolua_S, 2, &arg0, "ccui.ImageView:setBlendFunc");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ImageView_setBlendFunc'", nullptr);
+            return 0;
+        }
+        cobj->setBlendFunc(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ImageView:setBlendFunc",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ImageView_setBlendFunc'.",&tolua_err);
 #endif
 
     return 0;
@@ -11368,7 +11465,9 @@ int lua_register_cocos2dx_ui_ImageView(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"ImageView");
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_ImageView_constructor);
+        tolua_function(tolua_S,"getBlendFunc",lua_cocos2dx_ui_ImageView_getBlendFunc);
         tolua_function(tolua_S,"loadTexture",lua_cocos2dx_ui_ImageView_loadTexture);
+        tolua_function(tolua_S,"setBlendFunc",lua_cocos2dx_ui_ImageView_setBlendFunc);
         tolua_function(tolua_S,"init",lua_cocos2dx_ui_ImageView_init);
         tolua_function(tolua_S,"setScale9Enabled",lua_cocos2dx_ui_ImageView_setScale9Enabled);
         tolua_function(tolua_S,"setTextureRect",lua_cocos2dx_ui_ImageView_setTextureRect);
@@ -11718,6 +11817,53 @@ int lua_cocos2dx_ui_Text_getTextColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Text_getTextColor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_Text_getBlendFunc(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::Text* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.Text",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::Text*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Text_getBlendFunc'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Text_getBlendFunc'", nullptr);
+            return 0;
+        }
+        const cocos2d::BlendFunc& ret = cobj->getBlendFunc();
+        blendfunc_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Text:getBlendFunc",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Text_getBlendFunc'.",&tolua_err);
 #endif
 
     return 0;
@@ -12859,6 +13005,56 @@ int lua_cocos2dx_ui_Text_getLetter(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_Text_setBlendFunc(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::Text* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.Text",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::Text*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Text_setBlendFunc'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::BlendFunc arg0;
+
+        ok &= luaval_to_blendfunc(tolua_S, 2, &arg0, "ccui.Text:setBlendFunc");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Text_setBlendFunc'", nullptr);
+            return 0;
+        }
+        cobj->setBlendFunc(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.Text:setBlendFunc",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Text_setBlendFunc'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_Text_getTextVerticalAlignment(lua_State* tolua_S)
 {
     int argc = 0;
@@ -13144,6 +13340,7 @@ int lua_register_cocos2dx_ui_Text(lua_State* tolua_S)
         tolua_function(tolua_S,"disableEffect",lua_cocos2dx_ui_Text_disableEffect);
         tolua_function(tolua_S,"getLabelEffectType",lua_cocos2dx_ui_Text_getLabelEffectType);
         tolua_function(tolua_S,"getTextColor",lua_cocos2dx_ui_Text_getTextColor);
+        tolua_function(tolua_S,"getBlendFunc",lua_cocos2dx_ui_Text_getBlendFunc);
         tolua_function(tolua_S,"setTextVerticalAlignment",lua_cocos2dx_ui_Text_setTextVerticalAlignment);
         tolua_function(tolua_S,"setFontName",lua_cocos2dx_ui_Text_setFontName);
         tolua_function(tolua_S,"setTouchScaleChangeEnabled",lua_cocos2dx_ui_Text_setTouchScaleChangeEnabled);
@@ -13167,6 +13364,7 @@ int lua_register_cocos2dx_ui_Text(lua_State* tolua_S)
         tolua_function(tolua_S,"setTextColor",lua_cocos2dx_ui_Text_setTextColor);
         tolua_function(tolua_S,"enableGlow",lua_cocos2dx_ui_Text_enableGlow);
         tolua_function(tolua_S,"getLetter",lua_cocos2dx_ui_Text_getLetter);
+        tolua_function(tolua_S,"setBlendFunc",lua_cocos2dx_ui_Text_setBlendFunc);
         tolua_function(tolua_S,"getTextVerticalAlignment",lua_cocos2dx_ui_Text_getTextVerticalAlignment);
         tolua_function(tolua_S,"getTextAreaSize",lua_cocos2dx_ui_Text_getTextAreaSize);
         tolua_function(tolua_S,"setTextHorizontalAlignment",lua_cocos2dx_ui_Text_setTextHorizontalAlignment);
@@ -14645,6 +14843,53 @@ int lua_cocos2dx_ui_ScrollView_scrollToBottom(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_ScrollView_getScrolledPercentBothDirection(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ScrollView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ScrollView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ScrollView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_getScrolledPercentBothDirection'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_getScrolledPercentBothDirection'", nullptr);
+            return 0;
+        }
+        cocos2d::Vec2 ret = cobj->getScrolledPercentBothDirection();
+        vec2_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:getScrolledPercentBothDirection",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_getScrolledPercentBothDirection'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_ScrollView_getDirection(lua_State* tolua_S)
 {
     int argc = 0;
@@ -15242,7 +15487,7 @@ int lua_cocos2dx_ui_ScrollView_getInnerContainerPosition(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_ScrollView_getInnerContainerSize(lua_State* tolua_S)
+int lua_cocos2dx_ui_ScrollView_jumpToTop(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ui::ScrollView* cobj = nullptr;
@@ -15262,7 +15507,7 @@ int lua_cocos2dx_ui_ScrollView_getInnerContainerSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_getInnerContainerSize'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_jumpToTop'", nullptr);
         return 0;
     }
 #endif
@@ -15272,19 +15517,66 @@ int lua_cocos2dx_ui_ScrollView_getInnerContainerSize(lua_State* tolua_S)
     {
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_getInnerContainerSize'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_jumpToTop'", nullptr);
             return 0;
         }
-        const cocos2d::Size& ret = cobj->getInnerContainerSize();
-        size_to_luaval(tolua_S, ret);
+        cobj->jumpToTop();
+        lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:getInnerContainerSize",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:jumpToTop",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_getInnerContainerSize'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_jumpToTop'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_ScrollView_getScrolledPercentVertical(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ScrollView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ScrollView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ScrollView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_getScrolledPercentVertical'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_getScrolledPercentVertical'", nullptr);
+            return 0;
+        }
+        double ret = cobj->getScrolledPercentVertical();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:getScrolledPercentVertical",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_getScrolledPercentVertical'.",&tolua_err);
 #endif
 
     return 0;
@@ -15486,6 +15778,53 @@ int lua_cocos2dx_ui_ScrollView_setScrollBarAutoHideTime(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_setScrollBarAutoHideTime'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_ScrollView_stopScroll(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ScrollView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ScrollView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ScrollView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_stopScroll'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_stopScroll'", nullptr);
+            return 0;
+        }
+        cobj->stopScroll();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:stopScroll",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_stopScroll'.",&tolua_err);
 #endif
 
     return 0;
@@ -15734,7 +16073,7 @@ int lua_cocos2dx_ui_ScrollView_jumpToTopLeft(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_ScrollView_jumpToPercentHorizontal(lua_State* tolua_S)
+int lua_cocos2dx_ui_ScrollView_isScrollBarEnabled(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ui::ScrollView* cobj = nullptr;
@@ -15754,32 +16093,76 @@ int lua_cocos2dx_ui_ScrollView_jumpToPercentHorizontal(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_jumpToPercentHorizontal'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_isScrollBarEnabled'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 0) 
     {
-        double arg0;
-
-        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccui.ScrollView:jumpToPercentHorizontal");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_jumpToPercentHorizontal'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_isScrollBarEnabled'", nullptr);
             return 0;
         }
-        cobj->jumpToPercentHorizontal(arg0);
-        lua_settop(tolua_S, 1);
+        bool ret = cobj->isScrollBarEnabled();
+        tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:jumpToPercentHorizontal",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:isScrollBarEnabled",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_jumpToPercentHorizontal'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_isScrollBarEnabled'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_ScrollView_isAutoScrolling(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ScrollView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ScrollView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ScrollView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_isAutoScrolling'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_isAutoScrolling'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->isAutoScrolling();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:isAutoScrolling",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_isAutoScrolling'.",&tolua_err);
 #endif
 
     return 0;
@@ -15975,7 +16358,7 @@ int lua_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForHorizontal(lua_S
 
     return 0;
 }
-int lua_cocos2dx_ui_ScrollView_setScrollBarWidth(lua_State* tolua_S)
+int lua_cocos2dx_ui_ScrollView_getScrolledPercentHorizontal(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ui::ScrollView* cobj = nullptr;
@@ -15995,32 +16378,29 @@ int lua_cocos2dx_ui_ScrollView_setScrollBarWidth(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_setScrollBarWidth'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_getScrolledPercentHorizontal'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
+    if (argc == 0) 
     {
-        double arg0;
-
-        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccui.ScrollView:setScrollBarWidth");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_setScrollBarWidth'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_getScrolledPercentHorizontal'", nullptr);
             return 0;
         }
-        cobj->setScrollBarWidth(arg0);
-        lua_settop(tolua_S, 1);
+        double ret = cobj->getScrolledPercentHorizontal();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:setScrollBarWidth",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:getScrolledPercentHorizontal",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_setScrollBarWidth'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_getScrolledPercentHorizontal'.",&tolua_err);
 #endif
 
     return 0;
@@ -16122,7 +16502,7 @@ int lua_cocos2dx_ui_ScrollView_stopAutoScroll(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_ScrollView_jumpToTop(lua_State* tolua_S)
+int lua_cocos2dx_ui_ScrollView_scrollToTopRight(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ui::ScrollView* cobj = nullptr;
@@ -16142,7 +16522,60 @@ int lua_cocos2dx_ui_ScrollView_jumpToTop(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_jumpToTop'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_scrollToTopRight'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        double arg0;
+        bool arg1;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccui.ScrollView:scrollToTopRight");
+
+        ok &= luaval_to_boolean(tolua_S, 3,&arg1, "ccui.ScrollView:scrollToTopRight");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_scrollToTopRight'", nullptr);
+            return 0;
+        }
+        cobj->scrollToTopRight(arg0, arg1);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:scrollToTopRight",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_scrollToTopRight'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_ScrollView_isScrolling(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ScrollView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ScrollView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ScrollView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_isScrolling'", nullptr);
         return 0;
     }
 #endif
@@ -16152,19 +16585,19 @@ int lua_cocos2dx_ui_ScrollView_jumpToTop(lua_State* tolua_S)
     {
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_jumpToTop'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_isScrolling'", nullptr);
             return 0;
         }
-        cobj->jumpToTop();
-        lua_settop(tolua_S, 1);
+        bool ret = cobj->isScrolling();
+        tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:jumpToTop",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:isScrolling",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_jumpToTop'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_isScrolling'.",&tolua_err);
 #endif
 
     return 0;
@@ -16272,7 +16705,7 @@ int lua_cocos2dx_ui_ScrollView_jumpToPercentBothDirection(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForVertical(lua_State* tolua_S)
+int lua_cocos2dx_ui_ScrollView_stopOverallScroll(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ui::ScrollView* cobj = nullptr;
@@ -16292,7 +16725,7 @@ int lua_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForVertical(lua_Sta
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForVertical'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_stopOverallScroll'", nullptr);
         return 0;
     }
 #endif
@@ -16302,19 +16735,19 @@ int lua_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForVertical(lua_Sta
     {
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForVertical'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_stopOverallScroll'", nullptr);
             return 0;
         }
-        cocos2d::Vec2 ret = cobj->getScrollBarPositionFromCornerForVertical();
-        vec2_to_luaval(tolua_S, ret);
+        cobj->stopOverallScroll();
+        lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:getScrollBarPositionFromCornerForVertical",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:stopOverallScroll",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForVertical'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_stopOverallScroll'.",&tolua_err);
 #endif
 
     return 0;
@@ -16371,6 +16804,56 @@ int lua_cocos2dx_ui_ScrollView_scrollToPercentVertical(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_scrollToPercentVertical'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_ScrollView_setScrollBarWidth(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ScrollView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ScrollView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ScrollView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_setScrollBarWidth'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccui.ScrollView:setScrollBarWidth");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_setScrollBarWidth'", nullptr);
+            return 0;
+        }
+        cobj->setScrollBarWidth(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:setScrollBarWidth",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_setScrollBarWidth'.",&tolua_err);
 #endif
 
     return 0;
@@ -16722,7 +17205,7 @@ int lua_cocos2dx_ui_ScrollView_scrollToRight(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_ScrollView_isScrollBarEnabled(lua_State* tolua_S)
+int lua_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForVertical(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ui::ScrollView* cobj = nullptr;
@@ -16742,7 +17225,7 @@ int lua_cocos2dx_ui_ScrollView_isScrollBarEnabled(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_isScrollBarEnabled'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForVertical'", nullptr);
         return 0;
     }
 #endif
@@ -16752,19 +17235,19 @@ int lua_cocos2dx_ui_ScrollView_isScrollBarEnabled(lua_State* tolua_S)
     {
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_isScrollBarEnabled'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForVertical'", nullptr);
             return 0;
         }
-        bool ret = cobj->isScrollBarEnabled();
-        tolua_pushboolean(tolua_S,(bool)ret);
+        cocos2d::Vec2 ret = cobj->getScrollBarPositionFromCornerForVertical();
+        vec2_to_luaval(tolua_S, ret);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:isScrollBarEnabled",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:getScrollBarPositionFromCornerForVertical",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_isScrollBarEnabled'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForVertical'.",&tolua_err);
 #endif
 
     return 0;
@@ -16957,7 +17440,7 @@ int lua_cocos2dx_ui_ScrollView_jumpToRight(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_ScrollView_scrollToTopRight(lua_State* tolua_S)
+int lua_cocos2dx_ui_ScrollView_getInnerContainerSize(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ui::ScrollView* cobj = nullptr;
@@ -16977,35 +17460,79 @@ int lua_cocos2dx_ui_ScrollView_scrollToTopRight(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_scrollToTopRight'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_getInnerContainerSize'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
+    if (argc == 0) 
     {
-        double arg0;
-        bool arg1;
-
-        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccui.ScrollView:scrollToTopRight");
-
-        ok &= luaval_to_boolean(tolua_S, 3,&arg1, "ccui.ScrollView:scrollToTopRight");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_scrollToTopRight'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_getInnerContainerSize'", nullptr);
             return 0;
         }
-        cobj->scrollToTopRight(arg0, arg1);
-        lua_settop(tolua_S, 1);
+        const cocos2d::Size& ret = cobj->getInnerContainerSize();
+        size_to_luaval(tolua_S, ret);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:scrollToTopRight",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:getInnerContainerSize",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_scrollToTopRight'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_getInnerContainerSize'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_ScrollView_jumpToPercentHorizontal(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ScrollView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ScrollView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ScrollView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ScrollView_jumpToPercentHorizontal'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccui.ScrollView:jumpToPercentHorizontal");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ScrollView_jumpToPercentHorizontal'", nullptr);
+            return 0;
+        }
+        cobj->jumpToPercentHorizontal(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ScrollView:jumpToPercentHorizontal",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ScrollView_jumpToPercentHorizontal'.",&tolua_err);
 #endif
 
     return 0;
@@ -17134,6 +17661,7 @@ int lua_register_cocos2dx_ui_ScrollView(lua_State* tolua_S)
         tolua_function(tolua_S,"setScrollBarEnabled",lua_cocos2dx_ui_ScrollView_setScrollBarEnabled);
         tolua_function(tolua_S,"isInertiaScrollEnabled",lua_cocos2dx_ui_ScrollView_isInertiaScrollEnabled);
         tolua_function(tolua_S,"scrollToBottom",lua_cocos2dx_ui_ScrollView_scrollToBottom);
+        tolua_function(tolua_S,"getScrolledPercentBothDirection",lua_cocos2dx_ui_ScrollView_getScrolledPercentBothDirection);
         tolua_function(tolua_S,"getDirection",lua_cocos2dx_ui_ScrollView_getDirection);
         tolua_function(tolua_S,"setScrollBarColor",lua_cocos2dx_ui_ScrollView_setScrollBarColor);
         tolua_function(tolua_S,"scrollToBottomLeft",lua_cocos2dx_ui_ScrollView_scrollToBottomLeft);
@@ -17146,29 +17674,34 @@ int lua_register_cocos2dx_ui_ScrollView(lua_State* tolua_S)
         tolua_function(tolua_S,"scrollToPercentBothDirection",lua_cocos2dx_ui_ScrollView_scrollToPercentBothDirection);
         tolua_function(tolua_S,"setInnerContainerSize",lua_cocos2dx_ui_ScrollView_setInnerContainerSize);
         tolua_function(tolua_S,"getInnerContainerPosition",lua_cocos2dx_ui_ScrollView_getInnerContainerPosition);
-        tolua_function(tolua_S,"getInnerContainerSize",lua_cocos2dx_ui_ScrollView_getInnerContainerSize);
+        tolua_function(tolua_S,"jumpToTop",lua_cocos2dx_ui_ScrollView_jumpToTop);
+        tolua_function(tolua_S,"getScrolledPercentVertical",lua_cocos2dx_ui_ScrollView_getScrolledPercentVertical);
         tolua_function(tolua_S,"isBounceEnabled",lua_cocos2dx_ui_ScrollView_isBounceEnabled);
         tolua_function(tolua_S,"jumpToPercentVertical",lua_cocos2dx_ui_ScrollView_jumpToPercentVertical);
         tolua_function(tolua_S,"addEventListener",lua_cocos2dx_ui_ScrollView_addEventListener);
         tolua_function(tolua_S,"setScrollBarAutoHideTime",lua_cocos2dx_ui_ScrollView_setScrollBarAutoHideTime);
+        tolua_function(tolua_S,"stopScroll",lua_cocos2dx_ui_ScrollView_stopScroll);
         tolua_function(tolua_S,"setScrollBarPositionFromCornerForHorizontal",lua_cocos2dx_ui_ScrollView_setScrollBarPositionFromCornerForHorizontal);
         tolua_function(tolua_S,"setInertiaScrollEnabled",lua_cocos2dx_ui_ScrollView_setInertiaScrollEnabled);
         tolua_function(tolua_S,"setScrollBarAutoHideEnabled",lua_cocos2dx_ui_ScrollView_setScrollBarAutoHideEnabled);
         tolua_function(tolua_S,"getScrollBarColor",lua_cocos2dx_ui_ScrollView_getScrollBarColor);
         tolua_function(tolua_S,"jumpToTopLeft",lua_cocos2dx_ui_ScrollView_jumpToTopLeft);
-        tolua_function(tolua_S,"jumpToPercentHorizontal",lua_cocos2dx_ui_ScrollView_jumpToPercentHorizontal);
+        tolua_function(tolua_S,"isScrollBarEnabled",lua_cocos2dx_ui_ScrollView_isScrollBarEnabled);
+        tolua_function(tolua_S,"isAutoScrolling",lua_cocos2dx_ui_ScrollView_isAutoScrolling);
         tolua_function(tolua_S,"jumpToBottomRight",lua_cocos2dx_ui_ScrollView_jumpToBottomRight);
         tolua_function(tolua_S,"setTouchTotalTimeThreshold",lua_cocos2dx_ui_ScrollView_setTouchTotalTimeThreshold);
         tolua_function(tolua_S,"getTouchTotalTimeThreshold",lua_cocos2dx_ui_ScrollView_getTouchTotalTimeThreshold);
         tolua_function(tolua_S,"getScrollBarPositionFromCornerForHorizontal",lua_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForHorizontal);
-        tolua_function(tolua_S,"setScrollBarWidth",lua_cocos2dx_ui_ScrollView_setScrollBarWidth);
+        tolua_function(tolua_S,"getScrolledPercentHorizontal",lua_cocos2dx_ui_ScrollView_getScrolledPercentHorizontal);
         tolua_function(tolua_S,"setBounceEnabled",lua_cocos2dx_ui_ScrollView_setBounceEnabled);
         tolua_function(tolua_S,"stopAutoScroll",lua_cocos2dx_ui_ScrollView_stopAutoScroll);
-        tolua_function(tolua_S,"jumpToTop",lua_cocos2dx_ui_ScrollView_jumpToTop);
+        tolua_function(tolua_S,"scrollToTopRight",lua_cocos2dx_ui_ScrollView_scrollToTopRight);
+        tolua_function(tolua_S,"isScrolling",lua_cocos2dx_ui_ScrollView_isScrolling);
         tolua_function(tolua_S,"scrollToLeft",lua_cocos2dx_ui_ScrollView_scrollToLeft);
         tolua_function(tolua_S,"jumpToPercentBothDirection",lua_cocos2dx_ui_ScrollView_jumpToPercentBothDirection);
-        tolua_function(tolua_S,"getScrollBarPositionFromCornerForVertical",lua_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForVertical);
+        tolua_function(tolua_S,"stopOverallScroll",lua_cocos2dx_ui_ScrollView_stopOverallScroll);
         tolua_function(tolua_S,"scrollToPercentVertical",lua_cocos2dx_ui_ScrollView_scrollToPercentVertical);
+        tolua_function(tolua_S,"setScrollBarWidth",lua_cocos2dx_ui_ScrollView_setScrollBarWidth);
         tolua_function(tolua_S,"getScrollBarOpacity",lua_cocos2dx_ui_ScrollView_getScrollBarOpacity);
         tolua_function(tolua_S,"scrollToBottomRight",lua_cocos2dx_ui_ScrollView_scrollToBottomRight);
         tolua_function(tolua_S,"setScrollBarPositionFromCorner",lua_cocos2dx_ui_ScrollView_setScrollBarPositionFromCorner);
@@ -17176,12 +17709,13 @@ int lua_register_cocos2dx_ui_ScrollView(lua_State* tolua_S)
         tolua_function(tolua_S,"getScrollBarAutoHideTime",lua_cocos2dx_ui_ScrollView_getScrollBarAutoHideTime);
         tolua_function(tolua_S,"jumpToLeft",lua_cocos2dx_ui_ScrollView_jumpToLeft);
         tolua_function(tolua_S,"scrollToRight",lua_cocos2dx_ui_ScrollView_scrollToRight);
-        tolua_function(tolua_S,"isScrollBarEnabled",lua_cocos2dx_ui_ScrollView_isScrollBarEnabled);
+        tolua_function(tolua_S,"getScrollBarPositionFromCornerForVertical",lua_cocos2dx_ui_ScrollView_getScrollBarPositionFromCornerForVertical);
         tolua_function(tolua_S,"getScrollBarWidth",lua_cocos2dx_ui_ScrollView_getScrollBarWidth);
         tolua_function(tolua_S,"isScrollBarAutoHideEnabled",lua_cocos2dx_ui_ScrollView_isScrollBarAutoHideEnabled);
         tolua_function(tolua_S,"jumpToBottomLeft",lua_cocos2dx_ui_ScrollView_jumpToBottomLeft);
         tolua_function(tolua_S,"jumpToRight",lua_cocos2dx_ui_ScrollView_jumpToRight);
-        tolua_function(tolua_S,"scrollToTopRight",lua_cocos2dx_ui_ScrollView_scrollToTopRight);
+        tolua_function(tolua_S,"getInnerContainerSize",lua_cocos2dx_ui_ScrollView_getInnerContainerSize);
+        tolua_function(tolua_S,"jumpToPercentHorizontal",lua_cocos2dx_ui_ScrollView_jumpToPercentHorizontal);
         tolua_function(tolua_S,"create", lua_cocos2dx_ui_ScrollView_create);
         tolua_function(tolua_S,"createInstance", lua_cocos2dx_ui_ScrollView_createInstance);
     tolua_endmodule(tolua_S);
@@ -17284,6 +17818,53 @@ int lua_cocos2dx_ui_ListView_removeLastItem(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_removeLastItem'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_ListView_getLeftPadding(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ListView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ListView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_getLeftPadding'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_getLeftPadding'", nullptr);
+            return 0;
+        }
+        double ret = cobj->getLeftPadding();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:getLeftPadding",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_getLeftPadding'.",&tolua_err);
 #endif
 
     return 0;
@@ -17429,6 +18010,53 @@ int lua_cocos2dx_ui_ListView_getScrollDuration(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_ListView_getMagneticAllowedOutOfBoundary(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ListView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ListView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_getMagneticAllowedOutOfBoundary'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_getMagneticAllowedOutOfBoundary'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->getMagneticAllowedOutOfBoundary();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:getMagneticAllowedOutOfBoundary",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_getMagneticAllowedOutOfBoundary'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_ListView_getItemsMargin(lua_State* tolua_S)
 {
     int argc = 0;
@@ -17472,6 +18100,81 @@ int lua_cocos2dx_ui_ListView_getItemsMargin(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_getItemsMargin'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_ListView_scrollToItem(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ListView* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::ui::ListView*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_scrollToItem'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 4) {
+            ssize_t arg0;
+            ok &= luaval_to_ssize(tolua_S, 2, &arg0, "ccui.ListView:scrollToItem");
+
+            if (!ok) { break; }
+            cocos2d::Vec2 arg1;
+            ok &= luaval_to_vec2(tolua_S, 3, &arg1, "ccui.ListView:scrollToItem");
+
+            if (!ok) { break; }
+            cocos2d::Vec2 arg2;
+            ok &= luaval_to_vec2(tolua_S, 4, &arg2, "ccui.ListView:scrollToItem");
+
+            if (!ok) { break; }
+            double arg3;
+            ok &= luaval_to_number(tolua_S, 5,&arg3, "ccui.ListView:scrollToItem");
+
+            if (!ok) { break; }
+            cobj->scrollToItem(arg0, arg1, arg2, arg3);
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 3) {
+            ssize_t arg0;
+            ok &= luaval_to_ssize(tolua_S, 2, &arg0, "ccui.ListView:scrollToItem");
+
+            if (!ok) { break; }
+            cocos2d::Vec2 arg1;
+            ok &= luaval_to_vec2(tolua_S, 3, &arg1, "ccui.ListView:scrollToItem");
+
+            if (!ok) { break; }
+            cocos2d::Vec2 arg2;
+            ok &= luaval_to_vec2(tolua_S, 4, &arg2, "ccui.ListView:scrollToItem");
+
+            if (!ok) { break; }
+            cobj->scrollToItem(arg0, arg1, arg2);
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccui.ListView:scrollToItem",argc, 3);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_scrollToItem'.",&tolua_err);
 #endif
 
     return 0;
@@ -17532,7 +18235,7 @@ int lua_cocos2dx_ui_ListView_jumpToItem(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_ListView_setMagneticType(lua_State* tolua_S)
+int lua_cocos2dx_ui_ListView_setTopPadding(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ui::ListView* cobj = nullptr;
@@ -17552,7 +18255,7 @@ int lua_cocos2dx_ui_ListView_setMagneticType(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_setMagneticType'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_setTopPadding'", nullptr);
         return 0;
     }
 #endif
@@ -17560,24 +18263,24 @@ int lua_cocos2dx_ui_ListView_setMagneticType(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::ui::ListView::MagneticType arg0;
+        double arg0;
 
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.ListView:setMagneticType");
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccui.ListView:setTopPadding");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_setMagneticType'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_setTopPadding'", nullptr);
             return 0;
         }
-        cobj->setMagneticType(arg0);
+        cobj->setTopPadding(arg0);
         lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:setMagneticType",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:setTopPadding",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_setMagneticType'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_setTopPadding'.",&tolua_err);
 #endif
 
     return 0;
@@ -17782,6 +18485,56 @@ int lua_cocos2dx_ui_ListView_insertDefaultItem(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_ListView_setMagneticType(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ListView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ListView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_setMagneticType'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::ui::ListView::MagneticType arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.ListView:setMagneticType");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_setMagneticType'", nullptr);
+            return 0;
+        }
+        cobj->setMagneticType(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:setMagneticType",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_setMagneticType'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_ListView_setMagneticAllowedOutOfBoundary(lua_State* tolua_S)
 {
     int argc = 0;
@@ -17980,6 +18733,65 @@ int lua_cocos2dx_ui_ListView_getTopmostItemInCurrentView(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_ListView_setPadding(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ListView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ListView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_setPadding'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 4) 
+    {
+        double arg0;
+        double arg1;
+        double arg2;
+        double arg3;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccui.ListView:setPadding");
+
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "ccui.ListView:setPadding");
+
+        ok &= luaval_to_number(tolua_S, 4,&arg2, "ccui.ListView:setPadding");
+
+        ok &= luaval_to_number(tolua_S, 5,&arg3, "ccui.ListView:setPadding");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_setPadding'", nullptr);
+            return 0;
+        }
+        cobj->setPadding(arg0, arg1, arg2, arg3);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:setPadding",argc, 4);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_setPadding'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_ListView_removeAllItems(lua_State* tolua_S)
 {
     int argc = 0;
@@ -18023,6 +18835,53 @@ int lua_cocos2dx_ui_ListView_removeAllItems(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_removeAllItems'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_ListView_getRightPadding(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ListView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ListView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_getRightPadding'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_getRightPadding'", nullptr);
+            return 0;
+        }
+        double ret = cobj->getRightPadding();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:getRightPadding",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_getRightPadding'.",&tolua_err);
 #endif
 
     return 0;
@@ -18365,77 +19224,49 @@ int lua_cocos2dx_ui_ListView_removeItem(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_ListView_scrollToItem(lua_State* tolua_S)
+int lua_cocos2dx_ui_ListView_getTopPadding(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ui::ListView* cobj = nullptr;
     bool ok  = true;
+
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
 
+
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
 #endif
+
     cobj = (cocos2d::ui::ListView*)tolua_tousertype(tolua_S,1,0);
+
 #if COCOS2D_DEBUG >= 1
-    if (!cobj)
+    if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_scrollToItem'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_getTopPadding'", nullptr);
         return 0;
     }
 #endif
+
     argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 4) {
-            ssize_t arg0;
-            ok &= luaval_to_ssize(tolua_S, 2, &arg0, "ccui.ListView:scrollToItem");
-
-            if (!ok) { break; }
-            cocos2d::Vec2 arg1;
-            ok &= luaval_to_vec2(tolua_S, 3, &arg1, "ccui.ListView:scrollToItem");
-
-            if (!ok) { break; }
-            cocos2d::Vec2 arg2;
-            ok &= luaval_to_vec2(tolua_S, 4, &arg2, "ccui.ListView:scrollToItem");
-
-            if (!ok) { break; }
-            double arg3;
-            ok &= luaval_to_number(tolua_S, 5,&arg3, "ccui.ListView:scrollToItem");
-
-            if (!ok) { break; }
-            cobj->scrollToItem(arg0, arg1, arg2, arg3);
-            lua_settop(tolua_S, 1);
-            return 1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_getTopPadding'", nullptr);
+            return 0;
         }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 3) {
-            ssize_t arg0;
-            ok &= luaval_to_ssize(tolua_S, 2, &arg0, "ccui.ListView:scrollToItem");
-
-            if (!ok) { break; }
-            cocos2d::Vec2 arg1;
-            ok &= luaval_to_vec2(tolua_S, 3, &arg1, "ccui.ListView:scrollToItem");
-
-            if (!ok) { break; }
-            cocos2d::Vec2 arg2;
-            ok &= luaval_to_vec2(tolua_S, 4, &arg2, "ccui.ListView:scrollToItem");
-
-            if (!ok) { break; }
-            cobj->scrollToItem(arg0, arg1, arg2);
-            lua_settop(tolua_S, 1);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccui.ListView:scrollToItem",argc, 3);
+        double ret = cobj->getTopPadding();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:getTopPadding",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_scrollToItem'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_getTopPadding'.",&tolua_err);
 #endif
 
     return 0;
@@ -18487,7 +19318,7 @@ int lua_cocos2dx_ui_ListView_pushBackDefaultItem(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_ListView_getMagneticAllowedOutOfBoundary(lua_State* tolua_S)
+int lua_cocos2dx_ui_ListView_setLeftPadding(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ui::ListView* cobj = nullptr;
@@ -18507,29 +19338,32 @@ int lua_cocos2dx_ui_ListView_getMagneticAllowedOutOfBoundary(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_getMagneticAllowedOutOfBoundary'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_setLeftPadding'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
+    if (argc == 1) 
     {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccui.ListView:setLeftPadding");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_getMagneticAllowedOutOfBoundary'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_setLeftPadding'", nullptr);
             return 0;
         }
-        bool ret = cobj->getMagneticAllowedOutOfBoundary();
-        tolua_pushboolean(tolua_S,(bool)ret);
+        cobj->setLeftPadding(arg0);
+        lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:getMagneticAllowedOutOfBoundary",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:setLeftPadding",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_getMagneticAllowedOutOfBoundary'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_setLeftPadding'.",&tolua_err);
 #endif
 
     return 0;
@@ -18587,7 +19421,7 @@ int lua_cocos2dx_ui_ListView_getClosestItemToPosition(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_ListView_getRightmostItemInCurrentView(lua_State* tolua_S)
+int lua_cocos2dx_ui_ListView_setBottomPadding(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ui::ListView* cobj = nullptr;
@@ -18607,29 +19441,32 @@ int lua_cocos2dx_ui_ListView_getRightmostItemInCurrentView(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_getRightmostItemInCurrentView'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_setBottomPadding'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
+    if (argc == 1) 
     {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccui.ListView:setBottomPadding");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_getRightmostItemInCurrentView'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_setBottomPadding'", nullptr);
             return 0;
         }
-        cocos2d::ui::Widget* ret = cobj->getRightmostItemInCurrentView();
-        object_to_luaval<cocos2d::ui::Widget>(tolua_S, "ccui.Widget",(cocos2d::ui::Widget*)ret);
+        cobj->setBottomPadding(arg0);
+        lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:getRightmostItemInCurrentView",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:setBottomPadding",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_getRightmostItemInCurrentView'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_setBottomPadding'.",&tolua_err);
 #endif
 
     return 0;
@@ -18737,6 +19574,103 @@ int lua_cocos2dx_ui_ListView_getClosestItemToPositionInCurrentView(lua_State* to
 
     return 0;
 }
+int lua_cocos2dx_ui_ListView_getRightmostItemInCurrentView(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ListView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ListView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_getRightmostItemInCurrentView'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_getRightmostItemInCurrentView'", nullptr);
+            return 0;
+        }
+        cocos2d::ui::Widget* ret = cobj->getRightmostItemInCurrentView();
+        object_to_luaval<cocos2d::ui::Widget>(tolua_S, "ccui.Widget",(cocos2d::ui::Widget*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:getRightmostItemInCurrentView",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_getRightmostItemInCurrentView'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_ListView_setRightPadding(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ListView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ListView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_setRightPadding'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        double arg0;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "ccui.ListView:setRightPadding");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_setRightPadding'", nullptr);
+            return 0;
+        }
+        cobj->setRightPadding(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:setRightPadding",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_setRightPadding'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_ListView_setItemModel(lua_State* tolua_S)
 {
     int argc = 0;
@@ -18783,6 +19717,53 @@ int lua_cocos2dx_ui_ListView_setItemModel(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_setItemModel'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_ListView_getBottomPadding(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::ListView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.ListView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::ListView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_ListView_getBottomPadding'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_ListView_getBottomPadding'", nullptr);
+            return 0;
+        }
+        double ret = cobj->getBottomPadding();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.ListView:getBottomPadding",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_ListView_getBottomPadding'.",&tolua_err);
 #endif
 
     return 0;
@@ -18960,21 +19941,27 @@ int lua_register_cocos2dx_ui_ListView(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_ListView_constructor);
         tolua_function(tolua_S,"setGravity",lua_cocos2dx_ui_ListView_setGravity);
         tolua_function(tolua_S,"removeLastItem",lua_cocos2dx_ui_ListView_removeLastItem);
+        tolua_function(tolua_S,"getLeftPadding",lua_cocos2dx_ui_ListView_getLeftPadding);
         tolua_function(tolua_S,"getCenterItemInCurrentView",lua_cocos2dx_ui_ListView_getCenterItemInCurrentView);
         tolua_function(tolua_S,"getCurSelectedIndex",lua_cocos2dx_ui_ListView_getCurSelectedIndex);
         tolua_function(tolua_S,"getScrollDuration",lua_cocos2dx_ui_ListView_getScrollDuration);
+        tolua_function(tolua_S,"getMagneticAllowedOutOfBoundary",lua_cocos2dx_ui_ListView_getMagneticAllowedOutOfBoundary);
         tolua_function(tolua_S,"getItemsMargin",lua_cocos2dx_ui_ListView_getItemsMargin);
+        tolua_function(tolua_S,"scrollToItem",lua_cocos2dx_ui_ListView_scrollToItem);
         tolua_function(tolua_S,"jumpToItem",lua_cocos2dx_ui_ListView_jumpToItem);
-        tolua_function(tolua_S,"setMagneticType",lua_cocos2dx_ui_ListView_setMagneticType);
+        tolua_function(tolua_S,"setTopPadding",lua_cocos2dx_ui_ListView_setTopPadding);
         tolua_function(tolua_S,"getIndex",lua_cocos2dx_ui_ListView_getIndex);
         tolua_function(tolua_S,"pushBackCustomItem",lua_cocos2dx_ui_ListView_pushBackCustomItem);
         tolua_function(tolua_S,"setCurSelectedIndex",lua_cocos2dx_ui_ListView_setCurSelectedIndex);
         tolua_function(tolua_S,"insertDefaultItem",lua_cocos2dx_ui_ListView_insertDefaultItem);
+        tolua_function(tolua_S,"setMagneticType",lua_cocos2dx_ui_ListView_setMagneticType);
         tolua_function(tolua_S,"setMagneticAllowedOutOfBoundary",lua_cocos2dx_ui_ListView_setMagneticAllowedOutOfBoundary);
         tolua_function(tolua_S,"addEventListener",lua_cocos2dx_ui_ListView_addEventListener);
         tolua_function(tolua_S,"doLayout",lua_cocos2dx_ui_ListView_doLayout);
         tolua_function(tolua_S,"getTopmostItemInCurrentView",lua_cocos2dx_ui_ListView_getTopmostItemInCurrentView);
+        tolua_function(tolua_S,"setPadding",lua_cocos2dx_ui_ListView_setPadding);
         tolua_function(tolua_S,"removeAllItems",lua_cocos2dx_ui_ListView_removeAllItems);
+        tolua_function(tolua_S,"getRightPadding",lua_cocos2dx_ui_ListView_getRightPadding);
         tolua_function(tolua_S,"getBottommostItemInCurrentView",lua_cocos2dx_ui_ListView_getBottommostItemInCurrentView);
         tolua_function(tolua_S,"getItems",lua_cocos2dx_ui_ListView_getItems);
         tolua_function(tolua_S,"getLeftmostItemInCurrentView",lua_cocos2dx_ui_ListView_getLeftmostItemInCurrentView);
@@ -18982,14 +19969,17 @@ int lua_register_cocos2dx_ui_ListView(lua_State* tolua_S)
         tolua_function(tolua_S,"getMagneticType",lua_cocos2dx_ui_ListView_getMagneticType);
         tolua_function(tolua_S,"getItem",lua_cocos2dx_ui_ListView_getItem);
         tolua_function(tolua_S,"removeItem",lua_cocos2dx_ui_ListView_removeItem);
-        tolua_function(tolua_S,"scrollToItem",lua_cocos2dx_ui_ListView_scrollToItem);
+        tolua_function(tolua_S,"getTopPadding",lua_cocos2dx_ui_ListView_getTopPadding);
         tolua_function(tolua_S,"pushBackDefaultItem",lua_cocos2dx_ui_ListView_pushBackDefaultItem);
-        tolua_function(tolua_S,"getMagneticAllowedOutOfBoundary",lua_cocos2dx_ui_ListView_getMagneticAllowedOutOfBoundary);
+        tolua_function(tolua_S,"setLeftPadding",lua_cocos2dx_ui_ListView_setLeftPadding);
         tolua_function(tolua_S,"getClosestItemToPosition",lua_cocos2dx_ui_ListView_getClosestItemToPosition);
-        tolua_function(tolua_S,"getRightmostItemInCurrentView",lua_cocos2dx_ui_ListView_getRightmostItemInCurrentView);
+        tolua_function(tolua_S,"setBottomPadding",lua_cocos2dx_ui_ListView_setBottomPadding);
         tolua_function(tolua_S,"setScrollDuration",lua_cocos2dx_ui_ListView_setScrollDuration);
         tolua_function(tolua_S,"getClosestItemToPositionInCurrentView",lua_cocos2dx_ui_ListView_getClosestItemToPositionInCurrentView);
+        tolua_function(tolua_S,"getRightmostItemInCurrentView",lua_cocos2dx_ui_ListView_getRightmostItemInCurrentView);
+        tolua_function(tolua_S,"setRightPadding",lua_cocos2dx_ui_ListView_setRightPadding);
         tolua_function(tolua_S,"setItemModel",lua_cocos2dx_ui_ListView_setItemModel);
+        tolua_function(tolua_S,"getBottomPadding",lua_cocos2dx_ui_ListView_getBottomPadding);
         tolua_function(tolua_S,"insertCustomItem",lua_cocos2dx_ui_ListView_insertCustomItem);
         tolua_function(tolua_S,"create", lua_cocos2dx_ui_ListView_create);
         tolua_function(tolua_S,"createInstance", lua_cocos2dx_ui_ListView_createInstance);
@@ -22077,9 +23067,9 @@ int lua_cocos2dx_ui_TextField_setCursorPosition(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        unsigned long arg0;
+        unsigned int arg0;
 
-        ok &= luaval_to_ulong(tolua_S, 2, &arg0, "ccui.TextField:setCursorPosition");
+        ok &= luaval_to_uint32(tolua_S, 2,&arg0, "ccui.TextField:setCursorPosition");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_TextField_setCursorPosition'", nullptr);
@@ -23669,6 +24659,106 @@ int lua_cocos2dx_ui_PageView_insertPage(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_PageView_setIndicatorIndexNodesOpacity(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::PageView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.PageView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::PageView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_PageView_setIndicatorIndexNodesOpacity'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        uint16_t arg0;
+
+        ok &= luaval_to_uint16(tolua_S, 2,&arg0, "ccui.PageView:setIndicatorIndexNodesOpacity");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_PageView_setIndicatorIndexNodesOpacity'", nullptr);
+            return 0;
+        }
+        cobj->setIndicatorIndexNodesOpacity(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.PageView:setIndicatorIndexNodesOpacity",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_PageView_setIndicatorIndexNodesOpacity'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_PageView_setIndicatorSelectedIndexOpacity(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::PageView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.PageView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::PageView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_PageView_setIndicatorSelectedIndexOpacity'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        uint16_t arg0;
+
+        ok &= luaval_to_uint16(tolua_S, 2,&arg0, "ccui.PageView:setIndicatorSelectedIndexOpacity");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_PageView_setIndicatorSelectedIndexOpacity'", nullptr);
+            return 0;
+        }
+        cobj->setIndicatorSelectedIndexOpacity(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.PageView:setIndicatorSelectedIndexOpacity",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_PageView_setIndicatorSelectedIndexOpacity'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_PageView_removeAllPages(lua_State* tolua_S)
 {
     int argc = 0;
@@ -24258,6 +25348,53 @@ int lua_cocos2dx_ui_PageView_setIndicatorPosition(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_PageView_getIndicatorSelectedIndexOpacity(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::PageView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.PageView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::PageView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_PageView_getIndicatorSelectedIndexOpacity'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_PageView_getIndicatorSelectedIndexOpacity'", nullptr);
+            return 0;
+        }
+        uint16_t ret = cobj->getIndicatorSelectedIndexOpacity();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.PageView:getIndicatorSelectedIndexOpacity",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_PageView_getIndicatorSelectedIndexOpacity'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_PageView_scrollToPage(lua_State* tolua_S)
 {
     int argc = 0;
@@ -24472,6 +25609,53 @@ int lua_cocos2dx_ui_PageView_setIndicatorIndexNodesColor(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_PageView_setIndicatorIndexNodesColor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_PageView_getIndicatorIndexNodesOpacity(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::PageView* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.PageView",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::PageView*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_PageView_getIndicatorIndexNodesOpacity'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_PageView_getIndicatorIndexNodesOpacity'", nullptr);
+            return 0;
+        }
+        uint16_t ret = cobj->getIndicatorIndexNodesOpacity();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.PageView:getIndicatorIndexNodesOpacity",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_PageView_getIndicatorIndexNodesOpacity'.",&tolua_err);
 #endif
 
     return 0;
@@ -25001,6 +26185,8 @@ int lua_register_cocos2dx_ui_PageView(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_PageView_constructor);
         tolua_function(tolua_S,"setIndicatorSpaceBetweenIndexNodes",lua_cocos2dx_ui_PageView_setIndicatorSpaceBetweenIndexNodes);
         tolua_function(tolua_S,"insertPage",lua_cocos2dx_ui_PageView_insertPage);
+        tolua_function(tolua_S,"setIndicatorIndexNodesOpacity",lua_cocos2dx_ui_PageView_setIndicatorIndexNodesOpacity);
+        tolua_function(tolua_S,"setIndicatorSelectedIndexOpacity",lua_cocos2dx_ui_PageView_setIndicatorSelectedIndexOpacity);
         tolua_function(tolua_S,"removeAllPages",lua_cocos2dx_ui_PageView_removeAllPages);
         tolua_function(tolua_S,"setAutoScrollStopEpsilon",lua_cocos2dx_ui_PageView_setAutoScrollStopEpsilon);
         tolua_function(tolua_S,"setIndicatorIndexNodesScale",lua_cocos2dx_ui_PageView_setIndicatorIndexNodesScale);
@@ -25013,10 +26199,12 @@ int lua_register_cocos2dx_ui_PageView(lua_State* tolua_S)
         tolua_function(tolua_S,"getIndicatorSelectedIndexColor",lua_cocos2dx_ui_PageView_getIndicatorSelectedIndexColor);
         tolua_function(tolua_S,"getIndicatorIndexNodesScale",lua_cocos2dx_ui_PageView_getIndicatorIndexNodesScale);
         tolua_function(tolua_S,"setIndicatorPosition",lua_cocos2dx_ui_PageView_setIndicatorPosition);
+        tolua_function(tolua_S,"getIndicatorSelectedIndexOpacity",lua_cocos2dx_ui_PageView_getIndicatorSelectedIndexOpacity);
         tolua_function(tolua_S,"scrollToPage",lua_cocos2dx_ui_PageView_scrollToPage);
         tolua_function(tolua_S,"setIndicatorPositionAsAnchorPoint",lua_cocos2dx_ui_PageView_setIndicatorPositionAsAnchorPoint);
         tolua_function(tolua_S,"scrollToItem",lua_cocos2dx_ui_PageView_scrollToItem);
         tolua_function(tolua_S,"setIndicatorIndexNodesColor",lua_cocos2dx_ui_PageView_setIndicatorIndexNodesColor);
+        tolua_function(tolua_S,"getIndicatorIndexNodesOpacity",lua_cocos2dx_ui_PageView_getIndicatorIndexNodesOpacity);
         tolua_function(tolua_S,"getIndicatorPositionAsAnchorPoint",lua_cocos2dx_ui_PageView_getIndicatorPositionAsAnchorPoint);
         tolua_function(tolua_S,"getCurrentPageIndex",lua_cocos2dx_ui_PageView_getCurrentPageIndex);
         tolua_function(tolua_S,"removePage",lua_cocos2dx_ui_PageView_removePage);
@@ -25052,11 +26240,11 @@ int lua_cocos2dx_ui_Helper_getSubStringOfUTF8String(lua_State* tolua_S)
     if (argc == 3)
     {
         std::string arg0;
-        unsigned long arg1;
-        unsigned long arg2;
+        unsigned int arg1;
+        unsigned int arg2;
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.Helper:getSubStringOfUTF8String");
-        ok &= luaval_to_ulong(tolua_S, 3, &arg1, "ccui.Helper:getSubStringOfUTF8String");
-        ok &= luaval_to_ulong(tolua_S, 4, &arg2, "ccui.Helper:getSubStringOfUTF8String");
+        ok &= luaval_to_uint32(tolua_S, 3,&arg1, "ccui.Helper:getSubStringOfUTF8String");
+        ok &= luaval_to_uint32(tolua_S, 4,&arg2, "ccui.Helper:getSubStringOfUTF8String");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_Helper_getSubStringOfUTF8String'", nullptr);
@@ -26407,6 +27595,35 @@ int lua_cocos2dx_ui_RichElementImage_init(lua_State* tolua_S)
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
+    if (argc == 6) 
+    {
+        int arg0;
+        cocos2d::Color3B arg1;
+        uint16_t arg2;
+        std::string arg3;
+        std::string arg4;
+        cocos2d::ui::Widget::TextureResType arg5;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.RichElementImage:init");
+
+        ok &= luaval_to_color3b(tolua_S, 3, &arg1, "ccui.RichElementImage:init");
+
+        ok &= luaval_to_uint16(tolua_S, 4,&arg2, "ccui.RichElementImage:init");
+
+        ok &= luaval_to_std_string(tolua_S, 5,&arg3, "ccui.RichElementImage:init");
+
+        ok &= luaval_to_std_string(tolua_S, 6,&arg4, "ccui.RichElementImage:init");
+
+        ok &= luaval_to_int32(tolua_S, 7,(int *)&arg5, "ccui.RichElementImage:init");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_RichElementImage_init'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->init(arg0, arg1, arg2, arg3, arg4, arg5);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.RichElementImage:init",argc, 4);
     return 0;
 
@@ -26569,6 +27786,29 @@ int lua_cocos2dx_ui_RichElementImage_create(lua_State* tolua_S)
             return 0;
         }
         cocos2d::ui::RichElementImage* ret = cocos2d::ui::RichElementImage::create(arg0, arg1, arg2, arg3, arg4);
+        object_to_luaval<cocos2d::ui::RichElementImage>(tolua_S, "ccui.RichElementImage",(cocos2d::ui::RichElementImage*)ret);
+        return 1;
+    }
+    if (argc == 6)
+    {
+        int arg0;
+        cocos2d::Color3B arg1;
+        uint16_t arg2;
+        std::string arg3;
+        std::string arg4;
+        cocos2d::ui::Widget::TextureResType arg5;
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.RichElementImage:create");
+        ok &= luaval_to_color3b(tolua_S, 3, &arg1, "ccui.RichElementImage:create");
+        ok &= luaval_to_uint16(tolua_S, 4,&arg2, "ccui.RichElementImage:create");
+        ok &= luaval_to_std_string(tolua_S, 5,&arg3, "ccui.RichElementImage:create");
+        ok &= luaval_to_std_string(tolua_S, 6,&arg4, "ccui.RichElementImage:create");
+        ok &= luaval_to_int32(tolua_S, 7,(int *)&arg5, "ccui.RichElementImage:create");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_RichElementImage_create'", nullptr);
+            return 0;
+        }
+        cocos2d::ui::RichElementImage* ret = cocos2d::ui::RichElementImage::create(arg0, arg1, arg2, arg3, arg4, arg5);
         object_to_luaval<cocos2d::ui::RichElementImage>(tolua_S, "ccui.RichElementImage",(cocos2d::ui::RichElementImage*)ret);
         return 1;
     }
@@ -27605,6 +28845,103 @@ int lua_cocos2dx_ui_RichText_setAnchorTextGlow(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_RichText_getHorizontalAlignment(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::RichText* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.RichText",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::RichText*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_RichText_getHorizontalAlignment'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_RichText_getHorizontalAlignment'", nullptr);
+            return 0;
+        }
+        int ret = (int)cobj->getHorizontalAlignment();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.RichText:getHorizontalAlignment",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_RichText_getHorizontalAlignment'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_RichText_setHorizontalAlignment(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::RichText* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.RichText",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::RichText*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_RichText_setHorizontalAlignment'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::ui::RichText::HorizontalAlignment arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.RichText:setHorizontalAlignment");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_RichText_setHorizontalAlignment'", nullptr);
+            return 0;
+        }
+        cobj->setHorizontalAlignment(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.RichText:setHorizontalAlignment",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_RichText_setHorizontalAlignment'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_RichText_setAnchorTextDel(lua_State* tolua_S)
 {
     int argc = 0;
@@ -27799,7 +29136,7 @@ int lua_cocos2dx_ui_RichText_initWithXML(lua_State* tolua_S)
     {
         std::string arg0;
         cocos2d::ValueMap arg1;
-        std::function<void (const std::basic_string<char> &)> arg2;
+        std::function<void (const std::string&)> arg2;
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.RichText:initWithXML");
 
@@ -29251,7 +30588,7 @@ int lua_cocos2dx_ui_RichText_createWithXML(lua_State* tolua_S)
     {
         std::string arg0;
         cocos2d::ValueMap arg1;
-        std::function<void (const std::basic_string<char> &)> arg2;
+        std::function<void (const std::string&)> arg2;
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.RichText:createWithXML");
         ok &= luaval_to_ccvaluemap(tolua_S, 3, &arg1, "ccui.RichText:createWithXML");
         do {
@@ -29338,6 +30675,8 @@ int lua_register_cocos2dx_ui_RichText(lua_State* tolua_S)
         tolua_function(tolua_S,"setAnchorFontColor",lua_cocos2dx_ui_RichText_setAnchorFontColor);
         tolua_function(tolua_S,"setFontFace",lua_cocos2dx_ui_RichText_setFontFace);
         tolua_function(tolua_S,"setAnchorTextGlow",lua_cocos2dx_ui_RichText_setAnchorTextGlow);
+        tolua_function(tolua_S,"getHorizontalAlignment",lua_cocos2dx_ui_RichText_getHorizontalAlignment);
+        tolua_function(tolua_S,"setHorizontalAlignment",lua_cocos2dx_ui_RichText_setHorizontalAlignment);
         tolua_function(tolua_S,"setAnchorTextDel",lua_cocos2dx_ui_RichText_setAnchorTextDel);
         tolua_function(tolua_S,"getAnchorTextOutlineColor3B",lua_cocos2dx_ui_RichText_getAnchorTextOutlineColor3B);
         tolua_function(tolua_S,"stringWithColor4B",lua_cocos2dx_ui_RichText_stringWithColor4B);
@@ -31760,7 +33099,7 @@ int lua_cocos2dx_ui_EditBox_keyboardDidShow(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_EditBox_getScriptEditBoxHandler(lua_State* tolua_S)
+int lua_cocos2dx_ui_EditBox_setMaxLength(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ui::EditBox* cobj = nullptr;
@@ -31780,7 +33119,57 @@ int lua_cocos2dx_ui_EditBox_getScriptEditBoxHandler(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_getScriptEditBoxHandler'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_setMaxLength'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        int arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.EditBox:setMaxLength");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_setMaxLength'", nullptr);
+            return 0;
+        }
+        cobj->setMaxLength(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:setMaxLength",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_setMaxLength'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_EditBox_openKeyboard(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_openKeyboard'", nullptr);
         return 0;
     }
 #endif
@@ -31790,19 +33179,69 @@ int lua_cocos2dx_ui_EditBox_getScriptEditBoxHandler(lua_State* tolua_S)
     {
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_getScriptEditBoxHandler'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_openKeyboard'", nullptr);
             return 0;
         }
-        int ret = cobj->getScriptEditBoxHandler();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        cobj->openKeyboard();
+        lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:getScriptEditBoxHandler",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:openKeyboard",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_getScriptEditBoxHandler'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_openKeyboard'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_EditBox_setFontSize(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_setFontSize'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        int arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.EditBox:setFontSize");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_setFontSize'", nullptr);
+            return 0;
+        }
+        cobj->setFontSize(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:setFontSize",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_setFontSize'.",&tolua_err);
 #endif
 
     return 0;
@@ -31897,6 +33336,113 @@ int lua_cocos2dx_ui_EditBox_getInputMode(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_getInputMode'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_EditBox_initWithSizeAndBackgroundSprite(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_initWithSizeAndBackgroundSprite'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 2) {
+            cocos2d::Size arg0;
+            ok &= luaval_to_size(tolua_S, 2, &arg0, "ccui.EditBox:initWithSizeAndBackgroundSprite");
+
+            if (!ok) { break; }
+            cocos2d::ui::Scale9Sprite* arg1;
+            ok &= luaval_to_object<cocos2d::ui::Scale9Sprite>(tolua_S, 3, "ccui.Scale9Sprite",&arg1, "ccui.EditBox:initWithSizeAndBackgroundSprite");
+
+            if (!ok) { break; }
+            bool ret = cobj->initWithSizeAndBackgroundSprite(arg0, arg1);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 2) {
+            cocos2d::Size arg0;
+            ok &= luaval_to_size(tolua_S, 2, &arg0, "ccui.EditBox:initWithSizeAndBackgroundSprite");
+
+            if (!ok) { break; }
+            std::string arg1;
+            ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.EditBox:initWithSizeAndBackgroundSprite");
+
+            if (!ok) { break; }
+            bool ret = cobj->initWithSizeAndBackgroundSprite(arg0, arg1);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 3) {
+            cocos2d::Size arg0;
+            ok &= luaval_to_size(tolua_S, 2, &arg0, "ccui.EditBox:initWithSizeAndBackgroundSprite");
+
+            if (!ok) { break; }
+            std::string arg1;
+            ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.EditBox:initWithSizeAndBackgroundSprite");
+
+            if (!ok) { break; }
+            cocos2d::ui::Widget::TextureResType arg2;
+            ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "ccui.EditBox:initWithSizeAndBackgroundSprite");
+
+            if (!ok) { break; }
+            bool ret = cobj->initWithSizeAndBackgroundSprite(arg0, arg1, arg2);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 4) {
+            cocos2d::Size arg0;
+            ok &= luaval_to_size(tolua_S, 2, &arg0, "ccui.EditBox:initWithSizeAndBackgroundSprite");
+
+            if (!ok) { break; }
+            cocos2d::ui::Scale9Sprite* arg1;
+            ok &= luaval_to_object<cocos2d::ui::Scale9Sprite>(tolua_S, 3, "ccui.Scale9Sprite",&arg1, "ccui.EditBox:initWithSizeAndBackgroundSprite");
+
+            if (!ok) { break; }
+            cocos2d::ui::Scale9Sprite* arg2;
+            ok &= luaval_to_object<cocos2d::ui::Scale9Sprite>(tolua_S, 4, "ccui.Scale9Sprite",&arg2, "ccui.EditBox:initWithSizeAndBackgroundSprite");
+
+            if (!ok) { break; }
+            cocos2d::ui::Scale9Sprite* arg3;
+            ok &= luaval_to_object<cocos2d::ui::Scale9Sprite>(tolua_S, 5, "ccui.Scale9Sprite",&arg3, "ccui.EditBox:initWithSizeAndBackgroundSprite");
+
+            if (!ok) { break; }
+            bool ret = cobj->initWithSizeAndBackgroundSprite(arg0, arg1, arg2, arg3);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccui.EditBox:initWithSizeAndBackgroundSprite",argc, 4);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_initWithSizeAndBackgroundSprite'.",&tolua_err);
 #endif
 
     return 0;
@@ -32096,6 +33642,53 @@ int lua_cocos2dx_ui_EditBox_getPlaceholderFontSize(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_EditBox_getCapInsetsDisabledRenderer(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_getCapInsetsDisabledRenderer'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_getCapInsetsDisabledRenderer'", nullptr);
+            return 0;
+        }
+        const cocos2d::Rect& ret = cobj->getCapInsetsDisabledRenderer();
+        rect_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:getCapInsetsDisabledRenderer",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_getCapInsetsDisabledRenderer'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_EditBox_getPlaceHolder(lua_State* tolua_S)
 {
     int argc = 0;
@@ -32243,6 +33836,56 @@ int lua_cocos2dx_ui_EditBox_registerScriptEditBoxHandler(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_EditBox_setCapInsetsDisabledRenderer(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_setCapInsetsDisabledRenderer'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Rect arg0;
+
+        ok &= luaval_to_rect(tolua_S, 2, &arg0, "ccui.EditBox:setCapInsetsDisabledRenderer");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_setCapInsetsDisabledRenderer'", nullptr);
+            return 0;
+        }
+        cobj->setCapInsetsDisabledRenderer(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:setCapInsetsDisabledRenderer",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_setCapInsetsDisabledRenderer'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_EditBox_setPlaceholderFontSize(lua_State* tolua_S)
 {
     int argc = 0;
@@ -32289,6 +33932,73 @@ int lua_cocos2dx_ui_EditBox_setPlaceholderFontSize(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_setPlaceholderFontSize'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_EditBox_loadTextureDisabled(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_loadTextureDisabled'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.EditBox:loadTextureDisabled");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_loadTextureDisabled'", nullptr);
+            return 0;
+        }
+        cobj->loadTextureDisabled(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    if (argc == 2) 
+    {
+        std::string arg0;
+        cocos2d::ui::Widget::TextureResType arg1;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.EditBox:loadTextureDisabled");
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccui.EditBox:loadTextureDisabled");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_loadTextureDisabled'", nullptr);
+            return 0;
+        }
+        cobj->loadTextureDisabled(arg0, arg1);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:loadTextureDisabled",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_loadTextureDisabled'.",&tolua_err);
 #endif
 
     return 0;
@@ -32696,7 +34406,7 @@ int lua_cocos2dx_ui_EditBox_keyboardWillHide(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_EditBox_touchDownAction(lua_State* tolua_S)
+int lua_cocos2dx_ui_EditBox_setCapInsetsNormalRenderer(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ui::EditBox* cobj = nullptr;
@@ -32716,35 +34426,99 @@ int lua_cocos2dx_ui_EditBox_touchDownAction(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_touchDownAction'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_setCapInsetsNormalRenderer'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
+    if (argc == 1) 
     {
-        cocos2d::Ref* arg0;
-        cocos2d::ui::Widget::TouchEventType arg1;
+        cocos2d::Rect arg0;
 
-        ok &= luaval_to_object<cocos2d::Ref>(tolua_S, 2, "cc.Ref",&arg0, "ccui.EditBox:touchDownAction");
-
-        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccui.EditBox:touchDownAction");
+        ok &= luaval_to_rect(tolua_S, 2, &arg0, "ccui.EditBox:setCapInsetsNormalRenderer");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_touchDownAction'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_setCapInsetsNormalRenderer'", nullptr);
             return 0;
         }
-        cobj->touchDownAction(arg0, arg1);
+        cobj->setCapInsetsNormalRenderer(arg0);
         lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:touchDownAction",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:setCapInsetsNormalRenderer",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_touchDownAction'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_setCapInsetsNormalRenderer'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_EditBox_loadTexturePressed(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_loadTexturePressed'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.EditBox:loadTexturePressed");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_loadTexturePressed'", nullptr);
+            return 0;
+        }
+        cobj->loadTexturePressed(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    if (argc == 2) 
+    {
+        std::string arg0;
+        cocos2d::ui::Widget::TextureResType arg1;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.EditBox:loadTexturePressed");
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccui.EditBox:loadTexturePressed");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_loadTexturePressed'", nullptr);
+            return 0;
+        }
+        cobj->loadTexturePressed(arg0, arg1);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:loadTexturePressed",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_loadTexturePressed'.",&tolua_err);
 #endif
 
     return 0;
@@ -32843,6 +34617,128 @@ int lua_cocos2dx_ui_EditBox_getInputFlag(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_EditBox_initWithSizeAndTexture(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_initWithSizeAndTexture'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        cocos2d::Size arg0;
+        std::string arg1;
+
+        ok &= luaval_to_size(tolua_S, 2, &arg0, "ccui.EditBox:initWithSizeAndTexture");
+
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.EditBox:initWithSizeAndTexture");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_initWithSizeAndTexture'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initWithSizeAndTexture(arg0, arg1);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    if (argc == 3) 
+    {
+        cocos2d::Size arg0;
+        std::string arg1;
+        std::string arg2;
+
+        ok &= luaval_to_size(tolua_S, 2, &arg0, "ccui.EditBox:initWithSizeAndTexture");
+
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.EditBox:initWithSizeAndTexture");
+
+        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "ccui.EditBox:initWithSizeAndTexture");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_initWithSizeAndTexture'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initWithSizeAndTexture(arg0, arg1, arg2);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    if (argc == 4) 
+    {
+        cocos2d::Size arg0;
+        std::string arg1;
+        std::string arg2;
+        std::string arg3;
+
+        ok &= luaval_to_size(tolua_S, 2, &arg0, "ccui.EditBox:initWithSizeAndTexture");
+
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.EditBox:initWithSizeAndTexture");
+
+        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "ccui.EditBox:initWithSizeAndTexture");
+
+        ok &= luaval_to_std_string(tolua_S, 5,&arg3, "ccui.EditBox:initWithSizeAndTexture");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_initWithSizeAndTexture'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initWithSizeAndTexture(arg0, arg1, arg2, arg3);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    if (argc == 5) 
+    {
+        cocos2d::Size arg0;
+        std::string arg1;
+        std::string arg2;
+        std::string arg3;
+        cocos2d::ui::Widget::TextureResType arg4;
+
+        ok &= luaval_to_size(tolua_S, 2, &arg0, "ccui.EditBox:initWithSizeAndTexture");
+
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.EditBox:initWithSizeAndTexture");
+
+        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "ccui.EditBox:initWithSizeAndTexture");
+
+        ok &= luaval_to_std_string(tolua_S, 5,&arg3, "ccui.EditBox:initWithSizeAndTexture");
+
+        ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4, "ccui.EditBox:initWithSizeAndTexture");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_initWithSizeAndTexture'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initWithSizeAndTexture(arg0, arg1, arg2, arg3, arg4);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:initWithSizeAndTexture",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_initWithSizeAndTexture'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_EditBox_getTextHorizontalAlignment(lua_State* tolua_S)
 {
     int argc = 0;
@@ -32886,6 +34782,607 @@ int lua_cocos2dx_ui_EditBox_getTextHorizontalAlignment(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_getTextHorizontalAlignment'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_EditBox_getCapInsetsNormalRenderer(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_getCapInsetsNormalRenderer'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_getCapInsetsNormalRenderer'", nullptr);
+            return 0;
+        }
+        const cocos2d::Rect& ret = cobj->getCapInsetsNormalRenderer();
+        rect_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:getCapInsetsNormalRenderer",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_getCapInsetsNormalRenderer'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_EditBox_getCapInsetsPressedRenderer(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_getCapInsetsPressedRenderer'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_getCapInsetsPressedRenderer'", nullptr);
+            return 0;
+        }
+        const cocos2d::Rect& ret = cobj->getCapInsetsPressedRenderer();
+        rect_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:getCapInsetsPressedRenderer",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_getCapInsetsPressedRenderer'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_EditBox_getScriptEditBoxHandler(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_getScriptEditBoxHandler'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_getScriptEditBoxHandler'", nullptr);
+            return 0;
+        }
+        int ret = cobj->getScriptEditBoxHandler();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:getScriptEditBoxHandler",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_getScriptEditBoxHandler'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_EditBox_loadTextures(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_loadTextures'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        std::string arg0;
+        std::string arg1;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.EditBox:loadTextures");
+
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.EditBox:loadTextures");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_loadTextures'", nullptr);
+            return 0;
+        }
+        cobj->loadTextures(arg0, arg1);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    if (argc == 3) 
+    {
+        std::string arg0;
+        std::string arg1;
+        std::string arg2;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.EditBox:loadTextures");
+
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.EditBox:loadTextures");
+
+        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "ccui.EditBox:loadTextures");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_loadTextures'", nullptr);
+            return 0;
+        }
+        cobj->loadTextures(arg0, arg1, arg2);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    if (argc == 4) 
+    {
+        std::string arg0;
+        std::string arg1;
+        std::string arg2;
+        cocos2d::ui::Widget::TextureResType arg3;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.EditBox:loadTextures");
+
+        ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.EditBox:loadTextures");
+
+        ok &= luaval_to_std_string(tolua_S, 4,&arg2, "ccui.EditBox:loadTextures");
+
+        ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "ccui.EditBox:loadTextures");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_loadTextures'", nullptr);
+            return 0;
+        }
+        cobj->loadTextures(arg0, arg1, arg2, arg3);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:loadTextures",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_loadTextures'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_EditBox_setPlaceHolder(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_setPlaceHolder'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        const char* arg0;
+
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "ccui.EditBox:setPlaceHolder"); arg0 = arg0_tmp.c_str();
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_setPlaceHolder'", nullptr);
+            return 0;
+        }
+        cobj->setPlaceHolder(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:setPlaceHolder",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_setPlaceHolder'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_EditBox_setInputFlag(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_setInputFlag'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::ui::EditBox::InputFlag arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.EditBox:setInputFlag");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_setInputFlag'", nullptr);
+            return 0;
+        }
+        cobj->setInputFlag(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:setInputFlag",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_setInputFlag'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_EditBox_setReturnType(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_setReturnType'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::ui::EditBox::KeyboardReturnType arg0;
+
+        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.EditBox:setReturnType");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_setReturnType'", nullptr);
+            return 0;
+        }
+        cobj->setReturnType(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:setReturnType",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_setReturnType'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_EditBox_loadTextureNormal(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_loadTextureNormal'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.EditBox:loadTextureNormal");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_loadTextureNormal'", nullptr);
+            return 0;
+        }
+        cobj->loadTextureNormal(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    if (argc == 2) 
+    {
+        std::string arg0;
+        cocos2d::ui::Widget::TextureResType arg1;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccui.EditBox:loadTextureNormal");
+
+        ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccui.EditBox:loadTextureNormal");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_loadTextureNormal'", nullptr);
+            return 0;
+        }
+        cobj->loadTextureNormal(arg0, arg1);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:loadTextureNormal",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_loadTextureNormal'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_EditBox_getMaxLength(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_getMaxLength'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_getMaxLength'", nullptr);
+            return 0;
+        }
+        int ret = cobj->getMaxLength();
+        tolua_pushnumber(tolua_S,(lua_Number)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:getMaxLength",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_getMaxLength'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_EditBox_setCapInsetsPressedRenderer(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_setCapInsetsPressedRenderer'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Rect arg0;
+
+        ok &= luaval_to_rect(tolua_S, 2, &arg0, "ccui.EditBox:setCapInsetsPressedRenderer");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_setCapInsetsPressedRenderer'", nullptr);
+            return 0;
+        }
+        cobj->setCapInsetsPressedRenderer(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:setCapInsetsPressedRenderer",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_setCapInsetsPressedRenderer'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ui_EditBox_setText(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::EditBox* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_setText'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        const char* arg0;
+
+        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "ccui.EditBox:setText"); arg0 = arg0_tmp.c_str();
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_setText'", nullptr);
+            return 0;
+        }
+        cobj->setText(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:setText",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_setText'.",&tolua_err);
 #endif
 
     return 0;
@@ -32943,386 +35440,6 @@ int lua_cocos2dx_ui_EditBox_setPlaceholderFont(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_EditBox_setFontSize(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::ui::EditBox* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_setFontSize'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        int arg0;
-
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.EditBox:setFontSize");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_setFontSize'", nullptr);
-            return 0;
-        }
-        cobj->setFontSize(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:setFontSize",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_setFontSize'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_ui_EditBox_initWithSizeAndBackgroundSprite(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::ui::EditBox* cobj = nullptr;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_initWithSizeAndBackgroundSprite'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 2) {
-            cocos2d::Size arg0;
-            ok &= luaval_to_size(tolua_S, 2, &arg0, "ccui.EditBox:initWithSizeAndBackgroundSprite");
-
-            if (!ok) { break; }
-            cocos2d::ui::Scale9Sprite* arg1;
-            ok &= luaval_to_object<cocos2d::ui::Scale9Sprite>(tolua_S, 3, "ccui.Scale9Sprite",&arg1, "ccui.EditBox:initWithSizeAndBackgroundSprite");
-
-            if (!ok) { break; }
-            bool ret = cobj->initWithSizeAndBackgroundSprite(arg0, arg1);
-            tolua_pushboolean(tolua_S,(bool)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 2) {
-            cocos2d::Size arg0;
-            ok &= luaval_to_size(tolua_S, 2, &arg0, "ccui.EditBox:initWithSizeAndBackgroundSprite");
-
-            if (!ok) { break; }
-            std::string arg1;
-            ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.EditBox:initWithSizeAndBackgroundSprite");
-
-            if (!ok) { break; }
-            bool ret = cobj->initWithSizeAndBackgroundSprite(arg0, arg1);
-            tolua_pushboolean(tolua_S,(bool)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 3) {
-            cocos2d::Size arg0;
-            ok &= luaval_to_size(tolua_S, 2, &arg0, "ccui.EditBox:initWithSizeAndBackgroundSprite");
-
-            if (!ok) { break; }
-            std::string arg1;
-            ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.EditBox:initWithSizeAndBackgroundSprite");
-
-            if (!ok) { break; }
-            cocos2d::ui::Widget::TextureResType arg2;
-            ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "ccui.EditBox:initWithSizeAndBackgroundSprite");
-
-            if (!ok) { break; }
-            bool ret = cobj->initWithSizeAndBackgroundSprite(arg0, arg1, arg2);
-            tolua_pushboolean(tolua_S,(bool)ret);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccui.EditBox:initWithSizeAndBackgroundSprite",argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_initWithSizeAndBackgroundSprite'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_ui_EditBox_setPlaceHolder(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::ui::EditBox* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_setPlaceHolder'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        const char* arg0;
-
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "ccui.EditBox:setPlaceHolder"); arg0 = arg0_tmp.c_str();
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_setPlaceHolder'", nullptr);
-            return 0;
-        }
-        cobj->setPlaceHolder(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:setPlaceHolder",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_setPlaceHolder'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_ui_EditBox_setReturnType(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::ui::EditBox* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_setReturnType'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocos2d::ui::EditBox::KeyboardReturnType arg0;
-
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.EditBox:setReturnType");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_setReturnType'", nullptr);
-            return 0;
-        }
-        cobj->setReturnType(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:setReturnType",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_setReturnType'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_ui_EditBox_setInputFlag(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::ui::EditBox* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_setInputFlag'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocos2d::ui::EditBox::InputFlag arg0;
-
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.EditBox:setInputFlag");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_setInputFlag'", nullptr);
-            return 0;
-        }
-        cobj->setInputFlag(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:setInputFlag",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_setInputFlag'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_ui_EditBox_getMaxLength(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::ui::EditBox* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_getMaxLength'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_getMaxLength'", nullptr);
-            return 0;
-        }
-        int ret = cobj->getMaxLength();
-        tolua_pushnumber(tolua_S,(lua_Number)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:getMaxLength",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_getMaxLength'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_ui_EditBox_setText(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::ui::EditBox* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccui.EditBox",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::ui::EditBox*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_setText'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        const char* arg0;
-
-        std::string arg0_tmp; ok &= luaval_to_std_string(tolua_S, 2, &arg0_tmp, "ccui.EditBox:setText"); arg0 = arg0_tmp.c_str();
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_setText'", nullptr);
-            return 0;
-        }
-        cobj->setText(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:setText",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_setText'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_ui_EditBox_getPlaceholderFontColor(lua_State* tolua_S)
 {
     int argc = 0;
@@ -33370,7 +35487,7 @@ int lua_cocos2dx_ui_EditBox_getPlaceholderFontColor(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_ui_EditBox_setMaxLength(lua_State* tolua_S)
+int lua_cocos2dx_ui_EditBox_setCapInsets(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::ui::EditBox* cobj = nullptr;
@@ -33390,7 +35507,7 @@ int lua_cocos2dx_ui_EditBox_setMaxLength(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_setMaxLength'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_EditBox_setCapInsets'", nullptr);
         return 0;
     }
 #endif
@@ -33398,24 +35515,24 @@ int lua_cocos2dx_ui_EditBox_setMaxLength(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        int arg0;
+        cocos2d::Rect arg0;
 
-        ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.EditBox:setMaxLength");
+        ok &= luaval_to_rect(tolua_S, 2, &arg0, "ccui.EditBox:setCapInsets");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_setMaxLength'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_EditBox_setCapInsets'", nullptr);
             return 0;
         }
-        cobj->setMaxLength(arg0);
+        cobj->setCapInsets(arg0);
         lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:setMaxLength",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccui.EditBox:setCapInsets",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_setMaxLength'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_EditBox_setCapInsets'.",&tolua_err);
 #endif
 
     return 0;
@@ -33539,22 +35656,6 @@ int lua_cocos2dx_ui_EditBox_create(lua_State* tolua_S)
 
     do 
     {
-        if (argc == 2)
-        {
-            cocos2d::Size arg0;
-            ok &= luaval_to_size(tolua_S, 2, &arg0, "ccui.EditBox:create");
-            if (!ok) { break; }
-            std::string arg1;
-            ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.EditBox:create");
-            if (!ok) { break; }
-            cocos2d::ui::EditBox* ret = cocos2d::ui::EditBox::create(arg0, arg1);
-            object_to_luaval<cocos2d::ui::EditBox>(tolua_S, "ccui.EditBox",(cocos2d::ui::EditBox*)ret);
-            return 1;
-        }
-    } while (0);
-    ok  = true;
-    do 
-    {
         if (argc == 3)
         {
             cocos2d::Size arg0;
@@ -33629,6 +35730,88 @@ int lua_cocos2dx_ui_EditBox_create(lua_State* tolua_S)
         }
     } while (0);
     ok  = true;
+    do 
+    {
+        if (argc == 2)
+        {
+            cocos2d::Size arg0;
+            ok &= luaval_to_size(tolua_S, 2, &arg0, "ccui.EditBox:create");
+            if (!ok) { break; }
+            std::string arg1;
+            ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.EditBox:create");
+            if (!ok) { break; }
+            cocos2d::ui::EditBox* ret = cocos2d::ui::EditBox::create(arg0, arg1);
+            object_to_luaval<cocos2d::ui::EditBox>(tolua_S, "ccui.EditBox",(cocos2d::ui::EditBox*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 3)
+        {
+            cocos2d::Size arg0;
+            ok &= luaval_to_size(tolua_S, 2, &arg0, "ccui.EditBox:create");
+            if (!ok) { break; }
+            std::string arg1;
+            ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.EditBox:create");
+            if (!ok) { break; }
+            std::string arg2;
+            ok &= luaval_to_std_string(tolua_S, 4,&arg2, "ccui.EditBox:create");
+            if (!ok) { break; }
+            cocos2d::ui::EditBox* ret = cocos2d::ui::EditBox::create(arg0, arg1, arg2);
+            object_to_luaval<cocos2d::ui::EditBox>(tolua_S, "ccui.EditBox",(cocos2d::ui::EditBox*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 4)
+        {
+            cocos2d::Size arg0;
+            ok &= luaval_to_size(tolua_S, 2, &arg0, "ccui.EditBox:create");
+            if (!ok) { break; }
+            std::string arg1;
+            ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.EditBox:create");
+            if (!ok) { break; }
+            std::string arg2;
+            ok &= luaval_to_std_string(tolua_S, 4,&arg2, "ccui.EditBox:create");
+            if (!ok) { break; }
+            std::string arg3;
+            ok &= luaval_to_std_string(tolua_S, 5,&arg3, "ccui.EditBox:create");
+            if (!ok) { break; }
+            cocos2d::ui::EditBox* ret = cocos2d::ui::EditBox::create(arg0, arg1, arg2, arg3);
+            object_to_luaval<cocos2d::ui::EditBox>(tolua_S, "ccui.EditBox",(cocos2d::ui::EditBox*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 5)
+        {
+            cocos2d::Size arg0;
+            ok &= luaval_to_size(tolua_S, 2, &arg0, "ccui.EditBox:create");
+            if (!ok) { break; }
+            std::string arg1;
+            ok &= luaval_to_std_string(tolua_S, 3,&arg1, "ccui.EditBox:create");
+            if (!ok) { break; }
+            std::string arg2;
+            ok &= luaval_to_std_string(tolua_S, 4,&arg2, "ccui.EditBox:create");
+            if (!ok) { break; }
+            std::string arg3;
+            ok &= luaval_to_std_string(tolua_S, 5,&arg3, "ccui.EditBox:create");
+            if (!ok) { break; }
+            cocos2d::ui::Widget::TextureResType arg4;
+            ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4, "ccui.EditBox:create");
+            if (!ok) { break; }
+            cocos2d::ui::EditBox* ret = cocos2d::ui::EditBox::create(arg0, arg1, arg2, arg3, arg4);
+            object_to_luaval<cocos2d::ui::EditBox>(tolua_S, "ccui.EditBox",(cocos2d::ui::EditBox*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "ccui.EditBox:create",argc, 2);
     return 0;
 #if COCOS2D_DEBUG >= 1
@@ -33689,17 +35872,23 @@ int lua_register_cocos2dx_ui_EditBox(lua_State* tolua_S)
         tolua_function(tolua_S,"new",lua_cocos2dx_ui_EditBox_constructor);
         tolua_function(tolua_S,"getFontSize",lua_cocos2dx_ui_EditBox_getFontSize);
         tolua_function(tolua_S,"keyboardDidShow",lua_cocos2dx_ui_EditBox_keyboardDidShow);
-        tolua_function(tolua_S,"getScriptEditBoxHandler",lua_cocos2dx_ui_EditBox_getScriptEditBoxHandler);
+        tolua_function(tolua_S,"setMaxLength",lua_cocos2dx_ui_EditBox_setMaxLength);
+        tolua_function(tolua_S,"openKeyboard",lua_cocos2dx_ui_EditBox_openKeyboard);
+        tolua_function(tolua_S,"setFontSize",lua_cocos2dx_ui_EditBox_setFontSize);
         tolua_function(tolua_S,"getText",lua_cocos2dx_ui_EditBox_getText);
         tolua_function(tolua_S,"getInputMode",lua_cocos2dx_ui_EditBox_getInputMode);
+        tolua_function(tolua_S,"initWithSizeAndBackgroundSprite",lua_cocos2dx_ui_EditBox_initWithSizeAndBackgroundSprite);
         tolua_function(tolua_S,"getPlaceholderFontName",lua_cocos2dx_ui_EditBox_getPlaceholderFontName);
         tolua_function(tolua_S,"keyboardDidHide",lua_cocos2dx_ui_EditBox_keyboardDidHide);
         tolua_function(tolua_S,"setPlaceholderFontName",lua_cocos2dx_ui_EditBox_setPlaceholderFontName);
         tolua_function(tolua_S,"getPlaceholderFontSize",lua_cocos2dx_ui_EditBox_getPlaceholderFontSize);
+        tolua_function(tolua_S,"getCapInsetsDisabledRenderer",lua_cocos2dx_ui_EditBox_getCapInsetsDisabledRenderer);
         tolua_function(tolua_S,"getPlaceHolder",lua_cocos2dx_ui_EditBox_getPlaceHolder);
         tolua_function(tolua_S,"setFontName",lua_cocos2dx_ui_EditBox_setFontName);
         tolua_function(tolua_S,"registerScriptEditBoxHandler",lua_cocos2dx_ui_EditBox_registerScriptEditBoxHandler);
+        tolua_function(tolua_S,"setCapInsetsDisabledRenderer",lua_cocos2dx_ui_EditBox_setCapInsetsDisabledRenderer);
         tolua_function(tolua_S,"setPlaceholderFontSize",lua_cocos2dx_ui_EditBox_setPlaceholderFontSize);
+        tolua_function(tolua_S,"loadTextureDisabled",lua_cocos2dx_ui_EditBox_loadTextureDisabled);
         tolua_function(tolua_S,"setInputMode",lua_cocos2dx_ui_EditBox_setInputMode);
         tolua_function(tolua_S,"unregisterScriptEditBoxHandler",lua_cocos2dx_ui_EditBox_unregisterScriptEditBoxHandler);
         tolua_function(tolua_S,"keyboardWillShow",lua_cocos2dx_ui_EditBox_keyboardWillShow);
@@ -33708,20 +35897,26 @@ int lua_register_cocos2dx_ui_EditBox(lua_State* tolua_S)
         tolua_function(tolua_S,"setFontColor",lua_cocos2dx_ui_EditBox_setFontColor);
         tolua_function(tolua_S,"getFontName",lua_cocos2dx_ui_EditBox_getFontName);
         tolua_function(tolua_S,"keyboardWillHide",lua_cocos2dx_ui_EditBox_keyboardWillHide);
-        tolua_function(tolua_S,"touchDownAction",lua_cocos2dx_ui_EditBox_touchDownAction);
+        tolua_function(tolua_S,"setCapInsetsNormalRenderer",lua_cocos2dx_ui_EditBox_setCapInsetsNormalRenderer);
+        tolua_function(tolua_S,"loadTexturePressed",lua_cocos2dx_ui_EditBox_loadTexturePressed);
         tolua_function(tolua_S,"getFontColor",lua_cocos2dx_ui_EditBox_getFontColor);
         tolua_function(tolua_S,"getInputFlag",lua_cocos2dx_ui_EditBox_getInputFlag);
+        tolua_function(tolua_S,"initWithSizeAndTexture",lua_cocos2dx_ui_EditBox_initWithSizeAndTexture);
         tolua_function(tolua_S,"getTextHorizontalAlignment",lua_cocos2dx_ui_EditBox_getTextHorizontalAlignment);
-        tolua_function(tolua_S,"setPlaceholderFont",lua_cocos2dx_ui_EditBox_setPlaceholderFont);
-        tolua_function(tolua_S,"setFontSize",lua_cocos2dx_ui_EditBox_setFontSize);
-        tolua_function(tolua_S,"initWithSizeAndBackgroundSprite",lua_cocos2dx_ui_EditBox_initWithSizeAndBackgroundSprite);
+        tolua_function(tolua_S,"getCapInsetsNormalRenderer",lua_cocos2dx_ui_EditBox_getCapInsetsNormalRenderer);
+        tolua_function(tolua_S,"getCapInsetsPressedRenderer",lua_cocos2dx_ui_EditBox_getCapInsetsPressedRenderer);
+        tolua_function(tolua_S,"getScriptEditBoxHandler",lua_cocos2dx_ui_EditBox_getScriptEditBoxHandler);
+        tolua_function(tolua_S,"loadTextures",lua_cocos2dx_ui_EditBox_loadTextures);
         tolua_function(tolua_S,"setPlaceHolder",lua_cocos2dx_ui_EditBox_setPlaceHolder);
-        tolua_function(tolua_S,"setReturnType",lua_cocos2dx_ui_EditBox_setReturnType);
         tolua_function(tolua_S,"setInputFlag",lua_cocos2dx_ui_EditBox_setInputFlag);
+        tolua_function(tolua_S,"setReturnType",lua_cocos2dx_ui_EditBox_setReturnType);
+        tolua_function(tolua_S,"loadTextureNormal",lua_cocos2dx_ui_EditBox_loadTextureNormal);
         tolua_function(tolua_S,"getMaxLength",lua_cocos2dx_ui_EditBox_getMaxLength);
+        tolua_function(tolua_S,"setCapInsetsPressedRenderer",lua_cocos2dx_ui_EditBox_setCapInsetsPressedRenderer);
         tolua_function(tolua_S,"setText",lua_cocos2dx_ui_EditBox_setText);
+        tolua_function(tolua_S,"setPlaceholderFont",lua_cocos2dx_ui_EditBox_setPlaceholderFont);
         tolua_function(tolua_S,"getPlaceholderFontColor",lua_cocos2dx_ui_EditBox_getPlaceholderFontColor);
-        tolua_function(tolua_S,"setMaxLength",lua_cocos2dx_ui_EditBox_setMaxLength);
+        tolua_function(tolua_S,"setCapInsets",lua_cocos2dx_ui_EditBox_setCapInsets);
         tolua_function(tolua_S,"setFont",lua_cocos2dx_ui_EditBox_setFont);
         tolua_function(tolua_S,"setTextHorizontalAlignment",lua_cocos2dx_ui_EditBox_setTextHorizontalAlignment);
         tolua_function(tolua_S,"create", lua_cocos2dx_ui_EditBox_create);
@@ -37065,7 +39260,7 @@ int lua_cocos2dx_ui_TabControl_getTabCount(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ui_TabControl_getTabCount'", nullptr);
             return 0;
         }
-        unsigned long ret = cobj->getTabCount();
+        unsigned int ret = cobj->getTabCount();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -37965,10 +40160,10 @@ TOLUA_API int register_all_cocos2dx_ui(lua_State* tolua_S)
 	lua_register_cocos2dx_ui_LoadingBar(tolua_S);
 	lua_register_cocos2dx_ui_TextField(tolua_S);
 	lua_register_cocos2dx_ui_Scale9Sprite(tolua_S);
+	lua_register_cocos2dx_ui_Slider(tolua_S);
 	lua_register_cocos2dx_ui_RichElement(tolua_S);
 	lua_register_cocos2dx_ui_RichElementCustomNode(tolua_S);
 	lua_register_cocos2dx_ui_VBox(tolua_S);
-	lua_register_cocos2dx_ui_Slider(tolua_S);
 	lua_register_cocos2dx_ui_RadioButtonGroup(tolua_S);
 	lua_register_cocos2dx_ui_TabControl(tolua_S);
 	lua_register_cocos2dx_ui_ScrollView(tolua_S);

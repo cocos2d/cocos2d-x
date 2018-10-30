@@ -1,6 +1,7 @@
 /**
  Copyright 2013 BlackBerry Inc.
  Copyright (c) 2015-2017 Chukong Technologies
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -88,9 +89,6 @@ public:
 
 
 private:
-
-    bool init(MeshIndexData* meshIndexData, GLProgramState* glProgramState);
-
     /**
      * Constructor.
      */
@@ -105,10 +103,12 @@ private:
      * Hidden copy assignment operator.
      */
     VertexAttribBinding& operator=(const VertexAttribBinding&);
-
+    
+    bool init(MeshIndexData* meshIndexData, GLProgramState* glProgramState);
     void setVertexAttribPointer(const std::string& name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid* pointer);
     VertexAttribValue* getVertexAttribValue(const std::string &name);
     void parseAttributes();
+    void enableVertexAttributes(uint32_t flags) const;
 
 
     GLuint _handle;

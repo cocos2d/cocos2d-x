@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
  
@@ -23,18 +24,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-// FIXME: hack, must be included before ziputils
+#include "base/ZipUtils.h"
+
 #ifdef MINIZIP_FROM_SYSTEM
 #include <minizip/unzip.h>
 #else // from our embedded sources
 #include "unzip.h"
 #endif
 
-#include "base/ZipUtils.h"
-
 #include <zlib.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <set>
 
 #include "base/CCData.h"
 #include "base/ccMacros.h"
@@ -607,6 +608,39 @@ bool ZipFile::fileExists(const std::string &fileName) const
     } while(false);
     
     return ret;
+}
+
+std::vector<std::string> ZipFile::listFiles(const std::string &pathname) const
+{
+
+    // filter files which `filename.startsWith(pathname)`
+    // then make each path unique
+
+    std::set<std::string> fileSet;
+    ZipFilePrivate::FileListContainer::const_iterator it = _data->fileList.begin();
+    ZipFilePrivate::FileListContainer::const_iterator end = _data->fileList.end();
+    //ensure pathname ends with `/` as a directory
+    std::string dirname = pathname[pathname.length() -1] == '/' ? pathname : pathname + "/";
+    while(it != end)
+    {
+        const std::string &filename = it->first;
+        if(filename.substr(0, dirname.length()) == dirname)
+        {
+            std::string suffix = filename.substr(dirname.length());
+            auto pos = suffix.find("/");
+            if (pos == std::string::npos)
+            {
+                fileSet.insert(suffix);
+            }
+            else {
+                //fileSet.insert(parts[0] + "/");
+                fileSet.insert(suffix.substr(0, pos + 1));
+            }
+        }
+        it++;
+    }
+
+    return std::vector<std::string>(fileSet.begin(), fileSet.end());
 }
 
 unsigned char *ZipFile::getFileData(const std::string &fileName, ssize_t *size)

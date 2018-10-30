@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -90,7 +91,7 @@ private:
     std::unordered_map<int, std::function<void (int, const std::string &)>> _callbackMap;
 
     // UrlAudioPlayers which need to resumed while entering foreground
-    std::vector<IAudioPlayer*> _urlAudioPlayersNeedResume;
+    std::unordered_map<int, IAudioPlayer*> _urlAudioPlayersNeedResume;
 
     AudioPlayerProvider* _audioPlayerProvider;
     EventListener* _onPauseListener;

@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 // Resources prefix
 var s_resprefix = "";
 
@@ -6,7 +30,7 @@ var ccbjs = "";
 // so the respath will modify to res,
 if (!cc.sys.isNative)
 {
-    if (cc.game.config[cc.game.CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
+    if (cc.game.config && cc.game.config[cc.game.CONFIG_KEY.engineDir] !== "frameworks/cocos2d-html5") {
         ccbjs = "../../js-tests/resjs/";
     }
     else
@@ -700,12 +724,12 @@ var g_tilemaps = [
 
 var g_spine = [
     "spine/spineboy.atlas",
-    "spine/spineboy.json",
+    "spine/spineboy-ess.json",
     "spine/spineboy.png",
     "spine/sprite.png",
     "spine/goblins.png",
     "spine/goblins.atlas",
-    "spine/goblins_mesh.json"
+    "spine/goblins-pro.json"
 ];
 
 if (!cc.sys.isNative) {

@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -37,11 +38,11 @@
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/ccGLStateCache.h"
 #include "base/CCDirector.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventCustom.h"
+#include "base/ccUtils.h"
 #include "2d/CCFontFNT.h"
 
 NS_CC_BEGIN
@@ -155,6 +156,11 @@ public:
     {
         _letterVisible = visible;
         updateColor();
+    }
+
+    bool isVisible() const override
+    {
+        return _letterVisible;
     }
     
     //LabelLetter doesn't need to draw directly.
@@ -478,7 +484,7 @@ void Label::reset()
     _bmFontPath = "";
     _systemFontDirty = false;
     _systemFont = "Helvetica";
-    _systemFontSize = 12;
+    _systemFontSize = CC_DEFAULT_FONT_LABEL_SIZE;
 
     if (_horizontalKernings)
     {
@@ -588,22 +594,16 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
     }
 
     if (atlas == _fontAtlas)
-    {
-        if (_fontAtlas)
-        {
-            FontAtlasCache::releaseFontAtlas(_fontAtlas);
-        }
         return;
-    }
 
+    CC_SAFE_RETAIN(atlas);
     if (_fontAtlas)
     {
         _batchNodes.clear();
         FontAtlasCache::releaseFontAtlas(_fontAtlas);
-        _fontAtlas = nullptr;
     }
-
     _fontAtlas = atlas;
+    
     if (_reusedLetter == nullptr)
     {
         _reusedLetter = Sprite::create();
@@ -766,30 +766,36 @@ void Label::updateLabelLetters()
             else
             {
                 auto& letterInfo = _lettersInfo[letterIndex];
-                auto& letterDef = _fontAtlas->_letterDefinitions[letterInfo.utf32Char];
-                uvRect.size.height = letterDef.height;
-                uvRect.size.width = letterDef.width;
-                uvRect.origin.x = letterDef.U;
-                uvRect.origin.y = letterDef.V;
-
-                auto batchNode = _batchNodes.at(letterDef.textureID);
-                letterSprite->setTextureAtlas(batchNode->getTextureAtlas());
-                letterSprite->setTexture(_fontAtlas->getTexture(letterDef.textureID));
-                if (letterDef.width <= 0.f || letterDef.height <= 0.f)
+                if (letterInfo.valid)
                 {
-                    letterSprite->setTextureAtlas(nullptr);
+                    auto& letterDef = _fontAtlas->_letterDefinitions[letterInfo.utf32Char];
+                    uvRect.size.height = letterDef.height;
+                    uvRect.size.width = letterDef.width;
+                    uvRect.origin.x = letterDef.U;
+                    uvRect.origin.y = letterDef.V;
+
+                    auto batchNode = _batchNodes.at(letterDef.textureID);
+                    letterSprite->setTextureAtlas(batchNode->getTextureAtlas());
+                    letterSprite->setTexture(_fontAtlas->getTexture(letterDef.textureID));
+                    if (letterDef.width <= 0.f || letterDef.height <= 0.f)
+                    {
+                        letterSprite->setTextureAtlas(nullptr);
+                    }
+                    else
+                    {
+                        letterSprite->setTextureRect(uvRect, false, uvRect.size);
+                        letterSprite->setTextureAtlas(_batchNodes.at(letterDef.textureID)->getTextureAtlas());
+                        letterSprite->setAtlasIndex(_lettersInfo[letterIndex].atlasIndex);
+                    }
+
+                    auto px = letterInfo.positionX + letterDef.width / 2 + _linesOffsetX[letterInfo.lineIndex];
+                    auto py = letterInfo.positionY - letterDef.height / 2 + _letterOffsetY;
+                    letterSprite->setPosition(px, py);
                 }
                 else
                 {
-                    letterSprite->setTextureRect(uvRect, false, uvRect.size);
-                    letterSprite->setTextureAtlas(_batchNodes.at(letterDef.textureID)->getTextureAtlas());
-                    letterSprite->setAtlasIndex(_lettersInfo[letterIndex].atlasIndex);
+                    letterSprite->setTextureAtlas(nullptr);
                 }
-
-                auto px = letterInfo.positionX + letterDef.width / 2 + _linesOffsetX[letterInfo.lineIndex];
-                auto py = letterInfo.positionY - letterDef.height / 2 + _letterOffsetY;
-                letterSprite->setPosition(px, py);
-
                 this->updateLetterSpriteScale(letterSprite);
                 ++it;
             }
@@ -1379,7 +1385,7 @@ void Label::updateContent()
         if (_fontAtlas)
         {
             _batchNodes.clear();
-
+            CC_SAFE_RELEASE_NULL(_reusedLetter);
             FontAtlasCache::releaseFontAtlas(_fontAtlas);
             _fontAtlas = nullptr;
         }
@@ -1511,7 +1517,7 @@ void Label::onDrawShadow(GLProgram* glProgram, const Color4F& shadowColor)
     {
         Color3B oldColor = _realColor;
         GLubyte oldOPacity = _displayedOpacity;
-        _displayedOpacity = shadowColor.a * 255;
+        _displayedOpacity = shadowColor.a * (oldOPacity / 255.0f) * 255;
         setColor(Color3B(shadowColor));
 
         glProgram->setUniformsForBuiltins(_shadowTransform);
@@ -1533,7 +1539,7 @@ void Label::onDraw(const Mat4& transform, bool /*transformUpdated*/)
 {
     auto glprogram = getGLProgram();
     glprogram->use();
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
     if (_shadowEnabled)
     {
@@ -1785,13 +1791,15 @@ Sprite* Label::getLetter(int letterIndex)
                 }
                 else
                 {
+                    this->updateBMFontScale();
                     letter = LabelLetter::createWithTexture(_fontAtlas->getTexture(textureID), uvRect);
                     letter->setTextureAtlas(_batchNodes.at(textureID)->getTextureAtlas());
                     letter->setAtlasIndex(letterInfo.atlasIndex);
-                    auto px = letterInfo.positionX + uvRect.size.width / 2 + _linesOffsetX[letterInfo.lineIndex];
-                    auto py = letterInfo.positionY - uvRect.size.height / 2 + _letterOffsetY;
+                    auto px = letterInfo.positionX + _bmfontScale * uvRect.size.width / 2 + _linesOffsetX[letterInfo.lineIndex];
+                    auto py = letterInfo.positionY - _bmfontScale * uvRect.size.height / 2 + _letterOffsetY;
                     letter->setPosition(px,py);
                     letter->setOpacity(_realOpacity);
+                    this->updateLetterSpriteScale(letter);
                 }
                 
                 addChild(letter);
@@ -1870,7 +1878,7 @@ void Label::computeStringNumLines()
     size_t stringLen = _utf32Text.length();
     for (size_t i = 0; i < stringLen - 1; ++i)
     {
-        if (_utf32Text[i] == (char32_t)TextFormatter::NewLine)
+        if (_utf32Text[i] == StringUtils::UnicodeCharacters::NewLine)
         {
             quantityOfLines++;
         }
@@ -2076,7 +2084,11 @@ void Label::removeChild(Node* child, bool cleanup /* = true */)
 FontDefinition Label::_getFontDefinition() const
 {
     FontDefinition systemFontDef;
-    systemFontDef._fontName = _systemFont;
+
+    std::string fontName = _systemFont;
+    if (_fontAtlas && !_fontAtlas->getFontName().empty()) fontName = _fontAtlas->getFontName();
+
+    systemFontDef._fontName = fontName;
     systemFontDef._fontSize = _systemFontSize;
     systemFontDef._alignment = _hAlignment;
     systemFontDef._vertAlignment = _vAlignment;

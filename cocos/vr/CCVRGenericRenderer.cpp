@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2016-2017 Chukong Technologies Inc.
+ Copyright (c) 2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -29,7 +30,6 @@
 #include "vr/CCVRGenericHeadTracker.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgramState.h"
-#include "renderer/ccGLStateCache.h"
 #include "base/CCDirector.h"
 #include "2d/CCScene.h"
 #include "2d/CCCamera.h"
@@ -40,10 +40,10 @@
 NS_CC_BEGIN
 
 VRGenericRenderer::VRGenericRenderer()
-: _vignetteEnabled(true)
-, _distortion(nullptr)
-, _leftDistortionMesh(nullptr)
+: _leftDistortionMesh(nullptr)
 , _rightDistortionMesh(nullptr)
+, _distortion(nullptr)
+, _vignetteEnabled(true)
 , _glProgramState(nullptr)
 {
     _headTracker = new VRGenericHeadTracker;
@@ -125,7 +125,8 @@ void VRGenericRenderer::render(Scene* scene, Renderer* renderer)
     _fb->restoreFBO();
 
     auto texture = _fb->getRenderTarget()->getTexture();
-    GL::bindTexture2D(texture->getName());
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture->getName());
     _glProgramState->apply(Mat4::IDENTITY);
 
     GLint origViewport[4];

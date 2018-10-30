@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -38,6 +39,21 @@
 NS_CC_BEGIN
 
 namespace StringUtils {
+
+namespace UnicodeCharacters {
+    const char32_t NewLine                = 0x000A; // 10
+    const char32_t CarriageReturn         = 0x000D; // 13
+    const char32_t NextCharNoChangeX      = 0x0008; // 8
+    const char32_t Space                  = 0x0020; // 32
+    const char32_t NoBreakSpace           = 0x00A0; // 160
+}
+
+namespace AsciiCharacters {
+    const char NewLine                    = '\n';
+    const char CarriageReturn             = '\r';
+    const char NextCharNoChangeX          = '\b';
+    const char Space                      = ' ';
+}
 
 template<typename T>
 std::string toString(T arg)
@@ -162,7 +178,20 @@ CC_DLL bool isUnicodeSpace(char32_t ch);
  *
  */
 CC_DLL bool isCJKUnicode(char32_t ch);
-
+    
+/**
+ *  @brief Whether the character is a non-breaking character.
+ *  @param ch    The unicode character.
+ *  @returns     Whether the character is a non-breaking character.
+ *
+ *  @see https://en.wikipedia.org/wiki/Space_(punctuation)#Spaces_in_Unicode
+ *  @see https://en.wikipedia.org/wiki/Non-breaking_space
+ *  @see https://en.wikipedia.org/wiki/Figure_space
+ *  @see https://en.wikipedia.org/wiki/Word_joiner
+ *
+ */
+CC_DLL bool isUnicodeNonBreaking(char32_t ch);
+    
 /**
  *  @brief Returns the length of the string in characters.
  *  @param utf8 An UTF-8 encoded string.
@@ -196,7 +225,7 @@ public:
     struct CharUTF8
     {
         std::string _char;
-        bool isAnsi() { return _char.size() == 1; }
+        bool isASCII() const { return _char.size() == 1; }
     };
     typedef std::vector<CharUTF8> CharUTF8Store;
 
@@ -208,12 +237,15 @@ public:
     void replace(const std::string& newStr);
 
     std::string getAsCharSequence() const;
+    std::string getAsCharSequence(std::size_t pos) const;
+    std::string getAsCharSequence(std::size_t pos, std::size_t len) const;
 
     bool deleteChar(std::size_t pos);
     bool insert(std::size_t pos, const std::string& insertStr);
     bool insert(std::size_t pos, const StringUTF8& insertStr);
 
     CharUTF8Store& getString() { return _str; }
+    const CharUTF8Store& getString() const { return _str; }
 
 private:
     CharUTF8Store _str;

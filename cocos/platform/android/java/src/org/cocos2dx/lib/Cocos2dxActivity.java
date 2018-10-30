@@ -1,5 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2013 cocos2d-x.org
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -24,6 +25,7 @@ THE SOFTWARE.
 package org.cocos2dx.lib;
 
 import android.app.Activity;
+import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -34,6 +36,7 @@ import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.os.PowerManager;
 import android.preference.PreferenceManager.OnActivityResultListener;
 import android.util.Log;
 import android.view.View;
@@ -67,6 +70,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     private Cocos2dxWebViewHelper mWebViewHelper = null;
     private Cocos2dxEditBoxHelper mEditBoxHelper = null;
     private boolean hasFocus = false;
+    private boolean showVirtualButton = false;
+    private boolean gainAudioFocus = false;
+    private boolean paused = true;
 
     public Cocos2dxGLSurfaceView getGLSurfaceView(){
         return  mGLSurfaceView;
@@ -85,7 +91,23 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
             }
         });
     }
-    
+
+    public void setEnableVirtualButton(boolean value) {
+        this.showVirtualButton = value;
+    }
+
+    public void setEnableAudioFocusGain(boolean value) {
+        if(gainAudioFocus != value) {
+            if(!paused) {
+                if (value)
+                    Cocos2dxAudioFocusManager.registerAudioFocusListener(this);
+                else
+                    Cocos2dxAudioFocusManager.unregisterAudioFocusListener(this);
+            }
+            gainAudioFocus = value;
+        }
+    }
+
     protected void onLoadNativeLibraries() {
         try {
             ApplicationInfo ai = getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
@@ -104,6 +126,16 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Workaround in https://stackoverflow.com/questions/16283079/re-launch-of-activity-on-home-button-but-only-the-first-time/16447508
+        if (!isTaskRoot()) {
+            // Android launched another instance of the root activity into an existing task
+            //  so just quietly finish and go away, dropping the user back into the activity
+            //  at the top of the stack (ie: the last state of this task)
+            finish();
+            Log.w(TAG, "[Workaround] Ignore the activity started from icon!");
+            return;
+        }
 
         this.hideVirtualButton();
 
@@ -152,8 +184,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     @Override
     protected void onResume() {
     	Log.d(TAG, "onResume()");
+        paused = false;
         super.onResume();
-        Cocos2dxAudioFocusManager.registerAudioFocusListener(this);
+        if(gainAudioFocus)
+            Cocos2dxAudioFocusManager.registerAudioFocusListener(this);
         this.hideVirtualButton();
        	resumeIfHasFocus();
 
@@ -170,7 +204,11 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     }
     
     private void resumeIfHasFocus() {
-        if(hasFocus) {
+        //It is possible for the app to receive the onWindowsFocusChanged(true) event
+        //even though it is locked or asleep
+        boolean readyToPlay = !isDeviceLocked() && !isDeviceAsleep();
+
+        if(hasFocus && readyToPlay) {
             this.hideVirtualButton();
         	Cocos2dxHelper.onResume();
         	mGLSurfaceView.onResume();
@@ -180,8 +218,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     @Override
     protected void onPause() {
     	Log.d(TAG, "onPause()");
+        paused = true;
         super.onPause();
-        Cocos2dxAudioFocusManager.unregisterAudioFocusListener(this);
+        if(gainAudioFocus)
+            Cocos2dxAudioFocusManager.unregisterAudioFocusListener(this);
         Cocos2dxHelper.onPause();
         mGLSurfaceView.onPause();
         Cocos2dxEngineDataManager.pause();
@@ -189,7 +229,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     
     @Override
     protected void onDestroy() {
-        Cocos2dxAudioFocusManager.unregisterAudioFocusListener(this);
+        if(gainAudioFocus)
+            Cocos2dxAudioFocusManager.unregisterAudioFocusListener(this);
         super.onDestroy();
 
         Cocos2dxEngineDataManager.destroy();
@@ -251,8 +292,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         mFrameLayout.addView(this.mGLSurfaceView);
 
         // Switch to supported OpenGL (ARGB888) mode on emulator
-        if (isAndroidEmulator())
-           this.mGLSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
+        // this line dows not needed on new emulators and also it breaks stencil buffer
+        //if (isAndroidEmulator())
+        //   this.mGLSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
 
         this.mGLSurfaceView.setCocos2dxRenderer(new Cocos2dxRenderer());
         this.mGLSurfaceView.setCocos2dxEditText(edittext);
@@ -267,15 +309,17 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         //this line is need on some device if we specify an alpha bits
         if(this.mGLContextAttrs[3] > 0) glSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
 
-        // use custom EGLConfigureChooser and EGLContextFactory
+        // use custom EGLConfigureChooser
         Cocos2dxEGLConfigChooser chooser = new Cocos2dxEGLConfigChooser(this.mGLContextAttrs);
         glSurfaceView.setEGLConfigChooser(chooser);
-        glSurfaceView.setEGLContextFactory(new ContextFactory());
 
         return glSurfaceView;
     }
 
     protected void hideVirtualButton() {
+        if (showVirtualButton) {
+            return;
+        }
 
         if (Build.VERSION.SDK_INT >= 19) {
             // use reflection to remove dependence of API level
@@ -320,6 +364,24 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
       return isEmulator;
    }
 
+    private static boolean isDeviceLocked() {
+        KeyguardManager keyguardManager = (KeyguardManager)getContext().getSystemService(Context.KEYGUARD_SERVICE);
+        boolean locked = keyguardManager.inKeyguardRestrictedInputMode();
+        return locked;
+    }
+
+    private static boolean isDeviceAsleep() {
+        PowerManager powerManager = (PowerManager)getContext().getSystemService(Context.POWER_SERVICE);
+        if(powerManager == null) {
+            return false;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            return !powerManager.isInteractive();
+        } else {
+            return !powerManager.isScreenOn();
+        }
+    }
+    
     // ===========================================================
     // Inner and Anonymous Classes
     // ===========================================================
@@ -329,9 +391,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         private int[] mConfigAttributes;
         private  final int EGL_OPENGL_ES2_BIT = 0x04;
         private  final int EGL_OPENGL_ES3_BIT = 0x40;
-        public Cocos2dxEGLConfigChooser(int redSize, int greenSize, int blueSize, int alphaSize, int depthSize, int stencilSize)
+        public Cocos2dxEGLConfigChooser(int redSize, int greenSize, int blueSize, int alphaSize, int depthSize, int stencilSize, int multisamplingCount)
         {
-            mConfigAttributes = new int[] {redSize, greenSize, blueSize, alphaSize, depthSize, stencilSize};
+            mConfigAttributes = new int[] {redSize, greenSize, blueSize, alphaSize, depthSize, stencilSize, multisamplingCount};
         }
         public Cocos2dxEGLConfigChooser(int[] attributes)
         {
@@ -350,8 +412,36 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
                     EGL10.EGL_ALPHA_SIZE, mConfigAttributes[3],
                     EGL10.EGL_DEPTH_SIZE, mConfigAttributes[4],
                     EGL10.EGL_STENCIL_SIZE, mConfigAttributes[5],
+                    EGL10.EGL_SAMPLE_BUFFERS, (mConfigAttributes[6] > 0) ? 1 : 0,
+                    EGL10.EGL_SAMPLES, mConfigAttributes[6],
                     EGL10.EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
                     EGL10.EGL_NONE
+                },
+                {
+                     // GL ES 2 with user set 16 bit depth buffer
+                     EGL10.EGL_RED_SIZE, mConfigAttributes[0],
+                     EGL10.EGL_GREEN_SIZE, mConfigAttributes[1],
+                     EGL10.EGL_BLUE_SIZE, mConfigAttributes[2],
+                     EGL10.EGL_ALPHA_SIZE, mConfigAttributes[3],
+                     EGL10.EGL_DEPTH_SIZE, mConfigAttributes[4] >= 24 ? 16 : mConfigAttributes[4],
+                     EGL10.EGL_STENCIL_SIZE, mConfigAttributes[5],
+                     EGL10.EGL_SAMPLE_BUFFERS, (mConfigAttributes[6] > 0) ? 1 : 0,
+                     EGL10.EGL_SAMPLES, mConfigAttributes[6],
+                     EGL10.EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
+                     EGL10.EGL_NONE
+                },
+                {
+                     // GL ES 2 with user set 16 bit depth buffer without multisampling
+                     EGL10.EGL_RED_SIZE, mConfigAttributes[0],
+                     EGL10.EGL_GREEN_SIZE, mConfigAttributes[1],
+                     EGL10.EGL_BLUE_SIZE, mConfigAttributes[2],
+                     EGL10.EGL_ALPHA_SIZE, mConfigAttributes[3],
+                     EGL10.EGL_DEPTH_SIZE, mConfigAttributes[4] >= 24 ? 16 : mConfigAttributes[4],
+                     EGL10.EGL_STENCIL_SIZE, mConfigAttributes[5],
+                     EGL10.EGL_SAMPLE_BUFFERS, 0,
+                     EGL10.EGL_SAMPLES, 0,
+                     EGL10.EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
+                     EGL10.EGL_NONE
                 },
                 {
                     // GL ES 2 by default
@@ -379,25 +469,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
                 return configs[0];
             }
             return null;
-        }
-    }
-
-    private static class ContextFactory implements GLSurfaceView.EGLContextFactory {
-
-        private static int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
-
-        public EGLContext createContext(
-            EGL10 egl, EGLDisplay display, EGLConfig eglConfig) {
-            
-            int[] attributes = {EGL_CONTEXT_CLIENT_VERSION, 2, EGL10.EGL_NONE };
-            EGLContext context = egl.eglCreateContext(
-                display, eglConfig, EGL10.EGL_NO_CONTEXT, attributes);
-
-            return context;
-        }
-
-        public void destroyContext(EGL10 egl, EGLDisplay display, EGLContext context) {
-            egl.eglDestroyContext(display, context);
         }
     }
 }

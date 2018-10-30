@@ -1,6 +1,7 @@
 /**
  Copyright 2013 BlackBerry Inc.
  Copyright (c) 2015-2017 Chukong Technologies
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -21,7 +22,6 @@
 
 #include "renderer/CCVertexAttribBinding.h"
 #include "renderer/CCGLProgramState.h"
-#include "renderer/ccGLStateCache.h"
 #include "platform/CCGL.h"
 #include "base/CCConfiguration.h"
 #include "3d/CCMeshVertexIndexData.h"
@@ -144,16 +144,10 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, GLProgramState* glP
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         glGenVertexArrays(1, &_handle);
-        GL::bindVAO(_handle);
+        glBindVertexArray(_handle);
         glBindBuffer(GL_ARRAY_BUFFER, meshVertexData->getVertexBuffer()->getVBO());
 
-        auto flags = _vertexAttribsFlags;
-        for (int i = 0; flags > 0; i++) {
-            int flag = 1 << i;
-            if (flag & flags)
-                glEnableVertexAttribArray(i);
-            flags &= ~flag;
-        }
+        enableVertexAttributes(_vertexAttribsFlags);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshIndexData->getIndexBuffer()->getVBO());
 
@@ -162,7 +156,7 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, GLProgramState* glP
             attribute.second.apply();
         }
 
-        GL::bindVAO(0);
+        glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
@@ -176,7 +170,7 @@ void VertexAttribBinding::bind()
     if (_handle)
     {
         // hardware
-        GL::bindVAO(_handle);
+        glBindVertexArray(_handle);
     }
     else
     {
@@ -186,7 +180,7 @@ void VertexAttribBinding::bind()
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _meshIndexData->getIndexBuffer()->getVBO());
 
         // Software mode
-        GL::enableVertexAttribs(_vertexAttribsFlags);
+        enableVertexAttributes(_vertexAttribsFlags);
         // set attributes
         for(auto &attribute : _attributes)
         {
@@ -201,7 +195,7 @@ void VertexAttribBinding::unbind()
     if (_handle)
     {
         // Hardware
-       GL::bindVAO(0);
+        glBindVertexArray(0);
     }
     else
     {
@@ -229,6 +223,19 @@ void VertexAttribBinding::parseAttributes()
     {
         VertexAttribValue value(&attrib.second);
         _attributes[attrib.first] = value;
+    }
+}
+
+void VertexAttribBinding::enableVertexAttributes(uint32_t flags) const
+{
+    auto tmpFlags = flags;
+    for (int i = 0; tmpFlags > 0; i++)
+    {
+        int flag = 1 << i;
+        if (flag & tmpFlags)
+            glEnableVertexAttribArray(i);
+        
+        tmpFlags &= ~flag;
     }
 }
 

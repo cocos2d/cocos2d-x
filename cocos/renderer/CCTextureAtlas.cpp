@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -38,7 +39,6 @@ THE SOFTWARE.
 #include "base/CCEventListenerCustom.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgram.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTexture2D.h"
 #include "platform/CCGL.h"
@@ -71,7 +71,7 @@ TextureAtlas::~TextureAtlas()
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         glDeleteVertexArrays(1, &_VAOname);
-        GL::bindVAO(0);
+        glBindVertexArray(0);
     }
     CC_SAFE_RELEASE(_texture);
     
@@ -255,7 +255,7 @@ void TextureAtlas::setupIndices()
 void TextureAtlas::setupVBOandVAO()
 {
     glGenVertexArrays(1, &_VAOname);
-    GL::bindVAO(_VAOname);
+    glBindVertexArray(_VAOname);
 
 #define kQuadSize sizeof(_quads[0].bl)
 
@@ -280,7 +280,7 @@ void TextureAtlas::setupVBOandVAO()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _capacity * 6, _indices, GL_STATIC_DRAW);
 
     // Must unbind the VAO before changing the element buffer.
-    GL::bindVAO(0);
+    glBindVertexArray(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -297,7 +297,7 @@ void TextureAtlas::setupVBO()
 void TextureAtlas::mapBuffers()
 {
     // Avoid changing the element buffer for whatever VAO might be bound.
-	GL::bindVAO(0);
+    glBindVertexArray(0);
     
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, _quads, GL_DYNAMIC_DRAW);
@@ -612,7 +612,8 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
     if(!numberOfQuads)
         return;
     
-    GL::bindTexture2D(_texture);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _texture->getName());
 
     auto conf = Configuration::getInstance();
     if (conf->supportsShareableVAO() && conf->supportsMapBuffer())
@@ -642,7 +643,7 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
             _dirty = false;
         }
 
-        GL::bindVAO(_VAOname);
+        glBindVertexArray(_VAOname);
 
 #if CC_REBIND_INDICES_BUFFER
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
@@ -650,7 +651,7 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 
         glDrawElements(GL_TRIANGLES, (GLsizei) numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
         
-        GL::bindVAO(0);
+        glBindVertexArray(0);
         
 #if CC_REBIND_INDICES_BUFFER
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -674,7 +675,9 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
             _dirty = false;
         }
 
-        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
 
         // vertices
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, vertices));

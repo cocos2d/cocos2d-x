@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -305,19 +306,19 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
     return result;
 }
 
-Sprite::Sprite(void)
-: _batchNode(nullptr)
-, _textureAtlas(nullptr)
+Sprite::Sprite()
+: _textureAtlas(nullptr)
+, _batchNode(nullptr)
 , _shouldBeHidden(false)
 , _texture(nullptr)
 , _spriteFrame(nullptr)
-, _insideBounds(true)
 , _centerRectNormalized(0,0,1,1)
 , _renderMode(Sprite::RenderMode::QUAD)
-, _trianglesVertex(nullptr)
-, _trianglesIndex(nullptr)
 , _stretchFactor(Vec2::ONE)
 , _originalContentSize(Size::ZERO)
+, _trianglesVertex(nullptr)
+, _trianglesIndex(nullptr)
+, _insideBounds(true)
 , _stretchEnabled(true)
 {
 #if CC_SPRITE_DEBUG_DRAW
@@ -372,8 +373,10 @@ void Sprite::setTexture(const std::string &filename)
 
 void Sprite::setTexture(Texture2D *texture)
 {
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, texture));
-
+    if(_glProgramState == nullptr)
+    {
+        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, texture));
+    }
     // If batchnode, then texture id should be the same
     CCASSERT(! _batchNode || (texture &&  texture->getName() == _batchNode->getTexture()->getName()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
@@ -1431,23 +1434,7 @@ void Sprite::setFlippedX(bool flippedX)
     if (_flippedX != flippedX)
     {
         _flippedX = flippedX;
-
-        if (_renderMode == RenderMode::QUAD_BATCHNODE)
-        {
-            setDirty(true);
-        }
-        else if (_renderMode == RenderMode::POLYGON)
-        {
-            for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
-                auto& v = _polyInfo.triangles.verts[i].vertices;
-                v.x = _contentSize.width -v.x;
-            }
-        }
-        else
-        {
-            // RenderMode:: Quad or Slice9
-            updatePoly();
-        }
+        flipX();
     }
 }
 
@@ -1461,29 +1448,51 @@ void Sprite::setFlippedY(bool flippedY)
     if (_flippedY != flippedY)
     {
         _flippedY = flippedY;
-
-        if (_renderMode == RenderMode::QUAD_BATCHNODE)
-        {
-            setDirty(true);
-        }
-        else if (_renderMode == RenderMode::POLYGON)
-        {
-            for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
-                auto& v = _polyInfo.triangles.verts[i].vertices;
-                v.y = _contentSize.height -v.y;
-            }
-        }
-        else
-        {
-            // RenderMode:: Quad or Slice9
-            updatePoly();
-        }
+        flipY();
     }
 }
 
 bool Sprite::isFlippedY(void) const
 {
     return _flippedY;
+}
+
+void Sprite::flipX() {
+    if (_renderMode == RenderMode::QUAD_BATCHNODE)
+    {
+        setDirty(true);
+    }
+    else if (_renderMode == RenderMode::POLYGON)
+    {
+        for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
+            auto& v = _polyInfo.triangles.verts[i].vertices;
+            v.x = _contentSize.width -v.x;
+        }
+    }
+    else
+    {
+        // RenderMode:: Quad or Slice9
+        updatePoly();
+    }
+}
+
+void Sprite::flipY() {
+    if (_renderMode == RenderMode::QUAD_BATCHNODE)
+    {
+        setDirty(true);
+    }
+    else if (_renderMode == RenderMode::POLYGON)
+    {
+        for (ssize_t i = 0; i < _polyInfo.triangles.vertCount; i++) {
+            auto& v = _polyInfo.triangles.verts[i].vertices;
+            v.y = _contentSize.height -v.y;
+        }
+    }
+    else
+    {
+        // RenderMode:: Quad or Slice9
+        updatePoly();
+    }
 }
 
 //
@@ -1589,6 +1598,9 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
     {
         _polyInfo = spriteFrame->getPolygonInfo();
         _renderMode = RenderMode::POLYGON;
+        if (_flippedX) flipX();
+        if (_flippedY) flipY();
+        updateColor();
     }
     if (spriteFrame->hasAnchorPoint())
     {
@@ -1652,7 +1664,9 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
 
     // self render
     if( ! _batchNode ) {
-        _renderMode = RenderMode::QUAD;
+        if (_renderMode != RenderMode::SLICE9) {
+            _renderMode = RenderMode::QUAD;
+        }
         _atlasIndex = INDEX_NOT_INITIALIZED;
         setTextureAtlas(nullptr);
         _recursiveDirty = false;

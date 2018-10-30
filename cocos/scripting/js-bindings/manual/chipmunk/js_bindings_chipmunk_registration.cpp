@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012 Zynga Inc.
- * Copyright (c) 2013-2017 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -67,6 +68,7 @@ void jsb_register_chipmunk(JSContext* cx, JS::HandleObject object)
     JS_DefineFunction(cx, chipmunk, "momentForSegment", JSB_cpMomentForSegment, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE);
 
     JS::RootedObject space(cx, JSB_cpSpace_object);
+    JS_DefineFunction(cx, space, "segmentQuery", JSB_cpSpace_segmentQuery, 5, JSPROP_PERMANENT | JSPROP_ENUMERATE);
     JS_DefineFunction(cx, space, "segmentQueryFirst", JSB_cpSpace_segmentQueryFirst, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE);
     JS_DefineFunction(cx, space, "pointQueryNearest", JSB_cpSpace_pointQueryNearest, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE);
 

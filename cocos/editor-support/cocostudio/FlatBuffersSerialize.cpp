@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -243,7 +244,7 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
         _builder = new (std::nothrow) FlatBufferBuilder();
         
         Offset<NodeTree> nodeTree;
-        Offset<NodeAction> action;
+        Offset<NodeAction> aciton;
         std::vector<Offset<flatbuffers::AnimationInfo>> animationInfos;
         
         const tinyxml2::XMLElement* child = element->FirstChildElement();
@@ -255,7 +256,7 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
             if (name == "Animation") // action
             {
                 const tinyxml2::XMLElement* animation = child;
-                action = createNodeAction(animation);
+                aciton = createNodeAction(animation);
             }
             else if (name == "ObjectData") // nodeTree
             {
@@ -296,7 +297,7 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
                                                  _builder->CreateVector(_textures),
                                                  _builder->CreateVector(_texturePngs),
                                                  nodeTree,
-                                                 action,
+                                                 aciton,
                                                  _builder->CreateVector(animationInfos));
         _builder->Finish(csparsebinary);
         
@@ -337,15 +338,12 @@ Offset<NodeTree> FlatBuffersSerialize::createNodeTree(const tinyxml2::XMLElement
     if (classname == "ProjectNode")
     {
         auto reader = ProjectNodeReader::getInstance();
-        auto tempOptions = reader->createOptionsWithFlatBuffers(objectData, _builder);
-        
-        options = CreateOptions(*_builder, *(Offset<WidgetOptions>*)(&tempOptions));
+        options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
     }
     else if (classname == "SimpleAudio")
     {
         auto reader = ComAudioReader::getInstance();
-        auto tempOptions = reader->createOptionsWithFlatBuffers(objectData, _builder);
-        options = CreateOptions(*_builder, *(Offset<WidgetOptions>*)(&tempOptions));
+        options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
     }
     else
     {
@@ -355,8 +353,7 @@ Offset<NodeTree> FlatBuffersSerialize::createNodeTree(const tinyxml2::XMLElement
         NodeReaderProtocol* reader = dynamic_cast<NodeReaderProtocol*>(ObjectFactory::getInstance()->createObject(readername));
         if (reader != nullptr)
         {
-            auto tempOptions = reader->createOptionsWithFlatBuffers(objectData, _builder);
-            options = CreateOptions(*_builder, *(Offset<WidgetOptions>*)(&tempOptions));
+            options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
         }
     }
     
@@ -1351,7 +1348,7 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
         _builder = new (std::nothrow) FlatBufferBuilder();
 
         Offset<NodeTree> nodeTree;
-        Offset<NodeAction> action;
+        Offset<NodeAction> aciton;
         std::vector<Offset<flatbuffers::AnimationInfo> > animationInfos;
         
         const tinyxml2::XMLElement* child = element->FirstChildElement();
@@ -1363,7 +1360,7 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
             if (name == "Animation") // action
             {
                 const tinyxml2::XMLElement* animation = child;
-                action = createNodeAction(animation);
+                aciton = createNodeAction(animation);
             }
             else if (name == "ObjectData") // nodeTree
             {
@@ -1402,7 +1399,7 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
                                                  _builder->CreateVector(_textures),
                                                  _builder->CreateVector(_texturePngs),
                                                  nodeTree,
-                                                 action,
+                                                 aciton,
                                                  _builder->CreateVector(animationInfos));
         _builder->Finish(csparsebinary);
         
@@ -1426,14 +1423,12 @@ Offset<NodeTree> FlatBuffersSerialize::createNodeTreeForSimulator(const tinyxml2
     if (classname == "ProjectNode")
     {
         auto projectNodeOptions = createProjectNodeOptionsForSimulator(objectData);
-        options = CreateOptions(*_builder, *(Offset<WidgetOptions>*)(&projectNodeOptions));
+        options = CreateOptions(*_builder, *(Offset<Table>*)(&projectNodeOptions));
     }
     else if (classname == "SimpleAudio")
     {
         auto reader = ComAudioReader::getInstance();
-        auto tempOptions = reader->createOptionsWithFlatBuffers(objectData, _builder);
-        
-        options = CreateOptions(*_builder, *(Offset<WidgetOptions>*)(&tempOptions));
+        options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
     }
     else
     {
@@ -1443,9 +1438,7 @@ Offset<NodeTree> FlatBuffersSerialize::createNodeTreeForSimulator(const tinyxml2
         NodeReaderProtocol* reader = dynamic_cast<NodeReaderProtocol*>(ObjectFactory::getInstance()->createObject(readername));
         if (reader != nullptr)
         {
-            auto tempOptions = reader->createOptionsWithFlatBuffers(objectData, _builder);
-            
-            options = CreateOptions(*_builder, *(Offset<WidgetOptions>*)(&tempOptions));
+            options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
         }
     }
     

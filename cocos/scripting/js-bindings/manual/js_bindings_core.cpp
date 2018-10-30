@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2012 Zynga Inc.
- * Copyright (c) 2013-2017 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -141,12 +142,12 @@ void jsb_del_c_proxy_for_jsobject( JSObject *jsobj )
     CCASSERT(proxy, "Invalid proxy for JSObject");
     JS_SetPrivate(jsobj, NULL);
 
-    free(proxy);
+    delete(proxy);
 }
 
 void jsb_set_c_proxy_for_jsobject( JSObject *jsobj, void *handle, unsigned long flags)
 {
-    struct jsb_c_proxy_s *proxy = (struct jsb_c_proxy_s*) malloc(sizeof(*proxy));
+    struct jsb_c_proxy_s *proxy = new (std::nothrow) (struct jsb_c_proxy_s);
     CCASSERT(proxy, "No memory for proxy");
 
     proxy->handle = handle;

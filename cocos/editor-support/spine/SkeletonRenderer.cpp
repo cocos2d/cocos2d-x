@@ -31,6 +31,7 @@
 #include <spine/SkeletonRenderer.h>
 #include <spine/extension.h>
 #include <spine/SkeletonBatch.h>
+#include <spine/SkeletonTwoColorBatch.h>
 #include <spine/AttachmentVertices.h>
 #include <spine/Cocos2dAttachmentLoader.h>
 #include <algorithm>
@@ -61,6 +62,8 @@ SkeletonRenderer* SkeletonRenderer::createWithFile (const std::string& skeletonD
 
 void SkeletonRenderer::initialize () {
 	_worldVertices = new float[1000]; // Max number of vertices per mesh.
+	
+	_clipper = spSkeletonClipping_create();
 
 	_blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 	setOpacityModifyRGB(true);
@@ -74,21 +77,21 @@ void SkeletonRenderer::setSkeletonData (spSkeletonData *skeletonData, bool ownsS
 }
 
 SkeletonRenderer::SkeletonRenderer ()
-	: _atlas(nullptr), _attachmentLoader(nullptr), _debugSlots(false), _debugBones(false), _timeScale(1) {
+	: _atlas(nullptr), _attachmentLoader(nullptr), _debugSlots(false), _debugBones(false), _debugMeshes(false), _timeScale(1), _effect(nullptr) {
 }
 
 SkeletonRenderer::SkeletonRenderer (spSkeletonData *skeletonData, bool ownsSkeletonData)
-	: _atlas(nullptr), _attachmentLoader(nullptr), _debugSlots(false), _debugBones(false), _timeScale(1) {
+	: _atlas(nullptr), _attachmentLoader(nullptr), _debugSlots(false), _debugBones(false), _debugMeshes(false), _timeScale(1), _effect(nullptr) {
 	initWithData(skeletonData, ownsSkeletonData);
 }
 
 SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, spAtlas* atlas, float scale)
-	: _atlas(nullptr), _attachmentLoader(nullptr), _debugSlots(false), _debugBones(false), _timeScale(1) {
+	: _atlas(nullptr), _attachmentLoader(nullptr), _debugSlots(false), _debugBones(false), _debugMeshes(false), _timeScale(1), _effect(nullptr) {
 	initWithJsonFile(skeletonDataFile, atlas, scale);
 }
 
 SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, const std::string& atlasFile, float scale)
-	: _atlas(nullptr), _attachmentLoader(nullptr), _debugSlots(false), _debugBones(false), _timeScale(1) {
+	: _atlas(nullptr), _attachmentLoader(nullptr), _debugSlots(false), _debugBones(false), _debugMeshes(false), _timeScale(1), _effect(nullptr) {
 	initWithJsonFile(skeletonDataFile, atlasFile, scale);
 }
 
@@ -98,6 +101,7 @@ SkeletonRenderer::~SkeletonRenderer () {
 	if (_atlas) spAtlas_dispose(_atlas);
 	if (_attachmentLoader) spAttachmentLoader_dispose(_attachmentLoader);
 	delete [] _worldVertices;
+	spSkeletonClipping_dispose(_clipper);
 }
 
 void SkeletonRenderer::initWithData (spSkeletonData* skeletonData, bool ownsSkeletonData) {
@@ -172,91 +176,386 @@ void SkeletonRenderer::initWithBinaryFile (const std::string& skeletonDataFile, 
 
 
 void SkeletonRenderer::update (float deltaTime) {
+	Node::update(deltaTime);
 	spSkeleton_update(_skeleton, deltaTime * _timeScale);
 }
 
 void SkeletonRenderer::draw (Renderer* renderer, const Mat4& transform, uint32_t transformFlags) {
 	SkeletonBatch* batch = SkeletonBatch::getInstance();
+	SkeletonTwoColorBatch* twoColorBatch = SkeletonTwoColorBatch::getInstance();
+	bool isTwoColorTint = this->isTwoColorTint();
+	
+	if (_effect) _effect->begin(_effect, _skeleton);
 
-	Color3B nodeColor = getColor();
-	_skeleton->r = nodeColor.r / (float)255;
-	_skeleton->g = nodeColor.g / (float)255;
-	_skeleton->b = nodeColor.b / (float)255;
-	_skeleton->a = getDisplayedOpacity() / (float)255;
-    
+	Color4F nodeColor;
+	nodeColor.r = getDisplayedColor().r / (float)255;
+	nodeColor.g = getDisplayedColor().g / (float)255;
+	nodeColor.b = getDisplayedColor().b / (float)255;
+	nodeColor.a = getDisplayedOpacity() / (float)255;
+	
     Color4F color;
+	Color4F darkColor;
 	AttachmentVertices* attachmentVertices = nullptr;
+	TwoColorTrianglesCommand* lastTwoColorTrianglesCommand = nullptr;
 	for (int i = 0, n = _skeleton->slotsCount; i < n; ++i) {
 		spSlot* slot = _skeleton->drawOrder[i];
-		if (!slot->attachment) continue;
-
+		if (!slot->attachment) {
+			spSkeletonClipping_clipEnd(_clipper, slot);
+			continue;
+		}
+		
+		cocos2d::TrianglesCommand::Triangles triangles;
+		TwoColorTriangles trianglesTwoColor;
+		
 		switch (slot->attachment->type) {
 		case SP_ATTACHMENT_REGION: {
 			spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
-			spRegionAttachment_computeWorldVertices(attachment, slot->bone, _worldVertices);
 			attachmentVertices = getAttachmentVertices(attachment);
-            color.r = attachment->r;
-			color.g = attachment->g;
-			color.b = attachment->b;
-			color.a = attachment->a;
+			
+			if (!isTwoColorTint) {
+				triangles.indices = attachmentVertices->_triangles->indices;
+				triangles.indexCount = attachmentVertices->_triangles->indexCount;
+				triangles.verts = batch->allocateVertices(attachmentVertices->_triangles->vertCount);
+				triangles.vertCount = attachmentVertices->_triangles->vertCount;
+				memcpy(triangles.verts, attachmentVertices->_triangles->verts, sizeof(cocos2d::V3F_C4B_T2F) * attachmentVertices->_triangles->vertCount);
+				spRegionAttachment_computeWorldVertices(attachment, slot->bone, (float*)triangles.verts, 0, 6);
+			} else {
+				trianglesTwoColor.indices = attachmentVertices->_triangles->indices;
+				trianglesTwoColor.indexCount = attachmentVertices->_triangles->indexCount;
+				trianglesTwoColor.verts = twoColorBatch->allocateVertices(attachmentVertices->_triangles->vertCount);
+				trianglesTwoColor.vertCount = attachmentVertices->_triangles->vertCount;
+				for (int ii = 0; ii < trianglesTwoColor.vertCount; ii++) {
+					trianglesTwoColor.verts[ii].texCoords = attachmentVertices->_triangles->verts[ii].texCoords;
+				}
+				spRegionAttachment_computeWorldVertices(attachment, slot->bone, (float*)trianglesTwoColor.verts, 0, 7);
+			}
+			
+            color.r = attachment->color.r;
+			color.g = attachment->color.g;
+			color.b = attachment->color.b;
+			color.a = attachment->color.a;
+			
 			break;
 		}
 		case SP_ATTACHMENT_MESH: {
 			spMeshAttachment* attachment = (spMeshAttachment*)slot->attachment;
-			spMeshAttachment_computeWorldVertices(attachment, slot, _worldVertices);
 			attachmentVertices = getAttachmentVertices(attachment);
-            color.r = attachment->r;
-            color.g = attachment->g;
-            color.b = attachment->b;
-            color.a = attachment->a;
+			
+			if (!isTwoColorTint) {
+				triangles.indices = attachmentVertices->_triangles->indices;
+				triangles.indexCount = attachmentVertices->_triangles->indexCount;
+				triangles.verts = batch->allocateVertices(attachmentVertices->_triangles->vertCount);
+				triangles.vertCount = attachmentVertices->_triangles->vertCount;
+				memcpy(triangles.verts, attachmentVertices->_triangles->verts, sizeof(cocos2d::V3F_C4B_T2F) * attachmentVertices->_triangles->vertCount);
+				spVertexAttachment_computeWorldVertices(SUPER(attachment), slot, 0, triangles.vertCount * sizeof(cocos2d::V3F_C4B_T2F) / 4, (float*)triangles.verts, 0, 6);
+			} else {
+				trianglesTwoColor.indices = attachmentVertices->_triangles->indices;
+				trianglesTwoColor.indexCount = attachmentVertices->_triangles->indexCount;
+				trianglesTwoColor.verts = twoColorBatch->allocateVertices(attachmentVertices->_triangles->vertCount);
+				trianglesTwoColor.vertCount = attachmentVertices->_triangles->vertCount;
+				for (int ii = 0; ii < trianglesTwoColor.vertCount; ii++) {
+					trianglesTwoColor.verts[ii].texCoords = attachmentVertices->_triangles->verts[ii].texCoords;
+				}
+				spVertexAttachment_computeWorldVertices(SUPER(attachment), slot, 0, trianglesTwoColor.vertCount * sizeof(V3F_C4B_C4B_T2F) / 4, (float*)trianglesTwoColor.verts, 0, 7);
+			}
+			
+			color.r = attachment->color.r;
+			color.g = attachment->color.g;
+			color.b = attachment->color.b;
+			color.a = attachment->color.a;
+			
 			break;
 		}
+		case SP_ATTACHMENT_CLIPPING: {
+			spClippingAttachment* clip = (spClippingAttachment*)slot->attachment;
+			spSkeletonClipping_clipStart(_clipper, slot, clip);
+		}
 		default:
+			spSkeletonClipping_clipEnd(_clipper, slot);
 			continue;
 		}
-
-		color.a *= _skeleton->a * slot->a * 255;
-		float multiplier = _premultipliedAlpha ? color.a : 255;
-		color.r *= _skeleton->r * slot->r * multiplier;
-		color.g *= _skeleton->g * slot->g * multiplier;
-		color.b *= _skeleton->b * slot->b * multiplier;
-        
-        
-        
-		for (int v = 0, w = 0, vn = attachmentVertices->_triangles->vertCount; v < vn; ++v, w += 2) {
-			V3F_C4B_T2F* vertex = attachmentVertices->_triangles->verts + v;
-			vertex->vertices.x = _worldVertices[w];
-			vertex->vertices.y = _worldVertices[w + 1];
-            vertex->colors.r = (GLubyte)color.r;
-            vertex->colors.g = (GLubyte)color.g;
-            vertex->colors.b = (GLubyte)color.b;
-            vertex->colors.a = (GLubyte)color.a;
+		
+		if (slot->darkColor) {
+			darkColor.r = slot->darkColor->r * 255;
+			darkColor.g = slot->darkColor->g * 255;
+			darkColor.b = slot->darkColor->b * 255;
+		} else {
+			darkColor.r = 0;
+			darkColor.g = 0;
+			darkColor.b = 0;
 		}
-
+		
+		color.a *= nodeColor.a * _skeleton->color.a * slot->color.a * 255;
+		// skip rendering if the color of this attachment is 0
+		if (color.a == 0){
+			spSkeletonClipping_clipEnd(_clipper, slot);
+			continue;
+		}
+		float multiplier = _premultipliedAlpha ? color.a : 255;
+		color.r *= nodeColor.r * _skeleton->color.r * slot->color.r * multiplier;
+		color.g *= nodeColor.g * _skeleton->color.g * slot->color.g * multiplier;
+		color.b *= nodeColor.b * _skeleton->color.b * slot->color.b * multiplier;
+		
 		BlendFunc blendFunc;
 		switch (slot->data->blendMode) {
-		case SP_BLEND_MODE_ADDITIVE:
-			blendFunc.src = _premultipliedAlpha ? GL_ONE : GL_SRC_ALPHA;
-			blendFunc.dst = GL_ONE;
-			break;
-		case SP_BLEND_MODE_MULTIPLY:
-			blendFunc.src = GL_DST_COLOR;
-			blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
-			break;
-		case SP_BLEND_MODE_SCREEN:
-			blendFunc.src = GL_ONE;
-			blendFunc.dst = GL_ONE_MINUS_SRC_COLOR;
-			break;
-		default:
-			blendFunc.src = _premultipliedAlpha ? GL_ONE : GL_SRC_ALPHA;
-			blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+			case SP_BLEND_MODE_ADDITIVE:
+				blendFunc.src = _premultipliedAlpha ? GL_ONE : GL_SRC_ALPHA;
+				blendFunc.dst = GL_ONE;
+				break;
+			case SP_BLEND_MODE_MULTIPLY:
+				blendFunc.src = GL_DST_COLOR;
+				blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+				break;
+			case SP_BLEND_MODE_SCREEN:
+				blendFunc.src = GL_ONE;
+				blendFunc.dst = GL_ONE_MINUS_SRC_COLOR;
+				break;
+			default:
+				blendFunc.src = _premultipliedAlpha ? GL_ONE : GL_SRC_ALPHA;
+				blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 		}
-
-		batch->addCommand(renderer, _globalZOrder, attachmentVertices->_texture, _glProgramState, blendFunc,
-			*attachmentVertices->_triangles, transform, transformFlags);
+		
+		if (!isTwoColorTint) {
+			if (spSkeletonClipping_isClipping(_clipper)) {
+				spSkeletonClipping_clipTriangles(_clipper, (float*)&triangles.verts[0].vertices, triangles.vertCount * sizeof(cocos2d::V3F_C4B_T2F) / 4, triangles.indices, triangles.indexCount, (float*)&triangles.verts[0].texCoords, 6);
+				batch->deallocateVertices(triangles.vertCount);
+				
+				if (_clipper->clippedTriangles->size == 0){
+					spSkeletonClipping_clipEnd(_clipper, slot);
+					continue;
+				}
+				
+				triangles.vertCount = _clipper->clippedVertices->size >> 1;
+				triangles.verts = batch->allocateVertices(triangles.vertCount);
+				triangles.indexCount = _clipper->clippedTriangles->size;
+				triangles.indices = batch->allocateIndices(triangles.indexCount);
+				memcpy(triangles.indices, _clipper->clippedTriangles->items, sizeof(unsigned short) * _clipper->clippedTriangles->size);
+				
+				cocos2d::TrianglesCommand* batchedTriangles = batch->addCommand(renderer, _globalZOrder, attachmentVertices->_texture, _glProgramState, blendFunc, triangles, transform, transformFlags);
+				
+				float* verts = _clipper->clippedVertices->items;
+				float* uvs = _clipper->clippedUVs->items;
+				if (_effect) {
+					spColor light;
+					spColor dark;
+					light.r = color.r / 255.0f;
+					light.g = color.g / 255.0f;
+					light.b = color.b / 255.0f;
+					light.a = color.a / 255.0f;
+					dark.r = dark.g = dark.b = dark.a = 0;
+					for (int v = 0, vn = batchedTriangles->getTriangles().vertCount, vv = 0; v < vn; ++v, vv+=2) {
+						V3F_C4B_T2F* vertex = batchedTriangles->getTriangles().verts + v;
+						spColor lightCopy = light;
+						spColor darkCopy = dark;
+						vertex->vertices.x = verts[vv];
+						vertex->vertices.y = verts[vv + 1];
+						vertex->texCoords.u = uvs[vv];
+						vertex->texCoords.v = uvs[vv + 1];
+						_effect->transform(_effect, &vertex->vertices.x, &vertex->vertices.y, &vertex->texCoords.u, &vertex->texCoords.v, &lightCopy, &darkCopy);
+						vertex->colors.r = (GLubyte)(lightCopy.r * 255);
+						vertex->colors.g = (GLubyte)(lightCopy.g * 255);
+						vertex->colors.b = (GLubyte)(lightCopy.b * 255);
+						vertex->colors.a = (GLubyte)(lightCopy.a * 255);
+					}
+				} else {
+					for (int v = 0, vn = batchedTriangles->getTriangles().vertCount, vv = 0; v < vn; ++v, vv+=2) {
+						V3F_C4B_T2F* vertex = batchedTriangles->getTriangles().verts + v;
+						vertex->vertices.x = verts[vv];
+						vertex->vertices.y = verts[vv + 1];
+						vertex->texCoords.u = uvs[vv];
+						vertex->texCoords.v = uvs[vv + 1];
+						vertex->colors.r = (GLubyte)color.r;
+						vertex->colors.g = (GLubyte)color.g;
+						vertex->colors.b = (GLubyte)color.b;
+						vertex->colors.a = (GLubyte)color.a;
+					}
+				}
+			} else {
+				cocos2d::TrianglesCommand* batchedTriangles = batch->addCommand(renderer, _globalZOrder, attachmentVertices->_texture, _glProgramState, blendFunc, triangles, transform, transformFlags);
+				
+				if (_effect) {
+					spColor light;
+					spColor dark;
+					light.r = color.r / 255.0f;
+					light.g = color.g / 255.0f;
+					light.b = color.b / 255.0f;
+					light.a = color.a / 255.0f;
+					dark.r = dark.g = dark.b = dark.a = 0;
+					for (int v = 0, vn = batchedTriangles->getTriangles().vertCount; v < vn; ++v) {
+						V3F_C4B_T2F* vertex = batchedTriangles->getTriangles().verts + v;
+						spColor lightCopy = light;
+						spColor darkCopy = dark;
+						_effect->transform(_effect, &vertex->vertices.x, &vertex->vertices.y, &vertex->texCoords.u, &vertex->texCoords.v, &lightCopy, &darkCopy);
+						vertex->colors.r = (GLubyte)(lightCopy.r * 255);
+						vertex->colors.g = (GLubyte)(lightCopy.g * 255);
+						vertex->colors.b = (GLubyte)(lightCopy.b * 255);
+						vertex->colors.a = (GLubyte)(lightCopy.a * 255);
+					}
+				} else {
+					for (int v = 0, vn = batchedTriangles->getTriangles().vertCount; v < vn; ++v) {
+						V3F_C4B_T2F* vertex = batchedTriangles->getTriangles().verts + v;
+						vertex->colors.r = (GLubyte)color.r;
+						vertex->colors.g = (GLubyte)color.g;
+						vertex->colors.b = (GLubyte)color.b;
+						vertex->colors.a = (GLubyte)color.a;
+					}
+				}
+			}
+		} else {
+			if (spSkeletonClipping_isClipping(_clipper)) {
+				spSkeletonClipping_clipTriangles(_clipper, (float*)&trianglesTwoColor.verts[0].position, trianglesTwoColor.vertCount * sizeof(V3F_C4B_C4B_T2F) / 4, trianglesTwoColor.indices, trianglesTwoColor.indexCount, (float*)&trianglesTwoColor.verts[0].texCoords, 7);
+				twoColorBatch->deallocateVertices(trianglesTwoColor.vertCount);
+				
+				if (_clipper->clippedTriangles->size == 0){
+					spSkeletonClipping_clipEnd(_clipper, slot);
+					continue;
+				}
+				
+				trianglesTwoColor.vertCount = _clipper->clippedVertices->size >> 1;
+				trianglesTwoColor.verts = twoColorBatch->allocateVertices(trianglesTwoColor.vertCount);
+				trianglesTwoColor.indexCount = _clipper->clippedTriangles->size;
+				trianglesTwoColor.indices = twoColorBatch->allocateIndices(trianglesTwoColor.indexCount);
+				memcpy(trianglesTwoColor.indices, _clipper->clippedTriangles->items, sizeof(unsigned short) * _clipper->clippedTriangles->size);
+				
+				TwoColorTrianglesCommand* batchedTriangles = lastTwoColorTrianglesCommand = twoColorBatch->addCommand(renderer, _globalZOrder, attachmentVertices->_texture->getName(), _glProgramState, blendFunc, trianglesTwoColor, transform, transformFlags);
+				
+				float* verts = _clipper->clippedVertices->items;
+				float* uvs = _clipper->clippedUVs->items;
+				
+				if (_effect) {
+					spColor light;
+					spColor dark;
+					light.r = color.r / 255.0f;
+					light.g = color.g / 255.0f;
+					light.b = color.b / 255.0f;
+					light.a = color.a / 255.0f;
+					dark.r = darkColor.r / 255.0f;
+					dark.g = darkColor.g / 255.0f;
+					dark.b = darkColor.b / 255.0f;
+					dark.a = darkColor.a / 255.0f;
+					for (int v = 0, vn = batchedTriangles->getTriangles().vertCount, vv = 0; v < vn; ++v, vv += 2) {
+						V3F_C4B_C4B_T2F* vertex = batchedTriangles->getTriangles().verts + v;
+						spColor lightCopy = light;
+						spColor darkCopy = dark;
+						vertex->position.x = verts[vv];
+						vertex->position.y = verts[vv + 1];
+						vertex->texCoords.u = uvs[vv];
+						vertex->texCoords.v = uvs[vv + 1];
+						_effect->transform(_effect, &vertex->position.x, &vertex->position.y, &vertex->texCoords.u, &vertex->texCoords.v, &lightCopy, &darkCopy);
+						vertex->color.r = (GLubyte)(lightCopy.r * 255);
+						vertex->color.g = (GLubyte)(lightCopy.g * 255);
+						vertex->color.b = (GLubyte)(lightCopy.b * 255);
+						vertex->color.a = (GLubyte)(lightCopy.a * 255);
+						vertex->color2.r = (GLubyte)(darkCopy.r * 255);
+						vertex->color2.g = (GLubyte)(darkCopy.g * 255);
+						vertex->color2.b = (GLubyte)(darkCopy.b * 255);
+						vertex->color2.a = 1;
+					}
+				} else {
+					for (int v = 0, vn = batchedTriangles->getTriangles().vertCount, vv = 0; v < vn; ++v, vv += 2) {
+						V3F_C4B_C4B_T2F* vertex = batchedTriangles->getTriangles().verts + v;
+						vertex->position.x = verts[vv];
+						vertex->position.y = verts[vv + 1];
+						vertex->texCoords.u = uvs[vv];
+						vertex->texCoords.v = uvs[vv + 1];
+						vertex->color.r = (GLubyte)color.r;
+						vertex->color.g = (GLubyte)color.g;
+						vertex->color.b = (GLubyte)color.b;
+						vertex->color.a = (GLubyte)color.a;
+						vertex->color2.r = (GLubyte)darkColor.r;
+						vertex->color2.g = (GLubyte)darkColor.g;
+						vertex->color2.b = (GLubyte)darkColor.b;
+						vertex->color2.a = 1;
+					}
+				}
+			} else {
+				TwoColorTrianglesCommand* batchedTriangles = lastTwoColorTrianglesCommand = twoColorBatch->addCommand(renderer, _globalZOrder, attachmentVertices->_texture->getName(), _glProgramState, blendFunc, trianglesTwoColor, transform, transformFlags);
+				
+				if (_effect) {
+					spColor light;
+					spColor dark;
+					light.r = color.r / 255.0f;
+					light.g = color.g / 255.0f;
+					light.b = color.b / 255.0f;
+					light.a = color.a / 255.0f;
+					dark.r = darkColor.r / 255.0f;
+					dark.g = darkColor.g / 255.0f;
+					dark.b = darkColor.b / 255.0f;
+					dark.a = darkColor.a / 255.0f;
+					
+					for (int v = 0, vn = batchedTriangles->getTriangles().vertCount; v < vn; ++v) {
+						V3F_C4B_C4B_T2F* vertex = batchedTriangles->getTriangles().verts + v;
+						spColor lightCopy = light;
+						spColor darkCopy = dark;
+						_effect->transform(_effect, &vertex->position.x, &vertex->position.y, &vertex->texCoords.u, &vertex->texCoords.v, &lightCopy, &darkCopy);
+						vertex->color.r = (GLubyte)(lightCopy.r * 255);
+						vertex->color.g = (GLubyte)(lightCopy.g * 255);
+						vertex->color.b = (GLubyte)(lightCopy.b * 255);
+						vertex->color.a = (GLubyte)(lightCopy.a * 255);
+						vertex->color2.r = (GLubyte)(darkCopy.r * 255);
+						vertex->color2.g = (GLubyte)(darkCopy.g * 255);
+						vertex->color2.b = (GLubyte)(darkCopy.b * 255);
+						vertex->color2.a = 1;
+					}
+				} else {
+					for (int v = 0, vn = batchedTriangles->getTriangles().vertCount; v < vn; ++v) {
+						V3F_C4B_C4B_T2F* vertex = batchedTriangles->getTriangles().verts + v;
+						vertex->color.r = (GLubyte)color.r;
+						vertex->color.g = (GLubyte)color.g;
+						vertex->color.b = (GLubyte)color.b;
+						vertex->color.a = (GLubyte)color.a;
+						vertex->color2.r = (GLubyte)darkColor.r;
+						vertex->color2.g = (GLubyte)darkColor.g;
+						vertex->color2.b = (GLubyte)darkColor.b;
+						vertex->color2.a = 1;
+					}
+				}
+			}
+		}
+		spSkeletonClipping_clipEnd(_clipper, slot);
 	}
+	spSkeletonClipping_clipEnd2(_clipper);
+	
+	if (lastTwoColorTrianglesCommand) {
+		Node* parent = this->getParent();
+		
+		// We need to decide if we can postpone flushing the current
+		// batch. We can postpone if the next sibling node is a
+		// two color tinted skeleton with the same global-z.
+		// The parent->getChildrenCount() > 100 check is a hack
+		// as checking for a sibling is an O(n) operation, and if
+		// all children of this nodes parent are skeletons, we
+		// are in O(n2) territory.
+		if (!parent || parent->getChildrenCount() > 100 || getChildrenCount() != 0) {
+			lastTwoColorTrianglesCommand->setForceFlush(true);
+		} else {
+			Vector<Node*>& children = parent->getChildren();
+			Node* sibling = nullptr;
+			for (ssize_t i = 0; i < children.size(); i++) {
+				if (children.at(i) == this) {
+					if (i < children.size() - 1) {
+						sibling = children.at(i+1);
+						break;
+					}
+				}
+			}
+			if (!sibling) {
+				lastTwoColorTrianglesCommand->setForceFlush(true);
+			} else {
+				SkeletonRenderer* siblingSkeleton = dynamic_cast<SkeletonRenderer*>(sibling);
+				if (!siblingSkeleton || // flush is next sibling isn't a SkeletonRenderer
+					!siblingSkeleton->isTwoColorTint() || // flush if next sibling isn't two color tinted
+					!siblingSkeleton->isVisible() || // flush if next sibling is two color tinted but not visible
+					(siblingSkeleton->getGlobalZOrder() != this->getGlobalZOrder())) { // flush if next sibling is two color tinted but z-order differs
+					lastTwoColorTrianglesCommand->setForceFlush(true);
+				}
+			}
+		}
+	}
+	
+	if (_effect) _effect->end(_effect);
 
-	if (_debugSlots || _debugBones) {
+	if (_debugSlots || _debugBones || _debugMeshes) {
         drawDebug(renderer, transform, transformFlags);
 	}
 }
@@ -279,7 +578,7 @@ void SkeletonRenderer::drawDebug (Renderer* renderer, const Mat4 &transform, uin
             spSlot* slot = _skeleton->drawOrder[i];
             if (!slot->attachment || slot->attachment->type != SP_ATTACHMENT_REGION) continue;
             spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
-            spRegionAttachment_computeWorldVertices(attachment, slot->bone, _worldVertices);
+            spRegionAttachment_computeWorldVertices(attachment, slot->bone, _worldVertices, 0, 2);
             points[0] = Vec2(_worldVertices[0], _worldVertices[1]);
             points[1] = Vec2(_worldVertices[2], _worldVertices[3]);
             points[2] = Vec2(_worldVertices[4], _worldVertices[5]);
@@ -304,6 +603,26 @@ void SkeletonRenderer::drawDebug (Renderer* renderer, const Mat4 &transform, uin
             if (i == 0) color = Color4F::GREEN;
         }
     }
+	
+	if (_debugMeshes) {
+		// Meshes.
+		glLineWidth(1);
+		for (int i = 0, n = _skeleton->slotsCount; i < n; ++i) {
+			spSlot* slot = _skeleton->drawOrder[i];
+			if (!slot->attachment || slot->attachment->type != SP_ATTACHMENT_MESH) continue;
+			spMeshAttachment* attachment = (spMeshAttachment*)slot->attachment;			
+			spVertexAttachment_computeWorldVertices(SUPER(attachment), slot, 0, attachment->super.worldVerticesLength, _worldVertices, 0, 2);
+			for (int ii = 0; ii < attachment->trianglesCount;) {
+				Vec2 v1(_worldVertices + (attachment->triangles[ii++] * 2));
+				Vec2 v2(_worldVertices + (attachment->triangles[ii++] * 2));
+				Vec2 v3(_worldVertices + (attachment->triangles[ii++] * 2));
+				drawNode->drawLine(v1, v2, Color4F::YELLOW);
+				drawNode->drawLine(v2, v3, Color4F::YELLOW);
+				drawNode->drawLine(v3, v1, Color4F::YELLOW);
+			}
+		}
+		
+	}
     
     drawNode->draw(renderer, transform, transformFlags);
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
@@ -326,11 +645,11 @@ Rect SkeletonRenderer::getBoundingBox () const {
 		int verticesCount;
 		if (slot->attachment->type == SP_ATTACHMENT_REGION) {
 			spRegionAttachment* attachment = (spRegionAttachment*)slot->attachment;
-			spRegionAttachment_computeWorldVertices(attachment, slot->bone, _worldVertices);
+			spRegionAttachment_computeWorldVertices(attachment, slot->bone, _worldVertices, 0, 2);
 			verticesCount = 8;
 		} else if (slot->attachment->type == SP_ATTACHMENT_MESH) {
 			spMeshAttachment* mesh = (spMeshAttachment*)slot->attachment;
-			spMeshAttachment_computeWorldVertices(mesh, slot, _worldVertices);
+			spVertexAttachment_computeWorldVertices(SUPER(mesh), slot, 0, mesh->super.worldVerticesLength, _worldVertices, 0, 2);
 			verticesCount = mesh->super.worldVerticesLength;
 		} else
 			continue;
@@ -387,6 +706,21 @@ bool SkeletonRenderer::setAttachment (const std::string& slotName, const std::st
 bool SkeletonRenderer::setAttachment (const std::string& slotName, const char* attachmentName) {
 	return spSkeleton_setAttachment(_skeleton, slotName.c_str(), attachmentName) ? true : false;
 }
+	
+void SkeletonRenderer::setTwoColorTint(bool enabled) {
+	if (enabled)
+		setGLProgramState(SkeletonTwoColorBatch::getInstance()->getTwoColorTintProgramState());
+	else
+		setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+}
+
+bool SkeletonRenderer::isTwoColorTint() {
+	return getGLProgramState() == SkeletonTwoColorBatch::getInstance()->getTwoColorTintProgramState();
+}
+	
+void SkeletonRenderer::setVertexEffect(spVertexEffect *effect) {
+	this->_effect = effect;
+}
 
 spSkeleton* SkeletonRenderer::getSkeleton () {
 	return _skeleton;
@@ -411,6 +745,13 @@ void SkeletonRenderer::setDebugBonesEnabled (bool enabled) {
 }
 bool SkeletonRenderer::getDebugBonesEnabled () const {
 	return _debugBones;
+}
+	
+void SkeletonRenderer::setDebugMeshesEnabled (bool enabled) {
+	_debugMeshes = enabled;
+}
+bool SkeletonRenderer::getDebugMeshesEnabled () const {
+	return _debugMeshes;
 }
 
 void SkeletonRenderer::onEnter () {

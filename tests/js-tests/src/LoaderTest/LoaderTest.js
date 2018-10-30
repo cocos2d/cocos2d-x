@@ -1,7 +1,8 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -78,11 +79,10 @@ var LoaderTestLayer = BaseTestLayer.extend({
 
         cc.loader.loadAliases(str, function(){
             var sprite = new cc.Sprite("grossini.bmp");
-            self.addChild( sprite );
+            self.addChild( sprite, 100);
             sprite.x = winSize.width/2;
             sprite.y = winSize.height/2;
         });
-
     },
 
     onNextCallback: function(){
@@ -185,13 +185,13 @@ var LoaderCycleLayer = BaseTestLayer.extend({
     },
 
     onRestartCallback: function(){
-        var parent = this._parent;
+        var parent = this.getParent();
         parent.removeChild(this);
         parent.addChild(new LoaderCycleLayer());
     },
 
     onBackCallback: function(){
-        var parent = this._parent;
+        var parent = this.getParent();
         parent.removeChild(this);
         parent.addChild(new LoaderTestLayer());
     }

@@ -700,14 +700,14 @@ bool js_cocos2dx_audioengine_AudioEngine_setFinishCallback(JSContext *cx, uint32
     bool ok = true;
     if (argc == 2) {
         int arg0 = 0;
-        std::function<void (int, const std::basic_string<char> &)> arg1;
+        std::function<void (int, const std::string&)> arg1;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         do {
 		    if(JS_TypeOfValue(cx, args.get(1)) == JSTYPE_FUNCTION)
 		    {
 		        JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1), args.thisv()));
-		        auto lambda = [=](int larg0, const std::basic_string<char> & larg1) -> void {
+		        auto lambda = [=](int larg0, const std::string& larg1) -> void {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
 		            largv[0] = int32_to_jsval(cx, larg0);

@@ -1,7 +1,8 @@
 /****************************************************************************
 Copyright (c) 2009      On-Core
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc. 
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
 http://www.cocos2d-x.org
 
@@ -31,7 +32,6 @@ THE SOFTWARE.
 #include "2d/CCGrabber.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
 #include "renderer/CCTexture2D.h"
@@ -105,15 +105,16 @@ bool GridBase::initWithSize(const cocos2d::Size &gridSize, const cocos2d::Rect &
     }
     
     Texture2D *texture = new (std::nothrow) Texture2D();
-    texture->initWithData(data, dataLen,  format, POTWide, POTHigh, s);
-    
-    free(data);
     
     if (! texture)
     {
+        free(data);
         CCLOG("cocos2d: Grid: error creating texture");
         return false;
     }
+    
+    texture->initWithData(data, dataLen,  format, POTWide, POTHigh, s);
+    free(data);
     
     initWithSize(gridSize, texture, false, rect);
     
@@ -207,8 +208,6 @@ void GridBase::set2DProjection()
     director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
 
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-
-    GL::setProjectionMatrixDirty();
 }
 
 void GridBase::setGridRect(const cocos2d::Rect &rect)
@@ -254,7 +253,8 @@ void GridBase::afterDraw(cocos2d::Node * /*target*/)
 //        kmGLTranslatef(-offset.x, -offset.y, 0);
 //    }
 
-    GL::bindTexture2D(_texture->getName());
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _texture->getName());
 
     // restore projection for default FBO .fixed bug #543 #544
     //TODO:         Director::getInstance()->setProjection(Director::getInstance()->getProjection());
@@ -417,7 +417,8 @@ void Grid3D::blit(void)
 {
     int n = _gridSize.width * _gridSize.height;
 
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
     _shaderProgram->use();
     _shaderProgram->setUniformsForBuiltins();
 
@@ -663,7 +664,8 @@ void TiledGrid3D::blit(void)
     //
     // Attributes
     //
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
 
     // position
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _vertices);

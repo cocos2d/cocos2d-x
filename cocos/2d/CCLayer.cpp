@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
 http://www.cocos2d-x.org
 
@@ -28,9 +29,9 @@ THE SOFTWARE.
 #include <stdarg.h>
 #include "2d/CCLayer.h"
 #include "base/CCScriptSupport.h"
+#include "base/ccUtils.h"
 #include "platform/CCDevice.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
@@ -619,7 +620,8 @@ void LayerColor::onDraw(const Mat4& transform, uint32_t /*flags*/)
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
     
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR );
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
     
     //
     // Attributes
@@ -628,7 +630,7 @@ void LayerColor::onDraw(const Mat4& transform, uint32_t /*flags*/)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
 
-    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+    utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
@@ -881,14 +883,14 @@ LayerRadialGradient::LayerRadialGradient()
 , _startColorRend(Color4F::BLACK)
 , _endColor(Color4B::BLACK)
 , _endColorRend(Color4F::BLACK)
+, _center(Vec2(0,0))
 , _radius(0.f)
 , _expand(0.f)
-, _center(Vec2(0,0))
+, _uniformLocationStartColor(0)
+, _uniformLocationEndColor(0)
 , _uniformLocationCenter(0)
 , _uniformLocationRadius(0)
 , _uniformLocationExpand(0)
-, _uniformLocationEndColor(0)
-, _uniformLocationStartColor(0)
 , _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 { }
 
@@ -949,7 +951,7 @@ void LayerRadialGradient::onDraw(const Mat4& transform, uint32_t /*flags*/)
     program->setUniformLocationWith1f(_uniformLocationExpand, _expand);
     
     
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION);
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
     
     //
     // Attributes
@@ -957,7 +959,7 @@ void LayerRadialGradient::onDraw(const Mat4& transform, uint32_t /*flags*/)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
     
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    utils::setBlending(_blendFunc.src, _blendFunc.dst);
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
@@ -1254,12 +1256,18 @@ bool LayerMultiplex::initWithArray(const Vector<Layer*>& arrayOfLayers)
 
 void LayerMultiplex::switchTo(int n)
 {
+    
+    switchTo(n, true);
+}
+
+void LayerMultiplex::switchTo(int n, bool cleanup)
+{
     CCASSERT( n < _layers.size(), "Invalid index in MultiplexLayer switchTo message" );
-
-    this->removeChild(_layers.at(_enabledLayer), true);
-
+    
+    this->removeChild(_layers.at(_enabledLayer), cleanup);
+    
     _enabledLayer = n;
-
+    
     this->addChild(_layers.at(n));
 }
 

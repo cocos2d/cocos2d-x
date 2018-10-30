@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -37,7 +38,6 @@
 #include "renderer/CCTechnique.h"
 #include "renderer/CCPass.h"
 #include "renderer/CCRenderState.h"
-#include "renderer/ccGLStateCache.h"
 
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
@@ -198,13 +198,13 @@ static const int DEFAULT_RENDER_QUEUE = 0;
 //
 Renderer::Renderer()
 :_lastBatchedMeshCommand(nullptr)
+,_triBatchesToDrawCapacity(-1)
+,_triBatchesToDraw(nullptr)
 ,_filledVertex(0)
 ,_filledIndex(0)
 ,_glViewAssigned(false)
 ,_isRendering(false)
 ,_isDepthTestFor2D(false)
-,_triBatchesToDraw(nullptr)
-,_triBatchesToDrawCapacity(-1)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 ,_cacheTextureListener(nullptr)
 #endif
@@ -237,7 +237,7 @@ Renderer::~Renderer()
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         glDeleteVertexArrays(1, &_buffersVAO);
-        GL::bindVAO(0);
+        glBindVertexArray(0);
     }
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     Director::getInstance()->getEventDispatcher()->removeEventListener(_cacheTextureListener);
@@ -276,12 +276,19 @@ void Renderer::setupVBOAndVAO()
 {
     //generate vbo and vao for trianglesCommand
     glGenVertexArrays(1, &_buffersVAO);
-    GL::bindVAO(_buffersVAO);
+    glBindVertexArray(_buffersVAO);
 
     glGenBuffers(2, &_buffersVBO[0]);
 
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * VBO_SIZE, _verts, GL_DYNAMIC_DRAW);
+    // Issue #15652
+    // Should not initialize VBO with a large size (VBO_SIZE=65536),
+    // it may cause low FPS on some Android devices like LG G4 & Nexus 5X.
+    // It's probably because some implementations of OpenGLES driver will
+    // copy the whole memory of VBO which initialized at the first time
+    // once glBufferData/glBufferSubData is invoked.
+    // For more discussion, please refer to https://github.com/cocos2d/cocos2d-x/issues/15652
+    //glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * VBO_SIZE, _verts, GL_DYNAMIC_DRAW);
 
     // vertices
     glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
@@ -299,7 +306,7 @@ void Renderer::setupVBOAndVAO()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * INDEX_VBO_SIZE, _indices, GL_STATIC_DRAW);
 
     // Must unbind the VAO before changing the element buffer.
-    GL::bindVAO(0);
+    glBindVertexArray(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -322,7 +329,7 @@ void Renderer::setupVBO()
 void Renderer::mapBuffers()
 {
     // Avoid changing the element buffer for whatever VAO might be bound.
-    GL::bindVAO(0);
+    glBindVertexArray(0);
 
     glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * VBO_SIZE, _verts, GL_DYNAMIC_DRAW);
@@ -340,17 +347,17 @@ void Renderer::mapBuffers()
 
 void Renderer::addCommand(RenderCommand* command)
 {
-    int renderQueue =_commandGroupStack.top();
-    addCommand(command, renderQueue);
+    int renderQueueID =_commandGroupStack.top();
+    addCommand(command, renderQueueID);
 }
 
-void Renderer::addCommand(RenderCommand* command, int renderQueue)
+void Renderer::addCommand(RenderCommand* command, int renderQueueID)
 {
     CCASSERT(!_isRendering, "Cannot add command while rendering");
-    CCASSERT(renderQueue >=0, "Invalid render queue");
+    CCASSERT(renderQueueID >=0, "Invalid render queue");
     CCASSERT(command->getType() != RenderCommand::Type::UNKNOWN_COMMAND, "Invalid Command Type");
 
-    _renderGroups[renderQueue].push_back(command);
+    _renderGroups[renderQueueID].push_back(command);
 }
 
 void Renderer::pushGroup(int renderQueueID)
@@ -750,7 +757,7 @@ void Renderer::drawBatchedTriangles()
         // in the same batch ?
         if (batchable && (prevMaterialID == currentMaterialID || firstCommand))
         {
-            CC_ASSERT(firstCommand || _triBatchesToDraw[batchesTotal].cmd->getMaterialID() == cmd->getMaterialID() && "argh... error in logic");
+            CC_ASSERT((firstCommand || _triBatchesToDraw[batchesTotal].cmd->getMaterialID() == cmd->getMaterialID()) && "argh... error in logic");
             _triBatchesToDraw[batchesTotal].indicesToDraw += cmd->getIndexCount();
             _triBatchesToDraw[batchesTotal].cmd = cmd;
         }
@@ -786,7 +793,7 @@ void Renderer::drawBatchedTriangles()
     if (conf->supportsShareableVAO() && conf->supportsMapBuffer())
     {
         //Bind VAO
-        GL::bindVAO(_buffersVAO);
+        glBindVertexArray(_buffersVAO);
         //Set VBO data
         glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 
@@ -818,7 +825,9 @@ void Renderer::drawBatchedTriangles()
 
         glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * _filledVertex , _verts, GL_DYNAMIC_DRAW);
 
-        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
 
         // vertices
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, vertices));
@@ -844,10 +853,10 @@ void Renderer::drawBatchedTriangles()
     }
 
     /************** 4: Cleanup *************/
-    if (Configuration::getInstance()->supportsShareableVAO() && conf->supportsMapBuffer())
+    if (conf->supportsShareableVAO() && conf->supportsMapBuffer())
     {
         //Unbind VAO
-        GL::bindVAO(0);
+        glBindVertexArray(0);
     }
     else
     {
@@ -890,14 +899,14 @@ void Renderer::flushTriangles()
 // helpers
 bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 {
-    auto scene = Director::getInstance()->getRunningScene();
+    auto director = Director::getInstance();
+    auto scene = director->getRunningScene();
     
     //If draw to Rendertexture, return true directly.
     // only cull the default camera. The culling algorithm is valid for default camera.
     if (!scene || (scene && scene->_defaultCamera != Camera::getVisitingCamera()))
         return true;
 
-    auto director = Director::getInstance();
     Rect visibleRect(director->getVisibleOrigin(), director->getVisibleSize());
     
     // transform center point to screen space

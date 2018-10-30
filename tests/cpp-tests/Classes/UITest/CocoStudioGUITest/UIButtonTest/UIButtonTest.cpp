@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "UIButtonTest.h"
 
 USING_NS_CC;
@@ -23,6 +47,7 @@ UIButtonTests::UIButtonTests()
     ADD_TEST_CASE(Issue12249);
     ADD_TEST_CASE(Issue17116);
     ADD_TEST_CASE(UIButtonWithPolygonInfo);
+    ADD_TEST_CASE(UIButtonScale9ChangeSpriteFrame);
 }
 
 // UIButtonTest
@@ -1240,3 +1265,36 @@ bool UIButtonWithPolygonInfo::init()
     }
     return false;
 }
+
+UIButtonScale9ChangeSpriteFrame::UIButtonScale9ChangeSpriteFrame()
+{
+}
+
+bool UIButtonScale9ChangeSpriteFrame::init()
+{
+    if (UIScene::init())
+    {
+        ImageView* sprite = ImageView::create("Images/blocks.png");
+        sprite->setScale9Enabled(true);
+        sprite->setCapInsets(Rect(32, 32, 32, 32));
+        sprite->setContentSize(Size(96 * 1.5, 96));
+        sprite->setNormalizedPosition(Vec2(0.2, 0.5));
+        this->addChild(sprite);
+        
+        auto button = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
+        button->setScale9Enabled(true);
+        button->setContentSize(Size(100, 50));
+        button->setNormalizedPosition(Vec2(0.6, 0.5));
+        button->setTitleText("Press me");
+        addChild(button);
+        
+        button->addClickEventListener([sprite](Ref* button){
+            sprite->loadTexture("Images/blocks9.png");
+        });
+
+        
+        return true;
+    }
+    return false;
+}
+

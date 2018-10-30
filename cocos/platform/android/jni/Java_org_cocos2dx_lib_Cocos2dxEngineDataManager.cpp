@@ -1,5 +1,6 @@
 /****************************************************************************
 Copyright (c) 2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -121,8 +122,8 @@ std::string& toLowercase(std::string& s)
 namespace {
 
 const char* ENGINE_DATA_MANAGER_VERSION = "5";
-const char* CLASS_NAME_ENGINE_DATA_MANAGER = "org/cocos2dx/lib/Cocos2dxEngineDataManager";
-const char* CLASS_NAME_RENDERER = "org/cocos2dx/lib/Cocos2dxRenderer";
+const char* CLASS_NAME_ENGINE_DATA_MANAGER = "org.cocos2dx.lib.Cocos2dxEngineDataManager";
+const char* CLASS_NAME_RENDERER = "org.cocos2dx.lib.Cocos2dxRenderer";
 
 bool _isInitialized = false;
 bool _isSupported = false;
@@ -1021,7 +1022,7 @@ void EngineDataManager::onBeforeSetNextScene(EventCustom* event)
     _isReplaceScene = true;
 }
 
-void EngineDataManager::onBeforeReadFile(EventCustom* event)
+void EngineDataManager::onBeforeReadFile()
 {
     _isReadFile = true;
 }
@@ -1376,7 +1377,6 @@ void EngineDataManager::init()
     dispatcher->addCustomEventListener(Director::EVENT_BEFORE_SET_NEXT_SCENE, std::bind(onBeforeSetNextScene, std::placeholders::_1));
     dispatcher->addCustomEventListener(EVENT_COME_TO_FOREGROUND, std::bind(onEnterForeground, std::placeholders::_1));
     dispatcher->addCustomEventListener(EVENT_COME_TO_BACKGROUND, std::bind(onEnterBackground, std::placeholders::_1));
-    dispatcher->addCustomEventListener(EVENT_BEFORE_READ_FILE, std::bind(onBeforeReadFile, std::placeholders::_1));
 
     notifyGameStatus(GameStatus::LAUNCH_BEGIN, 5, -1);
 

@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -36,7 +37,7 @@ THE SOFTWARE.
 #define  LOG_TAG    "Java_org_cocos2dx_lib_Cocos2dxHelper.cpp"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
-static const std::string className = "org/cocos2dx/lib/Cocos2dxHelper";
+static const std::string className = "org.cocos2dx.lib.Cocos2dxHelper";
 
 static EditTextCallback s_editTextCallback = nullptr;
 static void* s_ctx = nullptr;
@@ -44,16 +45,12 @@ static void* s_ctx = nullptr;
 static int __deviceSampleRate = 44100;
 static int __deviceAudioBufferSizeInFrames = 192;
 
+static std::string g_apkPath;
+
 using namespace cocos2d;
 using namespace std;
 
-string g_apkPath;
-
 extern "C" {
-
-    JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetApkPath(JNIEnv*  env, jobject thiz, jstring apkPath) {
-        g_apkPath = JniHelper::jstring2string(apkPath);
-    }
 
     JNIEXPORT void JNICALL Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetContext(JNIEnv*  env, jobject thiz, jobject context, jobject assetManager) {
         JniHelper::setClassLoaderFrom(context);
@@ -88,6 +85,11 @@ extern "C" {
 }
 
 const char * getApkPath() {
+    if (g_apkPath.empty())
+    {
+        g_apkPath = JniHelper::callStaticStringMethod(className, "getAssetsPath");
+    }
+
     return g_apkPath.c_str();
 }
 
@@ -148,6 +150,7 @@ void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharse
         methodInfo.env->DeleteLocalRef(strArray);
         methodInfo.env->DeleteLocalRef(stringArg1);
         methodInfo.env->DeleteLocalRef(stringArg2);
+        methodInfo.env->DeleteLocalRef(newArray);
         methodInfo.env->DeleteLocalRef(methodInfo.classID);
     }
 }

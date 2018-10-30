@@ -40,9 +40,7 @@
     "linux_cfg": {
         "project_path": "project/proj.linux",
         "project_name": "js-tests",
-        "cmake_path": "../../",
-        "build_dir": "../../build/linux-build",
-        "build_result_dir": "js-tests"
+        "cmake_path": "project"
     },
     "wp8_1_cfg" : {
         "project_path": "../../build",

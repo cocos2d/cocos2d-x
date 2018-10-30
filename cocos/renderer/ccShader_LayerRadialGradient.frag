@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2017 Chukong Technologies Inc.
+ Copyright (c) 2016 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -23,6 +23,10 @@
  ****************************************************************************/
 
 const char* ccShader_LayerRadialGradient_frag = R"(
+
+#ifdef GL_ES
+precision highp float;
+#endif
 
 uniform vec4 u_startColor;
 uniform vec4 u_endColor;

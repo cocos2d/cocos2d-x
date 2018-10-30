@@ -1,7 +1,8 @@
 /****************************************************************************
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -620,7 +621,7 @@ var RemoveAndRetainNodeTest =  EventDispatcherTestDemo.extend({
             cc.callFunc(function () {
                 this._spriteSaved = true;
                 this._sprite.retain();
-                this._sprite.removeFromParent();
+                this._sprite.removeFromParent(false);
             }, this),
             cc.delayTime(5.0),
             cc.callFunc(function () {

@@ -2379,6 +2379,16 @@ getViewPortRect : function (
 },
 
 /**
+ * @method getScaleY
+ * @return {float}
+ */
+getScaleY : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setContentScaleFactor
  * @param {float} arg0
  * @return {bool}
@@ -2408,6 +2418,16 @@ setIMEKeyboardState : function (
 bool 
 )
 {
+},
+
+/**
+ * @method getSafeAreaRect
+ * @return {rect_object}
+ */
+getSafeAreaRect : function (
+)
+{
+    return cc.Rect;
 },
 
 /**
@@ -2467,13 +2487,11 @@ bool
 },
 
 /**
- * @method getScaleY
- * @return {float}
+ * @method setDefaultIcon
  */
-getScaleY : function (
+setDefaultIcon : function (
 )
 {
-    return 0;
 },
 
 /**
@@ -2534,6 +2552,16 @@ getDesignResolutionSize : function (
 )
 {
     return cc.Size;
+},
+
+/**
+ * @method setIcon
+* @param {Array|String} array
+*/
+setIcon : function(
+str 
+)
+{
 },
 
 /**
@@ -2723,20 +2751,20 @@ pause : function (
 
 /**
  * @method pushProjectionMatrix
- * @param {unsigned long} arg0
+ * @param {unsigned int} arg0
  */
 pushProjectionMatrix : function (
-long 
+int 
 )
 {
 },
 
 /**
  * @method popProjectionMatrix
- * @param {unsigned long} arg0
+ * @param {unsigned int} arg0
  */
 popProjectionMatrix : function (
-long 
+int 
 )
 {
 },
@@ -2753,10 +2781,10 @@ eventdispatcher
 
 /**
  * @method loadProjectionIdentityMatrix
- * @param {unsigned long} arg0
+ * @param {unsigned int} arg0
  */
 loadProjectionIdentityMatrix : function (
-long 
+int 
 )
 {
 },
@@ -2769,6 +2797,16 @@ setContentScaleFactor : function (
 float 
 )
 {
+},
+
+/**
+ * @method getDeltaTime
+ * @return {float}
+ */
+getDeltaTime : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -2792,13 +2830,13 @@ getWinSizeInPixels : function (
 },
 
 /**
- * @method getDeltaTime
- * @return {float}
+ * @method getSafeAreaRect
+ * @return {rect_object}
  */
-getDeltaTime : function (
+getSafeAreaRect : function (
 )
 {
-    return 0;
+    return cc.Rect;
 },
 
 /**
@@ -3008,11 +3046,11 @@ scheduler
 /**
  * @method multiplyProjectionMatrix
  * @param {mat4_object} arg0
- * @param {unsigned long} arg1
+ * @param {unsigned int} arg1
  */
 multiplyProjectionMatrix : function (
 mat4, 
-long 
+int 
 )
 {
 },
@@ -3290,21 +3328,21 @@ getVisibleSize : function (
 /**
  * @method loadProjectionMatrix
  * @param {mat4_object} arg0
- * @param {unsigned long} arg1
+ * @param {unsigned int} arg1
  */
 loadProjectionMatrix : function (
 mat4, 
-long 
+int 
 )
 {
 },
 
 /**
  * @method initProjectionMatrixStack
- * @param {unsigned long} arg0
+ * @param {unsigned int} arg0
  */
 initProjectionMatrixStack : function (
-long 
+int 
 )
 {
 },
@@ -7718,11 +7756,11 @@ event
 
 /**
  * @method hasEventListener
- * @param {std::basic_string<char>} arg0
+ * @param {String} arg0
  * @return {bool}
  */
 hasEventListener : function (
-basic_string<char> 
+str 
 )
 {
     return false;
@@ -8096,6 +8134,23 @@ EventListenerMouse : function (
 };
 
 /**
+ * @class EventListenerController
+ */
+cc.EventListenerController = {
+
+/**
+ * @method create
+ * @return {cc.EventListenerController}
+ */
+create : function (
+)
+{
+    return cc.EventListenerController;
+},
+
+};
+
+/**
  * @class EventListenerTouchOneByOne
  */
 cc.EventListenerTouchOneByOne = {
@@ -8161,6 +8216,88 @@ init : function (
  * @constructor
  */
 EventListenerTouchAllAtOnce : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EventController
+ */
+cc.EventController = {
+
+/**
+ * @method getControllerEventType
+ * @return {cc.EventController::ControllerEventType}
+ */
+getControllerEventType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setConnectStatus
+ * @param {bool} arg0
+ */
+setConnectStatus : function (
+bool 
+)
+{
+},
+
+/**
+ * @method isConnected
+ * @return {bool}
+ */
+isConnected : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setKeyCode
+ * @param {int} arg0
+ */
+setKeyCode : function (
+int 
+)
+{
+},
+
+/**
+ * @method getController
+ * @return {cc.Controller}
+ */
+getController : function (
+)
+{
+    return cc.Controller;
+},
+
+/**
+ * @method getKeyCode
+ * @return {int}
+ */
+getKeyCode : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method EventController
+ * @constructor
+* @param {cc.EventController::ControllerEventType|cc.EventController::ControllerEventType} controllereventtype
+* @param {cc.Controller|cc.Controller} controller
+* @param {bool|int} bool
+*/
+EventController : function(
+controllereventtype,
+controller,
+int 
 )
 {
 },
@@ -10836,7 +10973,7 @@ node
  * @method getNumberOfRunningActionsInTargetByTag
  * @param {cc.Node} arg0
  * @param {int} arg1
- * @return {unsigned long}
+ * @return {unsigned int}
  */
 getNumberOfRunningActionsInTargetByTag : function (
 node, 
@@ -12011,6 +12148,16 @@ color4f
 },
 
 /**
+ * @method setIsolated
+ * @param {bool} arg0
+ */
+setIsolated : function (
+bool 
+)
+{
+},
+
+/**
  * @method drawRect
 * @param {vec2_object|vec2_object} vec2
 * @param {vec2_object|vec2_object} vec2
@@ -12313,6 +12460,16 @@ color4f
 },
 
 /**
+ * @method isIsolated
+ * @return {bool}
+ */
+isIsolated : function (
+)
+{
+    return false;
+},
+
+/**
  * @method drawCubicBezier
  * @param {vec2_object} arg0
  * @param {vec2_object} arg1
@@ -12426,6 +12583,16 @@ disableEffect : function(
 labeleffect 
 )
 {
+},
+
+/**
+ * @method getLabelType
+ * @return {cc.Label::LabelType}
+ */
+getLabelType : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -12800,6 +12967,16 @@ setLineSpacing : function (
 float 
 )
 {
+},
+
+/**
+ * @method getRenderingFontSize
+ * @return {float}
+ */
+getRenderingFontSize : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -14266,10 +14443,12 @@ layer
 
 /**
  * @method switchTo
- * @param {int} arg0
- */
-switchTo : function (
-int 
+* @param {int|int} int
+* @param {bool} bool
+*/
+switchTo : function(
+int,
+bool 
 )
 {
 },
@@ -14943,6 +15122,14 @@ isEnabled : function (
 },
 
 /**
+ * @method alignItemsHorizontally
+ */
+alignItemsHorizontally : function (
+)
+{
+},
+
+/**
  * @method alignItemsHorizontallyWithPadding
  * @param {float} arg0
  */
@@ -14958,14 +15145,6 @@ float
  */
 alignItemsVerticallyWithPadding : function (
 float 
-)
-{
-},
-
-/**
- * @method alignItemsHorizontally
- */
-alignItemsHorizontally : function (
 )
 {
 },
@@ -15538,6 +15717,16 @@ getEndSpin : function (
  */
 setRotatePerSecondVar : function (
 float 
+)
+{
+},
+
+/**
+ * @method setSourcePositionCompatible
+ * @param {bool} arg0
+ */
+setSourcePositionCompatible : function (
+bool 
 )
 {
 },
@@ -16427,6 +16616,16 @@ str
  * @return {bool}
  */
 isAutoRemoveOnFinish : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isSourcePositionCompatible
+ * @return {bool}
+ */
+isSourcePositionCompatible : function (
 )
 {
     return false;
@@ -22721,7 +22920,7 @@ cc.TextFieldTTF = {
 
 /**
  * @method getCharCount
- * @return {unsigned long}
+ * @return {unsigned int}
  */
 getCharCount : function (
 )
@@ -22883,10 +23082,10 @@ getPlaceHolder : function (
 
 /**
  * @method setCursorPosition
- * @param {unsigned long} arg0
+ * @param {unsigned int} arg0
  */
 setCursorPosition : function (
-long 
+int 
 )
 {
 },

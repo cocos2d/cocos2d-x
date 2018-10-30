@@ -1,5 +1,6 @@
 /****************************************************************************
 Copyright (c) 2015 Neo Kim (neo.kim@neofect.com)
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -61,6 +62,10 @@ public:
     const Color3B& getIndexNodesColor() const { return _indexNodesColor; }
     void setIndexNodesScale(float indexNodesScale);
     float getIndexNodesScale() const { return _indexNodesScale; }
+    void setSelectedIndexOpacity(GLubyte opacity) { _currentIndexNode->setOpacity(opacity); }
+    GLubyte getSelectedIndexOpacity() const { return _currentIndexNode->getOpacity(); }
+    void setIndexNodesOpacity(GLubyte opacity);
+    GLubyte getIndexNodesOpacity() const { return _indexNodesOpacity; }
     
     /**
      * Sets texture for index nodes.
@@ -79,9 +84,11 @@ protected:
     PageView::Direction _direction;
     Vector<Sprite*> _indexNodes;
     Sprite* _currentIndexNode;
+    Sprite* _currentOverlappingIndexNode;
     float _spaceBetweenIndexNodes;
     float _indexNodesScale;
     Color3B _indexNodesColor;
+    GLubyte _indexNodesOpacity;
     
     bool _useDefaultTexture;
     std::string _indexNodesTextureFile;

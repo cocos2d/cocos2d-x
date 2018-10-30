@@ -1,0 +1,43 @@
+version: 1.0.{build}
+skip_tags: true
+skip_branch_with_pr: true
+image:
+  - Visual Studio 2015
+environment:
+  PYTHON: "C:\\Python27"
+  PYTHON_VERSION: "2.7.13"
+  PYTHON_ARCH: "32"
+  matrix:
+    - build_type: windows32_cmake_test
+    - build_type: windows32_sln_test
+    - build_type: android_cpp_tests
+    - build_type: android_lua_tests
+#    - build_type: android_cocos_new_test
+#    - build_type: android_cpp_empty_test
+#    - build_type: android_gen_libs
+
+
+platform:
+  - x86
+
+configuration:
+  - Release
+
+before_build:
+  - ps: ./tools/appveyor-scripts/before-build.ps1
+
+build_script:
+  - ps: ./tools/appveyor-scripts/build.ps1
+
+branches:
+  except:
+  - v1
+  - v2
+  - v4-develop
+  - v3-doc
+  - v3.11_backup
+  - v35-for-tizen
+
+clone_depth: 1
+
+test: off

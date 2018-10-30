@@ -54,21 +54,9 @@
     if (self = [super init])
     {
         if (! sharegroup)
-        {
-            // multisampling conflict with GLES3, refer to https://github.com/cocos2d/cocos2d-x/issues/17767
-            if (!multiSampling)
-                context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
-            if (! context_)
                 context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-        }
         else
-        {
-            // multisampling conflict with GLES3, refer to https://github.com/cocos2d/cocos2d-x/issues/17767
-            if (!multiSampling)
-                context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3 sharegroup:sharegroup];
-            if (!context_)
                 context_ = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2 sharegroup:sharegroup];
-        }
 
         if (!context_ || ![EAGLContext setCurrentContext:context_] )
         {

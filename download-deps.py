@@ -47,6 +47,7 @@ import json
 
 from optparse import OptionParser
 from time import time
+from time import sleep
 from sys import stdout
 from distutils.errors import DistutilsError
 from distutils.dir_util import copy_tree, remove_tree
@@ -68,7 +69,7 @@ def delete_folder_except(folder_path, excepts):
             os.remove(full_path)
 
 
-class UnrecognizedFormat:
+class UnrecognizedFormat(Exception):
     def __init__(self, prompt):
         self._prompt = prompt
 
@@ -111,6 +112,11 @@ class CocosZipInstaller(object):
         return ret
 
     def download_file(self):
+        # remove file for retry
+        try:
+            os.remove(self._filename)
+        except OSError:
+            pass
         print("==> Ready to download '%s' from '%s'" % (self._filename, self._url))
         import urllib2
         try:
@@ -225,7 +231,7 @@ class CocosZipInstaller(object):
 
     def download_zip_file(self):
         if not os.path.isfile(self._filename):
-            self.download_file()
+            self.download_file_with_retry(5, 3)
         try:
             if not zipfile.is_zipfile(self._filename):
                 raise UnrecognizedFormat("%s is not a zip file" % (self._filename))
@@ -235,6 +241,21 @@ class CocosZipInstaller(object):
                 os.remove(self._filename)
             print("==> Download it from internet again, please wait...")
             self.download_zip_file()
+
+    def download_file_with_retry(self, times, delay):
+        import urllib2
+        times_count = 0
+        while(times_count < times):
+            times_count += 1
+            try:
+                if(times_count > 1):
+                    print("==> Download file retry " + str(times_count))
+                self.download_file()
+                return
+            except Exception as err:
+                if(times_count >= times):
+                    raise err
+                sleep(delay)
 
     def need_to_update(self):
         if not os.path.isfile(self._version_path):
@@ -259,6 +280,22 @@ class CocosZipInstaller(object):
         print('==> Cleaning cocos2d-x/external folder ...')
         # remove external except 'config.json'
         delete_folder_except(external_folder, ['config.json'])
+
+    # rebuild link on linux
+    def fix_fmod_link(self, extract_dir):
+        import os
+        import platform
+        if platform.system() != "Linux":
+            return
+        print("==> Fix fmod link ... ")                        
+        fmod_path = os.path.join(extract_dir, "linux-specific/fmod/prebuilt/64-bit")
+        if os.path.exists(fmod_path):
+            os.unlink(os.path.join(fmod_path, "libfmod.so.6"))
+            os.unlink(os.path.join(fmod_path, "libfmodL.so.6"))
+            os.symlink("libfmod.so", os.path.join(fmod_path, "libfmod.so.6"))
+            os.symlink("libfmodL.so", os.path.join(fmod_path, "libfmodL.so.6"))
+        else:
+            print("==> fmod directory not found `%s`, failed to fix fmod link!"%fmod_path)
 
     def run(self, workpath, folder_for_extracting, remove_downloaded, force_update, download_only):
         if not force_update and not self.need_to_update():
@@ -285,6 +322,7 @@ class CocosZipInstaller(object):
                     if os.path.exists(distDir):
                         shutil.rmtree(distDir)
                     shutil.move( os.path.join(folder_for_extracting, srcDir), distDir)
+            self.fix_fmod_link(folder_for_extracting)
             print("==> Cleaning...")
             if os.path.exists(self._extracted_folder_name):
                 shutil.rmtree(self._extracted_folder_name)

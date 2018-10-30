@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -212,6 +213,71 @@ bool Color4F::operator!=(const Color3B& right) const
 bool Color4F::operator!=(const Color4B& right) const
 {
     return !(*this == right);
+}
+
+Color4F& operator+=(Color4F& lhs, const Color4F& rhs) {
+	lhs.r += rhs.r;
+	lhs.g += rhs.g;
+	lhs.b += rhs.b;
+	lhs.a += rhs.a;
+	return lhs;
+}
+Color4F operator+(Color4F lhs, const Color4F& rhs) {
+	return lhs += rhs;
+}
+Color4F& operator-=(Color4F& lhs, const Color4F& rhs) {
+	lhs.r -= rhs.r;
+	lhs.g -= rhs.g;
+	lhs.b -= rhs.b;
+	lhs.a -= rhs.a;
+	return lhs;
+}
+Color4F operator-(Color4F lhs, const Color4F& rhs) {
+	return lhs -= rhs;
+}
+
+Color4F& operator*=(Color4F& lhs, const Color4F& rhs) {
+	lhs.r *= rhs.r;
+	lhs.g *= rhs.g;
+	lhs.b *= rhs.b;
+	lhs.a *= rhs.a;
+	return lhs;
+}
+Color4F& operator*=(Color4F& lhs, float rhs) {
+	lhs.r *= rhs;
+	lhs.g *= rhs;
+	lhs.b *= rhs;
+	lhs.a *= rhs;
+	return lhs;
+}
+Color4F operator*(Color4F lhs, const Color4F& rhs) {
+    return lhs *= rhs;
+}
+
+Color4F operator*(Color4F lhs, float rhs) {
+    return lhs *= rhs;
+}
+
+Color4F& operator/=(Color4F& lhs, const Color4F& rhs) {
+	lhs.r /= rhs.r;
+	lhs.g /= rhs.g;
+	lhs.b /= rhs.b;
+	lhs.a /= rhs.a;
+	return lhs;
+}
+Color4F& operator/=(Color4F& lhs, float rhs) {
+	lhs.r /= rhs;
+	lhs.g /= rhs;
+	lhs.b /= rhs;
+	lhs.a /= rhs;
+	return lhs;
+}
+Color4F operator/(Color4F lhs, const Color4F& rhs) {
+    return lhs /= rhs;
+}
+
+Color4F operator/(Color4F lhs, float rhs) {
+    return lhs /= rhs;
 }
 
 /**

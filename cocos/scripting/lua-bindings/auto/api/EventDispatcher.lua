@@ -122,7 +122,7 @@
 -- return True if dispatching events is exist
 -- @function [parent=#EventDispatcher] hasEventListener 
 -- @param self
--- @param #std::basic_string<char> listenerID
+-- @param #string listenerID
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------

@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2015 Mazyad Alabduljaleel
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -78,7 +79,7 @@
 
 - (UIColor *)ccui_placeholderTextColor
 {
-    SEL selector = @selector(placeholderTextColor);
+    SEL selector = NSSelectorFromString(@"placeholderTextColor");
     if ([self respondsToSelector:selector]) {
         return [self performSelector:selector];
     }
@@ -87,7 +88,7 @@
 
 - (void)ccui_setPlaceholderTextColor:(UIColor *)ccui_placeholderTextColor
 {
-    SEL selector = @selector(setPlaceholderTextColor:);
+    SEL selector = NSSelectorFromString(@"setPlaceholderTextColor:");
     if ([self respondsToSelector:selector]) {
         [self performSelector:selector withObject:ccui_placeholderTextColor];
     }
@@ -95,7 +96,7 @@
 
 - (UIFont *)ccui_placeholderFont
 {
-    SEL selector = @selector(placeholderFont);
+    SEL selector = NSSelectorFromString(@"placeholderFont");
     if ([self respondsToSelector:selector]) {
         return [self performSelector:selector];
     }
@@ -104,7 +105,7 @@
 
 - (void)ccui_setPlaceholderFont:(UIFont *)ccui_placeholderFont
 {
-    SEL selector = @selector(setPlaceholderFont:);
+    SEL selector = NSSelectorFromString(@"setPlaceholderFont:");
     if ([self respondsToSelector:selector]) {
         [self performSelector:selector withObject:ccui_placeholderFont];
     }

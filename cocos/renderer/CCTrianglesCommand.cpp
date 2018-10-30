@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -23,12 +24,12 @@
  ****************************************************************************/
 
 #include "renderer/CCTrianglesCommand.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 #include "xxhash.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTexture2D.h"
+#include "base//ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -54,7 +55,7 @@ void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState*
     {
         int count = _triangles.indexCount;
         _triangles.indexCount = count / 3 * 3;
-        CCLOGERROR("Resize indexCount from %zd to %zd, size must be multiple times of 3", count, _triangles.indexCount);
+        CCLOGERROR("Resize indexCount from %d to %d, size must be multiple times of 3", count, _triangles.indexCount);
     }
     _mv = mv;
     
@@ -94,11 +95,16 @@ void TrianglesCommand::generateMaterialID()
     // if they don't have the same glProgramState, they might still have the same
     // uniforms/values and glProgram, but it would be too expensive to check the uniforms.
     struct {
+        void* glProgramState;
         GLuint textureId;
         GLenum blendSrc;
         GLenum blendDst;
-        void* glProgramState;
     } hashMe;
+
+    // NOTE: Initialize hashMe struct to make the value of padding bytes be filled with zero.
+    // It's important since XXH32 below will also consider the padding bytes which probably 
+    // are set to random values by different compilers.
+    memset(&hashMe, 0, sizeof(hashMe)); 
 
     hashMe.textureId = _textureID;
     hashMe.blendSrc = _blendType.src;
@@ -110,14 +116,16 @@ void TrianglesCommand::generateMaterialID()
 void TrianglesCommand::useMaterial() const
 {
     //Set texture
-    GL::bindTexture2D(_textureID);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _textureID);
     
     if (_alphaTextureID > 0)
     { // ANDROID ETC1 ALPHA supports.
-        GL::bindTexture2DN(1, _alphaTextureID);
+        glActiveTexture(GL_TEXTURE0 + 1);
+        glBindTexture(GL_TEXTURE_2D, _alphaTextureID);
     }
     //set blend mode
-    GL::blendFunc(_blendType.src, _blendType.dst);
+    utils::setBlending(_blendType.src, _blendType.dst);
     
     _glProgramState->apply(_mv);
 }

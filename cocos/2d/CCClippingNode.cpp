@@ -1,7 +1,8 @@
 /*
  * Copyright (c) 2012      Pierre-David Bélanger
  * Copyright (c) 2012      cocos2d-x.org
- * Copyright (c) 2013-2017 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * cocos2d-x: http://www.cocos2d-x.org
  *
@@ -28,7 +29,6 @@
 #include "2d/CCClippingNode.h"
 #include "2d/CCDrawingPrimitives.h"
 #include "renderer/CCGLProgramCache.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
 #include "base/CCDirector.h"
@@ -56,8 +56,8 @@ static void setProgram(Node *n, GLProgram *p)
 
 ClippingNode::ClippingNode()
 : _stencil(nullptr)
-, _stencilStateManager(new StencilStateManager())
 , _originStencilProgram(nullptr)
+, _stencilStateManager(new StencilStateManager())
 {
 }
 

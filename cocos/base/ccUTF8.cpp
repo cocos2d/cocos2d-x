@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -27,30 +28,57 @@
 #include "platform/CCCommon.h"
 #include "base/CCConsole.h"
 #include "ConvertUTF.h"
+#include <limits>
 
 NS_CC_BEGIN
 
 namespace StringUtils {
 
+/*--- This a C++ universal sprintf in the future.
+**  @pitfall: The behavior of vsnprintf between VS2013 and VS2015/2017 is different
+**      VS2013 or Unix-Like System will return -1 when buffer not enough, but VS2015/2017 will return the actural needed length for buffer at this station
+**      The _vsnprintf behavior is compatible API which always return -1 when buffer isn't enough at VS2013/2015/2017
+**      Yes, The vsnprintf is more efficient implemented by MSVC 19.0 or later, AND it's also standard-compliant, see reference: http://www.cplusplus.com/reference/cstdio/vsnprintf/
+*/
 std::string format(const char* format, ...)
 {
-#define CC_MAX_STRING_LENGTH (1024*100)
-    
-    std::string ret;
-    
-    va_list ap;
-    va_start(ap, format);
-    
-    char* buf = (char*)malloc(CC_MAX_STRING_LENGTH);
-    if (buf != nullptr)
-    {
-        vsnprintf(buf, CC_MAX_STRING_LENGTH, format, ap);
-        ret = buf;
-        free(buf);
+#define CC_VSNPRINTF_BUFFER_LENGTH 512
+    va_list args;
+    std::string buffer(CC_VSNPRINTF_BUFFER_LENGTH, '\0');
+
+    va_start(args, format);
+    int nret = vsnprintf(&buffer.front(), buffer.length() + 1, format, args);
+    va_end(args);
+
+    if (nret >= 0) {
+        if ((unsigned int)nret < buffer.length()) {
+            buffer.resize(nret);
+        }
+        else if ((unsigned int)nret > buffer.length()) { // VS2015/2017 or later Visual Studio Version
+            buffer.resize(nret);
+
+            va_start(args, format);
+            nret = vsnprintf(&buffer.front(), buffer.length() + 1, format, args);
+            va_end(args);
+
+            assert(nret == buffer.length());
+        }
+        // else equals, do nothing.
     }
-    va_end(ap);
-    
-    return ret;
+    else { // less or equal VS2013 and Unix System glibc implement.
+        do {
+            buffer.resize(buffer.length() * 3 / 2);
+
+            va_start(args, format);
+            nret = vsnprintf(&buffer.front(), buffer.length() + 1, format, args);
+            va_end(args);
+
+        } while (nret < 0);
+
+        buffer.resize(nret);
+    }
+
+    return buffer;
 }
 
 /*
@@ -130,7 +158,15 @@ bool isCJKUnicode(char32_t ch)
         || (ch >= 0x31C0 && ch <= 0x4DFF)   // Other extensions
         || (ch >= 0x1f004 && ch <= 0x1f682);// Emoji
 }
-
+    
+bool isUnicodeNonBreaking(char32_t ch)
+{
+    return ch == 0x00A0   // Non-Breaking Space
+    || ch == 0x202F       // Narrow Non-Breaking Space
+    || ch == 0x2007       // Figure Space
+    || ch == 0x2060;      // Word Joiner
+}
+    
 void trimUTF16Vector(std::vector<char16_t>& str)
 {
     int len = static_cast<int>(str.size());
@@ -273,7 +309,7 @@ bool UTF32ToUTF16(const std::u32string& utf32, std::u16string& outUtf16)
 std::string getStringUTFCharsJNI(JNIEnv* env, jstring srcjStr, bool* ret)
 {
     std::string utf8Str;
-    if(srcjStr != nullptr)
+    if(srcjStr != nullptr && env != nullptr)
     {
         const unsigned short * unicodeChar = ( const unsigned short *)env->GetStringChars(srcjStr, nullptr);
         size_t unicodeCharLength = env->GetStringLength(srcjStr);
@@ -380,11 +416,27 @@ void StringUTF8::replace(const std::string& newStr)
 
 std::string StringUTF8::getAsCharSequence() const
 {
-    std::string charSequence;
+    return getAsCharSequence(0, std::numeric_limits<std::size_t>::max());
+}
 
-    for (auto& charUtf8 : _str)
+std::string StringUTF8::getAsCharSequence(std::size_t pos) const
+{
+    return getAsCharSequence(pos, std::numeric_limits<std::size_t>::max());
+}
+
+std::string StringUTF8::getAsCharSequence(std::size_t pos, std::size_t len) const
+{
+    std::string charSequence;
+    std::size_t maxLen = _str.size() - pos;
+    if (len > maxLen)
     {
-        charSequence.append(charUtf8._char);
+        len = maxLen;
+    }
+
+    std::size_t endPos = len + pos;
+    while (pos < endPos)
+    {
+        charSequence.append(_str[pos++]._char);
     }
 
     return charSequence;

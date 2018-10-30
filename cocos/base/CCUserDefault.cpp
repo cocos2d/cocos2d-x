@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -57,25 +58,41 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
 
     do 
     {
-         tinyxml2::XMLDocument* xmlDoc = new (std::nothrow) tinyxml2::XMLDocument();
+        tinyxml2::XMLDocument* xmlDoc = new (std::nothrow) tinyxml2::XMLDocument();
         *doc = xmlDoc;
+        *rootNode = nullptr;
 
         std::string xmlBuffer = FileUtils::getInstance()->getStringFromFile(UserDefault::getInstance()->getXMLFilePath());
 
-        if (xmlBuffer.empty())
+        if (!xmlBuffer.empty())
         {
-            CCLOG("can not read xml file");
-            break;
-        }
-        xmlDoc->Parse(xmlBuffer.c_str(), xmlBuffer.size());
+            xmlDoc->Parse(xmlBuffer.c_str(), xmlBuffer.size());
 
-        // get root node
-        *rootNode = xmlDoc->RootElement();
+            // get root node
+            *rootNode = xmlDoc->RootElement();
+        }
+
         if (nullptr == *rootNode)
         {
-            CCLOG("read root node error");
-            break;
+            // try to insert xml declaration
+            if (!xmlDoc->FirstChild())
+            {
+                tinyxml2::XMLDeclaration *xmlDeclaration = xmlDoc->NewDeclaration(nullptr);
+                if (nullptr != xmlDeclaration)
+                {
+                    xmlDoc->LinkEndChild(xmlDeclaration);
+                }
+            }
+
+            // create root element
+            tinyxml2::XMLElement *rootEle = xmlDoc->NewElement(USERDEFAULT_ROOT_NAME);
+            if (nullptr == rootEle)
+                break;
+
+            xmlDoc->LinkEndChild(rootEle);
+            *rootNode = rootEle;
         }
+
         // find the node
         curNode = (*rootNode)->FirstChildElement();
         while (nullptr != curNode)
@@ -95,7 +112,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
 
 static void setValueForKey(const char* pKey, const char* pValue)
 {
-     tinyxml2::XMLElement* rootNode;
+    tinyxml2::XMLElement* rootNode;
     tinyxml2::XMLDocument* doc;
     tinyxml2::XMLElement* node;
     // check the params
@@ -474,22 +491,21 @@ bool UserDefault::createXMLFile()
     }  
     tinyxml2::XMLDeclaration *pDeclaration = pDoc->NewDeclaration(nullptr);  
     if (nullptr==pDeclaration)  
-    {  
+    {
+        delete pDoc;
         return false;  
     }  
     pDoc->LinkEndChild(pDeclaration); 
     tinyxml2::XMLElement *pRootEle = pDoc->NewElement(USERDEFAULT_ROOT_NAME);  
     if (nullptr==pRootEle)  
-    {  
+    {
+        delete pDoc;
         return false;  
     }  
     pDoc->LinkEndChild(pRootEle);  
     bRet = tinyxml2::XML_SUCCESS == pDoc->SaveFile(FileUtils::getInstance()->getSuitableFOpen(_filePath).c_str());
 
-    if(pDoc)
-    {
-        delete pDoc;
-    }
+    delete pDoc;
 
     return bRet;
 }
@@ -522,6 +538,7 @@ void UserDefault::deleteValueForKey(const char* key)
     // if node not exist, don't need to delete
     if (!node)
     {
+        CC_SAFE_DELETE(doc);
         return;
     }
 
