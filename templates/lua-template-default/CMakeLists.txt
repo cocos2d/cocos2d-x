@@ -21,9 +21,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 # ****************************************************************************/
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.6)
 
-set(APP_NAME TemplateLua)
+set(APP_NAME HelloLua)
 
 project(${APP_NAME})
 
@@ -135,15 +135,19 @@ endif()
 set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
 
 # mark app complie info and libs info
-cocos_build_app(${APP_NAME}
-                APP_SRC "${APP_SRC}"
-                DEPEND_COMMON_LIBS "luacocos2d" "cocos2d"
-                DEPEND_ANDROID_LIBS "cocos2d_android"
-                DEPEND_MACOSX_LIBS "simulator"
-                DEPEND_WINDOWS_LIBS "simulator"
-                )
+if(NOT ANDROID)
+    add_executable(${APP_NAME} ${APP_SRC})
+else()
+    add_library(${APP_NAME} SHARED ${APP_SRC})
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/platform/android ${ENGINE_BINARY_PATH}/cocos/platform)
+    target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
+endif()
 
-# mark app resources
+target_link_libraries(${APP_NAME} luacocos2d)
+target_include_directories(${APP_NAME} PRIVATE ${RUNTIME_SRC_ROOT}/Classes)
+
+# mark app resources, resource will be copy auto after mark
+setup_cocos_app_config(${APP_NAME})
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)

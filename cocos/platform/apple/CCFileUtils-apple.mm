@@ -37,6 +37,9 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "platform/CCSAXParser.h"
 
+
+#define DECLARE_GUARD std::lock_guard<std::recursive_mutex> mutexGuard(_mutex)
+
 NS_CC_BEGIN
 
 struct FileUtilsApple::IMPL {
@@ -231,6 +234,7 @@ FileUtils* FileUtils::getInstance()
 
 std::string FileUtilsApple::getWritablePath() const
 {
+    DECLARE_GUARD;
     if (_writablePath.length())
     {
         return _writablePath;
@@ -297,7 +301,7 @@ static int unlink_cb(const char *fpath, const struct stat *sb, int typeflag, str
     return ret;
 }
 
-bool FileUtilsApple::removeDirectory(const std::string& path)
+bool FileUtilsApple::removeDirectory(const std::string& path) const
 {
     if (path.empty())
     {
@@ -333,13 +337,13 @@ std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string
     return "";
 }
 
-ValueMap FileUtilsApple::getValueMapFromFile(const std::string& filename)
+ValueMap FileUtilsApple::getValueMapFromFile(const std::string& filename) const
 {
     auto d(FileUtils::getInstance()->getDataFromFile(filename));
     return getValueMapFromData(reinterpret_cast<char*>(d.getBytes()), static_cast<int>(d.getSize()));
 }
 
-ValueMap FileUtilsApple::getValueMapFromData(const char* filedata, int filesize)
+ValueMap FileUtilsApple::getValueMapFromData(const char* filedata, int filesize) const
 {
     NSData* file = [NSData dataWithBytes:filedata length:filesize];
     NSPropertyListFormat format;
@@ -359,12 +363,12 @@ ValueMap FileUtilsApple::getValueMapFromData(const char* filedata, int filesize)
     return ret;
 }
 
-bool FileUtilsApple::writeToFile(const ValueMap& dict, const std::string &fullPath)
+bool FileUtilsApple::writeToFile(const ValueMap& dict, const std::string &fullPath) const
 {
     return writeValueMapToFile(dict, fullPath);
 }
 
-bool FileUtils::writeValueMapToFile(const ValueMap& dict, const std::string& fullPath)
+bool FileUtils::writeValueMapToFile(const ValueMap& dict, const std::string& fullPath) const
 {
     valueMapCompact(const_cast<ValueMap&>(dict));
     //CCLOG("iOS||Mac Dictionary %d write to file %s", dict->_ID, fullPath.c_str());
@@ -380,7 +384,7 @@ bool FileUtils::writeValueMapToFile(const ValueMap& dict, const std::string& ful
     return [nsDict writeToFile:file atomically:YES];
 }
 
-void FileUtilsApple::valueMapCompact(ValueMap& valueMap)
+void FileUtilsApple::valueMapCompact(ValueMap& valueMap) const
 {
     auto itr = valueMap.begin();
     while(itr != valueMap.end()){
@@ -406,7 +410,7 @@ void FileUtilsApple::valueMapCompact(ValueMap& valueMap)
     }
 }
 
-void FileUtilsApple::valueVectorCompact(ValueVector& valueVector)
+void FileUtilsApple::valueVectorCompact(ValueVector& valueVector) const
 {
     auto itr = valueVector.begin();
     while(itr != valueVector.end()){
@@ -432,7 +436,7 @@ void FileUtilsApple::valueVectorCompact(ValueVector& valueVector)
     }
 }
 
-bool FileUtils::writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath)
+bool FileUtils::writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath) const
 {
     NSString* path = [NSString stringWithUTF8String:fullPath.c_str()];
     NSMutableArray* array = [NSMutableArray array];
@@ -446,7 +450,7 @@ bool FileUtils::writeValueVectorToFile(const ValueVector& vecData, const std::st
 
     return true;
 }
-ValueVector FileUtilsApple::getValueVectorFromFile(const std::string& filename)
+ValueVector FileUtilsApple::getValueVectorFromFile(const std::string& filename) const
 {
     //    NSString* pPath = [NSString stringWithUTF8String:pFileName];
     //    NSString* pathExtension= [pPath pathExtension];
@@ -467,7 +471,7 @@ ValueVector FileUtilsApple::getValueVectorFromFile(const std::string& filename)
     return ret;
 }
 
-bool FileUtilsApple::createDirectory(const std::string& path)
+bool FileUtilsApple::createDirectory(const std::string& path) const
 {
     CCASSERT(!path.empty(), "Invalid path");
     

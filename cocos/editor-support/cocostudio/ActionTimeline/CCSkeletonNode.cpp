@@ -27,11 +27,9 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "math/TransformUtils.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramState.h"
+#include "base/ccUtils.h"
 #include <stack>
-
-using namespace cocos2d::GL;
 
 NS_TIMELINE_BEGIN
 
@@ -236,13 +234,14 @@ void SkeletonNode::batchDrawAllSubBones(const cocos2d::Mat4 &transform)
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 
-    cocos2d::GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION | cocos2d::GL::VERTEX_ATTRIB_FLAG_COLOR);
+    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION);
+    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, vetices);
     glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, veticesColor);
 
-    cocos2d::GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
 #ifdef CC_STUDIO_ENABLED_VIEW
     glLineWidth(1);
@@ -269,13 +268,14 @@ void SkeletonNode::onDraw(const cocos2d::Mat4 &transform, uint32_t /*flags*/)
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 
-    cocos2d::GL::enableVertexAttribs(cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION | cocos2d::GL::VERTEX_ATTRIB_FLAG_COLOR);
+    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION);
+    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
     glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
 
-    cocos2d::GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     glDrawArrays(GL_TRIANGLE_STRIP, 4, 4);

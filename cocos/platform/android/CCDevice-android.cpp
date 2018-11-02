@@ -35,7 +35,7 @@ THE SOFTWARE.
 #include "platform/android/jni/JniHelper.h"
 #include "platform/CCFileUtils.h"
 
-static const std::string helperClassName = "org/cocos2dx/lib/Cocos2dxHelper";
+static const std::string helperClassName = "org.cocos2dx.lib.Cocos2dxHelper";
 
 NS_CC_BEGIN
 
@@ -88,8 +88,8 @@ public:
                       const FontDefinition& textDefinition )
     {
            JniMethodInfo methodInfo;
-           if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxBitmap", "createTextBitmapShadowStroke",
-               "([BLjava/lang/String;IIIIIIIIFZFFFFZIIIIFZI)Z"))
+           if (! JniHelper::getStaticMethodInfo(methodInfo, "org.cocos2dx.lib.Cocos2dxBitmap", "createTextBitmapShadowStroke",
+               "([BLjava/lang/String;IIIIIIIIZFFFFZIIIIFZI)Z"))
            {
                CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
                return false;

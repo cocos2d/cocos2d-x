@@ -993,10 +993,14 @@ void MySprite::onDraw(const Mat4 &transform, uint32_t flags)
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 
-    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+    cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
-    GL::bindTexture2D( _texture->getName() );
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _texture->getName());
+    
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
 
     #define kQuadSize sizeof(_quad.bl)
     size_t offset = (size_t)&_quad;

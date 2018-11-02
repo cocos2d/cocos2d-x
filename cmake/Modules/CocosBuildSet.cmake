@@ -6,6 +6,14 @@ if(" ${CMAKE_SOURCE_DIR}" STREQUAL " ${CMAKE_BINARY_DIR}")
         ")
 endif()
 
+# print cmake debug info
+set(CMAKE_DEBUG_TARGET_PROPERTIES
+    # INCLUDE_DIRECTORIES
+    # COMPILE_DEFINITIONS
+    # POSITION_INDEPENDENT_CODE
+    # CONTAINER_SIZE_REQUIRED
+    # LIB_VERSION
+)
 # It ensures that when Find*.cmake files included from cmake's Modules dir
 # include another *.cmake file with relative path, that file will be included
 # also from cmake's Modules dir, to not clash with per-project files.
@@ -24,9 +32,13 @@ endif()
 set(COCOS_EXTERNAL_DIR ${COCOS2DX_ROOT_PATH}/external)
 set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
 
+message(STATUS "PROJECT_NAME:" ${PROJECT_NAME})
+message(STATUS "PROJECT_SOURCE_DIR:" ${PROJECT_SOURCE_DIR})
 message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
 message(STATUS "CMAKE_MODULE_PATH:" ${CMAKE_MODULE_PATH})
 message(STATUS "COCOS_EXTERNAL_DIR:" ${COCOS_EXTERNAL_DIR})
+# delete binary dir if you hope a full clean re-build
+message(STATUS "PROJECT_BINARY_DIR:" ${PROJECT_BINARY_DIR})
 message(STATUS "ENGINE_BINARY_PATH:" ${ENGINE_BINARY_PATH})
 
 # include helper functions for cmake build
@@ -38,8 +50,4 @@ include(CocosSelectModule)
 # set common compiler options
 include(CocosCompileOptions)
 
-# collect prebuilt libraries
-include(CocosPickLibs)
-
-# compile source libraries
-include(CocosBuildModules)
+include(CocosConfigDepend)

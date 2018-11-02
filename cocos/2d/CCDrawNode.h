@@ -313,11 +313,21 @@ public:
     
     // Overrides
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+
+    virtual void visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
     
     void setLineWidth(GLfloat lineWidth);
 
     // Get CocosStudio guide lines width.
     GLfloat getLineWidth();
+
+    /**
+    * When isolated is set, the position of the node is no longer affected by parent nodes.
+    * Which means it will be drawn just like a root node.
+    */
+    void setIsolated(bool isolated) { _isolated = isolated; }
+
+    bool isIsolated() const { return _isolated; }
 
 CC_CONSTRUCTOR_ACCESS:
     DrawNode(GLfloat lineWidth = DEFAULT_LINE_WIDTH);
@@ -329,39 +339,42 @@ protected:
     void ensureCapacityGLPoint(int count);
     void ensureCapacityGLLine(int count);
 
-    GLuint      _vao;
-    GLuint      _vbo;
-    GLuint      _vaoGLPoint;
-    GLuint      _vboGLPoint;
-    GLuint      _vaoGLLine;
-    GLuint      _vboGLLine;
+    void setupBuffer();
 
-    int         _bufferCapacity;
-    GLsizei     _bufferCount;
-    V2F_C4B_T2F *_buffer;
+    GLuint      _vao = 0;
+    GLuint      _vbo = 0;
+    GLuint      _vaoGLPoint = 0;
+    GLuint      _vboGLPoint = 0;
+    GLuint      _vaoGLLine = 0;
+    GLuint      _vboGLLine = 0;
+
+    int         _bufferCapacity = 0;
+    GLsizei     _bufferCount = 0;
+    V2F_C4B_T2F *_buffer = nullptr;
     
-    int         _bufferCapacityGLPoint;
-    GLsizei     _bufferCountGLPoint;
-    V2F_C4B_T2F *_bufferGLPoint;
+    int         _bufferCapacityGLPoint = 0;
+    GLsizei     _bufferCountGLPoint = 0;
+    V2F_C4B_T2F *_bufferGLPoint = nullptr;
     Color4F     _pointColor;
-    int         _pointSize;
+    int         _pointSize = 0;
     
-    int         _bufferCapacityGLLine;
-    GLsizei     _bufferCountGLLine;
-    V2F_C4B_T2F *_bufferGLLine;
+    int         _bufferCapacityGLLine = 0;
+    GLsizei     _bufferCountGLLine = 0;
+    V2F_C4B_T2F *_bufferGLLine = nullptr;
 
     BlendFunc   _blendFunc;
     CustomCommand _customCommand;
     CustomCommand _customCommandGLPoint;
     CustomCommand _customCommandGLLine;
 
-    bool        _dirty;
-    bool        _dirtyGLPoint;
-    bool        _dirtyGLLine;
+    bool        _dirty = false;
+    bool        _dirtyGLPoint = false;
+    bool        _dirtyGLLine = false;
+    bool        _isolated = false;
     
-    GLfloat         _lineWidth;
+    GLfloat         _lineWidth = 0.0f;
 
-    GLfloat  _defaultLineWidth;
+    GLfloat  _defaultLineWidth = 0.0f;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);
 };

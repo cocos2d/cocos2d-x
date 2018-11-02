@@ -122,8 +122,8 @@ std::string& toLowercase(std::string& s)
 namespace {
 
 const char* ENGINE_DATA_MANAGER_VERSION = "5";
-const char* CLASS_NAME_ENGINE_DATA_MANAGER = "org/cocos2dx/lib/Cocos2dxEngineDataManager";
-const char* CLASS_NAME_RENDERER = "org/cocos2dx/lib/Cocos2dxRenderer";
+const char* CLASS_NAME_ENGINE_DATA_MANAGER = "org.cocos2dx.lib.Cocos2dxEngineDataManager";
+const char* CLASS_NAME_RENDERER = "org.cocos2dx.lib.Cocos2dxRenderer";
 
 bool _isInitialized = false;
 bool _isSupported = false;

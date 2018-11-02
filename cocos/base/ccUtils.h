@@ -188,6 +188,8 @@ namespace utils
     * @lua NA
     */
     CC_DLL LanguageType getLanguageTypeByISO2(const char* code);
+
+    CC_DLL void setBlending(GLenum sfactor, GLenum dfactor);
 }
 
 NS_CC_END

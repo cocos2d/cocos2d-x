@@ -29,9 +29,9 @@ THE SOFTWARE.
 #include <stdarg.h>
 #include "2d/CCLayer.h"
 #include "base/CCScriptSupport.h"
+#include "base/ccUtils.h"
 #include "platform/CCDevice.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
@@ -620,7 +620,8 @@ void LayerColor::onDraw(const Mat4& transform, uint32_t /*flags*/)
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
     
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR );
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
     
     //
     // Attributes
@@ -629,7 +630,7 @@ void LayerColor::onDraw(const Mat4& transform, uint32_t /*flags*/)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
 
-    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
+    utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
@@ -950,7 +951,7 @@ void LayerRadialGradient::onDraw(const Mat4& transform, uint32_t /*flags*/)
     program->setUniformLocationWith1f(_uniformLocationExpand, _expand);
     
     
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION);
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
     
     //
     // Attributes
@@ -958,7 +959,7 @@ void LayerRadialGradient::onDraw(const Mat4& transform, uint32_t /*flags*/)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
     
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    utils::setBlending(_blendFunc.src, _blendFunc.dst);
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     

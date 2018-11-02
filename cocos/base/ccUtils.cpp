@@ -37,6 +37,7 @@ THE SOFTWARE.
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"
+#include "renderer/CCRenderState.h"
 
 #include "platform/CCImage.h"
 #include "platform/CCFileUtils.h"
@@ -524,6 +525,24 @@ LanguageType getLanguageTypeByISO2(const char* code)
         ret = LanguageType::BELARUSIAN;
     }
     return ret;
+}
+
+void setBlending(GLenum sfactor, GLenum dfactor)
+{
+    if (sfactor == GL_ONE && dfactor == GL_ZERO)
+    {
+        glDisable(GL_BLEND);
+        RenderState::StateBlock::_defaultState->setBlend(false);
+    }
+    else
+    {
+        glEnable(GL_BLEND);
+        glBlendFunc(sfactor, dfactor);
+
+        RenderState::StateBlock::_defaultState->setBlend(true);
+        RenderState::StateBlock::_defaultState->setBlendSrc((RenderState::Blend)sfactor);
+        RenderState::StateBlock::_defaultState->setBlendDst((RenderState::Blend)dfactor);
+    }
 }
 
 }

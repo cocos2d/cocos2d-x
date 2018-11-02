@@ -22,6 +22,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-static void making_cmake_happy(void)
-{
+#pragma once
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include "tolua++.h"
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+//#include "lua.hpp"
+#ifdef __cplusplus
 }
+#endif
+
+TOLUA_API int register_downloader(lua_State* L);

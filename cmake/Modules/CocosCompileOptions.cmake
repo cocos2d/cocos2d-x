@@ -47,17 +47,6 @@
  endif()
  message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
- # ARCH_DIR only useful for search linux prebuilt libs
- if(LINUX)
-     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-         set(ARCH_DIR "64-bit")
-     elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
-         set(ARCH_DIR "32-bit")
-     else()
-         message(WARNING "CMAKE_SIZEOF_VOID_P: ${CMAKE_SIZEOF_VOID_P}")
-     endif()
- endif()
-
  # check and print compiler infos
  if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
      set(COMPILER_STRING ${CMAKE_CXX_COMPILER_ID})
@@ -109,6 +98,11 @@
      if(CLANG AND NOT ANDROID)
          set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
      endif()
+     if(LINUX)
+         add_definitions(-D_GNU_SOURCE)
+         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -lrt")
+         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread -lrt")
+     endif()
      # specail options for android
      if(ANDROID)
          set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fexceptions")
@@ -155,7 +149,7 @@
      return()
  endif()
 
- if(CMAKE_FIND_ROOT_PATH AND USE_EXTERNAL_PREBUILT)
+ if(CMAKE_FIND_ROOT_PATH)
      # Adds cocos2d-x external folder to the list of valid include/library paths when cross-compiling and using prebuilds
      set(CMAKE_FIND_ROOT_PATH ${CMAKE_FIND_ROOT_PATH} ${COCOS_EXTERNAL_DIR})
  endif()
@@ -173,45 +167,25 @@
          else()
              message(FATAL_ERROR "using Windows MSVC generate cocos2d-x project, MSVC_VERSION:${MSVC_VERSION} lower than needed")
          endif()
-         define_property(TARGET
-                         PROPERTY DEPEND_DLLS
-                         BRIEF_DOCS "depend dlls of a target"
-                         FULL_DOCS "use to save depend dlls of a target"
-                         )
      else()
          message(FATAL_ERROR "please using Windows MSVC compile cocos2d-x project, support other compile tools not yet")
      endif()
  endif()
 
- # check prebuilt config
- if(GEN_COCOS_PREBUILT AND USE_COCOS_PREBUILT)
-     message(FATAL_ERROR "can't generate prebuilt libs and use prebuilt libs at the same time")
- endif()
- if(GEN_COCOS_PREBUILT OR USE_COCOS_PREBUILT)
-     if(DEFINED COCOS_PREBUILT_ROOT)
-         message(STATUS "pre-defined COCOS_PREBUILT_ROOT: ${COCOS_PREBUILT_ROOT}")
-     else()
-         # the default prebuilt path is cocos2d-x/prebuilt
-         set(COCOS_PREBUILT_ROOT $ENV{COCOS_TEMPLATES_ROOT}/../prebuilt)
-     endif()
-     if(NOT IS_DIRECTORY ${COCOS_PREBUILT_ROOT})
-         message(STATUS "prebuilt root directory defined but not existed, create: ${COCOS_PREBUILT_ROOT}")
-         file(MAKE_DIRECTORY ${COCOS_PREBUILT_ROOT})
-     endif()
-     if(IS_DIRECTORY ${COCOS_PREBUILT_ROOT})
-         # prebuilt libs path
-         set(COCOS_PREBUILT_PATH ${COCOS_PREBUILT_ROOT}/${PLATFORM_FOLDER}/${CMAKE_BUILD_TYPE})
-         if(XCODE OR VS)
-             set(COCOS_PREBUILT_PATH ${COCOS_PREBUILT_ROOT}/${PLATFORM_FOLDER})
-         endif()
-         if(ANDROID)
-             set(COCOS_PREBUILT_PATH ${COCOS_PREBUILT_ROOT}/${PLATFORM_FOLDER}/${ANDROID_ABI})
-         endif()
-         message(STATUS "COCOS_PREBUILT_PATH:" ${COCOS_PREBUILT_PATH})
-     else()
-         if(ANDROID)
-             message(WARNING "using cmake in Android Studio, can't get value of environment variable, please define COCOS_PREBUILT_ROOT manually")
-         endif()
-         message(FATAL_ERROR "can't find prebuilt libs location")
-     endif()
- endif()
+# custom target property for dll collect
+define_property(TARGET
+    PROPERTY CC_DEPEND_DLLS
+    BRIEF_DOCS "depend dlls of a target"
+    FULL_DOCS "use to save depend dlls of a target"
+)
+# custom target property for lua/js link
+define_property(TARGET
+    PROPERTY CC_JS_DEPEND
+    BRIEF_DOCS "cocos2d js depend libs"
+    FULL_DOCS "use to save depend libs of cocos2d js project"
+) 
+define_property(TARGET
+    PROPERTY CC_LUA_DEPEND
+    BRIEF_DOCS "cocos2d lua depend libs"
+    FULL_DOCS "use to save depend libs of cocos2d lua project"
+) 

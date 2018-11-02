@@ -77,83 +77,83 @@ public:
      * @lua NA
      */
     virtual ~__String();
-    
-    /* override assignment operator 
+
+    /* override assignment operator
      * @js NA
      * @lua NA
      */
     __String& operator= (const __String& other);
 
-    /** init a string with format, it's similar with the c function 'sprintf' 
+    /** init a string with format, it's similar with the c function 'sprintf'
      * @js NA
      * @lua NA
      */
     bool initWithFormat(const char* format, ...) CC_FORMAT_PRINTF(2, 3);
 
-    /** convert to int value 
+    /** convert to int value
      * @js NA
      */
     int intValue() const;
 
-    /** convert to unsigned int value 
+    /** convert to unsigned int value
      * @js NA
      */
     unsigned int uintValue() const;
 
-    /** convert to float value 
+    /** convert to float value
      * @js NA
      */
     float floatValue() const;
 
-    /** convert to double value 
+    /** convert to double value
      * @js NA
      */
     double doubleValue() const;
 
-    /** convert to bool value 
+    /** convert to bool value
      * @js NA
      */
     bool boolValue() const;
 
-    /** get the C string 
+    /** get the C string
      * @js NA
      */
     const char* getCString() const;
 
-    /** get the length of string 
+    /** get the length of string
      * @js NA
      */
     int length() const;
 
-    /** compare to a c string 
+    /** compare to a c string
      * @js NA
      */
     int compare(const char *) const;
 
-    /** append additional characters at the end of its current value 
+    /** append additional characters at the end of its current value
      * @js NA
      * @lua NA
      */
     void append(const std::string& str);
 
-    /** append(w/ format) additional characters at the end of its current value 
+    /** append(w/ format) additional characters at the end of its current value
      * @js NA
      * @lua NA
      */
     void appendWithFormat(const char* format, ...);
 
-    /** split a string 
+    /** split a string
      * @js NA
      * @lua NA
      */
     __Array* componentsSeparatedByString(const char *delimiter);
-    
-    /* override functions 
+
+    /* override functions
      * @js NA
      */
     virtual bool isEqual(const Ref* pObject);
 
-    /** create a string with std string, you can also pass a c string pointer because the default constructor of std::string can access a c string pointer. 
+    /** create a string with std string, you can also pass a c string pointer because the default constructor of std::string can access a c string pointer.
      *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      * @js NA
@@ -168,14 +168,14 @@ public:
      */
     static __String* createWithFormat(const char* format, ...) CC_FORMAT_PRINTF(1, 2);
 
-    /** create a string with binary data 
+    /** create a string with binary data
      *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      * @js NA
      */
     static __String* createWithData(const unsigned char* pData, size_t nLen);
 
-    /** create a string with a file, 
+    /** create a string with a file,
      *  @return A String pointer which is an autorelease object pointer,
      *          it means that you needn't do a release operation unless you retain it.
      * @js NA
@@ -191,7 +191,7 @@ public:
      * @lua NA
      */
     virtual __String* clone() const override;
-    
+
 private:
 
     /** only for internal use */
@@ -201,7 +201,7 @@ public:
     std::string _string;
 };
 
-struct StringCompare : public std::binary_function<__String *, __String *, bool> {
+struct StringCompare : public std::function<bool(__String *, __String *)> {
     public:
         bool operator() (__String * a, __String * b) const {
             return strcmp(a->getCString(), b->getCString()) < 0;

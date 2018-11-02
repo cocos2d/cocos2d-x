@@ -309,7 +309,7 @@ bool UTF32ToUTF16(const std::u32string& utf32, std::u16string& outUtf16)
 std::string getStringUTFCharsJNI(JNIEnv* env, jstring srcjStr, bool* ret)
 {
     std::string utf8Str;
-    if(srcjStr != nullptr)
+    if(srcjStr != nullptr && env != nullptr)
     {
         const unsigned short * unicodeChar = ( const unsigned short *)env->GetStringChars(srcjStr, nullptr);
         size_t unicodeCharLength = env->GetStringLength(srcjStr);

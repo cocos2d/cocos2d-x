@@ -1,23 +1,5 @@
 include(CMakeParseArguments)
 
-# find a prebuilt lib by `lib_name` and save the result in `lib_out`
-function(cocos_find_prebuilt_lib_by_name lib_name lib_out)
-    set(search_path ${COCOS_PREBUILT_PATH})
-    if(XCODE OR VS)
-        set(search_path ${COCOS_PREBUILT_PATH}/${CMAKE_BUILD_TYPE})
-    endif()
-    message(STATUS "search_path cocos prebuilt library: ${search_path}")
-    find_library(found_lib ${lib_name} PATHS ${search_path} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
-
-    if(found_lib)
-        message(STATUS "found cocos prebuilt library: ${found_lib}")
-    else()
-        message(STATUS "can't found cocos prebuilt library: ${lib_name}")
-    endif()
-    set(${lib_out} ${found_lib} PARENT_SCOPE)
-    unset(found_lib CACHE)
-endfunction()
-
 # copy resource `FILES` and `FOLDERS` to `COPY_TO` folder
 function(cocos_copy_res)
     set(oneValueArgs COPY_TO)
@@ -78,7 +60,7 @@ function(get_target_depends_ext_dlls cocos_target all_depend_dlls_out)
             list(APPEND tmp_depend_libs ${tmp_target})
             foreach(depend_lib ${tmp_depend_libs})
                 if(TARGET ${depend_lib})
-                    get_target_property(tmp_dlls ${depend_lib} DEPEND_DLLS)
+                    get_target_property(tmp_dlls ${depend_lib} CC_DEPEND_DLLS)
                     if(tmp_dlls)
                         list(APPEND all_depend_ext_dlls ${tmp_dlls})
                     endif()
@@ -103,27 +85,15 @@ function(cocos_copy_target_dll cocos_target)
     cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
     get_target_depends_ext_dlls(${cocos_target} all_depend_dlls)
     # remove repeat items
-    list(REMOVE_DUPLICATES all_depend_dlls)
+    if(all_depend_dlls)
+        list(REMOVE_DUPLICATES all_depend_dlls)
+    endif()
+    # todo, add a option to enable/disable debug print
     message(STATUS "prepare to copy external dlls for ${cocos_target}:${all_depend_dlls}")
     foreach(cc_dll_file ${all_depend_dlls})
         get_filename_component(cc_dll_name ${cc_dll_file} NAME)
         configure_file(${cc_dll_file} "${opt_COPY_TO}/${cc_dll_name}" COPYONLY)
     endforeach()
-endfunction()
-
-# find dlls in a dir which `LIB_ABS_PATH` located, and save the result in `dlls_out`
-function(cocos_find_dlls_for_lib dlls_out)
-    set(oneValueArgs LIB_ABS_PATH)
-    cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-    get_filename_component(lib_dir ${opt_LIB_ABS_PATH} DIRECTORY)
-    file(GLOB lib_dir_files "${lib_dir}/*")
-    set(cc_dlls)
-    foreach(dir_file ${lib_dir_files})
-        if(${dir_file} MATCHES "dll$")
-            list(APPEND cc_dlls ${dir_file})
-        endif()
-    endforeach()
-    set(${dlls_out} ${cc_dlls} PARENT_SCOPE)
 endfunction()
 
 # mark `FILES` as resources, files will be put into sub-dir tree depend on its absolute path
@@ -188,34 +158,8 @@ function(source_group_single_file single_file)
     source_group("${ide_file_group}" FILES ${single_file})
 endfunction()
 
-# build a cocos application
-# hrough compile the files `APP_SRC`, link the libs in `*LIBS`, use the packages in `*.PKGS`
-# this method hide the link lib details, those is prebuilt libs or not
-function(cocos_build_app app_name)
-    set(multiValueArgs
-        APP_SRC
-        DEPEND_COMMON_LIBS
-        DEPEND_ANDROID_LIBS
-        COMMON_USE_PKGS
-        LINUX_USE_PKGS
-        DEPEND_MACOSX_LIBS
-        DEPEND_WINDOWS_LIBS
-        )
-    cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-
-    if(ANDROID)
-        add_library(${app_name} SHARED ${opt_APP_SRC})
-        foreach(android_lib ${opt_DEPEND_ANDROID_LIBS})
-            if(USE_COCOS_PREBUILT)
-                target_link_libraries(${app_name} -Wl,-whole-archive "${${_${android_lib}_prefix}_LIBRARIES}" -Wl,-no-whole-archive)
-            else()
-                target_link_libraries(${app_name} -Wl,-whole-archive ${android_lib} -Wl,-no-whole-archive)
-                add_dependencies(${app_name} ${android_lib})
-            endif()
-        endforeach()
-    else()
-        add_executable(${app_name} ${opt_APP_SRC})
-    endif()
+# setup a cocos application, include "APP_BIN_DIR", "APP_RES_DIR" config
+function(setup_cocos_app_config app_name)
     # set target PROPERTIES, depend different platforms
     if(APPLE)
         set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
@@ -233,49 +177,9 @@ function(cocos_build_app app_name)
     endif()
     set_target_properties(${app_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
 
-    if(MACOSX)
-        list(APPEND opt_DEPEND_COMMON_LIBS ${opt_DEPEND_MACOSX_LIBS})
-    elseif(WINDOWS)
-        list(APPEND opt_DEPEND_COMMON_LIBS ${opt_DEPEND_WINDOWS_LIBS})
-    endif()
-    # link commom libs, and common libs need external or system libs
-    if(USE_COCOS_PREBUILT)
-        include(CocosUseLibs)
-        foreach(common_lib ${opt_DEPEND_COMMON_LIBS})
-            message(STATUS "${app_name} prepare to link engine lib: ${common_lib}")
-            cocos_use_pkg(${app_name} ${_${common_lib}_prefix})
-            if(common_lib STREQUAL "cocos2d")
-                target_use_cocos2d_depend_libs(${app_name})
-            elseif(common_lib STREQUAL "jscocos2d")
-                target_use_jscocos2d_depend_libs(${app_name})
-            elseif(common_lib STREQUAL "luacocos2d")
-                target_use_luacocos2d_depend_libs(${app_name})
-            elseif(common_lib STREQUAL "simulator")
-                target_use_simulator_depend_libs(${app_name})
-            endif()
-        endforeach()
-    else()
-        foreach(common_lib ${opt_DEPEND_COMMON_LIBS})
-            target_link_libraries(${app_name} ${common_lib})
-            add_dependencies(${app_name} ${common_lib})
-        endforeach()
-    endif()
-
-    if(LINUX)
-        foreach(_pkg ${opt_LINUX_USE_PKGS})
-            cocos_use_pkg(${app_name} ${_pkg})
-        endforeach()
-    endif()
-    foreach(_pkg ${opt_COMMON_USE_PKGS})
-        cocos_use_pkg(${app_name} ${_pkg})
-    endforeach()
     # auto mark code files for IDE when mark app
     if(XCODE OR VS)
         cocos_mark_code_files(${APP_NAME})
-    endif()
-    # generate prebuilt auto when build app if GEN_COCOS_PREBUILT=ON
-    if(GEN_COCOS_PREBUILT)
-        add_dependencies(${APP_NAME} prebuilt)
     endif()
 
     set(APP_BIN_DIR ${APP_BIN_DIR} PARENT_SCOPE)
@@ -368,7 +272,7 @@ endfunction(set_xcode_property)
 
 # works same as find_package, but do additional care to properly find
 macro(cocos_find_package pkg_name pkg_prefix)
-    if(NOT USE_EXTERNAL_PREBUILT OR NOT ${pkg_prefix}_FOUND)
+    if(NOT ${pkg_prefix}_FOUND)
         find_package(${pkg_name} ${ARGN})
     endif()
     if(NOT ${pkg_prefix}_INCLUDE_DIRS AND ${pkg_prefix}_INCLUDE_DIR)
@@ -440,13 +344,13 @@ function(cocos_use_pkg target pkg)
             # message(STATUS "${target} add dll: ${_dlls}")
             get_property(pre_dlls
                          TARGET ${target}
-                         PROPERTY DEPEND_DLLS)
+                         PROPERTY CC_DEPEND_DLLS)
             if(pre_dlls)
                 set(_dlls ${pre_dlls} ${_dlls})
             endif()
             set_property(TARGET ${target}
                          PROPERTY
-                         DEPEND_DLLS ${_dlls}
+                         CC_DEPEND_DLLS ${_dlls}
                          )
         endif()
     endif()

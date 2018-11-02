@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "base/ccUTF8.h"
 
-static const std::string className = "org/cocos2dx/lib/Cocos2dxBitmap";
+static const std::string className = "org.cocos2dx.lib.Cocos2dxBitmap";
 
 using namespace cocos2d;
 

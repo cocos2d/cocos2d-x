@@ -24,12 +24,12 @@
  ****************************************************************************/
 
 #include "renderer/CCTrianglesCommand.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 #include "xxhash.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTexture2D.h"
+#include "base//ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -55,7 +55,7 @@ void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState*
     {
         int count = _triangles.indexCount;
         _triangles.indexCount = count / 3 * 3;
-        CCLOGERROR("Resize indexCount from %zd to %zd, size must be multiple times of 3", count, _triangles.indexCount);
+        CCLOGERROR("Resize indexCount from %d to %d, size must be multiple times of 3", count, _triangles.indexCount);
     }
     _mv = mv;
     
@@ -116,14 +116,16 @@ void TrianglesCommand::generateMaterialID()
 void TrianglesCommand::useMaterial() const
 {
     //Set texture
-    GL::bindTexture2D(_textureID);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _textureID);
     
     if (_alphaTextureID > 0)
     { // ANDROID ETC1 ALPHA supports.
-        GL::bindTexture2DN(1, _alphaTextureID);
+        glActiveTexture(GL_TEXTURE0 + 1);
+        glBindTexture(GL_TEXTURE_2D, _alphaTextureID);
     }
     //set blend mode
-    GL::blendFunc(_blendType.src, _blendType.dst);
+    utils::setBlending(_blendType.src, _blendType.dst);
     
     _glProgramState->apply(_mv);
 }

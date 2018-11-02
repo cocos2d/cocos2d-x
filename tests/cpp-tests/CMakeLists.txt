@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.6)
 
 set(APP_NAME cpp-tests)
 
@@ -91,7 +91,6 @@ list(APPEND GAME_HEADER
      Classes/UnitTest/UnitTest.h
      Classes/UnitTest/RefPtrTest.h
      Classes/ConfigurationTest/ConfigurationTest.h
-     Classes/PhysicsTest/PhysicsTest.h
      Classes/CurrentLanguageTest/CurrentLanguageTest.h
      Classes/AppDelegate.h
      Classes/LabelTest/LabelTestNew.h
@@ -146,6 +145,7 @@ list(APPEND GAME_HEADER
      Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.h
      Classes/ExtensionsTest/TableViewTest/TableViewTestScene.h
      Classes/ExtensionsTest/NetworkTest/WebSocketTest.h
+     Classes/ExtensionsTest/NetworkTest/WebSocketDelayTest.h
      Classes/ExtensionsTest/NetworkTest/SocketIOTest.h
      Classes/ExtensionsTest/NetworkTest/HttpClientTest.h
      Classes/Sprite3DTest/Sprite3DTest.h
@@ -254,6 +254,7 @@ list(APPEND GAME_SOURCE
      Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
      Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp
      Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp
+     Classes/ExtensionsTest/NetworkTest/WebSocketDelayTest.cpp
      Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp
      Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp
      Classes/FileUtilsTest/FileUtilsTest.cpp
@@ -276,7 +277,6 @@ list(APPEND GAME_SOURCE
      Classes/ParallaxTest/ParallaxTest.cpp
      Classes/Particle3DTest/Particle3DTest.cpp
      Classes/ParticleTest/ParticleTest.cpp
-     Classes/PhysicsTest/PhysicsTest.cpp
      Classes/ReleasePoolTest/ReleasePoolTest.cpp
      Classes/RenderTextureTest/RenderTextureTest.cpp
      Classes/RotateWorldTest/RotateWorldTest.cpp
@@ -355,16 +355,6 @@ if(WIN32 OR MACOSX OR LINUX)
     list(APPEND GAME_SOURCE
          Classes/WindowTest/WindowTest.cpp
          Classes/BugsTest/Bug-14327.cpp
-         )
-endif()
-
-if(USE_CHIPMUNK)
-    include_directories(${CHIPMUNK_INCLUDE_DIRS})
-    list(APPEND GAME_HEADER
-         Classes/ChipmunkTest/ChipmunkTest.h
-         )
-    list(APPEND GAME_SOURCE
-         Classes/ChipmunkTest/ChipmunkTest.cpp
          )
 endif()
 
@@ -447,31 +437,46 @@ if(USE_BULLET)
     include_directories(${BULLET_INCLUDE_DIRS})
 endif()
 
+
+if(USE_CHIPMUNK)
+    include_directories(${CHIPMUNK_INCLUDE_DIRS})
+    list(APPEND GAME_HEADER
+         Classes/PhysicsTest/PhysicsTest.h
+         Classes/ChipmunkTest/ChipmunkTest.h
+         )
+    list(APPEND GAME_SOURCE
+         Classes/PhysicsTest/PhysicsTest.cpp
+         Classes/ChipmunkTest/ChipmunkTest.cpp
+         )
+endif()
+
 if(NOT LINUX)
     list(APPEND GAME_SOURCE
          Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp
          )
 endif()
 
-include_directories(
-        Classes
-        ${COCOS2DX_ROOT_PATH}/cocos/editor-support
-)
-
 # mark app complie info and libs info
-set(APP_SRC
+set(all_code_files
     ${GAME_HEADER}
     ${GAME_SOURCE}
     )
-cocos_build_app(${APP_NAME}
-                APP_SRC "${APP_SRC}"
-                DEPEND_COMMON_LIBS "cocos2d"
-                DEPEND_ANDROID_LIBS "cocos2d_android"
-                COMMON_USE_PKGS "FREETYPE" "CURL"
-                LINUX_USE_PKGS "FONTCONFIG" "GTK3"
-                )
+
+if(NOT ANDROID)
+    add_executable(${APP_NAME} ${all_code_files})
+else()
+    add_library(${APP_NAME} SHARED ${all_code_files})
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/platform/android ${ENGINE_BINARY_PATH}/cocos/platform)
+    target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
+endif()
+
+target_link_libraries(${APP_NAME} cocos2d)
+target_include_directories(${APP_NAME}
+        PRIVATE Classes
+)
 
 # mark app resources
+setup_cocos_app_config(${APP_NAME})
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)

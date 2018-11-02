@@ -29,10 +29,11 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
-#include <string>
-#include <mutex>
-#include <vector>
+#include <functional>
 #include <memory>
+#include <mutex>
+#include <string>
+#include <vector>
 #ifdef OPENAL_PLAIN_INCLUDES
 #include <al.h>
 #else

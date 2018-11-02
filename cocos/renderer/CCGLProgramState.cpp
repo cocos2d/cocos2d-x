@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramStateCache.h"
 #include "renderer/CCGLProgramCache.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCTexture2D.h"
 #include "base/CCEventCustom.h"
 #include "base/CCEventListenerCustom.h"
@@ -117,12 +116,14 @@ void UniformValue::apply()
         switch (_uniform->type) {
             case GL_SAMPLER_2D:
                 _glprogram->setUniformLocationWith1i(_uniform->location, _value.tex.textureUnit);
-                GL::bindTexture2DN(_value.tex.textureUnit, _value.tex.textureId);
+                glActiveTexture(GL_TEXTURE0 + _value.tex.textureUnit);
+                glBindTexture(GL_TEXTURE_2D, _value.tex.textureId);
                 break;
 
             case GL_SAMPLER_CUBE:
                 _glprogram->setUniformLocationWith1i(_uniform->location, _value.tex.textureUnit);
-                GL::bindTextureN(_value.tex.textureUnit, _value.tex.textureId, GL_TEXTURE_CUBE_MAP);
+                glActiveTexture(GL_TEXTURE0 + _value.tex.textureUnit);
+                glBindTexture(GL_TEXTURE_CUBE_MAP, _value.tex.textureId);
                 break;
 
             case GL_INT:
@@ -422,8 +423,11 @@ GLProgramState::GLProgramState()
 , _vertexAttribsFlags(0)
 , _glprogram(nullptr)
 , _nodeBinding(nullptr)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+, _backToForegroundlistener(nullptr)
+#endif
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     /** listen the event that renderer was recreated on Android/WP8 */
     CCLOG("create rendererRecreatedListener for GLProgramState");
     _backToForegroundlistener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, 
@@ -438,7 +442,7 @@ GLProgramState::GLProgramState()
 
 GLProgramState::~GLProgramState()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
 #endif
 
@@ -568,7 +572,17 @@ void GLProgramState::applyAttributes(bool applyAttribFlags)
     if(_vertexAttribsFlags) {
         // enable/disable vertex attribs
         if (applyAttribFlags)
-            GL::enableVertexAttribs(_vertexAttribsFlags);
+        {
+            auto flags = _vertexAttribsFlags;
+            for (int i = 0; flags > 0; i++)
+            {
+                int flag = 1 << i;
+                if (flag & flags)
+                    glEnableVertexAttribArray(i);
+                
+                flags &= ~flag;
+            }
+        }
         // set attributes
         for(auto &attribute : _attributes)
         {
@@ -995,7 +1009,7 @@ void GLProgramState::setNodeBinding(Node* target)
     // weak ref
     _nodeBinding = target;
 
-    for (const auto autobinding: _autoBindings)
+    for (const auto& autobinding: _autoBindings)
         applyAutoBinding(autobinding.first, autobinding.second);
 }
 

@@ -2,9 +2,9 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocos2d_lua_android_static
+LOCAL_MODULE := cclua_android
 
-LOCAL_MODULE_FILENAME := libluacocos2dandroid
+LOCAL_MODULE_FILENAME := libluaccandroid
 
 LOCAL_ARM_MODE := arm
 
@@ -21,7 +21,7 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
                        -landroid
 
-LUA_STATIC_LIB := luajit_static
+LUA_STATIC_LIB := ext_luajit
 LUA_IMPORT_PATH := lua/luajit/prebuilt/android
 LUA_INCLUDE_PATH := $(LOCAL_PATH)/../../../../external/lua/luajit/include
 
@@ -33,9 +33,9 @@ include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE    := cocos2d_lua_static
+LOCAL_MODULE    := cclua_static
 
-LOCAL_MODULE_FILENAME := libluacocos2d
+LOCAL_MODULE_FILENAME := libluacc
 
 LOCAL_ARM_MODE := arm
 
@@ -79,6 +79,7 @@ LOCAL_SRC_FILES += ../manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.cpp
 #network
 LOCAL_SRC_FILES += ../manual/network/lua_cocos2dx_network_manual.cpp \
                    ../manual/network/lua_extensions.c \
+                   ../manual/network/lua_downloader.cpp \
                    ../manual/network/Lua_web_socket.cpp \
                    ../manual/network/lua_xml_http_request.cpp \
                    ../../../../external/lua/luasocket/auxiliar.c \
@@ -184,13 +185,11 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                            $(LOCAL_PATH)/../manual/navmesh \
                            $(LOCAL_PATH)/../../../..
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_android_static
+LOCAL_WHOLE_STATIC_LIBRARIES := cclua_android
 
-LOCAL_STATIC_LIBRARIES := cocos2dx_static
+LOCAL_STATIC_LIBRARIES := cc_static
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-add-path,$(LOCAL_PATH)/../../../..)
-$(call import-add-path,$(LOCAL_PATH)/../../../../external)
 $(call import-module,$(LUA_IMPORT_PATH))
 $(call import-module, cocos)

@@ -35,7 +35,7 @@
 #include "2d/CCActionCatmullRom.h"
 #include "2d/CCDrawingPrimitives.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/ccGLStateCache.h"
+#include "platform/CCGL.h"
 
 using namespace cocos2d;
 
@@ -4405,7 +4405,7 @@ static int tolua_Cocos2d_glEnableVertexAttribs00(lua_State* tolua_S)
 #endif
     {
         int arg0 = (int)tolua_tonumber(tolua_S, 1, 0);
-        GL::enableVertexAttribs(arg0);
+        glEnableVertexAttribArray(arg0);
     }
     return 0;
 #ifndef TOLUA_RELEASE

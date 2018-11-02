@@ -26,6 +26,8 @@
 #include "../ExtensionsTest.h"
 #include "testResource.h"
 
+#include "WebSocketDelayTest.h"
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 
@@ -33,6 +35,7 @@ WebSocketTests::WebSocketTests()
 {
     ADD_TEST_CASE(WebSocketTest);
     ADD_TEST_CASE(WebSocketCloseTest);
+    ADD_TEST_CASE(WebSocketDelayTest);
 }
 
 WebSocketTest::WebSocketTest()
