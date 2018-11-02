@@ -87,62 +87,30 @@ macro(cocos2dx_depend)
     endif()
 endmacro()
 
-macro(cocos2dx_define)
-    
-    if(USE_JPEG)
-        add_definitions(-DCC_USE_JPEG=1)
-    else()
-        add_definitions(-DCC_USE_JPEG=0)
-    endif()
+function(target_use_cocos2dx_define target)
 
-    if(USE_WEBP)
-        add_definitions(-DCC_USE_WEBP=1)
-    else()
-        add_definitions(-DCC_USE_WEBP=0)
-    endif()
+    # image define
+    target_compile_definitions(${target} PUBLIC CC_USE_JPEG=$<BOOL:${USE_JPEG}>)
+    target_compile_definitions(${target} PUBLIC CC_USE_WEBP=$<BOOL:${USE_WEBP}>)
+    target_compile_definitions(${target} PUBLIC CC_USE_TIFF=$<BOOL:${USE_TIFF}>)
+    target_compile_definitions(${target} PUBLIC CC_USE_PNG=$<BOOL:${USE_PNG}>)
 
-    if(USE_TIFF)
-        add_definitions(-DCC_USE_TIFF=1)
-    else()
-        add_definitions(-DCC_USE_TIFF=0)
-    endif()
+    # 2d physics
+    target_compile_definitions(${target} PUBLIC CC_ENABLE_CHIPMUNK_INTEGRATION=$<BOOL:${USE_CHIPMUNK}>)
+    target_compile_definitions(${target} PUBLIC CC_ENABLE_BOX2D_INTEGRATION=$<BOOL:${USE_BOX2D}>)
+    target_compile_definitions(${target} PUBLIC CC_USE_PHYSICS=$<OR:$<BOOL:${USE_CHIPMUNK}>,$<BOOL:${USE_BOX2D}>>)
 
-    if(USE_PNG)
-        add_definitions(-DCC_USE_PNG=1)
-    else()
-        add_definitions(-DCC_USE_PNG=0)
-    endif()
+    # 3d pyhsics
+    target_compile_definitions(${target} PUBLIC CC_USE_3D_PHYSICS=$<BOOL:${USE_BULLET}>)
+    target_compile_definitions(${target} PUBLIC CC_ENABLE_BULLET_INTEGRATION=$<BOOL:${USE_BULLET}>)
 
-    if(USE_CHIPMUNK)
-        add_definitions(-DCC_USE_PHYSICS=1)
-        add_definitions(-DCC_ENABLE_CHIPMUNK_INTEGRATION=1)
-    else()
-        add_definitions(-DCC_USE_PHYSICS=0)
-        add_definitions(-DCC_ENABLE_CHIPMUNK_INTEGRATION=0)
-    endif()
-
-    if(USE_BOX2D)
-        add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=1)
-    else()
-        add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=0)
-    endif(USE_BOX2D)
-
-    if(USE_BULLET)
-        add_definitions(-DCC_USE_3D_PHYSICS=1)
-        add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=1)
-    else(USE_BULLET)
-        add_definitions(-DCC_USE_3D_PHYSICS=0)
-        add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=0)
-    endif(USE_BULLET)
-
-    # tocheck, libuv option
-    add_definitions(-DLWS_WITH_LIBUV)
-endmacro()
+    # websocket option
+    target_compile_definitions(${target} PUBLIC LWS_WITH_LIBUV)
+endfunction()
 
 
 macro(target_use_cocos2dx_depend target)
     cocos2dx_depend()
-    cocos2dx_define()
     foreach(platform_lib ${PLATFORM_SPECIFIC_LIBS})
         target_link_libraries(${target} ${platform_lib})
     endforeach()
