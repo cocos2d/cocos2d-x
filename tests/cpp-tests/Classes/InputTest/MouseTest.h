@@ -71,4 +71,19 @@ private:
     cocos2d::EventListenerMouse* _lis;
 };
 
+class CursorTest : public BaseMouseTest
+{
+public:
+    CREATE_FUNC(CursorTest);
+    CursorTest();
+    ~CursorTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+private:
+    int _cursor;
+    cocos2d::EventListenerMouse* _lis;
+};
+
 #endif
