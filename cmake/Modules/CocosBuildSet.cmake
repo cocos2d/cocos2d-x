@@ -41,13 +41,23 @@ message(STATUS "COCOS_EXTERNAL_DIR:" ${COCOS_EXTERNAL_DIR})
 message(STATUS "PROJECT_BINARY_DIR:" ${PROJECT_BINARY_DIR})
 message(STATUS "ENGINE_BINARY_PATH:" ${ENGINE_BINARY_PATH})
 
-# include helper functions for cmake build
+# the default behavior of build module
+option(DEBUG_MODE "Debug or Release?" ON)
+option(BUILD_LUA_LIBS "Build lua libraries" OFF)
+option(BUILD_JS_LIBS "Build js libraries" OFF)
+# submodule of cocos2dx core libs
+option(BUILD_EXTENSIONS "Build extension library" ON)
+option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
+option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
+option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
+
+# include helper functions
 include(CocosBuildHelpers)
 
-# select building modules
-include(CocosSelectModule)
-
 # set common compiler options
-include(CocosCompileOptions)
+# add target compile define
+# add target compile options
+include(CocosConfigDefine)
 
+# config libraries dependence
 include(CocosConfigDepend)
