@@ -87,12 +87,6 @@ macro(cocos2dx_depend)
     endif()
 endmacro()
 
-function(target_use_cocos2dx_define target)
-    # websocket option
-    target_compile_definitions(${target} PUBLIC LWS_WITH_LIBUV)
-endfunction()
-
-
 macro(target_use_cocos2dx_depend target)
     cocos2dx_depend()
     foreach(platform_lib ${PLATFORM_SPECIFIC_LIBS})
