@@ -48,7 +48,7 @@ class JavascriptJavaBridge
 private:
     typedef enum : char
     {
-        TypeInvalid = -1,
+        TypeInvalid = static_cast<char>(-1),
         TypeVoid    = 0,
         TypeInteger = 1,
         TypeFloat   = 2,
