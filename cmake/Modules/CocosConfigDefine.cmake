@@ -166,8 +166,8 @@ endfunction()
     if(MSVC)
         target_compile_options(${target}
             PUBLIC /MP
+            PUBLIC /Z7
             PUBLIC /MD$<$<CONFIG:Debug>:d>
-            PUBLIC /NODEFAULTLIB:msvcrt /NODEFAULTLIB:libcmt
         )
     else()
         target_compile_options(${target} 
