@@ -2401,6 +2401,16 @@ float
 },
 
 /**
+ * @method getVR
+ * @return {cc.VRIRenderer}
+ */
+getVR : function (
+)
+{
+    return cc.VRIRenderer;
+},
+
+/**
  * @method getContentScaleFactor
  * @return {float}
  */
@@ -2431,13 +2441,19 @@ getSafeAreaRect : function (
 },
 
 /**
- * @method getVR
- * @return {cc.VRIRenderer}
+ * @method setViewPortInPoints
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
  */
-getVR : function (
+setViewPortInPoints : function (
+float, 
+float, 
+float, 
+float 
 )
 {
-    return cc.VRIRenderer;
 },
 
 /**
@@ -2515,16 +2531,6 @@ getVisibleOrigin : function (
 },
 
 /**
- * @method getFrameSize
- * @return {size_object}
- */
-getFrameSize : function (
-)
-{
-    return cc.Size;
-},
-
-/**
  * @method setFrameZoomFactor
  * @param {float} arg0
  */
@@ -2560,6 +2566,14 @@ getDesignResolutionSize : function (
 */
 setIcon : function(
 str 
+)
+{
+},
+
+/**
+ * @method setDefaultCursor
+ */
+setDefaultCursor : function (
 )
 {
 },
@@ -2631,19 +2645,13 @@ vrirenderer
 },
 
 /**
- * @method setViewPortInPoints
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
+ * @method getFrameSize
+ * @return {size_object}
  */
-setViewPortInPoints : function (
-float, 
-float, 
-float, 
-float 
+getFrameSize : function (
 )
 {
+    return cc.Size;
 },
 
 /**
@@ -2654,6 +2662,18 @@ getScissorRect : function (
 )
 {
     return cc.Rect;
+},
+
+/**
+ * @method setCursor
+ * @param {String} arg0
+ * @param {vec2_object} arg1
+ */
+setCursor : function (
+str, 
+vec2 
+)
+{
 },
 
 /**
