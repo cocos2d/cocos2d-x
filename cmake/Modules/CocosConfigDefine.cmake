@@ -128,6 +128,7 @@ endif()
         target_compile_definitions(${target} PUBLIC USE_FILE32API)
     elseif(LINUX)
         target_compile_definitions(${target} PUBLIC LINUX)
+        target_compile_definitions(${target} PUBLIC _GNU_SOURCE)
     elseif(ANDROID)
         target_compile_definitions(${target} PUBLIC ANDROID)
         target_compile_definitions(${target} PUBLIC USE_FILE32API)
@@ -148,6 +149,7 @@ endif()
                 PUBLIC _USEGUIDLL
                 PUBLIC _USREXDLL
                 PUBLIC _USRSTUDIODLL
+                PUBLIC _USE3DDLL
             )
         else()
             target_compile_definitions(${target} PUBLIC CC_STATIC)
@@ -173,7 +175,6 @@ endfunction()
          set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
      endif()
      if(LINUX)
-         add_definitions(-D_GNU_SOURCE)
          set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -lrt")
          set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread -lrt")
      endif()

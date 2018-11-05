@@ -55,8 +55,8 @@ option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
 include(CocosBuildHelpers)
 
 # set common compiler options
-# add target compile define
-# add target compile options
+# add target compile define function
+# add target compile options function
 include(CocosConfigDefine)
 
 # config libraries dependence

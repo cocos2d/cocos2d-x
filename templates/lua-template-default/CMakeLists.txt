@@ -32,11 +32,9 @@ set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/cocos2d-x)
 set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
 include(CocosBuildSet)
-if(NOT USE_COCOS_PREBUILT)
-    set(BUILD_LUA_LIBS ON)
-    set(BUILD_SIMU_LIB ON)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-endif()
+set(BUILD_LUA_LIBS ON)
+set(BUILD_SIMU_LIB ON)
+add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 
 # script and source files info, not need to compile
 set(res_res_folders
@@ -74,7 +72,7 @@ if(ANDROID)
 elseif(LINUX)
     list(APPEND GAME_SOURCE ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
 elseif(WINDOWS)
-    add_definitions(-D_USRLUASTATIC -D_USRLIBSIMSTATIC)
+    add_definitions(-D_USRLIBSIMSTATIC)
     list(APPEND GAME_HEADER
          ${RUNTIME_SRC_ROOT}/proj.win32/main.h
          ${RUNTIME_SRC_ROOT}/proj.win32/stdafx.h

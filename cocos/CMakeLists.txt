@@ -34,10 +34,6 @@ set(COCOS2D_X_VERSION 3.18)
 
 set(COCOS_CORE_LIB cocos2d)
 
-if(WINDOWS)
-    add_definitions(-DUNICODE -D_UNICODE)
-endif()
-
 include(2d/CMakeLists.txt)
 include(3d/CMakeLists.txt)
 include(platform/CMakeLists.txt)

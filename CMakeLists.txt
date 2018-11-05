@@ -41,8 +41,6 @@ include(CocosBuildSet)
 set(BUILD_LUA_LIBS ON)
 set(BUILD_JS_LIBS ON)
 
-if(NOT USE_COCOS_PREBUILT)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-endif()
+add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 add_subdirectory(${COCOS2DX_ROOT_PATH}/tests ${ENGINE_BINARY_PATH}/tests)
 
