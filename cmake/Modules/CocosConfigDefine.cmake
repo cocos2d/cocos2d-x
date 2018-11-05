@@ -165,21 +165,21 @@ endfunction()
  function(use_cocos2dx_compile_options target)
     if(MSVC)
         target_compile_options(${target}
-            PUBLIC "/MP"
-            PUBLIC "/MD$<$<CONFIG:Debug>:d>"
-            PUBLIC "/NODEFAULTLIB:msvcrt /NODEFAULTLIB:libcmt"
+            PUBLIC /MP
+            PUBLIC /MD$<$<CONFIG:Debug>:d>
+            PUBLIC /NODEFAULTLIB:msvcrt /NODEFAULTLIB:libcmt
         )
     else()
-        target_compile_options(${target} PUBLIC "-g -Wall")
+        target_compile_options(${target} PUBLIC -g -Wall)
         if(LINUX)
-            target_compile_options(${target} PUBLIC "-pthread -lrt")
+            target_compile_options(${target} PUBLIC -pthread -lrt)
         endif()
     endif()
     if(ANDROID)
         target_compile_options(${target}
-            PUBLIC "-latomic"
-            PUBLIC "$<$<COMPILE_LANGUAGE:C>:-fexceptions>"
-            PUBLIC "$<$<COMPILE_LANGUAGE:CXX>:-fsigned-char -fexceptions>"
+            PUBLIC -latomic
+            PUBLIC $<$<COMPILE_LANGUAGE:C>:-fexceptions>
+            PUBLIC $<$<COMPILE_LANGUAGE:CXX>:-fsigned-char -fexceptions>
         )
     endif()
  endfunction()
