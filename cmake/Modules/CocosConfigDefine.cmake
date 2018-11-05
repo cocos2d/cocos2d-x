@@ -53,9 +53,9 @@ else()
         set(XCODE TRUE)
     elseif(CMAKE_GENERATOR MATCHES Visual)
         set(VS TRUE)
-        # make configurations type keep same to cmake build type.
-        set(CMAKE_CONFIGURATION_TYPES "${CMAKE_BUILD_TYPE}" CACHE STRING "Reset the configurations to what we need" FORCE)
     endif()
+    # make configurations type keep same to cmake build type.
+    set(CMAKE_CONFIGURATION_TYPES "${CMAKE_BUILD_TYPE}" CACHE STRING "Reset the configurations to what we need" FORCE)
  endif()
  message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
