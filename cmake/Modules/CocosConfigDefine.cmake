@@ -102,6 +102,12 @@ define_property(TARGET
  endif()
  message(STATUS ${BUILDING_STRING})
 
+# check c++ standard
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 # check visual studio version
  if(WINDOWS)
     # not support other compile tools except MSVC for now
@@ -119,10 +125,8 @@ define_property(TARGET
 endif()
 
  # Set macro definitions for special platforms
- function(target_use_cocos2dx_define target)
-    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-        target_compile_definitions(${target} PUBLIC COCOS2D_DEBUG=1)
-    endif()
+ function(use_cocos2dx_compile_define target)
+    target_compile_definitions(${target} PUBLIC "COCOS2D_DEBUG$<$<CONFIG:Debug>:=1>")
     if(APPLE)
         target_compile_definitions(${target} PUBLIC __APPLE__)
         target_compile_definitions(${target} PUBLIC USE_FILE32API)
@@ -158,34 +162,24 @@ endif()
 endfunction()
 
  # Set compiler options
- if(MSVC)
-     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MDd")
-     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
-     set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} /NODEFAULTLIB:msvcrt /NODEFAULTLIB:libcmt")
-     set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} /NODEFAULTLIB:libcmt")
-
-     # multi thread compile option
-     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
- else()
-     set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g -Wall")
-     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${CMAKE_C_FLAGS_DEBUG}")
-     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -fPIC")
-     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wno-deprecated-declarations -Wno-reorder -Wno-invalid-offsetof -fPIC")
-     if(CLANG AND NOT ANDROID)
-         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-     endif()
-     if(LINUX)
-         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -lrt")
-         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -pthread -lrt")
-     endif()
-     # specail options for android
-     if(ANDROID)
-         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fexceptions")
-         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsigned-char -fexceptions")
-         set(CMAKE_CXX_CREATE_SHARED_LIBRARY "${CMAKE_CXX_CREATE_SHARED_LIBRARY} -latomic")
-         if(CLANG AND ANDROID_ARM_MODE STREQUAL thumb AND ANDROID_ABI STREQUAL armeabi)
-             string(REPLACE "-mthumb" "-marm" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
-             string(REPLACE "-mthumb" "-marm" CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS})
-         endif()
-     endif()
- endif(MSVC)
+ function(use_cocos2dx_compile_options target)
+    if(MSVC)
+        target_compile_options(${target}
+            PUBLIC "/MP"
+            PUBLIC "/MD$<$<CONFIG:Debug>:d>"
+            PUBLIC "/NODEFAULTLIB:msvcrt /NODEFAULTLIB:libcmt"
+        )
+    else()
+        target_compile_options(${target} PUBLIC "-g -Wall")
+        if(LINUX)
+            target_compile_options(${target} PUBLIC "-pthread -lrt")
+        endif()
+    endif()
+    if(ANDROID)
+        target_compile_options(${target}
+            PUBLIC "-latomic"
+            PUBLIC "$<$<COMPILE_LANGUAGE:C>:-fexceptions>"
+            PUBLIC "$<$<COMPILE_LANGUAGE:CXX>:-fsigned-char -fexceptions>"
+        )
+    endif()
+ endfunction()

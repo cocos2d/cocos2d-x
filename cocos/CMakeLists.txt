@@ -50,6 +50,12 @@ include(network/CMakeLists.txt)
 include(audio/CMakeLists.txt)
 include(storage/CMakeLists.txt)
 
+# default value for cocos2dx extensions modules build
+option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
+option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
+option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
+option(BUILD_EXTENSIONS "Build extension library" ON)
+
 if(BUILD_EDITOR_COCOSBUILDER)
     include(editor-support/cocosbuilder/CMakeLists.txt)
     set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_CCB_SRC} ${COCOS_CCB_HEADER})
@@ -117,11 +123,12 @@ add_library(cocos2d ${COCOS_SRC})
 add_subdirectory(${COCOS2DX_ROOT_PATH}/external ${ENGINE_BINARY_PATH}/external)
 target_link_libraries(cocos2d external)
 
-# add base macro define
-target_use_cocos2dx_define(cocos2d)
+# add base macro define and compile options
+use_cocos2dx_compile_define(cocos2d)
+use_cocos2dx_compile_options(cocos2d)
 
 # use all platform related system libs
-target_use_cocos2dx_depend(cocos2d)
+use_cocos2dx_libs_depend(cocos2d)
 
 target_include_directories(cocos2d
     PUBLIC ${COCOS2DX_ROOT_PATH}

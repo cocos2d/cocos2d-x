@@ -10,9 +10,9 @@ endif()
 set(CMAKE_DEBUG_TARGET_PROPERTIES
     # INCLUDE_DIRECTORIES
     # COMPILE_DEFINITIONS
+    # COMPILE_OPTIONS
+    # AUTOUIC_OPTIONS
     # POSITION_INDEPENDENT_CODE
-    # CONTAINER_SIZE_REQUIRED
-    # LIB_VERSION
 )
 # It ensures that when Find*.cmake files included from cmake's Modules dir
 # include another *.cmake file with relative path, that file will be included
@@ -45,11 +45,6 @@ message(STATUS "ENGINE_BINARY_PATH:" ${ENGINE_BINARY_PATH})
 option(DEBUG_MODE "Debug or Release?" ON)
 option(BUILD_LUA_LIBS "Build lua libraries" OFF)
 option(BUILD_JS_LIBS "Build js libraries" OFF)
-# submodule of cocos2dx core libs
-option(BUILD_EXTENSIONS "Build extension library" ON)
-option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
-option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
-option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
 
 # include helper functions
 include(CocosBuildHelpers)
