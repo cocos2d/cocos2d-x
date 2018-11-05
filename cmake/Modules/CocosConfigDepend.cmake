@@ -88,22 +88,6 @@ macro(cocos2dx_depend)
 endmacro()
 
 function(target_use_cocos2dx_define target)
-
-    # image define
-    target_compile_definitions(${target} PUBLIC CC_USE_JPEG=$<BOOL:${USE_JPEG}>)
-    target_compile_definitions(${target} PUBLIC CC_USE_WEBP=$<BOOL:${USE_WEBP}>)
-    target_compile_definitions(${target} PUBLIC CC_USE_TIFF=$<BOOL:${USE_TIFF}>)
-    target_compile_definitions(${target} PUBLIC CC_USE_PNG=$<BOOL:${USE_PNG}>)
-
-    # 2d physics
-    target_compile_definitions(${target} PUBLIC CC_ENABLE_CHIPMUNK_INTEGRATION=$<BOOL:${USE_CHIPMUNK}>)
-    target_compile_definitions(${target} PUBLIC CC_ENABLE_BOX2D_INTEGRATION=$<BOOL:${USE_BOX2D}>)
-    target_compile_definitions(${target} PUBLIC CC_USE_PHYSICS=$<OR:$<BOOL:${USE_CHIPMUNK}>,$<BOOL:${USE_BOX2D}>>)
-
-    # 3d pyhsics
-    target_compile_definitions(${target} PUBLIC CC_USE_3D_PHYSICS=$<BOOL:${USE_BULLET}>)
-    target_compile_definitions(${target} PUBLIC CC_ENABLE_BULLET_INTEGRATION=$<BOOL:${USE_BULLET}>)
-
     # websocket option
     target_compile_definitions(${target} PUBLIC LWS_WITH_LIBUV)
 endfunction()
