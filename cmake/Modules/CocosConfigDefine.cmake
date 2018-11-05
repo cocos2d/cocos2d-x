@@ -170,7 +170,10 @@ endfunction()
             PUBLIC /NODEFAULTLIB:msvcrt /NODEFAULTLIB:libcmt
         )
     else()
-        target_compile_options(${target} PUBLIC -g -Wall)
+        target_compile_options(${target} 
+            PUBLIC -Wall
+            PUBLIC $<$<CONFIG:Debug>:-g>
+        )
         if(LINUX)
             target_compile_options(${target} PUBLIC -pthread -lrt)
         endif()
