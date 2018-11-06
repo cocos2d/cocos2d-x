@@ -175,14 +175,10 @@ endfunction()
             PUBLIC $<$<CONFIG:Debug>:-g>
         )
         if(LINUX)
-            target_compile_options(${target} PUBLIC -pthread -lrt)
+            target_compile_options(${target} PUBLIC -pthread)
         endif()
     endif()
     if(ANDROID)
-        target_compile_options(${target}
-            PUBLIC -latomic
-            PUBLIC $<$<COMPILE_LANGUAGE:C>:-fexceptions>
-            PUBLIC $<$<COMPILE_LANGUAGE:CXX>:-fsigned-char -fexceptions>
-        )
+        target_compile_options(${target} PUBLIC -fsigned-char)
     endif()
  endfunction()
