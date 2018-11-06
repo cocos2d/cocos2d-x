@@ -1,7 +1,3 @@
-if(WINDOWS AND BUILD_SHARED_LIBS)
-    add_definitions(-D_USREXDLL)
-endif()
-
 set(COCOS_EXTENSIONS_HEADER
     ../extensions/ExtensionMacros.h
     ../extensions/assets-manager/AssetsManagerEx.h
