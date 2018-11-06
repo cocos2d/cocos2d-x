@@ -166,5 +166,5 @@ endfunction()
     if(MSVC)
         target_compile_options(${target}
             PUBLIC /MP
-        )
+    endif()
  endfunction()
