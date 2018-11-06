@@ -186,7 +186,7 @@ LOCAL_STATIC_LIBRARIES += ccnet
 LOCAL_STATIC_LIBRARIES += ext_box2d
 LOCAL_STATIC_LIBRARIES += ext_bullet
 
-LOCAL_CXXFLAGS += -fexceptions
+LOCAL_CXXFLAGS += -fexceptions -fsigned-char
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)
 

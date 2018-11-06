@@ -94,7 +94,7 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/.. \
                     $(LOCAL_PATH)/WidgetReader
 
-LOCAL_CFLAGS += -fexceptions
+LOCAL_CFLAGS += -fexceptions -fsigned-char
 
 LOCAL_STATIC_LIBRARIES := ccui
 LOCAL_STATIC_LIBRARIES += ccds
