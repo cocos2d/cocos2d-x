@@ -187,7 +187,13 @@ add_library(simulatorlib STATIC ${LIB_SOURCE})
 target_link_libraries(simulatorlib cocos2d)
 
 if(WINDOWS)
-    target_compile_options(simulatorlib PRIVATE _USRLIBSIMSTATIC)
+    target_compile_definitions(simulatorlib
+        PUBLIC _USRLIBSIMSTATIC
+        PRIVATE _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS
+    )
+    target_include_directories(simulatorlib
+        PRIVATE ${SIMULATOR_LIB_PATH}/../proj.win32
+    )
 endif()
 
 target_include_directories(simulatorlib
