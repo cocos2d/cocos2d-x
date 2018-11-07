@@ -218,7 +218,7 @@ public:
             CC_BREAK_IF(!pszText || nLen <= 0);
 
             RECT rc = { 0, 0, 0, 0 };
-            DWORD dwCalcFmt = DT_CALCRECT;
+            DWORD dwCalcFmt = DT_CALCRECT | DT_NOPREFIX;
             if (!enableWrap)
             {
                 dwCalcFmt |= DT_SINGLELINE;
@@ -298,12 +298,11 @@ public:
     {
         int nRet = 0;
         wchar_t * pwszBuffer = nullptr;
-        wchar_t* fixedText = nullptr;
         do
         {
             CC_BREAK_IF(!pszText);
 
-            DWORD dwFmt = DT_WORDBREAK;
+            DWORD dwFmt = DT_WORDBREAK | DT_NOPREFIX;
             if (!enableWrap) {
                 dwFmt |= DT_SINGLELINE;
             }
@@ -332,37 +331,7 @@ public:
             memset(pwszBuffer, 0, sizeof(wchar_t)*nBufLen);
             nLen = MultiByteToWideChar(CP_UTF8, 0, pszText, nLen, pwszBuffer, nBufLen);
 
-            if (strchr(pszText, '&'))
-            {
-                fixedText = new wchar_t[nLen * 2 + 1];
-                int fixedIndex = 0;
-                for (int index = 0; index < nLen; ++index)
-                {
-                    if (pwszBuffer[index] == '&')
-                    {
-                        fixedText[fixedIndex] = '&';
-                        fixedText[fixedIndex + 1] = '&';
-                        fixedIndex += 2;
-                    }
-                    else
-                    {
-                        fixedText[fixedIndex] = pwszBuffer[index];
-                        fixedIndex += 1;
-                    }
-                }
-                fixedText[fixedIndex] = '\0';
-                nLen = fixedIndex;
-            }
-
-            SIZE newSize;
-            if (fixedText)
-            {
-                newSize = sizeWithText(fixedText, nLen, dwFmt, fontName, textSize, tSize.cx, tSize.cy, enableWrap, overflow);
-            }
-            else
-            {
-                newSize = sizeWithText(pwszBuffer, nLen, dwFmt, fontName, textSize, tSize.cx, tSize.cy, enableWrap, overflow);
-            }
+            SIZE newSize = sizeWithText(pwszBuffer, nLen, dwFmt, fontName, textSize, tSize.cx, tSize.cy, enableWrap, overflow);
 
             RECT rcText = { 0 };
             // if content width is 0, use text size as content size
@@ -429,20 +398,12 @@ public:
             SetTextColor(_DC, RGB(255, 255, 255)); // white color
 
                                                    // draw text
-            if (fixedText)
-            {
-                nRet = DrawTextW(_DC, fixedText, nLen, &rcText, dwFmt);
-            }
-            else
-            {
-                nRet = DrawTextW(_DC, pwszBuffer, nLen, &rcText, dwFmt);
-            }
+            nRet = DrawTextW(_DC, pwszBuffer, nLen, &rcText, dwFmt);
 
             SelectObject(_DC, hOldBmp);
             SelectObject(_DC, hOldFont);
         } while (0);
         CC_SAFE_DELETE_ARRAY(pwszBuffer);
-        delete[] fixedText;
 
         return nRet;
     }
