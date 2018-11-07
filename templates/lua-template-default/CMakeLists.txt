@@ -144,6 +144,11 @@ endif()
 target_link_libraries(${APP_NAME} luacocos2d)
 target_include_directories(${APP_NAME} PRIVATE ${RUNTIME_SRC_ROOT}/Classes)
 
+if(WINDOWS OR MACOSX)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator ${ENGINE_BINARY_PATH}/cocos/simulatorlib)
+    target_link_libraries(${APP_NAME} simulatorlib)
+endif()
+
 # mark app resources, resource will be copy auto after mark
 setup_cocos_app_config(${APP_NAME})
 if(APPLE)
