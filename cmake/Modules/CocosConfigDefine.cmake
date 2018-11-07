@@ -166,19 +166,6 @@ endfunction()
     if(MSVC)
         target_compile_options(${target}
             PUBLIC /MP
-            PUBLIC /Z7
-            PUBLIC /MD$<$<CONFIG:Debug>:d>
         )
-    else()
-        target_compile_options(${target} 
-            PUBLIC -Wall
-            PUBLIC $<$<CONFIG:Debug>:-g>
-        )
-        if(LINUX)
-            target_compile_options(${target} PUBLIC -pthread)
-        endif()
-    endif()
-    if(ANDROID)
-        target_compile_options(${target} PUBLIC -fsigned-char)
     endif()
  endfunction()
