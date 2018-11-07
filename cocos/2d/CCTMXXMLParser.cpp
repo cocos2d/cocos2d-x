@@ -132,7 +132,6 @@ void TMXMapInfo::internalInit(const std::string& tmxFileName, const std::string&
     if (!tmxFileName.empty())
     {
         _TMXFileName = FileUtils::getInstance()->fullPathForFilename(tmxFileName);
-        CCASSERT(FileUtils::getInstance()->isFileExist(_TMXFileName), "TMXMapInfo::internalInit _TMXFileName file not exists!");
     }
     
     if (!resourcePath.empty())
@@ -213,7 +212,7 @@ bool TMXMapInfo::parseXMLFile(const std::string& xmlFilename)
     
     parser.setDelegator(this);
     auto fullPath = FileUtils::getInstance()->fullPathForFilename(xmlFilename);
-    assert(FileUtils::getInstance()->isFileExist(fullPath));
+    CCASSERT(FileUtils::getInstance()->isFileExist(fullPath), "TMXMapInfo::parseXMLFile xml file not exists");
     return parser.parse(fullPath);
 }
 
