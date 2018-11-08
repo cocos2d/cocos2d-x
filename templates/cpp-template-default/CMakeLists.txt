@@ -140,7 +140,7 @@ if(APPLE)
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
     endif()
 elseif(WINDOWS)
-    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR})
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR}/..)
 endif()
 
 if(LINUX OR WINDOWS)
