@@ -247,7 +247,7 @@ private:
     void setupVBO();
 
 protected:
-    GLushort*           _indices;
+    GLuint *           _indices;
     GLuint              _VAOname;
     GLuint              _buffersVBO[2]; //0: vertex  1: indices
     bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated

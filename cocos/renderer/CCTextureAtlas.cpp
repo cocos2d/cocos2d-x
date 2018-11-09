@@ -172,7 +172,7 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     CCASSERT(_quads == nullptr && _indices == nullptr, "_quads and _indices should be nullptr.");
 
     _quads = (V3F_C4B_T2F_Quad*)malloc( _capacity * sizeof(V3F_C4B_T2F_Quad) );
-    _indices = (GLushort *)malloc( _capacity * 6 * sizeof(GLushort) );
+    _indices = (GLuint *)malloc( _capacity * 6 * sizeof(GLuint) );
     
     if( ! ( _quads && _indices) && _capacity > 0) 
     {
@@ -187,7 +187,7 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     }
 
     memset( _quads, 0, _capacity * sizeof(V3F_C4B_T2F_Quad) );
-    memset( _indices, 0, _capacity * 6 * sizeof(GLushort) );
+    memset( _indices, 0, _capacity * 6 * sizeof(GLuint) );
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     /** listen the event that renderer was recreated on Android/WP8 */
@@ -239,6 +239,8 @@ void TextureAtlas::setupIndices()
 
     for( int i=0; i < _capacity; i++)
     {
+        //CCASSERT(i * 4 + 3 <= 131071, "index should less than 2^32 - 1");
+
         _indices[i*6+0] = i*4+0;
         _indices[i*6+1] = i*4+1;
         _indices[i*6+2] = i*4+2;
@@ -464,7 +466,7 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
     _capacity = newCapacity;
 
     V3F_C4B_T2F_Quad* tmpQuads = nullptr;
-    GLushort* tmpIndices = nullptr;
+    GLuint* tmpIndices = nullptr;
 
     // when calling initWithTexture(fileName, 0) on bada device, calloc(0, 1) will fail and return nullptr,
     // so here must judge whether _quads and _indices is nullptr.
@@ -494,7 +496,7 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
 
     if (_indices == nullptr)
     {
-        tmpIndices = (GLushort*)malloc(new_size);
+        tmpIndices = (GLuint*)malloc(new_size);
         if (tmpIndices != nullptr)
         {
             memset(tmpIndices, 0, new_size);
@@ -502,7 +504,7 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
     }
     else
     {
-        tmpIndices = (GLushort*)realloc(_indices, new_size);
+        tmpIndices = (GLuint*)realloc(_indices, new_size);
         if (tmpIndices != nullptr && _capacity > oldCapacity)
         {
             memset(tmpIndices + oldCapacity, 0, (_capacity - oldCapacity) * 6 * _indices_size);
@@ -649,8 +651,8 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 #endif
 
-        glDrawElements(GL_TRIANGLES, (GLsizei) numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
-        
+        glDrawElements(GL_TRIANGLES, (GLsizei) numberOfQuads*6, GL_UNSIGNED_INT, (GLvoid*) (start*6*sizeof(_indices[0])) );
+
         glBindVertexArray(0);
         
 #if CC_REBIND_INDICES_BUFFER
@@ -690,7 +692,7 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
 
-        glDrawElements(GL_TRIANGLES, (GLsizei)numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])));
+        glDrawElements(GL_TRIANGLES, (GLsizei)numberOfQuads*6, GL_UNSIGNED_INT, (GLvoid*) (start*6*sizeof(_indices[0])));
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
