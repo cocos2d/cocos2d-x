@@ -239,8 +239,6 @@ void TextureAtlas::setupIndices()
 
     for( int i=0; i < _capacity; i++)
     {
-        //CCASSERT(i * 4 + 3 <= 131071, "index should less than 2^32 - 1");
-
         _indices[i*6+0] = i*4+0;
         _indices[i*6+1] = i*4+1;
         _indices[i*6+2] = i*4+2;
