@@ -676,7 +676,7 @@ FileUtils::Status FileUtils::getContents(const std::string& filename, ResizableB
         return Status::ReadFailed;
     }
 
-    if (!(statBuf.st_dev & S_IFREG)) { 
+    if (!(statBuf.st_mode & S_IFREG)) { 
         return Status::NotRegularFileType;
     }
 
