@@ -669,20 +669,21 @@ FileUtils::Status FileUtils::getContents(const std::string& filename, ResizableB
     if (fullPath.empty())
         return Status::NotExists;
 
-    FILE *fp = fopen(fs->getSuitableFOpen(fullPath).c_str(), "rb");
+    std::string suitableFullPath = fs->getSuitableFOpen(fullPath).c_str();
+
+    struct stat statBuf;
+    if (stat(suitableFullPath.c_str(), &statBuf) == -1) {
+        return Status::ReadFailed;
+    }
+
+    if (!(statBuf.st_dev & S_IFREG)) { 
+        return Status::NotRegularFileType;
+    }
+
+    FILE *fp = fopen(suitableFullPath.c_str(), "rb");
     if (!fp)
         return Status::OpenFailed;
 
-#if defined(_MSC_VER)
-    auto descriptor = _fileno(fp);
-#else
-    auto descriptor = fileno(fp);
-#endif
-    struct stat statBuf;
-    if (fstat(descriptor, &statBuf) == -1) {
-        fclose(fp);
-        return Status::ReadFailed;
-    }
     size_t size = statBuf.st_size;
 
     buffer->resize(size);
