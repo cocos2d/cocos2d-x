@@ -9,9 +9,7 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
     include(CocosBuildSet)
-    if(NOT USE_COCOS_PREBUILT)
-        add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-    endif()
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 endif()
 
 # record sources, headers, resources...
@@ -347,7 +345,7 @@ if(ANDROID OR IOS)
          )
 endif()
 
-if(WIN32 OR MACOSX OR LINUX)
+if(WINDOWS OR MACOSX OR LINUX)
     list(APPEND GAME_HEADER
          Classes/WindowTest/WindowTest.h
          Classes/BugsTest/Bug-14327.h
@@ -358,97 +356,86 @@ if(WIN32 OR MACOSX OR LINUX)
          )
 endif()
 
-if(USE_BOX2D)
-    list(APPEND GAME_HEADER
-         Classes/Box2DTest/Box2dTest.cpp
-         Classes/Box2DTestBed/Test.h
-         Classes/Box2DTestBed/Tests/Chain.h
-         Classes/Box2DTestBed/Tests/Confined.h
-         Classes/Box2DTestBed/Tests/PolyCollision.h
-         Classes/Box2DTestBed/Tests/EdgeTest.h
-         Classes/Box2DTestBed/Tests/ApplyForce.h
-         Classes/Box2DTestBed/Tests/Gears.h
-         Classes/Box2DTestBed/Tests/SliderCrank.h
-         Classes/Box2DTestBed/Tests/ContinuousTest.h
-         Classes/Box2DTestBed/Tests/Revolute.h
-         Classes/Box2DTestBed/Tests/TheoJansen.h
-         Classes/Box2DTestBed/Tests/Bridge.h
-         Classes/Box2DTestBed/Tests/CollisionProcessing.h
-         Classes/Box2DTestBed/Tests/DistanceTest.h
-         Classes/Box2DTestBed/Tests/PolyShapes.h
-         Classes/Box2DTestBed/Tests/TimeOfImpact.h
-         Classes/Box2DTestBed/Tests/ConveyorBelt.h
-         Classes/Box2DTestBed/Tests/Tiles.h
-         Classes/Box2DTestBed/Tests/BulletTest.h
-         Classes/Box2DTestBed/Tests/MotorJoint.h
-         Classes/Box2DTestBed/Tests/Car.h
-         Classes/Box2DTestBed/Tests/Mobile.h
-         Classes/Box2DTestBed/Tests/VaryingFriction.h
-         Classes/Box2DTestBed/Tests/Rope.h
-         Classes/Box2DTestBed/Tests/SensorTest.h
-         Classes/Box2DTestBed/Tests/Pyramid.h
-         Classes/Box2DTestBed/Tests/VaryingRestitution.h
-         Classes/Box2DTestBed/Tests/RopeJoint.h
-         Classes/Box2DTestBed/Tests/VerticalStack.h
-         Classes/Box2DTestBed/Tests/MobileBalanced.h
-         Classes/Box2DTestBed/Tests/CompoundShapes.h
-         Classes/Box2DTestBed/Tests/CollisionFiltering.h
-         Classes/Box2DTestBed/Tests/Pulleys.h
-         Classes/Box2DTestBed/Tests/Breakable.h
-         Classes/Box2DTestBed/Tests/BodyTypes.h
-         Classes/Box2DTestBed/Tests/DumpShell.h
-         Classes/Box2DTestBed/Tests/ShapeEditing.h
-         Classes/Box2DTestBed/Tests/SphereStack.h
-         Classes/Box2DTestBed/Tests/OneSidedPlatform.h
-         Classes/Box2DTestBed/Tests/AddPair.h
-         Classes/Box2DTestBed/Tests/Pinball.h
-         Classes/Box2DTestBed/Tests/Tumbler.h
-         Classes/Box2DTestBed/Tests/RayCast.h
-         Classes/Box2DTestBed/Tests/ConvexHull.h
-         Classes/Box2DTestBed/Tests/EdgeShapes.h
-         Classes/Box2DTestBed/Tests/Prismatic.h
-         Classes/Box2DTestBed/Tests/Dominos.h
-         Classes/Box2DTestBed/Tests/Web.h
-         Classes/Box2DTestBed/Tests/CharacterCollision.h
-         Classes/Box2DTestBed/Tests/DynamicTreeTest.h
-         Classes/Box2DTestBed/Tests/Cantilever.h
-         Classes/Box2DTestBed/Box2dView.h
-         Classes/Box2DTestBed/GLES-Render.h
-         )
-    list(APPEND GAME_SOURCE
-         Classes/Box2DTest/Box2dTest.cpp
-         Classes/Box2DTestBed/Box2dView.cpp
-         Classes/Box2DTestBed/GLES-Render.cpp
-         Classes/Box2DTestBed/Test.cpp
-         Classes/Box2DTestBed/TestEntries.cpp
-         )
-    include_directories(${Box2D_INCLUDE_DIRS})
-endif()
+list(APPEND GAME_HEADER
+     Classes/Box2DTest/Box2dTest.cpp
+     Classes/Box2DTestBed/Test.h
+     Classes/Box2DTestBed/Tests/Chain.h
+     Classes/Box2DTestBed/Tests/Confined.h
+     Classes/Box2DTestBed/Tests/PolyCollision.h
+     Classes/Box2DTestBed/Tests/EdgeTest.h
+     Classes/Box2DTestBed/Tests/ApplyForce.h
+     Classes/Box2DTestBed/Tests/Gears.h
+     Classes/Box2DTestBed/Tests/SliderCrank.h
+     Classes/Box2DTestBed/Tests/ContinuousTest.h
+     Classes/Box2DTestBed/Tests/Revolute.h
+     Classes/Box2DTestBed/Tests/TheoJansen.h
+     Classes/Box2DTestBed/Tests/Bridge.h
+     Classes/Box2DTestBed/Tests/CollisionProcessing.h
+     Classes/Box2DTestBed/Tests/DistanceTest.h
+     Classes/Box2DTestBed/Tests/PolyShapes.h
+     Classes/Box2DTestBed/Tests/TimeOfImpact.h
+     Classes/Box2DTestBed/Tests/ConveyorBelt.h
+     Classes/Box2DTestBed/Tests/Tiles.h
+     Classes/Box2DTestBed/Tests/BulletTest.h
+     Classes/Box2DTestBed/Tests/MotorJoint.h
+     Classes/Box2DTestBed/Tests/Car.h
+     Classes/Box2DTestBed/Tests/Mobile.h
+     Classes/Box2DTestBed/Tests/VaryingFriction.h
+     Classes/Box2DTestBed/Tests/Rope.h
+     Classes/Box2DTestBed/Tests/SensorTest.h
+     Classes/Box2DTestBed/Tests/Pyramid.h
+     Classes/Box2DTestBed/Tests/VaryingRestitution.h
+     Classes/Box2DTestBed/Tests/RopeJoint.h
+     Classes/Box2DTestBed/Tests/VerticalStack.h
+     Classes/Box2DTestBed/Tests/MobileBalanced.h
+     Classes/Box2DTestBed/Tests/CompoundShapes.h
+     Classes/Box2DTestBed/Tests/CollisionFiltering.h
+     Classes/Box2DTestBed/Tests/Pulleys.h
+     Classes/Box2DTestBed/Tests/Breakable.h
+     Classes/Box2DTestBed/Tests/BodyTypes.h
+     Classes/Box2DTestBed/Tests/DumpShell.h
+     Classes/Box2DTestBed/Tests/ShapeEditing.h
+     Classes/Box2DTestBed/Tests/SphereStack.h
+     Classes/Box2DTestBed/Tests/OneSidedPlatform.h
+     Classes/Box2DTestBed/Tests/AddPair.h
+     Classes/Box2DTestBed/Tests/Pinball.h
+     Classes/Box2DTestBed/Tests/Tumbler.h
+     Classes/Box2DTestBed/Tests/RayCast.h
+     Classes/Box2DTestBed/Tests/ConvexHull.h
+     Classes/Box2DTestBed/Tests/EdgeShapes.h
+     Classes/Box2DTestBed/Tests/Prismatic.h
+     Classes/Box2DTestBed/Tests/Dominos.h
+     Classes/Box2DTestBed/Tests/Web.h
+     Classes/Box2DTestBed/Tests/CharacterCollision.h
+     Classes/Box2DTestBed/Tests/DynamicTreeTest.h
+     Classes/Box2DTestBed/Tests/Cantilever.h
+     Classes/Box2DTestBed/Box2dView.h
+     Classes/Box2DTestBed/GLES-Render.h
+     )
+list(APPEND GAME_SOURCE
+     Classes/Box2DTest/Box2dTest.cpp
+     Classes/Box2DTestBed/Box2dView.cpp
+     Classes/Box2DTestBed/GLES-Render.cpp
+     Classes/Box2DTestBed/Test.cpp
+     Classes/Box2DTestBed/TestEntries.cpp
+     )
 
-if(USE_BULLET)
-    list(APPEND GAME_HEADER
-         Classes/Physics3DTest/Physics3DTest.h
-         Classes/NavMeshTest/NavMeshTest.h
-         )
-    list(APPEND GAME_SOURCE
-         Classes/Physics3DTest/Physics3DTest.cpp
-         Classes/NavMeshTest/NavMeshTest.cpp
-         )
-    include_directories(${BULLET_INCLUDE_DIRS})
-endif()
-
-
-if(USE_CHIPMUNK)
-    include_directories(${CHIPMUNK_INCLUDE_DIRS})
-    list(APPEND GAME_HEADER
-         Classes/PhysicsTest/PhysicsTest.h
-         Classes/ChipmunkTest/ChipmunkTest.h
-         )
-    list(APPEND GAME_SOURCE
-         Classes/PhysicsTest/PhysicsTest.cpp
-         Classes/ChipmunkTest/ChipmunkTest.cpp
-         )
-endif()
+list(APPEND GAME_HEADER
+     Classes/Physics3DTest/Physics3DTest.h
+     Classes/NavMeshTest/NavMeshTest.h
+     )
+list(APPEND GAME_SOURCE
+     Classes/Physics3DTest/Physics3DTest.cpp
+     Classes/NavMeshTest/NavMeshTest.cpp
+     )
+list(APPEND GAME_HEADER
+     Classes/PhysicsTest/PhysicsTest.h
+     Classes/ChipmunkTest/ChipmunkTest.h
+     )
+list(APPEND GAME_SOURCE
+     Classes/PhysicsTest/PhysicsTest.cpp
+     Classes/ChipmunkTest/ChipmunkTest.cpp
+     )
 
 if(NOT LINUX)
     list(APPEND GAME_SOURCE

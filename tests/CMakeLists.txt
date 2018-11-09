@@ -26,7 +26,7 @@
 
 # build all test projects, it need the engine library
 
-# library have been build, on ../CMakeLists.txt, uesed to prevent tests project build engine lib again
+# library have been build, on ../CMakeLists.txt, used to prevent tests project build engine lib again
 set(BUILD_ENGINE_DONE ON)
 
 # add engine all tests project

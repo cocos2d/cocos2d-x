@@ -181,16 +181,17 @@ void log(const char * format, ...)
 
     do
     {
-        std::copy(buf + pos, buf + pos + MAX_LOG_LENGTH, tempBuf);
+        int dataSize = std::min(MAX_LOG_LENGTH, len - pos);
+        std::copy(buf + pos, buf + pos + dataSize, tempBuf);
 
-        tempBuf[MAX_LOG_LENGTH] = 0;
+        tempBuf[dataSize] = 0;
 
         MultiByteToWideChar(CP_UTF8, 0, tempBuf, -1, wszBuf, sizeof(wszBuf));
         OutputDebugStringW(wszBuf);
         WideCharToMultiByte(CP_ACP, 0, wszBuf, -1, tempBuf, sizeof(tempBuf), nullptr, FALSE);
         printf("%s", tempBuf);
 
-        pos += MAX_LOG_LENGTH;
+        pos += dataSize;
 
     } while (pos < len);
     SendLogToWindow(buf);
