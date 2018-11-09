@@ -669,7 +669,7 @@ FileUtils::Status FileUtils::getContents(const std::string& filename, ResizableB
     if (fullPath.empty())
         return Status::NotExists;
 
-    std::string suitableFullPath = fs->getSuitableFOpen(fullPath).c_str();
+    std::string suitableFullPath = fs->getSuitableFOpen(fullPath);
 
     struct stat statBuf;
     if (stat(suitableFullPath.c_str(), &statBuf) == -1) {
