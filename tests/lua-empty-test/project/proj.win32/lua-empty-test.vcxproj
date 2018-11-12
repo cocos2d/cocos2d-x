@@ -112,9 +112,9 @@
       <IgnoreSpecificDefaultLibraries>libcmt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\res" "$(OutDir)res" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\src" "$(OutDir)src" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(OutDir)src\cocos" /D /E /I /F /Y
+      <Command>xcopy "$(ProjectDir)..\..\res" "$(OutDir)Resources\res\" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\src" "$(OutDir)Resources\src\" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(OutDir)Resources\src\cocos\" /D /E /I /F /Y
 xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     </PreBuildEvent>
     <PreLinkEvent>
@@ -167,9 +167,9 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
       </Command>
     </PreLinkEvent>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\res" "$(OutDir)res" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\src" "$(OutDir)src" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(OutDir)src\cocos" /D /E /I /F /Y
+      <Command>xcopy "$(ProjectDir)..\..\res" "$(OutDir)Resources\res\" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\src" "$(OutDir)Resources\src\" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(OutDir)Resources\src\cocos" /D /E /I /F /Y
 xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
