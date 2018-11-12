@@ -180,23 +180,18 @@ private:
 class BatchNodesWrap {
 public:
 
-    static const int MAX_CHAR_CNT = 12000;
+    static const int PAGE_MAX_CHAR_CNT = 12000;
 
     void insert(int textureId, SpriteBatchNode *node);
-    SpriteBatchNode* at (int textureId, int characterIndex);
-
+    SpriteBatchNode* at(int textureId, int characterIndex);
     void clear() { _cache.clear(); }
     size_t size() const { return _cache.size(); }
     bool empty() const { return _cache.empty(); }
-
     void removeQuads();
     void drawQuads();
-
     void foreach(const std::function<void(SpriteBatchNode*)> &fn);
     Vector<SpriteBatchNode*>& getBatchNodes(int textureId) { return _cache[textureId]; }
-
-    void reserve(int textureSize, int reserveSize);
-
+    void reserve(int textureSize, int totalSize);
 private:
     unordered_map<int, Vector<SpriteBatchNode*>> _cache;
 };
@@ -209,7 +204,7 @@ void BatchNodesWrap::insert(int textureId, SpriteBatchNode *node)
 
 SpriteBatchNode *BatchNodesWrap::at(int textureId, int charaterIndex) 
 {
-    int idx = charaterIndex / MAX_CHAR_CNT;
+    int idx = charaterIndex / PAGE_MAX_CHAR_CNT;
     auto &vec = _cache[textureId];
     while (idx > vec.size() - 1) 
     {
@@ -221,26 +216,13 @@ SpriteBatchNode *BatchNodesWrap::at(int textureId, int charaterIndex)
 
 void BatchNodesWrap::removeQuads()
 {
-    for (auto &p : _cache)
-    {
-        for (auto &n : p.second)
-        {
-            n->getTextureAtlas()->removeAllQuads();
-        }
-    }
+    foreach([](SpriteBatchNode *node) {node->getTextureAtlas()->removeAllQuads(); });
 }
 
 void BatchNodesWrap::drawQuads()
 {
-    for (auto &p : _cache)
-    {
-        for (auto &n : p.second)
-        {
-            n->getTextureAtlas()->drawQuads();
-        }
-    }
+    foreach([](SpriteBatchNode *node) {node->getTextureAtlas()->drawQuads(); });
 }
-
 
 void BatchNodesWrap::foreach(const std::function<void(SpriteBatchNode*)> &fn)
 {
@@ -260,8 +242,8 @@ void BatchNodesWrap::reserve(int textureId, int totalSize)
     auto &vec = _cache[textureId];
     while (totalSize > 0)
     {
-        vec.at(idx)->reserveCapacity(std::min(totalSize % MAX_CHAR_CNT, totalSize));
-        totalSize -= MAX_CHAR_CNT;
+        vec.at(idx)->reserveCapacity(std::min(PAGE_MAX_CHAR_CNT, totalSize));
+        totalSize -= PAGE_MAX_CHAR_CNT;
         idx += 1;
     }
 }
@@ -926,7 +908,7 @@ bool Label::alignText()
         // optimize for one-texture-only scenario
         // if multiple textures, then we should count how many chars
         // are per texture
-        if (_batchNodes->size()==1 && _utf32Text.size() < BatchNodesWrap::MAX_CHAR_CNT)
+        if (_batchNodes->size()==1)
             _batchNodes->reserve(0, _utf32Text.size());
 
         _reusedLetter->setBatchNode(_batchNodes->at(0, 0));
