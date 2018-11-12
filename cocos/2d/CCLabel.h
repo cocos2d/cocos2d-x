@@ -33,6 +33,8 @@
 #include "2d/CCFontAtlas.h"
 #include "base/ccTypes.h"
 
+#include <memory>
+
 NS_CC_BEGIN
 
 /**
@@ -87,6 +89,8 @@ class Sprite;
 class SpriteBatchNode;
 class DrawNode;
 class EventListenerCustom;
+
+class BatchNodesWrap;
 
 /**
  * @brief Label is a subclass of Node that knows how to render text labels.
@@ -708,15 +712,16 @@ protected:
     bool _systemFontDirty;
     std::string _systemFont;
     float _systemFontSize;
-    Sprite* _textSprite;
-    Sprite* _shadowNode;
+    Sprite* _textSprite         = nullptr;
+    Sprite* _shadowNode         = nullptr;
 
-    FontAtlas* _fontAtlas;
-    Vector<SpriteBatchNode*> _batchNodes;
+    FontAtlas* _fontAtlas       = nullptr;
+    //Vector<SpriteBatchNode*> _batchNodes;
+    std::shared_ptr<BatchNodesWrap> _batchNodes = nullptr;
     std::vector<LetterInfo> _lettersInfo;
 
     //! used for optimization
-    Sprite *_reusedLetter;
+    Sprite *_reusedLetter       = nullptr;
     Rect _reusedRect;
     int _lengthOfString;
 
@@ -724,7 +729,7 @@ protected:
     float _lineHeight;
     float _lineSpacing;
     float _additionalKerning;
-    int* _horizontalKernings;
+    int* _horizontalKernings    = nullptr;
     bool _lineBreakWithoutSpaces;
     float _maxLineWidth;
     Size _labelDimensions;
@@ -745,7 +750,7 @@ protected:
     Color4B _textColor;
     Color4F _textColorF;
 
-    QuadCommand _quadCommand;
+    std::vector<QuadCommand> _quadCommand;
     CustomCommand _customCommand;
     Mat4  _shadowTransform;
     GLint _uniformEffectColor;
@@ -781,15 +786,15 @@ protected:
     DrawNode* _debugDrawNode;
 #endif
 
-    bool _enableWrap;
+    bool _enableWrap            = false;
     float _bmFontSize;
     float _bmfontScale;
     Overflow _overflow;
     float _originalFontSize;
 
-    bool _boldEnabled;
-    DrawNode* _underlineNode;
-    bool _strikethroughEnabled;
+    bool _boldEnabled           = false;
+    DrawNode* _underlineNode    = nullptr;
+    bool _strikethroughEnabled  = false;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);

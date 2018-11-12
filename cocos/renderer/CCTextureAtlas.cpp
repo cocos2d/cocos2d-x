@@ -237,6 +237,8 @@ void TextureAtlas::setupIndices()
     if (_capacity == 0)
         return;
 
+    CCASSERT(_capacity < ((1 << 16) - 1) / 4, "indice out of range");
+
     for( int i=0; i < _capacity; i++)
     {
         _indices[i*6+0] = i*4+0;
