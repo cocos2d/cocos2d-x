@@ -94,7 +94,7 @@ void SkeletonRenderer::setSkeletonData (spSkeletonData *skeletonData, bool ownsS
                 if (_s_chached_count[_skeletonDataFile_] == 0) {
                     auto iter_skeleton = _s_chached_skeletondata.find(_skeletonDataFile_);
                     auto iter_atlas = _s_chached_atlas.find(_skeletonDataFile_);
-                    if (iter_skeleton != _s_chached_skeletondata.end() and iter_atlas != _s_chached_atlas.end()){
+                    if ((iter_skeleton != _s_chached_skeletondata.end()) && (iter_atlas != _s_chached_atlas.end())){
                         spSkeletonData_dispose(iter_skeleton->second);
                         spAtlas_dispose(iter_atlas->second);
                         _s_chached_skeletondata.erase(iter_skeleton);
