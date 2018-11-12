@@ -121,11 +121,11 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup>
     <CustomBuildStep>
-      <Command>xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\js-bindings\script" "$(OutDir)\script" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\src" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\res" /D /E /I /F /Y
-copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\" /Y
-copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\" /Y</Command>
+      <Command>xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\js-bindings\script" "$(OutDir)\Resources\script\" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resources\src\" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resources\res\" /D /E /I /F /Y
+copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\Resources\" /Y
+copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\Resources\" /Y</Command>
       <Outputs>$(TargetName).cab</Outputs>
       <Inputs>$(TargetFileName)</Inputs>
     </CustomBuildStep>

@@ -130,8 +130,8 @@
     <CustomBuildStep>
       <Command>if not exist "$(LocalDebuggerWorkingDirectory)" mkdir "$(LocalDebuggerWorkingDirectory)"
 xcopy /Y /Q "$(OutDir)*.dll" "$(LocalDebuggerWorkingDirectory)"
-xcopy "$(ProjectDir)..\..\..\res" "$(LocalDebuggerWorkingDirectory)\res" /D /E /I /F /Y
-xcopy "$(ProjectDir)..\..\..\src" "$(LocalDebuggerWorkingDirectory)\src" /D /E /I /F /Y</Command>
+xcopy "$(ProjectDir)..\..\..\res" "$(LocalDebuggerWorkingDirectory)\Resources\res\" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\src" "$(LocalDebuggerWorkingDirectory)\Resources\src\" /D /E /I /F /Y</Command>
       <Outputs>$(TargetName).cab</Outputs>
       <Inputs>$(TargetFileName)</Inputs>
     </CustomBuildStep>
