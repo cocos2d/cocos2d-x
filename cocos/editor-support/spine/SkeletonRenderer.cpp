@@ -70,10 +70,48 @@ void SkeletonRenderer::initialize () {
 
 	setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
 }
-
+//we cached the skeletondata in _s_chached_skeletondata, and make its count +1
+//if we need clear the cache, we just need to dispatch an event by name 'REMOVE_UNUSED_SPINES' , it will detect the count value, if count < 1, then clear the skeletondata in _s_chached_skeletondata
+static std::map<std::string, spSkeletonData*> _s_chached_skeletondata;
+static std::map<std::string, spAtlas*> _s_chached_atlas;
+static std::map<std::string, int> _s_chached_count;
+    
 void SkeletonRenderer::setSkeletonData (spSkeletonData *skeletonData, bool ownsSkeletonData) {
 	_skeleton = spSkeleton_create(skeletonData);
 	_ownsSkeletonData = ownsSkeletonData;
+    
+    /***********this codes below should be extracted if someone is willing to do it***********************/
+    static bool flag = false;
+    //we add a listener to remove unused spines' data in the _s_chached_skeletondata & _s_chached_atlas
+    if (flag == false) {
+        auto _listener = EventListenerCustom::create("REMOVE_UNUSED_SPINES", [](EventCustom*) {
+            auto iter = _s_chached_count.begin();
+            while (iter != _s_chached_count.end()) {
+                auto _skeletonDataFile_ = iter->first; CCLOG("_s_chached_count[_skeletonDataFile]=[%s],count=[%d],count=[%d]",_skeletonDataFile_.c_str(),_s_chached_count[_skeletonDataFile_],iter->second);
+                if (iter->second < 1) {
+                    _s_chached_count[_skeletonDataFile_] = 0;
+                }
+                if (_s_chached_count[_skeletonDataFile_] == 0) {
+                    auto iter_skeleton = _s_chached_skeletondata.find(_skeletonDataFile_);
+                    auto iter_atlas = _s_chached_atlas.find(_skeletonDataFile_);
+                    if (iter_skeleton != _s_chached_skeletondata.end() and iter_atlas != _s_chached_atlas.end()){
+                        spSkeletonData_dispose(iter_skeleton->second);
+                        spAtlas_dispose(iter_atlas->second);
+                        _s_chached_skeletondata.erase(iter_skeleton);
+                        _s_chached_atlas.erase(iter_atlas);
+                    }
+                    _s_chached_count.erase(iter++);
+                    CCLOG("clear the cached spine data with the json:[%s]！",_skeletonDataFile_.c_str());
+                    continue;
+                }
+                iter++;
+            }
+        });
+        Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_listener, -1);
+        flag = true;
+    }
+    /***********this codes above should be extracted if someone is willing to do it***********************/
+    
 }
 
 SkeletonRenderer::SkeletonRenderer ()
@@ -96,12 +134,16 @@ SkeletonRenderer::SkeletonRenderer (const std::string& skeletonDataFile, const s
 }
 
 SkeletonRenderer::~SkeletonRenderer () {
-	if (_ownsSkeletonData) spSkeletonData_dispose(_skeleton->data);
+//    if (_ownsSkeletonData) spSkeletonData_dispose(_skeleton->data);
 	spSkeleton_dispose(_skeleton);
-	if (_atlas) spAtlas_dispose(_atlas);
+//    if (_atlas) spAtlas_dispose(_atlas);
 	if (_attachmentLoader) spAttachmentLoader_dispose(_attachmentLoader);
-	delete [] _worldVertices;
+//    delete [] _worldVertices;
 	spSkeletonClipping_dispose(_clipper);
+    
+    _s_chached_count[_skeletonDataFile] = _s_chached_count[_skeletonDataFile] - 1;
+    delete [] _worldVertices;
+    CCLOG("_count_=[%d],_skeletonDataFile=%s",_s_chached_count[_skeletonDataFile],_skeletonDataFile.c_str());
 }
 
 void SkeletonRenderer::initWithData (spSkeletonData* skeletonData, bool ownsSkeletonData) {
@@ -126,19 +168,53 @@ void SkeletonRenderer::initWithJsonFile (const std::string& skeletonDataFile, sp
 }
 
 void SkeletonRenderer::initWithJsonFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale) {
-	_atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
-	CCASSERT(_atlas, "Error reading atlas file.");
-
-	_attachmentLoader = SUPER(Cocos2dAttachmentLoader_create(_atlas));
-
-	spSkeletonJson* json = spSkeletonJson_createWithLoader(_attachmentLoader);
-	json->scale = scale;
-	spSkeletonData* skeletonData = spSkeletonJson_readSkeletonDataFile(json, skeletonDataFile.c_str());
-	CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data file.");
-	spSkeletonJson_dispose(json);
-
-	setSkeletonData(skeletonData, true);
-
+    
+    spSkeletonData* skeletonData = nullptr;
+    auto iter = _s_chached_skeletondata.find(skeletonDataFile);
+    auto iter_count = _s_chached_count.find(skeletonDataFile);
+    
+    if (iter == _s_chached_skeletondata.end()){
+        auto iter_atlas = _s_chached_atlas.find(skeletonDataFile);
+        if (iter_atlas == _s_chached_atlas.end()){
+            _atlas = spAtlas_createFromFile(atlasFile.c_str(), nullptr);
+            CCASSERT(_atlas, "Error reading atlas file.");
+            _s_chached_atlas.insert(std::make_pair(skeletonDataFile, _atlas));
+        }else{
+            _atlas = iter_atlas->second;
+        }
+        CCASSERT(_atlas, "--------Error reading atlas file--------.");
+        
+        auto attachmentLoader = SUPER(Cocos2dAttachmentLoader_create(_atlas));
+        //        clock_t start = clock();
+        spSkeletonJson* json = spSkeletonJson_createWithLoader(attachmentLoader);
+        json->scale = scale;
+        skeletonData = spSkeletonJson_readSkeletonDataFile(json, skeletonDataFile.c_str());
+        CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data file.");
+        spSkeletonJson_dispose(json);
+        //        clock_t end = clock();
+        //        log("cost time of loading json :%f,--->[%s]",(double)(end - start) / 1000000 , skeletonDataFile.c_str());
+        _s_chached_skeletondata.insert(std::make_pair(skeletonDataFile, skeletonData));
+        CCLOG("cached skeletondata with json[%s] , first using",skeletonDataFile.c_str());
+        if (iter_count == _s_chached_count.end()) {
+            _s_chached_count[skeletonDataFile] = 0;
+        }
+    }else{
+        skeletonData = iter->second;
+        CCLOG("just get the cached spine data with json[%s], it's so fast!!!",skeletonDataFile.c_str());
+    }
+    
+//    spSkeletonJson* json = spSkeletonJson_createWithLoader(_attachmentLoader);
+//    json->scale = scale;
+//    spSkeletonData* skeletonData = spSkeletonJson_readSkeletonDataFile(json, skeletonDataFile.c_str());
+//    CCASSERT(skeletonData, json->error ? json->error : "Error reading skeleton data file.");
+//    spSkeletonJson_dispose(json);
+//
+    setSkeletonData(skeletonData, true);
+    
+    _skeletonDataFile = skeletonDataFile;
+    _atlasFile = atlasFile;
+    _s_chached_count[skeletonDataFile] = _s_chached_count[skeletonDataFile] + 1;
+    
 	initialize();
 }
     

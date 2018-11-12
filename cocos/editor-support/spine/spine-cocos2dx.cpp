@@ -77,8 +77,41 @@ void _spAtlasPage_disposeTexture (spAtlasPage* self) {
 }
 
 char* _spUtil_readFile (const char* path, int* length) {
-	Data data = FileUtils::getInstance()->getDataFromFile(FileUtils::getInstance()->fullPathForFilename(path));
-	if (data.isNull()) return 0;
+    Data data;
+    //    clock_t start = clock();
+    static std::map<std::string, Data> _s_chached_skeleton_json_data;
+    auto iter = _s_chached_skeleton_json_data.find(path);
+    if (iter == _s_chached_skeleton_json_data.end()){
+        data = FileUtils::getInstance()->getDataFromFile(FileUtils::getInstance()->fullPathForFilename(path));
+        if (data.isNull()) return 0;
+        _s_chached_skeleton_json_data.insert(std::make_pair(path, data));
+        CCLOG("cached [%s] , first using",path);
+    }else{
+        CCLOG("already cached [%s] , use it right now",path);
+        data = iter->second;
+    }
+    
+    static bool flag = false;
+    if (flag == false) {
+        //sometimes we need to reload all the spine's json_data, eg: after we updated the game resources
+        auto _backToForegroundlistener = EventListenerCustom::create("REMOVE_UNUSED_SPINE_CONFIG_DATA", [&](EventCustom*) {
+            CCLOG("clearing the cached [%lu] spines' json_atlas_data...",_s_chached_skeleton_json_data.size());
+            auto iter = _s_chached_skeleton_json_data.begin();
+            while (iter != _s_chached_skeleton_json_data.end()) {
+                CCLOG("---->clear the cached spine's json_atlas_data [%s]",iter->first.c_str());
+                iter++;
+            }
+            std::map<std::string, Data> tmp;
+            _s_chached_skeleton_json_data.swap(tmp);
+            CCLOG("cleared all the cached spines' json_atlas_data!");
+        });
+        Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundlistener, -1);
+        flag = true;
+        CCLOG("add a listener to remove unused spines' data");
+    }
+    
+//    Data data = FileUtils::getInstance()->getDataFromFile(FileUtils::getInstance()->fullPathForFilename(path));
+//    if (data.isNull()) return 0;
 
 	// avoid buffer overflow (int is shorter than ssize_t in certain platforms)
 #if COCOS2D_VERSION >= 0x00031200

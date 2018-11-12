@@ -125,6 +125,8 @@ CC_CONSTRUCTOR_ACCESS:
 
 	virtual void initialize ();
 
+    std::string _skeletonDataFile;
+    std::string _atlasFile;
 protected:
 	void setSkeletonData (spSkeletonData* skeletonData, bool ownsSkeletonData);
 	virtual AttachmentVertices* getAttachmentVertices (spRegionAttachment* attachment) const;
