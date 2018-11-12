@@ -99,7 +99,7 @@
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
-xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
 xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
@@ -136,7 +136,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>
-xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
 xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>

@@ -168,7 +168,7 @@ function(setup_cocos_app_config app_name)
     elseif(MSVC)
         # only Debug and Release mode was supported when using MSVC.
         set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/$<CONFIG>")
-        set(APP_RES_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/${CMAKE_BUILD_TYPE}")
+        set(APP_RES_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/${CMAKE_BUILD_TYPE}/Resources")
         #Visual Studio Defaults to wrong type
         set_target_properties(${app_name} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
     else(LINUX)
@@ -182,7 +182,6 @@ function(setup_cocos_app_config app_name)
         cocos_mark_code_files(${APP_NAME})
     endif()
 
-    set(APP_BIN_DIR ${APP_BIN_DIR} PARENT_SCOPE)
     set(APP_RES_DIR ${APP_RES_DIR} PARENT_SCOPE)
 endfunction()
 
