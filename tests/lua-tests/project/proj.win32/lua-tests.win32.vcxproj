@@ -111,7 +111,7 @@
       <DllDataFileName>
       </DllDataFileName>
     </Midl>
-    <PreBuildEvent>
+    <PostBuildEvent>
       <Command>xcopy "$(ProjectDir)..\..\res" "$(OutDir)Resources\res\" /D /E /I /F /Y
 xcopy "$(ProjectDir)..\..\src" "$(OutDir)Resources\src\" /D /E /I /F /Y
 xcopy "$(ProjectDir)..\..\..\..\tests\cpp-tests\Resources" "$(OutDir)Resources\res\" /D /E /I /F /Y
@@ -119,7 +119,7 @@ xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(OutDir)R
 xcopy "$(ProjectDir)..\..\..\..\external\lua\luasocket\script" "$(OutDir)Resources\script\" /D /E /I /F /Y
 xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
       <Message>copy files</Message>
-    </PreBuildEvent>
+    </PostBuildEvent>
     <PreLinkEvent>
       <Command>
       </Command>
@@ -164,11 +164,11 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
       <DllDataFileName>
       </DllDataFileName>
     </Midl>
-    <PreBuildEvent>
+    <PostBuildEvent>
       <Command>
       </Command>
       <Message>copy files</Message>
-    </PreBuildEvent>
+    </PostBuildEvent>
     <PreLinkEvent>
       <Command>
       </Command>
