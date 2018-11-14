@@ -574,8 +574,7 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
         return false;
     }
 
-    _quads = tmpQuads;
-    
+    _quads = tmpQuads;    
     setupIndices();
     mapBuffers();
 
@@ -665,7 +664,6 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
         return;
     
     int quadsNumber = start + numberOfQuads;
-
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture->getName());
 
@@ -778,7 +776,7 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
         _dirty = false;
     }
 
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,quadsNumber*6);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,numberOfQuads*6);
     
     CHECK_GL_ERROR_DEBUG();
 }
