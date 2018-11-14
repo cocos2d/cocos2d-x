@@ -245,6 +245,7 @@ private:
     void mapBuffers();
     void setupVBOandVAO();
     void setupVBO();
+    void setupVAO(int index, int bufferCnt, int bufferSize);
     int vertexBufferCnt(int) const;
     int vertexBufferSize(int, int) const;
 
