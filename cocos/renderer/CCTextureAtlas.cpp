@@ -657,14 +657,14 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads)
     this->drawNumberOfQuads(numberOfQuads, 0);
 }
 
-void TextureAtlas::drawNumberOfQuads(ssize_t _numberOfQuads, ssize_t _start)
+void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 {
-    CCASSERT(_numberOfQuads>=0 && _start>=0, "numberOfQuads and start must be >= 0");
+    CCASSERT(numberOfQuads>=0 && start>=0, "numberOfQuads and start must be >= 0");
 
-    if(!_numberOfQuads)
+    if(!numberOfQuads)
         return;
     
-    int numberOfQuads = _start + _numberOfQuads;
+    int quadsNumber = start + numberOfQuads;
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture->getName());
@@ -676,13 +676,13 @@ void TextureAtlas::drawNumberOfQuads(ssize_t _numberOfQuads, ssize_t _start)
         // Using VBO and VAO
         //
 
-        int bufferCnt = vertexBufferCnt(numberOfQuads);
+        int bufferCnt = vertexBufferCnt(quadsNumber);
         int bufferSize = 0;
-        int offset = _start;
+        int offset = start;
 
         for(int i=0;i<bufferCnt; i++)
         {
-            bufferSize = vertexBufferSize(numberOfQuads, i);
+            bufferSize = vertexBufferSize(quadsNumber, i);
             if (offset >= bufferSize)
             {
                 offset -= bufferSize;
@@ -732,13 +732,13 @@ void TextureAtlas::drawNumberOfQuads(ssize_t _numberOfQuads, ssize_t _start)
         //
 
 #define kQuadSize sizeof(_quads[0].bl)
-        int bufferCnt = vertexBufferCnt(numberOfQuads);
+        int bufferCnt = vertexBufferCnt(quadsNumber);
         int bufferSize = 0;
-        int offset = _start;
+        int offset = start;
 
         for (int i = 0; i < bufferCnt; i++)
         {
-            bufferSize = vertexBufferSize(numberOfQuads, i);
+            bufferSize = vertexBufferSize(quadsNumber, i);
             
             if (offset >= bufferSize)
             {
@@ -778,7 +778,7 @@ void TextureAtlas::drawNumberOfQuads(ssize_t _numberOfQuads, ssize_t _start)
         _dirty = false;
     }
 
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,numberOfQuads*6);
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,quadsNumber*6);
     
     CHECK_GL_ERROR_DEBUG();
 }
