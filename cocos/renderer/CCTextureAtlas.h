@@ -245,12 +245,14 @@ private:
     void mapBuffers();
     void setupVBOandVAO();
     void setupVBO();
+    int vertexBufferCnt(int) const;
+    int vertexBufferSize(int, int) const;
 
 protected:
-    GLushort*           _indices;
-    GLuint              _VAOname;
-    GLuint              _buffersVBO[2]; //0: vertex  1: indices
-    bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
+    std::vector<GLushort>   _indices;
+    std::vector<GLuint>     _VAOname;
+    std::vector<GLuint>     _buffersVBO; //0: vertex  1: indices
+    bool                    _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
     /** quantity of quads that are going to be drawn */
     ssize_t _totalQuads;
     /** quantity of quads that can be stored with the current texture atlas size */
