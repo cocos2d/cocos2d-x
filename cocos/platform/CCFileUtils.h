@@ -203,7 +203,8 @@ public:
         ReadFailed = 3, // Read failed
         NotInitialized = 4, // FileUtils is not initializes
         TooLarge = 5, // The file is too large (great than 2^32-1)
-        ObtainSizeFailed = 6 // Failed to obtain the file size.
+        ObtainSizeFailed = 6, // Failed to obtain the file size.
+        NotRegularFileType = 7 // File type is not S_IFREG
     };
 
     /**
