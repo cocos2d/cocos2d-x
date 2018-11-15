@@ -1,3 +1,30 @@
+cocos2d-x-3.17 Nov.31 2018
+
+[NEW]           Engine: add `GLView::setCursor` for desktop platforms
+[NEW]           Engine: add methods to change icons for desktop platforms
+[NEW]           FileUtils: add listFiles impl for Android and Windows platform
+[NEW]           
+
+[REFINE]        Renderer: remove ccGLStateCache
+[REFINE]        UI: add line spacing support for system font on iOS and Android
+[REFINE]        CMake: improve external libraries link, compile options config
+[REFINE]        Windows: refine CCDevice-win32 BitmapDC
+[REFINE]        Windows: improve binary folder structure, copy resources to "Resources/" folder
+[REFINE]        Android: shorten C++ build path, reduce long path error on Windows
+[REFINE]        FileUtils: improve thread safety (use single recursive_mutex)
+[REFINE]        
+
+[FIX]           UI: fix locate image path relative to tsx file error for TiledMap
+[FIX]           UI: fix button setTitleLabel memory leak
+[FIX]           CMake: fix project name always be "TemplateCPP" when create a new project
+[FIX]           Android: keep cocos2dx activity at task root by mark "singleTask" in manifest
+[FIX]           Engine: aviod reading outside of the buffer when print log
+[FIX]           FileUtils: fix removeDirectory() failure on win32
+[FIX]           FileUtils: getContents will return an error code when the filename is a directory
+[FIX]           FileUtils: isFileExistInternal return false when folder as parameter on Linux
+[FIX]           cocos console: disable "gen-libs" command, since we didn't supported from 3.17 release
+[FIX]           
+
 cocos2d-x-3.17 May.21 2018
 
 [HIGHLIGHT]     Android: support Android Studio 3.0, NDK 16
