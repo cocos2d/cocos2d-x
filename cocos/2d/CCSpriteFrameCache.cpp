@@ -762,8 +762,12 @@ bool SpriteFrameCache::PlistFramesCache::eraseFrame(const std::string &frame)
     auto itFrame = _indexFrame2plist.find(frame);
     if (itFrame != _indexFrame2plist.end())
     {
-        _indexPlist2Frames[itFrame->second].erase(frame);   //update index plist->[frameNames]
+        auto plist = itFrame->second;
+        _indexPlist2Frames[plist].erase(frame);             //update index plist->[frameNames]
         _indexFrame2plist.erase(itFrame);                   //update index frame->plist
+        // erase plist index if all frames was erased
+        if (_indexFrame2plist.empty())
+            _indexPlist2Frames.erase(plist);
         return true;
     }
     return false;
