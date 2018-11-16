@@ -26,6 +26,8 @@
 
 #include "SpriteFrameCacheTest.h"
 
+#include <cassert>
+
 // enable log
 #define COCOS2D_DEBUG 1
 
@@ -35,6 +37,7 @@ SpriteFrameCacheTests::SpriteFrameCacheTests()
 {
     ADD_TEST_CASE(SpriteFrameCachePixelFormatTest);
     ADD_TEST_CASE(SpriteFrameCacheLoadMultipleTimes);
+    ADD_TEST_CASE(SpriteFrameCacheFullCheck);
 }
 
 SpriteFrameCachePixelFormatTest::SpriteFrameCachePixelFormatTest()
@@ -88,17 +91,9 @@ void SpriteFrameCachePixelFormatTest::loadSpriteFrames(const std::string &file, 
 }
 
 
-
-
 SpriteFrameCacheLoadMultipleTimes::SpriteFrameCacheLoadMultipleTimes()
 {
     const Size screenSize = Director::getInstance()->getWinSize();
-
-    infoLabel = Label::create();
-    infoLabel->setAnchorPoint(Point(0.5f, 1.0f));
-    infoLabel->setAlignment(cocos2d::TextHAlignment::CENTER);
-    infoLabel->setPosition(screenSize.width * 0.5f, screenSize.height * 0.7f);
-    addChild(infoLabel);
 
     // load atlas definition with specified PixelFormat and check that it matches to expected format
     loadSpriteFrames("Images/sprite_frames_test/test_RGBA8888.plist", Texture2D::PixelFormat::RGBA8888);
@@ -106,9 +101,7 @@ SpriteFrameCacheLoadMultipleTimes::SpriteFrameCacheLoadMultipleTimes()
     loadSpriteFrames("Images/sprite_frames_test/test_RGBA8888.plist", Texture2D::PixelFormat::RGBA8888);
     loadSpriteFrames("Images/sprite_frames_test/test_RGBA8888.plist", Texture2D::PixelFormat::RGBA8888);
 
-
 }
-
 
 void SpriteFrameCacheLoadMultipleTimes::loadSpriteFrames(const std::string &file, cocos2d::Texture2D::PixelFormat expectedFormat)
 {
@@ -119,9 +112,33 @@ void SpriteFrameCacheLoadMultipleTimes::loadSpriteFrames(const std::string &file
     const double memorySize = 1.0 * texture->getBitsPerPixelForFormat() * texture->getContentSizeInPixels().width * texture->getContentSizeInPixels().height / bitsPerKB;
     CC_ASSERT(texture->getPixelFormat() == expectedFormat);
 
-    const std::string textureInfo = StringUtils::format("%s: %.2f KB\r\n", texture->getStringForFormat(), memorySize);
-    infoLabel->setString(infoLabel->getString() + textureInfo);
-
     SpriteFrameCache::getInstance()->removeSpriteFrameByName("grossini.png");
     Director::getInstance()->getTextureCache()->removeTexture(texture);
+}
+
+
+SpriteFrameCacheFullCheck::SpriteFrameCacheFullCheck()
+{
+    const Size screenSize = Director::getInstance()->getWinSize();
+    // load atlas definition with specified PixelFormat and check that it matches to expected format
+    loadSpriteFrames("Images/test_polygon.plist", Texture2D::PixelFormat::RGBA8888);
+}
+
+void SpriteFrameCacheFullCheck::loadSpriteFrames(const std::string &file, cocos2d::Texture2D::PixelFormat expectedFormat)
+{
+    auto cache = SpriteFrameCache::getInstance();
+
+    CCASSERT(cache->isSpriteFramesWithFileLoaded("plist which not exists") == false, "Plist not exists");
+
+    cache->addSpriteFramesWithFile(file);
+    CCASSERT(cache->isSpriteFramesWithFileLoaded(file) == true, "Plist should be full after loaded");
+
+    cache->removeSpriteFrameByName("not_exists_grossinis_sister.png");
+    CCASSERT(cache->isSpriteFramesWithFileLoaded(file) == true, "Plist should not be still full");
+
+    cache->removeSpriteFrameByName("grossinis_sister1.png");
+    CCASSERT(cache->isSpriteFramesWithFileLoaded(file) == false, "Plist should not be full after remove any sprite");
+
+    cache->addSpriteFramesWithFile(file);
+    CCASSERT(cache->isSpriteFramesWithFileLoaded(file) == true, "Plist should be full after reloaded");
 }
