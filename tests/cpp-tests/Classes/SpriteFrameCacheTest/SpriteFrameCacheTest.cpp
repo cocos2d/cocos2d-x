@@ -34,6 +34,7 @@ USING_NS_CC;
 SpriteFrameCacheTests::SpriteFrameCacheTests()
 {
     ADD_TEST_CASE(SpriteFrameCachePixelFormatTest);
+    ADD_TEST_CASE(SpriteFrameCacheLoadMultipleTimes);
 }
 
 SpriteFrameCachePixelFormatTest::SpriteFrameCachePixelFormatTest()
@@ -82,6 +83,46 @@ void SpriteFrameCachePixelFormatTest::loadSpriteFrames(const std::string &file, 
     const std::string textureInfo = StringUtils::format("%s: %.2f KB\r\n", texture->getStringForFormat(), memorySize);
     infoLabel->setString(infoLabel->getString() + textureInfo);
     
+    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile(file);
+    Director::getInstance()->getTextureCache()->removeTexture(texture);
+}
+
+
+
+
+SpriteFrameCacheLoadMultipleTimes::SpriteFrameCacheLoadMultipleTimes()
+{
+    const Size screenSize = Director::getInstance()->getWinSize();
+
+    infoLabel = Label::create();
+    infoLabel->setAnchorPoint(Point(0.5f, 1.0f));
+    infoLabel->setAlignment(cocos2d::TextHAlignment::CENTER);
+    infoLabel->setPosition(screenSize.width * 0.5f, screenSize.height * 0.7f);
+    addChild(infoLabel);
+
+    // load atlas definition with specified PixelFormat and check that it matches to expected format
+    loadSpriteFrames("Images/sprite_frames_test/test_RGBA8888.plist", Texture2D::PixelFormat::RGBA8888);
+    loadSpriteFrames("Images/sprite_frames_test/test_RGBA8888.plist", Texture2D::PixelFormat::RGBA8888);
+    loadSpriteFrames("Images/sprite_frames_test/test_RGBA8888.plist", Texture2D::PixelFormat::RGBA8888);
+    loadSpriteFrames("Images/sprite_frames_test/test_RGBA8888.plist", Texture2D::PixelFormat::RGBA8888);
+
+
+}
+
+
+void SpriteFrameCacheLoadMultipleTimes::loadSpriteFrames(const std::string &file, cocos2d::Texture2D::PixelFormat expectedFormat)
+{
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile(file);
+    SpriteFrameCache::getInstance()->addSpriteFramesWithFile(file);
+    SpriteFrame *spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("grossini.png");
+    Texture2D *texture = spriteFrame->getTexture();
+    const ssize_t bitsPerKB = 8 * 1024;
+    const double memorySize = 1.0 * texture->getBitsPerPixelForFormat() * texture->getContentSizeInPixels().width * texture->getContentSizeInPixels().height / bitsPerKB;
+    CC_ASSERT(texture->getPixelFormat() == expectedFormat);
+
+    const std::string textureInfo = StringUtils::format("%s: %.2f KB\r\n", texture->getStringForFormat(), memorySize);
+    infoLabel->setString(infoLabel->getString() + textureInfo);
+
     SpriteFrameCache::getInstance()->removeSpriteFramesFromFile(file);
     Director::getInstance()->getTextureCache()->removeTexture(texture);
 }

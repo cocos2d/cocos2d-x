@@ -349,11 +349,11 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dict, const std::
 }
 
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, Texture2D *texture)
-{
-    if (_spriteFramesCache.hasPlist(plist))
-    {
-        return; // We already added it
-    }
+{   //// allow redundant adding
+    //if (_spriteFramesCache.hasPlist(plist))
+    //{
+    //    return; // We already added it
+    //}
     
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
     ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
@@ -370,10 +370,11 @@ void SpriteFrameCache::addSpriteFramesWithFileContent(const std::string& plist_c
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName)
 {
     CCASSERT(textureFileName.size()>0, "texture name should not be null");
-    if (_spriteFramesCache.hasPlist(plist))
-    {
-        return; // We already added it
-    }
+    //// allow redundant adding
+    //if (_spriteFramesCache.hasPlist(plist))
+    //{
+    //    return; // We already added it
+    //}
     const std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
     ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
     addSpriteFramesWithDictionary(dict, textureFileName, plist);
@@ -391,8 +392,8 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
         return;
     }
 
-    if (!_spriteFramesCache.hasPlist(plist))
-    {
+    //if (!_spriteFramesCache.hasPlist(plist)) //should allow redundant adding
+    //{
         ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
 
         string texturePath("");
@@ -424,7 +425,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
             CCLOG("cocos2d: SpriteFrameCache: Trying to use file %s as texture", texturePath.c_str());
         }
         addSpriteFramesWithDictionary(dict, texturePath, plist);
-    }
+    //}
 }
 
 bool SpriteFrameCache::isSpriteFramesWithFileLoaded(const std::string& plist) const
@@ -813,8 +814,9 @@ bool SpriteFrameCache::PlistFramesCache::hasFrame(const std::string &frame) cons
 
 bool SpriteFrameCache::PlistFramesCache::hasPlist(const std::string &plist) const
 {
-    return _indexPlist2Frames.find(plist) != _indexPlist2Frames.end();
-}
+    auto frames = _indexPlist2Frames.find(plist);
+    return frames != _indexPlist2Frames.end() && frames->second.size() > 0;
+} 
 
 SpriteFrame * SpriteFrameCache::PlistFramesCache::at(const std::string &frame)
 {
