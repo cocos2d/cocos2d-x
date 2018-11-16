@@ -116,12 +116,10 @@ protected:
         void clear();
 
         inline bool hasFrame(const std::string &frame) const;
-        inline bool hasPlist(const std::string &plist) const;
+        inline bool isPlistUsed(const std::string &plist) const;
 
         inline SpriteFrame *at(const std::string &frame);
         inline Map<std::string, SpriteFrame*>& getSpriteFrames();
-
-        inline bool isPlistUsed(const std::string &plist) const;
 
     private:
         Map<std::string, SpriteFrame*> _spriteFrames;

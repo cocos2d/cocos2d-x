@@ -113,7 +113,6 @@ SpriteFrameCacheLoadMultipleTimes::SpriteFrameCacheLoadMultipleTimes()
 void SpriteFrameCacheLoadMultipleTimes::loadSpriteFrames(const std::string &file, cocos2d::Texture2D::PixelFormat expectedFormat)
 {
     SpriteFrameCache::getInstance()->addSpriteFramesWithFile(file);
-    SpriteFrameCache::getInstance()->addSpriteFramesWithFile(file);
     SpriteFrame *spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("grossini.png");
     Texture2D *texture = spriteFrame->getTexture();
     const ssize_t bitsPerKB = 8 * 1024;
@@ -123,6 +122,6 @@ void SpriteFrameCacheLoadMultipleTimes::loadSpriteFrames(const std::string &file
     const std::string textureInfo = StringUtils::format("%s: %.2f KB\r\n", texture->getStringForFormat(), memorySize);
     infoLabel->setString(infoLabel->getString() + textureInfo);
 
-    SpriteFrameCache::getInstance()->removeSpriteFramesFromFile(file);
+    SpriteFrameCache::getInstance()->removeSpriteFrameByName("grossini.png");
     Director::getInstance()->getTextureCache()->removeTexture(texture);
 }
