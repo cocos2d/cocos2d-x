@@ -277,7 +277,7 @@ void FileUtilsWin32::listFilesRecursively(const std::string& dirPath, std::vecto
 long FileUtilsWin32::getFileSize(const std::string &filepath) const
 {
     struct _stat tmp;
-    if (_stat(filepath.c_str(), &tmp)!=0)
+    if (_stat(filepath.c_str(), &tmp) == 0)
     {
         return (long)tmp.st_size;
     }
