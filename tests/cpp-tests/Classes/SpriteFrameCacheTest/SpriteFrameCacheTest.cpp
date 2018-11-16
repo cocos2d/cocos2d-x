@@ -109,7 +109,6 @@ void SpriteFrameCacheLoadMultipleTimes::loadSpriteFrames(const std::string &file
     SpriteFrame *spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("grossini.png");
     Texture2D *texture = spriteFrame->getTexture();
     const ssize_t bitsPerKB = 8 * 1024;
-    const double memorySize = 1.0 * texture->getBitsPerPixelForFormat() * texture->getContentSizeInPixels().width * texture->getContentSizeInPixels().height / bitsPerKB;
     CC_ASSERT(texture->getPixelFormat() == expectedFormat);
 
     SpriteFrameCache::getInstance()->removeSpriteFrameByName("grossini.png");
