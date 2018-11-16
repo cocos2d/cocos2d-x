@@ -36,6 +36,9 @@ THE SOFTWARE.
 #include <regex>
 #include <sstream>
 
+#include <sys/types.h>  
+#include <sys/stat.h>  
+
 using namespace std;
 
 #define DECLARE_GUARD std::lock_guard<std::recursive_mutex> mutexGuard(_mutex)
@@ -269,6 +272,16 @@ void FileUtilsWin32::listFilesRecursively(const std::string& dirPath, std::vecto
         }
         tinydir_close(&dir);
     }
+}
+
+long FileUtilsWin32::getFileSize(const std::string &filepath) const
+{
+    struct _stat tmp;
+    if (_stat(filepath.c_str(), &tmp) == 0)
+    {
+        return (long)tmp.st_size;
+    }
+    return 0;
 }
 
 std::vector<std::string> FileUtilsWin32::listFiles(const std::string& dirPath) const
