@@ -417,4 +417,6 @@ THE SOFTWARE.
 #define CC_STRIP_FPS 0
 #endif
 
+#define CC_LABEL_MAX_LENGTH ((1<<16)/4)
+
 #endif // __CCCONFIG_H__
