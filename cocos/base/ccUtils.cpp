@@ -544,6 +544,18 @@ void setBlending(GLenum sfactor, GLenum dfactor)
         RenderState::StateBlock::_defaultState->setBlendDst((RenderState::Blend)dfactor);
     }
 }
+    
+void enableVertexAttributes(uint32_t flags)
+{
+    for (int i = 0; flags > 0; i++)
+    {
+        int flag = 1 << i;
+        if (flag & flags)
+            glEnableVertexAttribArray(i);
+        
+        flags &= ~flag;
+    }
+}
 
 }
 

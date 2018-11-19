@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "AppDelegate.h"
+#include "../Classes/AppDelegate.h"
 #include "cocos2d.h"
 
 USING_NS_CC;

@@ -390,6 +390,12 @@ void MotionStreak::onDraw(const Mat4 &transform, uint32_t /*flags*/)
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture->getName());
+    auto alphaTexID = _texture->getAlphaTextureName();
+    if (alphaTexID > 0)
+    {
+        glActiveTexture(GL_TEXTURE0 + 1);
+        glBindTexture(GL_TEXTURE_2D, alphaTexID);
+    }
 
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);

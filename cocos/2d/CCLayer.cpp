@@ -620,13 +620,13 @@ void LayerColor::onDraw(const Mat4& transform, uint32_t /*flags*/)
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
     
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-    
     //
     // Attributes
     //
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+    glDisableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
 
