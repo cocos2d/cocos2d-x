@@ -83,6 +83,8 @@ var TestScene = cc.Scene.extend({
 var LINE_SPACE = 40;
 var curPos = cc.p(0,0);
 
+var testcaseSorted = false;
+
 var TestController = cc.LayerGradient.extend({
     _itemMenu:null,
     _beginPos:0,
@@ -118,14 +120,21 @@ var TestController = cc.LayerGradient.extend({
         menu.x = 0;
         menu.y = 0;
 
-        // sort the test title
-        testNames.sort(function(first, second){
-            if (first.title > second.title)
-            {
-                return 1;
+        if(!testcaseSorted){
+            // sort the test title
+            testNames.sort(function(first, second){
+                if (first.title > second.title)
+                {
+                    return 1;
+                }
+                return -1;
+            });
+
+            for(var i = 0 ; i< testNames.length;i++) {
+                testNames[i].title = (i+1)+". " + testNames[i].title;
             }
-            return -1;
-        });
+        }
+        testcaseSorted = true;
 
         // add menu items for tests
         this._itemMenu = new cc.Menu();//item menu is where all the label goes, and the one gets scrolled
