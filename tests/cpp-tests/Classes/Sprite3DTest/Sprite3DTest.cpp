@@ -2441,7 +2441,8 @@ CameraBackgroundClearTest::CameraBackgroundClearTest()
 
 void CameraBackgroundClearTest::switch_CameraClearMode(cocos2d::Ref* sender)
 {
-    auto type = _camera->getBackgroundBrush()->getBrushType();
+    auto brush = _camera->getBackgroundBrush();
+    auto type = brush ? brush->getBrushType() : CameraBackgroundBrush::BrushType::NONE;
     if (type == CameraBackgroundBrush::BrushType::NONE)
     {
         _camera->setBackgroundBrush(CameraBackgroundBrush::createDepthBrush(1.f));
