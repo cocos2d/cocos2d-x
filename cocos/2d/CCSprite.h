@@ -49,7 +49,6 @@ class Texture2D;
 struct transformValues_;
 namespace backend {
     class Texture;
-    class CommandBuffer;
 }
 
 #ifdef SPRITE_RENDER_IN_SUBPIXEL
@@ -657,7 +656,6 @@ protected:
     
     //backend
     backend::Texture* _backendTexture = nullptr;
-    backend::CommandBuffer* _commandBuffer = nullptr;
 #if CC_SPRITE_DEBUG_DRAW
     DrawNode *_debugDrawNode;
 #endif //CC_SPRITE_DEBUG_DRAW
