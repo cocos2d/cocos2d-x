@@ -40,6 +40,10 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "2d/CCCamera.h"
+#include "renderer/backend/Texture.h"
+
+//for debug
+#include "renderer/backend/opengl/TextureGL.h"
 
 NS_CC_BEGIN
 
@@ -72,6 +76,18 @@ Sprite* Sprite::create(const std::string& filename)
 {
     Sprite *sprite = new (std::nothrow) Sprite();
     if (sprite && sprite->initWithFile(filename))
+    {
+        sprite->autorelease();
+        return sprite;
+    }
+    CC_SAFE_DELETE(sprite);
+    return nullptr;
+}
+
+Sprite* Sprite::backendCreate(const std::string& filename)
+{
+    Sprite *sprite = new (std::nothrow) Sprite();
+    if (sprite && sprite->initWithBackendFile(filename))
     {
         sprite->autorelease();
         return sprite;
@@ -187,6 +203,32 @@ bool Sprite::initWithFile(const std::string& filename)
     // don't release here.
     // when load texture failed, it's better to get a "transparent" sprite then a crashed program
     // this->release();
+    return false;
+}
+
+bool Sprite::initWithBackendFile(const std::string& filename)
+{
+    if (filename.empty())
+    {
+        CCLOG("Call Sprite::initWithFile with blank resource filename.");
+        return false;
+    }
+    
+    _fileName = filename;
+    _fileType = 0;
+    
+//    Texture2D *texture = _director->getTextureCache()->addImage(filename);
+    backend::Texture* texture = _director->getTextureCache()->addBackendImage(filename);
+    if (texture)
+    {
+        Rect rect = Rect::ZERO;
+//        rect.size = texture->getContentSize();
+        Size rectSize;
+        rectSize.width = texture->getWidth() / CC_CONTENT_SCALE_FACTOR();
+        rectSize.height = texture->getHeight() / CC_CONTENT_SCALE_FACTOR();
+        rect.size = rectSize;
+        return initWithBackendTexture(texture, rect);
+    }
     return false;
 }
 
@@ -306,6 +348,53 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
     return result;
 }
 
+bool Sprite::initWithBackendTexture(backend::Texture *texture, const Rect& rect, bool rotated)
+{
+    bool result = false;
+    if (Node::init())
+    {
+        _batchNode = nullptr;
+        
+        _recursiveDirty = false;
+        setDirty(false);
+        
+        _opacityModifyRGB = true;
+        
+        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+        
+        _flippedX = _flippedY = false;
+        
+        // default transform anchor: center
+        setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        
+        // zwoptex default values
+        _offsetPosition.setZero();
+        
+        // clean the Quad
+        memset(&_quad, 0, sizeof(_quad));
+        
+        // Atlas: Color
+        _quad.bl.colors = Color4B::WHITE;
+        _quad.br.colors = Color4B::WHITE;
+        _quad.tl.colors = Color4B::WHITE;
+        _quad.tr.colors = Color4B::WHITE;
+        
+        // update texture (calls updateBlendFunc)
+        setBackendTexture(texture);
+        setTextureRect(rect, rotated, rect.size);
+        
+        // by default use "Self Render".
+        // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
+        setBatchNode(nullptr);
+        result = true;
+    }
+    
+    _recursiveDirty = true;
+    setDirty(true);
+    
+    return result;
+}
+
 Sprite::Sprite()
 : _textureAtlas(nullptr)
 , _batchNode(nullptr)
@@ -333,6 +422,7 @@ Sprite::~Sprite()
     CC_SAFE_FREE(_trianglesIndex);
     CC_SAFE_RELEASE(_spriteFrame);
     CC_SAFE_RELEASE(_texture);
+    CC_SAFE_RELEASE(_backendTexture);
 }
 
 /*
@@ -405,6 +495,47 @@ void Sprite::setTexture(Texture2D *texture)
         CC_SAFE_RELEASE(_texture);
         _texture = texture;
         updateBlendFunc();
+    }
+}
+
+void Sprite::setBackendTexture(backend::Texture *texture)
+{
+    if(_glProgramState == nullptr)
+    {
+        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+    }
+    // If batchnode, then texture id should be the same
+    
+    backend::TextureGL* textureGL = static_cast<backend::TextureGL*>(texture);
+                          
+    CCASSERT(! _batchNode || (texture &&  textureGL->getHandler() == _batchNode->getTexture()->getName()), "CCSprite: Batched sprites should use the same texture as the batchnode");
+    // accept texture==nil as argument
+    CCASSERT( !texture || dynamic_cast<backend::Texture*>(texture), "setTexture expects a Texture2D. Invalid argument");
+    
+    if (texture == nullptr)
+    {
+        cocos2d::log("backend::Texture error....");
+//        // Gets the texture by key firstly.
+//        texture = _director->getTextureCache()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
+//
+//        // If texture wasn't in cache, create it from RAW data.
+//        if (texture == nullptr)
+//        {
+//            Image* image = new (std::nothrow) Image();
+//            bool CC_UNUSED isOK = image->initWithRawData(cc_2x2_white_image, sizeof(cc_2x2_white_image), 2, 2, 8);
+//            CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
+//
+//            texture = _director->getTextureCache()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
+//            CC_SAFE_RELEASE(image);
+//        }
+    }
+    
+    if ((_renderMode != RenderMode::QUAD_BATCHNODE) && (_backendTexture != texture))
+    {
+        CC_SAFE_RETAIN(texture);
+        CC_SAFE_RELEASE(_backendTexture);
+        _backendTexture = texture;
+        updateBackendBlendFunc();
     }
 }
 
@@ -773,15 +904,34 @@ void Sprite::setTextureCoords(const Rect& rectInPoints)
 void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQuad)
 {
     Texture2D *tex = (_renderMode == RenderMode::QUAD_BATCHNODE) ? _textureAtlas->getTexture() : _texture;
-    if (tex == nullptr)
+    
+    backend::Texture *backendTex = (_renderMode == RenderMode::QUAD_BATCHNODE) ? nullptr : _backendTexture;
+    if (tex == nullptr && backendTex == nullptr)
     {
         return;
     }
 
     const auto rectInPixels = CC_RECT_POINTS_TO_PIXELS(rectInPoints);
 
-    const float atlasWidth = (float)tex->getPixelsWide();
-    const float atlasHeight = (float)tex->getPixelsHigh();
+//    const float atlasWidth = (float)tex->getPixelsWide();
+//    const float atlasHeight = (float)tex->getPixelsHigh();
+    
+    float atlasWidth = 0.0;
+    float atlasHeight = 0.0;
+    if(tex)
+    {
+        atlasWidth = (float)tex->getPixelsWide();
+        atlasHeight = (float)tex->getPixelsHigh();
+    }
+    else if (backendTex)
+    {
+        atlasWidth = (float)backendTex->getWidth();
+        atlasHeight = (float)backendTex->getHeight();
+    }
+    else
+    {
+        cocos2d::log("set textureCoord error......");
+    }
 
     float rw = rectInPixels.size.width;
     float rh = rectInPixels.size.height;
@@ -1048,6 +1198,20 @@ void Sprite::updateTransform(void)
 
 void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
+    if (_backendTexture) {
+       
+        _trianglesCommand.init(_globalZOrder,
+                               _backendTexture,
+                               getGLProgramState(),
+                               _blendFunc,
+                               _polyInfo.triangles,
+                               transform,
+                               flags);
+        
+        renderer->addCommand(&_trianglesCommand);
+        return;
+    }
+    
     if (_texture == nullptr)
     {
         return;
@@ -1687,6 +1851,24 @@ void Sprite::updateBlendFunc(void)
 
     // it is possible to have an untextured sprite
     if (! _texture || ! _texture->hasPremultipliedAlpha())
+    {
+        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+        setOpacityModifyRGB(false);
+    }
+    else
+    {
+        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+        setOpacityModifyRGB(true);
+    }
+}
+
+void Sprite::updateBackendBlendFunc(void)
+{
+    CCASSERT(_renderMode != RenderMode::QUAD_BATCHNODE, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a SpriteBatchNode");
+    
+    // it is possible to have an untextured sprite
+    backend::TextureGL* textureGL = static_cast<backend::TextureGL*>(_backendTexture);
+    if (! _backendTexture || ! textureGL->hasPremultipliedAlpha())
     {
         _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
         setOpacityModifyRGB(false);
