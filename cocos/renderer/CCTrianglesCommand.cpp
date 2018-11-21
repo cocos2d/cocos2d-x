@@ -30,6 +30,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTexture2D.h"
 #include "base//ccUtils.h"
+#include "renderer/backend/opengl/TextureGL.h"
 
 NS_CC_BEGIN
 
@@ -74,6 +75,13 @@ void TrianglesCommand::init(float globalOrder, Texture2D* texture, GLProgramStat
 {
     init(globalOrder, texture->getName(), glProgramState, blendType, triangles, mv, flags);
     _alphaTextureID = texture->getAlphaTextureName();
+}
+
+void TrianglesCommand::init(float globalOrder, backend::Texture* textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags)
+{
+    backend::TextureGL* texture = static_cast<backend::TextureGL*>(textureID);
+    init(globalOrder, texture->getHandler(), glProgramState, blendType, triangles, mv, flags);
+    //    _alphaTextureID = texture->getAlphaTextureName();
 }
 
 TrianglesCommand::~TrianglesCommand()

@@ -40,6 +40,9 @@ NS_CC_BEGIN
  Every TrianglesCommand will have generate material ID by give textureID, glProgramState, Blend function
  if the material id is the same, these TrianglesCommands could be batched to save draw call.
 */
+namespace backend {
+    class Texture;
+}
 class CC_DLL TrianglesCommand : public RenderCommand
 {
 public:
@@ -71,6 +74,7 @@ public:
      */
     void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags);
     void init(float globalOrder, Texture2D* textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags);
+    void init(float globalOrder, backend::Texture* textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags);
     /**Apply the texture, shaders, programs, blend functions to GPU pipeline.*/
     void useMaterial() const;
     /**Get the material id of command.*/

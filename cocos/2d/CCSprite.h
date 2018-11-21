@@ -47,6 +47,9 @@ class Rect;
 class Size;
 class Texture2D;
 struct transformValues_;
+namespace backend {
+    class Texture;
+}
 
 #ifdef SPRITE_RENDER_IN_SUBPIXEL
 #undef SPRITE_RENDER_IN_SUBPIXEL
@@ -650,6 +653,9 @@ protected:
     Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
     SpriteFrame*     _spriteFrame;
     TrianglesCommand _trianglesCommand;     ///
+    
+    //backend
+    backend::Texture* _backendTexture = nullptr;
 #if CC_SPRITE_DEBUG_DRAW
     DrawNode *_debugDrawNode;
 #endif //CC_SPRITE_DEBUG_DRAW
