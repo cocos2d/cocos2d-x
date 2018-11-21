@@ -129,6 +129,7 @@ public:
      * @return  An autoreleased sprite object.
      */
     static Sprite* create(const std::string& filename);
+    static Sprite* backendCreate(const std::string& filename);
     
     /**
      * Creates a polygon sprite with a polygon info.
@@ -241,6 +242,7 @@ public:
      *  The Texture's rect is not changed.
      */
     virtual void setTexture(Texture2D *texture) override;
+    virtual void setBackendTexture(backend::Texture *texture);
 
     /** Returns the Texture2D object used by the sprite. */
     virtual Texture2D* getTexture() const override;
@@ -570,6 +572,7 @@ CC_CONSTRUCTOR_ACCESS :
      * @return  True if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithTexture(Texture2D *texture, const Rect& rect, bool rotated);
+    virtual bool initWithBackendTexture(backend::Texture *texture, const Rect& rect, bool rotated = false);
 
     /**
      * Initializes a sprite with an SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite.
@@ -602,6 +605,7 @@ CC_CONSTRUCTOR_ACCESS :
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename);
+    virtual bool initWithBackendFile(const std::string& filename);
 
     /**
      * Initializes a sprite with an image filename, and a rect.
@@ -622,9 +626,11 @@ protected:
     virtual void updateColor() override;
     virtual void setTextureCoords(const Rect& rect);
     virtual void setTextureCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad);
+    virtual void setBackendTextureCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad);
     virtual void setVertexCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad);
     void populateTriangle(int quadIndex, const V3F_C4B_T2F_Quad& quad);
     virtual void updateBlendFunc();
+    virtual void updateBackendBlendFunc();
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);
 
