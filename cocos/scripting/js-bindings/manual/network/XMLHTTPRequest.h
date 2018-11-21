@@ -49,6 +49,15 @@ public:
         JSON
     };
 
+    enum class EncodingType
+    {
+        GZIP,
+        COMPRESS,
+        DEFLATE,
+        BR,
+        IDENTITY
+    };
+
     // Ready States (http://www.w3.org/TR/XMLHttpRequest/#interface-xmlhttprequest)
     static const unsigned short UNSENT = 0;
     static const unsigned short OPENED = 1;
@@ -94,6 +103,7 @@ private:
     void _gotHeader(std::string& header);
     void _setRequestHeader(const char* field, const char* value);
     void _setHttpRequestHeader();
+    EncodingType _getEncodingType() const;
     void _setHttpRequestData(const char *data, size_t len);
     void _sendRequest(JSContext *cx);
     void _notify(JS::HandleObject callback, JS::HandleValueArray args);
