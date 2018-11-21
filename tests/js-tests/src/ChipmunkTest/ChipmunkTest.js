@@ -840,7 +840,7 @@ var ChipmunkReleaseTest = ChipmunkBaseLayer.extend({
         cc.log("OnExit");
 
         // not calling this on purpose
-        // this.space.removeCollisionHandler( 10, 11 );
+        this.space.removeCollisionHandler( 10, 11 );
         this.space = null;
 
         // cc.base(this, 'onExit');
