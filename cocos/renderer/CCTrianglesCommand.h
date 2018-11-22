@@ -28,6 +28,7 @@
 
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgramState.h"
+#include "renderer/CCPipelineDescriptor.h"
 
 /**
  * @addtogroup renderer
@@ -75,6 +76,7 @@ public:
     void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags);
     void init(float globalOrder, Texture2D* textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags);
     void init(float globalOrder, backend::Texture* textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags);
+    void init(float globalOrder, backend::Texture* textureID, const PipelineDescriptor& pipelineDescriptor, const Triangles& triangles, const Mat4& mv, uint32_t flags);
     /**Apply the texture, shaders, programs, blend functions to GPU pipeline.*/
     void useMaterial() const;
     /**Get the material id of command.*/
