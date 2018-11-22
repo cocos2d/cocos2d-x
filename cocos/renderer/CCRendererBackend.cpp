@@ -800,6 +800,8 @@ void RendererBackend::drawBatchedTriangles()
     for (int i = 0; i < batchesTotal; ++i)
     {
         auto pipelineDescriptor = _triBatchesToDraw[i].cmd->getPipelineDescriptor();
+        auto renderPipeline = createRenderPipeline(pipelineDescriptor);
+        _commandBuffer->setRenderPipeline(renderPipeline);
         
         _commandBuffer->setVertexBuffer(0, _vertexBuffer);
         _commandBuffer->setIndexBuffer(_indexBuffer);
@@ -883,6 +885,24 @@ bool RendererBackend::checkVisibility(const Mat4 &transform, const Size &size)
 void RendererBackend::setClearColor(const Color4F &clearColor)
 {
     _clearColor = clearColor;
+}
+
+backend::RenderPipeline* RendererBackend::createRenderPipeline(PipelineDescriptor* pipelineDescriptor)
+{
+    backend::RenderPipelineDescriptor renderPipelineDescriptor;
+    renderPipelineDescriptor.setVertexShaderModule(pipelineDescriptor->vertexShader);
+    renderPipelineDescriptor.setFragmentShaderModule(pipelineDescriptor->fragmentShader);
+    renderPipelineDescriptor.setVertexLayout(0, pipelineDescriptor->vertexLayout);
+    
+    auto device = backend::Device::getInstance();
+    auto blendState = device->createBlendState(pipelineDescriptor->blendDescriptor);
+    renderPipelineDescriptor.setBlendState(blendState);
+    
+    auto depthStencilState = device->createDepthStencilState(pipelineDescriptor->depthStencilDescriptor);
+    renderPipelineDescriptor.setDepthStencilState(depthStencilState);
+    
+    auto renderPipeline = device->newRenderPipeline(renderPipelineDescriptor);
+    return renderPipeline;
 }
 
 NS_CC_END

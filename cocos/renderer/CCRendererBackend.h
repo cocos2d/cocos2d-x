@@ -43,11 +43,13 @@ namespace backend
 {
     class Buffer;
     class CommandBuffer;
+    class RenderPipeline;
 }
 
 class EventListenerCustom;
 class TrianglesCommand;
 class MeshCommand;
+class PipelineDescriptor;
 
 /** Class that knows how to sort `RenderCommand` objects.
  Since the commands that have `z == 0` are "pushed back" in
@@ -216,6 +218,8 @@ protected:
     void visitRenderQueue(RenderQueueBackend& queue);
 
     void fillVerticesAndIndices(const TrianglesCommand* cmd);
+    
+    backend::RenderPipeline* createRenderPipeline(PipelineDescriptor*);
 
 
     /* clear color set outside be used in setGLDefaultValues() */
