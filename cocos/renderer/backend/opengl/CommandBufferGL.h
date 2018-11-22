@@ -27,7 +27,7 @@ public:
     virtual void setBindGroup(BindGroup* bindGroup) override;
     virtual void setIndexBuffer(Buffer* buffer) override;
     virtual void drawArrays(PrimitiveType primitiveType, uint32_t start,  uint32_t count) override;
-    virtual void drawElements(PrimitiveType primitiveType, IndexFormat indexType, uint32_t count) override;
+    virtual void drawElements(PrimitiveType primitiveType, IndexFormat indexType, uint32_t count, uint32_t offset) override;
     virtual void endRenderPass() override;
     
 private:

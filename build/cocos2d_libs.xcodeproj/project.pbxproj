@@ -518,6 +518,10 @@
 		460D4CCE21A54D650075726E /* ShaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460D4CCB21A54D650075726E /* ShaderCache.cpp */; };
 		460D4CCF21A54D650075726E /* ShaderCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4CCC21A54D650075726E /* ShaderCache.h */; };
 		460D4CD021A54D650075726E /* ShaderCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4CCC21A54D650075726E /* ShaderCache.h */; };
+		460D4CD321A5666E0075726E /* CCRendererBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4CD121A5666E0075726E /* CCRendererBackend.h */; };
+		460D4CD421A5666E0075726E /* CCRendererBackend.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4CD121A5666E0075726E /* CCRendererBackend.h */; };
+		460D4CD521A5666E0075726E /* CCRendererBackend.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460D4CD221A5666E0075726E /* CCRendererBackend.cpp */; };
+		460D4CD621A5666E0075726E /* CCRendererBackend.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460D4CD221A5666E0075726E /* CCRendererBackend.cpp */; };
 		461C204D21A5304A00F3BD47 /* CCPipelineDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461C204B21A5304A00F3BD47 /* CCPipelineDescriptor.cpp */; };
 		461C204E21A5304A00F3BD47 /* CCPipelineDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461C204B21A5304A00F3BD47 /* CCPipelineDescriptor.cpp */; };
 		461C204F21A5304A00F3BD47 /* CCPipelineDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 461C204C21A5304A00F3BD47 /* CCPipelineDescriptor.h */; };
@@ -2160,6 +2164,8 @@
 		460D4CCA21A545420075726E /* sprite.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sprite.frag; sourceTree = "<group>"; };
 		460D4CCB21A54D650075726E /* ShaderCache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderCache.cpp; sourceTree = "<group>"; };
 		460D4CCC21A54D650075726E /* ShaderCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderCache.h; sourceTree = "<group>"; };
+		460D4CD121A5666E0075726E /* CCRendererBackend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRendererBackend.h; sourceTree = "<group>"; };
+		460D4CD221A5666E0075726E /* CCRendererBackend.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCRendererBackend.cpp; sourceTree = "<group>"; };
 		461C204B21A5304A00F3BD47 /* CCPipelineDescriptor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCPipelineDescriptor.cpp; sourceTree = "<group>"; };
 		461C204C21A5304A00F3BD47 /* CCPipelineDescriptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPipelineDescriptor.h; sourceTree = "<group>"; };
 		46270FA21E1CC6A100AAA098 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../external/openssl/prebuilt/mac/libcrypto.a; sourceTree = "<group>"; };
@@ -3862,6 +3868,8 @@
 				50ABBD781925AB4100A911A9 /* CCRenderCommandPool.h */,
 				50ABBD791925AB4100A911A9 /* CCRenderer.cpp */,
 				50ABBD7A1925AB4100A911A9 /* CCRenderer.h */,
+				460D4CD221A5666E0075726E /* CCRendererBackend.cpp */,
+				460D4CD121A5666E0075726E /* CCRendererBackend.h */,
 				50ABBD7B1925AB4100A911A9 /* ccShaders.cpp */,
 				50ABBD7C1925AB4100A911A9 /* ccShaders.h */,
 				50ABBD7D1925AB4100A911A9 /* CCTexture2D.cpp */,
@@ -4365,6 +4373,7 @@
 				1A40D1631E8E56C7002E363A /* rapidjson.h in Headers */,
 				1A40D14E1E8E56C7002E363A /* memorybuffer.h in Headers */,
 				B6DD2FE71B04825B00E47F5F /* DetourPathQueue.h in Headers */,
+				460D4CD321A5666E0075726E /* CCRendererBackend.h in Headers */,
 				ED28C22F219E629B0078D854 /* Backend.h in Headers */,
 				B6DD2FBB1B04825B00E47F5F /* DetourAssert.h in Headers */,
 				50864CBB1C7BC1B000B3BAB1 /* cpPinJoint.h in Headers */,
@@ -5089,6 +5098,7 @@
 				15FB208E1AE7C57D00C31518 /* poly2tri.h in Headers */,
 				50ABBE9C1925AB6F00A911A9 /* CCRef.h in Headers */,
 				50ABBD961925AB4100A911A9 /* CCGLProgramState.h in Headers */,
+				460D4CD421A5666E0075726E /* CCRendererBackend.h in Headers */,
 				50ABBDB41925AB4100A911A9 /* ccShaders.h in Headers */,
 				50ABBE861925AB6F00A911A9 /* ccFPSImages.h in Headers */,
 				50ABBE2E1925AB6F00A911A9 /* ccCArray.h in Headers */,
@@ -5706,6 +5716,7 @@
 				ED28C233219E629B0078D854 /* RenderPass.cpp in Sources */,
 				468A14E61EF223B700ECA675 /* idl_gen_cpp.cpp in Sources */,
 				50ABBE691925AB6F00A911A9 /* CCEventListenerFocus.cpp in Sources */,
+				460D4CD521A5666E0075726E /* CCRendererBackend.cpp in Sources */,
 				ED28C27D219E629C0078D854 /* DeviceGL.cpp in Sources */,
 				B230ED7119B417AE00364AA8 /* CCTrianglesCommand.cpp in Sources */,
 				1A5702F2180BCE750088DEC7 /* CCTMXObjectGroup.cpp in Sources */,
@@ -6218,6 +6229,7 @@
 				ED28C234219E629B0078D854 /* RenderPass.cpp in Sources */,
 				1A5702F3180BCE750088DEC7 /* CCTMXObjectGroup.cpp in Sources */,
 				50ABBD3D1925AB0000A911A9 /* CCGeometry.cpp in Sources */,
+				460D4CD621A5666E0075726E /* CCRendererBackend.cpp in Sources */,
 				ED28C27E219E629C0078D854 /* DeviceGL.cpp in Sources */,
 				50ABBECC1925AB6F00A911A9 /* s3tc.cpp in Sources */,
 				1A5702F7180BCE750088DEC7 /* CCTMXTiledMap.cpp in Sources */,

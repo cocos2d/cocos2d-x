@@ -27,22 +27,22 @@ NS_CC_BEGIN
 
 void PipelineDescriptor::setVertexShader(backend::ShaderModule* shaderModule)
 {
-    if (_vertexShader == shaderModule)
+    if (vertexShader == shaderModule)
         return;
     
-    CC_SAFE_RELEASE(_vertexShader);
-    _vertexShader = shaderModule;
-    CC_SAFE_RETAIN(_vertexShader);
+    CC_SAFE_RELEASE(vertexShader);
+    vertexShader = shaderModule;
+    CC_SAFE_RETAIN(vertexShader);
 }
 
 void PipelineDescriptor::setFragmentShader(backend::ShaderModule* shaderModule)
 {
-    if (_fragmentShader == shaderModule)
+    if (fragmentShader == shaderModule)
         return;
     
-    CC_SAFE_RELEASE(_fragmentShader);
-    _fragmentShader = shaderModule;
-    CC_SAFE_RETAIN(_fragmentShader);
+    CC_SAFE_RELEASE(fragmentShader);
+    fragmentShader = shaderModule;
+    CC_SAFE_RETAIN(fragmentShader);
 }
 
 NS_CC_END

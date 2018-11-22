@@ -150,11 +150,11 @@ void CommandBufferGL::drawArrays(PrimitiveType primitiveType, uint32_t start,  u
     cleanResources();
 }
 
-void CommandBufferGL::drawElements(PrimitiveType primitiveType, IndexFormat indexType, uint32_t count)
+void CommandBufferGL::drawElements(PrimitiveType primitiveType, IndexFormat indexType, uint32_t count, uint32_t offset)
 {
     prepareDrawing();
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer->getHandler());
-    glDrawElements(toGLPrimitiveType(primitiveType), count, toGLIndexType(indexType), (GLvoid*)0);
+    glDrawElements(toGLPrimitiveType(primitiveType), count, toGLIndexType(indexType), (GLvoid*)(uintptr_t)offset);
     
     cleanResources();
 }
@@ -219,7 +219,7 @@ void CommandBufferGL::bindVertexBuffer(Program *program) const
                                   attribute.type,
                                   GL_FALSE,
                                   attribute.stride,
-                                  (GLvoid*)attribute.offset);
+                                  (GLvoid*)(uintptr_t)attribute.offset);
         }
         
         ++i;

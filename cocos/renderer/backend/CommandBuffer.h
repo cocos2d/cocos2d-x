@@ -25,7 +25,7 @@ public:
     virtual void setBindGroup(BindGroup* bindGroup) = 0;
     virtual void setIndexBuffer(Buffer* buffer) = 0;
     virtual void drawArrays(PrimitiveType primitiveType, uint32_t start,  uint32_t count) = 0;
-    virtual void drawElements(PrimitiveType primitiveType, IndexFormat indexType, uint32_t count) = 0;
+    virtual void drawElements(PrimitiveType primitiveType, IndexFormat indexType, uint32_t count, uint32_t offset) = 0;
     virtual void endRenderPass() = 0;
     
     void setStencilReferenceValue(uint32_t value);

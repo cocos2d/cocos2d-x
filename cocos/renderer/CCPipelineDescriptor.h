@@ -38,11 +38,11 @@ struct CC_DLL PipelineDescriptor final
     void setVertexShader(backend::ShaderModule* shaderModule);
     void setFragmentShader(backend::ShaderModule* shaderModule);
     
-    backend::DepthStencilDescriptor _depthStencilDescriptor;
-    backend::BlendDescriptor _blendDescriptor;
-    backend::BindGroup _bindGroup;
-    backend::ShaderModule* _vertexShader = nullptr;
-    backend::ShaderModule* _fragmentShader = nullptr;
+    backend::DepthStencilDescriptor depthStencilDescriptor;
+    backend::BlendDescriptor blendDescriptor;
+    backend::BindGroup bindGroup;
+    backend::ShaderModule* vertexShader = nullptr;
+    backend::ShaderModule* fragmentShader = nullptr;
 };
 
 NS_CC_END
