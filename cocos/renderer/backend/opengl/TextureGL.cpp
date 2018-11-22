@@ -3,6 +3,8 @@
 
 CC_BACKEND_BEGIN
 
+#define ISPOW2(n) (((n)&(n-1)) == 0)
+
 namespace
 {
     GLint toGLMagFilter(SamplerFilter magFilter)
