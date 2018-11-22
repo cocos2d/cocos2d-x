@@ -1044,7 +1044,7 @@ SIOClient::SIOClient(const std::string& path, SIOClientImpl* impl, SocketIO::SIO
 
 SIOClient::~SIOClient()
 {
-    if (isConnected() && _socket)
+    if (isConnected())
     {
         _socket->disconnectFromEndpoint(_path);
     }
