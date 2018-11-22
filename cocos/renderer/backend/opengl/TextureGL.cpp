@@ -22,10 +22,19 @@ namespace
         return ret;
     }
     
-    GLint toGLMinFilter(SamplerFilter minFilter, SamplerFilter mipmapFilter, bool mipmapEnabled)
+    GLint toGLMinFilter(SamplerFilter minFilter, SamplerFilter mipmapFilter, bool mipmapEnabled, bool bPow2)
     {
         if (mipmapEnabled)
         {
+            if(!bPow2)
+            {
+                cocos2d::log("Disable mipmap since non-power-of-two texture occur in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
+                if (SamplerFilter::LINEAR == minFilter)
+                    return GL_LINEAR;
+                else
+                    return GL_NEAREST;
+            }
+            
             switch (minFilter)
             {
                 case SamplerFilter::LINEAR:
@@ -55,9 +64,12 @@ namespace
         }
     }
     
-    GLint toGLAddressMode(SamplerAddressMode addressMode)
+    GLint toGLAddressMode(SamplerAddressMode addressMode, bool bPow2)
     {
-        GLint ret = GL_REPEAT;
+        GLint ret = GL_CLAMP_TO_EDGE;
+        if(!bPow2)
+            return ret;
+        
         switch (addressMode)
         {
             case SamplerAddressMode::REPEAT:
@@ -80,13 +92,13 @@ TextureGL::TextureGL(const TextureDescriptor& descriptor) : Texture(descriptor)
 {
     glGenTextures(1, &_texture);
     toGLTypes();
-    
+    bool bPow2 = ISPOW2(_width) && ISPOW2(_height);
     _magFilterGL = toGLMagFilter(descriptor.samplerDescriptor.magFilter);
     _minFilterGL = toGLMinFilter(descriptor.samplerDescriptor.minFilter,
-                                 descriptor.samplerDescriptor.mipmapFilter, _isMipmapEnabled);
+                                 descriptor.samplerDescriptor.mipmapFilter, _isMipmapEnabled, bPow2);
     
-    _sAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.sAddressMode);
-    _tAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.tAddressMode);
+    _sAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.sAddressMode, bPow2);
+    _tAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.tAddressMode, bPow2);
     
     // Update data here because `updateData()` may not be invoked later.
     // For example, a texture used as depth buffer will not invoke updateData().
