@@ -99,6 +99,8 @@ public:
     BlendFunc getBlendType() const { return _blendType; }
     /**Get the model view matrix.*/
     const Mat4& getModelView() const { return _mv; }
+     /**Get the PipelineDescriptor.*/
+    inline PipelineDescriptor* getPipelineDescriptor() const {return _pipelineDescriptor; }
     
 protected:
     /**Generate the material ID by textureID, glProgramState, and blend function.*/
