@@ -164,8 +164,8 @@ struct SamplerDescriptor
     SamplerFilter magFilter = SamplerFilter::LINEAR;
     SamplerFilter minFilter = SamplerFilter::LINEAR;
     SamplerFilter mipmapFilter = SamplerFilter::LINEAR;
-    SamplerAddressMode sAddressMode = SamplerAddressMode::REPEAT;
-    SamplerAddressMode tAddressMode = SamplerAddressMode::REPEAT;
+    SamplerAddressMode sAddressMode = SamplerAddressMode::CLAMP_TO_EDGE;
+    SamplerAddressMode tAddressMode = SamplerAddressMode::CLAMP_TO_EDGE;
 };
 
 enum class CullMode: uint32_t
