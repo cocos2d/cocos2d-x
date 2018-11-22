@@ -84,9 +84,10 @@ void TrianglesCommand::init(float globalOrder, backend::Texture* textureID, GLPr
     //    _alphaTextureID = texture->getAlphaTextureName();
 }
 
-void TrianglesCommand::init(float globalOrder, backend::Texture* textureID, const PipelineDescriptor& pipelineDescriptor, const Triangles& triangles, const Mat4& mv, uint32_t flags)
+void TrianglesCommand::init(float globalOrder, backend::Texture* textureID, PipelineDescriptor* pipelineDescriptor, const Triangles& triangles, const Mat4& mv, uint32_t flags)
 {
     //TODO
+    _pipelineDescriptor = pipelineDescriptor;
 }
 
 TrianglesCommand::~TrianglesCommand()
