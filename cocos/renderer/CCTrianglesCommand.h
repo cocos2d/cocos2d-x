@@ -28,6 +28,7 @@
 
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgramState.h"
+#include "renderer/CCPipelineDescriptor.h"
 
 /**
  * @addtogroup renderer
@@ -75,6 +76,7 @@ public:
     void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags);
     void init(float globalOrder, Texture2D* textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags);
     void init(float globalOrder, backend::Texture* textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags);
+    void init(float globalOrder, backend::Texture* textureID, PipelineDescriptor* pipelineDescriptor, const Triangles& triangles, const Mat4& mv, uint32_t flags);
     /**Apply the texture, shaders, programs, blend functions to GPU pipeline.*/
     void useMaterial() const;
     /**Get the material id of command.*/
@@ -97,6 +99,8 @@ public:
     BlendFunc getBlendType() const { return _blendType; }
     /**Get the model view matrix.*/
     const Mat4& getModelView() const { return _mv; }
+     /**Get the PipelineDescriptor.*/
+    inline PipelineDescriptor* getPipelineDescriptor() const {return _pipelineDescriptor; }
     
 protected:
     /**Generate the material ID by textureID, glProgramState, and blend function.*/
@@ -108,6 +112,7 @@ protected:
     GLuint _textureID;
     /**GLprogramstate for the command. encapsulate shaders and uniforms.*/
     GLProgramState* _glProgramState;
+    PipelineDescriptor* _pipelineDescriptor;
     /**Blend function when rendering the triangles.*/
     BlendFunc _blendType;
     /**Rendered triangles.*/
