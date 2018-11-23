@@ -34,6 +34,7 @@ public:
 
     virtual bool init() override;
 
+    virtual std::string title() const override { return "Bug422";}
     void reset();
     void check(Node* target);
     void menuCallback(cocos2d::Ref* sender);

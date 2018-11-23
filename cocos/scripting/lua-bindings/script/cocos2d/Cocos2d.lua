@@ -1,6 +1,11 @@
 
 cc = cc or {}
 
+
+function cc.random()
+    return cc_mathutils_random()
+end
+
 function cc.clampf(value, min_inclusive, max_inclusive)
     -- body
     local temp = 0
@@ -89,33 +94,7 @@ function cc.pGetDistance(startP,endP)
 end
 
 function cc.pIsLineIntersect(A, B, C, D, s, t)
-    if ((A.x == B.x) and (A.y == B.y)) or ((C.x == D.x) and (C.y == D.y))then
-        return false, s, t
-    end
-
-    local BAx = B.x - A.x
-    local BAy = B.y - A.y
-    local DCx = D.x - C.x
-    local DCy = D.y - C.y
-    local ACx = A.x - C.x
-    local ACy = A.y - C.y
-
-    local denom = DCy * BAx - DCx * BAy
-    s = DCx * ACy - DCy * ACx
-    t = BAx * ACy - BAy * ACx
-
-    if (denom == 0) then
-        if (s == 0 or t == 0) then
-            return true, s , t
-        end
-
-        return false, s, t
-    end
-
-    s = s / denom
-    t = t / denom
-
-    return true,s,t
+    return vec2_isLineIntersect(A, B, C, D)
 end
 
 function cc.pPerp(pt)
