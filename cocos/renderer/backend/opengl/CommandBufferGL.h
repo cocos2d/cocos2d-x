@@ -21,7 +21,7 @@ public:
     
     virtual void beginRenderPass(RenderPass* renderPass) override;
     virtual void setRenderPipeline(RenderPipeline* renderPipeline) override;
-    virtual void setViewport(uint32_t x, uint32_t y, uint32_t w, uint32_t h) override;
+    virtual void setViewport(int32_t x, int32_t y, int32_t w, int32_t h) override;
     virtual void setCullMode(CullMode mode) override;
     virtual void setVertexBuffer(uint32_t index, Buffer* buffer) override;
     virtual void setBindGroup(BindGroup* bindGroup) override;
@@ -33,10 +33,10 @@ public:
 private:
     struct Viewport
     {
-        uint32_t x = 0;
-        uint32_t y = 0;
-        uint32_t w = 0;
-        uint32_t h = 0;
+        GLint x = 0;
+        GLint y = 0;
+        GLint w = 0;
+        GLint h = 0;
     };
     
     void prepareDrawing() const;

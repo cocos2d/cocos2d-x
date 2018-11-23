@@ -19,7 +19,7 @@ class CommandBuffer : public cocos2d::Ref
 public:
     virtual void beginRenderPass(RenderPass* renderPass) = 0;
     virtual void setRenderPipeline(RenderPipeline* renderPipeline) = 0;
-    virtual void setViewport(uint32_t x, uint32_t y, uint32_t w, uint32_t h) = 0;
+    virtual void setViewport(int32_t x, int32_t y, int32_t w, int32_t h) = 0;
     virtual void setCullMode(CullMode mode) = 0;
     virtual void setVertexBuffer(uint32_t index, Buffer* buffer) = 0;
     virtual void setBindGroup(BindGroup* bindGroup) = 0;
