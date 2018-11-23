@@ -98,8 +98,8 @@ public:
     void set3D(bool value) { _is3D = value; }
     /**Get the depth by current model view matrix.*/
     float getDepth() const { return _depth; }
-    inline void setViewPort(int x, int y, int width, int height) { _viewPort = Rect(x, y, width, height); }
-    inline const Rect& getViewPort() const { return _viewPort;}
+    void setViewPort(int x, int y, int width, int height);
+    inline const int* getViewPort() const { return _viewPort;}
     
 protected:
     /**Constructor.*/
@@ -131,7 +131,7 @@ protected:
     float _depth;
     
     //set viewport
-    Rect _viewPort;
+    int _viewPort[4];
 };
 
 NS_CC_END
