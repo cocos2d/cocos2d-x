@@ -1304,7 +1304,7 @@ void Sprite::draw(RendererBackend *renderer, const Mat4 &transform, uint32_t fla
     if (_backendTexture) {
         
         backend::BindGroup bindGroup;
-        cocos2d::Mat4 projectionMat = transform;
+        cocos2d::Mat4 projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         bindGroup.setUniform("a_projection", projectionMat.m, sizeof(projectionMat.m));
         bindGroup.setTexture("u_texture", 0, _backendTexture);
         
