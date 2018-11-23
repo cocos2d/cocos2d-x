@@ -398,7 +398,7 @@ void Director::setOpenGLView(GLView *openGLView)
             setGLDefaultValues();
         }
 
-//        _backendRenderer->initGLView();
+       _backendRenderer->init();
 
         CHECK_GL_ERROR_DEBUG();
 

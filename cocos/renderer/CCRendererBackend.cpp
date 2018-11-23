@@ -214,11 +214,6 @@ RendererBackend::RendererBackend()
     // for the batched TriangleCommand
 //    _triBatchesToDrawCapacity = 500;
     _triBatchesToDraw = (TriBatchToDraw*) malloc(sizeof(_triBatchesToDraw[0]) * _triBatchesToDrawCapacity);
-    
-    auto device = backend::Device::getInstance();
-    _vertexBuffer = device->newBuffer(RendererBackend::VBO_SIZE, backend::BufferType::VERTEX, backend::BufferUsage::READ);
-    _indexBuffer = device->newBuffer(RendererBackend::INDEX_VBO_SIZE, backend::BufferType::INDEX, backend::BufferUsage::READ);
-    _commandBuffer = device->newCommandBuffer();
 }
 
 RendererBackend::~RendererBackend()
@@ -244,21 +239,13 @@ RendererBackend::~RendererBackend()
     CC_SAFE_RELEASE(_commandBuffer);
 }
 
-//void Renderer::initGLView()
-//{
-//#if CC_ENABLE_CACHE_TEXTURE_DATA
-//    _cacheTextureListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
-//        /** listen the event that renderer was recreated on Android/WP8 */
-//        this->setupBuffer();
-//    });
-//
-//    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_cacheTextureListener, -1);
-//#endif
-//
-//    setupBuffer();
-//
-//    _glViewAssigned = true;
-//}
+void RendererBackend::init()
+{
+    auto device = backend::Device::getInstance();
+    _vertexBuffer = device->newBuffer(RendererBackend::VBO_SIZE, backend::BufferType::VERTEX, backend::BufferUsage::READ);
+    _indexBuffer = device->newBuffer(RendererBackend::INDEX_VBO_SIZE, backend::BufferType::INDEX, backend::BufferUsage::READ);
+    _commandBuffer = device->newCommandBuffer();
+}
 
 //void Renderer::setupBuffer()
 //{

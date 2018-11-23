@@ -144,7 +144,7 @@ public:
     ~RendererBackend();
 
     //TODO: manage GLView inside Render itself
-//    void initGLView();
+    void init();
 
     /** Adds a `RenderComamnd` into the renderer */
     void addCommand(RenderCommand* command);
