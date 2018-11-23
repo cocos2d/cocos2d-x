@@ -71,7 +71,7 @@ void RenderCommand::setViewPort(int x, int y, int width, int height)
     _viewPort[0] = x;
     _viewPort[1] = y;
     _viewPort[2] = width;
-    _viewPort[4] = height;
+    _viewPort[3] = height;
 }
 
 NS_CC_END
