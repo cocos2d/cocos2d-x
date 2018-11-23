@@ -37,6 +37,7 @@ enum class VertexFormat : uint32_t
     INT_R32,
     USHORT_R16G16B16A16,
     USHORT_R16G16,
+    UBYTE_R8G8B8A8,
     UNORM_R8G8B8A8,
     UNORM_R8G8
 };

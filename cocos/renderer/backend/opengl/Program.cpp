@@ -22,6 +22,9 @@ namespace
             case VertexFormat::INT_R32:
                 ret = GL_INT;
                 break;
+            case VertexFormat::UBYTE_R8G8B8A8:
+                ret = GL_UNSIGNED_BYTE;
+                break;
             default:
                 break;
         }
@@ -35,6 +38,7 @@ namespace
         {
             case VertexFormat::FLOAT_R32G32B32A32:
             case VertexFormat::INT_R32G32B32A32:
+            case VertexFormat::UBYTE_R8G8B8A8:
                 ret = 4;
                 break;
             case VertexFormat::FLOAT_R32G32B32:
@@ -130,6 +134,7 @@ void Program::computeAttributeInfos(const RenderPipelineDescriptor& descriptor)
             attributeInfo.offset = attribute.offset;
             attributeInfo.type = toGLAttributeType(attribute.format);
             attributeInfo.size = getGLAttributeSize(attribute.format);
+            attributeInfo.normalized = attribute.normalized;
             
             vertexAttributeArray.push_back(attributeInfo);
         }

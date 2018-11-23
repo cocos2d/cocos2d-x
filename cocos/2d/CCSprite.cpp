@@ -515,13 +515,16 @@ void Sprite::setBackendTexture(backend::Texture *texture)
 #define VERTEX_POSITION_SIZE 3
 #define VERTEX_TEXCOORD_SIZE 2
 #define VERTEX_COLOR_SIZE 4
-    uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float);
-    uint32_t colorOffset = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float);
-    uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE+VERTEX_COLOR_SIZE)*sizeof(float);
+    uint32_t colorOffset = (VERTEX_POSITION_SIZE)*sizeof(float);
+    uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+    uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+    
+    //set vertexLayout according to V3F_C4B_T2F structure
     backend::VertexLayout vertexLayout;
     vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0);
-    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset);
-    vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::FLOAT_R32G32B32A32, colorOffset);
+    vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::UBYTE_R8G8B8A8, colorOffset, true);
+    vertexLayout.setAtrribute("a_texCoord", 2, backend::VertexFormat::FLOAT_R32G32, texcoordOffset);
+    
     vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
     _pipelineDescriptor.vertexLayout = vertexLayout;
     
@@ -1983,12 +1986,13 @@ void Sprite::updateBackendBlendFunc(void)
     backend::TextureGL* textureGL = static_cast<backend::TextureGL*>(_backendTexture);
     backend::BlendDescriptor blendDescriptor;
     blendDescriptor.blendEnabled = true;
-    blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::ONE;
-    blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE;
+    
     if (! _backendTexture || ! textureGL->hasPremultipliedAlpha())
     {
         blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::SRC_ALPHA;
         blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+        blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::SRC_ALPHA;
+        blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
 //        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
         setOpacityModifyRGB(false);
     }
@@ -1996,6 +2000,8 @@ void Sprite::updateBackendBlendFunc(void)
     {
         blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::ONE;
         blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+        blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::ONE;
+        blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
 //        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
         setOpacityModifyRGB(true);
     }

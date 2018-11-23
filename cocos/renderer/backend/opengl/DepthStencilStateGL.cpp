@@ -94,6 +94,9 @@ void DepthStencilStateGL::apply(uint32_t stencilReferenceValueFront, uint32_t st
     else
         glEnable(GL_DEPTH_TEST);
     
+    //TODO
+    glDisable(GL_DEPTH_TEST);
+    
     if (_depthStencilInfo.depthWriteEnabled)
         glDepthMask(GL_TRUE);
     else
