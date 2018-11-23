@@ -46,6 +46,8 @@ RenderCommand::~RenderCommand()
 
 void RenderCommand::init(float globalZOrder, const cocos2d::Mat4 &transform, uint32_t flags)
 {
+    experimental::Viewport defaultViewport = Camera::getDefaultViewport();
+    setViewPort(defaultViewport._left, defaultViewport._bottom, defaultViewport._width, defaultViewport._height);
     _globalOrder = globalZOrder;
     if (flags & Node::FLAGS_RENDER_AS_3D)
     {

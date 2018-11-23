@@ -44,6 +44,7 @@ THE SOFTWARE.
 #include "renderer/backend/Device.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCRendererBackend.h"
+#include "renderer/ccShaders.h"
 
 //for debug
 #include "renderer/backend/opengl/TextureGL.h"
@@ -506,10 +507,8 @@ void Sprite::setBackendTexture(backend::Texture *texture)
 //     setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
     
     auto device = backend::Device::getInstance();
-    std::string vsFilePath = FileUtils::getInstance()->fullPathForFilename("renderer/shaders/sprite.vert");
-    std::string fsFilePath = FileUtils::getInstance()->fullPathForFilename("renderer/shaders/sprite.frag");
-    auto vs = device->createShaderModule(backend::ShaderStage::VERTEX, vsFilePath);
-    auto fs = device->createShaderModule(backend::ShaderStage::FRAGMENT, fsFilePath);
+    auto vs = device->createShaderModule(backend::ShaderStage::VERTEX, sprite_vert);
+    auto fs = device->createShaderModule(backend::ShaderStage::FRAGMENT, sprite_frag);
     _pipelineDescriptor.setVertexShader(vs);
     _pipelineDescriptor.setFragmentShader(fs);
     

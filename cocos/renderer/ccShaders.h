@@ -100,6 +100,10 @@ extern CC_DLL const GLchar* ccETC1ASPositionTextureGray_frag;
 extern CC_DLL const GLchar* ccPosition_vert;
 extern CC_DLL const GLchar* ccShader_LayerRadialGradient_frag;
 
+//backend shader file
+extern CC_DLL const GLchar * sprite_vert;
+extern CC_DLL const GLchar * sprite_frag;
+
 NS_CC_END
 /**
  end of support group

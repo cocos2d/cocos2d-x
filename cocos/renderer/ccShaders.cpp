@@ -100,4 +100,8 @@ NS_CC_BEGIN
 #include "renderer/ccShader_Position.vert"
 #include "renderer/ccShader_LayerRadialGradient.frag"
 
+//backend shader file
+#include "renderer/shaders/sprite.vert"
+#include "renderer/shaders/sprite.frag"
+
 NS_CC_END
