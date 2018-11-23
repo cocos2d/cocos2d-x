@@ -512,14 +512,14 @@ void Sprite::setBackendTexture(backend::Texture *texture)
     _pipelineDescriptor.setVertexShader(vs);
     _pipelineDescriptor.setFragmentShader(fs);
     
-#define VERTEX_POSITION_SIZE 4
+#define VERTEX_POSITION_SIZE 3
 #define VERTEX_TEXCOORD_SIZE 2
 #define VERTEX_COLOR_SIZE 4
     uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float);
     uint32_t colorOffset = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float);
     uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE+VERTEX_COLOR_SIZE)*sizeof(float);
     backend::VertexLayout vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32A32, 0);
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0);
     vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset);
     vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::FLOAT_R32G32B32A32, colorOffset);
     vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
