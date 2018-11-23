@@ -29,7 +29,8 @@ const char* sprite_vert = R"(
 attribute vec4 a_position;
 attribute vec2 a_texCoord;
 attribute vec4 a_color;
-attribute mat4 a_projection;
+
+uniform mat4 a_projection;
 
 #ifdef GL_ES
 varying lowp vec4 v_fragmentColor;

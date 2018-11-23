@@ -489,4 +489,12 @@ void GLView::renderScene(Scene* scene, Renderer* renderer)
     scene->render(renderer, Mat4::IDENTITY, nullptr);
 }
 
+void GLView::renderScene(Scene* scene, RendererBackend* renderer)
+{
+    CCASSERT(scene, "Invalid Scene");
+    CCASSERT(renderer, "Invalid Renderer");
+    
+    scene->render(renderer, &Mat4::IDENTITY, nullptr);
+}
+
 NS_CC_END

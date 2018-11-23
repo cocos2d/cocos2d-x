@@ -63,6 +63,7 @@ class GLProgramState;
 class Material;
 class Camera;
 class PhysicsBody;
+class RendererBackend;
 
 /**
  * @addtogroup _2d
@@ -1147,6 +1148,7 @@ public:
      * @param flags Renderer flag.
      */
     virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags);
+    virtual void draw(RendererBackend *renderer, const Mat4& transform, uint32_t flags);
     virtual void draw() final;
 
     /**
@@ -1157,6 +1159,7 @@ public:
      * @param parentFlags Renderer flag.
      */
     virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags);
+    virtual void visit(RendererBackend *renderer, const Mat4& parentTransform, uint32_t parentFlags);
     virtual void visit() final;
 
 
