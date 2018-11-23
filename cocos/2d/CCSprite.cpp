@@ -41,6 +41,9 @@ THE SOFTWARE.
 #include "base/ccUTF8.h"
 #include "2d/CCCamera.h"
 #include "renderer/backend/Texture.h"
+#include "renderer/backend/Device.h"
+#include "platform/CCFileUtils.h"
+#include "renderer/CCRendererBackend.h"
 
 //for debug
 #include "renderer/backend/opengl/TextureGL.h"
@@ -500,11 +503,28 @@ void Sprite::setTexture(Texture2D *texture)
 
 void Sprite::setBackendTexture(backend::Texture *texture)
 {
-    if(_glProgramState == nullptr)
-    {
-        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
-    }
-    // If batchnode, then texture id should be the same
+//     setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+    
+    auto device = backend::Device::getInstance();
+    std::string vsFilePath = FileUtils::getInstance()->fullPathForFilename("renderer/shaders/sprite.vert");
+    std::string fsFilePath = FileUtils::getInstance()->fullPathForFilename("renderer/shaders/sprite.frag");
+    auto vs = device->createShaderModule(backend::ShaderStage::VERTEX, vsFilePath);
+    auto fs = device->createShaderModule(backend::ShaderStage::FRAGMENT, fsFilePath);
+    _pipelineDescriptor.setVertexShader(vs);
+    _pipelineDescriptor.setFragmentShader(fs);
+    
+#define VERTEX_POSITION_SIZE 4
+#define VERTEX_TEXCOORD_SIZE 2
+#define VERTEX_COLOR_SIZE 4
+    uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float);
+    uint32_t colorOffset = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float);
+    uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE+VERTEX_COLOR_SIZE)*sizeof(float);
+    backend::VertexLayout vertexLayout;
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32A32, 0);
+    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset);
+    vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::FLOAT_R32G32B32A32, colorOffset);
+    vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
+    _pipelineDescriptor.vertexLayout = vertexLayout;
     
     backend::TextureGL* textureGL = static_cast<backend::TextureGL*>(texture);
                           
@@ -1199,14 +1219,24 @@ void Sprite::updateTransform(void)
 void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if (_backendTexture) {
+        
+        backend::BindGroup bindGroup;
+        cocos2d::Mat4 projectionMat = transform;
+        bindGroup.setUniform("a_projection", projectionMat.m, sizeof(projectionMat.m));
+        bindGroup.setTexture("u_texture", 0, _backendTexture);
        
         _trianglesCommand.init(_globalZOrder,
-                               _backendTexture,
-                               getGLProgramState(),
-                               _blendFunc,
+                               &_pipelineDescriptor,
                                _polyInfo.triangles,
                                transform,
                                flags);
+//        _trianglesCommand.init(_globalZOrder,
+//                               _backendTexture,
+//                               getGLProgramState(),
+//                               _blendFunc,
+//                               _polyInfo.triangles,
+//                               transform,
+//                               flags);
         
         renderer->addCommand(&_trianglesCommand);
         return;
@@ -1262,6 +1292,90 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             to = verts[indices[i*3+2]].vertices;
             _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
 
+            from =verts[indices[i*3+2]].vertices;
+            to = verts[indices[i*3]].vertices;
+            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+        }
+#endif //CC_SPRITE_DEBUG_DRAW
+    }
+}
+
+void Sprite::draw(RendererBackend *renderer, const Mat4 &transform, uint32_t flags)
+{
+    if (_backendTexture) {
+        
+        backend::BindGroup bindGroup;
+        cocos2d::Mat4 projectionMat = transform;
+        bindGroup.setUniform("a_projection", projectionMat.m, sizeof(projectionMat.m));
+        bindGroup.setTexture("u_texture", 0, _backendTexture);
+        
+        _trianglesCommand.init(_globalZOrder,
+                               &_pipelineDescriptor,
+                               _polyInfo.triangles,
+                               transform,
+                               flags);
+        //        _trianglesCommand.init(_globalZOrder,
+        //                               _backendTexture,
+        //                               getGLProgramState(),
+        //                               _blendFunc,
+        //                               _polyInfo.triangles,
+        //                               transform,
+        //                               flags);
+        
+        renderer->addCommand(&_trianglesCommand);
+        return;
+    }
+    
+    if (_texture == nullptr)
+    {
+        return;
+    }
+    
+#if CC_USE_CULLING
+    // Don't calculate the culling if the transform was not updated
+    auto visitingCamera = Camera::getVisitingCamera();
+    auto defaultCamera = Camera::getDefaultCamera();
+    if (visitingCamera == nullptr) {
+        _insideBounds = true;
+    }
+    else if (visitingCamera == defaultCamera) {
+        _insideBounds = ((flags & FLAGS_TRANSFORM_DIRTY) || visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
+    }
+    else
+    {
+        // XXX: this always return true since
+        _insideBounds = renderer->checkVisibility(transform, _contentSize);
+    }
+    
+    if(_insideBounds)
+#endif
+    {
+        _trianglesCommand.init(_globalZOrder,
+                               _texture,
+                               getGLProgramState(),
+                               _blendFunc,
+                               _polyInfo.triangles,
+                               transform,
+                               flags);
+        
+        renderer->addCommand(&_trianglesCommand);
+        
+#if CC_SPRITE_DEBUG_DRAW
+        _debugDrawNode->clear();
+        auto count = _polyInfo.triangles.indexCount/3;
+        auto indices = _polyInfo.triangles.indices;
+        auto verts = _polyInfo.triangles.verts;
+        for(ssize_t i = 0; i < count; i++)
+        {
+            //draw 3 lines
+            Vec3 from =verts[indices[i*3]].vertices;
+            Vec3 to = verts[indices[i*3+1]].vertices;
+            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+            
+            from =verts[indices[i*3+1]].vertices;
+            to = verts[indices[i*3+2]].vertices;
+            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+            
             from =verts[indices[i*3+2]].vertices;
             to = verts[indices[i*3]].vertices;
             _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
@@ -1868,16 +1982,25 @@ void Sprite::updateBackendBlendFunc(void)
     
     // it is possible to have an untextured sprite
     backend::TextureGL* textureGL = static_cast<backend::TextureGL*>(_backendTexture);
+    backend::BlendDescriptor blendDescriptor;
+    blendDescriptor.blendEnabled = true;
+    blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::ONE;
+    blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE;
     if (! _backendTexture || ! textureGL->hasPremultipliedAlpha())
     {
-        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+        blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::SRC_ALPHA;
+        blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+//        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
         setOpacityModifyRGB(false);
     }
     else
     {
-        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+        blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::ONE;
+        blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+//        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
         setOpacityModifyRGB(true);
     }
+    _pipelineDescriptor.blendDescriptor = blendDescriptor;
 }
 
 std::string Sprite::getDescription() const

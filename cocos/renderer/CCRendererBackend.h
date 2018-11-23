@@ -115,11 +115,11 @@ protected:
 };
 
 //the struct is not used outside.
-struct RenderStackElement
-{
-    int renderQueueID;
-    ssize_t currentIndex;
-};
+//struct RenderStackElement
+//{
+//    int renderQueueID;
+//    ssize_t currentIndex;
+//};
 
 class GroupCommandManager;
 

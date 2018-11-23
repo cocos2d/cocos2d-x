@@ -47,6 +47,7 @@ class Rect;
 class Size;
 class Texture2D;
 struct transformValues_;
+struct PipelineDescriptor;
 namespace backend {
     class Texture;
 }
@@ -509,6 +510,7 @@ public:
     
     virtual void setVisible(bool bVisible) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(RendererBackend *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual void setOpacityModifyRGB(bool modify) override;
     virtual bool isOpacityModifyRGB() const override;
     /// @}
@@ -701,6 +703,8 @@ protected:
     int _fileType;
 
     bool _stretchEnabled;
+    
+    PipelineDescriptor _pipelineDescriptor;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);

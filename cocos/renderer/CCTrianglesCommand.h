@@ -76,7 +76,7 @@ public:
     void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags);
     void init(float globalOrder, Texture2D* textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags);
     void init(float globalOrder, backend::Texture* textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags);
-    void init(float globalOrder, backend::Texture* textureID, PipelineDescriptor* pipelineDescriptor, const Triangles& triangles, const Mat4& mv, uint32_t flags);
+    void init(float globalOrder, PipelineDescriptor* pipelineDescriptor, const Triangles& triangles, const Mat4& mv, uint32_t flags);
     /**Apply the texture, shaders, programs, blend functions to GPU pipeline.*/
     void useMaterial() const;
     /**Get the material id of command.*/
@@ -105,6 +105,7 @@ public:
 protected:
     /**Generate the material ID by textureID, glProgramState, and blend function.*/
     void generateMaterialID();
+    void generateBackendMaterialID();
     
     /**Generated material id.*/
     uint32_t _materialID;

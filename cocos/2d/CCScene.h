@@ -39,6 +39,7 @@ class BaseLight;
 class Renderer;
 class EventListenerCustom;
 class EventCustom;
+class RendererBackend;
 #if CC_USE_PHYSICS
 class PhysicsWorld;
 #endif
@@ -123,6 +124,8 @@ public:
      */
     virtual void render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* eyeProjections, unsigned int multiViewCount);
 
+    virtual void render(RendererBackend* renderer, const Mat4* eyeTransforms, const Mat4* eyeProjections, unsigned int multiViewCount = 1);
+    
     /** override function */
     virtual void removeAllChildren() override;
     

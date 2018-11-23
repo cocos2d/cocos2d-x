@@ -45,7 +45,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgramStateCache.h"
 #include "renderer/CCTextureCache.h"
-#include "renderer/CCRenderer.h"
+//#include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
 #include "renderer/CCFrameBuffer.h"
 #include "2d/CCCamera.h"
@@ -62,6 +62,7 @@ THE SOFTWARE.
 #include "base/CCAsyncTaskPool.h"
 #include "base/ObjectFactory.h"
 #include "platform/CCApplication.h"
+#include "renderer/CCRendererBackend.h"
 
 #if CC_ENABLE_SCRIPT_BINDING
 #include "base/CCScriptSupport.h"
@@ -157,7 +158,8 @@ bool Director::init(void)
     initTextureCache();
     initMatrixStack();
 
-    _renderer = new (std::nothrow) Renderer;
+//    _renderer = new (std::nothrow) Renderer;
+    _backendRenderer = new (std::nothrow) RendererBackend;
     RenderState::initialize();
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
@@ -189,8 +191,9 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_eventProjectionChanged);
     CC_SAFE_RELEASE(_eventResetDirector);
 
-    delete _renderer;
+//    delete _renderer;
     delete _console;
+    CC_SAFE_DELETE(_backendRenderer);
 
     CC_SAFE_RELEASE(_eventDispatcher);
     
@@ -265,7 +268,8 @@ void Director::drawScene()
         _eventDispatcher->dispatchEvent(_eventAfterUpdate);
     }
 
-    _renderer->clear();
+//    _renderer->clear();
+    _backendRenderer->clear();
     experimental::FrameBuffer::clearAllFBOs();
     
     _eventDispatcher->dispatchEvent(_eventBeforeDraw);
@@ -286,11 +290,13 @@ void Director::drawScene()
         _runningScene->stepPhysicsAndNavigation(_deltaTime);
 #endif
         //clear draw stats
-        _renderer->clearDrawStats();
+//        _renderer->clearDrawStats();
+        _backendRenderer->clearDrawStats();
         
         //render the scene
         if(_openGLView)
-            _openGLView->renderScene(_runningScene, _renderer);
+            _openGLView->renderScene(_runningScene, _backendRenderer);
+//            _openGLView->renderScene(_runningScene, _renderer);
         
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }
@@ -298,7 +304,7 @@ void Director::drawScene()
     // draw the notifications node
     if (_notificationNode)
     {
-        _notificationNode->visit(_renderer, Mat4::IDENTITY, 0);
+//        _notificationNode->visit(_renderer, Mat4::IDENTITY, 0);
     }
 
     updateFrameRate();
@@ -306,11 +312,11 @@ void Director::drawScene()
     if (_displayStats)
     {
 #if !CC_STRIP_FPS
-        showStats();
+//        showStats();
 #endif
     }
     
-    _renderer->render();
+    _backendRenderer->render();
 
     _eventDispatcher->dispatchEvent(_eventAfterDraw);
 
@@ -392,7 +398,7 @@ void Director::setOpenGLView(GLView *openGLView)
             setGLDefaultValues();
         }
 
-        _renderer->initGLView();
+//        _backendRenderer->initGLView();
 
         CHECK_GL_ERROR_DEBUG();
 
@@ -724,12 +730,14 @@ void Director::setAlphaBlending(bool on)
 
 void Director::setDepthTest(bool on)
 {
-    _renderer->setDepthTest(on);
+//    _renderer->setDepthTest(on);
+    _backendRenderer->setDepthTest(on);
 }
 
 void Director::setClearColor(const Color4F& clearColor)
 {
-    _renderer->setClearColor(clearColor);
+//    _renderer->setClearColor(clearColor);
+    _backendRenderer->setClearColor(clearColor);
 }
 
 static void GLToClipTransform(Mat4 *transformOut)
@@ -1250,8 +1258,10 @@ void Director::showStats()
             _frames = 0;
         }
 
-        auto currentCalls = (unsigned long)_renderer->getDrawnBatches();
-        auto currentVerts = (unsigned long)_renderer->getDrawnVertices();
+//        auto currentCalls = (unsigned long)_renderer->getDrawnBatches();
+//        auto currentVerts = (unsigned long)_renderer->getDrawnVertices();
+        auto currentCalls = (unsigned long)_backendRenderer->getDrawnBatches();
+        auto currentVerts = (unsigned long)_backendRenderer->getDrawnVertices();
         if( currentCalls != prevCalls ) {
             sprintf(buffer, "GL calls:%6lu", currentCalls);
             _drawnBatchesLabel->setString(buffer);
@@ -1265,9 +1275,9 @@ void Director::showStats()
         }
 
         const Mat4& identity = Mat4::IDENTITY;
-        _drawnVerticesLabel->visit(_renderer, identity, 0);
-        _drawnBatchesLabel->visit(_renderer, identity, 0);
-        _FPSLabel->visit(_renderer, identity, 0);
+//        _drawnVerticesLabel->visit(_renderer, identity, 0);
+//        _drawnBatchesLabel->visit(_renderer, identity, 0);
+//        _FPSLabel->visit(_renderer, identity, 0);
     }
 }
 

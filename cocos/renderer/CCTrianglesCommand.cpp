@@ -84,10 +84,32 @@ void TrianglesCommand::init(float globalOrder, backend::Texture* textureID, GLPr
     //    _alphaTextureID = texture->getAlphaTextureName();
 }
 
-void TrianglesCommand::init(float globalOrder, backend::Texture* textureID, PipelineDescriptor* pipelineDescriptor, const Triangles& triangles, const Mat4& mv, uint32_t flags)
+void TrianglesCommand::init(float globalOrder, PipelineDescriptor* pipelineDescriptor, const Triangles& triangles, const Mat4& mv, uint32_t flags)
 {
-    //TODO
+    CCASSERT(pipelineDescriptor, "Invalid pipelineDescriptor");
+    
+    RenderCommand::init(globalOrder, mv, flags);
+    
+    _triangles = triangles;
+    if(_triangles.indexCount % 3 != 0)
+    {
+        int count = _triangles.indexCount;
+        _triangles.indexCount = count / 3 * 3;
+        CCLOGERROR("Resize indexCount from %d to %d, size must be multiple times of 3", count, _triangles.indexCount);
+    }
+    _mv = mv;
+    
     _pipelineDescriptor = pipelineDescriptor;
+    generateBackendMaterialID();
+//    if( _textureID != textureID || _blendType.src != blendType.src || _blendType.dst != blendType.dst ||
+//       _glProgramState != glProgramState)
+//    {
+//        _textureID = textureID;
+//        _blendType = blendType;
+//        _glProgramState = glProgramState;
+//
+//        generateMaterialID();
+//    }
 }
 
 TrianglesCommand::~TrianglesCommand()
@@ -119,6 +141,32 @@ void TrianglesCommand::generateMaterialID()
     hashMe.blendSrc = _blendType.src;
     hashMe.blendDst = _blendType.dst;
     hashMe.glProgramState = _glProgramState;
+    _materialID = XXH32((const void*)&hashMe, sizeof(hashMe), 0);
+}
+
+void TrianglesCommand::generateBackendMaterialID()
+{
+    struct PipelineDescriptor
+    {
+        // These are helper functions to handle reference count.
+        void setVertexShader(backend::ShaderModule* shaderModule);
+        void setFragmentShader(backend::ShaderModule* shaderModule);
+        
+        backend::DepthStencilDescriptor depthStencilDescriptor;
+        backend::BlendDescriptor blendDescriptor;
+        backend::BindGroup* bindGroup;
+        backend::VertexLayout vertexLayout;
+        backend::ShaderModule* vertexShader = nullptr;
+        backend::ShaderModule* fragmentShader = nullptr;
+    }hashMe;
+    memset(&hashMe, 0, sizeof(hashMe));
+
+    hashMe.depthStencilDescriptor = _pipelineDescriptor->depthStencilDescriptor;
+    hashMe.blendDescriptor = _pipelineDescriptor->blendDescriptor;
+    hashMe.bindGroup = &_pipelineDescriptor->bindGroup;
+    hashMe.vertexLayout = _pipelineDescriptor->vertexLayout;
+    hashMe.vertexShader = _pipelineDescriptor->vertexShader;
+    hashMe.fragmentShader = _pipelineDescriptor->fragmentShader;
     _materialID = XXH32((const void*)&hashMe, sizeof(hashMe), 0);
 }
 
