@@ -27,26 +27,31 @@ matrix:
     - os: linux
       dist: xenial
       env: BUILD_TARGET=android_ndk-build
+      language: cpp
       sudo: required
     # android_lua ndk-build
     - os: linux
       dist: xenial
       env: BUILD_TARGET=android_lua_ndk-build
+      language: cpp
       sudo: required
     # android cmake
     - os: linux
       dist: xenial
       env: BUILD_TARGET=android_cmake
+      language: cpp
       sudo: required
     # android_lua cmake
     - os: linux
       dist: xenial
       env: BUILD_TARGET=android_lua_cmake
+      language: cpp
       sudo: required
     # android_js cmake
     - os: linux
       dist: xenial
       env: BUILD_TARGET=android_js_cmake
+      language: cpp
       sudo: required
     # mac
     - os: osx
