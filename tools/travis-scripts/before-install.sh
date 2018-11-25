@@ -136,6 +136,9 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
     install_environement_for_pull_request
 fi
 
+if [ $TRAVIS_OS_NAME == "linux" ]; then
+    export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
+fi
 # run after merging
 # - make cocos robot to send PR to cocos2d-x for new binding codes
 # - generate cocos_files.json for template
