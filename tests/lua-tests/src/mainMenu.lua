@@ -16,6 +16,7 @@ require "ClickAndMoveTest/ClickAndMoveTest"
 require "CocosDenshionTest/CocosDenshionTest"
 require "ComponentTest/main"
 require "CurrentLanguageTest/CurrentLanguageTest"
+require "DownloaderTest/DownloaderTest"
 require "DrawPrimitivesTest/DrawPrimitivesTest"
 require "EffectsTest/EffectsTest"
 require "EffectsAdvancedTest/EffectsAdvancedTest"
@@ -107,6 +108,7 @@ local _allTests = {
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
     { isSupported = true,  name = "ComponentTest"          , create_func   =         ComponentTestMain  },
     { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
+    { isSupported = true,  name = "DownloaderTest"          , create_func=   DownloaderTestMain      },
     { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
     { isSupported = true,  name = "DrawPrimitivesTest"     , create_func=        DrawPrimitivesTest      },
     { isSupported = true,  name = "EffectsTest"            , create_func   =               EffectsTest      },

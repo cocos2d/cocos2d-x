@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2015-2017 Chukong Technologies Inc.
+ Copyright (c) 2015-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -613,11 +614,10 @@ namespace cocos2d { namespace network {
 {
 //    NSLog(@"DownloaderAppleImpl downloadTask: \"%@\" received: %lld total: %lld", downloadTask.originalRequest.URL, totalBytesWritten, totalBytesExpectedToWrite);
 
-    if (nullptr == _outer)
+    if (nullptr == _outer || totalBytesExpectedToWrite == NSURLSessionTransferSizeUnknown)
     {
         return;
     }
-
     DownloadTaskWrapper *wrapper = [self.taskDict objectForKey:downloadTask];
 
     std::function<int64_t(void *, int64_t)> transferDataToBuffer;   // just a placeholder

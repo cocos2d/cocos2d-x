@@ -1,0 +1,201 @@
+import org.gradle.internal.os.OperatingSystem;
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
+
+    defaultConfig {
+        applicationId "org.cocos2dx.js_tests"
+        minSdkVersion PROP_MIN_SDK_VERSION
+        targetSdkVersion PROP_TARGET_SDK_VERSION
+        versionCode 1
+        versionName "1.0"
+
+        externalNativeBuild {
+            if (PROP_BUILD_TYPE == 'ndk-build') {
+                ndkBuild {
+                    targets 'js_tests'
+                    arguments 'NDK_TOOLCHAIN_VERSION=clang'
+                    arguments '-j' + Runtime.runtime.availableProcessors()
+
+                    def module_paths = [project.file("../../../../..").absolutePath,
+                                        project.file("../../../../../cocos").absolutePath,
+                                        project.file("../../../../../external").absolutePath]
+                    if (OperatingSystem.current().isWindows()) {
+                        module_paths = module_paths.collect {it.replaceAll('\\\\', '/')}
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(";")
+                    }
+                    else {
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(':')
+                    }
+                }
+            }
+            else if (PROP_BUILD_TYPE == 'cmake') {
+                cmake {
+                    targets "js_tests"
+                    arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE"
+                    cppFlags "-frtti -fexceptions -fsigned-char"
+                }
+            }
+        }
+
+        ndk {
+            abiFilters = []
+            abiFilters.addAll(PROP_APP_ABI.split(':').collect{it as String})
+        }
+    }
+
+    sourceSets.main {
+        java.srcDir "src"
+        res.srcDir "res"
+        manifest.srcFile "AndroidManifest.xml"
+    }
+
+    externalNativeBuild {
+        if (PROP_BUILD_TYPE == 'ndk-build') {
+            ndkBuild {
+                path "jni/Android.mk"
+            }
+        }
+        else if (PROP_BUILD_TYPE == 'cmake') {
+            cmake {
+                path "../../CMakeLists.txt"
+            }
+        }
+    }
+
+    signingConfigs {
+
+       release {
+            if (project.hasProperty("RELEASE_STORE_FILE")) {
+                storeFile file(RELEASE_STORE_FILE)
+                storePassword RELEASE_STORE_PASSWORD
+                keyAlias RELEASE_KEY_ALIAS
+                keyPassword RELEASE_KEY_PASSWORD
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (project.hasProperty("RELEASE_STORE_FILE")) {
+                signingConfig signingConfigs.release
+            }
+
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=0'
+                }
+            }
+        }
+
+        debug {
+            debuggable true
+            jniDebuggable true
+            renderscriptDebuggable true
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=1'
+                }
+            }
+        }
+    }
+}
+
+def getCocosCommandPath() {
+    if (OperatingSystem.current().isWindows()) {
+        return 'cocos.bat'
+    }
+    else {
+        // on unix like system, can not get environments variables easily
+        // so run a shell script to get environment variable sets by cocos2d-x setup.py
+        new ByteArrayOutputStream().withStream { os ->
+            def result = exec {
+                executable = project.file('get_environment.sh')
+                standardOutput = os
+            }
+            ext.console_path = os.toString().trim()
+        }
+        return new File(console_path + '/cocos').absolutePath;
+    }
+}
+
+// a method used to invoke the cocos jscompile command
+def compileJS(srcDir, dstDir) {
+    def compileArgs = ['jscompile', '-s', srcDir, '-d', dstDir]
+
+    println 'running command : ' + 'cocos ' + compileArgs.join(' ')
+    exec {
+        // if you meet problem, just replace `getCocosCommandPath()` to the path of cocos command
+        executable getCocosCommandPath()
+        args compileArgs
+    }
+
+    // remove the js files in dstDir
+    delete fileTree(dstDir) {
+        include '**/*.js'
+    }
+}
+
+android.applicationVariants.all { variant ->
+    // delete previous files first
+    delete "${buildDir}/intermediates/assets/${variant.dirName}"
+
+    variant.mergeAssets.doLast {
+        copy {
+           from "${buildDir}/../../../../res"
+           into "${buildDir}/intermediates/assets/${variant.dirName}/res"
+        }
+
+        copy {
+            from "${buildDir}/../../../../resjs"
+            into "${buildDir}/intermediates/assets/${variant.dirName}/res/resjs"
+        }
+
+        copy {
+            from "${buildDir}/../../../../src"
+            into "${buildDir}/intermediates/assets/${variant.dirName}/src"
+        }
+
+        copy {
+            from("${buildDir}/../../../../../cpp-tests/Resources") {
+                exclude "**/*.gz"
+            }
+            into "${buildDir}/intermediates/assets/${variant.dirName}/res"
+        }
+
+        copy {
+            from "${buildDir}/../../../../../../cocos/scripting/js-bindings/script"
+            into  "${buildDir}/intermediates/assets/${variant.dirName}/script"
+        }
+
+        copy {
+            from "${buildDir}/../../../../main.js"
+            from "${buildDir}/../../../../project.json"
+            into "${buildDir}/intermediates/assets/${variant.dirName}"
+        }
+
+        // compile the scripts if necessary
+        def compileScript = (variant.name.compareTo('release') == 0)
+        if (project.hasProperty('PROP_COMPILE_SCRIPT')) {
+            compileScript = (PROP_COMPILE_SCRIPT.compareTo('1') == 0)
+        }
+
+        if (compileScript) {
+            compileJS("${buildDir}/intermediates/assets/${variant.dirName}",
+                      "${buildDir}/intermediates/assets/${variant.dirName}")
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':libcocos2dx')
+}

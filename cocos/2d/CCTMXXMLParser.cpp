@@ -3,7 +3,8 @@ Copyright (c) 2011      Максим Аксенов
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -165,10 +166,10 @@ TMXMapInfo::TMXMapInfo()
 , _staggerAxis(TMXStaggerAxis_Y)
 , _staggerIndex(TMXStaggerIndex_Even)
 , _hexSideLength(0)
-, _parentElement(0)
-, _parentGID(0)
 , _mapSize(Size::ZERO)
 , _tileSize(Size::ZERO)
+, _parentElement(0)
+, _parentGID(0)
 , _layerAttribs(0)
 , _storingCharacters(false)
 , _xmlTileIndex(0)
@@ -210,8 +211,9 @@ bool TMXMapInfo::parseXMLFile(const std::string& xmlFilename)
     }
     
     parser.setDelegator(this);
-
-    return parser.parse(FileUtils::getInstance()->fullPathForFilename(xmlFilename));
+    auto fullPath = FileUtils::getInstance()->fullPathForFilename(xmlFilename);
+    CCASSERT(FileUtils::getInstance()->isFileExist(fullPath), "TMXMapInfo::parseXMLFile xml file not exists");
+    return parser.parse(fullPath);
 }
 
 // the XML parser calls here with all the elements
@@ -313,7 +315,7 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
                 _currentFirstGID = 0;
             }
             _recordFirstGID = false;
-            
+            _externalTilesetFullPath = externalTilesetFilename;
             tmxMapInfo->parseXMLFile(externalTilesetFilename);
         }
         else
@@ -430,7 +432,12 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
         std::string imagename = attributeDict["source"].asString();
         tileset->_originSourceImage = imagename;
 
-        if (_TMXFileName.find_last_of("/") != string::npos)
+        if (!_externalTilesetFullPath.empty())
+        {
+            string dir = _externalTilesetFullPath.substr(0, _externalTilesetFullPath.find_last_of("/") + 1);
+            tileset->_sourceImage = dir + imagename;
+        }
+        else if (_TMXFileName.find_last_of("/") != string::npos)
         {
             string dir = _TMXFileName.substr(0, _TMXFileName.find_last_of("/") + 1);
             tileset->_sourceImage = dir + imagename;

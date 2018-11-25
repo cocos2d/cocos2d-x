@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -37,7 +38,7 @@
 #include "platform/CCFileUtils.h"
 #include "ui/UIHelper.h"
 
-static const std::string className = "org/cocos2dx/lib/Cocos2dxWebViewHelper";
+static const std::string className = "org.cocos2dx.lib.Cocos2dxWebViewHelper";
 
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,"",__VA_ARGS__)
 

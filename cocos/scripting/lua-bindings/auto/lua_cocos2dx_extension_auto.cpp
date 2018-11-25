@@ -12744,7 +12744,7 @@ int lua_cocos2dx_extension_AssetsManagerEx_setVerifyCallback(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        std::function<bool (const std::basic_string<char> &, cocos2d::extension::ManifestAsset)> arg0;
+        std::function<bool (const std::string&, cocos2d::extension::ManifestAsset)> arg0;
 
         do {
 			// Lambda binding for lua is not supported.
@@ -12892,7 +12892,7 @@ int lua_cocos2dx_extension_AssetsManagerEx_setVersionCompareHandle(lua_State* to
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        std::function<int (const std::basic_string<char> &, const std::basic_string<char> &)> arg0;
+        std::function<int (const std::string&, const std::string&)> arg0;
 
         do {
 			// Lambda binding for lua is not supported.

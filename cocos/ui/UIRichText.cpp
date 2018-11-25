@@ -1,5 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -1399,6 +1400,7 @@ void RichText::formatText()
                         if (elmtText->_flags & RichElementText::GLOW_FLAG) {
                             label->enableGlow(Color4B(elmtText->_glowColor));
                         }
+                        label->setTextColor(Color4B(elmtText->_color));
                         elementRenderer = label;
                         break;
                     }
@@ -1422,6 +1424,7 @@ void RichText::formatText()
                             elementRenderer->addComponent(ListenerComponent::create(elementRenderer,
                                                                                     elmtImage->_url,
                                                                                     std::bind(&RichText::openUrl, this, std::placeholders::_1)));
+                            elementRenderer->setColor(element->_color);
                         }
                         break;
                     }
@@ -1429,6 +1432,7 @@ void RichText::formatText()
                     {
                         RichElementCustomNode* elmtCustom = static_cast<RichElementCustomNode*>(element);
                         elementRenderer = elmtCustom->_customNode;
+                        elementRenderer->setColor(element->_color);
                         break;
                     }
                     case RichElement::Type::NEWLINE:
@@ -1442,7 +1446,6 @@ void RichText::formatText()
 
                 if (elementRenderer)
                 {
-                    elementRenderer->setColor(element->_color);
                     elementRenderer->setOpacity(element->_opacity);
                     pushToContainer(elementRenderer);
                 }
@@ -1469,7 +1472,7 @@ void RichText::formatText()
                     case RichElement::Type::IMAGE:
                     {
                         RichElementImage* elmtImage = static_cast<RichElementImage*>(element);
-                        handleImageRenderer(elmtImage->_filePath, elmtImage->_color, elmtImage->_opacity, elmtImage->_width, elmtImage->_height, elmtImage->_url);
+                        handleImageRenderer(elmtImage->_filePath, elmtImage->_textureType, elmtImage->_color, elmtImage->_opacity, elmtImage->_width, elmtImage->_height, elmtImage->_url);
                         break;
                     }
                     case RichElement::Type::CUSTOM:
@@ -1528,26 +1531,17 @@ namespace {
         return std::any_of(str.begin(), str.end(), isUTF8CharWrappable);
     }
 
-    int findSplitPositionForWord(Label* label, const StringUtils::StringUTF8& text, float leftSpaceWidth, float newLineWidth)
+    int findSplitPositionForWord(Label* label, const StringUtils::StringUTF8& text, int estimatedIdx, float originalLeftSpaceWidth, float newLineWidth)
     {
-        float textRendererWidth = label->getContentSize().width;
-        float originalLeftSpaceWidth = leftSpaceWidth + textRendererWidth;
-
         bool startingNewLine = (newLineWidth == originalLeftSpaceWidth);
         if (!isWrappable(text))
             return (startingNewLine ? static_cast<int>(text.length()) : 0);
 
-        float overstepPercent = (-leftSpaceWidth) / textRendererWidth;
-        size_t stringLength = text.length();
-
-        // rough estimate
-        int leftLength = stringLength * (1.0f - overstepPercent);
-
         // The adjustment of the new line position
-        int idx = getNextWordPos(text, leftLength);
+        int idx = getNextWordPos(text, estimatedIdx);
         std::string leftStr = text.getAsCharSequence(0, idx);
         label->setString(leftStr);
-        textRendererWidth = label->getContentSize().width;
+        float textRendererWidth = label->getContentSize().width;
         if (originalLeftSpaceWidth < textRendererWidth)  // Have protruding
         {
             while (1)
@@ -1593,23 +1587,17 @@ namespace {
         return idx;
     }
 
-    int findSplitPositionForChar(Label* label, const StringUtils::StringUTF8& text, float leftSpaceWidth, float newLineWidth)
+    int findSplitPositionForChar(Label* label, const StringUtils::StringUTF8& text, int estimatedIdx, float originalLeftSpaceWidth, float newLineWidth)
     {
-        float textRendererWidth = label->getContentSize().width;
-        float originalLeftSpaceWidth = leftSpaceWidth + textRendererWidth;
-
         bool startingNewLine = (newLineWidth == originalLeftSpaceWidth);
 
-        float overstepPercent = (-leftSpaceWidth) / textRendererWidth;
         int stringLength = static_cast<int>(text.length());
-
-        // rough estimate
-        int leftLength = stringLength * (1.0f - overstepPercent);
+        int leftLength = estimatedIdx;
 
         // The adjustment of the new line position
         std::string leftStr = text.getAsCharSequence(0, leftLength);
         label->setString(leftStr);
-        textRendererWidth = label->getContentSize().width;
+        float textRendererWidth = label->getContentSize().width;
         if (originalLeftSpaceWidth < textRendererWidth)  // Have protruding
         {
             while (leftLength-- > 0)
@@ -1654,7 +1642,7 @@ namespace {
 void RichText::handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize, const Color3B &color,
                                   GLubyte opacity, uint32_t flags, const std::string& url,
                                   const Color3B& outlineColor, int outlineSize ,
-                                  const Color3B& shadowColor, const cocos2d::Size& shadowOffset, int shadowBlurRadius,
+                                  const Color3B& shadowColor, const Size& shadowOffset, int shadowBlurRadius,
                                   const Color3B& glowColor)
 {
     bool fileExist = FileUtils::getInstance()->isFileExist(fontName);
@@ -1706,24 +1694,35 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
             if (flags & RichElementText::GLOW_FLAG)
                 textRenderer->enableGlow(Color4B(glowColor));
 
-            textRenderer->setColor(color);
+            textRenderer->setTextColor(Color4B(color));
             textRenderer->setOpacity(opacity);
 
+            // textRendererWidth will get 0.0f, when we've got glError: 0x0501 in Label::getContentSize
+            // It happens when currentText is very very long so that can't generate a texture
             float textRendererWidth = textRenderer->getContentSize().width;
-            _leftSpaceWidth -= textRendererWidth;
 
             // no splitting
-            if (_leftSpaceWidth >= 0.0f)
+            if (textRendererWidth > 0.0f && _leftSpaceWidth >= textRendererWidth)
             {
+                _leftSpaceWidth -= textRendererWidth;
                 pushToContainer(textRenderer);
                 break;
             }
 
+            // rough estimate
+            // when textRendererWidth == 0.0f, use fontSize as the rough estimate of width for each char,
+            //  (_leftSpaceWidth / fontSize) means how many chars can be aligned in leftSpaceWidth.
+            int estimatedIdx = 0;
+            if (textRendererWidth > 0.0f)
+                estimatedIdx = static_cast<int>(_leftSpaceWidth / textRendererWidth * utf8Text.length());
+            else
+                estimatedIdx = static_cast<int>(_leftSpaceWidth / fontSize);
+
             int leftLength = 0;
             if (wrapMode == WRAP_PER_WORD)
-                leftLength = findSplitPositionForWord(textRenderer, utf8Text, _leftSpaceWidth, _customSize.width);
+                leftLength = findSplitPositionForWord(textRenderer, utf8Text, estimatedIdx, _leftSpaceWidth, _customSize.width);
             else
-                leftLength = findSplitPositionForChar(textRenderer, utf8Text, _leftSpaceWidth, _customSize.width);
+                leftLength = findSplitPositionForChar(textRenderer, utf8Text, estimatedIdx, _leftSpaceWidth, _customSize.width);
 
             // split string
             if (leftLength > 0)
@@ -1732,22 +1731,23 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
                 pushToContainer(textRenderer);
             }
 
-            // skip spaces
             StringUtils::StringUTF8::CharUTF8Store& str = utf8Text.getString();
-            int rightStart = leftLength;
-            while (rightStart < (int)str.size() && str[rightStart].isASCII() && std::isspace(str[rightStart]._char[0], std::locale()))
-                ++rightStart;
 
             // erase the chars which are processed
-            str.erase(str.begin(), str.begin() + rightStart);
+            str.erase(str.begin(), str.begin() + leftLength);
             currentText = utf8Text.getAsCharSequence();
         }
     }
 }
 
-void RichText::handleImageRenderer(const std::string& filePath, const Color3B &/*color*/, GLubyte /*opacity*/, int width, int height, const std::string& url)
+void RichText::handleImageRenderer(const std::string& filePath, Widget::TextureResType textureType, const Color3B &/*color*/, GLubyte /*opacity*/, int width, int height, const std::string& url)
 {
-    Sprite* imageRenderer = Sprite::create(filePath);
+    Sprite* imageRenderer;
+    if (textureType == Widget::TextureResType::LOCAL)
+        imageRenderer = Sprite::create(filePath);
+    else
+        imageRenderer = Sprite::createWithSpriteFrameName(filePath);
+
     if (imageRenderer)
     {
         auto currentSize = imageRenderer->getContentSize();
@@ -1962,7 +1962,7 @@ void RichText::ignoreContentAdaptWithSize(bool ignore)
         Widget::ignoreContentAdaptWithSize(ignore);
     }
 }
-    
+
 std::string RichText::getDescription() const
 {
     return "RichText";

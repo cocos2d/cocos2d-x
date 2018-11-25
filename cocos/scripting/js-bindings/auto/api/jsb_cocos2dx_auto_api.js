@@ -2379,6 +2379,16 @@ getViewPortRect : function (
 },
 
 /**
+ * @method getScaleY
+ * @return {float}
+ */
+getScaleY : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setContentScaleFactor
  * @param {float} arg0
  * @return {bool}
@@ -2388,6 +2398,16 @@ float
 )
 {
     return false;
+},
+
+/**
+ * @method getVR
+ * @return {cc.VRIRenderer}
+ */
+getVR : function (
+)
+{
+    return cc.VRIRenderer;
 },
 
 /**
@@ -2411,13 +2431,29 @@ bool
 },
 
 /**
- * @method getVR
- * @return {cc.VRIRenderer}
+ * @method getSafeAreaRect
+ * @return {rect_object}
  */
-getVR : function (
+getSafeAreaRect : function (
 )
 {
-    return cc.VRIRenderer;
+    return cc.Rect;
+},
+
+/**
+ * @method setViewPortInPoints
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ */
+setViewPortInPoints : function (
+float, 
+float, 
+float, 
+float 
+)
+{
 },
 
 /**
@@ -2467,13 +2503,11 @@ bool
 },
 
 /**
- * @method getScaleY
- * @return {float}
+ * @method setDefaultIcon
  */
-getScaleY : function (
+setDefaultIcon : function (
 )
 {
-    return 0;
 },
 
 /**
@@ -2494,16 +2528,6 @@ getVisibleOrigin : function (
 )
 {
     return cc.Vec2;
-},
-
-/**
- * @method getFrameSize
- * @return {size_object}
- */
-getFrameSize : function (
-)
-{
-    return cc.Size;
 },
 
 /**
@@ -2534,6 +2558,24 @@ getDesignResolutionSize : function (
 )
 {
     return cc.Size;
+},
+
+/**
+ * @method setIcon
+* @param {Array|String} array
+*/
+setIcon : function(
+str 
+)
+{
+},
+
+/**
+ * @method setDefaultCursor
+ */
+setDefaultCursor : function (
+)
+{
 },
 
 /**
@@ -2603,19 +2645,13 @@ vrirenderer
 },
 
 /**
- * @method setViewPortInPoints
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
+ * @method getFrameSize
+ * @return {size_object}
  */
-setViewPortInPoints : function (
-float, 
-float, 
-float, 
-float 
+getFrameSize : function (
 )
 {
+    return cc.Size;
 },
 
 /**
@@ -2626,6 +2662,18 @@ getScissorRect : function (
 )
 {
     return cc.Rect;
+},
+
+/**
+ * @method setCursor
+ * @param {String} arg0
+ * @param {vec2_object} arg1
+ */
+setCursor : function (
+str, 
+vec2 
+)
+{
 },
 
 /**
@@ -2723,20 +2771,20 @@ pause : function (
 
 /**
  * @method pushProjectionMatrix
- * @param {unsigned long} arg0
+ * @param {unsigned int} arg0
  */
 pushProjectionMatrix : function (
-long 
+int 
 )
 {
 },
 
 /**
  * @method popProjectionMatrix
- * @param {unsigned long} arg0
+ * @param {unsigned int} arg0
  */
 popProjectionMatrix : function (
-long 
+int 
 )
 {
 },
@@ -2753,10 +2801,10 @@ eventdispatcher
 
 /**
  * @method loadProjectionIdentityMatrix
- * @param {unsigned long} arg0
+ * @param {unsigned int} arg0
  */
 loadProjectionIdentityMatrix : function (
-long 
+int 
 )
 {
 },
@@ -2769,6 +2817,16 @@ setContentScaleFactor : function (
 float 
 )
 {
+},
+
+/**
+ * @method getDeltaTime
+ * @return {float}
+ */
+getDeltaTime : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -2792,13 +2850,13 @@ getWinSizeInPixels : function (
 },
 
 /**
- * @method getDeltaTime
- * @return {float}
+ * @method getSafeAreaRect
+ * @return {rect_object}
  */
-getDeltaTime : function (
+getSafeAreaRect : function (
 )
 {
-    return 0;
+    return cc.Rect;
 },
 
 /**
@@ -3008,11 +3066,11 @@ scheduler
 /**
  * @method multiplyProjectionMatrix
  * @param {mat4_object} arg0
- * @param {unsigned long} arg1
+ * @param {unsigned int} arg1
  */
 multiplyProjectionMatrix : function (
 mat4, 
-long 
+int 
 )
 {
 },
@@ -3290,21 +3348,21 @@ getVisibleSize : function (
 /**
  * @method loadProjectionMatrix
  * @param {mat4_object} arg0
- * @param {unsigned long} arg1
+ * @param {unsigned int} arg1
  */
 loadProjectionMatrix : function (
 mat4, 
-long 
+int 
 )
 {
 },
 
 /**
  * @method initProjectionMatrixStack
- * @param {unsigned long} arg0
+ * @param {unsigned int} arg0
  */
 initProjectionMatrixStack : function (
-long 
+int 
 )
 {
 },
@@ -7718,11 +7776,11 @@ event
 
 /**
  * @method hasEventListener
- * @param {std::basic_string<char>} arg0
+ * @param {String} arg0
  * @return {bool}
  */
 hasEventListener : function (
-basic_string<char> 
+str 
 )
 {
     return false;
@@ -10935,7 +10993,7 @@ node
  * @method getNumberOfRunningActionsInTargetByTag
  * @param {cc.Node} arg0
  * @param {int} arg1
- * @return {unsigned long}
+ * @return {unsigned int}
  */
 getNumberOfRunningActionsInTargetByTag : function (
 node, 
@@ -12110,6 +12168,16 @@ color4f
 },
 
 /**
+ * @method setIsolated
+ * @param {bool} arg0
+ */
+setIsolated : function (
+bool 
+)
+{
+},
+
+/**
  * @method drawRect
 * @param {vec2_object|vec2_object} vec2
 * @param {vec2_object|vec2_object} vec2
@@ -12412,6 +12480,16 @@ color4f
 },
 
 /**
+ * @method isIsolated
+ * @return {bool}
+ */
+isIsolated : function (
+)
+{
+    return false;
+},
+
+/**
  * @method drawCubicBezier
  * @param {vec2_object} arg0
  * @param {vec2_object} arg1
@@ -12525,6 +12603,16 @@ disableEffect : function(
 labeleffect 
 )
 {
+},
+
+/**
+ * @method getLabelType
+ * @return {cc.Label::LabelType}
+ */
+getLabelType : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -12899,6 +12987,16 @@ setLineSpacing : function (
 float 
 )
 {
+},
+
+/**
+ * @method getRenderingFontSize
+ * @return {float}
+ */
+getRenderingFontSize : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -15044,6 +15142,14 @@ isEnabled : function (
 },
 
 /**
+ * @method alignItemsHorizontally
+ */
+alignItemsHorizontally : function (
+)
+{
+},
+
+/**
  * @method alignItemsHorizontallyWithPadding
  * @param {float} arg0
  */
@@ -15059,14 +15165,6 @@ float
  */
 alignItemsVerticallyWithPadding : function (
 float 
-)
-{
-},
-
-/**
- * @method alignItemsHorizontally
- */
-alignItemsHorizontally : function (
 )
 {
 },
@@ -22842,7 +22940,7 @@ cc.TextFieldTTF = {
 
 /**
  * @method getCharCount
- * @return {unsigned long}
+ * @return {unsigned int}
  */
 getCharCount : function (
 )
@@ -23004,10 +23102,10 @@ getPlaceHolder : function (
 
 /**
  * @method setCursorPosition
- * @param {unsigned long} arg0
+ * @param {unsigned int} arg0
  */
 setCursorPosition : function (
-long 
+int 
 )
 {
 },

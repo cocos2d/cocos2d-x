@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -30,7 +31,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "base/ccUTF8.h"
 
-static const std::string className = "org/cocos2dx/lib/Cocos2dxBitmap";
+static const std::string className = "org.cocos2dx.lib.Cocos2dxBitmap";
 
 using namespace cocos2d;
 

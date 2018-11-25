@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -261,20 +262,7 @@ void LuaMinXmlHttpRequest::_setHttpRequestHeader()
     
     for (auto it = _requestHeader.begin(); it != _requestHeader.end(); ++it)
     {
-        const char* first = it->first.c_str();
-        const char* second = it->second.c_str();
-        size_t len = sizeof(char) * (strlen(first) + 3 + strlen(second));
-        char* test = (char*) malloc(len);
-        memset(test, 0,len);
-        
-        strcpy(test, first);
-        strcpy(test + strlen(first) , ": ");
-        strcpy(test + strlen(first) + 2, second);
-        
-        header.push_back(test);
-        
-        free(test);
-        
+        header.push_back(it->first + ": " + it->second);
     }
     
     if (!header.empty())

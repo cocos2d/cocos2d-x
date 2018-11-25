@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2016-2017 Chukong Technologies Inc.
+ Copyright (c) 2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -25,7 +26,7 @@
 #pragma once
 
 #define QUEUEBUFFER_NUM (3)
-#define QUEUEBUFFER_TIME_STEP (0.1f)
+#define QUEUEBUFFER_TIME_STEP (0.05f)
 
 #define QUOTEME_(x) #x
 #define QUOTEME(x) QUOTEME_(x)

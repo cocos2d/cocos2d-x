@@ -1,3 +1,27 @@
+/****************************************************************************
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ 
+ http://www.cocos2d-x.org
+ 
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ****************************************************************************/
+
 #include "UIScrollViewTest.h"
 
 USING_NS_CC;
@@ -15,6 +39,7 @@ UIScrollViewTests::UIScrollViewTests()
     ADD_TEST_CASE(UIScrollViewDisableTest);
     ADD_TEST_CASE(UIScrollViewInnerSize);
     ADD_TEST_CASE(UIScrollViewTestEvents);
+    ADD_TEST_CASE(UIScrollViewStopScrollingTest);
 }
 // UIScrollViewTest_Vertical
 
@@ -684,8 +709,10 @@ bool UIScrollViewInnerSize::init()
     return false;
 }
 
+// UIScrollViewTestEvents
+
 UIScrollViewTestEvents::UIScrollViewTestEvents()
-: _displayValueLabel(nullptr)
+    : _displayValueLabel(nullptr)
 {
     
 }
@@ -762,3 +789,131 @@ bool UIScrollViewTestEvents::init()
     return false;
 }
 
+// UIScrollViewStopScrollingTest
+
+UIScrollViewStopScrollingTest::UIScrollViewStopScrollingTest()
+    : _displayValueLabel(nullptr)
+    , _scrollView(nullptr)
+    , _remainingTime(0.0f)
+{
+
+}
+
+bool UIScrollViewStopScrollingTest::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        // Add a label in which the time remaining till scrolling stop will be displayed.
+        _displayValueLabel = Text::create("Scrolling stop isn't scheduled", "fonts/Marker Felt.ttf", 32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
+        _uiLayer->addChild(_displayValueLabel);
+
+        // Add the alert
+        Text* alert = Text::create("Click the button and start to scroll", "fonts/Marker Felt.ttf", 30);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 3.075f));
+        _uiLayer->addChild(alert);
+
+        Layout* root = static_cast<Layout*>(_uiLayer->getChildByTag(81));
+
+        Layout* background = static_cast<Layout*>(root->getChildByName("background_Panel"));
+
+        // Create the dragpanel
+        _scrollView = ui::ScrollView::create();
+        _scrollView->setDirection(ui::ScrollView::Direction::BOTH);
+        _scrollView->setTouchEnabled(true);
+        _scrollView->setBounceEnabled(true);
+        _scrollView->setBackGroundImageScale9Enabled(true);
+        _scrollView->setBackGroundImage("cocosui/green_edit.png");
+        _scrollView->setContentSize(Size(210, 122.5));
+        _scrollView->setScrollBarWidth(4);
+        _scrollView->setScrollBarPositionFromCorner(Vec2(6, 6));
+        Size backgroundSize = background->getContentSize();
+        _scrollView->setPosition(Vec2((widgetSize.width - backgroundSize.width) / 2.0f +
+            (backgroundSize.width - _scrollView->getContentSize().width) / 2.0f,
+            (widgetSize.height - backgroundSize.height) / 2.0f +
+            (backgroundSize.height - _scrollView->getContentSize().height) / 2.0f));
+        ImageView* imageView = ImageView::create("Hello.png");
+        _scrollView->addChild(imageView);
+        _scrollView->setInnerContainerSize(imageView->getContentSize());
+        Size innerSize = _scrollView->getInnerContainerSize();
+        imageView->setPosition(Vec2(innerSize.width / 2.0f, innerSize.height / 2.0f));
+        _uiLayer->addChild(_scrollView);
+
+        // Log some ScrollView events.
+        _scrollView->addEventListener([&] (Ref*, ui::ScrollView::EventType e)
+        {
+            switch (e)
+            {
+            case ui::ScrollView::EventType::SCROLLING_BEGAN:
+                CCLOG("scrolling began!");
+                break;
+            case ui::ScrollView::EventType::SCROLLING_ENDED:
+                CCLOG("scrolling ended!");
+                break;
+            case ui::ScrollView::EventType::AUTOSCROLL_ENDED:
+                CCLOG("auto-scrolling ended!");
+                break;
+            default: break;
+            }
+        });
+
+        // Jump to right bottom
+        _scrollView->jumpToBottomRight();
+
+        // Add button that will schedule scrolling stop when it is clicked.
+        Button* button_scale9 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
+        button_scale9->setTitleText("Stop scrolling in 3 sec.");
+        button_scale9->setScale9Enabled(true);
+        button_scale9->setContentSize(Size(120.0f, button_scale9->getVirtualRendererSize().height));
+        button_scale9->setPosition(Vec2(innerSize.width / 2.0f, innerSize.height / 2.0f));
+        button_scale9->addClickEventListener([this] (Ref*) { this->_remainingTime = 3.0f; });
+        _scrollView->addChild(button_scale9);
+
+        // Schedule update for this scene.
+        Director::getInstance()->getScheduler()->scheduleUpdate(this, 0, false);
+
+        return true;
+    }
+
+    return false;
+}
+
+void UIScrollViewStopScrollingTest::update(float dt)
+{
+    UIScene::update(dt);
+
+    if (_remainingTime > 0.0f)
+    {
+        _remainingTime -= dt;
+        
+        if (_remainingTime > 0.0f)
+        {
+            // Update timer caption.
+            char strRemainingTime[100];
+            sprintf(strRemainingTime, "Stop scrolling in %.1f sec.", _remainingTime);
+            _displayValueLabel->setString(std::string(strRemainingTime));
+        }
+        else
+        {
+            _scrollView->stopOverallScroll();
+
+            // Update timer caption.
+            std::string strRemainingTime = "Scrolling stop isn't scheduled";
+            _displayValueLabel->setString(strRemainingTime);
+
+            // Show hint label.
+            auto hintLabel = Label::createWithTTF("Stopped!", "fonts/Marker Felt.ttf", 32.0f);
+            Size contentSize = _uiLayer->getContentSize();
+            hintLabel->setPosition(Vec2(contentSize.width / 2.0f, contentSize.height / 2.0f));
+            hintLabel->runAction(Spawn::createWithTwoActions(
+                FadeOut::create(0.3f),
+                ScaleTo::create(0.3f, 2.0f)
+                ));
+            _uiLayer->addChild(hintLabel);
+        }
+    }
+}

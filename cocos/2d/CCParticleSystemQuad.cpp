@@ -3,7 +3,8 @@ Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2009      Leonardo Kasperavičius
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
  
@@ -34,7 +35,6 @@ THE SOFTWARE.
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCParticleBatchNode.h"
 #include "renderer/CCTextureAtlas.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
 #include "base/CCEventType.h"
@@ -63,7 +63,7 @@ ParticleSystemQuad::~ParticleSystemQuad()
         if (Configuration::getInstance()->supportsShareableVAO())
         {
             glDeleteVertexArrays(1, &_VAOname);
-            GL::bindVAO(0);
+            glBindVertexArray(0);
         }
     }
 }
@@ -547,10 +547,10 @@ void ParticleSystemQuad::setupVBOandVAO()
     // clean VAO
     glDeleteBuffers(2, &_buffersVBO[0]);
     glDeleteVertexArrays(1, &_VAOname);
-    GL::bindVAO(0);
+    glBindVertexArray(0);
     
     glGenVertexArrays(1, &_VAOname);
-    GL::bindVAO(_VAOname);
+    glBindVertexArray(_VAOname);
 
 #define kQuadSize sizeof(_quads[0].bl)
 
@@ -575,7 +575,7 @@ void ParticleSystemQuad::setupVBOandVAO()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _totalParticles * 6, _indices, GL_STATIC_DRAW);
 
     // Must unbind the VAO before changing the element buffer.
-    GL::bindVAO(0);
+    glBindVertexArray(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -679,7 +679,7 @@ void ParticleSystemQuad::setBatchNode(ParticleBatchNode * batchNode)
             if (Configuration::getInstance()->supportsShareableVAO())
             {
                 glDeleteVertexArrays(1, &_VAOname);
-                GL::bindVAO(0);
+                glBindVertexArray(0);
                 _VAOname = 0;
             }
         }

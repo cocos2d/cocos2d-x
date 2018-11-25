@@ -1,6 +1,7 @@
 /*
  * Created by LinWenhai on 20/10/13.
- * Copyright (c) 2013-2017 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +29,7 @@
 
 class JSArmatureWrapper: public JSCallbackWrapper {
 public:
-    JSArmatureWrapper(JS::HandleValue owner) : JSCallbackWrapper(owner) {};
+    JSArmatureWrapper(){};
 
     void movementCallbackFunc(cocostudio::Armature *armature, cocostudio::MovementEventType movementType, const std::string& movementID);
     void frameCallbackFunc(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
@@ -117,7 +118,7 @@ static bool js_cocos2dx_ArmatureAnimation_setMovementEventCallFunc(JSContext *cx
             return true;
         }
         else if (argc == 1 || argc == 2) {
-            JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper(args.thisv());
+            JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper();
             tmpObj->autorelease();
 
             auto userDict = static_cast<JSBinding::DictionaryRef*>(cobj->getUserObject());
@@ -164,7 +165,7 @@ static bool js_cocos2dx_ArmatureAnimation_setFrameEventCallFunc(JSContext *cx, u
             return true;
         }
         else if (argc == 1 || argc == 2) {
-            JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper(args.thisv());
+            JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper();
             tmpObj->autorelease();
 
             auto dict = static_cast<JSBinding::DictionaryRef*>(cobj->getUserObject());
@@ -206,7 +207,7 @@ static bool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint32
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
 
     if (argc == 3) {
-        JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper(args.thisv());
+        JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper();
         tmpObj->autorelease();
 
         tmpObj->setJSCallbackFunc(args.get(1));
@@ -221,7 +222,7 @@ static bool jsb_Animation_addArmatureFileInfoAsyncCallFunc(JSContext *cx, uint32
     }
 
     if(argc == 5){
-        JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper(args.thisv());
+        JSArmatureWrapper *tmpObj = new (std::nothrow) JSArmatureWrapper();
         tmpObj->autorelease();
 
         tmpObj->setJSCallbackFunc(args.get(3));

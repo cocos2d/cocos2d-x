@@ -8,10 +8,7 @@
     }, 
     "linux_cfg": {
         "project_path": "proj.linux",
-        "project_name": "cpp-tests",
-        "cmake_path": "../../",
-        "build_dir": "../../build/linux-build",
-        "build_result_dir": "cpp-tests"
+        "project_name": "cpp-tests"
     }, 
     "ios_cfg": {
         "project_path": "../../build",

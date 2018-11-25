@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -48,8 +49,8 @@
                                          depthFormat: cocos2d::GLViewImpl::_depthFormat
                                   preserveBackbuffer: NO
                                           sharegroup: nil
-                                       multiSampling: NO
-                                     numberOfSamples: 0 ];
+                                       multiSampling: cocos2d::GLViewImpl::_multisamplingCount > 0 ? YES : NO
+                                     numberOfSamples: cocos2d::GLViewImpl::_multisamplingCount ];
     
     // Enable or disable multiple touches
     [eaglView setMultipleTouchEnabled:NO];
@@ -103,6 +104,18 @@
 //fix not hide status on ios7
 - (BOOL)prefersStatusBarHidden {
     return YES;
+}
+
+// Controls the application's preferred home indicator auto-hiding when this view controller is shown.
+// (better use preferredScreenEdgesDeferringSystemGestures for controlling the home indicator)
+- (BOOL)prefersHomeIndicatorAutoHidden {
+    return NO;
+}
+
+// HOME Indicator need to be tapped twice 
+-(UIRectEdge)preferredScreenEdgesDeferringSystemGestures
+{
+    return UIRectEdgeBottom; 
 }
 
 - (void)didReceiveMemoryWarning {

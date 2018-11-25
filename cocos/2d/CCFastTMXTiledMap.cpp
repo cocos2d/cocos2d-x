@@ -2,7 +2,8 @@
 Copyright (c) 2009-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -236,16 +237,18 @@ TMXObjectGroup * TMXTiledMap::getObjectGroup(const std::string& groupName) const
 
 Value TMXTiledMap::getProperty(const std::string& propertyName) const
 {
-    if (_properties.find(propertyName) != _properties.end())
-        return _properties.at(propertyName);
+    auto propsItr = _properties.find(propertyName);
+    if (propsItr != _properties.end())
+        return propsItr->second;
     
     return Value();
 }
 
 Value TMXTiledMap::getPropertiesForGID(int GID) const
 {
-    if (_tileProperties.find(GID) != _tileProperties.end())
-        return _tileProperties.at(GID);
+    auto propsItr = _tileProperties.find(GID);
+    if (propsItr != _tileProperties.end())
+        return propsItr->second;
     
     return Value();
 }

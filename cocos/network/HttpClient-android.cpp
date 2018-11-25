@@ -1,7 +1,8 @@
 /****************************************************************************
  Copyright (c) 2012      greathqy
  Copyright (c) 2012      cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -109,7 +110,7 @@ public:
 
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
-                                           "org/cocos2dx/lib/Cocos2dxHttpURLConnection",
+                                           "org.cocos2dx.lib.Cocos2dxHttpURLConnection",
                                            "setRequestMethod",
                                            "(Ljava/net/HttpURLConnection;Ljava/lang/String;)V"))
         {
@@ -157,7 +158,7 @@ public:
         int suc = 0;
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
-                                           "org/cocos2dx/lib/Cocos2dxHttpURLConnection",
+                                           "org.cocos2dx.lib.Cocos2dxHttpURLConnection",
                                            "connect",
                                            "(Ljava/net/HttpURLConnection;)I"))
         {
@@ -173,7 +174,7 @@ public:
     {
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
-                                           "org/cocos2dx/lib/Cocos2dxHttpURLConnection",
+                                           "org.cocos2dx.lib.Cocos2dxHttpURLConnection",
                                            "disconnect",
                                            "(Ljava/net/HttpURLConnection;)V"))
         {
@@ -188,7 +189,7 @@ public:
         int responseCode = 0;
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
-                                           "org/cocos2dx/lib/Cocos2dxHttpURLConnection",
+                                           "org.cocos2dx.lib.Cocos2dxHttpURLConnection",
                                            "getResponseCode",
                                            "(Ljava/net/HttpURLConnection;)I"))
         {
@@ -205,7 +206,7 @@ public:
         char* message = nullptr;
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
-                                           "org/cocos2dx/lib/Cocos2dxHttpURLConnection",
+                                           "org.cocos2dx.lib.Cocos2dxHttpURLConnection",
                                            "getResponseMessage",
                                            "(Ljava/net/HttpURLConnection;)Ljava/lang/String;"))
         {
@@ -226,7 +227,7 @@ public:
     {
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
-                                           "org/cocos2dx/lib/Cocos2dxHttpURLConnection",
+                                           "org.cocos2dx.lib.Cocos2dxHttpURLConnection",
                                            "sendRequest",
                                            "(Ljava/net/HttpURLConnection;[B)V"))
         {
@@ -273,7 +274,7 @@ public:
         char* headers = nullptr;
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
-                                           "org/cocos2dx/lib/Cocos2dxHttpURLConnection",
+                                           "org.cocos2dx.lib.Cocos2dxHttpURLConnection",
                                            "getResponseHeaders",
                                            "(Ljava/net/HttpURLConnection;)Ljava/lang/String;"))
         {
@@ -300,7 +301,7 @@ public:
         char* content = nullptr;
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
-                                           "org/cocos2dx/lib/Cocos2dxHttpURLConnection",
+                                           "org.cocos2dx.lib.Cocos2dxHttpURLConnection",
                                            "getResponseContent",
                                            "(Ljava/net/HttpURLConnection;)[B"))
         {
@@ -323,7 +324,7 @@ public:
         char* value = nullptr;
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
-                                           "org/cocos2dx/lib/Cocos2dxHttpURLConnection",
+                                           "org.cocos2dx.lib.Cocos2dxHttpURLConnection",
                                            "getResponseHeaderByKey",
                                            "(Ljava/net/HttpURLConnection;Ljava/lang/String;)Ljava/lang/String;"))
         {
@@ -346,7 +347,7 @@ public:
         int contentLength = 0;
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
-                                           "org/cocos2dx/lib/Cocos2dxHttpURLConnection",
+                                           "org.cocos2dx.lib.Cocos2dxHttpURLConnection",
                                            "getResponseHeaderByKeyInt",
                                            "(Ljava/net/HttpURLConnection;Ljava/lang/String;)I"))
         {
@@ -365,7 +366,7 @@ public:
         char* header = nullptr;
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
-                                           "org/cocos2dx/lib/Cocos2dxHttpURLConnection",
+                                           "org.cocos2dx.lib.Cocos2dxHttpURLConnection",
                                            "getResponseHeaderByIdx",
                                            "(Ljava/net/HttpURLConnection;I)Ljava/lang/String;"))
         {
@@ -401,7 +402,7 @@ private:
     {
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
-            "org/cocos2dx/lib/Cocos2dxHttpURLConnection",
+            "org.cocos2dx.lib.Cocos2dxHttpURLConnection",
             "createHttpURLConnection",
             "(Ljava/lang/String;)Ljava/net/HttpURLConnection;"))
         {
@@ -419,7 +420,7 @@ private:
     {
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
-            "org/cocos2dx/lib/Cocos2dxHttpURLConnection",
+            "org.cocos2dx.lib.Cocos2dxHttpURLConnection",
             "addRequestHeader",
             "(Ljava/net/HttpURLConnection;Ljava/lang/String;Ljava/lang/String;)V"))
         {
@@ -522,7 +523,7 @@ private:
     {
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
-            "org/cocos2dx/lib/Cocos2dxHttpURLConnection",
+            "org.cocos2dx.lib.Cocos2dxHttpURLConnection",
             "setReadAndConnectTimeout",
             "(Ljava/net/HttpURLConnection;II)V"))
         {
@@ -541,7 +542,7 @@ private:
 
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
-            "org/cocos2dx/lib/Cocos2dxHttpURLConnection",
+            "org.cocos2dx.lib.Cocos2dxHttpURLConnection",
             "setVerifySSL",
             "(Ljava/net/HttpURLConnection;Ljava/lang/String;)V"))
         {
@@ -713,7 +714,7 @@ void HttpClient::processResponse(HttpResponse* response, char* responseMessage)
     char *messageInfo = urlConnection.getResponseMessage();
     if (messageInfo)
     {
-        strcpy(responseMessage, messageInfo);
+        strncpy(responseMessage, messageInfo, RESPONSE_BUFFER_SIZE-1);
         free(messageInfo);
     }
 

@@ -1,7 +1,8 @@
 /*
  * Created by Rolando Abarca on 3/14/12.
  * Copyright (c) 2012 Zynga Inc. All rights reserved.
- * Copyright (c) 2013-2017 Chukong Technologies Inc.
+ * Copyright (c) 2013-2016 Chukong Technologies Inc.
+ * Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -84,6 +85,7 @@ private:
     JSContext *_cx;
     JS::PersistentRootedObject *_global;
     JS::PersistentRootedObject *_debugGlobal;
+    JSCompartment *_oldCompartment;
     SimpleRunLoop* _runLoop;
     bool _jsInited;
     bool _needCleanup;
@@ -556,6 +558,8 @@ private:
     void string_report(JS::HandleValue val);
     void initRegister();
 
+    JSObject* newGlobalObject(JSContext* cx, bool debug);
+
 public:
     int handleNodeEvent(void* data);
     int handleActionEvent(void* data);
@@ -576,7 +580,6 @@ public:
     void restartVM();
 };
 
-JSObject* NewGlobalObject(JSContext* cx, bool debug = false);
 
 bool jsb_set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);
 bool jsb_get_reserved_slot(JSObject *obj, uint32_t idx, jsval& ret);

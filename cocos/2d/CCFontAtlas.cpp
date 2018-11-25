@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
 
@@ -476,9 +477,20 @@ Texture2D* FontAtlas::getTexture(int slot)
     return _atlasTextures[slot];
 }
 
-void  FontAtlas::setLineHeight(float newHeight)
+void FontAtlas::setLineHeight(float newHeight)
 {
     _lineHeight = newHeight;
+}
+
+std::string FontAtlas::getFontName() const
+{
+    std::string fontName = _fontFreeType ? _fontFreeType->getFontName() : "";
+    if(fontName.empty()) return fontName;
+    auto idx = fontName.rfind("/");
+    if (idx != std::string::npos) { return fontName.substr(idx + 1); }
+    idx = fontName.rfind("\\");
+    if (idx != std::string::npos) { return fontName.substr(idx + 1); }
+    return fontName;
 }
 
 void FontAtlas::setAliasTexParameters()

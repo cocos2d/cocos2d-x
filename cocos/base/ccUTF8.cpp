@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2014 cocos2d-x.org
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -46,18 +47,18 @@ std::string format(const char* format, ...)
     std::string buffer(CC_VSNPRINTF_BUFFER_LENGTH, '\0');
 
     va_start(args, format);
-    int nret = vsnprintf(&buffer.front(), buffer.length(), format, args);
+    int nret = vsnprintf(&buffer.front(), buffer.length() + 1, format, args);
     va_end(args);
 
     if (nret >= 0) {
-        if (nret < buffer.length()) {
+        if ((unsigned int)nret < buffer.length()) {
             buffer.resize(nret);
         }
-        else if (nret > buffer.length()) { // VS2015/2017 or later Visual Studio Version
+        else if ((unsigned int)nret > buffer.length()) { // VS2015/2017 or later Visual Studio Version
             buffer.resize(nret);
 
             va_start(args, format);
-            nret = vsnprintf(&buffer.front(), buffer.length(), format, args);
+            nret = vsnprintf(&buffer.front(), buffer.length() + 1, format, args);
             va_end(args);
 
             assert(nret == buffer.length());
@@ -69,7 +70,7 @@ std::string format(const char* format, ...)
             buffer.resize(buffer.length() * 3 / 2);
 
             va_start(args, format);
-            nret = vsnprintf(&buffer.front(), buffer.length(), format, args);
+            nret = vsnprintf(&buffer.front(), buffer.length() + 1, format, args);
             va_end(args);
 
         } while (nret < 0);
@@ -157,7 +158,15 @@ bool isCJKUnicode(char32_t ch)
         || (ch >= 0x31C0 && ch <= 0x4DFF)   // Other extensions
         || (ch >= 0x1f004 && ch <= 0x1f682);// Emoji
 }
-
+    
+bool isUnicodeNonBreaking(char32_t ch)
+{
+    return ch == 0x00A0   // Non-Breaking Space
+    || ch == 0x202F       // Narrow Non-Breaking Space
+    || ch == 0x2007       // Figure Space
+    || ch == 0x2060;      // Word Joiner
+}
+    
 void trimUTF16Vector(std::vector<char16_t>& str)
 {
     int len = static_cast<int>(str.size());
@@ -300,7 +309,7 @@ bool UTF32ToUTF16(const std::u32string& utf32, std::u16string& outUtf16)
 std::string getStringUTFCharsJNI(JNIEnv* env, jstring srcjStr, bool* ret)
 {
     std::string utf8Str;
-    if(srcjStr != nullptr)
+    if(srcjStr != nullptr && env != nullptr)
     {
         const unsigned short * unicodeChar = ( const unsigned short *)env->GetStringChars(srcjStr, nullptr);
         size_t unicodeCharLength = env->GetStringLength(srcjStr);

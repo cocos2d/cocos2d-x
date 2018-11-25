@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 Copyright (c) 2011 HKASoftware
 
@@ -40,7 +41,6 @@ THE SOFTWARE.
 #include "2d/CCCamera.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramCache.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "base/CCDirector.h"
@@ -186,10 +186,11 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
 
 void TMXLayer::onDraw(Primitive *primitive)
 {
-    GL::bindTexture2D(_texture->getName());
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _texture->getName());
     getGLProgramState()->apply(_modelViewTransform);
     
-    GL::bindVAO(0);
+    glBindVertexArray(0);
     primitive->draw();
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -291,7 +292,7 @@ void TMXLayer::updateTiles(const Rect& culledRect)
 
 void TMXLayer::updateVertexBuffer()
 {
-    GL::bindVAO(0);
+    glBindVertexArray(0);
     if(nullptr == _vData)
     {
         _vertexBuffer = VertexBuffer::create(sizeof(V3F_C4B_T2F), (int)_totalQuads.size() * 4);
@@ -719,8 +720,9 @@ void TMXLayer::removeChild(Node* node, bool cleanup)
 // TMXLayer - Properties
 Value TMXLayer::getProperty(const std::string& propertyName) const
 {
-    if (_properties.find(propertyName) != _properties.end())
-        return _properties.at(propertyName);
+    auto propItr = _properties.find(propertyName);
+    if (propItr != _properties.end())
+        return propItr->second;
     
     return Value();
 }

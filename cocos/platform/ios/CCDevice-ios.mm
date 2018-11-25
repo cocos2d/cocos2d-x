@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -27,13 +28,14 @@
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 
+#import <UIKit/UIKit.h>
+
 #include "platform/CCDevice.h"
 #include "base/ccTypes.h"
-#include "platform/apple/CCDevice-apple.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventAcceleration.h"
 #include "base/CCDirector.h"
-#import <UIKit/UIKit.h>
+#include "platform/apple/CCDevice-apple.h"
 
 // Accelerometer
 #if !defined(CC_TARGET_OS_TVOS)
@@ -337,6 +339,7 @@ typedef struct
     float        tintColorG;
     float        tintColorB;
     float        tintColorA;
+    float        lineSpacing;
 
     unsigned char*  data;
 
@@ -412,6 +415,7 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
         NSTextAlignment nsAlign = FontUtils::_calculateTextAlignment(align);
         NSMutableParagraphStyle* paragraphStyle = FontUtils::_calculateParagraphStyle(enableWrap, overflow);
         paragraphStyle.alignment = nsAlign;
+        paragraphStyle.lineSpacing = info->lineSpacing;
 
         // measure text size with specified font and determine the rectangle to draw text in
 
@@ -577,6 +581,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         info.tintColorG             = textDefinition._fontFillColor.g / 255.0f;
         info.tintColorB             = textDefinition._fontFillColor.b / 255.0f;
         info.tintColorA             = textDefinition._fontAlpha / 255.0f;
+        info.lineSpacing            = textDefinition._lineSpacing;
 
         if (! _initWithString(text, align, textDefinition._fontName.c_str(), textDefinition._fontSize, &info, textDefinition._enableWrap, textDefinition._overflow))
         {

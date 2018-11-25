@@ -1,6 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -86,7 +87,7 @@ FontAtlas* FontAtlasCache::getFontAtlasTTF(const _ttfConfig* config)
         }
     }
     else
-        return _atlasMap[atlasName];
+        return it->second;
 
     return nullptr;
 }
@@ -114,7 +115,7 @@ FontAtlas* FontAtlasCache::getFontAtlasFNT(const std::string& fontFileName, cons
         }
     }
     else
-        return _atlasMap[atlasName];
+        return it->second;
     
     return nullptr;
 }
@@ -139,7 +140,7 @@ FontAtlas* FontAtlasCache::getFontAtlasCharMap(const std::string& plistFile)
         }
     }
     else
-        return _atlasMap[atlasName];
+        return it->second;
 
     return nullptr;
 }
@@ -166,7 +167,7 @@ FontAtlas* FontAtlasCache::getFontAtlasCharMap(Texture2D* texture, int itemWidth
         }
     }
     else
-        return _atlasMap[atlasName];
+        return it->second;
 
     return nullptr;
 }
@@ -193,7 +194,7 @@ FontAtlas* FontAtlasCache::getFontAtlasCharMap(const std::string& charMapFile, i
         }
     }
     else
-        return _atlasMap[atlasName];
+        return it->second;
 
     return nullptr;
 }

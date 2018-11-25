@@ -1,6 +1,7 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -95,14 +96,32 @@ public:
     virtual void setFrameSize(float width, float height) override;
     virtual void setIMEKeyboardState(bool bOpen) override;
 
-    /*
-     * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
+#if CC_ICON_SET_SUPPORT
+    virtual void setIcon(const std::string& filename) const override;
+    virtual void setIcon(const std::vector<std::string>& filelist) const override;
+    virtual void setDefaultIcon() const override;
+#endif /* CC_ICON_SET_SUPPORT */
+
+    /**
+     * Sets the cursor for the window with custom image.
      */
-    void setFrameZoomFactor(float zoomFactor) override;
+    virtual void setCursor(const std::string& filename, Vec2 hotspot = Vec2::ANCHOR_TOP_LEFT) override;
+
+    /**
+     * Sets the cursor for the window back to default.
+     */
+    virtual void setDefaultCursor() override;
+
     /**
      * Hide or Show the mouse cursor if there is one.
      */
     virtual void setCursorVisible(bool isVisible) override;
+
+    /*
+     * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
+     */
+    void setFrameZoomFactor(float zoomFactor) override;
+
     /** Retina support is disabled by default
      *  @note This method is only available on Mac.
      */
@@ -119,6 +138,7 @@ public:
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     id getCocoaWindow() override { return glfwGetCocoaWindow(_mainWindow); }
+    id getNSGLContext() override { return glfwGetNSGLContext(_mainWindow); } // stevetranby: added
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 protected:
@@ -161,6 +181,8 @@ protected:
 
     float _mouseX;
     float _mouseY;
+
+    GLFWcursor* _cursor;
 
     friend class GLFWEventHandler;
     

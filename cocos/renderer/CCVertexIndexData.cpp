@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013-2017 Chukong Technologies Inc.
+ Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -23,7 +24,6 @@
  ****************************************************************************/
 
 #include "renderer/CCVertexIndexData.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCVertexIndexBuffer.h"
 
 NS_CC_BEGIN
@@ -115,13 +115,12 @@ VertexData::~VertexData()
 
 void VertexData::use()
 {
-    uint32_t flags(0);
+
     for(auto& element : _vertexStreams)
     {
-        flags = flags | (1 << element.second._stream._semantic);
+        glEnableVertexAttribArray(element.second._stream._semantic);
     }
     
-    GL::enableVertexAttribs(flags);
 
     int lastVBO = -1;
     for(auto& element : _vertexStreams)

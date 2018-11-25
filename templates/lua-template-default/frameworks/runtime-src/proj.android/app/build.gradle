@@ -1,0 +1,259 @@
+import org.gradle.internal.os.OperatingSystem;
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
+
+    defaultConfig {
+        applicationId "org.cocos2dx.hellolua"
+        minSdkVersion PROP_MIN_SDK_VERSION
+        targetSdkVersion PROP_TARGET_SDK_VERSION
+        versionCode 1
+        versionName "1.0"
+
+        externalNativeBuild {
+            if (PROP_BUILD_TYPE == 'ndk-build') {
+                ndkBuild {
+                    targets 'cocos2dlua'
+                    arguments 'NDK_TOOLCHAIN_VERSION=clang'
+                    arguments '-j' + Runtime.runtime.availableProcessors()
+
+                    def module_paths = [project.file("../../../cocos2d-x").absolutePath,
+                                        project.file("../../../cocos2d-x/cocos").absolutePath,
+                                        project.file("../../../cocos2d-x/external").absolutePath]
+                    if (OperatingSystem.current().isWindows()) {
+                        module_paths = module_paths.collect {it.replaceAll('\\\\', '/')}
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(";")
+                    }
+                    else {
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(':')
+                    }
+                }
+            }
+            else if (PROP_BUILD_TYPE == 'cmake') {
+                cmake {
+                    arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE"
+                    cppFlags "-frtti -fexceptions -fsigned-char"
+                }
+            }
+        }
+
+        ndk {
+            abiFilters = []
+            abiFilters.addAll(PROP_APP_ABI.split(':').collect{it as String})
+        }
+    }
+
+    sourceSets.main {
+        java.srcDir "src"
+        res.srcDir "res"
+        jniLibs.srcDir "libs"
+        manifest.srcFile "AndroidManifest.xml"
+    }
+
+    externalNativeBuild {
+        if (PROP_BUILD_TYPE == 'ndk-build') {
+            ndkBuild {
+                path "jni/Android.mk"
+            }
+        }
+        else if (PROP_BUILD_TYPE == 'cmake') {
+            cmake {
+                path "../../../../CMakeLists.txt"
+            }
+        }
+    }
+
+    signingConfigs {
+
+       release {
+            if (project.hasProperty("RELEASE_STORE_FILE")) {
+                storeFile file(RELEASE_STORE_FILE)
+                storePassword RELEASE_STORE_PASSWORD
+                keyAlias RELEASE_KEY_ALIAS
+                keyPassword RELEASE_KEY_PASSWORD
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (project.hasProperty("RELEASE_STORE_FILE")) {
+                signingConfig signingConfigs.release
+            }
+
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=0'
+                }
+            }
+        }
+
+        debug {
+            debuggable true
+            jniDebuggable true
+            renderscriptDebuggable true
+            externalNativeBuild {
+                ndkBuild {
+                    arguments 'NDK_DEBUG=1'
+                }
+            }
+        }
+    }
+}
+
+def getCocosCommandPath() {
+    if (OperatingSystem.current().isWindows()) {
+        return 'cocos.bat'
+    }
+    else {
+        // on unix like system, can not get environments variables easily
+        // so run a shell script to get environment variable sets by cocos2d-x setup.py
+        new ByteArrayOutputStream().withStream { os ->
+            def result = exec {
+                executable = project.file('get_environment.sh')
+                standardOutput = os
+            }
+            ext.console_path = os.toString().trim()
+        }
+        return new File(console_path + '/cocos').absolutePath;
+    }
+}
+
+// a method used to invoke the cocos luacompile command
+def compileLua(srcDir, dstDir, doCompile, is64bit, doEncrypt) {
+    def compileArgs = ['luacompile', '-s', srcDir, '-d', dstDir]
+    if (!doCompile) {
+        compileArgs << '--disable-compile'
+    }
+    else if (is64bit) {
+        compileArgs << '--bytecode-64bit'
+    }
+
+    if (doEncrypt) {
+        compileArgs << '-e'
+        compileArgs << '-k'
+        compileArgs << project.property('PROP_LUA_ENCRYPT_KEY')
+        compileArgs << '-b'
+        compileArgs << project.property('PROP_LUA_ENCRYPT_SIGN')
+    }
+
+    // commandLine compileArgs
+    println 'running command : ' + 'cocos ' + compileArgs.join(' ')
+    exec {
+        // if you meet problem, just replace `getCocosCommandPath()` to the path of cocos command
+        executable getCocosCommandPath()
+        args compileArgs
+    }
+
+    // remove the lua files in dstDir
+    delete fileTree(dstDir) {
+        include '**/*.lua'
+    }
+}
+
+android.applicationVariants.all { variant ->
+    // delete previous files first
+    delete "${buildDir}/intermediates/assets/${variant.dirName}"
+
+    variant.mergeAssets.doLast {
+        copy {
+           from "${buildDir}/../../../../../res"
+           into "${buildDir}/intermediates/assets/${variant.dirName}/res"
+        }
+
+        copy {
+            from "${buildDir}/../../../../../src"
+            into "${buildDir}/intermediates/assets/${variant.dirName}/src"
+        }
+
+        // copy {
+        //     from "${buildDir}/../../../../cocos2d-x/cocos/scripting/lua-bindings/script"
+        //     into  "${buildDir}/intermediates/assets/${variant.dirName}/src/cocos"
+        // }
+
+        // compile & encrypt the scripts if necessary
+        def compileScript = (variant.name.compareTo('release') == 0)
+        if (project.hasProperty('PROP_COMPILE_SCRIPT')) {
+            compileScript = (PROP_COMPILE_SCRIPT.compareTo('1') == 0)
+        }
+
+        def encryptLua = project.hasProperty('PROP_LUA_ENCRYPT') && (PROP_LUA_ENCRYPT.compareTo('1') == 0)
+        if (compileScript || encryptLua) {
+            // -1 means not build bytecode
+            // 0 means build 32bit only
+            // 1 means build 64bit only
+            // 2 means build both 32bit & 64bit
+            def buildType = -1
+            if (compileScript) {
+                def need64 = false
+                def need32 = false
+                def abis = PROP_APP_ABI.split(':').collect{it as String}
+                abis.each{ abi->
+                    if (abi.compareTo('arm64-v8a') == 0) {
+                        need64 = true
+                    }
+                    else
+                    {
+                        need32 = true
+                    }
+                }
+
+                if (need64 && need32) {
+                    buildType = 2
+                }
+                else if (need64) {
+                    buildType = 1
+                }
+                else {
+                    buildType = 0
+                }
+            }
+
+            // invoke cocos command to compile & encrypt the lua files
+            switch (buildType) {
+                case -1:
+                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
+                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
+                               false, false, encryptLua)
+                    break
+                case 0:
+                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
+                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
+                               true, false, encryptLua)
+                    break
+                case 1:
+                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
+                               "${buildDir}/intermediates/assets/${variant.dirName}/src/64bit",
+                               true, true, encryptLua)
+
+                    // remove the lua files in src dir
+                    delete fileTree("${buildDir}/intermediates/assets/${variant.dirName}/src") {
+                        include '**/*.lua'
+                    }
+                    delete "${buildDir}/intermediates/assets/${variant.dirName}/src/cocos"
+                    break
+                case 2:
+                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
+                               "${buildDir}/intermediates/assets/${variant.dirName}/src/64bit",
+                               true, true, encryptLua)
+                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
+                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
+                               true, false, encryptLua)
+                    break
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':libcocos2dx')
+}

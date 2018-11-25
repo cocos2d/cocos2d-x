@@ -7,6 +7,15 @@ environment:
   PYTHON: "C:\\Python27"
   PYTHON_VERSION: "2.7.13"
   PYTHON_ARCH: "32"
+  matrix:
+    - build_type: windows32_cmake_test
+    - build_type: windows32_sln_test
+    - build_type: android_cpp_tests
+    - build_type: android_lua_tests
+#    - build_type: android_cocos_new_test
+#    - build_type: android_cpp_empty_test
+#    - build_type: android_gen_libs
+
 
 platform:
   - x86
@@ -14,7 +23,7 @@ platform:
 configuration:
   - Release
 
-before_build: 
+before_build:
   - ps: ./tools/appveyor-scripts/before-build.ps1
 
 build_script:
@@ -28,3 +37,7 @@ branches:
   - v3-doc
   - v3.11_backup
   - v35-for-tizen
+
+clone_depth: 1
+
+test: off

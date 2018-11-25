@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014-2017 Chukong Technologies Inc.
+ Copyright (c) 2014-2016 Chukong Technologies Inc.
+ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -28,10 +29,11 @@
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
-#include <string>
-#include <mutex>
-#include <vector>
+#include <functional>
 #include <memory>
+#include <mutex>
+#include <string>
+#include <vector>
 #ifdef OPENAL_PLAIN_INCLUDES
 #include <al.h>
 #else

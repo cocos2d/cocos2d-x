@@ -2,7 +2,8 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2017 Chukong Technologies Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -43,7 +44,6 @@ THE SOFTWARE.
 
 #include "2d/CCActionCatmullRom.h"
 #include "base/CCDirector.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCRenderer.h"
 #include "platform/CCGL.h"
@@ -110,7 +110,7 @@ void drawPoint(const Vec2& point)
     p.x = point.x;
     p.y = point.y;
 
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
     s_shader->use();
     s_shader->setUniformsForBuiltins();
 
@@ -128,7 +128,7 @@ void drawPoints( const Vec2 *points, unsigned int numberOfPoints )
 {
     lazy_init();
 
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
     s_shader->use();
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
@@ -154,7 +154,7 @@ void drawLine(const Vec2& origin, const Vec2& destination)
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
 
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glDrawArrays(GL_LINES, 0, 2);
 
@@ -189,8 +189,7 @@ void drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon)
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
 
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
-
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, poli);
 
     if( closePolygon )
@@ -209,8 +208,7 @@ void drawSolidPoly(const Vec2 *poli, unsigned int numberOfPoints, Color4F color)
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &color.r, 1);
 
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
-
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, poli);
     glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) numberOfPoints);
 
@@ -227,7 +225,7 @@ void drawCircle( const Vec2& center, float radius, float angle, unsigned int seg
 
     const float coef = 2.0f * (float)M_PI/segments;
 
-    GLfloat *vertices = (GLfloat*)calloc( sizeof(GLfloat)*2*(segments+2), 1);
+    GLfloat *vertices = (GLfloat*)calloc( 2*(segments+2), sizeof(GLfloat));
     if( ! vertices )
         return;
 
@@ -246,8 +244,7 @@ void drawCircle( const Vec2& center, float radius, float angle, unsigned int seg
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
 
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
-
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments+additionalSegment);
 
@@ -267,7 +264,7 @@ void drawSolidCircle( const Vec2& center, float radius, float angle, unsigned in
     
     const float coef = 2.0f * (float)M_PI/segments;
     
-    GLfloat *vertices = (GLfloat*)calloc( sizeof(GLfloat)*2*(segments+2), 1);
+    GLfloat *vertices = (GLfloat*)calloc( 2*(segments+2), sizeof(GLfloat));
     if( ! vertices )
         return;
     
@@ -286,8 +283,7 @@ void drawSolidCircle( const Vec2& center, float radius, float angle, unsigned in
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
     
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
-    
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 
     glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) segments+1);
@@ -322,8 +318,7 @@ void drawQuadBezier(const Vec2& origin, const Vec2& control, const Vec2& destina
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
 
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
-
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
     CC_SAFE_DELETE_ARRAY(vertices);
@@ -374,8 +369,7 @@ void drawCardinalSpline( PointArray *config, float tension,  unsigned int segmen
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*)&s_color.r, 1);
 
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
-
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
 
@@ -403,8 +397,7 @@ void drawCubicBezier(const Vec2& origin, const Vec2& control1, const Vec2& contr
     s_shader->setUniformsForBuiltins();
     s_shader->setUniformLocationWith4fv(s_colorLocation, (GLfloat*) &s_color.r, 1);
 
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
-
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segments + 1);
     CC_SAFE_DELETE_ARRAY(vertices);
