@@ -76,7 +76,7 @@ function(get_target_depends_ext_dlls cocos_target all_depend_dlls_out)
 
     set(depend_libs)
     set(all_depend_ext_dlls)
-    search_depend_libs_recursive(${cocos_app} depend_libs)
+    search_depend_libs_recursive(${cocos_target} depend_libs)
     foreach(depend_lib ${depend_libs})
         if(TARGET ${depend_lib})
             get_target_property(tmp_dlls ${depend_lib} CC_DEPEND_DLLS)
