@@ -73,7 +73,7 @@ def install_android_ndk():
 
 @retry(Exception, tries=5, delay=1, backoff=1)
 def install_android_sdk_tools():
-    file_name = "sdk-tools-{system}-3859397.zip".format(
+    file_name = "sdk-tools-{system}-4333796.zip".format(
         system=platform.system().lower())
     url = "https://dl.google.com/android/repository/" + file_name
     zip_file = os.path.abspath(os.path.join(ROOT_DIR, file_name))
