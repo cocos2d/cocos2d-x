@@ -132,10 +132,10 @@ if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
 fi
 
 # fix for jdk9/10
-if [ $TRAVIS_OS_NAME == "linux" ]; then
-    export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
-    # export SDKMANAGER_OPTS="--add-modules java.se.ee"
-fi
+# if [ $TRAVIS_OS_NAME == "linux" ]; then
+#     export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
+#     # export SDKMANAGER_OPTS="--add-modules java.se.ee"
+# fi
 
 # build pull request
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
