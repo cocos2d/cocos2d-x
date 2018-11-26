@@ -32,7 +32,7 @@ public:
         bool normalized = false;
     };
     
-    void setAtrribute(const std::string& name, uint32_t index, VertexFormat format, uint32_t offset, bool normalized = false);
+    void setAtrribute(const std::string& name, uint32_t index, VertexFormat format, uint32_t offset, bool normalized);
     //FIXME: remove stepMode?
     void setLayout(uint32_t stride, VertexStepMode stepMode);
     
