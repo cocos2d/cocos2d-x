@@ -217,7 +217,7 @@ void CommandBufferGL::bindVertexBuffer(Program *program) const
             glVertexAttribPointer(attribute.location,
                                   attribute.size,
                                   attribute.type,
-                                  GL_FALSE,
+                                  attribute.normalized,
                                   attribute.stride,
                                   (GLvoid*)(uintptr_t)attribute.offset);
         }

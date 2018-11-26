@@ -19,6 +19,7 @@ struct AttributeInfo
     GLenum type = GL_BYTE;
     GLsizei stride = 0;
     uint32_t offset = 0;
+    GLboolean normalized = GL_FALSE;
 };
 
 struct UniformInfo

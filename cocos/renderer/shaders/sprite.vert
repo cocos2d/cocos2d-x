@@ -26,7 +26,7 @@
  */
 
 const char* sprite_vert = R"(
-attribute vec3 a_position;
+attribute vec4 a_position;
 attribute vec2 a_texCoord;
 attribute vec4 a_color;
 
@@ -42,7 +42,7 @@ varying vec2 v_texCoord;
 
 void main()
 {
-    gl_Position = a_projection * vec4(a_position, 1.0);
+    gl_Position = a_projection * a_position;
     v_fragmentColor = a_color;
     v_texCoord = a_texCoord;
 }
