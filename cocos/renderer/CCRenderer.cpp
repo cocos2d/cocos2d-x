@@ -212,7 +212,6 @@ Renderer::Renderer()
     _clearColor = Color4F::BLACK;
 
     // for the batched TriangleCommand
-//    _triBatchesToDrawCapacity = 500;
     _triBatchesToDraw = (TriBatchToDraw*) malloc(sizeof(_triBatchesToDraw[0]) * _triBatchesToDrawCapacity);
 }
 
@@ -221,15 +220,8 @@ Renderer::~Renderer()
     _renderGroups.clear();
     _groupCommandManager->release();
     
-//    glDeleteBuffers(2, _buffersVBO);
-
     free(_triBatchesToDraw);
 
-//    if (Configuration::getInstance()->supportsShareableVAO())
-//    {
-//        glDeleteVertexArrays(1, &_buffersVAO);
-//        glBindVertexArray(0);
-//    }
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     Director::getInstance()->getEventDispatcher()->removeEventListener(_cacheTextureListener);
 #endif
@@ -237,6 +229,7 @@ Renderer::~Renderer()
     CC_SAFE_RELEASE(_vertexBuffer);
     CC_SAFE_RELEASE(_indexBuffer);
     CC_SAFE_RELEASE(_commandBuffer);
+    CC_SAFE_RELEASE(_defaultRenderPass);
 }
 
 void Renderer::init()
@@ -550,6 +543,7 @@ void Renderer::render()
         visitRenderQueue(_renderGroups[0]);
     }
     clean();
+    _currentRenderPass = nullptr;
     _isRendering = false;
 }
 
@@ -575,14 +569,7 @@ void Renderer::clean()
 
 void Renderer::clear()
 {
-    //Enable Depth mask to make sure glClear clear the depth buffer correctly
-//    glDepthMask(true);
-//    glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
-//    glClear(GL_COLOR_BUFFER_BIT);
-//    glDepthMask(false);
-//
-//    RenderState::StateBlock::_defaultState->setDepthWrite(false);
-    //todo: minggo
+    _currentRenderPass = _defaultRenderPass;
 }
 
 void Renderer::setDepthTest(bool enable)
@@ -697,7 +684,7 @@ void Renderer::drawBatchedTriangles()
     _indexBuffer->updateData(_indices, sizeof(_indices[0]) * _filledIndex);
     
     /************** 2: Draw *************/
-    _commandBuffer->beginRenderPass(nullptr);
+    _commandBuffer->beginRenderPass(_currentRenderPass);
     
     for (int i = 0; i < batchesTotal; ++i)
     {
@@ -790,6 +777,12 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 void Renderer::setClearColor(const Color4F &clearColor)
 {
     _clearColor = clearColor;
+    
+    CC_SAFE_RELEASE(_defaultRenderPass);
+    backend::RenderPassDescriptor descriptor;
+    descriptor.setClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
+    descriptor.setClearDepth(0);
+    _defaultRenderPass = backend::Device::getInstance()->newRenderPass(descriptor);
 }
 
 backend::RenderPipeline* Renderer::createRenderPipeline(PipelineDescriptor* pipelineDescriptor)

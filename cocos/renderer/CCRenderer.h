@@ -45,6 +45,7 @@ namespace backend
     class Buffer;
     class CommandBuffer;
     class RenderPipeline;
+    class RenderPass;
 }
 
 class EventListenerCustom;
@@ -232,9 +233,12 @@ protected:
     unsigned short _indices[INDEX_VBO_SIZE];
     backend::Buffer* _vertexBuffer = nullptr;
     backend::Buffer* _indexBuffer = nullptr;
+    
+    
     backend::CommandBuffer* _commandBuffer = nullptr;
-//    GLuint _buffersVAO;
-//    GLuint _buffersVBO[2]; //0: vertex  1: indices
+    // The render pass with clear color and depth.
+    backend::RenderPass* _defaultRenderPass = nullptr;
+    backend::RenderPass* _currentRenderPass = nullptr;
 
     // Internal structure that has the information for the batches
     struct TriBatchToDraw
