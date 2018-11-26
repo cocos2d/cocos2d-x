@@ -131,14 +131,17 @@ if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
     exit 0
 fi
 
+# fix for jdk9/10
+if [ $TRAVIS_OS_NAME == "linux" ]; then
+    export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
+    # export SDKMANAGER_OPTS="--add-modules java.se.ee"
+fi
+
 # build pull request
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
     install_environement_for_pull_request
 fi
 
-if [ $TRAVIS_OS_NAME == "linux" ]; then
-    export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
-fi
 # run after merging
 # - make cocos robot to send PR to cocos2d-x for new binding codes
 # - generate cocos_files.json for template
