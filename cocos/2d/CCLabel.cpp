@@ -44,6 +44,7 @@
 #include "base/CCEventCustom.h"
 #include "base/ccUtils.h"
 #include "2d/CCFontFNT.h"
+#include "renderer/CCGLProgram.h"
 
 NS_CC_BEGIN
 

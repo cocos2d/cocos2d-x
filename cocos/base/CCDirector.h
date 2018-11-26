@@ -61,7 +61,6 @@ class EventListenerCustom;
 class TextureCache;
 class Renderer;
 class Camera;
-class RendererBackend;
 
 class Console;
 namespace experimental
@@ -704,7 +703,6 @@ protected:
 
     /* Renderer for the Director */
     Renderer *_renderer = nullptr;
-    RendererBackend *_backendRenderer = nullptr;
 
     /* Console for the director */
     Console *_console = nullptr;

@@ -42,6 +42,7 @@ THE SOFTWARE.
 #include "base/CCEventAcceleration.h"
 #include "base/CCEventListenerAcceleration.h"
 #include "base/ccUTF8.h"
+#include "renderer/CCGLProgram.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "platform/desktop/CCGLViewImpl-desktop.h"

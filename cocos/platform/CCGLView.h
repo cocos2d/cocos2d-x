@@ -422,8 +422,7 @@ public:
      * This method is called directly by the Director
      */
     void renderScene(Scene* scene, Renderer* renderer);
-    void renderScene(Scene* scene, RendererBackend* renderer);
-
+    
 protected:
     void updateDesignResolutionSize();
     

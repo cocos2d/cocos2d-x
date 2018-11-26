@@ -23,9 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-
-#ifndef __CC_RENDERER_H_
-#define __CC_RENDERER_H_
+#pragma once
 
 #include <vector>
 #include <stack>
@@ -33,24 +31,7 @@
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgram.h"
-#include "platform/CCGL.h"
 
-#if !defined(NDEBUG) && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-
-/// Basic wrapper for glInsertEventMarkerEXT() depending on the current build settings and platform.
-#define CCGL_DEBUG_INSERT_EVENT_MARKER(__message__) glInsertEventMarkerEXT(0, __message__)
-/// Basic wrapper for glPushGroupMarkerEXT() depending on the current build settings and platform.
-#define CCGL_DEBUG_PUSH_GROUP_MARKER(__message__) glPushGroupMarkerEXT(0, __message__)
-/// Basic wrapper for CCGL_DEBUG_POP_GROUP_MARKER() depending on the current build settings and platform.
-#define CCGL_DEBUG_POP_GROUP_MARKER() glPopGroupMarkerEXT()
-
-#else
-
-#define CCGL_DEBUG_INSERT_EVENT_MARKER(__message__)
-#define CCGL_DEBUG_PUSH_GROUP_MARKER(__message__)
-#define CCGL_DEBUG_POP_GROUP_MARKER()
-
-#endif
 
 /**
  * @addtogroup renderer
@@ -59,16 +40,25 @@
 
 NS_CC_BEGIN
 
+namespace backend
+{
+    class Buffer;
+    class CommandBuffer;
+    class RenderPipeline;
+}
+
 class EventListenerCustom;
 class TrianglesCommand;
 class MeshCommand;
+class PipelineDescriptor;
 
 /** Class that knows how to sort `RenderCommand` objects.
  Since the commands that have `z == 0` are "pushed back" in
  the correct order, the only `RenderCommand` objects that need to be sorted,
  are the ones that have `z < 0` and `z > 0`.
 */
-class RenderQueue {
+class RenderQueue
+{
 public:
     /**
     RenderCommand will be divided into Queue Groups.
@@ -109,9 +99,9 @@ public:
     ssize_t getSubQueueSize(QUEUE_GROUP group) const { return _commands[group].size(); }
 
     /**Save the current DepthState, CullState, DepthWriteState render state.*/
-    void saveRenderState();
-    /**Restore the saved DepthState, CullState, DepthWriteState render state.*/
-    void restoreRenderState();
+//    void saveRenderState();
+//    /**Restore the saved DepthState, CullState, DepthWriteState render state.*/
+//    void restoreRenderState();
     
 protected:
     /**The commands in the render queue.*/
@@ -126,11 +116,11 @@ protected:
 };
 
 //the struct is not used outside.
-struct RenderStackElement
-{
-    int renderQueueID;
-    ssize_t currentIndex;
-};
+//struct RenderStackElement
+//{
+//    int renderQueueID;
+//    ssize_t currentIndex;
+//};
 
 class GroupCommandManager;
 
@@ -155,7 +145,7 @@ public:
     ~Renderer();
 
     //TODO: manage GLView inside Render itself
-    void initGLView();
+    void init();
 
     /** Adds a `RenderComamnd` into the renderer */
     void addCommand(RenderCommand* command);
@@ -208,12 +198,6 @@ public:
     bool checkVisibility(const Mat4& transform, const Size& size);
 
 protected:
-
-    //Setup VBO or VAO based on OpenGL extensions
-    void setupBuffer();
-    void setupVBOAndVAO();
-    void setupVBO();
-    void mapBuffers();
     void drawBatchedTriangles();
 
     //Draw the previews queued triangles and flush previous context
@@ -229,6 +213,8 @@ protected:
     void visitRenderQueue(RenderQueue& queue);
 
     void fillVerticesAndIndices(const TrianglesCommand* cmd);
+    
+    backend::RenderPipeline* createRenderPipeline(PipelineDescriptor*);
 
 
     /* clear color set outside be used in setGLDefaultValues() */
@@ -238,43 +224,47 @@ protected:
     
     std::vector<RenderQueue> _renderGroups;
 
-    MeshCommand* _lastBatchedMeshCommand;
+    MeshCommand* _lastBatchedMeshCommand = nullptr;
     std::vector<TrianglesCommand*> _queuedTriangleCommands;
 
     //for TrianglesCommand
     V3F_C4B_T2F _verts[VBO_SIZE];
-    GLushort _indices[INDEX_VBO_SIZE];
-    GLuint _buffersVAO;
-    GLuint _buffersVBO[2]; //0: vertex  1: indices
+    unsigned short _indices[INDEX_VBO_SIZE];
+    backend::Buffer* _vertexBuffer = nullptr;
+    backend::Buffer* _indexBuffer = nullptr;
+    backend::CommandBuffer* _commandBuffer = nullptr;
+//    GLuint _buffersVAO;
+//    GLuint _buffersVBO[2]; //0: vertex  1: indices
 
     // Internal structure that has the information for the batches
-    struct TriBatchToDraw {
-        TrianglesCommand* cmd;  // needed for the Material
-        GLsizei indicesToDraw;
-        GLsizei offset;
+    struct TriBatchToDraw
+    {
+        TrianglesCommand* cmd = nullptr;  // needed for the Material
+        int indicesToDraw = 0;
+        int offset = 0;
     };
     // capacity of the array of TriBatches
-    int _triBatchesToDrawCapacity;
+    int _triBatchesToDrawCapacity = 500;
     // the TriBatches
-    TriBatchToDraw* _triBatchesToDraw;
+    TriBatchToDraw* _triBatchesToDraw = nullptr;
 
-    int _filledVertex;
-    int _filledIndex;
+    int _filledVertex = 0;
+    int _filledIndex = 0;
 
-    bool _glViewAssigned;
+//    bool _glViewAssigned;
 
     // stats
-    ssize_t _drawnBatches;
-    ssize_t _drawnVertices;
+    ssize_t _drawnBatches = 0;
+    ssize_t _drawnVertices = 0;
     //the flag for checking whether renderer is rendering
-    bool _isRendering;
+    bool _isRendering = false;
     
-    bool _isDepthTestFor2D;
+    bool _isDepthTestFor2D = false;
     
-    GroupCommandManager* _groupCommandManager;
+    GroupCommandManager* _groupCommandManager = nullptr;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    EventListenerCustom* _cacheTextureListener;
+    EventListenerCustom* _cacheTextureListener = nullptr;
 #endif
 };
 
@@ -284,4 +274,3 @@ NS_CC_END
  end of support group
  @}
  */
-#endif //__CC_RENDERER_H_

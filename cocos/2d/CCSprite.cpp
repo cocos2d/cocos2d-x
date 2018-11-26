@@ -43,7 +43,6 @@ THE SOFTWARE.
 #include "renderer/backend/Texture.h"
 #include "renderer/backend/Device.h"
 #include "platform/CCFileUtils.h"
-#include "renderer/CCRendererBackend.h"
 #include "renderer/ccShaders.h"
 
 //for debug
@@ -1217,92 +1216,7 @@ void Sprite::updateTransform(void)
 }
 
 // draw
-
 void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    if (_backendTexture) {
-        
-        backend::BindGroup bindGroup;
-        cocos2d::Mat4 projectionMat = transform;
-        bindGroup.setUniform("a_projection", projectionMat.m, sizeof(projectionMat.m));
-        bindGroup.setTexture("u_texture", 0, _backendTexture);
-       
-        _trianglesCommand.init(_globalZOrder,
-                               &_pipelineDescriptor,
-                               _polyInfo.triangles,
-                               transform,
-                               flags);
-//        _trianglesCommand.init(_globalZOrder,
-//                               _backendTexture,
-//                               getGLProgramState(),
-//                               _blendFunc,
-//                               _polyInfo.triangles,
-//                               transform,
-//                               flags);
-        
-        renderer->addCommand(&_trianglesCommand);
-        return;
-    }
-    
-    if (_texture == nullptr)
-    {
-        return;
-    }
-
-#if CC_USE_CULLING
-    // Don't calculate the culling if the transform was not updated
-    auto visitingCamera = Camera::getVisitingCamera();
-    auto defaultCamera = Camera::getDefaultCamera();
-    if (visitingCamera == nullptr) {
-        _insideBounds = true;
-    }
-    else if (visitingCamera == defaultCamera) {
-        _insideBounds = ((flags & FLAGS_TRANSFORM_DIRTY) || visitingCamera->isViewProjectionUpdated()) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
-    }
-    else
-    {
-        // XXX: this always return true since
-        _insideBounds = renderer->checkVisibility(transform, _contentSize);
-    }
-
-    if(_insideBounds)
-#endif
-    {
-        _trianglesCommand.init(_globalZOrder,
-                               _texture,
-                               getGLProgramState(),
-                               _blendFunc,
-                               _polyInfo.triangles,
-                               transform,
-                               flags);
-
-        renderer->addCommand(&_trianglesCommand);
-
-#if CC_SPRITE_DEBUG_DRAW
-        _debugDrawNode->clear();
-        auto count = _polyInfo.triangles.indexCount/3;
-        auto indices = _polyInfo.triangles.indices;
-        auto verts = _polyInfo.triangles.verts;
-        for(ssize_t i = 0; i < count; i++)
-        {
-            //draw 3 lines
-            Vec3 from =verts[indices[i*3]].vertices;
-            Vec3 to = verts[indices[i*3+1]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-
-            from =verts[indices[i*3+1]].vertices;
-            to = verts[indices[i*3+2]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-
-            from =verts[indices[i*3+2]].vertices;
-            to = verts[indices[i*3]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-        }
-#endif //CC_SPRITE_DEBUG_DRAW
-    }
-}
-
-void Sprite::draw(RendererBackend *renderer, const Mat4 &transform, uint32_t flags)
 {
     if (_backendTexture) {
         
@@ -1316,14 +1230,6 @@ void Sprite::draw(RendererBackend *renderer, const Mat4 &transform, uint32_t fla
                                _polyInfo.triangles,
                                transform,
                                flags);
-        //        _trianglesCommand.init(_globalZOrder,
-        //                               _backendTexture,
-        //                               getGLProgramState(),
-        //                               _blendFunc,
-        //                               _polyInfo.triangles,
-        //                               transform,
-        //                               flags);
-        
         renderer->addCommand(&_trianglesCommand);
         return;
     }

@@ -122,10 +122,7 @@ public:
      * @param multiViewCount The number of multiView.
      * @js NA
      */
-    virtual void render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* eyeProjections, unsigned int multiViewCount);
-
-    virtual void render(RendererBackend* renderer, const Mat4* eyeTransforms, const Mat4* eyeProjections, unsigned int multiViewCount = 1);
-    
+    virtual void render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* eyeProjections, unsigned int multiViewCount);    
     /** override function */
     virtual void removeAllChildren() override;
     

@@ -34,6 +34,7 @@
 #include "2d/CCActionCatmullRom.h"
 #include "platform/CCGL.h"
 #include "base/ccUtils.h"
+#include "renderer/CCGLProgram.h"
 
 NS_CC_BEGIN
 

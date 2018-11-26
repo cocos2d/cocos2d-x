@@ -49,7 +49,6 @@ public:
 
 protected:
     friend class Renderer;
-    friend class RendererBackend;
     GroupCommandManager();
     ~GroupCommandManager();
     bool init();
