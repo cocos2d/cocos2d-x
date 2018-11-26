@@ -23,7 +23,9 @@ struct DepthStencilDescriptor
 {
     CompareFunction depthCompareFunction = CompareFunction::LESS;
     bool depthWriteEnabled = false;
+    bool depthTestEnabled = false;
     
+    bool stencilTestEnabled = false;
     StencilDescriptor backFaceStencil;
     StencilDescriptor frontFaceStencil;
 };
@@ -35,7 +37,6 @@ protected:
     virtual ~DepthStencilState();
     
     DepthStencilDescriptor _depthStencilInfo;
-    bool _isStencilEnabled = false;
     bool _isBackFrontStencilEqual = false;
 };
 
