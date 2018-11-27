@@ -30,6 +30,7 @@
 #include "renderer/backend/BindGroup.h"
 #include "renderer/backend/ShaderModule.h"
 #include "renderer/backend/VertexLayout.h"
+#include "renderer/backend/RenderPassDescriptor.h"
 
 NS_CC_BEGIN
 
@@ -41,6 +42,7 @@ struct CC_DLL PipelineDescriptor final
     
     backend::DepthStencilDescriptor depthStencilDescriptor;
     backend::BlendDescriptor blendDescriptor;
+    backend::RenderPassDescriptor renderPassDescriptor;
     backend::BindGroup bindGroup;
     backend::VertexLayout vertexLayout;
     backend::ShaderModule* vertexShader = nullptr;

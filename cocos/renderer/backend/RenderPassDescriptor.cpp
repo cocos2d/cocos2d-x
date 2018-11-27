@@ -146,4 +146,13 @@ bool RenderPassDescriptor::hasStencil() const
             TextureFormat::D24S8 == _depthStencilAttachment.texture->getTextureFormat());
 }
 
+bool RenderPassDescriptor::needGenerateRenderPassState() const
+{
+    return _colorAttachmentsSet |
+           _depthStencilAttachmentSet |
+           _colorAttachments.needClearColor |
+           _depthStencilAttachment.needClearDepth |
+           _depthStencilAttachment.needClearStencil;
+}
+
 CC_BACKEND_END

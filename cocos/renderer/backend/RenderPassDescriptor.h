@@ -57,6 +57,7 @@ public:
     void setClearStencil(uint32_t clearValue);
     
     bool hasStencil() const;
+    bool needGenerateRenderPassState() const;
     
     inline const RenderPassDepthStencilAttachment& getDepthStencilAttachment() const { return _depthStencilAttachment; }
     inline const RenderPassColorAttachments& getColorAttachments() const { return _colorAttachments; }
