@@ -134,7 +134,7 @@ void Program::computeAttributeInfos(const RenderPipelineDescriptor& descriptor)
             attributeInfo.offset = attribute.offset;
             attributeInfo.type = toGLAttributeType(attribute.format);
             attributeInfo.size = getGLAttributeSize(attribute.format);
-            attributeInfo.normalized = attribute.normalized;
+            attributeInfo.normalized = attribute.needNormalize;
             
             vertexAttributeArray.push_back(attributeInfo);
         }

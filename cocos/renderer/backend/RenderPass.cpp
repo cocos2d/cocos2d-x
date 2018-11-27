@@ -13,7 +13,7 @@ RenderPass::RenderPass(const RenderPassDescriptor& descriptor)
 RenderPass::~RenderPass()
 {}
 
-bool RenderPass::Find(const RenderPassDescriptor& descriptor) const
+bool RenderPass::find(const RenderPassDescriptor& descriptor) const
 {
     if(_colorAttachmentsSet != descriptor.getColorAttachmentSet() ||
        _depthStencilAttachmentSet != descriptor.getDepthStencilAttachmentSet())

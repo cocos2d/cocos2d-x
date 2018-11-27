@@ -16,7 +16,7 @@ namespace
             return MTLVertexStepFunctionPerInstance;
     }
     
-    MTLVertexFormat toMTLVertexFormat(VertexFormat vertexFormat)
+    MTLVertexFormat toMTLVertexFormat(VertexFormat vertexFormat, bool needNormalize)
     {
         MTLVertexFormat ret = MTLVertexFormatFloat4;
         switch (vertexFormat)
@@ -46,19 +46,22 @@ namespace
                 ret = MTLVertexFormatInt;
                 break;
             case VertexFormat::USHORT_R16G16B16A16:
-                ret = MTLVertexFormatUShort4;
+                if (needNormalize)
+                    ret = MTLVertexFormatUShort4Normalized;
+                else
+                    ret = MTLVertexFormatUShort4;
                 break;
             case VertexFormat::USHORT_R16G16:
-                ret = MTLVertexFormatUShort2;
-                break;
-            case VertexFormat::UNORM_R8G8B8A8:
-                ret = MTLVertexFormatUChar4;
-                break;
-            case VertexFormat::UNORM_R8G8:
-                ret = MTLVertexFormatUChar2;
+                if (needNormalize)
+                    ret = MTLVertexFormatUShort2Normalized;
+                else
+                    ret = MTLVertexFormatUShort2;
                 break;
             case VertexFormat::UBYTE_R8G8B8A8:
-                ret = MTLVertexFormatUChar4;
+                if (needNormalize)
+                    ret = MTLVertexFormatUChar4Normalized;
+                else
+                    ret = MTLVertexFormatUChar4;
                 break;
             default:
                 assert(false);
@@ -172,9 +175,9 @@ void RenderPipelineMTL::setVertexLayout(MTLRenderPipelineDescriptor* mtlDescript
         const auto& attributes = vertexLayout.getAttributes();
         for (const auto& attribute : attributes)
         {
-            mtlDescriptor.vertexDescriptor.attributes[attribute.index].format = toMTLVertexFormat(attribute.format);
+            mtlDescriptor.vertexDescriptor.attributes[attribute.index].format = toMTLVertexFormat(attribute.format, attribute.needNormalize);
             mtlDescriptor.vertexDescriptor.attributes[attribute.index].offset = attribute.offset;
-            // Buffer index will always be 0;
+            // Buffer index will always be 0.
             mtlDescriptor.vertexDescriptor.attributes[attribute.index].bufferIndex = 0;
         }
         

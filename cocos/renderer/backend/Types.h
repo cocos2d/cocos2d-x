@@ -38,8 +38,6 @@ enum class VertexFormat : uint32_t
     USHORT_R16G16B16A16,
     USHORT_R16G16,
     UBYTE_R8G8B8A8,
-    UNORM_R8G8B8A8,
-    UNORM_R8G8
 };
 
 enum class TextureFormat : uint32_t
