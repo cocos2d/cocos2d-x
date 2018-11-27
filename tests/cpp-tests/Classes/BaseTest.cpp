@@ -194,7 +194,7 @@ void TestList::runThisTest()
         auto autoTestItem = MenuItemLabel::create(autoTestLabel, [&](Ref* sender){
             TestController::getInstance()->startAutoTest();
         });
-        autoTestItem->setPosition(Vec2(VisibleRect::left().x + 60, VisibleRect::bottom().y + 50));
+        autoTestItem->setPosition(Vec2(VisibleRect::right().x - 60, VisibleRect::bottom().y + 50));
 
         auto menu = Menu::create(closeItem, autoTestItem, nullptr);
         menu->setPosition(Vec2::ZERO);
