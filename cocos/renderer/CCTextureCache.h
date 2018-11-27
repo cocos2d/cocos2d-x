@@ -47,10 +47,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-namespace backend {
-    class Texture;
-}
-
 /**
  * @addtogroup _2d
  * @{
@@ -97,7 +93,6 @@ public:
      @param filepath A null terminated string.
     */
     Texture2D* addImage(const std::string &filepath);
-    backend::Texture* addBackendImage(const std::string& filePath);
 
     /** Returns a Texture2D object given a file image.
     * If the file image was not previously loaded, it will create a new Texture2D object and it will return it.
@@ -227,7 +222,6 @@ protected:
     int _asyncRefCount;
 
     std::unordered_map<std::string, Texture2D*> _textures;
-    std::unordered_map<std::string, backend::Texture*> _BackendTextures;
 
     static std::string s_etc1AlphaFileSuffix;
 };

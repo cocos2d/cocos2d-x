@@ -233,7 +233,8 @@ bool Material::parseSampler(GLProgramState* glProgramState, Properties* samplerP
         bool usemipmap = false;
         const char* mipmap = getOptionalString(samplerProperties, "mipmap", "false");
         if (mipmap && strcasecmp(mipmap, "true")==0) {
-            texture->generateMipmap();
+            cocos2d::log("Error in %s %s %d, TODO", __FILE__, __FUNCTION__, __LINE__);
+//            texture->generateMipmap();
             usemipmap = true;
         }
 
@@ -283,7 +284,8 @@ bool Material::parseSampler(GLProgramState* glProgramState, Properties* samplerP
         else
             CCLOG("Invalid magFilter: %s", magFilter);
 
-        texture->setTexParameters(texParams);
+        cocos2d::log("Error in %s %s %d, TODO", __FILE__, __FUNCTION__, __LINE__);
+//        texture->setTexParameters(texParams);
     }
 
     glProgramState->setUniformTexture(samplerProperties->getId(), texture);

@@ -79,8 +79,10 @@ bool HelloWorld::init()
 //    this->addChild(label, 1);
 
     // add "HelloWorld" splash screen"
-    auto sprite = Sprite::backendCreate("HelloWorld.png");
-
+//    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("bugs/circle.plist");
+//    auto sprite = Sprite::createWithSpriteFrameName("circle.png");
+    auto sprite = Sprite::create("HelloWorld.png");
+    
     // position the sprite on the center of the screen
     sprite->setPosition(Vec2(visibleSize / 2) + origin);
 

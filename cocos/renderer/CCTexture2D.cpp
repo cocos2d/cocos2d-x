@@ -47,6 +47,8 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"
 #include "base/CCNinePatchImageParser.h"
+#include "renderer/backend/Device.h"
+#include "renderer/backend/StringUtils.h"
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     #include "renderer/CCTextureCache.h"
@@ -436,16 +438,15 @@ Texture2D::Texture2D()
 : _pixelFormat(Texture2D::PixelFormat::DEFAULT)
 , _pixelsWide(0)
 , _pixelsHigh(0)
-, _name(0)
 , _maxS(0.0)
 , _maxT(0.0)
 , _hasPremultipliedAlpha(false)
 , _hasMipmaps(false)
-, _shaderProgram(nullptr)
 , _antialiasEnabled(true)
 , _ninePatchInfo(nullptr)
 , _valid(true)
 , _alphaTexture(nullptr)
+, _texture(nullptr)
 {
 }
 
@@ -457,23 +458,10 @@ Texture2D::~Texture2D()
     CC_SAFE_RELEASE_NULL(_alphaTexture); // ETC1 ALPHA support.
 
     CCLOGINFO("deallocing Texture2D: %p - id=%u", this, _name);
-    CC_SAFE_RELEASE(_shaderProgram);
 
     CC_SAFE_DELETE(_ninePatchInfo);
 
-    if(_name)
-    {
-        glDeleteTextures(1, &_name);
-    }
-}
-
-void Texture2D::releaseGLTexture()
-{
-    if(_name)
-    {
-        glDeleteTextures(1, &_name);
-    }
-    _name = 0;
+    CC_SAFE_RELEASE(_texture);
 }
 
 
@@ -494,7 +482,13 @@ int Texture2D::getPixelsHigh() const
 
 GLuint Texture2D::getName() const
 {
-    return _name;
+    cocos2d::log("Error in %s %s %d, TODO", __FILE__, __FUNCTION__, __LINE__);
+    return 0;
+}
+
+backend::Texture* Texture2D::getBackendTexture() const
+{
+    return _texture;
 }
 
 GLuint Texture2D::getAlphaTextureName() const
@@ -536,18 +530,6 @@ void Texture2D::setMaxT(GLfloat maxT)
     _maxT = maxT;
 }
 
-GLProgram* Texture2D::getGLProgram() const
-{
-    return _shaderProgram;
-}
-
-void Texture2D::setGLProgram(GLProgram* shaderProgram)
-{
-    CC_SAFE_RETAIN(shaderProgram);
-    CC_SAFE_RELEASE(_shaderProgram);
-    _shaderProgram = shaderProgram;
-}
-
 bool Texture2D::hasPremultipliedAlpha() const
 {
     return _hasPremultipliedAlpha;
@@ -566,8 +548,6 @@ bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::Pixel
 
 bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, int pixelsWide, int pixelsHigh)
 {
-
-
     //the pixelFormat must be a certain value 
     CCASSERT(pixelFormat != PixelFormat::NONE && pixelFormat != PixelFormat::AUTO, "the \"pixelFormat\" param must be a certain value!");
     CCASSERT(pixelsWide>0 && pixelsHigh>0, "Invalid size");
@@ -597,108 +577,16 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
         return false;
     }
 
-    //Set the row align only when mipmapsNum == 1 and the data is uncompressed
-    if (mipmapsNum == 1 && !info.compressed)
-    {
-        unsigned int bytesPerRow = pixelsWide * info.bpp / 8;
-
-        if(bytesPerRow % 8 == 0)
-        {
-            glPixelStorei(GL_UNPACK_ALIGNMENT, 8);
-        }
-        else if(bytesPerRow % 4 == 0)
-        {
-            glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-        }
-        else if(bytesPerRow % 2 == 0)
-        {
-            glPixelStorei(GL_UNPACK_ALIGNMENT, 2);
-        }
-        else
-        {
-            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        }
-    }else
-    {
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    }
-
-    if(_name != 0)
-    {
-        glDeleteTextures(1, &_name);
-        _name = 0;
-    }
-
-    glGenTextures(1, &_name);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _name);
-
-    if (mipmapsNum == 1)
-    {
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _antialiasEnabled ? GL_LINEAR : GL_NEAREST);
-    }else
-    {
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _antialiasEnabled ? GL_LINEAR_MIPMAP_NEAREST : GL_NEAREST_MIPMAP_NEAREST);
-    }
+    auto device = backend::Device::getInstance();
+    backend::TextureDescriptor textureDescriptor;
+    textureDescriptor.width = pixelsWide;
+    textureDescriptor.height = pixelsHigh;
+    backend::StringUtils::PixelFormat format = static_cast<backend::StringUtils::PixelFormat>(pixelFormat);
+    textureDescriptor.textureFormat = backend::StringUtils::PixelFormat2TextureFormat(format);
+    _texture = device->newTexture(textureDescriptor);
+    unsigned char *data = mipmaps[0].address;
+    _texture->updateData(data);
     
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _antialiasEnabled ? GL_LINEAR : GL_NEAREST );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    if (_antialiasEnabled)
-    {
-        TexParams texParams = {(GLuint)(_hasMipmaps?GL_LINEAR_MIPMAP_NEAREST:GL_LINEAR),GL_LINEAR,GL_NONE,GL_NONE};
-        VolatileTextureMgr::setTexParameters(this, texParams);
-    } 
-    else
-    {
-        TexParams texParams = {(GLuint)(_hasMipmaps?GL_NEAREST_MIPMAP_NEAREST:GL_NEAREST),GL_NEAREST,GL_NONE,GL_NONE};
-        VolatileTextureMgr::setTexParameters(this, texParams);
-    }
-#endif
-
-    // clean possible GL error
-    GLenum err = glGetError();
-    if (err != GL_NO_ERROR)
-    {
-        cocos2d::log("OpenGL error 0x%04X in %s %s %d\n", err, __FILE__, __FUNCTION__, __LINE__);
-    }
-    
-    // Specify OpenGL texture image
-    int width = pixelsWide;
-    int height = pixelsHigh;
-    
-    for (int i = 0; i < mipmapsNum; ++i)
-    {
-        unsigned char *data = mipmaps[i].address;
-        GLsizei datalen = mipmaps[i].len;
-
-        if (info.compressed)
-        {
-            glCompressedTexImage2D(GL_TEXTURE_2D, i, info.internalFormat, (GLsizei)width, (GLsizei)height, 0, datalen, data);
-        }
-        else
-        {
-            glTexImage2D(GL_TEXTURE_2D, i, info.internalFormat, (GLsizei)width, (GLsizei)height, 0, info.format, info.type, data);
-        }
-
-        if (i > 0 && (width != height || ccNextPOT(width) != width ))
-        {
-            CCLOG("cocos2d: Texture2D. WARNING. Mipmap level %u is not squared. Texture won't render correctly. width=%d != height=%d", i, width, height);
-        }
-
-        err = glGetError();
-        if (err != GL_NO_ERROR)
-        {
-            CCLOG("cocos2d: Texture2D: Error uploading compressed texture level: %u . glError: 0x%04X", i, err);
-            return false;
-        }
-
-        width = MAX(width >> 1, 1);
-        height = MAX(height >> 1, 1);
-    }
-
     _contentSize = Size((float)pixelsWide, (float)pixelsHigh);
     _pixelsWide = pixelsWide;
     _pixelsHigh = pixelsHigh;
@@ -709,28 +597,18 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     _hasPremultipliedAlpha = false;
     _hasMipmaps = mipmapsNum > 1;
 
-    // shader
-    setGLProgram(GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE));
     return true;
 }
 
-bool Texture2D::updateWithData(const void *data,int offsetX,int offsetY,int width,int height)
+bool Texture2D::updateWithData(void *data,int offsetX,int offsetY,int width,int height)
 {
-    if (_name)
+    if (_texture)
     {
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, _name);
-        const PixelFormatInfo& info = _pixelFormatInfoTables.at(_pixelFormat);
-        glTexSubImage2D(GL_TEXTURE_2D,0,offsetX,offsetY,width,height,info.format, info.type,data);
-
+        uint8_t* textureData = static_cast<uint8_t*>(data);
+        _texture->updateSubData(offsetX, offsetY, width, height, textureData);
         return true;
     }
     return false;
-}
-
-std::string Texture2D::getDescription() const
-{
-    return StringUtils::format("<Texture2D | Name = %u | Dimensions = %ld x %ld | Coordinates = (%.2f, %.2f)>", _name, (long)_pixelsWide, (long)_pixelsHigh, _maxS, _maxT);
 }
 
 // implementation Texture2D (Image)
@@ -752,12 +630,12 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
     this->_filePath = image->getFilePath();
     Configuration *conf = Configuration::getInstance();
 
-    int maxTextureSize = conf->getMaxTextureSize();
-    if (imageWidth > maxTextureSize || imageHeight > maxTextureSize) 
-    {
-        CCLOG("cocos2d: WARNING: Image (%u x %u) is bigger than the supported %u x %u", imageWidth, imageHeight, maxTextureSize, maxTextureSize);
-        return false;
-    }
+//    int maxTextureSize = conf->getMaxTextureSize();
+//    if (imageWidth > maxTextureSize || imageHeight > maxTextureSize)
+//    {
+//        CCLOG("cocos2d: WARNING: Image (%u x %u) is bigger than the supported %u x %u", imageWidth, imageHeight, maxTextureSize, maxTextureSize);
+//        return false;
+//    }
 
     unsigned char*   tempData = image->getData();
     Size             imageSize = Size((float)imageWidth, (float)imageHeight);
@@ -1171,170 +1049,136 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
 }
 
 
-// implementation Texture2D (Drawing)
-
-void Texture2D::drawAtPoint(const Vec2& point)
-{
-    GLfloat    coordinates[] = {
-        0.0f,    _maxT,
-        _maxS,_maxT,
-        0.0f,    0.0f,
-        _maxS,0.0f };
-
-    GLfloat    width = (GLfloat)_pixelsWide * _maxS,
-        height = (GLfloat)_pixelsHigh * _maxT;
-
-    GLfloat        vertices[] = {    
-        point.x,            point.y,
-        width + point.x,    point.y,
-        point.x,            height  + point.y,
-        width + point.x,    height  + point.y };
-
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-    _shaderProgram->use();
-    _shaderProgram->setUniformsForBuiltins();
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _name);
-
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
-
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-}
-
-void Texture2D::drawInRect(const Rect& rect)
-{
-    GLfloat    coordinates[] = {    
-        0.0f,    _maxT,
-        _maxS,_maxT,
-        0.0f,    0.0f,
-        _maxS,0.0f };
-
-    GLfloat    vertices[] = {    rect.origin.x,        rect.origin.y,                            /*0.0f,*/
-        rect.origin.x + rect.size.width,        rect.origin.y,                            /*0.0f,*/
-        rect.origin.x,                            rect.origin.y + rect.size.height,        /*0.0f,*/
-        rect.origin.x + rect.size.width,        rect.origin.y + rect.size.height,        /*0.0f*/ };
-
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-    _shaderProgram->use();
-    _shaderProgram->setUniformsForBuiltins();
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _name);
-
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-}
-
-
+//// implementation Texture2D (Drawing)
 //
-// Use to apply MIN/MAG filter
+//void Texture2D::drawAtPoint(const Vec2& point)
+//{
+//    GLfloat    coordinates[] = {
+//        0.0f,    _maxT,
+//        _maxS,_maxT,
+//        0.0f,    0.0f,
+//        _maxS,0.0f };
 //
-// implementation Texture2D (GLFilter)
-
-void Texture2D::generateMipmap()
-{
-    CCASSERT(_pixelsWide == ccNextPOT(_pixelsWide) && _pixelsHigh == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _name);
-    glGenerateMipmap(GL_TEXTURE_2D);
-    _hasMipmaps = true;
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    VolatileTextureMgr::setHasMipmaps(this, _hasMipmaps);
-#endif
-}
+//    GLfloat    width = (GLfloat)_pixelsWide * _maxS,
+//        height = (GLfloat)_pixelsHigh * _maxT;
+//
+//    GLfloat        vertices[] = {    
+//        point.x,            point.y,
+//        width + point.x,    point.y,
+//        point.x,            height  + point.y,
+//        width + point.x,    height  + point.y };
+//
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+//    _shaderProgram->use();
+//    _shaderProgram->setUniformsForBuiltins();
+//
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, _name);
+//
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
+//
+//    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+//}
+//
+//void Texture2D::drawInRect(const Rect& rect)
+//{
+//    GLfloat    coordinates[] = {    
+//        0.0f,    _maxT,
+//        _maxS,_maxT,
+//        0.0f,    0.0f,
+//        _maxS,0.0f };
+//
+//    GLfloat    vertices[] = {    rect.origin.x,        rect.origin.y,                            /*0.0f,*/
+//        rect.origin.x + rect.size.width,        rect.origin.y,                            /*0.0f,*/
+//        rect.origin.x,                            rect.origin.y + rect.size.height,        /*0.0f,*/
+//        rect.origin.x + rect.size.width,        rect.origin.y + rect.size.height,        /*0.0f*/ };
+//
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+//    _shaderProgram->use();
+//    _shaderProgram->setUniformsForBuiltins();
+//
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, _name);
+//
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
+//    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+//}
 
 bool Texture2D::hasMipmaps() const
 {
     return _hasMipmaps;
 }
 
-void Texture2D::setTexParameters(const TexParams &texParams)
-{
-    CCASSERT((_pixelsWide == ccNextPOT(_pixelsWide) || texParams.wrapS == GL_CLAMP_TO_EDGE) &&
-        (_pixelsHigh == ccNextPOT(_pixelsHigh) || texParams.wrapT == GL_CLAMP_TO_EDGE),
-        "GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _name);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams.minFilter );
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams.magFilter );
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams.wrapS );
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams.wrapT );
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    VolatileTextureMgr::setTexParameters(this, texParams);
-#endif
-}
-
 void Texture2D::setAliasTexParameters()
 {
-    if (! _antialiasEnabled)
-    {
-        return;
-    }
-
-    _antialiasEnabled = false;
-
-    if (_name == 0)
-    {
-        return;
-    }
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _name);
-
-    if( ! _hasMipmaps )
-    {
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-    }
-    else
-    {
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST );
-    }
-
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    TexParams texParams = {(GLuint)(_hasMipmaps?GL_NEAREST_MIPMAP_NEAREST:GL_NEAREST),GL_NEAREST,GL_NONE,GL_NONE};
-    VolatileTextureMgr::setTexParameters(this, texParams);
-#endif
+    cocos2d::log("Error in %s %s %d: TODO", __FILE__, __FUNCTION__, __LINE__);
+//    if (! _antialiasEnabled)
+//    {
+//        return;
+//    }
+//
+//    _antialiasEnabled = false;
+//
+//    if (_name == 0)
+//    {
+//        return;
+//    }
+//
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, _name);
+//
+//    if( ! _hasMipmaps )
+//    {
+//        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+//    }
+//    else
+//    {
+//        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST );
+//    }
+//
+//    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+//#if CC_ENABLE_CACHE_TEXTURE_DATA
+//    TexParams texParams = {(GLuint)(_hasMipmaps?GL_NEAREST_MIPMAP_NEAREST:GL_NEAREST),GL_NEAREST,GL_NONE,GL_NONE};
+//    VolatileTextureMgr::setTexParameters(this, texParams);
+//#endif
 }
 
 void Texture2D::setAntiAliasTexParameters()
 {
-    if ( _antialiasEnabled )
-    {
-        return;
-    }
-
-    _antialiasEnabled = true;
-
-    if (_name == 0)
-    {
-        return;
-    }
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _name);
-
-    if( ! _hasMipmaps )
-    {
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
-    }
-    else
-    {
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST );
-    }
-
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    TexParams texParams = {(GLuint)(_hasMipmaps?GL_LINEAR_MIPMAP_NEAREST:GL_LINEAR),GL_LINEAR,GL_NONE,GL_NONE};
-    VolatileTextureMgr::setTexParameters(this, texParams);
-#endif
+    cocos2d::log("Error in %s %s %d: TODO", __FILE__, __FUNCTION__, __LINE__);
+//    if ( _antialiasEnabled )
+//    {
+//        return;
+//    }
+//
+//    _antialiasEnabled = true;
+//
+//    if (_name == 0)
+//    {
+//        return;
+//    }
+//
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, _name);
+//
+//    if( ! _hasMipmaps )
+//    {
+//        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+//    }
+//    else
+//    {
+//        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST );
+//    }
+//
+//    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+//#if CC_ENABLE_CACHE_TEXTURE_DATA
+//    TexParams texParams = {(GLuint)(_hasMipmaps?GL_LINEAR_MIPMAP_NEAREST:GL_LINEAR),GL_LINEAR,GL_NONE,GL_NONE};
+//    VolatileTextureMgr::setTexParameters(this, texParams);
+//#endif
 }
 
 const char* Texture2D::getStringForFormat() const
