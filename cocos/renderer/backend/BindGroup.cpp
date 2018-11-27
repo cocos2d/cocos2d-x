@@ -55,10 +55,7 @@ BindGroup::TextureInfo& BindGroup::TextureInfo::operator=(TextureInfo&& rhs)
         rhs.retainTextures();
         releaseTextures();
         textures = rhs.textures;
-        retainTextures();
         
-        //release the textures before cleaning the vertor
-        rhs.releaseTextures();
         rhs.textures.clear();
     }
     return *this;
