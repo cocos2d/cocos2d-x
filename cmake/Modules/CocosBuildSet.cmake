@@ -10,6 +10,10 @@ set(CMAKE_DEBUG_TARGET_PROPERTIES
 # some useful variables for every one cocos project
 set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
 
+if(CMAKE_TOOLCHAIN_FILE)
+    message(STATUS "using toolchain file:" ${CMAKE_TOOLCHAIN_FILE})
+endif()
+
 message(STATUS "PROJECT_NAME:" ${PROJECT_NAME})
 message(STATUS "PROJECT_SOURCE_DIR:" ${PROJECT_SOURCE_DIR})
 message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
