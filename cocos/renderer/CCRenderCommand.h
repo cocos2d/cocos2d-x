@@ -22,15 +22,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-
-#ifndef __CCRENDERCOMMAND_H_
-#define __CCRENDERCOMMAND_H_
+#pragma once
 
 #include <stdint.h>
 
 #include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
+#include "renderer/CCPipelineDescriptor.h"
 
 /**
  * @addtogroup renderer
@@ -100,6 +98,8 @@ public:
     float getDepth() const { return _depth; }
     void setViewPort(int x, int y, int width, int height);
     inline const int* getViewPort() const { return _viewPort;}
+    // Can use the result to change the descritor content.
+    inline PipelineDescriptor& getPipelineDescriptor() { return _pipelineDescriptor; }
     
 protected:
     /**Constructor.*/
@@ -110,28 +110,30 @@ protected:
     void printID();
 
     /**Type used in order to avoid dynamic cast, faster. */
-    Type _type;
+    Type _type = RenderCommand::Type::UNKNOWN_COMMAND;
 
     /** Commands are sort by global Z order. */
-    float _globalOrder;
+    float _globalOrder = 0.f;
     
     /** Transparent flag. */
-    bool  _isTransparent;
+    bool  _isTransparent = true;
     
     /**
      QuadCommand and TrianglesCommand could be auto batched if there material ID is the same, however, if
      a command is skip batching, it would be forced to draw in a separate function call, and break the batch.
      */
-    bool _skipBatching;
+    bool _skipBatching = false;
     
     /** Is the command been rendered on 3D pass. */
-    bool _is3D;
+    bool _is3D = false;
     
     /** Depth from the model view matrix.*/
-    float _depth;
+    float _depth = 0.f;
     
     //set viewport
-    int _viewPort[4];
+    int _viewPort[4] = { 0, 0, 0, 0 };
+    
+    PipelineDescriptor _pipelineDescriptor;
 };
 
 NS_CC_END
@@ -139,4 +141,3 @@ NS_CC_END
  end of support group
  @}
  */
-#endif //__CCRENDERCOMMAND_H_

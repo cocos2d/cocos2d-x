@@ -424,8 +424,9 @@ void Sprite::setBackendTexture(backend::Texture *texture)
     auto device = backend::Device::getInstance();
     auto vs = device->createShaderModule(backend::ShaderStage::VERTEX, sprite_vert);
     auto fs = device->createShaderModule(backend::ShaderStage::FRAGMENT, sprite_frag);
-    _pipelineDescriptor.setVertexShader(vs);
-    _pipelineDescriptor.setFragmentShader(fs);
+    auto& pipelineDescriptor = _trianglesCommand.getPipelineDescriptor();
+    pipelineDescriptor.setVertexShader(vs);
+    pipelineDescriptor.setFragmentShader(fs);
     
 #define VERTEX_POSITION_SIZE 3
 #define VERTEX_TEXCOORD_SIZE 2
@@ -441,7 +442,7 @@ void Sprite::setBackendTexture(backend::Texture *texture)
     vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, colorOffset, true);
     
     vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
-    _pipelineDescriptor.vertexLayout = vertexLayout;
+    pipelineDescriptor.vertexLayout = vertexLayout;
     
     backend::TextureGL* textureGL = static_cast<backend::TextureGL*>(texture);
                           
@@ -1136,13 +1137,12 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if (_backendTexture) {
         
-        backend::BindGroup bindGroup;
         cocos2d::Mat4 projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        _pipelineDescriptor.bindGroup.setUniform("a_projection", projectionMat.m, sizeof(projectionMat.m));
-        _pipelineDescriptor.bindGroup.setTexture("u_texture", 0, _backendTexture);
+        auto& pipelineDescriptor = _trianglesCommand.getPipelineDescriptor();
+        pipelineDescriptor.bindGroup.setUniform("a_projection", projectionMat.m, sizeof(projectionMat.m));
+        pipelineDescriptor.bindGroup.setTexture("u_texture", 0, _backendTexture);
         
         _trianglesCommand.init(_globalZOrder,
-                               &_pipelineDescriptor,
                                _polyInfo.triangles,
                                transform,
                                flags);
@@ -1806,7 +1806,7 @@ void Sprite::updateBackendBlendFunc(void)
     
     // it is possible to have an untextured sprite
     backend::TextureGL* textureGL = static_cast<backend::TextureGL*>(_backendTexture);
-    backend::BlendDescriptor blendDescriptor;
+    backend::BlendDescriptor& blendDescriptor = _trianglesCommand.getPipelineDescriptor().blendDescriptor;
     blendDescriptor.blendEnabled = true;
     
     if (! _backendTexture || ! textureGL->hasPremultipliedAlpha())
@@ -1827,7 +1827,6 @@ void Sprite::updateBackendBlendFunc(void)
 //        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
         setOpacityModifyRGB(true);
     }
-    _pipelineDescriptor.blendDescriptor = blendDescriptor;
 }
 
 std::string Sprite::getDescription() const

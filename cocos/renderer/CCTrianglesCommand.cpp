@@ -84,10 +84,8 @@ void TrianglesCommand::init(float globalOrder, backend::Texture* textureID, GLPr
     //    _alphaTextureID = texture->getAlphaTextureName();
 }
 
-void TrianglesCommand::init(float globalOrder, PipelineDescriptor* pipelineDescriptor, const Triangles& triangles, const Mat4& mv, uint32_t flags)
+void TrianglesCommand::init(float globalOrder, const Triangles& triangles, const Mat4& mv, uint32_t flags)
 {
-    CCASSERT(pipelineDescriptor, "Invalid pipelineDescriptor");
-    
     RenderCommand::init(globalOrder, mv, flags);
     
     _triangles = triangles;
@@ -99,7 +97,6 @@ void TrianglesCommand::init(float globalOrder, PipelineDescriptor* pipelineDescr
     }
     _mv = mv;
     
-    _pipelineDescriptor = pipelineDescriptor;
     generateBackendMaterialID();
 //    if( _textureID != textureID || _blendType.src != blendType.src || _blendType.dst != blendType.dst ||
 //       _glProgramState != glProgramState)
@@ -161,12 +158,12 @@ void TrianglesCommand::generateBackendMaterialID()
     }hashMe;
     memset(&hashMe, 0, sizeof(hashMe));
 
-    hashMe.depthStencilDescriptor = _pipelineDescriptor->depthStencilDescriptor;
-    hashMe.blendDescriptor = _pipelineDescriptor->blendDescriptor;
-    hashMe.bindGroup = &_pipelineDescriptor->bindGroup;
-    hashMe.vertexLayout = _pipelineDescriptor->vertexLayout;
-    hashMe.vertexShader = _pipelineDescriptor->vertexShader;
-    hashMe.fragmentShader = _pipelineDescriptor->fragmentShader;
+    hashMe.depthStencilDescriptor = _pipelineDescriptor.depthStencilDescriptor;
+    hashMe.blendDescriptor = _pipelineDescriptor.blendDescriptor;
+    hashMe.bindGroup = &_pipelineDescriptor.bindGroup;
+    hashMe.vertexLayout = _pipelineDescriptor.vertexLayout;
+    hashMe.vertexShader = _pipelineDescriptor.vertexShader;
+    hashMe.fragmentShader = _pipelineDescriptor.fragmentShader;
     _materialID = XXH32((const void*)&hashMe, sizeof(hashMe), 0);
 }
 

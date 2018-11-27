@@ -47,7 +47,6 @@ class Rect;
 class Size;
 class Texture2D;
 struct transformValues_;
-struct PipelineDescriptor;
 namespace backend {
     class Texture;
 }
@@ -702,8 +701,6 @@ protected:
 
     bool _stretchEnabled;
     
-    PipelineDescriptor _pipelineDescriptor;
-
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
 };

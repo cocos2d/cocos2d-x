@@ -698,7 +698,7 @@ void Renderer::drawBatchedTriangles()
         
         _commandBuffer->setVertexBuffer(0, _vertexBuffer);
         _commandBuffer->setIndexBuffer(_indexBuffer);
-        _commandBuffer->setBindGroup(&pipelineDescriptor->bindGroup);
+        _commandBuffer->setBindGroup(&pipelineDescriptor.bindGroup);
         _commandBuffer->drawElements(backend::PrimitiveType::TRIANGLE,
                                      backend::IndexFormat::U_SHORT, _triBatchesToDraw[i].indicesToDraw,
                                      _triBatchesToDraw[i].offset * sizeof(_indices[0]));
@@ -786,18 +786,18 @@ void Renderer::setClearColor(const Color4F &clearColor)
     _defaultRenderPass = backend::Device::getInstance()->newRenderPass(descriptor);
 }
 
-backend::RenderPipeline* Renderer::createRenderPipeline(PipelineDescriptor* pipelineDescriptor)
+backend::RenderPipeline* Renderer::createRenderPipeline(const PipelineDescriptor& pipelineDescriptor)
 {
     backend::RenderPipelineDescriptor renderPipelineDescriptor;
-    renderPipelineDescriptor.setVertexShaderModule(pipelineDescriptor->vertexShader);
-    renderPipelineDescriptor.setFragmentShaderModule(pipelineDescriptor->fragmentShader);
-    renderPipelineDescriptor.setVertexLayout(0, pipelineDescriptor->vertexLayout);
+    renderPipelineDescriptor.setVertexShaderModule(pipelineDescriptor.vertexShader);
+    renderPipelineDescriptor.setFragmentShaderModule(pipelineDescriptor.fragmentShader);
+    renderPipelineDescriptor.setVertexLayout(0, pipelineDescriptor.vertexLayout);
     
     auto device = backend::Device::getInstance();
-    auto blendState = device->createBlendState(pipelineDescriptor->blendDescriptor);
+    auto blendState = device->createBlendState(pipelineDescriptor.blendDescriptor);
     renderPipelineDescriptor.setBlendState(blendState);
     
-    auto depthStencilState = device->createDepthStencilState(pipelineDescriptor->depthStencilDescriptor);
+    auto depthStencilState = device->createDepthStencilState(pipelineDescriptor.depthStencilDescriptor);
     renderPipelineDescriptor.setDepthStencilState(depthStencilState);
     
     auto renderPipeline = device->newRenderPipeline(renderPipelineDescriptor);

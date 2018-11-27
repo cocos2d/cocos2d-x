@@ -215,7 +215,7 @@ protected:
 
     void fillVerticesAndIndices(const TrianglesCommand* cmd);
     
-    backend::RenderPipeline* createRenderPipeline(PipelineDescriptor*);
+    backend::RenderPipeline* createRenderPipeline(const PipelineDescriptor&);
 
 
     /* clear color set outside be used in setGLDefaultValues() */
