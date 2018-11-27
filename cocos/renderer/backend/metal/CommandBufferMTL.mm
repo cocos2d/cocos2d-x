@@ -204,13 +204,13 @@ void CommandBufferMTL::setTextures() const
     }
 }
 
-void CommandBufferMTL::doSetTextures(const std::vector<std::string>& textures, bool isVertex) const
+void CommandBufferMTL::doSetTextures(const std::vector<std::string>& textureNames, bool isVertex) const
 {
     const auto& bindTextureInfos = _bindGroup->getTextureInfos();
     int i = 0;
-    for (const auto& texture : textures)
+    for (const auto& textureName : textureNames)
     {
-        auto iter = bindTextureInfos.find(texture);
+        auto iter = bindTextureInfos.find(textureName);
         if (bindTextureInfos.end() != iter)
         {
             //FIXME: should support texture array.
