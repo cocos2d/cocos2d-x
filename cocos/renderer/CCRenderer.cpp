@@ -691,6 +691,7 @@ void Renderer::drawBatchedTriangles()
         auto pipelineDescriptor = _triBatchesToDraw[i].cmd->getPipelineDescriptor();
         auto renderPipeline = createRenderPipeline(pipelineDescriptor);
         _commandBuffer->setRenderPipeline(renderPipeline);
+        renderPipeline->release();
         
         auto viewPort = _triBatchesToDraw[i].cmd->getViewPort();
         _commandBuffer->setViewport(viewPort[0], viewPort[1], viewPort[2], viewPort[3]);

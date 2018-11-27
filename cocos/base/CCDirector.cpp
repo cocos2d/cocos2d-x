@@ -1092,7 +1092,7 @@ void Director::purgeDirector()
 {
     reset();
 
-    CHECK_GL_ERROR_DEBUG();
+//    CHECK_GL_ERROR_DEBUG();
     
     // OpenGL view
     if (_openGLView)
