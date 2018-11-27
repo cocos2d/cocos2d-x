@@ -23,11 +23,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-
 #import <Cocoa/Cocoa.h>
+#import <Metal/Metal.h>
 #include <algorithm>
 
 #include "platform/CCApplication.h"
@@ -35,6 +32,7 @@ THE SOFTWARE.
 #include "math/CCGeometry.h"
 #include "base/CCDirector.h"
 #include "base/ccUtils.h"
+#include "renderer/backend/metal/DeviceMTL.h"
 
 NS_CC_BEGIN
 
@@ -85,6 +83,7 @@ int Application::run()
     while (!glview->windowShouldClose())
     {
         lastTime = getCurrentMillSecond();
+        backend::DeviceMTL::updateDrawable();
 
         // hack to fix issue #19080, black screen on macOS 10.14
         // stevetranby: look into doing this outside loop to get rid of condition test per frame
@@ -201,5 +200,3 @@ const std::string& Application::getStartupScriptFilename(void)
 }
 
 NS_CC_END
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC

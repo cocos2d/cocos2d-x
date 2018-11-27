@@ -374,7 +374,8 @@ void Director::setOpenGLView(GLView *openGLView)
     {
         // Configuration. Gather GPU info
         Configuration *conf = Configuration::getInstance();
-        conf->gatherGPUInfo();
+        //TODO: minggo
+//        conf->gatherGPUInfo();
         CCLOG("%s\n",conf->getInfo().c_str());
 
         if(_openGLView)
@@ -393,8 +394,6 @@ void Director::setOpenGLView(GLView *openGLView)
         }
 
        _renderer->init();
-
-        CHECK_GL_ERROR_DEBUG();
 
         if (_eventDispatcher)
         {
@@ -710,16 +709,17 @@ float Director::getZEye(void) const
 
 void Director::setAlphaBlending(bool on)
 {
-    if (on)
-    {
-        utils::setBlending(CC_BLEND_SRC, CC_BLEND_DST);
-    }
-    else
-    {
-        utils::setBlending(GL_ONE, GL_ZERO);
-    }
-
-    CHECK_GL_ERROR_DEBUG();
+    //TODO: minggo
+//    if (on)
+//    {
+//        utils::setBlending(CC_BLEND_SRC, CC_BLEND_DST);
+//    }
+//    else
+//    {
+//        utils::setBlending(GL_ONE, GL_ZERO);
+//    }
+//
+//    CHECK_GL_ERROR_DEBUG();
 }
 
 void Director::setDepthTest(bool on)

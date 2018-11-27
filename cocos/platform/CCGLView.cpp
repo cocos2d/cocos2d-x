@@ -165,7 +165,8 @@ void GLView::updateDesignResolutionSize()
         // A default viewport is needed in order to display the FPS,
         // since the FPS are rendered in the Director, and there is no viewport there.
         // Everything, including the FPS should renderer in the Scene.
-        glViewport(0, 0, _screenSize.width, _screenSize.height);
+        //TODO: minggo
+//        glViewport(0, 0, _screenSize.width, _screenSize.height);
     }
 }
 

@@ -293,8 +293,6 @@ bool Configuration::supportsOESPackedDepthStencil() const
     return _supportsOESPackedDepthStencil;
 }
 
-
-
 int Configuration::getMaxSupportDirLightInShader() const
 {
     return _maxDirLightInShader;

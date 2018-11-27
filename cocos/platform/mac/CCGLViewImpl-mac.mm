@@ -28,6 +28,7 @@ THE SOFTWARE.
 
 #include <cmath>
 #include <unordered_map>
+#include <Metal/Metal.h>
 
 #include "platform/CCApplication.h"
 #include "base/CCDirector.h"
@@ -42,6 +43,7 @@ THE SOFTWARE.
 #if CC_ICON_SET_SUPPORT
 #include "platform/CCImage.h"
 #endif /* CC_ICON_SET_SUPPORT */
+#include "renderer/backend/metal/DeviceMTL.h"
 
 NS_CC_BEGIN
 
@@ -317,6 +319,20 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
         MessageBox(message.c_str(), "Error launch application");
         return false;
     }
+    
+    // Initialize device.
+    NSView* contentView = [getCocoaWindow() contentView];
+    [contentView setWantsLayer: YES];
+    CGSize size;
+    size.width = rect.size.width;
+    size.height = rect.size.height;
+    CAMetalLayer* layer = [CAMetalLayer layer];
+    [layer setDevice:MTLCreateSystemDefaultDevice()];
+    [layer setPixelFormat:MTLPixelFormatBGRA8Unorm];
+    [layer setFramebufferOnly:YES];
+    [layer setDrawableSize:size];
+    [contentView setLayer:layer];
+    backend::DeviceMTL::setCAMetalLayer(layer);
 
     /*
     *  Note that the created window and context may differ from what you requested,
@@ -429,8 +445,8 @@ void GLViewImpl::end()
 
 void GLViewImpl::swapBuffers()
 {
-    if(_mainWindow)
-        glfwSwapBuffers(_mainWindow);
+//    if(_mainWindow)
+//        glfwSwapBuffers(_mainWindow);
 }
 
 bool GLViewImpl::windowShouldClose()

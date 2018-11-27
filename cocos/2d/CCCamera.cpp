@@ -458,17 +458,18 @@ void Camera::applyFrameBufferObject()
 
 void Camera::applyViewport()
 {
-    glGetIntegerv(GL_VIEWPORT, _oldViewport);
-
-    if(nullptr == _fbo)
-    {
-        glViewport(getDefaultViewport()._left, getDefaultViewport()._bottom, getDefaultViewport()._width, getDefaultViewport()._height);
-    }
-    else
-    {
-        glViewport(_viewport._left * _fbo->getWidth(), _viewport._bottom * _fbo->getHeight(),
-                   _viewport._width * _fbo->getWidth(), _viewport._height * _fbo->getHeight());
-    }
+    //TODO: minggo
+//    glGetIntegerv(GL_VIEWPORT, _oldViewport);
+//
+//    if(nullptr == _fbo)
+//    {
+//        glViewport(getDefaultViewport()._left, getDefaultViewport()._bottom, getDefaultViewport()._width, getDefaultViewport()._height);
+//    }
+//    else
+//    {
+//        glViewport(_viewport._left * _fbo->getWidth(), _viewport._bottom * _fbo->getHeight(),
+//                   _viewport._width * _fbo->getWidth(), _viewport._height * _fbo->getHeight());
+//    }
 }
 
 void Camera::setViewport(const experimental::Viewport& vp)
@@ -498,7 +499,8 @@ void Camera::restoreFrameBufferObject()
 
 void Camera::restoreViewport()
 {
-    glViewport(_oldViewport[0], _oldViewport[1], _oldViewport[2], _oldViewport[3]);
+    //TODO: minggo
+//    glViewport(_oldViewport[0], _oldViewport[1], _oldViewport[2], _oldViewport[3]);
 }
 
 int Camera::getRenderOrder() const
