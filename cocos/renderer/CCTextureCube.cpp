@@ -234,7 +234,7 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-    cocos2d::log("Error in %s %s %d, TODO", __FILE__, __FUNCTION__, __LINE__);
+//  TODO coulsonwang
 //    _name = handle;
 
     glActiveTexture(GL_TEXTURE0);
