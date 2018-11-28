@@ -18,6 +18,18 @@ BindGroup::UniformInfo::~UniformInfo()
         free(data);
 }
 
+BindGroup::UniformInfo::UniformInfo(const UniformInfo& rhs)
+: name(rhs.name)
+, size(rhs.size)
+{
+    if (rhs.data)
+    {
+        data = malloc(size);
+        if (data)
+            memcpy(data, rhs.data, size);
+    }
+}
+
 BindGroup::UniformInfo& BindGroup::UniformInfo::operator=(UniformInfo&& rhs)
 {
     if (this != &rhs)
@@ -40,6 +52,14 @@ BindGroup::TextureInfo::TextureInfo(const std::string& _name, const std::vector<
     retainTextures();
 }
 
+BindGroup::TextureInfo::TextureInfo(const TextureInfo& rhs)
+: name(rhs.name)
+, indices(rhs.indices)
+, textures(rhs.textures)
+{
+    retainTextures();
+}
+
 BindGroup::TextureInfo::~TextureInfo()
 {
     releaseTextures();
@@ -50,13 +70,10 @@ BindGroup::TextureInfo& BindGroup::TextureInfo::operator=(TextureInfo&& rhs)
     if (this != &rhs)
     {
         name = rhs.name;
-        indices = rhs.indices;
+        indices = std::move(rhs.indices);
         
-        rhs.retainTextures();
         releaseTextures();
-        textures = rhs.textures;
-        
-        rhs.textures.clear();
+        textures = std::move(rhs.textures);
     }
     return *this;
 }

@@ -19,7 +19,7 @@ public:
     {
         UniformInfo(const std::string& _name, void* _data, uint32_t _size);
         UniformInfo() = default;
-        UniformInfo(const UniformInfo&) = default;
+        UniformInfo(const UniformInfo&);
         ~UniformInfo();
         UniformInfo& operator =(UniformInfo&& rhs);
 
@@ -31,7 +31,7 @@ public:
     struct TextureInfo
     {
         TextureInfo(const std::string& _name, const std::vector<uint32_t>& _indices, const std::vector<Texture*> _textures);
-        TextureInfo(const TextureInfo&) = default;
+        TextureInfo(const TextureInfo&);
         TextureInfo() = default;
         ~TextureInfo();
         TextureInfo& operator =(TextureInfo&& rhs);

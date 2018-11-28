@@ -688,7 +688,7 @@ void Renderer::drawBatchedTriangles()
     
     for (int i = 0; i < batchesTotal; ++i)
     {
-        auto pipelineDescriptor = _triBatchesToDraw[i].cmd->getPipelineDescriptor();
+        auto& pipelineDescriptor = _triBatchesToDraw[i].cmd->getPipelineDescriptor();
         auto renderPipeline = createRenderPipeline(pipelineDescriptor);
         _commandBuffer->setRenderPipeline(renderPipeline);
         renderPipeline->release();
