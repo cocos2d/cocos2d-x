@@ -41,7 +41,6 @@ public:
     CREATE_FUNC(Bug15776Layer);
 
     virtual bool init() override;
-
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
