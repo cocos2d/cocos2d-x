@@ -24,10 +24,6 @@ function install_android_ndk()
 
 function install_linux_environment()
 {
-    mkdir -p $HOME/bin
-    pushd $HOME/bin
-
-    echo "GCC version: `gcc --version`"
     echo "Installing linux dependence packages ..."
     echo -e "y" | bash $COCOS2DX_ROOT/build/install-deps-linux.sh
     echo "Installing linux dependence packages finished!"
