@@ -1115,7 +1115,7 @@ bool Texture2D::hasMipmaps() const
 
 void Texture2D::setAliasTexParameters()
 {
-    cocos2d::log("Error in %s %s %d: TODO", __FILE__, __FUNCTION__, __LINE__);
+//    TODO coulsonwang
 //    if (! _antialiasEnabled)
 //    {
 //        return;
@@ -1149,7 +1149,7 @@ void Texture2D::setAliasTexParameters()
 
 void Texture2D::setAntiAliasTexParameters()
 {
-    cocos2d::log("Error in %s %s %d: TODO", __FILE__, __FUNCTION__, __LINE__);
+//    TODO coulsonwang
 //    if ( _antialiasEnabled )
 //    {
 //        return;
@@ -1356,4 +1356,40 @@ Texture2D* Texture2D::getAlphaTexture() const
 {
     return _alphaTexture;
 }
+
+//TODO coulsonwang
+//void Texture2D::setTexParameters(const TexParams &texParams)
+//{
+//    CCASSERT((_pixelsWide == ccNextPOT(_pixelsWide) || texParams.wrapS == GL_CLAMP_TO_EDGE) &&
+//             (_pixelsHigh == ccNextPOT(_pixelsHigh) || texParams.wrapT == GL_CLAMP_TO_EDGE),
+//             "GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
+//
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, _name);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams.minFilter );
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams.magFilter );
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams.wrapS );
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams.wrapT );
+//
+//#if CC_ENABLE_CACHE_TEXTURE_DATA
+//    VolatileTextureMgr::setTexParameters(this, texParams);
+//#endif
+//}
+
+//  TODO coulsonwang
+//// implementation Texture2D (GLFilter)
+//void Texture2D::generateMipmap()
+//{
+//    CCASSERT(_pixelsWide == ccNextPOT(_pixelsWide) && _pixelsHigh == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, _name);
+//    glGenerateMipmap(GL_TEXTURE_2D);
+//    _hasMipmaps = true;
+//#if CC_ENABLE_CACHE_TEXTURE_DATA
+//    VolatileTextureMgr::setHasMipmaps(this, _hasMipmaps);
+//#endif
+//}
+
+
+
 NS_CC_END

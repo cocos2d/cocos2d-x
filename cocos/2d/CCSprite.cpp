@@ -40,13 +40,9 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "2d/CCCamera.h"
-#include "renderer/backend/Texture.h"
 #include "renderer/backend/Device.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/ccShaders.h"
-
-//for debug
-#include "renderer/backend/opengl/TextureGL.h"
 
 NS_CC_BEGIN
 
@@ -297,7 +293,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         _quad.tr.colors = Color4B::WHITE;
 
         // update texture (calls updateBlendFunc)
-        setBackendTexture(texture->getBackendTexture());
+        setTexture(texture);
         setTextureRect(rect, rotated, rect.size);
 
         // by default use "Self Render".
@@ -339,7 +335,6 @@ Sprite::~Sprite()
     CC_SAFE_FREE(_trianglesIndex);
     CC_SAFE_RELEASE(_spriteFrame);
     CC_SAFE_RELEASE(_texture);
-    CC_SAFE_RELEASE(_backendTexture);
 }
 
 /*
@@ -380,47 +375,6 @@ void Sprite::setTexture(const std::string &filename)
 
 void Sprite::setTexture(Texture2D *texture)
 {
-    cocos2d::log("Error in %s %s %d, should not reach here!", __FILE__, __FUNCTION__, __LINE__);
-    
-    if(_glProgramState == nullptr)
-    {
-        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, texture));
-    }
-    // If batchnode, then texture id should be the same
-    CCASSERT(! _batchNode || (texture &&  texture->getName() == _batchNode->getTexture()->getName()), "CCSprite: Batched sprites should use the same texture as the batchnode");
-    // accept texture==nil as argument
-    CCASSERT( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
-
-    if (texture == nullptr)
-    {
-        // Gets the texture by key firstly.
-        texture = _director->getTextureCache()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
-
-        // If texture wasn't in cache, create it from RAW data.
-        if (texture == nullptr)
-        {
-            Image* image = new (std::nothrow) Image();
-            bool CC_UNUSED isOK = image->initWithRawData(cc_2x2_white_image, sizeof(cc_2x2_white_image), 2, 2, 8);
-            CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
-
-            texture = _director->getTextureCache()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
-            CC_SAFE_RELEASE(image);
-        }
-    }
-
-    if ((_renderMode != RenderMode::QUAD_BATCHNODE) && (_texture != texture))
-    {
-        CC_SAFE_RETAIN(texture);
-        CC_SAFE_RELEASE(_texture);
-        _texture = texture;
-        updateBlendFunc();
-    }
-}
-
-void Sprite::setBackendTexture(backend::Texture *texture)
-{
-//     setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
-    
     auto device = backend::Device::getInstance();
     auto vs = device->createShaderModule(backend::ShaderStage::VERTEX, sprite_vert);
     auto fs = device->createShaderModule(backend::ShaderStage::FRAGMENT, sprite_frag);
@@ -444,36 +398,33 @@ void Sprite::setBackendTexture(backend::Texture *texture)
     vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
     pipelineDescriptor.vertexLayout = vertexLayout;
     
-    backend::TextureGL* textureGL = static_cast<backend::TextureGL*>(texture);
-                          
-    CCASSERT(! _batchNode || (texture &&  textureGL->getHandler() == _batchNode->getTexture()->getName()), "CCSprite: Batched sprites should use the same texture as the batchnode");
+    CCASSERT(! _batchNode || (texture &&  texture == _batchNode->getTexture()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
-    CCASSERT( !texture || dynamic_cast<backend::Texture*>(texture), "setTexture expects a Texture2D. Invalid argument");
+    CCASSERT( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
     
     if (texture == nullptr)
     {
-        cocos2d::log("backend::Texture is nullptr in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
-//        // Gets the texture by key firstly.
-//        texture = _director->getTextureCache()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
-//
-//        // If texture wasn't in cache, create it from RAW data.
-//        if (texture == nullptr)
-//        {
-//            Image* image = new (std::nothrow) Image();
-//            bool CC_UNUSED isOK = image->initWithRawData(cc_2x2_white_image, sizeof(cc_2x2_white_image), 2, 2, 8);
-//            CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
-//
-//            texture = _director->getTextureCache()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
-//            CC_SAFE_RELEASE(image);
-//        }
+        // Gets the texture by key firstly.
+        texture = _director->getTextureCache()->getTextureForKey(CC_2x2_WHITE_IMAGE_KEY);
+
+        // If texture wasn't in cache, create it from RAW data.
+        if (texture == nullptr)
+        {
+            Image* image = new (std::nothrow) Image();
+            bool CC_UNUSED isOK = image->initWithRawData(cc_2x2_white_image, sizeof(cc_2x2_white_image), 2, 2, 8);
+            CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
+
+            texture = _director->getTextureCache()->addImage(image, CC_2x2_WHITE_IMAGE_KEY);
+            CC_SAFE_RELEASE(image);
+        }
     }
     
-    if ((_renderMode != RenderMode::QUAD_BATCHNODE) && (_backendTexture != texture))
+    if ((_renderMode != RenderMode::QUAD_BATCHNODE) && (_texture != texture))
     {
         CC_SAFE_RETAIN(texture);
-        CC_SAFE_RELEASE(_backendTexture);
-        _backendTexture = texture;
-        updateBackendBlendFunc();
+        CC_SAFE_RELEASE(_texture);
+        _texture = texture;
+        updateBlendFunc();
     }
 }
 
@@ -843,34 +794,16 @@ void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQua
 {
     Texture2D *tex = (_renderMode == RenderMode::QUAD_BATCHNODE) ? _textureAtlas->getTexture() : _texture;
     
-    backend::Texture *backendTex = (_renderMode == RenderMode::QUAD_BATCHNODE) ? nullptr : _backendTexture;
-    if (tex == nullptr && backendTex == nullptr)
+    if (tex == nullptr)
     {
         return;
     }
 
     const auto rectInPixels = CC_RECT_POINTS_TO_PIXELS(rectInPoints);
 
-//    const float atlasWidth = (float)tex->getPixelsWide();
-//    const float atlasHeight = (float)tex->getPixelsHigh();
-    
-    float atlasWidth = 0.0;
-    float atlasHeight = 0.0;
-    if(tex)
-    {
-        atlasWidth = (float)tex->getPixelsWide();
-        atlasHeight = (float)tex->getPixelsHigh();
-    }
-    else if (backendTex)
-    {
-        atlasWidth = (float)backendTex->getWidth();
-        atlasHeight = (float)backendTex->getHeight();
-    }
-    else
-    {
-        cocos2d::log("set textureCoord error......");
-    }
-
+    const float atlasWidth = (float)tex->getPixelsWide();
+    const float atlasHeight = (float)tex->getPixelsHigh();
+   
     float rw = rectInPixels.size.width;
     float rh = rectInPixels.size.height;
 
@@ -1135,21 +1068,6 @@ void Sprite::updateTransform(void)
 // draw
 void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    if (_backendTexture) {
-        
-        cocos2d::Mat4 projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        auto& pipelineDescriptor = _trianglesCommand.getPipelineDescriptor();
-        pipelineDescriptor.bindGroup.setUniform("a_projection", projectionMat.m, sizeof(projectionMat.m));
-        pipelineDescriptor.bindGroup.setTexture("u_texture", 0, _backendTexture);
-        
-        _trianglesCommand.init(_globalZOrder,
-                               _polyInfo.triangles,
-                               transform,
-                               flags);
-        renderer->addCommand(&_trianglesCommand);
-        return;
-    }
-    
     if (_texture == nullptr)
     {
         return;
@@ -1173,17 +1091,19 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     
     if(_insideBounds)
 #endif
-    {
-        _trianglesCommand.init(_globalZOrder,
-                               _texture,
-                               getGLProgramState(),
-                               _blendFunc,
-                               _polyInfo.triangles,
-                               transform,
-                               flags);
-        
-        renderer->addCommand(&_trianglesCommand);
-        
+   
+    backend::BindGroup bindGroup;
+    cocos2d::Mat4 projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    auto& pipelineDescriptor = _trianglesCommand.getPipelineDescriptor();
+    pipelineDescriptor.bindGroup.setUniform("a_projection", projectionMat.m, sizeof(projectionMat.m));
+    pipelineDescriptor.bindGroup.setTexture("u_texture", 0, _texture->getBackendTexture());
+    
+    _trianglesCommand.init(_globalZOrder,
+                           _polyInfo.triangles,
+                           transform,
+                           flags);
+    renderer->addCommand(&_trianglesCommand);
+    
 #if CC_SPRITE_DEBUG_DRAW
         _debugDrawNode->clear();
         auto count = _polyInfo.triangles.indexCount/3;
@@ -1205,7 +1125,6 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
         }
 #endif //CC_SPRITE_DEBUG_DRAW
-    }
 }
 
 // MARK: visit, draw, transform
@@ -1675,11 +1594,11 @@ void Sprite::setSpriteFrame(SpriteFrame *spriteFrame)
     }
     _unflippedOffsetPositionFromCenter = spriteFrame->getOffset();
 
-    backend::Texture *texture = spriteFrame->getTexture()->getBackendTexture();
+    Texture2D *texture = spriteFrame->getTexture();
     // update texture before updating texture rect
-    if (texture != _backendTexture)
+    if (texture != _texture)
     {
-        setBackendTexture(texture);
+        setTexture(texture);
     }
 
     // update rect
@@ -1728,7 +1647,7 @@ bool Sprite::isFrameDisplayed(SpriteFrame *frame) const
     Rect r = frame->getRect();
 
     return (r.equals(_rect) &&
-            frame->getTexture()->getBackendTexture() == _backendTexture &&
+            frame->getTexture() == _texture &&
             frame->getOffset().equals(_unflippedOffsetPositionFromCenter));
 }
 
@@ -1782,34 +1701,15 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
 }
 
 // MARK: Texture protocol
-
 void Sprite::updateBlendFunc(void)
 {
     CCASSERT(_renderMode != RenderMode::QUAD_BATCHNODE, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a SpriteBatchNode");
-
-    // it is possible to have an untextured sprite
-    if (! _texture || ! _texture->hasPremultipliedAlpha())
-    {
-        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
-        setOpacityModifyRGB(false);
-    }
-    else
-    {
-        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-        setOpacityModifyRGB(true);
-    }
-}
-
-void Sprite::updateBackendBlendFunc(void)
-{
-    CCASSERT(_renderMode != RenderMode::QUAD_BATCHNODE, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a SpriteBatchNode");
     
     // it is possible to have an untextured sprite
-    backend::TextureGL* textureGL = static_cast<backend::TextureGL*>(_backendTexture);
     backend::BlendDescriptor& blendDescriptor = _trianglesCommand.getPipelineDescriptor().blendDescriptor;
     blendDescriptor.blendEnabled = true;
     
-    if (! _backendTexture || ! textureGL->hasPremultipliedAlpha())
+    if (! _texture || ! _texture->hasPremultipliedAlpha())
     {
         blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::SRC_ALPHA;
         blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;

@@ -47,9 +47,6 @@ class Rect;
 class Size;
 class Texture2D;
 struct transformValues_;
-namespace backend {
-    class Texture;
-}
 
 #ifdef SPRITE_RENDER_IN_SUBPIXEL
 #undef SPRITE_RENDER_IN_SUBPIXEL
@@ -241,7 +238,6 @@ public:
      *  The Texture's rect is not changed.
      */
     virtual void setTexture(Texture2D *texture) override;
-    virtual void setBackendTexture(backend::Texture *texture);
 
     /** Returns the Texture2D object used by the sprite. */
     virtual Texture2D* getTexture() const override;
@@ -463,14 +459,12 @@ public:
     *In lua: local setBlendFunc(local src, local dst).
     *@endcode
     */
-    void setBlendFunc(const BlendFunc &blendFunc) override {     cocos2d::log("Error in %s %s %d, should not reach here!", __FILE__, __FUNCTION__, __LINE__);
-        _blendFunc = blendFunc; }
+    void setBlendFunc(const BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
     /**
     * @js  NA
     * @lua NA
     */
-    const BlendFunc& getBlendFunc() const override {     cocos2d::log("Error in %s %s %d, should not reach here!", __FILE__, __FUNCTION__, __LINE__);
-        return _blendFunc; }
+    const BlendFunc& getBlendFunc() const override { return _blendFunc; }
     /// @}
 
     /**
@@ -628,7 +622,6 @@ protected:
     virtual void setVertexCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad);
     void populateTriangle(int quadIndex, const V3F_C4B_T2F_Quad& quad);
     virtual void updateBlendFunc();
-    virtual void updateBackendBlendFunc();
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);
 
@@ -658,8 +651,6 @@ protected:
     SpriteFrame*     _spriteFrame;
     TrianglesCommand _trianglesCommand;     ///
     
-    //backend
-    backend::Texture* _backendTexture = nullptr;
 #if CC_SPRITE_DEBUG_DRAW
     DrawNode *_debugDrawNode;
 #endif //CC_SPRITE_DEBUG_DRAW
