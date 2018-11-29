@@ -108,6 +108,8 @@ private:
     void setVertexAttribPointer(const std::string& name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid* pointer);
     VertexAttribValue* getVertexAttribValue(const std::string &name);
     void parseAttributes();
+    void enableVertexAttributes(uint32_t flags) const;
+
 
     GLuint _handle;
 

@@ -25,7 +25,6 @@
 #include "platform/CCGL.h"
 #include "base/CCConfiguration.h"
 #include "3d/CCMeshVertexIndexData.h"
-#include "base/ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -148,7 +147,7 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, GLProgramState* glP
         glBindVertexArray(_handle);
         glBindBuffer(GL_ARRAY_BUFFER, meshVertexData->getVertexBuffer()->getVBO());
 
-        utils::enableVertexAttributes(_vertexAttribsFlags);
+        enableVertexAttributes(_vertexAttribsFlags);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshIndexData->getIndexBuffer()->getVBO());
 
@@ -181,7 +180,7 @@ void VertexAttribBinding::bind()
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _meshIndexData->getIndexBuffer()->getVBO());
 
         // Software mode
-        utils::enableVertexAttributes(_vertexAttribsFlags);
+        enableVertexAttributes(_vertexAttribsFlags);
         // set attributes
         for(auto &attribute : _attributes)
         {
@@ -224,6 +223,19 @@ void VertexAttribBinding::parseAttributes()
     {
         VertexAttribValue value(&attrib.second);
         _attributes[attrib.first] = value;
+    }
+}
+
+void VertexAttribBinding::enableVertexAttributes(uint32_t flags) const
+{
+    auto tmpFlags = flags;
+    for (int i = 0; tmpFlags > 0; i++)
+    {
+        int flag = 1 << i;
+        if (flag & tmpFlags)
+            glEnableVertexAttribArray(i);
+        
+        tmpFlags &= ~flag;
     }
 }
 

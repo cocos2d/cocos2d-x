@@ -517,12 +517,6 @@ void ProgressTimer::onDraw(const Mat4 &transform, uint32_t /*flags*/)
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _sprite->getTexture()->getName());
-    auto alphaTexID = _sprite->getTexture()->getAlphaTextureName();
-    if (alphaTexID > 0)
-    {
-        glActiveTexture(GL_TEXTURE0 + 1);
-        glBindTexture(GL_TEXTURE_2D, alphaTexID);
-    }
 
     glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]) , &_vertexData[0].vertices);
     glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);
