@@ -331,9 +331,15 @@ void Renderer::processRenderCommand(RenderCommand* command)
     else if(RenderCommand::Type::GROUP_COMMAND == commandType)
     {
         flush();
+        auto tmpRenderPass = _currentRenderPass;
+        _currentRenderPass = createRenderPass(command);
+        _viewPortStack.push({command->getViewPort()});
         int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
 //        CCGL_DEBUG_PUSH_GROUP_MARKER("RENDERER_GROUP_COMMAND");
         visitRenderQueue(_renderGroups[renderQueueID]);
+        _viewPortStack.pop();
+        _currentRenderPass->release();
+        _currentRenderPass = tmpRenderPass;
 //        CCGL_DEBUG_POP_GROUP_MARKER();
     }
     else if(RenderCommand::Type::CUSTOM_COMMAND == commandType)
@@ -694,8 +700,16 @@ void Renderer::drawBatchedTriangles()
         _commandBuffer->setRenderPipeline(renderPipeline);
         renderPipeline->release();
         
-        auto viewPort = _triBatchesToDraw[i].cmd->getViewPort();
-        _commandBuffer->setViewport(viewPort[0], viewPort[1], viewPort[2], viewPort[3]);
+        if (_viewPortStack.empty())
+        {
+            auto& viewPort = _triBatchesToDraw[i].cmd->getViewPort();
+            _commandBuffer->setViewport(viewPort[0], viewPort[1], viewPort[2], viewPort[3]);
+        }
+        else
+        {
+            auto& viewPort = _viewPortStack.top();
+            _commandBuffer->setViewport(viewPort[0], viewPort[1], viewPort[2], viewPort[3]);
+        }
         
         _commandBuffer->setVertexBuffer(0, _vertexBuffer);
         _commandBuffer->setIndexBuffer(_indexBuffer);
@@ -832,11 +846,21 @@ backend::RenderPipeline* Renderer::createRenderPipeline(const PipelineDescriptor
     auto blendState = device->createBlendState(pipelineDescriptor.blendDescriptor);
     renderPipelineDescriptor.setBlendState(blendState);
     
-    auto depthStencilState = device->createDepthStencilState(pipelineDescriptor.depthStencilDescriptor);
-    renderPipelineDescriptor.setDepthStencilState(depthStencilState);
+    auto& depthStencilDescritpor = pipelineDescriptor.depthStencilDescriptor;
+    if (depthStencilDescritpor.depthTestEnabled || depthStencilDescritpor.stencilTestEnabled)
+    {
+        auto depthStencilState = device->createDepthStencilState(pipelineDescriptor.depthStencilDescriptor);
+        renderPipelineDescriptor.setDepthStencilState(depthStencilState);
+    }
     
     auto renderPipeline = device->newRenderPipeline(renderPipelineDescriptor);
     return renderPipeline;
+}
+
+backend::RenderPass* Renderer::createRenderPass(RenderCommand* cmd)
+{
+    auto& renderpassDescriptor = cmd->getPipelineDescriptor().renderPassDescriptor;
+    return backend::Device::getInstance()->newRenderPass(renderpassDescriptor);
 }
 
 NS_CC_END

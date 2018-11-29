@@ -20,8 +20,7 @@ RenderPassMTL::RenderPassMTL(id<MTLDevice> mtlDevice, const RenderPassDescriptor
 
 RenderPassMTL::~RenderPassMTL()
 {
-    if (!_colorAttachmentsSet && !_depthStencilAttachmentSet)
-        [_mtlRenderPassDescritpr release];
+    [_mtlRenderPassDescritpr release];
 }
 
 MTLRenderPassDescriptor* RenderPassMTL::getMTLRenderPassDescriptor()

@@ -1049,6 +1049,17 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     return ret;
 }
 
+bool Texture2D::initWithBackendTexture(backend::Texture *texture)
+{
+    CC_SAFE_RETAIN(texture);
+    CC_SAFE_RELEASE(_texture);
+    _texture = texture;
+    
+    _pixelsWide = _contentSize.width = texture->getWidth();
+    _pixelsHigh = _contentSize.height = texture->getHeight();
+    return true;
+}
+
 
 //// implementation Texture2D (Drawing)
 //

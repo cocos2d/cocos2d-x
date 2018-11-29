@@ -24,8 +24,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __CCRENDER_TEXTURE_H__
-#define __CCRENDER_TEXTURE_H__
+#pragma once
 
 #include "2d/CCNode.h"
 #include "2d/CCSprite.h"
@@ -34,6 +33,11 @@ THE SOFTWARE.
 #include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
+
+namespace backend
+{
+    class Texture;
+}
 
 class EventCustom;
 
@@ -187,18 +191,6 @@ public:
      */
     void listenToForeground(EventCustom *event);
     
-    /** Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw" is true. 
-     *
-     * @return Clear flags.
-     */
-    unsigned int getClearFlags() const { return _clearFlags; }
-    
-    /** Set flags.
-     *
-     * @param clearFlags Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT.
-     */
-    void setClearFlags(unsigned int clearFlags) { _clearFlags = clearFlags; }
-    
     /** Clear color value. Valid only when "autoDraw" is true. 
      *
      * @return Color value.
@@ -209,7 +201,7 @@ public:
      *
      * @param clearColor Color value.
      */
-    void setClearColor(const Color4F &clearColor) { _clearColor = clearColor; }
+    void setClearColor(const Color4F &clearColor);
     
     /** Value for clearDepth. Valid only when "autoDraw" is true. 
      *
@@ -221,7 +213,7 @@ public:
      *
      * @param clearDepth Value for clearDepth.
      */
-    void setClearDepth(float clearDepth) { _clearDepth = clearDepth; }
+    void setClearDepth(float clearDepth);
     
     /** Value for clear Stencil. Valid only when "autoDraw" is true.
      *
@@ -233,7 +225,7 @@ public:
      *
      * @param clearStencil Value for clear Stencil.
      */
-    void setClearStencil(int clearStencil) { _clearStencil = clearStencil; }
+    void setClearStencil(int clearStencil);
     
     /** When enabled, it will render its children into the texture automatically. Disabled by default for compatibility reasons.
      * Will be enabled in the future.
@@ -308,62 +300,42 @@ public:
      */
     bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, GLuint depthStencilFormat);
 
-protected:
-    virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, GLbitfield flags);
+protected:    
+    bool         _keepMatrix = false;
+    Rect         _rtTextureRect = Rect::ZERO;
+    Rect         _fullRect = Rect::ZERO;
+    Rect         _fullviewPort = Rect::ZERO;
     
-    //flags: whether generate new modelView and projection matrix or not
-    bool         _keepMatrix;
-    Rect         _rtTextureRect;
-    Rect         _fullRect;
-    Rect         _fullviewPort;
-    
-    GLuint       _FBO;
-    GLuint       _depthRenderBuffer;
-    GLuint       _stencilRenderBuffer;
-    GLint        _oldFBO;
-    Texture2D* _texture;
-    Texture2D* _textureCopy;    // a copy of _texture
-    Image*     _UITextureImage;
-    Texture2D::PixelFormat _pixelFormat;
-    GLuint _depthAndStencilFormat;
+    Texture2D* _texture2D = nullptr;
+    backend::Texture* _depthStencilTexture = nullptr;
+    Texture2D* _texture2DCopy = nullptr;    // a copy of _texture
+    Image*     _UITextureImage = nullptr;
+    Texture2D::PixelFormat _pixelFormat = Texture2D::PixelFormat::RGBA8888;
     
     // code for "auto" update
-    GLbitfield   _clearFlags;
     Color4F    _clearColor;
-    GLclampf     _clearDepth;
-    GLint        _clearStencil;
-    bool         _autoDraw;
+    float     _clearDepth = 0.f;
+    int        _clearStencil = 0;
+    bool         _autoDraw = false;
 
     /** The Sprite being used.
      The sprite, by default, will use the following blending function: GL_ONE, GL_ONE_MINUS_SRC_ALPHA.
      The blending function can be changed in runtime by calling:
      - renderTexture->getSprite()->setBlendFunc((BlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA});
      */
-    Sprite* _sprite;
+    Sprite* _sprite = nullptr;
     
     GroupCommand _groupCommand;
-    CustomCommand _beginWithClearCommand;
-    CustomCommand _clearDepthCommand;
-    CustomCommand _clearCommand;
-    CustomCommand _beginCommand;
-    CustomCommand _endCommand;
     /*this command is used to encapsulate saveToFile,
      call saveToFile twice will overwrite this command and callback
      and the command and callback will be executed twice.
     */
     CustomCommand _saveToFileCommand;
-    std::function<void (RenderTexture*, const std::string&)> _saveFileCallback;
+    std::function<void (RenderTexture*, const std::string&)> _saveFileCallback = nullptr;
 protected:
     //renderer caches and callbacks
-    void onBegin();
-    void onEnd();
-
-    void onClear();
-    void onClearDepth();
 
     void onSaveToFile(const std::string& fileName, bool isRGBA = true);
-
-    void setupDepthAndStencil(int powW, int powH);
     
     Mat4 _oldTransMatrix, _oldProjMatrix;
     Mat4 _transformMatrix, _projectionMatrix;
@@ -376,5 +348,3 @@ private:
 /// @}
 
 NS_CC_END
-
-#endif //__CCRENDER_TEXTURE_H__

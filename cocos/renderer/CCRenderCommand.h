@@ -97,7 +97,7 @@ public:
     /**Get the depth by current model view matrix.*/
     float getDepth() const { return _depth; }
     void setViewPort(int x, int y, int width, int height);
-    inline const int* getViewPort() const { return _viewPort;}
+    inline const std::array<int, 4>& getViewPort() const { return _viewPort;}
     // Can use the result to change the descritor content.
     inline PipelineDescriptor& getPipelineDescriptor() { return _pipelineDescriptor; }
     
@@ -131,7 +131,7 @@ protected:
     float _depth = 0.f;
     
     //set viewport
-    int _viewPort[4] = { 0, 0, 0, 0 };
+    std::array<int, 4> _viewPort = { 0, 0, 0, 0 };
     
     PipelineDescriptor _pipelineDescriptor;
 };

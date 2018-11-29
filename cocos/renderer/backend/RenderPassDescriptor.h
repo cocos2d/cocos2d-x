@@ -49,7 +49,7 @@ struct RenderPassDepthStencilAttachment
 
 class RenderPassDescriptor
 {
-public:
+public:    
     void setColorAttachment(uint32_t attachment, Texture* texture);
     void setClearColor(float r, float g, float b, float a);
     void setDepthStencilAttachment(Texture* texture);

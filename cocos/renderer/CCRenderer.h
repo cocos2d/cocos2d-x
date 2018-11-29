@@ -27,6 +27,7 @@
 
 #include <vector>
 #include <stack>
+#include <array>
 
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderCommand.h"
@@ -217,6 +218,7 @@ protected:
     void fillVerticesAndIndices(const TrianglesCommand* cmd);
     
     backend::RenderPipeline* createRenderPipeline(const PipelineDescriptor&);
+    backend::RenderPass* createRenderPass(RenderCommand*);
 
 
     /* clear color set outside be used in setGLDefaultValues() */
@@ -235,11 +237,11 @@ protected:
     backend::Buffer* _vertexBuffer = nullptr;
     backend::Buffer* _indexBuffer = nullptr;
     
-    
     backend::CommandBuffer* _commandBuffer = nullptr;
     // The render pass with clear color and depth.
     backend::RenderPass* _defaultRenderPass = nullptr;
     backend::RenderPass* _currentRenderPass = nullptr;
+    std::stack<std::array<int, 4>> _viewPortStack;
 
     // Internal structure that has the information for the batches
     struct TriBatchToDraw
