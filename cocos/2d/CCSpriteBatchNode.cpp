@@ -412,7 +412,6 @@ void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
         child->updateTransform();
     }
     
-    backend::BindGroup bindGroup;
     cocos2d::Mat4 matrixProjection = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     cocos2d::Mat4 matrixMVP = matrixProjection * transform;
     auto& pipelineDescriptor = _batchCommand.getPipelineDescriptor();
