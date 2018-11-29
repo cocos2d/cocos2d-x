@@ -1370,8 +1370,8 @@ Texture2D* Texture2D::getAlphaTexture() const
 }
 
 //TODO coulsonwang
-//void Texture2D::setTexParameters(const TexParams &texParams)
-//{
+void Texture2D::setTexParameters(const TexParams &texParams)
+{
 //    CCASSERT((_pixelsWide == ccNextPOT(_pixelsWide) || texParams.wrapS == GL_CLAMP_TO_EDGE) &&
 //             (_pixelsHigh == ccNextPOT(_pixelsHigh) || texParams.wrapT == GL_CLAMP_TO_EDGE),
 //             "GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
@@ -1386,12 +1386,12 @@ Texture2D* Texture2D::getAlphaTexture() const
 //#if CC_ENABLE_CACHE_TEXTURE_DATA
 //    VolatileTextureMgr::setTexParameters(this, texParams);
 //#endif
-//}
+}
 
 //  TODO coulsonwang
 //// implementation Texture2D (GLFilter)
-//void Texture2D::generateMipmap()
-//{
+void Texture2D::generateMipmap()
+{
 //    CCASSERT(_pixelsWide == ccNextPOT(_pixelsWide) && _pixelsHigh == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
 //    glActiveTexture(GL_TEXTURE0);
 //    glBindTexture(GL_TEXTURE_2D, _name);
@@ -1400,7 +1400,7 @@ Texture2D* Texture2D::getAlphaTexture() const
 //#if CC_ENABLE_CACHE_TEXTURE_DATA
 //    VolatileTextureMgr::setHasMipmaps(this, _hasMipmaps);
 //#endif
-//}
+}
 
 
 

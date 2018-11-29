@@ -509,73 +509,74 @@ std::string TestDirectoryFuncs::subtitle() const
 
 void TextWritePlist::onEnter()
 {
-    FileUtilsDemo::onEnter();
-    auto root = __Dictionary::create();
-    auto string = __String::create("string element value");
-    root->setObject(string, "string element key");
-
-    auto array = __Array::create();
-
-    auto dictInArray = __Dictionary::create();
-    dictInArray->setObject(__String::create("string in dictInArray value 0"), "string in dictInArray key 0");
-    dictInArray->setObject(__String::create("string in dictInArray value 1"), "string in dictInArray key 1");
-    array->addObject(dictInArray);
-
-    array->addObject(__String::create("string in array"));
-
-    auto arrayInArray = __Array::create();
-    arrayInArray->addObject(__String::create("string 0 in arrayInArray"));
-    arrayInArray->addObject(__String::create("string 1 in arrayInArray"));
-    array->addObject(arrayInArray);
-
-    root->setObject(array, "array");
-
-    auto dictInDict = __Dictionary::create();
-    dictInDict->setObject(__String::create("string in dictInDict value"), "string in dictInDict key");
-
-    //add boolean to the plist
-    auto booleanObject = __Bool::create(true);
-    dictInDict->setObject(booleanObject, "bool");
-
-    //add integer to the plist
-    auto intObject = __Integer::create(1024);
-    dictInDict->setObject(intObject, "integer");
-
-    //add float to the plist
-    auto floatObject = __Float::create(1024.1024f);
-    dictInDict->setObject(floatObject, "float");
-
-    //add double to the plist
-    auto doubleObject = __Double::create(1024.123);
-    dictInDict->setObject(doubleObject, "double");
-
-
-
-    root->setObject(dictInDict, "dictInDict, Hello World");
-
-    // end with /
-    std::string writablePath = FileUtils::getInstance()->getWritablePath();
-    std::string fullPath = writablePath + "text.plist";
-    if(root->writeToFile(fullPath.c_str()))
-        log("see the plist file at %s", fullPath.c_str());
-    else
-        log("write plist file failed");
-
-    auto label = Label::createWithTTF(fullPath.c_str(), "fonts/Thonburi.ttf", 6);
-    this->addChild(label);
-    auto winSize = Director::getInstance()->getWinSize();
-    label->setPosition(winSize.width/2, winSize.height/3);
-
-    auto loadDict = __Dictionary::createWithContentsOfFile(fullPath.c_str());
-    auto loadDictInDict = (__Dictionary*)loadDict->objectForKey("dictInDict, Hello World");
-    auto boolValue = (__String*)loadDictInDict->objectForKey("bool");
-    log("%s",boolValue->getCString());
-    auto floatValue = (__String*)loadDictInDict->objectForKey("float");
-    log("%s",floatValue->getCString());
-    auto intValue = (__String*)loadDictInDict->objectForKey("integer");
-    log("%s",intValue->getCString());
-    auto doubleValue = (__String*)loadDictInDict->objectForKey("double");
-    log("%s",doubleValue->getCString());
+    //TODO: minggo
+//    FileUtilsDemo::onEnter();
+//    auto root = __Dictionary::create();
+//    auto string = __String::create("string element value");
+//    root->setObject(string, "string element key");
+//
+//    auto array = __Array::create();
+//
+//    auto dictInArray = __Dictionary::create();
+//    dictInArray->setObject(__String::create("string in dictInArray value 0"), "string in dictInArray key 0");
+//    dictInArray->setObject(__String::create("string in dictInArray value 1"), "string in dictInArray key 1");
+//    array->addObject(dictInArray);
+//
+//    array->addObject(__String::create("string in array"));
+//
+//    auto arrayInArray = __Array::create();
+//    arrayInArray->addObject(__String::create("string 0 in arrayInArray"));
+//    arrayInArray->addObject(__String::create("string 1 in arrayInArray"));
+//    array->addObject(arrayInArray);
+//
+//    root->setObject(array, "array");
+//
+//    auto dictInDict = __Dictionary::create();
+//    dictInDict->setObject(__String::create("string in dictInDict value"), "string in dictInDict key");
+//
+//    //add boolean to the plist
+//    auto booleanObject = __Bool::create(true);
+//    dictInDict->setObject(booleanObject, "bool");
+//
+//    //add integer to the plist
+//    auto intObject = __Integer::create(1024);
+//    dictInDict->setObject(intObject, "integer");
+//
+//    //add float to the plist
+//    auto floatObject = __Float::create(1024.1024f);
+//    dictInDict->setObject(floatObject, "float");
+//
+//    //add double to the plist
+//    auto doubleObject = __Double::create(1024.123);
+//    dictInDict->setObject(doubleObject, "double");
+//
+//
+//
+//    root->setObject(dictInDict, "dictInDict, Hello World");
+//
+//    // end with /
+//    std::string writablePath = FileUtils::getInstance()->getWritablePath();
+//    std::string fullPath = writablePath + "text.plist";
+//    if(root->writeToFile(fullPath.c_str()))
+//        log("see the plist file at %s", fullPath.c_str());
+//    else
+//        log("write plist file failed");
+//
+//    auto label = Label::createWithTTF(fullPath.c_str(), "fonts/Thonburi.ttf", 6);
+//    this->addChild(label);
+//    auto winSize = Director::getInstance()->getWinSize();
+//    label->setPosition(winSize.width/2, winSize.height/3);
+//
+//    auto loadDict = __Dictionary::createWithContentsOfFile(fullPath.c_str());
+//    auto loadDictInDict = (__Dictionary*)loadDict->objectForKey("dictInDict, Hello World");
+//    auto boolValue = (__String*)loadDictInDict->objectForKey("bool");
+//    log("%s",boolValue->getCString());
+//    auto floatValue = (__String*)loadDictInDict->objectForKey("float");
+//    log("%s",floatValue->getCString());
+//    auto intValue = (__String*)loadDictInDict->objectForKey("integer");
+//    log("%s",intValue->getCString());
+//    auto doubleValue = (__String*)loadDictInDict->objectForKey("double");
+//    log("%s",doubleValue->getCString());
 
 }
 

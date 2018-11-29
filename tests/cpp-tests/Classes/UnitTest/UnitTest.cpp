@@ -23,7 +23,6 @@
  ****************************************************************************/
 
 #include "UnitTest.h"
-#include "RefPtrTest.h"
 #include "ui/UIHelper.h"
 #include "network/Uri.h"
 
@@ -72,7 +71,6 @@ UnitTests::UnitTests()
     ADD_TEST_CASE(TemplateVectorTest);
     ADD_TEST_CASE(TemplateMapTest);
     ADD_TEST_CASE(ValueTest);
-    ADD_TEST_CASE(RefPtrTest);
     ADD_TEST_CASE(UTFConversionTest);
     ADD_TEST_CASE(UIHelperSubStringTest);
     ADD_TEST_CASE(ParseUriTest);

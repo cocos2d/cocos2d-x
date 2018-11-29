@@ -43,21 +43,20 @@ class RootTests : public TestList
 public:
     RootTests()
     {
-        addTest("Node: Scene3D", [](){return new (std::nothrow) Scene3DTests(); });
+//        addTest("Node: Scene3D", [](){return new (std::nothrow) Scene3DTests(); });
         addTest("ActionManager", [](){return new (std::nothrow) ActionManagerTests(); });
         addTest("Actions - Basic", [](){ return new (std::nothrow) ActionsTests(); });
         addTest("Actions - Ease", [](){return new (std::nothrow) ActionsEaseTests(); });
         addTest("Actions - Progress", [](){return new (std::nothrow) ActionsProgressTests(); });
-        addTest("Allocator - Basic", [](){return new (std::nothrow) AllocatorTests(); });
-        addTest("Audio - CocosDenshion", []() { return new (std::nothrow) CocosDenshionTests(); });
+        // addTest("Audio - CocosDenshion", []() { return new (std::nothrow) CocosDenshionTests(); });
         addTest("Audio - NewAudioEngine", []() { return new (std::nothrow) AudioEngineTests(); });
-#if CC_ENABLE_BOX2D_INTEGRATION
-        addTest("Box2d - Basic", []() { return new (std::nothrow) Box2DTests(); });
-        addTest("Box2d - TestBed", []() { return new (std::nothrow) Box2dTestBedSuite(); });
-#endif
-#if CC_ENABLE_CHIPMUNK_INTEGRATION
-        addTest("Chipmunk", []() { return new ChipmunkTests(); });
-#endif
+//#if CC_ENABLE_BOX2D_INTEGRATION
+//        addTest("Box2d - Basic", []() { return new (std::nothrow) Box2DTests(); });
+//        addTest("Box2d - TestBed", []() { return new (std::nothrow) Box2dTestBedSuite(); });
+//#endif
+//#if CC_ENABLE_CHIPMUNK_INTEGRATION
+//        addTest("Chipmunk", []() { return new ChipmunkTests(); });
+//#endif
         addTest("Bugs", []() { return new BugsTests(); });
         addTest("Click and Move", [](){return new ClickAndMoveTest(); });
         addTest("Configuration", []() { return new ConfigurationTests(); });
@@ -71,52 +70,50 @@ public:
         addTest("EventDispatcher", []() { return new EventDispatcherTests(); });
         addTest("Effects - Advanced", []() { return new EffectAdvanceTests(); });
         addTest("Effects - Basic", [](){return new EffectTests(); });
-        addTest("Extensions", []() { return new ExtensionsTests(); });
+//        addTest("Extensions", []() { return new ExtensionsTests(); });
         addTest("FileUtils", []() { return new FileUtilsTests(); });
         addTest("Fonts", []() { return new FontTests(); });
         addTest("Interval", [](){return new IntervalTests(); });
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         addTest("JNIHelper", []() { return new JNITests(); });
 #endif
-        addTest("Material System", [](){return new MaterialSystemTest(); });
-        addTest("Navigation Mesh", [](){return new NavMeshTests(); });
-        addTest("Node: BillBoard Test", [](){  return new BillBoardTests(); });
-        addTest("Node: Camera 3D Test", [](){  return new Camera3DTests(); });
+//        addTest("Material System", [](){return new MaterialSystemTest(); });
+//        addTest("Navigation Mesh", [](){return new NavMeshTests(); });
+//        addTest("Node: BillBoard Test", [](){  return new BillBoardTests(); });
+//        addTest("Node: Camera 3D Test", [](){  return new Camera3DTests(); });
         addTest("Node: Clipping", []() { return new ClippingNodeTests(); });
-        addTest("Node: Draw", [](){return new DrawPrimitivesTests(); });
-        addTest("Node: Label - New API", [](){return new NewLabelTests(); });
-        addTest("Node: Label - Old API", [](){return new LabelTests(); });
+        // addTest("Node: Label - New API", [](){return new NewLabelTests(); });
         addTest("Node: Layer", [](){return new LayerTests(); });
-        addTest("Node: Light", [](){return new LightTests(); });
+        // addTest("Node: Light", [](){return new LightTests(); });
         addTest("Node: Menu", [](){return new MenuTests(); });
         addTest("Node: MotionStreak", [](){return new MotionStreakTests(); });
         addTest("Node: Node", [](){return new CocosNodeTests(); });
         addTest("Node: Parallax", [](){return new ParallaxTests(); });
         addTest("Node: Particles", [](){return new ParticleTests(); });
-        addTest("Node: Particle3D (PU)", [](){return new Particle3DTests(); });
-#if CC_USE_PHYSICS
-        addTest("Node: Physics", []() { return new PhysicsTests(); });
-#endif
-        addTest("Node: Physics3D", []() { return new Physics3DTests(); } );
+//        addTest("Node: Particle3D (PU)", [](){return new Particle3DTests(); });
+//#if CC_USE_PHYSICS
+//        addTest("Node: Physics", []() { return new PhysicsTests(); });
+//#endif
+//        addTest("Node: Physics3D", []() { return new Physics3DTests(); } );
         addTest("Node: RenderTexture", [](){return new RenderTextureTests(); });
         addTest("Node: Scene", [](){return new SceneTests(); });
-        addTest("Node: Spine", [](){return new SpineTests(); });
+        // addTest("Node: Spine", [](){return new SpineTests(); });
         addTest("Node: Sprite", [](){return new SpriteTests(); });
-        addTest("Node: Sprite3D", [](){  return new Sprite3DTests(); });
+//        addTest("Node: Sprite3D", [](){  return new Sprite3DTests(); });
         addTest("Node: SpritePolygon", [](){return new (std::nothrow) SpritePolygonTest(); });
-        addTest("Node: Terrain", [](){  return new TerrainTests(); });
+//        addTest("Node: Terrain", [](){  return new TerrainTests(); });
         addTest("Node: TileMap", [](){return new TileMapTests(); });
         addTest("Node: FastTileMap", [](){return new FastTileMapTests(); });
         addTest("Node: Text Input", [](){return new TextInputTests(); });
-        addTest("Node: UI", [](){  return new UITests(); });
+//        addTest("Node: UI", [](){  return new UITests(); });
         addTest("Mouse", []() { return new MouseTests(); });
         addTest("MultiTouch", []() { return new MultiTouchTests(); });
         addTest("Renderer", []() { return new NewRendererTests(); });
         addTest("ReleasePool", [](){ return new ReleasePoolTests(); });
         addTest("Rotate World", [](){return new RotateWorldTests(); });
-        addTest("Scheduler", [](){return new SchedulerTests(); });
-        addTest("Shader - Basic", []() { return new ShaderTests(); });
-        addTest("Shader - Sprite", []() { return new Shader2Tests(); });
+        // addTest("Scheduler", [](){return new SchedulerTests(); });
+        // addTest("Shader - Basic", []() { return new ShaderTests(); });
+        // addTest("Shader - Sprite", []() { return new Shader2Tests(); });
         addTest("Texture2D", [](){return new Texture2DTests(); });
         addTest("TextureCache", []() { return new TextureCacheTests(); });
         addTest("TexturePacker Encryption", []() { return new TextureAtlasEncryptionTests(); });

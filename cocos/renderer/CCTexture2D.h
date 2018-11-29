@@ -292,14 +292,14 @@ public:
      * @endcode
      */
 //    TODO coulsonwang
-//    void setTexParameters(const TexParams& texParams);
+    void setTexParameters(const TexParams& texParams);
     
     /** Generates mipmap images for the texture.
      It only works if the texture size is POT (power of 2).
      @since v0.99.0
      */
 //    TODO coulsonwang
-//    void generateMipmap();
+    void generateMipmap();
     
     /** Sets antialias texture parameters:
      - GL_TEXTURE_MIN_FILTER = GL_LINEAR

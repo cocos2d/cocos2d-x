@@ -567,49 +567,52 @@ void ScrollView::addChild(Node * child, int zOrder, const std::string &name)
 
 void ScrollView::beforeDraw()
 {
+    //TODO: minggo
     //ScrollView don't support drawing in 3D space
-    _beforeDrawCommand.init(_globalZOrder);
-    _beforeDrawCommand.func = CC_CALLBACK_0(ScrollView::onBeforeDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_beforeDrawCommand);
-}
+//     _beforeDrawCommand.init(_globalZOrder);
+//     _beforeDrawCommand.func = CC_CALLBACK_0(ScrollView::onBeforeDraw, this);
+//     Director::getInstance()->getRenderer()->addCommand(&_beforeDrawCommand);
+ }
 
 /**
  * clip this view so that outside of the visible bounds can be hidden.
  */
 void ScrollView::onBeforeDraw()
 {
-    if (_clippingToBounds)
-    {
-		_scissorRestored = false;
-        Rect frame = getViewRect();
-        auto glview = Director::getInstance()->getOpenGLView();
-
-        if (glview->getVR() == nullptr) {
-            if (glview->isScissorEnabled()) {
-                _scissorRestored = true;
-                _parentScissorRect = glview->getScissorRect();
-                //set the intersection of _parentScissorRect and frame as the new scissor rect
-                if (frame.intersectsRect(_parentScissorRect)) {
-                    float x = MAX(frame.origin.x, _parentScissorRect.origin.x);
-                    float y = MAX(frame.origin.y, _parentScissorRect.origin.y);
-                    float xx = MIN(frame.origin.x + frame.size.width, _parentScissorRect.origin.x + _parentScissorRect.size.width);
-                    float yy = MIN(frame.origin.y + frame.size.height, _parentScissorRect.origin.y + _parentScissorRect.size.height);
-                    glview->setScissorInPoints(x, y, xx - x, yy - y);
-                }
-            }
-            else {
-                glEnable(GL_SCISSOR_TEST);
-                glview->setScissorInPoints(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
-            }
-        }
-    }
+    //TODO: minggo
+//    if (_clippingToBounds)
+//    {
+//        _scissorRestored = false;
+//        Rect frame = getViewRect();
+//        auto glview = Director::getInstance()->getOpenGLView();
+//
+//        if (glview->getVR() == nullptr) {
+//            if (glview->isScissorEnabled()) {
+//                _scissorRestored = true;
+//                _parentScissorRect = glview->getScissorRect();
+//                //set the intersection of _parentScissorRect and frame as the new scissor rect
+//                if (frame.intersectsRect(_parentScissorRect)) {
+//                    float x = MAX(frame.origin.x, _parentScissorRect.origin.x);
+//                    float y = MAX(frame.origin.y, _parentScissorRect.origin.y);
+//                    float xx = MIN(frame.origin.x + frame.size.width, _parentScissorRect.origin.x + _parentScissorRect.size.width);
+//                    float yy = MIN(frame.origin.y + frame.size.height, _parentScissorRect.origin.y + _parentScissorRect.size.height);
+//                    glview->setScissorInPoints(x, y, xx - x, yy - y);
+//                }
+//            }
+//            else {
+//                glEnable(GL_SCISSOR_TEST);
+//                glview->setScissorInPoints(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+//            }
+//        }
+//    }
 }
 
 void ScrollView::afterDraw()
 {
-    _afterDrawCommand.init(_globalZOrder);
-    _afterDrawCommand.func = CC_CALLBACK_0(ScrollView::onAfterDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_afterDrawCommand);
+    //TODO: minggo
+    // _afterDrawCommand.init(_globalZOrder);
+    // _afterDrawCommand.func = CC_CALLBACK_0(ScrollView::onAfterDraw, this);
+    // Director::getInstance()->getRenderer()->addCommand(&_afterDrawCommand);
 }
 
 /**
@@ -618,18 +621,19 @@ void ScrollView::afterDraw()
  */
 void ScrollView::onAfterDraw()
 {
-    if (_clippingToBounds)
-    {
-        auto glview = Director::getInstance()->getOpenGLView();
-        if (glview->getVR() == nullptr) {
-            if (_scissorRestored) {//restore the parent's scissor rect
-                glview->setScissorInPoints(_parentScissorRect.origin.x, _parentScissorRect.origin.y, _parentScissorRect.size.width, _parentScissorRect.size.height);
-            }
-            else {
-                glDisable(GL_SCISSOR_TEST);
-            }
-        }
-    }
+    //TODO:minggo
+//    if (_clippingToBounds)
+//    {
+//        auto glview = Director::getInstance()->getOpenGLView();
+//        if (glview->getVR() == nullptr) {
+//            if (_scissorRestored) {//restore the parent's scissor rect
+//                glview->setScissorInPoints(_parentScissorRect.origin.x, _parentScissorRect.origin.y, _parentScissorRect.size.width, _parentScissorRect.size.height);
+//            }
+//            else {
+//                glDisable(GL_SCISSOR_TEST);
+//            }
+//        }
+//    }
 }
 
 void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)

@@ -82,24 +82,25 @@ void PrettyPrinterDemo::onEnter()
     }
     
     // Test code
-    PrettyPrinter visitor;
-    
-    // print dictionary
-    auto dict = __Dictionary::createWithContentsOfFile("animations/animations.plist");
-    dict->acceptVisitor(visitor);
-    log("%s", visitor.getResult().c_str());
-    log("-------------------------------");
-    
-    __Set myset;
-    for (int i = 0; i < 30; ++i) {
-        myset.addObject(__String::createWithFormat("str: %d", i));
-    }
-    visitor.clear();
-    myset.acceptVisitor(visitor);
-    log("%s", visitor.getResult().c_str());
-    log("-------------------------------");
-    
-    visitor.clear();
+    //TODO: minggo
+//    PrettyPrinter visitor;
+//
+//    // print dictionary
+//    auto dict = __Dictionary::createWithContentsOfFile("animations/animations.plist");
+//    dict->acceptVisitor(visitor);
+//    log("%s", visitor.getResult().c_str());
+//    log("-------------------------------");
+//
+//    __Set myset;
+//    for (int i = 0; i < 30; ++i) {
+//        myset.addObject(__String::createWithFormat("str: %d", i));
+//    }
+//    visitor.clear();
+//    myset.acceptVisitor(visitor);
+//    log("%s", visitor.getResult().c_str());
+//    log("-------------------------------");
+//
+//    visitor.clear();
     addSprite();
 //    dict = Director::getInstance()->getTextureCache()->snapshotTextures();
 //    dict->acceptVisitor(visitor);

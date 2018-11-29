@@ -306,9 +306,10 @@ void TextureMipMap::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
     auto texture0 = Director::getInstance()->getTextureCache()->addImage("Images/grossini_dance_atlas.png");
-    texture0->generateMipmap();
-    Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-    texture0->setTexParameters(texParams);
+    //TODO: minggo
+//    texture0->generateMipmap();
+//    Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
+//    texture0->setTexParameters(texParams);
 
     auto texture1 = Director::getInstance()->getTextureCache()->addImage("Images/grossini_dance_atlas_nomipmap.png");
 
@@ -363,8 +364,9 @@ void TexturePVRMipMap::onEnter()
         addChild(imgMipMap);
 
         // support mipmap filtering
-        Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-        imgMipMap->getTexture()->setTexParameters(texParams);
+        //TODO minggo
+//        Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
+//        imgMipMap->getTexture()->setTexParameters(texParams);
     }
 
     auto img = Sprite::create("Images/logo-nomipmap.pvr");
@@ -409,8 +411,9 @@ void TexturePVRMipMap2::onEnter()
     addChild(imgMipMap);
     
     // support mipmap filtering
-    Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-    imgMipMap->getTexture()->setTexParameters(texParams);
+    //TODO minggo
+//    Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
+//    imgMipMap->getTexture()->setTexParameters(texParams);
 
     auto img = Sprite::create("Images/test_image.png");
     img->setPosition(Vec2( s.width/2.0f+100, s.height/2.0f));
@@ -1800,8 +1803,9 @@ void TextureDrawAtPoint::onDraw(const Mat4 &transform, uint32_t flags)
 
     auto s = Director::getInstance()->getWinSize();
     
-    _tex1->drawAtPoint(Vec2(s.width/2-50, s.height/2 - 50));
-    _Tex2F->drawAtPoint(Vec2(s.width/2+50, s.height/2 - 50));
+    //TODO: minggo
+//    _tex1->drawAtPoint(Vec2(s.width/2-50, s.height/2 - 50));
+//    _Tex2F->drawAtPoint(Vec2(s.width/2+50, s.height/2 - 50));
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
@@ -1845,8 +1849,9 @@ void TextureDrawInRect::onDraw(const Mat4 &transform, uint32_t flags)
     auto rect1 = Rect( s.width/2 - 80, 20, _tex1->getContentSize().width * 0.5f, _tex1->getContentSize().height *2 );
     auto rect2 = Rect( s.width/2 + 80, s.height/2, _tex1->getContentSize().width * 2, _tex1->getContentSize().height * 0.5f );
     
-    _tex1->drawInRect(rect1);
-    _Tex2F->drawInRect(rect2);
+    //TODO: minggo
+//    _tex1->drawInRect(rect1);
+//    _Tex2F->drawInRect(rect2);
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
