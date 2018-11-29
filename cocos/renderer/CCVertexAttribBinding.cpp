@@ -22,6 +22,7 @@
 
 #include "renderer/CCVertexAttribBinding.h"
 #include "renderer/CCGLProgramState.h"
+#include "renderer/ccGLStateCache.h"
 #include "platform/CCGL.h"
 #include "base/CCConfiguration.h"
 #include "3d/CCMeshVertexIndexData.h"
@@ -144,10 +145,16 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, GLProgramState* glP
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         glGenVertexArrays(1, &_handle);
-        glBindVertexArray(_handle);
+        GL::bindVAO(_handle);
         glBindBuffer(GL_ARRAY_BUFFER, meshVertexData->getVertexBuffer()->getVBO());
 
-        enableVertexAttributes(_vertexAttribsFlags);
+        auto flags = _vertexAttribsFlags;
+        for (int i = 0; flags > 0; i++) {
+            int flag = 1 << i;
+            if (flag & flags)
+                glEnableVertexAttribArray(i);
+            flags &= ~flag;
+        }
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshIndexData->getIndexBuffer()->getVBO());
 
@@ -156,7 +163,7 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, GLProgramState* glP
             attribute.second.apply();
         }
 
-        glBindVertexArray(0);
+        GL::bindVAO(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
@@ -170,7 +177,7 @@ void VertexAttribBinding::bind()
     if (_handle)
     {
         // hardware
-        glBindVertexArray(_handle);
+        GL::bindVAO(_handle);
     }
     else
     {
@@ -180,7 +187,7 @@ void VertexAttribBinding::bind()
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _meshIndexData->getIndexBuffer()->getVBO());
 
         // Software mode
-        enableVertexAttributes(_vertexAttribsFlags);
+        GL::enableVertexAttribs(_vertexAttribsFlags);
         // set attributes
         for(auto &attribute : _attributes)
         {
@@ -195,7 +202,7 @@ void VertexAttribBinding::unbind()
     if (_handle)
     {
         // Hardware
-        glBindVertexArray(0);
+       GL::bindVAO(0);
     }
     else
     {
@@ -223,19 +230,6 @@ void VertexAttribBinding::parseAttributes()
     {
         VertexAttribValue value(&attrib.second);
         _attributes[attrib.first] = value;
-    }
-}
-
-void VertexAttribBinding::enableVertexAttributes(uint32_t flags) const
-{
-    auto tmpFlags = flags;
-    for (int i = 0; tmpFlags > 0; i++)
-    {
-        int flag = 1 << i;
-        if (flag & tmpFlags)
-            glEnableVertexAttribArray(i);
-        
-        tmpFlags &= ~flag;
     }
 }
 

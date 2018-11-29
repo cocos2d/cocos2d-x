@@ -663,7 +663,8 @@ void RawStencilBufferTest::onBeforeDrawClip(int planeIndex, const Vec2& pt)
     glProgram->setUniformsForBuiltins();
     glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
     
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
+    
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     
@@ -692,7 +693,8 @@ void RawStencilBufferTest::onBeforeDrawSprite(int planeIndex, const Vec2& pt)
     glProgram->setUniformsForBuiltins();
     glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
 
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
+
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
@@ -892,7 +894,8 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
     glProgram->setUniformsForBuiltins();
     glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
 
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
+
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
