@@ -35,6 +35,8 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
+#include "renderer/backend/Device.h"
+#include "renderer/ccShaders.h"
 
 NS_CC_BEGIN
 
@@ -104,8 +106,36 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity/* = DEFAU
 
     _descendants.reserve(capacity);
     
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, tex));
+    createShaders();
+    
     return true;
+}
+
+void SpriteBatchNode::createShaders()
+{
+    //TODO coulsonwang, getOrCreateWithGLProgramName(program, texture)
+    auto device = backend::Device::getInstance();
+    auto vs = device->createShaderModule(backend::ShaderStage::VERTEX, positionTextureColor_vert);
+    auto fs = device->createShaderModule(backend::ShaderStage::FRAGMENT, positionTextureColor_frag);
+    auto& pipelineDescriptor = _batchCommand.getPipelineDescriptor();
+    pipelineDescriptor.setVertexShader(vs);
+    pipelineDescriptor.setFragmentShader(fs);
+    
+#define VERTEX_POSITION_SIZE 3
+#define VERTEX_TEXCOORD_SIZE 2
+#define VERTEX_COLOR_SIZE 4
+    //set vertexLayout according to V3F_C4B_T2F structure
+    uint32_t colorOffset = (VERTEX_POSITION_SIZE)*sizeof(float);
+    uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+    uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+    
+    backend::VertexLayout vertexLayout;
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
+    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset, false);
+    vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, colorOffset, true);
+    
+    vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
+    pipelineDescriptor.vertexLayout = vertexLayout;
 }
 
 bool SpriteBatchNode::init()
@@ -194,7 +224,7 @@ void SpriteBatchNode::addChild(Node * child, int zOrder, const std::string &name
     CCASSERT(dynamic_cast<Sprite*>(child) != nullptr, "CCSpriteBatchNode only supports Sprites as children");
     Sprite *sprite = static_cast<Sprite*>(child);
     // check Sprite is using the same texture id
-    CCASSERT(sprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "CCSprite is not using the same texture id");
+    CCASSERT(sprite->getTexture() == _textureAtlas->getTexture(), "CCSprite is not using the same texture id");
     
     Node::addChild(child, zOrder, name);
     
@@ -381,8 +411,16 @@ void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
     {
         child->updateTransform();
     }
+    
+    backend::BindGroup bindGroup;
+    cocos2d::Mat4 matrixProjection = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    cocos2d::Mat4 matrixMVP = matrixProjection * transform;
+    auto& pipelineDescriptor = _batchCommand.getPipelineDescriptor();
+    pipelineDescriptor.bindGroup.setUniform("a_MVPMatrix", matrixMVP.m, sizeof(matrixMVP.m));
+    pipelineDescriptor.bindGroup.setTexture("u_texture", 0, _textureAtlas->getTexture()->getBackendTexture());
 
-    _batchCommand.init(_globalZOrder, getGLProgram(), _blendFunc, _textureAtlas, transform, flags);
+    _batchCommand.init(_globalZOrder, _textureAtlas, transform, flags);
+//    _batchCommand.init(_globalZOrder, getGLProgram(), _blendFunc, _textureAtlas, transform, flags);
     renderer->addCommand(&_batchCommand);
 }
 
@@ -609,14 +647,24 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
 
 void SpriteBatchNode::updateBlendFunc()
 {
+    backend::BlendDescriptor& blendDescriptor = _batchCommand.getPipelineDescriptor().blendDescriptor;
+    blendDescriptor.blendEnabled = true;
     if (! _textureAtlas->getTexture()->hasPremultipliedAlpha())
     {
-        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+//        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+        blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::SRC_ALPHA;
+        blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+        blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::SRC_ALPHA;
+        blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
         setOpacityModifyRGB(false);
     }
     else
     {
-        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+//        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+        blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::ONE;
+        blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+        blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::ONE;
+        blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
         setOpacityModifyRGB(true);
     }
 }

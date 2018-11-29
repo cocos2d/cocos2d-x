@@ -238,18 +238,18 @@ public:
     /** Sets the quads that are going to be rendered. */
     void setQuads(V3F_C4B_T2F_Quad* quads);
     
+    inline unsigned short* getIndices() { return _indices; }
+    
 private:
     void renderCommand();
 
     void setupIndices();
-    void mapBuffers();
-    void setupVBOandVAO();
-    void setupVBO();
+//    void mapBuffers();
+//    void setupVBOandVAO();
+//    void setupVBO();
 
 protected:
     GLushort*           _indices;
-    GLuint              _VAOname;
-    GLuint              _buffersVBO[2]; //0: vertex  1: indices
     bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
     /** quantity of quads that are going to be drawn */
     ssize_t _totalQuads;

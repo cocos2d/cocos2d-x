@@ -66,13 +66,11 @@ TextureAtlas::~TextureAtlas()
     CC_SAFE_FREE(_quads);
     CC_SAFE_FREE(_indices);
 
-    glDeleteBuffers(2, _buffersVBO);
-
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glDeleteVertexArrays(1, &_VAOname);
-        glBindVertexArray(0);
-    }
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+//        glDeleteVertexArrays(1, &_VAOname);
+//        glBindVertexArray(0);
+//    }
     CC_SAFE_RELEASE(_texture);
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -197,33 +195,25 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     
     this->setupIndices();
 
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        setupVBOandVAO();
-    }
-    else
-    {
-        setupVBO();
-    }
-
     _dirty = true;
 
     return true;
 }
 
 void TextureAtlas::listenRendererRecreated(EventCustom* /*event*/)
-{  
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        setupVBOandVAO();
-    }
-    else
-    {
-        setupVBO();
-    }
-    
-    // set _dirty to true to force it rebinding buffer
-    _dirty = true;
+{
+    //TODO coulsonwang
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+//        setupVBOandVAO();
+//    }
+//    else
+//    {
+//        setupVBO();
+//    }
+//
+//    // set _dirty to true to force it rebinding buffer
+//    _dirty = true;
 }
 
 std::string TextureAtlas::getDescription() const
@@ -252,63 +242,63 @@ void TextureAtlas::setupIndices()
 
 //TextureAtlas - VAO / VBO specific
 
-void TextureAtlas::setupVBOandVAO()
-{
-    glGenVertexArrays(1, &_VAOname);
-    glBindVertexArray(_VAOname);
-
-#define kQuadSize sizeof(_quads[0].bl)
-
-    glGenBuffers(2, &_buffersVBO[0]);
-
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, _quads, GL_DYNAMIC_DRAW);
-
-    // vertices
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, vertices));
-
-    // colors
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
-
-    // tex coords
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _capacity * 6, _indices, GL_STATIC_DRAW);
-
-    // Must unbind the VAO before changing the element buffer.
-    glBindVertexArray(0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    CHECK_GL_ERROR_DEBUG();
-}
-
-void TextureAtlas::setupVBO()
-{
-    glGenBuffers(2, &_buffersVBO[0]);
-
-    mapBuffers();
-}
-
-void TextureAtlas::mapBuffers()
-{
-    // Avoid changing the element buffer for whatever VAO might be bound.
-    glBindVertexArray(0);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, _quads, GL_DYNAMIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _capacity * 6, _indices, GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-    CHECK_GL_ERROR_DEBUG();
-}
+//void TextureAtlas::setupVBOandVAO()
+//{
+//    glGenVertexArrays(1, &_VAOname);
+//    glBindVertexArray(_VAOname);
+//
+//#define kQuadSize sizeof(_quads[0].bl)
+//
+//    glGenBuffers(2, &_buffersVBO[0]);
+//
+//    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, _quads, GL_DYNAMIC_DRAW);
+//
+//    // vertices
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, vertices));
+//
+//    // colors
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
+//
+//    // tex coords
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
+//
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+//    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _capacity * 6, _indices, GL_STATIC_DRAW);
+//
+//    // Must unbind the VAO before changing the element buffer.
+//    glBindVertexArray(0);
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//
+//    CHECK_GL_ERROR_DEBUG();
+//}
+//
+//void TextureAtlas::setupVBO()
+//{
+//    glGenBuffers(2, &_buffersVBO[0]);
+//
+//    mapBuffers();
+//}
+//
+//void TextureAtlas::mapBuffers()
+//{
+//    // Avoid changing the element buffer for whatever VAO might be bound.
+//    glBindVertexArray(0);
+//
+//    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, _quads, GL_DYNAMIC_DRAW);
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+//    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _capacity * 6, _indices, GL_STATIC_DRAW);
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//
+//    CHECK_GL_ERROR_DEBUG();
+//}
 
 // TextureAtlas - Update, Insert, Move & Remove
 
@@ -525,7 +515,7 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
 
 
     setupIndices();
-    mapBuffers();
+//    mapBuffers();
 
     _dirty = true;
 
@@ -607,98 +597,99 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads)
 
 void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 {
-    CCASSERT(numberOfQuads>=0 && start>=0, "numberOfQuads and start must be >= 0");
-
-    if(!numberOfQuads)
-        return;
-    
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _texture->getName());
-
-    auto conf = Configuration::getInstance();
-    if (conf->supportsShareableVAO() && conf->supportsMapBuffer())
-    {
-        //
-        // Using VBO and VAO
-        //
-
-        // FIXME:: update is done in draw... perhaps it should be done in a timer
-        if (_dirty) 
-        {
-            glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-            // option 1: subdata
-//            glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
-
-            // option 2: data
-//            glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
-
-            // option 3: orphaning + glMapBuffer
-            glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, nullptr, GL_DYNAMIC_DRAW);
-            void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-            memcpy(buf, _quads, sizeof(_quads[0])* _totalQuads);
-            glUnmapBuffer(GL_ARRAY_BUFFER);
-            
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-            _dirty = false;
-        }
-
-        glBindVertexArray(_VAOname);
-
-#if CC_REBIND_INDICES_BUFFER
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-#endif
-
-        glDrawElements(GL_TRIANGLES, (GLsizei) numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
-        
-        glBindVertexArray(0);
-        
-#if CC_REBIND_INDICES_BUFFER
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-#endif
-
-//    glBindVertexArray(0);
-    }
-    else
-    {
-        //
-        // Using VBO without VAO
-        //
-
-#define kQuadSize sizeof(_quads[0].bl)
-        glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-
-        // FIXME:: update is done in draw... perhaps it should be done in a timer
-        if (_dirty) 
-        {
-            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(_quads[0]) * _totalQuads , &_quads[0] );
-            _dirty = false;
-        }
-
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-
-        // vertices
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, vertices));
-
-        // colors
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, colors));
-
-        // tex coords
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, texCoords));
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-
-        glDrawElements(GL_TRIANGLES, (GLsizei)numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])));
-
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
-
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,numberOfQuads*6);
-    
-    CHECK_GL_ERROR_DEBUG();
+    //TODO coulsonwang
+//    CCASSERT(numberOfQuads>=0 && start>=0, "numberOfQuads and start must be >= 0");
+//
+//    if(!numberOfQuads)
+//        return;
+//
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, _texture->getName());
+//
+//    auto conf = Configuration::getInstance();
+//    if (conf->supportsShareableVAO() && conf->supportsMapBuffer())
+//    {
+//        //
+//        // Using VBO and VAO
+//        //
+//
+//        // FIXME:: update is done in draw... perhaps it should be done in a timer
+//        if (_dirty)
+//        {
+//            glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+//            // option 1: subdata
+////            glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
+//
+//            // option 2: data
+////            glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
+//
+//            // option 3: orphaning + glMapBuffer
+//            glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, nullptr, GL_DYNAMIC_DRAW);
+//            void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+//            memcpy(buf, _quads, sizeof(_quads[0])* _totalQuads);
+//            glUnmapBuffer(GL_ARRAY_BUFFER);
+//
+//            glBindBuffer(GL_ARRAY_BUFFER, 0);
+//
+//            _dirty = false;
+//        }
+//
+//        glBindVertexArray(_VAOname);
+//
+//#if CC_REBIND_INDICES_BUFFER
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+//#endif
+//
+//        glDrawElements(GL_TRIANGLES, (GLsizei) numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
+//
+//        glBindVertexArray(0);
+//
+//#if CC_REBIND_INDICES_BUFFER
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//#endif
+//
+////    glBindVertexArray(0);
+//    }
+//    else
+//    {
+//        //
+//        // Using VBO without VAO
+//        //
+//
+//#define kQuadSize sizeof(_quads[0].bl)
+//        glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+//
+//        // FIXME:: update is done in draw... perhaps it should be done in a timer
+//        if (_dirty)
+//        {
+//            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(_quads[0]) * _totalQuads , &_quads[0] );
+//            _dirty = false;
+//        }
+//
+//        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+//        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+//
+//        // vertices
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, vertices));
+//
+//        // colors
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, colors));
+//
+//        // tex coords
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, texCoords));
+//
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+//
+//        glDrawElements(GL_TRIANGLES, (GLsizei)numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])));
+//
+//        glBindBuffer(GL_ARRAY_BUFFER, 0);
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//    }
+//
+//    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,numberOfQuads*6);
+//
+//    CHECK_GL_ERROR_DEBUG();
 }
 
 

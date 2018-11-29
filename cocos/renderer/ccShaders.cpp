@@ -103,5 +103,7 @@ NS_CC_BEGIN
 //backend shader file
 #include "renderer/shaders/sprite.vert"
 #include "renderer/shaders/sprite.frag"
+#include "renderer/shaders/positionTextureColor.vert"
+#include "renderer/shaders/positionTextureColor.frag"
 
 NS_CC_END
