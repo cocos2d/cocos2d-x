@@ -1,6 +1,5 @@
 cocos2d-x-3.17.1 Nov.19 2018
 
-[REFINE]        Renderer: remove ccGLStateCache
 [REFINE]        Renderer: properly reduce clear buffer times to save energy
 [REFINE]        Engine: improve the reuse logic of sprite frames cache
 [REFINE]        Engine: add `GLView::setCursor` for desktop platforms
