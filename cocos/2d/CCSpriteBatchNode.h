@@ -261,6 +261,8 @@ protected:
     void updateAtlasIndex(Sprite* sprite, ssize_t* curIndex);
     void swap(ssize_t oldIndex, ssize_t newIndex);
     void updateBlendFunc();
+    
+    void createShaders();
 
     TextureAtlas *_textureAtlas;
     BlendFunc _blendFunc;

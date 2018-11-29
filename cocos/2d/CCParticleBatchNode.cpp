@@ -406,7 +406,9 @@ void ParticleBatchNode::draw(Renderer* renderer, const Mat4 & /*transform*/, uin
     {
         return;
     }
-    _batchCommand.init(_globalZOrder, getGLProgram(), _blendFunc, _textureAtlas, _modelViewTransform, flags);
+    //TODO coulsonwang
+    cocos2d::log("Error in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
+//    _batchCommand.init(_globalZOrder, getGLProgram(), _blendFunc, _textureAtlas, _modelViewTransform, flags);
     renderer->addCommand(&_batchCommand);
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }

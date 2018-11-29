@@ -1141,7 +1141,7 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
     {
         Sprite* childSprite = dynamic_cast<Sprite*>(child);
         CCASSERT( childSprite, "CCSprite only supports Sprites as children when using SpriteBatchNode");
-        CCASSERT(childSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "childSprite's texture name should be equal to _textureAtlas's texture name!");
+        CCASSERT(childSprite->getTexture() == _textureAtlas->getTexture(), "childSprite's texture name should be equal to _textureAtlas's texture name!");
         //put it in descendants array of batch node
         _batchNode->appendChild(childSprite);
 
@@ -1166,7 +1166,7 @@ void Sprite::addChild(Node *child, int zOrder, const std::string &name)
     {
         Sprite* childSprite = dynamic_cast<Sprite*>(child);
         CCASSERT( childSprite, "CCSprite only supports Sprites as children when using SpriteBatchNode");
-        CCASSERT(childSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(),
+        CCASSERT(childSprite->getTexture() == _textureAtlas->getTexture(),
                  "childSprite's texture name should be equal to _textureAtlas's texture name.");
         //put it in descendants array of batch node
         _batchNode->appendChild(childSprite);

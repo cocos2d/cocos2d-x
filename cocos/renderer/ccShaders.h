@@ -103,6 +103,8 @@ extern CC_DLL const GLchar* ccShader_LayerRadialGradient_frag;
 //backend shader file
 extern CC_DLL const GLchar * sprite_vert;
 extern CC_DLL const GLchar * sprite_frag;
+extern CC_DLL const GLchar * positionTextureColor_vert;
+extern CC_DLL const GLchar * positionTextureColor_frag;
 
 NS_CC_END
 /**

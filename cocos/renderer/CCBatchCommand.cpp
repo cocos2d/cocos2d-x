@@ -33,26 +33,32 @@
 NS_CC_BEGIN
 
 BatchCommand::BatchCommand()
-: _textureID(0)
-, _blendType(BlendFunc::DISABLE)
+//: _textureID(0)
+: _blendType(BlendFunc::DISABLE)
 , _textureAtlas(nullptr)
 {
     _type = RenderCommand::Type::BATCH_COMMAND;
-    _shader = nullptr;
+//    _shader = nullptr;
 }
 
-void BatchCommand::init(float globalOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags)
+//TODO coulsonwang
+//void BatchCommand::init(float globalZOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags)
+//{
+//    //TODO coulsonwang
+//    cocos2d::log("Error in%s %s %d", __FILE__, __FUNCTION__, __LINE__);
+//}
+
+void BatchCommand::init(float globalOrder, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags)
 {
-    CCASSERT(shader, "shader cannot be null");
-    CCASSERT(textureAtlas, "textureAtlas cannot be null");
+//    CCASSERT(shader, "shader cannot be null");
+//    CCASSERT(textureAtlas, "textureAtlas cannot be null");
     
     RenderCommand::init(globalOrder, modelViewTransform, flags);
-    _textureID = textureAtlas->getTexture()->getName();
-    _blendType = blendType;
-    _shader = shader;
-    
+//    _textureID = textureAtlas->getTexture()->getName();
+//    _blendType = blendType;
+//    _shader = shader;
+//
     _textureAtlas = textureAtlas;
-    
     _mv = modelViewTransform;
 }
 
@@ -60,17 +66,32 @@ BatchCommand::~BatchCommand()
 {
 }
 
-void BatchCommand::execute()
-{
-    // Set material
-    _shader->use();
-    _shader->setUniformsForBuiltins(_mv);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _textureID);
-    utils::setBlending(_blendType.src, _blendType.dst);
+//void BatchCommand::execute()
+//{
+//    // Set material
+//    _shader->use();
+//    _shader->setUniformsForBuiltins(_mv);
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, _textureID);
+//    utils::setBlending(_blendType.src, _blendType.dst);
+//
+//    // Draw
+//    _textureAtlas->drawQuads();
+//}
 
-    // Draw
-    _textureAtlas->drawQuads();
+V3F_C4B_T2F_Quad* BatchCommand::getQuad()
+{
+    return _textureAtlas->getQuads();
+}
+
+unsigned short* BatchCommand::getIndices()
+{
+    return _textureAtlas->getIndices();
+}
+
+uint32_t BatchCommand::getQuadCount()
+{
+    return static_cast<uint32_t>(_textureAtlas->getTotalQuads());
 }
 
 NS_CC_END

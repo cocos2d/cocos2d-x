@@ -36,7 +36,7 @@
 NS_CC_BEGIN
 
 class TextureAtlas;
-class GLProgram;
+//class GLProgram;
 /**
 Command used to draw batches in one TextureAtlas.
 */
@@ -55,18 +55,23 @@ public:
     @param modelViewTransform Model view transform used for rendering.
     @param flags Indicate the render command should be rendered in 3D mode or not.
     */
-    void init(float globalZOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags);
+//    void init(float globalZOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags);
+    void init(float globalZOrder, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags);
 
     /**Execute the command, which will call openGL function to draw the texture atlas.*/
-    void execute();
+//    void execute();
+    
+    V3F_C4B_T2F_Quad* getQuad();
+    unsigned short* getIndices();
+    uint32_t getQuadCount();
 
 protected:
     //TODO: This member variable is not used. It should be removed.
     int32_t _materialID;
-    /**Texture ID used for texture atlas rendering.*/
-    GLuint _textureID;
-    /**Shaders used for rendering.*/
-    GLProgram* _shader;
+//    /**Texture ID used for texture atlas rendering.*/
+//    GLuint _textureID;
+//    /**Shaders used for rendering.*/
+//    GLProgram* _shader;
     /**Blend function for rendering.*/
     BlendFunc _blendType;
     /**Texture atlas for rendering.*/
