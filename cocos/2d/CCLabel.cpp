@@ -38,11 +38,11 @@
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/ccGLStateCache.h"
 #include "base/CCDirector.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventCustom.h"
-#include "base/ccUtils.h"
 #include "2d/CCFontFNT.h"
 
 NS_CC_BEGIN
@@ -1546,7 +1546,7 @@ void Label::onDraw(const Mat4& transform, bool /*transformUpdated*/)
 {
     auto glprogram = getGLProgram();
     glprogram->use();
-    utils::setBlending(_blendFunc.src, _blendFunc.dst);
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
 
     if (_shadowEnabled)
     {

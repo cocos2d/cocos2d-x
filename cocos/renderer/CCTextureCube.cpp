@@ -27,6 +27,8 @@
 #include "platform/CCImage.h"
 #include "platform/CCFileUtils.h"
 
+#include "renderer/ccGLStateCache.h"
+
 NS_CC_BEGIN
 
 unsigned char* getImageData(Image* img, Texture2D::PixelFormat&  ePixFmt)
@@ -191,8 +193,7 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
     GLuint handle;
     glGenTextures(1, &handle);
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, handle);
+    GL::bindTextureN(0, handle, GL_TEXTURE_CUBE_MAP);
 
     for (int i = 0; i < 6; i++)
     {
@@ -236,8 +237,7 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
 
     _name = handle;
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+    GL::bindTextureN(0, 0, GL_TEXTURE_CUBE_MAP);
 
     for (auto img: images)
     {
@@ -251,16 +251,14 @@ void TextureCube::setTexParameters(const TexParams& texParams)
 {
     CCASSERT(_name != 0, __FUNCTION__);
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, _name);
+    GL::bindTextureN(0, _name, GL_TEXTURE_CUBE_MAP);
 
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, texParams.minFilter);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, texParams.magFilter);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, texParams.wrapS);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, texParams.wrapT);
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+    GL::bindTextureN(0, 0, GL_TEXTURE_CUBE_MAP);
 }
 
 bool TextureCube::reloadTexture()

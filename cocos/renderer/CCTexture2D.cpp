@@ -45,6 +45,7 @@ THE SOFTWARE.
 #include "platform/CCPlatformMacros.h"
 #include "base/CCDirector.h"
 #include "renderer/CCGLProgram.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramCache.h"
 #include "base/CCNinePatchImageParser.h"
 
@@ -463,7 +464,7 @@ Texture2D::~Texture2D()
 
     if(_name)
     {
-        glDeleteTextures(1, &_name);
+        GL::deleteTexture(_name);
     }
 }
 
@@ -471,7 +472,7 @@ void Texture2D::releaseGLTexture()
 {
     if(_name)
     {
-        glDeleteTextures(1, &_name);
+        GL::deleteTexture(_name);
     }
     _name = 0;
 }
@@ -625,13 +626,12 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
     if(_name != 0)
     {
-        glDeleteTextures(1, &_name);
+        GL::deleteTexture(_name);
         _name = 0;
     }
 
     glGenTextures(1, &_name);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _name);
+    GL::bindTexture2D(_name);
 
     if (mipmapsNum == 1)
     {
@@ -718,8 +718,7 @@ bool Texture2D::updateWithData(const void *data,int offsetX,int offsetY,int widt
 {
     if (_name)
     {
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, _name);
+        GL::bindTexture2D(_name);
         const PixelFormatInfo& info = _pixelFormatInfoTables.at(_pixelFormat);
         glTexSubImage2D(GL_TEXTURE_2D,0,offsetX,offsetY,width,height,info.format, info.type,data);
 
@@ -1191,13 +1190,12 @@ void Texture2D::drawAtPoint(const Vec2& point)
         point.x,            height  + point.y,
         width + point.x,    height  + point.y };
 
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
     _shaderProgram->use();
     _shaderProgram->setUniformsForBuiltins();
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _name);
+    GL::bindTexture2D( _name );
+
 
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
@@ -1218,13 +1216,11 @@ void Texture2D::drawInRect(const Rect& rect)
         rect.origin.x,                            rect.origin.y + rect.size.height,        /*0.0f,*/
         rect.origin.x + rect.size.width,        rect.origin.y + rect.size.height,        /*0.0f*/ };
 
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
     _shaderProgram->use();
     _shaderProgram->setUniformsForBuiltins();
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _name);
+    GL::bindTexture2D( _name );
 
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
@@ -1245,8 +1241,7 @@ void Texture2D::PVRImagesHavePremultipliedAlpha(bool haveAlphaPremultiplied)
 void Texture2D::generateMipmap()
 {
     CCASSERT(_pixelsWide == ccNextPOT(_pixelsWide) && _pixelsHigh == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _name);
+    GL::bindTexture2D( _name );
     glGenerateMipmap(GL_TEXTURE_2D);
     _hasMipmaps = true;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -1265,8 +1260,7 @@ void Texture2D::setTexParameters(const TexParams &texParams)
         (_pixelsHigh == ccNextPOT(_pixelsHigh) || texParams.wrapT == GL_CLAMP_TO_EDGE),
         "GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _name);
+    GL::bindTexture2D( _name );
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams.minFilter );
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams.magFilter );
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams.wrapS );
@@ -1291,8 +1285,7 @@ void Texture2D::setAliasTexParameters()
         return;
     }
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _name);
+    GL::bindTexture2D( _name );
 
     if( ! _hasMipmaps )
     {
@@ -1324,8 +1317,7 @@ void Texture2D::setAntiAliasTexParameters()
         return;
     }
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _name);
+    GL::bindTexture2D( _name );
 
     if( ! _hasMipmaps )
     {

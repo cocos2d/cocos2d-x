@@ -1268,6 +1268,8 @@
         "cocos/renderer/CCVertexIndexData.cpp", 
         "cocos/renderer/CCVertexIndexData.h", 
         "cocos/renderer/CMakeLists.txt", 
+        "cocos/renderer/ccGLStateCache.cpp", 
+        "cocos/renderer/ccGLStateCache.h", 
         "cocos/renderer/ccShader_3D_Color.frag", 
         "cocos/renderer/ccShader_3D_ColorNormal.frag", 
         "cocos/renderer/ccShader_3D_ColorNormalTex.frag", 

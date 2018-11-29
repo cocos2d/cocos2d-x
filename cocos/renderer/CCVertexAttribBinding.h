@@ -89,6 +89,9 @@ public:
 
 
 private:
+
+    bool init(MeshIndexData* meshIndexData, GLProgramState* glProgramState);
+
     /**
      * Constructor.
      */
@@ -103,11 +106,11 @@ private:
      * Hidden copy assignment operator.
      */
     VertexAttribBinding& operator=(const VertexAttribBinding&);
-    
-    bool init(MeshIndexData* meshIndexData, GLProgramState* glProgramState);
+
     void setVertexAttribPointer(const std::string& name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid* pointer);
     VertexAttribValue* getVertexAttribValue(const std::string &name);
     void parseAttributes();
+
 
     GLuint _handle;
 

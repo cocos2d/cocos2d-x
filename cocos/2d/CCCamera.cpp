@@ -33,6 +33,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCGLProgramCache.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCFrameBuffer.h"
 #include "renderer/CCRenderState.h"
 

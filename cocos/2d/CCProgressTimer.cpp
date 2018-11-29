@@ -31,8 +31,8 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
 #include "2d/CCSprite.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
-#include "base/ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -509,20 +509,11 @@ void ProgressTimer::onDraw(const Mat4 &transform, uint32_t /*flags*/)
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
 
-    utils::setBlending(_sprite->getBlendFunc().src, _sprite->getBlendFunc().dst);
+    GL::blendFunc( _sprite->getBlendFunc().src, _sprite->getBlendFunc().dst );
 
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _sprite->getTexture()->getName());
-    auto alphaTexID = _sprite->getTexture()->getAlphaTextureName();
-    if (alphaTexID > 0)
-    {
-        glActiveTexture(GL_TEXTURE0 + 1);
-        glBindTexture(GL_TEXTURE_2D, alphaTexID);
-    }
+    GL::bindTexture2D( _sprite->getTexture() );
 
     glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]) , &_vertexData[0].vertices);
     glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);

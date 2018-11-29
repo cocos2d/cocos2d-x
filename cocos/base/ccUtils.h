@@ -188,9 +188,6 @@ namespace utils
     * @lua NA
     */
     CC_DLL LanguageType getLanguageTypeByISO2(const char* code);
-
-    CC_DLL void setBlending(GLenum sfactor, GLenum dfactor);
-    CC_DLL void enableVertexAttributes(uint32_t flags);
 }
 
 NS_CC_END

@@ -643,6 +643,7 @@
     <ClCompile Include="..\..\renderer\CCGLProgramCache.cpp" />
     <ClCompile Include="..\..\renderer\CCGLProgramState.cpp" />
     <ClCompile Include="..\..\renderer\CCGLProgramStateCache.cpp" />
+    <ClCompile Include="..\..\renderer\ccGLStateCache.cpp" />
     <ClCompile Include="..\..\renderer\CCGroupCommand.cpp" />
     <ClCompile Include="..\..\renderer\CCMaterial.cpp" />
     <ClCompile Include="..\..\renderer\CCMeshCommand.cpp" />
@@ -1329,6 +1330,7 @@
     <ClInclude Include="..\..\renderer\CCGLProgramCache.h" />
     <ClInclude Include="..\..\renderer\CCGLProgramState.h" />
     <ClInclude Include="..\..\renderer\CCGLProgramStateCache.h" />
+    <ClInclude Include="..\..\renderer\ccGLStateCache.h" />
     <ClInclude Include="..\..\renderer\CCGroupCommand.h" />
     <ClInclude Include="..\..\renderer\CCMaterial.h" />
     <ClInclude Include="..\..\renderer\CCMeshCommand.h" />
