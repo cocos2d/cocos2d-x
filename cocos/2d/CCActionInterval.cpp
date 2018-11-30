@@ -119,7 +119,7 @@ void ActionInterval::step(float dt)
     if (_firstTick)
     {
         _firstTick = false;
-        _elapsed = 0;
+        _elapsed = MATH_EPSILON;
     }
     else
     {
