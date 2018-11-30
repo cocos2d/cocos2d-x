@@ -2707,6 +2707,8 @@
 		EDF9D8A621AE9678004374AB /* positionTextureColor.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = positionTextureColor.vert; sourceTree = "<group>"; };
 		EDF9D8A721AF8CD1004374AB /* sprite.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sprite.vert; sourceTree = "<group>"; };
 		EDF9D8A821AF8CD1004374AB /* sprite.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sprite.frag; sourceTree = "<group>"; };
+		EDF9D8A921AF92C5004374AB /* label_normal.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = label_normal.frag; sourceTree = "<group>"; };
+		EDF9D8AA21AF92C5004374AB /* label_common.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = label_common.vert; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3705,6 +3707,8 @@
 		460D4CC821A545420075726E /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				EDF9D8AA21AF92C5004374AB /* label_common.vert */,
+				EDF9D8A921AF92C5004374AB /* label_normal.frag */,
 				EDF9D8A821AF8CD1004374AB /* sprite.frag */,
 				EDF9D8A721AF8CD1004374AB /* sprite.vert */,
 				EDF9D8A521AE9677004374AB /* positionTextureColor.frag */,

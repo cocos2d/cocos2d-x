@@ -650,7 +650,7 @@ void SpriteBatchNode::updateBlendFunc()
     blendDescriptor.blendEnabled = true;
     if (! _textureAtlas->getTexture()->hasPremultipliedAlpha())
     {
-//        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
         blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::SRC_ALPHA;
         blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
         blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::SRC_ALPHA;
@@ -659,7 +659,7 @@ void SpriteBatchNode::updateBlendFunc()
     }
     else
     {
-//        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
         blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::ONE;
         blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
         blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::ONE;
