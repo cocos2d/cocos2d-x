@@ -89,7 +89,7 @@ void ExtraAction::step(float /*dt*/)
 bool ActionInterval::initWithDuration(float d)
 {
 
-    _duration = abs(d) <= FLT_EPSILON ? FLT_EPSILON : d;
+    _duration = abs(d) <= MATH_EPSILON ? MATH_EPSILON : d;
     _elapsed = 0;
     _firstTick = true;
     _done = false;
@@ -119,7 +119,7 @@ void ActionInterval::step(float dt)
     if (_firstTick)
     {
         _firstTick = false;
-        _elapsed = FLT_EPSILON;
+        _elapsed = MATH_EPSILON;
     }
     else
     {
