@@ -105,5 +105,7 @@ NS_CC_BEGIN
 #include "renderer/shaders/sprite.frag"
 #include "renderer/shaders/positionTextureColor.vert"
 #include "renderer/shaders/positionTextureColor.frag"
+#include "renderer/shaders/label_common.vert"
+#include "renderer/shaders/label_normal.frag"
 
 NS_CC_END

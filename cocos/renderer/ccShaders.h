@@ -105,6 +105,8 @@ extern CC_DLL const GLchar * sprite_vert;
 extern CC_DLL const GLchar * sprite_frag;
 extern CC_DLL const GLchar * positionTextureColor_vert;
 extern CC_DLL const GLchar * positionTextureColor_frag;
+extern CC_DLL const GLchar * label_common_vert;
+extern CC_DLL const GLchar * label_normal_frag;
 
 NS_CC_END
 /**

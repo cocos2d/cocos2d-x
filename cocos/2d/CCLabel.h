@@ -687,6 +687,9 @@ protected:
     FontDefinition _getFontDefinition() const;
 
     virtual void updateColor() override;
+    
+    void setVertexLayout(PipelineDescriptor& vertexLayout);
+    void updateBlendState();
 
     LabelType _currentLabelType;
     bool _contentDirty;
