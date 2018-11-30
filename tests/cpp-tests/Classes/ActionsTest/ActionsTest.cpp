@@ -38,13 +38,13 @@ using namespace cocos2d::ui;
 
 ActionsTests::ActionsTests()
 {
-    ADD_TEST_CASE(ActionMove);
-    ADD_TEST_CASE(ActionMove3D);
-    ADD_TEST_CASE(ActionRotate);
-    ADD_TEST_CASE(ActionRotateBy3D);
-    ADD_TEST_CASE(ActionScale);
-    ADD_TEST_CASE(ActionSkew);
-    ADD_TEST_CASE(ActionRotationalSkew);
+//    ADD_TEST_CASE(ActionMove);
+//    ADD_TEST_CASE(ActionMove3D);
+//    ADD_TEST_CASE(ActionRotate);
+//    ADD_TEST_CASE(ActionRotateBy3D);
+//    ADD_TEST_CASE(ActionScale);
+//    ADD_TEST_CASE(ActionSkew);
+//    ADD_TEST_CASE(ActionRotationalSkew);
     ADD_TEST_CASE(ActionRotationalSkewVSStandardSkew);
     ADD_TEST_CASE(ActionSkewRotateScale);
     ADD_TEST_CASE(ActionJump);

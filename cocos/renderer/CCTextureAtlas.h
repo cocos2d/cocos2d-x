@@ -221,10 +221,10 @@ public:
     virtual std::string getDescription() const;
 
     /** Gets the quantity of quads that are going to be drawn. */
-    ssize_t getTotalQuads() const;
+    size_t getTotalQuads() const;
     
     /** Gets the quantity of quads that can be stored with the current texture atlas size. */
-    ssize_t getCapacity() const;
+    size_t getCapacity() const;
     
     /** Gets the texture of the texture atlas. */
     Texture2D* getTexture() const;
@@ -252,9 +252,9 @@ protected:
     GLushort*           _indices;
     bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
     /** quantity of quads that are going to be drawn */
-    ssize_t _totalQuads;
+    size_t _totalQuads;
     /** quantity of quads that can be stored with the current texture atlas size */
-    ssize_t _capacity;
+    size_t _capacity;
     /** Texture of the texture atlas */
     Texture2D* _texture;
     /** Quads that are going to be rendered */

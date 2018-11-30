@@ -62,13 +62,17 @@ public:
         /**Primitive command, used to draw primitives such as lines, points and triangles.*/
         PRIMITIVE_COMMAND,
         /**Triangles command, used to draw triangles.*/
-        TRIANGLES_COMMAND
+        TRIANGLES_COMMAND,
+        NORMAL_COMMAND
     };
     
+    //TODO: minggo should not have implementation.
     // These functions are invoked by renderer to fill vertex data and index data.
     // Return the length of data are copied in bytes.
     virtual size_t copyVertexData(void*) const { return 0; }
-    virtual size_t copyIndexData(void*) const { return 0; }
+    virtual const unsigned short* getIndices() const { return nullptr; }
+    virtual size_t getIndexCount() const { return 0; }
+    virtual size_t getVertexCount() const { return 0; }
 
     /**
      Init function, will be called by all the render commands.

@@ -47,6 +47,12 @@ public:
     BatchCommand();
     /**Destructor.*/
     ~BatchCommand();
+
+    virtual size_t copyVertexData(void*) const override;
+    virtual size_t getIndexCount() const override;
+    virtual size_t getVertexCount() const override { return getQuadCount(); }
+    virtual const unsigned short* getIndices() const override;
+
     /**Init the batch command.
     @param globalZOrder GlobalZOrder of the render command.
     @param shader Shader used for draw the texture atlas.
@@ -61,9 +67,8 @@ public:
     /**Execute the command, which will call openGL function to draw the texture atlas.*/
 //    void execute();
     
-    V3F_C4B_T2F_Quad* getQuad();
-    unsigned short* getIndices();
-    uint32_t getQuadCount();
+    V3F_C4B_T2F_Quad* getQuad() const;
+    size_t getQuadCount() const;
 
 protected:
     //TODO: This member variable is not used. It should be removed.

@@ -150,7 +150,7 @@ void CommandBufferGL::drawArrays(PrimitiveType primitiveType, uint32_t start,  u
     cleanResources();
 }
 
-void CommandBufferGL::drawElements(PrimitiveType primitiveType, IndexFormat indexType, uint32_t count, uint32_t offset)
+void CommandBufferGL::drawElements(PrimitiveType primitiveType, IndexFormat indexType, size_t count, size_t offset)
 {
     prepareDrawing();
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer->getHandler());

@@ -211,7 +211,7 @@ Renderer::Renderer()
     _triBatchesToDraw = (TriBatchToDraw*) malloc(sizeof(_triBatchesToDraw[0]) * _triBatchesToDrawCapacity);
 
     _verts = malloc(Renderer::VBO_SIZE);
-    _indices = malloc(Renderer::INDEX_VBO_SIZE);
+    _indices = (unsigned short*)malloc(Renderer::INDEX_VBO_SIZE);
 }
 
 Renderer::~Renderer()
@@ -279,96 +279,100 @@ int Renderer::createRenderQueue()
 void Renderer::processRenderCommand(RenderCommand* command)
 {
     auto commandType = command->getType();
-    if( RenderCommand::Type::TRIANGLES_COMMAND == commandType)
+    switch(commandType)
     {
-        // flush other queues
-        flush3D();
-
-        auto cmd = static_cast<TrianglesCommand*>(command);
-        
-        // flush own queue when buffer is full
-        if(_filledVertex + cmd->getVertexCount() > VBO_SIZE || _filledIndex + cmd->getIndexCount() > INDEX_VBO_SIZE)
+        case RenderCommand::Type::TRIANGLES_COMMAND:
         {
-            CCASSERT(cmd->getVertexCount()>= 0 && cmd->getVertexCount() < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
-            CCASSERT(cmd->getIndexCount()>= 0 && cmd->getIndexCount() < INDEX_VBO_SIZE, "VBO for index is not big enough, please break the data down or use customized render command");
-            drawBatchedTriangles();
-        }
-        
-        // queue it
-        _queuedTriangleCommands.push_back(cmd);
-        _filledIndex += cmd->getIndexCount();
-        _filledVertex += cmd->getVertexCount();
-    }
-    else if (RenderCommand::Type::MESH_COMMAND == commandType)
-    {
-        flush2D();
-        auto cmd = static_cast<MeshCommand*>(command);
-        
-        if (cmd->isSkipBatching() || _lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
-        {
+            // flush other queues
             flush3D();
-
-//            CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_MESH_COMMAND");
-
-            if(cmd->isSkipBatching())
+            
+            auto cmd = static_cast<TrianglesCommand*>(command);
+            
+            // flush own queue when buffer is full
+            if(_filledVertex + cmd->getVertexCount() > VBO_SIZE || _filledIndex + cmd->getIndexCount() > INDEX_VBO_SIZE)
             {
-                // XXX: execute() will call bind() and unbind()
-                // but unbind() shouldn't be call if the next command is a MESH_COMMAND with Material.
-                // Once most of cocos2d-x moves to Pass/StateBlock, only bind() should be used.
-                cmd->execute();
+                CCASSERT(cmd->getVertexCount()>= 0 && cmd->getVertexCount() < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
+                CCASSERT(cmd->getIndexCount()>= 0 && cmd->getIndexCount() < INDEX_VBO_SIZE, "VBO for index is not big enough, please break the data down or use customized render command");
+                drawBatchedTriangles();
+            }
+            
+            // queue it
+            _queuedTriangleCommands.push_back(cmd);
+            _filledIndex += cmd->getIndexCount();
+            _filledVertex += cmd->getVertexCount();
+        }
+            break;
+        case RenderCommand::Type::MESH_COMMAND:
+        {
+            flush2D();
+            auto cmd = static_cast<MeshCommand*>(command);
+            
+            if (cmd->isSkipBatching() || _lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
+            {
+                flush3D();
+                
+                //            CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_MESH_COMMAND");
+                
+                if(cmd->isSkipBatching())
+                {
+                    // XXX: execute() will call bind() and unbind()
+                    // but unbind() shouldn't be call if the next command is a MESH_COMMAND with Material.
+                    // Once most of cocos2d-x moves to Pass/StateBlock, only bind() should be used.
+                    cmd->execute();
+                }
+                else
+                {
+                    cmd->preBatchDraw();
+                    cmd->batchDraw();
+                    _lastBatchedMeshCommand = cmd;
+                }
             }
             else
             {
-                cmd->preBatchDraw();
+                //            CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_MESH_COMMAND");
                 cmd->batchDraw();
-                _lastBatchedMeshCommand = cmd;
             }
         }
-        else
+            break;
+        case RenderCommand::Type::GROUP_COMMAND:
         {
-//            CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_MESH_COMMAND");
-            cmd->batchDraw();
+            flush();
+            auto tmpRenderPass = _currentRenderPass;
+            _currentRenderPass = createRenderPass(command);
+            _viewPortStack.push({command->getViewPort()});
+            int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
+            //        CCGL_DEBUG_PUSH_GROUP_MARKER("RENDERER_GROUP_COMMAND");
+            visitRenderQueue(_renderGroups[renderQueueID]);
+            _viewPortStack.pop();
+            _currentRenderPass->release();
+            _currentRenderPass = tmpRenderPass;
+            //        CCGL_DEBUG_POP_GROUP_MARKER();
         }
-    }
-    else if(RenderCommand::Type::GROUP_COMMAND == commandType)
-    {
-        flush();
-        auto tmpRenderPass = _currentRenderPass;
-        _currentRenderPass = createRenderPass(command);
-        _viewPortStack.push({command->getViewPort()});
-        int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
-//        CCGL_DEBUG_PUSH_GROUP_MARKER("RENDERER_GROUP_COMMAND");
-        visitRenderQueue(_renderGroups[renderQueueID]);
-        _viewPortStack.pop();
-        _currentRenderPass->release();
-        _currentRenderPass = tmpRenderPass;
-//        CCGL_DEBUG_POP_GROUP_MARKER();
-    }
-    else if(RenderCommand::Type::CUSTOM_COMMAND == commandType)
-    {
-        flush();
-        auto cmd = static_cast<CustomCommand*>(command);
-//        CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_CUSTOM_COMMAND");
-        cmd->execute();
-    }
-    else if(RenderCommand::Type::BATCH_COMMAND == commandType)
-    {
-        flush();
-        drawBatchedCommand(command);
-//        auto cmd = static_cast<BatchCommand*>(command);
-//        CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_BATCH_COMMAND");
-//        cmd->execute();
-    }
-    else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
-    {
-        flush();
-        auto cmd = static_cast<PrimitiveCommand*>(command);
-//        CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_PRIMITIVE_COMMAND");
-        cmd->execute();
-    }
-    else
-    {
-        CCLOGERROR("Unknown commands in renderQueue");
+            break;
+        case RenderCommand::Type::CUSTOM_COMMAND:
+        {
+            flush();
+            auto cmd = static_cast<CustomCommand*>(command);
+            //        CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_CUSTOM_COMMAND");
+            cmd->execute();
+        }
+            break;
+        case RenderCommand::Type::BATCH_COMMAND:
+        case RenderCommand::Type::NORMAL_COMMAND:
+            flush();
+            drawBatchedCommand(command);
+            break;
+        case RenderCommand::Type::PRIMITIVE_COMMAND:
+        {
+            flush();
+            auto cmd = static_cast<PrimitiveCommand*>(command);
+            //        CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_PRIMITIVE_COMMAND");
+            cmd->execute();
+        }
+            break;
+        default:
+            assert(false);
+            break;
     }
 }
 
@@ -535,9 +539,6 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
 
 void Renderer::render()
 {
-    //Uncomment this once everything is rendered by new renderer
-    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     //TODO: setup camera or MVP
     _isRendering = true;
     
@@ -571,8 +572,7 @@ void Renderer::clean()
 
     // Clear batch commands
     _queuedTriangleCommands.clear();
-    _filledVertex = 0;
-    _filledIndex = 0;
+    cleanVerticesAndIncices();
     _lastBatchedMeshCommand = nullptr;
 }
 
@@ -606,29 +606,26 @@ void Renderer::setDepthTest(bool enable)
     //todo: minggo
 }
 
-void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
+void Renderer::fillVerticesAndIndices(const RenderCommand* cmd)
 {
-    // memcpy(&_verts[_filledVertex], cmd->getVertices(), sizeof(V3F_C4B_T2F) * cmd->getVertexCount());
+    _filledVertexBytes += cmd->copyVertexData((uint8_t*)_verts + _filledVertexBytes);
+    
+    const unsigned short* indices = cmd->getIndices();
+    auto indexCount = cmd->getIndexCount();
+    for(size_t i = 0; i < indexCount; ++i)
+    {
+        _indices[_filledIndex + i] = _filledVertex + indices[i];
+    }
+    
+    _filledIndex += indexCount;
+    _filledVertex += cmd->getVertexCount();
+}
 
-    // // fill vertex, and convert them to world coordinates
-    // const Mat4& modelView = cmd->getModelView();
-    // for(ssize_t i=0; i < cmd->getVertexCount(); ++i)
-    // {
-    //     modelView.transformPoint(&(_verts[i + _filledVertex].vertices));
-    // }
-
-    // // fill index
-    // const unsigned short* indices = cmd->getIndices();
-    // for(ssize_t i=0; i< cmd->getIndexCount(); ++i)
-    // {
-    //     _indices[_filledIndex + i] = _filledVertex + indices[i];
-    // }
-
-    // _filledVertex += cmd->getVertexCount();
-    // _filledIndex += cmd->getIndexCount();
-
-    _filledVertex += cmd->copyVertexData((char*)_verts + _filledVertex);
-    _filledIndex += cmd->copyIndexData((char*)_indices + _filledIndex);
+void Renderer::cleanVerticesAndIncices()
+{
+    _filledIndex = 0;
+    _filledVertex = 0;
+    _filledVertexBytes = 0;
 }
 
 void Renderer::drawBatchedTriangles()
@@ -636,8 +633,7 @@ void Renderer::drawBatchedTriangles()
     if(_queuedTriangleCommands.empty())
         return;
     
-    _filledVertex = 0;
-    _filledIndex = 0;
+    cleanVerticesAndIncices();
     
     /************** 1: Setup up vertices/indices *************/
     
@@ -670,7 +666,7 @@ void Renderer::drawBatchedTriangles()
             {
                 batchesTotal++;
                 _triBatchesToDraw[batchesTotal].offset =
-                    _triBatchesToDraw[batchesTotal-1].offset + _triBatchesToDraw[batchesTotal-1].indicesToDraw * _triBatchesToDraw[batchesTotal-1].cmd->getIndexSize();
+                    _triBatchesToDraw[batchesTotal-1].offset + _triBatchesToDraw[batchesTotal-1].indicesToDraw;
             }
             
             _triBatchesToDraw[batchesTotal].cmd = cmd;
@@ -696,8 +692,8 @@ void Renderer::drawBatchedTriangles()
     // _vertexBuffer->updateData(_verts, sizeof(_verts[0]) * _filledVertex);
     // _indexBuffer->updateData(_indices, sizeof(_indices[0]) * _filledIndex);
 
-    _vertexBuffer->updateData(_verts, _filledVertex);
-    _indexBuffer->updateData(_indices, _filledIndex);
+    _vertexBuffer->updateData(_verts, _filledVertexBytes);
+    _indexBuffer->updateData(_indices, sizeof(_indices[0]) * _filledIndex);
     
     /************** 2: Draw *************/
     _commandBuffer->beginRenderPass(_currentRenderPass);
@@ -724,50 +720,57 @@ void Renderer::drawBatchedTriangles()
         _commandBuffer->setIndexBuffer(_indexBuffer);
         _commandBuffer->setBindGroup(&pipelineDescriptor.bindGroup);
         _commandBuffer->drawElements(backend::PrimitiveType::TRIANGLE,
-                                     backend::IndexFormat::U_SHORT, _triBatchesToDraw[i].indicesToDraw,
-                                     _triBatchesToDraw[i].offset);
+                                     backend::IndexFormat::U_SHORT,
+                                     _triBatchesToDraw[i].indicesToDraw,
+                                     _triBatchesToDraw[i].offset * sizeof(_indices[0]));
     }
     
     _commandBuffer->endRenderPass();
     
     /************** 3: Cleanup *************/
     _queuedTriangleCommands.clear();
-    _filledVertex = 0;
-    _filledIndex = 0;
+    cleanVerticesAndIncices();
 }
 
 void Renderer::drawBatchedCommand(RenderCommand* command)
 {
-    auto cmd = static_cast<BatchCommand*>(command);
+//    auto cmd = static_cast<BatchCommand*>(command);
     
 //    fillVerticesAndIndices(cmd);
-    V3F_C4B_T2F_Quad* quad = cmd->getQuad();
-    unsigned short* indices = cmd->getIndices();
-    uint32_t quadSize = sizeof(quad[0]) * cmd->getQuadCount();
-    uint32_t indexCount = cmd->getQuadCount() * 6;
-    uint32_t indexSize = sizeof(indices[0]) * indexCount;
+//    V3F_C4B_T2F_Quad* quad = cmd->getQuad();
+//    unsigned short* indices = cmd->getIndices();
+//    uint32_t quadSize = sizeof(quad[0]) * cmd->getQuadCount();
+//    uint32_t indexCount = cmd->getQuadCount() * 6;
+//    uint32_t indexSize = sizeof(indices[0]) * indexCount;
+
+    fillVerticesAndIndices(command);
     
-    _vertexBuffer->updateData(quad, quadSize);
-    _indexBuffer->updateData(indices, indexSize);
+//    _vertexBuffer->updateData(quad, quadSize);
+//    _indexBuffer->updateData(indices, indexSize);
+    _vertexBuffer->updateData(_verts, _filledVertexBytes);
+    _indexBuffer->updateData(_indices, _filledIndex);
     
     /************** 2: Draw *************/
     _commandBuffer->beginRenderPass(_currentRenderPass);
-    auto& pipelineDescriptor = cmd->getPipelineDescriptor();
+    auto& pipelineDescriptor = command->getPipelineDescriptor();
     auto renderPipeline = createRenderPipeline(pipelineDescriptor);
     _commandBuffer->setRenderPipeline(renderPipeline);
     renderPipeline->release();
     
-    auto viewPort = cmd->getViewPort();
+    auto viewPort = command->getViewPort();
     _commandBuffer->setViewport(viewPort[0], viewPort[1], viewPort[2], viewPort[3]);
     
     _commandBuffer->setVertexBuffer(0, _vertexBuffer);
     _commandBuffer->setIndexBuffer(_indexBuffer);
     _commandBuffer->setBindGroup(&pipelineDescriptor.bindGroup);
     _commandBuffer->drawElements(backend::PrimitiveType::TRIANGLE,
-                                 backend::IndexFormat::U_SHORT, indexCount,
+                                 backend::IndexFormat::U_SHORT,
+                                 command->getIndexCount() * sizeof(_indices[0]),
                                  0);
     
     _commandBuffer->endRenderPass();
+    
+    cleanVerticesAndIncices();
 }
 
 void Renderer::flush()

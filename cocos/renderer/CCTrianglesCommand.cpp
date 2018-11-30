@@ -51,13 +51,6 @@ size_t TrianglesCommand::copyVertexData(void* out) const
     return dataLength;
 }
 
-size_t TrianglesCommand::copyIndexData(void* out) const
-{
-    auto dataLength = sizeof(unsigned short) * _triangles.indexCount;
-    memcpy(out, _triangles.indices, dataLength);
-    return dataLength;
-}
-
 void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags)
 {
     CCASSERT(glProgramState, "Invalid GLProgramState");

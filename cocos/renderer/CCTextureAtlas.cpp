@@ -78,12 +78,12 @@ TextureAtlas::~TextureAtlas()
 #endif
 }
 
-ssize_t TextureAtlas::getTotalQuads() const
+size_t TextureAtlas::getTotalQuads() const
 {
     return _totalQuads;
 }
 
-ssize_t TextureAtlas::getCapacity() const
+size_t TextureAtlas::getCapacity() const
 {
     return _capacity;
 }

@@ -43,6 +43,10 @@ THE SOFTWARE.
 #include "base/CCEventListenerAcceleration.h"
 #include "base/ccUTF8.h"
 #include "renderer/CCGLProgram.h"
+#include "renderer/backend/Device.h"
+#include "renderer/backend/ShaderModule.h"
+#include "renderer/shaders/positionColorNoMVP.vert"
+#include "renderer/shaders/positionColorNoMVP.frag"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "platform/desktop/CCGLViewImpl-desktop.h"
@@ -292,10 +296,41 @@ __LayerRGBA::__LayerRGBA()
 #endif
 /// LayerColor
 
+LayerColor::MyRenderCommand::MyRenderCommand()
+{
+    _type = RenderCommand::Type::NORMAL_COMMAND;
+}
+
+size_t LayerColor::MyRenderCommand::copyVertexData(void* out) const
+{
+    auto positionlength = sizeof(_noMVPVertices);
+    memcpy(out, _noMVPVertices, positionlength);
+    auto colorLength = sizeof(_squareColors);
+    memcpy((char*)out + positionlength, _squareColors, colorLength);
+    return positionlength + colorLength;
+}
+
+size_t LayerColor::MyRenderCommand::getIndexCount() const
+{
+    return 6;
+}
+
 LayerColor::LayerColor()
 {
     // default blend function
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+    
+    auto& vertexLayout = _renderCommand.getPipelineDescriptor().vertexLayout;
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32A32, 0, false);
+    vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::FLOAT_R32G32B32A32, sizeof(_renderCommand._noMVPVertices), false);
+    vertexLayout.setLayout(sizeof(_renderCommand._noMVPVertices) + sizeof(_renderCommand._squareColors), backend::VertexStepMode::VERTEX);
+    
+    auto device = backend::Device::getInstance();
+    auto vs = device->createShaderModule(backend::ShaderStage::VERTEX, positionColor_vert);
+    auto fs = device->createShaderModule(backend::ShaderStage::FRAGMENT, positionColor_frag);
+    auto& pipelineDescriptor = _renderCommand.getPipelineDescriptor();
+    pipelineDescriptor.setVertexShader(vs);
+    pipelineDescriptor.setFragmentShader(fs);
 }
     
 LayerColor::~LayerColor()
@@ -379,7 +414,6 @@ bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
         updateColor();
         setContentSize(Size(w, h));
 
-        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
         return true;
     }
     return false;
@@ -419,20 +453,23 @@ void LayerColor::changeHeight(GLfloat h)
 
 void LayerColor::updateColor()
 {
-    for( unsigned int i=0; i < 4; i++ )
+    for (int i = 0; i < 4; i++ )
     {
-        _squareColors[i].r = _displayedColor.r / 255.0f;
-        _squareColors[i].g = _displayedColor.g / 255.0f;
-        _squareColors[i].b = _displayedColor.b / 255.0f;
-        _squareColors[i].a = _displayedOpacity / 255.0f;
+        _renderCommand._squareColors[i].r = _displayedColor.r / 255.0f;
+        _renderCommand._squareColors[i].g = _displayedColor.g / 255.0f;
+        _renderCommand._squareColors[i].b = _displayedColor.b / 255.0f;
+        _renderCommand._squareColors[i].a = _displayedOpacity / 255.0f;
     }
 }
 
 void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    _customCommand.init(_globalZOrder, transform, flags);
-    _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
+//    _customCommand.init(_globalZOrder, transform, flags);
+//    _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this, transform, flags);
+//    renderer->addCommand(&_customCommand);
+    
+    _renderCommand.init(_globalZOrder, transform, flags);
+    renderer->addCommand(&_renderCommand);
     
     for(int i = 0; i < 4; ++i)
     {
@@ -440,36 +477,31 @@ void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         pos.x = _squareVertices[i].x; pos.y = _squareVertices[i].y; pos.z = _positionZ;
         pos.w = 1;
         _modelViewTransform.transformVector(&pos);
-        _noMVPVertices[i] = Vec3(pos.x,pos.y,pos.z)/pos.w;
+        _renderCommand._noMVPVertices[i] = Vec3(pos.x,pos.y,pos.z)/pos.w;
     }
 }
 
-void LayerColor::onDraw(const Mat4& transform, uint32_t /*flags*/)
-{
-    getGLProgram()->use();
-    getGLProgram()->setUniformsForBuiltins(transform);
-    
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-    
-    //
-    // Attributes
-    //
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
-
-    utils::setBlending(_blendFunc.src, _blendFunc.dst);
-
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
-}
-
-std::string LayerColor::getDescription() const
-{
-    return StringUtils::format("<LayerColor | Tag = %d>", _tag);
-}
+//void LayerColor::onDraw(const Mat4& transform, uint32_t /*flags*/)
+//{
+//    getGLProgram()->use();
+//    getGLProgram()->setUniformsForBuiltins(transform);
+//    
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+//    
+//    //
+//    // Attributes
+//    //
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
+//
+//    utils::setBlending(_blendFunc.src, _blendFunc.dst);
+//
+//    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+//
+//    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
+//}
 
 //
 // LayerGradient
@@ -587,25 +619,25 @@ void LayerGradient::updateColor()
     );
 
     // (-1, -1)
-    _squareColors[0].r = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c));
-    _squareColors[0].g = E.g + (S.g - E.g) * ((c + u.x + u.y) / (2.0f * c));
-    _squareColors[0].b = E.b + (S.b - E.b) * ((c + u.x + u.y) / (2.0f * c));
-    _squareColors[0].a = E.a + (S.a - E.a) * ((c + u.x + u.y) / (2.0f * c));
-    // (1, -1)
-    _squareColors[1].r = E.r + (S.r - E.r) * ((c - u.x + u.y) / (2.0f * c));
-    _squareColors[1].g = E.g + (S.g - E.g) * ((c - u.x + u.y) / (2.0f * c));
-    _squareColors[1].b = E.b + (S.b - E.b) * ((c - u.x + u.y) / (2.0f * c));
-    _squareColors[1].a = E.a + (S.a - E.a) * ((c - u.x + u.y) / (2.0f * c));
-    // (-1, 1)
-    _squareColors[2].r = E.r + (S.r - E.r) * ((c + u.x - u.y) / (2.0f * c));
-    _squareColors[2].g = E.g + (S.g - E.g) * ((c + u.x - u.y) / (2.0f * c));
-    _squareColors[2].b = E.b + (S.b - E.b) * ((c + u.x - u.y) / (2.0f * c));
-    _squareColors[2].a = E.a + (S.a - E.a) * ((c + u.x - u.y) / (2.0f * c));
-    // (1, 1)
-    _squareColors[3].r = E.r + (S.r - E.r) * ((c - u.x - u.y) / (2.0f * c));
-    _squareColors[3].g = E.g + (S.g - E.g) * ((c - u.x - u.y) / (2.0f * c));
-    _squareColors[3].b = E.b + (S.b - E.b) * ((c - u.x - u.y) / (2.0f * c));
-    _squareColors[3].a = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
+//    _squareColors[0].r = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c));
+//    _squareColors[0].g = E.g + (S.g - E.g) * ((c + u.x + u.y) / (2.0f * c));
+//    _squareColors[0].b = E.b + (S.b - E.b) * ((c + u.x + u.y) / (2.0f * c));
+//    _squareColors[0].a = E.a + (S.a - E.a) * ((c + u.x + u.y) / (2.0f * c));
+//    // (1, -1)
+//    _squareColors[1].r = E.r + (S.r - E.r) * ((c - u.x + u.y) / (2.0f * c));
+//    _squareColors[1].g = E.g + (S.g - E.g) * ((c - u.x + u.y) / (2.0f * c));
+//    _squareColors[1].b = E.b + (S.b - E.b) * ((c - u.x + u.y) / (2.0f * c));
+//    _squareColors[1].a = E.a + (S.a - E.a) * ((c - u.x + u.y) / (2.0f * c));
+//    // (-1, 1)
+//    _squareColors[2].r = E.r + (S.r - E.r) * ((c + u.x - u.y) / (2.0f * c));
+//    _squareColors[2].g = E.g + (S.g - E.g) * ((c + u.x - u.y) / (2.0f * c));
+//    _squareColors[2].b = E.b + (S.b - E.b) * ((c + u.x - u.y) / (2.0f * c));
+//    _squareColors[2].a = E.a + (S.a - E.a) * ((c + u.x - u.y) / (2.0f * c));
+//    // (1, 1)
+//    _squareColors[3].r = E.r + (S.r - E.r) * ((c - u.x - u.y) / (2.0f * c));
+//    _squareColors[3].g = E.g + (S.g - E.g) * ((c - u.x - u.y) / (2.0f * c));
+//    _squareColors[3].b = E.b + (S.b - E.b) * ((c - u.x - u.y) / (2.0f * c));
+//    _squareColors[3].a = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
 }
 
 const Color3B& LayerGradient::getStartColor() const

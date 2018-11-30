@@ -14,7 +14,7 @@ BufferGL::~BufferGL()
         glDeleteBuffers(1, &_buffer);
 }
 
-void BufferGL::updateData(void *data, uint32_t size)
+void BufferGL::updateData(void *data, size_t size)
 {
     assert(size <= _size);
     

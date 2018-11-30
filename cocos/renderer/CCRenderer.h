@@ -215,7 +215,8 @@ protected:
     void processRenderCommand(RenderCommand* command);
     void visitRenderQueue(RenderQueue& queue);
 
-    void fillVerticesAndIndices(const TrianglesCommand* cmd);
+    void fillVerticesAndIndices(const RenderCommand* cmd);
+    void cleanVerticesAndIncices();
     
     backend::RenderPipeline* createRenderPipeline(const PipelineDescriptor&);
     backend::RenderPass* createRenderPass(RenderCommand*);
@@ -235,7 +236,7 @@ protected:
 //    V3F_C4B_T2F _verts[VBO_SIZE];
 //    unsigned short _indices[INDEX_VBO_SIZE];
     void* _verts = nullptr;
-    void* _indices = nullptr;
+    unsigned short* _indices = nullptr;
     backend::Buffer* _vertexBuffer = nullptr;
     backend::Buffer* _indexBuffer = nullptr;
     
@@ -258,6 +259,7 @@ protected:
     TriBatchToDraw* _triBatchesToDraw = nullptr;
 
     size_t _filledVertex = 0;
+    size_t _filledVertexBytes = 0;
     size_t _filledIndex = 0;
 
 //    bool _glViewAssigned;

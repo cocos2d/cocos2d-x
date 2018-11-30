@@ -65,7 +65,9 @@ public:
     ~TrianglesCommand();
 
     virtual size_t copyVertexData(void*) const override;
-    virtual size_t copyIndexData(void*) const override;
+    virtual size_t getIndexCount() const override { return _triangles.indexCount; }
+    virtual size_t getVertexCount() const override { return _triangles.vertCount; }
+    virtual const unsigned short* getIndices() const override { return _triangles.indices; }
     
     /** Initializes the command.
      @param globalOrder GlobalZOrder of the command.
@@ -89,14 +91,12 @@ public:
     /**Get a const reference of triangles.*/
     const Triangles& getTriangles() const { return _triangles; }
     /**Get the vertex count in the triangles.*/
-    ssize_t getVertexCount() const { return _triangles.vertCount; }
     /**Get the index count of the triangles.*/
-    ssize_t getIndexCount() const { return _triangles.indexCount; }
     size_t getIndexSize() const { return sizeof(_triangles.indices[0]); }
     /**Get the vertex data pointer.*/
     const V3F_C4B_T2F* getVertices() const { return _triangles.verts; }
     /**Get the index data pointer.*/
-    const unsigned short* getIndices() const { return _triangles.indices; }
+    
     /**Get the glprogramstate.*/
     GLProgramState* getGLProgramState() const { return _glProgramState; }
     /**Get the blend function.*/

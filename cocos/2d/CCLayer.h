@@ -244,6 +244,25 @@ All features from Layer are valid, plus the following new features:
 class CC_DLL LayerColor : public Layer, public BlendProtocol
 {
 public:
+    
+    class MyRenderCommand: public RenderCommand
+    {
+    public:
+        MyRenderCommand();
+        
+        virtual size_t copyVertexData(void*) const override;
+        virtual const unsigned short* getIndices() const override { return _indicies; }
+        virtual size_t getIndexCount() const override;
+        virtual size_t getVertexCount() const override { return 4; }
+        
+    private:
+        friend class LayerColor;
+        
+        Vec3 _noMVPVertices[4];
+        Color4F  _squareColors[4];
+        unsigned short _indicies[6] = { 0, 1, 2, 2, 1, 3 };
+    };
+    
     /** Creates a fullscreen black layer.
      *
      * @return An autoreleased LayerColor object.
@@ -301,8 +320,6 @@ public:
     *@endcode
     */
     virtual void setBlendFunc(const BlendFunc& blendFunc) override;
-
-    virtual std::string getDescription() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     LayerColor();
@@ -313,15 +330,17 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithColor(const Color4B& color);
 
 protected:
-    void onDraw(const Mat4& transform, uint32_t flags);
+//    void onDraw(const Mat4& transform, uint32_t flags);
 
     virtual void updateColor() override;
 
     BlendFunc _blendFunc;
     Vec2 _squareVertices[4];
-    Color4F  _squareColors[4];
-    CustomCommand _customCommand;
-    Vec3 _noMVPVertices[4];
+//    Color4F  _squareColors[4];
+//    CustomCommand _customCommand;
+//    Vec3 _noMVPVertices[4];
+    
+    MyRenderCommand _renderCommand;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);
 

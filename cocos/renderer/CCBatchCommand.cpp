@@ -41,6 +41,24 @@ BatchCommand::BatchCommand()
 //    _shader = nullptr;
 }
 
+size_t BatchCommand::copyVertexData(void* out) const
+{
+    auto dataLength = sizeof(V3F_C4B_T2F_Quad) * getQuadCount();
+    memcpy(out, getQuad(), dataLength);
+
+    return dataLength;
+}
+
+const unsigned short* BatchCommand::getIndices() const
+{
+    return _textureAtlas->getIndices();
+}
+
+size_t BatchCommand::getIndexCount() const
+{
+    return getQuadCount() * 6;
+}
+
 //TODO coulsonwang
 //void BatchCommand::init(float globalZOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags)
 //{
@@ -79,19 +97,14 @@ BatchCommand::~BatchCommand()
 //    _textureAtlas->drawQuads();
 //}
 
-V3F_C4B_T2F_Quad* BatchCommand::getQuad()
+V3F_C4B_T2F_Quad* BatchCommand::getQuad() const
 {
     return _textureAtlas->getQuads();
 }
 
-unsigned short* BatchCommand::getIndices()
+size_t BatchCommand::getQuadCount() const
 {
-    return _textureAtlas->getIndices();
-}
-
-uint32_t BatchCommand::getQuadCount()
-{
-    return static_cast<uint32_t>(_textureAtlas->getTotalQuads());
+    return _textureAtlas->getTotalQuads();
 }
 
 NS_CC_END
