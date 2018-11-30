@@ -208,9 +208,6 @@ Renderer::Renderer()
     _renderGroups.push_back(defaultRenderQueue);
     _queuedTriangleCommands.reserve(BATCH_TRIAGCOMMAND_RESERVED_SIZE);
 
-    // default clear color
-    _clearColor = Color4F::BLACK;
-
     // for the batched TriangleCommand
     _triBatchesToDraw = (TriBatchToDraw*) malloc(sizeof(_triBatchesToDraw[0]) * _triBatchesToDrawCapacity);
 }
@@ -238,6 +235,7 @@ void Renderer::init()
     _vertexBuffer = device->newBuffer(Renderer::VBO_SIZE, backend::BufferType::VERTEX, backend::BufferUsage::READ);
     _indexBuffer = device->newBuffer(Renderer::INDEX_VBO_SIZE, backend::BufferType::INDEX, backend::BufferUsage::READ);
     _commandBuffer = device->newCommandBuffer();
+    createDefaultRenderPass();
 }
 
 void Renderer::addCommand(RenderCommand* command)
@@ -827,12 +825,7 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 void Renderer::setClearColor(const Color4F &clearColor)
 {
     _clearColor = clearColor;
-    
-    CC_SAFE_RELEASE(_defaultRenderPass);
-    backend::RenderPassDescriptor descriptor;
-    descriptor.setClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
-    descriptor.setClearDepth(0);
-    _defaultRenderPass = backend::Device::getInstance()->newRenderPass(descriptor);
+    createDefaultRenderPass();
 }
 
 backend::RenderPipeline* Renderer::createRenderPipeline(const PipelineDescriptor& pipelineDescriptor)
@@ -861,6 +854,15 @@ backend::RenderPass* Renderer::createRenderPass(RenderCommand* cmd)
 {
     auto& renderpassDescriptor = cmd->getPipelineDescriptor().renderPassDescriptor;
     return backend::Device::getInstance()->newRenderPass(renderpassDescriptor);
+}
+
+void Renderer::createDefaultRenderPass()
+{
+    CC_SAFE_RELEASE(_defaultRenderPass);
+    backend::RenderPassDescriptor descriptor;
+    descriptor.setClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
+    descriptor.setClearDepth(0);
+    _defaultRenderPass = backend::Device::getInstance()->newRenderPass(descriptor);
 }
 
 NS_CC_END

@@ -25,11 +25,10 @@
 
 /// @cond DO_NOT_SHOW
 
-#include "ui/UIWebView.h"
+#include "ui/UIWebView/UIWebView.h"
 #include "platform/CCGLView.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
-#include "ui/UIWebViewImpl-tizen.h"
 
 NS_CC_BEGIN
 namespace experimental{

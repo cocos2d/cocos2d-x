@@ -28,13 +28,13 @@
 // Webview not available on tvOS
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) && !defined(CC_TARGET_OS_TVOS)
 
-#include "ui/UIWebViewImpl-ios.h"
+#include "ui/UIWebView/UIWebViewImpl-ios.h"
 #include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
 #include "platform/CCGLView.h"
 #include "platform/ios/CCEAGLView-ios.h"
 #include "platform/CCFileUtils.h"
-#include "ui/UIWebView.h"
+#include "ui/UIWebView/UIWebView.h"
 
 static std::string getFixedBaseUrl(const std::string& baseUrl)
 {

@@ -219,10 +219,10 @@ protected:
     
     backend::RenderPipeline* createRenderPipeline(const PipelineDescriptor&);
     backend::RenderPass* createRenderPass(RenderCommand*);
-
+    void createDefaultRenderPass();
 
     /* clear color set outside be used in setGLDefaultValues() */
-    Color4F _clearColor;
+    Color4F _clearColor = Color4F::BLACK;
 
     std::stack<int> _commandGroupStack;
     
