@@ -412,7 +412,6 @@ void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
         child->updateTransform();
     }
     
-    backend::BindGroup bindGroup;
     cocos2d::Mat4 matrixProjection = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     cocos2d::Mat4 matrixMVP = matrixProjection * transform;
     auto& pipelineDescriptor = _batchCommand.getPipelineDescriptor();
@@ -651,7 +650,7 @@ void SpriteBatchNode::updateBlendFunc()
     blendDescriptor.blendEnabled = true;
     if (! _textureAtlas->getTexture()->hasPremultipliedAlpha())
     {
-//        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
         blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::SRC_ALPHA;
         blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
         blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::SRC_ALPHA;
@@ -660,7 +659,7 @@ void SpriteBatchNode::updateBlendFunc()
     }
     else
     {
-//        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
         blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::ONE;
         blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
         blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::ONE;

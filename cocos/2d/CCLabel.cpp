@@ -44,7 +44,9 @@
 #include "base/CCEventCustom.h"
 #include "base/ccUtils.h"
 #include "2d/CCFontFNT.h"
-#include "renderer/CCGLProgram.h"
+#include "renderer/backend/Device.h"
+#include "renderer/ccShaders.h"
+#include "renderer/backend/ShaderModule.h"
 
 NS_CC_BEGIN
 
@@ -541,15 +543,42 @@ static Texture2D* _getTexture(Label* label)
     return texture;
 }
 
+void Label::setVertexLayout(PipelineDescriptor& pipelineDescriptor)
+{
+#define VERTEX_POSITION_SIZE 3
+#define VERTEX_TEXCOORD_SIZE 2
+#define VERTEX_COLOR_SIZE 4
+    //set vertexLayout according to V3F_C4B_T2F structure
+    uint32_t colorOffset = (VERTEX_POSITION_SIZE)*sizeof(float);
+    uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+    uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+    
+    backend::VertexLayout vertexLayout;
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
+    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset, false);
+    vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, colorOffset, true);
+    vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
+    pipelineDescriptor.vertexLayout = vertexLayout;
+}
+
 void Label::updateShaderProgram()
 {
+    auto device = backend::Device::getInstance();
+    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    backend::ShaderModule* vert = nullptr;
+    backend::ShaderModule* frag = nullptr;
+
     switch (_currLabelEffect)
     {
     case cocos2d::LabelEffect::NORMAL:
         if (_useDistanceField)
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL));
         else if (_useA8Shader)
-            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_NORMAL));
+        {
+//            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_NORMAL));
+            vert = device->createShaderModule(backend::ShaderStage::VERTEX, label_common_vert);
+            frag = device->createShaderModule(backend::ShaderStage::FRAGMENT, label_normal_frag);
+        }
         else if (_shadowEnabled)
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, _getTexture(this)));
         else
@@ -572,7 +601,12 @@ void Label::updateShaderProgram()
         return;
     }
     
-    _uniformTextColor = glGetUniformLocation(getGLProgram()->getProgram(), "u_textColor");
+    pipelineDescriptor.setVertexShader(vert);
+    pipelineDescriptor.setFragmentShader(frag);
+    setVertexLayout(pipelineDescriptor);
+    
+    //TODO coulsonwang
+//    _uniformTextColor = glGetUniformLocation(getGLProgram()->getProgram(), "u_textColor");
 }
 
 void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false */, bool useA8Shader /* = false */)
@@ -1493,57 +1527,66 @@ void Label::onDrawShadow(GLProgram* glProgram, const Color4F& shadowColor)
 
 void Label::onDraw(const Mat4& transform, bool /*transformUpdated*/)
 {
-    auto glprogram = getGLProgram();
-    glprogram->use();
-    utils::setBlending(_blendFunc.src, _blendFunc.dst);
-
-    if (_shadowEnabled)
-    {
-        if (_boldEnabled)
-            onDrawShadow(glprogram, _textColorF);
-        else
-            onDrawShadow(glprogram, _shadowColor4F);
-    }
-
-    glprogram->setUniformsForBuiltins(transform);
-    for (auto&& it : _letters)
-    {
-        it.second->updateTransform();
-    }
-
-    if (_currentLabelType == LabelType::TTF)
-    {
-        switch (_currLabelEffect) {
-        case LabelEffect::OUTLINE:
-            // draw outline of text
-            glprogram->setUniformLocationWith1i(_uniformEffectType, 1); // 1: outline
-            glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
-            for (auto&& batchNode : _batchNodes)
-            {
-                batchNode->getTextureAtlas()->drawQuads();
-            }
-
-            // draw text without outline
-            glprogram->setUniformLocationWith1i(_uniformEffectType, 0); // 0: text
-            glprogram->setUniformLocationWith4f(_uniformTextColor, _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
-            break;
-        case LabelEffect::GLOW:
-            glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
-        case LabelEffect::NORMAL:
-            glprogram->setUniformLocationWith4f(_uniformTextColor,
-                _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
-            break;
-        default:
-            break;
-        }
-    }
-
-    for (auto&& batchNode : _batchNodes)
-    {
-        batchNode->getTextureAtlas()->drawQuads();
-    }
+    //TODO coulonswang
+    cocos2d::log("Error in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
+////    auto glprogram = getGLProgram();
+////    glprogram->use();
+////    utils::setBlending(_blendFunc.src, _blendFunc.dst);
+//
+//    if (_shadowEnabled)
+//    {
+//        //TODO coulsonwang
+//        cocos2d::log("Error in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
+////        if (_boldEnabled)
+////            onDrawShadow(glprogram, _textColorF);
+////        else
+////            onDrawShadow(glprogram, _shadowColor4F);
+//    }
+//
+////    glprogram->setUniformsForBuiltins(transform);
+//    for (auto&& it : _letters)
+//    {
+//        it.second->updateTransform();
+//    }
+//
+//    if (_currentLabelType == LabelType::TTF)
+//    {
+//        switch (_currLabelEffect) {
+//        case LabelEffect::OUTLINE:
+//                //TODO coulsonwang
+//                cocos2d::log("Error in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
+//            // draw outline of text
+////            glprogram->setUniformLocationWith1i(_uniformEffectType, 1); // 1: outline
+////            glprogram->setUniformLocationWith4f(_uniformEffectColor,
+////                _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+//            for (auto&& batchNode : _batchNodes)
+//            {
+//                batchNode->getTextureAtlas()->drawQuads();
+//            }
+//
+//            // draw text without outline
+////            glprogram->setUniformLocationWith1i(_uniformEffectType, 0); // 0: text
+////            glprogram->setUniformLocationWith4f(_uniformTextColor, _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+//            break;
+//        case LabelEffect::GLOW:
+////            glprogram->setUniformLocationWith4f(_uniformEffectColor,
+////                _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
+//        case LabelEffect::NORMAL:
+//            {
+//                
+//            }
+////            glprogram->setUniformLocationWith4f(_uniformTextColor,
+////                _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+//            break;
+//        default:
+//            break;
+//        }
+//    }
+//
+//    for (auto&& batchNode : _batchNodes)
+//    {
+//        batchNode->getTextureAtlas()->drawQuads();
+//    }
 }
 
 void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
@@ -1583,11 +1626,48 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         }
         else
         {
-            _customCommand.init(_globalZOrder, transform, flags);
-            _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
-
-            renderer->addCommand(&_customCommand);
+            for (auto&& batchNode : _batchNodes)
+            {
+                backend::BindGroup bindGroup;
+                auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
+                
+                cocos2d::Mat4 matrixProjection = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+                cocos2d::Mat4 matrixMVP = matrixProjection * transform;
+                pipelineDescriptor.bindGroup.setUniform("a_MVPMatrix", matrixMVP.m, sizeof(matrixMVP.m));
+                
+                Vec4 textColor(_textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+                pipelineDescriptor.bindGroup.setUniform("u_textColor", &textColor, sizeof(Vec4));
+                
+                auto textureAtlas = batchNode->getTextureAtlas();
+                pipelineDescriptor.bindGroup.setTexture("u_texture", 0, textureAtlas->getTexture()->getBackendTexture());
+                updateBlendState();
+                _customCommand.init(_globalZOrder, textureAtlas, transform, flags);
+//                _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
+                renderer->addCommand(&_customCommand);
+            }
         }
+    }
+}
+
+void Label::updateBlendState()
+{
+    backend::BlendDescriptor& blendDescriptor = _customCommand.getPipelineDescriptor().blendDescriptor;
+    blendDescriptor.blendEnabled = true;
+    if (_blendFunc == BlendFunc::ALPHA_NON_PREMULTIPLIED)
+    {
+        blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::SRC_ALPHA;
+        blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+        blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::SRC_ALPHA;
+        blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+        setOpacityModifyRGB(false);
+    }
+    else
+    {
+        blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::ONE;
+        blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+        blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::ONE;
+        blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+        setOpacityModifyRGB(true);
     }
 }
 

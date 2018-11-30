@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCTextureAtlas.h"
 
 NS_CC_BEGIN
 
@@ -36,6 +37,12 @@ CustomCommand::CustomCommand()
 void CustomCommand::init(float depth, const cocos2d::Mat4 &modelViewTransform, uint32_t flags)
 {
     RenderCommand::init(depth, modelViewTransform, flags);
+}
+
+void CustomCommand::init(float depth, TextureAtlas *textureAtlas, const cocos2d::Mat4 &modelViewTransform, uint32_t flags)
+{
+    RenderCommand::init(depth, modelViewTransform, flags);
+    _textureAtlas = textureAtlas;
 }
 
 void CustomCommand::init(float globalOrder)
@@ -54,6 +61,21 @@ void CustomCommand::execute()
     {
         func();
     }
+}
+
+V3F_C4B_T2F_Quad* CustomCommand::getQuad()
+{
+    return _textureAtlas->getQuads();
+}
+
+const unsigned short* CustomCommand::getIndices() const
+{
+    return _textureAtlas->getIndices();
+}
+
+uint32_t CustomCommand::getQuadCount()
+{
+    return static_cast<uint32_t>(_textureAtlas->getTotalQuads());
 }
 
 NS_CC_END

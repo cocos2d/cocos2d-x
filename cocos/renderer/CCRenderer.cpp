@@ -350,12 +350,8 @@ void Renderer::processRenderCommand(RenderCommand* command)
         }
             break;
         case RenderCommand::Type::CUSTOM_COMMAND:
-        {
             flush();
-            auto cmd = static_cast<CustomCommand*>(command);
-            //        CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_CUSTOM_COMMAND");
-            cmd->execute();
-        }
+            drawCustomCommand(command);
             break;
         case RenderCommand::Type::BATCH_COMMAND:
         case RenderCommand::Type::NORMAL_COMMAND:
@@ -771,6 +767,40 @@ void Renderer::drawBatchedCommand(RenderCommand* command)
     _commandBuffer->endRenderPass();
     
     cleanVerticesAndIncices();
+}
+
+void Renderer::drawCustomCommand(RenderCommand *command)
+{
+    auto cmd = static_cast<CustomCommand*>(command);
+    
+    //    fillVerticesAndIndices(cmd);
+    V3F_C4B_T2F_Quad* quad = cmd->getQuad();
+    const unsigned short* indices = cmd->getIndices();
+    uint32_t quadSize = sizeof(quad[0]) * cmd->getQuadCount();
+    uint32_t indexCount = cmd->getQuadCount() * 6;
+    uint32_t indexSize = sizeof(indices[0]) * indexCount;
+    
+    _vertexBuffer->updateData(quad, quadSize);
+    _indexBuffer->updateData(indices, indexSize);
+    
+    /************** 2: Draw *************/
+    _commandBuffer->beginRenderPass(_currentRenderPass);
+    auto& pipelineDescriptor = cmd->getPipelineDescriptor();
+    auto renderPipeline = createRenderPipeline(pipelineDescriptor);
+    _commandBuffer->setRenderPipeline(renderPipeline);
+    renderPipeline->release();
+    
+    auto viewPort = cmd->getViewPort();
+    _commandBuffer->setViewport(viewPort[0], viewPort[1], viewPort[2], viewPort[3]);
+    
+    _commandBuffer->setVertexBuffer(0, _vertexBuffer);
+    _commandBuffer->setIndexBuffer(_indexBuffer);
+    _commandBuffer->setBindGroup(&pipelineDescriptor.bindGroup);
+    _commandBuffer->drawElements(backend::PrimitiveType::TRIANGLE,
+                                 backend::IndexFormat::U_SHORT, indexCount,
+                                 0);
+    
+    _commandBuffer->endRenderPass();
 }
 
 void Renderer::flush()

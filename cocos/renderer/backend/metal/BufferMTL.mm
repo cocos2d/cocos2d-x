@@ -13,7 +13,7 @@ BufferMTL::~BufferMTL()
     [_mtlBuffer release];
 }
 
-void BufferMTL::updateData(void* data, size_t size)
+void BufferMTL::updateData(const void* data, size_t size)
 {
     memcpy(_mtlBuffer.contents, data, size);
 }

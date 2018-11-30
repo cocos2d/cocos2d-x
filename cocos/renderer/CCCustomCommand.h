@@ -35,6 +35,9 @@
  */
 
 NS_CC_BEGIN
+
+class TextureAtlas;
+
 /**
 Custom command is used for call custom openGL command which can not be done by other commands,
 such as stencil function, depth functions etc. The render command is executed by calling a call back function.
@@ -55,6 +58,7 @@ public:
 	@param flags Use to identify that the render command is 3D mode or not.
 	*/
     void init(float globalZOrder, const Mat4& modelViewTransform, uint32_t flags);
+    void init(float globalZOrder, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags);
     /**
     Init function. The render command will be in 2D mode.
     @param globalZOrder GlobalZOrder of the render command.
@@ -69,8 +73,13 @@ public:
     bool isTranslucent() { return true; }
     /**Callback function.*/
     std::function<void()> func;
+    
+    V3F_C4B_T2F_Quad* getQuad();
+    virtual const unsigned short* getIndices() const override;
+    uint32_t getQuadCount();
 
 protected:
+    TextureAtlas *_textureAtlas = nullptr;
 };
 
 NS_CC_END
