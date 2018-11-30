@@ -218,7 +218,7 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
     // find absolute path in flash memory
     if (s[0] == '/')
     {
-        CCLOG("find in flash memory dirPath(%s)", s);
+        //CCLOG("find in flash memory dirPath(%s)", s);
         struct stat st;
         if (stat(s, &st) == 0)
         {
