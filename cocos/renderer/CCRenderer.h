@@ -232,8 +232,10 @@ protected:
     std::vector<TrianglesCommand*> _queuedTriangleCommands;
 
     //for TrianglesCommand
-    V3F_C4B_T2F _verts[VBO_SIZE];
-    unsigned short _indices[INDEX_VBO_SIZE];
+//    V3F_C4B_T2F _verts[VBO_SIZE];
+//    unsigned short _indices[INDEX_VBO_SIZE];
+    void* _verts = nullptr;
+    void* _indices = nullptr;
     backend::Buffer* _vertexBuffer = nullptr;
     backend::Buffer* _indexBuffer = nullptr;
     
@@ -247,16 +249,16 @@ protected:
     struct TriBatchToDraw
     {
         TrianglesCommand* cmd = nullptr;  // needed for the Material
-        int indicesToDraw = 0;
-        int offset = 0;
+        size_t indicesToDraw = 0;
+        size_t offset = 0;
     };
     // capacity of the array of TriBatches
     int _triBatchesToDrawCapacity = 500;
     // the TriBatches
     TriBatchToDraw* _triBatchesToDraw = nullptr;
 
-    int _filledVertex = 0;
-    int _filledIndex = 0;
+    size_t _filledVertex = 0;
+    size_t _filledIndex = 0;
 
 //    bool _glViewAssigned;
 

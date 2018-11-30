@@ -65,7 +65,6 @@ static bool compare3DCommand(RenderCommand* a, RenderCommand* b)
 // queue
 RenderQueue::RenderQueue()
 {
-    
 }
 
 void RenderQueue::push_back(RenderCommand* command)
@@ -210,6 +209,9 @@ Renderer::Renderer()
 
     // for the batched TriangleCommand
     _triBatchesToDraw = (TriBatchToDraw*) malloc(sizeof(_triBatchesToDraw[0]) * _triBatchesToDrawCapacity);
+
+    _verts = malloc(Renderer::VBO_SIZE);
+    _indices = malloc(Renderer::INDEX_VBO_SIZE);
 }
 
 Renderer::~Renderer()
@@ -218,6 +220,8 @@ Renderer::~Renderer()
     _groupCommandManager->release();
     
     free(_triBatchesToDraw);
+    free(_verts);
+    free(_indices);
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     Director::getInstance()->getEventDispatcher()->removeEventListener(_cacheTextureListener);
@@ -604,24 +608,27 @@ void Renderer::setDepthTest(bool enable)
 
 void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
 {
-    memcpy(&_verts[_filledVertex], cmd->getVertices(), sizeof(V3F_C4B_T2F) * cmd->getVertexCount());
+    // memcpy(&_verts[_filledVertex], cmd->getVertices(), sizeof(V3F_C4B_T2F) * cmd->getVertexCount());
 
-    // fill vertex, and convert them to world coordinates
-    const Mat4& modelView = cmd->getModelView();
-    for(ssize_t i=0; i < cmd->getVertexCount(); ++i)
-    {
-        modelView.transformPoint(&(_verts[i + _filledVertex].vertices));
-    }
+    // // fill vertex, and convert them to world coordinates
+    // const Mat4& modelView = cmd->getModelView();
+    // for(ssize_t i=0; i < cmd->getVertexCount(); ++i)
+    // {
+    //     modelView.transformPoint(&(_verts[i + _filledVertex].vertices));
+    // }
 
-    // fill index
-    const unsigned short* indices = cmd->getIndices();
-    for(ssize_t i=0; i< cmd->getIndexCount(); ++i)
-    {
-        _indices[_filledIndex + i] = _filledVertex + indices[i];
-    }
+    // // fill index
+    // const unsigned short* indices = cmd->getIndices();
+    // for(ssize_t i=0; i< cmd->getIndexCount(); ++i)
+    // {
+    //     _indices[_filledIndex + i] = _filledVertex + indices[i];
+    // }
 
-    _filledVertex += cmd->getVertexCount();
-    _filledIndex += cmd->getIndexCount();
+    // _filledVertex += cmd->getVertexCount();
+    // _filledIndex += cmd->getIndexCount();
+
+    _filledVertex += cmd->copyVertexData((char*)_verts + _filledVertex);
+    _filledIndex += cmd->copyIndexData((char*)_indices + _filledIndex);
 }
 
 void Renderer::drawBatchedTriangles()
@@ -662,7 +669,8 @@ void Renderer::drawBatchedTriangles()
             if (!firstCommand)
             {
                 batchesTotal++;
-                _triBatchesToDraw[batchesTotal].offset = _triBatchesToDraw[batchesTotal-1].offset + _triBatchesToDraw[batchesTotal-1].indicesToDraw;
+                _triBatchesToDraw[batchesTotal].offset =
+                    _triBatchesToDraw[batchesTotal-1].offset + _triBatchesToDraw[batchesTotal-1].indicesToDraw * _triBatchesToDraw[batchesTotal-1].cmd->getIndexSize();
             }
             
             _triBatchesToDraw[batchesTotal].cmd = cmd;
@@ -685,8 +693,11 @@ void Renderer::drawBatchedTriangles()
     }
     batchesTotal++;
     
-    _vertexBuffer->updateData(_verts, sizeof(_verts[0]) * _filledVertex);
-    _indexBuffer->updateData(_indices, sizeof(_indices[0]) * _filledIndex);
+    // _vertexBuffer->updateData(_verts, sizeof(_verts[0]) * _filledVertex);
+    // _indexBuffer->updateData(_indices, sizeof(_indices[0]) * _filledIndex);
+
+    _vertexBuffer->updateData(_verts, _filledVertex);
+    _indexBuffer->updateData(_indices, _filledIndex);
     
     /************** 2: Draw *************/
     _commandBuffer->beginRenderPass(_currentRenderPass);
@@ -714,7 +725,7 @@ void Renderer::drawBatchedTriangles()
         _commandBuffer->setBindGroup(&pipelineDescriptor.bindGroup);
         _commandBuffer->drawElements(backend::PrimitiveType::TRIANGLE,
                                      backend::IndexFormat::U_SHORT, _triBatchesToDraw[i].indicesToDraw,
-                                     _triBatchesToDraw[i].offset * sizeof(_indices[0]));
+                                     _triBatchesToDraw[i].offset);
     }
     
     _commandBuffer->endRenderPass();

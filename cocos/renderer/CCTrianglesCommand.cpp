@@ -35,13 +35,27 @@
 NS_CC_BEGIN
 
 TrianglesCommand::TrianglesCommand()
-:_materialID(0)
-,_textureID(0)
-,_glProgramState(nullptr)
-,_blendType(BlendFunc::DISABLE)
-,_alphaTextureID(0)
 {
     _type = RenderCommand::Type::TRIANGLES_COMMAND;
+}
+
+size_t TrianglesCommand::copyVertexData(void* out) const
+{
+    auto dataLength = sizeof(V3F_C4B_T2F) * _triangles.vertCount;
+    memcpy(out, _triangles.verts, dataLength);
+    
+    auto tmpVerts = (V3F_C4B_T2F*)out;
+    for (int i = 0; i < _triangles.vertCount; ++i)
+        _mv.transformPoint(&tmpVerts[i].vertices);
+    
+    return dataLength;
+}
+
+size_t TrianglesCommand::copyIndexData(void* out) const
+{
+    auto dataLength = sizeof(unsigned short) * _triangles.indexCount;
+    memcpy(out, _triangles.indices, dataLength);
+    return dataLength;
 }
 
 void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags)
@@ -97,16 +111,8 @@ void TrianglesCommand::init(float globalOrder, const Triangles& triangles, const
     }
     _mv = mv;
     
-    generateBackendMaterialID();
-//    if( _textureID != textureID || _blendType.src != blendType.src || _blendType.dst != blendType.dst ||
-//       _glProgramState != glProgramState)
-//    {
-//        _textureID = textureID;
-//        _blendType = blendType;
-//        _glProgramState = glProgramState;
-//
-//        generateMaterialID();
-//    }
+    // TODO: optimize it only generate material ID needed.
+    generateMaterialID();
 }
 
 TrianglesCommand::~TrianglesCommand()
@@ -114,34 +120,6 @@ TrianglesCommand::~TrianglesCommand()
 }
 
 void TrianglesCommand::generateMaterialID()
-{
-    // glProgramState is hashed because it contains:
-    //  *  uniforms/values
-    //  *  glProgram
-    //
-    // we safely can when the same glProgramState is being used then they share those states
-    // if they don't have the same glProgramState, they might still have the same
-    // uniforms/values and glProgram, but it would be too expensive to check the uniforms.
-    struct {
-        void* glProgramState;
-        GLuint textureId;
-        GLenum blendSrc;
-        GLenum blendDst;
-    } hashMe;
-
-    // NOTE: Initialize hashMe struct to make the value of padding bytes be filled with zero.
-    // It's important since XXH32 below will also consider the padding bytes which probably 
-    // are set to random values by different compilers.
-    memset(&hashMe, 0, sizeof(hashMe)); 
-
-    hashMe.textureId = _textureID;
-    hashMe.blendSrc = _blendType.src;
-    hashMe.blendDst = _blendType.dst;
-    hashMe.glProgramState = _glProgramState;
-    _materialID = XXH32((const void*)&hashMe, sizeof(hashMe), 0);
-}
-
-void TrianglesCommand::generateBackendMaterialID()
 {
     struct PipelineDescriptor
     {

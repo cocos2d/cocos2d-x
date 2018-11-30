@@ -63,6 +63,9 @@ public:
     TrianglesCommand();
     /**Destructor.*/
     ~TrianglesCommand();
+
+    virtual size_t copyVertexData(void*) const override;
+    virtual size_t copyIndexData(void*) const override;
     
     /** Initializes the command.
      @param globalOrder GlobalZOrder of the command.
@@ -89,6 +92,7 @@ public:
     ssize_t getVertexCount() const { return _triangles.vertCount; }
     /**Get the index count of the triangles.*/
     ssize_t getIndexCount() const { return _triangles.indexCount; }
+    size_t getIndexSize() const { return sizeof(_triangles.indices[0]); }
     /**Get the vertex data pointer.*/
     const V3F_C4B_T2F* getVertices() const { return _triangles.verts; }
     /**Get the index data pointer.*/
@@ -104,22 +108,21 @@ public:
 protected:
     /**Generate the material ID by textureID, glProgramState, and blend function.*/
     void generateMaterialID();
-    void generateBackendMaterialID();
     
     /**Generated material id.*/
-    uint32_t _materialID;
+    uint32_t _materialID = 0;
     /**OpenGL handle for texture.*/
-    GLuint _textureID;
+    GLuint _textureID = 0;
     /**GLprogramstate for the command. encapsulate shaders and uniforms.*/
-    GLProgramState* _glProgramState;
+    GLProgramState* _glProgramState = nullptr;
     /**Blend function when rendering the triangles.*/
-    BlendFunc _blendType;
+    BlendFunc _blendType = BlendFunc::DISABLE;
     /**Rendered triangles.*/
     Triangles _triangles;
     /**Model view matrix when rendering the triangles.*/
     Mat4 _mv;
 
-    GLuint _alphaTextureID; // ANDROID ETC1 ALPHA supports.
+    GLuint _alphaTextureID = 0; // ANDROID ETC1 ALPHA supports.
 };
 
 NS_CC_END

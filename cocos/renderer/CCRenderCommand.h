@@ -64,6 +64,11 @@ public:
         /**Triangles command, used to draw triangles.*/
         TRIANGLES_COMMAND
     };
+    
+    // These functions are invoked by renderer to fill vertex data and index data.
+    // Return the length of data are copied in bytes.
+    virtual size_t copyVertexData(void*) const { return 0; }
+    virtual size_t copyIndexData(void*) const { return 0; }
 
     /**
      Init function, will be called by all the render commands.
