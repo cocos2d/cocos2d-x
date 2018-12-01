@@ -1449,7 +1449,7 @@ static void __checkMathUtilResult(const char* description, const float* a1, cons
     }
 }
 
-void MathUtilTest::onEnter() __attribute__((optnone))
+void MathUtilTest::onEnter()
 {
     UnitTestDemo::onEnter();
     
