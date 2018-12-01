@@ -43,7 +43,7 @@ public:
     inline static void crossVec3(const float* v1, const float* v2, float* dst);
 };
 
-inline void MathUtilNeon::addMatrix(const float* m, float scalar, float* dst)
+inline void MathUtilNeon::addMatrix(const float* m, float scalar, float* dst) __attribute__((optnone))
 {
     asm volatile(
                  "vld1.32 {q0, q1}, [%1]!    \n\t" // M[m0-m7]
@@ -66,7 +66,7 @@ inline void MathUtilNeon::addMatrix(const float* m, float scalar, float* dst)
                  );
 }
 
-inline void MathUtilNeon::addMatrix(const float* m1, const float* m2, float* dst)
+inline void MathUtilNeon::addMatrix(const float* m1, const float* m2, float* dst) __attribute__((optnone))
 {
     asm volatile(
                  "vld1.32     {q0, q1},     [%1]! \n\t" // M1[m0-m7]
@@ -87,7 +87,7 @@ inline void MathUtilNeon::addMatrix(const float* m1, const float* m2, float* dst
                  );
 }
 
-inline void MathUtilNeon::subtractMatrix(const float* m1, const float* m2, float* dst)
+inline void MathUtilNeon::subtractMatrix(const float* m1, const float* m2, float* dst) __attribute__((optnone))
 {
     asm volatile(
                  "vld1.32     {q0, q1},     [%1]!  \n\t" // M1[m0-m7]
@@ -108,7 +108,7 @@ inline void MathUtilNeon::subtractMatrix(const float* m1, const float* m2, float
                  );
 }
 
-inline void MathUtilNeon::multiplyMatrix(const float* m, float scalar, float* dst)
+inline void MathUtilNeon::multiplyMatrix(const float* m, float scalar, float* dst) __attribute__((optnone))
 {
     asm volatile(
                  "vld1.32     {d0[0]},         [%2]        \n\t" // M[m0-m7]
@@ -128,7 +128,7 @@ inline void MathUtilNeon::multiplyMatrix(const float* m, float scalar, float* ds
                  );
 }
 
-inline void MathUtilNeon::multiplyMatrix(const float* m1, const float* m2, float* dst)
+inline void MathUtilNeon::multiplyMatrix(const float* m1, const float* m2, float* dst) __attribute__((optnone))
 {
     asm volatile(
                  "vld1.32     {d16 - d19}, [%1]! \n\t"       // M1[m0-m7]
@@ -165,7 +165,7 @@ inline void MathUtilNeon::multiplyMatrix(const float* m1, const float* m2, float
                  );
 }
 
-inline void MathUtilNeon::negateMatrix(const float* m, float* dst)
+inline void MathUtilNeon::negateMatrix(const float* m, float* dst) __attribute__((optnone))
 {
     asm volatile(
                  "vld1.32     {q0-q1},  [%1]!     \n\t" // load m0-m7
@@ -184,7 +184,7 @@ inline void MathUtilNeon::negateMatrix(const float* m, float* dst)
                  );
 }
 
-inline void MathUtilNeon::transposeMatrix(const float* m, float* dst)
+inline void MathUtilNeon::transposeMatrix(const float* m, float* dst) __attribute__((optnone))
 {
     asm volatile(
                  "vld4.32 {d0[0], d2[0], d4[0], d6[0]}, [%1]!    \n\t" // DST->M[m0, m4, m8, m12] = M[m0-m3]
@@ -200,7 +200,7 @@ inline void MathUtilNeon::transposeMatrix(const float* m, float* dst)
                  );
 }
 
-inline void MathUtilNeon::transformVec4(const float* m, float x, float y, float z, float w, float* dst)
+inline void MathUtilNeon::transformVec4(const float* m, float x, float y, float z, float w, float* dst) __attribute__((optnone))
 {
     asm volatile(
                  "vld1.32    {d0[0]},        [%1]    \n\t"    // V[x]
@@ -223,7 +223,7 @@ inline void MathUtilNeon::transformVec4(const float* m, float x, float y, float 
                  );
 }
 
-inline void MathUtilNeon::transformVec4(const float* m, const float* v, float* dst)
+inline void MathUtilNeon::transformVec4(const float* m, const float* v, float* dst) __attribute__((optnone))
 {
     asm volatile
     (
@@ -243,7 +243,7 @@ inline void MathUtilNeon::transformVec4(const float* m, const float* v, float* d
      );
 }
 
-inline void MathUtilNeon::crossVec3(const float* v1, const float* v2, float* dst)
+inline void MathUtilNeon::crossVec3(const float* v1, const float* v2, float* dst) __attribute__((optnone))
 {
     asm volatile(
                  "vld1.32 {d1[1]},  [%1]         \n\t" //
