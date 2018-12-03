@@ -51,22 +51,6 @@ unsigned int __idIndex = 0;
 #define INVALID_AL_BUFFER_ID 0xFFFFFFFF
 #define PCMDATA_CACHEMAXSIZE 1048576
 
-typedef ALvoid	AL_APIENTRY	(*alBufferDataStaticProcPtr) (const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq);
-static ALvoid  alBufferDataStaticProc(const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq)
-{
-    static alBufferDataStaticProcPtr proc = nullptr;
-
-    if (proc == nullptr) {
-        proc = (alBufferDataStaticProcPtr) alcGetProcAddress(nullptr, (const ALCchar*) "alBufferDataStatic");
-    }
-
-    if (proc){
-        proc(bid, format, data, size, freq);
-    }
-
-    return;
-}
-
 @interface NSTimerWrapper : NSObject
 {
     std::function<void()> _timeoutCallback;
@@ -103,11 +87,6 @@ static ALvoid  alBufferDataStaticProc(const ALint bid, ALenum format, ALvoid* da
 }
 
 @end
-
-static void setTimeout(double seconds, const std::function<void()>& cb)
-{
-    [[[NSTimerWrapper alloc] initWithTimeInterval:seconds callback:cb] autorelease];
-}
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;
@@ -185,7 +164,6 @@ void AudioCache::readDataTask(unsigned int selfId)
     _state = State::LOADING;
 
     AudioDecoder decoder;
-    char* l_pcmData = NULL;
     do
     {
         if (!decoder.open(_fileFullPath.c_str()))
@@ -245,19 +223,19 @@ void AudioCache::readDataTask(unsigned int selfId)
             // Reset to frame 0
             BREAK_IF_ERR_LOG(!decoder.seek(0), "AudioDecoder::seek(0) failed!");
 
-            l_pcmData = (char*)malloc(dataSize);
-            memset(l_pcmData, 0x00, dataSize);
-            ALOGV("  id=%u l_pcmData alloc: %p", selfId, l_pcmData);
+            _pcmData = (char*)malloc(dataSize);
+            memset(_pcmData, 0x00, dataSize);
+            ALOGV("  id=%u _pcmData alloc: %p", selfId, _pcmData);
 
             if (adjustFrames > 0)
             {
-                memcpy(l_pcmData + (dataSize - adjustFrameBuf.size()), adjustFrameBuf.data(), adjustFrameBuf.size());
+                memcpy(_pcmData + (dataSize - adjustFrameBuf.size()), adjustFrameBuf.data(), adjustFrameBuf.size());
             }
 
             if (*_isDestroyed)
                 break;
 
-            framesRead = decoder.readFixedFrames(std::min(framesToReadOnce, remainingFrames), l_pcmData + _framesRead * bytesPerFrame);
+            framesRead = decoder.readFixedFrames(std::min(framesToReadOnce, remainingFrames), _pcmData + _framesRead * bytesPerFrame);
             _framesRead += framesRead;
             remainingFrames -= framesRead;
 
@@ -272,7 +250,7 @@ void AudioCache::readDataTask(unsigned int selfId)
                 {
                     frames = originalTotalFrames - _framesRead;
                 }
-                framesRead = decoder.read(frames, l_pcmData + _framesRead * bytesPerFrame);
+                framesRead = decoder.read(frames, _pcmData + _framesRead * bytesPerFrame);
                 if (framesRead == 0)
                     break;
                 _framesRead += framesRead;
@@ -281,7 +259,7 @@ void AudioCache::readDataTask(unsigned int selfId)
 
             if (_framesRead < originalTotalFrames)
             {
-                memset(l_pcmData + _framesRead * bytesPerFrame, 0x00, (totalFrames - _framesRead) * bytesPerFrame);
+                memset(_pcmData + _framesRead * bytesPerFrame, 0x00, (totalFrames - _framesRead) * bytesPerFrame);
             }
 
             ALOGV("pcm buffer was loaded successfully, total frames: %u, total read frames: %u, adjust frames: %u, remainingFrames: %u", totalFrames, _framesRead, adjustFrames, remainingFrames);
@@ -293,9 +271,9 @@ void AudioCache::readDataTask(unsigned int selfId)
                 ALOGE("%s: attaching audio to buffer fail: %x", __PRETTY_FUNCTION__, alError);
                 break;
             }
-            ALOGV("  id=%u generated alGenBuffers: %u  for l_pcmData: %p", selfId, _alBufferId, l_pcmData);
-            ALOGV("  id=%u l_pcmData alBufferData: %p", selfId, l_pcmData);
-            alBufferData(_alBufferId, _format, l_pcmData, (ALsizei)dataSize, (ALsizei)sampleRate);
+            ALOGV("  id=%u generated alGenBuffers: %u  for _pcmData: %p", selfId, _alBufferId, _pcmData);
+            ALOGV("  id=%u _pcmData alBufferData: %p", selfId, _pcmData);
+            alBufferData(_alBufferId, _format, _pcmData, (ALsizei)dataSize, (ALsizei)sampleRate);
             _state = State::READY;
             invokingPlayCallbacks();
 
@@ -320,8 +298,9 @@ void AudioCache::readDataTask(unsigned int selfId)
 
     } while (false);
 
-    if (l_pcmData != NULL)
-        free(l_pcmData);
+    if (_pcmData != nullptr){
+        CC_SAFE_FREE(_pcmData);
+    }
 
     decoder.close();
 
