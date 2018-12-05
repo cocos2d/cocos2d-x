@@ -24,12 +24,12 @@
  ****************************************************************************/
 
 #include "renderer/CCTrianglesCommand.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 #include "xxhash.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTexture2D.h"
-#include "base//ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -116,16 +116,14 @@ void TrianglesCommand::generateMaterialID()
 void TrianglesCommand::useMaterial() const
 {
     //Set texture
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _textureID);
+    GL::bindTexture2D(_textureID);
     
     if (_alphaTextureID > 0)
     { // ANDROID ETC1 ALPHA supports.
-        glActiveTexture(GL_TEXTURE0 + 1);
-        glBindTexture(GL_TEXTURE_2D, _alphaTextureID);
+        GL::bindTexture2DN(1, _alphaTextureID);
     }
     //set blend mode
-    utils::setBlending(_blendType.src, _blendType.dst);
+    GL::blendFunc(_blendType.src, _blendType.dst);
     
     _glProgramState->apply(_mv);
 }

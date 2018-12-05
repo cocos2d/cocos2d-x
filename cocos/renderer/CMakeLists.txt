@@ -2,6 +2,7 @@ set(COCOS_RENDERER_HEADER
     renderer/CCTextureCache.h
     renderer/CCRenderer.h
     renderer/CCMaterial.h
+    renderer/ccGLStateCache.h
     renderer/CCRenderCommandPool.h
     renderer/ccShaders.h
     renderer/CCMeshCommand.h
@@ -55,6 +56,7 @@ set(COCOS_RENDERER_SRC
     renderer/CCVertexAttribBinding.cpp
     renderer/CCVertexIndexBuffer.cpp
     renderer/CCVertexIndexData.cpp
+    renderer/ccGLStateCache.cpp
     renderer/ccShaders.cpp
     renderer/CCFrameBuffer.cpp
     )

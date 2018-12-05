@@ -31,8 +31,6 @@
 #include <spine/extension.h>
 #include <algorithm>
 
-#include "base/ccUtils.h"
-
 USING_NS_CC;
 #define EVENT_AFTER_DRAW_RESET_POSITION "director_after_draw"
 using std::max;
@@ -92,17 +90,14 @@ void TwoColorTrianglesCommand::generateMaterialID() {
 
 void TwoColorTrianglesCommand::useMaterial() const {
 	//Set texture
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _textureID);
+	GL::bindTexture2D(_textureID);
 	
-	if (_alphaTextureID > 0)
-    {
+	if (_alphaTextureID > 0) {
 		// ANDROID ETC1 ALPHA supports.
-        glActiveTexture(GL_TEXTURE0 + 1);
-        glBindTexture(GL_TEXTURE_2D, _alphaTextureID);
+		GL::bindTexture2DN(1, _alphaTextureID);
 	}
 	//set blend mode
-    cocos2d::utils::setBlending(_blendType.src, _blendType.dst);
+	GL::blendFunc(_blendType.src, _blendType.dst);
 	
 	_glProgramState->apply(_mv);
 }

@@ -34,6 +34,8 @@ USING_NS_CC;
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgramStateCache.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCRenderState.h"
 #include "base/CCDirector.h"
 #include "base/CCEventType.h"
 #include "2d/CCCamera.h"
@@ -148,26 +150,21 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t /*flags*/)
 
     _stateBlock->bind();
 
-    glEnableVertexAttribArray(_positionLocation);
-    glEnableVertexAttribArray(_texcoordLocation);
-    glEnableVertexAttribArray(_normalLocation);
+    GL::enableVertexAttribs(1<<_positionLocation | 1 << _texcoordLocation | 1<<_normalLocation);
     glProgram->setUniformsForBuiltins(transform);
     _glProgramState->applyUniforms();
     glUniform3f(_lightDirLocation,_lightDir.x,_lightDir.y,_lightDir.z);
     if(!_alphaMap)
     {
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, _detailMapTextures[0]->getName());
+        GL::bindTexture2D(_detailMapTextures[0]->getName());
         //getGLProgramState()->setUniformTexture("")
         glUniform1i(_detailMapLocation[0],0);
         glUniform1i(_alphaIsHasAlphaMapLocation,0);
-    }
-    else
+    }else
     {
         for(int i =0;i<_maxDetailMapValue;++i)
         {
-            glActiveTexture(GL_TEXTURE0 + i);
-            glBindTexture(GL_TEXTURE_2D, _detailMapTextures[i]->getName());
+            GL::bindTexture2DN(i,_detailMapTextures[i]->getName());
             glUniform1i(_detailMapLocation[i],i);
 
             glUniform1f(_detailMapSizeLocation[i],_terrainData._detailMaps[i]._detailMapSize);
@@ -175,15 +172,13 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t /*flags*/)
 
         glUniform1i(_alphaIsHasAlphaMapLocation,1);
 
-        glActiveTexture(GL_TEXTURE0 + 4);
-        glBindTexture(GL_TEXTURE_2D, _alphaMap->getName());
+        GL::bindTexture2DN(4, _alphaMap->getName());
         glUniform1i(_alphaMapLocation,4);
     }
     if (_lightMap)
     {
         glUniform1i(_lightMapCheckLocation, 1);
-        glActiveTexture(GL_TEXTURE0 + 5);
-        glBindTexture(GL_TEXTURE_2D, _lightMap->getName());
+        GL::bindTexture2DN(5, _lightMap->getName());
         glUniform1i(_lightMapLocation, 5);
     }else
     {

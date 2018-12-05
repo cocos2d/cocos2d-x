@@ -32,6 +32,7 @@ class Bug15594Layer : public BugsTestBase
 {
 public:
     CREATE_FUNC(Bug15594Layer);
+    virtual std::string title() const override { return "Bug15594";}
 
     virtual bool init() override;
 };

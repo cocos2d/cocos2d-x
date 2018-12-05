@@ -77,7 +77,7 @@ function WebViewTest:init()
 
     local backBtn = ccui.Button:create("cocosui/animationbuttonnormal.png", "cocosui/animationbuttonpressed.png")
     backBtn:setTitleText("Back")
-    backBtn:setPosition(winSize.width / 2 + self._webView:getContentSize().width/2 + backBtn:getContentSize().width/2 + 10, winSize.height - 50)
+    backBtn:setPosition(winSize.width / 2 + self._webView:getContentSize().width/2 + backBtn:getContentSize().width/2 + 10, winSize.height - 10)
     backBtn:addClickEventListener(function(sender)
         self._webView:goBack()
     end)

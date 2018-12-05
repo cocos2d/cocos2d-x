@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramStateCache.h"
 #include "renderer/CCGLProgramCache.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCTexture2D.h"
 #include "base/CCEventCustom.h"
 #include "base/CCEventListenerCustom.h"
@@ -116,14 +117,12 @@ void UniformValue::apply()
         switch (_uniform->type) {
             case GL_SAMPLER_2D:
                 _glprogram->setUniformLocationWith1i(_uniform->location, _value.tex.textureUnit);
-                glActiveTexture(GL_TEXTURE0 + _value.tex.textureUnit);
-                glBindTexture(GL_TEXTURE_2D, _value.tex.textureId);
+                GL::bindTexture2DN(_value.tex.textureUnit, _value.tex.textureId);
                 break;
 
             case GL_SAMPLER_CUBE:
                 _glprogram->setUniformLocationWith1i(_uniform->location, _value.tex.textureUnit);
-                glActiveTexture(GL_TEXTURE0 + _value.tex.textureUnit);
-                glBindTexture(GL_TEXTURE_CUBE_MAP, _value.tex.textureId);
+                GL::bindTextureN(_value.tex.textureUnit, _value.tex.textureId, GL_TEXTURE_CUBE_MAP);
                 break;
 
             case GL_INT:
@@ -572,17 +571,7 @@ void GLProgramState::applyAttributes(bool applyAttribFlags)
     if(_vertexAttribsFlags) {
         // enable/disable vertex attribs
         if (applyAttribFlags)
-        {
-            auto flags = _vertexAttribsFlags;
-            for (int i = 0; flags > 0; i++)
-            {
-                int flag = 1 << i;
-                if (flag & flags)
-                    glEnableVertexAttribArray(i);
-                
-                flags &= ~flag;
-            }
-        }
+            GL::enableVertexAttribs(_vertexAttribsFlags);
         // set attributes
         for(auto &attribute : _attributes)
         {

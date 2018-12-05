@@ -108,7 +108,7 @@ var WebSocketTestLayer = cc.Layer.extend({
 
         var self = this;
 
-        this._wsiSendText = new WebSocket("wss://echo.websocket.org");
+        this._wsiSendText = new WebSocket("wss://echo.websocket.org", "", "cacert.pem");
         this._wsiSendText.onopen = function(evt) {
              self._sendTextStatus.setString("Opened, url: " + self._wsiSendText.url + ", protocol: " + self._wsiSendText.protocol);
         };

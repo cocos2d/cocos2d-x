@@ -32,6 +32,7 @@
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventType.h"
 #include "2d/CCLight.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureAtlas.h"
@@ -166,8 +167,7 @@ void MeshCommand::applyRenderState()
     CCASSERT(_stateBlock, "StateBlock must be non null");
 
     // blend and texture
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _textureID);
+    GL::bindTexture2D(_textureID);
 
     _stateBlock->bind();
 }
@@ -198,7 +198,7 @@ void MeshCommand::preBatchDraw()
             buildVAO();
         if (_vao)
         {
-            glBindVertexArray(_vao);
+            GL::bindVAO(_vao);
         }
         else
         {
@@ -247,7 +247,7 @@ void MeshCommand::postBatchDraw()
     {
         if (_vao)
         {
-            glBindVertexArray(0);
+            GL::bindVAO(0);
         }
         else
         {
@@ -305,7 +305,7 @@ void MeshCommand::buildVAO()
 
     releaseVAO();
     glGenVertexArrays(1, &_vao);
-    glBindVertexArray(_vao);
+    GL::bindVAO(_vao);
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
     auto flags = programState->getVertexAttribsFlags();
     for (int i = 0; flags > 0; i++) {
@@ -318,7 +318,7 @@ void MeshCommand::buildVAO()
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     
-    glBindVertexArray(0);
+    GL::bindVAO(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
@@ -328,7 +328,7 @@ void MeshCommand::releaseVAO()
     {
         glDeleteVertexArrays(1, &_vao);
         _vao = 0;
-        glBindVertexArray(0);
+        GL::bindVAO(0);
     }
 }
 

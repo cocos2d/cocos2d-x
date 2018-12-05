@@ -7344,7 +7344,7 @@
 				);
 				PRODUCT_NAME = "js-tests Mac";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../extensions $(SRCROOT)/../external";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../tests/js-tests/project/Classes";
 			};
 			name = Debug;
 		};
@@ -7376,7 +7376,7 @@
 				);
 				PRODUCT_NAME = "js-tests Mac";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../extensions $(SRCROOT)/../external";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../tests/js-tests/project/Classes";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -7409,7 +7409,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../extensions $(SRCROOT)/../external $(inherited) $(SRCROOT)/../external/spidermonkey/include/ios $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../extensions $(SRCROOT)/../external $(inherited) $(SRCROOT)/../external/spidermonkey/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../tests/js-tests/project/Classes";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -7443,7 +7443,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../extensions $(SRCROOT)/../external $(inherited) $(SRCROOT)/../external/spidermonkey/include/ios $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../extensions $(SRCROOT)/../external $(inherited) $(SRCROOT)/../external/spidermonkey/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../tests/js-tests/project/Classes";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -7493,7 +7493,7 @@
 					"-image_base",
 					100000000,
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../tests/lua-empty-test/project/Classes";
 			};
 			name = Debug;
 		};
@@ -7512,7 +7512,7 @@
 					"-image_base",
 					100000000,
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../tests/lua-empty-test/project/Classes";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -7568,6 +7568,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-empty-test/project/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -7583,7 +7584,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../tests/lua-empty-test/project/Classes";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -7598,6 +7599,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-empty-test/project/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -7613,7 +7615,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../tests/lua-empty-test/project/Classes";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -7634,7 +7636,7 @@
 					"-image_base",
 					100000000,
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../tests/lua-tests/project/Classes";
 			};
 			name = Debug;
 		};
@@ -7653,7 +7655,7 @@
 					"-image_base",
 					100000000,
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../tests/lua-tests/project/Classes";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -7683,7 +7685,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../tests/lua-tests/project/Classes";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -7713,7 +7715,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../tests/lua-tests/project/Classes";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -8263,7 +8265,7 @@
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -8291,7 +8293,7 @@
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
