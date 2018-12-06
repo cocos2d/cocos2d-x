@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.cocos2dx.cpp_tests"
+    package="org.cocos2dx.cpp_tests3"
     android:installLocation="auto">
 
     <uses-feature android:glEsVersion="0x00020000" />
