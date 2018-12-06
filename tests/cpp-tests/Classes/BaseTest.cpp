@@ -311,18 +311,30 @@ void TestSuite::restartCurrTest()
 
 void TestSuite::enterNextTest()
 {
+    auto start = std::chrono::high_resolution_clock::now();
     _currTestIndex = (_currTestIndex + 1) % _childTestNames.size();
 
     auto scene = _testCallbacks[_currTestIndex]();
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto takes_time = std::chrono::nanoseconds(end - start).count();
+    log("TestSuite::enterNextTest -create scene %f miliseconds ", (float)(takes_time * 1.0/ 1000000));
+
     auto testCase = getTestCase(scene);
     testCase->setTestSuite(this);
     testCase->setTestCaseName(_childTestNames[_currTestIndex]);
 
     Director::getInstance()->replaceScene(scene);
+
+    end = std::chrono::high_resolution_clock::now();
+    takes_time = std::chrono::nanoseconds(end - start).count();
+    log("TestSuite::enterNextTest takes %f miliseconds ", (float)(takes_time * 1.0/ 1000000));
 }
 
 void TestSuite::enterPreviousTest()
 {
+
+    auto start = std::chrono::high_resolution_clock::now();
     if (_currTestIndex > 0)
     {
         _currTestIndex -= 1;
@@ -333,11 +345,19 @@ void TestSuite::enterPreviousTest()
     }
 
     auto scene = _testCallbacks[_currTestIndex]();
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto takes_time = std::chrono::nanoseconds(end - start).count();
+    log("TestSuite::enterPreviousTest -create scene %f miliseconds ", (float)(takes_time * 1.0/ 1000000));
+
     auto testCase = getTestCase(scene);
     testCase->setTestSuite(this);
     testCase->setTestCaseName(_childTestNames[_currTestIndex]);
 
     Director::getInstance()->replaceScene(scene);
+    end = std::chrono::high_resolution_clock::now();
+    takes_time = std::chrono::nanoseconds(end - start).count();
+    log("TestSuite::enterPreviousTest takes %f miliseconds ", (float)(takes_time * 1.0/ 1000000));
 }
 
 //TestCase

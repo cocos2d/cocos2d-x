@@ -295,27 +295,30 @@ public class Cocos2dxHelper {
         return Cocos2dxHelper.sAssetManager;
     }
 
-    public static String getAssertFileList(){
+    public static String getAssetFileList(){
         AssetManager manager = getAssetManager();
         List<String> stack = new ArrayList<String>();
         List<String> ret = new ArrayList<String>();
-        stack.add("/");
-        while(!stack.isEmpty())
-        {
-            stack.remove(stack.size() - 1);
+        stack.add("");
+        while(!stack.isEmpty()) {
             String file = stack.get(stack.size() - 1);
+            stack.remove(stack.size() - 1);
             String fileList[] = null;
             try {
                 fileList = manager.list(file);
             }catch (Exception e){}
-            if(fileList == null|| fileList.length == 0)
-            {
+
+            if(fileList == null|| fileList.length == 0) {
                 ret.add("0"+file);
-            }
-            else
-            {
+            } else {
                 ret.add("1"+file);
-                Collections.addAll(ret, fileList);
+                if(file.isEmpty()) {
+                    Collections.addAll(stack, fileList);
+                }else {
+                    for (String sub : fileList) {
+                        stack.add(file + "/" + sub);
+                    }
+                }
             }
         }
         StringBuffer buffer = new StringBuffer();
