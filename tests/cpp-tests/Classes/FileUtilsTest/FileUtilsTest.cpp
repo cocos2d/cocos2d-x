@@ -24,20 +24,12 @@
 
 #include "FileUtilsTest.h"
 
-#include <chrono>
-
 USING_NS_CC;
 
 FileUtilsTests::FileUtilsTests()
 {
-    //ADD_TEST_CASE(TestResolutionDirectories);
-    addTestCase("TestResolutionDirectories", []() ->cocos2d::Scene* {
-        return TestResolutionDirectories::create();
-    });
-    //ADD_TEST_CASE(TestSearchPath);
-    addTestCase("TestSearchPath", []() ->cocos2d::Scene* {
-        return TestSearchPath::create();
-    });
+    ADD_TEST_CASE(TestResolutionDirectories);
+    ADD_TEST_CASE(TestSearchPath);
     ADD_TEST_CASE(TestFilenameLookup);
     ADD_TEST_CASE(TestIsFileExist);
     ADD_TEST_CASE(TestIsDirectoryExist);
@@ -66,35 +58,29 @@ void TestResolutionDirectories::onEnter()
     auto sharedFileUtils = FileUtils::getInstance();
 
     std::string ret;
-    for(int i=0; i < 1;i++)
-    {
-        sharedFileUtils->purgeCachedEntries();
-        auto start = std::chrono::high_resolution_clock::now();
-        _defaultSearchPathArray = sharedFileUtils->getOriginalSearchPaths();
-        std::vector<std::string> searchPaths = _defaultSearchPathArray;
-        searchPaths.insert(searchPaths.begin(),   "Misc");
-        sharedFileUtils->setSearchPaths(searchPaths);
 
-        _defaultResolutionsOrderArray = sharedFileUtils->getSearchResolutionsOrder();
-        std::vector<std::string> resolutionsOrder = _defaultResolutionsOrderArray;
+    sharedFileUtils->purgeCachedEntries();
+    _defaultSearchPathArray = sharedFileUtils->getOriginalSearchPaths();
+    std::vector<std::string> searchPaths = _defaultSearchPathArray;
+    searchPaths.insert(searchPaths.begin(),   "Misc");
+    sharedFileUtils->setSearchPaths(searchPaths);
 
-        resolutionsOrder.insert(resolutionsOrder.begin(), "resources-ipadhd");
-        resolutionsOrder.insert(resolutionsOrder.begin()+1, "resources-ipad");
-        resolutionsOrder.insert(resolutionsOrder.begin()+2, "resources-widehd");
-        resolutionsOrder.insert(resolutionsOrder.begin()+3, "resources-wide");
-        resolutionsOrder.insert(resolutionsOrder.begin()+4, "resources-hd");
-        resolutionsOrder.insert(resolutionsOrder.begin()+5, "resources-iphone");
+    _defaultResolutionsOrderArray = sharedFileUtils->getSearchResolutionsOrder();
+    std::vector<std::string> resolutionsOrder = _defaultResolutionsOrderArray;
 
-        sharedFileUtils->setSearchResolutionsOrder(resolutionsOrder);
+    resolutionsOrder.insert(resolutionsOrder.begin(), "resources-ipadhd");
+    resolutionsOrder.insert(resolutionsOrder.begin()+1, "resources-ipad");
+    resolutionsOrder.insert(resolutionsOrder.begin()+2, "resources-widehd");
+    resolutionsOrder.insert(resolutionsOrder.begin()+3, "resources-wide");
+    resolutionsOrder.insert(resolutionsOrder.begin()+4, "resources-hd");
+    resolutionsOrder.insert(resolutionsOrder.begin()+5, "resources-iphone");
 
-        for( int i=1; i<7; i++) {
-            auto filename = StringUtils::format("test%d.txt", i);
-            ret = sharedFileUtils->fullPathForFilename(filename);
-            //log("%s -> %s", filename.c_str(), ret.c_str());
-        }
-        auto end = std::chrono::high_resolution_clock::now();
-        auto takes_time = std::chrono::nanoseconds(end - start).count();
-        log("TestResolutionDirectories: takes %f miliseconds ", (float)(takes_time * 1.0/ 1000000));
+    sharedFileUtils->setSearchResolutionsOrder(resolutionsOrder);
+
+    for( int i=1; i<7; i++) {
+        auto filename = StringUtils::format("test%d.txt", i);
+        ret = sharedFileUtils->fullPathForFilename(filename);
+        log("%s -> %s", filename.c_str(), ret.c_str());
     }
 }
 
@@ -127,11 +113,7 @@ void TestSearchPath::onEnter()
 
     std::string ret;
 
-    auto start = std::chrono::high_resolution_clock::now();
-    for(int k=0;k<1;k++)
-    {
     sharedFileUtils->purgeCachedEntries();
-
     _defaultSearchPathArray = sharedFileUtils->getOriginalSearchPaths();
     std::vector<std::string> searchPaths = _defaultSearchPathArray;
     std::string writablePath = sharedFileUtils->getWritablePath();
@@ -202,11 +184,6 @@ void TestSearchPath::onEnter()
     // Recover old search paths
     sharedFileUtils->setSearchPaths(oldSearchPaths);
 #endif
-
-    auto end = std::chrono::high_resolution_clock::now();
-    auto takes_time = std::chrono::nanoseconds(end - start).count();
-    log("TestSearchPath: takes %f miliseconds ", (float)(takes_time * 1.0/ 1000000));
-    }
 }
 
 void TestSearchPath::onExit()
@@ -1415,7 +1392,6 @@ std::string TestWriteDataAsync::subtitle() const
 {
     return "";
 }
-
 
 void TestListFiles::onEnter()
 {

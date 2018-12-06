@@ -6,7 +6,7 @@ android {
     compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
 
     defaultConfig {
-        applicationId "org.cocos2dx.cpp_tests3"
+        applicationId "org.cocos2dx.cpp_tests"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
         versionCode 1
