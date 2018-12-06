@@ -220,12 +220,12 @@ std::string FileUtilsWin32::getPathForFilename(const std::string& filename, cons
     return FileUtils::getPathForFilename(unixFileName, unixResolutionDirectory, unixSearchPath);
 }
 
-std::string FileUtilsWin32::getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename) const
+std::string FileUtilsWin32::getFullPathForFilenameWithinDirectory(const std::string& strDirectory, const std::string& strFilename) const
 {
     std::string unixDirectory = convertPathFormatToUnixStyle(strDirectory);
     std::string unixFilename = convertPathFormatToUnixStyle(strFilename);
 
-    return FileUtils::getFullPathForDirectoryAndFilename(unixDirectory, unixFilename);
+    return FileUtils::getFullPathForFilenameWithinDirectory(unixDirectory, unixFilename);
 }
 
 void FileUtilsWin32::listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const

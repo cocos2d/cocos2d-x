@@ -343,6 +343,10 @@ public:
      */
     virtual std::string fullPathForFilename(const std::string &filename) const;
 
+    /**
+     * Returns the fullpath for a given dirname.
+     * @since 3.17.1
+     */
     virtual std::string fullPathForDirectory(const std::string &dirname) const;
 
     /**
@@ -952,11 +956,15 @@ protected:
     std::string _defaultResRootPath;
 
     /**
-     *  The full path cache. When a file is found, it will be added into this cache.
+     *  The full path cache for normal files. When a file is found, it will be added into this cache.
      *  This variable is used for improving the performance of file search.
      */
     mutable std::unordered_map<std::string, std::string> _fullPathCache;
 
+    /**
+     *  The full path cache for directories. When a diretory is found, it will be added into this cache.
+     *  This variable is used for improving the performance of file search.
+     */
     mutable std::unordered_map<std::string, std::string> _fullPathCacheDir;
 
     /**

@@ -119,11 +119,11 @@ std::string CCFileUtilsWinRT::getPathForFilename(const std::string& filename, co
     return FileUtils::getPathForFilename(unixFileName, unixResolutionDirectory, unixSearchPath);
 }
 
-std::string CCFileUtilsWinRT::getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename) const
+std::string CCFileUtilsWinRT::getFullPathForFilenameWithinDirectory(const std::string& strDirectory, const std::string& strFilename) const
 {
     std::string unixDirectory = convertPathFormatToUnixStyle(strDirectory);
     std::string unixFilename = convertPathFormatToUnixStyle(strFilename);
-    return FileUtils::getFullPathForDirectoryAndFilename(unixDirectory, unixFilename);
+    return FileUtils::getFullPathForFilenameWithinDirectory(unixDirectory, unixFilename);
 }
 
 std::string CCFileUtilsWinRT::getSuitableFOpen(const std::string& filenameUtf8) const
