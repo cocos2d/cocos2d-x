@@ -80,14 +80,6 @@ private:
     virtual bool isFileExistInternal(const std::string& strFilePath) const override;
     virtual bool isDirectoryExistInternal(const std::string& dirPath) const override;
 
-#if CC_ENABLE_ANDROID_ASSET_PATH_CACHE
-    void loadAssetCache() const;
-    int findInAssetCache(const std::string &path) const;
-    mutable std::shared_ptr<std::unordered_map<std::string, int>>  _assetCache;
-    mutable std::shared_ptr<bool>                        _assetCacheLoading;
-    mutable std::shared_ptr<bool>                        _assetCacheLoaded;
-#endif
-
     static AAssetManager* assetmanager;
     static ZipFile* obbfile;
 };

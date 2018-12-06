@@ -80,11 +80,6 @@ FileUtils* FileUtils::getInstance()
 
 FileUtilsAndroid::FileUtilsAndroid()
 {
-#if CC_ENABLE_ANDROID_ASSET_PATH_CACHE
-    _assetCache = std::make_shared<std::unordered_map<std::string, int>>();
-    _assetCacheLoaded = std::make_shared<bool>(false);
-    _assetCacheLoading = std::make_shared<bool>(false);
-#endif
 }
 
 FileUtilsAndroid::~FileUtilsAndroid()
@@ -189,14 +184,6 @@ bool FileUtilsAndroid::isFileExistInternal(const std::string& strFilePath) const
         }
         else if (FileUtilsAndroid::assetmanager)
         {
-#if CC_ENABLE_ANDROID_ASSET_PATH_CACHE
-            loadAssetCache();
-            auto itCache = findInAssetCache(s);
-            if(itCache != -2)
-            {
-                return itCache == 0;
-            }
-#endif
             AAsset* aa = AAssetManager_open(FileUtilsAndroid::assetmanager, s, AASSET_MODE_UNKNOWN);
             if (aa)
             {
@@ -218,52 +205,6 @@ bool FileUtilsAndroid::isFileExistInternal(const std::string& strFilePath) const
     }
     return bFound;
 }
-
-#if CC_ENABLE_ANDROID_ASSET_PATH_CACHE
-
-void FileUtilsAndroid::loadAssetCache() const
-{
-    if(*_assetCacheLoaded || *_assetCacheLoading) return;
-    *_assetCacheLoading = true;
-
-    auto assetCache = _assetCache;
-    auto assetCacheLoaded  = _assetCacheLoaded;
-    auto assetCacheLoading = _assetCacheLoading;
-
-    std::thread t([assetCache, assetCacheLoaded, assetCacheLoading](){
-        CCLOG("CCFileUtilsAndroid: start indexing assets/ ... ");
-        std::string fileListStr= JniHelper::callStaticStringMethod("org.cocos2dx.lib.Cocos2dxHelper", "getAssetFileList");
-        int i = 0;
-        do {
-            int sep = fileListStr.find("|", i);
-            if(sep == std::string::npos)
-            {
-                if( sep - i > 1)assetCache->emplace(fileListStr.substr(i + 1, sep - i - 1), fileListStr[i] - '0');
-                break;
-            }
-            else
-            {
-                if( sep - i > 1) assetCache->emplace(fileListStr.substr(i + 1, sep - i - 1), fileListStr[i] - '0');
-            }
-            i = sep + 1;
-        }while( i < fileListStr.length());
-        *assetCacheLoaded  = true;
-        *assetCacheLoading = false;
-        CCLOG("CCFileUtilsAndroid: finish indexing assets/");
-    });
-
-    t.detach();
-
-}
-
-int FileUtilsAndroid::findInAssetCache(const std::string &path) const
-{
-    if(!*_assetCacheLoaded) return -2;
-    auto it = _assetCache->find(path);
-    return it == _assetCache->end() ? -1 : it->second;
-}
-
-#endif
 
 bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) const
 {
@@ -295,14 +236,6 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
         {
             s += ASSETS_FOLDER_NAME_LENGTH;
         }
-#if CC_ENABLE_ANDROID_ASSET_PATH_CACHE
-        loadAssetCache();
-        auto itCache = findInAssetCache(s);
-        if(itCache != -2)
-        {
-            return itCache == 1;
-        }
-#endif
 
         if (FileUtilsAndroid::assetmanager)
         {
