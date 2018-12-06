@@ -57,16 +57,23 @@ import com.android.vending.expansion.zipfile.ZipResourceFile;
 
 import com.enhance.gameservice.IGameTuningService;
 
+import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 
 
 public class Cocos2dxHelper {
@@ -286,6 +293,39 @@ public class Cocos2dxHelper {
 
     public static AssetManager getAssetManager() {
         return Cocos2dxHelper.sAssetManager;
+    }
+
+    public static String getAssertFileList(){
+        AssetManager manager = getAssetManager();
+        List<String> stack = new ArrayList<String>();
+        List<String> ret = new ArrayList<String>();
+        stack.add("/");
+        while(!stack.isEmpty())
+        {
+            stack.remove(stack.size() - 1);
+            String file = stack.get(stack.size() - 1);
+            String fileList[] = null;
+            try {
+                fileList = manager.list(file);
+            }catch (Exception e){}
+            if(fileList == null|| fileList.length == 0)
+            {
+                ret.add("0"+file);
+            }
+            else
+            {
+                ret.add("1"+file);
+                Collections.addAll(ret, fileList);
+            }
+        }
+        StringBuffer buffer = new StringBuffer();
+        Iterator<String> it = ret.iterator();
+        while(it.hasNext())
+        {
+            buffer.append(it.next());
+            if(it.hasNext()) buffer.append("|");
+        }
+        return buffer.toString();
     }
 
     public static void enableAccelerometer() {

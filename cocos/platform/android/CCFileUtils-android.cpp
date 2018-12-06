@@ -227,6 +227,8 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
     }
     else
     {
+        auto std::string fileListStr= JniHelper::callStaticStringMethod("org.cocos2dx.lib.Cocos2dxHelper", "getAssertFileList");
+
         // find it in apk's assets dir
         // Found "assets/" at the beginning of the path and we don't want it
         //CCLOG("find in apk dirPath(%s)", s);
