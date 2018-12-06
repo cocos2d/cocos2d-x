@@ -343,11 +343,6 @@ public:
      */
     virtual std::string fullPathForFilename(const std::string &filename) const;
 
-    /**
-     * Returns the fullpath for a given dirname.
-     * @since 3.17.1
-     */
-    virtual std::string fullPathForDirectory(const std::string &dirname) const;
 
     /**
      * Loads the filenameLookup dictionary from the contents of a filename.
@@ -913,6 +908,12 @@ protected:
      */
     virtual std::string getFullPathForFilenameWithinDirectory(const std::string& directory, const std::string& filename) const;
 
+
+    /**
+     * Returns the fullpath for a given dirname.
+     * @since 3.17.1
+     */
+    virtual std::string fullPathForDirectory(const std::string &dirname) const;
 
     /**
     * mutex used to protect fields. 

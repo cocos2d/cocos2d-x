@@ -380,7 +380,7 @@ string CCFileUtilsWinRT::getWritablePath() const
 
 void CCFileUtilsWinRT::listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const
 {
-    std::string fullpath = fullPathForFilename(dirPath);
+    std::string fullpath = fullPathForDirectory(dirPath);
     if (isDirectoryExist(fullpath))
     {
         tinydir_dir dir;
@@ -426,7 +426,7 @@ void CCFileUtilsWinRT::listFilesRecursively(const std::string& dirPath, std::vec
 
 std::vector<std::string> CCFileUtilsWinRT::listFiles(const std::string& dirPath) const
 {
-    std::string fullpath = fullPathForFilename(dirPath);
+    std::string fullpath = fullPathForDirectory(dirPath);
     std::vector<std::string> files;
     if (isDirectoryExist(fullpath))
     {
