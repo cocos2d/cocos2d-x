@@ -55,6 +55,7 @@ FileUtilsTests::FileUtilsTests()
     ADD_TEST_CASE(TestFileFuncsAsync);
     ADD_TEST_CASE(TestWriteStringAsync);
     ADD_TEST_CASE(TestWriteDataAsync);
+    ADD_TEST_CASE(TestListFiles);
 }
 
 // TestResolutionDirectories
@@ -1411,6 +1412,44 @@ std::string TestWriteDataAsync::title() const
 }
 
 std::string TestWriteDataAsync::subtitle() const
+{
+    return "";
+}
+
+
+void TestListFiles::onEnter()
+{
+    FileUtilsDemo::onEnter();
+
+    auto winSize = Director::getInstance()->getWinSize();
+
+    auto infoLabel = Label::createWithTTF("show file count, should not be 0", "fonts/Thonburi.ttf", 18);
+    this->addChild(infoLabel);
+    infoLabel->setPosition(winSize.width / 2, winSize.height * 3 / 4);
+
+    auto cntLabel = Label::createWithTTF("show readResult", "fonts/Thonburi.ttf", 18);
+    this->addChild(cntLabel);
+    cntLabel->setPosition(winSize.width / 2, winSize.height / 3);
+    // writeTest
+    auto list = FileUtils::getInstance()->listFiles("fonts");
+
+    char cntBuffer[200] = { 0 };
+    snprintf(cntBuffer, 200, "%d", list.size());
+    cntLabel->setString(cntBuffer);
+
+}
+
+void TestListFiles::onExit()
+{
+    FileUtilsDemo::onExit();
+}
+
+std::string TestListFiles::title() const
+{
+    return "FileUtils: list files of directory";
+}
+
+std::string TestListFiles::subtitle() const
 {
     return "";
 }

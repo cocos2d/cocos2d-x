@@ -286,7 +286,7 @@ long FileUtilsWin32::getFileSize(const std::string &filepath) const
 
 std::vector<std::string> FileUtilsWin32::listFiles(const std::string& dirPath) const
 {
-    std::string fullpath = fullPathForFilename(dirPath);
+    std::string fullpath = fullPathForDirectory(dirPath);
     std::vector<std::string> files;
     if (isDirectoryExist(fullpath))
     {
