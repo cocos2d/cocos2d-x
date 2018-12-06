@@ -81,7 +81,7 @@ FileUtils* FileUtils::getInstance()
 FileUtilsAndroid::FileUtilsAndroid()
 {
 #if CC_ENABLE_ANDROID_ASSET_PATH_CACHE
-    _assetCache = std::make_shared<std::map<std::string, int>>();
+    _assetCache = std::make_shared<std::unordered_map<std::string, int>>();
     _assetCacheLoaded = std::make_shared<bool>(false);
     _assetCacheLoading = std::make_shared<bool>(false);
 #endif
@@ -365,7 +365,7 @@ std::vector<std::string> FileUtilsAndroid::listFiles(const std::string& dirPath)
     if(isAbsolutePath(dirPath)) return FileUtils::listFiles(dirPath);
 
     std::vector<std::string> fileList;
-    string fullPath = fullPathForFilename(dirPath);
+    string fullPath = fullPathForDirectory(dirPath);
 
     static const std::string apkprefix("assets/");
     string relativePath = "";

@@ -34,7 +34,7 @@ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 #include "base/ccTypes.h"
 #include <string>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include "jni.h"
 #include "android/asset_manager.h"
@@ -83,7 +83,7 @@ private:
 #if CC_ENABLE_ANDROID_ASSET_PATH_CACHE
     void loadAssetCache() const;
     int findInAssetCache(const std::string &path) const;
-    mutable std::shared_ptr<std::map<std::string, int>>  _assetCache;
+    mutable std::shared_ptr<std::unordered_map<std::string, int>>  _assetCache;
     mutable std::shared_ptr<bool>                        _assetCacheLoading;
     mutable std::shared_ptr<bool>                        _assetCacheLoaded;
 #endif
