@@ -31,8 +31,6 @@ public:
     virtual CommandBuffer* newCommandBuffer() = 0;
     // Create a buffer, not auto released.
     virtual Buffer* newBuffer(uint32_t size, BufferType type, BufferUsage usage) = 0;
-    // Create a render pass, not auto released.
-    virtual RenderPass* newRenderPass(const RenderPassDescriptor& descriptor) = 0;
     // Create a texture, not auto released.
     virtual Texture* newTexture(const TextureDescriptor& descriptor) = 0;
     // Create a auto released shader module.

@@ -25,6 +25,7 @@
 
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCTextureAtlas.h"
+#include "renderer/backend/Buffer.h"
 
 NS_CC_BEGIN
 
@@ -52,7 +53,8 @@ void CustomCommand::init(float globalOrder)
 
 CustomCommand::~CustomCommand()
 {
-
+    CC_SAFE_RELEASE(_vertexBuffer);
+    CC_SAFE_RELEASE(_indexBuffer);
 }
 
 void CustomCommand::execute()

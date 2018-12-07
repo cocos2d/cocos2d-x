@@ -45,6 +45,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "renderer/backend/Device.h"
 #include "renderer/backend/ShaderModule.h"
+#include "renderer/backend/Buffer.h"
 #include "renderer/shaders/positionColorNoMVP.vert"
 #include "renderer/shaders/positionColorNoMVP.frag"
 
@@ -298,21 +299,29 @@ __LayerRGBA::__LayerRGBA()
 
 LayerColor::MyRenderCommand::MyRenderCommand()
 {
-    _type = RenderCommand::Type::NORMAL_COMMAND;
+    auto device = backend::Device::getInstance();
+    _vertexBuffer = device->newBuffer(sizeof(_noMVPVertices) + sizeof(_squareColors), backend::BufferType::VERTEX, backend::BufferUsage::READ);
+    _indexBuffer = device->newBuffer(sizeof(_indicies), backend::BufferType::INDEX, backend::BufferUsage::READ);
+    _indexBuffer->updateData(_indicies, 0, sizeof(_indicies));
+    _indexCount = 6;
 }
 
-size_t LayerColor::MyRenderCommand::copyVertexData(void* out) const
+void LayerColor::MyRenderCommand::updateVeretxBuffer()
 {
-    auto positionlength = sizeof(_noMVPVertices);
-    memcpy(out, _noMVPVertices, positionlength);
-    auto colorLength = sizeof(_squareColors);
-    memcpy((char*)out + positionlength, _squareColors, colorLength);
-    return positionlength + colorLength;
-}
-
-size_t LayerColor::MyRenderCommand::getIndexCount() const
-{
-    return 6;
+    uint8_t* data = (uint8_t*)malloc(sizeof(_noMVPVertices) + sizeof(_squareColors));
+    if (! data)
+        return;
+    
+    size_t offset = 0;
+    for (int i = 0; i < 4; ++i)
+    {
+        offset = i * (sizeof(_noMVPVertices[0]) + sizeof(_squareColors[0]) );
+        memcpy(data + offset, &_noMVPVertices[i], sizeof(_noMVPVertices[0]));
+        memcpy(data + offset + sizeof(_noMVPVertices[0]), &_squareColors[i], sizeof(_squareColors[0]));
+    }
+    _vertexBuffer->updateData(data, 0, sizeof(_noMVPVertices) + sizeof(_squareColors));
+    
+    free(data);
 }
 
 LayerColor::LayerColor()
@@ -321,9 +330,9 @@ LayerColor::LayerColor()
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
     
     auto& vertexLayout = _renderCommand.getPipelineDescriptor().vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32A32, 0, false);
-    vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::FLOAT_R32G32B32A32, sizeof(_renderCommand._noMVPVertices), false);
-    vertexLayout.setLayout(sizeof(_renderCommand._noMVPVertices) + sizeof(_renderCommand._squareColors), backend::VertexStepMode::VERTEX);
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
+    vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::FLOAT_R32G32B32A32, sizeof(_renderCommand._noMVPVertices[0]), false);
+    vertexLayout.setLayout(sizeof(_renderCommand._noMVPVertices[0]) + sizeof(_renderCommand._squareColors[0]), backend::VertexStepMode::VERTEX);
     
     auto device = backend::Device::getInstance();
     auto vs = device->createShaderModule(backend::ShaderStage::VERTEX, positionColor_vert);
@@ -346,6 +355,14 @@ const BlendFunc &LayerColor::getBlendFunc() const
 void LayerColor::setBlendFunc(const BlendFunc &var)
 {
     _blendFunc = var;
+    
+    backend::BlendDescriptor& blendDescriptor = _renderCommand.getPipelineDescriptor().blendDescriptor;
+    blendDescriptor.blendEnabled = true;
+    
+    blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::SRC_ALPHA;
+    blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+    blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::SRC_ALPHA;
+    blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
 }
 
 LayerColor* LayerColor::create()
@@ -460,16 +477,17 @@ void LayerColor::updateColor()
         _renderCommand._squareColors[i].b = _displayedColor.b / 255.0f;
         _renderCommand._squareColors[i].a = _displayedOpacity / 255.0f;
     }
+    _renderCommand.updateVeretxBuffer();
 }
 
 void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-//    _customCommand.init(_globalZOrder, transform, flags);
-//    _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this, transform, flags);
-//    renderer->addCommand(&_customCommand);
-    
-    _renderCommand.init(_globalZOrder, transform, flags);
+{    
+    _renderCommand.init(_globalZOrder);
     renderer->addCommand(&_renderCommand);
+    
+    cocos2d::Mat4 projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    auto& pipelineDescriptor = _renderCommand.getPipelineDescriptor();
+    pipelineDescriptor.bindGroup.setUniform("a_projection", projectionMat.m, sizeof(projectionMat.m));
     
     for(int i = 0; i < 4; ++i)
     {
@@ -479,6 +497,7 @@ void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         _modelViewTransform.transformVector(&pos);
         _renderCommand._noMVPVertices[i] = Vec3(pos.x,pos.y,pos.z)/pos.w;
     }
+    _renderCommand.updateVeretxBuffer();
 }
 
 //void LayerColor::onDraw(const Mat4& transform, uint32_t /*flags*/)

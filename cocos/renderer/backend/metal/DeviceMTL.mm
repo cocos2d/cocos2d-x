@@ -3,7 +3,6 @@
 #include "BufferMTL.h"
 #include "RenderPipelineMTL.h"
 #include "ShaderModuleMTL.h"
-#include "RenderPassMTL.h"
 #include "DepthStencilStateMTL.h"
 #include "TextureMTL.h"
 #include "BlendStateMTL.h"
@@ -26,18 +25,13 @@ Device* Device::getInstance()
 void DeviceMTL::setCAMetalLayer(CAMetalLayer* metalLayer)
 {
     DeviceMTL::_metalLayer = metalLayer;
-    Utils::createDefaultRenderPassDescriptor();
+//    Utils::createDefaultRenderPassDescriptor();
 }
 
 void DeviceMTL::updateDrawable()
 {
-    if (DeviceMTL::_currentDrawable)
-        [DeviceMTL::_currentDrawable release];
-    
     DeviceMTL::_currentDrawable = [DeviceMTL::_metalLayer nextDrawable];
-    [DeviceMTL::_currentDrawable retain];
-    
-    Utils::updateDefaultRenderPassDescriptor(DeviceMTL::_currentDrawable.texture);
+    Utils::updateDefaultColorAttachmentTexture(DeviceMTL::_currentDrawable.texture);
 }
 
 DeviceMTL::DeviceMTL()
@@ -63,11 +57,6 @@ Buffer* DeviceMTL::newBuffer(uint32_t size, BufferType type, BufferUsage usage)
 Texture* DeviceMTL::newTexture(const TextureDescriptor& descriptor)
 {
     return new (std::nothrow) TextureMTL(_mtlDevice, descriptor);
-}
-
-RenderPass* DeviceMTL::newRenderPass(const RenderPassDescriptor& descriptor)
-{
-    return new (std::nothrow) RenderPassMTL(_mtlDevice, descriptor);
 }
 
 ShaderModule* DeviceMTL::createShaderModule(ShaderStage stage, const std::string& source)

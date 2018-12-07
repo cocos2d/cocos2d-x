@@ -15,12 +15,12 @@ class VertexLayout
 public:
     struct Attribute
     {
-        Attribute(const std::string& _name, uint32_t _index, VertexFormat _format, uint32_t _offset, bool _needNormalize)
+        Attribute(const std::string& _name, uint32_t _index, VertexFormat _format, uint32_t _offset, bool needToBeNormallized)
         : name(_name)
         , index(_index)
         , format(_format)
         , offset(_offset)
-        , needNormalize(_needNormalize)
+        , needToBeNormallized(needToBeNormallized)
         {}
         
         // name is used in opengl
@@ -29,10 +29,10 @@ public:
         uint32_t offset = 0;
         // index is used in metal
         uint32_t index = 0;
-        bool needNormalize = false;
+        bool needToBeNormallized = false;
     };
     
-    void setAtrribute(const std::string& name, uint32_t index, VertexFormat format, uint32_t offset, bool needNormalize);
+    void setAtrribute(const std::string& name, uint32_t index, VertexFormat format, uint32_t offset, bool needToBeNormallized);
     //FIXME: remove stepMode?
     void setLayout(uint32_t stride, VertexStepMode stepMode);
     

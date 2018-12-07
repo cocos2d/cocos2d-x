@@ -82,9 +82,16 @@ namespace
 DepthStencilStateMTL::DepthStencilStateMTL(id<MTLDevice> mtlDevice, const DepthStencilDescriptor& descriptor)
 : DepthStencilState(descriptor)
 {
+    if (!descriptor.depthTestEnabled && !descriptor.stencilTestEnabled)
+        return;
+    
     MTLDepthStencilDescriptor* mtlDescriptor = [[MTLDepthStencilDescriptor alloc] init];
-    mtlDescriptor.depthWriteEnabled = descriptor.depthWriteEnabled;
-    mtlDescriptor.depthCompareFunction = toMTLCompareFunction(descriptor.depthCompareFunction);
+    
+    if (descriptor.depthTestEnabled)
+    {
+        mtlDescriptor.depthWriteEnabled = descriptor.depthWriteEnabled;
+        mtlDescriptor.depthCompareFunction = toMTLCompareFunction(descriptor.depthCompareFunction);
+    }
     
     if (descriptor.stencilTestEnabled)
     {

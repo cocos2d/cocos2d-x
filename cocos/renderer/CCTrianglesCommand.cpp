@@ -39,18 +39,6 @@ TrianglesCommand::TrianglesCommand()
     _type = RenderCommand::Type::TRIANGLES_COMMAND;
 }
 
-size_t TrianglesCommand::copyVertexData(void* out) const
-{
-    auto dataLength = sizeof(V3F_C4B_T2F) * _triangles.vertCount;
-    memcpy(out, _triangles.verts, dataLength);
-    
-    auto tmpVerts = (V3F_C4B_T2F*)out;
-    for (int i = 0; i < _triangles.vertCount; ++i)
-        _mv.transformPoint(&tmpVerts[i].vertices);
-    
-    return dataLength;
-}
-
 void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags)
 {
     CCASSERT(glProgramState, "Invalid GLProgramState");

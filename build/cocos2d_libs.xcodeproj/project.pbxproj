@@ -537,10 +537,8 @@
 		460D4D1421ABD0C60075726E /* DeviceMTL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460D4D0021ABD0C60075726E /* DeviceMTL.mm */; };
 		460D4D1521ABD0C60075726E /* TextureMTL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460D4D0121ABD0C60075726E /* TextureMTL.mm */; };
 		460D4D1621ABD0C60075726E /* TextureMTL.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4D0221ABD0C60075726E /* TextureMTL.h */; };
-		460D4D1721ABD0C60075726E /* RenderPassMTL.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4D0321ABD0C60075726E /* RenderPassMTL.h */; };
 		460D4D1821ABD0C60075726E /* CommandBufferMTL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460D4D0421ABD0C60075726E /* CommandBufferMTL.mm */; };
 		460D4D1921ABD0C60075726E /* RenderPipelineMTL.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4D0521ABD0C60075726E /* RenderPipelineMTL.h */; };
-		460D4D1A21ABD0C60075726E /* RenderPassMTL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460D4D0621ABD0C60075726E /* RenderPassMTL.mm */; };
 		460D4D1B21ABD0C60075726E /* RenderPipelineMTL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460D4D0721ABD0C60075726E /* RenderPipelineMTL.mm */; };
 		461C204D21A5304A00F3BD47 /* CCPipelineDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461C204B21A5304A00F3BD47 /* CCPipelineDescriptor.cpp */; };
 		461C204E21A5304A00F3BD47 /* CCPipelineDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461C204B21A5304A00F3BD47 /* CCPipelineDescriptor.cpp */; };
@@ -781,6 +779,10 @@
 		46C02E0818E91123004B7456 /* xxhash.c in Sources */ = {isa = PBXBuildFile; fileRef = 46C02E0518E91123004B7456 /* xxhash.c */; };
 		46C02E0918E91123004B7456 /* xxhash.h in Headers */ = {isa = PBXBuildFile; fileRef = 46C02E0618E91123004B7456 /* xxhash.h */; };
 		46C02E0A18E91123004B7456 /* xxhash.h in Headers */ = {isa = PBXBuildFile; fileRef = 46C02E0618E91123004B7456 /* xxhash.h */; };
+		46E21B4721B900C900430A43 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46E21B4521B900C900430A43 /* StringUtils.cpp */; };
+		46E21B4821B900C900430A43 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46E21B4521B900C900430A43 /* StringUtils.cpp */; };
+		46E21B4921B900C900430A43 /* StringUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 46E21B4621B900C900430A43 /* StringUtils.h */; };
+		46E21B4A21B900C900430A43 /* StringUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 46E21B4621B900C900430A43 /* StringUtils.h */; };
 		46F9B47621AFE64C009DF858 /* ExtensionMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 46F9B31321AFE64B009DF858 /* ExtensionMacros.h */; };
 		46F9B47721AFE64C009DF858 /* ExtensionMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 46F9B31321AFE64B009DF858 /* ExtensionMacros.h */; };
 		46F9B6F021AFE64C009DF858 /* cocos-ext.h in Headers */ = {isa = PBXBuildFile; fileRef = 46F9B45421AFE64B009DF858 /* cocos-ext.h */; };
@@ -2021,10 +2023,6 @@
 		DABC9FAA19E7DFA900FA252C /* CCClippingRectangleNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DABC9FA719E7DFA900FA252C /* CCClippingRectangleNode.cpp */; };
 		DABC9FAB19E7DFA900FA252C /* CCClippingRectangleNode.h in Headers */ = {isa = PBXBuildFile; fileRef = DABC9FA819E7DFA900FA252C /* CCClippingRectangleNode.h */; };
 		DABC9FAC19E7DFA900FA252C /* CCClippingRectangleNode.h in Headers */ = {isa = PBXBuildFile; fileRef = DABC9FA819E7DFA900FA252C /* CCClippingRectangleNode.h */; };
-		ED28C21F219E629B0078D854 /* RenderPass.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C1ED219E629B0078D854 /* RenderPass.h */; };
-		ED28C220219E629B0078D854 /* RenderPass.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C1ED219E629B0078D854 /* RenderPass.h */; };
-		ED28C221219E629B0078D854 /* RenderPipelineDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C1EE219E629B0078D854 /* RenderPipelineDescriptor.cpp */; };
-		ED28C222219E629B0078D854 /* RenderPipelineDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C1EE219E629B0078D854 /* RenderPipelineDescriptor.cpp */; };
 		ED28C223219E629B0078D854 /* RenderPipeline.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C1EF219E629B0078D854 /* RenderPipeline.h */; };
 		ED28C224219E629B0078D854 /* RenderPipeline.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C1EF219E629B0078D854 /* RenderPipeline.h */; };
 		ED28C225219E629B0078D854 /* DepthStencilState.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C1F0219E629B0078D854 /* DepthStencilState.h */; };
@@ -2039,16 +2037,10 @@
 		ED28C22E219E629B0078D854 /* Types.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C1F4219E629B0078D854 /* Types.h */; };
 		ED28C22F219E629B0078D854 /* Backend.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C1F5219E629B0078D854 /* Backend.h */; };
 		ED28C230219E629B0078D854 /* Backend.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C1F5219E629B0078D854 /* Backend.h */; };
-		ED28C231219E629B0078D854 /* StringUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C1F6219E629B0078D854 /* StringUtils.h */; };
-		ED28C232219E629B0078D854 /* StringUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C1F6219E629B0078D854 /* StringUtils.h */; };
-		ED28C233219E629B0078D854 /* RenderPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C1F7219E629B0078D854 /* RenderPass.cpp */; };
-		ED28C234219E629B0078D854 /* RenderPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C1F7219E629B0078D854 /* RenderPass.cpp */; };
 		ED28C235219E629B0078D854 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C1F8219E629B0078D854 /* Texture.cpp */; };
 		ED28C236219E629B0078D854 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C1F8219E629B0078D854 /* Texture.cpp */; };
 		ED28C237219E629B0078D854 /* Device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C1F9219E629B0078D854 /* Device.cpp */; };
 		ED28C238219E629B0078D854 /* Device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C1F9219E629B0078D854 /* Device.cpp */; };
-		ED28C239219E629B0078D854 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C1FA219E629B0078D854 /* StringUtils.cpp */; };
-		ED28C23A219E629B0078D854 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C1FA219E629B0078D854 /* StringUtils.cpp */; };
 		ED28C23B219E629B0078D854 /* RenderPassDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C1FB219E629B0078D854 /* RenderPassDescriptor.h */; };
 		ED28C23C219E629B0078D854 /* RenderPassDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C1FB219E629B0078D854 /* RenderPassDescriptor.h */; };
 		ED28C23D219E629B0078D854 /* CommandBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C1FC219E629B0078D854 /* CommandBuffer.h */; };
@@ -2075,8 +2067,6 @@
 		ED28C252219E629C0078D854 /* BindGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C206219E629B0078D854 /* BindGroup.h */; };
 		ED28C253219E629C0078D854 /* VertexLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C207219E629B0078D854 /* VertexLayout.h */; };
 		ED28C254219E629C0078D854 /* VertexLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C207219E629B0078D854 /* VertexLayout.h */; };
-		ED28C255219E629C0078D854 /* RenderPassDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C208219E629B0078D854 /* RenderPassDescriptor.cpp */; };
-		ED28C256219E629C0078D854 /* RenderPassDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C208219E629B0078D854 /* RenderPassDescriptor.cpp */; };
 		ED28C258219E629C0078D854 /* ShaderModuleGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C20A219E629B0078D854 /* ShaderModuleGL.cpp */; };
 		ED28C25A219E629C0078D854 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C20B219E629B0078D854 /* Program.cpp */; };
 		ED28C25C219E629C0078D854 /* BufferGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C20C219E629B0078D854 /* BufferGL.cpp */; };
@@ -2375,10 +2365,8 @@
 		460D4D0021ABD0C60075726E /* DeviceMTL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DeviceMTL.mm; sourceTree = "<group>"; };
 		460D4D0121ABD0C60075726E /* TextureMTL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TextureMTL.mm; sourceTree = "<group>"; };
 		460D4D0221ABD0C60075726E /* TextureMTL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureMTL.h; sourceTree = "<group>"; };
-		460D4D0321ABD0C60075726E /* RenderPassMTL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderPassMTL.h; sourceTree = "<group>"; };
 		460D4D0421ABD0C60075726E /* CommandBufferMTL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CommandBufferMTL.mm; sourceTree = "<group>"; };
 		460D4D0521ABD0C60075726E /* RenderPipelineMTL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderPipelineMTL.h; sourceTree = "<group>"; };
-		460D4D0621ABD0C60075726E /* RenderPassMTL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RenderPassMTL.mm; sourceTree = "<group>"; };
 		460D4D0721ABD0C60075726E /* RenderPipelineMTL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RenderPipelineMTL.mm; sourceTree = "<group>"; };
 		461C204B21A5304A00F3BD47 /* CCPipelineDescriptor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCPipelineDescriptor.cpp; sourceTree = "<group>"; };
 		461C204C21A5304A00F3BD47 /* CCPipelineDescriptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPipelineDescriptor.h; sourceTree = "<group>"; };
@@ -2551,6 +2539,8 @@
 		46BDE4A91FA3316A00104C05 /* libbox2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbox2d.a; path = ../external/Box2D/prebuilt/ios/libbox2d.a; sourceTree = "<group>"; };
 		46C02E0518E91123004B7456 /* xxhash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xxhash.c; sourceTree = "<group>"; };
 		46C02E0618E91123004B7456 /* xxhash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxhash.h; sourceTree = "<group>"; };
+		46E21B4521B900C900430A43 /* StringUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtils.cpp; sourceTree = "<group>"; };
+		46E21B4621B900C900430A43 /* StringUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtils.h; sourceTree = "<group>"; };
 		46E7207B1ECAC75C0034BEC7 /* ccShader_ETC1AS_PositionTextureColor.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_ETC1AS_PositionTextureColor.frag; sourceTree = "<group>"; };
 		46E7207C1ECAC75C0034BEC7 /* ccShader_ETC1AS_PositionTextureGray.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_ETC1AS_PositionTextureGray.frag; sourceTree = "<group>"; };
 		46E7207E1ECAC75C0034BEC7 /* ccShader_Position.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_Position.vert; sourceTree = "<group>"; };
@@ -2963,8 +2953,6 @@
 		DA8C62A119E52C6400000516 /* ioapi_mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi_mem.h; sourceTree = "<group>"; };
 		DABC9FA719E7DFA900FA252C /* CCClippingRectangleNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCClippingRectangleNode.cpp; sourceTree = "<group>"; };
 		DABC9FA819E7DFA900FA252C /* CCClippingRectangleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClippingRectangleNode.h; sourceTree = "<group>"; };
-		ED28C1ED219E629B0078D854 /* RenderPass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderPass.h; sourceTree = "<group>"; };
-		ED28C1EE219E629B0078D854 /* RenderPipelineDescriptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderPipelineDescriptor.cpp; sourceTree = "<group>"; };
 		ED28C1EF219E629B0078D854 /* RenderPipeline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderPipeline.h; sourceTree = "<group>"; };
 		ED28C1F0219E629B0078D854 /* DepthStencilState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepthStencilState.h; sourceTree = "<group>"; };
 		ED28C1F1219E629B0078D854 /* RenderPipelineDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderPipelineDescriptor.h; sourceTree = "<group>"; };
@@ -2972,11 +2960,8 @@
 		ED28C1F3219E629B0078D854 /* VertexLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VertexLayout.cpp; sourceTree = "<group>"; };
 		ED28C1F4219E629B0078D854 /* Types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
 		ED28C1F5219E629B0078D854 /* Backend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Backend.h; sourceTree = "<group>"; };
-		ED28C1F6219E629B0078D854 /* StringUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtils.h; sourceTree = "<group>"; };
-		ED28C1F7219E629B0078D854 /* RenderPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderPass.cpp; sourceTree = "<group>"; };
 		ED28C1F8219E629B0078D854 /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
 		ED28C1F9219E629B0078D854 /* Device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Device.cpp; sourceTree = "<group>"; };
-		ED28C1FA219E629B0078D854 /* StringUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtils.cpp; sourceTree = "<group>"; };
 		ED28C1FB219E629B0078D854 /* RenderPassDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderPassDescriptor.h; sourceTree = "<group>"; };
 		ED28C1FC219E629B0078D854 /* CommandBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandBuffer.h; sourceTree = "<group>"; };
 		ED28C1FD219E629B0078D854 /* ShaderModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderModule.h; sourceTree = "<group>"; };
@@ -2990,7 +2975,6 @@
 		ED28C205219E629B0078D854 /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
 		ED28C206219E629B0078D854 /* BindGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindGroup.h; sourceTree = "<group>"; };
 		ED28C207219E629B0078D854 /* VertexLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VertexLayout.h; sourceTree = "<group>"; };
-		ED28C208219E629B0078D854 /* RenderPassDescriptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderPassDescriptor.cpp; sourceTree = "<group>"; };
 		ED28C20A219E629B0078D854 /* ShaderModuleGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderModuleGL.cpp; sourceTree = "<group>"; };
 		ED28C20B219E629B0078D854 /* Program.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Program.cpp; sourceTree = "<group>"; };
 		ED28C20C219E629B0078D854 /* BufferGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BufferGL.cpp; sourceTree = "<group>"; };
@@ -4047,8 +4031,6 @@
 				460D4CFA21ABD0C60075726E /* DepthStencilStateMTL.mm */,
 				460D4CF521ABD0C60075726E /* DeviceMTL.h */,
 				460D4D0021ABD0C60075726E /* DeviceMTL.mm */,
-				460D4D0321ABD0C60075726E /* RenderPassMTL.h */,
-				460D4D0621ABD0C60075726E /* RenderPassMTL.mm */,
 				460D4D0521ABD0C60075726E /* RenderPipelineMTL.h */,
 				460D4D0721ABD0C60075726E /* RenderPipelineMTL.mm */,
 				460D4CF821ABD0C60075726E /* ShaderModuleMTL.h */,
@@ -4846,6 +4828,8 @@
 		ED28C1EC219E629B0078D854 /* backend */ = {
 			isa = PBXGroup;
 			children = (
+				46E21B4521B900C900430A43 /* StringUtils.cpp */,
+				46E21B4621B900C900430A43 /* StringUtils.h */,
 				ED28C1F5219E629B0078D854 /* Backend.h */,
 				ED28C204219E629B0078D854 /* BindGroup.cpp */,
 				ED28C206219E629B0078D854 /* BindGroup.h */,
@@ -4861,17 +4845,11 @@
 				ED28C202219E629B0078D854 /* Macros.h */,
 				460D4CF321ABD0C60075726E /* metal */,
 				ED28C209219E629B0078D854 /* opengl */,
-				ED28C1F7219E629B0078D854 /* RenderPass.cpp */,
-				ED28C1ED219E629B0078D854 /* RenderPass.h */,
-				ED28C208219E629B0078D854 /* RenderPassDescriptor.cpp */,
 				ED28C1FB219E629B0078D854 /* RenderPassDescriptor.h */,
 				ED28C1EF219E629B0078D854 /* RenderPipeline.h */,
-				ED28C1EE219E629B0078D854 /* RenderPipelineDescriptor.cpp */,
 				ED28C1F1219E629B0078D854 /* RenderPipelineDescriptor.h */,
 				ED28C1FF219E629B0078D854 /* ShaderModule.cpp */,
 				ED28C1FD219E629B0078D854 /* ShaderModule.h */,
-				ED28C1FA219E629B0078D854 /* StringUtils.cpp */,
-				ED28C1F6219E629B0078D854 /* StringUtils.h */,
 				ED28C1F8219E629B0078D854 /* Texture.cpp */,
 				ED28C205219E629B0078D854 /* Texture.h */,
 				ED28C1F4219E629B0078D854 /* Types.h */,
@@ -4940,7 +4918,6 @@
 				B6DD2FE71B04825B00E47F5F /* DetourPathQueue.h in Headers */,
 				460D4CD321A5666E0075726E /* CCRenderer.h in Headers */,
 				ED28C22F219E629B0078D854 /* Backend.h in Headers */,
-				460D4D1721ABD0C60075726E /* RenderPassMTL.h in Headers */,
 				B6DD2FBB1B04825B00E47F5F /* DetourAssert.h in Headers */,
 				50864CBB1C7BC1B000B3BAB1 /* cpPinJoint.h in Headers */,
 				50ABBED31925AB6F00A911A9 /* uthash.h in Headers */,
@@ -5049,7 +5026,6 @@
 				1A5701BF180BCB5A0088DEC7 /* CCLabelAtlas.h in Headers */,
 				A045F6DE1BA816A1005076C7 /* CCCameraBackgroundBrush.h in Headers */,
 				4631CB6D21AFD9F90000D408 /* CCUIEditBoxMac.h in Headers */,
-				ED28C231219E629B0078D854 /* StringUtils.h in Headers */,
 				4631CB6F21AFD9F90000D408 /* CCUISingleLineTextField.h in Headers */,
 				50ABBED91925AB6F00A911A9 /* ZipUtils.h in Headers */,
 				50643BDB19BFAF4400EF68ED /* CCStdC.h in Headers */,
@@ -5165,7 +5141,6 @@
 				1A5702F8180BCE750088DEC7 /* CCTMXTiledMap.h in Headers */,
 				5034CA21191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest.frag in Headers */,
 				4631CBEF21AFD9FA0000D408 /* UISlider.h in Headers */,
-				ED28C21F219E629B0078D854 /* RenderPass.h in Headers */,
 				4631CB8321AFD9F90000D408 /* UIEditBoxImpl.h in Headers */,
 				1A40D1301E8E56C7002E363A /* ieee754.h in Headers */,
 				15FB20991AE7C57D00C31518 /* sweep.h in Headers */,
@@ -5299,6 +5274,7 @@
 				ED28C23D219E629B0078D854 /* CommandBuffer.h in Headers */,
 				50ABBE371925AB6F00A911A9 /* CCConsole.h in Headers */,
 				50ABC00B1926664800A911A9 /* CCDevice.h in Headers */,
+				46E21B4921B900C900430A43 /* StringUtils.h in Headers */,
 				50ABC0131926664800A911A9 /* CCGLView.h in Headers */,
 				50ABBDB31925AB4100A911A9 /* ccShaders.h in Headers */,
 				50ABBDAB1925AB4100A911A9 /* CCRenderCommandPool.h in Headers */,
@@ -5887,7 +5863,6 @@
 				4631CB1C21AFD9F90000D408 /* UILayoutComponent.h in Headers */,
 				1A5701E9180BCB8C0088DEC7 /* CCTransition.h in Headers */,
 				ED28C262219E629C0078D854 /* RenderPipelineGL.h in Headers */,
-				ED28C232219E629B0078D854 /* StringUtils.h in Headers */,
 				B6DD2FAE1B04825B00E47F5F /* DetourDebugDraw.h in Headers */,
 				B6DD2FD81B04825B00E47F5F /* DetourCrowd.h in Headers */,
 				50ABBED41925AB6F00A911A9 /* uthash.h in Headers */,
@@ -5936,6 +5911,7 @@
 				50ABBD431925AB0000A911A9 /* CCMathBase.h in Headers */,
 				15EFA214198A2BB5000C57D3 /* CCProtectedNode.h in Headers */,
 				50ABBE441925AB6F00A911A9 /* CCDirector.h in Headers */,
+				46E21B4A21B900C900430A43 /* StringUtils.h in Headers */,
 				5034CA4A191D591100CE6051 /* ccShader_Label_df.frag in Headers */,
 				50864CA71C7BC1B000B3BAB1 /* cpConstraint.h in Headers */,
 				1A570281180BCC900088DEC7 /* CCSprite.h in Headers */,
@@ -6109,7 +6085,6 @@
 				15FB209E1AE7C57D00C31518 /* sweep_context.h in Headers */,
 				ED28C264219E629C0078D854 /* ShaderModuleGL.h in Headers */,
 				50ABBE5C1925AB6F00A911A9 /* CCEventKeyboard.h in Headers */,
-				ED28C220219E629B0078D854 /* RenderPass.h in Headers */,
 				1A2B22B51E6E5828001D5EC9 /* Uri.h in Headers */,
 				50ABC01C1926664800A911A9 /* CCSAXParser.h in Headers */,
 				1A5FB7C51DF012D900C918C1 /* AudioMacros.h in Headers */,
@@ -6315,7 +6290,6 @@
 				50ABBD831925AB4100A911A9 /* CCBatchCommand.cpp in Sources */,
 				4631CB7321AFD9F90000D408 /* CCUIPasswordTextField.m in Sources */,
 				1A5701C7180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */,
-				ED28C255219E629C0078D854 /* RenderPassDescriptor.cpp in Sources */,
 				50ABBE711925AB6F00A911A9 /* CCEventListenerMouse.cpp in Sources */,
 				50FC3FA91D74C2D1001C936A /* CCEventListenerController.cpp in Sources */,
 				1A5701DE180BCB8C0088DEC7 /* CCLayer.cpp in Sources */,
@@ -6348,7 +6322,6 @@
 				1A570202180BCBD40088DEC7 /* CCClippingNode.cpp in Sources */,
 				4631CB2921AFD9F90000D408 /* UITextAtlas.cpp in Sources */,
 				1A570208180BCBDF0088DEC7 /* CCMotionStreak.cpp in Sources */,
-				ED28C221219E629B0078D854 /* RenderPipelineDescriptor.cpp in Sources */,
 				15FB20971AE7C57D00C31518 /* sweep.cc in Sources */,
 				1A570210180BCBF40088DEC7 /* CCProgressTimer.cpp in Sources */,
 				501216941AC47393009A4BEA /* CCPass.cpp in Sources */,
@@ -6402,7 +6375,6 @@
 				460D4D1121ABD0C60075726E /* ShaderModuleMTL.mm in Sources */,
 				294D7D941D0E67B4002CE7B7 /* CCDevice-apple.mm in Sources */,
 				1A5702EE180BCE750088DEC7 /* CCTMXLayer.cpp in Sources */,
-				ED28C233219E629B0078D854 /* RenderPass.cpp in Sources */,
 				468A14E61EF223B700ECA675 /* idl_gen_cpp.cpp in Sources */,
 				50ABBE691925AB6F00A911A9 /* CCEventListenerFocus.cpp in Sources */,
 				460D4CD521A5666E0075726E /* CCRenderer.cpp in Sources */,
@@ -6427,7 +6399,6 @@
 				5012168E1AC47380009A4BEA /* CCRenderState.cpp in Sources */,
 				50ABC0011926664800A911A9 /* CCLock-apple.cpp in Sources */,
 				4631CBE321AFD9FA0000D408 /* UISlider.cpp in Sources */,
-				ED28C239219E629B0078D854 /* StringUtils.cpp in Sources */,
 				50ABBD931925AB4100A911A9 /* CCGLProgramState.cpp in Sources */,
 				1A57034B180BD09B0088DEC7 /* tinyxml2.cpp in Sources */,
 				1A570354180BD0B00088DEC7 /* ioapi.cpp in Sources */,
@@ -6479,6 +6450,7 @@
 				50ABBD541925AB0000A911A9 /* TransformUtils.cpp in Sources */,
 				DABC9FA919E7DFA900FA252C /* CCClippingRectangleNode.cpp in Sources */,
 				3E2F27A619CFBFE100E7C490 /* AudioEngine.cpp in Sources */,
+				46E21B4721B900C900430A43 /* StringUtils.cpp in Sources */,
 				4631CBD321AFD9FA0000D408 /* UIRichText.cpp in Sources */,
 				460D4D1421ABD0C60075726E /* DeviceMTL.mm in Sources */,
 				468A14EC1EF223B700ECA675 /* idl_gen_general.cpp in Sources */,
@@ -6503,7 +6475,6 @@
 				50ABC0151926664800A911A9 /* CCImage.cpp in Sources */,
 				50ABBE231925AB6F00A911A9 /* base64.cpp in Sources */,
 				B6DD2FF51B04825B00E47F5F /* fastlz.c in Sources */,
-				460D4D1A21ABD0C60075726E /* RenderPassMTL.mm in Sources */,
 				15AE1BB519AADFEF00C27E9E /* SocketIO.cpp in Sources */,
 				50ABBE5D1925AB6F00A911A9 /* CCEventListener.cpp in Sources */,
 				50ABBD601925AB0000A911A9 /* Vec4.cpp in Sources */,
@@ -6877,7 +6848,6 @@
 				299CF1FC19A434BC00C378C1 /* ccRandom.cpp in Sources */,
 				DA8C62A319E52C6400000516 /* ioapi_mem.cpp in Sources */,
 				50ABBE241925AB6F00A911A9 /* base64.cpp in Sources */,
-				ED28C256219E629C0078D854 /* RenderPassDescriptor.cpp in Sources */,
 				1A5701A6180BCB590088DEC7 /* CCFontAtlasCache.cpp in Sources */,
 				1A5701B2180BCB590088DEC7 /* CCFontFNT.cpp in Sources */,
 				4631CBC021AFD9FA0000D408 /* UITextField.cpp in Sources */,
@@ -6913,7 +6883,6 @@
 				4631CB3221AFD9F90000D408 /* UIEditBoxImpl-common.cpp in Sources */,
 				1A5701EF180BCB8C0088DEC7 /* CCTransitionProgress.cpp in Sources */,
 				4631CB4E21AFD9F90000D408 /* CCUIEditBoxIOS.mm in Sources */,
-				ED28C222219E629B0078D854 /* RenderPipelineDescriptor.cpp in Sources */,
 				B240C5EA1B09DFB000137F50 /* CCFrameBuffer.cpp in Sources */,
 				1A5701F8180BCBAD0088DEC7 /* CCMenu.cpp in Sources */,
 				50ABBD511925AB0000A911A9 /* Quaternion.cpp in Sources */,
@@ -6945,6 +6914,7 @@
 				ED28C25A219E629C0078D854 /* Program.cpp in Sources */,
 				50ABBD901925AB4100A911A9 /* CCGLProgramCache.cpp in Sources */,
 				1A57027F180BCC900088DEC7 /* CCSprite.cpp in Sources */,
+				46E21B4821B900C900430A43 /* StringUtils.cpp in Sources */,
 				294D7D951D0E67B4002CE7B7 /* CCDevice-apple.mm in Sources */,
 				1A570283180BCC900088DEC7 /* CCSpriteBatchNode.cpp in Sources */,
 				4631CB7821AFD9F90000D408 /* UIEditBoxImpl-ios.mm in Sources */,
@@ -6965,7 +6935,6 @@
 				1A5702C9180BCE370088DEC7 /* CCTextFieldTTF.cpp in Sources */,
 				1A5702EB180BCE750088DEC7 /* CCTileMapAtlas.cpp in Sources */,
 				1A5702EF180BCE750088DEC7 /* CCTMXLayer.cpp in Sources */,
-				ED28C234219E629B0078D854 /* RenderPass.cpp in Sources */,
 				1A5702F3180BCE750088DEC7 /* CCTMXObjectGroup.cpp in Sources */,
 				50ABBD3D1925AB0000A911A9 /* CCGeometry.cpp in Sources */,
 				460D4CD621A5666E0075726E /* CCRenderer.cpp in Sources */,
@@ -6991,7 +6960,6 @@
 				50ABBDB61925AB4100A911A9 /* CCTexture2D.cpp in Sources */,
 				1A570355180BD0B00088DEC7 /* ioapi.cpp in Sources */,
 				4631CB3021AFD9F90000D408 /* UIText.cpp in Sources */,
-				ED28C23A219E629B0078D854 /* StringUtils.cpp in Sources */,
 				46F9B73321AFE7C0009DF858 /* CCScrollView.cpp in Sources */,
 				46F9B74421B0CB44009DF858 /* UIWebView.mm in Sources */,
 				1A570359180BD0B00088DEC7 /* unzip.cpp in Sources */,

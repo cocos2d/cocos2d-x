@@ -1,7 +1,4 @@
 #include "Texture.h"
-#include "StringUtils.h"
-
-#include <string>
 
 CC_BACKEND_BEGIN
 

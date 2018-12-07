@@ -16,10 +16,7 @@ public:
     
     void apply(int index) const;
     inline GLuint getHandler() const { return _texture; }
-    void setAlphaTexture(Texture* alphaTexture);
-    inline void setPreMultiplyAlpha(bool bhasPremultipliedAlpha){_hasPremultipliedAlpha = bhasPremultipliedAlpha;}
-    inline bool hasPremultipliedAlpha(){return _hasPremultipliedAlpha;}
-    inline void setTextureID(GLuint texID){_texture = texID;}
+    
 private:
     void toGLTypes();
     void generateMipmpas() const;
@@ -36,9 +33,6 @@ private:
     GLint _internalFormat = GL_RGBA;
     GLenum _format = GL_RGBA;
     GLenum _type = GL_UNSIGNED_BYTE;
-    
-    Texture* _alphaTexture = nullptr;
-    bool _hasPremultipliedAlpha = false;
 };
 
 CC_BACKEND_END

@@ -150,45 +150,6 @@ void RenderQueue::realloc(size_t reserveSize)
     }
 }
 
-//void RenderQueue::saveRenderState()
-//{
-//    _isDepthEnabled = glIsEnabled(GL_DEPTH_TEST) != GL_FALSE;
-//    _isCullEnabled = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
-//    glGetBooleanv(GL_DEPTH_WRITEMASK, &_isDepthWrite);
-//
-//    CHECK_GL_ERROR_DEBUG();
-//}
-//
-//void RenderQueue::restoreRenderState()
-//{
-//    if (_isCullEnabled)
-//    {
-//        glEnable(GL_CULL_FACE);
-//        RenderState::StateBlock::_defaultState->setCullFace(true);
-//    }
-//    else
-//    {
-//        glDisable(GL_CULL_FACE);
-//        RenderState::StateBlock::_defaultState->setCullFace(false);
-//    }
-//
-//    if (_isDepthEnabled)
-//    {
-//        glEnable(GL_DEPTH_TEST);
-//        RenderState::StateBlock::_defaultState->setDepthTest(true);
-//    }
-//    else
-//    {
-//        glDisable(GL_DEPTH_TEST);
-//        RenderState::StateBlock::_defaultState->setDepthTest(false);
-//    }
-//
-//    glDepthMask(_isDepthWrite);
-//    RenderState::StateBlock::_defaultState->setDepthWrite(_isDepthEnabled);
-//
-//    CHECK_GL_ERROR_DEBUG();
-//}
-
 //
 //
 //
@@ -209,9 +170,9 @@ Renderer::Renderer()
 
     // for the batched TriangleCommand
     _triBatchesToDraw = (TriBatchToDraw*) malloc(sizeof(_triBatchesToDraw[0]) * _triBatchesToDrawCapacity);
-
-    _verts = malloc(Renderer::VBO_SIZE);
-    _indices = (unsigned short*)malloc(Renderer::INDEX_VBO_SIZE);
+    
+    _defaultRenderPassDescriptor.needClearColor = true;
+    _defaultRenderPassDescriptor.clearColorValue = {_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a};
 }
 
 Renderer::~Renderer()
@@ -220,8 +181,6 @@ Renderer::~Renderer()
     _groupCommandManager->release();
     
     free(_triBatchesToDraw);
-    free(_verts);
-    free(_indices);
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     Director::getInstance()->getEventDispatcher()->removeEventListener(_cacheTextureListener);
@@ -230,7 +189,6 @@ Renderer::~Renderer()
     CC_SAFE_RELEASE(_vertexBuffer);
     CC_SAFE_RELEASE(_indexBuffer);
     CC_SAFE_RELEASE(_commandBuffer);
-    CC_SAFE_RELEASE(_defaultRenderPass);
 }
 
 void Renderer::init()
@@ -239,7 +197,6 @@ void Renderer::init()
     _vertexBuffer = device->newBuffer(Renderer::VBO_SIZE, backend::BufferType::VERTEX, backend::BufferUsage::READ);
     _indexBuffer = device->newBuffer(Renderer::INDEX_VBO_SIZE, backend::BufferType::INDEX, backend::BufferUsage::READ);
     _commandBuffer = device->newCommandBuffer();
-    createDefaultRenderPass();
 }
 
 void Renderer::addCommand(RenderCommand* command)
@@ -298,8 +255,8 @@ void Renderer::processRenderCommand(RenderCommand* command)
             
             // queue it
             _queuedTriangleCommands.push_back(cmd);
-            _filledIndex += cmd->getIndexCount();
-            _filledVertex += cmd->getVertexCount();
+//             _filledIndex += cmd->getIndexCount();
+//             _filledVertex += cmd->getVertexCount();
         }
             break;
         case RenderCommand::Type::MESH_COMMAND:
@@ -337,15 +294,11 @@ void Renderer::processRenderCommand(RenderCommand* command)
         case RenderCommand::Type::GROUP_COMMAND:
         {
             flush();
-            auto tmpRenderPass = _currentRenderPass;
-            _currentRenderPass = createRenderPass(command);
             _viewPortStack.push({command->getViewPort()});
             int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
             //        CCGL_DEBUG_PUSH_GROUP_MARKER("RENDERER_GROUP_COMMAND");
             visitRenderQueue(_renderGroups[renderQueueID]);
             _viewPortStack.pop();
-            _currentRenderPass->release();
-            _currentRenderPass = tmpRenderPass;
             //        CCGL_DEBUG_POP_GROUP_MARKER();
         }
             break;
@@ -354,7 +307,6 @@ void Renderer::processRenderCommand(RenderCommand* command)
             drawCustomCommand(command);
             break;
         case RenderCommand::Type::BATCH_COMMAND:
-        case RenderCommand::Type::NORMAL_COMMAND:
             flush();
             drawBatchedCommand(command);
             break;
@@ -375,7 +327,11 @@ void Renderer::processRenderCommand(RenderCommand* command)
 void Renderer::visitRenderQueue(RenderQueue& queue)
 {
     //todo: minggo
-//    queue.saveRenderState();
+    _commandBuffer->beginFrame();
+    _isFirstCommand = true;
+    
+//    _commandBuffer->beginRenderPass(_defaultRenderPassDescriptor);
+//    _commandBuffer->endRenderPass();
     
     //
     //Process Global-Z < 0 Objects
@@ -530,7 +486,8 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
 //        flush();
 //    }
     
-//    queue.restoreRenderState();
+    _commandBuffer->endFrame();
+    _isFirstCommand = false;
 }
 
 void Renderer::render()
@@ -549,7 +506,6 @@ void Renderer::render()
         visitRenderQueue(_renderGroups[0]);
     }
     clean();
-    _currentRenderPass = nullptr;
     _isRendering = false;
 }
 
@@ -568,13 +524,12 @@ void Renderer::clean()
 
     // Clear batch commands
     _queuedTriangleCommands.clear();
-    cleanVerticesAndIncices();
     _lastBatchedMeshCommand = nullptr;
 }
 
 void Renderer::clear()
 {
-    _currentRenderPass = _defaultRenderPass;
+    
 }
 
 void Renderer::setDepthTest(bool enable)
@@ -602,34 +557,38 @@ void Renderer::setDepthTest(bool enable)
     //todo: minggo
 }
 
-void Renderer::fillVerticesAndIndices(const RenderCommand* cmd)
+void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
 {
-    _filledVertexBytes += cmd->copyVertexData((uint8_t*)_verts + _filledVertexBytes);
+    memcpy(&_verts[_filledVertex], cmd->getVertices(), sizeof(V3F_C4B_T2F) * cmd->getVertexCount());
     
+    // fill vertex, and convert them to world coordinates
+    const Mat4& modelView = cmd->getModelView();
+    for(ssize_t i=0; i < cmd->getVertexCount(); ++i)
+    {
+        modelView.transformPoint(&(_verts[i + _filledVertex].vertices));
+    }
+    
+    // fill index
     const unsigned short* indices = cmd->getIndices();
-    auto indexCount = cmd->getIndexCount();
-    for(size_t i = 0; i < indexCount; ++i)
+    for(ssize_t i=0; i< cmd->getIndexCount(); ++i)
     {
         _indices[_filledIndex + i] = _filledVertex + indices[i];
     }
     
-    _filledIndex += indexCount;
     _filledVertex += cmd->getVertexCount();
+    _filledIndex += cmd->getIndexCount();
 }
 
 void Renderer::cleanVerticesAndIncices()
 {
     _filledIndex = 0;
     _filledVertex = 0;
-    _filledVertexBytes = 0;
 }
 
 void Renderer::drawBatchedTriangles()
 {
     if(_queuedTriangleCommands.empty())
         return;
-    
-    cleanVerticesAndIncices();
     
     /************** 1: Setup up vertices/indices *************/
     
@@ -685,19 +644,16 @@ void Renderer::drawBatchedTriangles()
     }
     batchesTotal++;
     
-    // _vertexBuffer->updateData(_verts, sizeof(_verts[0]) * _filledVertex);
-    // _indexBuffer->updateData(_indices, sizeof(_indices[0]) * _filledIndex);
-
-    _vertexBuffer->updateData(_verts, _filledVertexBytes);
-    _indexBuffer->updateData(_indices, sizeof(_indices[0]) * _filledIndex);
+     _vertexBuffer->updateData(_verts, 0, sizeof(_verts[0]) * _filledVertex);
+     _indexBuffer->updateData(_indices, 0, sizeof(_indices[0]) * _filledIndex);
     
     /************** 2: Draw *************/
-    _commandBuffer->beginRenderPass(_currentRenderPass);
-    
     for (int i = 0; i < batchesTotal; ++i)
     {
+        checkFirstCommand(_triBatchesToDraw[i].cmd);
+        
         auto& pipelineDescriptor = _triBatchesToDraw[i].cmd->getPipelineDescriptor();
-        auto renderPipeline = createRenderPipeline(pipelineDescriptor);
+        auto renderPipeline = createRenderPipeline(_triBatchesToDraw[i].cmd->getPipelineDescriptor());
         _commandBuffer->setRenderPipeline(renderPipeline);
         renderPipeline->release();
         
@@ -719,9 +675,9 @@ void Renderer::drawBatchedTriangles()
                                      backend::IndexFormat::U_SHORT,
                                      _triBatchesToDraw[i].indicesToDraw,
                                      _triBatchesToDraw[i].offset * sizeof(_indices[0]));
+        
+        _commandBuffer->endRenderPass();
     }
-    
-    _commandBuffer->endRenderPass();
     
     /************** 3: Cleanup *************/
     _queuedTriangleCommands.clear();
@@ -730,74 +686,48 @@ void Renderer::drawBatchedTriangles()
 
 void Renderer::drawBatchedCommand(RenderCommand* command)
 {
-//    auto cmd = static_cast<BatchCommand*>(command);
-    
-//    fillVerticesAndIndices(cmd);
-//    V3F_C4B_T2F_Quad* quad = cmd->getQuad();
-//    unsigned short* indices = cmd->getIndices();
-//    uint32_t quadSize = sizeof(quad[0]) * cmd->getQuadCount();
-//    uint32_t indexCount = cmd->getQuadCount() * 6;
-//    uint32_t indexSize = sizeof(indices[0]) * indexCount;
-
-    fillVerticesAndIndices(command);
-    
-//    _vertexBuffer->updateData(quad, quadSize);
-//    _indexBuffer->updateData(indices, indexSize);
-    _vertexBuffer->updateData(_verts, _filledVertexBytes);
-    _indexBuffer->updateData(_indices, _filledIndex);
-    
-    /************** 2: Draw *************/
-    _commandBuffer->beginRenderPass(_currentRenderPass);
-    auto& pipelineDescriptor = command->getPipelineDescriptor();
-    auto renderPipeline = createRenderPipeline(pipelineDescriptor);
-    _commandBuffer->setRenderPipeline(renderPipeline);
-    renderPipeline->release();
-    
-    auto viewPort = command->getViewPort();
-    _commandBuffer->setViewport(viewPort[0], viewPort[1], viewPort[2], viewPort[3]);
-    
-    _commandBuffer->setVertexBuffer(0, _vertexBuffer);
-    _commandBuffer->setIndexBuffer(_indexBuffer);
-    _commandBuffer->setBindGroup(&pipelineDescriptor.bindGroup);
-    _commandBuffer->drawElements(backend::PrimitiveType::TRIANGLE,
-                                 backend::IndexFormat::U_SHORT,
-                                 command->getIndexCount() * sizeof(_indices[0]),
-                                 0);
-    
-    _commandBuffer->endRenderPass();
-    
-    cleanVerticesAndIncices();
+//    fillVerticesAndIndices(command);
+//    
+//    /************** 2: Draw *************/
+//    auto& pipelineDescriptor = command->getPipelineDescriptor();
+//    _commandBuffer->beginRenderPass(pipelineDescriptor.renderPassDescriptor);
+//    auto renderPipeline = createRenderPipeline(pipelineDescriptor);
+//    _commandBuffer->setRenderPipeline(renderPipeline);
+//    renderPipeline->release();
+//    
+//    auto viewPort = command->getViewPort();
+//    _commandBuffer->setViewport(viewPort[0], viewPort[1], viewPort[2], viewPort[3]);
+//    
+//    _commandBuffer->setVertexBuffer(0, _vertexBuffer);
+//    _commandBuffer->setIndexBuffer(_indexBuffer);
+//    _commandBuffer->setBindGroup(&pipelineDescriptor.bindGroup);
+//    _commandBuffer->drawElements(backend::PrimitiveType::TRIANGLE,
+//                                 backend::IndexFormat::U_SHORT,
+//                                 command->getIndexCount(),
+//                                 0);
+//    
+//    _commandBuffer->endRenderPass();
 }
 
 void Renderer::drawCustomCommand(RenderCommand *command)
 {
     auto cmd = static_cast<CustomCommand*>(command);
     
-    //    fillVerticesAndIndices(cmd);
-    V3F_C4B_T2F_Quad* quad = cmd->getQuad();
-    const unsigned short* indices = cmd->getIndices();
-    uint32_t quadSize = sizeof(quad[0]) * cmd->getQuadCount();
-    uint32_t indexCount = cmd->getQuadCount() * 6;
-    uint32_t indexSize = sizeof(indices[0]) * indexCount;
-    
-    _vertexBuffer->updateData(quad, quadSize);
-    _indexBuffer->updateData(indices, indexSize);
-    
-    /************** 2: Draw *************/
-    _commandBuffer->beginRenderPass(_currentRenderPass);
+    checkFirstCommand(command);
     auto& pipelineDescriptor = cmd->getPipelineDescriptor();
     auto renderPipeline = createRenderPipeline(pipelineDescriptor);
     _commandBuffer->setRenderPipeline(renderPipeline);
     renderPipeline->release();
     
+    _commandBuffer->setVertexBuffer(0, cmd->getVertexBuffer());
+    _commandBuffer->setIndexBuffer(cmd->getIndexBuffer());
     auto viewPort = cmd->getViewPort();
     _commandBuffer->setViewport(viewPort[0], viewPort[1], viewPort[2], viewPort[3]);
     
-    _commandBuffer->setVertexBuffer(0, _vertexBuffer);
-    _commandBuffer->setIndexBuffer(_indexBuffer);
     _commandBuffer->setBindGroup(&pipelineDescriptor.bindGroup);
     _commandBuffer->drawElements(backend::PrimitiveType::TRIANGLE,
-                                 backend::IndexFormat::U_SHORT, indexCount,
+                                 backend::IndexFormat::U_SHORT,
+                                 cmd->getIndexCount(),
                                  0);
     
     _commandBuffer->endRenderPass();
@@ -869,44 +799,43 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 void Renderer::setClearColor(const Color4F &clearColor)
 {
     _clearColor = clearColor;
-    createDefaultRenderPass();
+    _defaultRenderPassDescriptor.clearColorValue = {_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a};
 }
 
 backend::RenderPipeline* Renderer::createRenderPipeline(const PipelineDescriptor& pipelineDescriptor)
 {
     backend::RenderPipelineDescriptor renderPipelineDescriptor;
-    renderPipelineDescriptor.setVertexShaderModule(pipelineDescriptor.vertexShader);
-    renderPipelineDescriptor.setFragmentShaderModule(pipelineDescriptor.fragmentShader);
-    renderPipelineDescriptor.setVertexLayout(0, pipelineDescriptor.vertexLayout);
+    renderPipelineDescriptor.vertexShaderModule = pipelineDescriptor.vertexShader;
+    renderPipelineDescriptor.fragmentShaderModule = pipelineDescriptor.fragmentShader;
+    renderPipelineDescriptor.vertexLayouts.push_back(pipelineDescriptor.vertexLayout);
     
     auto device = backend::Device::getInstance();
     auto blendState = device->createBlendState(pipelineDescriptor.blendDescriptor);
-    renderPipelineDescriptor.setBlendState(blendState);
+    renderPipelineDescriptor.blendState = blendState;
     
     auto& depthStencilDescritpor = pipelineDescriptor.depthStencilDescriptor;
     if (depthStencilDescritpor.depthTestEnabled || depthStencilDescritpor.stencilTestEnabled)
     {
-        auto depthStencilState = device->createDepthStencilState(pipelineDescriptor.depthStencilDescriptor);
-        renderPipelineDescriptor.setDepthStencilState(depthStencilState);
+        auto depthStencilState = device->createDepthStencilState(depthStencilDescritpor);
+        renderPipelineDescriptor.depthStencilState = depthStencilState;
     }
     
     auto renderPipeline = device->newRenderPipeline(renderPipelineDescriptor);
     return renderPipeline;
 }
 
-backend::RenderPass* Renderer::createRenderPass(RenderCommand* cmd)
+void Renderer::checkFirstCommand(RenderCommand* cmd)
 {
-    auto& renderpassDescriptor = cmd->getPipelineDescriptor().renderPassDescriptor;
-    return backend::Device::getInstance()->newRenderPass(renderpassDescriptor);
-}
-
-void Renderer::createDefaultRenderPass()
-{
-    CC_SAFE_RELEASE(_defaultRenderPass);
-    backend::RenderPassDescriptor descriptor;
-    descriptor.setClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
-    descriptor.setClearDepth(0);
-    _defaultRenderPass = backend::Device::getInstance()->newRenderPass(descriptor);
+    if (_isFirstCommand)
+    {
+        _isFirstCommand = false;
+        
+        auto renderPassDescriptor = cmd->getPipelineDescriptor().renderPassDescriptor;
+        renderPassDescriptor.needClearColor = true;
+        _commandBuffer->beginRenderPass(renderPassDescriptor);
+    }
+    else
+        _commandBuffer->beginRenderPass(cmd->getPipelineDescriptor().renderPassDescriptor);
 }
 
 NS_CC_END

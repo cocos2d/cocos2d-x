@@ -46,16 +46,16 @@ namespace
                 ret = MTLVertexFormatInt;
                 break;
             case VertexFormat::USHORT_R16G16B16A16:
-                if (needNormalize)
-                    ret = MTLVertexFormatUShort4Normalized;
-                else
-                    ret = MTLVertexFormatUShort4;
+                ret = MTLVertexFormatUShort4;
                 break;
             case VertexFormat::USHORT_R16G16:
-                if (needNormalize)
-                    ret = MTLVertexFormatUShort2Normalized;
-                else
-                    ret = MTLVertexFormatUShort2;
+                ret = MTLVertexFormatUShort2;
+                break;
+            case VertexFormat::UNORM_R8G8B8A8:
+                ret = MTLVertexFormatUChar4;
+                break;
+            case VertexFormat::UNORM_R8G8:
+                ret = MTLVertexFormatUChar2;
                 break;
             case VertexFormat::UBYTE_R8G8B8A8:
                 if (needNormalize)
@@ -76,28 +76,22 @@ RenderPipelineMTL::RenderPipelineMTL(id<MTLDevice> mtlDevice, const RenderPipeli
 {
     _mtlRenderPipelineDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
     
-    auto vertexShaderModule = static_cast<ShaderModuleMTL*>(descriptor.getVertexShaderModule());
-    _mtlRenderPipelineDescriptor.vertexFunction = vertexShaderModule->getMTLFunction();
-    _vertexUniforms = vertexShaderModule->getUniforms();
-    _vertexUniformBuffer = vertexShaderModule->getUniformBuffer();
-    _vertexTextures = vertexShaderModule->getTextures();
-    
-    auto fragShaderModule = static_cast<ShaderModuleMTL*>(descriptor.getFragmentShaderModule());
-    _mtlRenderPipelineDescriptor.fragmentFunction = fragShaderModule->getMTLFunction();
-    _fragmentUniforms = fragShaderModule->getUniforms();
-    _fragementUniformBuffer = fragShaderModule->getUniformBuffer();
-    _fragmentTextures = fragShaderModule->getTextures();
-    
+    setShaderModules(descriptor);
     setVertexLayout(_mtlRenderPipelineDescriptor, descriptor);
     
     // Depth stencil state.
-    auto depthStencilState = descriptor.getDepthStencilState();
+    auto depthStencilState = descriptor.depthStencilState;
     if (depthStencilState)
         _mtlDepthStencilState = static_cast<DepthStencilStateMTL*>(depthStencilState)->getMTLDepthStencilState();
     
-    auto blendState = static_cast<BlendStateMTL*>(descriptor.getBlendState());
+    auto blendState = static_cast<BlendStateMTL*>(descriptor.blendState);
     if (blendState)
         _blendDescriptorMTL = blendState->getBlendDescriptorMTL();
+    
+    setBlendStateAndFormat(descriptor);
+    
+    _mtlRenderPipelineState = [_mtlDevice newRenderPipelineStateWithDescriptor:_mtlRenderPipelineDescriptor error:nil];
+    [_mtlRenderPipelineDescriptor release];
 }
 
 RenderPipelineMTL::~RenderPipelineMTL()
@@ -105,64 +99,9 @@ RenderPipelineMTL::~RenderPipelineMTL()
     [_mtlRenderPipelineState release];
 }
 
-void RenderPipelineMTL::apply(const RenderPass* renderPass)
-{
-    if (!_mtlRenderPipelineState)
-    {
-        // If color attachments and depth/stencil attachment are not set, then use default render pass descriptor.
-        // Or it uses custome render pass descriptor.
-        if (renderPass &&
-            (renderPass->hasColorAttachments() || renderPass->hasDepthStencilAttachment()))
-        {
-            if (renderPass->hasDepthStencilAttachment())
-            {
-                const auto& depthStencilAttacment = renderPass->getDepthStencilAttachment();
-                const auto& pixelFormat = Utils::toMTLPixelFormat(depthStencilAttacment.texture->getTextureFormat());
-                _mtlRenderPipelineDescriptor.depthAttachmentPixelFormat = pixelFormat;
-                _mtlRenderPipelineDescriptor.stencilAttachmentPixelFormat = pixelFormat;
-            }
-            else
-            {
-                _mtlRenderPipelineDescriptor.depthAttachmentPixelFormat = Utils::getTempDepthStencilAttachmentPixelFormat();
-                _mtlRenderPipelineDescriptor.stencilAttachmentPixelFormat = Utils::getTempDepthStencilAttachmentPixelFormat();
-            }
-            
-            if (renderPass->hasColorAttachments())
-            {
-                const auto& colorAttachments = renderPass->getColorAttachments();
-                int i = 0;
-                for (const auto& texture : colorAttachments.textures)
-                {
-                    if (!texture)
-                        continue;
-                    
-                    _mtlRenderPipelineDescriptor.colorAttachments[i].pixelFormat = Utils::toMTLPixelFormat(texture->getTextureFormat());
-                    setBlendState(_mtlRenderPipelineDescriptor.colorAttachments[i]);
-                    ++i;
-                }
-            }
-            else
-            {
-                _mtlRenderPipelineDescriptor.colorAttachments[0].pixelFormat = Utils::getTempColorAttachmentPixelFormat();
-                setBlendState(_mtlRenderPipelineDescriptor.colorAttachments[0]);
-            }
-        }
-        else
-        {
-            _mtlRenderPipelineDescriptor.colorAttachments[0].pixelFormat = Utils::getDefaultColorAttachmentPixelFormat();
-            _mtlRenderPipelineDescriptor.depthAttachmentPixelFormat = Utils::getDefaultDepthStencilAttachmentPixelFormat();
-            _mtlRenderPipelineDescriptor.stencilAttachmentPixelFormat = Utils::getDefaultDepthStencilAttachmentPixelFormat();
-            setBlendState(_mtlRenderPipelineDescriptor.colorAttachments[0]);
-        }
-        
-        _mtlRenderPipelineState = [_mtlDevice newRenderPipelineStateWithDescriptor:_mtlRenderPipelineDescriptor error:nil];
-        [_mtlRenderPipelineDescriptor release];
-    }
-}
-
 void RenderPipelineMTL::setVertexLayout(MTLRenderPipelineDescriptor* mtlDescriptor, const RenderPipelineDescriptor& descriptor)
 {
-    const auto& vertexLayouts = descriptor.getVertexLayouts();
+    const auto& vertexLayouts = descriptor.vertexLayouts;
     int vertexIndex = 0;
     for (const auto& vertexLayout : vertexLayouts)
     {
@@ -175,9 +114,9 @@ void RenderPipelineMTL::setVertexLayout(MTLRenderPipelineDescriptor* mtlDescript
         const auto& attributes = vertexLayout.getAttributes();
         for (const auto& attribute : attributes)
         {
-            mtlDescriptor.vertexDescriptor.attributes[attribute.index].format = toMTLVertexFormat(attribute.format, attribute.needNormalize);
+            mtlDescriptor.vertexDescriptor.attributes[attribute.index].format = toMTLVertexFormat(attribute.format, attribute.needToBeNormallized);
             mtlDescriptor.vertexDescriptor.attributes[attribute.index].offset = attribute.offset;
-            // Buffer index will always be 0.
+            // Buffer index will always be 0;
             mtlDescriptor.vertexDescriptor.attributes[attribute.index].bufferIndex = 0;
         }
         
@@ -197,6 +136,35 @@ void RenderPipelineMTL::setBlendState(MTLRenderPipelineColorAttachmentDescriptor
     colorAttachmentDescriptor.destinationRGBBlendFactor = _blendDescriptorMTL.destinationRGBBlendFactor;
     colorAttachmentDescriptor.sourceAlphaBlendFactor = _blendDescriptorMTL.sourceAlphaBlendFactor;
     colorAttachmentDescriptor.destinationAlphaBlendFactor = _blendDescriptorMTL.destinationAlphaBlendFactor;
+}
+
+void RenderPipelineMTL::setShaderModules(const RenderPipelineDescriptor& descriptor)
+{
+    auto vertexShaderModule = static_cast<ShaderModuleMTL*>(descriptor.vertexShaderModule);
+    _mtlRenderPipelineDescriptor.vertexFunction = vertexShaderModule->getMTLFunction();
+    _vertexUniforms = vertexShaderModule->getUniforms();
+    _vertexUniformBuffer = vertexShaderModule->getUniformBuffer();
+    _vertexTextures = vertexShaderModule->getTextures();
+    
+    auto fragShaderModule = static_cast<ShaderModuleMTL*>(descriptor.fragmentShaderModule);
+    _mtlRenderPipelineDescriptor.fragmentFunction = fragShaderModule->getMTLFunction();
+    _fragmentUniforms = fragShaderModule->getUniforms();
+    _fragementUniformBuffer = fragShaderModule->getUniformBuffer();
+    _fragmentTextures = fragShaderModule->getTextures();
+}
+
+void RenderPipelineMTL::setBlendStateAndFormat(const RenderPipelineDescriptor& descriptor)
+{
+    for (int i = 0; i < MAX_COLOR_ATTCHMENT; ++i)
+    {
+        if (TextureFormat::NONE == descriptor.colorAttachmentsFormat[i])
+            continue;
+        
+        _mtlRenderPipelineDescriptor.colorAttachments[i].pixelFormat = Utils::toMTLPixelFormat(descriptor.colorAttachmentsFormat[i]);
+        setBlendState(_mtlRenderPipelineDescriptor.colorAttachments[i]);
+    }
+    _mtlRenderPipelineDescriptor.depthAttachmentPixelFormat = Utils::toMTLPixelFormat(descriptor.depthAttachmentFormat);
+    _mtlRenderPipelineDescriptor.stencilAttachmentPixelFormat = Utils::toMTLPixelFormat(descriptor.stencilAttachmentFormat);
 }
 
 CC_BACKEND_END

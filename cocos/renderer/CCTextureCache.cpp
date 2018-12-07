@@ -42,7 +42,7 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 #include "base/CCNinePatchImageParser.h"
 #include "renderer/backend/Device.h"
-#include "renderer/backend/StringUtils.h"
+//#include "renderer/backend/StringUtils.h"
 
 
 using namespace std;

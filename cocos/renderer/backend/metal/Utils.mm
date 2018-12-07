@@ -6,35 +6,8 @@
 
 CC_BACKEND_BEGIN
 
-id<MTLTexture> Utils::_tempColorAttachmentTexture = nil;
-id<MTLTexture> Utils::_tempDepthStencilAttachmentTexture = nil;
-MTLRenderPassDescriptor* Utils::_defaultRenderPassDescriptor = nil;
-
-id<MTLTexture> Utils::getTempColorAttachmentTexture()
-{
-    if (!Utils::_tempColorAttachmentTexture)
-        Utils::_tempColorAttachmentTexture = Utils::createColorAttachmentTexture();
-    
-    return Utils::_tempColorAttachmentTexture;
-}
-
-id<MTLTexture> Utils::getTempDepthStencilAttachmentTexture()
-{
-    if (!Utils::_tempDepthStencilAttachmentTexture)
-        Utils::_tempDepthStencilAttachmentTexture = Utils::createDepthStencilAttachmentTexture();
-    
-    return Utils::_tempDepthStencilAttachmentTexture;
-}
-
-MTLPixelFormat Utils::getTempColorAttachmentPixelFormat()
-{
-    return COLOR_ATTAHCMENT_PIXEL_FORMAT;
-}
-
-MTLPixelFormat Utils::getTempDepthStencilAttachmentPixelFormat()
-{
-    return DEPTH_STENCIL_ATTACHMENT_PIXEL_FORMAT;
-}
+id<MTLTexture> Utils::_defaultColorAttachmentTexture = nil;
+id<MTLTexture> Utils::_defaultDepthStencilAttachmentTexture = nil;
 
 MTLPixelFormat Utils::getDefaultDepthStencilAttachmentPixelFormat()
 {
@@ -46,33 +19,22 @@ MTLPixelFormat Utils::getDefaultColorAttachmentPixelFormat()
     return COLOR_ATTAHCMENT_PIXEL_FORMAT;
 }
 
-void Utils::createDefaultRenderPassDescriptor()
+id<MTLTexture> Utils::getDefaultDepthStencilTexture()
 {
-    if (!Utils::_defaultRenderPassDescriptor)
-    {
-        Utils::_defaultRenderPassDescriptor = [MTLRenderPassDescriptor renderPassDescriptor];
-        Utils::_defaultRenderPassDescriptor.colorAttachments[0].loadAction = MTLLoadActionClear;
-        Utils::_defaultRenderPassDescriptor.colorAttachments[0].storeAction = MTLStoreActionStore;
-        
-        // Set default depth and stencil texture.
-        auto defaultDepthStencilTexture = Utils::createDepthStencilAttachmentTexture();
-        Utils::_defaultRenderPassDescriptor.depthAttachment.texture = defaultDepthStencilTexture;
-        Utils::_defaultRenderPassDescriptor.stencilAttachment.texture = defaultDepthStencilTexture;
-        
-        Utils::_defaultRenderPassDescriptor.depthAttachment.loadAction = MTLLoadActionClear;
-        Utils::_defaultRenderPassDescriptor.stencilAttachment.loadAction = MTLLoadActionClear;
-        [Utils::_defaultRenderPassDescriptor retain];
-    }
+    if (! _defaultDepthStencilAttachmentTexture)
+        _defaultDepthStencilAttachmentTexture = Utils::createDepthStencilAttachmentTexture();
+    
+    return _defaultDepthStencilAttachmentTexture;
 }
 
-MTLRenderPassDescriptor* Utils::getDefaultRenderPassDescriptor()
+id<MTLTexture> Utils::getDefaultColorAttachmentTexture()
 {
-    return Utils::_defaultRenderPassDescriptor;
+    return _defaultColorAttachmentTexture;
 }
 
-void Utils::updateDefaultRenderPassDescriptor(id<MTLTexture> texture)
+void Utils::updateDefaultColorAttachmentTexture(id<MTLTexture> texture)
 {
-    Utils::_defaultRenderPassDescriptor.colorAttachments[0].texture = texture;
+    Utils::_defaultColorAttachmentTexture = texture;
 }
 
 MTLPixelFormat Utils::toMTLPixelFormat(TextureFormat textureFormat)
@@ -89,9 +51,10 @@ MTLPixelFormat Utils::toMTLPixelFormat(TextureFormat textureFormat)
             // Not all devices supports MTLPixelFormatDepth24Unorm_Stencil8, so change to MTLPixelFormatDepth32Float_Stencil8.
         case TextureFormat::D24S8:
             return MTLPixelFormatDepth32Float_Stencil8;
+        case TextureFormat::SYSTEM_DEFAULT:
+            return COLOR_ATTAHCMENT_PIXEL_FORMAT;
         case TextureFormat::NONE:
-            assert(false);
-            break;
+            return MTLPixelFormatInvalid;
     }
 }
 

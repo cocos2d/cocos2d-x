@@ -86,10 +86,13 @@ void DepthStencilStateGL::apply(uint32_t stencilReferenceValueFront, uint32_t st
 {
     // depth test
     
-    if (_depthStencilInfo.depthTestEnabled)
-        glEnable(GL_DEPTH_TEST);
-    else
+    if (_depthStencilInfo.depthCompareFunction == CompareFunction::ALWAYS &&
+        !_depthStencilInfo.depthWriteEnabled)
+    {
         glDisable(GL_DEPTH_TEST);
+    }
+    else
+        glEnable(GL_DEPTH_TEST);
     
     if (_depthStencilInfo.depthWriteEnabled)
         glDepthMask(GL_TRUE);
@@ -98,13 +101,13 @@ void DepthStencilStateGL::apply(uint32_t stencilReferenceValueFront, uint32_t st
     
     glDepthFunc(toGLComareFunction(_depthStencilInfo.depthCompareFunction));
     
-    if (_depthStencilInfo.stencilTestEnabled)
+    if (_isStencilEnabled)
         glEnable(GL_STENCIL_TEST);
     else
         glDisable(GL_STENCIL_TEST);
     
     // stencil test
-    if (_depthStencilInfo.stencilTestEnabled)
+    if (_isStencilEnabled)
     {
         if (_isBackFrontStencilEqual)
         {

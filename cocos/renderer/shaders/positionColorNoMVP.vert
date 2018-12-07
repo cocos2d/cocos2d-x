@@ -27,6 +27,8 @@ const char* positionColor_vert = R"(
 attribute vec4 a_position;
 attribute vec4 a_color;
 
+uniform mat4 a_projection;
+
 #ifdef GL_ES
 varying lowp vec4 v_fragmentColor;
 #else
@@ -35,7 +37,7 @@ varying vec4 v_fragmentColor;
 
 void main()
 {
-    gl_Position =  a_position;
+    gl_Position = a_projection *  a_position;
     v_fragmentColor = a_color;
 }
 )";

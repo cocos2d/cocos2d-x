@@ -9,31 +9,23 @@ CC_BACKEND_BEGIN
 class Utils
 {
 public:
-    static id<MTLTexture> getTempColorAttachmentTexture();
-    static id<MTLTexture> getTempDepthStencilAttachmentTexture();
-    
-    static void createDefaultRenderPassDescriptor();
-    static MTLRenderPassDescriptor* getDefaultRenderPassDescriptor();
-    static void updateDefaultRenderPassDescriptor(id<MTLTexture> texture);
+    static void updateDefaultColorAttachmentTexture(id<MTLTexture> texture);
     static MTLPixelFormat getDefaultDepthStencilAttachmentPixelFormat();
     static MTLPixelFormat getDefaultColorAttachmentPixelFormat();
-    
-    static MTLPixelFormat getTempColorAttachmentPixelFormat();
-    static MTLPixelFormat getTempDepthStencilAttachmentPixelFormat();
+    static id<MTLTexture> getDefaultDepthStencilTexture();
+    static id<MTLTexture> getDefaultColorAttachmentTexture();
+
     
     static MTLPixelFormat toMTLPixelFormat(TextureFormat textureFormat);
-    
     static void generateMipmaps(id<MTLTexture> texture);
     
 private:
     static id<MTLTexture> createColorAttachmentTexture();
     static id<MTLTexture> createDepthStencilAttachmentTexture();
+
     
-    // Temple textures for render pass that just make metal work.
-    static id<MTLTexture> _tempColorAttachmentTexture;
-    static id<MTLTexture> _tempDepthStencilAttachmentTexture;
-    
-    static MTLRenderPassDescriptor* _defaultRenderPassDescriptor;
+    static id<MTLTexture> _defaultColorAttachmentTexture;
+    static id<MTLTexture> _defaultDepthStencilAttachmentTexture;
 };
 
 CC_BACKEND_END

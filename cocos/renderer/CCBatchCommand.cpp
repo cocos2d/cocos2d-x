@@ -41,24 +41,6 @@ BatchCommand::BatchCommand()
 //    _shader = nullptr;
 }
 
-size_t BatchCommand::copyVertexData(void* out) const
-{
-    auto dataLength = sizeof(V3F_C4B_T2F_Quad) * getQuadCount();
-    memcpy(out, getQuad(), dataLength);
-
-    return dataLength;
-}
-
-const unsigned short* BatchCommand::getIndices() const
-{
-    return _textureAtlas->getIndices();
-}
-
-size_t BatchCommand::getIndexCount() const
-{
-    return getQuadCount() * 6;
-}
-
 //TODO coulsonwang
 //void BatchCommand::init(float globalZOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags)
 //{

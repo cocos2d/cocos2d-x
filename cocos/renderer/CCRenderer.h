@@ -216,12 +216,11 @@ protected:
     void processRenderCommand(RenderCommand* command);
     void visitRenderQueue(RenderQueue& queue);
 
-    void fillVerticesAndIndices(const RenderCommand* cmd);
+    void fillVerticesAndIndices(const TrianglesCommand* cmd);
     void cleanVerticesAndIncices();
+    void checkFirstCommand(RenderCommand*);
     
     backend::RenderPipeline* createRenderPipeline(const PipelineDescriptor&);
-    backend::RenderPass* createRenderPass(RenderCommand*);
-    void createDefaultRenderPass();
 
     /* clear color set outside be used in setGLDefaultValues() */
     Color4F _clearColor = Color4F::BLACK;
@@ -234,17 +233,13 @@ protected:
     std::vector<TrianglesCommand*> _queuedTriangleCommands;
 
     //for TrianglesCommand
-//    V3F_C4B_T2F _verts[VBO_SIZE];
-//    unsigned short _indices[INDEX_VBO_SIZE];
-    void* _verts = nullptr;
-    unsigned short* _indices = nullptr;
+    V3F_C4B_T2F _verts[VBO_SIZE];
+    unsigned short _indices[INDEX_VBO_SIZE];
     backend::Buffer* _vertexBuffer = nullptr;
     backend::Buffer* _indexBuffer = nullptr;
     
     backend::CommandBuffer* _commandBuffer = nullptr;
-    // The render pass with clear color and depth.
-    backend::RenderPass* _defaultRenderPass = nullptr;
-    backend::RenderPass* _currentRenderPass = nullptr;
+    backend::RenderPassDescriptor _defaultRenderPassDescriptor;
     std::stack<std::array<int, 4>> _viewPortStack;
 
     // Internal structure that has the information for the batches
@@ -260,7 +255,6 @@ protected:
     TriBatchToDraw* _triBatchesToDraw = nullptr;
 
     size_t _filledVertex = 0;
-    size_t _filledVertexBytes = 0;
     size_t _filledIndex = 0;
 
 //    bool _glViewAssigned;
@@ -270,8 +264,9 @@ protected:
     ssize_t _drawnVertices = 0;
     //the flag for checking whether renderer is rendering
     bool _isRendering = false;
-    
     bool _isDepthTestFor2D = false;
+    
+    bool _isFirstCommand = false;
     
     GroupCommandManager* _groupCommandManager = nullptr;
     

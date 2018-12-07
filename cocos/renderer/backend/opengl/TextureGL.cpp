@@ -3,8 +3,6 @@
 
 CC_BACKEND_BEGIN
 
-#define ISPOW2(n) (((n)&(n-1)) == 0)
-
 namespace
 {
     GLint toGLMagFilter(SamplerFilter magFilter)
@@ -24,19 +22,10 @@ namespace
         return ret;
     }
     
-    GLint toGLMinFilter(SamplerFilter minFilter, SamplerFilter mipmapFilter, bool mipmapEnabled, bool isPow2)
+    GLint toGLMinFilter(SamplerFilter minFilter, SamplerFilter mipmapFilter, bool mipmapEnabled)
     {
         if (mipmapEnabled)
         {
-            if(!isPow2)
-            {
-                cocos2d::log("Change minification filter to either NEAREST or LINEAR since non-power-of-two texture occur in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
-                if (SamplerFilter::LINEAR == minFilter)
-                    return GL_LINEAR;
-                else
-                    return GL_NEAREST;
-            }
-            
             switch (minFilter)
             {
                 case SamplerFilter::LINEAR:
@@ -66,15 +55,9 @@ namespace
         }
     }
     
-    GLint toGLAddressMode(SamplerAddressMode addressMode, bool isPow2)
+    GLint toGLAddressMode(SamplerAddressMode addressMode)
     {
-        GLint ret = GL_CLAMP_TO_EDGE;
-        if(!isPow2 && addressMode != SamplerAddressMode::CLAMP_TO_EDGE)
-        {
-            cocos2d::log("Change texture wrap mode to CLAMP_TO_EDGE since non-power-of-two texture occur in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
-            return GL_CLAMP_TO_EDGE;
-        }
-        
+        GLint ret = GL_REPEAT;
         switch (addressMode)
         {
             case SamplerAddressMode::REPEAT:
@@ -97,13 +80,13 @@ TextureGL::TextureGL(const TextureDescriptor& descriptor) : Texture(descriptor)
 {
     glGenTextures(1, &_texture);
     toGLTypes();
-    bool isPow2 = ISPOW2(_width) && ISPOW2(_height);
+    
     _magFilterGL = toGLMagFilter(descriptor.samplerDescriptor.magFilter);
     _minFilterGL = toGLMinFilter(descriptor.samplerDescriptor.minFilter,
-                                 descriptor.samplerDescriptor.mipmapFilter, _isMipmapEnabled, isPow2);
+                                 descriptor.samplerDescriptor.mipmapFilter, _isMipmapEnabled);
     
-    _sAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.sAddressMode, isPow2);
-    _tAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.tAddressMode, isPow2);
+    _sAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.sAddressMode);
+    _tAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.tAddressMode);
     
     // Update data here because `updateData()` may not be invoked later.
     // For example, a texture used as depth buffer will not invoke updateData().
@@ -123,10 +106,6 @@ void TextureGL::updateData(uint8_t* data)
     // TODO: support texture cube, and compressed data.
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _magFilterGL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _minFilterGL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _sAddressModeGL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _tAddressModeGL);
     glTexImage2D(GL_TEXTURE_2D,
                  0,
                  _internalFormat,
@@ -165,6 +144,10 @@ void TextureGL::apply(int index) const
 {
     glActiveTexture(GL_TEXTURE0 + index);
     glBindTexture(GL_TEXTURE_2D, _texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _magFilterGL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _minFilterGL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _sAddressModeGL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _tAddressModeGL);
 }
 
 void TextureGL::generateMipmpas() const
@@ -197,25 +180,14 @@ void TextureGL::toGLTypes()
 //            _format = GL_DEPTH_COMPONENT;
 //            _internalFormat = GL_DEPTH_COMPONENT;
 //            _type = GL_UNSIGNED_INT;
-//        case TextureFormat::D24S8:
-//            _format = GL_DEPTH_STENCIL_OES;
-//            _internalFormat = GL_DEPTH_STENCIL_OES;
-//            _type = GL_UNSIGNED_INT_24_8_OES;
-//            break;
+        case TextureFormat::D24S8:
+            _format = GL_DEPTH_STENCIL_OES;
+            _internalFormat = GL_DEPTH_STENCIL_OES;
+            _type = GL_UNSIGNED_INT_24_8_OES;
+            break;
         default:
             break;
     }
 }
-
-/// halx99 spec, ANDROID ETC1 ALPHA supports.
-void TextureGL::setAlphaTexture(Texture* alphaTexture)
-{
-    if (alphaTexture != nullptr) {
-        this->_alphaTexture = alphaTexture;
-        this->_alphaTexture->retain();
-        this->_hasPremultipliedAlpha = true; // PremultipliedAlpha should be true.
-    }
-}
-
 
 CC_BACKEND_END

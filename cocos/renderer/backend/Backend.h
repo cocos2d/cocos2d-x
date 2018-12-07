@@ -1,7 +1,6 @@
 #pragma once
 
 #include "renderer/backend/BindGroup.h"
-#include "renderer/backend/RenderPass.h"
 #include "renderer/backend/RenderPassDescriptor.h"
 #include "renderer/backend/RenderPipeline.h"
 #include "renderer/backend/RenderPipelineDescriptor.h"

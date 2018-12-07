@@ -48,11 +48,6 @@ public:
     /**Destructor.*/
     ~BatchCommand();
 
-    virtual size_t copyVertexData(void*) const override;
-    virtual size_t getIndexCount() const override;
-    virtual size_t getVertexCount() const override { return getQuadCount(); }
-    virtual const unsigned short* getIndices() const override;
-
     /**Init the batch command.
     @param globalZOrder GlobalZOrder of the render command.
     @param shader Shader used for draw the texture atlas.

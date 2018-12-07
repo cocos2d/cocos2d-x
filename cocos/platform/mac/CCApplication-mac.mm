@@ -81,8 +81,7 @@ int Application::run()
     while (!glview->windowShouldClose())
     {
         lastTime = getCurrentMillSecond();
-        backend::DeviceMTL::updateDrawable();
-
+        
         director->mainLoop();
         glview->pollEvents();
 

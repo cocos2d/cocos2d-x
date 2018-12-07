@@ -69,4 +69,5 @@ RenderPipeline* DeviceGL::newRenderPipeline(const RenderPipelineDescriptor& desc
 {
     return new (std::nothrow) RenderPipelineGL(descriptor);
 }
+
 CC_BACKEND_END

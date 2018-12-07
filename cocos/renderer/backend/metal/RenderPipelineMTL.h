@@ -2,7 +2,6 @@
 
 #include "../RenderPipeline.h"
 #include "../RenderPipelineDescriptor.h"
-#include "../RenderPass.h"
 #include "BlendStateMTL.h"
 #include <string>
 #include <vector>
@@ -16,9 +15,7 @@ class RenderPipelineMTL : public RenderPipeline
 public:
     RenderPipelineMTL(id<MTLDevice> mtlDevice, const RenderPipelineDescriptor& descriptor);
     ~RenderPipelineMTL();
-    
-    void apply(const RenderPass* renderPass);
-    
+        
     inline id<MTLRenderPipelineState> getMTLRenderPipelineState() const { return _mtlRenderPipelineState; }
     inline id<MTLDepthStencilState> getMTLDepthStencilState() const { return _mtlDepthStencilState; }
     
@@ -32,6 +29,8 @@ public:
 private:
     void setVertexLayout(MTLRenderPipelineDescriptor*, const RenderPipelineDescriptor&);
     void setBlendState(MTLRenderPipelineColorAttachmentDescriptor*);
+    void setShaderModules(const RenderPipelineDescriptor&);
+    void setBlendStateAndFormat(const RenderPipelineDescriptor&);
     
     id<MTLRenderPipelineState> _mtlRenderPipelineState = nil;
     id<MTLDepthStencilState> _mtlDepthStencilState = nil;

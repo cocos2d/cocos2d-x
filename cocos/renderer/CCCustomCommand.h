@@ -36,6 +36,11 @@
 
 NS_CC_BEGIN
 
+namespace backend
+{
+    class Buffer;
+}
+
 class TextureAtlas;
 
 /**
@@ -75,11 +80,18 @@ public:
     std::function<void()> func;
     
     V3F_C4B_T2F_Quad* getQuad();
-    virtual const unsigned short* getIndices() const override;
+    const unsigned short* getIndices() const;
     uint32_t getQuadCount();
+    
+    inline backend::Buffer* getVertexBuffer() const { return _vertexBuffer; }
+    inline backend::Buffer* getIndexBuffer() const { return _indexBuffer; }
+    inline size_t getIndexCount() const { return _indexCount; }
 
 protected:
     TextureAtlas *_textureAtlas = nullptr;
+    backend::Buffer* _vertexBuffer = nullptr;
+    backend::Buffer* _indexBuffer = nullptr;
+    size_t _indexCount = 0;
 };
 
 NS_CC_END

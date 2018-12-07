@@ -199,7 +199,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
             break;
 
         auto& pipelineDescriptor = _groupCommand.getPipelineDescriptor();
-        pipelineDescriptor.renderPassDescriptor.setColorAttachment(0, texture);
+//        pipelineDescriptor.renderPassDescriptor.setColorAttachment(0, texture);
 
 //        if (depthStencilFormat != 0)
         {
@@ -207,7 +207,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
             _depthStencilTexture = backend::Device::getInstance()->newTexture(descriptor);
             
             auto& renderpassDescriptor = _groupCommand.getPipelineDescriptor().renderPassDescriptor;
-            renderpassDescriptor.setDepthStencilAttachment(_depthStencilTexture);
+//            renderpassDescriptor.setDepthStencilAttachment(_depthStencilTexture);
         }
 
         _texture2D->setAntiAliasTexParameters();
@@ -557,19 +557,30 @@ void RenderTexture::end()
 void RenderTexture::setClearColor(const Color4F &clearColor)
 {
     _clearColor = clearColor;
-    _groupCommand.getPipelineDescriptor().renderPassDescriptor.setClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
+    
+    auto& renderPassDescriptor =  _groupCommand.getPipelineDescriptor().renderPassDescriptor;
+    renderPassDescriptor.clearColorValue = { clearColor.r, clearColor.g, clearColor.b, clearColor.a };
+    renderPassDescriptor.needClearColor = true;
+    renderPassDescriptor.needColorAttachment = true;
 }
 
 void RenderTexture::setClearDepth(float clearDepth)
 {
     _clearDepth = clearDepth;
-    _groupCommand.getPipelineDescriptor().renderPassDescriptor.setClearDepth(clearDepth);
+    auto& renderPassDescriptor =  _groupCommand.getPipelineDescriptor().renderPassDescriptor;
+    renderPassDescriptor.clearDepthValue = _clearDepth;
+    renderPassDescriptor.needDepthAttachment = true;
+    renderPassDescriptor.needClearDepth = true;
 }
 
 void RenderTexture::setClearStencil(int clearStencil)
 {
     _clearStencil = clearStencil;
-    _groupCommand.getPipelineDescriptor().renderPassDescriptor.setClearStencil(clearStencil);
+    
+    auto& renderPassDescriptor =  _groupCommand.getPipelineDescriptor().renderPassDescriptor;
+    renderPassDescriptor.clearStencilValue = _clearStencil;
+    renderPassDescriptor.needClearStencil = true;
+    renderPassDescriptor.needStencilAttachment = true;
 }
 
 NS_CC_END

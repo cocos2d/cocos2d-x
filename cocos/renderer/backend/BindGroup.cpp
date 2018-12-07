@@ -12,12 +12,6 @@ BindGroup::UniformInfo::UniformInfo(const std::string& _name, void* _data, uint3
         memcpy(data, _data, size);
 }
 
-BindGroup::UniformInfo::~UniformInfo()
-{
-    if (data)
-        free(data);
-}
-
 BindGroup::UniformInfo::UniformInfo(const UniformInfo& rhs)
 : name(rhs.name)
 , size(rhs.size)
@@ -28,6 +22,12 @@ BindGroup::UniformInfo::UniformInfo(const UniformInfo& rhs)
         if (data)
             memcpy(data, rhs.data, size);
     }
+}
+
+BindGroup::UniformInfo::~UniformInfo()
+{
+    if (data)
+        free(data);
 }
 
 BindGroup::UniformInfo& BindGroup::UniformInfo::operator=(UniformInfo&& rhs)

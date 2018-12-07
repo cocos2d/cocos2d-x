@@ -38,10 +38,13 @@ enum class VertexFormat : uint32_t
     USHORT_R16G16B16A16,
     USHORT_R16G16,
     UBYTE_R8G8B8A8,
+    UNORM_R8G8B8A8,
+    UNORM_R8G8
 };
 
 enum class TextureFormat : uint32_t
 {
+    NONE,
     // Four 8-bit normalized unsigned integer components in RGBA order.
     R8G8B8A8,
     // Three 8-bit normalized unsigned integer components in RGB order.
@@ -52,7 +55,7 @@ enum class TextureFormat : uint32_t
     // components: 24 bits, typically used for a depth render target, and 8 bits, typically used for
     // a stencil render target.
     D24S8,
-    NONE
+    SYSTEM_DEFAULT,
 };
 
 enum class TextureUsage : uint32_t
@@ -163,8 +166,8 @@ struct SamplerDescriptor
     SamplerFilter magFilter = SamplerFilter::LINEAR;
     SamplerFilter minFilter = SamplerFilter::LINEAR;
     SamplerFilter mipmapFilter = SamplerFilter::LINEAR;
-    SamplerAddressMode sAddressMode = SamplerAddressMode::CLAMP_TO_EDGE;
-    SamplerAddressMode tAddressMode = SamplerAddressMode::CLAMP_TO_EDGE;
+    SamplerAddressMode sAddressMode = SamplerAddressMode::REPEAT;
+    SamplerAddressMode tAddressMode = SamplerAddressMode::REPEAT;
 };
 
 enum class CullMode: uint32_t

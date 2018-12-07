@@ -245,16 +245,13 @@ class CC_DLL LayerColor : public Layer, public BlendProtocol
 {
 public:
     
-    class MyRenderCommand: public RenderCommand
+    class MyRenderCommand: public CustomCommand
     {
     public:
         MyRenderCommand();
         
-        virtual size_t copyVertexData(void*) const override;
-        virtual const unsigned short* getIndices() const override { return _indicies; }
-        virtual size_t getIndexCount() const override;
-        virtual size_t getVertexCount() const override { return 4; }
-        
+        void updateVeretxBuffer();
+
     private:
         friend class LayerColor;
         

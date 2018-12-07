@@ -96,7 +96,7 @@ void CommandBufferGL::setRenderPipeline(RenderPipeline* renderPipeline)
     _renderPipeline = rp;
 }
 
-void CommandBufferGL::setViewport(int32_t x, int32_t y, int32_t w, int32_t h)
+void CommandBufferGL::setViewport(uint32_t x, uint32_t y, uint32_t w, uint32_t h)
 {
     _viewport.x = x;
     _viewport.y = y;
@@ -150,11 +150,11 @@ void CommandBufferGL::drawArrays(PrimitiveType primitiveType, uint32_t start,  u
     cleanResources();
 }
 
-void CommandBufferGL::drawElements(PrimitiveType primitiveType, IndexFormat indexType, size_t count, size_t offset)
+void CommandBufferGL::drawElements(PrimitiveType primitiveType, IndexFormat indexType, uint32_t count)
 {
     prepareDrawing();
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer->getHandler());
-    glDrawElements(toGLPrimitiveType(primitiveType), count, toGLIndexType(indexType), (GLvoid*)(uintptr_t)offset);
+    glDrawElements(toGLPrimitiveType(primitiveType), count, toGLIndexType(indexType), (GLvoid*)0);
     
     cleanResources();
 }
@@ -217,9 +217,9 @@ void CommandBufferGL::bindVertexBuffer(Program *program) const
             glVertexAttribPointer(attribute.location,
                                   attribute.size,
                                   attribute.type,
-                                  attribute.normalized,
+                                  attribute.needToBeNormallized,
                                   attribute.stride,
-                                  (GLvoid*)(uintptr_t)attribute.offset);
+                                  (GLvoid*)attribute.offset);
         }
         
         ++i;

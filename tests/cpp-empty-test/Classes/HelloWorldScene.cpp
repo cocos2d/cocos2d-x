@@ -78,17 +78,27 @@ bool HelloWorld::init()
 
 //    // add the label as a child to this layer
     this->addChild(label, 1);
-
-    // add "HelloWorld" splash screen"
+    label->runAction(MoveTo::create(10, Vec2(100, 100)));
+//
+//    // add "HelloWorld" splash screen"
 //    SpriteFrameCache::getInstance()->addSpriteFramesWithFile("bugs/circle.plist");
 //    auto sprite = Sprite::createWithSpriteFrameName("circle.png");
     auto sprite = Sprite::create("HelloWorld.png");
-    
+
     // position the sprite on the center of the screen
     sprite->setPosition(Vec2(visibleSize / 2) + origin);
 
     // add the sprite as a child to this layer
     this->addChild(sprite);
+    
+    auto s = Director::getInstance()->getWinSize();
+    Size boxSize(100.0f, 100.0f);
+    auto box = LayerColor::create(Color4B(255,255,0,255));
+    box->setAnchorPoint(Vec2(0.5,0.5));
+    box->setContentSize( boxSize );
+    box->setIgnoreAnchorPointForPosition(false);
+    box->setPosition(s.width/2, s.height - 100 - box->getContentSize().height/2);
+    this->addChild(box, 1);
 
 //    auto drawNode = DrawNode::create();
 //    drawNode->setPosition(Vec2(0, 0));

@@ -17,7 +17,6 @@ struct TextureDescriptor
     SamplerDescriptor samplerDescriptor;
 };
 
-
 class Texture : public cocos2d::Ref
 {
 public:
@@ -28,7 +27,7 @@ public:
     inline TextureUsage getTextureUsage() const { return _textureUsage; }
     inline uint32_t getWidth() const { return _width; }
     inline uint32_t getHeight() const { return _height; }
-    inline size_t getTextureHashCode() const {return _textureHashCode;}
+    
 protected:
     Texture(const TextureDescriptor& descriptor);
     virtual ~Texture();
@@ -41,7 +40,6 @@ protected:
     TextureFormat _textureFormat = TextureFormat::R8G8B8;
     TextureUsage _textureUsage = TextureUsage::READ;
     bool _isMipmapEnabled = false;
-    size_t _textureHashCode = 0;
 };
 
 CC_BACKEND_END
