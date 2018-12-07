@@ -1439,7 +1439,7 @@ void TestIsFileExistRejectFolder::onEnter()
 
     auto winSize = Director::getInstance()->getWinSize();
 
-    auto infoLabel = Label::createWithTTF("tests folder 'fonts/', expect to be false", "fonts/Thonburi.ttf", 18);
+    auto infoLabel = Label::createWithTTF("tests folder 'NavMesh/maps', expect to be false", "fonts/Thonburi.ttf", 18);
     this->addChild(infoLabel);
     infoLabel->setPosition(winSize.width / 2, winSize.height * 3 / 4);
 
@@ -1447,8 +1447,8 @@ void TestIsFileExistRejectFolder::onEnter()
     this->addChild(cntLabel);
     cntLabel->setPosition(winSize.width / 2, winSize.height / 3);
     
-    auto exists = FileUtils::getInstance()->isFileExist("fonts/");
-    auto isDirectory = FileUtils::getInstance()->isDirectoryExist("fonts/");
+    auto exists = FileUtils::getInstance()->isFileExist("NavMesh/maps");
+    auto isDirectory = FileUtils::getInstance()->isDirectoryExist("NavMesh/maps");
 
     char cntBuffer[200] = { 0 };
     snprintf(cntBuffer, 200, "isDir: %s, isFile: %s,  %s", isDirectory ? "true": "false" , exists ? "true" : "false", exists ? "failure!" : "ok!" );
