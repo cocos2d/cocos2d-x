@@ -227,6 +227,8 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
     }
     else
     {
+
+
         // find it in apk's assets dir
         // Found "assets/" at the beginning of the path and we don't want it
         //CCLOG("find in apk dirPath(%s)", s);
@@ -234,6 +236,7 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
         {
             s += ASSETS_FOLDER_NAME_LENGTH;
         }
+
         if (FileUtilsAndroid::assetmanager)
         {
             AAssetDir* aa = AAssetManager_openDir(FileUtilsAndroid::assetmanager, s);
@@ -295,7 +298,7 @@ std::vector<std::string> FileUtilsAndroid::listFiles(const std::string& dirPath)
     if(isAbsolutePath(dirPath)) return FileUtils::listFiles(dirPath);
 
     std::vector<std::string> fileList;
-    string fullPath = fullPathForFilename(dirPath);
+    string fullPath = fullPathForDirectory(dirPath);
 
     static const std::string apkprefix("assets/");
     string relativePath = "";
