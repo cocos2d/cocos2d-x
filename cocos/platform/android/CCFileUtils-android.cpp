@@ -213,7 +213,13 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
         return false;
     }
 
-    const char* s = dirPath.c_str();
+    std::string dirPathCopy = dirPath;
+    if(dirPathCopy[dirPathCopy.length() - 1] == '/')
+    {
+        dirPathCopy[dirPathCopy.length() - 1] = '\0';
+    }
+
+    const char* s = dirPathCopy.c_str();
     
     // find absolute path in flash memory
     if (s[0] == '/')

@@ -48,6 +48,7 @@ FileUtilsTests::FileUtilsTests()
     ADD_TEST_CASE(TestWriteStringAsync);
     ADD_TEST_CASE(TestWriteDataAsync);
     ADD_TEST_CASE(TestListFiles);
+    ADD_TEST_CASE(TestIsFileExistRejectFolder);
 }
 
 // TestResolutionDirectories
@@ -1426,6 +1427,46 @@ std::string TestListFiles::title() const
 }
 
 std::string TestListFiles::subtitle() const
+{
+    return "";
+}
+
+
+
+void TestIsFileExistRejectFolder::onEnter()
+{
+    FileUtilsDemo::onEnter();
+
+    auto winSize = Director::getInstance()->getWinSize();
+
+    auto infoLabel = Label::createWithTTF("tests folder 'fonts/', expect to be false", "fonts/Thonburi.ttf", 18);
+    this->addChild(infoLabel);
+    infoLabel->setPosition(winSize.width / 2, winSize.height * 3 / 4);
+
+    auto cntLabel = Label::createWithTTF("waiting...", "fonts/Thonburi.ttf", 18);
+    this->addChild(cntLabel);
+    cntLabel->setPosition(winSize.width / 2, winSize.height / 3);
+    
+    auto exists = FileUtils::getInstance()->isFileExist("fonts/");
+    auto isDirectory = FileUtils::getInstance()->isDirectoryExist("fonts/");
+
+    char cntBuffer[200] = { 0 };
+    snprintf(cntBuffer, 200, "isDir: %s, isFile: %s,  %s", isDirectory ? "true": "false" , exists ? "true" : "false", exists ? "failure!" : "ok!" );
+    cntLabel->setString(cntBuffer);
+
+}
+
+void TestIsFileExistRejectFolder::onExit()
+{
+    FileUtilsDemo::onExit();
+}
+
+std::string TestIsFileExistRejectFolder::title() const
+{
+    return "FileUtils: isFileExist(direname)";
+}
+
+std::string TestIsFileExistRejectFolder::subtitle() const
 {
     return "";
 }

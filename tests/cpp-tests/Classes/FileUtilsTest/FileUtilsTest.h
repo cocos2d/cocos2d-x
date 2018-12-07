@@ -269,4 +269,15 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class TestIsFileExistRejectFolder : public FileUtilsDemo
+{
+public:
+    CREATE_FUNC(TestIsFileExistRejectFolder);
+
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 #endif /* __FILEUTILSTEST_H__ */
