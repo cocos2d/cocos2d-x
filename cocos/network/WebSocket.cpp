@@ -1327,9 +1327,17 @@ int WebSocket::onSocketCallback(struct lws *wsi,
         case LWS_CALLBACK_CHANGE_MODE_POLL_FD:
         case LWS_CALLBACK_LOCK_POLL:
         case LWS_CALLBACK_UNLOCK_POLL:
+        case LWS_CALLBACK_ADD_POLL_FD:
+        case LWS_CALLBACK_DEL_POLL_FD:
+        case LWS_CALLBACK_CLOSED_CLIENT_HTTP:
+        case LWS_CALLBACK_CLIENT_FILTER_PRE_ESTABLISH:
+        case LWS_CALLBACK_CLIENT_APPEND_HANDSHAKE_HEADER:
             break;
         case LWS_CALLBACK_PROTOCOL_INIT:
             LOGD("protocol init...");
+            break;
+        case LWS_CALLBACK_WSI_CREATE:
+            LOGD("protocol create...");
             break;
         case LWS_CALLBACK_PROTOCOL_DESTROY:
             LOGD("protocol destroy...");
