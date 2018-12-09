@@ -922,7 +922,7 @@ void WebSocket::onClientOpenConnectionRequest()
 
         if (nullptr == _wsInstance)
         {
-            onConnectionError();
+            onConnectionError(nullptr, 0);
             return;
         }
     }
@@ -1197,11 +1197,19 @@ int WebSocket::onConnectionOpened()
     return 0;
 }
 
-int WebSocket::onConnectionError()
+int WebSocket::onConnectionError(void* in, ssize_t len)
 {
+    std::string error;
+
     {
         std::lock_guard<std::mutex> lk(_readyStateMutex);
-        LOGD("WebSocket (%p) onConnectionError, state: %d ...\n", this, (int)_readyState);
+        if (len > 0)
+        {
+            error.assign((char*)in, (char*)in + len);
+        }
+
+        LOGD("WebSocket (%p) onConnectionError, state: %d, error: %s\n", this, (int)_readyState, error.c_str());
+
         if (_readyState == State::CLOSED)
         {
             return 0;
@@ -1210,13 +1218,14 @@ int WebSocket::onConnectionError()
     }
 
     std::shared_ptr<std::atomic<bool>> isDestroyed = _isDestroyed;
-    __wsHelper->sendMessageToCocosThread([this, isDestroyed](){
+    __wsHelper->sendMessageToCocosThread([this, isDestroyed, error](){
         if (*isDestroyed)
         {
             LOGD("WebSocket instance was destroyed!\n");
         }
         else
         {
+            CCLOGERROR("WebSocket connection error: %s", error.c_str());
             _delegate->onError(this, ErrorCode::CONNECTION_FAILURE);
         }
     });
@@ -1301,7 +1310,7 @@ int WebSocket::onSocketCallback(struct lws *wsi,
             break;
 
         case LWS_CALLBACK_CLIENT_CONNECTION_ERROR:
-            ret = onConnectionError();
+            ret = onConnectionError(in, len);
             break;
 
         case LWS_CALLBACK_WSI_DESTROY:
