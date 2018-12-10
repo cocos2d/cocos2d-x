@@ -213,7 +213,13 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
         return false;
     }
 
-    const char* s = dirPath.c_str();
+    std::string dirPathCopy = dirPath;
+    if(dirPathCopy[dirPathCopy.length() - 1] == '/')
+    {
+        dirPathCopy.erase(dirPathCopy.length() - 1);
+    }
+
+    const char* s = dirPathCopy.c_str();
     
     // find absolute path in flash memory
     if (s[0] == '/')
@@ -315,6 +321,11 @@ std::vector<std::string> FileUtilsAndroid::listFiles(const std::string& dirPath)
     if (nullptr == assetmanager) {
         LOGD("... FileUtilsAndroid::assetmanager is nullptr");
         return fileList;
+    }
+
+    if(relativePath[relativePath.length() - 1] == '/')
+    {
+        relativePath.erase(relativePath.length() - 1);
     }
 
     auto *dir = AAssetManager_openDir(assetmanager, relativePath.c_str());
