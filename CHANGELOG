@@ -26,6 +26,7 @@ cocos2d-x-3.17.1 Nov.19 2018
 [REFINE]        3rd: improve cmake build scripts for external libs
 [REFINE]        Tests: add websocket latency test
 [REFINE]        Tests: add download multi task test case
+[REFINE]        Tests: improve part test cases UI shows
 [REFINE]        cocos console: disable "gen-libs" command
 [REFINE]        Others: add another xbox 360 configuration
 [REFINE]        Others: remove ANT_ROOT env check on setup.py
@@ -46,9 +47,9 @@ cocos2d-x-3.17.1 Nov.19 2018
 [FIX]           UI: fix not support sprite frame when ignoreContentAdaptWithSize is false
 [FIX]           UI: fix out of range access in Label 
 [FIX]           UI: fix Widget::getAncestorWidget error
-[FIX]           UI: fix "known incorrect sRGB profile" by mogrify convert png format
 [FIX]           UI: fix iOS editbox EndAction wrong when single line mode (UITextField)
 [FIX]           UI: Fix for Label and UIRichEdit text trailing space trimming
+[FXI]           JavaScript: fix crash if garbage collection runs between TouchStart and TouchEnd event
 [FIX]           Audio: fix AudioEngine rotateBufferThread crash on iOS
 [FIX]           Audio: add extra init checks in pcm audio service, avoid crash in PcmAudioService 
 [FIX]           Audio: fix AVAudioSessionErrorCodeCannotStartPlaying error may occur on Apple
@@ -70,6 +71,7 @@ cocos2d-x-3.17.1 Nov.19 2018
 [FIX]           FileUtils: let isFileExistInternal return false when folder as parameter on Linux
 [FIX]           CMake: fix project name always be "TemplateCpp" when create a new project
 [FIX]           Tests: fix auto test stop in cpp-tests project
+[FIX]           cocos console: do uninstall only when that app is installed for android
 
 cocos2d-x-3.17 May.21 2018
 
