@@ -16,7 +16,7 @@ public:
     virtual void beginFrame() override;
     virtual void beginRenderPass(const RenderPassDescriptor& descriptor) override;
     virtual void setRenderPipeline(RenderPipeline* renderPipeline) override;
-    virtual void setViewport(uint32_t x, uint32_t y, uint32_t w, uint32_t h) override;
+    virtual void setViewport(ssize_t x, ssize_t y, size_t w, size_t h) override;
     virtual void setCullMode(CullMode mode) override;
     virtual void setVertexBuffer(size_t index, Buffer* buffer) override;
     virtual void setBindGroup(BindGroup* bindGroup) override;

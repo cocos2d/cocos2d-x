@@ -101,13 +101,13 @@ void DepthStencilStateGL::apply(uint32_t stencilReferenceValueFront, uint32_t st
     
     glDepthFunc(toGLComareFunction(_depthStencilInfo.depthCompareFunction));
     
-    if (_isStencilEnabled)
+    if (_depthStencilInfo.depthTestEnabled)
         glEnable(GL_STENCIL_TEST);
     else
         glDisable(GL_STENCIL_TEST);
-    
+
     // stencil test
-    if (_isStencilEnabled)
+    if (_depthStencilInfo.stencilTestEnabled)
     {
         if (_isBackFrontStencilEqual)
         {

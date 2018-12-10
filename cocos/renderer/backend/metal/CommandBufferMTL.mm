@@ -169,7 +169,7 @@ void CommandBufferMTL::setRenderPipeline(RenderPipeline* renderPipeline)
     [_mtlRenderEncoder setRenderPipelineState:_renderPipelineMTL->getMTLRenderPipelineState()];
 }
 
-void CommandBufferMTL::setViewport(uint32_t x, uint32_t y, uint32_t w, uint32_t h)
+void CommandBufferMTL::setViewport(ssize_t x, ssize_t y, size_t w, size_t h)
 {
     MTLViewport viewport;
     viewport.originX = x;

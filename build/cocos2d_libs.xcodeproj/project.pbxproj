@@ -2077,10 +2077,8 @@
 		ED28C266219E629C0078D854 /* BufferGL.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C211219E629B0078D854 /* BufferGL.h */; };
 		ED28C268219E629C0078D854 /* BlendStateGL.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C212219E629B0078D854 /* BlendStateGL.h */; };
 		ED28C26A219E629C0078D854 /* TextureGL.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C213219E629B0078D854 /* TextureGL.h */; };
-		ED28C26C219E629C0078D854 /* RenderPassGL.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C214219E629B0078D854 /* RenderPassGL.h */; };
 		ED28C26E219E629C0078D854 /* DeviceGL.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C215219E629B0078D854 /* DeviceGL.h */; };
 		ED28C270219E629C0078D854 /* DepthStencilStateGL.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C216219E629B0078D854 /* DepthStencilStateGL.h */; };
-		ED28C272219E629C0078D854 /* RenderPassGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C217219E629B0078D854 /* RenderPassGL.cpp */; };
 		ED28C274219E629C0078D854 /* RenderPipelineGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C218219E629B0078D854 /* RenderPipelineGL.cpp */; };
 		ED28C276219E629C0078D854 /* CommandBufferGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C219219E629B0078D854 /* CommandBufferGL.cpp */; };
 		ED28C278219E629C0078D854 /* CommandBufferGL.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C21A219E629B0078D854 /* CommandBufferGL.h */; };
@@ -2985,10 +2983,8 @@
 		ED28C211219E629B0078D854 /* BufferGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BufferGL.h; sourceTree = "<group>"; };
 		ED28C212219E629B0078D854 /* BlendStateGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlendStateGL.h; sourceTree = "<group>"; };
 		ED28C213219E629B0078D854 /* TextureGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureGL.h; sourceTree = "<group>"; };
-		ED28C214219E629B0078D854 /* RenderPassGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderPassGL.h; sourceTree = "<group>"; };
 		ED28C215219E629B0078D854 /* DeviceGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceGL.h; sourceTree = "<group>"; };
 		ED28C216219E629B0078D854 /* DepthStencilStateGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepthStencilStateGL.h; sourceTree = "<group>"; };
-		ED28C217219E629B0078D854 /* RenderPassGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderPassGL.cpp; sourceTree = "<group>"; };
 		ED28C218219E629B0078D854 /* RenderPipelineGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderPipelineGL.cpp; sourceTree = "<group>"; };
 		ED28C219219E629B0078D854 /* CommandBufferGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommandBufferGL.cpp; sourceTree = "<group>"; };
 		ED28C21A219E629B0078D854 /* CommandBufferGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandBufferGL.h; sourceTree = "<group>"; };
@@ -4862,25 +4858,23 @@
 		ED28C209219E629B0078D854 /* opengl */ = {
 			isa = PBXGroup;
 			children = (
-				ED28C20A219E629B0078D854 /* ShaderModuleGL.cpp */,
-				ED28C20B219E629B0078D854 /* Program.cpp */,
+				ED28C211219E629B0078D854 /* BufferGL.h */,
 				ED28C20C219E629B0078D854 /* BufferGL.cpp */,
+				ED28C210219E629B0078D854 /* ShaderModuleGL.h */,
+				ED28C20A219E629B0078D854 /* ShaderModuleGL.cpp */,
+				ED28C212219E629B0078D854 /* BlendStateGL.h */,
 				ED28C20D219E629B0078D854 /* BlendStateGL.cpp */,
+				ED28C216219E629B0078D854 /* DepthStencilStateGL.h */,
 				ED28C20E219E629B0078D854 /* DepthStencilStateGL.cpp */,
 				ED28C20F219E629B0078D854 /* RenderPipelineGL.h */,
-				ED28C210219E629B0078D854 /* ShaderModuleGL.h */,
-				ED28C211219E629B0078D854 /* BufferGL.h */,
-				ED28C212219E629B0078D854 /* BlendStateGL.h */,
-				ED28C213219E629B0078D854 /* TextureGL.h */,
-				ED28C214219E629B0078D854 /* RenderPassGL.h */,
-				ED28C215219E629B0078D854 /* DeviceGL.h */,
-				ED28C216219E629B0078D854 /* DepthStencilStateGL.h */,
-				ED28C217219E629B0078D854 /* RenderPassGL.cpp */,
 				ED28C218219E629B0078D854 /* RenderPipelineGL.cpp */,
 				ED28C219219E629B0078D854 /* CommandBufferGL.cpp */,
 				ED28C21A219E629B0078D854 /* CommandBufferGL.h */,
 				ED28C21B219E629B0078D854 /* Program.h */,
+				ED28C20B219E629B0078D854 /* Program.cpp */,
+				ED28C213219E629B0078D854 /* TextureGL.h */,
 				ED28C21C219E629B0078D854 /* TextureGL.cpp */,
+				ED28C215219E629B0078D854 /* DeviceGL.h */,
 				ED28C21D219E629B0078D854 /* DeviceGL.cpp */,
 			);
 			path = opengl;
@@ -5781,7 +5775,6 @@
 				4631CBA621AFD9FA0000D408 /* UITextBMFont.h in Headers */,
 				468A14E11EF223B700ECA675 /* flatbuffers.h in Headers */,
 				ED28C23E219E629C0078D854 /* CommandBuffer.h in Headers */,
-				ED28C26C219E629C0078D854 /* RenderPassGL.h in Headers */,
 				50ABBE381925AB6F00A911A9 /* CCConsole.h in Headers */,
 				4631CBD221AFD9FA0000D408 /* UIScale9Sprite.h in Headers */,
 				46F9B6F121AFE64C009DF858 /* cocos-ext.h in Headers */,
@@ -7039,7 +7032,6 @@
 				4631CB8E21AFD9FA0000D408 /* UIScale9Sprite.cpp in Sources */,
 				4631CBC421AFD9FA0000D408 /* UIScrollView.cpp in Sources */,
 				B6DD2FD01B04825B00E47F5F /* DetourNode.cpp in Sources */,
-				ED28C272219E629C0078D854 /* RenderPassGL.cpp in Sources */,
 				50ABBE7A1925AB6F00A911A9 /* CCEventMouse.cpp in Sources */,
 				4631CBDC21AFD9FA0000D408 /* UILoadingBar.cpp in Sources */,
 				15EFA212198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */,

@@ -3,7 +3,6 @@
 #include "BufferGL.h"
 #include "ShaderModuleGL.h"
 #include "CommandBufferGL.h"
-#include "RenderPassGL.h"
 #include "TextureGL.h"
 #include "DepthStencilStateGL.h"
 #include "BlendStateGL.h"
@@ -31,11 +30,6 @@ Buffer* DeviceGL::newBuffer(uint32_t size, BufferType type, BufferUsage usage)
 Texture* DeviceGL::newTexture(const TextureDescriptor& descriptor)
 {
     return new (std::nothrow) TextureGL(descriptor);
-}
-
-RenderPass* DeviceGL::newRenderPass(const RenderPassDescriptor& descriptor)
-{
-    return new (std::nothrow) RenderPassGL(descriptor);
 }
 
 ShaderModule* DeviceGL::createShaderModule(ShaderStage stage, const std::string& source)

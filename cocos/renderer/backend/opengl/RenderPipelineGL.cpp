@@ -12,11 +12,11 @@ RenderPipelineGL::RenderPipelineGL(const RenderPipelineDescriptor& descriptor)
 {
     _program = new Program(descriptor);
     
-    const auto& depthStencilState = descriptor.getDepthStencilState();
+    const auto& depthStencilState = descriptor.depthStencilState;
     CC_SAFE_RETAIN(depthStencilState);
     _depthStencilState = static_cast<DepthStencilStateGL*>(depthStencilState);
     
-    const auto& blendState = descriptor.getBlendState();
+    const auto& blendState = descriptor.blendState;
     CC_SAFE_RETAIN(blendState);
     _blendState = static_cast<BlendStateGL*>(blendState);
 }

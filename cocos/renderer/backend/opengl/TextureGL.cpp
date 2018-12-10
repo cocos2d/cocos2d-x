@@ -5,6 +5,8 @@ CC_BACKEND_BEGIN
 
 namespace
 {
+#define ISPOW2(n) (((n) & (n-1)) == 0)
+
     GLint toGLMagFilter(SamplerFilter magFilter)
     {
         GLint ret = GL_LINEAR;
@@ -22,10 +24,19 @@ namespace
         return ret;
     }
     
-    GLint toGLMinFilter(SamplerFilter minFilter, SamplerFilter mipmapFilter, bool mipmapEnabled)
+    GLint toGLMinFilter(SamplerFilter minFilter, SamplerFilter mipmapFilter, bool mipmapEnabled, bool isPow2)
     {
         if (mipmapEnabled)
         {
+            if(!isPow2)
+            {
+                cocos2d::log("Change minification filter to either NEAREST or LINEAR since non-power-of-two texture occur in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
+                if (SamplerFilter::LINEAR == minFilter)
+                    return GL_LINEAR;
+                else
+                    return GL_NEAREST;
+            }
+            
             switch (minFilter)
             {
                 case SamplerFilter::LINEAR:
@@ -55,9 +66,15 @@ namespace
         }
     }
     
-    GLint toGLAddressMode(SamplerAddressMode addressMode)
+    GLint toGLAddressMode(SamplerAddressMode addressMode, bool isPow2)
     {
         GLint ret = GL_REPEAT;
+        if(!isPow2)
+        {
+            cocos2d::log("Change texture wrap mode to CLAMP_TO_EDGE since non-power-of-two texture occur in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
+            return GL_CLAMP_TO_EDGE;
+        }
+        
         switch (addressMode)
         {
             case SamplerAddressMode::REPEAT:
@@ -80,14 +97,14 @@ TextureGL::TextureGL(const TextureDescriptor& descriptor) : Texture(descriptor)
 {
     glGenTextures(1, &_texture);
     toGLTypes();
-    
+    bool isPow2 = ISPOW2(_width) && ISPOW2(_height);
     _magFilterGL = toGLMagFilter(descriptor.samplerDescriptor.magFilter);
     _minFilterGL = toGLMinFilter(descriptor.samplerDescriptor.minFilter,
-                                 descriptor.samplerDescriptor.mipmapFilter, _isMipmapEnabled);
+                                 descriptor.samplerDescriptor.mipmapFilter, _isMipmapEnabled, isPow2);
     
-    _sAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.sAddressMode);
-    _tAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.tAddressMode);
-    
+    _sAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.sAddressMode, isPow2);
+    _tAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.tAddressMode, isPow2);
+   
     // Update data here because `updateData()` may not be invoked later.
     // For example, a texture used as depth buffer will not invoke updateData().
     uint8_t* data = (uint8_t*)malloc(_width * _height * _bytesPerElement);
@@ -106,6 +123,10 @@ void TextureGL::updateData(uint8_t* data)
     // TODO: support texture cube, and compressed data.
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _magFilterGL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _minFilterGL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _sAddressModeGL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _tAddressModeGL);
     glTexImage2D(GL_TEXTURE_2D,
                  0,
                  _internalFormat,
@@ -144,10 +165,6 @@ void TextureGL::apply(int index) const
 {
     glActiveTexture(GL_TEXTURE0 + index);
     glBindTexture(GL_TEXTURE_2D, _texture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _magFilterGL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _minFilterGL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _sAddressModeGL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _tAddressModeGL);
 }
 
 void TextureGL::generateMipmpas() const
