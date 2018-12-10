@@ -163,15 +163,15 @@ public:
 
     /** Creates a render queue and returns its Id */
     int createRenderQueue();
+    
+    void beginFrame();
+    void endFrame();
 
     /** Renders into the GLView all the queued `RenderCommand` objects */
     void render();
 
     /** Cleans all `RenderCommand`s in the queue */
     void clean();
-
-    /** Clear GL buffer and screen */
-    void clear();
 
     /** set color for clear screen */
     void setClearColor(const Color4F& clearColor);

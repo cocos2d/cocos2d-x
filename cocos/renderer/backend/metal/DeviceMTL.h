@@ -14,7 +14,8 @@ public:
     // Invoke by engine internally at the beginning of rendering a new frame.
     static void updateDrawable();
     static CAMetalLayer* getCAMetalLayer() { return DeviceMTL::_metalLayer; }
-    static id<CAMetalDrawable> getCurrentDrawable() { return DeviceMTL::_currentDrawable; }
+    static id<CAMetalDrawable> getCurrentDrawable();
+    static void resetCurrentDrawable();
     
     DeviceMTL();
     ~DeviceMTL();

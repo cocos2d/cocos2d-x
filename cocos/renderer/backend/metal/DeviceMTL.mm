@@ -27,10 +27,17 @@ void DeviceMTL::setCAMetalLayer(CAMetalLayer* metalLayer)
     DeviceMTL::_metalLayer = metalLayer;
 }
 
-void DeviceMTL::updateDrawable()
+id<CAMetalDrawable> DeviceMTL::getCurrentDrawable()
 {
-    DeviceMTL::_currentDrawable = [DeviceMTL::_metalLayer nextDrawable];
-    Utils::updateDefaultColorAttachmentTexture(DeviceMTL::_currentDrawable.texture);
+    if (! DeviceMTL::_currentDrawable)
+        DeviceMTL::_currentDrawable = [DeviceMTL::_metalLayer nextDrawable];
+    
+    return DeviceMTL::_currentDrawable;
+}
+
+void DeviceMTL::resetCurrentDrawable()
+{
+    DeviceMTL::_currentDrawable = nil;
 }
 
 DeviceMTL::DeviceMTL()

@@ -13,14 +13,12 @@ public:
     static MTLPixelFormat getDefaultDepthStencilAttachmentPixelFormat();
     static MTLPixelFormat getDefaultColorAttachmentPixelFormat();
     static id<MTLTexture> getDefaultDepthStencilTexture();
-    static id<MTLTexture> getDefaultColorAttachmentTexture();
 
     
     static MTLPixelFormat toMTLPixelFormat(TextureFormat textureFormat);
     static void generateMipmaps(id<MTLTexture> texture);
     
 private:
-    static id<MTLTexture> createColorAttachmentTexture();
     static id<MTLTexture> createDepthStencilAttachmentTexture();
 
     

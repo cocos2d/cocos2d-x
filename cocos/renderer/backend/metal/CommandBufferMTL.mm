@@ -148,8 +148,6 @@ void CommandBufferMTL::beginFrame()
 {
     _mtlCommandBuffer = [_mtlCommandQueue commandBuffer];
     [_mtlCommandBuffer retain];
-    
-    _deviceMTL->updateDrawable();
 }
 
 void CommandBufferMTL::beginRenderPass(const RenderPassDescriptor& descriptor)
@@ -244,6 +242,7 @@ void CommandBufferMTL::endFrame()
     [_mtlCommandBuffer presentDrawable:DeviceMTL::getCurrentDrawable()];
     [_mtlCommandBuffer commit];
     [_mtlCommandBuffer release];
+    DeviceMTL::resetCurrentDrawable();
 }
 
 void CommandBufferMTL::afterDraw()

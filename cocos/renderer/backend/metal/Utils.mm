@@ -27,11 +27,6 @@ id<MTLTexture> Utils::getDefaultDepthStencilTexture()
     return _defaultDepthStencilAttachmentTexture;
 }
 
-id<MTLTexture> Utils::getDefaultColorAttachmentTexture()
-{
-    return _defaultColorAttachmentTexture;
-}
-
 void Utils::updateDefaultColorAttachmentTexture(id<MTLTexture> texture)
 {
     Utils::_defaultColorAttachmentTexture = texture;
@@ -56,21 +51,6 @@ MTLPixelFormat Utils::toMTLPixelFormat(TextureFormat textureFormat)
         case TextureFormat::NONE:
             return MTLPixelFormatInvalid;
     }
-}
-
-id<MTLTexture> Utils::createColorAttachmentTexture()
-{
-    auto CAMetalLayer = DeviceMTL::getCAMetalLayer();
-    MTLTextureDescriptor* textureDescriptor = [[MTLTextureDescriptor alloc] init];
-    textureDescriptor.width = CAMetalLayer.drawableSize.width;
-    textureDescriptor.height = CAMetalLayer.drawableSize.height;
-    textureDescriptor.pixelFormat = COLOR_ATTAHCMENT_PIXEL_FORMAT;
-    textureDescriptor.resourceOptions = MTLResourceStorageModePrivate;
-    textureDescriptor.usage = MTLTextureUsageRenderTarget;
-    auto ret = [CAMetalLayer.device newTextureWithDescriptor:textureDescriptor];
-    [textureDescriptor release];
-    
-    return ret;
 }
 
 id<MTLTexture> Utils::createDepthStencilAttachmentTexture()

@@ -265,7 +265,7 @@ void Director::drawScene()
         _eventDispatcher->dispatchEvent(_eventAfterUpdate);
     }
 
-    _renderer->clear();
+    _renderer->beginFrame();
     experimental::FrameBuffer::clearAllFBOs();
     
     _eventDispatcher->dispatchEvent(_eventBeforeDraw);
@@ -310,7 +310,7 @@ void Director::drawScene()
 #endif
     }
     
-    _renderer->render();
+   _renderer->render();
 
     _eventDispatcher->dispatchEvent(_eventAfterDraw);
 
@@ -323,6 +323,8 @@ void Director::drawScene()
     {
         _openGLView->swapBuffers();
     }
+    
+    _renderer->endFrame();
 
     if (_displayStats)
     {

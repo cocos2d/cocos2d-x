@@ -492,9 +492,6 @@ void Renderer::render()
 {
     //TODO: setup camera or MVP
     _isRendering = true;
-    _isFirstCommand = true;
-    _commandBuffer->beginFrame();
-    
 //    if (_glViewAssigned)
     {
         //Process render commands
@@ -505,9 +502,19 @@ void Renderer::render()
         }
         visitRenderQueue(_renderGroups[0]);
     }
-    _commandBuffer->endFrame();
     clean();
     _isRendering = false;
+}
+
+void Renderer::beginFrame()
+{
+    _commandBuffer->beginFrame();
+    _isFirstCommand = true;
+}
+
+void Renderer::endFrame()
+{
+    _commandBuffer->endFrame();
     _isFirstCommand = false;
 }
 
@@ -527,11 +534,6 @@ void Renderer::clean()
     // Clear batch commands
     _queuedTriangleCommands.clear();
     _lastBatchedMeshCommand = nullptr;
-}
-
-void Renderer::clear()
-{
-    
 }
 
 void Renderer::setDepthTest(bool enable)
@@ -817,7 +819,8 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
         else
             renderPipelineDescriptor.stencilAttachmentFormat = backend::TextureFormat::D24S8;
     }
-    
+
+    //FIXME: optimize it, cache the result as possible.
     auto renderPipeline = device->newRenderPipeline(renderPipelineDescriptor);
     _commandBuffer->setRenderPipeline(renderPipeline);
     renderPipeline->release();
