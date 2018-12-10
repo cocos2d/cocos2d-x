@@ -204,3 +204,12 @@ macro(find_host_package)
     set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
     set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 endmacro(find_host_package)
+
+# This macro lets you find library on the host system
+macro(find_host_library)
+    set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY NEVER)
+
+    find_library(${ARGN})
+
+    set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+endmacro(find_host_library)
