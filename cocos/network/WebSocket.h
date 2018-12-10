@@ -231,7 +231,7 @@ private:
     int onClientWritable();
     int onClientReceivedData(void* in, ssize_t len);
     int onConnectionOpened();
-    int onConnectionError();
+    int onConnectionError(void* in, ssize_t len);
     int onConnectionClosed();
 
     struct lws_vhost* createVhost(struct lws_protocols* protocols, int& sslConnection);
