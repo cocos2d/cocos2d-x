@@ -21,7 +21,7 @@ public:
     virtual void beginFrame() = 0;
     virtual void beginRenderPass(const RenderPassDescriptor& descriptor) = 0;
     virtual void setRenderPipeline(RenderPipeline* renderPipeline) = 0;
-    virtual void setViewport(uint32_t x, uint32_t y, uint32_t w, uint32_t h) = 0;
+    virtual void setViewport(ssize_t x, ssize_t y, size_t w, size_t h) = 0;
     virtual void setCullMode(CullMode mode) = 0;
     virtual void setVertexBuffer(size_t index, Buffer* buffer) = 0;
     virtual void setBindGroup(BindGroup* bindGroup) = 0;

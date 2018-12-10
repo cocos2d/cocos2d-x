@@ -61,8 +61,8 @@ namespace
 }
 
 Program::Program(const RenderPipelineDescriptor& descriptor)
-: _vertexShaderModule(static_cast<ShaderModuleGL*>(descriptor.getVertexShaderModule()))
-, _fragmentShaderModule(static_cast<ShaderModuleGL*>(descriptor.getFragmentShaderModule()))
+: _vertexShaderModule(static_cast<ShaderModuleGL*>(descriptor.vertexShaderModule))
+, _fragmentShaderModule(static_cast<ShaderModuleGL*>(descriptor.fragmentShaderModule))
 {
     assert(_vertexShaderModule != nullptr && _fragmentShaderModule != nullptr);
     
@@ -114,7 +114,7 @@ void Program::compileProgram()
 
 void Program::computeAttributeInfos(const RenderPipelineDescriptor& descriptor)
 {
-    const auto& vertexLayouts = descriptor.getVertexLayouts();
+    const auto& vertexLayouts = descriptor.vertexLayouts;
     for (const auto& vertexLayout : vertexLayouts)
     {
         if (! vertexLayout.isValid())
@@ -134,7 +134,7 @@ void Program::computeAttributeInfos(const RenderPipelineDescriptor& descriptor)
             attributeInfo.offset = attribute.offset;
             attributeInfo.type = toGLAttributeType(attribute.format);
             attributeInfo.size = getGLAttributeSize(attribute.format);
-            attribute.needToBeNormallized = attribute.normalized;
+            attributeInfo.normalized = attribute.needToBeNormallized;
             
             vertexAttributeArray.push_back(attributeInfo);
         }
