@@ -170,9 +170,6 @@ Renderer::Renderer()
 
     // for the batched TriangleCommand
     _triBatchesToDraw = (TriBatchToDraw*) malloc(sizeof(_triBatchesToDraw[0]) * _triBatchesToDrawCapacity);
-    
-    _defaultRenderPassDescriptor.needClearColor = true;
-    _defaultRenderPassDescriptor.clearColorValue = {_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a};
 }
 
 Renderer::~Renderer()
@@ -294,12 +291,18 @@ void Renderer::processRenderCommand(RenderCommand* command)
         case RenderCommand::Type::GROUP_COMMAND:
         {
             flush();
-            _viewPortStack.push({command->getViewPort()});
+            
+            RenderInfo renderInfo;
+            renderInfo.renderPassDescriptor = command->getPipelineDescriptor().renderPassDescriptor;
+            renderInfo.viewPort = command->getViewPort();
+            _renderInfoStack.push(renderInfo);
+            
             int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
-            //        CCGL_DEBUG_PUSH_GROUP_MARKER("RENDERER_GROUP_COMMAND");
             visitRenderQueue(_renderGroups[renderQueueID]);
-            _viewPortStack.pop();
-            //        CCGL_DEBUG_POP_GROUP_MARKER();
+            
+            //FIXME: should add a flag in group command to chedk if need to clear color.
+            _isFirstCommand = true;
+            _renderInfoStack.pop();
         }
             break;
         case RenderCommand::Type::CUSTOM_COMMAND:
@@ -327,8 +330,6 @@ void Renderer::processRenderCommand(RenderCommand* command)
 void Renderer::visitRenderQueue(RenderQueue& queue)
 {
     //todo: minggo
-    _commandBuffer->beginFrame();
-    _isFirstCommand = true;
     
 //    _commandBuffer->beginRenderPass(_defaultRenderPassDescriptor);
 //    _commandBuffer->endRenderPass();
@@ -485,15 +486,14 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
 //        }
 //        flush();
 //    }
-    
-    _commandBuffer->endFrame();
-    _isFirstCommand = false;
 }
 
 void Renderer::render()
 {
     //TODO: setup camera or MVP
     _isRendering = true;
+    _isFirstCommand = true;
+    _commandBuffer->beginFrame();
     
 //    if (_glViewAssigned)
     {
@@ -505,8 +505,10 @@ void Renderer::render()
         }
         visitRenderQueue(_renderGroups[0]);
     }
+    _commandBuffer->endFrame();
     clean();
     _isRendering = false;
+    _isFirstCommand = false;
 }
 
 void Renderer::clean()
@@ -650,32 +652,15 @@ void Renderer::drawBatchedTriangles()
     /************** 2: Draw *************/
     for (int i = 0; i < batchesTotal; ++i)
     {
-        checkFirstCommand(_triBatchesToDraw[i].cmd);
-        
-        auto& pipelineDescriptor = _triBatchesToDraw[i].cmd->getPipelineDescriptor();
-        auto renderPipeline = createRenderPipeline(_triBatchesToDraw[i].cmd->getPipelineDescriptor());
-        _commandBuffer->setRenderPipeline(renderPipeline);
-        renderPipeline->release();
-        
-        if (_viewPortStack.empty())
-        {
-            auto& viewPort = _triBatchesToDraw[i].cmd->getViewPort();
-            _commandBuffer->setViewport(viewPort[0], viewPort[1], viewPort[2], viewPort[3]);
-        }
-        else
-        {
-            auto& viewPort = _viewPortStack.top();
-            _commandBuffer->setViewport(viewPort[0], viewPort[1], viewPort[2], viewPort[3]);
-        }
-        
+        beginRenderPass(_triBatchesToDraw[i].cmd);
         _commandBuffer->setVertexBuffer(0, _vertexBuffer);
         _commandBuffer->setIndexBuffer(_indexBuffer);
+        auto& pipelineDescriptor = _triBatchesToDraw[i].cmd->getPipelineDescriptor();
         _commandBuffer->setBindGroup(&pipelineDescriptor.bindGroup);
         _commandBuffer->drawElements(backend::PrimitiveType::TRIANGLE,
                                      backend::IndexFormat::U_SHORT,
                                      _triBatchesToDraw[i].indicesToDraw,
                                      _triBatchesToDraw[i].offset * sizeof(_indices[0]));
-        
         _commandBuffer->endRenderPass();
     }
     
@@ -713,18 +698,10 @@ void Renderer::drawCustomCommand(RenderCommand *command)
 {
     auto cmd = static_cast<CustomCommand*>(command);
     
-    checkFirstCommand(command);
-    auto& pipelineDescriptor = cmd->getPipelineDescriptor();
-    auto renderPipeline = createRenderPipeline(pipelineDescriptor);
-    _commandBuffer->setRenderPipeline(renderPipeline);
-    renderPipeline->release();
-    
+    beginRenderPass(command);
     _commandBuffer->setVertexBuffer(0, cmd->getVertexBuffer());
     _commandBuffer->setIndexBuffer(cmd->getIndexBuffer());
-    auto viewPort = cmd->getViewPort();
-    _commandBuffer->setViewport(viewPort[0], viewPort[1], viewPort[2], viewPort[3]);
-    
-    _commandBuffer->setBindGroup(&pipelineDescriptor.bindGroup);
+    _commandBuffer->setBindGroup( &(cmd->getPipelineDescriptor().bindGroup) );
     _commandBuffer->drawElements(backend::PrimitiveType::TRIANGLE,
                                  backend::IndexFormat::U_SHORT,
                                  cmd->getIndexCount(),
@@ -799,10 +776,9 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 void Renderer::setClearColor(const Color4F &clearColor)
 {
     _clearColor = clearColor;
-    _defaultRenderPassDescriptor.clearColorValue = {_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a};
 }
 
-backend::RenderPipeline* Renderer::createRenderPipeline(const PipelineDescriptor& pipelineDescriptor)
+void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, const backend::RenderPassDescriptor& renderPassDescriptor)
 {
     backend::RenderPipelineDescriptor renderPipelineDescriptor;
     renderPipelineDescriptor.vertexShaderModule = pipelineDescriptor.vertexShader;
@@ -820,22 +796,68 @@ backend::RenderPipeline* Renderer::createRenderPipeline(const PipelineDescriptor
         renderPipelineDescriptor.depthStencilState = depthStencilState;
     }
     
+    if (renderPassDescriptor.needColorAttachment)
+    {
+        // FIXME: now just handle color attach ment 0.
+        if (renderPassDescriptor.colorAttachmentsTexture[0])
+            renderPipelineDescriptor.colorAttachmentsFormat[0] = renderPassDescriptor.colorAttachmentsTexture[0]->getTextureFormat();
+    }
+    
+    if (renderPassDescriptor.needDepthAttachment)
+    {
+        if (renderPassDescriptor.depthAttachmentTexture)
+            renderPipelineDescriptor.depthAttachmentFormat = renderPassDescriptor.depthAttachmentTexture->getTextureFormat();
+        else
+            renderPipelineDescriptor.depthAttachmentFormat = backend::TextureFormat::D24S8;
+    }
+    if (renderPassDescriptor.needStencilAttachment)
+    {
+        if (renderPassDescriptor.stencilAttachmentTexture)
+            renderPipelineDescriptor.stencilAttachmentFormat = renderPassDescriptor.stencilAttachmentTexture->getTextureFormat();
+        else
+            renderPipelineDescriptor.stencilAttachmentFormat = backend::TextureFormat::D24S8;
+    }
+    
     auto renderPipeline = device->newRenderPipeline(renderPipelineDescriptor);
-    return renderPipeline;
+    _commandBuffer->setRenderPipeline(renderPipeline);
+    renderPipeline->release();
 }
 
-void Renderer::checkFirstCommand(RenderCommand* cmd)
+void Renderer::beginRenderPass(RenderCommand* cmd)
 {
+    backend::RenderPassDescriptor* renderPassDescriptor = nullptr;
+    if (_renderInfoStack.empty())
+        renderPassDescriptor = &cmd->getPipelineDescriptor().renderPassDescriptor;
+    else
+        renderPassDescriptor = &(_renderInfoStack.top().renderPassDescriptor);
+    
+    // Begine render pass.
     if (_isFirstCommand)
     {
         _isFirstCommand = false;
         
-        auto renderPassDescriptor = cmd->getPipelineDescriptor().renderPassDescriptor;
-        renderPassDescriptor.needClearColor = true;
-        _commandBuffer->beginRenderPass(renderPassDescriptor);
+        auto tmpRenderPassDescriptor = *renderPassDescriptor;
+        tmpRenderPassDescriptor.needClearColor = true;
+        tmpRenderPassDescriptor.clearColorValue = {_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a};
+        _commandBuffer->beginRenderPass(tmpRenderPassDescriptor);
     }
     else
-        _commandBuffer->beginRenderPass(cmd->getPipelineDescriptor().renderPassDescriptor);
+        _commandBuffer->beginRenderPass(*renderPassDescriptor);
+    
+    // Set viewport.
+    if (_renderInfoStack.empty())
+    {
+        const auto& viewport = cmd->getViewPort();
+        _commandBuffer->setViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
+    }
+    else
+    {
+        const auto& viewport = _renderInfoStack.top().viewPort;
+        _commandBuffer->setViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
+    }
+    
+    // Set render pipeline.
+    setRenderPipeline(cmd->getPipelineDescriptor(), *renderPassDescriptor);
 }
 
 NS_CC_END

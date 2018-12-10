@@ -218,9 +218,9 @@ protected:
 
     void fillVerticesAndIndices(const TrianglesCommand* cmd);
     void cleanVerticesAndIncices();
-    void checkFirstCommand(RenderCommand*);
+    void beginRenderPass(RenderCommand*);
     
-    backend::RenderPipeline* createRenderPipeline(const PipelineDescriptor&);
+    void setRenderPipeline(const PipelineDescriptor&, const backend::RenderPassDescriptor&);
 
     /* clear color set outside be used in setGLDefaultValues() */
     Color4F _clearColor = Color4F::BLACK;
@@ -239,8 +239,14 @@ protected:
     backend::Buffer* _indexBuffer = nullptr;
     
     backend::CommandBuffer* _commandBuffer = nullptr;
-    backend::RenderPassDescriptor _defaultRenderPassDescriptor;
-    std::stack<std::array<int, 4>> _viewPortStack;
+    
+    // Internal structure that has the information for some global render information.
+    struct RenderInfo
+    {
+        backend::RenderPassDescriptor renderPassDescriptor;
+        std::array<int, 4> viewPort;
+    };
+    std::stack<struct RenderInfo> _renderInfoStack;
 
     // Internal structure that has the information for the batches
     struct TriBatchToDraw

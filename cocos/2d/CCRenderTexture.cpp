@@ -199,7 +199,8 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
             break;
 
         auto& pipelineDescriptor = _groupCommand.getPipelineDescriptor();
-//        pipelineDescriptor.renderPassDescriptor.setColorAttachment(0, texture);
+        pipelineDescriptor.renderPassDescriptor.colorAttachmentsTexture[0] = texture;
+        pipelineDescriptor.renderPassDescriptor.needColorAttachment = true;
 
 //        if (depthStencilFormat != 0)
         {
@@ -207,7 +208,9 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
             _depthStencilTexture = backend::Device::getInstance()->newTexture(descriptor);
             
             auto& renderpassDescriptor = _groupCommand.getPipelineDescriptor().renderPassDescriptor;
-//            renderpassDescriptor.setDepthStencilAttachment(_depthStencilTexture);
+            renderpassDescriptor.depthAttachmentTexture = renderpassDescriptor.stencilAttachmentTexture = _depthStencilTexture;
+            renderpassDescriptor.needDepthAttachment = true;
+            renderpassDescriptor.needStencilAttachment = true;
         }
 
         _texture2D->setAntiAliasTexParameters();

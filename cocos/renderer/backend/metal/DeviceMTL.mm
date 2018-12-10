@@ -25,7 +25,6 @@ Device* Device::getInstance()
 void DeviceMTL::setCAMetalLayer(CAMetalLayer* metalLayer)
 {
     DeviceMTL::_metalLayer = metalLayer;
-//    Utils::createDefaultRenderPassDescriptor();
 }
 
 void DeviceMTL::updateDrawable()
