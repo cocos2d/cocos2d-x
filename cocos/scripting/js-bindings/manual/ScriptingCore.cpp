@@ -396,17 +396,7 @@ bool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
 
 bool JSB_closeWindow(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    EventListenerCustom* _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [&](EventCustom *event) {
-        Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
-        CC_SAFE_RELEASE(_event);
-        
-        ScriptingCore::getInstance()->cleanup();
-    });
-    _event->retain();
     Director::getInstance()->end();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
     return true;
 };
 
