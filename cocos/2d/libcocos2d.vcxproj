@@ -15,6 +15,7 @@
     <ProjectGuid>{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}</ProjectGuid>
     <RootNamespace>cocos2d-x.win32</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -646,6 +647,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\uv\prebuilt\win32\*.*" "$(OutDir)"</Com
     <ClCompile Include="..\renderer\CCGLProgramCache.cpp" />
     <ClCompile Include="..\renderer\CCGLProgramState.cpp" />
     <ClCompile Include="..\renderer\CCGLProgramStateCache.cpp" />
+    <ClCompile Include="..\renderer\ccGLStateCache.cpp" />
     <ClCompile Include="..\renderer\CCGroupCommand.cpp" />
     <ClCompile Include="..\renderer\CCMaterial.cpp" />
     <ClCompile Include="..\renderer\CCMeshCommand.cpp" />
@@ -1286,6 +1288,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\uv\prebuilt\win32\*.*" "$(OutDir)"</Com
     <ClInclude Include="..\renderer\CCGLProgramCache.h" />
     <ClInclude Include="..\renderer\CCGLProgramState.h" />
     <ClInclude Include="..\renderer\CCGLProgramStateCache.h" />
+    <ClInclude Include="..\renderer\ccGLStateCache.h" />
     <ClInclude Include="..\renderer\CCGroupCommand.h" />
     <ClInclude Include="..\renderer\CCMaterial.h" />
     <ClInclude Include="..\renderer\CCMeshCommand.h" />

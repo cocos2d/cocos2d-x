@@ -160,6 +160,12 @@
 -- @return GLView#GLView self (return value: cc.GLView)
 
 --------------------------------
+-- Sets the cursor for the window back to default.
+-- @function [parent=#GLView] setDefaultCursor 
+-- @param self
+-- @return GLView#GLView self (return value: cc.GLView)
+        
+--------------------------------
 --  When the window is closed, it will return false if the platforms is Ios or Android.<br>
 -- If the platforms is windows or Mac,it will return true.<br>
 -- return In ios and android it will return false,if in windows or Mac it will return true.
@@ -246,6 +252,16 @@
 -- @function [parent=#GLView] getScissorRect 
 -- @param self
 -- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+-- Sets the cursor for the window with custom image.<br>
+-- param filename A path to image file, e.g., "cursors/custom.png".<br>
+-- param hotspot Cursor hotspot, as a anchor point, default is top left (0, 1)
+-- @function [parent=#GLView] setCursor 
+-- @param self
+-- @param #string filename
+-- @param #vec2_table hotspot
+-- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
 --  Get retina factor.<br>

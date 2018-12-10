@@ -202,7 +202,7 @@ std::string TestSearchPath::title() const
 
 std::string TestSearchPath::subtitle() const
 {
-    return "See the console, can see a orange box and a 'about' picture";
+    return "See the console, can see a orange box and a 'about' picture, except Android";
 }
 
 // TestFilenameLookup

@@ -14,6 +14,7 @@
     <ProjectGuid>{1FA2BD06-2F52-48F6-8468-C0CC33127F5E}</ProjectGuid>
     <RootNamespace>test_win32</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -103,7 +104,7 @@
       </Command>
     </PreLinkEvent>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
+      <Command>xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
 xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
@@ -144,7 +145,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
       </Command>
     </PreLinkEvent>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
+      <Command>xcopy "$(ProjectDir)..\Resources" "$(OutDir)\Resources\" /D /E /I /F /Y
 xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>

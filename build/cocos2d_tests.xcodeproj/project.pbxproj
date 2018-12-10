@@ -1129,6 +1129,9 @@
 		52B47A341A534B2B004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A331A534B2B004E4C60 /* Security.framework */; };
 		52B47A351A53A43A004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A331A534B2B004E4C60 /* Security.framework */; };
 		53367D561DC22891005862DE /* WindowTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 53367D541DC22891005862DE /* WindowTest.cpp */; };
+		53E6A008218FA06E002BE515 /* InputTest in Resources */ = {isa = PBXBuildFile; fileRef = 53E6A007218FA06D002BE515 /* InputTest */; };
+		53E6A009218FA06E002BE515 /* InputTest in Resources */ = {isa = PBXBuildFile; fileRef = 53E6A007218FA06D002BE515 /* InputTest */; };
+		53E6A00A218FA06E002BE515 /* InputTest in Resources */ = {isa = PBXBuildFile; fileRef = 53E6A007218FA06D002BE515 /* InputTest */; };
 		59620E8F1921E5CF002021B6 /* Bug-Child.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59620E8D1921E5CF002021B6 /* Bug-Child.cpp */; };
 		59620E901921E5CF002021B6 /* Bug-Child.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59620E8D1921E5CF002021B6 /* Bug-Child.cpp */; };
 		59E170151AB42EB10007F2BF /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
@@ -2302,6 +2305,7 @@
 		52B47A331A534B2B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		53367D541DC22891005862DE /* WindowTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WindowTest.cpp; sourceTree = "<group>"; };
 		53367D551DC22891005862DE /* WindowTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowTest.h; sourceTree = "<group>"; };
+		53E6A007218FA06D002BE515 /* InputTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = InputTest; path = "../tests/cpp-tests/Resources/InputTest"; sourceTree = "<group>"; };
 		59620E8D1921E5CF002021B6 /* Bug-Child.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-Child.cpp"; sourceTree = "<group>"; };
 		59620E8E1921E5CF002021B6 /* Bug-Child.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-Child.h"; sourceTree = "<group>"; };
 		5EBEECAE1995247000429821 /* DrawNode3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DrawNode3D.cpp; path = Sprite3DTest/DrawNode3D.cpp; sourceTree = "<group>"; };
@@ -3976,6 +3980,7 @@
 				1AC35CBC18CED84500F37B72 /* hd */,
 				1AC35CBD18CED84500F37B72 /* Hello.png */,
 				1AC35CBE18CED84500F37B72 /* Images */,
+				53E6A007218FA06D002BE515 /* InputTest */,
 				15B3709219EE5D1000ABE682 /* Manifests */,
 				5046AB5A1AF2C4180060550B /* Materials */,
 				1AC35CC118CED84500F37B72 /* Misc */,
@@ -5699,6 +5704,7 @@
 				5046AB5B1AF2C4180060550B /* Materials in Resources */,
 				B63993311A49359F00B07923 /* Particle3D in Resources */,
 				1AC35CEC18CED84500F37B72 /* fonts in Resources */,
+				53E6A008218FA06E002BE515 /* InputTest in Resources */,
 				460629781CDB4DBA00B44058 /* ccs-res in Resources */,
 				1AC35CCA18CED84500F37B72 /* animations in Resources */,
 				1AC35CEA18CED84500F37B72 /* fileLookup.plist in Resources */,
@@ -5776,6 +5782,7 @@
 				507B41211C31BEA60067B53E /* animations in Resources */,
 				507B41221C31BEA60067B53E /* cocosvideo.mp4 in Resources */,
 				507B41231C31BEA60067B53E /* Sprite3DTest in Resources */,
+				53E6A00A218FA06E002BE515 /* InputTest in Resources */,
 				507B41251C31BEA60067B53E /* hd in Resources */,
 				507B41271C31BEA60067B53E /* Misc in Resources */,
 				507B41281C31BEA60067B53E /* Hello.png in Resources */,
@@ -5949,6 +5956,7 @@
 				1AC35CE918CED84500F37B72 /* extensions in Resources */,
 				3E2BDAD219BEA3E20055CDCD /* audio in Resources */,
 				5046AB5C1AF2C4180060550B /* Materials in Resources */,
+				53E6A009218FA06E002BE515 /* InputTest in Resources */,
 				C08689C318D370C90093E810 /* background.caf in Resources */,
 				15B3709419EE5D1000ABE682 /* Manifests in Resources */,
 				1AC35D0B18CED84500F37B72 /* zwoptex in Resources */,
@@ -7336,7 +7344,7 @@
 				);
 				PRODUCT_NAME = "js-tests Mac";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../extensions $(SRCROOT)/../external";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../tests/js-tests/project/Classes";
 			};
 			name = Debug;
 		};
@@ -7368,7 +7376,7 @@
 				);
 				PRODUCT_NAME = "js-tests Mac";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../extensions $(SRCROOT)/../external";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../tests/js-tests/project/Classes";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -7401,7 +7409,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../extensions $(SRCROOT)/../external $(inherited) $(SRCROOT)/../external/spidermonkey/include/ios $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../extensions $(SRCROOT)/../external $(inherited) $(SRCROOT)/../external/spidermonkey/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../tests/js-tests/project/Classes";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -7435,7 +7443,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../extensions $(SRCROOT)/../external $(inherited) $(SRCROOT)/../external/spidermonkey/include/ios $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../extensions $(SRCROOT)/../external $(inherited) $(SRCROOT)/../external/spidermonkey/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../tests/js-tests/project/Classes";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -7485,7 +7493,7 @@
 					"-image_base",
 					100000000,
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../tests/lua-empty-test/project/Classes";
 			};
 			name = Debug;
 		};
@@ -7504,7 +7512,7 @@
 					"-image_base",
 					100000000,
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../tests/lua-empty-test/project/Classes";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -7560,6 +7568,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-empty-test/project/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -7575,7 +7584,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../tests/lua-empty-test/project/Classes";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -7590,6 +7599,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/lua-empty-test/project/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -7605,7 +7615,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../tests/lua-empty-test/project/Classes";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -7626,7 +7636,7 @@
 					"-image_base",
 					100000000,
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../tests/lua-tests/project/Classes";
 			};
 			name = Debug;
 		};
@@ -7645,7 +7655,7 @@
 					"-image_base",
 					100000000,
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../tests/lua-tests/project/Classes";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -7675,7 +7685,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../tests/lua-tests/project/Classes";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -7705,7 +7715,7 @@
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../external/lua/tolua $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../tests/lua-tests/project/Classes";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -7723,7 +7733,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/freetype2/include/mac/freetype2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/freetype2/include/mac/freetype2 $(SRCROOT)/../tests/cpp-tests/Classes";
 			};
 			name = Debug;
 		};
@@ -7739,7 +7749,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/freetype2/include/mac/freetype2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/freetype2/include/mac/freetype2 $(SRCROOT)/../tests/cpp-tests/Classes";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -8255,7 +8265,7 @@
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -8283,7 +8293,7 @@
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

@@ -73,6 +73,7 @@ public:
     
     int getFontAscender() const;
     const char* getFontFamily() const;
+    std::string getFontName() const { return _fontName; }
 
     virtual FontAtlas* createFontAtlas() override;
     virtual int getFontMaxHeight() const override { return _lineHeight; }

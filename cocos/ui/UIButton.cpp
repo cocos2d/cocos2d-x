@@ -158,19 +158,17 @@ bool Button::createTitleRendererIfNull() {
 
 void Button::createTitleRenderer()
 {
-    _titleRenderer = Label::create();
-    _titleRenderer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-    addProtectedChild(_titleRenderer, TITLE_RENDERER_Z, -1);
+    setTitleLabel(Label::create());
 }
 
 /** replaces the current Label node with a new one */
 void Button::setTitleLabel(Label* label)
 {
-    if (_titleRenderer != label) {
-        CC_SAFE_RELEASE(_titleRenderer);
-        _titleRenderer = label;
-        CC_SAFE_RETAIN(_titleRenderer);
+    if (label && _titleRenderer != label) {
 
+        if (_titleRenderer) removeProtectedChild(_titleRenderer);
+
+        _titleRenderer = label;
         addProtectedChild(_titleRenderer, TITLE_RENDERER_Z, -1);
         updateTitleLocation();
     }

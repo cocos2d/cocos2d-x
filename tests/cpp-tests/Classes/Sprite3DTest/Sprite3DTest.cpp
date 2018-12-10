@@ -2295,8 +2295,7 @@ Animate3DCallbackTest::Animate3DCallbackTest()
 
         ValueMap valuemap0;
         animate->setKeyFrameUserInfo(275, valuemap0);
-        
-        auto listener = EventListenerCustom::create(Animate3DDisplayedNotification, [&](EventCustom* event)
+        _customEventListener = EventListenerCustom::create(Animate3DDisplayedNotification, [&](EventCustom* event)
         {
             auto info = (Animate3D::Animate3DDisplayedEventInfo*)event->getUserData();
             auto node = getChildByTag(100);
@@ -2310,12 +2309,19 @@ Animate3DCallbackTest::Animate3DCallbackTest()
             
             cocos2d::log("frame %d", info->frame);
         });
-        Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
+        Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_customEventListener, -1);
     }
 }
 
 Animate3DCallbackTest::~Animate3DCallbackTest()
 {
+    cocos2d::log("Animate3DCallbackTest destroied!");
+    if(_customEventListener)
+    {
+        Director::getInstance()->getEventDispatcher()->removeEventListener(_customEventListener);
+        _customEventListener = nullptr;
+    }
+
 }
 
 std::string Animate3DCallbackTest::title() const
@@ -2441,7 +2447,8 @@ CameraBackgroundClearTest::CameraBackgroundClearTest()
 
 void CameraBackgroundClearTest::switch_CameraClearMode(cocos2d::Ref* sender)
 {
-    auto type = _camera->getBackgroundBrush()->getBrushType();
+    auto brush = _camera->getBackgroundBrush();
+    auto type = brush ? brush->getBrushType() : CameraBackgroundBrush::BrushType::NONE;
     if (type == CameraBackgroundBrush::BrushType::NONE)
     {
         _camera->setBackgroundBrush(CameraBackgroundBrush::createDepthBrush(1.f));

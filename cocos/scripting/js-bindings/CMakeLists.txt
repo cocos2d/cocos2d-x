@@ -165,14 +165,8 @@ target_include_directories(jscocos2d
         INTERFACE ${cocos_root}/cocos/scripting/js-bindings/manual
 )
 
-# ignore part warnings on binding codes. tocheck: not take effect?
-
 if(WINDOWS)
     target_compile_definitions(jscocos2d PRIVATE _USRJSSTATIC)
-else()
-    target_compile_options(jscocos2d PRIVATE 
-        -Wno-deprecated
-    )
 endif()
 
 set_target_properties(jscocos2d

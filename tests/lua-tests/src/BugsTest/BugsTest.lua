@@ -441,7 +441,7 @@ local function BugTest1174()
     
     print("Test1 - Start")
     local i = 0
-    for i = 0, 9999 do
+    for i = 0, 999 do
         --[[
         A|b
         -----
@@ -513,7 +513,7 @@ local function BugTest1174()
         
     ok=0
     err=0
-    for i = 0 , 9999 do
+    for i = 0 , 999 do
         -- A | b
         -- -----
         -- c | d

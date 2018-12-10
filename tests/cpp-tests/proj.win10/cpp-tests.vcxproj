@@ -594,9 +594,6 @@
     <ProjectReference Include="..\..\..\cocos\editor-support\spine\proj.win10\libSpine.vcxproj">
       <Project>{4b3ba10a-941f-4e08-8a50-8a7fcb822bb8}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\external\Box2D\proj-win10\libbox2d.vcxproj">
-      <Project>{0c32d479-46d5-46c3-9aa9-0a8ff8320516}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />

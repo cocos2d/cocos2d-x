@@ -39,9 +39,7 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 #include "base/ccUTF8.h"
 #include "2d/CCCamera.h"
-#if CC_ICON_SET_SUPPORT
 #include "platform/CCImage.h"
-#endif /* CC_ICON_SET_SUPPORT */
 
 NS_CC_BEGIN
 
@@ -207,6 +205,7 @@ GLViewImpl::GLViewImpl(bool initglfw)
 , _monitor(nullptr)
 , _mouseX(0.0f)
 , _mouseY(0.0f)
+, _cursor(nullptr)
 {
     _viewName = "cocos2dx";
     g_keyCodeMap.clear();
@@ -503,6 +502,37 @@ void GLViewImpl::setDefaultIcon() const {
     glfwSetWindowIcon(window, 0, nullptr);
 }
 #endif /* CC_ICON_SET_SUPPORT */
+
+void GLViewImpl::setCursor(const std::string& filename, Vec2 hotspot) {
+
+    if (_cursor) {
+        glfwDestroyCursor(_cursor);
+        _cursor = nullptr;
+    }
+
+    Image* ccImage = new (std::nothrow) Image();
+    if (ccImage && ccImage->initWithImageFile(filename)) {
+        GLFWimage image;
+        image.width = ccImage->getWidth();
+        image.height = ccImage->getHeight();
+        image.pixels = ccImage->getData();
+        _cursor = glfwCreateCursor(&image, (int)(hotspot.x * image.width), (int)((1.0f - hotspot.y) * image.height));
+        if (_cursor) {
+            glfwSetCursor(_mainWindow, _cursor);
+        }
+    }
+    CC_SAFE_DELETE(ccImage);
+}
+
+void GLViewImpl::setDefaultCursor() {
+
+    if (_cursor) {
+        glfwDestroyCursor(_cursor);
+        _cursor = nullptr;
+    }
+
+    glfwSetCursor(_mainWindow, NULL);
+}
 
 void GLViewImpl::setCursorVisible( bool isVisible )
 {

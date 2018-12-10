@@ -26,6 +26,7 @@
 
 #include "renderer/CCQuadCommand.h"
 
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCMaterial.h"
 #include "renderer/CCTechnique.h"

@@ -179,7 +179,7 @@ target_include_directories(luacocos2d
 )
 
 if(WINDOWS)
-    target_compile_definitions(luacocos2d PRIVATE _USRLUASTATIC)
+    target_compile_definitions(luacocos2d PUBLIC _USRLUASTATIC)
 endif()
 
 

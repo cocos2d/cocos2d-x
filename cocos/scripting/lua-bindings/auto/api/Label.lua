@@ -63,7 +63,7 @@
 -- Returns type of label<br>
 -- warning Not support system font.<br>
 -- return the type of label<br>
--- since v3.18.0
+-- since v3.17.1
 -- @function [parent=#Label] getLabelType 
 -- @param self
 -- @return int#int ret (return value: int)

@@ -9,6 +9,37 @@ $env:ANDROID_NDK_HOME=$env:APPVEYOR_BUILD_FOLDER + "\..\android-ndk-r16b"
 $env:ANDROID_SDK_ROOT=$env:APPVEYOR_BUILD_FOLDER + "\..\android-sdk"
 $env:NDK_ROOT=$env:APPVEYOR_BUILD_FOLDER + "\..\android-ndk-r16b"
 
+function Retry-Command {
+    [CmdletBinding()]
+    Param(
+        [Parameter(Position=0, Mandatory=$true)]
+        [scriptblock]$ScriptBlock,
+
+        [Parameter(Position=1, Mandatory=$false)]
+        [int]$Maximum = 5
+    )
+
+    Begin {
+        $cnt = 0
+    }
+
+    Process {
+        do {
+            $cnt++
+            try {
+                $ScriptBlock.Invoke()
+                return
+            } catch {
+                Write-Error $_.Exception.InnerException.Message -ErrorAction Continue
+            }
+        } while ($cnt -lt $Maximum)
+
+        # Throw an error after $Maximum unsuccessful invocations. Doesn't need
+        # a condition, since the function returns upon successful invocation.
+        throw 'Execution failed.'
+    }
+}
+
 function PushAndroidArtifacts
 {
     # https://www.appveyor.com/docs/packaging-artifacts/
@@ -19,7 +50,9 @@ function PushAndroidArtifacts
 If ($env:build_type -eq "android_cpp_tests") {
     Write-Host "Build tests\cpp-tests"
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tests\cpp-tests\proj.android\
-    & ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --parallel --info
+    Retry-Command -ScriptBlock {
+        & ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --parallel --info
+    } -Maximum 5
     if ($lastexitcode -ne 0) {throw}
     PushAndroidArtifacts
     Pop-Location
@@ -28,7 +61,10 @@ If ($env:build_type -eq "android_cpp_tests") {
     Write-Host "Build tests\lua-test"
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tests\lua-tests\project\proj.android\
     # tocheck, release mode failed on "LuaTests:mergeReleaseAssets"
-    & ./gradlew assembleDebug -PPROP_BUILD_TYPE=ndk-build --parallel --info
+    Retry-Command -ScriptBlock {
+        & ./gradlew assembleDebug -PPROP_BUILD_TYPE=ndk-build --parallel --info
+    } -Maximum 5
+
     if ($lastexitcode -ne 0) {throw}
     PushAndroidArtifacts
     Pop-Location
@@ -36,7 +72,9 @@ If ($env:build_type -eq "android_cpp_tests") {
 } elseif ($env:build_type -eq "android_cpp_empty_test") {
     Write-Host "Build tests\cpp-empty-test"
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tests\cpp-empty-test\proj.android\
-    & ./gradlew assembleRelease
+    Retry-Command -ScriptBlock {
+        & ./gradlew assembleRelease
+    } -Maximum 5
     if ($lastexitcode -ne 0) {throw}
     PushAndroidArtifacts
     Pop-Location
@@ -48,7 +86,10 @@ If ($env:build_type -eq "android_cpp_tests") {
 
     Write-Host "Build cocos_new_test"
     Push-Location $env:APPVEYOR_BUILD_FOLDER\cocos_new_test\proj.android\
-    & ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --parallel --info
+    Retry-Command -ScriptBlock {
+        & ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --parallel --info
+    } -Maximum 5
+    
     if ($lastexitcode -ne 0) {throw}
     PushAndroidArtifacts
     Pop-Location

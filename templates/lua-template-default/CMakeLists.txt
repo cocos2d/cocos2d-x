@@ -32,11 +32,8 @@ set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/cocos2d-x)
 set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
 include(CocosBuildSet)
-if(NOT USE_COCOS_PREBUILT)
-    set(BUILD_LUA_LIBS ON)
-    set(BUILD_SIMU_LIB ON)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-endif()
+set(BUILD_LUA_LIBS ON)
+add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 
 # script and source files info, not need to compile
 set(res_res_folders
@@ -74,7 +71,6 @@ if(ANDROID)
 elseif(LINUX)
     list(APPEND GAME_SOURCE ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp)
 elseif(WINDOWS)
-    add_definitions(-D_USRLUASTATIC -D_USRLIBSIMSTATIC)
     list(APPEND GAME_HEADER
          ${RUNTIME_SRC_ROOT}/proj.win32/main.h
          ${RUNTIME_SRC_ROOT}/proj.win32/stdafx.h
@@ -146,6 +142,11 @@ endif()
 target_link_libraries(${APP_NAME} luacocos2d)
 target_include_directories(${APP_NAME} PRIVATE ${RUNTIME_SRC_ROOT}/Classes)
 
+if(WINDOWS OR MACOSX)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator ${ENGINE_BINARY_PATH}/cocos/simulatorlib)
+    target_link_libraries(${APP_NAME} simulatorlib)
+endif()
+
 # mark app resources, resource will be copy auto after mark
 setup_cocos_app_config(${APP_NAME})
 if(APPLE)
@@ -159,7 +160,7 @@ if(APPLE)
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
     endif()
 elseif(WINDOWS)
-    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR})
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR}/..)
 endif()
 # copy resource on linux or WINDOWS
 if(LINUX OR WINDOWS)

@@ -30,6 +30,7 @@
 #include "vr/CCVRGenericHeadTracker.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgramState.h"
+#include "renderer/ccGLStateCache.h"
 #include "base/CCDirector.h"
 #include "2d/CCScene.h"
 #include "2d/CCCamera.h"
@@ -125,8 +126,7 @@ void VRGenericRenderer::render(Scene* scene, Renderer* renderer)
     _fb->restoreFBO();
 
     auto texture = _fb->getRenderTarget()->getTexture();
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture->getName());
+    GL::bindTexture2D(texture->getName());
     _glProgramState->apply(Mat4::IDENTITY);
 
     GLint origViewport[4];

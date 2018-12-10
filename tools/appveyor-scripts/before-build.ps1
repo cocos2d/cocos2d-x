@@ -1,5 +1,7 @@
 Set-PSDebug -Trace 1
 $python = "C:\\Python27\\python.exe"
+$git_retry = "$pyhon $env:APPVEYOR_BUILD_FOLDER\tools\appveyor-scripts\git_retry.py"
+
 
 function Download-Deps
 {
@@ -27,14 +29,16 @@ function Generate-Binding-Codes
 function Update-SubModule
 {
     Push-Location $env:APPVEYOR_BUILD_FOLDER
-    & git submodule init
-    & git submodule update --recursive --depth=1
+    & $git_retry submodule init
+    & $git_retry submodule update --recursive --depth=1
     Pop-Location
 }
 
 Update-SubModule
 
 Download-Deps
+
+& python -m pip install retry
 
 If ($env:build_type -eq "windows32") {
     & $python -u .\tools\appveyor-scripts\setup_android.py --ndk_only

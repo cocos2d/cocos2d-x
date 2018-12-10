@@ -26,6 +26,7 @@
 #include "base/ccMacros.h"
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
+#include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgramState.h"
@@ -56,7 +57,7 @@ Skybox::~Skybox()
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         glDeleteVertexArrays(1, &_vao);
-        glBindVertexArray(0);
+        GL::bindVAO(0);
         _vao = 0;
     }
 
@@ -107,7 +108,7 @@ void Skybox::initBuffers()
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         glGenVertexArrays(1, &_vao);
-        glBindVertexArray(_vao);
+        GL::bindVAO(_vao);
     }
 	// The skybox is rendered using a purpose-built shader which makes use of
 	// the shader language's inherent support for cubemaps. Hence there is no
@@ -152,7 +153,7 @@ void Skybox::initBuffers()
         glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
         getGLProgramState()->applyAttributes(false);
 
-        glBindVertexArray(0);
+        GL::bindVAO(0);
     }
 }
 
@@ -200,11 +201,11 @@ void Skybox::onDraw(const Mat4& transform, uint32_t /*flags*/)
 
     if (Configuration::getInstance()->supportsShareableVAO())
     {
-        glBindVertexArray(_vao);
+        GL::bindVAO(_vao);
     }
     else
     {
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION);
 
         glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
@@ -216,7 +217,7 @@ void Skybox::onDraw(const Mat4& transform, uint32_t /*flags*/)
 
     if (Configuration::getInstance()->supportsShareableVAO())
     {
-        glBindVertexArray(0);
+        GL::bindVAO(0);
     }
     else
     {

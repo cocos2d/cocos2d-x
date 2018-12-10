@@ -64,22 +64,21 @@ bool UIFocusTestBase::init()
 
         _dpadMenu = Menu::create();
 
-        auto winSize = Director::getInstance()->getVisibleSize();
         auto leftItem = MenuItemFont::create("Left", CC_CALLBACK_0(UIFocusTestBase::onLeftKeyPressed, this));
-        leftItem->setPosition(Vec2(winSize.width - 100, winSize.height/2));
+        leftItem->setPosition(VisibleRect::right() + Vec2(-100, 0));
         _dpadMenu->addChild(leftItem);
 
 
         auto rightItem = MenuItemFont::create("Right", CC_CALLBACK_0(UIFocusTestBase::onRightKeyPressed, this));
-        rightItem->setPosition(Vec2(winSize.width - 30, winSize.height/2));
+        rightItem->setPosition(VisibleRect::right() + Vec2(-30, 0));
         _dpadMenu->addChild(rightItem);
 
         auto upItem = MenuItemFont::create("Up", CC_CALLBACK_0(UIFocusTestBase::onUpKeyPressed, this));
-        upItem->setPosition(Vec2(winSize.width - 60, winSize.height/2 + 50));
+        upItem->setPosition(VisibleRect::right() + Vec2(-60, 50));
         _dpadMenu->addChild(upItem);
 
         auto downItem = MenuItemFont::create("Down", CC_CALLBACK_0(UIFocusTestBase::onDownKeyPressed, this));
-        downItem->setPosition(Vec2(winSize.width - 60, winSize.height/2 - 50));
+        downItem->setPosition(VisibleRect::right() + Vec2(-60, -50));
         _dpadMenu->addChild(downItem);
 
         _dpadMenu->setPosition(Vec2::ZERO);
@@ -95,7 +94,7 @@ bool UIFocusTestBase::init()
         
         _toggleButton = Button::create("cocosui/switch-mask.png");
         _toggleButton->setTitleText("Toggle Loop");
-        _toggleButton->setPosition(Vec2(60, winSize.height - 50));
+        _toggleButton->setPosition(VisibleRect::leftTop() + Vec2(60, -50));
         _toggleButton->setTitleColor(Color3B::RED);
         _toggleButton->setFocusEnabled(false);
         this->addChild(_toggleButton);
@@ -181,10 +180,8 @@ bool UIFocusTestHorizontal::init()
 {
     if (UIFocusTestBase::init()) {
 
-        Size winSize = Director::getInstance()->getVisibleSize();
-
         _horizontalLayout = HBox::create();
-        _horizontalLayout->setPosition(Vec2(20, winSize.height/2 + 40));
+        _horizontalLayout->setPosition(VisibleRect::left() + Vec2(20, 40));
         _uiLayer->addChild(_horizontalLayout);
 
         _horizontalLayout->setFocused(true);
@@ -202,7 +199,7 @@ bool UIFocusTestHorizontal::init()
         }
 
         _loopText = Text::create("loop enabled", "Arial", 20);
-        _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
+        _loopText->setPosition(VisibleRect::top() + Vec2(0, -50));
         _loopText->setColor(Color3B::GREEN);
         this->addChild(_loopText);
 
@@ -244,10 +241,8 @@ bool UIFocusTestVertical::init()
 {
     if (UIFocusTestBase::init()) {
 
-        Size winSize = Director::getInstance()->getVisibleSize();
-
         _verticalLayout = VBox::create();
-        _verticalLayout->setPosition(Vec2(winSize.width/2 - 100, winSize.height - 70));
+        _verticalLayout->setPosition(VisibleRect::top() + Vec2(-100, -70));
         _uiLayer->addChild(_verticalLayout);
         _verticalLayout->setTag(100);
         _verticalLayout->setScale(0.5);
@@ -266,7 +261,7 @@ bool UIFocusTestVertical::init()
         }
 
         _loopText = Text::create("loop enabled", "Arial", 20);
-        _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
+        _loopText->setPosition(VisibleRect::top() + Vec2(0, -50));
         _loopText->setColor(Color3B::GREEN);
         this->addChild(_loopText);
        
@@ -305,10 +300,8 @@ bool UIFocusTestNestedLayout1::init()
 {
     if (UIFocusTestBase::init()) {
 
-        Size winSize = Director::getInstance()->getVisibleSize();
-
         _verticalLayout = VBox::create();
-        _verticalLayout->setPosition(Vec2(winSize.width/2 - 80, winSize.height - 70));
+        _verticalLayout->setPosition(VisibleRect::top() + Vec2(-80, -70));
         _uiLayer->addChild(_verticalLayout);
         _verticalLayout->setScale(0.5);
 
@@ -362,7 +355,7 @@ bool UIFocusTestNestedLayout1::init()
         }
 
         _loopText = Text::create("loop enabled", "Arial", 20);
-        _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
+        _loopText->setPosition(VisibleRect::top() + Vec2(0, -50));
         _loopText->setColor(Color3B::GREEN);
         this->addChild(_loopText);
 
@@ -401,10 +394,8 @@ bool UIFocusTestNestedLayout2::init()
 {
     if (UIFocusTestBase::init()) {
 
-        Size winSize = Director::getInstance()->getVisibleSize();
-
         _horizontalLayout = HBox::create();
-        _horizontalLayout->setPosition(Vec2(winSize.width/2 - 200, winSize.height - 70));
+        _horizontalLayout->setPosition(VisibleRect::top() + Vec2(-200, -70));
         _uiLayer->addChild(_horizontalLayout);
         _horizontalLayout->setScale(0.6f);
 
@@ -458,7 +449,7 @@ bool UIFocusTestNestedLayout2::init()
         }
 
         _loopText = Text::create("loop enabled", "Arial", 20);
-        _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
+        _loopText->setPosition(VisibleRect::top() + Vec2(0, -50));
         _loopText->setColor(Color3B::GREEN);
         this->addChild(_loopText);
 
@@ -497,10 +488,9 @@ bool UIFocusTestNestedLayout3::init()
 {
     if (UIFocusTestBase::init()) {
 
-        Size winSize = Director::getInstance()->getVisibleSize();
-
         _verticalLayout = VBox::create();
-        _verticalLayout->setPosition(Vec2(40, winSize.height - 70));
+        _verticalLayout->setPosition(VisibleRect::leftTop() + Vec2(40, -70));
+
         _uiLayer->addChild(_verticalLayout);
         _verticalLayout->setScale(0.8f);
 
@@ -562,7 +552,7 @@ bool UIFocusTestNestedLayout3::init()
 
 
         _loopText = Text::create("loop enabled", "Arial", 20);
-        _loopText->setPosition(Vec2(winSize.width/2, winSize.height - 50));
+        _loopText->setPosition(VisibleRect::top() + Vec2(0, -50));
         _loopText->setColor(Color3B::GREEN);
         this->addChild(_loopText);
 

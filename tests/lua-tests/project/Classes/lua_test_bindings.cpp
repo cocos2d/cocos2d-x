@@ -134,7 +134,7 @@ DrawNode3D::~DrawNode3D()
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         glDeleteVertexArrays(1, &_vao);
-        glBindVertexArray(0);
+        GL::bindVAO(0);
         _vao = 0;
     }
 }
@@ -176,7 +176,7 @@ bool DrawNode3D::init()
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         glGenVertexArrays(1, &_vao);
-        glBindVertexArray(_vao);
+        GL::bindVAO(_vao);
     }
     
     glGenBuffers(1, &_vbo);
@@ -193,7 +193,7 @@ bool DrawNode3D::init()
     
     if (Configuration::getInstance()->supportsShareableVAO())
     {
-        glBindVertexArray(0);
+        GL::bindVAO(0);
     }
     
     CHECK_GL_ERROR_DEBUG();
@@ -226,7 +226,7 @@ void DrawNode3D::onDraw(const Mat4 &transform, uint32_t flags)
     glProgram->use();
     glProgram->setUniformsForBuiltins(transform);
     glEnable(GL_DEPTH_TEST);
-    utils::setBlending(_blendFunc.src, _blendFunc.dst);
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
     
     if (_dirty)
     {
@@ -236,12 +236,11 @@ void DrawNode3D::onDraw(const Mat4 &transform, uint32_t flags)
     }
     if (Configuration::getInstance()->supportsShareableVAO())
     {
-        glBindVertexArray(_vao);
+        GL::bindVAO(_vao);
     }
     else
     {
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
         
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
         // vertex
