@@ -852,7 +852,7 @@ bool AudioSwitchStateTest::init()
             AudioEngine::play2d("audio/SoundEffectsFX009/FX082.mp3");
             AudioEngine::play2d("audio/LuckyDay.mp3");
             
-        }, 0.1f, "AudioSwitchStateTest");
+        }, 0.01f, "AudioSwitchStateTest");
         
         return true;
     }
