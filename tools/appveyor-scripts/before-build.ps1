@@ -40,6 +40,11 @@ Download-Deps
 
 & python -m pip install retry
 
+& choco install ninja
+if ($lastexitcode -ne 0) {throw}
+& ninja --version
+if ($lastexitcode -ne 0) {throw}
+
 If ($env:build_type -eq "windows32") {
     & $python -u .\tools\appveyor-scripts\setup_android.py --ndk_only
     Generate-Binding-Codes

@@ -100,13 +100,19 @@ If ($env:build_type -eq "android_cpp_tests") {
 #     if ($lastexitcode -ne 0) {throw}
 
 } elseif ($env:build_type -eq "windows32_cmake_test") {
+    # setup visual studio command line
+    # needed for ninja
+    & "${env:COMSPEC}" /s /c "`"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat`" x86 > NUL && set" | foreach-object {
+        $name, $value = $_ -split '=', 2
+        set-content env:\"$name" $value
+    }
     Write-Host "Build tests project by cmake"
 
     & mkdir $env:APPVEYOR_BUILD_FOLDER\win32-build
     # if ($lastexitcode -ne 0) {throw} # mkdir return no-zero
 
     Push-Location $env:APPVEYOR_BUILD_FOLDER\win32-build
-    & cmake -DCMAKE_BUILD_TYPE=Release ..
+    & cmake -DCMAKE_BUILD_TYPE=Release -GNinja ..
     if ($lastexitcode -ne 0) {throw}
 
     & cmake --build . --config Release
