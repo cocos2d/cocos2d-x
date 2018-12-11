@@ -36,10 +36,6 @@ NS_CC_BEGIN
 
 struct CC_DLL PipelineDescriptor final
 {
-    // These are helper functions to handle reference count.
-    void setVertexShader(backend::ShaderModule* shaderModule);
-    void setFragmentShader(backend::ShaderModule* shaderModule);
-    
     backend::DepthStencilDescriptor depthStencilDescriptor;
     backend::BlendDescriptor blendDescriptor;
     backend::RenderPassDescriptor renderPassDescriptor;

@@ -35,8 +35,9 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
-#include "renderer/backend/Device.h"
 #include "renderer/ccShaders.h"
+#include "renderer/CCShaderCache.h"
+
 
 NS_CC_BEGIN
 
@@ -113,13 +114,9 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity/* = DEFAU
 
 void SpriteBatchNode::createShaders()
 {
-    //TODO coulsonwang, getOrCreateWithGLProgramName(program, texture)
-    auto device = backend::Device::getInstance();
-    auto vs = device->createShaderModule(backend::ShaderStage::VERTEX, positionTextureColor_vert);
-    auto fs = device->createShaderModule(backend::ShaderStage::FRAGMENT, positionTextureColor_frag);
     auto& pipelineDescriptor = _batchCommand.getPipelineDescriptor();
-    pipelineDescriptor.setVertexShader(vs);
-    pipelineDescriptor.setFragmentShader(fs);
+    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
+    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
     
 #define VERTEX_POSITION_SIZE 3
 #define VERTEX_TEXCOORD_SIZE 2

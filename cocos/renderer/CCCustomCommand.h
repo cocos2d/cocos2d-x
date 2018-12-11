@@ -41,8 +41,6 @@ namespace backend
     class Buffer;
 }
 
-class TextureAtlas;
-
 /**
 Custom command is used for call custom openGL command which can not be done by other commands,
 such as stencil function, depth functions etc. The render command is executed by calling a call back function.
@@ -50,10 +48,21 @@ such as stencil function, depth functions etc. The render command is executed by
 class CC_DLL CustomCommand : public RenderCommand
 {
 public:
+    
+    enum class DrawType
+    {
+        ARRAY,
+        ELEMENT
+    };
+    
+    using PrimitiveType = backend::PrimitiveType;
+        
 	/**Constructor.*/
     CustomCommand();
     /**Destructor.*/
-    ~CustomCommand();
+    virtual ~CustomCommand();
+    
+    CustomCommand& operator=(const CustomCommand& rhs);
     
 public:
 	/**
@@ -63,35 +72,57 @@ public:
 	@param flags Use to identify that the render command is 3D mode or not.
 	*/
     void init(float globalZOrder, const Mat4& modelViewTransform, uint32_t flags);
-    void init(float globalZOrder, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags);
     /**
     Init function. The render command will be in 2D mode.
     @param globalZOrder GlobalZOrder of the render command.
     */
     void init(float globalZOrder);
+    
+    void createVertexBuffer(size_t sizePerVertex, size_t count);
+    void createIndexBuffer(size_t sizePerIndex, size_t count);
 
-    /**
-    Execute the render command and call callback functions.
-    */
-    void execute();
-    //TODO: This function is not used, it should be removed.
-    bool isTranslucent() { return true; }
-    /**Callback function.*/
-    std::function<void()> func;
+    void updateVertexBuffer(void* data, size_t offset, size_t length);
+    void updateIndexBuffer(void* data, size_t offset, size_t length);
     
-    V3F_C4B_T2F_Quad* getQuad();
-    const unsigned short* getIndices() const;
-    uint32_t getQuadCount();
+    inline void setDrawType(DrawType drawType) { _drawType = drawType; }
+    inline DrawType getDrawType() const { return _drawType; }
+    inline void setPrimitiveType(PrimitiveType primitiveType) { _primitiveType = primitiveType; }
+    inline PrimitiveType getPrimitiveType() const { return _primitiveType; }
     
-    inline backend::Buffer* getVertexBuffer() const { return _vertexBuffer; }
-    inline backend::Buffer* getIndexBuffer() const { return _indexBuffer; }
+    inline backend::Buffer* getVertexBuffer() const { assert(_vertexBuffer); return _vertexBuffer; }
+    inline backend::Buffer* getIndexBuffer() const { assert(_indexBuffer); return _indexBuffer; }
     inline size_t getIndexCount() const { return _indexCount; }
+    inline size_t getVertexCount() const { return _vertexCount; }
+    
+    inline void setVertexDrawInfo(size_t vertexStart, size_t count) { _vertexStart = vertexStart; _vertexDrawCount = count; }
+    inline size_t getVertexDrawStart() const { return _vertexStart; }
+    inline size_t getVertexDrawCount() const { return _vertexDrawCount == 0 ? _vertexCount : _vertexDrawCount; }
+    
+    inline void setIndexDrawInfo(size_t indexBufferOffset, size_t count) { _indexBufferOffset = indexBufferOffset; _indexDrawCount = count; }
+    inline size_t getIndexDrawBufferOffset() const { return _indexBufferOffset; }
+    inline size_t getIndexDrawCount() const { return _indexDrawCount == 0 ? _indexCount : _indexDrawCount; }
+    
+    /**
+     Execute the render command and call callback functions.
+     */
+    //    void execute();
+    //    /**Callback function.*/
+    std::function<void()> func;
 
 protected:
-    TextureAtlas *_textureAtlas = nullptr;
     backend::Buffer* _vertexBuffer = nullptr;
     backend::Buffer* _indexBuffer = nullptr;
     size_t _indexCount = 0;
+    size_t _vertexCount = 0;
+    
+    size_t _vertexStart = 0;
+    size_t _vertexDrawCount = 0;
+    
+    size_t _indexBufferOffset = 0;
+    size_t _indexDrawCount = 0;
+    
+    DrawType _drawType = DrawType::ELEMENT;
+    PrimitiveType _primitiveType = PrimitiveType::TRIANGLE;
 };
 
 NS_CC_END

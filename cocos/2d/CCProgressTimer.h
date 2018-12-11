@@ -24,11 +24,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __MISC_NODE_CCPROGRESS_TIMER_H__
-#define __MISC_NODE_CCPROGRESS_TIMER_H__
+#pragma once
 
 #include "renderer/CCCustomCommand.h"
 #include "2d/CCNode.h"
+#include "renderer/CCPipelineDescriptor.h"
 
 NS_CC_BEGIN
 
@@ -158,7 +158,7 @@ CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
-    ProgressTimer();
+    ProgressTimer() = default;
     /**
      * @js NA
      * @lua NA
@@ -168,28 +168,26 @@ CC_CONSTRUCTOR_ACCESS:
     /** Initializes a progress timer with the sprite as the shape the timer goes through */
     bool initWithSprite(Sprite* sp);
     
-protected:
-    void onDraw(const Mat4 &transform, uint32_t flags);
-    
+protected:    
     Tex2F textureCoordFromAlphaPoint(Vec2 alpha);
     Vec2 vertexFromAlphaPoint(Vec2 alpha);
-    void updateProgress(void);
-    void updateBar(void);
-    void updateRadial(void);
-    virtual void updateColor(void) override;
+    void updateProgress();
+    void updateBar();
+    void updateRadial();
+    virtual void updateColor() override;
     Vec2 boundaryTexCoord(char index);
 
-    Type _type;
+    Type _type = Type::RADIAL;
     Vec2 _midpoint;
     Vec2 _barChangeRate;
-    float _percentage;
-    Sprite *_sprite;
-    int _vertexDataCount;
-    V2F_C4B_T2F *_vertexData;
+    float _percentage = 0.0f;
+    Sprite *_sprite = nullptr;
+    int _vertexDataCount = 0;
+    V2F_C4B_T2F *_vertexData = nullptr;
+    bool _reverseDirection = false;
     
     CustomCommand _customCommand;
-
-    bool _reverseDirection;
+    CustomCommand _customCommand2;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ProgressTimer);
@@ -199,5 +197,3 @@ private:
 /// @}
 
 NS_CC_END
-
-#endif //__MISC_NODE_CCPROGRESS_TIMER_H__

@@ -21,39 +21,34 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#pragma once
 
-#include "ShaderCache.h"
-#include "renderer/backend/Device.h"
+#include "platform/CCPlatformMacros.h"
+#include "renderer/backend/ShaderModule.h"
+
+#include <string>
+#include <unordered_map>
 
 NS_CC_BEGIN
 
-std::unordered_map<std::string, backend::ShaderModule*> ShaderCache::_cachedVertexShaders;
-std::unordered_map<std::string, backend::ShaderModule*> ShaderCache::_cachedFragmentShaders;
-
-backend::ShaderModule* ShaderCache::newVertexShaderModule(const std::string& key, const std::string& shaderSource)
+class CC_DLL ShaderCache
 {
-    auto iter = ShaderCache::_cachedVertexShaders.find(key);
-    if (ShaderCache::_cachedVertexShaders.end() != iter)
-        return iter->second;
+public:
+    /** Create a vertex shader module.
+        @param key A key to identify a shader module. If it is created before, then just return the cached shader module.
+        @param shaderSource The source code of the shader.
+     */
+    static backend::ShaderModule* newVertexShaderModule(const std::string& shaderSource);
     
-    auto shader = backend::Device::getInstance()->createShaderModule(backend::ShaderStage::VERTEX, shaderSource);
-    CC_SAFE_RETAIN(shader);
-    ShaderCache::_cachedVertexShaders.emplace(key, shader);
+    /** Create a fragment shader module.
+     @param key A key to identify a shader module. If it is created before, then just return the cached shader module.
+     @param shaderSource The source code of the shader.
+     */
+    static backend::ShaderModule* newFragmentShaderModule(const std::string& shaderSource);
     
-    return shader;
-}
-
-backend::ShaderModule* ShaderCache::newFragmentShaderModule(const std::string& key, const std::string& shaderSource)
-{
-    auto iter = ShaderCache::_cachedFragmentShaders.find(key);
-    if (ShaderCache::_cachedFragmentShaders.end() != iter)
-        return iter->second;
-    
-    auto shader = backend::Device::getInstance()->createShaderModule(backend::ShaderStage::FRAGMENT, shaderSource);
-    CC_SAFE_RETAIN(shader);
-    ShaderCache::_cachedFragmentShaders.emplace(key, shader);
-    
-    return shader;
-}
+private:
+    static std::unordered_map<std::size_t, backend::ShaderModule*> _cachedVertexShaders;
+    static std::unordered_map<std::size_t, backend::ShaderModule*> _cachedFragmentShaders;
+};
 
 NS_CC_END

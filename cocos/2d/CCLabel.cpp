@@ -47,6 +47,7 @@
 #include "renderer/backend/Device.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ShaderModule.h"
+#include "renderer/CCShaderCache.h"
 
 NS_CC_BEGIN
 
@@ -576,8 +577,8 @@ void Label::updateShaderProgram()
         else if (_useA8Shader)
         {
 //            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_LABEL_NORMAL));
-            vert = device->createShaderModule(backend::ShaderStage::VERTEX, label_common_vert);
-            frag = device->createShaderModule(backend::ShaderStage::FRAGMENT, label_normal_frag);
+            vert = ShaderCache::newVertexShaderModule(label_common_vert);
+            frag = ShaderCache::newFragmentShaderModule(label_normal_frag);
         }
         else if (_shadowEnabled)
             setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, _getTexture(this)));
@@ -601,8 +602,8 @@ void Label::updateShaderProgram()
         return;
     }
     
-    pipelineDescriptor.setVertexShader(vert);
-    pipelineDescriptor.setFragmentShader(frag);
+    pipelineDescriptor.vertexShader = vert;
+    pipelineDescriptor.fragmentShader = frag;
     setVertexLayout(pipelineDescriptor);
     
     //TODO coulsonwang
@@ -1641,7 +1642,7 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
                 auto textureAtlas = batchNode->getTextureAtlas();
                 pipelineDescriptor.bindGroup.setTexture("u_texture", 0, textureAtlas->getTexture()->getBackendTexture());
                 updateBlendState();
-                _customCommand.init(_globalZOrder, textureAtlas, transform, flags);
+//                _customCommand.init(_globalZOrder, textureAtlas, transform, flags);
 //                _customCommand.func = CC_CALLBACK_0(Label::onDraw, this, transform, transformUpdated);
                 renderer->addCommand(&_customCommand);
             }

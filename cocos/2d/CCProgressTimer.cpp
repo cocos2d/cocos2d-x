@@ -33,6 +33,9 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "renderer/CCRenderer.h"
 #include "base/ccUtils.h"
+#include "renderer/CCShaderCache.h"
+#include "renderer/shaders/positionTextureColor.vert"
+#include "renderer/shaders/positionTextureColor.frag"
 
 NS_CC_BEGIN
 
@@ -40,17 +43,6 @@ NS_CC_BEGIN
 //  kProgressTextureCoords holds points {0,1} {0,0} {1,0} {1,1} we can represent it as bits
 const char kProgressTextureCoords = 0x4b;
 
-
-ProgressTimer::ProgressTimer()
-:_type(Type::RADIAL)
-,_midpoint(0,0)
-,_barChangeRate(0,0)
-,_percentage(0.0f)
-,_sprite(nullptr)
-,_vertexDataCount(0)
-,_vertexData(nullptr)
-,_reverseDirection(false)
-{}
 
 ProgressTimer* ProgressTimer::create(Sprite* sp)
 {
@@ -67,19 +59,31 @@ ProgressTimer* ProgressTimer::create(Sprite* sp)
 
 bool ProgressTimer::initWithSprite(Sprite* sp)
 {
-    setPercentage(0.0f);
-    _vertexData = nullptr;
-    _vertexDataCount = 0;
-
     setAnchorPoint(Vec2(0.5f,0.5f));
-    _type = Type::RADIAL;
-    _reverseDirection = false;
     setMidpoint(Vec2(0.5f, 0.5f));
     setBarChangeRate(Vec2(1,1));
     setSprite(sp);
 
-    // shader state
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, sp->getTexture()));
+    auto& pipelieDescriptor = _customCommand.getPipelineDescriptor();
+    pipelieDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
+    pipelieDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
+    
+    //set vertexLayout according to V2F_C4B_T2F structure
+#define VERTEX_POSITION_SIZE 2
+#define VERTEX_TEXCOORD_SIZE 2
+#define VERTEX_COLOR_SIZE 4
+    uint32_t colorOffset = (VERTEX_POSITION_SIZE)*sizeof(float);
+    uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+    uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+    auto& vertexLayout = pipelieDescriptor.vertexLayout;
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32, 0, false);
+    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset, false);
+    vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, colorOffset, true);
+    vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
+    
+    _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
+    _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE_STRIP);
+    
     return true;
 }
 
@@ -189,35 +193,37 @@ Vec2 ProgressTimer::vertexFromAlphaPoint(Vec2 alpha)
     return ret;
 }
 
-void ProgressTimer::updateColor(void)
+void ProgressTimer::updateColor()
 {
-    if (!_sprite) {
+    if (!_sprite)
         return;
-    }
 
     if (_vertexData)
     {
-        Color4B sc = _sprite->getQuad().tl.colors;
+        const Color4B& sc = _sprite->getQuad().tl.colors;
         for (int i = 0; i < _vertexDataCount; ++i)
         {
             _vertexData[i].colors = sc;
-        }            
+        }
+        _customCommand.updateVertexBuffer(_vertexData, 0, sizeof(_vertexData[0]) * _vertexDataCount);
     }
 }
 
-void ProgressTimer::updateProgress(void)
+void ProgressTimer::updateProgress()
 {
-    switch (_type)
-    {
-    case Type::RADIAL:
-        updateRadial();
-        break;
-    case Type::BAR:
-        updateBar();
-        break;
-    default:
-        break;
-    }
+//    switch (_type)
+//    {
+//    case Type::RADIAL:
+//        updateRadial();
+//        break;
+//    case Type::BAR:
+//        updateBar();
+//        break;
+//    default:
+//        break;
+//    }
+    
+    updateBar();
 }
 
 void ProgressTimer::setAnchorPoint(const Vec2& anchorPoint)
@@ -344,7 +350,6 @@ void ProgressTimer::updateRadial(void)
 
         //    Now that we have the minimum magnitude we can use that to find our intersection
         hit = _midpoint+ ((percentagePt - _midpoint) * min_t);
-
     }
 
 
@@ -352,22 +357,24 @@ void ProgressTimer::updateRadial(void)
     //    the 3 is for the _midpoint, 12 o'clock point and hitpoint position.
 
     bool sameIndexCount = true;
-    if(_vertexDataCount != index + 3){
+    if (_vertexDataCount != index + 3)
+    {
         sameIndexCount = false;
         CC_SAFE_FREE(_vertexData);
         _vertexDataCount = 0;
     }
 
 
-    if(!_vertexData) {
+    if (!_vertexData)
+    {
         _vertexDataCount = index + 3;
         _vertexData = (V2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V2F_C4B_T2F));
         CCASSERT( _vertexData, "CCProgressTimer. Not enough memory");
     }
     updateColor();
 
-    if (!sameIndexCount) {
-
+    if (!sameIndexCount)
+    {
         //    First we populate the array with the _midpoint, then all
         //    vertices/texcoords/colors of the 12 'o clock start and edges and the hitpoint
         _vertexData[0].texCoords = textureCoordFromAlphaPoint(_midpoint);
@@ -376,7 +383,8 @@ void ProgressTimer::updateRadial(void)
         _vertexData[1].texCoords = textureCoordFromAlphaPoint(topMid);
         _vertexData[1].vertices = vertexFromAlphaPoint(topMid);
 
-        for(int i = 0; i < index; ++i){
+        for(int i = 0; i < index; ++i)
+        {
             Vec2 alphaPoint = boundaryTexCoord(i);
             _vertexData[i+2].texCoords = textureCoordFromAlphaPoint(alphaPoint);
             _vertexData[i+2].vertices = vertexFromAlphaPoint(alphaPoint);
@@ -386,7 +394,6 @@ void ProgressTimer::updateRadial(void)
     //    hitpoint will go last
     _vertexData[_vertexDataCount - 1].texCoords = textureCoordFromAlphaPoint(hit);
     _vertexData[_vertexDataCount - 1].vertices = vertexFromAlphaPoint(hit);
-
 }
 
 ///
@@ -400,9 +407,9 @@ void ProgressTimer::updateRadial(void)
 ///
 void ProgressTimer::updateBar(void)
 {
-    if (!_sprite) {
+    if (!_sprite)
         return;
-    }
+    
     float alpha = _percentage / 100.0f;
     Vec2 alphaOffset = Vec2(1.0f * (1.0f - _barChangeRate.x) + alpha * _barChangeRate.x, 1.0f * (1.0f - _barChangeRate.y) + alpha * _barChangeRate.y) * 0.5f;
     Vec2 min = _midpoint - alphaOffset;
@@ -430,7 +437,7 @@ void ProgressTimer::updateBar(void)
 
 
     if (!_reverseDirection) {
-        if(!_vertexData) {
+        if (! _vertexData) {
             _vertexDataCount = 4;
             _vertexData = (V2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V2F_C4B_T2F));
             CCASSERT( _vertexData, "CCProgressTimer. Not enough memory");
@@ -488,70 +495,63 @@ void ProgressTimer::updateBar(void)
         _vertexData[5].texCoords = textureCoordFromAlphaPoint(Vec2(max.x,min.y));
         _vertexData[5].vertices = vertexFromAlphaPoint(Vec2(max.x,min.y));
     }
+    
+    _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexDataCount);
     updateColor();
 }
 
 Vec2 ProgressTimer::boundaryTexCoord(char index)
 {
-    if (index < kProgressTextureCoordsCount) {
-        if (_reverseDirection) {
+    if (index < kProgressTextureCoordsCount)
+    {
+        if (_reverseDirection)
             return Vec2((kProgressTextureCoords>>(7-(index<<1)))&1,(kProgressTextureCoords>>(7-((index<<1)+1)))&1);
-        } else {
+        else
             return Vec2((kProgressTextureCoords>>((index<<1)+1))&1,(kProgressTextureCoords>>(index<<1))&1);
-        }
     }
-    return Vec2::ZERO;
-}
-
-void ProgressTimer::onDraw(const Mat4 &transform, uint32_t /*flags*/)
-{
-
-    getGLProgram()->use();
-    getGLProgram()->setUniformsForBuiltins(transform);
-
-    utils::setBlending(_sprite->getBlendFunc().src, _sprite->getBlendFunc().dst);
-
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _sprite->getTexture()->getName());
-
-    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]) , &_vertexData[0].vertices);
-    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);
-    glVertexAttribPointer( GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(_vertexData[0]), &_vertexData[0].colors);
-
-    if(_type == Type::RADIAL)
-    {
-        glDrawArrays(GL_TRIANGLE_FAN, 0, _vertexDataCount);
-        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_vertexDataCount);
-    }
-    else if (_type == Type::BAR)
-    {
-        if (!_reverseDirection) 
-        {
-            glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount);
-            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_vertexDataCount);
-        }
-        else 
-        {
-            glDrawArrays(GL_TRIANGLE_STRIP, 0, _vertexDataCount/2);
-            glDrawArrays(GL_TRIANGLE_STRIP, 4, _vertexDataCount/2);
-            // 2 draw calls
-            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(2,_vertexDataCount);
-        }
-    }
+    else
+        return Vec2::ZERO;
 }
 
 void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if( ! _vertexData || ! _sprite)
         return;
-
-    _customCommand.init(_globalZOrder, transform, flags);
-    _customCommand.func = CC_CALLBACK_0(ProgressTimer::onDraw, this, transform, flags);
-    renderer->addCommand(&_customCommand);
+    
+    //TODO: support rial
+    
+    
+    //TODO: GL::blendFunc( _sprite->getBlendFunc().src, _sprite->getBlendFunc().dst );
+    backend::BlendDescriptor& blendDescriptor = _customCommand.getPipelineDescriptor().blendDescriptor;
+    blendDescriptor.blendEnabled = true;
+    blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::ONE;
+    blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+    blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::ONE;
+    blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+    
+    backend::BindGroup bindGroup;
+    const cocos2d::Mat4& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    Mat4 finalMat = projectionMat * transform;
+    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    pipelineDescriptor.bindGroup.setUniform("a_MVPMatrix", finalMat.m, sizeof(finalMat.m));
+    pipelineDescriptor.bindGroup.setTexture("u_texture", 0, _sprite->getTexture()->getBackendTexture());
+    
+    if (!_reverseDirection)
+    {
+        _customCommand.init(_globalZOrder, transform, flags);
+        _customCommand.setVertexDrawInfo(0, _vertexDataCount);
+        renderer->addCommand(&_customCommand);
+    }
+    else
+    {
+        _customCommand.init(_globalZOrder, transform, flags);
+        _customCommand.setVertexDrawInfo(0, _vertexDataCount / 2);
+        renderer->addCommand(&_customCommand);
+        
+        _customCommand2 = _customCommand;
+        _customCommand2.setVertexDrawInfo(4, _vertexDataCount / 2);
+        renderer->addCommand(&_customCommand2);
+    }
 }
 
 

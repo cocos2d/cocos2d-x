@@ -43,8 +43,7 @@ THE SOFTWARE.
 #include "base/CCEventListenerAcceleration.h"
 #include "base/ccUTF8.h"
 #include "renderer/CCGLProgram.h"
-#include "renderer/backend/Device.h"
-#include "renderer/backend/ShaderModule.h"
+#include "renderer/CCShaderCache.h"
 #include "renderer/backend/Buffer.h"
 #include "renderer/shaders/positionColorNoMVP.vert"
 #include "renderer/shaders/positionColorNoMVP.frag"
@@ -297,49 +296,28 @@ __LayerRGBA::__LayerRGBA()
 #endif
 /// LayerColor
 
-LayerColor::MyRenderCommand::MyRenderCommand()
-{
-    auto device = backend::Device::getInstance();
-    _vertexBuffer = device->newBuffer(sizeof(_noMVPVertices) + sizeof(_squareColors), backend::BufferType::VERTEX, backend::BufferUsage::READ);
-    _indexBuffer = device->newBuffer(sizeof(_indicies), backend::BufferType::INDEX, backend::BufferUsage::READ);
-    _indexBuffer->updateData(_indicies, 0, sizeof(_indicies));
-    _indexCount = 6;
-}
-
-void LayerColor::MyRenderCommand::updateVeretxBuffer()
-{
-    uint8_t* data = (uint8_t*)malloc(sizeof(_noMVPVertices) + sizeof(_squareColors));
-    if (! data)
-        return;
-    
-    size_t offset = 0;
-    for (int i = 0; i < 4; ++i)
-    {
-        offset = i * (sizeof(_noMVPVertices[0]) + sizeof(_squareColors[0]) );
-        memcpy(data + offset, &_noMVPVertices[i], sizeof(_noMVPVertices[0]));
-        memcpy(data + offset + sizeof(_noMVPVertices[0]), &_squareColors[i], sizeof(_squareColors[0]));
-    }
-    _vertexBuffer->updateData(data, 0, sizeof(_noMVPVertices) + sizeof(_squareColors));
-    
-    free(data);
-}
-
 LayerColor::LayerColor()
 {
     // default blend function
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
     
-    auto& vertexLayout = _renderCommand.getPipelineDescriptor().vertexLayout;
+    auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
     vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
-    vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::FLOAT_R32G32B32A32, sizeof(_renderCommand._noMVPVertices[0]), false);
-    vertexLayout.setLayout(sizeof(_renderCommand._noMVPVertices[0]) + sizeof(_renderCommand._squareColors[0]), backend::VertexStepMode::VERTEX);
+    vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::FLOAT_R32G32B32A32, sizeof(_noMVPVertices[0]), false);
+    vertexLayout.setLayout(sizeof(_noMVPVertices[0]) + sizeof(_squareColors[0]), backend::VertexStepMode::VERTEX);
     
-    auto device = backend::Device::getInstance();
-    auto vs = device->createShaderModule(backend::ShaderStage::VERTEX, positionColor_vert);
-    auto fs = device->createShaderModule(backend::ShaderStage::FRAGMENT, positionColor_frag);
-    auto& pipelineDescriptor = _renderCommand.getPipelineDescriptor();
-    pipelineDescriptor.setVertexShader(vs);
-    pipelineDescriptor.setFragmentShader(fs);
+    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionColor_vert);
+    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionColor_frag);
+    
+    _customCommand.createIndexBuffer(sizeof(unsigned short), 6);
+    unsigned short indices[] = {0, 1, 2, 2, 1, 3};
+    _customCommand.updateIndexBuffer(indices, 0, sizeof(indices));
+    
+    _customCommand.createVertexBuffer(sizeof(_noMVPVertices[0]) + sizeof(_squareColors[0]), 4);
+    
+    _customCommand.setDrawType(CustomCommand::DrawType::ELEMENT);
+    _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE);
 }
     
 LayerColor::~LayerColor()
@@ -356,7 +334,7 @@ void LayerColor::setBlendFunc(const BlendFunc &var)
 {
     _blendFunc = var;
     
-    backend::BlendDescriptor& blendDescriptor = _renderCommand.getPipelineDescriptor().blendDescriptor;
+    backend::BlendDescriptor& blendDescriptor = _customCommand.getPipelineDescriptor().blendDescriptor;
     blendDescriptor.blendEnabled = true;
     
     blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::SRC_ALPHA;
@@ -472,21 +450,21 @@ void LayerColor::updateColor()
 {
     for (int i = 0; i < 4; i++ )
     {
-        _renderCommand._squareColors[i].r = _displayedColor.r / 255.0f;
-        _renderCommand._squareColors[i].g = _displayedColor.g / 255.0f;
-        _renderCommand._squareColors[i].b = _displayedColor.b / 255.0f;
-        _renderCommand._squareColors[i].a = _displayedOpacity / 255.0f;
+        _squareColors[i].r = _displayedColor.r / 255.0f;
+        _squareColors[i].g = _displayedColor.g / 255.0f;
+        _squareColors[i].b = _displayedColor.b / 255.0f;
+        _squareColors[i].a = _displayedOpacity / 255.0f;
     }
-    _renderCommand.updateVeretxBuffer();
+    updateVertexBuffer();
 }
 
 void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {    
-    _renderCommand.init(_globalZOrder);
-    renderer->addCommand(&_renderCommand);
+    _customCommand.init(_globalZOrder);
+    renderer->addCommand(&_customCommand);
     
     cocos2d::Mat4 projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    auto& pipelineDescriptor = _renderCommand.getPipelineDescriptor();
+    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
     pipelineDescriptor.bindGroup.setUniform("a_projection", projectionMat.m, sizeof(projectionMat.m));
     
     for(int i = 0; i < 4; ++i)
@@ -495,32 +473,28 @@ void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         pos.x = _squareVertices[i].x; pos.y = _squareVertices[i].y; pos.z = _positionZ;
         pos.w = 1;
         _modelViewTransform.transformVector(&pos);
-        _renderCommand._noMVPVertices[i] = Vec3(pos.x,pos.y,pos.z)/pos.w;
+        _noMVPVertices[i] = Vec3(pos.x,pos.y,pos.z)/pos.w;
     }
-    _renderCommand.updateVeretxBuffer();
+    updateVertexBuffer();
 }
 
-//void LayerColor::onDraw(const Mat4& transform, uint32_t /*flags*/)
-//{
-//    getGLProgram()->use();
-//    getGLProgram()->setUniformsForBuiltins(transform);
-//    
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-//    
-//    //
-//    // Attributes
-//    //
-//    glBindBuffer(GL_ARRAY_BUFFER, 0);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
-//
-//    utils::setBlending(_blendFunc.src, _blendFunc.dst);
-//
-//    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-//
-//    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
-//}
+void LayerColor::updateVertexBuffer()
+{
+    uint8_t* data = (uint8_t*)malloc(sizeof(_noMVPVertices) + sizeof(_squareColors));
+    if (! data)
+        return;
+
+    size_t offset = 0;
+    for (int i = 0; i < 4; ++i)
+    {
+        offset = i * (sizeof(_noMVPVertices[0]) + sizeof(_squareColors[0]) );
+        memcpy(data + offset, &_noMVPVertices[i], sizeof(_noMVPVertices[0]));
+        memcpy(data + offset + sizeof(_noMVPVertices[0]), &_squareColors[i], sizeof(_squareColors[0]));
+    }
+    _customCommand.updateVertexBuffer(data, 0, sizeof(_noMVPVertices) + sizeof(_squareColors));
+
+    free(data);
+}
 
 //
 // LayerGradient

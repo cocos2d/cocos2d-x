@@ -26,13 +26,39 @@
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/backend/Buffer.h"
+#include "renderer/backend/Device.h"
 
 NS_CC_BEGIN
 
 CustomCommand::CustomCommand()
-: func(nullptr)
+//: func(nullptr)
 {
     _type = RenderCommand::Type::CUSTOM_COMMAND;
+}
+
+CustomCommand& CustomCommand::operator=(const CustomCommand& rhs)
+{
+    RenderCommand::operator = (rhs);
+    
+    _vertexBuffer = rhs._vertexBuffer;
+    CC_SAFE_RETAIN(_vertexBuffer);
+    
+    _indexBuffer = rhs._indexBuffer;
+    CC_SAFE_RETAIN(_indexBuffer);
+    
+    _indexCount = rhs._indexCount;
+    _vertexCount = rhs._vertexCount;
+    
+    _vertexStart = rhs._vertexStart;
+    _vertexDrawCount = rhs._vertexDrawCount;
+    
+    _indexBufferOffset = rhs._indexBufferOffset;
+    _indexDrawCount = rhs._indexDrawCount;
+    
+    _drawType = rhs._drawType;
+    _primitiveType = rhs._primitiveType;
+    
+    return *this;
 }
 
 void CustomCommand::init(float depth, const cocos2d::Mat4 &modelViewTransform, uint32_t flags)
@@ -40,15 +66,41 @@ void CustomCommand::init(float depth, const cocos2d::Mat4 &modelViewTransform, u
     RenderCommand::init(depth, modelViewTransform, flags);
 }
 
-void CustomCommand::init(float depth, TextureAtlas *textureAtlas, const cocos2d::Mat4 &modelViewTransform, uint32_t flags)
-{
-    RenderCommand::init(depth, modelViewTransform, flags);
-    _textureAtlas = textureAtlas;
-}
-
 void CustomCommand::init(float globalOrder)
 {
     _globalOrder = globalOrder;
+}
+
+void CustomCommand::createVertexBuffer(size_t sizePerVertex, size_t count)
+{
+    CC_SAFE_RELEASE(_vertexBuffer);
+    
+    _vertexCount = count;
+    
+    auto device = backend::Device::getInstance();
+    _vertexBuffer = device->newBuffer(sizePerVertex * count, backend::BufferType::VERTEX, backend::BufferUsage::READ);
+}
+
+void CustomCommand::createIndexBuffer(size_t sizePerIndex, size_t count)
+{
+    CC_SAFE_RELEASE(_indexBuffer);
+    
+    _indexCount = count;
+    
+    auto device = backend::Device::getInstance();
+    _indexBuffer = device->newBuffer(sizePerIndex * count, backend::BufferType::INDEX, backend::BufferUsage::READ);
+}
+
+void CustomCommand::updateVertexBuffer(void* data, size_t offset, size_t length)
+{   
+    assert(_vertexBuffer);
+    _vertexBuffer->updateData(data, offset, length);
+}
+
+void CustomCommand::updateIndexBuffer(void* data, size_t offset, size_t length)
+{
+    assert(_indexBuffer);
+    _indexBuffer->updateData(data, offset, length);
 }
 
 CustomCommand::~CustomCommand()
@@ -57,27 +109,12 @@ CustomCommand::~CustomCommand()
     CC_SAFE_RELEASE(_indexBuffer);
 }
 
-void CustomCommand::execute()
-{
-    if(func)
-    {
-        func();
-    }
-}
-
-V3F_C4B_T2F_Quad* CustomCommand::getQuad()
-{
-    return _textureAtlas->getQuads();
-}
-
-const unsigned short* CustomCommand::getIndices() const
-{
-    return _textureAtlas->getIndices();
-}
-
-uint32_t CustomCommand::getQuadCount()
-{
-    return static_cast<uint32_t>(_textureAtlas->getTotalQuads());
-}
+//void CustomCommand::execute()
+//{
+//    if(func)
+//    {
+//        func();
+//    }
+//}
 
 NS_CC_END

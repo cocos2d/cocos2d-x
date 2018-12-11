@@ -40,9 +40,9 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "2d/CCCamera.h"
-#include "renderer/backend/Device.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/ccShaders.h"
+#include "renderer/CCShaderCache.h"
 
 NS_CC_BEGIN
 
@@ -375,12 +375,9 @@ void Sprite::setTexture(const std::string &filename)
 
 void Sprite::setTexture(Texture2D *texture)
 {
-    auto device = backend::Device::getInstance();
-    auto vs = device->createShaderModule(backend::ShaderStage::VERTEX, sprite_vert);
-    auto fs = device->createShaderModule(backend::ShaderStage::FRAGMENT, sprite_frag);
     auto& pipelineDescriptor = _trianglesCommand.getPipelineDescriptor();
-    pipelineDescriptor.setVertexShader(vs);
-    pipelineDescriptor.setFragmentShader(fs);
+    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(sprite_vert);
+    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(sprite_frag);
     
 #define VERTEX_POSITION_SIZE 3
 #define VERTEX_TEXCOORD_SIZE 2

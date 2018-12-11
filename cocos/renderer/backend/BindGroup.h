@@ -17,7 +17,7 @@ class BindGroup : public cocos2d::Ref
 public:
     struct UniformInfo
     {
-        UniformInfo(const std::string& _name, void* _data, uint32_t _size);
+        UniformInfo(const std::string& _name, const void* _data, uint32_t _size);
         UniformInfo() = default;
         UniformInfo(const UniformInfo&);
         ~UniformInfo();
@@ -46,7 +46,7 @@ public:
     
     void setTexture(const std::string& name, uint32_t index, Texture* texture);
     void setTextureArray(const std::string& name, const std::vector<uint32_t>& indices, const std::vector<Texture*> textures);
-    void setUniform(const std::string& name, void* data, uint32_t size);
+    void setUniform(const std::string& name, const void* data, uint32_t size);
     
     inline const std::unordered_map<std::string, UniformInfo>& getUniformInfos() const { return _uniformInfos; }
     inline const std::unordered_map<std::string, TextureInfo>& getTextureInfos() const { return _textureInfos; }

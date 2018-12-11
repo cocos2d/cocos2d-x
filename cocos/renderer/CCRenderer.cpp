@@ -583,12 +583,21 @@ void Renderer::drawCustomCommand(RenderCommand *command)
     
     beginRenderPass(command);
     _commandBuffer->setVertexBuffer(0, cmd->getVertexBuffer());
-    _commandBuffer->setIndexBuffer(cmd->getIndexBuffer());
     _commandBuffer->setBindGroup( &(cmd->getPipelineDescriptor().bindGroup) );
-    _commandBuffer->drawElements(backend::PrimitiveType::TRIANGLE,
-                                 backend::IndexFormat::U_SHORT,
-                                 cmd->getIndexCount(),
-                                 0);
+    
+    auto drawType = cmd->getDrawType();
+    if (CustomCommand::DrawType::ELEMENT == drawType)
+    {
+        _commandBuffer->setIndexBuffer(cmd->getIndexBuffer());
+        _commandBuffer->drawElements(cmd->getPrimitiveType(),
+                                     backend::IndexFormat::U_SHORT,
+                                     cmd->getIndexDrawCount(),
+                                     cmd->getIndexDrawBufferOffset());
+    }
+    else
+        _commandBuffer->drawArrays(cmd->getPrimitiveType(),
+                                   cmd->getVertexDrawStart(),
+                                   cmd->getVertexDrawCount());
     
     _commandBuffer->endRenderPass();
 }

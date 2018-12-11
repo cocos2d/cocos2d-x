@@ -3,7 +3,7 @@
 
 CC_BACKEND_BEGIN
 
-BindGroup::UniformInfo::UniformInfo(const std::string& _name, void* _data, uint32_t _size)
+BindGroup::UniformInfo::UniformInfo(const std::string& _name, const void* _data, uint32_t _size)
 : name(_name)
 , size(_size)
 {
@@ -104,7 +104,7 @@ void BindGroup::setTextureArray(const std::string& name, const std::vector<uint3
     _textureInfos[name] = std::move(textureInfo);
 }
 
-void BindGroup::setUniform(const std::string& name, void* data, uint32_t size)
+void BindGroup::setUniform(const std::string& name, const void* data, uint32_t size)
 {
     UniformInfo uniform(name, data, size);
     _uniformInfos[name] = std::move(uniform);

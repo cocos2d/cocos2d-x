@@ -244,22 +244,7 @@ All features from Layer are valid, plus the following new features:
 class CC_DLL LayerColor : public Layer, public BlendProtocol
 {
 public:
-    
-    class MyRenderCommand: public CustomCommand
-    {
-    public:
-        MyRenderCommand();
-        
-        void updateVeretxBuffer();
 
-    private:
-        friend class LayerColor;
-        
-        Vec3 _noMVPVertices[4];
-        Color4F  _squareColors[4];
-        unsigned short _indicies[6] = { 0, 1, 2, 2, 1, 3 };
-    };
-    
     /** Creates a fullscreen black layer.
      *
      * @return An autoreleased LayerColor object.
@@ -327,17 +312,17 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithColor(const Color4B& color);
 
 protected:
-//    void onDraw(const Mat4& transform, uint32_t flags);
 
     virtual void updateColor() override;
+    void updateVertexBuffer();
 
     BlendFunc _blendFunc;
     Vec2 _squareVertices[4];
-//    Color4F  _squareColors[4];
-//    CustomCommand _customCommand;
-//    Vec3 _noMVPVertices[4];
+    Color4F  _squareColors[4];
+    CustomCommand _customCommand;
+    Vec3 _noMVPVertices[4];
     
-    MyRenderCommand _renderCommand;
+//    MyRenderCommand _renderCommand;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);
 
