@@ -37,7 +37,6 @@
 #include "renderer/CCMaterial.h"
 #include "renderer/CCTechnique.h"
 #include "renderer/CCPass.h"
-//#include "renderer/CCRenderState.h"
 
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
@@ -170,6 +169,16 @@ Renderer::Renderer()
 
     // for the batched TriangleCommand
     _triBatchesToDraw = (TriBatchToDraw*) malloc(sizeof(_triBatchesToDraw[0]) * _triBatchesToDrawCapacity);
+    
+    _renderPassDescriptor.clearColorValue = {0, 0, 0, 1};
+    _renderPassDescriptor.needClearColor = true;
+    _renderPassDescriptor.needColorAttachment = true;
+    _renderPassDescriptor.clearDepthValue = 0;
+    _renderPassDescriptor.needClearDepth = true;
+    _renderPassDescriptor.needDepthAttachment = true;
+    _renderPassDescriptor.clearStencilValue = 0;
+    _renderPassDescriptor.needClearStencil = true;
+    _renderPassDescriptor.needStencilAttachment = true;
 }
 
 Renderer::~Renderer()
@@ -293,15 +302,12 @@ void Renderer::processRenderCommand(RenderCommand* command)
             flush();
             
             RenderInfo renderInfo;
-            renderInfo.renderPassDescriptor = command->getPipelineDescriptor().renderPassDescriptor;
             renderInfo.viewPort = command->getViewPort();
             _renderInfoStack.push(renderInfo);
+            clear(command->getPipelineDescriptor().renderPassDescriptor);
             
             int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
             visitRenderQueue(_renderGroups[renderQueueID]);
-            
-            //FIXME: should add a flag in group command to chedk if need to clear color.
-            _isFirstCommand = true;
             _renderInfoStack.pop();
         }
             break;
@@ -329,163 +335,39 @@ void Renderer::processRenderCommand(RenderCommand* command)
 
 void Renderer::visitRenderQueue(RenderQueue& queue)
 {
-    //todo: minggo
-    
-//    _commandBuffer->beginRenderPass(_defaultRenderPassDescriptor);
-//    _commandBuffer->endRenderPass();
-    
     //
     //Process Global-Z < 0 Objects
     //
-//    const auto& zNegQueue = queue.getSubQueue(RenderQueueBackend::QUEUE_GROUP::GLOBALZ_NEG);
-//    if (zNegQueue.size() > 0)
-//    {
-//        if(_isDepthTestFor2D)
-//        {
-//            glEnable(GL_DEPTH_TEST);
-//            glDepthMask(true);
-//            glEnable(GL_BLEND);
-//            RenderState::StateBlock::_defaultState->setDepthTest(true);
-//            RenderState::StateBlock::_defaultState->setDepthWrite(true);
-//            RenderState::StateBlock::_defaultState->setBlend(true);
-//        }
-//        else
-//        {
-//            glDisable(GL_DEPTH_TEST);
-//            glDepthMask(false);
-//            glEnable(GL_BLEND);
-//            RenderState::StateBlock::_defaultState->setDepthTest(false);
-//            RenderState::StateBlock::_defaultState->setDepthWrite(false);
-//            RenderState::StateBlock::_defaultState->setBlend(true);
-//        }
-//        glDisable(GL_CULL_FACE);
-//        RenderState::StateBlock::_defaultState->setCullFace(false);
-//
-//        for (const auto& zNegNext : zNegQueue)
-//        {
-//            processRenderCommand(zNegNext);
-//        }
-//        flush();
-//    }
+    doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_NEG));
     
     //
     //Process Opaque Object
     //
-//    const auto& opaqueQueue = queue.getSubQueue(RenderQueueBackend::QUEUE_GROUP::OPAQUE_3D);
-//    if (opaqueQueue.size() > 0)
-//    {
-//        //Clear depth to achieve layered rendering
-//        glEnable(GL_DEPTH_TEST);
-//        glDepthMask(true);
-//        glDisable(GL_BLEND);
-//        glEnable(GL_CULL_FACE);
-//        RenderState::StateBlock::_defaultState->setDepthTest(true);
-//        RenderState::StateBlock::_defaultState->setDepthWrite(true);
-//        RenderState::StateBlock::_defaultState->setBlend(false);
-//        RenderState::StateBlock::_defaultState->setCullFace(true);
-//
-//        for (const auto& opaqueNext : opaqueQueue)
-//        {
-//            processRenderCommand(opaqueNext);
-//        }
-//        flush();
-//    }
+    doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::OPAQUE_3D));
     
     //
     //Process 3D Transparent object
     //
-//    const auto& transQueue = queue.getSubQueue(RenderQueueBackend::QUEUE_GROUP::TRANSPARENT_3D);
-//    if (transQueue.size() > 0)
-//    {
-//        glEnable(GL_DEPTH_TEST);
-//        glDepthMask(false);
-//        glEnable(GL_BLEND);
-//        glEnable(GL_CULL_FACE);
-//
-//        RenderState::StateBlock::_defaultState->setDepthTest(true);
-//        RenderState::StateBlock::_defaultState->setDepthWrite(false);
-//        RenderState::StateBlock::_defaultState->setBlend(true);
-//        RenderState::StateBlock::_defaultState->setCullFace(true);
-//
-//
-//        for (const auto& transNext : transQueue)
-//        {
-//            processRenderCommand(transNext);
-//        }
-//        flush();
-//    }
+    doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::TRANSPARENT_3D));
     
     //
     //Process Global-Z = 0 Queue
     //
-    const auto& zZeroQueue = queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_ZERO);
-    if (zZeroQueue.size() > 0)
-    {
-//        if(_isDepthTestFor2D)
-//        {
-//            glEnable(GL_DEPTH_TEST);
-//            glDepthMask(true);
-//            glEnable(GL_BLEND);
-//
-//            RenderState::StateBlock::_defaultState->setDepthTest(true);
-//            RenderState::StateBlock::_defaultState->setDepthWrite(true);
-//            RenderState::StateBlock::_defaultState->setBlend(true);
-//        }
-//        else
-//        {
-//            glDisable(GL_DEPTH_TEST);
-//            glDepthMask(false);
-//            glEnable(GL_BLEND);
-//
-//            RenderState::StateBlock::_defaultState->setDepthTest(false);
-//            RenderState::StateBlock::_defaultState->setDepthWrite(false);
-//            RenderState::StateBlock::_defaultState->setBlend(true);
-//        }
-//        glDisable(GL_CULL_FACE);
-//        RenderState::StateBlock::_defaultState->setCullFace(false);
-        
-        for (const auto& zZeroNext : zZeroQueue)
-        {
-            processRenderCommand(zZeroNext);
-        }
-        flush();
-    }
+    doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_ZERO));
     
     //
     //Process Global-Z > 0 Queue
     //
-//    const auto& zPosQueue = queue.getSubQueue(RenderQueueBackend::QUEUE_GROUP::GLOBALZ_POS);
-//    if (zPosQueue.size() > 0)
-//    {
-//        if(_isDepthTestFor2D)
-//        {
-//            glEnable(GL_DEPTH_TEST);
-//            glDepthMask(true);
-//            glEnable(GL_BLEND);
-//
-//            RenderState::StateBlock::_defaultState->setDepthTest(true);
-//            RenderState::StateBlock::_defaultState->setDepthWrite(true);
-//            RenderState::StateBlock::_defaultState->setBlend(true);
-//        }
-//        else
-//        {
-//            glDisable(GL_DEPTH_TEST);
-//            glDepthMask(false);
-//            glEnable(GL_BLEND);
-//
-//            RenderState::StateBlock::_defaultState->setDepthTest(false);
-//            RenderState::StateBlock::_defaultState->setDepthWrite(false);
-//            RenderState::StateBlock::_defaultState->setBlend(true);
-//        }
-//        glDisable(GL_CULL_FACE);
-//        RenderState::StateBlock::_defaultState->setCullFace(false);
-//
-//        for (const auto& zPosNext : zPosQueue)
-//        {
-//            processRenderCommand(zPosNext);
-//        }
-//        flush();
-//    }
+    doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_POS));
+}
+
+void Renderer::doVisitRenderQueue(const std::vector<RenderCommand*>& renderCommands)
+{
+    for (const auto& command : renderCommands)
+    {
+        processRenderCommand(command);
+    }
+    flush();
 }
 
 void Renderer::render()
@@ -509,13 +391,12 @@ void Renderer::render()
 void Renderer::beginFrame()
 {
     _commandBuffer->beginFrame();
-    _isFirstCommand = true;
+    clear(_renderPassDescriptor);
 }
 
 void Renderer::endFrame()
 {
     _commandBuffer->endFrame();
-    _isFirstCommand = false;
 }
 
 void Renderer::clean()
@@ -727,8 +608,6 @@ void Renderer::flush3D()
 {
     if (_lastBatchedMeshCommand)
     {
-//        CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_BATCH_MESH");
-
         _lastBatchedMeshCommand->postBatchDraw();
         _lastBatchedMeshCommand = nullptr;
     }
@@ -778,6 +657,7 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 void Renderer::setClearColor(const Color4F &clearColor)
 {
     _clearColor = clearColor;
+    _renderPassDescriptor.clearColorValue = {clearColor.r, clearColor.g, clearColor.b, clearColor.a};
 }
 
 void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, const backend::RenderPassDescriptor& renderPassDescriptor)
@@ -828,24 +708,8 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
 
 void Renderer::beginRenderPass(RenderCommand* cmd)
 {
-    backend::RenderPassDescriptor* renderPassDescriptor = nullptr;
-    if (_renderInfoStack.empty())
-        renderPassDescriptor = &cmd->getPipelineDescriptor().renderPassDescriptor;
-    else
-        renderPassDescriptor = &(_renderInfoStack.top().renderPassDescriptor);
-    
-    // Begine render pass.
-    if (_isFirstCommand)
-    {
-        _isFirstCommand = false;
-        
-        auto tmpRenderPassDescriptor = *renderPassDescriptor;
-        tmpRenderPassDescriptor.needClearColor = true;
-        tmpRenderPassDescriptor.clearColorValue = {_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a};
-        _commandBuffer->beginRenderPass(tmpRenderPassDescriptor);
-    }
-    else
-        _commandBuffer->beginRenderPass(*renderPassDescriptor);
+    const auto& renderPassDescriptor = cmd->getPipelineDescriptor().renderPassDescriptor;
+    _commandBuffer->beginRenderPass(renderPassDescriptor);
     
     // Set viewport.
     if (_renderInfoStack.empty())
@@ -860,7 +724,13 @@ void Renderer::beginRenderPass(RenderCommand* cmd)
     }
     
     // Set render pipeline.
-    setRenderPipeline(cmd->getPipelineDescriptor(), *renderPassDescriptor);
+    setRenderPipeline(cmd->getPipelineDescriptor(), renderPassDescriptor);
+}
+
+void Renderer::clear(const backend::RenderPassDescriptor& descriptor)
+{
+    _commandBuffer->beginRenderPass(descriptor);
+    _commandBuffer->endRenderPass();
 }
 
 NS_CC_END

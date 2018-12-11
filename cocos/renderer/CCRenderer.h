@@ -215,12 +215,14 @@ protected:
 
     void processRenderCommand(RenderCommand* command);
     void visitRenderQueue(RenderQueue& queue);
+    void doVisitRenderQueue(const std::vector<RenderCommand*>&);
 
     void fillVerticesAndIndices(const TrianglesCommand* cmd);
     void cleanVerticesAndIncices();
     void beginRenderPass(RenderCommand*);
     
     void setRenderPipeline(const PipelineDescriptor&, const backend::RenderPassDescriptor&);
+    void clear(const backend::RenderPassDescriptor&);
 
     /* clear color set outside be used in setGLDefaultValues() */
     Color4F _clearColor = Color4F::BLACK;
@@ -239,11 +241,11 @@ protected:
     backend::Buffer* _indexBuffer = nullptr;
     
     backend::CommandBuffer* _commandBuffer = nullptr;
+    backend::RenderPassDescriptor _renderPassDescriptor;
     
     // Internal structure that has the information for some global render information.
     struct RenderInfo
     {
-        backend::RenderPassDescriptor renderPassDescriptor;
         std::array<int, 4> viewPort;
     };
     std::stack<struct RenderInfo> _renderInfoStack;
@@ -271,9 +273,7 @@ protected:
     //the flag for checking whether renderer is rendering
     bool _isRendering = false;
     bool _isDepthTestFor2D = false;
-    
-    bool _isFirstCommand = false;
-    
+        
     GroupCommandManager* _groupCommandManager = nullptr;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
