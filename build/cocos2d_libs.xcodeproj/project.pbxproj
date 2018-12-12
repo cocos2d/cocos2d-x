@@ -2989,18 +2989,20 @@
 		ED28C21C219E629B0078D854 /* TextureGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureGL.cpp; sourceTree = "<group>"; };
 		ED28C21D219E629B0078D854 /* DeviceGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeviceGL.cpp; sourceTree = "<group>"; };
 		ED28C21E219E629B0078D854 /* CommandBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommandBuffer.cpp; sourceTree = "<group>"; };
+		ED5C8CBC21C0B3C100F280A7 /* label_distanceFieldGlow.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = label_distanceFieldGlow.frag; sourceTree = "<group>"; };
+		ED5C8CBD21C0B5B700F280A7 /* positionColor.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = positionColor.frag; sourceTree = "<group>"; };
+		ED5C8CBE21C0B5B800F280A7 /* positionColor.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = positionColor.vert; sourceTree = "<group>"; };
 		ED682BB9213F5FC6001BF6CB /* libuv_a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv_a.a; path = ../external/uv/prebuilt/mac/libuv_a.a; sourceTree = "<group>"; };
 		ED682BC0213F63CB001BF6CB /* libuv_a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv_a.a; path = ../external/uv/prebuilt/ios/libuv_a.a; sourceTree = "<group>"; };
 		ED682BC2213F6C7A001BF6CB /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../external/websockets/prebuilt/tvos/libwebsockets.a; sourceTree = "<group>"; };
 		ED682BC4213F6CBE001BF6CB /* libuv_a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv_a.a; path = ../external/uv/prebuilt/tvos/libuv_a.a; sourceTree = "<group>"; };
 		ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCNodeGrid.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeGrid.h; sourceTree = "<group>"; };
+		EDDDA78321B0E1C2008926F0 /* label_distanceNormal.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = label_distanceNormal.frag; sourceTree = "<group>"; };
+		EDDDA78421B11B0C008926F0 /* label_outline.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = label_outline.frag; sourceTree = "<group>"; };
 		EDF9D8A521AE9677004374AB /* positionTextureColor.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = positionTextureColor.frag; sourceTree = "<group>"; };
 		EDF9D8A621AE9678004374AB /* positionTextureColor.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = positionTextureColor.vert; sourceTree = "<group>"; };
-		EDF9D8A721AF8CD1004374AB /* sprite.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sprite.vert; sourceTree = "<group>"; };
-		EDF9D8A821AF8CD1004374AB /* sprite.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sprite.frag; sourceTree = "<group>"; };
 		EDF9D8A921AF92C5004374AB /* label_normal.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = label_normal.frag; sourceTree = "<group>"; };
-		EDF9D8AA21AF92C5004374AB /* label_common.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = label_common.vert; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4001,12 +4003,14 @@
 		460D4CC821A545420075726E /* shaders */ = {
 			isa = PBXGroup;
 			children = (
-				EDF9D8AA21AF92C5004374AB /* label_common.vert */,
+				ED5C8CBC21C0B3C100F280A7 /* label_distanceFieldGlow.frag */,
+				EDDDA78421B11B0C008926F0 /* label_outline.frag */,
+				EDDDA78321B0E1C2008926F0 /* label_distanceNormal.frag */,
 				EDF9D8A921AF92C5004374AB /* label_normal.frag */,
-				EDF9D8A821AF8CD1004374AB /* sprite.frag */,
-				EDF9D8A721AF8CD1004374AB /* sprite.vert */,
 				EDF9D8A521AE9677004374AB /* positionTextureColor.frag */,
 				EDF9D8A621AE9678004374AB /* positionTextureColor.vert */,
+				ED5C8CBD21C0B5B700F280A7 /* positionColor.frag */,
+				ED5C8CBE21C0B5B800F280A7 /* positionColor.vert */,
 			);
 			path = shaders;
 			sourceTree = "<group>";

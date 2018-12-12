@@ -3,8 +3,6 @@
  *
  * Copyright (c) 2011 Ricardo Quesada
  * Copyright (c) 2012 Zynga Inc.
- * Copyright (c) 2018 Xiamen Yaji Software Co., Ltd.
- * http://www.cocos2d-x.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,25 +23,22 @@
  * THE SOFTWARE.
  */
 
-const char* sprite_vert = R"(
+const char* positionColor_vert = R"(
 attribute vec4 a_position;
-attribute vec2 a_texCoord;
 attribute vec4 a_color;
 
-uniform mat4 a_projection;
+uniform mat4 u_MVPMatrix;
 
 #ifdef GL_ES
 varying lowp vec4 v_fragmentColor;
-varying mediump vec2 v_texCoord;
 #else
 varying vec4 v_fragmentColor;
-varying vec2 v_texCoord;
 #endif
 
 void main()
 {
-    gl_Position = a_projection * a_position;
+    gl_Position = u_MVPMatrix *  a_position;
     v_fragmentColor = a_color;
-    v_texCoord = a_texCoord;
 }
 )";
+

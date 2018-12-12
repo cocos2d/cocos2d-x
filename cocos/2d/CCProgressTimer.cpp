@@ -533,7 +533,7 @@ void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
     const cocos2d::Mat4& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     Mat4 finalMat = projectionMat * transform;
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    pipelineDescriptor.bindGroup.setUniform("a_MVPMatrix", finalMat.m, sizeof(finalMat.m));
+    pipelineDescriptor.bindGroup.setUniform("u_MVPMatrix", finalMat.m, sizeof(finalMat.m));
     pipelineDescriptor.bindGroup.setTexture("u_texture", 0, _sprite->getTexture()->getBackendTexture());
     
     if (!_reverseDirection)

@@ -354,7 +354,7 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     //Process Global-Z = 0 Queue
     //
     doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_ZERO));
-    
+        
     //
     //Process Global-Z > 0 Queue
     //
@@ -364,10 +364,10 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
 void Renderer::doVisitRenderQueue(const std::vector<RenderCommand*>& renderCommands)
 {
     for (const auto& command : renderCommands)
-    {
+        {
         processRenderCommand(command);
-    }
-    flush();
+        }
+        flush();
 }
 
 void Renderer::render()

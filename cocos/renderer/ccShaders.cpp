@@ -101,11 +101,13 @@ NS_CC_BEGIN
 #include "renderer/ccShader_LayerRadialGradient.frag"
 
 //backend shader file
-#include "renderer/shaders/sprite.vert"
-#include "renderer/shaders/sprite.frag"
+#include "renderer/shaders/positionColor.vert"
+#include "renderer/shaders/positionColor.frag"
 #include "renderer/shaders/positionTextureColor.vert"
 #include "renderer/shaders/positionTextureColor.frag"
-#include "renderer/shaders/label_common.vert"
 #include "renderer/shaders/label_normal.frag"
+#include "renderer/shaders/label_distanceNormal.frag"
+#include "renderer/shaders/label_outline.frag"
+#include "renderer/shaders/label_distanceFieldGlow.frag"
 
 NS_CC_END
