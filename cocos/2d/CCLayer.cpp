@@ -464,7 +464,7 @@ void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     
     cocos2d::Mat4 projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    pipelineDescriptor.bindGroup.setUniform("a_projection", projectionMat.m, sizeof(projectionMat.m));
+    pipelineDescriptor.bindGroup.setUniform("u_MVPMatrix", projectionMat.m, sizeof(projectionMat.m));
     
     for(int i = 0; i < 4; ++i)
     {

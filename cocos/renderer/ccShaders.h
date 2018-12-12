@@ -25,7 +25,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#pragma once
+#ifndef __CCSHADER_H__
+#define __CCSHADER_H__
 /// @cond DO_NOT_SHOW
 
 #include "platform/CCGL.h"
@@ -100,14 +101,14 @@ extern CC_DLL const GLchar* ccPosition_vert;
 extern CC_DLL const GLchar* ccShader_LayerRadialGradient_frag;
 
 //backend shader file
-extern CC_DLL const GLchar * sprite_vert;
-extern CC_DLL const GLchar * sprite_frag;
-extern CC_DLL const GLchar * positionTextureColor_vert;
-extern CC_DLL const GLchar * positionTextureColor_frag;
-extern CC_DLL const GLchar * label_common_vert;
-extern CC_DLL const GLchar * label_normal_frag;
 extern CC_DLL const GLchar * positionColor_vert;
 extern CC_DLL const GLchar * positionColor_frag;
+extern CC_DLL const GLchar * positionTextureColor_vert;
+extern CC_DLL const GLchar * positionTextureColor_frag;
+extern CC_DLL const GLchar * label_normal_frag;
+extern CC_DLL const GLchar * label_distanceNormal_frag;
+extern CC_DLL const GLchar * labelOutline_frag;
+extern CC_DLL const GLchar * labelDistanceFieldGlow_frag;
 
 NS_CC_END
 /**
@@ -115,3 +116,4 @@ NS_CC_END
  @}
  */
 /// @endcond
+#endif /* __CCSHADER_H__ */

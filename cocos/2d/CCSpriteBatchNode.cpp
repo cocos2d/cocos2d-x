@@ -412,7 +412,7 @@ void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
     cocos2d::Mat4 matrixProjection = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     cocos2d::Mat4 matrixMVP = matrixProjection * transform;
     auto& pipelineDescriptor = _batchCommand.getPipelineDescriptor();
-    pipelineDescriptor.bindGroup.setUniform("a_MVPMatrix", matrixMVP.m, sizeof(matrixMVP.m));
+    pipelineDescriptor.bindGroup.setUniform("u_MVPMatrix", matrixMVP.m, sizeof(matrixMVP.m));
     pipelineDescriptor.bindGroup.setTexture("u_texture", 0, _textureAtlas->getTexture()->getBackendTexture());
 
     _batchCommand.init(_globalZOrder, _textureAtlas, transform, flags);

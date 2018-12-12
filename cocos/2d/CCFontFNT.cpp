@@ -524,13 +524,15 @@ void BMFontConfiguration::parseCommonArguments(const char* line)
     tmp = strstr(tmp, "scaleW=") + 7;
     sscanf(tmp, "%d", &value);
 
-    int maxTextureSize = Configuration::getInstance()->getMaxTextureSize();
-    CCASSERT(value <= maxTextureSize, "CCLabelBMFont: page can't be larger than supported");
+    //TODO coulsonwang
+//    int maxTextureSize = Configuration::getInstance()->getMaxTextureSize();
+//    CCASSERT(value <= maxTextureSize, "CCLabelBMFont: page can't be larger than supported");
 
     // scaleH. sanity check
     tmp = strstr(tmp, "scaleH=") + 7;
     sscanf(tmp, "%d", &value);
-    CCASSERT(value <= maxTextureSize, "CCLabelBMFont: page can't be larger than supported");
+    //TODO coulsonwang
+//    CCASSERT(value <= maxTextureSize, "CCLabelBMFont: page can't be larger than supported");
 
     // pages. sanity check
     tmp = strstr(tmp, "pages=") + 6;

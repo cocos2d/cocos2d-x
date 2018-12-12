@@ -53,6 +53,7 @@ FontAtlas::FontAtlas(Font &theFont)
 , _rendererRecreatedListener(nullptr)
 , _antialiasEnabled(true)
 , _currLineHeight(0)
+, _currentPageDataRGBA(nullptr)
 {
     _font->retain();
 
@@ -91,6 +92,8 @@ void FontAtlas::reinit()
         _currentPageData = nullptr;
     }
     
+    CC_SAFE_DELETE_ARRAY(_currentPageDataRGBA);
+    
     auto texture = new (std::nothrow) Texture2D;
     
     _currentPageDataSize = CacheTextureWidth * CacheTextureHeight;
@@ -100,15 +103,27 @@ void FontAtlas::reinit()
     {
         _lineHeight += 2 * outlineSize;
         _currentPageDataSize *= 2;
+        
+        _currentPageDataSizeRGBA = _currentPageDataSize * 2;
+        _currentPageDataRGBA = new (std::nothrow) unsigned char[_currentPageDataSizeRGBA];
+        memset(_currentPageDataRGBA, 0, _currentPageDataSizeRGBA);
     }
     
     _currentPageData = new (std::nothrow) unsigned char[_currentPageDataSize];
     memset(_currentPageData, 0, _currentPageDataSize);
     
-    auto  pixelFormat = outlineSize > 0 ? Texture2D::PixelFormat::AI88 : Texture2D::PixelFormat::A8;
-    texture->initWithData(_currentPageData, _currentPageDataSize,
-                          pixelFormat, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth,CacheTextureHeight) );
-    
+    //metal do no support AI88 format
+    if(outlineSize > 0)
+    {
+        texture->initWithData(_currentPageDataRGBA, _currentPageDataSizeRGBA,
+                              Texture2D::PixelFormat::RGBA8888, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth,CacheTextureHeight) );
+    }
+    else
+    {
+        texture->initWithData(_currentPageData, _currentPageDataSize,
+                              Texture2D::PixelFormat::A8, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth,CacheTextureHeight) );
+        
+    }
     addTexture(texture,0);
     texture->release();
 }
@@ -382,17 +397,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u32string& utf32Text)
                 _currentPageOrigX = 0;
                 if (_currentPageOrigY + _lineHeight + _letterPadding + _letterEdgeExtend >= CacheTextureHeight)
                 {
-                    unsigned char *data = nullptr;
-                    if (pixelFormat == Texture2D::PixelFormat::AI88)
-                    {
-                        data = _currentPageData + CacheTextureWidth * (int)startY * 2;
-                    }
-                    else
-                    {
-                        data = _currentPageData + CacheTextureWidth * (int)startY;
-                    }
-                    _atlasTextures[_currentPage]->updateWithData(data, 0, startY,
-                        CacheTextureWidth, CacheTextureHeight - startY);
+                    updateTextureContent(pixelFormat, startY);
 
                     startY = 0.0f;
 
@@ -452,18 +457,30 @@ bool FontAtlas::prepareLetterDefinitions(const std::u32string& utf32Text)
         _letterDefinitions[it.first] = tempDef;
     }
 
+    updateTextureContent(pixelFormat, startY);
+    return true;
+}
+
+void FontAtlas::updateTextureContent(Texture2D::PixelFormat format, int startY)
+{
     unsigned char *data = nullptr;
-    if (pixelFormat == Texture2D::PixelFormat::AI88)
+    auto outlineSize = _fontFreeType->getOutlineSize();
+    if (outlineSize > 0 && format == Texture2D::PixelFormat::AI88)
     {
+        int nLen = CacheTextureWidth * (_currentPageOrigY - startY + _currLineHeight);
         data = _currentPageData + CacheTextureWidth * (int)startY * 2;
+        for (auto i = 0; i < nLen; i++)
+        {
+            _currentPageDataRGBA[i*4] = data[i*2];
+            _currentPageDataRGBA[i*4+3] = data[i*2+1];
+        }
+        _atlasTextures[_currentPage]->updateWithData(_currentPageDataRGBA, 0, startY, CacheTextureWidth, _currentPageOrigY - startY + _currLineHeight);
     }
     else
     {
         data = _currentPageData + CacheTextureWidth * (int)startY;
+       _atlasTextures[_currentPage]->updateWithData(data, 0, startY, CacheTextureWidth, _currentPageOrigY - startY + _currLineHeight);
     }
-    _atlasTextures[_currentPage]->updateWithData(data, 0, startY, CacheTextureWidth, _currentPageOrigY - startY + _currLineHeight);
-
-    return true;
 }
 
 void FontAtlas::addTexture(Texture2D *texture, int slot)

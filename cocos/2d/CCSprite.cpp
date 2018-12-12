@@ -376,8 +376,8 @@ void Sprite::setTexture(const std::string &filename)
 void Sprite::setTexture(Texture2D *texture)
 {
     auto& pipelineDescriptor = _trianglesCommand.getPipelineDescriptor();
-    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(sprite_vert);
-    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(sprite_frag);
+    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
+    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
     
 #define VERTEX_POSITION_SIZE 3
 #define VERTEX_TEXCOORD_SIZE 2
@@ -1092,7 +1092,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     backend::BindGroup bindGroup;
     cocos2d::Mat4 projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     auto& pipelineDescriptor = _trianglesCommand.getPipelineDescriptor();
-    pipelineDescriptor.bindGroup.setUniform("a_projection", projectionMat.m, sizeof(projectionMat.m));
+    pipelineDescriptor.bindGroup.setUniform("u_MVPMatrix", projectionMat.m, sizeof(projectionMat.m));
     pipelineDescriptor.bindGroup.setTexture("u_texture", 0, _texture->getBackendTexture());
     
     _trianglesCommand.init(_globalZOrder,

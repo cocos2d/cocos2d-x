@@ -411,7 +411,7 @@ void ParticleBatchNode::draw(Renderer* renderer, const Mat4 & transform, uint32_
     const cocos2d::Mat4& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     Mat4 finalMat = projectionMat * transform;
     auto& bindGroup = command.getPipelineDescriptor().bindGroup;
-    bindGroup.setUniform("a_projection", finalMat.m, sizeof(finalMat.m));
+    bindGroup.setUniform("u_MVPMatrix", finalMat.m, sizeof(finalMat.m));
     
     //TODO: minggo: don't set blend factor every frame.
     auto& blendDescriptor = command.getPipelineDescriptor().blendDescriptor;

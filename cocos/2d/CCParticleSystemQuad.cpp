@@ -50,8 +50,8 @@ NS_CC_BEGIN
 ParticleSystemQuad::ParticleSystemQuad()
 {
     auto& pipelieDescriptor = _quadCommand.getPipelineDescriptor();
-    pipelieDescriptor.vertexShader = ShaderCache::newVertexShaderModule(sprite_vert);
-    pipelieDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(sprite_frag);
+    pipelieDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
+    pipelieDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
     
     //set vertexLayout according to V3F_C4B_T2F structure
 #define VERTEX_POSITION_SIZE 3
@@ -441,9 +441,9 @@ void ParticleSystemQuad::draw(Renderer *renderer, const Mat4 &transform, uint32_
         bindGroup.setTexture("u_texture", 0, _texture->getBackendTexture());
         
         cocos2d::Mat4 projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        bindGroup.setUniform("a_projection", projectionMat.m, sizeof(projectionMat.m));
+        bindGroup.setUniform("u_MVPMatrix", projectionMat.m, sizeof(projectionMat.m));
         
-        _quadCommand.init(_globalZOrder, _blendFunc, _quads, _particleCount, transform, flags);
+        _quadCommand.init(_globalZOrder, _texture, _quads, _particleCount, transform, flags);
         renderer->addCommand(&_quadCommand);
     }
 }

@@ -55,15 +55,20 @@ QuadCommand::~QuadCommand()
 void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
                        const Mat4& mv, uint32_t flags)
 {
-    if (quadCount * 6 > _indexSize)
-        reIndex((int)quadCount*6);
-
-    Triangles triangles;
-    triangles.verts = &quads->tl;
-    triangles.vertCount = (int)quadCount * 4;
-    triangles.indices = __indices;
-    triangles.indexCount = (int)quadCount * 6;
-   TrianglesCommand::init(globalOrder, textureID, glProgramState, blendType, triangles, mv, flags);
+    //TOOD coulsonwang
+    cocos2d::log("Error in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
+//    CCASSERT(glProgramState, "Invalid GLProgramState");
+//    CCASSERT(glProgramState->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
+//
+//    if (quadCount * 6 > _indexSize)
+//        reIndex((int)quadCount*6);
+//
+//    Triangles triangles;
+//    triangles.verts = &quads->tl;
+//    triangles.vertCount = (int)quadCount * 4;
+//    triangles.indices = __indices;
+//    triangles.indexCount = (int)quadCount * 6;
+//    TrianglesCommand::init(globalOrder, textureID, glProgramState, blendType, triangles, mv, flags);
 }
 
 void QuadCommand::reIndex(int indicesCount)
@@ -107,11 +112,12 @@ void QuadCommand::init(float globalOrder, Texture2D* texture, GLProgramState* gl
     _alphaTextureID = texture->getAlphaTextureName();
 }
 
-void QuadCommand::init(float globalOrder, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount, const Mat4& mv, uint32_t flags)
+
+void QuadCommand::init(float globalOrder, Texture2D *texture, V3F_C4B_T2F_Quad *quads, ssize_t quadCount, const Mat4 &mv, uint32_t flags)
 {
     if (quadCount * 6 > _indexSize)
-        reIndex((int)quadCount*6);
-
+    reIndex((int)quadCount*6);
+    
     Triangles triangles;
     triangles.verts = &quads->tl;
     triangles.vertCount = (int)quadCount * 4;
@@ -126,6 +132,7 @@ void QuadCommand::init(float globalOrder, const BlendFunc& blendType, V3F_C4B_T2
     blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
     blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::ONE;
     blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+    _alphaTextureID = texture->getAlphaTextureName();
 }
 
 NS_CC_END

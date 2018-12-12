@@ -52,8 +52,8 @@ NS_CC_BEGIN
 TextureAtlas::TextureAtlas()
 {
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(sprite_vert);
-    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(sprite_frag);
+    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
+    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
     
 #define VERTEX_POSITION_SIZE 3
 #define VERTEX_TEXCOORD_SIZE 2
