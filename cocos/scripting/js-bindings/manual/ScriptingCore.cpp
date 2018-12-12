@@ -1430,7 +1430,7 @@ bool ScriptingCore::handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::Eve
     {
         jsval dataVal[2];
         dataVal[0] = OBJECT_TO_JSVAL(jsretArr);
-        dataVal[1] = OBJECT_TO_JSVAL(jsb_ref_get_or_create_jsobject(_cx, event, typeClassEvent, "cocos2d::Touch"));
+        dataVal[1] = OBJECT_TO_JSVAL(jsb_ref_get_or_create_jsobject(_cx, event, typeClassEvent, "cocos2d::EventTouch"));
         ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), funcName.c_str(), 2, dataVal, jsvalRet);
         // event is created on the heap and its destructor won't be invoked, so we need to remove JS object manually
         removeJSObject(_cx, event);
