@@ -241,6 +241,7 @@ public:
     
 private:
     friend class ParticleBatchNode;
+    friend class AtlasNode;
 
     void renderCommand();
 

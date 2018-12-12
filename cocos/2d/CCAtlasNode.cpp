@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCGLProgram.h"
+#include "base/ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -40,15 +40,6 @@ NS_CC_BEGIN
 // AtlasNode - Creation & Init
 
 AtlasNode::AtlasNode()
-: _itemsPerRow(0)
-, _itemsPerColumn(0)
-, _itemWidth(0)
-, _itemHeight(0)
-, _textureAtlas(nullptr)
-, _isOpacityModifyRGB(false)
-, _quadsToDraw(0)
-, _uniformColor(0)
-, _ignoreContentScaleFactor(false)
 {
 }
 
@@ -103,9 +94,6 @@ bool AtlasNode::initWithTexture(Texture2D* texture, int tileWidth, int tileHeigh
 
     _quadsToDraw = itemsToRender;
 
-    // shader stuff
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, texture));
-
     return true;
 }
 
@@ -132,12 +120,30 @@ void AtlasNode::updateAtlasValues()
 
 // AtlasNode - draw
 void AtlasNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    // ETC1 ALPHA supports.
-    _quadCommand.init(_globalZOrder, _textureAtlas->getTexture(), getGLProgramState(), _blendFunc, _textureAtlas->getQuads(), _quadsToDraw, transform, flags);
+{    
+    if( _textureAtlas->getTotalQuads() == 0 )
+    {
+        return;
+    }
     
-    renderer->addCommand(&_quadCommand);
-
+    auto& command = _textureAtlas->_customCommand;
+    command.init(_globalZOrder);
+    
+    // Texture is set in TextureAtlas.
+    const cocos2d::Mat4& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    Mat4 finalMat = projectionMat * transform;
+    auto& bindGroup = command.getPipelineDescriptor().bindGroup;
+    bindGroup.setUniform("u_MVPMatrix", finalMat.m, sizeof(finalMat.m));
+    
+    //TODO: minggo: don't set blend factor every frame.
+    auto& blendDescriptor = command.getPipelineDescriptor().blendDescriptor;
+    blendDescriptor.blendEnabled = true;
+    blendDescriptor.sourceRGBBlendFactor = blendDescriptor.sourceAlphaBlendFactor = utils::toBackendBlendFactor(_blendFunc.src);
+    blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor = utils::toBackendBlendFactor(_blendFunc.dst);
+    
+    _textureAtlas->drawQuads();
+    
+    renderer->addCommand(&command);
 }
 
 // AtlasNode - RGBA protocol
@@ -246,7 +252,7 @@ TextureAtlas * AtlasNode::getTextureAtlas() const
     return _textureAtlas;
 }
 
-ssize_t AtlasNode::getQuadsToDraw() const
+size_t AtlasNode::getQuadsToDraw() const
 {
     return _quadsToDraw;
 }
