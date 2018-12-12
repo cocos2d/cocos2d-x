@@ -35,13 +35,9 @@ THE SOFTWARE.
 #include "base/CCEventType.h"
 #include "base/CCDirector.h"
 #include "base/CCConfiguration.h"
-#include "base/CCEventDispatcher.h"
-#include "base/CCEventListenerCustom.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTexture2D.h"
-#include "renderer/ccShaders.h"
-#include "renderer/CCShaderCache.h"
 
 //According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong
 
@@ -51,28 +47,6 @@ NS_CC_BEGIN
 
 TextureAtlas::TextureAtlas()
 {
-    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
-    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
-    
-#define VERTEX_POSITION_SIZE 3
-#define VERTEX_TEXCOORD_SIZE 2
-#define VERTEX_COLOR_SIZE 4
-    uint32_t colorOffset = (VERTEX_POSITION_SIZE)*sizeof(float);
-    uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
-    uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
-    
-    //set vertexLayout according to V3F_C4B_T2F structure
-    backend::VertexLayout vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
-    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset, false);
-    vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, colorOffset, true);
-    
-    vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
-    pipelineDescriptor.vertexLayout = vertexLayout;
-    
-    _customCommand.setDrawType(CustomCommand::DrawType::ELEMENT);
-    _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE);
 }
 
 TextureAtlas::~TextureAtlas()
@@ -198,34 +172,11 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     memset( _quads, 0, _capacity * sizeof(V3F_C4B_T2F_Quad) );
     memset( _indices, 0, _capacity * 6 * sizeof(GLushort) );
     
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    /** listen the event that renderer was recreated on Android/WP8 */
-    _rendererRecreatedListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(TextureAtlas::listenRendererRecreated, this));
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_rendererRecreatedListener, -1);
-#endif
-    
     this->setupIndices();
-    this->setupVBO();
 
     _dirty = true;
 
     return true;
-}
-
-void TextureAtlas::listenRendererRecreated(EventCustom* /*event*/)
-{
-    //TODO coulsonwang
-//    if (Configuration::getInstance()->supportsShareableVAO())
-//    {
-//        setupVBOandVAO();
-//    }
-//    else
-//    {
-//        setupVBO();
-//    }
-//
-//    // set _dirty to true to force it rebinding buffer
-//    _dirty = true;
 }
 
 std::string TextureAtlas::getDescription() const
@@ -251,14 +202,6 @@ void TextureAtlas::setupIndices()
     }
 }
 
-void TextureAtlas::setupVBO()
-{
-    _customCommand.createVertexBuffer(sizeof(_quads[0]), _capacity);
-    _customCommand.updateVertexBuffer(_quads, 0, sizeof(_quads[0]) * _capacity);
-    
-    _customCommand.createIndexBuffer(sizeof(_indices[0]) , _capacity * 6);
-    _customCommand.updateIndexBuffer(_indices, 0, sizeof(_indices[0]) * _capacity * 6);
-}
 
 // TextureAtlas - Update, Insert, Move & Remove
 
@@ -474,7 +417,6 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
     _indices = tmpIndices;
 
     setupIndices();
-    setupVBO();
 
     _dirty = true;
 
@@ -540,35 +482,6 @@ void TextureAtlas::fillWithEmptyQuadsFromIndex(ssize_t index, ssize_t amount)
         _quads[i] = quad;
     }
 }
-
-// TextureAtlas - Drawing
-
-void TextureAtlas::drawQuads()
-{
-    this->drawNumberOfQuads(_totalQuads, 0);
-}
-
-void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads)
-{
-    CCASSERT(numberOfQuads>=0, "numberOfQuads must be >= 0");
-    this->drawNumberOfQuads(numberOfQuads, 0);
-}
-
-void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
-{
-    // _customCommand is initialized in other module, such as PartcileBatchNode, SpriteBatchNode, and so on.
-    
-    auto& bindGroup = _customCommand.getPipelineDescriptor().bindGroup;
-    bindGroup.setTexture("u_texture", 0, _texture->getBackendTexture());
-    
-    // FIXME:: update is done in draw... perhaps it should be done in a timer
-    if (_dirty)
-    {
-        _customCommand.updateVertexBuffer(_quads, 0, sizeof(_quads[0]) * _totalQuads);
-        _dirty = false;
-    }
-}
-
 
 NS_CC_END
 

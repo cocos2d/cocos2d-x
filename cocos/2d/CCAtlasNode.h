@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 #include "base/CCProtocols.h"
 #include "base/ccTypes.h"
+#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -138,6 +139,8 @@ protected:
 
     /** This variable is only used for LabelAtlas FPS display. So plz don't modify its value. */
     bool _ignoreContentScaleFactor = false;
+    
+    QuadCommand _quadCommand;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(AtlasNode);

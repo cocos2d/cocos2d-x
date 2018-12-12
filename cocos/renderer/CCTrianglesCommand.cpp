@@ -79,7 +79,7 @@ void TrianglesCommand::init(float globalOrder, backend::Texture* textureID, GLPr
     //    _alphaTextureID = texture->getAlphaTextureName();
 }
 
-void TrianglesCommand::init(float globalOrder, const Triangles& triangles, const Mat4& mv, uint32_t flags)
+void TrianglesCommand::init(float globalOrder, const BlendFunc& blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags)
 {
     RenderCommand::init(globalOrder, mv, flags);
     
@@ -94,6 +94,12 @@ void TrianglesCommand::init(float globalOrder, const Triangles& triangles, const
     
     // TODO: optimize it only generate material ID needed.
     generateMaterialID();
+
+    //TODO: minggo set it in Node?
+    auto& blendDescriptor = _pipelineDescriptor.blendDescriptor;
+    blendDescriptor.blendEnabled = true;
+    blendDescriptor.sourceRGBBlendFactor = blendDescriptor.sourceAlphaBlendFactor = utils::toBackendBlendFactor(blendType.src);
+    blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor = utils::toBackendBlendFactor(blendType.dst);
 }
 
 TrianglesCommand::~TrianglesCommand()

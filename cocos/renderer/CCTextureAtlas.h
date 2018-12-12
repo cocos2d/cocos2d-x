@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include "base/ccTypes.h"
 #include "base/CCRef.h"
 #include "base/ccConfig.h"
-#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -189,25 +188,6 @@ public:
     */
     void fillWithEmptyQuadsFromIndex(ssize_t index, ssize_t amount);
 
-    /** Draws n quads.
-    * N can't be greater than the capacity of the Atlas.
-    */
-    void drawNumberOfQuads(ssize_t n);
-
-    /** Draws n quads from an index (offset).
-    N + start can't be greater than the capacity of the atlas.
-
-    @since v1.0
-    */
-    void drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start);
-
-    /** Draws all the Atlas's Quads.
-    */
-    void drawQuads();
-    /** Listen the event that renderer was recreated on Android.
-     */
-    void listenRendererRecreated(EventCustom* event);
-
     /** Whether or not the array buffer of the VBO needs to be updated.*/
     bool isDirty() { return _dirty; }
     /** Specify if the array buffer of the VBO needs to be updated. */
@@ -246,8 +226,6 @@ private:
     void renderCommand();
 
     void setupIndices();
-//    void mapBuffers();
-    void setupVBO();
 
 protected:
     unsigned short* _indices = nullptr;
@@ -260,7 +238,6 @@ protected:
     Texture2D* _texture = nullptr;
     /** Quads that are going to be rendered */
     V3F_C4B_T2F_Quad* _quads = nullptr;
-    CustomCommand _customCommand;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _rendererRecreatedListener = nullptr;

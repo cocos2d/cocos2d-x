@@ -1494,52 +1494,52 @@ float Label::getBMFontSize()const
 
 void Label::onDrawShadow(GLProgram* glProgram, const Color4F& shadowColor)
 {
-    if (_currentLabelType == LabelType::TTF)
-    {
-        if (_currLabelEffect == LabelEffect::OUTLINE)
-        {
-            glProgram->setUniformLocationWith1i(_uniformEffectType, 2); // 2: shadow
-            glProgram->setUniformLocationWith4f(_uniformEffectColor, shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
-        }
-        else
-        {
-            glProgram->setUniformLocationWith4f(_uniformTextColor, shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
-            if (_currLabelEffect == LabelEffect::GLOW)
-            {
-                glProgram->setUniformLocationWith4f(_uniformEffectColor, shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
-            }
-        }
-
-        glProgram->setUniformsForBuiltins(_shadowTransform);
-        for (auto&& it : _letters)
-        {
-            it.second->updateTransform();
-        }
-        for (auto&& batchNode : _batchNodes)
-        {
-            batchNode->getTextureAtlas()->drawQuads();
-        }
-    }
-    else
-    {
-        Color3B oldColor = _realColor;
-        GLubyte oldOPacity = _displayedOpacity;
-        _displayedOpacity = shadowColor.a * (oldOPacity / 255.0f) * 255;
-        setColor(Color3B(shadowColor));
-
-        glProgram->setUniformsForBuiltins(_shadowTransform);
-        for (auto&& it : _letters)
-        {
-            it.second->updateTransform();
-        }
-        for (auto&& batchNode : _batchNodes)
-        {
-            batchNode->getTextureAtlas()->drawQuads();
-        }
-
-        _displayedOpacity = oldOPacity;
-        setColor(oldColor);
-    }
+//    if (_currentLabelType == LabelType::TTF)
+//    {
+//        if (_currLabelEffect == LabelEffect::OUTLINE)
+//        {
+//            glProgram->setUniformLocationWith1i(_uniformEffectType, 2); // 2: shadow
+//            glProgram->setUniformLocationWith4f(_uniformEffectColor, shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
+//        }
+//        else
+//        {
+//            glProgram->setUniformLocationWith4f(_uniformTextColor, shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
+//            if (_currLabelEffect == LabelEffect::GLOW)
+//            {
+//                glProgram->setUniformLocationWith4f(_uniformEffectColor, shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
+//            }
+//        }
+//
+//        glProgram->setUniformsForBuiltins(_shadowTransform);
+//        for (auto&& it : _letters)
+//        {
+//            it.second->updateTransform();
+//        }
+//        for (auto&& batchNode : _batchNodes)
+//        {
+//            batchNode->getTextureAtlas()->drawQuads();
+//        }
+//    }
+//    else
+//    {
+//        Color3B oldColor = _realColor;
+//        GLubyte oldOPacity = _displayedOpacity;
+//        _displayedOpacity = shadowColor.a * (oldOPacity / 255.0f) * 255;
+//        setColor(Color3B(shadowColor));
+//
+//        glProgram->setUniformsForBuiltins(_shadowTransform);
+//        for (auto&& it : _letters)
+//        {
+//            it.second->updateTransform();
+//        }
+//        for (auto&& batchNode : _batchNodes)
+//        {
+//            batchNode->getTextureAtlas()->drawQuads();
+//        }
+//
+//        _displayedOpacity = oldOPacity;
+//        setColor(oldColor);
+//    }
 }
 
 void Label::onDraw(const Mat4& transform, bool /*transformUpdated*/)
@@ -1756,7 +1756,7 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             pipelineQuad = pipelineDescriptor;
             pipelineQuad.bindGroup.setUniform("u_MVPMatrix", matrixProjection.m, sizeof(matrixProjection.m));
             pipelineQuad.bindGroup.setTexture("u_texture", 0, texture->getBackendTexture());
-            _quadCommand.init(_globalZOrder, texture, textureAtlas->getQuads(), textureAtlas->getTotalQuads(), transform, flags);
+            _quadCommand.init(_globalZOrder, texture, _blendFunc, textureAtlas->getQuads(), textureAtlas->getTotalQuads(), transform, flags);
             renderer->addCommand(&_quadCommand);
         }
         else

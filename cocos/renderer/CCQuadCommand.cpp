@@ -32,6 +32,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCPass.h"
 #include "renderer/CCTexture2D.h"
+#include "base/ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -113,7 +114,7 @@ void QuadCommand::init(float globalOrder, Texture2D* texture, GLProgramState* gl
 }
 
 
-void QuadCommand::init(float globalOrder, Texture2D *texture, V3F_C4B_T2F_Quad *quads, ssize_t quadCount, const Mat4 &mv, uint32_t flags)
+void QuadCommand::init(float globalOrder, Texture2D *texture, const BlendFunc& blendType, V3F_C4B_T2F_Quad *quads, ssize_t quadCount, const Mat4 &mv, uint32_t flags)
 {
     if (quadCount * 6 > _indexSize)
     reIndex((int)quadCount*6);
@@ -123,15 +124,8 @@ void QuadCommand::init(float globalOrder, Texture2D *texture, V3F_C4B_T2F_Quad *
     triangles.vertCount = (int)quadCount * 4;
     triangles.indices = __indices;
     triangles.indexCount = (int)quadCount * 6;
-    TrianglesCommand::init(globalOrder, triangles, mv, flags);
+    TrianglesCommand::init(globalOrder, blendType, triangles, mv, flags);
 
-    //TODO: minggo set it in Node?
-    backend::BlendDescriptor& blendDescriptor = getPipelineDescriptor().blendDescriptor;
-    blendDescriptor.blendEnabled = true;
-    blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::ONE;
-    blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-    blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::ONE;
-    blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
     _alphaTextureID = texture->getAlphaTextureName();
 }
 

@@ -1088,40 +1088,41 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     
     if(_insideBounds)
 #endif
-   
-    backend::BindGroup bindGroup;
-    cocos2d::Mat4 projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    auto& pipelineDescriptor = _trianglesCommand.getPipelineDescriptor();
-    pipelineDescriptor.bindGroup.setUniform("u_MVPMatrix", projectionMat.m, sizeof(projectionMat.m));
-    pipelineDescriptor.bindGroup.setTexture("u_texture", 0, _texture->getBackendTexture());
-    
-    _trianglesCommand.init(_globalZOrder,
-                           _polyInfo.triangles,
-                           transform,
-                           flags);
-    renderer->addCommand(&_trianglesCommand);
-    
-#if CC_SPRITE_DEBUG_DRAW
-        _debugDrawNode->clear();
-        auto count = _polyInfo.triangles.indexCount/3;
-        auto indices = _polyInfo.triangles.indices;
-        auto verts = _polyInfo.triangles.verts;
-        for(ssize_t i = 0; i < count; i++)
-        {
-            //draw 3 lines
-            Vec3 from =verts[indices[i*3]].vertices;
-            Vec3 to = verts[indices[i*3+1]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-            
-            from =verts[indices[i*3+1]].vertices;
-            to = verts[indices[i*3+2]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-            
-            from =verts[indices[i*3+2]].vertices;
-            to = verts[indices[i*3]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-        }
+    {
+        const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        auto& bindGroup = _trianglesCommand.getPipelineDescriptor().bindGroup;
+        bindGroup.setUniform("u_MVPMatrix", projectionMat.m, sizeof(projectionMat.m));
+        bindGroup.setTexture("u_texture", 0, _texture->getBackendTexture());
+        
+        _trianglesCommand.init(_globalZOrder,
+                               _blendFunc,
+                               _polyInfo.triangles,
+                               transform,
+                               flags);
+        renderer->addCommand(&_trianglesCommand);
+        
+    #if CC_SPRITE_DEBUG_DRAW
+            _debugDrawNode->clear();
+            auto count = _polyInfo.triangles.indexCount/3;
+            auto indices = _polyInfo.triangles.indices;
+            auto verts = _polyInfo.triangles.verts;
+            for(ssize_t i = 0; i < count; i++)
+            {
+                //draw 3 lines
+                Vec3 from =verts[indices[i*3]].vertices;
+                Vec3 to = verts[indices[i*3+1]].vertices;
+                _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+                
+                from =verts[indices[i*3+1]].vertices;
+                to = verts[indices[i*3+2]].vertices;
+                _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+                
+                from =verts[indices[i*3+2]].vertices;
+                to = verts[indices[i*3]].vertices;
+                _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+            }
 #endif //CC_SPRITE_DEBUG_DRAW
+    }
 }
 
 // MARK: visit, draw, transform
@@ -1708,20 +1709,12 @@ void Sprite::updateBlendFunc(void)
     
     if (! _texture || ! _texture->hasPremultipliedAlpha())
     {
-        blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::SRC_ALPHA;
-        blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-        blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::SRC_ALPHA;
-        blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-//        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
         setOpacityModifyRGB(false);
     }
     else
     {
-        blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::ONE;
-        blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-        blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::ONE;
-        blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-//        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
         setOpacityModifyRGB(true);
     }
 }
