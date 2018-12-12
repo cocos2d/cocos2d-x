@@ -114,7 +114,7 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity/* = DEFAU
 
 void SpriteBatchNode::createShaders()
 {
-    auto& pipelineDescriptor = _batchCommand.getPipelineDescriptor();
+    auto& pipelineDescriptor = _quadCommand.getPipelineDescriptor();
     pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
     pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
     
@@ -126,13 +126,12 @@ void SpriteBatchNode::createShaders()
     uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
     uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
     
-    backend::VertexLayout vertexLayout;
+    auto& vertexLayout = pipelineDescriptor.vertexLayout;
     vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
     vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset, false);
     vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, colorOffset, true);
     
     vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
-    pipelineDescriptor.vertexLayout = vertexLayout;
 }
 
 bool SpriteBatchNode::init()
@@ -152,7 +151,6 @@ bool SpriteBatchNode::initWithFile(const std::string& fileImage, ssize_t capacit
 }
 
 SpriteBatchNode::SpriteBatchNode()
-: _textureAtlas(nullptr)
 {
 }
 
@@ -409,15 +407,13 @@ void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
         child->updateTransform();
     }
     
-    cocos2d::Mat4 matrixProjection = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    cocos2d::Mat4 matrixMVP = matrixProjection * transform;
-    auto& pipelineDescriptor = _batchCommand.getPipelineDescriptor();
-    pipelineDescriptor.bindGroup.setUniform("u_MVPMatrix", matrixMVP.m, sizeof(matrixMVP.m));
-    pipelineDescriptor.bindGroup.setTexture("u_texture", 0, _textureAtlas->getTexture()->getBackendTexture());
+    const auto& matrixProjection = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    auto& bindGroup = _quadCommand.getPipelineDescriptor().bindGroup;
+    bindGroup.setUniform("u_MVPMatrix", matrixProjection.m, sizeof(matrixProjection.m));
+    bindGroup.setTexture("u_texture", 0, _textureAtlas->getTexture()->getBackendTexture());
 
-    _batchCommand.init(_globalZOrder, _textureAtlas, transform, flags);
-//    _batchCommand.init(_globalZOrder, getGLProgram(), _blendFunc, _textureAtlas, transform, flags);
-    renderer->addCommand(&_batchCommand);
+    _quadCommand.init(_globalZOrder, _textureAtlas->getTexture(), _blendFunc, _textureAtlas->getQuads(), _textureAtlas->getTotalQuads(), transform, flags);
+    renderer->addCommand(&_quadCommand);
 }
 
 void SpriteBatchNode::increaseAtlasCapacity()
@@ -643,24 +639,14 @@ void SpriteBatchNode::removeSpriteFromAtlas(Sprite *sprite)
 
 void SpriteBatchNode::updateBlendFunc()
 {
-    backend::BlendDescriptor& blendDescriptor = _batchCommand.getPipelineDescriptor().blendDescriptor;
-    blendDescriptor.blendEnabled = true;
     if (! _textureAtlas->getTexture()->hasPremultipliedAlpha())
     {
         _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
-        blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::SRC_ALPHA;
-        blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-        blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::SRC_ALPHA;
-        blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
         setOpacityModifyRGB(false);
     }
     else
     {
         _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-        blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::ONE;
-        blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-        blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::ONE;
-        blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
         setOpacityModifyRGB(true);
     }
 }
