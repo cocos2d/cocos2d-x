@@ -45,8 +45,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCShaderCache.h"
 #include "renderer/backend/Buffer.h"
-#include "renderer/shaders/positionColorNoMVP.vert"
-#include "renderer/shaders/positionColorNoMVP.frag"
+#include "renderer/ccShaders.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "platform/desktop/CCGLViewImpl-desktop.h"

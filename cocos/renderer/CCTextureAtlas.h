@@ -25,15 +25,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __CCTEXTURE_ATLAS_H__
-#define __CCTEXTURE_ATLAS_H__
+#pragma once
 
 #include <string>
 
 #include "base/ccTypes.h"
 #include "base/CCRef.h"
 #include "base/ccConfig.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -241,27 +240,29 @@ public:
     inline unsigned short* getIndices() { return _indices; }
     
 private:
+    friend class ParticleBatchNode;
+
     void renderCommand();
 
     void setupIndices();
 //    void mapBuffers();
-//    void setupVBOandVAO();
-//    void setupVBO();
+    void setupVBO();
 
 protected:
-    GLushort*           _indices;
-    bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
+    unsigned short* _indices = nullptr;
+    bool _dirty = false; //indicates whether or not the array buffer of the VBO needs to be updated
     /** quantity of quads that are going to be drawn */
-    size_t _totalQuads;
+    size_t _totalQuads = 0;
     /** quantity of quads that can be stored with the current texture atlas size */
-    size_t _capacity;
+    size_t _capacity = 0;
     /** Texture of the texture atlas */
-    Texture2D* _texture;
+    Texture2D* _texture = nullptr;
     /** Quads that are going to be rendered */
-    V3F_C4B_T2F_Quad* _quads;
+    V3F_C4B_T2F_Quad* _quads = nullptr;
+    CustomCommand _customCommand;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    EventListenerCustom* _rendererRecreatedListener;
+    EventListenerCustom* _rendererRecreatedListener = nullptr;
 #endif
 };
 
@@ -269,7 +270,3 @@ protected:
 /// @}
 
 NS_CC_END
-
-#endif //__CCTEXTURE_ATLAS_H__
-
-

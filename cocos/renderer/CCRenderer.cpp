@@ -200,8 +200,8 @@ Renderer::~Renderer()
 void Renderer::init()
 {
     auto device = backend::Device::getInstance();
-    _vertexBuffer = device->newBuffer(Renderer::VBO_SIZE, backend::BufferType::VERTEX, backend::BufferUsage::READ);
-    _indexBuffer = device->newBuffer(Renderer::INDEX_VBO_SIZE, backend::BufferType::INDEX, backend::BufferUsage::READ);
+    _vertexBuffer = device->newBuffer(Renderer::VBO_SIZE * sizeof(_verts[0]), backend::BufferType::VERTEX, backend::BufferUsage::READ);
+    _indexBuffer = device->newBuffer(Renderer::INDEX_VBO_SIZE * sizeof(_indices[0]), backend::BufferType::INDEX, backend::BufferUsage::READ);
     _commandBuffer = device->newCommandBuffer();
 }
 

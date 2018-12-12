@@ -34,8 +34,7 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "base/ccUtils.h"
 #include "renderer/CCShaderCache.h"
-#include "renderer/shaders/positionTextureColor.vert"
-#include "renderer/shaders/positionTextureColor.frag"
+#include "renderer/ccShaders.h"
 
 NS_CC_BEGIN
 

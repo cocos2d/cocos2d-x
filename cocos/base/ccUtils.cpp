@@ -544,6 +544,39 @@ void setBlending(GLenum sfactor, GLenum dfactor)
         RenderState::StateBlock::_defaultState->setBlendDst((RenderState::Blend)dfactor);
     }
 }
+    
+backend::BlendFactor toBackendBlendFactor(GLenum factor)
+{
+    switch (factor) {
+        case GL_ONE:
+            return backend::BlendFactor::ONE;
+        case GL_ZERO:
+            return backend::BlendFactor::ZERO;
+        case GL_SRC_COLOR:
+            return backend::BlendFactor::SRC_COLOR;
+        case GL_ONE_MINUS_SRC_COLOR:
+            return backend::BlendFactor::ONE_MINUS_SRC_COLOR;
+        case GL_SRC_ALPHA:
+            return backend::BlendFactor::SRC_ALPHA;
+        case GL_ONE_MINUS_SRC_ALPHA:
+            return backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+        case GL_DST_COLOR:
+            return backend::BlendFactor::DST_COLOR;
+        case GL_ONE_MINUS_DST_COLOR:
+            return backend::BlendFactor::ONE_MINUS_DST_COLOR;
+        case GL_DST_ALPHA:
+            return backend::BlendFactor::DST_ALPHA;
+        case GL_ONE_MINUS_DST_ALPHA:
+            return backend::BlendFactor::ONE_MINUS_DST_ALPHA;
+        case GL_SRC_ALPHA_SATURATE:
+            return backend::BlendFactor::SRC_ALPHA_SATURATE;
+        case GL_BLEND_COLOR:
+            return backend::BlendFactor::BLEND_CLOLOR;
+        default:
+            assert(false);
+            break;
+    }
+}
 
 }
 

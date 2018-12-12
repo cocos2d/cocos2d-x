@@ -107,5 +107,7 @@ NS_CC_BEGIN
 #include "renderer/shaders/positionTextureColor.frag"
 #include "renderer/shaders/label_common.vert"
 #include "renderer/shaders/label_normal.frag"
+#include "renderer/shaders/positionColor.vert"
+#include "renderer/shaders/positionColor.frag"
 
 NS_CC_END

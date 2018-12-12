@@ -38,13 +38,12 @@
 #include "renderer/CCTextureAtlas.h"
 #include "base/CCProfiling.h"
 #include "base/ccUTF8.h"
+#include "base/ccUtils.h"
 
 NS_CC_BEGIN
 
 ParticleBatchNode::ParticleBatchNode()
-: _textureAtlas(nullptr)
 {
-
 }
 
 ParticleBatchNode::~ParticleBatchNode()
@@ -94,8 +93,6 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, int capacity)
     _children.reserve(capacity);
     
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, tex));
 
     return true;
 }
@@ -398,7 +395,7 @@ void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
     _textureAtlas->removeAllQuads();
 }
 
-void ParticleBatchNode::draw(Renderer* renderer, const Mat4 & /*transform*/, uint32_t flags)
+void ParticleBatchNode::draw(Renderer* renderer, const Mat4 & transform, uint32_t flags)
 {
     CC_PROFILER_START("CCParticleBatchNode - draw");
 
@@ -406,14 +403,28 @@ void ParticleBatchNode::draw(Renderer* renderer, const Mat4 & /*transform*/, uin
     {
         return;
     }
-    //TODO coulsonwang
-    cocos2d::log("Error in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
-//    _batchCommand.init(_globalZOrder, getGLProgram(), _blendFunc, _textureAtlas, _modelViewTransform, flags);
-    renderer->addCommand(&_batchCommand);
+    
+    auto& command = _textureAtlas->_customCommand;
+    command.init(_globalZOrder);
+    
+    // Texture is set in TextureAtlas.
+    const cocos2d::Mat4& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    Mat4 finalMat = projectionMat * transform;
+    auto& bindGroup = command.getPipelineDescriptor().bindGroup;
+    bindGroup.setUniform("a_projection", finalMat.m, sizeof(finalMat.m));
+    
+    //TODO: minggo: don't set blend factor every frame.
+    auto& blendDescriptor = command.getPipelineDescriptor().blendDescriptor;
+    blendDescriptor.blendEnabled = true;
+    blendDescriptor.sourceRGBBlendFactor = blendDescriptor.sourceAlphaBlendFactor = utils::toBackendBlendFactor(_blendFunc.src);
+    blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor = utils::toBackendBlendFactor(_blendFunc.dst);
+    
+    _textureAtlas->drawQuads();
+    
+    renderer->addCommand(&command);
+    
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }
-
-
 
 void ParticleBatchNode::increaseAtlasCapacityTo(ssize_t quantity)
 {

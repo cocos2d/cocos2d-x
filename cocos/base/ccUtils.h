@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 #include "base/ccMacros.h"
 #include "base/CCData.h"
+#include "renderer/backend/Types.h"
 
 /** @file ccUtils.h
 Misc free functions
@@ -190,6 +191,9 @@ namespace utils
     CC_DLL LanguageType getLanguageTypeByISO2(const char* code);
 
     CC_DLL void setBlending(GLenum sfactor, GLenum dfactor);
+    
+    //TODO: minggo: should remove it.
+    CC_DLL backend::BlendFactor toBackendBlendFactor(GLenum factor);
 }
 
 NS_CC_END
