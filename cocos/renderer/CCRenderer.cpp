@@ -550,6 +550,16 @@ void Renderer::drawBatchedTriangles()
     /************** 3: Cleanup *************/
     _queuedTriangleCommands.clear();
     cleanVerticesAndIncices();
+    
+    //FIXME: in metal, buffer is not used until the end of the frame. So can not share the same buffer in
+    // differenrt draw calls. And may be we can use the same buffer with offset, but it has wrong effect.
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    _vertexBuffer->release();
+    _indexBuffer->release();
+    auto device = backend::Device::getInstance();
+    _vertexBuffer = device->newBuffer(Renderer::VBO_SIZE * sizeof(_verts[0]), backend::BufferType::VERTEX, backend::BufferUsage::READ);
+    _indexBuffer = device->newBuffer(Renderer::INDEX_VBO_SIZE * sizeof(_indices[0]), backend::BufferType::INDEX, backend::BufferUsage::READ);
+#endif
 }
 
 void Renderer::drawBatchedCommand(RenderCommand* command)

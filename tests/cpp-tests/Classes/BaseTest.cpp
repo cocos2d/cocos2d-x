@@ -166,9 +166,8 @@ void TestList::runThisTest()
     if (_parentTest)
     {
         //Add back button.
-//        TTFConfig ttfConfig("fonts/arial.ttf", 20);
-//        auto label = Label::createWithTTF(ttfConfig, "Back");
-        auto label = Label::createWithSystemFont("Back", "Arial", 20);
+        TTFConfig ttfConfig("fonts/arial.ttf", 20);
+        auto label = Label::createWithTTF(ttfConfig, "Back");
 
         auto menuItem = MenuItemLabel::create(label, std::bind(&TestBase::backsUpOneLevel, this));
         auto menu = Menu::create(menuItem, nullptr);
@@ -191,8 +190,7 @@ void TestList::runThisTest()
         });
         closeItem->setPosition(VisibleRect::right().x - 30, VisibleRect::top().y - 30);
 
-//        auto autoTestLabel = Label::createWithTTF("Start AutoTest","fonts/arial.ttf",16);
-        auto autoTestLabel = Label::createWithSystemFont("Start AutoTest", "Arial", 26);
+        auto autoTestLabel = Label::createWithTTF("Start AutoTest","fonts/arial.ttf",16);
         auto autoTestItem = MenuItemLabel::create(autoTestLabel, [&](Ref* sender){
             TestController::getInstance()->startAutoTest();
         });
@@ -236,9 +234,7 @@ TableViewCell* TestList::tableCellAtIndex(TableView *table, ssize_t idx)
     if (!cell)
     {
         cell = TableViewCell::create();
-        //TODO:minggo
-//        auto label = Label::createWithTTF(_childTestNames[idx], "fonts/arial.ttf", 20.0f);
-        auto label = Label::createWithSystemFont(_childTestNames[idx], "Arial", 20.f);
+        auto label = Label::createWithTTF(_childTestNames[idx], "fonts/arial.ttf", 20.0f);
         label->setTag(TABEL_LABEL_TAG);
         label->setPosition(200, 15);
         cell->addChild(label);
@@ -399,16 +395,13 @@ bool TestCase::init()
     if (Scene::init())
     {
         // add title and subtitle
-        //TODO:minggo
-//        TTFConfig ttfConfig("fonts/arial.ttf", 26);
-//        _titleLabel = Label::createWithTTF(ttfConfig, title());
-        _titleLabel = Label::createWithSystemFont(title(), "Arial", 26);
+        TTFConfig ttfConfig("fonts/arial.ttf", 26);
+        _titleLabel = Label::createWithTTF(ttfConfig, title());
         addChild(_titleLabel, 9999);
         _titleLabel->setPosition(VisibleRect::center().x, VisibleRect::top().y - 30);
         
-//        ttfConfig.fontSize = 16;
-//        _subtitleLabel = Label::createWithTTF(ttfConfig, subtitle());
-        _subtitleLabel = Label::createWithSystemFont(subtitle(), "Arial", 16);
+        ttfConfig.fontSize = 16;
+        _subtitleLabel = Label::createWithTTF(ttfConfig, subtitle());
         _subtitleLabel->setMaxLineWidth(VisibleRect::getVisibleRect().size.width);
         addChild(_subtitleLabel, 9999);
         _subtitleLabel->setPosition(VisibleRect::center().x, VisibleRect::top().y - 60);
@@ -417,9 +410,8 @@ bool TestCase::init()
         _restartTestItem = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(TestCase::restartTestCallback, this));
         _nextTestItem = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(TestCase::nextTestCallback, this));
         
-//        ttfConfig.fontSize = 20;
-//        auto backLabel = Label::createWithTTF(ttfConfig, "Back");
-        auto backLabel = Label::createWithSystemFont("Back", "Arial", 20);
+        ttfConfig.fontSize = 20;
+        auto backLabel = Label::createWithTTF(ttfConfig, "Back");
         auto backItem = MenuItemLabel::create(backLabel, CC_CALLBACK_1(TestCase::onBackCallback, this));
 
         auto menu = Menu::create(_priorTestItem, _restartTestItem, _nextTestItem, backItem, nullptr);
