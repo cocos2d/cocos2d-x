@@ -52,6 +52,7 @@ namespace backend
 class EventListenerCustom;
 class TrianglesCommand;
 class MeshCommand;
+class GroupCommand;
 class PipelineDescriptor;
 
 /** Class that knows how to sort `RenderCommand` objects.
@@ -201,7 +202,6 @@ public:
 
 protected:
     void drawBatchedTriangles();
-    void drawBatchedCommand(RenderCommand* command);
     void drawCustomCommand(RenderCommand* command);
 
     //Draw the previews queued triangles and flush previous context
@@ -214,6 +214,7 @@ protected:
     void flushTriangles();
 
     void processRenderCommand(RenderCommand* command);
+    void processGroupCommand(GroupCommand*);
     void visitRenderQueue(RenderQueue& queue);
     void doVisitRenderQueue(const std::vector<RenderCommand*>&);
 
@@ -221,7 +222,7 @@ protected:
     void cleanVerticesAndIncices();
     void beginRenderPass(RenderCommand*);
     
-    void setRenderPipeline(const PipelineDescriptor&, const backend::RenderPassDescriptor&);
+    void setRenderPipeline(const PipelineDescriptor&);
     void clear(const backend::RenderPassDescriptor&);
 
     /* clear color set outside be used in setGLDefaultValues() */
@@ -243,12 +244,8 @@ protected:
     backend::CommandBuffer* _commandBuffer = nullptr;
     backend::RenderPassDescriptor _renderPassDescriptor;
     
-    // Internal structure that has the information for some global render information.
-    struct RenderInfo
-    {
-        std::array<int, 4> viewPort;
-    };
-    std::stack<struct RenderInfo> _renderInfoStack;
+    // Group command is used to modify other commands' render states.
+    std::stack<GroupCommand*> _groupCommandStack;
 
     // Internal structure that has the information for the batches
     struct TriBatchToDraw

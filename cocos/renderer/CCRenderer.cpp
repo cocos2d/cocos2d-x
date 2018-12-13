@@ -239,6 +239,21 @@ int Renderer::createRenderQueue()
     return (int)_renderGroups.size() - 1;
 }
 
+void Renderer::processGroupCommand(GroupCommand* command)
+{
+    flush();
+
+    _groupCommandStack.push(command);
+
+    if (command->getPipelineDescriptor().renderPassDescriptor.needClearColor)
+        clear(command->getPipelineDescriptor().renderPassDescriptor);
+
+    int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
+    visitRenderQueue(_renderGroups[renderQueueID]);
+
+    _groupCommandStack.pop();
+}
+
 void Renderer::processRenderCommand(RenderCommand* command)
 {
     auto commandType = command->getType();
@@ -261,8 +276,8 @@ void Renderer::processRenderCommand(RenderCommand* command)
             
             // queue it
             _queuedTriangleCommands.push_back(cmd);
-             _filledIndex += cmd->getIndexCount();
-             _filledVertex += cmd->getVertexCount();
+            _filledIndex += cmd->getIndexCount();
+            _filledVertex += cmd->getVertexCount();
         }
             break;
         case RenderCommand::Type::MESH_COMMAND:
@@ -273,9 +288,7 @@ void Renderer::processRenderCommand(RenderCommand* command)
             if (cmd->isSkipBatching() || _lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
             {
                 flush3D();
-                
-                //            CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_MESH_COMMAND");
-                
+
                 if(cmd->isSkipBatching())
                 {
                     // XXX: execute() will call bind() and unbind()
@@ -298,18 +311,7 @@ void Renderer::processRenderCommand(RenderCommand* command)
         }
             break;
         case RenderCommand::Type::GROUP_COMMAND:
-        {
-            flush();
-            
-            RenderInfo renderInfo;
-            renderInfo.viewPort = command->getViewPort();
-            _renderInfoStack.push(renderInfo);
-            clear(command->getPipelineDescriptor().renderPassDescriptor);
-            
-            int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
-            visitRenderQueue(_renderGroups[renderQueueID]);
-            _renderInfoStack.pop();
-        }
+            processGroupCommand(static_cast<GroupCommand*>(command));
             break;
         case RenderCommand::Type::CUSTOM_COMMAND:
             flush();
@@ -317,7 +319,7 @@ void Renderer::processRenderCommand(RenderCommand* command)
             break;
         case RenderCommand::Type::BATCH_COMMAND:
             flush();
-            drawBatchedCommand(command);
+            // TODO: should remove batched command
             break;
         case RenderCommand::Type::PRIMITIVE_COMMAND:
         {
@@ -416,31 +418,16 @@ void Renderer::clean()
     // Clear batch commands
     _queuedTriangleCommands.clear();
     _lastBatchedMeshCommand = nullptr;
+
+    while (!_groupCommandStack.empty())
+    {
+        assert(false);
+        _groupCommandStack.pop();
+    }
 }
 
 void Renderer::setDepthTest(bool enable)
 {
-//    if (enable)
-//    {
-//        glClearDepth(1.0f);
-//        glEnable(GL_DEPTH_TEST);
-//        glDepthFunc(GL_LEQUAL);
-//
-//        RenderState::StateBlock::_defaultState->setDepthTest(true);
-//        RenderState::StateBlock::_defaultState->setDepthFunction(RenderState::DEPTH_LEQUAL);
-//
-////        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-//    }
-//    else
-//    {
-//        glDisable(GL_DEPTH_TEST);
-//
-//        RenderState::StateBlock::_defaultState->setDepthTest(false);
-//    }
-//
-//    _isDepthTestFor2D = enable;
-//    CHECK_GL_ERROR_DEBUG();
-    //todo: minggo
 }
 
 void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
@@ -566,31 +553,6 @@ void Renderer::drawBatchedTriangles()
     _isFirstTriangleDraw = false;
 }
 
-void Renderer::drawBatchedCommand(RenderCommand* command)
-{
-//    fillVerticesAndIndices(command);
-//    
-//    /************** 2: Draw *************/
-//    auto& pipelineDescriptor = command->getPipelineDescriptor();
-//    _commandBuffer->beginRenderPass(pipelineDescriptor.renderPassDescriptor);
-//    auto renderPipeline = createRenderPipeline(pipelineDescriptor);
-//    _commandBuffer->setRenderPipeline(renderPipeline);
-//    renderPipeline->release();
-//    
-//    auto viewPort = command->getViewPort();
-//    _commandBuffer->setViewport(viewPort[0], viewPort[1], viewPort[2], viewPort[3]);
-//    
-//    _commandBuffer->setVertexBuffer(0, _vertexBuffer);
-//    _commandBuffer->setIndexBuffer(_indexBuffer);
-//    _commandBuffer->setBindGroup(&pipelineDescriptor.bindGroup);
-//    _commandBuffer->drawElements(backend::PrimitiveType::TRIANGLE,
-//                                 backend::IndexFormat::U_SHORT,
-//                                 command->getIndexCount(),
-//                                 0);
-//    
-//    _commandBuffer->endRenderPass();
-}
-
 void Renderer::drawCustomCommand(RenderCommand *command)
 {
     auto cmd = static_cast<CustomCommand*>(command);
@@ -683,7 +645,7 @@ void Renderer::setClearColor(const Color4F &clearColor)
     _renderPassDescriptor.clearColorValue = {clearColor.r, clearColor.g, clearColor.b, clearColor.a};
 }
 
-void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, const backend::RenderPassDescriptor& renderPassDescriptor)
+void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor)
 {
     backend::RenderPipelineDescriptor renderPipelineDescriptor;
     renderPipelineDescriptor.vertexShaderModule = pipelineDescriptor.vertexShader;
@@ -694,16 +656,17 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
     auto blendState = device->createBlendState(pipelineDescriptor.blendDescriptor);
     renderPipelineDescriptor.blendState = blendState;
     
-    auto& depthStencilDescritpor = pipelineDescriptor.depthStencilDescriptor;
+    const auto& depthStencilDescritpor = pipelineDescriptor.depthStencilDescriptor;
     if (depthStencilDescritpor.depthTestEnabled || depthStencilDescritpor.stencilTestEnabled)
     {
         auto depthStencilState = device->createDepthStencilState(depthStencilDescritpor);
         renderPipelineDescriptor.depthStencilState = depthStencilState;
     }
-    
+
+    const auto& renderPassDescriptor = pipelineDescriptor.renderPassDescriptor;
     if (renderPassDescriptor.needColorAttachment)
     {
-        // FIXME: now just handle color attach ment 0.
+        // FIXME: now just handle color attachment 0.
         if (renderPassDescriptor.colorAttachmentsTexture[0])
             renderPipelineDescriptor.colorAttachmentsFormat[0] = renderPassDescriptor.colorAttachmentsTexture[0]->getTextureFormat();
     }
@@ -735,19 +698,29 @@ void Renderer::beginRenderPass(RenderCommand* cmd)
     _commandBuffer->beginRenderPass(renderPassDescriptor);
     
     // Set viewport.
-    if (_renderInfoStack.empty())
+    if (_groupCommandStack.empty())
     {
         const auto& viewport = cmd->getViewPort();
         _commandBuffer->setViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
     }
     else
     {
-        const auto& viewport = _renderInfoStack.top().viewPort;
+        const auto& viewport = _groupCommandStack.top()->getViewPort();
         _commandBuffer->setViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
     }
-    
+
     // Set render pipeline.
-    setRenderPipeline(cmd->getPipelineDescriptor(), renderPassDescriptor);
+    if (_groupCommandStack.empty())
+        setRenderPipeline(cmd->getPipelineDescriptor());
+    else
+    {
+        auto pipelineDescriptor = cmd->getPipelineDescriptor();
+
+        const auto& pipelieDescriptorGroupCommand =  _groupCommandStack.top()->getPipelineDescriptor();
+        pipelineDescriptor.renderPassDescriptor = pipelieDescriptorGroupCommand.renderPassDescriptor;
+        pipelineDescriptor.depthStencilDescriptor = pipelieDescriptorGroupCommand.depthStencilDescriptor;
+        setRenderPipeline(pipelineDescriptor);
+    }
 }
 
 void Renderer::clear(const backend::RenderPassDescriptor& descriptor)

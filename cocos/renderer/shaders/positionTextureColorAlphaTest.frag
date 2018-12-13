@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-const char* ccPositionTextureColorAlphaTest_frag = R"(
+const char* positionTextureColorAlphaTest_frag = R"(
 
 #ifdef GL_ES
 precision lowp float;
@@ -30,11 +30,13 @@ precision lowp float;
 
 varying vec4 v_fragmentColor;
 varying vec2 v_texCoord;
+
 uniform float u_alpha_value;
+uniform sampler2D u_texture;
 
 void main()
 {
-    vec4 texColor = texture2D(CC_Texture0, v_texCoord);
+    vec4 texColor = texture2D(u_texture, v_texCoord);
 
 // mimic: glAlphaFunc(GL_GREATER)
 // pass if ( incoming_pixel >= u_alpha_value ) => fail if incoming_pixel < u_alpha_value

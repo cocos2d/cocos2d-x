@@ -105,6 +105,7 @@ extern CC_DLL const GLchar * positionColor_vert;
 extern CC_DLL const GLchar * positionColor_frag;
 extern CC_DLL const GLchar * positionTextureColor_vert;
 extern CC_DLL const GLchar * positionTextureColor_frag;
+extern CC_DLL const GLchar * positionTextureColorAlphaTest_frag;
 extern CC_DLL const GLchar * label_normal_frag;
 extern CC_DLL const GLchar * label_distanceNormal_frag;
 extern CC_DLL const GLchar * labelOutline_frag;

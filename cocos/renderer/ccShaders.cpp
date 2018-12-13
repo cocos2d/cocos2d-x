@@ -105,6 +105,7 @@ NS_CC_BEGIN
 #include "renderer/shaders/positionColor.frag"
 #include "renderer/shaders/positionTextureColor.vert"
 #include "renderer/shaders/positionTextureColor.frag"
+#include "renderer/shaders/positionTextureColorAlphaTest.frag"
 #include "renderer/shaders/label_normal.frag"
 #include "renderer/shaders/label_distanceNormal.frag"
 #include "renderer/shaders/label_outline.frag"

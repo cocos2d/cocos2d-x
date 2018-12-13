@@ -42,9 +42,9 @@ enum
 
 TileMapTests::TileMapTests()
 {
-    ADD_TEST_CASE(TMXIsoZorder);
-    ADD_TEST_CASE(TMXOrthoZorder);
-    ADD_TEST_CASE(TMXStaggeredTest);
+    // ADD_TEST_CASE(TMXIsoZorder);
+    // ADD_TEST_CASE(TMXOrthoZorder);
+    // ADD_TEST_CASE(TMXStaggeredTest);
     ADD_TEST_CASE(TMXIsoVertexZ);
     ADD_TEST_CASE(TMXOrthoVertexZ);
     ADD_TEST_CASE(TMXOrthoTest);
@@ -1077,14 +1077,14 @@ void TMXIsoVertexZ::onEnter()
     
     // TIP: 2d projection should be used
     Director::getInstance()->setProjection(Director::Projection::_2D);
-    Director::getInstance()->setDepthTest(true);
+   Director::getInstance()->setDepthTest(true);
 }
 
 void TMXIsoVertexZ::onExit()
 {
     // At exit use any other projection. 
     Director::getInstance()->setProjection(Director::Projection::DEFAULT);
-    Director::getInstance()->setDepthTest(false);
+   Director::getInstance()->setDepthTest(false);
     TileDemo::onExit();
 }
 
