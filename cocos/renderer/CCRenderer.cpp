@@ -261,8 +261,8 @@ void Renderer::processRenderCommand(RenderCommand* command)
             
             // queue it
             _queuedTriangleCommands.push_back(cmd);
-//             _filledIndex += cmd->getIndexCount();
-//             _filledVertex += cmd->getVertexCount();
+             _filledIndex += cmd->getIndexCount();
+             _filledVertex += cmd->getVertexCount();
         }
             break;
         case RenderCommand::Type::MESH_COMMAND:
@@ -390,6 +390,7 @@ void Renderer::render()
 
 void Renderer::beginFrame()
 {
+    _isFirstTriangleDraw = true;
     _commandBuffer->beginFrame();
     clear(_renderPassDescriptor);
 }
@@ -485,6 +486,18 @@ void Renderer::drawBatchedTriangles()
     int prevMaterialID = -1;
     bool firstCommand = true;
     
+    //FIXME: in metal, buffer is not used until the end of the frame. So can not share the same buffer in
+    // differenrt draw calls. And may be we can use the same buffer with offset, but it has wrong effect.
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    _vertexBuffer->release();
+    _indexBuffer->release();
+    auto device = backend::Device::getInstance();
+    _vertexBuffer = device->newBuffer(_filledVertex * sizeof(_verts[0]), backend::BufferType::VERTEX, backend::BufferUsage::READ);
+    _indexBuffer = device->newBuffer(_filledIndex * sizeof(_indices[0]), backend::BufferType::INDEX, backend::BufferUsage::READ);
+#endif
+
+    cleanVerticesAndIncices();
+
     for(const auto& cmd : _queuedTriangleCommands)
     {
         auto currentMaterialID = cmd->getMaterialID();
@@ -528,7 +541,7 @@ void Renderer::drawBatchedTriangles()
         firstCommand = false;
     }
     batchesTotal++;
-    
+
      _vertexBuffer->updateData(_verts, 0, sizeof(_verts[0]) * _filledVertex);
      _indexBuffer->updateData(_indices, 0, sizeof(_indices[0]) * _filledIndex);
     
@@ -550,16 +563,7 @@ void Renderer::drawBatchedTriangles()
     /************** 3: Cleanup *************/
     _queuedTriangleCommands.clear();
     cleanVerticesAndIncices();
-    
-    //FIXME: in metal, buffer is not used until the end of the frame. So can not share the same buffer in
-    // differenrt draw calls. And may be we can use the same buffer with offset, but it has wrong effect.
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    _vertexBuffer->release();
-    _indexBuffer->release();
-    auto device = backend::Device::getInstance();
-    _vertexBuffer = device->newBuffer(Renderer::VBO_SIZE * sizeof(_verts[0]), backend::BufferType::VERTEX, backend::BufferUsage::READ);
-    _indexBuffer = device->newBuffer(Renderer::INDEX_VBO_SIZE * sizeof(_indices[0]), backend::BufferType::INDEX, backend::BufferUsage::READ);
-#endif
+    _isFirstTriangleDraw = false;
 }
 
 void Renderer::drawBatchedCommand(RenderCommand* command)
