@@ -29,7 +29,7 @@ void BufferGL::updateData(void* data, size_t offset, size_t size)
             }
             else
             {
-                glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+                glBufferData(GL_ARRAY_BUFFER, _size, data, GL_STATIC_DRAW);
             }
         }
         else
@@ -41,7 +41,7 @@ void BufferGL::updateData(void* data, size_t offset, size_t size)
             }
             else
             {
-                glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+                glBufferData(GL_ELEMENT_ARRAY_BUFFER, _size, data, GL_STATIC_DRAW);
             }
         }
     }

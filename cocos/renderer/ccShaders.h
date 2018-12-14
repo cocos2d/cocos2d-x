@@ -110,6 +110,9 @@ extern CC_DLL const GLchar * label_normal_frag;
 extern CC_DLL const GLchar * label_distanceNormal_frag;
 extern CC_DLL const GLchar * labelOutline_frag;
 extern CC_DLL const GLchar * labelDistanceFieldGlow_frag;
+extern CC_DLL const GLchar * positionColorLengthTexture_vert;
+extern CC_DLL const GLchar * positionColorLengthTexture_frag;
+extern CC_DLL const GLchar * positionColorTextureAsPointsize_vert;
 
 NS_CC_END
 /**

@@ -44,11 +44,9 @@
 #include "base/CCEventCustom.h"
 #include "base/ccUtils.h"
 #include "2d/CCFontFNT.h"
-#include "renderer/backend/Device.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ShaderModule.h"
 #include "renderer/CCShaderCache.h"
-#include "renderer/backend/Buffer.h"
 
 NS_CC_BEGIN
 /**

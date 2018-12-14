@@ -110,5 +110,8 @@ NS_CC_BEGIN
 #include "renderer/shaders/label_distanceNormal.frag"
 #include "renderer/shaders/label_outline.frag"
 #include "renderer/shaders/label_distanceFieldGlow.frag"
+#include "renderer/shaders/positionColorLengthTexture.vert"
+#include "renderer/shaders/positionColorLengthTexture.frag"
+#include "renderer/shaders/positionColorTextureAsPointsize.vert"
 
 NS_CC_END

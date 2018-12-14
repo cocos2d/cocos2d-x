@@ -2992,6 +2992,9 @@
 		ED5C8CBC21C0B3C100F280A7 /* label_distanceFieldGlow.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = label_distanceFieldGlow.frag; sourceTree = "<group>"; };
 		ED5C8CBD21C0B5B700F280A7 /* positionColor.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = positionColor.frag; sourceTree = "<group>"; };
 		ED5C8CBE21C0B5B800F280A7 /* positionColor.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = positionColor.vert; sourceTree = "<group>"; };
+		ED5C8CBF21C0BB3200F280A7 /* positionColorTextureAsPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = positionColorTextureAsPointsize.vert; sourceTree = "<group>"; };
+		ED5C8CC021C0BB3200F280A7 /* positionColorLengthTexture.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = positionColorLengthTexture.frag; sourceTree = "<group>"; };
+		ED5C8CC121C0BB3300F280A7 /* positionColorLengthTexture.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = positionColorLengthTexture.vert; sourceTree = "<group>"; };
 		ED682BB9213F5FC6001BF6CB /* libuv_a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv_a.a; path = ../external/uv/prebuilt/mac/libuv_a.a; sourceTree = "<group>"; };
 		ED682BC0213F63CB001BF6CB /* libuv_a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv_a.a; path = ../external/uv/prebuilt/ios/libuv_a.a; sourceTree = "<group>"; };
 		ED682BC2213F6C7A001BF6CB /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../external/websockets/prebuilt/tvos/libwebsockets.a; sourceTree = "<group>"; };
@@ -4011,6 +4014,9 @@
 				EDF9D8A621AE9678004374AB /* positionTextureColor.vert */,
 				ED5C8CBD21C0B5B700F280A7 /* positionColor.frag */,
 				ED5C8CBE21C0B5B800F280A7 /* positionColor.vert */,
+				ED5C8CC021C0BB3200F280A7 /* positionColorLengthTexture.frag */,
+				ED5C8CC121C0BB3300F280A7 /* positionColorLengthTexture.vert */,
+				ED5C8CBF21C0BB3200F280A7 /* positionColorTextureAsPointsize.vert */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
