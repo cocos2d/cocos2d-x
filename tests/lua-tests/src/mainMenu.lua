@@ -200,11 +200,13 @@ function CreateTestMenu()
     CloseMenu:addChild(CloseItem)
     menuLayer:addChild(CloseMenu)
 
+    local targetPlatform = cc.Application:getInstance():getTargetPlatform()       
+
     -- add menu items for tests
     local MainMenu = cc.Menu:create()
     local index = 0
     local obj = nil
-    for index, obj in pairs(_allTests) do
+    for index, obj in pairs(_allTests) do    
         local testLabel = cc.Label:createWithTTF(index .. ". " .. obj.name, s_arialPath, 24)
         testLabel:setAnchorPoint(cc.p(0.5, 0.5))
         local testMenuItem = cc.MenuItemLabel:create(testLabel)

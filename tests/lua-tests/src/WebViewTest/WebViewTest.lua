@@ -103,7 +103,7 @@ function WebViewTest:init()
     evalJsBtn:setTitleText("Evaluate JS")
     evalJsBtn:setPosition(winSize.width / 2 - self._webView:getContentSize().width/2 - evalJsBtn:getContentSize().width/2 - 30, winSize.height / 2 - 50)
     evalJsBtn:addClickEventListener(function(sender)
-        self._webView:evaluateJS("alert(\"hello\")")
+        self._webView:evaluateJS("setTimeout(function(){alert(\"hello\");}, 0);")
     end)
     self:addChild(evalJsBtn)
 end
