@@ -18,7 +18,7 @@ cocos2d-x-3.17.1 Nov.19 2018
 [REFINE]        Action: add ui::LoadingBar support to Progress actions
 [REFINE]        Network: support multiple parameters in SocketIO emit/send method
 [REFINE]        FileUtils: improve thread safety (use single recursive_mutex)
-[REFINE]        FileUitls: add getFileSize impl for Windows
+[REFINE]        FileUtils: add getFileSize impl for Windows
 [REFINE]        FileUtils: add listFiles impl for Android and Windows platform
 [REFINE]        FileUtils: exact fullPathForDirectory from fullPathForFilename, fullPathForFilename should not accept directory
 [REFINE]        CMake: improve libraries link, compile options config
