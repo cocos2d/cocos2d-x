@@ -123,7 +123,6 @@ void TrianglesCommand::generateMaterialID()
     }hashMe;
     memset(&hashMe, 0, sizeof(hashMe));
 
-    hashMe.depthStencilDescriptor = _pipelineDescriptor.depthStencilDescriptor;
     hashMe.blendDescriptor = _pipelineDescriptor.blendDescriptor;
     hashMe.bindGroup = &_pipelineDescriptor.bindGroup;
     hashMe.vertexLayout = _pipelineDescriptor.vertexLayout;

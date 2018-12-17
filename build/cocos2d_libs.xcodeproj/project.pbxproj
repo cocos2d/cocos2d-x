@@ -542,6 +542,8 @@
 		460D4D1B21ABD0C60075726E /* RenderPipelineMTL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460D4D0721ABD0C60075726E /* RenderPipelineMTL.mm */; };
 		461C204F21A5304A00F3BD47 /* CCPipelineDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 461C204C21A5304A00F3BD47 /* CCPipelineDescriptor.h */; };
 		461C205021A5304A00F3BD47 /* CCPipelineDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 461C204C21A5304A00F3BD47 /* CCPipelineDescriptor.h */; };
+		461FE08421C34EEB00E5378F /* CCEnumClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 461FE08321C34EEB00E5378F /* CCEnumClass.h */; };
+		461FE08521C34EEB00E5378F /* CCEnumClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 461FE08321C34EEB00E5378F /* CCEnumClass.h */; };
 		46270FA41E1CC6A200AAA098 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46270FA21E1CC6A100AAA098 /* libcrypto.a */; };
 		46270FA51E1CC6A200AAA098 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46270FA31E1CC6A100AAA098 /* libssl.a */; };
 		46270FA81E1CC84500AAA098 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46270FA61E1CC84500AAA098 /* libcrypto.a */; };
@@ -2365,6 +2367,7 @@
 		460D4D0521ABD0C60075726E /* RenderPipelineMTL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderPipelineMTL.h; sourceTree = "<group>"; };
 		460D4D0721ABD0C60075726E /* RenderPipelineMTL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RenderPipelineMTL.mm; sourceTree = "<group>"; };
 		461C204C21A5304A00F3BD47 /* CCPipelineDescriptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPipelineDescriptor.h; sourceTree = "<group>"; };
+		461FE08321C34EEB00E5378F /* CCEnumClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEnumClass.h; path = ../base/CCEnumClass.h; sourceTree = "<group>"; };
 		46270FA21E1CC6A100AAA098 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../external/openssl/prebuilt/mac/libcrypto.a; sourceTree = "<group>"; };
 		46270FA31E1CC6A100AAA098 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../external/openssl/prebuilt/mac/libssl.a; sourceTree = "<group>"; };
 		46270FA61E1CC84500AAA098 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../external/openssl/prebuilt/ios/libcrypto.a; sourceTree = "<group>"; };
@@ -3300,6 +3303,7 @@
 		1A5700A2180BC5E60088DEC7 /* base */ = {
 			isa = PBXGroup;
 			children = (
+				461FE08321C34EEB00E5378F /* CCEnumClass.h */,
 				291901411B05895600F8B4BA /* CCNinePatchImageParser.h */,
 				291901421B05895600F8B4BA /* CCNinePatchImageParser.cpp */,
 				505385001B01887A00793096 /* CCProperties.h */,
@@ -4979,6 +4983,7 @@
 				50ABC0671926664800A911A9 /* CCPlatformDefine-mac.h in Headers */,
 				46C02E0918E91123004B7456 /* xxhash.h in Headers */,
 				1A40D16F1E8E56C7002E363A /* stringbuffer.h in Headers */,
+				461FE08421C34EEB00E5378F /* CCEnumClass.h in Headers */,
 				50CB247D19D9C5A100687767 /* AudioPlayer.h in Headers */,
 				4631CBAD21AFD9FA0000D408 /* GUIDefine.h in Headers */,
 				50864CA01C7BC1B000B3BAB1 /* cpBB.h in Headers */,
@@ -5936,6 +5941,7 @@
 				1AC0269D1914068200FA920D /* ConvertUTF.h in Headers */,
 				507003241B69735300E83DDD /* HttpConnection-winrt.h in Headers */,
 				4631CBC621AFD9FA0000D408 /* UIImageView.h in Headers */,
+				461FE08521C34EEB00E5378F /* CCEnumClass.h in Headers */,
 				1A5702FD180BCE750088DEC7 /* CCTMXXMLParser.h in Headers */,
 				1A570303180BCE890088DEC7 /* CCParallaxNode.h in Headers */,
 				50ABBE2A1925AB6F00A911A9 /* CCAutoreleasePool.h in Headers */,

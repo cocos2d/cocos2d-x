@@ -22,7 +22,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #pragma once
 
 #include <vector>
@@ -222,7 +221,7 @@ protected:
     void cleanVerticesAndIncices();
     void beginRenderPass(RenderCommand*);
     
-    void setRenderPipeline(const PipelineDescriptor&);
+    void setRenderPipeline(const PipelineDescriptor&, const backend::RenderPassDescriptor&);
     void clear(const backend::RenderPassDescriptor&);
 
     /* clear color set outside be used in setGLDefaultValues() */
@@ -242,6 +241,7 @@ protected:
     backend::Buffer* _indexBuffer = nullptr;
     
     backend::CommandBuffer* _commandBuffer = nullptr;
+    backend::RenderPassDescriptor _clearRenderPassDescriptor;
     backend::RenderPassDescriptor _renderPassDescriptor;
     
     // Group command is used to modify other commands' render states.

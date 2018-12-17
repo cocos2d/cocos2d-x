@@ -170,15 +170,15 @@ Renderer::Renderer()
     // for the batched TriangleCommand
     _triBatchesToDraw = (TriBatchToDraw*) malloc(sizeof(_triBatchesToDraw[0]) * _triBatchesToDrawCapacity);
     
-    _renderPassDescriptor.clearColorValue = {0, 0, 0, 1};
-    _renderPassDescriptor.needClearColor = true;
-    _renderPassDescriptor.needColorAttachment = true;
-    _renderPassDescriptor.clearDepthValue = 0;
-    _renderPassDescriptor.needClearDepth = true;
-    _renderPassDescriptor.needDepthAttachment = true;
-    _renderPassDescriptor.clearStencilValue = 0;
-    _renderPassDescriptor.needClearStencil = true;
-    _renderPassDescriptor.needStencilAttachment = true;
+    _clearRenderPassDescriptor.clearColorValue = {0, 0, 0, 1};
+    _clearRenderPassDescriptor.needClearColor = true;
+    _clearRenderPassDescriptor.needColorAttachment = true;
+    _clearRenderPassDescriptor.clearDepthValue = 0;
+    _clearRenderPassDescriptor.needClearDepth = true;
+    _clearRenderPassDescriptor.needDepthAttachment = true;
+    _clearRenderPassDescriptor.clearStencilValue = 0;
+    _clearRenderPassDescriptor.needClearStencil = true;
+    _clearRenderPassDescriptor.needStencilAttachment = true;
 }
 
 Renderer::~Renderer()
@@ -366,10 +366,10 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
 void Renderer::doVisitRenderQueue(const std::vector<RenderCommand*>& renderCommands)
 {
     for (const auto& command : renderCommands)
-        {
+    {
         processRenderCommand(command);
-        }
-        flush();
+    }
+    flush();
 }
 
 void Renderer::render()
@@ -394,7 +394,8 @@ void Renderer::beginFrame()
 {
     _isFirstTriangleDraw = true;
     _commandBuffer->beginFrame();
-    clear(_renderPassDescriptor);
+
+    clear(_clearRenderPassDescriptor);
 }
 
 void Renderer::endFrame()
@@ -642,10 +643,10 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 void Renderer::setClearColor(const Color4F &clearColor)
 {
     _clearColor = clearColor;
-    _renderPassDescriptor.clearColorValue = {clearColor.r, clearColor.g, clearColor.b, clearColor.a};
+    _clearRenderPassDescriptor.clearColorValue = {clearColor.r, clearColor.g, clearColor.b, clearColor.a};
 }
 
-void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor)
+void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, const backend::RenderPassDescriptor& renderPassDescriptor)
 {
     backend::RenderPipelineDescriptor renderPipelineDescriptor;
     renderPipelineDescriptor.vertexShaderModule = pipelineDescriptor.vertexShader;
@@ -663,7 +664,6 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor)
         renderPipelineDescriptor.depthStencilState = depthStencilState;
     }
 
-    const auto& renderPassDescriptor = pipelineDescriptor.renderPassDescriptor;
     if (renderPassDescriptor.needColorAttachment)
     {
         // FIXME: now just handle color attachment 0.
@@ -694,32 +694,30 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor)
 
 void Renderer::beginRenderPass(RenderCommand* cmd)
 {
-    const auto& renderPassDescriptor = cmd->getPipelineDescriptor().renderPassDescriptor;
-    _commandBuffer->beginRenderPass(renderPassDescriptor);
-    
     // Set viewport.
     if (_groupCommandStack.empty())
     {
+        const auto& renderPassDescriptor = cmd->getPipelineDescriptor().renderPassDescriptor;
+        _commandBuffer->beginRenderPass(renderPassDescriptor);
+
         const auto& viewport = cmd->getViewPort();
         _commandBuffer->setViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
+
+        setRenderPipeline(cmd->getPipelineDescriptor(), renderPassDescriptor);
     }
     else
     {
+        auto renderPassDescriptor = _groupCommandStack.top()->getPipelineDescriptor().renderPassDescriptor;
+        renderPassDescriptor.needClearStencil = false;
+        renderPassDescriptor.needClearColor = false;
+        renderPassDescriptor.needClearDepth = false;
+
+        _commandBuffer->beginRenderPass(renderPassDescriptor);
+
         const auto& viewport = _groupCommandStack.top()->getViewPort();
         _commandBuffer->setViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
-    }
 
-    // Set render pipeline.
-    if (_groupCommandStack.empty())
-        setRenderPipeline(cmd->getPipelineDescriptor());
-    else
-    {
-        auto pipelineDescriptor = cmd->getPipelineDescriptor();
-
-        const auto& pipelieDescriptorGroupCommand =  _groupCommandStack.top()->getPipelineDescriptor();
-        pipelineDescriptor.renderPassDescriptor = pipelieDescriptorGroupCommand.renderPassDescriptor;
-        pipelineDescriptor.depthStencilDescriptor = pipelieDescriptorGroupCommand.depthStencilDescriptor;
-        setRenderPipeline(pipelineDescriptor);
+        setRenderPipeline(cmd->getPipelineDescriptor(), renderPassDescriptor);
     }
 }
 

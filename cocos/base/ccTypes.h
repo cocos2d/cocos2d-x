@@ -640,6 +640,14 @@ enum class SetIntervalReason : char
     BY_DIRECTOR_PAUSE
 };
 
+struct CC_DLL Viewport
+{
+    int x = 0;
+    int y = 0;
+    size_t w = 0;
+    size_t h = 0;
+};
+
 NS_CC_END
 // end group
 /// @}

@@ -78,6 +78,8 @@ namespace
                                                                                      descriptor.clearColorValue[2],
                                                                                      descriptor.clearColorValue[3]);
                 }
+                else
+                    mtlDescritpor.colorAttachments[i].loadAction = MTLLoadActionLoad;
                 
                 hasCustomColorAttachment = true;
             }
@@ -152,9 +154,7 @@ void CommandBufferMTL::beginFrame()
 
 void CommandBufferMTL::beginRenderPass(const RenderPassDescriptor& descriptor)
 {
-    _renderPassDescriptor = descriptor;
-    
-    _mtlRenderEncoder = [_mtlCommandBuffer renderCommandEncoderWithDescriptor:toMTLRenderPassDescriptor(_renderPassDescriptor)];
+    _mtlRenderEncoder = [_mtlCommandBuffer renderCommandEncoderWithDescriptor:toMTLRenderPassDescriptor(descriptor)];
     [_mtlRenderEncoder retain];
     [_mtlRenderEncoder setFrontFacingWinding:MTLWindingCounterClockwise];
 }
@@ -171,9 +171,7 @@ void CommandBufferMTL::setViewport(ssize_t x, ssize_t y, size_t w, size_t h)
 {
     MTLViewport viewport;
     viewport.originX = x;
-    // Metal coordinate origin is top-left, which is different from OpenGL,
-    // so adjust the coordinate here.
-    viewport.originY = DeviceMTL::getCAMetalLayer().drawableSize.height - y - h;
+    viewport.originY = y;
     viewport.width = w;
     viewport.height = h;
     viewport.znear = -1;

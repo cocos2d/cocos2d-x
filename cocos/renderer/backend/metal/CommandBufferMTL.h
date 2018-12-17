@@ -42,7 +42,6 @@ private:
     DeviceMTL* _deviceMTL = nullptr;
     RenderPipelineMTL* _renderPipelineMTL = nullptr;
     BindGroup* _bindGroup = nullptr;
-    RenderPassDescriptor _renderPassDescriptor;
 };
 
 CC_BACKEND_END
