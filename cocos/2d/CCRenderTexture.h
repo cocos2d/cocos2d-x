@@ -305,6 +305,8 @@ protected:
     Rect         _rtTextureRect = Rect::ZERO;
     Rect         _fullRect = Rect::ZERO;
     Rect         _fullviewPort = Rect::ZERO;
+
+    Viewport     _oldViewport;
     
     Texture2D* _texture2D = nullptr;
     backend::Texture* _depthStencilTexture = nullptr;
@@ -326,6 +328,8 @@ protected:
     Sprite* _sprite = nullptr;
     
     GroupCommand _groupCommand;
+    CustomCommand _beginCommand;
+    CustomCommand _endCommand;
     /*this command is used to encapsulate saveToFile,
      call saveToFile twice will overwrite this command and callback
      and the command and callback will be executed twice.
@@ -334,6 +338,8 @@ protected:
     std::function<void (RenderTexture*, const std::string&)> _saveFileCallback = nullptr;
 protected:
     //renderer caches and callbacks
+    void onBegin();
+    void onEnd();
 
     void onSaveToFile(const std::string& fileName, bool isRGBA = true);
     

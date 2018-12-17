@@ -203,6 +203,9 @@ void Renderer::init()
     _vertexBuffer = device->newBuffer(Renderer::VBO_SIZE * sizeof(_verts[0]), backend::BufferType::VERTEX, backend::BufferUsage::READ);
     _indexBuffer = device->newBuffer(Renderer::INDEX_VBO_SIZE * sizeof(_indices[0]), backend::BufferType::INDEX, backend::BufferUsage::READ);
     _commandBuffer = device->newCommandBuffer();
+
+    experimental::Viewport defaultViewport = Camera::getDefaultViewport();
+    setViewPort(defaultViewport._left, defaultViewport._bottom, defaultViewport._width, defaultViewport._height);
 }
 
 void Renderer::addCommand(RenderCommand* command)
@@ -431,6 +434,14 @@ void Renderer::setDepthTest(bool enable)
 {
 }
 
+void Renderer::setViewPort(int x, int y, size_t w, size_t h)
+{
+    _viewport.x = x;
+    _viewport.y = y;
+    _viewport.w = w;
+    _viewport.h = h;
+}
+
 void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
 {
     memcpy(&_verts[_filledVertex], cmd->getVertices(), sizeof(V3F_C4B_T2F) * cmd->getVertexCount());
@@ -557,6 +568,11 @@ void Renderer::drawBatchedTriangles()
 void Renderer::drawCustomCommand(RenderCommand *command)
 {
     auto cmd = static_cast<CustomCommand*>(command);
+
+    cmd->execute();
+
+    if (cmd->isSkipRendering())
+        return;
     
     beginRenderPass(command);
     _commandBuffer->setVertexBuffer(0, cmd->getVertexBuffer());
@@ -700,8 +716,9 @@ void Renderer::beginRenderPass(RenderCommand* cmd)
         const auto& renderPassDescriptor = cmd->getPipelineDescriptor().renderPassDescriptor;
         _commandBuffer->beginRenderPass(renderPassDescriptor);
 
-        const auto& viewport = cmd->getViewPort();
-        _commandBuffer->setViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
+//        const auto& viewport = cmd->getViewPort();
+//        _commandBuffer->setViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
+        _commandBuffer->setViewport(_viewport.x, _viewport.y, _viewport.w, _viewport.h);
 
         setRenderPipeline(cmd->getPipelineDescriptor(), renderPassDescriptor);
     }
@@ -714,8 +731,9 @@ void Renderer::beginRenderPass(RenderCommand* cmd)
 
         _commandBuffer->beginRenderPass(renderPassDescriptor);
 
-        const auto& viewport = _groupCommandStack.top()->getViewPort();
-        _commandBuffer->setViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
+//        const auto& viewport = _groupCommandStack.top()->getViewPort();
+//        _commandBuffer->setViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
+        _commandBuffer->setViewport(_viewport.x, _viewport.y, _viewport.w, _viewport.h);
 
         setRenderPipeline(cmd->getPipelineDescriptor(), renderPassDescriptor);
     }

@@ -83,6 +83,9 @@ public:
 
     void updateVertexBuffer(void* data, size_t offset, size_t length);
     void updateIndexBuffer(void* data, size_t offset, size_t length);
+
+    inline void skipRendering(bool value) { _skipRendering = value; }
+    inline bool isSkipRendering() const { return _skipRendering; }
     
     inline void setDrawType(DrawType drawType) { _drawType = drawType; }
     inline DrawType getDrawType() const { return _drawType; }
@@ -105,11 +108,13 @@ public:
     /**
      Execute the render command and call callback functions.
      */
-    //    void execute();
-    //    /**Callback function.*/
+    void execute();
+    /**Callback function.*/
     std::function<void()> func;
 
 protected:
+    bool _skipRendering = false;
+
     backend::Buffer* _vertexBuffer = nullptr;
     backend::Buffer* _indexBuffer = nullptr;
     size_t _indexCount = 0;

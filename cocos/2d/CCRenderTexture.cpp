@@ -227,7 +227,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
 
         _texture2D->release();
         //TODO: minggo: should support iOS too.
-#if (CCTARGET_PLATFORM != CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
         _sprite->setFlippedY(true);
 #endif
 
@@ -503,6 +503,27 @@ void RenderTexture::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
     }
 }
 
+void RenderTexture::onBegin()
+{
+    Rect viewport;
+    viewport.size.width = _fullviewPort.size.width;
+    viewport.size.height = _fullviewPort.size.height;
+    float viewPortRectWidthRatio = float(viewport.size.width)/_fullRect.size.width;
+    float viewPortRectHeightRatio = float(viewport.size.height)/_fullRect.size.height;
+    viewport.origin.x = (_fullRect.origin.x - _rtTextureRect.origin.x) * viewPortRectWidthRatio;
+    viewport.origin.y = (_fullRect.origin.y - _rtTextureRect.origin.y) * viewPortRectHeightRatio;
+
+    Renderer *renderer =  Director::getInstance()->getRenderer();
+    _oldViewport = renderer->getViewport();
+    renderer->setViewPort(viewport.origin.x, viewport.origin.y, viewport.size.width, viewport.size.height);
+}
+
+void RenderTexture::onEnd()
+{
+    Renderer *renderer =  Director::getInstance()->getRenderer();
+    renderer->setViewPort(_oldViewport.x, _oldViewport.y, _oldViewport.w, _oldViewport.h);
+}
+
 void RenderTexture::begin()
 {
     Director* director = Director::getInstance();
@@ -536,28 +557,28 @@ void RenderTexture::begin()
     Renderer *renderer =  Director::getInstance()->getRenderer();
     renderer->addCommand(&_groupCommand);
     renderer->pushGroup(_groupCommand.getRenderQueueID());
-    
-    Rect viewport;
-    viewport.size.width = _fullviewPort.size.width;
-    viewport.size.height = _fullviewPort.size.height;
-    float viewPortRectWidthRatio = float(viewport.size.width)/_fullRect.size.width;
-    float viewPortRectHeightRatio = float(viewport.size.height)/_fullRect.size.height;
-    viewport.origin.x = (_fullRect.origin.x - _rtTextureRect.origin.x) * viewPortRectWidthRatio;
-    viewport.origin.y = (_fullRect.origin.y - _rtTextureRect.origin.y) * viewPortRectHeightRatio;
-    _groupCommand.setViewPort(viewport.origin.x, viewport.origin.y, viewport.size.width, viewport.size.height);
+
+    _beginCommand.init(_globalZOrder);
+    _beginCommand.skipRendering(true);
+    _beginCommand.func = CC_CALLBACK_0(RenderTexture::onBegin, this);
+    renderer->addCommand(&_beginCommand);
 }
 
 void RenderTexture::end()
 {
+    _endCommand.init(_globalZOrder);
+    _endCommand.skipRendering(true);
+    _endCommand.func = CC_CALLBACK_0(RenderTexture::onEnd, this);
+
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when setting matrix stack");
     
     Renderer *renderer = director->getRenderer();
+    renderer->addCommand(&_endCommand);
     renderer->popGroup();
-    
+
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-
 }
 
 void RenderTexture::setClearColor(const Color4F &clearColor)

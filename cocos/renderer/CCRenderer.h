@@ -192,6 +192,9 @@ public:
      * For 2D object depth test is disabled by default
      */
     void setDepthTest(bool enable);
+
+    void setViewPort(int x, int y, size_t w, size_t h);
+    const Viewport& getViewport() const { return _viewport; }
     
     //This will not be used outside.
     GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; }
@@ -226,6 +229,8 @@ protected:
 
     /* clear color set outside be used in setGLDefaultValues() */
     Color4F _clearColor = Color4F::BLACK;
+
+    Viewport _viewport;
 
     std::stack<int> _commandGroupStack;
     

@@ -109,12 +109,12 @@ CustomCommand::~CustomCommand()
     CC_SAFE_RELEASE(_indexBuffer);
 }
 
-//void CustomCommand::execute()
-//{
-//    if(func)
-//    {
-//        func();
-//    }
-//}
+void CustomCommand::execute()
+{
+   if(func)
+   {
+       func();
+   }
+}
 
 NS_CC_END
