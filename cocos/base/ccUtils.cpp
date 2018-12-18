@@ -578,6 +578,18 @@ backend::BlendFactor toBackendBlendFactor(GLenum factor)
     }
 }
 
+const Mat4& getAdjustMatrix()
+{
+    static cocos2d::Mat4 adjustMatrix = {
+        1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 0.5, 0.5,
+        0, 0, 0, 1
+    };
+
+    return adjustMatrix;
+}
+
 }
 
 NS_CC_END

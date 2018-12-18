@@ -42,6 +42,7 @@ private:
     DeviceMTL* _deviceMTL = nullptr;
     RenderPipelineMTL* _renderPipelineMTL = nullptr;
     BindGroup* _bindGroup = nullptr;
+    size_t _renderTargetHeight = 0;
 };
 
 CC_BACKEND_END

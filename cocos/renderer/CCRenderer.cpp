@@ -673,10 +673,10 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
     auto blendState = device->createBlendState(pipelineDescriptor.blendDescriptor);
     renderPipelineDescriptor.blendState = blendState;
     
-    const auto& depthStencilDescritpor = pipelineDescriptor.depthStencilDescriptor;
-    if (depthStencilDescritpor.depthTestEnabled || depthStencilDescritpor.stencilTestEnabled)
+//    const auto& depthStencilDescritpor = pipelineDescriptor.depthStencilDescriptor;
+    if (_depthStencilDescriptor.depthTestEnabled || _depthStencilDescriptor.stencilTestEnabled)
     {
-        auto depthStencilState = device->createDepthStencilState(depthStencilDescritpor);
+        auto depthStencilState = device->createDepthStencilState(_depthStencilDescriptor);
         renderPipelineDescriptor.depthStencilState = depthStencilState;
     }
 

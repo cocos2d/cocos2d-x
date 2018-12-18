@@ -103,6 +103,8 @@ extern CC_DLL const GLchar* ccShader_LayerRadialGradient_frag;
 //backend shader file
 extern CC_DLL const GLchar * positionColor_vert;
 extern CC_DLL const GLchar * positionColor_frag;
+extern CC_DLL const GLchar * positionTexture_vert;
+extern CC_DLL const GLchar * positionTexture_frag;
 extern CC_DLL const GLchar * positionTextureColor_vert;
 extern CC_DLL const GLchar * positionTextureColor_frag;
 extern CC_DLL const GLchar * positionTextureColorAlphaTest_frag;

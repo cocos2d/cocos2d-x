@@ -24,18 +24,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __EFFECTS_CCGRID_H__
-#define __EFFECTS_CCGRID_H__
+#pragma once
 
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
 #include "base/CCDirector.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
 class Texture2D;
-class Grabber;
-class GLProgram;
+// class Grabber;
+// class GLProgram;
 class Node;
 
 /**
@@ -141,11 +142,18 @@ protected:
     Size _gridSize;
     Texture2D *_texture;
     Vec2 _step;
-    Grabber *_grabber;
+    // Grabber *_grabber;
     bool _isTextureFlipped;
-    GLProgram* _shaderProgram;
+    // GLProgram* _shaderProgram;
     Director::Projection _directorProjection;
     Rect _gridRect;
+
+    GroupCommand _groupCommand;
+    CustomCommand _drawCommand;
+    CustomCommand _beforeDrawCommand;
+    CustomCommand _afterDrawCommand;
+    CustomCommand _beforeBlitCommand;
+    CustomCommand _afterBlitCommand;
 };
 
 /**
@@ -204,17 +212,21 @@ public:
      Getter and Setter for depth test state when blit.
      @js NA
      */
-    void setNeedDepthTestForBlit( bool neededDepthTest) { _needDepthTestForBlit = neededDepthTest; }
+    void setNeedDepthTestForBlit(bool neededDepthTest) { _needDepthTestForBlit = neededDepthTest; }
     bool getNeedDepthTestForBlit() const { return _needDepthTestForBlit; }
     /**@}*/
 protected:
-    GLvoid *_texCoordinates;
-    GLvoid *_vertices;
-    GLvoid *_originalVertices;
-    GLushort *_indices;
-    bool _needDepthTestForBlit;
-    bool _oldDepthTestValue;
-    bool _oldDepthWriteValue;
+    void updateVertexBuffer();
+    void updateVertexAndTexCoordinate();
+
+    void* _vertexBuffer = nullptr;
+    void* _texCoordinates = nullptr;
+    void* _vertices = nullptr;
+    void* _originalVertices = nullptr;
+    unsigned short *_indices = nullptr;
+    bool _needDepthTestForBlit = false;
+    bool _oldDepthTestValue = false;
+    bool _oldDepthWriteValue = false;
 };
 
 /**
@@ -278,5 +290,3 @@ protected:
 /// @}
 
 NS_CC_END
-
-#endif // __EFFECTS_CCGRID_H__

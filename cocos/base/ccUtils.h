@@ -194,6 +194,9 @@ namespace utils
     
     //TODO: minggo: should remove it.
     CC_DLL backend::BlendFactor toBackendBlendFactor(GLenum factor);
+
+    // Adjust matrix for metal.
+    CC_DLL const Mat4& getAdjustMatrix();
 }
 
 NS_CC_END

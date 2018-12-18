@@ -103,6 +103,8 @@ NS_CC_BEGIN
 //backend shader file
 #include "renderer/shaders/positionColor.vert"
 #include "renderer/shaders/positionColor.frag"
+#include "renderer/shaders/positionTexture.vert"
+#include "renderer/shaders/positionTexture.frag"
 #include "renderer/shaders/positionTextureColor.vert"
 #include "renderer/shaders/positionTextureColor.frag"
 #include "renderer/shaders/positionTextureColorAlphaTest.frag"

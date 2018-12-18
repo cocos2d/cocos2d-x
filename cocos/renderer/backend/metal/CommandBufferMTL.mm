@@ -154,7 +154,10 @@ void CommandBufferMTL::beginFrame()
 
 void CommandBufferMTL::beginRenderPass(const RenderPassDescriptor& descriptor)
 {
-    _mtlRenderEncoder = [_mtlCommandBuffer renderCommandEncoderWithDescriptor:toMTLRenderPassDescriptor(descriptor)];
+    auto mtlDescriptor = toMTLRenderPassDescriptor(descriptor);
+    _renderTargetHeight = mtlDescriptor.colorAttachments[0].texture.height;
+    _mtlRenderEncoder = [_mtlCommandBuffer renderCommandEncoderWithDescriptor:mtlDescriptor];
+
     [_mtlRenderEncoder retain];
     [_mtlRenderEncoder setFrontFacingWinding:MTLWindingCounterClockwise];
 }
@@ -171,7 +174,7 @@ void CommandBufferMTL::setViewport(ssize_t x, ssize_t y, size_t w, size_t h)
 {
     MTLViewport viewport;
     viewport.originX = x;
-    viewport.originY = y;
+    viewport.originY = _renderTargetHeight - y - h;
     viewport.width = w;
     viewport.height = h;
     viewport.znear = -1;

@@ -248,6 +248,7 @@ protected:
     backend::CommandBuffer* _commandBuffer = nullptr;
     backend::RenderPassDescriptor _clearRenderPassDescriptor;
     backend::RenderPassDescriptor _renderPassDescriptor;
+    backend::DepthStencilDescriptor _depthStencilDescriptor;
     
     // Group command is used to modify other commands' render states.
     std::stack<GroupCommand*> _groupCommandStack;

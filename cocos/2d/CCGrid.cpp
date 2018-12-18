@@ -29,13 +29,12 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "base/ccUtils.h"
 #include "2d/CCNode.h"
-#include "2d/CCGrabber.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
 #include "renderer/CCTexture2D.h"
-#include "platform/CCGL.h"
+#include "renderer/CCShaderCache.h"
+#include "renderer/ccShaders.h"
+#include "renderer/backend/Device.h"
 #include "2d/CCCamera.h"
 
 NS_CC_BEGIN
@@ -92,29 +91,21 @@ bool GridBase::initWithSize(const cocos2d::Size &gridSize, const cocos2d::Rect &
     auto POTWide = ccNextPOT((unsigned int)s.width);
     auto POTHigh = ccNextPOT((unsigned int)s.height);
     
-    // we only use rgba8888
-    Texture2D::PixelFormat format = Texture2D::PixelFormat::RGBA8888;
-    
-    auto dataLen = POTWide * POTHigh * 4;
-    void *data = calloc(dataLen, 1);
-    if (! data)
-    {
-        CCLOG("cocos2d: Grid: not enough memory.");
-        this->release();
-        return false;
-    }
-    
     Texture2D *texture = new (std::nothrow) Texture2D();
-    
     if (! texture)
     {
-        free(data);
         CCLOG("cocos2d: Grid: error creating texture");
         return false;
     }
-    
-    texture->initWithData(data, dataLen,  format, POTWide, POTHigh, s);
-    free(data);
+
+    backend::TextureDescriptor descriptor;
+    descriptor.width = POTWide;
+    descriptor.height = POTHigh;
+    descriptor.textureUsage = backend::TextureUsage::RENDER_TARGET;
+    descriptor.textureFormat = backend::TextureFormat::R8G8B8A8;
+    auto backendTexture = backend::Device::getInstance()->newTexture(descriptor);
+    texture->initWithBackendTexture(backendTexture);
+    backendTexture->release();
     
     initWithSize(gridSize, texture, false, rect);
     
@@ -139,6 +130,11 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipp
     _texture = texture;
     CC_SAFE_RETAIN(_texture);
     _isTextureFlipped = flipped;
+
+    //TODO: minggo: should add iOS when iOS use metal.
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    _isTextureFlipped = !flipped;
+#endif
     
     if (rect.equals(Rect::ZERO)) {
         auto size = _texture->getContentSize();
@@ -150,17 +146,35 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipp
     _step.x = _gridRect.size.width/_gridSize.width;
     _step.y = _gridRect.size.height/_gridSize.height;
     
-    _grabber = new (std::nothrow) Grabber();
-    if (_grabber)
-    {
-        _grabber->grab(_texture);
-    }
-    else
-    {
-        ret = false;
-    }
+    // _grabber = new (std::nothrow) Grabber();
+    // if (_grabber)
+    // {
+    //     _grabber->grab(_texture);
+    // }
+    // else
+    // {
+    //     ret = false;
+    // }
+    auto& renderPassDescriptor = _groupCommand.getPipelineDescriptor().renderPassDescriptor;
+    renderPassDescriptor.colorAttachmentsTexture[0] = texture->getBackendTexture();
+    renderPassDescriptor.needColorAttachment = true;
+    renderPassDescriptor.needClearColor = true;
+    renderPassDescriptor.clearColorValue = {0 ,0, 0, 0};
     
-    _shaderProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE);
+    // _shaderProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE);
+    auto& pipelineDescriptor = _drawCommand.getPipelineDescriptor();
+    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionTexture_vert);
+    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionTexture_frag);
+
+#define VERTEX_POSITION_SIZE 3
+#define VERTEX_TEXCOORD_SIZE 2
+    uint32_t texcoordOffset = (VERTEX_POSITION_SIZE)*sizeof(float);
+    uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float);
+    auto& vertexLayout = _drawCommand.getPipelineDescriptor().vertexLayout;
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
+    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset, false);
+    vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
+
     calculateVertexPoints();
     
     return ret;
@@ -172,7 +186,6 @@ GridBase::~GridBase(void)
 
     //TODO: ? why 2.0 comments this line:        setActive(false);
     CC_SAFE_RELEASE(_texture);
-    CC_SAFE_RELEASE(_grabber);
 }
 
 // properties
@@ -200,7 +213,7 @@ void GridBase::set2DProjection()
 {
     Director *director = Director::getInstance();
     Size    size = director->getWinSizeInPixels();
-    
+
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
     Mat4 orthoMatrix;
@@ -215,32 +228,42 @@ void GridBase::setGridRect(const cocos2d::Rect &rect)
     _gridRect = rect;
 }
 
-void GridBase::beforeDraw(void)
+void GridBase::beforeDraw()
 {
     // save projection
     Director *director = Director::getInstance();
-    _directorProjection = director->getProjection();
 
-    // 2d projection
-    //    [director setProjection:Director::Projection::_2D];
-    set2DProjection();
-    
-    Size    size = director->getWinSizeInPixels();
-    glViewport(0, 0, (GLsizei)(size.width), (GLsizei)(size.height) );
-    _grabber->beforeRender(_texture);
+    auto renderer = director->getRenderer();
+
+    renderer->addCommand(&_groupCommand);
+    renderer->pushGroup(_groupCommand.getRenderQueueID());
+
+    _beforeDrawCommand.skipRendering(true);
+    _beforeDrawCommand.func = [=]() -> void {
+        _directorProjection = director->getProjection();
+        set2DProjection();
+        Size    size = director->getWinSizeInPixels();
+        renderer->setViewPort(0, 0, size.width, size.height);
+    };
+    renderer->addCommand(&_beforeDrawCommand);
 }
 
 void GridBase::afterDraw(cocos2d::Node * /*target*/)
 {
-    _grabber->afterRender(_texture);
-
     // restore projection
     Director *director = Director::getInstance();
-    director->setProjection(_directorProjection);
+    auto renderer = director->getRenderer();
 
-    director->setViewport();
-    const auto& vp = Camera::getDefaultViewport();
-    glViewport(vp._left, vp._bottom, vp._width, vp._height);
+    _afterDrawCommand.skipRendering(true);
+    _afterDrawCommand.func = [=]() -> void {
+        director->setProjection(_directorProjection);
+        const auto& vp = Camera::getDefaultViewport();
+        renderer->setViewPort(vp._left, vp._bottom, vp._width, vp._height);
+    };
+    renderer->addCommand(&_afterDrawCommand);
+
+    renderer->popGroup();
+
 //    if (target->getCamera()->isDirty())
 //    {
 //        Vec2 offset = target->getAnchorPointInPoints();
@@ -253,15 +276,22 @@ void GridBase::afterDraw(cocos2d::Node * /*target*/)
 //        kmGLTranslatef(-offset.x, -offset.y, 0);
 //    }
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _texture->getName());
-
     // restore projection for default FBO .fixed bug #543 #544
     //TODO:         Director::getInstance()->setProjection(Director::getInstance()->getProjection());
     //TODO:         Director::getInstance()->applyOrientation();
-    beforeBlit();
+    _beforeBlitCommand.skipRendering(true);
+    _beforeBlitCommand.func = [=]() -> void {
+        beforeBlit();
+    };
+    renderer->addCommand(&_beforeBlitCommand);
+
     blit();
-    afterBlit();
+
+    _afterBlitCommand.skipRendering(true);
+    _afterBlitCommand.func = [=]() -> void {
+        afterBlit();
+    };
+    renderer->addCommand(&_afterBlitCommand);
 }
 
 void GridBase::blit(void)
@@ -363,38 +393,23 @@ Grid3D* Grid3D::create(const Size& gridSize, Texture2D *texture, bool flipped, c
 
 
 Grid3D::Grid3D()
-: _texCoordinates(nullptr)
-, _vertices(nullptr)
-, _originalVertices(nullptr)
-, _indices(nullptr)
-, _needDepthTestForBlit(false)
 {
-
 }
 
-Grid3D::~Grid3D(void)
+Grid3D::~Grid3D()
 {
     CC_SAFE_FREE(_texCoordinates);
     CC_SAFE_FREE(_vertices);
     CC_SAFE_FREE(_indices);
     CC_SAFE_FREE(_originalVertices);
+    CC_SAFE_FREE(_vertexBuffer);
 }
 
 void Grid3D::beforeBlit()
 {
     if(_needDepthTestForBlit)
     {
-        _oldDepthTestValue = glIsEnabled(GL_DEPTH_TEST) != GL_FALSE;
-        GLboolean depthWriteMask;
-        glGetBooleanv(GL_DEPTH_WRITEMASK, &depthWriteMask);
-		_oldDepthWriteValue = depthWriteMask != GL_FALSE;
-        CHECK_GL_ERROR_DEBUG();
-
-        glEnable(GL_DEPTH_TEST);
-        RenderState::StateBlock::_defaultState->setDepthTest(true);
-
-        glDepthMask(true);
-        RenderState::StateBlock::_defaultState->setDepthWrite(true);
+        //TODO:minggo
     }
 }
 
@@ -402,61 +417,44 @@ void Grid3D::afterBlit()
 {
     if(_needDepthTestForBlit)
     {
-        if(_oldDepthTestValue)
-            glEnable(GL_DEPTH_TEST);
-        else
-            glDisable(GL_DEPTH_TEST);
-        RenderState::StateBlock::_defaultState->setDepthTest(_oldDepthTestValue);
-
-        glDepthMask(_oldDepthWriteValue);
-        RenderState::StateBlock::_defaultState->setDepthWrite(_oldDepthWriteValue);
+       //TODO:minggo
     }
 }
 
-void Grid3D::blit(void)
+void Grid3D::blit()
 {
-    int n = _gridSize.width * _gridSize.height;
-
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-    _shaderProgram->use();
-    _shaderProgram->setUniformsForBuiltins();
-
-    //
-    // Attributes
-    //
-
-    // position
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _vertices);
-
-    // texCoords
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, _texCoordinates);
-
-    glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, _indices);
+    updateVertexBuffer();
+    Director::getInstance()->getRenderer()->addCommand(&_drawCommand);
+    cocos2d::Mat4 projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    auto& bindGroup = _drawCommand.getPipelineDescriptor().bindGroup;
+    bindGroup.setUniform("u_MVPMatrix", projectionMat.m, sizeof(projectionMat.m));
+    bindGroup.setTexture("u_texture", 0, _texture->getBackendTexture());
 }
 
-void Grid3D::calculateVertexPoints(void)
+void Grid3D::calculateVertexPoints()
 {
     float width = (float)_texture->getPixelsWide();
     float height = (float)_texture->getPixelsHigh();
     float imageH = _texture->getContentSizeInPixels().height;
 
-    int x, y, i;
+    size_t x = 0, y = 0, i = 0;
     CC_SAFE_FREE(_vertices);
     CC_SAFE_FREE(_originalVertices);
     CC_SAFE_FREE(_texCoordinates);
+    CC_SAFE_FREE(_vertexBuffer);
     CC_SAFE_FREE(_indices);
 
-    unsigned int numOfPoints = (_gridSize.width+1) * (_gridSize.height+1);
+    size_t numOfPoints = (_gridSize.width+1) * (_gridSize.height+1);
 
     _vertices = malloc(numOfPoints * sizeof(Vec3));
     _originalVertices = malloc(numOfPoints * sizeof(Vec3));
     _texCoordinates = malloc(numOfPoints * sizeof(Vec2));
+    _vertexBuffer = malloc(numOfPoints * (sizeof(Vec3) + sizeof(Vec2)));
     _indices = (GLushort*)malloc(_gridSize.width * _gridSize.height * sizeof(GLushort) * 6);
 
-    GLfloat *vertArray = (GLfloat*)_vertices;
-    GLfloat *texArray = (GLfloat*)_texCoordinates;
-    GLushort *idxArray = _indices;
+    float *vertArray = (float*)_vertices;
+    float *texArray = (float*)_texCoordinates;
+    unsigned short *idxArray = _indices;
 
     for (x = 0; x < _gridSize.width; ++x)
     {
@@ -464,21 +462,22 @@ void Grid3D::calculateVertexPoints(void)
         {
             int idx = (y * _gridSize.width) + x;
 
-            GLfloat x1 = x * _step.x + _gridRect.origin.x;
-            GLfloat x2 = x1 + _step.x;
-            GLfloat y1 = y * _step.y + _gridRect.origin.y;
-            GLfloat y2= y1 + _step.y;
+            float x1 = x * _step.x + _gridRect.origin.x;
+            float x2 = x1 + _step.x;
+            float y1 = y * _step.y + _gridRect.origin.y;
+            float y2= y1 + _step.y;
 
-            GLushort a = (GLushort)(x * (_gridSize.height + 1) + y);
-            GLushort b = (GLushort)((x + 1) * (_gridSize.height + 1) + y);
-            GLushort c = (GLushort)((x + 1) * (_gridSize.height + 1) + (y + 1));
-            GLushort d = (GLushort)(x * (_gridSize.height + 1) + (y + 1));
+            unsigned short a = (unsigned short)(x * (_gridSize.height + 1) + y);
+            unsigned short b = (unsigned short)((x + 1) * (_gridSize.height + 1) + y);
+            unsigned short c = (unsigned short)((x + 1) * (_gridSize.height + 1) + (y + 1));
+            unsigned short d = (unsigned short)(x * (_gridSize.height + 1) + (y + 1));
 
-            GLushort tempidx[6] = {a, b, d, b, c, d};
+            unsigned short tempidx[6] = {a, b, d, b, c, d};
 
-            memcpy(&idxArray[6*idx], tempidx, 6*sizeof(GLushort));
+            memcpy(&idxArray[6*idx], tempidx, 6*sizeof(unsigned short));
 
             int l1[4] = {a*3, b*3, c*3, d*3};
+
             Vec3 e(x1, y1, 0);
             Vec3 f(x2, y1, 0);
             Vec3 g(x2, y2, 0);
@@ -507,6 +506,8 @@ void Grid3D::calculateVertexPoints(void)
             }
         }
     }
+
+    updateVertexAndTexCoordinate();
 
     memcpy(_originalVertices, _vertices, (_gridSize.width+1) * (_gridSize.height+1) * sizeof(Vec3));
 }
@@ -545,13 +546,45 @@ void Grid3D::setVertex(const Vec2& pos, const Vec3& vertex)
     vertArray[index+2] = vertex.z;
 }
 
-void Grid3D::reuse(void)
+void Grid3D::reuse()
 {
     if (_reuseGrid > 0)
     {
         memcpy(_originalVertices, _vertices, (_gridSize.width+1) * (_gridSize.height+1) * sizeof(Vec3));
         --_reuseGrid;
     }
+}
+
+void Grid3D::updateVertexBuffer()
+{
+    size_t numOfPoints = (_gridSize.width+1) * (_gridSize.height+1);
+    auto tempVecPointer = (Vec3*)_vertices;
+    for (size_t i = 0; i < numOfPoints; ++i)
+    {
+        auto offset = i * (sizeof(Vec3) + sizeof(Vec2));
+        memcpy((char*)_vertexBuffer + offset, &tempVecPointer[i], sizeof(Vec3));
+    }
+    _drawCommand.updateVertexBuffer(_vertexBuffer, 0, numOfPoints * sizeof(Vec3) + numOfPoints * sizeof(Vec2));
+
+    _drawCommand.updateIndexBuffer(_indices, 0, _gridSize.width * _gridSize.height * 6 * sizeof(unsigned short));
+}
+
+void Grid3D::updateVertexAndTexCoordinate()
+{
+    size_t numOfPoints = (_gridSize.width+1) * (_gridSize.height+1);
+    auto tempVecPointer = (Vec3*)_vertices;
+    auto tempTexPointer = (Vec2*)_texCoordinates;
+    for (size_t i = 0; i < numOfPoints; ++i)
+    {
+        auto offset = i * (sizeof(Vec3) + sizeof(Vec2));
+        memcpy((char*)_vertexBuffer + offset, &tempVecPointer[i], sizeof(Vec3));
+        memcpy((char*)_vertexBuffer + offset + sizeof(Vec3), &tempTexPointer[i], sizeof(Vec2));
+    }
+    _drawCommand.createVertexBuffer(sizeof(Vec3) + sizeof(Vec2), numOfPoints);
+    _drawCommand.updateVertexBuffer(_vertexBuffer, 0, numOfPoints * sizeof(Vec3) + numOfPoints * sizeof(Vec2));
+
+    _drawCommand.createIndexBuffer(sizeof(unsigned short), _gridSize.width * _gridSize.height * 6);
+    _drawCommand.updateIndexBuffer(_indices, 0, _gridSize.width * _gridSize.height * 6 * sizeof(unsigned short));
 }
 
 // implementation of TiledGrid3D
@@ -653,29 +686,29 @@ TiledGrid3D* TiledGrid3D::create(const Size& gridSize, Texture2D *texture, bool 
     return ret;
 }
 
-void TiledGrid3D::blit(void)
+void TiledGrid3D::blit()
 {
-    int n = _gridSize.width * _gridSize.height;
-
-    
-    _shaderProgram->use();
-    _shaderProgram->setUniformsForBuiltins();
-
-    //
-    // Attributes
-    //
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-
-    // position
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _vertices);
-
-    // texCoords
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, _texCoordinates);
-
-    glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, _indices);
-
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,n*6);
+//    int n = _gridSize.width * _gridSize.height;
+//
+//
+//    _shaderProgram->use();
+//    _shaderProgram->setUniformsForBuiltins();
+//
+//    //
+//    // Attributes
+//    //
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+//
+//    // position
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _vertices);
+//
+//    // texCoords
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, _texCoordinates);
+//
+//    glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, _indices);
+//
+//    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,n*6);
 }
 
 void TiledGrid3D::calculateVertexPoints(void)
