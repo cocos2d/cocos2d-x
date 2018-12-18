@@ -49,16 +49,27 @@ class Node;
 class CC_DLL GridBase : public Ref
 {
 public:
-    /** create one Grid */
-    static GridBase* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** create one Grid */
-    static GridBase* create(const Size& gridSize);
     /**
     Destructor.
      * @js NA
      * @lua NA
      */
-    virtual ~GridBase(void);
+    virtual ~GridBase();
+
+    /**@{
+     Interface for custom action when before or after draw.
+     @js NA
+     */
+    virtual void beforeBlit() {}
+    virtual void afterBlit() {}
+    /**@}*/
+
+    /**Interface used to blit the texture with grid to screen.*/
+    virtual void blit() = 0;
+    /**Interface, Reuse the grid vertices.*/
+    virtual void reuse() = 0;
+    /**Interface, Calculate the vertices used for the blit.*/
+    virtual void calculateVertexPoints() = 0;
 
     /**@{
      Init the Grid base.
@@ -103,27 +114,12 @@ public:
     /**@{
      Init and reset the status when render effects by using the grid.
      */
-    void beforeDraw(void);
+    void beforeDraw();
     void afterDraw(Node *target);
     /**@}*/
     
-    /**@{
-     Interface for custom action when before or after draw.
-     @js NA
-     */
-    virtual void beforeBlit() {}
-    virtual void afterBlit() {}
-    /**@}*/
-    
-    /**Interface used to blit the texture with grid to screen.*/
-    virtual void blit(void);
-    /**Interface, Reuse the grid vertices.*/
-    virtual void reuse(void);
-    /**Interface, Calculate the vertices used for the blit.*/
-    virtual void calculateVertexPoints(void);
-    
     /**Change projection to 2D for grabbing.*/
-    void set2DProjection(void);
+    void set2DProjection();
     
     /**
      * @brief Set the effect grid rect.
@@ -137,15 +133,13 @@ public:
     const Rect& getGridRect() const { return _gridRect; }
 
 protected:
-    bool _active;
-    int  _reuseGrid;
+    bool _active = false;
+    int  _reuseGrid = 0;
     Size _gridSize;
-    Texture2D *_texture;
+    Texture2D *_texture = nullptr;
     Vec2 _step;
-    // Grabber *_grabber;
-    bool _isTextureFlipped;
-    // GLProgram* _shaderProgram;
-    Director::Projection _directorProjection;
+    bool _isTextureFlipped = false;
+    Director::Projection _directorProjection = Director::Projection::_2D;
     Rect _gridRect;
 
     GroupCommand _groupCommand;
@@ -244,17 +238,14 @@ public:
     static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
     /** Create one Grid. */
     static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped, const Rect& rect);
-    /**
-     Constructor.
-     * @js ctor
+
+    /**@{
+     Implementations for interfaces in base class.
      */
-    TiledGrid3D();
-    /**
-     Destructor.
-     * @js NA
-     * @lua NA
-     */
-    ~TiledGrid3D();
+    virtual void blit() override;
+    virtual void reuse() override;
+    virtual void calculateVertexPoints() override;
+    /**@}*/
 
     /** Returns the tile at the given position.
      * @js NA
@@ -272,18 +263,27 @@ public:
      */
     void setTile(const Vec2& pos, const Quad3& coords);
 
-    /**@{
-     Implementations for interfaces in base class.
-     */
-    virtual void blit() override;
-    virtual void reuse() override;
-    virtual void calculateVertexPoints() override;
-    /**@}*/
 protected:
-    GLvoid *_texCoordinates;
-    GLvoid *_vertices;
-    GLvoid *_originalVertices;
-    GLushort *_indices;
+    /**
+     Constructor.
+     * @js ctor
+     */
+    TiledGrid3D() = default;
+    /**
+     Destructor.
+     * @js NA
+     * @lua NA
+     */
+    ~TiledGrid3D();
+
+    void updateVertexBuffer();
+    void updateVertexAndTexCoordinate();
+
+    void* _texCoordinates = nullptr;
+    void* _vertices = nullptr;
+    void* _originalVertices = nullptr;
+    unsigned short* _indices = nullptr;
+    void* _vertexBuffer = nullptr;
 };
 
 // end of effects group

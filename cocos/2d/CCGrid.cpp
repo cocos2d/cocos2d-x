@@ -40,43 +40,43 @@ THE SOFTWARE.
 NS_CC_BEGIN
 // implementation of GridBase
 
-GridBase* GridBase::create(const Size& gridSize)
-{
-    GridBase *pGridBase = new (std::nothrow) GridBase();
-
-    if (pGridBase)
-    {
-        if (pGridBase->initWithSize(gridSize))
-        {
-            pGridBase->autorelease();
-        }
-        else
-        {
-            CC_SAFE_RELEASE_NULL(pGridBase);
-        }
-    }
-
-    return pGridBase;
-}
-
-GridBase* GridBase::create(const Size& gridSize, Texture2D *texture, bool flipped)
-{
-    GridBase *pGridBase = new (std::nothrow) GridBase();
-
-    if (pGridBase)
-    {
-        if (pGridBase->initWithSize(gridSize, texture, flipped))
-        {
-            pGridBase->autorelease();
-        }
-        else
-        {
-            CC_SAFE_RELEASE_NULL(pGridBase);
-        }
-    }
-
-    return pGridBase;
-}
+//GridBase* GridBase::create(const Size& gridSize)
+//{
+//    GridBase *pGridBase = new (std::nothrow) GridBase();
+//
+//    if (pGridBase)
+//    {
+//        if (pGridBase->initWithSize(gridSize))
+//        {
+//            pGridBase->autorelease();
+//        }
+//        else
+//        {
+//            CC_SAFE_RELEASE_NULL(pGridBase);
+//        }
+//    }
+//
+//    return pGridBase;
+//}
+//
+//GridBase* GridBase::create(const Size& gridSize, Texture2D *texture, bool flipped)
+//{
+//    GridBase *pGridBase = new (std::nothrow) GridBase();
+//
+//    if (pGridBase)
+//    {
+//        if (pGridBase->initWithSize(gridSize, texture, flipped))
+//        {
+//            pGridBase->autorelease();
+//        }
+//        else
+//        {
+//            CC_SAFE_RELEASE_NULL(pGridBase);
+//        }
+//    }
+//
+//    return pGridBase;
+//}
 
 bool GridBase::initWithSize(const Size& gridSize)
 {
@@ -292,21 +292,6 @@ void GridBase::afterDraw(cocos2d::Node * /*target*/)
         afterBlit();
     };
     renderer->addCommand(&_afterBlitCommand);
-}
-
-void GridBase::blit(void)
-{
-    CCASSERT(0, "Subclass should implement it.");
-}
-
-void GridBase::reuse(void)
-{
-    CCASSERT(0, "Subclass should implement it!");
-}
-
-void GridBase::calculateVertexPoints(void)
-{
-    CCASSERT(0, "Subclass should implement it.");
 }
 
 // implementation of Grid3D
@@ -589,16 +574,7 @@ void Grid3D::updateVertexAndTexCoordinate()
 
 // implementation of TiledGrid3D
 
-TiledGrid3D::TiledGrid3D()
-    : _texCoordinates(nullptr)
-    , _vertices(nullptr)
-    , _originalVertices(nullptr)
-    , _indices(nullptr)
-{
-
-}
-
-TiledGrid3D::~TiledGrid3D(void)
+TiledGrid3D::~TiledGrid3D()
 {
     CC_SAFE_FREE(_texCoordinates);
     CC_SAFE_FREE(_vertices);
@@ -688,30 +664,15 @@ TiledGrid3D* TiledGrid3D::create(const Size& gridSize, Texture2D *texture, bool 
 
 void TiledGrid3D::blit()
 {
-//    int n = _gridSize.width * _gridSize.height;
-//
-//
-//    _shaderProgram->use();
-//    _shaderProgram->setUniformsForBuiltins();
-//
-//    //
-//    // Attributes
-//    //
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-//
-//    // position
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _vertices);
-//
-//    // texCoords
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, _texCoordinates);
-//
-//    glDrawElements(GL_TRIANGLES, (GLsizei)n*6, GL_UNSIGNED_SHORT, _indices);
-//
-//    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,n*6);
+    updateVertexBuffer();
+    Director::getInstance()->getRenderer()->addCommand(&_drawCommand);
+    cocos2d::Mat4 projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    auto& bindGroup = _drawCommand.getPipelineDescriptor().bindGroup;
+    bindGroup.setUniform("u_MVPMatrix", projectionMat.m, sizeof(projectionMat.m));
+    bindGroup.setTexture("u_texture", 0, _texture->getBackendTexture());
 }
 
-void TiledGrid3D::calculateVertexPoints(void)
+void TiledGrid3D::calculateVertexPoints()
 {
     float width = (float)_texture->getPixelsWide();
     float height = (float)_texture->getPixelsHigh();
@@ -722,21 +683,22 @@ void TiledGrid3D::calculateVertexPoints(void)
     CC_SAFE_FREE(_originalVertices);
     CC_SAFE_FREE(_texCoordinates);
     CC_SAFE_FREE(_indices);
+    CC_SAFE_FREE(_vertexBuffer);
 
     _vertices = malloc(numQuads*4*sizeof(Vec3));
     _originalVertices = malloc(numQuads*4*sizeof(Vec3));
     _texCoordinates = malloc(numQuads*4*sizeof(Vec2));
     _indices = (GLushort*)malloc(numQuads*6*sizeof(GLushort));
+    _vertexBuffer = malloc(numQuads * 4 * (sizeof(Vec3) + sizeof(Vec2) ) );
 
-    GLfloat *vertArray = (GLfloat*)_vertices;
-    GLfloat *texArray = (GLfloat*)_texCoordinates;
-    GLushort *idxArray = _indices;
+    float *vertArray = (GLfloat*)_vertices;
+    float *texArray = (GLfloat*)_texCoordinates;
+    unsigned short *idxArray = _indices;
     
-    int x, y;
-    
-    for( x = 0; x < _gridSize.width; x++ )
+
+    for (int x = 0; x < _gridSize.width; ++x)
     {
-        for( y = 0; y < _gridSize.height; y++ )
+        for (int y = 0; y < _gridSize.height; ++y)
         {
             float x1 = x * _step.x + _gridRect.origin.x;
             float x2 = x1 + _step.x;
@@ -776,18 +738,19 @@ void TiledGrid3D::calculateVertexPoints(void)
         }
     }
     
-    for (x = 0; x < numQuads; x++)
+    for (int x = 0; x < numQuads; x++)
     {
-        idxArray[x*6+0] = (GLushort)(x * 4 + 0);
-        idxArray[x*6+1] = (GLushort)(x * 4 + 1);
-        idxArray[x*6+2] = (GLushort)(x * 4 + 2);
+        idxArray[x*6+0] = (unsigned short)(x * 4 + 0);
+        idxArray[x*6+1] = (unsigned short)(x * 4 + 1);
+        idxArray[x*6+2] = (unsigned short)(x * 4 + 2);
         
-        idxArray[x*6+3] = (GLushort)(x * 4 + 1);
-        idxArray[x*6+4] = (GLushort)(x * 4 + 2);
-        idxArray[x*6+5] = (GLushort)(x * 4 + 3);
+        idxArray[x*6+3] = (unsigned short)(x * 4 + 1);
+        idxArray[x*6+4] = (unsigned short)(x * 4 + 2);
+        idxArray[x*6+5] = (unsigned short)(x * 4 + 3);
     }
-    
-    memcpy(_originalVertices, _vertices, numQuads * 12 * sizeof(GLfloat));
+
+    updateVertexAndTexCoordinate();
+    memcpy(_originalVertices, _vertices, numQuads * 12 * sizeof(float));
 }
 
 void TiledGrid3D::setTile(const Vec2& pos, const Quad3& coords)
@@ -822,7 +785,7 @@ Quad3 TiledGrid3D::getTile(const Vec2& pos) const
     return ret;
 }
 
-void TiledGrid3D::reuse(void)
+void TiledGrid3D::reuse()
 {
     if (_reuseGrid > 0)
     {
@@ -831,6 +794,38 @@ void TiledGrid3D::reuse(void)
         memcpy(_originalVertices, _vertices, numQuads * 12 * sizeof(GLfloat));
         --_reuseGrid;
     }
+}
+
+void TiledGrid3D::updateVertexBuffer()
+{
+    size_t numOfPoints = _gridSize.width * _gridSize.height * 4;
+    auto tempVecPointer = (Vec3*)_vertices;
+    for (size_t i = 0; i < numOfPoints; ++i)
+    {
+        auto offset = i * (sizeof(Vec3) + sizeof(Vec2));
+        memcpy((char*)_vertexBuffer + offset, &tempVecPointer[i], sizeof(Vec3));
+    }
+    _drawCommand.updateVertexBuffer(_vertexBuffer, 0, numOfPoints * sizeof(Vec3) + numOfPoints * sizeof(Vec2));
+
+    _drawCommand.updateIndexBuffer(_indices, 0, _gridSize.width * _gridSize.height * 6 * sizeof(unsigned short));
+}
+
+void TiledGrid3D::updateVertexAndTexCoordinate()
+{
+    size_t numOfPoints = _gridSize.width * _gridSize.height * 4;
+    auto tempVecPointer = (Vec3*)_vertices;
+    auto tempTexPointer = (Vec2*)_texCoordinates;
+    for (size_t i = 0; i < numOfPoints; ++i)
+    {
+        auto offset = i * (sizeof(Vec3) + sizeof(Vec2));
+        memcpy((char*)_vertexBuffer + offset, &tempVecPointer[i], sizeof(Vec3));
+        memcpy((char*)_vertexBuffer + offset + sizeof(Vec3), &tempTexPointer[i], sizeof(Vec2));
+    }
+    _drawCommand.createVertexBuffer(sizeof(Vec3) + sizeof(Vec2), numOfPoints);
+    _drawCommand.updateVertexBuffer(_vertexBuffer, 0, numOfPoints * sizeof(Vec3) + numOfPoints * sizeof(Vec2));
+
+    _drawCommand.createIndexBuffer(sizeof(unsigned short), _gridSize.width * _gridSize.height * 6);
+    _drawCommand.updateIndexBuffer(_indices, 0, _gridSize.width * _gridSize.height * 6 * sizeof(unsigned short));
 }
 
 NS_CC_END
