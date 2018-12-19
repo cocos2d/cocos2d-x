@@ -29,7 +29,7 @@ end
 
 local function nextAction()
 	SceneIdx = SceneIdx + 1
-    SceneIdx = math.mod(SceneIdx, MAX_LAYER)
+    SceneIdx = math.fmod(SceneIdx, MAX_LAYER)
 
     return CreateParticleLayer()
 end
@@ -208,17 +208,17 @@ local function reorderParticles(dt)
         local child2 = parent:getChildByTag(2)
         local child3 = parent:getChildByTag(3)
 
-        if math.mod(ParticleReorder_Order, 3) == 0 then
+        if math.fmod(ParticleReorder_Order, 3) == 0 then
             parent:reorderChild(child1, 1)
             parent:reorderChild(child2, 2)
             parent:reorderChild(child3, 3)
 
-        elseif math.mod(ParticleReorder_Order, 3) == 1 then
+        elseif math.fmod(ParticleReorder_Order, 3) == 1 then
             parent:reorderChild(child1, 3)
             parent:reorderChild(child2, 1)
             parent:reorderChild(child3, 2)
 
-        elseif math.mod(ParticleReorder_Order, 3) == 2 then
+        elseif math.fmod(ParticleReorder_Order, 3) == 2 then
             parent:reorderChild(child1, 2)
             parent:reorderChild(child2, 3)
             parent:reorderChild(child3, 1)
@@ -1233,7 +1233,7 @@ local Issue870_entry = nil
 local function updateQuads(dt)
 	update(dt)
 
-	Issue870_index = math.mod(Issue870_index + 1, 4)
+	Issue870_index = math.fmod(Issue870_index + 1, 4)
     local rect = cc.rect(Issue870_index * 32, 0, 32, 32)
     emitter:setTextureWithRect(emitter:getTexture(), rect)
 end
@@ -1344,7 +1344,7 @@ local function removeSystem(dt)
 	local ChildrenCount = table.getn(AddAndDeleteParticleSystems_batchNode:getChildren())
     if ChildrenCount > 0 then
         cclog("remove random system")
-        local rand = math.mod(math.random(1, 999999), ChildrenCount - 1)
+        local rand = math.fmod(math.random(1, 999999), ChildrenCount - 1)
         AddAndDeleteParticleSystems_batchNode:removeChild(AddAndDeleteParticleSystems_batchNode:getChildren()[(rand)], true)
 
 		--add new
@@ -1352,7 +1352,7 @@ local function removeSystem(dt)
         particleSystem:setPositionType(cc.POSITION_TYPE_GROUPED )
         particleSystem:setTotalParticles(200)
 
-        particleSystem:setPosition(math.mod(math.random(1, 999999), 300) ,math.mod(math.random(1, 999999), 400))
+        particleSystem:setPosition(math.fmod(math.random(1, 999999), 300) ,math.fmod(math.random(1, 999999), 400))
 
         cclog("add a new system")
 		local randZ = math.floor(math.random() * 100)

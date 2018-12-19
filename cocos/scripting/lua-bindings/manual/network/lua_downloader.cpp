@@ -42,6 +42,7 @@ static int get_field_int(lua_State *L, const char *field, int def)
     if (lua_isnil(L, -1))
     {
         //luaL_error(L, "get_field_int: field '%s' no exists.", field);
+        lua_pop(L, 1);
         return ret;
     }
     ret = (int)lua_tointeger(L, -1);
@@ -57,6 +58,7 @@ static std::string get_field_string(lua_State *L, const char *field, const char 
     if (lua_isnil(L, -1))
     {
         //luaL_error(L, "get_field_string: field '%s' no exists.", field);
+        lua_pop(L, 1);
         return ret;
     }
     ret = std::string(lua_tostring(L, -1));
