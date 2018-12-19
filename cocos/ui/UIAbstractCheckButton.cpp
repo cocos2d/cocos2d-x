@@ -309,8 +309,6 @@ void AbstractCheckButton::onPressStateChangedToNormal()
     _backGroundBoxDisabledRenderer->setVisible(false);
     _frontCrossDisabledRenderer->setVisible(false);
     
-//    _backGroundBoxRenderer->setGLProgramState(this->getNormalGLProgramState(_backGroundBoxRenderer->getTexture()));
-//    _frontCrossRenderer->setGLProgramState(this->getNormalGLProgramState(_frontCrossRenderer->getTexture()));
     _backGroundBoxRenderer->updateShaders(positionTextureColor_vert, positionTextureColor_frag);
     _frontCrossRenderer->updateShaders(positionTextureColor_vert, positionTextureColor_frag);
     
@@ -328,8 +326,6 @@ void AbstractCheckButton::onPressStateChangedToNormal()
 
 void AbstractCheckButton::onPressStateChangedToPressed()
 {
-//    _backGroundBoxRenderer->setGLProgramState(this->getNormalGLProgramState(_backGroundBoxRenderer->getTexture()));
-//    _frontCrossRenderer->setGLProgramState(this->getNormalGLProgramState(_frontCrossRenderer->getTexture()));
     _backGroundBoxRenderer->updateShaders(positionTextureColor_vert, positionTextureColor_frag);
     _frontCrossRenderer->updateShaders(positionTextureColor_vert, positionTextureColor_frag);
     
@@ -354,8 +350,6 @@ void AbstractCheckButton::onPressStateChangedToDisabled()
     if (!_isBackgroundDisabledTextureLoaded
         || !_isFrontCrossDisabledTextureLoaded)
     {
-//        _backGroundBoxRenderer->setGLProgramState(this->getGrayGLProgramState(_backGroundBoxRenderer->getTexture()));
-//        _frontCrossRenderer->setGLProgramState(this->getGrayGLProgramState(_backGroundBoxRenderer->getTexture()));
         _backGroundBoxRenderer->updateShaders(positionTextureColor_vert, grayScale_frag);
         _frontCrossRenderer->updateShaders(positionTextureColor_vert, grayScale_frag);
     }
