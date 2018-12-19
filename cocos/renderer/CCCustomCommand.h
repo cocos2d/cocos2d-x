@@ -82,8 +82,6 @@ public:
     void updateIndexBuffer(void* data, size_t length);
     void updateVertexBuffer(void* data, size_t offset, size_t length);
     void updateIndexBuffer(void* data, size_t offset, size_t length);
-    void updateVertexBuffer(void* data, size_t offset, size_t count, size_t sizePerCount);
-    void updateIndexBuffer(void* data, size_t offset, size_t count, size_t sizePerCount);
     
     inline void setDrawType(DrawType drawType) { _drawType = drawType; }
     inline DrawType getDrawType() const { return _drawType; }
@@ -126,6 +124,9 @@ protected:
     PrimitiveType _primitiveType = PrimitiveType::TRIANGLE;
     
     float _lineWidth = 0.0;
+    
+    size_t _sizePerVertex = 0;
+    size_t _sizePerIndex = 0;
 };
 
 NS_CC_END
