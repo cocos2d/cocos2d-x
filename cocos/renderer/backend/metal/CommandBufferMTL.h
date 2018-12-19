@@ -26,7 +26,7 @@ public:
     virtual void endRenderPass() override;
     virtual void endFrame() override;
     
-    virtual void setLineWidth(float_t lineWidth) override;
+    virtual void setLineWidth(float lineWidth) override;
     
 private:
     void prepareDrawing() const;

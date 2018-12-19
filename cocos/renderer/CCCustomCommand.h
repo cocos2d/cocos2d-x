@@ -81,6 +81,8 @@ public:
     void createVertexBuffer(size_t sizePerVertex, size_t count);
     void createIndexBuffer(size_t sizePerIndex, size_t count);
 
+    void updateVertexBuffer(void* data, size_t length);
+    void updateIndexBuffer(void* data, size_t length);
     void updateVertexBuffer(void* data, size_t offset, size_t length);
     void updateIndexBuffer(void* data, size_t offset, size_t length);
     

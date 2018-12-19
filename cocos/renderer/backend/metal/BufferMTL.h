@@ -11,7 +11,8 @@ public:
     BufferMTL(id<MTLDevice> mtlDevice, size_t size, BufferType type, BufferUsage usage);
     ~BufferMTL();
     
-    virtual void updateData(void* data, size_t offset, size_t size) override;
+    virtual void updateData(void* data, size_t size) override;
+    virtual void updateSubData(void* data, size_t offset, size_t size) override;
     
     inline id<MTLBuffer> getMTLBuffer() const { return _mtlBuffer; }
     

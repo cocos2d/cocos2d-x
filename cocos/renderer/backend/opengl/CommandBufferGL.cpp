@@ -498,7 +498,7 @@ void CommandBufferGL::cleanResources()
     _vertexBuffers.clear();
 }
 
-void CommandBufferGL::setLineWidth(float_t lineWidth)
+void CommandBufferGL::setLineWidth(float lineWidth)
 {
     if(lineWidth > 0.0f)
         glLineWidth(lineWidth);
