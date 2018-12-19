@@ -360,4 +360,8 @@ uint32_t CommandBufferMTL::fillUniformBuffer(uint8_t* buffer, const std::vector<
     return offset;
 }
 
+void CommandBufferMTL::setLineWidth(float lineWidth)
+{
+}
+
 CC_BACKEND_END

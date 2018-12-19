@@ -12,7 +12,9 @@ public:
     BufferGL(uint32_t size, BufferType type, BufferUsage usage);
     ~BufferGL();
     
-    virtual void updateData(void* data, size_t offset, size_t size) override;
+    virtual void updateData(void* data, size_t size) override;
+    virtual void updateSubData(void* data, size_t offset, size_t size) override;
+    
     inline GLuint getHandler() const { return _buffer; }
     
 private:

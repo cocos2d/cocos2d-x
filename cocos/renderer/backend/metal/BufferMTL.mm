@@ -13,7 +13,13 @@ BufferMTL::~BufferMTL()
     [_mtlBuffer release];
 }
 
-void BufferMTL::updateData(void* data, size_t offset, size_t size)
+void BufferMTL::updateData(void* data, size_t size)
+{
+    assert(size <= _size);
+    memcpy((char*)_mtlBuffer.contents, data, size);
+}
+
+void BufferMTL::updateSubData(void* data, size_t offset, size_t size)
 {
     assert(offset + size <= _size);
     memcpy((char*)_mtlBuffer.contents + offset, data, size);

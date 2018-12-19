@@ -498,4 +498,10 @@ void CommandBufferGL::cleanResources()
     _vertexBuffers.clear();
 }
 
+void CommandBufferGL::setLineWidth(float lineWidth)
+{
+    if(lineWidth > 0.0f)
+        glLineWidth(lineWidth);
+}
+
 CC_BACKEND_END

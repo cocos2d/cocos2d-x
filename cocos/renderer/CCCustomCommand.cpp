@@ -94,14 +94,55 @@ void CustomCommand::createIndexBuffer(size_t sizePerIndex, size_t count)
 void CustomCommand::updateVertexBuffer(void* data, size_t offset, size_t length)
 {   
     assert(_vertexBuffer);
-    _vertexBuffer->updateData(data, offset, length);
+    _vertexBuffer->updateSubData(data, offset, length);
 }
 
 void CustomCommand::updateIndexBuffer(void* data, size_t offset, size_t length)
 {
     assert(_indexBuffer);
-    _indexBuffer->updateData(data, offset, length);
+    _indexBuffer->updateSubData(data, offset, length);
 }
+
+void CustomCommand::updateVertexBuffer(void* data, size_t length)
+{
+    assert(_vertexBuffer);
+    _vertexBuffer->updateData(data, length);
+}
+
+void CustomCommand::updateIndexBuffer(void* data, size_t length)
+{
+    assert(_indexBuffer);
+    _indexBuffer->updateData(data, length);
+}
+
+void CustomCommand::updateVertexBuffer(void* data, size_t offset, size_t count, size_t sizePerCount)
+{
+    assert(_vertexBuffer);
+    if(offset)
+    {
+        _vertexCount += count;
+    }
+    else
+    {
+        _vertexCount = count;
+    }
+    _vertexBuffer->updateData(data, offset, count*sizePerCount);
+}
+
+void CustomCommand::updateIndexBuffer(void* data, size_t offset, size_t count, size_t sizePerCount)
+{
+    assert(_indexBuffer);
+    if(offset)
+    {
+        _indexCount += count;
+    }
+    else
+    {
+        _indexCount = count;
+    }
+    _indexBuffer->updateData(data, offset, count*sizePerCount);
+}
+
 
 CustomCommand::~CustomCommand()
 {

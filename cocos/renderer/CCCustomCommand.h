@@ -81,8 +81,13 @@ public:
     void createVertexBuffer(size_t sizePerVertex, size_t count);
     void createIndexBuffer(size_t sizePerIndex, size_t count);
 
+    void updateVertexBuffer(void* data, size_t length);
+    void updateIndexBuffer(void* data, size_t length);
     void updateVertexBuffer(void* data, size_t offset, size_t length);
     void updateIndexBuffer(void* data, size_t offset, size_t length);
+    void updateVertexBuffer(void* data, size_t offset, size_t count, size_t sizePerCount);
+    void updateIndexBuffer(void* data, size_t offset, size_t count, size_t sizePerCount);
+
 
     inline void skipRendering(bool value) { _skipRendering = value; }
     inline bool isSkipRendering() const { return _skipRendering; }
@@ -96,6 +101,7 @@ public:
     inline backend::Buffer* getIndexBuffer() const { assert(_indexBuffer); return _indexBuffer; }
     inline size_t getIndexCount() const { return _indexCount; }
     inline size_t getVertexCount() const { return _vertexCount; }
+    inline void setVertexCount(size_t count) { _vertexCount = count; }
     
     inline void setVertexDrawInfo(size_t vertexStart, size_t count) { _vertexStart = vertexStart; _vertexDrawCount = count; }
     inline size_t getVertexDrawStart() const { return _vertexStart; }
@@ -111,6 +117,9 @@ public:
     void execute();
     /**Callback function.*/
     std::function<void()> func;
+    
+    inline void setLineWidth(float_t lineWidth) { _lineWidth = lineWidth; }
+    inline float_t getLineWidth() const { return _lineWidth; }
 
 protected:
     bool _skipRendering = false;
@@ -128,6 +137,8 @@ protected:
     
     DrawType _drawType = DrawType::ELEMENT;
     PrimitiveType _primitiveType = PrimitiveType::TRIANGLE;
+    
+    float_t _lineWidth = 0.0;
 };
 
 NS_CC_END

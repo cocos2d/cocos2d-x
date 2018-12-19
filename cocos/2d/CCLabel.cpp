@@ -44,11 +44,9 @@
 #include "base/CCEventCustom.h"
 #include "base/ccUtils.h"
 #include "2d/CCFontFNT.h"
-#include "renderer/backend/Device.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ShaderModule.h"
 #include "renderer/CCShaderCache.h"
-#include "renderer/backend/Buffer.h"
 
 NS_CC_BEGIN
 /**
@@ -1492,120 +1490,6 @@ float Label::getBMFontSize()const
     return _bmFontSize;
 }
 
-void Label::onDrawShadow(GLProgram* glProgram, const Color4F& shadowColor)
-{
-//    if (_currentLabelType == LabelType::TTF)
-//    {
-//        if (_currLabelEffect == LabelEffect::OUTLINE)
-//        {
-//            glProgram->setUniformLocationWith1i(_uniformEffectType, 2); // 2: shadow
-//            glProgram->setUniformLocationWith4f(_uniformEffectColor, shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
-//        }
-//        else
-//        {
-//            glProgram->setUniformLocationWith4f(_uniformTextColor, shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
-//            if (_currLabelEffect == LabelEffect::GLOW)
-//            {
-//                glProgram->setUniformLocationWith4f(_uniformEffectColor, shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
-//            }
-//        }
-//
-//        glProgram->setUniformsForBuiltins(_shadowTransform);
-//        for (auto&& it : _letters)
-//        {
-//            it.second->updateTransform();
-//        }
-//        for (auto&& batchNode : _batchNodes)
-//        {
-//            batchNode->getTextureAtlas()->drawQuads();
-//        }
-//    }
-//    else
-//    {
-//        Color3B oldColor = _realColor;
-//        GLubyte oldOPacity = _displayedOpacity;
-//        _displayedOpacity = shadowColor.a * (oldOPacity / 255.0f) * 255;
-//        setColor(Color3B(shadowColor));
-//
-//        glProgram->setUniformsForBuiltins(_shadowTransform);
-//        for (auto&& it : _letters)
-//        {
-//            it.second->updateTransform();
-//        }
-//        for (auto&& batchNode : _batchNodes)
-//        {
-//            batchNode->getTextureAtlas()->drawQuads();
-//        }
-//
-//        _displayedOpacity = oldOPacity;
-//        setColor(oldColor);
-//    }
-}
-
-void Label::onDraw(const Mat4& transform, bool /*transformUpdated*/)
-{
-    //TODO coulonswang
-    cocos2d::log("Error in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
-////    auto glprogram = getGLProgram();
-////    glprogram->use();
-////    utils::setBlending(_blendFunc.src, _blendFunc.dst);
-//
-//    if (_shadowEnabled)
-//    {
-//        //TODO coulsonwang
-//        cocos2d::log("Error in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
-////        if (_boldEnabled)
-////            onDrawShadow(glprogram, _textColorF);
-////        else
-////            onDrawShadow(glprogram, _shadowColor4F);
-//    }
-//
-////    glprogram->setUniformsForBuiltins(transform);
-//    for (auto&& it : _letters)
-//    {
-//        it.second->updateTransform();
-//    }
-//
-//    if (_currentLabelType == LabelType::TTF)
-//    {
-//        switch (_currLabelEffect) {
-//        case LabelEffect::OUTLINE:
-//                //TODO coulsonwang
-//                cocos2d::log("Error in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
-//            // draw outline of text
-////            glprogram->setUniformLocationWith1i(_uniformEffectType, 1); // 1: outline
-////            glprogram->setUniformLocationWith4f(_uniformEffectColor,
-////                _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
-//            for (auto&& batchNode : _batchNodes)
-//            {
-//                batchNode->getTextureAtlas()->drawQuads();
-//            }
-//
-//            // draw text without outline
-////            glprogram->setUniformLocationWith1i(_uniformEffectType, 0); // 0: text
-////            glprogram->setUniformLocationWith4f(_uniformTextColor, _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
-//            break;
-//        case LabelEffect::GLOW:
-////            glprogram->setUniformLocationWith4f(_uniformEffectColor,
-////                _effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
-//        case LabelEffect::NORMAL:
-//            {
-//                
-//            }
-////            glprogram->setUniformLocationWith4f(_uniformTextColor,
-////                _textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
-//            break;
-//        default:
-//            break;
-//        }
-//    }
-//
-//    for (auto&& batchNode : _batchNodes)
-//    {
-//        batchNode->getTextureAtlas()->drawQuads();
-//    }
-}
-
 void Label::updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer, const Mat4 &transform)
 {
     if(textureAtlas->getTotalQuads() > _customCommand.getVertexCount())
@@ -1613,8 +1497,8 @@ void Label::updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer,
         _customCommand.createVertexBuffer(sizeof(V3F_C4B_T2F_Quad), textureAtlas->getTotalQuads());
         _customCommand.createIndexBuffer(sizeof(unsigned short), textureAtlas->getTotalQuads()*6);
     }
-    _customCommand.updateVertexBuffer(textureAtlas->getQuads(), 0, sizeof(V3F_C4B_T2F_Quad)*textureAtlas->getTotalQuads());
-    _customCommand.updateIndexBuffer(textureAtlas->getIndices(), 0, sizeof(unsigned short)*textureAtlas->getTotalQuads()*6);
+    _customCommand.updateVertexBuffer(textureAtlas->getQuads(), 0, textureAtlas->getTotalQuads(), sizeof(V3F_C4B_T2F_Quad));
+    _customCommand.updateIndexBuffer(textureAtlas->getIndices(), 0, textureAtlas->getTotalQuads()*6, sizeof(unsigned short));
     _customCommand.setIndexDrawInfo(0, _customCommand.getIndexCount());
     
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();

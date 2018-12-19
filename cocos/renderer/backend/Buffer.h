@@ -9,7 +9,8 @@ CC_BACKEND_BEGIN
 class Buffer : public cocos2d::Ref
 {
 public:
-    virtual void updateData(void* data, size_t offset, size_t size) = 0;
+    virtual void updateData(void* data, size_t size) = 0;
+    virtual void updateSubData(void* data, size_t offset, size_t size) = 0;
     
 protected:
     Buffer(size_t size, BufferType type, BufferUsage usage)

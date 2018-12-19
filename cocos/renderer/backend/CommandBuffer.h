@@ -31,6 +31,8 @@ public:
     virtual void endRenderPass() = 0;
     virtual void endFrame() = 0;
     
+    virtual void setLineWidth(float lineWidth) = 0;
+    
     void setStencilReferenceValue(uint32_t value);
     void setStencilReferenceValue(uint32_t frontRef, uint32_t backRef);
     
