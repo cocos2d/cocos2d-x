@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "2d/CCCamera.h"
 #include "editor-support/cocostudio/CocosStudioExtension.h"
-
+#include "renderer/ccShaders.h"
 NS_CC_BEGIN
 
 /* FIXME:
@@ -663,14 +663,13 @@ void Slider::onPressStateChangedToNormal()
     _slidBallPressedRenderer->setVisible(false);
     _slidBallDisabledRenderer->setVisible(false);
     
-    _slidBallNormalRenderer->setGLProgramState(this->getNormalGLProgramState(_slidBallNormalRenderer->getTexture()));
+    _slidBallNormalRenderer->updateShaders(positionTextureColor_vert, positionTextureColor_frag);
     _slidBallNormalRenderer->setScale(_sliderBallNormalTextureScaleX, _sliderBallNormalTextureScaleY);
 }
 
 void Slider::onPressStateChangedToPressed()
 {
-    _slidBallNormalRenderer->setGLProgramState(this->getNormalGLProgramState(_slidBallNormalRenderer->getTexture()));
-
+    _slidBallNormalRenderer->updateShaders(positionTextureColor_vert, positionTextureColor_frag);
     
     if (!_isSliderBallPressedTextureLoaded)
     {
@@ -689,7 +688,7 @@ void Slider::onPressStateChangedToDisabled()
 {
     if (!_isSliderBallDisabledTexturedLoaded)
     {
-        _slidBallNormalRenderer->setGLProgramState(this->getGrayGLProgramState(_slidBallNormalRenderer->getTexture()));
+        _slidBallNormalRenderer->updateShaders(positionTextureColor_vert, grayScale_frag);
         _slidBallNormalRenderer->setVisible(true);
     }
     else

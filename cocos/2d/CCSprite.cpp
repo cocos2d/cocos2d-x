@@ -372,13 +372,8 @@ void Sprite::setTexture(const std::string &filename)
         rect.size = texture->getContentSize();
     setTextureRect(rect);
 }
-
-void Sprite::setTexture(Texture2D *texture)
+void Sprite::setVertexLayout()
 {
-    auto& pipelineDescriptor = _trianglesCommand.getPipelineDescriptor();
-    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
-    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
-    
 #define VERTEX_POSITION_SIZE 3
 #define VERTEX_TEXCOORD_SIZE 2
 #define VERTEX_COLOR_SIZE 4
@@ -393,7 +388,20 @@ void Sprite::setTexture(Texture2D *texture)
     vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, colorOffset, true);
     
     vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
-    pipelineDescriptor.vertexLayout = vertexLayout;
+    _trianglesCommand.getPipelineDescriptor().vertexLayout = vertexLayout;
+}
+
+void Sprite::updateShaders(const char* vert, const char* frag)
+{
+    auto& pipelineDescriptor = _trianglesCommand.getPipelineDescriptor();
+    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(vert);
+    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(frag);
+    setVertexLayout();
+}
+
+void Sprite::setTexture(Texture2D *texture)
+{
+    updateShaders(positionTextureColor_vert, positionTextureColor_frag);
     
     CCASSERT(! _batchNode || (texture &&  texture == _batchNode->getTexture()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
