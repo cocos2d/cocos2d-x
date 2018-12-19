@@ -286,19 +286,6 @@ public:
     * @lua NA
     */
     void setBlendFunc(const BlendFunc &blendFunc);
-
-    /**
-     * @js NA
-     */
-    virtual void onDraw(const Mat4 &transform, uint32_t flags);
-    /**
-     * @js NA
-     */
-    virtual void onDrawGLLine(const Mat4 &transform, uint32_t flags);
-    /**
-     * @js NA
-     */
-    virtual void onDrawGLPoint(const Mat4 &transform, uint32_t flags);
     
     // Overrides
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
@@ -328,7 +315,10 @@ protected:
     void ensureCapacityGLPoint(int count);
     void ensureCapacityGLLine(int count);
 
-    void setupBuffer();
+    void updateShader();
+    void setVertexLayout(CustomCommand& cmd);
+    void updateBlendState(CustomCommand& cmd);
+    void updateUniforms(const Mat4 &transform, CustomCommand& cmd);
 
     GLuint      _vao = 0;
     GLuint      _vbo = 0;

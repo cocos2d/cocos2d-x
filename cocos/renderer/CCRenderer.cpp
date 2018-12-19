@@ -541,8 +541,8 @@ void Renderer::drawBatchedTriangles()
     }
     batchesTotal++;
 
-     _vertexBuffer->updateData(_verts, 0, sizeof(_verts[0]) * _filledVertex);
-     _indexBuffer->updateData(_indices, 0, sizeof(_indices[0]) * _filledIndex);
+     _vertexBuffer->updateData(_verts, sizeof(_verts[0]) * _filledVertex);
+     _indexBuffer->updateData(_indices, sizeof(_indices[0]) * _filledIndex);
     
     /************** 2: Draw *************/
     for (int i = 0; i < batchesTotal; ++i)
@@ -579,6 +579,7 @@ void Renderer::drawCustomCommand(RenderCommand *command)
     _commandBuffer->setBindGroup( &(cmd->getPipelineDescriptor().bindGroup) );
     
     auto drawType = cmd->getDrawType();
+    _commandBuffer->setLineWidth(cmd->getLineWidth());
     if (CustomCommand::DrawType::ELEMENT == drawType)
     {
         _commandBuffer->setIndexBuffer(cmd->getIndexBuffer());
