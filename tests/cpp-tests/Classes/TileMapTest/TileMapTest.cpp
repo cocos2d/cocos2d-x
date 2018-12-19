@@ -42,9 +42,9 @@ enum
 
 TileMapTests::TileMapTests()
 {
-    // ADD_TEST_CASE(TMXIsoZorder);
-    // ADD_TEST_CASE(TMXOrthoZorder);
-    // ADD_TEST_CASE(TMXStaggeredTest);
+    ADD_TEST_CASE(TMXIsoZorder);
+    ADD_TEST_CASE(TMXOrthoZorder);
+    ADD_TEST_CASE(TMXStaggeredTest);
     ADD_TEST_CASE(TMXIsoVertexZ);
     ADD_TEST_CASE(TMXOrthoVertexZ);
     ADD_TEST_CASE(TMXOrthoTest);

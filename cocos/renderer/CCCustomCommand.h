@@ -69,6 +69,7 @@ public:
 	@param flags Use to identify that the render command is 3D mode or not.
 	*/
     void init(float globalZOrder, const Mat4& modelViewTransform, uint32_t flags);
+    void init(float globalZOrder, const BlendFunc& blendFunc);
     /**
     Init function. The render command will be in 2D mode.
     @param globalZOrder GlobalZOrder of the render command.

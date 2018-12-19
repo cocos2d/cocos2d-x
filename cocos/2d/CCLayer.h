@@ -25,9 +25,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __CCLAYER_H__
-#define __CCLAYER_H__
+#pragma once
 
 #include "2d/CCNode.h"
 #include "base/CCProtocols.h"
@@ -257,7 +255,7 @@ public:
      * @param height The height of layer.
      * @return An autoreleased LayerColor object.
      */
-    static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
+    static LayerColor * create(const Color4B& color, float width, float height);
     /** Creates a Layer with color. Width and height are the window size.
      *
      * @param color The color of layer.
@@ -269,19 +267,19 @@ public:
      * 
      * @param w The width of layer.
      */
-    void changeWidth(GLfloat w);
+    void changeWidth(float w);
     /** Change height in Points.
      *
      * @param h The height of layer.
      */
-    void changeHeight(GLfloat h);
+    void changeHeight(float h);
     /** Change width and height in Points.
      * 
      * @param w The width of layer.
      * @param h The Height of layer.
     @since v0.8
     */
-    void changeWidthAndHeight(GLfloat w ,GLfloat h);
+    void changeWidthAndHeight(float w, float h);
 
     //
     // Overrides
@@ -308,7 +306,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~LayerColor();
     
     bool init() override;
-    bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
+    bool initWithColor(const Color4B& color, float width, float height);
     bool initWithColor(const Color4B& color);
 
 protected:
@@ -322,7 +320,6 @@ protected:
     CustomCommand _customCommand;
     Vec3 _noMVPVertices[4];
     
-//    MyRenderCommand _renderCommand;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);
 
@@ -415,23 +412,23 @@ public:
      *
      * @param startOpacity The start opacity, from 0 to 255.
      */
-    void setStartOpacity( GLubyte startOpacity );
+    void setStartOpacity(uint8_t startOpacity );
     /** Returns the start opacity of the gradient.
      *
      * @return The start opacity.
      */
-    GLubyte getStartOpacity() const;
+    uint8_t getStartOpacity() const;
 
     /** Returns the end opacity of the gradient.
      *
      * @param endOpacity The end opacity, from 0 to 255.
      */
-    void setEndOpacity( GLubyte endOpacity );
+    void setEndOpacity(uint8_t endOpacity );
     /** Returns the end opacity of the gradient.
      *
      * @return The end opacity.
      */
-    GLubyte getEndOpacity() const;
+    uint8_t getEndOpacity() const;
 
     /** Sets the directional vector that will be used for the gradient.
     The default value is vertical direction (0,-1). 
@@ -467,12 +464,12 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     virtual void updateColor() override;
 
-    Color3B _startColor;
-    Color3B _endColor;
-    GLubyte _startOpacity;
-    GLubyte _endOpacity;
-    Vec2   _alongVector;
-    bool    _compressedInterpolation;
+    Color3B _startColor = Color3B::BLACK;
+    Color3B _endColor = Color3B::BLACK;
+    uint8_t _startOpacity = 255;
+    uint8_t _endOpacity = 255;
+    Vec2   _alongVector = {0, -1};
+    bool    _compressedInterpolation = true;
 };
 
 
@@ -687,6 +684,3 @@ private:
 /// @}
 
 NS_CC_END
-
-#endif // __CCLAYER_H__
-

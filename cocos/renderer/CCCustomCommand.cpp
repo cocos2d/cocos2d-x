@@ -26,6 +26,7 @@
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/backend/Buffer.h"
 #include "renderer/backend/Device.h"
+#include "base//ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -60,9 +61,19 @@ CustomCommand& CustomCommand::operator=(const CustomCommand& rhs)
     return *this;
 }
 
-void CustomCommand::init(float depth, const cocos2d::Mat4 &modelViewTransform, uint32_t flags)
+void CustomCommand::init(float globalZOrder, const cocos2d::Mat4 &modelViewTransform, uint32_t flags)
 {
-    RenderCommand::init(depth, modelViewTransform, flags);
+    RenderCommand::init(globalZOrder, modelViewTransform, flags);
+}
+
+void CustomCommand::init(float globalZOrder, const BlendFunc& blendFunc)
+{
+    auto& blendDescriptor = _pipelineDescriptor.blendDescriptor;
+    blendDescriptor.blendEnabled = true;
+    blendDescriptor.sourceRGBBlendFactor = blendDescriptor.sourceAlphaBlendFactor = utils::toBackendBlendFactor(blendFunc.src);
+    blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor = utils::toBackendBlendFactor(blendFunc.dst);
+
+    _globalOrder = globalZOrder;
 }
 
 void CustomCommand::init(float globalOrder)

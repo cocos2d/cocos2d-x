@@ -332,14 +332,6 @@ const BlendFunc &LayerColor::getBlendFunc() const
 void LayerColor::setBlendFunc(const BlendFunc &var)
 {
     _blendFunc = var;
-    
-    backend::BlendDescriptor& blendDescriptor = _customCommand.getPipelineDescriptor().blendDescriptor;
-    blendDescriptor.blendEnabled = true;
-    
-    blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::SRC_ALPHA;
-    blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-    blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::SRC_ALPHA;
-    blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
 }
 
 LayerColor* LayerColor::create()
@@ -459,7 +451,7 @@ void LayerColor::updateColor()
 
 void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {    
-    _customCommand.init(_globalZOrder);
+    _customCommand.init(_globalZOrder, _blendFunc);
     renderer->addCommand(&_customCommand);
     
     cocos2d::Mat4 projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -499,14 +491,7 @@ void LayerColor::updateVertexBuffer()
 // LayerGradient
 //
 LayerGradient::LayerGradient()
-: _startColor(Color4B::BLACK)
-, _endColor(Color4B::BLACK)
-, _startOpacity(255)
-, _endOpacity(255)
-, _alongVector(Vec2(0, -1))
-, _compressedInterpolation(true)
 {
-    
 }
 
 LayerGradient::~LayerGradient()
@@ -611,25 +596,25 @@ void LayerGradient::updateColor()
     );
 
     // (-1, -1)
-//    _squareColors[0].r = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c));
-//    _squareColors[0].g = E.g + (S.g - E.g) * ((c + u.x + u.y) / (2.0f * c));
-//    _squareColors[0].b = E.b + (S.b - E.b) * ((c + u.x + u.y) / (2.0f * c));
-//    _squareColors[0].a = E.a + (S.a - E.a) * ((c + u.x + u.y) / (2.0f * c));
-//    // (1, -1)
-//    _squareColors[1].r = E.r + (S.r - E.r) * ((c - u.x + u.y) / (2.0f * c));
-//    _squareColors[1].g = E.g + (S.g - E.g) * ((c - u.x + u.y) / (2.0f * c));
-//    _squareColors[1].b = E.b + (S.b - E.b) * ((c - u.x + u.y) / (2.0f * c));
-//    _squareColors[1].a = E.a + (S.a - E.a) * ((c - u.x + u.y) / (2.0f * c));
-//    // (-1, 1)
-//    _squareColors[2].r = E.r + (S.r - E.r) * ((c + u.x - u.y) / (2.0f * c));
-//    _squareColors[2].g = E.g + (S.g - E.g) * ((c + u.x - u.y) / (2.0f * c));
-//    _squareColors[2].b = E.b + (S.b - E.b) * ((c + u.x - u.y) / (2.0f * c));
-//    _squareColors[2].a = E.a + (S.a - E.a) * ((c + u.x - u.y) / (2.0f * c));
-//    // (1, 1)
-//    _squareColors[3].r = E.r + (S.r - E.r) * ((c - u.x - u.y) / (2.0f * c));
-//    _squareColors[3].g = E.g + (S.g - E.g) * ((c - u.x - u.y) / (2.0f * c));
-//    _squareColors[3].b = E.b + (S.b - E.b) * ((c - u.x - u.y) / (2.0f * c));
-//    _squareColors[3].a = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
+   _squareColors[0].r = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c));
+   _squareColors[0].g = E.g + (S.g - E.g) * ((c + u.x + u.y) / (2.0f * c));
+   _squareColors[0].b = E.b + (S.b - E.b) * ((c + u.x + u.y) / (2.0f * c));
+   _squareColors[0].a = E.a + (S.a - E.a) * ((c + u.x + u.y) / (2.0f * c));
+   // (1, -1)
+   _squareColors[1].r = E.r + (S.r - E.r) * ((c - u.x + u.y) / (2.0f * c));
+   _squareColors[1].g = E.g + (S.g - E.g) * ((c - u.x + u.y) / (2.0f * c));
+   _squareColors[1].b = E.b + (S.b - E.b) * ((c - u.x + u.y) / (2.0f * c));
+   _squareColors[1].a = E.a + (S.a - E.a) * ((c - u.x + u.y) / (2.0f * c));
+   // (-1, 1)
+   _squareColors[2].r = E.r + (S.r - E.r) * ((c + u.x - u.y) / (2.0f * c));
+   _squareColors[2].g = E.g + (S.g - E.g) * ((c + u.x - u.y) / (2.0f * c));
+   _squareColors[2].b = E.b + (S.b - E.b) * ((c + u.x - u.y) / (2.0f * c));
+   _squareColors[2].a = E.a + (S.a - E.a) * ((c + u.x - u.y) / (2.0f * c));
+   // (1, 1)
+   _squareColors[3].r = E.r + (S.r - E.r) * ((c - u.x - u.y) / (2.0f * c));
+   _squareColors[3].g = E.g + (S.g - E.g) * ((c - u.x - u.y) / (2.0f * c));
+   _squareColors[3].b = E.b + (S.b - E.b) * ((c - u.x - u.y) / (2.0f * c));
+   _squareColors[3].a = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
 }
 
 const Color3B& LayerGradient::getStartColor() const
