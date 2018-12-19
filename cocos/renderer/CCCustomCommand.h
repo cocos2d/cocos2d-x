@@ -101,7 +101,6 @@ public:
     inline backend::Buffer* getIndexBuffer() const { assert(_indexBuffer); return _indexBuffer; }
     inline size_t getIndexCount() const { return _indexCount; }
     inline size_t getVertexCount() const { return _vertexCount; }
-    inline void setVertexCount(size_t count) { _vertexCount = count; }
     
     inline void setVertexDrawInfo(size_t vertexStart, size_t count) { _vertexStart = vertexStart; _vertexDrawCount = count; }
     inline size_t getVertexDrawStart() const { return _vertexStart; }
@@ -118,8 +117,8 @@ public:
     /**Callback function.*/
     std::function<void()> func;
     
-    inline void setLineWidth(float_t lineWidth) { _lineWidth = lineWidth; }
-    inline float_t getLineWidth() const { return _lineWidth; }
+    inline void setLineWidth(float lineWidth) { _lineWidth = lineWidth; }
+    inline float getLineWidth() const { return _lineWidth; }
 
 protected:
     bool _skipRendering = false;
@@ -138,7 +137,7 @@ protected:
     DrawType _drawType = DrawType::ELEMENT;
     PrimitiveType _primitiveType = PrimitiveType::TRIANGLE;
     
-    float_t _lineWidth = 0.0;
+    float _lineWidth = 0.0;
 };
 
 NS_CC_END

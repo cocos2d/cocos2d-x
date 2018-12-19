@@ -126,7 +126,7 @@ void CustomCommand::updateVertexBuffer(void* data, size_t offset, size_t count, 
     {
         _vertexCount = count;
     }
-    _vertexBuffer->updateData(data, offset, count*sizePerCount);
+    _vertexBuffer->updateSubData(data, offset, count*sizePerCount);
 }
 
 void CustomCommand::updateIndexBuffer(void* data, size_t offset, size_t count, size_t sizePerCount)
@@ -140,7 +140,7 @@ void CustomCommand::updateIndexBuffer(void* data, size_t offset, size_t count, s
     {
         _indexCount = count;
     }
-    _indexBuffer->updateData(data, offset, count*sizePerCount);
+    _indexBuffer->updateSubData(data, offset, count*sizePerCount);
 }
 
 
