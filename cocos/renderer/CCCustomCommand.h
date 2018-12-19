@@ -121,6 +121,9 @@ protected:
     
     size_t _indexBufferOffset = 0;
     size_t _indexDrawCount = 0;
+
+    size_t _perVertexSize = 0;
+    size_t _perIndexSize = 0;
     
     DrawType _drawType = DrawType::ELEMENT;
     PrimitiveType _primitiveType = PrimitiveType::TRIANGLE;

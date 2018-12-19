@@ -73,9 +73,8 @@ void CustomCommand::init(float globalOrder)
 void CustomCommand::createVertexBuffer(size_t sizePerVertex, size_t count)
 {
     CC_SAFE_RELEASE(_vertexBuffer);
-    
-    _vertexCount = count;
-    
+
+    _perVertexSize = sizePerVertex;
     auto device = backend::Device::getInstance();
     _vertexBuffer = device->newBuffer(sizePerVertex * count, backend::BufferType::VERTEX, backend::BufferUsage::READ);
 }
@@ -83,9 +82,8 @@ void CustomCommand::createVertexBuffer(size_t sizePerVertex, size_t count)
 void CustomCommand::createIndexBuffer(size_t sizePerIndex, size_t count)
 {
     CC_SAFE_RELEASE(_indexBuffer);
-    
-    _indexCount = count;
-    
+
+    _perIndexSize = sizePerIndex;
     auto device = backend::Device::getInstance();
     _indexBuffer = device->newBuffer(sizePerIndex * count, backend::BufferType::INDEX, backend::BufferUsage::READ);
 }
@@ -93,24 +91,40 @@ void CustomCommand::createIndexBuffer(size_t sizePerIndex, size_t count)
 void CustomCommand::updateVertexBuffer(void* data, size_t offset, size_t length)
 {   
     assert(_vertexBuffer);
+
+    if (offset)
+        _vertexCount += length / _perVertexSize;
+    else
+        _vertexCount = length / _perVertexSize;
+
     _vertexBuffer->updateSubData(data, offset, length);
 }
 
 void CustomCommand::updateIndexBuffer(void* data, size_t offset, size_t length)
 {
     assert(_indexBuffer);
+
+    if (offset)
+        _indexCount += length / _perIndexSize;
+    else
+        _indexCount = length / _perIndexSize;
+
     _indexBuffer->updateSubData(data, offset, length);
 }
 
 void CustomCommand::updateVertexBuffer(void* data, size_t length)
 {
     assert(_vertexBuffer);
+
+    _vertexCount = length / _perVertexSize;
     _vertexBuffer->updateData(data, length);
 }
 
 void CustomCommand::updateIndexBuffer(void* data, size_t length)
 {
     assert(_indexBuffer);
+
+    _indexCount = length / _perIndexSize;
     _indexBuffer->updateData(data, length);
 }
 
