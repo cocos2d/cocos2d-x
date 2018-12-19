@@ -42,6 +42,7 @@ static int get_field_int(lua_State *L, const char *field, int def)
     if (lua_isnil(L, -1))
     {
         //luaL_error(L, "get_field_int: field '%s' no exists.", field);
+        lua_pop(L, 1);
         return ret;
     }
     ret = (int)lua_tointeger(L, -1);
@@ -57,6 +58,7 @@ static std::string get_field_string(lua_State *L, const char *field, const char 
     if (lua_isnil(L, -1))
     {
         //luaL_error(L, "get_field_string: field '%s' no exists.", field);
+        lua_pop(L, 1);
         return ret;
     }
     ret = std::string(lua_tostring(L, -1));
@@ -132,13 +134,13 @@ static int lua_downloader_new(lua_State *L)
         downloader = new (ptr) Downloader();
     }
 
-    luaL_getmetatable(L, "cc.Downloader");
-    lua_setmetatable(L, -2);
+    luaL_getmetatable(L, "cc.Downloader");              //stack  downloader, cc.Downloader
+    lua_setmetatable(L, -2);                            //stack  downloader
 
     //register callback table
-    lua_pushlightuserdata(L, (void*)downloader);
-    lua_newtable(L);
-    lua_settable(L, LUA_REGISTRYINDEX);
+    lua_pushlightuserdata(L, (void*)downloader);        //stack downloader, key[*downloader]
+    lua_newtable(L);                                    //stack downloader, key[*downloader], {}
+    lua_settable(L, LUA_REGISTRYINDEX);                 //stack downloaders
 
     return 1;
 }
@@ -335,13 +337,16 @@ static const struct luaL_Reg downloaderMemberFns[] = {
 
 int register_downloader(lua_State* L)
 {
-    luaL_newmetatable(L, "cc.Downloader");
-    lua_pushstring(L, "__index");
-    lua_pushvalue(L, -2);    /* pushes the metatable */
-    lua_settable(L, -3);     /* metatable.__index = metatable */
-
-    luaL_openlib(L, nullptr, downloaderMemberFns, 0);
-    luaL_openlib(L, "cc.Downloader", downloaderStaticFns, 0);
+    int stackSize = lua_gettop(L);
+    luaL_newmetatable(L, "cc.Downloader");  //stack metatable(cc.Downloader)
+    lua_pushstring(L, "__index");           //stack metatable(*), __index
+    lua_pushvalue(L, -2);                   //stack metatable(*), __index, metatable(*)
+    lua_settable(L, -3);                    //stack metatable(*)
+    luaL_register(L, nullptr, downloaderMemberFns);   //stack metatable(*)
+    lua_pop(L, 1);                                      //stack *empty*
+    luaL_register(L, "cc.Downloader", downloaderStaticFns);   //stack *empty*
+    lua_pop(L, 1);
+    assert(stackSize == lua_gettop(L));
     return 1;
 }
 
