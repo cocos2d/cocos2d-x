@@ -103,6 +103,35 @@ void CustomCommand::updateIndexBuffer(void* data, size_t offset, size_t length)
     _indexBuffer->updateData(data, offset, length);
 }
 
+void CustomCommand::updateVertexBuffer(void* data, size_t offset, size_t count, size_t sizePerCount)
+{
+    assert(_vertexBuffer);
+    if(offset)
+    {
+        _vertexCount += count;
+    }
+    else
+    {
+        _vertexCount = count;
+    }
+    _vertexBuffer->updateData(data, offset, count*sizePerCount);
+}
+
+void CustomCommand::updateIndexBuffer(void* data, size_t offset, size_t count, size_t sizePerCount)
+{
+    assert(_indexBuffer);
+    if(offset)
+    {
+        _indexCount += count;
+    }
+    else
+    {
+        _indexCount = count;
+    }
+    _indexBuffer->updateData(data, offset, count*sizePerCount);
+}
+
+
 CustomCommand::~CustomCommand()
 {
     CC_SAFE_RELEASE(_vertexBuffer);
