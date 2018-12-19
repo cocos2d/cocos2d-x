@@ -559,7 +559,6 @@ void RenderTexture::begin()
     renderer->pushGroup(_groupCommand.getRenderQueueID());
 
     _beginCommand.init(_globalZOrder);
-    _beginCommand.skipRendering(true);
     _beginCommand.func = CC_CALLBACK_0(RenderTexture::onBegin, this);
     renderer->addCommand(&_beginCommand);
 }
@@ -567,7 +566,6 @@ void RenderTexture::begin()
 void RenderTexture::end()
 {
     _endCommand.init(_globalZOrder);
-    _endCommand.skipRendering(true);
     _endCommand.func = CC_CALLBACK_0(RenderTexture::onEnd, this);
 
     Director* director = Director::getInstance();

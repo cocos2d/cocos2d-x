@@ -540,6 +540,10 @@
 		461C205021A5304A00F3BD47 /* CCPipelineDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 461C204C21A5304A00F3BD47 /* CCPipelineDescriptor.h */; };
 		461FE08421C34EEB00E5378F /* CCEnumClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 461FE08321C34EEB00E5378F /* CCEnumClass.h */; };
 		461FE08521C34EEB00E5378F /* CCEnumClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 461FE08321C34EEB00E5378F /* CCEnumClass.h */; };
+		461FE09021CA129B00E5378F /* CCCallbackCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461FE08E21CA129B00E5378F /* CCCallbackCommand.cpp */; };
+		461FE09121CA129B00E5378F /* CCCallbackCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461FE08E21CA129B00E5378F /* CCCallbackCommand.cpp */; };
+		461FE09221CA129B00E5378F /* CCCallbackCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 461FE08F21CA129B00E5378F /* CCCallbackCommand.h */; };
+		461FE09321CA129B00E5378F /* CCCallbackCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 461FE08F21CA129B00E5378F /* CCCallbackCommand.h */; };
 		46270FA41E1CC6A200AAA098 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46270FA21E1CC6A100AAA098 /* libcrypto.a */; };
 		46270FA51E1CC6A200AAA098 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46270FA31E1CC6A100AAA098 /* libssl.a */; };
 		46270FA81E1CC84500AAA098 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46270FA61E1CC84500AAA098 /* libcrypto.a */; };
@@ -2360,6 +2364,8 @@
 		460D4D0721ABD0C60075726E /* RenderPipelineMTL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RenderPipelineMTL.mm; sourceTree = "<group>"; };
 		461C204C21A5304A00F3BD47 /* CCPipelineDescriptor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPipelineDescriptor.h; sourceTree = "<group>"; };
 		461FE08321C34EEB00E5378F /* CCEnumClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEnumClass.h; path = ../base/CCEnumClass.h; sourceTree = "<group>"; };
+		461FE08E21CA129B00E5378F /* CCCallbackCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCallbackCommand.cpp; sourceTree = "<group>"; };
+		461FE08F21CA129B00E5378F /* CCCallbackCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCallbackCommand.h; sourceTree = "<group>"; };
 		46270FA21E1CC6A100AAA098 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../external/openssl/prebuilt/mac/libcrypto.a; sourceTree = "<group>"; };
 		46270FA31E1CC6A100AAA098 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../external/openssl/prebuilt/mac/libssl.a; sourceTree = "<group>"; };
 		46270FA61E1CC84500AAA098 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../external/openssl/prebuilt/ios/libcrypto.a; sourceTree = "<group>"; };
@@ -4453,6 +4459,8 @@
 		5034CA5D191D591900CE6051 /* shaders-old */ = {
 			isa = PBXGroup;
 			children = (
+				461FE08E21CA129B00E5378F /* CCCallbackCommand.cpp */,
+				461FE08F21CA129B00E5378F /* CCCallbackCommand.h */,
 				46E7207F1ECACB750034BEC7 /* ccShader_LayerRadialGradient.frag */,
 				46E7207B1ECAC75C0034BEC7 /* ccShader_ETC1AS_PositionTextureColor.frag */,
 				46E7207C1ECAC75C0034BEC7 /* ccShader_ETC1AS_PositionTextureGray.frag */,
@@ -5166,6 +5174,7 @@
 				1A570356180BD0B00088DEC7 /* ioapi.h in Headers */,
 				50ABBE331925AB6F00A911A9 /* CCConfiguration.h in Headers */,
 				8525E3A21B291E42008EE815 /* clipper.hpp in Headers */,
+				461FE09221CA129B00E5378F /* CCCallbackCommand.h in Headers */,
 				ED28C22D219E629B0078D854 /* Types.h in Headers */,
 				15FB209D1AE7C57D00C31518 /* sweep_context.h in Headers */,
 				50CB247519D9C5A100687767 /* AudioCache.h in Headers */,
@@ -5984,6 +5993,7 @@
 				46F9B73121AFE7C0009DF858 /* CCScrollView.h in Headers */,
 				50ABBEA61925AB6F00A911A9 /* CCScriptSupport.h in Headers */,
 				ED28C27A219E629C0078D854 /* Program.h in Headers */,
+				461FE09321CA129B00E5378F /* CCCallbackCommand.h in Headers */,
 				46C02E0A18E91123004B7456 /* xxhash.h in Headers */,
 				ED28C226219E629B0078D854 /* DepthStencilState.h in Headers */,
 				5034CA4C191D591100CE6051 /* ccShader_Label_df_glow.frag in Headers */,
@@ -6338,6 +6348,7 @@
 				50ABC0191926664800A911A9 /* CCSAXParser.cpp in Sources */,
 				B6DD2FA71B04825B00E47F5F /* DebugDraw.cpp in Sources */,
 				1A57028A180BCC900088DEC7 /* CCSpriteFrameCache.cpp in Sources */,
+				461FE09021CA129B00E5378F /* CCCallbackCommand.cpp in Sources */,
 				1A570292180BCCAB0088DEC7 /* CCAnimation.cpp in Sources */,
 				1A570296180BCCAB0088DEC7 /* CCAnimationCache.cpp in Sources */,
 				50ABBE351925AB6F00A911A9 /* CCConsole.cpp in Sources */,
@@ -6881,6 +6892,7 @@
 				4631CB5A21AFD9F90000D408 /* CCUIMultilineTextField.mm in Sources */,
 				4631CB2C21AFD9F90000D408 /* UIVideoPlayer-android.cpp in Sources */,
 				1A570211180BCBF40088DEC7 /* CCProgressTimer.cpp in Sources */,
+				461FE09121CA129B00E5378F /* CCCallbackCommand.cpp in Sources */,
 				4631CB1421AFD9F90000D408 /* UIVideoPlayer-ios.mm in Sources */,
 				503DD8ED1926736A00CD74DD /* CCGLViewImpl-ios.mm in Sources */,
 				B6DD2FA81B04825B00E47F5F /* DebugDraw.cpp in Sources */,

@@ -22,7 +22,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/backend/Buffer.h"
@@ -148,14 +147,6 @@ CustomCommand::~CustomCommand()
 {
     CC_SAFE_RELEASE(_vertexBuffer);
     CC_SAFE_RELEASE(_indexBuffer);
-}
-
-void CustomCommand::execute()
-{
-   if(func)
-   {
-       func();
-   }
 }
 
 NS_CC_END

@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "platform/CCImage.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCCallbackCommand.h"
 
 NS_CC_BEGIN
 
@@ -328,8 +329,8 @@ protected:
     Sprite* _sprite = nullptr;
     
     GroupCommand _groupCommand;
-    CustomCommand _beginCommand;
-    CustomCommand _endCommand;
+    CallbackCommand _beginCommand;
+    CallbackCommand _endCommand;
     /*this command is used to encapsulate saveToFile,
      call saveToFile twice will overwrite this command and callback
      and the command and callback will be executed twice.

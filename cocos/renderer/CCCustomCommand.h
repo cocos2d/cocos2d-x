@@ -22,10 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-
-#ifndef _CC_CUSTOMCOMMAND_H_
-#define _CC_CUSTOMCOMMAND_H_
+#pragma once
 
 #include "renderer/CCRenderCommand.h"
 
@@ -87,10 +84,6 @@ public:
     void updateIndexBuffer(void* data, size_t offset, size_t length);
     void updateVertexBuffer(void* data, size_t offset, size_t count, size_t sizePerCount);
     void updateIndexBuffer(void* data, size_t offset, size_t count, size_t sizePerCount);
-
-
-    inline void skipRendering(bool value) { _skipRendering = value; }
-    inline bool isSkipRendering() const { return _skipRendering; }
     
     inline void setDrawType(DrawType drawType) { _drawType = drawType; }
     inline DrawType getDrawType() const { return _drawType; }
@@ -110,19 +103,14 @@ public:
     inline size_t getIndexDrawBufferOffset() const { return _indexBufferOffset; }
     inline size_t getIndexDrawCount() const { return _indexDrawCount == 0 ? _indexCount : _indexDrawCount; }
     
-    /**
-     Execute the render command and call callback functions.
-     */
-    void execute();
-    /**Callback function.*/
-    std::function<void()> func;
-    
     inline void setLineWidth(float lineWidth) { _lineWidth = lineWidth; }
     inline float getLineWidth() const { return _lineWidth; }
 
-protected:
-    bool _skipRendering = false;
+    /**Callback function.*/
+    //TODO:minggo: should remove it.
+    std::function<void()> func;
 
+protected:
     backend::Buffer* _vertexBuffer = nullptr;
     backend::Buffer* _indexBuffer = nullptr;
     size_t _indexCount = 0;
@@ -145,4 +133,3 @@ NS_CC_END
  end of support group
  @}
  */
-#endif //_CC_CUSTOMCOMMAND_H_

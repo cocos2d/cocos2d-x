@@ -28,8 +28,8 @@
 #include <algorithm>
 
 #include "renderer/CCTrianglesCommand.h"
-#include "renderer/CCBatchCommand.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCCallbackCommand.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCPrimitiveCommand.h"
 #include "renderer/CCMeshCommand.h"
@@ -324,6 +324,10 @@ void Renderer::processRenderCommand(RenderCommand* command)
             flush();
             // TODO: should remove batched command
             break;
+        case RenderCommand::Type::CALLBACK_COMMAND:
+            flush();
+            static_cast<CallbackCommand*>(command)->execute();
+            break;
         case RenderCommand::Type::PRIMITIVE_COMMAND:
         {
             flush();
@@ -571,11 +575,6 @@ void Renderer::drawBatchedTriangles()
 void Renderer::drawCustomCommand(RenderCommand *command)
 {
     auto cmd = static_cast<CustomCommand*>(command);
-
-    cmd->execute();
-
-    if (cmd->isSkipRendering())
-        return;
     
     beginRenderPass(command);
     _commandBuffer->setVertexBuffer(0, cmd->getVertexBuffer());

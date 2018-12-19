@@ -63,7 +63,7 @@ public:
         PRIMITIVE_COMMAND,
         /**Triangles command, used to draw triangles.*/
         TRIANGLES_COMMAND,
-        NORMAL_COMMAND
+        CALLBACK_COMMAND,
     };
 
     /**

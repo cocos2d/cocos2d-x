@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCCallbackCommand.h"
 
 NS_CC_BEGIN
 
@@ -144,10 +145,10 @@ protected:
 
     GroupCommand _groupCommand;
     CustomCommand _drawCommand;
-    CustomCommand _beforeDrawCommand;
-    CustomCommand _afterDrawCommand;
-    CustomCommand _beforeBlitCommand;
-    CustomCommand _afterBlitCommand;
+    CallbackCommand _beforeDrawCommand;
+    CallbackCommand _afterDrawCommand;
+    CallbackCommand _beforeBlitCommand;
+    CallbackCommand _afterBlitCommand;
 };
 
 /**

@@ -238,7 +238,6 @@ void GridBase::beforeDraw()
     renderer->addCommand(&_groupCommand);
     renderer->pushGroup(_groupCommand.getRenderQueueID());
 
-    _beforeDrawCommand.skipRendering(true);
     _beforeDrawCommand.func = [=]() -> void {
         _directorProjection = director->getProjection();
         set2DProjection();
@@ -254,7 +253,6 @@ void GridBase::afterDraw(cocos2d::Node * /*target*/)
     Director *director = Director::getInstance();
     auto renderer = director->getRenderer();
 
-    _afterDrawCommand.skipRendering(true);
     _afterDrawCommand.func = [=]() -> void {
         director->setProjection(_directorProjection);
         const auto& vp = Camera::getDefaultViewport();
@@ -279,7 +277,6 @@ void GridBase::afterDraw(cocos2d::Node * /*target*/)
     // restore projection for default FBO .fixed bug #543 #544
     //TODO:         Director::getInstance()->setProjection(Director::getInstance()->getProjection());
     //TODO:         Director::getInstance()->applyOrientation();
-    _beforeBlitCommand.skipRendering(true);
     _beforeBlitCommand.func = [=]() -> void {
         beforeBlit();
     };
@@ -287,7 +284,6 @@ void GridBase::afterDraw(cocos2d::Node * /*target*/)
 
     blit();
 
-    _afterBlitCommand.skipRendering(true);
     _afterBlitCommand.func = [=]() -> void {
         afterBlit();
     };
