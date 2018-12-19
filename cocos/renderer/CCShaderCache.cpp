@@ -40,7 +40,7 @@ backend::ShaderModule* ShaderCache::newVertexShaderModule(const std::string& sha
     auto shader = backend::Device::getInstance()->createShaderModule(backend::ShaderStage::VERTEX, shaderSource);
     CC_SAFE_RETAIN(shader);
     ShaderCache::_cachedVertexShaders.emplace(key, shader);
-    
+
     return shader;
 }
 

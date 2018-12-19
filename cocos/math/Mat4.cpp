@@ -128,6 +128,13 @@ void Mat4::createPerspective(float fieldOfView, float aspectRatio,
     dst->m[10] = (-(zFarPlane + zNearPlane)) * f_n;
     dst->m[11] = -1.0f;
     dst->m[14] = -2.0f * zFarPlane * zNearPlane * f_n;
+
+// https://metashapes.com/blog/opengl-metal-projection-matrix-problem/
+//TODO: minggo: should add iOS when iOS use metal
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    dst->m[10] = -(zFarPlane) * f_n;
+    dst->m[14] = -(zFarPlane * zNearPlane) * f_n;
+#endif
 }
 
 void Mat4::createOrthographic(float width, float height, float zNearPlane, float zFarPlane, Mat4* dst)
@@ -154,6 +161,13 @@ void Mat4::createOrthographicOffCenter(float left, float right, float bottom, fl
     dst->m[13] = (top + bottom) / (bottom - top);
     dst->m[14] = (zNearPlane + zFarPlane) / (zNearPlane - zFarPlane);
     dst->m[15] = 1;
+
+//// https://metashapes.com/blog/opengl-metal-projection-matrix-problem/
+////TODO: minggo: should add iOS when iOS use metal
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    dst->m[10] = 1 / (zNearPlane - zFarPlane);
+    dst->m[14] = zNearPlane / (zNearPlane - zFarPlane);
+#endif
 }
     
 void Mat4::createBillboard(const Vec3& objectPosition, const Vec3& cameraPosition,

@@ -98,6 +98,8 @@ namespace
                 else
                     mtlDescritpor.colorAttachments[0].loadAction = MTLLoadActionLoad;
             }
+
+            mtlDescritpor.colorAttachments[0].storeAction = MTLStoreActionStore;
         }
         
         // Set depth/stencil attachment
@@ -115,6 +117,8 @@ namespace
             }
             else
                 mtlDescritpor.depthAttachment.loadAction = MTLLoadActionLoad;
+
+            mtlDescritpor.depthAttachment.storeAction = MTLStoreActionStore;
         }
         if (descriptor.needStencilAttachment)
         {
@@ -130,6 +134,8 @@ namespace
             }
             else
                 mtlDescritpor.stencilAttachment.loadAction = MTLLoadActionLoad;
+
+            mtlDescritpor.stencilAttachment.storeAction = MTLStoreActionStore;
         }
         
         return mtlDescritpor;
@@ -159,7 +165,7 @@ void CommandBufferMTL::beginRenderPass(const RenderPassDescriptor& descriptor)
     _mtlRenderEncoder = [_mtlCommandBuffer renderCommandEncoderWithDescriptor:mtlDescriptor];
 
     [_mtlRenderEncoder retain];
-    [_mtlRenderEncoder setFrontFacingWinding:MTLWindingCounterClockwise];
+//    [_mtlRenderEncoder setFrontFacingWinding:MTLWindingCounterClockwise];
 }
 
 void CommandBufferMTL::setRenderPipeline(RenderPipeline* renderPipeline)

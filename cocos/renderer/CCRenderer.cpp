@@ -173,7 +173,7 @@ Renderer::Renderer()
     _clearRenderPassDescriptor.clearColorValue = {0, 0, 0, 1};
     _clearRenderPassDescriptor.needClearColor = true;
     _clearRenderPassDescriptor.needColorAttachment = true;
-    _clearRenderPassDescriptor.clearDepthValue = 0;
+    _clearRenderPassDescriptor.clearDepthValue = 1;
     _clearRenderPassDescriptor.needClearDepth = true;
     _clearRenderPassDescriptor.needDepthAttachment = true;
     _clearRenderPassDescriptor.clearStencilValue = 0;
@@ -432,6 +432,9 @@ void Renderer::clean()
 
 void Renderer::setDepthTest(bool enable)
 {
+    _depthStencilDescriptor.depthTestEnabled = enable;
+    _depthStencilDescriptor.depthWriteEnabled = enable;
+    _renderPassDescriptor.needDepthAttachment = enable;
 }
 
 void Renderer::setViewPort(int x, int y, size_t w, size_t h)
@@ -713,14 +716,15 @@ void Renderer::beginRenderPass(RenderCommand* cmd)
     // Set viewport.
     if (_groupCommandStack.empty())
     {
-        const auto& renderPassDescriptor = cmd->getPipelineDescriptor().renderPassDescriptor;
-        _commandBuffer->beginRenderPass(renderPassDescriptor);
+//        const auto& renderPassDescriptor = cmd->getPipelineDescriptor().renderPassDescriptor;
+//        _commandBuffer->beginRenderPass(renderPassDescriptor);
+          _commandBuffer->beginRenderPass(_renderPassDescriptor);
 
 //        const auto& viewport = cmd->getViewPort();
 //        _commandBuffer->setViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
         _commandBuffer->setViewport(_viewport.x, _viewport.y, _viewport.w, _viewport.h);
 
-        setRenderPipeline(cmd->getPipelineDescriptor(), renderPassDescriptor);
+        setRenderPipeline(cmd->getPipelineDescriptor(), _renderPassDescriptor);
     }
     else
     {
