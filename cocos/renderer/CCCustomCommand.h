@@ -83,6 +83,9 @@ public:
 
     void updateVertexBuffer(void* data, size_t offset, size_t length);
     void updateIndexBuffer(void* data, size_t offset, size_t length);
+    void updateVertexBuffer(void* data, size_t offset, size_t count, size_t sizePerCount);
+    void updateIndexBuffer(void* data, size_t offset, size_t count, size_t sizePerCount);
+
 
     inline void skipRendering(bool value) { _skipRendering = value; }
     inline bool isSkipRendering() const { return _skipRendering; }
