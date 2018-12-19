@@ -115,5 +115,6 @@ NS_CC_BEGIN
 #include "renderer/shaders/positionColorLengthTexture.vert"
 #include "renderer/shaders/positionColorLengthTexture.frag"
 #include "renderer/shaders/positionColorTextureAsPointsize.vert"
+#include "renderer/shaders/ui_Gray.frag"
 
 NS_CC_END

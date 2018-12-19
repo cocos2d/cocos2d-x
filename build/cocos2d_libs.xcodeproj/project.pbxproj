@@ -3532,6 +3532,7 @@
 		EDC78AB521CA19FA00E1863C /* CCArmature.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArmature.cpp; sourceTree = "<group>"; };
 		EDC78AB621CA19FA00E1863C /* CCActionObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCActionObject.cpp; sourceTree = "<group>"; };
 		EDC78AB721CA19FA00E1863C /* CCSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSkin.h; sourceTree = "<group>"; };
+		EDC78D8621CA253000E1863C /* ui_Gray.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ui_Gray.frag; sourceTree = "<group>"; };
 		EDDDA78321B0E1C2008926F0 /* label_distanceNormal.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = label_distanceNormal.frag; sourceTree = "<group>"; };
 		EDDDA78421B11B0C008926F0 /* label_outline.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = label_outline.frag; sourceTree = "<group>"; };
 		EDF9D8A521AE9677004374AB /* positionTextureColor.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = positionTextureColor.frag; sourceTree = "<group>"; };
@@ -4537,6 +4538,7 @@
 		460D4CC821A545420075726E /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				EDC78D8621CA253000E1863C /* ui_Gray.frag */,
 				ED5C8CBC21C0B3C100F280A7 /* label_distanceFieldGlow.frag */,
 				EDDDA78421B11B0C008926F0 /* label_outline.frag */,
 				EDDDA78321B0E1C2008926F0 /* label_distanceNormal.frag */,

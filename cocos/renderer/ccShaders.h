@@ -115,6 +115,7 @@ extern CC_DLL const GLchar * labelDistanceFieldGlow_frag;
 extern CC_DLL const GLchar * positionColorLengthTexture_vert;
 extern CC_DLL const GLchar * positionColorLengthTexture_frag;
 extern CC_DLL const GLchar * positionColorTextureAsPointsize_vert;
+extern CC_DLL const GLchar * grayScale_frag;
 
 NS_CC_END
 /**
