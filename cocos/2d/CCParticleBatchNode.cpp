@@ -447,10 +447,10 @@ void ParticleBatchNode::draw(Renderer* renderer, const Mat4 & transform, uint32_
         const auto& indices = _textureAtlas->getIndices();
         
         _customCommand.createVertexBuffer(sizeof(quads[0]), capacity);
-        _customCommand.updateVertexBuffer(quads, 0, sizeof(quads[0]) * capacity);
+        _customCommand.updateVertexBuffer(quads, sizeof(quads[0]) * capacity);
         
         _customCommand.createIndexBuffer(sizeof(indices[0]) , capacity * 6);
-        _customCommand.updateIndexBuffer(indices, 0, sizeof(indices[0]) * capacity * 6);
+        _customCommand.updateIndexBuffer(indices, sizeof(indices[0]) * capacity * 6);
     }
         
     renderer->addCommand(&_customCommand);
