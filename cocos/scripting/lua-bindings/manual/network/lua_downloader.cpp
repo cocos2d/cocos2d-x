@@ -337,14 +337,16 @@ static const struct luaL_Reg downloaderMemberFns[] = {
 
 int register_downloader(lua_State* L)
 {
+    int stackSize = lua_gettop(L);
     luaL_newmetatable(L, "cc.Downloader");  //stack metatable(cc.Downloader)
     lua_pushstring(L, "__index");           //stack metatable(*), __index
     lua_pushvalue(L, -2);                   //stack metatable(*), __index, metatable(*)
     lua_settable(L, -3);                    //stack metatable(*)
-
     luaL_register(L, nullptr, downloaderMemberFns);   //stack metatable(*)
     lua_pop(L, 1);                                      //stack *empty*
     luaL_register(L, "cc.Downloader", downloaderStaticFns);   //stack *empty*
+    lua_pop(L, 1);
+    assert(stackSize == lua_gettop(L));
     return 1;
 }
 
