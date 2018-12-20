@@ -311,7 +311,7 @@ LayerColor::LayerColor()
     
     _customCommand.createIndexBuffer(sizeof(unsigned short), 6);
     unsigned short indices[] = {0, 1, 2, 2, 1, 3};
-    _customCommand.updateIndexBuffer(indices, 0, sizeof(indices));
+    _customCommand.updateIndexBuffer(indices, sizeof(indices));
     
     _customCommand.createVertexBuffer(sizeof(_noMVPVertices[0]) + sizeof(_squareColors[0]), 4);
     
@@ -490,7 +490,7 @@ void LayerColor::updateVertexBuffer()
         memcpy(data + offset, &_noMVPVertices[i], sizeof(_noMVPVertices[0]));
         memcpy(data + offset + sizeof(_noMVPVertices[0]), &_squareColors[i], sizeof(_squareColors[0]));
     }
-    _customCommand.updateVertexBuffer(data, 0, sizeof(_noMVPVertices) + sizeof(_squareColors));
+    _customCommand.updateVertexBuffer(data, sizeof(_noMVPVertices) + sizeof(_squareColors));
 
     free(data);
 }

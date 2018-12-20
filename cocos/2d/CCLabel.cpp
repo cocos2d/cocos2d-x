@@ -1497,8 +1497,8 @@ void Label::updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer,
         _customCommand.createVertexBuffer(sizeof(V3F_C4B_T2F_Quad), textureAtlas->getTotalQuads());
         _customCommand.createIndexBuffer(sizeof(unsigned short), textureAtlas->getTotalQuads()*6);
     }
-    _customCommand.updateVertexBuffer(textureAtlas->getQuads(), 0, textureAtlas->getTotalQuads(), sizeof(V3F_C4B_T2F_Quad));
-    _customCommand.updateIndexBuffer(textureAtlas->getIndices(), 0, textureAtlas->getTotalQuads()*6, sizeof(unsigned short));
+    _customCommand.updateVertexBuffer(textureAtlas->getQuads(), textureAtlas->getTotalQuads() * sizeof(V3F_C4B_T2F_Quad));
+    _customCommand.updateIndexBuffer(textureAtlas->getIndices(), textureAtlas->getTotalQuads()*6*sizeof(unsigned short));
     _customCommand.setIndexDrawInfo(0, _customCommand.getIndexCount());
     
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();

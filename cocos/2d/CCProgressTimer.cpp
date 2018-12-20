@@ -204,7 +204,7 @@ void ProgressTimer::updateColor()
         {
             _vertexData[i].colors = sc;
         }
-        _customCommand.updateVertexBuffer(_vertexData, 0, sizeof(_vertexData[0]) * _vertexDataCount);
+        _customCommand.updateVertexBuffer(_vertexData, sizeof(_vertexData[0]) * _vertexDataCount);
     }
 }
 

@@ -74,7 +74,7 @@ void CustomCommand::createVertexBuffer(size_t sizePerVertex, size_t count)
 {
     CC_SAFE_RELEASE(_vertexBuffer);
     
-    _vertexCount = count;
+    _sizePerVertex = sizePerVertex;
     
     auto device = backend::Device::getInstance();
     _vertexBuffer = device->newBuffer(sizePerVertex * count, backend::BufferType::VERTEX, backend::BufferUsage::READ);
@@ -84,7 +84,7 @@ void CustomCommand::createIndexBuffer(size_t sizePerIndex, size_t count)
 {
     CC_SAFE_RELEASE(_indexBuffer);
     
-    _indexCount = count;
+    _sizePerIndex = sizePerIndex;
     
     auto device = backend::Device::getInstance();
     _indexBuffer = device->newBuffer(sizePerIndex * count, backend::BufferType::INDEX, backend::BufferUsage::READ);
@@ -93,55 +93,30 @@ void CustomCommand::createIndexBuffer(size_t sizePerIndex, size_t count)
 void CustomCommand::updateVertexBuffer(void* data, size_t offset, size_t length)
 {   
     assert(_vertexBuffer);
+    _vertexCount += length/_sizePerVertex;
     _vertexBuffer->updateSubData(data, offset, length);
 }
 
 void CustomCommand::updateIndexBuffer(void* data, size_t offset, size_t length)
 {
     assert(_indexBuffer);
+    _indexCount += length/_sizePerIndex;
     _indexBuffer->updateSubData(data, offset, length);
 }
 
 void CustomCommand::updateVertexBuffer(void* data, size_t length)
 {
     assert(_vertexBuffer);
+    _vertexCount = length/_sizePerVertex;
     _vertexBuffer->updateData(data, length);
 }
 
 void CustomCommand::updateIndexBuffer(void* data, size_t length)
 {
     assert(_indexBuffer);
+    _indexCount = length/_sizePerIndex;
     _indexBuffer->updateData(data, length);
 }
-
-void CustomCommand::updateVertexBuffer(void* data, size_t offset, size_t count, size_t sizePerCount)
-{
-    assert(_vertexBuffer);
-    if(offset)
-    {
-        _vertexCount += count;
-    }
-    else
-    {
-        _vertexCount = count;
-    }
-    _vertexBuffer->updateSubData(data, offset, count*sizePerCount);
-}
-
-void CustomCommand::updateIndexBuffer(void* data, size_t offset, size_t count, size_t sizePerCount)
-{
-    assert(_indexBuffer);
-    if(offset)
-    {
-        _indexCount += count;
-    }
-    else
-    {
-        _indexCount = count;
-    }
-    _indexBuffer->updateSubData(data, offset, count*sizePerCount);
-}
-
 
 CustomCommand::~CustomCommand()
 {
