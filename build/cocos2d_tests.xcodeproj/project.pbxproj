@@ -615,6 +615,8 @@
 		406023E5208DDFF5008F1C02 /* strings in Resources */ = {isa = PBXBuildFile; fileRef = 400308D720060F12000DFE6D /* strings */; };
 		460629781CDB4DBA00B44058 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
 		460629791CDB4DBA00B44058 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
+		461FE09E21CB2E2D00E5378F /* DrawPrimitivesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461FE09D21CB2E2D00E5378F /* DrawPrimitivesTest.cpp */; };
+		461FE09F21CB2E2D00E5378F /* DrawPrimitivesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461FE09D21CB2E2D00E5378F /* DrawPrimitivesTest.cpp */; };
 		4631CBF621AFDA300000D408 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4631CBF521AFDA300000D408 /* Metal.framework */; };
 		4631CBF721AFDE2C0000D408 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46535CDA21ABD689005B5370 /* Metal.framework */; };
 		463D7E7C1D227C5F00EA6BD1 /* Bug-14327.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463D7E781D227C3800EA6BD1 /* Bug-14327.cpp */; };
@@ -2033,6 +2035,8 @@
 		3EA0FB65191B933000B170C8 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		400308D720060F12000DFE6D /* strings */ = {isa = PBXFileReference; lastKnownFileType = folder; name = strings; path = "../tests/cpp-tests/Resources/strings"; sourceTree = "<group>"; };
 		460629771CDB4DBA00B44058 /* ccs-res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "ccs-res"; path = "../tests/cpp-tests/Resources/ccs-res"; sourceTree = "<group>"; };
+		461FE09C21CB2E2D00E5378F /* DrawPrimitivesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawPrimitivesTest.h; sourceTree = "<group>"; };
+		461FE09D21CB2E2D00E5378F /* DrawPrimitivesTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawPrimitivesTest.cpp; sourceTree = "<group>"; };
 		4631CBF521AFDA300000D408 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.1.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
 		463D7E781D227C3800EA6BD1 /* Bug-14327.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-14327.cpp"; sourceTree = "<group>"; };
 		463D7E791D227C3800EA6BD1 /* Bug-14327.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-14327.h"; sourceTree = "<group>"; };
@@ -3007,6 +3011,7 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				461FE09B21CB2E2D00E5378F /* DrawPrimitivesTest */,
 				EDC788C521CA154800E1863C /* UITest */,
 				53367D531DC22891005862DE /* WindowTest */,
 				50921EAC1B746D5F00C085CC /* DownloaderTest */,
@@ -4002,6 +4007,15 @@
 				3E6177F31960FEFE00DE83F5 /* iphone */,
 			);
 			name = Resource;
+			sourceTree = "<group>";
+		};
+		461FE09B21CB2E2D00E5378F /* DrawPrimitivesTest */ = {
+			isa = PBXGroup;
+			children = (
+				461FE09C21CB2E2D00E5378F /* DrawPrimitivesTest.h */,
+				461FE09D21CB2E2D00E5378F /* DrawPrimitivesTest.cpp */,
+			);
+			path = DrawPrimitivesTest;
 			sourceTree = "<group>";
 		};
 		46A15F9D1807A4F8005B8026 /* Products */ = {
@@ -5953,6 +5967,7 @@
 				1AC35C5518CECF0C00F37B72 /* Texture2dTest.cpp in Sources */,
 				1AC35C0718CECF0C00F37B72 /* MouseTest.cpp in Sources */,
 				1AC35C5D18CECF0C00F37B72 /* Ball.cpp in Sources */,
+				461FE09E21CB2E2D00E5378F /* DrawPrimitivesTest.cpp in Sources */,
 				1AC35B3518CECF0C00F37B72 /* TestEntries.cpp in Sources */,
 				1AC35B2D18CECF0C00F37B72 /* Box2dTest.cpp in Sources */,
 				EDC7891921CA154800E1863C /* UISceneManager.cpp in Sources */,
@@ -6202,6 +6217,7 @@
 				EDC7892821CA154800E1863C /* UIButtonTest.cpp in Sources */,
 				EDC7891C21CA154800E1863C /* UITextBMFontTest.cpp in Sources */,
 				1AC35C7118CECF0C00F37B72 /* VibrateTest.cpp in Sources */,
+				461FE09F21CB2E2D00E5378F /* DrawPrimitivesTest.cpp in Sources */,
 				1AC35B4A18CECF0C00F37B72 /* Bug-914.cpp in Sources */,
 				1AC35B6418CECF0C00F37B72 /* EffectsAdvancedTest.cpp in Sources */,
 				1AC35C6018CECF0C00F37B72 /* Paddle.cpp in Sources */,

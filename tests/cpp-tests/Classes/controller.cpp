@@ -82,6 +82,7 @@ public:
 //        addTest("Node: BillBoard Test", [](){  return new BillBoardTests(); });
 //        addTest("Node: Camera 3D Test", [](){  return new Camera3DTests(); });
         addTest("Node: Clipping", []() { return new ClippingNodeTests(); });
+        addTest("Node: Draw", [](){return new DrawPrimitivesTests(); });
         // addTest("Node: Label - New API", [](){return new NewLabelTests(); });
         addTest("Node: Layer", [](){return new LayerTests(); });
         // addTest("Node: Light", [](){return new LightTests(); });
