@@ -39,13 +39,10 @@ TrianglesCommand::TrianglesCommand()
     _type = RenderCommand::Type::TRIANGLES_COMMAND;
 }
 
-void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles,const Mat4& mv, uint32_t flags)
+void TrianglesCommand::init(float globalOrder, Texture2D* texture, const BlendFunc& blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags)
 {
-    CCASSERT(glProgramState, "Invalid GLProgramState");
-    CCASSERT(glProgramState->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
-
     RenderCommand::init(globalOrder, mv, flags);
-
+    
     _triangles = triangles;
     if(_triangles.indexCount % 3 != 0)
     {
@@ -54,52 +51,25 @@ void TrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState*
         CCLOGERROR("Resize indexCount from %d to %d, size must be multiple times of 3", count, _triangles.indexCount);
     }
     _mv = mv;
-    
-    if( _textureID != textureID || _blendType.src != blendType.src || _blendType.dst != blendType.dst ||
-       _glProgramState != glProgramState)
+
+    if (_vs != _pipelineDescriptor.vertexShader ||
+        _fs != _pipelineDescriptor.fragmentShader ||
+        _texture != texture->getBackendTexture() ||
+        _blendType != blendType)
     {
-        _textureID = textureID;
+        _vs = _pipelineDescriptor.vertexShader;
+        _fs = _pipelineDescriptor.fragmentShader;
+        _texture = texture->getBackendTexture();
+
         _blendType = blendType;
-        _glProgramState = glProgramState;
+        //TODO: minggo set it in Node?
+        auto& blendDescriptor = _pipelineDescriptor.blendDescriptor;
+        blendDescriptor.blendEnabled = true;
+        blendDescriptor.sourceRGBBlendFactor = blendDescriptor.sourceAlphaBlendFactor = utils::toBackendBlendFactor(blendType.src);
+        blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor = utils::toBackendBlendFactor(blendType.dst);
 
         generateMaterialID();
     }
-}
-
-void TrianglesCommand::init(float globalOrder, Texture2D* texture, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags)
-{
-    init(globalOrder, texture->getName(), glProgramState, blendType, triangles, mv, flags);
-    _alphaTextureID = texture->getAlphaTextureName();
-}
-
-void TrianglesCommand::init(float globalOrder, backend::Texture* textureID, GLProgramState* glProgramState, BlendFunc blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags)
-{
-    backend::TextureGL* texture = static_cast<backend::TextureGL*>(textureID);
-    init(globalOrder, texture->getHandler(), glProgramState, blendType, triangles, mv, flags);
-    //    _alphaTextureID = texture->getAlphaTextureName();
-}
-
-void TrianglesCommand::init(float globalOrder, const BlendFunc& blendType, const Triangles& triangles, const Mat4& mv, uint32_t flags)
-{
-    RenderCommand::init(globalOrder, mv, flags);
-    
-    _triangles = triangles;
-    if(_triangles.indexCount % 3 != 0)
-    {
-        int count = _triangles.indexCount;
-        _triangles.indexCount = count / 3 * 3;
-        CCLOGERROR("Resize indexCount from %d to %d, size must be multiple times of 3", count, _triangles.indexCount);
-    }
-    _mv = mv;
-    
-    // TODO: optimize it only generate material ID needed.
-    generateMaterialID();
-
-    //TODO: minggo set it in Node?
-    auto& blendDescriptor = _pipelineDescriptor.blendDescriptor;
-    blendDescriptor.blendEnabled = true;
-    blendDescriptor.sourceRGBBlendFactor = blendDescriptor.sourceAlphaBlendFactor = utils::toBackendBlendFactor(blendType.src);
-    blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor = utils::toBackendBlendFactor(blendType.dst);
 }
 
 TrianglesCommand::~TrianglesCommand()
@@ -108,44 +78,26 @@ TrianglesCommand::~TrianglesCommand()
 
 void TrianglesCommand::generateMaterialID()
 {
-    struct PipelineDescriptor
+    struct
     {
-        // These are helper functions to handle reference count.
-        void setVertexShader(backend::ShaderModule* shaderModule);
-        void setFragmentShader(backend::ShaderModule* shaderModule);
-        
-        backend::DepthStencilDescriptor depthStencilDescriptor;
-        backend::BlendDescriptor blendDescriptor;
-        backend::BindGroup* bindGroup;
-        backend::VertexLayout vertexLayout;
-        backend::ShaderModule* vertexShader = nullptr;
-        backend::ShaderModule* fragmentShader = nullptr;
+        void* texture;
+        void* fs;
+        void* vs;
+        GLenum blendSrc;
+        GLenum blendDst;
     }hashMe;
+
+    // NOTE: Initialize hashMe struct to make the value of padding bytes be filled with zero.
+    // It's important since XXH32 below will also consider the padding bytes which probably
+    // are set to random values by different compilers.
     memset(&hashMe, 0, sizeof(hashMe));
 
-    hashMe.blendDescriptor = _pipelineDescriptor.blendDescriptor;
-    hashMe.bindGroup = &_pipelineDescriptor.bindGroup;
-    hashMe.vertexLayout = _pipelineDescriptor.vertexLayout;
-    hashMe.vertexShader = _pipelineDescriptor.vertexShader;
-    hashMe.fragmentShader = _pipelineDescriptor.fragmentShader;
+    hashMe.texture = _texture;
+    hashMe.blendDst = _blendType.dst;
+    hashMe.blendSrc = _blendType.src;
+    hashMe.fs = _fs;
+    hashMe.vs = _vs;
     _materialID = XXH32((const void*)&hashMe, sizeof(hashMe), 0);
-}
-
-void TrianglesCommand::useMaterial() const
-{
-    //Set texture
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _textureID);
-    
-    if (_alphaTextureID > 0)
-    { // ANDROID ETC1 ALPHA supports.
-        glActiveTexture(GL_TEXTURE0 + 1);
-        glBindTexture(GL_TEXTURE_2D, _alphaTextureID);
-    }
-    //set blend mode
-    utils::setBlending(_blendType.src, _blendType.dst);
-    
-    _glProgramState->apply(_mv);
 }
 
 NS_CC_END

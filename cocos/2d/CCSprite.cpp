@@ -1103,6 +1103,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         bindGroup.setTexture("u_texture", 0, _texture->getBackendTexture());
         
         _trianglesCommand.init(_globalZOrder,
+                               _texture,
                                _blendFunc,
                                _polyInfo.triangles,
                                transform,
