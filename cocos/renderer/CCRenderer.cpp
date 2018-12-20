@@ -434,11 +434,102 @@ void Renderer::clean()
     }
 }
 
-void Renderer::setDepthTest(bool enable)
+void Renderer::setDepthTest(bool value)
 {
-    _depthStencilDescriptor.depthTestEnabled = enable;
-    _depthStencilDescriptor.depthWriteEnabled = enable;
-    _renderPassDescriptor.needDepthAttachment = enable;
+    _depthStencilDescriptor.depthTestEnabled = value;
+    _renderPassDescriptor.needDepthAttachment = value;
+}
+
+void Renderer::setDepthWrite(bool value)
+{
+    _depthStencilDescriptor.depthWriteEnabled = value;
+}
+bool Renderer::getDepthTest() const
+{
+    return _depthStencilDescriptor.depthTestEnabled;
+}
+bool Renderer::getDepthWrite() const
+{
+    return _depthStencilDescriptor.depthWriteEnabled;
+}
+
+void Renderer::setStencilTest(bool value)
+{
+    _depthStencilDescriptor.stencilTestEnabled = value;
+    _renderPassDescriptor.needStencilAttachment = value;
+
+    _renderPassDescriptor.needStencilAttachment = value;
+}
+
+void Renderer::setStencilCompareFunction(backend::CompareFunction func, unsigned int ref, unsigned int readMask)
+{
+    _depthStencilDescriptor.frontFaceStencil.stencilCompareFunction = func;
+    _depthStencilDescriptor.backFaceStencil.stencilCompareFunction = func;
+
+    _depthStencilDescriptor.frontFaceStencil.readMask = readMask;
+    _depthStencilDescriptor.backFaceStencil.readMask = readMask;
+
+    _stencilRef = ref;
+}
+
+void Renderer::setStencilOperation(backend::StencilOperation stencilFailureOp,
+                             backend::StencilOperation depthFailureOp,
+                             backend::StencilOperation stencilDepthPassOp)
+{
+    _depthStencilDescriptor.frontFaceStencil.stencilFailureOperation = stencilFailureOp;
+    _depthStencilDescriptor.backFaceStencil.stencilFailureOperation = stencilFailureOp;
+
+    _depthStencilDescriptor.frontFaceStencil.depthFailureOperation = depthFailureOp;
+    _depthStencilDescriptor.backFaceStencil.depthFailureOperation = depthFailureOp;
+
+    _depthStencilDescriptor.frontFaceStencil.depthStencilPassOperation = stencilDepthPassOp;
+    _depthStencilDescriptor.backFaceStencil.depthStencilPassOperation = stencilDepthPassOp;
+}
+
+void Renderer::setStencilWriteMask(unsigned int mask)
+{
+    _depthStencilDescriptor.frontFaceStencil.writeMask = mask;
+    _depthStencilDescriptor.backFaceStencil.writeMask = mask;
+}
+
+bool Renderer::getStencilTest() const
+{
+    return _depthStencilDescriptor.stencilTestEnabled;
+}
+
+backend::StencilOperation Renderer::getStencilFailureOperation() const
+{
+    return _depthStencilDescriptor.frontFaceStencil.stencilFailureOperation;
+}
+
+backend::StencilOperation Renderer::getStencilPassDepthFailureOperation() const
+{
+    return _depthStencilDescriptor.frontFaceStencil.depthFailureOperation;
+}
+
+backend::StencilOperation Renderer::getStencilDepthPassOperation() const
+{
+    return _depthStencilDescriptor.frontFaceStencil.depthStencilPassOperation;
+}
+
+backend::CompareFunction Renderer::getStencilCompareFunction() const
+{
+    return _depthStencilDescriptor.depthCompareFunction;
+}
+
+unsigned int Renderer::getStencilReadMask() const
+{
+    return _depthStencilDescriptor.frontFaceStencil.readMask;
+}
+
+unsigned int Renderer::getStencilWriteMask() const
+{
+    return _depthStencilDescriptor.frontFaceStencil.writeMask;
+}
+
+unsigned int Renderer::getStencilReferenceValue() const
+{
+    return _stencilRef;
 }
 
 void Renderer::setViewPort(int x, int y, size_t w, size_t h)
@@ -494,6 +585,7 @@ void Renderer::drawBatchedTriangles()
     
     //FIXME: in metal, buffer is not used until the end of the frame. So can not share the same buffer in
     // differenrt draw calls. And may be we can use the same buffer with offset, but it has wrong effect.
+    // iOS should do it too.
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     _vertexBuffer->release();
     _indexBuffer->release();
@@ -716,12 +808,7 @@ void Renderer::beginRenderPass(RenderCommand* cmd)
     // Set viewport.
     if (_groupCommandStack.empty())
     {
-//        const auto& renderPassDescriptor = cmd->getPipelineDescriptor().renderPassDescriptor;
-//        _commandBuffer->beginRenderPass(renderPassDescriptor);
-          _commandBuffer->beginRenderPass(_renderPassDescriptor);
-
-//        const auto& viewport = cmd->getViewPort();
-//        _commandBuffer->setViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
+        _commandBuffer->beginRenderPass(_renderPassDescriptor);
         _commandBuffer->setViewport(_viewport.x, _viewport.y, _viewport.w, _viewport.h);
 
         setRenderPipeline(cmd->getPipelineDescriptor(), _renderPassDescriptor);
@@ -729,18 +816,22 @@ void Renderer::beginRenderPass(RenderCommand* cmd)
     else
     {
         auto renderPassDescriptor = _groupCommandStack.top()->getPipelineDescriptor().renderPassDescriptor;
+        if (_depthStencilDescriptor.stencilTestEnabled)
+            renderPassDescriptor.needStencilAttachment = true;
+        if (_depthStencilDescriptor.depthTestEnabled)
+            renderPassDescriptor.needDepthAttachment = true;
+
+        // Since color/depth/stencil is cleared in handleGroupCommand(), so don't clear it here.
         renderPassDescriptor.needClearStencil = false;
         renderPassDescriptor.needClearColor = false;
         renderPassDescriptor.needClearDepth = false;
 
         _commandBuffer->beginRenderPass(renderPassDescriptor);
-
-//        const auto& viewport = _groupCommandStack.top()->getViewPort();
-//        _commandBuffer->setViewport(viewport[0], viewport[1], viewport[2], viewport[3]);
         _commandBuffer->setViewport(_viewport.x, _viewport.y, _viewport.w, _viewport.h);
-
         setRenderPipeline(cmd->getPipelineDescriptor(), renderPassDescriptor);
     }
+
+    _commandBuffer->setStencilReferenceValue(_stencilRef);
 }
 
 void Renderer::clear(const backend::RenderPassDescriptor& descriptor)

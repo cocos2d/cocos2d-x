@@ -25,14 +25,12 @@
  * THE SOFTWARE.
  *
  */
-
-#ifndef __MISCNODE_CCCLIPPING_NODE_H__
-#define __MISCNODE_CCCLIPPING_NODE_H__
+#pragma once
 
 #include "2d/CCNode.h"
-#include "platform/CCGL.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCCallbackCommand.h"
 
 NS_CC_BEGIN
 
@@ -162,14 +160,12 @@ protected:
     StencilStateManager* _stencilStateManager;
     
     GroupCommand _groupCommand;
-    CustomCommand _beforeVisitCmd;
-    CustomCommand _afterDrawStencilCmd;
-    CustomCommand _afterVisitCmd;
+    CallbackCommand _beforeVisitCmd;
+    CallbackCommand _afterDrawStencilCmd;
+    CallbackCommand _afterVisitCmd;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ClippingNode);
 };
 /** @} */
 NS_CC_END
-
-#endif // __MISCNODE_CCCLIPPING_NODE_H__

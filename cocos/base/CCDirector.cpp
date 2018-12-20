@@ -727,6 +727,7 @@ void Director::setAlphaBlending(bool on)
 void Director::setDepthTest(bool on)
 {
     _renderer->setDepthTest(on);
+    _renderer->setDepthWrite(on);
 }
 
 void Director::setClearColor(const Color4F& clearColor)
