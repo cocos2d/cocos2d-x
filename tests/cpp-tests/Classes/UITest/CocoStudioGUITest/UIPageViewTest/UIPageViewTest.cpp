@@ -109,8 +109,10 @@ bool UIPageViewTest::init()
         
         pageView->removeItem(0);
         pageView->scrollToItem(pageCount - 2);
+        //TODO coulsonwang
+        cocos2d::log("TODO in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
         //This method is deprecated, we used here only testing purpose
-        pageView->addEventListenerPageView(this, pagevieweventselector(UIPageViewTest::pageViewEvent));
+//        pageView->addEventListenerPageView(this, pagevieweventselector(UIPageViewTest::pageViewEvent));
         
         pageView->setIndicatorIndexNodesOpacity(255);
         

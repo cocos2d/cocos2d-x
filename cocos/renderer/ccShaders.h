@@ -117,7 +117,7 @@ extern CC_DLL const char * positionColorLengthTexture_frag;
 extern CC_DLL const char * positionColorTextureAsPointsize_vert;
 extern CC_DLL const char* position_vert;
 extern CC_DLL const char* layer_radialGradient_frag;
-
+extern CC_DLL const GLchar * grayScale_frag;
 
 NS_CC_END
 /**

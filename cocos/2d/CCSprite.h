@@ -510,6 +510,9 @@ public:
 
     int getResourceType() const { return _fileType; }
     const std::string& getResourceName() const { return _fileName; }
+    
+    virtual void setVertexLayout();
+    virtual void updateShaders(const char* vert, const char* frag);
 
 CC_CONSTRUCTOR_ACCESS :
 	/**

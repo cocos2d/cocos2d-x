@@ -69,12 +69,13 @@ public:
 	@param flags Use to identify that the render command is 3D mode or not.
 	*/
     void init(float globalZOrder, const Mat4& modelViewTransform, uint32_t flags);
-    void init(float globalZOrder, const BlendFunc& blendFunc);
+    
     /**
     Init function. The render command will be in 2D mode.
     @param globalZOrder GlobalZOrder of the render command.
     */
     void init(float globalZOrder);
+    void init(float globalZOrder, const BlendFunc& blendFunc);
     
     void createVertexBuffer(size_t sizePerVertex, size_t count);
     void createIndexBuffer(size_t sizePerIndex, size_t count);
@@ -83,8 +84,6 @@ public:
     void updateIndexBuffer(void* data, size_t length);
     void updateVertexBuffer(void* data, size_t offset, size_t length);
     void updateIndexBuffer(void* data, size_t offset, size_t length);
-    void updateVertexBuffer(void* data, size_t offset, size_t count, size_t sizePerCount);
-    void updateIndexBuffer(void* data, size_t offset, size_t count, size_t sizePerCount);
     
     inline void setDrawType(DrawType drawType) { _drawType = drawType; }
     inline DrawType getDrawType() const { return _drawType; }
@@ -122,14 +121,14 @@ protected:
     
     size_t _indexBufferOffset = 0;
     size_t _indexDrawCount = 0;
-
-    size_t _perVertexSize = 0;
-    size_t _perIndexSize = 0;
     
     DrawType _drawType = DrawType::ELEMENT;
     PrimitiveType _primitiveType = PrimitiveType::TRIANGLE;
     
     float _lineWidth = 0.0;
+    
+    size_t _sizePerVertex = 0;
+    size_t _sizePerIndex = 0;
 };
 
 NS_CC_END
