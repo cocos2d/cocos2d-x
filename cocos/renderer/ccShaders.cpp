@@ -115,5 +115,7 @@ NS_CC_BEGIN
 #include "renderer/shaders/positionColorLengthTexture.vert"
 #include "renderer/shaders/positionColorLengthTexture.frag"
 #include "renderer/shaders/positionColorTextureAsPointsize.vert"
+#include "renderer/shaders/position.vert"
+#include "renderer/shaders/layer_radialGradient.frag"
 
 NS_CC_END

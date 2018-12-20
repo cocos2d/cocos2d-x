@@ -53,7 +53,7 @@ struct Color4F;
 struct CC_DLL Color3B
 {
     Color3B();
-    Color3B(GLubyte _r, GLubyte _g, GLubyte _b);
+    Color3B(uint8_t _r, uint8_t _g, uint8_t _b);
     explicit Color3B(const Color4B& color);
     explicit Color3B(const Color4F& color);
 
@@ -69,9 +69,9 @@ struct CC_DLL Color3B
         return (*this == other);
     }
 
-    GLubyte r;
-    GLubyte g;
-    GLubyte b;
+    uint8_t r = 0;
+    uint8_t g = 0;
+    uint8_t b = 0;
 
     static const Color3B WHITE;
     static const Color3B YELLOW;
@@ -91,11 +91,11 @@ struct CC_DLL Color3B
 struct CC_DLL Color4B
 {
     Color4B();
-    Color4B(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a);
-    explicit Color4B(const Color3B& color, GLubyte _a = 255);
+    Color4B(uint8_t _r, uint8_t _g, uint8_t _b, uint8_t _a);
+    explicit Color4B(const Color3B& color, uint8_t _a = 255);
     explicit Color4B(const Color4F& color);
     
-    inline void set(GLubyte _r, GLubyte _g, GLubyte _b, GLubyte _a)
+    inline void set(uint8_t _r, uint8_t _g, uint8_t _b, uint8_t _a)
     {
         r = _r;
         g = _g;
@@ -110,10 +110,10 @@ struct CC_DLL Color4B
     bool operator!=(const Color3B& right) const;
     bool operator!=(const Color4F& right) const;
 
-    GLubyte r;
-    GLubyte g;
-    GLubyte b;
-    GLubyte a;
+    uint8_t r = 0;
+    uint8_t g = 0;
+    uint8_t b = 0;
+    uint8_t a = 0;
 
     static const Color4B WHITE;
     static const Color4B YELLOW;
@@ -150,10 +150,10 @@ struct CC_DLL Color4F
         return (*this == other);
     }
 
-    GLfloat r;
-    GLfloat g;
-    GLfloat b;
-    GLfloat a;
+    float r = 0.f;
+    float g = 0.f;
+    float b = 0.f;
+    float a = 0.f;
 
     static const Color4F WHITE;
     static const Color4F YELLOW;
@@ -222,10 +222,10 @@ Color4F operator/(Color4F lhs, float rhs);
 struct CC_DLL Tex2F {
     Tex2F(float _u, float _v): u(_u), v(_v) {}
 
-    Tex2F(): u(0.f), v(0.f) {}
+    Tex2F() {}
 
-    GLfloat u;
-    GLfloat v;
+    float u = 0.f;
+    float v = 0.f;
 };
 
 /** @struct PointSprite
@@ -233,9 +233,9 @@ struct CC_DLL Tex2F {
  */
 struct CC_DLL PointSprite
 {
-    Vec2   pos;        // 8 bytes
+    Vec2       pos;        // 8 bytes
     Color4B    color;      // 4 bytes
-    GLfloat    size;       // 4 bytes
+    float      size = 0.f;       // 4 bytes
 };
 
 /** @struct Quad2
@@ -282,7 +282,7 @@ struct V2F_C4B_PF
     /// colors (4B)
     Color4B        colors;
     /// pointsize
-    float      pointSize;
+    float      pointSize = 0.f;
 };
 
 /** @struct V2F_C4F_T2F
@@ -489,8 +489,8 @@ struct CC_DLL T2F_Quad
 struct CC_DLL AnimationFrameData
 {
     T2F_Quad texCoords;
-    float delay;
     Size size;
+    float delay = 0.f;
 };
 
 /**
@@ -502,23 +502,14 @@ struct CC_DLL AnimationFrameData
  */
 struct CC_DLL FontShadow
 {
-public:
-
-    // shadow is not enabled by default
-    FontShadow()
-        : _shadowEnabled(false)
-        , _shadowBlur(0)
-        , _shadowOpacity(0)
-    {}
-
-    /// true if shadow enabled
-    bool   _shadowEnabled;
     /// shadow x and y offset
     Size   _shadowOffset;
     /// shadow blurriness
-    float  _shadowBlur;
+    float  _shadowBlur = 0.f;
     /// shadow opacity
-    float  _shadowOpacity;
+    float  _shadowOpacity = 0.f;
+    /// true if shadow enabled
+    bool   _shadowEnabled = false;
 };
 
 /** @struct FontStroke
@@ -526,24 +517,15 @@ public:
  */
 struct CC_DLL FontStroke
 {
-public:
-
-    // stroke is disabled by default
-    FontStroke()
-        : _strokeEnabled(false)
-        , _strokeColor(Color3B::BLACK)
-        , _strokeAlpha(255)
-        , _strokeSize(0)
-    {}
-
-    /// true if stroke enabled
-    bool      _strokeEnabled;
     /// stroke color
-    Color3B   _strokeColor;
-    /// stroke alpha
-    GLubyte   _strokeAlpha;
+    Color3B   _strokeColor = Color3B::BLACK;
     /// stroke size
-    float     _strokeSize;
+    float     _strokeSize = 0.f;
+    /// true if stroke enabled
+    bool      _strokeEnabled = false;
+    /// stroke alpha
+    uint8_t   _strokeAlpha = 255;
+
 
 };
 
@@ -552,47 +534,31 @@ public:
  */
 struct CC_DLL FontDefinition
 {
-public:
-    /**
-     * @js NA
-     * @lua NA
-     */
-    FontDefinition()
-        : _fontSize(0)
-        , _alignment(TextHAlignment::CENTER)
-        , _vertAlignment(TextVAlignment::TOP)
-        , _dimensions(Size::ZERO)
-        , _fontFillColor(Color3B::WHITE)
-        , _fontAlpha(255)
-        , _enableWrap(true)
-        , _overflow(0)
-    {}
-
     /// font name
     std::string           _fontName;
     /// font size
-    int                   _fontSize;
+    int                   _fontSize = 0;
     /// horizontal alignment
-    TextHAlignment        _alignment;
+    TextHAlignment        _alignment = TextHAlignment::CENTER;
     /// vertical alignment
-    TextVAlignment _vertAlignment;
+    TextVAlignment _vertAlignment = TextVAlignment::TOP;
     /// rendering box
-    Size                  _dimensions;
+    Size                  _dimensions = Size::ZERO;
     /// font color
-    Color3B               _fontFillColor;
+    Color3B               _fontFillColor = Color3B::WHITE;
     /// font alpha
-    GLubyte               _fontAlpha;
+    uint8_t               _fontAlpha = 255;
     /// font shadow
     FontShadow            _shadow;
     /// font stroke
     FontStroke            _stroke;
     /// enable text wrap
-    bool                  _enableWrap;
+    bool                  _enableWrap = true;
     /** There are 4 overflows: none, clamp, shrink and resize_height.
      *  The corresponding integer values are 0, 1, 2, 3 respectively
      * For more information, please refer to Label::Overflow enum class.
      */
-    int                  _overflow;
+    int                  _overflow = 0;
 };
 
 /**
@@ -615,17 +581,14 @@ enum class LabelEffect {
 /** @struct Acceleration
  * The device accelerometer reports values for each axis in units of g-force.
  */
-class CC_DLL Acceleration
-    : public Ref
+class CC_DLL Acceleration: public Ref
 {
 public:
-    double x;
-    double y;
-    double z;
+    double x = 0;
+    double y = 0;
+    double z = 0;
 
-    double timestamp;
-
-    Acceleration(): x(0), y(0), z(0), timestamp(0) {}
+    double timestamp = 0;
 };
 
 extern const std::string CC_DLL STD_STRING_EMPTY;

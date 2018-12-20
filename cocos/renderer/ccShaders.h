@@ -101,20 +101,23 @@ extern CC_DLL const GLchar* ccPosition_vert;
 extern CC_DLL const GLchar* ccShader_LayerRadialGradient_frag;
 
 //backend shader file
-extern CC_DLL const GLchar * positionColor_vert;
-extern CC_DLL const GLchar * positionColor_frag;
-extern CC_DLL const GLchar * positionTexture_vert;
-extern CC_DLL const GLchar * positionTexture_frag;
-extern CC_DLL const GLchar * positionTextureColor_vert;
-extern CC_DLL const GLchar * positionTextureColor_frag;
-extern CC_DLL const GLchar * positionTextureColorAlphaTest_frag;
-extern CC_DLL const GLchar * label_normal_frag;
-extern CC_DLL const GLchar * label_distanceNormal_frag;
-extern CC_DLL const GLchar * labelOutline_frag;
-extern CC_DLL const GLchar * labelDistanceFieldGlow_frag;
-extern CC_DLL const GLchar * positionColorLengthTexture_vert;
-extern CC_DLL const GLchar * positionColorLengthTexture_frag;
-extern CC_DLL const GLchar * positionColorTextureAsPointsize_vert;
+extern CC_DLL const char* positionColor_vert;
+extern CC_DLL const char * positionColor_frag;
+extern CC_DLL const char * positionTexture_vert;
+extern CC_DLL const char * positionTexture_frag;
+extern CC_DLL const char * positionTextureColor_vert;
+extern CC_DLL const char * positionTextureColor_frag;
+extern CC_DLL const char * positionTextureColorAlphaTest_frag;
+extern CC_DLL const char * label_normal_frag;
+extern CC_DLL const char * label_distanceNormal_frag;
+extern CC_DLL const char * labelOutline_frag;
+extern CC_DLL const char * labelDistanceFieldGlow_frag;
+extern CC_DLL const char * positionColorLengthTexture_vert;
+extern CC_DLL const char * positionColorLengthTexture_frag;
+extern CC_DLL const char * positionColorTextureAsPointsize_vert;
+extern CC_DLL const char* position_vert;
+extern CC_DLL const char* layer_radialGradient_frag;
+
 
 NS_CC_END
 /**

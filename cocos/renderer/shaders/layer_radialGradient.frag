@@ -22,9 +22,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-const char* position_vert = R"(
+const char* layer_radialGradient_frag = R"(
 
-attribute vec4 a_position;
+#ifdef GL_ES
+precision highp float;
+#endif
+
+uniform vec4 u_startColor;
+uniform vec4 u_endColor;
+uniform vec2 u_center;
+uniform float u_radius;
+uniform float u_expand;
 
 #ifdef GL_ES
 varying lowp vec4 v_position;
@@ -32,11 +40,23 @@ varying lowp vec4 v_position;
 varying vec4 v_position;
 #endif
 
-uniform mat4 u_MVPMatrix;
-
 void main()
 {
-    gl_Position = u_MVPMatrix * a_position;
-    v_position = a_position;
+    float d = distance(v_position.xy, u_center) / u_radius;
+    if (d <= 1.0)
+    {
+        if (d <= u_expand)
+        {
+            gl_FragColor = u_startColor;
+        }
+        else
+        {
+            gl_FragColor = mix(u_startColor, u_endColor, (d - u_expand) / (1.0 - u_expand));
+        }
+    }
+    else
+    {
+        gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
+    }
 }
 )";

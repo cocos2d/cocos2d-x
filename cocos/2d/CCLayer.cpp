@@ -638,24 +638,24 @@ const Color3B& LayerGradient::getEndColor() const
     return _endColor;
 }
 
-void LayerGradient::setStartOpacity(GLubyte o)
+void LayerGradient::setStartOpacity(uint8_t o)
 {
     _startOpacity = o;
     updateColor();
 }
 
-GLubyte LayerGradient::getStartOpacity() const
+uint8_t LayerGradient::getStartOpacity() const
 {
     return _startOpacity;
 }
 
-void LayerGradient::setEndOpacity(GLubyte o)
+void LayerGradient::setEndOpacity(uint8_t o)
 {
     _endOpacity = o;
     updateColor();
 }
 
-GLubyte LayerGradient::getEndOpacity() const
+uint8_t LayerGradient::getEndOpacity() const
 {
     return _endOpacity;
 }
@@ -717,20 +717,20 @@ LayerRadialGradient* LayerRadialGradient::create()
 }
 
 LayerRadialGradient::LayerRadialGradient()
-: _startColor(Color4B::BLACK)
-, _startColorRend(Color4F::BLACK)
-, _endColor(Color4B::BLACK)
-, _endColorRend(Color4F::BLACK)
-, _center(Vec2(0,0))
-, _radius(0.f)
-, _expand(0.f)
-, _uniformLocationStartColor(0)
-, _uniformLocationEndColor(0)
-, _uniformLocationCenter(0)
-, _uniformLocationRadius(0)
-, _uniformLocationExpand(0)
-, _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
-{ }
+{
+    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(position_vert);
+    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(layer_radialGradient_frag);
+
+    auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32, 0, false);
+    vertexLayout.setLayout(sizeof(_vertices[0]), backend::VertexStepMode::VERTEX);
+
+    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionColor_vert);
+    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionColor_frag);
+
+    _customCommand.createVertexBuffer(sizeof(_vertices[0]), sizeof(_vertices) / sizeof(_vertices[0]));
+}
 
 LayerRadialGradient::~LayerRadialGradient()
 {}
@@ -754,14 +754,6 @@ bool LayerRadialGradient::initWithColor(const cocos2d::Color4B &startColor, cons
         setRadius(radius);
         setCenter(center);
         
-        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_LAYER_RADIAL_GRADIENT));
-        auto program = getGLProgram();
-        _uniformLocationStartColor = program->getUniformLocation("u_startColor");
-        _uniformLocationEndColor = program->getUniformLocation("u_endColor");
-        _uniformLocationExpand = program->getUniformLocation("u_expand");
-        _uniformLocationRadius = program->getUniformLocation("u_radius");
-        _uniformLocationCenter = program->getUniformLocation("u_center");
-        
         return true;
     }
     
@@ -770,38 +762,15 @@ bool LayerRadialGradient::initWithColor(const cocos2d::Color4B &startColor, cons
 
 void LayerRadialGradient::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    _customCommand.init(_globalZOrder, transform, flags);
-    _customCommand.func = CC_CALLBACK_0(LayerRadialGradient::onDraw, this, transform, flags);
+    _customCommand.init(_globalZOrder, _blendFunc);
     renderer->addCommand(&_customCommand);
-}
 
-void LayerRadialGradient::onDraw(const Mat4& transform, uint32_t /*flags*/)
-{
-    auto program = getGLProgram();
-    program->use();
-    program->setUniformsForBuiltins(transform);
-    program->setUniformLocationWith4f(_uniformLocationStartColor, _startColorRend.r,
-                                      _startColorRend.g, _startColorRend.b, _startColorRend.a);
-    program->setUniformLocationWith4f(_uniformLocationEndColor, _endColorRend.r,
-                                      _endColorRend.g, _endColorRend.b, _endColorRend.a);
-    program->setUniformLocationWith2f(_uniformLocationCenter, _center.x, _center.y);
-    program->setUniformLocationWith1f(_uniformLocationRadius, _radius);
-    program->setUniformLocationWith1f(_uniformLocationExpand, _expand);
-    
-    
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    
-    //
-    // Attributes
-    //
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
-    
-    utils::setBlending(_blendFunc.src, _blendFunc.dst);
-    
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
+    auto& bindGroup = _customCommand.getPipelineDescriptor().bindGroup;
+    bindGroup.setUniform("u_startColor", &_startColor, sizeof(_startColor));
+    bindGroup.setUniform("u_endColor", &_endColor, sizeof(_endColor));
+    bindGroup.setUniform("u_center", &_center, sizeof(_center));
+    bindGroup.setUniform("u_radius", &_radius, sizeof(_radius));
+    bindGroup.setUniform("u_expand", &_expand, sizeof(_expand));
 }
 
 void LayerRadialGradient::setContentSize(const Size& size)
@@ -811,6 +780,8 @@ void LayerRadialGradient::setContentSize(const Size& size)
     _vertices[3].x = size.width;
     _vertices[3].y = size.height;
     Layer::setContentSize(size);
+
+    _customCommand.updateVertexBuffer(_vertices, sizeof(_vertices));
 }
 
 void LayerRadialGradient::setStartOpacity(GLubyte opacity)
@@ -819,18 +790,18 @@ void LayerRadialGradient::setStartOpacity(GLubyte opacity)
     _startColor.a = opacity;
 }
 
-GLubyte LayerRadialGradient::getStartOpacity() const
+uint8_t LayerRadialGradient::getStartOpacity() const
 {
     return _startColor.a;
 }
 
-void LayerRadialGradient::setEndOpacity(GLubyte opacity)
+void LayerRadialGradient::setEndOpacity(uint8_t opacity)
 {
     _endColorRend.a = opacity / 255.0f;
     _endColor.a = opacity;
 }
 
-GLubyte LayerRadialGradient::getEndOpacity() const
+uint8_t LayerRadialGradient::getEndOpacity() const
 {
     return _endColor.a;
 }
