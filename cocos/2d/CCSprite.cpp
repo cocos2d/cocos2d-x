@@ -1075,7 +1075,7 @@ void Sprite::updateTransform(void)
 // draw
 void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    if (_texture == nullptr)
+    if (_texture == nullptr || _texture->getBackendTexture() == nullptr)
     {
         return;
     }
