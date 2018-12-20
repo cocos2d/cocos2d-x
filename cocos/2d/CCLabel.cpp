@@ -1661,7 +1661,7 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             auto alphaTexture = textureAtlas->getTexture()->getAlphaTexture();
             if(alphaTexture && alphaTexture->getBackendTexture())
             {
-                pipelineDescriptor.bindGroup.setTexture("u_texture1", 1, alphaTexture->getBackendTexture());
+                pipelineQuad.bindGroup.setTexture("u_texture1", 1, alphaTexture->getBackendTexture());
             }
             _quadCommand.init(_globalZOrder, texture, _blendFunc, textureAtlas->getQuads(), textureAtlas->getTotalQuads(), transform, flags);
             renderer->addCommand(&_quadCommand);
