@@ -571,8 +571,17 @@ void Label::updateShaderProgram()
 
     if (_currentLabelType == LabelType::BMFONT || _currentLabelType == LabelType::CHARMAP)
     {
-        vert = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
-        frag = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
+        auto texture = _getTexture(this);
+        if(texture && texture->getAlphaTextureName())
+        {
+            vert = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
+            frag = ShaderCache::newFragmentShaderModule(etc1_frag);
+        }
+        else
+        {
+            vert = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
+            frag = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
+        }
     }
     else
     {
@@ -589,15 +598,19 @@ void Label::updateShaderProgram()
                     vert = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
                     frag = ShaderCache::newFragmentShaderModule(label_normal_frag);
                 }
-                else if (_shadowEnabled)
-                {
-                    vert = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
-                    frag = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
-                }
                 else
                 {
-                    vert = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
-                    frag = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
+                    auto texture = _getTexture(this);
+                    if(texture && texture->getAlphaTextureName())
+                    {
+                        vert = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
+                        frag = ShaderCache::newFragmentShaderModule(etc1_frag);
+                    }
+                    else
+                    {
+                        vert = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
+                        frag = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
+                    }
                 }
                 break;
             case cocos2d::LabelEffect::OUTLINE:
@@ -1490,21 +1503,26 @@ float Label::getBMFontSize()const
     return _bmFontSize;
 }
 
+void Label::updateBuffer(TextureAtlas* textureAtlas, CustomCommand& customCommand)
+{
+    if(textureAtlas->getTotalQuads() > customCommand.getVertexCount())
+    {
+        customCommand.createVertexBuffer(sizeof(V3F_C4B_T2F_Quad), textureAtlas->getTotalQuads());
+        customCommand.createIndexBuffer(sizeof(unsigned short), textureAtlas->getTotalQuads()*6);
+    }
+   customCommand.updateVertexBuffer(textureAtlas->getQuads(), textureAtlas->getTotalQuads() * sizeof(V3F_C4B_T2F_Quad));
+   customCommand.updateIndexBuffer(textureAtlas->getIndices(), textureAtlas->getTotalQuads()*6*sizeof(unsigned short));
+   customCommand.setIndexDrawInfo(0, customCommand.getIndexCount());
+}
+
 void Label::updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer, const Mat4 &transform)
 {
-    if(textureAtlas->getTotalQuads() > _customCommand.getVertexCount())
-    {
-        _customCommand.createVertexBuffer(sizeof(V3F_C4B_T2F_Quad), textureAtlas->getTotalQuads());
-        _customCommand.createIndexBuffer(sizeof(unsigned short), textureAtlas->getTotalQuads()*6);
-    }
-    _customCommand.updateVertexBuffer(textureAtlas->getQuads(), textureAtlas->getTotalQuads() * sizeof(V3F_C4B_T2F_Quad));
-    _customCommand.updateIndexBuffer(textureAtlas->getIndices(), textureAtlas->getTotalQuads()*6*sizeof(unsigned short));
-    _customCommand.setIndexDrawInfo(0, _customCommand.getIndexCount());
-    
+    updateBuffer(textureAtlas, _customCommand);
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
     if (_shadowEnabled) {
-        _customCommandShadow = _customCommand;
+        updateBuffer(textureAtlas, _customCommandShadow);
         auto& pipelineShadow = _customCommandShadow.getPipelineDescriptor();
+        pipelineShadow = pipelineDescriptor;
         const auto& matrixP = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         Mat4 matrixMVP = matrixP * _shadowTransform;
         pipelineShadow.bindGroup.setUniform("u_MVPMatrix", matrixMVP.m, sizeof(matrixMVP.m));
@@ -1533,7 +1551,7 @@ void Label::updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer,
                 //draw outline
                 {
                     effectType[0] = 1;
-                    _customCommandOutLine = _customCommand;
+                    updateBuffer(textureAtlas, _customCommandOutLine);
                     auto& pipelineOutline = _customCommandOutLine.getPipelineDescriptor();
                     pipelineOutline = pipelineDescriptor;
                     pipelineOutline.bindGroup.setUniform("u_effectColor", &effectColor, sizeof(Vec4));
@@ -1589,7 +1607,7 @@ void Label::updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer,
             GLubyte oldOPacity = _displayedOpacity;
             _displayedOpacity = _shadowColor4F.a * (oldOPacity / 255.0f) * 255;
             setColor(Color3B(_shadowColor4F));
-
+            _customCommandShadow.updateVertexBuffer(textureAtlas->getQuads(), textureAtlas->getTotalQuads() * sizeof(V3F_C4B_T2F_Quad));
             _customCommandShadow.init(_globalZOrder);
             renderer->addCommand(&_customCommandShadow);
             
@@ -1640,6 +1658,11 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             pipelineQuad = pipelineDescriptor;
             pipelineQuad.bindGroup.setUniform("u_MVPMatrix", matrixProjection.m, sizeof(matrixProjection.m));
             pipelineQuad.bindGroup.setTexture("u_texture", 0, texture->getBackendTexture());
+            auto alphaTexture = textureAtlas->getTexture()->getAlphaTexture();
+            if(alphaTexture && alphaTexture->getBackendTexture())
+            {
+                pipelineDescriptor.bindGroup.setTexture("u_texture1", 1, alphaTexture->getBackendTexture());
+            }
             _quadCommand.init(_globalZOrder, texture, _blendFunc, textureAtlas->getQuads(), textureAtlas->getTotalQuads(), transform, flags);
             renderer->addCommand(&_quadCommand);
         }
@@ -1653,6 +1676,11 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
                 pipelineDescriptor.bindGroup.setUniform("u_textColor", &textColor, sizeof(Vec4));
                 auto textureAtlas = batchNode->getTextureAtlas();
                 pipelineDescriptor.bindGroup.setTexture("u_texture", 0, textureAtlas->getTexture()->getBackendTexture());
+                auto alphaTexture = textureAtlas->getTexture()->getAlphaTexture();
+                if(alphaTexture && alphaTexture->getBackendTexture())
+                {
+                    pipelineDescriptor.bindGroup.setTexture("u_texture1", 1, alphaTexture->getBackendTexture());
+                }
                 updateEffectUniforms(textureAtlas, renderer, transform);
             }
         }

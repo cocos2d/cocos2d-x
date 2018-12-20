@@ -309,8 +309,11 @@ void AbstractCheckButton::onPressStateChangedToNormal()
     _backGroundBoxDisabledRenderer->setVisible(false);
     _frontCrossDisabledRenderer->setVisible(false);
     
-    _backGroundBoxRenderer->updateShaders(positionTextureColor_vert, positionTextureColor_frag);
-    _frontCrossRenderer->updateShaders(positionTextureColor_vert, positionTextureColor_frag);
+    auto isETC1 = _backGroundBoxRenderer->getTexture() && _backGroundBoxRenderer->getTexture()->getAlphaTextureName();
+    _backGroundBoxRenderer->updateShaders(positionTextureColor_vert, (isETC1)?etc1_frag:positionTextureColor_frag);
+    
+    isETC1 = _frontCrossRenderer->getTexture() && _frontCrossRenderer->getTexture()->getAlphaTextureName();
+    _frontCrossRenderer->updateShaders(positionTextureColor_vert, (isETC1)?etc1_frag:positionTextureColor_frag);
     
     
     _backGroundBoxRenderer->setScale(_backgroundTextureScaleX, _backgroundTextureScaleY);
@@ -326,8 +329,11 @@ void AbstractCheckButton::onPressStateChangedToNormal()
 
 void AbstractCheckButton::onPressStateChangedToPressed()
 {
-    _backGroundBoxRenderer->updateShaders(positionTextureColor_vert, positionTextureColor_frag);
-    _frontCrossRenderer->updateShaders(positionTextureColor_vert, positionTextureColor_frag);
+    auto isETC1 = _backGroundBoxRenderer->getTexture() && _backGroundBoxRenderer->getTexture()->getAlphaTextureName();
+    _backGroundBoxRenderer->updateShaders(positionTextureColor_vert, (isETC1)?etc1_frag:positionTextureColor_frag);
+    
+    isETC1 = _frontCrossRenderer->getTexture() && _frontCrossRenderer->getTexture()->getAlphaTextureName();
+    _frontCrossRenderer->updateShaders(positionTextureColor_vert, (isETC1)?etc1_frag:positionTextureColor_frag);
     
     if (!_isBackgroundSelectedTextureLoaded)
     {
@@ -350,8 +356,11 @@ void AbstractCheckButton::onPressStateChangedToDisabled()
     if (!_isBackgroundDisabledTextureLoaded
         || !_isFrontCrossDisabledTextureLoaded)
     {
-        _backGroundBoxRenderer->updateShaders(positionTextureColor_vert, grayScale_frag);
-        _frontCrossRenderer->updateShaders(positionTextureColor_vert, grayScale_frag);
+        auto isETC1 = _backGroundBoxRenderer->getTexture() && _backGroundBoxRenderer->getTexture()->getAlphaTextureName();
+        _backGroundBoxRenderer->updateShaders(positionTextureColor_vert, (isETC1)?etc1Gray_frag:grayScale_frag);
+        
+        isETC1 = _frontCrossRenderer->getTexture() && _frontCrossRenderer->getTexture()->getAlphaTextureName();
+        _frontCrossRenderer->updateShaders(positionTextureColor_vert, (isETC1)?etc1Gray_frag:grayScale_frag);
     }
     else
     {

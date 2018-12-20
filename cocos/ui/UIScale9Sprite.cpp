@@ -305,14 +305,14 @@ void Scale9Sprite::setState(Scale9Sprite::State state)
 {
     if (_brightState != state) {
         _brightState = state;
-
+        auto isETC1 = getTexture() && getTexture()->getAlphaTextureName();
         switch (state)
         {
             case State::NORMAL:
-                Sprite::updateShaders(positionTextureColor_vert, positionTextureColor_frag);
+                Sprite::updateShaders(positionTextureColor_vert, (isETC1)?etc1_frag:positionTextureColor_frag);
                 break;
             case State::GRAY:
-                Sprite::updateShaders(positionTextureColor_vert, grayScale_frag);
+                Sprite::updateShaders(positionTextureColor_vert, (isETC1)?etc1Gray_frag:grayScale_frag);
             default:
                 break;
         }

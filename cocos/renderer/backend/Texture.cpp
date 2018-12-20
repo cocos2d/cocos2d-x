@@ -33,6 +33,7 @@ Texture::Texture(const TextureDescriptor& descriptor)
 , _bytesPerElement(computeBytesPerElement(descriptor.textureFormat))
 , _isMipmapEnabled(descriptor.samplerDescriptor.mipmapEnabled)
 , _textureUsage(descriptor.textureUsage)
+, _isCompressed(descriptor.compressed)
 {
 }
 

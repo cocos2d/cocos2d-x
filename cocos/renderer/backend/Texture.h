@@ -13,6 +13,7 @@ struct TextureDescriptor
     uint32_t width = 0;
     uint32_t height = 0;
     uint32_t depth = 0;
+    bool compressed = false;
     
     SamplerDescriptor samplerDescriptor;
 };
@@ -40,6 +41,7 @@ protected:
     TextureFormat _textureFormat = TextureFormat::R8G8B8;
     TextureUsage _textureUsage = TextureUsage::READ;
     bool _isMipmapEnabled = false;
+    bool _isCompressed = false;
 };
 
 CC_BACKEND_END
