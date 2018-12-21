@@ -443,6 +443,7 @@ void Renderer::setDepthTest(bool value)
 void Renderer::setDepthWrite(bool value)
 {
     _depthStencilDescriptor.depthWriteEnabled = value;
+    _renderPassDescriptor.needDepthAttachment = value;
 }
 bool Renderer::getDepthTest() const
 {
@@ -769,7 +770,9 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
     renderPipelineDescriptor.blendState = blendState;
     
 //    const auto& depthStencilDescritpor = pipelineDescriptor.depthStencilDescriptor;
-    if (_depthStencilDescriptor.depthTestEnabled || _depthStencilDescriptor.stencilTestEnabled)
+    if (_depthStencilDescriptor.depthTestEnabled ||
+        _depthStencilDescriptor.depthWriteEnabled ||
+        _depthStencilDescriptor.stencilTestEnabled)
     {
         auto depthStencilState = device->createDepthStencilState(_depthStencilDescriptor);
         renderPipelineDescriptor.depthStencilState = depthStencilState;

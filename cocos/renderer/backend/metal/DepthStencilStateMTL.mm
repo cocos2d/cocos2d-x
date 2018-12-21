@@ -75,6 +75,8 @@ namespace
         mtlDescriptor.depthFailureOperation = toMTLStencilOperation(descriptor.depthFailureOperation);
         mtlDescriptor.depthStencilPassOperation = toMTLStencilOperation(descriptor.depthStencilPassOperation);
         mtlDescriptor.stencilCompareFunction = toMTLCompareFunction(descriptor.stencilCompareFunction);
+        mtlDescriptor.readMask = descriptor.readMask;
+        mtlDescriptor.writeMask = descriptor.writeMask;
         return mtlDescriptor;
     }
 }
