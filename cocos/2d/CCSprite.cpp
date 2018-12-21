@@ -383,13 +383,12 @@ void Sprite::setVertexLayout()
     uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
     
     //set vertexLayout according to V3F_C4B_T2F structure
-    backend::VertexLayout vertexLayout;
+    auto& vertexLayout = _trianglesCommand.getPipelineDescriptor().vertexLayout;
     vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
     vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset, false);
     vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, colorOffset, true);
     
     vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
-    _trianglesCommand.getPipelineDescriptor().vertexLayout = vertexLayout;
 }
 
 void Sprite::updateShaders(const char* vert, const char* frag)
@@ -1110,6 +1109,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         }
         
         _trianglesCommand.init(_globalZOrder,
+                               _texture,
                                _blendFunc,
                                _polyInfo.triangles,
                                transform,

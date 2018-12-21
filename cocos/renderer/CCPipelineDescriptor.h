@@ -36,7 +36,6 @@ NS_CC_BEGIN
 
 struct CC_DLL PipelineDescriptor final
 {
-    backend::DepthStencilDescriptor depthStencilDescriptor;
     backend::BlendDescriptor blendDescriptor;
     backend::RenderPassDescriptor renderPassDescriptor;
     backend::BindGroup bindGroup;

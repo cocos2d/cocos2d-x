@@ -117,12 +117,6 @@ protected:
     GLboolean _isDepthWrite;
 };
 
-//the struct is not used outside.
-//struct RenderStackElement
-//{
-//    int renderQueueID;
-//    ssize_t currentIndex;
-//};
 
 class GroupCommandManager;
 
@@ -186,12 +180,27 @@ public:
     /* clear draw stats */
     void clearDrawStats() { _drawnBatches = _drawnVertices = 0; }
 
-    /**
-     * Enable/Disable depth test
-     * For 3D object depth test is enabled by default and can not be changed
-     * For 2D object depth test is disabled by default
-     */
-    void setDepthTest(bool enable);
+    // depth/stencil state.
+
+    void setDepthTest(bool value);
+    void setDepthWrite(bool value);
+    bool getDepthTest() const;
+    bool getDepthWrite() const;
+
+    void setStencilTest(bool value);
+    void setStencilCompareFunction(backend::CompareFunction func, unsigned int ref, unsigned int readMask);
+    void setStencilOperation(backend::StencilOperation stencilFailureOp,
+                             backend::StencilOperation depthFailureOp,
+                             backend::StencilOperation stencilDepthPassOp);
+    void setStencilWriteMask(unsigned int mask);
+    bool getStencilTest() const;
+    backend::StencilOperation getStencilFailureOperation() const;
+    backend::StencilOperation getStencilPassDepthFailureOperation() const;
+    backend::StencilOperation getStencilDepthPassOperation() const;
+    backend::CompareFunction getStencilCompareFunction() const;
+    unsigned int getStencilReadMask() const;
+    unsigned int getStencilWriteMask() const;
+    unsigned int getStencilReferenceValue() const;
 
     void setViewPort(int x, int y, size_t w, size_t h);
     const Viewport& getViewport() const { return _viewport; }
@@ -279,6 +288,8 @@ protected:
     bool _isDepthTestFor2D = false;
         
     GroupCommandManager* _groupCommandManager = nullptr;
+
+    unsigned int _stencilRef = 0;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _cacheTextureListener = nullptr;

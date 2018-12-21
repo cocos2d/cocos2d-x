@@ -124,7 +124,7 @@ void QuadCommand::init(float globalOrder, Texture2D *texture, const BlendFunc& b
     triangles.vertCount = (int)quadCount * 4;
     triangles.indices = __indices;
     triangles.indexCount = (int)quadCount * 6;
-    TrianglesCommand::init(globalOrder, blendType, triangles, mv, flags);
+    TrianglesCommand::init(globalOrder, texture, blendType, triangles, mv, flags);
 
     _alphaTextureID = texture->getAlphaTextureName();
 }

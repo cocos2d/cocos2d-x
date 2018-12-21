@@ -23,11 +23,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef StencilStateManager_hpp
-#define StencilStateManager_hpp
+#pragma once
+
 #include "base/ccConfig.h"
 #include "platform/CCPlatformMacros.h"
-#include "platform/CCGL.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCCallbackCommand.h"
 
 /**
  * @addtogroup base
@@ -45,36 +46,42 @@ public:
     void setAlphaThreshold(GLfloat alphaThreshold);
     void setInverted(bool inverted);
     bool isInverted()const;
-    GLfloat getAlphaThreshold()const;
+    float getAlphaThreshold()const;
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(StencilStateManager);
-    static GLint s_layer;
+    static int s_layer;
     /**draw fullscreen quad to clear stencil bits
      */
     void drawFullScreenQuadClearStencil();
     
     
-    GLfloat _alphaThreshold;
-    bool    _inverted;
+    float _alphaThreshold = 1.f;
+    bool _inverted = false;
     
-    GLboolean _currentStencilEnabled;
-    GLuint _currentStencilWriteMask;
-    GLenum _currentStencilFunc;
-    GLint _currentStencilRef;
-    GLuint _currentStencilValueMask;
-    GLenum _currentStencilFail;
-    GLenum _currentStencilPassDepthFail;
-    GLenum _currentStencilPassDepthPass;
-    GLboolean _currentDepthWriteMask;
+    bool _currentStencilEnabled = false;
+    unsigned int _currentStencilWriteMask = ~0;
+    backend::CompareFunction _currentStencilFunc = backend::CompareFunction::ALWAYS;
+    unsigned int _currentStencilRef = 0;
+    unsigned int _currentStencilReadMask = ~0;
+    backend::StencilOperation _currentStencilFail = backend::StencilOperation::KEEP;
+    backend::StencilOperation _currentStencilPassDepthFail = backend::StencilOperation::KEEP;
+    backend::StencilOperation _currentStencilPassDepthPass = backend::StencilOperation::KEEP;
+    bool _currentDepthWriteMask = true;
     
-    GLboolean _currentAlphaTestEnabled;
-    GLenum _currentAlphaTestFunc;
-    GLclampf _currentAlphaTestRef;
-    
-    GLint _mask_layer_le;
+    bool _currentAlphaTestEnabled = false;
+//    GLenum _currentAlphaTestFunc;
+//    GLclampf _currentAlphaTestRef;
+
+    unsigned int _mask_layer_le = 0;
+
+    CustomCommand _customCommand;
+    CallbackCommand _beforeDrawQuadCmd;
+    CallbackCommand _afterDrawQuadCmd;
+    CallbackCommand _afterDrawStencilCmd;
+    CallbackCommand _afterVisitCmd;
 };
 
 NS_CC_END
 // end of base group
 /** @} */
-#endif /* StencilStateManager_hpp */

@@ -393,9 +393,10 @@ void HoleDemo::setup()
     
     holesClipper->setStencil( _holesStencil);
     
-    _outerClipper->addChild(holesClipper);
+    // _outerClipper->addChild(holesClipper);
     
-    this->addChild(_outerClipper);
+    // this->addChild(_outerClipper);
+    this->addChild(holesClipper);
     
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesBegan = CC_CALLBACK_2(HoleDemo::onTouchesBegan, this);

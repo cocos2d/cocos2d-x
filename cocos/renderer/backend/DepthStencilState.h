@@ -15,8 +15,8 @@ struct StencilDescriptor
     StencilOperation depthFailureOperation = StencilOperation::KEEP;
     StencilOperation depthStencilPassOperation = StencilOperation::KEEP;
     CompareFunction stencilCompareFunction = CompareFunction::ALWAYS;
-    uint32_t readMask = 0;
-    uint32_t writeMask = 0;
+    unsigned int readMask = 0;
+    unsigned int writeMask = 0;
 };
 
 struct DepthStencilDescriptor

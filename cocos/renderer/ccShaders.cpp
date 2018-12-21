@@ -118,6 +118,11 @@ NS_CC_BEGIN
 #include "renderer/shaders/position.vert"
 #include "renderer/shaders/layer_radialGradient.frag"
 #include "renderer/shaders/ui_Gray.frag"
+#include "renderer/shaders/positionTextureUColor.vert"
+#include "renderer/shaders/positionTextureUColor.frag"
+#include "renderer/shaders/positionUColor.vert"
+#include "renderer/shaders/positionUColor.frag"
 #include "renderer/shaders/etc1.frag"
 #include "renderer/shaders/etc1_Gray.frag"
+
 NS_CC_END
