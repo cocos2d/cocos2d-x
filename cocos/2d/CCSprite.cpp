@@ -372,6 +372,7 @@ void Sprite::setTexture(const std::string &filename)
         rect.size = texture->getContentSize();
     setTextureRect(rect);
 }
+
 void Sprite::setVertexLayout()
 {
 #define VERTEX_POSITION_SIZE 3
@@ -400,7 +401,8 @@ void Sprite::updateShaders(const char* vert, const char* frag)
 
 void Sprite::setTexture(Texture2D *texture)
 {
-    updateShaders(positionTextureColor_vert, positionTextureColor_frag);
+    auto isETC1 = texture && texture->getAlphaTextureName();
+    updateShaders(positionTextureColor_vert, (isETC1) ? etc1_frag : positionTextureColor_frag);
     
     CCASSERT(! _batchNode || (texture &&  texture == _batchNode->getTexture()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
@@ -1072,7 +1074,7 @@ void Sprite::updateTransform(void)
 // draw
 void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    if (_texture == nullptr)
+    if (_texture == nullptr || _texture->getBackendTexture() == nullptr)
     {
         return;
     }
@@ -1100,6 +1102,11 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         auto& bindGroup = _trianglesCommand.getPipelineDescriptor().bindGroup;
         bindGroup.setUniform("u_MVPMatrix", projectionMat.m, sizeof(projectionMat.m));
         bindGroup.setTexture("u_texture", 0, _texture->getBackendTexture());
+        auto alphaTexture = _texture->getAlphaTexture();
+        if(alphaTexture && alphaTexture->getBackendTexture())
+        {
+            bindGroup.setTexture("u_texture1", 1, alphaTexture->getBackendTexture());
+        }
         
         _trianglesCommand.init(_globalZOrder,
                                _texture,

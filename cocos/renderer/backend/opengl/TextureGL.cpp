@@ -121,21 +121,59 @@ TextureGL::~TextureGL()
 void TextureGL::updateData(uint8_t* data)
 {
     // TODO: support texture cube, and compressed data.
+    
+    //Set the row align only when mipmapsNum == 1 and the data is uncompressed
+    if(!_isMipmapEnabled && !_isCompressed)
+    {
+        unsigned int bytesPerRow = _width * _bytesPerElement;
+        
+        if(bytesPerRow % 8 == 0)
+        {
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 8);
+        }
+        else if(bytesPerRow % 4 == 0)
+        {
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+        }
+        else if(bytesPerRow % 2 == 0)
+        {
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 2);
+        }
+        else
+        {
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        }
+    }
+    else
+    {
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    }
+    
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _magFilterGL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _minFilterGL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _sAddressModeGL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _tAddressModeGL);
-    glTexImage2D(GL_TEXTURE_2D,
-                 0,
-                 _internalFormat,
-                 _width,
-                 _height,
-                 0,
-                 _format,
-                 _type,
-                 data);
+
+//  TODO coulsonwang
+//    if(_isCompressed)
+//    {
+//        auto datalen = _width * _height * _bytesPerElement;
+//        glCompressedTexImage2D(GL_TEXTURE_2D, 0, _internalFormat, (GLsizei)_width, (GLsizei)_height, 0, datalen, data);
+//    }
+//    else
+    {
+        glTexImage2D(GL_TEXTURE_2D,
+                     0,
+                     _internalFormat,
+                     _width,
+                     _height,
+                     0,
+                     _format,
+                     _type,
+                     data);
+    }
     CHECK_GL_ERROR_DEBUG();
     
     generateMipmpas();

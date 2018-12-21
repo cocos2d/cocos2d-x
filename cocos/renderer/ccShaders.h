@@ -121,7 +121,8 @@ extern CC_DLL const char * positionTextureUColor_vert;
 extern CC_DLL const char * positionTextureUColor_frag;
 extern CC_DLL const char * positionUColor_vert;
 extern CC_DLL const char * positionUColor_frag;
-
+extern CC_DLL const char * etc1_frag;
+extern CC_DLL const char * etc1Gray_frag;
 NS_CC_END
 /**
  end of support group

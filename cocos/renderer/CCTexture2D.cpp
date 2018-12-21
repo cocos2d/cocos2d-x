@@ -492,9 +492,9 @@ backend::Texture* Texture2D::getBackendTexture() const
     return _texture;
 }
 
-GLuint Texture2D::getAlphaTextureName() const
+bool Texture2D::getAlphaTextureName() const
 {
-    return _alphaTexture == nullptr ? 0 : _alphaTexture->getName();
+    return _alphaTexture == nullptr ? 0 : _alphaTexture->getBackendTexture();
 }
 
 Size Texture2D::getContentSize() const
@@ -582,6 +582,12 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     backend::TextureDescriptor textureDescriptor;
     textureDescriptor.width = pixelsWide;
     textureDescriptor.height = pixelsHigh;
+    textureDescriptor.samplerDescriptor.minFilter = (_antialiasEnabled) ? backend::SamplerFilter::LINEAR : backend::SamplerFilter::NEAREST;
+    textureDescriptor.samplerDescriptor.magFilter = (_antialiasEnabled) ? backend::SamplerFilter::LINEAR : backend::SamplerFilter::NEAREST;
+    if (mipmapsNum > 1)
+    {
+        textureDescriptor.samplerDescriptor.mipmapFilter = backend::SamplerFilter::NEAREST;
+    }
     backend::StringUtils::PixelFormat format = static_cast<backend::StringUtils::PixelFormat>(pixelFormat);
     textureDescriptor.textureFormat = backend::StringUtils::PixelFormat2TextureFormat(format);
     _texture = device->newTexture(textureDescriptor);
@@ -629,8 +635,8 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
     int imageWidth = image->getWidth();
     int imageHeight = image->getHeight();
     this->_filePath = image->getFilePath();
-    Configuration *conf = Configuration::getInstance();
-
+//    Configuration *conf = Configuration::getInstance();
+//
 //    int maxTextureSize = conf->getMaxTextureSize();
 //    if (imageWidth > maxTextureSize || imageHeight > maxTextureSize)
 //    {

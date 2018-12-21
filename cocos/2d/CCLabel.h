@@ -690,6 +690,7 @@ protected:
     void setVertexLayout(PipelineDescriptor& vertexLayout);
     void updateBlendState();
     void updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer, const Mat4 &transform);
+    void updateBuffer(TextureAtlas* textureAtlas, CustomCommand& customCommand);
 
     LabelType _currentLabelType;
     bool _contentDirty;
