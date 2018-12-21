@@ -936,6 +936,34 @@ void EventDispatcher::dispatchEvent(Event* event)
         (this->*pfnDispatchEventToListeners)(listeners, onEvent);
     }
     
+    /**
+     * For the case of custom events, dispatch the new listeners to be added to avoid timing issues
+     * This helps to avoid logic issues when adding listeners while dispatching an event
+     **/
+    if (event->getType() == Event::Type::CUSTOM)
+    {
+        // Retrieve all listeners with the corresponding ID
+        EventListenerVector waitingListeners;
+        for (auto it = _toAddedListeners.begin(); it != _toAddedListeners.end(); it++)
+        {
+            if ( (*it)->getListenerID() == listenerID)
+            {
+                waitingListeners.push_back(*it);
+            }
+        }
+        
+        if (waitingListeners.size() > 0)
+        {
+            auto onEvent = [&event](EventListener* listener) -> bool{
+                event->setCurrentTarget(listener->getAssociatedNode());
+                listener->_onEvent(event);
+                return event->isStopped();
+            };
+            
+            (this->*pfnDispatchEventToListeners)(&waitingListeners, onEvent);
+        }
+    }
+    
     updateListeners(event);
 }
 
