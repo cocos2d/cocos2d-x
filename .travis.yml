@@ -1,5 +1,11 @@
 matrix:
   include:
+    # iOS_cmake
+    - os: osx
+      env: BUILD_TARGET=ios_cmake
+      language: cpp
+      osx_image: xcode10.1
+      sudo: required
     # linux
     - os: linux
       dist: xenial
@@ -14,12 +20,6 @@ matrix:
     # mac_cmake
     - os: osx
       env: BUILD_TARGET=mac_cmake
-      language: cpp
-      osx_image: xcode9.3
-      sudo: required
-    # iOS_cmake
-    - os: osx
-      env: BUILD_TARGET=ios_cmake
       language: cpp
       osx_image: xcode9.3
       sudo: required

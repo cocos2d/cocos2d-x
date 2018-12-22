@@ -82,15 +82,11 @@ function build_ios_cmake()
     # python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
     # popd
     # cd $COCOS2DX_ROOT/cocos_new_test
-    cd $COCOS2DX_ROOT
+    cd $COCOS2DX_ROOT/tests/cpp-empty-test/
     mkdir -p ios_cmake_build
     cd ios_cmake_build
-    cmake .. -DCMAKE_TOOLCHAIN_FILE=$COCOS2DX_ROOT/cmake/ios.toolchain.cmake -GXcode -DIOS_PLATFORM=SIMULATOR64
-    # too much logs on console when "cmake --build ."
-    # cmake --build .
-    xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build  | xcpretty
-    #the following commands must not be removed
-    xcodebuild -project Cocos2d-x.xcodeproj -alltargets -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build
+    cmake .. -DCMAKE_TOOLCHAIN_FILE=$COCOS2DX_ROOT/cmake/ios.toolchain.cmake -GXcode
+    cmake --build .
     exit 0
 }
 
