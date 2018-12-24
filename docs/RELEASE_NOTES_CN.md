@@ -18,7 +18,7 @@ Cocos2d-x 3.17.1 侧重于稳定性的提升, 已有问题的修复。
 - CMake 脚本优化，解决存在的链接问题
 - Android 默认启用 CMake 方式编译
 - Android 升级 Gradle 到 4.6, SDK 28, plugin 3.1.0 
-- 升级 LuaJIT 到 2.1.0-beta3，减少 3.17 的闪退问题
+- 升级 LuaJIT 到 2.1.0-beta3，修复 3.17 Lua 项目的闪退问题
 - 升级 libwebsockets 到 2.4.2
 - FileUtils 内部加锁，增加线程安全，完善接口实现
 - 限制 Label 长度，避免绘制错误
