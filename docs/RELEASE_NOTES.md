@@ -13,12 +13,12 @@ The 3.17.1 release focuses on bug fixing.
 
 ## Highlights
 
-- Fix LUA performance drop bug introduced in 3.17
+- Fix Lua loading performance drop bug introduced in 3.17
 - Renderer limit glClear invoke times, reduce power consuming
 - optimize CMake script，fix some linking issues
 - Android use CMake as default PROP_BUILD_TYPE value
-- Android upgrade gradle to 4.6, SDK 28, android gradle plugin 3.1.0 
-- upgrade luajit to 2.1.0-beta3, developer reports a random crash in 3.17 LUA release mode
+- Android upgrade Gradle to 4.6, SDK 28, android gradle plugin 3.1.0 
+- upgrade LuaJIT to 2.1.0-beta3, fix random crash in 3.17 Lua release mode
 - upgrade libwebsockets to 2.4.2
 - FileUtils improve thread safety
 - limit Labels text length to fix render error
