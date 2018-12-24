@@ -13,6 +13,7 @@ The 3.17.1 release focuses on bug fixing.
 
 ## Highlights
 
+- Fix LUA performance drop bug introduced in 3.17
 - Renderer limit glClear invoke times, reduce power consuming
 - optimize CMake script，fix some linking issues
 - Android use CMake as default PROP_BUILD_TYPE value
@@ -23,4 +24,4 @@ The 3.17.1 release focuses on bug fixing.
 - limit Labels text length to fix render error
 - add Downloader binding to Lua
 
-This release contains more than 43 bugs fixed and 34 misc improvements, please refer to [ChangeLog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
+This release contains more than 45 bugs fixed and 34 misc improvements, please refer to [ChangeLog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
