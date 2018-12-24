@@ -13,7 +13,7 @@ The 3.17.1 release focuses on bug fixing.
 
 ## Highlights
 
-- Renderer limit glClear invoke times, reduce power consuming
+- Renderer limit glClear invoke times, reduce power consuming
 - optimize CMake script，fix some linking issues
 - Android use CMake as default PROP_BUILD_TYPE value
 - Android upgrade gradle to 4.6, SDK 28, android gradle plugin 3.1.0 
