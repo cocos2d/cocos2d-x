@@ -88,7 +88,6 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    ScriptEngineManager::destroyInstance();
 }
 
 void AppDelegate::initGLContextAttrs()

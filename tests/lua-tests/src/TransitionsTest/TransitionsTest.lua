@@ -30,7 +30,7 @@ end
 
 local function nextAction()
     SceneIdx = SceneIdx + 1
-    SceneIdx = math.mod(SceneIdx, Transition_Table.MAX_LAYER)
+    SceneIdx = math.fmod(SceneIdx, Transition_Table.MAX_LAYER)
 
     switchSceneTypeNo()
     return generateTranScene()
