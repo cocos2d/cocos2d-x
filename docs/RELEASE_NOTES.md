@@ -20,7 +20,7 @@ The 3.17.1 release focuses on bug fixing.
 - Android upgrade Gradle to 4.6, SDK 28, android gradle plugin 3.1.0 
 - upgrade LuaJIT to 2.1.0-beta3, fix random crash in 3.17 Lua release mode
 - upgrade libwebsockets to 2.4.2
-- FileUtils provide thread-safe implementation and add missing cross-platform interface
+- FileUtils provide thread-safe implementation and add missing cross-platform interfaces
 - limit Labels text length to fix render error
 - add Downloader binding to Lua
 
