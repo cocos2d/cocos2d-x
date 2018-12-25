@@ -609,7 +609,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
 bool Texture2D::updateWithData(void *data,int offsetX,int offsetY,int width,int height)
 {
-    if (_texture)
+    if (_texture && width > 0 && height > 0)
     {
         uint8_t* textureData = static_cast<uint8_t*>(data);
         _texture->updateSubData(offsetX, offsetY, width, height, textureData);
