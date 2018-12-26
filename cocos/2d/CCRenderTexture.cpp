@@ -24,7 +24,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
 #include "2d/CCRenderTexture.h"
 
 #include "base/ccUtils.h"
@@ -198,20 +197,16 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         else
             break;
 
-        auto& pipelineDescriptor = _groupCommand.getPipelineDescriptor();
-        pipelineDescriptor.renderPassDescriptor.colorAttachmentsTexture[0] = texture;
-        pipelineDescriptor.renderPassDescriptor.needColorAttachment = true;
         setClearColor(_clearColor);
 
 //        if (depthStencilFormat != 0)
         {
             descriptor.textureFormat = backend::TextureFormat::D24S8;
-            _depthStencilTexture = backend::Device::getInstance()->newTexture(descriptor);
-            
-            auto& renderpassDescriptor = _groupCommand.getPipelineDescriptor().renderPassDescriptor;
-            renderpassDescriptor.depthAttachmentTexture = renderpassDescriptor.stencilAttachmentTexture = _depthStencilTexture;
-            renderpassDescriptor.needDepthAttachment = true;
-            renderpassDescriptor.needStencilAttachment = true;
+            texture = backend::Device::getInstance()->newTexture(descriptor);
+            _depthStencilTexture = new (std::nothrow) Texture2D;
+            _depthStencilTexture->initWithBackendTexture(texture);
+            texture->release();
+
             setClearDepth(_clearDepth);
             setClearStencil(_clearStencil);
         }
@@ -505,6 +500,29 @@ void RenderTexture::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
 
 void RenderTexture::onBegin()
 {
+    Director *director = Director::getInstance();
+
+    _oldProjMatrix = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _projectionMatrix);
+
+    _oldTransMatrix = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _transformMatrix);
+
+    if(!_keepMatrix)
+    {
+        director->setProjection(director->getProjection());
+        const Size& texSize = _texture2D->getContentSizeInPixels();
+
+        // Calculate the adjustment ratios based on the old and new projections
+        Size size = director->getWinSizeInPixels();
+        float widthRatio = size.width / texSize.width;
+        float heightRatio = size.height / texSize.height;
+
+        Mat4 orthoMatrix;
+        Mat4::createOrthographicOffCenter((float)-1.0 / widthRatio, (float)1.0 / widthRatio, (float)-1.0 / heightRatio, (float)1.0 / heightRatio, -1, 1, &orthoMatrix);
+        director->multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
+    }
+
     Rect viewport;
     viewport.size.width = _fullviewPort.size.width;
     viewport.size.height = _fullviewPort.size.height;
@@ -513,15 +531,28 @@ void RenderTexture::onBegin()
     viewport.origin.x = (_fullRect.origin.x - _rtTextureRect.origin.x) * viewPortRectWidthRatio;
     viewport.origin.y = (_fullRect.origin.y - _rtTextureRect.origin.y) * viewPortRectHeightRatio;
 
-    Renderer *renderer =  Director::getInstance()->getRenderer();
+    Renderer *renderer =  director->getRenderer();
+    
     _oldViewport = renderer->getViewport();
     renderer->setViewPort(viewport.origin.x, viewport.origin.y, viewport.size.width, viewport.size.height);
+
+    _oldColorAttachment = renderer->getColorAttachment();
+    _oldDepthAttachment = renderer->getDepthAttachment();
+    _oldStencilAttachment = renderer->getStencilAttachment();
+    _oldRenderTargetFlag = renderer->getRenderTargetFlag();
+
+    renderer->setRenderTarget(RenderTargetFlag::COLOR | RenderTargetFlag::DEPTH | RenderTargetFlag::STENCIL,
+                              _texture2D,
+                              _depthStencilTexture,
+                              _depthStencilTexture);
 }
 
 void RenderTexture::onEnd()
 {
     Renderer *renderer =  Director::getInstance()->getRenderer();
     renderer->setViewPort(_oldViewport.x, _oldViewport.y, _oldViewport.w, _oldViewport.h);
+
+    renderer->setRenderTarget(_oldRenderTargetFlag, _oldColorAttachment, _oldDepthAttachment, _oldStencilAttachment);
 }
 
 void RenderTexture::begin()
@@ -561,6 +592,8 @@ void RenderTexture::begin()
     _beginCommand.init(_globalZOrder);
     _beginCommand.func = CC_CALLBACK_0(RenderTexture::onBegin, this);
     renderer->addCommand(&_beginCommand);
+
+    renderer->clear(_clearFlags, _clearColor, _clearDepth, _clearStencil);
 }
 
 void RenderTexture::end()
@@ -582,30 +615,19 @@ void RenderTexture::end()
 void RenderTexture::setClearColor(const Color4F &clearColor)
 {
     _clearColor = clearColor;
-    
-    auto& renderPassDescriptor =  _groupCommand.getPipelineDescriptor().renderPassDescriptor;
-    renderPassDescriptor.clearColorValue = { clearColor.r, clearColor.g, clearColor.b, clearColor.a };
-    renderPassDescriptor.needClearColor = true;
-    renderPassDescriptor.needColorAttachment = true;
+    _clearFlags |= ClearFlag::COLOR;
 }
 
 void RenderTexture::setClearDepth(float clearDepth)
 {
     _clearDepth = clearDepth;
-    auto& renderPassDescriptor =  _groupCommand.getPipelineDescriptor().renderPassDescriptor;
-    renderPassDescriptor.clearDepthValue = _clearDepth;
-    renderPassDescriptor.needDepthAttachment = true;
-    renderPassDescriptor.needClearDepth = true;
+    _clearFlags |= ClearFlag::DEPTH;
 }
 
 void RenderTexture::setClearStencil(int clearStencil)
 {
     _clearStencil = clearStencil;
-    
-    auto& renderPassDescriptor =  _groupCommand.getPipelineDescriptor().renderPassDescriptor;
-    renderPassDescriptor.clearStencilValue = _clearStencil;
-    renderPassDescriptor.needClearStencil = true;
-    renderPassDescriptor.needStencilAttachment = true;
+    _clearFlags |= ClearFlag::STENCIL;
 }
 
 NS_CC_END

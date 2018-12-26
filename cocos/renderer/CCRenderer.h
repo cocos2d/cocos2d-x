@@ -52,7 +52,9 @@ class EventListenerCustom;
 class TrianglesCommand;
 class MeshCommand;
 class GroupCommand;
+class CallbackCommand;
 class PipelineDescriptor;
+class Texture2D;
 
 /** Class that knows how to sort `RenderCommand` objects.
  Since the commands that have `z == 0` are "pushed back" in
@@ -117,6 +119,19 @@ protected:
     GLboolean _isDepthWrite;
 };
 
+class CC_DLL ClearCommandManager
+{
+public:
+    ClearCommandManager();
+    ~ClearCommandManager();
+
+    CallbackCommand* getCommand();
+    void pushBackCommand(CallbackCommand*);
+
+private:
+    std::vector<CallbackCommand*> _commands;
+};
+
 
 class GroupCommandManager;
 
@@ -167,8 +182,6 @@ public:
     /** Cleans all `RenderCommand`s in the queue */
     void clean();
 
-    /** set color for clear screen */
-    void setClearColor(const Color4F& clearColor);
     /* returns the number of drawn batches in the last frame */
     ssize_t getDrawnBatches() const { return _drawnBatches; }
     /* RenderCommands (except) TrianglesCommand should update this value */
@@ -179,6 +192,17 @@ public:
     void addDrawnVertices(ssize_t number) { _drawnVertices += number; };
     /* clear draw stats */
     void clearDrawStats() { _drawnBatches = _drawnVertices = 0; }
+
+    void setRenderTarget(RenderTargetFlag flags, Texture2D* colorAttachment, Texture2D* depthAttachment, Texture2D* stencilAttachment);
+    void clear(ClearFlag flags, const Color4F& color, float depth, unsigned int stencil);
+    Texture2D* getColorAttachment() const;
+    Texture2D* getDepthAttachment() const;
+    Texture2D* getStencilAttachment() const;
+    const Color4F& getClearColor() const;
+    float getClearDepth() const;
+    unsigned int getClearStencil() const;
+    ClearFlag getClearFlag() const;
+    RenderTargetFlag getRenderTargetFlag() const;
 
     // depth/stencil state.
 
@@ -234,10 +258,7 @@ protected:
     void beginRenderPass(RenderCommand*);
     
     void setRenderPipeline(const PipelineDescriptor&, const backend::RenderPassDescriptor&);
-    void clear(const backend::RenderPassDescriptor&);
 
-    /* clear color set outside be used in setGLDefaultValues() */
-    Color4F _clearColor = Color4F::BLACK;
 
     Viewport _viewport;
 
@@ -255,12 +276,11 @@ protected:
     backend::Buffer* _indexBuffer = nullptr;
     
     backend::CommandBuffer* _commandBuffer = nullptr;
-    backend::RenderPassDescriptor _clearRenderPassDescriptor;
     backend::RenderPassDescriptor _renderPassDescriptor;
     backend::DepthStencilDescriptor _depthStencilDescriptor;
-    
-    // Group command is used to modify other commands' render states.
-    std::stack<GroupCommand*> _groupCommandStack;
+
+    ClearCommandManager _clearCommandManager;
+    std::vector<CallbackCommand*> _cachedClearCommands;
 
     // Internal structure that has the information for the batches
     struct TriBatchToDraw
@@ -290,6 +310,14 @@ protected:
     GroupCommandManager* _groupCommandManager = nullptr;
 
     unsigned int _stencilRef = 0;
+
+    // weak reference
+    Texture2D* _colorAttachment = nullptr;
+    Texture2D* _depthAttachment = nullptr;
+    Texture2D* _stencilAttachment = nullptr;
+    Color4F _clearColor = Color4F::BLACK;
+    ClearFlag _clearFlag;
+    RenderTargetFlag _renderTargetFlag = RenderTargetFlag::COLOR;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _cacheTextureListener = nullptr;

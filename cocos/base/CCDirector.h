@@ -704,6 +704,8 @@ protected:
     /* Renderer for the Director */
     Renderer *_renderer = nullptr;
 
+    Color4F _clearColor = {0, 0, 0, 1};
+
     /* Console for the director */
     Console *_console = nullptr;
 

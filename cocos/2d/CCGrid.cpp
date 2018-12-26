@@ -40,44 +40,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 // implementation of GridBase
 
-//GridBase* GridBase::create(const Size& gridSize)
-//{
-//    GridBase *pGridBase = new (std::nothrow) GridBase();
-//
-//    if (pGridBase)
-//    {
-//        if (pGridBase->initWithSize(gridSize))
-//        {
-//            pGridBase->autorelease();
-//        }
-//        else
-//        {
-//            CC_SAFE_RELEASE_NULL(pGridBase);
-//        }
-//    }
-//
-//    return pGridBase;
-//}
-//
-//GridBase* GridBase::create(const Size& gridSize, Texture2D *texture, bool flipped)
-//{
-//    GridBase *pGridBase = new (std::nothrow) GridBase();
-//
-//    if (pGridBase)
-//    {
-//        if (pGridBase->initWithSize(gridSize, texture, flipped))
-//        {
-//            pGridBase->autorelease();
-//        }
-//        else
-//        {
-//            CC_SAFE_RELEASE_NULL(pGridBase);
-//        }
-//    }
-//
-//    return pGridBase;
-//}
-
 bool GridBase::initWithSize(const Size& gridSize)
 {
     return initWithSize(gridSize, Rect::ZERO);
@@ -146,22 +108,6 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipp
     _step.x = _gridRect.size.width/_gridSize.width;
     _step.y = _gridRect.size.height/_gridSize.height;
     
-    // _grabber = new (std::nothrow) Grabber();
-    // if (_grabber)
-    // {
-    //     _grabber->grab(_texture);
-    // }
-    // else
-    // {
-    //     ret = false;
-    // }
-    auto& renderPassDescriptor = _groupCommand.getPipelineDescriptor().renderPassDescriptor;
-    renderPassDescriptor.colorAttachmentsTexture[0] = texture->getBackendTexture();
-    renderPassDescriptor.needColorAttachment = true;
-    renderPassDescriptor.needClearColor = true;
-    renderPassDescriptor.clearColorValue = {0 ,0, 0, 0};
-    
-    // _shaderProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE);
     auto& pipelineDescriptor = _drawCommand.getPipelineDescriptor();
     pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionTexture_vert);
     pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionTexture_frag);
@@ -243,8 +189,17 @@ void GridBase::beforeDraw()
         set2DProjection();
         Size    size = director->getWinSizeInPixels();
         renderer->setViewPort(0, 0, size.width, size.height);
+
+        RenderTargetFlag flags = RenderTargetFlag::COLOR;
+        _oldColorAttachment = renderer->getColorAttachment();
+        _oldDepthAttachment = renderer->getDepthAttachment();
+        _oldStencilAttachment = renderer->getStencilAttachment();
+        _oldRenderTargetFlag = renderer->getRenderTargetFlag();
+
+        renderer->setRenderTarget(flags, _texture, nullptr, nullptr);
     };
     renderer->addCommand(&_beforeDrawCommand);
+    renderer->clear(ClearFlag::COLOR, _clearColor, 1, 0);
 }
 
 void GridBase::afterDraw(cocos2d::Node * /*target*/)
@@ -257,6 +212,7 @@ void GridBase::afterDraw(cocos2d::Node * /*target*/)
         director->setProjection(_directorProjection);
         const auto& vp = Camera::getDefaultViewport();
         renderer->setViewPort(vp._left, vp._bottom, vp._width, vp._height);
+        renderer->setRenderTarget(_oldRenderTargetFlag, _oldColorAttachment, _oldDepthAttachment, _oldStencilAttachment);
     };
     renderer->addCommand(&_afterDrawCommand);
 
@@ -388,17 +344,22 @@ Grid3D::~Grid3D()
 
 void Grid3D::beforeBlit()
 {
+    auto renderer = Director::getInstance()->getRenderer();
+
     if(_needDepthTestForBlit)
     {
-        //TODO:minggo
+        _oldDepthTest = renderer->getDepthTest();
+        renderer->setDepthTest(true);
     }
 }
 
 void Grid3D::afterBlit()
 {
+    auto renderer = Director::getInstance()->getRenderer();
     if(_needDepthTestForBlit)
     {
        //TODO:minggo
+       renderer->setDepthTest(_oldDepthTest);
     }
 }
 

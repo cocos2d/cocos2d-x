@@ -143,12 +143,18 @@ protected:
     Director::Projection _directorProjection = Director::Projection::_2D;
     Rect _gridRect;
 
+    Color4F _clearColor = {0, 0, 0, 0};
+
     GroupCommand _groupCommand;
     CustomCommand _drawCommand;
     CallbackCommand _beforeDrawCommand;
     CallbackCommand _afterDrawCommand;
     CallbackCommand _beforeBlitCommand;
     CallbackCommand _afterBlitCommand;
+    RenderTargetFlag _oldRenderTargetFlag;
+    Texture2D* _oldColorAttachment = nullptr;
+    Texture2D* _oldDepthAttachment = nullptr;
+    Texture2D* _oldStencilAttachment = nullptr;
 };
 
 /**
@@ -220,8 +226,8 @@ protected:
     void* _originalVertices = nullptr;
     unsigned short *_indices = nullptr;
     bool _needDepthTestForBlit = false;
-    bool _oldDepthTestValue = false;
-    bool _oldDepthWriteValue = false;
+    bool _oldDepthTest = false;
+    bool _oldDepthWrite = false;
 };
 
 /**

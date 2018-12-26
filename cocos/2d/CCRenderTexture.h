@@ -310,16 +310,21 @@ protected:
     Viewport     _oldViewport;
     
     Texture2D* _texture2D = nullptr;
-    backend::Texture* _depthStencilTexture = nullptr;
+    Texture2D* _depthStencilTexture = nullptr;
     Texture2D* _texture2DCopy = nullptr;    // a copy of _texture
+    Texture2D* _oldColorAttachment = nullptr;
+    Texture2D* _oldDepthAttachment = nullptr;
+    Texture2D* _oldStencilAttachment = nullptr;
+    RenderTargetFlag _oldRenderTargetFlag;
     Image*     _UITextureImage = nullptr;
     Texture2D::PixelFormat _pixelFormat = Texture2D::PixelFormat::RGBA8888;
     
     // code for "auto" update
-    Color4F    _clearColor;
-    float     _clearDepth = 0.f;
-    int        _clearStencil = 0;
-    bool         _autoDraw = false;
+    Color4F _clearColor;
+    float _clearDepth = 1.f;
+    int _clearStencil = 0;
+    bool _autoDraw = false;
+    ClearFlag _clearFlags;
 
     /** The Sprite being used.
      The sprite, by default, will use the following blending function: GL_ONE, GL_ONE_MINUS_SRC_ALPHA.

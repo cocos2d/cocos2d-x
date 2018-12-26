@@ -25,9 +25,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __BASE_CCTYPES_H__
-#define __BASE_CCTYPES_H__
+#pragma once
 
 #include <string>
 
@@ -35,6 +33,7 @@ THE SOFTWARE.
 #include "math/CCMath.h"
 #include "base/CCRef.h"
 #include "platform/CCGL.h"
+#include "base/CCEnumClass.h"
 
 /**
  * @addtogroup base
@@ -611,7 +610,24 @@ struct CC_DLL Viewport
     size_t h = 0;
 };
 
+enum class ClearFlag : uint8_t
+{
+    COLOR = 1,
+    DEPTH = 1 << 1,
+    STENCIL = 1 << 2,
+    ALL = COLOR | DEPTH | STENCIL
+};
+ENABLE_BITMASK_OPERATORS(ClearFlag)
+
+enum class RenderTargetFlag : uint8_t
+{
+    COLOR = 1,
+    DEPTH = 1 << 1,
+    STENCIL = 1 << 2,
+    ALL = COLOR | DEPTH | STENCIL
+};
+ENABLE_BITMASK_OPERATORS(RenderTargetFlag)
+
 NS_CC_END
 // end group
 /// @}
-#endif //__BASE_CCTYPES_H__
