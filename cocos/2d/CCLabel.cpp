@@ -1653,6 +1653,9 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             }
             // ETC1 ALPHA supports for BMFONT & CHARMAP
             auto textureAtlas = _batchNodes.at(0)->getTextureAtlas();
+            if(!textureAtlas->getTotalQuads())
+                return;
+            
             auto texture = textureAtlas->getTexture();
             auto& pipelineQuad = _quadCommand.getPipelineDescriptor();
             pipelineQuad = pipelineDescriptor;
@@ -1670,11 +1673,15 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         {
             for (auto&& batchNode : _batchNodes)
             {
+                auto textureAtlas = batchNode->getTextureAtlas();
+                if(!textureAtlas->getTotalQuads())
+                    return;
+                
                 cocos2d::Mat4 matrixMVP = matrixProjection * transform;
                 pipelineDescriptor.bindGroup.setUniform("u_MVPMatrix", matrixMVP.m, sizeof(matrixMVP.m));
                 Vec4 textColor(_textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
                 pipelineDescriptor.bindGroup.setUniform("u_textColor", &textColor, sizeof(Vec4));
-                auto textureAtlas = batchNode->getTextureAtlas();
+                
                 pipelineDescriptor.bindGroup.setTexture("u_texture", 0, textureAtlas->getTexture()->getBackendTexture());
                 auto alphaTexture = textureAtlas->getTexture()->getAlphaTexture();
                 if(alphaTexture && alphaTexture->getBackendTexture())

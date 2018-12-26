@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include "ui/GUIExport.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
+#include "renderer/CCCallbackCommand.h"
 
 /**
  * @addtogroup ui
@@ -638,11 +639,11 @@ protected:
     StencilStateManager *_stencilStateManager;
 
     GroupCommand _groupCommand;
-    CustomCommand _beforeVisitCmdStencil;
-    CustomCommand _afterDrawStencilCmd;
-    CustomCommand _afterVisitCmdStencil;
-    CustomCommand _beforeVisitCmdScissor;
-    CustomCommand _afterVisitCmdScissor;
+    CallbackCommand _beforeVisitCmdStencil;
+    CallbackCommand _afterDrawStencilCmd;
+    CallbackCommand _afterVisitCmdStencil;
+    CallbackCommand _beforeVisitCmdScissor;
+    CallbackCommand _afterVisitCmdScissor;
     
     bool _doLayoutDirty;
     bool _isInterceptTouch;
