@@ -22,26 +22,22 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-
 #include "renderer/CCRenderCommand.h"
 #include "2d/CCCamera.h"
 #include "2d/CCNode.h"
-#include "base/CCDirector.h"
+
 
 NS_CC_BEGIN
 
 RenderCommand::RenderCommand()
 {
-    experimental::Viewport defaultViewport = Camera::getDefaultViewport();
-    setViewPort(defaultViewport._left, defaultViewport._bottom, defaultViewport._width, defaultViewport._height);
 }
 
 RenderCommand::~RenderCommand()
 {
 }
 
-void RenderCommand::init(float globalZOrder, const cocos2d::Mat4 &transform, uint32_t flags)
+void RenderCommand::init(float globalZOrder, const cocos2d::Mat4 &transform, unsigned int flags)
 {
     _globalOrder = globalZOrder;
     if (flags & Node::FLAGS_RENDER_AS_3D)
@@ -61,14 +57,6 @@ void RenderCommand::init(float globalZOrder, const cocos2d::Mat4 &transform, uin
 void RenderCommand::printID()
 {
     printf("Command Depth: %f\n", _globalOrder);
-}
-
-void RenderCommand::setViewPort(int x, int y, int width, int height)
-{
-    _viewPort[0] = x;
-    _viewPort[1] = y;
-    _viewPort[2] = width;
-    _viewPort[3] = height;
 }
 
 NS_CC_END

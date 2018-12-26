@@ -24,8 +24,6 @@
  ****************************************************************************/
 #pragma once
 
-#include <stdint.h>
-
 #include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
 #include "renderer/CCPipelineDescriptor.h"
@@ -72,7 +70,7 @@ public:
      @param modelViewTransform Modelview matrix when submitting the render command.
      @param flags Flag used to indicate whether the command should be draw at 3D mode or not.
      */
-    void init(float globalZOrder, const Mat4& modelViewTransform, uint32_t flags);
+    void init(float globalZOrder, const Mat4& modelViewTransform, unsigned int flags);
     
     /** Get global Z order. */
     float getGlobalOrder() const { return _globalOrder; }
@@ -97,9 +95,7 @@ public:
     void set3D(bool value) { _is3D = value; }
     /**Get the depth by current model view matrix.*/
     float getDepth() const { return _depth; }
-    void setViewPort(int x, int y, int width, int height);
-    inline const std::array<int, 4>& getViewPort() const { return _viewPort;}
-    // Can use the result to change the descritor content.
+    // Can use the result to change the descriptor content.
     inline PipelineDescriptor& getPipelineDescriptor() { return _pipelineDescriptor; }
     
 protected:
@@ -130,9 +126,6 @@ protected:
     
     /** Depth from the model view matrix.*/
     float _depth = 0.f;
-    
-    //set viewport
-    std::array<int, 4> _viewPort = { 0, 0, 0, 0 };
     
     PipelineDescriptor _pipelineDescriptor;
 };
