@@ -269,7 +269,7 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransfor
 //    _beforeVisitCmdStencil.init(_globalZOrder);
 //    _beforeVisitCmdStencil.func = CC_CALLBACK_0(StencilStateManager::onBeforeVisit, _stencilStateManager);
 //    renderer->addCommand(&_beforeVisitCmdStencil);
-    _stencilStateManager->onBeforeVisit();
+    _stencilStateManager->onBeforeVisit(_globalZOrder);
     
     _clippingStencil->visit(renderer, _modelViewTransform, flags);
     

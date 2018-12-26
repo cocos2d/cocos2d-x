@@ -204,7 +204,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     // _beforeVisitCmd.init(_globalZOrder);
     // _beforeVisitCmd.func = CC_CALLBACK_0(StencilStateManager::onBeforeVisit, _stencilStateManager);
     // renderer->addCommand(&_beforeVisitCmd);
-    _stencilStateManager->onBeforeVisit();
+    _stencilStateManager->onBeforeVisit(_globalZOrder);
     
     auto alphaThreshold = this->getAlphaThreshold();
     if (alphaThreshold < 1)

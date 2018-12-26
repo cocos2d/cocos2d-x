@@ -60,7 +60,7 @@ StencilStateManager::StencilStateManager()
     pipelineDescriptor.bindGroup.setUniform("u_color", &color, sizeof(color));
 }
 
-void StencilStateManager::drawFullScreenQuadClearStencil()
+void StencilStateManager::drawFullScreenQuadClearStencil(float globalZOrder)
 {
 //    Director* director = Director::getInstance();
 //    CCASSERT(nullptr != director, "Director is null when setting matrix stack");
@@ -96,7 +96,7 @@ void StencilStateManager::drawFullScreenQuadClearStencil()
 //
 //    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
 //
-    _customCommand.init(0);
+    _customCommand.init(globalZOrder);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
     _customCommand.getPipelineDescriptor().bindGroup.setUniform("u_MVPMatrix", Mat4::IDENTITY.m, sizeof(Mat4::IDENTITY.m));
 
@@ -125,7 +125,7 @@ bool StencilStateManager::isInverted()const
     return _inverted;
 }
 
-void StencilStateManager::onBeforeVisit()
+void StencilStateManager::onBeforeVisit(float globalZOrder)
 {
     auto renderer = Director::getInstance()->getRenderer();
 
@@ -139,6 +139,7 @@ void StencilStateManager::onBeforeVisit()
     // mask of all layers less than or equal to the current (ie: for layer 3: 00000111)
     _mask_layer_le = mask_layer | mask_layer_l;
 
+    _beforeDrawQuadCmd.init(globalZOrder);
     _beforeDrawQuadCmd.func = [=]() -> void {
 
         // manually save the stencil state
@@ -207,8 +208,9 @@ void StencilStateManager::onBeforeVisit()
 
     // draw a fullscreen solid rectangle to clear the stencil buffer
     //ccDrawSolidRect(Vec2::ZERO, ccpFromSize([[Director sharedDirector] winSize]), Color4F(1, 1, 1, 1));
-    drawFullScreenQuadClearStencil();
+    drawFullScreenQuadClearStencil(globalZOrder);
 
+    _afterDrawQuadCmd.init(globalZOrder);
     _afterDrawQuadCmd.func = [=]() -> void {
         // setup the stencil test func like this:
         // for each pixel in the stencil node

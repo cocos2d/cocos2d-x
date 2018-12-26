@@ -40,7 +40,7 @@ class CC_DLL StencilStateManager
 {
 public:
     StencilStateManager();
-    void onBeforeVisit();
+    void onBeforeVisit(float globalZOrder);
     void onAfterDrawStencil();
     void onAfterVisit();
     void setAlphaThreshold(GLfloat alphaThreshold);
@@ -53,7 +53,7 @@ private:
     static int s_layer;
     /**draw fullscreen quad to clear stencil bits
      */
-    void drawFullScreenQuadClearStencil();
+    void drawFullScreenQuadClearStencil(float globalZOrder);
     
     
     float _alphaThreshold = 1.f;
