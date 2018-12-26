@@ -72,7 +72,7 @@ CustomCommand& CustomCommand::operator=(const CustomCommand& rhs)
     return *this;
 }
 
-void CustomCommand::init(float depth, const cocos2d::Mat4 &modelViewTransform, uint32_t flags)
+void CustomCommand::init(float depth, const cocos2d::Mat4 &modelViewTransform, unsigned int flags)
 {
     RenderCommand::init(depth, modelViewTransform, flags);
 }
@@ -92,7 +92,7 @@ void CustomCommand::init(float globalZOrder, const BlendFunc& blendFunc)
     blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor = utils::toBackendBlendFactor(blendFunc.dst);
 }
 
-void CustomCommand::createVertexBuffer(size_t sizePerVertex, size_t count)
+void CustomCommand::createVertexBuffer(unsigned int sizePerVertex, unsigned int count)
 {
     CC_SAFE_RELEASE(_vertexBuffer);
     
@@ -102,7 +102,7 @@ void CustomCommand::createVertexBuffer(size_t sizePerVertex, size_t count)
     _vertexBuffer = device->newBuffer(sizePerVertex * count, backend::BufferType::VERTEX, backend::BufferUsage::READ);
 }
 
-void CustomCommand::createIndexBuffer(size_t sizePerIndex, size_t count)
+void CustomCommand::createIndexBuffer(unsigned int sizePerIndex, unsigned int count)
 {
     CC_SAFE_RELEASE(_indexBuffer);
     
@@ -112,28 +112,28 @@ void CustomCommand::createIndexBuffer(size_t sizePerIndex, size_t count)
     _indexBuffer = device->newBuffer(sizePerIndex * count, backend::BufferType::INDEX, backend::BufferUsage::READ);
 }
 
-void CustomCommand::updateVertexBuffer(void* data, size_t offset, size_t length)
+void CustomCommand::updateVertexBuffer(void* data, unsigned int offset, unsigned int length)
 {   
     assert(_vertexBuffer);
     _vertexCount += length/_sizePerVertex;
     _vertexBuffer->updateSubData(data, offset, length);
 }
 
-void CustomCommand::updateIndexBuffer(void* data, size_t offset, size_t length)
+void CustomCommand::updateIndexBuffer(void* data, unsigned int offset, unsigned int length)
 {
     assert(_indexBuffer);
     _indexCount += length/_sizePerIndex;
     _indexBuffer->updateSubData(data, offset, length);
 }
 
-void CustomCommand::updateVertexBuffer(void* data, size_t length)
+void CustomCommand::updateVertexBuffer(void* data, unsigned int length)
 {
     assert(_vertexBuffer);
     _vertexCount = length/_sizePerVertex;
     _vertexBuffer->updateData(data, length);
 }
 
-void CustomCommand::updateIndexBuffer(void* data, size_t length)
+void CustomCommand::updateIndexBuffer(void* data, unsigned int length)
 {
     assert(_indexBuffer);
     _indexCount = length/_sizePerIndex;

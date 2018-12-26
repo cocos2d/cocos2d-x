@@ -543,7 +543,7 @@ unsigned int Renderer::getStencilReferenceValue() const
     return _stencilRef;
 }
 
-void Renderer::setViewPort(int x, int y, size_t w, size_t h)
+void Renderer::setViewPort(int x, int y, unsigned int w, unsigned int h)
 {
     _viewport.x = x;
     _viewport.y = y;

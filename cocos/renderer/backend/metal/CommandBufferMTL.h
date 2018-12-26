@@ -16,13 +16,13 @@ public:
     virtual void beginFrame() override;
     virtual void beginRenderPass(const RenderPassDescriptor& descriptor) override;
     virtual void setRenderPipeline(RenderPipeline* renderPipeline) override;
-    virtual void setViewport(ssize_t x, ssize_t y, size_t w, size_t h) override;
+    virtual void setViewport(int x, int y, unsigned int w, unsigned int h) override;
     virtual void setCullMode(CullMode mode) override;
-    virtual void setVertexBuffer(size_t index, Buffer* buffer) override;
+    virtual void setVertexBuffer(unsigned int index, Buffer* buffer) override;
     virtual void setBindGroup(BindGroup* bindGroup) override;
     virtual void setIndexBuffer(Buffer* buffer) override;
-    virtual void drawArrays(PrimitiveType primitiveType, uint32_t start,  uint32_t count) override;
-    virtual void drawElements(PrimitiveType primitiveType, IndexFormat indexType, uint32_t count, uint32_t offset) override;
+    virtual void drawArrays(PrimitiveType primitiveType, unsigned int start,  unsigned int count) override;
+    virtual void drawElements(PrimitiveType primitiveType, IndexFormat indexType, unsigned int count, unsigned int offset) override;
     virtual void endRenderPass() override;
     virtual void endFrame() override;
     
@@ -33,7 +33,7 @@ private:
     void setTextures() const;
     void doSetTextures(const std::vector<std::string>& textures, bool isVertex) const;
     void setUniformBuffer() const;
-    uint32_t fillUniformBuffer(uint8_t* buffer, const std::vector<std::string>& uniforms) const;
+    unsigned int fillUniformBuffer(uint8_t* buffer, const std::vector<std::string>& uniforms) const;
     void afterDraw();
     
     id<MTLCommandBuffer> _mtlCommandBuffer = nil;
@@ -44,7 +44,7 @@ private:
     DeviceMTL* _deviceMTL = nullptr;
     RenderPipelineMTL* _renderPipelineMTL = nullptr;
     BindGroup* _bindGroup = nullptr;
-    size_t _renderTargetHeight = 0;
+    unsigned int _renderTargetHeight = 0;
 };
 
 CC_BACKEND_END

@@ -13,7 +13,7 @@ public:
     ~TextureMTL();
     
     virtual void updateData(uint8_t* data) override;
-    virtual void updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint8_t* data) override;
+    virtual void updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data) override;
     
     inline id<MTLTexture> getMTLTexture() const { return _mtlTexture; }
     inline id<MTLSamplerState> getMTLSamplerState() const { return _mtlSamplerState; }
@@ -24,7 +24,7 @@ private:
     
     id<MTLTexture> _mtlTexture = nil;
     id<MTLSamplerState> _mtlSamplerState = nil;
-    uint32_t _bytesPerRow = 0;
+    unsigned int _bytesPerRow = 0;
 };
 
 CC_BACKEND_END

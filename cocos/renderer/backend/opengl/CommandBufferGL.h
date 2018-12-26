@@ -22,13 +22,13 @@ public:
     virtual void beginFrame() override;
     virtual void beginRenderPass(const RenderPassDescriptor& descriptor) override;
     virtual void setRenderPipeline(RenderPipeline* renderPipeline) override;
-    virtual void setViewport(ssize_t x, ssize_t y, size_t w, size_t h) override;
+    virtual void setViewport(int x, int y, unsigned int w, unsigned int h) override;
     virtual void setCullMode(CullMode mode) override;
-    virtual void setVertexBuffer(size_t index, Buffer* buffer) override;
+    virtual void setVertexBuffer(unsigned int index, Buffer* buffer) override;
     virtual void setBindGroup(BindGroup* bindGroup) override;
     virtual void setIndexBuffer(Buffer* buffer) override;
-    virtual void drawArrays(PrimitiveType primitiveType, uint32_t start,  uint32_t count) override;
-    virtual void drawElements(PrimitiveType primitiveType, IndexFormat indexType, uint32_t count, uint32_t offset) override;
+    virtual void drawArrays(PrimitiveType primitiveType, unsigned int start,  unsigned int count) override;
+    virtual void drawElements(PrimitiveType primitiveType, IndexFormat indexType, unsigned int count, unsigned int offset) override;
     virtual void endRenderPass() override;
     virtual void endFrame() override;
     
@@ -37,16 +37,16 @@ public:
 private:
     struct Viewport
     {
-        ssize_t x = 0;
-        ssize_t y = 0;
-        size_t w = 0;
-        size_t h = 0;
+        int x = 0;
+        int y = 0;
+        unsigned int w = 0;
+        unsigned int h = 0;
     };
     
     void prepareDrawing() const;
     void bindVertexBuffer(Program* program) const;
     void setUniforms(Program* program) const;
-    void setUniform(bool isArray, GLuint location, uint32_t size, GLenum uniformType, void* data) const;
+    void setUniform(bool isArray, GLuint location, unsigned int size, GLenum uniformType, void* data) const;
     void cleanResources();
     void applyRenderPassDescriptor(const RenderPassDescriptor& descirptor);
     

@@ -606,8 +606,8 @@ struct CC_DLL Viewport
 {
     int x = 0;
     int y = 0;
-    size_t w = 0;
-    size_t h = 0;
+    unsigned int w = 0;
+    unsigned int h = 0;
 };
 
 enum class ClearFlag : uint8_t

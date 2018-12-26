@@ -217,7 +217,7 @@ void CommandBufferGL::setRenderPipeline(RenderPipeline* renderPipeline)
     _renderPipeline = rp;
 }
 
-void CommandBufferGL::setViewport(ssize_t x, ssize_t y, size_t w, size_t h)
+void CommandBufferGL::setViewport(int x, int y, unsigned int w, unsigned int h)
 {
     _viewport.x = x;
     _viewport.y = y;
@@ -241,7 +241,7 @@ void CommandBufferGL::setIndexBuffer(Buffer* buffer)
     _indexBuffer = static_cast<BufferGL*>(buffer);
 }
 
-void CommandBufferGL::setVertexBuffer(size_t index, Buffer* buffer)
+void CommandBufferGL::setVertexBuffer(unsigned int index, Buffer* buffer)
 {
     assert(buffer != nullptr);
     if (buffer == nullptr)
@@ -263,7 +263,7 @@ void CommandBufferGL::setBindGroup(BindGroup* bindGroup)
     _bindGroup = bindGroup;
 }
 
-void CommandBufferGL::drawArrays(PrimitiveType primitiveType, uint32_t start,  uint32_t count)
+void CommandBufferGL::drawArrays(PrimitiveType primitiveType, unsigned int start,  unsigned int count)
 {
     prepareDrawing();
     glDrawArrays(toGLPrimitiveType(primitiveType), start, count);
@@ -271,7 +271,7 @@ void CommandBufferGL::drawArrays(PrimitiveType primitiveType, uint32_t start,  u
     cleanResources();
 }
 
-void CommandBufferGL::drawElements(PrimitiveType primitiveType, IndexFormat indexType, uint32_t count, uint32_t offset)
+void CommandBufferGL::drawElements(PrimitiveType primitiveType, IndexFormat indexType, unsigned int count, unsigned int offset)
 {
     prepareDrawing();
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer->getHandler());
@@ -397,7 +397,7 @@ void CommandBufferGL::setUniforms(Program* program) const
 
 #define DEF_TO_INT(pointer, index)     (*((GLint*)(pointer) + index))
 #define DEF_TO_FLOAT(pointer, index)   (*((GLfloat*)(pointer) + index))
-void CommandBufferGL::setUniform(bool isArray, GLuint location, uint32_t size, GLenum uniformType, void* data) const
+void CommandBufferGL::setUniform(bool isArray, GLuint location, unsigned int size, GLenum uniformType, void* data) const
 {
     GLsizei count = size;
     switch (uniformType)

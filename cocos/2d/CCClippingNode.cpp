@@ -32,17 +32,17 @@
 
 NS_CC_BEGIN
 
-namespace
-{
-    void setProgram(Node *n, GLProgram *p)
-    {
-        n->setGLProgram(p);
-
-        auto& children = n->getChildren();
-        for(const auto &child : children)
-            setProgram(child, p);
-    }
-}
+//namespace
+//{
+//    void setProgram(Node *n, GLProgram *p)
+//    {
+//        n->setGLProgram(p);
+//
+//        auto& children = n->getChildren();
+//        for(const auto &child : children)
+//            setProgram(child, p);
+//    }
+//}
 
 ClippingNode::ClippingNode()
 : _stencil(nullptr)

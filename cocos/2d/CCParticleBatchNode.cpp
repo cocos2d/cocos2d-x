@@ -443,10 +443,10 @@ void ParticleBatchNode::draw(Renderer* renderer, const Mat4 & transform, uint32_
     if (_textureAtlas->isDirty())
     {
         const auto& quads = _textureAtlas->getQuads();
-        size_t capacity = _textureAtlas->getCapacity();
+        unsigned int capacity = (unsigned int)_textureAtlas->getCapacity();
         const auto& indices = _textureAtlas->getIndices();
         
-        _customCommand.createVertexBuffer(sizeof(quads[0]), capacity);
+        _customCommand.createVertexBuffer((unsigned int)(sizeof(quads[0]) ), capacity);
         _customCommand.updateVertexBuffer(quads, sizeof(quads[0]) * capacity);
         
         _customCommand.createIndexBuffer(sizeof(indices[0]) , capacity * 6);

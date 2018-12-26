@@ -82,7 +82,7 @@ DepthStencilStateGL::DepthStencilStateGL(const DepthStencilDescriptor& descripto
 : DepthStencilState(descriptor)
 {}
 
-void DepthStencilStateGL::apply(uint32_t stencilReferenceValueFront, uint32_t stencilReferenceValueBack) const
+void DepthStencilStateGL::apply(unsigned int stencilReferenceValueFront, unsigned int stencilReferenceValueBack) const
 {
     // depth test
     

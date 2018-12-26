@@ -11,7 +11,7 @@ public:
     static void reset();
     
     DepthStencilStateGL(const DepthStencilDescriptor& descriptor);
-    void apply(uint32_t stencilReferenceValueFront, uint32_t stencilReferenceValueBack) const;
+    void apply(unsigned int stencilReferenceValueFront, unsigned int stencilReferenceValueBack) const;
 };
 
 CC_BACKEND_END

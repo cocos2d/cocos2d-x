@@ -161,7 +161,7 @@ void CommandBufferMTL::beginFrame()
 void CommandBufferMTL::beginRenderPass(const RenderPassDescriptor& descriptor)
 {
     auto mtlDescriptor = toMTLRenderPassDescriptor(descriptor);
-    _renderTargetHeight = mtlDescriptor.colorAttachments[0].texture.height;
+    _renderTargetHeight = (unsigned int)mtlDescriptor.colorAttachments[0].texture.height;
     _mtlRenderEncoder = [_mtlCommandBuffer renderCommandEncoderWithDescriptor:mtlDescriptor];
 
     [_mtlRenderEncoder retain];
@@ -176,7 +176,7 @@ void CommandBufferMTL::setRenderPipeline(RenderPipeline* renderPipeline)
     [_mtlRenderEncoder setRenderPipelineState:_renderPipelineMTL->getMTLRenderPipelineState()];
 }
 
-void CommandBufferMTL::setViewport(ssize_t x, ssize_t y, size_t w, size_t h)
+void CommandBufferMTL::setViewport(int x, int y, unsigned int w, unsigned int h)
 {
     MTLViewport viewport;
     viewport.originX = x;
@@ -193,7 +193,7 @@ void CommandBufferMTL::setCullMode(CullMode mode)
     [_mtlRenderEncoder setCullMode:toMTLCullMode(mode)];
 }
 
-void CommandBufferMTL::setVertexBuffer(size_t index, Buffer* buffer)
+void CommandBufferMTL::setVertexBuffer(unsigned int index, Buffer* buffer)
 {
     // Vertex buffer is bound in index 0.
     [_mtlRenderEncoder setVertexBuffer:static_cast<BufferMTL*>(buffer)->getMTLBuffer()
@@ -218,7 +218,7 @@ void CommandBufferMTL::setIndexBuffer(Buffer* buffer)
     [_mtlIndexBuffer retain];
 }
 
-void CommandBufferMTL::drawArrays(PrimitiveType primitiveType, uint32_t start,  uint32_t count)
+void CommandBufferMTL::drawArrays(PrimitiveType primitiveType, unsigned int start,  unsigned int count)
 {
     prepareDrawing();
     [_mtlRenderEncoder drawPrimitives:toMTLPrimitive(primitiveType)
@@ -226,7 +226,7 @@ void CommandBufferMTL::drawArrays(PrimitiveType primitiveType, uint32_t start,  
                           vertexCount:count];
 }
 
-void CommandBufferMTL::drawElements(PrimitiveType primitiveType, IndexFormat indexType, uint32_t count, uint32_t offset)
+void CommandBufferMTL::drawElements(PrimitiveType primitiveType, IndexFormat indexType, unsigned int count, unsigned int offset)
 {
     prepareDrawing();
     [_mtlRenderEncoder drawIndexedPrimitives:toMTLPrimitive(primitiveType)
@@ -286,11 +286,11 @@ void CommandBufferMTL::setTextures() const
     }
 }
 
-void CommandBufferMTL::doSetTextures(const std::vector<std::string>& textures, bool isVertex) const
+void CommandBufferMTL::doSetTextures(const std::vector<std::string>& textureNames, bool isVertex) const
 {
     const auto& bindTextureInfos = _bindGroup->getTextureInfos();
     int i = 0;
-    for (const auto& texture : textures)
+    for (const auto& texture : textureNames)
     {
         auto iter = bindTextureInfos.find(texture);
         if (bindTextureInfos.end() != iter)

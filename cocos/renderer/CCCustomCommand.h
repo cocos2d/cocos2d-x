@@ -68,7 +68,7 @@ public:
 	@param modelViewTransform When in 3D mode, depth sorting needs modelViewTransform.
 	@param flags Use to identify that the render command is 3D mode or not.
 	*/
-    void init(float globalZOrder, const Mat4& modelViewTransform, uint32_t flags);
+    void init(float globalZOrder, const Mat4& modelViewTransform, unsigned int flags);
     
     /**
     Init function. The render command will be in 2D mode.
@@ -77,13 +77,13 @@ public:
     void init(float globalZOrder);
     void init(float globalZOrder, const BlendFunc& blendFunc);
     
-    void createVertexBuffer(size_t sizePerVertex, size_t count);
-    void createIndexBuffer(size_t sizePerIndex, size_t count);
+    void createVertexBuffer(unsigned int sizePerVertex, unsigned int count);
+    void createIndexBuffer(unsigned int sizePerIndex, unsigned int count);
 
-    void updateVertexBuffer(void* data, size_t length);
-    void updateIndexBuffer(void* data, size_t length);
-    void updateVertexBuffer(void* data, size_t offset, size_t length);
-    void updateIndexBuffer(void* data, size_t offset, size_t length);
+    void updateVertexBuffer(void* data, unsigned int length);
+    void updateIndexBuffer(void* data, unsigned int length);
+    void updateVertexBuffer(void* data, unsigned int offset, unsigned int length);
+    void updateIndexBuffer(void* data, unsigned int offset, unsigned int length);
     
     inline void setDrawType(DrawType drawType) { _drawType = drawType; }
     inline DrawType getDrawType() const { return _drawType; }
@@ -92,16 +92,16 @@ public:
     
     inline backend::Buffer* getVertexBuffer() const { assert(_vertexBuffer); return _vertexBuffer; }
     inline backend::Buffer* getIndexBuffer() const { assert(_indexBuffer); return _indexBuffer; }
-    inline size_t getIndexCount() const { return _indexCount; }
-    inline size_t getVertexCount() const { return _vertexCount; }
+    inline unsigned int getIndexCount() const { return _indexCount; }
+    inline unsigned int getVertexCount() const { return _vertexCount; }
     
-    inline void setVertexDrawInfo(size_t vertexStart, size_t count) { _vertexStart = vertexStart; _vertexDrawCount = count; }
-    inline size_t getVertexDrawStart() const { return _vertexStart; }
-    inline size_t getVertexDrawCount() const { return _vertexDrawCount == 0 ? _vertexCount : _vertexDrawCount; }
+    inline void setVertexDrawInfo(unsigned int vertexStart, unsigned int count) { _vertexStart = vertexStart; _vertexDrawCount = count; }
+    inline unsigned int getVertexDrawStart() const { return _vertexStart; }
+    inline unsigned int getVertexDrawCount() const { return _vertexDrawCount == 0 ? _vertexCount : _vertexDrawCount; }
     
-    inline void setIndexDrawInfo(size_t indexBufferOffset, size_t count) { _indexBufferOffset = indexBufferOffset; _indexDrawCount = count; }
-    inline size_t getIndexDrawBufferOffset() const { return _indexBufferOffset; }
-    inline size_t getIndexDrawCount() const { return _indexDrawCount == 0 ? _indexCount : _indexDrawCount; }
+    inline void setIndexDrawInfo(unsigned int indexBufferOffset, unsigned int count) { _indexBufferOffset = indexBufferOffset; _indexDrawCount = count; }
+    inline unsigned int getIndexDrawBufferOffset() const { return _indexBufferOffset; }
+    inline unsigned int getIndexDrawCount() const { return _indexDrawCount == 0 ? _indexCount : _indexDrawCount; }
     
     inline void setLineWidth(float lineWidth) { _lineWidth = lineWidth; }
     inline float getLineWidth() const { return _lineWidth; }
@@ -113,22 +113,22 @@ public:
 protected:
     backend::Buffer* _vertexBuffer = nullptr;
     backend::Buffer* _indexBuffer = nullptr;
-    size_t _indexCount = 0;
-    size_t _vertexCount = 0;
+    unsigned int _indexCount = 0;
+    unsigned int _vertexCount = 0;
     
-    size_t _vertexStart = 0;
-    size_t _vertexDrawCount = 0;
+    unsigned int _vertexStart = 0;
+    unsigned int _vertexDrawCount = 0;
     
-    size_t _indexBufferOffset = 0;
-    size_t _indexDrawCount = 0;
+    unsigned int _indexBufferOffset = 0;
+    unsigned int _indexDrawCount = 0;
     
     DrawType _drawType = DrawType::ELEMENT;
     PrimitiveType _primitiveType = PrimitiveType::TRIANGLE;
     
     float _lineWidth = 0.0;
     
-    size_t _sizePerVertex = 0;
-    size_t _sizePerIndex = 0;
+    unsigned int _sizePerVertex = 0;
+    unsigned int _sizePerIndex = 0;
 };
 
 NS_CC_END

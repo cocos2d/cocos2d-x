@@ -22,7 +22,7 @@ CommandBuffer* DeviceGL::newCommandBuffer()
     return new (std::nothrow) CommandBufferGL();
 }
 
-Buffer* DeviceGL::newBuffer(uint32_t size, BufferType type, BufferUsage usage)
+Buffer* DeviceGL::newBuffer(unsigned int size, BufferType type, BufferUsage usage)
 {
     return new (std::nothrow) BufferGL(size, type, usage);
 }

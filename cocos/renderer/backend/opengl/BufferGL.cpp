@@ -2,7 +2,7 @@
 
 CC_BACKEND_BEGIN
 
-BufferGL::BufferGL(uint32_t size, BufferType type, BufferUsage usage)
+BufferGL::BufferGL(unsigned int size, BufferType type, BufferUsage usage)
 : Buffer(size, type, usage)
 {
     glGenBuffers(1, &_buffer);
@@ -14,7 +14,7 @@ BufferGL::~BufferGL()
         glDeleteBuffers(1, &_buffer);
 }
 
-void BufferGL::updateData(void* data, size_t size)
+void BufferGL::updateData(void* data, unsigned int size)
 {
     assert(size);
     
@@ -34,7 +34,7 @@ void BufferGL::updateData(void* data, size_t size)
     }
 }
 
-void BufferGL::updateSubData(void* data, size_t offset, size_t size)
+void BufferGL::updateSubData(void* data, unsigned int offset, unsigned int size)
 {
     assert(offset + size <= _size);
     

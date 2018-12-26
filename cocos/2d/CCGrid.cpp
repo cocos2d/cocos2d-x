@@ -107,7 +107,7 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipp
     }
     _step.x = _gridRect.size.width/_gridSize.width;
     _step.y = _gridRect.size.height/_gridSize.height;
-    
+
     auto& pipelineDescriptor = _drawCommand.getPipelineDescriptor();
     pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionTexture_vert);
     pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionTexture_frag);
@@ -506,14 +506,14 @@ void Grid3D::updateVertexBuffer()
         auto offset = i * (sizeof(Vec3) + sizeof(Vec2));
         memcpy((char*)_vertexBuffer + offset, &tempVecPointer[i], sizeof(Vec3));
     }
-    _drawCommand.updateVertexBuffer(_vertexBuffer, numOfPoints * sizeof(Vec3) + numOfPoints * sizeof(Vec2));
+    _drawCommand.updateVertexBuffer(_vertexBuffer, (unsigned int)(numOfPoints * sizeof(Vec3) + numOfPoints * sizeof(Vec2)) );
 
     _drawCommand.updateIndexBuffer(_indices, _gridSize.width * _gridSize.height * 6 * sizeof(unsigned short));
 }
 
 void Grid3D::updateVertexAndTexCoordinate()
 {
-    size_t numOfPoints = (_gridSize.width+1) * (_gridSize.height+1);
+    unsigned int numOfPoints = (_gridSize.width+1) * (_gridSize.height+1);
     auto tempVecPointer = (Vec3*)_vertices;
     auto tempTexPointer = (Vec2*)_texCoordinates;
     for (size_t i = 0; i < numOfPoints; ++i)
@@ -522,7 +522,7 @@ void Grid3D::updateVertexAndTexCoordinate()
         memcpy((char*)_vertexBuffer + offset, &tempVecPointer[i], sizeof(Vec3));
         memcpy((char*)_vertexBuffer + offset + sizeof(Vec3), &tempTexPointer[i], sizeof(Vec2));
     }
-    _drawCommand.createVertexBuffer(sizeof(Vec3) + sizeof(Vec2), numOfPoints);
+    _drawCommand.createVertexBuffer((unsigned int)(sizeof(Vec3) + sizeof(Vec2)), numOfPoints);
     _drawCommand.updateVertexBuffer(_vertexBuffer, numOfPoints * sizeof(Vec3) + numOfPoints * sizeof(Vec2));
 
     _drawCommand.createIndexBuffer(sizeof(unsigned short), _gridSize.width * _gridSize.height * 6);
@@ -762,14 +762,14 @@ void TiledGrid3D::updateVertexBuffer()
         auto offset = i * (sizeof(Vec3) + sizeof(Vec2));
         memcpy((char*)_vertexBuffer + offset, &tempVecPointer[i], sizeof(Vec3));
     }
-    _drawCommand.updateVertexBuffer(_vertexBuffer, numOfPoints * sizeof(Vec3) + numOfPoints * sizeof(Vec2));
+    _drawCommand.updateVertexBuffer(_vertexBuffer, (unsigned int)(numOfPoints * sizeof(Vec3) + numOfPoints * sizeof(Vec2)) );
 
     _drawCommand.updateIndexBuffer(_indices, _gridSize.width * _gridSize.height * 6 * sizeof(unsigned short));
 }
 
 void TiledGrid3D::updateVertexAndTexCoordinate()
 {
-    size_t numOfPoints = _gridSize.width * _gridSize.height * 4;
+    unsigned int numOfPoints = _gridSize.width * _gridSize.height * 4;
     auto tempVecPointer = (Vec3*)_vertices;
     auto tempTexPointer = (Vec2*)_texCoordinates;
     for (size_t i = 0; i < numOfPoints; ++i)
@@ -778,7 +778,7 @@ void TiledGrid3D::updateVertexAndTexCoordinate()
         memcpy((char*)_vertexBuffer + offset, &tempVecPointer[i], sizeof(Vec3));
         memcpy((char*)_vertexBuffer + offset + sizeof(Vec3), &tempTexPointer[i], sizeof(Vec2));
     }
-    _drawCommand.createVertexBuffer(sizeof(Vec3) + sizeof(Vec2), numOfPoints);
+    _drawCommand.createVertexBuffer((unsigned int)(sizeof(Vec3) + sizeof(Vec2) ), numOfPoints);
     _drawCommand.updateVertexBuffer(_vertexBuffer, numOfPoints * sizeof(Vec3) + numOfPoints * sizeof(Vec2));
 
     _drawCommand.createIndexBuffer(sizeof(unsigned short), _gridSize.width * _gridSize.height * 6);

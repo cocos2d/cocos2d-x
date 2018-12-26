@@ -1507,11 +1507,11 @@ void Label::updateBuffer(TextureAtlas* textureAtlas, CustomCommand& customComman
 {
     if(textureAtlas->getTotalQuads() > customCommand.getVertexCount())
     {
-        customCommand.createVertexBuffer(sizeof(V3F_C4B_T2F_Quad), textureAtlas->getTotalQuads());
-        customCommand.createIndexBuffer(sizeof(unsigned short), textureAtlas->getTotalQuads()*6);
+        customCommand.createVertexBuffer((unsigned int)sizeof(V3F_C4B_T2F_Quad), (unsigned int)textureAtlas->getTotalQuads());
+        customCommand.createIndexBuffer((unsigned int)sizeof(unsigned short), (unsigned int)textureAtlas->getTotalQuads()*6);
     }
-   customCommand.updateVertexBuffer(textureAtlas->getQuads(), textureAtlas->getTotalQuads() * sizeof(V3F_C4B_T2F_Quad));
-   customCommand.updateIndexBuffer(textureAtlas->getIndices(), textureAtlas->getTotalQuads()*6*sizeof(unsigned short));
+   customCommand.updateVertexBuffer(textureAtlas->getQuads(), (unsigned int)(textureAtlas->getTotalQuads() * sizeof(V3F_C4B_T2F_Quad)) );
+   customCommand.updateIndexBuffer(textureAtlas->getIndices(), (unsigned int)(textureAtlas->getTotalQuads()*6*sizeof(unsigned short)) );
    customCommand.setIndexDrawInfo(0, customCommand.getIndexCount());
 }
 
@@ -1607,7 +1607,7 @@ void Label::updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer,
             GLubyte oldOPacity = _displayedOpacity;
             _displayedOpacity = _shadowColor4F.a * (oldOPacity / 255.0f) * 255;
             setColor(Color3B(_shadowColor4F));
-            _customCommandShadow.updateVertexBuffer(textureAtlas->getQuads(), textureAtlas->getTotalQuads() * sizeof(V3F_C4B_T2F_Quad));
+            _customCommandShadow.updateVertexBuffer(textureAtlas->getQuads(), (unsigned int)(textureAtlas->getTotalQuads() * sizeof(V3F_C4B_T2F_Quad)) );
             _customCommandShadow.init(_globalZOrder);
             renderer->addCommand(&_customCommandShadow);
             

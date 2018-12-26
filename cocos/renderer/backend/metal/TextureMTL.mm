@@ -55,7 +55,7 @@ namespace
         }
     }
     
-    bool convertData(uint8_t* src, uint32_t length, TextureFormat format, uint8_t** out)
+    bool convertData(uint8_t* src, unsigned int length, TextureFormat format, uint8_t** out)
     {
         *out = src;
         bool converted = false;
@@ -91,10 +91,10 @@ TextureMTL::~TextureMTL()
 
 void TextureMTL::updateData(uint8_t* data)
 {
-    updateSubData(0, 0, (uint32_t)_mtlTexture.width, (uint32_t)_mtlTexture.height, data);
+    updateSubData(0, 0, (unsigned int)_mtlTexture.width, (unsigned int)_mtlTexture.height, data);
 }
 
-void TextureMTL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint8_t* data)
+void TextureMTL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data)
 {
     MTLRegion region =
     {

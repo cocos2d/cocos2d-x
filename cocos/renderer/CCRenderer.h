@@ -226,7 +226,7 @@ public:
     unsigned int getStencilWriteMask() const;
     unsigned int getStencilReferenceValue() const;
 
-    void setViewPort(int x, int y, size_t w, size_t h);
+    void setViewPort(int x, int y, unsigned int w, unsigned int h);
     const Viewport& getViewport() const { return _viewport; }
     
     //This will not be used outside.
@@ -286,22 +286,22 @@ protected:
     struct TriBatchToDraw
     {
         TrianglesCommand* cmd = nullptr;  // needed for the Material
-        size_t indicesToDraw = 0;
-        size_t offset = 0;
+        unsigned int indicesToDraw = 0;
+        unsigned int offset = 0;
     };
     // capacity of the array of TriBatches
     int _triBatchesToDrawCapacity = 500;
     // the TriBatches
     TriBatchToDraw* _triBatchesToDraw = nullptr;
 
-    size_t _filledVertex = 0;
-    size_t _filledIndex = 0;
+    unsigned int _filledVertex = 0;
+    unsigned int _filledIndex = 0;
 
 //    bool _glViewAssigned;
 
     // stats
-    ssize_t _drawnBatches = 0;
-    ssize_t _drawnVertices = 0;
+    unsigned int _drawnBatches = 0;
+    unsigned int _drawnVertices = 0;
     //the flag for checking whether renderer is rendering
     bool _isRendering = false;
     bool _isFirstTriangleDraw = true;

@@ -48,7 +48,7 @@ public:
     /**The structure of Triangles. */
     struct Triangles
     {
-        Triangles(V3F_C4B_T2F* _verts, unsigned short* _indices, size_t _vertCount, size_t _indexCount)
+        Triangles(V3F_C4B_T2F* _verts, unsigned short* _indices, unsigned int _vertCount, unsigned int _indexCount)
         : verts(_verts)
         , indices(_indices)
         , vertCount(_vertCount)
@@ -62,9 +62,9 @@ public:
         /**Index data pointer.*/
         unsigned short* indices = nullptr;
         /**The number of vertices.*/
-        size_t vertCount = 0;
+        unsigned int vertCount = 0;
         /**The number of indices.*/
-        size_t indexCount = 0;
+        unsigned int indexCount = 0;
     };
 
     /**Constructor.*/

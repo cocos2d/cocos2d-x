@@ -180,7 +180,7 @@ void TextureGL::updateData(uint8_t* data)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void TextureGL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint8_t* data)
+void TextureGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data)
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture);

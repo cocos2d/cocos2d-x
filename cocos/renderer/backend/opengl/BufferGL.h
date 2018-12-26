@@ -9,11 +9,11 @@ CC_BACKEND_BEGIN
 class BufferGL : public Buffer
 {
 public:
-    BufferGL(uint32_t size, BufferType type, BufferUsage usage);
+    BufferGL(unsigned int size, BufferType type, BufferUsage usage);
     ~BufferGL();
     
-    virtual void updateData(void* data, size_t size) override;
-    virtual void updateSubData(void* data, size_t offset, size_t size) override;
+    virtual void updateData(void* data, unsigned int size) override;
+    virtual void updateSubData(void* data, unsigned int offset, unsigned int size) override;
     
     inline GLuint getHandler() const { return _buffer; }
     

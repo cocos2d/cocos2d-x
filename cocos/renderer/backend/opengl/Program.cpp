@@ -143,7 +143,7 @@ void Program::computeAttributeInfos(const RenderPipelineDescriptor& descriptor)
     }
 }
 
-bool Program::getAttributeLocation(const std::string& attributeName, uint32_t& location)
+bool Program::getAttributeLocation(const std::string& attributeName, unsigned int& location)
 {
     GLint loc = glGetAttribLocation(_program, attributeName.c_str());
     if (-1 == loc)

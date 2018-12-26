@@ -23,7 +23,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
 #pragma once
 
 #include "base/ccConfig.h"
@@ -36,7 +35,7 @@ extern "C" {
 
 #if !CC_STRIP_FPS
 extern unsigned char cc_fps_images_png[];
-unsigned int cc_fps_images_len();
+extern unsigned int cc_fps_images_len(void);
 #endif
 
 #ifdef __cplusplus

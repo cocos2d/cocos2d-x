@@ -14,11 +14,11 @@ class ShaderModuleGL;
 
 struct AttributeInfo
 {
-    uint32_t location = 0;
-    uint32_t size = 0;
+    unsigned int location = 0;
+    unsigned int size = 0;
     GLenum type = GL_BYTE;
     GLsizei stride = 0;
-    uint32_t offset = 0;
+    unsigned int offset = 0;
     GLboolean needToBeNormallized = GL_FALSE;
 };
 
@@ -47,7 +47,7 @@ public:
 private:
     void compileProgram();
     void computeAttributeInfos(const RenderPipelineDescriptor& descriptor);
-    bool getAttributeLocation(const std::string& attributeName, uint32_t& location);
+    bool getAttributeLocation(const std::string& attributeName, unsigned int& location);
     void computeUniformInfos();
     
     GLuint _program = 0;
