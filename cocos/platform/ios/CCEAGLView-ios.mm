@@ -137,7 +137,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         {
             self.contentScaleFactor = [[UIScreen mainScreen] scale];
         }
-//        self.contentScaleFactor = 1;
 
         CAMetalLayer* metalLayer = (CAMetalLayer*)[self layer];
         metalLayer.device = MTLCreateSystemDefaultDevice();
@@ -204,8 +203,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         return;
 
     size_ = [self bounds].size;
-//    size_.width *= self.contentScaleFactor;
-//    size_.height *= self.contentScaleFactor;
+    size_.width *= self.contentScaleFactor;
+    size_.height *= self.contentScaleFactor;
 
     // Avoid flicker. Issue #350
     if ([NSThread isMainThread])

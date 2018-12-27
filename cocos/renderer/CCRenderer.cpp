@@ -222,9 +222,6 @@ void Renderer::init()
     _vertexBuffer = device->newBuffer(Renderer::VBO_SIZE * sizeof(_verts[0]), backend::BufferType::VERTEX, backend::BufferUsage::READ);
     _indexBuffer = device->newBuffer(Renderer::INDEX_VBO_SIZE * sizeof(_indices[0]), backend::BufferType::INDEX, backend::BufferUsage::READ);
     _commandBuffer = device->newCommandBuffer();
-
-    experimental::Viewport defaultViewport = Camera::getDefaultViewport();
-    setViewPort(defaultViewport._left, defaultViewport._bottom, defaultViewport._width, defaultViewport._height);
 }
 
 void Renderer::addCommand(RenderCommand* command)

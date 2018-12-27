@@ -458,18 +458,7 @@ void Camera::applyFrameBufferObject()
 
 void Camera::applyViewport()
 {
-    //TODO: minggo
-//    glGetIntegerv(GL_VIEWPORT, _oldViewport);
-//
-//    if(nullptr == _fbo)
-//    {
-//        glViewport(getDefaultViewport()._left, getDefaultViewport()._bottom, getDefaultViewport()._width, getDefaultViewport()._height);
-//    }
-//    else
-//    {
-//        glViewport(_viewport._left * _fbo->getWidth(), _viewport._bottom * _fbo->getHeight(),
-//                   _viewport._width * _fbo->getWidth(), _viewport._height * _fbo->getHeight());
-//    }
+    Director::getInstance()->getRenderer()->setViewPort(_defaultViewport._left, _defaultViewport._bottom, _defaultViewport._width, _defaultViewport._height);
 }
 
 void Camera::setViewport(const experimental::Viewport& vp)

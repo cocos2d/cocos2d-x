@@ -180,7 +180,7 @@ void CommandBufferMTL::setViewport(int x, int y, unsigned int w, unsigned int h)
 {
     MTLViewport viewport;
     viewport.originX = x;
-    viewport.originY = _renderTargetHeight - y - h;
+    viewport.originY = (int)(_renderTargetHeight - y - h);
     viewport.width = w;
     viewport.height = h;
     viewport.znear = -1;
