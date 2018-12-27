@@ -158,6 +158,10 @@ void CustomCommand::clear()
 {
     _vertexCount = 0;
     _indexCount = 0;
+    _vertexStart = 0;
+    _vertexDrawCount = 0;
+    _indexBufferOffset = 0;
+    _indexDrawCount = 0;
 }
 
 NS_CC_END
