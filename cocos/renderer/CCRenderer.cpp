@@ -596,8 +596,7 @@ void Renderer::drawBatchedTriangles()
     
     //FIXME: in metal, buffer is not used until the end of the frame. So can not share the same buffer in
     // differenrt draw calls. And may be we can use the same buffer with offset, but it has wrong effect.
-    // iOS should do it too.
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#ifdef CC_USE_METAL
     _vertexBuffer->release();
     _indexBuffer->release();
     auto device = backend::Device::getInstance();

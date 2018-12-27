@@ -46,7 +46,7 @@ namespace
     
     void convertRGB2RGBA(uint8_t* src, uint8_t* dst, uint32_t length)
     {
-        for (uint32 i = 0; i < length; ++i)
+        for (uint32_t i = 0; i < length; ++i)
         {
             *dst++ = *src++;
             *dst++ = *src++;

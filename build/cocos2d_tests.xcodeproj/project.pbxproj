@@ -202,7 +202,6 @@
 		1A0EE40A18CDF775004CD58F /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
 		1A0EE40B18CDF775004CD58F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
 		1A0EE40C18CDF775004CD58F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */; };
-		1A0EE40D18CDF775004CD58F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
 		1A0EE40E18CDF775004CD58F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B71783AE6D0073F6A7 /* UIKit.framework */; };
 		1A0EE40F18CDF775004CD58F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
 		1A0EE42C18CDF799004CD58F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA3AF18CDA06D0087CE3A /* libz.dylib */; };
@@ -617,6 +616,7 @@
 		460629791CDB4DBA00B44058 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
 		461FE09E21CB2E2D00E5378F /* DrawPrimitivesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461FE09D21CB2E2D00E5378F /* DrawPrimitivesTest.cpp */; };
 		461FE09F21CB2E2D00E5378F /* DrawPrimitivesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461FE09D21CB2E2D00E5378F /* DrawPrimitivesTest.cpp */; };
+		462CBDDE21D469EE005712AB /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4631CBF521AFDA300000D408 /* Metal.framework */; };
 		4631CBF621AFDA300000D408 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4631CBF521AFDA300000D408 /* Metal.framework */; };
 		4631CBF721AFDE2C0000D408 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46535CDA21ABD689005B5370 /* Metal.framework */; };
 		463D7E7C1D227C5F00EA6BD1 /* Bug-14327.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463D7E781D227C3800EA6BD1 /* Bug-14327.cpp */; };
@@ -624,6 +624,7 @@
 		463D7E7E1D227CA400EA6BD1 /* Bug-15776.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463D7E7A1D227C3800EA6BD1 /* Bug-15776.cpp */; };
 		463D7E7F1D227CAB00EA6BD1 /* Bug-15776.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463D7E7A1D227C3800EA6BD1 /* Bug-15776.cpp */; };
 		46535CDB21ABD689005B5370 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46535CDA21ABD689005B5370 /* Metal.framework */; };
+		46BD387921D358E4002BD50F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46BD387821D358E4002BD50F /* OpenGLES.framework */; };
 		4B5C5BA81CA1147300D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
 		4B5C5BA91CA1147F00D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
 		4B5C5BAB1CA1149900D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B5C5BAA1CA1149900D55A14 /* Security.framework */; };
@@ -2044,6 +2045,7 @@
 		463D7E7B1D227C3800EA6BD1 /* Bug-15776.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-15776.h"; sourceTree = "<group>"; };
 		46535CDA21ABD689005B5370 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
+		46BD387821D358E4002BD50F /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		4B5C5BAA1CA1149900D55A14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		4B5C5BB41CA114DB00D55A14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		500D1CD11CF4A48B00535D35 /* Bug-15594.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "Bug-15594.cpp"; sourceTree = "<group>"; };
@@ -2382,6 +2384,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46BD387921D358E4002BD50F /* OpenGLES.framework in Frameworks */,
 				4631CBF621AFDA300000D408 /* Metal.framework in Frameworks */,
 				294D7D8A1D0E5093002CE7B7 /* CoreText.framework in Frameworks */,
 				4B5C5BAC1CA114A300D55A14 /* Security.framework in Frameworks */,
@@ -2394,7 +2397,6 @@
 				ED545A741B68A1B400C3958E /* libiconv.dylib in Frameworks */,
 				1A0EE40B18CDF775004CD58F /* QuartzCore.framework in Frameworks */,
 				1A0EE40C18CDF775004CD58F /* CoreGraphics.framework in Frameworks */,
-				1A0EE40D18CDF775004CD58F /* OpenGLES.framework in Frameworks */,
 				1A0EE40E18CDF775004CD58F /* UIKit.framework in Frameworks */,
 				1A0EE40F18CDF775004CD58F /* AVFoundation.framework in Frameworks */,
 			);
@@ -2671,6 +2673,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				462CBDDE21D469EE005712AB /* Metal.framework in Frameworks */,
 				29DC5A201CFFE6E100CF2930 /* CoreText.framework in Frameworks */,
 				4B5C5BAB1CA1149900D55A14 /* Security.framework in Frameworks */,
 				ED545A731B68A1AC00C3958E /* libiconv.dylib in Frameworks */,
@@ -3871,6 +3874,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				46BD387821D358E4002BD50F /* OpenGLES.framework */,
 				46535CDA21ABD689005B5370 /* Metal.framework */,
 				4631CBF521AFDA300000D408 /* Metal.framework */,
 				C8DE9E481F0EAECD00B48C6B /* GameController.framework */,
@@ -6979,13 +6983,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-cpp-empty-test";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -6999,13 +7004,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-cpp-empty-test";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";

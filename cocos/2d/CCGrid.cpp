@@ -93,8 +93,7 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipp
     CC_SAFE_RETAIN(_texture);
     _isTextureFlipped = flipped;
 
-    //TODO: minggo: should add iOS when iOS use metal.
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#ifdef CC_USE_METAL
     _isTextureFlipped = !flipped;
 #endif
     

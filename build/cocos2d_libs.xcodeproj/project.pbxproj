@@ -548,6 +548,9 @@
 		46270FA51E1CC6A200AAA098 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46270FA31E1CC6A100AAA098 /* libssl.a */; };
 		46270FA81E1CC84500AAA098 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46270FA61E1CC84500AAA098 /* libcrypto.a */; };
 		46270FA91E1CC84500AAA098 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46270FA71E1CC84500AAA098 /* libssl.a */; };
+		462CBDDB21D46525005712AB /* libglsl_optimizer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 462CBDD821D46525005712AB /* libglsl_optimizer.a */; };
+		462CBDDC21D46525005712AB /* libmesa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 462CBDD921D46525005712AB /* libmesa.a */; };
+		462CBDDD21D46525005712AB /* libglcpp-library.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 462CBDDA21D46525005712AB /* libglcpp-library.a */; };
 		4631CB0D21AFD9F90000D408 /* UIWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4631CA9121AFD9F90000D408 /* UIWidget.cpp */; };
 		4631CB0E21AFD9F90000D408 /* UIWidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4631CA9121AFD9F90000D408 /* UIWidget.cpp */; };
 		4631CB0F21AFD9F90000D408 /* UIRadioButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 4631CA9221AFD9F90000D408 /* UIRadioButton.h */; };
@@ -773,6 +776,24 @@
 		468A197B1EF3BA6500ECA675 /* libBulletMultiThreaded.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 468A19761EF3BA6500ECA675 /* libBulletMultiThreaded.a */; };
 		468A197C1EF3BA6500ECA675 /* libLinearMath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 468A19771EF3BA6500ECA675 /* libLinearMath.a */; };
 		468A197D1EF3BA6500ECA675 /* libMiniCL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 468A19781EF3BA6500ECA675 /* libMiniCL.a */; };
+		46BD387A21D35A46002BD50F /* BlendStateMTL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460D4CF921ABD0C60075726E /* BlendStateMTL.mm */; };
+		46BD387B21D35A4A002BD50F /* BlendStateMTL.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4CFB21ABD0C60075726E /* BlendStateMTL.h */; };
+		46BD387C21D35A4E002BD50F /* BufferMTL.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4CFE21ABD0C60075726E /* BufferMTL.h */; };
+		46BD387D21D35A51002BD50F /* BufferMTL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460D4CF721ABD0C60075726E /* BufferMTL.mm */; };
+		46BD387E21D35A54002BD50F /* CommandBufferMTL.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4CFF21ABD0C60075726E /* CommandBufferMTL.h */; };
+		46BD387F21D35A57002BD50F /* CommandBufferMTL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460D4D0421ABD0C60075726E /* CommandBufferMTL.mm */; };
+		46BD388021D35A5B002BD50F /* DepthStencilStateMTL.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4CFC21ABD0C60075726E /* DepthStencilStateMTL.h */; };
+		46BD388121D35A5F002BD50F /* DepthStencilStateMTL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460D4CFA21ABD0C60075726E /* DepthStencilStateMTL.mm */; };
+		46BD388221D35A62002BD50F /* DeviceMTL.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4CF521ABD0C60075726E /* DeviceMTL.h */; };
+		46BD388321D35A68002BD50F /* DeviceMTL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460D4D0021ABD0C60075726E /* DeviceMTL.mm */; };
+		46BD388421D35A68002BD50F /* RenderPipelineMTL.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4D0521ABD0C60075726E /* RenderPipelineMTL.h */; };
+		46BD388521D35A68002BD50F /* RenderPipelineMTL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460D4D0721ABD0C60075726E /* RenderPipelineMTL.mm */; };
+		46BD388621D35A68002BD50F /* ShaderModuleMTL.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4CF821ABD0C60075726E /* ShaderModuleMTL.h */; };
+		46BD388721D35A68002BD50F /* ShaderModuleMTL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460D4CFD21ABD0C60075726E /* ShaderModuleMTL.mm */; };
+		46BD388821D35A68002BD50F /* TextureMTL.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4D0221ABD0C60075726E /* TextureMTL.h */; };
+		46BD388921D35A68002BD50F /* TextureMTL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460D4D0121ABD0C60075726E /* TextureMTL.mm */; };
+		46BD388A21D35A68002BD50F /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4CF421ABD0C60075726E /* Utils.h */; };
+		46BD388B21D35A68002BD50F /* Utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460D4CF621ABD0C60075726E /* Utils.mm */; };
 		46BDE4A81FA32D3400104C05 /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46BDE4A71FA32D3400104C05 /* libbox2d.a */; };
 		46BDE4AA1FA3316A00104C05 /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46BDE4A91FA3316A00104C05 /* libbox2d.a */; };
 		46C02E0718E91123004B7456 /* xxhash.c in Sources */ = {isa = PBXBuildFile; fileRef = 46C02E0518E91123004B7456 /* xxhash.c */; };
@@ -869,9 +890,6 @@
 		503DD8E51926736A00CD74DD /* CCDirectorCaller-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503DD8D31926736A00CD74DD /* CCDirectorCaller-ios.mm */; };
 		503DD8E61926736A00CD74DD /* CCEAGLView-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 503DD8D41926736A00CD74DD /* CCEAGLView-ios.h */; };
 		503DD8E71926736A00CD74DD /* CCEAGLView-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503DD8D51926736A00CD74DD /* CCEAGLView-ios.mm */; };
-		503DD8E81926736A00CD74DD /* CCES2Renderer-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 503DD8D61926736A00CD74DD /* CCES2Renderer-ios.h */; };
-		503DD8E91926736A00CD74DD /* CCES2Renderer-ios.m in Sources */ = {isa = PBXBuildFile; fileRef = 503DD8D71926736A00CD74DD /* CCES2Renderer-ios.m */; };
-		503DD8EA1926736A00CD74DD /* CCESRenderer-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 503DD8D81926736A00CD74DD /* CCESRenderer-ios.h */; };
 		503DD8EB1926736A00CD74DD /* CCGL-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 503DD8D91926736A00CD74DD /* CCGL-ios.h */; };
 		503DD8EC1926736A00CD74DD /* CCGLViewImpl-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 503DD8DA1926736A00CD74DD /* CCGLViewImpl-ios.h */; };
 		503DD8ED1926736A00CD74DD /* CCGLViewImpl-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503DD8DB1926736A00CD74DD /* CCGLViewImpl-ios.mm */; };
@@ -1079,7 +1097,6 @@
 		507B3C371C31BDD30067B53E /* CCEventListener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBDE01925AB6E00A911A9 /* CCEventListener.cpp */; };
 		507B3C381C31BDD30067B53E /* CCRenderState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5012168C1AC47380009A4BEA /* CCRenderState.cpp */; };
 		507B3C3B1C31BDD30067B53E /* CCTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBE051925AB6E00A911A9 /* CCTouch.cpp */; };
-		507B3C401C31BDD30067B53E /* CCES2Renderer-ios.m in Sources */ = {isa = PBXBuildFile; fileRef = 503DD8D71926736A00CD74DD /* CCES2Renderer-ios.m */; };
 		507B3C411C31BDD30067B53E /* cocos2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50272539190BF1B900AAF4ED /* cocos2d.cpp */; };
 		507B3C491C31BDD30067B53E /* CCEventListenerFocus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBDE61925AB6E00A911A9 /* CCEventListenerFocus.cpp */; };
 		507B3C4B1C31BDD30067B53E /* CCEventListenerCustom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBDE41925AB6E00A911A9 /* CCEventListenerCustom.cpp */; };
@@ -1340,7 +1357,6 @@
 		507B3FD51C31BDD30067B53E /* ccShader_Label_normal.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA0E191D591000CE6051 /* ccShader_Label_normal.frag */; };
 		507B3FDA1C31BDD30067B53E /* Quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD2B1925AB0000A911A9 /* Quaternion.h */; };
 		507B3FDB1C31BDD30067B53E /* CCTechnique.h in Headers */ = {isa = PBXBuildFile; fileRef = 501216991AC473A3009A4BEA /* CCTechnique.h */; };
-		507B3FDE1C31BDD30067B53E /* CCES2Renderer-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 503DD8D61926736A00CD74DD /* CCES2Renderer-ios.h */; };
 		507B3FE31C31BDD30067B53E /* CCEventListenerFocus.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDE71925AB6E00A911A9 /* CCEventListenerFocus.h */; };
 		507B3FE41C31BDD30067B53E /* ccShader_PositionColor.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA09191D591000CE6051 /* ccShader_PositionColor.frag */; };
 		507B3FE71C31BDD30067B53E /* ccConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDC91925AB6E00A911A9 /* ccConfig.h */; };
@@ -1405,7 +1421,6 @@
 		507B40B61C31BDD30067B53E /* TGAlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBE1A1925AB6F00A911A9 /* TGAlib.h */; };
 		507B40BF1C31BDD30067B53E /* SimpleAudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FE21807A56F005B8026 /* SimpleAudioEngine.h */; };
 		507B40C61C31BDD30067B53E /* CCMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = 5012169F1AC473AD009A4BEA /* CCMaterial.h */; };
-		507B40CE1C31BDD30067B53E /* CCESRenderer-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 503DD8D81926736A00CD74DD /* CCESRenderer-ios.h */; };
 		507B40D01C31BDD30067B53E /* CCEventFocus.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDDD1925AB6E00A911A9 /* CCEventFocus.h */; };
 		507B40D71C31BDD30067B53E /* CCCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBF211926664700A911A9 /* CCCommon.h */; };
 		507B40D81C31BDD30067B53E /* CCCameraBackgroundBrush.h in Headers */ = {isa = PBXBuildFile; fileRef = A045F6DB1BA816A1005076C7 /* CCCameraBackgroundBrush.h */; };
@@ -2065,24 +2080,6 @@
 		ED28C252219E629C0078D854 /* BindGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C206219E629B0078D854 /* BindGroup.h */; };
 		ED28C253219E629C0078D854 /* VertexLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C207219E629B0078D854 /* VertexLayout.h */; };
 		ED28C254219E629C0078D854 /* VertexLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C207219E629B0078D854 /* VertexLayout.h */; };
-		ED28C258219E629C0078D854 /* ShaderModuleGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C20A219E629B0078D854 /* ShaderModuleGL.cpp */; };
-		ED28C25A219E629C0078D854 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C20B219E629B0078D854 /* Program.cpp */; };
-		ED28C25C219E629C0078D854 /* BufferGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C20C219E629B0078D854 /* BufferGL.cpp */; };
-		ED28C25E219E629C0078D854 /* BlendStateGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C20D219E629B0078D854 /* BlendStateGL.cpp */; };
-		ED28C260219E629C0078D854 /* DepthStencilStateGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C20E219E629B0078D854 /* DepthStencilStateGL.cpp */; };
-		ED28C262219E629C0078D854 /* RenderPipelineGL.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C20F219E629B0078D854 /* RenderPipelineGL.h */; };
-		ED28C264219E629C0078D854 /* ShaderModuleGL.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C210219E629B0078D854 /* ShaderModuleGL.h */; };
-		ED28C266219E629C0078D854 /* BufferGL.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C211219E629B0078D854 /* BufferGL.h */; };
-		ED28C268219E629C0078D854 /* BlendStateGL.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C212219E629B0078D854 /* BlendStateGL.h */; };
-		ED28C26A219E629C0078D854 /* TextureGL.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C213219E629B0078D854 /* TextureGL.h */; };
-		ED28C26E219E629C0078D854 /* DeviceGL.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C215219E629B0078D854 /* DeviceGL.h */; };
-		ED28C270219E629C0078D854 /* DepthStencilStateGL.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C216219E629B0078D854 /* DepthStencilStateGL.h */; };
-		ED28C274219E629C0078D854 /* RenderPipelineGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C218219E629B0078D854 /* RenderPipelineGL.cpp */; };
-		ED28C276219E629C0078D854 /* CommandBufferGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C219219E629B0078D854 /* CommandBufferGL.cpp */; };
-		ED28C278219E629C0078D854 /* CommandBufferGL.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C21A219E629B0078D854 /* CommandBufferGL.h */; };
-		ED28C27A219E629C0078D854 /* Program.h in Headers */ = {isa = PBXBuildFile; fileRef = ED28C21B219E629B0078D854 /* Program.h */; };
-		ED28C27C219E629C0078D854 /* TextureGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C21C219E629B0078D854 /* TextureGL.cpp */; };
-		ED28C27E219E629C0078D854 /* DeviceGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C21D219E629B0078D854 /* DeviceGL.cpp */; };
 		ED28C27F219E629C0078D854 /* CommandBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C21E219E629B0078D854 /* CommandBuffer.cpp */; };
 		ED28C280219E629C0078D854 /* CommandBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED28C21E219E629B0078D854 /* CommandBuffer.cpp */; };
 		ED682BBA213F5FC7001BF6CB /* libuv_a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED682BB9213F5FC6001BF6CB /* libuv_a.a */; };
@@ -2722,6 +2719,9 @@
 		46270FA31E1CC6A100AAA098 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../external/openssl/prebuilt/mac/libssl.a; sourceTree = "<group>"; };
 		46270FA61E1CC84500AAA098 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = ../external/openssl/prebuilt/ios/libcrypto.a; sourceTree = "<group>"; };
 		46270FA71E1CC84500AAA098 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = ../external/openssl/prebuilt/ios/libssl.a; sourceTree = "<group>"; };
+		462CBDD821D46525005712AB /* libglsl_optimizer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglsl_optimizer.a; path = "../external/glsl-optimizer/prebuilt/ios/libglsl_optimizer.a"; sourceTree = "<group>"; };
+		462CBDD921D46525005712AB /* libmesa.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmesa.a; path = "../external/glsl-optimizer/prebuilt/ios/libmesa.a"; sourceTree = "<group>"; };
+		462CBDDA21D46525005712AB /* libglcpp-library.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libglcpp-library.a"; path = "../external/glsl-optimizer/prebuilt/ios/libglcpp-library.a"; sourceTree = "<group>"; };
 		4631CA9121AFD9F90000D408 /* UIWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidget.cpp; sourceTree = "<group>"; };
 		4631CA9221AFD9F90000D408 /* UIRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRadioButton.h; sourceTree = "<group>"; };
 		4631CA9421AFD9F90000D408 /* UIVideoPlayer-ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIVideoPlayer-ios.mm"; sourceTree = "<group>"; };
@@ -2883,6 +2883,9 @@
 		46A15FFD1807A56F005B8026 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		46A15FFE1807A56F005B8026 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		46A15FFF1807A56F005B8026 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
+		46BD387221D35727002BD50F /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.1.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
+		46BD387421D35750002BD50F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.1.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		46BD387621D35867002BD50F /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		46BDE4A71FA32D3400104C05 /* libbox2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbox2d.a; path = ../external/Box2D/prebuilt/mac/libbox2d.a; sourceTree = "<group>"; };
 		46BDE4A91FA3316A00104C05 /* libbox2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbox2d.a; path = ../external/Box2D/prebuilt/ios/libbox2d.a; sourceTree = "<group>"; };
 		46C02E0518E91123004B7456 /* xxhash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xxhash.c; sourceTree = "<group>"; };
@@ -2949,9 +2952,6 @@
 		503DD8D31926736A00CD74DD /* CCDirectorCaller-ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "CCDirectorCaller-ios.mm"; sourceTree = "<group>"; };
 		503DD8D41926736A00CD74DD /* CCEAGLView-ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCEAGLView-ios.h"; sourceTree = "<group>"; };
 		503DD8D51926736A00CD74DD /* CCEAGLView-ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "CCEAGLView-ios.mm"; sourceTree = "<group>"; };
-		503DD8D61926736A00CD74DD /* CCES2Renderer-ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCES2Renderer-ios.h"; sourceTree = "<group>"; };
-		503DD8D71926736A00CD74DD /* CCES2Renderer-ios.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCES2Renderer-ios.m"; sourceTree = "<group>"; };
-		503DD8D81926736A00CD74DD /* CCESRenderer-ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCESRenderer-ios.h"; sourceTree = "<group>"; };
 		503DD8D91926736A00CD74DD /* CCGL-ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCGL-ios.h"; sourceTree = "<group>"; };
 		503DD8DA1926736A00CD74DD /* CCGLViewImpl-ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCGLViewImpl-ios.h"; sourceTree = "<group>"; };
 		503DD8DB1926736A00CD74DD /* CCGLViewImpl-ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "CCGLViewImpl-ios.mm"; sourceTree = "<group>"; };
@@ -3323,24 +3323,6 @@
 		ED28C205219E629B0078D854 /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
 		ED28C206219E629B0078D854 /* BindGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindGroup.h; sourceTree = "<group>"; };
 		ED28C207219E629B0078D854 /* VertexLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VertexLayout.h; sourceTree = "<group>"; };
-		ED28C20A219E629B0078D854 /* ShaderModuleGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShaderModuleGL.cpp; sourceTree = "<group>"; };
-		ED28C20B219E629B0078D854 /* Program.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Program.cpp; sourceTree = "<group>"; };
-		ED28C20C219E629B0078D854 /* BufferGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BufferGL.cpp; sourceTree = "<group>"; };
-		ED28C20D219E629B0078D854 /* BlendStateGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlendStateGL.cpp; sourceTree = "<group>"; };
-		ED28C20E219E629B0078D854 /* DepthStencilStateGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DepthStencilStateGL.cpp; sourceTree = "<group>"; };
-		ED28C20F219E629B0078D854 /* RenderPipelineGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RenderPipelineGL.h; sourceTree = "<group>"; };
-		ED28C210219E629B0078D854 /* ShaderModuleGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderModuleGL.h; sourceTree = "<group>"; };
-		ED28C211219E629B0078D854 /* BufferGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BufferGL.h; sourceTree = "<group>"; };
-		ED28C212219E629B0078D854 /* BlendStateGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlendStateGL.h; sourceTree = "<group>"; };
-		ED28C213219E629B0078D854 /* TextureGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureGL.h; sourceTree = "<group>"; };
-		ED28C215219E629B0078D854 /* DeviceGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceGL.h; sourceTree = "<group>"; };
-		ED28C216219E629B0078D854 /* DepthStencilStateGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepthStencilStateGL.h; sourceTree = "<group>"; };
-		ED28C218219E629B0078D854 /* RenderPipelineGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderPipelineGL.cpp; sourceTree = "<group>"; };
-		ED28C219219E629B0078D854 /* CommandBufferGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommandBufferGL.cpp; sourceTree = "<group>"; };
-		ED28C21A219E629B0078D854 /* CommandBufferGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandBufferGL.h; sourceTree = "<group>"; };
-		ED28C21B219E629B0078D854 /* Program.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Program.h; sourceTree = "<group>"; };
-		ED28C21C219E629B0078D854 /* TextureGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureGL.cpp; sourceTree = "<group>"; };
-		ED28C21D219E629B0078D854 /* DeviceGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DeviceGL.cpp; sourceTree = "<group>"; };
 		ED28C21E219E629B0078D854 /* CommandBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommandBuffer.cpp; sourceTree = "<group>"; };
 		ED5C8CBC21C0B3C100F280A7 /* label_distanceFieldGlow.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = label_distanceFieldGlow.frag; sourceTree = "<group>"; };
 		ED5C8CBD21C0B5B700F280A7 /* positionColor.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = positionColor.frag; sourceTree = "<group>"; };
@@ -3605,6 +3587,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				462CBDDB21D46525005712AB /* libglsl_optimizer.a in Frameworks */,
+				462CBDDC21D46525005712AB /* libmesa.a in Frameworks */,
+				462CBDDD21D46525005712AB /* libglcpp-library.a in Frameworks */,
 				ED682BC1213F63CB001BF6CB /* libuv_a.a in Frameworks */,
 				46BDE4AA1FA3316A00104C05 /* libbox2d.a in Frameworks */,
 				466F05251EF7659300B80080 /* libBulletCollision.a in Frameworks */,
@@ -3667,7 +3652,13 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				462CBDDA21D46525005712AB /* libglcpp-library.a */,
+				462CBDD821D46525005712AB /* libglsl_optimizer.a */,
+				462CBDD921D46525005712AB /* libmesa.a */,
+				46BD387621D35867002BD50F /* OpenGLES.framework */,
+				46BD387421D35750002BD50F /* QuartzCore.framework */,
 				46535CD821ABD63B005B5370 /* Metal.framework */,
+				46BD387221D35727002BD50F /* Metal.framework */,
 				46535CC821ABD352005B5370 /* libglcpp-library.a */,
 				46535CCE21ABD4AB005B5370 /* libglcpp-library.a */,
 				46535CC721ABD352005B5370 /* libglsl_optimizer.a */,
@@ -5060,9 +5051,6 @@
 				503DD8D31926736A00CD74DD /* CCDirectorCaller-ios.mm */,
 				503DD8D41926736A00CD74DD /* CCEAGLView-ios.h */,
 				503DD8D51926736A00CD74DD /* CCEAGLView-ios.mm */,
-				503DD8D61926736A00CD74DD /* CCES2Renderer-ios.h */,
-				503DD8D71926736A00CD74DD /* CCES2Renderer-ios.m */,
-				503DD8D81926736A00CD74DD /* CCESRenderer-ios.h */,
 				503DD8D91926736A00CD74DD /* CCGL-ios.h */,
 				503DD8DA1926736A00CD74DD /* CCGLViewImpl-ios.h */,
 				503DD8DB1926736A00CD74DD /* CCGLViewImpl-ios.mm */,
@@ -5391,7 +5379,6 @@
 				ED28C1F2219E629B0078D854 /* Device.h */,
 				ED28C202219E629B0078D854 /* Macros.h */,
 				460D4CF321ABD0C60075726E /* metal */,
-				ED28C209219E629B0078D854 /* opengl */,
 				ED28C1FB219E629B0078D854 /* RenderPassDescriptor.h */,
 				ED28C1EF219E629B0078D854 /* RenderPipeline.h */,
 				ED28C1F1219E629B0078D854 /* RenderPipelineDescriptor.h */,
@@ -5404,31 +5391,6 @@
 				ED28C207219E629B0078D854 /* VertexLayout.h */,
 			);
 			path = backend;
-			sourceTree = "<group>";
-		};
-		ED28C209219E629B0078D854 /* opengl */ = {
-			isa = PBXGroup;
-			children = (
-				ED28C211219E629B0078D854 /* BufferGL.h */,
-				ED28C20C219E629B0078D854 /* BufferGL.cpp */,
-				ED28C210219E629B0078D854 /* ShaderModuleGL.h */,
-				ED28C20A219E629B0078D854 /* ShaderModuleGL.cpp */,
-				ED28C212219E629B0078D854 /* BlendStateGL.h */,
-				ED28C20D219E629B0078D854 /* BlendStateGL.cpp */,
-				ED28C216219E629B0078D854 /* DepthStencilStateGL.h */,
-				ED28C20E219E629B0078D854 /* DepthStencilStateGL.cpp */,
-				ED28C20F219E629B0078D854 /* RenderPipelineGL.h */,
-				ED28C218219E629B0078D854 /* RenderPipelineGL.cpp */,
-				ED28C219219E629B0078D854 /* CommandBufferGL.cpp */,
-				ED28C21A219E629B0078D854 /* CommandBufferGL.h */,
-				ED28C21B219E629B0078D854 /* Program.h */,
-				ED28C20B219E629B0078D854 /* Program.cpp */,
-				ED28C213219E629B0078D854 /* TextureGL.h */,
-				ED28C21C219E629B0078D854 /* TextureGL.cpp */,
-				ED28C215219E629B0078D854 /* DeviceGL.h */,
-				ED28C21D219E629B0078D854 /* DeviceGL.cpp */,
-			);
-			path = opengl;
 			sourceTree = "<group>";
 		};
 		EDC7894321CA19FA00E1863C /* editor-support */ = {
@@ -6663,7 +6625,6 @@
 				507B3FDA1C31BDD30067B53E /* Quaternion.h in Headers */,
 				507B3FDB1C31BDD30067B53E /* CCTechnique.h in Headers */,
 				1A40D1621E8E56C7002E363A /* prettywriter.h in Headers */,
-				507B3FDE1C31BDD30067B53E /* CCES2Renderer-ios.h in Headers */,
 				507B3FE31C31BDD30067B53E /* CCEventListenerFocus.h in Headers */,
 				507B3FE41C31BDD30067B53E /* ccShader_PositionColor.frag in Headers */,
 				507B3FE71C31BDD30067B53E /* ccConfig.h in Headers */,
@@ -6743,7 +6704,6 @@
 				1A40D12C1E8E56C7002E363A /* diyfp.h in Headers */,
 				507B40C61C31BDD30067B53E /* CCMaterial.h in Headers */,
 				50864CD81C7BC1B100B3BAB1 /* cpSlideJoint.h in Headers */,
-				507B40CE1C31BDD30067B53E /* CCESRenderer-ios.h in Headers */,
 				507B40D01C31BDD30067B53E /* CCEventFocus.h in Headers */,
 				507B40D71C31BDD30067B53E /* CCCommon.h in Headers */,
 				507B40D81C31BDD30067B53E /* CCCameraBackgroundBrush.h in Headers */,
@@ -6825,7 +6785,6 @@
 				EDC78CFD21CA19FC00E1863C /* TextFieldReader.h in Headers */,
 				4631CBB221AFD9FA0000D408 /* UIListView.h in Headers */,
 				503DD8EC1926736A00CD74DD /* CCGLViewImpl-ios.h in Headers */,
-				ED28C26E219E629C0078D854 /* DeviceGL.h in Headers */,
 				50ABBEBA1925AB6F00A911A9 /* ccUTF8.h in Headers */,
 				50643BD619BFAEDA00EF68ED /* CCPlatformDefine.h in Headers */,
 				EDC78C7321CA19FC00E1863C /* WidgetCallBackHandlerProtocol.h in Headers */,
@@ -6838,7 +6797,6 @@
 				EDC78C6F21CA19FC00E1863C /* CCComBase.h in Headers */,
 				EDC78CA121CA19FC00E1863C /* WidgetReaderProtocol.h in Headers */,
 				4631CB6021AFD9F90000D408 /* CCUISingleLineTextField.h in Headers */,
-				ED28C268219E629C0078D854 /* BlendStateGL.h in Headers */,
 				1A40D1161E8E56C7002E363A /* encodings.h in Headers */,
 				5034CA3A191D591100CE6051 /* ccShader_PositionColorLengthTexture.frag in Headers */,
 				EDC78C1321CA19FB00E1863C /* CCBoneNode.h in Headers */,
@@ -6875,6 +6833,7 @@
 				50864CAA1C7BC1B000B3BAB1 /* cpDampedRotarySpring.h in Headers */,
 				4631CB1621AFD9F90000D408 /* UITextAtlas.h in Headers */,
 				46F9B72B21AFE64D009DF858 /* CCTableView.h in Headers */,
+				46BD388021D35A5B002BD50F /* DepthStencilStateMTL.h in Headers */,
 				1A40D1251E8E56C7002E363A /* fwd.h in Headers */,
 				1A570080180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
 				1A570084180BC5A10088DEC7 /* CCActionManager.h in Headers */,
@@ -6912,6 +6871,7 @@
 				50ABBE381925AB6F00A911A9 /* CCConsole.h in Headers */,
 				4631CBD221AFD9FA0000D408 /* UIScale9Sprite.h in Headers */,
 				46F9B6F121AFE64C009DF858 /* cocos-ext.h in Headers */,
+				46BD388A21D35A68002BD50F /* Utils.h in Headers */,
 				50ABBE8A1925AB6F00A911A9 /* CCMap.h in Headers */,
 				460D4CD021A54D650075726E /* CCShaderCache.h in Headers */,
 				503DD8E61926736A00CD74DD /* CCEAGLView-ios.h in Headers */,
@@ -6963,6 +6923,7 @@
 				50ABBE681925AB6F00A911A9 /* CCEventListenerCustom.h in Headers */,
 				50864CC81C7BC1B100B3BAB1 /* cpRatchetJoint.h in Headers */,
 				50864C9E1C7BC1B000B3BAB1 /* cpArbiter.h in Headers */,
+				46BD387B21D35A4A002BD50F /* BlendStateMTL.h in Headers */,
 				8525E3A31B291E42008EE815 /* clipper.hpp in Headers */,
 				50864C8F1C7BC1B000B3BAB1 /* chipmunk_ffi.h in Headers */,
 				EDC78D1D21CA19FC00E1863C /* CocoLoader.h in Headers */,
@@ -6971,6 +6932,7 @@
 				15AE1BBA19AADFF000C27E9E /* HttpClient.h in Headers */,
 				B6DD2FCA1B04825B00E47F5F /* DetourNavMeshBuilder.h in Headers */,
 				50693C611B6BF2AE005C5820 /* CCDownloader.h in Headers */,
+				46BD387E21D35A54002BD50F /* CommandBufferMTL.h in Headers */,
 				5034CA42191D591100CE6051 /* ccShader_Position_uColor.frag in Headers */,
 				ED28C230219E629B0078D854 /* Backend.h in Headers */,
 				52B47A2E1A5349A3004E4C60 /* HttpAsynConnection-apple.h in Headers */,
@@ -6983,6 +6945,7 @@
 				BA6249A91E77D2850096291C /* tinydir.h in Headers */,
 				B6DD2FEC1B04825B00E47F5F /* DetourProximityGrid.h in Headers */,
 				EDC78D1721CA19FC00E1863C /* CCComExtensionData.h in Headers */,
+				46BD388421D35A68002BD50F /* RenderPipelineMTL.h in Headers */,
 				1A5701CA180BCB5A0088DEC7 /* CCLabelTextFormatter.h in Headers */,
 				4631CB5E21AFD9F90000D408 /* UITextField+CCUITextInput.h in Headers */,
 				50643BDC19BFAF4400EF68ED /* CCStdC.h in Headers */,
@@ -6990,6 +6953,7 @@
 				5034CA22191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest.frag in Headers */,
 				50864CE01C7BC1B100B3BAB1 /* cpTransform.h in Headers */,
 				50ABBECE1925AB6F00A911A9 /* s3tc.h in Headers */,
+				46BD388221D35A62002BD50F /* DeviceMTL.h in Headers */,
 				50643BE519BFCF1800EF68ED /* CCPlatformMacros.h in Headers */,
 				3EACC9A719F5014D00EB3C5E /* CCLight.h in Headers */,
 				EDC78C9D21CA19FC00E1863C /* Node3DReader.h in Headers */,
@@ -7004,7 +6968,6 @@
 				EDC78CAD21CA19FC00E1863C /* CSTabControl_generated.h in Headers */,
 				4631CB1C21AFD9F90000D408 /* UILayoutComponent.h in Headers */,
 				1A5701E9180BCB8C0088DEC7 /* CCTransition.h in Headers */,
-				ED28C262219E629C0078D854 /* RenderPipelineGL.h in Headers */,
 				B6DD2FAE1B04825B00E47F5F /* DetourDebugDraw.h in Headers */,
 				EDC78C0521CA19FB00E1863C /* CCSkeletonNode.h in Headers */,
 				EDC78C7F21CA19FC00E1863C /* ProjectNodeReader.h in Headers */,
@@ -7031,7 +6994,6 @@
 				EDC78BF721CA19FB00E1863C /* CCInputDelegate.h in Headers */,
 				B6DD2FAA1B04825B00E47F5F /* DebugDraw.h in Headers */,
 				50864C8C1C7BC1B000B3BAB1 /* chipmunk.h in Headers */,
-				ED28C26A219E629C0078D854 /* TextureGL.h in Headers */,
 				B6DD2FDC1B04825B00E47F5F /* DetourLocalBoundary.h in Headers */,
 				15FB209A1AE7C57D00C31518 /* sweep.h in Headers */,
 				1A570213180BCBF40088DEC7 /* CCProgressTimer.h in Headers */,
@@ -7119,7 +7081,6 @@
 				1A40D1431E8E56C7002E363A /* strfunc.h in Headers */,
 				15AE1BBE19AADFF000C27E9E /* SocketIO.h in Headers */,
 				B6DD2FBA1B04825B00E47F5F /* DetourAlloc.h in Headers */,
-				ED28C266219E629C0078D854 /* BufferGL.h in Headers */,
 				294D7D971D0E67B4002CE7B7 /* CCDevice-apple.h in Headers */,
 				50864CBC1C7BC1B000B3BAB1 /* cpPinJoint.h in Headers */,
 				50ABBED61925AB6F00A911A9 /* utlist.h in Headers */,
@@ -7131,8 +7092,6 @@
 				1A40D1611E8E56C7002E363A /* prettywriter.h in Headers */,
 				EDC78C5721CA19FB00E1863C /* CCArmatureAnimation.h in Headers */,
 				5012169D1AC473A3009A4BEA /* CCTechnique.h in Headers */,
-				ED28C278219E629C0078D854 /* CommandBufferGL.h in Headers */,
-				503DD8E81926736A00CD74DD /* CCES2Renderer-ios.h in Headers */,
 				50ABBE6C1925AB6F00A911A9 /* CCEventListenerFocus.h in Headers */,
 				46F9B74721B0CB44009DF858 /* UIWebViewImpl-ios.h in Headers */,
 				EDC78C8721CA19FC00E1863C /* ListViewReader.h in Headers */,
@@ -7154,7 +7113,6 @@
 				EDC78CEF21CA19FC00E1863C /* CSBoneBinary_generated.h in Headers */,
 				46F9B73121AFE7C0009DF858 /* CCScrollView.h in Headers */,
 				50ABBEA61925AB6F00A911A9 /* CCScriptSupport.h in Headers */,
-				ED28C27A219E629C0078D854 /* Program.h in Headers */,
 				461FE09321CA129B00E5378F /* CCCallbackCommand.h in Headers */,
 				46C02E0A18E91123004B7456 /* xxhash.h in Headers */,
 				ED28C226219E629B0078D854 /* DepthStencilState.h in Headers */,
@@ -7163,7 +7121,6 @@
 				1A40D1671E8E56C7002E363A /* reader.h in Headers */,
 				EDC78D2D21CA19FC00E1863C /* CCSSceneReader.h in Headers */,
 				50ABBE3C1925AB6F00A911A9 /* CCData.h in Headers */,
-				ED28C270219E629C0078D854 /* DepthStencilStateGL.h in Headers */,
 				503DD8FA1926B0DB00CD74DD /* CCIMEDispatcher.h in Headers */,
 				50ABBEC81925AB6F00A911A9 /* etc1.h in Headers */,
 				B29594B71926D5EC003EEF37 /* CCMeshCommand.h in Headers */,
@@ -7212,6 +7169,7 @@
 				50643BD519BFAECF00EF68ED /* CCGL.h in Headers */,
 				B276EF601988D1D500CD400F /* CCVertexIndexData.h in Headers */,
 				4631CB7A21AFD9F90000D408 /* UIEditBoxImpl-common.h in Headers */,
+				46BD388621D35A68002BD50F /* ShaderModuleMTL.h in Headers */,
 				50ABBD5F1925AB0000A911A9 /* Vec3.h in Headers */,
 				4631CB2E21AFD9F90000D408 /* UIScrollViewBar.h in Headers */,
 				50ABBE821925AB6F00A911A9 /* CCEventType.h in Headers */,
@@ -7226,6 +7184,7 @@
 				EDC78C7921CA19FC00E1863C /* CSArmatureNode_generated.h in Headers */,
 				1A40D1371E8E56C7002E363A /* meta.h in Headers */,
 				B24AA98C195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */,
+				46BD388821D35A68002BD50F /* TextureMTL.h in Headers */,
 				50864CDA1C7BC1B100B3BAB1 /* cpSpace.h in Headers */,
 				46F9B74121B0CB44009DF858 /* UIWebView.h in Headers */,
 				EDC78D2721CA19FC00E1863C /* CCActionObject.h in Headers */,
@@ -7258,14 +7217,13 @@
 				1A40D12B1E8E56C7002E363A /* diyfp.h in Headers */,
 				50864CD71C7BC1B100B3BAB1 /* cpSlideJoint.h in Headers */,
 				4631CB4C21AFD9F90000D408 /* CCUIEditBoxIOS.h in Headers */,
-				503DD8EA1926736A00CD74DD /* CCESRenderer-ios.h in Headers */,
+				46BD387C21D35A4E002BD50F /* BufferMTL.h in Headers */,
 				50ABBE581925AB6F00A911A9 /* CCEventFocus.h in Headers */,
 				50ABC00A1926664800A911A9 /* CCCommon.h in Headers */,
 				4631CBDE21AFD9FA0000D408 /* UILayoutParameter.h in Headers */,
 				A045F6DF1BA816A1005076C7 /* CCCameraBackgroundBrush.h in Headers */,
 				15FB209E1AE7C57D00C31518 /* sweep_context.h in Headers */,
 				EDC78CD721CA19FC00E1863C /* Sprite3DReader.h in Headers */,
-				ED28C264219E629C0078D854 /* ShaderModuleGL.h in Headers */,
 				50ABBE5C1925AB6F00A911A9 /* CCEventKeyboard.h in Headers */,
 				EDC78CA521CA19FC00E1863C /* ButtonReader.h in Headers */,
 				1A2B22B51E6E5828001D5EC9 /* Uri.h in Headers */,
@@ -7938,7 +7896,6 @@
 				507B3C371C31BDD30067B53E /* CCEventListener.cpp in Sources */,
 				507B3C381C31BDD30067B53E /* CCRenderState.cpp in Sources */,
 				507B3C3B1C31BDD30067B53E /* CCTouch.cpp in Sources */,
-				507B3C401C31BDD30067B53E /* CCES2Renderer-ios.m in Sources */,
 				507B3C411C31BDD30067B53E /* cocos2d.cpp in Sources */,
 				507B3C491C31BDD30067B53E /* CCEventListenerFocus.cpp in Sources */,
 				507B3C4B1C31BDD30067B53E /* CCEventListenerCustom.cpp in Sources */,
@@ -8025,6 +7982,7 @@
 				EDC78D1F21CA19FC00E1863C /* TriggerMng.cpp in Sources */,
 				B6DD2FF21B04825B00E47F5F /* DetourTileCacheBuilder.cpp in Sources */,
 				EDC78CC721CA19FC00E1863C /* LayoutReader.cpp in Sources */,
+				46BD388721D35A68002BD50F /* ShaderModuleMTL.mm in Sources */,
 				4631CB9821AFD9FA0000D408 /* UIPageViewIndicator.cpp in Sources */,
 				EDC78D0721CA19FC00E1863C /* CCBone.cpp in Sources */,
 				503DD8E11926736A00CD74DD /* CCApplication-ios.mm in Sources */,
@@ -8068,7 +8026,6 @@
 				3E6176681960F89B00DE83F5 /* CCController-apple.mm in Sources */,
 				B29594B51926D5EC003EEF37 /* CCMeshCommand.cpp in Sources */,
 				EDC78D3321CA19FC00E1863C /* CCArmature.cpp in Sources */,
-				ED28C25E219E629C0078D854 /* BlendStateGL.cpp in Sources */,
 				298C75D61C0465D1006BAE63 /* CCStencilStateManager.cpp in Sources */,
 				50ABBE7E1925AB6F00A911A9 /* CCEventTouch.cpp in Sources */,
 				501216951AC47393009A4BEA /* CCPass.cpp in Sources */,
@@ -8081,7 +8038,6 @@
 				50ABBEA01925AB6F00A911A9 /* CCScheduler.cpp in Sources */,
 				50ABBE4E1925AB6F00A911A9 /* CCEventCustom.cpp in Sources */,
 				4631CB0E21AFD9F90000D408 /* UIWidget.cpp in Sources */,
-				ED28C276219E629C0078D854 /* CommandBufferGL.cpp in Sources */,
 				4631CB8C21AFD9FA0000D408 /* UILayout.cpp in Sources */,
 				1A40D0DD1E8E4C76002E363A /* md5.c in Sources */,
 				EDC78C5F21CA19FC00E1863C /* CCTransformHelp.cpp in Sources */,
@@ -8110,10 +8066,8 @@
 				468A14F61EF223B700ECA675 /* idl_parser.cpp in Sources */,
 				EDC78BE721CA19FB00E1863C /* CCComController.cpp in Sources */,
 				4631CBB021AFD9FA0000D408 /* UIImageView.cpp in Sources */,
-				ED28C258219E629C0078D854 /* ShaderModuleGL.cpp in Sources */,
 				50ABBED81925AB6F00A911A9 /* ZipUtils.cpp in Sources */,
 				460D4CCE21A54D650075726E /* CCShaderCache.cpp in Sources */,
-				ED28C27C219E629C0078D854 /* TextureGL.cpp in Sources */,
 				EDC78C0D21CA19FB00E1863C /* CCFrame.cpp in Sources */,
 				EDC78CD321CA19FC00E1863C /* CheckBoxReader.cpp in Sources */,
 				1A57008E180BC5A10088DEC7 /* CCActionTiledGrid.cpp in Sources */,
@@ -8163,7 +8117,6 @@
 				1A5701BE180BCB5A0088DEC7 /* CCLabelAtlas.cpp in Sources */,
 				15FB20751AE7BF8600C31518 /* CCAutoPolygon.cpp in Sources */,
 				1A087AE91860400400196EF5 /* edtaa3func.cpp in Sources */,
-				ED28C260219E629C0078D854 /* DepthStencilStateGL.cpp in Sources */,
 				B6DD2FC41B04825B00E47F5F /* DetourNavMesh.cpp in Sources */,
 				1A5701C8180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */,
 				EDC78CC921CA19FC00E1863C /* SingleNodeReader.cpp in Sources */,
@@ -8172,6 +8125,7 @@
 				4631CB4421AFD9F90000D408 /* UIEditBoxImpl-stub.cpp in Sources */,
 				4631CBB621AFD9FA0000D408 /* UITextBMFont.cpp in Sources */,
 				15FB20941AE7C57D00C31518 /* cdt.cc in Sources */,
+				46BD388521D35A68002BD50F /* RenderPipelineMTL.mm in Sources */,
 				EDC78C0321CA19FB00E1863C /* CCBoneNode.cpp in Sources */,
 				299754F5193EC95400A54AC3 /* ObjectFactory.cpp in Sources */,
 				1A5701DF180BCB8C0088DEC7 /* CCLayer.cpp in Sources */,
@@ -8180,11 +8134,14 @@
 				1A5701E3180BCB8C0088DEC7 /* CCScene.cpp in Sources */,
 				4631CB2A21AFD9F90000D408 /* UITextAtlas.cpp in Sources */,
 				50ABBD611925AB0000A911A9 /* Vec4.cpp in Sources */,
+				46BD388921D35A68002BD50F /* TextureMTL.mm in Sources */,
+				46BD387D21D35A51002BD50F /* BufferMTL.mm in Sources */,
 				1A5701E7180BCB8C0088DEC7 /* CCTransition.cpp in Sources */,
 				ED28C238219E629B0078D854 /* Device.cpp in Sources */,
 				50ABC01E1926664800A911A9 /* CCThread.cpp in Sources */,
 				1A5701EB180BCB8C0088DEC7 /* CCTransitionPageTurn.cpp in Sources */,
 				4631CB3221AFD9F90000D408 /* UIEditBoxImpl-common.cpp in Sources */,
+				46BD387A21D35A46002BD50F /* BlendStateMTL.mm in Sources */,
 				EDC78BE121CA19FB00E1863C /* CCProcessBase.cpp in Sources */,
 				1A5701EF180BCB8C0088DEC7 /* CCTransitionProgress.cpp in Sources */,
 				EDC78CDB21CA19FC00E1863C /* SliderReader.cpp in Sources */,
@@ -8207,6 +8164,7 @@
 				4631CB1421AFD9F90000D408 /* UIVideoPlayer-ios.mm in Sources */,
 				503DD8ED1926736A00CD74DD /* CCGLViewImpl-ios.mm in Sources */,
 				B6DD2FA81B04825B00E47F5F /* DebugDraw.cpp in Sources */,
+				46BD388321D35A68002BD50F /* DeviceMTL.mm in Sources */,
 				ED28C280219E629C0078D854 /* CommandBuffer.cpp in Sources */,
 				1A570215180BCBF40088DEC7 /* CCRenderTexture.cpp in Sources */,
 				1A570222180BCC1A0088DEC7 /* CCParticleBatchNode.cpp in Sources */,
@@ -8223,13 +8181,13 @@
 				B24AA986195A675C007B4522 /* CCFastTMXLayer.cpp in Sources */,
 				1A57022E180BCC1A0088DEC7 /* CCParticleSystemQuad.cpp in Sources */,
 				4631CB7C21AFD9F90000D408 /* UIEditBoxImpl-tizen.cpp in Sources */,
-				ED28C25A219E629C0078D854 /* Program.cpp in Sources */,
 				EDC78C8321CA19FC00E1863C /* GameNode3DReader.cpp in Sources */,
 				50ABBD901925AB4100A911A9 /* CCGLProgramCache.cpp in Sources */,
 				1A57027F180BCC900088DEC7 /* CCSprite.cpp in Sources */,
 				46E21B4821B900C900430A43 /* StringUtils.cpp in Sources */,
 				294D7D951D0E67B4002CE7B7 /* CCDevice-apple.mm in Sources */,
 				1A570283180BCC900088DEC7 /* CCSpriteBatchNode.cpp in Sources */,
+				46BD387F21D35A57002BD50F /* CommandBufferMTL.mm in Sources */,
 				4631CB7821AFD9F90000D408 /* UIEditBoxImpl-ios.mm in Sources */,
 				4631CBE021AFD9FA0000D408 /* UILayoutParameter.cpp in Sources */,
 				EDC78D2121CA19FC00E1863C /* CCSpriteFrameCacheHelper.cpp in Sources */,
@@ -8259,7 +8217,6 @@
 				50ABBD3D1925AB0000A911A9 /* CCGeometry.cpp in Sources */,
 				460D4CD621A5666E0075726E /* CCRenderer.cpp in Sources */,
 				EDC78C9521CA19FC00E1863C /* SpriteReader.cpp in Sources */,
-				ED28C27E219E629C0078D854 /* DeviceGL.cpp in Sources */,
 				4631CB9C21AFD9FA0000D408 /* UIVideoPlayer-tizen.cpp in Sources */,
 				50ABBECC1925AB6F00A911A9 /* s3tc.cpp in Sources */,
 				1A5702F7180BCE750088DEC7 /* CCTMXTiledMap.cpp in Sources */,
@@ -8297,9 +8254,7 @@
 				EDC78D3121CA19FC00E1863C /* CCComAttribute.cpp in Sources */,
 				50ABBE5E1925AB6F00A911A9 /* CCEventListener.cpp in Sources */,
 				5012168F1AC47380009A4BEA /* CCRenderState.cpp in Sources */,
-				ED28C25C219E629C0078D854 /* BufferGL.cpp in Sources */,
 				50ABBEA81925AB6F00A911A9 /* CCTouch.cpp in Sources */,
-				503DD8E91926736A00CD74DD /* CCES2Renderer-ios.m in Sources */,
 				5027253D190BF1B900AAF4ED /* cocos2d.cpp in Sources */,
 				50ABBE6A1925AB6F00A911A9 /* CCEventListenerFocus.cpp in Sources */,
 				50ABBE661925AB6F00A911A9 /* CCEventListenerCustom.cpp in Sources */,
@@ -8308,7 +8263,6 @@
 				503DD8F81926B0DB00CD74DD /* CCIMEDispatcher.cpp in Sources */,
 				50ABBDB21925AB4100A911A9 /* ccShaders.cpp in Sources */,
 				50ABBD451925AB0000A911A9 /* CCVertex.cpp in Sources */,
-				ED28C274219E629C0078D854 /* RenderPipelineGL.cpp in Sources */,
 				50ABBEB01925AB6F00A911A9 /* CCUserDefault.cpp in Sources */,
 				50ABBE521925AB6F00A911A9 /* CCEventDispatcher.cpp in Sources */,
 				4631CB9A21AFD9FA0000D408 /* UIRadioButton.cpp in Sources */,
@@ -8339,6 +8293,7 @@
 				50CB248019D9C5A100687767 /* AudioPlayer.mm in Sources */,
 				EDC78C5321CA19FB00E1863C /* CocoLoader.cpp in Sources */,
 				50ABBE9A1925AB6F00A911A9 /* CCRef.cpp in Sources */,
+				46BD388B21D35A68002BD50F /* Utils.mm in Sources */,
 				85B3743B1B204B9400C488D6 /* clipper.cpp in Sources */,
 				EDC78C9B21CA19FC00E1863C /* TextAtlasReader.cpp in Sources */,
 				4631CBD421AFD9FA0000D408 /* UIRichText.cpp in Sources */,
@@ -8394,6 +8349,7 @@
 				15EFA212198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */,
 				4631CBA421AFD9FA0000D408 /* UIListView.cpp in Sources */,
 				50ABBD981925AB4100A911A9 /* CCGLProgramStateCache.cpp in Sources */,
+				46BD388121D35A5F002BD50F /* DepthStencilStateMTL.mm in Sources */,
 				15AE1BBF19AADFF000C27E9E /* WebSocket.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8696,11 +8652,12 @@
 					"\"$(SRCROOT)/../external/bullet/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/Box2D/prebuilt/ios\"",
 					"$(SRCROOT)/../external/uv/prebuilt/ios",
+					"$(SRCROOT)/../external/glsl-optimizer/prebuilt/ios",
 				);
 				OTHER_LDFLAGS = "-llibsql3";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios/freetype2 $(SRCROOT)/../external/openssl/include/ios $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/uv/include";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios/freetype2 $(SRCROOT)/../external/openssl/include/ios $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/uv/include $(SRCROOT)/../external/glsl-optimizer/include";
 			};
 			name = Debug;
 		};
@@ -8734,11 +8691,12 @@
 					"\"$(SRCROOT)/../external/bullet/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/Box2D/prebuilt/ios\"",
 					"$(SRCROOT)/../external/uv/prebuilt/ios",
+					"$(SRCROOT)/../external/glsl-optimizer/prebuilt/ios",
 				);
 				OTHER_LDFLAGS = "-llibsql3";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios/freetype2 $(SRCROOT)/../external/openssl/include/ios $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/uv/include";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios/freetype2 $(SRCROOT)/../external/openssl/include/ios $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/uv/include $(SRCROOT)/../external/glsl-optimizer/include";
 			};
 			name = Release;
 		};
