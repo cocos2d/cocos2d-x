@@ -115,14 +115,22 @@ void CustomCommand::createIndexBuffer(unsigned int sizePerIndex, unsigned int co
 void CustomCommand::updateVertexBuffer(void* data, unsigned int offset, unsigned int length)
 {   
     assert(_vertexBuffer);
-    _vertexCount += length/_sizePerVertex;
+    if (offset)
+        _vertexCount += length / _sizePerVertex;
+    else
+        _vertexCount = length / _sizePerVertex;
+    
     _vertexBuffer->updateSubData(data, offset, length);
 }
 
 void CustomCommand::updateIndexBuffer(void* data, unsigned int offset, unsigned int length)
 {
     assert(_indexBuffer);
-    _indexCount += length/_sizePerIndex;
+    if (offset)
+        _indexCount += length / _sizePerIndex;
+    else
+        _indexCount = length / _sizePerIndex;
+    
     _indexBuffer->updateSubData(data, offset, length);
 }
 
@@ -144,6 +152,16 @@ CustomCommand::~CustomCommand()
 {
     CC_SAFE_RELEASE(_vertexBuffer);
     CC_SAFE_RELEASE(_indexBuffer);
+}
+
+void CustomCommand::clear()
+{
+    _vertexCount = 0;
+    _indexCount = 0;
+    _vertexStart = 0;
+    _vertexDrawCount = 0;
+    _indexBufferOffset = 0;
+    _indexDrawCount = 0;
 }
 
 NS_CC_END

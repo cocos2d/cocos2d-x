@@ -105,6 +105,8 @@ public:
     
     inline void setLineWidth(float lineWidth) { _lineWidth = lineWidth; }
     inline float getLineWidth() const { return _lineWidth; }
+    
+    void clear();
 
     /**Callback function.*/
     //TODO:minggo: should remove it.
