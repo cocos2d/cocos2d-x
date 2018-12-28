@@ -173,7 +173,6 @@ float _levelDecreaseThreshold = 0.2f;
 float _cpuFpsFactor = 1.0f;
 float _gpuFpsFactor = 1.0f;
 bool _isFpsChanged = false;
-float _oldRealFps = 60.0f;
 
 uint32_t _lowFpsCheckMode = 0; // 0: Continuous mode, 1: Average mode
 float _lowRealFpsThreshold = 0.5f; // Unit: percentage (0 ~ 1)

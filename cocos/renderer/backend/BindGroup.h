@@ -22,6 +22,7 @@ public:
         UniformInfo(const UniformInfo&);
         ~UniformInfo();
         UniformInfo& operator =(UniformInfo&& rhs);
+        UniformInfo& operator =(const UniformInfo& rhs);
         
         std::string name;
         uint32_t size = 0;
@@ -35,6 +36,7 @@ public:
         TextureInfo(const TextureInfo&);
         ~TextureInfo();
         TextureInfo& operator =(TextureInfo&& rhs);
+        TextureInfo& operator =(const TextureInfo& rhs);
         
         void retainTextures();
         void releaseTextures();

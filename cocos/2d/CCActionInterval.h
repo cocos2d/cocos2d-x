@@ -1561,14 +1561,14 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithAnimation(Animation *animation);
 
 protected:
-    std::vector<float>* _splitTimes;
-    int             _nextFrame;
-    SpriteFrame*    _origFrame;
-    int _currFrameIndex;
-    unsigned int    _executedLoops;
-    Animation*      _animation;
+    std::vector<float>* _splitTimes = new std::vector<float>;
+    int             _nextFrame = 0;
+    SpriteFrame*    _origFrame = nullptr;
+    int _currFrameIndex = 0;
+    unsigned int    _executedLoops = 0;
+    Animation*      _animation = nullptr;
 
-    EventCustom*    _frameDisplayedEvent;
+    EventCustom*    _frameDisplayedEvent = nullptr;
     AnimationFrame::DisplayedEventInfo _frameDisplayedEventInfo;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Animate);

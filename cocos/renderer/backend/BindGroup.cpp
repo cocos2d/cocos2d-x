@@ -36,11 +36,28 @@ BindGroup::UniformInfo& BindGroup::UniformInfo::operator=(UniformInfo&& rhs)
     {
         name = rhs.name;
         size = rhs.size;
-        
+
+        if (data) free(data);
         data = rhs.data;
         rhs.data = nullptr;
     }
     
+    return *this;
+}
+
+BindGroup::UniformInfo& BindGroup::UniformInfo::operator=(const UniformInfo& rhs)
+{
+    if (this != &rhs)
+    {
+        name = rhs.name;
+        size = rhs.size;
+
+        if (data) free(data);
+        data = malloc(size);
+        if (data)
+            memcpy(data, rhs.data, size);
+    }
+
     return *this;
 }
 
@@ -75,6 +92,21 @@ BindGroup::TextureInfo& BindGroup::TextureInfo::operator=(TextureInfo&& rhs)
         releaseTextures();
         textures = std::move(rhs.textures);
     }
+    return *this;
+}
+
+BindGroup::TextureInfo& BindGroup::TextureInfo::operator=(const TextureInfo& rhs)
+{
+    if (this != &rhs)
+    {
+        name = rhs.name;
+        indices = rhs.indices;
+
+        releaseTextures();
+        textures = rhs.textures;
+        retainTextures();
+    }
+
     return *this;
 }
 
