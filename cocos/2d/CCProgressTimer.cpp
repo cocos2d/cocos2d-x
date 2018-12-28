@@ -361,11 +361,13 @@ void ProgressTimer::updateRadial(void)
     {
         sameIndexCount = false;
         _vertexData.resize(index + 3);
+        _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size());
     }
 
     if (_indexData.size() != 3 + 3 * index)
     {
         _indexData.resize(3 + 3 * index);
+        _customCommand.createIndexBuffer(sizeof(_indexData[0]), _indexData.size());
     }
 
     //updateColor();
@@ -394,7 +396,6 @@ void ProgressTimer::updateRadial(void)
             _indexData[i * 3 + 2] = i + 1;
         }
 
-        _customCommand.createIndexBuffer(sizeof(_indexData[0]), _indexData.size());
         _customCommand.updateIndexBuffer(_indexData.data(), _indexData.size() * sizeof(_indexData[0]));
     }
 
@@ -402,7 +403,6 @@ void ProgressTimer::updateRadial(void)
     _vertexData[_vertexData.size() - 1].texCoords = textureCoordFromAlphaPoint(hit);
     _vertexData[_vertexData.size() - 1].vertices = vertexFromAlphaPoint(hit);
 
-    _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size());
 
     updateColor();
 }
@@ -449,7 +449,11 @@ void ProgressTimer::updateBar(void)
 
     if (!_reverseDirection) {
         
-        _vertexData.resize(4);
+        if (_vertexData.size() != 4)
+        {
+            _vertexData.resize(4);
+            _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size());
+        }
 
         //    TOPLEFT
         _vertexData[0].texCoords = textureCoordFromAlphaPoint(Vec2(min.x,max.y));
@@ -467,8 +471,9 @@ void ProgressTimer::updateBar(void)
         _vertexData[3].texCoords = textureCoordFromAlphaPoint(Vec2(max.x,min.y));
         _vertexData[3].vertices = vertexFromAlphaPoint(Vec2(max.x,min.y));
     } else {
-        if(_vertexData.empty()) {
+        if(_vertexData.size() != 8) {
             _vertexData.resize(8);
+            _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size());
             //    TOPLEFT 1
             _vertexData[0].texCoords = textureCoordFromAlphaPoint(Vec2(0,1));
             _vertexData[0].vertices = vertexFromAlphaPoint(Vec2(0,1));
@@ -503,7 +508,6 @@ void ProgressTimer::updateBar(void)
         _vertexData[5].vertices = vertexFromAlphaPoint(Vec2(max.x,min.y));
     }
     
-    _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size());
     updateColor();
 }
 
