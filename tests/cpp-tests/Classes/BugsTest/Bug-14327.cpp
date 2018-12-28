@@ -97,7 +97,7 @@ void Bug14327Layer::editBoxEditingDidBegin(cocos2d::ui::EditBox* editBox)
     log("editBox %p DidBegin !", editBox);
 }
 
-void Bug14327Layer::editBoxEditingDidEnd(cocos2d::ui::EditBox* editBox)
+void Bug14327Layer::editBoxEditingDidEndWithAction(cocos2d::ui::EditBox* editBox, cocos2d::ui::EditBoxDelegate::EditBoxEndAction EditBoxEndAction)
 {
     log("editBox %p DidEnd !", editBox);
 }

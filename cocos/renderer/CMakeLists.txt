@@ -1,37 +1,59 @@
 set(COCOS_RENDERER_HEADER
-    renderer/CCTextureCache.h
-    renderer/CCRenderer.h
-    renderer/CCMaterial.h
-    renderer/CCRenderCommandPool.h
-    renderer/ccShaders.h
-    renderer/CCMeshCommand.h
-    renderer/CCGLProgramStateCache.h
-    renderer/CCRenderCommand.h
-    renderer/CCTextureCube.h
+    renderer/CCBatchCommand.h
+    renderer/CCCallbackCommand.h
+    renderer/CCCustomCommand.h
+    renderer/CCFrameBuffer.h
     renderer/CCGLProgram.h
     renderer/CCGLProgramCache.h
-    renderer/CCTextureAtlas.h
+    renderer/CCGLProgramState.h
+    renderer/CCGLProgramStateCache.h
     renderer/CCGroupCommand.h
+    renderer/CCMaterial.h
+    renderer/CCMeshCommand.h
+    renderer/CCPass.h
+    renderer/CCPipelineDescriptor.h
+    renderer/CCPrimitive.h
+    renderer/CCPrimitiveCommand.h
+    renderer/CCQuadCommand.h
+    renderer/CCRenderCommand.h
+    renderer/CCRenderCommandPool.h
+    renderer/CCRenderState.h
+    renderer/CCRenderer.h
+    renderer/CCShaderCache.h
+    renderer/CCTechnique.h
+    renderer/CCTexture2D.h
+    renderer/CCTextureAtlas.h
+    renderer/CCTextureCache.h
+    renderer/CCTextureCube.h
+    renderer/CCTrianglesCommand.h
     renderer/CCVertexAttribBinding.h
     renderer/CCVertexIndexBuffer.h
     renderer/CCVertexIndexData.h
-    renderer/CCPrimitive.h
-    renderer/CCTexture2D.h
-    renderer/CCCustomCommand.h
-    renderer/CCFrameBuffer.h
-    renderer/CCQuadCommand.h
-    renderer/CCTechnique.h
-    renderer/CCPrimitiveCommand.h
-    renderer/CCGLProgramState.h
-    renderer/CCTrianglesCommand.h
-    renderer/CCBatchCommand.h
-    renderer/CCPass.h
-    renderer/CCRenderState.h
+    renderer/ccShaders.h
+
+    renderer/backend/Backend.h
+    renderer/backend/BindGroup.h
+    renderer/backend/BlendState.h
+    renderer/backend/Buffer.h
+    renderer/backend/CommandBuffer.h
+    renderer/backend/DepthStencilState.h
+    renderer/backend/Device.h
+    renderer/backend/Macros.h
+    renderer/backend/RenderPassDescriptor.h
+    renderer/backend/RenderPipeline.h
+    renderer/backend/RenderPipelineDescriptor.h
+    renderer/backend/ShaderModule.h
+    renderer/backend/StringUtils.h
+    renderer/backend/Texture.h
+    renderer/backend/Types.h
+    renderer/backend/VertexLayout.h
     )
 
 set(COCOS_RENDERER_SRC
     renderer/CCBatchCommand.cpp
+    renderer/CCCallbackCommand.cpp
     renderer/CCCustomCommand.cpp
+    renderer/CCFrameBuffer.cpp
     renderer/CCGLProgram.cpp
     renderer/CCGLProgramCache.cpp
     renderer/CCGLProgramState.cpp
@@ -46,6 +68,7 @@ set(COCOS_RENDERER_SRC
     renderer/CCRenderCommand.cpp
     renderer/CCRenderState.cpp
     renderer/CCRenderer.cpp
+    renderer/CCShaderCache.cpp
     renderer/CCTechnique.cpp
     renderer/CCTexture2D.cpp
     renderer/CCTextureAtlas.cpp
@@ -56,5 +79,41 @@ set(COCOS_RENDERER_SRC
     renderer/CCVertexIndexBuffer.cpp
     renderer/CCVertexIndexData.cpp
     renderer/ccShaders.cpp
-    renderer/CCFrameBuffer.cpp
+
+    renderer/backend/BindGroup.cpp
+    renderer/backend/BlendState.cpp
+    renderer/backend/CommandBuffer.cpp
+    renderer/backend/DepthStencilState.cpp
+    renderer/backend/Device.cpp
+    renderer/backend/ShaderModule.cpp
+    renderer/backend/StringUtils.cpp
+    renderer/backend/Texture.cpp
+    renderer/backend/VertexLayout.cpp
     )
+
+if(ANDROID OR WINDOWS) 
+
+list(APPEND COCOS_RENDERER_HEADER
+    renderer/backend/opengl/BufferGL.h
+    renderer/backend/opengl/CommandBufferGL.h
+    renderer/backend/opengl/DepthStencilStateGL.h
+    renderer/backend/opengl/DeviceGL.h
+    renderer/backend/opengl/Program.h
+    renderer/backend/opengl/RenderPipelineGL.h
+    renderer/backend/opengl/ShaderModuleGL.h
+    renderer/backend/opengl/TextureGL.h
+)
+
+list(APPEND COCOS_RENDERER_SRC
+    renderer/backend/opengl/BlendStateGL.cpp
+    renderer/backend/opengl/BufferGL.cpp
+    renderer/backend/opengl/CommandBufferGL.cpp
+    renderer/backend/opengl/DepthStencilStateGL.cpp
+    renderer/backend/opengl/DeviceGL.cpp
+    renderer/backend/opengl/Program.cpp
+    renderer/backend/opengl/RenderPipelineGL.cpp
+    renderer/backend/opengl/ShaderModuleGL.cpp
+    renderer/backend/opengl/TextureGL.cpp
+)
+
+endif()

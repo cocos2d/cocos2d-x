@@ -6,7 +6,7 @@
 #include "../BindGroup.h"
 #include "Program.h"
 #include "BlendStateGL.h"
-#include "ccMacros.h"
+#include "base/ccMacros.h"
 
 CC_BACKEND_BEGIN
 

@@ -133,7 +133,7 @@ void SkeletonBatch::deallocateIndices(uint32_t numIndices) {
 	
 cocos2d::TrianglesCommand* SkeletonBatch::addCommand(cocos2d::Renderer* renderer, float globalOrder, cocos2d::Texture2D* texture, cocos2d::GLProgramState* glProgramState, cocos2d::BlendFunc blendType, const cocos2d::TrianglesCommand::Triangles& triangles, const cocos2d::Mat4& mv, uint32_t flags) {
 	TrianglesCommand* command = nextFreeCommand();
-	command->init(globalOrder, texture, glProgramState, blendType, triangles, mv, flags);
+	command->init(globalOrder, texture, blendType, triangles, mv, flags);
 	renderer->addCommand(command);
 	return command;
 }

@@ -1,4 +1,5 @@
 #include "BufferGL.h"
+#include <cassert>
 
 CC_BACKEND_BEGIN
 

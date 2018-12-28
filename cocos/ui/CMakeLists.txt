@@ -63,17 +63,17 @@ elseif(LINUX)
         )
 elseif(ANDROID)
     set(COCOS_UI_SPECIFIC_HEADER
-        ui/UIWebView.h
+        ui/UIWebView/UIWebView.h
         ui/UIVideoPlayer.h
-        ui/UIWebViewImpl-android.h
+        ui/UIWebView/UIWebViewImpl-android.h
         ui/UIEditBox/UIEditBoxImpl-android.h
         )
     set(COCOS_UI_SPECIFIC_SRC
         ui/UIEditBox/UIEditBoxImpl-android.cpp
         ui/UIVideoPlayer-android.cpp
-        ui/UIWebViewImpl-android.cpp
+        ui/UIWebView/UIWebViewImpl-android.cpp
         # it's special for android, not a common file
-        ui/UIWebView.cpp
+        ui/UIWebView/UIWebView.cpp
         )
 endif()
 
@@ -85,7 +85,7 @@ set(COCOS_UI_HEADER
     ui/UIAbstractCheckButton.h
     ui/UIButton.h
     ui/UICheckBox.h
-    ui/UIDeprecated.h
+#    ui/UIDeprecated.h
     ui/UIHBox.h
     ui/UIHelper.h
     ui/UIImageView.h
@@ -120,7 +120,7 @@ set(COCOS_UI_SRC
     ui/UIAbstractCheckButton.cpp
     ui/UICheckBox.cpp
     ui/UIRadioButton.cpp
-    ui/UIDeprecated.cpp
+ #   ui/UIDeprecated.cpp
     ui/UIHBox.cpp
     ui/UIHelper.cpp
     ui/UIImageView.cpp

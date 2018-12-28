@@ -76,12 +76,12 @@ void RenderTexture::listenToBackground(EventCustom* /*event*/)
 
     if (_UITextureImage)
     {
-        const Size& s = _texture->getContentSizeInPixels();
-        VolatileTextureMgr::addDataTexture(_texture, _UITextureImage->getData(), s.width * s.height * 4, Texture2D::PixelFormat::RGBA8888, s);
+        const Size& s = _texture2D->getContentSizeInPixels();
+        VolatileTextureMgr::addDataTexture(_texture2D, _UITextureImage->getData(), s.width * s.height * 4, Texture2D::PixelFormat::RGBA8888, s);
         
-        if ( _textureCopy )
+        if ( _texture2DCopy )
         {
-            VolatileTextureMgr::addDataTexture(_textureCopy, _UITextureImage->getData(), s.width * s.height * 4, Texture2D::PixelFormat::RGBA8888, s);
+            VolatileTextureMgr::addDataTexture(_texture2DCopy, _UITextureImage->getData(), s.width * s.height * 4, Texture2D::PixelFormat::RGBA8888, s);
         }
     }
     else
@@ -94,16 +94,17 @@ void RenderTexture::listenToBackground(EventCustom* /*event*/)
 void RenderTexture::listenToForeground(EventCustom* /*event*/)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    const Size& s = _texture->getContentSizeInPixels();
-    if (_depthAndStencilFormat != 0)
-    {
-        setupDepthAndStencil(s.width, s.height);
-    }
+    const Size& s = _texture2D->getContentSizeInPixels();
+    //TODO new-renderer: field _depthAndStencilFormat removal
+//    if (_depthAndStencilFormat != 0)
+//    {
+//        setupDepthAndStencil(s.width, s.height);
+//    }
     
-    _texture->setAntiAliasTexParameters();
-    if(_textureCopy)
+    _texture2D->setAntiAliasTexParameters();
+    if(_texture2DCopy)
     {
-        _textureCopy->setAntiAliasTexParameters();
+        _texture2DCopy->setAntiAliasTexParameters();
     }
 #endif
 }

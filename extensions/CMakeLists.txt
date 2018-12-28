@@ -178,7 +178,7 @@ set(COCOS_EXTENSIONS_HEADER
     ../extensions/GUI/CCScrollView/CCTableViewCell.h
     ../extensions/GUI/CCScrollView/CCScrollView.h
     ../extensions/GUI/CCScrollView/CCTableView.h
-    ../extensions/ExtensionDeprecated.h
+#    ../extensions/ExtensionDeprecated.h
     ../extensions/ExtensionExport.h
     )
 
