@@ -30,6 +30,8 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 #include "renderer/CCPipelineDescriptor.h"
 
+#include <vector>
+
 NS_CC_BEGIN
 
 class Sprite;
@@ -182,8 +184,8 @@ protected:
     Vec2 _barChangeRate;
     float _percentage = 0.0f;
     Sprite *_sprite = nullptr;
-    int _vertexDataCount = 0;
-    V2F_C4B_T2F *_vertexData = nullptr;
+    std::vector<V2F_C4B_T2F> _vertexData;
+    std::vector<uint16_t> _indexData;
     bool _reverseDirection = false;
     
     CustomCommand _customCommand;

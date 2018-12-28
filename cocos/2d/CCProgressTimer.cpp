@@ -80,15 +80,14 @@ bool ProgressTimer::initWithSprite(Sprite* sp)
     vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, colorOffset, true);
     vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
     
-    _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
-    _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE_STRIP);
+    _customCommand.setDrawType(CustomCommand::DrawType::ELEMENT);
+    _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE);
     
     return true;
 }
 
 ProgressTimer::~ProgressTimer(void)
 {
-    CC_SAFE_FREE(_vertexData);
     CC_SAFE_RELEASE(_sprite);
 }
 
@@ -121,10 +120,9 @@ void ProgressTimer::setSprite(Sprite *sprite)
         setContentSize(_sprite->getContentSize());
 
         //    Every time we set a new sprite, we free the current vertex data
-        if (_vertexData)
+        if (!_vertexData.empty())
         {
-            CC_SAFE_FREE(_vertexData);
-            _vertexDataCount = 0;
+            _vertexData.clear();
             updateProgress();
         }
     }        
@@ -132,16 +130,22 @@ void ProgressTimer::setSprite(Sprite *sprite)
 
 void ProgressTimer::setType(Type type)
 {
+
+    if (type == Type::RADIAL)
+    {
+        _customCommand.setDrawType(CustomCommand::DrawType::ELEMENT);
+        _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE);
+    }
+    else
+    {
+        _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE_STRIP);
+        _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
+    }
+
     if (type != _type)
     {
         //    release all previous information
-        if (_vertexData)
-        {
-            CC_SAFE_FREE(_vertexData);
-            _vertexData = nullptr;
-            _vertexDataCount = 0;
-        }
-
+        _vertexData.clear();
         _type = type;
     }
 }
@@ -150,10 +154,8 @@ void ProgressTimer::setReverseDirection(bool reverse)
 {
     if( _reverseDirection != reverse ) {
         _reverseDirection = reverse;
-
         //    release all previous information
-        CC_SAFE_FREE(_vertexData);
-        _vertexDataCount = 0;
+        _vertexData.clear();
     }
 }
 
@@ -197,32 +199,31 @@ void ProgressTimer::updateColor()
     if (!_sprite)
         return;
 
-    if (_vertexData)
+    if (!_vertexData.empty())
     {
         const Color4B& sc = _sprite->getQuad().tl.colors;
-        for (int i = 0; i < _vertexDataCount; ++i)
+        for (int i = 0; i < _vertexData.size(); ++i)
         {
             _vertexData[i].colors = sc;
         }
-        _customCommand.updateVertexBuffer(_vertexData, sizeof(_vertexData[0]) * _vertexDataCount);
+        _customCommand.updateVertexBuffer(_vertexData.data(), sizeof(_vertexData[0]) * _vertexData.size());
     }
 }
 
 void ProgressTimer::updateProgress()
 {
-//    switch (_type)
-//    {
-//    case Type::RADIAL:
-//        updateRadial();
-//        break;
-//    case Type::BAR:
-//        updateBar();
-//        break;
-//    default:
-//        break;
-//    }
-    
-    updateBar();
+    switch (_type)
+    {
+    case Type::RADIAL:
+        updateRadial();
+        break;
+    case Type::BAR:
+        updateBar();
+        break;
+    default:
+        break;
+    }
+    //updateBar();
 }
 
 void ProgressTimer::setAnchorPoint(const Vec2& anchorPoint)
@@ -356,21 +357,18 @@ void ProgressTimer::updateRadial(void)
     //    the 3 is for the _midpoint, 12 o'clock point and hitpoint position.
 
     bool sameIndexCount = true;
-    if (_vertexDataCount != index + 3)
+    if (_vertexData.size() != index + 3)
     {
         sameIndexCount = false;
-        CC_SAFE_FREE(_vertexData);
-        _vertexDataCount = 0;
+        _vertexData.resize(index + 3);
     }
 
-
-    if (!_vertexData)
+    if (_indexData.size() != 3 + 3 * index)
     {
-        _vertexDataCount = index + 3;
-        _vertexData = (V2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V2F_C4B_T2F));
-        CCASSERT( _vertexData, "CCProgressTimer. Not enough memory");
+        _indexData.resize(3 + 3 * index);
     }
-    updateColor();
+
+    //updateColor();
 
     if (!sameIndexCount)
     {
@@ -388,11 +386,25 @@ void ProgressTimer::updateRadial(void)
             _vertexData[i+2].texCoords = textureCoordFromAlphaPoint(alphaPoint);
             _vertexData[i+2].vertices = vertexFromAlphaPoint(alphaPoint);
         }
+
+        for (int i = 0; i < index + 1; i++)
+        {
+            _indexData[i * 3] = 0;
+            _indexData[i * 3 + 1] = i + 2;
+            _indexData[i * 3 + 2] = i + 1;
+        }
+
+        _customCommand.createIndexBuffer(sizeof(_indexData[0]), _indexData.size());
+        _customCommand.updateIndexBuffer(_indexData.data(), _indexData.size() * sizeof(_indexData[0]));
     }
 
     //    hitpoint will go last
-    _vertexData[_vertexDataCount - 1].texCoords = textureCoordFromAlphaPoint(hit);
-    _vertexData[_vertexDataCount - 1].vertices = vertexFromAlphaPoint(hit);
+    _vertexData[_vertexData.size() - 1].texCoords = textureCoordFromAlphaPoint(hit);
+    _vertexData[_vertexData.size() - 1].vertices = vertexFromAlphaPoint(hit);
+
+    _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size());
+
+    updateColor();
 }
 
 ///
@@ -436,11 +448,9 @@ void ProgressTimer::updateBar(void)
 
 
     if (!_reverseDirection) {
-        if (! _vertexData) {
-            _vertexDataCount = 4;
-            _vertexData = (V2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V2F_C4B_T2F));
-            CCASSERT( _vertexData, "CCProgressTimer. Not enough memory");
-        }
+        
+        _vertexData.resize(4);
+
         //    TOPLEFT
         _vertexData[0].texCoords = textureCoordFromAlphaPoint(Vec2(min.x,max.y));
         _vertexData[0].vertices = vertexFromAlphaPoint(Vec2(min.x,max.y));
@@ -457,10 +467,8 @@ void ProgressTimer::updateBar(void)
         _vertexData[3].texCoords = textureCoordFromAlphaPoint(Vec2(max.x,min.y));
         _vertexData[3].vertices = vertexFromAlphaPoint(Vec2(max.x,min.y));
     } else {
-        if(!_vertexData) {
-            _vertexDataCount = 8;
-            _vertexData = (V2F_C4B_T2F*)malloc(_vertexDataCount * sizeof(V2F_C4B_T2F));
-            CCASSERT( _vertexData, "CCProgressTimer. Not enough memory");
+        if(_vertexData.empty()) {
+            _vertexData.resize(8);
             //    TOPLEFT 1
             _vertexData[0].texCoords = textureCoordFromAlphaPoint(Vec2(0,1));
             _vertexData[0].vertices = vertexFromAlphaPoint(Vec2(0,1));
@@ -495,7 +503,7 @@ void ProgressTimer::updateBar(void)
         _vertexData[5].vertices = vertexFromAlphaPoint(Vec2(max.x,min.y));
     }
     
-    _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexDataCount);
+    _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size());
     updateColor();
 }
 
@@ -514,7 +522,7 @@ Vec2 ProgressTimer::boundaryTexCoord(char index)
 
 void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    if( ! _vertexData || ! _sprite)
+    if( _vertexData.empty() || ! _sprite)
         return;
     
     //TODO: support rial
@@ -535,21 +543,30 @@ void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
     pipelineDescriptor.bindGroup.setUniform("u_MVPMatrix", finalMat.m, sizeof(finalMat.m));
     pipelineDescriptor.bindGroup.setTexture("u_texture", 0, _sprite->getTexture()->getBackendTexture());
     
-    if (!_reverseDirection)
+
+    if(_type == Type::BAR)
     {
-        _customCommand.init(_globalZOrder, transform, flags);
-        _customCommand.setVertexDrawInfo(0, _vertexDataCount);
-        renderer->addCommand(&_customCommand);
+        if (!_reverseDirection)
+        {
+            _customCommand.init(_globalZOrder, transform, flags);
+            _customCommand.setVertexDrawInfo(0, _vertexData.size());
+            renderer->addCommand(&_customCommand);
+        }
+        else
+        {
+            _customCommand.init(_globalZOrder, transform, flags);
+            _customCommand.setVertexDrawInfo(0, _vertexData.size() / 2);
+            renderer->addCommand(&_customCommand);
+        
+            _customCommand2 = _customCommand;
+            _customCommand2.setVertexDrawInfo(4, _vertexData.size() / 2);
+            renderer->addCommand(&_customCommand2);
+        }
     }
     else
     {
-        _customCommand.init(_globalZOrder, transform, flags);
-        _customCommand.setVertexDrawInfo(0, _vertexDataCount / 2);
+        _customCommand.init(_globalZOrder);
         renderer->addCommand(&_customCommand);
-        
-        _customCommand2 = _customCommand;
-        _customCommand2.setVertexDrawInfo(4, _vertexDataCount / 2);
-        renderer->addCommand(&_customCommand2);
     }
 }
 
