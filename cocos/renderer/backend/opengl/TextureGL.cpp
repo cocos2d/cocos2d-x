@@ -1,5 +1,6 @@
 #include "TextureGL.h"
 #include "base/ccMacros.h"
+#include "platform/CCPlatformConfig.h"
 
 CC_BACKEND_BEGIN
 
@@ -236,10 +237,15 @@ void TextureGL::toGLTypes()
 //            _internalFormat = GL_DEPTH_COMPONENT;
 //            _type = GL_UNSIGNED_INT;
         case TextureFormat::D24S8:
-            //TODO new-renderer: OpenGL / OpenGLES difference, enums are not defined
-            //_format = GL_DEPTH_STENCIL_OES;
-            //_internalFormat = GL_DEPTH_STENCIL_OES;
-            //_type = GL_UNSIGNED_INT_24_8_OES;
+#ifdef CC_USE_GLES
+            _format = GL_DEPTH_STENCIL_OES;
+            _internalFormat = GL_DEPTH_STENCIL_OES;
+            _type = GL_UNSIGNED_INT_24_8_OES;
+#else
+            _format = GL_DEPTH_STENCIL;
+            _internalFormat = GL_DEPTH32F_STENCIL8;
+            _type = GL_FLOAT_32_UNSIGNED_INT_24_8_REV;
+#endif
             break;
         default:
             break;
