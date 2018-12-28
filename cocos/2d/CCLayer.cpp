@@ -726,10 +726,9 @@ LayerRadialGradient::LayerRadialGradient()
     vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32, 0, false);
     vertexLayout.setLayout(sizeof(_vertices[0]), backend::VertexStepMode::VERTEX);
 
-    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionColor_vert);
-    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionColor_frag);
-
     _customCommand.createVertexBuffer(sizeof(_vertices[0]), sizeof(_vertices) / sizeof(_vertices[0]));
+    _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
+    _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE_STRIP);
 }
 
 LayerRadialGradient::~LayerRadialGradient()
@@ -765,9 +764,13 @@ void LayerRadialGradient::draw(Renderer *renderer, const Mat4 &transform, uint32
     _customCommand.init(_globalZOrder, _blendFunc);
     renderer->addCommand(&_customCommand);
 
+    const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     auto& bindGroup = _customCommand.getPipelineDescriptor().bindGroup;
-    bindGroup.setUniform("u_startColor", &_startColor, sizeof(_startColor));
-    bindGroup.setUniform("u_endColor", &_endColor, sizeof(_endColor));
+    Mat4 finalMat = projectionMat * transform;
+    bindGroup.setUniform("u_MVPMatrix", finalMat.m, sizeof(finalMat.m));
+
+    bindGroup.setUniform("u_startColor", &_startColorRend, sizeof(_startColorRend));
+    bindGroup.setUniform("u_endColor", &_endColorRend, sizeof(_endColorRend));
     bindGroup.setUniform("u_center", &_center, sizeof(_center));
     bindGroup.setUniform("u_radius", &_radius, sizeof(_radius));
     bindGroup.setUniform("u_expand", &_expand, sizeof(_expand));

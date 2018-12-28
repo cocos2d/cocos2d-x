@@ -89,8 +89,12 @@ RenderPipelineMTL::RenderPipelineMTL(id<MTLDevice> mtlDevice, const RenderPipeli
         _blendDescriptorMTL = blendState->getBlendDescriptorMTL();
     
     setBlendStateAndFormat(descriptor);
-    
-    _mtlRenderPipelineState = [_mtlDevice newRenderPipelineStateWithDescriptor:_mtlRenderPipelineDescriptor error:nil];
+
+    NSError *error = nil;
+    _mtlRenderPipelineState = [_mtlDevice newRenderPipelineStateWithDescriptor:_mtlRenderPipelineDescriptor error:&error];
+    if (error)
+        NSLog(@"Can not create renderpipeline state: %@", error);
+
     [_mtlRenderPipelineDescriptor release];
 }
 
