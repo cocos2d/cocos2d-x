@@ -883,7 +883,7 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
             _retinaFactor = 2;
         }
 
-        glfwSetWindowSize(window, static_cast<int>(frameSizeW * 0.5f * _retinaFactor * _frameZoomFactor) , static_cast<int>(frameSizeH * 0.5f * _retinaFactor * _frameZoomFactor));
+        glfwSetWindowSize(window, static_cast<int>(frameSizeW * 0.5f * _retinaFactor * _frameZoomFactor), static_cast<int>(frameSizeH * 0.5f * _retinaFactor * _frameZoomFactor));
     }
     else if (std::abs(factorX - 2.0f) < FLT_EPSILON && std::abs(factorY - 2.0f) < FLT_EPSILON)
     {
@@ -1000,41 +1000,42 @@ static bool glew_dynamic_binding()
 // helper
 bool GLViewImpl::initGlew()
 {
-//#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
-//    GLenum GlewInitResult = glewInit();
-//    if (GLEW_OK != GlewInitResult)
-//    {
-//        MessageBox((char *)glewGetErrorString(GlewInitResult), "OpenGL error");
-//        return false;
-//    }
-//
-//    if (GLEW_ARB_vertex_shader && GLEW_ARB_fragment_shader)
-//    {
-//        log("Ready for GLSL");
-//    }
-//    else
-//    {
-//        log("Not totally ready :(");
-//    }
-//
-//    if (glewIsSupported("GL_VERSION_2_0"))
-//    {
-//        log("Ready for OpenGL 2.0");
-//    }
-//    else
-//    {
-//        log("OpenGL 2.0 not supported");
-//    }
+
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+//#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
+    GLenum GlewInitResult = glewInit();
+    if (GLEW_OK != GlewInitResult)
+    {
+        MessageBox((char *)glewGetErrorString(GlewInitResult), "OpenGL error");
+        return false;
+    }
+
+    if (GLEW_ARB_vertex_shader && GLEW_ARB_fragment_shader)
+    {
+        log("Ready for GLSL");
+    }
+    else
+    {
+        log("Not totally ready :(");
+    }
+
+    if (glewIsSupported("GL_VERSION_2_0"))
+    {
+        log("Ready for OpenGL 2.0");
+    }
+    else
+    {
+        log("OpenGL 2.0 not supported");
+    }
+
+
     if(glew_dynamic_binding() == false)
     {
         MessageBox("No OpenGL framebuffer support. Please upgrade the driver of your video card.", "OpenGL error");
         return false;
     }
 #endif
-
-//#endif // (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
 
     return true;
 }

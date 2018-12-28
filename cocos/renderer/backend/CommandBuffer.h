@@ -7,6 +7,7 @@
 #include "Macros.h"
 #include "Types.h"
 #include "RenderPassDescriptor.h"
+#include "CCStdC.h"
 
 CC_BACKEND_BEGIN
 

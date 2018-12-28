@@ -53,7 +53,7 @@ class TrianglesCommand;
 class MeshCommand;
 class GroupCommand;
 class CallbackCommand;
-class PipelineDescriptor;
+struct PipelineDescriptor;
 class Texture2D;
 
 /** Class that knows how to sort `RenderCommand` objects.

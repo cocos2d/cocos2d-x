@@ -5,6 +5,8 @@
 
 #include "platform/CCGL.h"
 
+#include "CCStdC.h"
+
 #include <vector>
 
 CC_BACKEND_BEGIN

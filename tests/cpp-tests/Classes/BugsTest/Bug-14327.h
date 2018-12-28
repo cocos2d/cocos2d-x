@@ -27,7 +27,10 @@
 
 #include "BugsTest.h"
 
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+
+#include "ui/UIEditBox/UIEditBox.h"
 
 class Bug14327Layer : public BugsTestBase, public cocos2d::ui::EditBoxDelegate
 {
@@ -37,7 +40,7 @@ public:
     virtual bool init() override;
 
     virtual void editBoxEditingDidBegin(cocos2d::ui::EditBox* editBox) override;
-    virtual void editBoxEditingDidEnd(cocos2d::ui::EditBox* editBox) override;
+    virtual void editBoxEditingDidEndWithAction(cocos2d::ui::EditBox* editBox, cocos2d::ui::EditBoxDelegate::EditBoxEndAction EditBoxEndAction) override;
     virtual void editBoxTextChanged(cocos2d::ui::EditBox* editBox, const std::string& text) override;
     virtual void editBoxReturn(cocos2d::ui::EditBox* editBox) override;
 

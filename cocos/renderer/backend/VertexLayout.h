@@ -17,9 +17,9 @@ public:
     {
         Attribute(const std::string& _name, unsigned int _index, VertexFormat _format, unsigned int _offset, bool needToBeNormallized)
         : name(_name)
-        , index(_index)
         , format(_format)
         , offset(_offset)
+        , index(_index)
         , needToBeNormallized(needToBeNormallized)
         {}
         

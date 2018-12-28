@@ -89,14 +89,14 @@ list(APPEND GAME_HEADER
      Classes/precheader.h
      Classes/CurlTest/CurlTest.h
      Classes/UnitTest/UnitTest.h
-     Classes/UnitTest/RefPtrTest.h
+#    Classes/UnitTest/RefPtrTest.h
      Classes/ConfigurationTest/ConfigurationTest.h
      Classes/CurrentLanguageTest/CurrentLanguageTest.h
      Classes/AppDelegate.h
-     Classes/LabelTest/LabelTestNew.h
-     Classes/LabelTest/LabelTest.h
+#     Classes/LabelTest/LabelTestNew.h
+#     Classes/LabelTest/LabelTest.h
      Classes/Particle3DTest/Particle3DTest.h
-     Classes/AllocatorTest/AllocatorTest.h
+#     Classes/AllocatorTest/AllocatorTest.h
      Classes/VibrateTest/VibrateTest.h
      Classes/ClippingNodeTest/ClippingNodeTest.h
      Classes/UserDefaultTest/UserDefaultTest.h
@@ -156,7 +156,7 @@ list(APPEND GAME_HEADER
      Classes/CocosDenshionTest/CocosDenshionTest.h
      Classes/InputTest/MouseTest.h
      Classes/SpineTest/SpineTest.h
-     Classes/Scene3DTest/Scene3DTest.h
+#     Classes/Scene3DTest/Scene3DTest.h
      Classes/ParticleTest/ParticleTest.h
      Classes/EffectsTest/EffectsTest.h
      Classes/UITest/UITest.h
@@ -216,7 +216,7 @@ list(APPEND GAME_SOURCE
      Classes/ActionsEaseTest/ActionsEaseTest.cpp
      Classes/ActionsProgressTest/ActionsProgressTest.cpp
      Classes/ActionsTest/ActionsTest.cpp
-     Classes/AllocatorTest/AllocatorTest.cpp
+#     Classes/AllocatorTest/AllocatorTest.cpp
      Classes/AppDelegate.cpp
      Classes/BaseTest.cpp
      Classes/BillBoardTest/BillBoardTest.cpp
@@ -261,8 +261,8 @@ list(APPEND GAME_SOURCE
      Classes/FontTest/FontTest.cpp
      Classes/InputTest/MouseTest.cpp
      Classes/IntervalTest/IntervalTest.cpp
-     Classes/LabelTest/LabelTest.cpp
-     Classes/LabelTest/LabelTestNew.cpp
+ #    Classes/LabelTest/LabelTest.cpp
+ #    Classes/LabelTest/LabelTestNew.cpp
      Classes/LayerTest/LayerTest.cpp
      Classes/LightTest/LightTest.cpp
      Classes/MaterialSystemTest/MaterialSystemTest.cpp
@@ -285,7 +285,7 @@ list(APPEND GAME_SOURCE
      Classes/ShaderTest/ShaderTest.cpp
      Classes/ShaderTest/ShaderTest2.cpp
      Classes/SpineTest/SpineTest.cpp
-     Classes/Scene3DTest/Scene3DTest.cpp
+#     Classes/Scene3DTest/Scene3DTest.cpp
      Classes/Sprite3DTest/DrawNode3D.cpp
      Classes/Sprite3DTest/Sprite3DTest.cpp
      Classes/SpritePolygonTest/SpritePolygonTest.cpp
@@ -324,7 +324,7 @@ list(APPEND GAME_SOURCE
      Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp
      Classes/UITest/CocoStudioGUITest/UITabControlTest/UITabControlTest.cpp
      Classes/UITest/UITest.cpp
-     Classes/UnitTest/RefPtrTest.cpp
+#     Classes/UnitTest/RefPtrTest.cpp
      Classes/UnitTest/UnitTest.cpp
      Classes/UserDefaultTest/UserDefaultTest.cpp
      Classes/VisibleRect.cpp

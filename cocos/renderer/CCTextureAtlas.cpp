@@ -35,6 +35,8 @@ THE SOFTWARE.
 #include "base/CCEventType.h"
 #include "base/CCDirector.h"
 #include "base/CCConfiguration.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventListenerCustom.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTexture2D.h"
