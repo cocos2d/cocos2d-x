@@ -42,6 +42,40 @@ NS_CC_BEGIN
 //  kProgressTextureCoords holds points {0,1} {0,0} {1,0} {1,1} we can represent it as bits
 const char kProgressTextureCoords = 0x4b;
 
+namespace
+{
+    void initPipelineDescriptor(cocos2d::CustomCommand& command, bool ridal)
+    {
+        auto& pipelieDescriptor = command.getPipelineDescriptor();
+        pipelieDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
+        pipelieDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
+
+        //set vertexLayout according to V2F_C4B_T2F structure
+    #define VERTEX_POSITION_SIZE 2
+    #define VERTEX_TEXCOORD_SIZE 2
+    #define VERTEX_COLOR_SIZE 4
+        uint32_t colorOffset = (VERTEX_POSITION_SIZE)*sizeof(float);
+        uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+        uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+        auto& vertexLayout = pipelieDescriptor.vertexLayout;
+        vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32, 0, false);
+        vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset, false);
+        vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, colorOffset, true);
+        vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
+
+        if (ridal)
+        {
+            command.setDrawType(CustomCommand::DrawType::ELEMENT);
+            command.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE);
+        }
+        else
+        {
+            command.setDrawType(CustomCommand::DrawType::ARRAY);
+            command.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE_STRIP);
+        }
+    }
+}
+
 
 ProgressTimer* ProgressTimer::create(Sprite* sp)
 {
@@ -63,25 +97,8 @@ bool ProgressTimer::initWithSprite(Sprite* sp)
     setBarChangeRate(Vec2(1,1));
     setSprite(sp);
 
-    auto& pipelieDescriptor = _customCommand.getPipelineDescriptor();
-    pipelieDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
-    pipelieDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
-    
-    //set vertexLayout according to V2F_C4B_T2F structure
-#define VERTEX_POSITION_SIZE 2
-#define VERTEX_TEXCOORD_SIZE 2
-#define VERTEX_COLOR_SIZE 4
-    uint32_t colorOffset = (VERTEX_POSITION_SIZE)*sizeof(float);
-    uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
-    uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
-    auto& vertexLayout = pipelieDescriptor.vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32, 0, false);
-    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset, false);
-    vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, colorOffset, true);
-    vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
-    
-    _customCommand.setDrawType(CustomCommand::DrawType::ELEMENT);
-    _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE);
+    initPipelineDescriptor(_customCommand, true);
+    initPipelineDescriptor(_customCommand2, false);
     
     return true;
 }
@@ -206,7 +223,6 @@ void ProgressTimer::updateColor()
         {
             _vertexData[i].colors = sc;
         }
-        _customCommand.updateVertexBuffer(_vertexData.data(), sizeof(_vertexData[0]) * _vertexData.size());
     }
 }
 
@@ -223,7 +239,6 @@ void ProgressTimer::updateProgress()
     default:
         break;
     }
-    //updateBar();
 }
 
 void ProgressTimer::setAnchorPoint(const Vec2& anchorPoint)
@@ -361,16 +376,14 @@ void ProgressTimer::updateRadial(void)
     {
         sameIndexCount = false;
         _vertexData.resize(index + 3);
-        _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size());
+        _customCommand.createVertexBuffer(sizeof(_vertexData[0]), (unsigned int)_vertexData.size());
     }
 
     if (_indexData.size() != 3 + 3 * index)
     {
         _indexData.resize(3 + 3 * index);
-        _customCommand.createIndexBuffer(sizeof(_indexData[0]), _indexData.size());
+        _customCommand.createIndexBuffer(sizeof(_indexData[0]), (unsigned int)_indexData.size());
     }
-
-    //updateColor();
 
     if (!sameIndexCount)
     {
@@ -396,15 +409,15 @@ void ProgressTimer::updateRadial(void)
             _indexData[i * 3 + 2] = i + 1;
         }
 
-        _customCommand.updateIndexBuffer(_indexData.data(), _indexData.size() * sizeof(_indexData[0]));
+        _customCommand.updateIndexBuffer(_indexData.data(), (unsigned int)(_indexData.size() * sizeof(_indexData[0])) );
     }
 
     //    hitpoint will go last
     _vertexData[_vertexData.size() - 1].texCoords = textureCoordFromAlphaPoint(hit);
     _vertexData[_vertexData.size() - 1].vertices = vertexFromAlphaPoint(hit);
 
-
     updateColor();
+    _customCommand.updateVertexBuffer(_vertexData.data(), sizeof(_vertexData[0]) * _vertexData.size());
 }
 
 ///
@@ -470,10 +483,15 @@ void ProgressTimer::updateBar(void)
         //    BOTRIGHT
         _vertexData[3].texCoords = textureCoordFromAlphaPoint(Vec2(max.x,min.y));
         _vertexData[3].vertices = vertexFromAlphaPoint(Vec2(max.x,min.y));
+
+        updateColor();
+
+        _customCommand.updateVertexBuffer(_vertexData.data(), sizeof(_vertexData[0]) * _vertexData.size());
     } else {
         if(_vertexData.size() != 8) {
             _vertexData.resize(8);
-            _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size());
+            _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size() / 2);
+            _customCommand2.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size() / 2);
             //    TOPLEFT 1
             _vertexData[0].texCoords = textureCoordFromAlphaPoint(Vec2(0,1));
             _vertexData[0].vertices = vertexFromAlphaPoint(Vec2(0,1));
@@ -506,9 +524,12 @@ void ProgressTimer::updateBar(void)
         //    BOTLEFT 2
         _vertexData[5].texCoords = textureCoordFromAlphaPoint(Vec2(max.x,min.y));
         _vertexData[5].vertices = vertexFromAlphaPoint(Vec2(max.x,min.y));
+
+        updateColor();
+
+        _customCommand.updateVertexBuffer(_vertexData.data(), sizeof(_vertexData[0]) * _vertexData.size() / 2);
+        _customCommand2.updateVertexBuffer((char*)_vertexData.data() + sizeof(_vertexData[0]) * _vertexData.size() / 2, sizeof(_vertexData[0]) * _vertexData.size() / 2);
     }
-    
-    updateColor();
 }
 
 Vec2 ProgressTimer::boundaryTexCoord(char index)
@@ -528,19 +549,7 @@ void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
 {
     if( _vertexData.empty() || ! _sprite)
         return;
-    
-    //TODO: support rial
-    
-    
-    //TODO: GL::blendFunc( _sprite->getBlendFunc().src, _sprite->getBlendFunc().dst );
-    backend::BlendDescriptor& blendDescriptor = _customCommand.getPipelineDescriptor().blendDescriptor;
-    blendDescriptor.blendEnabled = true;
-    blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::ONE;
-    blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-    blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::ONE;
-    blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-    
-    backend::BindGroup bindGroup;
+
     const cocos2d::Mat4& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     Mat4 finalMat = projectionMat * transform;
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
@@ -552,24 +561,24 @@ void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
     {
         if (!_reverseDirection)
         {
-            _customCommand.init(_globalZOrder, transform, flags);
-            _customCommand.setVertexDrawInfo(0, _vertexData.size());
+            _customCommand.init(_globalZOrder, _sprite->getBlendFunc());
             renderer->addCommand(&_customCommand);
         }
         else
         {
-            _customCommand.init(_globalZOrder, transform, flags);
-            _customCommand.setVertexDrawInfo(0, _vertexData.size() / 2);
+            _customCommand.init(_globalZOrder, _sprite->getBlendFunc());
             renderer->addCommand(&_customCommand);
-        
-            _customCommand2 = _customCommand;
-            _customCommand2.setVertexDrawInfo(4, _vertexData.size() / 2);
+
+            _customCommand2.init(_globalZOrder, _sprite->getBlendFunc());
+            auto& pipelineDescriptor2 = _customCommand2.getPipelineDescriptor();
+            pipelineDescriptor2.bindGroup.setUniform("u_MVPMatrix", finalMat.m, sizeof(finalMat.m));
+            pipelineDescriptor2.bindGroup.setTexture("u_texture", 0, _sprite->getTexture()->getBackendTexture());
             renderer->addCommand(&_customCommand2);
         }
     }
     else
     {
-        _customCommand.init(_globalZOrder);
+        _customCommand.init(_globalZOrder, _sprite->getBlendFunc());
         renderer->addCommand(&_customCommand);
     }
 }

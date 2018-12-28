@@ -170,7 +170,7 @@ CC_CONSTRUCTOR_ACCESS:
     /** Initializes a progress timer with the sprite as the shape the timer goes through */
     bool initWithSprite(Sprite* sp);
     
-protected:    
+protected:
     Tex2F textureCoordFromAlphaPoint(Vec2 alpha);
     Vec2 vertexFromAlphaPoint(Vec2 alpha);
     void updateProgress();

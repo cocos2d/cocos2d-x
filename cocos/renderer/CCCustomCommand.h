@@ -59,8 +59,6 @@ public:
     /**Destructor.*/
     virtual ~CustomCommand();
     
-    CustomCommand& operator=(const CustomCommand& rhs);
-    
 public:
 	/**
 	Init function.
@@ -77,8 +75,8 @@ public:
     void init(float globalZOrder);
     void init(float globalZOrder, const BlendFunc& blendFunc);
     
-    void createVertexBuffer(unsigned int sizePerVertex, unsigned int count);
-    void createIndexBuffer(unsigned int sizePerIndex, unsigned int count);
+    void createVertexBuffer(unsigned int vertexSize, unsigned int count);
+    void createIndexBuffer(unsigned int indexSize, unsigned int count);
 
     void updateVertexBuffer(void* data, unsigned int length);
     void updateIndexBuffer(void* data, unsigned int length);
@@ -129,8 +127,8 @@ protected:
     
     float _lineWidth = 0.0;
     
-    unsigned int _sizePerVertex = 0;
-    unsigned int _sizePerIndex = 0;
+    unsigned int _vertexSize = 0;
+    unsigned int _indexSize = 0;
 };
 
 NS_CC_END

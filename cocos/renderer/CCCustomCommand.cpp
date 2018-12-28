@@ -31,45 +31,8 @@
 NS_CC_BEGIN
 
 CustomCommand::CustomCommand()
-//: func(nullptr)
 {
     _type = RenderCommand::Type::CUSTOM_COMMAND;
-}
-
-CustomCommand& CustomCommand::operator=(const CustomCommand& rhs)
-{
-    if (this != &rhs)
-    {
-        RenderCommand::operator = (rhs);
-
-        if (_vertexBuffer != rhs._vertexBuffer)
-        {
-            CC_SAFE_RELEASE(_vertexBuffer);
-            _vertexBuffer = rhs._vertexBuffer;
-            CC_SAFE_RETAIN(_vertexBuffer);
-        }
-
-        if (_indexBuffer != rhs._indexBuffer)
-        {
-            CC_SAFE_RELEASE(_indexBuffer);
-            _indexBuffer = rhs._indexBuffer;
-            CC_SAFE_RETAIN(_indexBuffer);
-        }
-
-        _indexCount = rhs._indexCount;
-        _vertexCount = rhs._vertexCount;
-
-        _vertexStart = rhs._vertexStart;
-        _vertexDrawCount = rhs._vertexDrawCount;
-
-        _indexBufferOffset = rhs._indexBufferOffset;
-        _indexDrawCount = rhs._indexDrawCount;
-
-        _drawType = rhs._drawType;
-        _primitiveType = rhs._primitiveType;
-    }
-    
-    return *this;
 }
 
 void CustomCommand::init(float depth, const cocos2d::Mat4 &modelViewTransform, unsigned int flags)
@@ -92,33 +55,33 @@ void CustomCommand::init(float globalZOrder, const BlendFunc& blendFunc)
     blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor = utils::toBackendBlendFactor(blendFunc.dst);
 }
 
-void CustomCommand::createVertexBuffer(unsigned int sizePerVertex, unsigned int count)
+void CustomCommand::createVertexBuffer(unsigned int vertexSize, unsigned int count)
 {
     CC_SAFE_RELEASE(_vertexBuffer);
     
-    _sizePerVertex = sizePerVertex;
+    _vertexSize = vertexSize;
     
     auto device = backend::Device::getInstance();
-    _vertexBuffer = device->newBuffer(sizePerVertex * count, backend::BufferType::VERTEX, backend::BufferUsage::READ);
+    _vertexBuffer = device->newBuffer(vertexSize * count, backend::BufferType::VERTEX, backend::BufferUsage::READ);
 }
 
-void CustomCommand::createIndexBuffer(unsigned int sizePerIndex, unsigned int count)
+void CustomCommand::createIndexBuffer(unsigned int indexSize, unsigned int count)
 {
     CC_SAFE_RELEASE(_indexBuffer);
     
-    _sizePerIndex = sizePerIndex;
+    _indexSize = indexSize;
     
     auto device = backend::Device::getInstance();
-    _indexBuffer = device->newBuffer(sizePerIndex * count, backend::BufferType::INDEX, backend::BufferUsage::READ);
+    _indexBuffer = device->newBuffer(indexSize * count, backend::BufferType::INDEX, backend::BufferUsage::READ);
 }
 
 void CustomCommand::updateVertexBuffer(void* data, unsigned int offset, unsigned int length)
 {   
     assert(_vertexBuffer);
     if (offset)
-        _vertexCount += length / _sizePerVertex;
+        _vertexCount += length / _vertexSize;
     else
-        _vertexCount = length / _sizePerVertex;
+        _vertexCount = length / _vertexSize;
     
     _vertexBuffer->updateSubData(data, offset, length);
 }
@@ -127,9 +90,9 @@ void CustomCommand::updateIndexBuffer(void* data, unsigned int offset, unsigned 
 {
     assert(_indexBuffer);
     if (offset)
-        _indexCount += length / _sizePerIndex;
+        _indexCount += length / _indexSize;
     else
-        _indexCount = length / _sizePerIndex;
+        _indexCount = length / _indexSize;
     
     _indexBuffer->updateSubData(data, offset, length);
 }
@@ -137,14 +100,14 @@ void CustomCommand::updateIndexBuffer(void* data, unsigned int offset, unsigned 
 void CustomCommand::updateVertexBuffer(void* data, unsigned int length)
 {
     assert(_vertexBuffer);
-    _vertexCount = length/_sizePerVertex;
+    _vertexCount = length/_vertexSize;
     _vertexBuffer->updateData(data, length);
 }
 
 void CustomCommand::updateIndexBuffer(void* data, unsigned int length)
 {
     assert(_indexBuffer);
-    _indexCount = length/_sizePerIndex;
+    _indexCount = length / _indexSize;
     _indexBuffer->updateData(data, length);
 }
 
