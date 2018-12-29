@@ -253,8 +253,7 @@ protected:
     void visitRenderQueue(RenderQueue& queue);
     void doVisitRenderQueue(const std::vector<RenderCommand*>&);
 
-    void fillVerticesAndIndices(const TrianglesCommand* cmd);
-    void cleanVerticesAndIncices();
+    void fillVerticesAndIndices(const TrianglesCommand* cmd, unsigned int vertexBufferOffset, unsigned int& filledVertexCount, unsigned int& filledIndexCount);
     void beginRenderPass(RenderCommand*);
     
     void setRenderPipeline(const PipelineDescriptor&, const backend::RenderPassDescriptor&);
@@ -294,17 +293,19 @@ protected:
     // the TriBatches
     TriBatchToDraw* _triBatchesToDraw = nullptr;
 
-    unsigned int _filledVertex = 0;
-    unsigned int _filledIndex = 0;
+//    unsigned int _filledVertex = 0;
+//    unsigned int _filledIndex = 0;
 
-//    bool _glViewAssigned;
+    unsigned int _queuedTotalVertexCount = 0;
+    unsigned int _queuedTotalIndexCount = 0;
+    unsigned int _queuedVertexCount = 0;
+    unsigned int _queuedIndexCount = 0;
 
     // stats
     unsigned int _drawnBatches = 0;
     unsigned int _drawnVertices = 0;
     //the flag for checking whether renderer is rendering
     bool _isRendering = false;
-    bool _isFirstTriangleDraw = true;
     bool _isDepthTestFor2D = false;
         
     GroupCommandManager* _groupCommandManager = nullptr;

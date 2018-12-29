@@ -432,6 +432,14 @@ void Sprite::setTexture(Texture2D *texture)
         _texture = texture;
         updateBlendFunc();
     }
+
+    auto& bindGroup = _trianglesCommand.getPipelineDescriptor().bindGroup;
+    bindGroup.setTexture("u_texture", 0, _texture->getBackendTexture());
+    auto alphaTexture = _texture->getAlphaTexture();
+    if(alphaTexture && alphaTexture->getBackendTexture())
+    {
+        bindGroup.setTexture("u_texture1", 1, alphaTexture->getBackendTexture());
+    }
 }
 
 Texture2D* Sprite::getTexture() const
@@ -1101,12 +1109,6 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         auto& bindGroup = _trianglesCommand.getPipelineDescriptor().bindGroup;
         bindGroup.setUniform("u_MVPMatrix", projectionMat.m, sizeof(projectionMat.m));
-        bindGroup.setTexture("u_texture", 0, _texture->getBackendTexture());
-        auto alphaTexture = _texture->getAlphaTexture();
-        if(alphaTexture && alphaTexture->getBackendTexture())
-        {
-            bindGroup.setTexture("u_texture1", 1, alphaTexture->getBackendTexture());
-        }
         
         _trianglesCommand.init(_globalZOrder,
                                _texture,
