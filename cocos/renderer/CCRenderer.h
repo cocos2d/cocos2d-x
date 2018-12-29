@@ -142,6 +142,7 @@ Whenever possible prefer to use `TrianglesCommand` objects since the renderer wi
 class CC_DLL Renderer
 {
 public:
+    
     /**The max number of vertices in a vertex buffer object.*/
     static const int VBO_SIZE = 65536;
     /**The max number of indices in a index buffer.*/
@@ -234,6 +235,11 @@ public:
 
     /** returns whether or not a rectangle is visible or not */
     bool checkVisibility(const Mat4& transform, const Size& size);
+    
+    bool getScissorTest() const;
+    void setScissorTest(bool enabled);
+    const ScissorRect& getScissorRect() const;
+    void setScissorRect(float x, float y, float width, float height);
 
 protected:
     void drawBatchedTriangles();
@@ -318,6 +324,13 @@ protected:
     Color4F _clearColor = Color4F::BLACK;
     ClearFlag _clearFlag;
     RenderTargetFlag _renderTargetFlag = RenderTargetFlag::COLOR;
+
+    struct ScissorState
+    {
+        ScissorRect rect;
+        bool isEnabled = false;
+    };
+    ScissorState _scissorState;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _cacheTextureListener = nullptr;

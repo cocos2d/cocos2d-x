@@ -28,6 +28,8 @@ public:
     
     virtual void setLineWidth(float lineWidth) override;
     
+    virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) override;
+    
 private:
     void prepareDrawing() const;
     void setTextures() const;
