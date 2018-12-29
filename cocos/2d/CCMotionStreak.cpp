@@ -24,7 +24,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
 #include "2d/CCMotionStreak.h"
 #include "math/CCVertex.h"
 #include "base/CCDirector.h"
@@ -32,28 +31,24 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/CCGLProgram.h"
+#include "renderer/CCShaderCache.h"
+#include "renderer/ccShaders.h"
 
 NS_CC_BEGIN
 
 MotionStreak::MotionStreak()
-: _fastMode(false)
-, _startingPositionInitialized(false)
-, _texture(nullptr)
-, _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
-, _stroke(0.0f)
-, _fadeDelta(0.0f)
-, _minSeg(0.0f)
-, _maxPoints(0)
-, _nuPoints(0)
-, _previousNuPoints(0)
-, _pointVertexes(nullptr)
-, _pointState(nullptr)
-, _vertices(nullptr)
-, _colorPointer(nullptr)
-, _texCoords(nullptr)
 {
+    _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
+
+    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
+    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
+
+    auto& vertexLayout = pipelineDescriptor.vertexLayout;
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32, 0, false);
+    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, 2 * sizeof(float), false);
+    vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, 4 * sizeof(float), true);
+    vertexLayout.setLayout(4 * sizeof(float) + 4 * sizeof(uint8_t), backend::VertexStepMode::VERTEX);
 }
 
 MotionStreak::~MotionStreak()
@@ -109,28 +104,23 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
 
     _positionR.setZero();
     _fastMode = true;
-    _minSeg = (minSeg == -1.0f) ? stroke/5.0f : minSeg;
+    _minSeg = (minSeg == -1.0f) ? stroke/ 5.0f : minSeg;
     _minSeg *= _minSeg;
 
     _stroke = stroke;
-    _fadeDelta = 1.0f/fade;
+    _fadeDelta = 1.0f / fade;
     
-    double fps = 1/Director::getInstance()->getAnimationInterval();
-    _maxPoints = (int)(fade*fps)+2;
+    double fps = 1 / Director::getInstance()->getAnimationInterval();
+    _maxPoints = (int)(fade * fps) + 2;
     
-    _nuPoints = 0;
     _pointState = (float *)malloc(sizeof(float) * _maxPoints);
     _pointVertexes = (Vec2*)malloc(sizeof(Vec2) * _maxPoints);
 
-    _vertices = (Vec2*)malloc(sizeof(Vec2) * _maxPoints * 2);
-    _texCoords = (Tex2F*)malloc(sizeof(Tex2F) * _maxPoints * 2);
-    _colorPointer =  (GLubyte*)malloc(sizeof(GLubyte) * _maxPoints * 2 * 4);
-
-    // Set blend mode
-    _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
-
-    // shader state
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, texture));
+    _vertexCount = _maxPoints * 2;
+    _vertices = (Vec2*)malloc(sizeof(Vec2) * _vertexCount);
+    _texCoords = (Tex2F*)malloc(sizeof(Tex2F) * _vertexCount);
+    _colorPointer =  (uint8_t*)malloc(sizeof(uint8_t) * 4 * _vertexCount);
+    _customCommand.createVertexBuffer(sizeof(Vec2) + sizeof(Tex2F) + sizeof(uint8_t) * 4, _vertexCount);
 
     setTexture(texture);
     setColor(color);
@@ -249,7 +239,7 @@ void MotionStreak::setOpacityModifyRGB(bool /*bValue*/)
 {
 }
 
-bool MotionStreak::isOpacityModifyRGB(void) const
+bool MotionStreak::isOpacityModifyRGB() const
 {
     return false;
 }
@@ -257,27 +247,25 @@ bool MotionStreak::isOpacityModifyRGB(void) const
 void MotionStreak::update(float delta)
 {
     if (!_startingPositionInitialized)
-    {
         return;
-    }
-    
+
     delta *= _fadeDelta;
 
     unsigned int newIdx, newIdx2, i, i2;
     unsigned int mov = 0;
 
     // Update current points
-    for(i = 0; i<_nuPoints; i++)
+    for (i = 0; i < _nuPoints; i++)
     {
-        _pointState[i]-=delta;
+        _pointState[i] -= delta;
 
-        if(_pointState[i] <= 0)
+        if (_pointState[i] <= 0)
             mov++;
         else
         {
-            newIdx = i-mov;
+            newIdx = i - mov;
 
-            if(mov>0)
+            if (mov > 0)
             {
                 // Move data
                 _pointState[newIdx] = _pointState[i];
@@ -286,8 +274,8 @@ void MotionStreak::update(float delta)
                 _pointVertexes[newIdx] = _pointVertexes[i];
 
                 // Move vertices
-                i2 = i*2;
-                newIdx2 = newIdx*2;
+                i2 = i * 2;
+                newIdx2 = newIdx * 2;
                 _vertices[newIdx2] = _vertices[i2];
                 _vertices[newIdx2+1] = _vertices[i2+1];
 
@@ -301,39 +289,34 @@ void MotionStreak::update(float delta)
                 _colorPointer[newIdx2+5] = _colorPointer[i2+5];
                 _colorPointer[newIdx2+6] = _colorPointer[i2+6];
             }else
-                newIdx2 = newIdx*8;
+                newIdx2 = newIdx * 8;
 
-            const GLubyte op = (GLubyte)(_pointState[newIdx] * 255.0f);
+            const uint8_t op = (uint8_t)(_pointState[newIdx] * 255.0f);
             _colorPointer[newIdx2+3] = op;
             _colorPointer[newIdx2+7] = op;
         }
     }
-    _nuPoints-=mov;
+    _nuPoints -= mov;
 
     // Append new point
     bool appendNewPoint = true;
-    if(_nuPoints >= _maxPoints)
-    {
+    if (_nuPoints >= _maxPoints)
         appendNewPoint = false;
-    }
-
-    else if(_nuPoints>0)
+    else if (_nuPoints > 0)
     {
         bool a1 = _pointVertexes[_nuPoints-1].getDistanceSq(_positionR) < _minSeg;
-        bool a2 = (_nuPoints == 1) ? false : (_pointVertexes[_nuPoints-2].getDistanceSq(_positionR)< (_minSeg * 2.0f));
-        if(a1 || a2)
-        {
+        bool a2 = (_nuPoints == 1) ? false : (_pointVertexes[_nuPoints-2].getDistanceSq(_positionR) < (_minSeg * 2.0f));
+        if (a1 || a2)
             appendNewPoint = false;
-        }
     }
 
-    if(appendNewPoint)
+    if (appendNewPoint)
     {
         _pointVertexes[_nuPoints] = _positionR;
         _pointState[_nuPoints] = 1.0f;
 
         // Color assignment
-        const unsigned int offset = _nuPoints*8;
+        const unsigned int offset = _nuPoints * 8;
         *((Color3B*)(_colorPointer + offset)) = _displayedColor;
         *((Color3B*)(_colorPointer + offset+4)) = _displayedColor;
 
@@ -342,7 +325,7 @@ void MotionStreak::update(float delta)
         _colorPointer[offset+7] = 255;
 
         // Generate polygon
-        if(_nuPoints > 0 && _fastMode )
+        if (_nuPoints > 0 && _fastMode )
         {
             if(_nuPoints > 1)
             {
@@ -354,18 +337,17 @@ void MotionStreak::update(float delta)
             }
         }
 
-        _nuPoints ++;
+        _nuPoints++;
     }
 
-    if( ! _fastMode )
-    {
+
+    if (! _fastMode)
         ccVertexLineToPolygon(_pointVertexes, _stroke, _vertices, 0, _nuPoints);
-    }
 
     // Updated Tex Coords only if they are different than previous step
-    if( _nuPoints  && _previousNuPoints != _nuPoints ) {
+    if (_nuPoints  && _previousNuPoints != _nuPoints) {
         float texDelta = 1.0f / _nuPoints;
-        for( i=0; i < _nuPoints; i++ ) {
+        for (i = 0; i < _nuPoints; i++) {
             _texCoords[i*2] = Tex2F(0, texDelta*i);
             _texCoords[i*2+1] = Tex2F(1, texDelta*i);
         }
@@ -381,32 +363,52 @@ void MotionStreak::reset()
 
 void MotionStreak::onDraw(const Mat4 &transform, uint32_t /*flags*/)
 {  
-    getGLProgram()->use();
-    getGLProgram()->setUniformsForBuiltins(transform);
-
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-    utils::setBlending(_blendFunc.src, _blendFunc.dst);
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _texture->getName());
-
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorPointer);
-
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _nuPoints*2);
+//    getGLProgram()->use();
+//    getGLProgram()->setUniformsForBuiltins(transform);
+//
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+//    utils::setBlending(_blendFunc.src, _blendFunc.dst);
+//
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, _texture->getName());
+//
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorPointer);
+//
+//    glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);
+//    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _nuPoints*2);
 }
 
 void MotionStreak::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if(_nuPoints <= 1)
         return;
-    _customCommand.init(_globalZOrder, transform, flags);
-    _customCommand.func = CC_CALLBACK_0(MotionStreak::onDraw, this, transform, flags);
+        
+    _customCommand.init(_globalZOrder, _blendFunc);
+    _customCommand.setVertexDrawInfo(0, _nuPoints * 2);
     renderer->addCommand(&_customCommand);
+//    _customCommand.func = CC_CALLBACK_0(MotionStreak::onDraw, this, transform, flags);
+//    renderer->addCommand(&_customCommand);
+
+    auto& bindGroup = _customCommand.getPipelineDescriptor().bindGroup;
+    bindGroup.setTexture("u_texture", 0, _texture->getBackendTexture());
+
+    const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    Mat4 finalMat = projectionMat * transform;
+    bindGroup.setUniform("u_MVPMatrix", finalMat.m, sizeof(Mat4));
+
+    unsigned int offset = 0;
+    unsigned int vertexSize = sizeof(Vec2) + sizeof(Vec2) + sizeof(uint8_t) * 4;
+    for (unsigned int i = 0; i < _vertexCount; ++i)
+    {
+        offset = i * vertexSize;
+        _customCommand.updateVertexBuffer(&_vertices[i], offset, sizeof(_vertices[0]));
+        _customCommand.updateVertexBuffer(&_texCoords[i], offset + sizeof(_vertices[0]), sizeof(_texCoords[0]) );
+        _customCommand.updateVertexBuffer(&_colorPointer[i], offset + sizeof(_vertices[0]) + sizeof(_texCoords[0]), 4 * sizeof(uint8_t));
+    }
 }
 
 NS_CC_END

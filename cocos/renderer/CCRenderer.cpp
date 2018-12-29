@@ -687,7 +687,7 @@ void Renderer::drawCustomCommand(RenderCommand *command)
         _commandBuffer->drawElements(cmd->getPrimitiveType(),
                                      backend::IndexFormat::U_SHORT,
                                      cmd->getIndexDrawCount(),
-                                     cmd->getIndexDrawBufferOffset());
+                                     cmd->getIndexDrawOffset());
     }
     else
         _commandBuffer->drawArrays(cmd->getPrimitiveType(),

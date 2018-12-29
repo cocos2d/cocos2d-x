@@ -55,59 +55,51 @@ void CustomCommand::init(float globalZOrder, const BlendFunc& blendFunc)
     blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor = utils::toBackendBlendFactor(blendFunc.dst);
 }
 
-void CustomCommand::createVertexBuffer(unsigned int vertexSize, unsigned int count)
+void CustomCommand::createVertexBuffer(unsigned int vertexSize, unsigned int capacity)
 {
     CC_SAFE_RELEASE(_vertexBuffer);
     
     _vertexSize = vertexSize;
+    _vertexCapacity = capacity;
+    _vertexDrawCount = capacity;
     
     auto device = backend::Device::getInstance();
-    _vertexBuffer = device->newBuffer(vertexSize * count, backend::BufferType::VERTEX, backend::BufferUsage::READ);
+    _vertexBuffer = device->newBuffer(vertexSize * capacity, backend::BufferType::VERTEX, backend::BufferUsage::READ);
 }
 
-void CustomCommand::createIndexBuffer(unsigned int indexSize, unsigned int count)
+void CustomCommand::createIndexBuffer(unsigned int indexSize, unsigned int capacity)
 {
     CC_SAFE_RELEASE(_indexBuffer);
     
     _indexSize = indexSize;
+    _indexCapacity = capacity;
+    _indexDrawCount = capacity;
     
     auto device = backend::Device::getInstance();
-    _indexBuffer = device->newBuffer(indexSize * count, backend::BufferType::INDEX, backend::BufferUsage::READ);
+    _indexBuffer = device->newBuffer(indexSize * capacity, backend::BufferType::INDEX, backend::BufferUsage::READ);
 }
 
 void CustomCommand::updateVertexBuffer(void* data, unsigned int offset, unsigned int length)
 {   
     assert(_vertexBuffer);
-    if (offset)
-        _vertexCount += length / _vertexSize;
-    else
-        _vertexCount = length / _vertexSize;
-    
     _vertexBuffer->updateSubData(data, offset, length);
 }
 
 void CustomCommand::updateIndexBuffer(void* data, unsigned int offset, unsigned int length)
 {
     assert(_indexBuffer);
-    if (offset)
-        _indexCount += length / _indexSize;
-    else
-        _indexCount = length / _indexSize;
-    
     _indexBuffer->updateSubData(data, offset, length);
 }
 
 void CustomCommand::updateVertexBuffer(void* data, unsigned int length)
 {
     assert(_vertexBuffer);
-    _vertexCount = length/_vertexSize;
     _vertexBuffer->updateData(data, length);
 }
 
 void CustomCommand::updateIndexBuffer(void* data, unsigned int length)
 {
     assert(_indexBuffer);
-    _indexCount = length / _indexSize;
     _indexBuffer->updateData(data, length);
 }
 
@@ -119,12 +111,12 @@ CustomCommand::~CustomCommand()
 
 void CustomCommand::clear()
 {
-    _vertexCount = 0;
-    _indexCount = 0;
-    _vertexStart = 0;
+    _vertexDrawStart = 0;
     _vertexDrawCount = 0;
-    _indexBufferOffset = 0;
+    _indexDrawOffset = 0;
     _indexDrawCount = 0;
+    _vertexCapacity = 0;
+    _indexCapacity = 0;
 }
 
 NS_CC_END

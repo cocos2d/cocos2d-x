@@ -75,13 +75,16 @@ public:
     void init(float globalZOrder);
     void init(float globalZOrder, const BlendFunc& blendFunc);
     
-    void createVertexBuffer(unsigned int vertexSize, unsigned int count);
-    void createIndexBuffer(unsigned int indexSize, unsigned int count);
+    void createVertexBuffer(unsigned int vertexSize, unsigned int capacity);
+    void createIndexBuffer(unsigned int indexSize, unsigned int capacity);
 
     void updateVertexBuffer(void* data, unsigned int length);
     void updateIndexBuffer(void* data, unsigned int length);
     void updateVertexBuffer(void* data, unsigned int offset, unsigned int length);
     void updateIndexBuffer(void* data, unsigned int offset, unsigned int length);
+
+    inline unsigned int getVertexCapacity() const { return _vertexCapacity; }
+    inline unsigned int getIndexCapacity() const { return _indexCapacity; }
     
     inline void setDrawType(DrawType drawType) { _drawType = drawType; }
     inline DrawType getDrawType() const { return _drawType; }
@@ -90,16 +93,14 @@ public:
     
     inline backend::Buffer* getVertexBuffer() const { assert(_vertexBuffer); return _vertexBuffer; }
     inline backend::Buffer* getIndexBuffer() const { assert(_indexBuffer); return _indexBuffer; }
-    inline unsigned int getIndexCount() const { return _indexCount; }
-    inline unsigned int getVertexCount() const { return _vertexCount; }
+
+    inline void setVertexDrawInfo(unsigned int start, unsigned int count) { _vertexDrawStart = start; _vertexDrawCount = count; }
+    inline unsigned int getVertexDrawStart() const { return _vertexDrawStart; }
+    inline unsigned int getVertexDrawCount() const { return _vertexDrawCount;}
     
-    inline void setVertexDrawInfo(unsigned int vertexStart, unsigned int count) { _vertexStart = vertexStart; _vertexDrawCount = count; }
-    inline unsigned int getVertexDrawStart() const { return _vertexStart; }
-    inline unsigned int getVertexDrawCount() const { return _vertexDrawCount == 0 ? _vertexCount : _vertexDrawCount; }
-    
-    inline void setIndexDrawInfo(unsigned int indexBufferOffset, unsigned int count) { _indexBufferOffset = indexBufferOffset; _indexDrawCount = count; }
-    inline unsigned int getIndexDrawBufferOffset() const { return _indexBufferOffset; }
-    inline unsigned int getIndexDrawCount() const { return _indexDrawCount == 0 ? _indexCount : _indexDrawCount; }
+    inline void setIndexDrawInfo(unsigned int start, unsigned int count) { _indexDrawOffset = start * _indexSize; _indexDrawCount = count; }
+    inline unsigned int getIndexDrawOffset() const { return _indexDrawOffset; }
+    inline unsigned int getIndexDrawCount() const { return _indexDrawCount; }
     
     inline void setLineWidth(float lineWidth) { _lineWidth = lineWidth; }
     inline float getLineWidth() const { return _lineWidth; }
@@ -113,13 +114,11 @@ public:
 protected:
     backend::Buffer* _vertexBuffer = nullptr;
     backend::Buffer* _indexBuffer = nullptr;
-    unsigned int _indexCount = 0;
-    unsigned int _vertexCount = 0;
     
-    unsigned int _vertexStart = 0;
+    unsigned int _vertexDrawStart = 0;
     unsigned int _vertexDrawCount = 0;
     
-    unsigned int _indexBufferOffset = 0;
+    unsigned int _indexDrawOffset = 0;
     unsigned int _indexDrawCount = 0;
     
     DrawType _drawType = DrawType::ELEMENT;
@@ -129,6 +128,9 @@ protected:
     
     unsigned int _vertexSize = 0;
     unsigned int _indexSize = 0;
+
+    unsigned int _vertexCapacity = 0;
+    unsigned int _indexCapacity = 0;
 };
 
 NS_CC_END
