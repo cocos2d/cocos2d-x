@@ -727,14 +727,20 @@ void Director::setAlphaBlending(bool on)
 
 void Director::setDepthTest(bool on)
 {
-    _renderer->setDepthTest(on);
+    if (on)
+    {
+        _renderer->setDepthTest(true);
+        _renderer->setDepthCompareFunction(backend::CompareFunction::LESS_EQUAL);
+    }
+    else
+        _renderer->setDepthTest(false);
+
     _renderer->setDepthWrite(on);
 }
 
 void Director::setClearColor(const Color4F& clearColor)
 {
     _clearColor = clearColor;
-    // _renderer->setClearColor(clearColor);
 }
 
 static void GLToClipTransform(Mat4 *transformOut)

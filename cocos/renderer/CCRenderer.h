@@ -209,8 +209,10 @@ public:
 
     void setDepthTest(bool value);
     void setDepthWrite(bool value);
+    void setDepthCompareFunction(backend::CompareFunction func);
     bool getDepthTest() const;
     bool getDepthWrite() const;
+    backend::CompareFunction getDepthCompareFunction() const;
 
     void setStencilTest(bool value);
     void setStencilCompareFunction(backend::CompareFunction func, unsigned int ref, unsigned int readMask);

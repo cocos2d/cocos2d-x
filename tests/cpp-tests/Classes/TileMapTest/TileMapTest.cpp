@@ -1084,7 +1084,7 @@ void TMXIsoVertexZ::onExit()
 {
     // At exit use any other projection. 
     Director::getInstance()->setProjection(Director::Projection::DEFAULT);
-   Director::getInstance()->setDepthTest(false);
+    Director::getInstance()->setDepthTest(false);
     TileDemo::onExit();
 }
 

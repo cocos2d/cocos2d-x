@@ -289,6 +289,8 @@ void Renderer::processRenderCommand(RenderCommand* command)
                 CCASSERT(cmd->getVertexCount()>= 0 && cmd->getVertexCount() < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
                 CCASSERT(cmd->getIndexCount()>= 0 && cmd->getIndexCount() < INDEX_VBO_SIZE, "VBO for index is not big enough, please break the data down or use customized render command");
                 drawBatchedTriangles();
+
+                // TODO: should create a new buffer for it.
             }
             
             // queue it
@@ -459,10 +461,22 @@ void Renderer::setDepthWrite(bool value)
     _depthStencilDescriptor.depthWriteEnabled = value;
     _renderPassDescriptor.needDepthAttachment = value;
 }
-bool Renderer::getDepthTest() const
+
+void Renderer::setDepthCompareFunction(backend::CompareFunction func)
+{
+    _depthStencilDescriptor.depthCompareFunction = func;
+}
+
+backend::CompareFunction Renderer::getDepthCompareFunction() const
+{
+    return _depthStencilDescriptor.depthCompareFunction;
+}
+
+bool Renderer::Renderer::getDepthTest() const
 {
     return _depthStencilDescriptor.depthTestEnabled;
 }
+
 bool Renderer::getDepthWrite() const
 {
     return _depthStencilDescriptor.depthWriteEnabled;
