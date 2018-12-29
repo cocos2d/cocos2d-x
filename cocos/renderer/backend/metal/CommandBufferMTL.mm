@@ -364,4 +364,19 @@ void CommandBufferMTL::setLineWidth(float lineWidth)
 {
 }
 
+void CommandBufferMTL::setScissorRect(bool isEnabled, float x, float y, float width, float height)
+{
+    if(!isEnabled)
+        return;
+    
+    MTLScissorRect scissorRect;
+    scissorRect.x = x;
+    scissorRect.y = _renderTargetHeight - height - y;
+    scissorRect.width = width;
+    scissorRect.height = height;
+    
+    [_mtlRenderEncoder setScissorRect:scissorRect];
+}
+
+
 CC_BACKEND_END

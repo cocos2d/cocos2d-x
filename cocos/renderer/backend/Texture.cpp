@@ -9,6 +9,7 @@ namespace
         uint8_t ret = 0;
         switch (textureFormat)
         {
+            case TextureFormat::RGBA4444:
             case TextureFormat::R8G8B8A8:
                 ret = 4;
                 break;

@@ -307,7 +307,7 @@ void Director::drawScene()
     if (_displayStats)
     {
 #if !CC_STRIP_FPS
-//        showStats();
+        showStats();
 #endif
     }
     
@@ -1269,10 +1269,10 @@ void Director::showStats()
             prevVerts = currentVerts;
         }
 
-//        const Mat4& identity = Mat4::IDENTITY;
-//        _drawnVerticesLabel->visit(_renderer, identity, 0);
-//        _drawnBatchesLabel->visit(_renderer, identity, 0);
-//        _FPSLabel->visit(_renderer, identity, 0);
+        const Mat4& identity = Mat4::IDENTITY;
+        _drawnVerticesLabel->visit(_renderer, identity, 0);
+        _drawnBatchesLabel->visit(_renderer, identity, 0);
+        _FPSLabel->visit(_renderer, identity, 0);
     }
 }
 

@@ -37,6 +37,8 @@ public:
     void setStencilReferenceValue(unsigned int value);
     void setStencilReferenceValue(unsigned int frontRef, unsigned int backRef);
     
+    virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) = 0;
+    
 protected:
     virtual ~CommandBuffer() = default;
     

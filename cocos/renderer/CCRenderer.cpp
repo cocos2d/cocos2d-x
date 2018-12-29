@@ -660,6 +660,9 @@ void Renderer::drawBatchedTriangles()
                                      _triBatchesToDraw[i].indicesToDraw,
                                      _triBatchesToDraw[i].offset * sizeof(_indices[0]));
         _commandBuffer->endRenderPass();
+        
+        _drawnBatches++;
+        _drawnVertices += _triBatchesToDraw[i].indicesToDraw;
     }
     
     /************** 3: Cleanup *************/
@@ -685,12 +688,16 @@ void Renderer::drawCustomCommand(RenderCommand *command)
                                      backend::IndexFormat::U_SHORT,
                                      cmd->getIndexDrawCount(),
                                      cmd->getIndexDrawOffset());
+        _drawnVertices += cmd->getIndexDrawCount();
     }
     else
+    {
         _commandBuffer->drawArrays(cmd->getPrimitiveType(),
                                    cmd->getVertexDrawStart(),
                                    cmd->getVertexDrawCount());
-    
+        _drawnVertices += cmd->getVertexDrawCount();
+    }
+    _drawnBatches++;
     _commandBuffer->endRenderPass();
 }
 
@@ -805,7 +812,7 @@ void Renderer::beginRenderPass(RenderCommand* cmd)
 {
      _commandBuffer->beginRenderPass(_renderPassDescriptor);
      _commandBuffer->setViewport(_viewport.x, _viewport.y, _viewport.w, _viewport.h);
-
+    _commandBuffer->setScissorRect(_scissorState.isEnabled, _scissorState.rect.x, _scissorState.rect.y, _scissorState.rect.width, _scissorState.rect.height);
      setRenderPipeline(cmd->getPipelineDescriptor(), _renderPassDescriptor);
 
     _commandBuffer->setStencilReferenceValue(_stencilRef);
@@ -942,6 +949,29 @@ ClearFlag Renderer::getClearFlag() const
 RenderTargetFlag Renderer::getRenderTargetFlag() const
 {
     return _renderTargetFlag;
+}
+
+void Renderer::setScissorTest(bool enabled)
+{
+    _scissorState.isEnabled = enabled;
+}
+
+bool Renderer::getScissorTest() const
+{
+    return _scissorState.isEnabled;
+}
+
+const ScissorRect& Renderer::getScissorRect() const
+{
+    return _scissorState.rect;
+}
+
+void Renderer::setScissorRect(float x, float y, float width, float height)
+{
+    _scissorState.rect.x = x;
+    _scissorState.rect.y = y;
+    _scissorState.rect.width = width;
+    _scissorState.rect.height = height;
 }
 
 NS_CC_END

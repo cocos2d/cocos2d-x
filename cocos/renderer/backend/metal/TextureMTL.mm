@@ -55,16 +55,42 @@ namespace
         }
     }
     
+    void convertRGBA4444ToRGBA8888(uint8_t* src, uint8_t* dst, uint32_t length)
+    {
+        //map [0, 0xF] to [0, 0xFF]
+        auto factor = 0x11;
+        
+        for (uint32_t i = 0; i < length; ++i)
+        {
+            *dst++ = (src[i*2] & 0xF0) * factor;
+            *dst++ = (src[i*2] & 0x0F) * factor;
+            *dst++ = (src[i*2+1] & 0xF0) * factor;
+            *dst++ = (src[i*2+1] & 0x0F) * factor;
+        }
+    }
+    
     bool convertData(uint8_t* src, unsigned int length, TextureFormat format, uint8_t** out)
     {
         *out = src;
         bool converted = false;
-        if (TextureFormat::R8G8B8 == format)
+        switch (format)
         {
-            *out = (uint8_t*)malloc(length * 4);
-            convertRGB2RGBA(src, *out, length);
-            
-            converted = true;
+            case TextureFormat::R8G8B8:
+                {
+                    *out = (uint8_t*)malloc(length * 4);
+                    convertRGB2RGBA(src, *out, length);
+                    converted = true;
+                }
+                break;
+            case TextureFormat::RGBA4444:
+                {
+                    *out = (uint8_t*)malloc(length * 4);
+                    convertRGBA4444ToRGBA8888(src, *out, length);
+                    converted = true;
+                }
+                break;
+            default:
+                break;
         }
         return converted;
     }

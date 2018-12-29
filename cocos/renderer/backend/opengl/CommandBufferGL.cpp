@@ -504,4 +504,18 @@ void CommandBufferGL::setLineWidth(float lineWidth)
         glLineWidth(lineWidth);
 }
 
+
+void CommandBufferGL::setScissorRect(bool isEnabled, float x, float y, float width, float height)
+{
+    if(isEnabled)
+    {
+        glEnable(GL_SCISSOR_TEST);
+        glScissor(x, y, width, height);
+    }
+    else
+    {
+        glDisable(GL_SCISSOR_TEST);
+    }
+}
+
 CC_BACKEND_END

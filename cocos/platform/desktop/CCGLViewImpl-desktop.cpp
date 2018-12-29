@@ -43,6 +43,8 @@ THE SOFTWARE.
 #include "platform/CCImage.h"
 #endif /* CC_ICON_SET_SUPPORT */
 
+#include "renderer/CCRenderer.h"
+
 NS_CC_BEGIN
 
 GLViewImpl* GLFWEventHandler::_view = nullptr;
@@ -448,18 +450,18 @@ void GLViewImpl::pollEvents()
 
 void GLViewImpl::enableRetina(bool enabled)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    _isRetinaEnabled = enabled;
-    if (_isRetinaEnabled)
-    {
-        _retinaFactor = 1;
-    }
-    else
-    {
-        _retinaFactor = 2;
-    }
-    updateFrameSize();
-#endif
+// #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+//     _isRetinaEnabled = enabled;
+//     if (_isRetinaEnabled)
+//     {
+//         _retinaFactor = 1;
+//     }
+//     else
+//     {
+//         _retinaFactor = 2;
+//     }
+//     updateFrameSize();
+// #endif
 }
 
 
@@ -628,21 +630,21 @@ void GLViewImpl::updateFrameSize()
         int frameBufferW = 0, frameBufferH = 0;
         glfwGetFramebufferSize(_mainWindow, &frameBufferW, &frameBufferH);
 
-        if (frameBufferW == 2 * w && frameBufferH == 2 * h)
-        {
-            if (_isRetinaEnabled)
-            {
-                _retinaFactor = 1;
-            }
-            else
-            {
-                _retinaFactor = 2;
-            }
-            glfwSetWindowSize(_mainWindow, _screenSize.width/2 * _retinaFactor * _frameZoomFactor, _screenSize.height/2 * _retinaFactor * _frameZoomFactor);
+        // if (frameBufferW == 2 * w && frameBufferH == 2 * h)
+        // {
+        //     if (_isRetinaEnabled)
+        //     {
+        //         _retinaFactor = 1;
+        //     }
+        //     else
+        //     {
+        //         _retinaFactor = 2;
+        //     }
+        //     glfwSetWindowSize(_mainWindow, _screenSize.width/2 * _retinaFactor * _frameZoomFactor, _screenSize.height/2 * _retinaFactor * _frameZoomFactor);
 
-            _isInRetinaMonitor = true;
-        }
-        else
+        //     _isInRetinaMonitor = true;
+        // }
+        // else
         {
             if (_isInRetinaMonitor)
             {
@@ -672,20 +674,24 @@ void GLViewImpl::setViewPortInPoints(float x , float y , float w , float h)
 
 void GLViewImpl::setScissorInPoints(float x , float y , float w , float h)
 {
-    glScissor((GLint)(x * _scaleX * _retinaFactor * _frameZoomFactor + _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor),
-               (GLint)(y * _scaleY * _retinaFactor  * _frameZoomFactor + _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor),
-               (GLsizei)(w * _scaleX * _retinaFactor * _frameZoomFactor),
-               (GLsizei)(h * _scaleY * _retinaFactor * _frameZoomFactor));
+    auto x1 = (GLint)(x * _scaleX * _retinaFactor * _frameZoomFactor + _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor);
+    auto y1 = (GLint)(y * _scaleY * _retinaFactor  * _frameZoomFactor + _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor);
+    auto width1 = (GLsizei)(w * _scaleX * _retinaFactor * _frameZoomFactor);
+    auto height1 = (GLsizei)(h * _scaleY * _retinaFactor * _frameZoomFactor);
+    auto renderer = Director::getInstance()->getRenderer();
+    renderer->setScissorRect(x1, y1, width1, height1);
+
 }
 
 Rect GLViewImpl::getScissorRect() const
 {
-    GLfloat params[4];
-    glGetFloatv(GL_SCISSOR_BOX, params);
-    float x = (params[0] - _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor) / (_scaleX * _retinaFactor * _frameZoomFactor);
-    float y = (params[1] - _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor) / (_scaleY * _retinaFactor  * _frameZoomFactor);
-    float w = params[2] / (_scaleX * _retinaFactor * _frameZoomFactor);
-    float h = params[3] / (_scaleY * _retinaFactor  * _frameZoomFactor);
+    auto renderer = Director::getInstance()->getRenderer();
+    auto& rect = renderer->getScissorRect();
+
+    float x = (rect.x - _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor) / (_scaleX * _retinaFactor * _frameZoomFactor);
+    float y = (rect.y - _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor) / (_scaleY * _retinaFactor  * _frameZoomFactor);
+    float w = rect.width / (_scaleX * _retinaFactor * _frameZoomFactor);
+    float h = rect.height / (_scaleY * _retinaFactor  * _frameZoomFactor);
     return Rect(x, y, w, h);
 }
 

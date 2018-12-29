@@ -337,7 +337,8 @@ void Layout::onBeforeVisitScissor()
     _scissorOldState = glview->isScissorEnabled();
     if (false == _scissorOldState)
     {
-        glEnable(GL_SCISSOR_TEST);
+        auto renderer = Director::getInstance()->getRenderer();
+        renderer->setScissorTest(true);
     }
 
     // apply scissor box
@@ -369,7 +370,8 @@ void Layout::onAfterVisitScissor()
     else
     {
         // revert scissor test
-        glDisable(GL_SCISSOR_TEST);
+        auto renderer = Director::getInstance()->getRenderer();
+        renderer->setScissorTest(false);
     }
 }
     
@@ -379,6 +381,16 @@ void Layout::scissorClippingVisit(Renderer *renderer, const Mat4& parentTransfor
     {
         _clippingRectDirty = true;
     }
+    
+    Director* director = Director::getInstance();
+    CCASSERT(nullptr != director, "Director is null when setting matrix stack");
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+    
+    _groupCommand.init(_globalZOrder);
+    renderer->addCommand(&_groupCommand);
+    renderer->pushGroup(_groupCommand.getRenderQueueID());
+
     _beforeVisitCmdScissor.init(_globalZOrder);
     _beforeVisitCmdScissor.func = CC_CALLBACK_0(Layout::onBeforeVisitScissor, this);
     renderer->addCommand(&_beforeVisitCmdScissor);
@@ -388,6 +400,9 @@ void Layout::scissorClippingVisit(Renderer *renderer, const Mat4& parentTransfor
     _afterVisitCmdScissor.init(_globalZOrder);
     _afterVisitCmdScissor.func = CC_CALLBACK_0(Layout::onAfterVisitScissor, this);
     renderer->addCommand(&_afterVisitCmdScissor);
+    
+    renderer->popGroup();
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 void Layout::setClippingEnabled(bool able)

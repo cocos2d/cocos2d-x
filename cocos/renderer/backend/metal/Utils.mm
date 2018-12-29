@@ -37,6 +37,7 @@ MTLPixelFormat Utils::toMTLPixelFormat(TextureFormat textureFormat)
     switch (textureFormat)
     {
         case TextureFormat::R8G8B8A8:
+        case TextureFormat::RGBA4444:
             return MTLPixelFormatRGBA8Unorm;
             // Should transfer the data to match pixel format when updating data.
         case TextureFormat::R8G8B8:
