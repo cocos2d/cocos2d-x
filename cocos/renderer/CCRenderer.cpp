@@ -663,6 +663,9 @@ void Renderer::drawBatchedTriangles()
                                      _triBatchesToDraw[i].indicesToDraw,
                                      _triBatchesToDraw[i].offset * sizeof(_indices[0]));
         _commandBuffer->endRenderPass();
+        
+        _drawnBatches++;
+        _drawnVertices += _triBatchesToDraw[i].indicesToDraw;
     }
     
     /************** 3: Cleanup *************/
@@ -688,12 +691,16 @@ void Renderer::drawCustomCommand(RenderCommand *command)
                                      backend::IndexFormat::U_SHORT,
                                      cmd->getIndexDrawCount(),
                                      cmd->getIndexDrawOffset());
+        _drawnVertices += cmd->getIndexDrawCount();
     }
     else
+    {
         _commandBuffer->drawArrays(cmd->getPrimitiveType(),
                                    cmd->getVertexDrawStart(),
                                    cmd->getVertexDrawCount());
-    
+        _drawnVertices += cmd->getVertexDrawCount();
+    }
+    _drawnBatches++;
     _commandBuffer->endRenderPass();
 }
 

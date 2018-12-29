@@ -206,6 +206,8 @@ TextureFormat StringUtils::PixelFormat2TextureFormat(const PixelFormat& pixleFor
             return TextureFormat::R8G8B8;
         case PixelFormat::A8:
             return TextureFormat::A8;
+        case PixelFormat::RGBA4444:
+            return TextureFormat::RGBA4444;
         default:
             return TextureFormat::NONE;
             break;
