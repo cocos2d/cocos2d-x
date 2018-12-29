@@ -39,6 +39,7 @@ NS_CC_BEGIN
 MotionStreak::MotionStreak()
 {
     _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
+    _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE_STRIP);
 
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
     pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
@@ -361,37 +362,16 @@ void MotionStreak::reset()
     _nuPoints = 0;
 }
 
-void MotionStreak::onDraw(const Mat4 &transform, uint32_t /*flags*/)
-{  
-//    getGLProgram()->use();
-//    getGLProgram()->setUniformsForBuiltins(transform);
-//
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-//    utils::setBlending(_blendFunc.src, _blendFunc.dst);
-//
-//    glActiveTexture(GL_TEXTURE0);
-//    glBindTexture(GL_TEXTURE_2D, _texture->getName());
-//
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorPointer);
-//
-//    glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);
-//    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _nuPoints*2);
-}
-
 void MotionStreak::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if(_nuPoints <= 1)
         return;
+
+    auto drawCount = _nuPoints * 2;
         
     _customCommand.init(_globalZOrder, _blendFunc);
-    _customCommand.setVertexDrawInfo(0, _nuPoints * 2);
+    _customCommand.setVertexDrawInfo(0, drawCount);
     renderer->addCommand(&_customCommand);
-//    _customCommand.func = CC_CALLBACK_0(MotionStreak::onDraw, this, transform, flags);
-//    renderer->addCommand(&_customCommand);
 
     auto& bindGroup = _customCommand.getPipelineDescriptor().bindGroup;
     bindGroup.setTexture("u_texture", 0, _texture->getBackendTexture());
@@ -402,12 +382,12 @@ void MotionStreak::draw(Renderer *renderer, const Mat4 &transform, uint32_t flag
 
     unsigned int offset = 0;
     unsigned int vertexSize = sizeof(Vec2) + sizeof(Vec2) + sizeof(uint8_t) * 4;
-    for (unsigned int i = 0; i < _vertexCount; ++i)
+    for (unsigned int i = 0; i < drawCount; ++i)
     {
         offset = i * vertexSize;
         _customCommand.updateVertexBuffer(&_vertices[i], offset, sizeof(_vertices[0]));
         _customCommand.updateVertexBuffer(&_texCoords[i], offset + sizeof(_vertices[0]), sizeof(_texCoords[0]) );
-        _customCommand.updateVertexBuffer(&_colorPointer[i], offset + sizeof(_vertices[0]) + sizeof(_texCoords[0]), 4 * sizeof(uint8_t));
+        _customCommand.updateVertexBuffer(&_colorPointer[i * 4], offset + sizeof(_vertices[0]) + sizeof(_texCoords[0]), 4 * sizeof(uint8_t));
     }
 }
 

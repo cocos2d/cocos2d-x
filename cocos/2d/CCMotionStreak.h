@@ -73,8 +73,8 @@ public:
     virtual void getPosition(float* x, float* y) const override;
     virtual void setPositionX(float x) override;
     virtual void setPositionY(float y) override;
-    virtual float getPositionX(void) const override;
-    virtual float getPositionY(void) const override;
+    virtual float getPositionX() const override;
+    virtual float getPositionY() const override;
     virtual Vec3 getPosition3D() const override;
     /**
     * @js NA
@@ -97,8 +97,8 @@ public:
     * @lua NA
     */
     virtual const BlendFunc& getBlendFunc() const override;
-    virtual GLubyte getOpacity() const override;
-    virtual void setOpacity(GLubyte opacity) override;
+    virtual uint8_t getOpacity() const override;
+    virtual void setOpacity(uint8_t opacity) override;
     virtual void setOpacityModifyRGB(bool value) override;
     virtual bool isOpacityModifyRGB() const override;
 
@@ -158,9 +158,6 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithFade(float fade, float minSeg, float stroke, const Color3B& color, Texture2D* texture);
 
 protected:
-    //renderer callback
-    void onDraw(const Mat4 &transform, uint32_t flags);
-
     bool _fastMode = false;
     bool _startingPositionInitialized = false;
 
@@ -181,9 +178,8 @@ protected:
     Vec2* _pointVertexes = nullptr;
     float* _pointState = nullptr;
 
-    // Opengl
     Vec2* _vertices = nullptr;
-    GLubyte* _colorPointer = nullptr;
+    uint8_t* _colorPointer = nullptr;
     Tex2F* _texCoords = nullptr;
     unsigned int _vertexCount = 0;
     
