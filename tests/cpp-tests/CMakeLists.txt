@@ -332,6 +332,7 @@ list(APPEND GAME_SOURCE
      Classes/controller.cpp
      # Classes/VRTest/VRTest.cpp
      # Classes/VRTest/VRTest.h
+     Classes/precheader.cpp
      )
 
 if(ANDROID OR IOS)
