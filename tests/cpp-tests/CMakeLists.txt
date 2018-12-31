@@ -332,7 +332,6 @@ list(APPEND GAME_SOURCE
      Classes/controller.cpp
      # Classes/VRTest/VRTest.cpp
      # Classes/VRTest/VRTest.h
-     Classes/precheader.cpp
      )
 
 if(ANDROID OR IOS)
@@ -486,6 +485,8 @@ if(LINUX OR WINDOWS)
 endif()
 
 if(WIN32)
+    # precompiled header. Compilation time speedup ~4x.
+    target_sources(${APP_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Classes/precheader.cpp")
     set_target_properties(${APP_NAME} PROPERTIES COMPILE_FLAGS "/Yuprecheader.h /FIprecheader.h")
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/Classes/precheader.cpp" PROPERTIES COMPILE_FLAGS "/Ycprecheader.h")
 endif()
