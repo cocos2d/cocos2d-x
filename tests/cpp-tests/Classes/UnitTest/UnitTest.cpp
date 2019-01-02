@@ -161,6 +161,7 @@ void TemplateVectorTest::onEnter()
     Vector<Node*> vec4(createVector());
     for (const auto& child : vec4)
     {
+        CC_UNUSED_PARAM(child);
         CCASSERT(child->getReferenceCount() == 2, "child's reference count should be 2.");
     }
 
@@ -184,6 +185,7 @@ void TemplateVectorTest::onEnter()
 
     for (const auto& child : vec5)
     {
+        CC_UNUSED_PARAM(child);
         CCASSERT(child->getReferenceCount() == 2, "child's reference count is 2.");
     }
 
@@ -276,6 +278,7 @@ void TemplateVectorTest::onEnter()
     CCASSERT(vec7.size() == 20, "vec7's size is 20.");
     for (const auto& child : vec7)
     {
+        CC_UNUSED_PARAM(child);
         CCASSERT(child->getReferenceCount() == 2, "child's reference count is 2.");
     }
 
@@ -332,6 +335,7 @@ void TemplateVectorTest::onEnter()
 
     for (const auto& child : vecSelfAssign)
     {
+        CC_UNUSED_PARAM(child);
         CCASSERT(child->getReferenceCount() == 2, "child's reference count is 2.");
     }
 
@@ -340,6 +344,7 @@ void TemplateVectorTest::onEnter()
 
     for (const auto& child : vecSelfAssign)
     {
+        CC_UNUSED_PARAM(child);
         CCASSERT(child->getReferenceCount() == 2, "child's reference count is 2.");
     }
 
@@ -388,6 +393,7 @@ void TemplateMapTest::onEnter()
     Map<std::string, Node*> map2 = createMap();
     for (const auto& e : map2)
     {
+        CC_UNUSED_PARAM(e);
         CCASSERT(e.second->getReferenceCount() == 2, "e.second element's reference count is 2.");
     }
 
@@ -395,6 +401,7 @@ void TemplateMapTest::onEnter()
     Map<std::string, Node*> map3(map2);
     for (const auto& e : map3)
     {
+        CC_UNUSED_PARAM(e);
         CCASSERT(e.second->getReferenceCount() == 3, "e.second's reference count is 3.");
     }
 
@@ -406,6 +413,7 @@ void TemplateMapTest::onEnter()
     CCASSERT(unusedNode->getReferenceCount() == 1, "unusedNode's reference count is 1.");
     for (const auto& e : map4)
     {
+        CC_UNUSED_PARAM(e);
         CCASSERT(e.second->getReferenceCount() == 2, "e.second's reference count is 2.");
     }
 
@@ -414,6 +422,7 @@ void TemplateMapTest::onEnter()
     map5 = map4;
     for (const auto& e : map5)
     {
+        CC_UNUSED_PARAM(e);
         CCASSERT(e.second->getReferenceCount() == 3, "e.second's reference count is 3.");
     }
 
@@ -422,6 +431,7 @@ void TemplateMapTest::onEnter()
 
     for (const auto& e : map4)
     {
+        CC_UNUSED_PARAM(e);
         CCASSERT(e.second == map5.find(e.first)->second, "e.second can't be found in map5.");
     }
 
@@ -465,6 +475,7 @@ void TemplateMapTest::onEnter()
 
     // find
     auto nodeToFind = map4.find("10");
+    CC_UNUSED_PARAM(nodeToFind);
     CCASSERT(nodeToFind->second->getTag() == 1010, "nodeToFind's tag value is 1010.");
 
     // insert
@@ -510,6 +521,7 @@ void TemplateMapTest::onEnter()
 
     for (const auto& e : mapForClearCopy)
     {
+        CC_UNUSED_PARAM(e);
         CCASSERT(e.second->getReferenceCount() == 2, "e.second's reference count is 2.");
     }
 
@@ -531,6 +543,7 @@ void TemplateMapTest::onEnter()
 
     for (const auto& e : mapForSelfAssign)
     {
+        CC_UNUSED_PARAM(e);
         CCASSERT(e.second->getReferenceCount() == 2, "e.second's reference count is 2.");
     }
 
@@ -539,6 +552,7 @@ void TemplateMapTest::onEnter()
 
     for (const auto& e : mapForSelfAssign)
     {
+        CC_UNUSED_PARAM(e);
         CCASSERT(e.second->getReferenceCount() == 2, "e.second's reference's count is 2.");
     }
 }
