@@ -101,11 +101,6 @@ public:
     std::vector<RenderCommand*>& getSubQueue(QUEUE_GROUP group) { return _commands[group]; }
     /**Get the number of render commands contained in a subqueue.*/
     ssize_t getSubQueueSize(QUEUE_GROUP group) const { return _commands[group].size(); }
-
-    /**Save the current DepthState, CullState, DepthWriteState render state.*/
-//    void saveRenderState();
-//    /**Restore the saved DepthState, CullState, DepthWriteState render state.*/
-//    void restoreRenderState();
     
 protected:
     /**The commands in the render queue.*/
@@ -244,6 +239,23 @@ public:
     void setScissorRect(float x, float y, float width, float height);
 
 protected:
+    class TriangleCommandBufferManager
+    {
+    public:
+        ~TriangleCommandBufferManager();
+
+        void init();
+        void putbackAllBuffers();
+        void prepareNextBuffer();
+        backend::Buffer* getVertexBuffer() const;
+        backend::Buffer* getIndexBuffer() const;
+
+    private:
+        int _currentBufferIndex = -1;
+        std::vector<backend::Buffer*> _vertexBufferPool;
+        std::vector<backend::Buffer*> _indexBufferPool;
+    };
+
     void drawBatchedTriangles();
     void drawCustomCommand(RenderCommand* command);
 
@@ -281,6 +293,7 @@ protected:
     unsigned short _indices[INDEX_VBO_SIZE];
     backend::Buffer* _vertexBuffer = nullptr;
     backend::Buffer* _indexBuffer = nullptr;
+    TriangleCommandBufferManager _triangleCommandBufferManager;
     
     backend::CommandBuffer* _commandBuffer = nullptr;
     backend::RenderPassDescriptor _renderPassDescriptor;
@@ -301,13 +314,12 @@ protected:
     // the TriBatches
     TriBatchToDraw* _triBatchesToDraw = nullptr;
 
-//    unsigned int _filledVertex = 0;
-//    unsigned int _filledIndex = 0;
-
     unsigned int _queuedTotalVertexCount = 0;
     unsigned int _queuedTotalIndexCount = 0;
     unsigned int _queuedVertexCount = 0;
     unsigned int _queuedIndexCount = 0;
+    unsigned int _filledIndex = 0;
+    unsigned int _filledVertex = 0;
 
     // stats
     unsigned int _drawnBatches = 0;

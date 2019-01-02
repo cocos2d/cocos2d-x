@@ -211,22 +211,18 @@ Renderer::~Renderer()
     Director::getInstance()->getEventDispatcher()->removeEventListener(_cacheTextureListener);
 #endif
     
-    CC_SAFE_RELEASE(_vertexBuffer);
-    CC_SAFE_RELEASE(_indexBuffer);
     CC_SAFE_RELEASE(_commandBuffer);
 }
 
 void Renderer::init()
 {
+    _triangleCommandBufferManager.init();
+
     auto device = backend::Device::getInstance();
-
-    _vertexBuffer = device->newBuffer(Renderer::VBO_SIZE * sizeof(_verts[0]), backend::BufferType::VERTEX, backend::BufferUsage::READ);
-    _vertexBuffer->updateData(_verts, Renderer::VBO_SIZE * sizeof(_verts[0]));
-
-    _indexBuffer = device->newBuffer(Renderer::INDEX_VBO_SIZE * sizeof(_indices[0]), backend::BufferType::INDEX, backend::BufferUsage::READ);
-    _indexBuffer->updateData(_indices, Renderer::INDEX_VBO_SIZE * sizeof(_indices[0]));
-
     _commandBuffer = device->newCommandBuffer();
+
+    _vertexBuffer = _triangleCommandBufferManager.getVertexBuffer();
+    _indexBuffer = _triangleCommandBufferManager.getIndexBuffer();
 }
 
 void Renderer::addCommand(RenderCommand* command)
@@ -290,7 +286,11 @@ void Renderer::processRenderCommand(RenderCommand* command)
                 CCASSERT(cmd->getIndexCount()>= 0 && cmd->getIndexCount() < INDEX_VBO_SIZE, "VBO for index is not big enough, please break the data down or use customized render command");
                 drawBatchedTriangles();
 
-                // TODO: should create a new buffer for it.
+                _triangleCommandBufferManager.prepareNextBuffer();
+                _queuedIndexCount = _queuedVertexCount = _queuedTotalIndexCount = _queuedTotalVertexCount = 0;
+
+                _vertexBuffer = _triangleCommandBufferManager.getVertexBuffer();
+                _indexBuffer = _triangleCommandBufferManager.getIndexBuffer();
             }
             
             // queue it
@@ -428,6 +428,9 @@ void Renderer::endFrame()
         _clearCommandManager.pushBackCommand(comand);
     _cachedClearCommands.clear();
 
+    _triangleCommandBufferManager.putbackAllBuffers();
+    _vertexBuffer = _triangleCommandBufferManager.getVertexBuffer();
+    _indexBuffer = _triangleCommandBufferManager.getIndexBuffer();
     _queuedTotalIndexCount = 0;
     _queuedTotalVertexCount = 0;
 }
@@ -611,15 +614,15 @@ void Renderer::drawBatchedTriangles()
     int prevMaterialID = -1;
     bool firstCommand = true;
 
-    unsigned int filledVertexCount = 0;
-    unsigned int filledIndexCount = 0;
+    _filledVertex = 0;
+    _filledIndex = 0;
 
     for(const auto& cmd : _queuedTriangleCommands)
     {
         auto currentMaterialID = cmd->getMaterialID();
         const bool batchable = !cmd->isSkipBatching();
         
-        fillVerticesAndIndices(cmd, vertexBufferFillOffset, filledVertexCount, filledIndexCount);
+        fillVerticesAndIndices(cmd, vertexBufferFillOffset, _filledVertex, _filledIndex);
         
         // in the same batch ?
         if (batchable && (prevMaterialID == currentMaterialID || firstCommand))
@@ -658,8 +661,8 @@ void Renderer::drawBatchedTriangles()
     }
     batchesTotal++;
 
-    _vertexBuffer->updateSubData(_verts, vertexBufferFillOffset * sizeof(_verts[0]), filledVertexCount * sizeof(_verts[0]));
-    _indexBuffer->updateSubData(_indices, indexBufferFillOffset * sizeof(_indices[0]), filledIndexCount * sizeof(_indices[0]));
+    _vertexBuffer->updateSubData(_verts, vertexBufferFillOffset * sizeof(_verts[0]), _filledVertex * sizeof(_verts[0]));
+    _indexBuffer->updateSubData(_indices, indexBufferFillOffset * sizeof(_indices[0]), _filledIndex * sizeof(_indices[0]));
 
     /************** 2: Draw *************/
     for (int i = 0; i < batchesTotal; ++i)
@@ -986,6 +989,75 @@ void Renderer::setScissorRect(float x, float y, float width, float height)
     _scissorState.rect.y = y;
     _scissorState.rect.width = width;
     _scissorState.rect.height = height;
+}
+
+// TriangleCommandBufferManager
+Renderer::TriangleCommandBufferManager::~TriangleCommandBufferManager()
+{
+    for (auto& vertexBuffer : _vertexBufferPool)
+        vertexBuffer->release();
+
+    for (auto& indexBuffer : _indexBufferPool)
+        indexBuffer->release();
+}
+
+void Renderer::TriangleCommandBufferManager::init()
+{
+    prepareNextBuffer();
+}
+
+void Renderer::TriangleCommandBufferManager::putbackAllBuffers()
+{
+    _currentBufferIndex = 0;
+}
+
+void Renderer::TriangleCommandBufferManager::prepareNextBuffer()
+{
+    if (_currentBufferIndex < (int)_vertexBufferPool.size() - 1)
+    {
+        ++_currentBufferIndex;
+        return;
+    }
+
+    auto device = backend::Device::getInstance();
+
+    auto tmpData = malloc(Renderer::VBO_SIZE * sizeof(_verts[0]));
+    if (!tmpData)
+        return;
+
+    auto vertexBuffer = device->newBuffer(Renderer::VBO_SIZE * sizeof(_verts[0]), backend::BufferType::VERTEX, backend::BufferUsage::READ);
+    if (!vertexBuffer)
+    {
+        free(tmpData);
+        return;
+    }
+    vertexBuffer->updateData(tmpData, Renderer::VBO_SIZE * sizeof(_verts[0]));
+
+    auto indexBuffer = device->newBuffer(Renderer::INDEX_VBO_SIZE * sizeof(_indices[0]), backend::BufferType::INDEX, backend::BufferUsage::READ);
+    if (! indexBuffer)
+    {
+        free(tmpData);
+        vertexBuffer->release();
+        return;
+    }
+    indexBuffer->updateData(tmpData, Renderer::INDEX_VBO_SIZE * sizeof(_indices[0]));
+
+    free(tmpData);
+
+    _vertexBufferPool.push_back(vertexBuffer);
+    _indexBufferPool.push_back(indexBuffer);
+
+    ++_currentBufferIndex;
+}
+
+backend::Buffer* Renderer::TriangleCommandBufferManager::getVertexBuffer() const
+{
+    return _vertexBufferPool[_currentBufferIndex];
+}
+
+backend::Buffer* Renderer::TriangleCommandBufferManager::getIndexBuffer() const
+{
+    return _indexBufferPool[_currentBufferIndex];
 }
 
 NS_CC_END
