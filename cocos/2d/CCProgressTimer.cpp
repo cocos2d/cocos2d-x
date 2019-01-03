@@ -376,13 +376,13 @@ void ProgressTimer::updateRadial(void)
     {
         sameIndexCount = false;
         _vertexData.resize(index + 3);
-        _customCommand.createVertexBuffer(sizeof(_vertexData[0]), (unsigned int)_vertexData.size());
+        _customCommand.createVertexBuffer(sizeof(_vertexData[0]), (unsigned int)_vertexData.size(),  CustomCommand::BufferUsage::DYNAMIC);
     }
 
     if (_indexData.size() != 3 + 3 * index)
     {
         _indexData.resize(3 + 3 * index);
-        _customCommand.createIndexBuffer(sizeof(_indexData[0]), (unsigned int)_indexData.size());
+        _customCommand.createIndexBuffer(sizeof(_indexData[0]), (unsigned int)_indexData.size(), CustomCommand::BufferUsage::DYNAMIC);
     }
 
     if (!sameIndexCount)
@@ -465,7 +465,7 @@ void ProgressTimer::updateBar(void)
         if (_vertexData.size() != 4)
         {
             _vertexData.resize(4);
-            _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size());
+            _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size(), CustomCommand::BufferUsage::DYNAMIC);
         }
 
         //    TOPLEFT
@@ -490,8 +490,8 @@ void ProgressTimer::updateBar(void)
     } else {
         if(_vertexData.size() != 8) {
             _vertexData.resize(8);
-            _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size() / 2);
-            _customCommand2.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size() / 2);
+            _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size() / 2, CustomCommand::BufferUsage::DYNAMIC);
+            _customCommand2.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size() / 2, CustomCommand::BufferUsage::DYNAMIC);
             //    TOPLEFT 1
             _vertexData[0].texCoords = textureCoordFromAlphaPoint(Vec2(0,1));
             _vertexData[0].vertices = vertexFromAlphaPoint(Vec2(0,1));

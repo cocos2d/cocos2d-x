@@ -5,6 +5,8 @@
 #include "TextureMTL.h"
 #include "Utils.h"
 #include "../BindGroup.h"
+#include "../Macros.h"
+#include "BufferManager.h"
 
 CC_BACKEND_BEGIN
 
@@ -145,6 +147,7 @@ namespace
 CommandBufferMTL::CommandBufferMTL(DeviceMTL* deviceMTL)
 : _deviceMTL(deviceMTL)
 , _mtlCommandQueue(deviceMTL->getMTLCommandQueue())
+, _frameBoundarySemaphore(dispatch_semaphore_create(MAX_INFLIGHT_BUFFER))
 {
 }
 
@@ -154,8 +157,12 @@ CommandBufferMTL::~CommandBufferMTL()
 
 void CommandBufferMTL::beginFrame()
 {
+    dispatch_semaphore_wait(_frameBoundarySemaphore, DISPATCH_TIME_FOREVER);
+
     _mtlCommandBuffer = [_mtlCommandQueue commandBuffer];
     [_mtlCommandBuffer retain];
+
+    BufferManager::beginFrame();
 }
 
 void CommandBufferMTL::beginRenderPass(const RenderPassDescriptor& descriptor)
@@ -247,6 +254,13 @@ void CommandBufferMTL::endRenderPass()
 void CommandBufferMTL::endFrame()
 {
     [_mtlCommandBuffer presentDrawable:DeviceMTL::getCurrentDrawable()];
+
+    [_mtlCommandBuffer addCompletedHandler:^(id<MTLCommandBuffer> commandBuffer) {
+        // GPU work is complete
+        // Signal the semaphore to start the CPU work
+        dispatch_semaphore_signal(_frameBoundarySemaphore);
+    }];
+
     [_mtlCommandBuffer commit];
     [_mtlCommandBuffer release];
     DeviceMTL::resetCurrentDrawable();

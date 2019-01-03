@@ -55,7 +55,7 @@ void CustomCommand::init(float globalZOrder, const BlendFunc& blendFunc)
     blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor = utils::toBackendBlendFactor(blendFunc.dst);
 }
 
-void CustomCommand::createVertexBuffer(unsigned int vertexSize, unsigned int capacity)
+void CustomCommand::createVertexBuffer(unsigned int vertexSize, unsigned int capacity, BufferUsage usage)
 {
     CC_SAFE_RELEASE(_vertexBuffer);
     
@@ -64,10 +64,10 @@ void CustomCommand::createVertexBuffer(unsigned int vertexSize, unsigned int cap
     _vertexDrawCount = capacity;
     
     auto device = backend::Device::getInstance();
-    _vertexBuffer = device->newBuffer(vertexSize * capacity, backend::BufferType::VERTEX, backend::BufferUsage::READ);
+    _vertexBuffer = device->newBuffer(vertexSize * capacity, backend::BufferType::VERTEX, usage);
 }
 
-void CustomCommand::createIndexBuffer(unsigned int indexSize, unsigned int capacity)
+void CustomCommand::createIndexBuffer(unsigned int indexSize, unsigned int capacity, BufferUsage usage)
 {
     CC_SAFE_RELEASE(_indexBuffer);
     
@@ -76,7 +76,7 @@ void CustomCommand::createIndexBuffer(unsigned int indexSize, unsigned int capac
     _indexDrawCount = capacity;
     
     auto device = backend::Device::getInstance();
-    _indexBuffer = device->newBuffer(indexSize * capacity, backend::BufferType::INDEX, backend::BufferUsage::READ);
+    _indexBuffer = device->newBuffer(indexSize * capacity, backend::BufferType::INDEX, usage);
 }
 
 void CustomCommand::updateVertexBuffer(void* data, unsigned int offset, unsigned int length)

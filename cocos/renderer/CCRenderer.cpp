@@ -1025,7 +1025,7 @@ void Renderer::TriangleCommandBufferManager::prepareNextBuffer()
     if (!tmpData)
         return;
 
-    auto vertexBuffer = device->newBuffer(Renderer::VBO_SIZE * sizeof(_verts[0]), backend::BufferType::VERTEX, backend::BufferUsage::READ);
+    auto vertexBuffer = device->newBuffer(Renderer::VBO_SIZE * sizeof(_verts[0]), backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
     if (!vertexBuffer)
     {
         free(tmpData);
@@ -1033,7 +1033,7 @@ void Renderer::TriangleCommandBufferManager::prepareNextBuffer()
     }
     vertexBuffer->updateData(tmpData, Renderer::VBO_SIZE * sizeof(_verts[0]));
 
-    auto indexBuffer = device->newBuffer(Renderer::INDEX_VBO_SIZE * sizeof(_indices[0]), backend::BufferType::INDEX, backend::BufferUsage::READ);
+    auto indexBuffer = device->newBuffer(Renderer::INDEX_VBO_SIZE * sizeof(_indices[0]), backend::BufferType::INDEX, backend::BufferUsage::DYNAMIC);
     if (! indexBuffer)
     {
         free(tmpData);

@@ -47,6 +47,8 @@ private:
     RenderPipelineMTL* _renderPipelineMTL = nullptr;
     BindGroup* _bindGroup = nullptr;
     unsigned int _renderTargetHeight = 0;
+    
+    dispatch_semaphore_t _frameBoundarySemaphore;
 };
 
 CC_BACKEND_END

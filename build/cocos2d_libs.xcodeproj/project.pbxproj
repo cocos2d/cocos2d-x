@@ -800,6 +800,10 @@
 		46C02E0818E91123004B7456 /* xxhash.c in Sources */ = {isa = PBXBuildFile; fileRef = 46C02E0518E91123004B7456 /* xxhash.c */; };
 		46C02E0918E91123004B7456 /* xxhash.h in Headers */ = {isa = PBXBuildFile; fileRef = 46C02E0618E91123004B7456 /* xxhash.h */; };
 		46C02E0A18E91123004B7456 /* xxhash.h in Headers */ = {isa = PBXBuildFile; fileRef = 46C02E0618E91123004B7456 /* xxhash.h */; };
+		46D3D45B21DE014500EF5E75 /* BufferManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D45921DE014500EF5E75 /* BufferManager.mm */; };
+		46D3D45C21DE014500EF5E75 /* BufferManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D45921DE014500EF5E75 /* BufferManager.mm */; };
+		46D3D45D21DE014500EF5E75 /* BufferManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D45A21DE014500EF5E75 /* BufferManager.h */; };
+		46D3D45E21DE014500EF5E75 /* BufferManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D45A21DE014500EF5E75 /* BufferManager.h */; };
 		46E21B4721B900C900430A43 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46E21B4521B900C900430A43 /* StringUtils.cpp */; };
 		46E21B4821B900C900430A43 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46E21B4521B900C900430A43 /* StringUtils.cpp */; };
 		46E21B4921B900C900430A43 /* StringUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 46E21B4621B900C900430A43 /* StringUtils.h */; };
@@ -2890,6 +2894,8 @@
 		46BDE4A91FA3316A00104C05 /* libbox2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbox2d.a; path = ../external/Box2D/prebuilt/ios/libbox2d.a; sourceTree = "<group>"; };
 		46C02E0518E91123004B7456 /* xxhash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xxhash.c; sourceTree = "<group>"; };
 		46C02E0618E91123004B7456 /* xxhash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxhash.h; sourceTree = "<group>"; };
+		46D3D45921DE014500EF5E75 /* BufferManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = BufferManager.mm; sourceTree = "<group>"; };
+		46D3D45A21DE014500EF5E75 /* BufferManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BufferManager.h; sourceTree = "<group>"; };
 		46E21B4521B900C900430A43 /* StringUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtils.cpp; sourceTree = "<group>"; };
 		46E21B4621B900C900430A43 /* StringUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtils.h; sourceTree = "<group>"; };
 		46E7207B1ECAC75C0034BEC7 /* ccShader_ETC1AS_PositionTextureColor.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_ETC1AS_PositionTextureColor.frag; sourceTree = "<group>"; };
@@ -4576,6 +4582,8 @@
 				460D4D0121ABD0C60075726E /* TextureMTL.mm */,
 				460D4CF421ABD0C60075726E /* Utils.h */,
 				460D4CF621ABD0C60075726E /* Utils.mm */,
+				46D3D45921DE014500EF5E75 /* BufferManager.mm */,
+				46D3D45A21DE014500EF5E75 /* BufferManager.h */,
 			);
 			path = metal;
 			sourceTree = "<group>";
@@ -6294,6 +6302,7 @@
 				50ABBE5B1925AB6F00A911A9 /* CCEventKeyboard.h in Headers */,
 				EDC78D1221CA19FC00E1863C /* CCArmatureDataManager.h in Headers */,
 				4631CBED21AFD9FA0000D408 /* UIPageView.h in Headers */,
+				46D3D45D21DE014500EF5E75 /* BufferManager.h in Headers */,
 				1A40D1391E8E56C7002E363A /* pow10.h in Headers */,
 				50ABC00F1926664800A911A9 /* CCFileUtils.h in Headers */,
 				50ABBE3B1925AB6F00A911A9 /* CCData.h in Headers */,
@@ -6808,6 +6817,7 @@
 				50ABBEC41925AB6F00A911A9 /* CCVector.h in Headers */,
 				EDC78BED21CA19FB00E1863C /* CCComAttribute.h in Headers */,
 				EDC78C9921CA19FC00E1863C /* TextAtlasReader.h in Headers */,
+				46D3D45E21DE014500EF5E75 /* BufferManager.h in Headers */,
 				50ABBE501925AB6F00A911A9 /* CCEventCustom.h in Headers */,
 				A0534A661B872FFD006B03E5 /* CCDownloader-apple.h in Headers */,
 				B240C5EC1B09DFB000137F50 /* CCFrameBuffer.h in Headers */,
@@ -7700,6 +7710,7 @@
 				B6DD2FF51B04825B00E47F5F /* fastlz.c in Sources */,
 				15AE1BB519AADFEF00C27E9E /* SocketIO.cpp in Sources */,
 				EDC78C4221CA19FB00E1863C /* FlatBuffersSerialize.cpp in Sources */,
+				46D3D45B21DE014500EF5E75 /* BufferManager.mm in Sources */,
 				50ABBE5D1925AB6F00A911A9 /* CCEventListener.cpp in Sources */,
 				50ABBD601925AB0000A911A9 /* Vec4.cpp in Sources */,
 				EDC78C7A21CA19FC00E1863C /* ArmatureNodeReader.cpp in Sources */,
@@ -8334,6 +8345,7 @@
 				1A1645B1191B726C008C7C7F /* ConvertUTF.c in Sources */,
 				50ABBE3A1925AB6F00A911A9 /* CCData.cpp in Sources */,
 				1A1645B3191B726C008C7C7F /* ConvertUTFWrapper.cpp in Sources */,
+				46D3D45C21DE014500EF5E75 /* BufferManager.mm in Sources */,
 				B6DD2FEA1B04825B00E47F5F /* DetourProximityGrid.cpp in Sources */,
 				1ABA68AF1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */,
 				46F9B74A21B0CB44009DF858 /* UIWebViewImpl-ios.mm in Sources */,

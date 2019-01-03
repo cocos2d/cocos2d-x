@@ -8,8 +8,8 @@ CC_BACKEND_BEGIN
 
 enum class BufferUsage : uint32_t
 {
-    READ,
-    WRITE
+    STATIC,
+    DYNAMIC
 };
 
 enum class BufferType : uint32_t

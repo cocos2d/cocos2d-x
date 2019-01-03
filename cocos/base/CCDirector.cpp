@@ -249,6 +249,8 @@ void Director::setGLDefaultValues()
 // Draw the Scene
 void Director::drawScene()
 {
+    _renderer->beginFrame();
+
     // calculate "global" dt
     calculateDeltaTime();
     
@@ -265,7 +267,6 @@ void Director::drawScene()
         _eventDispatcher->dispatchEvent(_eventAfterUpdate);
     }
 
-    _renderer->beginFrame();
     _renderer->clear(ClearFlag::ALL, _clearColor, 1, 0);
     experimental::FrameBuffer::clearAllFBOs();
     

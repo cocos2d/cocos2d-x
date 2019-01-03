@@ -309,11 +309,11 @@ LayerColor::LayerColor()
     pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionColor_vert);
     pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionColor_frag);
     
-    _customCommand.createIndexBuffer(sizeof(unsigned short), 6);
+    _customCommand.createIndexBuffer(sizeof(unsigned short), 6, CustomCommand::BufferUsage::STATIC);
     unsigned short indices[] = {0, 1, 2, 2, 1, 3};
     _customCommand.updateIndexBuffer(indices, sizeof(indices));
     
-    _customCommand.createVertexBuffer(sizeof(_noMVPVertices[0]) + sizeof(_squareColors[0]), 4);
+    _customCommand.createVertexBuffer(sizeof(_noMVPVertices[0]) + sizeof(_squareColors[0]), 4, CustomCommand::BufferUsage::DYNAMIC);
     
     _customCommand.setDrawType(CustomCommand::DrawType::ELEMENT);
     _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE);
@@ -726,7 +726,7 @@ LayerRadialGradient::LayerRadialGradient()
     vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32, 0, false);
     vertexLayout.setLayout(sizeof(_vertices[0]), backend::VertexStepMode::VERTEX);
 
-    _customCommand.createVertexBuffer(sizeof(_vertices[0]), sizeof(_vertices) / sizeof(_vertices[0]));
+    _customCommand.createVertexBuffer(sizeof(_vertices[0]), sizeof(_vertices) / sizeof(_vertices[0]), CustomCommand::BufferUsage::DYNAMIC);
     _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
     _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE_STRIP);
 }

@@ -53,6 +53,7 @@ public:
     };
     
     using PrimitiveType = backend::PrimitiveType;
+    using BufferUsage = backend::BufferUsage;
         
 	/**Constructor.*/
     CustomCommand();
@@ -75,8 +76,8 @@ public:
     void init(float globalZOrder);
     void init(float globalZOrder, const BlendFunc& blendFunc);
     
-    void createVertexBuffer(unsigned int vertexSize, unsigned int capacity);
-    void createIndexBuffer(unsigned int indexSize, unsigned int capacity);
+    void createVertexBuffer(unsigned int vertexSize, unsigned int capacity, BufferUsage usage);
+    void createIndexBuffer(unsigned int indexSize, unsigned int capacity, BufferUsage usage);
 
     void updateVertexBuffer(void* data, unsigned int length);
     void updateIndexBuffer(void* data, unsigned int length);

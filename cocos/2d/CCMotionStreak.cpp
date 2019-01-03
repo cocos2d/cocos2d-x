@@ -121,7 +121,7 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
     _vertices = (Vec2*)malloc(sizeof(Vec2) * _vertexCount);
     _texCoords = (Tex2F*)malloc(sizeof(Tex2F) * _vertexCount);
     _colorPointer =  (uint8_t*)malloc(sizeof(uint8_t) * 4 * _vertexCount);
-    _customCommand.createVertexBuffer(sizeof(Vec2) + sizeof(Tex2F) + sizeof(uint8_t) * 4, _vertexCount);
+    _customCommand.createVertexBuffer(sizeof(Vec2) + sizeof(Tex2F) + sizeof(uint8_t) * 4, _vertexCount, CustomCommand::BufferUsage::DYNAMIC);
 
     setTexture(texture);
     setColor(color);

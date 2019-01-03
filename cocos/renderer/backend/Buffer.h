@@ -21,7 +21,7 @@ protected:
     
     virtual ~Buffer() = default;
     
-    BufferUsage _usage = BufferUsage::READ;
+    BufferUsage _usage = BufferUsage::DYNAMIC;
     BufferType _type = BufferType::VERTEX;
     unsigned int _size = 0;
 };

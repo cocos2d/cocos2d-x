@@ -521,10 +521,10 @@ void Grid3D::updateVertexAndTexCoordinate()
         memcpy((char*)_vertexBuffer + offset, &tempVecPointer[i], sizeof(Vec3));
         memcpy((char*)_vertexBuffer + offset + sizeof(Vec3), &tempTexPointer[i], sizeof(Vec2));
     }
-    _drawCommand.createVertexBuffer((unsigned int)(sizeof(Vec3) + sizeof(Vec2)), numOfPoints);
+    _drawCommand.createVertexBuffer((unsigned int)(sizeof(Vec3) + sizeof(Vec2)), numOfPoints, CustomCommand::BufferUsage::DYNAMIC);
     _drawCommand.updateVertexBuffer(_vertexBuffer, numOfPoints * sizeof(Vec3) + numOfPoints * sizeof(Vec2));
 
-    _drawCommand.createIndexBuffer(sizeof(unsigned short), _gridSize.width * _gridSize.height * 6);
+    _drawCommand.createIndexBuffer(sizeof(unsigned short), _gridSize.width * _gridSize.height * 6, CustomCommand::BufferUsage::DYNAMIC);
     _drawCommand.updateIndexBuffer(_indices, _gridSize.width * _gridSize.height * 6 * sizeof(unsigned short));
 }
 
@@ -777,10 +777,10 @@ void TiledGrid3D::updateVertexAndTexCoordinate()
         memcpy((char*)_vertexBuffer + offset, &tempVecPointer[i], sizeof(Vec3));
         memcpy((char*)_vertexBuffer + offset + sizeof(Vec3), &tempTexPointer[i], sizeof(Vec2));
     }
-    _drawCommand.createVertexBuffer((unsigned int)(sizeof(Vec3) + sizeof(Vec2) ), numOfPoints);
+    _drawCommand.createVertexBuffer((unsigned int)(sizeof(Vec3) + sizeof(Vec2) ), numOfPoints, CustomCommand::BufferUsage::DYNAMIC);
     _drawCommand.updateVertexBuffer(_vertexBuffer, numOfPoints * sizeof(Vec3) + numOfPoints * sizeof(Vec2));
 
-    _drawCommand.createIndexBuffer(sizeof(unsigned short), _gridSize.width * _gridSize.height * 6);
+    _drawCommand.createIndexBuffer(sizeof(unsigned short), _gridSize.width * _gridSize.height * 6, CustomCommand::BufferUsage::DYNAMIC);
     _drawCommand.updateIndexBuffer(_indices, _gridSize.width * _gridSize.height * 6 * sizeof(unsigned short));
 }
 
