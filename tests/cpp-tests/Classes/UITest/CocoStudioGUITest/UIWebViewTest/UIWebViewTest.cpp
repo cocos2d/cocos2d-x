@@ -144,7 +144,7 @@ bool WebViewTest::init()
         evalJsBtn->setPosition(VisibleRect::center() - Vec2( _webView->getContentSize().width/2 +
                                                     evalJsBtn->getContentSize().width/2 + 10,-50 ));
         evalJsBtn->addClickEventListener([=](Ref*){
-            _webView->evaluateJS("alert(\"hello\")");
+            _webView->evaluateJS("setTimeout(function(){alert(\"hello\");}, 0)");
         });
         evalJsBtn->setName("evalJs");
         this->addChild(evalJsBtn);

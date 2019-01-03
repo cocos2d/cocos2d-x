@@ -23,6 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 #include "lua_downloader.h"
 
+#include "cocos2d.h"
 #include "network/CCDownloader.h"
 #include "lua_extensions.h"
 #include <iostream>
@@ -42,6 +43,7 @@ static int get_field_int(lua_State *L, const char *field, int def)
     if (lua_isnil(L, -1))
     {
         //luaL_error(L, "get_field_int: field '%s' no exists.", field);
+        lua_pop(L, 1);
         return ret;
     }
     ret = (int)lua_tointeger(L, -1);
@@ -56,7 +58,8 @@ static std::string get_field_string(lua_State *L, const char *field, const char 
     lua_gettable(L, -2);
     if (lua_isnil(L, -1))
     {
-        //luaL_error(L, "get_field_string: field '%s' no exists.", field);
+        //CCLOGERROR("get_field_string: field '%s' no exists.", field);
+        lua_pop(L, 1);
         return ret;
     }
     ret = std::string(lua_tostring(L, -1));
@@ -115,7 +118,7 @@ static int lua_downloader_new(lua_State *L)
     if (argc >= 1) {
         //parse DownloaderHints
         if (!lua_istable(L, -1)) {
-            luaL_error(L, "cc.Downloader.new: first argument should be table if set");
+            CCLOGERROR("cc.Downloader.new: first argument should be table if set");
             return 0;
         }
         DownloaderHints hints;
@@ -132,13 +135,13 @@ static int lua_downloader_new(lua_State *L)
         downloader = new (ptr) Downloader();
     }
 
-    luaL_getmetatable(L, "cc.Downloader");
-    lua_setmetatable(L, -2);
+    luaL_getmetatable(L, "cc.Downloader");              //stack  downloader, cc.Downloader
+    lua_setmetatable(L, -2);                            //stack  downloader
 
     //register callback table
-    lua_pushlightuserdata(L, (void*)downloader);
-    lua_newtable(L);
-    lua_settable(L, LUA_REGISTRYINDEX);
+    lua_pushlightuserdata(L, (void*)downloader);        //stack downloader, key[*downloader]
+    lua_newtable(L);                                    //stack downloader, key[*downloader], {}
+    lua_settable(L, LUA_REGISTRYINDEX);                 //stack downloaders
 
     return 1;
 }
@@ -153,7 +156,7 @@ static int lua_downloader_createDownloadDataTask(lua_State *L)
 
     if (argc == 0)
     {
-        luaL_error(L, "cc.Downloader.createDownloadDataTask parameter error");
+        CCLOGERROR("cc.Downloader.createDownloadDataTask parameter error");
         return 0;
     }
 
@@ -175,7 +178,7 @@ static int lua_downloader_createDownloadFileTask(lua_State *L)
 
     if (argc < 2)
     {
-        luaL_error(L, "cc.Downloader.createDownloadFileTask parameter error!");
+        CCLOGERROR("cc.Downloader.createDownloadFileTask parameter error!");
         return 0;
     }
 
@@ -193,7 +196,7 @@ static int lua_downloader_setOnFileTaskSuccess(lua_State *L)
     int argc = lua_gettop(L) - 1;
     Downloader *d = checkDownloader(L);
     if (argc != 1) {
-        luaL_error(L, "cc.Downloader.setOnFileTaskSuccess parameter error!");
+        CCLOGERROR("cc.Downloader.setOnFileTaskSuccess parameter error!");
         return 0;
     }
     luaL_argcheck(L, lua_isfunction(L, 2), 2, "should be a function");
@@ -207,7 +210,7 @@ static int lua_downloader_setOnFileTaskSuccess(lua_State *L)
             if (lua_pcall(L, 1, 0, 0) != 0)
             {
                 lua_pop(L, 1);                                // remove callback or nil
-                luaL_error(L, "cc.Downloader.setOnFileTaskSuccess invoke callback error!");
+                CCLOGERROR("cc.Downloader.setOnFileTaskSuccess invoke callback error!");
                 return;
             }
         }
@@ -223,7 +226,7 @@ static int lua_downloader_setOnTaskProgress(lua_State *L)
     Downloader *d = checkDownloader(L);
     int argc = lua_gettop(L) - 1;
     if (argc != 1) {
-        luaL_error(L, "cc.Downloader.setOnTaskProgress parameter error!");
+        CCLOGERROR("cc.Downloader.setOnTaskProgress parameter error!");
         return 0;
     }
     luaL_argcheck(L, lua_isfunction(L, 2), 2, "should be a function");
@@ -243,7 +246,7 @@ static int lua_downloader_setOnTaskProgress(lua_State *L)
             if (lua_pcall(L, 4, 0, 0) != 0)
             {
                 lua_pop(L, 1);                                // remove callback or nil
-                luaL_error(L, "cc.Downloader.setOnTaskProgress invoke callback error!");
+                CCLOGERROR("cc.Downloader.setOnTaskProgress invoke callback error!");
                 return;
             }
         }
@@ -259,7 +262,7 @@ static int lua_downloader_setOnTaskError(lua_State *L)
     Downloader *d = checkDownloader(L);
     int argc = lua_gettop(L) - 1;
     if (argc != 1) {
-        luaL_error(L, "cc.Downloader.setOnTaskError parameter error!");
+        CCLOGERROR("cc.Downloader.setOnTaskError parameter error!");
         return 0;
     }
     luaL_argcheck(L, lua_isfunction(L, 2), 2, "should be a function");
@@ -279,7 +282,7 @@ static int lua_downloader_setOnTaskError(lua_State *L)
             if (lua_pcall(L, 4, 0, 0) != 0)
             {
                 lua_pop(L, 1);                                // remove callback or nil
-                luaL_error(L, "cc.Downloader.setOnTaskError invoke callback error!");
+                CCLOGERROR("cc.Downloader.setOnTaskError invoke callback error!");
                 return;
             }
         }
@@ -311,7 +314,7 @@ static int lua_downloader_tostring(lua_State *L)
     return 1;
 }
 
-static const struct luaL_reg downloaderStaticFns[] = {
+static const struct luaL_Reg downloaderStaticFns[] = {
     { "new", lua_downloader_new }, 
     /* 
      * cocos2d::Downloader is not a subclass of cocos2d::Ref, 
@@ -322,7 +325,7 @@ static const struct luaL_reg downloaderStaticFns[] = {
     };
 
 
-static const struct luaL_reg downloaderMemberFns[] = {
+static const struct luaL_Reg downloaderMemberFns[] = {
     { "createDownloadDataTask", lua_downloader_createDownloadDataTask },
     { "createDownloadFileTask", lua_downloader_createDownloadFileTask },
     { "setOnFileTaskSuccess",   lua_downloader_setOnFileTaskSuccess },
@@ -335,13 +338,16 @@ static const struct luaL_reg downloaderMemberFns[] = {
 
 int register_downloader(lua_State* L)
 {
-    luaL_newmetatable(L, "cc.Downloader");
-    lua_pushstring(L, "__index");
-    lua_pushvalue(L, -2);    /* pushes the metatable */
-    lua_settable(L, -3);     /* metatable.__index = metatable */
-
-    luaL_openlib(L, nullptr, downloaderMemberFns, 0);
-    luaL_openlib(L, "cc.Downloader", downloaderStaticFns, 0);
+    int stackSize = lua_gettop(L);
+    luaL_newmetatable(L, "cc.Downloader");  //stack metatable(cc.Downloader)
+    lua_pushstring(L, "__index");           //stack metatable(*), __index
+    lua_pushvalue(L, -2);                   //stack metatable(*), __index, metatable(*)
+    lua_settable(L, -3);                    //stack metatable(*)
+    luaL_register(L, nullptr, downloaderMemberFns);   //stack metatable(*)
+    lua_pop(L, 1);                                      //stack *empty*
+    luaL_register(L, "cc.Downloader", downloaderStaticFns);   //stack *empty*
+    lua_pop(L, 1);
+    assert(stackSize == lua_gettop(L));
     return 1;
 }
 

@@ -624,6 +624,7 @@ void FileUtils::purgeCachedEntries()
 {
     DECLARE_GUARD;
     _fullPathCache.clear();
+    _fullPathCacheDir.clear();
 }
 
 std::string FileUtils::getStringFromFile(const std::string& filename) const
@@ -808,7 +809,7 @@ std::string FileUtils::getPathForFilename(const std::string& filename, const std
     path += file_path;
     path += resolutionDirectory;
 
-    path = getFullPathForDirectoryAndFilename(path, file);
+    path = getFullPathForFilenameWithinDirectory(path, file);
 
     return path;
 }
@@ -864,6 +865,60 @@ std::string FileUtils::fullPathForFilename(const std::string &filename) const
     return "";
 }
 
+
+std::string FileUtils::fullPathForDirectory(const std::string &dir) const
+{
+    DECLARE_GUARD;
+
+    if (dir.empty())
+    {
+        return "";
+    }
+
+    if (isAbsolutePath(dir))
+    {
+        return dir;
+    }
+
+    // Already Cached ?
+    auto cacheIter = _fullPathCacheDir.find(dir);
+    if(cacheIter != _fullPathCacheDir.end())
+    {
+        return cacheIter->second;
+    }
+    std::string longdir = dir;
+    std::string fullpath;
+
+    if(longdir[longdir.length() - 1] != '/')
+    {
+        longdir +="/";
+    }
+
+    for (const auto& searchIt : _searchPathArray)
+    {
+        for (const auto& resolutionIt : _searchResolutionsOrderArray)
+        {
+            fullpath = searchIt + longdir + resolutionIt;
+            auto exists = isDirectoryExistInternal(fullpath);
+
+            if (exists && !fullpath.empty())
+            {
+                // Using the filename passed in as key.
+                _fullPathCacheDir.emplace(dir, fullpath);
+                return fullpath;
+            }
+
+        }
+    }
+
+    if(isPopupNotify()){
+        CCLOG("cocos2d: fullPathForDirectory: No directory found at %s. Possible missing directory.", dir.c_str());
+    }
+
+    // The file wasn't found, return empty string.
+    return "";
+}
+
 std::string FileUtils::fullPathFromRelativeFile(const std::string &filename, const std::string &relativeFile) const
 {
     return relativeFile.substr(0, relativeFile.rfind('/')+1) + getNewFilename(filename);
@@ -881,6 +936,7 @@ void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& search
     bool existDefault = false;
 
     _fullPathCache.clear();
+    _fullPathCacheDir.clear();
     _searchResolutionsOrderArray.clear();
     for(const auto& iter : searchResolutionsOrder)
     {
@@ -956,6 +1012,7 @@ void FileUtils::setDefaultResourceRootPath(const std::string& path)
     if (_defaultResRootPath != path)
     {
         _fullPathCache.clear();
+        _fullPathCacheDir.clear();
         _defaultResRootPath = path;
         if (!_defaultResRootPath.empty() && _defaultResRootPath[_defaultResRootPath.length()-1] != '/')
         {
@@ -974,6 +1031,7 @@ void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
     _originalSearchPaths = searchPaths;
 
     _fullPathCache.clear();
+    _fullPathCacheDir.clear();
     _searchPathArray.clear();
 
     for (const auto& path : _originalSearchPaths)
@@ -1030,6 +1088,7 @@ void FileUtils::setFilenameLookupDictionary(const ValueMap& filenameLookupDict)
 {
     DECLARE_GUARD;
     _fullPathCache.clear();
+    _fullPathCacheDir.clear();
     _filenameLookupDict = filenameLookupDict;
 }
 
@@ -1053,7 +1112,7 @@ void FileUtils::loadFilenameLookupDictionaryFromFile(const std::string &filename
     }
 }
 
-std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) const
+std::string FileUtils::getFullPathForFilenameWithinDirectory(const std::string& directory, const std::string& filename) const
 {
     // get directory+filename, safely adding '/' as necessary
     std::string ret = directory;
@@ -1061,9 +1120,8 @@ std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& dir
         ret += '/';
     }
     ret += filename;
-
     // if the file doesn't exist, return an empty string
-    if (!isFileExistInternal(ret) && !isDirectoryExistInternal(ret)) {
+    if (!isFileExistInternal(ret)) {
         ret = "";
     }
     return ret;
@@ -1110,8 +1168,8 @@ bool FileUtils::isDirectoryExist(const std::string& dirPath) const
     }
 
     // Already Cached ?
-    auto cacheIter = _fullPathCache.find(dirPath);
-    if( cacheIter != _fullPathCache.end() )
+    auto cacheIter = _fullPathCacheDir.find(dirPath);
+    if( cacheIter != _fullPathCacheDir.end() )
     {
         return isDirectoryExistInternal(cacheIter->second);
     }
@@ -1122,10 +1180,10 @@ bool FileUtils::isDirectoryExist(const std::string& dirPath) const
         for (const auto& resolutionIt : _searchResolutionsOrderArray)
         {
             // searchPath + file_path + resourceDirectory
-            fullpath = fullPathForFilename(searchIt + dirPath + resolutionIt);
+            fullpath = fullPathForDirectory(searchIt + dirPath + resolutionIt);
             if (isDirectoryExistInternal(fullpath))
             {
-                _fullPathCache.emplace(dirPath, fullpath);
+                _fullPathCacheDir.emplace(dirPath, fullpath);
                 return true;
             }
         }
@@ -1188,7 +1246,7 @@ void FileUtils::getFileSize(const std::string &filepath, std::function<void(long
 
 void FileUtils::listFilesAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const
 {
-    auto fullPath = fullPathForFilename(dirPath);
+    auto fullPath = fullPathForDirectory(dirPath);
     performOperationOffthread([fullPath]() {
         return FileUtils::getInstance()->listFiles(fullPath);
     }, std::move(callback));
@@ -1196,7 +1254,7 @@ void FileUtils::listFilesAsync(const std::string& dirPath, std::function<void(st
 
 void FileUtils::listFilesRecursivelyAsync(const std::string& dirPath, std::function<void(std::vector<std::string>)> callback) const
 {
-    auto fullPath = fullPathForFilename(dirPath);
+    auto fullPath = fullPathForDirectory(dirPath);
     performOperationOffthread([fullPath]() {
         std::vector<std::string> retval;
         FileUtils::getInstance()->listFilesRecursively(fullPath, &retval);
@@ -1459,7 +1517,7 @@ long FileUtils::getFileSize(const std::string &filepath) const
 std::vector<std::string> FileUtils::listFiles(const std::string& dirPath) const
 {
     std::vector<std::string> files;
-    std::string fullpath = fullPathForFilename(dirPath);
+    std::string fullpath = fullPathForDirectory(dirPath);
     if (isDirectoryExist(fullpath))
     {
         tinydir_dir dir;
@@ -1497,7 +1555,7 @@ std::vector<std::string> FileUtils::listFiles(const std::string& dirPath) const
 
 void FileUtils::listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const
 {
-    std::string fullpath = fullPathForFilename(dirPath);
+    std::string fullpath = fullPathForDirectory(dirPath);
     if (isDirectoryExist(fullpath))
     {
         tinydir_dir dir;

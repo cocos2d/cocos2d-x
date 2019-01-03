@@ -93,10 +93,6 @@ bool VideoPlayerTest::init()
 void VideoPlayerTest::menuCloseCallback(Ref* sender)
 {
     Director::getInstance()->end();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
 }
 
 void VideoPlayerTest::menuFullScreenCallback(Ref* sender)

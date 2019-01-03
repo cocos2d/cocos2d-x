@@ -315,7 +315,7 @@ bool FileUtilsApple::removeDirectory(const std::string& path) const
         return true;
 }
 
-std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) const
+std::string FileUtilsApple::getFullPathForFilenameWithinDirectory(const std::string& directory, const std::string& filename) const
 {
     if (directory[0] != '/')
     {

@@ -199,6 +199,14 @@ Director::~Director(void)
     ObjectFactory::destroyInstance();
 
     s_SharedDirector = nullptr;
+
+#if CC_ENABLE_SCRIPT_BINDING
+    ScriptEngineManager::destroyInstance();
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    exit(0);
+#endif
 }
 
 void Director::setDefaultValues(void)

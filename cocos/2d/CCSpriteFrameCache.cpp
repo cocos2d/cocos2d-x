@@ -375,6 +375,11 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
 {
     CCASSERT(!plist.empty(), "plist filename should not be nullptr");
     
+    if (_spriteFramesCache.isPlistFull(plist)) 
+    {
+        return;
+    }
+
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
     if (fullPath.empty())
     {
