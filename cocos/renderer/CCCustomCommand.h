@@ -96,7 +96,10 @@ public:
     inline void setIndexFormat(IndexFormat format) { _indexFormat = format; }
     inline IndexFormat getIndexFormat() const { return _indexFormat; }
     
+    void setVertexBuffer(backend::Buffer* vertexBuffer);
     inline backend::Buffer* getVertexBuffer() const { assert(_vertexBuffer); return _vertexBuffer; }
+
+    void setIndexBuffer(backend::Buffer* indexBuffer, IndexFormat _indexFormat);
     inline backend::Buffer* getIndexBuffer() const { assert(_indexBuffer); return _indexBuffer; }
 
     inline void setVertexDrawInfo(unsigned int start, unsigned int count) { _vertexDrawStart = start; _vertexDrawCount = count; }
@@ -132,7 +135,6 @@ protected:
     
     float _lineWidth = 0.0;
     
-    unsigned int _vertexSize = 0;
     unsigned int _indexSize = 0;
 
     unsigned int _vertexCapacity = 0;

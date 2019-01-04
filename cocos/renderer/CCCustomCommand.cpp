@@ -35,6 +35,12 @@ CustomCommand::CustomCommand()
     _type = RenderCommand::Type::CUSTOM_COMMAND;
 }
 
+CustomCommand::~CustomCommand()
+{
+    CC_SAFE_RELEASE(_vertexBuffer);
+    CC_SAFE_RELEASE(_indexBuffer);
+}
+
 void CustomCommand::init(float depth, const cocos2d::Mat4 &modelViewTransform, unsigned int flags)
 {
     RenderCommand::init(depth, modelViewTransform, flags);
@@ -59,7 +65,6 @@ void CustomCommand::createVertexBuffer(unsigned int vertexSize, unsigned int cap
 {
     CC_SAFE_RELEASE(_vertexBuffer);
     
-    _vertexSize = vertexSize;
     _vertexCapacity = capacity;
     _vertexDrawCount = capacity;
     
@@ -91,6 +96,30 @@ void CustomCommand::updateIndexBuffer(void* data, unsigned int offset, unsigned 
     _indexBuffer->updateSubData(data, offset, length);
 }
 
+void CustomCommand::setVertexBuffer(backend::Buffer *vertexBuffer)
+{
+    if (_vertexBuffer == vertexBuffer)
+        return;
+
+    _vertexBuffer = vertexBuffer;
+    CC_SAFE_RETAIN(_vertexBuffer);
+}
+
+void CustomCommand::setIndexBuffer(backend::Buffer *indexBuffer, IndexFormat format)
+{
+    if (_indexBuffer == indexBuffer && _indexFormat == format)
+        return;
+
+    _indexBuffer = indexBuffer;
+    CC_SAFE_RETAIN(_indexBuffer);
+
+    _indexFormat = format;
+    if (IndexFormat::U_SHORT == _indexFormat)
+        _indexSize = (unsigned int)sizeof(unsigned short);
+    else
+        _indexSize = (unsigned int)sizeof(unsigned int);
+}
+
 void CustomCommand::updateVertexBuffer(void* data, unsigned int length)
 {
     assert(_vertexBuffer);
@@ -103,20 +132,12 @@ void CustomCommand::updateIndexBuffer(void* data, unsigned int length)
     _indexBuffer->updateData(data, length);
 }
 
-CustomCommand::~CustomCommand()
-{
-    CC_SAFE_RELEASE(_vertexBuffer);
-    CC_SAFE_RELEASE(_indexBuffer);
-}
-
 void CustomCommand::clear()
 {
     _vertexDrawStart = 0;
     _vertexDrawCount = 0;
     _indexDrawOffset = 0;
     _indexDrawCount = 0;
-    _vertexCapacity = 0;
-    _indexCapacity = 0;
 }
 
 NS_CC_END
