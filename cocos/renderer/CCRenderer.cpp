@@ -720,7 +720,7 @@ void Renderer::drawCustomCommand(RenderCommand *command)
     {
         _commandBuffer->setIndexBuffer(cmd->getIndexBuffer());
         _commandBuffer->drawElements(cmd->getPrimitiveType(),
-                                     backend::IndexFormat::U_SHORT,
+                                     cmd->getIndexFormat(),
                                      cmd->getIndexDrawCount(),
                                      cmd->getIndexDrawOffset());
         _drawnVertices += cmd->getIndexDrawCount();

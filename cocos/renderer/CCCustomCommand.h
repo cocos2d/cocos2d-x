@@ -45,7 +45,6 @@ such as stencil function, depth functions etc. The render command is executed by
 class CC_DLL CustomCommand : public RenderCommand
 {
 public:
-    
     enum class DrawType
     {
         ARRAY,
@@ -54,6 +53,7 @@ public:
     
     using PrimitiveType = backend::PrimitiveType;
     using BufferUsage = backend::BufferUsage;
+    using IndexFormat = backend::IndexFormat;
         
 	/**Constructor.*/
     CustomCommand();
@@ -89,8 +89,12 @@ public:
     
     inline void setDrawType(DrawType drawType) { _drawType = drawType; }
     inline DrawType getDrawType() const { return _drawType; }
+
     inline void setPrimitiveType(PrimitiveType primitiveType) { _primitiveType = primitiveType; }
     inline PrimitiveType getPrimitiveType() const { return _primitiveType; }
+
+    inline void setIndexFormat(IndexFormat format) { _indexFormat = format; }
+    inline IndexFormat getIndexFormat() const { return _indexFormat; }
     
     inline backend::Buffer* getVertexBuffer() const { assert(_vertexBuffer); return _vertexBuffer; }
     inline backend::Buffer* getIndexBuffer() const { assert(_indexBuffer); return _indexBuffer; }
@@ -124,6 +128,7 @@ protected:
     
     DrawType _drawType = DrawType::ELEMENT;
     PrimitiveType _primitiveType = PrimitiveType::TRIANGLE;
+    IndexFormat _indexFormat = IndexFormat::U_SHORT;
     
     float _lineWidth = 0.0;
     
