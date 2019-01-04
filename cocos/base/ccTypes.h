@@ -324,7 +324,7 @@ struct CC_DLL V3F_T2F
 };
 
 /** @struct V3F_C4F
-* A Vec3 with a vertex point, a tex coord point.
+* A Vec3 with a vertex point, a color.
 */
 struct CC_DLL V3F_C4F 
 {
