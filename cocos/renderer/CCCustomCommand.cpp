@@ -72,16 +72,17 @@ void CustomCommand::createVertexBuffer(unsigned int vertexSize, unsigned int cap
     _vertexBuffer = device->newBuffer(vertexSize * capacity, backend::BufferType::VERTEX, usage);
 }
 
-void CustomCommand::createIndexBuffer(unsigned int indexSize, unsigned int capacity, BufferUsage usage)
+void CustomCommand::createIndexBuffer(IndexFormat format, unsigned int capacity, BufferUsage usage)
 {
     CC_SAFE_RELEASE(_indexBuffer);
     
-    _indexSize = indexSize;
+    _indexFormat = format;
+    _indexSize = computeIndexSize();
     _indexCapacity = capacity;
     _indexDrawCount = capacity;
     
     auto device = backend::Device::getInstance();
-    _indexBuffer = device->newBuffer(indexSize * capacity, backend::BufferType::INDEX, usage);
+    _indexBuffer = device->newBuffer(_indexSize * capacity, backend::BufferType::INDEX, usage);
 }
 
 void CustomCommand::updateVertexBuffer(void* data, unsigned int offset, unsigned int length)
@@ -114,10 +115,7 @@ void CustomCommand::setIndexBuffer(backend::Buffer *indexBuffer, IndexFormat for
     CC_SAFE_RETAIN(_indexBuffer);
 
     _indexFormat = format;
-    if (IndexFormat::U_SHORT == _indexFormat)
-        _indexSize = (unsigned int)sizeof(unsigned short);
-    else
-        _indexSize = (unsigned int)sizeof(unsigned int);
+    _indexSize = computeIndexSize();
 }
 
 void CustomCommand::updateVertexBuffer(void* data, unsigned int length)
@@ -138,6 +136,14 @@ void CustomCommand::clear()
     _vertexDrawCount = 0;
     _indexDrawOffset = 0;
     _indexDrawCount = 0;
+}
+
+unsigned int CustomCommand::computeIndexSize() const
+{
+if (IndexFormat::U_SHORT == _indexFormat)
+    return (unsigned int)sizeof(unsigned short);
+else
+    return (unsigned int)sizeof(unsigned int);
 }
 
 NS_CC_END

@@ -185,7 +185,7 @@ protected:
     float _percentage = 0.0f;
     Sprite *_sprite = nullptr;
     std::vector<V2F_C4B_T2F> _vertexData;
-    std::vector<uint16_t> _indexData;
+    std::vector<unsigned short> _indexData;
     bool _reverseDirection = false;
     
     CustomCommand _customCommand;

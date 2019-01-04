@@ -77,7 +77,7 @@ public:
     void init(float globalZOrder, const BlendFunc& blendFunc);
     
     void createVertexBuffer(unsigned int vertexSize, unsigned int capacity, BufferUsage usage);
-    void createIndexBuffer(unsigned int indexSize, unsigned int capacity, BufferUsage usage);
+    void createIndexBuffer(IndexFormat format, unsigned int capacity, BufferUsage usage);
 
     void updateVertexBuffer(void* data, unsigned int length);
     void updateIndexBuffer(void* data, unsigned int length);
@@ -93,13 +93,10 @@ public:
     inline void setPrimitiveType(PrimitiveType primitiveType) { _primitiveType = primitiveType; }
     inline PrimitiveType getPrimitiveType() const { return _primitiveType; }
 
-    inline void setIndexFormat(IndexFormat format) { _indexFormat = format; }
-    inline IndexFormat getIndexFormat() const { return _indexFormat; }
-    
     void setVertexBuffer(backend::Buffer* vertexBuffer);
     inline backend::Buffer* getVertexBuffer() const { assert(_vertexBuffer); return _vertexBuffer; }
 
-    void setIndexBuffer(backend::Buffer* indexBuffer, IndexFormat _indexFormat);
+    void setIndexBuffer(backend::Buffer* indexBuffer, IndexFormat indexFormat);
     inline backend::Buffer* getIndexBuffer() const { assert(_indexBuffer); return _indexBuffer; }
 
     inline void setVertexDrawInfo(unsigned int start, unsigned int count) { _vertexDrawStart = start; _vertexDrawCount = count; }
@@ -112,6 +109,8 @@ public:
     
     inline void setLineWidth(float lineWidth) { _lineWidth = lineWidth; }
     inline float getLineWidth() const { return _lineWidth; }
+
+    inline IndexFormat getIndexFormat() const { return _indexFormat; }
     
     void clear();
 
@@ -120,6 +119,8 @@ public:
     std::function<void()> func;
 
 protected:
+    unsigned int computeIndexSize() const;
+
     backend::Buffer* _vertexBuffer = nullptr;
     backend::Buffer* _indexBuffer = nullptr;
     

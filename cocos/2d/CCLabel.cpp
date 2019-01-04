@@ -1505,10 +1505,10 @@ float Label::getBMFontSize()const
 
 void Label::updateBuffer(TextureAtlas* textureAtlas, CustomCommand& customCommand)
 {
-    if(textureAtlas->getTotalQuads() > customCommand.getVertexCapacity())
+    if (textureAtlas->getTotalQuads() > customCommand.getVertexCapacity())
     {
         customCommand.createVertexBuffer((unsigned int)sizeof(V3F_C4B_T2F_Quad), (unsigned int)textureAtlas->getTotalQuads(), CustomCommand::BufferUsage::DYNAMIC);
-        customCommand.createIndexBuffer((unsigned int)sizeof(unsigned short), (unsigned int)textureAtlas->getTotalQuads()*6, CustomCommand::BufferUsage::DYNAMIC);
+        customCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, (unsigned int)textureAtlas->getTotalQuads()*6, CustomCommand::BufferUsage::DYNAMIC);
     }
    customCommand.updateVertexBuffer(textureAtlas->getQuads(), (unsigned int)(textureAtlas->getTotalQuads() * sizeof(V3F_C4B_T2F_Quad)) );
    customCommand.updateIndexBuffer(textureAtlas->getIndices(), (unsigned int)(textureAtlas->getTotalQuads()*6*sizeof(unsigned short)) );

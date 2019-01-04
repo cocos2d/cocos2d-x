@@ -309,7 +309,7 @@ LayerColor::LayerColor()
     pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionColor_vert);
     pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionColor_frag);
     
-    _customCommand.createIndexBuffer(sizeof(unsigned short), 6, CustomCommand::BufferUsage::STATIC);
+    _customCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, 6, CustomCommand::BufferUsage::STATIC);
     unsigned short indices[] = {0, 1, 2, 2, 1, 3};
     _customCommand.updateIndexBuffer(indices, sizeof(indices));
     

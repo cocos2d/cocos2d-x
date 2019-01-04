@@ -53,7 +53,7 @@ StencilStateManager::StencilStateManager()
     _customCommand.updateVertexBuffer(vertices, sizeof(vertices));
 
     unsigned short indices[6] = {0, 1, 2, 0, 2, 3};
-    _customCommand.createIndexBuffer(sizeof(unsigned short), 6, CustomCommand::BufferUsage::STATIC);
+    _customCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, 6, CustomCommand::BufferUsage::STATIC);
     _customCommand.updateIndexBuffer(indices, sizeof(indices));
 
     Color4F color(1, 1, 1, 1);
@@ -62,46 +62,9 @@ StencilStateManager::StencilStateManager()
 
 void StencilStateManager::drawFullScreenQuadClearStencil(float globalZOrder)
 {
-//    Director* director = Director::getInstance();
-//    CCASSERT(nullptr != director, "Director is null when setting matrix stack");
-//
-//    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-//    director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-//
-//    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-//    director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-//
-//    Vec2 vertices[] = {
-//        Vec2(-1.0f, -1.0f),
-//        Vec2(1.0f, -1.0f),
-//        Vec2(1.0f, 1.0f),
-//        Vec2(-1.0f, 1.0f)
-//    };
-//
-//    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-//
-//    int colorLocation = glProgram->getUniformLocation("u_color");
-//    CHECK_GL_ERROR_DEBUG();
-//
-//    Color4F color(1, 1, 1, 1);
-//
-//    glProgram->use();
-//    glProgram->setUniformsForBuiltins();
-//    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
-//
-//    glBindBuffer(GL_ARRAY_BUFFER, 0);
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-//    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-//
-//    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
-//
     _customCommand.init(globalZOrder);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
     _customCommand.getPipelineDescriptor().bindGroup.setUniform("u_MVPMatrix", Mat4::IDENTITY.m, sizeof(Mat4::IDENTITY.m));
-
-//    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-//    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
 
@@ -143,16 +106,6 @@ void StencilStateManager::onBeforeVisit(float globalZOrder)
     _beforeDrawQuadCmd.func = [=]() -> void {
 
         // manually save the stencil state
-
-    //    _currentStencilEnabled = glIsEnabled(GL_STENCIL_TEST);
-    //    glGetIntegerv(GL_STENCIL_WRITEMASK, (GLint *)&_currentStencilWriteMask);
-    //    glGetIntegerv(GL_STENCIL_FUNC, (GLint *)&_currentStencilFunc);
-    //    glGetIntegerv(GL_STENCIL_REF, &_currentStencilRef);
-    //    glGetIntegerv(GL_STENCIL_VALUE_MASK, (GLint *)&_currentStencilValueMask);
-    //    glGetIntegerv(GL_STENCIL_FAIL, (GLint *)&_currentStencilFail);
-    //    glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, (GLint *)&_currentStencilPassDepthFail);
-    //    glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, (GLint *)&_currentStencilPassDepthPass);
-
         _currentStencilEnabled = renderer->getStencilTest();
         _currentStencilWriteMask = renderer->getStencilWriteMask();
         _currentStencilFunc = renderer->getStencilCompareFunction();
@@ -163,29 +116,20 @@ void StencilStateManager::onBeforeVisit(float globalZOrder)
         _currentStencilPassDepthPass = renderer->getStencilDepthPassOperation();
 
         // enable stencil use
-    //    glEnable(GL_STENCIL_TEST);
         renderer->setStencilTest(true);
-        // check for OpenGL error while enabling stencil test
-    //    CHECK_GL_ERROR_DEBUG();
 
         // all bits on the stencil buffer are readonly, except the current layer bit,
         // this means that operation like glClear or glStencilOp will be masked with this value
-    //    glStencilMask(mask_layer);
         renderer->setStencilWriteMask(mask_layer);
-        //    RenderState::StateBlock::_defaultState->setStencilWrite(mask_layer);
 
         // manually save the depth test state
 
-    //    glGetBooleanv(GL_DEPTH_WRITEMASK, &_currentDepthWriteMask);
         _currentDepthWriteMask = renderer->getDepthWrite();
 
-        // disable depth test while drawing the stencil
-        //glDisable(GL_DEPTH_TEST);
         // disable update to the depth buffer while drawing the stencil,
         // as the stencil is not meant to be rendered in the real scene,
         // it should never prevent something else to be drawn,
         // only disabling depth buffer update should do
-    //    glDepthMask(GL_FALSE);
         renderer->setDepthWrite(false);
 
         ///////////////////////////////////
@@ -197,8 +141,6 @@ void StencilStateManager::onBeforeVisit(float globalZOrder)
         //     never draw it into the frame buffer
         //     if not in inverted mode: set the current layer value to 0 in the stencil buffer
         //     if in inverted mode: set the current layer value to 1 in the stencil buffer
-    //    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
-    //    glStencilOp(!_inverted ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP);
         renderer->setStencilCompareFunction(backend::CompareFunction::NEVER, mask_layer, mask_layer);
         renderer->setStencilOperation(!_inverted ? backend::StencilOperation::ZERO : backend::StencilOperation::REPLACE,
                                       backend::StencilOperation::KEEP,
@@ -207,7 +149,6 @@ void StencilStateManager::onBeforeVisit(float globalZOrder)
     renderer->addCommand(&_beforeDrawQuadCmd);
 
     // draw a fullscreen solid rectangle to clear the stencil buffer
-    //ccDrawSolidRect(Vec2::ZERO, ccpFromSize([[Director sharedDirector] winSize]), Color4F(1, 1, 1, 1));
     drawFullScreenQuadClearStencil(globalZOrder);
 
     _afterDrawQuadCmd.init(globalZOrder);
@@ -217,12 +158,9 @@ void StencilStateManager::onBeforeVisit(float globalZOrder)
         //     never draw it into the frame buffer
         //     if not in inverted mode: set the current layer value to 1 in the stencil buffer
         //     if in inverted mode: set the current layer value to 0 in the stencil buffer
-    //    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
         auto renderer = Director::getInstance()->getRenderer();
         renderer->setStencilCompareFunction(backend::CompareFunction::NEVER, mask_layer, mask_layer);
-        //    RenderState::StateBlock::_defaultState->setStencilFunction(RenderState::STENCIL_NEVER, mask_layer, mask_layer);
 
-    //    glStencilOp(!_inverted ? GL_REPLACE : GL_ZERO, GL_KEEP, GL_KEEP);
         renderer->setStencilOperation(!_inverted ? backend::StencilOperation::REPLACE : backend::StencilOperation::ZERO,
                                       backend::StencilOperation::KEEP,
                                       backend::StencilOperation::KEEP);
@@ -264,10 +202,8 @@ void StencilStateManager::onAfterDrawStencil()
     //         draw the pixel and keep the current layer in the stencil buffer
     //     else
     //         do not draw the pixel but keep the current layer in the stencil buffer
-//    glStencilFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le);
     renderer->setStencilCompareFunction(backend::CompareFunction::EQUAL, _mask_layer_le, _mask_layer_le);
 
-//    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
     renderer->setStencilOperation(backend::StencilOperation::KEEP, backend::StencilOperation::KEEP, backend::StencilOperation::KEEP);
 
     // draw (according to the stencil test function) this node and its children
@@ -280,18 +216,14 @@ void StencilStateManager::onAfterVisit()
     // CLEANUP
     
     // manually restore the stencil state
-//    glStencilFunc(_currentStencilFunc, _currentStencilRef, _currentStencilValueMask);
     auto renderer = Director::getInstance()->getRenderer();
     renderer->setStencilCompareFunction(_currentStencilFunc, _currentStencilRef, _currentStencilReadMask);
 
-//    glStencilOp(_currentStencilFail, _currentStencilPassDepthFail, _currentStencilPassDepthPass);
     renderer->setStencilOperation(_currentStencilFail, _currentStencilPassDepthFail, _currentStencilPassDepthPass);
 
-//    glStencilMask(_currentStencilWriteMask);
     renderer->setStencilWriteMask(_currentStencilWriteMask);
     if (!_currentStencilEnabled)
     {
-//        glDisable(GL_STENCIL_TEST);
         renderer->setStencilTest(false);
     }
     

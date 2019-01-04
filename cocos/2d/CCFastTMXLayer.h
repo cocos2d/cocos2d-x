@@ -27,12 +27,10 @@ THE SOFTWARE.
 ****************************************************************************/
 #pragma once
 
-#include <map>
 #include <unordered_map>
 #include "2d/CCNode.h"
 #include "2d/CCTMXXMLParser.h"
 #include "renderer/CCCustomCommand.h"
-#include "base/CCMap.h"
 
 NS_CC_BEGIN
 
@@ -41,7 +39,6 @@ class TMXLayerInfo;
 class TMXTilesetInfo;
 class Texture2D;
 class Sprite;
-struct _ccCArray;
 
 namespace backend
 {
