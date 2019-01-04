@@ -251,7 +251,9 @@ protected:
         backend::Buffer* getIndexBuffer() const;
 
     private:
-        int _currentBufferIndex = -1;
+        void createBuffer();
+
+        int _currentBufferIndex = 0;
         std::vector<backend::Buffer*> _vertexBufferPool;
         std::vector<backend::Buffer*> _indexBufferPool;
     };
@@ -273,7 +275,7 @@ protected:
     void visitRenderQueue(RenderQueue& queue);
     void doVisitRenderQueue(const std::vector<RenderCommand*>&);
 
-    void fillVerticesAndIndices(const TrianglesCommand* cmd, unsigned int vertexBufferOffset, unsigned int& filledVertexCount, unsigned int& filledIndexCount);
+    void fillVerticesAndIndices(const TrianglesCommand* cmd, unsigned int vertexBufferOffset);
     void beginRenderPass(RenderCommand*);
     
     void setRenderPipeline(const PipelineDescriptor&, const backend::RenderPassDescriptor&);
