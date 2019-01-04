@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "base/CCProtocols.h"
 #include "renderer/CCCustomCommand.h"
 
+#include <vector>
 
 NS_CC_BEGIN
 
@@ -316,10 +317,9 @@ protected:
 
     BlendFunc _blendFunc;
     Vec2 _squareVertices[4];
-    Color4F  _squareColors[4];
     CustomCommand _customCommand;
-    Vec3 _noMVPVertices[4];
-    
+
+    V3F_C4F _vertexData[4];
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);
 

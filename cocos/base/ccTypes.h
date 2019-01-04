@@ -323,6 +323,17 @@ struct CC_DLL V3F_T2F
     Tex2F          texCoords;
 };
 
+/** @struct V3F_C4F
+* A Vec3 with a vertex point, a color.
+*/
+struct CC_DLL V3F_C4F 
+{
+    /// vertices (3F)
+    Vec3 vertices;
+    /// vertices (4F)
+    Color4F colors;
+};
+
 /** @struct V2F_C4B_T2F_Triangle
  * A Triangle of V2F_C4B_T2F.
  */
