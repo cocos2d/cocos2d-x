@@ -198,8 +198,6 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         else
             break;
 
-        setClearColor(_clearColor);
-
 //        if (depthStencilFormat != 0)
         {
             descriptor.textureFormat = backend::TextureFormat::D24S8;
@@ -207,10 +205,9 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
             _depthStencilTexture = new (std::nothrow) Texture2D;
             _depthStencilTexture->initWithBackendTexture(texture);
             texture->release();
-
-            setClearDepth(_clearDepth);
-            setClearStencil(_clearStencil);
         }
+
+        _clearFlags = ClearFlag::ALL;
 
         _texture2D->setAntiAliasTexParameters();
         if (_texture2DCopy)
@@ -276,25 +273,25 @@ void RenderTexture::setVirtualViewport(const Vec2& rtBegin, const Rect& fullRect
 
 void RenderTexture::beginWithClear(float r, float g, float b, float a)
 {
-    setClearColor(Color4F(r, g, b, a));
-    setClearDepth(0);
-    setClearStencil(0);
-    begin();
+    beginWithClear(r, g, b, a, 0, 0, ClearFlag::COLOR);
 }
 
 void RenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue)
 {
-    setClearColor(Color4F(r, g, b, a));
-    setClearDepth(depthValue);
-    setClearStencil(0);
-    begin();
+    beginWithClear(r, g, b, a, depthValue, 0, ClearFlag::COLOR | ClearFlag::DEPTH);
 }
 
 void RenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue)
 {
+    beginWithClear(r, g, b, a, depthValue, stencilValue, ClearFlag::ALL);
+}
+
+void RenderTexture::beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, ClearFlag flags)
+{
     setClearColor(Color4F(r, g, b, a));
     setClearDepth(depthValue);
     setClearStencil(stencilValue);
+    setClearFlags(flags);
     begin();
 }
 
@@ -616,19 +613,16 @@ void RenderTexture::end()
 void RenderTexture::setClearColor(const Color4F &clearColor)
 {
     _clearColor = clearColor;
-    _clearFlags |= ClearFlag::COLOR;
 }
 
 void RenderTexture::setClearDepth(float clearDepth)
 {
     _clearDepth = clearDepth;
-    _clearFlags |= ClearFlag::DEPTH;
 }
 
 void RenderTexture::setClearStencil(int clearStencil)
 {
     _clearStencil = clearStencil;
-    _clearFlags |= ClearFlag::STENCIL;
 }
 
 NS_CC_END

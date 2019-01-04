@@ -147,6 +147,7 @@ THE SOFTWARE.
 #include "base/CCProtocols.h"
 
 // renderer
+#include "renderer/CCCallbackCommand.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"

@@ -191,6 +191,18 @@ public:
      * @param event Event Custom.
      */
     void listenToForeground(EventCustom *event);
+
+    /** Valid when "autoDraw" is true.
+     *
+     * @return Clear flags.
+     */
+    ClearFlag getClearFlags() const { return _clearFlags; }
+
+    /** Set flags.
+     *
+     * @param clearFlags set clear flags.
+     */
+    void setClearFlags(ClearFlag clearFlags) { _clearFlags = clearFlags; }
     
     /** Clear color value. Valid only when "autoDraw" is true. 
      *
@@ -301,7 +313,14 @@ public:
      */
     bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, GLuint depthStencilFormat);
 
-protected:    
+protected:
+    virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, ClearFlag flags);
+    //renderer caches and callbacks
+    void onBegin();
+    void onEnd();
+
+    void onSaveToFile(const std::string& fileName, bool isRGBA = true);
+
     bool         _keepMatrix = false;
     Rect         _rtTextureRect = Rect::ZERO;
     Rect         _fullRect = Rect::ZERO;
@@ -342,12 +361,6 @@ protected:
     */
     CustomCommand _saveToFileCommand;
     std::function<void (RenderTexture*, const std::string&)> _saveFileCallback = nullptr;
-protected:
-    //renderer caches and callbacks
-    void onBegin();
-    void onEnd();
-
-    void onSaveToFile(const std::string& fileName, bool isRGBA = true);
     
     Mat4 _oldTransMatrix, _oldProjMatrix;
     Mat4 _transformMatrix, _projectionMatrix;

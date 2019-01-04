@@ -22,6 +22,14 @@ operator |(Enum lhs, Enum rhs)
 }
 
 template<typename Enum>
+typename std::enable_if<EnableBitMaskOperators<Enum>::enable, bool>::type
+operator ==(Enum lhs, Enum rhs)
+{
+    using underlying = typename std::underlying_type<Enum>::type;
+        static_cast<underlying>(lhs) == static_cast<underlying>(rhs);
+}
+
+template<typename Enum>
 typename std::enable_if<EnableBitMaskOperators<Enum>::enable, Enum>::type&
 operator |=(Enum& lhs, Enum rhs)
 {
@@ -35,7 +43,7 @@ operator |=(Enum& lhs, Enum rhs)
 }
 
 template<typename Enum>
-unsigned int
+typename std::enable_if<EnableBitMaskOperators<Enum>::enable, unsigned int>::type
 operator &(Enum lhs, Enum rhs)
 {
     using underlying = typename std::underlying_type<Enum>::type;

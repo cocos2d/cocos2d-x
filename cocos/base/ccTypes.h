@@ -631,6 +631,7 @@ struct CC_DLL ScissorRect
 
 enum class ClearFlag : uint8_t
 {
+    NONE = 0,
     COLOR = 1,
     DEPTH = 1 << 1,
     STENCIL = 1 << 2,
