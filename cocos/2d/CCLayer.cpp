@@ -302,8 +302,8 @@ LayerColor::LayerColor()
     
     auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
     vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
-    vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::FLOAT_R32G32B32A32, sizeof(_noMVPVertices[0]), false);
-    vertexLayout.setLayout(sizeof(_noMVPVertices[0]) + sizeof(_squareColors[0]), backend::VertexStepMode::VERTEX);
+    vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::FLOAT_R32G32B32A32, sizeof(_vertexData[0].vertices), false);
+    vertexLayout.setLayout(sizeof(_vertexData[0]), backend::VertexStepMode::VERTEX);
     
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
     pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionColor_vert);
@@ -313,7 +313,7 @@ LayerColor::LayerColor()
     unsigned short indices[] = {0, 1, 2, 2, 1, 3};
     _customCommand.updateIndexBuffer(indices, sizeof(indices));
     
-    _customCommand.createVertexBuffer(sizeof(_noMVPVertices[0]) + sizeof(_squareColors[0]), 4, CustomCommand::BufferUsage::DYNAMIC);
+    _customCommand.createVertexBuffer(sizeof(_vertexData[0]), 4, CustomCommand::BufferUsage::DYNAMIC);
     
     _customCommand.setDrawType(CustomCommand::DrawType::ELEMENT);
     _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE);
@@ -441,10 +441,10 @@ void LayerColor::updateColor()
 {
     for (int i = 0; i < 4; i++ )
     {
-        _squareColors[i].r = _displayedColor.r / 255.0f;
-        _squareColors[i].g = _displayedColor.g / 255.0f;
-        _squareColors[i].b = _displayedColor.b / 255.0f;
-        _squareColors[i].a = _displayedOpacity / 255.0f;
+        _vertexData[i].colors.r = _displayedColor.r / 255.0f;
+        _vertexData[i].colors.g = _displayedColor.g / 255.0f;
+        _vertexData[i].colors.b = _displayedColor.b / 255.0f;
+        _vertexData[i].colors.a = _displayedOpacity / 255.0f;
     }
     updateVertexBuffer();
 }
@@ -464,27 +464,14 @@ void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         pos.x = _squareVertices[i].x; pos.y = _squareVertices[i].y; pos.z = _positionZ;
         pos.w = 1;
         _modelViewTransform.transformVector(&pos);
-        _noMVPVertices[i] = Vec3(pos.x,pos.y,pos.z)/pos.w;
+        _vertexData[i].vertices = Vec3(pos.x,pos.y,pos.z)/pos.w;
     }
     updateVertexBuffer();
 }
 
 void LayerColor::updateVertexBuffer()
 {
-    uint8_t* data = (uint8_t*)malloc(sizeof(_noMVPVertices) + sizeof(_squareColors));
-    if (! data)
-        return;
-
-    size_t offset = 0;
-    for (int i = 0; i < 4; ++i)
-    {
-        offset = i * (sizeof(_noMVPVertices[0]) + sizeof(_squareColors[0]) );
-        memcpy(data + offset, &_noMVPVertices[i], sizeof(_noMVPVertices[0]));
-        memcpy(data + offset + sizeof(_noMVPVertices[0]), &_squareColors[i], sizeof(_squareColors[0]));
-    }
-    _customCommand.updateVertexBuffer(data, sizeof(_noMVPVertices) + sizeof(_squareColors));
-
-    free(data);
+    _customCommand.updateVertexBuffer(_vertexData, sizeof(_vertexData));
 }
 
 //
@@ -596,25 +583,25 @@ void LayerGradient::updateColor()
     );
 
     // (-1, -1)
-   _squareColors[0].r = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c));
-   _squareColors[0].g = E.g + (S.g - E.g) * ((c + u.x + u.y) / (2.0f * c));
-   _squareColors[0].b = E.b + (S.b - E.b) * ((c + u.x + u.y) / (2.0f * c));
-   _squareColors[0].a = E.a + (S.a - E.a) * ((c + u.x + u.y) / (2.0f * c));
+   _vertexData[0].colors.r = E.r + (S.r - E.r) * ((c + u.x + u.y) / (2.0f * c));
+   _vertexData[0].colors.g = E.g + (S.g - E.g) * ((c + u.x + u.y) / (2.0f * c));
+   _vertexData[0].colors.b = E.b + (S.b - E.b) * ((c + u.x + u.y) / (2.0f * c));
+   _vertexData[0].colors.a = E.a + (S.a - E.a) * ((c + u.x + u.y) / (2.0f * c));
    // (1, -1)
-   _squareColors[1].r = E.r + (S.r - E.r) * ((c - u.x + u.y) / (2.0f * c));
-   _squareColors[1].g = E.g + (S.g - E.g) * ((c - u.x + u.y) / (2.0f * c));
-   _squareColors[1].b = E.b + (S.b - E.b) * ((c - u.x + u.y) / (2.0f * c));
-   _squareColors[1].a = E.a + (S.a - E.a) * ((c - u.x + u.y) / (2.0f * c));
+   _vertexData[1].colors.r = E.r + (S.r - E.r) * ((c - u.x + u.y) / (2.0f * c));
+   _vertexData[1].colors.g = E.g + (S.g - E.g) * ((c - u.x + u.y) / (2.0f * c));
+   _vertexData[1].colors.b = E.b + (S.b - E.b) * ((c - u.x + u.y) / (2.0f * c));
+   _vertexData[1].colors.a = E.a + (S.a - E.a) * ((c - u.x + u.y) / (2.0f * c));
    // (-1, 1)
-   _squareColors[2].r = E.r + (S.r - E.r) * ((c + u.x - u.y) / (2.0f * c));
-   _squareColors[2].g = E.g + (S.g - E.g) * ((c + u.x - u.y) / (2.0f * c));
-   _squareColors[2].b = E.b + (S.b - E.b) * ((c + u.x - u.y) / (2.0f * c));
-   _squareColors[2].a = E.a + (S.a - E.a) * ((c + u.x - u.y) / (2.0f * c));
+   _vertexData[2].colors.r = E.r + (S.r - E.r) * ((c + u.x - u.y) / (2.0f * c));
+   _vertexData[2].colors.g = E.g + (S.g - E.g) * ((c + u.x - u.y) / (2.0f * c));
+   _vertexData[2].colors.b = E.b + (S.b - E.b) * ((c + u.x - u.y) / (2.0f * c));
+   _vertexData[2].colors.a = E.a + (S.a - E.a) * ((c + u.x - u.y) / (2.0f * c));
    // (1, 1)
-   _squareColors[3].r = E.r + (S.r - E.r) * ((c - u.x - u.y) / (2.0f * c));
-   _squareColors[3].g = E.g + (S.g - E.g) * ((c - u.x - u.y) / (2.0f * c));
-   _squareColors[3].b = E.b + (S.b - E.b) * ((c - u.x - u.y) / (2.0f * c));
-   _squareColors[3].a = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
+   _vertexData[3].colors.r = E.r + (S.r - E.r) * ((c - u.x - u.y) / (2.0f * c));
+   _vertexData[3].colors.g = E.g + (S.g - E.g) * ((c - u.x - u.y) / (2.0f * c));
+   _vertexData[3].colors.b = E.b + (S.b - E.b) * ((c - u.x - u.y) / (2.0f * c));
+   _vertexData[3].colors.a = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
 }
 
 const Color3B& LayerGradient::getStartColor() const
