@@ -328,7 +328,7 @@ struct CC_DLL V3F_T2F
 */
 struct CC_DLL V3F_C4F 
 {
-    /// vertices (2F)
+    /// vertices (3F)
     Vec3 vertices;
     /// vertices (4F)
     Color4F colors;
