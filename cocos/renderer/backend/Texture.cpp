@@ -9,12 +9,14 @@ namespace
         uint8_t ret = 0;
         switch (textureFormat)
         {
-            case TextureFormat::RGBA4444:
             case TextureFormat::R8G8B8A8:
                 ret = 4;
                 break;
             case TextureFormat::R8G8B8:
                 ret = 3;
+                break;
+            case TextureFormat::RGBA4444:
+                ret = 2;
                 break;
             case TextureFormat::A8:
                 ret = 1;
