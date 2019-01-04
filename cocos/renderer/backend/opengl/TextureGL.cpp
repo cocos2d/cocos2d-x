@@ -227,6 +227,11 @@ void TextureGL::toGLTypes()
             _format = GL_RGB;
             _type = GL_UNSIGNED_BYTE;
             break;
+        case TextureFormat::RGBA4444:
+            _internalFormat = GL_RGBA;
+            _format = GL_RGBA;
+            _type = GL_UNSIGNED_SHORT_4_4_4_4;
+            break;
         case TextureFormat::A8:
             _internalFormat = GL_ALPHA;
             _format = GL_ALPHA;
