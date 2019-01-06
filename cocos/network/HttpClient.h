@@ -150,6 +150,12 @@ public:
     std::mutex& getCookieFileMutex() {return _cookieFileMutex;}
 
     std::mutex& getSSLCaFileMutex() {return _sslCaFileMutex;}
+    
+    /** clear respond and request queue and call a callback when it happens */
+    typedef std::function<void(HttpRequest*)> ClearReqCallback;
+    void clearResponseAndRequestQueue(std::function<bool(HttpResponse* resp)> Predicate);
+    void setClearRequestCB(ClearReqCallback cb) { _clearReqCb = cb; }
+        
 private:
     HttpClient();
     virtual ~HttpClient();
@@ -203,6 +209,8 @@ private:
     char _responseMessage[RESPONSE_BUFFER_SIZE];
 
     HttpRequest* _requestSentinel;
+    
+    ClearReqCallback _clearReqCb;
 };
 
 } // namespace network

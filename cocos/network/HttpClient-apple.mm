@@ -371,6 +371,7 @@ HttpClient::HttpClient()
 , _threadCount(0)
 , _cookie(nullptr)
 , _requestSentinel(new HttpRequest())
+, _clearReqCb(nullptr)
 {
     CCLOG("In the constructor of HttpClient!");
     memset(_responseMessage, 0, sizeof(char) * RESPONSE_BUFFER_SIZE);
@@ -534,7 +535,29 @@ void HttpClient::processResponse(HttpResponse* response, char* responseMessage)
         response->setErrorBuffer(responseMessage);
     }
 }
-
+    
+void HttpClient::clearResponseAndRequestQueue(std::function<bool(HttpResponse* resp)> predicate)
+{
+    _requestQueueMutex.lock();
+    if (_requestQueue.size())
+    {
+        for (auto obj : _requestQueue)
+        {
+            if(_clearReqCb)
+            {
+                _clearReqCb(obj);
+            }
+            obj->release();
+        }
+        
+        _requestQueue.clear();
+    }
+    _requestQueueMutex.unlock();
+    
+    _responseQueueMutex.lock();
+    _responseQueue.erase(std::remove_if(_responseQueue.begin(), _responseQueue.end(), predicate), _responseQueue.end());
+    _responseQueueMutex.unlock();
+}
 
 void HttpClient::increaseThreadCount()
 {
