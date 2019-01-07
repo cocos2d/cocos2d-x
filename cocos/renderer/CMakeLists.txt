@@ -1,5 +1,4 @@
 set(COCOS_RENDERER_HEADER
-    renderer/CCBatchCommand.h
     renderer/CCCallbackCommand.h
     renderer/CCCustomCommand.h
     renderer/CCGLProgram.h
@@ -47,7 +46,6 @@ set(COCOS_RENDERER_HEADER
     )
 
 set(COCOS_RENDERER_SRC
-    renderer/CCBatchCommand.cpp
     renderer/CCCallbackCommand.cpp
     renderer/CCCustomCommand.cpp
     renderer/CCGLProgram.cpp

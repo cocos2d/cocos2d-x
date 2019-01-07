@@ -1105,7 +1105,6 @@
 		507B3C5A1C31BDD30067B53E /* DetourAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F831B04825B00E47F5F /* DetourAlloc.cpp */; };
 		507B3C681C31BDD30067B53E /* DetourCrowd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F931B04825B00E47F5F /* DetourCrowd.cpp */; };
 		507B3C691C31BDD30067B53E /* CCAffineTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD1B1925AB0000A911A9 /* CCAffineTransform.cpp */; };
-		507B3C701C31BDD30067B53E /* CCBatchCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD641925AB4100A911A9 /* CCBatchCommand.cpp */; };
 		507B3C721C31BDD30067B53E /* CCRenderCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD761925AB4100A911A9 /* CCRenderCommand.cpp */; };
 		507B3C7A1C31BDD30067B53E /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBE031925AB6E00A911A9 /* CCScriptSupport.cpp */; };
 		507B3C7D1C31BDD30067B53E /* CCMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5012169E1AC473AD009A4BEA /* CCMaterial.cpp */; };
@@ -1366,7 +1365,6 @@
 		507B40101C31BDD30067B53E /* etc1.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBE151925AB6F00A911A9 /* etc1.h */; };
 		507B40141C31BDD30067B53E /* CCMeshCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B29594B31926D5EC003EEF37 /* CCMeshCommand.h */; };
 		507B40151C31BDD30067B53E /* CCEventListenerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6176641960F89B00DE83F5 /* CCEventListenerController.h */; };
-		507B40161C31BDD30067B53E /* CCBatchCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD651925AB4100A911A9 /* CCBatchCommand.h */; };
 		507B40191C31BDD30067B53E /* CCEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDD51925AB6E00A911A9 /* CCEvent.h */; };
 		507B401A1C31BDD30067B53E /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = 50272538190BF1B900AAF4ED /* cocos2d.h */; };
 		507B401C1C31BDD30067B53E /* CCNinePatchImageParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 291901411B05895600F8B4BA /* CCNinePatchImageParser.h */; };
@@ -1559,10 +1557,6 @@
 		50ABBD611925AB0000A911A9 /* Vec4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD351925AB0000A911A9 /* Vec4.cpp */; };
 		50ABBD621925AB0000A911A9 /* Vec4.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD361925AB0000A911A9 /* Vec4.h */; };
 		50ABBD631925AB0000A911A9 /* Vec4.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD361925AB0000A911A9 /* Vec4.h */; };
-		50ABBD831925AB4100A911A9 /* CCBatchCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD641925AB4100A911A9 /* CCBatchCommand.cpp */; };
-		50ABBD841925AB4100A911A9 /* CCBatchCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD641925AB4100A911A9 /* CCBatchCommand.cpp */; };
-		50ABBD851925AB4100A911A9 /* CCBatchCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD651925AB4100A911A9 /* CCBatchCommand.h */; };
-		50ABBD861925AB4100A911A9 /* CCBatchCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD651925AB4100A911A9 /* CCBatchCommand.h */; };
 		50ABBD871925AB4100A911A9 /* CCCustomCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD661925AB4100A911A9 /* CCCustomCommand.cpp */; };
 		50ABBD881925AB4100A911A9 /* CCCustomCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD661925AB4100A911A9 /* CCCustomCommand.cpp */; };
 		50ABBD891925AB4100A911A9 /* CCCustomCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD671925AB4100A911A9 /* CCCustomCommand.h */; };
@@ -3015,8 +3009,6 @@
 		50ABBD351925AB0000A911A9 /* Vec4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vec4.cpp; sourceTree = "<group>"; };
 		50ABBD361925AB0000A911A9 /* Vec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vec4.h; sourceTree = "<group>"; };
 		50ABBD371925AB0000A911A9 /* Vec4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vec4.inl; sourceTree = "<group>"; };
-		50ABBD641925AB4100A911A9 /* CCBatchCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBatchCommand.cpp; sourceTree = "<group>"; };
-		50ABBD651925AB4100A911A9 /* CCBatchCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBatchCommand.h; sourceTree = "<group>"; };
 		50ABBD661925AB4100A911A9 /* CCCustomCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCustomCommand.cpp; sourceTree = "<group>"; };
 		50ABBD671925AB4100A911A9 /* CCCustomCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCustomCommand.h; sourceTree = "<group>"; };
 		50ABBD681925AB4100A911A9 /* CCGLProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGLProgram.cpp; sourceTree = "<group>"; };
@@ -4898,8 +4890,6 @@
 				B276EF5C1988D1D500CD400F /* CCVertexIndexData.cpp */,
 				B276EF5D1988D1D500CD400F /* CCVertexIndexBuffer.h */,
 				B276EF5E1988D1D500CD400F /* CCVertexIndexBuffer.cpp */,
-				50ABBD641925AB4100A911A9 /* CCBatchCommand.cpp */,
-				50ABBD651925AB4100A911A9 /* CCBatchCommand.h */,
 				50ABBD661925AB4100A911A9 /* CCCustomCommand.cpp */,
 				50ABBD671925AB4100A911A9 /* CCCustomCommand.h */,
 				50ABBD681925AB4100A911A9 /* CCGLProgram.cpp */,
@@ -6131,7 +6121,6 @@
 				1A57030E180BCF190088DEC7 /* CCComponent.h in Headers */,
 				50FC3FA81D74C2A1001C936A /* CCEventListenerController.h in Headers */,
 				1A570312180BCF190088DEC7 /* CCComponentContainer.h in Headers */,
-				50ABBD851925AB4100A911A9 /* CCBatchCommand.h in Headers */,
 				50ABC0651926664800A911A9 /* CCGL-mac.h in Headers */,
 				4631CBC521AFD9FA0000D408 /* UIImageView.h in Headers */,
 				50643BD419BFAECF00EF68ED /* CCGL.h in Headers */,
@@ -6599,7 +6588,6 @@
 				507B40101C31BDD30067B53E /* etc1.h in Headers */,
 				507B40141C31BDD30067B53E /* CCMeshCommand.h in Headers */,
 				507B40151C31BDD30067B53E /* CCEventListenerController.h in Headers */,
-				507B40161C31BDD30067B53E /* CCBatchCommand.h in Headers */,
 				507B40191C31BDD30067B53E /* CCEvent.h in Headers */,
 				507B401A1C31BDD30067B53E /* cocos2d.h in Headers */,
 				507B401C1C31BDD30067B53E /* CCNinePatchImageParser.h in Headers */,
@@ -7080,7 +7068,6 @@
 				4631CBBC21AFD9FA0000D408 /* UIText.h in Headers */,
 				3E6176771960F89B00DE83F5 /* CCEventListenerController.h in Headers */,
 				4631CBAA21AFD9FA0000D408 /* UIHelper.h in Headers */,
-				50ABBD861925AB4100A911A9 /* CCBatchCommand.h in Headers */,
 				50ABBE481925AB6F00A911A9 /* CCEvent.h in Headers */,
 				EDC78D1321CA19FC00E1863C /* CCArmatureDataManager.h in Headers */,
 				5027253B190BF1B900AAF4ED /* cocos2d.h in Headers */,
@@ -7407,7 +7394,6 @@
 				1A087AE81860400400196EF5 /* edtaa3func.cpp in Sources */,
 				EDC78C2021CA19FB00E1863C /* CCSkinNode.cpp in Sources */,
 				EDC78C2621CA19FB00E1863C /* TriggerBase.cpp in Sources */,
-				50ABBD831925AB4100A911A9 /* CCBatchCommand.cpp in Sources */,
 				4631CB7321AFD9F90000D408 /* CCUIPasswordTextField.m in Sources */,
 				1A5701C7180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */,
 				50ABBE711925AB6F00A911A9 /* CCEventListenerMouse.cpp in Sources */,
@@ -7854,7 +7840,6 @@
 				468A14E51EF223B700ECA675 /* flatc.cpp in Sources */,
 				507B3C681C31BDD30067B53E /* DetourCrowd.cpp in Sources */,
 				507B3C691C31BDD30067B53E /* CCAffineTransform.cpp in Sources */,
-				507B3C701C31BDD30067B53E /* CCBatchCommand.cpp in Sources */,
 				507B3C721C31BDD30067B53E /* CCRenderCommand.cpp in Sources */,
 				507B3C7A1C31BDD30067B53E /* CCScriptSupport.cpp in Sources */,
 				507B3C7D1C31BDD30067B53E /* CCMaterial.cpp in Sources */,
@@ -8213,7 +8198,6 @@
 				4631CBC221AFD9FA0000D408 /* UILayoutComponent.cpp in Sources */,
 				50ABBD391925AB0000A911A9 /* CCAffineTransform.cpp in Sources */,
 				EDC78D3521CA19FC00E1863C /* CCActionObject.cpp in Sources */,
-				50ABBD841925AB4100A911A9 /* CCBatchCommand.cpp in Sources */,
 				50ABBDA81925AB4100A911A9 /* CCRenderCommand.cpp in Sources */,
 				50ABBEA41925AB6F00A911A9 /* CCScriptSupport.cpp in Sources */,
 				EDC78CAF21CA19FC00E1863C /* TabControlReader.cpp in Sources */,
