@@ -665,19 +665,20 @@ void GLViewImpl::setFrameSize(float width, float height)
 
 void GLViewImpl::setViewPortInPoints(float x , float y , float w , float h)
 {
-    experimental::Viewport vp((float)(x * _scaleX * _retinaFactor * _frameZoomFactor + _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor),
-        (float)(y * _scaleY * _retinaFactor  * _frameZoomFactor + _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor),
-        (float)(w * _scaleX * _retinaFactor * _frameZoomFactor),
-        (float)(h * _scaleY * _retinaFactor * _frameZoomFactor));
+    Viewport vp;
+    vp.x = x * _scaleX * _retinaFactor * _frameZoomFactor + _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor;
+    vp.y = y * _scaleY * _retinaFactor  * _frameZoomFactor + _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor;
+    vp.w = w * _scaleX * _retinaFactor * _frameZoomFactor;
+    vp.h = h * _scaleY * _retinaFactor * _frameZoomFactor;
     Camera::setDefaultViewport(vp);
 }
 
 void GLViewImpl::setScissorInPoints(float x , float y , float w , float h)
 {
-    auto x1 = (GLint)(x * _scaleX * _retinaFactor * _frameZoomFactor + _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor);
-    auto y1 = (GLint)(y * _scaleY * _retinaFactor  * _frameZoomFactor + _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor);
-    auto width1 = (GLsizei)(w * _scaleX * _retinaFactor * _frameZoomFactor);
-    auto height1 = (GLsizei)(h * _scaleY * _retinaFactor * _frameZoomFactor);
+    auto x1 = (int)(x * _scaleX * _retinaFactor * _frameZoomFactor + _viewPortRect.origin.x * _retinaFactor * _frameZoomFactor);
+    auto y1 = (int)(y * _scaleY * _retinaFactor  * _frameZoomFactor + _viewPortRect.origin.y * _retinaFactor * _frameZoomFactor);
+    auto width1 = (unsigned int)(w * _scaleX * _retinaFactor * _frameZoomFactor);
+    auto height1 = (unsigned int)(h * _scaleY * _retinaFactor * _frameZoomFactor);
     auto renderer = Director::getInstance()->getRenderer();
     renderer->setScissorRect(x1, y1, width1, height1);
 

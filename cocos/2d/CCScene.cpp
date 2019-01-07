@@ -229,7 +229,6 @@ void Scene::render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eye
 #endif
 
         renderer->render();
-        camera->restore();
 
        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
@@ -263,7 +262,6 @@ void Scene::render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eye
 #endif
 
     Camera::_visitingCamera = nullptr;
-    //    experimental::FrameBuffer::applyDefaultFBO();
 }
 
 void Scene::removeAllChildren()

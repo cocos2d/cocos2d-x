@@ -210,7 +210,7 @@ void GridBase::afterDraw(cocos2d::Node * /*target*/)
     _afterDrawCommand.func = [=]() -> void {
         director->setProjection(_directorProjection);
         const auto& vp = Camera::getDefaultViewport();
-        renderer->setViewPort(vp._left, vp._bottom, vp._width, vp._height);
+        renderer->setViewPort(vp.x, vp.y, vp.w, vp.h);
         renderer->setRenderTarget(_oldRenderTargetFlag, _oldColorAttachment, _oldDepthAttachment, _oldStencilAttachment);
     };
     renderer->addCommand(&_afterDrawCommand);

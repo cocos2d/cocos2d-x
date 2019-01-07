@@ -245,10 +245,11 @@ Vec2 GLView::getVisibleOrigin() const
 
 void GLView::setViewPortInPoints(float x , float y , float w , float h)
 {
-    experimental::Viewport vp((float)(x * _scaleX + _viewPortRect.origin.x),
-        (float)(y * _scaleY + _viewPortRect.origin.y),
-        (float)(w * _scaleX),
-        (float)(h * _scaleY));
+    Viewport vp;
+    vp.x = x * _scaleX + _viewPortRect.origin.x;
+    vp.y = y * _scaleY + _viewPortRect.origin.y;
+    vp.w = w * _scaleX;
+    vp.h = h * _scaleY;
     Camera::setDefaultViewport(vp);
 }
 
