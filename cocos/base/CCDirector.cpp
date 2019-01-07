@@ -300,7 +300,7 @@ void Director::drawScene()
     // draw the notifications node
     if (_notificationNode)
     {
-//        _notificationNode->visit(_renderer, Mat4::IDENTITY, 0);
+        _notificationNode->visit(_renderer, Mat4::IDENTITY, 0);
     }
 
     updateFrameRate();
@@ -451,7 +451,10 @@ void Director::initMatrixStack()
         _modelViewMatrixStack.pop();
     }
 
-    _projectionMatrixStackList.clear();
+    while (!_projectionMatrixStack.empty())
+    {
+         _projectionMatrixStack.pop();
+    }
 
     while (!_textureMatrixStack.empty())
     {
@@ -459,29 +462,13 @@ void Director::initMatrixStack()
     }
 
     _modelViewMatrixStack.push(Mat4::IDENTITY);
-    std::stack<Mat4> projectionMatrixStack;
-    projectionMatrixStack.push(Mat4::IDENTITY);
-    _projectionMatrixStackList.push_back(projectionMatrixStack);
+    _projectionMatrixStack.push(Mat4::IDENTITY);
     _textureMatrixStack.push(Mat4::IDENTITY);
 }
 
 void Director::resetMatrixStack()
 {
     initMatrixStack();
-}
-
-void Director::initProjectionMatrixStack(size_t stackCount)
-{
-    _projectionMatrixStackList.clear();
-    std::stack<Mat4> projectionMatrixStack;
-    projectionMatrixStack.push(Mat4::IDENTITY);
-    for (size_t i = 0; i < stackCount; ++i)
-        _projectionMatrixStackList.push_back(projectionMatrixStack);
-}
-
-size_t Director::getProjectionMatrixStackSize()
-{
-    return _projectionMatrixStackList.size();
 }
 
 void Director::popMatrix(MATRIX_STACK_TYPE type)
@@ -492,7 +479,7 @@ void Director::popMatrix(MATRIX_STACK_TYPE type)
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        _projectionMatrixStackList[0].pop();
+        _projectionMatrixStack.pop();
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
@@ -504,11 +491,6 @@ void Director::popMatrix(MATRIX_STACK_TYPE type)
     }
 }
 
-void Director::popProjectionMatrix(size_t index)
-{
-    _projectionMatrixStackList[index].pop();
-}
-
 void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
@@ -517,7 +499,7 @@ void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        _projectionMatrixStackList[0].top() = Mat4::IDENTITY;
+        _projectionMatrixStack.top() = Mat4::IDENTITY;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
@@ -529,10 +511,6 @@ void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
     }
 }
 
-void Director::loadProjectionIdentityMatrix(size_t index)
-{
-    _projectionMatrixStackList[index].top() = Mat4::IDENTITY;
-}
 
 void Director::loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
 {
@@ -542,7 +520,7 @@ void Director::loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        _projectionMatrixStackList[0].top() = mat;
+        _projectionMatrixStack.top() = mat;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
@@ -554,11 +532,6 @@ void Director::loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
     }
 }
 
-void Director::loadProjectionMatrix(const Mat4& mat, size_t index)
-{
-    _projectionMatrixStackList[index].top() = mat;
-}
-
 void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
@@ -567,7 +540,7 @@ void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
     {
-        _projectionMatrixStackList[0].top() *= mat;
+        _projectionMatrixStack.top() *= mat;
     }
     else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
     {
@@ -579,11 +552,6 @@ void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
     }
 }
 
-void Director::multiplyProjectionMatrix(const Mat4& mat, size_t index)
-{
-    _projectionMatrixStackList[index].top() *= mat;
-}
-
 void Director::pushMatrix(MATRIX_STACK_TYPE type)
 {
     if(type == MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW)
@@ -592,7 +560,7 @@ void Director::pushMatrix(MATRIX_STACK_TYPE type)
     }
     else if(type == MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION)
     {
-        _projectionMatrixStackList[0].push(_projectionMatrixStackList[0].top());
+        _projectionMatrixStack.push(_projectionMatrixStack.top());
     }
     else if(type == MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE)
     {
@@ -604,11 +572,6 @@ void Director::pushMatrix(MATRIX_STACK_TYPE type)
     }
 }
 
-void Director::pushProjectionMatrix(size_t index)
-{
-    _projectionMatrixStackList[index].push(_projectionMatrixStackList[index].top());
-}
-
 const Mat4& Director::getMatrix(MATRIX_STACK_TYPE type) const
 {
     if(type == MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW)
@@ -617,7 +580,7 @@ const Mat4& Director::getMatrix(MATRIX_STACK_TYPE type) const
     }
     else if(type == MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION)
     {
-        return _projectionMatrixStackList[0].top();
+        return _projectionMatrixStack.top();
     }
     else if(type == MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE)
     {
@@ -626,11 +589,6 @@ const Mat4& Director::getMatrix(MATRIX_STACK_TYPE type) const
 
     CCASSERT(false, "unknown matrix stack type, will return modelview matrix instead");
     return  _modelViewMatrixStack.top();
-}
-
-const Mat4& Director::getProjectionMatrix(size_t index) const
-{
-    return _projectionMatrixStackList[index].top();
 }
 
 void Director::setProjection(Projection projection)

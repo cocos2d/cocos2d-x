@@ -2879,7 +2879,6 @@
 		46E7207C1ECAC75C0034BEC7 /* ccShader_ETC1AS_PositionTextureGray.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_ETC1AS_PositionTextureGray.frag; sourceTree = "<group>"; };
 		46E7207E1ECAC75C0034BEC7 /* ccShader_Position.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_Position.vert; sourceTree = "<group>"; };
 		46E7207F1ECACB750034BEC7 /* ccShader_LayerRadialGradient.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_LayerRadialGradient.frag; sourceTree = "<group>"; };
-		46F9B31121AFE64B009DF858 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		46F9B31221AFE64B009DF858 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		46F9B31321AFE64B009DF858 /* ExtensionMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionMacros.h; sourceTree = "<group>"; };
 		46F9B45421AFE64B009DF858 /* cocos-ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cocos-ext.h"; sourceTree = "<group>"; };
@@ -4852,7 +4851,6 @@
 		46F9B31021AFE64B009DF858 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
-				46F9B31121AFE64B009DF858 /* Android.mk */,
 				46F9B31221AFE64B009DF858 /* CMakeLists.txt */,
 				46F9B31321AFE64B009DF858 /* ExtensionMacros.h */,
 				46F9B45421AFE64B009DF858 /* cocos-ext.h */,
