@@ -620,14 +620,10 @@
 		4631CB7821AFD9F90000D408 /* UIEditBoxImpl-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4631CACB21AFD9F90000D408 /* UIEditBoxImpl-ios.mm */; };
 		4631CB7921AFD9F90000D408 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = 4631CACC21AFD9F90000D408 /* UIEditBoxImpl-common.h */; };
 		4631CB7A21AFD9F90000D408 /* UIEditBoxImpl-common.h in Headers */ = {isa = PBXBuildFile; fileRef = 4631CACC21AFD9F90000D408 /* UIEditBoxImpl-common.h */; };
-		4631CB7B21AFD9F90000D408 /* UIEditBoxImpl-tizen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4631CACD21AFD9F90000D408 /* UIEditBoxImpl-tizen.cpp */; };
-		4631CB7C21AFD9F90000D408 /* UIEditBoxImpl-tizen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4631CACD21AFD9F90000D408 /* UIEditBoxImpl-tizen.cpp */; };
 		4631CB7D21AFD9F90000D408 /* UIEditBoxImpl-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 4631CACE21AFD9F90000D408 /* UIEditBoxImpl-ios.h */; };
 		4631CB7E21AFD9F90000D408 /* UIEditBoxImpl-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 4631CACE21AFD9F90000D408 /* UIEditBoxImpl-ios.h */; };
 		4631CB7F21AFD9F90000D408 /* UIEditBoxImpl-win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4631CACF21AFD9F90000D408 /* UIEditBoxImpl-win32.cpp */; };
 		4631CB8021AFD9F90000D408 /* UIEditBoxImpl-win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4631CACF21AFD9F90000D408 /* UIEditBoxImpl-win32.cpp */; };
-		4631CB8121AFD9F90000D408 /* UIEditBoxImpl-tizen.h in Headers */ = {isa = PBXBuildFile; fileRef = 4631CAD021AFD9F90000D408 /* UIEditBoxImpl-tizen.h */; };
-		4631CB8221AFD9F90000D408 /* UIEditBoxImpl-tizen.h in Headers */ = {isa = PBXBuildFile; fileRef = 4631CAD021AFD9F90000D408 /* UIEditBoxImpl-tizen.h */; };
 		4631CB8321AFD9F90000D408 /* UIEditBoxImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4631CAD121AFD9F90000D408 /* UIEditBoxImpl.h */; };
 		4631CB8421AFD9F90000D408 /* UIEditBoxImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4631CAD121AFD9F90000D408 /* UIEditBoxImpl.h */; };
 		4631CB8721AFD9F90000D408 /* UIWidget.h in Headers */ = {isa = PBXBuildFile; fileRef = 4631CAD321AFD9F90000D408 /* UIWidget.h */; };
@@ -646,8 +642,6 @@
 		4631CB9821AFD9FA0000D408 /* UIPageViewIndicator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4631CADB21AFD9F90000D408 /* UIPageViewIndicator.cpp */; };
 		4631CB9921AFD9FA0000D408 /* UIRadioButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4631CADC21AFD9F90000D408 /* UIRadioButton.cpp */; };
 		4631CB9A21AFD9FA0000D408 /* UIRadioButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4631CADC21AFD9F90000D408 /* UIRadioButton.cpp */; };
-		4631CB9B21AFD9FA0000D408 /* UIVideoPlayer-tizen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4631CADD21AFD9F90000D408 /* UIVideoPlayer-tizen.cpp */; };
-		4631CB9C21AFD9FA0000D408 /* UIVideoPlayer-tizen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4631CADD21AFD9F90000D408 /* UIVideoPlayer-tizen.cpp */; };
 		4631CB9D21AFD9FA0000D408 /* UIScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4631CADE21AFD9F90000D408 /* UIScrollView.h */; };
 		4631CB9E21AFD9FA0000D408 /* UIScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4631CADE21AFD9F90000D408 /* UIScrollView.h */; };
 		4631CB9F21AFD9FA0000D408 /* UIRelativeBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 4631CADF21AFD9F90000D408 /* UIRelativeBox.h */; };
@@ -2721,7 +2715,6 @@
 		4631CA9821AFD9F90000D408 /* UILayoutComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UILayoutComponent.h; sourceTree = "<group>"; };
 		4631CA9921AFD9F90000D408 /* UIButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIButton.cpp; sourceTree = "<group>"; };
 		4631CA9A21AFD9F90000D408 /* UIPageView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIPageView.cpp; sourceTree = "<group>"; };
-		4631CA9B21AFD9F90000D408 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
 		4631CA9C21AFD9F90000D408 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		4631CA9D21AFD9F90000D408 /* UITabControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITabControl.h; sourceTree = "<group>"; };
 		4631CA9E21AFD9F90000D408 /* UIVBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIVBox.cpp; sourceTree = "<group>"; };
@@ -2761,10 +2754,8 @@
 		4631CACA21AFD9F90000D408 /* CCUIMultilineTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCUIMultilineTextField.m; sourceTree = "<group>"; };
 		4631CACB21AFD9F90000D408 /* UIEditBoxImpl-ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIEditBoxImpl-ios.mm"; sourceTree = "<group>"; };
 		4631CACC21AFD9F90000D408 /* UIEditBoxImpl-common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-common.h"; sourceTree = "<group>"; };
-		4631CACD21AFD9F90000D408 /* UIEditBoxImpl-tizen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-tizen.cpp"; sourceTree = "<group>"; };
 		4631CACE21AFD9F90000D408 /* UIEditBoxImpl-ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-ios.h"; sourceTree = "<group>"; };
 		4631CACF21AFD9F90000D408 /* UIEditBoxImpl-win32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-win32.cpp"; sourceTree = "<group>"; };
-		4631CAD021AFD9F90000D408 /* UIEditBoxImpl-tizen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-tizen.h"; sourceTree = "<group>"; };
 		4631CAD121AFD9F90000D408 /* UIEditBoxImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEditBoxImpl.h; sourceTree = "<group>"; };
 		4631CAD321AFD9F90000D408 /* UIWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidget.h; sourceTree = "<group>"; };
 		4631CAD421AFD9F90000D408 /* CocosGUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosGUI.cpp; sourceTree = "<group>"; };
@@ -2774,7 +2765,6 @@
 		4631CADA21AFD9F90000D408 /* UITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextField.h; sourceTree = "<group>"; };
 		4631CADB21AFD9F90000D408 /* UIPageViewIndicator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIPageViewIndicator.cpp; sourceTree = "<group>"; };
 		4631CADC21AFD9F90000D408 /* UIRadioButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRadioButton.cpp; sourceTree = "<group>"; };
-		4631CADD21AFD9F90000D408 /* UIVideoPlayer-tizen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIVideoPlayer-tizen.cpp"; sourceTree = "<group>"; };
 		4631CADE21AFD9F90000D408 /* UIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollView.h; sourceTree = "<group>"; };
 		4631CADF21AFD9F90000D408 /* UIRelativeBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRelativeBox.h; sourceTree = "<group>"; };
 		4631CAE021AFD9F90000D408 /* UIHBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIHBox.cpp; sourceTree = "<group>"; };
@@ -4580,7 +4570,6 @@
 				4631CA9821AFD9F90000D408 /* UILayoutComponent.h */,
 				4631CA9921AFD9F90000D408 /* UIButton.cpp */,
 				4631CA9A21AFD9F90000D408 /* UIPageView.cpp */,
-				4631CA9B21AFD9F90000D408 /* Android.mk */,
 				4631CA9C21AFD9F90000D408 /* CMakeLists.txt */,
 				4631CA9D21AFD9F90000D408 /* UITabControl.h */,
 				4631CA9E21AFD9F90000D408 /* UIVBox.cpp */,
@@ -4600,7 +4589,6 @@
 				4631CADA21AFD9F90000D408 /* UITextField.h */,
 				4631CADB21AFD9F90000D408 /* UIPageViewIndicator.cpp */,
 				4631CADC21AFD9F90000D408 /* UIRadioButton.cpp */,
-				4631CADD21AFD9F90000D408 /* UIVideoPlayer-tizen.cpp */,
 				4631CADE21AFD9F90000D408 /* UIScrollView.h */,
 				4631CADF21AFD9F90000D408 /* UIRelativeBox.h */,
 				4631CAE021AFD9F90000D408 /* UIHBox.cpp */,
@@ -4658,10 +4646,8 @@
 				4631CABF21AFD9F90000D408 /* Mac */,
 				4631CACB21AFD9F90000D408 /* UIEditBoxImpl-ios.mm */,
 				4631CACC21AFD9F90000D408 /* UIEditBoxImpl-common.h */,
-				4631CACD21AFD9F90000D408 /* UIEditBoxImpl-tizen.cpp */,
 				4631CACE21AFD9F90000D408 /* UIEditBoxImpl-ios.h */,
 				4631CACF21AFD9F90000D408 /* UIEditBoxImpl-win32.cpp */,
-				4631CAD021AFD9F90000D408 /* UIEditBoxImpl-tizen.h */,
 				4631CAD121AFD9F90000D408 /* UIEditBoxImpl.h */,
 			);
 			path = UIEditBox;
@@ -6044,7 +6030,6 @@
 				1A57020A180BCBDF0088DEC7 /* CCMotionStreak.h in Headers */,
 				EDC78D1421CA19FC00E1863C /* CCDatas.h in Headers */,
 				1A570212180BCBF40088DEC7 /* CCProgressTimer.h in Headers */,
-				4631CB8121AFD9F90000D408 /* UIEditBoxImpl-tizen.h in Headers */,
 				1A570216180BCBF40088DEC7 /* CCRenderTexture.h in Headers */,
 				1A40D11B1E8E56C7002E363A /* error.h in Headers */,
 				1A570223180BCC1A0088DEC7 /* CCParticleBatchNode.h in Headers */,
@@ -7173,7 +7158,6 @@
 				EDC78D2721CA19FC00E1863C /* CCActionObject.h in Headers */,
 				4631CBAC21AFD9FA0000D408 /* UICheckBox.h in Headers */,
 				50ABBEAE1925AB6F00A911A9 /* ccTypes.h in Headers */,
-				4631CB8221AFD9F90000D408 /* UIEditBoxImpl-tizen.h in Headers */,
 				1A40D1341E8E56C7002E363A /* itoa.h in Headers */,
 				EDC78C2B21CA19FB00E1863C /* CocosStudioExtension.h in Headers */,
 				EDC78C1B21CA19FB00E1863C /* CSLoader.h in Headers */,
@@ -7530,7 +7514,6 @@
 				50693C5E1B6BF2AE005C5820 /* CCDownloader.cpp in Sources */,
 				EDC78C7C21CA19FC00E1863C /* ProjectNodeReader.cpp in Sources */,
 				50ABBEAF1925AB6F00A911A9 /* CCUserDefault.cpp in Sources */,
-				4631CB7B21AFD9F90000D408 /* UIEditBoxImpl-tizen.cpp in Sources */,
 				EDC78C4821CA19FB00E1863C /* CCArmatureAnimation.cpp in Sources */,
 				ED28C243219E629C0078D854 /* ShaderModule.cpp in Sources */,
 				50ABBE791925AB6F00A911A9 /* CCEventMouse.cpp in Sources */,
@@ -7567,7 +7550,6 @@
 				468A14F21EF223B700ECA675 /* idl_gen_text.cpp in Sources */,
 				826294351AAF004C00CB7CF7 /* HttpCookie.cpp in Sources */,
 				1A5702F6180BCE750088DEC7 /* CCTMXTiledMap.cpp in Sources */,
-				4631CB9B21AFD9FA0000D408 /* UIVideoPlayer-tizen.cpp in Sources */,
 				1A5702FA180BCE750088DEC7 /* CCTMXXMLParser.cpp in Sources */,
 				50FC3FA21D74C1A1001C936A /* CCEventController.cpp in Sources */,
 				B6DD2FE11B04825B00E47F5F /* DetourPathCorridor.cpp in Sources */,
@@ -8155,7 +8137,6 @@
 				B24AA98A195A675C007B4522 /* CCFastTMXTiledMap.cpp in Sources */,
 				B24AA986195A675C007B4522 /* CCFastTMXLayer.cpp in Sources */,
 				1A57022E180BCC1A0088DEC7 /* CCParticleSystemQuad.cpp in Sources */,
-				4631CB7C21AFD9F90000D408 /* UIEditBoxImpl-tizen.cpp in Sources */,
 				EDC78C8321CA19FC00E1863C /* GameNode3DReader.cpp in Sources */,
 				50ABBD901925AB4100A911A9 /* CCGLProgramCache.cpp in Sources */,
 				1A57027F180BCC900088DEC7 /* CCSprite.cpp in Sources */,
@@ -8192,7 +8173,6 @@
 				50ABBD3D1925AB0000A911A9 /* CCGeometry.cpp in Sources */,
 				460D4CD621A5666E0075726E /* CCRenderer.cpp in Sources */,
 				EDC78C9521CA19FC00E1863C /* SpriteReader.cpp in Sources */,
-				4631CB9C21AFD9FA0000D408 /* UIVideoPlayer-tizen.cpp in Sources */,
 				50ABBECC1925AB6F00A911A9 /* s3tc.cpp in Sources */,
 				1A5702F7180BCE750088DEC7 /* CCTMXTiledMap.cpp in Sources */,
 				EDC78C8921CA19FC00E1863C /* GameMapReader.cpp in Sources */,
