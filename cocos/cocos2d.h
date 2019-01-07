@@ -169,7 +169,6 @@ THE SOFTWARE.
 #include "renderer/CCVertexAttribBinding.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "renderer/CCVertexIndexData.h"
-#include "renderer/CCFrameBuffer.h"
 #include "renderer/ccShaders.h"
 
 // physics

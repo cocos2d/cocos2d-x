@@ -33,7 +33,6 @@ THE SOFTWARE.
 #include "base/CCEventListenerCustom.h"
 #include "base/ccUTF8.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCFrameBuffer.h"
 
 #if CC_USE_PHYSICS
 #include "physics/CCPhysicsWorld.h"

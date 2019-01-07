@@ -2,7 +2,6 @@ set(COCOS_RENDERER_HEADER
     renderer/CCBatchCommand.h
     renderer/CCCallbackCommand.h
     renderer/CCCustomCommand.h
-    renderer/CCFrameBuffer.h
     renderer/CCGLProgram.h
     renderer/CCGLProgramCache.h
     renderer/CCGLProgramState.h
@@ -51,7 +50,6 @@ set(COCOS_RENDERER_SRC
     renderer/CCBatchCommand.cpp
     renderer/CCCallbackCommand.cpp
     renderer/CCCustomCommand.cpp
-    renderer/CCFrameBuffer.cpp
     renderer/CCGLProgram.cpp
     renderer/CCGLProgramCache.cpp
     renderer/CCGLProgramState.cpp
