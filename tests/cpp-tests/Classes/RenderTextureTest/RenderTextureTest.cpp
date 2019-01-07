@@ -202,7 +202,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     rend->setVirtualViewport(Vec2(s.width/2-32, s.height/2-32),Rect(0,0,s.width,s.height),Rect(0,0,pixelSize.width,pixelSize.height));
 
     // It's possible to modify the RenderTexture blending function by
-    //        [[rend sprite] setBlendFunc:(BlendFunc) {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
+    //        [[rend sprite] setBlendFunc:(BlendFunc) {BlendFactor::ONE, BlendFactor::ONE_MINUS_SRC_ALPHA}];
     rend->begin();
     spr_premulti->visit();
     spr_nonpremulti->visit();

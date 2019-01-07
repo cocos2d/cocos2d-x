@@ -299,20 +299,20 @@ void SkeletonRenderer::draw (Renderer* renderer, const Mat4& transform, uint32_t
 		BlendFunc blendFunc;
 		switch (slot->data->blendMode) {
 			case SP_BLEND_MODE_ADDITIVE:
-				blendFunc.src = _premultipliedAlpha ? GL_ONE : GL_SRC_ALPHA;
-				blendFunc.dst = GL_ONE;
+				blendFunc.src = _premultipliedAlpha ? backend::BlendFactor::ONE : backend::BlendFactor::SRC_ALPHA;
+				blendFunc.dst = backend::BlendFactor::ONE;
 				break;
 			case SP_BLEND_MODE_MULTIPLY:
-				blendFunc.src = GL_DST_COLOR;
-				blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+				blendFunc.src = backend::BlendFactor::DST_COLOR;
+				blendFunc.dst = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
 				break;
 			case SP_BLEND_MODE_SCREEN:
-				blendFunc.src = GL_ONE;
-				blendFunc.dst = GL_ONE_MINUS_SRC_COLOR;
+				blendFunc.src = backend::BlendFactor::ONE;
+				blendFunc.dst = backend::BlendFactor::ONE_MINUS_SRC_COLOR;
 				break;
 			default:
-				blendFunc.src = _premultipliedAlpha ? GL_ONE : GL_SRC_ALPHA;
-				blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
+				blendFunc.src = _premultipliedAlpha ? backend::BlendFactor::ONE : backend::BlendFactor::SRC_ALPHA;
+				blendFunc.dst = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
 		}
 		
 		if (!isTwoColorTint) {

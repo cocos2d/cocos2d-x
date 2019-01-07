@@ -35,6 +35,7 @@ set(COCOS_BASE_HEADER
     base/etc1.h
     base/CCGameController.h
     base/CCConsole.h
+    base/ccConstants.h
     base/CCEvent.h
     base/ccTypes.h
     base/CCAsyncTaskPool.h

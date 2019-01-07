@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "editor-support/cocostudio/WidgetReader/SkeletonReader/CSBoneBinary_generated.h"
 #include "editor-support/cocostudio/WidgetReader/SkeletonReader/BoneNodeReader.h"
 #include "editor-support/cocostudio/ActionTimeline/CCBoneNode.h"
-
+#include "base/ccUtils.h"
 
 USING_NS_CC;
 USING_NS_TIMELINE;
@@ -103,11 +103,11 @@ Offset<Table> BoneNodeReader::createOptionsWithFlatBuffers(const tinyxml2::XMLEl
 
                 if (name == "Src")
                 {
-                    blendFunc.src = atoi(value.c_str());
+                    blendFunc.src = utils::toBackendBlendFactor(atoi(value.c_str()));
                 }
                 else if (name == "Dst")
                 {
-                    blendFunc.dst = atoi(value.c_str());
+                    blendFunc.dst = utils::toBackendBlendFactor(atoi(value.c_str()));
                 }
 
                 battribute = battribute->Next();
@@ -116,7 +116,7 @@ Offset<Table> BoneNodeReader::createOptionsWithFlatBuffers(const tinyxml2::XMLEl
 
         child = child->NextSiblingElement();
     }
-    flatbuffers::BlendFunc f_blendFunc(blendFunc.src, blendFunc.dst);
+    flatbuffers::BlendFunc f_blendFunc(utils::toGLBlendFactor(blendFunc.src), utils::toGLBlendFactor(blendFunc.dst));
 
     auto options = CreateBoneOptions(*builder,
         nodeOptions,
@@ -140,8 +140,8 @@ void BoneNodeReader::setPropsWithFlatBuffers(cocos2d::Node *node,
     if (f_blendFunc)
     {
         cocos2d::BlendFunc blendFunc = cocos2d::BlendFunc::ALPHA_PREMULTIPLIED;
-        blendFunc.src = f_blendFunc->src();
-        blendFunc.dst = f_blendFunc->dst();
+        blendFunc.src = utils::toBackendBlendFactor(f_blendFunc->src());
+        blendFunc.dst = utils::toBackendBlendFactor(f_blendFunc->dst());
         bone->setBlendFunc(blendFunc);
     }
 }

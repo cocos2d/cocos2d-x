@@ -54,6 +54,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/CCProfiling.h"
 #include "base/ccUTF8.h"
+#include "base/ccUtils.h"
 #include "renderer/CCTextureCache.h"
 #include "platform/CCFileUtils.h"
 
@@ -336,13 +337,13 @@ bool ParticleSystem::initWithDictionary(ValueMap& dictionary, const std::string&
             // blend function 
             if (!_configName.empty())
             {
-                _blendFunc.src = dictionary["blendFuncSource"].asFloat();
+                _blendFunc.src = utils::toBackendBlendFactor((int)dictionary["blendFuncSource"].asFloat());
             }
             else
             {
-                _blendFunc.src = dictionary["blendFuncSource"].asInt();
+                _blendFunc.src = utils::toBackendBlendFactor(dictionary["blendFuncSource"].asInt());
             }
-            _blendFunc.dst = dictionary["blendFuncDestination"].asInt();
+            _blendFunc.dst = utils::toBackendBlendFactor(dictionary["blendFuncDestination"].asInt());
 
             // color
             _startColor.r = dictionary["startColorRed"].asFloat();
@@ -1112,7 +1113,7 @@ void ParticleSystem::setBlendAdditive(bool additive)
 
 bool ParticleSystem::isBlendAdditive() const
 {
-    return( _blendFunc.src == GL_SRC_ALPHA && _blendFunc.dst == GL_ONE);
+    return( _blendFunc.src == backend::BlendFactor::SRC_ALPHA && _blendFunc.dst == backend::BlendFactor::ONE);
 }
 
 // ParticleSystem - Properties of Gravity Mode 

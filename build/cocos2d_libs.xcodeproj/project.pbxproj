@@ -2090,6 +2090,9 @@
 		ED682BC1213F63CB001BF6CB /* libuv_a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED682BC0213F63CB001BF6CB /* libuv_a.a */; };
 		ED682BC3213F6C7A001BF6CB /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED682BC2213F6C7A001BF6CB /* libwebsockets.a */; };
 		ED682BC5213F6CBF001BF6CB /* libuv_a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED682BC4213F6CBE001BF6CB /* libuv_a.a */; };
+		ED75D42021E3030E0052B87E /* ccConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = ED75D41F21E3030E0052B87E /* ccConstants.h */; };
+		ED75D42121E303160052B87E /* ccConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = ED75D41F21E3030E0052B87E /* ccConstants.h */; };
+		ED75D42221E303160052B87E /* ccConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = ED75D41F21E3030E0052B87E /* ccConstants.h */; };
 		ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9518599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9618599AD8000A5232 /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
@@ -3340,6 +3343,7 @@
 		ED682BC0213F63CB001BF6CB /* libuv_a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv_a.a; path = ../external/uv/prebuilt/ios/libuv_a.a; sourceTree = "<group>"; };
 		ED682BC2213F6C7A001BF6CB /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../external/websockets/prebuilt/tvos/libwebsockets.a; sourceTree = "<group>"; };
 		ED682BC4213F6CBE001BF6CB /* libuv_a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv_a.a; path = ../external/uv/prebuilt/tvos/libuv_a.a; sourceTree = "<group>"; };
+		ED75D41F21E3030E0052B87E /* ccConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ccConstants.h; path = ../base/ccConstants.h; sourceTree = "<group>"; };
 		ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCNodeGrid.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeGrid.h; sourceTree = "<group>"; };
 		EDC789E021CA19FA00E1863C /* CCComAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComAudio.cpp; sourceTree = "<group>"; };
@@ -3841,6 +3845,7 @@
 		1A5700A2180BC5E60088DEC7 /* base */ = {
 			isa = PBXGroup;
 			children = (
+				ED75D41F21E3030E0052B87E /* ccConstants.h */,
 				461FE08321C34EEB00E5378F /* CCEnumClass.h */,
 				291901411B05895600F8B4BA /* CCNinePatchImageParser.h */,
 				291901421B05895600F8B4BA /* CCNinePatchImageParser.cpp */,
@@ -6282,6 +6287,7 @@
 				B24AA987195A675C007B4522 /* CCFastTMXLayer.h in Headers */,
 				1A40D16C1E8E56C7002E363A /* stream.h in Headers */,
 				EDC78C5821CA19FC00E1863C /* CCActionFrameEasing.h in Headers */,
+				ED75D42021E3030E0052B87E /* ccConstants.h in Headers */,
 				4631CBD121AFD9FA0000D408 /* UIScale9Sprite.h in Headers */,
 				50ABBEBD1925AB6F00A911A9 /* ccUtils.h in Headers */,
 				A0534A651B872FFD006B03E5 /* CCDownloader-apple.h in Headers */,
@@ -6597,6 +6603,7 @@
 				507B3F691C31BDD30067B53E /* CCAnimationCache.h in Headers */,
 				50864CC31C7BC1B100B3BAB1 /* cpPolyline.h in Headers */,
 				507B3F6E1C31BDD30067B53E /* CCTouch.h in Headers */,
+				ED75D42221E303160052B87E /* ccConstants.h in Headers */,
 				50864C961C7BC1B000B3BAB1 /* chipmunk_types.h in Headers */,
 				507B3F7A1C31BDD30067B53E /* CCEventListenerMouse.h in Headers */,
 				1A40D13E1E8E56C7002E363A /* regex.h in Headers */,
@@ -6759,6 +6766,7 @@
 				EDC78BEB21CA19FB00E1863C /* CCDisplayManager.h in Headers */,
 				460D4CD421A5666E0075726E /* CCRenderer.h in Headers */,
 				50ABBDB41925AB4100A911A9 /* ccShaders.h in Headers */,
+				ED75D42121E303160052B87E /* ccConstants.h in Headers */,
 				50ABBE861925AB6F00A911A9 /* ccFPSImages.h in Headers */,
 				50ABBE2E1925AB6F00A911A9 /* ccCArray.h in Headers */,
 				1A40D10D1E8E56C7002E363A /* document-wrapper.h in Headers */,

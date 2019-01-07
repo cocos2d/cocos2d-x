@@ -833,8 +833,8 @@ protected:
     /** whether or not the particles are using blend additive.
      If enabled, the following blending function will be used.
      @code
-     source blend function = GL_SRC_ALPHA;
-     dest blend function = GL_ONE;
+     source blend function = BlendFactor::SRC_ALPHA;
+     dest blend function = BlendFactor::ONE;
      @endcode
      */
     bool _isBlendAdditive;

@@ -29,6 +29,7 @@
 #include "extensions/Particle3D/PU/CCPUTranslateManager.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCPlatformMacros.h"
+#include "renderer/backend/Types.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #include <io.h>
@@ -56,8 +57,8 @@ PUMaterial::PUMaterial()
 , depthWrite(true)
 , wrapMode(GL_CLAMP_TO_EDGE)
 {
-    blendFunc.src = GL_ONE;
-    blendFunc.dst = GL_ZERO;
+    blendFunc.src = backend::BlendFactor::ONE;
+    blendFunc.dst = backend::BlendFactor::ZERO;
 }
 
 PUMaterialCache::PUMaterialCache()

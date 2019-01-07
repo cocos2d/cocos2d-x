@@ -500,18 +500,18 @@ void LayerTestBlend::newBlend(float dt)
 {
      auto layer = (LayerColor*)getChildByTag(kTagLayer);
 
-    GLenum src;
-    GLenum dst;
+     backend::BlendFactor src;
+     backend::BlendFactor dst;
 
-    if( layer->getBlendFunc().dst == GL_ZERO )
+    if( layer->getBlendFunc().dst == backend::BlendFactor::ZERO )
     {
-        src = GL_SRC_ALPHA;
-        dst = GL_ONE_MINUS_SRC_ALPHA;
+        src = backend::BlendFactor::SRC_ALPHA;
+        dst = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
     }
     else
     {
-        src = GL_ONE_MINUS_DST_COLOR;
-        dst = GL_ZERO;
+        src = backend::BlendFactor::ONE_MINUS_DST_COLOR;
+        dst = backend::BlendFactor::ZERO;
     }
 
     BlendFunc bf = {src, dst};

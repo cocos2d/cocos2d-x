@@ -34,10 +34,12 @@ THE SOFTWARE.
 #include "base/CCAsyncTaskPool.h"
 #include "base/CCEventDispatcher.h"
 #include "base/base64.h"
+#include "base/ccConstants.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderState.h"
+#include "renderer/backend/Types.h"
 
 #include "platform/CCImage.h"
 #include "platform/CCFileUtils.h"
@@ -527,9 +529,9 @@ LanguageType getLanguageTypeByISO2(const char* code)
     return ret;
 }
 
-void setBlending(GLenum sfactor, GLenum dfactor)
+void setBlending(backend::BlendFactor sfactor, backend::BlendFactor dfactor)
 {
-    if (sfactor == GL_ONE && dfactor == GL_ZERO)
+    if (sfactor == backend::BlendFactor::ONE && dfactor == backend::BlendFactor::ZERO)
     {
         glDisable(GL_BLEND);
         RenderState::StateBlock::_defaultState->setBlend(false);
@@ -537,7 +539,7 @@ void setBlending(GLenum sfactor, GLenum dfactor)
     else
     {
         glEnable(GL_BLEND);
-        glBlendFunc(sfactor, dfactor);
+        glBlendFunc(toGLBlendFactor(sfactor), toGLBlendFactor(dfactor));
 
         RenderState::StateBlock::_defaultState->setBlend(true);
         RenderState::StateBlock::_defaultState->setBlendSrc((RenderState::Blend)sfactor);
@@ -545,37 +547,85 @@ void setBlending(GLenum sfactor, GLenum dfactor)
     }
 }
     
-backend::BlendFactor toBackendBlendFactor(GLenum factor)
+backend::BlendFactor toBackendBlendFactor(int factor)
 {
     switch (factor) {
-        case GL_ONE:
+        case GLBlendConst::ONE:
             return backend::BlendFactor::ONE;
-        case GL_ZERO:
+        case GLBlendConst::ZERO:
             return backend::BlendFactor::ZERO;
-        case GL_SRC_COLOR:
+        case GLBlendConst::SRC_COLOR:
             return backend::BlendFactor::SRC_COLOR;
-        case GL_ONE_MINUS_SRC_COLOR:
+        case GLBlendConst::ONE_MINUS_SRC_COLOR:
             return backend::BlendFactor::ONE_MINUS_SRC_COLOR;
-        case GL_SRC_ALPHA:
+        case GLBlendConst::SRC_ALPHA:
             return backend::BlendFactor::SRC_ALPHA;
-        case GL_ONE_MINUS_SRC_ALPHA:
+        case GLBlendConst::ONE_MINUS_SRC_ALPHA:
             return backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-        case GL_DST_COLOR:
+        case GLBlendConst::DST_COLOR:
             return backend::BlendFactor::DST_COLOR;
-        case GL_ONE_MINUS_DST_COLOR:
+        case GLBlendConst::ONE_MINUS_DST_COLOR:
             return backend::BlendFactor::ONE_MINUS_DST_COLOR;
-        case GL_DST_ALPHA:
+        case GLBlendConst::DST_ALPHA:
             return backend::BlendFactor::DST_ALPHA;
-        case GL_ONE_MINUS_DST_ALPHA:
+        case GLBlendConst::ONE_MINUS_DST_ALPHA:
             return backend::BlendFactor::ONE_MINUS_DST_ALPHA;
-        case GL_SRC_ALPHA_SATURATE:
+        case GLBlendConst::SRC_ALPHA_SATURATE:
             return backend::BlendFactor::SRC_ALPHA_SATURATE;
-        case GL_BLEND_COLOR:
+        case GLBlendConst::BLEND_COLOR:
             return backend::BlendFactor::BLEND_CLOLOR;
         default:
             assert(false);
             break;
     }
+    return backend::BlendFactor::ONE;
+}
+
+int toGLBlendFactor(backend::BlendFactor blendFactor)
+{
+    int ret = GLBlendConst::ONE;
+    switch (blendFactor)
+    {
+    case backend::BlendFactor::ZERO:
+        ret = GLBlendConst::ZERO;
+        break;
+    case backend::BlendFactor::ONE:
+        ret = GLBlendConst::ONE;
+        break;
+    case backend::BlendFactor::SRC_COLOR:
+        ret = GLBlendConst::SRC_COLOR;
+        break;
+    case backend::BlendFactor::ONE_MINUS_SRC_COLOR:
+        ret = GLBlendConst::ONE_MINUS_SRC_COLOR;
+        break;
+    case backend::BlendFactor::SRC_ALPHA:
+        ret = GLBlendConst::SRC_ALPHA;
+        break;
+    case backend::BlendFactor::ONE_MINUS_SRC_ALPHA:
+        ret = GLBlendConst::ONE_MINUS_SRC_ALPHA;
+        break;
+    case backend::BlendFactor::DST_COLOR:
+        ret = GLBlendConst::DST_COLOR;
+        break;
+    case backend::BlendFactor::ONE_MINUS_DST_COLOR:
+        ret = GLBlendConst::ONE_MINUS_DST_COLOR;
+        break;
+    case backend::BlendFactor::DST_ALPHA:
+        ret = GLBlendConst::DST_ALPHA;
+        break;
+    case backend::BlendFactor::ONE_MINUS_DST_ALPHA:
+        ret = GLBlendConst::ONE_MINUS_DST_ALPHA;
+        break;
+    case backend::BlendFactor::SRC_ALPHA_SATURATE:
+        ret = GLBlendConst::SRC_ALPHA_SATURATE;
+        break;
+    case backend::BlendFactor::BLEND_CLOLOR:
+        ret = GLBlendConst::BLEND_COLOR;
+        break;
+    default:
+        break;
+    }
+    return ret;
 }
 
 const Mat4& getAdjustMatrix()

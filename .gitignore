@@ -169,3 +169,4 @@ cmake-build-*/
 .vs
 cmake_build*
 metal-support*.zip
+**/.project

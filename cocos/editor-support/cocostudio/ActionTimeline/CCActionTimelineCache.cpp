@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "2d/CCSpriteFrameCache.h"
 #include "2d/CCSpriteFrame.h"
+#include "base/ccUtils.h"
 
 #include "editor-support/cocostudio/CSParseBinary_generated.h"
 
@@ -916,12 +917,12 @@ Frame* ActionTimelineCache::loadBlendFrameWithFlatBuffers(const flatbuffers::Ble
 {
     BlendFuncFrame* frame = BlendFuncFrame::create();
     cocos2d::BlendFunc blend;
-    blend.src = GL_ONE;
-    blend.dst = GL_ONE_MINUS_SRC_ALPHA;
+    blend.src = backend::BlendFactor::ONE;
+    blend.dst = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
     if (nullptr != flatbuffers->blendFunc())
     {
-        blend.src = flatbuffers->blendFunc()->src();
-        blend.dst = flatbuffers->blendFunc()->dst();
+        blend.src = utils::toBackendBlendFactor(flatbuffers->blendFunc()->src());
+        blend.dst = utils::toBackendBlendFactor(flatbuffers->blendFunc()->dst());
     }
     frame->setBlendFunc(blend);
 

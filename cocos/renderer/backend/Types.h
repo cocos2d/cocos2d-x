@@ -135,7 +135,7 @@ enum class BlendOperation: uint32_t
     RESERVE_SUBTRACT
 };
 
-enum class BlendFactor: uint32_t
+enum class BlendFactor : uint32_t
 {
     ZERO,
     ONE,

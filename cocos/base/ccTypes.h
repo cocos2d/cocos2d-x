@@ -404,23 +404,28 @@ struct CC_DLL V3F_T2F_Quad
     V3F_T2F    tr;
 };
 
+
+namespace backend {
+    enum class BlendFactor: uint32_t;
+}
+
 /** @struct BlendFunc
  * Blend Function used for textures.
  */
 struct CC_DLL BlendFunc
 {
     /** source blend function */
-    GLenum src;
+    backend::BlendFactor src;
     /** destination blend function */
-    GLenum dst;
+    backend::BlendFactor dst;
 
-    /** Blending disabled. Uses {GL_ONE, GL_ZERO} */
+    /** Blending disabled. Uses {BlendFactor::ONE, BlendFactor::ZERO} */
     static const BlendFunc DISABLE;
-    /** Blending enabled for textures with Alpha premultiplied. Uses {GL_ONE, GL_ONE_MINUS_SRC_ALPHA} */
+    /** Blending enabled for textures with Alpha premultiplied. Uses {BlendFactor::ONE, BlendFactor::ONE_MINUS_SRC_ALPHA} */
     static const BlendFunc ALPHA_PREMULTIPLIED;
-    /** Blending enabled for textures with Alpha NON premultiplied. Uses {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA} */
+    /** Blending enabled for textures with Alpha NON premultiplied. Uses {BlendFactor::SRC_ALPHA, BlendFactor::ONE_MINUS_SRC_ALPHA} */
     static const BlendFunc ALPHA_NON_PREMULTIPLIED;
-    /** Enables Additive blending. Uses {GL_SRC_ALPHA, GL_ONE} */
+    /** Enables Additive blending. Uses {BlendFactor::SRC_ALPHA, BlendFactor::ONE} */
     static const BlendFunc ADDITIVE;
 
     bool operator==(const BlendFunc &a) const

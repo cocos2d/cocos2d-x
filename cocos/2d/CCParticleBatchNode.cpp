@@ -437,8 +437,8 @@ void ParticleBatchNode::draw(Renderer* renderer, const Mat4 & transform, uint32_
     //TODO: minggo: don't set blend factor every frame.
     auto& blendDescriptor = _customCommand.getPipelineDescriptor().blendDescriptor;
     blendDescriptor.blendEnabled = true;
-    blendDescriptor.sourceRGBBlendFactor = blendDescriptor.sourceAlphaBlendFactor = utils::toBackendBlendFactor(_blendFunc.src);
-    blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor = utils::toBackendBlendFactor(_blendFunc.dst);
+    blendDescriptor.sourceRGBBlendFactor = blendDescriptor.sourceAlphaBlendFactor =_blendFunc.src;
+    blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor =_blendFunc.dst;
     
     if (_textureAtlas->isDirty())
     {

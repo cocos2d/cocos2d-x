@@ -249,7 +249,7 @@ void RenderState::StateBlock::bindNoRestore()
     }
     if ((_bits & RS_BLEND_FUNC) && (_blendSrc != _defaultState->_blendSrc || _blendDst != _defaultState->_blendDst))
     {
-        utils::setBlending((GLenum)_blendSrc, (GLenum)_blendDst);
+        utils::setBlending(utils::toBackendBlendFactor(_blendSrc), utils::toBackendBlendFactor(_blendDst));
         _defaultState->_blendSrc = _blendSrc;
         _defaultState->_blendDst = _blendDst;
     }
@@ -344,7 +344,7 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
     }
     if (!(stateOverrideBits & RS_BLEND_FUNC) && (_defaultState->_bits & RS_BLEND_FUNC))
     {
-        utils::setBlending(GL_ONE, GL_ZERO);
+        utils::setBlending(backend::BlendFactor::ONE, backend::BlendFactor::ZERO);
         _defaultState->_bits &= ~RS_BLEND_FUNC;
         _defaultState->_blendSrc = RenderState::BLEND_ONE;
         _defaultState->_blendDst = RenderState::BLEND_ZERO;

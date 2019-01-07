@@ -65,8 +65,8 @@ void TrianglesCommand::init(float globalOrder, Texture2D* texture, const BlendFu
         //TODO: minggo set it in Node?
         auto& blendDescriptor = _pipelineDescriptor.blendDescriptor;
         blendDescriptor.blendEnabled = true;
-        blendDescriptor.sourceRGBBlendFactor = blendDescriptor.sourceAlphaBlendFactor = utils::toBackendBlendFactor(blendType.src);
-        blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor = utils::toBackendBlendFactor(blendType.dst);
+        blendDescriptor.sourceRGBBlendFactor = blendDescriptor.sourceAlphaBlendFactor = blendType.src;
+        blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor = blendType.dst;
 
         generateMaterialID();
     }
@@ -83,8 +83,8 @@ void TrianglesCommand::generateMaterialID()
         void* texture;
         void* fs;
         void* vs;
-        GLenum blendSrc;
-        GLenum blendDst;
+        backend::BlendFactor src;
+        backend::BlendFactor dst;
     }hashMe;
 
     // NOTE: Initialize hashMe struct to make the value of padding bytes be filled with zero.
@@ -93,8 +93,8 @@ void TrianglesCommand::generateMaterialID()
     memset(&hashMe, 0, sizeof(hashMe));
 
     hashMe.texture = _texture;
-    hashMe.blendDst = _blendType.dst;
-    hashMe.blendSrc = _blendType.src;
+    hashMe.src = _blendType.src;
+    hashMe.dst = _blendType.dst;
     hashMe.fs = _fs;
     hashMe.vs = _vs;
     _materialID = XXH32((const void*)&hashMe, sizeof(hashMe), 0);

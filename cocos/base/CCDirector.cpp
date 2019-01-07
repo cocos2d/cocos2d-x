@@ -720,7 +720,7 @@ void Director::setAlphaBlending(bool on)
 //    }
 //    else
 //    {
-//        utils::setBlending(GL_ONE, GL_ZERO);
+//        utils::setBlending(BlendFactor::ONE, BlendFactor::ZERO);
 //    }
 //
 //    CHECK_GL_ERROR_DEBUG();
