@@ -954,7 +954,6 @@
 		507B3A061C31BDD30067B53E /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A15FED1807A56F005B8026 /* SimpleAudioEngine_objc.m */; };
 		507B3A091C31BDD30067B53E /* CCImage-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503DD8DC1926736A00CD74DD /* CCImage-ios.mm */; };
 		507B3A0E1C31BDD30067B53E /* CCGLProgramState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD6C1925AB4100A911A9 /* CCGLProgramState.cpp */; };
-		507B3A111C31BDD30067B53E /* CCPrimitive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B44C1989D5E800D9A687 /* CCPrimitive.cpp */; };
 		507B3A121C31BDD30067B53E /* CCAutoreleasePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBDC51925AB6E00A911A9 /* CCAutoreleasePool.cpp */; };
 		507B3A181C31BDD30067B53E /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A15FEA1807A56F005B8026 /* CocosDenshion.m */; };
 		507B3A1A1C31BDD30067B53E /* RecastDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F7E1B04825B00E47F5F /* RecastDebugDraw.cpp */; };
@@ -1189,7 +1188,6 @@
 		507B3D751C31BDD30067B53E /* DetourMath.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F881B04825B00E47F5F /* DetourMath.h */; };
 		507B3D7F1C31BDD30067B53E /* CCValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBE121925AB6F00A911A9 /* CCValue.h */; };
 		507B3D821C31BDD30067B53E /* firePngData.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBE161925AB6F00A911A9 /* firePngData.h */; };
-		507B3D831C31BDD30067B53E /* CCPrimitive.h in Headers */ = {isa = PBXBuildFile; fileRef = B257B44D1989D5E800D9A687 /* CCPrimitive.h */; };
 		507B3D841C31BDD30067B53E /* CCPlatformConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 50643BE019BFCF1800EF68ED /* CCPlatformConfig.h */; };
 		507B3D861C31BDD30067B53E /* DetourPathQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F9C1B04825B00E47F5F /* DetourPathQueue.h */; };
 		507B3D8B1C31BDD30067B53E /* CDOpenALSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FE71807A56F005B8026 /* CDOpenALSupport.h */; };
@@ -1923,10 +1921,6 @@
 		B24AA98A195A675C007B4522 /* CCFastTMXTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24AA983195A675C007B4522 /* CCFastTMXTiledMap.cpp */; };
 		B24AA98B195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */; };
 		B24AA98C195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */; };
-		B257B44E1989D5E800D9A687 /* CCPrimitive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B44C1989D5E800D9A687 /* CCPrimitive.cpp */; };
-		B257B44F1989D5E800D9A687 /* CCPrimitive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B44C1989D5E800D9A687 /* CCPrimitive.cpp */; };
-		B257B4501989D5E800D9A687 /* CCPrimitive.h in Headers */ = {isa = PBXBuildFile; fileRef = B257B44D1989D5E800D9A687 /* CCPrimitive.h */; };
-		B257B4511989D5E800D9A687 /* CCPrimitive.h in Headers */ = {isa = PBXBuildFile; fileRef = B257B44D1989D5E800D9A687 /* CCPrimitive.h */; };
 		B276EF5F1988D1D500CD400F /* CCVertexIndexData.h in Headers */ = {isa = PBXBuildFile; fileRef = B276EF5B1988D1D500CD400F /* CCVertexIndexData.h */; };
 		B276EF601988D1D500CD400F /* CCVertexIndexData.h in Headers */ = {isa = PBXBuildFile; fileRef = B276EF5B1988D1D500CD400F /* CCVertexIndexData.h */; };
 		B276EF611988D1D500CD400F /* CCVertexIndexData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B276EF5C1988D1D500CD400F /* CCVertexIndexData.cpp */; };
@@ -3234,8 +3228,6 @@
 		B24AA982195A675C007B4522 /* CCFastTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFastTMXLayer.h; sourceTree = "<group>"; };
 		B24AA983195A675C007B4522 /* CCFastTMXTiledMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFastTMXTiledMap.cpp; sourceTree = "<group>"; };
 		B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFastTMXTiledMap.h; sourceTree = "<group>"; };
-		B257B44C1989D5E800D9A687 /* CCPrimitive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPrimitive.cpp; sourceTree = "<group>"; };
-		B257B44D1989D5E800D9A687 /* CCPrimitive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPrimitive.h; sourceTree = "<group>"; };
 		B276EF5B1988D1D500CD400F /* CCVertexIndexData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertexIndexData.h; sourceTree = "<group>"; };
 		B276EF5C1988D1D500CD400F /* CCVertexIndexData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVertexIndexData.cpp; sourceTree = "<group>"; };
 		B276EF5D1988D1D500CD400F /* CCVertexIndexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertexIndexBuffer.h; sourceTree = "<group>"; };
@@ -4975,8 +4967,6 @@
 				50ABBD801925AB4100A911A9 /* CCTextureAtlas.h */,
 				50ABBD811925AB4100A911A9 /* CCTextureCache.cpp */,
 				50ABBD821925AB4100A911A9 /* CCTextureCache.h */,
-				B257B44C1989D5E800D9A687 /* CCPrimitive.cpp */,
-				B257B44D1989D5E800D9A687 /* CCPrimitive.h */,
 				5012168C1AC47380009A4BEA /* CCRenderState.cpp */,
 				5012168D1AC47380009A4BEA /* CCRenderState.h */,
 				501216921AC47393009A4BEA /* CCPass.cpp */,
@@ -6237,7 +6227,6 @@
 				505385021B01887A00793096 /* CCProperties.h in Headers */,
 				50ABBE471925AB6F00A911A9 /* CCEvent.h in Headers */,
 				5012169C1AC473A3009A4BEA /* CCTechnique.h in Headers */,
-				B257B4501989D5E800D9A687 /* CCPrimitive.h in Headers */,
 				4631CB7D21AFD9F90000D408 /* UIEditBoxImpl-ios.h in Headers */,
 				46F9B73021AFE7C0009DF858 /* CCScrollView.h in Headers */,
 				EDC78C2E21CA19FB00E1863C /* CCTransformHelp.h in Headers */,
@@ -6413,7 +6402,6 @@
 				507B3D751C31BDD30067B53E /* DetourMath.h in Headers */,
 				507B3D7F1C31BDD30067B53E /* CCValue.h in Headers */,
 				507B3D821C31BDD30067B53E /* firePngData.h in Headers */,
-				507B3D831C31BDD30067B53E /* CCPrimitive.h in Headers */,
 				1A40D1321E8E56C7002E363A /* ieee754.h in Headers */,
 				507B3D841C31BDD30067B53E /* CCPlatformConfig.h in Headers */,
 				507B3D861C31BDD30067B53E /* DetourPathQueue.h in Headers */,
@@ -6778,7 +6766,6 @@
 				50ABBEC21925AB6F00A911A9 /* CCValue.h in Headers */,
 				50ABBECA1925AB6F00A911A9 /* firePngData.h in Headers */,
 				46F9B47721AFE64C009DF858 /* ExtensionMacros.h in Headers */,
-				B257B4511989D5E800D9A687 /* CCPrimitive.h in Headers */,
 				1A40D1311E8E56C7002E363A /* ieee754.h in Headers */,
 				50643BE319BFCF1800EF68ED /* CCPlatformConfig.h in Headers */,
 				4631CBD021AFD9FA0000D408 /* UILoadingBar.h in Headers */,
@@ -7382,7 +7369,6 @@
 				B240C5E91B09DFB000137F50 /* CCFrameBuffer.cpp in Sources */,
 				1A570069180BC5A10088DEC7 /* CCActionCatmullRom.cpp in Sources */,
 				4631CB4921AFD9F90000D408 /* UIEditBox.cpp in Sources */,
-				B257B44E1989D5E800D9A687 /* CCPrimitive.cpp in Sources */,
 				299CF1FB19A434BC00C378C1 /* ccRandom.cpp in Sources */,
 				EDC78BDE21CA19FB00E1863C /* CCDatas.cpp in Sources */,
 				4631CBB721AFD9FA0000D408 /* UITabControl.cpp in Sources */,
@@ -7751,7 +7737,6 @@
 				507B3A061C31BDD30067B53E /* SimpleAudioEngine_objc.m in Sources */,
 				507B3A091C31BDD30067B53E /* CCImage-ios.mm in Sources */,
 				507B3A0E1C31BDD30067B53E /* CCGLProgramState.cpp in Sources */,
-				507B3A111C31BDD30067B53E /* CCPrimitive.cpp in Sources */,
 				507B3A121C31BDD30067B53E /* CCAutoreleasePool.cpp in Sources */,
 				507B3A181C31BDD30067B53E /* CocosDenshion.m in Sources */,
 				507B3A1A1C31BDD30067B53E /* RecastDebugDraw.cpp in Sources */,
@@ -8003,7 +7988,6 @@
 				503DD8EE1926736A00CD74DD /* CCImage-ios.mm in Sources */,
 				EDC78BFF21CA19FB00E1863C /* CocosStudioExtension.cpp in Sources */,
 				50ABBD941925AB4100A911A9 /* CCGLProgramState.cpp in Sources */,
-				B257B44F1989D5E800D9A687 /* CCPrimitive.cpp in Sources */,
 				50ABBE281925AB6F00A911A9 /* CCAutoreleasePool.cpp in Sources */,
 				15AE185E19AAD31200C27E9E /* CocosDenshion.m in Sources */,
 				EDC78C8521CA19FC00E1863C /* ListViewReader.cpp in Sources */,

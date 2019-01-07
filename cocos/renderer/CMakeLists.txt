@@ -12,7 +12,6 @@ set(COCOS_RENDERER_HEADER
     renderer/CCMeshCommand.h
     renderer/CCPass.h
     renderer/CCPipelineDescriptor.h
-    renderer/CCPrimitive.h
     renderer/CCQuadCommand.h
     renderer/CCRenderCommand.h
     renderer/CCRenderCommandPool.h
@@ -61,7 +60,6 @@ set(COCOS_RENDERER_SRC
     renderer/CCMaterial.cpp
     renderer/CCMeshCommand.cpp
     renderer/CCPass.cpp
-    renderer/CCPrimitive.cpp
     renderer/CCQuadCommand.cpp
     renderer/CCRenderCommand.cpp
     renderer/CCRenderState.cpp
