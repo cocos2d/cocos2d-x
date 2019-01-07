@@ -47,7 +47,6 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
-#include "renderer/CCFrameBuffer.h"
 #include "2d/CCCamera.h"
 #include "base/CCUserDefault.h"
 #include "base/ccUtils.h"
@@ -268,7 +267,6 @@ void Director::drawScene()
     }
 
     _renderer->clear(ClearFlag::ALL, _clearColor, 1, 0);
-    experimental::FrameBuffer::clearAllFBOs();
     
     _eventDispatcher->dispatchEvent(_eventBeforeDraw);
     
