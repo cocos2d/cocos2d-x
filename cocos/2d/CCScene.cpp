@@ -266,11 +266,6 @@ void Scene::render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eye
     //    experimental::FrameBuffer::applyDefaultFBO();
 }
 
-void Scene::render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* eyeProjections, unsigned int multiViewCount)
-{
-
-}
-
 void Scene::removeAllChildren()
 {
     if (_defaultCamera)
