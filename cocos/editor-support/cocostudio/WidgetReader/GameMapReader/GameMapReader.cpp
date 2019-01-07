@@ -29,7 +29,6 @@
 #include "2d/CCTMXXMLParser.h"
 #include "2d/CCTMXTiledMap.h"
 #include "platform/CCFileUtils.h"
-#include "deprecated/CCString.h"
 
 #include "editor-support/cocostudio/CSParseBinary_generated.h"
 #include "editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.h"

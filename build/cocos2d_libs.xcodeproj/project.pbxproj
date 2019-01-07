@@ -1001,7 +1001,6 @@
 		507B3ACD1C31BDD30067B53E /* CCAtlasNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570096180BC5C10088DEC7 /* CCAtlasNode.cpp */; };
 		507B3AD11C31BDD30067B53E /* MathUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD261925AB0000A911A9 /* MathUtil.cpp */; };
 		507B3AD21C31BDD30067B53E /* DetourNavMeshQuery.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F8D1B04825B00E47F5F /* DetourNavMeshQuery.cpp */; };
-		507B3AD31C31BDD30067B53E /* CCDataVisitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBDD01925AB6E00A911A9 /* CCDataVisitor.cpp */; };
 		507B3AD51C31BDD30067B53E /* CCNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57009C180BC5D20088DEC7 /* CCNode.cpp */; };
 		507B3AD81C31BDD30067B53E /* CCDrawNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57010C180BC8EE0088DEC7 /* CCDrawNode.cpp */; };
 		507B3ADC1C31BDD30067B53E /* CCGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570119180BC90D0088DEC7 /* CCGrid.cpp */; };
@@ -1191,7 +1190,6 @@
 		507B3D841C31BDD30067B53E /* CCPlatformConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 50643BE019BFCF1800EF68ED /* CCPlatformConfig.h */; };
 		507B3D861C31BDD30067B53E /* DetourPathQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2F9C1B04825B00E47F5F /* DetourPathQueue.h */; };
 		507B3D8B1C31BDD30067B53E /* CDOpenALSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FE71807A56F005B8026 /* CDOpenALSupport.h */; };
-		507B3D8C1C31BDD30067B53E /* CCDataVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDD11925AB6E00A911A9 /* CCDataVisitor.h */; };
 		507B3D8F1C31BDD30067B53E /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570048180BC5A10088DEC7 /* CCAction.h */; };
 		507B3D931C31BDD30067B53E /* CCGLViewImpl-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 503DD8DA1926736A00CD74DD /* CCGLViewImpl-ios.h */; };
 		507B3D9C1C31BDD30067B53E /* ccUTF8.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBE0E1925AB6F00A911A9 /* ccUTF8.h */; };
@@ -1653,10 +1651,6 @@
 		50ABBE3A1925AB6F00A911A9 /* CCData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBDCE1925AB6E00A911A9 /* CCData.cpp */; };
 		50ABBE3B1925AB6F00A911A9 /* CCData.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDCF1925AB6E00A911A9 /* CCData.h */; };
 		50ABBE3C1925AB6F00A911A9 /* CCData.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDCF1925AB6E00A911A9 /* CCData.h */; };
-		50ABBE3D1925AB6F00A911A9 /* CCDataVisitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBDD01925AB6E00A911A9 /* CCDataVisitor.cpp */; };
-		50ABBE3E1925AB6F00A911A9 /* CCDataVisitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBDD01925AB6E00A911A9 /* CCDataVisitor.cpp */; };
-		50ABBE3F1925AB6F00A911A9 /* CCDataVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDD11925AB6E00A911A9 /* CCDataVisitor.h */; };
-		50ABBE401925AB6F00A911A9 /* CCDataVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDD11925AB6E00A911A9 /* CCDataVisitor.h */; };
 		50ABBE411925AB6F00A911A9 /* CCDirector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBDD21925AB6E00A911A9 /* CCDirector.cpp */; };
 		50ABBE421925AB6F00A911A9 /* CCDirector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBDD21925AB6E00A911A9 /* CCDirector.cpp */; };
 		50ABBE431925AB6F00A911A9 /* CCDirector.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDD31925AB6E00A911A9 /* CCDirector.h */; };
@@ -3080,8 +3074,6 @@
 		50ABBDCD1925AB6E00A911A9 /* CCConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCConsole.h; path = ../base/CCConsole.h; sourceTree = "<group>"; };
 		50ABBDCE1925AB6E00A911A9 /* CCData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCData.cpp; path = ../base/CCData.cpp; sourceTree = "<group>"; };
 		50ABBDCF1925AB6E00A911A9 /* CCData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCData.h; path = ../base/CCData.h; sourceTree = "<group>"; };
-		50ABBDD01925AB6E00A911A9 /* CCDataVisitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCDataVisitor.cpp; path = ../base/CCDataVisitor.cpp; sourceTree = "<group>"; };
-		50ABBDD11925AB6E00A911A9 /* CCDataVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCDataVisitor.h; path = ../base/CCDataVisitor.h; sourceTree = "<group>"; };
 		50ABBDD21925AB6E00A911A9 /* CCDirector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCDirector.cpp; path = ../base/CCDirector.cpp; sourceTree = "<group>"; };
 		50ABBDD31925AB6E00A911A9 /* CCDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCDirector.h; path = ../base/CCDirector.h; sourceTree = "<group>"; };
 		50ABBDD41925AB6E00A911A9 /* CCEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCEvent.cpp; path = ../base/CCEvent.cpp; sourceTree = "<group>"; };
@@ -3868,8 +3860,6 @@
 				50ABBDCD1925AB6E00A911A9 /* CCConsole.h */,
 				50ABBDCE1925AB6E00A911A9 /* CCData.cpp */,
 				50ABBDCF1925AB6E00A911A9 /* CCData.h */,
-				50ABBDD01925AB6E00A911A9 /* CCDataVisitor.cpp */,
-				50ABBDD11925AB6E00A911A9 /* CCDataVisitor.h */,
 				50ABBDD21925AB6E00A911A9 /* CCDirector.cpp */,
 				50ABBDD31925AB6E00A911A9 /* CCDirector.h */,
 				50ABBDD41925AB6E00A911A9 /* CCEvent.cpp */,
@@ -6293,7 +6283,6 @@
 				50ABC00F1926664800A911A9 /* CCFileUtils.h in Headers */,
 				50ABBE3B1925AB6F00A911A9 /* CCData.h in Headers */,
 				1A40D1721E8E56C7002E363A /* writer.h in Headers */,
-				50ABBE3F1925AB6F00A911A9 /* CCDataVisitor.h in Headers */,
 				EDC78C0A21CA19FB00E1863C /* CCActionTimeline.h in Headers */,
 				1A40D1091E8E56C6002E363A /* allocators.h in Headers */,
 				EDC78D2421CA19FC00E1863C /* LocalizationManager.h in Headers */,
@@ -6406,7 +6395,6 @@
 				507B3D841C31BDD30067B53E /* CCPlatformConfig.h in Headers */,
 				507B3D861C31BDD30067B53E /* DetourPathQueue.h in Headers */,
 				507B3D8B1C31BDD30067B53E /* CDOpenALSupport.h in Headers */,
-				507B3D8C1C31BDD30067B53E /* CCDataVisitor.h in Headers */,
 				507B3D8F1C31BDD30067B53E /* CCAction.h in Headers */,
 				507B3D931C31BDD30067B53E /* CCGLViewImpl-ios.h in Headers */,
 				507B3D9C1C31BDD30067B53E /* ccUTF8.h in Headers */,
@@ -6775,7 +6763,6 @@
 				B6DD2FE81B04825B00E47F5F /* DetourPathQueue.h in Headers */,
 				15AE185B19AAD31200C27E9E /* CDOpenALSupport.h in Headers */,
 				EDC78D0321CA19FC00E1863C /* CCComAudio.h in Headers */,
-				50ABBE401925AB6F00A911A9 /* CCDataVisitor.h in Headers */,
 				1A570064180BC5A10088DEC7 /* CCAction.h in Headers */,
 				EDC78CFD21CA19FC00E1863C /* TextFieldReader.h in Headers */,
 				4631CBB221AFD9FA0000D408 /* UIListView.h in Headers */,
@@ -7551,7 +7538,6 @@
 				EDC78D2021CA19FC00E1863C /* CCSpriteFrameCacheHelper.cpp in Sources */,
 				EDC78C7021CA19FC00E1863C /* CCSGUIReader.cpp in Sources */,
 				50ABC0111926664800A911A9 /* CCGLView.cpp in Sources */,
-				50ABBE3D1925AB6F00A911A9 /* CCDataVisitor.cpp in Sources */,
 				4631CB7721AFD9F90000D408 /* UIEditBoxImpl-ios.mm in Sources */,
 				4631CBDF21AFD9FA0000D408 /* UILayoutParameter.cpp in Sources */,
 				EDC78BE021CA19FB00E1863C /* CCProcessBase.cpp in Sources */,
@@ -7788,7 +7774,6 @@
 				507B3ACD1C31BDD30067B53E /* CCAtlasNode.cpp in Sources */,
 				507B3AD11C31BDD30067B53E /* MathUtil.cpp in Sources */,
 				507B3AD21C31BDD30067B53E /* DetourNavMeshQuery.cpp in Sources */,
-				507B3AD31C31BDD30067B53E /* CCDataVisitor.cpp in Sources */,
 				507B3AD51C31BDD30067B53E /* CCNode.cpp in Sources */,
 				507B3AD81C31BDD30067B53E /* CCDrawNode.cpp in Sources */,
 				507B3ADC1C31BDD30067B53E /* CCGrid.cpp in Sources */,
@@ -8074,7 +8059,6 @@
 				B6DD2FCC1B04825B00E47F5F /* DetourNavMeshQuery.cpp in Sources */,
 				ED28C236219E629B0078D854 /* Texture.cpp in Sources */,
 				4631CB2421AFD9F90000D408 /* UIVBox.cpp in Sources */,
-				50ABBE3E1925AB6F00A911A9 /* CCDataVisitor.cpp in Sources */,
 				1A57009F180BC5D20088DEC7 /* CCNode.cpp in Sources */,
 				EDC78C2921CA19FB00E1863C /* CCDisplayManager.cpp in Sources */,
 				4631CB5421AFD9F90000D408 /* CCUISingleLineTextField.mm in Sources */,
