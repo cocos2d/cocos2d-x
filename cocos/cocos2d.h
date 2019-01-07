@@ -157,7 +157,6 @@ THE SOFTWARE.
 #include "renderer/CCMaterial.h"
 #include "renderer/CCPass.h"
 #include "renderer/CCPrimitive.h"
-#include "renderer/CCPrimitiveCommand.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCRenderCommandPool.h"

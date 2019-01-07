@@ -30,7 +30,6 @@
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCCallbackCommand.h"
 #include "renderer/CCGroupCommand.h"
-#include "renderer/CCPrimitiveCommand.h"
 #include "renderer/CCMeshCommand.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCMaterial.h"
@@ -350,14 +349,6 @@ void Renderer::processRenderCommand(RenderCommand* command)
         case RenderCommand::Type::CALLBACK_COMMAND:
             flush();
             static_cast<CallbackCommand*>(command)->execute();
-            break;
-        case RenderCommand::Type::PRIMITIVE_COMMAND:
-        {
-            flush();
-            auto cmd = static_cast<PrimitiveCommand*>(command);
-            //        CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_PRIMITIVE_COMMAND");
-            cmd->execute();
-        }
             break;
         default:
             assert(false);

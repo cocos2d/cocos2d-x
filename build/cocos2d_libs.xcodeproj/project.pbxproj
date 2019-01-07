@@ -950,7 +950,6 @@
 		507B39F41C31BDD30067B53E /* CCApplication-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503DD8CF1926736A00CD74DD /* CCApplication-ios.mm */; };
 		507B39F91C31BDD30067B53E /* fastlz.c in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2FA51B04825B00E47F5F /* fastlz.c */; };
 		507B39FA1C31BDD30067B53E /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBF291926664700A911A9 /* CCSAXParser.cpp */; };
-		507B3A011C31BDD30067B53E /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		507B3A041C31BDD30067B53E /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A15FE81807A56F005B8026 /* CDOpenALSupport.m */; };
 		507B3A061C31BDD30067B53E /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A15FED1807A56F005B8026 /* SimpleAudioEngine_objc.m */; };
 		507B3A091C31BDD30067B53E /* CCImage-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503DD8DC1926736A00CD74DD /* CCImage-ios.mm */; };
@@ -1903,7 +1902,6 @@
 		A05DCF9D1B90584E00EE040B /* CCDownloader-curl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A05DCF9B1B90584E00EE040B /* CCDownloader-curl.cpp */; };
 		A05DCF9E1B90584E00EE040B /* CCDownloader-curl.h in Headers */ = {isa = PBXBuildFile; fileRef = A05DCF9C1B90584E00EE040B /* CCDownloader-curl.h */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
-		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
 		B21770401977ECE6009EE11B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703F1977ECE6009EE11B /* OpenGL.framework */; };
 		B21770421977ECF8009EE11B /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21770411977ECF8009EE11B /* ApplicationServices.framework */; };
@@ -1929,8 +1927,6 @@
 		B257B44F1989D5E800D9A687 /* CCPrimitive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B44C1989D5E800D9A687 /* CCPrimitive.cpp */; };
 		B257B4501989D5E800D9A687 /* CCPrimitive.h in Headers */ = {isa = PBXBuildFile; fileRef = B257B44D1989D5E800D9A687 /* CCPrimitive.h */; };
 		B257B4511989D5E800D9A687 /* CCPrimitive.h in Headers */ = {isa = PBXBuildFile; fileRef = B257B44D1989D5E800D9A687 /* CCPrimitive.h */; };
-		B257B460198A353E00D9A687 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
-		B257B461198A353E00D9A687 /* CCPrimitiveCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B257B45F198A353E00D9A687 /* CCPrimitiveCommand.h */; };
 		B276EF5F1988D1D500CD400F /* CCVertexIndexData.h in Headers */ = {isa = PBXBuildFile; fileRef = B276EF5B1988D1D500CD400F /* CCVertexIndexData.h */; };
 		B276EF601988D1D500CD400F /* CCVertexIndexData.h in Headers */ = {isa = PBXBuildFile; fileRef = B276EF5B1988D1D500CD400F /* CCVertexIndexData.h */; };
 		B276EF611988D1D500CD400F /* CCVertexIndexData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B276EF5C1988D1D500CD400F /* CCVertexIndexData.cpp */; };
@@ -3240,8 +3236,6 @@
 		B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFastTMXTiledMap.h; sourceTree = "<group>"; };
 		B257B44C1989D5E800D9A687 /* CCPrimitive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPrimitive.cpp; sourceTree = "<group>"; };
 		B257B44D1989D5E800D9A687 /* CCPrimitive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPrimitive.h; sourceTree = "<group>"; };
-		B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPrimitiveCommand.cpp; sourceTree = "<group>"; };
-		B257B45F198A353E00D9A687 /* CCPrimitiveCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPrimitiveCommand.h; sourceTree = "<group>"; };
 		B276EF5B1988D1D500CD400F /* CCVertexIndexData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertexIndexData.h; sourceTree = "<group>"; };
 		B276EF5C1988D1D500CD400F /* CCVertexIndexData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVertexIndexData.cpp; sourceTree = "<group>"; };
 		B276EF5D1988D1D500CD400F /* CCVertexIndexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertexIndexBuffer.h; sourceTree = "<group>"; };
@@ -4983,8 +4977,6 @@
 				50ABBD821925AB4100A911A9 /* CCTextureCache.h */,
 				B257B44C1989D5E800D9A687 /* CCPrimitive.cpp */,
 				B257B44D1989D5E800D9A687 /* CCPrimitive.h */,
-				B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */,
-				B257B45F198A353E00D9A687 /* CCPrimitiveCommand.h */,
 				5012168C1AC47380009A4BEA /* CCRenderState.cpp */,
 				5012168D1AC47380009A4BEA /* CCRenderState.h */,
 				501216921AC47393009A4BEA /* CCPass.cpp */,
@@ -6232,7 +6224,6 @@
 				EDC78CEE21CA19FC00E1863C /* CSBoneBinary_generated.h in Headers */,
 				4631CBBB21AFD9FA0000D408 /* UIText.h in Headers */,
 				50ABBE9D1925AB6F00A911A9 /* CCRefPtr.h in Headers */,
-				B257B461198A353E00D9A687 /* CCPrimitiveCommand.h in Headers */,
 				5034CA31191D591100CE6051 /* ccShader_PositionTexture_uColor.vert in Headers */,
 				50ABBE7B1925AB6F00A911A9 /* CCEventMouse.h in Headers */,
 				1A40D1511E8E56C7002E363A /* memorystream.h in Headers */,
@@ -7425,7 +7416,6 @@
 				1A570098180BC5C10088DEC7 /* CCAtlasNode.cpp in Sources */,
 				1A57009E180BC5D20088DEC7 /* CCNode.cpp in Sources */,
 				EDC78C3821CA19FB00E1863C /* CCDecorativeDisplay.cpp in Sources */,
-				B257B460198A353E00D9A687 /* CCPrimitiveCommand.cpp in Sources */,
 				291901451B05895600F8B4BA /* CCNinePatchImageParser.cpp in Sources */,
 				46535CDF21ABE8C0005B5370 /* CCGLViewImpl-mac.mm in Sources */,
 				468A14E31EF223B700ECA675 /* flatc.cpp in Sources */,
@@ -7757,7 +7747,6 @@
 				507B39F41C31BDD30067B53E /* CCApplication-ios.mm in Sources */,
 				507B39F91C31BDD30067B53E /* fastlz.c in Sources */,
 				507B39FA1C31BDD30067B53E /* CCSAXParser.cpp in Sources */,
-				507B3A011C31BDD30067B53E /* CCPrimitiveCommand.cpp in Sources */,
 				507B3A041C31BDD30067B53E /* CDOpenALSupport.m in Sources */,
 				507B3A061C31BDD30067B53E /* SimpleAudioEngine_objc.m in Sources */,
 				507B3A091C31BDD30067B53E /* CCImage-ios.mm in Sources */,
@@ -8007,7 +7996,6 @@
 				503DD8E11926736A00CD74DD /* CCApplication-ios.mm in Sources */,
 				B6DD2FF61B04825B00E47F5F /* fastlz.c in Sources */,
 				50ABC01A1926664800A911A9 /* CCSAXParser.cpp in Sources */,
-				B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */,
 				15AE185C19AAD31200C27E9E /* CDOpenALSupport.m in Sources */,
 				15AE186119AAD31200C27E9E /* SimpleAudioEngine_objc.m in Sources */,
 				EDC78C1521CA19FB00E1863C /* CCActionTimelineNode.cpp in Sources */,

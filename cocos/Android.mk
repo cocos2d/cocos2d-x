@@ -171,7 +171,6 @@ renderer/CCMaterial.cpp \
 renderer/CCMeshCommand.cpp \
 renderer/CCPass.cpp \
 renderer/CCPrimitive.cpp \
-renderer/CCPrimitiveCommand.cpp \
 renderer/CCQuadCommand.cpp \
 renderer/CCRenderCommand.cpp \
 renderer/CCRenderState.cpp \
