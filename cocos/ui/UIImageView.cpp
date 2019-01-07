@@ -238,6 +238,11 @@ const Rect& ImageView::getCapInsets()const
     return _capInsets;
 }
 
+const std::string ImageView::getTextureFile()const
+{
+	return _textureFile;
+}
+
 void ImageView::onSizeChanged()
 {
     Widget::onSizeChanged();

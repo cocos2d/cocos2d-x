@@ -118,6 +118,12 @@ public:
      * @see `setCapInsets(const Rect&)`
      */
     const Rect& getCapInsets()const;
+
+	/**
+	* Get ImageView's texture file.
+	* @return texture file.
+	*/
+	const std::string getTextureFile()const;
     
     /**
      * Sets the source blending function.
