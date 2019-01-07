@@ -167,12 +167,18 @@ namespace utils
     }
 
     /**
-     *  Gets the md5 hash for the given file.
-     *  @param filename The file to calculate md5 hash.
-     *  @return The md5 hash for the file
-     */
+    *  Gets the md5 hash for the given file.
+    *  @param filename The file to calculate md5 hash.
+    *  @return The md5 hash for the file
+    */
     CC_DLL std::string getFileMD5Hash(const std::string &filename);
 
+	/**
+	*  Gets the md5 hash for the given string.
+	*  @param dataStr The string to calculate md5 hash.
+	*  @return The md5 hash for the string
+	*/
+	CC_DLL std::string getStringMD5Hash(const std::string &dataStr);
 
     /**
     *  Gets the md5 hash for the given buffer.
