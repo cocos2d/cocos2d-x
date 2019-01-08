@@ -39,6 +39,9 @@ using namespace cocos2d::experimental::ui;
 @interface UIVideoViewWrapperIos : NSObject
 
 @property (strong,nonatomic) MPMoviePlayerController * moviePlayer;
+@property (assign,nonatomic) MPMovieRepeatMode repeatMode;
+@property (assign,nonatomic) MPMovieControlStyle controlStyle;
+@property (assign,nonatomic) BOOL userInteractionEnabled;
 
 - (void) setFrame:(int) left :(int) top :(int) width :(int) height;
 - (void) setURL:(int) videoSource :(std::string&) videoUrl;
@@ -75,6 +78,10 @@ using namespace cocos2d::experimental::ui;
 {
     if (self = [super init]) {
         self.moviePlayer = nullptr;
+        self.repeatMode = MPMovieRepeatModeNone;
+        self.controlStyle = MPMovieControlStyleEmbedded;
+        self.userInteractionEnabled = true;
+        
         _videoPlayer = (VideoPlayer*)videoPlayer;
         _keepRatioEnabled = false;
     }
@@ -143,8 +150,9 @@ using namespace cocos2d::experimental::ui;
         self.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
     }
     self.moviePlayer.allowsAirPlay = false;
-    self.moviePlayer.controlStyle = MPMovieControlStyleEmbedded;
-    self.moviePlayer.view.userInteractionEnabled = true;
+    self.moviePlayer.controlStyle = self.controlStyle;
+    self.moviePlayer.view.userInteractionEnabled = self.userInteractionEnabled;
+    self.moviePlayer.repeatMode = self.repeatMode;
 
     auto clearColor = [UIColor clearColor];
     self.moviePlayer.backgroundView.backgroundColor = clearColor;
@@ -270,6 +278,9 @@ VideoPlayer::VideoPlayer()
 , _keepAspectRatioEnabled(false)
 , _videoPlayerIndex(-1)
 , _eventCallback(nullptr)
+, _isLooping(false)
+, _isUserInputEnabled(true)
+, _styleType(StyleType::DEFAULT)
 {
     _videoView = [[UIVideoViewWrapperIos alloc] init:this];
 
@@ -299,6 +310,33 @@ void VideoPlayer::setURL(const std::string& videoUrl)
     _videoURL = videoUrl;
     _videoSource = VideoPlayer::Source::URL;
     [((UIVideoViewWrapperIos*)_videoView) setURL:(int)_videoSource :_videoURL];
+}
+
+void VideoPlayer::setLooping(bool looping)
+{
+    _isLooping = looping;
+    [((UIVideoViewWrapperIos*)_videoView) setRepeatMode:_isLooping ? MPMovieRepeatModeOne : MPMovieRepeatModeNone];
+}
+
+void VideoPlayer::setUserInputEnabled(bool enableInput)
+{
+    _isUserInputEnabled = enableInput;
+    [((UIVideoViewWrapperIos*)_videoView) setUserInteractionEnabled:enableInput];
+}
+
+void VideoPlayer::setStyle(StyleType style)
+{
+    _styleType = style;
+
+    switch (style) {
+        case StyleType::DEFAULT:
+            [((UIVideoViewWrapperIos*)_videoView) setControlStyle:MPMovieControlStyleEmbedded];
+            break;
+            
+        case StyleType::NONE:
+            [((UIVideoViewWrapperIos*)_videoView) setControlStyle:MPMovieControlStyleNone];
+            break;
+    }
 }
 
 void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
@@ -403,6 +441,16 @@ bool VideoPlayer::isPlaying() const
     return _isPlaying;
 }
 
+bool VideoPlayer::isLooping() const
+{
+    return _isLooping;
+}
+
+bool VideoPlayer::isUserInputEnabled() const
+{
+    return _isUserInputEnabled;
+}
+
 void VideoPlayer::setVisible(bool visible)
 {
     cocos2d::ui::Widget::setVisible(visible);
@@ -462,6 +510,9 @@ void VideoPlayer::copySpecialProperties(Widget *widget)
     if (videoPlayer)
     {
         _isPlaying = videoPlayer->_isPlaying;
+        _isLooping = videoPlayer->_isLooping;
+        _isUserInputEnabled = videoPlayer->_isUserInputEnabled;
+        _styleType = videoPlayer->_styleType;
         _fullScreenEnabled = videoPlayer->_fullScreenEnabled;
         _fullScreenDirty = videoPlayer->_fullScreenDirty;
         _videoURL = videoPlayer->_videoURL;
