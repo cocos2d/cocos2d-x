@@ -39,8 +39,8 @@ namespace backend
 }
 
 /**
-Custom command is used for call custom openGL command which can not be done by other commands,
-such as stencil function, depth functions etc. The render command is executed by calling a call back function.
+Custom command is used to draw all things except triangle commands. You can use
+this command to draw things, just provide vertex/index data and set corret flags.
 */
 class CC_DLL CustomCommand : public RenderCommand
 {
@@ -50,18 +50,27 @@ public:
         ARRAY,
         ELEMENT
     };
-    
+
     using PrimitiveType = backend::PrimitiveType;
+    /**
+    Buffer usage of vertex/index buffer. If the contents is not updated every frame,
+    then use STATIC, other use DYNAMIC.
+    */
     using BufferUsage = backend::BufferUsage;
+    /**
+    The index format determine the size for index data. U_SHORT is enough for most
+    cases.
+    */
     using IndexFormat = backend::IndexFormat;
         
 	/**Constructor.*/
     CustomCommand();
     /**Destructor.*/
-    virtual ~CustomCommand();
+    ~CustomCommand();
     
 public:
 	/**
+    TODO: should remove it.
 	Init function.
 	@param globalZOrder GlobalZOrder of the render command.
 	@param modelViewTransform When in 3D mode, depth sorting needs modelViewTransform.
@@ -74,35 +83,102 @@ public:
     @param globalZOrder GlobalZOrder of the render command.
     */
     void init(float globalZOrder);
+    /**
+    Init function. The render command will be in 2D mode.
+    @param globalZOrder GlobalZOrder of the render command.
+    @param blendFunc blend function of the render command.
+    */
     void init(float globalZOrder, const BlendFunc& blendFunc);
-    
+
+    /**
+    Create a vertex buffer of the custom command. The buffer size is (vertexSize * capacity).
+    If the buffer already exists, then it will delete the old buffer and create a new one.
+    @param vertexSize the size of every vertex data.
+    @param capacity how many vertices of the buffer
+    @param usage the usage of the vertex buffer. Use Static of the vertex data are not updated
+                 every frame, otherwise use DYNAMIC.
+    */
     void createVertexBuffer(unsigned int vertexSize, unsigned int capacity, BufferUsage usage);
+    /**
+    Create an index buffer of the custom command. The buffer size is (indexSize * capacity).
+    Index size is determined by format. If the buffer already exists, then it will delete the
+    old buffer and create a new one.
+    @param format index fomrat, if format is U_SHORT, then the index data type should be
+                  unsigned short, otherwise should be unsigned int.
+    @param capacity how many indices of the buffer
+    @param usage the usage of the vertex buffer. Use Static of the index data are not updated
+                 every frame, otherwise use DYNAMIC.
+    */
     void createIndexBuffer(IndexFormat format, unsigned int capacity, BufferUsage usage);
 
+    /**
+    Update vertex buffer contents.
+    @param data Specifies a pointer to the new data that will be copied into the data store.
+    @param length Specifies the length in bytes of the data store region being replaced.
+    */
     void updateVertexBuffer(void* data, unsigned int length);
+    /**
+    Update index buffer contents.
+    @param data Specifies a pointer to the new data that will be copied into the data store.
+    @param length Specifies the size in bytes of the data store region being replaced.
+    */
     void updateIndexBuffer(void* data, unsigned int length);
+    /**
+    Update some or all contents of vertex buffer.
+    @param data Specifies a pointer to the new data that will be copied into the data store.
+    @param offset Specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes.
+    @param length Specifies the size in bytes of the data store region being replaced.
+    */
     void updateVertexBuffer(void* data, unsigned int offset, unsigned int length);
+    /**
+    Update some or call contents of index buffer
+    @param data Specifies a pointer to the new data that will be copied into the data store.
+    @param offset specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes.
+    @param length Specifies the size in bytes of the data store region being replaced.
+    */
     void updateIndexBuffer(void* data, unsigned int offset, unsigned int length);
 
+    /**
+    Get vertex buffer capacity.
+    */
     inline unsigned int getVertexCapacity() const { return _vertexCapacity; }
+    /**
+    Get index buffer capacity.
+    */
     inline unsigned int getIndexCapacity() const { return _indexCapacity; }
-    
+
     inline void setDrawType(DrawType drawType) { _drawType = drawType; }
     inline DrawType getDrawType() const { return _drawType; }
 
     inline void setPrimitiveType(PrimitiveType primitiveType) { _primitiveType = primitiveType; }
     inline PrimitiveType getPrimitiveType() const { return _primitiveType; }
 
+    /**
+    Set the vertex buffer. The existing vertex buffer will be replaced if exist.
+    */
     void setVertexBuffer(backend::Buffer* vertexBuffer);
-    inline backend::Buffer* getVertexBuffer() const { assert(_vertexBuffer); return _vertexBuffer; }
+    inline backend::Buffer* getVertexBuffer() const { return _vertexBuffer; }
 
+    /**
+    Set the index buffer. The existing index buffer will be replaced if exist.
+    */
     void setIndexBuffer(backend::Buffer* indexBuffer, IndexFormat indexFormat);
-    inline backend::Buffer* getIndexBuffer() const { assert(_indexBuffer); return _indexBuffer; }
+    inline backend::Buffer* getIndexBuffer() const { return _indexBuffer; }
 
+    /**
+    Set the drawing information if the drawing type is ARRAY.
+    @start specifices the starting index of vertex buffer
+    @count specifices the number of vertices to be rendered
+    */
     inline void setVertexDrawInfo(unsigned int start, unsigned int count) { _vertexDrawStart = start; _vertexDrawCount = count; }
     inline unsigned int getVertexDrawStart() const { return _vertexDrawStart; }
     inline unsigned int getVertexDrawCount() const { return _vertexDrawCount;}
-    
+
+    /**
+    Set the drawing information if the drawing type is ELEMENT.
+    @start specifices the starting index of index buffer
+    @count specifices the number of indices to be rendered
+    */
     inline void setIndexDrawInfo(unsigned int start, unsigned int count) { _indexDrawOffset = start * _indexSize; _indexDrawCount = count; }
     inline unsigned int getIndexDrawOffset() const { return _indexDrawOffset; }
     inline unsigned int getIndexDrawCount() const { return _indexDrawCount; }
@@ -111,8 +187,6 @@ public:
     inline float getLineWidth() const { return _lineWidth; }
 
     inline IndexFormat getIndexFormat() const { return _indexFormat; }
-    
-    void clear();
 
     /**Callback function.*/
     //TODO:minggo: should remove it.

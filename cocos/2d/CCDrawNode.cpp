@@ -800,9 +800,6 @@ void DrawNode::clear()
     _bufferCountGLPoint = 0;
     _dirtyGLPoint = true;
     _lineWidth = _defaultLineWidth;
-    _customCommand.clear();
-    _customCommandGLLine.clear();
-    _customCommandGLPoint.clear();
 }
 
 const BlendFunc& DrawNode::getBlendFunc() const

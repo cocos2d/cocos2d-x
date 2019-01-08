@@ -168,9 +168,6 @@ public:
 
     /** Creates a render queue and returns its Id */
     int createRenderQueue();
-    
-    void beginFrame();
-    void endFrame();
 
     /** Renders into the GLView all the queued `RenderCommand` objects */
     void render();
@@ -189,7 +186,22 @@ public:
     /* clear draw stats */
     void clearDrawStats() { _drawnBatches = _drawnVertices = 0; }
 
+    /**
+     Set render targets. If not set, will use default render targets. It will effect all commands.
+     @flags Flags to indicate which attachment to be replaced.
+     @colorAttachment The value to replace color attachment, only one color attachment supported now.
+     @depthAttachment The value to repalce depth attachment.
+     @stencilAttachment The value to replace stencil attachment. Depth attachment and stencil attachment
+                        can be the same value.
+     */
     void setRenderTarget(RenderTargetFlag flags, Texture2D* colorAttachment, Texture2D* depthAttachment, Texture2D* stencilAttachment);
+    /**
+    Set clear values for each attachment.
+    @flags Flags to indicate which attachment clear value to be modified.
+    @color The clear color value.
+    @depth The clear depth value.
+    @stencil The clear stencil value.
+    */
     void clear(ClearFlag flags, const Color4F& color, float depth, unsigned int stencil);
     Texture2D* getColorAttachment() const;
     Texture2D* getDepthAttachment() const;
@@ -202,13 +214,16 @@ public:
 
     // depth/stencil state.
 
+    /* Enable/disable depth test. */
     void setDepthTest(bool value);
+    /* Enable/disable to update depth buffer. */
     void setDepthWrite(bool value);
     void setDepthCompareFunction(backend::CompareFunction func);
     bool getDepthTest() const;
     bool getDepthWrite() const;
     backend::CompareFunction getDepthCompareFunction() const;
 
+    /* Enable/disable stencil test. */
     void setStencilTest(bool value);
     void setStencilCompareFunction(backend::CompareFunction func, unsigned int ref, unsigned int readMask);
     void setStencilOperation(backend::StencilOperation stencilFailureOp,
@@ -222,23 +237,28 @@ public:
     backend::CompareFunction getStencilCompareFunction() const;
     unsigned int getStencilReadMask() const;
     unsigned int getStencilWriteMask() const;
+    /* Get stencil reference value set by `setStencilCompareFunction`. */
     unsigned int getStencilReferenceValue() const;
 
+    // view port
     void setViewPort(int x, int y, unsigned int w, unsigned int h);
     const Viewport& getViewport() const { return _viewport; }
-    
-    //This will not be used outside.
-    GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; }
+
+    // scissor test
+
+    /* Enable/disable scissor test. */
+    void setScissorTest(bool enabled);
+    void setScissorRect(float x, float y, float width, float height);
+    bool getScissorTest() const;
+    const ScissorRect& getScissorRect() const;
 
     /** returns whether or not a rectangle is visible or not */
     bool checkVisibility(const Mat4& transform, const Size& size);
-    
-    bool getScissorTest() const;
-    void setScissorTest(bool enabled);
-    const ScissorRect& getScissorRect() const;
-    void setScissorRect(float x, float y, float width, float height);
 
 protected:
+    friend class Director;
+    friend class GroupCommand;
+
     class TriangleCommandBufferManager
     {
     public:
@@ -258,8 +278,12 @@ protected:
         std::vector<backend::Buffer*> _indexBufferPool;
     };
 
+    inline GroupCommandManager * getGroupCommandManager() const { return _groupCommandManager; }
     void drawBatchedTriangles();
     void drawCustomCommand(RenderCommand* command);
+
+    void beginFrame();
+    void endFrame();
 
     //Draw the previews queued triangles and flush previous context
     void flush();

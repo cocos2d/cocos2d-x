@@ -342,10 +342,6 @@ void Renderer::processRenderCommand(RenderCommand* command)
             flush();
             drawCustomCommand(command);
             break;
-        case RenderCommand::Type::BATCH_COMMAND:
-            flush();
-            // TODO: should remove batched command
-            break;
         case RenderCommand::Type::CALLBACK_COMMAND:
             flush();
             static_cast<CallbackCommand*>(command)->execute();

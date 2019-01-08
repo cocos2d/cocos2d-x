@@ -130,14 +130,6 @@ void CustomCommand::updateIndexBuffer(void* data, unsigned int length)
     _indexBuffer->updateData(data, length);
 }
 
-void CustomCommand::clear()
-{
-    _vertexDrawStart = 0;
-    _vertexDrawCount = 0;
-    _indexDrawOffset = 0;
-    _indexDrawCount = 0;
-}
-
 unsigned int CustomCommand::computeIndexSize() const
 {
 if (IndexFormat::U_SHORT == _indexFormat)

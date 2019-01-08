@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2018 Xiamen Yaji Software Co., Ltd.
+ Copyright (c) 2018-2019 Xiamen Yaji Software Co., Ltd.
 
  http://www.cocos2d-x.org
 
@@ -33,8 +33,10 @@
 NS_CC_BEGIN
 
 /**
-Custom command is used for call custom openGL command which can not be done by other commands,
-such as stencil function, depth functions etc. The render command is executed by calling a call back function.
+Callback command is used to invoke a callback function when this command is
+executed. You can do some logic opertion in the callback, such as invoking
+renderer to set depth/stencil test. Don't suggest to invoke backen API in
+the callback function.
 */
 class CC_DLL CallbackCommand : public RenderCommand
 {
