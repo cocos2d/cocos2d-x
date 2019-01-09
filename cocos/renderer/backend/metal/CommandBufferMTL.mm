@@ -153,6 +153,7 @@ CommandBufferMTL::CommandBufferMTL(DeviceMTL* deviceMTL)
 
 CommandBufferMTL::~CommandBufferMTL()
 {
+    dispatch_semaphore_signal(_frameBoundarySemaphore);
 }
 
 void CommandBufferMTL::beginFrame()
