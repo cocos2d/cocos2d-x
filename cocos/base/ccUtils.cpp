@@ -191,7 +191,7 @@ Image* captureNode(Node* startNode, float scale)
 
     RenderTexture* finalRtx = nullptr;
 
-    auto rtx = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
+    auto rtx = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8);
     // rtx->setKeepMatrix(true);
     Point savedPos = startNode->getPosition();
     Point anchor;
@@ -213,7 +213,7 @@ Image* captureNode(Node* startNode, float scale)
         sprite->setAnchorPoint(Point(0, 0));
         sprite->setFlippedY(true);
 
-        finalRtx = RenderTexture::create(size.width * scale, size.height * scale, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
+        finalRtx = RenderTexture::create(size.width * scale, size.height * scale, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8);
 
         sprite->setScale(scale); // or use finalRtx->setKeepMatrix(true);
         finalRtx->begin(); 

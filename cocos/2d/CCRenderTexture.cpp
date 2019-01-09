@@ -122,7 +122,7 @@ RenderTexture * RenderTexture::create(int w, int h, Texture2D::PixelFormat eForm
     return nullptr;
 }
 
-RenderTexture * RenderTexture::create(int w ,int h, Texture2D::PixelFormat eFormat, GLuint uDepthStencilFormat)
+RenderTexture * RenderTexture::create(int w ,int h, Texture2D::PixelFormat eFormat, TextureFormat uDepthStencilFormat)
 {
     RenderTexture *ret = new (std::nothrow) RenderTexture();
 
@@ -139,7 +139,7 @@ RenderTexture * RenderTexture::create(int w, int h)
 {
     RenderTexture *ret = new (std::nothrow) RenderTexture();
 
-    if(ret && ret->initWithWidthAndHeight(w, h, Texture2D::PixelFormat::RGBA8888, 0))
+    if(ret && ret->initWithWidthAndHeight(w, h, Texture2D::PixelFormat::RGBA8888, TextureFormat::NONE))
     {
         ret->autorelease();
         return ret;
@@ -150,10 +150,10 @@ RenderTexture * RenderTexture::create(int w, int h)
 
 bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat)
 {
-    return initWithWidthAndHeight(w, h, eFormat, 0);
+    return initWithWidthAndHeight(w, h, eFormat, TextureFormat::NONE);
 }
 
-bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, GLuint depthStencilFormat)
+bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, TextureFormat depthStencilFormat)
 {
     CCASSERT(format != Texture2D::PixelFormat::A8, "only RGB and RGBA formats are valid for a render texture");
 
@@ -185,9 +185,11 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         backend::TextureDescriptor descriptor;
         descriptor.width = powW;
         descriptor.height = powH;
-        descriptor.textureUsage = backend::TextureUsage::RENDER_TARGET;
-        descriptor.textureFormat = backend::TextureFormat::R8G8B8A8;
+        descriptor.textureUsage = TextureUsage::RENDER_TARGET;
+        descriptor.textureFormat = TextureFormat::R8G8B8A8;
         auto texture = backend::Device::getInstance()->newTexture(descriptor);
+        if (! texture)
+            break;
 
         _texture2D = new (std::nothrow) Texture2D();
         if (_texture2D)
@@ -198,16 +200,31 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         else
             break;
 
-//        if (depthStencilFormat != 0)
+        _clearFlags = ClearFlag::COLOR;
+        _renderTargetFlags = RenderTargetFlag::COLOR;
+
+        clearColorAttachment();
+
+        if (TextureFormat::D24S8 == depthStencilFormat)
         {
-            descriptor.textureFormat = backend::TextureFormat::D24S8;
+            descriptor.textureFormat = depthStencilFormat;
             texture = backend::Device::getInstance()->newTexture(descriptor);
+            if (! texture)
+                break;
+
             _depthStencilTexture = new (std::nothrow) Texture2D;
+            if (!_depthStencilTexture)
+            {
+                texture->release();
+                break;
+            }
+
             _depthStencilTexture->initWithBackendTexture(texture);
             texture->release();
-        }
 
-        _clearFlags = ClearFlag::ALL;
+            _clearFlags = ClearFlag::ALL;
+            _renderTargetFlags = RenderTargetFlag::ALL;
+        }
 
         _texture2D->setAntiAliasTexParameters();
         if (_texture2DCopy)
@@ -254,11 +271,6 @@ void RenderTexture::setSprite(Sprite* sprite)
     CC_SAFE_RETAIN(sprite);
     CC_SAFE_RELEASE(_sprite);
     _sprite = sprite;
-}
-
-void RenderTexture::setKeepMatrix(bool keepMatrix)
-{
-    _keepMatrix = keepMatrix;
 }
 
 void RenderTexture::setVirtualViewport(const Vec2& rtBegin, const Rect& fullRect, const Rect& fullViewport)
@@ -539,10 +551,7 @@ void RenderTexture::onBegin()
     _oldStencilAttachment = renderer->getStencilAttachment();
     _oldRenderTargetFlag = renderer->getRenderTargetFlag();
 
-    renderer->setRenderTarget(RenderTargetFlag::COLOR | RenderTargetFlag::DEPTH | RenderTargetFlag::STENCIL,
-                              _texture2D,
-                              _depthStencilTexture,
-                              _depthStencilTexture);
+    renderer->setRenderTarget(_renderTargetFlags, _texture2D, _depthStencilTexture, _depthStencilTexture);
 }
 
 void RenderTexture::onEnd()
@@ -610,19 +619,22 @@ void RenderTexture::end()
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
-void RenderTexture::setClearColor(const Color4F &clearColor)
+void RenderTexture::clearColorAttachment()
 {
-    _clearColor = clearColor;
-}
+    auto renderer = Director::getInstance()->getRenderer();
+    _beforeClearAttachmentCommand.func = [=]() -> void {
+        _oldColorAttachment = renderer->getColorAttachment();
+        renderer->setRenderTarget(RenderTargetFlag::COLOR, _texture2D, nullptr, nullptr);
+    };
+    renderer->addCommand(&_beforeClearAttachmentCommand);
 
-void RenderTexture::setClearDepth(float clearDepth)
-{
-    _clearDepth = clearDepth;
-}
+    Color4F color(0.f, 0.f, 0.f, 1.f);
+    renderer->clear(ClearFlag::COLOR, color, 1, 0);
 
-void RenderTexture::setClearStencil(int clearStencil)
-{
-    _clearStencil = clearStencil;
+    _afterClearAttachmentCommand.func = [=]() -> void {
+        renderer->setRenderTarget(RenderTargetFlag::COLOR, _oldColorAttachment, nullptr, nullptr);
+    };
+    renderer->addCommand(&_afterClearAttachmentCommand);
 }
 
 NS_CC_END

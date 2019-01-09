@@ -1057,7 +1057,7 @@ void ClippingToRenderTextureTest::reproduceBug()
 
     // container rendered on Texture the size of the screen and because Clipping node use stencil buffer so we need to
     // create RenderTexture with depthStencil format parameter
-    RenderTexture* rt = RenderTexture::create(visibleSize.width, visibleSize.height, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
+    RenderTexture* rt = RenderTexture::create(visibleSize.width, visibleSize.height, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8);
     rt->setPosition(visibleSize.width/2, visibleSize.height/2);
     this->addChild(rt);
 

@@ -56,7 +56,7 @@ RenderTextureSave::RenderTextureSave()
     // note that the render texture is a Node, and contains a sprite of its texture for convenience,
     // so we can just parent it to the scene like any other Node
     this->addChild(_target, -1);
-    
+
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(RenderTextureSave::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
@@ -118,46 +118,46 @@ RenderTextureSave::~RenderTextureSave()
 
 void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {
-    auto touch = touches[0];
-    auto start = touch->getLocation();
-    auto end = touch->getPreviousLocation();
+     auto touch = touches[0];
+     auto start = touch->getLocation();
+     auto end = touch->getPreviousLocation();
 
-    // begin drawing to the render texture
-    _target->begin();
+     // begin drawing to the render texture
+     _target->begin();
 
-    // for extra points, we'll draw this smoothly from the last position and vary the sprite's
-    // scale/rotation/offset
-    float distance = start.getDistance(end);
-    if (distance > 1)
-    {
-        int d = (int)distance;
-        _brushs.clear();
-        for(int i = 0; i < d; ++i)
-        {
-            Sprite * sprite = Sprite::create("Images/fire.png");
-            sprite->setColor(Color3B::RED);
-            sprite->setOpacity(20);
-            _brushs.pushBack(sprite);
-        }
-        for (int i = 0; i < d; i++)
-        {
-            float difx = end.x - start.x;
-            float dify = end.y - start.y;
-            float delta = (float)i / distance;
-            _brushs.at(i)->setPosition(Vec2(start.x + (difx * delta), start.y + (dify * delta)));
-            _brushs.at(i)->setRotation(rand() % 360);
-            float r = (float)(rand() % 50 / 50.f) + 0.25f;
-            _brushs.at(i)->setScale(r);
-            /*_brush->setColor(Color3B(CCRANDOM_0_1() * 127 + 128, 255, 255));*/
-            // Use CCRANDOM_0_1() will cause error when loading libtests.so on android, I don't know why.
-            _brushs.at(i)->setColor(Color3B(rand() % 127 + 128, 255, 255));
-            // Call visit to draw the brush, don't call draw..
-            _brushs.at(i)->visit();
-        }
-    }
+     // for extra points, we'll draw this smoothly from the last position and vary the sprite's
+     // scale/rotation/offset
+     float distance = start.getDistance(end);
+     if (distance > 1)
+     {
+         int d = (int)distance;
+         _brushs.clear();
+         for(int i = 0; i < d; ++i)
+         {
+             Sprite * sprite = Sprite::create("Images/fire.png");
+             sprite->setColor(Color3B::RED);
+             sprite->setOpacity(20);
+             _brushs.pushBack(sprite);
+         }
+         for (int i = 0; i < d; i++)
+         {
+             float difx = end.x - start.x;
+             float dify = end.y - start.y;
+             float delta = (float)i / distance;
+             _brushs.at(i)->setPosition(Vec2(start.x + (difx * delta), start.y + (dify * delta)));
+             _brushs.at(i)->setRotation(rand() % 360);
+             float r = (float)(rand() % 50 / 50.f) + 0.25f;
+             _brushs.at(i)->setScale(r);
+             /*_brush->setColor(Color3B(CCRANDOM_0_1() * 127 + 128, 255, 255));*/
+             // Use CCRANDOM_0_1() will cause error when loading libtests.so on android, I don't know why.
+             _brushs.at(i)->setColor(Color3B(rand() % 127 + 128, 255, 255));
+             // Call visit to draw the brush, don't call draw..
+             _brushs.at(i)->visit();
+         }
+     }
 
-    // finish drawing and return context back to the screen
-    _target->end();
+     // finish drawing and return context back to the screen
+     _target->end();
 }
 
 /**
@@ -446,7 +446,7 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
     //! move sprite half width and height, and draw only where not marked
     _spriteDraw->setPosition(_spriteDraw->getPosition() + Vec2(_spriteDraw->getContentSize().width * _spriteDraw->getScale() * 0.5, _spriteDraw->getContentSize().height * _spriteDraw->getScale() * 0.5));
     
-    _rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, GL_DEPTH24_STENCIL8);
+    _rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, TextureFormat::D24S8);
 
     _rend->setPosition(Vec2(s.width * 0.5f, s.height * 0.5f));
 

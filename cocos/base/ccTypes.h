@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "platform/CCGL.h"
 #include "base/CCEnumClass.h"
+#include "renderer/backend/Types.h"
 
 /**
  * @addtogroup base
@@ -652,6 +653,10 @@ enum class RenderTargetFlag : uint8_t
     ALL = COLOR | DEPTH | STENCIL
 };
 ENABLE_BITMASK_OPERATORS(RenderTargetFlag)
+
+// export backend types to cocos2d namespance
+using TextureFormat = backend::TextureFormat;
+using TextureUsage = backend::TextureUsage;
 
 NS_CC_END
 // end group
