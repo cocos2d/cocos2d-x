@@ -26,6 +26,7 @@ THE SOFTWARE.
 package org.cocos2dx.lib;
 
 import android.content.pm.PackageManager;
+import android.graphics.Rect;
 import android.media.AudioManager;
 import android.app.Activity;
 import android.content.ComponentName;
@@ -47,9 +48,11 @@ import android.preference.PreferenceManager.OnActivityResultListener;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.DisplayCutout;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
+import android.view.Window;
 import android.view.WindowManager;
 
 import com.android.vending.expansion.zipfile.APKExpansionSupport;
@@ -64,6 +67,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -769,6 +773,46 @@ public class Cocos2dxHelper {
         }
 
         return false;
+    }
+
+    /**
+     * Returns whether the window is always allowed to extend into the DisplayCutout areas on the short edges of the screen.
+     *
+     * @return true if the window in display cutout mode on the short edges of the screen, false otherwise
+     */
+    public static boolean isCutoutEnabled() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            WindowManager.LayoutParams lp = sActivity.getWindow().getAttributes();
+            return lp.layoutInDisplayCutoutMode == WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns safe insets array.
+     *
+     * @return array of int with safe insets values
+     */
+    public static int[] getSafeInsets() {
+        final int[] safeInsets = new int[]{0, 0, 0, 0};
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            Window cocosWindow = sActivity.getWindow();
+            DisplayCutout displayCutout = cocosWindow.getDecorView().getRootWindowInsets().getDisplayCutout();
+           // Judge whether it is cutouts (aka notch) screen phone by judge cutout equle to null
+            if (displayCutout != null) {
+                List<Rect> rects = displayCutout.getBoundingRects();
+                // Judge whether it is cutouts (aka notch) screen phone by judge cutout rects is null or zero size
+                if (rects != null && rects.size() != 0) {
+                    safeInsets[0] = displayCutout.getSafeInsetBottom();
+                    safeInsets[1] = displayCutout.getSafeInsetLeft();
+                    safeInsets[2] = displayCutout.getSafeInsetRight();
+                    safeInsets[3] = displayCutout.getSafeInsetTop();
+                }
+            }
+        }
+
+        return safeInsets;
     }
 
     /**
