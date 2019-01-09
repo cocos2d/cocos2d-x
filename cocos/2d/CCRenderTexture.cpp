@@ -232,11 +232,10 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         setSprite(Sprite::createWithTexture(_texture2D));
 
         _texture2D->release();
-        //TODO: minggo: should support iOS too.
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
+
+#if defined(CC_USE_GL) || defined(CC_USE_GLES)
         _sprite->setFlippedY(true);
 #endif
-
         _sprite->setBlendFunc( BlendFunc::ALPHA_PREMULTIPLIED );
         _sprite->setOpacityModifyRGB(true);
         
@@ -487,9 +486,6 @@ void RenderTexture::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
         begin();
 
         //clear screen
-//        _clearCommand.init(_globalZOrder);
-//        _clearCommand.func = CC_CALLBACK_0(RenderTexture::onClear, this);
-//        renderer->addCommand(&_clearCommand);
         Director::getInstance()->getRenderer()->clear(_clearFlags, _clearColor, _clearDepth, _clearStencil);
 
         //! make sure all children are drawn
