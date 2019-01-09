@@ -799,7 +799,7 @@ public class Cocos2dxHelper {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             Window cocosWindow = sActivity.getWindow();
             DisplayCutout displayCutout = cocosWindow.getDecorView().getRootWindowInsets().getDisplayCutout();
-           // Judge whether it is cutouts (aka notch) screen phone by judge cutout equle to null
+            // Judge whether it is cutouts (aka notch) screen phone by judge cutout equle to null
             if (displayCutout != null) {
                 List<Rect> rects = displayCutout.getBoundingRects();
                 // Judge whether it is cutouts (aka notch) screen phone by judge cutout rects is null or zero size
