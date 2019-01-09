@@ -557,6 +557,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     renderTexture->addChild(sprite1);
     renderTexture->addChild(sprite2);
     renderTexture->setClearColor(Color4F(0, 0, 0, 0));
+    renderTexture->setClearFlags(ClearFlag::COLOR);
     
     /* add the render texture to the scene */
     addChild(renderTexture);

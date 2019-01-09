@@ -200,7 +200,6 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         else
             break;
 
-        _clearFlags = ClearFlag::COLOR;
         _renderTargetFlags = RenderTargetFlag::COLOR;
 
         clearColorAttachment();
@@ -221,9 +220,6 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
 
             _depthStencilTexture->initWithBackendTexture(texture);
             texture->release();
-
-            _clearFlags = ClearFlag::ALL;
-            _renderTargetFlags = RenderTargetFlag::ALL;
         }
 
         _texture2D->setAntiAliasTexParameters();
@@ -305,6 +301,7 @@ void RenderTexture::beginWithClear(float r, float g, float b, float a, float dep
     setClearStencil(stencilValue);
     setClearFlags(flags);
     begin();
+    Director::getInstance()->getRenderer()->clear(_clearFlags, _clearColor, _clearDepth, _clearStencil);
 }
 
 void RenderTexture::clear(float r, float g, float b, float a)
@@ -493,6 +490,7 @@ void RenderTexture::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
 //        _clearCommand.init(_globalZOrder);
 //        _clearCommand.func = CC_CALLBACK_0(RenderTexture::onClear, this);
 //        renderer->addCommand(&_clearCommand);
+        Director::getInstance()->getRenderer()->clear(_clearFlags, _clearColor, _clearDepth, _clearStencil);
 
         //! make sure all children are drawn
         sortAllChildren();
@@ -599,8 +597,6 @@ void RenderTexture::begin()
     _beginCommand.init(_globalZOrder);
     _beginCommand.func = CC_CALLBACK_0(RenderTexture::onBegin, this);
     renderer->addCommand(&_beginCommand);
-
-    renderer->clear(_clearFlags, _clearColor, _clearDepth, _clearStencil);
 }
 
 void RenderTexture::end()
@@ -619,6 +615,16 @@ void RenderTexture::end()
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
 
+void RenderTexture::setClearFlags(ClearFlag clearFlags)
+{
+    _clearFlags = clearFlags;
+    if (_clearFlags != ClearFlag::NONE
+        && !_depthStencilTexture)
+    {
+        _clearFlags = ClearFlag::COLOR;
+    }
+}
+
 void RenderTexture::clearColorAttachment()
 {
     auto renderer = Director::getInstance()->getRenderer();
@@ -628,7 +634,7 @@ void RenderTexture::clearColorAttachment()
     };
     renderer->addCommand(&_beforeClearAttachmentCommand);
 
-    Color4F color(0.f, 0.f, 0.f, 1.f);
+    Color4F color(0.f, 0.f, 0.f, 0.f);
     renderer->clear(ClearFlag::COLOR, color, 1, 0);
 
     _afterClearAttachmentCommand.func = [=]() -> void {

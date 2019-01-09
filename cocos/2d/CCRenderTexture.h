@@ -207,7 +207,7 @@ public:
      *
      * @param clearFlags set clear flags.
      */
-    inline void setClearFlags(ClearFlag clearFlags) { _clearFlags = clearFlags; }
+    void setClearFlags(ClearFlag clearFlags);
     
     /** Clear color value. Valid only when "autoDraw" is true. 
      *
@@ -345,7 +345,7 @@ protected:
     float _clearDepth = 1.f;
     int _clearStencil = 0;
     bool _autoDraw = false;
-    ClearFlag _clearFlags;
+    ClearFlag _clearFlags = ClearFlag::NONE;
 
     /** The Sprite being used.
      The sprite, by default, will use the following blending function: BlendFactor::ONE, BlendFactor::ONE_MINUS_SRC_ALPHA.
