@@ -148,35 +148,6 @@ void RenderQueue::realloc(size_t reserveSize)
     }
 }
 
-ClearCommandManager::ClearCommandManager()
-{
-    _commands.reserve(5);
-}
-
-ClearCommandManager::~ClearCommandManager()
-{
-    for(auto& command : _commands)
-        delete command;
-}
-
-CallbackCommand* ClearCommandManager::getCommand()
-{
-    if (_commands.empty())
-        return new CallbackCommand;
-    else
-    {
-        auto command = _commands.back();
-        _commands.pop_back();
-        return command;
-    }
-}
-
-void ClearCommandManager::pushBackCommand(CallbackCommand* command)
-{
-    command->func = nullptr;
-    _commands.push_back(command);
-}
-
 //
 //
 //
@@ -415,10 +386,6 @@ void Renderer::beginFrame()
 void Renderer::endFrame()
 {
     _commandBuffer->endFrame();
-
-    for (auto& comand : _cachedClearCommands)
-        _clearCommandManager.pushBackCommand(comand);
-    _cachedClearCommands.clear();
 
 #ifdef CC_USE_METAL
     _triangleCommandBufferManager.putbackAllBuffers();
@@ -898,7 +865,7 @@ void Renderer::clear(ClearFlag flags, const Color4F& color, float depth, unsigne
 {
     _clearFlag = flags;
 
-    CallbackCommand* command = _clearCommandManager.getCommand();
+    CallbackCommand* command = new CallbackCommand();;
     command->func = [=]() -> void {
         backend::RenderPassDescriptor descriptor;
 
@@ -927,9 +894,9 @@ void Renderer::clear(ClearFlag flags, const Color4F& color, float depth, unsigne
 
         _commandBuffer->beginRenderPass(descriptor);
         _commandBuffer->endRenderPass();
-    };
 
-    _cachedClearCommands.push_back(command);
+        delete command;
+    };
     addCommand(command);
 }
 

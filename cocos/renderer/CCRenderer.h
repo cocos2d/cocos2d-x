@@ -114,20 +114,6 @@ protected:
     GLboolean _isDepthWrite;
 };
 
-class CC_DLL ClearCommandManager
-{
-public:
-    ClearCommandManager();
-    ~ClearCommandManager();
-
-    CallbackCommand* getCommand();
-    void pushBackCommand(CallbackCommand*);
-
-private:
-    std::vector<CallbackCommand*> _commands;
-};
-
-
 class GroupCommandManager;
 
 /* Class responsible for the rendering in.
@@ -324,9 +310,6 @@ protected:
     backend::CommandBuffer* _commandBuffer = nullptr;
     backend::RenderPassDescriptor _renderPassDescriptor;
     backend::DepthStencilDescriptor _depthStencilDescriptor;
-
-    ClearCommandManager _clearCommandManager;
-    std::vector<CallbackCommand*> _cachedClearCommands;
 
     // Internal structure that has the information for the batches
     struct TriBatchToDraw
