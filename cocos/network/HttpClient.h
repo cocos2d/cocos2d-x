@@ -151,10 +151,32 @@ public:
 
     std::mutex& getSSLCaFileMutex() {return _sslCaFileMutex;}
     
-    /** clear respond and request queue and call a callback when it happens */
-    typedef std::function<void(HttpRequest*)> ClearReqCallback;
-    void clearResponseAndRequestQueue(std::function<bool(HttpResponse* resp)> Predicate);
-    void setClearRequestCB(ClearReqCallback cb) { _clearReqCb = cb; }
+    typedef std::function<bool(HttpRequest*)> ClearRequestPredicate;
+    typedef std::function<bool(HttpResponse*)> ClearResponsePredicate;
+
+    /**
+     * Clears the pending http responses and http requests
+     * If defined, the method uses the ClearRequestPredicate and ClearResponsePredicate
+     * to check for each request/response which to delete
+     */
+    void clearResponseAndRequestQueue(); 
+
+    /**
+    * Sets a predicate function that is going to be called to determine if we proceed
+    * each of the pending requests
+    *
+    * @param predicate function that will be called 
+    */
+    void setClearRequestPredicate(ClearRequestPredicate predicate) { _clearRequestPredicate = predicate; }
+
+    /**
+     Sets a predicate function that is going to be called to determine if we proceed
+    * each of the pending requests
+    *
+    * @param cb predicate function that will be called 
+    */
+    void setClearResponsePredicate(ClearResponsePredicate predicate) { _clearResponsePredicate = predicate; }
+
         
 private:
     HttpClient();
@@ -210,7 +232,8 @@ private:
 
     HttpRequest* _requestSentinel;
     
-    ClearReqCallback _clearReqCb;
+    ClearRequestPredicate _clearRequestPredicate;
+    ClearResponsePredicate _clearResponsePredicate;
 };
 
 } // namespace network
