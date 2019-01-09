@@ -157,7 +157,7 @@ set(COCOS_SPINE_SRC
     editor-support/spine/VertexEffect.cpp
     )
 
-if(COCOS2D_X_VERSION VERSION_GREATER "4.0.0")
+if("${COCOS2D_X_VERSION}" VERSION_GREATER "3.99")
     list(APPEND COCOS_SPINE_SRC
         editor-support/spine/SkeletonBatch-v4.cpp
         editor-support/spine/SkeletonRenderer-v4.cpp
