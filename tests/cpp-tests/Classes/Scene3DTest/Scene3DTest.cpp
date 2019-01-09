@@ -34,6 +34,8 @@
 USING_NS_CC;
 using namespace spine;
 
+Cocos2dTextureLoader textureLoader;
+
 class SkeletonAnimationCullingFix : public SkeletonAnimation
 {
 public:
@@ -51,7 +53,7 @@ public:
     static SkeletonAnimationCullingFix* createWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1)
     {
         SkeletonAnimationCullingFix* node = new SkeletonAnimationCullingFix();
-        spAtlas* atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
+        spine::Atlas* atlas = new spine::Atlas(atlasFile.c_str(), &textureLoader);
         node->initWithJsonFile(skeletonDataFile, atlas, scale);
         node->autorelease();
         return node;
@@ -77,8 +79,8 @@ class Scene3DTestScene : public TestCase
 public:
     CREATE_FUNC(Scene3DTestScene);
     
-    bool onTouchBegan(Touch* touch, Event* event) { return true; }
-    void onTouchEnd(Touch*, Event*);
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event) { return true; }
+    void onTouchEnd(cocos2d::Touch*, cocos2d::Event*);
     
 private:
     Scene3DTestScene();
@@ -888,7 +890,7 @@ void Scene3DTestScene::createDescDlg()
     }
 }
 
-void Scene3DTestScene::onTouchEnd(Touch* touch, Event* event)
+void Scene3DTestScene::onTouchEnd(cocos2d::Touch* touch, cocos2d::Event* event)
 {
     auto location = touch->getLocation();
     auto camera = _gameCameras[CAMERA_WORLD_3D_SCENE];

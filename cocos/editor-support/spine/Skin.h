@@ -28,68 +28,122 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_SKIN_H_
-#define SPINE_SKIN_H_
+#ifndef Spine_Skin_h
+#define Spine_Skin_h
 
-#include <spine/dll.h>
-#include <spine/Attachment.h>
+#include <spine/Vector.h>
+#include <spine/SpineString.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace spine {
+class Attachment;
 
-struct spSkeleton;
+class Skeleton;
 
-typedef struct spSkin {
-	const char* const name;
+/// Stores attachments by slot index and attachment name.
+/// See SkeletonData::getDefaultSkin, Skeleton::getSkin, and
+/// http://esotericsoftware.com/spine-runtime-skins in the Spine Runtimes Guide.
+class SP_API Skin : public SpineObject {
+	friend class Skeleton;
 
-#ifdef __cplusplus
-	spSkin() :
-		name(0) {
-	}
-#endif
-} spSkin;
+public:
+	class SP_API AttachmentMap : public SpineObject {
+		friend class Skin;
 
-/* Private structs, needed by Skeleton */
-typedef struct _Entry _Entry;
-struct _Entry {
-	int slotIndex;
-	const char* name;
-	spAttachment* attachment;
-	_Entry* next;
+	public:
+		struct SP_API Entry {
+			size_t _slotIndex;
+			String _name;
+			Attachment *_attachment;
+
+			Entry(size_t slotIndex, const String &name, Attachment *attachment) :
+					_slotIndex(slotIndex),
+					_name(name),
+					_attachment(attachment) {
+			}
+		};
+
+		class SP_API Entries {
+			friend class AttachmentMap;
+
+		public:
+			bool hasNext() {
+				while(true) {
+					if (_slotIndex >= _buckets.size()) return false;
+					if (_bucketIndex >= _buckets[_slotIndex].size()) {
+						_bucketIndex = 0;
+						++_slotIndex;
+						continue;
+					};
+					return true;
+				}
+			}
+
+			Entry &next() {
+				Entry &result = _buckets[_slotIndex][_bucketIndex];
+				++_bucketIndex;
+				return result;
+			}
+
+		protected:
+			Entries(Vector< Vector<Entry> > &buckets) : _buckets(buckets), _slotIndex(0), _bucketIndex(0) {
+			}
+
+		private:
+			Vector< Vector<Entry> > &_buckets;
+			size_t _slotIndex;
+			size_t _bucketIndex;
+		};
+
+		void put(size_t slotIndex, const String &attachmentName, Attachment *attachment);
+
+		Attachment *get(size_t slotIndex, const String &attachmentName);
+
+		void remove(size_t slotIndex, const String &attachmentName);
+
+		Entries getEntries();
+
+	protected:
+		AttachmentMap();
+
+	private:
+
+		int findInBucket(Vector <Entry> &, const String &attachmentName);
+
+		Vector <Vector<Entry> > _buckets;
+	};
+
+	explicit Skin(const String &name);
+
+	~Skin();
+
+	/// Adds an attachment to the skin for the specified slot index and name.
+	/// If the name already exists for the slot, the previous value is replaced.
+	void addAttachment(size_t slotIndex, const String &name, Attachment *attachment);
+
+	/// Returns the attachment for the specified slot index and name, or NULL.
+	Attachment *getAttachment(size_t slotIndex, const String &name);
+
+	/// Finds the skin keys for a given slot. The results are added to the passed array of names.
+	/// @param slotIndex The target slotIndex. To find the slot index, use Skeleton::findSlotIndex or SkeletonData::findSlotIndex
+	/// @param names Found skin key names will be added to this array.
+	void findNamesForSlot(size_t slotIndex, Vector <String> &names);
+
+	/// Finds the attachments for a given slot. The results are added to the passed array of Attachments.
+	/// @param slotIndex The target slotIndex. To find the slot index, use Skeleton::findSlotIndex or SkeletonData::findSlotIndex
+	/// @param attachments Found Attachments will be added to this array.
+	void findAttachmentsForSlot(size_t slotIndex, Vector<Attachment *> &attachments);
+
+	const String &getName();
+
+	AttachmentMap::Entries getAttachments();
+
+private:
+	const String _name;
+	AttachmentMap _attachments;
+
+	/// Attach all attachments from this skin if the corresponding attachment from the old skin is currently attached.
+	void attachAll(Skeleton &skeleton, Skin &oldSkin);
 };
-
-typedef struct {
-	spSkin super;
-	_Entry* entries;
-} _spSkin;
-
-SP_API spSkin* spSkin_create (const char* name);
-SP_API void spSkin_dispose (spSkin* self);
-
-/* The Skin owns the attachment. */
-SP_API void spSkin_addAttachment (spSkin* self, int slotIndex, const char* name, spAttachment* attachment);
-/* Returns 0 if the attachment was not found. */
-SP_API spAttachment* spSkin_getAttachment (const spSkin* self, int slotIndex, const char* name);
-
-/* Returns 0 if the slot or attachment was not found. */
-SP_API const char* spSkin_getAttachmentName (const spSkin* self, int slotIndex, int attachmentIndex);
-
-/** Attach each attachment in this skin if the corresponding attachment in oldSkin is currently attached. */
-SP_API void spSkin_attachAll (const spSkin* self, struct spSkeleton* skeleton, const spSkin* oldspSkin);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spSkin Skin;
-#define Skin_create(...) spSkin_create(__VA_ARGS__)
-#define Skin_dispose(...) spSkin_dispose(__VA_ARGS__)
-#define Skin_addAttachment(...) spSkin_addAttachment(__VA_ARGS__)
-#define Skin_getAttachment(...) spSkin_getAttachment(__VA_ARGS__)
-#define Skin_getAttachmentName(...) spSkin_getAttachmentName(__VA_ARGS__)
-#define Skin_attachAll(...) spSkin_attachAll(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
 }
-#endif
 
-#endif /* SPINE_SKIN_H_ */
+#endif /* Spine_Skin_h */

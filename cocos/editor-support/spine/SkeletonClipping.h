@@ -28,41 +28,53 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_SKELETONCLIPPING_H
-#define SPINE_SKELETONCLIPPING_H
+#ifndef Spine_SkeletonClipping_h
+#define Spine_SkeletonClipping_h
 
-#include <spine/dll.h>
-#include <spine/Array.h>
-#include <spine/ClippingAttachment.h>
-#include <spine/Slot.h>
+#include <spine/Vector.h>
 #include <spine/Triangulator.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace spine {
+    class Slot;
+    class ClippingAttachment;
+    
+    class SP_API SkeletonClipping : public SpineObject {
+    public:
+        SkeletonClipping();
 
-typedef struct spSkeletonClipping {
-	spTriangulator* triangulator;
-	spFloatArray* clippingPolygon;
-	spFloatArray* clipOutput;
-	spFloatArray* clippedVertices;
-	spFloatArray* clippedUVs;
-	spUnsignedShortArray* clippedTriangles;
-	spFloatArray* scratch;
-	spClippingAttachment* clipAttachment;
-	spArrayFloatArray* clippingPolygons;
-} spSkeletonClipping;
-
-SP_API spSkeletonClipping* spSkeletonClipping_create();
-SP_API int spSkeletonClipping_clipStart(spSkeletonClipping* self, spSlot* slot, spClippingAttachment* clip);
-SP_API void spSkeletonClipping_clipEnd(spSkeletonClipping* self, spSlot* slot);
-SP_API void spSkeletonClipping_clipEnd2(spSkeletonClipping* self);
-SP_API int /*boolean*/ spSkeletonClipping_isClipping(spSkeletonClipping* self);
-SP_API void spSkeletonClipping_clipTriangles(spSkeletonClipping* self, float* vertices, int verticesLength, unsigned short* triangles, int trianglesLength, float* uvs, int stride);
-SP_API void spSkeletonClipping_dispose(spSkeletonClipping* self);
-
-#ifdef __cplusplus
+        size_t clipStart(Slot& slot, ClippingAttachment* clip);
+        
+        void clipEnd(Slot& slot);
+        
+        void clipEnd();
+		
+		void clipTriangles(float* vertices, unsigned short* triangles, size_t trianglesLength, float* uvs, size_t stride);
+		
+        void clipTriangles(Vector<float>& vertices, Vector<unsigned short>& triangles, Vector<float>& uvs, size_t stride);
+        
+        bool isClipping();
+        
+        Vector<float>& getClippedVertices();
+        Vector<unsigned short>& getClippedTriangles();
+        Vector<float>& getClippedUVs();
+        
+    private:
+        Triangulator _triangulator;
+        Vector<float> _clippingPolygon;
+        Vector<float> _clipOutput;
+        Vector<float> _clippedVertices;
+        Vector<unsigned short> _clippedTriangles;
+        Vector<float> _clippedUVs;
+        Vector<float> _scratch;
+        ClippingAttachment* _clipAttachment;
+        Vector< Vector<float>* > *_clippingPolygons;
+        
+        /** Clips the input triangle against the convex, clockwise clipping area. If the triangle lies entirely within the clipping
+                  * area, false is returned. The clipping area must duplicate the first vertex at the end of the vertices list. */
+        bool clip(float x1, float y1, float x2, float y2, float x3, float y3, Vector<float>* clippingArea, Vector<float>* output);
+        
+        static void makeClockwise(Vector<float>& polygon);
+    };
 }
-#endif
 
-#endif /* SPINE_SKELETONCLIPPING_H */
+#endif /* Spine_SkeletonClipping_h */

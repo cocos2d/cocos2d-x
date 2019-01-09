@@ -55,14 +55,28 @@ namespace spine {
 		TwoColorTrianglesCommand();
 		
 		~TwoColorTrianglesCommand();
-	
+
+#ifndef CC_USE_NEW_RENDERER
 		void init(float globalOrder, GLuint textureID, cocos2d::GLProgramState* glProgramState, cocos2d::BlendFunc blendType, const TwoColorTriangles& triangles, const cocos2d::Mat4& mv, uint32_t flags);
-		
+
 		void useMaterial() const;
+
+        inline GLuint getTextureID() const { return _textureID; }        inline cocos2d::GLProgramState* getGLProgramState() const { return _glProgramState; }
+
+        void draw();
+#else
+        void init(float globalOrder, cocos2d::Texture2D* texture, cocos2d::BlendFunc blendType, const TwoColorTriangles& triangles, const cocos2d::Mat4& mv, uint32_t flags);
+
+        void updateCommandPipelineDescriptor();
+
+        inline cocos2d::backend::Texture* getTexture() const { return _texture; }
+
+        void draw(cocos2d::Renderer *renderer);
+
+        void updateVertexAndIndexBuffer(cocos2d::Renderer *renderer, V3F_C4B_C4B_T2F *vertices, int verticesSize, uint16_t *indices, int indicesSize);
+#endif
 		
 		inline uint32_t getMaterialID() const { return _materialID; }
-		
-		inline GLuint getTextureID() const { return _textureID; }
 		
 		inline const TwoColorTriangles& getTriangles() const { return _triangles; }
 		
@@ -74,13 +88,9 @@ namespace spine {
 		
 		inline const unsigned short* getIndices() const { return _triangles.indices; }
 		
-		inline cocos2d::GLProgramState* getGLProgramState() const { return _glProgramState; }
-		
 		inline cocos2d::BlendFunc getBlendType() const { return _blendType; }
 		
 		inline const cocos2d::Mat4& getModelView() const { return _mv; }
-		
-		void draw ();
 		
 		void setForceFlush (bool forceFlush) { _forceFlush = forceFlush; }
 		
@@ -89,9 +99,16 @@ namespace spine {
 	protected:
 		void generateMaterialID();
 		uint32_t _materialID;
+
+#ifndef CC_USE_NEW_RENDERER
 		GLuint _textureID;
 		cocos2d::GLProgramState* _glProgramState;
 		cocos2d::GLProgram* _glProgram;
+#else
+        void *_vs = nullptr;
+        void *_fs = nullptr;
+        cocos2d::backend::Texture *_texture = nullptr;
+#endif
 		cocos2d::BlendFunc _blendType;
 		TwoColorTriangles _triangles;
 		cocos2d::Mat4 _mv;
@@ -113,6 +130,7 @@ namespace spine {
 		unsigned short* allocateIndices(uint32_t numIndices);
 		void deallocateIndices(uint32_t numIndices);
 
+#ifndef CC_USE_NEW_RENDERER
 		TwoColorTrianglesCommand* addCommand(cocos2d::Renderer* renderer, float globalOrder, GLuint textureID, cocos2d::GLProgramState* glProgramState, cocos2d::BlendFunc blendType, const TwoColorTriangles& triangles, const cocos2d::Mat4& mv, uint32_t flags);
 
 		cocos2d::GLProgramState* getTwoColorTintProgramState () { return _twoColorTintShaderState; }
@@ -120,7 +138,13 @@ namespace spine {
 		void batch (TwoColorTrianglesCommand* command);
 		
 		void flush (TwoColorTrianglesCommand* materialCommand);
-		
+#else
+        TwoColorTrianglesCommand* addCommand(cocos2d::Renderer* renderer, float globalOrder, cocos2d::Texture2D* texture, cocos2d::BlendFunc blendType, const TwoColorTriangles& triangles, const cocos2d::Mat4& mv, uint32_t flags);
+
+        void batch(cocos2d::Renderer* renderer, TwoColorTrianglesCommand* command);
+
+        void flush(cocos2d::Renderer* renderer, TwoColorTrianglesCommand* materialCommand);
+#endif
 		uint32_t getNumBatches () { return _numBatches; };
 		
     protected:
@@ -140,27 +164,30 @@ namespace spine {
 		uint32_t _numVertices;
 		
 		// pool of indices
-		spUnsignedShortArray* _indices;
+		Vector<unsigned short> _indices;
 		
-		// two color tint shader and state
-		cocos2d::GLProgram* _twoColorTintShader;
-		cocos2d::GLProgramState* _twoColorTintShaderState;
 		
 		// VBO handles & attribute locations
 		GLuint _vertexBufferHandle;
 		V3F_C4B_C4B_T2F* _vertexBuffer;
 		uint32_t _numVerticesBuffer;
+        uint32_t _numIndicesBuffer;
+        unsigned short* _indexBuffer;
+
+#ifndef CC_USE_NEW_RENDERER
+        // two color tint shader and state
+        cocos2d::GLProgram* _twoColorTintShader;
+        cocos2d::GLProgramState* _twoColorTintShaderState;
+
 		GLuint _indexBufferHandle;
-		uint32_t _numIndicesBuffer;
-		unsigned short* _indexBuffer;
 		GLint _positionAttributeLocation;
 		GLint _colorAttributeLocation;
 		GLint _color2AttributeLocation;
 		GLint _texCoordsAttributeLocation;
-		
+#endif				
 		// last batched command, needed for flushing to set material
-		TwoColorTrianglesCommand* _lastCommand;
-		
+		TwoColorTrianglesCommand* _lastCommand = nullptr;
+
 		// number of batches in the last frame
 		uint32_t _numBatches;
 	};

@@ -28,147 +28,132 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_ATLAS_H_
-#define SPINE_ATLAS_H_
+#ifndef Spine_Atlas_h
+#define Spine_Atlas_h
 
-#include <spine/dll.h>
+#include <spine/Vector.h>
+#include <spine/Extension.h>
+#include <spine/SpineObject.h>
+#include <spine/SpineString.h>
+#include <spine/HasRendererObject.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace spine {
+enum Format {
+	Format_Alpha,
+	Format_Intensity,
+	Format_LuminanceAlpha,
+	Format_RGB565,
+	Format_RGBA4444,
+	Format_RGB888,
+	Format_RGBA8888
+};
 
-typedef struct spAtlas spAtlas;
+enum TextureFilter {
+	TextureFilter_Unknown,
+	TextureFilter_Nearest,
+	TextureFilter_Linear,
+	TextureFilter_MipMap,
+	TextureFilter_MipMapNearestNearest,
+	TextureFilter_MipMapLinearNearest,
+	TextureFilter_MipMapNearestLinear,
+	TextureFilter_MipMapLinearLinear
+};
 
-typedef enum {
-	SP_ATLAS_UNKNOWN_FORMAT,
-	SP_ATLAS_ALPHA,
-	SP_ATLAS_INTENSITY,
-	SP_ATLAS_LUMINANCE_ALPHA,
-	SP_ATLAS_RGB565,
-	SP_ATLAS_RGBA4444,
-	SP_ATLAS_RGB888,
-	SP_ATLAS_RGBA8888
-} spAtlasFormat;
+enum TextureWrap {
+	TextureWrap_MirroredRepeat,
+	TextureWrap_ClampToEdge,
+	TextureWrap_Repeat
+};
 
-typedef enum {
-	SP_ATLAS_UNKNOWN_FILTER,
-	SP_ATLAS_NEAREST,
-	SP_ATLAS_LINEAR,
-	SP_ATLAS_MIPMAP,
-	SP_ATLAS_MIPMAP_NEAREST_NEAREST,
-	SP_ATLAS_MIPMAP_LINEAR_NEAREST,
-	SP_ATLAS_MIPMAP_NEAREST_LINEAR,
-	SP_ATLAS_MIPMAP_LINEAR_LINEAR
-} spAtlasFilter;
-
-typedef enum {
-	SP_ATLAS_MIRROREDREPEAT,
-	SP_ATLAS_CLAMPTOEDGE,
-	SP_ATLAS_REPEAT
-} spAtlasWrap;
-
-typedef struct spAtlasPage spAtlasPage;
-struct spAtlasPage {
-	const spAtlas* atlas;
-	const char* name;
-	spAtlasFormat format;
-	spAtlasFilter minFilter, magFilter;
-	spAtlasWrap uWrap, vWrap;
-
-	void* rendererObject;
+class SP_API AtlasPage : public SpineObject, public HasRendererObject {
+public:
+	String name;
+	Format format;
+	TextureFilter minFilter;
+	TextureFilter magFilter;
+	TextureWrap uWrap;
+	TextureWrap vWrap;
 	int width, height;
 
-	spAtlasPage* next;
+	explicit AtlasPage(const String &inName) : name(inName), format(Format_RGBA8888), minFilter(TextureFilter_Nearest),
+											   magFilter(TextureFilter_Nearest), uWrap(TextureWrap_ClampToEdge),
+											   vWrap(TextureWrap_ClampToEdge) {
+	}
+
+	virtual ~AtlasPage() { }
 };
 
-SP_API spAtlasPage* spAtlasPage_create (spAtlas* atlas, const char* name);
-SP_API void spAtlasPage_dispose (spAtlasPage* self);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spAtlasFormat AtlasFormat;
-#define ATLAS_UNKNOWN_FORMAT SP_ATLAS_UNKNOWN_FORMAT
-#define ATLAS_ALPHA SP_ATLAS_ALPHA
-#define ATLAS_INTENSITY SP_ATLAS_INTENSITY
-#define ATLAS_LUMINANCE_ALPHA SP_ATLAS_LUMINANCE_ALPHA
-#define ATLAS_RGB565 SP_ATLAS_RGB565
-#define ATLAS_RGBA4444 SP_ATLAS_RGBA4444
-#define ATLAS_RGB888 SP_ATLAS_RGB888
-#define ATLAS_RGBA8888 SP_ATLAS_RGBA8888
-typedef spAtlasFilter AtlasFilter;
-#define ATLAS_UNKNOWN_FILTER SP_ATLAS_UNKNOWN_FILTER
-#define ATLAS_NEAREST SP_ATLAS_NEAREST
-#define ATLAS_LINEAR SP_ATLAS_LINEAR
-#define ATLAS_MIPMAP SP_ATLAS_MIPMAP
-#define ATLAS_MIPMAP_NEAREST_NEAREST SP_ATLAS_MIPMAP_NEAREST_NEAREST
-#define ATLAS_MIPMAP_LINEAR_NEAREST SP_ATLAS_MIPMAP_LINEAR_NEAREST
-#define ATLAS_MIPMAP_NEAREST_LINEAR SP_ATLAS_MIPMAP_NEAREST_LINEAR
-#define ATLAS_MIPMAP_LINEAR_LINEAR SP_ATLAS_MIPMAP_LINEAR_LINEAR
-typedef spAtlasWrap AtlasWrap;
-#define ATLAS_MIRROREDREPEAT SP_ATLAS_MIRROREDREPEAT
-#define ATLAS_CLAMPTOEDGE SP_ATLAS_CLAMPTOEDGE
-#define ATLAS_REPEAT SP_ATLAS_REPEAT
-typedef spAtlasPage AtlasPage;
-#define AtlasPage_create(...) spAtlasPage_create(__VA_ARGS__)
-#define AtlasPage_dispose(...) spAtlasPage_dispose(__VA_ARGS__)
-#endif
-
-/**/
-
-typedef struct spAtlasRegion spAtlasRegion;
-struct spAtlasRegion {
-	const char* name;
+class SP_API AtlasRegion : public SpineObject {
+public:
+	AtlasPage *page;
+	String name;
 	int x, y, width, height;
 	float u, v, u2, v2;
-	int offsetX, offsetY;
+	float offsetX, offsetY;
 	int originalWidth, originalHeight;
 	int index;
-	int/*bool*/rotate;
-	int/*bool*/flip;
-	int* splits;
-	int* pads;
-
-	spAtlasPage* page;
-
-	spAtlasRegion* next;
+	bool rotate;
+	Vector<int> splits;
+	Vector<int> pads;
 };
 
-SP_API spAtlasRegion* spAtlasRegion_create ();
-SP_API void spAtlasRegion_dispose (spAtlasRegion* self);
+class TextureLoader;
 
-#ifdef SPINE_SHORT_NAMES
-typedef spAtlasRegion AtlasRegion;
-#define AtlasRegion_create(...) spAtlasRegion_create(__VA_ARGS__)
-#define AtlasRegion_dispose(...) spAtlasRegion_dispose(__VA_ARGS__)
-#endif
+class SP_API Atlas : public SpineObject {
+public:
+	Atlas(const String &path, TextureLoader *textureLoader);
 
-/**/
+	Atlas(const char *data, int length, const char *dir, TextureLoader *textureLoader);
 
-struct spAtlas {
-	spAtlasPage* pages;
-	spAtlasRegion* regions;
+	~Atlas();
 
-	void* rendererObject;
+	void flipV();
+
+	/// Returns the first region found with the specified name. This method uses String comparison to find the region, so the result
+	/// should be cached rather than calling this method multiple times.
+	/// @return The region, or NULL.
+	AtlasRegion *findRegion(const String &name);
+
+	Vector<AtlasPage*> &getPages();
+
+private:
+	Vector<AtlasPage *> _pages;
+	Vector<AtlasRegion *> _regions;
+	TextureLoader *_textureLoader;
+
+	void load(const char *begin, int length, const char *dir);
+
+	class Str {
+	public:
+		const char *begin;
+		const char *end;
+	};
+
+	static void trim(Str *str);
+
+	/// Tokenize string without modification. Returns 0 on failure
+	static int readLine(const char **begin, const char *end, Str *str);
+
+	/// Moves str->begin past the first occurence of c. Returns 0 on failure
+	static int beginPast(Str *str, char c);
+
+	/// Returns 0 on failure
+	static int readValue(const char **begin, const char *end, Str *str);
+
+	/// Returns the number of tuple values read (1, 2, 4, or 0 for failure)
+	static int readTuple(const char **begin, const char *end, Str tuple[]);
+
+	static char *mallocString(Str *str);
+
+	static int indexOf(const char **array, int count, Str *str);
+
+	static int equals(Str *str, const char *other);
+
+	static int toInt(Str *str);
+
+	static Atlas *abortAtlas(Atlas *atlas);
 };
-
-/* Image files referenced in the atlas file will be prefixed with dir. */
-SP_API spAtlas* spAtlas_create (const char* data, int length, const char* dir, void* rendererObject);
-/* Image files referenced in the atlas file will be prefixed with the directory containing the atlas file. */
-SP_API spAtlas* spAtlas_createFromFile (const char* path, void* rendererObject);
-SP_API void spAtlas_dispose (spAtlas* atlas);
-
-/* Returns 0 if the region was not found. */
-SP_API spAtlasRegion* spAtlas_findRegion (const spAtlas* self, const char* name);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spAtlas Atlas;
-#define Atlas_create(...) spAtlas_create(__VA_ARGS__)
-#define Atlas_createFromFile(...) spAtlas_createFromFile(__VA_ARGS__)
-#define Atlas_dispose(...) spAtlas_dispose(__VA_ARGS__)
-#define Atlas_findRegion(...) spAtlas_findRegion(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
 }
-#endif
 
-#endif /* SPINE_ATLAS_H_ */
+#endif /* Spine_Atlas_h */
+

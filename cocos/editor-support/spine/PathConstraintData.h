@@ -28,70 +28,78 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_PATHCONSTRAINTDATA_H_
-#define SPINE_PATHCONSTRAINTDATA_H_
+#ifndef Spine_PathConstraintData_h
+#define Spine_PathConstraintData_h
 
-#include <spine/dll.h>
-#include <spine/BoneData.h>
-#include <spine/SlotData.h>
+#include <spine/PositionMode.h>
+#include <spine/SpacingMode.h>
+#include <spine/RotateMode.h>
+#include <spine/Vector.h>
+#include <spine/SpineObject.h>
+#include <spine/SpineString.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace spine {
+    class BoneData;
+    class SlotData;
+    
+    class SP_API PathConstraintData : public SpineObject {
+        friend class SkeletonBinary;
+        friend class SkeletonJson;
+        
+        friend class PathConstraint;
+        friend class Skeleton;
+        friend class PathConstraintMixTimeline;
+        friend class PathConstraintPositionTimeline;
+        friend class PathConstraintSpacingTimeline;
+        
+    public:
+        explicit PathConstraintData(const String& name);
 
-typedef enum {
-	SP_POSITION_MODE_FIXED, SP_POSITION_MODE_PERCENT
-} spPositionMode;
+        const String& getName();
+        
+        int getOrder();
+        void setOrder(int inValue);
+        
+        Vector<BoneData*>& getBones();
+        
+        SlotData* getTarget();
+        void setTarget(SlotData* inValue);
+        
+        PositionMode getPositionMode();
+        void setPositionMode(PositionMode inValue);
+        
+        SpacingMode getSpacingMode();
+        void setSpacingMode(SpacingMode inValue);
+        
+        RotateMode getRotateMode();
+        void setRotateMode(RotateMode inValue);
+        
+        float getOffsetRotation();
+        void setOffsetRotation(float inValue);
+        
+        float getPosition();
+        void setPosition(float inValue);
+        
+        float getSpacing();
+        void setSpacing(float inValue);
+        
+        float getRotateMix();
+        void setRotateMix(float inValue);
+        
+        float getTranslateMix();
+        void setTranslateMix(float inValue);
 
-typedef enum {
-	SP_SPACING_MODE_LENGTH, SP_SPACING_MODE_FIXED, SP_SPACING_MODE_PERCENT
-} spSpacingMode;
-
-typedef enum {
-	SP_ROTATE_MODE_TANGENT, SP_ROTATE_MODE_CHAIN, SP_ROTATE_MODE_CHAIN_SCALE
-} spRotateMode;
-
-typedef struct spPathConstraintData {
-	const char* const name;
-	int order;
-	int bonesCount;
-	spBoneData** const bones;
-	spSlotData* target;
-	spPositionMode positionMode;
-	spSpacingMode spacingMode;
-	spRotateMode rotateMode;
-	float offsetRotation;
-	float position, spacing, rotateMix, translateMix;
-
-#ifdef __cplusplus
-	spPathConstraintData() :
-		name(0),
-		bonesCount(0),
-		bones(0),
-		target(0),
-		positionMode(SP_POSITION_MODE_FIXED),
-		spacingMode(SP_SPACING_MODE_LENGTH),
-		rotateMode(SP_ROTATE_MODE_TANGENT),
-		offsetRotation(0),
-		position(0),
-		spacing(0),
-		rotateMix(0),
-		translateMix(0) {
-	}
-#endif
-} spPathConstraintData;
-
-SP_API spPathConstraintData* spPathConstraintData_create (const char* name);
-SP_API void spPathConstraintData_dispose (spPathConstraintData* self);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spPathConstraintData PathConstraintData;
-#define PathConstraintData_create(...) spPathConstraintData_create(__VA_ARGS__)
-#define PathConstraintData_dispose(...) spPathConstraintData_dispose(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
+    private:
+        const String _name;
+        int _order;
+        Vector<BoneData*> _bones;
+        SlotData* _target;
+        PositionMode _positionMode;
+        SpacingMode _spacingMode;
+        RotateMode _rotateMode;
+        float _offsetRotation;
+        float _position, _spacing, _rotateMix, _translateMix;
+    };
 }
-#endif
 
-#endif /* SPINE_PATHCONSTRAINTDATA_H_ */
+#endif /* Spine_PathConstraintData_h */

@@ -28,58 +28,93 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_BONEDATA_H_
-#define SPINE_BONEDATA_H_
+#ifndef Spine_BoneData_h
+#define Spine_BoneData_h
 
-#include <spine/dll.h>
+#include <spine/TransformMode.h>
+#include <spine/SpineObject.h>
+#include <spine/SpineString.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace spine {
+class SP_API BoneData : public SpineObject {
+	friend class SkeletonBinary;
 
-typedef enum {
-	SP_TRANSFORMMODE_NORMAL,
-	SP_TRANSFORMMODE_ONLYTRANSLATION,
-	SP_TRANSFORMMODE_NOROTATIONORREFLECTION,
-	SP_TRANSFORMMODE_NOSCALE,
-	SP_TRANSFORMMODE_NOSCALEORREFLECTION
-} spTransformMode;
+	friend class SkeletonJson;
 
-typedef struct spBoneData spBoneData;
-struct spBoneData {
-	const int index;
-	const char* const name;
-	spBoneData* const parent;
-	float length;
-	float x, y, rotation, scaleX, scaleY, shearX, shearY;
-	spTransformMode transformMode;
+	friend class AnimationState;
 
-#ifdef __cplusplus
-	spBoneData() :
-		index(0),
-		name(0),
-		parent(0),
-		length(0),
-		x(0), y(0),
-		rotation(0),
-		scaleX(0), scaleY(0),
-		shearX(0), shearY(0),
-		transformMode(SP_TRANSFORMMODE_NORMAL) {
-	}
-#endif
+	friend class RotateTimeline;
+
+	friend class ScaleTimeline;
+
+	friend class ShearTimeline;
+
+	friend class TranslateTimeline;
+
+public:
+	BoneData(int index, const String &name, BoneData *parent = NULL);
+
+	/// The index of the bone in Skeleton.Bones
+	int getIndex();
+
+	/// The name of the bone, which is unique within the skeleton.
+	const String &getName();
+
+	/// May be NULL.
+	BoneData *getParent();
+
+	float getLength();
+
+	void setLength(float inValue);
+
+	/// Local X translation.
+	float getX();
+
+	void setX(float inValue);
+
+	/// Local Y translation.
+	float getY();
+
+	void setY(float inValue);
+
+	/// Local rotation.
+	float getRotation();
+
+	void setRotation(float inValue);
+
+	/// Local scaleX.
+	float getScaleX();
+
+	void setScaleX(float inValue);
+
+	/// Local scaleY.
+	float getScaleY();
+
+	void setScaleY(float inValue);
+
+	/// Local shearX.
+	float getShearX();
+
+	void setShearX(float inValue);
+
+	/// Local shearY.
+	float getShearY();
+
+	void setShearY(float inValue);
+
+	/// The transform mode for how parent world transforms affect this bone.
+	TransformMode getTransformMode();
+
+	void setTransformMode(TransformMode inValue);
+
+private:
+	const int _index;
+	const String _name;
+	BoneData *_parent;
+	float _length;
+	float _x, _y, _rotation, _scaleX, _scaleY, _shearX, _shearY;
+	TransformMode _transformMode;
 };
-
-SP_API spBoneData* spBoneData_create (int index, const char* name, spBoneData* parent);
-SP_API void spBoneData_dispose (spBoneData* self);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spBoneData BoneData;
-#define BoneData_create(...) spBoneData_create(__VA_ARGS__)
-#define BoneData_dispose(...) spBoneData_dispose(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
 }
-#endif
 
-#endif /* SPINE_BONEDATA_H_ */
+#endif /* Spine_BoneData_h */

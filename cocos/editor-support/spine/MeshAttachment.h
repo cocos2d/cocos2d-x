@@ -28,64 +28,115 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_MESHATTACHMENT_H_
-#define SPINE_MESHATTACHMENT_H_
+#ifndef Spine_MeshAttachment_h
+#define Spine_MeshAttachment_h
 
-#include <spine/dll.h>
-#include <spine/Attachment.h>
 #include <spine/VertexAttachment.h>
-#include <spine/Atlas.h>
-#include <spine/Slot.h>
+#include <spine/Vector.h>
+#include <spine/Color.h>
+#include <spine/HasRendererObject.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace spine {
+    /// Attachment that displays a texture region using a mesh.
+    class SP_API MeshAttachment : public VertexAttachment, public HasRendererObject {
+        friend class SkeletonBinary;
+        friend class SkeletonJson;
+        friend class AtlasAttachmentLoader;
+        
+        RTTI_DECL
+        
+    public:
+        explicit MeshAttachment(const String& name);
 
-typedef struct spMeshAttachment spMeshAttachment;
-struct spMeshAttachment {
-	spVertexAttachment super;
+        virtual ~MeshAttachment();
 
-	void* rendererObject;
-	int regionOffsetX, regionOffsetY; /* Pixels stripped from the bottom left, unrotated. */
-	int regionWidth, regionHeight; /* Unrotated, stripped pixel size. */
-	int regionOriginalWidth, regionOriginalHeight; /* Unrotated, unstripped pixel size. */
-	float regionU, regionV, regionU2, regionV2;
-	int/*bool*/regionRotate;
+        void updateUVs();
 
-	const char* path;
+        virtual bool applyDeform(VertexAttachment* sourceAttachment);
+        
+        int getHullLength();
+        void setHullLength(int inValue);
+        
+        Vector<float>& getRegionUVs();
+        
+        /// The UV pair for each vertex, normalized within the entire texture. See also MeshAttachment::updateUVs
+        Vector<float>& getUVs();
+        
+        Vector<unsigned short>& getTriangles();
+        
+        Color& getColor();
+        
+        const String& getPath();
+        void setPath(const String& inValue);
+        
+        float getRegionU();
+        void setRegionU(float inValue);
+        
+        float getRegionV();
+        void setRegionV(float inValue);
+        
+        float getRegionU2();
+        void setRegionU2(float inValue);
+        
+        float getRegionV2();
+        void setRegionV2(float inValue);
+        
+        bool getRegionRotate();
+        void setRegionRotate(bool inValue);
+        
+        float getRegionOffsetX();
+        void setRegionOffsetX(float inValue);
+        
+        // Pixels stripped from the bottom left, unrotated.
+        float getRegionOffsetY();
+        void setRegionOffsetY(float inValue);
+        
+        float getRegionWidth();
+        void setRegionWidth(float inValue);
+        
+        // Unrotated, stripped size.
+        float getRegionHeight();
+        void setRegionHeight(float inValue);
+        
+        float getRegionOriginalWidth();
+        void setRegionOriginalWidth(float inValue);
+        
+        // Unrotated, unstripped size.
+        float getRegionOriginalHeight();
+        void setRegionOriginalHeight(float inValue);
+        
+        bool getInheritDeform();
+        void setInheritDeform(bool inValue);
+        
+        MeshAttachment* getParentMesh();
+        void setParentMesh(MeshAttachment* inValue);
+        
+        // Nonessential.
+        Vector<unsigned short>& getEdges();
+        float getWidth();
+        void setWidth(float inValue);
+        float getHeight();
+        void setHeight(float inValue);
 
-	float* regionUVs;
-	float* uvs;
-
-	int trianglesCount;
-	unsigned short* triangles;
-
-	spColor color;
-
-	int hullLength;
-
-	spMeshAttachment* const parentMesh;
-	int/*bool*/inheritDeform;
-
-	/* Nonessential. */
-	int edgesCount;
-	int* edges;
-	float width, height;
-};
-
-SP_API spMeshAttachment* spMeshAttachment_create (const char* name);
-SP_API void spMeshAttachment_updateUVs (spMeshAttachment* self);
-SP_API void spMeshAttachment_setParentMesh (spMeshAttachment* self, spMeshAttachment* parentMesh);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spMeshAttachment MeshAttachment;
-#define MeshAttachment_create(...) spMeshAttachment_create(__VA_ARGS__)
-#define MeshAttachment_updateUVs(...) spMeshAttachment_updateUVs(__VA_ARGS__)
-#define MeshAttachment_setParentMesh(...) spMeshAttachment_setParentMesh(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
+    private:
+        float _regionOffsetX, _regionOffsetY, _regionWidth, _regionHeight, _regionOriginalWidth, _regionOriginalHeight;
+        MeshAttachment* _parentMesh;
+        Vector<float> _uvs;
+        Vector<float> _regionUVs;
+        Vector<unsigned short> _triangles;
+        Vector<unsigned short> _edges;
+        String _path;
+        float _regionU;
+        float _regionV;
+        float _regionU2;
+        float _regionV2;
+        float _width;
+        float _height;
+        Color _color;
+        int _hullLength;
+        bool _inheritDeform;
+        bool _regionRotate;
+    };
 }
-#endif
 
-#endif /* SPINE_MESHATTACHMENT_H_ */
+#endif /* Spine_MeshAttachment_h */

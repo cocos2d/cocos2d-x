@@ -28,49 +28,66 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_IKCONSTRAINTDATA_H_
-#define SPINE_IKCONSTRAINTDATA_H_
+#ifndef Spine_IkConstraintData_h
+#define Spine_IkConstraintData_h
 
-#include <spine/dll.h>
-#include <spine/BoneData.h>
+#include <spine/Vector.h>
+#include <spine/SpineObject.h>
+#include <spine/SpineString.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace spine {
+    class BoneData;
+    
+    class SP_API IkConstraintData : public SpineObject {
+        friend class SkeletonBinary;
+        friend class SkeletonJson;
+        friend class IkConstraint;
+        friend class Skeleton;
+        friend class IkConstraintTimeline;
+        
+    public:
+        explicit IkConstraintData(const String& name);
+        
+        /// The IK constraint's name, which is unique within the skeleton.
+        const String& getName();
 
-typedef struct spIkConstraintData {
-	const char* const name;
-	int order;
-	int bonesCount;
-	spBoneData** bones;
+        size_t getOrder();
+        void setOrder(size_t inValue);
+        
+        /// The bones that are constrained by this IK Constraint.
+        Vector<BoneData*>& getBones();
+        
+        /// The bone that is the IK target.
+        BoneData* getTarget();
+        void setTarget(BoneData* inValue);
+        
+        /// Controls the bend direction of the IK bones, either 1 or -1.
+        int getBendDirection();
+        void setBendDirection(int inValue);
 
-	spBoneData* target;
-	int bendDirection;
-	float mix;
+        bool getCompress();
+        void setCompress(bool inValue);
 
-#ifdef __cplusplus
-	spIkConstraintData() :
-		name(0),
-		bonesCount(0),
-		bones(0),
-		target(0),
-		bendDirection(0),
-		mix(0) {
-	}
-#endif
-} spIkConstraintData;
+        bool getStretch();
+        void setStretch(bool inValue);
 
-SP_API spIkConstraintData* spIkConstraintData_create (const char* name);
-SP_API void spIkConstraintData_dispose (spIkConstraintData* self);
+        bool getUniform();
+        void setUniform(bool inValue);
+        
+        float getMix();
+        void setMix(float inValue);
 
-#ifdef SPINE_SHORT_NAMES
-typedef spIkConstraintData IkConstraintData;
-#define IkConstraintData_create(...) spIkConstraintData_create(__VA_ARGS__)
-#define IkConstraintData_dispose(...) spIkConstraintData_dispose(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
+    private:
+        const String _name;
+        size_t _order;
+        Vector<BoneData*> _bones;
+        BoneData* _target;
+        int _bendDirection;
+        bool _compress;
+        bool _stretch;
+        bool _uniform;
+        float _mix;
+    };
 }
-#endif
 
-#endif /* SPINE_IKCONSTRAINTDATA_H_ */
+#endif /* Spine_IkConstraintData_h */

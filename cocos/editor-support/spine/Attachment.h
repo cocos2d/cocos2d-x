@@ -28,56 +28,27 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_ATTACHMENT_H_
-#define SPINE_ATTACHMENT_H_
+#ifndef Spine_Attachment_h
+#define Spine_Attachment_h
 
-#include <spine/dll.h>
+#include <spine/RTTI.h>
+#include <spine/SpineObject.h>
+#include <spine/SpineString.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace spine {
+class SP_API Attachment : public SpineObject {
+RTTI_DECL
 
-struct spAttachmentLoader;
+public:
+	explicit Attachment(const String &name);
 
-typedef enum {
-	SP_ATTACHMENT_REGION,
-	SP_ATTACHMENT_BOUNDING_BOX,
-	SP_ATTACHMENT_MESH,
-	SP_ATTACHMENT_LINKED_MESH,
-	SP_ATTACHMENT_PATH,
-	SP_ATTACHMENT_POINT,
-	SP_ATTACHMENT_CLIPPING
-} spAttachmentType;
+	virtual ~Attachment();
 
-typedef struct spAttachment {
-	const char* const name;
-	const spAttachmentType type;
-	const void* const vtable;
-	struct spAttachmentLoader* attachmentLoader;
+	const String &getName() const;
 
-#ifdef __cplusplus
-	spAttachment() :
-		name(0),
-		type(SP_ATTACHMENT_REGION),
-		vtable(0) {
-	}
-#endif
-} spAttachment;
-
-void spAttachment_dispose (spAttachment* self);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spAttachmentType AttachmentType;
-#define ATTACHMENT_REGION SP_ATTACHMENT_REGION
-#define ATTACHMENT_BOUNDING_BOX SP_ATTACHMENT_BOUNDING_BOX
-#define ATTACHMENT_MESH SP_ATTACHMENT_MESH
-#define ATTACHMENT_LINKED_MESH SP_ATTACHMENT_LINKED_MESH
-typedef spAttachment Attachment;
-#define Attachment_dispose(...) spAttachment_dispose(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
+private:
+	const String _name;
+};
 }
-#endif
 
-#endif /* SPINE_ATTACHMENT_H_ */
+#endif /* Spine_Attachment_h */

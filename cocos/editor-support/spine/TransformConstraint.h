@@ -28,54 +28,66 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_TRANSFORMCONSTRAINT_H_
-#define SPINE_TRANSFORMCONSTRAINT_H_
+#ifndef Spine_TransformConstraint_h
+#define Spine_TransformConstraint_h
 
-#include <spine/dll.h>
-#include <spine/TransformConstraintData.h>
-#include <spine/Bone.h>
+#include <spine/Constraint.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <spine/Vector.h>
 
-struct spSkeleton;
-
-typedef struct spTransformConstraint {
-	spTransformConstraintData* const data;
-	int bonesCount;
-	spBone** const bones;
-	spBone* target;
-	float rotateMix, translateMix, scaleMix, shearMix;
-
-#ifdef __cplusplus
-	spTransformConstraint() :
-		data(0),
-		bonesCount(0),
-		bones(0),
-		target(0),
-		rotateMix(0),
-		translateMix(0),
-		scaleMix(0),
-		shearMix(0) {
-	}
-#endif
-} spTransformConstraint;
-
-SP_API spTransformConstraint* spTransformConstraint_create (spTransformConstraintData* data, const struct spSkeleton* skeleton);
-SP_API void spTransformConstraint_dispose (spTransformConstraint* self);
-
-SP_API void spTransformConstraint_apply (spTransformConstraint* self);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spTransformConstraint TransformConstraint;
-#define TransformConstraint_create(...) spTransformConstraint_create(__VA_ARGS__)
-#define TransformConstraint_dispose(...) spTransformConstraint_dispose(__VA_ARGS__)
-#define TransformConstraint_apply(...) spTransformConstraint_apply(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
+namespace spine {
+    class TransformConstraintData;
+    class Skeleton;
+    class Bone;
+    
+    class SP_API TransformConstraint : public Constraint {
+        friend class Skeleton;
+        friend class TransformConstraintTimeline;
+        
+        RTTI_DECL
+        
+    public:
+        TransformConstraint(TransformConstraintData& data, Skeleton& skeleton);
+        
+        void apply();
+        
+        virtual void update();
+        
+        virtual int getOrder();
+        
+        TransformConstraintData& getData();
+        
+        Vector<Bone*>& getBones();
+        
+        Bone* getTarget();
+        void setTarget(Bone* inValue);
+        
+        float getRotateMix();
+        void setRotateMix(float inValue);
+        
+        float getTranslateMix();
+        void setTranslateMix(float inValue);
+        
+        float getScaleMix();
+        void setScaleMix(float inValue);
+        
+        float getShearMix();
+        void setShearMix(float inValue);
+        
+    private:
+        TransformConstraintData& _data;
+        Vector<Bone*> _bones;
+        Bone* _target;
+        float _rotateMix, _translateMix, _scaleMix, _shearMix;
+        
+        void applyAbsoluteWorld();
+        
+        void applyRelativeWorld();
+        
+        void applyAbsoluteLocal();
+        
+        void applyRelativeLocal();
+    };
 }
-#endif
 
-#endif /* SPINE_TRANSFORMCONSTRAINT_H_ */
+#endif /* Spine_TransformConstraint_h */

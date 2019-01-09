@@ -30,6 +30,8 @@ cmake_minimum_required(VERSION 3.6)
 
 project(Cocos2d-x)
 
+set(COCOS2D_X_VERSION "3.17.1")
+
 # cocos2dx root path
 set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)

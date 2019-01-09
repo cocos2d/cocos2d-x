@@ -28,36 +28,33 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_PATHATTACHMENT_H_
-#define SPINE_PATHATTACHMENT_H_
+#ifndef Spine_PathAttachment_h
+#define Spine_PathAttachment_h
 
-#include <spine/dll.h>
-#include <spine/Attachment.h>
 #include <spine/VertexAttachment.h>
-#include <spine/Atlas.h>
-#include <spine/Slot.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-typedef struct spPathAttachment {
-	spVertexAttachment super;
-	int lengthsLength;
-	float* lengths;
-	int/*bool*/ closed, constantSpeed;
-} spPathAttachment;
-
-SP_API spPathAttachment* spPathAttachment_create (const char* name);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spPathAttachment PathAttachment;
-#define PathAttachment_create(...) spPathAttachment_create(__VA_ARGS__)
-#define PathAttachment_computeWorldVertices(...) spPathAttachment_computeWorldVertices(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
+namespace spine {
+    class SP_API PathAttachment : public VertexAttachment {
+        friend class SkeletonBinary;
+        friend class SkeletonJson;
+        
+        RTTI_DECL
+        
+    public:
+        explicit PathAttachment(const String& name);
+        
+        /// The length in the setup pose from the start of the path to the end of each curve.
+        Vector<float>& getLengths();
+        bool isClosed();
+        void setClosed(bool inValue);
+        bool isConstantSpeed();
+        void setConstantSpeed(bool inValue);
+        
+    private:
+        Vector<float> _lengths;
+        bool _closed;
+        bool _constantSpeed;
+    };
 }
-#endif
 
-#endif /* SPINE_PATHATTACHMENT_H_ */
+#endif /* Spine_PathAttachment_h */

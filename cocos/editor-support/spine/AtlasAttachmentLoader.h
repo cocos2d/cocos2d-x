@@ -28,31 +28,47 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_ATLASATTACHMENTLOADER_H_
-#define SPINE_ATLASATTACHMENTLOADER_H_
+#ifndef Spine_AtlasAttachmentLoader_h
+#define Spine_AtlasAttachmentLoader_h
 
-#include <spine/dll.h>
 #include <spine/AttachmentLoader.h>
-#include <spine/Atlas.h>
+#include <spine/Vector.h>
+#include <spine/SpineString.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
-typedef struct spAtlasAttachmentLoader {
-	spAttachmentLoader super;
-	spAtlas* atlas;
-} spAtlasAttachmentLoader;
+namespace spine {
+    class Atlas;
+    class AtlasRegion;
+    
+    ///
+    /// An AttachmentLoader that configures attachments using texture regions from an Atlas.
+    /// See http://esotericsoftware.com/spine-loading-skeleton-data#JSON-and-binary-data about Loading Skeleton Data in the Spine Runtimes Guide.
+    ///
+	class SP_API AtlasAttachmentLoader : public AttachmentLoader {
+    public:
+		RTTI_DECL
+		
+        explicit AtlasAttachmentLoader(Atlas* atlas);
+        
+        virtual RegionAttachment* newRegionAttachment(Skin& skin, const String& name, const String& path);
+        
+        virtual MeshAttachment* newMeshAttachment(Skin& skin, const String& name, const String& path);
+        
+        virtual BoundingBoxAttachment* newBoundingBoxAttachment(Skin& skin, const String& name);
+        
+        virtual PathAttachment* newPathAttachment(Skin& skin, const String& name);
+        
+        virtual PointAttachment* newPointAttachment(Skin& skin, const String& name);
+        
+        virtual ClippingAttachment* newClippingAttachment(Skin& skin, const String& name);
 
-SP_API spAtlasAttachmentLoader* spAtlasAttachmentLoader_create (spAtlas* atlas);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spAtlasAttachmentLoader AtlasAttachmentLoader;
-#define AtlasAttachmentLoader_create(...) spAtlasAttachmentLoader_create(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
+		virtual void configureAttachment(Attachment* attachment);
+        
+        AtlasRegion* findRegion(const String& name);
+        
+    private:
+        Atlas* _atlas;
+    };
 }
-#endif
 
-#endif /* SPINE_ATLASATTACHMENTLOADER_H_ */
+#endif /* Spine_AtlasAttachmentLoader_h */

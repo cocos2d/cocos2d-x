@@ -58,6 +58,9 @@ namespace spine {
 		void reset ();
 		
 		cocos2d::TrianglesCommand* nextFreeCommand ();
+#if CC_USE_NEW_RENDERER
+        cocos2d::TrianglesCommand* createNewTrianglesCommand();
+#endif
 		
 		// pool of commands
 		std::vector<cocos2d::TrianglesCommand*> _commandsPool;
@@ -68,7 +71,7 @@ namespace spine {
 		uint32_t _numVertices;
 		
 		// pool of indices
-		spUnsignedShortArray* _indices;
+		Vector<unsigned short> _indices;
     };
 	
 }

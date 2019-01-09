@@ -28,50 +28,61 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_ANIMATIONSTATEDATA_H_
-#define SPINE_ANIMATIONSTATEDATA_H_
+#ifndef Spine_AnimationStateData_h
+#define Spine_AnimationStateData_h
 
-#include <spine/dll.h>
-#include <spine/Animation.h>
-#include <spine/SkeletonData.h>
+#include <spine/HashMap.h>
+#include <spine/SpineObject.h>
+#include <spine/SpineString.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <assert.h>
 
-typedef struct spAnimationStateData {
-	spSkeletonData* const skeletonData;
-	float defaultMix;
-	const void* const entries;
+namespace spine {
+    class SkeletonData;
+    class Animation;
+    
+    /// Stores mix (crossfade) durations to be applied when AnimationState animations are changed.
+    class SP_API AnimationStateData : public SpineObject {
+        friend class AnimationState;
+        
+    public:
+		explicit AnimationStateData(SkeletonData* skeletonData);
+		
+        /// The SkeletonData to look up animations when they are specified by name.
+        SkeletonData* getSkeletonData();
+        
+        /// The mix duration to use when no mix duration has been specifically defined between two animations.
+        float getDefaultMix();
+        void setDefaultMix(float inValue);
+        
+        /// Sets a mix duration by animation names.
+        void setMix(const String& fromName, const String& toName, float duration);
+        
+        /// Sets a mix duration when changing from the specified animation to the other.
+        /// See TrackEntry.MixDuration.
+        void setMix(Animation* from, Animation* to, float duration);
+        
+        ///
+        /// The mix duration to use when changing from the specified animation to the other,
+        /// or the DefaultMix if no mix duration has been set.
+        ///
+        float getMix(Animation* from, Animation* to);
 
-#ifdef __cplusplus
-	spAnimationStateData() :
-		skeletonData(0),
-		defaultMix(0),
-		entries(0) {
-	}
-#endif
-} spAnimationStateData;
+    private:
+        class AnimationPair : public SpineObject {
+        public:
+            Animation* _a1;
+            Animation* _a2;
 
-SP_API spAnimationStateData* spAnimationStateData_create (spSkeletonData* skeletonData);
-SP_API void spAnimationStateData_dispose (spAnimationStateData* self);
-
-SP_API void spAnimationStateData_setMixByName (spAnimationStateData* self, const char* fromName, const char* toName, float duration);
-SP_API void spAnimationStateData_setMix (spAnimationStateData* self, spAnimation* from, spAnimation* to, float duration);
-/* Returns 0 if there is no mixing between the animations. */
-SP_API float spAnimationStateData_getMix (spAnimationStateData* self, spAnimation* from, spAnimation* to);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spAnimationStateData AnimationStateData;
-#define AnimationStateData_create(...) spAnimationStateData_create(__VA_ARGS__)
-#define AnimationStateData_dispose(...) spAnimationStateData_dispose(__VA_ARGS__)
-#define AnimationStateData_setMixByName(...) spAnimationStateData_setMixByName(__VA_ARGS__)
-#define AnimationStateData_setMix(...) spAnimationStateData_setMix(__VA_ARGS__)
-#define AnimationStateData_getMix(...) spAnimationStateData_getMix(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
+            explicit AnimationPair(Animation* a1 = NULL, Animation* a2 = NULL);
+            
+            bool operator==(const AnimationPair &other) const;
+        };
+        
+        SkeletonData* _skeletonData;
+        float _defaultMix;
+        HashMap<AnimationPair, float> _animationToMixTime;
+    };
 }
-#endif
 
-#endif /* SPINE_ANIMATIONSTATEDATA_H_ */
+#endif /* Spine_AnimationStateData_h */
