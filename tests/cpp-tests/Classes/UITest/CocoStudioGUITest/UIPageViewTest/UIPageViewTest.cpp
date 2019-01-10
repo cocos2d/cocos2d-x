@@ -123,11 +123,11 @@ bool UIPageViewTest::init()
     return false;
 }
 
-void UIPageViewTest::pageViewEvent(Ref *pSender, PageViewEventType type)
+void UIPageViewTest::pageViewEvent(Ref *pSender, PageView::EventType type)
 {
     switch (type)
     {
-        case PAGEVIEW_EVENT_TURNING:
+        case PageView::EventType::TURNING:
         {
             PageView* pageView = dynamic_cast<PageView*>(pSender);
             

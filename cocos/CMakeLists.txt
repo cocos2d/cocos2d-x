@@ -46,17 +46,11 @@ include(physics3d/CMakeLists.txt)
 include(math/CMakeLists.txt)
 include(navmesh/CMakeLists.txt)
 include(renderer/CMakeLists.txt)
-#include(vr/CMakeLists.txt)
 include(base/CMakeLists.txt)
 include(ui/CMakeLists.txt)
 include(network/CMakeLists.txt)
 include(audio/CMakeLists.txt)
 include(storage/CMakeLists.txt)
-
-#if(BUILD_EDITOR_COCOSBUILDER)
-#    include(editor-support/cocosbuilder/CMakeLists.txt)
-#    set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_CCB_SRC} ${COCOS_CCB_HEADER})
-#endif(BUILD_EDITOR_COCOSBUILDER)
 
 if(BUILD_EDITOR_COCOSTUDIO)
     include(editor-support/cocostudio/CMakeLists.txt)
@@ -84,7 +78,6 @@ set(COCOS_HEADER cocos2d.h
     ${COCOS_BASE_HEADER}
     ${COCOS_AUDIO_HEADER}
     ${COCOS_UI_HEADER}
-    ${COCOS_DEPRECATED_HEADER}
     ${COCOS_NETWORK_HEADER}
     ${COCOS_EDITOR_SUPPORT_HEADER}
     ${COCOS_EXTENSIONS_HEADER}

@@ -177,16 +177,6 @@ typedef void (Ref::*SEL_SCHEDULE)(float);
 #define CC_MENU_SELECTOR(_SELECTOR) static_cast<cocos2d::SEL_MenuHandler>(&_SELECTOR)
 #define CC_SCHEDULE_SELECTOR(_SELECTOR) static_cast<cocos2d::SEL_SCHEDULE>(&_SELECTOR)
 
-// Deprecated
-#define callfunc_selector(_SELECTOR) CC_CALLFUNC_SELECTOR(_SELECTOR)
-#define callfuncN_selector(_SELECTOR) CC_CALLFUNCN_SELECTOR(_SELECTOR)
-#define callfuncND_selector(_SELECTOR) CC_CALLFUNCND_SELECTOR(_SELECTOR)
-#define callfuncO_selector(_SELECTOR) CC_CALLFUNCO_SELECTOR(_SELECTOR)
-#define menu_selector(_SELECTOR) CC_MENU_SELECTOR(_SELECTOR)
-#define schedule_selector(_SELECTOR) CC_SCHEDULE_SELECTOR(_SELECTOR)
-
-
-
 NS_CC_END
 // end of base group
 /** @} */

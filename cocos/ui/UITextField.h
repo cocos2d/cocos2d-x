@@ -223,25 +223,6 @@ protected:
 };
 
 /**
- * TextField event type.
- * @deprecated Use @see `TextField::EventType` instead.
- */
-typedef enum
-{
-    TEXTFIELD_EVENT_ATTACH_WITH_IME,
-    TEXTFIELD_EVENT_DETACH_WITH_IME,
-    TEXTFIELD_EVENT_INSERT_TEXT,
-    TEXTFIELD_EVENT_DELETE_BACKWARD,
-}TextFiledEventType;
-
-/**
- * A callback which would be called when a TextField event happens.
- * @deprecated Use @see `ccTextFieldCallback` instead.
- */
-typedef void (Ref::*SEL_TextFieldEvent)(Ref*, TextFiledEventType);
-#define textfieldeventselector(_SELECTOR) (SEL_TextFieldEvent)(&_SELECTOR)
-
-/**
  * @brief A widget which allows users to input text.
  * The rendering of the input text are based on @see `TextFieldTTF'.
  * If you want to use system control behavior, please use @see `EditBox` instead.

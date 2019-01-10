@@ -2007,48 +2007,6 @@ private:
  */
 bool CC_DLL isScreenPointInRect(const Vec2 &pt, const Camera* camera, const Mat4& w2l, const Rect& rect, Vec3 *p);
 
-// NodeRGBA
-
-/** @class __NodeRGBA
- * @brief __NodeRGBA is a subclass of Node that implements the RGBAProtocol protocol.
- 
- All features from Node are valid, plus the following new features:
- - opacity
- - RGB colors
- 
- Opacity/Color propagates into children that conform to the RGBAProtocol if cascadeOpacity/cascadeColor is enabled.
- @since v2.1
- @js NA
- */
-class CC_DLL __NodeRGBA : public Node, public __RGBAProtocol
-{
-public:
-    // overrides
-    virtual GLubyte getOpacity() const override { return Node::getOpacity(); }
-    virtual GLubyte getDisplayedOpacity() const  override { return Node::getDisplayedOpacity(); }
-    virtual void setOpacity(GLubyte opacity) override { return Node::setOpacity(opacity); }
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override { return Node::updateDisplayedOpacity(parentOpacity); }
-    virtual bool isCascadeOpacityEnabled() const  override { return Node::isCascadeOpacityEnabled(); }
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override { return Node::setCascadeOpacityEnabled(cascadeOpacityEnabled); }
-
-    virtual const Color3B& getColor(void) const override { return Node::getColor(); }
-    virtual const Color3B& getDisplayedColor() const override { return Node::getDisplayedColor(); }
-    virtual void setColor(const Color3B& color) override { return Node::setColor(color); }
-    virtual void updateDisplayedColor(const Color3B& parentColor) override { return Node::updateDisplayedColor(parentColor); }
-    virtual bool isCascadeColorEnabled() const override { return Node::isCascadeColorEnabled(); }
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override { return Node::setCascadeColorEnabled(cascadeColorEnabled); }
-
-    virtual void setOpacityModifyRGB(bool bValue) override { return Node::setOpacityModifyRGB(bValue); }
-    virtual bool isOpacityModifyRGB() const override { return Node::isOpacityModifyRGB(); }
-
-CC_CONSTRUCTOR_ACCESS:
-    __NodeRGBA();
-    virtual ~__NodeRGBA() {}
-
-private:
-    CC_DISALLOW_COPY_AND_ASSIGN(__NodeRGBA);
-};
-
 // end of _2d group
 /// @}
 

@@ -2274,11 +2274,4 @@ int Node::getAttachedNodeCount()
     return __attachedNodeCount;
 }
 
-// MARK: Deprecated
-
-__NodeRGBA::__NodeRGBA()
-{
-    CCLOG("NodeRGBA deprecated.");
-}
-
 NS_CC_END

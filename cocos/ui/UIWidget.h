@@ -46,32 +46,6 @@ namespace ui {
     class LayoutComponent;
 
 /**
- * Touch event type.
- *@deprecated use `Widget::TouchEventType` instead
- */
-typedef enum
-{
-    TOUCH_EVENT_BEGAN,
-    TOUCH_EVENT_MOVED,
-    TOUCH_EVENT_ENDED,
-    TOUCH_EVENT_CANCELED
-}TouchEventType;
-    
-/**
- * Touch event callback.
- *@deprecated use `Widget::ccWidgetTouchCallback` instead
- */
-typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
-#define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
-
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-#ifdef ABSOLUTE
-#undef ABSOLUTE
-#endif
-#endif
-
-/**
  *@brief Base class for all ui widgets.
  * This class inherent from `ProtectedNode` and `LayoutParameterProtocol`.
  * If you want to implements your own ui widget, you should subclass it.

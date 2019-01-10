@@ -186,50 +186,6 @@ private:
 
 };
 
-
-/** @class __LayerRGBA
- * @brief LayerRGBA is a subclass of Layer that implements the RGBAProtocol protocol using a solid color as the background.
- 
- All features from Layer are valid, plus the following new features that propagate into children that conform to the RGBAProtocol:
- - opacity
- - RGB colors
- @since 2.1
- @js NA
- */
-class CC_DLL __LayerRGBA : public Layer, public __RGBAProtocol
-{
-public:
-    CREATE_FUNC(__LayerRGBA);
-    
-    
-    //
-    // Overrides
-    //
-    virtual uint8_t getOpacity() const override { return Layer::getOpacity(); }
-    virtual uint8_t getDisplayedOpacity() const override { return Layer::getDisplayedOpacity(); }
-    virtual void setOpacity(uint8_t opacity) override { Layer::setOpacity(opacity); }
-    virtual void updateDisplayedOpacity(uint8_t parentOpacity) override { Layer::updateDisplayedOpacity(parentOpacity); }
-    virtual bool isCascadeOpacityEnabled() const override { return Layer::isCascadeOpacityEnabled(); }
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override { Layer::setCascadeOpacityEnabled(cascadeOpacityEnabled); }
-
-    virtual const Color3B& getColor() const override { return Layer::getColor(); }
-    virtual const Color3B& getDisplayedColor() const override { return Layer::getDisplayedColor(); }
-    virtual void setColor(const Color3B& color) override { Layer::setColor(color); }
-    virtual void updateDisplayedColor(const Color3B& parentColor) override { Layer::updateDisplayedColor(parentColor); }
-    virtual bool isCascadeColorEnabled() const override { return Layer::isCascadeOpacityEnabled(); }
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override { Layer::setCascadeColorEnabled(cascadeColorEnabled); }
-
-    virtual void setOpacityModifyRGB(bool bValue) override { Layer::setOpacityModifyRGB(bValue); }
-    virtual bool isOpacityModifyRGB() const override { return Layer::isOpacityModifyRGB(); }
-
-CC_CONSTRUCTOR_ACCESS:
-    __LayerRGBA();
-    virtual ~__LayerRGBA() {}
-
-private:
-    CC_DISALLOW_COPY_AND_ASSIGN(__LayerRGBA);
-};
-
 //
 // LayerColor
 //

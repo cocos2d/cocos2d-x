@@ -43,33 +43,6 @@ namespace ui {
 class ScrollViewBar;
 
 /**
- *Scrollview scroll event type.
- *@deprecated use @see `ScrollView::EventType` instead.
- */
-typedef enum
-{
-    SCROLLVIEW_EVENT_SCROLL_TO_TOP,
-    SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM,
-    SCROLLVIEW_EVENT_SCROLL_TO_LEFT,
-    SCROLLVIEW_EVENT_SCROLL_TO_RIGHT,
-    SCROLLVIEW_EVENT_SCROLLING,
-    SCROLLVIEW_EVENT_BOUNCE_TOP,
-    SCROLLVIEW_EVENT_BOUNCE_BOTTOM,
-    SCROLLVIEW_EVENT_BOUNCE_LEFT,
-    SCROLLVIEW_EVENT_BOUNCE_RIGHT,
-	SCROLLVIEW_EVENT_SCROLLING_BEGAN,
-	SCROLLVIEW_EVENT_SCROLLING_ENDED,
-    SCROLLVIEW_EVENT_AUTOSCROLL_ENDED
-}ScrollviewEventType;
-
-/**
- * A callback which would be called when a ScrollView is scrolling.
- *@deprecated Use @see `ccScrollViewCallback` instead.
- */
-typedef void (Ref::*SEL_ScrollViewEvent)(Ref*, ScrollviewEventType);
-#define scrollvieweventselector(_SELECTOR) (SEL_ScrollViewEvent)(&_SELECTOR)
-
-/**
  * Layout container for a view hierarchy that can be scrolled by the user, allowing it to be larger than the physical display.
  * It holds a inner `Layout` container for storing child items horizontally or vertically.
  */
@@ -654,8 +627,8 @@ protected:
     void processScrollEvent(MoveDirection dir, bool bounce);
     void processScrollingEvent();
 	void processScrollingEndedEvent();
-    void dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType);
-    
+    void dispatchEvent(EventType eventType);
+
     void updateScrollBar(const Vec2& outOfBoundary);
 	
 protected:

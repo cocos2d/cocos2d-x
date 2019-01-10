@@ -38,25 +38,6 @@ NS_CC_BEGIN
 namespace ui {
 
 /**
- * Checkbox event type, there are two type here:
- * - selected state
- * - unselected state
- * @deprecated use `CheckBox::EventType` instead
- */
-typedef enum
-{
-    CHECKBOX_STATE_EVENT_SELECTED,
-    CHECKBOX_STATE_EVENT_UNSELECTED
-} CheckBoxEventType;
-
-/**
- * A callback which will be called after checkbox event happens.
- * @deprecated use `CheckBox::ccCheckBoxCallback` instead.
- */
-typedef void (Ref::*SEL_SelectedStateEvent)(Ref*,CheckBoxEventType);
-#define checkboxselectedeventselector(_SELECTOR) (SEL_SelectedStateEvent)(&_SELECTOR)
-
-/**
  *  Checkbox is a specific type of two-states button that can be either checked or unchecked.
  */
 class CC_GUI_DLL CheckBox : public AbstractCheckButton

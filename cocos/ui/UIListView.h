@@ -37,22 +37,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 namespace ui{
-    
-/**
- * ListView click item event type.
- */
-typedef enum
-{
-    LISTVIEW_ONSELECTEDITEM_START,
-    LISTVIEW_ONSELECTEDITEM_END
-}ListViewEventType;
-
-/**
- * A callback which would be called when a ListView item is clicked.
- *@deprecated Use `ccListViewCallback` instead.
- */
-typedef void (Ref::*SEL_ListViewEvent)(Ref*,ListViewEventType);
-#define listvieweventselector(_SELECTOR) (SEL_ListViewEvent)(&_SELECTOR)
 
 /**
  *@brief ListView is a view group that displays a list of scrollable items.

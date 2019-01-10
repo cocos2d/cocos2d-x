@@ -40,22 +40,6 @@ namespace ui {
 class PageViewIndicator;
 
 /**
- *PageView page turn event type.
- *@deprecated Use `PageView::EventType` instead.
- */
-typedef enum
-{
-    PAGEVIEW_EVENT_TURNING,
-}PageViewEventType;
-
-/**
- *A callback which would be called when a PageView turning event is happening.
- *@deprecated Use `PageView::ccPageViewCallback` instead.
- */
-typedef void (Ref::*SEL_PageViewEvent)(Ref*, PageViewEventType);
-#define pagevieweventselector(_SELECTOR)(SEL_PageViewEvent)(&_SELECTOR)
-
-/**
  *@brief Layout manager that allows the user to flip left & right and up & down through pages of data.
  *
  */

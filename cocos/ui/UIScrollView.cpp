@@ -513,7 +513,7 @@ void ScrollView::stopScroll()
 
         startBounceBackIfNeeded();
 
-        dispatchEvent(SCROLLVIEW_EVENT_SCROLLING_ENDED, EventType::SCROLLING_ENDED);
+        dispatchEvent(EventType::SCROLLING_ENDED);
     }
 }
 
@@ -535,7 +535,7 @@ void ScrollView::stopAutoScroll()
         _autoScrollTotalTime = 0;
         _autoScrollAccumulatedTime = 0;
 
-        dispatchEvent(SCROLLVIEW_EVENT_AUTOSCROLL_ENDED, EventType::AUTOSCROLL_ENDED);
+        dispatchEvent(EventType::AUTOSCROLL_ENDED);
     }
 }
 
@@ -629,7 +629,7 @@ void ScrollView::processAutoScrolling(float deltaTime)
     if(reachedEnd)
     {
         _autoScrolling = false;
-        dispatchEvent(SCROLLVIEW_EVENT_AUTOSCROLL_ENDED, EventType::AUTOSCROLL_ENDED);
+        dispatchEvent(EventType::AUTOSCROLL_ENDED);
     }
 
     moveInnerContainer(newPosition - getInnerContainerPosition(), reachedEnd);
@@ -1125,63 +1125,58 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
 
 void ScrollView::processScrollEvent(MoveDirection dir, bool bounce)
 {
-    ScrollviewEventType scrollEventType;
     EventType eventType;
     switch(dir) {
         case MoveDirection::TOP:
         {
-            scrollEventType = (bounce ? SCROLLVIEW_EVENT_BOUNCE_TOP : SCROLLVIEW_EVENT_SCROLL_TO_TOP);
             eventType = (bounce ? EventType::BOUNCE_TOP : EventType::SCROLL_TO_TOP);
             break;
         }
         case MoveDirection::BOTTOM:
         {
-            scrollEventType = (bounce ? SCROLLVIEW_EVENT_BOUNCE_BOTTOM : SCROLLVIEW_EVENT_SCROLL_TO_BOTTOM);
             eventType = (bounce ? EventType::BOUNCE_BOTTOM : EventType::SCROLL_TO_BOTTOM);
             break;
         }
         case MoveDirection::LEFT:
         {
-            scrollEventType = (bounce ? SCROLLVIEW_EVENT_BOUNCE_LEFT : SCROLLVIEW_EVENT_SCROLL_TO_LEFT);
             eventType = (bounce ? EventType::BOUNCE_LEFT : EventType::SCROLL_TO_LEFT);
             break;
         }
         case MoveDirection::RIGHT:
         {
-            scrollEventType = (bounce ? SCROLLVIEW_EVENT_BOUNCE_RIGHT : SCROLLVIEW_EVENT_SCROLL_TO_RIGHT);
             eventType = (bounce ? EventType::BOUNCE_RIGHT : EventType::SCROLL_TO_RIGHT);
             break;
         }
     }
-    dispatchEvent(scrollEventType, eventType);
+    dispatchEvent(eventType);
 }
 
 void ScrollView::processScrollingEvent()
 {
     if ( !_scrolling ) {
         _scrolling = true;
-        dispatchEvent(SCROLLVIEW_EVENT_SCROLLING_BEGAN, EventType::SCROLLING_BEGAN);
+        dispatchEvent(EventType::SCROLLING_BEGAN);
     }
-    dispatchEvent(SCROLLVIEW_EVENT_SCROLLING, EventType::SCROLLING);
+    dispatchEvent(EventType::SCROLLING);
 }
     
 void ScrollView::processScrollingEndedEvent() {
     _scrolling = false;
-    dispatchEvent(SCROLLVIEW_EVENT_SCROLLING_ENDED, EventType::SCROLLING_ENDED);
+    dispatchEvent(EventType::SCROLLING_ENDED);
 }
 
-void ScrollView::dispatchEvent(ScrollviewEventType scrollEventType, EventType eventType)
+void ScrollView::dispatchEvent(EventType eventType)
 {
-    this->retain();
-    if (_eventCallback)
-    {
-        _eventCallback(this, eventType);
-    }
-    if (_ccEventCallback)
-    {
-        _ccEventCallback(this, static_cast<int>(eventType));
-    }
-    this->release();
+   this->retain();
+   if (_eventCallback)
+   {
+       _eventCallback(this, eventType);
+   }
+   if (_ccEventCallback)
+   {
+       _ccEventCallback(this, static_cast<int>(eventType));
+   }
+   this->release();
 }
 
 void ScrollView::addEventListener(const ccScrollViewCallback& callback)

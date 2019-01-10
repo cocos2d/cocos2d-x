@@ -62,15 +62,6 @@ THE SOFTWARE.
 
 #include "base/ccConfig.h"
 
-/** @def CC_SWAP
-simple macro that swaps 2 variables
- @deprecated use std::swap() instead
-*/
-#define CC_SWAP(x, y, type)    \
-{    type temp = (x);        \
-    x = y; y = temp;        \
-}
-
 #include "base/ccRandom.h"
 
 /** @def CCRANDOM_MINUS1_1
