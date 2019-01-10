@@ -30,6 +30,7 @@ macro(cocos2dx_depend)
         find_library(OPENAL_LIBRARY OpenAL)
         find_library(QUARTZCORE_LIBRARY QuartzCore)
         find_library(GAMECONTROLLER_LIBRARY GameController)
+        find_library(METAL_LIBRARY Metal)
         set(COCOS_APPLE_LIBS
             ${OPENAL_LIBRARY}
             ${AUDIOTOOLBOX_LIBRARY}
@@ -37,6 +38,7 @@ macro(cocos2dx_depend)
             ${FOUNDATION_LIBRARY}
             ${ICONV_LIBRARY}
             ${GAMECONTROLLER_LIBRARY}
+            ${METAL_LIBRARY}
             )
 
         if(BUILD_JS_LIBS)

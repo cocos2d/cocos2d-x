@@ -108,4 +108,32 @@ list(APPEND COCOS_RENDERER_SRC
     renderer/backend/opengl/TextureGL.cpp
 )
 
+else()
+
+list(APPEND COCOS_RENDERER_HEADER
+    renderer/backend/metal/BlendStateMTL.h
+    renderer/backend/metal/BufferMTL.h
+    renderer/backend/metal/BufferManager.h
+    renderer/backend/metal/CommandBufferMTL.h
+    renderer/backend/metal/DepthStencilStateMTL.h
+    renderer/backend/metal/DeviceMTL.h
+    renderer/backend/metal/RenderPipelineMTL.h
+    renderer/backend/metal/ShaderModuleMTL.h
+    renderer/backend/metal/TextureMTL.h
+    renderer/backend/metal/Utils.h
+)
+
+list(APPEND COCOS_RENDERER_SRC
+    renderer/backend/metal/BlendStateMTL.mm
+    renderer/backend/metal/BufferMTL.mm
+    renderer/backend/metal/BufferManager.mm
+    renderer/backend/metal/CommandBufferMTL.mm
+    renderer/backend/metal/DepthStencilStateMTL.mm
+    renderer/backend/metal/DeviceMTL.mm
+    renderer/backend/metal/RenderPipelineMTL.mm
+    renderer/backend/metal/ShaderModuleMTL.mm
+    renderer/backend/metal/TextureMTL.mm
+    renderer/backend/metal/Utils.mm
+)
+
 endif()

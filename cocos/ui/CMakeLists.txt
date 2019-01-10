@@ -31,9 +31,9 @@ elseif(APPLE)
             )
     elseif(IOS)
         set(COCOS_UI_SPECIFIC_HEADER
-            ui/UIWebView.h
+            ui/UIWebView/UIWebView.h
             ui/UIVideoPlayer.h
-            ui/UIWebViewImpl-ios.h
+            ui/UIWebView/UIWebViewImpl-ios.h
             ui/UIEditBox/UIEditBoxImpl-ios.h
             ui/UIEditBox/iOS/CCUIEditBoxIOS.h
             ui/UIEditBox/iOS/CCUIMultilineTextField.h
@@ -43,9 +43,9 @@ elseif(APPLE)
             ui/UIEditBox/iOS/CCUISingleLineTextField.h
             )
         set(COCOS_UI_SPECIFIC_SRC
-            ui/UIWebView.mm
+            ui/UIWebView/UIWebView.mm
             ui/UIVideoPlayer-ios.mm
-            ui/UIWebViewImpl-ios.mm
+            ui/UIWebView/UIWebViewImpl-ios.mm
             ui/UIEditBox/UIEditBoxImpl-ios.mm
             ui/UIEditBox/iOS/CCUIEditBoxIOS.mm
             ui/UIEditBox/iOS/CCUIMultilineTextField.mm

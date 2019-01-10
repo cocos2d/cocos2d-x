@@ -93,7 +93,7 @@ public:
         addTest("Node: Particles", [](){return new ParticleTests(); });
 //        addTest("Node: Particle3D (PU)", [](){return new Particle3DTests(); });
 #if CC_USE_PHYSICS
-       addTest("Node: Physics", []() { return new PhysicsTests(); });
+//       addTest("Node: Physics", []() { return new PhysicsTests(); });
 #endif
 //        addTest("Node: Physics3D", []() { return new Physics3DTests(); } );
         addTest("Node: RenderTexture", [](){return new RenderTextureTests(); });
