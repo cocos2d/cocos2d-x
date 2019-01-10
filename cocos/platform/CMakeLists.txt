@@ -63,7 +63,6 @@ elseif(APPLE)
     set(COCOS_PLATFORM_SPECIFIC_SRC
         platform/apple/CCLock-apple.cpp
         platform/apple/CCFileUtils-apple.mm
-        platform/apple/CCThread-apple.mm
         platform/apple/CCDevice-apple.mm
         )
     if(MACOSX)
@@ -151,13 +150,11 @@ set(COCOS_PLATFORM_HEADER
     platform/CCPlatformMacros.h
     platform/CCSAXParser.h
     platform/CCStdC.h
-    platform/CCThread.h
     )
 
 set(COCOS_PLATFORM_SRC
     ${COCOS_PLATFORM_SPECIFIC_SRC}
     platform/CCSAXParser.cpp
-    platform/CCThread.cpp
     platform/CCGLView.cpp
     platform/CCFileUtils.cpp
     platform/CCImage.cpp
