@@ -157,10 +157,6 @@ public:
     bool saveToFile(const std::string &filename, bool isToRGB = true);
 
 protected:
-#if CC_USE_WIC
-    bool encodeWithWIC(const std::string& filePath, bool isToRGB, GUID containerFormat);
-    bool decodeWithWIC(const unsigned char *data, ssize_t dataLen);
-#endif
     bool initWithJpgData(const unsigned char *  data, ssize_t dataLen);
     bool initWithPngData(const unsigned char * data, ssize_t dataLen);
     bool initWithTiffData(const unsigned char * data, ssize_t dataLen);
