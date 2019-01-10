@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 #include "2d/CCFontAtlas.h"
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
 #include <iconv.h>
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
@@ -144,7 +144,7 @@ FontAtlas::~FontAtlas()
 
     delete []_currentPageData;
 
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
     if (_iconv)
     {
         iconv_close(_iconv);
@@ -234,7 +234,7 @@ void FontAtlas::conversionU32TOGB2312(const std::u32string& u32Text, std::unorde
     {
     case FT_ENCODING_GB2312:
     {
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
         std::u16string u16Text;
         cocos2d::StringUtils::UTF32ToUTF16(u32Text, u16Text);
         WideCharToMultiByte(936, NULL, (LPCWCH)u16Text.c_str(), strLen, (LPSTR)gb2312Text, gb2312StrSize, NULL, NULL);

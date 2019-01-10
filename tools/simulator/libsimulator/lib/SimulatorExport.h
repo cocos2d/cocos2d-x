@@ -24,7 +24,7 @@
 
 #pragma once
 
-#if (defined(WIN32) && defined(_WINDOWS)) || defined(WINRT) || defined(WP8)
+#if (defined(WIN32) && defined(_WINDOWS))
     #ifdef __MINGW32__
         #include <string.h>
     #endif

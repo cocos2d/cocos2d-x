@@ -95,12 +95,6 @@ public:
     virtual void doLayout() = 0;
 };
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-#ifdef RELATIVE
-#undef RELATIVE
-#endif
-#endif
-
 /**
  *@brief A container for holding a few child widgets. 
  *

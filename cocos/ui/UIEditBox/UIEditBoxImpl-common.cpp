@@ -39,7 +39,7 @@ static cocos2d::Size applyPadding(const cocos2d::Size& sizeToCorrect) {
     return cocos2d::Size(sizeToCorrect.width - CC_EDIT_BOX_PADDING * 2, sizeToCorrect.height);
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #define PASSWORD_CHAR "*"
 #else
 #define PASSWORD_CHAR "\u25CF"

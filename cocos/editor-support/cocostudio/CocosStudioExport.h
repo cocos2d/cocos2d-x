@@ -25,7 +25,7 @@
 #ifndef __CCCOCOSSTUDIO_H__
 #define __CCCOCOSSTUDIO_H__
 
-#if (defined(WIN32) && defined(_WINDOWS)) || defined(WINRT) || defined(WP8)
+#if (defined(WIN32) && defined(_WINDOWS))
     #ifdef __MINGW32__
         #include <string.h>
     #endif

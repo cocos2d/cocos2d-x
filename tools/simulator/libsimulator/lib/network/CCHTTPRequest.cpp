@@ -219,20 +219,12 @@ bool HTTPRequest::start(void)
     curl_easy_setopt(_curl, CURLOPT_COOKIEFILE, "");
 
 #ifdef _WINDOWS_
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	std::thread worker(requestCURL, this);
-	worker.detach();
-
-#else
     CreateThread(NULL,          // default security attributes
                  0,             // use default stack size
                  requestCURL,   // thread function name
                  this,          // argument to thread function
                  0,             // use default creation flags
                  NULL);
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-
 #else
     pthread_create(&_thread, NULL, requestCURL, this);
     pthread_detach(_thread);

@@ -926,12 +926,6 @@
 		50693C5F1B6BF2AE005C5820 /* CCDownloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50693C5C1B6BF2AE005C5820 /* CCDownloader.cpp */; };
 		50693C601B6BF2AE005C5820 /* CCDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 50693C5D1B6BF2AE005C5820 /* CCDownloader.h */; };
 		50693C611B6BF2AE005C5820 /* CCDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 50693C5D1B6BF2AE005C5820 /* CCDownloader.h */; };
-		5070031B1B69735200E83DDD /* HttpClient-android.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507003161B69735200E83DDD /* HttpClient-android.cpp */; };
-		5070031D1B69735200E83DDD /* HttpClient-winrt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507003171B69735200E83DDD /* HttpClient-winrt.cpp */; };
-		507003211B69735300E83DDD /* HttpConnection-winrt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507003191B69735200E83DDD /* HttpConnection-winrt.cpp */; };
-		507003221B69735300E83DDD /* HttpConnection-winrt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507003191B69735200E83DDD /* HttpConnection-winrt.cpp */; };
-		507003231B69735300E83DDD /* HttpConnection-winrt.h in Headers */ = {isa = PBXBuildFile; fileRef = 5070031A1B69735200E83DDD /* HttpConnection-winrt.h */; };
-		507003241B69735300E83DDD /* HttpConnection-winrt.h in Headers */ = {isa = PBXBuildFile; fileRef = 5070031A1B69735200E83DDD /* HttpConnection-winrt.h */; };
 		507B39C71C31BDD30067B53E /* DetourPathQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F9B1B04825B00E47F5F /* DetourPathQueue.cpp */; };
 		507B39D21C31BDD30067B53E /* sweep.cc in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20831AE7C57D00C31518 /* sweep.cc */; };
 		507B39D61C31BDD30067B53E /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
@@ -1050,7 +1044,6 @@
 		507B3BA91C31BDD30067B53E /* CCSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570276180BCC900088DEC7 /* CCSprite.cpp */; };
 		507B3BB81C31BDD30067B53E /* CCSpriteBatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570278180BCC900088DEC7 /* CCSpriteBatchNode.cpp */; };
 		507B3BBB1C31BDD30067B53E /* CCSpriteFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57027A180BCC900088DEC7 /* CCSpriteFrame.cpp */; };
-		507B3BBC1C31BDD30067B53E /* HttpConnection-winrt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507003191B69735200E83DDD /* HttpConnection-winrt.cpp */; };
 		507B3BC51C31BDD30067B53E /* CCSpriteFrameCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57027C180BCC900088DEC7 /* CCSpriteFrameCache.cpp */; };
 		507B3BC61C31BDD30067B53E /* sweep_context.cc in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20851AE7C57D00C31518 /* sweep_context.cc */; };
 		507B3BC81C31BDD30067B53E /* CCAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57028E180BCCAB0088DEC7 /* CCAnimation.cpp */; };
@@ -1318,7 +1311,6 @@
 		507B3F8C1C31BDD30067B53E /* CCTMXObjectGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5702E5180BCE750088DEC7 /* CCTMXObjectGroup.h */; };
 		507B3F8D1C31BDD30067B53E /* CCTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5702E7180BCE750088DEC7 /* CCTMXTiledMap.h */; };
 		507B3F8F1C31BDD30067B53E /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC026991914068200FA920D /* ConvertUTF.h */; };
-		507B3F911C31BDD30067B53E /* HttpConnection-winrt.h in Headers */ = {isa = PBXBuildFile; fileRef = 5070031A1B69735200E83DDD /* HttpConnection-winrt.h */; };
 		507B3F921C31BDD30067B53E /* CCTMXXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5702E9180BCE750088DEC7 /* CCTMXXMLParser.h */; };
 		507B3F9B1C31BDD30067B53E /* CCParallaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5702FF180BCE890088DEC7 /* CCParallaxNode.h */; };
 		507B3F9C1C31BDD30067B53E /* CCAutoreleasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDC61925AB6E00A911A9 /* CCAutoreleasePool.h */; };
@@ -2916,11 +2908,7 @@
 		50643BE119BFCF1800EF68ED /* CCPlatformMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlatformMacros.h; sourceTree = "<group>"; };
 		50693C5C1B6BF2AE005C5820 /* CCDownloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCDownloader.cpp; sourceTree = "<group>"; };
 		50693C5D1B6BF2AE005C5820 /* CCDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDownloader.h; sourceTree = "<group>"; };
-		507003161B69735200E83DDD /* HttpClient-android.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "HttpClient-android.cpp"; sourceTree = "<group>"; };
-		507003171B69735200E83DDD /* HttpClient-winrt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "HttpClient-winrt.cpp"; sourceTree = "<group>"; };
 		507003181B69735200E83DDD /* HttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClient.cpp; sourceTree = "<group>"; };
-		507003191B69735200E83DDD /* HttpConnection-winrt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "HttpConnection-winrt.cpp"; sourceTree = "<group>"; };
-		5070031A1B69735200E83DDD /* HttpConnection-winrt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HttpConnection-winrt.h"; sourceTree = "<group>"; };
 		507B40FD1C31BDD30067B53E /* libcocos2d tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		50864C6D1C7BC1B000B3BAB1 /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		50864C6E1C7BC1B000B3BAB1 /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -4983,12 +4971,8 @@
 			isa = PBXGroup;
 			children = (
 				52B47A2B1A5349A3004E4C60 /* HttpClient-apple.mm */,
-				507003161B69735200E83DDD /* HttpClient-android.cpp */,
-				507003171B69735200E83DDD /* HttpClient-winrt.cpp */,
 				507003181B69735200E83DDD /* HttpClient.cpp */,
 				1AAF5363180E3374000584C8 /* HttpClient.h */,
-				507003191B69735200E83DDD /* HttpConnection-winrt.cpp */,
-				5070031A1B69735200E83DDD /* HttpConnection-winrt.h */,
 				52B47A291A5349A3004E4C60 /* HttpAsynConnection-apple.h */,
 				52B47A2A1A5349A3004E4C60 /* HttpAsynConnection-apple.m */,
 				52B47A2C1A5349A3004E4C60 /* HttpCookie.cpp */,
@@ -6241,7 +6225,6 @@
 				4631CB3321AFD9F90000D408 /* UIEditBox.h in Headers */,
 				501216901AC47380009A4BEA /* CCRenderState.h in Headers */,
 				1A40D1181E8E56C7002E363A /* en.h in Headers */,
-				507003231B69735300E83DDD /* HttpConnection-winrt.h in Headers */,
 				3EACC9A219F5014D00EB3C5E /* CCCamera.h in Headers */,
 				50864CAF1C7BC1B000B3BAB1 /* cpGearJoint.h in Headers */,
 				B6DD2FEF1B04825B00E47F5F /* DetourTileCache.h in Headers */,
@@ -6491,7 +6474,6 @@
 				507B3F8C1C31BDD30067B53E /* CCTMXObjectGroup.h in Headers */,
 				507B3F8D1C31BDD30067B53E /* CCTMXTiledMap.h in Headers */,
 				507B3F8F1C31BDD30067B53E /* ConvertUTF.h in Headers */,
-				507B3F911C31BDD30067B53E /* HttpConnection-winrt.h in Headers */,
 				507B3F921C31BDD30067B53E /* CCTMXXMLParser.h in Headers */,
 				507B3F9B1C31BDD30067B53E /* CCParallaxNode.h in Headers */,
 				507B3F9C1C31BDD30067B53E /* CCAutoreleasePool.h in Headers */,
@@ -6938,7 +6920,6 @@
 				4631CB9E21AFD9FA0000D408 /* UIScrollView.h in Headers */,
 				1A5702F9180BCE750088DEC7 /* CCTMXTiledMap.h in Headers */,
 				1AC0269D1914068200FA920D /* ConvertUTF.h in Headers */,
-				507003241B69735300E83DDD /* HttpConnection-winrt.h in Headers */,
 				4631CBC621AFD9FA0000D408 /* UIImageView.h in Headers */,
 				461FE08521C34EEB00E5378F /* CCEnumClass.h in Headers */,
 				1A5702FD180BCE750088DEC7 /* CCTMXXMLParser.h in Headers */,
@@ -7311,7 +7292,6 @@
 				1A5701A1180BCB590088DEC7 /* CCFontAtlas.cpp in Sources */,
 				B6DD2FC71B04825B00E47F5F /* DetourNavMeshBuilder.cpp in Sources */,
 				1A5701A5180BCB590088DEC7 /* CCFontAtlasCache.cpp in Sources */,
-				507003211B69735300E83DDD /* HttpConnection-winrt.cpp in Sources */,
 				4631CBBD21AFD9FA0000D408 /* UILayoutManager.cpp in Sources */,
 				EDC78BD821CA19FB00E1863C /* CCComAudio.cpp in Sources */,
 				ED28C235219E629B0078D854 /* Texture.cpp in Sources */,
@@ -7375,7 +7355,6 @@
 				EDC78C5A21CA19FC00E1863C /* CCActionManagerEx.cpp in Sources */,
 				4631CBB521AFD9FA0000D408 /* UITextBMFont.cpp in Sources */,
 				1A1645B2191B726C008C7C7F /* ConvertUTFWrapper.cpp in Sources */,
-				5070031B1B69735200E83DDD /* HttpClient-android.cpp in Sources */,
 				ED28C237219E629B0078D854 /* Device.cpp in Sources */,
 				1A5701FB180BCBAD0088DEC7 /* CCMenuItem.cpp in Sources */,
 				1A570202180BCBD40088DEC7 /* CCClippingNode.cpp in Sources */,
@@ -7437,7 +7416,6 @@
 				4631CB7721AFD9F90000D408 /* UIEditBoxImpl-ios.mm in Sources */,
 				4631CBDF21AFD9FA0000D408 /* UILayoutParameter.cpp in Sources */,
 				EDC78BE021CA19FB00E1863C /* CCProcessBase.cpp in Sources */,
-				5070031D1B69735200E83DDD /* HttpClient-winrt.cpp in Sources */,
 				EDC78C2221CA19FB00E1863C /* CCSkeletonNode.cpp in Sources */,
 				1A5702C8180BCE370088DEC7 /* CCTextFieldTTF.cpp in Sources */,
 				50ABBE7D1925AB6F00A911A9 /* CCEventTouch.cpp in Sources */,
@@ -7722,7 +7700,6 @@
 				507B3BA91C31BDD30067B53E /* CCSprite.cpp in Sources */,
 				507B3BB81C31BDD30067B53E /* CCSpriteBatchNode.cpp in Sources */,
 				507B3BBB1C31BDD30067B53E /* CCSpriteFrame.cpp in Sources */,
-				507B3BBC1C31BDD30067B53E /* HttpConnection-winrt.cpp in Sources */,
 				507B3BC51C31BDD30067B53E /* CCSpriteFrameCache.cpp in Sources */,
 				507B3BC61C31BDD30067B53E /* sweep_context.cc in Sources */,
 				507B3BC81C31BDD30067B53E /* CCAnimation.cpp in Sources */,
@@ -8052,7 +8029,6 @@
 				EDC78C4521CA19FB00E1863C /* CCTween.cpp in Sources */,
 				EDC78C5B21CA19FC00E1863C /* CCActionManagerEx.cpp in Sources */,
 				EDC78CDF21CA19FC00E1863C /* ComAudioReader.cpp in Sources */,
-				507003221B69735300E83DDD /* HttpConnection-winrt.cpp in Sources */,
 				4631CB2821AFD9F90000D408 /* UICheckBox.cpp in Sources */,
 				1A57028B180BCC900088DEC7 /* CCSpriteFrameCache.cpp in Sources */,
 				15FB209C1AE7C57D00C31518 /* sweep_context.cc in Sources */,

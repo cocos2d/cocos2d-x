@@ -206,14 +206,12 @@ bool ShaderMandelbrot::init()
 {
     if (ShaderTestDemo::init())
     {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Mandelbrot.fsh");
 
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
-#endif
         return true;
     }
     
@@ -239,14 +237,12 @@ bool ShaderJulia::init()
 {
     if (ShaderTestDemo::init())
     {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Julia.fsh");
 
         auto s = Director::getInstance()->getWinSize();
         sn->setPosition(Vec2(s.width/2, s.height/2));
 
         addChild(sn);
-#endif
         return true;
     }
 
@@ -426,13 +422,9 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
 
 void SpriteBlur::initGLProgram()
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     std::string fragSource = FileUtils::getInstance()->getStringFromFile(
         FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh"));
-#else
-    std::string fragSource = FileUtils::getInstance()->getStringFromFile(
-        FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur_winrt.fsh"));
-#endif
+
     auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource.data());
 
     auto glProgramState = GLProgramState::getOrCreateWithGLProgram(program);
@@ -440,10 +432,8 @@ void SpriteBlur::initGLProgram()
     
     auto size = getTexture()->getContentSizeInPixels();
     getGLProgramState()->setUniformVec2("resolution", size);
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     getGLProgramState()->setUniformFloat("blurRadius", _blurRadius);
     getGLProgramState()->setUniformFloat("sampleNum", 7.0f);
-#endif
 }
 
 void SpriteBlur::setBlurRadius(float radius)
@@ -530,9 +520,7 @@ bool ShaderBlur::init()
         auto label = Label::createWithTTF("Normal Sprite", "fonts/arial.ttf", 12.0f);
         addChild(label);
         label->setPosition(Vec2(2*s.width/3, s.height/3.0f));
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
         createSliderCtls();
-#else
         auto label_blur = Label::createWithTTF("Blur Sprite", "fonts/arial.ttf", 12.0f);
         addChild(label_blur);
         label_blur->setPosition(Vec2(s.width/3, s.height/3.0f));

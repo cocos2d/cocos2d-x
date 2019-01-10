@@ -56,12 +56,6 @@ typedef void (cocos2d::Ref::*SEL_HttpResponse)(HttpClient* client, HttpResponse*
  * @lua NA
  */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-#ifdef DELETE
-#undef DELETE
-#endif
-#endif
-
 class CC_DLL HttpRequest : public Ref
 {
 public:

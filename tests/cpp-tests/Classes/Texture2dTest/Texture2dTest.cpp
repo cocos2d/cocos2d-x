@@ -80,10 +80,8 @@ Texture2DTests::Texture2DTests()
     ADD_TEST_CASE(TextureJPEG);
     ADD_TEST_CASE(TextureTIFF);
     ADD_TEST_CASE(TextureTGA);
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     ADD_TEST_CASE(TextureWEBP);
     ADD_TEST_CASE(TextureWEBPNoAlpha)
-#endif
     ADD_TEST_CASE(TexturePixelFormat);
     ADD_TEST_CASE(TextureBlend);
     ADD_TEST_CASE(TextureAsync);
@@ -2046,12 +2044,6 @@ std::string TextureETC1::subtitle() const
         {(int)Application::Platform::OS_ANDROID, "Android"},
         {(int)Application::Platform::OS_IPHONE, "iPhone"},
         {(int)Application::Platform::OS_IPAD, "iPad"},
-        {(int)Application::Platform::OS_BLACKBERRY, "BlackBerry"},
-        {(int)Application::Platform::OS_NACL, "NativeClient"},
-        {(int)Application::Platform::OS_EMSCRIPTEN, "Emscripten"},
-        {(int)Application::Platform::OS_TIZEN, "Tizen"},
-        {(int)Application::Platform::OS_WINRT, "WinRT"},
-        {(int)Application::Platform::OS_WP8, "Windows Phone 8"}
     };
 
     if (isSupportETCHardwareDecode)

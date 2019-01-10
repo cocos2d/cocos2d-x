@@ -40,7 +40,7 @@
 #include "platform/CCFileUtils.h"
 
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #define strcasecmp _stricmp
 #endif
 

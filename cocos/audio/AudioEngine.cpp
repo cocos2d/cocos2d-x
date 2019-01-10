@@ -36,7 +36,7 @@
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 #include "audio/apple/AudioEngine-inl.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-#include "audio/winrt/AudioEngine-winrt.h"
+#include "audio/win32/AudioEngine-w32.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 #include "audio/linux/AudioEngine-linux.h"
 #endif
