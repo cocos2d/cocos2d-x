@@ -66,10 +66,6 @@ THE SOFTWARE.
 #include "base/CCScriptSupport.h"
 #endif
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.h"
-#endif
-
 /**
  Position of the FPS
  
@@ -159,9 +155,6 @@ bool Director::init(void)
     _renderer = new (std::nothrow) Renderer;
     RenderState::initialize();
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    EngineDataManager::init();
-#endif
     return true;
 }
 
@@ -1069,9 +1062,6 @@ void Director::purgeDirector()
         _openGLView = nullptr;
     }
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    EngineDataManager::destroy();
-#endif
     // delete Director
     release();
 }
@@ -1401,7 +1391,7 @@ void Director::startAnimation(SetIntervalReason reason)
 
     _cocos2d_thread_id = std::this_thread::get_id();
 
-    Application::getInstance()->setAnimationInterval(_animationInterval, reason);
+    Application::getInstance()->setAnimationInterval(_animationInterval);
 
     // fix issue #3509, skip one fps to avoid incorrect time calculation.
     setNextDeltaTimeZero(true);
