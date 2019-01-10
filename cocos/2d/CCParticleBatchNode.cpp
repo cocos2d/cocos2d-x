@@ -425,7 +425,7 @@ void ParticleBatchNode::draw(Renderer* renderer, const Mat4 & transform, uint32_
     if( _textureAtlas->getTotalQuads() == 0 )
         return;
     
-    _customCommand.init(_globalZOrder);
+    _customCommand.init(_globalZOrder, _blendFunc);
     
     // Texture is set in TextureAtlas.
     const cocos2d::Mat4& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -433,13 +433,7 @@ void ParticleBatchNode::draw(Renderer* renderer, const Mat4 & transform, uint32_
     auto& bindGroup = _customCommand.getPipelineDescriptor().bindGroup;
     bindGroup.setUniform("u_MVPMatrix", finalMat.m, sizeof(finalMat.m));
     bindGroup.setTexture("u_texture", 0, _textureAtlas->getTexture()->getBackendTexture());
-    
-    //TODO: minggo: don't set blend factor every frame.
-    auto& blendDescriptor = _customCommand.getPipelineDescriptor().blendDescriptor;
-    blendDescriptor.blendEnabled = true;
-    blendDescriptor.sourceRGBBlendFactor = blendDescriptor.sourceAlphaBlendFactor =_blendFunc.src;
-    blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor =_blendFunc.dst;
-    
+
     if (_textureAtlas->isDirty())
     {
         const auto& quads = _textureAtlas->getQuads();
