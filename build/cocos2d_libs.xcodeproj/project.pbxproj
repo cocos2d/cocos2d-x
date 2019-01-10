@@ -1048,7 +1048,6 @@
 		507B3B491C31BDD30067B53E /* CCScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5701D6180BCB8C0088DEC7 /* CCScene.cpp */; };
 		507B3B4A1C31BDD30067B53E /* Vec4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD351925AB0000A911A9 /* Vec4.cpp */; };
 		507B3B511C31BDD30067B53E /* CCTransition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5701D8180BCB8C0088DEC7 /* CCTransition.cpp */; };
-		507B3B581C31BDD30067B53E /* CCThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBF2B1926664700A911A9 /* CCThread.cpp */; };
 		507B3B5B1C31BDD30067B53E /* CCTransitionPageTurn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5701DA180BCB8C0088DEC7 /* CCTransitionPageTurn.cpp */; };
 		507B3B5E1C31BDD30067B53E /* CCTransitionProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5701DC180BCB8C0088DEC7 /* CCTransitionProgress.cpp */; };
 		507B3B611C31BDD30067B53E /* CCMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5701F3180BCBAD0088DEC7 /* CCMenu.cpp */; };
@@ -1103,7 +1102,6 @@
 		507B3C121C31BDD30067B53E /* pvr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464AD6E3197EBB1400E502D8 /* pvr.cpp */; };
 		507B3C181C31BDD30067B53E /* CCComponentContainer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57030A180BCF190088DEC7 /* CCComponentContainer.cpp */; };
 		507B3C191C31BDD30067B53E /* ccCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBDC71925AB6E00A911A9 /* ccCArray.cpp */; };
-		507B3C1D1C31BDD30067B53E /* CCThread-apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBF1F1926664700A911A9 /* CCThread-apple.mm */; };
 		507B3C201C31BDD30067B53E /* CCUserDefault-android.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBE0C1925AB6F00A911A9 /* CCUserDefault-android.cpp */; };
 		507B3C221C31BDD30067B53E /* tinyxml2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570349180BD09B0088DEC7 /* tinyxml2.cpp */; };
 		507B3C231C31BDD30067B53E /* CCTexture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD7D1925AB4100A911A9 /* CCTexture2D.cpp */; };
@@ -1428,7 +1426,6 @@
 		507B409E1C31BDD30067B53E /* CCTextureCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD821925AB4100A911A9 /* CCTextureCache.h */; };
 		507B409F1C31BDD30067B53E /* CCVertexIndexBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = B276EF5D1988D1D500CD400F /* CCVertexIndexBuffer.h */; };
 		507B40A11C31BDD30067B53E /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
-		507B40A21C31BDD30067B53E /* CCThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBF2C1926664700A911A9 /* CCThread.h */; };
 		507B40A71C31BDD30067B53E /* Export.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A15FE11807A56F005B8026 /* Export.h */; };
 		507B40AC1C31BDD30067B53E /* atitc.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDC21925AB6E00A911A9 /* atitc.h */; };
 		507B40B61C31BDD30067B53E /* TGAlib.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBE1A1925AB6F00A911A9 /* TGAlib.h */; };
@@ -1819,8 +1816,6 @@
 		50ABC0021926664800A911A9 /* CCLock-apple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBF1D1926664700A911A9 /* CCLock-apple.cpp */; };
 		50ABC0031926664800A911A9 /* CCLock-apple.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBF1E1926664700A911A9 /* CCLock-apple.h */; };
 		50ABC0041926664800A911A9 /* CCLock-apple.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBF1E1926664700A911A9 /* CCLock-apple.h */; };
-		50ABC0051926664800A911A9 /* CCThread-apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBF1F1926664700A911A9 /* CCThread-apple.mm */; };
-		50ABC0061926664800A911A9 /* CCThread-apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBF1F1926664700A911A9 /* CCThread-apple.mm */; };
 		50ABC0071926664800A911A9 /* CCApplicationProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBF201926664700A911A9 /* CCApplicationProtocol.h */; };
 		50ABC0081926664800A911A9 /* CCApplicationProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBF201926664700A911A9 /* CCApplicationProtocol.h */; };
 		50ABC0091926664800A911A9 /* CCCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBF211926664700A911A9 /* CCCommon.h */; };
@@ -1843,10 +1838,6 @@
 		50ABC01A1926664800A911A9 /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBF291926664700A911A9 /* CCSAXParser.cpp */; };
 		50ABC01B1926664800A911A9 /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBF2A1926664700A911A9 /* CCSAXParser.h */; };
 		50ABC01C1926664800A911A9 /* CCSAXParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBF2A1926664700A911A9 /* CCSAXParser.h */; };
-		50ABC01D1926664800A911A9 /* CCThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBF2B1926664700A911A9 /* CCThread.cpp */; };
-		50ABC01E1926664800A911A9 /* CCThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBF2B1926664700A911A9 /* CCThread.cpp */; };
-		50ABC01F1926664800A911A9 /* CCThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBF2C1926664700A911A9 /* CCThread.h */; };
-		50ABC0201926664800A911A9 /* CCThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBF2C1926664700A911A9 /* CCThread.h */; };
 		50ABC05D1926664800A911A9 /* CCApplication-mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBF4F1926664700A911A9 /* CCApplication-mac.h */; };
 		50ABC05F1926664800A911A9 /* CCApplication-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBF501926664700A911A9 /* CCApplication-mac.mm */; };
 		50ABC0611926664800A911A9 /* CCCommon-mac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBF511926664700A911A9 /* CCCommon-mac.mm */; };
@@ -3165,7 +3156,6 @@
 		50ABBF1C1926664700A911A9 /* CCFileUtils-apple.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "CCFileUtils-apple.mm"; sourceTree = "<group>"; };
 		50ABBF1D1926664700A911A9 /* CCLock-apple.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "CCLock-apple.cpp"; sourceTree = "<group>"; };
 		50ABBF1E1926664700A911A9 /* CCLock-apple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCLock-apple.h"; sourceTree = "<group>"; };
-		50ABBF1F1926664700A911A9 /* CCThread-apple.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "CCThread-apple.mm"; sourceTree = "<group>"; };
 		50ABBF201926664700A911A9 /* CCApplicationProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplicationProtocol.h; sourceTree = "<group>"; };
 		50ABBF211926664700A911A9 /* CCCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCommon.h; sourceTree = "<group>"; };
 		50ABBF221926664700A911A9 /* CCDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDevice.h; sourceTree = "<group>"; };
@@ -3177,8 +3167,6 @@
 		50ABBF281926664700A911A9 /* CCImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCImage.h; sourceTree = "<group>"; };
 		50ABBF291926664700A911A9 /* CCSAXParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSAXParser.cpp; sourceTree = "<group>"; };
 		50ABBF2A1926664700A911A9 /* CCSAXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSAXParser.h; sourceTree = "<group>"; };
-		50ABBF2B1926664700A911A9 /* CCThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCThread.cpp; sourceTree = "<group>"; };
-		50ABBF2C1926664700A911A9 /* CCThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCThread.h; sourceTree = "<group>"; };
 		50ABBF4F1926664700A911A9 /* CCApplication-mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCApplication-mac.h"; sourceTree = "<group>"; };
 		50ABBF501926664700A911A9 /* CCApplication-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "CCApplication-mac.mm"; sourceTree = "<group>"; };
 		50ABBF511926664700A911A9 /* CCCommon-mac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "CCCommon-mac.mm"; sourceTree = "<group>"; };
@@ -5183,8 +5171,6 @@
 				50ABBF281926664700A911A9 /* CCImage.h */,
 				50ABBF291926664700A911A9 /* CCSAXParser.cpp */,
 				50ABBF2A1926664700A911A9 /* CCSAXParser.h */,
-				50ABBF2B1926664700A911A9 /* CCThread.cpp */,
-				50ABBF2C1926664700A911A9 /* CCThread.h */,
 			);
 			name = platform;
 			path = ../cocos/platform;
@@ -5197,7 +5183,6 @@
 				50ABBF1C1926664700A911A9 /* CCFileUtils-apple.mm */,
 				50ABBF1D1926664700A911A9 /* CCLock-apple.cpp */,
 				50ABBF1E1926664700A911A9 /* CCLock-apple.h */,
-				50ABBF1F1926664700A911A9 /* CCThread-apple.mm */,
 				294D7D921D0E67B4002CE7B7 /* CCDevice-apple.mm */,
 				294D7D931D0E67B4002CE7B7 /* CCDevice-apple.h */,
 			);
@@ -6207,7 +6192,6 @@
 				15FB209D1AE7C57D00C31518 /* sweep_context.h in Headers */,
 				50CB247519D9C5A100687767 /* AudioCache.h in Headers */,
 				1A40D1691E8E56C7002E363A /* schema.h in Headers */,
-				50ABC01F1926664800A911A9 /* CCThread.h in Headers */,
 				5053850E1B02819E00793096 /* CCVertexAttribBinding.h in Headers */,
 				460D4D1221ABD0C60075726E /* BufferMTL.h in Headers */,
 				1A57035A180BD0B00088DEC7 /* unzip.h in Headers */,
@@ -6703,7 +6687,6 @@
 				507B409F1C31BDD30067B53E /* CCVertexIndexBuffer.h in Headers */,
 				1A40D1201E8E56C7002E363A /* filereadstream.h in Headers */,
 				507B40A11C31BDD30067B53E /* CCNodeGrid.h in Headers */,
-				507B40A21C31BDD30067B53E /* CCThread.h in Headers */,
 				507B40A71C31BDD30067B53E /* Export.h in Headers */,
 				507B40AC1C31BDD30067B53E /* atitc.h in Headers */,
 				507B40B61C31BDD30067B53E /* TGAlib.h in Headers */,
@@ -7215,7 +7198,6 @@
 				1A40D11F1E8E56C7002E363A /* filereadstream.h in Headers */,
 				ED9C6A9718599AD8000A5232 /* CCNodeGrid.h in Headers */,
 				EDC78C5121CA19FB00E1863C /* CCBone.h in Headers */,
-				50ABC0201926664800A911A9 /* CCThread.h in Headers */,
 				EDC78C6521CA19FC00E1863C /* CSParse3DBinary_generated.h in Headers */,
 				15AE184B19AAD30500C27E9E /* Export.h in Headers */,
 				50ABBE221925AB6F00A911A9 /* atitc.h in Headers */,
@@ -7649,7 +7631,6 @@
 				464AD6E5197EBB1400E502D8 /* pvr.cpp in Sources */,
 				460D4D1B21ABD0C60075726E /* RenderPipelineMTL.mm in Sources */,
 				50ABBDA31925AB4100A911A9 /* CCQuadCommand.cpp in Sources */,
-				50ABC01D1926664800A911A9 /* CCThread.cpp in Sources */,
 				50ABBECB1925AB6F00A911A9 /* s3tc.cpp in Sources */,
 				50ABBD481925AB0000A911A9 /* Mat4.cpp in Sources */,
 				4631CB9921AFD9FA0000D408 /* UIRadioButton.cpp in Sources */,
@@ -7662,7 +7643,6 @@
 				50ABBE751925AB6F00A911A9 /* CCEventListenerTouch.cpp in Sources */,
 				4631CBC121AFD9FA0000D408 /* UILayoutComponent.cpp in Sources */,
 				50ABBE511925AB6F00A911A9 /* CCEventDispatcher.cpp in Sources */,
-				50ABC0051926664800A911A9 /* CCThread-apple.mm in Sources */,
 				460D4D0E21ABD0C60075726E /* DepthStencilStateMTL.mm in Sources */,
 				460D4D1521ABD0C60075726E /* TextureMTL.mm in Sources */,
 				468A14E91EF223B700ECA675 /* idl_gen_fbs.cpp in Sources */,
@@ -7835,7 +7815,6 @@
 				507B3B491C31BDD30067B53E /* CCScene.cpp in Sources */,
 				507B3B4A1C31BDD30067B53E /* Vec4.cpp in Sources */,
 				507B3B511C31BDD30067B53E /* CCTransition.cpp in Sources */,
-				507B3B581C31BDD30067B53E /* CCThread.cpp in Sources */,
 				507B3B5B1C31BDD30067B53E /* CCTransitionPageTurn.cpp in Sources */,
 				507B3B5E1C31BDD30067B53E /* CCTransitionProgress.cpp in Sources */,
 				507B3B611C31BDD30067B53E /* CCMenu.cpp in Sources */,
@@ -7891,7 +7870,6 @@
 				507B3C181C31BDD30067B53E /* CCComponentContainer.cpp in Sources */,
 				507B3C191C31BDD30067B53E /* ccCArray.cpp in Sources */,
 				468A14F11EF223B700ECA675 /* idl_gen_go.cpp in Sources */,
-				507B3C1D1C31BDD30067B53E /* CCThread-apple.mm in Sources */,
 				507B3C201C31BDD30067B53E /* CCUserDefault-android.cpp in Sources */,
 				507B3C221C31BDD30067B53E /* tinyxml2.cpp in Sources */,
 				507B3C231C31BDD30067B53E /* CCTexture2D.cpp in Sources */,
@@ -8143,7 +8121,6 @@
 				46BD387D21D35A51002BD50F /* BufferMTL.mm in Sources */,
 				1A5701E7180BCB8C0088DEC7 /* CCTransition.cpp in Sources */,
 				ED28C238219E629B0078D854 /* Device.cpp in Sources */,
-				50ABC01E1926664800A911A9 /* CCThread.cpp in Sources */,
 				1A5701EB180BCB8C0088DEC7 /* CCTransitionPageTurn.cpp in Sources */,
 				4631CB3221AFD9F90000D408 /* UIEditBoxImpl-common.cpp in Sources */,
 				46BD387A21D35A46002BD50F /* BlendStateMTL.mm in Sources */,
@@ -8238,7 +8215,6 @@
 				1A570311180BCF190088DEC7 /* CCComponentContainer.cpp in Sources */,
 				468A14F01EF223B700ECA675 /* idl_gen_go.cpp in Sources */,
 				50ABBE2C1925AB6F00A911A9 /* ccCArray.cpp in Sources */,
-				50ABC0061926664800A911A9 /* CCThread-apple.mm in Sources */,
 				4631CBE421AFD9FA0000D408 /* UISlider.cpp in Sources */,
 				50ABBEB61925AB6F00A911A9 /* CCUserDefault-android.cpp in Sources */,
 				1A57034C180BD09B0088DEC7 /* tinyxml2.cpp in Sources */,
