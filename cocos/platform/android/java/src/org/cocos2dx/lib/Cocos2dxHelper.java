@@ -80,9 +80,6 @@ public class Cocos2dxHelper {
     // ===========================================================
     // Fields
     // ===========================================================
-
-    private static Cocos2dxMusic sCocos2dMusic;
-    private static Cocos2dxSound sCocos2dSound = null;
     private static AssetManager sAssetManager;
     private static Cocos2dxAccelerometer sCocos2dxAccelerometer = null;
     private static boolean sAccelerometerEnabled;
@@ -156,7 +153,6 @@ public class Cocos2dxHelper {
             
             Cocos2dxHelper.sPackageName = applicationInfo.packageName;
 
-            Cocos2dxHelper.sCocos2dMusic = new Cocos2dxMusic(activity);
             Cocos2dxHelper.sAssetManager = activity.getAssets();
             Cocos2dxHelper.nativeSetContext((Context)activity, Cocos2dxHelper.sAssetManager);
     
@@ -359,100 +355,6 @@ public class Cocos2dxHelper {
         return array;
     }
 
-    public static void preloadBackgroundMusic(final String pPath) {
-        Cocos2dxHelper.sCocos2dMusic.preloadBackgroundMusic(pPath);
-    }
-
-    public static void playBackgroundMusic(final String pPath, final boolean isLoop) {
-        Cocos2dxHelper.sCocos2dMusic.playBackgroundMusic(pPath, isLoop);
-    }
-
-    public static void resumeBackgroundMusic() {
-        Cocos2dxHelper.sCocos2dMusic.resumeBackgroundMusic();
-    }
-
-    public static void pauseBackgroundMusic() {
-        Cocos2dxHelper.sCocos2dMusic.pauseBackgroundMusic();
-    }
-
-    public static void stopBackgroundMusic() {
-        Cocos2dxHelper.sCocos2dMusic.stopBackgroundMusic();
-    }
-
-    public static void rewindBackgroundMusic() {
-        Cocos2dxHelper.sCocos2dMusic.rewindBackgroundMusic();
-    }
-
-    public static boolean willPlayBackgroundMusic() {
-        return Cocos2dxHelper.sCocos2dMusic.willPlayBackgroundMusic();
-    }
-
-    public static boolean isBackgroundMusicPlaying() {
-        return Cocos2dxHelper.sCocos2dMusic.isBackgroundMusicPlaying();
-    }
-
-    public static float getBackgroundMusicVolume() {
-        return Cocos2dxHelper.sCocos2dMusic.getBackgroundVolume();
-    }
-
-    public static void setBackgroundMusicVolume(final float volume) {
-        Cocos2dxHelper.sCocos2dMusic.setBackgroundVolume(volume);
-    }
-
-    public static void preloadEffect(final String path) {
-        Cocos2dxHelper.getSound().preloadEffect(path);
-    }
-
-    public static int playEffect(final String path, final boolean isLoop, final float pitch, final float pan, final float gain) {
-        return Cocos2dxHelper.getSound().playEffect(path, isLoop, pitch, pan, gain);
-    }
-
-    public static void resumeEffect(final int soundId) {
-        Cocos2dxHelper.getSound().resumeEffect(soundId);
-    }
-
-    public static void pauseEffect(final int soundId) {
-        Cocos2dxHelper.getSound().pauseEffect(soundId);
-    }
-
-    public static void stopEffect(final int soundId) {
-        Cocos2dxHelper.getSound().stopEffect(soundId);
-    }
-
-    public static float getEffectsVolume() {
-        return Cocos2dxHelper.getSound().getEffectsVolume();
-    }
-
-    public static void setEffectsVolume(final float volume) {
-        Cocos2dxHelper.getSound().setEffectsVolume(volume);
-    }
-
-    public static void unloadEffect(final String path) {
-        Cocos2dxHelper.getSound().unloadEffect(path);
-    }
-
-    public static void pauseAllEffects() {
-        Cocos2dxHelper.getSound().pauseAllEffects();
-    }
-
-    public static void resumeAllEffects() {
-        Cocos2dxHelper.getSound().resumeAllEffects();
-    }
-
-    public static void stopAllEffects() {
-        Cocos2dxHelper.getSound().stopAllEffects();
-    }
-
-    static void setAudioFocus(boolean isAudioFocus) {
-        sCocos2dMusic.setAudioFocus(isAudioFocus);
-        getSound().setAudioFocus(isAudioFocus);
-    }
-
-    public static void end() {
-        Cocos2dxHelper.sCocos2dMusic.end();
-        Cocos2dxHelper.getSound().end();
-    }
-
     public static void onResume() {
         sActivityVisible = true;
         if (Cocos2dxHelper.sAccelerometerEnabled) {
@@ -468,16 +370,6 @@ public class Cocos2dxHelper {
         if (Cocos2dxHelper.sAccelerometerEnabled) {
             Cocos2dxHelper.getAccelerometer().disable();
         }
-    }
-
-    public static void onEnterBackground() {
-        getSound().onEnterBackground();
-        sCocos2dMusic.onEnterBackground();
-    }
-    
-    public static void onEnterForeground() {
-        getSound().onEnterForeground();
-        sCocos2dMusic.onEnterForeground();
     }
     
     public static void terminateProcess() {
@@ -825,12 +717,5 @@ public class Cocos2dxHelper {
             Cocos2dxHelper.sCocos2dxAccelerometer = new Cocos2dxAccelerometer(sActivity);
 
         return sCocos2dxAccelerometer;
-    }
-
-    private static Cocos2dxSound getSound() {
-        if (null == sCocos2dSound)
-            sCocos2dSound = new Cocos2dxSound(sActivity);
-
-        return sCocos2dSound;
     }
 }

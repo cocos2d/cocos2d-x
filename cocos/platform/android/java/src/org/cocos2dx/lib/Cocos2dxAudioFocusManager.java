@@ -52,7 +52,6 @@ class Cocos2dxAudioFocusManager {
                             @Override
                             public void run() {
                                 nativeOnAudioFocusChange(AUDIOFOCUS_LOST);
-                                Cocos2dxHelper.setAudioFocus(false);
                             }
                         });
 
@@ -63,7 +62,6 @@ class Cocos2dxAudioFocusManager {
                             @Override
                             public void run() {
                                 nativeOnAudioFocusChange(AUDIOFOCUS_LOST_TRANSIENT);
-                                Cocos2dxHelper.setAudioFocus(false);
                             }
                         });
                     } else if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK) {
@@ -73,7 +71,6 @@ class Cocos2dxAudioFocusManager {
                             @Override
                             public void run() {
                                 nativeOnAudioFocusChange(AUDIOFOCUS_LOST_TRANSIENT_CAN_DUCK);
-                                Cocos2dxHelper.setAudioFocus(false);
                             }
                         });
                     } else if (focusChange == AudioManager.AUDIOFOCUS_GAIN) {
@@ -84,7 +81,6 @@ class Cocos2dxAudioFocusManager {
                             @Override
                             public void run() {
                                 nativeOnAudioFocusChange(AUDIOFOCUS_GAIN);
-                                Cocos2dxHelper.setAudioFocus(true);
                             }
                         });
                     }
@@ -122,7 +118,6 @@ class Cocos2dxAudioFocusManager {
         Cocos2dxHelper.runOnGLThread(new Runnable() {
             @Override
             public void run() {
-                Cocos2dxHelper.setAudioFocus(true);
                 nativeOnAudioFocusChange(AUDIOFOCUS_GAIN);
             }
         });
