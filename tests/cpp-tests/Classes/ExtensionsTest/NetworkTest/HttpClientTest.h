@@ -56,4 +56,28 @@ private:
     cocos2d::Label* _labelStatusCode;
 };
 
+class HttpClientClearRequestsTest : public TestCase
+{
+public:
+    CREATE_FUNC(HttpClientClearRequestsTest);
+    
+    HttpClientClearRequestsTest();
+    virtual ~HttpClientClearRequestsTest();
+    
+    //Menu Callbacks
+    void onMenuCancelAllClicked(cocos2d::Ref *sender);
+    void onMenuCancelSomeClicked(cocos2d::Ref *sender);
+    
+    //Http Response Callback
+    void onHttpRequestCompleted(cocos2d::network::HttpClient *sender, cocos2d::network::HttpResponse *response);
+    
+    virtual std::string title() const override { return "Http Request Test"; }
+    
+private:
+    int _totalExpectedRequests;
+    int _totalProcessedRequests;
+    cocos2d::Label* _labelTrakingData;
+    cocos2d::Label* _labelStatusCode;
+};
+
 #endif //__HTTPREQUESTHTTP_H
