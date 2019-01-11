@@ -259,7 +259,7 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
     cylinder->setRotation3D(Vec3(-90,0,0));
 
     //the callback function update cylinder's texcoord
-    schedule(schedule_selector(Sprite3DUVAnimationTest::cylinderUpdate));
+    schedule(CC_SCHEDULE_SELECTOR(Sprite3DUVAnimationTest::cylinderUpdate));
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,

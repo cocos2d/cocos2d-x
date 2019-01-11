@@ -95,7 +95,7 @@ list(APPEND GAME_HEADER
      Classes/AppDelegate.h
 #     Classes/LabelTest/LabelTestNew.h
 #     Classes/LabelTest/LabelTest.h
-     Classes/Particle3DTest/Particle3DTest.h
+#     Classes/Particle3DTest/Particle3DTest.h
 #     Classes/AllocatorTest/AllocatorTest.h
      Classes/VibrateTest/VibrateTest.h
      Classes/ClippingNodeTest/ClippingNodeTest.h
@@ -132,7 +132,7 @@ list(APPEND GAME_HEADER
      Classes/NewEventDispatcherTest/NewEventDispatcherTest.h
      Classes/ActionsProgressTest/ActionsProgressTest.h
      Classes/RotateWorldTest/RotateWorldTest.h
-     #Classes/Camera3DTest/Camera3DTest.h
+#     #Classes/Camera3DTest/Camera3DTest.h
      Classes/TextInputTest/TextInputTest.h
      Classes/Texture2dTest/Texture2dTest.h
      #Classes/TerrainTest/TerrainTest.h
@@ -148,14 +148,14 @@ list(APPEND GAME_HEADER
      Classes/ExtensionsTest/NetworkTest/WebSocketDelayTest.h
      Classes/ExtensionsTest/NetworkTest/SocketIOTest.h
      Classes/ExtensionsTest/NetworkTest/HttpClientTest.h
-     Classes/Sprite3DTest/Sprite3DTest.h
-     Classes/Sprite3DTest/DrawNode3D.h
+#     Classes/Sprite3DTest/Sprite3DTest.h
+#     Classes/Sprite3DTest/DrawNode3D.h
      Classes/BaseTest.h
      Classes/SceneTest/SceneTest.h
      Classes/ReleasePoolTest/ReleasePoolTest.h
      Classes/CocosDenshionTest/CocosDenshionTest.h
      Classes/InputTest/MouseTest.h
-     Classes/SpineTest/SpineTest.h
+#     Classes/SpineTest/SpineTest.h
 #     Classes/Scene3DTest/Scene3DTest.h
      Classes/ParticleTest/ParticleTest.h
      Classes/EffectsTest/EffectsTest.h
@@ -184,7 +184,7 @@ list(APPEND GAME_HEADER
      Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.h
      Classes/UITest/CocoStudioGUITest/UITextTest/UITextTest.h
      Classes/DrawPrimitivesTest/DrawPrimitivesTest.h
-     Classes/BillBoardTest/BillBoardTest.h
+#     Classes/BillBoardTest/BillBoardTest.h
      Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.h
      Classes/EffectsAdvancedTest/EffectsAdvancedTest.h
      Classes/SchedulerTest/SchedulerTest.h
@@ -219,7 +219,7 @@ list(APPEND GAME_SOURCE
 #     Classes/AllocatorTest/AllocatorTest.cpp
      Classes/AppDelegate.cpp
      Classes/BaseTest.cpp
-     Classes/BillBoardTest/BillBoardTest.cpp
+#     Classes/BillBoardTest/BillBoardTest.cpp
      Classes/BugsTest/Bug-CCDrawNode.cpp
      Classes/BugsTest/Bug-1159.cpp
      Classes/BugsTest/Bug-1174.cpp
@@ -264,8 +264,8 @@ list(APPEND GAME_SOURCE
  #    Classes/LabelTest/LabelTest.cpp
  #    Classes/LabelTest/LabelTestNew.cpp
      Classes/LayerTest/LayerTest.cpp
-     Classes/LightTest/LightTest.cpp
-     Classes/MaterialSystemTest/MaterialSystemTest.cpp
+#     Classes/LightTest/LightTest.cpp
+#     Classes/MaterialSystemTest/MaterialSystemTest.cpp
      Classes/MenuTest/MenuTest.cpp
      Classes/MotionStreakTest/MotionStreakTest.cpp
      Classes/MultiTouchTest/MultiTouchTest.cpp
@@ -275,7 +275,7 @@ list(APPEND GAME_SOURCE
      Classes/NodeTest/NodeTest.cpp
      Classes/OpenURLTest/OpenURLTest.cpp
      Classes/ParallaxTest/ParallaxTest.cpp
-     Classes/Particle3DTest/Particle3DTest.cpp
+#     Classes/Particle3DTest/Particle3DTest.cpp
      Classes/ParticleTest/ParticleTest.cpp
      Classes/ReleasePoolTest/ReleasePoolTest.cpp
      Classes/RenderTextureTest/RenderTextureTest.cpp
@@ -286,8 +286,8 @@ list(APPEND GAME_SOURCE
      Classes/ShaderTest/ShaderTest2.cpp
      Classes/SpineTest/SpineTest.cpp
 #     Classes/Scene3DTest/Scene3DTest.cpp
-     Classes/Sprite3DTest/DrawNode3D.cpp
-     Classes/Sprite3DTest/Sprite3DTest.cpp
+#     Classes/Sprite3DTest/DrawNode3D.cpp
+#     Classes/Sprite3DTest/Sprite3DTest.cpp
      Classes/SpritePolygonTest/SpritePolygonTest.cpp
      Classes/SpriteTest/SpriteTest.cpp
  #    Classes/TerrainTest/TerrainTest.cpp
@@ -332,8 +332,6 @@ list(APPEND GAME_SOURCE
      Classes/ZwoptexTest/ZwoptexTest.cpp
      Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp
      Classes/controller.cpp
-     # Classes/VRTest/VRTest.cpp
-     # Classes/VRTest/VRTest.h
      )
 
 if(ANDROID OR IOS)

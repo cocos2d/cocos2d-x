@@ -521,10 +521,7 @@ bool ShaderBlur::init()
         addChild(label);
         label->setPosition(Vec2(2*s.width/3, s.height/3.0f));
         createSliderCtls();
-        auto label_blur = Label::createWithTTF("Blur Sprite", "fonts/arial.ttf", 12.0f);
-        addChild(label_blur);
-        label_blur->setPosition(Vec2(s.width/3, s.height/3.0f));
-#endif
+        
         return true;
     }
 
