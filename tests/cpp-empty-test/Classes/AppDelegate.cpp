@@ -37,7 +37,6 @@ USING_NS_CC;
 using namespace std;
 
 AppDelegate::AppDelegate()
-:test(nullptr)
 {
 
 }
