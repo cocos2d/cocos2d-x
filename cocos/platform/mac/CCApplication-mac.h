@@ -27,9 +27,6 @@ THE SOFTWARE.
 #ifndef __CC_APPLICATION_MAC_H__
 #define __CC_APPLICATION_MAC_H__
 
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-
 #include "platform/CCCommon.h"
 #include "platform/CCApplicationProtocol.h"
 #include <string>
@@ -110,7 +107,5 @@ protected:
 };
 
 NS_CC_END
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
 #endif  // end of __CC_APPLICATION_MAC_H__;

@@ -435,10 +435,6 @@
 		1A5FB7C41DF012D900C918C1 /* AudioMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5FB7C31DF012D900C918C1 /* AudioMacros.h */; };
 		1A5FB7C51DF012D900C918C1 /* AudioMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5FB7C31DF012D900C918C1 /* AudioMacros.h */; };
 		1A5FB7C61DF012D900C918C1 /* AudioMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A5FB7C31DF012D900C918C1 /* AudioMacros.h */; };
-		1A9DCA27180E6955007A3AD4 /* CCGLBufferedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9DCA02180E6955007A3AD4 /* CCGLBufferedNode.cpp */; };
-		1A9DCA28180E6955007A3AD4 /* CCGLBufferedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9DCA02180E6955007A3AD4 /* CCGLBufferedNode.cpp */; };
-		1A9DCA29180E6955007A3AD4 /* CCGLBufferedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9DCA03180E6955007A3AD4 /* CCGLBufferedNode.h */; };
-		1A9DCA2A180E6955007A3AD4 /* CCGLBufferedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9DCA03180E6955007A3AD4 /* CCGLBufferedNode.h */; };
 		1ABA68AE1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ABA68AC1888D700007D1BB4 /* CCFontCharMap.cpp */; };
 		1ABA68AF1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1ABA68AC1888D700007D1BB4 /* CCFontCharMap.cpp */; };
 		1ABA68B01888D700007D1BB4 /* CCFontCharMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 1ABA68AD1888D700007D1BB4 /* CCFontCharMap.h */; };
@@ -1101,7 +1097,6 @@
 		507B3C841C31BDD30067B53E /* AudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BDAEB19C0436F0055CDCD /* AudioEngine.cpp */; };
 		507B3C861C31BDD30067B53E /* HttpCookie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2C1A5349A3004E4C60 /* HttpCookie.cpp */; };
 		507B3C881C31BDD30067B53E /* CCQuadCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD741925AB4100A911A9 /* CCQuadCommand.cpp */; };
-		507B3C9A1C31BDD30067B53E /* CCGLBufferedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A9DCA02180E6955007A3AD4 /* CCGLBufferedNode.cpp */; };
 		507B3CA01C31BDD30067B53E /* atitc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBDC11925AB6E00A911A9 /* atitc.cpp */; };
 		507B3CA31C31BDD30067B53E /* AudioPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 50CB247419D9C5A100687767 /* AudioPlayer.mm */; };
 		507B3CA41C31BDD30067B53E /* CCRef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBDFE1925AB6E00A911A9 /* CCRef.cpp */; };
@@ -1376,7 +1371,6 @@
 		507B40661C31BDD30067B53E /* AudioCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 50CB246F19D9C5A100687767 /* AudioCache.h */; };
 		507B406B1C31BDD30067B53E /* CCVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD221925AB0000A911A9 /* CCVertex.h */; };
 		507B40741C31BDD30067B53E /* DetourTileCache.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2FA11B04825B00E47F5F /* DetourTileCache.h */; };
-		507B407D1C31BDD30067B53E /* CCGLBufferedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A9DCA03180E6955007A3AD4 /* CCGLBufferedNode.h */; };
 		507B407F1C31BDD30067B53E /* pvr.h in Headers */ = {isa = PBXBuildFile; fileRef = 464AD6E4197EBB1400E502D8 /* pvr.h */; };
 		507B40851C31BDD30067B53E /* ccShader_PositionTexture.frag in Headers */ = {isa = PBXBuildFile; fileRef = 5034CA05191D591000CE6051 /* ccShader_PositionTexture.frag */; };
 		507B40861C31BDD30067B53E /* CCFastTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */; };
@@ -2586,8 +2580,6 @@
 		1A5FB7C31DF012D900C918C1 /* AudioMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioMacros.h; sourceTree = "<group>"; };
 		1A97ABFC1A1D962A0076D9CC /* MathUtilNeon64.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MathUtilNeon64.inl; sourceTree = "<group>"; };
 		1A97ABFD1A1D962A0076D9CC /* MathUtilSSE.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MathUtilSSE.inl; sourceTree = "<group>"; };
-		1A9DCA02180E6955007A3AD4 /* CCGLBufferedNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGLBufferedNode.cpp; sourceTree = "<group>"; };
-		1A9DCA03180E6955007A3AD4 /* CCGLBufferedNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLBufferedNode.h; sourceTree = "<group>"; };
 		1AAF5363180E3374000584C8 /* HttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClient.h; sourceTree = "<group>"; };
 		1AAF5364180E3374000584C8 /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
 		1AAF5365180E3374000584C8 /* HttpResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpResponse.h; sourceTree = "<group>"; };
@@ -4683,8 +4675,6 @@
 				A045F6DB1BA816A1005076C7 /* CCCameraBackgroundBrush.h */,
 				3EACC99E19F5014D00EB3C5E /* CCLight.cpp */,
 				3EACC99F19F5014D00EB3C5E /* CCLight.h */,
-				1A9DCA02180E6955007A3AD4 /* CCGLBufferedNode.cpp */,
-				1A9DCA03180E6955007A3AD4 /* CCGLBufferedNode.h */,
 				1A570046180BC59A0088DEC7 /* actions */,
 				1A570095180BC5B00088DEC7 /* base-nodes */,
 				1A570109180BC8DC0088DEC7 /* draw-nodes */,
@@ -6187,7 +6177,6 @@
 				50ABBE671925AB6F00A911A9 /* CCEventListenerCustom.h in Headers */,
 				EDC78CFC21CA19FC00E1863C /* TextFieldReader.h in Headers */,
 				50ABBE2F1925AB6F00A911A9 /* ccConfig.h in Headers */,
-				1A9DCA29180E6955007A3AD4 /* CCGLBufferedNode.h in Headers */,
 				4631CB2D21AFD9F90000D408 /* UIScrollViewBar.h in Headers */,
 				50ABC0031926664800A911A9 /* CCLock-apple.h in Headers */,
 				ED28C227219E629B0078D854 /* RenderPipelineDescriptor.h in Headers */,
@@ -6549,7 +6538,6 @@
 				507B406B1C31BDD30067B53E /* CCVertex.h in Headers */,
 				50864CB11C7BC1B000B3BAB1 /* cpGearJoint.h in Headers */,
 				507B40741C31BDD30067B53E /* DetourTileCache.h in Headers */,
-				507B407D1C31BDD30067B53E /* CCGLBufferedNode.h in Headers */,
 				507B407F1C31BDD30067B53E /* pvr.h in Headers */,
 				507B40851C31BDD30067B53E /* ccShader_PositionTexture.frag in Headers */,
 				507B40861C31BDD30067B53E /* CCFastTMXTiledMap.h in Headers */,
@@ -7043,7 +7031,6 @@
 				EDC78C9321CA19FC00E1863C /* LoadingBarReader.h in Headers */,
 				B6DD2FF01B04825B00E47F5F /* DetourTileCache.h in Headers */,
 				46D3D47E21E473BB00EF5E75 /* CCPhysicsShape.h in Headers */,
-				1A9DCA2A180E6955007A3AD4 /* CCGLBufferedNode.h in Headers */,
 				464AD6E8197EBB1400E502D8 /* pvr.h in Headers */,
 				5034CA36191D591100CE6051 /* ccShader_PositionTexture.frag in Headers */,
 				EDC78C7921CA19FC00E1863C /* CSArmatureNode_generated.h in Headers */,
@@ -7515,7 +7502,6 @@
 				EDC78C9421CA19FC00E1863C /* SpriteReader.cpp in Sources */,
 				50ABBE6D1925AB6F00A911A9 /* CCEventListenerKeyboard.cpp in Sources */,
 				15FB20871AE7C57D00C31518 /* shapes.cc in Sources */,
-				1A9DCA27180E6955007A3AD4 /* CCGLBufferedNode.cpp in Sources */,
 				50ABBD541925AB0000A911A9 /* TransformUtils.cpp in Sources */,
 				DABC9FA919E7DFA900FA252C /* CCClippingRectangleNode.cpp in Sources */,
 				3E2F27A619CFBFE100E7C490 /* AudioEngine.cpp in Sources */,
@@ -7759,7 +7745,6 @@
 				507B3C841C31BDD30067B53E /* AudioEngine.cpp in Sources */,
 				507B3C861C31BDD30067B53E /* HttpCookie.cpp in Sources */,
 				507B3C881C31BDD30067B53E /* CCQuadCommand.cpp in Sources */,
-				507B3C9A1C31BDD30067B53E /* CCGLBufferedNode.cpp in Sources */,
 				507B3CA01C31BDD30067B53E /* atitc.cpp in Sources */,
 				507B3CA31C31BDD30067B53E /* AudioPlayer.mm in Sources */,
 				507B3CA41C31BDD30067B53E /* CCRef.cpp in Sources */,
@@ -8117,7 +8102,6 @@
 				52B47A311A5349A3004E4C60 /* HttpCookie.cpp in Sources */,
 				50ABBDA41925AB4100A911A9 /* CCQuadCommand.cpp in Sources */,
 				EDC78CA321CA19FC00E1863C /* ButtonReader.cpp in Sources */,
-				1A9DCA28180E6955007A3AD4 /* CCGLBufferedNode.cpp in Sources */,
 				50ABBE201925AB6F00A911A9 /* atitc.cpp in Sources */,
 				50CB248019D9C5A100687767 /* AudioPlayer.mm in Sources */,
 				EDC78C5321CA19FB00E1863C /* CocoLoader.cpp in Sources */,

@@ -51,7 +51,6 @@ set(COCOS_2D_HEADER
     2d/CCAnimation.h
     2d/CCNodeGrid.h
     2d/CCFontFreeType.h
-    2d/CCGLBufferedNode.h
     2d/CCAction.h
     2d/CCTransition.h
     2d/CCTransitionPageTurn.h
@@ -102,7 +101,6 @@ set(COCOS_2D_SRC
     2d/CCFont.cpp
     2d/CCFontFNT.cpp
     2d/CCFontFreeType.cpp
-    2d/CCGLBufferedNode.cpp
     2d/CCGrid.cpp
     2d/CCLabelAtlas.cpp
     2d/CCLabel.cpp
