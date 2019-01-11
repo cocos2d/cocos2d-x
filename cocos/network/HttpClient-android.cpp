@@ -998,16 +998,19 @@ void HttpClient::clearResponseAndRequestQueue()
     _requestQueueMutex.lock();
     if (_requestQueue.size())
     {
-        for (auto obj : _requestQueue)
+        for (auto it = _requestQueue.begin(); it != _requestQueue.end();)
         {
             if(!_clearRequestPredicate ||
-               _clearRequestPredicate(obj))
+               _clearRequestPredicate((*it)))
             {
-                obj->release();
+                (*it)->release();
+                it =_requestQueue.erase(it);
+            }
+            else
+            {
+                it++;
             }
         }
-        
-        _requestQueue.clear();
     }
     _requestQueueMutex.unlock();
     
