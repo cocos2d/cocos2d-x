@@ -258,7 +258,7 @@ namespace experimental{
 
             int _videoPlayerIndex;
             ccVideoPlayerCallback _eventCallback;
-
+	
             void* _videoView;
         };
     }
