@@ -7,29 +7,39 @@ CC_BACKEND_BEGIN
 BufferMTL::BufferMTL(id<MTLDevice> mtlDevice, unsigned int size, BufferType type, BufferUsage usage)
 : Buffer(size, type, usage)
 {
-//    _mtlBuffer = [mtlDevice newBufferWithLength:size options:MTLResourceStorageModeShared];
-
-    int maxInflightBuffers = BufferUsage::DYNAMIC == usage ? MAX_INFLIGHT_BUFFER : 1;
-    NSMutableArray *mutableDynamicDataBuffers = [NSMutableArray arrayWithCapacity:maxInflightBuffers];
-    for (int i = 0; i < maxInflightBuffers; ++i)
+    if (BufferUsage::DYNAMIC == usage)
     {
-        // Create a new buffer with enough capacity to store one instance of the dynamic buffer data
-        id <MTLBuffer> dynamicDataBuffer = [mtlDevice newBufferWithLength:size options:MTLResourceStorageModeShared];
-        [mutableDynamicDataBuffers addObject:dynamicDataBuffer];
+        NSMutableArray *mutableDynamicDataBuffers = [NSMutableArray arrayWithCapacity:MAX_INFLIGHT_BUFFER];
+        for (int i = 0; i < MAX_INFLIGHT_BUFFER; ++i)
+        {
+            // Create a new buffer with enough capacity to store one instance of the dynamic buffer data
+            id <MTLBuffer> dynamicDataBuffer = [mtlDevice newBufferWithLength:size options:MTLResourceStorageModeShared];
+            [mutableDynamicDataBuffers addObject:dynamicDataBuffer];
+        }
+        _dynamicDataBuffers = [mutableDynamicDataBuffers copy];
+
+        _mtlBuffer = _dynamicDataBuffers[0];
+        BufferManager::addBuffer(this);
     }
-    _dynamicDataBuffers = [mutableDynamicDataBuffers copy];
-
-    _mtlBuffer = _dynamicDataBuffers[0];
-
-    BufferManager::addBuffer(this);
+    else
+    {
+        _mtlBuffer = [mtlDevice newBufferWithLength:size options:MTLResourceStorageModeShared];
+    }
 }
 
 BufferMTL::~BufferMTL()
 {
-    for (id<MTLBuffer> buffer in _dynamicDataBuffers)
+    if (BufferUsage::DYNAMIC == _usage)
+    {
+        for (id<MTLBuffer> buffer in _dynamicDataBuffers)
         [buffer release];
 
-    BufferManager::removeBuffer(this);
+        BufferManager::removeBuffer(this);
+    }
+    else
+    {
+        [_mtlBuffer release];
+    }
 }
 
 void BufferMTL::updateData(void* data, unsigned int size)
@@ -51,11 +61,9 @@ id<MTLBuffer> BufferMTL::getMTLBuffer() const
 
 void BufferMTL::updateIndex()
 {
-    if (BufferUsage::DYNAMIC == _usage)
-        _currentFrameIndex = (_currentFrameIndex + 1) % MAX_INFLIGHT_BUFFER;
-    else
-        _currentFrameIndex = 0;
-        
+    assert(BufferUsage::DYNAMIC == _usage);
+    
+    _currentFrameIndex = (_currentFrameIndex + 1) % MAX_INFLIGHT_BUFFER;
     _mtlBuffer = _dynamicDataBuffers[_currentFrameIndex];
 }
 
