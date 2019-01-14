@@ -91,6 +91,9 @@ function install_environement_for_after_merge()
 }
 
 if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
+    sudo apt-get update
+    sudo apt-get install ninja-build
+    ninja --version
     download_deps
     sudo python -m pip install retry
     python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py
