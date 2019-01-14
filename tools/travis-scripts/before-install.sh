@@ -59,6 +59,9 @@ function install_environement_for_pull_request()
     echo "Building pull request ..."
 
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+        sudo apt-get update
+        sudo apt-get install ninja-build
+        ninja --version
         if [ "$BUILD_TARGET" == "linux" ]; then
             install_linux_environment
         fi
