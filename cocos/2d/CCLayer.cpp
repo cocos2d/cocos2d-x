@@ -32,7 +32,6 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 #include "platform/CCDevice.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCGLProgramState.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerTouch.h"
@@ -42,7 +41,6 @@ THE SOFTWARE.
 #include "base/CCEventAcceleration.h"
 #include "base/CCEventListenerAcceleration.h"
 #include "base/ccUTF8.h"
-#include "renderer/CCGLProgram.h"
 #include "renderer/CCShaderCache.h"
 #include "renderer/backend/Buffer.h"
 #include "renderer/ccShaders.h"
@@ -337,7 +335,7 @@ LayerColor* LayerColor::create()
     return ret;
 }
 
-LayerColor * LayerColor::create(const Color4B& color, GLfloat width, GLfloat height)
+LayerColor * LayerColor::create(const Color4B& color, float width, float height)
 {
     LayerColor * layer = new (std::nothrow) LayerColor();
     if( layer && layer->initWithColor(color,width,height))
@@ -367,7 +365,7 @@ bool LayerColor::init()
     return initWithColor(Color4B(0,0,0,0), s.width, s.height);
 }
 
-bool LayerColor::initWithColor(const Color4B& color, GLfloat w, GLfloat h)
+bool LayerColor::initWithColor(const Color4B& color, float w, float h)
 {
     if (Layer::init())
     {
@@ -411,17 +409,17 @@ void LayerColor::setContentSize(const Size & size)
     Layer::setContentSize(size);
 }
 
-void LayerColor::changeWidthAndHeight(GLfloat w ,GLfloat h)
+void LayerColor::changeWidthAndHeight(float w ,float h)
 {
     this->setContentSize(Size(w, h));
 }
 
-void LayerColor::changeWidth(GLfloat w)
+void LayerColor::changeWidth(float w)
 {
     this->setContentSize(Size(w, _contentSize.height));
 }
 
-void LayerColor::changeHeight(GLfloat h)
+void LayerColor::changeHeight(float h)
 {
     this->setContentSize(Size(_contentSize.width, h));
 }
