@@ -4,7 +4,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE := cocos2djs_shared
 
-LOCAL_MODULE_FILENAME := libccjs
+LOCAL_MODULE_FILENAME := libcocos2djs
 
 LOCAL_SRC_FILES := hellojavascript/main.cpp \
                    ../../../Classes/AppDelegate.cpp 
