@@ -44,6 +44,8 @@ If ($env:build_type -eq "windows32") {
     & $python -u .\tools\appveyor-scripts\setup_android.py --ndk_only
     Generate-Binding-Codes
 } elseif ($env:build_type -like "android*") {
+    & choco install ninja
+    & ninja --version
     & $python -u .\tools\appveyor-scripts\setup_android.py
     if ($lastexitcode -ne 0) {throw}
 }
