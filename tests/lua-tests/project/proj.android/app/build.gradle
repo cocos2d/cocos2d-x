@@ -34,9 +34,8 @@ android {
             else if (PROP_BUILD_TYPE == 'cmake') {
                 cmake {
                     targets 'lua_tests'
-                    arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", \
-                              "-DUSE_CHIPMUNK=TRUE", "-DUSE_BULLET=TRUE", "-DBUILD_LUA_LIBS=TRUE"
-                    cppFlags "-frtti -fexceptions"
+                    arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE"
+                    cppFlags "-frtti -fexceptions -fsigned-char"
                 }
             }
         }

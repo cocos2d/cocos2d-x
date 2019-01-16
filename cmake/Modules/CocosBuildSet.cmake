@@ -10,9 +10,9 @@ endif()
 set(CMAKE_DEBUG_TARGET_PROPERTIES
     # INCLUDE_DIRECTORIES
     # COMPILE_DEFINITIONS
+    # COMPILE_OPTIONS
+    # AUTOUIC_OPTIONS
     # POSITION_INDEPENDENT_CODE
-    # CONTAINER_SIZE_REQUIRED
-    # LIB_VERSION
 )
 # It ensures that when Find*.cmake files included from cmake's Modules dir
 # include another *.cmake file with relative path, that file will be included
@@ -32,6 +32,10 @@ endif()
 set(COCOS_EXTERNAL_DIR ${COCOS2DX_ROOT_PATH}/external)
 set(ENGINE_BINARY_PATH ${PROJECT_BINARY_DIR}/engine)
 
+if(CMAKE_TOOLCHAIN_FILE)
+    message(STATUS "using toolchain file:" ${CMAKE_TOOLCHAIN_FILE})
+endif()
+
 message(STATUS "PROJECT_NAME:" ${PROJECT_NAME})
 message(STATUS "PROJECT_SOURCE_DIR:" ${PROJECT_SOURCE_DIR})
 message(STATUS "COCOS2DX_ROOT_PATH:" ${COCOS2DX_ROOT_PATH})
@@ -41,13 +45,18 @@ message(STATUS "COCOS_EXTERNAL_DIR:" ${COCOS_EXTERNAL_DIR})
 message(STATUS "PROJECT_BINARY_DIR:" ${PROJECT_BINARY_DIR})
 message(STATUS "ENGINE_BINARY_PATH:" ${ENGINE_BINARY_PATH})
 
-# include helper functions for cmake build
+# the default behavior of build module
+option(DEBUG_MODE "Debug or Release?" ON)
+option(BUILD_LUA_LIBS "Build lua libraries" OFF)
+option(BUILD_JS_LIBS "Build js libraries" OFF)
+
+# include helper functions
 include(CocosBuildHelpers)
 
-# select building modules
-include(CocosSelectModule)
-
 # set common compiler options
-include(CocosCompileOptions)
+# add target compile define function
+# add target compile options function
+include(CocosConfigDefine)
 
+# config libraries dependence
 include(CocosConfigDepend)

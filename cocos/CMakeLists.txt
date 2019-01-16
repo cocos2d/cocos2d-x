@@ -34,10 +34,6 @@ set(COCOS2D_X_VERSION 3.18)
 
 set(COCOS_CORE_LIB cocos2d)
 
-if(WINDOWS)
-    add_definitions(-DUNICODE -D_UNICODE)
-endif()
-
 include(2d/CMakeLists.txt)
 #include(3d/CMakeLists.txt)
 include(platform/CMakeLists.txt)
@@ -51,6 +47,11 @@ include(ui/CMakeLists.txt)
 include(network/CMakeLists.txt)
 include(audio/CMakeLists.txt)
 include(storage/CMakeLists.txt)
+
+# default value for cocos2dx extensions modules build
+option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
+option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
+option(BUILD_EXTENSIONS "Build extension library" ON)
 
 if(BUILD_EDITOR_COCOSTUDIO)
     include(editor-support/cocostudio/CMakeLists.txt)
@@ -110,16 +111,20 @@ add_library(cocos2d ${COCOS_SRC})
 add_subdirectory(${COCOS2DX_ROOT_PATH}/external ${ENGINE_BINARY_PATH}/external)
 target_link_libraries(cocos2d external)
 
+# add base macro define and compile options
+use_cocos2dx_compile_define(cocos2d)
+use_cocos2dx_compile_options(cocos2d)
+
 # use all platform related system libs
-target_use_cocos2dx_depend(cocos2d)
+use_cocos2dx_libs_depend(cocos2d)
 
 target_include_directories(cocos2d
     PUBLIC ${COCOS2DX_ROOT_PATH}
     PUBLIC ${COCOS2DX_ROOT_PATH}/cocos
     PUBLIC ${COCOS2DX_ROOT_PATH}/extensions
     PUBLIC ${COCOS2DX_ROOT_PATH}/cocos/platform
+    PUBLIC ${COCOS2DX_ROOT_PATH}/cocos/editor-support
     INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/base
-    INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/editor-support
     INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/audio/include
     INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/platform/${PLATFORM_FOLDER}
 )
@@ -143,4 +148,13 @@ endif()
 
 if(XCODE OR VS)
     cocos_mark_code_files("cocos2d")
+endif()
+
+if(WIN32)
+    # precompiled header. Compilation time speedup ~4x.
+    target_sources(cocos2d PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp")
+    set_target_properties(cocos2d PROPERTIES COMPILE_FLAGS "/Yuprecheader.h /FIprecheader.h")
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp" PROPERTIES COMPILE_FLAGS "/Ycprecheader.h")
+    # compile c as c++. needed for precompiled header
+    set_source_files_properties(${COCOS_SPINE_SRC} base/ccFPSImages.c PROPERTIES LANGUAGE CXX)
 endif()

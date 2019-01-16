@@ -165,14 +165,8 @@ target_include_directories(jscocos2d
         INTERFACE ${cocos_root}/cocos/scripting/js-bindings/manual
 )
 
-# ignore part warnings on binding codes. tocheck: not take effect?
-
 if(WINDOWS)
     target_compile_definitions(jscocos2d PRIVATE _USRJSSTATIC)
-else()
-    target_compile_options(jscocos2d PRIVATE 
-        -Wno-deprecated
-    )
 endif()
 
 set_target_properties(jscocos2d
@@ -184,4 +178,11 @@ set_target_properties(jscocos2d
 
 if(XCODE OR VS)
     cocos_mark_code_files("jscocos2d")
+endif()
+
+if(WIN32)
+    # precompiled header
+    target_sources(jscocos2d PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp")
+    set_target_properties(jscocos2d PROPERTIES COMPILE_FLAGS "/Yuprecheader.h /FIprecheader.h")
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp" PROPERTIES COMPILE_FLAGS "/Ycprecheader.h")
 endif()

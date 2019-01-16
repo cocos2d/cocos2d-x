@@ -35,10 +35,8 @@ set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/cocos2d-x)
 set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
 include(CocosBuildSet)
-if(NOT USE_COCOS_PREBUILT)
-    set(BUILD_JS_LIBS ON)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-endif()
+set(BUILD_JS_LIBS ON)
+add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 
 # script and source files info, not need to compile
 set(res_main_files
@@ -121,6 +119,8 @@ else()
     add_library(${APP_NAME} SHARED ${APP_SRC})
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/platform/android ${ENGINE_BINARY_PATH}/cocos/platform)
     target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/proj.android ${ENGINE_BINARY_PATH}/cocos/js-android)
+    target_link_libraries(${APP_NAME} -Wl,--whole-archive js_android_spec -Wl,--no-whole-archive)
 endif()
 
 target_link_libraries(${APP_NAME} jscocos2d)
@@ -139,7 +139,7 @@ if(APPLE)
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
     endif()
 elseif(WINDOWS)
-    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR})
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR}/..)
 endif()
 # copy resource on linux or WINDOWS
 if(LINUX OR WINDOWS)

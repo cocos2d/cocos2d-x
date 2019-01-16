@@ -32,9 +32,7 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
     include(CocosBuildSet)
-    if(NOT USE_COCOS_PREBUILT)
-        add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-    endif()
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 endif()
 
 # record sources, headers, resources...
@@ -139,7 +137,7 @@ if(APPLE)
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon-${APP_NAME}")
     endif()
 elseif(WINDOWS)
-    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR})
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR}/..)
 endif()
 
 if(LINUX OR WINDOWS)
