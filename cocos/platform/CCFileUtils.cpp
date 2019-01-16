@@ -814,20 +814,9 @@ std::string FileUtils::getPathForFilename(const std::string& filename, const std
     return path;
 }
 
-std::string FileUtils::fullPathForFilename(const std::string &filename) const
+std::string FileUtils::fullPathForFilenameImpl(const std::string &filename) const
 {
-    
     DECLARE_GUARD;
-
-    if (filename.empty())
-    {
-        return "";
-    }
-
-    if (isAbsolutePath(filename))
-    {
-        return filename;
-    }
 
     // Already Cached ?
     auto cacheIter = _fullPathCache.find(filename);
@@ -856,13 +845,30 @@ std::string FileUtils::fullPathForFilename(const std::string &filename) const
 
         }
     }
+    // The file wasn't found, return empty string.
+    return "";    
+}
 
-    if(isPopupNotify()){
+std::string FileUtils::fullPathForFilename(const std::string &filename) const
+{
+    if (filename.empty())
+    {
+        return "";
+    }
+
+    if (isAbsolutePath(filename))
+    {
+        return filename;
+    }
+
+    std::string fullpath = fullPathForFilenameImpl(filename);
+
+    if(fullpath.empty() && isPopupNotify())
+    {
         CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", filename.c_str());
     }
 
-    // The file wasn't found, return empty string.
-    return "";
+    return fullpath;
 }
 
 

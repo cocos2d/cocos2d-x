@@ -1007,6 +1007,11 @@ protected:
 
         AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, [](void*){}, nullptr, std::move(lambda));
     }
+private:
+    /**
+     *  Minimum scope to be thread safe needed by fullPathForFilename
+     */
+    std::string fullPathForFilenameImpl(const std::string &filename) const;
 };
 
 // end of support group
