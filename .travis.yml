@@ -2,6 +2,7 @@ matrix:
   include:
     # linux
     - os: linux
+      dist: xenial
       env: 
         - BUILD_TARGET=linux 
         - GEN_BINDING_AND_COCOSFILE=true
@@ -61,9 +62,10 @@ matrix:
       sudo: required
     - os: linux
       env: BUILD_TARGET=android_cocos_new_test
-      language: cpp
+      language: android
       sudo: required
     - os: linux
+      dist: xenial
       env: BUILD_TARGET=linux_cocos_new_test
       language: cpp
       sudo: required

@@ -14,7 +14,7 @@ struct RenderPassDescriptor
 {
     float clearDepthValue = 0.f;
     float clearStencilValue = 0.f;
-    std::array<float, 4> clearColorValue = {{0.f, 0.f, 0.f, 0.f}}; // double-braces required in C++11
+    std::array<float, 4> clearColorValue {{0.f, 0.f, 0.f, 0.f}}; // double-braces required in C++11
     bool needColorAttachment = true;
     bool needDepthAttachment = false;
     bool needStencilAttachment = false;
