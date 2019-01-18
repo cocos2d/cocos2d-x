@@ -74,6 +74,8 @@ public:
     virtual void nativeCloseKeyboard() override {};
     virtual void setNativeMaxLength(int maxLength) override {};
 
+    virtual void setNativeInputRestriction(int inputRestriction) override;
+    virtual void setNativeUneditableTextLength(int uneditableTextLength) override;
     
 private:
     virtual void doAnimationWhenKeyboardMove(float duration, float distance)override {}

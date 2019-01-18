@@ -38,6 +38,7 @@ THE SOFTWARE.
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 static const std::string className = "org.cocos2dx.lib.Cocos2dxHelper";
+static const std::string editBoxClassName = "org.cocos2dx.lib.Cocos2dxEditBoxHelper";
 
 static EditTextCallback s_editTextCallback = nullptr;
 static void* s_ctx = nullptr;
@@ -131,6 +132,27 @@ int getDeviceAudioBufferSizeInFrames()
 {
     return __deviceAudioBufferSizeInFrames;
 }
+
+void setInputRestrictionEditBoxJNI(int index, int inputRestriction) 
+{
+    JniMethodInfo t;
+
+    if (JniHelper::getStaticMethodInfo(t, editBoxClassName.c_str(), "setInputRestriction", "(II)V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, inputRestriction);
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
+void setUneditableTextLengthEditBoxJNI(int index, int uneditableTextLength) 
+{
+    JniMethodInfo t;
+
+    if (JniHelper::getStaticMethodInfo(t, editBoxClassName.c_str(), "setUneditableTextLength", "(II)V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, uneditableTextLength);
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
 
 void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharset, char* dst, const char* newCharset)
 {

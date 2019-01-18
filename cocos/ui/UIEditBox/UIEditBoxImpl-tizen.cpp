@@ -444,6 +444,17 @@ void EditBoxImplTizen::closeKeyboard()
 
 }
 
+void EditBoxImplTizen::setNativeInputRestriction(int inputRestriction) 
+{ 
+    // not implemented yet     
+}
+
+void EditBoxImplTizen::setNativeUneditableTextLength(int uneditableTextLength) 
+{ 
+    // not implemented yet     
+} 
+
+
 }
 
 NS_CC_END

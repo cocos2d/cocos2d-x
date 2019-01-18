@@ -81,6 +81,22 @@ void EditBox::openKeyboard() const
 {
     _editBoxImpl->openKeyboard();
 }
+    
+void EditBox::setInputRestriction(int inputRestriction)
+{
+    if (_editBoxImpl)
+    {
+        _editBoxImpl->setInputRestriction(inputRestriction);
+    }
+}
+
+void EditBox::setUneditableTextLength(int uneditableTextLength)
+{
+    if (_editBoxImpl)
+    {
+        _editBoxImpl->setUneditableTextLength(uneditableTextLength);
+    }
+}
 
 void EditBox::touchDownAction(Ref* /*sender*/, TouchEventType controlEvent)
 {

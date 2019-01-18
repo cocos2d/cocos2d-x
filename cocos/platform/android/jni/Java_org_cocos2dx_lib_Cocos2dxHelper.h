@@ -38,4 +38,7 @@ extern void conversionEncodingJNI(const char* src, int byteSize, const char* fro
 extern int getDeviceSampleRate();
 extern int getDeviceAudioBufferSizeInFrames();
 
+extern void setInputRestrictionEditBoxJNI(int index, int inputRestriction);
+extern void setUneditableTextLengthEditBoxJNI(int index, int uneditableTextLength);
+
 #endif /* __Java_org_cocos2dx_lib_Cocos2dxHelper_H__ */

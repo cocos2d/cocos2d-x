@@ -31,6 +31,7 @@
 
 #include "ui/UIEditBox/UIEditBox.h"
 #include <jni.h>
+#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
 #include "platform/android/jni/JniHelper.h"
 #include "2d/CCLabel.h"
 #include "base/ccUTF8.h"
@@ -211,6 +212,16 @@ void EditBoxImplAndroid::nativeOpenKeyboard()
 void EditBoxImplAndroid::nativeCloseKeyboard()
 {
     JniHelper::callStaticVoidMethod(editBoxClassName, "closeKeyboard", _editBoxIndex);
+}
+
+void EditBoxImplAndroid::setNativeInputRestriction(int inputRestriction)
+{
+    setInputRestrictionEditBoxJNI(_editBoxIndex, inputRestriction);
+}
+
+void EditBoxImplAndroid::setNativeUneditableTextLength(int uneditableTextLength)
+{
+    setUneditableTextLengthEditBoxJNI(_editBoxIndex, uneditableTextLength);
 }
 
 void editBoxEditingDidBegin(int index)

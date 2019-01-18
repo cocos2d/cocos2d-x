@@ -105,6 +105,12 @@ public:
     virtual void openKeyboard() override;
     virtual void closeKeyboard() override;
 
+    virtual void setInputRestriction(int inputRestriction) override;
+    virtual void setUneditableTextLength(int uneditableTextLength) override;
+
+    virtual int  getInputRestriction() override { return _inputRestriction; }
+    virtual int  getUneditableTextLength() override { return _uneditableTextLength; }
+
     virtual void onEndEditing(const std::string& text);
 
     void editBoxEditingDidBegin();
@@ -128,6 +134,10 @@ public:
     virtual const char* getNativeDefaultFontName() = 0;
     virtual void nativeOpenKeyboard() = 0;
     virtual void nativeCloseKeyboard() = 0;
+    
+    virtual void setNativeInputRestriction(int inputRestriction) = 0;
+    virtual void setNativeUneditableTextLength(int uneditableTextLength) = 0;
+  
     virtual void setNativeMaxLength(int maxLength) {};
 
 
@@ -142,6 +152,7 @@ protected:
     Label* _labelPlaceHolder;
     EditBox::InputMode    _editBoxInputMode;
     EditBox::InputFlag    _editBoxInputFlag;
+    int                   _editBoxInputRestriction;
     EditBox::KeyboardReturnType  _keyboardReturnType;
     TextHAlignment _alignment;
 
@@ -157,6 +168,8 @@ protected:
     Color4B _colText;
     Color4B _colPlaceHolder;
 
+    int _inputRestriction;
+    int _uneditableTextLength;
     int   _maxLength;
     Size _contentSize;
     bool _editingMode;

@@ -103,6 +103,14 @@ bool EditBoxImplLinux::isEditing()
     return false;
 }
 
+void EditBoxImplLinux::setNativeInputRestriction(int inputRestriction) {
+	// not implemented yet
+}
+
+void EditBoxImplLinux::setNativeUneditableTextLength(int uneditableTextLength) {
+	// not implemented yet
+}
+
 void EditBoxImplLinux::nativeOpenKeyboard()
 {
     std::string text = this->getText();

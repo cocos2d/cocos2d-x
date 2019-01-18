@@ -73,6 +73,9 @@ public:
     virtual void nativeOpenKeyboard() override;
     virtual void nativeCloseKeyboard() override;
     
+    virtual void setNativeInputRestriction(int inputRestriction) override;
+    virtual void setNativeUneditableTextLength(int uneditableTextLength) override;
+    
     //need to remove siri text
     virtual const char* getText(void)override;
 

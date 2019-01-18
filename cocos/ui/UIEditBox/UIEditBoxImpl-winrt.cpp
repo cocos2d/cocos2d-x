@@ -280,6 +280,16 @@ namespace cocos2d {
       _maxLength = maxLength;
     }
 
+    void EditBoxWinRT::setNativeInputRestriction(int inputRestriction) 
+    { 
+        // not implemented yet     
+    }
+
+    void EditBoxWinRT::setNativeUneditableTextLength(int uneditableTextLength) 
+    { 
+        // not implemented yet     
+    } 
+
     void EditBoxWinRT::_setTextHorizontalAlignment(TextBox^ textBox)
     {
       switch (_alignment) {
