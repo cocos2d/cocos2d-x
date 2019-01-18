@@ -52,8 +52,8 @@ LayerTests::LayerTests()
     ADD_TEST_CASE(LayerExtendedBlendOpacityTest);
     ADD_TEST_CASE(LayerBug3162A);
     ADD_TEST_CASE(LayerBug3162B);
-    ADD_TEST_CASE(LayerColorOccludeBug);
-    ADD_TEST_CASE(LayerRadialGradientTest);
+//    ADD_TEST_CASE(LayerColorOccludeBug); // TODO crash on iPhone X
+//    ADD_TEST_CASE(LayerRadialGradientTest);
 }
 
 // Cascading support extensions

@@ -61,8 +61,8 @@ CocosNodeTests::CocosNodeTests()
     ADD_TEST_CASE(NodeToWorld3D);
     ADD_TEST_CASE(SchedulerTest1);
     ADD_TEST_CASE(SchedulerCallbackTest);
-    ADD_TEST_CASE(CameraOrbitTest);
     // TODO: Camera has been removed from CCNode; add new feature to support it
+    // ADD_TEST_CASE(CameraOrbitTest);
     //ADD_TEST_CASE(CameraZoomTest);
     ADD_TEST_CASE(ConvertToNode);
     ADD_TEST_CASE(NodeOpaqueTest);

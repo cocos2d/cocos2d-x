@@ -53,14 +53,14 @@ ClippingNodeTests::ClippingNodeTests()
     ADD_TEST_CASE(SpriteNoAlphaTest);
     ADD_TEST_CASE(SpriteInvertedTest);
     ADD_TEST_CASE(NestedTest);
-    ADD_TEST_CASE(RawStencilBufferTest);
-    ADD_TEST_CASE(RawStencilBufferTest2);
-    ADD_TEST_CASE(RawStencilBufferTest3);
-    ADD_TEST_CASE(RawStencilBufferTest4);
-    ADD_TEST_CASE(RawStencilBufferTest5);
-    ADD_TEST_CASE(RawStencilBufferTest6);
+//    ADD_TEST_CASE(RawStencilBufferTest); // TODO shouldn't call OpenGL API directly
+//    ADD_TEST_CASE(RawStencilBufferTest2);
+//    ADD_TEST_CASE(RawStencilBufferTest3);
+//    ADD_TEST_CASE(RawStencilBufferTest4);
+//    ADD_TEST_CASE(RawStencilBufferTest5);
+//    ADD_TEST_CASE(RawStencilBufferTest6);
     ADD_TEST_CASE(ClippingToRenderTextureTest);
-    ADD_TEST_CASE(ClippingRectangleNodeTest);
+//    ADD_TEST_CASE(ClippingRectangleNodeTest); // TODO for unfinished CCClippingNode Impl
 }
 
 //// Demo examples start here

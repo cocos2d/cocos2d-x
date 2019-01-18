@@ -121,11 +121,12 @@ bool UIRichTextTest::init()
 
         RichElementImage* reimg = RichElementImage::create(6, Color3B::WHITE, 255, "cocosui/sliderballnormal.png");
 
-        cocostudio::ArmatureDataManager::getInstance()->addArmatureFileInfo("cocosui/100/100.ExportJson");
-        cocostudio::Armature *pAr = cocostudio::Armature::create("100");
-        pAr->getAnimation()->play("Animation1");
+//        TODO
+//        cocostudio::ArmatureDataManager::getInstance()->addArmatureFileInfo("cocosui/100/100.ExportJson");
+//        cocostudio::Armature *pAr = cocostudio::Armature::create("100"); //
+//        pAr->getAnimation()->play("Animation1");
 
-        RichElementCustomNode* recustom = RichElementCustomNode::create(1, Color3B::WHITE, 255, pAr);
+//        RichElementCustomNode* recustom = RichElementCustomNode::create(1, Color3B::WHITE, 255, pAr);
         RichElementText* re6 = RichElementText::create(7, Color3B::ORANGE, 255, "Have fun!! ", "Helvetica", 10);
         _richText->pushBackElement(re1);
         _richText->insertElement(re2, 1);
@@ -133,7 +134,7 @@ bool UIRichTextTest::init()
         _richText->pushBackElement(re4);
         _richText->pushBackElement(re5);
         _richText->insertElement(reimg, 2);
-        _richText->pushBackElement(recustom);
+//        _richText->pushBackElement(recustom);
         _richText->pushBackElement(re6);
 
         _richText->setPosition(Vec2(widgetSize.width / 2, widgetSize.height / 2));

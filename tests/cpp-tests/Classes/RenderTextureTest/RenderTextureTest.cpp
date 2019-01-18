@@ -32,7 +32,7 @@ RenderTextureTests::RenderTextureTests()
     ADD_TEST_CASE(RenderTextureSave);
     ADD_TEST_CASE(RenderTextureIssue937);
     ADD_TEST_CASE(RenderTextureZbuffer);
-    ADD_TEST_CASE(RenderTextureTestDepthStencil);
+//    ADD_TEST_CASE(RenderTextureTestDepthStencil);
     ADD_TEST_CASE(RenderTextureTargetNode);
     ADD_TEST_CASE(SpriteRenderTextureBug);
     ADD_TEST_CASE(RenderTexturePartTest);

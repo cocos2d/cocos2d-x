@@ -548,6 +548,8 @@
 		3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		400308D820060F12000DFE6D /* strings in Resources */ = {isa = PBXBuildFile; fileRef = 400308D720060F12000DFE6D /* strings */; };
 		406023E5208DDFF5008F1C02 /* strings in Resources */ = {isa = PBXBuildFile; fileRef = 400308D720060F12000DFE6D /* strings */; };
+		40FE102D21F06FC50061C04F /* CocosDenshionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40FE102B21F06FC50061C04F /* CocosDenshionTest.cpp */; };
+		40FE102E21F06FC50061C04F /* CocosDenshionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 40FE102B21F06FC50061C04F /* CocosDenshionTest.cpp */; };
 		460629781CDB4DBA00B44058 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
 		460629791CDB4DBA00B44058 /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 460629771CDB4DBA00B44058 /* ccs-res */; };
 		461FE09E21CB2E2D00E5378F /* DrawPrimitivesTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461FE09D21CB2E2D00E5378F /* DrawPrimitivesTest.cpp */; };
@@ -1713,6 +1715,8 @@
 		3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = cocosvideo.mp4; path = "../tests/cpp-tests/Resources/cocosvideo.mp4"; sourceTree = "<group>"; };
 		3EA0FB65191B933000B170C8 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/MediaPlayer.framework; sourceTree = DEVELOPER_DIR; };
 		400308D720060F12000DFE6D /* strings */ = {isa = PBXFileReference; lastKnownFileType = folder; name = strings; path = "../tests/cpp-tests/Resources/strings"; sourceTree = "<group>"; };
+		40FE102B21F06FC50061C04F /* CocosDenshionTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocosDenshionTest.cpp; sourceTree = "<group>"; };
+		40FE102C21F06FC50061C04F /* CocosDenshionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosDenshionTest.h; sourceTree = "<group>"; };
 		460629771CDB4DBA00B44058 /* ccs-res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "ccs-res"; path = "../tests/cpp-tests/Resources/ccs-res"; sourceTree = "<group>"; };
 		461FE09C21CB2E2D00E5378F /* DrawPrimitivesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawPrimitivesTest.h; sourceTree = "<group>"; };
 		461FE09D21CB2E2D00E5378F /* DrawPrimitivesTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawPrimitivesTest.cpp; sourceTree = "<group>"; };
@@ -2461,6 +2465,7 @@
 				1AC3599A18CECF0B00F37B72 /* ConfigurationTest */,
 				1AC3599D18CECF0B00F37B72 /* ConsoleTest */,
 				1AC359A218CECF0B00F37B72 /* CurlTest */,
+				40FE102A21F06FC50061C04F /* CocosDenshionTest */,
 				1AC359A518CECF0B00F37B72 /* CurrentLanguageTest */,
 				1AC359A818CECF0B00F37B72 /* DataVisitorTest */,
 				50921EAC1B746D5F00C085CC /* DownloaderTest */,
@@ -3368,6 +3373,15 @@
 				3E2BDACF19BEA3410055CDCD /* NewAudioEngineTest.h */,
 			);
 			path = NewAudioEngineTest;
+			sourceTree = "<group>";
+		};
+		40FE102A21F06FC50061C04F /* CocosDenshionTest */ = {
+			isa = PBXGroup;
+			children = (
+				40FE102B21F06FC50061C04F /* CocosDenshionTest.cpp */,
+				40FE102C21F06FC50061C04F /* CocosDenshionTest.h */,
+			);
+			path = CocosDenshionTest;
 			sourceTree = "<group>";
 		};
 		461FE09B21CB2E2D00E5378F /* DrawPrimitivesTest */ = {
@@ -4931,6 +4945,7 @@
 				EDC7892921CA154800E1863C /* UIScale9SpriteTest.cpp in Sources */,
 				EDC7891B21CA154800E1863C /* UITextBMFontTest.cpp in Sources */,
 				27C5CE011C6E0469000CA4B3 /* SpriteFrameCacheTest.cpp in Sources */,
+				40FE102D21F06FC50061C04F /* CocosDenshionTest.cpp in Sources */,
 				1AC35B4118CECF0C00F37B72 /* QuestionContainerSprite.cpp in Sources */,
 				1AC35C1718CECF0C00F37B72 /* MotionStreakTest.cpp in Sources */,
 				EDC7893F21CA154800E1863C /* UIFocusTest.cpp in Sources */,
@@ -5224,6 +5239,7 @@
 				EDC7892421CA154800E1863C /* UIRichTextTest.cpp in Sources */,
 				EDC7894021CA154800E1863C /* UIFocusTest.cpp in Sources */,
 				94D793DA1B4B7A3600F60F10 /* Bug-CCDrawNode.cpp in Sources */,
+				40FE102E21F06FC50061C04F /* CocosDenshionTest.cpp in Sources */,
 				1AC35B3E18CECF0C00F37B72 /* Bug-422.cpp in Sources */,
 				1AC35B5018CECF0C00F37B72 /* ClickAndMoveTest.cpp in Sources */,
 			);

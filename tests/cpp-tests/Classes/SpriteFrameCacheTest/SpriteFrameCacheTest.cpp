@@ -26,6 +26,8 @@
 
 #include "SpriteFrameCacheTest.h"
 
+#include <cassert>
+
 // enable log
 #define COCOS2D_DEBUG 1
 
@@ -34,6 +36,8 @@ USING_NS_CC;
 SpriteFrameCacheTests::SpriteFrameCacheTests()
 {
     ADD_TEST_CASE(SpriteFrameCachePixelFormatTest);
+    ADD_TEST_CASE(SpriteFrameCacheLoadMultipleTimes);
+    ADD_TEST_CASE(SpriteFrameCacheFullCheck);
 }
 
 SpriteFrameCachePixelFormatTest::SpriteFrameCachePixelFormatTest()

@@ -123,3 +123,15 @@ tags
 
 v*-deps-*.zip
 v*-lua-runtime-*.zip
+
+# Ignore the CMake build folder, such as ios-build/linux-build
+*-build/
+# Ignore the CLion build folder, such as cmake-build-debug
+cmake-build-*/
+cmake_build*
+metal-support*.zip
+**/.project
+
+# vscode folder
+.vs
+.vscode

@@ -182,7 +182,7 @@ if __name__ == '__main__':
 
     cocos_root =os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
     cocos_file_path =os.path.abspath(os.path.join(cocos_root, "templates", "cocos2dx_files.json"))
-    cocos_file_ingore =os.path.abspath(os.path.join(os.path.dirname(__file__), "config.gitingore"))
+    cocos_file_ingore =os.path.abspath(os.path.join(os.path.dirname(__file__), "config.gitignore"))
     # print ("begin list files")
     cocosObj = CocosFileList()
     cocosObj.readIngoreFile(cocos_file_ingore)

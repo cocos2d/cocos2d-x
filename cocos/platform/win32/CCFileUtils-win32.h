@@ -112,6 +112,8 @@ protected:
 
 	virtual FileUtils::Status getContents(const std::string& filename, ResizableBuffer* buffer) const override;
 
+    virtual long getFileSize(const std::string &filepath) const override;
+
     /**
      *  Gets full path for filename, resolution directory and search path.
      *
@@ -132,7 +134,7 @@ protected:
      *  @param filename  The name of the file.
      *  @return The full path of the file, if the file can't be found, it will return an empty string.
      */
-    virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) const override;
+    virtual std::string getFullPathForFilenameWithinDirectory(const std::string& directory, const std::string& filename) const override;
 
     /**
     *  List all files in a directory.

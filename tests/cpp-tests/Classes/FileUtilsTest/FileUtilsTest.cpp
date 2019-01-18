@@ -47,6 +47,8 @@ FileUtilsTests::FileUtilsTests()
     ADD_TEST_CASE(TestFileFuncsAsync);
     ADD_TEST_CASE(TestWriteStringAsync);
     ADD_TEST_CASE(TestWriteDataAsync);
+//    ADD_TEST_CASE(TestListFiles); // TODO assert failed on iPhone X
+    // ADD_TEST_CASE(TestIsFileExistRejectFolder);
 }
 
 // TestResolutionDirectories
@@ -202,7 +204,7 @@ std::string TestSearchPath::title() const
 
 std::string TestSearchPath::subtitle() const
 {
-    return "See the console, can see a orange box and a 'about' picture";
+    return "See the console, can see a orange box and a 'about' picture, except Android";
 }
 
 // TestFilenameLookup
@@ -509,8 +511,8 @@ std::string TestDirectoryFuncs::subtitle() const
 
 void TextWritePlist::onEnter()
 {
+    FileUtilsDemo::onEnter();
     //TODO: minggo
-//    FileUtilsDemo::onEnter();
 //    auto root = __Dictionary::create();
 //    auto string = __String::create("string element value");
 //    root->setObject(string, "string element key");
@@ -1389,6 +1391,83 @@ std::string TestWriteDataAsync::title() const
 }
 
 std::string TestWriteDataAsync::subtitle() const
+{
+    return "";
+}
+
+void TestListFiles::onEnter()
+{
+    FileUtilsDemo::onEnter();
+
+    auto winSize = Director::getInstance()->getWinSize();
+
+    auto infoLabel = Label::createWithTTF("show file count, should not be 0", "fonts/Thonburi.ttf", 18);
+    this->addChild(infoLabel);
+    infoLabel->setPosition(winSize.width / 2, winSize.height * 3 / 4);
+
+    auto cntLabel = Label::createWithTTF("show readResult", "fonts/Thonburi.ttf", 18);
+    this->addChild(cntLabel);
+    cntLabel->setPosition(winSize.width / 2, winSize.height / 3);
+    // writeTest
+    auto list = FileUtils::getInstance()->listFiles("fonts");
+
+    char cntBuffer[200] = { 0 };
+    snprintf(cntBuffer, 200, "%lu", static_cast<unsigned long>(list.size()));
+    cntLabel->setString(cntBuffer);
+
+}
+
+void TestListFiles::onExit()
+{
+    FileUtilsDemo::onExit();
+}
+
+std::string TestListFiles::title() const
+{
+    return "FileUtils: list files of directory";
+}
+
+std::string TestListFiles::subtitle() const
+{
+    return "";
+}
+
+
+
+void TestIsFileExistRejectFolder::onEnter()
+{
+    FileUtilsDemo::onEnter();
+
+    auto winSize = Director::getInstance()->getWinSize();
+
+    auto infoLabel = Label::createWithTTF("tests folder 'NavMesh/maps', expect to be false", "fonts/Thonburi.ttf", 18);
+    this->addChild(infoLabel);
+    infoLabel->setPosition(winSize.width / 2, winSize.height * 3 / 4);
+
+    auto cntLabel = Label::createWithTTF("waiting...", "fonts/Thonburi.ttf", 18);
+    this->addChild(cntLabel);
+    cntLabel->setPosition(winSize.width / 2, winSize.height / 3);
+    
+    auto exists = FileUtils::getInstance()->isFileExist("NavMesh/maps");
+    auto isDirectory = FileUtils::getInstance()->isDirectoryExist("NavMesh/maps");
+
+    char cntBuffer[200] = { 0 };
+    snprintf(cntBuffer, 200, "isDir: %s, isFile: %s,  %s", isDirectory ? "true": "false" , exists ? "true" : "false", exists ? "failure!" : "ok!" );
+    cntLabel->setString(cntBuffer);
+
+}
+
+void TestIsFileExistRejectFolder::onExit()
+{
+    FileUtilsDemo::onExit();
+}
+
+std::string TestIsFileExistRejectFolder::title() const
+{
+    return "FileUtils: isFileExist(direname)";
+}
+
+std::string TestIsFileExistRejectFolder::subtitle() const
 {
     return "";
 }

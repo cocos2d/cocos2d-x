@@ -28,7 +28,6 @@ THE SOFTWARE.
 #define __CC_APPLICATION_PROTOCOL_H__
 
 #include "platform/CCPlatformMacros.h"
-#include "base/CCScriptSupport.h"
 #include "base/CCAutoreleasePool.h"
 #include "base/ccTypes.h"
 
@@ -67,9 +66,6 @@ public:
      * @lua NA
      */
     virtual ~ApplicationProtocol(){
-#if CC_ENABLE_SCRIPT_BINDING
-        ScriptEngineManager::destroyInstance();
-#endif
         /** clean auto release pool. */
         PoolManager::destroyInstance();
     }
