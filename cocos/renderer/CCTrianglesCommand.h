@@ -41,6 +41,7 @@ NS_CC_BEGIN
 */
 namespace backend {
     class Texture;
+    class Program;
 }
 class CC_DLL TrianglesCommand : public RenderCommand
 {
@@ -112,8 +113,7 @@ protected:
 
     // Cached value to determine to generate material id or not.
     BlendFunc _blendType = BlendFunc::DISABLE;
-    backend::ShaderModule* _vs = nullptr;
-    backend::ShaderModule* _fs = nullptr;
+    backend::Program* _program = nullptr;
     backend::Texture* _texture = nullptr;
 };
 

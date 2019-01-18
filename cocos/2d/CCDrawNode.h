@@ -319,7 +319,7 @@ protected:
     void setVertexLayout(CustomCommand& cmd);
     void updateBlendState(CustomCommand& cmd);
     void updateUniforms(const Mat4 &transform, CustomCommand& cmd);
-
+ 
     GLuint      _vao = 0;
     GLuint      _vbo = 0;
     GLuint      _vaoGLPoint = 0;
@@ -342,6 +342,11 @@ protected:
     V2F_C4B_T2F *_bufferGLLine = nullptr;
 
     BlendFunc   _blendFunc;
+    
+    backend::ProgramState* _programState = nullptr;
+    backend::ProgramState* _programStatePoint = nullptr;
+    backend::ProgramState* _programStateLine = nullptr;
+    
     CustomCommand _customCommand;
     CustomCommand _customCommandGLPoint;
     CustomCommand _customCommandGLLine;
@@ -354,6 +359,7 @@ protected:
     GLfloat         _lineWidth = 0.0f;
 
     GLfloat  _defaultLineWidth = 0.0f;
+    
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);
 };

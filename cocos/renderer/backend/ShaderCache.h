@@ -23,17 +23,25 @@
  ****************************************************************************/
 #pragma once
 
+#include "Macros.h"
+#include "base/CCRef.h"
 #include "platform/CCPlatformMacros.h"
 #include "renderer/backend/ShaderModule.h"
 
 #include <string>
 #include <unordered_map>
 
-NS_CC_BEGIN
+CC_BACKEND_BEGIN
 
-class CC_DLL ShaderCache
+class ShaderCache : public Ref
 {
 public:
+    /** returns the shared instance */
+    static ShaderCache* getInstance();
+    
+    /** purges the cache. It releases the retained instance. */
+    static void destroyInstance();
+    
     /** Create a vertex shader module.
         @param key A key to identify a shader module. If it is created before, then just return the cached shader module.
         @param shaderSource The source code of the shader.
@@ -46,9 +54,16 @@ public:
      */
     static backend::ShaderModule* newFragmentShaderModule(const std::string& shaderSource);
     
-private:
-    static std::unordered_map<std::size_t, backend::ShaderModule*> _cachedVertexShaders;
-    static std::unordered_map<std::size_t, backend::ShaderModule*> _cachedFragmentShaders;
+    void removeUnusedShader();
+    
+protected:
+    virtual ~ShaderCache();
+    
+    bool init();
+    static backend::ShaderModule* newShaderModule(backend::ShaderStage stage, const std::string& shaderSource);
+    
+    static std::unordered_map<std::size_t, backend::ShaderModule*> _cachedShaders;
+    static ShaderCache* _sharedShaderCache;
 };
 
-NS_CC_END
+CC_BACKEND_END

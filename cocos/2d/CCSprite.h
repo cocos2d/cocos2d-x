@@ -633,6 +633,8 @@ protected:
 
     virtual void flipX();
     virtual void flipY();
+    
+    virtual void updateProgramState();
 
     //
     // Data used when the sprite is rendered using a SpriteSheet
@@ -653,6 +655,12 @@ protected:
     Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
     SpriteFrame*     _spriteFrame;
     TrianglesCommand _trianglesCommand;     ///
+    
+    backend::UniformLocation _mvpMatrixLocation;
+    backend::UniformLocation _textureLocation;
+    backend::UniformLocation _alphaTextureLocation;
+    
+    backend::ProgramState* _programState = nullptr;
     
 #if CC_SPRITE_DEBUG_DRAW
     DrawNode *_debugDrawNode;

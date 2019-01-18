@@ -8,13 +8,13 @@
 #include "Types.h"
 #include "RenderPassDescriptor.h"
 #include "CCStdC.h"
+#include "ProgramState.h"
 
 CC_BACKEND_BEGIN
 
 class RenderPass;
 class RenderPipeline;
 class Buffer;
-class BindGroup;
 
 class CommandBuffer : public cocos2d::Ref
 {
@@ -25,7 +25,7 @@ public:
     virtual void setViewport(int x, int y, unsigned int w, unsigned int h) = 0;
     virtual void setCullMode(CullMode mode) = 0;
     virtual void setVertexBuffer(unsigned int index, Buffer* buffer) = 0;
-    virtual void setBindGroup(BindGroup* bindGroup) = 0;
+    virtual void setProgramState(ProgramState* programState) = 0;
     virtual void setIndexBuffer(Buffer* buffer) = 0;
     virtual void drawArrays(PrimitiveType primitiveType, unsigned int start,  unsigned int count) = 0;
     virtual void drawElements(PrimitiveType primitiveType, IndexFormat indexType, unsigned int count, unsigned int offset) = 0;

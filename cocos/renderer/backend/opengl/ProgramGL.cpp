@@ -1,4 +1,4 @@
-#include "Program.h"
+#include "ProgramGL.h"
 #include "ShaderModuleGL.h"
 
 CC_BACKEND_BEGIN
@@ -58,23 +58,70 @@ namespace
         }
         return ret;
     }
+    
+    GLsizei getUniformSize(GLenum size)
+    {
+        GLsizei ret = 0;
+        switch (size)
+        {
+            case GL_BOOL:
+            case GL_BYTE:
+            case GL_UNSIGNED_BYTE:
+                ret = sizeof(GLbyte);
+                break;
+            case GL_BOOL_VEC2:
+            case GL_SHORT:
+            case GL_UNSIGNED_SHORT:
+                ret = sizeof(GLshort);
+                break;
+            case GL_BOOL_VEC3:
+                ret = sizeof(GLboolean);
+                break;
+            case GL_BOOL_VEC4:
+            case GL_INT:
+            case GL_UNSIGNED_INT:
+            case GL_FLOAT:
+                ret = sizeof(GLfloat) * 4;
+                break;
+            case GL_FLOAT_VEC2:
+            case GL_INT_VEC2:
+                ret = sizeof(GLfloat) * 2;
+                break;
+            case GL_FLOAT_VEC3:
+            case GL_INT_VEC3:
+                ret = sizeof(GLfloat) * 3;
+                break;
+            case GL_FLOAT_MAT2:
+            case GL_FLOAT_VEC4:
+            case GL_INT_VEC4:
+                ret = sizeof(GLfloat) * 4;
+                break;
+            case GL_FLOAT_MAT3:
+                ret = sizeof(GLfloat) * 9;
+                break;
+            case GL_FLOAT_MAT4:
+                ret = sizeof(GLfloat) * 16;
+                break;
+            default:
+                break;
+        }
+        return ret;
+    }
 }
 
-Program::Program(const RenderPipelineDescriptor& descriptor)
-: _vertexShaderModule(static_cast<ShaderModuleGL*>(descriptor.vertexShaderModule))
-, _fragmentShaderModule(static_cast<ShaderModuleGL*>(descriptor.fragmentShaderModule))
+ProgramGL::ProgramGL(const std::string& vertexShader, const std::string& fragmentShader)
+: Program(vertexShader, fragmentShader)
 {
-    assert(_vertexShaderModule != nullptr && _fragmentShaderModule != nullptr);
-    
+    _vertexShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newVertexShaderModule(vertexShader));
+    _fragmentShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newFragmentShaderModule(fragmentShader));
+
     CC_SAFE_RETAIN(_vertexShaderModule);
     CC_SAFE_RETAIN(_fragmentShaderModule);
-    
     compileProgram();
-    computeAttributeInfos(descriptor);
     computeUniformInfos();
 }
 
-Program::~Program()
+ProgramGL::~ProgramGL()
 {
     CC_SAFE_RELEASE(_vertexShaderModule);
     CC_SAFE_RELEASE(_fragmentShaderModule);
@@ -82,7 +129,7 @@ Program::~Program()
         glDeleteProgram(_program);
 }
 
-void Program::compileProgram()
+void ProgramGL::compileProgram()
 {
     if (_vertexShaderModule == nullptr || _fragmentShaderModule == nullptr)
         return;
@@ -112,7 +159,7 @@ void Program::compileProgram()
     }
 }
 
-void Program::computeAttributeInfos(const RenderPipelineDescriptor& descriptor)
+void ProgramGL::computeAttributeInfos(const RenderPipelineDescriptor& descriptor)
 {
     const auto& vertexLayouts = descriptor.vertexLayouts;
     for (const auto& vertexLayout : vertexLayouts)
@@ -143,7 +190,7 @@ void Program::computeAttributeInfos(const RenderPipelineDescriptor& descriptor)
     }
 }
 
-bool Program::getAttributeLocation(const std::string& attributeName, unsigned int& location)
+bool ProgramGL::getAttributeLocation(const std::string& attributeName, unsigned int& location) const
 {
     GLint loc = glGetAttribLocation(_program, attributeName.c_str());
     if (-1 == loc)
@@ -156,7 +203,7 @@ bool Program::getAttributeLocation(const std::string& attributeName, unsigned in
     return true;
 }
 
-void Program::computeUniformInfos()
+void ProgramGL::computeUniformInfos()
 {
     if (!_program)
     return;
@@ -172,7 +219,7 @@ void Program::computeUniformInfos()
     GLchar* uniformName = (GLchar*)malloc(MAX_UNIFORM_NAME_LENGTH + 1);
     for (int i = 0; i < numOfUniforms; ++i)
     {
-        glGetActiveUniform(_program, i, MAX_UNIFORM_NAME_LENGTH, &length, &uniform.size, &uniform.type, uniformName);
+        glGetActiveUniform(_program, i, MAX_UNIFORM_NAME_LENGTH, &length, &uniform.count, &uniform.type, uniformName);
         uniformName[length] = '\0';
         
         if (length > 3)
@@ -184,13 +231,39 @@ void Program::computeUniformInfos()
                 uniform.isArray = true;
             }
         }
-        
-        uniform.name = uniformName;
         uniform.location = glGetUniformLocation(_program, uniformName);
-        
-        _uniformInfos.push_back(uniform);
+        uniform.bufferSize = getUniformSize(uniform.type);
+        _uniformInfos[uniformName] = uniform;
+
+        _maxLocation = _maxLocation <= uniform.location ? (uniform.location + 1) : _maxLocation;
     }
     free(uniformName);
+}
+
+UniformLocation ProgramGL::getUniformLocation(const std::string& uniform) const
+{
+    UniformLocation uniformLocation;
+    uniformLocation.location = glGetUniformLocation(_program, uniform.c_str());
+    return uniformLocation;
+}
+
+const std::unordered_map<std::string, UniformInfo>& ProgramGL::getVertexUniformInfos() const
+{
+    return _uniformInfos;
+}
+
+const std::unordered_map<std::string, UniformInfo>& ProgramGL::getFragmentUniformInfos() const
+{
+    return _uniformInfos;
+}
+
+int ProgramGL::getMaxVertexLocation() const
+{
+    return _maxLocation;
+}
+int ProgramGL::getMaxFragmentLocation() const
+{
+    return _maxLocation;
 }
 
 CC_BACKEND_END

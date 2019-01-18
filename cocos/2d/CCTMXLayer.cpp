@@ -33,7 +33,8 @@ THE SOFTWARE.
 #include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/ccShaders.h"
-#include "renderer/CCShaderCache.h"
+#include "renderer/backend/Program.h"
+#include "renderer/backend/ProgramState.h"
 
 NS_CC_BEGIN
 
@@ -249,8 +250,10 @@ void TMXLayer::parseInternalProperties()
             float alphaFuncValue = alphaFuncVal.asFloat();
 
             auto& pipelineDescriptor = _quadCommand.getPipelineDescriptor();
-            pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionTextureColorAlphaTest_frag);
-            pipelineDescriptor.bindGroup.setUniform("u_alpha_value", &alphaFuncValue, sizeof(alphaFuncValue));
+            auto& vertexShader = pipelineDescriptor.programState->getProgram()->getVertexShader();
+            updateShaders(vertexShader, positionTextureColorAlphaTest_frag);
+            auto alphaValueLocation = pipelineDescriptor.programState->getUniformLocation("u_alpha_value");
+            pipelineDescriptor.programState->setUniform(alphaValueLocation, &alphaFuncValue, sizeof(alphaFuncValue));
         }
         else
         {

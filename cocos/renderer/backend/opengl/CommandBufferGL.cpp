@@ -3,8 +3,7 @@
 #include "RenderPipelineGL.h"
 #include "TextureGL.h"
 #include "DepthStencilStateGL.h"
-#include "../BindGroup.h"
-#include "Program.h"
+#include "ProgramGL.h"
 #include "BlendStateGL.h"
 #include "base/ccMacros.h"
 
@@ -256,11 +255,11 @@ void CommandBufferGL::setVertexBuffer(unsigned int index, Buffer* buffer)
     _vertexBuffers[index] = static_cast<BufferGL*>(buffer);
 }
 
-void CommandBufferGL::setBindGroup(BindGroup* bindGroup)
+void CommandBufferGL::setProgramState(ProgramState* programState)
 {
-    CC_SAFE_RETAIN(bindGroup);
-    CC_SAFE_RELEASE(_bindGroup);
-    _bindGroup = bindGroup;
+    CC_SAFE_RETAIN(programState);
+    CC_SAFE_RELEASE(_programState);
+    _programState = programState;
 }
 
 void CommandBufferGL::drawArrays(PrimitiveType primitiveType, unsigned int start,  unsigned int count)
@@ -323,7 +322,7 @@ void CommandBufferGL::prepareDrawing() const
     }
 }
 
-void CommandBufferGL::bindVertexBuffer(Program *program) const
+void CommandBufferGL::bindVertexBuffer(ProgramGL *program) const
 {
     // Bind vertex buffers and set the attributes.
     int i = 0;
@@ -351,46 +350,41 @@ void CommandBufferGL::bindVertexBuffer(Program *program) const
     }
 }
 
-void CommandBufferGL::setUniforms(Program* program) const
+void CommandBufferGL::setUniforms(ProgramGL* program) const
 {
-    if (_bindGroup)
+    if (_programState)
     {
-        const auto& texutreInfos = _bindGroup->getTextureInfos();
-        const auto& bindUniformInfos = _bindGroup->getUniformInfos();
-        const auto& activeUniformInfos = program->getUniformInfos();
-        for (const auto& activeUinform : activeUniformInfos)
+        const auto& uniformInfos = _programState->getVertexUniformInfos();
+        for(const auto& iter : uniformInfos)
         {
-            // Set normal uniforms.
-            const auto& bindUniformInfo = bindUniformInfos.find(activeUinform.name);
-            if (bindUniformInfos.end() != bindUniformInfo)
+            const auto& uniformInfo = iter.uniformInfo;
+            if(!iter.dirty)
+                continue;
+            setUniform(uniformInfo.isArray,
+                       uniformInfo.location,
+                       uniformInfo.count,
+                       uniformInfo.type,
+                       iter.data);
+        }
+        
+        const auto& textureInfo = _programState->getVertexTextureInfos();
+        for(const auto& iter : textureInfo)
+        {
+            const auto& textures = iter.second.textures;
+            const auto& slot = iter.second.slot;
+            
+            int i = 0;
+            for (const auto& texture: textures)
             {
-                setUniform(activeUinform.isArray,
-                           activeUinform.location,
-                           activeUinform.size,
-                           activeUinform.type,
-                           (*bindUniformInfo).second.data);
+                static_cast<TextureGL*>(texture)->apply(slot[i]);
+                ++i;
             }
             
-            // Bind textures.
-            const auto& bindUniformTextureInfo = texutreInfos.find(activeUinform.name);
-            if (texutreInfos.end() != bindUniformTextureInfo)
-            {
-                const auto& textures = (*bindUniformTextureInfo).second.textures;
-                const auto& indices = (*bindUniformTextureInfo).second.indices;
-                
-                int i = 0;
-                for (const auto& texture: textures)
-                {
-                    static_cast<TextureGL*>(texture)->apply(indices[i]);
-                    ++i;
-                }
-                
-                setUniform(activeUinform.isArray,
-                           activeUinform.location,
-                           activeUinform.size,
-                           activeUinform.type,
-                           (void*)indices.data());
-            }
+            auto arrayCount = slot.size();
+            if (arrayCount > 1)
+                glUniform1iv(iter.first, (uint32_t)arrayCount, (GLint*)slot.data());
+            else
+                glUniform1i(iter.first, slot[0]);
         }
     }
 }
@@ -490,7 +484,7 @@ void CommandBufferGL::cleanResources()
 {
     CC_SAFE_RELEASE_NULL(_indexBuffer);
     CC_SAFE_RELEASE_NULL(_renderPipeline);
-    CC_SAFE_RELEASE_NULL(_bindGroup);
+    CC_SAFE_RELEASE_NULL(_programState);
       
     for (const auto& vertexBuffer : _vertexBuffers)
         CC_SAFE_RELEASE(vertexBuffer);

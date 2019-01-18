@@ -52,13 +52,11 @@ void TrianglesCommand::init(float globalOrder, Texture2D* texture, const BlendFu
     }
     _mv = mv;
 
-    if (_vs != _pipelineDescriptor.vertexShader ||
-        _fs != _pipelineDescriptor.fragmentShader ||
+    if (_program != _pipelineDescriptor.programState->getProgram() ||
         _texture != texture->getBackendTexture() ||
         _blendType != blendType)
     {
-        _vs = _pipelineDescriptor.vertexShader;
-        _fs = _pipelineDescriptor.fragmentShader;
+        _program = _pipelineDescriptor.programState->getProgram();
         _texture = texture->getBackendTexture();
 
         _blendType = blendType;
@@ -81,8 +79,7 @@ void TrianglesCommand::generateMaterialID()
     struct
     {
         void* texture;
-        void* fs;
-        void* vs;
+        void* program;
         backend::BlendFactor src;
         backend::BlendFactor dst;
     }hashMe;
@@ -95,8 +92,7 @@ void TrianglesCommand::generateMaterialID()
     hashMe.texture = _texture;
     hashMe.src = _blendType.src;
     hashMe.dst = _blendType.dst;
-    hashMe.fs = _fs;
-    hashMe.vs = _vs;
+    hashMe.program = _program;
     _materialID = XXH32((const void*)&hashMe, sizeof(hashMe), 0);
 }
 

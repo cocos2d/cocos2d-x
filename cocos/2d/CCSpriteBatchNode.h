@@ -260,11 +260,15 @@ protected:
     void swap(ssize_t oldIndex, ssize_t newIndex);
     void updateBlendFunc();
     
-    void createShaders();
+    virtual void updateShaders(const std::string& vertexShader, const std::string& fragmentShader);
 
     TextureAtlas *_textureAtlas = nullptr;
     BlendFunc _blendFunc;
     QuadCommand _quadCommand;
+    
+    backend::UniformLocation _mvpMatrixLocaiton;
+    backend::UniformLocation _textureLocation;
+    backend::ProgramState* _programState = nullptr;
 
     // all descendants: children, grand children, etc...
     // There is not need to retain/release these objects, since they are already retained by _children

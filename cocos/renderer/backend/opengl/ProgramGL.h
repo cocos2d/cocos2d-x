@@ -5,8 +5,10 @@
 #include "../RenderPipelineDescriptor.h"
 #include "base/CCRef.h"
 #include "platform/CCGL.h"
+#include "../Program.h"
 
 #include <string>
+#include <unordered_map>
 
 CC_BACKEND_BEGIN
 
@@ -22,32 +24,29 @@ struct AttributeInfo
     GLboolean needToBeNormallized = GL_FALSE;
 };
 
-struct UniformInfo
-{
-    std::string name;
-    GLsizei size = 0;
-    GLuint location = 0;
-    GLenum type = GL_FLOAT;
-    bool isArray = false;
-};
-
-
-class Program : public cocos2d::Ref
+class ProgramGL : public Program
 {
 public:
     typedef std::vector<AttributeInfo> VertexAttributeArray;
     
-    Program(const RenderPipelineDescriptor& descriptor);
-    ~Program();
+    ProgramGL(const std::string& vertexShader, const std::string& fragmentShader);
+    ~ProgramGL();
     
     inline const std::vector<VertexAttributeArray>& getAttributeInfos() const { return _attributeInfos; }
-    inline const std::vector<UniformInfo>& getUniformInfos() const { return _uniformInfos; }
     inline GLuint getHandler() const { return _program; }
-    
+    void computeAttributeInfos(const RenderPipelineDescriptor& descriptor);
+
+    virtual const std::unordered_map<std::string, UniformInfo>& getVertexUniformInfos() const override;
+    virtual const std::unordered_map<std::string, UniformInfo>& getFragmentUniformInfos() const override;
+
+    virtual UniformLocation getUniformLocation(const std::string& uniform) const override;
+
+    virtual int getMaxVertexLocation() const override;
+    virtual int getMaxFragmentLocation() const override;
+
 private:
     void compileProgram();
-    void computeAttributeInfos(const RenderPipelineDescriptor& descriptor);
-    bool getAttributeLocation(const std::string& attributeName, unsigned int& location);
+    bool getAttributeLocation(const std::string& attributeName, unsigned int& location) const;
     void computeUniformInfos();
     
     GLuint _program = 0;
@@ -55,7 +54,9 @@ private:
     ShaderModuleGL* _fragmentShaderModule = nullptr;
     
     std::vector<VertexAttributeArray> _attributeInfos;
-    std::vector<UniformInfo> _uniformInfos;
+    std::unordered_map<std::string, UniformInfo> _uniformInfos;
+    
+    int _maxLocation = -1;
 };
 
 CC_BACKEND_END

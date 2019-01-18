@@ -5,6 +5,27 @@
 
 CC_BACKEND_BEGIN
 
+namespace
+{
+    uint32_t getTypeSize(glslopt_basic_type type)
+    {
+        uint32_t ret = 0;
+        switch (type)
+        {
+            case kGlslTypeFloat:
+            case kGlslTypeInt:
+                ret = 4;
+                break;
+            case kGlslTypeBool:
+                ret = 1;
+                break;
+            default:
+                break;
+        }
+        return ret;
+    }
+}
+
 ShaderModuleMTL::ShaderModuleMTL(id<MTLDevice> mtlDevice, ShaderStage stage, const std::string& source)
 : ShaderModule(stage)
 {
@@ -84,7 +105,18 @@ void ShaderModuleMTL::parseUniform(id<MTLDevice> mtlDevice, glslopt_shader* shad
         glslopt_precision parPrec;
         int parVecSize, parMatSize, parArrSize, location;
         glslopt_shader_get_uniform_desc(shader, i, &parName, &parType, &parPrec, &parVecSize, &parMatSize, &parArrSize, &location);
-        _uniforms.push_back(parName);
+        
+        parArrSize = (parArrSize > 0) ? parArrSize : 1;
+        UniformInfo uniform;
+        uniform.count = parArrSize;
+        uniform.location = location;
+        uniform.isArray = parArrSize;
+        uniform.bufferSize = getTypeSize(parType) * parVecSize * parMatSize * parArrSize;
+        //TODO coulsonwang
+        uniform.bufferSize = uniform.bufferSize < 16 ? 16 : uniform.bufferSize;
+        _uniformInfos[parName] = uniform;
+        
+        _maxLocation = _maxLocation < location ? (location + 1) : _maxLocation;
     }
 }
 
@@ -98,7 +130,12 @@ void ShaderModuleMTL::parseTexture(id<MTLDevice> mtlDevice, glslopt_shader* shad
         glslopt_precision parPrec;
         int parVecSize, parMatSize, parArrSize, location;
         glslopt_shader_get_texture_desc(shader, i, &parName, &parType, &parPrec, &parVecSize, &parMatSize, &parArrSize, &location);
-        _textures.push_back(parName);
+        
+        UniformInfo uniform;
+        uniform.count = parArrSize;
+        uniform.location = location;
+        uniform.isArray = parArrSize > 0;
+        _uniformInfos[parName] = uniform;
     }
 }
 

@@ -61,6 +61,7 @@ THE SOFTWARE.
 #include "base/CCAsyncTaskPool.h"
 #include "base/ObjectFactory.h"
 #include "platform/CCApplication.h"
+#include "renderer/backend/ProgramCache.h"
 
 #if CC_ENABLE_SCRIPT_BINDING
 #include "base/CCScriptSupport.h"
@@ -1040,6 +1041,8 @@ void Director::reset()
     GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
     AsyncTaskPool::destroyInstance();
+    backend::ProgramCache::destroyInstance();
+    
     
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();

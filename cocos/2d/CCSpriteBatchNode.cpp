@@ -36,7 +36,7 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/ccShaders.h"
-#include "renderer/CCShaderCache.h"
+#include "renderer/backend/ProgramState.h"
 
 
 NS_CC_BEGIN
@@ -107,16 +107,19 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity/* = DEFAU
 
     _descendants.reserve(capacity);
     
-    createShaders();
+    updateShaders(positionTextureColor_vert, positionTextureColor_frag);
     
     return true;
 }
 
-void SpriteBatchNode::createShaders()
+void SpriteBatchNode::updateShaders(const std::string &vertexShader, const std::string &fragmentShader)
 {
     auto& pipelineDescriptor = _quadCommand.getPipelineDescriptor();
-    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
-    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
+    CC_SAFE_RELEASE(_programState);
+    _programState = new (std::nothrow) backend::ProgramState(vertexShader, fragmentShader);
+    pipelineDescriptor.programState = _programState;
+    _mvpMatrixLocaiton = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
+    _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
     
 #define VERTEX_POSITION_SIZE 3
 #define VERTEX_TEXCOORD_SIZE 2
@@ -157,6 +160,7 @@ SpriteBatchNode::SpriteBatchNode()
 SpriteBatchNode::~SpriteBatchNode()
 {
     CC_SAFE_RELEASE(_textureAtlas);
+    CC_SAFE_RELEASE(_programState);
 }
 
 // override visit
@@ -408,9 +412,9 @@ void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
     }
     
     const auto& matrixProjection = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    auto& bindGroup = _quadCommand.getPipelineDescriptor().bindGroup;
-    bindGroup.setUniform("u_MVPMatrix", matrixProjection.m, sizeof(matrixProjection.m));
-    bindGroup.setTexture("u_texture", 0, _textureAtlas->getTexture()->getBackendTexture());
+    auto programState = _quadCommand.getPipelineDescriptor().programState;
+    programState->setUniform(_mvpMatrixLocaiton, matrixProjection.m, sizeof(matrixProjection.m));
+    programState->setTexture(_textureLocation, 0, _textureAtlas->getTexture()->getBackendTexture());
 
     _quadCommand.init(_globalZOrder, _textureAtlas->getTexture(), _blendFunc, _textureAtlas->getQuads(), _textureAtlas->getTotalQuads(), transform, flags);
     renderer->addCommand(&_quadCommand);

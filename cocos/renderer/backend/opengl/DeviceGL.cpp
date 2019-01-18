@@ -6,6 +6,7 @@
 #include "TextureGL.h"
 #include "DepthStencilStateGL.h"
 #include "BlendStateGL.h"
+#include "ProgramGL.h"
 
 CC_BACKEND_BEGIN
 
@@ -15,6 +16,16 @@ Device* Device::getInstance()
         _instance = new (std::nothrow) DeviceGL();
     
     return _instance;
+}
+
+DeviceGL::DeviceGL()
+{
+    ProgramCache::getInstance();
+}
+
+DeviceGL::~DeviceGL()
+{
+    ProgramCache::destroyInstance();
 }
 
 CommandBuffer* DeviceGL::newCommandBuffer()
@@ -32,13 +43,9 @@ Texture* DeviceGL::newTexture(const TextureDescriptor& descriptor)
     return new (std::nothrow) TextureGL(descriptor);
 }
 
-ShaderModule* DeviceGL::createShaderModule(ShaderStage stage, const std::string& source)
+ShaderModule* DeviceGL::newShaderModule(ShaderStage stage, const std::string& source)
 {
-    auto ret = new (std::nothrow) ShaderModuleGL(stage, source);
-    if (ret)
-        ret->autorelease();
-    
-    return ret;
+    return new (std::nothrow) ShaderModuleGL(stage, source);
 }
 
 DepthStencilState* DeviceGL::createDepthStencilState(const DepthStencilDescriptor& descriptor)
@@ -62,6 +69,11 @@ BlendState* DeviceGL::createBlendState(const BlendDescriptor& descriptor)
 RenderPipeline* DeviceGL::newRenderPipeline(const RenderPipelineDescriptor& descriptor)
 {
     return new (std::nothrow) RenderPipelineGL(descriptor);
+}
+
+Program* DeviceGL::newProgram(const std::string& vertexShader, const std::string& fragmentShader)
+{
+    return new (std::nothrow) ProgramGL(vertexShader, fragmentShader);
 }
 
 CC_BACKEND_END

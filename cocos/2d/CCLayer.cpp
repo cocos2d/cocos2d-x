@@ -41,9 +41,9 @@ THE SOFTWARE.
 #include "base/CCEventAcceleration.h"
 #include "base/CCEventListenerAcceleration.h"
 #include "base/ccUTF8.h"
-#include "renderer/CCShaderCache.h"
 #include "renderer/backend/Buffer.h"
 #include "renderer/ccShaders.h"
+#include "renderer/backend/ProgramState.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include "platform/desktop/CCGLViewImpl-desktop.h"
@@ -293,8 +293,9 @@ LayerColor::LayerColor()
     vertexLayout.setLayout(sizeof(_vertexData[0]), backend::VertexStepMode::VERTEX);
     
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionColor_vert);
-    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionColor_frag);
+    _programState = new (std::nothrow) backend::ProgramState(positionColor_vert, positionColor_frag);
+    pipelineDescriptor.programState = _programState;
+    _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     
     _customCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, 6, CustomCommand::BufferUsage::STATIC);
     unsigned short indices[] = {0, 1, 2, 2, 1, 3};
@@ -308,6 +309,7 @@ LayerColor::LayerColor()
     
 LayerColor::~LayerColor()
 {
+    CC_SAFE_RELEASE(_programState);
 }
 
 /// blendFunc getter
@@ -443,7 +445,7 @@ void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     
     cocos2d::Mat4 projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    pipelineDescriptor.bindGroup.setUniform("u_MVPMatrix", projectionMat.m, sizeof(projectionMat.m));
+    pipelineDescriptor.programState->setUniform(_mvpMatrixLocation, projectionMat.m, sizeof(projectionMat.m));
     
     for(int i = 0; i < 4; ++i)
     {
@@ -693,8 +695,14 @@ LayerRadialGradient* LayerRadialGradient::create()
 LayerRadialGradient::LayerRadialGradient()
 {
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(position_vert);
-    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(layer_radialGradient_frag);
+    _programState = new (std::nothrow) backend::ProgramState(position_vert, layer_radialGradient_frag);
+    pipelineDescriptor.programState = _programState;
+    _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
+    _startColorLocation = pipelineDescriptor.programState->getUniformLocation("u_startColor");
+    _endColorLocation = pipelineDescriptor.programState->getUniformLocation("u_endColor");
+    _centerLocation = pipelineDescriptor.programState->getUniformLocation("u_center");
+    _radiusLocation = pipelineDescriptor.programState->getUniformLocation("u_radius");
+    _expandLocation = pipelineDescriptor.programState->getUniformLocation("u_expand");
 
     auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
     vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32, 0, false);
@@ -706,7 +714,9 @@ LayerRadialGradient::LayerRadialGradient()
 }
 
 LayerRadialGradient::~LayerRadialGradient()
-{}
+{
+    CC_SAFE_RELEASE(_programState);
+}
 
 bool LayerRadialGradient::initWithColor(const cocos2d::Color4B &startColor, const cocos2d::Color4B &endColor, float radius, const Vec2& center, float expand)
 {
@@ -739,15 +749,15 @@ void LayerRadialGradient::draw(Renderer *renderer, const Mat4 &transform, uint32
     renderer->addCommand(&_customCommand);
 
     const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    auto& bindGroup = _customCommand.getPipelineDescriptor().bindGroup;
+    auto programState = _customCommand.getPipelineDescriptor().programState;
     Mat4 finalMat = projectionMat * transform;
-    bindGroup.setUniform("u_MVPMatrix", finalMat.m, sizeof(finalMat.m));
+    programState->setUniform(_mvpMatrixLocation, finalMat.m, sizeof(finalMat.m));
 
-    bindGroup.setUniform("u_startColor", &_startColorRend, sizeof(_startColorRend));
-    bindGroup.setUniform("u_endColor", &_endColorRend, sizeof(_endColorRend));
-    bindGroup.setUniform("u_center", &_center, sizeof(_center));
-    bindGroup.setUniform("u_radius", &_radius, sizeof(_radius));
-    bindGroup.setUniform("u_expand", &_expand, sizeof(_expand));
+    programState->setUniform(_startColorLocation, &_startColorRend, sizeof(_startColorRend));
+    programState->setUniform(_endColorLocation, &_endColorRend, sizeof(_endColorRend));
+    programState->setUniform(_centerLocation, &_center, sizeof(_center));
+    programState->setUniform(_radiusLocation, &_radius, sizeof(_radius));
+    programState->setUniform(_expandLocation, &_expand, sizeof(_expand));
 }
 
 void LayerRadialGradient::setContentSize(const Size& size)

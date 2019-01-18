@@ -640,7 +640,7 @@ void Renderer::drawBatchedTriangles()
         _commandBuffer->setVertexBuffer(0, _vertexBuffer);
         _commandBuffer->setIndexBuffer(_indexBuffer);
         auto& pipelineDescriptor = _triBatchesToDraw[i].cmd->getPipelineDescriptor();
-        _commandBuffer->setBindGroup(&pipelineDescriptor.bindGroup);
+        _commandBuffer->setProgramState(pipelineDescriptor.programState);
         _commandBuffer->drawElements(backend::PrimitiveType::TRIANGLE,
                                      backend::IndexFormat::U_SHORT,
                                      _triBatchesToDraw[i].indicesToDraw,
@@ -666,7 +666,7 @@ void Renderer::drawCustomCommand(RenderCommand *command)
     
     beginRenderPass(command);
     _commandBuffer->setVertexBuffer(0, cmd->getVertexBuffer());
-    _commandBuffer->setBindGroup( &(cmd->getPipelineDescriptor().bindGroup) );
+    _commandBuffer->setProgramState(cmd->getPipelineDescriptor().programState);
     
     auto drawType = cmd->getDrawType();
     _commandBuffer->setLineWidth(cmd->getLineWidth());
@@ -753,8 +753,7 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, const backend::RenderPassDescriptor& renderPassDescriptor)
 {
     backend::RenderPipelineDescriptor renderPipelineDescriptor;
-    renderPipelineDescriptor.vertexShaderModule = pipelineDescriptor.vertexShader;
-    renderPipelineDescriptor.fragmentShaderModule = pipelineDescriptor.fragmentShader;
+    renderPipelineDescriptor.programState = pipelineDescriptor.programState;
     renderPipelineDescriptor.vertexLayouts.push_back(pipelineDescriptor.vertexLayout);
     
     auto device = backend::Device::getInstance();

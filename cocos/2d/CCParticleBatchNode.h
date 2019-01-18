@@ -177,6 +177,10 @@ private:
     BlendFunc _blendFunc;
     
     CustomCommand _customCommand;
+    
+    backend::UniformLocation _mvpMatrixLocaiton;
+    backend::UniformLocation _textureLocation;
+    backend::ProgramState* _programState = nullptr;
 };
 
 // end of _2d group

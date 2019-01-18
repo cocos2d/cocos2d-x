@@ -276,6 +276,9 @@ protected:
     CustomCommand _customCommand;
 
     V3F_C4F _vertexData[4];
+    
+    backend::UniformLocation _mvpMatrixLocation;
+    backend::ProgramState* _programState = nullptr;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);
 
@@ -503,6 +506,14 @@ private:
     CustomCommand _customCommand;
     
     BlendFunc _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+    
+    backend::UniformLocation _mvpMatrixLocation;
+    backend::UniformLocation _startColorLocation;
+    backend::UniformLocation _endColorLocation;
+    backend::UniformLocation _centerLocation;
+    backend::UniformLocation _radiusLocation;
+    backend::UniformLocation _expandLocation;
+    backend::ProgramState* _programState = nullptr;
 };
 
 

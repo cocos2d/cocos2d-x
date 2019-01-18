@@ -13,7 +13,7 @@ CC_BACKEND_BEGIN
 
 class BufferGL;
 class RenderPipelineGL;
-class Program;
+class ProgramGL;
 
 class CommandBufferGL : public CommandBuffer
 {
@@ -27,7 +27,7 @@ public:
     virtual void setViewport(int x, int y, unsigned int w, unsigned int h) override;
     virtual void setCullMode(CullMode mode) override;
     virtual void setVertexBuffer(unsigned int index, Buffer* buffer) override;
-    virtual void setBindGroup(BindGroup* bindGroup) override;
+    virtual void setProgramState(ProgramState* programState) override;
     virtual void setIndexBuffer(Buffer* buffer) override;
     virtual void drawArrays(PrimitiveType primitiveType, unsigned int start,  unsigned int count) override;
     virtual void drawElements(PrimitiveType primitiveType, IndexFormat indexType, unsigned int count, unsigned int offset) override;
@@ -48,8 +48,8 @@ private:
     };
     
     void prepareDrawing() const;
-    void bindVertexBuffer(Program* program) const;
-    void setUniforms(Program* program) const;
+    void bindVertexBuffer(ProgramGL* program) const;
+    void setUniforms(ProgramGL* program) const;
     void setUniform(bool isArray, GLuint location, unsigned int size, GLenum uniformType, void* data) const;
     void cleanResources();
     void applyRenderPassDescriptor(const RenderPassDescriptor& descirptor);
@@ -58,7 +58,7 @@ private:
     GLint _defaultFBO = 0;
     GLuint _currentFBO = 0;
     std::vector<BufferGL*> _vertexBuffers;
-    BindGroup* _bindGroup = nullptr;
+    ProgramState* _programState = nullptr;
     BufferGL* _indexBuffer = nullptr;
     RenderPipelineGL* _renderPipeline = nullptr;
     CullMode _cullMode = CullMode::NONE;

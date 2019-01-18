@@ -3,6 +3,7 @@
 #include "ShaderModuleMTL.h"
 #include "DepthStencilStateMTL.h"
 #include "Utils.h"
+#include "ProgramMTL.h"
 
 CC_BACKEND_BEGIN
 
@@ -144,17 +145,13 @@ void RenderPipelineMTL::setBlendState(MTLRenderPipelineColorAttachmentDescriptor
 
 void RenderPipelineMTL::setShaderModules(const RenderPipelineDescriptor& descriptor)
 {
-    auto vertexShaderModule = static_cast<ShaderModuleMTL*>(descriptor.vertexShaderModule);
+    auto vertexShaderModule = static_cast<ProgramMTL*>(descriptor.programState->getProgram())->getVertexShader();
     _mtlRenderPipelineDescriptor.vertexFunction = vertexShaderModule->getMTLFunction();
-    _vertexUniforms = vertexShaderModule->getUniforms();
     _vertexUniformBuffer = vertexShaderModule->getUniformBuffer();
-    _vertexTextures = vertexShaderModule->getTextures();
     
-    auto fragShaderModule = static_cast<ShaderModuleMTL*>(descriptor.fragmentShaderModule);
+    auto fragShaderModule = static_cast<ProgramMTL*>(descriptor.programState->getProgram())->getFragmentShader();
     _mtlRenderPipelineDescriptor.fragmentFunction = fragShaderModule->getMTLFunction();
-    _fragmentUniforms = fragShaderModule->getUniforms();
     _fragementUniformBuffer = fragShaderModule->getUniformBuffer();
-    _fragmentTextures = fragShaderModule->getTextures();
 }
 
 void RenderPipelineMTL::setBlendStateAndFormat(const RenderPipelineDescriptor& descriptor)

@@ -21,10 +21,6 @@ public:
     
     inline const std::shared_ptr<uint8_t>& getVertexUniformBuffer() const { return _vertexUniformBuffer; }
     inline const std::shared_ptr<uint8_t>& getFragmentUniformBuffer() const { return _fragementUniformBuffer; }
-    inline const std::vector<std::string>& getVertexUniforms() const { return _vertexUniforms; }
-    inline const std::vector<std::string>& getFragmentUniforms() const { return _fragmentUniforms; }
-    inline const std::vector<std::string>& getVertexTextures() const { return _vertexTextures; }
-    inline const std::vector<std::string>& getFragmentTextures() const { return _fragmentTextures; }
     
 private:
     void setVertexLayout(MTLRenderPipelineDescriptor*, const RenderPipelineDescriptor&);
@@ -37,12 +33,7 @@ private:
     id<MTLDevice> _mtlDevice = nil;
     
     std::shared_ptr<uint8_t> _vertexUniformBuffer = nullptr;
-    std::vector<std::string> _vertexUniforms;
-    std::vector<std::string> _vertexTextures;
-    
     std::shared_ptr<uint8_t> _fragementUniformBuffer = nullptr;
-    std::vector<std::string> _fragmentUniforms;
-    std::vector<std::string> _fragmentTextures;
     
     MTLRenderPipelineDescriptor* _mtlRenderPipelineDescriptor = nil;
     BlendDescriptorMTL _blendDescriptorMTL;

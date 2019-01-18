@@ -26,8 +26,8 @@
 #include "base/CCStencilStateManager.h"
 #include "base/CCDirector.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCShaderCache.h"
 #include "renderer/ccShaders.h"
+#include "renderer/backend/ProgramState.h"
 
 NS_CC_BEGIN
 
@@ -40,9 +40,12 @@ StencilStateManager::StencilStateManager()
     vertexLayout.setLayout(2 * sizeof(float), backend::VertexStepMode::VERTEX);
 
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionUColor_vert);
-    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionUColor_frag);
-
+    _programState = new (std::nothrow) backend::ProgramState(positionUColor_vert, positionUColor_frag);
+    pipelineDescriptor.programState = _programState;
+    _mvpMatrixLocaiton = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
+    _colorUniformLocation = pipelineDescriptor.programState->getUniformLocation("u_color");
+    
+   
     Vec2 vertices[4] = {
         Vec2(-1.0f, -1.0f),
         Vec2(1.0f, -1.0f),
@@ -57,14 +60,19 @@ StencilStateManager::StencilStateManager()
     _customCommand.updateIndexBuffer(indices, sizeof(indices));
 
     Color4F color(1, 1, 1, 1);
-    pipelineDescriptor.bindGroup.setUniform("u_color", &color, sizeof(color));
+    pipelineDescriptor.programState->setUniform(_colorUniformLocation, &color, sizeof(color));
+}
+
+StencilStateManager::~StencilStateManager()
+{
+    CC_SAFE_RELEASE(_programState);
 }
 
 void StencilStateManager::drawFullScreenQuadClearStencil(float globalZOrder)
 {
     _customCommand.init(globalZOrder);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
-    _customCommand.getPipelineDescriptor().bindGroup.setUniform("u_MVPMatrix", Mat4::IDENTITY.m, sizeof(Mat4::IDENTITY.m));
+    _customCommand.getPipelineDescriptor().programState->setUniform(_mvpMatrixLocaiton, Mat4::IDENTITY.m, sizeof(Mat4::IDENTITY.m));
 }
 
 

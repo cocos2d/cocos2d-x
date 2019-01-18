@@ -32,8 +32,8 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "base/ccUtils.h"
 #include "renderer/ccShaders.h"
-#include "renderer/CCShaderCache.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/backend/ProgramState.h"
 
 NS_CC_BEGIN
 
@@ -44,9 +44,11 @@ NS_CC_BEGIN
 AtlasNode::AtlasNode()
 {
     auto& pipelineDescriptor = _quadCommand.getPipelineDescriptor();
-    pipelineDescriptor.vertexShader = ShaderCache::newVertexShaderModule(positionTextureColor_vert);
-    pipelineDescriptor.fragmentShader = ShaderCache::newFragmentShaderModule(positionTextureColor_frag);
-    
+    _programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColor_frag);
+    pipelineDescriptor.programState = _programState;
+    _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
+    _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
+  
 #define VERTEX_POSITION_SIZE 3
 #define VERTEX_TEXCOORD_SIZE 2
 #define VERTEX_COLOR_SIZE 4
@@ -67,6 +69,7 @@ AtlasNode::AtlasNode()
 AtlasNode::~AtlasNode()
 {
     CC_SAFE_RELEASE(_textureAtlas);
+    CC_SAFE_RELEASE(_programState);
 }
 
 AtlasNode * AtlasNode::create(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender)
@@ -145,11 +148,11 @@ void AtlasNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     if( _textureAtlas->getTotalQuads() == 0 )
         return;
     
-    auto& bindGroup = _quadCommand.getPipelineDescriptor().bindGroup;
-    bindGroup.setTexture("u_texture", 0, _textureAtlas->getTexture()->getBackendTexture());
+    auto programState = _quadCommand.getPipelineDescriptor().programState;
+    programState->setTexture(_textureLocation, 0, _textureAtlas->getTexture()->getBackendTexture());
     
     const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    bindGroup.setUniform("u_MVPMatrix", projectionMat.m, sizeof(projectionMat.m));
+    programState->setUniform(_mvpMatrixLocation, projectionMat.m, sizeof(projectionMat.m));
     
     _quadCommand.init(_globalZOrder, _textureAtlas->getTexture(), _blendFunc, _textureAtlas->getQuads(), _quadsToDraw, transform, flags);
     renderer->addCommand(&_quadCommand);
