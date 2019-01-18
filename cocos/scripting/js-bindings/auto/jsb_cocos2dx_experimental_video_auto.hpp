@@ -16,16 +16,21 @@ void register_all_cocos2dx_experimental_video(JSContext* cx, JS::HandleObject ob
 bool js_cocos2dx_experimental_video_VideoPlayer_getFileName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_getURL(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_play(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_experimental_video_VideoPlayer_isUserInputEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_setKeepAspectRatioEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_stop(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_setFullScreenEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_setFileName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_setURL(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_experimental_video_VideoPlayer_setStyle(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_experimental_video_VideoPlayer_seekTo(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_isKeepAspectRatioEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_onPlayEvent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_isFullScreenEnabled(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_experimental_video_VideoPlayer_isLooping(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_isPlaying(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_experimental_video_VideoPlayer_seekTo(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_experimental_video_VideoPlayer_setLooping(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_experimental_video_VideoPlayer_setUserInputEnabled(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_experimental_video_VideoPlayer_VideoPlayer(JSContext *cx, uint32_t argc, jsval *vp);
 

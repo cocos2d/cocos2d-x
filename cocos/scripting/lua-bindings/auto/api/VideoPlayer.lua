@@ -25,6 +25,13 @@
 -- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
         
 --------------------------------
+-- Checks whether the VideoPlayer is set to listen user input to resume and pause the video<br>
+-- return true if the videoplayer user input is set, false otherwise.
+-- @function [parent=#VideoPlayer] isUserInputEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Causes the video player to keep aspect ratio or no when displaying the video.<br>
 -- param enable    Specify true to keep aspect ratio or false to scale the video until <br>
 -- both dimensions fit the visible bounds of the view exactly.
@@ -62,6 +69,22 @@
 -- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
         
 --------------------------------
+-- Set the style of the player<br>
+-- param style The corresponding style
+-- @function [parent=#VideoPlayer] setStyle 
+-- @param self
+-- @param #int style
+-- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
+        
+--------------------------------
+-- Seeks to specified time position.<br>
+-- param sec   The offset in seconds from the start to seek to.
+-- @function [parent=#VideoPlayer] seekTo 
+-- @param self
+-- @param #float sec
+-- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
+        
+--------------------------------
 -- Indicates whether the video player keep aspect ratio when displaying the video.
 -- @function [parent=#VideoPlayer] isKeepAspectRatioEnabled 
 -- @param self
@@ -83,6 +106,13 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- Checks whether the VideoPlayer is set with looping mode.<br>
+-- return true if the videoplayer is set to loop, false otherwise.
+-- @function [parent=#VideoPlayer] isLooping 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Checks whether the VideoPlayer is playing.<br>
 -- return True if currently playing, false otherwise.
 -- @function [parent=#VideoPlayer] isPlaying 
@@ -90,11 +120,19 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Seeks to specified time position.<br>
--- param sec   The offset in seconds from the start to seek to.
--- @function [parent=#VideoPlayer] seekTo 
+-- brief Set if playback is done in loop mode<br>
+-- param looping the video will or not automatically restart at the end
+-- @function [parent=#VideoPlayer] setLooping 
 -- @param self
--- @param #float sec
+-- @param #bool looping
+-- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
+        
+--------------------------------
+-- Set if the player will enable user input for basic pause and resume of video<br>
+-- param enableInput If true, input will be handled for basic functionality (pause/resume)
+-- @function [parent=#VideoPlayer] setUserInputEnabled 
+-- @param self
+-- @param #bool enableInput
 -- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
         
 --------------------------------
