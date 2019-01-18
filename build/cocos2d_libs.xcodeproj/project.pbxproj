@@ -2085,6 +2085,10 @@
 		ED9C6A9518599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9618599AD8000A5232 /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
 		ED9C6A9718599AD8000A5232 /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
+		EDAF7C6F21F1797000E070B2 /* CCTextureUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = EDAF7C6D21F1796F00E070B2 /* CCTextureUtils.h */; };
+		EDAF7C7021F1797000E070B2 /* CCTextureUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = EDAF7C6D21F1796F00E070B2 /* CCTextureUtils.h */; };
+		EDAF7C7121F1797000E070B2 /* CCTextureUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAF7C6E21F1797000E070B2 /* CCTextureUtils.cpp */; };
+		EDAF7C7221F1797000E070B2 /* CCTextureUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAF7C6E21F1797000E070B2 /* CCTextureUtils.cpp */; };
 		EDC78BD821CA19FB00E1863C /* CCComAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC789E021CA19FA00E1863C /* CCComAudio.cpp */; };
 		EDC78BD921CA19FB00E1863C /* CCComAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC789E021CA19FA00E1863C /* CCComAudio.cpp */; };
 		EDC78BDA21CA19FB00E1863C /* CCProcessBase.h in Headers */ = {isa = PBXBuildFile; fileRef = EDC789E121CA19FA00E1863C /* CCProcessBase.h */; };
@@ -3336,6 +3340,8 @@
 		ED93A75821EDBCBA00170050 /* Program.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Program.cpp; sourceTree = "<group>"; };
 		ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCNodeGrid.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeGrid.h; sourceTree = "<group>"; };
+		EDAF7C6D21F1796F00E070B2 /* CCTextureUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTextureUtils.h; path = ../CCTextureUtils.h; sourceTree = "<group>"; };
+		EDAF7C6E21F1797000E070B2 /* CCTextureUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCTextureUtils.cpp; path = ../CCTextureUtils.cpp; sourceTree = "<group>"; };
 		EDC789E021CA19FA00E1863C /* CCComAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCComAudio.cpp; sourceTree = "<group>"; };
 		EDC789E121CA19FA00E1863C /* CCProcessBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProcessBase.h; sourceTree = "<group>"; };
 		EDC789E221CA19FA00E1863C /* TriggerMng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriggerMng.h; sourceTree = "<group>"; };
@@ -5361,6 +5367,8 @@
 		ED28C1EC219E629B0078D854 /* backend */ = {
 			isa = PBXGroup;
 			children = (
+				EDAF7C6E21F1797000E070B2 /* CCTextureUtils.cpp */,
+				EDAF7C6D21F1796F00E070B2 /* CCTextureUtils.h */,
 				EDE6456D21F017210063F6E4 /* ProgramState.cpp */,
 				EDE6456F21F017210063F6E4 /* ProgramState.h */,
 				EDE6456E21F017210063F6E4 /* ShaderCache.cpp */,
@@ -6104,6 +6112,7 @@
 				A045F6D81BA81577005076C7 /* CCTextureCube.h in Headers */,
 				B6DD2FC11B04825B00E47F5F /* DetourMath.h in Headers */,
 				50CB247919D9C5A100687767 /* AudioEngine-inl.h in Headers */,
+				EDAF7C6F21F1797000E070B2 /* CCTextureUtils.h in Headers */,
 				50ABBD561925AB0000A911A9 /* TransformUtils.h in Headers */,
 				299754F6193EC95400A54AC3 /* ObjectFactory.h in Headers */,
 				50ABBD991925AB4100A911A9 /* CCGLProgramStateCache.h in Headers */,
@@ -6976,6 +6985,7 @@
 				1A5701E9180BCB8C0088DEC7 /* CCTransition.h in Headers */,
 				B6DD2FAE1B04825B00E47F5F /* DetourDebugDraw.h in Headers */,
 				EDC78C0521CA19FB00E1863C /* CCSkeletonNode.h in Headers */,
+				EDAF7C7021F1797000E070B2 /* CCTextureUtils.h in Headers */,
 				EDC78C7F21CA19FC00E1863C /* ProjectNodeReader.h in Headers */,
 				B6DD2FD81B04825B00E47F5F /* DetourCrowd.h in Headers */,
 				50ABBED41925AB6F00A911A9 /* uthash.h in Headers */,
@@ -7547,6 +7557,7 @@
 				460D4D0D21ABD0C60075726E /* BlendStateMTL.mm in Sources */,
 				46D3D47121E473BB00EF5E75 /* CCPhysicsShape.cpp in Sources */,
 				1A570286180BCC900088DEC7 /* CCSpriteFrame.cpp in Sources */,
+				EDAF7C7121F1797000E070B2 /* CCTextureUtils.cpp in Sources */,
 				B24AA989195A675C007B4522 /* CCFastTMXTiledMap.cpp in Sources */,
 				50ABC0191926664800A911A9 /* CCSAXParser.cpp in Sources */,
 				B6DD2FA71B04825B00E47F5F /* DebugDraw.cpp in Sources */,
@@ -8121,6 +8132,7 @@
 				1A5701BE180BCB5A0088DEC7 /* CCLabelAtlas.cpp in Sources */,
 				15FB20751AE7BF8600C31518 /* CCAutoPolygon.cpp in Sources */,
 				1A087AE91860400400196EF5 /* edtaa3func.cpp in Sources */,
+				EDAF7C7221F1797000E070B2 /* CCTextureUtils.cpp in Sources */,
 				B6DD2FC41B04825B00E47F5F /* DetourNavMesh.cpp in Sources */,
 				1A5701C8180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */,
 				EDC78CC921CA19FC00E1863C /* SingleNodeReader.cpp in Sources */,
