@@ -118,6 +118,12 @@ public:
         //! ATITC-compressed texture: ATC_INTERPOLATED_ALPHA
         ATC_INTERPOLATED_ALPHA,
         //! Default texture format: AUTO
+        
+        MTL_B5G6R5,
+        //MTL_A1BGR5,
+        MTL_BGR5A1,
+        MTL_ABGR4,
+        
         DEFAULT = AUTO,
         
         NONE = -1
@@ -204,8 +210,22 @@ public:
      * @js NA
      * @lua NA
      */
-    bool initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& contentSize);
+    bool initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& contentSize) { return initWithData(data, dataLen, pixelFormat, pixelFormat, pixelsWide, pixelsHigh, contentSize);}
 
+    /** Initializes with a texture2d with data.
+     
+     @param data Specifies a pointer to the image data in memory.
+     @param dataLen The image data length.
+     @param pixelFormat The image pixelFormat.
+     @param renderFormat The format converted to.
+     @param pixelsWide The image width.
+     @param pixelsHigh The image height.
+     @param contentSize The image content size.
+     * @js NA
+     * @lua NA
+     */
+    bool initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, Texture2D::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, const Size& contentSize);
+    
     /** Initializes with mipmaps. 
      
      @param mipmaps Specifies a pointer to the image data in memory.
@@ -214,7 +234,7 @@ public:
      @param pixelsWide The image width.
      @param pixelsHigh The image height.
      */
-    bool initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh);
+    bool initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, Texture2D::PixelFormat pixelFormat, Texture2D::PixelFormat renderFormat, int pixelsWide, int pixelsHigh);
     
     /** Update with texture data.
      
@@ -279,20 +299,9 @@ public:
     //TODO: minggo: is it resaonable?
     bool initWithBackendTexture(backend::Texture* texture);
 
-    /** Sets the min filter, mag filter, wrap s and wrap t texture parameters.
-     If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
-     
-     @warning Calling this method could allocate additional texture memory.
-     
-     @since v0.8
-     * @code
-     * When this function bound into js or lua,the input parameter will be changed
-     * In js: var setBlendFunc(var arg1, var arg2, var arg3, var arg4)
-     * In lua: local setBlendFunc(local arg1, local arg2, local arg3, local arg4)
-     * @endcode
-     */
-//    TODO coulsonwang
-    void setTexParameters(const TexParams& texParams);
+    /** Set sampler properties
+    */
+    void setSamplerDescriptor(const backend::SamplerDescriptor& texParams);
     
     /** Generates mipmap images for the texture.
      It only works if the texture size is POT (power of 2).
@@ -425,54 +434,9 @@ private:
      */
     void addSpriteFrameCapInset(SpriteFrame* spritframe, const Rect& capInsets);
 
-    /**convert functions*/
 
-    /**
-    Convert the format to the format param you specified, if the format is PixelFormat::Automatic, it will detect it automatically and convert to the closest format for you.
-    It will return the converted format to you. if the outData != data, you must delete it manually.
-    */
-    static PixelFormat convertDataToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat originFormat, PixelFormat format, unsigned char** outData, ssize_t* outDataLen);
 
-    static PixelFormat convertI8ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen);
-    static PixelFormat convertAI88ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen);
-    static PixelFormat convertRGB888ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen);
-    static PixelFormat convertRGBA8888ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen);
-
-    //I8 to XXX
-    static void convertI8ToRGB888(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertI8ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertI8ToRGB565(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertI8ToRGBA4444(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertI8ToRGB5A1(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertI8ToAI88(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-
-    //AI88 to XXX
-    static void convertAI88ToRGB888(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertAI88ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertAI88ToRGB565(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertAI88ToRGBA4444(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertAI88ToRGB5A1(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertAI88ToA8(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertAI88ToI8(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-
-    //RGB888 to XXX
-    static void convertRGB888ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertRGB888ToRGB565(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertRGB888ToA8(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertRGB888ToI8(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertRGB888ToAI88(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertRGB888ToRGBA4444(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertRGB888ToRGB5A1(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-
-    //RGBA8888 to XXX
-    static void convertRGBA8888ToRGB888(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertRGBA8888ToRGB565(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertRGBA8888ToI8(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertRGBA8888ToA8(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertRGBA8888ToAI88(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertRGBA8888ToRGBA4444(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-    static void convertRGBA8888ToRGB5A1(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
-
+    
 protected:
     /** pixel format of the texture */
     Texture2D::PixelFormat _pixelFormat;

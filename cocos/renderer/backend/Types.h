@@ -56,8 +56,29 @@ enum class TextureFormat : uint32_t
     // components: 24 bits, typically used for a depth render target, and 8 bits, typically used for
     // a stencil render target.
     D24S8,
+    I8,
+    AI88,
     RGBA4444,
-    SYSTEM_DEFAULT,
+    RGB565,
+    RGB5A1,
+    //metal 16 bits pixel formats
+    MTL_B5G6R5,
+    //MTL_A1BGR5,
+    MTL_BGR5A1,
+    MTL_ABGR4,
+    // compressed format
+    ETC1,
+    ATC_RGB,
+    ATC_EXPLICIT_ALPHA,
+    ATC_INTERPOLATED_ALPHA,
+    PVRTC2,
+    PVRTC2A,
+    PVRTC4,
+    PVRTC4A,
+    S3TC_DXT1,
+    S3TC_DXT3,
+    S3TC_DXT5,
+    SYSTEM_DEFAULT
 };
 
 enum class TextureUsage : uint32_t
@@ -98,13 +119,15 @@ enum class SamplerAddressMode: uint32_t
 {
     REPEAT,
     MIRROR_REPEAT,
-    CLAMP_TO_EDGE
+    CLAMP_TO_EDGE,
+    DONT_CARE,
 };
 
 enum class SamplerFilter: uint32_t
 {
     NEAREST,
-    LINEAR
+    LINEAR,
+    DONT_CARE,
 };
 
 enum class StencilOperation: uint32_t
@@ -170,6 +193,15 @@ struct SamplerDescriptor
     SamplerFilter mipmapFilter = SamplerFilter::LINEAR;
     SamplerAddressMode sAddressMode = SamplerAddressMode::CLAMP_TO_EDGE;
     SamplerAddressMode tAddressMode = SamplerAddressMode::CLAMP_TO_EDGE;
+    
+    SamplerDescriptor(bool _mipmapEnabled = false,
+                      SamplerFilter _magFilter = SamplerFilter::LINEAR,
+                      SamplerFilter _minFilter = SamplerFilter::LINEAR,
+                      SamplerFilter _mipmapFilter = SamplerFilter::LINEAR,
+                      SamplerAddressMode _sAddressMode = SamplerAddressMode::CLAMP_TO_EDGE,
+                      SamplerAddressMode _tAddressMode = SamplerAddressMode::CLAMP_TO_EDGE
+                      ):mipmapEnabled(_mipmapEnabled), magFilter(_magFilter), minFilter(_minFilter),
+    mipmapFilter(_mipmapFilter), sAddressMode(_sAddressMode), tAddressMode(_tAddressMode) {}
 };
 
 enum class CullMode: uint32_t

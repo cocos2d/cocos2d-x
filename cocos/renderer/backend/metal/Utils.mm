@@ -36,8 +36,23 @@ MTLPixelFormat Utils::toMTLPixelFormat(TextureFormat textureFormat)
 {
     switch (textureFormat)
     {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        case TextureFormat::MTL_ABGR4:
+            return MTLPixelFormatABGR4Unorm;
+        case TextureFormat::MTL_BGR5A1:
+            return MTLPixelFormatBGR5A1Unorm;
+        case TextureFormat::MTL_B5G6R5:
+            return MTLPixelFormatB5G6R5Unorm;
+        case TextureFormat::PVRTC4A:
+            return MTLPixelFormatPVRTC_RGBA_4BPP;
+        case TextureFormat::PVRTC4:
+            return MTLPixelFormatPVRTC_RGB_4BPP;
+        case TextureFormat::PVRTC2A:
+            return MTLPixelFormatPVRTC_RGBA_2BPP;
+        case TextureFormat::PVRTC2:
+            return MTLPixelFormatPVRTC_RGB_2BPP;
+#endif
         case TextureFormat::R8G8B8A8:
-        case TextureFormat::RGBA4444:
             return MTLPixelFormatRGBA8Unorm;
             // Should transfer the data to match pixel format when updating data.
         case TextureFormat::R8G8B8:
@@ -50,6 +65,7 @@ MTLPixelFormat Utils::toMTLPixelFormat(TextureFormat textureFormat)
         case TextureFormat::SYSTEM_DEFAULT:
             return COLOR_ATTAHCMENT_PIXEL_FORMAT;
         case TextureFormat::NONE:
+        default:
             return MTLPixelFormatInvalid;
     }
 }

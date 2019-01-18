@@ -307,7 +307,7 @@ void TextureMipMap::onEnter()
     //TODO: minggo
 //    texture0->generateMipmap();
 //    Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-//    texture0->setTexParameters(texParams);
+//    texture0->setSamplerDescriptor(texParams);
 
     auto texture1 = Director::getInstance()->getTextureCache()->addImage("Images/grossini_dance_atlas_nomipmap.png");
 
@@ -364,7 +364,7 @@ void TexturePVRMipMap::onEnter()
         // support mipmap filtering
         //TODO minggo
 //        Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-//        imgMipMap->getTexture()->setTexParameters(texParams);
+//        imgMipMap->getTexture()->setSamplerDescriptor(texParams);
     }
 
     auto img = Sprite::create("Images/logo-nomipmap.pvr");
@@ -411,7 +411,7 @@ void TexturePVRMipMap2::onEnter()
     // support mipmap filtering
     //TODO minggo
 //    Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-//    imgMipMap->getTexture()->setTexParameters(texParams);
+//    imgMipMap->getTexture()->setSamplerDescriptor(texParams);
 
     auto img = Sprite::create("Images/test_image.png");
     img->setPosition(Vec2( s.width/2.0f+100, s.height/2.0f));
@@ -592,7 +592,6 @@ void TexturePVRRGBA5551::onEnter()
 {
     TextureDemo::onEnter();
     auto s = Director::getInstance()->getWinSize();
-    
     auto img = Sprite::create("Images/test_image_rgba5551.pvr");
     img->setPosition(Vec2( s.width/2.0f, s.height/2.0f));
     addChild(img);
@@ -1593,9 +1592,14 @@ void TextureGlClamp::onEnter()
     auto sprite = Sprite::create("Images/pattern1.png", Rect(0,0,512,256));
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition(Vec2(size.width/2,size.height/2));
-    Texture2D::TexParams params = {GL_LINEAR,GL_LINEAR,GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
-    sprite->getTexture()->setTexParameters(params);
-
+    backend::SamplerDescriptor descriptor = { true,
+        backend::SamplerFilter::LINEAR,
+        backend::SamplerFilter::LINEAR,
+        backend::SamplerFilter::LINEAR,
+        backend::SamplerAddressMode::CLAMP_TO_EDGE,
+        backend::SamplerAddressMode::CLAMP_TO_EDGE,
+    };
+    sprite->getTexture()->setSamplerDescriptor(descriptor);
     auto rotate = RotateBy::create(4, 360);
     sprite->runAction(rotate);
     auto scale = ScaleBy::create(2, 0.04f);
@@ -1630,8 +1634,14 @@ void TextureGlRepeat::onEnter()
     auto sprite = Sprite::create("Images/pattern1.png", Rect(0, 0, 4096, 4096));
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition(Vec2(size.width/2,size.height/2));
-    Texture2D::TexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
-    sprite->getTexture()->setTexParameters(params);
+    backend::SamplerDescriptor descriptor = {true, 
+        backend::SamplerFilter::LINEAR, 
+        backend::SamplerFilter::LINEAR,
+        backend::SamplerFilter::LINEAR,
+        backend::SamplerAddressMode::REPEAT,
+        backend::SamplerAddressMode::REPEAT
+    };
+    sprite->getTexture()->setSamplerDescriptor(descriptor);
     
     auto rotate = RotateBy::create(4, 360);
     sprite->runAction(rotate);
@@ -1787,8 +1797,9 @@ void TextureDrawAtPoint::draw(Renderer *renderer, const Mat4 &transform, uint32_
     TextureDemo::draw(renderer, transform, flags);
     
     _renderCmd.init(_globalZOrder, transform, flags);
-    _renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this, transform, flags);
-    renderer->addCommand(&_renderCmd);
+    //TODO: impl new CustomRenderer
+    //_renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this, transform, flags);
+    //renderer->addCommand(&_renderCmd);
 
 }
 
@@ -1832,7 +1843,8 @@ void TextureDrawInRect::draw(Renderer *renderer, const Mat4 &transform, uint32_t
 
     _renderCmd.init(_globalZOrder, transform, flags);
     _renderCmd.func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this, transform, flags);
-    renderer->addCommand(&_renderCmd);
+    //TODO: impl new CustomRenderer
+    //renderer->addCommand(&_renderCmd);
 }
 
 void TextureDrawInRect::onDraw(const Mat4 &transform, uint32_t flags)

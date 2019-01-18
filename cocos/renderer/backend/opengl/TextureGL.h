@@ -14,6 +14,8 @@ public:
     virtual void updateData(uint8_t* data) override;
     virtual void updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data) override;
     
+    virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler)  override;
+
     void apply(int index) const;
     inline GLuint getHandler() const { return _texture; }
     
@@ -33,6 +35,8 @@ private:
     GLint _internalFormat = GL_RGBA;
     GLenum _format = GL_RGBA;
     GLenum _type = GL_UNSIGNED_BYTE;
+
+    bool _isCompressed = false;
 };
 
 CC_BACKEND_END

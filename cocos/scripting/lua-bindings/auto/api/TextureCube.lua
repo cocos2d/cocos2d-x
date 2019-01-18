@@ -13,7 +13,7 @@
 --------------------------------
 --  Sets the min filter, mag filter, wrap s and wrap t texture parameters.<br>
 -- If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
--- @function [parent=#TextureCube] setTexParameters 
+-- @function [parent=#TextureCube] setSamplerDescriptor
 -- @param self
 -- @param #cc.Texture2D::_TexParams 
 -- @return TextureCube#TextureCube self (return value: cc.TextureCube)

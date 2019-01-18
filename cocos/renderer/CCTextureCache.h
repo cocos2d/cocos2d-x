@@ -262,7 +262,8 @@ protected:
     std::string _fileName;
 
     bool                      _hasMipmaps;
-    Texture2D::TexParams      _texParams;
+    //Texture2D::TexParams      _texParams;
+    backend::SamplerDescriptor _samplerDescriptor;
     std::string               _text;
     FontDefinition            _fontDefinition;
 };
@@ -276,7 +277,7 @@ public:
     static void addImage(Texture2D *tt, Image *image);
 
     static void setHasMipmaps(Texture2D *t, bool hasMipmaps);
-    static void setTexParameters(Texture2D *t, const Texture2D::TexParams &texParams);
+    static void setSamplerDescriptor(Texture2D *t, const backend::SamplerDescriptor &samplerDescriptor);
     static void removeTexture(Texture2D *t);
     static void reloadAllTextures();
 public:

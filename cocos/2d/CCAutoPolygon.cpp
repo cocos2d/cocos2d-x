@@ -187,7 +187,7 @@ AutoPolygon::AutoPolygon(const std::string &filename)
     _filename = filename;
     _image = new (std::nothrow) Image();
     _image->initWithImageFile(filename);
-    CCASSERT(_image->getRenderFormat()==Texture2D::PixelFormat::RGBA8888, "unsupported format, currently only supports rgba8888");
+    CCASSERT(_image->getPixelFormat()==Texture2D::PixelFormat::RGBA8888, "unsupported format, currently only supports rgba8888");
     _data = _image->getData();
     _width = _image->getWidth();
     _height = _image->getHeight();

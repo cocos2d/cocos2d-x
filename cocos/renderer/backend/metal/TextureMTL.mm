@@ -32,6 +32,8 @@ namespace
                 return MTLSamplerMinMagFilterNearest;
             case SamplerFilter::LINEAR:
                 return MTLSamplerMinMagFilterLinear;
+            case SamplerFilter::DONT_CARE:
+                return MTLSamplerMinMagFilterNearest;
         }
     }
     
@@ -41,6 +43,8 @@ namespace
                 return MTLSamplerMipFilterNearest;
             case SamplerFilter::LINEAR:
                 return MTLSamplerMipFilterLinear;
+            case SamplerFilter::DONT_CARE:
+                return MTLSamplerMipFilterNearest;
         }
     }
     
@@ -54,20 +58,7 @@ namespace
             *dst++ = 255;
         }
     }
-    
-    void convertRGBA4444ToRGBA8888(uint8_t* src, uint8_t* dst, uint32_t length)
-    {
-        //map [0, 0xF] to [0, 0xFF]
-        auto factor = 0x11;
-        
-        for (uint32_t i = 0; i < length; ++i)
-        {
-            *dst++ = (src[i*2] & 0xF0) * factor;
-            *dst++ = (src[i*2] & 0x0F) * factor;
-            *dst++ = (src[i*2+1] & 0xF0) * factor;
-            *dst++ = (src[i*2+1] & 0x0F) * factor;
-        }
-    }
+
     
     bool convertData(uint8_t* src, unsigned int length, TextureFormat format, uint8_t** out)
     {
@@ -82,13 +73,6 @@ namespace
                     converted = true;
                 }
                 break;
-            case TextureFormat::RGBA4444:
-                {
-                    *out = (uint8_t*)malloc(length * 4);
-                    convertRGBA4444ToRGBA8888(src, *out, length);
-                    converted = true;
-                }
-                break;
             default:
                 break;
         }
@@ -99,17 +83,17 @@ namespace
 TextureMTL::TextureMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
 : Texture(descriptor)
 {
+    _mtlDevice = mtlDevice;
     createTexture(mtlDevice, descriptor);
-    createSampler(mtlDevice, descriptor);
+    createSampler(mtlDevice, descriptor.samplerDescriptor);
     
     // Metal doesn't support RGB888/RGBA4444, so should convert to RGBA888;
-    if (TextureFormat::R8G8B8 == _textureFormat ||
-        TextureFormat::RGBA4444 == _textureFormat)
+    if (TextureFormat::R8G8B8 == _textureFormat)
     {
-        _bytesPerElement = 4;
+        _bitsPerElement = 4 * 8;
     }
     
-    _bytesPerRow = _bytesPerElement * descriptor.width;
+    _bytesPerRow = descriptor.width * _bitsPerElement / 8 ;
 }
 
 TextureMTL::~TextureMTL()
@@ -117,6 +101,12 @@ TextureMTL::~TextureMTL()
     [_mtlTexture release];
     [_mtlSamplerState release];
 }
+
+void TextureMTL::updateSamplerDescriptor(const SamplerDescriptor &sampler)
+{
+    createSampler(_mtlDevice, sampler);
+}
+
 
 void TextureMTL::updateData(uint8_t* data)
 {
@@ -136,10 +126,13 @@ void TextureMTL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsig
                                  (uint32_t)(width * height),
                                  _textureFormat, &convertedData);
     
+    //when pixel format is a compressed one, bytePerRow should be set to ZERO
+    int bytesPerRow = _isCompressed ? 0 : _bytesPerRow;
+    
     [_mtlTexture replaceRegion:region
                    mipmapLevel:0
                      withBytes:convertedData
-                   bytesPerRow:_bytesPerRow];
+                   bytesPerRow:bytesPerRow];
     
     if (converted)
         free(convertedData);
@@ -164,16 +157,25 @@ void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor&
     _mtlTexture = [mtlDevice newTextureWithDescriptor:textureDescriptor];
 }
 
-void TextureMTL::createSampler(id<MTLDevice> mtlDevice, const TextureDescriptor &descriptor)
+void TextureMTL::createSampler(id<MTLDevice> mtlDevice, const SamplerDescriptor &descriptor)
 {
     MTLSamplerDescriptor *mtlDescriptor = [MTLSamplerDescriptor new];
-    mtlDescriptor.sAddressMode = toMTLSamplerAddressMode(descriptor.samplerDescriptor.sAddressMode);
-    mtlDescriptor.tAddressMode = toMTLSamplerAddressMode(descriptor.samplerDescriptor.tAddressMode);
+    mtlDescriptor.sAddressMode = descriptor.sAddressMode == SamplerAddressMode::DONT_CARE ? _sAddressMode : toMTLSamplerAddressMode(descriptor.sAddressMode);
+    mtlDescriptor.tAddressMode = descriptor.tAddressMode == SamplerAddressMode::DONT_CARE ? _tAddressMode : toMTLSamplerAddressMode(descriptor.tAddressMode);
     
-    mtlDescriptor.minFilter = toMTLSamplerMinMagFilter(descriptor.samplerDescriptor.minFilter);
-    mtlDescriptor.magFilter = toMTLSamplerMinMagFilter(descriptor.samplerDescriptor.magFilter);
+    mtlDescriptor.minFilter = descriptor.minFilter == SamplerFilter::DONT_CARE ? _minFilter : toMTLSamplerMinMagFilter(descriptor.minFilter);
+    mtlDescriptor.magFilter = descriptor.magFilter == SamplerFilter::DONT_CARE ? _magFilter : toMTLSamplerMinMagFilter(descriptor.magFilter);
     if (_isMipmapEnabled)
-        mtlDescriptor.mipFilter = toMTLSamplerMipFilter(descriptor.samplerDescriptor.mipmapFilter);
+        mtlDescriptor.mipFilter = descriptor.mipmapFilter == SamplerFilter::DONT_CARE ? _mipFilter : toMTLSamplerMipFilter(descriptor.mipmapFilter);
+    
+    if(_mtlSamplerState)
+        [_mtlSamplerState release];
+    
+    _sAddressMode = mtlDescriptor.sAddressMode;
+    _tAddressMode = mtlDescriptor.tAddressMode;
+    _minFilter = mtlDescriptor.minFilter;
+    _magFilter = mtlDescriptor.magFilter;
+    _mipFilter = mtlDescriptor.mipFilter;
     
     _mtlSamplerState = [mtlDevice newSamplerStateWithDescriptor:mtlDescriptor];
     

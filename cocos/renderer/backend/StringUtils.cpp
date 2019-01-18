@@ -208,6 +208,42 @@ TextureFormat StringUtils::PixelFormat2TextureFormat(const PixelFormat& pixleFor
             return TextureFormat::A8;
         case PixelFormat::RGBA4444:
             return TextureFormat::RGBA4444;
+        case PixelFormat::I8:
+            return TextureFormat::I8;
+        case PixelFormat::AI88:
+            return TextureFormat::AI88;
+        case PixelFormat::RGB565:
+            return TextureFormat::RGB565;
+        case PixelFormat::RGB5A1:
+            return TextureFormat::RGB5A1;
+        case PixelFormat::ETC:
+            return TextureFormat::ETC1;
+        case PixelFormat::ATC_RGB:
+            return TextureFormat::ATC_RGB;
+        case PixelFormat::ATC_EXPLICIT_ALPHA:
+            return TextureFormat::ATC_EXPLICIT_ALPHA;
+        case PixelFormat::ATC_INTERPOLATED_ALPHA:
+            return TextureFormat::ATC_INTERPOLATED_ALPHA;
+        case PixelFormat::PVRTC2:
+            return TextureFormat::PVRTC2;
+        case PixelFormat::PVRTC2A:
+            return TextureFormat::PVRTC2A;
+        case PixelFormat::PVRTC4:
+            return TextureFormat::PVRTC4;
+        case PixelFormat::PVRTC4A:
+            return TextureFormat::PVRTC4A;
+        case PixelFormat::S3TC_DXT1:
+            return TextureFormat::S3TC_DXT1;
+        case PixelFormat::S3TC_DXT3:
+            return TextureFormat::S3TC_DXT3;
+        case PixelFormat::S3TC_DXT5:
+            return TextureFormat::S3TC_DXT5;
+        case PixelFormat::MTL_ABGR4:
+            return TextureFormat::MTL_ABGR4;
+        case PixelFormat::MTL_BGR5A1:
+            return TextureFormat::MTL_BGR5A1;
+        case PixelFormat::MTL_B5G6R5:
+            return TextureFormat::MTL_B5G6R5;
         default:
             return TextureFormat::NONE;
             break;

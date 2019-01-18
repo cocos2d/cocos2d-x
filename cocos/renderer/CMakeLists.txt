@@ -20,6 +20,7 @@ set(COCOS_RENDERER_HEADER
     renderer/CCTextureAtlas.h
     renderer/CCTextureCache.h
     renderer/CCTextureCube.h
+    renderer/CCTextureUtils.h
     renderer/CCTrianglesCommand.h
     renderer/CCVertexAttribBinding.h
     renderer/CCVertexIndexBuffer.h
@@ -67,6 +68,7 @@ set(COCOS_RENDERER_SRC
     renderer/CCTextureAtlas.cpp
     renderer/CCTextureCache.cpp
     renderer/CCTextureCube.cpp
+    renderer/CCTextureUtils.cpp
     renderer/CCTrianglesCommand.cpp
     renderer/CCVertexAttribBinding.cpp
     renderer/CCVertexIndexBuffer.cpp
@@ -87,7 +89,7 @@ set(COCOS_RENDERER_SRC
     renderer/backend/ShaderCache.cpp
     )
 
-if(ANDROID OR WINDOWS) 
+if(ANDROID OR WINDOWS OR LINUX) 
 
 list(APPEND COCOS_RENDERER_HEADER
     renderer/backend/opengl/BufferGL.h

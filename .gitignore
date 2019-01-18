@@ -170,3 +170,5 @@ cmake-build-*/
 cmake_build*
 metal-support*.zip
 **/.project
+
+desktop.ini

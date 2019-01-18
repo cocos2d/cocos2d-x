@@ -723,10 +723,6 @@ VolatileTexture::VolatileTexture(Texture2D *t)
 , _hasMipmaps(false)
 , _text("")
 {
-    _texParams.minFilter = GL_LINEAR;
-    _texParams.magFilter = GL_LINEAR;
-    _texParams.wrapS = GL_CLAMP_TO_EDGE;
-    _texParams.wrapT = GL_CLAMP_TO_EDGE;
 }
 
 VolatileTexture::~VolatileTexture()
@@ -817,18 +813,10 @@ void VolatileTextureMgr::setHasMipmaps(Texture2D *t, bool hasMipmaps)
     vt->_hasMipmaps = hasMipmaps;
 }
 
-void VolatileTextureMgr::setTexParameters(Texture2D *t, const Texture2D::TexParams &texParams)
+void VolatileTextureMgr::setSamplerDescriptor(Texture2D *t, const backend::SamplerDescriptor &desc)
 {
     VolatileTexture *vt = findVolotileTexture(t);
-
-    if (texParams.minFilter != GL_NONE)
-        vt->_texParams.minFilter = texParams.minFilter;
-    if (texParams.magFilter != GL_NONE)
-        vt->_texParams.magFilter = texParams.magFilter;
-    if (texParams.wrapS != GL_NONE)
-        vt->_texParams.wrapS = texParams.wrapS;
-    if (texParams.wrapT != GL_NONE)
-        vt->_texParams.wrapT = texParams.wrapT;
+    vt->_samplerDescriptor = desc;
 }
 
 void VolatileTextureMgr::removeTexture(Texture2D *t)
@@ -899,7 +887,7 @@ void VolatileTextureMgr::reloadAllTextures()
         if (vt->_hasMipmaps) {
             vt->_texture->generateMipmap();
         }
-        vt->_texture->setTexParameters(vt->_texParams);
+        vt->_texture->setSamplerDescriptor(vt->_samplerDescriptor);
     }
 
     _isReloading = false;

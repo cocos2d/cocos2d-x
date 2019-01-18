@@ -285,7 +285,7 @@ bool Material::parseSampler(GLProgramState* glProgramState, Properties* samplerP
             CCLOG("Invalid magFilter: %s", magFilter);
 
 //        TODO coulsonwang
-//        texture->setTexParameters(texParams);
+//        texture->setSamplerDescriptor(texParams);
     }
 
     glProgramState->setUniformTexture(samplerProperties->getId(), texture);

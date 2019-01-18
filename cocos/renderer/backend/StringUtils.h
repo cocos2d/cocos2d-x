@@ -61,6 +61,13 @@ public:
         //! ATITC-compressed texture: ATC_INTERPOLATED_ALPHA
         ATC_INTERPOLATED_ALPHA,
         //! Default texture format: AUTO
+        
+        //metal 16-bits packed pixel formats
+        MTL_B5G6R5,
+        //MTL_A1BGR5,
+        MTL_BGR5A1,
+        MTL_ABGR4,
+        
         DEFAULT = AUTO,
         
         NONE = -1

@@ -136,7 +136,7 @@ public:
     unsigned char *   getData()               { return _data; }
     ssize_t           getDataLen()            { return _dataLen; }
     Format            getFileType()           { return _fileType; }
-    Texture2D::PixelFormat getRenderFormat()  { return _renderFormat; }
+    Texture2D::PixelFormat getPixelFormat()  { return _pixelFormat; }
     int               getWidth()              { return _width; }
     int               getHeight()             { return _height; }
     int               getNumberOfMipmaps()    { return _numberOfMipmaps; }
@@ -191,7 +191,7 @@ protected:
     int _height;
     bool _unpack;
     Format _fileType;
-    Texture2D::PixelFormat _renderFormat;
+    Texture2D::PixelFormat _pixelFormat;
     MipmapInfo _mipmaps[MIPMAP_MAX];   // pointer to mipmap images
     int _numberOfMipmaps;
     // false if we can't auto detect the image is premultiplied or not.
