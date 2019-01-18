@@ -31,13 +31,13 @@
 
 NS_CC_BEGIN
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 bool VertexBuffer::_enableShadowCopy = true;
 #else
 bool VertexBuffer::_enableShadowCopy = false;
 #endif
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 bool IndexBuffer::_enableShadowCopy = true;
 #else
 bool IndexBuffer::_enableShadowCopy = false;

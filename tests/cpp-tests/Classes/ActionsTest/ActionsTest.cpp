@@ -345,9 +345,9 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     box->setPosition(s.width/2, s.height - 100 - box->getContentSize().height/2);
     this->addChild(box);
 
-    auto label = Label::createWithTTF("Standard cocos2d Skew", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(s.width/2, s.height - 100 + label->getContentSize().height);
-    this->addChild(label);
+//    auto label = Label::createWithTTF("Standard cocos2d Skew", "fonts/Marker Felt.ttf", 16.0f);
+//    label->setPosition(s.width/2, s.height - 100 + label->getContentSize().height);
+//    this->addChild(label);
 
     auto actionTo = SkewBy::create(2, 360, 0);
     auto actionToBack = SkewBy::create(2, -360, 0);
@@ -361,9 +361,9 @@ void ActionRotationalSkewVSStandardSkew::onEnter()
     box->setPosition(s.width/2, s.height - 250 - box->getContentSize().height/2);
     this->addChild(box);
 
-    label = Label::createWithTTF("Rotational Skew", "fonts/Marker Felt.ttf", 16.0f);
-    label->setPosition(s.width/2, s.height - 250 + label->getContentSize().height/2);
-    this->addChild(label);
+//    label = Label::createWithTTF("Rotational Skew", "fonts/Marker Felt.ttf", 16.0f);
+//    label->setPosition(s.width/2, s.height - 250 + label->getContentSize().height/2);
+//    this->addChild(label);
     auto actionTo2 = RotateBy::create(2, 360, 0);
     auto actionToBack2 = RotateBy::create(2, -360, 0);
     box->runAction(Sequence::create(actionTo2, actionToBack2, nullptr));

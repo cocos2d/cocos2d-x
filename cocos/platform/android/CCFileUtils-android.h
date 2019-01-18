@@ -34,6 +34,8 @@ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 #include "base/ccTypes.h"
 #include <string>
 #include <vector>
+#include <unordered_map>
+#include <memory>
 #include "jni.h"
 #include "android/asset_manager.h"
 

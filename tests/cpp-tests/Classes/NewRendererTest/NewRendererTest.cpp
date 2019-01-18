@@ -31,7 +31,7 @@ NewRendererTests::NewRendererTests()
 {
     ADD_TEST_CASE(NewSpriteTest);
     ADD_TEST_CASE(GroupCommandTest);
-    ADD_TEST_CASE(NewClippingNodeTest);
+//    ADD_TEST_CASE(NewClippingNodeTest); // When depth and stencil are used together, ...
     ADD_TEST_CASE(NewDrawNodeTest);
     ADD_TEST_CASE(NewCullingTest);
     ADD_TEST_CASE(VBOFullTest);
@@ -39,8 +39,8 @@ NewRendererTests::NewRendererTests()
     ADD_TEST_CASE(CaptureNodeTest);
     ADD_TEST_CASE(BugAutoCulling);
     ADD_TEST_CASE(RendererBatchQuadTri);
-    ADD_TEST_CASE(RendererUniformBatch);
-    ADD_TEST_CASE(RendererUniformBatch2);
+    // ADD_TEST_CASE(RendererUniformBatch); // TODO shouldn't call OpenGL API directly
+    // ADD_TEST_CASE(RendererUniformBatch2);
 };
 
 std::string MultiSceneTest::title() const
@@ -655,11 +655,7 @@ RendererUniformBatch::RendererUniformBatch()
 
 GLProgramState* RendererUniformBatch::createBlurGLProgramState()
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     const std::string shaderName("Shaders/example_Blur.fsh");
-#else
-    const std::string shaderName("Shaders/example_Blur_winrt.fsh");
-#endif
     // outline shader
     auto fileUtiles = FileUtils::getInstance();
     auto fragmentFullPath = fileUtiles->fullPathForFilename(shaderName);
@@ -668,10 +664,8 @@ GLProgramState* RendererUniformBatch::createBlurGLProgramState()
     auto glprogramstate = (glprogram == nullptr ? nullptr : GLProgramState::getOrCreateWithGLProgram(glprogram));
 
     glprogramstate->setUniformVec2("resolution", Vec2(85,121));
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     glprogramstate->setUniformFloat("blurRadius", 10);
     glprogramstate->setUniformFloat("sampleNum", 5);
-#endif
 
     return glprogramstate;
 }
@@ -735,11 +729,8 @@ RendererUniformBatch2::RendererUniformBatch2()
 
 GLProgramState* RendererUniformBatch2::createBlurGLProgramState()
 {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     const std::string shaderName("Shaders/example_Blur.fsh");
-#else
-    const std::string shaderName("Shaders/example_Blur_winrt.fsh");
-#endif
+
     // outline shader
     auto fileUtiles = FileUtils::getInstance();
     auto fragmentFullPath = fileUtiles->fullPathForFilename(shaderName);
@@ -748,10 +739,8 @@ GLProgramState* RendererUniformBatch2::createBlurGLProgramState()
     auto glprogramstate = (glprogram == nullptr ? nullptr : GLProgramState::getOrCreateWithGLProgram(glprogram));
 
     glprogramstate->setUniformVec2("resolution", Vec2(85,121));
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     glprogramstate->setUniformFloat("blurRadius", 10);
     glprogramstate->setUniformFloat("sampleNum", 5);
-#endif
 
     return glprogramstate;
 }

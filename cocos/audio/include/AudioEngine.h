@@ -22,17 +22,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #pragma once
-
-#include "platform/CCPlatformConfig.h"
-#include "platform/CCPlatformMacros.h"
-#include "audio/include/Export.h"
 
 #include <functional>
 #include <list>
 #include <string>
 #include <unordered_map>
+
+#include "platform/CCPlatformConfig.h"
+#include "platform/CCPlatformMacros.h"
+#include "audio/include/Export.h"
 
 #ifdef ERROR
 #undef ERROR

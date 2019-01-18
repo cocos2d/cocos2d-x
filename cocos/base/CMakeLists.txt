@@ -35,6 +35,7 @@ set(COCOS_BASE_HEADER
     base/etc1.h
     base/CCGameController.h
     base/CCConsole.h
+    base/ccConstants.h
     base/CCEvent.h
     base/ccTypes.h
     base/CCAsyncTaskPool.h
@@ -62,20 +63,10 @@ set(COCOS_BASE_HEADER
     base/CCMap.h
     base/ccUTF8.h
     base/CCScriptSupport.h
-    base/allocator/CCAllocatorBase.h
-    base/allocator/CCAllocatorDiagnostics.h
-    base/allocator/CCAllocatorMacros.h
-    base/allocator/CCAllocatorMutex.h
-    base/allocator/CCAllocatorStrategyGlobalSmallBlock.h
-    base/allocator/CCAllocatorStrategyDefault.h
-    base/allocator/CCAllocatorStrategyPool.h
-    base/allocator/CCAllocatorGlobal.h
-    base/allocator/CCAllocatorStrategyFixedBlock.h
     base/CCEventFocus.h
     base/CCConfiguration.h
     base/CCProtocols.h
     base/TGAlib.h
-    base/CCDataVisitor.h
     base/CCEventMouse.h
     base/CCIMEDelegate.h
     base/CCNS.h
@@ -98,7 +89,6 @@ set(COCOS_BASE_SRC
     base/CCConsole.cpp
     base/CCController.cpp
     base/CCData.cpp
-    base/CCDataVisitor.cpp
     base/CCNinePatchImageParser.cpp
     base/CCDirector.cpp
     base/CCEvent.cpp
@@ -132,9 +122,6 @@ set(COCOS_BASE_SRC
     base/CCStencilStateManager.cpp
     base/TGAlib.cpp
     base/ZipUtils.cpp
-    base/allocator/CCAllocatorDiagnostics.cpp
-    base/allocator/CCAllocatorGlobal.cpp
-    base/allocator/CCAllocatorGlobalNewDelete.cpp
     base/atitc.cpp
     base/base64.cpp
     base/ccCArray.cpp

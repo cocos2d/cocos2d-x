@@ -14,7 +14,6 @@ set(${target_name}_src
   jni/Java_org_cocos2dx_lib_Cocos2dxBitmap.cpp
   jni/Java_org_cocos2dx_lib_Cocos2dxHelper.cpp
   jni/Java_org_cocos2dx_lib_Cocos2dxRenderer.cpp
-  jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.cpp
 )
 
 add_library(${target_name} STATIC

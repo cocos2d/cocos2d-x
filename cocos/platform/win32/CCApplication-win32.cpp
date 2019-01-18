@@ -151,11 +151,6 @@ void Application::setAnimationInterval(float interval)
     _animationInterval.QuadPart = (LONGLONG)(interval * freq.QuadPart);
 }
 
-void Application::setAnimationInterval(float interval, SetIntervalReason reason)
-{
-    setAnimationInterval(interval);
-}
-
 //////////////////////////////////////////////////////////////////////////
 // static member function
 //////////////////////////////////////////////////////////////////////////
@@ -163,12 +158,6 @@ Application* Application::getInstance()
 {
     CC_ASSERT(sm_pSharedApplication);
     return sm_pSharedApplication;
-}
-
-// @deprecated Use getInstance() instead
-Application* Application::sharedApplication()
-{
-    return Application::getInstance();
 }
 
 LanguageType Application::getCurrentLanguage()

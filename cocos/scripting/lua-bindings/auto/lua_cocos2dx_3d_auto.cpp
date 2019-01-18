@@ -1210,7 +1210,7 @@ int lua_cocos2dx_3d_TextureCube_setTexParameters(lua_State* tolua_S)
     {
         cocos2d::Texture2D::TexParams arg0;
 
-        ok &= luaval_to_texparams(tolua_S, 2, &arg0, "cc.TextureCube:setTexParameters");
+        ok &= luaval_to_texparams(tolua_S, 2, &arg0, "cc.TextureCube:setSamplerDescriptor");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_TextureCube_setTexParameters'", nullptr);
@@ -1220,7 +1220,7 @@ int lua_cocos2dx_3d_TextureCube_setTexParameters(lua_State* tolua_S)
         lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TextureCube:setTexParameters",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TextureCube:setSamplerDescriptor",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -1327,7 +1327,7 @@ int lua_register_cocos2dx_3d_TextureCube(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"TextureCube");
         tolua_function(tolua_S,"new",lua_cocos2dx_3d_TextureCube_constructor);
         tolua_function(tolua_S,"reloadTexture",lua_cocos2dx_3d_TextureCube_reloadTexture);
-        tolua_function(tolua_S,"setTexParameters",lua_cocos2dx_3d_TextureCube_setTexParameters);
+        tolua_function(tolua_S,"setSamplerDescriptor",lua_cocos2dx_3d_TextureCube_setTexParameters);
         tolua_function(tolua_S,"create", lua_cocos2dx_3d_TextureCube_create);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::TextureCube).name();

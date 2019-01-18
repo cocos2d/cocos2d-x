@@ -32,7 +32,9 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
-#include "renderer/CCGLProgram.h"
+#include "renderer/ccShaders.h"
+#include "renderer/backend/Program.h"
+#include "renderer/backend/ProgramState.h"
 
 NS_CC_BEGIN
 
@@ -246,16 +248,12 @@ void TMXLayer::parseInternalProperties()
             _useAutomaticVertexZ = true;
             auto alphaFuncVal = getProperty("cc_alpha_func");
             float alphaFuncValue = alphaFuncVal.asFloat();
-            setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST));
 
-            GLint alphaValueLocation = glGetUniformLocation(getGLProgram()->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-
-            // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-            
-            // use shader program to set uniform
-            getGLProgram()->use();
-            getGLProgram()->setUniformLocationWith1f(alphaValueLocation, alphaFuncValue);
-            CHECK_GL_ERROR_DEBUG();
+            auto& pipelineDescriptor = _quadCommand.getPipelineDescriptor();
+            auto& vertexShader = pipelineDescriptor.programState->getProgram()->getVertexShader();
+            updateShaders(vertexShader, positionTextureColorAlphaTest_frag);
+            auto alphaValueLocation = pipelineDescriptor.programState->getUniformLocation("u_alpha_value");
+            pipelineDescriptor.programState->setUniform(alphaValueLocation, &alphaFuncValue, sizeof(alphaFuncValue));
         }
         else
         {

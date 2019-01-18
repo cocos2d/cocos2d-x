@@ -32,10 +32,6 @@
          "project_rename":{
             "src_project_name":"HelloJavascript",
             "files":[
-               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
-               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
-               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
-               "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj"
           ]
          },
@@ -43,10 +39,6 @@
             "src_project_name":"HelloJavascript",
             "files":[
                "manifest.webapp",
-               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj",
-               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.filters",
-               "frameworks/runtime-src/proj.win32/PROJECT_NAME.vcxproj.user",
-               "frameworks/runtime-src/proj.win32/PROJECT_NAME.sln",
                "frameworks/runtime-src/proj.win32/main.cpp",
                "frameworks/runtime-src/proj.android/settings.gradle",
                "frameworks/runtime-src/proj.android/app/res/values/strings.xml",

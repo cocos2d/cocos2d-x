@@ -42,15 +42,31 @@ THE SOFTWARE.
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
 #include "base/ccUTF8.h"
+#include "renderer/ccShaders.h"
+#include "renderer/backend/ProgramState.h"
 
 NS_CC_BEGIN
 
 ParticleSystemQuad::ParticleSystemQuad()
-:_quads(nullptr)
-,_indices(nullptr)
-,_VAOname(0)
 {
-    memset(_buffersVBO, 0, sizeof(_buffersVBO));
+    auto& pipelieDescriptor = _quadCommand.getPipelineDescriptor();
+    _programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColor_frag);
+    pipelieDescriptor.programState = _programState;
+    _mvpMatrixLocaiton = pipelieDescriptor.programState->getUniformLocation("u_MVPMatrix");
+    _textureLocation = pipelieDescriptor.programState->getUniformLocation("u_texture");
+    
+    //set vertexLayout according to V3F_C4B_T2F structure
+#define VERTEX_POSITION_SIZE 3
+#define VERTEX_TEXCOORD_SIZE 2
+#define VERTEX_COLOR_SIZE 4
+    uint32_t colorOffset = (VERTEX_POSITION_SIZE)*sizeof(float);
+    uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+    uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+    auto& vertexLayout = pipelieDescriptor.vertexLayout;
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
+    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset, false);
+    vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, colorOffset, true);
+    vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
 }
 
 ParticleSystemQuad::~ParticleSystemQuad()
@@ -59,13 +75,8 @@ ParticleSystemQuad::~ParticleSystemQuad()
     {
         CC_SAFE_FREE(_quads);
         CC_SAFE_FREE(_indices);
-        glDeleteBuffers(2, &_buffersVBO[0]);
-        if (Configuration::getInstance()->supportsShareableVAO())
-        {
-            glDeleteVertexArrays(1, &_VAOname);
-            glBindVertexArray(0);
-        }
     }
+    CC_SAFE_RELEASE(_programState);
 }
 
 // implementation ParticleSystemQuad
@@ -119,16 +130,7 @@ bool ParticleSystemQuad::initWithTotalParticles(int numberOfParticles)
         }
 
         initIndices();
-        if (Configuration::getInstance()->supportsShareableVAO())
-        {
-            setupVBOandVAO();
-        }
-        else
-        {
-            setupVBO();
-        }
-
-        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
+//        setupVBO();
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         // Need to listen the event only when not use batchnode, because it will use VBO
@@ -432,34 +434,19 @@ void ParticleSystemQuad::updateParticleQuads()
     }
 }
 
-void ParticleSystemQuad::postStep()
-{
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    
-    // Option 1: Sub Data
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(_quads[0])*_totalParticles, _quads);
-    
-    // Option 2: Data
-    //  glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * particleCount, quads_, GL_DYNAMIC_DRAW);
-    
-    // Option 3: Orphaning + glMapBuffer
-    // glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0])*_totalParticles, nullptr, GL_STREAM_DRAW);
-    // void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-    // memcpy(buf, _quads, sizeof(_quads[0])*_totalParticles);
-    // glUnmapBuffer(GL_ARRAY_BUFFER);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
-    CHECK_GL_ERROR_DEBUG();
-}
-
 // overriding draw method
 void ParticleSystemQuad::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     //quad command
     if(_particleCount > 0)
     {
-        _quadCommand.init(_globalZOrder, _texture, getGLProgramState(), _blendFunc, _quads, _particleCount, transform, flags);
+        auto programState = _quadCommand.getPipelineDescriptor().programState;
+        programState->setTexture(_textureLocation, 0, _texture->getBackendTexture());
+        
+        cocos2d::Mat4 projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        programState->setUniform(_mvpMatrixLocaiton, projectionMat.m, sizeof(projectionMat.m));
+        
+        _quadCommand.init(_globalZOrder, _texture, _blendFunc, _quads, _particleCount, transform, flags);
         renderer->addCommand(&_quadCommand);
     }
 }
@@ -517,14 +504,7 @@ void ParticleSystemQuad::setTotalParticles(int tp)
         }
 
         initIndices();
-        if (Configuration::getInstance()->supportsShareableVAO())
-        {
-            setupVBOandVAO();
-        }
-        else
-        {
-            setupVBO();
-        }
+//        setupVBO();
         
         // fixed http://www.cocos2d-x.org/issues/3990
         // Updates texture coords.
@@ -542,77 +522,20 @@ void ParticleSystemQuad::setTotalParticles(int tp)
     resetSystem();
 }
 
-void ParticleSystemQuad::setupVBOandVAO()
-{
-    // clean VAO
-    glDeleteBuffers(2, &_buffersVBO[0]);
-    glDeleteVertexArrays(1, &_VAOname);
-    glBindVertexArray(0);
-    
-    glGenVertexArrays(1, &_VAOname);
-    glBindVertexArray(_VAOname);
-
-#define kQuadSize sizeof(_quads[0].bl)
-
-    glGenBuffers(2, &_buffersVBO[0]);
-
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _totalParticles, _quads, GL_DYNAMIC_DRAW);
-
-    // vertices
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, vertices));
-
-    // colors
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, colors));
-
-    // tex coords
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _totalParticles * 6, _indices, GL_STATIC_DRAW);
-
-    // Must unbind the VAO before changing the element buffer.
-    glBindVertexArray(0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    CHECK_GL_ERROR_DEBUG();
-}
-
-void ParticleSystemQuad::setupVBO()
-{
-    glDeleteBuffers(2, &_buffersVBO[0]);
-    
-    glGenBuffers(2, &_buffersVBO[0]);
-
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _totalParticles, _quads, GL_DYNAMIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _totalParticles * 6, _indices, GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-    CHECK_GL_ERROR_DEBUG();
-}
-
 void ParticleSystemQuad::listenRendererRecreated(EventCustom* /*event*/)
 {
     //when comes to foreground in android, _buffersVBO and _VAOname is a wild handle
     //before recreating, we need to reset them to 0
-    memset(_buffersVBO, 0, sizeof(_buffersVBO));
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        _VAOname = 0;
-        setupVBOandVAO();
-    }
-    else
-    {
-        setupVBO();
-    }
+//    memset(_buffersVBO, 0, sizeof(_buffersVBO));
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+//        _VAOname = 0;
+//        setupVBOandVAO();
+//    }
+//    else
+//    {
+//        setupVBO();
+//    }
 }
 
 bool ParticleSystemQuad::allocMemory()
@@ -654,14 +577,7 @@ void ParticleSystemQuad::setBatchNode(ParticleBatchNode * batchNode)
             allocMemory();
             initIndices();
             setTexture(oldBatch->getTexture());
-            if (Configuration::getInstance()->supportsShareableVAO())
-            {
-                setupVBOandVAO();
-            }
-            else
-            {
-                setupVBO();
-            }
+//            setupVBO();
         }
         // OLD: was it self render ? cleanup
         else if( !oldBatch )
@@ -673,15 +589,6 @@ void ParticleSystemQuad::setBatchNode(ParticleBatchNode * batchNode)
 
             CC_SAFE_FREE(_quads);
             CC_SAFE_FREE(_indices);
-
-            glDeleteBuffers(2, &_buffersVBO[0]);
-            memset(_buffersVBO, 0, sizeof(_buffersVBO));
-            if (Configuration::getInstance()->supportsShareableVAO())
-            {
-                glDeleteVertexArrays(1, &_VAOname);
-                glBindVertexArray(0);
-                _VAOname = 0;
-            }
         }
     }
 }

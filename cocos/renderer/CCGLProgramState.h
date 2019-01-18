@@ -100,14 +100,6 @@ public:
      @param callback Callback function to send data to OpenGL pipeline.
      */
     void setCallback(const std::function<void(GLProgram*, Uniform*)> &callback);
-    /**
-     Set texture to uniform value.
-     @param textureId The texture handle.
-     @param textureUnit The binding texture unit to be used in shader.
-     @deprecated please use setTexture(Texture2D* texture, GLuint textureUnit) instead,
-                 Passing a `textureId` may trigger texture lost issue (https://github.com/cocos2d/cocos2d-x/issues/16871).
-    */
-    CC_DEPRECATED_ATTRIBUTE void setTexture(GLuint textureId, GLuint textureUnit);
 
     /**
      Set texture to uniform value.
@@ -332,12 +324,6 @@ public:
     void setUniformMat4(const std::string& uniformName, const Mat4& value);
     void setUniformCallback(const std::string& uniformName, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(const std::string& uniformName, Texture2D *texture);
-    /**
-     * @deprecated, please use setUniformTexture(const std::string& uniformName, Texture2D *texture) instead,
-     * Passing a `textureId` may trigger texture lost issue (https://github.com/cocos2d/cocos2d-x/issues/16871).
-     */
-    CC_DEPRECATED_ATTRIBUTE void setUniformTexture(const std::string& uniformName, GLuint textureId);
-    /**@}*/
     
     /** @{
      Setting user defined uniforms by uniform location in the shader.
@@ -354,13 +340,7 @@ public:
     void setUniformMat4(GLint uniformLocation, const Mat4& value);
     void setUniformCallback(GLint uniformLocation, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(GLint uniformLocation, Texture2D *texture);
-    /**
-     * @deprecated, please use setUniformTexture(GLint uniformLocation, Texture2D *texture) instead,
-     * Passing a `textureId` may trigger texture lost issue (https://github.com/cocos2d/cocos2d-x/issues/16871).
-     */
-    CC_DEPRECATED_ATTRIBUTE void setUniformTexture(GLint uniformLocation, GLuint textureId);
-    /**@}*/
-
+ 
     /** 
      * Returns the Node bound to the GLProgramState
      */

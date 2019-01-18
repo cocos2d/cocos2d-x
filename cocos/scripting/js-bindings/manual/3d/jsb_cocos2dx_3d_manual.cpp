@@ -416,7 +416,7 @@ void register_all_cocos2dx_3d_manual(JSContext *cx, JS::HandleObject global)
     JS_DefineFunction(cx, tmpObj, "getMeshVertexAttribute", js_cocos2dx_Mesh_getMeshVertexAttribute, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
     tmpObj.set(jsb_cocos2d_TextureCube_prototype);
-    JS_DefineFunction(cx, tmpObj, "setTexParameters", js_cocos2dx_CCTextureCube_setTexParameters, 4, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "setSamplerDescriptor", js_cocos2dx_CCTextureCube_setTexParameters, 4, JSPROP_READONLY | JSPROP_PERMANENT);
 
     tmpObj.set(jsb_cocos2d_Terrain_prototype);
     JS_DefineFunction(cx, tmpObj, "getHeightData", js_cocos2dx_Terrain_getHeightData, 0, JSPROP_READONLY | JSPROP_PERMANENT);

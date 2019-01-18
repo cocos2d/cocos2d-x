@@ -28,12 +28,11 @@
  * THE SOFTWARE.
  *
  */
-#ifndef __CCPARTICLEBATCHNODE_H__
-#define __CCPARTICLEBATCHNODE_H__
+#pragma once
 
 #include "2d/CCNode.h"
 #include "base/CCProtocols.h"
-#include "renderer/CCBatchCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -130,7 +129,7 @@ public:
     virtual void removeChild(Node* child, bool cleanup) override;
     virtual void reorderChild(Node * child, int zOrder) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
-    virtual Texture2D* getTexture(void) const override;
+    virtual Texture2D* getTexture() const override;
     virtual void setTexture(Texture2D *texture) override;
     /**
     * @code
@@ -144,7 +143,7 @@ public:
     * @js NA
     * @lua NA
     */
-    virtual const BlendFunc& getBlendFunc(void) const override;
+    virtual const BlendFunc& getBlendFunc() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     /**
@@ -170,20 +169,21 @@ private:
     void getCurrentIndex(int* oldIndex, int* newIndex, Node* child, int z);
     int addChildHelper(ParticleSystem* child, int z, int aTag, const std::string &name, bool setTag);
     void addChildByTagOrName(ParticleSystem* child, int z, int tag, const std::string &name, bool setTag);
-    void updateBlendFunc(void);
+    void updateBlendFunc();
     /** the texture atlas used for drawing the quads */
-    TextureAtlas* _textureAtlas;
+    TextureAtlas* _textureAtlas = nullptr;
 
     /** the blend function used for drawing the quads */
     BlendFunc _blendFunc;
-    // quad command
-    BatchCommand _batchCommand;
+    
+    CustomCommand _customCommand;
+    
+    backend::UniformLocation _mvpMatrixLocaiton;
+    backend::UniformLocation _textureLocation;
+    backend::ProgramState* _programState = nullptr;
 };
 
 // end of _2d group
 /// @}
 
 NS_CC_END
-
-#endif /* __CCPARTICLEBATCHNODE_H__ */
-

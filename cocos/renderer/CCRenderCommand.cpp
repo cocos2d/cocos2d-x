@@ -22,21 +22,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-
 #include "renderer/CCRenderCommand.h"
 #include "2d/CCCamera.h"
 #include "2d/CCNode.h"
 
+
 NS_CC_BEGIN
 
 RenderCommand::RenderCommand()
-: _type(RenderCommand::Type::UNKNOWN_COMMAND)
-, _globalOrder(0)
-, _isTransparent(true)
-, _skipBatching(false)
-, _is3D(false)
-, _depth(0)
 {
 }
 
@@ -44,7 +37,7 @@ RenderCommand::~RenderCommand()
 {
 }
 
-void RenderCommand::init(float globalZOrder, const cocos2d::Mat4 &transform, uint32_t flags)
+void RenderCommand::init(float globalZOrder, const cocos2d::Mat4 &transform, unsigned int flags)
 {
     _globalOrder = globalZOrder;
     if (flags & Node::FLAGS_RENDER_AS_3D)

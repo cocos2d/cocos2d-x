@@ -50,6 +50,8 @@ public:
     QuadCommand();
     /**Destructor.*/
     ~QuadCommand();
+
+    //TODO: remove textureID, program st
     
     /** Initializes the command.
      @param globalOrder GlobalZOrder of the command.
@@ -64,13 +66,11 @@ public:
     void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const Mat4& mv, uint32_t flags);
 
-    /**Deprecated function, the params is similar as the upper init function, with flags equals 0.*/
-    CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
-              const Mat4& mv);
-
     void init(float globalOrder, Texture2D* textureID, GLProgramState* glProgramState, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
         const Mat4& mv, uint32_t flags);
 
+    void init(float globalOrder, Texture2D* texture, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount, const Mat4& mv, uint32_t flags);
+    
 protected:
     void reIndex(int indices);
 

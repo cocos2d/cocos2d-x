@@ -31,10 +31,6 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "renderer/CCTexture2D.h"
 
-#if CC_USE_WIC
-#include "platform/winrt/WICImageLoader-winrt.h"
-#endif
-
 // premultiply alpha, or the effect will be wrong when using other pixel formats in Texture2D,
 // such as RGB888, RGB5A1
 #define CC_RGB_PREMULTIPLY_ALPHA(vr, vg, vb, va) \
@@ -140,13 +136,12 @@ public:
     unsigned char *   getData()               { return _data; }
     ssize_t           getDataLen()            { return _dataLen; }
     Format            getFileType()           { return _fileType; }
-    Texture2D::PixelFormat getRenderFormat()  { return _renderFormat; }
+    Texture2D::PixelFormat getPixelFormat()  { return _pixelFormat; }
     int               getWidth()              { return _width; }
     int               getHeight()             { return _height; }
     int               getNumberOfMipmaps()    { return _numberOfMipmaps; }
     MipmapInfo*       getMipmaps()            { return _mipmaps; }
     bool              hasPremultipliedAlpha() { return _hasPremultipliedAlpha; }
-    CC_DEPRECATED_ATTRIBUTE bool isPremultipliedAlpha() { return _hasPremultipliedAlpha; }
     std::string getFilePath() const { return _filePath; }
 
     int                      getBitPerPixel();
@@ -162,10 +157,6 @@ public:
     bool saveToFile(const std::string &filename, bool isToRGB = true);
 
 protected:
-#if CC_USE_WIC
-    bool encodeWithWIC(const std::string& filePath, bool isToRGB, GUID containerFormat);
-    bool decodeWithWIC(const unsigned char *data, ssize_t dataLen);
-#endif
     bool initWithJpgData(const unsigned char *  data, ssize_t dataLen);
     bool initWithPngData(const unsigned char * data, ssize_t dataLen);
     bool initWithTiffData(const unsigned char * data, ssize_t dataLen);
@@ -200,7 +191,7 @@ protected:
     int _height;
     bool _unpack;
     Format _fileType;
-    Texture2D::PixelFormat _renderFormat;
+    Texture2D::PixelFormat _pixelFormat;
     MipmapInfo _mipmaps[MIPMAP_MAX];   // pointer to mipmap images
     int _numberOfMipmaps;
     // false if we can't auto detect the image is premultiplied or not.

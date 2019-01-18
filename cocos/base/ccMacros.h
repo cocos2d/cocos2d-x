@@ -62,15 +62,6 @@ THE SOFTWARE.
 
 #include "base/ccConfig.h"
 
-/** @def CC_SWAP
-simple macro that swaps 2 variables
- @deprecated use std::swap() instead
-*/
-#define CC_SWAP(x, y, type)    \
-{    type temp = (x);        \
-    x = y; y = temp;        \
-}
-
 #include "base/ccRandom.h"
 
 /** @def CCRANDOM_MINUS1_1
@@ -99,8 +90,8 @@ simple macro that swaps 2 variables
 /** @def CC_BLEND_SRC
 default gl blend src function. Compatible with premultiplied alpha images.
 */
-#define CC_BLEND_SRC GL_ONE
-#define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
+#define CC_BLEND_SRC cocos2d::backend::BlendFactor::ONE
+#define CC_BLEND_DST cocos2d::backend::BlendFactor::ONE_MINUS_SRC_ALPHA
 
 
 /** @def CC_NODE_DRAW_SETUP

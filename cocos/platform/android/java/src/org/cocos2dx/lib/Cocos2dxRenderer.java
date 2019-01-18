@@ -157,12 +157,10 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
         if (! mNativeInitCompleted)
             return;
 
-        Cocos2dxHelper.onEnterBackground();
         Cocos2dxRenderer.nativeOnPause();
     }
 
     public void handleOnResume() {
-        Cocos2dxHelper.onEnterForeground();
         Cocos2dxRenderer.nativeOnResume();
     }
 

@@ -24,37 +24,6 @@ function install_android_ndk()
 
 function install_linux_environment()
 {
-    mkdir -p $HOME/bin
-    pushd $HOME/bin
-
-    echo "GCC version: `gcc --version`"
-    # install new version cmake
-    CMAKE_VERSION="3.7.2"
-    CMAKE_DOWNLOAD_URL="https://cmake.org/files/v3.7/cmake-${CMAKE_VERSION}.tar.gz"
-    echo "Download ${CMAKE_DOWNLOAD_URL}"
-    ${CURL} -O ${CMAKE_DOWNLOAD_URL}
-    tar -zxf "cmake-${CMAKE_VERSION}.tar.gz"
-    cd "cmake-${CMAKE_VERSION}"
-    ./configure > /dev/null
-    make -j2 > /dev/null
-    sudo make install > /dev/null
-    echo "CMake Version: `cmake --version`"
-    cd ..
-
-    # install new version binutils
-    BINUTILS_VERSION="2.27"
-    BINUTILS_URL="http://ftp.gnu.org/gnu/binutils/binutils-${BINUTILS_VERSION}.tar.gz"
-    echo "Download ${BINUTILS_URL}"
-    ${CURL} -O ${BINUTILS_URL}
-    tar -zxf "binutils-${BINUTILS_VERSION}.tar.gz"
-    cd "binutils-${BINUTILS_VERSION}"
-    ./configure > /dev/null
-    make -j2 > /dev/null
-    sudo make install > /dev/null
-    echo "ld Version: `ld --version`"
-    echo "which ld: `which ld`"
-    sudo rm /usr/bin/ld
-    popd
     echo "Installing linux dependence packages ..."
     echo -e "y" | bash $COCOS2DX_ROOT/build/install-deps-linux.sh
     echo "Installing linux dependence packages finished!"
@@ -90,6 +59,9 @@ function install_environement_for_pull_request()
     echo "Building pull request ..."
 
     if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+        sudo apt-get update
+        sudo apt-get install ninja-build
+        ninja --version
         if [ "$BUILD_TARGET" == "linux" ]; then
             install_linux_environment
         fi
@@ -119,6 +91,9 @@ function install_environement_for_after_merge()
 }
 
 if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
+    sudo apt-get update
+    sudo apt-get install ninja-build
+    ninja --version
     download_deps
     sudo python -m pip install retry
     python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py

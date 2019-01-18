@@ -62,12 +62,6 @@ public:
      */
     static void destroyInstance();
 
-    /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static Configuration *sharedConfiguration();
-
-    /** @deprecated Use destroyInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static void purgeConfiguration();
-
 public:
     /** Destructor
      * @js NA

@@ -80,10 +80,8 @@ Texture2DTests::Texture2DTests()
     ADD_TEST_CASE(TextureJPEG);
     ADD_TEST_CASE(TextureTIFF);
     ADD_TEST_CASE(TextureTGA);
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     ADD_TEST_CASE(TextureWEBP);
     ADD_TEST_CASE(TextureWEBPNoAlpha)
-#endif
     ADD_TEST_CASE(TexturePixelFormat);
     ADD_TEST_CASE(TextureBlend);
     ADD_TEST_CASE(TextureAsync);
@@ -93,18 +91,18 @@ Texture2DTests::Texture2DTests()
     ADD_TEST_CASE(TextureCache1);
     ADD_TEST_CASE(TextureDrawAtPoint);
     ADD_TEST_CASE(TextureDrawInRect);
-    
+
     ADD_TEST_CASE(TextureETC1);
-    
+
     ADD_TEST_CASE(TextureS3TCDxt1);
     ADD_TEST_CASE(TextureS3TCDxt3);
     ADD_TEST_CASE(TextureS3TCDxt5);
     ADD_TEST_CASE(TextureS3TCWithNoMipmaps);
-    
+
     ADD_TEST_CASE(TextureATITCRGB);
     ADD_TEST_CASE(TextureATITCExplicit);
     ADD_TEST_CASE(TextureATITCInterpolated);
-    
+
     ADD_TEST_CASE(TextureConvertRGB888);
     ADD_TEST_CASE(TextureConvertRGBA8888);
     ADD_TEST_CASE(TextureConvertI8);
@@ -306,9 +304,10 @@ void TextureMipMap::onEnter()
     auto s = Director::getInstance()->getWinSize();
 
     auto texture0 = Director::getInstance()->getTextureCache()->addImage("Images/grossini_dance_atlas.png");
-    texture0->generateMipmap();
-    Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-    texture0->setTexParameters(texParams);
+    //TODO: minggo
+//    texture0->generateMipmap();
+//    Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
+//    texture0->setSamplerDescriptor(texParams);
 
     auto texture1 = Director::getInstance()->getTextureCache()->addImage("Images/grossini_dance_atlas_nomipmap.png");
 
@@ -363,8 +362,9 @@ void TexturePVRMipMap::onEnter()
         addChild(imgMipMap);
 
         // support mipmap filtering
-        Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-        imgMipMap->getTexture()->setTexParameters(texParams);
+        //TODO minggo
+//        Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
+//        imgMipMap->getTexture()->setSamplerDescriptor(texParams);
     }
 
     auto img = Sprite::create("Images/logo-nomipmap.pvr");
@@ -409,8 +409,9 @@ void TexturePVRMipMap2::onEnter()
     addChild(imgMipMap);
     
     // support mipmap filtering
-    Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
-    imgMipMap->getTexture()->setTexParameters(texParams);
+    //TODO minggo
+//    Texture2D::TexParams texParams = { GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
+//    imgMipMap->getTexture()->setSamplerDescriptor(texParams);
 
     auto img = Sprite::create("Images/test_image.png");
     img->setPosition(Vec2( s.width/2.0f+100, s.height/2.0f));
@@ -591,7 +592,6 @@ void TexturePVRRGBA5551::onEnter()
 {
     TextureDemo::onEnter();
     auto s = Director::getInstance()->getWinSize();
-    
     auto img = Sprite::create("Images/test_image_rgba5551.pvr");
     img->setPosition(Vec2( s.width/2.0f, s.height/2.0f));
     addChild(img);
@@ -1455,18 +1455,18 @@ void TextureBlend::onEnter()
     for( int i=0;i < 15;i++ )
     {
         // BOTTOM sprites have alpha pre-multiplied
-        // they use by default GL_ONE, GL_ONE_MINUS_SRC_ALPHA
+        // they use by default BlendFactor::ONE, BlendFactor::ONE_MINUS_SRC_ALPHA
         auto cloud = Sprite::create("Images/test_blend.png");
         addChild(cloud, i+1, 100+i);
         cloud->setPosition(Vec2(50+25*i, 80));
         cloud->setBlendFunc( BlendFunc::ALPHA_PREMULTIPLIED );
 
         // CENTER sprites have also alpha pre-multiplied
-        // they use by default GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
+        // they use by default BlendFactor::SRC_ALPHA, BlendFactor::ONE_MINUS_SRC_ALPHA
         cloud = Sprite::create("Images/test_blend.png");
         addChild(cloud, i+1, 200+i);
         cloud->setPosition(Vec2(50+25*i, 160));
-        BlendFunc blendFunc2 = { GL_ONE_MINUS_DST_COLOR, GL_ZERO };
+        BlendFunc blendFunc2 = { backend::BlendFactor::ONE_MINUS_DST_COLOR, backend::BlendFactor::ZERO };
         cloud->setBlendFunc(blendFunc2);
 
         // UPPER sprites are using custom blending function
@@ -1474,7 +1474,7 @@ void TextureBlend::onEnter()
         cloud = Sprite::create("Images/test_blend.png");
         addChild(cloud, i+1, 200+i);
         cloud->setPosition(Vec2(50+25*i, 320-80));
-        BlendFunc blendFunc3 = { GL_SRC_ALPHA, GL_ONE };
+        BlendFunc blendFunc3 = { backend::BlendFactor::SRC_ALPHA, backend::BlendFactor::ONE };
         cloud->setBlendFunc(blendFunc3);  // additive blending
     }
 }
@@ -1592,9 +1592,14 @@ void TextureGlClamp::onEnter()
     auto sprite = Sprite::create("Images/pattern1.png", Rect(0,0,512,256));
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition(Vec2(size.width/2,size.height/2));
-    Texture2D::TexParams params = {GL_LINEAR,GL_LINEAR,GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE};
-    sprite->getTexture()->setTexParameters(params);
-
+    backend::SamplerDescriptor descriptor = { true,
+        backend::SamplerFilter::LINEAR,
+        backend::SamplerFilter::LINEAR,
+        backend::SamplerFilter::LINEAR,
+        backend::SamplerAddressMode::CLAMP_TO_EDGE,
+        backend::SamplerAddressMode::CLAMP_TO_EDGE,
+    };
+    sprite->getTexture()->setSamplerDescriptor(descriptor);
     auto rotate = RotateBy::create(4, 360);
     sprite->runAction(rotate);
     auto scale = ScaleBy::create(2, 0.04f);
@@ -1629,8 +1634,14 @@ void TextureGlRepeat::onEnter()
     auto sprite = Sprite::create("Images/pattern1.png", Rect(0, 0, 4096, 4096));
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition(Vec2(size.width/2,size.height/2));
-    Texture2D::TexParams params = {GL_LINEAR,GL_LINEAR,GL_REPEAT,GL_REPEAT};
-    sprite->getTexture()->setTexParameters(params);
+    backend::SamplerDescriptor descriptor = {true, 
+        backend::SamplerFilter::LINEAR, 
+        backend::SamplerFilter::LINEAR,
+        backend::SamplerFilter::LINEAR,
+        backend::SamplerAddressMode::REPEAT,
+        backend::SamplerAddressMode::REPEAT
+    };
+    sprite->getTexture()->setSamplerDescriptor(descriptor);
     
     auto rotate = RotateBy::create(4, 360);
     sprite->runAction(rotate);
@@ -1786,8 +1797,9 @@ void TextureDrawAtPoint::draw(Renderer *renderer, const Mat4 &transform, uint32_
     TextureDemo::draw(renderer, transform, flags);
     
     _renderCmd.init(_globalZOrder, transform, flags);
-    _renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this, transform, flags);
-    renderer->addCommand(&_renderCmd);
+    //TODO: impl new CustomRenderer
+    //_renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this, transform, flags);
+    //renderer->addCommand(&_renderCmd);
 
 }
 
@@ -1800,8 +1812,9 @@ void TextureDrawAtPoint::onDraw(const Mat4 &transform, uint32_t flags)
 
     auto s = Director::getInstance()->getWinSize();
     
-    _tex1->drawAtPoint(Vec2(s.width/2-50, s.height/2 - 50));
-    _Tex2F->drawAtPoint(Vec2(s.width/2+50, s.height/2 - 50));
+    //TODO: minggo
+//    _tex1->drawAtPoint(Vec2(s.width/2-50, s.height/2 - 50));
+//    _Tex2F->drawAtPoint(Vec2(s.width/2+50, s.height/2 - 50));
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
@@ -1830,7 +1843,8 @@ void TextureDrawInRect::draw(Renderer *renderer, const Mat4 &transform, uint32_t
 
     _renderCmd.init(_globalZOrder, transform, flags);
     _renderCmd.func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this, transform, flags);
-    renderer->addCommand(&_renderCmd);
+    //TODO: impl new CustomRenderer
+    //renderer->addCommand(&_renderCmd);
 }
 
 void TextureDrawInRect::onDraw(const Mat4 &transform, uint32_t flags)
@@ -1845,8 +1859,9 @@ void TextureDrawInRect::onDraw(const Mat4 &transform, uint32_t flags)
     auto rect1 = Rect( s.width/2 - 80, 20, _tex1->getContentSize().width * 0.5f, _tex1->getContentSize().height *2 );
     auto rect2 = Rect( s.width/2 + 80, s.height/2, _tex1->getContentSize().width * 2, _tex1->getContentSize().height * 0.5f );
     
-    _tex1->drawInRect(rect1);
-    _Tex2F->drawInRect(rect2);
+    //TODO: minggo
+//    _tex1->drawInRect(rect1);
+//    _Tex2F->drawInRect(rect2);
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
@@ -2041,12 +2056,6 @@ std::string TextureETC1::subtitle() const
         {(int)Application::Platform::OS_ANDROID, "Android"},
         {(int)Application::Platform::OS_IPHONE, "iPhone"},
         {(int)Application::Platform::OS_IPAD, "iPad"},
-        {(int)Application::Platform::OS_BLACKBERRY, "BlackBerry"},
-        {(int)Application::Platform::OS_NACL, "NativeClient"},
-        {(int)Application::Platform::OS_EMSCRIPTEN, "Emscripten"},
-        {(int)Application::Platform::OS_TIZEN, "Tizen"},
-        {(int)Application::Platform::OS_WINRT, "WinRT"},
-        {(int)Application::Platform::OS_WP8, "Windows Phone 8"}
     };
 
     if (isSupportETCHardwareDecode)

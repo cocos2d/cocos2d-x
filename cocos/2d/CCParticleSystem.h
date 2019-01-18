@@ -189,12 +189,6 @@ emitter.startSpin = 0;
 
 */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-#ifdef RELATIVE
-#undef RELATIVE
-#endif
-#endif
-
 class CC_DLL ParticleSystem : public Node, public TextureProtocol, public PlayableProtocol
 {
 public:
@@ -731,7 +725,6 @@ public:
     /** does the alpha value modify color */
     void setOpacityModifyRGB(bool opacityModifyRGB) override { _opacityModifyRGB = opacityModifyRGB; }
     bool isOpacityModifyRGB() const override { return _opacityModifyRGB; }
-    CC_DEPRECATED_ATTRIBUTE bool getOpacityModifyRGB() const { return isOpacityModifyRGB(); }
     
     /** Gets the particles movement type: Free or Grouped.
      @since v0.8
@@ -834,8 +827,8 @@ protected:
     /** whether or not the particles are using blend additive.
      If enabled, the following blending function will be used.
      @code
-     source blend function = GL_SRC_ALPHA;
-     dest blend function = GL_ONE;
+     source blend function = BlendFactor::SRC_ALPHA;
+     dest blend function = BlendFactor::ONE;
      @endcode
      */
     bool _isBlendAdditive;

@@ -98,7 +98,7 @@ public:
     virtual std::string subtitle() const override;
     virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
 private:
-    cocos2d::CustomCommand _renderCmds[4];
+    cocos2d::CallbackCommand _renderCmds[4];
     void onBeforeClear();
     void onBeforeStencil();
     void onBeforeDraw();

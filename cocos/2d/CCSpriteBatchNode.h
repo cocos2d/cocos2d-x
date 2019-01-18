@@ -26,16 +26,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __CC_SPRITE_BATCH_NODE_H__
-#define __CC_SPRITE_BATCH_NODE_H__
+#pragma once
 
 #include <vector>
 
 #include "2d/CCNode.h"
 #include "base/CCProtocols.h"
 #include "renderer/CCTextureAtlas.h"
-#include "renderer/CCBatchCommand.h"
+#include "renderer/CCQuadCommand.h"
 
 NS_CC_BEGIN
 
@@ -261,10 +259,16 @@ protected:
     void updateAtlasIndex(Sprite* sprite, ssize_t* curIndex);
     void swap(ssize_t oldIndex, ssize_t newIndex);
     void updateBlendFunc();
+    
+    virtual void updateShaders(const std::string& vertexShader, const std::string& fragmentShader);
 
-    TextureAtlas *_textureAtlas;
+    TextureAtlas *_textureAtlas = nullptr;
     BlendFunc _blendFunc;
-    BatchCommand _batchCommand;     // render command
+    QuadCommand _quadCommand;
+    
+    backend::UniformLocation _mvpMatrixLocaiton;
+    backend::UniformLocation _textureLocation;
+    backend::ProgramState* _programState = nullptr;
 
     // all descendants: children, grand children, etc...
     // There is not need to retain/release these objects, since they are already retained by _children
@@ -276,5 +280,3 @@ protected:
 /** @} */
 
 NS_CC_END
-
-#endif // __CC_SPRITE_BATCH_NODE_H__

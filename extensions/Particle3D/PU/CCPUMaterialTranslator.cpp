@@ -26,6 +26,7 @@
 
 #include "CCPUMaterialTranslator.h"
 #include "extensions/Particle3D/PU/CCPUMaterialManager.h"
+#include "renderer/backend/Types.h"
 
 NS_CC_BEGIN
 
@@ -280,8 +281,8 @@ void PUMaterialPassTranslator::translate( PUScriptCompiler* compiler, PUAbstract
                     {
                         if (val == matToken[TOKEN_MAT_BLEND_ADD])
                         {
-                            material->blendFunc.src = GL_ONE;
-                            material->blendFunc.dst= GL_ONE;
+                            material->blendFunc.src = backend::BlendFactor::ONE;
+                            material->blendFunc.dst= backend::BlendFactor::ONE;
                         }
                         else if (val == matToken[TOKEN_MAT_BLEND_ALPHA])
                         {
@@ -289,26 +290,26 @@ void PUMaterialPassTranslator::translate( PUScriptCompiler* compiler, PUAbstract
                         }
                         else if (val == matToken[TOKEN_MAT_BLEND_COLOR])
                         {
-                            material->blendFunc.src = GL_SRC_COLOR;
-                            material->blendFunc.dst= GL_ONE_MINUS_SRC_COLOR;
+                            material->blendFunc.src = backend::BlendFactor::SRC_COLOR;
+                            material->blendFunc.dst= backend::BlendFactor::ONE_MINUS_SRC_COLOR;
                         }
                         else if (val == matToken[TOKEN_MAT_BLEND_MODULATE])
                         {
-                            material->blendFunc.src = GL_DST_COLOR;
-                            material->blendFunc.dst= GL_ZERO;
+                            material->blendFunc.src = backend::BlendFactor::DST_COLOR;
+                            material->blendFunc.dst= backend::BlendFactor::ZERO;
                         }
                         else if (val == matToken[TOKEN_MAT_BLEND_REPLACE])
                         {
-                            material->blendFunc.src = GL_ONE;
-                            material->blendFunc.dst= GL_ZERO;
+                            material->blendFunc.src = backend::BlendFactor::ONE;
+                            material->blendFunc.dst= backend::BlendFactor::ZERO;
                         }
                         else if (val == matToken[TOKEN_MAT_BLEND_SRC_COLOR])
                         {
-                            material->blendFunc.src = GL_SRC_COLOR;
+                            material->blendFunc.src = backend::BlendFactor::SRC_COLOR;
                         }
                         else if (val == matToken[TOKEN_MAT_BLEND_DEST_COLOR])
                         {
-                            material->blendFunc.src = GL_DST_COLOR;
+                            material->blendFunc.src = backend::BlendFactor::DST_COLOR;
                         }
                     }
 
@@ -318,19 +319,19 @@ void PUMaterialPassTranslator::translate( PUScriptCompiler* compiler, PUAbstract
                         {
                             if (val == matToken[TOKEN_MAT_BLEND_ONE])
                             {
-                                material->blendFunc.dst = GL_ONE;
+                                material->blendFunc.dst = backend::BlendFactor::ONE;
                             }
                             else if (val == matToken[TOKEN_MAT_BLEND_ZERO])
                             {
-                                material->blendFunc.dst = GL_ZERO;
+                                material->blendFunc.dst = backend::BlendFactor::ZERO;
                             }
                             else if (val == matToken[TOKEN_MAT_BLEND_SRC_COLOR])
                             {
-                                material->blendFunc.dst = GL_SRC_COLOR;
+                                material->blendFunc.dst = backend::BlendFactor::SRC_COLOR;
                             }
                             else if (val == matToken[TOKEN_MAT_BLEND_DEST_COLOR])
                             {
-                                material->blendFunc.dst = GL_DST_COLOR;
+                                material->blendFunc.dst = backend::BlendFactor::DST_COLOR;
                             }
                         }
                     }

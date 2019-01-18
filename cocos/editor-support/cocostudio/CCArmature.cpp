@@ -33,7 +33,6 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCGLProgramState.h"
-#include "2d/CCDrawingPrimitives.h"
 #include "base/CCDirector.h"
 
 #if ENABLE_PHYSICS_BOX2D_DETECT
@@ -627,7 +626,9 @@ void Armature::drawContour()
 #pragma warning (disable: 4996)
 #endif
             
-            DrawPrimitives::drawPoly( points, (unsigned int)length, true );
+            //TODO coulsonwang
+            cocos2d::log("TODO in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
+//            DrawPrimitives::drawPoly( points, (unsigned int)length, true );
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"

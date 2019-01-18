@@ -31,7 +31,6 @@ THE SOFTWARE.
 #include "platform/CCCommon.h"
 #include "platform/android/jni/JniHelper.h"
 #include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
-#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.h"
 #include "android/asset_manager.h"
 #include "android/asset_manager_jni.h"
 #include "base/ZipUtils.h"
@@ -213,7 +212,13 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
         return false;
     }
 
-    const char* s = dirPath.c_str();
+    std::string dirPathCopy = dirPath;
+    if(dirPathCopy[dirPathCopy.length() - 1] == '/')
+    {
+        dirPathCopy.erase(dirPathCopy.length() - 1);
+    }
+
+    const char* s = dirPathCopy.c_str();
     
     // find absolute path in flash memory
     if (s[0] == '/')
@@ -227,6 +232,8 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
     }
     else
     {
+
+
         // find it in apk's assets dir
         // Found "assets/" at the beginning of the path and we don't want it
         CCLOG("find in apk dirPath(%s)", s);
@@ -234,6 +241,7 @@ bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) cons
         {
             s += ASSETS_FOLDER_NAME_LENGTH;
         }
+
         if (FileUtilsAndroid::assetmanager)
         {
             AAssetDir* aa = AAssetManager_openDir(FileUtilsAndroid::assetmanager, s);
@@ -295,7 +303,7 @@ std::vector<std::string> FileUtilsAndroid::listFiles(const std::string& dirPath)
     if(isAbsolutePath(dirPath)) return FileUtils::listFiles(dirPath);
 
     std::vector<std::string> fileList;
-    string fullPath = fullPathForFilename(dirPath);
+    string fullPath = fullPathForDirectory(dirPath);
 
     static const std::string apkprefix("assets/");
     string relativePath = "";
@@ -312,6 +320,11 @@ std::vector<std::string> FileUtilsAndroid::listFiles(const std::string& dirPath)
     if (nullptr == assetmanager) {
         LOGD("... FileUtilsAndroid::assetmanager is nullptr");
         return fileList;
+    }
+
+    if(relativePath[relativePath.length() - 1] == '/')
+    {
+        relativePath.erase(relativePath.length() - 1);
     }
 
     auto *dir = AAssetManager_openDir(assetmanager, relativePath.c_str());
@@ -333,8 +346,6 @@ std::vector<std::string> FileUtilsAndroid::listFiles(const std::string& dirPath)
 
 FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer) const
 {
-    EngineDataManager::onBeforeReadFile();
-
     static const std::string apkprefix("assets/");
     if (filename.empty())
         return FileUtils::Status::NotExists;

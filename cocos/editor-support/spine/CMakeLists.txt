@@ -1,5 +1,3 @@
-include_directories(editor-support)
-
 set(COCOS_SPINE_HEADER
     editor-support/spine/Animation.h
     editor-support/spine/EventData.h

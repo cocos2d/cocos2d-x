@@ -44,11 +44,6 @@
 #include "platform/win32/inet_pton_mingw.h"
 #endif
 #define bzero(a, b) memset(a, 0, b);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-#include "platform/winrt/inet_ntop_winrt.h"
-#include "platform/winrt/inet_pton_winrt.h"
-#include "platform/winrt/CCWinRTUtils.h"
-#endif
 #else
 #include <netdb.h>
 #include <unistd.h>
@@ -68,7 +63,6 @@
 #include "renderer/CCTextureCache.h"
 #include "base/base64.h"
 #include "base/ccUtils.h"
-#include "base/allocator/CCAllocatorDiagnostics.h"
 NS_CC_BEGIN
 
 extern const char* cocos2dVersion(void);
@@ -120,10 +114,6 @@ namespace {
                         (LPARAM)(LPVOID)&myCDS);
         }
     }
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-    void SendLogToWindow(const char *log)
-    {
-    }
 #endif
 }
 
@@ -172,7 +162,7 @@ void log(const char * format, ...)
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info", "%s", buf);
 
-#elif CC_TARGET_PLATFORM ==  CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+#elif CC_TARGET_PLATFORM ==  CC_PLATFORM_WIN32
 
     int pos = 0;
     int len = nret;
@@ -532,7 +522,7 @@ bool Console::listenOnTCP(int port)
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     WSADATA wsaData;
     n = WSAStartup(MAKEWORD(2, 2),&wsaData);
 #endif
@@ -574,7 +564,7 @@ bool Console::listenOnTCP(int port)
             break;          /* success */
 
 /* bind error, close and try next one */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
         closesocket(listenfd);
 #else
         close(listenfd);
@@ -783,7 +773,7 @@ void Console::loop()
                     //receive a SIGPIPE, which will cause linux system shutdown the sending process.
                     //Add this ioctl code to check if the socket has been closed by peer.
                     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
                     u_long n = 0;
                     ioctlsocket(fd, FIONREAD, &n);
 #else
@@ -836,14 +826,14 @@ void Console::loop()
     // clean up: ignore stdin, stdout and stderr
     for(const auto &fd: _fds )
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
         closesocket(fd);
 #else
         close(fd);
 #endif
     }
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     closesocket(_listenfd);
     WSACleanup();
 #else
@@ -1207,7 +1197,7 @@ void Console::commandExit(int fd, const std::string& /*args*/)
 {
     FD_CLR(fd, &_read_set);
     _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     closesocket(fd);
 #else
     close(fd);

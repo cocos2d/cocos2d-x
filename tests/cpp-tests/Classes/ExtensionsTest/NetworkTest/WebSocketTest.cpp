@@ -346,9 +346,6 @@ WebSocketCloseTest::WebSocketCloseTest()
 
     auto closeItem = MenuItemImage::create(s_pathClose, s_pathClose, [](Ref* sender){
         Director::getInstance()->end();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        exit(0);
-#endif
     });
     closeItem->setPosition(VisibleRect::right().x / 2, VisibleRect::top().y * 2 / 3);
 

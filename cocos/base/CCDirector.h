@@ -3,7 +3,7 @@
  Copyright (c) 2010-2013 cocos2d-x.org
  Copyright (c) 2011      Zynga Inc.
  Copyright (c) 2013-2016 Chukong Technologies Inc.
- Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ Copyright (c) 2017-2019 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -25,9 +25,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __CCDIRECTOR_H__
-#define __CCDIRECTOR_H__
+#pragma once
 
 #include <stack>
 #include <thread>
@@ -63,10 +61,6 @@ class Renderer;
 class Camera;
 
 class Console;
-namespace experimental
-{
-    class FrameBuffer;
-}
 
 /**
  * @brief Matrix stack type.
@@ -142,12 +136,6 @@ public:
      */
     static Director* getInstance();
 
-    /**
-     * @deprecated Use getInstance() instead.
-     * @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE static Director* sharedDirector() { return Director::getInstance(); }
-    
     /**
      * @js ctor
      */
@@ -475,34 +463,15 @@ public:
      */
     void pushMatrix(MATRIX_STACK_TYPE type);
 
-    /**
-     * Clones a projection matrix and put it to the top of projection matrix stack.
-     * @param index The index of projection matrix stack.
-     * @js NA
-     */
-    void pushProjectionMatrix(size_t index);
-
     /** Pops the top matrix of the specified type of matrix stack.
      * @js NA
      */
     void popMatrix(MATRIX_STACK_TYPE type);
 
-    /** Pops the top matrix of the projection matrix stack.
-     * @param index The index of projection matrix stack.
-     * @js NA
-     */
-    void popProjectionMatrix(size_t index);
-
     /** Adds an identity matrix to the top of specified type of matrix stack.
      * @js NA
      */
     void loadIdentityMatrix(MATRIX_STACK_TYPE type);
-
-    /** Adds an identity matrix to the top of projection matrix stack.
-     * @param index The index of projection matrix stack.
-     * @js NA
-     */
-    void loadProjectionIdentityMatrix(size_t index);
 
     /**
      * Adds a matrix to the top of specified type of matrix stack.
@@ -514,15 +483,6 @@ public:
     void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
 
     /**
-     * Adds a matrix to the top of projection matrix stack.
-     *
-     * @param mat The matrix that to be added.
-     * @param index The index of projection matrix stack.
-     * @js NA
-     */
-    void loadProjectionMatrix(const Mat4& mat, size_t index);
-
-    /**
      * Multiplies a matrix to the top of specified type of matrix stack.
      *
      * @param type Matrix type.
@@ -532,45 +492,16 @@ public:
     void multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
 
     /**
-     * Multiplies a matrix to the top of projection matrix stack.
-     *
-     * @param mat The matrix that to be multiplied.
-     * @param index The index of projection matrix stack.
-     * @js NA
-     */
-    void multiplyProjectionMatrix(const Mat4& mat, size_t index);
-
-    /**
      * Gets the top matrix of specified type of matrix stack.
      * @js NA
      */
     const Mat4& getMatrix(MATRIX_STACK_TYPE type) const;
 
     /**
-     * Gets the top matrix of projection matrix stack.
-     * @param index The index of projection matrix stack.
-     * @js NA
-     */
-    const Mat4& getProjectionMatrix(size_t index) const;
-
-    /**
      * Clear all types of matrix stack, and add identity matrix to these matrix stacks.
      * @js NA
      */
     void resetMatrixStack();
-
-    /**
-     * Init the projection matrix stack.
-     * @param stackCount The size of projection matrix stack.
-     * @js NA
-     */
-    void initProjectionMatrixStack(size_t stackCount);
-
-    /**
-     * Get the size of projection matrix stack.
-     * @js NA
-     */
-    size_t getProjectionMatrixStackSize();
 
     /**
      * returns the cocos2d thread id.
@@ -616,11 +547,8 @@ protected:
     void initMatrixStack();
 
     std::stack<Mat4> _modelViewMatrixStack;
-    /** In order to support GL MultiView features, we need to use the matrix array,
-        but we don't know the number of MultiView, so using the vector instead.
-     */
-    std::vector< std::stack<Mat4> > _projectionMatrixStackList;
     std::stack<Mat4> _textureMatrixStack;
+    std::stack<Mat4> _projectionMatrixStack;
 
     /** Scheduler associated with this director
      @since v2.0
@@ -710,6 +638,8 @@ protected:
     /* Renderer for the Director */
     Renderer *_renderer = nullptr;
 
+    Color4F _clearColor = {0, 0, 0, 1};
+
     /* Console for the director */
     Console *_console = nullptr;
 
@@ -725,15 +655,7 @@ protected:
     friend class GLView;
 };
 
-// FIXME: Added for backward compatibility in case
-// someone is subclassing it.
-// Should be removed in v4.0
-class DisplayLinkDirector : public Director
-{};
-
 // end of base group
 /** @} */
 
 NS_CC_END
-
-#endif // __CCDIRECTOR_H__

@@ -7,10 +7,6 @@
          "project_rename":{
             "src_project_name":"HelloCpp",
             "files":[
-               "proj.win32/PROJECT_NAME.vcxproj",
-               "proj.win32/PROJECT_NAME.vcxproj.filters",
-               "proj.win32/PROJECT_NAME.vcxproj.user",
-               "proj.win32/PROJECT_NAME.sln",
                "proj.ios_mac/PROJECT_NAME.xcodeproj"
             ]
          },
@@ -18,10 +14,6 @@
             "src_project_name":"HelloCpp",
             "files":[
                "Classes/AppDelegate.cpp",
-               "proj.win32/PROJECT_NAME.vcxproj",
-               "proj.win32/PROJECT_NAME.vcxproj.filters",
-               "proj.win32/PROJECT_NAME.vcxproj.user",
-               "proj.win32/PROJECT_NAME.sln",
                "proj.win32/main.cpp",
                "proj.android/settings.gradle",
                "proj.android/app/res/values/strings.xml",

@@ -39,6 +39,7 @@ class BaseLight;
 class Renderer;
 class EventListenerCustom;
 class EventCustom;
+class RendererBackend;
 #if CC_USE_PHYSICS
 class PhysicsWorld;
 #endif
@@ -113,16 +114,7 @@ public:
      * @js NA
      */
     virtual void render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eyeProjection = nullptr);
-
-    /** Render the scene.
-     * @param renderer The renderer use to render the scene.
-     * @param eyeTransforms The AdditionalTransform List of camera of multiView.
-     * @param eyeProjections The projection matrix List of camera of multiView.
-     * @param multiViewCount The number of multiView.
-     * @js NA
-     */
-    virtual void render(Renderer* renderer, const Mat4* eyeTransforms, const Mat4* eyeProjections, unsigned int multiViewCount);
-
+  
     /** override function */
     virtual void removeAllChildren() override;
     

@@ -29,15 +29,16 @@
 #include "extensions/Particle3D/PU/CCPUTranslateManager.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCPlatformMacros.h"
+#include "renderer/backend/Types.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include <io.h>
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCFileUtils-android.h"
 #include <android/asset_manager.h>
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include <ftw.h>
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
@@ -56,8 +57,8 @@ PUMaterial::PUMaterial()
 , depthWrite(true)
 , wrapMode(GL_CLAMP_TO_EDGE)
 {
-    blendFunc.src = GL_ONE;
-    blendFunc.dst = GL_ZERO;
+    blendFunc.src = backend::BlendFactor::ONE;
+    blendFunc.dst = backend::BlendFactor::ZERO;
 }
 
 PUMaterialCache::PUMaterialCache()

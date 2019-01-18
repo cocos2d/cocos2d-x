@@ -22,15 +22,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-
-#ifndef __CCRENDERCOMMAND_H_
-#define __CCRENDERCOMMAND_H_
-
-#include <stdint.h>
+#pragma once
 
 #include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
+#include "renderer/CCPipelineDescriptor.h"
 
 /**
  * @addtogroup renderer
@@ -53,18 +49,16 @@ public:
         UNKNOWN_COMMAND,
         /** Quad command, used for draw quad.*/
         QUAD_COMMAND,
-        /**Custom command, used for calling callback for rendering.*/
+        /**Custom command, used to draw things other then TRIANGLES_COMMAND.*/
         CUSTOM_COMMAND,
-        /**Batch command, used for draw batches in texture atlas.*/
-        BATCH_COMMAND,
         /**Group command, which can group command in a tree hierarchy.*/
         GROUP_COMMAND,
         /**Mesh command, used to draw 3D meshes.*/
         MESH_COMMAND,
-        /**Primitive command, used to draw primitives such as lines, points and triangles.*/
-        PRIMITIVE_COMMAND,
         /**Triangles command, used to draw triangles.*/
-        TRIANGLES_COMMAND
+        TRIANGLES_COMMAND,
+        /**Callback command, used for calling callback for rendering.*/
+        CALLBACK_COMMAND,
     };
 
     /**
@@ -73,7 +67,7 @@ public:
      @param modelViewTransform Modelview matrix when submitting the render command.
      @param flags Flag used to indicate whether the command should be draw at 3D mode or not.
      */
-    void init(float globalZOrder, const Mat4& modelViewTransform, uint32_t flags);
+    void init(float globalZOrder, const Mat4& modelViewTransform, unsigned int flags);
     
     /** Get global Z order. */
     float getGlobalOrder() const { return _globalOrder; }
@@ -98,6 +92,8 @@ public:
     void set3D(bool value) { _is3D = value; }
     /**Get the depth by current model view matrix.*/
     float getDepth() const { return _depth; }
+    // Can use the result to change the descriptor content.
+    inline PipelineDescriptor& getPipelineDescriptor() { return _pipelineDescriptor; }
     
 protected:
     /**Constructor.*/
@@ -108,25 +104,27 @@ protected:
     void printID();
 
     /**Type used in order to avoid dynamic cast, faster. */
-    Type _type;
+    Type _type = RenderCommand::Type::UNKNOWN_COMMAND;
 
     /** Commands are sort by global Z order. */
-    float _globalOrder;
+    float _globalOrder = 0.f;
     
     /** Transparent flag. */
-    bool  _isTransparent;
+    bool  _isTransparent = true;
     
     /**
      QuadCommand and TrianglesCommand could be auto batched if there material ID is the same, however, if
      a command is skip batching, it would be forced to draw in a separate function call, and break the batch.
      */
-    bool _skipBatching;
+    bool _skipBatching = false;
     
     /** Is the command been rendered on 3D pass. */
-    bool _is3D;
+    bool _is3D = false;
     
     /** Depth from the model view matrix.*/
-    float _depth;
+    float _depth = 0.f;
+    
+    PipelineDescriptor _pipelineDescriptor;
 };
 
 NS_CC_END
@@ -134,4 +132,3 @@ NS_CC_END
  end of support group
  @}
  */
-#endif //__CCRENDERCOMMAND_H_

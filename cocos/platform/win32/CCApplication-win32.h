@@ -61,13 +61,9 @@ public:
     @return Current application instance pointer.
     */
     static Application* getInstance();
-
-    /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
     
     /* override functions */
     virtual void setAnimationInterval(float interval) override;
-    virtual void setAnimationInterval(float interval, SetIntervalReason reason) override;
 
     virtual LanguageType getCurrentLanguage();
 

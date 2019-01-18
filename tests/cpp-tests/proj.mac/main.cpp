@@ -22,8 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#include "AppDelegate.h"
+#include "../Classes/AppDelegate.h"
 
 USING_NS_CC;
 

@@ -272,17 +272,6 @@ public:
      */
     void drawTriangle(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Color4F &color);
 
-    /** draw a quadratic bezier curve with color and number of segments, use drawQuadBezier instead.
-     *
-     * @param from The origin of the bezier path.
-     * @param control The control of the bezier path.
-     * @param to The destination of the bezier path.
-     * @param segments The number of segments.
-     * @param color The quadratic bezier color.
-     * @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE void drawQuadraticBezier(const Vec2& from, const Vec2& control, const Vec2& to, unsigned int segments, const Color4F &color);
-    
     /** Clear the geometry in the node's buffer. */
     void clear();
     /** Get the color mixed mode.
@@ -297,19 +286,6 @@ public:
     * @lua NA
     */
     void setBlendFunc(const BlendFunc &blendFunc);
-
-    /**
-     * @js NA
-     */
-    virtual void onDraw(const Mat4 &transform, uint32_t flags);
-    /**
-     * @js NA
-     */
-    virtual void onDrawGLLine(const Mat4 &transform, uint32_t flags);
-    /**
-     * @js NA
-     */
-    virtual void onDrawGLPoint(const Mat4 &transform, uint32_t flags);
     
     // Overrides
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
@@ -339,8 +315,11 @@ protected:
     void ensureCapacityGLPoint(int count);
     void ensureCapacityGLLine(int count);
 
-    void setupBuffer();
-
+    void updateShader();
+    void setVertexLayout(CustomCommand& cmd);
+    void updateBlendState(CustomCommand& cmd);
+    void updateUniforms(const Mat4 &transform, CustomCommand& cmd);
+ 
     GLuint      _vao = 0;
     GLuint      _vbo = 0;
     GLuint      _vaoGLPoint = 0;
@@ -363,6 +342,11 @@ protected:
     V2F_C4B_T2F *_bufferGLLine = nullptr;
 
     BlendFunc   _blendFunc;
+    
+    backend::ProgramState* _programState = nullptr;
+    backend::ProgramState* _programStatePoint = nullptr;
+    backend::ProgramState* _programStateLine = nullptr;
+    
     CustomCommand _customCommand;
     CustomCommand _customCommandGLPoint;
     CustomCommand _customCommandGLLine;
@@ -375,6 +359,7 @@ protected:
     GLfloat         _lineWidth = 0.0f;
 
     GLfloat  _defaultLineWidth = 0.0f;
+    
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);
 };

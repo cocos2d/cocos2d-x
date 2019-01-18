@@ -76,17 +76,13 @@ public:
      */
     Value getProperty(const std::string& propertyName) const;
     
-    CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const std::string& propertyName) const { return getProperty(propertyName); };
-
     /** Return the dictionary for the specific object name.
      * It will return the 1st object found on the array for the given name.
      *
      * @return Return the dictionary for the specific object name.
      */
     ValueMap getObject(const std::string& objectName) const;
-    
-    CC_DEPRECATED_ATTRIBUTE ValueMap objectNamed(const std::string& objectName) const { return getObject(objectName); };
-    
+        
     /** Gets the offset position of child objects. 
      *
      * @return The offset position of child objects.

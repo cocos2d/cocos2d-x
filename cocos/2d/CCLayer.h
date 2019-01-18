@@ -25,14 +25,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __CCLAYER_H__
-#define __CCLAYER_H__
+#pragma once
 
 #include "2d/CCNode.h"
 #include "base/CCProtocols.h"
 #include "renderer/CCCustomCommand.h"
 
+#include <vector>
 
 NS_CC_BEGIN
 
@@ -68,17 +67,6 @@ public:
      * @return An autoreleased Layer object.
      */
     static Layer *create();
-
-    // Deprecated touch callbacks.
-    CC_DEPRECATED_ATTRIBUTE virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) final;
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) final;
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) final;
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchCancelled(Touch *pTouch, Event *pEvent) final;
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesBegan(__Set *pTouches, Event *pEvent) final;
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesMoved(__Set *pTouches, Event *pEvent) final;
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesEnded(__Set *pTouches, Event *pEvent) final;
-    CC_DEPRECATED_ATTRIBUTE virtual void ccTouchesCancelled(__Set *pTouches, Event *pEvent) final;
     
     /* Callback function should not be deprecated, it will generate lots of warnings.
        Since 'setTouchEnabled' was deprecated, it will make warnings if developer overrides onTouchXXX and invokes setTouchEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
@@ -141,11 +129,6 @@ public:
     * @js NA
     */
     virtual void onTouchesCancelled(const std::vector<Touch*>&touches, Event *unused_event);
-    /** 
-      @deprecated Please override onAcceleration 
-      @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* /*accelerationValue*/) final {};
 
 	/* Callback function should not be deprecated, it will generate lots of warnings.
 	Since 'setAccelerometerEnabled' was deprecated, it will make warnings if developer overrides onAcceleration and invokes setAccelerometerEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
@@ -157,67 +140,6 @@ public:
      */
     virtual void onAcceleration(Acceleration* acc, Event* unused_event);
 
-    /** If isTouchEnabled, this method is called onEnter. Override it to change the
-    way Layer receives touch events.
-    ( Default: TouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0); )
-    Example:
-    void Layer::registerWithTouchDispatcher()
-    {
-    TouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,INT_MIN+1,true);
-    }
-    @since v0.8.0
-    @js NA
-    */
-    CC_DEPRECATED_ATTRIBUTE virtual void registerWithTouchDispatcher() final {};
-
-    /** whether or not it will receive Touch events.
-    You can enable / disable touch events with this property.
-    Only the touches of this node will be affected. This "method" is not propagated to it's children.
-    @since v0.8.1
-    @js NA
-    */
-    CC_DEPRECATED_ATTRIBUTE bool isTouchEnabled() const;
-    CC_DEPRECATED_ATTRIBUTE void setTouchEnabled(bool value);
-    
-    CC_DEPRECATED_ATTRIBUTE virtual void setTouchMode(Touch::DispatchMode mode);
-    CC_DEPRECATED_ATTRIBUTE virtual Touch::DispatchMode getTouchMode() const;
-
-    /** 
-      swallowsTouches of the touch events. Default is true 
-      @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE virtual void setSwallowsTouches(bool swallowsTouches);
-    CC_DEPRECATED_ATTRIBUTE virtual bool isSwallowsTouches() const;
-
-    /** whether or not it will receive Accelerometer events
-    You can enable / disable accelerometer events with this property.
-    @since v0.8.1
-    @js NA
-    */
-    CC_DEPRECATED_ATTRIBUTE virtual bool isAccelerometerEnabled() const;
-    CC_DEPRECATED_ATTRIBUTE virtual void setAccelerometerEnabled(bool value);
-    CC_DEPRECATED_ATTRIBUTE virtual void setAccelerometerInterval(double interval);
-
-    /** whether or not it will receive keyboard or keypad events
-    You can enable / disable accelerometer events with this property.
-    it's new in cocos2d-x
-    @js NA
-    */
-
-    CC_DEPRECATED_ATTRIBUTE virtual bool isKeyboardEnabled() const;
-    CC_DEPRECATED_ATTRIBUTE virtual void setKeyboardEnabled(bool value);
-
-    /** 
-      Please use onKeyPressed instead. 
-      @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE virtual void keyPressed(int /*keyCode*/) final {};
-    
-    /** 
-      Please use onKeyReleased instead. 
-      @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE virtual void keyReleased(int /*keyCode*/) final {};
 
 	/* Callback function should not be deprecated, it will generate lots of warnings.
 	Since 'setKeyboardEnabled' was deprecated, it will make warnings if developer overrides onKeyXXX and invokes setKeyboardEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
@@ -235,16 +157,6 @@ public:
     */
     virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
 
-    CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return _keyboardEnabled; }
-    CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value);
-
-    /** 
-      @deprecated Please override onKeyReleased and check the keycode of KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) instead. 
-      @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE virtual void keyBackClicked() final {};
-    CC_DEPRECATED_ATTRIBUTE virtual void keyMenuClicked() final {};
-
     // Overrides
     virtual std::string getDescription() const override;
 
@@ -255,12 +167,9 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
 protected:
-    //add the api for avoid use deprecated api
-    CC_DEPRECATED_ATTRIBUTE void _addTouchListener() {}
-
-    CC_DEPRECATED_ATTRIBUTE void addTouchListener() {}
-    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch, Event* event);
-    CC_DEPRECATED_ATTRIBUTE int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches, Event* event);
+    
+    int executeScriptTouchHandler(EventTouch::EventCode eventType, Touch* touch, Event* event);
+    int executeScriptTouchesHandler(EventTouch::EventCode eventType, const std::vector<Touch*>& touches, Event* event);
 
     bool _touchEnabled;
     bool _accelerometerEnabled;
@@ -277,50 +186,6 @@ private:
 
 };
 
-
-/** @class __LayerRGBA
- * @brief LayerRGBA is a subclass of Layer that implements the RGBAProtocol protocol using a solid color as the background.
- 
- All features from Layer are valid, plus the following new features that propagate into children that conform to the RGBAProtocol:
- - opacity
- - RGB colors
- @since 2.1
- @js NA
- */
-class CC_DLL __LayerRGBA : public Layer, public __RGBAProtocol
-{
-public:
-    CREATE_FUNC(__LayerRGBA);
-    
-    
-    //
-    // Overrides
-    //
-    virtual GLubyte getOpacity() const override { return Layer::getOpacity(); }
-    virtual GLubyte getDisplayedOpacity() const override { return Layer::getDisplayedOpacity(); }
-    virtual void setOpacity(GLubyte opacity) override { Layer::setOpacity(opacity); }
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override { Layer::updateDisplayedOpacity(parentOpacity); }
-    virtual bool isCascadeOpacityEnabled() const override { return Layer::isCascadeOpacityEnabled(); }
-    virtual void setCascadeOpacityEnabled(bool cascadeOpacityEnabled) override { Layer::setCascadeOpacityEnabled(cascadeOpacityEnabled); }
-
-    virtual const Color3B& getColor() const override { return Layer::getColor(); }
-    virtual const Color3B& getDisplayedColor() const override { return Layer::getDisplayedColor(); }
-    virtual void setColor(const Color3B& color) override { Layer::setColor(color); }
-    virtual void updateDisplayedColor(const Color3B& parentColor) override { Layer::updateDisplayedColor(parentColor); }
-    virtual bool isCascadeColorEnabled() const override { return Layer::isCascadeOpacityEnabled(); }
-    virtual void setCascadeColorEnabled(bool cascadeColorEnabled) override { Layer::setCascadeColorEnabled(cascadeColorEnabled); }
-
-    virtual void setOpacityModifyRGB(bool bValue) override { Layer::setOpacityModifyRGB(bValue); }
-    virtual bool isOpacityModifyRGB() const override { return Layer::isOpacityModifyRGB(); }
-
-CC_CONSTRUCTOR_ACCESS:
-    __LayerRGBA();
-    virtual ~__LayerRGBA() {}
-
-private:
-    CC_DISALLOW_COPY_AND_ASSIGN(__LayerRGBA);
-};
-
 //
 // LayerColor
 //
@@ -334,6 +199,7 @@ All features from Layer are valid, plus the following new features:
 class CC_DLL LayerColor : public Layer, public BlendProtocol
 {
 public:
+
     /** Creates a fullscreen black layer.
      *
      * @return An autoreleased LayerColor object.
@@ -346,7 +212,7 @@ public:
      * @param height The height of layer.
      * @return An autoreleased LayerColor object.
      */
-    static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
+    static LayerColor * create(const Color4B& color, float width, float height);
     /** Creates a Layer with color. Width and height are the window size.
      *
      * @param color The color of layer.
@@ -358,19 +224,19 @@ public:
      * 
      * @param w The width of layer.
      */
-    void changeWidth(GLfloat w);
+    void changeWidth(float w);
     /** Change height in Points.
      *
      * @param h The height of layer.
      */
-    void changeHeight(GLfloat h);
+    void changeHeight(float h);
     /** Change width and height in Points.
      * 
      * @param w The width of layer.
      * @param h The Height of layer.
     @since v0.8
     */
-    void changeWidthAndHeight(GLfloat w ,GLfloat h);
+    void changeWidthAndHeight(float w, float h);
 
     //
     // Overrides
@@ -391,27 +257,28 @@ public:
     *@endcode
     */
     virtual void setBlendFunc(const BlendFunc& blendFunc) override;
-
-    virtual std::string getDescription() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     LayerColor();
     virtual ~LayerColor();
     
     bool init() override;
-    bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
+    bool initWithColor(const Color4B& color, float width, float height);
     bool initWithColor(const Color4B& color);
 
 protected:
-    void onDraw(const Mat4& transform, uint32_t flags);
 
     virtual void updateColor() override;
+    void updateVertexBuffer();
 
     BlendFunc _blendFunc;
     Vec2 _squareVertices[4];
-    Color4F  _squareColors[4];
     CustomCommand _customCommand;
-    Vec3 _noMVPVertices[4];
+
+    V3F_C4F _vertexData[4];
+    
+    backend::UniformLocation _mvpMatrixLocation;
+    backend::ProgramState* _programState = nullptr;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(LayerColor);
 
@@ -504,23 +371,23 @@ public:
      *
      * @param startOpacity The start opacity, from 0 to 255.
      */
-    void setStartOpacity( GLubyte startOpacity );
+    void setStartOpacity(uint8_t startOpacity );
     /** Returns the start opacity of the gradient.
      *
      * @return The start opacity.
      */
-    GLubyte getStartOpacity() const;
+    uint8_t getStartOpacity() const;
 
     /** Returns the end opacity of the gradient.
      *
      * @param endOpacity The end opacity, from 0 to 255.
      */
-    void setEndOpacity( GLubyte endOpacity );
+    void setEndOpacity(uint8_t endOpacity );
     /** Returns the end opacity of the gradient.
      *
      * @return The end opacity.
      */
-    GLubyte getEndOpacity() const;
+    uint8_t getEndOpacity() const;
 
     /** Sets the directional vector that will be used for the gradient.
     The default value is vertical direction (0,-1). 
@@ -556,12 +423,12 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     virtual void updateColor() override;
 
-    Color3B _startColor;
-    Color3B _endColor;
-    GLubyte _startOpacity;
-    GLubyte _endOpacity;
-    Vec2   _alongVector;
-    bool    _compressedInterpolation;
+    Color3B _startColor = Color3B::BLACK;
+    Color3B _endColor = Color3B::BLACK;
+    uint8_t _startOpacity = 255;
+    uint8_t _endOpacity = 255;
+    Vec2   _alongVector = {0, -1};
+    bool    _compressedInterpolation = true;
 };
 
 
@@ -589,11 +456,11 @@ public:
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual void setContentSize(const Size& size) override;
     
-    void setStartOpacity(GLubyte opacity);
-    GLubyte getStartOpacity() const;
+    void setStartOpacity(uint8_t opacity);
+    uint8_t getStartOpacity() const;
     
-    void setEndOpacity(GLubyte opacity);
-    GLubyte getEndOpacity() const;
+    void setEndOpacity(uint8_t opacity);
+    uint8_t getEndOpacity() const;
     
     void setRadius(float radius);
     float getRadius() const;
@@ -623,32 +490,30 @@ CC_CONSTRUCTOR_ACCESS:
     
     bool initWithColor(const Color4B& startColor, const Color4B& endColor, float radius, const Vec2& center, float expand);
     
-protected:
-    void onDraw(const Mat4& transform, uint32_t flags);
-    
-    
 private:
     void convertColor4B24F(Color4F& outColor, const Color4B& inColor);
     
-    Color4B _startColor;
-    Color4F _startColorRend; // start color used in shader
+    Color4B _startColor = Color4B::BLACK;
+    Color4F _startColorRend = Color4F::BLACK; // start color used in shader
     
-    Color4B _endColor;
-    Color4F _endColorRend; // end color used in shader
-    
-    Vec2 _center;
-    float _radius;
-    float _expand;
+    Color4B _endColor = Color4B::BLACK;
+    Color4F _endColorRend = Color4F::BLACK; // end color used in shader
+
     Vec2 _vertices[4];
+    Vec2 _center;
+    float _radius = 0.f;
+    float _expand = 0.f;
     CustomCommand _customCommand;
     
-    GLint _uniformLocationStartColor;
-    GLint _uniformLocationEndColor;
-    GLint _uniformLocationCenter;
-    GLint _uniformLocationRadius;
-    GLint _uniformLocationExpand;
+    BlendFunc _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
     
-    BlendFunc _blendFunc;
+    backend::UniformLocation _mvpMatrixLocation;
+    backend::UniformLocation _startColorLocation;
+    backend::UniformLocation _endColorLocation;
+    backend::UniformLocation _centerLocation;
+    backend::UniformLocation _radiusLocation;
+    backend::UniformLocation _expandLocation;
+    backend::ProgramState* _programState = nullptr;
 };
 
 
@@ -684,25 +549,7 @@ public:
      * In lua:local create(...)
      * @endcode
      */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported
-    typedef Layer* M;
-    static LayerMultiplex* create(M m1, std::nullptr_t listEnd) { return createVariadic(m1, NULL); }
-    static LayerMultiplex* create(M m1, M m2, std::nullptr_t listEnd) { return createVariadic(m1, m2, NULL); }
-    static LayerMultiplex* create(M m1, M m2, M m3, std::nullptr_t listEnd) { return createVariadic(m1, m2, m3, NULL); }
-    static LayerMultiplex* create(M m1, M m2, M m3, M m4, std::nullptr_t listEnd) { return createVariadic(m1, m2, m3, m4, NULL); }
-    static LayerMultiplex* create(M m1, M m2, M m3, M m4, M m5, std::nullptr_t listEnd) { return createVariadic(m1, m2, m3, m4, m5, NULL); }
-    static LayerMultiplex* create(M m1, M m2, M m3, M m4, M m5, M m6, std::nullptr_t listEnd) { return createVariadic(m1, m2, m3, m4, m5, m6, NULL); }
-    static LayerMultiplex* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, std::nullptr_t listEnd) { return createVariadic(m1, m2, m3, m4, m5, m6, m7, NULL); }
-    static LayerMultiplex* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, std::nullptr_t listEnd) { return createVariadic(m1, m2, m3, m4, m5, m6, m7, m8, NULL); }
-    static LayerMultiplex* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, std::nullptr_t listEnd) { return createVariadic(m1, m2, m3, m4, m5, m6, m7, m8, m9, NULL); }
-    static LayerMultiplex* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, M m10, std::nullptr_t listEnd) { return createVariadic(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10,  NULL); }
-
-    // On WP8 for variable argument lists longer than 10 items, use createWithArray or createVariadic with NULL as the last argument
-    static LayerMultiplex* createVariadic(Layer* item, ...) CC_REQUIRES_NULL_TERMINATION;
-#else
     static LayerMultiplex * create(Layer* layer, ... );
-#endif
 
     /** Creates a LayerMultiplex with one layer.
      * Lua script can not init with undetermined number of variables
@@ -776,6 +623,3 @@ private:
 /// @}
 
 NS_CC_END
-
-#endif // __CCLAYER_H__
-

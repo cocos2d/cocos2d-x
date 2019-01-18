@@ -69,7 +69,7 @@ bool ControlColourPicker::init()
 		   especially the display of 'huePickerBackground.png' when in 800*480 window size with 480*320 design resolution and hd(960*640) resources.
 	    */
 //        spriteSheet->getTexture()->setAliasTexParameters();
-//         spriteSheet->getTexture()->setTexParameters(&params);
+//         spriteSheet->getTexture()->setSamplerDescriptor(&params);
 //         spriteSheet->getTexture()->generateMipmap();
 
         // Init default color

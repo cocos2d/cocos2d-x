@@ -161,11 +161,6 @@ unsigned int PolygonInfo::getTrianglesCount() const
     return (unsigned int)triangles.indexCount/3;
 }
 
-unsigned int PolygonInfo::getTriaglesCount() const
-{
-    return getTrianglesCount();
-}
-
 float PolygonInfo::getArea() const
 {
     float area = 0;
@@ -192,7 +187,7 @@ AutoPolygon::AutoPolygon(const std::string &filename)
     _filename = filename;
     _image = new (std::nothrow) Image();
     _image->initWithImageFile(filename);
-    CCASSERT(_image->getRenderFormat()==Texture2D::PixelFormat::RGBA8888, "unsupported format, currently only supports rgba8888");
+    CCASSERT(_image->getPixelFormat()==Texture2D::PixelFormat::RGBA8888, "unsupported format, currently only supports rgba8888");
     _data = _image->getData();
     _width = _image->getWidth();
     _height = _image->getHeight();
@@ -649,7 +644,7 @@ TrianglesCommand::Triangles AutoPolygon::triangulate(const std::vector<Vec2>& po
 
     // Triangles should really use std::vector and not arrays for verts and indices. 
     // Then the above memcpy would not be necessary
-    TrianglesCommand::Triangles triangles = { vertsBuf, indicesBuf, static_cast<int>(verts.size()), static_cast<int>(indices.size()) };
+    TrianglesCommand::Triangles triangles = { vertsBuf, indicesBuf, (unsigned int)verts.size(), (unsigned int)indices.size() };
     return triangles;
 }
 

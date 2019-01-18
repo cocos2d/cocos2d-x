@@ -25,34 +25,24 @@
  * THE SOFTWARE.
  *
  */
-
 #include "2d/CCClippingNode.h"
-#include "2d/CCDrawingPrimitives.h"
-#include "renderer/CCGLProgramCache.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCRenderState.h"
 #include "base/CCDirector.h"
 #include "base/CCStencilStateManager.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-#define CC_CLIPPING_NODE_OPENGLES 0
-#else
-#define CC_CLIPPING_NODE_OPENGLES 1
-#endif
-
 NS_CC_BEGIN
 
-#if CC_CLIPPING_NODE_OPENGLES
-static void setProgram(Node *n, GLProgram *p)
-{
-    n->setGLProgram(p);
-    
-    auto& children = n->getChildren();
-    for(const auto &child : children) {
-        setProgram(child, p);
-    }
-}
-#endif
+//namespace
+//{
+//    void setProgram(Node *n, GLProgram *p)
+//    {
+//        n->setGLProgram(p);
+//
+//        auto& children = n->getChildren();
+//        for(const auto &child : children)
+//            setProgram(child, p);
+//    }
+//}
 
 ClippingNode::ClippingNode()
 : _stencil(nullptr)
@@ -211,26 +201,26 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
 
     renderer->pushGroup(_groupCommand.getRenderQueueID());
 
-    _beforeVisitCmd.init(_globalZOrder);
-    _beforeVisitCmd.func = CC_CALLBACK_0(StencilStateManager::onBeforeVisit, _stencilStateManager);
-    renderer->addCommand(&_beforeVisitCmd);
+    // _beforeVisitCmd.init(_globalZOrder);
+    // _beforeVisitCmd.func = CC_CALLBACK_0(StencilStateManager::onBeforeVisit, _stencilStateManager);
+    // renderer->addCommand(&_beforeVisitCmd);
+    _stencilStateManager->onBeforeVisit(_globalZOrder);
     
     auto alphaThreshold = this->getAlphaThreshold();
     if (alphaThreshold < 1)
     {
-#if CC_CLIPPING_NODE_OPENGLES
-        // since glAlphaTest do not exists in OES, use a shader that writes
-        // pixel only if greater than an alpha threshold
-        GLProgram *program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
-        GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-        // set our alphaThreshold
-        program->use();
-        program->setUniformLocationWith1f(alphaValueLocation, alphaThreshold);
-        // we need to recursively apply this shader to all the nodes in the stencil node
-        // FIXME: we should have a way to apply shader to all nodes without having to do this
-        setProgram(_stencil, program);
-#endif
-
+          //TODO: minggo: it is hard to do it in current design, and it is a bad design.
+          // We may not support it.
+//        // since glAlphaTest do not exists in OES, use a shader that writes
+//        // pixel only if greater than an alpha threshold
+//        GLProgram *program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
+//        GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
+//        // set our alphaThreshold
+//        program->use();
+//        program->setUniformLocationWith1f(alphaValueLocation, alphaThreshold);
+//        // we need to recursively apply this shader to all the nodes in the stencil node
+//        // FIXME: we should have a way to apply shader to all nodes without having to do this
+//        setProgram(_stencil, program);
     }
     _stencil->visit(renderer, _modelViewTransform, flags);
 
@@ -341,15 +331,16 @@ GLfloat ClippingNode::getAlphaThreshold() const
 
 void ClippingNode::setAlphaThreshold(GLfloat alphaThreshold)
 {
-#if CC_CLIPPING_NODE_OPENGLES
-    if (alphaThreshold == 1 && alphaThreshold != _stencilStateManager->getAlphaThreshold())
-    {
-        // should reset program used by _stencil
-        if (_stencil)
-            setProgram(_stencil, _originStencilProgram);
-    }
-#endif
-    
+//TODO: minggo
+//#if CC_CLIPPING_NODE_OPENGLES
+//    if (alphaThreshold == 1 && alphaThreshold !cpp= _stencilStateManager->getAlphaThreshold())
+//    {
+//        // should reset program used by _stencil
+//        if (_stencil)
+//            setProgram(_stencil, _originStencilProgram);
+//    }
+//#endif
+
     _stencilStateManager->setAlphaThreshold(alphaThreshold);
 }
 

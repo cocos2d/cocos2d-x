@@ -22,35 +22,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-
-#ifndef __CC_RENDERER_H_
-#define __CC_RENDERER_H_
+#pragma once
 
 #include <vector>
 #include <stack>
+#include <array>
 
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgram.h"
-#include "platform/CCGL.h"
 
-#if !defined(NDEBUG) && CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-
-/// Basic wrapper for glInsertEventMarkerEXT() depending on the current build settings and platform.
-#define CCGL_DEBUG_INSERT_EVENT_MARKER(__message__) glInsertEventMarkerEXT(0, __message__)
-/// Basic wrapper for glPushGroupMarkerEXT() depending on the current build settings and platform.
-#define CCGL_DEBUG_PUSH_GROUP_MARKER(__message__) glPushGroupMarkerEXT(0, __message__)
-/// Basic wrapper for CCGL_DEBUG_POP_GROUP_MARKER() depending on the current build settings and platform.
-#define CCGL_DEBUG_POP_GROUP_MARKER() glPopGroupMarkerEXT()
-
-#else
-
-#define CCGL_DEBUG_INSERT_EVENT_MARKER(__message__)
-#define CCGL_DEBUG_PUSH_GROUP_MARKER(__message__)
-#define CCGL_DEBUG_POP_GROUP_MARKER()
-
-#endif
 
 /**
  * @addtogroup renderer
@@ -59,16 +40,29 @@
 
 NS_CC_BEGIN
 
+namespace backend
+{
+    class Buffer;
+    class CommandBuffer;
+    class RenderPipeline;
+    class RenderPass;
+}
+
 class EventListenerCustom;
 class TrianglesCommand;
 class MeshCommand;
+class GroupCommand;
+class CallbackCommand;
+struct PipelineDescriptor;
+class Texture2D;
 
 /** Class that knows how to sort `RenderCommand` objects.
  Since the commands that have `z == 0` are "pushed back" in
  the correct order, the only `RenderCommand` objects that need to be sorted,
  are the ones that have `z < 0` and `z > 0`.
 */
-class RenderQueue {
+class RenderQueue
+{
 public:
     /**
     RenderCommand will be divided into Queue Groups.
@@ -107,11 +101,6 @@ public:
     std::vector<RenderCommand*>& getSubQueue(QUEUE_GROUP group) { return _commands[group]; }
     /**Get the number of render commands contained in a subqueue.*/
     ssize_t getSubQueueSize(QUEUE_GROUP group) const { return _commands[group].size(); }
-
-    /**Save the current DepthState, CullState, DepthWriteState render state.*/
-    void saveRenderState();
-    /**Restore the saved DepthState, CullState, DepthWriteState render state.*/
-    void restoreRenderState();
     
 protected:
     /**The commands in the render queue.*/
@@ -125,13 +114,6 @@ protected:
     GLboolean _isDepthWrite;
 };
 
-//the struct is not used outside.
-struct RenderStackElement
-{
-    int renderQueueID;
-    ssize_t currentIndex;
-};
-
 class GroupCommandManager;
 
 /* Class responsible for the rendering in.
@@ -141,6 +123,7 @@ Whenever possible prefer to use `TrianglesCommand` objects since the renderer wi
 class CC_DLL Renderer
 {
 public:
+    
     /**The max number of vertices in a vertex buffer object.*/
     static const int VBO_SIZE = 65536;
     /**The max number of indices in a index buffer.*/
@@ -155,7 +138,7 @@ public:
     ~Renderer();
 
     //TODO: manage GLView inside Render itself
-    void initGLView();
+    void init();
 
     /** Adds a `RenderComamnd` into the renderer */
     void addCommand(RenderCommand* command);
@@ -178,11 +161,6 @@ public:
     /** Cleans all `RenderCommand`s in the queue */
     void clean();
 
-    /** Clear GL buffer and screen */
-    void clear();
-
-    /** set color for clear screen */
-    void setClearColor(const Color4F& clearColor);
     /* returns the number of drawn batches in the last frame */
     ssize_t getDrawnBatches() const { return _drawnBatches; }
     /* RenderCommands (except) TrianglesCommand should update this value */
@@ -195,26 +173,103 @@ public:
     void clearDrawStats() { _drawnBatches = _drawnVertices = 0; }
 
     /**
-     * Enable/Disable depth test
-     * For 3D object depth test is enabled by default and can not be changed
-     * For 2D object depth test is disabled by default
+     Set render targets. If not set, will use default render targets. It will effect all commands.
+     @flags Flags to indicate which attachment to be replaced.
+     @colorAttachment The value to replace color attachment, only one color attachment supported now.
+     @depthAttachment The value to repalce depth attachment.
+     @stencilAttachment The value to replace stencil attachment. Depth attachment and stencil attachment
+                        can be the same value.
      */
-    void setDepthTest(bool enable);
-    
-    //This will not be used outside.
-    GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; }
+    void setRenderTarget(RenderTargetFlag flags, Texture2D* colorAttachment, Texture2D* depthAttachment, Texture2D* stencilAttachment);
+    /**
+    Set clear values for each attachment.
+    @flags Flags to indicate which attachment clear value to be modified.
+    @color The clear color value.
+    @depth The clear depth value.
+    @stencil The clear stencil value.
+    */
+    void clear(ClearFlag flags, const Color4F& color, float depth, unsigned int stencil);
+    Texture2D* getColorAttachment() const;
+    Texture2D* getDepthAttachment() const;
+    Texture2D* getStencilAttachment() const;
+    const Color4F& getClearColor() const;
+    float getClearDepth() const;
+    unsigned int getClearStencil() const;
+    ClearFlag getClearFlag() const;
+    RenderTargetFlag getRenderTargetFlag() const;
+
+    // depth/stencil state.
+
+    /* Enable/disable depth test. */
+    void setDepthTest(bool value);
+    /* Enable/disable to update depth buffer. */
+    void setDepthWrite(bool value);
+    void setDepthCompareFunction(backend::CompareFunction func);
+    bool getDepthTest() const;
+    bool getDepthWrite() const;
+    backend::CompareFunction getDepthCompareFunction() const;
+
+    /* Enable/disable stencil test. */
+    void setStencilTest(bool value);
+    void setStencilCompareFunction(backend::CompareFunction func, unsigned int ref, unsigned int readMask);
+    void setStencilOperation(backend::StencilOperation stencilFailureOp,
+                             backend::StencilOperation depthFailureOp,
+                             backend::StencilOperation stencilDepthPassOp);
+    void setStencilWriteMask(unsigned int mask);
+    bool getStencilTest() const;
+    backend::StencilOperation getStencilFailureOperation() const;
+    backend::StencilOperation getStencilPassDepthFailureOperation() const;
+    backend::StencilOperation getStencilDepthPassOperation() const;
+    backend::CompareFunction getStencilCompareFunction() const;
+    unsigned int getStencilReadMask() const;
+    unsigned int getStencilWriteMask() const;
+    /* Get stencil reference value set by `setStencilCompareFunction`. */
+    unsigned int getStencilReferenceValue() const;
+
+    // view port
+    void setViewPort(int x, int y, unsigned int w, unsigned int h);
+    const Viewport& getViewport() const { return _viewport; }
+
+    // scissor test
+
+    /* Enable/disable scissor test. */
+    void setScissorTest(bool enabled);
+    void setScissorRect(float x, float y, float width, float height);
+    bool getScissorTest() const;
+    const ScissorRect& getScissorRect() const;
 
     /** returns whether or not a rectangle is visible or not */
     bool checkVisibility(const Mat4& transform, const Size& size);
 
 protected:
+    friend class Director;
+    friend class GroupCommand;
 
-    //Setup VBO or VAO based on OpenGL extensions
-    void setupBuffer();
-    void setupVBOAndVAO();
-    void setupVBO();
-    void mapBuffers();
+    class TriangleCommandBufferManager
+    {
+    public:
+        ~TriangleCommandBufferManager();
+
+        void init();
+        void putbackAllBuffers();
+        void prepareNextBuffer();
+        backend::Buffer* getVertexBuffer() const;
+        backend::Buffer* getIndexBuffer() const;
+
+    private:
+        void createBuffer();
+
+        int _currentBufferIndex = 0;
+        std::vector<backend::Buffer*> _vertexBufferPool;
+        std::vector<backend::Buffer*> _indexBufferPool;
+    };
+
+    inline GroupCommandManager * getGroupCommandManager() const { return _groupCommandManager; }
     void drawBatchedTriangles();
+    void drawCustomCommand(RenderCommand* command);
+
+    void beginFrame();
+    void endFrame();
 
     //Draw the previews queued triangles and flush previous context
     void flush();
@@ -226,55 +281,83 @@ protected:
     void flushTriangles();
 
     void processRenderCommand(RenderCommand* command);
+    void processGroupCommand(GroupCommand*);
     void visitRenderQueue(RenderQueue& queue);
+    void doVisitRenderQueue(const std::vector<RenderCommand*>&);
 
-    void fillVerticesAndIndices(const TrianglesCommand* cmd);
+    void fillVerticesAndIndices(const TrianglesCommand* cmd, unsigned int vertexBufferOffset);
+    void beginRenderPass(RenderCommand*);
+    
+    void setRenderPipeline(const PipelineDescriptor&, const backend::RenderPassDescriptor&);
 
 
-    /* clear color set outside be used in setGLDefaultValues() */
-    Color4F _clearColor;
+    Viewport _viewport;
 
     std::stack<int> _commandGroupStack;
     
     std::vector<RenderQueue> _renderGroups;
 
-    MeshCommand* _lastBatchedMeshCommand;
+    MeshCommand* _lastBatchedMeshCommand = nullptr;
     std::vector<TrianglesCommand*> _queuedTriangleCommands;
 
     //for TrianglesCommand
     V3F_C4B_T2F _verts[VBO_SIZE];
-    GLushort _indices[INDEX_VBO_SIZE];
-    GLuint _buffersVAO;
-    GLuint _buffersVBO[2]; //0: vertex  1: indices
+    unsigned short _indices[INDEX_VBO_SIZE];
+    backend::Buffer* _vertexBuffer = nullptr;
+    backend::Buffer* _indexBuffer = nullptr;
+    TriangleCommandBufferManager _triangleCommandBufferManager;
+    
+    backend::CommandBuffer* _commandBuffer = nullptr;
+    backend::RenderPassDescriptor _renderPassDescriptor;
+    backend::DepthStencilDescriptor _depthStencilDescriptor;
 
     // Internal structure that has the information for the batches
-    struct TriBatchToDraw {
-        TrianglesCommand* cmd;  // needed for the Material
-        GLsizei indicesToDraw;
-        GLsizei offset;
+    struct TriBatchToDraw
+    {
+        TrianglesCommand* cmd = nullptr;  // needed for the Material
+        unsigned int indicesToDraw = 0;
+        unsigned int offset = 0;
     };
     // capacity of the array of TriBatches
-    int _triBatchesToDrawCapacity;
+    int _triBatchesToDrawCapacity = 500;
     // the TriBatches
-    TriBatchToDraw* _triBatchesToDraw;
+    TriBatchToDraw* _triBatchesToDraw = nullptr;
 
-    int _filledVertex;
-    int _filledIndex;
-
-    bool _glViewAssigned;
+    unsigned int _queuedTotalVertexCount = 0;
+    unsigned int _queuedTotalIndexCount = 0;
+    unsigned int _queuedVertexCount = 0;
+    unsigned int _queuedIndexCount = 0;
+    unsigned int _filledIndex = 0;
+    unsigned int _filledVertex = 0;
 
     // stats
-    ssize_t _drawnBatches;
-    ssize_t _drawnVertices;
+    unsigned int _drawnBatches = 0;
+    unsigned int _drawnVertices = 0;
     //the flag for checking whether renderer is rendering
-    bool _isRendering;
-    
-    bool _isDepthTestFor2D;
-    
-    GroupCommandManager* _groupCommandManager;
+    bool _isRendering = false;
+    bool _isDepthTestFor2D = false;
+        
+    GroupCommandManager* _groupCommandManager = nullptr;
+
+    unsigned int _stencilRef = 0;
+
+    // weak reference
+    Texture2D* _colorAttachment = nullptr;
+    Texture2D* _depthAttachment = nullptr;
+    Texture2D* _stencilAttachment = nullptr;
+    Color4F _clearColor = Color4F::BLACK;
+    ClearFlag _clearFlag;
+    RenderTargetFlag _renderTargetFlag = RenderTargetFlag::COLOR;
+
+    struct ScissorState
+    {
+        ScissorRect rect;
+        bool isEnabled = false;
+    };
+    ScissorState _scissorState;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    EventListenerCustom* _cacheTextureListener;
+    EventListenerCustom* _cacheTextureListener = nullptr;
 #endif
 };
 
@@ -284,4 +367,3 @@ NS_CC_END
  end of support group
  @}
  */
-#endif //__CC_RENDERER_H_

@@ -41,16 +41,7 @@ class CC_DLL Font : public Ref
 {
 public:
     virtual FontAtlas* createFontAtlas() = 0;
-
     virtual int* getHorizontalKerningForTextUTF32(const std::u32string& text, int &outNumLetters) const = 0;
-    
-    CC_DEPRECATED_ATTRIBUTE inline int* getHorizontalKerningForTextUTF16(const std::u16string& text, int &outNumLetters) const
-    {
-        std::u32string utf32;
-        StringUtils::UTF16ToUTF32(text, utf32);
-        return getHorizontalKerningForTextUTF32(utf32, outNumLetters);
-    }
-    
     virtual int getFontMaxHeight() const { return 0; }
 };
 

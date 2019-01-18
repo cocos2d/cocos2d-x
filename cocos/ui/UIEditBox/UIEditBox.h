@@ -73,13 +73,6 @@ namespace ui {
         virtual void editBoxEditingDidBegin(EditBox* /*editBox*/) {}
 
         /**
-         * This method is called when an edit box loses focus after keyboard is hidden.
-         * @param editBox The edit box object that generated the event.
-         * @deprecated Use editBoxEditingDidEndWithAction() instead to receive reason for end
-         */
-        CC_DEPRECATED_ATTRIBUTE virtual void editBoxEditingDidEnd(EditBox* /*editBox*/) {}
-
-        /**
          * This method is called when the edit box text was changed.
          * @param editBox The edit box object that generated the event.
          * @param text The new text.
@@ -654,14 +647,6 @@ namespace ui {
          * @lua NA
          */
         virtual void keyboardDidHide(IMEKeyboardNotificationInfo& info) override;
-
-        /**
-         * @js NA
-         * @lua NA
-         * @deprecated Use openKeyboard() instead to open the keyboard
-         */
-        CC_DEPRECATED_ATTRIBUTE
-        void touchDownAction(Ref *sender, TouchEventType controlEvent);
 
         void openKeyboard() const;
 

@@ -67,7 +67,7 @@ static AppDelegate s_sharedApplication;
     // Use RootViewController manage CCEAGLView
     viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
 #if !defined(CC_TARGET_OS_TVOS)
-    viewController.wantsFullScreenLayout = YES;
+    viewController.extendedLayoutIncludesOpaqueBars = YES;
 #endif
     viewController.view = eaglView;
 

@@ -56,7 +56,6 @@
 #include "ActionsEaseTest/ActionsEaseTest.h"
 #include "ActionsProgressTest/ActionsProgressTest.h"
 #include "ActionsTest/ActionsTest.h"
-#include "AllocatorTest/AllocatorTest.h"
 #include "BillBoardTest/BillBoardTest.h"
 #include "BugsTest/BugsTest.h"
 #include "Camera3DTest/Camera3DTest.h"
@@ -75,7 +74,6 @@
 #include "FontTest/FontTest.h"
 #include "InputTest/MouseTest.h"
 #include "IntervalTest/IntervalTest.h"
-#include "LabelTest/LabelTest.h"
 #include "LabelTest/LabelTestNew.h"
 #include "LayerTest/LayerTest.h"
 #include "LightTest/LightTest.h"
@@ -118,7 +116,6 @@
 #include "UnitTest/UnitTest.h"
 #include "UserDefaultTest/UserDefaultTest.h"
 #include "VibrateTest/VibrateTest.h"
-#include "VRTest/VRTest.h"
 #include "ZwoptexTest/ZwoptexTest.h"
 #include "SpriteFrameCacheTest/SpriteFrameCacheTest.h"
 

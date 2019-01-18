@@ -28,7 +28,6 @@ THE SOFTWARE.
 #define __CC_APPLICATION_PROTOCOL_H__
 
 #include "platform/CCPlatformMacros.h"
-#include "base/CCScriptSupport.h"
 #include "base/CCAutoreleasePool.h"
 #include "base/ccTypes.h"
 
@@ -53,13 +52,13 @@ public:
         OS_MAC,         /**< Mac OS X*/
         OS_ANDROID,     /**< Android */
         OS_IPHONE,      /**< iPhone */
-        OS_IPAD,        /**< iPad */
-        OS_BLACKBERRY,  /**< BlackBerry */
-        OS_NACL,        /**< Native Client in Chrome */
-        OS_EMSCRIPTEN,  /**< Emscripten */
-        OS_TIZEN,       /**< Tizen */
-        OS_WINRT,       /**< Windows Runtime Applications */
-        OS_WP8          /**< Windows Phone 8 Applications */
+        OS_IPAD         /**< iPad */
+        // OS_BLACKBERRY,  /**< BlackBerry */
+        // OS_NACL,        /**< Native Client in Chrome */
+        // OS_EMSCRIPTEN,  /**< Emscripten */
+        // OS_TIZEN,       /**< Tizen */
+        // OS_WINRT,       /**< Windows Runtime Applications */
+        // OS_WP8          /**< Windows Phone 8 Applications */
     };
 
     /**
@@ -67,9 +66,6 @@ public:
      * @lua NA
      */
     virtual ~ApplicationProtocol(){
-#if CC_ENABLE_SCRIPT_BINDING
-        ScriptEngineManager::destroyInstance();
-#endif
         /** clean auto release pool. */
         PoolManager::destroyInstance();
     }
@@ -104,7 +100,6 @@ public:
     * @lua NA
     */
     virtual void setAnimationInterval(float interval) = 0;
-    virtual void setAnimationInterval(float interval, SetIntervalReason reason) = 0;
 
     /** Subclass override the function to set OpenGL context attribution instead of use default value.
     * And now can only set six attributions:redBits,greenBits,blueBits,alphaBits,depthBits,stencilBits.

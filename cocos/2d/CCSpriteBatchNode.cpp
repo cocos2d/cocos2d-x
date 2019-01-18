@@ -35,6 +35,9 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
+#include "renderer/ccShaders.h"
+#include "renderer/backend/ProgramState.h"
+
 
 NS_CC_BEGIN
 
@@ -104,8 +107,34 @@ bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity/* = DEFAU
 
     _descendants.reserve(capacity);
     
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, tex));
+    updateShaders(positionTextureColor_vert, positionTextureColor_frag);
+    
     return true;
+}
+
+void SpriteBatchNode::updateShaders(const std::string &vertexShader, const std::string &fragmentShader)
+{
+    auto& pipelineDescriptor = _quadCommand.getPipelineDescriptor();
+    CC_SAFE_RELEASE(_programState);
+    _programState = new (std::nothrow) backend::ProgramState(vertexShader, fragmentShader);
+    pipelineDescriptor.programState = _programState;
+    _mvpMatrixLocaiton = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
+    _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
+    
+#define VERTEX_POSITION_SIZE 3
+#define VERTEX_TEXCOORD_SIZE 2
+#define VERTEX_COLOR_SIZE 4
+    //set vertexLayout according to V3F_C4B_T2F structure
+    uint32_t colorOffset = (VERTEX_POSITION_SIZE)*sizeof(float);
+    uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+    uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+    
+    auto& vertexLayout = pipelineDescriptor.vertexLayout;
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
+    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset, false);
+    vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, colorOffset, true);
+    
+    vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
 }
 
 bool SpriteBatchNode::init()
@@ -125,13 +154,13 @@ bool SpriteBatchNode::initWithFile(const std::string& fileImage, ssize_t capacit
 }
 
 SpriteBatchNode::SpriteBatchNode()
-: _textureAtlas(nullptr)
 {
 }
 
 SpriteBatchNode::~SpriteBatchNode()
 {
     CC_SAFE_RELEASE(_textureAtlas);
+    CC_SAFE_RELEASE(_programState);
 }
 
 // override visit
@@ -194,7 +223,7 @@ void SpriteBatchNode::addChild(Node * child, int zOrder, const std::string &name
     CCASSERT(dynamic_cast<Sprite*>(child) != nullptr, "CCSpriteBatchNode only supports Sprites as children");
     Sprite *sprite = static_cast<Sprite*>(child);
     // check Sprite is using the same texture id
-    CCASSERT(sprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "CCSprite is not using the same texture id");
+    CCASSERT(sprite->getTexture() == _textureAtlas->getTexture(), "CCSprite is not using the same texture id");
     
     Node::addChild(child, zOrder, name);
     
@@ -381,9 +410,14 @@ void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
     {
         child->updateTransform();
     }
+    
+    const auto& matrixProjection = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    auto programState = _quadCommand.getPipelineDescriptor().programState;
+    programState->setUniform(_mvpMatrixLocaiton, matrixProjection.m, sizeof(matrixProjection.m));
+    programState->setTexture(_textureLocation, 0, _textureAtlas->getTexture()->getBackendTexture());
 
-    _batchCommand.init(_globalZOrder, getGLProgram(), _blendFunc, _textureAtlas, transform, flags);
-    renderer->addCommand(&_batchCommand);
+    _quadCommand.init(_globalZOrder, _textureAtlas->getTexture(), _blendFunc, _textureAtlas->getQuads(), _textureAtlas->getTotalQuads(), transform, flags);
+    renderer->addCommand(&_quadCommand);
 }
 
 void SpriteBatchNode::increaseAtlasCapacity()

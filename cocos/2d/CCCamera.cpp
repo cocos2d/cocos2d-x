@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2014-2016 Chukong Technologies Inc.
- Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ Copyright (c) 2017-2019 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -33,13 +33,11 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCGLProgramCache.h"
-#include "renderer/CCFrameBuffer.h"
-#include "renderer/CCRenderState.h"
 
 NS_CC_BEGIN
 
 Camera* Camera::_visitingCamera = nullptr;
-experimental::Viewport Camera::_defaultViewport;
+Viewport Camera::_defaultViewport;
 
 // start static methods
 
@@ -90,11 +88,11 @@ Camera* Camera::getDefaultCamera()
     return nullptr;
 }
 
-const experimental::Viewport& Camera::getDefaultViewport()
+const Viewport& Camera::getDefaultViewport()
 {
     return _defaultViewport;
 }
-void Camera::setDefaultViewport(const experimental::Viewport& vp)
+void Camera::setDefaultViewport(const Viewport& vp)
 {
     _defaultViewport = vp;
 }
@@ -108,12 +106,12 @@ const Camera* Camera::getVisitingCamera()
 
 Camera::Camera()
 {
-    _frustum.setClipZ(true);
+    // minggo comment
+    // _frustum.setClipZ(true);
 }
 
 Camera::~Camera()
 {
-    CC_SAFE_RELEASE_NULL(_fbo);
     CC_SAFE_RELEASE(_clearBrush);
 }
 
@@ -334,15 +332,16 @@ void Camera::unprojectGL(const Size& viewport, const Vec3* src, Vec3* dst) const
     dst->set(screen.x, screen.y, screen.z);
 }
 
-bool Camera::isVisibleInFrustum(const AABB* aabb) const
-{
-    if (_frustumDirty)
-    {
-        _frustum.initFrustum(this);
-        _frustumDirty = false;
-    }
-    return !_frustum.isOutOfFrustum(*aabb);
-}
+// minggo comment
+// bool Camera::isVisibleInFrustum(const AABB* aabb) const
+// {
+//     if (_frustumDirty)
+//     {
+//         _frustum.initFrustum(this);
+//         _frustumDirty = false;
+//     }
+//     return !_frustum.isOutOfFrustum(*aabb);
+// }
 
 float Camera::getDepthInView(const Mat4& transform) const
 {
@@ -422,94 +421,21 @@ void Camera::clearBackground()
     }
 }
 
-void Camera::setFrameBufferObject(experimental::FrameBuffer *fbo)
-{
-    CC_SAFE_RETAIN(fbo);
-    CC_SAFE_RELEASE_NULL(_fbo);
-    _fbo = fbo;
-    if(_scene)
-    {
-        _scene->setCameraOrderDirty();
-    }
-}
-
 void Camera::apply()
 {
     _viewProjectionUpdated = _transformUpdated;
-    applyFrameBufferObject();
     applyViewport();
-}
-
-void Camera::applyFrameBufferObject()
-{
-    if(nullptr == _fbo)
-    {
-        // inherit from context if it doesn't have a FBO
-        // don't call apply the default one
-//        experimental::FrameBuffer::applyDefaultFBO();
-    }
-    else
-    {
-        _fbo->applyFBO();
-    }
 }
 
 void Camera::applyViewport()
 {
-    glGetIntegerv(GL_VIEWPORT, _oldViewport);
-
-    if(nullptr == _fbo)
-    {
-        glViewport(getDefaultViewport()._left, getDefaultViewport()._bottom, getDefaultViewport()._width, getDefaultViewport()._height);
-    }
-    else
-    {
-        glViewport(_viewport._left * _fbo->getWidth(), _viewport._bottom * _fbo->getHeight(),
-                   _viewport._width * _fbo->getWidth(), _viewport._height * _fbo->getHeight());
-    }
-}
-
-void Camera::setViewport(const experimental::Viewport& vp)
-{
-    _viewport = vp;
-}
-
-void Camera::restore()
-{
-    restoreFrameBufferObject();
-    restoreViewport();
-}
-
-void Camera::restoreFrameBufferObject()
-{
-    if(nullptr == _fbo)
-    {
-        // it was inherited from context if it doesn't have a FBO
-        // don't call restore the default one... just keep using the previous one
-//        experimental::FrameBuffer::applyDefaultFBO();
-    }
-    else
-    {
-        _fbo->restoreFBO();
-    }
-}
-
-void Camera::restoreViewport()
-{
-    glViewport(_oldViewport[0], _oldViewport[1], _oldViewport[2], _oldViewport[3]);
+    Director::getInstance()->getRenderer()->setViewPort(_defaultViewport.x, _defaultViewport.y, _defaultViewport.w, _defaultViewport.h);
 }
 
 int Camera::getRenderOrder() const
 {
     int result(0);
-    if(_fbo)
-    {
-        result = _fbo->getFID()<<8;
-    }
-    else
-    {
-        result = 127 <<8;
-    }
+    result = 127 <<8;
     result += _depth;
     return result;
 }

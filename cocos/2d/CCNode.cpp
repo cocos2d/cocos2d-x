@@ -1196,6 +1196,10 @@ void Node::draw(Renderer* /*renderer*/, const Mat4 & /*transform*/, uint32_t /*f
 {
 }
 
+void Node::draw(RendererBackend* /*renderer*/, const Mat4 & /*transform*/, uint32_t /*flags*/)
+{
+}
+
 void Node::visit()
 {
     auto renderer = _director->getRenderer();
@@ -1289,6 +1293,59 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
         this->draw(renderer, _modelViewTransform, flags);
     }
 
+    _director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    
+    // FIX ME: Why need to set _orderOfArrival to 0??
+    // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
+    // reset for next frame
+    // _orderOfArrival = 0;
+}
+
+void Node::visit(RendererBackend* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+{
+    // quick return if not visible. children won't be drawn.
+    if (!_visible)
+    {
+        return;
+    }
+    
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
+    
+    // IMPORTANT:
+    // To ease the migration to v3.0, we still support the Mat4 stack,
+    // but it is deprecated and your code should not rely on it
+    _director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    _director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+    
+    bool visibleByCamera = isVisitableByVisitingCamera();
+    
+    int i = 0;
+    
+    if(!_children.empty())
+    {
+        sortAllChildren();
+        // draw children zOrder < 0
+        for(auto size = _children.size(); i < size; ++i)
+        {
+            auto node = _children.at(i);
+            
+            if (node && node->_localZOrder < 0)
+                node->visit(renderer, _modelViewTransform, flags);
+            else
+                break;
+        }
+        // self draw
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, flags);
+        
+        for(auto it=_children.cbegin()+i, itCend = _children.cend(); it != itCend; ++it)
+            (*it)->visit(renderer, _modelViewTransform, flags);
+    }
+    else if (visibleByCamera)
+    {
+        this->draw(renderer, _modelViewTransform, flags);
+    }
+    
     _director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
     // FIX ME: Why need to set _orderOfArrival to 0??
@@ -1640,16 +1697,6 @@ void Node::pause()
     _eventDispatcher->pauseEventListenersForTarget(this);
 }
 
-void Node::resumeSchedulerAndActions()
-{
-    resume();
-}
-
-void Node::pauseSchedulerAndActions()
-{
-    pause();
-}
-
 // override me
 void Node::update(float fDelta)
 {
@@ -1738,22 +1785,32 @@ const Mat4& Node::getNodeToParentTransform() const
             float sy = sinf(radiansY);
             
             float m0 = _transform.m[0], m1 = _transform.m[1], m4 = _transform.m[4], m5 = _transform.m[5], m8 = _transform.m[8], m9 = _transform.m[9];
-            _transform.m[0] = cy * m0 - sx * m1, _transform.m[4] = cy * m4 - sx * m5, _transform.m[8] = cy * m8 - sx * m9;
-            _transform.m[1] = sy * m0 + cx * m1, _transform.m[5] = sy * m4 + cx * m5, _transform.m[9] = sy * m8 + cx * m9;
+            _transform.m[0] = cy * m0 - sx * m1;
+            _transform.m[4] = cy * m4 - sx * m5;
+            _transform.m[8] = cy * m8 - sx * m9;
+            _transform.m[1] = sy * m0 + cx * m1;
+            _transform.m[5] = sy * m4 + cx * m5;
+            _transform.m[9] = sy * m8 + cx * m9;
         }
         _transform = translation * _transform;
 
         if (_scaleX != 1.f)
         {
-            _transform.m[0] *= _scaleX, _transform.m[1] *= _scaleX, _transform.m[2] *= _scaleX;
+            _transform.m[0] *= _scaleX;
+            _transform.m[1] *= _scaleX;
+             _transform.m[2] *= _scaleX;
         }
         if (_scaleY != 1.f)
         {
-            _transform.m[4] *= _scaleY, _transform.m[5] *= _scaleY, _transform.m[6] *= _scaleY;
+            _transform.m[4] *= _scaleY;
+            _transform.m[5] *= _scaleY;
+            _transform.m[6] *= _scaleY;
         }
         if (_scaleZ != 1.f)
         {
-            _transform.m[8] *= _scaleZ, _transform.m[9] *= _scaleZ, _transform.m[10] *= _scaleZ;
+            _transform.m[8] *= _scaleZ;
+            _transform.m[9] *= _scaleZ;
+            _transform.m[10] *= _scaleZ;
         }
         
         // FIXME:: Try to inline skew
@@ -2215,13 +2272,6 @@ void Node::setCameraMask(unsigned short mask, bool applyChildren)
 int Node::getAttachedNodeCount()
 {
     return __attachedNodeCount;
-}
-
-// MARK: Deprecated
-
-__NodeRGBA::__NodeRGBA()
-{
-    CCLOG("NodeRGBA deprecated.");
 }
 
 NS_CC_END

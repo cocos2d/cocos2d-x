@@ -32,6 +32,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCPass.h"
 #include "renderer/CCTexture2D.h"
+#include "base/ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -55,18 +56,20 @@ QuadCommand::~QuadCommand()
 void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
                        const Mat4& mv, uint32_t flags)
 {
-    CCASSERT(glProgramState, "Invalid GLProgramState");
-    CCASSERT(glProgramState->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
-
-    if (quadCount * 6 > _indexSize)
-        reIndex((int)quadCount*6);
-
-    Triangles triangles;
-    triangles.verts = &quads->tl;
-    triangles.vertCount = (int)quadCount * 4;
-    triangles.indices = __indices;
-    triangles.indexCount = (int)quadCount * 6;
-    TrianglesCommand::init(globalOrder, textureID, glProgramState, blendType, triangles, mv, flags);
+    //TOOD coulsonwang
+    cocos2d::log("Error in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
+//    CCASSERT(glProgramState, "Invalid GLProgramState");
+//    CCASSERT(glProgramState->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
+//
+//    if (quadCount * 6 > _indexSize)
+//        reIndex((int)quadCount*6);
+//
+//    Triangles triangles;
+//    triangles.verts = &quads->tl;
+//    triangles.vertCount = (int)quadCount * 4;
+//    triangles.indices = __indices;
+//    triangles.indexCount = (int)quadCount * 6;
+//    TrianglesCommand::init(globalOrder, textureID, glProgramState, blendType, triangles, mv, flags);
 }
 
 void QuadCommand::reIndex(int indicesCount)
@@ -103,15 +106,26 @@ void QuadCommand::reIndex(int indicesCount)
     _indexSize = indicesCount;
 }
 
-void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount, const Mat4 &mv)
-{
-    init(globalOrder, textureID, shader, blendType, quads, quadCount, mv, 0);
-}
-
 void QuadCommand::init(float globalOrder, Texture2D* texture, GLProgramState* glProgramState, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
     const Mat4& mv, uint32_t flags)
 {
     init(globalOrder, texture->getName(), glProgramState, blendType, quads, quadCount, mv, flags);
+    _alphaTextureID = texture->getAlphaTextureName();
+}
+
+
+void QuadCommand::init(float globalOrder, Texture2D *texture, const BlendFunc& blendType, V3F_C4B_T2F_Quad *quads, ssize_t quadCount, const Mat4 &mv, uint32_t flags)
+{
+    if (quadCount * 6 > _indexSize)
+        reIndex((int)quadCount*6);
+    
+    Triangles triangles;
+    triangles.verts = &quads->tl;
+    triangles.vertCount = (int)quadCount * 4;
+    triangles.indices = __indices;
+    triangles.indexCount = (int)quadCount * 6;
+    TrianglesCommand::init(globalOrder, texture, blendType, triangles, mv, flags);
+
     _alphaTextureID = texture->getAlphaTextureName();
 }
 

@@ -9,9 +9,7 @@ if(NOT DEFINED BUILD_ENGINE_DONE)
     set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
     include(CocosBuildSet)
-    if(NOT USE_COCOS_PREBUILT)
-        add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-    endif()
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 endif()
 
 # record sources, headers, resources...
@@ -89,14 +87,14 @@ list(APPEND GAME_HEADER
      Classes/precheader.h
      Classes/CurlTest/CurlTest.h
      Classes/UnitTest/UnitTest.h
-     Classes/UnitTest/RefPtrTest.h
+#    Classes/UnitTest/RefPtrTest.h
      Classes/ConfigurationTest/ConfigurationTest.h
      Classes/CurrentLanguageTest/CurrentLanguageTest.h
      Classes/AppDelegate.h
-     Classes/LabelTest/LabelTestNew.h
-     Classes/LabelTest/LabelTest.h
-     Classes/Particle3DTest/Particle3DTest.h
-     Classes/AllocatorTest/AllocatorTest.h
+#     Classes/LabelTest/LabelTestNew.h
+#     Classes/LabelTest/LabelTest.h
+#     Classes/Particle3DTest/Particle3DTest.h
+#     Classes/AllocatorTest/AllocatorTest.h
      Classes/VibrateTest/VibrateTest.h
      Classes/ClippingNodeTest/ClippingNodeTest.h
      Classes/UserDefaultTest/UserDefaultTest.h
@@ -132,10 +130,10 @@ list(APPEND GAME_HEADER
      Classes/NewEventDispatcherTest/NewEventDispatcherTest.h
      Classes/ActionsProgressTest/ActionsProgressTest.h
      Classes/RotateWorldTest/RotateWorldTest.h
-     Classes/Camera3DTest/Camera3DTest.h
+#     #Classes/Camera3DTest/Camera3DTest.h
      Classes/TextInputTest/TextInputTest.h
      Classes/Texture2dTest/Texture2dTest.h
-     Classes/TerrainTest/TerrainTest.h
+     #Classes/TerrainTest/TerrainTest.h
      Classes/controller.h
      Classes/TransitionsTest/TransitionsTest.h
      Classes/TextureCacheTest/TextureCacheTest.h
@@ -148,15 +146,15 @@ list(APPEND GAME_HEADER
      Classes/ExtensionsTest/NetworkTest/WebSocketDelayTest.h
      Classes/ExtensionsTest/NetworkTest/SocketIOTest.h
      Classes/ExtensionsTest/NetworkTest/HttpClientTest.h
-     Classes/Sprite3DTest/Sprite3DTest.h
-     Classes/Sprite3DTest/DrawNode3D.h
+#     Classes/Sprite3DTest/Sprite3DTest.h
+#     Classes/Sprite3DTest/DrawNode3D.h
      Classes/BaseTest.h
      Classes/SceneTest/SceneTest.h
      Classes/ReleasePoolTest/ReleasePoolTest.h
      Classes/CocosDenshionTest/CocosDenshionTest.h
      Classes/InputTest/MouseTest.h
-     Classes/SpineTest/SpineTest.h
-     Classes/Scene3DTest/Scene3DTest.h
+#     Classes/SpineTest/SpineTest.h
+#     Classes/Scene3DTest/Scene3DTest.h
      Classes/ParticleTest/ParticleTest.h
      Classes/EffectsTest/EffectsTest.h
      Classes/UITest/UITest.h
@@ -184,16 +182,16 @@ list(APPEND GAME_HEADER
      Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.h
      Classes/UITest/CocoStudioGUITest/UITextTest/UITextTest.h
      Classes/DrawPrimitivesTest/DrawPrimitivesTest.h
-     Classes/BillBoardTest/BillBoardTest.h
+     #Classes/BillBoardTest/BillBoardTest.h
      Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.h
      Classes/EffectsAdvancedTest/EffectsAdvancedTest.h
      Classes/SchedulerTest/SchedulerTest.h
      Classes/MultiTouchTest/MultiTouchTest.h
      Classes/testResource.h
-     Classes/ShaderTest/ShaderTest.vsh.h
-     Classes/ShaderTest/shaderTest.psh.h
-     Classes/ShaderTest/ShaderTest.h
-     Classes/ShaderTest/ShaderTest2.h
+     #Classes/ShaderTest/ShaderTest.vsh.h
+     #Classes/ShaderTest/shaderTest.psh.h
+     #Classes/ShaderTest/ShaderTest.h
+     #Classes/ShaderTest/ShaderTest2.h
      Classes/NewRendererTest/NewRendererTest.h
      Classes/SpritePolygonTest/SpritePolygonTest.h
      Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.h
@@ -216,10 +214,10 @@ list(APPEND GAME_SOURCE
      Classes/ActionsEaseTest/ActionsEaseTest.cpp
      Classes/ActionsProgressTest/ActionsProgressTest.cpp
      Classes/ActionsTest/ActionsTest.cpp
-     Classes/AllocatorTest/AllocatorTest.cpp
+#     Classes/AllocatorTest/AllocatorTest.cpp
      Classes/AppDelegate.cpp
      Classes/BaseTest.cpp
-     Classes/BillBoardTest/BillBoardTest.cpp
+    # Classes/BillBoardTest/BillBoardTest.cpp
      Classes/BugsTest/Bug-CCDrawNode.cpp
      Classes/BugsTest/Bug-1159.cpp
      Classes/BugsTest/Bug-1174.cpp
@@ -236,7 +234,7 @@ list(APPEND GAME_SOURCE
      Classes/BugsTest/Bug-15776.cpp
      Classes/BugsTest/Bug-Child.cpp
      Classes/BugsTest/BugsTest.cpp
-     Classes/Camera3DTest/Camera3DTest.cpp
+     #Classes/Camera3DTest/Camera3DTest.cpp
      Classes/ClickAndMoveTest/ClickAndMoveTest.cpp
      Classes/ClippingNodeTest/ClippingNodeTest.cpp
      Classes/CocosDenshionTest/CocosDenshionTest.cpp
@@ -261,11 +259,11 @@ list(APPEND GAME_SOURCE
      Classes/FontTest/FontTest.cpp
      Classes/InputTest/MouseTest.cpp
      Classes/IntervalTest/IntervalTest.cpp
-     Classes/LabelTest/LabelTest.cpp
-     Classes/LabelTest/LabelTestNew.cpp
+ #    Classes/LabelTest/LabelTest.cpp
+ #    Classes/LabelTest/LabelTestNew.cpp
      Classes/LayerTest/LayerTest.cpp
-     Classes/LightTest/LightTest.cpp
-     Classes/MaterialSystemTest/MaterialSystemTest.cpp
+#     Classes/LightTest/LightTest.cpp
+#     Classes/MaterialSystemTest/MaterialSystemTest.cpp
      Classes/MenuTest/MenuTest.cpp
      Classes/MotionStreakTest/MotionStreakTest.cpp
      Classes/MultiTouchTest/MultiTouchTest.cpp
@@ -275,22 +273,22 @@ list(APPEND GAME_SOURCE
      Classes/NodeTest/NodeTest.cpp
      Classes/OpenURLTest/OpenURLTest.cpp
      Classes/ParallaxTest/ParallaxTest.cpp
-     Classes/Particle3DTest/Particle3DTest.cpp
+#     Classes/Particle3DTest/Particle3DTest.cpp
      Classes/ParticleTest/ParticleTest.cpp
      Classes/ReleasePoolTest/ReleasePoolTest.cpp
      Classes/RenderTextureTest/RenderTextureTest.cpp
      Classes/RotateWorldTest/RotateWorldTest.cpp
      Classes/SceneTest/SceneTest.cpp
      Classes/SchedulerTest/SchedulerTest.cpp
-     Classes/ShaderTest/ShaderTest.cpp
-     Classes/ShaderTest/ShaderTest2.cpp
-     Classes/SpineTest/SpineTest.cpp
-     Classes/Scene3DTest/Scene3DTest.cpp
-     Classes/Sprite3DTest/DrawNode3D.cpp
-     Classes/Sprite3DTest/Sprite3DTest.cpp
+     #Classes/ShaderTest/ShaderTest.cpp
+     #Classes/ShaderTest/ShaderTest2.cpp
+     #Classes/SpineTest/SpineTest.cpp
+#     Classes/Scene3DTest/Scene3DTest.cpp
+#     Classes/Sprite3DTest/DrawNode3D.cpp
+#     Classes/Sprite3DTest/Sprite3DTest.cpp
      Classes/SpritePolygonTest/SpritePolygonTest.cpp
      Classes/SpriteTest/SpriteTest.cpp
-     Classes/TerrainTest/TerrainTest.cpp
+ #    Classes/TerrainTest/TerrainTest.cpp
      Classes/TextInputTest/TextInputTest.cpp
      Classes/Texture2dTest/Texture2dTest.cpp
      Classes/TextureCacheTest/TextureCacheTest.cpp
@@ -324,7 +322,7 @@ list(APPEND GAME_SOURCE
      Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp
      Classes/UITest/CocoStudioGUITest/UITabControlTest/UITabControlTest.cpp
      Classes/UITest/UITest.cpp
-     Classes/UnitTest/RefPtrTest.cpp
+#     Classes/UnitTest/RefPtrTest.cpp
      Classes/UnitTest/UnitTest.cpp
      Classes/UserDefaultTest/UserDefaultTest.cpp
      Classes/VisibleRect.cpp
@@ -332,8 +330,6 @@ list(APPEND GAME_SOURCE
      Classes/ZwoptexTest/ZwoptexTest.cpp
      Classes/SpriteFrameCacheTest/SpriteFrameCacheTest.cpp
      Classes/controller.cpp
-     # Classes/VRTest/VRTest.cpp
-     # Classes/VRTest/VRTest.h
      )
 
 if(ANDROID OR IOS)
@@ -347,7 +343,7 @@ if(ANDROID OR IOS)
          )
 endif()
 
-if(WIN32 OR MACOSX OR LINUX)
+if(WINDOWS OR MACOSX OR LINUX)
     list(APPEND GAME_HEADER
          Classes/WindowTest/WindowTest.h
          Classes/BugsTest/Bug-14327.h
@@ -358,97 +354,86 @@ if(WIN32 OR MACOSX OR LINUX)
          )
 endif()
 
-if(USE_BOX2D)
-    list(APPEND GAME_HEADER
-         Classes/Box2DTest/Box2dTest.cpp
-         Classes/Box2DTestBed/Test.h
-         Classes/Box2DTestBed/Tests/Chain.h
-         Classes/Box2DTestBed/Tests/Confined.h
-         Classes/Box2DTestBed/Tests/PolyCollision.h
-         Classes/Box2DTestBed/Tests/EdgeTest.h
-         Classes/Box2DTestBed/Tests/ApplyForce.h
-         Classes/Box2DTestBed/Tests/Gears.h
-         Classes/Box2DTestBed/Tests/SliderCrank.h
-         Classes/Box2DTestBed/Tests/ContinuousTest.h
-         Classes/Box2DTestBed/Tests/Revolute.h
-         Classes/Box2DTestBed/Tests/TheoJansen.h
-         Classes/Box2DTestBed/Tests/Bridge.h
-         Classes/Box2DTestBed/Tests/CollisionProcessing.h
-         Classes/Box2DTestBed/Tests/DistanceTest.h
-         Classes/Box2DTestBed/Tests/PolyShapes.h
-         Classes/Box2DTestBed/Tests/TimeOfImpact.h
-         Classes/Box2DTestBed/Tests/ConveyorBelt.h
-         Classes/Box2DTestBed/Tests/Tiles.h
-         Classes/Box2DTestBed/Tests/BulletTest.h
-         Classes/Box2DTestBed/Tests/MotorJoint.h
-         Classes/Box2DTestBed/Tests/Car.h
-         Classes/Box2DTestBed/Tests/Mobile.h
-         Classes/Box2DTestBed/Tests/VaryingFriction.h
-         Classes/Box2DTestBed/Tests/Rope.h
-         Classes/Box2DTestBed/Tests/SensorTest.h
-         Classes/Box2DTestBed/Tests/Pyramid.h
-         Classes/Box2DTestBed/Tests/VaryingRestitution.h
-         Classes/Box2DTestBed/Tests/RopeJoint.h
-         Classes/Box2DTestBed/Tests/VerticalStack.h
-         Classes/Box2DTestBed/Tests/MobileBalanced.h
-         Classes/Box2DTestBed/Tests/CompoundShapes.h
-         Classes/Box2DTestBed/Tests/CollisionFiltering.h
-         Classes/Box2DTestBed/Tests/Pulleys.h
-         Classes/Box2DTestBed/Tests/Breakable.h
-         Classes/Box2DTestBed/Tests/BodyTypes.h
-         Classes/Box2DTestBed/Tests/DumpShell.h
-         Classes/Box2DTestBed/Tests/ShapeEditing.h
-         Classes/Box2DTestBed/Tests/SphereStack.h
-         Classes/Box2DTestBed/Tests/OneSidedPlatform.h
-         Classes/Box2DTestBed/Tests/AddPair.h
-         Classes/Box2DTestBed/Tests/Pinball.h
-         Classes/Box2DTestBed/Tests/Tumbler.h
-         Classes/Box2DTestBed/Tests/RayCast.h
-         Classes/Box2DTestBed/Tests/ConvexHull.h
-         Classes/Box2DTestBed/Tests/EdgeShapes.h
-         Classes/Box2DTestBed/Tests/Prismatic.h
-         Classes/Box2DTestBed/Tests/Dominos.h
-         Classes/Box2DTestBed/Tests/Web.h
-         Classes/Box2DTestBed/Tests/CharacterCollision.h
-         Classes/Box2DTestBed/Tests/DynamicTreeTest.h
-         Classes/Box2DTestBed/Tests/Cantilever.h
-         Classes/Box2DTestBed/Box2dView.h
-         Classes/Box2DTestBed/GLES-Render.h
-         )
-    list(APPEND GAME_SOURCE
-         Classes/Box2DTest/Box2dTest.cpp
-         Classes/Box2DTestBed/Box2dView.cpp
-         Classes/Box2DTestBed/GLES-Render.cpp
-         Classes/Box2DTestBed/Test.cpp
-         Classes/Box2DTestBed/TestEntries.cpp
-         )
-    include_directories(${Box2D_INCLUDE_DIRS})
-endif()
+list(APPEND GAME_HEADER
+     Classes/Box2DTest/Box2dTest.cpp
+     Classes/Box2DTestBed/Test.h
+     Classes/Box2DTestBed/Tests/Chain.h
+     Classes/Box2DTestBed/Tests/Confined.h
+     Classes/Box2DTestBed/Tests/PolyCollision.h
+     Classes/Box2DTestBed/Tests/EdgeTest.h
+     Classes/Box2DTestBed/Tests/ApplyForce.h
+     Classes/Box2DTestBed/Tests/Gears.h
+     Classes/Box2DTestBed/Tests/SliderCrank.h
+     Classes/Box2DTestBed/Tests/ContinuousTest.h
+     Classes/Box2DTestBed/Tests/Revolute.h
+     Classes/Box2DTestBed/Tests/TheoJansen.h
+     Classes/Box2DTestBed/Tests/Bridge.h
+     Classes/Box2DTestBed/Tests/CollisionProcessing.h
+     Classes/Box2DTestBed/Tests/DistanceTest.h
+     Classes/Box2DTestBed/Tests/PolyShapes.h
+     Classes/Box2DTestBed/Tests/TimeOfImpact.h
+     Classes/Box2DTestBed/Tests/ConveyorBelt.h
+     Classes/Box2DTestBed/Tests/Tiles.h
+     Classes/Box2DTestBed/Tests/BulletTest.h
+     Classes/Box2DTestBed/Tests/MotorJoint.h
+     Classes/Box2DTestBed/Tests/Car.h
+     Classes/Box2DTestBed/Tests/Mobile.h
+     Classes/Box2DTestBed/Tests/VaryingFriction.h
+     Classes/Box2DTestBed/Tests/Rope.h
+     Classes/Box2DTestBed/Tests/SensorTest.h
+     Classes/Box2DTestBed/Tests/Pyramid.h
+     Classes/Box2DTestBed/Tests/VaryingRestitution.h
+     Classes/Box2DTestBed/Tests/RopeJoint.h
+     Classes/Box2DTestBed/Tests/VerticalStack.h
+     Classes/Box2DTestBed/Tests/MobileBalanced.h
+     Classes/Box2DTestBed/Tests/CompoundShapes.h
+     Classes/Box2DTestBed/Tests/CollisionFiltering.h
+     Classes/Box2DTestBed/Tests/Pulleys.h
+     Classes/Box2DTestBed/Tests/Breakable.h
+     Classes/Box2DTestBed/Tests/BodyTypes.h
+     Classes/Box2DTestBed/Tests/DumpShell.h
+     Classes/Box2DTestBed/Tests/ShapeEditing.h
+     Classes/Box2DTestBed/Tests/SphereStack.h
+     Classes/Box2DTestBed/Tests/OneSidedPlatform.h
+     Classes/Box2DTestBed/Tests/AddPair.h
+     Classes/Box2DTestBed/Tests/Pinball.h
+     Classes/Box2DTestBed/Tests/Tumbler.h
+     Classes/Box2DTestBed/Tests/RayCast.h
+     Classes/Box2DTestBed/Tests/ConvexHull.h
+     Classes/Box2DTestBed/Tests/EdgeShapes.h
+     Classes/Box2DTestBed/Tests/Prismatic.h
+     Classes/Box2DTestBed/Tests/Dominos.h
+     Classes/Box2DTestBed/Tests/Web.h
+     Classes/Box2DTestBed/Tests/CharacterCollision.h
+     Classes/Box2DTestBed/Tests/DynamicTreeTest.h
+     Classes/Box2DTestBed/Tests/Cantilever.h
+     Classes/Box2DTestBed/Box2dView.h
+     Classes/Box2DTestBed/GLES-Render.h
+     )
+list(APPEND GAME_SOURCE
+     Classes/Box2DTest/Box2dTest.cpp
+     Classes/Box2DTestBed/Box2dView.cpp
+     Classes/Box2DTestBed/GLES-Render.cpp
+     Classes/Box2DTestBed/Test.cpp
+     Classes/Box2DTestBed/TestEntries.cpp
+     )
 
-if(USE_BULLET)
-    list(APPEND GAME_HEADER
-         Classes/Physics3DTest/Physics3DTest.h
-         Classes/NavMeshTest/NavMeshTest.h
-         )
-    list(APPEND GAME_SOURCE
-         Classes/Physics3DTest/Physics3DTest.cpp
-         Classes/NavMeshTest/NavMeshTest.cpp
-         )
-    include_directories(${BULLET_INCLUDE_DIRS})
-endif()
-
-
-if(USE_CHIPMUNK)
-    include_directories(${CHIPMUNK_INCLUDE_DIRS})
-    list(APPEND GAME_HEADER
-         Classes/PhysicsTest/PhysicsTest.h
-         Classes/ChipmunkTest/ChipmunkTest.h
-         )
-    list(APPEND GAME_SOURCE
-         Classes/PhysicsTest/PhysicsTest.cpp
-         Classes/ChipmunkTest/ChipmunkTest.cpp
-         )
-endif()
+list(APPEND GAME_HEADER
+     Classes/Physics3DTest/Physics3DTest.h
+     Classes/NavMeshTest/NavMeshTest.h
+     )
+list(APPEND GAME_SOURCE
+     Classes/Physics3DTest/Physics3DTest.cpp
+     Classes/NavMeshTest/NavMeshTest.cpp
+     )
+list(APPEND GAME_HEADER
+     Classes/PhysicsTest/PhysicsTest.h
+     Classes/ChipmunkTest/ChipmunkTest.h
+     )
+list(APPEND GAME_SOURCE
+     Classes/PhysicsTest/PhysicsTest.cpp
+     Classes/ChipmunkTest/ChipmunkTest.cpp
+     )
 
 if(NOT LINUX)
     list(APPEND GAME_SOURCE
@@ -486,11 +471,22 @@ if(APPLE)
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon-${APP_NAME}")
+        set_xcode_property(${APP_NAME} IPHONEOS_DEPLOYMENT_TARGET "8.0")
+        message(STATUS "set ios delopyment target 8.0")
     endif()
 elseif(WINDOWS)
-    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR})
+    # "too large PDB" error often occurs in cpp-tests when using default "/Zi"
+    target_compile_options(${APP_NAME} PRIVATE /Z7)
+    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR}/..)
 endif()
 
 if(LINUX OR WINDOWS)
     cocos_copy_res(COPY_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
+endif()
+
+if(WIN32)
+    # precompiled header. Compilation time speedup ~4x.
+    target_sources(${APP_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Classes/precheader.cpp")
+    set_target_properties(${APP_NAME} PROPERTIES COMPILE_FLAGS "/Yuprecheader.h /FIprecheader.h")
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/Classes/precheader.cpp" PROPERTIES COMPILE_FLAGS "/Ycprecheader.h")
 endif()

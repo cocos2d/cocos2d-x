@@ -1,7 +1,3 @@
-if(WINDOWS AND BUILD_SHARED_LIBS)
-    add_definitions(-D_USREXDLL)
-endif()
-
 set(COCOS_EXTENSIONS_HEADER
     ../extensions/ExtensionMacros.h
     ../extensions/assets-manager/AssetsManagerEx.h
@@ -178,7 +174,7 @@ set(COCOS_EXTENSIONS_HEADER
     ../extensions/GUI/CCScrollView/CCTableViewCell.h
     ../extensions/GUI/CCScrollView/CCScrollView.h
     ../extensions/GUI/CCScrollView/CCTableView.h
-    ../extensions/ExtensionDeprecated.h
+#    ../extensions/ExtensionDeprecated.h
     ../extensions/ExtensionExport.h
     )
 

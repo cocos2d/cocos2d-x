@@ -45,12 +45,6 @@ class LintContext:
   def __init__(self, root, fix):
     self.exclude = [
       # exclude some platform specific files.
-      'platform/win8.1-universal/Cocos2dRenderer.cpp',
-      'platform/win8.1-universal/OpenGLES.cpp',
-      'platform/win8.1-universal/OpenGLESPage.xaml.cpp',
-      'platform/win8.1-universal/OpenGLESPage.xaml.h',
-      'platform/win8.1-universal/pch.cpp',
-      'platform/winrt/pch.cpp',
       'editor-support/spine/Json.c',
       'editor-support/spine/PathConstraint.h',
       'editor-support/spine/SkeletonJson.c',

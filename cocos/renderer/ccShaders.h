@@ -24,9 +24,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+#pragma once
 
-#ifndef __CCSHADER_H__
-#define __CCSHADER_H__
 /// @cond DO_NOT_SHOW
 
 #include "platform/CCGL.h"
@@ -100,10 +99,33 @@ extern CC_DLL const GLchar* ccETC1ASPositionTextureGray_frag;
 extern CC_DLL const GLchar* ccPosition_vert;
 extern CC_DLL const GLchar* ccShader_LayerRadialGradient_frag;
 
+//backend shader file
+extern CC_DLL const char * positionColor_vert;
+extern CC_DLL const char * positionColor_frag;
+extern CC_DLL const char * positionTexture_vert;
+extern CC_DLL const char * positionTexture_frag;
+extern CC_DLL const char * positionTextureColor_vert;
+extern CC_DLL const char * positionTextureColor_frag;
+extern CC_DLL const char * positionTextureColorAlphaTest_frag;
+extern CC_DLL const char * label_normal_frag;
+extern CC_DLL const char * label_distanceNormal_frag;
+extern CC_DLL const char * labelOutline_frag;
+extern CC_DLL const char * labelDistanceFieldGlow_frag;
+extern CC_DLL const char * positionColorLengthTexture_vert;
+extern CC_DLL const char * positionColorLengthTexture_frag;
+extern CC_DLL const char * positionColorTextureAsPointsize_vert;
+extern CC_DLL const char * position_vert;
+extern CC_DLL const char * layer_radialGradient_frag;
+extern CC_DLL const char * grayScale_frag;
+extern CC_DLL const char * positionTextureUColor_vert;
+extern CC_DLL const char * positionTextureUColor_frag;
+extern CC_DLL const char * positionUColor_vert;
+extern CC_DLL const char * positionUColor_frag;
+extern CC_DLL const char * etc1_frag;
+extern CC_DLL const char * etc1Gray_frag;
 NS_CC_END
 /**
  end of support group
  @}
  */
 /// @endcond
-#endif /* __CCSHADER_H__ */

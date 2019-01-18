@@ -172,15 +172,6 @@ void UniformValue::setCallback(const std::function<void(GLProgram*, Uniform*)> &
     _type = Type::CALLBACK_FN;
 }
 
-void UniformValue::setTexture(GLuint textureId, GLuint textureUnit)
-{
-    //CCASSERT(_uniform->type == GL_SAMPLER_2D, "Wrong type. expecting GL_SAMPLER_2D");
-    _value.tex.textureId = textureId;
-    _value.tex.textureUnit = textureUnit;
-    _value.tex.texture = nullptr;
-    _type = Type::VALUE;
-}
-
 void UniformValue::setTexture(Texture2D* texture, GLuint textureUnit)
 {
     CCASSERT(texture != nullptr, "texture is nullptr");
@@ -912,48 +903,6 @@ void GLProgramState::setUniformTexture(GLint uniformLocation, Texture2D *texture
         else
         {
             v->setTexture(texture, _textureUnitIndex);
-            _boundTextureUnits[v->_uniform->name] = _textureUnitIndex++;
-        }
-    }
-    else
-    {
-        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
-    }
-}
-
-void GLProgramState::setUniformTexture(const std::string& uniformName, GLuint textureId)
-{
-    auto v = getUniformValue(uniformName);
-    if (v)
-    {
-        if (_boundTextureUnits.find(uniformName) != _boundTextureUnits.end())
-        {
-            v->setTexture(textureId, _boundTextureUnits[uniformName]);
-        }
-        else
-        {
-            v->setTexture(textureId, _textureUnitIndex);
-            _boundTextureUnits[uniformName] = _textureUnitIndex++;
-        }
-    }
-    else
-    {
-        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
-    }
-}
-
-void GLProgramState::setUniformTexture(GLint uniformLocation, GLuint textureId)
-{
-    auto v = getUniformValue(uniformLocation);
-    if (v)
-    {
-        if (_boundTextureUnits.find(v->_uniform->name) != _boundTextureUnits.end())
-        {
-            v->setTexture(textureId, _boundTextureUnits[v->_uniform->name]);
-        }
-        else
-        {
-            v->setTexture(textureId, _textureUnitIndex);
             _boundTextureUnits[v->_uniform->name] = _textureUnitIndex++;
         }
     }

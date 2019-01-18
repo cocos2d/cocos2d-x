@@ -24,11 +24,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef __MISC_NODE_CCPROGRESS_TIMER_H__
-#define __MISC_NODE_CCPROGRESS_TIMER_H__
+#pragma once
 
 #include "renderer/CCCustomCommand.h"
 #include "2d/CCNode.h"
+#include "renderer/CCPipelineDescriptor.h"
+
+#include <vector>
 
 NS_CC_BEGIN
 
@@ -112,14 +114,6 @@ public:
      */
     void setReverseDirection(bool value);
 
-    /** Set the Reverse direction.
-     * @js setReverseDirection
-     * @lua setReverseDirection
-     * @param reverse If reverse is false it will clockwise,if is true it will Anti-clockwise.
-     */
-    CC_DEPRECATED_ATTRIBUTE void setReverseProgress(bool reverse) { setReverseDirection(reverse); }
-
-
     /**
      *    Midpoint is used to modify the progress start position.
      *    If you're using radials type then the midpoint changes the center point.
@@ -166,7 +160,7 @@ CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */
-    ProgressTimer();
+    ProgressTimer() = default;
     /**
      * @js NA
      * @lua NA
@@ -177,27 +171,28 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithSprite(Sprite* sp);
     
 protected:
-    void onDraw(const Mat4 &transform, uint32_t flags);
-    
     Tex2F textureCoordFromAlphaPoint(Vec2 alpha);
     Vec2 vertexFromAlphaPoint(Vec2 alpha);
-    void updateProgress(void);
-    void updateBar(void);
-    void updateRadial(void);
-    virtual void updateColor(void) override;
+    void updateProgress();
+    void updateBar();
+    void updateRadial();
+    virtual void updateColor() override;
     Vec2 boundaryTexCoord(char index);
 
-    Type _type;
+    Type _type = Type::RADIAL;
     Vec2 _midpoint;
     Vec2 _barChangeRate;
-    float _percentage;
-    Sprite *_sprite;
-    int _vertexDataCount;
-    V2F_C4B_T2F *_vertexData;
+    float _percentage = 0.0f;
+    Sprite *_sprite = nullptr;
+    std::vector<V2F_C4B_T2F> _vertexData;
+    std::vector<unsigned short> _indexData;
+    bool _reverseDirection = false;
     
     CustomCommand _customCommand;
-
-    bool _reverseDirection;
+    CustomCommand _customCommand2;
+    
+    backend::ProgramState* _programState = nullptr;
+    backend::ProgramState* _programState2 = nullptr;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ProgressTimer);
@@ -207,5 +202,3 @@ private:
 /// @}
 
 NS_CC_END
-
-#endif //__MISC_NODE_CCPROGRESS_TIMER_H__

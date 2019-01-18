@@ -40,7 +40,7 @@
 #include "platform/CCFileUtils.h"
 
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #define strcasecmp _stricmp
 #endif
 
@@ -233,7 +233,8 @@ bool Material::parseSampler(GLProgramState* glProgramState, Properties* samplerP
         bool usemipmap = false;
         const char* mipmap = getOptionalString(samplerProperties, "mipmap", "false");
         if (mipmap && strcasecmp(mipmap, "true")==0) {
-            texture->generateMipmap();
+//            TODO coulsonwang
+//            texture->generateMipmap();
             usemipmap = true;
         }
 
@@ -283,7 +284,8 @@ bool Material::parseSampler(GLProgramState* glProgramState, Properties* samplerP
         else
             CCLOG("Invalid magFilter: %s", magFilter);
 
-        texture->setTexParameters(texParams);
+//        TODO coulsonwang
+//        texture->setSamplerDescriptor(texParams);
     }
 
     glProgramState->setUniformTexture(samplerProperties->getId(), texture);

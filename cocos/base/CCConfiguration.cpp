@@ -111,6 +111,18 @@ std::string Configuration::getInfo() const
     return forDump.getDescription();
 }
 
+#ifdef CC_USE_METAL
+void Configuration::gatherGPUInfo()
+{
+    //support PVRTC/EAC/ETC2/ASTC/BC/YUV
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    _supportsPVRTC = true;
+#else
+    _supportsPVRTC = false;
+#endif
+    _supportsETC1 = false; //support etc2;
+}
+#else
 void Configuration::gatherGPUInfo()
 {
 	_valueDict["gl.vendor"] = Value((const char*)glGetString(GL_VENDOR));
@@ -172,6 +184,8 @@ void Configuration::gatherGPUInfo()
     CHECK_GL_ERROR_DEBUG();
 }
 
+#endif
+
 Configuration* Configuration::getInstance()
 {
     if (! s_sharedConfiguration)
@@ -186,18 +200,6 @@ Configuration* Configuration::getInstance()
 void Configuration::destroyInstance()
 {
     CC_SAFE_RELEASE_NULL(s_sharedConfiguration);
-}
-
-// FIXME: deprecated
-Configuration* Configuration::sharedConfiguration()
-{
-    return Configuration::getInstance();
-}
-
-// FIXME: deprecated
-void Configuration::purgeConfiguration()
-{
-    Configuration::destroyInstance();
 }
 
 
@@ -304,8 +306,6 @@ bool Configuration::supportsOESPackedDepthStencil() const
 {
     return _supportsOESPackedDepthStencil;
 }
-
-
 
 int Configuration::getMaxSupportDirLightInShader() const
 {

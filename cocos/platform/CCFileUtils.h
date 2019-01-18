@@ -147,12 +147,6 @@ public:
      */
     static void setDelegate(FileUtils *delegate);
 
-    /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static FileUtils* sharedFileUtils() { return getInstance(); }
-
-    /** @deprecated Use destroyInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static void purgeFileUtils() { destroyInstance(); }
-
     /**
      *  The destructor of FileUtils.
      * @js NA
@@ -203,7 +197,8 @@ public:
         ReadFailed = 3, // Read failed
         NotInitialized = 4, // FileUtils is not initializes
         TooLarge = 5, // The file is too large (great than 2^32-1)
-        ObtainSizeFailed = 6 // Failed to obtain the file size.
+        ObtainSizeFailed = 6, // Failed to obtain the file size.
+        NotRegularFileType = 7 // File type is not S_IFREG
     };
 
     /**
@@ -274,17 +269,6 @@ public:
     virtual Status getContents(const std::string& filename, ResizableBuffer* buffer) const;
 
     /**
-     *  Gets resource file data
-     *
-     *  @param[in]  filename The resource file name which contains the path.
-     *  @param[in]  mode The read mode of the file.
-     *  @param[out] size If the file read operation succeeds, it will be the data size, otherwise 0.
-     *  @return Upon success, a pointer to the data is returned, otherwise NULL.
-     *  @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
-     */
-    CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t *size) const;
-
-    /**
      *  Gets resource file data from a zip file.
      *
      *  @param[in]  filename The resource file name which contains the relative path of the zip file.
@@ -341,6 +325,7 @@ public:
      @since v2.1
      */
     virtual std::string fullPathForFilename(const std::string &filename) const;
+
 
     /**
      * Loads the filenameLookup dictionary from the contents of a filename.
@@ -904,8 +889,14 @@ protected:
      *  @param filename  The name of the file.
      *  @return The full path of the file, if the file can't be found, it will return an empty string.
      */
-    virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) const;
+    virtual std::string getFullPathForFilenameWithinDirectory(const std::string& directory, const std::string& filename) const;
 
+
+    /**
+     * Returns the fullpath for a given dirname.
+     * @since 3.17.1
+     */
+    virtual std::string fullPathForDirectory(const std::string &dirname) const;
 
     /**
     * mutex used to protect fields. 
@@ -949,10 +940,16 @@ protected:
     std::string _defaultResRootPath;
 
     /**
-     *  The full path cache. When a file is found, it will be added into this cache.
+     *  The full path cache for normal files. When a file is found, it will be added into this cache.
      *  This variable is used for improving the performance of file search.
      */
     mutable std::unordered_map<std::string, std::string> _fullPathCache;
+
+    /**
+     *  The full path cache for directories. When a diretory is found, it will be added into this cache.
+     *  This variable is used for improving the performance of file search.
+     */
+    mutable std::unordered_map<std::string, std::string> _fullPathCacheDir;
 
     /**
      * Writable path.

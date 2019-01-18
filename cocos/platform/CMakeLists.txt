@@ -63,38 +63,37 @@ elseif(APPLE)
     set(COCOS_PLATFORM_SPECIFIC_SRC
         platform/apple/CCLock-apple.cpp
         platform/apple/CCFileUtils-apple.mm
-        platform/apple/CCThread-apple.mm
         platform/apple/CCDevice-apple.mm
         )
     if(MACOSX)
         set(COCOS_PLATFORM_SPECIFIC_HEADER
             ${COCOS_PLATFORM_SPECIFIC_HEADER}
             platform/mac/CCStdC-mac.h
+            platform/mac/CCGLViewImpl-mac.h
             platform/mac/CCPlatformDefine-mac.h
             platform/mac/CCApplication-mac.h
             platform/mac/CCGL-mac.h
-            platform/desktop/CCGLViewImpl-desktop.h
+           # platform/desktop/CCGLViewImpl-desktop.h
             )
         set(COCOS_PLATFORM_SPECIFIC_SRC
             ${COCOS_PLATFORM_SPECIFIC_SRC}
             platform/mac/CCApplication-mac.mm
+            platform/mac/CCGLViewImpl-mac.mm
             platform/mac/CCCommon-mac.mm
             platform/mac/CCDevice-mac.mm
-            platform/desktop/CCGLViewImpl-desktop.cpp
+           # platform/desktop/CCGLViewImpl-desktop.cpp
             )
     elseif(IOS)
         set(COCOS_PLATFORM_SPECIFIC_HEADER
             ${COCOS_PLATFORM_SPECIFIC_HEADER}
-            platform/ios/CCGL-ios.h
             platform/ios/CCApplication-ios.h
             platform/ios/CCDirectorCaller-ios.h
-            platform/ios/CCESRenderer-ios.h
-            platform/ios/OpenGL_Internal-ios.h
+            platform/ios/CCEAGLView-ios.h
+            platform/ios/CCGL-ios.h
+            platform/ios/CCGLViewImpl-ios.h
             platform/ios/CCPlatformDefine-ios.h
             platform/ios/CCStdC-ios.h
-            platform/ios/CCEAGLView-ios.h
-            platform/ios/CCGLViewImpl-ios.h
-            platform/ios/CCES2Renderer-ios.h
+            platform/ios/OpenGL_Internal-ios.h
             )
         set(COCOS_PLATFORM_SPECIFIC_SRC
             ${COCOS_PLATFORM_SPECIFIC_SRC}
@@ -103,7 +102,6 @@ elseif(APPLE)
             platform/ios/CCDevice-ios.mm
             platform/ios/CCDirectorCaller-ios.mm
             platform/ios/CCEAGLView-ios.mm
-            platform/ios/CCES2Renderer-ios.m
             platform/ios/CCGLViewImpl-ios.mm
             platform/ios/CCImage-ios.mm
             )
@@ -152,13 +150,11 @@ set(COCOS_PLATFORM_HEADER
     platform/CCPlatformMacros.h
     platform/CCSAXParser.h
     platform/CCStdC.h
-    platform/CCThread.h
     )
 
 set(COCOS_PLATFORM_SRC
     ${COCOS_PLATFORM_SPECIFIC_SRC}
     platform/CCSAXParser.cpp
-    platform/CCThread.cpp
     platform/CCGLView.cpp
     platform/CCFileUtils.cpp
     platform/CCImage.cpp

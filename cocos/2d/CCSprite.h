@@ -306,9 +306,6 @@ public:
     virtual void setSpriteFrame(SpriteFrame* newFrame);
     /** @} */
 
-    /** @deprecated Use `setSpriteFrame()` instead. */
-    CC_DEPRECATED_ATTRIBUTE virtual void setDisplayFrame(SpriteFrame *newFrame) { setSpriteFrame(newFrame); }
-
     /**
      * Returns whether or not a SpriteFrame is being displayed.
      */
@@ -318,12 +315,6 @@ public:
      * Returns the current displayed frame.
      */
     virtual SpriteFrame* getSpriteFrame() const;
-    /** @deprecated Use `getSpriteFrame()` instead.
-     * @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* getDisplayFrame() const { return getSpriteFrame(); }
-    /** @deprecated Use `getSpriteFrame()` instead. */
-    CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* displayFrame() const { return getSpriteFrame(); };
 
     /// @} End of frames methods
 
@@ -416,16 +407,6 @@ public:
      */
     void setFlippedX(bool flippedX);
 
-    /** @deprecated Use isFlippedX() instead.
-    * @js NA
-    * @lua NA
-    */
-    CC_DEPRECATED_ATTRIBUTE bool isFlipX() { return isFlippedX(); };
-    /** @deprecated Use setFlippedX() instead
-     * @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE void setFlipX(bool flippedX) { setFlippedX(flippedX); };
-
     /**
      * Return the flag which indicates whether the sprite is flipped vertically or not.
      *
@@ -446,15 +427,6 @@ public:
 
     /// @} End of Sprite properties getter/setters
 
-    /** @deprecated Use isFlippedY() instead.
-     * @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE bool isFlipY() { return isFlippedY(); };
-    /** @deprecated Use setFlippedY() instead.
-     * @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flippedY) { setFlippedY(flippedY); };
-
     /**
      * returns a reference of the polygon information associated with this sprite
      *
@@ -472,14 +444,8 @@ public:
     /** whether or not contentSize stretches the sprite's texture */
     void setStretchEnabled(bool enabled);
 
-    /** @deprecated Use setStretchEnabled() instead. */
-    CC_DEPRECATED_ATTRIBUTE void setStrechEnabled(bool enabled);
-
     /** returns whether or not contentSize stretches the sprite's texture */
     bool isStretchEnabled() const;
-
-    /** @deprecated Use isStretchEnabled() instead. */
-    CC_DEPRECATED_ATTRIBUTE bool isStrechEnabled() const;
 
     //
     // Overrides
@@ -544,6 +510,9 @@ public:
 
     int getResourceType() const { return _fileType; }
     const std::string& getResourceName() const { return _fileName; }
+    
+    virtual void setVertexLayout();
+    virtual void updateShaders(const char* vert, const char* frag);
 
 CC_CONSTRUCTOR_ACCESS :
 	/**
@@ -664,6 +633,8 @@ protected:
 
     virtual void flipX();
     virtual void flipY();
+    
+    virtual void updateProgramState();
 
     //
     // Data used when the sprite is rendered using a SpriteSheet
@@ -684,6 +655,13 @@ protected:
     Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
     SpriteFrame*     _spriteFrame;
     TrianglesCommand _trianglesCommand;     ///
+    
+    backend::UniformLocation _mvpMatrixLocation;
+    backend::UniformLocation _textureLocation;
+    backend::UniformLocation _alphaTextureLocation;
+    
+    backend::ProgramState* _programState = nullptr;
+    
 #if CC_SPRITE_DEBUG_DRAW
     DrawNode *_debugDrawNode;
 #endif //CC_SPRITE_DEBUG_DRAW
@@ -724,7 +702,7 @@ protected:
     int _fileType;
 
     bool _stretchEnabled;
-
+    
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
 };

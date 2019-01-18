@@ -22,9 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#ifndef __MISCNODE_CCGRID_NODE_H__
-#define __MISCNODE_CCGRID_NODE_H__
+#pragma once
 
 #include "2d/CCNode.h"
 #include "renderer/CCGroupCommand.h"
@@ -98,18 +96,16 @@ protected:
     void onGridBeginDraw();
     void onGridEndDraw();
 
-    Node* _gridTarget;
-    GridBase* _nodeGrid;
+    Node* _gridTarget = nullptr;
+    GridBase* _nodeGrid = nullptr;
     GroupCommand _groupCommand;
     CustomCommand _gridBeginCommand;
     CustomCommand _gridEndCommand;
     
-    Rect _gridRect;
+    Rect _gridRect = Rect::ZERO;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(NodeGrid);
 };
 /** @} */
 NS_CC_END
-
-#endif

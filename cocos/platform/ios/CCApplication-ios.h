@@ -61,15 +61,11 @@ public:
     */
     static Application* getInstance();
     
-    /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static Application* sharedApplication();
-    
     /**
      @brief    Callback by Director for limit FPS.
      @param interval    The time, expressed in seconds, between current frame and next.
      */
     virtual void setAnimationInterval(float interval) override;
-    virtual void setAnimationInterval(float interval, SetIntervalReason reason) override;
 
     /**
     @brief Get current language config

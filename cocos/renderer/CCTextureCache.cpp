@@ -41,7 +41,8 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "base/ccUtils.h"
 #include "base/CCNinePatchImageParser.h"
-
+#include "renderer/backend/Device.h"
+//#include "renderer/backend/StringUtils.h"
 
 
 using namespace std;
@@ -62,11 +63,6 @@ std::string TextureCache::getETC1AlphaFileSuffix()
     return s_etc1AlphaFileSuffix;
 }
 
-TextureCache * TextureCache::getInstance()
-{
-    return Director::getInstance()->getTextureCache();
-}
-
 TextureCache::TextureCache()
 : _loadingThread(nullptr)
 , _needQuit(false)
@@ -82,19 +78,6 @@ TextureCache::~TextureCache()
         texture.second->release();
 
     CC_SAFE_DELETE(_loadingThread);
-}
-
-void TextureCache::destroyInstance()
-{
-}
-
-TextureCache * TextureCache::sharedTextureCache()
-{
-    return Director::getInstance()->getTextureCache();
-}
-
-void TextureCache::purgeSharedTextureCache()
-{
 }
 
 std::string TextureCache::getDescription() const
@@ -636,14 +619,6 @@ Texture2D* TextureCache::getTextureForKey(const std::string &textureKeyName) con
     return nullptr;
 }
 
-void TextureCache::reloadAllTextures()
-{
-    //will do nothing
-    // #if CC_ENABLE_CACHE_TEXTURE_DATA
-    //     VolatileTextureMgr::reloadAllTextures();
-    // #endif
-}
-
 std::string TextureCache::getTextureFilePath(cocos2d::Texture2D* texture) const
 {
     for (auto& item : _textures)
@@ -748,10 +723,6 @@ VolatileTexture::VolatileTexture(Texture2D *t)
 , _hasMipmaps(false)
 , _text("")
 {
-    _texParams.minFilter = GL_LINEAR;
-    _texParams.magFilter = GL_LINEAR;
-    _texParams.wrapS = GL_CLAMP_TO_EDGE;
-    _texParams.wrapT = GL_CLAMP_TO_EDGE;
 }
 
 VolatileTexture::~VolatileTexture()
@@ -842,18 +813,10 @@ void VolatileTextureMgr::setHasMipmaps(Texture2D *t, bool hasMipmaps)
     vt->_hasMipmaps = hasMipmaps;
 }
 
-void VolatileTextureMgr::setTexParameters(Texture2D *t, const Texture2D::TexParams &texParams)
+void VolatileTextureMgr::setSamplerDescriptor(Texture2D *t, const backend::SamplerDescriptor &desc)
 {
     VolatileTexture *vt = findVolotileTexture(t);
-
-    if (texParams.minFilter != GL_NONE)
-        vt->_texParams.minFilter = texParams.minFilter;
-    if (texParams.magFilter != GL_NONE)
-        vt->_texParams.magFilter = texParams.magFilter;
-    if (texParams.wrapS != GL_NONE)
-        vt->_texParams.wrapS = texParams.wrapS;
-    if (texParams.wrapT != GL_NONE)
-        vt->_texParams.wrapT = texParams.wrapT;
+    vt->_samplerDescriptor = desc;
 }
 
 void VolatileTextureMgr::removeTexture(Texture2D *t)
@@ -877,7 +840,8 @@ void VolatileTextureMgr::reloadAllTextures()
     // we need to release all of the glTextures to avoid collisions of texture id's when reloading the textures onto the GPU
     for (auto& item : _textures)
     {
-        item->_texture->releaseGLTexture();
+        //TODO new-renderer: interface releaseGLTexture removal
+    //    item->_texture->releaseGLTexture();
     }
 
     CCLOG("reload all texture");
@@ -923,7 +887,7 @@ void VolatileTextureMgr::reloadAllTextures()
         if (vt->_hasMipmaps) {
             vt->_texture->generateMipmap();
         }
-        vt->_texture->setTexParameters(vt->_texParams);
+        vt->_texture->setSamplerDescriptor(vt->_samplerDescriptor);
     }
 
     _isReloading = false;

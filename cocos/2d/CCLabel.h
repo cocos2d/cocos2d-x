@@ -87,6 +87,7 @@ class Sprite;
 class SpriteBatchNode;
 class DrawNode;
 class EventListenerCustom;
+class TextureAtlas;
 
 /**
  * @brief Label is a subclass of Node that knows how to render text labels.
@@ -608,13 +609,6 @@ public:
     virtual void removeChild(Node* child, bool cleanup = true) override;
     virtual void setGlobalZOrder(float globalZOrder) override;
 
-    CC_DEPRECATED_ATTRIBUTE static Label* create(const std::string& text, const std::string& font, float fontSize,
-        const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
-        TextVAlignment vAlignment = TextVAlignment::TOP);
-    CC_DEPRECATED_ATTRIBUTE virtual void setFontDefinition(const FontDefinition& textDefinition);
-    CC_DEPRECATED_ATTRIBUTE FontDefinition getFontDefinition() const { return _getFontDefinition(); }
-    CC_DEPRECATED_ATTRIBUTE int getCommonLineHeight() const { return (int)getLineHeight();}
-
 CC_CONSTRUCTOR_ACCESS:
     /**
      * Constructor of Label.
@@ -653,8 +647,6 @@ protected:
 
     void computeStringNumLines();
 
-    void onDraw(const Mat4& transform, bool transformUpdated);
-    void onDrawShadow(GLProgram* glProgram, const Color4F& shadowColor);
     void drawSelf(bool visibleByCamera, Renderer* renderer, uint32_t flags);
 
     bool multilineTextWrapByChar();
@@ -694,6 +686,11 @@ protected:
     FontDefinition _getFontDefinition() const;
 
     virtual void updateColor() override;
+    
+    void setVertexLayout(PipelineDescriptor& vertexLayout);
+    void updateBlendState();
+    void updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer, const Mat4 &transform);
+    void updateBuffer(TextureAtlas* textureAtlas, CustomCommand& customCommand);
 
     LabelType _currentLabelType;
     bool _contentDirty;
@@ -747,6 +744,9 @@ protected:
 
     QuadCommand _quadCommand;
     CustomCommand _customCommand;
+    CustomCommand _customCommandOutLine;
+    CustomCommand _customCommandShadow;
+    
     Mat4  _shadowTransform;
     GLint _uniformEffectColor;
     GLint _uniformEffectType; // 0: None, 1: Outline, 2: Shadow; Only used when outline is enabled.
@@ -790,6 +790,15 @@ protected:
     bool _boldEnabled;
     DrawNode* _underlineNode;
     bool _strikethroughEnabled;
+    
+    backend::UniformLocation _mvpMatrixLocation;
+    backend::UniformLocation _textureLocation;
+    backend::UniformLocation _alphaTextureLocation;
+    backend::UniformLocation _textColorLocation;
+    backend::UniformLocation _effectColorLocation;
+    backend::UniformLocation _effectTypeLocation;
+    
+    backend::ProgramState* _programState = nullptr;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);

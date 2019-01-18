@@ -28,7 +28,6 @@
  * THE SOFTWARE.
  *
  */
-
 #include "2d/CCParticleBatchNode.h"
 #include "2d/CCGrid.h"
 #include "2d/CCParticleSystem.h"
@@ -38,18 +37,44 @@
 #include "renderer/CCTextureAtlas.h"
 #include "base/CCProfiling.h"
 #include "base/ccUTF8.h"
+#include "base/ccUtils.h"
+#include "renderer/ccShaders.h"
+#include "renderer/backend/ProgramState.h"
 
 NS_CC_BEGIN
 
 ParticleBatchNode::ParticleBatchNode()
-: _textureAtlas(nullptr)
 {
-
+    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    _programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColor_frag);
+    pipelineDescriptor.programState = _programState;
+    _mvpMatrixLocaiton = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
+    _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
+    
+#define VERTEX_POSITION_SIZE 3
+#define VERTEX_TEXCOORD_SIZE 2
+#define VERTEX_COLOR_SIZE 4
+    uint32_t colorOffset = (VERTEX_POSITION_SIZE)*sizeof(float);
+    uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+    uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+    
+    //set vertexLayout according to V3F_C4B_T2F structure
+    backend::VertexLayout vertexLayout;
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
+    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset, false);
+    vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, colorOffset, true);
+    
+    vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
+    pipelineDescriptor.vertexLayout = vertexLayout;
+    
+    _customCommand.setDrawType(CustomCommand::DrawType::ELEMENT);
+    _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE);
 }
 
 ParticleBatchNode::~ParticleBatchNode()
 {
     CC_SAFE_RELEASE(_textureAtlas);
+    CC_SAFE_RELEASE(_programState);
 }
 /*
  * creation with Texture2D
@@ -95,8 +120,6 @@ bool ParticleBatchNode::initWithTexture(Texture2D *tex, int capacity)
     
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR, tex));
-
     return true;
 }
 
@@ -131,7 +154,7 @@ void ParticleBatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, u
 
     if (isVisitableByVisitingCamera())
     {
-        // IMPORTANT:
+        // IMPORTANT:d
         // To ease the migration to v3.0, we still support the Mat4 stack,
         // but it is deprecated and your code should not rely on it
         Director* director = Director::getInstance();
@@ -398,20 +421,39 @@ void ParticleBatchNode::removeAllChildrenWithCleanup(bool doCleanup)
     _textureAtlas->removeAllQuads();
 }
 
-void ParticleBatchNode::draw(Renderer* renderer, const Mat4 & /*transform*/, uint32_t flags)
+void ParticleBatchNode::draw(Renderer* renderer, const Mat4 & transform, uint32_t flags)
 {
     CC_PROFILER_START("CCParticleBatchNode - draw");
 
     if( _textureAtlas->getTotalQuads() == 0 )
-    {
         return;
+    
+    _customCommand.init(_globalZOrder, _blendFunc);
+    
+    // Texture is set in TextureAtlas.
+    const cocos2d::Mat4& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    Mat4 finalMat = projectionMat * transform;
+    auto programState = _customCommand.getPipelineDescriptor().programState;
+    programState->setUniform(_mvpMatrixLocaiton, finalMat.m, sizeof(finalMat.m));
+    programState->setTexture(_textureLocation, 0, _textureAtlas->getTexture()->getBackendTexture());
+
+    if (_textureAtlas->isDirty())
+    {
+        const auto& quads = _textureAtlas->getQuads();
+        unsigned int capacity = (unsigned int)_textureAtlas->getCapacity();
+        const auto& indices = _textureAtlas->getIndices();
+        
+        _customCommand.createVertexBuffer((unsigned int)(sizeof(quads[0]) ), capacity, CustomCommand::BufferUsage::STATIC);
+        _customCommand.updateVertexBuffer(quads, sizeof(quads[0]) * capacity);
+        
+        _customCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT , capacity * 6, CustomCommand::BufferUsage::STATIC);
+        _customCommand.updateIndexBuffer(indices, sizeof(indices[0]) * capacity * 6);
     }
-    _batchCommand.init(_globalZOrder, getGLProgram(), _blendFunc, _textureAtlas, _modelViewTransform, flags);
-    renderer->addCommand(&_batchCommand);
+        
+    renderer->addCommand(&_customCommand);
+    
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }
-
-
 
 void ParticleBatchNode::increaseAtlasCapacityTo(ssize_t quantity)
 {

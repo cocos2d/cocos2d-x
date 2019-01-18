@@ -223,25 +223,6 @@ protected:
 };
 
 /**
- * TextField event type.
- * @deprecated Use @see `TextField::EventType` instead.
- */
-typedef enum
-{
-    TEXTFIELD_EVENT_ATTACH_WITH_IME,
-    TEXTFIELD_EVENT_DETACH_WITH_IME,
-    TEXTFIELD_EVENT_INSERT_TEXT,
-    TEXTFIELD_EVENT_DELETE_BACKWARD,
-}TextFiledEventType;
-
-/**
- * A callback which would be called when a TextField event happens.
- * @deprecated Use @see `ccTextFieldCallback` instead.
- */
-typedef void (Ref::*SEL_TextFieldEvent)(Ref*, TextFiledEventType);
-#define textfieldeventselector(_SELECTOR) (SEL_TextFieldEvent)(&_SELECTOR)
-
-/**
  * @brief A widget which allows users to input text.
  * The rendering of the input text are based on @see `TextFieldTTF'.
  * If you want to use system control behavior, please use @see `EditBox` instead.
@@ -409,20 +390,6 @@ public:
     
     /**
      *Change content of TextField.
-     *@deprecated Use @see `setString(const std::string&)` instead.
-     *@param text A string content.
-     */
-    CC_DEPRECATED_ATTRIBUTE void setText(const std::string& text){this->setString(text);}
-
-    /**
-     *Query the content of TextField.
-     *@deprecated Use @see `getString` instead.
-     *@return The string value of TextField.
-     */
-    CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue()const{return this->getString();}
-    
-    /**
-     *Change content of TextField.
      *@param text A string content.
      */
     void setString(const std::string& text);
@@ -560,13 +527,6 @@ public:
     
     /**
      * Add a event listener to TextField, when some predefined event happens, the callback will be called.
-     *@deprecated Use @see `addEventListener` instead.
-     *@param target A pointer of `Ref*` type.
-     *@param selector A member function pointer with type of `SEL_TextFieldEvent`.
-     */
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerTextField(Ref* target, SEL_TextFieldEvent selector);
-    /**
-     * Add a event listener to TextField, when some predefined event happens, the callback will be called.
      *@param callback A callback function with type of `ccTextFieldCallback`.
      */
     void addEventListener(const ccTextFieldCallback& callback);
@@ -676,18 +636,6 @@ protected:
     bool _useTouchArea;
     
     Ref* _textFieldEventListener;
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
-    SEL_TextFieldEvent _textFieldEventSelector;
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (pop)
-#endif
     ccTextFieldCallback _eventCallback;
     
     bool _textFieldRendererAdaptDirty;

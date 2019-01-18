@@ -37,22 +37,6 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 namespace ui{
-    
-/**
- * ListView click item event type.
- */
-typedef enum
-{
-    LISTVIEW_ONSELECTEDITEM_START,
-    LISTVIEW_ONSELECTEDITEM_END
-}ListViewEventType;
-
-/**
- * A callback which would be called when a ListView item is clicked.
- *@deprecated Use `ccListViewCallback` instead.
- */
-typedef void (Ref::*SEL_ListViewEvent)(Ref*,ListViewEventType);
-#define listvieweventselector(_SELECTOR) (SEL_ListViewEvent)(&_SELECTOR)
 
 /**
  *@brief ListView is a view group that displays a list of scrollable items.
@@ -425,14 +409,6 @@ public:
     
     /**
      * Add an event click callback to ListView, then one item of Listview is clicked, the callback will be called.
-     *@deprecated Use  `addEventListener` instead.
-     *@param target A pointer of `Ref*` type.
-     *@param selector A member function pointer with type of `SEL_ListViewEvent`.
-     */
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerListView(Ref* target, SEL_ListViewEvent selector);
-
-    /**
-     * Add an event click callback to ListView, then one item of Listview is clicked, the callback will be called.
      *@param callback A callback function with type of `ccListViewCallback`.
      */
     void addEventListener(const ccListViewCallback& callback);
@@ -447,19 +423,6 @@ public:
     virtual void setDirection(Direction dir) override;
     
     virtual std::string getDescription() const override;
-    
-    /**
-     * @brief Refresh view and layout of ListView manually.
-     * This method will mark ListView content as dirty and the content view will be refreshed in the next frame.
-     * @deprecated Use method requestDoLayout() instead
-     */
-    CC_DEPRECATED_ATTRIBUTE void requestRefreshView();
-
-    /**
-     * @brief Refresh content view of ListView.
-     * @deprecated Use method forceDoLayout() instead
-     */
-    CC_DEPRECATED_ATTRIBUTE void refreshView();
 
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
@@ -510,20 +473,6 @@ protected:
     ssize_t _curSelectedIndex;
 
     bool _innerContainerDoLayoutDirty;
-    
-    Ref*       _listViewEventListener;
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
-    SEL_ListViewEvent    _listViewEventSelector;
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (pop)
-#endif
     ccListViewCallback _eventCallback;
 };
 

@@ -538,14 +538,6 @@ public:
     /** returns the Uniform flags */
     const UniformFlags& getUniformFlags() const { return _flags; }
 
-    //DEPRECATED
-    CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderByteArray(const GLchar* vertexByteArray, const GLchar* fragByteArray)
-    { return initWithByteArrays(vertexByteArray, fragByteArray); }
-    CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderFilename(const std::string &vertexFilename, const std::string& fragFilename)
-    { return initWithFilenames(vertexFilename, fragFilename); }
-    CC_DEPRECATED_ATTRIBUTE void addAttribute(const std::string &attributeName, GLuint index) const { return bindAttribLocation(attributeName, index); }
-
-
 protected:
     /**
     Update the uniform data in location.

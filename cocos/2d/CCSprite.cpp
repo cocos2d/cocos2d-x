@@ -40,6 +40,9 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "2d/CCCamera.h"
+#include "platform/CCFileUtils.h"
+#include "renderer/ccShaders.h"
+#include "renderer/backend/ProgramState.h"
 
 NS_CC_BEGIN
 
@@ -144,7 +147,6 @@ Sprite* Sprite::create()
 bool Sprite::init()
 {
     initWithTexture(nullptr, Rect::ZERO);
-
     return true;
 }
 
@@ -333,6 +335,7 @@ Sprite::~Sprite()
     CC_SAFE_FREE(_trianglesIndex);
     CC_SAFE_RELEASE(_spriteFrame);
     CC_SAFE_RELEASE(_texture);
+    CC_SAFE_RELEASE(_programState);
 }
 
 /*
@@ -371,17 +374,48 @@ void Sprite::setTexture(const std::string &filename)
     setTextureRect(rect);
 }
 
+void Sprite::setVertexLayout()
+{
+#define VERTEX_POSITION_SIZE 3
+#define VERTEX_TEXCOORD_SIZE 2
+#define VERTEX_COLOR_SIZE 4
+    uint32_t colorOffset = (VERTEX_POSITION_SIZE)*sizeof(float);
+    uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+    uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
+    
+    //set vertexLayout according to V3F_C4B_T2F structure
+    auto& vertexLayout = _trianglesCommand.getPipelineDescriptor().vertexLayout;
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
+    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset, false);
+    vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, colorOffset, true);
+    
+    vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
+}
+
+void Sprite::updateShaders(const char* vert, const char* frag)
+{
+    auto& pipelineDescriptor = _trianglesCommand.getPipelineDescriptor();
+    CC_SAFE_RELEASE(_programState);
+    _programState = new (std::nothrow) backend::ProgramState(vert, frag);
+    pipelineDescriptor.programState = _programState;
+    
+    _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
+    _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
+    _alphaTextureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture1");
+    
+    setVertexLayout();
+    updateProgramState();
+}
+
 void Sprite::setTexture(Texture2D *texture)
 {
-    if(_glProgramState == nullptr)
-    {
-        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, texture));
-    }
-    // If batchnode, then texture id should be the same
-    CCASSERT(! _batchNode || (texture &&  texture->getName() == _batchNode->getTexture()->getName()), "CCSprite: Batched sprites should use the same texture as the batchnode");
+    auto isETC1 = texture && texture->getAlphaTextureName();
+    updateShaders(positionTextureColor_vert, (isETC1) ? etc1_frag : positionTextureColor_frag);
+    
+    CCASSERT(! _batchNode || (texture &&  texture == _batchNode->getTexture()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
     CCASSERT( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
-
+    
     if (texture == nullptr)
     {
         // Gets the texture by key firstly.
@@ -398,13 +432,31 @@ void Sprite::setTexture(Texture2D *texture)
             CC_SAFE_RELEASE(image);
         }
     }
-
+    
     if ((_renderMode != RenderMode::QUAD_BATCHNODE) && (_texture != texture))
     {
         CC_SAFE_RETAIN(texture);
         CC_SAFE_RELEASE(_texture);
         _texture = texture;
         updateBlendFunc();
+    }
+
+    updateProgramState();
+}
+
+void Sprite::updateProgramState()
+{
+    if (_texture == nullptr || _texture->getBackendTexture() == nullptr)
+    {
+        return;
+    }
+    
+    auto programState = _trianglesCommand.getPipelineDescriptor().programState;
+    programState->setTexture(_textureLocation, 0, _texture->getBackendTexture());
+    auto alphaTexture = _texture->getAlphaTexture();
+    if(alphaTexture && alphaTexture->getBackendTexture())
+    {
+        programState->setTexture(_alphaTextureLocation, 1, alphaTexture->getBackendTexture());
     }
 }
 
@@ -773,6 +825,7 @@ void Sprite::setTextureCoords(const Rect& rectInPoints)
 void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQuad)
 {
     Texture2D *tex = (_renderMode == RenderMode::QUAD_BATCHNODE) ? _textureAtlas->getTexture() : _texture;
+    
     if (tex == nullptr)
     {
         return;
@@ -782,7 +835,7 @@ void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQua
 
     const float atlasWidth = (float)tex->getPixelsWide();
     const float atlasHeight = (float)tex->getPixelsHigh();
-
+   
     float rw = rectInPixels.size.width;
     float rh = rectInPixels.size.height;
 
@@ -1045,14 +1098,13 @@ void Sprite::updateTransform(void)
 }
 
 // draw
-
 void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    if (_texture == nullptr)
+    if (_texture == nullptr || _texture->getBackendTexture() == nullptr)
     {
         return;
     }
-
+    
 #if CC_USE_CULLING
     // Don't calculate the culling if the transform was not updated
     auto visitingCamera = Camera::getVisitingCamera();
@@ -1068,40 +1120,42 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         // XXX: this always return true since
         _insideBounds = renderer->checkVisibility(transform, _contentSize);
     }
-
+    
     if(_insideBounds)
 #endif
     {
+        const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        auto programState = _trianglesCommand.getPipelineDescriptor().programState;
+        programState->setUniform(_mvpMatrixLocation, projectionMat.m, sizeof(projectionMat.m));
+        
         _trianglesCommand.init(_globalZOrder,
                                _texture,
-                               getGLProgramState(),
                                _blendFunc,
                                _polyInfo.triangles,
                                transform,
                                flags);
-
         renderer->addCommand(&_trianglesCommand);
-
-#if CC_SPRITE_DEBUG_DRAW
-        _debugDrawNode->clear();
-        auto count = _polyInfo.triangles.indexCount/3;
-        auto indices = _polyInfo.triangles.indices;
-        auto verts = _polyInfo.triangles.verts;
-        for(ssize_t i = 0; i < count; i++)
-        {
-            //draw 3 lines
-            Vec3 from =verts[indices[i*3]].vertices;
-            Vec3 to = verts[indices[i*3+1]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-
-            from =verts[indices[i*3+1]].vertices;
-            to = verts[indices[i*3+2]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-
-            from =verts[indices[i*3+2]].vertices;
-            to = verts[indices[i*3]].vertices;
-            _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-        }
+        
+    #if CC_SPRITE_DEBUG_DRAW
+            _debugDrawNode->clear();
+            auto count = _polyInfo.triangles.indexCount/3;
+            auto indices = _polyInfo.triangles.indices;
+            auto verts = _polyInfo.triangles.verts;
+            for(ssize_t i = 0; i < count; i++)
+            {
+                //draw 3 lines
+                Vec3 from =verts[indices[i*3]].vertices;
+                Vec3 to = verts[indices[i*3+1]].vertices;
+                _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+                
+                from =verts[indices[i*3+1]].vertices;
+                to = verts[indices[i*3+2]].vertices;
+                _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+                
+                from =verts[indices[i*3+2]].vertices;
+                to = verts[indices[i*3]].vertices;
+                _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+            }
 #endif //CC_SPRITE_DEBUG_DRAW
     }
 }
@@ -1120,7 +1174,7 @@ void Sprite::addChild(Node *child, int zOrder, int tag)
     {
         Sprite* childSprite = dynamic_cast<Sprite*>(child);
         CCASSERT( childSprite, "CCSprite only supports Sprites as children when using SpriteBatchNode");
-        CCASSERT(childSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "childSprite's texture name should be equal to _textureAtlas's texture name!");
+        CCASSERT(childSprite->getTexture() == _textureAtlas->getTexture(), "childSprite's texture name should be equal to _textureAtlas's texture name!");
         //put it in descendants array of batch node
         _batchNode->appendChild(childSprite);
 
@@ -1145,7 +1199,7 @@ void Sprite::addChild(Node *child, int zOrder, const std::string &name)
     {
         Sprite* childSprite = dynamic_cast<Sprite*>(child);
         CCASSERT( childSprite, "CCSprite only supports Sprites as children when using SpriteBatchNode");
-        CCASSERT(childSprite->getTexture()->getName() == _textureAtlas->getTexture()->getName(),
+        CCASSERT(childSprite->getTexture() == _textureAtlas->getTexture(),
                  "childSprite's texture name should be equal to _textureAtlas's texture name.");
         //put it in descendants array of batch node
         _batchNode->appendChild(childSprite);
@@ -1375,19 +1429,9 @@ void Sprite::setStretchEnabled(bool enabled)
     }
 }
 
-void Sprite::setStrechEnabled(bool enabled)
-{
-    setStretchEnabled(enabled);
-}
-
 bool Sprite::isStretchEnabled() const
 {
     return _stretchEnabled;
-}
-
-bool Sprite::isStrechEnabled() const
-{
-    return isStretchEnabled();
 }
 
 void Sprite::updateStretchFactor()
@@ -1636,7 +1680,7 @@ bool Sprite::isFrameDisplayed(SpriteFrame *frame) const
     Rect r = frame->getRect();
 
     return (r.equals(_rect) &&
-            frame->getTexture()->getName() == _texture->getName() &&
+            frame->getTexture() == _texture &&
             frame->getOffset().equals(_unflippedOffsetPositionFromCenter));
 }
 
@@ -1690,12 +1734,14 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
 }
 
 // MARK: Texture protocol
-
 void Sprite::updateBlendFunc(void)
 {
     CCASSERT(_renderMode != RenderMode::QUAD_BATCHNODE, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a SpriteBatchNode");
-
+    
     // it is possible to have an untextured sprite
+    backend::BlendDescriptor& blendDescriptor = _trianglesCommand.getPipelineDescriptor().blendDescriptor;
+    blendDescriptor.blendEnabled = true;
+    
     if (! _texture || ! _texture->hasPremultipliedAlpha())
     {
         _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;

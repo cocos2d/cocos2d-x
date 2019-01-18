@@ -38,7 +38,7 @@
 #include "cocos2d.h" // we used cocos2dVersion() ...
 
 // for debug socket
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include <io.h>
 #include <WS2tcpip.h>
 #else
@@ -110,7 +110,7 @@ static std::unordered_map<int,int> ports_sockets;
 
 static void cc_closesocket(int fd)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     closesocket(fd);
 #else
     close(fd);
@@ -345,19 +345,10 @@ bool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
     os = JS_InternString(cx, "Android");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     os = JS_InternString(cx, "Windows");
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MARMALADE)
-    os = JS_InternString(cx, "Marmalade");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
     os = JS_InternString(cx, "Linux");
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BADA)
-    os = JS_InternString(cx, "Bada");
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
-    os = JS_InternString(cx, "Blackberry");
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     os = JS_InternString(cx, "OS X");
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    os = JS_InternString(cx, "WINRT");
-#else
     os = JS_InternString(cx, "Unknown");
 #endif
 
@@ -396,17 +387,7 @@ bool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
 
 bool JSB_closeWindow(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    EventListenerCustom* _event = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [&](EventCustom *event) {
-        Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
-        CC_SAFE_RELEASE(_event);
-        
-        ScriptingCore::getInstance()->cleanup();
-    });
-    _event->retain();
     Director::getInstance()->end();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
     return true;
 };
 
@@ -1970,7 +1951,7 @@ static void serverEntryPoint(unsigned int port)
 
     int err = 0;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     WSADATA wsaData;
     err = WSAStartup(MAKEWORD(2, 2),&wsaData);
 #endif

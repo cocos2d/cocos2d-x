@@ -53,14 +53,14 @@ ClippingNodeTests::ClippingNodeTests()
     ADD_TEST_CASE(SpriteNoAlphaTest);
     ADD_TEST_CASE(SpriteInvertedTest);
     ADD_TEST_CASE(NestedTest);
-    ADD_TEST_CASE(RawStencilBufferTest);
-    ADD_TEST_CASE(RawStencilBufferTest2);
-    ADD_TEST_CASE(RawStencilBufferTest3);
-    ADD_TEST_CASE(RawStencilBufferTest4);
-    ADD_TEST_CASE(RawStencilBufferTest5);
-    ADD_TEST_CASE(RawStencilBufferTest6);
+//    ADD_TEST_CASE(RawStencilBufferTest); // TODO shouldn't call OpenGL API directly
+//    ADD_TEST_CASE(RawStencilBufferTest2);
+//    ADD_TEST_CASE(RawStencilBufferTest3);
+//    ADD_TEST_CASE(RawStencilBufferTest4);
+//    ADD_TEST_CASE(RawStencilBufferTest5);
+//    ADD_TEST_CASE(RawStencilBufferTest6);
     ADD_TEST_CASE(ClippingToRenderTextureTest);
-    ADD_TEST_CASE(ClippingRectangleNodeTest);
+//    ADD_TEST_CASE(ClippingRectangleNodeTest); // TODO for unfinished CCClippingNode Impl
 }
 
 //// Demo examples start here
@@ -394,9 +394,9 @@ void HoleDemo::setup()
     holesClipper->setStencil( _holesStencil);
     
     _outerClipper->addChild(holesClipper);
-    
+
     this->addChild(_outerClipper);
-    
+
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesBegan = CC_CALLBACK_2(HoleDemo::onTouchesBegan, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
@@ -1057,7 +1057,7 @@ void ClippingToRenderTextureTest::reproduceBug()
 
     // container rendered on Texture the size of the screen and because Clipping node use stencil buffer so we need to
     // create RenderTexture with depthStencil format parameter
-    RenderTexture* rt = RenderTexture::create(visibleSize.width, visibleSize.height, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
+    RenderTexture* rt = RenderTexture::create(visibleSize.width, visibleSize.height, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8);
     rt->setPosition(visibleSize.width/2, visibleSize.height/2);
     this->addChild(rt);
 

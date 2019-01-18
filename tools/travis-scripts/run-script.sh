@@ -29,14 +29,12 @@ function do_retry()
 
 function build_linux()
 {
-    CPU_CORES=`grep -c ^processor /proc/cpuinfo`
     echo "Building tests ..."
     cd $COCOS2DX_ROOT/build
     mkdir -p linux-build
     cd linux-build
     cmake ../..
-    echo "cpu cores: ${CPU_CORES}"
-    make -j${CPU_CORES} VERBOSE=1
+    cmake --build .
 }
 
 function build_mac()
@@ -375,14 +373,13 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
         update_cocos_files
         python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l lua -p my.pack.qqqq cocos_new_test
         popd
-        CPU_CORES=`grep -c ^processor /proc/cpuinfo`
+
         echo "Building tests ..."
         cd $COCOS2DX_ROOT/cocos_new_test
         mkdir -p linux-build
         cd linux-build
         cmake ..
-        echo "cpu cores: ${CPU_CORES}"
-        make -j${CPU_CORES} VERBOSE=1
+        cmake --build .
         exit 0
     fi
     if [ $BUILD_TARGET == 'mac_cmake' ]; then

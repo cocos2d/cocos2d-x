@@ -43,16 +43,16 @@ THE SOFTWARE.
 #define CC_PLATFORM_IOS                1
 #define CC_PLATFORM_ANDROID            2
 #define CC_PLATFORM_WIN32              3
-#define CC_PLATFORM_MARMALADE          4
+// #define CC_PLATFORM_MARMALADE          4
 #define CC_PLATFORM_LINUX              5
-#define CC_PLATFORM_BADA               6
-#define CC_PLATFORM_BLACKBERRY         7
+// #define CC_PLATFORM_BADA               6
+// #define CC_PLATFORM_BLACKBERRY         7
 #define CC_PLATFORM_MAC                8
-#define CC_PLATFORM_NACL               9
-#define CC_PLATFORM_EMSCRIPTEN        10
-#define CC_PLATFORM_TIZEN             11
-#define CC_PLATFORM_QT5               12
-#define CC_PLATFORM_WINRT             13
+// #define CC_PLATFORM_NACL               9
+// #define CC_PLATFORM_EMSCRIPTEN        10
+// #define CC_PLATFORM_TIZEN             11
+// #define CC_PLATFORM_QT5               12
+// #define CC_PLATFORM_WINRT             13
 
 // Determine target platform by compile environment macro.
 #define CC_TARGET_PLATFORM             CC_PLATFORM_UNKNOWN
@@ -87,53 +87,6 @@ THE SOFTWARE.
     #define CC_TARGET_PLATFORM         CC_PLATFORM_LINUX
 #endif
 
-// marmalade
-#if defined(MARMALADE)
-#undef  CC_TARGET_PLATFORM
-#define CC_TARGET_PLATFORM         CC_PLATFORM_MARMALADE
-#endif
-
-// bada
-#if defined(SHP)
-#undef  CC_TARGET_PLATFORM
-#define CC_TARGET_PLATFORM         CC_PLATFORM_BADA
-#endif
-
-// qnx
-#if defined(__QNX__)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM     CC_PLATFORM_BLACKBERRY
-#endif
-
-// native client
-#if defined(__native_client__)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM     CC_PLATFORM_NACL
-#endif
-
-// Emscripten
-#if defined(EMSCRIPTEN)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM     CC_PLATFORM_EMSCRIPTEN
-#endif
-
-// tizen
-#if defined(TIZEN)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM     CC_PLATFORM_TIZEN
-#endif
-
-// qt5
-#if defined(CC_TARGET_QT5)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM     CC_PLATFORM_QT5
-#endif
-
-// WinRT (Windows 8.1 Store/Phone App)
-#if defined(WINRT)
-    #undef  CC_TARGET_PLATFORM
-    #define CC_TARGET_PLATFORM          CC_PLATFORM_WINRT
-#endif
 
 //////////////////////////////////////////////////////////////////////////
 // post configure
@@ -150,10 +103,18 @@ THE SOFTWARE.
 #endif
 #endif  // CC_PLATFORM_WIN32
 
-#if ((CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN))
+#if ((CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS))
     #define CC_PLATFORM_MOBILE
 #else
     #define CC_PLATFORM_PC
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    #define CC_USE_METAL
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    #define CC_USE_GLES
+#else
+    #define CC_USE_GL
 #endif
 
 /// @endcond

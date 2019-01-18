@@ -63,26 +63,6 @@ NS_CC_BEGIN
 class CC_DLL TextureCache : public Ref
 {
 public:
-    /** Returns the shared instance of the cache. */
-    CC_DEPRECATED_ATTRIBUTE static TextureCache * getInstance();
-
-    /** @deprecated Use getInstance() instead. */
-    CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache();
-
-    /** Purges the cache. It releases the retained instance.
-     @since v0.99.0
-     */
-    CC_DEPRECATED_ATTRIBUTE static void destroyInstance();
-
-    /** @deprecated Use destroyInstance() instead. */
-    CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache();
-
-    /** Reload all textures.
-    Should not call it, called by frame work.
-    Now the function do nothing, use VolatileTextureMgr::reloadAllTextures.
-     */
-    CC_DEPRECATED_ATTRIBUTE static void reloadAllTextures();
-
     // ETC1 ALPHA supports.
     static void setETC1AlphaFileSuffix(const std::string& suffix);
     static std::string getETC1AlphaFileSuffix();
@@ -147,14 +127,12 @@ public:
     * If "key" is nil, then a new texture will be created each time.
     */
     Texture2D* addImage(Image *image, const std::string &key);
-    CC_DEPRECATED_ATTRIBUTE Texture2D* addUIImage(Image *image, const std::string& key) { return addImage(image,key); }
 
     /** Returns an already created texture. Returns nil if the texture doesn't exist.
     @param key It's the related/absolute path of the file image.
     @since v0.99.5
     */
     Texture2D* getTextureForKey(const std::string& key) const;
-    CC_DEPRECATED_ATTRIBUTE Texture2D* textureForKey(const std::string& key) const { return getTextureForKey(key); }
 
     /** Reload texture from the image file.
     * If the file image hasn't loaded before, load it.
@@ -284,7 +262,8 @@ protected:
     std::string _fileName;
 
     bool                      _hasMipmaps;
-    Texture2D::TexParams      _texParams;
+    //Texture2D::TexParams      _texParams;
+    backend::SamplerDescriptor _samplerDescriptor;
     std::string               _text;
     FontDefinition            _fontDefinition;
 };
@@ -298,7 +277,7 @@ public:
     static void addImage(Texture2D *tt, Image *image);
 
     static void setHasMipmaps(Texture2D *t, bool hasMipmaps);
-    static void setTexParameters(Texture2D *t, const Texture2D::TexParams &texParams);
+    static void setSamplerDescriptor(Texture2D *t, const backend::SamplerDescriptor &samplerDescriptor);
     static void removeTexture(Texture2D *t);
     static void reloadAllTextures();
 public:

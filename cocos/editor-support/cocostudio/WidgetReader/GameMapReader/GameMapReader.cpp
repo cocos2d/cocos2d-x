@@ -29,7 +29,6 @@
 #include "2d/CCTMXXMLParser.h"
 #include "2d/CCTMXTiledMap.h"
 #include "platform/CCFileUtils.h"
-#include "deprecated/CCString.h"
 
 #include "editor-support/cocostudio/CSParseBinary_generated.h"
 #include "editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.h"
@@ -230,7 +229,9 @@ namespace cocostudio
                 Node* node = Node::create();
                 setPropsWithFlatBuffers(node, (Table*)gameMapOptions);
                 auto label = Label::create();
-                label->setString(__String::createWithFormat("Some error of gid are in TMX Layer '%s'", layerName.c_str())->getCString());
+                //TODO couslonwang
+                cocos2d::log("TODO in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
+//                label->setString(__String::createWithFormat("Some error of gid are in TMX Layer '%s'", layerName.c_str())->getCString());
                 node->setScale(1.0f);
                 node->addChild(label);
                 return node;

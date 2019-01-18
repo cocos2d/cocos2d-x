@@ -797,23 +797,24 @@ void CameraCullingDemo::onExit()
 
 void CameraCullingDemo::update(float dt)
 {
-    _drawAABB->clear();
-    
-    if(_cameraType == CameraType::ThirdPerson)
-        drawCameraFrustum();
-    
-    Vector<Node*>& children = _layer3D->getChildren();
-    Vec3 corners[8];
-    
-    for (const auto& iter: children)
-    {
-        const AABB& aabb = static_cast<Sprite3D*>(iter)->getAABB();
-        if (_cameraFirst->isVisibleInFrustum(&aabb))
-        {
-            aabb.getCorners(corners);
-            _drawAABB->drawCube(corners, Color4F(0, 1, 0, 1));
-        }
-    }
+    //TODO minggo
+//    _drawAABB->clear();
+//
+//    if(_cameraType == CameraType::ThirdPerson)
+//        drawCameraFrustum();
+//
+//    Vector<Node*>& children = _layer3D->getChildren();
+//    Vec3 corners[8];
+//
+//    for (const auto& iter: children)
+//    {
+//        const AABB& aabb = static_cast<Sprite3D*>(iter)->getAABB();
+//        if (_cameraFirst->isVisibleInFrustum(&aabb))
+//        {
+//            aabb.getCorners(corners);
+//            _drawAABB->drawCube(corners, Color4F(0, 1, 0, 1));
+//        }
+//    }
 }
 
 void CameraCullingDemo::reachEndCallBack()
@@ -1317,7 +1318,7 @@ void FogTestDemo::onEnter()
     _layer3D->setCameraMask(2);
 
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                             [this](EventCustom*)
                                                             {
@@ -1380,7 +1381,7 @@ void FogTestDemo::onExit()
         _camera = nullptr;
     }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }

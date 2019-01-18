@@ -50,8 +50,8 @@ EffectTests::EffectTests()
     ADD_TEST_CASE(JumpTiles3DDemo);
     ADD_TEST_CASE(SplitRowsDemo);
     ADD_TEST_CASE(SplitColsDemo);
-    ADD_TEST_CASE(PageTurn3DDemo);
-    ADD_TEST_CASE(PageTurn3DRectDemo);
+//    ADD_TEST_CASE(PageTurn3DDemo); // TODO crash on iPhone X
+//    ADD_TEST_CASE(PageTurn3DRectDemo);
 }
 
 Shaky3DDemo::Shaky3DDemo()

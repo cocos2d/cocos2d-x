@@ -25,6 +25,7 @@
 
 #include "editor-support/cocostudio/WidgetReader/SpriteReader/SpriteReader.h"
 
+#include "base/ccUtils.h"
 #include "2d/CCSprite.h"
 #include "2d/CCSpriteFrameCache.h"
 #include "platform/CCFileUtils.h"
@@ -140,11 +141,11 @@ namespace cocostudio
                     
                     if (name == "Src")
                     {
-                        blendFunc.src = atoi(value.c_str());
+                        blendFunc.src = utils::toBackendBlendFactor(atoi(value.c_str()));
                     }
                     else if (name == "Dst")
                     {
-                        blendFunc.dst = atoi(value.c_str());
+                        blendFunc.dst = utils::toBackendBlendFactor(atoi(value.c_str()));
                     }
                     
                     attribute = attribute->Next();
@@ -154,7 +155,7 @@ namespace cocostudio
             child = child->NextSiblingElement();
         }
         
-        flatbuffers::BlendFunc f_blendFunc(blendFunc.src, blendFunc.dst);
+        flatbuffers::BlendFunc f_blendFunc(utils::toGLBlendFactor(blendFunc.src), utils::toGLBlendFactor(blendFunc.dst));
 
         auto options = CreateSpriteOptions(*builder,
                                            nodeOptions,
@@ -234,8 +235,8 @@ namespace cocostudio
         if (f_blendFunc)
         {
             cocos2d::BlendFunc blendFunc = cocos2d::BlendFunc::ALPHA_PREMULTIPLIED;
-            blendFunc.src = f_blendFunc->src();
-            blendFunc.dst = f_blendFunc->dst();
+            blendFunc.src = utils::toBackendBlendFactor(f_blendFunc->src());
+            blendFunc.dst = utils::toBackendBlendFactor(f_blendFunc->dst());
             sprite->setBlendFunc(blendFunc);
         }
         

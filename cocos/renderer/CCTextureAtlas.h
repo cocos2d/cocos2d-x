@@ -25,9 +25,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#ifndef __CCTEXTURE_ATLAS_H__
-#define __CCTEXTURE_ATLAS_H__
+#pragma once
 
 #include <string>
 
@@ -190,25 +188,6 @@ public:
     */
     void fillWithEmptyQuadsFromIndex(ssize_t index, ssize_t amount);
 
-    /** Draws n quads.
-    * N can't be greater than the capacity of the Atlas.
-    */
-    void drawNumberOfQuads(ssize_t n);
-
-    /** Draws n quads from an index (offset).
-    N + start can't be greater than the capacity of the atlas.
-
-    @since v1.0
-    */
-    void drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start);
-
-    /** Draws all the Atlas's Quads.
-    */
-    void drawQuads();
-    /** Listen the event that renderer was recreated on Android.
-     */
-    void listenRendererRecreated(EventCustom* event);
-
     /** Whether or not the array buffer of the VBO needs to be updated.*/
     bool isDirty() { return _dirty; }
     /** Specify if the array buffer of the VBO needs to be updated. */
@@ -221,10 +200,10 @@ public:
     virtual std::string getDescription() const;
 
     /** Gets the quantity of quads that are going to be drawn. */
-    ssize_t getTotalQuads() const;
+    size_t getTotalQuads() const;
     
     /** Gets the quantity of quads that can be stored with the current texture atlas size. */
-    ssize_t getCapacity() const;
+    size_t getCapacity() const;
     
     /** Gets the texture of the texture atlas. */
     Texture2D* getTexture() const;
@@ -238,30 +217,30 @@ public:
     /** Sets the quads that are going to be rendered. */
     void setQuads(V3F_C4B_T2F_Quad* quads);
     
+    inline unsigned short* getIndices() { return _indices; }
+    
 private:
+    friend class ParticleBatchNode;
+    friend class AtlasNode;
+
     void renderCommand();
 
     void setupIndices();
-    void mapBuffers();
-    void setupVBOandVAO();
-    void setupVBO();
 
 protected:
-    GLushort*           _indices;
-    GLuint              _VAOname;
-    GLuint              _buffersVBO[2]; //0: vertex  1: indices
-    bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
+    unsigned short* _indices = nullptr;
+    bool _dirty = false; //indicates whether or not the array buffer of the VBO needs to be updated
     /** quantity of quads that are going to be drawn */
-    ssize_t _totalQuads;
+    size_t _totalQuads = 0;
     /** quantity of quads that can be stored with the current texture atlas size */
-    ssize_t _capacity;
+    size_t _capacity = 0;
     /** Texture of the texture atlas */
-    Texture2D* _texture;
+    Texture2D* _texture = nullptr;
     /** Quads that are going to be rendered */
-    V3F_C4B_T2F_Quad* _quads;
+    V3F_C4B_T2F_Quad* _quads = nullptr;
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    EventListenerCustom* _rendererRecreatedListener;
+    EventListenerCustom* _rendererRecreatedListener = nullptr;
 #endif
 };
 
@@ -269,7 +248,3 @@ protected:
 /// @}
 
 NS_CC_END
-
-#endif //__CCTEXTURE_ATLAS_H__
-
-

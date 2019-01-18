@@ -177,19 +177,6 @@ Sequence* Sequence::createWithTwoActions(FiniteTimeAction *actionOne, FiniteTime
     return nullptr;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-Sequence* Sequence::variadicCreate(FiniteTimeAction *action1, ...)
-{
-    va_list params;
-    va_start(params, action1);
-
-    Sequence *ret = Sequence::createWithVariableList(action1, params);
-
-    va_end(params);
-    
-    return ret;
-}
-#else
 Sequence* Sequence::create(FiniteTimeAction *action1, ...)
 {
     va_list params;
@@ -201,7 +188,6 @@ Sequence* Sequence::create(FiniteTimeAction *action1, ...)
     
     return ret;
 }
-#endif
 
 Sequence* Sequence::createWithVariableList(FiniteTimeAction *action1, va_list args)
 {
@@ -631,19 +617,6 @@ RepeatForever *RepeatForever::reverse() const
 // Spawn
 //
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-Spawn* Spawn::variadicCreate(FiniteTimeAction *action1, ...)
-{
-    va_list params;
-    va_start(params, action1);
-
-    Spawn *ret = Spawn::createWithVariableList(action1, params);
-
-    va_end(params);
-    
-    return ret;
-}
-#else
 Spawn* Spawn::create(FiniteTimeAction *action1, ...)
 {
     va_list params;
@@ -655,7 +628,6 @@ Spawn* Spawn::create(FiniteTimeAction *action1, ...)
     
     return ret;
 }
-#endif
 
 Spawn* Spawn::createWithVariableList(FiniteTimeAction *action1, va_list args)
 {
@@ -2535,15 +2507,7 @@ Animate* Animate::create(Animation *animation)
 }
 
 Animate::Animate()
-: _splitTimes(new std::vector<float>)
-, _nextFrame(0)
-, _origFrame(nullptr)
-, _executedLoops(0)
-, _animation(nullptr)
-, _frameDisplayedEvent(nullptr)
-, _currFrameIndex(0)
 {
-
 }
 
 Animate::~Animate()

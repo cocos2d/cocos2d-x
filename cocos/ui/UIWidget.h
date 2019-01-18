@@ -46,32 +46,6 @@ namespace ui {
     class LayoutComponent;
 
 /**
- * Touch event type.
- *@deprecated use `Widget::TouchEventType` instead
- */
-typedef enum
-{
-    TOUCH_EVENT_BEGAN,
-    TOUCH_EVENT_MOVED,
-    TOUCH_EVENT_ENDED,
-    TOUCH_EVENT_CANCELED
-}TouchEventType;
-    
-/**
- * Touch event callback.
- *@deprecated use `Widget::ccWidgetTouchCallback` instead
- */
-typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
-#define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
-
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-#ifdef ABSOLUTE
-#undef ABSOLUTE
-#endif
-#endif
-
-/**
  *@brief Base class for all ui widgets.
  * This class inherent from `ProtectedNode` and `LayoutParameterProtocol`.
  * If you want to implements your own ui widget, you should subclass it.
@@ -251,23 +225,10 @@ public:
 
     /**
      * Gets the left boundary position of this widget in parent's coordination system.
-     * @deprecated use `getLeftBoundary` instead.
-     * @return The left boundary position of this widget.
-     */
-    CC_DEPRECATED_ATTRIBUTE float getLeftInParent(){return this->getLeftBoundary();}
-
-    /**
-     * Gets the left boundary position of this widget in parent's coordination system.
      * @return The left boundary position of this widget.
      */
     float getLeftBoundary() const;
 
-    /**
-     * Gets the bottom boundary position of this widget in parent's coordination system.
-     * @deprecated use `getBottomBoundary` instead.
-     * @return The bottom boundary position of this widget.
-     */
-    CC_DEPRECATED_ATTRIBUTE float getBottomInParent(){return this->getBottomBoundary();}
     /**
      * Gets the bottom boundary position of this widget in parent's coordination system.
      * @return The bottom boundary position of this widget.
@@ -276,22 +237,10 @@ public:
 
     /**
      * Gets the right boundary position of this widget in parent's coordination system.
-     * @deprecated use `getRightBoundary` instead.
-     * @return The right boundary position of this widget.
-     */
-    CC_DEPRECATED_ATTRIBUTE float getRightInParent(){return this->getRightBoundary();}
-    /**
-     * Gets the right boundary position of this widget in parent's coordination system.
      * @return The right boundary position of this widget.
      */
     float getRightBoundary() const;
 
-    /**
-     * Gets the top boundary position of this widget in parent's coordination system.
-     * @deprecated use `getTopBoundary` instead.
-     * @return The top boundary position of this widget.
-     */
-    CC_DEPRECATED_ATTRIBUTE float getTopInParent(){return this->getTopBoundary();}
     /**
      * Gets the top boundary position of this widget in parent's coordination system.
      * @return The top boundary position of this widget.
@@ -303,10 +252,6 @@ public:
      */
     virtual void visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
-    /**
-     * Sets the touch event target/selector to the widget
-     */
-    CC_DEPRECATED_ATTRIBUTE void addTouchEventListener(Ref* target,SEL_TouchEvent selector);
     /**
      * Set a callback to touch vent listener.
      *@param callback  The callback in `ccWidgetEventCallback.`
@@ -406,15 +351,6 @@ public:
      */
     virtual bool isFlippedY()const{return _flippedY;};
 
-    /** @deprecated Use isFlippedX() instead */
-    CC_DEPRECATED_ATTRIBUTE bool isFlipX() { return isFlippedX(); };
-    /** @deprecated Use setFlippedX() instead */
-    CC_DEPRECATED_ATTRIBUTE void setFlipX(bool flipX) { setFlippedX(flipX); };
-    /** @deprecated Use isFlippedY() instead */
-    CC_DEPRECATED_ATTRIBUTE bool isFlipY() { return isFlippedY(); };
-    /** @deprecated Use setFlippedY() instead */
-    CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flipY) { setFlippedY(flipY); };
-
     //override the setScale function of Node
     virtual void setScaleX(float scaleX) override;
     virtual void setScaleY(float scaleY) override;
@@ -425,15 +361,6 @@ public:
     virtual float getScaleY() const override;
     virtual float getScale() const override;
     using Node::getScaleZ;
-    
-    /**
-     * Checks a point if in parent's area.
-     *
-     * @param pt A point in `Vec2`.
-     * @deprecated  use `isClippingParentContainsPoint` instead.
-     * @return true if the point is in parent's area, false otherwise.
-     */
-    CC_DEPRECATED_ATTRIBUTE bool clippingParentAreaContainPoint(const Vec2 &pt){return this->isClippingParentContainsPoint(pt);}
 
     /**
      * Checks a point if in parent's area.
@@ -445,22 +372,10 @@ public:
 
     /**
      * Gets the touch began point of widget when widget is selected.
-     * @deprecated use `getTouchBeganPosition` instead.
-     * @return the touch began point.
-     */
-    CC_DEPRECATED_ATTRIBUTE const Vec2& getTouchStartPos()const{return this->getTouchBeganPosition();}
-    /**
-     * Gets the touch began point of widget when widget is selected.
      * @return the touch began point.
      */
     const Vec2& getTouchBeganPosition()const;
 
-    /*
-     * Gets the touch move point of widget when widget is selected.
-     * @deprecated use `getTouchMovePosition` instead.
-     * @return the touch move point.
-     */
-    CC_DEPRECATED_ATTRIBUTE const Vec2& getTouchMovePos()const{ return this->getTouchMovePosition();}
     /*
      * Gets the touch move point of widget when widget is selected.
      * @return the touch move point.
@@ -469,22 +384,10 @@ public:
 
     /*
      * Gets the touch end point of widget when widget is selected.
-     * @deprecated use `getTouchEndPosition` instead.
-     * @return the touch end point.
-     */
-    CC_DEPRECATED_ATTRIBUTE const Vec2& getTouchEndPos()const{return this->getTouchEndPosition();}
-    /*
-     * Gets the touch end point of widget when widget is selected.
      * @return the touch end point.
      */
     const Vec2& getTouchEndPosition()const;
 
-    /**
-     * Changes the size that is widget's size
-     * @deprecated use `setContentSize` instead.
-     * @param size that is widget's size
-     */
-    CC_DEPRECATED_ATTRIBUTE virtual void setSize(const Size &size);
     /**
      * Changes the size that is widget's size
      * @param contentSize A content size in `Size`.
@@ -513,13 +416,6 @@ public:
      * @see `SizeType`
      */
     SizeType getSizeType() const;
-
-    /**
-     * Get the size of widget
-     *
-     * @return Widget content size.
-     */
-    CC_DEPRECATED_ATTRIBUTE const Size& getSize() const;
     
     /**
      * Get the user defined widget size.
@@ -596,16 +492,6 @@ public:
      * @return LayoutParameter
      */
     LayoutParameter* getLayoutParameter()const override;
-    /**
-     * Gets LayoutParameter of widget.
-     *
-     * @see LayoutParameter
-     * @deprecated use `getLayoutParameter()` instead.
-     * @param type  Relative or Linear
-     * @return LayoutParameter
-     */
-    CC_DEPRECATED_ATTRIBUTE LayoutParameter* getLayoutParameter(LayoutParameter::Type type);
-
 
     /**
      * Toggle whether ignore user defined content size for widget.
@@ -762,15 +648,6 @@ public:
     /**
      * Return a current focused widget in your UI scene.
      * No matter what widget object you call this method on , it will return you the exact one focused widget.
-     * @param isWidget  if your set isWidget to true, it will return the _realFocusedWidget which is always a widget
-     *                  otherwise, it will return a widget or a layout.
-     * @deprecated use `getCurrentFocusedWidget` instead.
-     */
-    CC_DEPRECATED_ATTRIBUTE Widget* getCurrentFocusedWidget(bool isWidget);
-
-    /**
-     * Return a current focused widget in your UI scene.
-     * No matter what widget object you call this method on , it will return you the exact one focused widget.
      */
     static Widget* getCurrentFocusedWidget();
 
@@ -841,6 +718,8 @@ public:
     bool isLayoutComponentEnabled()const;
 
 CC_CONSTRUCTOR_ACCESS:
+    
+    friend class PageView;
 
     //initializes state of widget.
     virtual bool init() override;
@@ -859,7 +738,6 @@ CC_CONSTRUCTOR_ACCESS:
      */
     void propagateTouchEvent(TouchEventType event, Widget* sender, Touch *touch);
     
-    friend class PageView;
     /**
      * This method is called when a focus change event happens
      *@param widgetLostFocus  The widget which lose its focus
@@ -924,9 +802,6 @@ protected:
     Widget* getAncestorWidget(Node* node);
     bool isAncestorsVisible(Node* node);
 
-    /** @deprecated Use getAncestorWidget instead. */
-    CC_DEPRECATED_ATTRIBUTE Widget* getAncensterWidget(Node* node);
-
     void cleanupWidget();
     LayoutComponent* getOrCreateLayoutComponent();
 
@@ -977,18 +852,6 @@ protected:
     static Widget *_focusedWidget;  //both layout & widget will be stored in this variable
 
     Ref*       _touchEventListener;
-    #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-    #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    #elif _MSC_VER >= 1400 //vs 2005 or higher
-    #pragma warning (push)
-    #pragma warning (disable: 4996)
-    #endif
-    SEL_TouchEvent    _touchEventSelector;
-    #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-    #pragma GCC diagnostic warning "-Wdeprecated-declarations"
-    #elif _MSC_VER >= 1400 //vs 2005 or higher
-    #pragma warning (pop)
-    #endif
     ccWidgetTouchCallback _touchEventCallback;
     ccWidgetClickCallback _clickEventListener;
     ccWidgetEventCallback _ccEventCallback;

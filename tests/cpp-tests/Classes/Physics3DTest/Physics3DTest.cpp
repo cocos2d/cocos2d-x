@@ -40,8 +40,6 @@ enum
     IDC_RESTART
 };
 
-static cocos2d::Scene* physicsScene = nullptr;
-
 #define START_POS_X -0.5
 #define START_POS_Y -2.5
 #define START_POS_Z -0.5

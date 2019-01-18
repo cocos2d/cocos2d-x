@@ -1358,11 +1358,6 @@ bool Terrain::Chunk::getIntersectPointWithRay(const Ray& ray, Vec3& intersectPoi
     return isFind;
 }
 
-bool Terrain::Chunk::getInsterctPointWithRay(const Ray& ray, Vec3& intersectPoint)
-{
-    return getIntersectPointWithRay(ray, intersectPoint);
-}
-
 void Terrain::Chunk::updateVerticesForLOD()
 {
     if(_oldLod == _currentLod){ return;} // no need to update vertices
@@ -1559,18 +1554,19 @@ void Terrain::QuadTree::resetNeedDraw(bool value)
 
 void Terrain::QuadTree::cullByCamera(const Camera * camera, const Mat4 & worldTransform)
 {
-    if(!camera->isVisibleInFrustum(&_worldSpaceAABB))
-    {
+    //TODO new-renderer: interface  isVisibleInFrustum removal
+//    if(!camera->isVisibleInFrustum(&_worldSpaceAABB))
+//    {
         this->resetNeedDraw(false);
-    }else
-    {
+//    }else
+ //   {
         if(!_isTerminal){
             _tl->cullByCamera(camera,worldTransform);
             _tr->cullByCamera(camera,worldTransform);
             _bl->cullByCamera(camera,worldTransform);
             _br->cullByCamera(camera,worldTransform);
         }
-    }
+//    }
 }
 
 void Terrain::QuadTree::preCalculateAABB(const Mat4 & worldTransform)
@@ -1721,11 +1717,6 @@ bool Terrain::Triangle::getIntersectPoint(const Ray& ray, Vec3& intersectPoint) 
 
     intersectPoint = ray._origin + ray._direction * t;
     return true;
-}
-
-bool Terrain::Triangle::getInsterctPoint(const Ray& ray, Vec3& intersectPoint) const
-{
-    return getIntersectPoint(ray, intersectPoint);
 }
 
 NS_CC_END

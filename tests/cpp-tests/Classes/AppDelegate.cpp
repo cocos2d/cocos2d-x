@@ -23,12 +23,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #include "AppDelegate.h"
 
 #include "cocos2d.h"
 #include "controller.h"
-#include "editor-support/cocostudio/CocoStudio.h"
+// #include "editor-support/cocostudio/CocoStudio.h"
 #include "extensions/cocos-ext.h"
 
 USING_NS_CC;
@@ -41,7 +40,8 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate()
 {
     //SimpleAudioEngine::end();
-    cocostudio::ArmatureDataManager::destroyInstance();
+    //TODO: minggo
+    // cocostudio::ArmatureDataManager::destroyInstance();
 }
 
 // if you want a different context, modify the value of glContextAttrs
@@ -65,7 +65,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLViewImpl::create("Cpp Tests");
+        glview = GLViewImpl::create("Cpp Tests");   
         director->setOpenGLView(glview);
     }
 
@@ -98,22 +98,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     fileUtils->setSearchPaths(searchPaths);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    // a bug in DirectX 11 level9-x on the device prevents ResolutionPolicy::NO_BORDER from working correctly
-    glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
-#else
     glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::NO_BORDER);
-#endif
 
     // Enable Remote Console
     auto console = director->getConsole();
     console->listenOnTCP(5678);
 
     _testController = TestController::getInstance();
-
-    // To enable built-in VR, use this line.
-//    auto vrImpl = new VRGenericRenderer;
-//    glview->setVR(vrImpl);
 
     return true;
 }
@@ -123,7 +114,7 @@ void AppDelegate::applicationDidEnterBackground()
 {
     if (_testController)
     {
-        _testController->onEnterBackground();
+//        _testController->onEnterBackground();
     }
     
     Director::getInstance()->stopAnimation();
@@ -134,7 +125,7 @@ void AppDelegate::applicationWillEnterForeground()
 {
     if (_testController)
     {
-        _testController->onEnterForeground();
+//        _testController->onEnterForeground();
     }
     
     Director::getInstance()->startAnimation();

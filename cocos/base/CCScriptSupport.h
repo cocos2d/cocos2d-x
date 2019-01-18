@@ -901,20 +901,6 @@ public:
      * @js NA
      */
     static void sendNodeEventToLua(Node* node, int action);
-    /**
-     * @deprecated Use getInstance() instead.
-     *
-     * @lua NA
-     * @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE static ScriptEngineManager* sharedManager() { return ScriptEngineManager::getInstance(); };
-    /**
-     * @deprecated Use destroyInstance() instead.
-     *
-     * @lua NA
-     * @js NA
-     */
-    CC_DEPRECATED_ATTRIBUTE static void purgeSharedManager() { ScriptEngineManager::destroyInstance(); };
     
 private:
     ScriptEngineManager(void)

@@ -35,11 +35,11 @@
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
 #include "platform/CCStdC.h" // ssize_t on windows
+#include "renderer/CCTexture2D.h"
 
 NS_CC_BEGIN
 
 class Font;
-class Texture2D;
 class EventCustom;
 class EventListenerCustom;
 class FontFreeType;
@@ -128,6 +128,8 @@ protected:
      * @param scaleFactor A float scale factor for scaling font letter info.
      */
     void scaleFontLetterDefinition(float scaleFactor);
+    
+    void updateTextureContent(Texture2D::PixelFormat format, int startY);
 
     std::unordered_map<ssize_t, Texture2D*> _atlasTextures;
     std::unordered_map<char32_t, FontLetterDefinition> _letterDefinitions;
@@ -139,7 +141,9 @@ protected:
     // Dynamic GlyphCollection related stuff
     int _currentPage;
     unsigned char *_currentPageData;
+    unsigned char *_currentPageDataRGBA;
     int _currentPageDataSize;
+    int _currentPageDataSizeRGBA;
     float _currentPageOrigX;
     float _currentPageOrigY;
     int _letterPadding;

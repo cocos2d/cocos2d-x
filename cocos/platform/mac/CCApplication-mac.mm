@@ -23,11 +23,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-#include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-
 #import <Cocoa/Cocoa.h>
+#import <Metal/Metal.h>
 #include <algorithm>
 
 #include "platform/CCApplication.h"
@@ -35,6 +32,7 @@ THE SOFTWARE.
 #include "math/CCGeometry.h"
 #include "base/CCDirector.h"
 #include "base/ccUtils.h"
+#include "renderer/backend/metal/DeviceMTL.h"
 
 NS_CC_BEGIN
 
@@ -79,7 +77,7 @@ int Application::run()
     
     // Retain glview to avoid glview being released in the while loop
     glview->retain();
-    
+
     while (!glview->windowShouldClose())
     {
         lastTime = getCurrentMillSecond();
@@ -115,11 +113,6 @@ void Application::setAnimationInterval(float interval)
     _animationInterval = interval*1000.0f;
 }
 
-void Application::setAnimationInterval(float interval, SetIntervalReason reason)
-{
-    setAnimationInterval(interval);
-}
-
 Application::Platform Application::getTargetPlatform()
 {
     return Platform::OS_MAC;
@@ -141,12 +134,6 @@ Application* Application::getInstance()
 {
     CCASSERT(sm_pSharedApplication, "sm_pSharedApplication not set");
     return sm_pSharedApplication;
-}
-
-// @deprecated Use getInstance() instead
-Application* Application::sharedApplication()
-{
-    return Application::getInstance();
 }
 
 const char * Application::getCurrentLanguageCode()
@@ -185,24 +172,6 @@ bool Application::openURL(const std::string &url)
     return [[NSWorkspace sharedWorkspace] openURL:nsUrl];
 }
 
-void Application::setResourceRootPath(const std::string& rootResDir)
-{
-    _resourceRootPath = rootResDir;
-    if (_resourceRootPath[_resourceRootPath.length() - 1] != '/')
-    {
-        _resourceRootPath += '/';
-    }
-    FileUtils* pFileUtils = FileUtils::getInstance();
-    std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
-    searchPaths.insert(searchPaths.begin(), _resourceRootPath);
-    pFileUtils->setSearchPaths(searchPaths);
-}
-
-const std::string& Application::getResourceRootPath(void)
-{
-    return _resourceRootPath;
-}
-
 void Application::setStartupScriptFilename(const std::string& startupScriptFile)
 {
     _startupScriptFilename = startupScriptFile;
@@ -215,5 +184,3 @@ const std::string& Application::getStartupScriptFilename(void)
 }
 
 NS_CC_END
-
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
