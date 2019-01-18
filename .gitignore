@@ -179,3 +179,6 @@ tests/*/project/proj.android/.settings/org.eclipse.buildship.core.prefs
 # tmp folder for temp usage
 tmp/
 temp/
+
+# external libs zip
+*.zip
