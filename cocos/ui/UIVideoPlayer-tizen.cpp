@@ -60,6 +60,7 @@ public:
         _image = evas_object_image_filled_add(evas);
         evas_object_show(_image);
         player_create(&_player);
+        player_set_looping(_player, videoPlayer->isLooping() );
 
         evas_object_event_callback_add(_image, EVAS_CALLBACK_MOUSE_UP, _VideoPlayerTizen::mouse_up_cb, this);
         eext_object_event_callback_add(app->_win, EEXT_CALLBACK_BACK, _VideoPlayerTizen::win_back_cb, this);
@@ -80,14 +81,17 @@ public:
 
     static void mouse_up_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
     {
-        _VideoPlayerTizen* videoPlayerTizen = (_VideoPlayerTizen*)data;
-        if (videoPlayerTizen->_videoPlayer->isPlaying())
+        if (_videoPlayer->_isUserInputEnabled())
         {
-            videoPlayerTizen->_videoPlayer->pause();
-        }
-        else
-        {
-            videoPlayerTizen->_videoPlayer->resume();
+            _VideoPlayerTizen* videoPlayerTizen = (_VideoPlayerTizen*)data;
+            if (videoPlayerTizen->_videoPlayer->isPlaying())
+            {
+                videoPlayerTizen->_videoPlayer->pause();
+            }
+            else
+            {
+                videoPlayerTizen->_videoPlayer->resume();
+            }
         }
     }
 
@@ -122,6 +126,9 @@ VideoPlayer::VideoPlayer()
 , _fullScreenEnabled(false)
 , _fullScreenDirty(false)
 , _keepAspectRatioEnabled(false)
+, _isLooping(false)
+, _isUserInputEnabled(true)
+, _styleType(StyleType::DEFAULT)
 {
     _videoView = (void*) new (std::nothrow) _VideoPlayerTizen(this);
 
@@ -157,6 +164,24 @@ void VideoPlayer::setURL(const std::string& videoUrl)
 
     _VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
     player_set_uri(impl->_player, videoUrl.c_str());
+}
+
+void VideoPlayer::setLooping(bool looping)
+{
+    _isLooping = looping;
+    _VideoPlayerTizen* impl = (_VideoPlayerTizen*)_videoView;
+   player_set_looping(impl->_player, looping );
+}
+
+void VideoPlayer::setUserInputEnabled(bool enableInput)
+{
+    _isUserInputEnabled = enableInput
+    
+}
+
+void VideoPlayer::setStyle(StyleType style)
+{
+    _styleType = style;
 }
 
 void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
@@ -436,6 +461,9 @@ void VideoPlayer::copySpecialProperties(Widget *widget)
     if (videoPlayer)
     {
         _isPlaying = videoPlayer->_isPlaying;
+        _isLooping = videoPlayer->_isLooping;
+        _isUserInputEnabled = videoPlayer->_isUserInputEnabled;
+        _styleType = videoPlayer->_styleType;
         _fullScreenEnabled = videoPlayer->_fullScreenEnabled;
         _fullScreenDirty = videoPlayer->_fullScreenDirty;
         _videoURL = videoPlayer->_videoURL;
