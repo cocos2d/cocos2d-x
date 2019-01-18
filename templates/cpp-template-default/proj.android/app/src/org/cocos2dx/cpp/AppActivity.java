@@ -26,6 +26,7 @@ package org.cocos2dx.cpp;
 
 import android.os.Bundle;
 import org.cocos2dx.lib.Cocos2dxActivity;
+import android.os.Build;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
