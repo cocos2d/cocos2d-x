@@ -36,6 +36,7 @@ UIEditBoxTests::UIEditBoxTests()
     ADD_TEST_CASE(UIEditBoxTestToggleVisibility);
     ADD_TEST_CASE(UIEditBoxTestTextHorizontalAlignment);
     ADD_TEST_CASE(UIEditBoxTestPressedAndDisabled);
+    ADD_TEST_CASE(UIEditBoxTestRestrictions);
 }
 
 // UIEditBoxTest
@@ -386,4 +387,52 @@ bool UIEditBoxTestPressedAndDisabled::init() {
     editbox->setEnabled(false);
 
     return true;
+}
+
+// UIEditBoxTestRestrictions
+bool UIEditBoxTestRestrictions::init()
+{
+    if (UIScene::init())
+    {
+        auto glview = Director::getInstance()->getOpenGLView();
+        auto visibleOrigin = glview->getVisibleOrigin();
+        auto visibleSize = glview->getVisibleSize();
+        
+        auto pBg = Sprite::create("Images/HelloWorld.png");
+        pBg->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
+        addChild(pBg);
+        
+        auto editBoxSize = Size(visibleSize.width - 100, visibleSize.height * 0.1);
+        
+        // top
+        std::string pNormalSprite = "extensions/green_edit.png";
+        _editbox = ui::EditBox::create(editBoxSize + Size(0,40), ui::Scale9Sprite::create(pNormalSprite));
+        _editbox->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-50, visibleOrigin.y+visibleSize.height*3/4));
+        _editbox->setFontColor(Color3B::RED);
+        _editbox->setPlaceHolder("Only Alphanumeric characters");
+        _editbox->setPlaceholderFontColor(Color3B::WHITE);
+        _editbox->setMaxLength(25);
+        _editbox->setFontSize(editBoxSize.height/2);
+        _editbox->setText("Only alphanumeric test");
+        _editbox->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
+        _editbox->setVisible(true);
+        _editbox->setInputRestriction( (int) EditBox::InputRestrictionFlag::ALNUM );
+        addChild(_editbox);
+        
+        _editbox2 = ui::EditBox::create(editBoxSize + Size(0,40), ui::Scale9Sprite::create(pNormalSprite));
+        _editbox2->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2-50, visibleOrigin.y+visibleSize.height*1/4));
+        _editbox2->setFontColor(Color3B::RED);
+        _editbox2->setPlaceHolder("Name:");
+        _editbox2->setPlaceholderFontColor(Color3B::WHITE);
+        _editbox2->setMaxLength(25);
+        _editbox2->setFontSize(editBoxSize.height/2);
+        _editbox2->setText("Can't edit: can edit");
+        _editbox2->setReturnType(ui::EditBox::KeyboardReturnType::DONE);
+        _editbox2->setVisible(true);
+        _editbox2->setUneditableTextLength(11);
+        addChild(_editbox2);
+        
+        return true;
+    }
+    return false;
 }
