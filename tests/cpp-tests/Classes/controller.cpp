@@ -73,7 +73,7 @@ public:
 //        addTest("Extensions", []() { return new ExtensionsTests(); });
         addTest("FileUtils", []() { return new FileUtilsTests(); });
         addTest("Fonts", []() { return new FontTests(); });
-//        addTest("Interval", [](){return new IntervalTests(); }); // TODO crash on iPhone X
+        addTest("Interval", [](){return new IntervalTests(); });
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         addTest("JNIHelper", []() { return new JNITests(); });
 #endif
@@ -81,7 +81,7 @@ public:
 //        addTest("Navigation Mesh", [](){return new NavMeshTests(); });
 //        addTest("Node: BillBoard Test", [](){  return new BillBoardTests(); });
 //        addTest("Node: Camera 3D Test", [](){  return new Camera3DTests(); });
-//        addTest("Node: Clipping", []() { return new ClippingNodeTests(); }); // TODO crash on iPhone X
+        addTest("Node: Clipping", []() { return new ClippingNodeTests(); });
         addTest("Node: Draw", [](){return new DrawPrimitivesTests(); });
         // addTest("Node: Label - New API", [](){return new NewLabelTests(); });
         addTest("Node: Layer", [](){return new LayerTests(); });
@@ -103,8 +103,8 @@ public:
 //        addTest("Node: Sprite3D", [](){  return new Sprite3DTests(); });
         addTest("Node: SpritePolygon", [](){return new (std::nothrow) SpritePolygonTest(); });
 //        addTest("Node: Terrain", [](){  return new TerrainTests(); });
-//        addTest("Node: TileMap", [](){return new TileMapTests(); }); // failed assertion `When depth and stencil are used toget ...
-//        addTest("Node: FastTileMap", [](){return new FastTileMapTests(); });
+        addTest("Node: TileMap", [](){return new TileMapTests(); });
+        addTest("Node: FastTileMap", [](){return new FastTileMapTests(); });
         addTest("Node: Text Input", [](){return new TextInputTests(); });
         addTest("Node: UI", [](){  return new UITests(); });
         addTest("Mouse", []() { return new MouseTests(); });
@@ -119,7 +119,7 @@ public:
         addTest("TextureCache", []() { return new TextureCacheTests(); });
         addTest("TexturePacker Encryption", []() { return new TextureAtlasEncryptionTests(); });
         addTest("Touches", [](){return new TouchesTests(); });
-//        addTest("Transitions", [](){return new TransitionsTests(); });
+        addTest("Transitions", [](){return new TransitionsTests(); });
         addTest("Unit Test", []() { return new UnitTests(); });
         addTest("URL Open Test", []() { return new OpenURLTests(); });
         addTest("UserDefault", []() { return new UserDefaultTests(); });

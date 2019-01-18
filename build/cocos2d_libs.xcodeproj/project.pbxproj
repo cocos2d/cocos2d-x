@@ -528,10 +528,6 @@
 		40FE107221F073BF0061C04F /* CCControlSaturationBrightnessPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 40FE104421F070640061C04F /* CCControlSaturationBrightnessPicker.h */; };
 		40FE107321F073BF0061C04F /* CCControlPotentiometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 40FE104521F070640061C04F /* CCControlPotentiometer.h */; };
 		40FE107421F073BF0061C04F /* CCControlSwitch.h in Headers */ = {isa = PBXBuildFile; fileRef = 40FE104621F070640061C04F /* CCControlSwitch.h */; };
-		460D4CCD21A54D650075726E /* CCShaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460D4CCB21A54D650075726E /* CCShaderCache.cpp */; };
-		460D4CCE21A54D650075726E /* CCShaderCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460D4CCB21A54D650075726E /* CCShaderCache.cpp */; };
-		460D4CCF21A54D650075726E /* CCShaderCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4CCC21A54D650075726E /* CCShaderCache.h */; };
-		460D4CD021A54D650075726E /* CCShaderCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4CCC21A54D650075726E /* CCShaderCache.h */; };
 		460D4CD321A5666E0075726E /* CCRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4CD121A5666E0075726E /* CCRenderer.h */; };
 		460D4CD421A5666E0075726E /* CCRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4CD121A5666E0075726E /* CCRenderer.h */; };
 		460D4CD521A5666E0075726E /* CCRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460D4CD221A5666E0075726E /* CCRenderer.cpp */; };
@@ -788,6 +784,30 @@
 		468A197B1EF3BA6500ECA675 /* libBulletMultiThreaded.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 468A19761EF3BA6500ECA675 /* libBulletMultiThreaded.a */; };
 		468A197C1EF3BA6500ECA675 /* libLinearMath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 468A19771EF3BA6500ECA675 /* libLinearMath.a */; };
 		468A197D1EF3BA6500ECA675 /* libMiniCL.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 468A19781EF3BA6500ECA675 /* libMiniCL.a */; };
+		46AF3A0D21F1877100D5AFCD /* CCPhysicsWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A0121F1877100D5AFCD /* CCPhysicsWorld.cpp */; };
+		46AF3A0E21F1877100D5AFCD /* CCPhysicsWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A0121F1877100D5AFCD /* CCPhysicsWorld.cpp */; };
+		46AF3A0F21F1877100D5AFCD /* CCPhysicsBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A0221F1877100D5AFCD /* CCPhysicsBody.cpp */; };
+		46AF3A1021F1877100D5AFCD /* CCPhysicsBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A0221F1877100D5AFCD /* CCPhysicsBody.cpp */; };
+		46AF3A1121F1877100D5AFCD /* CCPhysicsShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A0321F1877100D5AFCD /* CCPhysicsShape.cpp */; };
+		46AF3A1221F1877100D5AFCD /* CCPhysicsShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A0321F1877100D5AFCD /* CCPhysicsShape.cpp */; };
+		46AF3A1321F1877100D5AFCD /* CCPhysicsContact.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A0421F1877100D5AFCD /* CCPhysicsContact.h */; };
+		46AF3A1421F1877100D5AFCD /* CCPhysicsContact.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A0421F1877100D5AFCD /* CCPhysicsContact.h */; };
+		46AF3A1521F1877100D5AFCD /* CCPhysicsWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A0521F1877100D5AFCD /* CCPhysicsWorld.h */; };
+		46AF3A1621F1877100D5AFCD /* CCPhysicsWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A0521F1877100D5AFCD /* CCPhysicsWorld.h */; };
+		46AF3A1721F1877100D5AFCD /* CCPhysicsContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A0621F1877100D5AFCD /* CCPhysicsContact.cpp */; };
+		46AF3A1821F1877100D5AFCD /* CCPhysicsContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A0621F1877100D5AFCD /* CCPhysicsContact.cpp */; };
+		46AF3A1921F1877100D5AFCD /* CCPhysicsBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A0721F1877100D5AFCD /* CCPhysicsBody.h */; };
+		46AF3A1A21F1877100D5AFCD /* CCPhysicsBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A0721F1877100D5AFCD /* CCPhysicsBody.h */; };
+		46AF3A1B21F1877100D5AFCD /* cpCompat62.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A0821F1877100D5AFCD /* cpCompat62.h */; };
+		46AF3A1C21F1877100D5AFCD /* cpCompat62.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A0821F1877100D5AFCD /* cpCompat62.h */; };
+		46AF3A1D21F1877100D5AFCD /* CCPhysicsShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A0921F1877100D5AFCD /* CCPhysicsShape.h */; };
+		46AF3A1E21F1877100D5AFCD /* CCPhysicsShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A0921F1877100D5AFCD /* CCPhysicsShape.h */; };
+		46AF3A1F21F1877100D5AFCD /* CCPhysicsHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A0A21F1877100D5AFCD /* CCPhysicsHelper.h */; };
+		46AF3A2021F1877100D5AFCD /* CCPhysicsHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A0A21F1877100D5AFCD /* CCPhysicsHelper.h */; };
+		46AF3A2121F1877100D5AFCD /* CCPhysicsJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A0B21F1877100D5AFCD /* CCPhysicsJoint.h */; };
+		46AF3A2221F1877100D5AFCD /* CCPhysicsJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A0B21F1877100D5AFCD /* CCPhysicsJoint.h */; };
+		46AF3A2321F1877100D5AFCD /* CCPhysicsJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A0C21F1877100D5AFCD /* CCPhysicsJoint.cpp */; };
+		46AF3A2421F1877100D5AFCD /* CCPhysicsJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A0C21F1877100D5AFCD /* CCPhysicsJoint.cpp */; };
 		46BD387A21D35A46002BD50F /* BlendStateMTL.mm in Sources */ = {isa = PBXBuildFile; fileRef = 460D4CF921ABD0C60075726E /* BlendStateMTL.mm */; };
 		46BD387B21D35A4A002BD50F /* BlendStateMTL.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4CFB21ABD0C60075726E /* BlendStateMTL.h */; };
 		46BD387C21D35A4E002BD50F /* BufferMTL.h in Headers */ = {isa = PBXBuildFile; fileRef = 460D4CFE21ABD0C60075726E /* BufferMTL.h */; };
@@ -816,30 +836,6 @@
 		46D3D45C21DE014500EF5E75 /* BufferManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D45921DE014500EF5E75 /* BufferManager.mm */; };
 		46D3D45D21DE014500EF5E75 /* BufferManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D45A21DE014500EF5E75 /* BufferManager.h */; };
 		46D3D45E21DE014500EF5E75 /* BufferManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D45A21DE014500EF5E75 /* BufferManager.h */; };
-		46D3D46D21E473BB00EF5E75 /* CCPhysicsWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D46121E473BB00EF5E75 /* CCPhysicsWorld.cpp */; };
-		46D3D46E21E473BB00EF5E75 /* CCPhysicsWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D46121E473BB00EF5E75 /* CCPhysicsWorld.cpp */; };
-		46D3D46F21E473BB00EF5E75 /* CCPhysicsBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D46221E473BB00EF5E75 /* CCPhysicsBody.cpp */; };
-		46D3D47021E473BB00EF5E75 /* CCPhysicsBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D46221E473BB00EF5E75 /* CCPhysicsBody.cpp */; };
-		46D3D47121E473BB00EF5E75 /* CCPhysicsShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D46321E473BB00EF5E75 /* CCPhysicsShape.cpp */; };
-		46D3D47221E473BB00EF5E75 /* CCPhysicsShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D46321E473BB00EF5E75 /* CCPhysicsShape.cpp */; };
-		46D3D47321E473BB00EF5E75 /* CCPhysicsContact.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D46421E473BB00EF5E75 /* CCPhysicsContact.h */; };
-		46D3D47421E473BB00EF5E75 /* CCPhysicsContact.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D46421E473BB00EF5E75 /* CCPhysicsContact.h */; };
-		46D3D47521E473BB00EF5E75 /* CCPhysicsWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D46521E473BB00EF5E75 /* CCPhysicsWorld.h */; };
-		46D3D47621E473BB00EF5E75 /* CCPhysicsWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D46521E473BB00EF5E75 /* CCPhysicsWorld.h */; };
-		46D3D47721E473BB00EF5E75 /* CCPhysicsContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D46621E473BB00EF5E75 /* CCPhysicsContact.cpp */; };
-		46D3D47821E473BB00EF5E75 /* CCPhysicsContact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D46621E473BB00EF5E75 /* CCPhysicsContact.cpp */; };
-		46D3D47921E473BB00EF5E75 /* CCPhysicsBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D46721E473BB00EF5E75 /* CCPhysicsBody.h */; };
-		46D3D47A21E473BB00EF5E75 /* CCPhysicsBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D46721E473BB00EF5E75 /* CCPhysicsBody.h */; };
-		46D3D47B21E473BB00EF5E75 /* cpCompat62.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D46821E473BB00EF5E75 /* cpCompat62.h */; };
-		46D3D47C21E473BB00EF5E75 /* cpCompat62.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D46821E473BB00EF5E75 /* cpCompat62.h */; };
-		46D3D47D21E473BB00EF5E75 /* CCPhysicsShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D46921E473BB00EF5E75 /* CCPhysicsShape.h */; };
-		46D3D47E21E473BB00EF5E75 /* CCPhysicsShape.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D46921E473BB00EF5E75 /* CCPhysicsShape.h */; };
-		46D3D47F21E473BB00EF5E75 /* CCPhysicsHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D46A21E473BB00EF5E75 /* CCPhysicsHelper.h */; };
-		46D3D48021E473BB00EF5E75 /* CCPhysicsHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D46A21E473BB00EF5E75 /* CCPhysicsHelper.h */; };
-		46D3D48121E473BB00EF5E75 /* CCPhysicsJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D46B21E473BB00EF5E75 /* CCPhysicsJoint.h */; };
-		46D3D48221E473BB00EF5E75 /* CCPhysicsJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D3D46B21E473BB00EF5E75 /* CCPhysicsJoint.h */; };
-		46D3D48321E473BB00EF5E75 /* CCPhysicsJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D46C21E473BB00EF5E75 /* CCPhysicsJoint.cpp */; };
-		46D3D48421E473BB00EF5E75 /* CCPhysicsJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D46C21E473BB00EF5E75 /* CCPhysicsJoint.cpp */; };
 		46D3D48A21E6E8F700EF5E75 /* SimpleAudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D48921E6E8F700EF5E75 /* SimpleAudioEngine.cpp */; };
 		46D3D48B21E6E8F700EF5E75 /* SimpleAudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46D3D48921E6E8F700EF5E75 /* SimpleAudioEngine.cpp */; };
 		46E21B4721B900C900430A43 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46E21B4521B900C900430A43 /* StringUtils.cpp */; };
@@ -2717,8 +2713,6 @@
 		40FE104421F070640061C04F /* CCControlSaturationBrightnessPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlSaturationBrightnessPicker.h; sourceTree = "<group>"; };
 		40FE104521F070640061C04F /* CCControlPotentiometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlPotentiometer.h; sourceTree = "<group>"; };
 		40FE104621F070640061C04F /* CCControlSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlSwitch.h; sourceTree = "<group>"; };
-		460D4CCB21A54D650075726E /* CCShaderCache.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CCShaderCache.cpp; sourceTree = "<group>"; };
-		460D4CCC21A54D650075726E /* CCShaderCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCShaderCache.h; sourceTree = "<group>"; };
 		460D4CD121A5666E0075726E /* CCRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderer.h; sourceTree = "<group>"; };
 		460D4CD221A5666E0075726E /* CCRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCRenderer.cpp; sourceTree = "<group>"; };
 		460D4CF421ABD0C60075726E /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
@@ -2884,6 +2878,19 @@
 		46A15FCC1807A544005B8026 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = ../AUTHORS; sourceTree = "<group>"; };
 		46A15FCE1807A544005B8026 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		46A15FE11807A56F005B8026 /* Export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
+		46AF3A0021F1877100D5AFCD /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		46AF3A0121F1877100D5AFCD /* CCPhysicsWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsWorld.cpp; sourceTree = "<group>"; };
+		46AF3A0221F1877100D5AFCD /* CCPhysicsBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsBody.cpp; sourceTree = "<group>"; };
+		46AF3A0321F1877100D5AFCD /* CCPhysicsShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsShape.cpp; sourceTree = "<group>"; };
+		46AF3A0421F1877100D5AFCD /* CCPhysicsContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsContact.h; sourceTree = "<group>"; };
+		46AF3A0521F1877100D5AFCD /* CCPhysicsWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorld.h; sourceTree = "<group>"; };
+		46AF3A0621F1877100D5AFCD /* CCPhysicsContact.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsContact.cpp; sourceTree = "<group>"; };
+		46AF3A0721F1877100D5AFCD /* CCPhysicsBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsBody.h; sourceTree = "<group>"; };
+		46AF3A0821F1877100D5AFCD /* cpCompat62.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpCompat62.h; sourceTree = "<group>"; };
+		46AF3A0921F1877100D5AFCD /* CCPhysicsShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsShape.h; sourceTree = "<group>"; };
+		46AF3A0A21F1877100D5AFCD /* CCPhysicsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsHelper.h; sourceTree = "<group>"; };
+		46AF3A0B21F1877100D5AFCD /* CCPhysicsJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsJoint.h; sourceTree = "<group>"; };
+		46AF3A0C21F1877100D5AFCD /* CCPhysicsJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsJoint.cpp; sourceTree = "<group>"; };
 		46BD387221D35727002BD50F /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.1.sdk/System/Library/Frameworks/Metal.framework; sourceTree = DEVELOPER_DIR; };
 		46BD387421D35750002BD50F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.1.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		46BD387621D35867002BD50F /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
@@ -2893,19 +2900,6 @@
 		46C02E0618E91123004B7456 /* xxhash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxhash.h; sourceTree = "<group>"; };
 		46D3D45921DE014500EF5E75 /* BufferManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = BufferManager.mm; sourceTree = "<group>"; };
 		46D3D45A21DE014500EF5E75 /* BufferManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BufferManager.h; sourceTree = "<group>"; };
-		46D3D46021E473BB00EF5E75 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		46D3D46121E473BB00EF5E75 /* CCPhysicsWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsWorld.cpp; sourceTree = "<group>"; };
-		46D3D46221E473BB00EF5E75 /* CCPhysicsBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsBody.cpp; sourceTree = "<group>"; };
-		46D3D46321E473BB00EF5E75 /* CCPhysicsShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsShape.cpp; sourceTree = "<group>"; };
-		46D3D46421E473BB00EF5E75 /* CCPhysicsContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsContact.h; sourceTree = "<group>"; };
-		46D3D46521E473BB00EF5E75 /* CCPhysicsWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsWorld.h; sourceTree = "<group>"; };
-		46D3D46621E473BB00EF5E75 /* CCPhysicsContact.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsContact.cpp; sourceTree = "<group>"; };
-		46D3D46721E473BB00EF5E75 /* CCPhysicsBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsBody.h; sourceTree = "<group>"; };
-		46D3D46821E473BB00EF5E75 /* cpCompat62.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpCompat62.h; sourceTree = "<group>"; };
-		46D3D46921E473BB00EF5E75 /* CCPhysicsShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsShape.h; sourceTree = "<group>"; };
-		46D3D46A21E473BB00EF5E75 /* CCPhysicsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsHelper.h; sourceTree = "<group>"; };
-		46D3D46B21E473BB00EF5E75 /* CCPhysicsJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsJoint.h; sourceTree = "<group>"; };
-		46D3D46C21E473BB00EF5E75 /* CCPhysicsJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsJoint.cpp; sourceTree = "<group>"; };
 		46D3D48921E6E8F700EF5E75 /* SimpleAudioEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleAudioEngine.cpp; sourceTree = "<group>"; };
 		46E21B4521B900C900430A43 /* StringUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtils.cpp; sourceTree = "<group>"; };
 		46E21B4621B900C900430A43 /* StringUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtils.h; sourceTree = "<group>"; };
@@ -3632,6 +3626,7 @@
 				50272538190BF1B900AAF4ED /* cocos2d.h */,
 				46A15FCE1807A544005B8026 /* README.md */,
 				50DC5180187B817900A9C23F /* RELEASE_NOTES.md */,
+				46AF39FF21F1877100D5AFCD /* physics */,
 				EDC7894321CA19FA00E1863C /* editor-support */,
 				46A169A11807B037005B8026 /* 2d */,
 				46A15FD01807A56F005B8026 /* audio */,
@@ -4863,6 +4858,27 @@
 			path = ../cocos/math;
 			sourceTree = "<group>";
 		};
+		46AF39FF21F1877100D5AFCD /* physics */ = {
+			isa = PBXGroup;
+			children = (
+				46AF3A0021F1877100D5AFCD /* CMakeLists.txt */,
+				46AF3A0121F1877100D5AFCD /* CCPhysicsWorld.cpp */,
+				46AF3A0221F1877100D5AFCD /* CCPhysicsBody.cpp */,
+				46AF3A0321F1877100D5AFCD /* CCPhysicsShape.cpp */,
+				46AF3A0421F1877100D5AFCD /* CCPhysicsContact.h */,
+				46AF3A0521F1877100D5AFCD /* CCPhysicsWorld.h */,
+				46AF3A0621F1877100D5AFCD /* CCPhysicsContact.cpp */,
+				46AF3A0721F1877100D5AFCD /* CCPhysicsBody.h */,
+				46AF3A0821F1877100D5AFCD /* cpCompat62.h */,
+				46AF3A0921F1877100D5AFCD /* CCPhysicsShape.h */,
+				46AF3A0A21F1877100D5AFCD /* CCPhysicsHelper.h */,
+				46AF3A0B21F1877100D5AFCD /* CCPhysicsJoint.h */,
+				46AF3A0C21F1877100D5AFCD /* CCPhysicsJoint.cpp */,
+			);
+			name = physics;
+			path = ../cocos/physics;
+			sourceTree = "<group>";
+		};
 		46C02E0418E91123004B7456 /* xxhash */ = {
 			isa = PBXGroup;
 			children = (
@@ -4871,27 +4887,6 @@
 			);
 			name = xxhash;
 			path = ../external/xxhash;
-			sourceTree = "<group>";
-		};
-		46D3D45F21E473BB00EF5E75 /* physics */ = {
-			isa = PBXGroup;
-			children = (
-				46D3D46021E473BB00EF5E75 /* CMakeLists.txt */,
-				46D3D46121E473BB00EF5E75 /* CCPhysicsWorld.cpp */,
-				46D3D46221E473BB00EF5E75 /* CCPhysicsBody.cpp */,
-				46D3D46321E473BB00EF5E75 /* CCPhysicsShape.cpp */,
-				46D3D46421E473BB00EF5E75 /* CCPhysicsContact.h */,
-				46D3D46521E473BB00EF5E75 /* CCPhysicsWorld.h */,
-				46D3D46621E473BB00EF5E75 /* CCPhysicsContact.cpp */,
-				46D3D46721E473BB00EF5E75 /* CCPhysicsBody.h */,
-				46D3D46821E473BB00EF5E75 /* cpCompat62.h */,
-				46D3D46921E473BB00EF5E75 /* CCPhysicsShape.h */,
-				46D3D46A21E473BB00EF5E75 /* CCPhysicsHelper.h */,
-				46D3D46B21E473BB00EF5E75 /* CCPhysicsJoint.h */,
-				46D3D46C21E473BB00EF5E75 /* CCPhysicsJoint.cpp */,
-			);
-			name = physics;
-			path = ../physics;
 			sourceTree = "<group>";
 		};
 		46F9B31021AFE64B009DF858 /* extensions */ = {
@@ -4944,7 +4939,6 @@
 		500DC89819105D41007B91BF /* renderer */ = {
 			isa = PBXGroup;
 			children = (
-				46D3D45F21E473BB00EF5E75 /* physics */,
 				460D4CC821A545420075726E /* shaders */,
 				ED28C1EC219E629B0078D854 /* backend */,
 				5034CA5D191D591900CE6051 /* shaders-old */,
@@ -5913,6 +5907,7 @@
 				40FE105921F070640061C04F /* CCControlStepper.h in Headers */,
 				1A40D1331E8E56C7002E363A /* itoa.h in Headers */,
 				DABC9FAB19E7DFA900FA252C /* CCClippingRectangleNode.h in Headers */,
+				46AF3A1F21F1877100D5AFCD /* CCPhysicsHelper.h in Headers */,
 				EDC78C1C21CA19FB00E1863C /* CCActionTimelineCache.h in Headers */,
 				50ABBEC11925AB6F00A911A9 /* CCValue.h in Headers */,
 				1A40D1421E8E56C7002E363A /* strfunc.h in Headers */,
@@ -5941,6 +5936,7 @@
 				1A570077180BC5A10088DEC7 /* CCActionGrid3D.h in Headers */,
 				1A57007B180BC5A10088DEC7 /* CCActionInstant.h in Headers */,
 				B276EF5F1988D1D500CD400F /* CCVertexIndexData.h in Headers */,
+				46AF3A1B21F1877100D5AFCD /* cpCompat62.h in Headers */,
 				50864CA31C7BC1B000B3BAB1 /* cpBody.h in Headers */,
 				1A57007F180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
 				B6DD2FDB1B04825B00E47F5F /* DetourLocalBoundary.h in Headers */,
@@ -5977,6 +5973,7 @@
 				1A40D10C1E8E56C7002E363A /* document-wrapper.h in Headers */,
 				1A5700A0180BC5D20088DEC7 /* CCNode.h in Headers */,
 				50ABC0671926664800A911A9 /* CCPlatformDefine-mac.h in Headers */,
+				46AF3A2121F1877100D5AFCD /* CCPhysicsJoint.h in Headers */,
 				46C02E0918E91123004B7456 /* xxhash.h in Headers */,
 				1A40D16F1E8E56C7002E363A /* stringbuffer.h in Headers */,
 				EDC78C9221CA19FC00E1863C /* LoadingBarReader.h in Headers */,
@@ -5993,7 +5990,6 @@
 				EDC78C0021CA19FB00E1863C /* CCTimelineMacro.h in Headers */,
 				468A14E01EF223B600ECA675 /* flatbuffers.h in Headers */,
 				5034CA2D191D591100CE6051 /* ccShader_PositionTextureA8Color.frag in Headers */,
-				46D3D48121E473BB00EF5E75 /* CCPhysicsJoint.h in Headers */,
 				1A40D1601E8E56C7002E363A /* prettywriter.h in Headers */,
 				1A40D1481E8E56C7002E363A /* swap.h in Headers */,
 				460D4D1021ABD0C60075726E /* DepthStencilStateMTL.h in Headers */,
@@ -6034,6 +6030,7 @@
 				4631CB6D21AFD9F90000D408 /* CCUIEditBoxMac.h in Headers */,
 				4631CB6F21AFD9F90000D408 /* CCUISingleLineTextField.h in Headers */,
 				50ABBED91925AB6F00A911A9 /* ZipUtils.h in Headers */,
+				46AF3A1321F1877100D5AFCD /* CCPhysicsContact.h in Headers */,
 				50643BDB19BFAF4400EF68ED /* CCStdC.h in Headers */,
 				BA6249A81E77D2850096291C /* tinydir.h in Headers */,
 				1A2B22B01E6E54D6001D5EC9 /* Uri.h in Headers */,
@@ -6072,6 +6069,7 @@
 				EDE6457721F017220063F6E4 /* ShaderCache.h in Headers */,
 				1A40D12A1E8E56C7002E363A /* diyfp.h in Headers */,
 				B6DD2FC91B04825B00E47F5F /* DetourNavMeshBuilder.h in Headers */,
+				46AF3A1921F1877100D5AFCD /* CCPhysicsBody.h in Headers */,
 				1A57020A180BCBDF0088DEC7 /* CCMotionStreak.h in Headers */,
 				EDC78D1421CA19FC00E1863C /* CCDatas.h in Headers */,
 				1A570212180BCBF40088DEC7 /* CCProgressTimer.h in Headers */,
@@ -6170,7 +6168,6 @@
 				50ABBED51925AB6F00A911A9 /* utlist.h in Headers */,
 				1A5702F4180BCE750088DEC7 /* CCTMXObjectGroup.h in Headers */,
 				1A5702F8180BCE750088DEC7 /* CCTMXTiledMap.h in Headers */,
-				46D3D47B21E473BB00EF5E75 /* cpCompat62.h in Headers */,
 				5034CA21191D591100CE6051 /* ccShader_PositionTextureColorAlphaTest.frag in Headers */,
 				4631CBEF21AFD9FA0000D408 /* UISlider.h in Headers */,
 				4631CB8321AFD9F90000D408 /* UIEditBoxImpl.h in Headers */,
@@ -6184,7 +6181,6 @@
 				50ABBDA11925AB4100A911A9 /* CCGroupCommand.h in Headers */,
 				50864C911C7BC1B000B3BAB1 /* chipmunk_private.h in Headers */,
 				1A5702FC180BCE750088DEC7 /* CCTMXXMLParser.h in Headers */,
-				46D3D47321E473BB00EF5E75 /* CCPhysicsContact.h in Headers */,
 				50ABBDBB1925AB4100A911A9 /* CCTextureAtlas.h in Headers */,
 				15FB20911AE7C57D00C31518 /* advancing_front.h in Headers */,
 				1A570302180BCE890088DEC7 /* CCParallaxNode.h in Headers */,
@@ -6194,7 +6190,6 @@
 				1A570312180BCF190088DEC7 /* CCComponentContainer.h in Headers */,
 				50ABC0651926664800A911A9 /* CCGL-mac.h in Headers */,
 				4631CBC521AFD9FA0000D408 /* UIImageView.h in Headers */,
-				46D3D47D21E473BB00EF5E75 /* CCPhysicsShape.h in Headers */,
 				50643BD419BFAECF00EF68ED /* CCGL.h in Headers */,
 				4631CB1521AFD9F90000D408 /* UITextAtlas.h in Headers */,
 				50864CA61C7BC1B000B3BAB1 /* cpConstraint.h in Headers */,
@@ -6287,7 +6282,6 @@
 				1A40D15A1E8E56C7002E363A /* ostreamwrapper.h in Headers */,
 				1A40D12D1E8E56C7002E363A /* dtoa.h in Headers */,
 				B24AA987195A675C007B4522 /* CCFastTMXLayer.h in Headers */,
-				46D3D47921E473BB00EF5E75 /* CCPhysicsBody.h in Headers */,
 				1A40D16C1E8E56C7002E363A /* stream.h in Headers */,
 				EDC78C5821CA19FC00E1863C /* CCActionFrameEasing.h in Headers */,
 				ED75D42021E3030E0052B87E /* ccConstants.h in Headers */,
@@ -6310,6 +6304,7 @@
 				50ABBE7F1925AB6F00A911A9 /* CCEventTouch.h in Headers */,
 				EDC78CCA21CA19FC00E1863C /* SingleNodeReader.h in Headers */,
 				50ABBE5B1925AB6F00A911A9 /* CCEventKeyboard.h in Headers */,
+				46AF3A1D21F1877100D5AFCD /* CCPhysicsShape.h in Headers */,
 				EDC78D1221CA19FC00E1863C /* CCArmatureDataManager.h in Headers */,
 				4631CBED21AFD9FA0000D408 /* UIPageView.h in Headers */,
 				46D3D45D21DE014500EF5E75 /* BufferManager.h in Headers */,
@@ -6344,6 +6339,7 @@
 				50ABBE371925AB6F00A911A9 /* CCConsole.h in Headers */,
 				50ABC00B1926664800A911A9 /* CCDevice.h in Headers */,
 				46E21B4921B900C900430A43 /* StringUtils.h in Headers */,
+				46AF3A1521F1877100D5AFCD /* CCPhysicsWorld.h in Headers */,
 				EDC78CD621CA19FC00E1863C /* Sprite3DReader.h in Headers */,
 				50ABC0131926664800A911A9 /* CCGLView.h in Headers */,
 				50ABBDB31925AB4100A911A9 /* ccShaders.h in Headers */,
@@ -6374,9 +6370,7 @@
 				1A40D13C1E8E56C7002E363A /* regex.h in Headers */,
 				50ABBECD1925AB6F00A911A9 /* s3tc.h in Headers */,
 				50ABBE771925AB6F00A911A9 /* CCEventListenerTouch.h in Headers */,
-				46D3D47F21E473BB00EF5E75 /* CCPhysicsHelper.h in Headers */,
 				5034CA33191D591100CE6051 /* ccShader_PositionTexture_uColor.frag in Headers */,
-				46D3D47521E473BB00EF5E75 /* CCPhysicsWorld.h in Headers */,
 				B6DD2FEB1B04825B00E47F5F /* DetourProximityGrid.h in Headers */,
 				B6DD2FC51B04825B00E47F5F /* DetourNavMesh.h in Headers */,
 				50ABC0171926664800A911A9 /* CCImage.h in Headers */,
@@ -6736,6 +6730,7 @@
 				EDC78CC521CA19FC00E1863C /* LayoutReader.h in Headers */,
 				503DD8F01926736A00CD74DD /* CCStdC-ios.h in Headers */,
 				3EACC9A319F5014D00EB3C5E /* CCCamera.h in Headers */,
+				46AF3A2221F1877100D5AFCD /* CCPhysicsJoint.h in Headers */,
 				EDC78D1921CA19FC00E1863C /* CCComController.h in Headers */,
 				1A40D16A1E8E56C7002E363A /* schema.h in Headers */,
 				EDC78D0521CA19FC00E1863C /* CCDisplayFactory.h in Headers */,
@@ -6750,7 +6745,6 @@
 				46F9B72321AFE64D009DF858 /* CCTableViewCell.h in Headers */,
 				1A40D1281E8E56C7002E363A /* biginteger.h in Headers */,
 				1A40D1221E8E56C7002E363A /* filewritestream.h in Headers */,
-				46D3D47A21E473BB00EF5E75 /* CCPhysicsBody.h in Headers */,
 				50ABBE7C1925AB6F00A911A9 /* CCEventMouse.h in Headers */,
 				15FB208E1AE7C57D00C31518 /* poly2tri.h in Headers */,
 				EDC78C1121CA19FB00E1863C /* CCActionTimelineNode.h in Headers */,
@@ -6817,6 +6811,7 @@
 				EDC78BED21CA19FB00E1863C /* CCComAttribute.h in Headers */,
 				EDC78C9921CA19FC00E1863C /* TextAtlasReader.h in Headers */,
 				46D3D45E21DE014500EF5E75 /* BufferManager.h in Headers */,
+				46AF3A2021F1877100D5AFCD /* CCPhysicsHelper.h in Headers */,
 				50ABBE501925AB6F00A911A9 /* CCEventCustom.h in Headers */,
 				A0534A661B872FFD006B03E5 /* CCDownloader-apple.h in Headers */,
 				EDC78CB921CA19FC00E1863C /* PageViewReader.h in Headers */,
@@ -6827,6 +6822,7 @@
 				1A570078180BC5A10088DEC7 /* CCActionGrid3D.h in Headers */,
 				50ABBD631925AB0000A911A9 /* Vec4.h in Headers */,
 				1A40D12E1E8E56C7002E363A /* dtoa.h in Headers */,
+				46AF3A1421F1877100D5AFCD /* CCPhysicsContact.h in Headers */,
 				50CB247E19D9C5A100687767 /* AudioPlayer.h in Headers */,
 				EDC78CB321CA19FC00E1863C /* TextReader.h in Headers */,
 				1A57007C180BC5A10088DEC7 /* CCActionInstant.h in Headers */,
@@ -6878,7 +6874,6 @@
 				4631CBA621AFD9FA0000D408 /* UITextBMFont.h in Headers */,
 				468A14E11EF223B700ECA675 /* flatbuffers.h in Headers */,
 				ED28C23E219E629C0078D854 /* CommandBuffer.h in Headers */,
-				46D3D48021E473BB00EF5E75 /* CCPhysicsHelper.h in Headers */,
 				50ABBE381925AB6F00A911A9 /* CCConsole.h in Headers */,
 				4631CBD221AFD9FA0000D408 /* UIScale9Sprite.h in Headers */,
 				46F9B6F121AFE64C009DF858 /* cocos-ext.h in Headers */,
@@ -6924,7 +6919,6 @@
 				B6DD2FF41B04825B00E47F5F /* DetourTileCacheBuilder.h in Headers */,
 				40FE106E21F073BF0061C04F /* CCInvocation.h in Headers */,
 				1A5701B8180BCB5A0088DEC7 /* CCFontFreeType.h in Headers */,
-				46D3D47C21E473BB00EF5E75 /* cpCompat62.h in Headers */,
 				1A40D1401E8E56C7002E363A /* stack.h in Headers */,
 				461C205021A5304A00F3BD47 /* CCPipelineDescriptor.h in Headers */,
 				B6DD2FC61B04825B00E47F5F /* DetourNavMesh.h in Headers */,
@@ -7057,7 +7051,6 @@
 				50864CC21C7BC1B100B3BAB1 /* cpPolyline.h in Headers */,
 				50ABBEAA1925AB6F00A911A9 /* CCTouch.h in Headers */,
 				50864C951C7BC1B000B3BAB1 /* chipmunk_types.h in Headers */,
-				46D3D47421E473BB00EF5E75 /* CCPhysicsContact.h in Headers */,
 				50ABBE741925AB6F00A911A9 /* CCEventListenerMouse.h in Headers */,
 				1A40D13D1E8E56C7002E363A /* regex.h in Headers */,
 				EDC78BFD21CA19FB00E1863C /* CCActionManagerEx.h in Headers */,
@@ -7132,6 +7125,7 @@
 				46F9B73121AFE7C0009DF858 /* CCScrollView.h in Headers */,
 				50ABBEA61925AB6F00A911A9 /* CCScriptSupport.h in Headers */,
 				461FE09321CA129B00E5378F /* CCCallbackCommand.h in Headers */,
+				46AF3A1E21F1877100D5AFCD /* CCPhysicsShape.h in Headers */,
 				46C02E0A18E91123004B7456 /* xxhash.h in Headers */,
 				ED28C226219E629B0078D854 /* DepthStencilState.h in Headers */,
 				5034CA4C191D591100CE6051 /* ccShader_Label_df_glow.frag in Headers */,
@@ -7196,7 +7190,7 @@
 				50864CB01C7BC1B000B3BAB1 /* cpGearJoint.h in Headers */,
 				EDC78C9321CA19FC00E1863C /* LoadingBarReader.h in Headers */,
 				B6DD2FF01B04825B00E47F5F /* DetourTileCache.h in Headers */,
-				46D3D47E21E473BB00EF5E75 /* CCPhysicsShape.h in Headers */,
+				46AF3A1C21F1877100D5AFCD /* cpCompat62.h in Headers */,
 				464AD6E8197EBB1400E502D8 /* pvr.h in Headers */,
 				5034CA36191D591100CE6051 /* ccShader_PositionTexture.frag in Headers */,
 				EDC78C7921CA19FC00E1863C /* CSArmatureNode_generated.h in Headers */,
@@ -7210,7 +7204,6 @@
 				50ABBEAE1925AB6F00A911A9 /* ccTypes.h in Headers */,
 				1A40D1341E8E56C7002E363A /* itoa.h in Headers */,
 				EDC78C2B21CA19FB00E1863C /* CocosStudioExtension.h in Headers */,
-				46D3D47621E473BB00EF5E75 /* CCPhysicsWorld.h in Headers */,
 				EDC78C1B21CA19FB00E1863C /* CSLoader.h in Headers */,
 				50864C981C7BC1B000B3BAB1 /* chipmunk_unsafe.h in Headers */,
 				50ABBE261925AB6F00A911A9 /* base64.h in Headers */,
@@ -7224,7 +7217,6 @@
 				EDC78C6521CA19FC00E1863C /* CSParse3DBinary_generated.h in Headers */,
 				15AE184B19AAD30500C27E9E /* Export.h in Headers */,
 				50ABBE221925AB6F00A911A9 /* atitc.h in Headers */,
-				46D3D48221E473BB00EF5E75 /* CCPhysicsJoint.h in Headers */,
 				EDC78C5521CA19FB00E1863C /* CocosStudioExport.h in Headers */,
 				50ABBED21925AB6F00A911A9 /* TGAlib.h in Headers */,
 				EDC78D2321CA19FC00E1863C /* CCColliderDetector.h in Headers */,
@@ -7239,6 +7231,7 @@
 				46BD387C21D35A4E002BD50F /* BufferMTL.h in Headers */,
 				50ABBE581925AB6F00A911A9 /* CCEventFocus.h in Headers */,
 				50ABC00A1926664800A911A9 /* CCCommon.h in Headers */,
+				46AF3A1A21F1877100D5AFCD /* CCPhysicsBody.h in Headers */,
 				4631CBDE21AFD9FA0000D408 /* UILayoutParameter.h in Headers */,
 				40FE107321F073BF0061C04F /* CCControlPotentiometer.h in Headers */,
 				A045F6DF1BA816A1005076C7 /* CCCameraBackgroundBrush.h in Headers */,
@@ -7247,6 +7240,7 @@
 				50ABBE5C1925AB6F00A911A9 /* CCEventKeyboard.h in Headers */,
 				EDC78CA521CA19FC00E1863C /* ButtonReader.h in Headers */,
 				1A2B22B51E6E5828001D5EC9 /* Uri.h in Headers */,
+				46AF3A1621F1877100D5AFCD /* CCPhysicsWorld.h in Headers */,
 				EDC78BDB21CA19FB00E1863C /* CCProcessBase.h in Headers */,
 				50ABC01C1926664800A911A9 /* CCSAXParser.h in Headers */,
 				1A5FB7C51DF012D900C918C1 /* AudioMacros.h in Headers */,
@@ -7434,6 +7428,7 @@
 				EDC78C5E21CA19FC00E1863C /* CCTransformHelp.cpp in Sources */,
 				50ABBE651925AB6F00A911A9 /* CCEventListenerCustom.cpp in Sources */,
 				50ABBE391925AB6F00A911A9 /* CCData.cpp in Sources */,
+				46AF3A0F21F1877100D5AFCD /* CCPhysicsBody.cpp in Sources */,
 				50ABBED71925AB6F00A911A9 /* ZipUtils.cpp in Sources */,
 				B6DD2FDD1B04825B00E47F5F /* DetourObstacleAvoidance.cpp in Sources */,
 				1A570112180BC8EE0088DEC7 /* CCDrawNode.cpp in Sources */,
@@ -7442,7 +7437,6 @@
 				A0534A671B872FFD006B03E5 /* CCDownloader-apple.mm in Sources */,
 				EDC78C5221CA19FB00E1863C /* CocoLoader.cpp in Sources */,
 				46F9B72421AFE64D009DF858 /* CCTableView.cpp in Sources */,
-				46D3D46F21E473BB00EF5E75 /* CCPhysicsBody.cpp in Sources */,
 				EDC78CF621CA19FC00E1863C /* SkeletonNodeReader.cpp in Sources */,
 				1A57019D180BCB590088DEC7 /* CCFont.cpp in Sources */,
 				4631CBAF21AFD9FA0000D408 /* UIImageView.cpp in Sources */,
@@ -7458,7 +7452,6 @@
 				EDC78C2C21CA19FB00E1863C /* CCActionNode.cpp in Sources */,
 				EDC78C0C21CA19FB00E1863C /* CCFrame.cpp in Sources */,
 				4631CB1D21AFD9F90000D408 /* UIButton.cpp in Sources */,
-				46D3D46D21E473BB00EF5E75 /* CCPhysicsWorld.cpp in Sources */,
 				B6DD2FE91B04825B00E47F5F /* DetourProximityGrid.cpp in Sources */,
 				1A5701B5180BCB590088DEC7 /* CCFontFreeType.cpp in Sources */,
 				4631CB2321AFD9F90000D408 /* UIVBox.cpp in Sources */,
@@ -7504,7 +7497,6 @@
 				EDC78CD221CA19FC00E1863C /* CheckBoxReader.cpp in Sources */,
 				EDC78C8221CA19FC00E1863C /* GameNode3DReader.cpp in Sources */,
 				EDC78CD821CA19FC00E1863C /* Sprite3DReader.cpp in Sources */,
-				ED28C24D219E629C0078D854 /* BindGroup.cpp in Sources */,
 				40FE105A21F070640061C04F /* CCControlSlider.cpp in Sources */,
 				1A5701EE180BCB8C0088DEC7 /* CCTransitionProgress.cpp in Sources */,
 				15FB20931AE7C57D00C31518 /* cdt.cc in Sources */,
@@ -7537,7 +7529,6 @@
 				50ABBDB51925AB4100A911A9 /* CCTexture2D.cpp in Sources */,
 				3EACC9A019F5014D00EB3C5E /* CCCamera.cpp in Sources */,
 				1A570214180BCBF40088DEC7 /* CCRenderTexture.cpp in Sources */,
-				46D3D47721E473BB00EF5E75 /* CCPhysicsContact.cpp in Sources */,
 				A045F6DC1BA816A1005076C7 /* CCCameraBackgroundBrush.cpp in Sources */,
 				B6DD2FB31B04825B00E47F5F /* RecastDump.cpp in Sources */,
 				EDC78BEE21CA19FB00E1863C /* CocoStudio.cpp in Sources */,
@@ -7555,7 +7546,6 @@
 				1A57027E180BCC900088DEC7 /* CCSprite.cpp in Sources */,
 				1A570282180BCC900088DEC7 /* CCSpriteBatchNode.cpp in Sources */,
 				460D4D0D21ABD0C60075726E /* BlendStateMTL.mm in Sources */,
-				46D3D47121E473BB00EF5E75 /* CCPhysicsShape.cpp in Sources */,
 				1A570286180BCC900088DEC7 /* CCSpriteFrame.cpp in Sources */,
 				EDAF7C7121F1797000E070B2 /* CCTextureUtils.cpp in Sources */,
 				B24AA989195A675C007B4522 /* CCFastTMXTiledMap.cpp in Sources */,
@@ -7583,11 +7573,11 @@
 				EDC78C2221CA19FB00E1863C /* CCSkeletonNode.cpp in Sources */,
 				1A5702C8180BCE370088DEC7 /* CCTextFieldTTF.cpp in Sources */,
 				50ABBE7D1925AB6F00A911A9 /* CCEventTouch.cpp in Sources */,
+				46AF3A0D21F1877100D5AFCD /* CCPhysicsWorld.cpp in Sources */,
 				EDC78C7421CA19FC00E1863C /* CCBatchNode.cpp in Sources */,
 				4631CB6121AFD9F90000D408 /* CCUITextFieldFormatter.m in Sources */,
 				EDC78C0E21CA19FB00E1863C /* CSLoader.cpp in Sources */,
 				EDC78CBE21CA19FC00E1863C /* WidgetReader.cpp in Sources */,
-				46D3D48321E473BB00EF5E75 /* CCPhysicsJoint.cpp in Sources */,
 				4631CB2721AFD9F90000D408 /* UICheckBox.cpp in Sources */,
 				1A5702EA180BCE750088DEC7 /* CCTileMapAtlas.cpp in Sources */,
 				468A14F51EF223B700ECA675 /* idl_parser.cpp in Sources */,
@@ -7610,6 +7600,7 @@
 				50FC3FA21D74C1A1001C936A /* CCEventController.cpp in Sources */,
 				B6DD2FE11B04825B00E47F5F /* DetourPathCorridor.cpp in Sources */,
 				EDC78C1E21CA19FB00E1863C /* CCTimeLine.cpp in Sources */,
+				46AF3A1121F1877100D5AFCD /* CCPhysicsShape.cpp in Sources */,
 				50ABBD5C1925AB0000A911A9 /* Vec3.cpp in Sources */,
 				EDC78D1E21CA19FC00E1863C /* TriggerMng.cpp in Sources */,
 				EDC78D1021CA19FC00E1863C /* CCColliderDetector.cpp in Sources */,
@@ -7623,6 +7614,7 @@
 				50FC3F9E1D74C0A3001C936A /* CCController.cpp in Sources */,
 				50ABBD3C1925AB0000A911A9 /* CCGeometry.cpp in Sources */,
 				5012168E1AC47380009A4BEA /* CCRenderState.cpp in Sources */,
+				46AF3A2321F1877100D5AFCD /* CCPhysicsJoint.cpp in Sources */,
 				50ABC0011926664800A911A9 /* CCLock-apple.cpp in Sources */,
 				4631CBE321AFD9FA0000D408 /* UISlider.cpp in Sources */,
 				50ABBD931925AB4100A911A9 /* CCGLProgramState.cpp in Sources */,
@@ -7688,6 +7680,7 @@
 				50ABBD541925AB0000A911A9 /* TransformUtils.cpp in Sources */,
 				DABC9FA919E7DFA900FA252C /* CCClippingRectangleNode.cpp in Sources */,
 				3E2F27A619CFBFE100E7C490 /* AudioEngine.cpp in Sources */,
+				46AF3A1721F1877100D5AFCD /* CCPhysicsContact.cpp in Sources */,
 				46E21B4721B900C900430A43 /* StringUtils.cpp in Sources */,
 				EDC78D3221CA19FC00E1863C /* CCArmature.cpp in Sources */,
 				4631CBD321AFD9FA0000D408 /* UIRichText.cpp in Sources */,
@@ -8025,12 +8018,14 @@
 				4631CBCE21AFD9FA0000D408 /* UIScrollViewBar.cpp in Sources */,
 				1A2B22B31E6E54EC001D5EC9 /* Uri.cpp in Sources */,
 				ED28C242219E629C0078D854 /* BlendState.cpp in Sources */,
+				46AF3A1021F1877100D5AFCD /* CCPhysicsBody.cpp in Sources */,
 				EDC78CB121CA19FC00E1863C /* TextReader.cpp in Sources */,
 				EDC78C2D21CA19FB00E1863C /* CCActionNode.cpp in Sources */,
 				40FE106C21F073BF0061C04F /* CCControlSaturationBrightnessPicker.cpp in Sources */,
 				DABC9FAA19E7DFA900FA252C /* CCClippingRectangleNode.cpp in Sources */,
 				50ABBE621925AB6F00A911A9 /* CCEventListenerAcceleration.cpp in Sources */,
 				3E6176681960F89B00DE83F5 /* CCController-apple.mm in Sources */,
+				46AF3A1221F1877100D5AFCD /* CCPhysicsShape.cpp in Sources */,
 				B29594B51926D5EC003EEF37 /* CCMeshCommand.cpp in Sources */,
 				EDE6457221F017220063F6E4 /* ProgramState.cpp in Sources */,
 				EDC78D3321CA19FC00E1863C /* CCArmature.cpp in Sources */,
@@ -8068,8 +8063,8 @@
 				50ABBE421925AB6F00A911A9 /* CCDirector.cpp in Sources */,
 				EDC78CED21CA19FC00E1863C /* Particle3DReader.cpp in Sources */,
 				1A57007E180BC5A10088DEC7 /* CCActionInterval.cpp in Sources */,
-				46D3D47021E473BB00EF5E75 /* CCPhysicsBody.cpp in Sources */,
 				1A570082180BC5A10088DEC7 /* CCActionManager.cpp in Sources */,
+				46AF3A2421F1877100D5AFCD /* CCPhysicsJoint.cpp in Sources */,
 				A0534A681B872FFD006B03E5 /* CCDownloader-apple.mm in Sources */,
 				1A570086180BC5A10088DEC7 /* CCActionPageTurn3D.cpp in Sources */,
 				46F9B72521AFE64D009DF858 /* CCTableView.cpp in Sources */,
@@ -8078,7 +8073,6 @@
 				EDC78BE721CA19FB00E1863C /* CCComController.cpp in Sources */,
 				4631CBB021AFD9FA0000D408 /* UIImageView.cpp in Sources */,
 				50ABBED81925AB6F00A911A9 /* ZipUtils.cpp in Sources */,
-				460D4CCE21A54D650075726E /* CCShaderCache.cpp in Sources */,
 				40FE105F21F073BF0061C04F /* CCControlUtils.cpp in Sources */,
 				EDC78C0D21CA19FB00E1863C /* CCFrame.cpp in Sources */,
 				EDC78CD321CA19FC00E1863C /* CheckBoxReader.cpp in Sources */,
@@ -8088,7 +8082,6 @@
 				EDC78CC321CA19FC00E1863C /* ImageViewReader.cpp in Sources */,
 				1A570092180BC5A10088DEC7 /* CCActionTween.cpp in Sources */,
 				EDC78D0D21CA19FC00E1863C /* CCActionFrame.cpp in Sources */,
-				46D3D46E21E473BB00EF5E75 /* CCPhysicsWorld.cpp in Sources */,
 				EDC78BD921CA19FB00E1863C /* CCComAudio.cpp in Sources */,
 				4631CBBE21AFD9FA0000D408 /* UILayoutManager.cpp in Sources */,
 				1A570099180BC5C10088DEC7 /* CCAtlasNode.cpp in Sources */,
@@ -8167,7 +8160,6 @@
 				505385051B01887A00793096 /* CCProperties.cpp in Sources */,
 				50ABBD491925AB0000A911A9 /* Mat4.cpp in Sources */,
 				EDC78BEF21CA19FB00E1863C /* CocoStudio.cpp in Sources */,
-				46D3D47821E473BB00EF5E75 /* CCPhysicsContact.cpp in Sources */,
 				EDC78CE921CA19FC00E1863C /* NodeReaderProtocol.cpp in Sources */,
 				1A570203180BCBD40088DEC7 /* CCClippingNode.cpp in Sources */,
 				1A570209180BCBDF0088DEC7 /* CCMotionStreak.cpp in Sources */,
@@ -8184,7 +8176,6 @@
 				1A570215180BCBF40088DEC7 /* CCRenderTexture.cpp in Sources */,
 				1A570222180BCC1A0088DEC7 /* CCParticleBatchNode.cpp in Sources */,
 				1A570226180BCC1A0088DEC7 /* CCParticleExamples.cpp in Sources */,
-				46D3D47221E473BB00EF5E75 /* CCPhysicsShape.cpp in Sources */,
 				EDC78CE521CA19FC00E1863C /* ParticleReader.cpp in Sources */,
 				1A57022A180BCC1A0088DEC7 /* CCParticleSystem.cpp in Sources */,
 				3EACC9A119F5014D00EB3C5E /* CCCamera.cpp in Sources */,
@@ -8214,13 +8205,13 @@
 				1A57028B180BCC900088DEC7 /* CCSpriteFrameCache.cpp in Sources */,
 				15FB209C1AE7C57D00C31518 /* sweep_context.cc in Sources */,
 				1A570293180BCCAB0088DEC7 /* CCAnimation.cpp in Sources */,
-				46D3D48421E473BB00EF5E75 /* CCPhysicsJoint.cpp in Sources */,
 				4631CB9421AFD9FA0000D408 /* UIHelper.cpp in Sources */,
 				5053850D1B02819E00793096 /* CCVertexAttribBinding.cpp in Sources */,
 				15FB20901AE7C57D00C31518 /* advancing_front.cc in Sources */,
 				1A570297180BCCAB0088DEC7 /* CCAnimationCache.cpp in Sources */,
 				50ABBE321925AB6F00A911A9 /* CCConfiguration.cpp in Sources */,
 				EDC78CF321CA19FC00E1863C /* BoneNodeReader.cpp in Sources */,
+				46AF3A0E21F1877100D5AFCD /* CCPhysicsWorld.cpp in Sources */,
 				1A5702C9180BCE370088DEC7 /* CCTextFieldTTF.cpp in Sources */,
 				EDC78C4921CA19FB00E1863C /* CCArmatureAnimation.cpp in Sources */,
 				1A5702EB180BCE750088DEC7 /* CCTileMapAtlas.cpp in Sources */,
@@ -8290,6 +8281,7 @@
 				EDC78C6D21CA19FC00E1863C /* CCDisplayFactory.cpp in Sources */,
 				4631CBC221AFD9FA0000D408 /* UILayoutComponent.cpp in Sources */,
 				50ABBD391925AB0000A911A9 /* CCAffineTransform.cpp in Sources */,
+				46AF3A1821F1877100D5AFCD /* CCPhysicsContact.cpp in Sources */,
 				EDC78D3521CA19FC00E1863C /* CCActionObject.cpp in Sources */,
 				50ABBDA81925AB4100A911A9 /* CCRenderCommand.cpp in Sources */,
 				50ABBEA41925AB6F00A911A9 /* CCScriptSupport.cpp in Sources */,
