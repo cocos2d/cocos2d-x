@@ -54,12 +54,6 @@ else()
     message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 endif()
 
-# custom target property for dll collect
-define_property(TARGET
-    PROPERTY CC_DEPEND_DLLS
-    BRIEF_DOCS "depend dlls of a target"
-    FULL_DOCS "use to save depend dlls of a target"
-)
 # custom target property for lua/js link
 define_property(TARGET
     PROPERTY CC_JS_DEPEND
