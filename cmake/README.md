@@ -33,7 +33,12 @@ mkdir win32-build && cd win32-build
 cmake .. -G"Visual Studio 15 2017" -Tv141
 ```
 
-Execute `cmake --build .` to compile, or open __Cocos2d-x.sln__ in Explorer to use the generated project. 
+Execute `cmake --build .` to compile,
+```
+cmake --build . --config Debug
+cmake --build . --config Release
+```
+or open __Cocos2d-x.sln__ in Explorer to use the generated project. 
 
 ### Generate macOS Project
 
