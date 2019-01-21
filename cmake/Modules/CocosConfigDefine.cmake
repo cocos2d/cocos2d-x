@@ -25,23 +25,25 @@
          set(MACOSX TRUE)
          set(PLATFORM_FOLDER mac)
      endif()
-else()
+ else()
      message(FATAL_ERROR "Unsupported platform, CMake will exit")
      return()
  endif()
 
- if(CMAKE_GENERATOR)
-    # generators that are capable of organizing into a hierarchy of folders
-    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-    # simplify generator condition, please use them everywhere
-    if(CMAKE_GENERATOR STREQUAL Xcode)
-        set(XCODE TRUE)
-    elseif(CMAKE_GENERATOR MATCHES Visual)
-        set(VS TRUE)
-    endif()
+# generators that are capable of organizing into a hierarchy of folders
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+# simplify generator condition, please use them everywhere
+if(CMAKE_GENERATOR STREQUAL Xcode)
+    set(XCODE TRUE)
+elseif(CMAKE_GENERATOR MATCHES Visual)
+    set(VS TRUE)
+endif()
+message(STATUS "CMAKE_GENERATOR: ${CMAKE_GENERATOR}")
+
+if(CMAKE_CONFIGURATION_TYPES)
     set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Reset the configurations to what we need" FORCE)
     message(STATUS "CMAKE_CONFIGURATION_TYPES: ${CMAKE_CONFIGURATION_TYPES}")
- else()
+else()
     if(NOT CMAKE_BUILD_TYPE)
         if(DEBUG_MODE) # build mode, Debug is default value
             set(CMAKE_BUILD_TYPE Debug)
@@ -50,7 +52,7 @@ else()
         endif()
     endif()
     message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
- endif()
+endif()
 
 # custom target property for dll collect
 define_property(TARGET
