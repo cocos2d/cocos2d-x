@@ -481,11 +481,11 @@ if(APPLE)
 elseif(WINDOWS)
     # "too large PDB" error often occurs in cpp-tests when using default "/Zi"
     target_compile_options(${APP_NAME} PRIVATE /Z7)
-    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR}/..)
+    cocos_copy_target_dll(${APP_NAME})
 endif()
 
 if(LINUX OR WINDOWS)
-    cocos_copy_res(COPY_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
 endif()
 
 if(WIN32)

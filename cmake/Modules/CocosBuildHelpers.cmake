@@ -1,14 +1,17 @@
 include(CMakeParseArguments)
 
-# copy resource `FILES` and `FOLDERS` to `COPY_TO` folder
-function(cocos_copy_res)
+# copy resource `FILES` and `FOLDERS` to TARGET_FILE_DIR/Resources
+function(cocos_copy_target_res cocos_target)
     set(oneValueArgs COPY_TO)
     set(multiValueArgs FILES FOLDERS)
     cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
     # copy files
     foreach(cc_file ${opt_FILES})
         get_filename_component(file_name ${cc_file} NAME)
-        configure_file(${cc_file} "${opt_COPY_TO}/${file_name}" COPYONLY)
+        add_custom_command(TARGET ${cocos_target} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different ${cc_file} "${opt_COPY_TO}/${file_name}"
+            COMMENT "copy file: ${file_name}"
+        )
     endforeach()
     # copy folders files
     foreach(cc_folder ${opt_FOLDERS})
@@ -17,7 +20,10 @@ function(cocos_copy_res)
         foreach(res_file ${folder_files})
             get_filename_component(res_file_abs_path ${res_file} ABSOLUTE)
             file(RELATIVE_PATH res_file_relat_path ${folder_abs_path} ${res_file_abs_path})
-            configure_file(${res_file} "${opt_COPY_TO}/${res_file_relat_path}" COPYONLY)
+            add_custom_command(TARGET ${cocos_target} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${res_file} "${opt_COPY_TO}/${res_file_relat_path}"
+                COMMENT "copy file: ${res_file_relat_path}"
+            )
         endforeach()
     endforeach()
 endfunction()
@@ -92,18 +98,17 @@ endfunction()
 
 # copy the `cocos_target` needed dlls into `COPY_TO` folder
 function(cocos_copy_target_dll cocos_target)
-    set(oneValueArgs COPY_TO)
-    cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
     get_target_depends_ext_dlls(${cocos_target} all_depend_dlls)
     # remove repeat items
     if(all_depend_dlls)
         list(REMOVE_DUPLICATES all_depend_dlls)
     endif()
-    # todo, add a option to enable/disable debug print
-    message(STATUS "prepare to copy external dlls for ${cocos_target}:${all_depend_dlls}")
     foreach(cc_dll_file ${all_depend_dlls})
         get_filename_component(cc_dll_name ${cc_dll_file} NAME)
-        configure_file(${cc_dll_file} "${opt_COPY_TO}/${cc_dll_name}" COPYONLY)
+        add_custom_command(TARGET ${cocos_target} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different ${cc_dll_file} "$<TARGET_FILE_DIR:${cocos_target}>/${cc_dll_name}"
+            COMMENT "copy file: ${cc_dll_name}"
+        )
     endforeach()
 endfunction()
 
@@ -173,27 +178,19 @@ endfunction()
 function(setup_cocos_app_config app_name)
     # set target PROPERTIES, depend different platforms
     if(APPLE)
-        set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
         set_target_properties(${app_name} PROPERTIES MACOSX_BUNDLE 1
                               )
     elseif(MSVC)
-        # only Debug and Release mode was supported when using MSVC.
-        set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/$<CONFIG>")
-        set(APP_RES_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/${CMAKE_BUILD_TYPE}/Resources")
         #Visual Studio Defaults to wrong type
         set_target_properties(${app_name} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
-    else(LINUX)
-        set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}/${APP_NAME}")
-        set(APP_RES_DIR "${APP_BIN_DIR}/Resources")
     endif()
-    set_target_properties(${app_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
-
+    set_target_properties(${app_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/${app_name}")
     # auto mark code files for IDE when mark app
     if(XCODE OR VS)
-        cocos_mark_code_files(${APP_NAME})
+        cocos_mark_code_files(${app_name})
     endif()
 
-    set(APP_RES_DIR ${APP_RES_DIR} PARENT_SCOPE)
+    set(APP_RES_DIR "$<TARGET_FILE_DIR:${app_name}>/Resources" PARENT_SCOPE)
 endfunction()
 
 # if cc_variable not set, then set it cc_value
