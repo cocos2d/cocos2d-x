@@ -30,29 +30,27 @@ else()
      return()
  endif()
 
- # build mode, Debug is default value
- if(NOT CMAKE_BUILD_TYPE)
-     if(DEBUG_MODE)
-         set(CMAKE_BUILD_TYPE Debug)
-     else()
-         set(CMAKE_BUILD_TYPE Release)
-     endif()
- endif()
-
  if(CMAKE_GENERATOR)
     # generators that are capable of organizing into a hierarchy of folders
     set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-    # simplify generator condition judgement
+    # simplify generator condition, please use them everywhere
     if(CMAKE_GENERATOR STREQUAL Xcode)
         set(XCODE TRUE)
     elseif(CMAKE_GENERATOR MATCHES Visual)
         set(VS TRUE)
     endif()
-    # make configurations type keep same to cmake build type.
-    set(CMAKE_CONFIGURATION_TYPES "${CMAKE_BUILD_TYPE}" CACHE STRING "Reset the configurations to what we need" FORCE)
+    set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Reset the configurations to what we need" FORCE)
+    message(STATUS "CMAKE_CONFIGURATION_TYPES: ${CMAKE_CONFIGURATION_TYPES}")
+ else()
+    if(NOT CMAKE_BUILD_TYPE)
+        if(DEBUG_MODE) # build mode, Debug is default value
+            set(CMAKE_BUILD_TYPE Debug)
+        else()
+            set(CMAKE_BUILD_TYPE Release)
+        endif()
+    endif()
+    message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
  endif()
- message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
-
 
 # custom target property for dll collect
 define_property(TARGET
