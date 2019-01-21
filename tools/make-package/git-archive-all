@@ -234,7 +234,10 @@ class GitArchiver(object):
             extra_to_zip_file = zip_file["extract_to_zip_path"]
             zip_file_path = os.path.join(zip_file["zip_file_path"], zip_file_name)
             # 'v' letter was swallowed by github, so we need to substring it from the 2nd letter
-            extra_folder_name = zip_config["repo_name"] + '-' + zip_config["version"][1:]
+            if zip_config["version"][0] == 'v':
+                extra_folder_name = zip_config["repo_name"] + '-' + zip_config["version"][1:]
+            else:
+                extra_folder_name = zip_config["repo_name"] + '-' + zip_config["version"]
             extra_folder_path = os.path.join(self.main_repo_abspath, extra_folder_name)
             extra_folders.append(extra_folder_path)
             extra_file_paths = self.unpack_zipfile(zip_file_path, self.main_repo_abspath)
