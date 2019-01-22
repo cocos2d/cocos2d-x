@@ -58,7 +58,9 @@ cmake .. -GXcode -DCMAKE_TOOLCHAIN_FILE=../cmake/ios.toolchain.cmake
 open Cocos2d-x.xcodeproj
 ```
 
-The default build is for running on actual iOS hardware, if you want to run in the simulator, please add `-DIOS_PLATFORM=SIMULATOR` for architecture i386 or `-DIOS_PLATFORM=SIMULATOR64` for x86_64.
+The default build is for running on iOS device, if you want to run in the simulator, please add `-DIOS_PLATFORM=SIMULATOR` for architecture i386 or `-DIOS_PLATFORM=SIMULATOR64` for x86_64, but remember you can't run metal-support app in simulator because Apple limitation.
+
+if you want to sign iOS app in CMake, you will need to fill development team ID into `set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "")`, or select to sign in Xcode after project files generated.
 
 ### Android Studio
 
