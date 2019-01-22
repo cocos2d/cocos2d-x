@@ -180,7 +180,7 @@ if(XCODE OR VS)
     cocos_mark_code_files("jscocos2d")
 endif()
 
-if(WIN32)
+if(WINDOWS)
     # precompiled header
     target_sources(jscocos2d PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp")
     set_target_properties(jscocos2d PROPERTIES COMPILE_FLAGS "/Yuprecheader.h /FIprecheader.h")
