@@ -46,7 +46,7 @@ vec3 lensflare(vec2 uv,vec2 pos)
 	vec2 main = uv-pos;
 	vec2 uvd = uv*(length(uv));
 	
-	float ang = atan(main.x,main.y);
+	float ang = atan(main.y / main.x);
 	float dist=length(main); dist = pow(dist,.1);
 	float n = noise(vec2(ang*16.0,dist*32.0));
 	

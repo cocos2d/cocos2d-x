@@ -135,7 +135,7 @@ void ShaderNode::loadShaderVertex(const std::string &vert, const std::string &fr
     std::string vertSource;
     if (vert.empty()) {
         vertSource = ccPositionTextureColor_vert;
-        vertSource = COCOS2D_SHADER_UNIFORMS + vertSource;
+        vertSource = COCOS2D_SHADER_UNIFORMS + "\n" + vertSource;
     } else {
         std::string vertexFilePath = fileUtiles->fullPathForFilename(vert);
         vertSource = fileUtiles->getStringFromFile(vertexFilePath);
@@ -147,7 +147,7 @@ void ShaderNode::loadShaderVertex(const std::string &vert, const std::string &fr
     pipelineDescriptor.programState = programState;
     
     auto &vertexLayout = pipelineDescriptor.vertexLayout;
-    vertexLayout.setAtrribute("a_position", 2, backend::VertexFormat::FLOAT_R32G32, 0, false);
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32, 0, false);
     vertexLayout.setLayout(2 * sizeof(float), backend::VertexStepMode::VERTEX);
 
     _customCommand.createVertexBuffer(sizeof(float) * 2, 6, CustomCommand::BufferUsage::STATIC);
