@@ -9,8 +9,8 @@ function(cocos_copy_target_res cocos_target)
     foreach(cc_file ${opt_FILES})
         get_filename_component(file_name ${cc_file} NAME)
         add_custom_command(TARGET ${cocos_target} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E echo "copy file into Resources: ${file_name} ..."
             COMMAND ${CMAKE_COMMAND} -E copy_if_different ${cc_file} "${opt_COPY_TO}/${file_name}"
-            COMMENT "copy file: ${file_name}"
         )
     endforeach()
     # copy folders files
@@ -21,8 +21,8 @@ function(cocos_copy_target_res cocos_target)
             get_filename_component(res_file_abs_path ${res_file} ABSOLUTE)
             file(RELATIVE_PATH res_file_relat_path ${folder_abs_path} ${res_file_abs_path})
             add_custom_command(TARGET ${cocos_target} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E echo "copy file into Resources: ${res_file_relat_path} ..."
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different ${res_file} "${opt_COPY_TO}/${res_file_relat_path}"
-                COMMENT "copy file: ${res_file_relat_path}"
             )
         endforeach()
     endforeach()
@@ -96,7 +96,7 @@ function(get_target_depends_ext_dlls cocos_target all_depend_dlls_out)
     set(${all_depend_dlls_out} ${all_depend_ext_dlls} PARENT_SCOPE)
 endfunction()
 
-# copy the `cocos_target` needed dlls into `COPY_TO` folder
+# copy the `cocos_target` needed dlls into TARGET_FILE_DIR
 function(cocos_copy_target_dll cocos_target)
     get_target_depends_ext_dlls(${cocos_target} all_depend_dlls)
     # remove repeat items
@@ -106,8 +106,8 @@ function(cocos_copy_target_dll cocos_target)
     foreach(cc_dll_file ${all_depend_dlls})
         get_filename_component(cc_dll_name ${cc_dll_file} NAME)
         add_custom_command(TARGET ${cocos_target} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E echo "copy dll into target file dir: ${cc_dll_name} ..."
             COMMAND ${CMAKE_COMMAND} -E copy_if_different ${cc_dll_file} "$<TARGET_FILE_DIR:${cocos_target}>/${cc_dll_name}"
-            COMMENT "copy file: ${cc_dll_name}"
         )
     endforeach()
 endfunction()
