@@ -84,6 +84,7 @@ ShaderNode::ShaderNode()
 
 ShaderNode::~ShaderNode()
 {
+    CC_SAFE_RELEASE(_programState);
 }
 
 ShaderNode* ShaderNode::shaderNodeWithVertex(const std::string &vert, const std::string& frag)
@@ -135,16 +136,16 @@ void ShaderNode::loadShaderVertex(const std::string &vert, const std::string &fr
     std::string vertSource;
     if (vert.empty()) {
         vertSource = ccPositionTextureColor_vert;
-        vertSource = COCOS2D_SHADER_UNIFORMS + "\n" + vertSource;
+        //vertSource = COCOS2D_SHADER_UNIFORMS + "\n" + vertSource;
     } else {
         std::string vertexFilePath = fileUtiles->fullPathForFilename(vert);
         vertSource = fileUtiles->getStringFromFile(vertexFilePath);
     }
 
     auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    auto programState = new backend::ProgramState(vertSource, fragSource);
-    CC_SAFE_RELEASE(pipelineDescriptor.programState);
-    pipelineDescriptor.programState = programState;
+    CC_SAFE_RELEASE(_programState);
+    _programState = new backend::ProgramState(vertSource, fragSource);
+    pipelineDescriptor.programState = _programState;
     
     auto &vertexLayout = pipelineDescriptor.vertexLayout;
     vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32, 0, false);

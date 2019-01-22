@@ -162,6 +162,7 @@ protected:
     std::string _vertFileName;
     std::string _fragFileName;
     cocos2d::CustomCommand _customCommand;
+    cocos2d::backend::ProgramState *_programState = nullptr;
 };
 
 class ShaderLensFlare : public ShaderTestDemo
