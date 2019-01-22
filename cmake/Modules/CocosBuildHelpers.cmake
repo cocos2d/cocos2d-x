@@ -174,23 +174,21 @@ function(source_group_single_file single_file)
     source_group("${ide_file_group}" FILES ${single_file})
 endfunction()
 
-# setup a cocos application, include "APP_BIN_DIR", "APP_RES_DIR" config
+# setup a cocos application
 function(setup_cocos_app_config app_name)
-    # set target PROPERTIES, depend different platforms
-    if(APPLE)
-        set_target_properties(${app_name} PROPERTIES MACOSX_BUNDLE 1
-                              )
-    elseif(MSVC)
-        #Visual Studio Defaults to wrong type
-        set_target_properties(${app_name} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
-    endif()
+    # put all output app into bin/${app_name}
     set_target_properties(${app_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/${app_name}")
+    if(APPLE)
+        # output macOS/iOS .app
+        set_target_properties(${app_name} PROPERTIES MACOSX_BUNDLE 1)
+    elseif(MSVC)
+        # visual studio default is Console app, but we need Windows app
+        target_link_options(${app_name} PRIVATE "/SUBSYSTEM:WINDOWS")
+    endif()
     # auto mark code files for IDE when mark app
     if(XCODE OR VS)
         cocos_mark_code_files(${app_name})
     endif()
-
-    set(APP_RES_DIR "$<TARGET_FILE_DIR:${app_name}>/Resources" PARENT_SCOPE)
 endfunction()
 
 # if cc_variable not set, then set it cc_value
