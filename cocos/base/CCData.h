@@ -143,6 +143,16 @@ public:
      * @return the internal data buffer, free it after use.
      */
     unsigned char* takeBuffer(ssize_t* size);
+
+    std::string toString() 
+    { 
+        if (_size <= 0 || _bytes == nullptr)
+        {
+            return "";
+        }
+        return std::string(_bytes, _bytes + _size); 
+    }
+
 private:
     void move(Data& other);
 

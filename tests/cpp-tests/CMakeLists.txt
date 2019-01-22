@@ -188,9 +188,9 @@ list(APPEND GAME_HEADER
      Classes/SchedulerTest/SchedulerTest.h
      Classes/MultiTouchTest/MultiTouchTest.h
      Classes/testResource.h
-     #Classes/ShaderTest/ShaderTest.vsh.h
-     #Classes/ShaderTest/shaderTest.psh.h
-     #Classes/ShaderTest/ShaderTest.h
+     Classes/ShaderTest/ShaderTest.vsh.h
+     Classes/ShaderTest/shaderTest.psh.h
+     Classes/ShaderTest/ShaderTest.h
      #Classes/ShaderTest/ShaderTest2.h
      Classes/NewRendererTest/NewRendererTest.h
      Classes/SpritePolygonTest/SpritePolygonTest.h
@@ -280,7 +280,7 @@ list(APPEND GAME_SOURCE
      Classes/RotateWorldTest/RotateWorldTest.cpp
      Classes/SceneTest/SceneTest.cpp
      Classes/SchedulerTest/SchedulerTest.cpp
-     #Classes/ShaderTest/ShaderTest.cpp
+     Classes/ShaderTest/ShaderTest.cpp
      #Classes/ShaderTest/ShaderTest2.cpp
      #Classes/SpineTest/SpineTest.cpp
 #     Classes/Scene3DTest/Scene3DTest.cpp

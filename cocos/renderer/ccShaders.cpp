@@ -125,4 +125,7 @@ NS_CC_BEGIN
 #include "renderer/shaders/etc1.frag"
 #include "renderer/shaders/etc1_Gray.frag"
 
+#include "renderer/shaders/positionTextureColor_noMVP.vert"
+#include "renderer/shaders/positionTextureColor_noMVP.frag"
+
 NS_CC_END

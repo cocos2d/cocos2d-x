@@ -318,6 +318,7 @@ public:
 
     /// @} End of frames methods
 
+    virtual cocos2d::RenderCommand* getRenderCommand() override { return static_cast<cocos2d::RenderCommand*>(&_trianglesCommand); }
 
     /// @{
     /// @name Animation methods

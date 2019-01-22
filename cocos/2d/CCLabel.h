@@ -631,6 +631,9 @@ CC_CONSTRUCTOR_ACCESS:
     bool initWithTTF(const TTFConfig& ttfConfig, const std::string& text,
                      TextHAlignment hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0);
 
+
+    virtual void updateShaderProgram(const char *vertexShaderSource, const char *fragmentShaderSource);
+
 protected:
     struct LetterInfo
     {
@@ -799,6 +802,10 @@ protected:
     backend::UniformLocation _effectTypeLocation;
     
     backend::ProgramState* _programState = nullptr;
+
+    bool _shaderOverride = false;
+    const char *_vertexShader = nullptr;
+    const char *_fragShader = nullptr;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);

@@ -50,13 +50,13 @@ public:
         addTest("Actions - Progress", [](){return new (std::nothrow) ActionsProgressTests(); });
         addTest("Audio - CocosDenshion", []() { return new (std::nothrow) CocosDenshionTests(); }); // implement simple audio engine by audio engine
         addTest("Audio - NewAudioEngine", []() { return new (std::nothrow) AudioEngineTests(); });
-//#if CC_ENABLE_BOX2D_INTEGRATION
-//        addTest("Box2d - Basic", []() { return new (std::nothrow) Box2DTests(); });
-//        addTest("Box2d - TestBed", []() { return new (std::nothrow) Box2dTestBedSuite(); });
-//#endif
-//#if CC_ENABLE_CHIPMUNK_INTEGRATION
-//        addTest("Chipmunk", []() { return new ChipmunkTests(); });
-//#endif
+#if CC_ENABLE_BOX2D_INTEGRATION
+        addTest("Box2d - Basic", []() { return new (std::nothrow) Box2DTests(); });
+        addTest("Box2d - TestBed", []() { return new (std::nothrow) Box2dTestBedSuite(); });
+#endif
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
+        addTest("Chipmunk", []() { return new ChipmunkTests(); });
+#endif
         addTest("Bugs", []() { return new BugsTests(); });
         addTest("Click and Move", [](){return new ClickAndMoveTest(); });
         addTest("Configuration", []() { return new ConfigurationTests(); });
@@ -93,7 +93,7 @@ public:
         addTest("Node: Particles", [](){return new ParticleTests(); });
 //        addTest("Node: Particle3D (PU)", [](){return new Particle3DTests(); });
 #if CC_USE_PHYSICS
-//       addTest("Node: Physics", []() { return new PhysicsTests(); });
+        addTest("Node: Physics", []() { return new PhysicsTests(); });
 #endif
 //        addTest("Node: Physics3D", []() { return new Physics3DTests(); } );
         addTest("Node: RenderTexture", [](){return new RenderTextureTests(); });
@@ -112,8 +112,8 @@ public:
         addTest("Renderer", []() { return new NewRendererTests(); });
         addTest("ReleasePool", [](){ return new ReleasePoolTests(); });
         addTest("Rotate World", [](){return new RotateWorldTests(); });
-        // addTest("Scheduler", [](){return new SchedulerTests(); });
-        // addTest("Shader - Basic", []() { return new ShaderTests(); });
+        addTest("Scheduler", [](){return new SchedulerTests(); });
+        addTest("Shader - Basic", []() { return new ShaderTests(); });
         // addTest("Shader - Sprite", []() { return new Shader2Tests(); });
         addTest("Texture2D", [](){return new Texture2DTests(); });
         addTest("TextureCache", []() { return new TextureCacheTests(); });

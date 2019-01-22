@@ -564,75 +564,89 @@ void Label::setVertexLayout(PipelineDescriptor& pipelineDescriptor)
     _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE);
 }
 
+void Label::updateShaderProgram(const char *vertextShader, const char *fragShader)
+{
+    _vertexShader = vertextShader;
+    _fragShader = fragShader;
+    _shaderOverride = true;
+    updateShaderProgram();
+}
+
 void Label::updateShaderProgram()
 {
     const char* vert = nullptr;
     const char* frag = nullptr;
     
-    if (_currentLabelType == LabelType::BMFONT || _currentLabelType == LabelType::CHARMAP)
+    if(!_shaderOverride)
     {
-        auto texture = _getTexture(this);
-        if(texture && texture->getAlphaTextureName())
+        if (_currentLabelType == LabelType::BMFONT || _currentLabelType == LabelType::CHARMAP)
         {
-            vert = positionTextureColor_vert;
-            frag = etc1_frag;
+            auto texture = _getTexture(this);
+            if(texture && texture->getAlphaTextureName())
+            {
+                vert = positionTextureColor_vert;
+                frag = etc1_frag;
+            }
+            else
+            {
+                vert = positionTextureColor_vert;
+                frag = positionTextureColor_frag;
+            }
         }
         else
         {
-            vert = positionTextureColor_vert;
-            frag = positionTextureColor_frag;
-        }
-    }
-    else
-    {
-        switch (_currLabelEffect)
-        {
-            case cocos2d::LabelEffect::NORMAL:
-                if (_useDistanceField)
-                {
-                    vert = positionTextureColor_vert;
-                    frag = label_distanceNormal_frag;
-                }
-                else if (_useA8Shader)
-                {
-                    vert = positionTextureColor_vert;
-                    frag = label_normal_frag;
-                }
-                else
-                {
-                    auto texture = _getTexture(this);
-                    if(texture && texture->getAlphaTextureName())
+            switch (_currLabelEffect)
+            {
+                case cocos2d::LabelEffect::NORMAL:
+                    if (_useDistanceField)
                     {
                         vert = positionTextureColor_vert;
-                        frag = etc1_frag;
+                        frag = label_distanceNormal_frag;
+                    }
+                    else if (_useA8Shader)
+                    {
+                        vert = positionTextureColor_vert;
+                        frag = label_normal_frag;
                     }
                     else
                     {
-                        vert = positionTextureColor_vert;
-                        frag = positionTextureColor_frag;
+                        auto texture = _getTexture(this);
+                        if(texture && texture->getAlphaTextureName())
+                        {
+                            vert = positionTextureColor_vert;
+                            frag = etc1_frag;
+                        }
+                        else
+                        {
+                            vert = positionTextureColor_vert;
+                            frag = positionTextureColor_frag;
+                        }
                     }
-                }
-                break;
-            case cocos2d::LabelEffect::OUTLINE:
-                {
-                    vert = positionTextureColor_vert;
-                    frag = labelOutline_frag;
-                }
-                break;
-            case cocos2d::LabelEffect::GLOW:
-                if (_useDistanceField)
-                {
+                    break;
+                case cocos2d::LabelEffect::OUTLINE:
+                    {
                         vert = positionTextureColor_vert;
-                        frag = labelDistanceFieldGlow_frag;
-                }
-                break;
-            default:
-                return;
+                        frag = labelOutline_frag;
+                    }
+                    break;
+                case cocos2d::LabelEffect::GLOW:
+                    if (_useDistanceField)
+                    {
+                            vert = positionTextureColor_vert;
+                            frag = labelDistanceFieldGlow_frag;
+                    }
+                    break;
+                default:
+                    return;
+            }
         }
+        _vertexShader = vert;
+        _fragShader = frag;
     }
+
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
     CC_SAFE_RELEASE(_programState);
-    _programState = new (std::nothrow) backend::ProgramState(vert, frag);
+    _programState = new (std::nothrow) backend::ProgramState(_vertexShader, _fragShader);
     pipelineDescriptor.programState = _programState;
     _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");

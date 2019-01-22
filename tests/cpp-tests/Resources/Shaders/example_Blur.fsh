@@ -2,6 +2,10 @@
 precision mediump float;
 #endif
 
+uniform vec4 CC_Time;
+uniform sampler2D u_texture;
+//CC INCLUDES END\n\n
+
 varying vec4 v_fragmentColor;
 varying vec2 v_texCoord;
 
@@ -34,7 +38,7 @@ vec4 blur(vec2 p)
             for(float y = -r; y < r; y += sampleStep)
             {
                 float weight = (r - abs(x)) * (r - abs(y));
-                col += texture2D(CC_Texture0, p + vec2(x * unit.x, y * unit.y)) * weight;
+                col += texture2D(u_texture, p + vec2(x * unit.x, y * unit.y)) * weight;
                 count += weight;
             }
         }
@@ -42,5 +46,5 @@ vec4 blur(vec2 p)
         return col / count;
     }
     
-    return texture2D(CC_Texture0, p);
+    return texture2D(u_texture, p);
 }

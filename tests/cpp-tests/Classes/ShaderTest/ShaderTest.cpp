@@ -26,6 +26,8 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
+#include "renderer/backend/ProgramState.h"
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 
@@ -54,6 +56,24 @@ enum
     SIZE_X = 256,
     SIZE_Y = 256,
 };
+
+const std::string COCOS2D_SHADER_UNIFORMS =
+"uniform mat4 CC_PMatrix;\n"
+"uniform mat4 CC_MultiViewPMatrix[4];\n"
+"uniform mat4 CC_MVMatrix;\n"
+"uniform mat4 CC_MVPMatrix;\n"
+"uniform mat4 CC_MultiViewMVPMatrix[4];\n"
+"uniform mat3 CC_NormalMatrix;\n"
+"uniform vec4 CC_Time;\n"
+"uniform vec4 CC_SinTime;\n"
+"uniform vec4 CC_CosTime;\n"
+"uniform vec4 CC_Random01;\n"
+"uniform sampler2D CC_Texture0;\n"
+"uniform sampler2D CC_Texture1;\n"
+"uniform sampler2D CC_Texture2;\n"
+"uniform sampler2D CC_Texture3;\n"
+"//CC INCLUDES END\n\n";
+
 
 ShaderNode::ShaderNode()
 :_center(Vec2(0.0f, 0.0f))
@@ -110,18 +130,35 @@ void ShaderNode::loadShaderVertex(const std::string &vert, const std::string &fr
     auto fragmentFilePath = fileUtiles->fullPathForFilename(frag);
     auto fragSource = fileUtiles->getStringFromFile(fragmentFilePath);
 
+
     // vert
     std::string vertSource;
     if (vert.empty()) {
         vertSource = ccPositionTextureColor_vert;
+        vertSource = COCOS2D_SHADER_UNIFORMS + vertSource;
     } else {
         std::string vertexFilePath = fileUtiles->fullPathForFilename(vert);
         vertSource = fileUtiles->getStringFromFile(vertexFilePath);
     }
 
-    auto glprogram = GLProgram::createWithByteArrays(vertSource.c_str(), fragSource.c_str());
-    auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
-    setGLProgramState(glprogramstate);
+    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    auto programState = new backend::ProgramState(vertSource, fragSource);
+    CC_SAFE_RELEASE(pipelineDescriptor.programState);
+    pipelineDescriptor.programState = programState;
+    
+    auto &vertexLayout = pipelineDescriptor.vertexLayout;
+    vertexLayout.setAtrribute("a_position", 2, backend::VertexFormat::FLOAT_R32G32, 0, false);
+    vertexLayout.setLayout(2 * sizeof(float), backend::VertexStepMode::VERTEX);
+
+    _customCommand.createVertexBuffer(sizeof(float) * 2, 6, CustomCommand::BufferUsage::STATIC);
+    _customCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, 6, CustomCommand::BufferUsage::STATIC);
+
+    float w = SIZE_X, h = SIZE_Y;
+    GLfloat vertices[12] = { 0,0, w,0, w,h, 0,0, w, h, 0,h };
+    uint16_t indices[6] = { 0, 1, 2, 3, 4, 5 };
+
+    _customCommand.updateVertexBuffer(vertices, 12 * sizeof(float));
+    _customCommand.updateIndexBuffer(indices, sizeof(uint16_t) * 6);
 }
 
 void ShaderNode::update(float dt)
@@ -142,7 +179,9 @@ void ShaderNode::setPosition(const Vec2 &newPosition)
 void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder, transform, flags);
-    _customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, flags);
+    //_customCommand.func = CC_CALLBACK_0(ShaderNode::onDraw, this, transform, flags);
+    onDraw(transform, flags);
+
     renderer->addCommand(&_customCommand);
 }
 
@@ -151,15 +190,22 @@ void ShaderNode::onDraw(const Mat4 &transform, uint32_t flags)
     float w = SIZE_X, h = SIZE_Y;
     GLfloat vertices[12] = {0,0, w,0, w,h, 0,0, 0,h, w,h};
 
-    auto glProgramState = getGLProgramState();
-    glProgramState->setUniformVec2("resolution", _resolution);
-    glProgramState->setUniformVec2("center", _center);
-    glProgramState->setVertexAttribPointer("a_position", 2, GL_FLOAT, GL_FALSE, 0, vertices);
+    const cocos2d::Mat4& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    Mat4 finalMat = projectionMat * transform;
 
-    glProgramState->apply(transform);
+    auto programState = _customCommand.getPipelineDescriptor().programState;
+    auto mvp = programState->getUniformLocation("CC_MVPMatrix");
+    auto resolution = programState->getUniformLocation("resolution");
+    auto center = programState->getUniformLocation("center");
 
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    
+    float timeValue[4] = { _time, _time, _time, _time};
+    auto cctime = programState->getUniformLocation("CC_Time");
+
+    programState->setUniform(mvp, &finalMat.m, sizeof(finalMat.m));
+    programState->setUniform(resolution, &_resolution, sizeof(_resolution));
+    programState->setUniform(center, &_center, sizeof(_center));
+    programState->setUniform(cctime, &timeValue, sizeof(timeValue));
+
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,6);
 }
 
@@ -363,7 +409,7 @@ class SpriteBlur : public Sprite
 public:
     ~SpriteBlur();
     bool initWithTexture(Texture2D* texture, const Rect&  rect);
-    void initGLProgram();
+    void initCustomCommand();
 
     static SpriteBlur* create(const char *pszFileName);
     void setBlurRadius(float radius);
@@ -372,6 +418,7 @@ public:
 protected:
     float _blurRadius;
     float _blurSampleNum;
+   // cocos2d::CustomCommand _command;
 };
 
 SpriteBlur::~SpriteBlur()
@@ -412,7 +459,7 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 #endif
         
-        initGLProgram();
+        initCustomCommand();
 
         return true;
     }
@@ -420,32 +467,45 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
     return false;
 }
 
-void SpriteBlur::initGLProgram()
+void SpriteBlur::initCustomCommand()
 {
     std::string fragSource = FileUtils::getInstance()->getStringFromFile(
         FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh"));
 
-    auto program = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource.data());
+    //auto vertexShader = positionTextureColor_noMVP_vert;
+    this->updateShaders(positionTextureColor_noMVP_vert, fragSource.c_str());
 
-    auto glProgramState = GLProgramState::getOrCreateWithGLProgram(program);
-    setGLProgramState(glProgramState);
-    
+    auto pipelineDescriptor = _trianglesCommand.getPipelineDescriptor();
+    auto programState = pipelineDescriptor.programState;
+
+    auto resolution = programState->getUniformLocation("resolution");
+    auto blurRadius = programState->getUniformLocation("blurRadius"); 
+    auto sampleNum = programState->getUniformLocation("sampleNum");
+
     auto size = getTexture()->getContentSizeInPixels();
-    getGLProgramState()->setUniformVec2("resolution", size);
-    getGLProgramState()->setUniformFloat("blurRadius", _blurRadius);
-    getGLProgramState()->setUniformFloat("sampleNum", 7.0f);
+    float sampleNumValue = 7.0f;
+
+    programState->setUniform(resolution, &size, sizeof(size));
+    programState->setUniform(blurRadius, &_blurRadius, sizeof(_blurRadius));
+    programState->setUniform(sampleNum, &sampleNumValue, sizeof(sampleNumValue));
+
+    programState->setTexture(_textureLocation, 0, _texture->getBackendTexture());
 }
 
 void SpriteBlur::setBlurRadius(float radius)
 {
     _blurRadius = radius;
-    getGLProgramState()->setUniformFloat("blurRadius", _blurRadius);
+    auto programState = _trianglesCommand.getPipelineDescriptor().programState;
+    auto blurRadius = programState->getUniformLocation("blurRadius");
+    programState->setUniform(blurRadius, &_blurRadius, sizeof(_blurRadius));
 }
 
 void SpriteBlur::setBlurSampleNum(float num)
 {
     _blurSampleNum = num;
-    getGLProgramState()->setUniformFloat("sampleNum", _blurSampleNum);
+    auto programState = _trianglesCommand.getPipelineDescriptor().programState;
+    auto sampleNum = programState->getUniformLocation("sampleNum");
+    programState->setUniform(sampleNum, &_blurSampleNum, sizeof(_blurSampleNum));
 }
 
 // ShaderBlur
@@ -555,14 +615,12 @@ bool ShaderRetroEffect::init()
         auto fragStr = FileUtils::getInstance()->getStringFromFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh"));
         GLchar * fragSource = (GLchar*)fragStr.c_str();
 
-        auto p = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource);
-
         auto director = Director::getInstance();
         auto s = director->getWinSize();
 
         _label = Label::createWithBMFont("fonts/west_england-64.fnt","RETRO EFFECT");
         _label->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-        _label->setGLProgram(p);
+        _label->updateShaderProgram(positionTextureColor_noMVP_vert, fragSource);
 
         _label->setPosition(Vec2(s.width/2,s.height/2));
 
@@ -707,7 +765,11 @@ ui::Slider* ShaderMultiTexture::createSliderCtl()
         {
             ui::Slider* slider = dynamic_cast<ui::Slider*>(sender);
             float p = slider->getPercent() / 100.0f;
-            _sprite->getGLProgramState()->setUniformFloat("u_interpolate",p);
+            auto *command = (cocos2d::TrianglesCommand*) _sprite->getRenderCommand();
+            auto &programState = command->getPipelineDescriptor().programState;
+            auto interpolate = programState->getUniformLocation("u_interpolate");
+            programState->setUniform(interpolate, &p, sizeof(p));
+
         }
     });
     return slider;
@@ -718,6 +780,8 @@ bool ShaderMultiTexture::init()
     if (ShaderTestDemo::init())
     {
         auto s = Director::getInstance()->getWinSize();
+
+        auto fu = FileUtils::getInstance();
 
         // Left: normal sprite
         auto left = Sprite::create("Images/grossinis_sister1.png");
@@ -735,12 +799,20 @@ bool ShaderMultiTexture::init()
         addChild(_sprite);
         _sprite->setPosition(Vec2(s.width/2, s.height/2));
 
-        auto glprogram = GLProgram::createWithFilenames("Shaders/example_MultiTexture.vsh", "Shaders/example_MultiTexture.fsh");
-        auto glprogramstate = GLProgramState::getOrCreateWithGLProgram(glprogram);
-        _sprite->setGLProgramState(glprogramstate);
+        auto vertexShaderContent = fu->getDataFromFile("Shaders/example_MultiTexture.vsh").toString();
+        auto fragmentShaderContent = fu->getDataFromFile("Shaders/example_MultiTexture.fsh").toString();
 
-        glprogramstate->setUniformTexture("u_texture1", right->getTexture());
-        glprogramstate->setUniformFloat("u_interpolate",0.5);
+        _sprite->updateShaders((const char *)vertexShaderContent.c_str(), (const char *)fragmentShaderContent.c_str());
+
+        auto *command = (cocos2d::TrianglesCommand*) _sprite->getRenderCommand();
+
+        auto &programState = command->getPipelineDescriptor().programState;
+        auto u_texture1 = programState->getUniformLocation("u_texture1");
+        auto interpolate = programState->getUniformLocation("u_interpolate");
+
+        float interpolateValue = 0.5f;
+        programState->setUniform(interpolate, &interpolateValue, sizeof(interpolateValue));
+        programState->setTexture(u_texture1, 1, right->getTexture()->getBackendTexture());
 
         // slider
         createSliderCtl();
@@ -769,6 +841,11 @@ void ShaderMultiTexture::changeTexture(Ref*)
     auto texture = Director::getInstance()->getTextureCache()->addImage(textureFiles[_changedTextureId++ % textureFilesCount]);
     Sprite* right = dynamic_cast<Sprite*>(getChildByTag(rightSpriteTag));
     right->setTexture(texture);
-    auto programState = _sprite->getGLProgramState();
-    programState->setUniformTexture("u_texture1", right->getTexture());
+    
+    auto *command = (cocos2d::TrianglesCommand*) _sprite->getRenderCommand();
+
+    auto &programState = command->getPipelineDescriptor().programState;
+    auto u_texture1 = programState->getUniformLocation("u_texture1");;
+    programState->setTexture(u_texture1, 1, right->getTexture()->getBackendTexture());
+
 }

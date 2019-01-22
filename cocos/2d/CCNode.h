@@ -64,6 +64,7 @@ class Material;
 class Camera;
 class PhysicsBody;
 class RendererBackend;
+class RenderCommand;
 
 /**
  * @addtogroup _2d
@@ -1635,6 +1636,8 @@ public:
     void setAdditionalTransform(const Mat4* additionalTransform);
     void setAdditionalTransform(const Mat4& additionalTransform);
     void setAdditionalTransform(const AffineTransform& additionalTransform);
+
+    virtual cocos2d::RenderCommand* getRenderCommand() { return nullptr; }
 
     /// @} end of Coordinate Converters
 

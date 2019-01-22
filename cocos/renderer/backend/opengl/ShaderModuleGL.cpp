@@ -30,8 +30,8 @@ void ShaderModuleGL::compileShader(ShaderStage stage, const std::string &source)
     glGetShaderiv(_shader, GL_COMPILE_STATUS, &status);
     if (! status)
     {
-        printf("cocos2d: ERROR: Failed to compile shader:\n%s", source.c_str());
-        printf("cocos2d: %s", getErrorLog(_shader));
+        CCLOG("cocos2d: ERROR: Failed to compile shader:\n%s", source.c_str());
+        CCLOG("cocos2d: %s", getErrorLog(_shader));
         deleteShader();
     }
 }
