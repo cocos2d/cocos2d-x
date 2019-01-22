@@ -40,6 +40,7 @@
 #include "platform/android/jni/JniHelper.h"
 
 #include "base/ccUTF8.h"
+#include "base/ccUtils.h"
  
 NS_CC_BEGIN
 
@@ -92,6 +93,8 @@ public:
     ,_responseCookies("")
     ,_cookieFileName("")
     ,_contentLength(0)
+    ,_latency(0)
+    ,_requestStartTime(0)
     {
 
     }
@@ -162,6 +165,7 @@ public:
                                            "connect",
                                            "(Ljava/net/HttpURLConnection;)I"))
         {
+            _requestStartTime = cocos2d::utils::gettime();
             suc = methodInfo.env->CallStaticIntMethod(
                                                       methodInfo.classID, methodInfo.methodID, _httpURLConnection);
             methodInfo.env->DeleteLocalRef(methodInfo.classID);
@@ -396,6 +400,17 @@ public:
     {
         return _contentLength;
     }
+
+    double getLatency()
+    {
+        return _latency;
+    }
+
+    double calculateLatency()
+    {
+        _latency = cocos2d::utils::gettime() - _requestStartTime;
+        return _latency;
+    }
     
 private:
     void createHttpURLConnection(const std::string& url)
@@ -611,6 +626,8 @@ private:
     std::string _cookieFileName;
     std::string _url;
     int _contentLength;
+    double _latency;
+    double _requestStartTime;
 };
 
 // Process Response
@@ -676,6 +693,7 @@ void HttpClient::processResponse(HttpResponse* response, char* responseMessage)
     }
 
     responseCode = urlConnection.getResponseCode();
+    this->_latency = urlConnection.calculateLatency();
 
     if (0 == responseCode)
     {
@@ -722,6 +740,7 @@ void HttpClient::processResponse(HttpResponse* response, char* responseMessage)
 
     // write data to HttpResponse
     response->setResponseCode(responseCode);
+    response->setLatency(this->_latency);
 
     if (responseCode == -1)
     {
@@ -1073,6 +1092,11 @@ int HttpClient::getTimeoutForRead()
     std::lock_guard<std::mutex> lock(_timeoutForReadMutex);
     return _timeoutForRead;
 }
+    
+void HttpClient::setLatency(double latencyValue)
+{
+    _latency = latencyValue;
+}   
     
 const std::string& HttpClient::getCookieFilename()
 {

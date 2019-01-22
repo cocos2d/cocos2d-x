@@ -47,6 +47,8 @@
 @synthesize conn = conn;
 @synthesize finish = finish;
 @synthesize runLoop = runLoop;
+@synthesize latency = latency;
+@synthesize requestStartTime = requestStartTime;
 
 - (void)dealloc
 {
@@ -58,7 +60,7 @@
     [conn release];
     [runLoop release];
     [connError release];
-    
+    [requestStartTime release];
     [super dealloc];
 }
 
@@ -72,7 +74,7 @@
 
     self.responseData = [NSMutableData data];
     getDataTime = 0;
-
+    latency = 0;
     self.responseError = nil;
     self.connError = nil;
     
@@ -103,7 +105,7 @@
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     //NSLog(@"All headers = %@", [httpResponse allHeaderFields]);
     self.responseHeader = [httpResponse allHeaderFields];
-
+    self.requestStartTime = [NSDate date];
     responseCode = httpResponse.statusCode;
     self.statusString = [NSHTTPURLResponse localizedStringForStatusCode:responseCode];
     if(responseCode == 200)
@@ -149,7 +151,7 @@
 {
     //NSLog(@"Load failed with error %@", [error localizedDescription]);
     self.connError = error;
-    
+    self.latency = [[NSDate date] timeIntervalSinceDate:requestStartTime];
     finish = true;
 }
 
@@ -159,6 +161,7 @@
  **/
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
+    self.latency = [[NSDate date] timeIntervalSinceDate:requestStartTime];
     finish = true;
 }
 
