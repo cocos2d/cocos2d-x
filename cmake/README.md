@@ -8,7 +8,7 @@ CMake is an open-source, cross-platform family of tools designed to build, test 
   ```sh
   cmake --version
   ```
-if the CMake version is lower than 3.1, please upgrade.
+if the CMake version is lower than 3.6, please upgrade.
 
 2. You should use __out-of-source__ builds, this means you need to create a different directory than __cocos2d-x__ to execute the `cmake` command.
 
@@ -39,6 +39,8 @@ cmake --build . --config Debug
 cmake --build . --config Release
 ```
 or open __Cocos2d-x.sln__ in Explorer to use the generated project. 
+
+If can't found `MSVCR110.dll` issue occurs to you, please install this [Visual C++ Runtime Libraries](https://www.microsoft.com/en-us/download/details.aspx?id=30679), when runing the cpp-tests project
 
 ### Generate macOS Project
 
@@ -97,6 +99,11 @@ If you want to add cmake build arguments, please add it at [external Native Buil
 1. __`--build  <dir>`__, build a CMake-generated project binary tree, for example
 
     * `cmake --build ./msvc_build`, cmake will sellect corresponding build tools.
+
+## Tips
+
+1. Use `cmake ..` to refersh resources and code files, after you modify `Resources` or `CMakeLists.txt`.
+1. Don't need `CMAKE_BUILD_TYPE` options when `-G` Xcode or Visual Studio, CMake scripts will generate both configurations, so you can switch `Debug` and `Release` in IDE.
 
 ## Useful Links
 
