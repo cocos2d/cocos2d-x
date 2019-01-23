@@ -33,7 +33,6 @@
 #include "base/CCProtocols.h"
 #include "2d/CCNode.h"
 #include "renderer/CCMeshCommand.h"
-#include "renderer/CCGLProgramState.h"
 #include "3d/CCSkeleton3D.h" // need to include for lua-binding
 #include "3d/CCAABB.h"
 #include "3d/CCBundle3DData.h"
@@ -121,10 +120,12 @@ public:
     
     // overrides
     /** set GLProgramState, you should bind attributes by yourself */
-    virtual void setGLProgramState(GLProgramState *glProgramState) override;
+//    virtual void setGLProgramState(GLProgramState *glProgramState) override;
+//TODO minggo: should change Node::setGLProgramState(), then override
+    void setProgramState(backend::ProgramState *rogramState);
     /** just remember bind attributes */
-    virtual void setGLProgram(GLProgram *glprogram) override;
-    
+//    virtual void setGLProgram(GLProgram *glprogram) override;
+
     /*
      * Get AABB
      * If the sprite has animation, it can't be calculated accurately,
@@ -289,7 +290,7 @@ public:
     struct Sprite3DData
     {
         Vector<MeshVertexData*>   meshVertexDatas;
-        Vector<GLProgramState*>   glProgramStates;
+        Vector<backend::ProgramState*>   programStates;
         NodeDatas*      nodedatas;
         MaterialDatas*  materialdatas;
         ~Sprite3DData()
@@ -299,7 +300,7 @@ public:
             if (materialdatas)
                 delete materialdatas;
             meshVertexDatas.clear();
-            glProgramStates.clear();
+            programStates.clear();
         }
     };
     
