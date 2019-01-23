@@ -884,10 +884,10 @@ Rect Sprite3D::getBoundingBox() const
     return ret; 
 }
 
-void Sprite3D::setCullFace(CullMode cullMode)
+void Sprite3D::setCullFace(CullFaceSide side)
 {
     for (auto& it : _meshes) {
-        it->getMaterial()->getStateBlock()->setCullFaceSide(cullMode);
+        it->getMaterial()->getStateBlock()->setCullFaceSide(side);
 //        it->getMeshCommand().setCullFace(cullFace);
     }
 }

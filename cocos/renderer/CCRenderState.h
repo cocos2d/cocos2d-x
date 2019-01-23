@@ -40,8 +40,9 @@ NS_CC_BEGIN
 class Texture2D;
 class Pass;
 
-using CullMode = backend::CullMode;
+using CullFaceSide = backend::CullMode;
 using Winding = backend::Winding;
+using DepthFunction = backend::CompareFunction;
 
 /**
  * Defines the rendering state of the graphics device.
@@ -107,66 +108,6 @@ public:
     };
 
     /**
-     * Defines the supported depth compare functions.
-     *
-     * Depth compare functions specify the comparison that takes place between the
-     * incoming pixel's depth value and the depth value already in the depth buffer.
-     * If the compare function passes, the new pixel will be drawn.
-     *
-     * The initial depth compare function is DEPTH_LESS.
-     */
-    enum DepthFunction
-    {
-        DEPTH_NEVER = GL_NEVER,
-        DEPTH_LESS = GL_LESS,
-        DEPTH_EQUAL = GL_EQUAL,
-        DEPTH_LEQUAL = GL_LEQUAL,
-        DEPTH_GREATER = GL_GREATER,
-        DEPTH_NOTEQUAL = GL_NOTEQUAL,
-        DEPTH_GEQUAL = GL_GEQUAL,
-        DEPTH_ALWAYS = GL_ALWAYS
-    };
-
-    /**
-     * Defines the supported stencil compare functions.
-     *
-     * Stencil compare functions determine if a new pixel will be drawn.
-     *
-     * The initial stencil compare function is STENCIL_ALWAYS.
-     */
-    enum StencilFunction
-    {
-        STENCIL_NEVER = GL_NEVER,
-        STENCIL_ALWAYS = GL_ALWAYS,
-        STENCIL_LESS = GL_LESS,
-        STENCIL_LEQUAL = GL_LEQUAL,
-        STENCIL_EQUAL = GL_EQUAL,
-        STENCIL_GREATER = GL_GREATER,
-        STENCIL_GEQUAL = GL_GEQUAL,
-        STENCIL_NOTEQUAL = GL_NOTEQUAL
-    };
-
-    /**
-     * Defines the supported stencil operations to perform.
-     *
-     * Stencil operations determine what should happen to the pixel if the
-     * stencil test fails, passes, or passes but fails the depth test.
-     *
-     * The initial stencil operation is STENCIL_OP_KEEP.
-     */
-    enum StencilOperation
-    {
-        STENCIL_OP_KEEP = GL_KEEP,
-        STENCIL_OP_ZERO = GL_ZERO,
-        STENCIL_OP_REPLACE = GL_REPLACE,
-        STENCIL_OP_INCR = GL_INCR,
-        STENCIL_OP_DECR = GL_DECR,
-        STENCIL_OP_INVERT = GL_INVERT,
-        STENCIL_OP_INCR_WRAP = GL_INCR_WRAP,
-        STENCIL_OP_DECR_WRAP = GL_DECR_WRAP
-    };
-
-    /**
      * Defines a block of fixed-function render states that can be applied to a
      * RenderState object.
      */
@@ -187,8 +128,8 @@ public:
          * Don't use `new` or `delete` on them.
          * 
          */
-        StateBlock();
-        ~StateBlock();
+        StateBlock() = default;
+        ~StateBlock() = default;
 
         /**
          * Binds the state in this StateBlock to the renderer.
@@ -246,7 +187,7 @@ public:
          *
          * @param side The side to cull.
          */
-        void setCullFaceSide(CullMode mode);
+        void setCullFaceSide(CullFaceSide side);
 
         /**
          * Sets the winding for front facing polygons.
@@ -352,25 +293,16 @@ public:
 
         void cloneInto(StateBlock* renderState) const;
 
-        bool _cullFaceEnabled;
-        bool _depthTestEnabled;
-        bool _depthWriteEnabled;
-        DepthFunction _depthFunction;
-        bool _blendEnabled;
-        Blend _blendSrc;
-        Blend _blendDst;
-        CullMode _cullMode = CullMode::BACK;
+        bool _cullFaceEnabled = false;
+        bool _depthTestEnabled = true;
+        bool _depthWriteEnabled = false;
+        DepthFunction _depthFunction = DepthFunction::LESS;
+        bool _blendEnabled = true;
+        Blend _blendSrc = RenderState::BLEND_ONE;
+        Blend _blendDst = RenderState::BLEND_ZERO;
+        CullFaceSide _cullFaceSide = CullFaceSide::BACK;
         Winding _frontFace = Winding::COUNTER_CLOCK_WISE;
-        bool _stencilTestEnabled;
-        unsigned int _stencilWrite;
-        StencilFunction _stencilFunction;
-        int _stencilFunctionRef;
-        unsigned int _stencilFunctionMask;
-        StencilOperation _stencilOpSfail;
-        StencilOperation _stencilOpDpfail;
-        StencilOperation _stencilOpDppass;
-
-        long _bits;
+        long _bits = 0L;
 
         mutable uint32_t _hash;
         mutable bool _hashDirty;
@@ -385,23 +317,23 @@ protected:
     bool init(RenderState* parent);
     void cloneInto(RenderState* state) const;
 
-    mutable uint32_t _hash;
-    mutable bool _hashDirty;
+    mutable uint32_t _hash = 0;
+    mutable bool _hashDirty = true;
 
     /**
      * The StateBlock of fixed-function render states that can be applied to the RenderState.
      */
-    mutable StateBlock* _state;
+    mutable StateBlock* _state = nullptr;
 
     /**
      * The RenderState's parent. Weak Reference
      */
-    RenderState* _parent;
+    RenderState* _parent = nullptr;
 
     // name, for filtering
     std::string _name;
 
-    Texture2D* _texture;
+    Texture2D* _texture = nullptr;
 };
 
 NS_CC_END
