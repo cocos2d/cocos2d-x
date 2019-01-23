@@ -81,7 +81,7 @@ namespace
             case GL_INT:
             case GL_UNSIGNED_INT:
             case GL_FLOAT:
-                ret = sizeof(GLfloat) * 4;
+                ret = sizeof(GLfloat);
                 break;
             case GL_FLOAT_VEC2:
             case GL_INT_VEC2:

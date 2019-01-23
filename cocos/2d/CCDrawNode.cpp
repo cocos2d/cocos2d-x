@@ -280,9 +280,8 @@ void DrawNode::updateUniforms(const Mat4 &transform, CustomCommand& cmd)
     pipelineDescriptor.programState->setUniform(mvpLocation, matrixMVP.m, sizeof(matrixMVP.m));
 
     float alpha = _displayedOpacity / 255.0;
-    Vec4 alpha4(alpha, 0, 0, 0);
     auto alphaUniformLocation = pipelineDescriptor.programState->getUniformLocation("u_alpha");
-    pipelineDescriptor.programState->setUniform(alphaUniformLocation, &alpha4, sizeof(alpha4));
+    pipelineDescriptor.programState->setUniform(alphaUniformLocation, &alpha, sizeof(alpha));
 }
 
 void DrawNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)

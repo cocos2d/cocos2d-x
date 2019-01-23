@@ -5,27 +5,6 @@
 
 CC_BACKEND_BEGIN
 
-namespace
-{
-    uint32_t getTypeSize(glslopt_basic_type type)
-    {
-        uint32_t ret = 0;
-        switch (type)
-        {
-            case kGlslTypeFloat:
-            case kGlslTypeInt:
-                ret = 4;
-                break;
-            case kGlslTypeBool:
-                ret = 1;
-                break;
-            default:
-                break;
-        }
-        return ret;
-    }
-}
-
 ShaderModuleMTL::ShaderModuleMTL(id<MTLDevice> mtlDevice, ShaderStage stage, const std::string& source)
 : ShaderModule(stage)
 {
@@ -98,12 +77,24 @@ void ShaderModuleMTL::parseUniform(id<MTLDevice> mtlDevice, glslopt_shader* shad
         std::shared_ptr<uint8_t> sp(new uint8_t[uniformSize], [](uint8_t *p) { delete[] p; });
         _uniformBuffer = sp;
     }
+    
     for (int i = 0; i < uniformCount; ++i)
     {
+        int nextLocation = -1;
         const char* parName;
         glslopt_basic_type parType;
         glslopt_precision parPrec;
         int parVecSize, parMatSize, parArrSize, location;
+        if( i+1 < uniformCount)
+        {
+            glslopt_shader_get_uniform_desc(shader, i+1, &parName, &parType, &parPrec, &parVecSize, &parMatSize, &parArrSize, &location);
+            nextLocation = location;
+        }
+        else
+        {
+            nextLocation = uniformSize;
+        }
+        
         glslopt_shader_get_uniform_desc(shader, i, &parName, &parType, &parPrec, &parVecSize, &parMatSize, &parArrSize, &location);
         
         parArrSize = (parArrSize > 0) ? parArrSize : 1;
@@ -111,9 +102,7 @@ void ShaderModuleMTL::parseUniform(id<MTLDevice> mtlDevice, glslopt_shader* shad
         uniform.count = parArrSize;
         uniform.location = location;
         uniform.isArray = parArrSize;
-        uniform.bufferSize = getTypeSize(parType) * parVecSize * parMatSize * parArrSize;
-        //TODO coulsonwang
-        uniform.bufferSize = uniform.bufferSize < 16 ? 16 : uniform.bufferSize;
+        uniform.bufferSize = nextLocation - location;
         _uniformInfos[parName] = uniform;
         
         _maxLocation = _maxLocation < location ? (location + 1) : _maxLocation;

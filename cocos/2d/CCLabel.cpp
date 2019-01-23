@@ -1540,13 +1540,13 @@ void Label::updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer,
         switch (_currLabelEffect) {
             case LabelEffect::OUTLINE:
             {
-                int effectType[] = {0, 0, 0, 0};
+                int effectType = 0;
                 Vec4 effectColor(_effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
                 
                 //draw shadow
                 if(_shadowEnabled)
                 {
-                    effectType[0] = 2;
+                    effectType = 2;
                     auto& pipelineShadow = _customCommandShadow.getPipelineDescriptor();
                     Vec4 shadowColor = Vec4(_shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
                     pipelineShadow.programState->setUniform(_effectColorLocation, &shadowColor, sizeof(Vec4));
@@ -1557,7 +1557,7 @@ void Label::updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer,
                 
                 //draw outline
                 {
-                    effectType[0] = 1;
+                    effectType = 1;
                     updateBuffer(textureAtlas, _customCommandOutLine);
                     auto& pipelineOutline = _customCommandOutLine.getPipelineDescriptor();
                     pipelineOutline = pipelineDescriptor;
@@ -1570,7 +1570,7 @@ void Label::updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer,
               
                 //draw text
                 {
-                    effectType[0] = 0;
+                    effectType = 0;
                     pipelineDescriptor.programState->setUniform(_effectColorLocation, &effectColor, sizeof(Vec4));
                     pipelineDescriptor.programState->setUniform(_effectTypeLocation, &effectType, sizeof(effectType));
                 }
