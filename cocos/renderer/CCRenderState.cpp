@@ -41,10 +41,6 @@ RenderState::StateBlock* RenderState::StateBlock::_defaultState = nullptr;
 
 
 RenderState::RenderState()
-: _hash(0)
-, _hashDirty(true)
-, _parent(nullptr)
-, _texture(nullptr)
 {
     _state = StateBlock::create();
     CC_SAFE_RETAIN(_state);
@@ -202,26 +198,6 @@ RenderState::StateBlock* RenderState::StateBlock::create()
     return state;
 }
 
-//
-// The defaults are based on GamePlay3D defaults, with the following changes
-// _depthWriteEnabled is FALSE
-// _depthTestEnabled is TRUE
-// _blendEnabled is TRUE
-RenderState::StateBlock::StateBlock()
-: _cullFaceEnabled(false)
-, _depthTestEnabled(true), _depthWriteEnabled(false), _depthFunction(RenderState::DEPTH_LESS)
-, _blendEnabled(true), _blendSrc(RenderState::BLEND_ONE), _blendDst(RenderState::BLEND_ZERO)
-, _stencilTestEnabled(false), _stencilWrite(RS_ALL_ONES)
-, _stencilFunction(RenderState::STENCIL_ALWAYS), _stencilFunctionRef(0), _stencilFunctionMask(RS_ALL_ONES)
-, _stencilOpSfail(RenderState::STENCIL_OP_KEEP), _stencilOpDpfail(RenderState::STENCIL_OP_KEEP), _stencilOpDppass(RenderState::STENCIL_OP_KEEP)
-, _bits(0L)
-{
-}
-
-RenderState::StateBlock::~StateBlock()
-{
-}
-
 void RenderState::StateBlock::bind()
 {
     // When the public bind() is called with no RenderState object passed in,
@@ -265,10 +241,10 @@ void RenderState::StateBlock::bindNoRestore()
 
         _defaultState->_cullFaceEnabled = _cullFaceEnabled;
     }
-    if ((_bits & RS_CULL_FACE_SIDE) && (_cullMode != _defaultState->_cullMode))
+    if ((_bits & RS_CULL_FACE_SIDE) && (_cullFaceSide != _defaultState->_cullFaceSide))
     {
-        renderer->setCullMode(_cullMode);
-        _defaultState->_cullMode = _cullMode;
+        renderer->setCullMode(_cullFaceSide);
+        _defaultState->_cullFaceSide = _cullFaceSide;
     }
     if ((_bits & RS_FRONT_FACE) && (_frontFace != _defaultState->_frontFace))
     {
@@ -333,7 +309,7 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
     {
         renderer->setCullMode(CullMode::BACK);
         _defaultState->_bits &= ~RS_CULL_FACE_SIDE;
-        _defaultState->_cullMode = CullMode::BACK;
+        _defaultState->_cullFaceSide = CullFaceSide::BACK;
     }
     if (!(stateOverrideBits & RS_FRONT_FACE) && (_defaultState->_bits & RS_FRONT_FACE))
     {
@@ -358,7 +334,7 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
     //TODO
 //        glDepthFunc((GLenum)GL_LESS);
         _defaultState->_bits &= ~RS_DEPTH_FUNC;
-        _defaultState->_depthFunction = RenderState::DEPTH_LESS;
+        _defaultState->_depthFunction = DepthFunction::LESS;
     }
 }
 
@@ -389,16 +365,8 @@ void RenderState::StateBlock::cloneInto(StateBlock* state) const
     state->_blendEnabled = _blendEnabled;
     state->_blendSrc = _blendSrc;
     state->_blendDst = _blendDst;
-    state->_cullMode = _cullMode;
+    state->_cullFaceSide = _cullFaceSide;
     state->_frontFace = _frontFace;
-    state->_stencilTestEnabled = _stencilTestEnabled;
-    state->_stencilWrite = _stencilWrite;
-    state->_stencilFunction = _stencilFunction;
-    state->_stencilFunctionRef = _stencilFunctionRef;
-    state->_stencilFunctionMask = _stencilFunctionMask;
-    state->_stencilOpSfail = _stencilOpSfail;
-    state->_stencilOpDpfail = _stencilOpDpfail;
-    state->_stencilOpDppass = _stencilOpDppass;
     state->_bits = _bits;
 }
 
@@ -445,31 +413,31 @@ static RenderState::Blend parseBlend(const std::string& value)
     }
 }
 
-static RenderState::DepthFunction parseDepthFunc(const std::string& value)
+static DepthFunction parseDepthFunc(const std::string& value)
 {
     // Convert string to uppercase for comparison
     std::string upper(value);
     std::transform(upper.begin(), upper.end(), upper.begin(), (int(*)(int))toupper);
     if (upper == "NEVER")
-        return RenderState::DEPTH_NEVER;
+        return DepthFunction::NEVER;
     else if (upper == "LESS")
-        return RenderState::DEPTH_LESS;
+        return DepthFunction::LESS;
     else if (upper == "EQUAL")
-        return RenderState::DEPTH_EQUAL;
+        return DepthFunction::EQUAL;
     else if (upper == "LEQUAL")
-        return RenderState::DEPTH_LEQUAL;
+        return DepthFunction::LESS_EQUAL;
     else if (upper == "GREATER")
-        return RenderState::DEPTH_GREATER;
+        return DepthFunction::GREATER;
     else if (upper == "NOTEQUAL")
-        return RenderState::DEPTH_NOTEQUAL;
+        return DepthFunction::NOT_EQUAL;
     else if (upper == "GEQUAL")
-        return RenderState::DEPTH_GEQUAL;
+        return DepthFunction::GREATER_EQUAL;
     else if (upper == "ALWAYS")
-        return RenderState::DEPTH_ALWAYS;
+        return DepthFunction::ALWAYS;
     else
     {
         CCLOG("Unsupported depth function value (%s). Will default to DEPTH_LESS if errors are treated as warnings)", value.c_str());
-        return RenderState::DEPTH_LESS;
+        return DepthFunction::LESS;
     }
 }
 
@@ -622,7 +590,6 @@ void RenderState::StateBlock::setBlendDst(Blend blend)
 void RenderState::StateBlock::setCullFace(bool enabled)
 {
     _cullFaceEnabled = enabled;
-    _cullMode = CullMode::NONE;
     if (!enabled)
     {
         _bits &= ~RS_CULL_FACE;
@@ -633,10 +600,10 @@ void RenderState::StateBlock::setCullFace(bool enabled)
     }
 }
 
-void RenderState::StateBlock::setCullFaceSide(CullMode mode)
+void RenderState::StateBlock::setCullFaceSide(CullFaceSide side)
 {
-    _cullMode = mode;
-    if (_cullMode == CullMode::BACK)
+    _cullFaceSide = side;
+    if (_cullFaceSide == CullFaceSide::BACK)
     {
         // Default cull side
         _bits &= ~RS_CULL_FACE_SIDE;
@@ -690,7 +657,7 @@ void RenderState::StateBlock::setDepthWrite(bool enabled)
 void RenderState::StateBlock::setDepthFunction(DepthFunction func)
 {
     _depthFunction = func;
-    if (_depthFunction == DEPTH_LESS)
+    if (_depthFunction == DepthFunction::LESS)
     {
         // Default depth function
         _bits &= ~RS_DEPTH_FUNC;
