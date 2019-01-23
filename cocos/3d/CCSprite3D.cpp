@@ -41,8 +41,6 @@
 #include "platform/CCFileUtils.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/CCGLProgramCache.h"
 #include "renderer/CCMaterial.h"
 #include "renderer/CCTechnique.h"
 #include "renderer/CCPass.h"
@@ -148,7 +146,7 @@ void Sprite3D::afterAsyncLoad(void* param)
                     data->nodedatas = nodeDatas;
                     data->meshVertexDatas = _meshVertexDatas;
                     for (const auto mesh : _meshes) {
-                        data->glProgramStates.pushBack(mesh->getGLProgramState());
+                        data->programStates.pushBack(mesh->getProgramState());
                     }
                     
                     Sprite3DCache::getInstance()->addSprite3DData(asyncParam->modelPath, data);
@@ -219,8 +217,8 @@ bool Sprite3D::loadFromCache(const std::string& path)
 
         for (ssize_t i = 0, size = _meshes.size(); i < size; ++i) {
             // cloning is needed in order to have one state per sprite
-            auto glstate = spritedata->glProgramStates.at(i);
-            _meshes.at(i)->setGLProgramState(glstate->clone());
+//            auto glstate = spritedata->glProgramStates.at(i);
+//            _meshes.at(i)->setProgramState(glstate->clone());
         }
         return true;
     }
@@ -308,7 +306,7 @@ bool Sprite3D::initWithFile(const std::string& path)
             data->nodedatas = nodeDatas;
             data->meshVertexDatas = _meshVertexDatas;
             for (const auto mesh : _meshes) {
-                data->glProgramStates.pushBack(mesh->getGLProgramState());
+                data->programStates.pushBack(mesh->getProgramState());
             }
             
             Sprite3DCache::getInstance()->addSprite3DData(path, data);
@@ -807,18 +805,19 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     }
 }
 
-void Sprite3D::setGLProgramState(GLProgramState* glProgramState)
+void Sprite3D::setProgramState(backend::ProgramState* programState)
 {
-    Node::setGLProgramState(glProgramState);
+//TODO: minggo
+//    Node::setGLProgramState(glProgramState);
     for (auto state : _meshes) {
-        state->setGLProgramState(glProgramState);
+        state->setProgramState(programState);
     }
 }
-void Sprite3D::setGLProgram(GLProgram* glprogram)
-{
-    auto glProgramState = GLProgramState::create(glprogram);
-    setGLProgramState(glProgramState);
-}
+//void Sprite3D::setGLProgram(GLProgram* glprogram)
+//{
+//    auto glProgramState = GLProgramState::create(glprogram);
+//    setGLProgramState(glProgramState);
+//}
 
 void Sprite3D::setBlendFunc(const BlendFunc& blendFunc)
 {

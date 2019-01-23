@@ -46,8 +46,6 @@ NS_CC_BEGIN
 class Texture2D;
 class MeshSkin;
 class MeshIndexData;
-class GLProgramState;
-class GLProgram;
 class Material;
 class Renderer;
 class Scene;
@@ -157,7 +155,7 @@ public:
      * 
      * @lua NA
      */
-    GLProgramState* getGLProgramState() const;
+    backend::ProgramState* getProgramState() const;
     
     /**name getter */
     const std::string& getName() const { return _name; }
@@ -196,7 +194,7 @@ public:
     /**  Sets a new GLProgramState for the Mesh
      * A new Material will be created for it
      */
-    void setGLProgramState(GLProgramState* glProgramState);
+    void setProgramState(backend::ProgramState* programState);
 
     /** Sets a new Material to the Mesh */
     void setMaterial(Material* material);
