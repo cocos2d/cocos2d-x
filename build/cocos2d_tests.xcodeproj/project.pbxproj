@@ -562,6 +562,10 @@
 		463D7E7E1D227CA400EA6BD1 /* Bug-15776.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463D7E7A1D227C3800EA6BD1 /* Bug-15776.cpp */; };
 		463D7E7F1D227CAB00EA6BD1 /* Bug-15776.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463D7E7A1D227C3800EA6BD1 /* Bug-15776.cpp */; };
 		46535CDB21ABD689005B5370 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46535CDA21ABD689005B5370 /* Metal.framework */; };
+		46AF3AE621F740FB00D5AFCD /* Sprite3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3AE421F740FB00D5AFCD /* Sprite3DTest.cpp */; };
+		46AF3AE721F740FB00D5AFCD /* Sprite3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3AE421F740FB00D5AFCD /* Sprite3DTest.cpp */; };
+		46AF3AE821F740FB00D5AFCD /* DrawNode3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3AE521F740FB00D5AFCD /* DrawNode3D.cpp */; };
+		46AF3AE921F740FB00D5AFCD /* DrawNode3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3AE521F740FB00D5AFCD /* DrawNode3D.cpp */; };
 		46BD387921D358E4002BD50F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46BD387821D358E4002BD50F /* OpenGLES.framework */; };
 		4B5C5BA81CA1147300D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
 		4B5C5BA91CA1147F00D55A14 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
@@ -1727,6 +1731,10 @@
 		463D7E7B1D227C3800EA6BD1 /* Bug-15776.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-15776.h"; sourceTree = "<group>"; };
 		46535CDA21ABD689005B5370 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
+		46AF3AE221F740FB00D5AFCD /* Sprite3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprite3DTest.h; sourceTree = "<group>"; };
+		46AF3AE321F740FB00D5AFCD /* DrawNode3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawNode3D.h; sourceTree = "<group>"; };
+		46AF3AE421F740FB00D5AFCD /* Sprite3DTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sprite3DTest.cpp; sourceTree = "<group>"; };
+		46AF3AE521F740FB00D5AFCD /* DrawNode3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawNode3D.cpp; sourceTree = "<group>"; };
 		46BD387821D358E4002BD50F /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.1.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
 		4B5C5BAA1CA1149900D55A14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		4B5C5BB41CA114DB00D55A14 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
@@ -2453,6 +2461,7 @@
 				1AC35AF918CECF0C00F37B72 /* testResource.h */,
 				1AC35AFA18CECF0C00F37B72 /* tests.h */,
 				1AC35B1B18CECF0C00F37B72 /* VisibleRect.h */,
+				46AF3AE121F740FB00D5AFCD /* Sprite3DTest */,
 				1AC3592818CECF0A00F37B72 /* ActionManagerTest */,
 				1AC3592B18CECF0A00F37B72 /* ActionsEaseTest */,
 				1AC3592E18CECF0A00F37B72 /* ActionsProgressTest */,
@@ -3401,6 +3410,17 @@
 				507B42111C31BEA70067B53E /* libcocos2d tvOS.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		46AF3AE121F740FB00D5AFCD /* Sprite3DTest */ = {
+			isa = PBXGroup;
+			children = (
+				46AF3AE221F740FB00D5AFCD /* Sprite3DTest.h */,
+				46AF3AE321F740FB00D5AFCD /* DrawNode3D.h */,
+				46AF3AE421F740FB00D5AFCD /* Sprite3DTest.cpp */,
+				46AF3AE521F740FB00D5AFCD /* DrawNode3D.cpp */,
+			);
+			path = Sprite3DTest;
 			sourceTree = "<group>";
 		};
 		50921EAC1B746D5F00C085CC /* DownloaderTest */ = {
@@ -4924,6 +4944,7 @@
 				A5030C3519D059DA000E78E7 /* OpenURLTest.cpp in Sources */,
 				EDC7891121CA154800E1863C /* UIScrollViewTest.cpp in Sources */,
 				EDC7891321CA154800E1863C /* UIEditBoxTest.cpp in Sources */,
+				46AF3AE621F740FB00D5AFCD /* Sprite3DTest.cpp in Sources */,
 				1AC35C4518CECF0C00F37B72 /* SceneTest.cpp in Sources */,
 				59620E8F1921E5CF002021B6 /* Bug-Child.cpp in Sources */,
 				1AC35B5118CECF0C00F37B72 /* ClippingNodeTest.cpp in Sources */,
@@ -4968,6 +4989,7 @@
 				1AC35C0718CECF0C00F37B72 /* MouseTest.cpp in Sources */,
 				1AC35C5D18CECF0C00F37B72 /* Ball.cpp in Sources */,
 				461FE09E21CB2E2D00E5378F /* DrawPrimitivesTest.cpp in Sources */,
+				46AF3AE821F740FB00D5AFCD /* DrawNode3D.cpp in Sources */,
 				1AC35B3518CECF0C00F37B72 /* TestEntries.cpp in Sources */,
 				1AC35B2D18CECF0C00F37B72 /* Box2dTest.cpp in Sources */,
 				EDC7891921CA154800E1863C /* UISceneManager.cpp in Sources */,
@@ -5145,6 +5167,7 @@
 				1AC35B2418CECF0C00F37B72 /* ActionsEaseTest.cpp in Sources */,
 				EDC7892621CA154800E1863C /* UIPageViewTest.cpp in Sources */,
 				1AC35C1A18CECF0C00F37B72 /* MultiTouchTest.cpp in Sources */,
+				46AF3AE721F740FB00D5AFCD /* Sprite3DTest.cpp in Sources */,
 				EDC7893421CA154800E1863C /* UIListViewTest.cpp in Sources */,
 				1AC35C8718CECF1400F37B72 /* testsAppDelegate.mm in Sources */,
 				1AC35B2A18CECF0C00F37B72 /* AppDelegate.cpp in Sources */,
@@ -5217,6 +5240,7 @@
 				1AC35C6418CECF0C00F37B72 /* TransitionsTest.cpp in Sources */,
 				1AC35C4418CECF0C00F37B72 /* RotateWorldTest.cpp in Sources */,
 				1AC35B2618CECF0C00F37B72 /* ActionsProgressTest.cpp in Sources */,
+				46AF3AE921F740FB00D5AFCD /* DrawNode3D.cpp in Sources */,
 				1AC35B6618CECF0C00F37B72 /* EffectsTest.cpp in Sources */,
 				1AC35B2218CECF0C00F37B72 /* ActionManagerTest.cpp in Sources */,
 				1AC35C3E18CECF0C00F37B72 /* PhysicsTest.cpp in Sources */,

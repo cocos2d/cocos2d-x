@@ -27,21 +27,26 @@
  - OGRE3D: http://www.ogre3d.org/
  - Qt3D: http://qt-project.org/
  ****************************************************************************/
-
-#ifndef __cocos2d_libs__CCPass__
-#define __cocos2d_libs__CCPass__
+#pragma once
 
 #include <stdio.h>
 
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderState.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
-class GLProgramState;
 class Technique;
 class Node;
 class VertexAttribBinding;
+class MeshIndexData;
+
+namespace backend
+{
+    class ProgramState;
+    class Buffer;
+}
 
 class CC_DLL Pass : public RenderState
 {
@@ -50,18 +55,20 @@ class CC_DLL Pass : public RenderState
 public:
     /** Creates a Pass with a GLProgramState.
      */
-    static Pass* createWithGLProgramState(Technique* parent, GLProgramState* programState);
+    static Pass* createWithProgramState(Technique* parent, backend::ProgramState* programState);
 
     static Pass* create(Technique* parent);
 
-    /** Returns the GLProgramState */
-    GLProgramState* getGLProgramState() const;
+    /** Returns the ProgramState */
+    backend::ProgramState* getProgramState() const;
 
     /** Binds the GLProgramState and the RenderState.
      This method must be called before call the actual draw call.
      */
     void bind(const Mat4& modelView);
     void bind(const Mat4& modelView, bool bindAttributes);
+
+    void draw(const Mat4& modelView);
 
     /** Unbinds the Pass.
      This method must be called AFTER calling the actual draw call
@@ -76,14 +83,17 @@ public:
      *
      * @param binding The VertexAttribBinding to set (or NULL to remove an existing binding).
      */
-    void setVertexAttribBinding(VertexAttribBinding* binding);
+//    void setVertexAttribBinding(VertexAttribBinding* binding);
+
+    void setAttributeInfo(MeshIndexData* meshIndexData);
 
     /**
      * Returns the vertex attribute binding for this pass.
      *
      * @return The vertex attribute binding for this pass.
      */
-    VertexAttribBinding* getVertexAttributeBinding() const;
+     //TODO minggo
+//    VertexAttribBinding* getVertexAttributeBinding() const;
 
     uint32_t getHash() const;
 
@@ -92,20 +102,17 @@ public:
     Pass* clone() const;
 
 protected:
-    Pass();
+    Pass() = default;
     ~Pass();
     bool init(Technique* parent);
-    bool initWithGLProgramState(Technique* parent, GLProgramState *glProgramState);
+    bool initWithProgramState(Technique* parent, backend::ProgramState *glProgramState);
 
-    void setGLProgramState(GLProgramState* glProgramState);
+    void setProgramState(backend::ProgramState* programState);
     Node* getTarget() const;
 
-    GLProgramState* _glProgramState;
-    VertexAttribBinding* _vertexAttribBinding;
+    backend::ProgramState* _programState = nullptr;
+//    VertexAttribBinding* _vertexAttribBinding;
+    CustomCommand _customCommand;
 };
 
 NS_CC_END
-
-
-
-#endif /* defined(__cocos2d_libs__CCPass__) */

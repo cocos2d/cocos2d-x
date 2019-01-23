@@ -22,12 +22,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#pragma once
 
-#ifndef __CC_VERTEX_INDEX_DATA_H__
-#define __CC_VERTEX_INDEX_DATA_H__
-
-#include "base/CCRef.h"
 #include <map>
+#include "base/CCRef.h"
 
 /**
  * @addtogroup renderer
@@ -56,7 +54,6 @@ struct CC_DLL VertexStreamAttribute
      Constructor.
      */
     VertexStreamAttribute()
-    : _normalize(false),_offset(0),_semantic(0),_type(0),_size(0)
     {
     }
     /**
@@ -85,23 +82,23 @@ struct CC_DLL VertexStreamAttribute
     /**
      Whether the attribute should be normalized or not.
      */
-    bool _normalize;
+    bool _normalize = false;
     /**
      The offset of the attribute in the buffer.
      */
-    int _offset;
+    int _offset = 0;
     /**
      Describe that the attribute usage, could be Position, Color etc.
      */
-    int _semantic;
+    int _semantic = 0;
     /**
      Describe the type of attribute, could be GL_FLOAT, GL_UNSIGNED_BYTE etc.
      */
-    int _type;
+    int _type = 0;
     /**
      Describe how many elements of type in the attribute.
      */
-    int _size;
+    int _size = 0;
 };
 
 /**
@@ -150,12 +147,17 @@ public:
     @param semantic The semantic of the stream.
     */
     VertexBuffer* getStreamBuffer(int semantic) const;
-    
-    /**
-    Called for rendering, it will bind the state of vertex data to current rendering pipeline.
-    */
-    void use();
+
 protected:
+    /**
+    Simple struct to bundle buffer and attribute.
+    */
+    struct BufferAttribute
+    {
+        VertexBuffer* _buffer = nullptr;
+        VertexStreamAttribute _stream;
+    };
+
     /**
     Constructor.
     */
@@ -164,15 +166,6 @@ protected:
     Destructor.
     */
     virtual ~VertexData();
-protected:
-    /**
-    Simple struct to bundle buffer and attribute.
-    */
-    struct BufferAttribute
-    {
-        VertexBuffer* _buffer;
-        VertexStreamAttribute _stream;
-    };
     
     /**
     Streams in the VertexData.
@@ -185,4 +178,3 @@ NS_CC_END
  end of support group
  @}
  */
-#endif //__CC_VERTEX_INDEX_DATA_H__

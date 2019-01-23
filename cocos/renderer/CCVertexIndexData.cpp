@@ -22,7 +22,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #include "renderer/CCVertexIndexData.h"
 #include "renderer/CCVertexIndexBuffer.h"
 
@@ -111,37 +110,6 @@ VertexData::~VertexData()
         element.second._buffer->release();
     }
     _vertexStreams.clear();
-}
-
-void VertexData::use()
-{
-
-    for(auto& element : _vertexStreams)
-    {
-        glEnableVertexAttribArray(element.second._stream._semantic);
-    }
-    
-
-    int lastVBO = -1;
-    for(auto& element : _vertexStreams)
-    {
-        //glEnableVertexAttribArray((GLint)element.second._stream._semantic);
-        auto vertexStreamAttrib = element.second._stream;
-        auto vertexBuffer = element.second._buffer;
-
-        // don't call glBindBuffer() if not needed. Expensive operation.
-        int vbo = vertexBuffer->getVBO();
-        if (vbo != lastVBO) {
-            glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->getVBO());
-            lastVBO = vbo;
-        }
-        glVertexAttribPointer(GLint(vertexStreamAttrib._semantic),
-                              vertexStreamAttrib._size,
-                              vertexStreamAttrib._type,
-                              vertexStreamAttrib._normalize,
-                              vertexBuffer->getSizePerVertex(),
-                              (GLvoid*)((long)vertexStreamAttrib._offset));
-    }
 }
 
 NS_CC_END

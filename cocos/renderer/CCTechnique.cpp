@@ -35,12 +35,12 @@
 
 NS_CC_BEGIN
 
-Technique* Technique::createWithGLProgramState(Material* parent, GLProgramState* state)
+Technique* Technique::createWithProgramState(Material* parent, backend::ProgramState* state)
 {
     auto technique = new (std::nothrow) Technique();
     if (technique && technique->init(parent))
     {
-        auto pass = Pass::createWithGLProgramState(technique, state);
+        auto pass = Pass::createWithProgramState(technique, state);
         technique->addPass(pass);
 
         technique->autorelease();

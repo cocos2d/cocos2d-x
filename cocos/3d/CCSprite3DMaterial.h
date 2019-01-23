@@ -22,9 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#ifndef __CCSPRIT3DMATERIAL_H__
-#define __CCSPRIT3DMATERIAL_H__
+#pragma once
 
 #include <string>
 #include <unordered_map>
@@ -40,6 +38,11 @@ NS_CC_BEGIN
  */
 
 class Texture2D;
+
+namespace backend
+{
+    class ProgramState;
+}
 
 /**
  * @brief Sprite3DMaterial: Material for Sprite3D.
@@ -90,8 +93,9 @@ public:
      * @param programState GLProgramState instance
      * @return Created material
      */
-    static Sprite3DMaterial* createWithGLStateProgram(GLProgramState* programState);
-    
+//    static Sprite3DMaterial* createWithGLStateProgram(GLProgramState* programState);
+    static Sprite3DMaterial* createWithProgramState(backend::ProgramState* programState);
+
     void setTexture(Texture2D* tex, NTextureData::Usage usage);
     
     /**
@@ -171,5 +175,3 @@ protected:
 /// @}
 
 NS_CC_END
-
-#endif // __CCSPRIT3DMATERIAL_H__

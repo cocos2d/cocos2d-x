@@ -205,11 +205,11 @@ void MeshCommand::preBatchDraw()
             glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
 
             // FIXME: Assumes that all the passes in the Material share the same Vertex Attribs
-            GLProgramState* programState = _material
-                                            ? _material->_currentTechnique->_passes.at(0)->getGLProgramState()
-                                            : _glProgramState;
-            programState->applyAttributes();
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+//            GLProgramState* programState = _material
+//                                            ? _material->_currentTechnique->_passes.at(0)->getGLProgramState()
+//                                            : _glProgramState;
+//            programState->applyAttributes();
+//            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
         }
     }
 }
@@ -299,28 +299,28 @@ void MeshCommand::execute()
 void MeshCommand::buildVAO()
 {
     // FIXME: Assumes that all the passes in the Material share the same Vertex Attribs
-    GLProgramState* programState = (_material != nullptr)
-                                    ? _material->_currentTechnique->_passes.at(0)->getGLProgramState()
-                                    : _glProgramState;
-
-    releaseVAO();
-    glGenVertexArrays(1, &_vao);
-    glBindVertexArray(_vao);
-    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-    auto flags = programState->getVertexAttribsFlags();
-    for (int i = 0; flags > 0; i++) {
-        int flag = 1 << i;
-        if (flag & flags)
-            glEnableVertexAttribArray(i);
-        flags &= ~flag;
-    }
-    programState->applyAttributes(false);
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-    
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//    GLProgramState* programState = (_material != nullptr)
+//                                    ? _material->_currentTechnique->_passes.at(0)->getGLProgramState()
+//                                    : _glProgramState;
+//
+//    releaseVAO();
+//    glGenVertexArrays(1, &_vao);
+//    glBindVertexArray(_vao);
+//    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+//    auto flags = programState->getVertexAttribsFlags();
+//    for (int i = 0; flags > 0; i++) {
+//        int flag = 1 << i;
+//        if (flag & flags)
+//            glEnableVertexAttribArray(i);
+//        flags &= ~flag;
+//    }
+//    programState->applyAttributes(false);
+//    
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+//    
+//    glBindVertexArray(0);
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 void MeshCommand::releaseVAO()
 {
