@@ -192,8 +192,32 @@ void TestList::runThisTest()
             TestController::getInstance()->startAutoTest();
         });
         autoTestItem->setPosition(Vec2(VisibleRect::right().x - 60, VisibleRect::bottom().y + 50));
-
-        auto menu = Menu::create(closeItem, autoTestItem, nullptr);
+        
+#if CC_LABEL_DEBUG_DRAW
+        bool v = Label::getDebugDrawEnabled();
+        char str[20];
+        sprintf(str, "DebugDraw: %s", v ? "On" : "Off");
+        
+        auto toggleDebugDrawLabel = Label::createWithTTF(str, "fonts/arial.ttf",14);
+        _toggleDebugDrawItem = MenuItemLabel::create(toggleDebugDrawLabel, [&](Ref* sender){
+            bool v = !Label::getDebugDrawEnabled();
+            char str[20];
+            sprintf(str, "DebugDraw: %s", v ? "On" : "Off");
+            _toggleDebugDrawItem->setString(str);
+            Label::enableDebugDraw(v);
+#if CC_SPRITE_DEBUG_DRAW
+            Sprite::SetDebugDrawLevel(v ? 2 : 0);
+#endif // CC_SPRITE_DEBUG_DRAW
+        });
+        _toggleDebugDrawItem->setPosition(Vec2(VisibleRect::right().x - 60, VisibleRect::bottom().y + 70));
+#endif // CC_LABEL_DEBUG_DRAW
+        
+        
+        auto menu = Menu::create(closeItem, autoTestItem,
+#if CC_LABEL_DEBUG_DRAW
+                                 _toggleDebugDrawItem,
+#endif   // CC_LABEL_DEBUG_DRAW
+                                 nullptr);
         menu->setPosition(Vec2::ZERO);
         scene->addChild(menu, 1);
     }
