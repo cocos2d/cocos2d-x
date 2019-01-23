@@ -881,13 +881,13 @@ Rect Sprite3D::getBoundingBox() const
 {
     AABB aabb = getAABB();
     Rect ret(aabb._min.x, aabb._min.y, (aabb._max.x - aabb._min.x), (aabb._max.y - aabb._min.y));
-    return ret;
+    return ret; 
 }
 
-void Sprite3D::setCullFace(GLenum cullFace)
+void Sprite3D::setCullFace(CullMode cullMode)
 {
     for (auto& it : _meshes) {
-        it->getMaterial()->getStateBlock()->setCullFaceSide((RenderState::CullFaceSide)cullFace);
+        it->getMaterial()->getStateBlock()->setCullFaceSide(cullMode);
 //        it->getMeshCommand().setCullFace(cullFace);
     }
 }

@@ -40,6 +40,8 @@ NS_CC_BEGIN
 class Texture2D;
 class Pass;
 
+using CullMode = backend::CullMode;
+
 /**
  * Defines the rendering state of the graphics device.
  */
@@ -122,17 +124,6 @@ public:
         DEPTH_NOTEQUAL = GL_NOTEQUAL,
         DEPTH_GEQUAL = GL_GEQUAL,
         DEPTH_ALWAYS = GL_ALWAYS
-    };
-
-    /**
-     * Defines culling criteria for front-facing, back-facing and both-side
-     * facets.
-     */
-    enum CullFaceSide
-    {
-        CULL_FACE_SIDE_BACK = GL_BACK,
-        CULL_FACE_SIDE_FRONT = GL_FRONT,
-        CULL_FACE_SIDE_FRONT_AND_BACK = GL_FRONT_AND_BACK
     };
 
     /**
@@ -265,7 +256,7 @@ public:
          *
          * @param side The side to cull.
          */
-        void setCullFaceSide(CullFaceSide side);
+        void setCullFaceSide(CullMode mode);
 
         /**
          * Sets the winding for front facing polygons.
@@ -378,7 +369,7 @@ public:
         bool _blendEnabled;
         Blend _blendSrc;
         Blend _blendDst;
-        CullFaceSide _cullFaceSide;
+        CullMode _cullMode = CullMode::BACK;
         FrontFace _frontFace;
         bool _stencilTestEnabled;
         unsigned int _stencilWrite;

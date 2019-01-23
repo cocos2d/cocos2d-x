@@ -800,7 +800,8 @@ void Renderer::beginRenderPass(RenderCommand* cmd)
 {
      _commandBuffer->beginRenderPass(_renderPassDescriptor);
      _commandBuffer->setViewport(_viewport.x, _viewport.y, _viewport.w, _viewport.h);
-    _commandBuffer->setScissorRect(_scissorState.isEnabled, _scissorState.rect.x, _scissorState.rect.y, _scissorState.rect.width, _scissorState.rect.height);
+     _commandBuffer->setCullMode(_cullMode);
+     _commandBuffer->setScissorRect(_scissorState.isEnabled, _scissorState.rect.x, _scissorState.rect.y, _scissorState.rect.width, _scissorState.rect.height);
      setRenderPipeline(cmd->getPipelineDescriptor(), _renderPassDescriptor);
 
     _commandBuffer->setStencilReferenceValue(_stencilRef);
