@@ -132,6 +132,8 @@ public:
      * @return Return the effect grid rect.
      */
     const Rect& getGridRect() const { return _gridRect; }
+    
+    virtual void updateBlendState();
 
 protected:
     bool _active = false;
@@ -158,8 +160,9 @@ protected:
     
     backend::UniformLocation _mvpMatrixLocation;
     backend::UniformLocation _textureLocation;
-    
     backend::ProgramState* _programState = nullptr;
+    
+    BlendFunc  _blendFunc;
 };
 
 /**

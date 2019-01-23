@@ -124,8 +124,20 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipp
     vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
 
     calculateVertexPoints();
-    
+    updateBlendState();
     return ret;
+}
+
+void GridBase::updateBlendState()
+{
+    if (! _texture || ! _texture->hasPremultipliedAlpha())
+    {
+        _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+    }
+    else
+    {
+        _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+    }
 }
 
 GridBase::~GridBase(void)
@@ -370,6 +382,7 @@ void Grid3D::afterBlit()
 void Grid3D::blit()
 {
     updateVertexBuffer();
+    _drawCommand.init(0, _blendFunc);
     Director::getInstance()->getRenderer()->addCommand(&_drawCommand);
     cocos2d::Mat4 projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     auto programState = _drawCommand.getPipelineDescriptor().programState;
