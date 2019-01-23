@@ -647,6 +647,12 @@ CC_CONSTRUCTOR_ACCESS :
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
+
+#if CC_SPRITE_DEBUG_DRAW
+    static void SetDebugDrawLevel(int value);
+    static int GetDebugDrawLevel() { return _debugDrawLevel; }
+    static void SetDebugDrawColor(const Color4F& color);
+#endif
     
 protected:
 
@@ -727,6 +733,12 @@ protected:
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
+    
+#if CC_SPRITE_DEBUG_DRAW
+    static int _debugDrawLevel;	       /// Determine to draw or not debug sprite info (0 disabled, 1 bbox, 2 texture box)
+    static Color4F _debugDrawColor;    /// Color to be used to paint the debug bounding boxes
+#endif
+
 };
 
 

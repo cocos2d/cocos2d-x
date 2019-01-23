@@ -585,6 +585,12 @@ public:
     float getAdditionalKerning() const;
 
     FontAtlas* getFontAtlas() { return _fontAtlas; }
+    
+#if CC_LABEL_DEBUG_DRAW
+    static void enableDebugDraw(const bool value);
+    static bool getDebugDrawEnabled() { return _debugDrawEnabled; }
+    static void setDebugDrawColor(Color4F& color);
+#endif
 
     virtual const BlendFunc& getBlendFunc() const override { return _blendFunc; }
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
@@ -779,6 +785,8 @@ protected:
 
 #if CC_LABEL_DEBUG_DRAW
     DrawNode* _debugDrawNode;
+    static bool _debugDrawEnabled;
+    static Color4F _debugDrawColor;
 #endif
 
     bool _enableWrap;

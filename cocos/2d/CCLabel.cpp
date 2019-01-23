@@ -47,6 +47,13 @@
 
 NS_CC_BEGIN
 
+#if CC_LABEL_DEBUG_DRAW
+
+bool Label::_debugDrawEnabled = false;
+Color4F Label::_debugDrawColor = Color4F::WHITE;
+
+#endif
+
 /**
  * LabelLetter used to update the quad in texture atlas without SpriteBatchNode.
  */
@@ -396,10 +403,16 @@ Label::Label(TextHAlignment hAlignment /* = TextHAlignment::LEFT */,
     _hAlignment = hAlignment;
     _vAlignment = vAlignment;
 
+    // CROWDSTAR START
 #if CC_LABEL_DEBUG_DRAW
-    _debugDrawNode = DrawNode::create();
-    addChild(_debugDrawNode);
+    _debugDrawNode = nullptr;
+    if (Label::_debugDrawEnabled)
+    {
+        _debugDrawNode = DrawNode::create();
+        addChild(_debugDrawNode);
+    }
 #endif
+    // CROWDSTAR END
 
     _purgeTextureListener = EventListenerCustom::create(FontAtlas::CMD_PURGE_FONTATLAS, [this](EventCustom* event){
         if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
@@ -1468,17 +1481,22 @@ void Label::updateContent()
         _contentDirty = false;
     }
 
+    // CROWDSTAR START
 #if CC_LABEL_DEBUG_DRAW
-    _debugDrawNode->clear();
-    Vec2 vertices[4] =
+    if (Label::_debugDrawEnabled && _debugDrawNode)
     {
-        Vec2::ZERO,
-        Vec2(_contentSize.width, 0),
-        Vec2(_contentSize.width, _contentSize.height),
-        Vec2(0, _contentSize.height)
-    };
-    _debugDrawNode->drawPoly(vertices, 4, true, Color4F::WHITE);
+        _debugDrawNode->clear();
+        Vec2 vertices[4] =
+        {
+            Vec2::ZERO,
+            Vec2(_contentSize.width, 0),
+            Vec2(_contentSize.width, _contentSize.height),
+            Vec2(0, _contentSize.height)
+        };
+        _debugDrawNode->drawPoly(vertices, 4, true, Label::_debugDrawColor);
+    }
 #endif
+    // CROWDSTAR END
 }
 
 void Label::setBMFontSize(float fontSize)
@@ -1870,6 +1888,18 @@ float Label::getAdditionalKerning() const
 
     return _additionalKerning;
 }
+
+#if CC_LABEL_DEBUG_DRAW
+void Label::enableDebugDraw(const bool value)
+{
+    Label::_debugDrawEnabled = value;
+}
+
+void Label::setDebugDrawColor(Color4F& color)
+{
+    Label::_debugDrawColor = color;
+}
+#endif
 
 void Label::computeStringNumLines()
 {
