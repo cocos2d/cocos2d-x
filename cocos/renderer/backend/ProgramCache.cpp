@@ -51,6 +51,8 @@ bool ProgramCache::init()
     addProgram(positionTexture_vert, positionTexture_frag);
     addProgram(positionTextureColor_vert, positionTextureColorAlphaTest_frag);
     addProgram(positionUColor_vert, positionUColor_frag);
+    addProgram(positionTextureColor_vert, etc1Gray_frag);
+    addProgram(positionTextureColor_vert, grayScale_frag);
     return true;
 }
 

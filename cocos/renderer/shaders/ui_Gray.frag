@@ -15,5 +15,5 @@ void main(void)
      c = v_fragmentColor * c;
     gl_FragColor.xyz = vec3(0.2126*c.r + 0.7152*c.g + 0.0722*c.b);
     gl_FragColor.w = c.w;
-}Ø
+}
 )";
