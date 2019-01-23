@@ -475,7 +475,7 @@ void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
     RenderState::StateBlock::_defaultState->setCullFace(true);
     
     glCullFace(GL_BACK);
-    RenderState::StateBlock::_defaultState->setCullFaceSide(RenderState::CULL_FACE_SIDE_BACK);
+    RenderState::StateBlock::_defaultState->setCullFaceSide(CullMode::BACK);
     
     glDisable(GL_BLEND);
     RenderState::StateBlock::_defaultState->setBlend(false);

@@ -211,7 +211,7 @@ RenderState::StateBlock::StateBlock()
 : _cullFaceEnabled(false)
 , _depthTestEnabled(true), _depthWriteEnabled(false), _depthFunction(RenderState::DEPTH_LESS)
 , _blendEnabled(true), _blendSrc(RenderState::BLEND_ONE), _blendDst(RenderState::BLEND_ZERO)
-, _cullFaceSide(CULL_FACE_SIDE_BACK), _frontFace(FRONT_FACE_CCW)
+, _frontFace(FRONT_FACE_CCW)
 , _stencilTestEnabled(false), _stencilWrite(RS_ALL_ONES)
 , _stencilFunction(RenderState::STENCIL_ALWAYS), _stencilFunctionRef(0), _stencilFunctionMask(RS_ALL_ONES)
 , _stencilOpSfail(RenderState::STENCIL_OP_KEEP), _stencilOpDpfail(RenderState::STENCIL_OP_KEEP), _stencilOpDppass(RenderState::STENCIL_OP_KEEP)
@@ -261,18 +261,15 @@ void RenderState::StateBlock::bindNoRestore()
     }
     if ((_bits & RS_CULL_FACE) && (_cullFaceEnabled != _defaultState->_cullFaceEnabled))
     {
-    //TODO
-//        if (_cullFaceEnabled)
-//            glEnable(GL_CULL_FACE);
-//        else
-//            glDisable(GL_CULL_FACE);
+        if (!_cullFaceEnabled)
+             renderer->setCullMode(CullMode::NONE);
+
         _defaultState->_cullFaceEnabled = _cullFaceEnabled;
     }
-    if ((_bits & RS_CULL_FACE_SIDE) && (_cullFaceSide != _defaultState->_cullFaceSide))
+    if ((_bits & RS_CULL_FACE_SIDE) && (_cullMode != _defaultState->_cullMode))
     {
-    //TODO
-//        glCullFace((GLenum)_cullFaceSide);
-        _defaultState->_cullFaceSide = _cullFaceSide;
+        renderer->setCullMode(_cullMode);
+        _defaultState->_cullMode = _cullMode;
     }
     if ((_bits & RS_FRONT_FACE) && (_frontFace != _defaultState->_frontFace))
     {
@@ -335,17 +332,15 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
     }
     if (!(stateOverrideBits & RS_CULL_FACE) && (_defaultState->_bits & RS_CULL_FACE))
     {
-    //TODO
-//        glDisable(GL_CULL_FACE);
+        renderer->setCullMode(CullMode::NONE);
         _defaultState->_bits &= ~RS_CULL_FACE;
         _defaultState->_cullFaceEnabled = false;
     }
     if (!(stateOverrideBits & RS_CULL_FACE_SIDE) && (_defaultState->_bits & RS_CULL_FACE_SIDE))
     {
-    //TODO
-//        glCullFace((GLenum)GL_BACK);
+        renderer->setCullMode(CullMode::BACK);
         _defaultState->_bits &= ~RS_CULL_FACE_SIDE;
-        _defaultState->_cullFaceSide = RenderState::CULL_FACE_SIDE_BACK;
+        _defaultState->_cullMode = CullMode::BACK;
     }
     if (!(stateOverrideBits & RS_FRONT_FACE) && (_defaultState->_bits & RS_FRONT_FACE))
     {
@@ -404,7 +399,7 @@ void RenderState::StateBlock::cloneInto(StateBlock* state) const
     state->_blendEnabled = _blendEnabled;
     state->_blendSrc = _blendSrc;
     state->_blendDst = _blendDst;
-    state->_cullFaceSide = _cullFaceSide;
+    state->_cullMode = _cullMode;
     state->_frontFace = _frontFace;
     state->_stencilTestEnabled = _stencilTestEnabled;
     state->_stencilWrite = _stencilWrite;
@@ -488,21 +483,22 @@ static RenderState::DepthFunction parseDepthFunc(const std::string& value)
     }
 }
 
-static RenderState::CullFaceSide parseCullFaceSide(const std::string& value)
+static CullMode parseCullFaceSide(const std::string& value)
 {
     // Convert string to uppercase for comparison
     std::string upper(value);
     std::transform(upper.begin(), upper.end(), upper.begin(), (int(*)(int))toupper);
     if (upper == "BACK")
-        return RenderState::CULL_FACE_SIDE_BACK;
+        return CullMode::BACK;
     else if (upper == "FRONT")
-        return RenderState::CULL_FACE_SIDE_FRONT;
-    else if (upper == "FRONT_AND_BACK")
-        return RenderState::CULL_FACE_SIDE_FRONT_AND_BACK;
+        return CullMode::FRONT;
+// XXX: metal doesn't support back&front culling. Is it needed, since it will draw nothing.
+//    else if (upper == "FRONT_AND_BACK")
+//        return RenderState::CULL_FACE_SIDE_FRONT_AND_BACK;
     else
     {
         CCLOG("Unsupported cull face side value (%s). Will default to BACK if errors are treated as warnings.", value.c_str());
-        return RenderState::CULL_FACE_SIDE_BACK;
+        return CullMode::BACK;
     }
 }
 
@@ -636,6 +632,7 @@ void RenderState::StateBlock::setBlendDst(Blend blend)
 void RenderState::StateBlock::setCullFace(bool enabled)
 {
     _cullFaceEnabled = enabled;
+    _cullMode = CullMode::NONE;
     if (!enabled)
     {
         _bits &= ~RS_CULL_FACE;
@@ -646,10 +643,10 @@ void RenderState::StateBlock::setCullFace(bool enabled)
     }
 }
 
-void RenderState::StateBlock::setCullFaceSide(CullFaceSide side)
+void RenderState::StateBlock::setCullFaceSide(CullMode mode)
 {
-    _cullFaceSide = side;
-    if (_cullFaceSide == CULL_FACE_SIDE_BACK)
+    _cullMode = mode;
+    if (_cullMode == CullMode::BACK)
     {
         // Default cull side
         _bits &= ~RS_CULL_FACE_SIDE;

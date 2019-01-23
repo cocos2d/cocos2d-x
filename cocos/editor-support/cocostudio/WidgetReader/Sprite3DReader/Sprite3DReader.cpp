@@ -247,7 +247,7 @@ namespace cocostudio
         if (isFlipped)
         {
             sprite3D->setCullFaceEnabled(true);
-            sprite3D->setCullFace(GL_FRONT);
+            sprite3D->setCullFace(CullMode::FRONT);
         }
 
         if (lightFlag <= 0)

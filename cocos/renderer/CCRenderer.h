@@ -40,6 +40,8 @@
 
 NS_CC_BEGIN
 
+using CullMode = backend::CullMode;
+
 namespace backend
 {
     class Buffer;
@@ -226,8 +228,8 @@ public:
     /* Get stencil reference value set by `setStencilCompareFunction`. */
     unsigned int getStencilReferenceValue() const;
 
-    void setCullFace(bool value) { _cullFace = value; }
-    bool getCullFace() const { return _cullFace; }
+    void setCullMode(CullMode mode) { _cullMode = mode; }
+    CullMode getCullMode() const { return _cullMode; }
 
     // view port
     void setViewPort(int x, int y, unsigned int w, unsigned int h);
@@ -295,7 +297,7 @@ protected:
 
 
     Viewport _viewport;
-    bool _cullFace = false;
+    CullMode _cullMode = CullMode::NONE;
 
     std::stack<int> _commandGroupStack;
     
