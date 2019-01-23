@@ -132,10 +132,10 @@ public:
      * @return Return the effect grid rect.
      */
     const Rect& getGridRect() const { return _gridRect; }
-    
-    virtual void updateBlendState();
 
 protected:
+    void updateBlendState();
+    
     bool _active = false;
     int  _reuseGrid = 0;
     Size _gridSize;
