@@ -211,6 +211,12 @@ enum class CullMode: uint32_t
     FRONT = 0x00000002
 };
 
+enum class Winding: uint32_t
+{
+    CLOCK_WISE,
+    COUNTER_CLOCK_WISE
+};
+
 struct UniformInfo
 {
     int count = 0;

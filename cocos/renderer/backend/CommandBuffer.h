@@ -24,6 +24,7 @@ public:
     virtual void setRenderPipeline(RenderPipeline* renderPipeline) = 0;
     virtual void setViewport(int x, int y, unsigned int w, unsigned int h) = 0;
     virtual void setCullMode(CullMode mode) = 0;
+    virtual void setWinding(Winding winding) = 0;
     virtual void setVertexBuffer(unsigned int index, Buffer* buffer) = 0;
     virtual void setProgramState(ProgramState* programState) = 0;
     virtual void setIndexBuffer(Buffer* buffer) = 0;

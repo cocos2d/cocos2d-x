@@ -211,7 +211,6 @@ RenderState::StateBlock::StateBlock()
 : _cullFaceEnabled(false)
 , _depthTestEnabled(true), _depthWriteEnabled(false), _depthFunction(RenderState::DEPTH_LESS)
 , _blendEnabled(true), _blendSrc(RenderState::BLEND_ONE), _blendDst(RenderState::BLEND_ZERO)
-, _frontFace(FRONT_FACE_CCW)
 , _stencilTestEnabled(false), _stencilWrite(RS_ALL_ONES)
 , _stencilFunction(RenderState::STENCIL_ALWAYS), _stencilFunctionRef(0), _stencilFunctionMask(RS_ALL_ONES)
 , _stencilOpSfail(RenderState::STENCIL_OP_KEEP), _stencilOpDpfail(RenderState::STENCIL_OP_KEEP), _stencilOpDppass(RenderState::STENCIL_OP_KEEP)
@@ -273,22 +272,16 @@ void RenderState::StateBlock::bindNoRestore()
     }
     if ((_bits & RS_FRONT_FACE) && (_frontFace != _defaultState->_frontFace))
     {
-    //TODO
-//        glFrontFace((GLenum)_frontFace);
+        renderer->setWinding(_frontFace);
         _defaultState->_frontFace = _frontFace;
     }
     if ((_bits & RS_DEPTH_TEST) && (_depthTestEnabled != _defaultState->_depthTestEnabled))
     {
-//        if (_depthTestEnabled)
-//            glEnable(GL_DEPTH_TEST);
-//        else
-//            glDisable(GL_DEPTH_TEST);
         renderer->setDepthTest(_depthTestEnabled);
         _defaultState->_depthTestEnabled = _depthTestEnabled;
     }
     if ((_bits & RS_DEPTH_WRITE) && (_depthWriteEnabled != _defaultState->_depthWriteEnabled))
     {
-//        glDepthMask(_depthWriteEnabled ? GL_TRUE : GL_FALSE);
         renderer->setDepthWrite(_depthTestEnabled);
         _defaultState->_depthWriteEnabled = _depthWriteEnabled;
     }
@@ -344,21 +337,18 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
     }
     if (!(stateOverrideBits & RS_FRONT_FACE) && (_defaultState->_bits & RS_FRONT_FACE))
     {
-    //TODO
-//        glFrontFace((GLenum)GL_CCW);
+        renderer->setWinding(Winding::COUNTER_CLOCK_WISE);
         _defaultState->_bits &= ~RS_FRONT_FACE;
-        _defaultState->_frontFace = RenderState::FRONT_FACE_CCW;
+        _defaultState->_frontFace = Winding::COUNTER_CLOCK_WISE;
     }
     if (!(stateOverrideBits & RS_DEPTH_TEST) && (_defaultState->_bits & RS_DEPTH_TEST))
     {
-//        glEnable(GL_DEPTH_TEST);
         renderer->setDepthTest(true);
         _defaultState->_bits &= ~RS_DEPTH_TEST;
         _defaultState->_depthTestEnabled = true;
     }
     if (!(stateOverrideBits & RS_DEPTH_WRITE) && (_defaultState->_bits & RS_DEPTH_WRITE))
     {
-//        glDepthMask(GL_FALSE);
         renderer->setDepthWrite(false);
         _defaultState->_bits &= ~RS_DEPTH_WRITE;
         _defaultState->_depthWriteEnabled = false;
@@ -502,19 +492,19 @@ static CullMode parseCullFaceSide(const std::string& value)
     }
 }
 
-static RenderState::FrontFace parseFrontFace(const std::string& value)
+static Winding parseFrontFace(const std::string& value)
 {
     // Convert string to uppercase for comparison
     std::string upper(value);
     std::transform(upper.begin(), upper.end(), upper.begin(), (int(*)(int))toupper);
     if (upper == "CCW")
-        return RenderState::FRONT_FACE_CCW;
+        return Winding::COUNTER_CLOCK_WISE;
     else if (upper == "CW")
-        return RenderState::FRONT_FACE_CW;
+        return Winding::CLOCK_WISE;
     else
     {
         CCLOG("Unsupported front face side value (%s). Will default to CCW if errors are treated as warnings.", value.c_str());
-        return RenderState::FRONT_FACE_CCW;
+        return Winding::COUNTER_CLOCK_WISE;
     }
 }
 
@@ -657,10 +647,10 @@ void RenderState::StateBlock::setCullFaceSide(CullMode mode)
     }
 }
 
-void RenderState::StateBlock::setFrontFace(FrontFace winding)
+void RenderState::StateBlock::setFrontFace(Winding winding)
 {
     _frontFace = winding;
-    if (_frontFace == FRONT_FACE_CCW)
+    if (_frontFace == Winding::COUNTER_CLOCK_WISE)
     {
         // Default front face
         _bits &= ~RS_FRONT_FACE;

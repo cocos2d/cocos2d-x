@@ -11,6 +11,14 @@ CC_BACKEND_BEGIN
 
 namespace
 {
+    GLenum toGLFrontFace(Winding winding)
+    {
+        if (Winding::CLOCK_WISE == winding)
+            return GL_CW;
+        else
+            return GL_CCW;
+    }
+
     GLenum toGLPrimitiveType(PrimitiveType primitiveType)
     {
         GLenum ret = GL_TRIANGLES;
@@ -227,6 +235,11 @@ void CommandBufferGL::setViewport(int x, int y, unsigned int w, unsigned int h)
 void CommandBufferGL::setCullMode(CullMode mode)
 {
     _cullMode = mode;
+}
+
+void CommandBufferGL::setWinding(Winding winding)
+{
+    glFrontFace(toGLFrontFace(winding));
 }
 
 void CommandBufferGL::setIndexBuffer(Buffer* buffer)

@@ -9,7 +9,7 @@ CC_BACKEND_BEGIN
 
 class RenderPipelineMTL;
 
-class CommandBufferMTL : public CommandBuffer
+class CommandBufferMTL final : public CommandBuffer
 {
 public:
     CommandBufferMTL(DeviceMTL* deviceMTL);
@@ -20,6 +20,7 @@ public:
     virtual void setRenderPipeline(RenderPipeline* renderPipeline) override;
     virtual void setViewport(int x, int y, unsigned int w, unsigned int h) override;
     virtual void setCullMode(CullMode mode) override;
+    virtual void setWinding(Winding winding) override;
     virtual void setVertexBuffer(unsigned int index, Buffer* buffer) override;
     virtual void setProgramState(ProgramState* programState) override;
     virtual void setIndexBuffer(Buffer* buffer) override;
