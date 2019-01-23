@@ -22,9 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#ifndef __CC_VERTEX_INDEX_BUFFER_H__
-#define __CC_VERTEX_INDEX_BUFFER_H__
+#pragma once
 
 #include <vector>
 #include "base/CCRef.h"
@@ -37,6 +35,11 @@
 
 NS_CC_BEGIN
 
+namespace backend
+{
+    class Buffer;
+}
+
 class EventListenerCustom;
 
 /**
@@ -47,6 +50,15 @@ It is used to save an array of vertices.
 class CC_DLL VertexBuffer : public Ref
 {
 public:
+    /**
+    Static getter for shadowCopy.
+    */
+    static bool isShadowCopyEnabled() { return _enableShadowCopy; }
+    /**
+     Static setter for shadowCopy.
+     */
+    static void enableShadowCopy(bool enabled) { _enableShadowCopy = enabled; }
+
     /**
     Create an instance of VertexBuffer.
     @param sizePerVertex Size in bytes of one vertex.
@@ -73,7 +85,7 @@ public:
     /**
     Get the internal openGL handle.
     */
-    GLuint getVBO() const;
+    backend::Buffer* getVBO() const;
     
 protected:
     /**
@@ -91,28 +103,30 @@ protected:
     @param usage A hint to indicate whether the vertexBuffer are updated frequently or not to let GL optimise it.
     */
     bool init(int sizePerVertex, int vertexNumber, GLenum usage = GL_STATIC_DRAW);
-protected:
+
     /**
     Event handler for foreground.
     */
     void recreateVBO() const;
+
     /**
-    Event listener for foreground.
+    Static member to indicate that use _shadowCopy or not.
     */
-    EventListenerCustom* _recreateVBOEventListener;
-protected:
+    static bool _enableShadowCopy;
+
     /**
     Internal handle for openGL.
     */
-    mutable GLuint _vbo;
+//    mutable GLuint _vbo;
+    backend::Buffer* _vbo = nullptr;
     /**
     Size in bytes for one vertex.
     */
-    int _sizePerVertex;
+    int _sizePerVertex = 0;
     /**
     Number of vertices.
     */
-    int _vertexNumber;
+    int _vertexNumber = 0;
     /**
     Buffer used for shadow copy.
     */
@@ -121,20 +135,11 @@ protected:
     Hint for optimisation in GL.
     */
     GLenum _usage;
-protected:
-    /**
-    Static member to indicate that use _shadowCopy or not. 
+
+     /**
+    Event listener for foreground.
     */
-    static bool _enableShadowCopy;
-public:
-    /**
-    Static getter for shadowCopy.
-    */
-    static bool isShadowCopyEnabled() { return _enableShadowCopy; }
-    /**
-     Static setter for shadowCopy.
-     */
-    static void enableShadowCopy(bool enabled) { _enableShadowCopy = enabled; }
+    EventListenerCustom* _recreateVBOEventListener = nullptr;
 };
 
 /**
@@ -155,8 +160,16 @@ public:
         /**Int index will be used.*/
         INDEX_TYPE_UINT_32
     };
-    
-public:
+
+     /**
+    Static getter for shadowCopy.
+    */
+    static bool isShadowCopyEnabled() { return _enableShadowCopy; }
+    /**
+     Static setter for shadowCopy.
+     */
+    static void enableShadowCopy(bool enabled) { _enableShadowCopy = enabled; }
+
     /**
     Create an instance of IndexBuffer.
     @param type type of index.
@@ -190,7 +203,7 @@ public:
     /**
     Get the openGL handle for index buffer.
     */
-    GLuint getVBO() const;
+    backend::Buffer* getVBO() const;
 
 protected:
     /**
@@ -208,30 +221,36 @@ protected:
     @param usage A hint to indicate whether the vertexBuffer are updated frequently or not to let GL optimise it.
     */
     bool init(IndexType type, int number, GLenum usage = GL_STATIC_DRAW);
-    
-protected:
-    /**
-    Handle for openGL.
-    */
-    mutable GLuint _vbo;
-    /**
-    Type for index.
-    */
-    IndexType _type;
-    /**
-    Number of indices.
-    */
-    int _indexNumber;
-    
-protected:
+
     /**
     Event handler for foreground.
     */
     void recreateVBO() const;
+    
+    
+    /**
+    Static member to indicate that use _shadowCopy or not.
+    */
+    static bool _enableShadowCopy;
+
+    /**
+    Handle for openGL.
+    */
+//    mutable GLuint _vbo;
+    backend::Buffer* _vbo = nullptr;
+    /**
+    Type for index.
+    */
+    IndexType _type = IndexType::INDEX_TYPE_SHORT_16;
+    /**
+    Number of indices.
+    */
+    int _indexNumber = 0;
+
     /**
     Event listener for foreground.
     */
-    EventListenerCustom* _recreateVBOEventListener;
+    EventListenerCustom* _recreateVBOEventListener = nullptr;
     /**
     Buffer used for shadow copy.
     */
@@ -240,20 +259,6 @@ protected:
     Hint for optimisation in GL.
     */
     GLenum _usage;
-protected:
-    /**
-    Static member to indicate that use _shadowCopy or not.
-    */
-    static bool _enableShadowCopy;
-public:
-    /**
-    Static getter for shadowCopy.
-    */
-    static bool isShadowCopyEnabled() { return _enableShadowCopy; }
-    /**
-     Static setter for shadowCopy.
-     */
-    static void enableShadowCopy(bool enabled) { _enableShadowCopy = enabled; }
 };
 
 
@@ -263,4 +268,3 @@ NS_CC_END
  end of support group
  @}
  */
-#endif /* __CC_VERTEX_INDEX_BUFFER_H__*/

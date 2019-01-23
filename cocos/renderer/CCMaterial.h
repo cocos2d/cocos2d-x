@@ -27,9 +27,7 @@
  - OGRE3D: http://www.ogre3d.org/
  - Qt3D: http://qt-project.org/
  ****************************************************************************/
-
-#ifndef __cocos2d_libs__CCMaterial__
-#define __cocos2d_libs__CCMaterial__
+#pragma once
 
 #include <string>
 
@@ -51,6 +49,11 @@ class Pass;
 class GLProgramState;
 class Node;
 class Properties;
+
+namespace backend
+{
+    class ProgramState;
+}
 
 /// Material
 class CC_DLL Material : public RenderState
@@ -78,7 +81,7 @@ public:
      It will only contain one Technique and one Pass.
      Added in order to support legacy code.
      */
-    static Material* createWithGLStateProgram(GLProgramState* programState);
+    static Material* createWithProgramState(backend::ProgramState* programState);
 
     /**
      * Creates a material from the specified properties object.
@@ -88,6 +91,8 @@ public:
      * @return A new Material.
      */
     static Material* createWithProperties(Properties* materialProperties);
+
+    void draw(const Mat4& modelView);
 
     /// returns the material name
     std::string getName() const;
@@ -125,7 +130,7 @@ public:
 protected:
     Material();
     ~Material();
-    bool initWithGLProgramState(GLProgramState* state);
+    bool initWithProgramState(backend::ProgramState* state);
     bool initWithFile(const std::string& file);
     bool initWithProperties(Properties* materialProperties);
 
@@ -147,13 +152,10 @@ protected:
     Vector<Technique*> _techniques;
 
     // weak pointer since it is being help by _techniques
-    Technique* _currentTechnique;
+    Technique* _currentTechnique = nullptr;
 
     // weak reference
-    Node* _target;
+    Node* _target = nullptr;
 };
 
 NS_CC_END
-
-
-#endif /* defined(__cocos2d_libs__CCMaterial__) */

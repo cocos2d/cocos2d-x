@@ -53,6 +53,11 @@ class Renderer;
 class Scene;
 class Pass;
 
+namespace backend
+{
+    class Buffer;
+}
+
 /** 
  * @brief Mesh: contains ref to index buffer, GLProgramState, texture, skin, blend function, aabb and so on
  */
@@ -80,7 +85,7 @@ public:
      * 
      * @lua NA
      */
-    GLuint getVertexBuffer() const;
+    backend::Buffer* getVertexBuffer() const;
     /**
      * has vertex attribute?
      *
@@ -183,7 +188,7 @@ public:
      *
      * @lua NA
      */
-    GLuint getIndexBuffer() const;
+    backend::Buffer* getIndexBuffer() const;
     
     /**get AABB*/
     const AABB& getAABB() const { return _aabb; }

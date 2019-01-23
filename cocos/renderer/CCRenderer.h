@@ -226,6 +226,9 @@ public:
     /* Get stencil reference value set by `setStencilCompareFunction`. */
     unsigned int getStencilReferenceValue() const;
 
+    void setCullFace(bool value) { _cullFace = value; }
+    bool getCullFace() const { return _cullFace; }
+
     // view port
     void setViewPort(int x, int y, unsigned int w, unsigned int h);
     const Viewport& getViewport() const { return _viewport; }
@@ -292,6 +295,7 @@ protected:
 
 
     Viewport _viewport;
+    bool _cullFace = false;
 
     std::stack<int> _commandGroupStack;
     

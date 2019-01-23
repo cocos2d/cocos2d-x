@@ -27,13 +27,10 @@
  - OGRE3D: http://www.ogre3d.org/
  - Qt3D: http://qt-project.org/
  ****************************************************************************/
-
-#ifndef __cocos2d_libs__CCTechnique__
-#define __cocos2d_libs__CCTechnique__
+#pragma once
 
 #include <string>
 #include "renderer/CCRenderState.h"
-#include "renderer/CCPass.h"
 #include "base/CCRef.h"
 #include "platform/CCPlatformMacros.h"
 #include "base/CCVector.h"
@@ -41,8 +38,12 @@
 NS_CC_BEGIN
 
 class Pass;
-class GLProgramState;
 class Material;
+
+namespace  backend
+{
+    class ProgramState;
+}
 
 /// Technique
 class CC_DLL Technique : public RenderState
@@ -57,7 +58,7 @@ public:
     /** Creates a new Technique with a GLProgramState.
      Method added to support legacy code
      */
-    static Technique* createWithGLProgramState(Material* parent, GLProgramState* state);
+    static Technique* createWithProgramState(Material* parent, backend::ProgramState* state);
     static Technique* create(Material* parent);
 
     /** Adds a new pass to the Technique.
@@ -92,5 +93,3 @@ protected:
 };
 
 NS_CC_END
-
-#endif /* defined(__cocos2d_libs__CCTechnique__) */
