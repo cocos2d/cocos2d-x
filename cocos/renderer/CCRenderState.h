@@ -41,7 +41,7 @@ class Texture2D;
 class Pass;
 
 using CullFaceSide = backend::CullMode;
-using Winding = backend::Winding;
+using FrontFace = backend::Winding;
 using DepthFunction = backend::CompareFunction;
 
 /**
@@ -196,7 +196,7 @@ public:
          *
          * @param winding The winding for front facing polygons.
          */
-        void setFrontFace(Winding winding);
+        void setFrontFace(FrontFace winding);
 
         /**
          * Toggles depth testing.
@@ -289,8 +289,6 @@ public:
 
     protected:
         void bindNoRestore();
-//        static void enableDepthWrite();
-
         void cloneInto(StateBlock* renderState) const;
 
         bool _cullFaceEnabled = false;
@@ -301,7 +299,7 @@ public:
         Blend _blendSrc = RenderState::BLEND_ONE;
         Blend _blendDst = RenderState::BLEND_ZERO;
         CullFaceSide _cullFaceSide = CullFaceSide::BACK;
-        Winding _frontFace = Winding::COUNTER_CLOCK_WISE;
+        FrontFace _frontFace = FrontFace::COUNTER_CLOCK_WISE;
         long _bits = 0L;
 
         mutable uint32_t _hash;

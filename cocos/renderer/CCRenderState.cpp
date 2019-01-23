@@ -263,9 +263,7 @@ void RenderState::StateBlock::bindNoRestore()
     }
     if ((_bits & RS_DEPTH_FUNC) && (_depthFunction != _defaultState->_depthFunction))
     {
-    //TODO
-//        glDepthFunc((GLenum)_depthFunction);
-//        renderer->setDepthCompareFunction(backend::CompareFunction func)
+        renderer->setDepthCompareFunction(_depthFunction);
         _defaultState->_depthFunction = _depthFunction;
     }
 
@@ -313,9 +311,9 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
     }
     if (!(stateOverrideBits & RS_FRONT_FACE) && (_defaultState->_bits & RS_FRONT_FACE))
     {
-        renderer->setWinding(Winding::COUNTER_CLOCK_WISE);
+        renderer->setWinding(FrontFace::COUNTER_CLOCK_WISE);
         _defaultState->_bits &= ~RS_FRONT_FACE;
-        _defaultState->_frontFace = Winding::COUNTER_CLOCK_WISE;
+        _defaultState->_frontFace = FrontFace::COUNTER_CLOCK_WISE;
     }
     if (!(stateOverrideBits & RS_DEPTH_TEST) && (_defaultState->_bits & RS_DEPTH_TEST))
     {
@@ -331,28 +329,11 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
     }
     if (!(stateOverrideBits & RS_DEPTH_FUNC) && (_defaultState->_bits & RS_DEPTH_FUNC))
     {
-    //TODO
-//        glDepthFunc((GLenum)GL_LESS);
+        renderer->setDepthCompareFunction(DepthFunction::LESS);
         _defaultState->_bits &= ~RS_DEPTH_FUNC;
         _defaultState->_depthFunction = DepthFunction::LESS;
     }
 }
-
-//void RenderState::StateBlock::enableDepthWrite()
-//{
-//    CC_ASSERT(_defaultState);
-//
-//    // Internal method used to restore depth writing before a
-//    // clear operation. This is necessary if the last code to draw before the
-//    // next frame leaves depth writing disabled.
-//    if (!_defaultState->_depthWriteEnabled)
-//    {
-////        glDepthMask(GL_TRUE);
-//
-//        _defaultState->_bits &= ~RS_DEPTH_WRITE;
-//        _defaultState->_depthWriteEnabled = true;
-//    }
-//}
 
 void RenderState::StateBlock::cloneInto(StateBlock* state) const
 {
@@ -372,7 +353,7 @@ void RenderState::StateBlock::cloneInto(StateBlock* state) const
 
 static bool parseBoolean(const std::string& value)
 {
-    return (value.compare("true")==0);
+    return (value.compare("true") == 0);
 }
 
 static RenderState::Blend parseBlend(const std::string& value)
@@ -441,38 +422,38 @@ static DepthFunction parseDepthFunc(const std::string& value)
     }
 }
 
-static CullMode parseCullFaceSide(const std::string& value)
+static CullFaceSide parseCullFaceSide(const std::string& value)
 {
     // Convert string to uppercase for comparison
     std::string upper(value);
     std::transform(upper.begin(), upper.end(), upper.begin(), (int(*)(int))toupper);
     if (upper == "BACK")
-        return CullMode::BACK;
+        return CullFaceSide::BACK;
     else if (upper == "FRONT")
-        return CullMode::FRONT;
+        return CullFaceSide::FRONT;
 // XXX: metal doesn't support back&front culling. Is it needed, since it will draw nothing.
 //    else if (upper == "FRONT_AND_BACK")
 //        return RenderState::CULL_FACE_SIDE_FRONT_AND_BACK;
     else
     {
         CCLOG("Unsupported cull face side value (%s). Will default to BACK if errors are treated as warnings.", value.c_str());
-        return CullMode::BACK;
+        return CullFaceSide::BACK;
     }
 }
 
-static Winding parseFrontFace(const std::string& value)
+static FrontFace parseFrontFace(const std::string& value)
 {
     // Convert string to uppercase for comparison
     std::string upper(value);
     std::transform(upper.begin(), upper.end(), upper.begin(), (int(*)(int))toupper);
     if (upper == "CCW")
-        return Winding::COUNTER_CLOCK_WISE;
+        return FrontFace::COUNTER_CLOCK_WISE;
     else if (upper == "CW")
-        return Winding::CLOCK_WISE;
+        return FrontFace::CLOCK_WISE;
     else
     {
         CCLOG("Unsupported front face side value (%s). Will default to CCW if errors are treated as warnings.", value.c_str());
-        return Winding::COUNTER_CLOCK_WISE;
+        return FrontFace::COUNTER_CLOCK_WISE;
     }
 }
 
@@ -614,10 +595,10 @@ void RenderState::StateBlock::setCullFaceSide(CullFaceSide side)
     }
 }
 
-void RenderState::StateBlock::setFrontFace(Winding winding)
+void RenderState::StateBlock::setFrontFace(FrontFace winding)
 {
     _frontFace = winding;
-    if (_frontFace == Winding::COUNTER_CLOCK_WISE)
+    if (_frontFace == FrontFace::COUNTER_CLOCK_WISE)
     {
         // Default front face
         _bits &= ~RS_FRONT_FACE;
