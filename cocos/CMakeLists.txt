@@ -150,7 +150,7 @@ if(XCODE OR VS)
     cocos_mark_code_files("cocos2d")
 endif()
 
-if(WIN32)
+if(WINDOWS)
     # precompiled header. Compilation time speedup ~4x.
     target_sources(cocos2d PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp")
     set_target_properties(cocos2d PROPERTIES COMPILE_FLAGS "/Yuprecheader.h /FIprecheader.h")
