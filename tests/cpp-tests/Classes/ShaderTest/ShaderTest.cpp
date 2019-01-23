@@ -800,8 +800,8 @@ bool ShaderMultiTexture::init()
         addChild(_sprite);
         _sprite->setPosition(Vec2(s.width/2, s.height/2));
 
-        auto vertexShaderContent = fu->getDataFromFile("Shaders/example_MultiTexture.vsh").toString();
-        auto fragmentShaderContent = fu->getDataFromFile("Shaders/example_MultiTexture.fsh").toString();
+        auto vertexShaderContent = fu->getStringFromFile("Shaders/example_MultiTexture.vsh");
+        auto fragmentShaderContent = fu->getStringFromFile("Shaders/example_MultiTexture.fsh");
 
         _sprite->updateShaders((const char *)vertexShaderContent.c_str(), (const char *)fragmentShaderContent.c_str());
 

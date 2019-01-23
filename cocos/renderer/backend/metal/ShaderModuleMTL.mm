@@ -20,7 +20,7 @@ ShaderModuleMTL::ShaderModuleMTL(id<MTLDevice> mtlDevice, ShaderStage stage, con
         return;
     }
     
-    const char* metalShader = glslopt_get_raw_output(glslShader);
+    const char* metalShader = glslopt_get_output(glslShader);
     if (!metalShader)
     {
         NSLog(@"Can not get metal shader:");
@@ -29,7 +29,7 @@ ShaderModuleMTL::ShaderModuleMTL(id<MTLDevice> mtlDevice, ShaderStage stage, con
         return;
     }
     
-//    NSLog(@"%s", metalShader);
+    // NSLog(@"%s", metalShader);
     
     parseUniform(mtlDevice, glslShader);
     parseTexture(mtlDevice, glslShader);
