@@ -44,7 +44,6 @@ bool ProgramCache::init()
     addProgram(positionTextureColor_vert, label_normal_frag);
     addProgram(positionTextureColor_vert, labelOutline_frag);
     addProgram(positionTextureColor_vert, labelDistanceFieldGlow_frag);
-    addProgram(positionTextureColor_vert, labelDistanceFieldGlow_frag);
     addProgram(positionColorLengthTexture_vert, positionColorLengthTexture_frag);
     addProgram(positionColorTextureAsPointsize_vert, positionColor_frag);
     addProgram(positionColor_vert, positionColor_frag);
