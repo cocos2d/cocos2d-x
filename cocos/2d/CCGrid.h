@@ -134,6 +134,8 @@ public:
     const Rect& getGridRect() const { return _gridRect; }
 
 protected:
+    void updateBlendState();
+    
     bool _active = false;
     int  _reuseGrid = 0;
     Size _gridSize;
@@ -158,8 +160,9 @@ protected:
     
     backend::UniformLocation _mvpMatrixLocation;
     backend::UniformLocation _textureLocation;
-    
     backend::ProgramState* _programState = nullptr;
+    
+    BlendFunc  _blendFunc;
 };
 
 /**
