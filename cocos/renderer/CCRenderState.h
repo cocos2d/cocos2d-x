@@ -41,6 +41,7 @@ class Texture2D;
 class Pass;
 
 using CullMode = backend::CullMode;
+using Winding = backend::Winding;
 
 /**
  * Defines the rendering state of the graphics device.
@@ -124,17 +125,6 @@ public:
         DEPTH_NOTEQUAL = GL_NOTEQUAL,
         DEPTH_GEQUAL = GL_GEQUAL,
         DEPTH_ALWAYS = GL_ALWAYS
-    };
-
-    /**
-     * Defines the winding of vertices in faces that are considered front facing.
-     *
-     * The initial front face mode is set to FRONT_FACE_CCW.
-     */
-    enum FrontFace
-    {
-        FRONT_FACE_CW = GL_CW,
-        FRONT_FACE_CCW = GL_CCW
     };
 
     /**
@@ -265,7 +255,7 @@ public:
          *
          * @param winding The winding for front facing polygons.
          */
-        void setFrontFace(FrontFace winding);
+        void setFrontFace(Winding winding);
 
         /**
          * Toggles depth testing.
@@ -370,7 +360,7 @@ public:
         Blend _blendSrc;
         Blend _blendDst;
         CullMode _cullMode = CullMode::BACK;
-        FrontFace _frontFace;
+        Winding _frontFace = Winding::COUNTER_CLOCK_WISE;
         bool _stencilTestEnabled;
         unsigned int _stencilWrite;
         StencilFunction _stencilFunction;

@@ -15,7 +15,7 @@ class BufferGL;
 class RenderPipelineGL;
 class ProgramGL;
 
-class CommandBufferGL : public CommandBuffer
+class CommandBufferGL final : public CommandBuffer
 {
 public:
     CommandBufferGL();
@@ -26,6 +26,7 @@ public:
     virtual void setRenderPipeline(RenderPipeline* renderPipeline) override;
     virtual void setViewport(int x, int y, unsigned int w, unsigned int h) override;
     virtual void setCullMode(CullMode mode) override;
+    virtual void setWinding(Winding winding) override;
     virtual void setVertexBuffer(unsigned int index, Buffer* buffer) override;
     virtual void setProgramState(ProgramState* programState) override;
     virtual void setIndexBuffer(Buffer* buffer) override;

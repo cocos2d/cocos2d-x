@@ -11,6 +11,14 @@ CC_BACKEND_BEGIN
 
 namespace
 {
+    MTLWinding toMTLWinding(Winding winding)
+    {
+        if (Winding::CLOCK_WISE == winding)
+            return MTLWindingClockwise;
+        else
+            return MTLWindingCounterClockwise;
+    }
+
     MTLPrimitiveType toMTLPrimitive(PrimitiveType primitiveType)
     {
         MTLPrimitiveType ret = MTLPrimitiveTypeTriangle;
@@ -198,6 +206,11 @@ void CommandBufferMTL::setViewport(int x, int y, unsigned int w, unsigned int h)
 void CommandBufferMTL::setCullMode(CullMode mode)
 {
     [_mtlRenderEncoder setCullMode:toMTLCullMode(mode)];
+}
+
+void CommandBufferMTL::setWinding(Winding winding)
+{
+    [_mtlRenderEncoder setFrontFacingWinding:toMTLWinding(winding)];
 }
 
 void CommandBufferMTL::setVertexBuffer(unsigned int index, Buffer* buffer)
