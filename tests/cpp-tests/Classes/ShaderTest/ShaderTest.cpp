@@ -57,30 +57,24 @@ enum
     SIZE_Y = 256,
 };
 
-const std::string COCOS2D_SHADER_UNIFORMS =
-"uniform mat4 CC_PMatrix;\n"
-"uniform mat4 CC_MultiViewPMatrix[4];\n"
-"uniform mat4 CC_MVMatrix;\n"
-"uniform mat4 CC_MVPMatrix;\n"
-"uniform mat4 CC_MultiViewMVPMatrix[4];\n"
-"uniform mat3 CC_NormalMatrix;\n"
-"uniform vec4 CC_Time;\n"
-"uniform vec4 CC_SinTime;\n"
-"uniform vec4 CC_CosTime;\n"
-"uniform vec4 CC_Random01;\n"
-"uniform sampler2D CC_Texture0;\n"
-"uniform sampler2D CC_Texture1;\n"
-"uniform sampler2D CC_Texture2;\n"
-"uniform sampler2D CC_Texture3;\n"
-"//CC INCLUDES END\n\n";
-
-
 ShaderNode::ShaderNode()
 :_center(Vec2(0.0f, 0.0f))
 ,_resolution(Vec2(0.0f, 0.0f))
 ,_time(0.0f)
 {
 }
+
+
+static const char* simple_PositionTextureColor_vert = R"(
+uniform mat4 CC_MVPMatrix;
+attribute vec4 a_position;
+void main()
+{
+    gl_Position = CC_MVPMatrix * a_position;
+}
+)";
+
+
 
 ShaderNode::~ShaderNode()
 {
@@ -135,8 +129,7 @@ void ShaderNode::loadShaderVertex(const std::string &vert, const std::string &fr
     // vert
     std::string vertSource;
     if (vert.empty()) {
-        vertSource = ccPositionTextureColor_vert;
-        //vertSource = COCOS2D_SHADER_UNIFORMS + "\n" + vertSource;
+        vertSource = simple_PositionTextureColor_vert;
     } else {
         std::string vertexFilePath = fileUtiles->fullPathForFilename(vert);
         vertSource = fileUtiles->getStringFromFile(vertexFilePath);
