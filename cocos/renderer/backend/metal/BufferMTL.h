@@ -15,12 +15,15 @@ public:
     virtual void updateSubData(void* data, unsigned int offset, unsigned int size) override;
     
     id<MTLBuffer> getMTLBuffer() const;
-    void updateIndex();
+    void beginFrame();
     
 private:
+    void updateIndex();
+
     id<MTLBuffer> _mtlBuffer = nil;
     NSMutableArray* _dynamicDataBuffers = nil;
-    int _currentFrameIndex = -1;
+    int _currentFrameIndex = 0;
+    bool _indexUpdated = false;
 };
 
 CC_BACKEND_END
