@@ -167,54 +167,54 @@ public:
 //#endif
 //
 //};
-//
-//class Sprite3DHitTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DHitTest);
-//    Sprite3DHitTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//};
-//
-//class Sprite3DEffectTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DEffectTest);
-//    Sprite3DEffectTest();
-//    virtual ~Sprite3DEffectTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//    void addNewSpriteWithCoords(cocos2d::Vec2 p);
-//    
-//    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
-//    
-//protected:
-//    std::vector<cocos2d::Sprite3D*> _sprites;
-//    
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    cocos2d::EventListenerCustom* _backToForegroundListener;
-//#endif
-//};
-//
-//class AsyncLoadSprite3DTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(AsyncLoadSprite3DTest);
-//    AsyncLoadSprite3DTest();
-//    virtual ~AsyncLoadSprite3DTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//    void menuCallback_asyncLoadSprite(cocos2d::Ref* sender);
-//    
-//    void asyncLoad_Callback(cocos2d::Sprite3D* sprite, void* param);
-//    
-//protected:
-//    std::vector<std::string> _paths; //model paths to be loaded
-//};
-//
+
+class Sprite3DHitTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DHitTest);
+    Sprite3DHitTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class Sprite3DEffectTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DEffectTest);
+    Sprite3DEffectTest();
+    virtual ~Sprite3DEffectTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(cocos2d::Vec2 p);
+    
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    
+protected:
+    std::vector<cocos2d::Sprite3D*> _sprites;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    cocos2d::EventListenerCustom* _backToForegroundListener;
+#endif
+};
+
+class AsyncLoadSprite3DTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(AsyncLoadSprite3DTest);
+    AsyncLoadSprite3DTest();
+    virtual ~AsyncLoadSprite3DTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void menuCallback_asyncLoadSprite(cocos2d::Ref* sender);
+    
+    void asyncLoad_Callback(cocos2d::Sprite3D* sprite, void* param);
+    
+protected:
+    std::vector<std::string> _paths; //model paths to be loaded
+};
+
 //class Sprite3DWithSkinTest : public Sprite3DTestDemo
 //{
 //public:

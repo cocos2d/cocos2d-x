@@ -40,8 +40,8 @@ USING_NS_CC;
 Sprite3DTests::Sprite3DTests()
 {
     ADD_TEST_CASE(Sprite3DBasicTest);
-//    ADD_TEST_CASE(Sprite3DHitTest);
-//    ADD_TEST_CASE(AsyncLoadSprite3DTest);
+    ADD_TEST_CASE(Sprite3DHitTest);
+    ADD_TEST_CASE(AsyncLoadSprite3DTest);
 //    // 3DEffect use custom shader which is not supported on WP8/WinRT yet.
 //    ADD_TEST_CASE(Sprite3DEffectTest);
 //    ADD_TEST_CASE(Sprite3DUVAnimationTest);
@@ -667,81 +667,81 @@ std::string Sprite3DBasicTest::subtitle() const
 //        _camera->setPosition3D(cameraPos);      
 //    }
 //}
+
+//------------------------------------------------------------------
 //
-////------------------------------------------------------------------
-////
-//// Sprite3DHitTest
-////
-////------------------------------------------------------------------
-//Sprite3DHitTest::Sprite3DHitTest()
-//{
-//    auto s = Director::getInstance()->getWinSize();
-//    
-//    auto sprite1 = Sprite3D::create("Sprite3DTest/boss1.obj");
-//    
-//    sprite1->setScale(4.f);
-//    sprite1->setTexture("Sprite3DTest/boss.png");
-//    sprite1->setPosition( Vec2(s.width/2, s.height/2) );
-//    
-//    //add to scene
-//    addChild( sprite1 );
-//    sprite1->runAction(RepeatForever::create(RotateBy::create(3, 360)));
-//    
-//    auto sprite2 = Sprite3D::create("Sprite3DTest/boss1.obj");
-//    
-//    sprite2->setScale(4.f);
-//    sprite2->setTexture("Sprite3DTest/boss.png");
-//    sprite2->setPosition( Vec2(s.width/2, s.height/2) );
-//    sprite2->setAnchorPoint(Vec2(0.5, 0.5));
-//    
-//    //add to scene
-//    addChild( sprite2 );
-//    sprite2->runAction(RepeatForever::create(RotateBy::create(3, -360)));
-//    
-//    
-//    // Make sprite1 touchable
-//    auto listener1 = EventListenerTouchOneByOne::create();
-//    listener1->setSwallowTouches(true);
-//    
-//    listener1->onTouchBegan = [](Touch* touch, Event* event){
-//        auto target = static_cast<Sprite3D*>(event->getCurrentTarget());
-//      
-//        Rect rect = target->getBoundingBox();        
-//        if (rect.containsPoint(touch->getLocation()))
-//        {
-//            log("sprite3d began... x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
-//            target->setOpacity(100);
-//            return true;
-//        }
-//        return false;
-//    };
-//    
-//    listener1->onTouchMoved = [](Touch* touch, Event* event){
-//        auto target = static_cast<Sprite3D*>(event->getCurrentTarget());
-//        target->setPosition(target->getPosition() + touch->getDelta());
-//    };
-//    
-//    listener1->onTouchEnded = [=](Touch* touch, Event* event){
-//        auto target = static_cast<Sprite3D*>(event->getCurrentTarget());
-//        log("sprite3d onTouchesEnded.. ");
-//        target->setOpacity(255);
-//    };
-//    
-//    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
-//    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1->clone(), sprite2);
-//    
-//}
+// Sprite3DHitTest
 //
-//std::string Sprite3DHitTest::title() const
-//{
-//    return "Testing Sprite3D Touch in 2D";
-//}
-//
-//std::string Sprite3DHitTest::subtitle() const
-//{
-//    return "Tap Sprite3D and Drag";
-//}
-//
+//------------------------------------------------------------------
+Sprite3DHitTest::Sprite3DHitTest()
+{
+    auto s = Director::getInstance()->getWinSize();
+    
+    auto sprite1 = Sprite3D::create("Sprite3DTest/boss1.obj");
+    
+    sprite1->setScale(4.f);
+    sprite1->setTexture("Sprite3DTest/boss.png");
+    sprite1->setPosition( Vec2(s.width/2, s.height/2) );
+    
+    //add to scene
+    addChild( sprite1 );
+    sprite1->runAction(RepeatForever::create(RotateBy::create(3, 360)));
+    
+    auto sprite2 = Sprite3D::create("Sprite3DTest/boss1.obj");
+    
+    sprite2->setScale(4.f);
+    sprite2->setTexture("Sprite3DTest/boss.png");
+    sprite2->setPosition( Vec2(s.width/2, s.height/2) );
+    sprite2->setAnchorPoint(Vec2(0.5, 0.5));
+    
+    //add to scene
+    addChild( sprite2 );
+    sprite2->runAction(RepeatForever::create(RotateBy::create(3, -360)));
+    
+    
+    // Make sprite1 touchable
+    auto listener1 = EventListenerTouchOneByOne::create();
+    listener1->setSwallowTouches(true);
+    
+    listener1->onTouchBegan = [](Touch* touch, Event* event){
+        auto target = static_cast<Sprite3D*>(event->getCurrentTarget());
+      
+        Rect rect = target->getBoundingBox();        
+        if (rect.containsPoint(touch->getLocation()))
+        {
+            log("sprite3d began... x = %f, y = %f", touch->getLocation().x, touch->getLocation().y);
+            target->setOpacity(100);
+            return true;
+        }
+        return false;
+    };
+    
+    listener1->onTouchMoved = [](Touch* touch, Event* event){
+        auto target = static_cast<Sprite3D*>(event->getCurrentTarget());
+        target->setPosition(target->getPosition() + touch->getDelta());
+    };
+    
+    listener1->onTouchEnded = [=](Touch* touch, Event* event){
+        auto target = static_cast<Sprite3D*>(event->getCurrentTarget());
+        log("sprite3d onTouchesEnded.. ");
+        target->setOpacity(255);
+    };
+    
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1, sprite1);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener1->clone(), sprite2);
+    
+}
+
+std::string Sprite3DHitTest::title() const
+{
+    return "Testing Sprite3D Touch in 2D";
+}
+
+std::string Sprite3DHitTest::subtitle() const
+{
+    return "Tap Sprite3D and Drag";
+}
+
 //Sprite3DEffectTest::Sprite3DEffectTest()
 //{
 //    auto s = Director::getInstance()->getWinSize();
@@ -826,74 +826,74 @@ std::string Sprite3DBasicTest::subtitle() const
 //        addNewSpriteWithCoords( location );
 //    }
 //}
-//
-//AsyncLoadSprite3DTest::AsyncLoadSprite3DTest()
-//{
-//    _paths.push_back("Sprite3DTest/boss.obj");
-//    _paths.push_back("Sprite3DTest/girl.c3b");
-//    _paths.push_back("Sprite3DTest/orc.c3b");
-//    _paths.push_back("Sprite3DTest/ReskinGirl.c3b");
-//    _paths.push_back("Sprite3DTest/axe.c3b");
-//    
-//    TTFConfig ttfConfig("fonts/arial.ttf", 15);
-//    auto label1 = Label::createWithTTF(ttfConfig,"AsyncLoad Sprite3D");
-//    auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(AsyncLoadSprite3DTest::menuCallback_asyncLoadSprite,this) );
-//    
-//    auto s = Director::getInstance()->getWinSize();
-//    item1->setPosition( s.width * .5f, s.height * .8f);
-//    
-//    auto pMenu1 = Menu::create(item1, nullptr);
-//    pMenu1->setPosition(Vec2(0,0));
-//    this->addChild(pMenu1, 10);
-//    
-//    auto node = Node::create();
-//    node->setTag(101);
-//    this->addChild(node);
-//    
-//    menuCallback_asyncLoadSprite(nullptr);
-//}
-//
-//AsyncLoadSprite3DTest::~AsyncLoadSprite3DTest()
-//{
-//}
-//
-//std::string AsyncLoadSprite3DTest::title() const
-//{
-//    return "Testing Sprite3D::createAsync";
-//}
-//std::string AsyncLoadSprite3DTest::subtitle() const
-//{
-//    return "";
-//}
-//
-//void AsyncLoadSprite3DTest::menuCallback_asyncLoadSprite(Ref* sender)
-//{
-//    //Note that you must stop the tasks before leaving the scene.
-//    AsyncTaskPool::getInstance()->stopTasks(AsyncTaskPool::TaskType::TASK_IO);
-//    
-//    auto node = getChildByTag(101);
-//    node->removeAllChildren(); //remove all loaded sprite
-//    
-//    //remove cache data
-//    Sprite3DCache::getInstance()->removeAllSprite3DData();
-//    long index = 0;
-//    for (const auto& path : _paths) {
-//        Sprite3D::createAsync(path, CC_CALLBACK_2(AsyncLoadSprite3DTest::asyncLoad_Callback, this), (void*)index++);
-//    }
-//}
-//
-//void AsyncLoadSprite3DTest::asyncLoad_Callback(Sprite3D* sprite, void* param)
-//{
-//    long index = (long)param;
-//    auto node = getChildByTag(101);
-//    auto s = Director::getInstance()->getWinSize();
-//    float width = s.width / _paths.size();
-//    Vec2 point(width * (0.5f + index), s.height / 2.f);
-//    sprite->setPosition(point);
-//    node->addChild(sprite);
-//}
-//
-//
+
+AsyncLoadSprite3DTest::AsyncLoadSprite3DTest()
+{
+    _paths.push_back("Sprite3DTest/boss.obj");
+    _paths.push_back("Sprite3DTest/girl.c3b");
+    _paths.push_back("Sprite3DTest/orc.c3b");
+    _paths.push_back("Sprite3DTest/ReskinGirl.c3b");
+    _paths.push_back("Sprite3DTest/axe.c3b");
+    
+    TTFConfig ttfConfig("fonts/arial.ttf", 15);
+    auto label1 = Label::createWithTTF(ttfConfig,"AsyncLoad Sprite3D");
+    auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(AsyncLoadSprite3DTest::menuCallback_asyncLoadSprite,this) );
+    
+    auto s = Director::getInstance()->getWinSize();
+    item1->setPosition( s.width * .5f, s.height * .8f);
+    
+    auto pMenu1 = Menu::create(item1, nullptr);
+    pMenu1->setPosition(Vec2(0,0));
+    this->addChild(pMenu1, 10);
+    
+    auto node = Node::create();
+    node->setTag(101);
+    this->addChild(node);
+    
+    menuCallback_asyncLoadSprite(nullptr);
+}
+
+AsyncLoadSprite3DTest::~AsyncLoadSprite3DTest()
+{
+}
+
+std::string AsyncLoadSprite3DTest::title() const
+{
+    return "Testing Sprite3D::createAsync";
+}
+std::string AsyncLoadSprite3DTest::subtitle() const
+{
+    return "";
+}
+
+void AsyncLoadSprite3DTest::menuCallback_asyncLoadSprite(Ref* sender)
+{
+    //Note that you must stop the tasks before leaving the scene.
+    AsyncTaskPool::getInstance()->stopTasks(AsyncTaskPool::TaskType::TASK_IO);
+    
+    auto node = getChildByTag(101);
+    node->removeAllChildren(); //remove all loaded sprite
+    
+    //remove cache data
+    Sprite3DCache::getInstance()->removeAllSprite3DData();
+    long index = 0;
+    for (const auto& path : _paths) {
+        Sprite3D::createAsync(path, CC_CALLBACK_2(AsyncLoadSprite3DTest::asyncLoad_Callback, this), (void*)index++);
+    }
+}
+
+void AsyncLoadSprite3DTest::asyncLoad_Callback(Sprite3D* sprite, void* param)
+{
+    long index = (long)param;
+    auto node = getChildByTag(101);
+    auto s = Director::getInstance()->getWinSize();
+    float width = s.width / _paths.size();
+    Vec2 point(width * (0.5f + index), s.height / 2.f);
+    sprite->setPosition(point);
+    node->addChild(sprite);
+}
+
+
 //Sprite3DWithSkinTest::Sprite3DWithSkinTest()
 //{
 //    auto listener = EventListenerTouchAllAtOnce::create();

@@ -152,7 +152,7 @@ backend::Buffer* Mesh::getVertexBuffer() const
     return _meshIndexData->getVertexBuffer()->getVBO();
 }
 
-bool Mesh::hasVertexAttrib(int attrib) const
+bool Mesh::hasVertexAttrib(shader_consts::VertexKey attrib) const
 {
     return _meshIndexData->getMeshVertexData()->hasVertexAttrib(attrib);
 }

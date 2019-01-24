@@ -246,7 +246,8 @@ int Texture2D::getPixelsHigh() const
 GLuint Texture2D::getName() const
 {
     //TODO coulsonwang
-    cocos2d::log("Error in %s %s %d, TODO", __FILE__, __FUNCTION__, __LINE__);
+    //TODO arnold too many logs
+    //cocos2d::log("Error in %s %s %d, TODO", __FILE__, __FUNCTION__, __LINE__);
     return 0;
 }
 

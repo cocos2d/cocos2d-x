@@ -29,6 +29,7 @@
 
 #include "3d/CCBundle3DData.h"
 #include "3d/CCAABB.h"
+#include "3d/CC3DProgramInfo.h"
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"
@@ -88,7 +89,7 @@ public:
      *
      * @lua NA
      */
-    bool hasVertexAttrib(int attrib) const;
+    bool hasVertexAttrib(shader_consts::VertexKey attrib) const;
     /**get mesh vertex attribute count*/
     ssize_t getMeshVertexAttribCount() const;
     /**get MeshVertexAttribute by index*/

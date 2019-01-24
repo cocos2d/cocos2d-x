@@ -29,11 +29,12 @@
 
 #include "3d/CCBundle3DData.h"
 #include "3d/CCAABB.h"
+#include "3d/CC3DProgramInfo.h"
 
 #include "base/CCRef.h"
 #include "base/CCVector.h"
 #include "math/CCMath.h"
-#include "renderer/CCGLProgram.h"
+//#include "renderer/CCGLProgram.h"
 #include "renderer/CCVertexIndexData.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "renderer/CCCustomCommand.h"
@@ -124,7 +125,8 @@ public:
     MeshIndexData* getMeshIndexDataById(const std::string& id) const;
     
     /**has vertex attribute?*/
-    bool hasVertexAttrib(int attrib) const;
+    //TODO: will be removed!
+    bool hasVertexAttrib(shader_consts::VertexKey attrib) const;
     
 CC_CONSTRUCTOR_ACCESS:
     MeshVertexData() = default;
