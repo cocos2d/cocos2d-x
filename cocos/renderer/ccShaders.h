@@ -75,23 +75,6 @@ extern CC_DLL const GLchar * ccLabelOutline_frag;
 
 extern CC_DLL const GLchar * ccLabel_vert;
 
-extern CC_DLL const GLchar * cc3D_PositionTex_vert;
-extern CC_DLL const GLchar * cc3D_SkinPositionTex_vert;
-extern CC_DLL const GLchar * cc3D_ColorTex_frag;
-extern CC_DLL const GLchar * cc3D_Color_frag;
-extern CC_DLL const GLchar * cc3D_PositionNormalTex_vert;
-extern CC_DLL const GLchar * cc3D_SkinPositionNormalTex_vert;
-extern CC_DLL const GLchar * cc3D_ColorNormalTex_frag;
-extern CC_DLL const GLchar * cc3D_ColorNormal_frag;
-extern CC_DLL const GLchar * cc3D_Particle_vert;
-extern CC_DLL const GLchar * cc3D_Particle_tex_frag;
-extern CC_DLL const GLchar * cc3D_Particle_color_frag;
-extern CC_DLL const GLchar * cc3D_Skybox_vert;
-extern CC_DLL const GLchar * cc3D_Skybox_frag;
-extern CC_DLL const GLchar * cc3D_Terrain_vert;
-extern CC_DLL const GLchar * cc3D_Terrain_frag;
-extern CC_DLL const GLchar * ccCameraClearVert;
-extern CC_DLL const GLchar * ccCameraClearFrag;
 // ETC1 ALPHA supports.
 extern CC_DLL const GLchar* ccETC1ASPositionTextureColor_frag;
 extern CC_DLL const GLchar* ccETC1ASPositionTextureGray_frag;
@@ -123,8 +106,22 @@ extern CC_DLL const char * positionUColor_vert;
 extern CC_DLL const char * positionUColor_frag;
 extern CC_DLL const char * etc1_frag;
 extern CC_DLL const char * etc1Gray_frag;
-extern CC_DLL const char * CC3D_positionTexture_vert;
+
+extern CC_DLL const char * CC3D_color_frag;
+extern CC_DLL const char * CC3D_colorNormal_frag;
+extern CC_DLL const char * CC3D_colorNormalTexture_frag;
 extern CC_DLL const char * CC3D_colorTexture_frag;
+extern CC_DLL const char * CC3D_particleTexture_frag;
+extern CC_DLL const char * CC3D_particleColor_frag;
+extern CC_DLL const char * cc3D_particle_vert;
+extern CC_DLL const char * CC3D_positionNormalTexture_vert;
+extern CC_DLL const char * CC3D_skinPositionNormalTexture_vert;
+extern CC_DLL const char * CC3D_positionTexture_vert;
+extern CC_DLL const char * CC3D_skinPositionTexture_vert;
+extern CC_DLL const char * CC3D_skybox_frag;
+extern CC_DLL const char * CC3D_skybox_vert;
+extern CC_DLL const char * CC3D_terrain_frag;
+extern CC_DLL const char * CC3D_terrain_vert;
 NS_CC_END
 /**
  end of support group

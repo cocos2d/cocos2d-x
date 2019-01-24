@@ -1,5 +1,5 @@
 
-const char* cc3D_PositionNormalTex_vert = R"(
+const char* CC3D_positionNormalTexture_vert = R"(
 
 #ifdef USE_NORMAL_MAPPING
 #if (MAX_DIRECTIONAL_LIGHT_NUM > 0)
@@ -46,14 +46,18 @@ varying vec3 v_normal;
 #endif
 #endif
 
+uniform mat4 u_MVPMatrix;
+uniform mat4 u_PMatrix;
+uniform mat4 u_NormalMatrix;
+
 void main(void)
 {
-    vec4 ePosition = CC_MVMatrix * a_position;
+    vec4 ePosition = u_MVPMatrix * a_position;
 #ifdef USE_NORMAL_MAPPING
     #if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))
-        vec3 eTangent = normalize(CC_NormalMatrix * a_tangent);
-        vec3 eBinormal = normalize(CC_NormalMatrix * a_binormal);
-        vec3 eNormal = normalize(CC_NormalMatrix * a_normal);
+        vec3 eTangent = normalize(u_NormalMatrix * a_tangent);
+        vec3 eBinormal = normalize(u_NormalMatrix * a_binormal);
+        vec3 eNormal = normalize(u_NormalMatrix * a_normal);
     #endif
     #if (MAX_DIRECTIONAL_LIGHT_NUM > 0)
         for (int i = 0; i < MAX_DIRECTIONAL_LIGHT_NUM; ++i)
@@ -103,17 +107,17 @@ void main(void)
     #endif
 
     #if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))
-        v_normal = CC_NormalMatrix * a_normal;
+        v_normal = u_NormalMatrix * a_normal;
     #endif
 #endif
 
     TextureCoordOut = a_texCoord;
     TextureCoordOut.y = 1.0 - TextureCoordOut.y;
-    gl_Position = CC_PMatrix * ePosition;
+    gl_Position = u_PMatrix * ePosition;
 }
 )";
 
-const char* cc3D_SkinPositionNormalTex_vert = R"(
+const char* CC3D_skinPositionNormalTexture_vert = R"(
 
 #ifdef USE_NORMAL_MAPPING
 #if (MAX_DIRECTIONAL_LIGHT_NUM > 0)
@@ -239,13 +243,13 @@ void main()
     vec3 tangent;
     vec3 binormal;
     getPositionAndNormal(position, normal, tangent, binormal);
-    vec4 ePosition = CC_MVMatrix * position;
+    vec4 ePosition = u_MVMatrix * position;
 
 #ifdef USE_NORMAL_MAPPING
     #if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))
-        vec3 eTangent = normalize(CC_NormalMatrix * tangent);
-        vec3 eBinormal = normalize(CC_NormalMatrix * binormal);
-        vec3 eNormal = normalize(CC_NormalMatrix * normal);
+        vec3 eTangent = normalize(u_NormalMatrix * tangent);
+        vec3 eBinormal = normalize(u_NormalMatrix * binormal);
+        vec3 eNormal = normalize(u_NormalMatrix * normal);
     #endif
 
     #if (MAX_DIRECTIONAL_LIGHT_NUM > 0)
@@ -296,13 +300,13 @@ void main()
     #endif
 
     #if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))
-        v_normal = CC_NormalMatrix * normal;
+        v_normal = u_NormalMatrix * normal;
     #endif
 #endif
 
     TextureCoordOut = a_texCoord;
     TextureCoordOut.y = 1.0 - TextureCoordOut.y;
-    gl_Position = CC_PMatrix * ePosition;
+    gl_Position = u_PMatrix * ePosition;
 }
 
 )";
