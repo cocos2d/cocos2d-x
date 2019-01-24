@@ -301,6 +301,8 @@ void Mesh::setTexture(Texture2D* tex, NTextureData::Usage usage, bool cacheFileN
                 // FIXME: Ideally it should use glProgramState->setUniformTexture()
                 // and set CC_Texture0 that way. But trying to it, will trigger
                 // another bug
+                //TODO: pass->setTexture(tex); is not needed, and Pass::setTexture() doesn't need since
+                // texture is set in programstate.
                 pass->setTexture(tex);
                 auto programState = pass->getProgramState();
                 auto location = programState->getUniformLocation("u_texture");
@@ -318,8 +320,9 @@ void Mesh::setTexture(Texture2D* tex, NTextureData::Usage usage, bool cacheFileN
             auto technique = _material->_currentTechnique;
             for(auto& pass: technique->_passes)
             {
-            //TODO minggo
-//                pass->getGLProgramState()->setUniformTexture(s_uniformSamplerName[(int)usage], tex);
+                auto programState = pass->getProgramState();
+                auto location = programState->getUniformLocation("u_texture");
+                programState->setTexture(location, 0, tex->getBackendTexture());
             }
         }
     }
@@ -355,9 +358,9 @@ void Mesh::setMaterial(Material* material)
         {
             for (auto pass: technique->getPasses())
             {
+            //TODO
 //                auto vertexAttribBinding = VertexAttribBinding::create(_meshIndexData, pass->getGLProgramState());
 //                pass->setVertexAttribBinding(vertexAttribBinding);
-                pass->setAttributeInfo(_meshIndexData);
             }
         }
     }
@@ -430,7 +433,14 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
 //            setLightUniforms(pass, scene, color, lightMask);
     }
 
-    _material->draw(transform);
+    _material->draw(globalZ,
+                    getVertexBuffer(),
+                    getIndexBuffer(),
+                    getPrimitiveType(),
+                    getIndexFormat(),
+                    getIndexCount(),
+                    transform);
+
 
 //    renderer->addCommand(&_meshCommand);
 }
@@ -687,6 +697,7 @@ void Mesh::setBlendFunc(const BlendFunc &blendFunc)
     }
 
     if (_material) {
+        //TODO set blend to Pass
         _material->getStateBlock()->setBlendFunc(blendFunc);
         bindMeshCommand();
     }
@@ -698,7 +709,7 @@ const BlendFunc& Mesh::getBlendFunc() const
     return _blend;
 }
 
-GLenum Mesh::getPrimitiveType() const
+CustomCommand::PrimitiveType Mesh::getPrimitiveType() const
 {
     return _meshIndexData->getPrimitiveType();
 }
@@ -708,9 +719,9 @@ ssize_t Mesh::getIndexCount() const
     return _meshIndexData->getIndexBuffer()->getIndexNumber();
 }
 
-GLenum Mesh::getIndexFormat() const
+CustomCommand::IndexFormat Mesh::getIndexFormat() const
 {
-    return GL_UNSIGNED_SHORT;
+    return CustomCommand::IndexFormat::U_SHORT;
 }
 
 backend::Buffer* Mesh::getIndexBuffer() const

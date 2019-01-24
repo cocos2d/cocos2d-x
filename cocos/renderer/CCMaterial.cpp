@@ -118,10 +118,12 @@ bool Material::initWithProperties(Properties* materialProperties)
     return parseProperties(materialProperties);
 }
 
-void Material::draw(const Mat4& modelView)
+void Material::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
+                    CustomCommand::PrimitiveType primitive, CustomCommand::IndexFormat indexFormat,
+                    unsigned int indexCount, const Mat4& modelView)
 {
     for (const auto& pass: _currentTechnique->_passes)
-        pass->draw(modelView);
+        pass->draw(globalZOrder, vertexBuffer, indexBuffer,primitive, indexFormat, indexCount, modelView);
 }
 
 void Material::setTarget(cocos2d::Node *target)

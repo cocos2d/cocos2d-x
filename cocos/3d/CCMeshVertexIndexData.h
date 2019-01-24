@@ -22,9 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#ifndef __CCMESHVERTEXINDEXDATA_H__
-#define __CCMESHVERTEXINDEXDATA_H__
+#pragma once
 
 #include <string>
 #include <vector>
@@ -38,6 +36,7 @@
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCVertexIndexData.h"
 #include "renderer/CCVertexIndexBuffer.h"
+#include "renderer/CCCustomCommand.h"
 
 
 NS_CC_BEGIN
@@ -78,19 +77,19 @@ public:
     const std::string& getId() const { return _id; }
     
     /**primitive type setter & getter*/
-    GLenum getPrimitiveType() const { return _primitiveType; }
-    void   setPrimitiveType(GLenum primitive) { _primitiveType = primitive; }
+    CustomCommand::PrimitiveType getPrimitiveType() const { return _primitiveType; }
+    void   setPrimitiveType(CustomCommand::PrimitiveType primitive) { _primitiveType = primitive; }
     
 CC_CONSTRUCTOR_ACCESS:
-    MeshIndexData();
+    MeshIndexData() = default;
     virtual ~MeshIndexData();
     
 protected:
-    IndexBuffer*    _indexBuffer; //index buffer
-    MeshVertexData* _vertexData; //vertex buffer, weak ref
+    IndexBuffer*    _indexBuffer = nullptr; //index buffer
+    MeshVertexData* _vertexData = nullptr; //vertex buffer, weak ref
     AABB           _aabb; // original aabb of the submesh
     std::string    _id; //id
-    GLenum         _primitiveType;
+    CustomCommand::PrimitiveType   _primitiveType = CustomCommand::PrimitiveType::TRIANGLE;
     
     friend class MeshVertexData;
     friend class Sprite3D;
@@ -128,21 +127,19 @@ public:
     bool hasVertexAttrib(int attrib) const;
     
 CC_CONSTRUCTOR_ACCESS:
-    MeshVertexData();
+    MeshVertexData() = default;
     virtual ~MeshVertexData();
 
 protected:
-    VertexData*          _vertexData; //mesh vertex data
-    VertexBuffer*        _vertexBuffer; // vertex buffer
+    VertexData* _vertexData = nullptr; //mesh vertex data
+    VertexBuffer* _vertexBuffer = nullptr; // vertex buffer
     Vector<MeshIndexData*> _indexs; //index data
     std::vector<MeshVertexAttrib> _attribs; //vertex attributes
     
-    int                  _vertexCount; //vertex count
+    int _vertexCount = 0; //vertex count
 };
 
 // end of 3d group
 /// @}
 
 NS_CC_END
-
-#endif // __CCMESHVERTEXINDEXDATA_H__

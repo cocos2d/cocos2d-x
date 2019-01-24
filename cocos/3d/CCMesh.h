@@ -22,9 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#ifndef __CCMESH_H__
-#define __CCMESH_H__
+#pragma once
 
 #include <string>
 #include <map>
@@ -35,6 +33,7 @@
 #include "base/CCRef.h"
 #include "math/CCMath.h"
 #include "renderer/CCMeshCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -168,7 +167,7 @@ public:
      *
      * @lua NA
      */
-    GLenum getPrimitiveType() const;
+    CustomCommand::PrimitiveType getPrimitiveType() const;
     /**
      * get index count
      *
@@ -180,7 +179,7 @@ public:
      *
      * @lua NA
      */
-    GLenum getIndexFormat() const;
+    CustomCommand::IndexFormat getIndexFormat() const;
     /**
      * get index buffer
      *
@@ -281,5 +280,3 @@ extern std::string CC_DLL s_uniformSamplerName[];//uniform sampler names array
 /// @endcond
 
 NS_CC_END
-
-#endif // __CCMESH_H__
