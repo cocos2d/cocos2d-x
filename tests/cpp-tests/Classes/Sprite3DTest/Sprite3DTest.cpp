@@ -188,23 +188,23 @@ void Sprite3DBasicTest::addNewSpriteWithCoords(Vec2 p)
     
     sprite->setPosition( Vec2( p.x, p.y) );
     
-//    ActionInterval* action;
-//    float random = CCRANDOM_0_1();
-//
-//    if( random < 0.20 )
-//        action = ScaleBy::create(3, 2);
-//    else if(random < 0.40)
-//        action = RotateBy::create(3, 360);
-//    else if( random < 0.60)
-//        action = Blink::create(1, 3);
-//    else if( random < 0.8 )
-//        action = TintBy::create(2, 0, -255, -255);
-//    else
-//        action = FadeOut::create(2);
-//    auto action_back = action->reverse();
-//    auto seq = Sequence::create( action, action_back, nullptr );
-//
-//    sprite->runAction( RepeatForever::create(seq) );
+    ActionInterval* action;
+    float random = CCRANDOM_0_1();
+
+    if( random < 0.20 )
+        action = ScaleBy::create(3, 2);
+    else if(random < 0.40)
+        action = RotateBy::create(3, 360);
+    else if( random < 0.60)
+        action = Blink::create(1, 3);
+    else if( random < 0.8 )
+        action = TintBy::create(2, 0, -255, -255);
+    else
+        action = FadeOut::create(2);
+    auto action_back = action->reverse();
+    auto seq = Sequence::create( action, action_back, nullptr );
+
+    sprite->runAction( RepeatForever::create(seq) );
 }
 
 void Sprite3DBasicTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
