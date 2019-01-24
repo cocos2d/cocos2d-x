@@ -1,5 +1,5 @@
 
-const char* cc3D_Color_frag = R"(
+const char* CC3D_color_frag = R"(
 
 #ifdef GL_ES
 varying lowp vec4 DestinationColor;
