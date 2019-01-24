@@ -33,6 +33,7 @@
 
 #include "renderer/CCRenderState.h"
 #include "renderer/CCTechnique.h"
+#include "renderer/CCCustomCommand.h"
 #include "base/CCRef.h"
 #include "base/CCVector.h"
 #include "math/Vec2.h"
@@ -92,7 +93,9 @@ public:
      */
     static Material* createWithProperties(Properties* materialProperties);
 
-    void draw(const Mat4& modelView);
+    void draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
+              CustomCommand::PrimitiveType primitive, CustomCommand::IndexFormat indexFormat,
+              unsigned int indexCount, const Mat4& modelView);
 
     /// returns the material name
     std::string getName() const;

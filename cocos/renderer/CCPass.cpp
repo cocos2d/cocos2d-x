@@ -27,10 +27,8 @@
  - OGRE3D: http://www.ogre3d.org/
  - Qt3D: http://qt-project.org/
  ****************************************************************************/
-
 #include "renderer/CCPass.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/CCGLProgram.h"
+#include <xxhash.h>
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCTechnique.h"
 #include "renderer/CCMaterial.h"
@@ -42,8 +40,6 @@
 
 #include "base/ccTypes.h"
 #include "2d/CCNode.h"
-
-#include <xxhash.h>
 
 NS_CC_BEGIN
 
@@ -83,6 +79,15 @@ bool Pass::initWithProgramState(Technique* technique, backend::ProgramState *pro
     _parent = technique;
     setProgramState(programState);
     return true;
+}
+
+Pass::Pass()
+{
+    //TODO: set _customCommand's vertex layout.
+    auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
+    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, 6 * sizeof(float), false);
+    vertexLayout.setLayout(8 * sizeof(float), backend::VertexStepMode::VERTEX);
 }
 
 Pass::~Pass()
@@ -167,25 +172,16 @@ void Pass::bind(const Mat4& modelView, bool bindAttributes)
 //    RenderState::bind(this);
 }
 
-void Pass::setAttributeInfo(MeshIndexData* meshIndexData)
+void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
+                CustomCommand::PrimitiveType primitive, CustomCommand::IndexFormat indexFormat,
+                unsigned int indexCount, const Mat4& modelView)
 {
-    //TODO minggo: set format correctly.
-    _customCommand.createVertexBuffer(meshIndexData->getVertexBuffer()->getSizePerVertex(), meshIndexData->getVertexBuffer()->getVertexNumber(), backend::BufferUsage::STATIC);
-    _customCommand.setVertexBuffer(meshIndexData->getVertexBuffer()->getVBO());
-    _customCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, meshIndexData->getIndexBuffer()->getIndexNumber(), backend::BufferUsage::STATIC);
-    _customCommand.setIndexBuffer(meshIndexData->getIndexBuffer()->getVBO(), CustomCommand::IndexFormat::U_SHORT);
+    _customCommand.init(globalZOrder, BlendFunc::ALPHA_PREMULTIPLIED);
+    _customCommand.setPrimitiveType(primitive);
+    _customCommand.setIndexBuffer(indexBuffer, indexFormat);
+    _customCommand.setVertexBuffer(vertexBuffer);
+    _customCommand.setIndexDrawInfo(0, indexCount);
 
-    _customCommand.init(0, BlendFunc::ALPHA_PREMULTIPLIED);
-
-    //TODO: set _customCommand's vertex layout.
-    auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
-    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, 6 * sizeof(float), false);
-    vertexLayout.setLayout(8 * sizeof(float), backend::VertexStepMode::VERTEX);
-}
-
-void Pass::draw(const Mat4& modelView)
-{
     const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     Mat4 finalMat = projectionMat * modelView;
     auto location = _programState->getUniformLocation("u_MVPMatrix");

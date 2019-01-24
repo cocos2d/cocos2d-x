@@ -68,7 +68,9 @@ public:
     void bind(const Mat4& modelView);
     void bind(const Mat4& modelView, bool bindAttributes);
 
-    void draw(const Mat4& modelView);
+    void draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
+              CustomCommand::PrimitiveType primitive, CustomCommand::IndexFormat indexFormat,
+              unsigned int indexCount, const Mat4& modelView);
 
     /** Unbinds the Pass.
      This method must be called AFTER calling the actual draw call
@@ -85,8 +87,6 @@ public:
      */
 //    void setVertexAttribBinding(VertexAttribBinding* binding);
 
-    void setAttributeInfo(MeshIndexData* meshIndexData);
-
     /**
      * Returns the vertex attribute binding for this pass.
      *
@@ -102,7 +102,7 @@ public:
     Pass* clone() const;
 
 protected:
-    Pass() = default;
+    Pass();
     ~Pass();
     bool init(Technique* parent);
     bool initWithProgramState(Technique* parent, backend::ProgramState *glProgramState);

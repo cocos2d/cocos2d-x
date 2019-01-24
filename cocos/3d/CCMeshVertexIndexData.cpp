@@ -67,13 +67,6 @@ const VertexBuffer* MeshIndexData::getVertexBuffer() const
     return _vertexData->getVertexBuffer();
 }
 
-MeshIndexData::MeshIndexData()
-: _indexBuffer(nullptr)
-, _vertexData(nullptr)
-, _primitiveType(GL_TRIANGLES)
-{
-    
-}
 MeshIndexData::~MeshIndexData()
 {
     CC_SAFE_RELEASE(_indexBuffer);
@@ -142,13 +135,6 @@ bool MeshVertexData::hasVertexAttrib(int attrib) const
     return false;
 }
 
-MeshVertexData::MeshVertexData()
-: _vertexData(nullptr)
-, _vertexBuffer(nullptr)
-, _vertexCount(0)
-{
-    
-}
 MeshVertexData::~MeshVertexData()
 {
     CC_SAFE_RELEASE(_vertexData);
