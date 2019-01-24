@@ -422,7 +422,7 @@ void ProgressTimer::updateRadial(void)
     _vertexData[_vertexData.size() - 1].vertices = vertexFromAlphaPoint(hit);
 
     updateColor();
-    _customCommand.updateVertexBuffer(_vertexData.data(), sizeof(_vertexData[0]) * _vertexData.size());
+    _customCommand.updateVertexBuffer(_vertexData.data(), (unsigned int)(sizeof(_vertexData[0]) * _vertexData.size()) );
 }
 
 ///
@@ -470,7 +470,7 @@ void ProgressTimer::updateBar(void)
         if (_vertexData.size() != 4)
         {
             _vertexData.resize(4);
-            _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size(), CustomCommand::BufferUsage::DYNAMIC);
+            _customCommand.createVertexBuffer(sizeof(_vertexData[0]),(unsigned int) _vertexData.size(), CustomCommand::BufferUsage::DYNAMIC);
         }
 
         //    TOPLEFT
@@ -491,12 +491,12 @@ void ProgressTimer::updateBar(void)
 
         updateColor();
 
-        _customCommand.updateVertexBuffer(_vertexData.data(), sizeof(_vertexData[0]) * _vertexData.size());
+        _customCommand.updateVertexBuffer(_vertexData.data(), (unsigned int)(sizeof(_vertexData[0]) * _vertexData.size()));
     } else {
         if(_vertexData.size() != 8) {
             _vertexData.resize(8);
-            _customCommand.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size() / 2, CustomCommand::BufferUsage::DYNAMIC);
-            _customCommand2.createVertexBuffer(sizeof(_vertexData[0]), _vertexData.size() / 2, CustomCommand::BufferUsage::DYNAMIC);
+            _customCommand.createVertexBuffer(sizeof(_vertexData[0]), (unsigned int)(_vertexData.size() / 2), CustomCommand::BufferUsage::DYNAMIC);
+            _customCommand2.createVertexBuffer(sizeof(_vertexData[0]), (unsigned int)(_vertexData.size() / 2), CustomCommand::BufferUsage::DYNAMIC);
             //    TOPLEFT 1
             _vertexData[0].texCoords = textureCoordFromAlphaPoint(Vec2(0,1));
             _vertexData[0].vertices = vertexFromAlphaPoint(Vec2(0,1));
@@ -532,8 +532,9 @@ void ProgressTimer::updateBar(void)
 
         updateColor();
 
-        _customCommand.updateVertexBuffer(_vertexData.data(), sizeof(_vertexData[0]) * _vertexData.size() / 2);
-        _customCommand2.updateVertexBuffer((char*)_vertexData.data() + sizeof(_vertexData[0]) * _vertexData.size() / 2, sizeof(_vertexData[0]) * _vertexData.size() / 2);
+        _customCommand.updateVertexBuffer(_vertexData.data(), (unsigned int)(sizeof(_vertexData[0]) * _vertexData.size() / 2));
+        _customCommand2.updateVertexBuffer((char*)_vertexData.data() + sizeof(_vertexData[0]) * _vertexData.size() / 2,
+                                           (unsigned int)(sizeof(_vertexData[0]) * _vertexData.size() / 2));
     }
 }
 
@@ -577,7 +578,7 @@ void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
 
             _customCommand2.init(_globalZOrder, _sprite->getBlendFunc());
             auto& pipelineDescriptor2 = _customCommand2.getPipelineDescriptor();
-            auto mvpMatrixLocation = pipelineDescriptor2.programState->getUniformLocation("u_MVPMatrix");
+            mvpMatrixLocation = pipelineDescriptor2.programState->getUniformLocation("u_MVPMatrix");
             auto textureLocaiton = pipelineDescriptor2.programState->getUniformLocation("u_texture");
             pipelineDescriptor2.programState->setUniform(mvpMatrixLocation, finalMat.m, sizeof(finalMat.m));
             pipelineDescriptor2.programState->setTexture(textureLocaiton, 0, _sprite->getTexture()->getBackendTexture());

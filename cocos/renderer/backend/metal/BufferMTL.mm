@@ -45,12 +45,14 @@ BufferMTL::~BufferMTL()
 void BufferMTL::updateData(void* data, unsigned int size)
 {
     assert(size <= _size);
+    updateIndex();
     memcpy((uint8_t*)_mtlBuffer.contents, data, size);
 }
 
 void BufferMTL::updateSubData(void* data, unsigned int offset, unsigned int size)
 {
     assert(offset + size <= _size);
+    updateIndex();
     memcpy((uint8_t*)_mtlBuffer.contents + offset, data, size);
 }
 
@@ -59,12 +61,19 @@ id<MTLBuffer> BufferMTL::getMTLBuffer() const
     return _mtlBuffer;
 }
 
+void BufferMTL::beginFrame()
+{
+    _indexUpdated = false;
+}
+
 void BufferMTL::updateIndex()
 {
-    assert(BufferUsage::DYNAMIC == _usage);
-    
-    _currentFrameIndex = (_currentFrameIndex + 1) % MAX_INFLIGHT_BUFFER;
-    _mtlBuffer = _dynamicDataBuffers[_currentFrameIndex];
+    if (BufferUsage::DYNAMIC == _usage && !_indexUpdated)
+    {
+        _currentFrameIndex = (_currentFrameIndex + 1) % MAX_INFLIGHT_BUFFER;
+        _mtlBuffer = _dynamicDataBuffers[_currentFrameIndex];
+        _indexUpdated = true;
+    }
 }
 
 CC_BACKEND_END

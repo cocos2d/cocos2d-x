@@ -20,7 +20,7 @@ void BufferManager::removeBuffer(BufferMTL* buffer)
 void BufferManager::beginFrame()
 {
     for (auto& buffer : _buffers)
-        buffer->updateIndex();
+        buffer->beginFrame();
 }
 
 CC_BACKEND_END
