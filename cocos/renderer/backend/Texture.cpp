@@ -54,6 +54,8 @@ namespace
                 return byte(2);
             case TextureFormat::MTL_ABGR4:
                 return byte(2);
+            case TextureFormat::D24S8:
+                return byte(4);
             default:
                 assert(false); //"textureFormat pixel size in bytes not defined!";
                 break;
