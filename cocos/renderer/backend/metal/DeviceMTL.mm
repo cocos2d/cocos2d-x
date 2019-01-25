@@ -17,10 +17,10 @@ id<CAMetalDrawable> DeviceMTL::_currentDrawable = nil;
 
 Device* Device::getInstance()
 {
-    if (!_instance)
-        _instance = new (std::nothrow) DeviceMTL();
+    if (! Device::_instance)
+        Device::_instance = new (std::nothrow) DeviceMTL();
 
-    return _instance;
+    return Device::_instance;
 }
 
 void DeviceMTL::setCAMetalLayer(CAMetalLayer* metalLayer)
