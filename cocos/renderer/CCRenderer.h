@@ -32,6 +32,7 @@
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgram.h"
 
+#include "renderer/backend/Types.h"
 
 /**
  * @addtogroup renderer

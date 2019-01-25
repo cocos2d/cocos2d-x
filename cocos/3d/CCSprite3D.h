@@ -119,13 +119,13 @@ public:
     virtual const BlendFunc &getBlendFunc() const override;
     
     // overrides
-    /** set GLProgramState, you should bind attributes by yourself */
-//    virtual void setGLProgramState(GLProgramState *glProgramState) override;
-//TODO minggo: should change Node::setGLProgramState(), then override
-    void setProgramState(backend::ProgramState *rogramState);
+    //TODO minggo: should change Node::setGLProgramState(), then override
+    /** set ProgramState, you should bind attributes by yourself */
+    virtual void setProgramState(backend::ProgramState *programState);
     /** just remember bind attributes */
-//    virtual void setGLProgram(GLProgram *glprogram) override;
-
+    //TODO arnold: impl setProgram
+    //virtual void setGLProgram(GLProgram *glprogram) override;
+    
     /*
      * Get AABB
      * If the sprite has animation, it can't be calculated accurately,
