@@ -248,7 +248,7 @@ protected:
     std::string         _name;
     MeshCommand         _meshCommand;
     MeshIndexData*      _meshIndexData;
-    GLProgramState*     _glProgramState;
+    //GLProgramState*     _glProgramState;
     BlendFunc           _blend;
     bool                _blendDirty;
     Material*           _material;

@@ -48,7 +48,7 @@ varying vec3 v_normal;
 
 uniform mat4 u_MVPMatrix;
 uniform mat4 u_PMatrix;
-uniform mat4 u_NormalMatrix;
+uniform mat3 u_NormalMatrix;
 
 void main(void)
 {
@@ -119,6 +119,8 @@ void main(void)
 
 const char* CC3D_skinPositionNormalTexture_vert = R"(
 
+
+
 #ifdef USE_NORMAL_MAPPING
 #if (MAX_DIRECTIONAL_LIGHT_NUM > 0)
 uniform vec3 u_DirLightSourceDirection[MAX_DIRECTIONAL_LIGHT_NUM];
@@ -150,6 +152,10 @@ attribute vec3 a_binormal;
 const int SKINNING_JOINT_COUNT = 60;
 // Uniforms
 uniform vec4 u_matrixPalette[SKINNING_JOINT_COUNT * 3];
+
+uniform mat4 u_MVMatrix;
+uniform mat3 u_NormalMatrix;
+uniform mat4 u_PMatrix;
 
 // Varyings
 varying vec2 TextureCoordOut;

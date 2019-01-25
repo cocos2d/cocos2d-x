@@ -128,7 +128,6 @@ Mesh::Mesh()
 , _isTransparent(false)
 , _force2DQueue(false)
 , _meshIndexData(nullptr)
-, _glProgramState(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 , _blendDirty(true)
 , _material(nullptr)
@@ -144,7 +143,6 @@ Mesh::~Mesh()
     CC_SAFE_RELEASE(_skin);
     CC_SAFE_RELEASE(_meshIndexData);
     CC_SAFE_RELEASE(_material);
-    CC_SAFE_RELEASE(_glProgramState);
 }
 
 backend::Buffer* Mesh::getVertexBuffer() const
@@ -179,7 +177,7 @@ Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>
     std::vector<MeshVertexAttrib> attribs;
     MeshVertexAttrib att;
     att.size = 3;
-    att.type = GL_FLOAT;
+    att.type = backend::VertexFormat::FLOAT_R32G32B32;
     att.attribSizeBytes = att.size * sizeof(float);
     
     if (positions.size())
@@ -358,9 +356,9 @@ void Mesh::setMaterial(Material* material)
         {
             for (auto pass: technique->getPasses())
             {
-            //TODO
-//                auto vertexAttribBinding = VertexAttribBinding::create(_meshIndexData, pass->getGLProgramState());
-//                pass->setVertexAttribBinding(vertexAttribBinding);
+                //TODO
+                auto vertexAttribBinding = VertexAttribBinding::create(_meshIndexData, pass);
+                pass->setVertexAttribBinding(vertexAttribBinding);
             }
         }
     }

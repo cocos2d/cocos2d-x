@@ -31,6 +31,8 @@
 #include "math/CCMath.h"
 #include "3d/CCAABB.h"
 
+#include "renderer/backend/Types.h"
+
 #include <vector>
 #include <map>
  
@@ -45,7 +47,7 @@ struct MeshVertexAttrib
     //attribute size
     GLint size;
     //GL_FLOAT
-    GLenum type;
+    backend::VertexFormat type;
     //VERTEX_ATTRIB_POSITION,VERTEX_ATTRIB_COLOR,VERTEX_ATTRIB_TEX_COORD,VERTEX_ATTRIB_NORMAL, VERTEX_ATTRIB_BLEND_WEIGHT, VERTEX_ATTRIB_BLEND_INDEX, GLProgram for detail
     int  vertexAttrib;
     //size in bytes

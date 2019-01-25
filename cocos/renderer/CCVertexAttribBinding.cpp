@@ -21,10 +21,10 @@
  */
 
 #include "renderer/CCVertexAttribBinding.h"
-#include "renderer/CCGLProgramState.h"
-#include "platform/CCGL.h"
+#include "renderer/backend/Program.h"
 #include "base/CCConfiguration.h"
 #include "3d/CCMeshVertexIndexData.h"
+
 
 NS_CC_BEGIN
 
@@ -46,7 +46,7 @@ static GLuint __maxVertexAttribs = 0;
 static std::vector<VertexAttribBinding*> __vertexAttribBindingCache;
 
 VertexAttribBinding::VertexAttribBinding() :
-    _handle(0), _meshIndexData(nullptr), _glProgramState(nullptr), _attributes()
+    _handle(0), _meshIndexData(nullptr), _programState(nullptr), _attributes()
 {
 }
 
@@ -60,7 +60,7 @@ VertexAttribBinding::~VertexAttribBinding()
     }
 
     CC_SAFE_RELEASE(_meshIndexData);
-    CC_SAFE_RELEASE(_glProgramState);
+    CC_SAFE_RELEASE(_programState);
     _attributes.clear();
 
     if (_handle)
@@ -70,9 +70,9 @@ VertexAttribBinding::~VertexAttribBinding()
     }
 }
 
-VertexAttribBinding* VertexAttribBinding::create(MeshIndexData* meshIndexData, GLProgramState* glProgramState)
+VertexAttribBinding* VertexAttribBinding::create(MeshIndexData* meshIndexData, Pass* pass)
 {
-    CCASSERT(meshIndexData && glProgramState, "Invalid MeshIndexData and/or GLProgramState");
+    CCASSERT(meshIndexData && pass && pass->getProgramState(), "Invalid MeshIndexData and/or programState");
 
     // Search for an existing vertex attribute binding that can be used.
     VertexAttribBinding* b;
@@ -80,7 +80,7 @@ VertexAttribBinding* VertexAttribBinding::create(MeshIndexData* meshIndexData, G
     {
         b = __vertexAttribBindingCache[i];
         CC_ASSERT(b);
-        if (b->_meshIndexData == meshIndexData && b->_glProgramState == glProgramState)
+        if (b->_meshIndexData == meshIndexData && b->_programState == pass->getProgramState())
         {
             // Found a match!
             return b;
@@ -88,7 +88,7 @@ VertexAttribBinding* VertexAttribBinding::create(MeshIndexData* meshIndexData, G
     }
 
     b = new (std::nothrow) VertexAttribBinding();
-    if (b && b->init(meshIndexData, glProgramState))
+    if (b && b->init(meshIndexData, pass))
     {
         b->autorelease();
         __vertexAttribBindingCache.push_back(b);
@@ -97,74 +97,85 @@ VertexAttribBinding* VertexAttribBinding::create(MeshIndexData* meshIndexData, G
     return b;
 }
 
-bool VertexAttribBinding::init(MeshIndexData* meshIndexData, GLProgramState* glProgramState)
+bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass)
 {
-//    CCASSERT(meshIndexData && glProgramState, "Invalid arguments");
-//
-//    // One-time initialization.
-//    if (__maxVertexAttribs == 0)
-//    {
-//        GLint temp;
-//        glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &temp);
-//
-//        __maxVertexAttribs = temp;
-//        if (__maxVertexAttribs <= 0)
-//        {
-//            CCLOGERROR("The maximum number of vertex attributes supported by OpenGL on the current device is 0 or less.");
-//            return false;
-//        }
-//    }
-//
-//    _meshIndexData = meshIndexData;
-//    _meshIndexData->retain();
-//    _glProgramState = glProgramState;
-//    _glProgramState->retain();
-//
-//    auto meshVertexData = meshIndexData->getMeshVertexData();
-//    auto attributeCount = meshVertexData->getMeshVertexAttribCount();
-//
-//
-//    // Parse and set attributes
-//    parseAttributes();
-//    long offset = 0;
-//    for (auto k = 0; k < attributeCount; k++)
-//    {
-//        auto meshattribute = meshVertexData->getMeshVertexAttrib(k);
-//        setVertexAttribPointer(
-//                               s_attributeNames[meshattribute.vertexAttrib],
-//                               meshattribute.size,
-//                               meshattribute.type,
-//                               GL_FALSE,
-//                               meshVertexData->getVertexBuffer()->getSizePerVertex(),
-//                               (GLvoid*)offset);
-//        offset += meshattribute.attribSizeBytes;
-//    }
-//
-//    // VAO hardware
-//    if (Configuration::getInstance()->supportsShareableVAO())
-//    {
-//        glGenVertexArrays(1, &_handle);
-//        glBindVertexArray(_handle);
-//        glBindBuffer(GL_ARRAY_BUFFER, meshVertexData->getVertexBuffer()->getVBO());
-//
-//        enableVertexAttributes(_vertexAttribsFlags);
-//
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshIndexData->getIndexBuffer()->getVBO());
-//
-//        for(auto &attribute : _attributes)
-//        {
-//            attribute.second.apply();
-//        }
-//
-//        glBindVertexArray(0);
-//        glBindBuffer(GL_ARRAY_BUFFER, 0);
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-//    }
+
+
+    CCLOG("VertexAttribBinding::init");
+
+    CCASSERT(meshIndexData && pass && pass->getProgramState(), "Invalid arguments");
+
+    auto programState = pass->getProgramState();
+
+    
+
+    _vertexLayout = pass->getVertexLayout();
+
+    // One-time initialization.
+    if (__maxVertexAttribs == 0)
+    {
+        GLint temp;
+        glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &temp);
+
+        __maxVertexAttribs = temp;
+        if (__maxVertexAttribs <= 0)
+        {
+            CCLOGERROR("The maximum number of vertex attributes supported by OpenGL on the current device is 0 or less.");
+            return false;
+        }
+    }
+
+    _meshIndexData = meshIndexData;
+    _meshIndexData->retain();
+    _programState = programState;
+    _programState->retain();
+
+    auto meshVertexData = meshIndexData->getMeshVertexData();
+    auto attributeCount = meshVertexData->getMeshVertexAttribCount();
+
+
+    // Parse and set attributes
+    parseAttributes();
+    long offset = 0;
+    for (auto k = 0; k < attributeCount; k++)
+    {
+        auto meshattribute = meshVertexData->getMeshVertexAttrib(k);
+        setVertexAttribPointer(
+                               s_attributeNames[meshattribute.vertexAttrib],
+                               meshattribute.size,
+                               meshattribute.type,
+                               GL_FALSE,
+                               offset);
+        offset += meshattribute.attribSizeBytes;
+    }
+
+    _vertexLayout->setLayout(meshVertexData->getVertexBuffer()->getSizePerVertex(), backend::VertexStepMode::VERTEX);
+
+    //// VAO hardware
+    //if (Configuration::getInstance()->supportsShareableVAO())
+    //{
+    //    glGenVertexArrays(1, &_handle);
+    //    glBindVertexArray(_handle);
+    //    glBindBuffer(GL_ARRAY_BUFFER, meshVertexData->getVertexBuffer()->getVBO());
+
+    //    enableVertexAttributes(_vertexAttribsFlags);
+
+    //    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshIndexData->getIndexBuffer()->getVBO());
+
+    //    for(auto &attribute : _attributes)
+    //    {
+    //        attribute.second.apply();
+    //    }
+
+    //    glBindVertexArray(0);
+    //    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    //    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    //}
 
     return true;
 }
 
-void VertexAttribBinding::bind()
+void VertexAttribBinding::bind(backend::VertexLayout &layout)
 {
 
 //    if (_handle)
@@ -188,6 +199,7 @@ void VertexAttribBinding::bind()
 //        }
 //        
 //    }
+    
 }
 
 void VertexAttribBinding::unbind()
@@ -212,17 +224,18 @@ uint32_t VertexAttribBinding::getVertexAttribsFlags() const
 
 void VertexAttribBinding::parseAttributes()
 {
-    CCASSERT(_glProgramState, "invalid glprogram");
+    CCASSERT(_programState, "invalid glprogram");
 
     _attributes.clear();
     _vertexAttribsFlags = 0;
 
-    auto glprogram = _glProgramState->getGLProgram();
+    auto program = _programState->getProgram();
+    
+    auto attributes = program->getActiveAttributes();
 
-    for(auto &attrib: glprogram->_vertexAttribs)
+    for(auto &attrib: attributes)
     {
-        VertexAttribValue value(&attrib.second);
-        _attributes[attrib.first] = value;
+        _attributes[attrib.attributeName] = attrib;
     }
 }
 
@@ -239,7 +252,7 @@ void VertexAttribBinding::enableVertexAttributes(uint32_t flags) const
     }
 }
 
-VertexAttribValue* VertexAttribBinding::getVertexAttribValue(const std::string& name)
+backend::AttributeBindInfo* VertexAttribBinding::getVertexAttribValue(const std::string& name)
 {
     const auto itr = _attributes.find(name);
     if( itr != _attributes.end())
@@ -247,12 +260,13 @@ VertexAttribValue* VertexAttribBinding::getVertexAttribValue(const std::string& 
     return nullptr;
 }
 
-void VertexAttribBinding::setVertexAttribPointer(const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid* pointer)
+void VertexAttribBinding::setVertexAttribPointer(const std::string &name, GLint size, backend::VertexFormat type, GLboolean normalized, int offset)
 {
     auto v = getVertexAttribValue(name);
     if(v) {
-        v->setPointer(size, type, normalized, stride, pointer);
-        _vertexAttribsFlags |= 1 << v->_vertexAttrib->index;
+        //v->setPointer(size, type, normalized, stride, offset);
+        _vertexLayout->setAtrribute(name, v->location, type, offset, normalized);
+        _vertexAttribsFlags |= 1 << v->location;
     }
     else
     {

@@ -29,6 +29,7 @@
 #include "base/ccTypes.h"
 #include "renderer/CCMaterial.h"
 #include "3d/CCBundle3DData.h"
+#include "renderer/backend/Types.h"
 
 NS_CC_BEGIN
 
@@ -133,6 +134,18 @@ protected:
     static Sprite3DMaterial* _vertexLitMaterialSkin;
     static Sprite3DMaterial* _diffuseMaterialSkin;
     static Sprite3DMaterial* _bumpedDiffuseMaterialSkin;
+
+    static backend::ProgramState* _unLitMaterialProgState;
+    static backend::ProgramState* _unLitNoTexMaterialProgState;
+    static backend::ProgramState* _vertexLitMaterialProgState;
+    static backend::ProgramState* _diffuseMaterialProgState;
+    static backend::ProgramState* _diffuseNoTexMaterialProgState;
+    static backend::ProgramState* _bumpedDiffuseMaterialProgState;
+
+    static backend::ProgramState* _unLitMaterialSkinProgState;
+    static backend::ProgramState* _vertexLitMaterialSkinProgState;
+    static backend::ProgramState* _diffuseMaterialSkinProgState;
+    static backend::ProgramState* _bumpedDiffuseMaterialSkinProgState;
 };
 
 /**

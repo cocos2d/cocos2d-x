@@ -7,6 +7,7 @@
 #include "ShaderCache.h"
 
 #include <string>
+#include <vector>
 #include <unordered_map>
 
 CC_BACKEND_BEGIN
@@ -23,6 +24,7 @@ public:
     
     virtual int getMaxVertexLocation() const = 0;
     virtual int getMaxFragmentLocation() const = 0;
+    virtual std::vector<AttributeBindInfo> getActiveAttributes() const = 0;
     
     const std::string& getVertexShader() const { return _vertexShader; }
     const std::string& getFragmentShader() const { return _fragmentShader; }

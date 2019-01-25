@@ -118,6 +118,14 @@ ProgramState::~ProgramState()
 {
     CC_SAFE_RELEASE(_program);
     
+    for (auto &info : _vertexTextureInfos)
+    {
+        info.second.releaseTextures();
+    }
+    for (auto &info : _fragmentTextureInfos)
+    {
+        info.second.releaseTextures();
+    }
     _vertexUniformInfos.clear();
     _fragmentUniformInfos.clear();
     _vertexTextureInfos.clear();

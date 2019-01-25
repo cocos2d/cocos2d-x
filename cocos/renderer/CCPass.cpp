@@ -83,16 +83,17 @@ bool Pass::initWithProgramState(Technique* technique, backend::ProgramState *pro
 
 Pass::Pass()
 {
+    
     //TODO: set _customCommand's vertex layout.
-    auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
-    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, 6 * sizeof(float), false);
-    vertexLayout.setLayout(8 * sizeof(float), backend::VertexStepMode::VERTEX);
+    //auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
+    //vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
+    //vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, 6 * sizeof(float), false);
+    //vertexLayout.setLayout(8 * sizeof(float), backend::VertexStepMode::VERTEX);
 }
 
 Pass::~Pass()
 {
-//    CC_SAFE_RELEASE(_vertexAttribBinding);
+    CC_SAFE_RELEASE(_vertexAttribBinding);
     CC_SAFE_RELEASE(_programState);
 }
 
@@ -105,11 +106,11 @@ Pass* Pass::clone() const
         //TODO
 //        pass->_glProgramState = _glProgramState->clone();
 //        CC_SAFE_RETAIN(pass->_glProgramState);
-          pass->_programState = _programState;
-          CC_SAFE_RETAIN(_programState);
-//
-//        pass->_vertexAttribBinding = _vertexAttribBinding;
-//        CC_SAFE_RETAIN(pass->_vertexAttribBinding);
+        pass->_programState = _programState->clone();
+        CC_SAFE_RETAIN(_programState);
+        //
+        pass->_vertexAttribBinding = _vertexAttribBinding;
+        CC_SAFE_RETAIN(pass->_vertexAttribBinding);
 
         pass->autorelease();
     }
@@ -170,6 +171,12 @@ void Pass::bind(const Mat4& modelView, bool bindAttributes)
 //
 //    //set render state
 //    RenderState::bind(this);
+
+    auto &vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
+
+    if (bindAttributes && _vertexAttribBinding)
+        _vertexAttribBinding->bind(vertexLayout);
+
 }
 
 void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
@@ -186,6 +193,11 @@ void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buff
     Mat4 finalMat = projectionMat * modelView;
     auto location = _programState->getUniformLocation("u_MVPMatrix");
     _programState->setUniform(location, finalMat.m, sizeof(finalMat.m));
+
+    //update all attributes
+    bind(modelView);
+    //set state
+    _customCommand.getPipelineDescriptor().programState = _programState;
 
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 
@@ -207,20 +219,20 @@ void Pass::unbind()
 //    _vertexAttribBinding->unbind();
 }
 
-//void Pass::setVertexAttribBinding(VertexAttribBinding* binding)
-//{
-//    if (_vertexAttribBinding != binding)
-//    {
-//        CC_SAFE_RELEASE(_vertexAttribBinding);
-//        _vertexAttribBinding = binding;
-//        CC_SAFE_RETAIN(_vertexAttribBinding);
-//    }
-//}
+void Pass::setVertexAttribBinding(VertexAttribBinding* binding)
+{
+    if (_vertexAttribBinding != binding)
+    {
+        CC_SAFE_RELEASE(_vertexAttribBinding);
+        _vertexAttribBinding = binding;
+        CC_SAFE_RETAIN(_vertexAttribBinding);
+    }
+}
 
-//VertexAttribBinding* Pass::getVertexAttributeBinding() const
-//{
-//    return _vertexAttribBinding;
-//}
+VertexAttribBinding* Pass::getVertexAttributeBinding() const
+{
+    return _vertexAttribBinding;
+}
 
 
 NS_CC_END

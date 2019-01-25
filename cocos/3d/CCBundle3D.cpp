@@ -251,7 +251,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
             MeshData* meshdata = new (std::nothrow) MeshData();
             MeshVertexAttrib attrib;
             attrib.size = 3;
-            attrib.type = GL_FLOAT;
+            attrib.type = parseVertexType("GL_FLOAT", 3);
             
             if (mesh.positions.size())
             {
@@ -423,7 +423,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
             attribute=_binaryReader.readString();
             meshData->attribs[j].size = vSize;
             meshData->attribs[j].attribSizeBytes = meshData->attribs[j].size * 4;
-            meshData->attribs[j].type =  parseGLType(type);
+            meshData->attribs[j].type =  parseVertexType(type, vSize);
             meshData->attribs[j].vertexAttrib = parseGLProgramAttribute(attribute);
         }
         unsigned int vertexSizeInFloat = 0;
@@ -539,7 +539,7 @@ bool Bundle3D::loadMeshDatasBinary_0_1(MeshDatas& meshdatas)
         MeshVertexAttrib meshVertexAttribute;
         meshVertexAttribute.size = vSize;
         meshVertexAttribute.attribSizeBytes = vSize * 4;
-        meshVertexAttribute.type = GL_FLOAT;
+        meshVertexAttribute.type = parseVertexType("GL_FLOAT", vSize);
         if(vUsage == VERTEX_ATTRIB_NORMAL)
         {
             vUsage= GLProgram::VERTEX_ATTRIB_NORMAL;
@@ -654,7 +654,7 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
         MeshVertexAttrib meshVertexAttribute;
         meshVertexAttribute.size = vSize;
         meshVertexAttribute.attribSizeBytes = vSize * 4;
-        meshVertexAttribute.type = GL_FLOAT;
+        meshVertexAttribute.type = parseVertexType("GL_FLOAT", vSize);
         if(vUsage == VERTEX_ATTRIB_NORMAL)
         {
             vUsage= GLProgram::VERTEX_ATTRIB_NORMAL;
@@ -754,7 +754,7 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
 
             tempAttrib.size = size;
             tempAttrib.attribSizeBytes = sizeof(float) * size;
-            tempAttrib.type = parseGLType(type);
+            tempAttrib.type = parseVertexType(type, size);
             tempAttrib.vertexAttrib = parseGLProgramAttribute(attribute);
             meshData->attribs[i]=tempAttrib;
         }
@@ -949,8 +949,8 @@ bool Bundle3D::loadMaterialsBinary(MaterialDatas& materialdatas)
             float  uvdata[4];
             _binaryReader.read(&uvdata,sizeof(float), 4);
             textureData.type  = parseGLTextureType(_binaryReader.readString());
-            textureData.wrapS= parseGLType(_binaryReader.readString());
-            textureData.wrapT= parseGLType(_binaryReader.readString());
+            textureData.wrapS= parseGLAddressMode(_binaryReader.readString());
+            textureData.wrapT= parseGLAddressMode(_binaryReader.readString());
             materialData.textures.push_back(textureData);
         }
         materialdatas.materials.push_back(materialData);
@@ -1043,8 +1043,8 @@ bool  Bundle3D::loadMaterialsJson(MaterialDatas& materialdatas)
                 std::string filename = texture_val[FILENAME].GetString();
                 textureData.filename = filename.empty() ? filename : _modelPath + filename;
                 textureData.type  = parseGLTextureType(texture_val["type"].GetString());
-                textureData.wrapS = parseGLType(texture_val["wrapModeU"].GetString());
-                textureData.wrapT = parseGLType(texture_val["wrapModeV"].GetString());
+                textureData.wrapS = parseGLAddressMode(texture_val["wrapModeU"].GetString());
+                textureData.wrapT = parseGLAddressMode(texture_val["wrapModeV"].GetString());
                 materialData.textures.push_back(textureData);
             }
         }
@@ -1160,7 +1160,7 @@ bool Bundle3D::loadMeshDataJson_0_1(MeshDatas& meshdatas)
 
         meshdata->attribs[i].size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetUint();
         meshdata->attribs[i].attribSizeBytes = meshdata->attribs[i].size * 4;
-        meshdata->attribs[i].type = parseGLType(mesh_vertex_attribute_val[TYPE].GetString());
+        meshdata->attribs[i].type = parseVertexType(mesh_vertex_attribute_val[TYPE].GetString(), meshdata->attribs[i].size);
         meshdata->attribs[i].vertexAttrib = parseGLProgramAttribute(mesh_vertex_attribute_val[ATTRIBUTE].GetString());
     }
 
@@ -1205,7 +1205,7 @@ bool Bundle3D::loadMeshDataJson_0_2(MeshDatas& meshdatas)
 
         meshdata->attribs[i].size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetUint();
         meshdata->attribs[i].attribSizeBytes = meshdata->attribs[i].size * 4;
-        meshdata->attribs[i].type = parseGLType(mesh_vertex_attribute_val[TYPE].GetString());
+        meshdata->attribs[i].type = parseVertexType(mesh_vertex_attribute_val[TYPE].GetString(), meshdata->attribs[i].size);
         meshdata->attribs[i].vertexAttrib = parseGLProgramAttribute(mesh_vertex_attribute_val[ATTRIBUTE].GetString());
     }
 
@@ -1980,37 +1980,127 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton, bool singleSprit
     return nodedata;
 }
 
-GLenum Bundle3D::parseGLType(const std::string& str)
+backend::VertexFormat Bundle3D::parseVertexType(const std::string& str, int size)
 {
+    backend::VertexFormat ret = backend::VertexFormat::INT_R32;
     if (str == "GL_BYTE")
     {
-        return GL_BYTE;
+        switch (size)
+        {
+        case 4: 
+            return backend::VertexFormat::UBYTE_R8G8B8A8;
+        default:
+            CCLOGERROR("parseVertexType GL_BYTE x %d error", size);
+        }
     }
     else if(str == "GL_UNSIGNED_BYTE")
     {
-        return GL_UNSIGNED_BYTE;
+        switch (size)
+        {
+        case 3:
+            return backend::VertexFormat::UBYTE_R8G8B8A8;
+        default:
+            CCLOGERROR("parseVertexType GL_UNSIGNED_BYTE x %d error", size);
+        }
     }
     else if(str == "GL_SHORT")
     {
-        return GL_SHORT;
+        switch (size)
+        {
+        case 2:
+            return backend::VertexFormat::USHORT_R16G16;
+        case 4:
+            return backend::VertexFormat::USHORT_R16G16B16A16;
+        default:
+            CCLOGERROR("parseVertexType GL_SHORT x %d error", size);
+        }
     }
     else if(str == "GL_UNSIGNED_SHORT")
     {
-        return GL_UNSIGNED_SHORT;
+        switch (size)
+        {
+        case 2:
+            return backend::VertexFormat::USHORT_R16G16;
+        case 4:
+            return backend::VertexFormat::USHORT_R16G16B16A16;
+        default:
+            CCLOGERROR("parseVertexType GL_UNSIGNED_SHORT x %d error", size);
+        }
     }
     else if(str == "GL_INT")
     {
-        return GL_INT;
+        switch (size)
+        {
+        case 1:
+            return backend::VertexFormat::INT_R32;
+        case 2:
+            return backend::VertexFormat::INT_R32G32;
+        case 3:
+            return backend::VertexFormat::INT_R32G32B32;
+        case 4:
+            return backend::VertexFormat::INT_R32G32B32A32;
+        default:
+            CCLOGERROR("parseVertexType GL_INT x %d error", size);
+        }
     }
     else if (str == "GL_UNSIGNED_INT")
     {
-        return GL_UNSIGNED_INT;
+        switch (size)
+        {
+        case 1:
+            return backend::VertexFormat::INT_R32;
+        case 2:
+            return backend::VertexFormat::INT_R32G32;
+        case 3:
+            return backend::VertexFormat::INT_R32G32B32;
+        case 4:
+            return backend::VertexFormat::INT_R32G32B32A32;
+        default:
+            CCLOGERROR("parseVertexType GL_UNSIGNED_INT x %d error", size);
+        }
     }
     else if (str == "GL_FLOAT")
     {
-        return GL_FLOAT;
+        switch(size)
+        {
+        case 1:
+            return backend::VertexFormat::FLOAT_R32;
+        case 2:
+            return backend::VertexFormat::FLOAT_R32G32;
+        case 3:
+            return backend::VertexFormat::FLOAT_R32G32B32;
+        case 4:
+            return backend::VertexFormat::FLOAT_R32G32B32A32;
+        default:
+            CCLOGERROR("parseVertexType GL_UNSIGNED_INT x %d error", size);
+        }
     }
-    else if (str == "REPEAT")
+
+    return ret;
+}
+
+backend::SamplerAddressMode Bundle3D::parseSamplerAddressMode(const std::string &str)
+{
+
+    if (str == "REPEAT")
+    {
+        return backend::SamplerAddressMode::REPEAT;
+    }
+    else if (str == "CLAMP")
+    {
+        return backend::SamplerAddressMode::CLAMP_TO_EDGE;
+    }
+    else
+    {
+        CCASSERT(false, "Invalid GL type");
+        return backend::SamplerAddressMode::REPEAT;
+    }
+}
+
+GLenum Bundle3D::parseGLAddressMode(const std::string &str)
+{
+
+    if (str == "REPEAT")
     {
         return GL_REPEAT;
     }
@@ -2021,9 +2111,10 @@ GLenum Bundle3D::parseGLType(const std::string& str)
     else
     {
         CCASSERT(false, "Invalid GL type");
-        return 0;
+        return GL_REPEAT;
     }
 }
+
 NTextureData::Usage Bundle3D::parseGLTextureType(const std::string& str)
 {
     if (str == "AMBIENT")

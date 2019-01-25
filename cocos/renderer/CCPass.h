@@ -62,6 +62,8 @@ public:
     /** Returns the ProgramState */
     backend::ProgramState* getProgramState() const;
 
+    backend::VertexLayout* getVertexLayout() { return &(_customCommand.getPipelineDescriptor().vertexLayout); }
+
     /** Binds the GLProgramState and the RenderState.
      This method must be called before call the actual draw call.
      */
@@ -85,15 +87,14 @@ public:
      *
      * @param binding The VertexAttribBinding to set (or NULL to remove an existing binding).
      */
-//    void setVertexAttribBinding(VertexAttribBinding* binding);
+    void setVertexAttribBinding(VertexAttribBinding* binding);
 
     /**
      * Returns the vertex attribute binding for this pass.
      *
      * @return The vertex attribute binding for this pass.
      */
-     //TODO minggo
-//    VertexAttribBinding* getVertexAttributeBinding() const;
+    VertexAttribBinding* getVertexAttributeBinding() const;
 
     uint32_t getHash() const;
 
@@ -111,7 +112,7 @@ protected:
     Node* getTarget() const;
 
     backend::ProgramState* _programState = nullptr;
-//    VertexAttribBinding* _vertexAttribBinding;
+    VertexAttribBinding* _vertexAttribBinding = nullptr;
     CustomCommand _customCommand;
 };
 

@@ -1,5 +1,6 @@
 #include "ProgramGL.h"
 #include "ShaderModuleGL.h"
+#include "renderer/backend/Types.h"
 
 CC_BACKEND_BEGIN
 
@@ -59,7 +60,7 @@ namespace
         return ret;
     }
     
-    GLsizei getUniformSize(GLenum size)
+    GLsizei getGLDataTypeSize(GLenum size)
     {
         GLsizei ret = 0;
         switch (size)
@@ -204,6 +205,44 @@ bool ProgramGL::getAttributeLocation(const std::string& attributeName, unsigned 
     return true;
 }
 
+std::vector<AttributeBindInfo> ProgramGL::getActiveAttributes() const {
+
+    std::vector<AttributeBindInfo> attributes;
+
+    if (!_program) return attributes;
+
+    GLint numOfActiveAttributes = 0;
+    glGetProgramiv(_program, GL_ACTIVE_ATTRIBUTES, &numOfActiveAttributes);
+
+
+    if (numOfActiveAttributes <= 0)
+        return attributes;
+
+    attributes.reserve(numOfActiveAttributes);
+
+    const int MAX_ATTRIBUTE_NAME_LENGTH = 256;
+    std::vector<char> attrName(MAX_ATTRIBUTE_NAME_LENGTH + 1);
+
+    GLint attrNameLen = 0;
+    GLenum attrType;
+    GLint attrSize;
+    backend::AttributeBindInfo info;
+
+    for (int i = 0; i < numOfActiveAttributes; i++)
+    {
+        glGetActiveAttrib(_program, i, MAX_ATTRIBUTE_NAME_LENGTH, &attrNameLen, &attrSize, &attrType, attrName.data());
+        CHECK_GL_ERROR_DEBUG();
+        info.attributeName = std::string(attrName.data(), attrName.data() + attrNameLen);
+        info.location = i;
+        info.type = attrType;
+        info.size = getGLDataTypeSize(attrType) * attrSize;
+        attributes.push_back(info);
+    }
+
+    return attributes;
+
+}
+
 void ProgramGL::computeUniformInfos()
 {
     if (!_program)
@@ -233,7 +272,7 @@ void ProgramGL::computeUniformInfos()
             }
         }
         uniform.location = glGetUniformLocation(_program, uniformName);
-        uniform.bufferSize = getUniformSize(uniform.type);
+        uniform.bufferSize = getGLDataTypeSize(uniform.type);
         _uniformInfos[uniformName] = uniform;
 
         _maxLocation = _maxLocation <= uniform.location ? (uniform.location + 1) : _maxLocation;
