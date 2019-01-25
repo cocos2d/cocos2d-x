@@ -35,6 +35,7 @@ set(COCOS_3D_SRC
     3d/CCAttachNode.cpp
     3d/CCBillBoard.cpp
     3d/CCBundle3D.cpp
+    3d/CCBundle3DData.cpp
     3d/CCBundleReader.cpp
     3d/CCFrustum.cpp
     3d/CCMesh.cpp

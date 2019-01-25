@@ -63,8 +63,8 @@ struct CC_DLL VertexStreamAttribute
      @param type The type of attribute, could be GL_FLOAT, GL_UNSIGNED_BYTE etc.
      @param size Describe how many elements of type in the attribute.
      */
-    VertexStreamAttribute(int offset, int semantic, backend::VertexFormat type, int size)
-    : _normalize(false),_offset(offset),_semantic(semantic),_type(type),_size(size)
+    VertexStreamAttribute(int offset, int semantic, backend::VertexFormat type)
+    : _normalize(false),_offset(offset),_semantic(semantic),_type(type)
     {
     }
     /**
@@ -76,7 +76,7 @@ struct CC_DLL VertexStreamAttribute
      @param normalize If true, the data will be normalized by dividing 255.
      */
     VertexStreamAttribute(int offset, int semantic, backend::VertexFormat type, int size, bool normalize)
-    : _normalize(normalize),_offset(offset),_semantic(semantic),_type(type),_size(size)
+    : _normalize(normalize),_offset(offset),_semantic(semantic),_type(type)
     {
     }
     /**
@@ -98,7 +98,7 @@ struct CC_DLL VertexStreamAttribute
     /**
      Describe how many elements of type in the attribute.
      */
-    int _size = 0;
+    //int _size = 0;
 };
 
 /**

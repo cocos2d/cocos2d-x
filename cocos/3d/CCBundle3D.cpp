@@ -250,13 +250,11 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
             auto mesh = shape.mesh;
             MeshData* meshdata = new (std::nothrow) MeshData();
             MeshVertexAttrib attrib;
-            attrib.size = 3;
             attrib.type = parseVertexType("GL_FLOAT", 3);
             
             if (mesh.positions.size())
             {
                 attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_POSITION;
-                attrib.attribSizeBytes = attrib.size * sizeof(float);
                 meshdata->attribs.push_back(attrib);
                 
             }
@@ -265,15 +263,13 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
             {
                 hasnormal = true;
                 attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_NORMAL;
-                attrib.attribSizeBytes = attrib.size * sizeof(float);
                 meshdata->attribs.push_back(attrib);
             }
             if (mesh.texcoords.size())
             {
                 hastex = true;
-                attrib.size = 2;
+                attrib.type = parseVertexType("GL_FLOAT", 2);
                 attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
-                attrib.attribSizeBytes = attrib.size * sizeof(float);
                 meshdata->attribs.push_back(attrib);
             }
             
@@ -421,8 +417,6 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
             }
             std::string type = _binaryReader.readString();
             attribute=_binaryReader.readString();
-            meshData->attribs[j].size = vSize;
-            meshData->attribs[j].attribSizeBytes = meshData->attribs[j].size * 4;
             meshData->attribs[j].type =  parseVertexType(type, vSize);
             meshData->attribs[j].vertexAttrib = parseGLProgramAttribute(attribute);
         }
@@ -529,6 +523,7 @@ bool Bundle3D::loadMeshDatasBinary_0_1(MeshDatas& meshdatas)
     for (unsigned int i = 0; i < attribSize; ++i)
     {
         unsigned int vUsage, vSize;
+        shader_consts::VertexKey usage;
         if (_binaryReader.read(&vUsage, 4, 1) != 1 || _binaryReader.read(&vSize, 4, 1) != 1)
         {
             CCLOG("warning: Failed to read meshdata: usage or size '%s'.", _path.c_str());
@@ -537,30 +532,32 @@ bool Bundle3D::loadMeshDatasBinary_0_1(MeshDatas& meshdatas)
         }
 
         MeshVertexAttrib meshVertexAttribute;
-        meshVertexAttribute.size = vSize;
-        meshVertexAttribute.attribSizeBytes = vSize * 4;
         meshVertexAttribute.type = parseVertexType("GL_FLOAT", vSize);
         if(vUsage == VERTEX_ATTRIB_NORMAL)
         {
-            vUsage= GLProgram::VERTEX_ATTRIB_NORMAL;
+            usage = shader_consts::VertexKey::VERTEX_ATTRIB_NORMAL;
         }
         else if(vUsage == VERTEX_ATTRIB_BLEND_WEIGHT)
         {
-            vUsage= GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT;
+            usage = shader_consts::VertexKey::VERTEX_ATTRIB_BLEND_WEIGHT;
         }
         else if(vUsage == VERTEX_ATTRIB_BLEND_INDEX)
         {
-            vUsage= GLProgram::VERTEX_ATTRIB_BLEND_INDEX;
+            usage = shader_consts::VertexKey::VERTEX_ATTRIB_BLEND_INDEX;
         }
         else if(vUsage == VERTEX_ATTRIB_POSITION)
         {
-            vUsage= GLProgram::VERTEX_ATTRIB_POSITION;
+            usage = shader_consts::VertexKey::VERTEX_ATTRIB_POSITION;
         }
         else if(vUsage == VERTEX_ATTRIB_TEX_COORD)
         {
-            vUsage= GLProgram::VERTEX_ATTRIB_TEX_COORD;
+            usage = shader_consts::VertexKey::VERTEX_ATTRIB_TEX_COORD;
         }
-        meshVertexAttribute.vertexAttrib = vUsage;
+        else
+        {
+            CCASSERT(false, "invalidate usage value");
+        }
+        meshVertexAttribute.vertexAttrib = usage;
 
         meshdata->attribs.push_back(meshVertexAttribute);
     }
@@ -652,8 +649,6 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
         }
 
         MeshVertexAttrib meshVertexAttribute;
-        meshVertexAttribute.size = vSize;
-        meshVertexAttribute.attribSizeBytes = vSize * 4;
         meshVertexAttribute.type = parseVertexType("GL_FLOAT", vSize);
         if(vUsage == VERTEX_ATTRIB_NORMAL)
         {
@@ -752,8 +747,6 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
             std::string type = mesh_vertex_attribute_val[TYPE].GetString();
             std::string attribute = mesh_vertex_attribute_val[ATTRIBUTE].GetString();
 
-            tempAttrib.size = size;
-            tempAttrib.attribSizeBytes = sizeof(float) * size;
             tempAttrib.type = parseVertexType(type, size);
             tempAttrib.vertexAttrib = parseGLProgramAttribute(attribute);
             meshData->attribs[i]=tempAttrib;
@@ -1158,9 +1151,8 @@ bool Bundle3D::loadMeshDataJson_0_1(MeshDatas& meshdatas)
     {
         const rapidjson::Value& mesh_vertex_attribute_val = mesh_vertex_attribute[i];
 
-        meshdata->attribs[i].size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetUint();
-        meshdata->attribs[i].attribSizeBytes = meshdata->attribs[i].size * 4;
-        meshdata->attribs[i].type = parseVertexType(mesh_vertex_attribute_val[TYPE].GetString(), meshdata->attribs[i].size);
+        int size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetUint();
+        meshdata->attribs[i].type = parseVertexType(mesh_vertex_attribute_val[TYPE].GetString(), size);
         meshdata->attribs[i].vertexAttrib = parseGLProgramAttribute(mesh_vertex_attribute_val[ATTRIBUTE].GetString());
     }
 
@@ -1203,9 +1195,8 @@ bool Bundle3D::loadMeshDataJson_0_2(MeshDatas& meshdatas)
     {
         const rapidjson::Value& mesh_vertex_attribute_val = mesh_vertex_attribute[i];
 
-        meshdata->attribs[i].size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetUint();
-        meshdata->attribs[i].attribSizeBytes = meshdata->attribs[i].size * 4;
-        meshdata->attribs[i].type = parseVertexType(mesh_vertex_attribute_val[TYPE].GetString(), meshdata->attribs[i].size);
+        auto size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetUint();
+        meshdata->attribs[i].type = parseVertexType(mesh_vertex_attribute_val[TYPE].GetString(), size);
         meshdata->attribs[i].vertexAttrib = parseGLProgramAttribute(mesh_vertex_attribute_val[ATTRIBUTE].GetString());
     }
 
