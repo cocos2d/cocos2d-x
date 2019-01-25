@@ -146,8 +146,8 @@ list(APPEND GAME_HEADER
      Classes/ExtensionsTest/NetworkTest/WebSocketDelayTest.h
      Classes/ExtensionsTest/NetworkTest/SocketIOTest.h
      Classes/ExtensionsTest/NetworkTest/HttpClientTest.h
-#     Classes/Sprite3DTest/Sprite3DTest.h
-#     Classes/Sprite3DTest/DrawNode3D.h
+     Classes/Sprite3DTest/Sprite3DTest.h
+     Classes/Sprite3DTest/DrawNode3D.h
      Classes/BaseTest.h
      Classes/SceneTest/SceneTest.h
      Classes/ReleasePoolTest/ReleasePoolTest.h
@@ -284,8 +284,8 @@ list(APPEND GAME_SOURCE
      #Classes/ShaderTest/ShaderTest2.cpp
      #Classes/SpineTest/SpineTest.cpp
 #     Classes/Scene3DTest/Scene3DTest.cpp
-#     Classes/Sprite3DTest/DrawNode3D.cpp
-#     Classes/Sprite3DTest/Sprite3DTest.cpp
+     Classes/Sprite3DTest/DrawNode3D.cpp
+     Classes/Sprite3DTest/Sprite3DTest.cpp
      Classes/SpritePolygonTest/SpritePolygonTest.cpp
      Classes/SpriteTest/SpriteTest.cpp
  #    Classes/TerrainTest/TerrainTest.cpp

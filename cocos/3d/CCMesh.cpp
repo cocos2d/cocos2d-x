@@ -470,18 +470,17 @@ void Mesh::setMeshIndexData(MeshIndexData* subMesh)
 
 void Mesh::setProgramState(backend::ProgramState* programState)
 {
-    // XXX create dummy texture
     auto material = Material::createWithProgramState(programState);
     if (_material)
+    {
         material->setStateBlock(_material->getStateBlock());
+    }
     setMaterial(material);
 }
 
 backend::ProgramState* Mesh::getProgramState() const
 {
-    return _material ?
-                _material->_currentTechnique->_passes.at(0)->getProgramState()
-                : nullptr;
+    return _material ? _material->_currentTechnique->_passes.at(0)->getProgramState() : nullptr;
 }
 
 void Mesh::calculateAABB()

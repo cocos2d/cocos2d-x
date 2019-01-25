@@ -150,7 +150,7 @@ public:
     MeshIndexData* getMeshIndexData() const { return _meshIndexData; }
     
     /**
-     * get GLProgramState
+     * get ProgramState
      * 
      * @lua NA
      */
@@ -190,7 +190,7 @@ public:
     /**get AABB*/
     const AABB& getAABB() const { return _aabb; }
 
-    /**  Sets a new GLProgramState for the Mesh
+    /**  Sets a new ProgramState for the Mesh
      * A new Material will be created for it
      */
     void setProgramState(backend::ProgramState* programState);

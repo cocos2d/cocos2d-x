@@ -217,8 +217,8 @@ bool Sprite3D::loadFromCache(const std::string& path)
 
         for (ssize_t i = 0, size = _meshes.size(); i < size; ++i) {
             // cloning is needed in order to have one state per sprite
-//            auto glstate = spritedata->glProgramStates.at(i);
-//            _meshes.at(i)->setProgramState(glstate->clone());
+            auto glstate = spritedata->programStates.at(i);
+            _meshes.at(i)->setProgramState(glstate->clone());
         }
         return true;
     }
@@ -807,12 +807,13 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
 void Sprite3D::setProgramState(backend::ProgramState* programState)
 {
-//TODO: minggo
-//    Node::setGLProgramState(glProgramState);
+    //TODO
+    //Node::setGLProgramState(glProgramState);
     for (auto state : _meshes) {
         state->setProgramState(programState);
     }
 }
+//TODO add setProgram
 //void Sprite3D::setGLProgram(GLProgram* glprogram)
 //{
 //    auto glProgramState = GLProgramState::create(glprogram);

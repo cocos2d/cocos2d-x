@@ -19,6 +19,7 @@ public:
     
 private:
     GLuint _buffer = 0;
+    bool _bufferAllocated = false;
 };
 
 CC_BACKEND_END
