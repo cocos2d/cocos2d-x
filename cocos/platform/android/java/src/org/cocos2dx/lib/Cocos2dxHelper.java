@@ -25,6 +25,7 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.media.AudioManager;
@@ -780,6 +781,7 @@ public class Cocos2dxHelper {
      *
      * @return true if the window in display cutout mode on the short edges of the screen, false otherwise
      */
+    @SuppressLint("InlinedApi")
     public static boolean isCutoutEnabled() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             WindowManager.LayoutParams lp = sActivity.getWindow().getAttributes();
@@ -794,6 +796,7 @@ public class Cocos2dxHelper {
      *
      * @return array of int with safe insets values
      */
+    @SuppressLint("NewApi") 
     public static int[] getSafeInsets() {
         final int[] safeInsets = new int[]{0, 0, 0, 0};
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
