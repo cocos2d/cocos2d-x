@@ -193,6 +193,7 @@ Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>
     if (texs.size())
     {
         perVertexSizeInFloat += 2;
+        att.type = backend::VertexFormat::FLOAT_R32G32;
         att.vertexAttrib = shader_consts::VertexKey::VERTEX_ATTRIB_TEX_COORD;
         attribs.push_back(att);
     }
