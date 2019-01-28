@@ -401,10 +401,12 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
        _material->getStateBlock()->setDepthWrite(false);
    else
         _material->getStateBlock()->setDepthWrite(true);
+   
+    //TODO arnold
+    //_meshCommand.setSkipBatching(isTransparent);
+    //_meshCommand.setTransparent(isTransparent);
+    //_meshCommand.set3D(!_force2DQueue);
 
-    _meshCommand.setSkipBatching(isTransparent);
-    _meshCommand.setTransparent(isTransparent);
-    _meshCommand.set3D(!_force2DQueue);
     _material->getStateBlock()->setBlend(_force2DQueue || isTransparent);
 
     // set default uniforms for Mesh

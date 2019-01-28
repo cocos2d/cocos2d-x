@@ -207,7 +207,8 @@ public:
     /** 
      * Get the MeshCommand.
      */
-    MeshCommand& getMeshCommand() { return _meshCommand; }
+    //TODO arnold
+    //MeshCommand& getMeshCommand() { return _meshCommand; }
 
     /**skin setter*/
     void setSkin(MeshSkin* skin);
@@ -246,7 +247,7 @@ protected:
     bool                _force2DQueue; // add this mesh to 2D render queue
     
     std::string         _name;
-    MeshCommand         _meshCommand;
+    //MeshCommand         _meshCommand;
     MeshIndexData*      _meshIndexData;
     //GLProgramState*     _glProgramState;
     BlendFunc           _blend;

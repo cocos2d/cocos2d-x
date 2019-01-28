@@ -88,9 +88,9 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     backend::Buffer*    _indexBuffer = nullptr; //index buffer
-    MeshVertexData* _vertexData = nullptr; //vertex buffer, weak ref
-    AABB           _aabb; // original aabb of the submesh
-    std::string    _id; //id
+    MeshVertexData*     _vertexData = nullptr; //vertex buffer, weak ref
+    AABB                _aabb; // original aabb of the submesh
+    std::string         _id; //id
     CustomCommand::PrimitiveType   _primitiveType = CustomCommand::PrimitiveType::TRIANGLE;
     
     friend class MeshVertexData;
