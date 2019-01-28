@@ -83,17 +83,12 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
     
     int offset = 0;
     //TODO arnold set layout
-    auto &layout = vertexdata->_vertexData;
-
     for (int i = 0; i < meshdata.attribs.size(); i ++) {
         auto& it = meshdata.attribs[i];
         auto attr = VertexStreamAttribute(offset, it.vertexAttrib, it.type);
-        auto name = shader_consts::getAttributeName(it.vertexAttrib);
-        //TODO: needToBeNormalized should be set correctly. 
-        layout.setAtrribute(name, i, it.type, attr._offset, false);
         offset += it.getAttribSizeBytes();
     }
-    layout.setLayout(offset, backend::VertexStepMode::VERTEX);
+    vertexdata->_sizePerVertex = offset;
 
     vertexdata->_attribs = meshdata.attribs;
     

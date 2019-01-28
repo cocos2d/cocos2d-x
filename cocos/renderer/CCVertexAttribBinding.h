@@ -76,12 +76,12 @@ public:
     /**
      * Binds this vertex array object.
      */
-    void bind(backend::VertexLayout &layout);
+    //void bind(backend::VertexLayout &layout);
 
     /**
      * Unbinds this vertex array object.
      */
-    void unbind();
+    //void unbind();
 
     /**
      * Returns the vertex attrib flags
@@ -109,7 +109,7 @@ private:
     void setVertexAttribPointer(const std::string& name, backend::VertexFormat type, GLboolean normalized, int offset);
     backend::AttributeBindInfo* getVertexAttribValue(const std::string &name);
     void parseAttributes();
-    void enableVertexAttributes(uint32_t flags) const;
+    //void enableVertexAttributes(uint32_t flags) const;
 
 
     GLuint _handle;

@@ -87,14 +87,9 @@ VertexAttribBinding* VertexAttribBinding::create(MeshIndexData* meshIndexData, P
 bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass)
 {
 
-
-    CCLOG("VertexAttribBinding::init");
-
     CCASSERT(meshIndexData && pass && pass->getProgramState(), "Invalid arguments");
 
     auto programState = pass->getProgramState();
-
-    
 
     _vertexLayout = pass->getVertexLayout();
 
@@ -163,9 +158,9 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass)
     return true;
 }
 
-void VertexAttribBinding::bind(backend::VertexLayout &layout)
-{
-
+//void VertexAttribBinding::bind(backend::VertexLayout &layout)
+//{
+//
 //    if (_handle)
 //    {
 //        // hardware
@@ -187,23 +182,23 @@ void VertexAttribBinding::bind(backend::VertexLayout &layout)
 //        }
 //        
 //    }
-    
-}
+//    
+//}
 
-void VertexAttribBinding::unbind()
-{
-    if (_handle)
-    {
-        // Hardware
-        glBindVertexArray(0);
-    }
-    else
-    {
-        // Software
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
-}
+//void VertexAttribBinding::unbind()
+//{
+//    if (_handle)
+//    {
+//        // Hardware
+//        glBindVertexArray(0);
+//    }
+//    else
+//    {
+//        // Software
+//        glBindBuffer(GL_ARRAY_BUFFER, 0);
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//    }
+//}
 
 uint32_t VertexAttribBinding::getVertexAttribsFlags() const
 {
@@ -227,18 +222,18 @@ void VertexAttribBinding::parseAttributes()
     }
 }
 
-void VertexAttribBinding::enableVertexAttributes(uint32_t flags) const
-{
-    auto tmpFlags = flags;
-    for (int i = 0; tmpFlags > 0; i++)
-    {
-        int flag = 1 << i;
-        if (flag & tmpFlags)
-            glEnableVertexAttribArray(i);
-        
-        tmpFlags &= ~flag;
-    }
-}
+//void VertexAttribBinding::enableVertexAttributes(uint32_t flags) const
+//{
+//    auto tmpFlags = flags;
+//    for (int i = 0; tmpFlags > 0; i++)
+//    {
+//        int flag = 1 << i;
+//        if (flag & tmpFlags)
+//            glEnableVertexAttribArray(i);
+//        
+//        tmpFlags &= ~flag;
+//    }
+//}
 
 backend::AttributeBindInfo* VertexAttribBinding::getVertexAttribValue(const std::string& name)
 {

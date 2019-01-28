@@ -36,7 +36,7 @@
 #include "math/CCMath.h"
 //#include "renderer/CCGLProgram.h"
 #include "renderer/CCVertexIndexData.h"
-#include "renderer/CCVertexIndexBuffer.h"
+//#include "renderer/CCVertexIndexBuffer.h"
 #include "renderer/CCCustomCommand.h"
 
 
@@ -125,7 +125,7 @@ public:
     /** get index data by id */
     MeshIndexData* getMeshIndexDataById(const std::string& id) const;
     
-    ssize_t getSizePerVertex() const { return _vertexData.getStride(); }
+    ssize_t getSizePerVertex() const { return _sizePerVertex; }
 
     /**has vertex attribute?*/
     //TODO: will be removed!
@@ -136,8 +136,9 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~MeshVertexData();
 
 protected:
-    backend::VertexLayout _vertexData; //mesh vertex data
+    
     backend::Buffer* _vertexBuffer = nullptr; // vertex buffer
+    ssize_t  _sizePerVertex = -1;
     Vector<MeshIndexData*> _indexs; //index data
     std::vector<MeshVertexAttrib> _attribs; //vertex attributes
     
