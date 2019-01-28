@@ -163,7 +163,7 @@ protected:
      * get vertex attribute type
      * @param str The type in string
      */
-    unsigned int parseGLProgramAttribute(const std::string& str);
+    shader_consts::VertexKey parseGLProgramAttribute(const std::string& str);
 
     /*
      * get model path

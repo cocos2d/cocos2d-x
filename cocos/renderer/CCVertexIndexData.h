@@ -26,6 +26,7 @@
 
 #include <map>
 #include "base/CCRef.h"
+#include "3d/CC3DProgramInfo.h"
 
 /**
  * @addtogroup renderer
@@ -63,7 +64,7 @@ struct CC_DLL VertexStreamAttribute
      @param type The type of attribute, could be GL_FLOAT, GL_UNSIGNED_BYTE etc.
      @param size Describe how many elements of type in the attribute.
      */
-    VertexStreamAttribute(int offset, int semantic, backend::VertexFormat type)
+    VertexStreamAttribute(int offset, shader_consts::VertexKey semantic, backend::VertexFormat type)
     : _normalize(false),_offset(offset),_semantic(semantic),_type(type)
     {
     }
@@ -75,7 +76,7 @@ struct CC_DLL VertexStreamAttribute
      @param size Describe how many elements of type in the attribute.
      @param normalize If true, the data will be normalized by dividing 255.
      */
-    VertexStreamAttribute(int offset, int semantic, backend::VertexFormat type, int size, bool normalize)
+    VertexStreamAttribute(int offset, shader_consts::VertexKey semantic, backend::VertexFormat type, int size, bool normalize)
     : _normalize(normalize),_offset(offset),_semantic(semantic),_type(type)
     {
     }
@@ -90,7 +91,7 @@ struct CC_DLL VertexStreamAttribute
     /**
      Describe that the attribute usage, could be Position, Color etc.
      */
-    int _semantic = 0;
+    shader_consts::VertexKey _semantic = shader_consts::VertexKey::VERTEX_ATTRIB_POSITION;
     /**
      Describe the type of attribute, could be GL_FLOAT, GL_UNSIGNED_BYTE etc.
      */
@@ -131,22 +132,22 @@ public:
     Remove the given streams.
     @param semantic The semantic of the stream.
     */
-    void removeStream(int semantic);
+    void removeStream(shader_consts::VertexKey semantic);
     /**
     Get the attribute of stream, const version.
     @param semantic The semantic of the stream.
     */
-    const VertexStreamAttribute* getStreamAttribute(int semantic) const;
+    const VertexStreamAttribute* getStreamAttribute(shader_consts::VertexKey semantic) const;
     /**
     Get the attribute of stream.
     @param semantic The semantic of the stream.
     */
-    VertexStreamAttribute* getStreamAttribute(int semantic);
+    VertexStreamAttribute* getStreamAttribute(shader_consts::VertexKey semantic);
     /**
     Get the binded buffer of the stream.
     @param semantic The semantic of the stream.
     */
-    VertexBuffer* getStreamBuffer(int semantic) const;
+    VertexBuffer* getStreamBuffer(shader_consts::VertexKey semantic) const;
 
 protected:
     /**
@@ -170,7 +171,7 @@ protected:
     /**
     Streams in the VertexData.
     */
-    std::map<int, BufferAttribute> _vertexStreams;
+    std::map<shader_consts::VertexKey, BufferAttribute> _vertexStreams;
 };
 
 NS_CC_END

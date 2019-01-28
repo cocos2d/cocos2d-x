@@ -39,6 +39,8 @@ namespace shader_consts
 
         // backward compatibility
         VERTEX_ATTRIB_TEX_COORDS = VERTEX_ATTRIB_TEX_COORD,
+
+        VERTEX_ATTRIB_ERROR = -1
     };
 
     /**Preallocated uniform handle.*/

@@ -106,7 +106,7 @@ private:
     VertexAttribBinding& operator=(const VertexAttribBinding&);
     
     bool init(MeshIndexData* meshIndexData, Pass *pass);
-    void setVertexAttribPointer(const std::string& name, GLint size, backend::VertexFormat type, GLboolean normalized, int offset);
+    void setVertexAttribPointer(const std::string& name, backend::VertexFormat type, GLboolean normalized, int offset);
     backend::AttributeBindInfo* getVertexAttribValue(const std::string &name);
     void parseAttributes();
     void enableVertexAttributes(uint32_t flags) const;

@@ -84,7 +84,7 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
     int offset = 0;
     for (const auto& it : meshdata.attribs) {
         vertexdata->_vertexData->setStream(vertexdata->_vertexBuffer, VertexStreamAttribute(offset, it.vertexAttrib, it.type));
-        offset += it.attribSizeBytes;
+        offset += it.getAttribSizeBytes();
     }
 
     vertexdata->_attribs = meshdata.attribs;
@@ -129,7 +129,7 @@ MeshIndexData* MeshVertexData::getMeshIndexDataById(const std::string& id) const
 bool MeshVertexData::hasVertexAttrib(shader_consts::VertexKey attrib) const
 {
     for (const auto& it : _attribs) {
-        if (it.vertexAttrib == static_cast<int>(attrib))
+        if (it.vertexAttrib == attrib)
             return true;
     }
     return false;

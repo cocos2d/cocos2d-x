@@ -24,22 +24,23 @@
 #include "renderer/backend/Program.h"
 #include "base/CCConfiguration.h"
 #include "3d/CCMeshVertexIndexData.h"
-
+#include "3d/CC3DProgramInfo.h"
 
 NS_CC_BEGIN
 
+
 std::string s_attributeNames[] = {
-    GLProgram::ATTRIBUTE_NAME_POSITION,
-    GLProgram::ATTRIBUTE_NAME_COLOR,
-    GLProgram::ATTRIBUTE_NAME_TEX_COORD,
-    GLProgram::ATTRIBUTE_NAME_TEX_COORD1,
-    GLProgram::ATTRIBUTE_NAME_TEX_COORD2,
-    GLProgram::ATTRIBUTE_NAME_TEX_COORD3,
-    GLProgram::ATTRIBUTE_NAME_NORMAL,
-    GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT,
-    GLProgram::ATTRIBUTE_NAME_BLEND_INDEX,
-    GLProgram::ATTRIBUTE_NAME_TANGENT,
-    GLProgram::ATTRIBUTE_NAME_BINORMAL
+    shader_consts::attribute::ATTRIBUTE_NAME_POSITION,
+    shader_consts::attribute::ATTRIBUTE_NAME_COLOR,
+    shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD,
+    shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD1,
+    shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD2,
+    shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD3,
+    shader_consts::attribute::ATTRIBUTE_NAME_NORMAL,
+    shader_consts::attribute::ATTRIBUTE_NAME_BLEND_WEIGHT,
+    shader_consts::attribute::ATTRIBUTE_NAME_BLEND_INDEX,
+    shader_consts::attribute::ATTRIBUTE_NAME_TANGENT,
+    shader_consts::attribute::ATTRIBUTE_NAME_BINORMAL
 };
 
 static GLuint __maxVertexAttribs = 0;
@@ -141,12 +142,11 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass)
     {
         auto meshattribute = meshVertexData->getMeshVertexAttrib(k);
         setVertexAttribPointer(
-                               s_attributeNames[meshattribute.vertexAttrib],
-                               meshattribute.size,
+                               s_attributeNames[static_cast<int>(meshattribute.vertexAttrib)],
                                meshattribute.type,
                                GL_FALSE,
                                offset);
-        offset += meshattribute.attribSizeBytes;
+        offset += meshattribute.getAttribSizeBytes();
     }
 
     _vertexLayout->setLayout(meshVertexData->getVertexBuffer()->getSizePerVertex(), backend::VertexStepMode::VERTEX);
@@ -260,7 +260,7 @@ backend::AttributeBindInfo* VertexAttribBinding::getVertexAttribValue(const std:
     return nullptr;
 }
 
-void VertexAttribBinding::setVertexAttribPointer(const std::string &name, GLint size, backend::VertexFormat type, GLboolean normalized, int offset)
+void VertexAttribBinding::setVertexAttribPointer(const std::string &name, backend::VertexFormat type, GLboolean normalized, int offset)
 {
     auto v = getVertexAttribValue(name);
     if(v) {

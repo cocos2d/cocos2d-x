@@ -176,28 +176,24 @@ Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>
     std::vector<float> vertices;
     std::vector<MeshVertexAttrib> attribs;
     MeshVertexAttrib att;
-    att.size = 3;
     att.type = backend::VertexFormat::FLOAT_R32G32B32;
-    att.attribSizeBytes = att.size * sizeof(float);
     
     if (positions.size())
     {
         perVertexSizeInFloat += 3;
-        att.vertexAttrib = GLProgram::VERTEX_ATTRIB_POSITION;
+        att.vertexAttrib = shader_consts::VertexKey::VERTEX_ATTRIB_POSITION;
         attribs.push_back(att);
     }
     if (normals.size())
     {
         perVertexSizeInFloat += 3;
-        att.vertexAttrib = GLProgram::VERTEX_ATTRIB_NORMAL;
+        att.vertexAttrib = shader_consts::VertexKey::VERTEX_ATTRIB_NORMAL;
         attribs.push_back(att);
     }
     if (texs.size())
     {
         perVertexSizeInFloat += 2;
-        att.vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
-        att.size = 2;
-        att.attribSizeBytes = att.size * sizeof(float);
+        att.vertexAttrib = shader_consts::VertexKey::VERTEX_ATTRIB_TEX_COORD;
         attribs.push_back(att);
     }
     

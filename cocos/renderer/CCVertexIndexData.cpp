@@ -67,7 +67,7 @@ bool VertexData::setStream(VertexBuffer* buffer, const VertexStreamAttribute& st
     return true;
 }
 
-void VertexData::removeStream(int semantic)
+void VertexData::removeStream(shader_consts::VertexKey semantic)
 {
     auto iter = _vertexStreams.find(semantic);
     if(iter != _vertexStreams.end())
@@ -77,21 +77,21 @@ void VertexData::removeStream(int semantic)
     }
 }
 
-const VertexStreamAttribute* VertexData::getStreamAttribute(int semantic) const
+const VertexStreamAttribute* VertexData::getStreamAttribute(shader_consts::VertexKey semantic) const
 {
     auto iter = _vertexStreams.find(semantic);
     if(iter == _vertexStreams.end()) return nullptr;
     else return &iter->second._stream;
 }
 
-VertexStreamAttribute* VertexData::getStreamAttribute(int semantic)
+VertexStreamAttribute* VertexData::getStreamAttribute(shader_consts::VertexKey semantic)
 {
     auto iter = _vertexStreams.find(semantic);
     if(iter == _vertexStreams.end()) return nullptr;
     else return &iter->second._stream;
 }
 
-VertexBuffer* VertexData::getStreamBuffer(int semantic) const
+VertexBuffer* VertexData::getStreamBuffer(shader_consts::VertexKey semantic) const
 {
     auto iter = _vertexStreams.find(semantic);
     if(iter == _vertexStreams.end()) return nullptr;
