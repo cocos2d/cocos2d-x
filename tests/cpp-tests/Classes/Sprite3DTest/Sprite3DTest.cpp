@@ -829,11 +829,11 @@ std::string Sprite3DHitTest::subtitle() const
 
 AsyncLoadSprite3DTest::AsyncLoadSprite3DTest()
 {
-    _paths.push_back("Sprite3DTest/boss.obj");
+    //_paths.push_back("Sprite3DTest/boss.obj");
     _paths.push_back("Sprite3DTest/girl.c3b");
-    _paths.push_back("Sprite3DTest/orc.c3b");
-    _paths.push_back("Sprite3DTest/ReskinGirl.c3b");
-    _paths.push_back("Sprite3DTest/axe.c3b");
+    //_paths.push_back("Sprite3DTest/orc.c3b");
+    //_paths.push_back("Sprite3DTest/ReskinGirl.c3b");
+    //_paths.push_back("Sprite3DTest/axe.c3b");
     
     TTFConfig ttfConfig("fonts/arial.ttf", 15);
     auto label1 = Label::createWithTTF(ttfConfig,"AsyncLoad Sprite3D");

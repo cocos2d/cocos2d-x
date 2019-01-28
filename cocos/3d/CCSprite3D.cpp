@@ -388,13 +388,12 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
                     auto tex = mesh->getTexture();
                     if(tex)
                     {
-                    //TODO
-//                        Texture2D::TexParams texParams;
-//                        texParams.minFilter = GL_LINEAR;
-//                        texParams.magFilter = GL_LINEAR;
-//                        texParams.wrapS = textureData->wrapS;
-//                        texParams.wrapT = textureData->wrapT;
-//                        tex->setTexParameters(texParams);
+                        Texture2D::TexParams texParams;
+                        texParams.minFilter = GL_LINEAR;
+                        texParams.magFilter = GL_LINEAR;
+                        texParams.wrapS = textureData->wrapS;
+                        texParams.wrapT = textureData->wrapT;
+                        tex->setTexParameters(texParams);
                         mesh->_isTransparent = (materialData->getTextureData(NTextureData::Usage::Transparency) != nullptr);
                     }
                 }
@@ -404,13 +403,12 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
                     auto tex = Director::getInstance()->getTextureCache()->addImage(textureData->filename);
                     if(tex)
                     {
-                    //TODO
-//                        Texture2D::TexParams texParams;
-//                        texParams.minFilter = GL_LINEAR;
-//                        texParams.magFilter = GL_LINEAR;
-//                        texParams.wrapS = textureData->wrapS;
-//                        texParams.wrapT = textureData->wrapT;
-//                        tex->setTexParameters(texParams);
+                        Texture2D::TexParams texParams;
+                        texParams.minFilter = GL_LINEAR;
+                        texParams.magFilter = GL_LINEAR;
+                        texParams.wrapS = textureData->wrapS;
+                        texParams.wrapT = textureData->wrapT;
+                        tex->setTexParameters(texParams);
                     }
                     mesh->setTexture(tex, NTextureData::Usage::Normal);
                 }
@@ -555,13 +553,12 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                                 auto tex = mesh->getTexture();
                                 if(tex)
                                 {
-                                //TODO
-//                                    Texture2D::TexParams texParams;
-//                                    texParams.minFilter = GL_LINEAR;
-//                                    texParams.magFilter = GL_LINEAR;
-//                                    texParams.wrapS = textureData->wrapS;
-//                                    texParams.wrapT = textureData->wrapT;
-//                                    tex->setTexParameters(texParams);
+                                    Texture2D::TexParams texParams;
+                                    texParams.minFilter = GL_LINEAR;
+                                    texParams.magFilter = GL_LINEAR;
+                                    texParams.wrapS = textureData->wrapS;
+                                    texParams.wrapT = textureData->wrapT;
+                                    tex->setTexParameters(texParams);
                                     mesh->_isTransparent = (materialData->getTextureData(NTextureData::Usage::Transparency) != nullptr);
                                 }
                             }
@@ -571,13 +568,12 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                                 auto tex = Director::getInstance()->getTextureCache()->addImage(textureData->filename);
                                 if (tex)
                                 {
-                                //TODO
-//                                    Texture2D::TexParams texParams;
-//                                    texParams.minFilter = GL_LINEAR;
-//                                    texParams.magFilter = GL_LINEAR;
-//                                    texParams.wrapS = textureData->wrapS;
-//                                    texParams.wrapT = textureData->wrapT;
-//                                    tex->setTexParameters(texParams);
+                                    Texture2D::TexParams texParams;
+                                    texParams.minFilter = GL_LINEAR;
+                                    texParams.magFilter = GL_LINEAR;
+                                    texParams.wrapS = textureData->wrapS;
+                                    texParams.wrapT = textureData->wrapT;
+                                    tex->setTexParameters(texParams);
                                 }
                                 mesh->setTexture(tex, NTextureData::Usage::Normal);
                             }
@@ -811,7 +807,7 @@ void Sprite3D::setProgramState(backend::ProgramState* programState)
     //TODO
     //Node::setGLProgramState(glProgramState);
     for (auto state : _meshes) {
-        state->setProgramState(programState);
+        state->setProgramState(programState->clone());
     }
 }
 //TODO add setProgram

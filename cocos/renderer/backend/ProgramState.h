@@ -31,7 +31,7 @@ struct TextureInfo
 {
     TextureInfo(const std::vector<uint32_t>& _slots, const std::vector<backend::Texture*> _textures);
     TextureInfo() = default;
-    TextureInfo(const TextureInfo &) = default;
+    TextureInfo(const TextureInfo &);
     ~TextureInfo();
     TextureInfo& operator=(TextureInfo&& rhs);
     
@@ -51,8 +51,8 @@ public:
     /***
     *  deep clone ProgramState
     */
-    ProgramState *clone();
-
+    ProgramState *clone() const;
+    
     //get program
     backend::Program* getProgram() const { return _program; }
     

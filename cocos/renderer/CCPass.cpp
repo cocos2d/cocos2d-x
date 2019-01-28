@@ -103,14 +103,14 @@ Pass* Pass::clone() const
     if (pass)
     {
         RenderState::cloneInto(pass);
-        //TODO
-//        pass->_glProgramState = _glProgramState->clone();
-//        CC_SAFE_RETAIN(pass->_glProgramState);
-        pass->_programState = _programState->clone();
-        CC_SAFE_RETAIN(_programState);
+
+        pass->setProgramState(_programState->clone());
+        
         //
         pass->_vertexAttribBinding = _vertexAttribBinding;
         CC_SAFE_RETAIN(pass->_vertexAttribBinding);
+
+        pass->setParent(_parent);
 
         pass->autorelease();
     }
@@ -153,13 +153,13 @@ uint32_t Pass::getHash() const
     return _hash;
 }
 
-void Pass::bind(const Mat4& modelView)
-{
-    bind(modelView, true);
-}
+//void Pass::bind(const Mat4& modelView)
+//{
+//    bind(modelView, true);
+//}
 
-void Pass::bind(const Mat4& modelView, bool bindAttributes)
-{
+//void Pass::bind(const Mat4& modelView, bool bindAttributes)
+//{
 //    // vertex attribs
 //    if (bindAttributes && _vertexAttribBinding)
 //        _vertexAttribBinding->bind();
@@ -171,13 +171,7 @@ void Pass::bind(const Mat4& modelView, bool bindAttributes)
 //
 //    //set render state
 //    RenderState::bind(this);
-
-    auto &vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
-
-    if (bindAttributes && _vertexAttribBinding)
-        _vertexAttribBinding->bind(vertexLayout);
-
-}
+//}
 
 void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
                 CustomCommand::PrimitiveType primitive, CustomCommand::IndexFormat indexFormat,
@@ -194,9 +188,6 @@ void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buff
     auto location = _programState->getUniformLocation("u_MVPMatrix");
     _programState->setUniform(location, finalMat.m, sizeof(finalMat.m));
 
-    //update all attributes
-    bind(modelView);
-    //set state
     _customCommand.getPipelineDescriptor().programState = _programState;
 
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
@@ -212,12 +203,12 @@ Node* Pass::getTarget() const
     return material->_target;
 }
 
-void Pass::unbind()
-{
-    RenderState::StateBlock::restore(0);
-
-//    _vertexAttribBinding->unbind();
-}
+//void Pass::unbind()
+//{
+//    RenderState::StateBlock::restore(0);
+//
+////    _vertexAttribBinding->unbind();
+//}
 
 void Pass::setVertexAttribBinding(VertexAttribBinding* binding)
 {

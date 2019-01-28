@@ -420,12 +420,13 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
         if (-1 != location.location)
             programState->setUniform(location, &color, sizeof(color));
 
-//TODO minggo
-//        if (_skin)
-//            programState->setUniformVec4v("u_matrixPalette", (GLsizei)_skin->getMatrixPaletteSize(), _skin->getMatrixPalette());
-//
-//        if (scene && scene->getLights().size() > 0)
-//            setLightUniforms(pass, scene, color, lightMask);
+        location = programState->getUniformLocation("u_matrixPalette");
+        if (_skin)
+            programState->setUniform(location, _skin->getMatrixPalette(), (GLsizei)_skin->getMatrixPaletteSize());
+
+        //TODO arnold
+        if (scene && scene->getLights().size() > 0)
+            setLightUniforms(pass, scene, color, lightMask);
     }
 
     _material->draw(globalZ,

@@ -151,6 +151,8 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass)
 
     _vertexLayout->setLayout(meshVertexData->getVertexBuffer()->getSizePerVertex(), backend::VertexStepMode::VERTEX);
 
+    CCASSERT(offset == meshVertexData->getVertexBuffer()->getSizePerVertex(), "vertex layout mismatch!");
+
     //// VAO hardware
     //if (Configuration::getInstance()->supportsShareableVAO())
     //{
@@ -265,6 +267,7 @@ void VertexAttribBinding::setVertexAttribPointer(const std::string &name, backen
     auto v = getVertexAttribValue(name);
     if(v) {
         //v->setPointer(size, type, normalized, stride, offset);
+        CCLOG("bind attribute %s to location: %d, offset: %d", name.c_str(), v->location, offset);
         _vertexLayout->setAtrribute(name, v->location, type, offset, normalized);
         _vertexAttribsFlags |= 1 << v->location;
     }

@@ -67,8 +67,8 @@ public:
     /** Binds the GLProgramState and the RenderState.
      This method must be called before call the actual draw call.
      */
-    void bind(const Mat4& modelView);
-    void bind(const Mat4& modelView, bool bindAttributes);
+    //void bind(const Mat4& modelView);
+    //void bind(const Mat4& modelView, bool bindAttributes);
 
     void draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
               CustomCommand::PrimitiveType primitive, CustomCommand::IndexFormat indexFormat,
@@ -77,7 +77,7 @@ public:
     /** Unbinds the Pass.
      This method must be called AFTER calling the actual draw call
      */
-    void unbind();
+    //void unbind();f
 
     /**
      * Sets a vertex attribute binding for this pass.

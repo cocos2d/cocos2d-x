@@ -151,6 +151,9 @@ void ProgramGL::compileProgram()
     
     glAttachShader(_program, vertShader);
     glAttachShader(_program, fragShader);
+    
+    bindPredefinedVertexAttribs();
+
     glLinkProgram(_program);
     
     GLint status = 0;
@@ -200,7 +203,7 @@ bool ProgramGL::getAttributeLocation(const std::string& attributeName, unsigned 
     GLint loc = glGetAttribLocation(_program, attributeName.c_str());
     if (-1 == loc)
     {
-        printf("Cocos2d: %s: can not find vertex attribute of %s", __FUNCTION__, attributeName.c_str());
+        CCLOG("Cocos2d: %s: can not find vertex attribute of %s", __FUNCTION__, attributeName.c_str());
         return false;
     }
     
@@ -223,7 +226,9 @@ std::vector<AttributeBindInfo> ProgramGL::getActiveAttributes() const {
 
     attributes.reserve(numOfActiveAttributes);
 
-    const int MAX_ATTRIBUTE_NAME_LENGTH = 256;
+    int MAX_ATTRIBUTE_NAME_LENGTH = 256;
+    glGetProgramiv(_program, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &MAX_ATTRIBUTE_NAME_LENGTH);
+
     std::vector<char> attrName(MAX_ATTRIBUTE_NAME_LENGTH + 1);
 
     GLint attrNameLen = 0;
@@ -236,14 +241,38 @@ std::vector<AttributeBindInfo> ProgramGL::getActiveAttributes() const {
         glGetActiveAttrib(_program, i, MAX_ATTRIBUTE_NAME_LENGTH, &attrNameLen, &attrSize, &attrType, attrName.data());
         CHECK_GL_ERROR_DEBUG();
         info.attributeName = std::string(attrName.data(), attrName.data() + attrNameLen);
-        info.location = i;
+        info.location = glGetAttribLocation(_program, info.attributeName.c_str());
         info.type = attrType;
         info.size = getGLDataTypeSize(attrType) * attrSize;
+        CHECK_GL_ERROR_DEBUG();
         attributes.push_back(info);
     }
 
     return attributes;
 
+}
+
+void ProgramGL::bindPredefinedVertexAttribs() const
+{
+    static const struct {
+        const char *attributeName;
+        shader_consts::VertexKey location;
+    } attribute_locations[] =
+    {
+        { shader_consts::attribute::ATTRIBUTE_NAME_POSITION, shader_consts::VertexKey::VERTEX_ATTRIB_POSITION },
+        { shader_consts::attribute::ATTRIBUTE_NAME_COLOR, shader_consts::VertexKey::VERTEX_ATTRIB_COLOR },
+        { shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD, shader_consts::VertexKey::VERTEX_ATTRIB_TEX_COORD },
+        { shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD1, shader_consts::VertexKey::VERTEX_ATTRIB_TEX_COORD1 },
+        { shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD2, shader_consts::VertexKey::VERTEX_ATTRIB_TEX_COORD2 },
+        { shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD3, shader_consts::VertexKey::VERTEX_ATTRIB_TEX_COORD3 },
+        { shader_consts::attribute::ATTRIBUTE_NAME_NORMAL, shader_consts::VertexKey::VERTEX_ATTRIB_NORMAL },
+    };
+
+    const int size = sizeof(attribute_locations) / sizeof(attribute_locations[0]);
+
+    for (int i = 0; i < size; i++) {
+        glBindAttribLocation(_program, static_cast<int>(attribute_locations[i].location), attribute_locations[i].attributeName);
+    }
 }
 
 void ProgramGL::computeUniformInfos()

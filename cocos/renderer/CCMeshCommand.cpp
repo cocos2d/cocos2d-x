@@ -220,12 +220,8 @@ void MeshCommand::batchDraw()
     {
         for(const auto& pass: _material->_currentTechnique->_passes)
         {
-            pass->bind(_mv);
-
             glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
             CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
-
-            pass->unbind();
         }
     }
     else
@@ -271,12 +267,8 @@ void MeshCommand::execute()
     {
         for(const auto& pass: _material->_currentTechnique->_passes)
         {
-            pass->bind(_mv, true);
-
             glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
             CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
-
-            pass->unbind();
         }
     }
     else

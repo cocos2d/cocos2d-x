@@ -54,6 +54,13 @@ TextureInfo::TextureInfo(const std::vector<uint32_t>& _slots, const std::vector<
     retainTextures();
 }
 
+TextureInfo::TextureInfo(const TextureInfo &other)
+    : slot(other.slot)
+    , textures(other.textures)
+{
+    retainTextures();
+}
+
 TextureInfo::~TextureInfo()
 {
     releaseTextures();
@@ -118,21 +125,13 @@ ProgramState::~ProgramState()
 {
     CC_SAFE_RELEASE(_program);
     
-    for (auto &info : _vertexTextureInfos)
-    {
-        info.second.releaseTextures();
-    }
-    for (auto &info : _fragmentTextureInfos)
-    {
-        info.second.releaseTextures();
-    }
     _vertexUniformInfos.clear();
     _fragmentUniformInfos.clear();
     _vertexTextureInfos.clear();
     _fragmentTextureInfos.clear();
 }
 
-ProgramState *ProgramState::clone()
+ProgramState *ProgramState::clone() const
 {
     ProgramState *cp = new ProgramState();
     cp->_program = _program;
@@ -143,14 +142,6 @@ ProgramState *ProgramState::clone()
 
     CC_SAFE_RETAIN(cp->_program);
 
-    for (auto &info : cp->_vertexTextureInfos)
-    {
-        info.second.retainTextures();
-    }
-    for (auto &info : cp->_fragmentTextureInfos)
-    {
-        info.second.retainTextures();
-    }
     return cp;
 }
 
