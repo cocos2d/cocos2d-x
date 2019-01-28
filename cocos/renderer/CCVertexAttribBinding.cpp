@@ -29,20 +29,6 @@
 NS_CC_BEGIN
 
 
-std::string s_attributeNames[] = {
-    shader_consts::attribute::ATTRIBUTE_NAME_POSITION,
-    shader_consts::attribute::ATTRIBUTE_NAME_COLOR,
-    shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD,
-    shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD1,
-    shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD2,
-    shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD3,
-    shader_consts::attribute::ATTRIBUTE_NAME_NORMAL,
-    shader_consts::attribute::ATTRIBUTE_NAME_BLEND_WEIGHT,
-    shader_consts::attribute::ATTRIBUTE_NAME_BLEND_INDEX,
-    shader_consts::attribute::ATTRIBUTE_NAME_TANGENT,
-    shader_consts::attribute::ATTRIBUTE_NAME_BINORMAL
-};
-
 static GLuint __maxVertexAttribs = 0;
 static std::vector<VertexAttribBinding*> __vertexAttribBindingCache;
 
@@ -142,16 +128,16 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass)
     {
         auto meshattribute = meshVertexData->getMeshVertexAttrib(k);
         setVertexAttribPointer(
-                               s_attributeNames[static_cast<int>(meshattribute.vertexAttrib)],
+                               shader_consts::getAttributeName(meshattribute.vertexAttrib),
                                meshattribute.type,
                                GL_FALSE,
                                offset);
         offset += meshattribute.getAttribSizeBytes();
     }
 
-    _vertexLayout->setLayout(meshVertexData->getVertexBuffer()->getSizePerVertex(), backend::VertexStepMode::VERTEX);
+    _vertexLayout->setLayout(offset, backend::VertexStepMode::VERTEX);
 
-    CCASSERT(offset == meshVertexData->getVertexBuffer()->getSizePerVertex(), "vertex layout mismatch!");
+    CCASSERT(offset == meshVertexData->getSizePerVertex(), "vertex layout mismatch!");
 
     //// VAO hardware
     //if (Configuration::getInstance()->supportsShareableVAO())

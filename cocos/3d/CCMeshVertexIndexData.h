@@ -59,12 +59,13 @@ class CC_DLL MeshIndexData : public Ref
 {
 public:
     /** create  */
-    static MeshIndexData* create(const std::string& id, MeshVertexData* vertexData, IndexBuffer* indexbuffer, const AABB& aabb);
+    static MeshIndexData* create(const std::string& id, MeshVertexData* vertexData, backend::Buffer* indexbuffer, const AABB& aabb);
     
     /**get index buffer*/
-    const IndexBuffer* getIndexBuffer() const { return _indexBuffer; }
+    backend::Buffer* getIndexBuffer() const { return _indexBuffer; }
+
     /**get vertex buffer*/
-    const VertexBuffer* getVertexBuffer() const;
+    backend::Buffer* getVertexBuffer() const;
     
     /**get vertex data*/
     const MeshVertexData* getMeshVertexData() const { return _vertexData; }
@@ -86,7 +87,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~MeshIndexData();
     
 protected:
-    IndexBuffer*    _indexBuffer = nullptr; //index buffer
+    backend::Buffer*    _indexBuffer = nullptr; //index buffer
     MeshVertexData* _vertexData = nullptr; //vertex buffer, weak ref
     AABB           _aabb; // original aabb of the submesh
     std::string    _id; //id
@@ -109,7 +110,7 @@ public:
     static MeshVertexData* create(const MeshData& meshdata);
     
     /** get vertexbuffer */
-    const VertexBuffer* getVertexBuffer() const { return _vertexBuffer; }
+    backend::Buffer* getVertexBuffer() const { return _vertexBuffer; }
     
     /** get attributes count */
     ssize_t getMeshVertexAttribCount() const { return _attribs.size(); }
@@ -124,6 +125,8 @@ public:
     /** get index data by id */
     MeshIndexData* getMeshIndexDataById(const std::string& id) const;
     
+    ssize_t getSizePerVertex() const { return _vertexData.getStride(); }
+
     /**has vertex attribute?*/
     //TODO: will be removed!
     bool hasVertexAttrib(shader_consts::VertexKey attrib) const;
@@ -133,8 +136,8 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~MeshVertexData();
 
 protected:
-    VertexData* _vertexData = nullptr; //mesh vertex data
-    VertexBuffer* _vertexBuffer = nullptr; // vertex buffer
+    backend::VertexLayout _vertexData; //mesh vertex data
+    backend::Buffer* _vertexBuffer = nullptr; // vertex buffer
     Vector<MeshIndexData*> _indexs; //index data
     std::vector<MeshVertexAttrib> _attribs; //vertex attributes
     

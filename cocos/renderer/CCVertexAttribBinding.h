@@ -122,9 +122,6 @@ private:
     uint32_t _vertexAttribsFlags;
 };
 
-/// @cond
-extern std::string CC_DLL s_attributeNames[];//attribute names array
-/// @endcond
 
 NS_CC_END
 

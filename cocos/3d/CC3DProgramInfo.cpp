@@ -98,6 +98,28 @@ namespace shader_consts
     {
         return locations;
     }
+
+    const std::string getAttributeName(const VertexKey &key)
+    {
+        static std::string s_attributeNames[] = {
+            shader_consts::attribute::ATTRIBUTE_NAME_POSITION,
+            shader_consts::attribute::ATTRIBUTE_NAME_COLOR,
+            shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD,
+            shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD1,
+            shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD2,
+            shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD3,
+            shader_consts::attribute::ATTRIBUTE_NAME_NORMAL,
+            shader_consts::attribute::ATTRIBUTE_NAME_BLEND_WEIGHT,
+            shader_consts::attribute::ATTRIBUTE_NAME_BLEND_INDEX,
+            shader_consts::attribute::ATTRIBUTE_NAME_TANGENT,
+            shader_consts::attribute::ATTRIBUTE_NAME_BINORMAL
+        };
+
+        static int max = sizeof(s_attributeNames) / sizeof(s_attributeNames[0]);
+        auto idx = static_cast<int>(key);
+        CCASSERT(idx >= 0 && idx < max, "invalid key ");    
+        return s_attributeNames[idx];
+    }
 };
 
 NS_CC_END

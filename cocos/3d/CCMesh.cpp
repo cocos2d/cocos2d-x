@@ -147,7 +147,7 @@ Mesh::~Mesh()
 
 backend::Buffer* Mesh::getVertexBuffer() const
 {
-    return _meshIndexData->getVertexBuffer()->getVBO();
+    return _meshIndexData->getVertexBuffer();
 }
 
 bool Mesh::hasVertexAttrib(shader_consts::VertexKey attrib) const
@@ -167,7 +167,7 @@ const MeshVertexAttrib& Mesh::getMeshVertexAttribute(int idx)
 
 int Mesh::getVertexSizeInBytes() const
 {
-    return _meshIndexData->getVertexBuffer()->getSizePerVertex();
+    return _meshIndexData->getMeshVertexData()->getSizePerVertex();
 }
 
 Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const IndexArray& indices)
@@ -711,7 +711,7 @@ CustomCommand::PrimitiveType Mesh::getPrimitiveType() const
 
 ssize_t Mesh::getIndexCount() const
 {
-    return _meshIndexData->getIndexBuffer()->getIndexNumber();
+    return _meshIndexData->getIndexBuffer()->getSize() / sizeof(uint16_t);
 }
 
 CustomCommand::IndexFormat Mesh::getIndexFormat() const
@@ -721,6 +721,6 @@ CustomCommand::IndexFormat Mesh::getIndexFormat() const
 
 backend::Buffer* Mesh::getIndexBuffer() const
 {
-    return _meshIndexData->getIndexBuffer()->getVBO();
+    return _meshIndexData->getIndexBuffer();
 }
 NS_CC_END

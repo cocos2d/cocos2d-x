@@ -264,6 +264,7 @@ namespace shader_consts
     }
 
     const std::vector<std::pair<const char *, VertexKey>>& getPredefinedAttributes();
+    const std::string getAttributeName(const VertexKey &key);
 };
 
 NS_CC_END

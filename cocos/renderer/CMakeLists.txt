@@ -23,8 +23,8 @@ set(COCOS_RENDERER_HEADER
     renderer/CCTextureUtils.h
     renderer/CCTrianglesCommand.h
     renderer/CCVertexAttribBinding.h
-    renderer/CCVertexIndexBuffer.h
-    renderer/CCVertexIndexData.h
+    #renderer/CCVertexIndexBuffer.h
+    #renderer/CCVertexIndexData.h
     renderer/ccShaders.h
 
     renderer/backend/Backend.h
@@ -71,8 +71,8 @@ set(COCOS_RENDERER_SRC
     renderer/CCTextureUtils.cpp
     renderer/CCTrianglesCommand.cpp
     renderer/CCVertexAttribBinding.cpp
-    renderer/CCVertexIndexBuffer.cpp
-    renderer/CCVertexIndexData.cpp
+    #renderer/CCVertexIndexBuffer.cpp
+    #renderer/CCVertexIndexData.cpp
     renderer/ccShaders.cpp
 
     renderer/backend/BlendState.cpp
