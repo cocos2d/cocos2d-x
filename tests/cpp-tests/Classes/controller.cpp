@@ -43,7 +43,6 @@ class RootTests : public TestList
 public:
     RootTests()
     {
-        addTest("Node: Sprite3D", [](){  return new Sprite3DTests(); });
 //        addTest("Node: Scene3D", [](){return new (std::nothrow) Scene3DTests(); });
         addTest("ActionManager", [](){return new (std::nothrow) ActionManagerTests(); });
         addTest("Actions - Basic", [](){ return new (std::nothrow) ActionsTests(); });
@@ -101,6 +100,7 @@ public:
         addTest("Node: Scene", [](){return new SceneTests(); });
         // addTest("Node: Spine", [](){return new SpineTests(); });
         addTest("Node: Sprite", [](){return new SpriteTests(); });
+        addTest("Node: Sprite3D", [](){  return new Sprite3DTests(); });
          addTest("Node: SpritePolygon", [](){return new (std::nothrow) SpritePolygonTest(); });
 //        addTest("Node: Terrain", [](){  return new TerrainTests(); });
         addTest("Node: TileMap", [](){return new TileMapTests(); });
