@@ -14,10 +14,6 @@ RenderPipelineGL::RenderPipelineGL(const RenderPipelineDescriptor& descriptor)
     _programGL->computeAttributeInfos(descriptor);
     CC_SAFE_RETAIN(_programGL);
 
-    const auto& depthStencilState = descriptor.depthStencilState;
-    CC_SAFE_RETAIN(depthStencilState);
-    _depthStencilState = static_cast<DepthStencilStateGL*>(depthStencilState);
-    
     const auto& blendState = descriptor.blendState;
     CC_SAFE_RETAIN(blendState);
     _blendState = static_cast<BlendStateGL*>(blendState);
@@ -26,7 +22,6 @@ RenderPipelineGL::RenderPipelineGL(const RenderPipelineDescriptor& descriptor)
 RenderPipelineGL::~RenderPipelineGL()
 {
     CC_SAFE_RELEASE(_programGL);
-    CC_SAFE_RELEASE(_depthStencilState);
     CC_SAFE_RELEASE(_blendState);
 }
 

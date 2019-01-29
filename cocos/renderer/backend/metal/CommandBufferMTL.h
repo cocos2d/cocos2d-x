@@ -29,8 +29,8 @@ public:
     virtual void endFrame() override;
     
     virtual void setLineWidth(float lineWidth) override;
-    
     virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) override;
+    virtual void setDepthStencilState(DepthStencilState* depthStencilState) override;
     
 private:
     void prepareDrawing() const;
@@ -39,11 +39,13 @@ private:
     void setUniformBuffer() const;
     unsigned int fillUniformBuffer(uint8_t* buffer, const std::vector<UniformBuffer>& unifornInfo) const;
     void afterDraw();
-    
+    id<MTLRenderCommandEncoder> getRenderCommandEncoder(const RenderPassDescriptor& renderPassDescriptor);
+
     id<MTLCommandBuffer> _mtlCommandBuffer = nil;
     id<MTLCommandQueue> _mtlCommandQueue = nil;
     id<MTLRenderCommandEncoder> _mtlRenderEncoder = nil;
     id<MTLBuffer> _mtlIndexBuffer = nil;
+    id<MTLDepthStencilState> _mtlDepthStencilState = nil;
     
     DeviceMTL* _deviceMTL = nullptr;
     RenderPipelineMTL* _renderPipelineMTL = nullptr;
@@ -51,6 +53,7 @@ private:
     unsigned int _renderTargetHeight = 0;
     
     dispatch_semaphore_t _frameBoundarySemaphore;
+    RenderPassDescriptor _prevRenderPassDescriptor;
 };
 
 CC_BACKEND_END

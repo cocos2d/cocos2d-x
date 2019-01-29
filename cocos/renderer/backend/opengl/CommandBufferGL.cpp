@@ -287,6 +287,18 @@ void CommandBufferGL::endFrame()
 {
 }
 
+void CommandBufferGL::setDepthStencilState(DepthStencilState* depthStencilState)
+{
+    if (depthStencilState)
+    {
+        _depthStencilStateGL = static_cast<DepthStencilStateGL*>(depthStencilState);
+    }
+    else
+    {
+        _depthStencilStateGL = nullptr;
+    }
+}
+
 void CommandBufferGL::prepareDrawing() const
 {
     glViewport(_viewport.x, _viewport.y, _viewport.w, _viewport.h);
@@ -298,9 +310,8 @@ void CommandBufferGL::prepareDrawing() const
     setUniforms(program);
 
     // Set depth/stencil state.
-    if (_renderPipeline->getDepthStencilState())
-        _renderPipeline->getDepthStencilState()->apply(_stencilReferenceValueFront,
-                                                       _stencilReferenceValueBack);
+    if (_depthStencilStateGL)
+        _depthStencilStateGL->apply(_stencilReferenceValueFront, _stencilReferenceValueBack);
     else
         DepthStencilStateGL::reset();
     
