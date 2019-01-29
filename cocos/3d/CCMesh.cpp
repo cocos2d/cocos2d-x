@@ -424,7 +424,7 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
 
         location = programState->getUniformLocation("u_matrixPalette");
         if (_skin)
-            programState->setUniform(location, _skin->getMatrixPalette(), (GLsizei)_skin->getMatrixPaletteSize());
+            programState->setUniform(location, _skin->getMatrixPalette(), (GLsizei)_skin->getMatrixPaletteSize() * sizeof(Vec4));
 
         //TODO arnold
         if (scene && scene->getLights().size() > 0)
