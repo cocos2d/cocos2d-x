@@ -69,7 +69,7 @@ cocos2d-x-3.17.1 Nov.19 2018
 [FIX]           Android: keep cocos2dx activity at task root by mark "singleTask" in manifest
 [FIX]           Android: fix crash caused by JNIEnv null pointer in getStringUTFCharsJNI function
 [FIX]           Android: use 'Binary names' style on JNI for ClassLoader.loadClass
-[FIX]           Android: allow cleartext HTTP traffic by default
+[FIX]           Android: allow cleartext HTTP traffic by default for all tests project
 [FIX]           Windows: Support VS2017 in release mode
 [FIX]           Action: fix repeat CallFunc for some times, may never stop
 [FIX]           Physics: fix PhysicsJointMotor setRate and getRate Bad Access Crash
