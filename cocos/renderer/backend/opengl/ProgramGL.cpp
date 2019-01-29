@@ -78,9 +78,6 @@ namespace
             case GL_BOOL_VEC3:
                 ret = sizeof(GLboolean);
                 break;
-            case GL_FLOAT:
-                ret = sizeof(GLfloat);
-                break;
             case GL_BOOL_VEC4:
             case GL_INT:
             case GL_UNSIGNED_INT:
