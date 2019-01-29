@@ -21,6 +21,8 @@ public:
     virtual ShaderModuleMTL* getVertexShader() const { return _vertexShader; }
     virtual ShaderModuleMTL* getFragmentShader() const { return _fragmentShader; }
     
+    virtual std::vector<AttributeBindInfo> getActiveAttributes() const override;
+    
     virtual int getMaxVertexLocation() const override;
     virtual int getMaxFragmentLocation() const override;
 

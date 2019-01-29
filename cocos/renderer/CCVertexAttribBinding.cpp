@@ -22,6 +22,7 @@
 
 #include "renderer/CCVertexAttribBinding.h"
 #include "renderer/backend/Program.h"
+#include "renderer/CCPass.h"
 #include "base/CCConfiguration.h"
 #include "3d/CCMeshVertexIndexData.h"
 #include "3d/CC3DProgramInfo.h"
@@ -94,18 +95,19 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass)
     _vertexLayout = pass->getVertexLayout();
 
     // One-time initialization.
-    if (__maxVertexAttribs == 0)
-    {
-        GLint temp;
-        glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &temp);
-
-        __maxVertexAttribs = temp;
-        if (__maxVertexAttribs <= 0)
-        {
-            CCLOGERROR("The maximum number of vertex attributes supported by OpenGL on the current device is 0 or less.");
-            return false;
-        }
-    }
+    //TODO arnold
+//    if (__maxVertexAttribs == 0)
+//    {
+//        GLint temp;
+//        glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &temp);
+//
+//        __maxVertexAttribs = temp;
+//        if (__maxVertexAttribs <= 0)
+//        {
+//            CCLOGERROR("The maximum number of vertex attributes supported by OpenGL on the current device is 0 or less.");
+//            return false;
+//        }
+//    }
 
     _meshIndexData = meshIndexData;
     _meshIndexData->retain();
@@ -118,7 +120,7 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass)
 
     // Parse and set attributes
     parseAttributes();
-    long offset = 0;
+    int offset = 0;
     for (auto k = 0; k < attributeCount; k++)
     {
         auto meshattribute = meshVertexData->getMeshVertexAttrib(k);

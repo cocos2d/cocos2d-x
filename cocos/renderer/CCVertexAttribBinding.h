@@ -28,6 +28,7 @@
 #include "base/CCRef.h"
 #include "renderer/backend/ProgramState.h"
 #include "renderer/backend/Types.h"
+#include "renderer/CCPass.h"
 
 NS_CC_BEGIN
 
