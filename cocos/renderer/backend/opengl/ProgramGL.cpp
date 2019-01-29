@@ -152,7 +152,7 @@ void ProgramGL::compileProgram()
     glAttachShader(_program, vertShader);
     glAttachShader(_program, fragShader);
     
-    bindPredefinedVertexAttribs();
+    //bindPredefinedVertexAttribs();
 
     glLinkProgram(_program);
     

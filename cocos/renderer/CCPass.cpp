@@ -83,6 +83,7 @@ bool Pass::initWithProgramState(Technique* technique, backend::ProgramState *pro
 
 Pass::Pass()
 {
+    //_customCommand.set3D(true);
     
     //TODO: set _customCommand's vertex layout.
     //auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;

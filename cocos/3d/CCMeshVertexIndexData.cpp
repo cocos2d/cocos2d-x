@@ -104,7 +104,7 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
         auto& index = meshdata.subMeshIndices[i];
         //auto indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, (int)(index.size()));
         auto indexBuffer = backend::Device::getInstance()->newBuffer(index.size() * sizeof(index[0]), backend::BufferType::INDEX, backend::BufferUsage::STATIC);
-        indexBuffer->updateData((void*)&index[0], index.size() * sizeof(index[0]));
+        indexBuffer->updateData((void*)index.data(), index.size() * sizeof(index[0]));
         
         std::string id = (i < meshdata.subMeshIds.size() ? meshdata.subMeshIds[i] : "");
         MeshIndexData* indexdata = nullptr;
