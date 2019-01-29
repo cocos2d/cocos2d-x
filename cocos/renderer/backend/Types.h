@@ -3,6 +3,7 @@
 #include "Macros.h"
 
 #include <cstdint>
+#include <string>
 
 CC_BACKEND_BEGIN
 
