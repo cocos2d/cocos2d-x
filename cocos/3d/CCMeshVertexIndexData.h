@@ -34,9 +34,6 @@
 #include "base/CCRef.h"
 #include "base/CCVector.h"
 #include "math/CCMath.h"
-//#include "renderer/CCGLProgram.h"
-#include "renderer/CCVertexIndexData.h"
-//#include "renderer/CCVertexIndexBuffer.h"
 #include "renderer/CCCustomCommand.h"
 
 

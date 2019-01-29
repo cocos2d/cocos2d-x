@@ -5,6 +5,7 @@ NS_CC_BEGIN
 
 namespace shaderinfos
 {
+    /* TODO these consts should not be used */
     namespace shader {
         const char* SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR = "#ShaderETC1ASPositionTextureColor";
         const char* SHADER_NAME_ETC1AS_POSITION_TEXTURE_COLOR_NO_MVP = "#ShaderETC1ASPositionTextureColor_noMVP";

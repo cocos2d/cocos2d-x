@@ -83,26 +83,24 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
     
     int offset = 0;
     //TODO arnold set layout
-    for (int i = 0; i < meshdata.attribs.size(); i ++) {
-        auto& it = meshdata.attribs[i];
-        auto attr = VertexStreamAttribute(offset, it.vertexAttrib, it.type);
-        offset += it.getAttribSizeBytes();
-    }
-    vertexdata->_sizePerVertex = offset;
+    //for (int i = 0; i < meshdata.attribs.size(); i ++) {
+    //    auto& it = meshdata.attribs[i];
+    //    auto attr = VertexStreamAttribute(offset, it.vertexAttrib, it.type);
+    //    offset += it.getAttribSizeBytes();
+    //}
+    vertexdata->_sizePerVertex = meshdata.getPerVertexSize();
 
     vertexdata->_attribs = meshdata.attribs;
     
     if(vertexdata->_vertexBuffer)
     {
-        //vertexdata->_vertexBuffer->updateVertices((void*)&meshdata.vertex[0], (int)meshdata.vertex.size() * 4 / vertexdata->_vertexBuffer->getSizePerVertex(), 0);
-        vertexdata->_vertexBuffer->updateData((void*)&meshdata.vertex[0], meshdata.vertex.size() * 4);
+        vertexdata->_vertexBuffer->updateData((void*)&meshdata.vertex[0], meshdata.vertex.size() * sizeof(meshdata.vertex[0]));
     }
     
     bool needCalcAABB = (meshdata.subMeshAABB.size() != meshdata.subMeshIndices.size());
     for (size_t i = 0, size = meshdata.subMeshIndices.size(); i < size; ++i) {
 
         auto& index = meshdata.subMeshIndices[i];
-        //auto indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, (int)(index.size()));
         auto indexBuffer = backend::Device::getInstance()->newBuffer(index.size() * sizeof(index[0]), backend::BufferType::INDEX, backend::BufferUsage::STATIC);
         indexBuffer->updateData((void*)index.data(), index.size() * sizeof(index[0]));
         
