@@ -125,7 +125,7 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass)
     {
         auto meshattribute = meshVertexData->getMeshVertexAttrib(k);
         setVertexAttribPointer(
-                               shader_consts::getAttributeName(meshattribute.vertexAttrib),
+                               shaderinfos::getAttributeName(meshattribute.vertexAttrib),
                                meshattribute.type,
                                GL_FALSE,
                                offset);

@@ -1007,12 +1007,12 @@ Sprite3DCache::~Sprite3DCache()
 //
 static Sprite3DMaterial* getSprite3DMaterialForAttribs(MeshVertexData* meshVertexData, bool usesLight)
 {
-    bool textured = meshVertexData->hasVertexAttrib(shader_consts::VertexKey::VERTEX_ATTRIB_TEX_COORD);
-    bool hasSkin = meshVertexData->hasVertexAttrib(shader_consts::VertexKey::VERTEX_ATTRIB_BLEND_INDEX)
-    && meshVertexData->hasVertexAttrib(shader_consts::VertexKey::VERTEX_ATTRIB_BLEND_WEIGHT);
-    bool hasNormal = meshVertexData->hasVertexAttrib(shader_consts::VertexKey::VERTEX_ATTRIB_NORMAL);
-    bool hasTangentSpace = meshVertexData->hasVertexAttrib(shader_consts::VertexKey::VERTEX_ATTRIB_TANGENT)
-    && meshVertexData->hasVertexAttrib(shader_consts::VertexKey::VERTEX_ATTRIB_BINORMAL);
+    bool textured = meshVertexData->hasVertexAttrib(shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD);
+    bool hasSkin = meshVertexData->hasVertexAttrib(shaderinfos::VertexKey::VERTEX_ATTRIB_BLEND_INDEX)
+    && meshVertexData->hasVertexAttrib(shaderinfos::VertexKey::VERTEX_ATTRIB_BLEND_WEIGHT);
+    bool hasNormal = meshVertexData->hasVertexAttrib(shaderinfos::VertexKey::VERTEX_ATTRIB_NORMAL);
+    bool hasTangentSpace = meshVertexData->hasVertexAttrib(shaderinfos::VertexKey::VERTEX_ATTRIB_TANGENT)
+    && meshVertexData->hasVertexAttrib(shaderinfos::VertexKey::VERTEX_ATTRIB_BINORMAL);
     Sprite3DMaterial::MaterialType type;
     if(textured)
     {

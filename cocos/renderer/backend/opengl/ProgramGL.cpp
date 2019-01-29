@@ -256,16 +256,16 @@ void ProgramGL::bindPredefinedVertexAttribs() const
 {
     static const struct {
         const char *attributeName;
-        shader_consts::VertexKey location;
+        shaderinfos::VertexKey location;
     } attribute_locations[] =
     {
-        { shader_consts::attribute::ATTRIBUTE_NAME_POSITION, shader_consts::VertexKey::VERTEX_ATTRIB_POSITION },
-        { shader_consts::attribute::ATTRIBUTE_NAME_COLOR, shader_consts::VertexKey::VERTEX_ATTRIB_COLOR },
-        { shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD, shader_consts::VertexKey::VERTEX_ATTRIB_TEX_COORD },
-        { shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD1, shader_consts::VertexKey::VERTEX_ATTRIB_TEX_COORD1 },
-        { shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD2, shader_consts::VertexKey::VERTEX_ATTRIB_TEX_COORD2 },
-        { shader_consts::attribute::ATTRIBUTE_NAME_TEX_COORD3, shader_consts::VertexKey::VERTEX_ATTRIB_TEX_COORD3 },
-        { shader_consts::attribute::ATTRIBUTE_NAME_NORMAL, shader_consts::VertexKey::VERTEX_ATTRIB_NORMAL },
+        { shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, shaderinfos::VertexKey::VERTEX_ATTRIB_POSITION },
+        { shaderinfos::attribute::ATTRIBUTE_NAME_COLOR, shaderinfos::VertexKey::VERTEX_ATTRIB_COLOR },
+        { shaderinfos::attribute::ATTRIBUTE_NAME_TEX_COORD, shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD },
+        { shaderinfos::attribute::ATTRIBUTE_NAME_TEX_COORD1, shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD1 },
+        { shaderinfos::attribute::ATTRIBUTE_NAME_TEX_COORD2, shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD2 },
+        { shaderinfos::attribute::ATTRIBUTE_NAME_TEX_COORD3, shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD3 },
+        { shaderinfos::attribute::ATTRIBUTE_NAME_NORMAL, shaderinfos::VertexKey::VERTEX_ATTRIB_NORMAL },
     };
 
     const int size = sizeof(attribute_locations) / sizeof(attribute_locations[0]);

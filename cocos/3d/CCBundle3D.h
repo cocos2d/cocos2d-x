@@ -64,7 +64,7 @@ public:
     * get define data type
     * @param str The type in string
     */
-    static backend::VertexFormat parseVertexType(const std::string& str, int size);
+    static backend::VertexFormat parseGLDataType(const std::string& str, int size);
 
     /**
     * get define data type
@@ -163,7 +163,7 @@ protected:
      * get vertex attribute type
      * @param str The type in string
      */
-    shader_consts::VertexKey parseGLProgramAttribute(const std::string& str);
+    shaderinfos::VertexKey parseGLProgramAttribute(const std::string& str);
 
     /*
      * get model path

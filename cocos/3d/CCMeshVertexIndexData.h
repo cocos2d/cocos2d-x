@@ -129,7 +129,7 @@ public:
 
     /**has vertex attribute?*/
     //TODO: will be removed!
-    bool hasVertexAttrib(shader_consts::VertexKey attrib) const;
+    bool hasVertexAttrib(shaderinfos::VertexKey attrib) const;
     
 CC_CONSTRUCTOR_ACCESS:
     MeshVertexData() = default;

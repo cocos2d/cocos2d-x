@@ -54,7 +54,7 @@ struct MeshVertexAttrib
 
     //TODO arnold change vertexAttrib to std::string
     //VERTEX_ATTRIB_POSITION,VERTEX_ATTRIB_COLOR,VERTEX_ATTRIB_TEX_COORD,VERTEX_ATTRIB_NORMAL, VERTEX_ATTRIB_BLEND_WEIGHT, VERTEX_ATTRIB_BLEND_INDEX, GLProgram for detail
-    shader_consts::VertexKey vertexAttrib;
+    shaderinfos::VertexKey vertexAttrib;
     //size in bytes
     //int attribSizeBytes;
 

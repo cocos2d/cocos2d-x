@@ -9,7 +9,7 @@
 
 NS_CC_BEGIN
 
-namespace shader_consts
+namespace shaderinfos
 {
     enum class VertexKey :int {
 

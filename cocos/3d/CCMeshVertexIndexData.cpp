@@ -132,7 +132,7 @@ MeshIndexData* MeshVertexData::getMeshIndexDataById(const std::string& id) const
     return nullptr;
 }
 
-bool MeshVertexData::hasVertexAttrib(shader_consts::VertexKey attrib) const
+bool MeshVertexData::hasVertexAttrib(shaderinfos::VertexKey attrib) const
 {
     for (const auto& it : _attribs) {
         if (it.vertexAttrib == attrib)

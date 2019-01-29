@@ -89,7 +89,7 @@ public:
      *
      * @lua NA
      */
-    bool hasVertexAttrib(shader_consts::VertexKey attrib) const;
+    bool hasVertexAttrib(shaderinfos::VertexKey attrib) const;
     /**get mesh vertex attribute count*/
     ssize_t getMeshVertexAttribCount() const;
     /**get MeshVertexAttribute by index*/

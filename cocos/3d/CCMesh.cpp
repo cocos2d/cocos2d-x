@@ -150,7 +150,7 @@ backend::Buffer* Mesh::getVertexBuffer() const
     return _meshIndexData->getVertexBuffer();
 }
 
-bool Mesh::hasVertexAttrib(shader_consts::VertexKey attrib) const
+bool Mesh::hasVertexAttrib(shaderinfos::VertexKey attrib) const
 {
     return _meshIndexData->getMeshVertexData()->hasVertexAttrib(attrib);
 }
@@ -181,20 +181,20 @@ Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>
     if (positions.size())
     {
         perVertexSizeInFloat += 3;
-        att.vertexAttrib = shader_consts::VertexKey::VERTEX_ATTRIB_POSITION;
+        att.vertexAttrib = shaderinfos::VertexKey::VERTEX_ATTRIB_POSITION;
         attribs.push_back(att);
     }
     if (normals.size())
     {
         perVertexSizeInFloat += 3;
-        att.vertexAttrib = shader_consts::VertexKey::VERTEX_ATTRIB_NORMAL;
+        att.vertexAttrib = shaderinfos::VertexKey::VERTEX_ATTRIB_NORMAL;
         attribs.push_back(att);
     }
     if (texs.size())
     {
         perVertexSizeInFloat += 2;
         att.type = backend::VertexFormat::FLOAT_R32G32;
-        att.vertexAttrib = shader_consts::VertexKey::VERTEX_ATTRIB_TEX_COORD;
+        att.vertexAttrib = shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD;
         attribs.push_back(att);
     }
     
