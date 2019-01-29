@@ -149,8 +149,6 @@ void ProgramGL::compileProgram()
     glAttachShader(_program, vertShader);
     glAttachShader(_program, fragShader);
     
-    //bindPredefinedVertexAttribs();
-
     glLinkProgram(_program);
     
     GLint status = 0;
@@ -249,28 +247,6 @@ std::vector<AttributeBindInfo> ProgramGL::getActiveAttributes() const {
 
 }
 
-void ProgramGL::bindPredefinedVertexAttribs() const
-{
-    static const struct {
-        const char *attributeName;
-        shaderinfos::VertexKey location;
-    } attribute_locations[] =
-    {
-        { shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, shaderinfos::VertexKey::VERTEX_ATTRIB_POSITION },
-        { shaderinfos::attribute::ATTRIBUTE_NAME_COLOR, shaderinfos::VertexKey::VERTEX_ATTRIB_COLOR },
-        { shaderinfos::attribute::ATTRIBUTE_NAME_TEX_COORD, shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD },
-        { shaderinfos::attribute::ATTRIBUTE_NAME_TEX_COORD1, shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD1 },
-        { shaderinfos::attribute::ATTRIBUTE_NAME_TEX_COORD2, shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD2 },
-        { shaderinfos::attribute::ATTRIBUTE_NAME_TEX_COORD3, shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD3 },
-        { shaderinfos::attribute::ATTRIBUTE_NAME_NORMAL, shaderinfos::VertexKey::VERTEX_ATTRIB_NORMAL },
-    };
-
-    const int size = sizeof(attribute_locations) / sizeof(attribute_locations[0]);
-
-    for (int i = 0; i < size; i++) {
-        glBindAttribLocation(_program, static_cast<int>(attribute_locations[i].location), attribute_locations[i].attributeName);
-    }
-}
 
 void ProgramGL::computeUniformInfos()
 {

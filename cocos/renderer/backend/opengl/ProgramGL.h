@@ -47,8 +47,6 @@ public:
 
     virtual std::vector<AttributeBindInfo> getActiveAttributes() const override;
 
-    void bindPredefinedVertexAttribs() const;
-
 private:
     void compileProgram();
     bool getAttributeLocation(const std::string& attributeName, unsigned int& location) const;
