@@ -186,11 +186,11 @@ Renderer::~Renderer()
     
     CC_SAFE_RELEASE(_commandBuffer);
     
-    for (auto pipeline :_renderPipelineCache)
-    {
-        pipeline.second->release();
-    }
-    _renderPipelineCache.clear();
+//    for (auto pipeline :_renderPipelineCache)
+//    {
+//        pipeline.second->release();
+//    }
+//    _renderPipelineCache.clear();
 }
 
 void Renderer::init()
