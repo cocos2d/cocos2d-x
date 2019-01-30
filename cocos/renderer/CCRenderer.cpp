@@ -821,13 +821,13 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
     auto device = backend::Device::getInstance();
     auto blendState = device->createBlendState(pipelineDescriptor.blendDescriptor);
     renderPipelineDescriptor.blendState = blendState;
-    backend::DepthStencilState* depthStencilState = nullptr;
     
     if (_depthStencilDescriptor.depthTestEnabled ||
         _depthStencilDescriptor.depthWriteEnabled ||
         _depthStencilDescriptor.stencilTestEnabled)
     {
-        depthStencilState = device->createDepthStencilState(_depthStencilDescriptor);
+        auto depthStencilState = device->createDepthStencilState(_depthStencilDescriptor);
+        renderPipelineDescriptor.depthStencilState = depthStencilState;
     }
 
     if (renderPassDescriptor.needColorAttachment)
@@ -852,8 +852,10 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
             renderPipelineDescriptor.stencilAttachmentFormat = backend::TextureFormat::D24S8;
     }
 
-    _commandBuffer->setDepthStencilState(depthStencilState);
-    _commandBuffer->setRenderPipeline(getRenderPipeline(renderPipelineDescriptor));
+    //FIXME: optimize it, cache the result as possible.
+    auto renderPipeline = device->newRenderPipeline(renderPipelineDescriptor);
+    _commandBuffer->setRenderPipeline(renderPipeline);
+    renderPipeline->release();
 }
 
 void Renderer::beginRenderPass(RenderCommand* cmd)

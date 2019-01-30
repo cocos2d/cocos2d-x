@@ -15,7 +15,6 @@ CC_BACKEND_BEGIN
 class RenderPass;
 class RenderPipeline;
 class Buffer;
-class DepthStencilState;
 
 class CommandBuffer : public cocos2d::Ref
 {
@@ -32,13 +31,13 @@ public:
     virtual void drawElements(PrimitiveType primitiveType, IndexFormat indexType, unsigned int count, unsigned int offset) = 0;
     virtual void endRenderPass() = 0;
     virtual void endFrame() = 0;
-
+    
     virtual void setLineWidth(float lineWidth) = 0;
-    virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) = 0;
-    virtual void setDepthStencilState(DepthStencilState* depthStencilState) = 0;
     
     void setStencilReferenceValue(unsigned int value);
     void setStencilReferenceValue(unsigned int frontRef, unsigned int backRef);
+    
+    virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) = 0;
     
 protected:
     virtual ~CommandBuffer() = default;

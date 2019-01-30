@@ -1,6 +1,7 @@
 #include "RenderPipelineMTL.h"
 #include "DeviceMTL.h"
 #include "ShaderModuleMTL.h"
+#include "DepthStencilStateMTL.h"
 #include "Utils.h"
 #include "ProgramMTL.h"
 
@@ -78,6 +79,11 @@ RenderPipelineMTL::RenderPipelineMTL(id<MTLDevice> mtlDevice, const RenderPipeli
     
     setShaderModules(descriptor);
     setVertexLayout(_mtlRenderPipelineDescriptor, descriptor);
+    
+    // Depth stencil state.
+    auto depthStencilState = descriptor.depthStencilState;
+    if (depthStencilState)
+        _mtlDepthStencilState = static_cast<DepthStencilStateMTL*>(depthStencilState)->getMTLDepthStencilState();
     
     auto blendState = static_cast<BlendStateMTL*>(descriptor.blendState);
     if (blendState)

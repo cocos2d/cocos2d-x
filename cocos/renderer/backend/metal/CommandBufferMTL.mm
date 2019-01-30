@@ -302,26 +302,15 @@ void CommandBufferMTL::afterDraw()
     CC_SAFE_RELEASE_NULL(_programState);
 }
 
-void CommandBufferMTL::setDepthStencilState(DepthStencilState* depthStencilState)
-{
-    if (depthStencilState)
-    {
-        _mtlDepthStencilState = static_cast<DepthStencilStateMTL*>(depthStencilState)->getMTLDepthStencilState();
-    }
-    else
-    {
-        _mtlDepthStencilState = nil;
-    }
-}
-
 void CommandBufferMTL::prepareDrawing() const
 {
     setUniformBuffer();
     setTextures();
     
-    if (_mtlDepthStencilState)
+    auto mtlDepthStencilState = _renderPipelineMTL->getMTLDepthStencilState();
+    if (mtlDepthStencilState)
     {
-        [_mtlRenderEncoder setDepthStencilState:_mtlDepthStencilState];
+        [_mtlRenderEncoder setDepthStencilState:mtlDepthStencilState];
         [_mtlRenderEncoder setStencilFrontReferenceValue:_stencilReferenceValueFront
                                       backReferenceValue:_stencilReferenceValueBack];
     }

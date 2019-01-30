@@ -29,8 +29,8 @@ public:
     virtual void endFrame() override;
     
     virtual void setLineWidth(float lineWidth) override;
+    
     virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) override;
-    virtual void setDepthStencilState(DepthStencilState* depthStencilState) override;
     
 private:
     void prepareDrawing() const;
@@ -45,7 +45,6 @@ private:
     id<MTLCommandQueue> _mtlCommandQueue = nil;
     id<MTLRenderCommandEncoder> _mtlRenderEncoder = nil;
     id<MTLBuffer> _mtlIndexBuffer = nil;
-    id<MTLDepthStencilState> _mtlDepthStencilState = nil;
     
     DeviceMTL* _deviceMTL = nullptr;
     RenderPipelineMTL* _renderPipelineMTL = nullptr;

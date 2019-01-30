@@ -15,6 +15,7 @@ class BlendState;
 struct RenderPipelineDescriptor
 {
     ProgramState* programState = nullptr;
+    DepthStencilState* depthStencilState = nullptr;
     BlendState* blendState = nullptr;
     std::vector<VertexLayout> vertexLayouts;
     TextureFormat colorAttachmentsFormat[MAX_COLOR_ATTCHMENT] = { TextureFormat::SYSTEM_DEFAULT };
