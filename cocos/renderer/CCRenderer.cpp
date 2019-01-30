@@ -44,6 +44,7 @@
 #include "base/CCEventType.h"
 #include "2d/CCCamera.h"
 #include "2d/CCScene.h"
+#include "xxhash.h"
 
 #include "renderer/backend/Backend.h"
 
@@ -168,6 +169,8 @@ Renderer::Renderer()
 
     // for the batched TriangleCommand
     _triBatchesToDraw = (TriBatchToDraw*) malloc(sizeof(_triBatchesToDraw[0]) * _triBatchesToDrawCapacity);
+    
+    _renderPipelineCache.reserve(100);
 }
 
 Renderer::~Renderer()
@@ -182,6 +185,12 @@ Renderer::~Renderer()
 #endif
     
     CC_SAFE_RELEASE(_commandBuffer);
+    
+//    for (auto pipeline :_renderPipelineCache)
+//    {
+//        pipeline.second->release();
+//    }
+//    _renderPipelineCache.clear();
 }
 
 void Renderer::init()
@@ -748,6 +757,59 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 //    return ret;
     // todo: minggo
     return true;
+}
+
+backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipelineDescriptor& descriptor)
+{
+    struct
+    {
+        void* program;
+        void* blendState;
+        unsigned int vertexLayoutInfo[32];
+        backend::TextureFormat colorAttachment;
+        backend::TextureFormat depthAttachment;
+        backend::TextureFormat stencilAttachment;
+    }hashMe;
+    
+    memset(&hashMe, 0, sizeof(hashMe));
+    hashMe.program = descriptor.programState->getProgram();
+    hashMe.blendState = descriptor.blendState;
+    hashMe.colorAttachment = descriptor.colorAttachmentsFormat[0];
+    hashMe.depthAttachment = descriptor.depthAttachmentFormat;
+    hashMe.stencilAttachment = descriptor.stencilAttachmentFormat;
+    int index = 0;
+    for(const auto& vertexLayout : descriptor.vertexLayouts)
+    {
+        if (!vertexLayout.isValid())
+            continue;
+        
+        const auto& attributes = vertexLayout.getAttributes();
+        for (const auto& attribute : attributes)
+        {
+            /*
+             stepFunction:1     stride:15       offest:10       format:5        needNormalized:1
+                bit31           bit30 ~ bit16   bit15 ~ bit6    bit5 ~ bit1     bit0
+             */
+            hashMe.vertexLayoutInfo[index++] =
+                ((unsigned int)vertexLayout.getVertexStepMode() & 0x1) << 31 |
+                ((unsigned int)(vertexLayout.getStride() & 0x7FFF)) << 16 |
+                ((unsigned int)attribute.offset & 0x3FF) << 6 |
+                ((unsigned int)attribute.format & 0x1F) << 1 |
+                ((unsigned int)attribute.needToBeNormallized & 0x1);
+        }
+    }
+    
+    unsigned int hash = XXH32((const void*)&hashMe, sizeof(hashMe), 0);
+    auto iter = _renderPipelineCache.find(hash);
+    if (_renderPipelineCache.end() == iter)
+    {
+        auto renderPipeline = backend::Device::getInstance()->newRenderPipeline(descriptor);
+        _renderPipelineCache.emplace(hash, renderPipeline);
+
+        return renderPipeline;
+    }
+    else
+        return iter->second;
 }
 
 void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, const backend::RenderPassDescriptor& renderPassDescriptor)

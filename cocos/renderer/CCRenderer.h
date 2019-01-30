@@ -50,6 +50,7 @@ namespace backend
     class CommandBuffer;
     class RenderPipeline;
     class RenderPass;
+    class RenderPipelineDescriptor;
 }
 
 class EventListenerCustom;
@@ -300,6 +301,9 @@ protected:
     
     void setRenderPipeline(const PipelineDescriptor&, const backend::RenderPassDescriptor&);
 
+    backend::RenderPipeline* getRenderPipeline(const backend::RenderPipelineDescriptor& descriptor);
+
+    std::unordered_map<unsigned int, backend::RenderPipeline*> _renderPipelineCache;
 
     Viewport _viewport;
     CullMode _cullMode = CullMode::NONE;

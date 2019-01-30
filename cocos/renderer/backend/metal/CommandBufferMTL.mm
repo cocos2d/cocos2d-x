@@ -6,6 +6,7 @@
 #include "Utils.h"
 #include "../Macros.h"
 #include "BufferManager.h"
+#include "DepthStencilStateMTL.h"
 
 CC_BACKEND_BEGIN
 
@@ -173,13 +174,35 @@ void CommandBufferMTL::beginFrame()
     BufferManager::beginFrame();
 }
 
+id<MTLRenderCommandEncoder> CommandBufferMTL::getRenderCommandEncoder(const RenderPassDescriptor& renderPassDescriptor)
+{
+    if(_mtlRenderEncoder != nil && _prevRenderPassDescriptor == renderPassDescriptor)
+    {
+        return _mtlRenderEncoder;
+    }
+    else
+    {
+        _prevRenderPassDescriptor = renderPassDescriptor;
+    }
+    
+    if(_mtlRenderEncoder != nil)
+    {
+        [_mtlRenderEncoder endEncoding];
+        [_mtlRenderEncoder release];
+        _mtlRenderEncoder = nil;
+    }
+
+    auto mtlDescriptor = toMTLRenderPassDescriptor(renderPassDescriptor);
+    _renderTargetHeight = (unsigned int)mtlDescriptor.colorAttachments[0].texture.height;
+    id<MTLRenderCommandEncoder> mtlRenderEncoder = [_mtlCommandBuffer renderCommandEncoderWithDescriptor:mtlDescriptor];
+    [mtlRenderEncoder retain];
+    
+    return mtlRenderEncoder;
+}
+
 void CommandBufferMTL::beginRenderPass(const RenderPassDescriptor& descriptor)
 {
-    auto mtlDescriptor = toMTLRenderPassDescriptor(descriptor);
-    _renderTargetHeight = (unsigned int)mtlDescriptor.colorAttachments[0].texture.height;
-    _mtlRenderEncoder = [_mtlCommandBuffer renderCommandEncoderWithDescriptor:mtlDescriptor];
-
-    [_mtlRenderEncoder retain];
+    _mtlRenderEncoder = getRenderCommandEncoder(descriptor);
 //    [_mtlRenderEncoder setFrontFacingWinding:MTLWindingCounterClockwise];
 }
 
@@ -260,12 +283,14 @@ void CommandBufferMTL::drawElements(PrimitiveType primitiveType, IndexFormat ind
 void CommandBufferMTL::endRenderPass()
 {
     afterDraw();
-    [_mtlRenderEncoder endEncoding];
-    [_mtlRenderEncoder release];
 }
 
 void CommandBufferMTL::endFrame()
 {
+    [_mtlRenderEncoder endEncoding];
+    [_mtlRenderEncoder release];
+    _mtlRenderEncoder = nil;
+    
     [_mtlCommandBuffer presentDrawable:DeviceMTL::getCurrentDrawable()];
 
     [_mtlCommandBuffer addCompletedHandler:^(id<MTLCommandBuffer> commandBuffer) {

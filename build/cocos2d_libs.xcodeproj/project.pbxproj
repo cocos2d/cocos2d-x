@@ -2148,6 +2148,8 @@
 		ED75D42221E303160052B87E /* ccConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = ED75D41F21E3030E0052B87E /* ccConstants.h */; };
 		ED93A75921EDBCBA00170050 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED93A75821EDBCBA00170050 /* Program.cpp */; };
 		ED93A75A21EDBCBA00170050 /* Program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED93A75821EDBCBA00170050 /* Program.cpp */; };
+		ED989BAF21FF43CC000E47AB /* RenderPassDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED989BAE21FF43CB000E47AB /* RenderPassDescriptor.cpp */; };
+		ED989BB021FF43CC000E47AB /* RenderPassDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED989BAE21FF43CB000E47AB /* RenderPassDescriptor.cpp */; };
 		ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9518599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
 		ED9C6A9618599AD8000A5232 /* CCNodeGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */; };
@@ -3454,6 +3456,7 @@
 		ED682BC4213F6CBE001BF6CB /* libuv_a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv_a.a; path = ../external/uv/prebuilt/tvos/libuv_a.a; sourceTree = "<group>"; };
 		ED75D41F21E3030E0052B87E /* ccConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ccConstants.h; path = ../base/ccConstants.h; sourceTree = "<group>"; };
 		ED93A75821EDBCBA00170050 /* Program.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Program.cpp; sourceTree = "<group>"; };
+		ED989BAE21FF43CB000E47AB /* RenderPassDescriptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RenderPassDescriptor.cpp; sourceTree = "<group>"; };
 		ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCNodeGrid.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeGrid.h; sourceTree = "<group>"; };
 		EDAF7C6D21F1796F00E070B2 /* CCTextureUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTextureUtils.h; path = ../CCTextureUtils.h; sourceTree = "<group>"; };
@@ -5568,6 +5571,7 @@
 				ED28C202219E629B0078D854 /* Macros.h */,
 				460D4CF321ABD0C60075726E /* metal */,
 				ED28C1FB219E629B0078D854 /* RenderPassDescriptor.h */,
+				ED989BAE21FF43CB000E47AB /* RenderPassDescriptor.cpp */,
 				ED28C1EF219E629B0078D854 /* RenderPipeline.h */,
 				ED28C1F1219E629B0078D854 /* RenderPipelineDescriptor.h */,
 				ED28C1FF219E629B0078D854 /* ShaderModule.cpp */,
@@ -7767,6 +7771,7 @@
 				1A570225180BCC1A0088DEC7 /* CCParticleExamples.cpp in Sources */,
 				46AF3A8821F6B02400D5AFCD /* CCOBB.cpp in Sources */,
 				4631CB2B21AFD9F90000D408 /* UIVideoPlayer-android.cpp in Sources */,
+				ED989BAF21FF43CC000E47AB /* RenderPassDescriptor.cpp in Sources */,
 				1A570229180BCC1A0088DEC7 /* CCParticleSystem.cpp in Sources */,
 				4631CB1321AFD9F90000D408 /* UIVideoPlayer-ios.mm in Sources */,
 				1A57022D180BCC1A0088DEC7 /* CCParticleSystemQuad.cpp in Sources */,
@@ -8486,6 +8491,7 @@
 				50ABBEB61925AB6F00A911A9 /* CCUserDefault-android.cpp in Sources */,
 				1A57034C180BD09B0088DEC7 /* tinyxml2.cpp in Sources */,
 				50ABBDB61925AB4100A911A9 /* CCTexture2D.cpp in Sources */,
+				ED989BB021FF43CC000E47AB /* RenderPassDescriptor.cpp in Sources */,
 				EDC78C7D21CA19FC00E1863C /* ProjectNodeReader.cpp in Sources */,
 				1A570355180BD0B00088DEC7 /* ioapi.cpp in Sources */,
 				4631CB3021AFD9F90000D408 /* UIText.cpp in Sources */,

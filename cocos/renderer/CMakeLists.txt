@@ -87,6 +87,7 @@ set(COCOS_RENDERER_SRC
     renderer/backend/Program.cpp
     renderer/backend/ProgramState.cpp
     renderer/backend/ShaderCache.cpp
+    renderer/backend/RenderPassDescriptor.cpp
     )
 
 if(ANDROID OR WINDOWS OR LINUX) 

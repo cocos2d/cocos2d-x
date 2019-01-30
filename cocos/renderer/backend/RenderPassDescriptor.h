@@ -12,6 +12,9 @@ class Texture;
 
 struct RenderPassDescriptor
 {
+    RenderPassDescriptor& operator=(const RenderPassDescriptor& descriptor);
+    bool operator==(const RenderPassDescriptor& descriptor);
+
     float clearDepthValue = 0.f;
     float clearStencilValue = 0.f;
     std::array<float, 4> clearColorValue {{0.f, 0.f, 0.f, 0.f}}; // double-braces required in C++11
