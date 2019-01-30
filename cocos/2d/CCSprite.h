@@ -47,6 +47,7 @@ class Rect;
 class Size;
 class Texture2D;
 struct transformValues_;
+class EventListenerCustom;
 
 #ifdef SPRITE_RENDER_IN_SUBPIXEL
 #undef SPRITE_RENDER_IN_SUBPIXEL
@@ -618,23 +619,22 @@ CC_CONSTRUCTOR_ACCESS :
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
     
 protected:
-
     virtual void updateColor() override;
     virtual void setTextureCoords(const Rect& rect);
     virtual void setTextureCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad);
     virtual void setVertexCoords(const Rect& rect, V3F_C4B_T2F_Quad* outQuad);
-    void populateTriangle(int quadIndex, const V3F_C4B_T2F_Quad& quad);
     virtual void updateBlendFunc();
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);
+    virtual void flipX();
+    virtual void flipY();
+    virtual void updateProgramState();
 
     void updatePoly();
     void updateStretchFactor();
-
-    virtual void flipX();
-    virtual void flipY();
-    
-    virtual void updateProgramState();
+    void populateTriangle(int quadIndex, const V3F_C4B_T2F_Quad& quad);
+    void setMVPMatrixUniform();
+    void onProjectionChanged(EventCustom* event);
 
     //
     // Data used when the sprite is rendered using a SpriteSheet
@@ -702,6 +702,8 @@ protected:
     int _fileType;
 
     bool _stretchEnabled;
+
+    EventListenerCustom* _projectionChangedEvent = nullptr;
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);
