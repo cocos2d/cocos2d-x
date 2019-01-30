@@ -68,16 +68,14 @@ namespace
         return ret;
     }
     
-    MTLStencilDescriptor* toMTLStencilDescriptor(const StencilDescriptor& descriptor)
+    void setMTLStencilDescriptor(MTLStencilDescriptor* stencilDescriptor, const StencilDescriptor& descriptor)
     {
-        MTLStencilDescriptor* mtlDescriptor = [[MTLStencilDescriptor alloc] init];
-        mtlDescriptor.stencilFailureOperation = toMTLStencilOperation(descriptor.stencilFailureOperation);
-        mtlDescriptor.depthFailureOperation = toMTLStencilOperation(descriptor.depthFailureOperation);
-        mtlDescriptor.depthStencilPassOperation = toMTLStencilOperation(descriptor.depthStencilPassOperation);
-        mtlDescriptor.stencilCompareFunction = toMTLCompareFunction(descriptor.stencilCompareFunction);
-        mtlDescriptor.readMask = descriptor.readMask;
-        mtlDescriptor.writeMask = descriptor.writeMask;
-        return mtlDescriptor;
+        stencilDescriptor.stencilFailureOperation = toMTLStencilOperation(descriptor.stencilFailureOperation);
+        stencilDescriptor.depthFailureOperation = toMTLStencilOperation(descriptor.depthFailureOperation);
+        stencilDescriptor.depthStencilPassOperation = toMTLStencilOperation(descriptor.depthStencilPassOperation);
+        stencilDescriptor.stencilCompareFunction = toMTLCompareFunction(descriptor.stencilCompareFunction);
+        stencilDescriptor.readMask = descriptor.readMask;
+        stencilDescriptor.writeMask = descriptor.writeMask;
     }
 }
 
@@ -94,21 +92,14 @@ DepthStencilStateMTL::DepthStencilStateMTL(id<MTLDevice> mtlDevice, const DepthS
         mtlDescriptor.depthWriteEnabled = descriptor.depthWriteEnabled;
         mtlDescriptor.depthCompareFunction = toMTLCompareFunction(descriptor.depthCompareFunction);
     }
-    
-    MTLStencilDescriptor* frontFaceStencil = nil;
-    MTLStencilDescriptor* backFaceStencil = nil;
+  
     if (descriptor.stencilTestEnabled)
     {
-        frontFaceStencil = toMTLStencilDescriptor(descriptor.frontFaceStencil);
-        backFaceStencil = toMTLStencilDescriptor(descriptor.backFaceStencil);
-        
-        mtlDescriptor.frontFaceStencil = frontFaceStencil;
-        mtlDescriptor.backFaceStencil = backFaceStencil;
+        setMTLStencilDescriptor(mtlDescriptor.frontFaceStencil, descriptor.frontFaceStencil);
+        setMTLStencilDescriptor(mtlDescriptor.backFaceStencil, descriptor.backFaceStencil);
     }
     
     _mtlDepthStencilState = [mtlDevice newDepthStencilStateWithDescriptor:mtlDescriptor];
-    [frontFaceStencil release];
-    [backFaceStencil release];
     [mtlDescriptor release];
 }
 
