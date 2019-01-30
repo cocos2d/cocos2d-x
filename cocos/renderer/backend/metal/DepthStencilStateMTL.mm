@@ -95,13 +95,20 @@ DepthStencilStateMTL::DepthStencilStateMTL(id<MTLDevice> mtlDevice, const DepthS
         mtlDescriptor.depthCompareFunction = toMTLCompareFunction(descriptor.depthCompareFunction);
     }
     
+    MTLStencilDescriptor* frontFaceStencil = nil;
+    MTLStencilDescriptor* backFaceStencil = nil;
     if (descriptor.stencilTestEnabled)
     {
-        mtlDescriptor.frontFaceStencil = toMTLStencilDescriptor(descriptor.frontFaceStencil);
-        mtlDescriptor.backFaceStencil = toMTLStencilDescriptor(descriptor.backFaceStencil);
+        frontFaceStencil = toMTLStencilDescriptor(descriptor.frontFaceStencil);
+        backFaceStencil = toMTLStencilDescriptor(descriptor.backFaceStencil);
+        
+        mtlDescriptor.frontFaceStencil = frontFaceStencil;
+        mtlDescriptor.backFaceStencil = backFaceStencil;
     }
     
     _mtlDepthStencilState = [mtlDevice newDepthStencilStateWithDescriptor:mtlDescriptor];
+    [frontFaceStencil release];
+    [backFaceStencil release];
     [mtlDescriptor release];
 }
 
