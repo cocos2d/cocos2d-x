@@ -27,14 +27,11 @@
  - OGRE3D: http://www.ogre3d.org/
  - Qt3D: http://qt-project.org/
  ****************************************************************************/
-
 #include "renderer/CCMaterial.h"
 #include "renderer/CCTechnique.h"
 #include "renderer/CCPass.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCTexture2D.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramState.h"
 #include "base/CCProperties.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
@@ -76,12 +73,12 @@ Material* Material::createWithProperties(Properties* materialProperties)
     return nullptr;
 }
 
-Material* Material::createWithGLStateProgram(GLProgramState* programState)
+Material* Material::createWithProgramState(backend::ProgramState* programState)
 {
-    CCASSERT(programState, "Invalid GL Program State");
+    CCASSERT(programState, "Invalid Program State");
 
     auto mat = new (std::nothrow) Material();
-    if (mat && mat->initWithGLProgramState(programState))
+    if (mat && mat->initWithProgramState(programState))
     {
         mat->autorelease();
         return mat;
@@ -90,9 +87,9 @@ Material* Material::createWithGLStateProgram(GLProgramState* programState)
     return nullptr;
 }
 
-bool Material::initWithGLProgramState(cocos2d::GLProgramState *state)
+bool Material::initWithProgramState(backend::ProgramState *state)
 {
-    auto technique = Technique::createWithGLProgramState(this, state);
+    auto technique = Technique::createWithProgramState(this, state);
     if (technique) {
         _techniques.pushBack(technique);
 
@@ -119,6 +116,14 @@ bool Material::initWithFile(const std::string& validfilename)
 bool Material::initWithProperties(Properties* materialProperties)
 {
     return parseProperties(materialProperties);
+}
+
+void Material::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
+                    CustomCommand::PrimitiveType primitive, CustomCommand::IndexFormat indexFormat,
+                    unsigned int indexCount, const Mat4& modelView)
+{
+    for (const auto& pass: _currentTechnique->_passes)
+        pass->draw(globalZOrder, vertexBuffer, indexBuffer,primitive, indexFormat, indexCount, modelView);
 }
 
 void Material::setTarget(cocos2d::Node *target)
@@ -288,7 +293,8 @@ bool Material::parseSampler(GLProgramState* glProgramState, Properties* samplerP
 //        texture->setSamplerDescriptor(texParams);
     }
 
-    glProgramState->setUniformTexture(samplerProperties->getId(), texture);
+//TODO minggo
+//    glProgramState->setUniformTexture(samplerProperties->getId(), texture);
     return true;
 }
 
@@ -305,31 +311,32 @@ bool Material::parseShader(Pass* pass, Properties* shaderProperties)
 
     if (vertShader && fragShader)
     {
-        auto glProgramState = GLProgramState::getOrCreateWithShaders(vertShader, fragShader, compileTimeDefines);
-        pass->setGLProgramState(glProgramState);
+    //TODO minggo
+//        auto glProgramState = GLProgramState::getOrCreateWithShaders(vertShader, fragShader, compileTimeDefines);
+//        pass->setGLProgramState(glProgramState);
 
         // Parse uniforms only if the GLProgramState was created
-        auto property = shaderProperties->getNextProperty();
-        while (property)
-        {
-            if (isValidUniform(property))
-            {
-                parseUniform(glProgramState, shaderProperties, property);
-            }
-
-            property = shaderProperties->getNextProperty();
-        }
-
-        auto space = shaderProperties->getNextNamespace();
-        while (space)
-        {
-            const char* name = space->getNamespace();
-            if (strcmp(name, "sampler") == 0)
-            {
-                parseSampler(glProgramState, space);
-            }
-            space = shaderProperties->getNextNamespace();
-        }
+//        auto property = shaderProperties->getNextProperty();
+//        while (property)
+//        {
+//            if (isValidUniform(property))
+//            {
+//                parseUniform(glProgramState, shaderProperties, property);
+//            }
+//
+//            property = shaderProperties->getNextProperty();
+//        }
+//
+//        auto space = shaderProperties->getNextNamespace();
+//        while (space)
+//        {
+//            const char* name = space->getNamespace();
+//            if (strcmp(name, "sampler") == 0)
+//            {
+//                parseSampler(glProgramState, space);
+//            }
+//            space = shaderProperties->getNextNamespace();
+//        }
     }
 
     return true;
@@ -339,56 +346,57 @@ bool Material::parseUniform(GLProgramState* programState, Properties* properties
 {
     bool ret = true;
 
-    auto type = properties->getType(uniformName);
-
-    switch (type) {
-        case Properties::Type::NUMBER:
-        {
-            auto f = properties->getFloat(uniformName);
-            programState->setUniformFloat(uniformName, f);
-            break;
-        }
-
-        case Properties::Type::VECTOR2:
-        {
-            Vec2 v2;
-            properties->getVec2(uniformName, &v2);
-            programState->setUniformVec2(uniformName, v2);
-            break;
-        }
-
-        case Properties::Type::VECTOR3:
-        {
-            Vec3 v3;
-            properties->getVec3(uniformName, &v3);
-            programState->setUniformVec3(uniformName, v3);
-            break;
-        }
-
-        case Properties::Type::VECTOR4:
-        {
-            Vec4 v4;
-            properties->getVec4(uniformName, &v4);
-            programState->setUniformVec4(uniformName, v4);
-            break;
-        }
-
-        case Properties::Type::MATRIX:
-        {
-            Mat4 m4;
-            properties->getMat4(uniformName, &m4);
-            programState->setUniformMat4(uniformName, m4);
-            break;
-        }
-
-        case Properties::Type::STRING:
-        default:
-        {
-            // Assume this is a parameter auto-binding.
-            programState->setParameterAutoBinding(uniformName, properties->getString());
-            break;
-        }
-    }
+//TODO minggo
+//    auto type = properties->getType(uniformName);
+//
+//    switch (type) {
+//        case Properties::Type::NUMBER:
+//        {
+//            auto f = properties->getFloat(uniformName);
+//            programState->setUniformFloat(uniformName, f);
+//            break;
+//        }
+//
+//        case Properties::Type::VECTOR2:
+//        {
+//            Vec2 v2;
+//            properties->getVec2(uniformName, &v2);
+//            programState->setUniformVec2(uniformName, v2);
+//            break;
+//        }
+//
+//        case Properties::Type::VECTOR3:
+//        {
+//            Vec3 v3;
+//            properties->getVec3(uniformName, &v3);
+//            programState->setUniformVec3(uniformName, v3);
+//            break;
+//        }
+//
+//        case Properties::Type::VECTOR4:
+//        {
+//            Vec4 v4;
+//            properties->getVec4(uniformName, &v4);
+//            programState->setUniformVec4(uniformName, v4);
+//            break;
+//        }
+//
+//        case Properties::Type::MATRIX:
+//        {
+//            Mat4 m4;
+//            properties->getMat4(uniformName, &m4);
+//            programState->setUniformMat4(uniformName, m4);
+//            break;
+//        }
+//
+//        case Properties::Type::STRING:
+//        default:
+//        {
+//            // Assume this is a parameter auto-binding.
+//            programState->setParameterAutoBinding(uniformName, properties->getString());
+//            break;
+//        }
+//    }
     return ret;
 }
 

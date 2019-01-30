@@ -2,25 +2,38 @@
 #include "renderer/backend/ProgramCache.h"
 #include "renderer/backend/Program.h"
 #include "renderer/backend/Texture.h"
+#include "renderer/backend/Types.h"
 
 CC_BACKEND_BEGIN
 
-UniformBuffer::UniformBuffer(backend::UniformInfo _uniformInfo)
+UniformBuffer::UniformBuffer(const backend::UniformInfo &_uniformInfo)
 : uniformInfo(_uniformInfo)
-, dirty(false)
 {
-    if(uniformInfo.bufferSize)
+    if(uniformInfo.bufferSize > 0)
     {
-        data = malloc(uniformInfo.bufferSize);
-        if (data)
-            memset(data, 0, uniformInfo.bufferSize);
+        data.resize(uniformInfo.bufferSize);
+        std::fill(data.begin(), data.end(), 0);
     }
 }
 
 UniformBuffer::~UniformBuffer()
 {
-    if (data)
-        free(data);
+}
+
+UniformBuffer::UniformBuffer(const UniformBuffer &other):
+    uniformInfo(other.uniformInfo), data(other.data)
+{
+}
+
+UniformBuffer& UniformBuffer::operator=(const UniformBuffer& rhs)
+{
+    if (this != &rhs)
+    {
+        uniformInfo = rhs.uniformInfo;
+        data = rhs.data;
+    }
+
+    return *this;
 }
 
 UniformBuffer& UniformBuffer::operator=(UniformBuffer&& rhs)
@@ -28,8 +41,7 @@ UniformBuffer& UniformBuffer::operator=(UniformBuffer&& rhs)
     if (this != &rhs)
     {
         uniformInfo = rhs.uniformInfo;
-        data = rhs.data;
-        rhs.data = nullptr;
+        data = std::move(rhs.data);
     }
 
     return *this;
@@ -38,6 +50,13 @@ UniformBuffer& UniformBuffer::operator=(UniformBuffer&& rhs)
 TextureInfo::TextureInfo(const std::vector<uint32_t>& _slots, const std::vector<backend::Texture*> _textures)
 : slot(_slots)
 , textures(_textures)
+{
+    retainTextures();
+}
+
+TextureInfo::TextureInfo(const TextureInfo &other)
+    : slot(other.slot)
+    , textures(other.textures)
 {
     retainTextures();
 }
@@ -98,6 +117,10 @@ ProgramState::ProgramState(const std::string& vertexShader, const std::string& f
     }
 }
 
+ProgramState::ProgramState()
+{
+}
+
 ProgramState::~ProgramState()
 {
     CC_SAFE_RELEASE(_program);
@@ -108,13 +131,28 @@ ProgramState::~ProgramState()
     _fragmentTextureInfos.clear();
 }
 
+ProgramState *ProgramState::clone() const
+{
+    ProgramState *cp = new ProgramState();
+    cp->_program = _program;
+    cp->_vertexUniformInfos = _vertexUniformInfos;
+    cp->_fragmentUniformInfos = _fragmentUniformInfos;
+    cp->_vertexTextureInfos = _vertexTextureInfos;
+    cp->_fragmentTextureInfos = _fragmentTextureInfos;
+
+    CC_SAFE_RETAIN(cp->_program);
+
+    return cp;
+}
+
+
 void ProgramState::createVertexUniformBuffer()
 {
     const auto& vertexUniformInfos = _program->getVertexUniformInfos();
     for(const auto& uniformInfo : vertexUniformInfos)
     {
         if(uniformInfo.second.bufferSize)
-            _vertexUniformInfos[uniformInfo.second.location] = uniformInfo.second;
+            _vertexUniformInfos[uniformInfo.second.location] = uniformInfo.second; 
     }
 }
 
@@ -157,19 +195,14 @@ void ProgramState::setVertexUniform(int location, const void* data, uint32_t siz
     if(location < 0)
         return;
     
-    assert(size <= _vertexUniformInfos[location].uniformInfo.bufferSize);
-    memcpy(_vertexUniformInfos[location].data, data, size);
-    _vertexUniformInfos[location].dirty = true;
+    _vertexUniformInfos[location].data.assign((char*)data, (char*)data + size);
 }
 
 void ProgramState::setFragmentUniform(int location, const void* data, uint32_t size)
 {
     if(location < 0)
         return;
-    
-    assert(size <= _fragmentUniformInfos[location].uniformInfo.bufferSize);
-    memcpy(_fragmentUniformInfos[location].data, data, size);
-    _fragmentUniformInfos[location].dirty = true;
+    _fragmentUniformInfos[location].data.assign((char *)data, (char *)data + size);
 }
 
 void ProgramState::setTexture(const backend::UniformLocation& uniformLocation, uint32_t slot, backend::Texture* texture)

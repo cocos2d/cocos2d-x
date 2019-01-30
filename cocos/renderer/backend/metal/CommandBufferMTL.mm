@@ -11,6 +11,14 @@ CC_BACKEND_BEGIN
 
 namespace
 {
+    MTLWinding toMTLWinding(Winding winding)
+    {
+        if (Winding::CLOCK_WISE == winding)
+            return MTLWindingClockwise;
+        else
+            return MTLWindingCounterClockwise;
+    }
+
     MTLPrimitiveType toMTLPrimitive(PrimitiveType primitiveType)
     {
         MTLPrimitiveType ret = MTLPrimitiveTypeTriangle;
@@ -200,6 +208,11 @@ void CommandBufferMTL::setCullMode(CullMode mode)
     [_mtlRenderEncoder setCullMode:toMTLCullMode(mode)];
 }
 
+void CommandBufferMTL::setWinding(Winding winding)
+{
+    [_mtlRenderEncoder setFrontFacingWinding:toMTLWinding(winding)];
+}
+
 void CommandBufferMTL::setVertexBuffer(unsigned int index, Buffer* buffer)
 {
     // Vertex buffer is bound in index 0.
@@ -363,7 +376,7 @@ unsigned int CommandBufferMTL::fillUniformBuffer(uint8_t* buffer, const std::vec
     for(const auto& iter : unifornInfo)
     {
         const auto& bindUniformInfo = iter.uniformInfo;
-        memcpy(buffer + bindUniformInfo.location, iter.data, bindUniformInfo.bufferSize);
+        memcpy(buffer + bindUniformInfo.location, iter.data.data(), bindUniformInfo.bufferSize);
         offset += bindUniformInfo.bufferSize;
     }
     return offset;

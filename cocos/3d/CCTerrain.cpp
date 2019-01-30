@@ -386,7 +386,7 @@ float Terrain::getHeight(const Vec2& pos, Vec3* normal) const
 float Terrain::getImageHeight(int pixel_x,int pixel_y) const
 {
     int byte_stride =1;
-    switch (_heightMapImage->getRenderFormat())
+    switch (_heightMapImage->getPixelFormat())
     {
     case Texture2D::PixelFormat::BGRA8888:
         byte_stride = 4;

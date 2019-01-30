@@ -26,7 +26,9 @@
 #include <unordered_map>
 
 #include "base/CCRef.h"
-#include "renderer/CCGLProgramState.h"
+#include "renderer/backend/ProgramState.h"
+#include "renderer/backend/Types.h"
+#include "renderer/CCPass.h"
 
 NS_CC_BEGIN
 
@@ -70,17 +72,17 @@ public:
      * 
      * @return A VertexAttribBinding for the requested parameters.
      */
-    static VertexAttribBinding* create(MeshIndexData* meshIndexData, GLProgramState* glProgramState);
+    static VertexAttribBinding* create(MeshIndexData* meshIndexData, Pass *pass);
 
     /**
      * Binds this vertex array object.
      */
-    void bind();
+    //void bind(backend::VertexLayout &layout);
 
     /**
      * Unbinds this vertex array object.
      */
-    void unbind();
+    //void unbind();
 
     /**
      * Returns the vertex attrib flags
@@ -104,25 +106,23 @@ private:
      */
     VertexAttribBinding& operator=(const VertexAttribBinding&);
     
-    bool init(MeshIndexData* meshIndexData, GLProgramState* glProgramState);
-    void setVertexAttribPointer(const std::string& name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid* pointer);
-    VertexAttribValue* getVertexAttribValue(const std::string &name);
+    bool init(MeshIndexData* meshIndexData, Pass *pass);
+    void setVertexAttribPointer(const std::string& name, backend::VertexFormat type, GLboolean normalized, int offset);
+    backend::AttributeBindInfo* getVertexAttribValue(const std::string &name);
     void parseAttributes();
-    void enableVertexAttributes(uint32_t flags) const;
+    //void enableVertexAttributes(uint32_t flags) const;
 
 
     GLuint _handle;
 
     MeshIndexData* _meshIndexData;
-    GLProgramState* _glProgramState;
+    backend::ProgramState* _programState;
+    backend::VertexLayout* _vertexLayout; //weak reference
 
-    std::unordered_map<std::string, VertexAttribValue> _attributes;
+    std::unordered_map<std::string, backend::AttributeBindInfo> _attributes;
     uint32_t _vertexAttribsFlags;
 };
 
-/// @cond
-extern std::string CC_DLL s_attributeNames[];//attribute names array
-/// @endcond
 
 NS_CC_END
 

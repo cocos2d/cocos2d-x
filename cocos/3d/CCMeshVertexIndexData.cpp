@@ -41,6 +41,8 @@
 #include "base/CCEventType.h"
 #include "base/CCDirector.h"
 
+#include "renderer/backend/Buffer.h"
+#include "renderer/backend/Device.h"
 
 using namespace std;
 
@@ -48,7 +50,7 @@ NS_CC_BEGIN
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-MeshIndexData* MeshIndexData::create(const std::string& id, MeshVertexData* vertexData, IndexBuffer* indexbuffer, const AABB& aabb)
+MeshIndexData* MeshIndexData::create(const std::string& id, MeshVertexData* vertexData, backend::Buffer* indexbuffer, const AABB& aabb)
 {
     auto meshindex = new (std::nothrow) MeshIndexData();
     
@@ -62,18 +64,11 @@ MeshIndexData* MeshIndexData::create(const std::string& id, MeshVertexData* vert
     return meshindex;
 }
 
-const VertexBuffer* MeshIndexData::getVertexBuffer() const
+backend::Buffer* MeshIndexData::getVertexBuffer() const
 {
     return _vertexData->getVertexBuffer();
 }
 
-MeshIndexData::MeshIndexData()
-: _indexBuffer(nullptr)
-, _vertexData(nullptr)
-, _primitiveType(GL_TRIANGLES)
-{
-    
-}
 MeshIndexData::~MeshIndexData()
 {
     CC_SAFE_RELEASE(_indexBuffer);
@@ -83,30 +78,32 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
 {
     auto vertexdata = new (std::nothrow) MeshVertexData();
     int pervertexsize = meshdata.getPerVertexSize();
-    vertexdata->_vertexBuffer = VertexBuffer::create(pervertexsize, (int)(meshdata.vertex.size() / (pervertexsize / 4)));
-    vertexdata->_vertexData = VertexData::create();
-    CC_SAFE_RETAIN(vertexdata->_vertexData);
-    CC_SAFE_RETAIN(vertexdata->_vertexBuffer);
+    vertexdata->_vertexBuffer = backend::Device::getInstance()->newBuffer(meshdata.vertex.size() * sizeof(meshdata.vertex[0]), backend::BufferType::VERTEX, backend::BufferUsage::STATIC);
+    //CC_SAFE_RETAIN(vertexdata->_vertexBuffer);
     
     int offset = 0;
-    for (const auto& it : meshdata.attribs) {
-        vertexdata->_vertexData->setStream(vertexdata->_vertexBuffer, VertexStreamAttribute(offset, it.vertexAttrib, it.type, it.size));
-        offset += it.attribSizeBytes;
-    }
-    
+    //TODO arnold set layout
+    //for (int i = 0; i < meshdata.attribs.size(); i ++) {
+    //    auto& it = meshdata.attribs[i];
+    //    auto attr = VertexStreamAttribute(offset, it.vertexAttrib, it.type);
+    //    offset += it.getAttribSizeBytes();
+    //}
+    vertexdata->_sizePerVertex = meshdata.getPerVertexSize();
+
     vertexdata->_attribs = meshdata.attribs;
     
     if(vertexdata->_vertexBuffer)
     {
-        vertexdata->_vertexBuffer->updateVertices((void*)&meshdata.vertex[0], (int)meshdata.vertex.size() * 4 / vertexdata->_vertexBuffer->getSizePerVertex(), 0);
+        vertexdata->_vertexBuffer->updateData((void*)&meshdata.vertex[0], meshdata.vertex.size() * sizeof(meshdata.vertex[0]));
     }
     
     bool needCalcAABB = (meshdata.subMeshAABB.size() != meshdata.subMeshIndices.size());
     for (size_t i = 0, size = meshdata.subMeshIndices.size(); i < size; ++i) {
 
         auto& index = meshdata.subMeshIndices[i];
-        auto indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, (int)(index.size()));
-        indexBuffer->updateIndices(&index[0], (int)index.size(), 0);
+        auto indexBuffer = backend::Device::getInstance()->newBuffer(index.size() * sizeof(index[0]), backend::BufferType::INDEX, backend::BufferUsage::STATIC);
+        indexBuffer->updateData((void*)index.data(), index.size() * sizeof(index[0]));
+        
         std::string id = (i < meshdata.subMeshIds.size() ? meshdata.subMeshIds[i] : "");
         MeshIndexData* indexdata = nullptr;
         if (needCalcAABB)
@@ -133,7 +130,7 @@ MeshIndexData* MeshVertexData::getMeshIndexDataById(const std::string& id) const
     return nullptr;
 }
 
-bool MeshVertexData::hasVertexAttrib(int attrib) const
+bool MeshVertexData::hasVertexAttrib(shaderinfos::VertexKey attrib) const
 {
     for (const auto& it : _attribs) {
         if (it.vertexAttrib == attrib)
@@ -142,16 +139,8 @@ bool MeshVertexData::hasVertexAttrib(int attrib) const
     return false;
 }
 
-MeshVertexData::MeshVertexData()
-: _vertexData(nullptr)
-, _vertexBuffer(nullptr)
-, _vertexCount(0)
-{
-    
-}
 MeshVertexData::~MeshVertexData()
 {
-    CC_SAFE_RELEASE(_vertexData);
     CC_SAFE_RELEASE(_vertexBuffer);
     _indexs.clear();
 }

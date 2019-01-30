@@ -32,6 +32,7 @@
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgram.h"
 
+#include "renderer/backend/Types.h"
 
 /**
  * @addtogroup renderer
@@ -39,6 +40,9 @@
  */
 
 NS_CC_BEGIN
+
+using CullMode = backend::CullMode;
+using Winding = backend::Winding;
 
 namespace backend
 {
@@ -226,6 +230,12 @@ public:
     /* Get stencil reference value set by `setStencilCompareFunction`. */
     unsigned int getStencilReferenceValue() const;
 
+    void setCullMode(CullMode mode) { _cullMode = mode; }
+    CullMode getCullMode() const { return _cullMode; }
+
+    void setWinding(Winding winding) { _winding = winding; }
+    Winding getWinding() const { return _winding; }
+
     // view port
     void setViewPort(int x, int y, unsigned int w, unsigned int h);
     const Viewport& getViewport() const { return _viewport; }
@@ -292,6 +302,8 @@ protected:
 
 
     Viewport _viewport;
+    CullMode _cullMode = CullMode::NONE;
+    Winding _winding = Winding::CLOCK_WISE;
 
     std::stack<int> _commandGroupStack;
     

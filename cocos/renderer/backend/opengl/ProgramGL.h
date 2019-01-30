@@ -8,6 +8,7 @@
 #include "../Program.h"
 
 #include <string>
+#include <vector>
 #include <unordered_map>
 
 CC_BACKEND_BEGIN
@@ -43,6 +44,8 @@ public:
 
     virtual int getMaxVertexLocation() const override;
     virtual int getMaxFragmentLocation() const override;
+
+    virtual std::vector<AttributeBindInfo> getActiveAttributes() const override;
 
 private:
     void compileProgram();

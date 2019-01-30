@@ -11,6 +11,14 @@ CC_BACKEND_BEGIN
 
 namespace
 {
+    GLenum toGLFrontFace(Winding winding)
+    {
+        if (Winding::CLOCK_WISE == winding)
+            return GL_CW;
+        else
+            return GL_CCW;
+    }
+
     GLenum toGLPrimitiveType(PrimitiveType primitiveType)
     {
         GLenum ret = GL_TRIANGLES;
@@ -229,6 +237,11 @@ void CommandBufferGL::setCullMode(CullMode mode)
     _cullMode = mode;
 }
 
+void CommandBufferGL::setWinding(Winding winding)
+{
+    glFrontFace(toGLFrontFace(winding));
+}
+
 void CommandBufferGL::setIndexBuffer(Buffer* buffer)
 {
     assert(buffer != nullptr);
@@ -355,16 +368,17 @@ void CommandBufferGL::setUniforms(ProgramGL* program) const
     if (_programState)
     {
         const auto& uniformInfos = _programState->getVertexUniformInfos();
+        int i = 0;
         for(const auto& iter : uniformInfos)
         {
             const auto& uniformInfo = iter.uniformInfo;
-            if(!iter.dirty)
+            if(uniformInfo.bufferSize <= 0)
                 continue;
             setUniform(uniformInfo.isArray,
                        uniformInfo.location,
                        uniformInfo.count,
                        uniformInfo.type,
-                       iter.data);
+                       (void*)iter.data.data());
         }
         
         const auto& textureInfo = _programState->getVertexTextureInfos();

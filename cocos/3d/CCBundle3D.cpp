@@ -250,13 +250,11 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
             auto mesh = shape.mesh;
             MeshData* meshdata = new (std::nothrow) MeshData();
             MeshVertexAttrib attrib;
-            attrib.size = 3;
-            attrib.type = GL_FLOAT;
+            attrib.type = parseGLDataType("GL_FLOAT", 3);
             
             if (mesh.positions.size())
             {
-                attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_POSITION;
-                attrib.attribSizeBytes = attrib.size * sizeof(float);
+                attrib.vertexAttrib = shaderinfos::VertexKey::VERTEX_ATTRIB_POSITION;
                 meshdata->attribs.push_back(attrib);
                 
             }
@@ -264,16 +262,14 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
             if (mesh.normals.size())
             {
                 hasnormal = true;
-                attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_NORMAL;
-                attrib.attribSizeBytes = attrib.size * sizeof(float);
+                attrib.vertexAttrib = shaderinfos::VertexKey::VERTEX_ATTRIB_NORMAL;
                 meshdata->attribs.push_back(attrib);
             }
             if (mesh.texcoords.size())
             {
                 hastex = true;
-                attrib.size = 2;
-                attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
-                attrib.attribSizeBytes = attrib.size * sizeof(float);
+                attrib.type = parseGLDataType("GL_FLOAT", 2);
+                attrib.vertexAttrib = shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD;
                 meshdata->attribs.push_back(attrib);
             }
             
@@ -421,9 +417,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
             }
             std::string type = _binaryReader.readString();
             attribute=_binaryReader.readString();
-            meshData->attribs[j].size = vSize;
-            meshData->attribs[j].attribSizeBytes = meshData->attribs[j].size * 4;
-            meshData->attribs[j].type =  parseGLType(type);
+            meshData->attribs[j].type =  parseGLDataType(type, vSize);
             meshData->attribs[j].vertexAttrib = parseGLProgramAttribute(attribute);
         }
         unsigned int vertexSizeInFloat = 0;
@@ -529,6 +523,7 @@ bool Bundle3D::loadMeshDatasBinary_0_1(MeshDatas& meshdatas)
     for (unsigned int i = 0; i < attribSize; ++i)
     {
         unsigned int vUsage, vSize;
+        shaderinfos::VertexKey usage;
         if (_binaryReader.read(&vUsage, 4, 1) != 1 || _binaryReader.read(&vSize, 4, 1) != 1)
         {
             CCLOG("warning: Failed to read meshdata: usage or size '%s'.", _path.c_str());
@@ -537,30 +532,32 @@ bool Bundle3D::loadMeshDatasBinary_0_1(MeshDatas& meshdatas)
         }
 
         MeshVertexAttrib meshVertexAttribute;
-        meshVertexAttribute.size = vSize;
-        meshVertexAttribute.attribSizeBytes = vSize * 4;
-        meshVertexAttribute.type = GL_FLOAT;
+        meshVertexAttribute.type = parseGLDataType("GL_FLOAT", vSize);
         if(vUsage == VERTEX_ATTRIB_NORMAL)
         {
-            vUsage= GLProgram::VERTEX_ATTRIB_NORMAL;
+            usage = shaderinfos::VertexKey::VERTEX_ATTRIB_NORMAL;
         }
         else if(vUsage == VERTEX_ATTRIB_BLEND_WEIGHT)
         {
-            vUsage= GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT;
+            usage = shaderinfos::VertexKey::VERTEX_ATTRIB_BLEND_WEIGHT;
         }
         else if(vUsage == VERTEX_ATTRIB_BLEND_INDEX)
         {
-            vUsage= GLProgram::VERTEX_ATTRIB_BLEND_INDEX;
+            usage = shaderinfos::VertexKey::VERTEX_ATTRIB_BLEND_INDEX;
         }
         else if(vUsage == VERTEX_ATTRIB_POSITION)
         {
-            vUsage= GLProgram::VERTEX_ATTRIB_POSITION;
+            usage = shaderinfos::VertexKey::VERTEX_ATTRIB_POSITION;
         }
         else if(vUsage == VERTEX_ATTRIB_TEX_COORD)
         {
-            vUsage= GLProgram::VERTEX_ATTRIB_TEX_COORD;
+            usage = shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD;
         }
-        meshVertexAttribute.vertexAttrib = vUsage;
+        else
+        {
+            CCASSERT(false, "invalidate usage value");
+        }
+        meshVertexAttribute.vertexAttrib = usage;
 
         meshdata->attribs.push_back(meshVertexAttribute);
     }
@@ -644,6 +641,7 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
     for (unsigned int i = 0; i < attribSize; ++i)
     {
         unsigned int vUsage, vSize;
+        shaderinfos::VertexKey usage = shaderinfos::VertexKey::VERTEX_ATTRIB_ERROR;
         if (_binaryReader.read(&vUsage, 4, 1) != 1 || _binaryReader.read(&vSize, 4, 1) != 1)
         {
             CCLOG("warning: Failed to read meshdata: usage or size '%s'.", _path.c_str());
@@ -652,30 +650,28 @@ bool Bundle3D::loadMeshDatasBinary_0_2(MeshDatas& meshdatas)
         }
 
         MeshVertexAttrib meshVertexAttribute;
-        meshVertexAttribute.size = vSize;
-        meshVertexAttribute.attribSizeBytes = vSize * 4;
-        meshVertexAttribute.type = GL_FLOAT;
+        meshVertexAttribute.type = parseGLDataType("GL_FLOAT", vSize);
         if(vUsage == VERTEX_ATTRIB_NORMAL)
         {
-            vUsage= GLProgram::VERTEX_ATTRIB_NORMAL;
+            usage = shaderinfos::VertexKey::VERTEX_ATTRIB_NORMAL;
         }
         else if(vUsage == VERTEX_ATTRIB_BLEND_WEIGHT)
         {
-            vUsage= GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT;
+            usage = shaderinfos::VertexKey::VERTEX_ATTRIB_BLEND_WEIGHT;
         }
         else if(vUsage == VERTEX_ATTRIB_BLEND_INDEX)
         {
-            vUsage= GLProgram::VERTEX_ATTRIB_BLEND_INDEX;
+            usage = shaderinfos::VertexKey::VERTEX_ATTRIB_BLEND_INDEX;
         }
         else if(vUsage == VERTEX_ATTRIB_POSITION)
         {
-            vUsage= GLProgram::VERTEX_ATTRIB_POSITION;
+            usage = shaderinfos::VertexKey::VERTEX_ATTRIB_POSITION;
         }
         else if(vUsage == VERTEX_ATTRIB_TEX_COORD)
         {
-            vUsage= GLProgram::VERTEX_ATTRIB_TEX_COORD;
+            usage = shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD;
         }
-        meshVertexAttribute.vertexAttrib = vUsage;
+        meshVertexAttribute.vertexAttrib = usage;
 
         meshdata->attribs.push_back(meshVertexAttribute);
     }
@@ -752,9 +748,7 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
             std::string type = mesh_vertex_attribute_val[TYPE].GetString();
             std::string attribute = mesh_vertex_attribute_val[ATTRIBUTE].GetString();
 
-            tempAttrib.size = size;
-            tempAttrib.attribSizeBytes = sizeof(float) * size;
-            tempAttrib.type = parseGLType(type);
+            tempAttrib.type = parseGLDataType(type, size);
             tempAttrib.vertexAttrib = parseGLProgramAttribute(attribute);
             meshData->attribs[i]=tempAttrib;
         }
@@ -949,8 +943,8 @@ bool Bundle3D::loadMaterialsBinary(MaterialDatas& materialdatas)
             float  uvdata[4];
             _binaryReader.read(&uvdata,sizeof(float), 4);
             textureData.type  = parseGLTextureType(_binaryReader.readString());
-            textureData.wrapS= parseGLType(_binaryReader.readString());
-            textureData.wrapT= parseGLType(_binaryReader.readString());
+            textureData.wrapS= parseGLAddressMode(_binaryReader.readString());
+            textureData.wrapT= parseGLAddressMode(_binaryReader.readString());
             materialData.textures.push_back(textureData);
         }
         materialdatas.materials.push_back(materialData);
@@ -1043,8 +1037,8 @@ bool  Bundle3D::loadMaterialsJson(MaterialDatas& materialdatas)
                 std::string filename = texture_val[FILENAME].GetString();
                 textureData.filename = filename.empty() ? filename : _modelPath + filename;
                 textureData.type  = parseGLTextureType(texture_val["type"].GetString());
-                textureData.wrapS = parseGLType(texture_val["wrapModeU"].GetString());
-                textureData.wrapT = parseGLType(texture_val["wrapModeV"].GetString());
+                textureData.wrapS = parseGLAddressMode(texture_val["wrapModeU"].GetString());
+                textureData.wrapT = parseGLAddressMode(texture_val["wrapModeV"].GetString());
                 materialData.textures.push_back(textureData);
             }
         }
@@ -1158,9 +1152,8 @@ bool Bundle3D::loadMeshDataJson_0_1(MeshDatas& meshdatas)
     {
         const rapidjson::Value& mesh_vertex_attribute_val = mesh_vertex_attribute[i];
 
-        meshdata->attribs[i].size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetUint();
-        meshdata->attribs[i].attribSizeBytes = meshdata->attribs[i].size * 4;
-        meshdata->attribs[i].type = parseGLType(mesh_vertex_attribute_val[TYPE].GetString());
+        int size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetUint();
+        meshdata->attribs[i].type = parseGLDataType(mesh_vertex_attribute_val[TYPE].GetString(), size);
         meshdata->attribs[i].vertexAttrib = parseGLProgramAttribute(mesh_vertex_attribute_val[ATTRIBUTE].GetString());
     }
 
@@ -1203,9 +1196,8 @@ bool Bundle3D::loadMeshDataJson_0_2(MeshDatas& meshdatas)
     {
         const rapidjson::Value& mesh_vertex_attribute_val = mesh_vertex_attribute[i];
 
-        meshdata->attribs[i].size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetUint();
-        meshdata->attribs[i].attribSizeBytes = meshdata->attribs[i].size * 4;
-        meshdata->attribs[i].type = parseGLType(mesh_vertex_attribute_val[TYPE].GetString());
+        auto size = mesh_vertex_attribute_val[ATTRIBUTESIZE].GetUint();
+        meshdata->attribs[i].type = parseGLDataType(mesh_vertex_attribute_val[TYPE].GetString(), size);
         meshdata->attribs[i].vertexAttrib = parseGLProgramAttribute(mesh_vertex_attribute_val[ATTRIBUTE].GetString());
     }
 
@@ -1980,37 +1972,127 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton, bool singleSprit
     return nodedata;
 }
 
-GLenum Bundle3D::parseGLType(const std::string& str)
+backend::VertexFormat Bundle3D::parseGLDataType(const std::string& str, int size)
 {
+    backend::VertexFormat ret = backend::VertexFormat::INT_R32;
     if (str == "GL_BYTE")
     {
-        return GL_BYTE;
+        switch (size)
+        {
+        case 4: 
+            return backend::VertexFormat::UBYTE_R8G8B8A8;
+        default:
+            CCLOGERROR("parseVertexType GL_BYTE x %d error", size);
+        }
     }
     else if(str == "GL_UNSIGNED_BYTE")
     {
-        return GL_UNSIGNED_BYTE;
+        switch (size)
+        {
+        case 4:
+            return backend::VertexFormat::UBYTE_R8G8B8A8;
+        default:
+            CCLOGERROR("parseVertexType GL_UNSIGNED_BYTE x %d error", size);
+        }
     }
     else if(str == "GL_SHORT")
     {
-        return GL_SHORT;
+        switch (size)
+        {
+        case 2:
+            return backend::VertexFormat::USHORT_R16G16;
+        case 4:
+            return backend::VertexFormat::USHORT_R16G16B16A16;
+        default:
+            CCLOGERROR("parseVertexType GL_SHORT x %d error", size);
+        }
     }
     else if(str == "GL_UNSIGNED_SHORT")
     {
-        return GL_UNSIGNED_SHORT;
+        switch (size)
+        {
+        case 2:
+            return backend::VertexFormat::USHORT_R16G16;
+        case 4:
+            return backend::VertexFormat::USHORT_R16G16B16A16;
+        default:
+            CCLOGERROR("parseVertexType GL_UNSIGNED_SHORT x %d error", size);
+        }
     }
     else if(str == "GL_INT")
     {
-        return GL_INT;
+        switch (size)
+        {
+        case 1:
+            return backend::VertexFormat::INT_R32;
+        case 2:
+            return backend::VertexFormat::INT_R32G32;
+        case 3:
+            return backend::VertexFormat::INT_R32G32B32;
+        case 4:
+            return backend::VertexFormat::INT_R32G32B32A32;
+        default:
+            CCLOGERROR("parseVertexType GL_INT x %d error", size);
+        }
     }
     else if (str == "GL_UNSIGNED_INT")
     {
-        return GL_UNSIGNED_INT;
+        switch (size)
+        {
+        case 1:
+            return backend::VertexFormat::INT_R32;
+        case 2:
+            return backend::VertexFormat::INT_R32G32;
+        case 3:
+            return backend::VertexFormat::INT_R32G32B32;
+        case 4:
+            return backend::VertexFormat::INT_R32G32B32A32;
+        default:
+            CCLOGERROR("parseVertexType GL_UNSIGNED_INT x %d error", size);
+        }
     }
     else if (str == "GL_FLOAT")
     {
-        return GL_FLOAT;
+        switch(size)
+        {
+        case 1:
+            return backend::VertexFormat::FLOAT_R32;
+        case 2:
+            return backend::VertexFormat::FLOAT_R32G32;
+        case 3:
+            return backend::VertexFormat::FLOAT_R32G32B32;
+        case 4:
+            return backend::VertexFormat::FLOAT_R32G32B32A32;
+        default:
+            CCLOGERROR("parseVertexType GL_UNSIGNED_INT x %d error", size);
+        }
     }
-    else if (str == "REPEAT")
+    CCASSERT(false, "parseVertexType failed!");
+    return ret;
+}
+
+backend::SamplerAddressMode Bundle3D::parseSamplerAddressMode(const std::string &str)
+{
+
+    if (str == "REPEAT")
+    {
+        return backend::SamplerAddressMode::REPEAT;
+    }
+    else if (str == "CLAMP")
+    {
+        return backend::SamplerAddressMode::CLAMP_TO_EDGE;
+    }
+    else
+    {
+        CCASSERT(false, "Invalid GL type");
+        return backend::SamplerAddressMode::REPEAT;
+    }
+}
+
+GLenum Bundle3D::parseGLAddressMode(const std::string &str)
+{
+
+    if (str == "REPEAT")
     {
         return GL_REPEAT;
     }
@@ -2021,9 +2103,10 @@ GLenum Bundle3D::parseGLType(const std::string& str)
     else
     {
         CCASSERT(false, "Invalid GL type");
-        return 0;
+        return GL_REPEAT;
     }
 }
+
 NTextureData::Usage Bundle3D::parseGLTextureType(const std::string& str)
 {
     if (str == "AMBIENT")
@@ -2072,73 +2155,73 @@ NTextureData::Usage Bundle3D::parseGLTextureType(const std::string& str)
         return NTextureData::Usage::Unknown;
     }
 }
-unsigned int Bundle3D::parseGLProgramAttribute(const std::string& str)
+shaderinfos::VertexKey Bundle3D::parseGLProgramAttribute(const std::string& str)
 {
     if (str == "VERTEX_ATTRIB_POSITION")
     {
-        return GLProgram::VERTEX_ATTRIB_POSITION;
+        return shaderinfos::VertexKey::VERTEX_ATTRIB_POSITION;
     }
     else if (str == "VERTEX_ATTRIB_COLOR")
     {
-        return GLProgram::VERTEX_ATTRIB_COLOR;
+        return shaderinfos::VertexKey::VERTEX_ATTRIB_COLOR;
     }
     else if (str == "VERTEX_ATTRIB_TEX_COORD")
     {
-        return GLProgram::VERTEX_ATTRIB_TEX_COORD;
+        return shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD;
     }
     else if (str == "VERTEX_ATTRIB_TEX_COORD1")
     {
-        return GLProgram::VERTEX_ATTRIB_TEX_COORD1;
+        return shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD1;
     }
     else if (str == "VERTEX_ATTRIB_TEX_COORD2")
     {
-        return GLProgram::VERTEX_ATTRIB_TEX_COORD2;
+        return shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD2;
     }
     else if (str == "VERTEX_ATTRIB_TEX_COORD3")
     {
-        return GLProgram::VERTEX_ATTRIB_TEX_COORD3;
+        return shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD3;
     }
     //comment out them
 //    else if (str == "VERTEX_ATTRIB_TEX_COORD4")
 //    {
-//        return GLProgram::VERTEX_ATTRIB_TEX_COORD4;
+//        return shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD4;
 //    }
 //    else if (str == "VERTEX_ATTRIB_TEX_COORD5")
 //    {
-//        return GLProgram::VERTEX_ATTRIB_TEX_COORD5;
+//        return shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD5;
 //    }
 //    else if (str == "VERTEX_ATTRIB_TEX_COORD6")
 //    {
-//        return GLProgram::VERTEX_ATTRIB_TEX_COORD6;
+//        return shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD6;
 //    }
 //    else if (str == "VERTEX_ATTRIB_TEX_COORD7")
 //    {
-//        return GLProgram::VERTEX_ATTRIB_TEX_COORD7;
+//        return shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD7;
 //    }
     else if (str == "VERTEX_ATTRIB_NORMAL")
     {
-        return GLProgram::VERTEX_ATTRIB_NORMAL;
+        return shaderinfos::VertexKey::VERTEX_ATTRIB_NORMAL;
     }
     else if (str == "VERTEX_ATTRIB_BLEND_WEIGHT")
     {
-        return GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT;
+        return shaderinfos::VertexKey::VERTEX_ATTRIB_BLEND_WEIGHT;
     }
     else if (str == "VERTEX_ATTRIB_BLEND_INDEX")
     {
-        return GLProgram::VERTEX_ATTRIB_BLEND_INDEX;
+        return shaderinfos::VertexKey::VERTEX_ATTRIB_BLEND_INDEX;
     }
     else if (str == "VERTEX_ATTRIB_TANGENT")
     {
-        return GLProgram::VERTEX_ATTRIB_TANGENT;
+        return shaderinfos::VertexKey::VERTEX_ATTRIB_TANGENT;
     }
     else if (str == "VERTEX_ATTRIB_BINORMAL")
     {
-        return GLProgram::VERTEX_ATTRIB_BINORMAL;
+        return shaderinfos::VertexKey::VERTEX_ATTRIB_BINORMAL;
     }
     else
     {
         CCASSERT(false, "Wrong Attribute type");
-        return -1;
+        return shaderinfos::VertexKey::VERTEX_ATTRIB_ERROR;
     }
 }
 

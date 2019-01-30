@@ -63,4 +63,10 @@ int ProgramMTL::getMaxFragmentLocation() const
     return _fragmentShader->getMaxLocation();
 }
 
+std::vector<AttributeBindInfo> ProgramMTL::getActiveAttributes() const
+{
+    //TODO arnold
+    return std::vector<AttributeBindInfo>();
+}
+
 CC_BACKEND_END

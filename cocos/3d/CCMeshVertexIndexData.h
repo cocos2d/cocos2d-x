@@ -22,22 +22,19 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#ifndef __CCMESHVERTEXINDEXDATA_H__
-#define __CCMESHVERTEXINDEXDATA_H__
+#pragma once
 
 #include <string>
 #include <vector>
 
 #include "3d/CCBundle3DData.h"
 #include "3d/CCAABB.h"
+#include "3d/CC3DProgramInfo.h"
 
 #include "base/CCRef.h"
 #include "base/CCVector.h"
 #include "math/CCMath.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCVertexIndexData.h"
-#include "renderer/CCVertexIndexBuffer.h"
+#include "renderer/CCCustomCommand.h"
 
 
 NS_CC_BEGIN
@@ -59,12 +56,13 @@ class CC_DLL MeshIndexData : public Ref
 {
 public:
     /** create  */
-    static MeshIndexData* create(const std::string& id, MeshVertexData* vertexData, IndexBuffer* indexbuffer, const AABB& aabb);
+    static MeshIndexData* create(const std::string& id, MeshVertexData* vertexData, backend::Buffer* indexbuffer, const AABB& aabb);
     
     /**get index buffer*/
-    const IndexBuffer* getIndexBuffer() const { return _indexBuffer; }
+    backend::Buffer* getIndexBuffer() const { return _indexBuffer; }
+
     /**get vertex buffer*/
-    const VertexBuffer* getVertexBuffer() const;
+    backend::Buffer* getVertexBuffer() const;
     
     /**get vertex data*/
     const MeshVertexData* getMeshVertexData() const { return _vertexData; }
@@ -78,19 +76,19 @@ public:
     const std::string& getId() const { return _id; }
     
     /**primitive type setter & getter*/
-    GLenum getPrimitiveType() const { return _primitiveType; }
-    void   setPrimitiveType(GLenum primitive) { _primitiveType = primitive; }
+    CustomCommand::PrimitiveType getPrimitiveType() const { return _primitiveType; }
+    void   setPrimitiveType(CustomCommand::PrimitiveType primitive) { _primitiveType = primitive; }
     
 CC_CONSTRUCTOR_ACCESS:
-    MeshIndexData();
+    MeshIndexData() = default;
     virtual ~MeshIndexData();
     
 protected:
-    IndexBuffer*    _indexBuffer; //index buffer
-    MeshVertexData* _vertexData; //vertex buffer, weak ref
-    AABB           _aabb; // original aabb of the submesh
-    std::string    _id; //id
-    GLenum         _primitiveType;
+    backend::Buffer*    _indexBuffer = nullptr; //index buffer
+    MeshVertexData*     _vertexData = nullptr; //vertex buffer, weak ref
+    AABB                _aabb; // original aabb of the submesh
+    std::string         _id; //id
+    CustomCommand::PrimitiveType   _primitiveType = CustomCommand::PrimitiveType::TRIANGLE;
     
     friend class MeshVertexData;
     friend class Sprite3D;
@@ -109,7 +107,7 @@ public:
     static MeshVertexData* create(const MeshData& meshdata);
     
     /** get vertexbuffer */
-    const VertexBuffer* getVertexBuffer() const { return _vertexBuffer; }
+    backend::Buffer* getVertexBuffer() const { return _vertexBuffer; }
     
     /** get attributes count */
     ssize_t getMeshVertexAttribCount() const { return _attribs.size(); }
@@ -124,25 +122,27 @@ public:
     /** get index data by id */
     MeshIndexData* getMeshIndexDataById(const std::string& id) const;
     
+    ssize_t getSizePerVertex() const { return _sizePerVertex; }
+
     /**has vertex attribute?*/
-    bool hasVertexAttrib(int attrib) const;
+    //TODO: will be removed!
+    bool hasVertexAttrib(shaderinfos::VertexKey attrib) const;
     
 CC_CONSTRUCTOR_ACCESS:
-    MeshVertexData();
+    MeshVertexData() = default;
     virtual ~MeshVertexData();
 
 protected:
-    VertexData*          _vertexData; //mesh vertex data
-    VertexBuffer*        _vertexBuffer; // vertex buffer
+    
+    backend::Buffer* _vertexBuffer = nullptr; // vertex buffer
+    ssize_t  _sizePerVertex = -1;
     Vector<MeshIndexData*> _indexs; //index data
     std::vector<MeshVertexAttrib> _attribs; //vertex attributes
     
-    int                  _vertexCount; //vertex count
+    int _vertexCount = 0; //vertex count
 };
 
 // end of 3d group
 /// @}
 
 NS_CC_END
-
-#endif // __CCMESHVERTEXINDEXDATA_H__

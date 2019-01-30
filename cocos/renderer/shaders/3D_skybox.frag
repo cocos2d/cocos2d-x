@@ -1,4 +1,4 @@
-const char* cc3D_Skybox_frag = R"(
+const char* CC3D_skybox_frag = R"(
 #ifdef GL_ES
 varying mediump vec3        v_reflect;
 #else

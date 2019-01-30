@@ -33,7 +33,6 @@
 #include "base/CCProtocols.h"
 #include "2d/CCNode.h"
 #include "renderer/CCMeshCommand.h"
-#include "renderer/CCGLProgramState.h"
 #include "3d/CCSkeleton3D.h" // need to include for lua-binding
 #include "3d/CCAABB.h"
 #include "3d/CCBundle3DData.h"
@@ -120,10 +119,12 @@ public:
     virtual const BlendFunc &getBlendFunc() const override;
     
     // overrides
-    /** set GLProgramState, you should bind attributes by yourself */
-    virtual void setGLProgramState(GLProgramState *glProgramState) override;
+    //TODO minggo: should change Node::setGLProgramState(), then override
+    /** set ProgramState, you should bind attributes by yourself */
+    virtual void setProgramState(backend::ProgramState *programState);
     /** just remember bind attributes */
-    virtual void setGLProgram(GLProgram *glprogram) override;
+    //TODO arnold: impl setProgram
+    //virtual void setGLProgram(GLProgram *glprogram) override;
     
     /*
      * Get AABB
@@ -163,8 +164,8 @@ public:
      */
     virtual Rect getBoundingBox() const override;
 
-    // set which face is going to cull, GL_BACK, GL_FRONT, GL_FRONT_AND_BACK, default GL_BACK
-    void setCullFace(GLenum cullFace);
+    // set which face is going to cull, CullFaceSide::BACK, CullFaceSide::FRONT and CullFaceSide::NONE.
+    void setCullFace(CullFaceSide side);
     // set cull face enable or not
     void setCullFaceEnabled(bool enable);
     
@@ -289,7 +290,7 @@ public:
     struct Sprite3DData
     {
         Vector<MeshVertexData*>   meshVertexDatas;
-        Vector<GLProgramState*>   glProgramStates;
+        Vector<backend::ProgramState*>   programStates;
         NodeDatas*      nodedatas;
         MaterialDatas*  materialdatas;
         ~Sprite3DData()
@@ -299,7 +300,7 @@ public:
             if (materialdatas)
                 delete materialdatas;
             meshVertexDatas.clear();
-            glProgramStates.clear();
+            programStates.clear();
         }
     };
     

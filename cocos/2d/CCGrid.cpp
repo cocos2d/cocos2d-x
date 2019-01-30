@@ -30,7 +30,6 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 #include "2d/CCNode.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCRenderState.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/Device.h"

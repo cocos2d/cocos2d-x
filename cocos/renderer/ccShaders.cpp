@@ -78,18 +78,6 @@ NS_CC_BEGIN
 #include "renderer/ccShader_Label_outline.frag"
 
 //
-#include "renderer/ccShader_3D_PositionTex.vert"
-#include "renderer/ccShader_3D_Color.frag"
-#include "renderer/ccShader_3D_ColorTex.frag"
-#include "renderer/ccShader_3D_PositionNormalTex.vert"
-#include "renderer/ccShader_3D_ColorNormal.frag"
-#include "renderer/ccShader_3D_ColorNormalTex.frag"
-#include "renderer/ccShader_3D_Particle.vert"
-#include "renderer/ccShader_3D_Particle.frag"
-#include "renderer/ccShader_3D_Skybox.vert"
-#include "renderer/ccShader_3D_Skybox.frag"
-#include "renderer/ccShader_3D_Terrain.vert"
-#include "renderer/ccShader_3D_Terrain.frag"
 #include "renderer/ccShader_CameraClear.vert"
 #include "renderer/ccShader_CameraClear.frag"
 
@@ -124,5 +112,18 @@ NS_CC_BEGIN
 #include "renderer/shaders/positionUColor.frag"
 #include "renderer/shaders/etc1.frag"
 #include "renderer/shaders/etc1_Gray.frag"
+
+#include "renderer/shaders/3D_color.frag"
+#include "renderer/shaders/3D_colorNormal.frag"
+#include "renderer/shaders/3D_colorNormalTexture.frag"
+#include "renderer/shaders/3D_colorTexture.frag"
+#include "renderer/shaders/3D_particle.vert"
+#include "renderer/shaders/3D_particle.frag"
+#include "renderer/shaders/3D_positionNormalTexture.vert"
+#include "renderer/shaders/3D_positionTexture.vert"
+#include "renderer/shaders/3D_skybox.vert"
+#include "renderer/shaders/3D_skybox.frag"
+#include "renderer/shaders/3D_terrain.frag"
+#include "renderer/shaders/3D_terrain.vert"
 
 NS_CC_END

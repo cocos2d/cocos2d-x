@@ -35,7 +35,7 @@ set(COCOS2D_X_VERSION 3.18)
 set(COCOS_CORE_LIB cocos2d)
 
 include(2d/CMakeLists.txt)
-#include(3d/CMakeLists.txt)
+include(3d/CMakeLists.txt)
 include(platform/CMakeLists.txt)
 include(physics/CMakeLists.txt)
 #include(physics3d/CMakeLists.txt)

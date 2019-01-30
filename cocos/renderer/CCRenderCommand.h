@@ -94,7 +94,7 @@ public:
     float getDepth() const { return _depth; }
     // Can use the result to change the descriptor content.
     inline PipelineDescriptor& getPipelineDescriptor() { return _pipelineDescriptor; }
-    
+
 protected:
     /**Constructor.*/
     RenderCommand();

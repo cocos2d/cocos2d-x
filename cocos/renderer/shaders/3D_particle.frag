@@ -1,5 +1,5 @@
 
-const char* cc3D_Particle_tex_frag = R"(
+const char* CC3D_particleTexture_frag = R"(
 
 #ifdef GL_ES
 varying mediump vec2 TextureCoordOut;
@@ -10,13 +10,15 @@ varying vec2 TextureCoordOut;
 #endif
 uniform vec4 u_color;
 
+uniform sampler2D u_texture;
+
 void main(void)
 {
-    gl_FragColor = texture2D(CC_Texture0, TextureCoordOut) * ColorOut * u_color;
+    gl_FragColor = texture2D(u_texture, TextureCoordOut) * ColorOut * u_color;
 }
 )";
 
-const char* cc3D_Particle_color_frag = R"(
+const char* CC3D_particleColor_frag = R"(
 
 #ifdef GL_ES
 varying mediump vec4 ColorOut;

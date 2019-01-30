@@ -24,9 +24,7 @@
    - Qt3D: http://qt-project.org/
 
  ****************************************************************************/
-
-#ifndef __cocos2d_libs__CCRenderState__
-#define __cocos2d_libs__CCRenderState__
+#pragma once
 
 #include <string>
 #include <functional>
@@ -41,6 +39,10 @@ NS_CC_BEGIN
 
 class Texture2D;
 class Pass;
+
+using CullFaceSide = backend::CullMode;
+using FrontFace = backend::Winding;
+using DepthFunction = backend::CompareFunction;
 
 /**
  * Defines the rendering state of the graphics device.
@@ -106,88 +108,6 @@ public:
     };
 
     /**
-     * Defines the supported depth compare functions.
-     *
-     * Depth compare functions specify the comparison that takes place between the
-     * incoming pixel's depth value and the depth value already in the depth buffer.
-     * If the compare function passes, the new pixel will be drawn.
-     *
-     * The initial depth compare function is DEPTH_LESS.
-     */
-    enum DepthFunction
-    {
-        DEPTH_NEVER = GL_NEVER,
-        DEPTH_LESS = GL_LESS,
-        DEPTH_EQUAL = GL_EQUAL,
-        DEPTH_LEQUAL = GL_LEQUAL,
-        DEPTH_GREATER = GL_GREATER,
-        DEPTH_NOTEQUAL = GL_NOTEQUAL,
-        DEPTH_GEQUAL = GL_GEQUAL,
-        DEPTH_ALWAYS = GL_ALWAYS
-    };
-
-    /**
-     * Defines culling criteria for front-facing, back-facing and both-side
-     * facets.
-     */
-    enum CullFaceSide
-    {
-        CULL_FACE_SIDE_BACK = GL_BACK,
-        CULL_FACE_SIDE_FRONT = GL_FRONT,
-        CULL_FACE_SIDE_FRONT_AND_BACK = GL_FRONT_AND_BACK
-    };
-
-    /**
-     * Defines the winding of vertices in faces that are considered front facing.
-     *
-     * The initial front face mode is set to FRONT_FACE_CCW.
-     */
-    enum FrontFace
-    {
-        FRONT_FACE_CW = GL_CW,
-        FRONT_FACE_CCW = GL_CCW
-    };
-
-    /**
-     * Defines the supported stencil compare functions.
-     *
-     * Stencil compare functions determine if a new pixel will be drawn.
-     *
-     * The initial stencil compare function is STENCIL_ALWAYS.
-     */
-    enum StencilFunction
-    {
-        STENCIL_NEVER = GL_NEVER,
-        STENCIL_ALWAYS = GL_ALWAYS,
-        STENCIL_LESS = GL_LESS,
-        STENCIL_LEQUAL = GL_LEQUAL,
-        STENCIL_EQUAL = GL_EQUAL,
-        STENCIL_GREATER = GL_GREATER,
-        STENCIL_GEQUAL = GL_GEQUAL,
-        STENCIL_NOTEQUAL = GL_NOTEQUAL
-    };
-
-    /**
-     * Defines the supported stencil operations to perform.
-     *
-     * Stencil operations determine what should happen to the pixel if the
-     * stencil test fails, passes, or passes but fails the depth test.
-     *
-     * The initial stencil operation is STENCIL_OP_KEEP.
-     */
-    enum StencilOperation
-    {
-        STENCIL_OP_KEEP = GL_KEEP,
-        STENCIL_OP_ZERO = GL_ZERO,
-        STENCIL_OP_REPLACE = GL_REPLACE,
-        STENCIL_OP_INCR = GL_INCR,
-        STENCIL_OP_DECR = GL_DECR,
-        STENCIL_OP_INVERT = GL_INVERT,
-        STENCIL_OP_INCR_WRAP = GL_INCR_WRAP,
-        STENCIL_OP_DECR_WRAP = GL_DECR_WRAP
-    };
-
-    /**
      * Defines a block of fixed-function render states that can be applied to a
      * RenderState object.
      */
@@ -208,8 +128,8 @@ public:
          * Don't use `new` or `delete` on them.
          * 
          */
-        StateBlock();
-        ~StateBlock();
+        StateBlock() = default;
+        ~StateBlock() = default;
 
         /**
          * Binds the state in this StateBlock to the renderer.
@@ -304,46 +224,6 @@ public:
          */
         void setDepthFunction(DepthFunction func);
 
-//        /**
-//         * Toggles stencil testing.
-//         *
-//         * By default, stencil testing is disabled.
-//         *
-//         * @param enabled true to enable, false to disable.
-//         */
-//        void setStencilTest(bool enabled);
-//
-//        /**
-//         * Sets the stencil writing mask.
-//         *
-//         * By default, the stencil writing mask is all 1's.
-//         *
-//         * @param mask Bit mask controlling writing to individual stencil planes.
-//         */
-//        void setStencilWrite(unsigned int mask);
-//
-//        /**
-//         * Sets the stencil function.
-//         *
-//         * By default, the function is set to STENCIL_ALWAYS, the reference value is 0, and the mask is all 1's.
-//         *
-//         * @param func The stencil function.
-//         * @param ref The stencil reference value.
-//         * @param mask The stencil mask.
-//         */
-//        void setStencilFunction(StencilFunction func, int ref, unsigned int mask);
-//
-//        /**
-//         * Sets the stencil operation.
-//         *
-//         * By default, stencil fail, stencil pass/depth fail, and stencil and depth pass are set to STENCIL_OP_KEEP.
-//         *
-//         * @param sfail The stencil operation if the stencil test fails.
-//         * @param dpfail The stencil operation if the stencil test passes, but the depth test fails.
-//         * @param dppass The stencil operation if both the stencil test and depth test pass.
-//         */
-//        void setStencilOperation(StencilOperation sfail, StencilOperation dpfail, StencilOperation dppass);
-
         /**
          * Sets a render state from the given name and value strings.
          *
@@ -408,31 +288,19 @@ public:
         static StateBlock* _defaultState;
 
     protected:
-
         void bindNoRestore();
-        static void enableDepthWrite();
-
         void cloneInto(StateBlock* renderState) const;
 
-        bool _cullFaceEnabled;
-        bool _depthTestEnabled;
-        bool _depthWriteEnabled;
-        DepthFunction _depthFunction;
-        bool _blendEnabled;
-        Blend _blendSrc;
-        Blend _blendDst;
-        CullFaceSide _cullFaceSide;
-        FrontFace _frontFace;
-        bool _stencilTestEnabled;
-        unsigned int _stencilWrite;
-        StencilFunction _stencilFunction;
-        int _stencilFunctionRef;
-        unsigned int _stencilFunctionMask;
-        StencilOperation _stencilOpSfail;
-        StencilOperation _stencilOpDpfail;
-        StencilOperation _stencilOpDppass;
-
-        long _bits;
+        bool _cullFaceEnabled = false;
+        bool _depthTestEnabled = true;
+        bool _depthWriteEnabled = false;
+        DepthFunction _depthFunction = DepthFunction::LESS;
+        bool _blendEnabled = true;
+        Blend _blendSrc = RenderState::BLEND_ONE;
+        Blend _blendDst = RenderState::BLEND_ZERO;
+        CullFaceSide _cullFaceSide = CullFaceSide::BACK;
+        FrontFace _frontFace = FrontFace::COUNTER_CLOCK_WISE;
+        long _bits = 0L;
 
         mutable uint32_t _hash;
         mutable bool _hashDirty;
@@ -447,25 +315,23 @@ protected:
     bool init(RenderState* parent);
     void cloneInto(RenderState* state) const;
 
-    mutable uint32_t _hash;
-    mutable bool _hashDirty;
+    mutable uint32_t _hash = 0;
+    mutable bool _hashDirty = true;
 
     /**
      * The StateBlock of fixed-function render states that can be applied to the RenderState.
      */
-    mutable StateBlock* _state;
+    mutable StateBlock* _state = nullptr;
 
     /**
      * The RenderState's parent. Weak Reference
      */
-    RenderState* _parent;
+    RenderState* _parent = nullptr;
 
     // name, for filtering
     std::string _name;
 
-    Texture2D* _texture;
+    Texture2D* _texture = nullptr;
 };
 
 NS_CC_END
-
-#endif /* defined(__cocos2d_libs__CCRenderState__) */

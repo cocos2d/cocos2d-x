@@ -3,6 +3,7 @@
 #include "Macros.h"
 
 #include <cstdint>
+#include <string>
 
 CC_BACKEND_BEGIN
 
@@ -211,6 +212,12 @@ enum class CullMode: uint32_t
     FRONT = 0x00000002
 };
 
+enum class Winding: uint32_t
+{
+    CLOCK_WISE,
+    COUNTER_CLOCK_WISE
+};
+
 struct UniformInfo
 {
     int count = 0;
@@ -224,6 +231,14 @@ struct UniformLocation
 {
     int location = -1;
     ShaderStage shaderStage = ShaderStage::VERTEX;
+};
+
+struct AttributeBindInfo
+{
+    std::string attributeName;
+    int         location    = -1;
+    int         size        = 0;
+    int         type        = 0;
 };
 
 CC_BACKEND_END

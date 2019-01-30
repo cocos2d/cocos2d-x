@@ -129,6 +129,61 @@ namespace {
 #endif
 #endif
     };
+
+    backend::SamplerFilter GLToBackendMagFilter(GLint magFilter)
+    {
+        switch (magFilter)
+        {
+        case GL_LINEAR:
+            return backend::SamplerFilter::LINEAR;
+        case GL_NEAREST:
+            return backend::SamplerFilter::NEAREST;
+        default:
+            return backend::SamplerFilter::LINEAR;
+        }
+    }
+
+
+    GLint toGLAddressMode(backend::SamplerAddressMode addressMode, bool isPow2)
+    {
+        GLint ret = GL_REPEAT;
+        if (!isPow2 && (addressMode != backend::SamplerAddressMode::CLAMP_TO_EDGE))
+        {
+            cocos2d::log("Change texture wrap mode to CLAMP_TO_EDGE since non-power-of-two texture occur in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
+            return GL_CLAMP_TO_EDGE;
+        }
+
+        switch (addressMode)
+        {
+        case backend::SamplerAddressMode::REPEAT:
+            ret = GL_REPEAT;
+            break;
+        case backend::SamplerAddressMode::MIRROR_REPEAT:
+            ret = GL_MIRRORED_REPEAT;
+            break;
+        case backend::SamplerAddressMode::CLAMP_TO_EDGE:
+            ret = GL_CLAMP_TO_EDGE;
+            break;
+        default:
+            break;
+        }
+        return ret;
+    }
+
+    backend::SamplerAddressMode GLToBackendAddressMode(int addressMode)
+    {
+        switch (addressMode)
+        {
+        case GL_REPEAT:
+            return backend::SamplerAddressMode::REPEAT;
+        case GL_MIRRORED_REPEAT:
+            return backend::SamplerAddressMode::MIRROR_REPEAT;
+        case GL_CLAMP_TO_EDGE:
+            return backend::SamplerAddressMode::CLAMP_TO_EDGE;
+        default:
+            return backend::SamplerAddressMode::REPEAT;
+        }
+    }
 }
 
 //CLASS IMPLEMENTATIONS:
@@ -191,7 +246,8 @@ int Texture2D::getPixelsHigh() const
 GLuint Texture2D::getName() const
 {
     //TODO coulsonwang
-    cocos2d::log("Error in %s %s %d, TODO", __FILE__, __FUNCTION__, __LINE__);
+    //TODO arnold too many logs
+    //cocos2d::log("Error in %s %s %d, TODO", __FILE__, __FUNCTION__, __LINE__);
     return 0;
 }
 
@@ -860,6 +916,19 @@ Texture2D* Texture2D::getAlphaTexture() const
 void Texture2D::setSamplerDescriptor(const backend::SamplerDescriptor &texParams)
 {
     _texture->updateSamplerDescriptor(texParams);
+}
+
+//TODO: should be reform later
+void Texture2D::setTexParameters(const Texture2D::TexParams &params)
+{
+    backend::SamplerDescriptor sd;
+    sd.minFilter = GLToBackendMagFilter(params.minFilter);
+    sd.magFilter = GLToBackendMagFilter(params.magFilter);
+    sd.mipmapEnabled = true;
+    sd.mipmapFilter = backend::SamplerFilter::DONT_CARE;
+    sd.tAddressMode = GLToBackendAddressMode(params.wrapT);
+    sd.sAddressMode = GLToBackendAddressMode(params.wrapS);
+    setSamplerDescriptor(sd);
 }
 
 //  TODO coulsonwang

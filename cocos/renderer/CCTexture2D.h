@@ -303,6 +303,9 @@ public:
     */
     void setSamplerDescriptor(const backend::SamplerDescriptor& texParams);
     
+    //TODO: should be remove later
+    void setTexParameters(const TexParams &params);
+
     /** Generates mipmap images for the texture.
      It only works if the texture size is POT (power of 2).
      @since v0.99.0

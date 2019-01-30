@@ -27,19 +27,19 @@
  - OGRE3D: http://www.ogre3d.org/
  - Qt3D: http://qt-project.org/
  ****************************************************************************/
-
 #include "renderer/CCPass.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/CCGLProgram.h"
+#include <xxhash.h>
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCTechnique.h"
 #include "renderer/CCMaterial.h"
 #include "renderer/CCVertexAttribBinding.h"
+#include "renderer/backend/ProgramState.h"
+#include "3d/CCMeshVertexIndexData.h"
+#include "base/CCDirector.h"
+#include "renderer/CCRenderer.h"
 
 #include "base/ccTypes.h"
 #include "2d/CCNode.h"
-
-#include <xxhash.h>
 
 NS_CC_BEGIN
 
@@ -56,10 +56,10 @@ Pass* Pass::create(Technique* technique)
     return nullptr;
 }
 
-Pass* Pass::createWithGLProgramState(Technique* technique, GLProgramState* programState)
+Pass* Pass::createWithProgramState(Technique* technique, backend::ProgramState* programState)
 {
     auto pass = new (std::nothrow) Pass();
-    if (pass && pass->initWithGLProgramState(technique, programState))
+    if (pass && pass->initWithProgramState(technique, programState))
     {
         pass->autorelease();
         return pass;
@@ -74,24 +74,28 @@ bool Pass::init(Technique* technique)
     return true;
 }
 
-bool Pass::initWithGLProgramState(Technique* technique, GLProgramState *glProgramState)
+bool Pass::initWithProgramState(Technique* technique, backend::ProgramState *programState)
 {
     _parent = technique;
-    _glProgramState = glProgramState;
-    CC_SAFE_RETAIN(_glProgramState);
+    setProgramState(programState);
     return true;
 }
 
 Pass::Pass()
-: _glProgramState(nullptr)
-, _vertexAttribBinding(nullptr)
 {
+    //_customCommand.set3D(true);
+    
+    //TODO: set _customCommand's vertex layout.
+    //auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
+    //vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
+    //vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, 6 * sizeof(float), false);
+    //vertexLayout.setLayout(8 * sizeof(float), backend::VertexStepMode::VERTEX);
 }
 
 Pass::~Pass()
 {
-    CC_SAFE_RELEASE(_glProgramState);
     CC_SAFE_RELEASE(_vertexAttribBinding);
+    CC_SAFE_RELEASE(_programState);
 }
 
 Pass* Pass::clone() const
@@ -100,28 +104,34 @@ Pass* Pass::clone() const
     if (pass)
     {
         RenderState::cloneInto(pass);
-        pass->_glProgramState = _glProgramState->clone();
-        CC_SAFE_RETAIN(pass->_glProgramState);
 
+        pass->setProgramState(_programState->clone());
+        
+        //
         pass->_vertexAttribBinding = _vertexAttribBinding;
         CC_SAFE_RETAIN(pass->_vertexAttribBinding);
+
+        pass->setParent(_parent);
 
         pass->autorelease();
     }
     return pass;
 }
 
-GLProgramState* Pass::getGLProgramState() const
+backend::ProgramState* Pass::getProgramState() const
 {
-    return _glProgramState;
+   return _programState;
 }
 
-void Pass::setGLProgramState(GLProgramState* glProgramState)
+void Pass::setProgramState(backend::ProgramState* programState)
 {
-    if ( _glProgramState != glProgramState) {
-        CC_SAFE_RELEASE(_glProgramState);
-        _glProgramState = glProgramState;
-        CC_SAFE_RETAIN(_glProgramState);
+    if (_programState != programState)
+    {
+        CC_SAFE_RELEASE(_programState);
+        _programState = programState;
+        CC_SAFE_RETAIN(_programState);
+
+        _customCommand.getPipelineDescriptor().programState = _programState;
 
         _hashDirty = true;
     }
@@ -129,40 +139,61 @@ void Pass::setGLProgramState(GLProgramState* glProgramState)
 
 uint32_t Pass::getHash() const
 {
-    if (_hashDirty || _state->isDirty()) {
-        uint32_t glProgram = (uint32_t)_glProgramState->getGLProgram()->getProgram();
+    if (_hashDirty || _state->isDirty())
+    {
+        //FIXME: loose information?
+        uint32_t program = (uint32_t)(intptr_t)(_programState->getProgram());
         uint32_t textureid = _texture ? _texture->getName() : -1;
         uint32_t stateblockid = _state->getHash();
 
-        _hash = glProgram ^ textureid ^ stateblockid;
+        _hash = program ^ textureid ^ stateblockid;
 
-//        _hash = XXH32((const void*)intArray, sizeof(intArray), 0);
         _hashDirty = false;
     }
 
     return _hash;
 }
 
-void Pass::bind(const Mat4& modelView)
+//void Pass::bind(const Mat4& modelView)
+//{
+//    bind(modelView, true);
+//}
+
+//void Pass::bind(const Mat4& modelView, bool bindAttributes)
+//{
+//    // vertex attribs
+//    if (bindAttributes && _vertexAttribBinding)
+//        _vertexAttribBinding->bind();
+//
+//    auto glprogramstate = _glProgramState ? _glProgramState : getTarget()->getGLProgramState();
+//
+//    glprogramstate->applyGLProgram(modelView);
+//    glprogramstate->applyUniforms();
+//
+//    //set render state
+//    RenderState::bind(this);
+//}
+
+void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
+                CustomCommand::PrimitiveType primitive, CustomCommand::IndexFormat indexFormat,
+                unsigned int indexCount, const Mat4& modelView)
 {
-    bind(modelView, true);
-}
+    _customCommand.init(globalZOrder, BlendFunc::ALPHA_PREMULTIPLIED);
+    _customCommand.setPrimitiveType(primitive);
+    _customCommand.setIndexBuffer(indexBuffer, indexFormat);
+    _customCommand.setVertexBuffer(vertexBuffer);
+    _customCommand.setIndexDrawInfo(0, indexCount);
 
-void Pass::bind(const Mat4& modelView, bool bindAttributes)
-{
+    const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    Mat4 finalMat = projectionMat * modelView;
+    auto location = _programState->getUniformLocation("u_MVPMatrix");
+    _programState->setUniform(location, finalMat.m, sizeof(finalMat.m));
 
-    // vertex attribs
-    if (bindAttributes && _vertexAttribBinding)
-        _vertexAttribBinding->bind();
+    _customCommand.getPipelineDescriptor().programState = _programState;
 
-    auto glprogramstate = _glProgramState ? _glProgramState : getTarget()->getGLProgramState();
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 
-    glprogramstate->applyGLProgram(modelView);
-    glprogramstate->applyUniforms();
-
-    //set render state
     RenderState::bind(this);
-
 }
 
 Node* Pass::getTarget() const
@@ -173,12 +204,12 @@ Node* Pass::getTarget() const
     return material->_target;
 }
 
-void Pass::unbind()
-{
-    RenderState::StateBlock::restore(0);
-
-    _vertexAttribBinding->unbind();
-}
+//void Pass::unbind()
+//{
+//    RenderState::StateBlock::restore(0);
+//
+////    _vertexAttribBinding->unbind();
+//}
 
 void Pass::setVertexAttribBinding(VertexAttribBinding* binding)
 {
