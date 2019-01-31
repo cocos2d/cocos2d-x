@@ -58,7 +58,6 @@ private:
     void cleanResources();
     void applyRenderPassDescriptor(const RenderPassDescriptor& descirptor);
     
-    struct Viewport _viewport;
     GLint _defaultFBO = 0;
     GLuint _currentFBO = 0;
     std::vector<BufferGL*> _vertexBuffers;
