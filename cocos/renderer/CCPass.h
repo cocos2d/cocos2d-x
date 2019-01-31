@@ -34,6 +34,8 @@
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderState.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCallbackCommand.h"
 
 NS_CC_BEGIN
 
