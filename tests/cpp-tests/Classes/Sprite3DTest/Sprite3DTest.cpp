@@ -44,7 +44,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(AsyncLoadSprite3DTest);
 //    // 3DEffect use custom shader which is not supported on WP8/WinRT yet.
     ADD_TEST_CASE(Sprite3DEffectTest);
-//    ADD_TEST_CASE(Sprite3DUVAnimationTest);
+    ADD_TEST_CASE(Sprite3DUVAnimationTest);
 //    ADD_TEST_CASE(Sprite3DFakeShadowTest);
 //    ADD_TEST_CASE(Sprite3DBasicToonShaderTest);
 //    ADD_TEST_CASE(Sprite3DLightMapTest);
@@ -233,88 +233,89 @@ std::string Sprite3DBasicTest::subtitle() const
 //
 //------------------------------------------------------------------
 
-//Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
-//{
-//    //the offset use to translating texture
-//    _cylinder_texture_offset = 0;
-//    _shining_duration = 0;
-//    Size visibleSize = Director::getInstance()->getVisibleSize();
-//
-//    //use custom camera
-//    auto camera = Camera::createPerspective(60, visibleSize.width/visibleSize.height, 0.1f, 200);
-//    camera->setCameraFlag(CameraFlag::USER1);
-//
-//    //create cylinder
-//    //TODO minggo
-////    auto cylinder = Sprite3D::create("Sprite3DTest/cylinder.c3b");
-////    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/UVAnimation.material");
-////    _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
-////    cylinder->setMaterial(mat);
-//
-////    this->addChild(cylinder);
-////    this->setCameraMask(2);
-////    this->addChild(camera);
-////
-////    //adjust cylinder's position & rotation
-////    cylinder->setPosition3D(Vec3(0,-15,-50));
-////    cylinder->setRotation3D(Vec3(-90,0,0));
-//
-//    //the callback function update cylinder's texcoord
-//    schedule(CC_SCHEDULE_SELECTOR(Sprite3DUVAnimationTest::cylinderUpdate));
-//    
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
-//                                                            [=](EventCustom*)
-//                                                            {
-//                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/UVAnimation.material");
-//                                                                
-//                                                                cylinder->setMaterial(mat);
-//                                                                _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
-//                                                            }
-//                                                            );
-//    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
-//#endif
-//}
-//
-//Sprite3DUVAnimationTest::~Sprite3DUVAnimationTest()
-//{
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
-//#endif
-//}
-//
-//std::string Sprite3DUVAnimationTest::title() const 
-//{
-//    return "Testing UV Animation";
-//}
-//
-//std::string Sprite3DUVAnimationTest::subtitle() const 
-//{
-//    return "";
-//}
-//
-//void Sprite3DUVAnimationTest::cylinderUpdate(float dt)
-//{
-//    //callback function to update cylinder's texcoord
-//    static bool fade_in = true;
-//    _cylinder_texture_offset += 0.3*dt;
-//    _cylinder_texture_offset = (_cylinder_texture_offset >1) ? 0 : _cylinder_texture_offset;
-//    if(fade_in)
-//    {
-//        _shining_duration += 0.5 * dt;
-//        if (_shining_duration > 1) fade_in = false;
-//    }
-//    else
-//    {
-//        _shining_duration -= 0.5 * dt;
-//        if (_shining_duration < 0) fade_in = true;
-//    }
-//
-//    //pass the result to shader
-//    _state->setUniformFloat("offset",_cylinder_texture_offset);
-//    _state->setUniformFloat("duration", _shining_duration);
-//}
-//
+Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
+{
+    //the offset use to translating texture
+    _cylinder_texture_offset = 0;
+    _shining_duration = 0;
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+
+    //use custom camera
+    auto camera = Camera::createPerspective(60, visibleSize.width/visibleSize.height, 0.1f, 200);
+    camera->setCameraFlag(CameraFlag::USER1);
+
+    //create cylinder
+    auto cylinder = Sprite3D::create("Sprite3DTest/cylinder.c3b");
+    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/UVAnimation.material");
+    _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getProgramState();
+    cylinder->setMaterial(mat);
+
+    this->addChild(cylinder);
+    this->setCameraMask(2);
+    this->addChild(camera);
+
+    //adjust cylinder's position & rotation
+    cylinder->setPosition3D(Vec3(0,-15,-50));
+    cylinder->setRotation3D(Vec3(-90,0,0));
+
+    //the callback function update cylinder's texcoord
+    schedule(CC_SCHEDULE_SELECTOR(Sprite3DUVAnimationTest::cylinderUpdate));
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                            [=](EventCustom*)
+                                                            {
+                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/UVAnimation.material");
+                                                                
+                                                                cylinder->setMaterial(mat);
+                                                                _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
+}
+
+Sprite3DUVAnimationTest::~Sprite3DUVAnimationTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
+}
+
+std::string Sprite3DUVAnimationTest::title() const 
+{
+    return "Testing UV Animation";
+}
+
+std::string Sprite3DUVAnimationTest::subtitle() const 
+{
+    return "";
+}
+
+void Sprite3DUVAnimationTest::cylinderUpdate(float dt)
+{
+    //callback function to update cylinder's texcoord
+    static bool fade_in = true;
+    _cylinder_texture_offset += 0.3*dt;
+    _cylinder_texture_offset = (_cylinder_texture_offset >1) ? 0 : _cylinder_texture_offset;
+    if(fade_in)
+    {
+        _shining_duration += 0.5 * dt;
+        if (_shining_duration > 1) fade_in = false;
+    }
+    else
+    {
+        _shining_duration -= 0.5 * dt;
+        if (_shining_duration < 0) fade_in = true;
+    }
+
+    //pass the result to shader
+    auto offsetLoc = _state->getUniformLocation("offset");
+    auto durationLoc = _state->getUniformLocation("duration");
+    _state->setUniform(offsetLoc, _cylinder_texture_offset);
+    _state->setUniform(durationLoc, _shining_duration);
+}
+
 ////------------------------------------------------------------------
 ////
 //// Sprite3DFakeShadowTest

@@ -63,6 +63,12 @@ public:
     inline std::vector<UniformBuffer>& getVertexUniformInfos() { return _vertexUniformInfos; }
     inline const std::vector<UniformBuffer>& getFragmentUniformInfos() const { return _fragmentUniformInfos; }
     
+    template<typename T>
+    void setUniform(const backend::UniformLocation& uniformLocation, const T& data)
+    {
+        setUniform(uniformLocation,(const void *) &data, sizeof(T));
+    }
+
     //set textures
     void setTexture(const backend::UniformLocation& uniformLocation, uint32_t slot, backend::Texture* texture);
     void setTextureArray(const backend::UniformLocation& uniformLocation, const std::vector<uint32_t>& slots, const std::vector<backend::Texture*> textures);

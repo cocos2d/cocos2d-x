@@ -27,6 +27,7 @@
 #define _SPRITE3D_TEST_H_
 
 #include "BaseTest.h"
+#include "renderer/backend/ProgramState.h"
 #include <string>
 
 namespace cocos2d {
@@ -80,27 +81,27 @@ public:
     void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 };
 
-//class Sprite3DUVAnimationTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DUVAnimationTest);
-//    Sprite3DUVAnimationTest();
-//    virtual ~Sprite3DUVAnimationTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//protected:
-//    void cylinderUpdate(float dt);
-//    
-//    float _cylinder_texture_offset;
-//    float _shining_duration;
-//    cocos2d::GLProgramState * _state;
-//    
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    cocos2d::EventListenerCustom* _backToForegroundListener;
-//#endif
-//};
-//
+class Sprite3DUVAnimationTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DUVAnimationTest);
+    Sprite3DUVAnimationTest();
+    virtual ~Sprite3DUVAnimationTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+protected:
+    void cylinderUpdate(float dt);
+    
+    float _cylinder_texture_offset;
+    float _shining_duration;
+    cocos2d::backend::ProgramState * _state = nullptr;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    cocos2d::EventListenerCustom* _backToForegroundListener;
+#endif
+};
+
 //class Sprite3DFakeShadowTest : public Sprite3DTestDemo
 //{
 //public:
