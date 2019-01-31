@@ -1,6 +1,6 @@
 #include "BufferGL.h"
 #include <cassert>
-
+#include "base/ccMacros.h"
 CC_BACKEND_BEGIN
 
 BufferGL::BufferGL(unsigned int size, BufferType type, BufferUsage usage)

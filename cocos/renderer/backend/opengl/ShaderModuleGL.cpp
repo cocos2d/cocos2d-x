@@ -1,6 +1,7 @@
 #include "ShaderModuleGL.h"
 
 #include "platform/CCPlatformMacros.h"
+#include "base/ccMacros.h"
 
 CC_BACKEND_BEGIN
 

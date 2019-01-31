@@ -1,6 +1,7 @@
 #include "ProgramGL.h"
 #include "ShaderModuleGL.h"
 #include "renderer/backend/Types.h"
+#include "base/ccMacros.h"
 
 CC_BACKEND_BEGIN
 
