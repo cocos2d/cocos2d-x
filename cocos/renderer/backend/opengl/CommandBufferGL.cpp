@@ -151,7 +151,7 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
         // If not draw buffer is needed, should invoke this line explicitly, or it will cause
         // GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER and GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER error.
         // https://stackoverflow.com/questions/28313782/porting-opengl-es-framebuffer-to-opengl
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
         glDrawBuffer(GL_NONE);
         glReadBuffer(GL_NONE);
 #endif
@@ -226,10 +226,7 @@ void CommandBufferGL::setRenderPipeline(RenderPipeline* renderPipeline)
 
 void CommandBufferGL::setViewport(int x, int y, unsigned int w, unsigned int h)
 {
-    _viewport.x = x;
-    _viewport.y = y;
-    _viewport.w = w;
-    _viewport.h = h;
+    glViewport(x, y, w, h);
 }
 
 void CommandBufferGL::setCullMode(CullMode mode)
@@ -313,9 +310,7 @@ void CommandBufferGL::setDepthStencilState(DepthStencilState* depthStencilState)
 }
 
 void CommandBufferGL::prepareDrawing() const
-{
-    glViewport(_viewport.x, _viewport.y, _viewport.w, _viewport.h);
-    
+{   
     const auto& program = _renderPipeline->getProgram();
     glUseProgram(program->getHandler());
     
