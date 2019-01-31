@@ -14,6 +14,7 @@ CC_BACKEND_BEGIN
 class BufferGL;
 class RenderPipelineGL;
 class ProgramGL;
+class DepthStencilStateGL;
 
 class CommandBufferGL final : public CommandBuffer
 {
@@ -38,6 +39,8 @@ public:
     virtual void setLineWidth(float lineWidth) override;
     
     virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) override;
+    virtual void setDepthStencilState(DepthStencilState* depthStencilState) override;
+
     
 private:
     struct Viewport
@@ -63,6 +66,7 @@ private:
     BufferGL* _indexBuffer = nullptr;
     RenderPipelineGL* _renderPipeline = nullptr;
     CullMode _cullMode = CullMode::NONE;
+    DepthStencilStateGL* _depthStencilStateGL = nullptr;
 };
 
 CC_BACKEND_END

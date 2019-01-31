@@ -9,7 +9,6 @@
 
 CC_BACKEND_BEGIN
 
-class DepthStencilStateGL;
 class ProgramGL;
 class BlendStateGL;
 
@@ -20,12 +19,10 @@ public:
     ~RenderPipelineGL();
     
     inline ProgramGL* getProgram() const { return _programGL; }
-    inline DepthStencilStateGL* getDepthStencilState() const { return _depthStencilState; }
     inline BlendStateGL* getBlendState() const { return _blendState; }
     
 private:
     ProgramGL* _programGL = nullptr;
-    DepthStencilStateGL* _depthStencilState = nullptr;
     BlendStateGL* _blendState = nullptr;
 };
 
