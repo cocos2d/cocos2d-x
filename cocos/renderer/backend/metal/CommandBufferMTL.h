@@ -30,8 +30,8 @@ public:
     virtual void endFrame() override;
     
     virtual void setLineWidth(float lineWidth) override;
-    
     virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) override;
+    virtual void setDepthStencilState(DepthStencilState* depthStencilState) override;
     
 private:
     void prepareDrawing() const;
@@ -47,9 +47,10 @@ private:
     id<MTLRenderCommandEncoder> _mtlRenderEncoder = nil;
     id<MTLBuffer> _mtlIndexBuffer = nil;
     
-    DeviceMTL* _deviceMTL = nullptr;
     RenderPipelineMTL* _renderPipelineMTL = nullptr;
     ProgramState* _programState = nullptr;
+    id<MTLDepthStencilState> _mtlDepthStencilState = nil;
+    
     unsigned int _renderTargetHeight = 0;
     
     dispatch_semaphore_t _frameBoundarySemaphore;

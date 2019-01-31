@@ -153,8 +153,7 @@ namespace
 }
 
 CommandBufferMTL::CommandBufferMTL(DeviceMTL* deviceMTL)
-: _deviceMTL(deviceMTL)
-, _mtlCommandQueue(deviceMTL->getMTLCommandQueue())
+: _mtlCommandQueue(deviceMTL->getMTLCommandQueue())
 , _frameBoundarySemaphore(dispatch_semaphore_create(MAX_INFLIGHT_BUFFER))
 {
 }
@@ -315,15 +314,23 @@ void CommandBufferMTL::afterDraw()
     CC_SAFE_RELEASE_NULL(_programState);
 }
 
+void CommandBufferMTL::setDepthStencilState(DepthStencilState* depthStencilState)
+{
+    if (depthStencilState)
+        _mtlDepthStencilState = static_cast<DepthStencilStateMTL*>(depthStencilState)->getMTLDepthStencilState();
+    else
+        _mtlDepthStencilState = nil;
+    
+}
+
 void CommandBufferMTL::prepareDrawing() const
 {
     setUniformBuffer();
     setTextures();
     
-    auto mtlDepthStencilState = _renderPipelineMTL->getMTLDepthStencilState();
-    if (mtlDepthStencilState)
+    if (_mtlDepthStencilState)
     {
-        [_mtlRenderEncoder setDepthStencilState:mtlDepthStencilState];
+        [_mtlRenderEncoder setDepthStencilState:_mtlDepthStencilState];
         [_mtlRenderEncoder setStencilFrontReferenceValue:_stencilReferenceValueFront
                                       backReferenceValue:_stencilReferenceValueBack];
     }

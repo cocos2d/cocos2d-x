@@ -822,12 +822,12 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
     auto blendState = device->createBlendState(pipelineDescriptor.blendDescriptor);
     renderPipelineDescriptor.blendState = blendState;
     
+    backend::DepthStencilState* depthStencilState = nullptr;
     if (_depthStencilDescriptor.depthTestEnabled ||
         _depthStencilDescriptor.depthWriteEnabled ||
         _depthStencilDescriptor.stencilTestEnabled)
     {
-        auto depthStencilState = device->createDepthStencilState(_depthStencilDescriptor);
-        renderPipelineDescriptor.depthStencilState = depthStencilState;
+        depthStencilState = device->createDepthStencilState(_depthStencilDescriptor);
     }
 
     if (renderPassDescriptor.needColorAttachment)
@@ -852,10 +852,8 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
             renderPipelineDescriptor.stencilAttachmentFormat = backend::TextureFormat::D24S8;
     }
 
-    //FIXME: optimize it, cache the result as possible.
-    auto renderPipeline = device->newRenderPipeline(renderPipelineDescriptor);
-    _commandBuffer->setRenderPipeline(renderPipeline);
-    renderPipeline->release();
+    _commandBuffer->setRenderPipeline(getRenderPipeline(renderPipelineDescriptor));
+    _commandBuffer->setDepthStencilState(depthStencilState);
 }
 
 void Renderer::beginRenderPass(RenderCommand* cmd)
@@ -928,7 +926,7 @@ void Renderer::clear(ClearFlag flags, const Color4F& color, float depth, unsigne
 {
     _clearFlag = flags;
 
-    CallbackCommand* command = new CallbackCommand();;
+    CallbackCommand* command = new CallbackCommand();
     command->func = [=]() -> void {
         backend::RenderPassDescriptor descriptor;
 

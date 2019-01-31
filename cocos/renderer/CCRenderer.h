@@ -50,7 +50,7 @@ namespace backend
     class CommandBuffer;
     class RenderPipeline;
     class RenderPass;
-    class RenderPipelineDescriptor;
+    struct RenderPipelineDescriptor;
 }
 
 class EventListenerCustom;

@@ -17,7 +17,6 @@ public:
     ~RenderPipelineMTL();
         
     inline id<MTLRenderPipelineState> getMTLRenderPipelineState() const { return _mtlRenderPipelineState; }
-    inline id<MTLDepthStencilState> getMTLDepthStencilState() const { return _mtlDepthStencilState; }
     
     inline const std::shared_ptr<uint8_t>& getVertexUniformBuffer() const { return _vertexUniformBuffer; }
     inline const std::shared_ptr<uint8_t>& getFragmentUniformBuffer() const { return _fragementUniformBuffer; }
@@ -29,7 +28,6 @@ private:
     void setBlendStateAndFormat(const RenderPipelineDescriptor&);
     
     id<MTLRenderPipelineState> _mtlRenderPipelineState = nil;
-    id<MTLDepthStencilState> _mtlDepthStencilState = nil;
     id<MTLDevice> _mtlDevice = nil;
     
     std::shared_ptr<uint8_t> _vertexUniformBuffer = nullptr;

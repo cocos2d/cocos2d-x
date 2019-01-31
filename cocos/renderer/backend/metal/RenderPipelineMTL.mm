@@ -80,11 +80,6 @@ RenderPipelineMTL::RenderPipelineMTL(id<MTLDevice> mtlDevice, const RenderPipeli
     setShaderModules(descriptor);
     setVertexLayout(_mtlRenderPipelineDescriptor, descriptor);
     
-    // Depth stencil state.
-    auto depthStencilState = descriptor.depthStencilState;
-    if (depthStencilState)
-        _mtlDepthStencilState = static_cast<DepthStencilStateMTL*>(depthStencilState)->getMTLDepthStencilState();
-    
     auto blendState = static_cast<BlendStateMTL*>(descriptor.blendState);
     if (blendState)
         _blendDescriptorMTL = blendState->getBlendDescriptorMTL();
