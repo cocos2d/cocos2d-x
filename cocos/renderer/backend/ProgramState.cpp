@@ -4,6 +4,8 @@
 #include "renderer/backend/Texture.h"
 #include "renderer/backend/Types.h"
 
+#include "base/ccMacros.h"
+
 CC_BACKEND_BEGIN
 
 UniformBuffer::UniformBuffer(const backend::UniformInfo &_uniformInfo)

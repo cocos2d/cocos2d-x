@@ -169,7 +169,9 @@ void MeshCommand::applyRenderState()
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _textureID);
 
-    _stateBlock->bind();
+    auto &pipelineDescriptor = getPipelineDescriptor();
+
+    _stateBlock->bind(&pipelineDescriptor);
 }
 
 void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, BlendFunc blend)
@@ -253,7 +255,8 @@ void MeshCommand::postBatchDraw()
 
         // restore the default state since we don't know
         // if the next command will need the default state or not
-        RenderState::StateBlock::restore(0);
+        //TODO arnold
+        //RenderState::StateBlock::restoreGlobalState(0);
     }
 }
 

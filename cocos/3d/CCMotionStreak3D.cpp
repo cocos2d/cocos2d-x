@@ -396,9 +396,11 @@ void MotionStreak3D::onDraw(const Mat4 &transform, uint32_t /*flags*/)
     glBindTexture(GL_TEXTURE_2D, _texture->getName());
     
     glDisable(GL_CULL_FACE);
-    RenderState::StateBlock::_defaultState->setCullFace(false);
+    //TODO arnold
+    //RenderState::StateBlock::_globalState->setCullFace(false);
     glEnable(GL_DEPTH_TEST);
-    RenderState::StateBlock::_defaultState->setDepthTest(true);
+    //TODO arnold
+    //RenderState::StateBlock::_globalState->setDepthTest(true);
 
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _vertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);

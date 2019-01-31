@@ -46,13 +46,14 @@ namespace  backend
 }
 
 /// Technique
-class CC_DLL Technique : public RenderState
+class CC_DLL Technique :public Ref//: public RenderState
 {
     friend class Material;
     friend class Renderer;
     friend class Pass;
     friend class MeshCommand;
     friend class Mesh;
+    friend class RenderState;
 
 public:
     /** Creates a new Technique with a GLProgramState.
@@ -81,15 +82,21 @@ public:
     /** Returns a new clone of the Technique */
     Technique* clone() const;
 
+    void setMaterial(Material * material) { _material = material; }
+
+    RenderState::StateBlock &getStateBlock() { return _renderState.getStateBlock(); }
+
 protected:
     Technique();
     ~Technique();
     bool init(Material* parent);
 
     void setName(const std::string& name);
-
+    RenderState _renderState;
     std::string _name;
     Vector<Pass*> _passes;
+
+    Material *_material = nullptr;
 };
 
 NS_CC_END

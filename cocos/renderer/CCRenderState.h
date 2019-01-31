@@ -35,6 +35,9 @@
 #include "base/ccTypes.h"
 #include "base/CCVector.h"
 
+#include "renderer/CCPipelineDescriptor.h"
+#include "renderer/backend/Types.h"
+
 NS_CC_BEGIN
 
 class Texture2D;
@@ -54,64 +57,23 @@ class CC_DLL RenderState : public Ref
     friend class Pass;
 
 public:
-    /**
-     * Static initializer that is called during game startup.
-     */
-    static void initialize();
-
-    /**
-     * Static finalizer that is called during game shutdown.
-     */
-    static void finalize();
 
     std::string getName() const;
-
-
-    /** Texture that will use in the CC_Texture0 uniform.
-     Added to be backwards compatible. Use Samplers from .material instead.
-     */
-    void setTexture(Texture2D* texture);
-
-    /** Returns the texture that is going to be used for CC_Texture0.
-     Added to be backwards compatible.
-     */
-    Texture2D* getTexture() const;
 
     /**
      * Binds the render state for this RenderState and any of its parents, top-down,
      * for the given pass.
      */
-    void bind(Pass* pass);
+    void bindPass(Pass* pass);
 
-    /**
-     * Returns the topmost RenderState in the hierarchy below the given RenderState.
-     */
-    RenderState* getTopmost(RenderState* below);
-    
-    void setParent(RenderState* parent) { _parent = parent; }
 
-    enum Blend
-    {
-        BLEND_ZERO = GL_ZERO,
-        BLEND_ONE = GL_ONE,
-        BLEND_SRC_COLOR = GL_SRC_COLOR,
-        BLEND_ONE_MINUS_SRC_COLOR = GL_ONE_MINUS_SRC_COLOR,
-        BLEND_DST_COLOR = GL_DST_COLOR,
-        BLEND_ONE_MINUS_DST_COLOR = GL_ONE_MINUS_DST_COLOR,
-        BLEND_SRC_ALPHA = GL_SRC_ALPHA,
-        BLEND_ONE_MINUS_SRC_ALPHA = GL_ONE_MINUS_SRC_ALPHA,
-        BLEND_DST_ALPHA = GL_DST_ALPHA,
-        BLEND_ONE_MINUS_DST_ALPHA = GL_ONE_MINUS_DST_ALPHA,
-        BLEND_CONSTANT_ALPHA = GL_CONSTANT_ALPHA,
-        BLEND_ONE_MINUS_CONSTANT_ALPHA = GL_ONE_MINUS_CONSTANT_ALPHA,
-        BLEND_SRC_ALPHA_SATURATE = GL_SRC_ALPHA_SATURATE
-    };
+    void unbindPass(Pass* pass);
 
     /**
      * Defines a block of fixed-function render states that can be applied to a
      * RenderState object.
      */
-    class CC_DLL StateBlock : public Ref
+    class CC_DLL StateBlock // : public Ref
     {
         friend class RenderState;
         friend class Pass;
@@ -122,7 +84,7 @@ public:
         /**
          * Creates a new StateBlock with default render state settings.
          */
-        static StateBlock* create();
+        //static StateBlock* create();
 
         /** The recommended way to create StateBlocks is by calling `create`.
          * Don't use `new` or `delete` on them.
@@ -130,14 +92,14 @@ public:
          */
         StateBlock() = default;
         ~StateBlock() = default;
-
+        StateBlock(const StateBlock &) = default;
         /**
          * Binds the state in this StateBlock to the renderer.
          *
          * This method handles both setting and restoring of render states to ensure that
          * only the state explicitly defined by this StateBlock is applied to the renderer.
          */
-        void bind();
+        void bind(PipelineDescriptor *programState);
 
         /**
          * Explicitly sets the source and destination used in the blend function for this render state.
@@ -162,7 +124,7 @@ public:
          *
          * @param blend Specifies how the source blending factors are computed.
          */
-        void setBlendSrc(Blend blend);
+        void setBlendSrc(backend::BlendFactor blend);
 
         /**
          * Explicitly sets the source used in the blend function for this render state.
@@ -171,7 +133,7 @@ public:
          *
          * @param blend Specifies how the destination blending factors are computed.
          */
-        void setBlendDst(Blend blend);
+        void setBlendDst(backend::BlendFactor blend);
 
         /**
          * Explicitly enables or disables backface culling.
@@ -258,80 +220,46 @@ public:
             RS_ALL_ONES = 0xFFFFFFFF,
         };
 
-        /** 
-         * Invalidates the default StateBlock.
-         *
-         * Only call it if you are calling GL calls directly. Invoke this function
-         * at the end of your custom draw call.
-         * This function restores the default render state its defaults values.
-         * Since this function might call GL calls, it must be called in a GL context is present.
-         *
-         * @param stateBits Bitwise-OR of the states that needs to be invalidated
-         */
-        static void invalidate(long stateBits);
-
-        /**
-         * Restores the global Render State to the default state
-         *
-         * The difference between `invalidate()` and `restore()`, is that `restore()` will
-         * restore the global Render State based on its current state. Only the
-         * states that were changed will be restored.
-         *
-         * Rule of thumb:
-         
-         - call `restore()` if you want to restore to the default state after using `StateBlock`.
-         - call `invalidate()` if you want to restore to the default state after calling manual GL calls.
-
-         */
-        static void restore(long stateOverrideBits);
-
-        static StateBlock* _defaultState;
-
     protected:
-        void bindNoRestore();
-        void cloneInto(StateBlock* renderState) const;
+        
+        /**
+        * update internal states of ProgramState
+        */
+        void apply(PipelineDescriptor *programState);
+
+        static void restore(long flags, PipelineDescriptor *programState);
+
 
         bool _cullFaceEnabled = false;
         bool _depthTestEnabled = true;
         bool _depthWriteEnabled = false;
         DepthFunction _depthFunction = DepthFunction::LESS;
         bool _blendEnabled = true;
-        Blend _blendSrc = RenderState::BLEND_ONE;
-        Blend _blendDst = RenderState::BLEND_ZERO;
+        backend::BlendFactor _blendSrc = backend::BlendFactor::ONE;
+        backend::BlendFactor _blendDst = backend::BlendFactor::ZERO;
         CullFaceSide _cullFaceSide = CullFaceSide::BACK;
         FrontFace _frontFace = FrontFace::COUNTER_CLOCK_WISE;
-        long _bits = 0L;
+        long _modifiedBits = 0L;
 
         mutable uint32_t _hash;
         mutable bool _hashDirty;
     };
 
-    void setStateBlock(StateBlock* state);
-    StateBlock* getStateBlock() const;
+    StateBlock& getStateBlock() const;
 
 protected:
-    RenderState();
-    ~RenderState();
-    bool init(RenderState* parent);
-    void cloneInto(RenderState* state) const;
-
+    RenderState() = default;
+    
     mutable uint32_t _hash = 0;
     mutable bool _hashDirty = true;
 
     /**
      * The StateBlock of fixed-function render states that can be applied to the RenderState.
      */
-    mutable StateBlock* _state = nullptr;
-
-    /**
-     * The RenderState's parent. Weak Reference
-     */
-    RenderState* _parent = nullptr;
+    mutable StateBlock _state;
 
     // name, for filtering
     std::string _name;
-
-    Texture2D* _texture = nullptr;
 };
 
 NS_CC_END

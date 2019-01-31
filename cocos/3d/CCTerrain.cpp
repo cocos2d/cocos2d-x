@@ -108,10 +108,10 @@ bool Terrain::initProperties()
 
     setGLProgramState(state);
 
-    _stateBlock->setBlend(false);
-    _stateBlock->setDepthWrite(true);
-    _stateBlock->setDepthTest(true);
-    _stateBlock->setCullFace(true);
+    _stateBlock.setBlend(false);
+    _stateBlock.setDepthWrite(true);
+    _stateBlock.setDepthTest(true);
+    _stateBlock.setCullFace(true);
 
     setDrawWire(false);
     setIsEnableFrustumCull(true);
@@ -127,6 +127,8 @@ void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, 
 
 void Terrain::onDraw(const Mat4 &transform, uint32_t /*flags*/)
 {
+    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+
     auto modelMatrix = getNodeToWorldTransform();
     if(memcmp(&modelMatrix,&_terrainModelMatrix,sizeof(Mat4))!=0)
     {
@@ -146,7 +148,7 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t /*flags*/)
     }
 #endif
 
-    _stateBlock->bind();
+    _stateBlock.bind(&pipelineDescriptor);
 
     glEnableVertexAttribArray(_positionLocation);
     glEnableVertexAttribArray(_texcoordLocation);
@@ -282,14 +284,10 @@ Terrain::Terrain()
 : _alphaMap(nullptr)
 , _lightMap(nullptr)
 , _lightDir(-1.f, -1.f, 0.f)
-, _stateBlock(nullptr)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 , _backToForegroundListener(nullptr)
 #endif
 {
-    _stateBlock = RenderState::StateBlock::create();
-    CC_SAFE_RETAIN(_stateBlock);
-
     _customCommand.setTransparent(false);
     _customCommand.set3D(true);
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -485,7 +483,6 @@ void Terrain::setIsEnableFrustumCull(bool bool_value)
 
 Terrain::~Terrain()
 {
-    CC_SAFE_RELEASE(_stateBlock);
     CC_SAFE_RELEASE(_alphaMap);
     CC_SAFE_RELEASE(_lightMap);
     CC_SAFE_RELEASE(_heightMapImage);

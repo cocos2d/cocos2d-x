@@ -531,20 +531,21 @@ LanguageType getLanguageTypeByISO2(const char* code)
 
 void setBlending(backend::BlendFactor sfactor, backend::BlendFactor dfactor)
 {
-    if (sfactor == backend::BlendFactor::ONE && dfactor == backend::BlendFactor::ZERO)
-    {
-        glDisable(GL_BLEND);
-        RenderState::StateBlock::_defaultState->setBlend(false);
-    }
-    else
-    {
-        glEnable(GL_BLEND);
-        glBlendFunc(toGLBlendFactor(sfactor), toGLBlendFactor(dfactor));
+    //TODO arnold: global state is removal
+    //if (sfactor == backend::BlendFactor::ONE && dfactor == backend::BlendFactor::ZERO)
+    //{
+    //    glDisable(GL_BLEND);
+    //    RenderState::StateBlock::_globalState->setBlend(false);
+    //}
+    //else
+    //{
+    //    glEnable(GL_BLEND);
+    //    glBlendFunc(toGLBlendFactor(sfactor), toGLBlendFactor(dfactor));
 
-        RenderState::StateBlock::_defaultState->setBlend(true);
-        RenderState::StateBlock::_defaultState->setBlendSrc((RenderState::Blend)sfactor);
-        RenderState::StateBlock::_defaultState->setBlendDst((RenderState::Blend)dfactor);
-    }
+    //    RenderState::StateBlock::_globalState->setBlend(true);
+    //    RenderState::StateBlock::_globalState->setBlendSrc(sfactor);
+    //    RenderState::StateBlock::_globalState->setBlendDst(dfactor);
+    //}
 }
     
 backend::BlendFactor toBackendBlendFactor(int factor)
@@ -574,6 +575,10 @@ backend::BlendFactor toBackendBlendFactor(int factor)
             return backend::BlendFactor::SRC_ALPHA_SATURATE;
         case GLBlendConst::BLEND_COLOR:
             return backend::BlendFactor::BLEND_CLOLOR;
+        case GLBlendConst::CONSTANT_ALPHA:
+            return backend::BlendFactor::CONSTANT_ALPHA;
+        case GLBlendConst::ONE_MINUS_CONSTANT_ALPHA:
+            return backend::BlendFactor::ONE_MINUS_CONSTANT_ALPHA;
         default:
             assert(false);
             break;

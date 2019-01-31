@@ -71,7 +71,7 @@ Technique::~Technique()
 
 bool Technique::init(Material* parent)
 {
-    _parent = parent;
+    _material = parent;
     return true;
 }
 
@@ -82,12 +82,13 @@ Technique* Technique::clone() const
     if (technique)
     {
         technique->_name = _name;
-        RenderState::cloneInto(technique);
+        //TODO arnold: remove renderstate from technique
+        //RenderState::cloneInto(technique);
 
         for (const auto pass: _passes)
         {
             auto p = pass->clone();
-            p->_parent = technique;
+            p->_technique = technique;
             technique->_passes.pushBack(p);
         }
 

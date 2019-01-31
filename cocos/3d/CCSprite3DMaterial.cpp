@@ -193,14 +193,15 @@ Material* Sprite3DMaterial::clone() const
     auto material = new (std::nothrow) Sprite3DMaterial();
     if (material)
     {
-        RenderState::cloneInto(material);
+        // RenderState::cloneInto(material);
+        material->_renderState = _renderState;
         
         for (const auto& technique: _techniques)
         {
             auto t = technique->clone();
-            t->setParent(material);
+            t->setMaterial(material);
             for (ssize_t i = 0; i < t->getPassCount(); i++) {
-                t->getPassByIndex(i)->setParent(t);
+                t->getPassByIndex(i)->setTechnique(t);
             }
             material->_techniques.pushBack(t);
         }

@@ -70,13 +70,13 @@ Pass* Pass::createWithProgramState(Technique* technique, backend::ProgramState* 
 
 bool Pass::init(Technique* technique)
 {
-    _parent = technique;
+    _technique = technique;
     return true;
 }
 
 bool Pass::initWithProgramState(Technique* technique, backend::ProgramState *programState)
 {
-    _parent = technique;
+    _technique = technique;
     setProgramState(programState);
     return true;
 }
@@ -103,15 +103,15 @@ Pass* Pass::clone() const
     auto pass = new (std::nothrow) Pass();
     if (pass)
     {
-        RenderState::cloneInto(pass);
+        //RenderState::cloneInto(pass);
+        pass->_renderState = _renderState;
 
         pass->setProgramState(_programState->clone());
         
-        //
         pass->_vertexAttribBinding = _vertexAttribBinding;
         CC_SAFE_RETAIN(pass->_vertexAttribBinding);
 
-        pass->setParent(_parent);
+        pass->setTechnique(_technique);
 
         pass->autorelease();
     }
@@ -137,22 +137,22 @@ void Pass::setProgramState(backend::ProgramState* programState)
     }
 }
 
-uint32_t Pass::getHash() const
-{
-    if (_hashDirty || _state->isDirty())
-    {
-        //FIXME: loose information?
-        uint32_t program = (uint32_t)(intptr_t)(_programState->getProgram());
-        uint32_t textureid = _texture ? _texture->getName() : -1;
-        uint32_t stateblockid = _state->getHash();
-
-        _hash = program ^ textureid ^ stateblockid;
-
-        _hashDirty = false;
-    }
-
-    return _hash;
-}
+//uint32_t Pass::getHash() const
+//{
+//    if (_hashDirty || _state->isDirty())
+//    {
+//        //FIXME: loose information?
+//        uint32_t program = (uint32_t)(intptr_t)(_programState->getProgram());
+//        uint32_t textureid = _texture ? _texture->getName() : -1;
+//        uint32_t stateblockid = _state->getHash();
+//
+//        _hash = program ^ textureid ^ stateblockid;
+//
+//        _hashDirty = false;
+//    }
+//
+//    return _hash;
+//}
 
 //void Pass::bind(const Mat4& modelView)
 //{
@@ -191,18 +191,63 @@ void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buff
 
     _customCommand.getPipelineDescriptor().programState = _programState;
 
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    auto *renderer = Director::getInstance()->getRenderer();
 
-    RenderState::bind(this);
+    _groupCommand.init(globalZOrder);
+    renderer->addCommand(&_groupCommand);
+    renderer->pushGroup(_groupCommand.getRenderQueueID());
+
+    _beforeVisitCmd.init(globalZOrder);
+    _afterVisitCmd.init(globalZOrder);
+
+    _beforeVisitCmd.func = CC_CALLBACK_0(Pass::onBeforeVisitCmd, this);
+    _afterVisitCmd.func = CC_CALLBACK_0(Pass::onAfterVisitCmd, this);
+
+    renderer->addCommand(&_beforeVisitCmd);
+    renderer->addCommand(&_customCommand);
+    renderer->addCommand(&_afterVisitCmd);
+
+    renderer->popGroup();
 }
+
+void Pass::onBeforeVisitCmd()
+{
+    auto *renderer = Director::getInstance()->getRenderer();
+    //_oldDepthEnabledState = renderer->getDepthTest();
+
+    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+
+    //TODO arnold
+    _renderState.bindPass(this);
+
+    renderer->setDepthTest(true);
+}
+
+void Pass::onAfterVisitCmd()
+{
+    //auto *renderer = Director::getInstance()->getRenderer();
+    //TODO arnold : restore renderState
+    //RenderState::StateBlock::restoreGlobalState(0);
+
+    //renderer->setDepthTest(_oldDepthEnabledState);
+
+    _renderState.unbindPass(this);
+}
+
 
 Node* Pass::getTarget() const
 {
-    CCASSERT(_parent && _parent->_parent, "Pass must have a Technique and Material");
+    CCASSERT(_technique && _technique->_material, "Pass must have a Technique and Material");
 
-    Material *material = static_cast<Material*>(_parent->_parent);
+    Material *material = _technique->_material;
     return material->_target;
 }
+
+void Pass::setTechnique(Technique *technique)
+{
+    _technique = technique; //weak reference
+}
+
 
 //void Pass::unbind()
 //{

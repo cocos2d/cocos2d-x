@@ -884,7 +884,7 @@ Rect Sprite3D::getBoundingBox() const
 void Sprite3D::setCullFace(CullFaceSide side)
 {
     for (auto& it : _meshes) {
-        it->getMaterial()->getStateBlock()->setCullFaceSide(side);
+        it->getMaterial()->getStateBlock().setCullFaceSide(side);
 //        it->getMeshCommand().setCullFace(cullFace);
     }
 }
@@ -892,7 +892,7 @@ void Sprite3D::setCullFace(CullFaceSide side)
 void Sprite3D::setCullFaceEnabled(bool enable)
 {
     for (auto& it : _meshes) {
-        it->getMaterial()->getStateBlock()->setCullFace(enable);
+        it->getMaterial()->getStateBlock().setCullFace(enable);
 //        it->getMeshCommand().setCullFaceEnabled(enable);
     }
 }

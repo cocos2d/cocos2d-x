@@ -142,7 +142,8 @@ void DrawNode3D::onDraw(const Mat4 &transform, uint32_t flags)
     glProgram->use();
     glProgram->setUniformsForBuiltins(transform);
     glEnable(GL_DEPTH_TEST);
-    RenderState::StateBlock::_defaultState->setDepthTest(true);
+    //TODO arnold
+    //RenderState::StateBlock::_globalState->setDepthTest(true);
     cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
     if (_dirty)

@@ -7,6 +7,8 @@
 #include "BlendStateGL.h"
 #include "base/ccMacros.h"
 
+#include <algorithm>
+
 CC_BACKEND_BEGIN
 
 namespace
@@ -381,18 +383,27 @@ void CommandBufferGL::setUniforms(ProgramGL* program) const
 {
     if (_programState)
     {
-        const auto& uniformInfos = _programState->getVertexUniformInfos();
+        auto& uniformInfos = _programState->getVertexUniformInfos();
         int i = 0;
-        for(const auto& iter : uniformInfos)
+        for(auto& iter : uniformInfos)
         {
-            const auto& uniformInfo = iter.uniformInfo;
+            auto& uniformInfo = iter.uniformInfo;
             if(uniformInfo.bufferSize <= 0)
                 continue;
+
+            int elementCount = uniformInfo.count;
+            if (uniformInfo.isArray)
+            {
+                CCASSERT(uniformInfo.count * uniformInfo.bufferSize >= iter.data.size(), "uniform data size mismatch!");
+                //iter.data.reserve(uniformInfo.count * uniformInfo.bufferSize);
+                elementCount = std::min(elementCount, (int)(iter.data.size() / uniformInfo.bufferSize));
+            }
+
             setUniform(uniformInfo.isArray,
-                       uniformInfo.location,
-                       uniformInfo.count,
-                       uniformInfo.type,
-                       (void*)iter.data.data());
+                uniformInfo.location,
+                elementCount,
+                uniformInfo.type,
+                (void*)iter.data.data());
         }
         
         const auto& textureInfo = _programState->getVertexTextureInfos();
@@ -504,6 +515,7 @@ void CommandBufferGL::setUniform(bool isArray, GLuint location, unsigned int siz
         break;
         
         default:
+            CCASSERT(false, "invalidate Uniform data type");
         break;
     }
 }

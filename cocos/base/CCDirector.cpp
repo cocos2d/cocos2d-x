@@ -154,7 +154,8 @@ bool Director::init(void)
     initMatrixStack();
 
     _renderer = new (std::nothrow) Renderer;
-    RenderState::initialize();
+    //TODO arnold
+    //RenderState::initialize(); 
 
     return true;
 }
@@ -1055,7 +1056,8 @@ void Director::reset()
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
     resetMatrixStack();
-    RenderState::finalize();
+    //TODO arnold
+    //RenderState::finalize();
     
     destroyTextureCache();
 }
@@ -1082,7 +1084,8 @@ void Director::restartDirector()
     reset();
     
     // RenderState need to be reinitialized
-    RenderState::initialize();
+    //TODO arnold
+    //RenderState::initialize();
 
     // Texture cache need to be reinitialized
     initTextureCache();

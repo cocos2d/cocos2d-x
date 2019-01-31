@@ -43,7 +43,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DHitTest);
     ADD_TEST_CASE(AsyncLoadSprite3DTest);
 //    // 3DEffect use custom shader which is not supported on WP8/WinRT yet.
-//    ADD_TEST_CASE(Sprite3DEffectTest);
+    ADD_TEST_CASE(Sprite3DEffectTest);
 //    ADD_TEST_CASE(Sprite3DUVAnimationTest);
 //    ADD_TEST_CASE(Sprite3DFakeShadowTest);
 //    ADD_TEST_CASE(Sprite3DBasicToonShaderTest);

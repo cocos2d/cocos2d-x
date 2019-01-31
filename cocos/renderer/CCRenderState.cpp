@@ -28,53 +28,17 @@
 #include "renderer/CCRenderState.h"
 
 #include <string>
+#include <cassert>
 
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCPass.h"
 #include "base/ccUtils.h"
 #include "base/CCDirector.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCMaterial.h"
 
 NS_CC_BEGIN
 
-RenderState::StateBlock* RenderState::StateBlock::_defaultState = nullptr;
-
-
-RenderState::RenderState()
-{
-    _state = StateBlock::create();
-    CC_SAFE_RETAIN(_state);
-}
-
-RenderState::~RenderState()
-{
-    CC_SAFE_RELEASE(_texture);
-    CC_SAFE_RELEASE(_state);
-}
-
-void RenderState::initialize()
-{
-    if (StateBlock::_defaultState == nullptr)
-    {
-        StateBlock::_defaultState = StateBlock::create();
-        CC_SAFE_RETAIN(StateBlock::_defaultState);
-    }
-}
-
-void RenderState::finalize()
-{
-    CC_SAFE_RELEASE_NULL(StateBlock::_defaultState);
-}
-
-bool RenderState::init(RenderState* parent)
-{
-    CCASSERT(!_parent, "Cannot reinitialize Render State");
-    CCASSERT(parent, "parent must be non-null");
-
-    // Weak reference
-    _parent = parent;
-    return true;
-}
 
 std::string RenderState::getName() const
 {
@@ -82,315 +46,243 @@ std::string RenderState::getName() const
 }
 
 
-void RenderState::setTexture(Texture2D* texture)
-{
-    if (_texture != texture)
-    {
-        CC_SAFE_RELEASE(_texture);
-        _texture = texture;
-        CC_SAFE_RETAIN(_texture);
-    }
-}
-
-Texture2D* RenderState::getTexture() const
-{
-    return _texture;
-}
-
-void RenderState::bind(Pass* pass)
+void RenderState::bindPass(Pass* pass)
 {
     CC_ASSERT(pass);
+    assert(pass->_technique && pass->_technique->_material);
+    auto *technique = pass->_technique;
+    auto *material = technique->_material;
+    auto &pipelineDescriptor = pass->_customCommand.getPipelineDescriptor();
 
-//    if (_texture)
-//    {
-//        glActiveTexture(GL_TEXTURE0);
-//        glBindTexture(GL_TEXTURE_2D, _texture->getName());
-//    }
+    //need reset all state
+    //pipelineDescriptor.blendDescriptor.blendEnabled = true;
 
     // Get the combined modified state bits for our RenderState hierarchy.
-    long stateOverrideBits = _state ? _state->_bits : 0;
-    RenderState* rs = _parent;
-    while (rs)
-    {
-        if (rs->_state)
-        {
-            stateOverrideBits |= rs->_state->_bits;
-        }
-        rs = rs->_parent;
-    }
+    long overrideBits = _state._modifiedBits;
+    overrideBits |= technique->getStateBlock()._modifiedBits;
+    overrideBits |= material->getStateBlock()._modifiedBits;
 
     // Restore renderer state to its default, except for explicitly specified states
-    StateBlock::restore(stateOverrideBits);
+    RenderState::StateBlock::restore(overrideBits, &pipelineDescriptor);
 
-    // Apply renderer state for the entire hierarchy, top-down.
-    rs = nullptr;
-    while ((rs = getTopmost(rs)))
-    {
-        if (rs->_state)
-        {
-            rs->_state->bindNoRestore();
-        }
-    }
+    material->getStateBlock().apply(&pipelineDescriptor);
+    technique->getStateBlock().apply(&pipelineDescriptor);
+    _state.apply(&pipelineDescriptor);
+
 }
 
-RenderState* RenderState::getTopmost(RenderState* below)
+void RenderState::unbindPass(Pass* pass)
 {
-    RenderState* rs = this;
-    if (rs == below)
-    {
-        // Nothing below ourself.
-        return nullptr;
-    }
-
-    while (rs)
-    {
-        if (rs->_parent == below || rs->_parent == nullptr)
-        {
-            // Stop traversing up here.
-            return rs;
-        }
-        rs = rs->_parent;
-    }
-
-    return nullptr;
+    auto &pipelineDescriptor = pass->_customCommand.getPipelineDescriptor();
+    RenderState::StateBlock::restore(0, &pipelineDescriptor);
 }
 
-RenderState::StateBlock* RenderState::getStateBlock() const
+RenderState::StateBlock& RenderState::getStateBlock() const
 {
     return _state;
 }
 
-void RenderState::setStateBlock(RenderState::StateBlock* state)
-{
-    CC_SAFE_RETAIN(state);
-    CC_SAFE_RELEASE(_state);
-    _state = state;
-}
 
-void RenderState::cloneInto(RenderState* renderState) const
-{
-    CCASSERT(renderState, "must be non null");
-
-    // Clone our state block
-    if (_state)
-    {
-        _state->cloneInto(renderState->getStateBlock());
-    }
-
-    renderState->_name = _name;
-    renderState->_texture = _texture;
-    CC_SAFE_RETAIN(renderState->_texture);
-    // weak ref. don't retain
-    renderState->_parent = _parent;
-}
-
-//
-// StateBlock
-//
-RenderState::StateBlock* RenderState::StateBlock::create()
-{
-    auto state = new (std::nothrow) RenderState::StateBlock();
-    if (state)
-    {
-        state->autorelease();
-    }
-
-    return state;
-}
-
-void RenderState::StateBlock::bind()
+void RenderState::StateBlock::bind(PipelineDescriptor *programState)
 {
     // When the public bind() is called with no RenderState object passed in,
     // we assume we are being called to bind the state of a single StateBlock,
     // irrespective of whether it belongs to a hierarchy of RenderStates.
     // Therefore, we call restore() here with only this StateBlock's override
     // bits to restore state before applying the new state.
-    StateBlock::restore(_bits);
-
-    bindNoRestore();
+    
+    apply(programState);
 }
 
-void RenderState::StateBlock::bindNoRestore()
+void RenderState::StateBlock::apply(PipelineDescriptor *programState)
 {
-    CC_ASSERT(_defaultState);
+    //CC_ASSERT(_globalState);
 
     auto renderer = Director::getInstance()->getRenderer();
+    auto &blend = programState->blendDescriptor;
 
-    // Update any state that differs from _defaultState and flip _defaultState bits
-    if ((_bits & RS_BLEND) && (_blendEnabled != _defaultState->_blendEnabled))
+    // Update any state that differs from _globalState and flip _globalState bits
+    if ((_modifiedBits & RS_BLEND))
     {
-    //TODO
-//        if (_blendEnabled)
-//            glEnable(GL_BLEND);
-//        else
-//            glDisable(GL_BLEND);
+        blend.blendEnabled = _blendEnabled;
+    }
 
-        _defaultState->_blendEnabled = _blendEnabled;
-    }
-    if ((_bits & RS_BLEND_FUNC) && (_blendSrc != _defaultState->_blendSrc || _blendDst != _defaultState->_blendDst))
+    if ((_modifiedBits & RS_BLEND_FUNC))
     {
-    //TODO
-//        utils::setBlending(utils::toBackendBlendFactor(_blendSrc), utils::toBackendBlendFactor(_blendDst));
-        _defaultState->_blendSrc = _blendSrc;
-        _defaultState->_blendDst = _blendDst;
+        blend.sourceAlphaBlendFactor = blend.sourceRGBBlendFactor = _blendSrc;
+        blend.destinationAlphaBlendFactor = blend.destinationRGBBlendFactor = _blendDst;
     }
-    if ((_bits & RS_CULL_FACE) && (_cullFaceEnabled != _defaultState->_cullFaceEnabled))
+
+    if ((_modifiedBits & RS_CULL_FACE))
     {
         if (!_cullFaceEnabled)
              renderer->setCullMode(CullMode::NONE);
-
-        _defaultState->_cullFaceEnabled = _cullFaceEnabled;
     }
-    if ((_bits & RS_CULL_FACE_SIDE) && (_cullFaceSide != _defaultState->_cullFaceSide))
+
+    if ((_modifiedBits & RS_CULL_FACE_SIDE))
     {
         renderer->setCullMode(_cullFaceSide);
-        _defaultState->_cullFaceSide = _cullFaceSide;
     }
-    if ((_bits & RS_FRONT_FACE) && (_frontFace != _defaultState->_frontFace))
+
+    if ((_modifiedBits & RS_FRONT_FACE))
     {
         renderer->setWinding(_frontFace);
-        _defaultState->_frontFace = _frontFace;
     }
-    if ((_bits & RS_DEPTH_TEST) && (_depthTestEnabled != _defaultState->_depthTestEnabled))
+    if ((_modifiedBits & RS_DEPTH_TEST))
     {
         renderer->setDepthTest(_depthTestEnabled);
-        _defaultState->_depthTestEnabled = _depthTestEnabled;
     }
-    if ((_bits & RS_DEPTH_WRITE) && (_depthWriteEnabled != _defaultState->_depthWriteEnabled))
+
+    if ((_modifiedBits & RS_DEPTH_WRITE))
     {
-        renderer->setDepthWrite(_depthTestEnabled);
-        _defaultState->_depthWriteEnabled = _depthWriteEnabled;
+        renderer->setDepthWrite(_depthWriteEnabled);
     }
-    if ((_bits & RS_DEPTH_FUNC) && (_depthFunction != _defaultState->_depthFunction))
+
+    if ((_modifiedBits & RS_DEPTH_FUNC))
     {
         renderer->setDepthCompareFunction(_depthFunction);
-        _defaultState->_depthFunction = _depthFunction;
     }
-
-    _defaultState->_bits |= _bits;
 }
 
-void RenderState::StateBlock::restore(long stateOverrideBits)
+void RenderState::StateBlock::restore(long overrideBits, PipelineDescriptor *programState)
 {
-    CC_ASSERT(_defaultState);
-
     auto renderer = Director::getInstance()->getRenderer();
+    auto &blend = programState->blendDescriptor;
 
-    // If there is no state to restore (i.e. no non-default state), do nothing.
-//    if (_defaultState->_bits == 0)
-    if ( (stateOverrideBits | _defaultState->_bits) == stateOverrideBits)
-        return;
+    // Update any state that differs from _globalState and flip _globalState bits
+    if (!(overrideBits & RS_BLEND))
+    {
+        blend.blendEnabled = true;
+    }
 
-    // Restore any state that is not overridden and is not default
-    if (!(stateOverrideBits & RS_BLEND) && (_defaultState->_bits & RS_BLEND))
+    if (!(overrideBits & RS_BLEND_FUNC))
     {
-    //TODO
-//        glEnable(GL_BLEND);
-        _defaultState->_bits &= ~RS_BLEND;
-        _defaultState->_blendEnabled = true;
+        blend.sourceAlphaBlendFactor = blend.sourceRGBBlendFactor = backend::BlendFactor::ONE;
+        blend.destinationAlphaBlendFactor = blend.destinationRGBBlendFactor = backend::BlendFactor::ZERO;
     }
-    if (!(stateOverrideBits & RS_BLEND_FUNC) && (_defaultState->_bits & RS_BLEND_FUNC))
-    {
-    //TODO
-//        utils::setBlending(backend::BlendFactor::ONE, backend::BlendFactor::ZERO);
-        _defaultState->_bits &= ~RS_BLEND_FUNC;
-        _defaultState->_blendSrc = RenderState::BLEND_ONE;
-        _defaultState->_blendDst = RenderState::BLEND_ZERO;
-    }
-    if (!(stateOverrideBits & RS_CULL_FACE) && (_defaultState->_bits & RS_CULL_FACE))
+
+    if (!(overrideBits & RS_CULL_FACE))
     {
         renderer->setCullMode(CullMode::NONE);
-        _defaultState->_bits &= ~RS_CULL_FACE;
-        _defaultState->_cullFaceEnabled = false;
     }
-    if (!(stateOverrideBits & RS_CULL_FACE_SIDE) && (_defaultState->_bits & RS_CULL_FACE_SIDE))
+
+    if (!(overrideBits & RS_CULL_FACE_SIDE))
     {
         renderer->setCullMode(CullMode::BACK);
-        _defaultState->_bits &= ~RS_CULL_FACE_SIDE;
-        _defaultState->_cullFaceSide = CullFaceSide::BACK;
     }
-    if (!(stateOverrideBits & RS_FRONT_FACE) && (_defaultState->_bits & RS_FRONT_FACE))
+
+    if (!(overrideBits & RS_FRONT_FACE))
     {
         renderer->setWinding(FrontFace::COUNTER_CLOCK_WISE);
-        _defaultState->_bits &= ~RS_FRONT_FACE;
-        _defaultState->_frontFace = FrontFace::COUNTER_CLOCK_WISE;
     }
-    if (!(stateOverrideBits & RS_DEPTH_TEST) && (_defaultState->_bits & RS_DEPTH_TEST))
+
+    if (!(overrideBits & RS_DEPTH_TEST))
     {
         renderer->setDepthTest(true);
-        _defaultState->_bits &= ~RS_DEPTH_TEST;
-        _defaultState->_depthTestEnabled = true;
     }
-    if (!(stateOverrideBits & RS_DEPTH_WRITE) && (_defaultState->_bits & RS_DEPTH_WRITE))
+
+    if (!(overrideBits & RS_DEPTH_WRITE))
     {
         renderer->setDepthWrite(false);
-        _defaultState->_bits &= ~RS_DEPTH_WRITE;
-        _defaultState->_depthWriteEnabled = false;
     }
-    if (!(stateOverrideBits & RS_DEPTH_FUNC) && (_defaultState->_bits & RS_DEPTH_FUNC))
+
+
+    if (!(overrideBits & RS_DEPTH_FUNC))
     {
         renderer->setDepthCompareFunction(DepthFunction::LESS);
-        _defaultState->_bits &= ~RS_DEPTH_FUNC;
-        _defaultState->_depthFunction = DepthFunction::LESS;
     }
 }
 
-void RenderState::StateBlock::cloneInto(StateBlock* state) const
-{
-    CC_ASSERT(state);
-
-    state->_cullFaceEnabled = _cullFaceEnabled;
-    state->_depthTestEnabled = _depthTestEnabled;
-    state->_depthWriteEnabled = _depthWriteEnabled;
-    state->_depthFunction = _depthFunction;
-    state->_blendEnabled = _blendEnabled;
-    state->_blendSrc = _blendSrc;
-    state->_blendDst = _blendDst;
-    state->_cullFaceSide = _cullFaceSide;
-    state->_frontFace = _frontFace;
-    state->_bits = _bits;
-}
+//void RenderState::StateBlock::restoreGlobalState(long notDefaultValueBits)
+//{
+//    //CC_ASSERT(_globalState);
+//
+//    auto renderer = Director::getInstance()->getRenderer();
+//
+//    //only zero bits in notDefaultValueBits will be reset to zero
+//
+//    // If there is no state to restore (i.e. no non-default state), do nothing.
+////    if (_globalState->_bits == 0)
+//    if ( (notDefaultValueBits)
+//        return;
+//
+//    // Restore any state that is not overridden and is not default
+//    if (!(notDefaultValueBits & RS_BLEND))
+//    {
+//    //TODO
+////        glEnable(GL_BLEND);
+//    }
+//    if (!(notDefaultValueBits & RS_BLEND_FUNC))
+//    {
+//    //TODO
+////        utils::setBlending(backend::BlendFactor::ONE, backend::BlendFactor::ZERO);
+//        _globalState->_notDefaultValueBits &= ~RS_BLEND_FUNC;
+//        _globalState->_blendSrc = backend::BlendFactor::ONE;
+//        _globalState->_blendDst = backend::BlendFactor::ZERO;
+//    }
+//    if (!(notDefaultValueBits & RS_CULL_FACE))
+//    {
+//        
+//    }
+//    if (!(notDefaultValueBits & RS_CULL_FACE_SIDE))
+//    {
+//        
+//    }
+//    if (!(notDefaultValueBits & RS_FRONT_FACE))
+//    {
+//       
+//    }
+//    if (!(notDefaultValueBits & RS_DEPTH_TEST))
+//    {
+//       
+//    }
+//    if (!(notDefaultValueBits & RS_DEPTH_WRITE))
+//    {
+//    }
+//    if (!(notDefaultValueBits & RS_DEPTH_FUNC))
+//   
+//}
 
 static bool parseBoolean(const std::string& value)
 {
     return (value.compare("true") == 0);
 }
 
-static RenderState::Blend parseBlend(const std::string& value)
+static backend::BlendFactor parseBlend(const std::string& value)
 {
     // Convert the string to uppercase for comparison.
     std::string upper(value);
     std::transform(upper.begin(), upper.end(), upper.begin(), (int(*)(int))toupper);
     if (upper == "ZERO")
-        return RenderState::BLEND_ZERO;
+        return backend::BlendFactor::ZERO;
     else if (upper == "ONE")
-        return RenderState::BLEND_ONE;
+        return backend::BlendFactor::ONE;
     else if (upper == "SRC_COLOR")
-        return RenderState::BLEND_SRC_COLOR;
+        return backend::BlendFactor::SRC_COLOR;
     else if (upper == "ONE_MINUS_SRC_COLOR")
-        return RenderState::BLEND_ONE_MINUS_SRC_COLOR;
+        return backend::BlendFactor::ONE_MINUS_SRC_COLOR;
     else if (upper == "DST_COLOR")
-        return RenderState::BLEND_DST_COLOR;
+        return backend::BlendFactor::DST_COLOR;
     else if (upper == "ONE_MINUS_DST_COLOR")
-        return RenderState::BLEND_ONE_MINUS_DST_COLOR;
+        return backend::BlendFactor::ONE_MINUS_DST_COLOR;
     else if (upper == "SRC_ALPHA")
-        return RenderState::BLEND_SRC_ALPHA;
+        return backend::BlendFactor::SRC_ALPHA;
     else if (upper == "ONE_MINUS_SRC_ALPHA")
-        return RenderState::BLEND_ONE_MINUS_SRC_ALPHA;
+        return backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
     else if (upper == "DST_ALPHA")
-        return RenderState::BLEND_DST_ALPHA;
+        return backend::BlendFactor::DST_ALPHA;
     else if (upper == "ONE_MINUS_DST_ALPHA")
-        return RenderState::BLEND_ONE_MINUS_DST_ALPHA;
+        return backend::BlendFactor::ONE_MINUS_DST_ALPHA;
     else if (upper == "CONSTANT_ALPHA")
-        return RenderState::BLEND_CONSTANT_ALPHA;
+        return backend::BlendFactor::CONSTANT_ALPHA;
     else if (upper == "ONE_MINUS_CONSTANT_ALPHA")
-        return RenderState::BLEND_ONE_MINUS_CONSTANT_ALPHA;
+        return backend::BlendFactor::ONE_MINUS_CONSTANT_ALPHA;
     else if (upper == "SRC_ALPHA_SATURATE")
-        return RenderState::BLEND_SRC_ALPHA_SATURATE;
+        return backend::BlendFactor::SRC_ALPHA_SATURATE;
     else
     {
         CCLOG("Unsupported blend value (%s). (Will default to BLEND_ONE if errors are treated as warnings)", value.c_str());
-        return RenderState::BLEND_ONE;
+        return backend::BlendFactor::ONE;
     }
 }
 
@@ -513,58 +405,50 @@ uint32_t RenderState::StateBlock::getHash() const
     return 0x12345678;
 }
 
-void RenderState::StateBlock::invalidate(long stateBits)
-{
-    CCASSERT(_defaultState, "_default state not created yet. Cannot be invalidated");
-
-    _defaultState->_bits = stateBits;
-    _defaultState->restore(0);
-}
-
 void RenderState::StateBlock::setBlend(bool enabled)
 {
     _blendEnabled = enabled;
     if (enabled)
     {
-        _bits &= ~RS_BLEND;
+        _modifiedBits &= ~RS_BLEND;
     }
     else
     {
-        _bits |= RS_BLEND;
+        _modifiedBits |= RS_BLEND;
     }
 }
 
 void RenderState::StateBlock::setBlendFunc(const BlendFunc& blendFunc)
 {
-    setBlendSrc((RenderState::Blend)blendFunc.src);
-    setBlendDst((RenderState::Blend)blendFunc.dst);
+    setBlendSrc(blendFunc.src);
+    setBlendDst(blendFunc.dst);
 }
 
-void RenderState::StateBlock::setBlendSrc(Blend blend)
+void RenderState::StateBlock::setBlendSrc(backend::BlendFactor blend)
 {
     _blendSrc = blend;
-    if (_blendSrc == BLEND_ONE && _blendDst == BLEND_ZERO)
+    if (_blendSrc == backend::BlendFactor::ONE && _blendDst == backend::BlendFactor::ZERO)
     {
         // Default blend func
-        _bits &= ~RS_BLEND_FUNC;
+        _modifiedBits &= ~RS_BLEND_FUNC;
     }
     else
     {
-        _bits |= RS_BLEND_FUNC;
+        _modifiedBits |= RS_BLEND_FUNC;
     }
 }
 
-void RenderState::StateBlock::setBlendDst(Blend blend)
+void RenderState::StateBlock::setBlendDst(backend::BlendFactor blend)
 {
     _blendDst = blend;
-    if (_blendSrc == BLEND_ONE && _blendDst == BLEND_ZERO)
+    if (_blendSrc == backend::BlendFactor::ONE && _blendDst == backend::BlendFactor::ZERO)
     {
         // Default blend func
-        _bits &= ~RS_BLEND_FUNC;
+        _modifiedBits &= ~RS_BLEND_FUNC;
     }
     else
     {
-        _bits |= RS_BLEND_FUNC;
+        _modifiedBits |= RS_BLEND_FUNC;
     }
 }
 
@@ -573,11 +457,11 @@ void RenderState::StateBlock::setCullFace(bool enabled)
     _cullFaceEnabled = enabled;
     if (!enabled)
     {
-        _bits &= ~RS_CULL_FACE;
+        _modifiedBits &= ~RS_CULL_FACE;
     }
     else
     {
-        _bits |= RS_CULL_FACE;
+        _modifiedBits |= RS_CULL_FACE;
     }
 }
 
@@ -587,11 +471,11 @@ void RenderState::StateBlock::setCullFaceSide(CullFaceSide side)
     if (_cullFaceSide == CullFaceSide::BACK)
     {
         // Default cull side
-        _bits &= ~RS_CULL_FACE_SIDE;
+        _modifiedBits &= ~RS_CULL_FACE_SIDE;
     }
     else
     {
-        _bits |= RS_CULL_FACE_SIDE;
+        _modifiedBits |= RS_CULL_FACE_SIDE;
     }
 }
 
@@ -601,11 +485,11 @@ void RenderState::StateBlock::setFrontFace(FrontFace winding)
     if (_frontFace == FrontFace::COUNTER_CLOCK_WISE)
     {
         // Default front face
-        _bits &= ~RS_FRONT_FACE;
+        _modifiedBits &= ~RS_FRONT_FACE;
     }
     else
     {
-        _bits |= RS_FRONT_FACE;
+        _modifiedBits |= RS_FRONT_FACE;
     }
 }
 
@@ -614,11 +498,11 @@ void RenderState::StateBlock::setDepthTest(bool enabled)
     _depthTestEnabled = enabled;
     if (enabled)
     {
-        _bits &= ~RS_DEPTH_TEST;
+        _modifiedBits &= ~RS_DEPTH_TEST;
     }
     else
     {
-        _bits |= RS_DEPTH_TEST;
+        _modifiedBits |= RS_DEPTH_TEST;
     }
 }
 
@@ -627,11 +511,11 @@ void RenderState::StateBlock::setDepthWrite(bool enabled)
     _depthWriteEnabled = enabled;
     if (!enabled)
     {
-        _bits &= ~RS_DEPTH_WRITE;
+        _modifiedBits &= ~RS_DEPTH_WRITE;
     }
     else
     {
-        _bits |= RS_DEPTH_WRITE;
+        _modifiedBits |= RS_DEPTH_WRITE;
     }
 }
 
@@ -641,11 +525,11 @@ void RenderState::StateBlock::setDepthFunction(DepthFunction func)
     if (_depthFunction == DepthFunction::LESS)
     {
         // Default depth function
-        _bits &= ~RS_DEPTH_FUNC;
+        _modifiedBits &= ~RS_DEPTH_FUNC;
     }
     else
     {
-        _bits |= RS_DEPTH_FUNC;
+        _modifiedBits |= RS_DEPTH_FUNC;
     }
 }
 

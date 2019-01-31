@@ -41,6 +41,7 @@ class Technique;
 class Node;
 class VertexAttribBinding;
 class MeshIndexData;
+class RenderState;
 
 namespace backend
 {
@@ -48,10 +49,11 @@ namespace backend
     class Buffer;
 }
 
-class CC_DLL Pass : public RenderState
+class CC_DLL Pass : public Ref //: public RenderState
 {
     friend class Material;
-
+    friend class Technique;
+    friend class RenderState;
 public:
     /** Creates a Pass with a GLProgramState.
      */
@@ -77,7 +79,7 @@ public:
     /** Unbinds the Pass.
      This method must be called AFTER calling the actual draw call
      */
-    //void unbind();f
+    //void unbind();
 
     /**
      * Sets a vertex attribute binding for this pass.
@@ -96,11 +98,14 @@ public:
      */
     VertexAttribBinding* getVertexAttributeBinding() const;
 
-    uint32_t getHash() const;
+    //TODO arnold
+    //uint32_t getHash() const;
 
     /**
      * Returns a clone (deep-copy) of this instance */
     Pass* clone() const;
+
+    void setTechnique(Technique *technique);
 
 protected:
     Pass();
@@ -114,6 +119,19 @@ protected:
     backend::ProgramState* _programState = nullptr;
     VertexAttribBinding* _vertexAttribBinding = nullptr;
     CustomCommand _customCommand;
+    Technique * _technique = nullptr;
+    bool _hashDirty = true;
+    RenderState _renderState;
+
+private:
+    void onBeforeVisitCmd();
+    void onAfterVisitCmd();
+
+    GroupCommand _groupCommand;
+    CallbackCommand _beforeVisitCmd;
+    CallbackCommand _afterVisitCmd;
+
+    //bool _oldDepthEnabledState;
 };
 
 NS_CC_END

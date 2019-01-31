@@ -47,6 +47,8 @@ namespace
                             return GL_LINEAR_MIPMAP_LINEAR;
                         case SamplerFilter::NEAREST:
                             return GL_LINEAR_MIPMAP_NEAREST;
+                        case SamplerFilter::DONT_CARE:
+                            return GL_LINEAR_MIPMAP_LINEAR;
                     }
                 case SamplerFilter::NEAREST:
                     switch (mipmapFilter)
@@ -55,7 +57,11 @@ namespace
                             return GL_NEAREST_MIPMAP_LINEAR;
                         case SamplerFilter::NEAREST:
                             return GL_NEAREST_MIPMAP_NEAREST;
+                        case SamplerFilter::DONT_CARE:
+                            return GL_NEAREST_MIPMAP_LINEAR;
                     }
+                case SamplerFilter::DONT_CARE:
+                    return GL_NEAREST_MIPMAP_LINEAR;
             }
         }
         else
@@ -65,6 +71,8 @@ namespace
             else
                 return GL_NEAREST;
         }
+        
+        CCASSERT(false, "invalidate SamplerFilter");
     }
     
     GLint toGLAddressMode(SamplerAddressMode addressMode, bool isPow2)
@@ -151,7 +159,10 @@ void TextureGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _tAddressModeGL);
     }
 
+
     if (needGenerateMipmap) generateMipmpas();
+
+    CHECK_GL_ERROR_DEBUG();
 }
 
 void TextureGL::updateData(uint8_t* data)

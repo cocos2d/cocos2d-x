@@ -60,6 +60,7 @@ public:
     void setUniform(const backend::UniformLocation& uniformLocation, const void* data, uint32_t size);
     backend::UniformLocation getUniformLocation(const std::string& uniform) const;
     inline const std::vector<UniformBuffer>& getVertexUniformInfos() const { return _vertexUniformInfos; }
+    inline std::vector<UniformBuffer>& getVertexUniformInfos() { return _vertexUniformInfos; }
     inline const std::vector<UniformBuffer>& getFragmentUniformInfos() const { return _fragmentUniformInfos; }
     
     //set textures

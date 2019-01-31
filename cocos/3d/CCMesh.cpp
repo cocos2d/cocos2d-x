@@ -298,7 +298,8 @@ void Mesh::setTexture(Texture2D* tex, NTextureData::Usage usage, bool cacheFileN
                 // another bug
                 //TODO: pass->setTexture(tex); is not needed, and Pass::setTexture() doesn't need since
                 // texture is set in programstate.
-                pass->setTexture(tex);
+                // pass->setTexture(tex);
+
                 auto programState = pass->getProgramState();
                 auto location = programState->getUniformLocation("u_texture");
                 programState->setTexture(location, 0, tex->getBackendTexture());
@@ -398,16 +399,16 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
 
 
    if (isTransparent && !forceDepthWrite)
-       _material->getStateBlock()->setDepthWrite(false);
+       _material->getStateBlock().setDepthWrite(false);
    else
-        _material->getStateBlock()->setDepthWrite(true);
+        _material->getStateBlock().setDepthWrite(true);
    
     //TODO arnold
     //_meshCommand.setSkipBatching(isTransparent);
     //_meshCommand.setTransparent(isTransparent);
     //_meshCommand.set3D(!_force2DQueue);
 
-    _material->getStateBlock()->setBlend(_force2DQueue || isTransparent);
+    _material->getStateBlock().setBlend(_force2DQueue || isTransparent);
 
     // set default uniforms for Mesh
     // 'u_color' and others
@@ -415,20 +416,22 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
     auto technique = _material->_currentTechnique;
     for(const auto pass : technique->_passes)
     {
-//        auto programState = pass->getGLProgramState();
-//        programState->setUniformVec4("u_color", color);
         auto programState = pass->getProgramState();
         auto location = programState->getUniformLocation("u_color");
         if (-1 != location.location)
             programState->setUniform(location, &color, sizeof(color));
 
         location = programState->getUniformLocation("u_matrixPalette");
+        static_assert(sizeof(Vec4) == (sizeof(float) * 4), "sizeof Vec4 should be 16 bytes");
         if (_skin)
-            programState->setUniform(location, _skin->getMatrixPalette(), (GLsizei)_skin->getMatrixPaletteSize() * sizeof(Vec4));
+            programState->setUniform(location, _skin->getMatrixPalette(), _skin->getMatrixPaletteSizeInBytes());
 
         //TODO arnold
         if (scene && scene->getLights().size() > 0)
+        {
+            CCASSERT(false, "not completed!");
             setLightUniforms(pass, scene, color, lightMask);
+        }
     }
 
     _material->draw(globalZ,
@@ -524,16 +527,16 @@ void Mesh::bindMeshCommand()
     {
         auto pass = _material->_currentTechnique->_passes.at(0);
 //        auto glprogramstate = pass->getGLProgramState();
-        auto texture = pass->getTexture();
-        auto textureid = texture ? texture->getName() : 0;
+        //auto texture = pass->getTexture();
+       // auto textureid = texture ? texture->getName() : 0;
         // XXX
 //        auto blend = pass->getStateBlock()->getBlendFunc();
         auto blend = BlendFunc::ALPHA_PREMULTIPLIED;
 
 //TODO
 //        _meshCommand.genMaterialID(textureid, glprogramstate, _meshIndexData->getVertexBuffer()->getVBO(), _meshIndexData->getIndexBuffer()->getVBO(), blend);
-        _material->getStateBlock()->setCullFace(true);
-        _material->getStateBlock()->setDepthTest(true);
+        _material->getStateBlock().setCullFace(true);
+        _material->getStateBlock().setDepthTest(true);
     }
 }
 
@@ -695,7 +698,7 @@ void Mesh::setBlendFunc(const BlendFunc &blendFunc)
 
     if (_material) {
         //TODO set blend to Pass
-        _material->getStateBlock()->setBlendFunc(blendFunc);
+        _material->getStateBlock().setBlendFunc(blendFunc);
         bindMeshCommand();
     }
 }
