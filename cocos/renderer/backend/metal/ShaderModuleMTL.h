@@ -25,6 +25,7 @@ public:
     inline const int getMaxLocation() const { return _maxLocation; }
     
 private:
+    void parseAttibute(id<MTLDevice> mtlDevice, glslopt_shader* shader);
     void parseUniform(id<MTLDevice> mtlDevice, glslopt_shader* shader);
     void parseTexture(id<MTLDevice> mtlDevice, glslopt_shader* shader);
     
@@ -32,6 +33,7 @@ private:
     
     std::shared_ptr<uint8_t> _uniformBuffer = nullptr;
     std::unordered_map<std::string, UniformInfo> _uniformInfos;
+    std::vector<AttributeBindInfo> _attributeInfo;
     
     int _maxLocation = -1;
 };
