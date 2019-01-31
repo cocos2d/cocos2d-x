@@ -82,9 +82,7 @@ Technique* Technique::clone() const
     if (technique)
     {
         technique->_name = _name;
-        //TODO arnold: remove renderstate from technique
-        //RenderState::cloneInto(technique);
-
+        technique->_renderState = _renderState;
         for (const auto pass: _passes)
         {
             auto p = pass->clone();

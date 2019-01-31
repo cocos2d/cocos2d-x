@@ -57,11 +57,6 @@ namespace backend
     class ProgramState;
 }
 
-namespace backend
-{
-    class ProgramState;
-}
-
 /// Material
 class CC_DLL Material :public Ref//: public RenderState
 {

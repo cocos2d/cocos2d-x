@@ -90,7 +90,8 @@ void RenderState::StateBlock::bind(PipelineDescriptor *programState)
     // irrespective of whether it belongs to a hierarchy of RenderStates.
     // Therefore, we call restore() here with only this StateBlock's override
     // bits to restore state before applying the new state.
-    
+    StateBlock::restore(_modifiedBits);
+
     apply(programState);
 }
 
@@ -192,56 +193,6 @@ void RenderState::StateBlock::restore(long overrideBits, PipelineDescriptor *pro
         renderer->setDepthCompareFunction(DepthFunction::LESS);
     }
 }
-
-//void RenderState::StateBlock::restoreGlobalState(long notDefaultValueBits)
-//{
-//    //CC_ASSERT(_globalState);
-//
-//    auto renderer = Director::getInstance()->getRenderer();
-//
-//    //only zero bits in notDefaultValueBits will be reset to zero
-//
-//    // If there is no state to restore (i.e. no non-default state), do nothing.
-////    if (_globalState->_bits == 0)
-//    if ( (notDefaultValueBits)
-//        return;
-//
-//    // Restore any state that is not overridden and is not default
-//    if (!(notDefaultValueBits & RS_BLEND))
-//    {
-//    //TODO
-////        glEnable(GL_BLEND);
-//    }
-//    if (!(notDefaultValueBits & RS_BLEND_FUNC))
-//    {
-//    //TODO
-////        utils::setBlending(backend::BlendFactor::ONE, backend::BlendFactor::ZERO);
-//        _globalState->_notDefaultValueBits &= ~RS_BLEND_FUNC;
-//        _globalState->_blendSrc = backend::BlendFactor::ONE;
-//        _globalState->_blendDst = backend::BlendFactor::ZERO;
-//    }
-//    if (!(notDefaultValueBits & RS_CULL_FACE))
-//    {
-//        
-//    }
-//    if (!(notDefaultValueBits & RS_CULL_FACE_SIDE))
-//    {
-//        
-//    }
-//    if (!(notDefaultValueBits & RS_FRONT_FACE))
-//    {
-//       
-//    }
-//    if (!(notDefaultValueBits & RS_DEPTH_TEST))
-//    {
-//       
-//    }
-//    if (!(notDefaultValueBits & RS_DEPTH_WRITE))
-//    {
-//    }
-//    if (!(notDefaultValueBits & RS_DEPTH_FUNC))
-//   
-//}
 
 static bool parseBoolean(const std::string& value)
 {
