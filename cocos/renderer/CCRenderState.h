@@ -225,9 +225,9 @@ public:
         /**
         * update internal states of ProgramState
         */
-        void apply(PipelineDescriptor *programState);
+        void apply(PipelineDescriptor *pipelineDescriptor);
 
-        static void restore(long flags, PipelineDescriptor *programState);
+        static void restore(long flags, PipelineDescriptor *pipelineDescriptor);
 
 
         bool _cullFaceEnabled = false;

@@ -83,24 +83,24 @@ RenderState::StateBlock& RenderState::getStateBlock() const
 }
 
 
-void RenderState::StateBlock::bind(PipelineDescriptor *programState)
+void RenderState::StateBlock::bind(PipelineDescriptor *pipelineDescriptor)
 {
     // When the public bind() is called with no RenderState object passed in,
     // we assume we are being called to bind the state of a single StateBlock,
     // irrespective of whether it belongs to a hierarchy of RenderStates.
     // Therefore, we call restore() here with only this StateBlock's override
     // bits to restore state before applying the new state.
-    StateBlock::restore(_modifiedBits);
+    StateBlock::restore(_modifiedBits, pipelineDescriptor);
 
-    apply(programState);
+    apply(pipelineDescriptor);
 }
 
-void RenderState::StateBlock::apply(PipelineDescriptor *programState)
+void RenderState::StateBlock::apply(PipelineDescriptor *pipelineDescriptor)
 {
     //CC_ASSERT(_globalState);
 
     auto renderer = Director::getInstance()->getRenderer();
-    auto &blend = programState->blendDescriptor;
+    auto &blend = pipelineDescriptor->blendDescriptor;
 
     // Update any state that differs from _globalState and flip _globalState bits
     if ((_modifiedBits & RS_BLEND))

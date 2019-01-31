@@ -742,98 +742,98 @@ std::string Sprite3DHitTest::subtitle() const
     return "Tap Sprite3D and Drag";
 }
 
-//Sprite3DEffectTest::Sprite3DEffectTest()
-//{
-//    auto s = Director::getInstance()->getWinSize();
-//    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
-//    
-//    auto listener = EventListenerTouchAllAtOnce::create();
-//    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DEffectTest::onTouchesEnded, this);
-//    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
-//                                                            [this](EventCustom*)
-//                                                            {
-//                                                                auto material = Sprite3DMaterial::createWithFilename("Sprite3DTest/outline.material");
-//                                                                material->setTechnique("outline_noneskinned");
-//                                                                for(auto& sprite : _sprites)
-//                                                                {
-//                                                                    sprite->setMaterial(material->clone());
-//                                                                }
-//                                                            }
-//                                                            );
-//    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
-//#endif
-//}
-//
-//Sprite3DEffectTest::~Sprite3DEffectTest()
-//{
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
-//#endif
-//}
-//
-//std::string Sprite3DEffectTest::title() const
-//{
-//    return "Testing Sprite3D";
-//}
-//std::string Sprite3DEffectTest::subtitle() const
-//{
-//    return "Sprite3d with effects";
-//}
-//
-//void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
-//{
-//    //option 2: load obj and assign the texture
-//    auto sprite = Sprite3D::create("Sprite3DTest/boss1.obj");
-//    auto material = Sprite3DMaterial::createWithFilename("Sprite3DTest/outline.material");
-//    material->setTechnique("outline_noneskinned");
-//    sprite->setMaterial(material);
-//    sprite->setScale(6.f);
-//    Director::getInstance()->getTextureCache()->removeUnusedTextures();
-//    
-//    //add to scene
-//    addChild( sprite );
-//    
-//    sprite->setPosition( Vec2( p.x, p.y) );
-//    
-//    ActionInterval* action;
-//    float random = CCRANDOM_0_1();
-//    
-//    if( random < 0.20 )
-//        action = ScaleBy::create(3, 2);
-//    else if(random < 0.40)
-//        action = RotateBy::create(3, 360);
-//    else if( random < 0.60)
-//        action = Blink::create(1, 3);
-//    else if( random < 0.8 )
-//        action = TintBy::create(2, 0, -255, -255);
-//    else
-//        action = FadeOut::create(2);
-//    auto action_back = action->reverse();
-//    auto seq = Sequence::create( action, action_back, nullptr );
-//    
-//    sprite->runAction( RepeatForever::create(seq) );
-//    _sprites.push_back(sprite);
-//}
-//
-//void Sprite3DEffectTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
-//{
-//    for (auto touch: touches)
-//    {
-//        auto location = touch->getLocation();
-//        
-//        addNewSpriteWithCoords( location );
-//    }
-//}
+Sprite3DEffectTest::Sprite3DEffectTest()
+{
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DEffectTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                            [this](EventCustom*)
+                                                            {
+                                                                auto material = Sprite3DMaterial::createWithFilename("Sprite3DTest/outline.material");
+                                                                material->setTechnique("outline_noneskinned");
+                                                                for(auto& sprite : _sprites)
+                                                                {
+                                                                    sprite->setMaterial(material->clone());
+                                                                }
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
+#endif
+}
+
+Sprite3DEffectTest::~Sprite3DEffectTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
+}
+
+std::string Sprite3DEffectTest::title() const
+{
+    return "Testing Sprite3D";
+}
+std::string Sprite3DEffectTest::subtitle() const
+{
+    return "Sprite3d with effects";
+}
+
+void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
+{
+    //option 2: load obj and assign the texture
+    auto sprite = Sprite3D::create("Sprite3DTest/boss1.obj");
+    auto material = Sprite3DMaterial::createWithFilename("Sprite3DTest/outline.material");
+    material->setTechnique("outline_noneskinned");
+    sprite->setMaterial(material);
+    sprite->setScale(6.f);
+    Director::getInstance()->getTextureCache()->removeUnusedTextures();
+    
+    //add to scene
+    addChild( sprite );
+    
+    sprite->setPosition( Vec2( p.x, p.y) );
+    
+    ActionInterval* action;
+    float random = CCRANDOM_0_1();
+    
+    if( random < 0.20 )
+        action = ScaleBy::create(3, 2);
+    else if(random < 0.40)
+        action = RotateBy::create(3, 360);
+    else if( random < 0.60)
+        action = Blink::create(1, 3);
+    else if( random < 0.8 )
+        action = TintBy::create(2, 0, -255, -255);
+    else
+        action = FadeOut::create(2);
+    auto action_back = action->reverse();
+    auto seq = Sequence::create( action, action_back, nullptr );
+    
+    sprite->runAction( RepeatForever::create(seq) );
+    _sprites.push_back(sprite);
+}
+
+void Sprite3DEffectTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    for (auto touch: touches)
+    {
+        auto location = touch->getLocation();
+        
+        addNewSpriteWithCoords( location );
+    }
+}
 
 AsyncLoadSprite3DTest::AsyncLoadSprite3DTest()
 {
-    //_paths.push_back("Sprite3DTest/boss.obj");
+    _paths.push_back("Sprite3DTest/boss.obj");
     _paths.push_back("Sprite3DTest/girl.c3b");
-    //_paths.push_back("Sprite3DTest/orc.c3b");
-    //_paths.push_back("Sprite3DTest/ReskinGirl.c3b");
-    //_paths.push_back("Sprite3DTest/axe.c3b");
+    _paths.push_back("Sprite3DTest/orc.c3b");
+    _paths.push_back("Sprite3DTest/ReskinGirl.c3b");
+    _paths.push_back("Sprite3DTest/axe.c3b");
     
     TTFConfig ttfConfig("fonts/arial.ttf", 15);
     auto label1 = Label::createWithTTF(ttfConfig,"AsyncLoad Sprite3D");
