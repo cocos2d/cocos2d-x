@@ -102,42 +102,42 @@ protected:
 #endif
 };
 
-//class Sprite3DFakeShadowTest : public Sprite3DTestDemo
-//{
-//public:
-//    enum State
-//    {
-//        State_None = 0,
-//        State_Idle = 0x01,
-//        State_Move = 0x02,
-//        State_Rotate = 0x04
-//    };
-//    CREATE_FUNC(Sprite3DFakeShadowTest);
-//    Sprite3DFakeShadowTest();
-//    virtual ~Sprite3DFakeShadowTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    void Move(cocos2d::Ref* sender,int value);
-//    void updateCamera(float fDelta);
-//    void move3D(float elapsedTime);
-//    void updateState(float elapsedTime);
-//    bool isState(unsigned int state,unsigned int bit) const;
-//    void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
-//    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
-//    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
-//private:
-//    cocos2d::Camera * _camera;
-//    cocos2d::Vec3 _targetPos;
-//    unsigned int   _curState;
-//    cocos2d::Sprite3D * _plane;
-//    cocos2d::Sprite3D * _orc;
-//    cocos2d::GLProgramState * _state;
-//    
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    cocos2d::EventListenerCustom* _backToForegroundListener;
-//#endif
-//};
-//
+class Sprite3DFakeShadowTest : public Sprite3DTestDemo
+{
+public:
+    enum State
+    {
+        State_None = 0,
+        State_Idle = 0x01,
+        State_Move = 0x02,
+        State_Rotate = 0x04
+    };
+    CREATE_FUNC(Sprite3DFakeShadowTest);
+    Sprite3DFakeShadowTest();
+    virtual ~Sprite3DFakeShadowTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void Move(cocos2d::Ref* sender,int value);
+    void updateCamera(float fDelta);
+    void move3D(float elapsedTime);
+    void updateState(float elapsedTime);
+    bool isState(unsigned int state,unsigned int bit) const;
+    void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+private:
+    cocos2d::Camera * _camera;
+    cocos2d::Vec3 _targetPos;
+    unsigned int   _curState;
+    cocos2d::Sprite3D * _plane;
+    cocos2d::Sprite3D * _orc;
+    cocos2d::backend::ProgramState *_state = nullptr;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    cocos2d::EventListenerCustom* _backToForegroundListener;
+#endif
+};
+
 //class Sprite3DLightMapTest : public Sprite3DTestDemo
 //{
 //public:
@@ -150,24 +150,24 @@ protected:
 //private:
 //    cocos2d::Camera * _camera;
 //};
-//
-//class Sprite3DBasicToonShaderTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DBasicToonShaderTest);
-//    Sprite3DBasicToonShaderTest();
-//    virtual ~Sprite3DBasicToonShaderTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//protected:
-//    cocos2d::GLProgramState * _state;
-//    
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    cocos2d::EventListenerCustom* _backToForegroundListener;
-//#endif
-//
-//};
+
+class Sprite3DBasicToonShaderTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DBasicToonShaderTest);
+    Sprite3DBasicToonShaderTest();
+    virtual ~Sprite3DBasicToonShaderTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+protected:
+    cocos2d::backend::ProgramState * _state;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    cocos2d::EventListenerCustom* _backToForegroundListener;
+#endif
+
+};
 
 class Sprite3DHitTest : public Sprite3DTestDemo
 {

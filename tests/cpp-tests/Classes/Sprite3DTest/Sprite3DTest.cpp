@@ -45,8 +45,8 @@ Sprite3DTests::Sprite3DTests()
 //    // 3DEffect use custom shader which is not supported on WP8/WinRT yet.
     ADD_TEST_CASE(Sprite3DEffectTest);
     ADD_TEST_CASE(Sprite3DUVAnimationTest);
-//    ADD_TEST_CASE(Sprite3DFakeShadowTest);
-//    ADD_TEST_CASE(Sprite3DBasicToonShaderTest);
+    ADD_TEST_CASE(Sprite3DFakeShadowTest);
+    ADD_TEST_CASE(Sprite3DBasicToonShaderTest);
 //    ADD_TEST_CASE(Sprite3DLightMapTest);
 //    ADD_TEST_CASE(Sprite3DWithSkinTest);
 //    ADD_TEST_CASE(Sprite3DWithSkinOutlineTest);
@@ -316,288 +316,293 @@ void Sprite3DUVAnimationTest::cylinderUpdate(float dt)
     _state->setUniform(durationLoc, _shining_duration);
 }
 
-////------------------------------------------------------------------
-////
-//// Sprite3DFakeShadowTest
-////
-////------------------------------------------------------------------
-//Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
-//{
-//    Size visibleSize = Director::getInstance()->getVisibleSize();
-//    
-//    auto listener = EventListenerTouchAllAtOnce::create();
-//    listener->onTouchesBegan = CC_CALLBACK_2(Sprite3DFakeShadowTest::onTouchesBegan, this);
-//    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DFakeShadowTest::onTouchesMoved, this);
-//    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DFakeShadowTest::onTouchesEnded, this);
-//    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-//    
-//    auto layer = Layer::create();
-//    addChild(layer,0);
-//    //create Camera
-//    _camera = Camera::createPerspective(60, visibleSize.width/visibleSize.height, 0.1f, 200);
-//    _camera->setCameraFlag(CameraFlag::USER1);
-//    _camera->setPosition3D(Vec3(0,20,25));
-//    _camera->setRotation3D(Vec3(-60,0,0));
+//------------------------------------------------------------------
 //
-//    //create a plane
-//    _plane = Sprite3D::create("Sprite3DTest/plane.c3t");
-//    _plane->setRotation3D(Vec3(90,0,0));
+// Sprite3DFakeShadowTest
 //
-////TODO minggo
-////    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/FakeShadow.material");
-////    _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
-////    _plane->setMaterial(mat);
-////    _state->setUniformMat4("u_model_matrix",_plane->getNodeToWorldTransform());
+//------------------------------------------------------------------
+Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
+{
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(Sprite3DFakeShadowTest::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DFakeShadowTest::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DFakeShadowTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    auto layer = Layer::create();
+    addChild(layer,0);
+    //create Camera
+    _camera = Camera::createPerspective(60, visibleSize.width/visibleSize.height, 0.1f, 200);
+    _camera->setCameraFlag(CameraFlag::USER1);
+    _camera->setPosition3D(Vec3(0,20,25));
+    _camera->setRotation3D(Vec3(-60,0,0));
+
+    //create a plane
+    _plane = Sprite3D::create("Sprite3DTest/plane.c3t");
+    _plane->setRotation3D(Vec3(90,0,0));
+
+
+    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/FakeShadow.material");
+    _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getProgramState();
+    _plane->setMaterial(mat);
+
+
+    auto location = _state->getUniformLocation("u_model_matrix");
+    auto transform = _plane->getNodeToWorldTransform();
+    _state->setUniform(location, transform.m);
+
+    layer->addChild(_plane); 
+
+    //create the orc
+    _orc = Sprite3D::create("Sprite3DTest/orc.c3b");
+    _orc->setScale(0.2f);
+    _orc->setRotation3D(Vec3(0,180,0));
+    _orc->setPosition3D(Vec3(0,0,10));
+    _targetPos = _orc->getPosition3D();
+    location = _state->getUniformLocation("u_target_pos");
+    _state->setUniform(location, _orc->getPosition3D());
+    layer->addChild(_orc);
+    layer->addChild(_camera);
+    layer->setCameraMask(2);
+
+    schedule(CC_SCHEDULE_SELECTOR(Sprite3DFakeShadowTest::updateCamera), 0.0f);
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                            [this](EventCustom*)
+                                                            {
+                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/FakeShadow.material");
+                                                                _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+                                                                _plane->setMaterial(mat);
+                                                                _state->setUniformMat4("u_model_matrix",_plane->getNodeToWorldTransform());
+                                                                _state->setUniformVec3("u_target_pos", _orc->getPosition3D());
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
+}
+
+Sprite3DFakeShadowTest::~Sprite3DFakeShadowTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
+}
+
+std::string Sprite3DFakeShadowTest::title() const 
+{
+    return "fake shadow effect";
+}
+
+std::string Sprite3DFakeShadowTest::subtitle() const 
+{
+    return "touch the screen to move around";
+}
+
+void Sprite3DFakeShadowTest::Move(cocos2d::Ref* sender,int value)
+{
+    _orc->setPositionX(_orc->getPositionX()+value);
+
+}
+
+void Sprite3DFakeShadowTest::updateCamera(float fDelta)
+{
+    updateState(fDelta);
+    if(isState(_curState,State_Move))
+    {
+        move3D(fDelta);
+        if(isState(_curState,State_Rotate))
+        {
+            Vec3 curPos = _orc->getPosition3D();
+
+            Vec3 newFaceDir = _targetPos - curPos;
+            newFaceDir.y = 0;
+            newFaceDir.normalize();
+            Vec3 up;
+            _orc->getNodeToWorldTransform().getUpVector(&up);
+            up.normalize();
+            Vec3 right;
+            Vec3::cross(-newFaceDir,up,&right);
+            right.normalize();
+            Vec3 pos = Vec3(0,0,0);
+            Mat4 mat;
+            mat.m[0] = right.x;
+            mat.m[1] = right.y;
+            mat.m[2] = right.z;
+            mat.m[3] = 0.0f;
+
+            mat.m[4] = up.x;
+            mat.m[5] = up.y;
+            mat.m[6] = up.z;
+            mat.m[7] = 0.0f;
+
+            mat.m[8]  = newFaceDir.x;
+            mat.m[9]  = newFaceDir.y;
+            mat.m[10] = newFaceDir.z;
+            mat.m[11] = 0.0f;
+
+            mat.m[12] = pos.x;
+            mat.m[13] = pos.y;
+            mat.m[14] = pos.z;
+            mat.m[15] = 1.0f;
+            _orc->setAdditionalTransform(&mat);
+        }
+    }
+}
+
+
+void Sprite3DFakeShadowTest::move3D(float elapsedTime)
+{
+    Vec3 curPos=  _orc->getPosition3D();
+    Vec3 newFaceDir = _targetPos - curPos;
+    newFaceDir.y = 0.0f;
+    newFaceDir.normalize();
+    Vec3 offset = newFaceDir * 25.0f * elapsedTime;
+    curPos+=offset;
+    _orc->setPosition3D(curPos);
+    offset.x=offset.x;
+    offset.z=offset.z;
+    //pass the newest orc position
+    auto location = _state->getUniformLocation("u_target_pos");
+    _state->setUniform(location, _orc->getPosition3D());
+}
+
+void Sprite3DFakeShadowTest::updateState(float elapsedTime)
+{
+    Vec3 curPos=  _orc->getPosition3D();
+    Vec3 curFaceDir;
+    _orc->getNodeToWorldTransform().getForwardVector(&curFaceDir);
+    curFaceDir=-curFaceDir;
+    curFaceDir.normalize();
+    Vec3 newFaceDir = _targetPos - curPos;
+    newFaceDir.y = 0.0f;
+    newFaceDir.normalize();
+    float cosAngle = std::fabs(Vec3::dot(curFaceDir,newFaceDir) - 1.0f);
+    float dist = curPos.distanceSquared(_targetPos);
+    if(dist<=4.0f)
+    {
+        if(cosAngle<=0.01f)
+            _curState = State_Idle;
+        else
+            _curState = State_Rotate;
+    }
+    else
+    {
+        if(cosAngle>0.01f)
+            _curState = State_Rotate | State_Move;
+        else
+            _curState = State_Move;
+    }
+}
+
+bool Sprite3DFakeShadowTest::isState(unsigned int state,unsigned int bit) const
+{
+    return (state & bit) == bit;
+}
+
+void Sprite3DFakeShadowTest::onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event *event)
+{
+
+}
+
+void Sprite3DFakeShadowTest::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event *event)
+{
+}
+
+void Sprite3DFakeShadowTest::onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event *event)
+{
+    for ( auto &item: touches )
+    {
+        auto touch = item;
+        auto location = touch->getLocationInView();
+        if(_camera)
+        {
+            if(_orc )
+            {
+                Vec3 nearP(location.x, location.y, -1.0f), farP(location.x, location.y, 1.0f);
+
+                auto size = Director::getInstance()->getWinSize();
+                nearP = _camera->unproject(nearP);
+                farP = _camera->unproject(farP);
+                Vec3 dir(farP - nearP);
+                float dist=0.0f;
+                float ndd = Vec3::dot(Vec3(0,1,0),dir);
+                if(ndd == 0)
+                    dist=0.0f;
+                float ndo = Vec3::dot(Vec3(0,1,0),nearP);
+                dist= (0 - ndo) / ndd;
+                Vec3 p =   nearP + dist *  dir;
+
+                if( p.x > 100)
+                    p.x = 100;
+                if( p.x < -100)
+                    p.x = -100;
+                if( p.z > 100)
+                    p.z = 100;
+                if( p.z < -100)
+                    p.z = -100;
+
+                _targetPos=p;
+            }
+        }
+    }
+}
+
+//------------------------------------------------------------------
 //
-//    layer->addChild(_plane); 
+// Sprite3DBasicToonShaderTest
 //
-//    //create the orc
-//    _orc = Sprite3D::create("Sprite3DTest/orc.c3b");
-//    _orc->setScale(0.2f);
-//    _orc->setRotation3D(Vec3(0,180,0));
-//    _orc->setPosition3D(Vec3(0,0,10));
-//    _targetPos = _orc->getPosition3D();
-//    _state->setUniformVec3("u_target_pos", _orc->getPosition3D());
-//    layer->addChild(_orc);
-//    layer->addChild(_camera);
-//    layer->setCameraMask(2);
-//
-//    schedule(CC_SCHEDULE_SELECTOR(Sprite3DFakeShadowTest::updateCamera), 0.0f);
-//    
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
-//                                                            [this](EventCustom*)
-//                                                            {
-//                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/FakeShadow.material");
-//                                                                _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
-//                                                                _plane->setMaterial(mat);
-//                                                                _state->setUniformMat4("u_model_matrix",_plane->getNodeToWorldTransform());
-//                                                                _state->setUniformVec3("u_target_pos", _orc->getPosition3D());
-//                                                            }
-//                                                            );
-//    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
-//#endif
-//}
-//
-//Sprite3DFakeShadowTest::~Sprite3DFakeShadowTest()
-//{
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
-//#endif
-//}
-//
-//std::string Sprite3DFakeShadowTest::title() const 
-//{
-//    return "fake shadow effect";
-//}
-//
-//std::string Sprite3DFakeShadowTest::subtitle() const 
-//{
-//    return "touch the screen to move around";
-//}
-//
-//void Sprite3DFakeShadowTest::Move(cocos2d::Ref* sender,int value)
-//{
-//    _orc->setPositionX(_orc->getPositionX()+value);
-//
-//}
-//
-//void Sprite3DFakeShadowTest::updateCamera(float fDelta)
-//{
-//    updateState(fDelta);
-//    if(isState(_curState,State_Move))
-//    {
-//        move3D(fDelta);
-//        if(isState(_curState,State_Rotate))
-//        {
-//            Vec3 curPos = _orc->getPosition3D();
-//
-//            Vec3 newFaceDir = _targetPos - curPos;
-//            newFaceDir.y = 0;
-//            newFaceDir.normalize();
-//            Vec3 up;
-//            _orc->getNodeToWorldTransform().getUpVector(&up);
-//            up.normalize();
-//            Vec3 right;
-//            Vec3::cross(-newFaceDir,up,&right);
-//            right.normalize();
-//            Vec3 pos = Vec3(0,0,0);
-//            Mat4 mat;
-//            mat.m[0] = right.x;
-//            mat.m[1] = right.y;
-//            mat.m[2] = right.z;
-//            mat.m[3] = 0.0f;
-//
-//            mat.m[4] = up.x;
-//            mat.m[5] = up.y;
-//            mat.m[6] = up.z;
-//            mat.m[7] = 0.0f;
-//
-//            mat.m[8]  = newFaceDir.x;
-//            mat.m[9]  = newFaceDir.y;
-//            mat.m[10] = newFaceDir.z;
-//            mat.m[11] = 0.0f;
-//
-//            mat.m[12] = pos.x;
-//            mat.m[13] = pos.y;
-//            mat.m[14] = pos.z;
-//            mat.m[15] = 1.0f;
-//            _orc->setAdditionalTransform(&mat);
-//        }
-//    }
-//}
-//
-//
-//void Sprite3DFakeShadowTest::move3D(float elapsedTime)
-//{
-//    Vec3 curPos=  _orc->getPosition3D();
-//    Vec3 newFaceDir = _targetPos - curPos;
-//    newFaceDir.y = 0.0f;
-//    newFaceDir.normalize();
-//    Vec3 offset = newFaceDir * 25.0f * elapsedTime;
-//    curPos+=offset;
-//    _orc->setPosition3D(curPos);
-//    offset.x=offset.x;
-//    offset.z=offset.z;
-//    //pass the newest orc position
-//    _state->setUniformVec3("u_target_pos",_orc->getPosition3D());
-//}
-//
-//void Sprite3DFakeShadowTest::updateState(float elapsedTime)
-//{
-//    Vec3 curPos=  _orc->getPosition3D();
-//    Vec3 curFaceDir;
-//    _orc->getNodeToWorldTransform().getForwardVector(&curFaceDir);
-//    curFaceDir=-curFaceDir;
-//    curFaceDir.normalize();
-//    Vec3 newFaceDir = _targetPos - curPos;
-//    newFaceDir.y = 0.0f;
-//    newFaceDir.normalize();
-//    float cosAngle = std::fabs(Vec3::dot(curFaceDir,newFaceDir) - 1.0f);
-//    float dist = curPos.distanceSquared(_targetPos);
-//    if(dist<=4.0f)
-//    {
-//        if(cosAngle<=0.01f)
-//            _curState = State_Idle;
-//        else
-//            _curState = State_Rotate;
-//    }
-//    else
-//    {
-//        if(cosAngle>0.01f)
-//            _curState = State_Rotate | State_Move;
-//        else
-//            _curState = State_Move;
-//    }
-//}
-//
-//bool Sprite3DFakeShadowTest::isState(unsigned int state,unsigned int bit) const
-//{
-//    return (state & bit) == bit;
-//}
-//
-//void Sprite3DFakeShadowTest::onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event *event)
-//{
-//
-//}
-//
-//void Sprite3DFakeShadowTest::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event *event)
-//{
-//}
-//
-//void Sprite3DFakeShadowTest::onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event *event)
-//{
-//    for ( auto &item: touches )
-//    {
-//        auto touch = item;
-//        auto location = touch->getLocationInView();
-//        if(_camera)
-//        {
-//            if(_orc )
-//            {
-//                Vec3 nearP(location.x, location.y, -1.0f), farP(location.x, location.y, 1.0f);
-//
-//                auto size = Director::getInstance()->getWinSize();
-//                nearP = _camera->unproject(nearP);
-//                farP = _camera->unproject(farP);
-//                Vec3 dir(farP - nearP);
-//                float dist=0.0f;
-//                float ndd = Vec3::dot(Vec3(0,1,0),dir);
-//                if(ndd == 0)
-//                    dist=0.0f;
-//                float ndo = Vec3::dot(Vec3(0,1,0),nearP);
-//                dist= (0 - ndo) / ndd;
-//                Vec3 p =   nearP + dist *  dir;
-//
-//                if( p.x > 100)
-//                    p.x = 100;
-//                if( p.x < -100)
-//                    p.x = -100;
-//                if( p.z > 100)
-//                    p.z = 100;
-//                if( p.z < -100)
-//                    p.z = -100;
-//
-//                _targetPos=p;
-//            }
-//        }
-//    }
-//}
-//
-////------------------------------------------------------------------
-////
-//// Sprite3DBasicToonShaderTest
-////
-////------------------------------------------------------------------
-//Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
-//{
-//    Size visibleSize = Director::getInstance()->getVisibleSize();
-//    auto _camera = Camera::createPerspective(60, visibleSize.width/visibleSize.height, 0.1f, 200);
-//    _camera->setCameraFlag(CameraFlag::USER1);
-//    // create a teapot
-//    //TODO minggo
-////    auto teapot = Sprite3D::create("Sprite3DTest/teapot.c3b");
-////    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/BasicToon.material");
-////    _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
-////    teapot->setMaterial(mat);
-//
-////    teapot->setPosition3D(Vec3(0,-5,-20));
-////    teapot->setRotation3D(Vec3(-90,180,0)); 
-////    auto rotate_action = RotateBy::create(1.5,Vec3(0,30,0));
-////    teapot->runAction(RepeatForever::create(rotate_action)); 
-////    addChild(teapot);
-//    addChild(_camera);
-//    setCameraMask(2);
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
-//                                                            [=](EventCustom*)
-//                                                            {
-//                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/BasicToon.material");
-//                                                                _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
-//                                                                teapot->setMaterial(mat);
-//                                                            }
-//                                                            );
-//    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
-//#endif
-//}
-//
-//Sprite3DBasicToonShaderTest::~Sprite3DBasicToonShaderTest()
-//{
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
-//#endif
-//}
-//
-//std::string Sprite3DBasicToonShaderTest::title() const 
-//{
-//    return "basic toon shader test";
-//}
-//
-//std::string Sprite3DBasicToonShaderTest::subtitle() const 
-//{
-//    return " ";
-//}
-//
+//------------------------------------------------------------------
+Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
+{
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    auto _camera = Camera::createPerspective(60, visibleSize.width/visibleSize.height, 0.1f, 200);
+    _camera->setCameraFlag(CameraFlag::USER1);
+    // create a teapot
+    auto teapot = Sprite3D::create("Sprite3DTest/teapot.c3b");
+    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/BasicToon.material");
+    _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getProgramState();
+    teapot->setMaterial(mat);
+
+    teapot->setPosition3D(Vec3(0,-5,-20));
+    teapot->setRotation3D(Vec3(-90,180,0)); 
+    auto rotate_action = RotateBy::create(1.5,Vec3(0,30,0));
+    teapot->runAction(RepeatForever::create(rotate_action)); 
+    addChild(teapot);
+    addChild(_camera);
+    setCameraMask(2);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                            [=](EventCustom*)
+                                                            {
+                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/BasicToon.material");
+                                                                _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+                                                                teapot->setMaterial(mat);
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
+}
+
+Sprite3DBasicToonShaderTest::~Sprite3DBasicToonShaderTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
+}
+
+std::string Sprite3DBasicToonShaderTest::title() const 
+{
+    return "basic toon shader test";
+}
+
+std::string Sprite3DBasicToonShaderTest::subtitle() const 
+{
+    return " ";
+}
+
 ////------------------------------------------------------------------
 ////
 //// Sprite3DLightMapTest 

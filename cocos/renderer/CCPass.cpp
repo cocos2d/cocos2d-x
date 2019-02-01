@@ -184,10 +184,11 @@ void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buff
     _customCommand.setVertexBuffer(vertexBuffer);
     _customCommand.setIndexDrawInfo(0, indexCount);
 
-    const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    Mat4 finalMat = projectionMat * modelView;
-    auto location = _programState->getUniformLocation("u_MVPMatrix");
-    _programState->setUniform(location, finalMat.m, sizeof(finalMat.m));
+    //const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    //Mat4 finalMat = projectionMat * modelView;
+    //auto location = _programState->getUniformLocation("u_MVPMatrix");
+    //_programState->setUniform(location, finalMat.m, sizeof(finalMat.m));
+    _programState->setBuiltinUniforms(modelView);
 
     _customCommand.getPipelineDescriptor().programState = _programState;
 

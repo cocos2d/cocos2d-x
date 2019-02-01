@@ -274,5 +274,85 @@ void ProgramState::setTextureArray(int location, const std::vector<uint32_t>& sl
     textureInfo[location] = std::move(info);
 }
 
+
+
+void ProgramState::setBuiltinUniforms(const Mat4 &matrixMV)
+{
+    //uniform mat4 u_MVMatrix;
+    //uniform mat3 u_NormalMatrix;
+    //uniform mat4 u_PMatrix;
+    //uniform vec4 u_Time
+    //uniform vec4 u_SinTime
+    //uniform vec4 u_CosTime
+    //uniform vec4 u_Random
+    //uniform mat4 u_MVPMatrix; 
+    auto *director = Director::getInstance();
+    const auto& matrixP = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+
+    auto location = getUniformLocation("u_PMatrix");
+
+    if (location)
+    {
+        setUniform(location, matrixP.m);
+    }
+
+    location = getUniformLocation("u_MVMatrix");
+    if (location)
+    {
+        setUniform(location, matrixP.m);
+    }
+
+    location = getUniformLocation("u_MVPMatrix");
+    if (location)
+    {
+        Mat4 matrixMVP = matrixP * matrixMV;
+        setUniform(location, matrixMVP.m);
+    }
+
+
+    location = getUniformLocation("u_NormalMatrix");
+    if (location)
+    {
+        Mat4 mvInverse = matrixMV;
+        mvInverse.m[12] = mvInverse.m[13] = mvInverse.m[14] = 0.0f;
+        mvInverse.inverse();
+        mvInverse.transpose();
+        GLfloat normalMat[9];
+        normalMat[0] = mvInverse.m[0]; normalMat[1] = mvInverse.m[1]; normalMat[2] = mvInverse.m[2];
+        normalMat[3] = mvInverse.m[4]; normalMat[4] = mvInverse.m[5]; normalMat[5] = mvInverse.m[6];
+        normalMat[6] = mvInverse.m[8]; normalMat[7] = mvInverse.m[9]; normalMat[8] = mvInverse.m[10];
+        setUniform(location, &normalMat, sizeof(normalMat));
+    }
+
+    float time = director->getTotalFrames() * director->getAnimationInterval();
+    location = getUniformLocation("u_Time");
+    if (location) {
+        // This doesn't give the most accurate global time value.
+        // Cocos2D doesn't store a high precision time value, so this will have to do.
+        // Getting Mach time per frame per shader using time could be extremely expensive.
+        setUniform(location, Vec4(time / 10.0f, time, time * 2, time * 4));
+    }
+    
+    location = getUniformLocation("u_SinTime");
+    if (location)
+    {
+        setUniform(location, Vec4(time / 8.0f, time / 4.0f, time / 2.0f, sinf(time)));
+    }
+
+    location = getUniformLocation("u_CosTime");
+    if (location)
+    {
+        setUniform(location, Vec4(time / 8.0f, time / 4.0f, time / 2.0f, cosf(time)));
+    }
+
+    location = getUniformLocation("u_Random");
+    if (location)
+    {
+        Vec4 random = { CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1() };
+        setUniform(location, random);
+    }
+}
+
+
 CC_BACKEND_END
 

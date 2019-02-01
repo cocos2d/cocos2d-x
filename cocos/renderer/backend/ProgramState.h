@@ -74,6 +74,9 @@ public:
     void setTextureArray(const backend::UniformLocation& uniformLocation, const std::vector<uint32_t>& slots, const std::vector<backend::Texture*> textures);
     void addTexture(const backend::UniformLocation& uniformLocation, backend::Texture* texture);
 
+
+    void setBuiltinUniforms(const Mat4 &matrixMV);
+
     inline const std::unordered_map<int, TextureInfo>& getVertexTextureInfos() const { return _vertexTextureInfos; }
     inline const std::unordered_map<int, TextureInfo>& getFragmentTextureInfos() const { return _fragmentTextureInfos; }
     
