@@ -316,6 +316,8 @@ void CommandBufferGL::prepareDrawing() const
     const auto& program = _renderPipeline->getProgram();
     glUseProgram(program->getHandler());
     
+    //TODO arnold: depth stencil info
+    program->getD
     bindVertexBuffer(program);
     setUniforms(program);
 

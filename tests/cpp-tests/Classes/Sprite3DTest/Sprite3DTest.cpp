@@ -51,9 +51,9 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DWithSkinTest);
     ADD_TEST_CASE(Sprite3DWithSkinOutlineTest);
     ADD_TEST_CASE(Animate3DTest);
-//    ADD_TEST_CASE(AttachmentTest);
-//    ADD_TEST_CASE(Sprite3DReskinTest);
-//    ADD_TEST_CASE(Sprite3DWithOBBPerformanceTest);
+    ADD_TEST_CASE(AttachmentTest);
+    ADD_TEST_CASE(Sprite3DReskinTest);
+    ADD_TEST_CASE(Sprite3DWithOBBPerformanceTest);
 //    ADD_TEST_CASE(Sprite3DMirrorTest);
 //    ADD_TEST_CASE(QuaternionTest);
 //    ADD_TEST_CASE(Sprite3DEmptyTest);
@@ -1226,441 +1226,442 @@ void Animate3DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* ev
     }
 }
 
-//AttachmentTest::AttachmentTest()
-//: _hasWeapon(false)
-//, _sprite(nullptr)
-//{
-//    auto s = Director::getInstance()->getWinSize();
-//    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
-//    
-//    auto listener = EventListenerTouchAllAtOnce::create();
-//    listener->onTouchesEnded = CC_CALLBACK_2(AttachmentTest::onTouchesEnded, this);
-//    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-//}
-//std::string AttachmentTest::title() const
-//{
-//    return "Testing Sprite3D Attachment";
-//}
-//std::string AttachmentTest::subtitle() const
-//{
-//    return "touch to switch weapon";
-//}
-//
-//void AttachmentTest::addNewSpriteWithCoords(Vec2 p)
-//{
-//    std::string fileName = "Sprite3DTest/orc.c3b";
-//    auto sprite = Sprite3D::create(fileName);
-//    sprite->setScale(5);
-//    sprite->setRotation3D(Vec3(0,180,0));
-//    addChild(sprite);
-//    sprite->setPosition( Vec2( p.x, p.y) );
-//    
-//    //test attach
-//    auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
-//    sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
-//    
-//    auto animation = Animation3D::create(fileName);
-//    if (animation)
-//    {
-//        auto animate = Animate3D::create(animation);
-//        
-//        sprite->runAction(RepeatForever::create(animate));
-//    }
-//    _sprite = sprite;
-//    _hasWeapon = true;
-//}
-//
-//void AttachmentTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
-//{
-//    if (_hasWeapon)
-//    {
-//        _sprite->removeAllAttachNode();
-//    }
-//    else
-//    {
-//        auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
-//        _sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
-//    }
-//    _hasWeapon = !_hasWeapon;
-//}
-//Sprite3DReskinTest::Sprite3DReskinTest()
-//: _sprite(nullptr)
-//{
-//    auto s = Director::getInstance()->getWinSize();
-//    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
-//    
-//    auto listener = EventListenerTouchAllAtOnce::create();
-//    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DReskinTest::onTouchesEnded, this);
-//    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-//    TTFConfig ttfConfig("fonts/arial.ttf", 20);
-//    auto label1 = Label::createWithTTF(ttfConfig,"Hair");
-//    auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
-//    auto label2 = Label::createWithTTF(ttfConfig,"Glasses");
-//    auto item2 = MenuItemLabel::create(label2,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
-//    auto label3 = Label::createWithTTF(ttfConfig,"Coat");
-//    auto item3 = MenuItemLabel::create(label3,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
-//    auto label4 = Label::createWithTTF(ttfConfig,"Pants");
-//    auto item4 = MenuItemLabel::create(label4,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
-//    auto label5 = Label::createWithTTF(ttfConfig,"Shoes");
-//    auto item5 = MenuItemLabel::create(label5,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
-//    item1->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*4 ) );
-//    item2->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *5 ) );
-//    item3->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*6 ) );
-//    item4->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *7 ) );
-//    item5->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *8 ) );
-//    item1->setUserData((void*)SkinType::HAIR);
-//    item2->setUserData((void*)SkinType::GLASSES);
-//    item3->setUserData((void*)SkinType::UPPER_BODY);
-//    item4->setUserData((void*)SkinType::PANTS);
-//    item5->setUserData((void*)SkinType::SHOES);
-//    auto pMenu1 = Menu::create(item1, item2, item3, item4, item5, nullptr);
-//    pMenu1->setPosition(Vec2(0,0));
-//    this->addChild(pMenu1, 10);
-//    
-//}
-//void Sprite3DReskinTest::menuCallback_reSkin(Ref* sender)
-//{
-//    long index = (long)(((MenuItemLabel*)sender)->getUserData());
-//    if (index < (int)SkinType::MAX_TYPE)
-//    {
-//        _curSkin[index] = (_curSkin[index] + 1) % _skins[index].size();
-//        applyCurSkin();
-//    }
-//}
-//
-//std::string Sprite3DReskinTest::title() const
-//{
-//    return "Testing Sprite3D Reskin";
-//}
-//std::string Sprite3DReskinTest::subtitle() const
-//{
-//    return "";
-//}
-//
-//void Sprite3DReskinTest::addNewSpriteWithCoords(Vec2 p)
-//{
-//    std::string fileName = "Sprite3DTest/ReskinGirl.c3b";
-//    auto sprite = Sprite3D::create(fileName);
-//    sprite->setScale(4);
-//    sprite->setRotation3D(Vec3(0,0,0));
-//    addChild(sprite);
-//    sprite->setPosition( Vec2( p.x, p.y-60) );
-//    auto animation = Animation3D::create(fileName);
-//    if (animation)
-//    {
-//        auto animate = Animate3D::create(animation);
-//        
-//        sprite->runAction(RepeatForever::create(animate));
-//    }
-//    _sprite = sprite;
-//    
-//    auto& body = _skins[(int)SkinType::UPPER_BODY];
-//    body.push_back("Girl_UpperBody01");
-//    body.push_back("Girl_UpperBody02");
-//    
-//    auto& pants = _skins[(int)SkinType::PANTS];
-//    pants.push_back("Girl_LowerBody01");
-//    pants.push_back("Girl_LowerBody02");
-//    
-//    auto& shoes = _skins[(int)SkinType::SHOES];
-//    shoes.push_back("Girl_Shoes01");
-//    shoes.push_back("Girl_Shoes02");
-//    
-//    auto& hair = _skins[(int)SkinType::HAIR];
-//    hair.push_back("Girl_Hair01");
-//    hair.push_back("Girl_Hair02");
-//    
-//    auto& face = _skins[(int)SkinType::FACE];
-//    face.push_back("Girl_Face01");
-//    face.push_back("Girl_Face02");
-//    
-//    auto& hand = _skins[(int)SkinType::HAND];
-//    hand.push_back("Girl_Hand01");
-//    hand.push_back("Girl_Hand02");
-//    
-//    auto& glasses = _skins[(int)SkinType::GLASSES];
-//    glasses.push_back("");
-//    glasses.push_back("Girl_Glasses01");
-//    
-//    memset(_curSkin, 0, (int)SkinType::MAX_TYPE * sizeof(int));
-//    
-//    applyCurSkin();
-//}
-//
-//void Sprite3DReskinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
-//{
-//}
-//
-//void Sprite3DReskinTest::applyCurSkin()
-//{
-//    for (ssize_t i = 0; i < _sprite->getMeshCount(); i++) {
-//        auto mesh = _sprite->getMeshByIndex(static_cast<int>(i));
-//        bool isVisible = false;
-//        for (int j = 0; j < (int)SkinType::MAX_TYPE; j++) {
-//            if (mesh->getName() == _skins[j].at(_curSkin[j]))
-//            {
-//                isVisible = true;
-//                break;
-//            }
-//        }
-//        _sprite->getMeshByIndex(static_cast<int>(i))->setVisible(isVisible);
-//    }
-//}
-//
-//Sprite3DWithOBBPerformanceTest::Sprite3DWithOBBPerformanceTest()
-//{
-//    auto listener = EventListenerTouchAllAtOnce::create();
-//    listener->onTouchesBegan = CC_CALLBACK_2(Sprite3DWithOBBPerformanceTest::onTouchesBegan, this);
-//    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithOBBPerformanceTest::onTouchesEnded, this);
-//    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DWithOBBPerformanceTest::onTouchesMoved, this);
-//    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-//    auto s = Director::getInstance()->getWinSize();
-//    initDrawBox();
-//    
-//    addNewSpriteWithCoords(Vec2(s.width/2, s.height/2));
-//    MenuItemFont::setFontName("fonts/arial.ttf");
-//    MenuItemFont::setFontSize(65);
-//    auto decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(Sprite3DWithOBBPerformanceTest::delOBBCallback, this));
-//    decrease->setColor(Color3B(0,200,20));
-//    auto increase = MenuItemFont::create(" + ", CC_CALLBACK_1(Sprite3DWithOBBPerformanceTest::addOBBCallback, this));
-//    increase->setColor(Color3B(0,200,20));
-//    
-//    auto menu = Menu::create(decrease, increase, nullptr);
-//    menu->alignItemsHorizontally();
-//    menu->setPosition(Vec2(s.width/2, s.height-65));
-//    addChild(menu, 1);
-//    
-//    TTFConfig ttfCount("fonts/Marker Felt.ttf", 30);
-//    _labelCubeCount = Label::createWithTTF(ttfCount,"0 cubes");
-//    _labelCubeCount->setColor(Color3B(0,200,20));
-//    _labelCubeCount->setPosition(Vec2(s.width/2, s.height-90));
-//    addChild(_labelCubeCount);
-//    _hasCollider = false;
-//    addOBBCallback(nullptr);
-//    scheduleUpdate();
-//}
-//std::string Sprite3DWithOBBPerformanceTest::title() const
-//{
-//    return "OBB Collision Performance Test";
-//}
-//std::string Sprite3DWithOBBPerformanceTest::subtitle() const
-//{
-//    return "";
-//}
-//void Sprite3DWithOBBPerformanceTest::addNewOBBWithCoords(Vec2 p)
-//{
-//    Vec3 extents = Vec3(10, 10, 10);
-//    AABB aabb(-extents, extents);
-//    auto obb = OBB(aabb);
-//    obb._center = Vec3(p.x,p.y,0);
-//    _obb.push_back(obb);
-//}
-//
-//void Sprite3DWithOBBPerformanceTest::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
-//{
-//    for (const auto& touch: touches)
-//    {
-//        auto location = touch->getLocationInView();
-//        auto obbSize = _obb.size();
-//        if(obbSize)
-//        {
-//            _intersetList.clear();
-//            Ray ray;
-//            calculateRayByLocationInView(&ray,location);
-//            for(decltype(obbSize) i = 0; i < obbSize; i++)
-//            {
-//                if(ray.intersects(_obb[i]))
-//                {
-//                    _intersetList.insert((int)i);
-//                    return;
-//                }
-//            }
-//        }
-//    }
-//}
-//
-//void Sprite3DWithOBBPerformanceTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
-//{
-//    
-//}
-//
-//void Sprite3DWithOBBPerformanceTest::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
-//{
-//    for (const auto& touch: touches)
-//    {
-//        auto location = touch->getLocation();       
-//        auto obbSize = _obb.size();
-//
-//        for(decltype(obbSize) i = 0; i < obbSize; i++)
-//        {
-//            if(_intersetList.find((int)i) != _intersetList.end())
-//                _obb[i]._center = Vec3(location.x,location.y,0);
-//        }
-//    }
-//}
-//
-//void Sprite3DWithOBBPerformanceTest::update(float dt)
-//{
-//    char szText[16];
-//    sprintf(szText,"%lu cubes", static_cast<unsigned long>(_obb.size()));
-//    _labelCubeCount->setString(szText);
-//    
-//    if (_drawDebug)
-//    {
-//        _drawDebug->clear();
-//        
-//        Mat4 mat = _sprite->getNodeToWorldTransform();
-//        
-//        _obbt = _obbtOri;
-//        _obbt.transform(mat);
-//        
-//        Vec3 corners[8] = {};
-//        _obbt.getCorners(corners);
-//        _drawDebug->drawCube(corners, Color4F(0,0,1,1));
-//    }
-//    if(_obb.size() > 0)
-//    {
-//        _drawOBB->clear();
-//        auto obbSize = _obb.size();
-//        for(decltype(obbSize) i =0; i < obbSize; i++)
-//        {
-//            Vec3 corners[8] = {};
-//            _obb[i].getCorners(corners);
-//            _drawOBB->drawCube(corners, _obbt.intersects(_obb[i])?Color4F(1,0,0,1):Color4F(0,1,0,1));
-//        }
-//    }
-//}
-//
-//void Sprite3DWithOBBPerformanceTest::initDrawBox()
-//{
-//    _drawOBB = DrawNode3D::create();
-//    addChild(_drawOBB);
-//}
-//
-//void Sprite3DWithOBBPerformanceTest::addNewSpriteWithCoords(Vec2 p)
-//{
-//    std::string fileName = "Sprite3DTest/tortoise.c3b";
-//    auto sprite = Sprite3D::create(fileName);
-//    AABB aabb = sprite->getAABB();
-//    _obbt = OBB(aabb);
-//    _obbtOri = _obbt;
-//    
-//    sprite->setScale(0.1f);
-//    auto s = Director::getInstance()->getWinSize();
-//    sprite->setPosition(Vec2(s.width * 4.f / 5.f, s.height / 2.f));
-//    addChild(sprite);
-//    _sprite = sprite;
-//    auto animation = Animation3D::create(fileName);
-//    if (animation)
-//    {
-//        auto animate = Animate3D::create(animation, 0.f, 1.933f);
-//        sprite->runAction(RepeatForever::create(animate));
-//    }
-//    
-//    _moveAction = MoveTo::create(4.f, Vec2(s.width / 5.f, s.height / 2.f));
-//    _moveAction->retain();
-//    auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerformanceTest::reachEndCallBack, this)), nullptr);
-//    seq->setTag(100);
-//    sprite->runAction(seq);
-//    
-//    
-//    
-//    _drawDebug = DrawNode3D::create();
-//    addChild(_drawDebug);
-//}
-//
-//void Sprite3DWithOBBPerformanceTest::reachEndCallBack()
-//{
-//    auto s = Director::getInstance()->getWinSize();
-//    _sprite->stopActionByTag(100);
-//    auto inverse = MoveTo::create(4.f, Vec2(s.width - _sprite->getPositionX(), s.height / 2.f));
-//    inverse->retain();
-//    _moveAction->release();
-//    _moveAction = inverse;
-//    auto rot = RotateBy::create(1.0f, Vec3(0.f, 180.f, 0.f));
-//    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerformanceTest::reachEndCallBack, this)), nullptr);
-//    seq->setTag(100);
-//    _sprite->runAction(seq);
-//}
-//
-//void Sprite3DWithOBBPerformanceTest::addOBBCallback(Ref* sender)
-//{
-//    addOBBWithCount(10);
-//}
-//
-//void Sprite3DWithOBBPerformanceTest::addOBBWithCount(float value)
-//{
-//    for(int i = 0; i < value; i++)
-//    {
-//        Vec2 randompos = Vec2(CCRANDOM_0_1() * Director::getInstance()->getWinSize().width,CCRANDOM_0_1() * Director::getInstance()->getWinSize().height);
-//        Vec3 extents = Vec3(10, 10, 10);
-//        AABB aabb(-extents, extents);
-//        auto obb = OBB(aabb);
-//        obb._center = Vec3(randompos.x,randompos.y,0);
-//        _obb.push_back(obb);
-//    }
-//}
-//
-//void Sprite3DWithOBBPerformanceTest::delOBBCallback(Ref* sender)
-//{
-//    delOBBWithCount(10);
-//}
-//
-//void Sprite3DWithOBBPerformanceTest::delOBBWithCount(float value)
-//{
-//    if(_obb.size() >= 10)
-//    {
-//        _obb.erase(_obb.begin(),_obb.begin() + value);
-//        _drawOBB->clear();
-//    }
-//    else
-//        return;
-//}
-//void Sprite3DWithOBBPerformanceTest::unproject(const Mat4& viewProjection, const Size* viewport, Vec3* src, Vec3* dst)
-//{
-//    assert(dst);
-//    
-//    assert(viewport->width != 0.0f && viewport->height != 0.0f);
-//    Vec4 screen(src->x / viewport->width, ((viewport->height - src->y)) / viewport->height, src->z, 1.0f);
-//    
-//    screen.x = screen.x * 2.0f - 1.0f;
-//    screen.y = screen.y * 2.0f - 1.0f;
-//    screen.z = screen.z * 2.0f - 1.0f;
-//    
-//    viewProjection.getInversed().transformVector(screen, &screen);
-//    
-//    if (screen.w != 0.0f)
-//    {
-//        screen.x /= screen.w;
-//        screen.y /= screen.w;
-//        screen.z /= screen.w;
-//    }
-//    
-//    dst->set(screen.x, screen.y, screen.z);
-//}
-//
-//void Sprite3DWithOBBPerformanceTest::calculateRayByLocationInView(Ray* ray, const Vec2& location)
-//{
-//    auto dir = Director::getInstance();
-//    auto view = dir->getWinSize();
-//    auto mat = dir->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-//    
-//    Vec3 src = Vec3(location.x, location.y, -1);
-//    Vec3 nearPoint;
-//    unproject(mat, &view, &src, &nearPoint);
-//    
-//    src = Vec3(location.x, location.y, 1);
-//    Vec3 farPoint;
-//    unproject(mat, &view, &src, &farPoint);
-//    
-//    Vec3 direction;
-//    Vec3::subtract(farPoint, nearPoint, &direction);
-//    direction.normalize();
-//    
-//    ray->_origin = nearPoint;
-//    ray->_direction = direction;
-//}
-//
+AttachmentTest::AttachmentTest()
+: _hasWeapon(false)
+, _sprite(nullptr)
+{
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(AttachmentTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+std::string AttachmentTest::title() const
+{
+    return "Testing Sprite3D Attachment";
+}
+std::string AttachmentTest::subtitle() const
+{
+    return "touch to switch weapon";
+}
+
+void AttachmentTest::addNewSpriteWithCoords(Vec2 p)
+{
+    std::string fileName = "Sprite3DTest/orc.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(5);
+    sprite->setRotation3D(Vec3(0,180,0));
+    addChild(sprite);
+    sprite->setPosition( Vec2( p.x, p.y) );
+    
+    //test attach
+    auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
+    sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
+    
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        
+        sprite->runAction(RepeatForever::create(animate));
+    }
+    _sprite = sprite;
+    _hasWeapon = true;
+}
+
+void AttachmentTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    if (_hasWeapon)
+    {
+        _sprite->removeAllAttachNode();
+    }
+    else
+    {
+        auto sp = Sprite3D::create("Sprite3DTest/axe.c3b");
+        _sprite->getAttachNode("Bip001 R Hand")->addChild(sp);
+    }
+    _hasWeapon = !_hasWeapon;
+}
+
+Sprite3DReskinTest::Sprite3DReskinTest()
+: _sprite(nullptr)
+{
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DReskinTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    TTFConfig ttfConfig("fonts/arial.ttf", 20);
+    auto label1 = Label::createWithTTF(ttfConfig,"Hair");
+    auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
+    auto label2 = Label::createWithTTF(ttfConfig,"Glasses");
+    auto item2 = MenuItemLabel::create(label2,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
+    auto label3 = Label::createWithTTF(ttfConfig,"Coat");
+    auto item3 = MenuItemLabel::create(label3,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
+    auto label4 = Label::createWithTTF(ttfConfig,"Pants");
+    auto item4 = MenuItemLabel::create(label4,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
+    auto label5 = Label::createWithTTF(ttfConfig,"Shoes");
+    auto item5 = MenuItemLabel::create(label5,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
+    item1->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*4 ) );
+    item2->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *5 ) );
+    item3->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*6 ) );
+    item4->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *7 ) );
+    item5->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height *8 ) );
+    item1->setUserData((void*)SkinType::HAIR);
+    item2->setUserData((void*)SkinType::GLASSES);
+    item3->setUserData((void*)SkinType::UPPER_BODY);
+    item4->setUserData((void*)SkinType::PANTS);
+    item5->setUserData((void*)SkinType::SHOES);
+    auto pMenu1 = Menu::create(item1, item2, item3, item4, item5, nullptr);
+    pMenu1->setPosition(Vec2(0,0));
+    this->addChild(pMenu1, 10);
+    
+}
+void Sprite3DReskinTest::menuCallback_reSkin(Ref* sender)
+{
+    long index = (long)(((MenuItemLabel*)sender)->getUserData());
+    if (index < (int)SkinType::MAX_TYPE)
+    {
+        _curSkin[index] = (_curSkin[index] + 1) % _skins[index].size();
+        applyCurSkin();
+    }
+}
+
+std::string Sprite3DReskinTest::title() const
+{
+    return "Testing Sprite3D Reskin";
+}
+std::string Sprite3DReskinTest::subtitle() const
+{
+    return "";
+}
+
+void Sprite3DReskinTest::addNewSpriteWithCoords(Vec2 p)
+{
+    std::string fileName = "Sprite3DTest/ReskinGirl.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(4);
+    sprite->setRotation3D(Vec3(0,0,0));
+    addChild(sprite);
+    sprite->setPosition( Vec2( p.x, p.y-60) );
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        
+        sprite->runAction(RepeatForever::create(animate));
+    }
+    _sprite = sprite;
+    
+    auto& body = _skins[(int)SkinType::UPPER_BODY];
+    body.push_back("Girl_UpperBody01");
+    body.push_back("Girl_UpperBody02");
+    
+    auto& pants = _skins[(int)SkinType::PANTS];
+    pants.push_back("Girl_LowerBody01");
+    pants.push_back("Girl_LowerBody02");
+    
+    auto& shoes = _skins[(int)SkinType::SHOES];
+    shoes.push_back("Girl_Shoes01");
+    shoes.push_back("Girl_Shoes02");
+    
+    auto& hair = _skins[(int)SkinType::HAIR];
+    hair.push_back("Girl_Hair01");
+    hair.push_back("Girl_Hair02");
+    
+    auto& face = _skins[(int)SkinType::FACE];
+    face.push_back("Girl_Face01");
+    face.push_back("Girl_Face02");
+    
+    auto& hand = _skins[(int)SkinType::HAND];
+    hand.push_back("Girl_Hand01");
+    hand.push_back("Girl_Hand02");
+    
+    auto& glasses = _skins[(int)SkinType::GLASSES];
+    glasses.push_back("");
+    glasses.push_back("Girl_Glasses01");
+    
+    memset(_curSkin, 0, (int)SkinType::MAX_TYPE * sizeof(int));
+    
+    applyCurSkin();
+}
+
+void Sprite3DReskinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+}
+
+void Sprite3DReskinTest::applyCurSkin()
+{
+    for (ssize_t i = 0; i < _sprite->getMeshCount(); i++) {
+        auto mesh = _sprite->getMeshByIndex(static_cast<int>(i));
+        bool isVisible = false;
+        for (int j = 0; j < (int)SkinType::MAX_TYPE; j++) {
+            if (mesh->getName() == _skins[j].at(_curSkin[j]))
+            {
+                isVisible = true;
+                break;
+            }
+        }
+        _sprite->getMeshByIndex(static_cast<int>(i))->setVisible(isVisible);
+    }
+}
+
+Sprite3DWithOBBPerformanceTest::Sprite3DWithOBBPerformanceTest()
+{
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(Sprite3DWithOBBPerformanceTest::onTouchesBegan, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithOBBPerformanceTest::onTouchesEnded, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DWithOBBPerformanceTest::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    auto s = Director::getInstance()->getWinSize();
+    initDrawBox();
+    
+    addNewSpriteWithCoords(Vec2(s.width/2, s.height/2));
+    MenuItemFont::setFontName("fonts/arial.ttf");
+    MenuItemFont::setFontSize(65);
+    auto decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(Sprite3DWithOBBPerformanceTest::delOBBCallback, this));
+    decrease->setColor(Color3B(0,200,20));
+    auto increase = MenuItemFont::create(" + ", CC_CALLBACK_1(Sprite3DWithOBBPerformanceTest::addOBBCallback, this));
+    increase->setColor(Color3B(0,200,20));
+    
+    auto menu = Menu::create(decrease, increase, nullptr);
+    menu->alignItemsHorizontally();
+    menu->setPosition(Vec2(s.width/2, s.height-65));
+    addChild(menu, 1);
+    
+    TTFConfig ttfCount("fonts/Marker Felt.ttf", 30);
+    _labelCubeCount = Label::createWithTTF(ttfCount,"0 cubes");
+    _labelCubeCount->setColor(Color3B(0,200,20));
+    _labelCubeCount->setPosition(Vec2(s.width/2, s.height-90));
+    addChild(_labelCubeCount);
+    _hasCollider = false;
+    addOBBCallback(nullptr);
+    scheduleUpdate();
+}
+std::string Sprite3DWithOBBPerformanceTest::title() const
+{
+    return "OBB Collision Performance Test";
+}
+std::string Sprite3DWithOBBPerformanceTest::subtitle() const
+{
+    return "";
+}
+void Sprite3DWithOBBPerformanceTest::addNewOBBWithCoords(Vec2 p)
+{
+    Vec3 extents = Vec3(10, 10, 10);
+    AABB aabb(-extents, extents);
+    auto obb = OBB(aabb);
+    obb._center = Vec3(p.x,p.y,0);
+    _obb.push_back(obb);
+}
+
+void Sprite3DWithOBBPerformanceTest::onTouchesBegan(const std::vector<Touch*>& touches, Event* event)
+{
+    for (const auto& touch: touches)
+    {
+        auto location = touch->getLocationInView();
+        auto obbSize = _obb.size();
+        if(obbSize)
+        {
+            _intersetList.clear();
+            Ray ray;
+            calculateRayByLocationInView(&ray,location);
+            for(decltype(obbSize) i = 0; i < obbSize; i++)
+            {
+                if(ray.intersects(_obb[i]))
+                {
+                    _intersetList.insert((int)i);
+                    return;
+                }
+            }
+        }
+    }
+}
+
+void Sprite3DWithOBBPerformanceTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    
+}
+
+void Sprite3DWithOBBPerformanceTest::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
+{
+    for (const auto& touch: touches)
+    {
+        auto location = touch->getLocation();       
+        auto obbSize = _obb.size();
+
+        for(decltype(obbSize) i = 0; i < obbSize; i++)
+        {
+            if(_intersetList.find((int)i) != _intersetList.end())
+                _obb[i]._center = Vec3(location.x,location.y,0);
+        }
+    }
+}
+
+void Sprite3DWithOBBPerformanceTest::update(float dt)
+{
+    char szText[16];
+    sprintf(szText,"%lu cubes", static_cast<unsigned long>(_obb.size()));
+    _labelCubeCount->setString(szText);
+    
+    if (_drawDebug)
+    {
+        _drawDebug->clear();
+        
+        Mat4 mat = _sprite->getNodeToWorldTransform();
+        
+        _obbt = _obbtOri;
+        _obbt.transform(mat);
+        
+        Vec3 corners[8] = {};
+        _obbt.getCorners(corners);
+        _drawDebug->drawCube(corners, Color4F(0,0,1,1));
+    }
+    if(_obb.size() > 0)
+    {
+        _drawOBB->clear();
+        auto obbSize = _obb.size();
+        for(decltype(obbSize) i =0; i < obbSize; i++)
+        {
+            Vec3 corners[8] = {};
+            _obb[i].getCorners(corners);
+            _drawOBB->drawCube(corners, _obbt.intersects(_obb[i])?Color4F(1,0,0,1):Color4F(0,1,0,1));
+        }
+    }
+}
+
+void Sprite3DWithOBBPerformanceTest::initDrawBox()
+{
+    _drawOBB = DrawNode3D::create();
+    addChild(_drawOBB);
+}
+
+void Sprite3DWithOBBPerformanceTest::addNewSpriteWithCoords(Vec2 p)
+{
+    std::string fileName = "Sprite3DTest/tortoise.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    AABB aabb = sprite->getAABB();
+    _obbt = OBB(aabb);
+    _obbtOri = _obbt;
+    
+    sprite->setScale(0.1f);
+    auto s = Director::getInstance()->getWinSize();
+    sprite->setPosition(Vec2(s.width * 4.f / 5.f, s.height / 2.f));
+    addChild(sprite);
+    _sprite = sprite;
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation, 0.f, 1.933f);
+        sprite->runAction(RepeatForever::create(animate));
+    }
+    
+    _moveAction = MoveTo::create(4.f, Vec2(s.width / 5.f, s.height / 2.f));
+    _moveAction->retain();
+    auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerformanceTest::reachEndCallBack, this)), nullptr);
+    seq->setTag(100);
+    sprite->runAction(seq);
+    
+    
+    
+    _drawDebug = DrawNode3D::create();
+    addChild(_drawDebug);
+}
+
+void Sprite3DWithOBBPerformanceTest::reachEndCallBack()
+{
+    auto s = Director::getInstance()->getWinSize();
+    _sprite->stopActionByTag(100);
+    auto inverse = MoveTo::create(4.f, Vec2(s.width - _sprite->getPositionX(), s.height / 2.f));
+    inverse->retain();
+    _moveAction->release();
+    _moveAction = inverse;
+    auto rot = RotateBy::create(1.0f, Vec3(0.f, 180.f, 0.f));
+    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerformanceTest::reachEndCallBack, this)), nullptr);
+    seq->setTag(100);
+    _sprite->runAction(seq);
+}
+
+void Sprite3DWithOBBPerformanceTest::addOBBCallback(Ref* sender)
+{
+    addOBBWithCount(10);
+}
+
+void Sprite3DWithOBBPerformanceTest::addOBBWithCount(float value)
+{
+    for(int i = 0; i < value; i++)
+    {
+        Vec2 randompos = Vec2(CCRANDOM_0_1() * Director::getInstance()->getWinSize().width,CCRANDOM_0_1() * Director::getInstance()->getWinSize().height);
+        Vec3 extents = Vec3(10, 10, 10);
+        AABB aabb(-extents, extents);
+        auto obb = OBB(aabb);
+        obb._center = Vec3(randompos.x,randompos.y,0);
+        _obb.push_back(obb);
+    }
+}
+
+void Sprite3DWithOBBPerformanceTest::delOBBCallback(Ref* sender)
+{
+    delOBBWithCount(10);
+}
+
+void Sprite3DWithOBBPerformanceTest::delOBBWithCount(float value)
+{
+    if(_obb.size() >= 10)
+    {
+        _obb.erase(_obb.begin(),_obb.begin() + value);
+        _drawOBB->clear();
+    }
+    else
+        return;
+}
+void Sprite3DWithOBBPerformanceTest::unproject(const Mat4& viewProjection, const Size* viewport, Vec3* src, Vec3* dst)
+{
+    assert(dst);
+    
+    assert(viewport->width != 0.0f && viewport->height != 0.0f);
+    Vec4 screen(src->x / viewport->width, ((viewport->height - src->y)) / viewport->height, src->z, 1.0f);
+    
+    screen.x = screen.x * 2.0f - 1.0f;
+    screen.y = screen.y * 2.0f - 1.0f;
+    screen.z = screen.z * 2.0f - 1.0f;
+    
+    viewProjection.getInversed().transformVector(screen, &screen);
+    
+    if (screen.w != 0.0f)
+    {
+        screen.x /= screen.w;
+        screen.y /= screen.w;
+        screen.z /= screen.w;
+    }
+    
+    dst->set(screen.x, screen.y, screen.z);
+}
+
+void Sprite3DWithOBBPerformanceTest::calculateRayByLocationInView(Ray* ray, const Vec2& location)
+{
+    auto dir = Director::getInstance();
+    auto view = dir->getWinSize();
+    auto mat = dir->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    
+    Vec3 src = Vec3(location.x, location.y, -1);
+    Vec3 nearPoint;
+    unproject(mat, &view, &src, &nearPoint);
+    
+    src = Vec3(location.x, location.y, 1);
+    Vec3 farPoint;
+    unproject(mat, &view, &src, &farPoint);
+    
+    Vec3 direction;
+    Vec3::subtract(farPoint, nearPoint, &direction);
+    direction.normalize();
+    
+    ray->_origin = nearPoint;
+    ray->_direction = direction;
+}
+
 //Sprite3DMirrorTest::Sprite3DMirrorTest()
 //: _sprite(nullptr)
 //, _mirrorSprite(nullptr)

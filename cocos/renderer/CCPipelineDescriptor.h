@@ -41,6 +41,7 @@ struct CC_DLL PipelineDescriptor final
     backend::BlendDescriptor blendDescriptor;
     backend::RenderPassDescriptor renderPassDescriptor;
     backend::VertexLayout vertexLayout;
+    backend::DepthStencilDescriptor *depthStencilDescriptor = nullptr; //weak reference
 };
 
 NS_CC_END

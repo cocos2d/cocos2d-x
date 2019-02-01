@@ -22,9 +22,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#ifndef _SPRITE3D_TEST_H_
-#define _SPRITE3D_TEST_H_
+#pragma once
 
 #include "BaseTest.h"
 #include "renderer/backend/ProgramState.h"
@@ -297,88 +295,89 @@ protected:
     cocos2d::MoveTo* _moveAction;
 };
 
-//class AttachmentTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(AttachmentTest);
-//    AttachmentTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
-//    
-//    void addNewSpriteWithCoords(cocos2d::Vec2 p);
-//    
-//protected:
-//    bool _hasWeapon;
-//    cocos2d::Sprite3D* _sprite;
-//};
-//
-//class Sprite3DReskinTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DReskinTest);
-//    Sprite3DReskinTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
-//    void addNewSpriteWithCoords(cocos2d::Vec2 p);
-//    
-//    void menuCallback_reSkin(cocos2d::Ref* sender);
-//protected:
-//    void applyCurSkin();
-//    
-//    enum class SkinType
-//    {
-//        UPPER_BODY = 0,
-//        PANTS,
-//        SHOES,
-//        HAIR,
-//        FACE,
-//        HAND,
-//        GLASSES,
-//        MAX_TYPE,
-//    };
-//    
-//    std::vector<std::string> _skins[(int)SkinType::MAX_TYPE]; //all skins
-//    int                      _curSkin[(int)SkinType::MAX_TYPE]; //current skin index
-//    cocos2d::Sprite3D* _sprite;
-//};
-//class Sprite3DWithOBBPerformanceTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DWithOBBPerformanceTest);
-//    Sprite3DWithOBBPerformanceTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    virtual void update(float dt) override;
-//    void addNewOBBWithCoords(cocos2d::Vec2 p);
-//    void addNewSpriteWithCoords(cocos2d::Vec2 p);
-//    void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
-//    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
-//    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
-//    void addOBBCallback(cocos2d::Ref* sender);
-//    void delOBBCallback(cocos2d::Ref* sender);
-//    void addOBBWithCount(float value);
-//    void delOBBWithCount(float value);
-//protected:
-//    cocos2d::Sprite3D*        _sprite;
-//    std::vector<cocos2d::OBB>          _obb;
-//    cocos2d::DrawNode3D*               _drawOBB;
-//    cocos2d::Label*                    _labelCubeCount;
-//    cocos2d::MoveTo*                   _moveAction;
-//    cocos2d::OBB                       _obbt;
-//    cocos2d::OBB                       _obbtOri; //tortoise origin obb
-//    cocos2d::DrawNode3D*               _drawDebug;
-//    bool                      _hasCollider;
-//    std::set<int>             _intersetList;
-//    void initDrawBox();
-//    void reachEndCallBack();
-//    
-//    void unproject(const cocos2d::Mat4& viewProjection, const cocos2d::Size* viewport, cocos2d::Vec3* src, cocos2d::Vec3* dst);
-//    void calculateRayByLocationInView(cocos2d::Ray* ray, const cocos2d::Vec2& location);
-//};
-//
+class AttachmentTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(AttachmentTest);
+    AttachmentTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    
+    void addNewSpriteWithCoords(cocos2d::Vec2 p);
+    
+protected:
+    bool _hasWeapon;
+    cocos2d::Sprite3D* _sprite;
+};
+
+class Sprite3DReskinTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DReskinTest);
+    Sprite3DReskinTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void addNewSpriteWithCoords(cocos2d::Vec2 p);
+    
+    void menuCallback_reSkin(cocos2d::Ref* sender);
+protected:
+    void applyCurSkin();
+    
+    enum class SkinType
+    {
+        UPPER_BODY = 0,
+        PANTS,
+        SHOES,
+        HAIR,
+        FACE,
+        HAND,
+        GLASSES,
+        MAX_TYPE,
+    };
+    
+    std::vector<std::string> _skins[(int)SkinType::MAX_TYPE]; //all skins
+    int                      _curSkin[(int)SkinType::MAX_TYPE]; //current skin index
+    cocos2d::Sprite3D* _sprite;
+};
+
+class Sprite3DWithOBBPerformanceTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DWithOBBPerformanceTest);
+    Sprite3DWithOBBPerformanceTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void update(float dt) override;
+    void addNewOBBWithCoords(cocos2d::Vec2 p);
+    void addNewSpriteWithCoords(cocos2d::Vec2 p);
+    void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void addOBBCallback(cocos2d::Ref* sender);
+    void delOBBCallback(cocos2d::Ref* sender);
+    void addOBBWithCount(float value);
+    void delOBBWithCount(float value);
+protected:
+    cocos2d::Sprite3D*        _sprite;
+    std::vector<cocos2d::OBB>          _obb;
+    cocos2d::DrawNode3D*               _drawOBB;
+    cocos2d::Label*                    _labelCubeCount;
+    cocos2d::MoveTo*                   _moveAction;
+    cocos2d::OBB                       _obbt;
+    cocos2d::OBB                       _obbtOri; //tortoise origin obb
+    cocos2d::DrawNode3D*               _drawDebug;
+    bool                      _hasCollider;
+    std::set<int>             _intersetList;
+    void initDrawBox();
+    void reachEndCallBack();
+    
+    void unproject(const cocos2d::Mat4& viewProjection, const cocos2d::Size* viewport, cocos2d::Vec3* src, cocos2d::Vec3* dst);
+    void calculateRayByLocationInView(cocos2d::Ray* ray, const cocos2d::Vec2& location);
+};
+
 //class Sprite3DMirrorTest : public Sprite3DTestDemo
 //{
 //public:
@@ -626,5 +625,3 @@ protected:
 //    virtual std::string title() const override;
 //    virtual std::string subtitle() const override;
 //};
-
-#endif
