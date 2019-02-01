@@ -174,7 +174,21 @@ backend::UniformLocation ProgramState::getUniformLocation(const std::string& uni
     return _program->getUniformLocation(uniform);
 }
 
-void ProgramState::setUniform(const backend::UniformLocation& uniformLocation, const void* data, uint32_t size)
+void ProgramState::setUniform(const std::string &uniformName, const void* data, ssize_t size)
+{
+    auto location = getUniformLocation(uniformName);
+    if (location)
+    {
+        setUniform(location, data, size);
+    }
+    else
+    {
+        CCLOGERROR("uniform not found: \"%s\"", uniformName.c_str());
+    }
+}
+
+
+void ProgramState::setUniform(const backend::UniformLocation& uniformLocation, const void* data, ssize_t size)
 {
     switch (uniformLocation.shaderStage)
     {

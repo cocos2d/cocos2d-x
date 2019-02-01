@@ -130,7 +130,7 @@ list(APPEND GAME_HEADER
      Classes/NewEventDispatcherTest/NewEventDispatcherTest.h
      Classes/ActionsProgressTest/ActionsProgressTest.h
      Classes/RotateWorldTest/RotateWorldTest.h
-#     #Classes/Camera3DTest/Camera3DTest.h
+    #  Classes/Camera3DTest/Camera3DTest.h
      Classes/TextInputTest/TextInputTest.h
      Classes/Texture2dTest/Texture2dTest.h
      #Classes/TerrainTest/TerrainTest.h
@@ -234,7 +234,7 @@ list(APPEND GAME_SOURCE
      Classes/BugsTest/Bug-15776.cpp
      Classes/BugsTest/Bug-Child.cpp
      Classes/BugsTest/BugsTest.cpp
-     #Classes/Camera3DTest/Camera3DTest.cpp
+    #  Classes/Camera3DTest/Camera3DTest.cpp
      Classes/ClickAndMoveTest/ClickAndMoveTest.cpp
      Classes/ClippingNodeTest/ClippingNodeTest.cpp
      Classes/CocosDenshionTest/CocosDenshionTest.cpp

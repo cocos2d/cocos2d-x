@@ -47,10 +47,10 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DUVAnimationTest);
     ADD_TEST_CASE(Sprite3DFakeShadowTest);
     ADD_TEST_CASE(Sprite3DBasicToonShaderTest);
-//    ADD_TEST_CASE(Sprite3DLightMapTest);
-//    ADD_TEST_CASE(Sprite3DWithSkinTest);
-//    ADD_TEST_CASE(Sprite3DWithSkinOutlineTest);
-//    ADD_TEST_CASE(Animate3DTest);
+    ADD_TEST_CASE(Sprite3DLightMapTest);
+    ADD_TEST_CASE(Sprite3DWithSkinTest);
+    ADD_TEST_CASE(Sprite3DWithSkinOutlineTest);
+    ADD_TEST_CASE(Animate3DTest);
 //    ADD_TEST_CASE(AttachmentTest);
 //    ADD_TEST_CASE(Sprite3DReskinTest);
 //    ADD_TEST_CASE(Sprite3DWithOBBPerformanceTest);
@@ -603,76 +603,76 @@ std::string Sprite3DBasicToonShaderTest::subtitle() const
     return " ";
 }
 
-////------------------------------------------------------------------
-////
-//// Sprite3DLightMapTest 
-////
-////------------------------------------------------------------------
-//Sprite3DLightMapTest::Sprite3DLightMapTest()
-//{
-//    //the assets are from the OpenVR demo
-//    //get the visible size.
-//    Size visibleSize = Director::getInstance()->getVisibleSize();
-//    _camera = Camera::createPerspective(60, visibleSize.width/visibleSize.height, 0.1f, 200);
-//    _camera->setCameraFlag(CameraFlag::USER1);
-//    _camera->setPosition3D(Vec3(0,25,15));
-//    _camera->setRotation3D(Vec3(-35,0,0));
-//    auto LightMapScene = Sprite3D::create("Sprite3DTest/LightMapScene.c3b"); 
-//    LightMapScene->setScale(0.1f); 
-//    addChild(LightMapScene);
-//    addChild(_camera); 
-//    setCameraMask(2); 
+//------------------------------------------------------------------
 //
-//    //add a point light
-//    auto light = PointLight::create(Vec3(35,75,-20.5),Color3B(255,255,255),150);
-//    addChild(light);
-//    //set the ambient light 
-//    auto ambient = AmbientLight::create(Color3B(55,55,55));
-//    addChild(ambient);
+// Sprite3DLightMapTest 
 //
-//    //create a listener
-//    auto listener = EventListenerTouchAllAtOnce::create();
-//    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DLightMapTest::onTouchesMoved, this);
-//    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-//}
-//Sprite3DLightMapTest::~Sprite3DLightMapTest()
-//{
-//    
-//}
-//std::string Sprite3DLightMapTest::title() const
-//{
-//    return "light map test";
-//}
-//
-//std::string Sprite3DLightMapTest::subtitle() const 
-//{
-//    return "drag the screen to move around";
-//}
-//
-//void Sprite3DLightMapTest::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
-//{
-//    if(touches.size()==1)
-//    {
-//        float delta = Director::getInstance()->getDeltaTime();
-//        auto touch = touches[0];
-//        auto location = touch->getLocation();
-//        auto PreviousLocation = touch->getPreviousLocation();
-//        Point newPos = PreviousLocation - location;
-//
-//        Vec3 cameraDir;
-//        Vec3 cameraRightDir;
-//        _camera->getNodeToWorldTransform().getForwardVector(&cameraDir);
-//        cameraDir.normalize();
-//        cameraDir.y=0;
-//        _camera->getNodeToWorldTransform().getRightVector(&cameraRightDir);
-//        cameraRightDir.normalize();
-//        cameraRightDir.y=0;
-//        Vec3 cameraPos=  _camera->getPosition3D();
-//        cameraPos+=cameraDir*newPos.y*delta;  
-//        cameraPos+=cameraRightDir*newPos.x*delta;
-//        _camera->setPosition3D(cameraPos);      
-//    }
-//}
+//------------------------------------------------------------------
+Sprite3DLightMapTest::Sprite3DLightMapTest()
+{
+    //the assets are from the OpenVR demo
+    //get the visible size.
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    _camera = Camera::createPerspective(60, visibleSize.width/visibleSize.height, 0.1f, 200);
+    _camera->setCameraFlag(CameraFlag::USER1);
+    _camera->setPosition3D(Vec3(0,25,15));
+    _camera->setRotation3D(Vec3(-35,0,0));
+    auto LightMapScene = Sprite3D::create("Sprite3DTest/LightMapScene.c3b"); 
+    LightMapScene->setScale(0.1f); 
+    addChild(LightMapScene);
+    addChild(_camera); 
+    setCameraMask(2); 
+
+    //add a point light
+    auto light = PointLight::create(Vec3(35,75,-20.5),Color3B(255,255,255),150);
+    addChild(light);
+    //set the ambient light 
+    auto ambient = AmbientLight::create(Color3B(55,55,55));
+    addChild(ambient);
+
+    //create a listener
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DLightMapTest::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+Sprite3DLightMapTest::~Sprite3DLightMapTest()
+{
+    
+}
+std::string Sprite3DLightMapTest::title() const
+{
+    return "light map test";
+}
+
+std::string Sprite3DLightMapTest::subtitle() const 
+{
+    return "drag the screen to move around";
+}
+
+void Sprite3DLightMapTest::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
+{
+    if(touches.size()==1)
+    {
+        float delta = Director::getInstance()->getDeltaTime();
+        auto touch = touches[0];
+        auto location = touch->getLocation();
+        auto PreviousLocation = touch->getPreviousLocation();
+        Point newPos = PreviousLocation - location;
+
+        Vec3 cameraDir;
+        Vec3 cameraRightDir;
+        _camera->getNodeToWorldTransform().getForwardVector(&cameraDir);
+        cameraDir.normalize();
+        cameraDir.y=0;
+        _camera->getNodeToWorldTransform().getRightVector(&cameraRightDir);
+        cameraRightDir.normalize();
+        cameraRightDir.y=0;
+        Vec3 cameraPos=  _camera->getPosition3D();
+        cameraPos+=cameraDir*newPos.y*delta;  
+        cameraPos+=cameraRightDir*newPos.x*delta;
+        _camera->setPosition3D(cameraPos);      
+    }
+}
 
 //------------------------------------------------------------------
 //
@@ -900,332 +900,332 @@ void AsyncLoadSprite3DTest::asyncLoad_Callback(Sprite3D* sprite, void* param)
 }
 
 
-//Sprite3DWithSkinTest::Sprite3DWithSkinTest()
-//{
-//    auto listener = EventListenerTouchAllAtOnce::create();
-//    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithSkinTest::onTouchesEnded, this);
-//    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-//    
-//    // switch animation quality. In fact, you can set the sprite3d out of frustum to Animate3DQuality::QUALITY_NONE, it can save a lot of cpu time
-//    MenuItemFont::setFontName("fonts/arial.ttf");
-//    MenuItemFont::setFontSize(15);
-//    _animateQuality = (int)Animate3DQuality::QUALITY_LOW;
-//    _menuItem = MenuItemFont::create(getAnimationQualityMessage(), CC_CALLBACK_1(Sprite3DWithSkinTest::switchAnimationQualityCallback,this));
-//    _menuItem->setColor(Color3B(0,200,20));
-//    auto menu = Menu::create(_menuItem,NULL);
-//    menu->setPosition(Vec2::ZERO);
-//    _menuItem->setPosition(VisibleRect::left().x + 50, VisibleRect::top().y -70);
-//    addChild(menu, 1);
-//
-//    _sprits.clear();
-//    
-//    auto s = Director::getInstance()->getWinSize();
-//    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
-//}
-//std::string Sprite3DWithSkinTest::title() const
-//{
-//    return "Testing Sprite3D";
-//}
-//std::string Sprite3DWithSkinTest::subtitle() const
-//{
-//    return "Tap screen to add more sprite3D";
-//}
-//
-//void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
-//{
-//    std::string fileName = "Sprite3DTest/orc.c3b";
-//    auto sprite = Sprite3D::create(fileName);
-//    sprite->setScale(3);
-//    sprite->setRotation3D(Vec3(0,180,0));
-//    sprite->setPosition( Vec2( p.x, p.y) );
-//    addChild(sprite);
-//    _sprits.push_back(sprite);
-//    
-//    auto animation = Animation3D::create(fileName);
-//    if (animation)
-//    {
-//        auto animate = Animate3D::create(animation);
-//        bool inverse = (std::rand() % 3 == 0);
-//
-//        int rand2 = std::rand();
-//        float speed = 1.0f;
-//        if(rand2 % 3 == 1)
-//        {
-//            speed = animate->getSpeed() + CCRANDOM_0_1();
-//        }
-//        else if(rand2 % 3 == 2)
-//        {
-//            speed = animate->getSpeed() - 0.5 * CCRANDOM_0_1();
-//        }
-//        animate->setSpeed(inverse ? -speed : speed);
-//        animate->setTag(110);
-//        animate->setQuality((Animate3DQuality)_animateQuality);
-//        auto repeat = RepeatForever::create(animate);
-//        repeat->setTag(110);
-//        sprite->runAction(repeat);
-//    }
-//}
-//
-//std::string Sprite3DWithSkinTest::getAnimationQualityMessage() const
-//{
-//    if (_animateQuality == (int)Animate3DQuality::QUALITY_NONE)
-//        return "None Quality";
-//    else if (_animateQuality == (int)Animate3DQuality::QUALITY_LOW)
-//        return "Low Quality";
-//    else if (_animateQuality == (int)Animate3DQuality::QUALITY_HIGH)
-//        return "High Quality";
-//    
-//    return "";
-//}
-//
-//void Sprite3DWithSkinTest::switchAnimationQualityCallback(Ref* sender)
-//{
-//    ++_animateQuality;
-//    if (_animateQuality > (int)Animate3DQuality::QUALITY_HIGH)
-//        _animateQuality = (int)Animate3DQuality::QUALITY_NONE;
-//    
-//    _menuItem->setString(getAnimationQualityMessage());
-//    
-//    for (auto iter: _sprits)
-//    {
-//        RepeatForever* repAction = dynamic_cast<RepeatForever*>(iter->getActionByTag(110));
-//        Animate3D* animate3D = dynamic_cast<Animate3D*>(repAction->getInnerAction());
-//        animate3D->setQuality((Animate3DQuality)_animateQuality);
-//    }
-//}
-//
-//void Sprite3DWithSkinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
-//{
-//    for (auto touch: touches)
-//    {
-//        auto location = touch->getLocation();
-//        
-//        addNewSpriteWithCoords( location );
-//    }
-//}
-//
-//Sprite3DWithSkinOutlineTest::Sprite3DWithSkinOutlineTest()
-//{
-//    auto listener = EventListenerTouchAllAtOnce::create();
-//    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithSkinOutlineTest::onTouchesEnded, this);
-//    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-//    
-//    auto s = Director::getInstance()->getWinSize();
-//    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
-//    
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
-//                                                            [this](EventCustom*)
-//                                                            {
-//                                                                auto material = Sprite3DMaterial::createWithFilename("Sprite3DTest/outline.material");
-//                                                                material->setTechnique("outline_skinned");
-//                                                                for(auto& sprite : _sprites)
-//                                                                {
-//                                                                    sprite->setMaterial(material->clone());
-//                                                                }
-//                                                            }
-//                                                            );
-//    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
-//#endif
-//}
-//Sprite3DWithSkinOutlineTest::~Sprite3DWithSkinOutlineTest()
-//{
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
-//#endif
-//}
-//std::string Sprite3DWithSkinOutlineTest::title() const
-//{
-//    return "Testing Sprite3D for skinned outline";
-//}
-//std::string Sprite3DWithSkinOutlineTest::subtitle() const
-//{
-//    return "Tap screen to add more sprite3D";
-//}
-//
-//void Sprite3DWithSkinOutlineTest::addNewSpriteWithCoords(Vec2 p)
-//{
-//    
-//    std::string fileName = "Sprite3DTest/orc.c3b";
-//    auto sprite = Sprite3D::create(fileName);
-//    
-//    auto material = Sprite3DMaterial::createWithFilename("Sprite3DTest/outline.material");
-//    material->setTechnique("outline_skinned");
-//    sprite->setMaterial(material);
-//    
-//    sprite->setScale(3);
-//    sprite->setRotation3D(Vec3(0,180,0));
-//    addChild(sprite);
-//    sprite->setPosition( Vec2( p.x, p.y) );
-//    
-//    auto animation = Animation3D::create(fileName);
-//    if (animation)
-//    {
-//        auto animate = Animate3D::create(animation);
-//        bool inverse = (std::rand() % 3 == 0);
-//        
-//        int rand2 = std::rand();
-//        float speed = 1.0f;
-//        if(rand2 % 3 == 1)
-//        {
-//            speed = animate->getSpeed() + CCRANDOM_0_1();
-//        }
-//        else if(rand2 % 3 == 2)
-//        {
-//            speed = animate->getSpeed() - 0.5 * CCRANDOM_0_1();
-//        }
-//        animate->setSpeed(inverse ? -speed : speed);
-//        
-//        sprite->runAction(RepeatForever::create(animate));
-//    }
-//}
-//
-//void Sprite3DWithSkinOutlineTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
-//{
-//    for (auto touch: touches)
-//    {
-//        auto location = touch->getLocation();
-//        
-//        addNewSpriteWithCoords( location );
-//    }
-//}
-//
-//Animate3DTest::Animate3DTest()
-//: _sprite(nullptr)
-//, _swim(nullptr)
-//, _hurt(nullptr)
-//, _elapseTransTime(0.f)
-//, _moveAction(nullptr)
-//{
-//    addSprite3D();
-//    
-//    auto listener = EventListenerTouchAllAtOnce::create();
-//    listener->onTouchesEnded = CC_CALLBACK_2(Animate3DTest::onTouchesEnded, this);
-//    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-//    
-//    scheduleUpdate();
-//}
-//
-//Animate3DTest::~Animate3DTest()
-//{
-//    CC_SAFE_RELEASE(_moveAction);
-//    CC_SAFE_RELEASE(_hurt);
-//    CC_SAFE_RELEASE(_swim);
-//}
-//
-//std::string Animate3DTest::title() const
-//{
-//    return "Testing Animate3D";
-//}
-//
-//std::string Animate3DTest::subtitle() const
-//{
-//    return "Touch to beat the tortoise";
-//}
-//
-//void Animate3DTest::update(float dt)
-//{
-//    if (_state == State::HURT_TO_SWIMMING)
-//    {
-//        _elapseTransTime += dt;
-//        
-//        if (_elapseTransTime >= Animate3D::getTransitionTime())
-//        {
-//            _sprite->stopAction(_hurt);
-//            _state = State::SWIMMING;
-//        }
-//    }
-//    else if (_state == State::SWIMMING_TO_HURT)
-//    {
-//        _elapseTransTime += dt;
-//        if (_elapseTransTime >= Animate3D::getTransitionTime())
-//        {
-//            _sprite->stopAction(_swim);
-//            _state = State::HURT;
-//        }
-//    }
-//}
-//
-//void Animate3DTest::addSprite3D()
-//{
-//    std::string fileName = "Sprite3DTest/tortoise.c3b";
-//    auto sprite = Sprite3D::create(fileName);
-//    sprite->setScale(0.1f);
-//    auto s = Director::getInstance()->getWinSize();
-//    sprite->setPosition(Vec2(s.width * 4.f / 5.f, s.height / 2.f));
-//    addChild(sprite);
-//    _sprite = sprite;
-//    auto animation = Animation3D::create(fileName);
-//    if (animation)
-//    {
-//        auto animate = Animate3D::create(animation, 0.f, 1.933f);
-//        _swim = RepeatForever::create(animate);
-//        sprite->runAction(_swim);
-//        
-//        _swim->retain();
-//        _hurt = Animate3D::create(animation, 1.933f, 2.8f);
-//        _hurt->retain();
-//        _state = State::SWIMMING;
-//    }
-//    
-//    _moveAction = MoveTo::create(4.f, Vec2(s.width / 5.f, s.height / 2.f));
-//    _moveAction->retain();
-//    auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(Animate3DTest::reachEndCallBack, this)), nullptr);
-//    seq->setTag(100);
-//    sprite->runAction(seq);
-//}
-//
-//void Animate3DTest::reachEndCallBack()
-//{
-//    auto s = Director::getInstance()->getWinSize();
-//    _sprite->stopActionByTag(100);
-//    auto inverse = MoveTo::create(4.f, Vec2(s.width - _sprite->getPositionX(), s.height / 2.f));
-//    inverse->retain();
-//    _moveAction->release();
-//    _moveAction = inverse;
-//    auto rot = RotateBy::create(1.f, Vec3(0.f, 180.f, 0.f));
-//    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(Animate3DTest::reachEndCallBack, this)), nullptr);
-//    seq->setTag(100);
-//    _sprite->runAction(seq);
-//}
-//
-//void Animate3DTest::renewCallBack()
-//{
-//    //rerun swim action
-//    _sprite->runAction(_swim);
-//    _state = State::HURT_TO_SWIMMING;
-//    _elapseTransTime = 0.0f;
-//}
-//
-//void Animate3DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
-//{
-//    for (auto touch: touches)
-//    {
-//        auto location = touch->getLocation();
-//        
-//        if (_sprite)
-//        {
-//            float len = (_sprite->getPosition() - location).length();
-//            if (len < 40)
-//            {
-//                //hurt the tortoise
-//                if (_state == State::SWIMMING)
-//                {
-//                    _elapseTransTime = 0.0f;
-//                    _state = State::SWIMMING_TO_HURT;
-//                    _sprite->stopAction(_hurt);
-//                    _sprite->runAction(_hurt);
-//                    auto delay = DelayTime::create(_hurt->getDuration() - Animate3D::getTransitionTime());
-//                    auto seq = Sequence::create(delay, CallFunc::create(CC_CALLBACK_0(Animate3DTest::renewCallBack, this)), nullptr);
-//                    seq->setTag(101);
-//                    _sprite->runAction(seq);
-//                }
-//                return;
-//            }
-//        }
-//    }
-//}
-//
+Sprite3DWithSkinTest::Sprite3DWithSkinTest()
+{
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithSkinTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    // switch animation quality. In fact, you can set the sprite3d out of frustum to Animate3DQuality::QUALITY_NONE, it can save a lot of cpu time
+    MenuItemFont::setFontName("fonts/arial.ttf");
+    MenuItemFont::setFontSize(15);
+    _animateQuality = (int)Animate3DQuality::QUALITY_LOW;
+    _menuItem = MenuItemFont::create(getAnimationQualityMessage(), CC_CALLBACK_1(Sprite3DWithSkinTest::switchAnimationQualityCallback,this));
+    _menuItem->setColor(Color3B(0,200,20));
+    auto menu = Menu::create(_menuItem,NULL);
+    menu->setPosition(Vec2::ZERO);
+    _menuItem->setPosition(VisibleRect::left().x + 50, VisibleRect::top().y -70);
+    addChild(menu, 1);
+
+    _sprits.clear();
+    
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+}
+std::string Sprite3DWithSkinTest::title() const
+{
+    return "Testing Sprite3D";
+}
+std::string Sprite3DWithSkinTest::subtitle() const
+{
+    return "Tap screen to add more sprite3D";
+}
+
+void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
+{
+    std::string fileName = "Sprite3DTest/orc.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(3);
+    sprite->setRotation3D(Vec3(0,180,0));
+    sprite->setPosition( Vec2( p.x, p.y) );
+    addChild(sprite);
+    _sprits.push_back(sprite);
+    
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        bool inverse = (std::rand() % 3 == 0);
+
+        int rand2 = std::rand();
+        float speed = 1.0f;
+        if(rand2 % 3 == 1)
+        {
+            speed = animate->getSpeed() + CCRANDOM_0_1();
+        }
+        else if(rand2 % 3 == 2)
+        {
+            speed = animate->getSpeed() - 0.5 * CCRANDOM_0_1();
+        }
+        animate->setSpeed(inverse ? -speed : speed);
+        animate->setTag(110);
+        animate->setQuality((Animate3DQuality)_animateQuality);
+        auto repeat = RepeatForever::create(animate);
+        repeat->setTag(110);
+        sprite->runAction(repeat);
+    }
+}
+
+std::string Sprite3DWithSkinTest::getAnimationQualityMessage() const
+{
+    if (_animateQuality == (int)Animate3DQuality::QUALITY_NONE)
+        return "None Quality";
+    else if (_animateQuality == (int)Animate3DQuality::QUALITY_LOW)
+        return "Low Quality";
+    else if (_animateQuality == (int)Animate3DQuality::QUALITY_HIGH)
+        return "High Quality";
+    
+    return "";
+}
+
+void Sprite3DWithSkinTest::switchAnimationQualityCallback(Ref* sender)
+{
+    ++_animateQuality;
+    if (_animateQuality > (int)Animate3DQuality::QUALITY_HIGH)
+        _animateQuality = (int)Animate3DQuality::QUALITY_NONE;
+    
+    _menuItem->setString(getAnimationQualityMessage());
+    
+    for (auto iter: _sprits)
+    {
+        RepeatForever* repAction = dynamic_cast<RepeatForever*>(iter->getActionByTag(110));
+        Animate3D* animate3D = dynamic_cast<Animate3D*>(repAction->getInnerAction());
+        animate3D->setQuality((Animate3DQuality)_animateQuality);
+    }
+}
+
+void Sprite3DWithSkinTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    for (auto touch: touches)
+    {
+        auto location = touch->getLocation();
+        
+        addNewSpriteWithCoords( location );
+    }
+}
+
+Sprite3DWithSkinOutlineTest::Sprite3DWithSkinOutlineTest()
+{
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithSkinOutlineTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                            [this](EventCustom*)
+                                                            {
+                                                                auto material = Sprite3DMaterial::createWithFilename("Sprite3DTest/outline.material");
+                                                                material->setTechnique("outline_skinned");
+                                                                for(auto& sprite : _sprites)
+                                                                {
+                                                                    sprite->setMaterial(material->clone());
+                                                                }
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
+#endif
+}
+Sprite3DWithSkinOutlineTest::~Sprite3DWithSkinOutlineTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
+}
+std::string Sprite3DWithSkinOutlineTest::title() const
+{
+    return "Testing Sprite3D for skinned outline";
+}
+std::string Sprite3DWithSkinOutlineTest::subtitle() const
+{
+    return "Tap screen to add more sprite3D";
+}
+
+void Sprite3DWithSkinOutlineTest::addNewSpriteWithCoords(Vec2 p)
+{
+    
+    std::string fileName = "Sprite3DTest/orc.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    
+    auto material = Sprite3DMaterial::createWithFilename("Sprite3DTest/outline.material");
+    material->setTechnique("outline_skinned");
+    sprite->setMaterial(material);
+    
+    sprite->setScale(3);
+    sprite->setRotation3D(Vec3(0,180,0));
+    addChild(sprite);
+    sprite->setPosition( Vec2( p.x, p.y) );
+    
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        bool inverse = (std::rand() % 3 == 0);
+        
+        int rand2 = std::rand();
+        float speed = 1.0f;
+        if(rand2 % 3 == 1)
+        {
+            speed = animate->getSpeed() + CCRANDOM_0_1();
+        }
+        else if(rand2 % 3 == 2)
+        {
+            speed = animate->getSpeed() - 0.5 * CCRANDOM_0_1();
+        }
+        animate->setSpeed(inverse ? -speed : speed);
+        
+        sprite->runAction(RepeatForever::create(animate));
+    }
+}
+
+void Sprite3DWithSkinOutlineTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    for (auto touch: touches)
+    {
+        auto location = touch->getLocation();
+        
+        addNewSpriteWithCoords( location );
+    }
+}
+
+Animate3DTest::Animate3DTest()
+: _sprite(nullptr)
+, _swim(nullptr)
+, _hurt(nullptr)
+, _elapseTransTime(0.f)
+, _moveAction(nullptr)
+{
+    addSprite3D();
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(Animate3DTest::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    scheduleUpdate();
+}
+
+Animate3DTest::~Animate3DTest()
+{
+    CC_SAFE_RELEASE(_moveAction);
+    CC_SAFE_RELEASE(_hurt);
+    CC_SAFE_RELEASE(_swim);
+}
+
+std::string Animate3DTest::title() const
+{
+    return "Testing Animate3D";
+}
+
+std::string Animate3DTest::subtitle() const
+{
+    return "Touch to beat the tortoise";
+}
+
+void Animate3DTest::update(float dt)
+{
+    if (_state == State::HURT_TO_SWIMMING)
+    {
+        _elapseTransTime += dt;
+        
+        if (_elapseTransTime >= Animate3D::getTransitionTime())
+        {
+            _sprite->stopAction(_hurt);
+            _state = State::SWIMMING;
+        }
+    }
+    else if (_state == State::SWIMMING_TO_HURT)
+    {
+        _elapseTransTime += dt;
+        if (_elapseTransTime >= Animate3D::getTransitionTime())
+        {
+            _sprite->stopAction(_swim);
+            _state = State::HURT;
+        }
+    }
+}
+
+void Animate3DTest::addSprite3D()
+{
+    std::string fileName = "Sprite3DTest/tortoise.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setScale(0.1f);
+    auto s = Director::getInstance()->getWinSize();
+    sprite->setPosition(Vec2(s.width * 4.f / 5.f, s.height / 2.f));
+    addChild(sprite);
+    _sprite = sprite;
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation, 0.f, 1.933f);
+        _swim = RepeatForever::create(animate);
+        sprite->runAction(_swim);
+        
+        _swim->retain();
+        _hurt = Animate3D::create(animation, 1.933f, 2.8f);
+        _hurt->retain();
+        _state = State::SWIMMING;
+    }
+    
+    _moveAction = MoveTo::create(4.f, Vec2(s.width / 5.f, s.height / 2.f));
+    _moveAction->retain();
+    auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(Animate3DTest::reachEndCallBack, this)), nullptr);
+    seq->setTag(100);
+    sprite->runAction(seq);
+}
+
+void Animate3DTest::reachEndCallBack()
+{
+    auto s = Director::getInstance()->getWinSize();
+    _sprite->stopActionByTag(100);
+    auto inverse = MoveTo::create(4.f, Vec2(s.width - _sprite->getPositionX(), s.height / 2.f));
+    inverse->retain();
+    _moveAction->release();
+    _moveAction = inverse;
+    auto rot = RotateBy::create(1.f, Vec3(0.f, 180.f, 0.f));
+    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(Animate3DTest::reachEndCallBack, this)), nullptr);
+    seq->setTag(100);
+    _sprite->runAction(seq);
+}
+
+void Animate3DTest::renewCallBack()
+{
+    //rerun swim action
+    _sprite->runAction(_swim);
+    _state = State::HURT_TO_SWIMMING;
+    _elapseTransTime = 0.0f;
+}
+
+void Animate3DTest::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
+{
+    for (auto touch: touches)
+    {
+        auto location = touch->getLocation();
+        
+        if (_sprite)
+        {
+            float len = (_sprite->getPosition() - location).length();
+            if (len < 40)
+            {
+                //hurt the tortoise
+                if (_state == State::SWIMMING)
+                {
+                    _elapseTransTime = 0.0f;
+                    _state = State::SWIMMING_TO_HURT;
+                    _sprite->stopAction(_hurt);
+                    _sprite->runAction(_hurt);
+                    auto delay = DelayTime::create(_hurt->getDuration() - Animate3D::getTransitionTime());
+                    auto seq = Sequence::create(delay, CallFunc::create(CC_CALLBACK_0(Animate3DTest::renewCallBack, this)), nullptr);
+                    seq->setTag(101);
+                    _sprite->runAction(seq);
+                }
+                return;
+            }
+        }
+    }
+}
+
 //AttachmentTest::AttachmentTest()
 //: _hasWeapon(false)
 //, _sprite(nullptr)

@@ -57,16 +57,24 @@ public:
     backend::Program* getProgram() const { return _program; }
     
     //get or set uniforms
-    void setUniform(const backend::UniformLocation& uniformLocation, const void* data, uint32_t size);
+    void setUniform(const backend::UniformLocation& uniformLocation, const void* data, ssize_t size);
     backend::UniformLocation getUniformLocation(const std::string& uniform) const;
     inline const std::vector<UniformBuffer>& getVertexUniformInfos() const { return _vertexUniformInfos; }
     inline std::vector<UniformBuffer>& getVertexUniformInfos() { return _vertexUniformInfos; }
     inline const std::vector<UniformBuffer>& getFragmentUniformInfos() const { return _fragmentUniformInfos; }
     
+
+    void setUniform(const std::string &uniformName, const void *data, ssize_t size);
+
     template<typename T>
     void setUniform(const backend::UniformLocation& uniformLocation, const T& data)
     {
         setUniform(uniformLocation,(const void *) &data, sizeof(T));
+    }
+    template<typename T>
+    void setUniform(const std::string &uniformName, const T& data)
+    {
+        setUniform(uniformName, (const void *)&data, sizeof(T));
     }
 
     //set textures

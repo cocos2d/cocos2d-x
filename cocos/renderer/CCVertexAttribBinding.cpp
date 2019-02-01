@@ -128,7 +128,9 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass)
                                shaderinfos::getAttributeName(meshattribute.vertexAttrib),
                                meshattribute.type,
                                GL_FALSE,
-                               offset);
+                               offset, 
+                               1 << k //FIXME: wrong flag
+            );
         offset += meshattribute.getAttribSizeBytes();
     }
 
@@ -224,6 +226,12 @@ void VertexAttribBinding::parseAttributes()
     }
 }
 
+bool VertexAttribBinding::hasAttribute(const shaderinfos::VertexKey &key) const
+{
+    auto &name = shaderinfos::getAttributeName(key);
+    return _attributes.find(name) != _attributes.end();
+}
+
 //void VertexAttribBinding::enableVertexAttributes(uint32_t flags) const
 //{
 //    auto tmpFlags = flags;
@@ -245,16 +253,17 @@ backend::AttributeBindInfo* VertexAttribBinding::getVertexAttribValue(const std:
     return nullptr;
 }
 
-void VertexAttribBinding::setVertexAttribPointer(const std::string &name, backend::VertexFormat type, GLboolean normalized, int offset)
+void VertexAttribBinding::setVertexAttribPointer(const std::string &name, backend::VertexFormat type, GLboolean normalized, int offset, int flag)
 {
     auto v = getVertexAttribValue(name);
     if(v) {
+        CCLOG("cocos2d: set attribute '%s' location: %d, offset: %d", name.c_str(), v->location, offset);
         _vertexLayout->setAtrribute(name, v->location, type, offset, normalized);
-        _vertexAttribsFlags |= 1 << v->location;
+        _vertexAttribsFlags |= flag;
     }
     else
     {
-        //CCLOG("cocos2d: warning: Attribute not found: %s", name.c_str());
+        CCLOG("cocos2d: warning: Attribute not found: %s", name.c_str());
     }
 }
 

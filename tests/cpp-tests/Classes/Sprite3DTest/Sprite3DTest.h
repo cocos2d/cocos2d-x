@@ -138,18 +138,18 @@ private:
 #endif
 };
 
-//class Sprite3DLightMapTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DLightMapTest);
-//    Sprite3DLightMapTest();
-//    virtual ~Sprite3DLightMapTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
-//private:
-//    cocos2d::Camera * _camera;
-//};
+class Sprite3DLightMapTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DLightMapTest);
+    Sprite3DLightMapTest();
+    virtual ~Sprite3DLightMapTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+private:
+    cocos2d::Camera * _camera;
+};
 
 class Sprite3DBasicToonShaderTest : public Sprite3DTestDemo
 {
@@ -216,87 +216,87 @@ protected:
     std::vector<std::string> _paths; //model paths to be loaded
 };
 
-//class Sprite3DWithSkinTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DWithSkinTest);
-//    Sprite3DWithSkinTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//    void addNewSpriteWithCoords(cocos2d::Vec2 p);
-//    
-//    void switchAnimationQualityCallback(cocos2d::Ref* sender);
-//    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
-//    
-//    std::string getAnimationQualityMessage() const;
-//private:
-//    std::vector<cocos2d::Sprite3D*> _sprits;
-//    int _animateQuality;
-//    cocos2d::MenuItemFont* _menuItem;
-//};
-//
-//class Sprite3DWithSkinOutlineTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DWithSkinOutlineTest);
-//    Sprite3DWithSkinOutlineTest();
-//    virtual ~Sprite3DWithSkinOutlineTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//    void addNewSpriteWithCoords(cocos2d::Vec2 p);
-//    
-//    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
-//    
-//protected:
-//    std::vector<cocos2d::Sprite3D*> _sprites;
-//    
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    cocos2d::EventListenerCustom* _backToForegroundListener;
-//#endif
-//};
-//
-//class Animate3DTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Animate3DTest);
-//    Animate3DTest();
-//    ~Animate3DTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
-//    
-//    virtual void update(float dt) override;
-//    
-//protected:
-//    void addSprite3D();
-//    
-//    enum class State
-//    {
-//        SWIMMING,
-//        SWIMMING_TO_HURT,
-//        HURT,
-//        HURT_TO_SWIMMING,
-//    };
-//    
-//    void reachEndCallBack();
-//    
-//    void renewCallBack();
-//    
-//    cocos2d::Sprite3D* _sprite;
-//    
-//    cocos2d::Action* _swim;
-//    cocos2d::Animate3D* _hurt;
-//
-//    float _elapseTransTime;
-//    
-//    State   _state;
-//    
-//    cocos2d::MoveTo* _moveAction;
-//};
-//
+class Sprite3DWithSkinTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DWithSkinTest);
+    Sprite3DWithSkinTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(cocos2d::Vec2 p);
+    
+    void switchAnimationQualityCallback(cocos2d::Ref* sender);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    
+    std::string getAnimationQualityMessage() const;
+private:
+    std::vector<cocos2d::Sprite3D*> _sprits;
+    int _animateQuality;
+    cocos2d::MenuItemFont* _menuItem;
+};
+
+class Sprite3DWithSkinOutlineTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DWithSkinOutlineTest);
+    Sprite3DWithSkinOutlineTest();
+    virtual ~Sprite3DWithSkinOutlineTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(cocos2d::Vec2 p);
+    
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    
+protected:
+    std::vector<cocos2d::Sprite3D*> _sprites;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    cocos2d::EventListenerCustom* _backToForegroundListener;
+#endif
+};
+
+class Animate3DTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Animate3DTest);
+    Animate3DTest();
+    ~Animate3DTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    
+    virtual void update(float dt) override;
+    
+protected:
+    void addSprite3D();
+    
+    enum class State
+    {
+        SWIMMING,
+        SWIMMING_TO_HURT,
+        HURT,
+        HURT_TO_SWIMMING,
+    };
+    
+    void reachEndCallBack();
+    
+    void renewCallBack();
+    
+    cocos2d::Sprite3D* _sprite;
+    
+    cocos2d::Action* _swim;
+    cocos2d::Animate3D* _hurt;
+
+    float _elapseTransTime;
+    
+    State   _state;
+    
+    cocos2d::MoveTo* _moveAction;
+};
+
 //class AttachmentTest : public Sprite3DTestDemo
 //{
 //public:
