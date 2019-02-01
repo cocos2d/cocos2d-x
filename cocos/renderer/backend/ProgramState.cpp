@@ -95,6 +95,17 @@ TextureInfo& TextureInfo::operator=(TextureInfo&& rhs)
     return *this;
 }
 
+TextureInfo& TextureInfo::operator=(const TextureInfo& rhs)
+{
+    if (this != &rhs)
+    {
+        slot = rhs.slot;
+        textures = rhs.textures;
+        retainTextures();
+    }
+    return *this;
+}
+
 ProgramState::ProgramState(const std::string& vertexShader, const std::string& fragmentShader)
 {
     _program = backend::ProgramCache::getInstance()->newProgram(vertexShader, fragmentShader);
