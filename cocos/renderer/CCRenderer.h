@@ -27,6 +27,7 @@
 #include <vector>
 #include <stack>
 #include <array>
+#include <deque>
 
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderCommand.h"
@@ -120,6 +121,7 @@ protected:
 };
 
 class GroupCommandManager;
+
 
 /* Class responsible for the rendering in.
 
@@ -252,6 +254,11 @@ public:
     /** returns whether or not a rectangle is visible or not */
     bool checkVisibility(const Mat4& transform, const Size& size);
 
+    /** save global renderer states to stack */
+    void pushGlobalStates();
+    /** pop global renderer states from stack */
+    void popGlobalStates();
+
 protected:
     friend class Director;
     friend class GroupCommand;
@@ -273,6 +280,13 @@ protected:
         int _currentBufferIndex = 0;
         std::vector<backend::Buffer*> _vertexBufferPool;
         std::vector<backend::Buffer*> _indexBufferPool;
+    };
+
+    //snapshot of global states
+    struct RendererGlobalState
+    {
+        backend::RenderPassDescriptor _renderPassDescriptor;
+        backend::DepthStencilDescriptor _depthStencilDescriptor;
     };
 
     inline GroupCommandManager * getGroupCommandManager() const { return _groupCommandManager; }
@@ -364,6 +378,8 @@ protected:
     Color4F _clearColor = Color4F::BLACK;
     ClearFlag _clearFlag;
     RenderTargetFlag _renderTargetFlag = RenderTargetFlag::COLOR;
+
+    std::deque<RendererGlobalState> _globalStateStack;
 
     struct ScissorState
     {

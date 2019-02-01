@@ -217,6 +217,8 @@ void Pass::onBeforeVisitCmd()
 
     auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
 
+    renderer->pushGlobalStates();
+
     //TODO arnold
     _renderState.bindPass(this);
 
@@ -225,13 +227,15 @@ void Pass::onBeforeVisitCmd()
 
 void Pass::onAfterVisitCmd()
 {
-    //auto *renderer = Director::getInstance()->getRenderer();
+    auto *renderer = Director::getInstance()->getRenderer();
     //TODO arnold : restore renderState
     //RenderState::StateBlock::restoreGlobalState(0);
 
     //renderer->setDepthTest(_oldDepthEnabledState);
 
     _renderState.unbindPass(this);
+
+    renderer->popGlobalStates();
 }
 
 

@@ -301,8 +301,8 @@ bool Material::parseSampler(backend::ProgramState* programState, Properties* sam
 
     auto location = programState->getUniformLocation(samplerProperties->getId());
     //TODO arnold: slot may be incorrect
-    programState->setTexture(location, 0,  texture->getBackendTexture());
-    
+    //programState->setTexture(location, 0,  texture->getBackendTexture());
+    programState->addTexture(location, texture->getBackendTexture());
 
     return true;
 }

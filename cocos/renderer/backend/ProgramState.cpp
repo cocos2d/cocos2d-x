@@ -3,8 +3,9 @@
 #include "renderer/backend/Program.h"
 #include "renderer/backend/Texture.h"
 #include "renderer/backend/Types.h"
-
 #include "base/ccMacros.h"
+
+#include <algorithm>
 
 CC_BACKEND_BEGIN
 
@@ -141,7 +142,7 @@ ProgramState *ProgramState::clone() const
     cp->_fragmentUniformInfos = _fragmentUniformInfos;
     cp->_vertexTextureInfos = _vertexTextureInfos;
     cp->_fragmentTextureInfos = _fragmentTextureInfos;
-
+    cp->_textureSlotId = _textureSlotId;
     CC_SAFE_RETAIN(cp->_program);
 
     return cp;
@@ -226,6 +227,11 @@ void ProgramState::setTexture(const backend::UniformLocation& uniformLocation, u
     }
 }
 
+void ProgramState::addTexture(const backend::UniformLocation& uniformLocation, backend::Texture* texture)
+{
+    setTexture(uniformLocation, ++_textureSlotId, texture);
+}
+
 void ProgramState::setTextureArray(const backend::UniformLocation& uniformLocation, const std::vector<uint32_t>& slots, const std::vector<backend::Texture*> textures)
 {
     switch (uniformLocation.shaderStage)
@@ -255,6 +261,7 @@ void ProgramState::setTexture(int location, uint32_t slot, backend::Texture* tex
     info.textures = {texture};
     info.retainTextures();
     textureInfo[location] = std::move(info);
+    _textureSlotId = std::max(_textureSlotId, slot);
 }
 
 void ProgramState::setTextureArray(int location, const std::vector<uint32_t>& slots, const std::vector<backend::Texture*> textures, std::unordered_map<int, TextureInfo>& textureInfo)
