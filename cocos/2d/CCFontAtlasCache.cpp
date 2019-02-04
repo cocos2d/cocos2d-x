@@ -36,7 +36,7 @@
 NS_CC_BEGIN
 
 std::unordered_map<std::string, FontAtlas *> FontAtlasCache::_atlasMap;
-#define ATLAS_MAP_KEY_BUFFER 255
+#define ATLAS_MAP_KEY_PREFIX_BUFFER_SIZE 255
 
 void FontAtlasCache::purgeCachedData()
 {
@@ -60,15 +60,11 @@ FontAtlas* FontAtlasCache::getFontAtlasTTF(const _ttfConfig* config)
         useDistanceField = false;
     }
 
-    char tmp[ATLAS_MAP_KEY_BUFFER];
-    if (useDistanceField) {
-        snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "df %.2f %d %s", config->fontSize, config->outlineSize,
-                 realFontFilename.c_str());
-    } else {
-        snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "%.2f %d %s", config->fontSize, config->outlineSize,
-                 realFontFilename.c_str());
-    }
-    std::string atlasName = tmp;
+    std::string key;
+    char key_prefix[ATLAS_MAP_KEY_PREFIX_BUFFER_SIZE];
+    snprintf(key_prefix, ATLAS_MAP_KEY_PREFIX_BUFFER_SIZE, useDistanceField ? "df %.2f %d " : "%.2f %d ", config->fontSize, config->outlineSize);
+    std::string atlasName(key_prefix);
+    atlasName += realFontFilename;
 
     auto it = _atlasMap.find(atlasName);
 
@@ -87,7 +83,7 @@ FontAtlas* FontAtlasCache::getFontAtlasTTF(const _ttfConfig* config)
         }
     }
     else
-        return it->second;
+        return _atlasMap[atlasName];
 
     return nullptr;
 }
@@ -95,9 +91,10 @@ FontAtlas* FontAtlasCache::getFontAtlasTTF(const _ttfConfig* config)
 FontAtlas* FontAtlasCache::getFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset /* = Vec2::ZERO */)
 {
     auto realFontFilename = FileUtils::getInstance()->getNewFilename(fontFileName);  // resolves real file path, to prevent storing multiple atlases for the same file.
-    char tmp[ATLAS_MAP_KEY_BUFFER];
-    snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "%.2f %.2f %s", imageOffset.x, imageOffset.y, realFontFilename.c_str());
-    std::string atlasName = tmp;
+    char key_prefix[ATLAS_MAP_KEY_PREFIX_BUFFER_SIZE];
+    snprintf(key_prefix, ATLAS_MAP_KEY_PREFIX_BUFFER_SIZE, "%.2f %.2f ", imageOffset.x, imageOffset.y);
+    std::string atlasName(key_prefix);
+    atlasName += realFontFilename;
     
     auto it = _atlasMap.find(atlasName);
     if ( it == _atlasMap.end() )
@@ -115,7 +112,7 @@ FontAtlas* FontAtlasCache::getFontAtlasFNT(const std::string& fontFileName, cons
         }
     }
     else
-        return it->second;
+        return _atlasMap[atlasName];
     
     return nullptr;
 }
@@ -140,14 +137,14 @@ FontAtlas* FontAtlasCache::getFontAtlasCharMap(const std::string& plistFile)
         }
     }
     else
-        return it->second;
+        return _atlasMap[atlasName];
 
     return nullptr;
 }
 
 FontAtlas* FontAtlasCache::getFontAtlasCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
 {
-    char tmp[30];
+    char tmp[ATLAS_MAP_KEY_PREFIX_BUFFER_SIZE];
     sprintf(tmp,"name:%u_%d_%d_%d",texture->getName(),itemWidth,itemHeight,startCharMap);
     std::string atlasName = tmp;
 
@@ -167,16 +164,17 @@ FontAtlas* FontAtlasCache::getFontAtlasCharMap(Texture2D* texture, int itemWidth
         }
     }
     else
-        return it->second;
+        return _atlasMap[atlasName];
 
     return nullptr;
 }
 
 FontAtlas* FontAtlasCache::getFontAtlasCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
-    char tmp[ATLAS_MAP_KEY_BUFFER];
-    snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "%d %d %d %s", itemWidth, itemHeight, startCharMap, charMapFile.c_str());
-    std::string atlasName = tmp;
+    char key_prefix[ATLAS_MAP_KEY_PREFIX_BUFFER_SIZE];
+    snprintf(key_prefix, ATLAS_MAP_KEY_PREFIX_BUFFER_SIZE, "%d %d %d ", itemWidth, itemHeight, startCharMap);
+    std::string atlasName(key_prefix);
+    atlasName += charMapFile;
 
     auto it = _atlasMap.find(atlasName);
     if ( it == _atlasMap.end() )
@@ -194,7 +192,7 @@ FontAtlas* FontAtlasCache::getFontAtlasCharMap(const std::string& charMapFile, i
         }
     }
     else
-        return it->second;
+        return _atlasMap[atlasName];
 
     return nullptr;
 }
@@ -224,9 +222,10 @@ bool FontAtlasCache::releaseFontAtlas(FontAtlas *atlas)
 
 void FontAtlasCache::reloadFontAtlasFNT(const std::string& fontFileName, const Vec2& imageOffset/* = Vec2::ZERO*/)
 {
-    char tmp[ATLAS_MAP_KEY_BUFFER];
-    snprintf(tmp, ATLAS_MAP_KEY_BUFFER, "%.2f %.2f %s", imageOffset.x, imageOffset.y, fontFileName.c_str());
-    std::string atlasName = tmp;
+    char key_prefix[ATLAS_MAP_KEY_PREFIX_BUFFER_SIZE];
+    snprintf(key_prefix, ATLAS_MAP_KEY_PREFIX_BUFFER_SIZE, "%.2f %.2f ", imageOffset.x, imageOffset.y);
+    std::string atlasName(key_prefix);
+    atlasName += fontFileName;
     
     auto it = _atlasMap.find(atlasName);
     if (it != _atlasMap.end())
