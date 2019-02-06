@@ -50,6 +50,8 @@ NS_CC_BEGIN
 
 static SpriteFrameCache *_sharedSpriteFrameCache = nullptr;
 
+SpriteFrameNameGenerator SpriteFrameCache::_spriteFrameNameGenerator = nullptr;
+
 SpriteFrameCache* SpriteFrameCache::getInstance()
 {
     if (! _sharedSpriteFrameCache)
@@ -59,6 +61,11 @@ SpriteFrameCache* SpriteFrameCache::getInstance()
     }
 
     return _sharedSpriteFrameCache;
+}
+
+void SpriteFrameCache::SetSpriteFrameNameGenerator(SpriteFrameNameGenerator generator)
+{
+    SpriteFrameCache::_spriteFrameNameGenerator = generator;
 }
 
 void SpriteFrameCache::destroyInstance()
@@ -177,7 +184,11 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
     for (auto& iter : framesDict)
     {
         ValueMap& frameDict = iter.second.asValueMap();
-        std::string spriteFrameName = iter.first;
+        
+        std::string spriteFrameName =  SpriteFrameCache::_spriteFrameNameGenerator ?
+            _spriteFrameNameGenerator(plist, iter.first) :
+            iter.first;
+      
         SpriteFrame* spriteFrame = _spriteFramesCache.at(spriteFrameName);
         if (spriteFrame)
         {

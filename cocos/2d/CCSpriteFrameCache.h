@@ -45,6 +45,8 @@ class Sprite;
 class Texture2D;
 class PolygonInfo;
 
+typedef std::function<std::string(std::string, std::string)> SpriteFrameNameGenerator;
+
 /**
  * @addtogroup _2d
  * @{
@@ -156,6 +158,15 @@ public:
      * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedSpriteFrameCache() { return SpriteFrameCache::destroyInstance(); }
+    
+    /** Sets a function to generate the sprite frame name. This allows to set a specific way to
+     * manage the frame naming in the game, for example to identify the original plist, or follow
+     * a certain naming convention
+     *
+     * @param Function pointer to a sprite frame name generator
+     * @return void
+     */
+    static void SetSpriteFrameNameGenerator(SpriteFrameNameGenerator generator);
 
     /** Destructor.
      * @js NA
@@ -319,6 +330,8 @@ protected:
 
     ValueMap _spriteFramesAliases;
     PlistFramesCache _spriteFramesCache;
+
+    static SpriteFrameNameGenerator _spriteFrameNameGenerator;
 };
 
 // end of _2d group
