@@ -198,12 +198,12 @@ bool Sprite::initWithFile(const std::string& filename)
 }
 
 #if CC_SPRITE_DEBUG_DRAW
-void Sprite::SetDebugDrawLevel(int value)
+void Sprite::setDebugDrawLevel(int value)
 {
     Sprite::_debugDrawLevel = value;
 }
 
-void Sprite::SetDebugDrawColor(const Color4F& color)
+void Sprite::setDebugDrawColor(const Color4F& color)
 {
     Sprite::_debugDrawColor = color;
 }
@@ -345,7 +345,11 @@ Sprite::Sprite()
     if (Sprite::_debugDrawLevel > 0)
     {
         _debugDrawNode = DrawNode::create();
-        addChild(_debugDrawNode, INT_MAX); // CROWDSTAR: Check seconds parameter INT_MAX
+        addChild(_debugDrawNode, INT_MAX);
+    }
+    else
+    {
+        _debugDrawNode = nullptr;
     }
 #endif //CC_SPRITE_DEBUG_DRAW
 }

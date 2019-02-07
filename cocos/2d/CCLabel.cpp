@@ -403,16 +403,17 @@ Label::Label(TextHAlignment hAlignment /* = TextHAlignment::LEFT */,
     _hAlignment = hAlignment;
     _vAlignment = vAlignment;
 
-    // CROWDSTAR START
 #if CC_LABEL_DEBUG_DRAW
-    _debugDrawNode = nullptr;
     if (Label::_debugDrawEnabled)
     {
         _debugDrawNode = DrawNode::create();
         addChild(_debugDrawNode);
     }
+    else
+    {
+        _debugDrawNode = nullptr;
+    }
 #endif
-    // CROWDSTAR END
 
     _purgeTextureListener = EventListenerCustom::create(FontAtlas::CMD_PURGE_FONTATLAS, [this](EventCustom* event){
         if (_fontAtlas && _currentLabelType == LabelType::TTF && event->getUserData() == _fontAtlas)
@@ -1481,7 +1482,6 @@ void Label::updateContent()
         _contentDirty = false;
     }
 
-    // CROWDSTAR START
 #if CC_LABEL_DEBUG_DRAW
     if (Label::_debugDrawEnabled && _debugDrawNode)
     {
@@ -1496,7 +1496,6 @@ void Label::updateContent()
         _debugDrawNode->drawPoly(vertices, 4, true, Label::_debugDrawColor);
     }
 #endif
-    // CROWDSTAR END
 }
 
 void Label::setBMFontSize(float fontSize)
