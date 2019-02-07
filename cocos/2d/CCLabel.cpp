@@ -49,7 +49,7 @@ NS_CC_BEGIN
 
 #if CC_LABEL_DEBUG_DRAW
 
-bool Label::_debugDrawEnabled = false;
+bool Label::_debugDrawEnabled = true;
 Color4F Label::_debugDrawColor = Color4F::WHITE;
 
 #endif

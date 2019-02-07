@@ -45,7 +45,7 @@ NS_CC_BEGIN
 
 #if CC_SPRITE_DEBUG_DRAW
 
-int Sprite::_debugDrawLevel = 0;
+int Sprite::_debugDrawLevel = 2;
 Color4F Sprite::_debugDrawColor = Color4F::WHITE; //Color4F::RED
 
 #endif
