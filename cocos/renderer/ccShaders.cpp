@@ -126,4 +126,7 @@ NS_CC_BEGIN
 #include "renderer/shaders/3D_terrain.frag"
 #include "renderer/shaders/3D_terrain.vert"
 
+#include "renderer/shaders/lineColor.frag"
+#include "renderer/shaders/lineColor.vert"
+
 NS_CC_END

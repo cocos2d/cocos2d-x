@@ -88,6 +88,10 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
 protected:
+
+    void onBeforeDraw();
+    void onAfterDraw();
+
     struct V3F_C4B
     {
         cocos2d::Vec3     vertices;
@@ -97,17 +101,21 @@ protected:
 
 
     BlendFunc   _blendFunc;
+    cocos2d::GroupCommand _groupCommand;
     cocos2d::CustomCommand _customCommand;
+    cocos2d::CallbackCommand _beforeCommand;
+    cocos2d::CallbackCommand _afterCommand;
     backend::ProgramState* _programStateLine = nullptr;
     backend::DepthStencilDescriptor *_depthstencilDescriptor = nullptr;
 
     std::vector<V3F_C4B> _bufferLines;
-    std::vector<uint16_t> _indexes;
+    
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode3D);
 
     bool _isDirty = true;
+    bool _depthTestEnabled = false;
 };
 
 NS_CC_END

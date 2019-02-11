@@ -378,40 +378,40 @@ protected:
     void calculateRayByLocationInView(cocos2d::Ray* ray, const cocos2d::Vec2& location);
 };
 
-//class Sprite3DMirrorTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DMirrorTest);
-//    Sprite3DMirrorTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//    void addNewSpriteWithCoords(cocos2d::Vec2 p);
-//    
-//protected:
-//    bool _hasWeapon;
-//    cocos2d::Sprite3D* _sprite;
-//    cocos2d::Sprite3D* _mirrorSprite;
-//};
-//
-//class QuaternionTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(QuaternionTest);
-//    QuaternionTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//    void addNewSpriteWithCoords(cocos2d::Vec2 p);
-//    virtual void update(float delta) override;
-//    
-//protected:
-//    cocos2d::Sprite3D* _sprite;
-//    float              _arcSpeed;
-//    float              _radius;
-//    float              _accAngle;
-//};
-//
+class Sprite3DMirrorTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DMirrorTest);
+    Sprite3DMirrorTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(cocos2d::Vec2 p);
+    
+protected:
+    bool _hasWeapon;
+    cocos2d::Sprite3D* _sprite;
+    cocos2d::Sprite3D* _mirrorSprite;
+};
+
+class QuaternionTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(QuaternionTest);
+    QuaternionTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(cocos2d::Vec2 p);
+    virtual void update(float delta) override;
+    
+protected:
+    cocos2d::Sprite3D* _sprite;
+    float              _arcSpeed;
+    float              _radius;
+    float              _accAngle;
+};
+
 //// 3d + 2d use case
 //class UseCaseSprite3D : public Sprite3DTestDemo
 //{

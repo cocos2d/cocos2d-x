@@ -90,6 +90,10 @@ Pass::Pass()
     //vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
     //vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, 6 * sizeof(float), false);
     //vertexLayout.setLayout(8 * sizeof(float), backend::VertexStepMode::VERTEX);
+
+    _beforeVisitCmd.func = CC_CALLBACK_0(Pass::onBeforeVisitCmd, this);
+    _afterVisitCmd.func = CC_CALLBACK_0(Pass::onAfterVisitCmd, this);
+
 }
 
 Pass::~Pass()
@@ -200,9 +204,6 @@ void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buff
 
     _beforeVisitCmd.init(globalZOrder);
     _afterVisitCmd.init(globalZOrder);
-
-    _beforeVisitCmd.func = CC_CALLBACK_0(Pass::onBeforeVisitCmd, this);
-    _afterVisitCmd.func = CC_CALLBACK_0(Pass::onAfterVisitCmd, this);
 
     renderer->addCommand(&_beforeVisitCmd);
     renderer->addCommand(&_customCommand);
