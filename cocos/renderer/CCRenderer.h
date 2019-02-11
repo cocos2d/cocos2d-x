@@ -287,6 +287,8 @@ protected:
     {
         backend::RenderPassDescriptor _renderPassDescriptor;
         backend::DepthStencilDescriptor _depthStencilDescriptor;
+        CullMode _cullMode;
+        Winding _winding;
     };
 
     inline GroupCommandManager * getGroupCommandManager() const { return _groupCommandManager; }

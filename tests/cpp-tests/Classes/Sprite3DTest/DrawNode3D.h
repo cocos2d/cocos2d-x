@@ -115,7 +115,6 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode3D);
 
     bool _isDirty = true;
-    bool _depthTestEnabled = false;
 };
 
 NS_CC_END

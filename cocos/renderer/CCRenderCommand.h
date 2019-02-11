@@ -95,6 +95,12 @@ public:
     // Can use the result to change the descriptor content.
     inline PipelineDescriptor& getPipelineDescriptor() { return _pipelineDescriptor; }
 
+    /** set command id, used in debug */
+    void setId(int id) { _commandId = id; }
+
+    /** get command id */
+    int getId() { return _commandId; }
+
 protected:
     /**Constructor.*/
     RenderCommand();
@@ -123,6 +129,9 @@ protected:
     
     /** Depth from the model view matrix.*/
     float _depth = 0.f;
+
+    /** used for debug, */
+    int _commandId = -1;
     
     PipelineDescriptor _pipelineDescriptor;
 };

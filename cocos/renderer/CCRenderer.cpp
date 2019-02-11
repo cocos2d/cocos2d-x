@@ -761,7 +761,7 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 
 void Renderer::pushGlobalStates()
 {
-    RendererGlobalState states = { _renderPassDescriptor, _depthStencilDescriptor};
+    RendererGlobalState states = { _renderPassDescriptor, _depthStencilDescriptor , _cullMode, _winding};
     _globalStateStack.push_back(states);
 }
 
@@ -770,6 +770,8 @@ void Renderer::popGlobalStates()
     RendererGlobalState states = _globalStateStack.back();
     _renderPassDescriptor = states._renderPassDescriptor;
     _depthStencilDescriptor = states._depthStencilDescriptor;
+    _cullMode = states._cullMode;
+    _winding = states._winding;
 }
 
 backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipelineDescriptor& descriptor)

@@ -201,14 +201,14 @@ void DrawNode3D::setBlendFunc(const BlendFunc &blendFunc)
 void DrawNode3D::onBeforeDraw()
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    _depthTestEnabled = renderer->getDepthTest();
+    renderer->pushGlobalStates();
     renderer->setDepthTest(true);
 }
 
 void DrawNode3D::onAfterDraw()
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    renderer->setDepthTest(_depthTestEnabled);
+    renderer->popGlobalStates();
 }
 
 
