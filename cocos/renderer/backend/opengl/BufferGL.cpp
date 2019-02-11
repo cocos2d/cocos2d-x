@@ -50,6 +50,7 @@ void BufferGL::updateSubData(void* data, unsigned int offset, unsigned int size)
 
     if (_buffer)
     {
+        CHECK_GL_ERROR_DEBUG();
         if (BufferType::VERTEX == _type)
         {
             glBindBuffer(GL_ARRAY_BUFFER, _buffer);

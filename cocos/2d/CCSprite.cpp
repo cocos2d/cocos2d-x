@@ -1101,7 +1101,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
                                flags);
         renderer->addCommand(&_trianglesCommand);
         
-    #if CC_SPRITE_DEBUG_DRAW
+#if CC_SPRITE_DEBUG_DRAW
             _debugDrawNode->clear();
             auto count = _polyInfo.triangles.indexCount / 3;
             auto indices = _polyInfo.triangles.indices;

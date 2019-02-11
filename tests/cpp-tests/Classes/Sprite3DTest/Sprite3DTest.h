@@ -49,23 +49,23 @@ public:
     virtual ~Sprite3DTestDemo();
 };
 
-//class Sprite3DForceDepthTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DForceDepthTest);
-//    Sprite3DForceDepthTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//};
-//
-//class Sprite3DEmptyTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DEmptyTest);
-//    Sprite3DEmptyTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//};
+class Sprite3DForceDepthTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DForceDepthTest);
+    Sprite3DForceDepthTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class Sprite3DEmptyTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DEmptyTest);
+    Sprite3DEmptyTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
 
 class Sprite3DBasicTest : public Sprite3DTestDemo
 {
@@ -412,33 +412,33 @@ protected:
     float              _accAngle;
 };
 
-//// 3d + 2d use case
-//class UseCaseSprite3D : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(UseCaseSprite3D);
-//    UseCaseSprite3D();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//    virtual void update(float delta) override;
-//    
-//    void menuCallback_Message(cocos2d::Ref* sender);
-//    
-//protected:
-//    
-//    void switchCase();
-//    
-//    enum class USECASE{
-//        _3D_WITH_2D,
-//        _UI_3D_UI,
-//        MAX_CASE_NUM,
-//    };
-//    cocos2d::Label*      _label;
-//    int                  _caseIdx; // use case index
-//    std::string          _useCaseTitles[(int)USECASE::MAX_CASE_NUM];
-//};
-//
+// 3d + 2d use case
+class UseCaseSprite3D : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(UseCaseSprite3D);
+    UseCaseSprite3D();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    virtual void update(float delta) override;
+    
+    void menuCallback_Message(cocos2d::Ref* sender);
+    
+protected:
+    
+    void switchCase();
+    
+    enum class USECASE{
+        _3D_WITH_2D,
+        _UI_3D_UI,
+        MAX_CASE_NUM,
+    };
+    cocos2d::Label*      _label;
+    int                  _caseIdx; // use case index
+    std::string          _useCaseTitles[(int)USECASE::MAX_CASE_NUM];
+};
+
 //// node animation test, cocos2d-x supports both skeletal animation and node animation
 //class NodeAnimationTest : public Sprite3DTestDemo
 //{
