@@ -196,7 +196,8 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
         mask |= GL_STENCIL_BUFFER_BIT;
         glClearStencil(descirptor.clearStencilValue);
     }
-    glClear(mask);
+    
+    if(mask) glClear(mask);
     
     CHECK_GL_ERROR_DEBUG();
     

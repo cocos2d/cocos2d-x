@@ -110,7 +110,7 @@ public:
     
 protected:
     /**The commands in the render queue.*/
-    std::vector<RenderCommand*> _commands[QUEUE_COUNT];
+    std::vector<std::vector<RenderCommand*> > _commands;
     
     /**Cull state.*/
     bool _isCullEnabled;

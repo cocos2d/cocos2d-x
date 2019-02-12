@@ -64,6 +64,7 @@ static bool compare3DCommand(RenderCommand* a, RenderCommand* b)
 // queue
 RenderQueue::RenderQueue()
 {
+    _commands.resize(QUEUE_COUNT);
 }
 
 void RenderQueue::push_back(RenderCommand* command)
@@ -71,11 +72,11 @@ void RenderQueue::push_back(RenderCommand* command)
     float z = command->getGlobalOrder();
     if(z < 0)
     {
-        _commands[QUEUE_GROUP::GLOBALZ_NEG].push_back(command);
+        getSubQueue(QUEUE_GROUP::GLOBALZ_NEG).push_back(command);
     }
     else if(z > 0)
     {
-        _commands[QUEUE_GROUP::GLOBALZ_POS].push_back(command);
+        getSubQueue(QUEUE_GROUP::GLOBALZ_POS).push_back(command);
     }
     else
     {
@@ -83,16 +84,16 @@ void RenderQueue::push_back(RenderCommand* command)
         {
             if(command->isTransparent())
             {
-                _commands[QUEUE_GROUP::TRANSPARENT_3D].push_back(command);
+                getSubQueue(QUEUE_GROUP::TRANSPARENT_3D).push_back(command);
             }
             else
             {
-                _commands[QUEUE_GROUP::OPAQUE_3D].push_back(command);
+                getSubQueue(QUEUE_GROUP::OPAQUE_3D).push_back(command);
             }
         }
         else
         {
-            _commands[QUEUE_GROUP::GLOBALZ_ZERO].push_back(command);
+            getSubQueue(QUEUE_GROUP::GLOBALZ_ZERO).push_back(command);
         }
     }
 }
@@ -100,7 +101,7 @@ void RenderQueue::push_back(RenderCommand* command)
 ssize_t RenderQueue::size() const
 {
     ssize_t result(0);
-    for(int index = 0; index < QUEUE_GROUP::QUEUE_COUNT; ++index)
+    for(int index = 0; index < _commands.size(); ++index)
     {
         result += _commands[index].size();
     }
@@ -111,14 +112,14 @@ ssize_t RenderQueue::size() const
 void RenderQueue::sort()
 {
     // Don't sort _queue0, it already comes sorted
-    std::stable_sort(std::begin(_commands[QUEUE_GROUP::TRANSPARENT_3D]), std::end(_commands[QUEUE_GROUP::TRANSPARENT_3D]), compare3DCommand);
-    std::stable_sort(std::begin(_commands[QUEUE_GROUP::GLOBALZ_NEG]), std::end(_commands[QUEUE_GROUP::GLOBALZ_NEG]), compareRenderCommand);
-    std::stable_sort(std::begin(_commands[QUEUE_GROUP::GLOBALZ_POS]), std::end(_commands[QUEUE_GROUP::GLOBALZ_POS]), compareRenderCommand);
+    std::stable_sort(std::begin(getSubQueue(QUEUE_GROUP::TRANSPARENT_3D)), std::end(getSubQueue(QUEUE_GROUP::TRANSPARENT_3D)), compare3DCommand);
+    std::stable_sort(std::begin(getSubQueue(QUEUE_GROUP::GLOBALZ_NEG)), std::end(getSubQueue(QUEUE_GROUP::GLOBALZ_NEG)), compareRenderCommand);
+    std::stable_sort(std::begin(getSubQueue(QUEUE_GROUP::GLOBALZ_POS)), std::end(getSubQueue(QUEUE_GROUP::GLOBALZ_POS)), compareRenderCommand);
 }
 
 RenderCommand* RenderQueue::operator[](ssize_t index) const
 {
-    for(int queIndex = 0; queIndex < QUEUE_GROUP::QUEUE_COUNT; ++queIndex)
+    for(int queIndex = 0; queIndex < _commands.size(); ++queIndex)
     {
         if(index < static_cast<ssize_t>(_commands[queIndex].size()))
             return _commands[queIndex][index];
@@ -134,7 +135,7 @@ RenderCommand* RenderQueue::operator[](ssize_t index) const
 
 void RenderQueue::clear()
 {
-    for(int i = 0; i < QUEUE_COUNT; ++i)
+    for(int i = 0; i < _commands.size(); ++i)
     {
         _commands[i].clear();
     }
@@ -142,7 +143,7 @@ void RenderQueue::clear()
 
 void RenderQueue::realloc(size_t reserveSize)
 {
-    for(int i = 0; i < QUEUE_COUNT; ++i)
+    for(int i = 0; i < _commands.size(); ++i)
     {
         _commands[i] = std::vector<RenderCommand*>();
         _commands[i].reserve(reserveSize);
@@ -942,6 +943,7 @@ void Renderer::clear(ClearFlag flags, const Color4F& color, float depth, unsigne
     _clearFlag = flags;
 
     CallbackCommand* command = new CallbackCommand();
+    command->init(-10000);
     command->func = [=]() -> void {
         backend::RenderPassDescriptor descriptor;
 

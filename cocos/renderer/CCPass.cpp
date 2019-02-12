@@ -194,8 +194,6 @@ void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buff
     //_programState->setUniform(location, finalMat.m, sizeof(finalMat.m));
     _programState->setBuiltinUniforms(modelView);
 
-    _customCommand.getPipelineDescriptor().programState = _programState;
-
     auto *renderer = Director::getInstance()->getRenderer();
 
     _groupCommand.init(globalZOrder);
