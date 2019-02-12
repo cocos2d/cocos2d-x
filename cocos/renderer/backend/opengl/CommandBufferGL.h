@@ -57,7 +57,8 @@ private:
     void setUniform(bool isArray, GLuint location, unsigned int size, GLenum uniformType, void* data) const;
     void cleanResources();
     void applyRenderPassDescriptor(const RenderPassDescriptor& descirptor);
-    
+
+    GLuint _frameBuffer = 0;
     GLint _defaultFBO = 0;
     GLuint _currentFBO = 0;
     std::vector<BufferGL*> _vertexBuffers;
