@@ -24,6 +24,7 @@ THE SOFTWARE.
 #pragma once
 
 #include "renderer/backend/Texture.h"
+#include "renderer/CCTextureCube.h"
 
 CC_BACKEND_BEGIN
 

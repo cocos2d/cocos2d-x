@@ -1,6 +1,9 @@
+#include "renderer/CCTexture2D.h"
 #include "TextureGL.h"
 #include "base/ccMacros.h"
 #include "platform/CCPlatformConfig.h"
+#include "platform/CCFileUtils.h"
+#include "platform/CCImage.h"
 
 CC_BACKEND_BEGIN
 
