@@ -7,6 +7,7 @@
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
 #include "renderer/backend/Types.h"
+#include "math/Mat4.h"
 
 CC_BACKEND_BEGIN
 
@@ -83,7 +84,7 @@ public:
     void addTexture(const backend::UniformLocation& uniformLocation, backend::Texture* texture);
 
 
-    void setBuiltinUniforms(const Mat4 &matrixMV);
+    void setBuiltinUniforms(const cocos2d::Mat4 &matrixMV);
 
     inline const std::unordered_map<int, TextureInfo>& getVertexTextureInfos() const { return _vertexTextureInfos; }
     inline const std::unordered_map<int, TextureInfo>& getFragmentTextureInfos() const { return _fragmentTextureInfos; }

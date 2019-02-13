@@ -4,6 +4,7 @@
 #include "renderer/backend/Texture.h"
 #include "renderer/backend/Types.h"
 #include "base/ccMacros.h"
+#include "base/CCDirector.h"
 
 #include <algorithm>
 

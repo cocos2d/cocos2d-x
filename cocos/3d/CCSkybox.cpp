@@ -32,6 +32,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
 #include "renderer/CCTextureCube.h"
+#include "renderer/ccShaders.h"
 #include "3d/CCSkybox.h"
 #include "2d/CCCamera.h"
 

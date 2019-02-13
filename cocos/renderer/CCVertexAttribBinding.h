@@ -29,6 +29,7 @@
 #include "renderer/backend/ProgramState.h"
 #include "renderer/backend/Types.h"
 #include "renderer/CCPass.h"
+#include "3d/CC3DProgramInfo.h"
 
 NS_CC_BEGIN
 
