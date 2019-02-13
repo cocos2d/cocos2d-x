@@ -6734,6 +6734,16 @@ supportsMapBuffer : function (
 },
 
 /**
+ * @method getInfoAsMap
+ * @return {map_object}
+ */
+getInfoAsMap : function (
+)
+{
+    return map_object;
+},
+
+/**
  * @method destroyInstance
  */
 destroyInstance : function (
