@@ -34,6 +34,7 @@ struct TextureInfo
     TextureInfo(const TextureInfo &);
     ~TextureInfo();
     TextureInfo& operator=(TextureInfo&& rhs);
+    TextureInfo& operator=(const TextureInfo& rhs);
     
     void retainTextures();
     void releaseTextures();
