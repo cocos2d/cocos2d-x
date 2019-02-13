@@ -8,7 +8,7 @@ TextureCube* TextureCube::create(const std::string& positive_x, const std::strin
                                  const std::string& positive_y, const std::string& negative_y,
                                  const std::string& positive_z, const std::string& negative_z)
 {
-    auto ret = new (std::nothrow) backend::TextureCubeMapMTL();
+    auto ret = new (std::nothrow) backend::TextureCubeMTL();
     if (ret && ret->init(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z))
     {
         ret->autorelease();
@@ -22,7 +22,7 @@ NS_CC_END
 
 CC_BACKEND_BEGIN
 
-bool TextureCubeMapMTL::init(const std::string& positive_x, const std::string& negative_x,
+bool TextureCubeMTL::init(const std::string& positive_x, const std::string& negative_x,
                             const std::string& positive_y, const std::string& negative_y,
                             const std::string& positive_z, const std::string& negative_z)
 {
@@ -37,7 +37,7 @@ bool TextureCubeMapMTL::init(const std::string& positive_x, const std::string& n
     return false;
 }
 
-void TextureCubeMapMTL::setTexParameters(const TexParams& texParams)
+void TextureCubeMTL::setTexParameters(const TexParams& texParams)
 {
     //TODO: arnold
     assert(false);

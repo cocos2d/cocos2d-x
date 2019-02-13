@@ -109,7 +109,7 @@ void DrawNode3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
     if (_isDirty && !_bufferLines.empty())
     {
-        _customCommand.updateVertexBuffer(_bufferLines.data(), _bufferLines.size() * sizeof(_bufferLines[0]));
+        _customCommand.updateVertexBuffer(_bufferLines.data(), (unsigned int)(_bufferLines.size() * sizeof(_bufferLines[0])));
         _isDirty = false;
     }
 
