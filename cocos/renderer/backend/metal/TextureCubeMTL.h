@@ -6,7 +6,7 @@
 
 CC_BACKEND_BEGIN
 
-class CC_DLL TextureCubeMapMTL : public TextureCube
+class CC_DLL TextureCubeMTL : public TextureCube
 {
 public:
     virtual void setTexParameters(const TexParams &);
