@@ -51,7 +51,7 @@ namespace backend
     class Buffer;
 }
 
-class CC_DLL Pass : public Ref //: public RenderState
+class CC_DLL Pass : public Ref
 {
     friend class Material;
     friend class Technique;

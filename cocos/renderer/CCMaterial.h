@@ -58,7 +58,7 @@ namespace backend
 }
 
 /// Material
-class CC_DLL Material :public Ref//: public RenderState
+class CC_DLL Material :public Ref
 {
     friend class Node;
     friend class Technique;

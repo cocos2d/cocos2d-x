@@ -72,11 +72,11 @@ void RenderQueue::push_back(RenderCommand* command)
     float z = command->getGlobalOrder();
     if(z < 0)
     {
-        getSubQueue(QUEUE_GROUP::GLOBALZ_NEG).push_back(command);
+        _commands[QUEUE_GROUP::GLOBALZ_NEG].push_back(command);
     }
     else if(z > 0)
     {
-        getSubQueue(QUEUE_GROUP::GLOBALZ_POS).push_back(command);
+        _commands[QUEUE_GROUP::GLOBALZ_POS].push_back(command);
     }
     else
     {
@@ -84,16 +84,16 @@ void RenderQueue::push_back(RenderCommand* command)
         {
             if(command->isTransparent())
             {
-                getSubQueue(QUEUE_GROUP::TRANSPARENT_3D).push_back(command);
+                _commands[QUEUE_GROUP::TRANSPARENT_3D].push_back(command);
             }
             else
             {
-                getSubQueue(QUEUE_GROUP::OPAQUE_3D).push_back(command);
+                _commands[QUEUE_GROUP::OPAQUE_3D].push_back(command);
             }
         }
         else
         {
-            getSubQueue(QUEUE_GROUP::GLOBALZ_ZERO).push_back(command);
+            _commands[QUEUE_GROUP::GLOBALZ_ZERO].push_back(command);
         }
     }
 }
@@ -112,9 +112,9 @@ ssize_t RenderQueue::size() const
 void RenderQueue::sort()
 {
     // Don't sort _queue0, it already comes sorted
-    std::stable_sort(std::begin(getSubQueue(QUEUE_GROUP::TRANSPARENT_3D)), std::end(getSubQueue(QUEUE_GROUP::TRANSPARENT_3D)), compare3DCommand);
-    std::stable_sort(std::begin(getSubQueue(QUEUE_GROUP::GLOBALZ_NEG)), std::end(getSubQueue(QUEUE_GROUP::GLOBALZ_NEG)), compareRenderCommand);
-    std::stable_sort(std::begin(getSubQueue(QUEUE_GROUP::GLOBALZ_POS)), std::end(getSubQueue(QUEUE_GROUP::GLOBALZ_POS)), compareRenderCommand);
+    std::stable_sort(std::begin(_commands[QUEUE_GROUP::TRANSPARENT_3D]), std::end(_commands[QUEUE_GROUP::TRANSPARENT_3D]), compare3DCommand);
+    std::stable_sort(std::begin(_commands[QUEUE_GROUP::GLOBALZ_NEG]), std::end(_commands[QUEUE_GROUP::GLOBALZ_NEG]), compareRenderCommand);
+    std::stable_sort(std::begin(_commands[QUEUE_GROUP::GLOBALZ_POS]), std::end(_commands[QUEUE_GROUP::GLOBALZ_POS]), compareRenderCommand);
 }
 
 RenderCommand* RenderQueue::operator[](ssize_t index) const
