@@ -80,6 +80,7 @@ CommandBufferGL::CommandBufferGL()
 
 CommandBufferGL::~CommandBufferGL()
 {
+    glDeleteFramebuffers(1, &_frameBuffer);
     cleanResources();
 }
 
@@ -99,7 +100,11 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
     bool useStencilAttachmentExternal = descirptor.needStencilAttachment && descirptor.stencilAttachmentTexture;
     if (useColorAttachmentExternal || useDepthAttachmentExternal || useStencilAttachmentExternal)
     {
-        glGenFramebuffers(1, &_currentFBO);
+        if(_frameBuffer == 0)
+        {
+            glGenFramebuffers(1, &_frameBuffer);
+        }
+        _currentFBO = _frameBuffer;
     }
     else
     {
