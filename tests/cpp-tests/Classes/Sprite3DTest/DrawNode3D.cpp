@@ -115,18 +115,12 @@ void DrawNode3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
     if (!_bufferLines.empty())
     {
-        _groupCommand.init(_globalZOrder);
         _beforeCommand.init(_globalZOrder);
         _afterCommand.init(_globalZOrder);
-
-        renderer->addCommand(&_groupCommand);
-        renderer->pushGroup(_groupCommand.getRenderQueueID());
 
         renderer->addCommand(&_beforeCommand);
         renderer->addCommand(&_customCommand);
         renderer->addCommand(&_afterCommand);
-
-        renderer->popGroup();
     }
 }
 

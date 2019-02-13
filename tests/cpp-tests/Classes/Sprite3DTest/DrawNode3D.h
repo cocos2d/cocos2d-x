@@ -101,7 +101,6 @@ protected:
 
 
     BlendFunc   _blendFunc;
-    cocos2d::GroupCommand _groupCommand;
     cocos2d::CustomCommand _customCommand;
     cocos2d::CallbackCommand _beforeCommand;
     cocos2d::CallbackCommand _afterCommand;

@@ -105,7 +105,6 @@ protected:
     
     backend::ProgramState *_programState = nullptr;
     CustomCommand _customCommand;
-    GroupCommand _groupCommand;
     CallbackCommand _beforeCommand;
     CallbackCommand _afterCommand;
 

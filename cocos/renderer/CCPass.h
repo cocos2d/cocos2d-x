@@ -129,7 +129,6 @@ private:
     void onBeforeVisitCmd();
     void onAfterVisitCmd();
 
-    GroupCommand _groupCommand;
     CallbackCommand _beforeVisitCmd;
     CallbackCommand _afterVisitCmd;
 

@@ -196,18 +196,12 @@ void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buff
 
     auto *renderer = Director::getInstance()->getRenderer();
 
-    _groupCommand.init(globalZOrder);
-    renderer->addCommand(&_groupCommand);
-    renderer->pushGroup(_groupCommand.getRenderQueueID());
-
     _beforeVisitCmd.init(globalZOrder);
     _afterVisitCmd.init(globalZOrder);
 
     renderer->addCommand(&_beforeVisitCmd);
     renderer->addCommand(&_customCommand);
     renderer->addCommand(&_afterVisitCmd);
-
-    renderer->popGroup();
 }
 
 void Pass::onBeforeVisitCmd()

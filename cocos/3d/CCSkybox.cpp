@@ -148,22 +148,15 @@ void Skybox::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
     _customCommand.setTransparent(false);
     _customCommand.set3D(true);
 
-    _groupCommand.init(_globalZOrder);
     _beforeCommand.init(_globalZOrder);
     _afterCommand.init(_globalZOrder);
 
     _beforeCommand.func = CC_CALLBACK_0(Skybox::onBeforeDraw, this);
     _afterCommand.func = CC_CALLBACK_0(Skybox::onAfterDraw, this);
 
-    renderer->addCommand(&_groupCommand);
-    renderer->pushGroup(_groupCommand.getRenderQueueID());
-
     renderer->addCommand(&_beforeCommand);
     renderer->addCommand(&_customCommand);
     renderer->addCommand(&_afterCommand);
-
-    renderer->popGroup();
-
 
     auto camera = Camera::getVisitingCamera();
 
