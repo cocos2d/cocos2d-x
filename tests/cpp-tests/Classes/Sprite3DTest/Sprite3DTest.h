@@ -476,7 +476,7 @@ public:
 protected:
     cocos2d::TextureCube* _textureCube;
     cocos2d::Skybox* _skyBox;
-    //cocos2d::Sprite3D* _teapot;
+    cocos2d::Sprite3D* _teapot;
     cocos2d::Camera *_camera;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

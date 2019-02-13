@@ -100,13 +100,127 @@ namespace
         }
         return ret;
     }
+
+    unsigned char* getImageData(Image* img, Texture2D::PixelFormat&  ePixFmt)
+    {
+        unsigned char*    pTmpData = img->getData();
+        unsigned int*     inPixel32 = nullptr;
+        unsigned char*    inPixel8 = nullptr;
+        unsigned short*   outPixel16 = nullptr;
+        bool              bHasAlpha = img->hasAlpha();
+        size_t            uBPP = img->getBitPerPixel();
+
+        int               nWidth = img->getWidth();
+        int               nHeight = img->getHeight();
+
+        // compute pixel format
+        if (bHasAlpha)
+        {
+            ePixFmt = Texture2D::PixelFormat::DEFAULT;
+        }
+        else
+        {
+            if (uBPP >= 8)
+            {
+                ePixFmt = Texture2D::PixelFormat::RGB888;
+            }
+            else
+            {
+                ePixFmt = Texture2D::PixelFormat::RGB565;
+            }
+        }
+
+        // Repack the pixel data into the right format
+        unsigned int uLen = nWidth * nHeight;
+
+        if (ePixFmt == Texture2D::PixelFormat::RGB565)
+        {
+            if (bHasAlpha)
+            {
+                // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
+                inPixel32 = (unsigned int*)img->getData();
+                pTmpData = new (std::nothrow) unsigned char[nWidth * nHeight * 2];
+                outPixel16 = (unsigned short*)pTmpData;
+
+                for (unsigned int i = 0; i < uLen; ++i, ++inPixel32)
+                {
+                    *outPixel16++ =
+                        ((((*inPixel32 >> 0) & 0xFF) >> 3) << 11) |  // R
+                        ((((*inPixel32 >> 8) & 0xFF) >> 2) << 5) |  // G
+                        ((((*inPixel32 >> 16) & 0xFF) >> 3) << 0);    // B
+                }
+            }
+            else
+            {
+                // Convert "RRRRRRRRGGGGGGGGBBBBBBBB" to "RRRRRGGGGGGBBBBB"
+                pTmpData = new (std::nothrow) unsigned char[nWidth * nHeight * 2];
+                outPixel16 = (unsigned short*)pTmpData;
+                inPixel8 = (unsigned char*)img->getData();
+
+                for (unsigned int i = 0; i < uLen; ++i)
+                {
+                    unsigned char R = *inPixel8++;
+                    unsigned char G = *inPixel8++;
+                    unsigned char B = *inPixel8++;
+
+                    *outPixel16++ =
+                        ((R >> 3) << 11) |  // R
+                        ((G >> 2) << 5) |  // G
+                        ((B >> 3) << 0);    // B
+                }
+            }
+        }
+
+        if (bHasAlpha && ePixFmt == Texture2D::PixelFormat::RGB888)
+        {
+            // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRRRRGGGGGGGGBBBBBBBB"
+            inPixel32 = (unsigned int*)img->getData();
+
+            pTmpData = new (std::nothrow) unsigned char[nWidth * nHeight * 3];
+            unsigned char* outPixel8 = pTmpData;
+
+            for (unsigned int i = 0; i < uLen; ++i, ++inPixel32)
+            {
+                *outPixel8++ = (*inPixel32 >> 0) & 0xFF; // R
+                *outPixel8++ = (*inPixel32 >> 8) & 0xFF; // G
+                *outPixel8++ = (*inPixel32 >> 16) & 0xFF; // B
+            }
+        }
+
+        return pTmpData;
+    }
+
+    Image* createImage(const std::string& path)
+    {
+        // Split up directory and filename
+        // MUTEX:
+        // Needed since addImageAsync calls this method from a different thread
+
+        std::string fullpath = FileUtils::getInstance()->fullPathForFilename(path);
+        if (fullpath.size() == 0)
+        {
+            return nullptr;
+        }
+
+        // all images are handled by UIImage except PVR extension that is handled by our own handler
+        Image* image = nullptr;
+        do
+        {
+            image = new (std::nothrow) Image();
+            CC_BREAK_IF(nullptr == image);
+
+            bool bRet = image->initWithImageFile(fullpath);
+            CC_BREAK_IF(!bRet);
+        } while (0);
+
+        return image;
+    }
 }
 
-TextureGL::TextureGL(const TextureDescriptor& descriptor) : Texture(descriptor)
+Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : TextureGL(descriptor)
 {
 
-    if (descriptor.textureType != TextureType::TEXTURE_2D)
-        return;
+    CCASSERT(descriptor.textureType == TextureType::TEXTURE_2D, "invalidate texture type");
 
     glGenTextures(1, &_texture);
     toGLTypes();
@@ -125,13 +239,13 @@ TextureGL::TextureGL(const TextureDescriptor& descriptor) : Texture(descriptor)
     free(data);
 }
 
-TextureGL::~TextureGL()
+Texture2DGL::~Texture2DGL()
 {
     if (_texture)
         glDeleteTextures(1, &_texture);
 }
 
-void TextureGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
+void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
     bool isPow2 = ISPOW2(_width) && ISPOW2(_height);
     bool needGenerateMipmap = !_isMipmapEnabled && sampler.mipmapEnabled;
     _isMipmapEnabled = sampler.mipmapEnabled;
@@ -169,7 +283,7 @@ void TextureGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
     CHECK_GL_ERROR_DEBUG();
 }
 
-void TextureGL::updateData(uint8_t* data)
+void Texture2DGL::updateData(uint8_t* data)
 {
     // TODO: support texture cube, and compressed data.
     
@@ -231,7 +345,7 @@ void TextureGL::updateData(uint8_t* data)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void TextureGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data)
+void Texture2DGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data)
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture);
@@ -250,20 +364,20 @@ void TextureGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsign
     CHECK_GL_ERROR_DEBUG();
 }
 
-void TextureGL::apply(int index) const
+void Texture2DGL::apply(int index) const
 {
     glActiveTexture(GL_TEXTURE0 + index);
     glBindTexture(GL_TEXTURE_2D, _texture);
 }
 
-void TextureGL::generateMipmpas() const
+void Texture2DGL::generateMipmpas() const
 {
     if (_isMipmapEnabled &&
         TextureUsage::RENDER_TARGET != _textureUsage)
         glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-void TextureGL::toGLTypes()
+void Texture2DGL::toGLTypes()
 {
     switch (_textureFormat)
     {
@@ -413,6 +527,101 @@ void TextureGL::toGLTypes()
         default:
             break;
     }
+}
+
+
+
+TextureCubeGL::TextureCubeGL(const TextureDescriptor& descriptor) : backend::TextureGL(descriptor)
+{
+    glGenTextures(1, &_texture);
+}
+
+TextureCubeGL::~TextureCubeGL()
+{
+
+}
+void TextureCubeGL::apply(int index) const
+{
+    CHECK_GL_ERROR_DEBUG();
+    glActiveTexture(GL_TEXTURE0 + index);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _texture);
+    CHECK_GL_ERROR_DEBUG();
+}
+
+bool TextureCubeGL::init(const std::string& positive_x, const std::string& negative_x,
+    const std::string& positive_y, const std::string& negative_y,
+    const std::string& positive_z, const std::string& negative_z)
+{
+
+    std::vector<Image*> images(6);
+
+    images[0] = createImage(positive_x);
+    images[1] = createImage(negative_x);
+    images[2] = createImage(positive_y);
+    images[3] = createImage(negative_y);
+    images[4] = createImage(positive_z);
+    images[5] = createImage(negative_z);
+
+    glActiveTexture(GL_TEXTURE0);
+    CHECK_GL_ERROR_DEBUG();
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _texture);
+    CHECK_GL_ERROR_DEBUG();
+
+    for (int i = 0; i < 6; i++)
+    {
+        Image* img = images[i];
+
+        Texture2D::PixelFormat  ePixelFmt;
+        unsigned char*          pData = getImageData(img, ePixelFmt);
+        if (ePixelFmt == Texture2D::PixelFormat::RGBA8888 || ePixelFmt == Texture2D::PixelFormat::DEFAULT)
+        {
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                0,                  // level
+                GL_RGBA,            // internal format
+                img->getWidth(),    // width
+                img->getHeight(),   // height
+                0,                  // border
+                GL_RGBA,            // format
+                GL_UNSIGNED_BYTE,   // type
+                pData);             // pixel data
+            CHECK_GL_ERROR_DEBUG();
+        }
+        else if (ePixelFmt == Texture2D::PixelFormat::RGB888)
+        {
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                0,                  // level
+                GL_RGB,             // internal format
+                img->getWidth(),    // width
+                img->getHeight(),   // height
+                0,                  // border
+                GL_RGB,             // format
+                GL_UNSIGNED_BYTE,   // type
+                pData);             // pixel data
+            CHECK_GL_ERROR_DEBUG();
+        }
+
+        if (pData != img->getData())
+            delete[] pData;
+    }
+
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    CHECK_GL_ERROR_DEBUG();
+    //  TODO coulsonwang
+    //    _name = handle;
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+    for (auto img : images)
+    {
+        CC_SAFE_RELEASE(img);
+    }
+
+    return true;
 }
 
 CC_BACKEND_END

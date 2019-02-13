@@ -2053,8 +2053,8 @@ void UseCaseSprite3D::update(float delta)
 
 Sprite3DCubeMapTest::Sprite3DCubeMapTest() :
     _textureCube(nullptr),
-    _skyBox(nullptr)
-    //,_teapot(nullptr)
+    _skyBox(nullptr),
+    _teapot(nullptr)
 {
     auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords(Vec2(s.width / 2, s.height / 2));
@@ -2066,7 +2066,7 @@ Sprite3DCubeMapTest::~Sprite3DCubeMapTest()
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 
-    //_teapot->release();
+    _teapot->release();
     _skyBox->release();
     _textureCube->release();
 }
@@ -2092,9 +2092,9 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
     listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DCubeMapTest::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-    //// create a teapot
-    //_teapot = Sprite3D::create("Sprite3DTest/teapot.c3b");
-    //_teapot->retain();
+    // create a teapot
+    _teapot = Sprite3D::create("Sprite3DTest/teapot.c3b");
+    _teapot->retain();
 
     // create the second texture for cylinder
     _textureCube = TextureCube::create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
@@ -2112,21 +2112,21 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
     _textureCube->setTexParameters(tRepeatParams);
 
 
-    //auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/CubeMap.material");
-    //auto state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getProgramState();
-    //_teapot->setMaterial(mat);
+    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/CubeMap.material");
+    auto state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getProgramState();
+    _teapot->setMaterial(mat);
 
-    //// pass the texture sampler to our custom shader
-    //auto cubeTexLoc = state->getUniformLocation("u_cubeTex");
-    //state->setTexture(cubeTexLoc, 1, _textureCube->getBackendTexture());
+    // pass the texture sampler to our custom shader
+    auto cubeTexLoc = state->getUniformLocation("u_cubeTex");
+    state->setTexture(cubeTexLoc, 0, _textureCube->getBackendTexture());
 
-    //_teapot->setPosition3D(Vec3(0, -5, 0));
-    //_teapot->setRotation3D(Vec3(-90, 180, 0));
+    _teapot->setPosition3D(Vec3(0, -5, 0));
+    _teapot->setRotation3D(Vec3(-90, 180, 0));
 
     auto rotate_action = RotateBy::create(1.5, Vec3(0, 30, 0));
-    //_teapot->runAction(RepeatForever::create(rotate_action));
+    _teapot->runAction(RepeatForever::create(rotate_action));
 
-    //addChild(_teapot);
+    addChild(_teapot);
 
     {
         // config skybox

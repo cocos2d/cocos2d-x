@@ -82,6 +82,7 @@ bool Skybox::init()
     initBuffers();
 
     CHECK_GL_ERROR_DEBUG();
+    _globalZOrder = -1; //draw before normal 3d objects
 
     return true;
 }
@@ -192,7 +193,7 @@ void Skybox::setTexture(TextureCube* texture)
 
     _texture = texture;
 
-    _programState->setTexture(_uniformEnvLoc, 2, _texture->getBackendTexture());
+    _programState->setTexture(_uniformEnvLoc, 0, _texture->getBackendTexture());
 }
 
 void Skybox::reload()
