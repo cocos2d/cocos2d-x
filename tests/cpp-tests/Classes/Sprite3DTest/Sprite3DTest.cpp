@@ -268,7 +268,7 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
         auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/UVAnimation.material");
 
         cylinder->setMaterial(mat);
-        _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+        _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getProgramState();
     }
     );
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
@@ -374,10 +374,10 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
         [this](EventCustom*)
     {
         auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/FakeShadow.material");
-        _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+        _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getProgramState();
         _plane->setMaterial(mat);
-        _state->setUniformMat4("u_model_matrix", _plane->getNodeToWorldTransform());
-        _state->setUniformVec3("u_target_pos", _orc->getPosition3D());
+        _state->setUniform("u_model_matrix", _plane->getNodeToWorldTransform());
+        _state->setUniform("u_target_pos", _orc->getPosition3D());
     }
     );
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
@@ -578,7 +578,7 @@ Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
         [=](EventCustom*)
     {
         auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/BasicToon.material");
-        _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+        _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getProgramState();
         teapot->setMaterial(mat);
     }
     );
@@ -2158,11 +2158,12 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
         _textureCube->setTexParameters(tRepeatParams);
 
         auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/CubeMap.material");
-        auto state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getGLProgramState();
+        auto state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getProgramState();
         _teapot->setMaterial(mat);
         _skyBox->setTexture(_textureCube);
         // pass the texture sampler to our custom shader
-        state->setUniformTexture("u_cubeTex", _textureCube);
+        auto cubeTexLoc = state->getUniformLocation("u_cubeTex");
+        state->setTexture(cubeTexLoc, 0, _textureCube->getBackendTexture());
     }
     );
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
