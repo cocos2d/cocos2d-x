@@ -531,16 +531,16 @@ void Texture2DGL::toGLTypes()
 
 
 
-TextureCubeGL::TextureCubeGL(const TextureDescriptor& descriptor) : backend::TextureGL(descriptor)
+TextureCubeMapGL::TextureCubeMapGL(const TextureDescriptor& descriptor) : backend::TextureGL(descriptor)
 {
     glGenTextures(1, &_texture);
 }
 
-TextureCubeGL::~TextureCubeGL()
+TextureCubeMapGL::~TextureCubeMapGL()
 {
 
 }
-void TextureCubeGL::apply(int index) const
+void TextureCubeMapGL::apply(int index) const
 {
     CHECK_GL_ERROR_DEBUG();
     glActiveTexture(GL_TEXTURE0 + index);
@@ -548,7 +548,7 @@ void TextureCubeGL::apply(int index) const
     CHECK_GL_ERROR_DEBUG();
 }
 
-bool TextureCubeGL::init(const std::string& positive_x, const std::string& negative_x,
+bool TextureCubeMapGL::init(const std::string& positive_x, const std::string& negative_x,
     const std::string& positive_y, const std::string& negative_y,
     const std::string& positive_z, const std::string& negative_z)
 {

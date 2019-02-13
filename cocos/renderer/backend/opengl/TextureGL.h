@@ -60,11 +60,11 @@ protected:
     bool _isCompressed = false;
 };
 
-class TextureCubeGL : public backend::TextureGL
+class TextureCubeMapGL : public backend::TextureGL
 {
 public:
-    TextureCubeGL(const TextureDescriptor& descriptor);
-    virtual ~TextureCubeGL();
+    TextureCubeMapGL(const TextureDescriptor& descriptor);
+    virtual ~TextureCubeMapGL();
     virtual void apply(int index) const override;
     bool init(const std::string& positive_x, const std::string& negative_x,
         const std::string& positive_y, const std::string& negative_y,

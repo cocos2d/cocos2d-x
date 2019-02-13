@@ -40,7 +40,7 @@ TextureCube* TextureCube::create(const std::string& positive_x, const std::strin
     const std::string& positive_y, const std::string& negative_y,
     const std::string& positive_z, const std::string& negative_z)
 {
-    auto ret = new (std::nothrow) backend::TextureCubeMapGL();
+    auto ret = new (std::nothrow) backend::TextureCubeGL();
     if (ret && ret->init(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z))
     {
         ret->autorelease();
@@ -54,7 +54,7 @@ NS_CC_END
 
 CC_BACKEND_BEGIN
 
-bool TextureCubeMapGL::init(const std::string& positive_x, const std::string& negative_x,
+bool TextureCubeGL::init(const std::string& positive_x, const std::string& negative_x,
                        const std::string& positive_y, const std::string& negative_y,
                        const std::string& positive_z, const std::string& negative_z)
 {
@@ -71,13 +71,13 @@ bool TextureCubeMapGL::init(const std::string& positive_x, const std::string& ne
     descriptor.textureUsage = TextureUsage::READ;
     descriptor.width = 4;
     descriptor.height = 4;
-    _texture = new TextureCubeGL(descriptor);
+    _texture = new TextureCubeMapGL(descriptor);
 
-    return ((TextureCubeGL*)_texture)->init(positive_x, negative_x, positive_y, negative_y, positive_z, 
+    return ((TextureCubeMapGL*)_texture)->init(positive_x, negative_x, positive_y, negative_y, positive_z, 
         negative_z);
 }
 
-void TextureCubeMapGL::setTexParameters(const TexParams& texParams)
+void TextureCubeGL::setTexParameters(const TexParams& texParams)
 {
     glActiveTexture(GL_TEXTURE0);
 

@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 CC_BACKEND_BEGIN
 
-class CC_DLL TextureCubeMapGL : public TextureCube
+class CC_DLL TextureCubeGL : public TextureCube
 {
 public:
     virtual void setTexParameters(const TexParams&);

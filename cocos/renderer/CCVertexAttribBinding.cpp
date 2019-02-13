@@ -257,7 +257,7 @@ void VertexAttribBinding::setVertexAttribPointer(const std::string &name, backen
 {
     auto v = getVertexAttribValue(name);
     if(v) {
-        CCLOG("cocos2d: set attribute '%s' location: %d, offset: %d", name.c_str(), v->location, offset);
+        // CCLOG("cocos2d: set attribute '%s' location: %d, offset: %d", name.c_str(), v->location, offset);
         _vertexLayout->setAtrribute(name, v->location, type, offset, normalized);
         _vertexAttribsFlags |= flag;
     }
