@@ -9,17 +9,17 @@ class TextureGL : public Texture
 {
 public:
     TextureGL(const TextureDescriptor& descriptor);
-    ~TextureGL();
+    virtual ~TextureGL();
     
     virtual void updateData(uint8_t* data) override;
     virtual void updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data) override;
     
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler)  override;
 
-    void apply(int index) const;
+    virtual void apply(int index) const;
     inline GLuint getHandler() const { return _texture; }
     
-private:
+protected:
     void toGLTypes();
     void generateMipmpas() const;
     

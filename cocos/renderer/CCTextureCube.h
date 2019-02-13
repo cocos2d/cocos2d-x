@@ -1,6 +1,5 @@
 ﻿/****************************************************************************
- Copyright (c) 2015-2016 Chukong Technologies Inc.
- Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+ Copyright (c) 2019 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -23,8 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCTEXTURECUBE_H__
-#define __CCTEXTURECUBE_H__
+#pragma once
 
 #include "renderer/CCTexture2D.h"
 
@@ -62,7 +60,7 @@ public:
     /** Sets the min filter, mag filter, wrap s and wrap t texture parameters.
     If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
     */
-    void setTexParameters(const TexParams&);
+    virtual void setTexParameters(const TexParams&) = 0;
 
     /** reload texture cube after GLESContext reconstructed.*/
     bool reloadTexture();
@@ -78,10 +76,10 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~TextureCube();
 protected:
 
-    bool init(const std::string& positive_x, const std::string& negative_x,
+    virtual bool init(const std::string& positive_x, const std::string& negative_x,
               const std::string& positive_y, const std::string& negative_y,
-              const std::string& positive_z, const std::string& negative_z);
-private:
+              const std::string& positive_z, const std::string& negative_z) = 0;
+
     std::vector<std::string> _imgPath;
 };
 
@@ -89,5 +87,3 @@ private:
 /// @}
 
 NS_CC_END
-
-#endif // __CCTEXTURECUBE_H__

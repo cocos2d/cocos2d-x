@@ -104,6 +104,10 @@ namespace
 
 TextureGL::TextureGL(const TextureDescriptor& descriptor) : Texture(descriptor)
 {
+
+    if (descriptor.textureType != TextureType::TEXTURE_2D)
+        return;
+
     glGenTextures(1, &_texture);
     toGLTypes();
     bool isPow2 = ISPOW2(_width) && ISPOW2(_height);

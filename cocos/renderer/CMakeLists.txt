@@ -23,8 +23,6 @@ set(COCOS_RENDERER_HEADER
     renderer/CCTextureUtils.h
     renderer/CCTrianglesCommand.h
     renderer/CCVertexAttribBinding.h
-    #renderer/CCVertexIndexBuffer.h
-    #renderer/CCVertexIndexData.h
     renderer/ccShaders.h
 
     renderer/backend/Backend.h
@@ -71,8 +69,6 @@ set(COCOS_RENDERER_SRC
     renderer/CCTextureUtils.cpp
     renderer/CCTrianglesCommand.cpp
     renderer/CCVertexAttribBinding.cpp
-    #renderer/CCVertexIndexBuffer.cpp
-    #renderer/CCVertexIndexData.cpp
     renderer/ccShaders.cpp
 
     renderer/backend/BlendState.cpp
@@ -101,6 +97,7 @@ list(APPEND COCOS_RENDERER_HEADER
     renderer/backend/opengl/RenderPipelineGL.h
     renderer/backend/opengl/ShaderModuleGL.h
     renderer/backend/opengl/TextureGL.h
+    renderer/backend/opengl/TextureCubeGL.h
 )
 
 list(APPEND COCOS_RENDERER_SRC
@@ -113,6 +110,7 @@ list(APPEND COCOS_RENDERER_SRC
     renderer/backend/opengl/RenderPipelineGL.cpp
     renderer/backend/opengl/ShaderModuleGL.cpp
     renderer/backend/opengl/TextureGL.cpp
+    renderer/backend/opengl/TextureCubeGL.cpp
 )
 
 else()

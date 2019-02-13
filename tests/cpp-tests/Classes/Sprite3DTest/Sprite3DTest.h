@@ -453,36 +453,37 @@ protected:
 //    std::vector<cocos2d::Sprite3D*> _sprites;
 //    int _vectorIndex;
 //};
-//
-//namespace cocos2d
-//{
-//class TextureCube;
-//class Skybox;
-//}
-//class Sprite3DCubeMapTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DCubeMapTest);
-//    Sprite3DCubeMapTest();
-//    ~Sprite3DCubeMapTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//
-//    void addNewSpriteWithCoords(cocos2d::Vec2);
-//
-//    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
-//
-//protected:
-//    cocos2d::TextureCube* _textureCube;
-//    cocos2d::Skybox* _skyBox;
-//    cocos2d::Sprite3D* _teapot;
-//    cocos2d::Camera *_camera;
-//
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    cocos2d::EventListenerCustom* _backToForegroundListener;
-//#endif
-//};
-//
+
+namespace cocos2d
+{
+class TextureCube;
+class Skybox;
+}
+
+class Sprite3DCubeMapTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DCubeMapTest);
+    Sprite3DCubeMapTest();
+    ~Sprite3DCubeMapTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void addNewSpriteWithCoords(cocos2d::Vec2);
+
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+
+protected:
+    cocos2d::TextureCube* _textureCube;
+    cocos2d::Skybox* _skyBox;
+    //cocos2d::Sprite3D* _teapot;
+    cocos2d::Camera *_camera;
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    cocos2d::EventListenerCustom* _backToForegroundListener;
+#endif
+};
+
 ///// issue 9767 setGLProgram
 //class Issue9767 : public Sprite3DTestDemo
 //{

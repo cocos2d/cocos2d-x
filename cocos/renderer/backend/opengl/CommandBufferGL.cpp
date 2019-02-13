@@ -288,7 +288,7 @@ void CommandBufferGL::drawElements(PrimitiveType primitiveType, IndexFormat inde
     prepareDrawing();
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer->getHandler());
     glDrawElements(toGLPrimitiveType(primitiveType), count, toGLIndexType(indexType), (GLvoid*)offset);
-    
+    CHECK_GL_ERROR_DEBUG();
     cleanResources();
 }
 
