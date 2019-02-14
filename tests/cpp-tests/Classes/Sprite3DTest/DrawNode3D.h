@@ -106,7 +106,7 @@ protected:
     cocos2d::CallbackCommand _afterCommand;
     backend::ProgramState* _programStateLine = nullptr;
     backend::DepthStencilDescriptor *_depthstencilDescriptor = nullptr;
-
+    backend::UniformLocation _locMVPMatrix;
     std::vector<V3F_C4B> _bufferLines;
     
 
@@ -114,6 +114,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode3D);
 
     bool _isDirty = true;
+    bool _rendererDepthTestEnabled;
 };
 
 NS_CC_END

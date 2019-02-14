@@ -27,13 +27,9 @@ THE SOFTWARE.
 #include "renderer/backend/Texture.h"
 #include "renderer/backend/opengl/TextureGL.h"
 #include "base/ccMacros.h"
-#include "platform/CCImage.h"
-#include "platform/CCFileUtils.h"
 
 
 NS_CC_BEGIN
-
-
 
 
 TextureCube* TextureCube::create(const std::string& positive_x, const std::string& negative_x,
@@ -54,44 +50,28 @@ NS_CC_END
 
 CC_BACKEND_BEGIN
 
-bool TextureCubeGL::init(const std::string& positive_x, const std::string& negative_x,
-                       const std::string& positive_y, const std::string& negative_y,
-                       const std::string& positive_z, const std::string& negative_z)
+TextureCubeGL::TextureCubeGL()
 {
-    _imgPath[0] = positive_x;
-    _imgPath[1] = negative_x;
-    _imgPath[2] = positive_y;
-    _imgPath[3] = negative_y;
-    _imgPath[4] = positive_z;
-    _imgPath[5] = negative_z;
     CC_SAFE_RELEASE_NULL(_texture);
-
     auto descriptor = backend::TextureDescriptor();
     descriptor.textureType = TextureType::TEXTURE_CUBE;
     descriptor.textureUsage = TextureUsage::READ;
     descriptor.width = 4;
     descriptor.height = 4;
     _texture = new TextureCubeMapGL(descriptor);
-
-    return ((TextureCubeMapGL*)_texture)->init(positive_x, negative_x, positive_y, negative_y, positive_z, 
-        negative_z);
 }
+
+bool TextureCubeGL::updateImageData(int side, Texture2D::PixelFormat format, int width, int height, unsigned char *data)
+{
+    TextureCubeMapGL *cube = static_cast<TextureCubeMapGL*>(_texture);
+    return cube->updateImageData(side, format, width, height, data);
+}
+
 
 void TextureCubeGL::setTexParameters(const TexParams& texParams)
 {
-    glActiveTexture(GL_TEXTURE0);
-
-    glBindTexture(GL_TEXTURE_CUBE_MAP, ((TextureGL*)_texture)->getHandler());
-    CHECK_GL_ERROR_DEBUG();
-
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, texParams.minFilter);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, texParams.magFilter);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, texParams.wrapS);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, texParams.wrapT);
-    CHECK_GL_ERROR_DEBUG();
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+    TextureCubeMapGL *cube = static_cast<TextureCubeMapGL*>(_texture);
+    cube->setTexParams(texParams);
 }
 
 CC_BACKEND_END

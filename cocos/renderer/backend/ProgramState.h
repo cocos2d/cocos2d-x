@@ -59,33 +59,22 @@ public:
     backend::Program* getProgram() const { return _program; }
     
     //get or set uniforms
-    void setUniform(const backend::UniformLocation& uniformLocation, const void* data, ssize_t size);
+    void setUniform(const backend::UniformLocation& uniformLocation, const void* data, uint32_t size);
     backend::UniformLocation getUniformLocation(const std::string& uniform) const;
     inline const std::vector<UniformBuffer>& getVertexUniformInfos() const { return _vertexUniformInfos; }
     inline std::vector<UniformBuffer>& getVertexUniformInfos() { return _vertexUniformInfos; }
     inline const std::vector<UniformBuffer>& getFragmentUniformInfos() const { return _fragmentUniformInfos; }
     
-
-    void setUniform(const std::string &uniformName, const void *data, ssize_t size);
-
     template<typename T>
     void setUniform(const backend::UniformLocation& uniformLocation, const T& data)
     {
-        setUniform(uniformLocation,(const void *) &data, sizeof(T));
-    }
-    template<typename T>
-    void setUniform(const std::string &uniformName, const T& data)
-    {
-        setUniform(uniformName, (const void *)&data, sizeof(T));
+        setUniform(uniformLocation,(const void *) &data, (uint32_t)sizeof(T));
     }
 
     //set textures
     void setTexture(const backend::UniformLocation& uniformLocation, uint32_t slot, backend::Texture* texture);
     void setTextureArray(const backend::UniformLocation& uniformLocation, const std::vector<uint32_t>& slots, const std::vector<backend::Texture*> textures);
     void addTexture(const backend::UniformLocation& uniformLocation, backend::Texture* texture);
-
-
-    void setBuiltinUniforms(const cocos2d::Mat4 &matrixMV);
 
     inline const std::unordered_map<int, TextureInfo>& getVertexTextureInfos() const { return _vertexTextureInfos; }
     inline const std::unordered_map<int, TextureInfo>& getFragmentTextureInfos() const { return _fragmentTextureInfos; }

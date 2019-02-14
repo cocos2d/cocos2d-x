@@ -20,12 +20,12 @@
  This file was modified to fit the cocos2d-x project
  */
 
-#include "renderer/CCVertexAttribBinding.h"
 #include "renderer/backend/Program.h"
 #include "renderer/CCPass.h"
 #include "base/CCConfiguration.h"
 #include "3d/CCMeshVertexIndexData.h"
 #include "3d/CC3DProgramInfo.h"
+#include "3d/CCVertexAttribBinding.h"
 
 NS_CC_BEGIN
 

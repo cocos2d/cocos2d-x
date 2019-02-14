@@ -999,7 +999,6 @@ void Sprite::updateTransform(void)
     // recalculate matrix only if it is dirty
     if(isDirty() )
     {
-
         // If it is not visible, or one of its ancestors is not visible, then do nothing:
         if( !_visible || ( _parent && _parent != _batchNode && static_cast<Sprite*>(_parent)->_shouldBeHidden) )
         {
@@ -1065,9 +1064,6 @@ void Sprite::updateTransform(void)
         if (_textureAtlas)
             _textureAtlas->updateQuad(&_quad, _atlasIndex);
 
-        //when camera differs
-        setMVPMatrixUniform();
-
         _recursiveDirty = false;
         setDirty(false);
     }
@@ -1081,7 +1077,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     if (_texture == nullptr || _texture->getBackendTexture() == nullptr)
         return;
     
-    //TODO: anrold: current camera can be a customized one.
+    //TODO: anrold: current camera can be a non-default one.
     setMVPMatrixUniform();
 
 #if CC_USE_CULLING

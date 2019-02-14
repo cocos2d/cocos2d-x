@@ -31,10 +31,10 @@ CC_BACKEND_BEGIN
 class CC_DLL TextureCubeGL : public TextureCube
 {
 public:
-    virtual void setTexParameters(const TexParams&);
-    virtual bool init(const std::string& positive_x, const std::string& negative_x,
-        const std::string& positive_y, const std::string& negative_y,
-        const std::string& positive_z, const std::string& negative_z) override;
+    TextureCubeGL();
+    virtual void setTexParameters(const TexParams&) override;
+    virtual bool updateImageData(int side, Texture2D::PixelFormat format, int width, int height, unsigned char *data) override;
+
 };
 
 CC_BACKEND_END

@@ -76,11 +76,15 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~TextureCube();
 protected:
 
-    virtual bool init(const std::string& positive_x, const std::string& negative_x,
+    bool init(const std::string& positive_x, const std::string& negative_x,
               const std::string& positive_y, const std::string& negative_y,
-              const std::string& positive_z, const std::string& negative_z) = 0;
+              const std::string& positive_z, const std::string& negative_z);
+
+    virtual bool updateImageData(int side, Texture2D::PixelFormat format, int width, int height, unsigned char *data) = 0;
 
     std::vector<std::string> _imgPath;
+
+
 };
 
 // end of 3d group

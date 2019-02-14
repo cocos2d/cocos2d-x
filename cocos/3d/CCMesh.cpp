@@ -27,6 +27,7 @@
 #include "3d/CCMeshSkin.h"
 #include "3d/CCSkeleton3D.h"
 #include "3d/CCMeshVertexIndexData.h"
+#include "3d/CCVertexAttribBinding.h"
 #include "2d/CCLight.h"
 #include "2d/CCScene.h"
 #include "base/CCEventDispatcher.h"
@@ -38,7 +39,6 @@
 #include "renderer/CCPass.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/backend/Buffer.h"
-#include "renderer/CCVertexAttribBinding.h"
 #include "math/Mat4.h"
 
 using namespace std;
@@ -63,21 +63,6 @@ std::string s_uniformSamplerName[] =
     "",//NTextureData::Usage::Reflection
 };
 
-static const char          *s_dirLightUniformColorName = "u_DirLightSourceColor";
-static const char          *s_dirLightUniformDirName = "u_DirLightSourceDirection";
-
-static const char          *s_pointLightUniformColorName = "u_PointLightSourceColor";
-static const char          *s_pointLightUniformPositionName = "u_PointLightSourcePosition";
-static const char          *s_pointLightUniformRangeInverseName = "u_PointLightSourceRangeInverse";
-
-static const char          *s_spotLightUniformColorName = "u_SpotLightSourceColor";
-static const char          *s_spotLightUniformPositionName = "u_SpotLightSourcePosition";
-static const char          *s_spotLightUniformDirName = "u_SpotLightSourceDirection";
-static const char          *s_spotLightUniformInnerAngleCosName = "u_SpotLightSourceInnerAngleCos";
-static const char          *s_spotLightUniformOuterAngleCosName = "u_SpotLightSourceOuterAngleCos";
-static const char          *s_spotLightUniformRangeInverseName = "u_SpotLightSourceRangeInverse";
-
-static const char          *s_ambientLightUniformColorName = "u_AmbientLightSourceColor";
 
 // helpers
 void Mesh::resetLightUniformValues()
@@ -299,10 +284,7 @@ void Mesh::setTexture(Texture2D* tex, NTextureData::Usage usage, bool cacheFileN
                 //TODO: pass->setTexture(tex); is not needed, and Pass::setTexture() doesn't need since
                 // texture is set in programstate.
                 // pass->setTexture(tex);
-
-                auto programState = pass->getProgramState();
-                auto location = programState->getUniformLocation("u_texture");
-                programState->setTexture(location, 0, tex->getBackendTexture());
+                pass->setUniformTexture(0, tex->getBackendTexture());
             }
         }
         
@@ -416,15 +398,10 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
     auto technique = _material->_currentTechnique;
     for(const auto pass : technique->_passes)
     {
-        auto programState = pass->getProgramState();
-        auto location = programState->getUniformLocation("u_color");
-        if (-1 != location.location)
-            programState->setUniform(location, &color, sizeof(color));
+        pass->setUniformColor(&color, sizeof(color));
 
-        location = programState->getUniformLocation("u_matrixPalette");
-        static_assert(sizeof(Vec4) == (sizeof(float) * 4), "sizeof Vec4 should be 16 bytes");
         if (_skin)
-            programState->setUniform(location, _skin->getMatrixPalette(), _skin->getMatrixPaletteSizeInBytes());
+            pass->setUniformMatrixPalette(_skin->getMatrixPalette(), _skin->getMatrixPaletteSizeInBytes());
 
         //TODO arnold
         if (scene && scene->getLights().size() > 0)
@@ -550,7 +527,6 @@ void Mesh::setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigne
     int maxSpotLight = conf->getMaxSupportSpotLightInShader();
     auto &lights = scene->getLights();
 
-    auto programState = pass->getProgramState();
     auto bindings= pass->getVertexAttributeBinding();
 
     if (bindings &&  bindings->hasAttribute(shaderinfos::VertexKey::VERTEX_ATTRIB_NORMAL))
@@ -629,31 +605,31 @@ void Mesh::setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigne
                 }
             }
         }
-
         if (0 < maxDirLight)
         {
-            programState->setUniform(s_dirLightUniformColorName, &_dirLightUniformColorValues[0], _dirLightUniformColorValues.size() * sizeof(_dirLightUniformColorValues[0]));
-            programState->setUniform(s_dirLightUniformDirName, &_dirLightUniformDirValues[0], _dirLightUniformDirValues.size() * sizeof(_dirLightUniformDirValues[0]));
+            pass->setUniformDirLightColor(&_dirLightUniformColorValues[0], _dirLightUniformColorValues.size() * sizeof(_dirLightUniformColorValues[0]));
+            pass->setUniformDirLightDir(&_dirLightUniformDirValues[0], _dirLightUniformDirValues.size() * sizeof(_dirLightUniformDirValues[0]));
         }
 
         if (0 < maxPointLight)
         {
-            programState->setUniform(s_pointLightUniformColorName, &_pointLightUniformColorValues[0], _pointLightUniformColorValues.size() * sizeof(_pointLightUniformColorValues[0]));
-            programState->setUniform(s_pointLightUniformPositionName, &_pointLightUniformPositionValues[0], _pointLightUniformPositionValues.size() * sizeof(_pointLightUniformPositionValues[0]));
-            programState->setUniform(s_pointLightUniformRangeInverseName, &_pointLightUniformRangeInverseValues[0], _pointLightUniformRangeInverseValues.size() * sizeof(_pointLightUniformRangeInverseValues[0]));
+            pass->setUniformPointLightColor(&_pointLightUniformColorValues[0], _pointLightUniformColorValues.size() * sizeof(_pointLightUniformColorValues[0]));
+            pass->setUniformPointLightPosition(&_pointLightUniformPositionValues[0], _pointLightUniformPositionValues.size() * sizeof(_pointLightUniformPositionValues[0]));
+            pass->setUniformPointLightRangeInverse(&_pointLightUniformRangeInverseValues[0], _pointLightUniformRangeInverseValues.size() * sizeof(_pointLightUniformRangeInverseValues[0]));
         }
 
         if (0 < maxSpotLight)
         {
-            programState->setUniform(s_spotLightUniformColorName, &_spotLightUniformColorValues[0], _spotLightUniformColorValues.size() * sizeof(_spotLightUniformColorValues[0]));
-            programState->setUniform(s_spotLightUniformPositionName, &_spotLightUniformPositionValues[0], _spotLightUniformPositionValues.size() * sizeof(_spotLightUniformPositionValues[0]));
-            programState->setUniform(s_spotLightUniformDirName, &_spotLightUniformDirValues[0], _spotLightUniformDirValues.size() * sizeof(_spotLightUniformDirValues[0]));
-            programState->setUniform(s_spotLightUniformInnerAngleCosName, &_spotLightUniformInnerAngleCosValues[0], _spotLightUniformInnerAngleCosValues.size() * sizeof(_spotLightUniformInnerAngleCosValues[0]));
-            programState->setUniform(s_spotLightUniformOuterAngleCosName, &_spotLightUniformOuterAngleCosValues[0], _spotLightUniformOuterAngleCosValues.size() * sizeof(_spotLightUniformOuterAngleCosValues[0]));
-            programState->setUniform(s_spotLightUniformRangeInverseName, &_spotLightUniformRangeInverseValues[0], _spotLightUniformRangeInverseValues.size() * sizeof(_spotLightUniformRangeInverseValues[0]));
+            pass->setUniformSpotLightColor(&_spotLightUniformColorValues[0], _spotLightUniformColorValues.size() * sizeof(_spotLightUniformColorValues[0]));
+            pass->setUniformSpotLightPosition(&_spotLightUniformPositionValues[0], _spotLightUniformPositionValues.size() * sizeof(_spotLightUniformPositionValues[0]));
+            pass->setUniformSpotLightDir(&_spotLightUniformDirValues[0], _spotLightUniformDirValues.size() * sizeof(_spotLightUniformDirValues[0]));
+            pass->setUniformSpotLightInnerAngleCos(&_spotLightUniformInnerAngleCosValues[0], _spotLightUniformInnerAngleCosValues.size() * sizeof(_spotLightUniformInnerAngleCosValues[0]));
+            pass->setUniformSpotLightOuterAngleCos(&_spotLightUniformOuterAngleCosValues[0], _spotLightUniformOuterAngleCosValues.size() * sizeof(_spotLightUniformOuterAngleCosValues[0]));
+            pass->setUniformSpotLightRangeInverse(&_spotLightUniformRangeInverseValues[0], _spotLightUniformRangeInverseValues.size() * sizeof(_spotLightUniformRangeInverseValues[0]));
         }
 
-        programState->setUniform(s_ambientLightUniformColorName, Vec3(ambientColor.x, ambientColor.y, ambientColor.z));
+        auto ambientLightColor = Vec3(ambientColor.x, ambientColor.y, ambientColor.z);
+        pass->setUniformAmbientLigthColor(&ambientLightColor, sizeof(ambientLightColor));
     }
     else // normal does not exist
     {
@@ -678,7 +654,8 @@ void Mesh::setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigne
         {
             ambient.x /= 255.f; ambient.y /= 255.f; ambient.z /= 255.f;
             //override the uniform value of u_color using the calculated color
-            programState->setUniform("u_color", Vec4(color.x * ambient.x, color.y * ambient.y, color.z * ambient.z, color.w));
+            auto fcolor = Vec4(color.x * ambient.x, color.y * ambient.y, color.z * ambient.z, color.w);
+            pass->setUniformColor(&fcolor, sizeof(fcolor));
         }
     }
 }

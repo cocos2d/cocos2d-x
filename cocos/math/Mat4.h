@@ -27,6 +27,7 @@
 
 #include "math/Vec3.h"
 #include "math/Vec4.h"
+#include <vector>
 
 #ifdef __SSE__
 #include <xmmintrin.h>
@@ -549,6 +550,11 @@ public:
      Get the Negated matrix.
      */
     Mat4 getNegated() const;
+
+    /**
+     Get the Normal Matrix of matrixMV
+    */
+    std::vector<float> getNormalMatrix() const;
 
     /**
      * Post-multiplies this matrix by the matrix corresponding to the

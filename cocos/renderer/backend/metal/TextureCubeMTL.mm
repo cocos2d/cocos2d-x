@@ -22,16 +22,8 @@ NS_CC_END
 
 CC_BACKEND_BEGIN
 
-bool TextureCubeMTL::init(const std::string& positive_x, const std::string& negative_x,
-                            const std::string& positive_y, const std::string& negative_y,
-                            const std::string& positive_z, const std::string& negative_z)
+bool TextureCubeMTL::updateImageData(int side, Texture2D::PixelFormat format, int width, int height, unsigned char *data)
 {
-    _imgPath[0] = positive_x;
-    _imgPath[1] = negative_x;
-    _imgPath[2] = positive_y;
-    _imgPath[3] = negative_y;
-    _imgPath[4] = positive_z;
-    _imgPath[5] = negative_z;
     //TODO: arnold
     assert(false);
     return false;

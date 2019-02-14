@@ -83,7 +83,6 @@ bool Skybox::init()
     initBuffers();
 
     CHECK_GL_ERROR_DEBUG();
-    _globalZOrder = -1; //draw before normal 3d objects
 
     return true;
 }
@@ -167,8 +166,6 @@ void Skybox::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
     // prescale the matrix to account for the camera fov
     cameraModelMat.scale(1 / projectionMat.m[0], 1 / projectionMat.m[5], 1.0);
 
-    _programState->setBuiltinUniforms(transform);
-
     Vec4 color(_displayedColor.r / 255.f, _displayedColor.g / 255.f, _displayedColor.b / 255.f, 1.f);
     _programState->setUniform(_uniformColorLoc, color);
     _programState->setUniform(_uniformCameraRotLoc, cameraModelMat.m);
@@ -198,7 +195,11 @@ void Skybox::reload()
 void Skybox::onBeforeDraw()
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    renderer->pushGlobalStates();
+    
+    _rendererDepthTestEnabled = renderer->getDepthTest();
+    _rendererDepthCmpFunc = renderer->getDepthCompareFunction();
+    _rendererCullMode = renderer->getCullMode();
+
     renderer->setDepthTest(true);
     renderer->setDepthCompareFunction(backend::CompareFunction::LESS);
     renderer->setCullMode(CullMode::BACK);
@@ -207,7 +208,9 @@ void Skybox::onBeforeDraw()
 void Skybox::onAfterDraw()
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    renderer->popGlobalStates();
+    renderer->setDepthTest(_rendererDepthTestEnabled);
+    renderer->setDepthCompareFunction(_rendererDepthCmpFunc);
+    renderer->setCullMode(_rendererCullMode);
 }
 
 NS_CC_END

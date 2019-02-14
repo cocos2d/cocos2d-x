@@ -10,9 +10,7 @@ class CC_DLL TextureCubeMTL : public TextureCube
 {
 public:
     virtual void setTexParameters(const TexParams &);
-    bool init(const std::string& positive_x, const std::string& negative_x,
-              const std::string& positive_y, const std::string& negative_y,
-              const std::string& positive_z, const std::string& negative_z);
+    virtual bool updateImageData(int side, Texture2D::PixelFormat format, int width, int height, unsigned char *data);
 };
 
 CC_BACKEND_END

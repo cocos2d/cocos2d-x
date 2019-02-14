@@ -376,8 +376,10 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
         auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/FakeShadow.material");
         _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getProgramState();
         _plane->setMaterial(mat);
-        _state->setUniform("u_model_matrix", _plane->getNodeToWorldTransform());
-        _state->setUniform("u_target_pos", _orc->getPosition3D());
+        backend::UniformLocation loc = _state->getUniformLocation("u_model_matrix");
+        _state->setUniform(loc, _plane->getNodeToWorldTransform());
+        loc = _state->getUniformLocation("u_target_pos");
+        _state->setUniform(loc, _orc->getPosition3D());
     }
     );
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);

@@ -297,9 +297,7 @@ void Sprite3DMaterial::setTexture(Texture2D* tex, NTextureData::Usage usage)
 {
     const auto& passes = getTechnique()->getPasses();
     for (auto& pass : passes) {
-        auto location = pass->getProgramState()->getUniformLocation("u_texture");
-        if (-1 != location.location)
-            pass->getProgramState()->setTexture(location, 0, tex->getBackendTexture());
+        pass->setUniformTexture(0, tex->getBackendTexture());
     }
 }
 

@@ -109,6 +109,29 @@ public:
 
     void setTechnique(Technique *technique);
 
+    
+    void setUniformTexture(uint32_t slot, backend::Texture *); //u_texture
+
+    void setUniformColor(const void *, size_t);                 //ucolor
+    void setUniformMatrixPalette(const void *, size_t);         //u_matrixPalette
+
+    void setUniformDirLightColor(const void *, size_t);
+    void setUniformDirLightDir(const void *, size_t);
+
+    void setUniformPointLightColor(const void *, size_t);
+    void setUniformPointLightPosition(const void *, size_t);
+    void setUniformPointLightRangeInverse(const void *, size_t);
+
+    void setUniformSpotLightColor(const void *, size_t);
+    void setUniformSpotLightPosition(const void *, size_t);
+    void setUniformSpotLightDir(const void *, size_t);
+    void setUniformSpotLightInnerAngleCos(const void *, size_t);
+    void setUniformSpotLightOuterAngleCos(const void *, size_t);
+    void setUniformSpotLightRangeInverse(const void *, size_t);
+
+    void setUniformAmbientLigthColor(const void *, size_t);
+
+
 protected:
     Pass();
     ~Pass();
@@ -118,21 +141,55 @@ protected:
     void setProgramState(backend::ProgramState* programState);
     Node* getTarget() const;
 
-    backend::ProgramState* _programState = nullptr;
     VertexAttribBinding* _vertexAttribBinding = nullptr;
     CustomCommand _customCommand;
     Technique * _technique = nullptr;
     bool _hashDirty = true;
     RenderState _renderState;
 
+
 private:
+    
+
+    //bool _oldDepthEnabledState;
+    void initUniformLocations();
     void onBeforeVisitCmd();
     void onAfterVisitCmd();
+
+    backend::ProgramState* _programState = nullptr;
 
     CallbackCommand _beforeVisitCmd;
     CallbackCommand _afterVisitCmd;
 
-    //bool _oldDepthEnabledState;
+    backend::UniformLocation _locMVPMatrix;
+    backend::UniformLocation _locMVMatrix;
+    backend::UniformLocation _locPMatrix;
+    backend::UniformLocation _locNormalMatrix;
+
+    backend::UniformLocation _locTexture;               //u_texture
+
+    backend::UniformLocation _locColor;                 //ucolor
+    backend::UniformLocation _locMatrixPalette;         //u_matrixPalette
+
+    backend::UniformLocation _locDirLightColor;
+    backend::UniformLocation _locDirLightDir;
+
+    backend::UniformLocation _locPointLightColor;
+    backend::UniformLocation _locPointLightPosition;
+    backend::UniformLocation _locPointLightRangeInverse;
+
+    backend::UniformLocation _locSpotLightColor;
+    backend::UniformLocation _locSpotLightPosition;
+    backend::UniformLocation _locSpotLightDir;
+    backend::UniformLocation _locSpotLightInnerAngleCos;
+    backend::UniformLocation _locSpotLightOuterAngleCos;
+    backend::UniformLocation _locSpotLightRangeInverse;
+
+    backend::UniformLocation _locAmbientLigthColor;
+
+    bool _rendererDepthTestEnabled;
+    backend::CompareFunction _rendererDepthCmpFunc;
+    backend::CullMode _rendererCullMode;
 };
 
 NS_CC_END

@@ -20,8 +20,7 @@
  This file was modified to fit the cocos2d-x project
  */
 
-#ifndef CC_VERTEXATTRIBUTEBINDING_H_
-#define CC_VERTEXATTRIBUTEBINDING_H_
+#pragma once
 
 #include <unordered_map>
 
@@ -128,4 +127,3 @@ private:
 
 NS_CC_END
 
-#endif // CC_VERTEXATTRIBUTEBINDING_H_
