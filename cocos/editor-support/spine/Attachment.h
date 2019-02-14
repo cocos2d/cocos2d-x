@@ -31,7 +31,7 @@
 #ifndef SPINE_ATTACHMENT_H_
 #define SPINE_ATTACHMENT_H_
 
-#include <spine/dll.h>
+#include "spine/dll.h"
 
 #ifdef __cplusplus
 extern "C" {

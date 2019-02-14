@@ -31,8 +31,8 @@
 #ifndef SPINE_TRIANGULATOR_H
 #define SPINE_TRIANGULATOR_H
 
-#include <spine/dll.h>
-#include <spine/Array.h>
+#include "spine/dll.h"
+#include "spine/Array.h"
 
 #ifdef __cplusplus
 extern "C" {

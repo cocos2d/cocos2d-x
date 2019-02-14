@@ -31,10 +31,10 @@
 #ifndef SPINE_PATHCONSTRAINT_H_
 #define SPINE_PATHCONSTRAINT_H_
 
-#include <spine/dll.h>
-#include <spine/PathConstraintData.h>
-#include <spine/Bone.h>
-#include <spine/Slot.h>
+#include "spine/dll.h"
+#include "spine/PathConstraintData.h"
+#include "spine/Bone.h"
+#include "spine/Slot.h"
 #include "PathAttachment.h"
 
 #ifdef __cplusplus

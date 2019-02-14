@@ -31,9 +31,9 @@
 #ifndef SPINE_SLOTDATA_H_
 #define SPINE_SLOTDATA_H_
 
-#include <spine/dll.h>
-#include <spine/BoneData.h>
-#include <spine/Color.h>
+#include "spine/dll.h"
+#include "spine/BoneData.h"
+#include "spine/Color.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -28,11 +28,11 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/SkeletonBinary.h>
+#include "spine/SkeletonBinary.h"
 #include <stdio.h>
-#include <spine/extension.h>
-#include <spine/AtlasAttachmentLoader.h>
-#include <spine/Animation.h>
+#include "spine/extension.h"
+#include "spine/AtlasAttachmentLoader.h"
+#include "spine/Animation.h"
 #include "kvec.h"
 
 typedef struct {

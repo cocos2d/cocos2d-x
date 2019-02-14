@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/VertexEffect.h>
-#include <spine/extension.h>
+#include "spine/VertexEffect.h"
+#include "spine/extension.h"
 
 void _spJitterVertexEffect_begin(spVertexEffect* self, spSkeleton* skeleton) {
 }

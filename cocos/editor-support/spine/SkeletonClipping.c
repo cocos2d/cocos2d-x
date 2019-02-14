@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/SkeletonClipping.h>
-#include <spine/extension.h>
+#include "spine/SkeletonClipping.h"
+#include "spine/extension.h"
 
 spSkeletonClipping* spSkeletonClipping_create() {
 	spSkeletonClipping* clipping = CALLOC(spSkeletonClipping, 1);

@@ -19,7 +19,7 @@
 #ifndef TEST_H
 #define TEST_H
 
-#include <Box2D/Box2D.h>
+#include "Box2D/Box2D.h"
 #include "GLES-Render.h"
 
 #include <cstdlib>

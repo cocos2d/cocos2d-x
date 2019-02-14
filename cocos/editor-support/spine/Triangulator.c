@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/Triangulator.h>
-#include <spine/extension.h>
+#include "spine/Triangulator.h"
+#include "spine/extension.h"
 #include <stdio.h>
 
 spTriangulator* spTriangulator_create() {

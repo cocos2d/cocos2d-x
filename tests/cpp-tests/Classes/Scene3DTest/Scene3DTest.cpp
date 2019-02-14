@@ -26,7 +26,7 @@
 
 #include "ui/CocosGUI.h"
 #include "renderer/CCRenderState.h"
-#include <spine/spine-cocos2dx.h>
+#include "spine/spine-cocos2dx.h"
 
 #include "../testResource.h"
 #include "../TerrainTest/TerrainTest.h"

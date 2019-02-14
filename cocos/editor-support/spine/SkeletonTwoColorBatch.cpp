@@ -27,8 +27,8 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
-#include <spine/SkeletonTwoColorBatch.h>
-#include <spine/extension.h>
+#include "spine/SkeletonTwoColorBatch.h"
+#include "spine/extension.h"
 #include <algorithm>
 
 USING_NS_CC;

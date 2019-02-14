@@ -31,9 +31,9 @@
 #ifndef SPINE_ATTACHMENTLOADER_H_
 #define SPINE_ATTACHMENTLOADER_H_
 
-#include <spine/dll.h>
-#include <spine/Attachment.h>
-#include <spine/Skin.h>
+#include "spine/dll.h"
+#include "spine/Attachment.h"
+#include "spine/Skin.h"
 
 #ifdef __cplusplus
 extern "C" {
