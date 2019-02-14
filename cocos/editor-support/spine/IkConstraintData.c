@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/IkConstraintData.h>
-#include <spine/extension.h>
+#include "spine/IkConstraintData.h"
+#include "spine/extension.h"
 
 spIkConstraintData* spIkConstraintData_create (const char* name) {
 	spIkConstraintData* self = NEW(spIkConstraintData);

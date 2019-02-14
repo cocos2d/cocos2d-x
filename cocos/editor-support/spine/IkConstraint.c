@@ -28,9 +28,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/IkConstraint.h>
-#include <spine/Skeleton.h>
-#include <spine/extension.h>
+#include "spine/IkConstraint.h"
+#include "spine/Skeleton.h"
+#include "spine/extension.h"
 #include <float.h>
 
 spIkConstraint *spIkConstraint_create(spIkConstraintData *data, const spSkeleton *skeleton) {

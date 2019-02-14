@@ -31,9 +31,9 @@
 #ifndef SPINE_PATHCONSTRAINTDATA_H_
 #define SPINE_PATHCONSTRAINTDATA_H_
 
-#include <spine/dll.h>
-#include <spine/BoneData.h>
-#include <spine/SlotData.h>
+#include "spine/dll.h"
+#include "spine/BoneData.h"
+#include "spine/SlotData.h"
 
 #ifdef __cplusplus
 extern "C" {

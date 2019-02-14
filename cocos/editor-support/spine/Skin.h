@@ -31,8 +31,8 @@
 #ifndef SPINE_SKIN_H_
 #define SPINE_SKIN_H_
 
-#include <spine/dll.h>
-#include <spine/Attachment.h>
+#include "spine/dll.h"
+#include "spine/Attachment.h"
 
 #ifdef __cplusplus
 extern "C" {

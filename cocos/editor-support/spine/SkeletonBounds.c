@@ -28,9 +28,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/SkeletonBounds.h>
+#include "spine/SkeletonBounds.h"
 #include <limits.h>
-#include <spine/extension.h>
+#include "spine/extension.h"
 
 spPolygon* spPolygon_create (int capacity) {
 	spPolygon* self = NEW(spPolygon);

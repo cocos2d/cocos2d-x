@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/PathConstraintData.h>
-#include <spine/extension.h>
+#include "spine/PathConstraintData.h"
+#include "spine/extension.h"
 
 spPathConstraintData* spPathConstraintData_create (const char* name) {
 	spPathConstraintData* self = NEW(spPathConstraintData);

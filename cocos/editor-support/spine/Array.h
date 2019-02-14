@@ -31,7 +31,7 @@
 #ifndef SPINE_ARRAY_H
 #define SPINE_ARRAY_H
 
-#include <spine/dll.h>
+#include "spine/dll.h"
 
 #ifdef __cplusplus
 extern "C" {

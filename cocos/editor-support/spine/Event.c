@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/Event.h>
-#include <spine/extension.h>
+#include "spine/Event.h"
+#include "spine/extension.h"
 
 spEvent* spEvent_create (float time, spEventData* data) {
 	spEvent* self = NEW(spEvent);

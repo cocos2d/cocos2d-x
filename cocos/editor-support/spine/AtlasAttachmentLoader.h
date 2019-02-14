@@ -31,9 +31,9 @@
 #ifndef SPINE_ATLASATTACHMENTLOADER_H_
 #define SPINE_ATLASATTACHMENTLOADER_H_
 
-#include <spine/dll.h>
-#include <spine/AttachmentLoader.h>
-#include <spine/Atlas.h>
+#include "spine/dll.h"
+#include "spine/AttachmentLoader.h"
+#include "spine/Atlas.h"
 
 #ifdef __cplusplus
 extern "C" {

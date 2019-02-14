@@ -28,7 +28,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/extension.h>
+#include "spine/extension.h"
 #include <stdio.h>
 
 float _spInternalRandom () {

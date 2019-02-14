@@ -28,9 +28,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/TransformConstraint.h>
-#include <spine/Skeleton.h>
-#include <spine/extension.h>
+#include "spine/TransformConstraint.h"
+#include "spine/Skeleton.h"
+#include "spine/extension.h"
 
 spTransformConstraint* spTransformConstraint_create (spTransformConstraintData* data, const spSkeleton* skeleton) {
 	int i;
