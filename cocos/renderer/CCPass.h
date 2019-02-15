@@ -190,6 +190,8 @@ private:
     bool _rendererDepthTestEnabled;
     backend::CompareFunction _rendererDepthCmpFunc;
     backend::CullMode _rendererCullMode;
+    backend::Winding _rendererWinding;
+    bool _rendererDepthWrite;
 };
 
 NS_CC_END

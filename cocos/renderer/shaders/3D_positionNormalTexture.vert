@@ -47,12 +47,13 @@ varying vec3 v_normal;
 #endif
 
 uniform mat4 u_MVPMatrix;
+uniform mat4 u_MVMatrix;
 uniform mat4 u_PMatrix;
 uniform mat3 u_NormalMatrix;
 
 void main(void)
 {
-    vec4 ePosition = u_MVPMatrix * a_position;
+    vec4 ePosition = u_MVMatrix * a_position;
 #ifdef USE_NORMAL_MAPPING
     #if ((MAX_DIRECTIONAL_LIGHT_NUM > 0) || (MAX_POINT_LIGHT_NUM > 0) || (MAX_SPOT_LIGHT_NUM > 0))
         vec3 eTangent = normalize(u_NormalMatrix * a_tangent);
