@@ -17,6 +17,9 @@ public:
     
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) override;
     
+    virtual void updateImageData(TextureCubeSide side, Texture2D::PixelFormat format, int width, int height, void *data) override
+    {}
+
     inline id<MTLTexture> getMTLTexture() const { return _mtlTexture; }
     inline id<MTLSamplerState> getMTLSamplerState() const { return _mtlSamplerState; }
     

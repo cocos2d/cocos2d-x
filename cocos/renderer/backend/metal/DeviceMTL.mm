@@ -63,10 +63,17 @@ Buffer* DeviceMTL::newBuffer(unsigned int size, BufferType type, BufferUsage usa
     return new (std::nothrow) BufferMTL(_mtlDevice, size, type, usage);
 }
 
-Texture* DeviceMTL::newTexture(const TextureDescriptor& descriptor)
+Texture* DeviceMTL::newTexture2D(const TextureDescriptor& descriptor)
 {
     return new (std::nothrow) TextureMTL(_mtlDevice, descriptor);
 }
+
+Texture* DeviceMTL::newTextureCube(const TextureDescriptor &descriptor)
+{
+    CCASSERT(false, "TextureCubMTL is not implemented!");
+    return nullptr;
+}
+
 
 ShaderModule* DeviceMTL::newShaderModule(ShaderStage stage, const std::string& source)
 {

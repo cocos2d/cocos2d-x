@@ -2,6 +2,7 @@
 
 #include "Types.h"
 #include "base/CCRef.h"
+#include "renderer/CCTexture2D.h"
 #include <cassert>
 
 CC_BACKEND_BEGIN
