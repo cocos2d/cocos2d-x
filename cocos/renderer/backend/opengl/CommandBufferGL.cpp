@@ -114,7 +114,7 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
     
     if (useDepthAttachmentExternal)
     {
-        auto depthTexture = static_cast<TextureGL*>(descirptor.depthAttachmentTexture);
+        auto depthTexture = static_cast<Texture2DGL*>(descirptor.depthAttachmentTexture);
         glFramebufferTexture2D(GL_FRAMEBUFFER,
                                GL_DEPTH_ATTACHMENT,
                                GL_TEXTURE_2D,
@@ -125,7 +125,7 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
         
     if (useStencilAttachmentExternal)
     {
-        auto stencilTexture = static_cast<TextureGL*>(descirptor.depthAttachmentTexture);
+        auto stencilTexture = static_cast<Texture2DGL*>(descirptor.depthAttachmentTexture);
         glFramebufferTexture2D(GL_FRAMEBUFFER,
                                GL_STENCIL_ATTACHMENT,
                                GL_TEXTURE_2D,

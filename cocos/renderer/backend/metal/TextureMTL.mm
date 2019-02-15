@@ -145,7 +145,7 @@ void TextureMTL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsig
 void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
 {
     MTLTextureDescriptor* textureDescriptor =
-           [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:Utils::toMTLPixelFormat(descriptor.textureFormat)
+           [MTLTextureDescriptor TextureDescriptorWithPixelFormat:Utils::toMTLPixelFormat(descriptor.textureFormat)
                                                               width:descriptor.width
                                                              height:descriptor.height
                                                           mipmapped:TRUE];

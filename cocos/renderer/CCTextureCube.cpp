@@ -26,6 +26,8 @@
 #include "renderer/CCTextureCube.h"
 #include "platform/CCImage.h"
 #include "platform/CCFileUtils.h"
+#include "renderer/backend/Texture.h"
+#include "renderer/backend/Device.h"
 
 NS_CC_BEGIN
 
@@ -147,11 +149,14 @@ Image* createImage(const std::string& path)
 
 TextureCube::TextureCube()
 {
+    backend::TextureDescriptor sd;
     _imgPath.resize(6);
+    _texture = backend::Device::getInstance()->newTextureCube(sd);
 }
 
 TextureCube::~TextureCube()
 {
+    CC_SAFE_RELEASE_NULL(_texture);
 }
 
 TextureCube* TextureCube::create(const std::string& positive_x, const std::string& negative_x,
@@ -188,11 +193,6 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
     images[4] = createImage(positive_z);
     images[5] = createImage(negative_z);
 
-    GLuint handle;
-    glGenTextures(1, &handle);
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, handle);
 
     for (int i = 0; i < 6; i++)
     {
@@ -200,45 +200,18 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
 
         Texture2D::PixelFormat  ePixelFmt;
         unsigned char*          pData = getImageData(img, ePixelFmt);
-        if (ePixelFmt == Texture2D::PixelFormat::RGBA8888 || ePixelFmt == Texture2D::PixelFormat::DEFAULT)
-        {
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-                         0,                  // level
-                         GL_RGBA,            // internal format
-                         img->getWidth(),    // width
-                         img->getHeight(),   // height
-                         0,                  // border
-                         GL_RGBA,            // format
-                         GL_UNSIGNED_BYTE,   // type
-                         pData);             // pixel data
-        }
-        else if (ePixelFmt == Texture2D::PixelFormat::RGB888)
-        {
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-                         0,                  // level
-                         GL_RGB,             // internal format
-                         img->getWidth(),    // width
-                         img->getHeight(),   // height
-                         0,                  // border
-                         GL_RGB,             // format
-                         GL_UNSIGNED_BYTE,   // type
-                         pData);             // pixel data
-        }
-
+        _texture->updateImageData(static_cast<backend::TextureCubeSide>(i), ePixelFmt, img->getWidth(), img->getHeight(), pData);
         if (pData != img->getData())
             delete[] pData;
     }
 
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    backend::SamplerDescriptor sd;
+    sd.minFilter = backend::SamplerFilter::LINEAR;
+    sd.magFilter= backend::SamplerFilter::LINEAR;
+    sd.sAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+    sd.tAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
 
-//  TODO coulsonwang
-//    _name = handle;
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+    _texture->updateSamplerDescriptor(sd);
 
     for (auto img: images)
     {
@@ -248,9 +221,9 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
     return true;
 }
 
-void TextureCube::setTexParameters(const TexParams& texParams)
+void TextureCube::setTexParameters(const Texture2D::TexParams& texParams)
 {
-    //TODO coulsonwang
+    //TODO arnold
 //    CCASSERT(_name != 0, __FUNCTION__);
 //
 //    glActiveTexture(GL_TEXTURE0);

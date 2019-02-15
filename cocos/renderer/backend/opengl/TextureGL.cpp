@@ -94,7 +94,30 @@ namespace
     }
 }
 
-TextureGL::TextureGL(const TextureDescriptor& descriptor) : Texture(descriptor)
+void TextureGL::setSamplerDescriptor(const SamplerDescriptor& descriptor, bool isPow2)
+{
+    if (descriptor.magFilter != SamplerFilter::DONT_CARE)
+    {
+        _magFilterGL = toGLMagFilter(descriptor.magFilter);
+    }
+
+    if (descriptor.minFilter != SamplerFilter::DONT_CARE)
+    {
+        _minFilterGL = toGLMinFilter(descriptor.minFilter, descriptor.mipmapFilter, descriptor.mipmapEnabled, isPow2);
+    }
+
+    if (descriptor.sAddressMode != SamplerAddressMode::DONT_CARE)
+    {
+        _sAddressModeGL = toGLAddressMode(descriptor.sAddressMode, isPow2);
+    }
+
+    if (descriptor.tAddressMode != SamplerAddressMode::DONT_CARE)
+    {
+        _tAddressModeGL = toGLAddressMode(descriptor.tAddressMode, isPow2);
+    }
+}
+
+Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : TextureGL(descriptor)
 {
     glGenTextures(1, &_texture);
     toGLTypes();
@@ -113,48 +136,46 @@ TextureGL::TextureGL(const TextureDescriptor& descriptor) : Texture(descriptor)
     free(data);
 }
 
-TextureGL::~TextureGL()
+Texture2DGL::~Texture2DGL()
 {
     if (_texture)
         glDeleteTextures(1, &_texture);
 }
 
-void TextureGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
+void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
     bool isPow2 = ISPOW2(_width) && ISPOW2(_height);
     bool needGenerateMipmap = !_isMipmapEnabled && sampler.mipmapEnabled;
     _isMipmapEnabled = sampler.mipmapEnabled;
+
+    setSamplerDescriptor(sampler, isPow2);
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture);
 
     if (sampler.magFilter != SamplerFilter::DONT_CARE)
     {
-        _magFilterGL = toGLMagFilter(sampler.magFilter);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _magFilterGL);
     }
 
     if (sampler.minFilter != SamplerFilter::DONT_CARE)
     {
-        _minFilterGL = toGLMinFilter(sampler.minFilter, sampler.mipmapFilter, _isMipmapEnabled, isPow2);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _minFilterGL);
     }
 
     if (sampler.sAddressMode != SamplerAddressMode::DONT_CARE)
     {
-        _sAddressModeGL = toGLAddressMode(sampler.sAddressMode, isPow2);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _sAddressModeGL);
     }
 
     if (sampler.tAddressMode != SamplerAddressMode::DONT_CARE)
     {
-        _tAddressModeGL = toGLAddressMode(sampler.tAddressMode, isPow2);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _tAddressModeGL);
     }
 
     if (needGenerateMipmap) generateMipmpas();
 }
 
-void TextureGL::updateData(uint8_t* data)
+void Texture2DGL::updateData(uint8_t* data)
 {
     // TODO: support texture cube, and compressed data.
     
@@ -216,7 +237,7 @@ void TextureGL::updateData(uint8_t* data)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void TextureGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data)
+void Texture2DGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data)
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture);
@@ -235,20 +256,20 @@ void TextureGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsign
     CHECK_GL_ERROR_DEBUG();
 }
 
-void TextureGL::apply(int index) const
+void Texture2DGL::apply(int index) const
 {
     glActiveTexture(GL_TEXTURE0 + index);
     glBindTexture(GL_TEXTURE_2D, _texture);
 }
 
-void TextureGL::generateMipmpas() const
+void Texture2DGL::generateMipmpas() const
 {
     if (_isMipmapEnabled &&
         TextureUsage::RENDER_TARGET != _textureUsage)
         glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-void TextureGL::toGLTypes()
+void Texture2DGL::toGLTypes()
 {
     switch (_textureFormat)
     {
@@ -398,6 +419,78 @@ void TextureGL::toGLTypes()
         default:
             break;
     }
+}
+
+TextureCubeGL::TextureCubeGL(const TextureDescriptor& descriptor)
+    :TextureGL(descriptor)
+{
+    _textureType = TextureType::TEXTURE_CUBE;
+    glGenTextures(1, &_texture);
+    CHECK_GL_ERROR_DEBUG();
+}
+
+TextureCubeGL::~TextureCubeGL()
+{
+    if(_texture)
+        glDeleteTextures(1, &_texture);
+}
+
+void TextureCubeGL::updateSamplerDescriptor(const SamplerDescriptor &sampler)
+{
+    setSamplerDescriptor(sampler, true);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _texture);
+    
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, _minFilterGL);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, _magFilterGL);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, _sAddressModeGL);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, _tAddressModeGL);
+    
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+}
+
+void TextureCubeGL::apply(int index) const
+{
+    glActiveTexture(GL_TEXTURE0+ index);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _texture);
+
+}
+
+void TextureCubeGL::updateImageData(TextureCubeSide side, Texture2D::PixelFormat ePixelFmt, int width, int height, void *data)
+{
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _texture);
+    int i = static_cast<int>(side);
+    if (ePixelFmt == Texture2D::PixelFormat::RGBA8888 || ePixelFmt == Texture2D::PixelFormat::DEFAULT)
+    {
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+            0,                  // level
+            GL_RGBA,            // internal format
+            width,              // width
+            height,             // height
+            0,                  // border
+            GL_RGBA,            // format
+            GL_UNSIGNED_BYTE,   // type
+            data);              // pixel data
+    }
+    else if (ePixelFmt == Texture2D::PixelFormat::RGB888)
+    {
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+            0,                  // level
+            GL_RGB,             // internal format
+            width,              // width
+            height,             // height
+            0,                  // border
+            GL_RGB,             // format
+            GL_UNSIGNED_BYTE,   // type
+            data);             // pixel data
+    }
+    else
+    {
+        CCASSERT(false, "invalidate texture format");
+    }
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 
 CC_BACKEND_END

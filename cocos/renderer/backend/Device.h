@@ -36,8 +36,10 @@ public:
     virtual CommandBuffer* newCommandBuffer() = 0;
     // Create a buffer, not auto released.
     virtual Buffer* newBuffer(uint32_t size, BufferType type, BufferUsage usage) = 0;
-    // Create a texture, not auto released.
-    virtual Texture* newTexture(const TextureDescriptor& descriptor) = 0;
+    // Create a 2d texture, not auto released.
+    virtual Texture* newTexture2D(const TextureDescriptor& descriptor) = 0;
+    // Create a cube texture, not auto released
+    virtual Texture* newTextureCube(const TextureDescriptor& descriptor) = 0;
     // Create a auto released depth stencil state.
     virtual DepthStencilState* createDepthStencilState(const DepthStencilDescriptor& descriptor) = 0;
     // Create a auto released blend state.

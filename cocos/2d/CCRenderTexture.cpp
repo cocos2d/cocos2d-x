@@ -187,7 +187,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         descriptor.height = powH;
         descriptor.textureUsage = TextureUsage::RENDER_TARGET;
         descriptor.textureFormat = TextureFormat::R8G8B8A8;
-        auto texture = backend::Device::getInstance()->newTexture(descriptor);
+        auto texture = backend::Device::getInstance()->newTexture2D(descriptor);
         if (! texture)
             break;
 
@@ -207,7 +207,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         if (TextureFormat::D24S8 == depthStencilFormat)
         {
             descriptor.textureFormat = depthStencilFormat;
-            texture = backend::Device::getInstance()->newTexture(descriptor);
+            texture = backend::Device::getInstance()->newTexture2D(descriptor);
             if (! texture)
                 break;
 

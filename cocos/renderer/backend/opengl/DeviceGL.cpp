@@ -38,9 +38,14 @@ Buffer* DeviceGL::newBuffer(unsigned int size, BufferType type, BufferUsage usag
     return new (std::nothrow) BufferGL(size, type, usage);
 }
 
-Texture* DeviceGL::newTexture(const TextureDescriptor& descriptor)
+Texture* DeviceGL::newTexture2D(const TextureDescriptor& descriptor)
 {
-    return new (std::nothrow) TextureGL(descriptor);
+    return new (std::nothrow) Texture2DGL(descriptor);
+}
+
+Texture* DeviceGL::newTextureCube(const TextureDescriptor& descriptor)
+{
+    return new (std::nothrow) TextureCubeGL(descriptor);
 }
 
 ShaderModule* DeviceGL::newShaderModule(ShaderStage stage, const std::string& source)

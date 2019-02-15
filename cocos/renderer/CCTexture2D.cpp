@@ -379,7 +379,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     
     textureDescriptor.compressed = info.compressed;
     
-    _texture = device->newTexture(textureDescriptor);
+    _texture = device->newTexture2D(textureDescriptor);
 
     _texture->updateData(outData);
     if(outData && outData != data && outDataLen > 0)

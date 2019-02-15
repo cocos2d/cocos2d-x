@@ -582,7 +582,8 @@ void CameraBackgroundSkyBoxBrush::setTexture(TextureCube*  texture)
     CC_SAFE_RETAIN(texture);
     CC_SAFE_RELEASE(_texture);
     _texture = texture;
-    _glProgramState->setUniformTexture("u_Env", _texture);
+    //TODO arnold
+    //_glProgramState->setUniformTexture("u_Env", _texture->getBackendTexture());
 }
 
 bool CameraBackgroundSkyBoxBrush::isActived() const
