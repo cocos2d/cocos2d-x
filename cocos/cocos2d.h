@@ -166,7 +166,6 @@ THE SOFTWARE.
 #include "renderer/CCTextureCube.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCTrianglesCommand.h"
-#include "renderer/CCVertexAttribBinding.h"
 #include "renderer/ccShaders.h"
 
 // physics
@@ -274,6 +273,7 @@ THE SOFTWARE.
 #include "3d/CCSprite3D.h"
 #include "3d/CCSprite3DMaterial.h"
 #include "3d/CCTerrain.h"
+#include "3d/CCVertexAttribBinding.h"
 
 NS_CC_BEGIN
 

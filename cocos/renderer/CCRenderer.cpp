@@ -134,7 +134,7 @@ RenderCommand* RenderQueue::operator[](ssize_t index) const
 
 void RenderQueue::clear()
 {
-    for(int i = 0; i < QUEUE_COUNT; ++i)
+    for(int i = 0; i < QUEUE_GROUP::QUEUE_COUNT; ++i)
     {
         _commands[i].clear();
     }
@@ -142,7 +142,7 @@ void RenderQueue::clear()
 
 void RenderQueue::realloc(size_t reserveSize)
 {
-    for(int i = 0; i < QUEUE_COUNT; ++i)
+    for(int i = 0; i < QUEUE_GROUP::QUEUE_COUNT; ++i)
     {
         _commands[i] = std::vector<RenderCommand*>();
         _commands[i].reserve(reserveSize);
@@ -927,6 +927,7 @@ void Renderer::clear(ClearFlag flags, const Color4F& color, float depth, unsigne
     _clearFlag = flags;
 
     CallbackCommand* command = new CallbackCommand();
+    command->init(-10000);
     command->func = [=]() -> void {
         backend::RenderPassDescriptor descriptor;
 

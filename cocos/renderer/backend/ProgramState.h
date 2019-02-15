@@ -61,8 +61,9 @@ public:
     void setUniform(const backend::UniformLocation& uniformLocation, const void* data, uint32_t size);
     backend::UniformLocation getUniformLocation(const std::string& uniform) const;
     inline const std::vector<UniformBuffer>& getVertexUniformInfos() const { return _vertexUniformInfos; }
+    inline std::vector<UniformBuffer>& getVertexUniformInfos() { return _vertexUniformInfos; }
     inline const std::vector<UniformBuffer>& getFragmentUniformInfos() const { return _fragmentUniformInfos; }
-    
+
     //set textures
     void setTexture(const backend::UniformLocation& uniformLocation, uint32_t slot, backend::Texture* texture);
     void setTextureArray(const backend::UniformLocation& uniformLocation, const std::vector<uint32_t>& slots, const std::vector<backend::Texture*> textures);
@@ -87,7 +88,6 @@ protected:
     
     std::unordered_map<int, TextureInfo> _vertexTextureInfos;
     std::unordered_map<int, TextureInfo> _fragmentTextureInfos;
-    
 };
 
 CC_BACKEND_END

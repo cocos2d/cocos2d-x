@@ -223,8 +223,6 @@ std::vector<AttributeBindInfo> ProgramGL::getActiveAttributes() const {
     attributes.reserve(numOfActiveAttributes);
 
     int MAX_ATTRIBUTE_NAME_LENGTH = 256;
-    glGetProgramiv(_program, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &MAX_ATTRIBUTE_NAME_LENGTH);
-
     std::vector<char> attrName(MAX_ATTRIBUTE_NAME_LENGTH + 1);
 
     GLint attrNameLen = 0;

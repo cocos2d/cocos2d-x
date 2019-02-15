@@ -34,6 +34,8 @@
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderState.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCallbackCommand.h"
 
 NS_CC_BEGIN
 
@@ -41,6 +43,7 @@ class Technique;
 class Node;
 class VertexAttribBinding;
 class MeshIndexData;
+class RenderState;
 
 namespace backend
 {
@@ -48,10 +51,11 @@ namespace backend
     class Buffer;
 }
 
-class CC_DLL Pass : public RenderState
+class CC_DLL Pass : public Ref
 {
     friend class Material;
-
+    friend class Technique;
+    friend class RenderState;
 public:
     /** Creates a Pass with a GLProgramState.
      */
@@ -77,7 +81,7 @@ public:
     /** Unbinds the Pass.
      This method must be called AFTER calling the actual draw call
      */
-    //void unbind();f
+    //void unbind();
 
     /**
      * Sets a vertex attribute binding for this pass.
@@ -96,11 +100,37 @@ public:
      */
     VertexAttribBinding* getVertexAttributeBinding() const;
 
-    uint32_t getHash() const;
+    //TODO arnold
+    //uint32_t getHash() const;
 
     /**
      * Returns a clone (deep-copy) of this instance */
     Pass* clone() const;
+
+    void setTechnique(Technique *technique);
+
+    
+    void setUniformTexture(uint32_t slot, backend::Texture *); //u_texture
+
+    void setUniformColor(const void *, size_t);                 //ucolor
+    void setUniformMatrixPalette(const void *, size_t);         //u_matrixPalette
+
+    void setUniformDirLightColor(const void *, size_t);
+    void setUniformDirLightDir(const void *, size_t);
+
+    void setUniformPointLightColor(const void *, size_t);
+    void setUniformPointLightPosition(const void *, size_t);
+    void setUniformPointLightRangeInverse(const void *, size_t);
+
+    void setUniformSpotLightColor(const void *, size_t);
+    void setUniformSpotLightPosition(const void *, size_t);
+    void setUniformSpotLightDir(const void *, size_t);
+    void setUniformSpotLightInnerAngleCos(const void *, size_t);
+    void setUniformSpotLightOuterAngleCos(const void *, size_t);
+    void setUniformSpotLightRangeInverse(const void *, size_t);
+
+    void setUniformAmbientLigthColor(const void *, size_t);
+
 
 protected:
     Pass();
@@ -111,9 +141,55 @@ protected:
     void setProgramState(backend::ProgramState* programState);
     Node* getTarget() const;
 
-    backend::ProgramState* _programState = nullptr;
     VertexAttribBinding* _vertexAttribBinding = nullptr;
     CustomCommand _customCommand;
+    Technique * _technique = nullptr;
+    bool _hashDirty = true;
+    RenderState _renderState;
+
+
+private:
+    
+
+    //bool _oldDepthEnabledState;
+    void initUniformLocations();
+    void onBeforeVisitCmd();
+    void onAfterVisitCmd();
+
+    backend::ProgramState* _programState = nullptr;
+
+    CallbackCommand _beforeVisitCmd;
+    CallbackCommand _afterVisitCmd;
+
+    backend::UniformLocation _locMVPMatrix;
+    backend::UniformLocation _locMVMatrix;
+    backend::UniformLocation _locPMatrix;
+    backend::UniformLocation _locNormalMatrix;
+
+    backend::UniformLocation _locTexture;               //u_texture
+
+    backend::UniformLocation _locColor;                 //ucolor
+    backend::UniformLocation _locMatrixPalette;         //u_matrixPalette
+
+    backend::UniformLocation _locDirLightColor;
+    backend::UniformLocation _locDirLightDir;
+
+    backend::UniformLocation _locPointLightColor;
+    backend::UniformLocation _locPointLightPosition;
+    backend::UniformLocation _locPointLightRangeInverse;
+
+    backend::UniformLocation _locSpotLightColor;
+    backend::UniformLocation _locSpotLightPosition;
+    backend::UniformLocation _locSpotLightDir;
+    backend::UniformLocation _locSpotLightInnerAngleCos;
+    backend::UniformLocation _locSpotLightOuterAngleCos;
+    backend::UniformLocation _locSpotLightRangeInverse;
+
+    backend::UniformLocation _locAmbientLigthColor;
+
+    bool _rendererDepthTestEnabled;
+    backend::CompareFunction _rendererDepthCmpFunc;
+    backend::CullMode _rendererCullMode;
 };
 
 NS_CC_END

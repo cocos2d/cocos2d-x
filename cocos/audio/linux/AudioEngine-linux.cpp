@@ -97,7 +97,7 @@ bool AudioEngineImpl::init()
     mapSound.clear();
 
     auto scheduler = cocos2d::Director::getInstance()->getScheduler();
-    scheduler->schedule(schedule_selector(AudioEngineImpl::update), this, 0.05f, false);
+    scheduler->schedule(CC_SCHEDULE_SELECTOR(AudioEngineImpl::update), this, 0.05f, false);
 
     g_AudioEngineImpl = this;
 

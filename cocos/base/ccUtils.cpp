@@ -531,20 +531,21 @@ LanguageType getLanguageTypeByISO2(const char* code)
 
 void setBlending(backend::BlendFactor sfactor, backend::BlendFactor dfactor)
 {
-    if (sfactor == backend::BlendFactor::ONE && dfactor == backend::BlendFactor::ZERO)
-    {
-        glDisable(GL_BLEND);
-        RenderState::StateBlock::_defaultState->setBlend(false);
-    }
-    else
-    {
-        glEnable(GL_BLEND);
-        glBlendFunc(toGLBlendFactor(sfactor), toGLBlendFactor(dfactor));
+    //TODO arnold: global state is removal
+    //if (sfactor == backend::BlendFactor::ONE && dfactor == backend::BlendFactor::ZERO)
+    //{
+    //    glDisable(GL_BLEND);
+    //    RenderState::StateBlock::_globalState->setBlend(false);
+    //}
+    //else
+    //{
+    //    glEnable(GL_BLEND);
+    //    glBlendFunc(toGLBlendFactor(sfactor), toGLBlendFactor(dfactor));
 
-        RenderState::StateBlock::_defaultState->setBlend(true);
-        RenderState::StateBlock::_defaultState->setBlendSrc((RenderState::Blend)sfactor);
-        RenderState::StateBlock::_defaultState->setBlendDst((RenderState::Blend)dfactor);
-    }
+    //    RenderState::StateBlock::_globalState->setBlend(true);
+    //    RenderState::StateBlock::_globalState->setBlendSrc(sfactor);
+    //    RenderState::StateBlock::_globalState->setBlendDst(dfactor);
+    //}
 }
     
 backend::BlendFactor toBackendBlendFactor(int factor)
@@ -574,6 +575,10 @@ backend::BlendFactor toBackendBlendFactor(int factor)
             return backend::BlendFactor::SRC_ALPHA_SATURATE;
         case GLBlendConst::BLEND_COLOR:
             return backend::BlendFactor::BLEND_CLOLOR;
+        case GLBlendConst::CONSTANT_ALPHA:
+            return backend::BlendFactor::CONSTANT_ALPHA;
+        case GLBlendConst::ONE_MINUS_CONSTANT_ALPHA:
+            return backend::BlendFactor::ONE_MINUS_CONSTANT_ALPHA;
         default:
             assert(false);
             break;
@@ -638,6 +643,19 @@ const Mat4& getAdjustMatrix()
     };
 
     return adjustMatrix;
+}
+
+std::vector<float> getNormalMat3OfMat4(const Mat4 &mat)
+{
+    std::vector<float> normalMat(9);
+    Mat4 mvInverse = mat;
+    mvInverse.m[12] = mvInverse.m[13] = mvInverse.m[14] = 0.0f;
+    mvInverse.inverse();
+    mvInverse.transpose();
+    normalMat[0] = mvInverse.m[0]; normalMat[1] = mvInverse.m[1]; normalMat[2] = mvInverse.m[2];
+    normalMat[3] = mvInverse.m[4]; normalMat[4] = mvInverse.m[5]; normalMat[5] = mvInverse.m[6];
+    normalMat[6] = mvInverse.m[8]; normalMat[7] = mvInverse.m[9]; normalMat[8] = mvInverse.m[10];
+    return normalMat;
 }
 
 }

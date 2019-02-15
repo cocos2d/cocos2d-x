@@ -34,7 +34,6 @@ static int PALETTE_ROWS = 3;
 MeshSkin::MeshSkin()
 : _rootBone(nullptr)
 , _skeleton(nullptr)
-, _matrixPalette(nullptr)
 {
     
 }
@@ -101,10 +100,7 @@ int MeshSkin::getBoneIndex(Bone3D* bone) const
 //compute matrix palette used by gpu skin
 Vec4* MeshSkin::getMatrixPalette()
 {
-    if (_matrixPalette == nullptr)
-    {
-        _matrixPalette = new (std::nothrow) Vec4[_skinBones.size() * PALETTE_ROWS];
-    }
+    _matrixPalette.resize(_skinBones.size() * PALETTE_ROWS);
     int i = 0, paletteIndex = 0;
     static Mat4 t;
     for (auto it : _skinBones )
@@ -115,7 +111,7 @@ Vec4* MeshSkin::getMatrixPalette()
         _matrixPalette[paletteIndex++].set(t.m[2], t.m[6], t.m[10], t.m[14]);
     }
     
-    return _matrixPalette;
+    return _matrixPalette.data();
 }
 
 ssize_t MeshSkin::getMatrixPaletteSize() const
@@ -123,10 +119,14 @@ ssize_t MeshSkin::getMatrixPaletteSize() const
     return _skinBones.size() * PALETTE_ROWS;
 }
 
+ssize_t MeshSkin::getMatrixPaletteSizeInBytes() const
+{
+    return _skinBones.size() * PALETTE_ROWS * sizeof(_matrixPalette[0]);
+}
+
 void MeshSkin::removeAllBones()
 {
     _skinBones.clear();
-    CC_SAFE_DELETE_ARRAY(_matrixPalette);
     CC_SAFE_RELEASE(_rootBone);
 }
 

@@ -30,6 +30,7 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 
 #include "renderer/CCRenderState.h"
 #include "renderer/CCTechnique.h"
@@ -50,6 +51,7 @@ class Pass;
 class GLProgramState;
 class Node;
 class Properties;
+class RenderState;
 
 namespace backend
 {
@@ -57,7 +59,7 @@ namespace backend
 }
 
 /// Material
-class CC_DLL Material : public RenderState
+class CC_DLL Material :public Ref
 {
     friend class Node;
     friend class Technique;
@@ -65,6 +67,7 @@ class CC_DLL Material : public RenderState
     friend class MeshCommand;
     friend class Renderer;
     friend class Mesh;
+    friend class RenderState;
 
 public:
     /**
@@ -130,6 +133,14 @@ public:
     /** returns a clone (deep-copy) of the material */
     virtual Material* clone() const;
 
+    inline RenderState::StateBlock &getStateBlock() { return _renderState._state; }
+
+    inline void setStateBlock(const RenderState::StateBlock &state) { 
+        _renderState._state = state; 
+    }
+
+    RenderState * getRenderState() { return &_renderState; }
+
 protected:
     Material();
     ~Material();
@@ -143,13 +154,14 @@ protected:
     bool parseTechnique(Properties* properties);
     bool parsePass(Technique* technique, Properties* properties);
     bool parseShader(Pass* pass, Properties* properties);
-    bool parseSampler(GLProgramState* glProgramState, Properties* properties);
-    bool parseUniform(GLProgramState* programState, Properties* properties, const char* uniformName);
-    bool parseRenderState(RenderState* renderState, Properties* properties);
-    
-    
+    bool parseSampler(backend::ProgramState* programState, Properties* properties);
+    bool parseUniform(backend::ProgramState* programState, Properties* properties, const char* uniformName);
+    bool parseRenderState(RenderState::StateBlock *state, Properties* properties);
+
     // material name
     std::string _name;
+
+    RenderState _renderState;
 
     // array of techniques
     Vector<Technique*> _techniques;
@@ -159,6 +171,9 @@ protected:
 
     // weak reference
     Node* _target = nullptr;
+
+    std::unordered_map<std::string, int> _textureSlots;
+    int _textureSlotIndex = 0;
 };
 
 NS_CC_END

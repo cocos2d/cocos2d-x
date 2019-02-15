@@ -94,6 +94,8 @@ extern CC_DLL const char * label_normal_frag;
 extern CC_DLL const char * label_distanceNormal_frag;
 extern CC_DLL const char * labelOutline_frag;
 extern CC_DLL const char * labelDistanceFieldGlow_frag;
+extern CC_DLL const char * lineColor3D_frag;
+extern CC_DLL const char * lineColor3D_vert;
 extern CC_DLL const char * positionColorLengthTexture_vert;
 extern CC_DLL const char * positionColorLengthTexture_frag;
 extern CC_DLL const char * positionColorTextureAsPointsize_vert;

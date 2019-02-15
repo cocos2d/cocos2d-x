@@ -462,23 +462,24 @@ void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
     
     _glProgramState->apply(Mat4::IDENTITY);
     
-    glEnable(GL_DEPTH_TEST);
-    RenderState::StateBlock::_defaultState->setDepthTest(true);
-    
-    glDepthMask(GL_TRUE);
-    RenderState::StateBlock::_defaultState->setDepthWrite(true);
-    
-    glDepthFunc(GL_ALWAYS);
-    RenderState::StateBlock::_defaultState->setDepthFunction(DepthFunction::ALWAYS);
-    
-    glEnable(GL_CULL_FACE);
-    RenderState::StateBlock::_defaultState->setCullFace(true);
-    
-    glCullFace(GL_BACK);
-    RenderState::StateBlock::_defaultState->setCullFaceSide(CullMode::BACK);
-    
-    glDisable(GL_BLEND);
-    RenderState::StateBlock::_defaultState->setBlend(false);
+    //TODO arnold 
+    //glEnable(GL_DEPTH_TEST);
+    //RenderState::StateBlock::_globalState->setDepthTest(true);
+    //
+    //glDepthMask(GL_TRUE);
+    //RenderState::StateBlock::_globalState->setDepthWrite(true);
+    //
+    //glDepthFunc(GL_ALWAYS);
+    //RenderState::StateBlock::_globalState->setDepthFunction(DepthFunction::ALWAYS);
+    //
+    //glEnable(GL_CULL_FACE);
+    //RenderState::StateBlock::_globalState->setCullFace(true);
+    //
+    //glCullFace(GL_BACK);
+    //RenderState::StateBlock::_globalState->setCullFaceSide(CullMode::BACK);
+    //
+    //glDisable(GL_BLEND);
+    //RenderState::StateBlock::_globalState->setBlend(false);
     
     if (Configuration::getInstance()->supportsShareableVAO())
     {

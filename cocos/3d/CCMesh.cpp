@@ -27,6 +27,7 @@
 #include "3d/CCMeshSkin.h"
 #include "3d/CCSkeleton3D.h"
 #include "3d/CCMeshVertexIndexData.h"
+#include "3d/CCVertexAttribBinding.h"
 #include "2d/CCLight.h"
 #include "2d/CCScene.h"
 #include "base/CCEventDispatcher.h"
@@ -38,7 +39,6 @@
 #include "renderer/CCPass.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/backend/Buffer.h"
-#include "renderer/CCVertexAttribBinding.h"
 #include "math/Mat4.h"
 
 using namespace std;
@@ -63,21 +63,6 @@ std::string s_uniformSamplerName[] =
     "",//NTextureData::Usage::Reflection
 };
 
-static const char          *s_dirLightUniformColorName = "u_DirLightSourceColor";
-static const char          *s_dirLightUniformDirName = "u_DirLightSourceDirection";
-
-static const char          *s_pointLightUniformColorName = "u_PointLightSourceColor";
-static const char          *s_pointLightUniformPositionName = "u_PointLightSourcePosition";
-static const char          *s_pointLightUniformRangeInverseName = "u_PointLightSourceRangeInverse";
-
-static const char          *s_spotLightUniformColorName = "u_SpotLightSourceColor";
-static const char          *s_spotLightUniformPositionName = "u_SpotLightSourcePosition";
-static const char          *s_spotLightUniformDirName = "u_SpotLightSourceDirection";
-static const char          *s_spotLightUniformInnerAngleCosName = "u_SpotLightSourceInnerAngleCos";
-static const char          *s_spotLightUniformOuterAngleCosName = "u_SpotLightSourceOuterAngleCos";
-static const char          *s_spotLightUniformRangeInverseName = "u_SpotLightSourceRangeInverse";
-
-static const char          *s_ambientLightUniformColorName = "u_AmbientLightSourceColor";
 
 // helpers
 void Mesh::resetLightUniformValues()
@@ -298,10 +283,8 @@ void Mesh::setTexture(Texture2D* tex, NTextureData::Usage usage, bool cacheFileN
                 // another bug
                 //TODO: pass->setTexture(tex); is not needed, and Pass::setTexture() doesn't need since
                 // texture is set in programstate.
-                pass->setTexture(tex);
-                auto programState = pass->getProgramState();
-                auto location = programState->getUniformLocation("u_texture");
-                programState->setTexture(location, 0, tex->getBackendTexture());
+                // pass->setTexture(tex);
+                pass->setUniformTexture(0, tex->getBackendTexture());
             }
         }
         
@@ -398,16 +381,16 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
 
 
    if (isTransparent && !forceDepthWrite)
-       _material->getStateBlock()->setDepthWrite(false);
+       _material->getStateBlock().setDepthWrite(false);
    else
-        _material->getStateBlock()->setDepthWrite(true);
+        _material->getStateBlock().setDepthWrite(true);
    
     //TODO arnold
     //_meshCommand.setSkipBatching(isTransparent);
     //_meshCommand.setTransparent(isTransparent);
     //_meshCommand.set3D(!_force2DQueue);
 
-    _material->getStateBlock()->setBlend(_force2DQueue || isTransparent);
+    _material->getStateBlock().setBlend(_force2DQueue || isTransparent);
 
     // set default uniforms for Mesh
     // 'u_color' and others
@@ -415,20 +398,16 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
     auto technique = _material->_currentTechnique;
     for(const auto pass : technique->_passes)
     {
-//        auto programState = pass->getGLProgramState();
-//        programState->setUniformVec4("u_color", color);
-        auto programState = pass->getProgramState();
-        auto location = programState->getUniformLocation("u_color");
-        if (-1 != location.location)
-            programState->setUniform(location, &color, sizeof(color));
+        pass->setUniformColor(&color, sizeof(color));
 
-        location = programState->getUniformLocation("u_matrixPalette");
         if (_skin)
-            programState->setUniform(location, _skin->getMatrixPalette(), (GLsizei)_skin->getMatrixPaletteSize() * sizeof(Vec4));
+            pass->setUniformMatrixPalette(_skin->getMatrixPalette(), _skin->getMatrixPaletteSizeInBytes());
 
         //TODO arnold
         if (scene && scene->getLights().size() > 0)
+        {
             setLightUniforms(pass, scene, color, lightMask);
+        }
     }
 
     _material->draw(globalZ,
@@ -524,16 +503,16 @@ void Mesh::bindMeshCommand()
     {
         auto pass = _material->_currentTechnique->_passes.at(0);
 //        auto glprogramstate = pass->getGLProgramState();
-        auto texture = pass->getTexture();
-        auto textureid = texture ? texture->getName() : 0;
+        //auto texture = pass->getTexture();
+       // auto textureid = texture ? texture->getName() : 0;
         // XXX
 //        auto blend = pass->getStateBlock()->getBlendFunc();
         auto blend = BlendFunc::ALPHA_PREMULTIPLIED;
 
 //TODO
 //        _meshCommand.genMaterialID(textureid, glprogramstate, _meshIndexData->getVertexBuffer()->getVBO(), _meshIndexData->getIndexBuffer()->getVBO(), blend);
-        _material->getStateBlock()->setCullFace(true);
-        _material->getStateBlock()->setDepthTest(true);
+        _material->getStateBlock().setCullFace(true);
+        _material->getStateBlock().setDepthTest(true);
     }
 }
 
@@ -542,144 +521,143 @@ void Mesh::setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigne
     CCASSERT(pass, "Invalid Pass");
     CCASSERT(scene, "Invalid scene");
 
-//TODO minggo
-//    const auto& conf = Configuration::getInstance();
-//    int maxDirLight = conf->getMaxSupportDirLightInShader();
-//    int maxPointLight = conf->getMaxSupportPointLightInShader();
-//    int maxSpotLight = conf->getMaxSupportSpotLightInShader();
-//    auto &lights = scene->getLights();
-//
-//    auto glProgramState = pass->getGLProgramState();
-//    auto attributes = pass->getVertexAttributeBinding()->getVertexAttribsFlags();
-//
-//    if (attributes & (1 << GLProgram::VERTEX_ATTRIB_NORMAL))
-//    {
-//        resetLightUniformValues();
-//
-//        GLint enabledDirLightNum = 0;
-//        GLint enabledPointLightNum = 0;
-//        GLint enabledSpotLightNum = 0;
-//        Vec3 ambientColor;
-//        for (const auto& light : lights)
-//        {
-//            bool useLight = light->isEnabled() && ((unsigned int)light->getLightFlag() & lightmask);
-//            if (useLight)
-//            {
-//                float intensity = light->getIntensity();
-//                switch (light->getLightType())
-//                {
-//                    case LightType::DIRECTIONAL:
-//                    {
-//                        if(enabledDirLightNum < maxDirLight)
-//                        {
-//                            auto dirLight = static_cast<DirectionLight *>(light);
-//                            Vec3 dir = dirLight->getDirectionInWorld();
-//                            dir.normalize();
-//                            const Color3B &col = dirLight->getDisplayedColor();
-//                            _dirLightUniformColorValues[enabledDirLightNum].set(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
-//                            _dirLightUniformDirValues[enabledDirLightNum] = dir;
-//                            ++enabledDirLightNum;
-//                        }
-//
-//                    }
-//                        break;
-//                    case LightType::POINT:
-//                    {
-//                        if(enabledPointLightNum < maxPointLight)
-//                        {
-//                            auto pointLight = static_cast<PointLight *>(light);
-//                            Mat4 mat= pointLight->getNodeToWorldTransform();
-//                            const Color3B &col = pointLight->getDisplayedColor();
-//                            _pointLightUniformColorValues[enabledPointLightNum].set(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
-//                            _pointLightUniformPositionValues[enabledPointLightNum].set(mat.m[12], mat.m[13], mat.m[14]);
-//                            _pointLightUniformRangeInverseValues[enabledPointLightNum] = 1.0f / pointLight->getRange();
-//                            ++enabledPointLightNum;
-//                        }
-//                    }
-//                        break;
-//                    case LightType::SPOT:
-//                    {
-//                        if(enabledSpotLightNum < maxSpotLight)
-//                        {
-//                            auto spotLight = static_cast<SpotLight *>(light);
-//                            Vec3 dir = spotLight->getDirectionInWorld();
-//                            dir.normalize();
-//                            Mat4 mat= light->getNodeToWorldTransform();
-//                            const Color3B &col = spotLight->getDisplayedColor();
-//                            _spotLightUniformColorValues[enabledSpotLightNum].set(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
-//                            _spotLightUniformPositionValues[enabledSpotLightNum].set(mat.m[12], mat.m[13], mat.m[14]);
-//                            _spotLightUniformDirValues[enabledSpotLightNum] = dir;
-//                            _spotLightUniformInnerAngleCosValues[enabledSpotLightNum] = spotLight->getCosInnerAngle();
-//                            _spotLightUniformOuterAngleCosValues[enabledSpotLightNum] = spotLight->getCosOuterAngle();
-//                            _spotLightUniformRangeInverseValues[enabledSpotLightNum] = 1.0f / spotLight->getRange();
-//                            ++enabledSpotLightNum;
-//                        }
-//                    }
-//                        break;
-//                    case LightType::AMBIENT:
-//                    {
-//                        auto ambLight = static_cast<AmbientLight *>(light);
-//                        const Color3B &col = ambLight->getDisplayedColor();
-//                        ambientColor.add(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
-//                    }
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//        }
-//
-//        if (0 < maxDirLight)
-//        {
-//            glProgramState->setUniformVec3v(s_dirLightUniformColorName, _dirLightUniformColorValues.size(), &_dirLightUniformColorValues[0]);
-//            glProgramState->setUniformVec3v(s_dirLightUniformDirName, _dirLightUniformDirValues.size(), &_dirLightUniformDirValues[0]);
-//        }
-//
-//        if (0 < maxPointLight)
-//        {
-//            glProgramState->setUniformVec3v(s_pointLightUniformColorName, _pointLightUniformColorValues.size(), &_pointLightUniformColorValues[0]);
-//            glProgramState->setUniformVec3v(s_pointLightUniformPositionName, _pointLightUniformPositionValues.size(), &_pointLightUniformPositionValues[0]);
-//            glProgramState->setUniformFloatv(s_pointLightUniformRangeInverseName, _pointLightUniformRangeInverseValues.size(), &_pointLightUniformRangeInverseValues[0]);
-//        }
-//
-//        if (0 < maxSpotLight)
-//        {
-//            glProgramState->setUniformVec3v(s_spotLightUniformColorName, _spotLightUniformColorValues.size(), &_spotLightUniformColorValues[0]);
-//            glProgramState->setUniformVec3v(s_spotLightUniformPositionName, _spotLightUniformPositionValues.size(), &_spotLightUniformPositionValues[0]);
-//            glProgramState->setUniformVec3v(s_spotLightUniformDirName, _spotLightUniformDirValues.size(), &_spotLightUniformDirValues[0]);
-//            glProgramState->setUniformFloatv(s_spotLightUniformInnerAngleCosName, _spotLightUniformInnerAngleCosValues.size(), &_spotLightUniformInnerAngleCosValues[0]);
-//            glProgramState->setUniformFloatv(s_spotLightUniformOuterAngleCosName, _spotLightUniformOuterAngleCosValues.size(), &_spotLightUniformOuterAngleCosValues[0]);
-//            glProgramState->setUniformFloatv(s_spotLightUniformRangeInverseName, _spotLightUniformRangeInverseValues.size(), &_spotLightUniformRangeInverseValues[0]);
-//        }
-//
-//        glProgramState->setUniformVec3(s_ambientLightUniformColorName, Vec3(ambientColor.x, ambientColor.y, ambientColor.z));
-//    }
-//    else // normal does not exist
-//    {
-//        Vec3 ambient(0.0f, 0.0f, 0.0f);
-//        bool hasAmbient = false;
-//        for (const auto& light : lights)
-//        {
-//            if (light->getLightType() == LightType::AMBIENT)
-//            {
-//                bool useLight = light->isEnabled() && ((unsigned int)light->getLightFlag() & lightmask);
-//                if (useLight)
-//                {
-//                    hasAmbient = true;
-//                    const Color3B &col = light->getDisplayedColor();
-//                    ambient.x += col.r * light->getIntensity();
-//                    ambient.y += col.g * light->getIntensity();
-//                    ambient.z += col.b * light->getIntensity();
-//                }
-//            }
-//        }
-//        if (hasAmbient)
-//        {
-//            ambient.x /= 255.f; ambient.y /= 255.f; ambient.z /= 255.f;
-//            //override the uniform value of u_color using the calculated color
-//            glProgramState->setUniformVec4("u_color", Vec4(color.x * ambient.x, color.y * ambient.y, color.z * ambient.z, color.w));
-//        }
-//    }
+    const auto& conf = Configuration::getInstance();
+    int maxDirLight = conf->getMaxSupportDirLightInShader();
+    int maxPointLight = conf->getMaxSupportPointLightInShader();
+    int maxSpotLight = conf->getMaxSupportSpotLightInShader();
+    auto &lights = scene->getLights();
+
+    auto bindings= pass->getVertexAttributeBinding();
+
+    if (bindings &&  bindings->hasAttribute(shaderinfos::VertexKey::VERTEX_ATTRIB_NORMAL))
+    {
+        resetLightUniformValues();
+
+        GLint enabledDirLightNum = 0;
+        GLint enabledPointLightNum = 0;
+        GLint enabledSpotLightNum = 0;
+        Vec3 ambientColor;
+        for (const auto& light : lights)
+        {
+            bool useLight = light->isEnabled() && ((unsigned int)light->getLightFlag() & lightmask);
+            if (useLight)
+            {
+                float intensity = light->getIntensity();
+                switch (light->getLightType())
+                {
+                    case LightType::DIRECTIONAL:
+                    {
+                        if(enabledDirLightNum < maxDirLight)
+                        {
+                            auto dirLight = static_cast<DirectionLight *>(light);
+                            Vec3 dir = dirLight->getDirectionInWorld();
+                            dir.normalize();
+                            const Color3B &col = dirLight->getDisplayedColor();
+                            _dirLightUniformColorValues[enabledDirLightNum].set(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
+                            _dirLightUniformDirValues[enabledDirLightNum] = dir;
+                            ++enabledDirLightNum;
+                        }
+
+                    }
+                        break;
+                    case LightType::POINT:
+                    {
+                        if(enabledPointLightNum < maxPointLight)
+                        {
+                            auto pointLight = static_cast<PointLight *>(light);
+                            Mat4 mat= pointLight->getNodeToWorldTransform();
+                            const Color3B &col = pointLight->getDisplayedColor();
+                            _pointLightUniformColorValues[enabledPointLightNum].set(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
+                            _pointLightUniformPositionValues[enabledPointLightNum].set(mat.m[12], mat.m[13], mat.m[14]);
+                            _pointLightUniformRangeInverseValues[enabledPointLightNum] = 1.0f / pointLight->getRange();
+                            ++enabledPointLightNum;
+                        }
+                    }
+                        break;
+                    case LightType::SPOT:
+                    {
+                        if(enabledSpotLightNum < maxSpotLight)
+                        {
+                            auto spotLight = static_cast<SpotLight *>(light);
+                            Vec3 dir = spotLight->getDirectionInWorld();
+                            dir.normalize();
+                            Mat4 mat= light->getNodeToWorldTransform();
+                            const Color3B &col = spotLight->getDisplayedColor();
+                            _spotLightUniformColorValues[enabledSpotLightNum].set(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
+                            _spotLightUniformPositionValues[enabledSpotLightNum].set(mat.m[12], mat.m[13], mat.m[14]);
+                            _spotLightUniformDirValues[enabledSpotLightNum] = dir;
+                            _spotLightUniformInnerAngleCosValues[enabledSpotLightNum] = spotLight->getCosInnerAngle();
+                            _spotLightUniformOuterAngleCosValues[enabledSpotLightNum] = spotLight->getCosOuterAngle();
+                            _spotLightUniformRangeInverseValues[enabledSpotLightNum] = 1.0f / spotLight->getRange();
+                            ++enabledSpotLightNum;
+                        }
+                    }
+                        break;
+                    case LightType::AMBIENT:
+                    {
+                        auto ambLight = static_cast<AmbientLight *>(light);
+                        const Color3B &col = ambLight->getDisplayedColor();
+                        ambientColor.add(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
+                    }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        if (0 < maxDirLight)
+        {
+            pass->setUniformDirLightColor(&_dirLightUniformColorValues[0], _dirLightUniformColorValues.size() * sizeof(_dirLightUniformColorValues[0]));
+            pass->setUniformDirLightDir(&_dirLightUniformDirValues[0], _dirLightUniformDirValues.size() * sizeof(_dirLightUniformDirValues[0]));
+        }
+
+        if (0 < maxPointLight)
+        {
+            pass->setUniformPointLightColor(&_pointLightUniformColorValues[0], _pointLightUniformColorValues.size() * sizeof(_pointLightUniformColorValues[0]));
+            pass->setUniformPointLightPosition(&_pointLightUniformPositionValues[0], _pointLightUniformPositionValues.size() * sizeof(_pointLightUniformPositionValues[0]));
+            pass->setUniformPointLightRangeInverse(&_pointLightUniformRangeInverseValues[0], _pointLightUniformRangeInverseValues.size() * sizeof(_pointLightUniformRangeInverseValues[0]));
+        }
+
+        if (0 < maxSpotLight)
+        {
+            pass->setUniformSpotLightColor(&_spotLightUniformColorValues[0], _spotLightUniformColorValues.size() * sizeof(_spotLightUniformColorValues[0]));
+            pass->setUniformSpotLightPosition(&_spotLightUniformPositionValues[0], _spotLightUniformPositionValues.size() * sizeof(_spotLightUniformPositionValues[0]));
+            pass->setUniformSpotLightDir(&_spotLightUniformDirValues[0], _spotLightUniformDirValues.size() * sizeof(_spotLightUniformDirValues[0]));
+            pass->setUniformSpotLightInnerAngleCos(&_spotLightUniformInnerAngleCosValues[0], _spotLightUniformInnerAngleCosValues.size() * sizeof(_spotLightUniformInnerAngleCosValues[0]));
+            pass->setUniformSpotLightOuterAngleCos(&_spotLightUniformOuterAngleCosValues[0], _spotLightUniformOuterAngleCosValues.size() * sizeof(_spotLightUniformOuterAngleCosValues[0]));
+            pass->setUniformSpotLightRangeInverse(&_spotLightUniformRangeInverseValues[0], _spotLightUniformRangeInverseValues.size() * sizeof(_spotLightUniformRangeInverseValues[0]));
+        }
+
+        auto ambientLightColor = Vec3(ambientColor.x, ambientColor.y, ambientColor.z);
+        pass->setUniformAmbientLigthColor(&ambientLightColor, sizeof(ambientLightColor));
+    }
+    else // normal does not exist
+    {
+        Vec3 ambient(0.0f, 0.0f, 0.0f);
+        bool hasAmbient = false;
+        for (const auto& light : lights)
+        {
+            if (light->getLightType() == LightType::AMBIENT)
+            {
+                bool useLight = light->isEnabled() && ((unsigned int)light->getLightFlag() & lightmask);
+                if (useLight)
+                {
+                    hasAmbient = true;
+                    const Color3B &col = light->getDisplayedColor();
+                    ambient.x += col.r * light->getIntensity();
+                    ambient.y += col.g * light->getIntensity();
+                    ambient.z += col.b * light->getIntensity();
+                }
+            }
+        }
+        if (hasAmbient)
+        {
+            ambient.x /= 255.f; ambient.y /= 255.f; ambient.z /= 255.f;
+            //override the uniform value of u_color using the calculated color
+            auto fcolor = Vec4(color.x * ambient.x, color.y * ambient.y, color.z * ambient.z, color.w);
+            pass->setUniformColor(&fcolor, sizeof(fcolor));
+        }
+    }
 }
 
 void Mesh::setBlendFunc(const BlendFunc &blendFunc)
@@ -695,7 +673,7 @@ void Mesh::setBlendFunc(const BlendFunc &blendFunc)
 
     if (_material) {
         //TODO set blend to Pass
-        _material->getStateBlock()->setBlendFunc(blendFunc);
+        _material->getStateBlock().setBlendFunc(blendFunc);
         bindMeshCommand();
     }
 }

@@ -121,6 +121,7 @@ protected:
 
 class GroupCommandManager;
 
+
 /* Class responsible for the rendering in.
 
 Whenever possible prefer to use `TrianglesCommand` objects since the renderer will automatically batch them.

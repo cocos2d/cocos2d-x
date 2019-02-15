@@ -999,7 +999,6 @@ void Sprite::updateTransform(void)
     // recalculate matrix only if it is dirty
     if(isDirty() )
     {
-
         // If it is not visible, or one of its ancestors is not visible, then do nothing:
         if( !_visible || ( _parent && _parent != _batchNode && static_cast<Sprite*>(_parent)->_shouldBeHidden) )
         {
@@ -1077,6 +1076,9 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if (_texture == nullptr || _texture->getBackendTexture() == nullptr)
         return;
+    
+    //TODO: anrold: current camera can be a non-default one.
+    setMVPMatrixUniform();
 
 #if CC_USE_CULLING
     // Don't calculate the culling if the transform was not updated
@@ -1101,7 +1103,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
                                flags);
         renderer->addCommand(&_trianglesCommand);
         
-    #if CC_SPRITE_DEBUG_DRAW
+#if CC_SPRITE_DEBUG_DRAW
             _debugDrawNode->clear();
             auto count = _polyInfo.triangles.indexCount / 3;
             auto indices = _polyInfo.triangles.indices;

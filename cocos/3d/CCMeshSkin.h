@@ -30,7 +30,7 @@
 #include "base/CCRef.h"
 #include "base/CCVector.h"
 #include "math/CCMath.h"
-
+#include <vector>
 
 NS_CC_BEGIN
 
@@ -73,6 +73,9 @@ public:
     
     /**getSkinBoneCount() * 3*/
     ssize_t getMatrixPaletteSize() const;
+
+    /**getSkinBoneCount() * 3 * sizeof(Vec4) */
+    ssize_t getMatrixPaletteSizeInBytes() const;
     
     /**get root bone of the skin*/
     Bone3D* getRootBone() const;
@@ -104,7 +107,7 @@ protected:
     // This array is passed to the vertex shader as a uniform.
     // Each 4x3 row-wise matrix is represented as 3 Vec4's.
     // The number of Vec4's is (_skinBones.size() * 3).
-    Vec4* _matrixPalette;
+    std::vector<Vec4> _matrixPalette;
 };
 
 // end of 3d group

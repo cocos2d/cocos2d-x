@@ -31,6 +31,7 @@ ShaderModuleMTL::ShaderModuleMTL(id<MTLDevice> mtlDevice, ShaderStage stage, con
     
 //    NSLog(@"%s", metalShader);
     
+    parseAttibute(mtlDevice, glslShader);
     parseUniform(mtlDevice, glslShader);
     parseTexture(mtlDevice, glslShader);
     
@@ -66,6 +67,24 @@ ShaderModuleMTL::ShaderModuleMTL(id<MTLDevice> mtlDevice, ShaderStage stage, con
 ShaderModuleMTL::~ShaderModuleMTL()
 {
     [_mtlFunction release];
+}
+
+void ShaderModuleMTL::parseAttibute(id<MTLDevice> mtlDevice, glslopt_shader* shader)
+{
+    const int attributeCount = glslopt_shader_get_input_count(shader);
+    for(int i = 0; i < attributeCount; i++)
+    {
+        const char* parName;
+        glslopt_basic_type parType;
+        glslopt_precision parPrec;
+        int parVecSize, parMatSize, parArrSize, location;
+         glslopt_shader_get_input_desc(shader, i, &parName, &parType, &parPrec, &parVecSize, &parMatSize, &parArrSize, &location);
+        
+        AttributeBindInfo attributeInfo;
+        attributeInfo.attributeName = parName;
+        attributeInfo.location = location;
+        _attributeInfo.push_back(attributeInfo);
+    }
 }
 
 void ShaderModuleMTL::parseUniform(id<MTLDevice> mtlDevice, glslopt_shader* shader)

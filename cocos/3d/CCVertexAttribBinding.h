@@ -20,8 +20,7 @@
  This file was modified to fit the cocos2d-x project
  */
 
-#ifndef CC_VERTEXATTRIBUTEBINDING_H_
-#define CC_VERTEXATTRIBUTEBINDING_H_
+#pragma once
 
 #include <unordered_map>
 
@@ -29,6 +28,7 @@
 #include "renderer/backend/ProgramState.h"
 #include "renderer/backend/Types.h"
 #include "renderer/CCPass.h"
+#include "3d/CC3DProgramInfo.h"
 
 NS_CC_BEGIN
 
@@ -89,6 +89,7 @@ public:
      */
     uint32_t getVertexAttribsFlags() const;
 
+    bool hasAttribute(const shaderinfos::VertexKey &key) const;
 
 private:
     /**
@@ -107,7 +108,7 @@ private:
     VertexAttribBinding& operator=(const VertexAttribBinding&);
     
     bool init(MeshIndexData* meshIndexData, Pass *pass);
-    void setVertexAttribPointer(const std::string& name, backend::VertexFormat type, GLboolean normalized, int offset);
+    void setVertexAttribPointer(const std::string& name, backend::VertexFormat type, GLboolean normalized, int offset, int flag);
     backend::AttributeBindInfo* getVertexAttribValue(const std::string &name);
     void parseAttributes();
     //void enableVertexAttributes(uint32_t flags) const;
@@ -126,4 +127,3 @@ private:
 
 NS_CC_END
 
-#endif // CC_VERTEXATTRIBUTEBINDING_H_

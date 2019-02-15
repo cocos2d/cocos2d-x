@@ -150,7 +150,6 @@ ProgramState *ProgramState::clone() const
     cp->_fragmentUniformInfos = _fragmentUniformInfos;
     cp->_vertexTextureInfos = _vertexTextureInfos;
     cp->_fragmentTextureInfos = _fragmentTextureInfos;
-
     CC_SAFE_RETAIN(cp->_program);
 
     return cp;

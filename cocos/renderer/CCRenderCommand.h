@@ -123,7 +123,7 @@ protected:
     
     /** Depth from the model view matrix.*/
     float _depth = 0.f;
-    
+
     PipelineDescriptor _pipelineDescriptor;
 };
 

@@ -516,7 +516,7 @@ protected:
     GLint _lightMapLocation;
     GLint _detailMapSizeLocation[4];
     GLint _lightDirLocation;
-    RenderState::StateBlock* _stateBlock;
+    RenderState::StateBlock _stateBlock;
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _backToForegroundListener;

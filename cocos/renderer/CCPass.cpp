@@ -32,17 +32,35 @@
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCTechnique.h"
 #include "renderer/CCMaterial.h"
-#include "renderer/CCVertexAttribBinding.h"
 #include "renderer/backend/ProgramState.h"
 #include "3d/CCMeshVertexIndexData.h"
+#include "3d/CCVertexAttribBinding.h"
 #include "base/CCDirector.h"
 #include "renderer/CCRenderer.h"
 
 #include "base/ccTypes.h"
+#include "base/ccUtils.h"
 #include "2d/CCNode.h"
 
 NS_CC_BEGIN
 
+//uniform names
+
+static const char          *s_dirLightUniformColorName = "u_DirLightSourceColor";
+static const char          *s_dirLightUniformDirName = "u_DirLightSourceDirection";
+
+static const char          *s_pointLightUniformColorName = "u_PointLightSourceColor";
+static const char          *s_pointLightUniformPositionName = "u_PointLightSourcePosition";
+static const char          *s_pointLightUniformRangeInverseName = "u_PointLightSourceRangeInverse";
+
+static const char          *s_spotLightUniformColorName = "u_SpotLightSourceColor";
+static const char          *s_spotLightUniformPositionName = "u_SpotLightSourcePosition";
+static const char          *s_spotLightUniformDirName = "u_SpotLightSourceDirection";
+static const char          *s_spotLightUniformInnerAngleCosName = "u_SpotLightSourceInnerAngleCos";
+static const char          *s_spotLightUniformOuterAngleCosName = "u_SpotLightSourceOuterAngleCos";
+static const char          *s_spotLightUniformRangeInverseName = "u_SpotLightSourceRangeInverse";
+
+static const char          *s_ambientLightUniformColorName = "u_AmbientLightSourceColor";
 
 Pass* Pass::create(Technique* technique)
 {
@@ -70,13 +88,13 @@ Pass* Pass::createWithProgramState(Technique* technique, backend::ProgramState* 
 
 bool Pass::init(Technique* technique)
 {
-    _parent = technique;
+    _technique = technique;
     return true;
 }
 
 bool Pass::initWithProgramState(Technique* technique, backend::ProgramState *programState)
 {
-    _parent = technique;
+    _technique = technique;
     setProgramState(programState);
     return true;
 }
@@ -90,6 +108,10 @@ Pass::Pass()
     //vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
     //vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, 6 * sizeof(float), false);
     //vertexLayout.setLayout(8 * sizeof(float), backend::VertexStepMode::VERTEX);
+
+    _beforeVisitCmd.func = CC_CALLBACK_0(Pass::onBeforeVisitCmd, this);
+    _afterVisitCmd.func = CC_CALLBACK_0(Pass::onAfterVisitCmd, this);
+
 }
 
 Pass::~Pass()
@@ -103,15 +125,15 @@ Pass* Pass::clone() const
     auto pass = new (std::nothrow) Pass();
     if (pass)
     {
-        RenderState::cloneInto(pass);
+        //RenderState::cloneInto(pass);
+        pass->_renderState = _renderState;
 
         pass->setProgramState(_programState->clone());
         
-        //
         pass->_vertexAttribBinding = _vertexAttribBinding;
         CC_SAFE_RETAIN(pass->_vertexAttribBinding);
 
-        pass->setParent(_parent);
+        pass->setTechnique(_technique);
 
         pass->autorelease();
     }
@@ -130,29 +152,59 @@ void Pass::setProgramState(backend::ProgramState* programState)
         CC_SAFE_RELEASE(_programState);
         _programState = programState;
         CC_SAFE_RETAIN(_programState);
-
         _customCommand.getPipelineDescriptor().programState = _programState;
-
+        initUniformLocations();
         _hashDirty = true;
     }
 }
 
-uint32_t Pass::getHash() const
+void Pass::initUniformLocations()
 {
-    if (_hashDirty || _state->isDirty())
-    {
-        //FIXME: loose information?
-        uint32_t program = (uint32_t)(intptr_t)(_programState->getProgram());
-        uint32_t textureid = _texture ? _texture->getName() : -1;
-        uint32_t stateblockid = _state->getHash();
+    auto *ps = _programState;
 
-        _hash = program ^ textureid ^ stateblockid;
+    _locMVPMatrix = ps->getUniformLocation("u_MVPMatrix");
+    _locMVMatrix = ps->getUniformLocation("u_MVMatrix");
+    _locPMatrix = ps->getUniformLocation("u_PMatrix");
+    _locNormalMatrix = ps->getUniformLocation("u_NormalMatrix");
 
-        _hashDirty = false;
-    }
+    _locTexture = ps->getUniformLocation("u_texture");
+    
+    _locColor = ps->getUniformLocation("u_color");
+    _locMatrixPalette = ps->getUniformLocation("u_matrixPalette");
 
-    return _hash;
+    _locDirLightColor = ps->getUniformLocation(s_dirLightUniformColorName);
+    _locDirLightDir = ps->getUniformLocation(s_dirLightUniformDirName);
+
+    _locPointLightColor = ps->getUniformLocation(s_pointLightUniformColorName);
+    _locPointLightPosition = ps->getUniformLocation(s_pointLightUniformPositionName);
+    _locPointLightRangeInverse = ps->getUniformLocation(s_pointLightUniformRangeInverseName);
+
+    _locSpotLightColor = ps->getUniformLocation(s_spotLightUniformColorName);
+    _locSpotLightPosition = ps->getUniformLocation(s_spotLightUniformPositionName);
+    _locSpotLightDir = ps->getUniformLocation(s_spotLightUniformDirName);
+    _locSpotLightInnerAngleCos = ps->getUniformLocation(s_spotLightUniformInnerAngleCosName);
+    _locSpotLightOuterAngleCos = ps->getUniformLocation(s_spotLightUniformOuterAngleCosName);
+    _locSpotLightRangeInverse = ps->getUniformLocation(s_spotLightUniformRangeInverseName);
+
+    _locAmbientLigthColor = ps->getUniformLocation(s_ambientLightUniformColorName);
 }
+
+//uint32_t Pass::getHash() const
+//{
+//    if (_hashDirty || _state->isDirty())
+//    {
+//        //FIXME: loose information?
+//        uint32_t program = (uint32_t)(intptr_t)(_programState->getProgram());
+//        uint32_t textureid = _texture ? _texture->getName() : -1;
+//        uint32_t stateblockid = _state->getHash();
+//
+//        _hash = program ^ textureid ^ stateblockid;
+//
+//        _hashDirty = false;
+//    }
+//
+//    return _hash;
+//}
 
 //void Pass::bind(const Mat4& modelView)
 //{
@@ -184,25 +236,73 @@ void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buff
     _customCommand.setVertexBuffer(vertexBuffer);
     _customCommand.setIndexDrawInfo(0, indexCount);
 
-    const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    Mat4 finalMat = projectionMat * modelView;
-    auto location = _programState->getUniformLocation("u_MVPMatrix");
-    _programState->setUniform(location, finalMat.m, sizeof(finalMat.m));
+    auto &matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    auto mvp = matrixP * modelView;
+    _programState->setUniform(_locMVPMatrix, mvp.m, sizeof(mvp.m));
+    if (_locMVMatrix) 
+    {
+        _programState->setUniform(_locMVMatrix, modelView.m, sizeof(modelView.m));
+    }
+    
+    if (_locPMatrix)
+    {
+        _programState->setUniform(_locPMatrix, matrixP.m, sizeof(matrixP.m));
+    }
 
-    _customCommand.getPipelineDescriptor().programState = _programState;
+    if (_locNormalMatrix)
+    {
+        auto normalMatrix = utils::getNormalMat3OfMat4(modelView);
+        _programState->setUniform(_locNormalMatrix, normalMatrix.data(), sizeof(normalMatrix[0]) * normalMatrix.size());
+    }
 
-    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+    auto *renderer = Director::getInstance()->getRenderer();
 
-    RenderState::bind(this);
+    _beforeVisitCmd.init(globalZOrder);
+    _afterVisitCmd.init(globalZOrder);
+
+    renderer->addCommand(&_beforeVisitCmd);
+    renderer->addCommand(&_customCommand);
+    renderer->addCommand(&_afterVisitCmd);
 }
+
+void Pass::onBeforeVisitCmd()
+{
+    auto *renderer = Director::getInstance()->getRenderer();
+    //_oldDepthEnabledState = renderer->getDepthTest();
+
+    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+
+    _rendererDepthTestEnabled = renderer->getDepthTest();
+    _rendererDepthCmpFunc = renderer->getDepthCompareFunction();
+    _rendererCullMode = renderer->getCullMode();
+    
+    _renderState.bindPass(this);
+    renderer->setDepthTest(true);
+}
+
+void Pass::onAfterVisitCmd()
+{
+    auto *renderer = Director::getInstance()->getRenderer();
+    _renderState.unbindPass(this);
+    renderer->setDepthTest(_rendererDepthTestEnabled);
+    renderer->setDepthCompareFunction(_rendererDepthCmpFunc);
+    renderer->setCullMode(_rendererCullMode);
+}
+
 
 Node* Pass::getTarget() const
 {
-    CCASSERT(_parent && _parent->_parent, "Pass must have a Technique and Material");
+    CCASSERT(_technique && _technique->_material, "Pass must have a Technique and Material");
 
-    Material *material = static_cast<Material*>(_parent->_parent);
+    Material *material = _technique->_material;
     return material->_target;
 }
+
+void Pass::setTechnique(Technique *technique)
+{
+    _technique = technique; //weak reference
+}
+
 
 //void Pass::unbind()
 //{
@@ -225,6 +325,93 @@ VertexAttribBinding* Pass::getVertexAttributeBinding() const
 {
     return _vertexAttribBinding;
 }
+
+void Pass::setUniformTexture(uint32_t slot, backend::Texture *tex)
+{
+    _programState->setTexture(_locTexture, slot, tex);
+}
+
+#define TRY_SET_UNIFORM(loc) \
+    if(loc) { \
+        _programState->setUniform(loc, data, (uint32_t)dataLen) ; \
+    } \
+    else \
+    { \
+     CCLOG("warning: failed to set uniform in %s", __FUNCTION__); \
+    }
+
+
+void Pass::setUniformColor(const void *data, size_t dataLen)
+{
+    TRY_SET_UNIFORM(_locColor);
+}
+
+void Pass::setUniformMatrixPalette(const void *data, size_t dataLen)
+{
+    TRY_SET_UNIFORM(_locMatrixPalette);
+}
+
+
+void Pass::setUniformDirLightColor(const void *data, size_t dataLen)
+{
+    TRY_SET_UNIFORM(_locDirLightColor);
+}
+
+void Pass::setUniformDirLightDir(const void *data, size_t dataLen)
+{
+    TRY_SET_UNIFORM(_locDirLightDir);
+}
+
+void Pass::setUniformPointLightColor(const void *data, size_t dataLen)
+{
+    TRY_SET_UNIFORM(_locPointLightColor);
+}
+
+void Pass::setUniformPointLightPosition(const void *data, size_t dataLen)
+{
+    TRY_SET_UNIFORM(_locPointLightPosition);
+}
+
+void Pass::setUniformPointLightRangeInverse(const void *data, size_t dataLen)
+{
+    TRY_SET_UNIFORM(_locPointLightRangeInverse);
+}
+
+void Pass::setUniformSpotLightColor(const void *data, size_t dataLen)
+{
+    TRY_SET_UNIFORM(_locSpotLightColor);
+}
+
+void Pass::setUniformSpotLightPosition(const void *data, size_t dataLen)
+{
+    TRY_SET_UNIFORM(_locSpotLightPosition);
+}
+
+void Pass::setUniformSpotLightDir(const void *data, size_t dataLen)
+{
+    TRY_SET_UNIFORM(_locSpotLightDir);
+}
+
+void Pass::setUniformSpotLightInnerAngleCos(const void *data, size_t dataLen)
+{
+    TRY_SET_UNIFORM(_locSpotLightInnerAngleCos);
+}
+
+void Pass::setUniformSpotLightOuterAngleCos(const void *data, size_t dataLen)
+{
+    TRY_SET_UNIFORM(_locSpotLightOuterAngleCos);
+}
+
+void Pass::setUniformSpotLightRangeInverse(const void *data, size_t dataLen)
+{
+    TRY_SET_UNIFORM(_locSpotLightRangeInverse);
+}
+
+void Pass::setUniformAmbientLigthColor(const void *data, size_t dataLen)
+{
+    TRY_SET_UNIFORM(_locAmbientLigthColor);
+}
+
 
 
 NS_CC_END

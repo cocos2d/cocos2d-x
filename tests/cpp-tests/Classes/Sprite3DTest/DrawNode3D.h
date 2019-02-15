@@ -77,7 +77,7 @@ public:
     */
     void setBlendFunc(const BlendFunc &blendFunc);
 
-    void onDraw(const cocos2d::Mat4& transform, uint32_t flags);
+    void updateCommand(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t flags);
     
     // Overrides
     virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
@@ -88,6 +88,10 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
 protected:
+
+    void onBeforeDraw();
+    void onAfterDraw();
+
     struct V3F_C4B
     {
         cocos2d::Vec3     vertices;
@@ -95,20 +99,22 @@ protected:
     };
     void ensureCapacity(int count);
 
-    GLuint      _vao;
-    GLuint      _vbo;
-
-    int         _bufferCapacity;
-    GLsizei     _bufferCount;
-    V3F_C4B*    _buffer;
 
     BlendFunc   _blendFunc;
     cocos2d::CustomCommand _customCommand;
-
-    bool        _dirty;
+    cocos2d::CallbackCommand _beforeCommand;
+    cocos2d::CallbackCommand _afterCommand;
+    backend::ProgramState* _programStateLine = nullptr;
+    backend::DepthStencilDescriptor *_depthstencilDescriptor = nullptr;
+    backend::UniformLocation _locMVPMatrix;
+    std::vector<V3F_C4B> _bufferLines;
+    
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode3D);
+
+    bool _isDirty = true;
+    bool _rendererDepthTestEnabled;
 };
 
 NS_CC_END

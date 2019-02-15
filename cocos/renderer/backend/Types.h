@@ -172,7 +172,9 @@ enum class BlendFactor : uint32_t
     ONE_MINUS_DST_COLOR,
     DST_ALPHA,
     ONE_MINUS_DST_ALPHA,
+    CONSTANT_ALPHA,
     SRC_ALPHA_SATURATE,
+    ONE_MINUS_CONSTANT_ALPHA,
     BLEND_CLOLOR
 };
 
@@ -231,6 +233,8 @@ struct UniformLocation
 {
     int location = -1;
     ShaderStage shaderStage = ShaderStage::VERTEX;
+
+    operator bool() { return location >= 0; }
 };
 
 struct AttributeBindInfo
