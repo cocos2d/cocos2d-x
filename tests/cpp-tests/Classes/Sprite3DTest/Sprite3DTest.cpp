@@ -377,9 +377,11 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
         _state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getProgramState();
         _plane->setMaterial(mat);
         backend::UniformLocation loc = _state->getUniformLocation("u_model_matrix");
-        _state->setUniform(loc, _plane->getNodeToWorldTransform());
+        auto trans = _plane->getNodeToWorldTransform();
+        _state->setUniform(loc, &trans, sizeof(trans));
         loc = _state->getUniformLocation("u_target_pos");
-        _state->setUniform(loc, _orc->getPosition3D());
+        auto pos = _orc->getPosition3D();
+        _state->setUniform(loc, &pos, sizeof(pos));
     }
     );
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
