@@ -27,7 +27,6 @@
 
 #include "math/Vec3.h"
 #include "math/Vec4.h"
-#include <vector>
 
 #ifdef __SSE__
 #include <xmmintrin.h>

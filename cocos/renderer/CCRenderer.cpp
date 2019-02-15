@@ -64,7 +64,6 @@ static bool compare3DCommand(RenderCommand* a, RenderCommand* b)
 // queue
 RenderQueue::RenderQueue()
 {
-    _commands.resize(QUEUE_COUNT);
 }
 
 void RenderQueue::push_back(RenderCommand* command)
@@ -101,7 +100,7 @@ void RenderQueue::push_back(RenderCommand* command)
 ssize_t RenderQueue::size() const
 {
     ssize_t result(0);
-    for(int index = 0; index < _commands.size(); ++index)
+    for(int index = 0; index < QUEUE_GROUP::QUEUE_COUNT; ++index)
     {
         result += _commands[index].size();
     }
@@ -119,7 +118,7 @@ void RenderQueue::sort()
 
 RenderCommand* RenderQueue::operator[](ssize_t index) const
 {
-    for(int queIndex = 0; queIndex < _commands.size(); ++queIndex)
+    for(int queIndex = 0; queIndex < QUEUE_GROUP::QUEUE_COUNT; ++queIndex)
     {
         if(index < static_cast<ssize_t>(_commands[queIndex].size()))
             return _commands[queIndex][index];
@@ -135,7 +134,7 @@ RenderCommand* RenderQueue::operator[](ssize_t index) const
 
 void RenderQueue::clear()
 {
-    for(int i = 0; i < _commands.size(); ++i)
+    for(int i = 0; i < QUEUE_GROUP::QUEUE_COUNT; ++i)
     {
         _commands[i].clear();
     }
@@ -143,7 +142,7 @@ void RenderQueue::clear()
 
 void RenderQueue::realloc(size_t reserveSize)
 {
-    for(int i = 0; i < _commands.size(); ++i)
+    for(int i = 0; i < QUEUE_GROUP::QUEUE_COUNT; ++i)
     {
         _commands[i] = std::vector<RenderCommand*>();
         _commands[i].reserve(reserveSize);

@@ -312,8 +312,8 @@ void Sprite3DUVAnimationTest::cylinderUpdate(float dt)
     //pass the result to shader
     auto offsetLoc = _state->getUniformLocation("offset");
     auto durationLoc = _state->getUniformLocation("duration");
-    _state->setUniform(offsetLoc, _cylinder_texture_offset);
-    _state->setUniform(durationLoc, _shining_duration);
+    _state->setUniform(offsetLoc, &_cylinder_texture_offset, sizeof(_cylinder_texture_offset));
+    _state->setUniform(durationLoc, &_shining_duration, sizeof(_shining_duration));
 }
 
 //------------------------------------------------------------------
@@ -351,7 +351,7 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
 
     auto location = _state->getUniformLocation("u_model_matrix");
     auto transform = _plane->getNodeToWorldTransform();
-    _state->setUniform(location, transform.m);
+    _state->setUniform(location, transform.m, sizeof(transform.m));
 
     layer->addChild(_plane);
 
@@ -362,7 +362,7 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
     _orc->setPosition3D(Vec3(0, 0, 10));
     _targetPos = _orc->getPosition3D();
     location = _state->getUniformLocation("u_target_pos");
-    _state->setUniform(location, _orc->getPosition3D());
+    _state->setUniform(location, &_targetPos, sizeof(_targetPos));
     layer->addChild(_orc);
     layer->addChild(_camera);
     layer->setCameraMask(2);
@@ -468,7 +468,8 @@ void Sprite3DFakeShadowTest::move3D(float elapsedTime)
     offset.z = offset.z;
     //pass the newest orc position
     auto location = _state->getUniformLocation("u_target_pos");
-    _state->setUniform(location, _orc->getPosition3D());
+    auto position = _orc->getPosition3D();
+    _state->setUniform(location, &position, sizeof(position));
 }
 
 void Sprite3DFakeShadowTest::updateState(float elapsedTime)

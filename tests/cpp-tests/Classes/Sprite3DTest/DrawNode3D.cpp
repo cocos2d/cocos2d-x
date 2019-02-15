@@ -130,7 +130,7 @@ void DrawNode3D::updateCommand(cocos2d::Renderer* renderer,const Mat4 &transform
     auto &matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     auto mvp = matrixP * transform;
 
-    _programStateLine->setUniform(_locMVPMatrix, mvp.m);
+    _programStateLine->setUniform(_locMVPMatrix, mvp.m, sizeof(mvp.m));
 
     //TODO arnold: _customcommand should support enable depth !!!
     // glEnable(GL_DEPTH_TEST);

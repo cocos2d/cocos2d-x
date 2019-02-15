@@ -7,7 +7,6 @@
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
 #include "renderer/backend/Types.h"
-#include "math/Mat4.h"
 
 CC_BACKEND_BEGIN
 
@@ -64,12 +63,6 @@ public:
     inline const std::vector<UniformBuffer>& getVertexUniformInfos() const { return _vertexUniformInfos; }
     inline std::vector<UniformBuffer>& getVertexUniformInfos() { return _vertexUniformInfos; }
     inline const std::vector<UniformBuffer>& getFragmentUniformInfos() const { return _fragmentUniformInfos; }
-    
-    template<typename T>
-    void setUniform(const backend::UniformLocation& uniformLocation, const T& data)
-    {
-        setUniform(uniformLocation,(const void *) &data, (uint32_t)sizeof(T));
-    }
 
     //set textures
     void setTexture(const backend::UniformLocation& uniformLocation, uint32_t slot, backend::Texture* texture);

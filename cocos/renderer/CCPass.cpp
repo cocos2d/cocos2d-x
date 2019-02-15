@@ -238,15 +238,15 @@ void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buff
 
     auto &matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     auto mvp = matrixP * modelView;
-    _programState->setUniform(_locMVPMatrix, mvp.m);
+    _programState->setUniform(_locMVPMatrix, mvp.m, sizeof(mvp.m));
     if (_locMVMatrix) 
     {
-        _programState->setUniform(_locMVMatrix, modelView.m);
+        _programState->setUniform(_locMVMatrix, modelView.m, sizeof(modelView.m));
     }
     
     if (_locPMatrix)
     {
-        _programState->setUniform(_locPMatrix, matrixP.m);
+        _programState->setUniform(_locPMatrix, matrixP.m, sizeof(matrixP.m));
     }
 
     if (_locNormalMatrix)
