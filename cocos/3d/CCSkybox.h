@@ -29,10 +29,7 @@
 #include "base/ccTypes.h"
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCCustomCommand.h"
-#include "renderer/CCGroupCommand.h"
-#include "renderer/CCCallbackCommand.h"
 #include "2d/CCNode.h"
-#include "renderer/backend/ProgramState.h"
 
 NS_CC_BEGIN
 
@@ -102,26 +99,18 @@ protected:
     * init internal buffers for Skybox.
     */
     void initBuffers();
-    
-    backend::ProgramState *_programState = nullptr;
+
+    void onDraw(const Mat4& transform, uint32_t flags);
+
+    GLuint      _vao;
+    GLuint      _vertexBuffer;
+    GLuint      _indexBuffer;
+
     CustomCommand _customCommand;
-    CallbackCommand _beforeCommand;
-    CallbackCommand _afterCommand;
 
     TextureCube*  _texture;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Skybox);
-
-    backend::UniformLocation _uniformColorLoc;
-    backend::UniformLocation _uniformCameraRotLoc;
-    backend::UniformLocation _uniformEnvLoc;
-
-    void onBeforeDraw();
-    void onAfterDraw();
-
-    bool _rendererDepthTestEnabled;
-    backend::CompareFunction _rendererDepthCmpFunc;
-    CullMode _rendererCullMode;
 };
 
 // end of 3d group

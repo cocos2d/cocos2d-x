@@ -1,9 +1,6 @@
-#include "renderer/CCTexture2D.h"
 #include "TextureGL.h"
 #include "base/ccMacros.h"
 #include "platform/CCPlatformConfig.h"
-#include "platform/CCFileUtils.h"
-#include "platform/CCImage.h"
 
 CC_BACKEND_BEGIN
 
@@ -50,8 +47,6 @@ namespace
                             return GL_LINEAR_MIPMAP_LINEAR;
                         case SamplerFilter::NEAREST:
                             return GL_LINEAR_MIPMAP_NEAREST;
-                        case SamplerFilter::DONT_CARE:
-                            return GL_LINEAR_MIPMAP_LINEAR;
                     }
                 case SamplerFilter::NEAREST:
                     switch (mipmapFilter)
@@ -60,11 +55,7 @@ namespace
                             return GL_NEAREST_MIPMAP_LINEAR;
                         case SamplerFilter::NEAREST:
                             return GL_NEAREST_MIPMAP_NEAREST;
-                        case SamplerFilter::DONT_CARE:
-                            return GL_NEAREST_MIPMAP_LINEAR;
                     }
-                case SamplerFilter::DONT_CARE:
-                    return GL_NEAREST_MIPMAP_LINEAR;
             }
         }
         else
@@ -74,8 +65,6 @@ namespace
             else
                 return GL_NEAREST;
         }
-        
-        CCASSERT(false, "invalidate SamplerFilter");
     }
     
     GLint toGLAddressMode(SamplerAddressMode addressMode, bool isPow2)
@@ -103,14 +92,10 @@ namespace
         }
         return ret;
     }
-
 }
 
-Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : TextureGL(descriptor)
+TextureGL::TextureGL(const TextureDescriptor& descriptor) : Texture(descriptor)
 {
-
-    CCASSERT(descriptor.textureType == TextureType::TEXTURE_2D, "invalidate texture type");
-
     glGenTextures(1, &_texture);
     toGLTypes();
     bool isPow2 = ISPOW2(_width) && ISPOW2(_height);
@@ -128,13 +113,13 @@ Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : TextureGL(descri
     free(data);
 }
 
-Texture2DGL::~Texture2DGL()
+TextureGL::~TextureGL()
 {
     if (_texture)
         glDeleteTextures(1, &_texture);
 }
 
-void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
+void TextureGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
     bool isPow2 = ISPOW2(_width) && ISPOW2(_height);
     bool needGenerateMipmap = !_isMipmapEnabled && sampler.mipmapEnabled;
     _isMipmapEnabled = sampler.mipmapEnabled;
@@ -166,13 +151,10 @@ void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _tAddressModeGL);
     }
 
-
     if (needGenerateMipmap) generateMipmpas();
-
-    CHECK_GL_ERROR_DEBUG();
 }
 
-void Texture2DGL::updateData(uint8_t* data)
+void TextureGL::updateData(uint8_t* data)
 {
     // TODO: support texture cube, and compressed data.
     
@@ -234,7 +216,7 @@ void Texture2DGL::updateData(uint8_t* data)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void Texture2DGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data)
+void TextureGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data)
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture);
@@ -253,20 +235,20 @@ void Texture2DGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsi
     CHECK_GL_ERROR_DEBUG();
 }
 
-void Texture2DGL::apply(int index) const
+void TextureGL::apply(int index) const
 {
     glActiveTexture(GL_TEXTURE0 + index);
     glBindTexture(GL_TEXTURE_2D, _texture);
 }
 
-void Texture2DGL::generateMipmpas() const
+void TextureGL::generateMipmpas() const
 {
     if (_isMipmapEnabled &&
         TextureUsage::RENDER_TARGET != _textureUsage)
         glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-void Texture2DGL::toGLTypes()
+void TextureGL::toGLTypes()
 {
     switch (_textureFormat)
     {
@@ -417,86 +399,5 @@ void Texture2DGL::toGLTypes()
             break;
     }
 }
-
-
-
-TextureCubeMapGL::TextureCubeMapGL(const TextureDescriptor& descriptor) : backend::TextureGL(descriptor)
-{
-    glGenTextures(1, &_texture);
-}
-
-TextureCubeMapGL::~TextureCubeMapGL()
-{
-
-}
-void TextureCubeMapGL::apply(int index) const
-{
-    CHECK_GL_ERROR_DEBUG();
-    glActiveTexture(GL_TEXTURE0 + index);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, _texture);
-    CHECK_GL_ERROR_DEBUG();
-}
-
-bool TextureCubeMapGL::updateImageData(int side, Texture2D::PixelFormat format, int width, int height, unsigned char *data)
-{
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, _texture);
-    CHECK_GL_ERROR_DEBUG();
-
-    if (format == Texture2D::PixelFormat::RGBA8888 || format == Texture2D::PixelFormat::DEFAULT)
-    {
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + side,
-            0,                  // level
-            GL_RGBA,            // internal format
-            width,              // width
-            height,             // height
-            0,                  // border
-            GL_RGBA,            // format
-            GL_UNSIGNED_BYTE,   // type
-            data);             // pixel data
-        CHECK_GL_ERROR_DEBUG();
-    }
-    else if (format == Texture2D::PixelFormat::RGB888)
-    {
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + side,
-            0,                  // level
-            GL_RGB,             // internal format
-            width,    // width
-            height,   // height
-            0,                  // border
-            GL_RGB,             // format
-            GL_UNSIGNED_BYTE,   // type
-            data);             // pixel data
-        CHECK_GL_ERROR_DEBUG();
-    }
-    else
-    {
-        CCASSERT(false, "invalidate texture format for TextureCubeMapGL");
-        return false;
-    }
-    
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-
-    return true;
-}
-
-void TextureCubeMapGL::setTexParams(const Texture2D::TexParams &texParams)
-{
-    glActiveTexture(GL_TEXTURE0);
-
-    glBindTexture(GL_TEXTURE_CUBE_MAP, _texture);
-    CHECK_GL_ERROR_DEBUG();
-
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, texParams.minFilter);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, texParams.magFilter);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, texParams.wrapS);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, texParams.wrapT);
-    CHECK_GL_ERROR_DEBUG();
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-}
-
 
 CC_BACKEND_END

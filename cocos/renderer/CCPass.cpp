@@ -39,6 +39,7 @@
 #include "renderer/CCRenderer.h"
 
 #include "base/ccTypes.h"
+#include "base/ccUtils.h"
 #include "2d/CCNode.h"
 
 NS_CC_BEGIN
@@ -250,7 +251,7 @@ void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buff
 
     if (_locNormalMatrix)
     {
-        auto normalMatrix = modelView.getNormalMatrix();
+        auto normalMatrix = utils::getNormalMat3OfMat4(modelView);
         _programState->setUniform(_locNormalMatrix, normalMatrix.data(), sizeof(normalMatrix[0]) * normalMatrix.size());
     }
 

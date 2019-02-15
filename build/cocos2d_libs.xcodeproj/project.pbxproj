@@ -2140,12 +2140,6 @@
 		ED75D42021E3030E0052B87E /* ccConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = ED75D41F21E3030E0052B87E /* ccConstants.h */; };
 		ED75D42121E303160052B87E /* ccConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = ED75D41F21E3030E0052B87E /* ccConstants.h */; };
 		ED75D42221E303160052B87E /* ccConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = ED75D41F21E3030E0052B87E /* ccConstants.h */; };
-		ED91889A2214154400B52056 /* TextureCubeMTL.mm in Sources */ = {isa = PBXBuildFile; fileRef = ED9188982214154300B52056 /* TextureCubeMTL.mm */; };
-		ED91889B2214154400B52056 /* TextureCubeMTL.h in Headers */ = {isa = PBXBuildFile; fileRef = ED9188992214154300B52056 /* TextureCubeMTL.h */; };
-		ED91889C2214167100B52056 /* CCSkybox.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A6021F6B02300D5AFCD /* CCSkybox.h */; };
-		ED91889D2214167200B52056 /* CCSkybox.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A6021F6B02300D5AFCD /* CCSkybox.h */; };
-		ED91889E2214167800B52056 /* CCSkybox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A6E21F6B02400D5AFCD /* CCSkybox.cpp */; };
-		ED91889F2214167900B52056 /* CCSkybox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A6E21F6B02400D5AFCD /* CCSkybox.cpp */; };
 		ED9188A62215619800B52056 /* CCVertexAttribBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9188A42215619700B52056 /* CCVertexAttribBinding.cpp */; };
 		ED9188A72215619800B52056 /* CCVertexAttribBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9188A42215619700B52056 /* CCVertexAttribBinding.cpp */; };
 		ED9188A82215619800B52056 /* CCVertexAttribBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9188A42215619700B52056 /* CCVertexAttribBinding.cpp */; };
@@ -3455,8 +3449,6 @@
 		ED682BC2213F6C7A001BF6CB /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../external/websockets/prebuilt/tvos/libwebsockets.a; sourceTree = "<group>"; };
 		ED682BC4213F6CBE001BF6CB /* libuv_a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv_a.a; path = ../external/uv/prebuilt/tvos/libuv_a.a; sourceTree = "<group>"; };
 		ED75D41F21E3030E0052B87E /* ccConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ccConstants.h; path = ../base/ccConstants.h; sourceTree = "<group>"; };
-		ED9188982214154300B52056 /* TextureCubeMTL.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TextureCubeMTL.mm; sourceTree = "<group>"; };
-		ED9188992214154300B52056 /* TextureCubeMTL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureCubeMTL.h; sourceTree = "<group>"; };
 		ED9188A42215619700B52056 /* CCVertexAttribBinding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVertexAttribBinding.cpp; sourceTree = "<group>"; };
 		ED9188A52215619700B52056 /* CCVertexAttribBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertexAttribBinding.h; sourceTree = "<group>"; };
 		ED93A75821EDBCBA00170050 /* Program.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Program.cpp; sourceTree = "<group>"; };
@@ -4734,8 +4726,6 @@
 		460D4CF321ABD0C60075726E /* metal */ = {
 			isa = PBXGroup;
 			children = (
-				ED9188992214154300B52056 /* TextureCubeMTL.h */,
-				ED9188982214154300B52056 /* TextureCubeMTL.mm */,
 				ED150A9A21E635AB00EFE7F7 /* ProgramMTL.h */,
 				ED150A9921E635AA00EFE7F7 /* ProgramMTL.mm */,
 				460D4CFB21ABD0C60075726E /* BlendStateMTL.h */,
@@ -6189,7 +6179,6 @@
 				1AC0269C1914068200FA920D /* ConvertUTF.h in Headers */,
 				50ABBED11925AB6F00A911A9 /* TGAlib.h in Headers */,
 				1A57019F180BCB590088DEC7 /* CCFont.h in Headers */,
-				ED91889C2214167100B52056 /* CCSkybox.h in Headers */,
 				DA8C62A419E52C6400000516 /* ioapi_mem.h in Headers */,
 				EDC78BDA21CA19FB00E1863C /* CCProcessBase.h in Headers */,
 				1A5701A3180BCB590088DEC7 /* CCFontAtlas.h in Headers */,
@@ -6411,7 +6400,6 @@
 				8525E3A21B291E42008EE815 /* clipper.hpp in Headers */,
 				461FE09221CA129B00E5378F /* CCCallbackCommand.h in Headers */,
 				ED28C22D219E629B0078D854 /* Types.h in Headers */,
-				ED91889B2214154400B52056 /* TextureCubeMTL.h in Headers */,
 				15FB209D1AE7C57D00C31518 /* sweep_context.h in Headers */,
 				50CB247519D9C5A100687767 /* AudioCache.h in Headers */,
 				1A40D1691E8E56C7002E363A /* schema.h in Headers */,
@@ -6989,7 +6977,6 @@
 				50643BE319BFCF1800EF68ED /* CCPlatformConfig.h in Headers */,
 				4631CBD021AFD9FA0000D408 /* UILoadingBar.h in Headers */,
 				EDC78C5921CA19FC00E1863C /* CCActionFrameEasing.h in Headers */,
-				ED91889D2214167200B52056 /* CCSkybox.h in Headers */,
 				EDC78CDD21CA19FC00E1863C /* SliderReader.h in Headers */,
 				EDC78CA921CA19FC00E1863C /* Light3DReader.h in Headers */,
 				B6DD2FE81B04825B00E47F5F /* DetourPathQueue.h in Headers */,
@@ -7715,7 +7702,6 @@
 				3EACC9A419F5014D00EB3C5E /* CCLight.cpp in Sources */,
 				ED28C22B219E629B0078D854 /* VertexLayout.cpp in Sources */,
 				4631CBBF21AFD9FA0000D408 /* UITextField.cpp in Sources */,
-				ED91889E2214167800B52056 /* CCSkybox.cpp in Sources */,
 				EDC78CE821CA19FC00E1863C /* NodeReaderProtocol.cpp in Sources */,
 				ED28C24B219E629C0078D854 /* DepthStencilState.cpp in Sources */,
 				EDC78C6821CA19FC00E1863C /* DictionaryHelper.cpp in Sources */,
@@ -7900,7 +7886,6 @@
 				4631CB9921AFD9FA0000D408 /* UIRadioButton.cpp in Sources */,
 				46AF3A8C21F6B02400D5AFCD /* CCSkeleton3D.cpp in Sources */,
 				40FE104E21F070640061C04F /* CCControl.cpp in Sources */,
-				ED91889A2214154400B52056 /* TextureCubeMTL.mm in Sources */,
 				826294341AAF003E00CB7CF7 /* HttpClient-apple.mm in Sources */,
 				50ABBD8F1925AB4100A911A9 /* CCGLProgramCache.cpp in Sources */,
 				EDE6457321F017220063F6E4 /* ShaderCache.cpp in Sources */,
@@ -8421,7 +8406,6 @@
 				46AF3A9521F6B02400D5AFCD /* CCSprite3DMaterial.cpp in Sources */,
 				1A570203180BCBD40088DEC7 /* CCClippingNode.cpp in Sources */,
 				1A570209180BCBDF0088DEC7 /* CCMotionStreak.cpp in Sources */,
-				ED91889F2214167900B52056 /* CCSkybox.cpp in Sources */,
 				EDC78C3921CA19FB00E1863C /* CCDecorativeDisplay.cpp in Sources */,
 				4631CB5A21AFD9F90000D408 /* CCUIMultilineTextField.mm in Sources */,
 				4631CB2C21AFD9F90000D408 /* UIVideoPlayer-android.cpp in Sources */,

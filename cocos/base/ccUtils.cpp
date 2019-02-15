@@ -645,6 +645,19 @@ const Mat4& getAdjustMatrix()
     return adjustMatrix;
 }
 
+std::vector<float> getNormalMat3OfMat4(const Mat4 &mat)
+{
+    std::vector<float> normalMat(9);
+    Mat4 mvInverse = mat;
+    mvInverse.m[12] = mvInverse.m[13] = mvInverse.m[14] = 0.0f;
+    mvInverse.inverse();
+    mvInverse.transpose();
+    normalMat[0] = mvInverse.m[0]; normalMat[1] = mvInverse.m[1]; normalMat[2] = mvInverse.m[2];
+    normalMat[3] = mvInverse.m[4]; normalMat[4] = mvInverse.m[5]; normalMat[5] = mvInverse.m[6];
+    normalMat[6] = mvInverse.m[8]; normalMat[7] = mvInverse.m[9]; normalMat[8] = mvInverse.m[10];
+    return normalMat;
+}
+
 }
 
 NS_CC_END

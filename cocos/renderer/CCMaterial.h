@@ -30,6 +30,7 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 
 #include "renderer/CCRenderState.h"
 #include "renderer/CCTechnique.h"
@@ -170,6 +171,9 @@ protected:
 
     // weak reference
     Node* _target = nullptr;
+
+    std::unordered_map<std::string, int> _textureSlots;
+    int _textureSlotIndex = 0;
 };
 
 NS_CC_END

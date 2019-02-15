@@ -299,10 +299,26 @@ bool Material::parseSampler(backend::ProgramState* programState, Properties* sam
         texture->setTexParameters(texParams);
     }
 
-    auto location = programState->getUniformLocation(samplerProperties->getId());
+    auto textureName = samplerProperties->getId();
+    auto location = programState->getUniformLocation(textureName);
     //TODO arnold: slot may be incorrect
     //programState->setTexture(location, 0,  texture->getBackendTexture());
-    programState->addTexture(location, texture->getBackendTexture());
+
+    if (!location)
+    {
+        CCLOG("warning: failed to find texture uniform location %s when parsing material", textureName);
+        return false;
+    }
+
+    if (_textureSlots.find(textureName) == _textureSlots.end())
+    {
+        _textureSlots[textureName] = _textureSlotIndex;
+        programState->setTexture(location, _textureSlotIndex++, texture->getBackendTexture());
+    }
+    else
+    {
+        programState->setTexture(location, _textureSlots[textureName], texture->getBackendTexture());
+    }
 
     return true;
 }
@@ -484,7 +500,8 @@ Material* Material::clone() const
         // current technique
         auto name = _currentTechnique->getName();
         material->_currentTechnique = material->getTechniqueByName(name);
-
+        material->_textureSlots = material->_textureSlots;
+        material->_textureSlotIndex = material->_textureSlotIndex;
         material->autorelease();
     }
     return material;

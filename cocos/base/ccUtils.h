@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "base/CCData.h"
 #include "renderer/backend/Types.h"
+#include "math/Mat4.h"
 
 /** @file ccUtils.h
 Misc free functions
@@ -199,6 +200,12 @@ namespace utils
 
     // Adjust matrix for metal.
     CC_DLL const Mat4& getAdjustMatrix();
+
+    /**
+    Get the Normal Matrix of matrixMV
+    */
+    CC_DLL std::vector<float> getNormalMat3OfMat4(const Mat4 &mat);
+
 }
 
 NS_CC_END

@@ -552,11 +552,6 @@ public:
     Mat4 getNegated() const;
 
     /**
-     Get the Normal Matrix of matrixMV
-    */
-    std::vector<float> getNormalMatrix() const;
-
-    /**
      * Post-multiplies this matrix by the matrix corresponding to the
      * specified quaternion rotation.
      *

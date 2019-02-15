@@ -25,13 +25,11 @@
 
 #include "renderer/CCTextureCube.h"
 #include "platform/CCImage.h"
-#include "renderer/backend/Texture.h"
 #include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
 
-
-static unsigned char* getImageData(Image* img, Texture2D::PixelFormat&  ePixFmt)
+unsigned char* getImageData(Image* img, Texture2D::PixelFormat&  ePixFmt)
 {
     unsigned char*    pTmpData = img->getData();
     unsigned int*     inPixel32 = nullptr;
@@ -120,7 +118,7 @@ static unsigned char* getImageData(Image* img, Texture2D::PixelFormat&  ePixFmt)
     return pTmpData;
 }
 
-static Image* createImage(const std::string& path)
+Image* createImage(const std::string& path)
 {
     // Split up directory and filename
     // MUTEX:
@@ -141,11 +139,11 @@ static Image* createImage(const std::string& path)
 
         bool bRet = image->initWithImageFile(fullpath);
         CC_BREAK_IF(!bRet);
-    } while (0);
+    }
+    while (0);
 
     return image;
 }
-
 
 TextureCube::TextureCube()
 {
@@ -154,12 +152,25 @@ TextureCube::TextureCube()
 
 TextureCube::~TextureCube()
 {
-    CC_SAFE_RELEASE_NULL(_texture);
+}
+
+TextureCube* TextureCube::create(const std::string& positive_x, const std::string& negative_x,
+                                 const std::string& positive_y, const std::string& negative_y,
+                                 const std::string& positive_z, const std::string& negative_z)
+{
+    auto ret = new (std::nothrow) TextureCube();
+    if (ret && ret->init(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
 }
 
 bool TextureCube::init(const std::string& positive_x, const std::string& negative_x,
-    const std::string& positive_y, const std::string& negative_y,
-    const std::string& positive_z, const std::string& negative_z)
+                       const std::string& positive_y, const std::string& negative_y,
+                       const std::string& positive_z, const std::string& negative_z)
 {
     _imgPath[0] = positive_x;
     _imgPath[1] = negative_x;
@@ -168,12 +179,6 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
     _imgPath[4] = positive_z;
     _imgPath[5] = negative_z;
 
-    auto descriptor = backend::TextureDescriptor();
-    descriptor.textureType = backend::TextureType::TEXTURE_CUBE;
-    descriptor.textureUsage = TextureUsage::READ;
-    descriptor.width = 4;
-    descriptor.height = 4;
-    
     std::vector<Image*> images(6);
 
     images[0] = createImage(positive_x);
@@ -183,24 +188,81 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
     images[4] = createImage(positive_z);
     images[5] = createImage(negative_z);
 
+    GLuint handle;
+    glGenTextures(1, &handle);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, handle);
+
     for (int i = 0; i < 6; i++)
     {
         Image* img = images[i];
 
         Texture2D::PixelFormat  ePixelFmt;
         unsigned char*          pData = getImageData(img, ePixelFmt);
-        updateImageData(i, ePixelFmt, img->getWidth(), img->getHeight(), pData);
+        if (ePixelFmt == Texture2D::PixelFormat::RGBA8888 || ePixelFmt == Texture2D::PixelFormat::DEFAULT)
+        {
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                         0,                  // level
+                         GL_RGBA,            // internal format
+                         img->getWidth(),    // width
+                         img->getHeight(),   // height
+                         0,                  // border
+                         GL_RGBA,            // format
+                         GL_UNSIGNED_BYTE,   // type
+                         pData);             // pixel data
+        }
+        else if (ePixelFmt == Texture2D::PixelFormat::RGB888)
+        {
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                         0,                  // level
+                         GL_RGB,             // internal format
+                         img->getWidth(),    // width
+                         img->getHeight(),   // height
+                         0,                  // border
+                         GL_RGB,             // format
+                         GL_UNSIGNED_BYTE,   // type
+                         pData);             // pixel data
+        }
+
         if (pData != img->getData())
             delete[] pData;
     }
 
-    TexParams params;
-    params.minFilter = GL_LINEAR;
-    params.magFilter = GL_LINEAR;
-    params.wrapS = GL_CLAMP_TO_EDGE;
-    params.wrapT = GL_CLAMP_TO_EDGE;
-    setTexParameters(params);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+//  TODO coulsonwang
+//    _name = handle;
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+
+    for (auto img: images)
+    {
+        CC_SAFE_RELEASE(img);
+    }
+
     return true;
+}
+
+void TextureCube::setTexParameters(const TexParams& texParams)
+{
+    //TODO coulsonwang
+//    CCASSERT(_name != 0, __FUNCTION__);
+//
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_CUBE_MAP, _name);
+//
+//    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, texParams.minFilter);
+//    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, texParams.magFilter);
+//    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, texParams.wrapS);
+//    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, texParams.wrapT);
+//
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 
 bool TextureCube::reloadTexture()
