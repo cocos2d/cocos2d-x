@@ -70,6 +70,7 @@ Texture* DeviceMTL::newTexture2D(const TextureDescriptor& descriptor)
 
 Texture* DeviceMTL::newTextureCube(const TextureDescriptor &descriptor)
 {
+    //TODO arnold
     CCASSERT(false, "TextureCubMTL is not implemented!");
     return nullptr;
 }
