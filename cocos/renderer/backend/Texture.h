@@ -10,7 +10,7 @@ struct TextureDescriptor
 {
     TextureType textureType = TextureType::TEXTURE_2D;
     TextureFormat textureFormat = TextureFormat::R8G8B8A8;
-    TextureUsage textureUsage = TextureUsage::READ;;
+    TextureUsage textureUsage = TextureUsage::READ;
     uint32_t depth = 0;
     bool compressed = false;
     SamplerDescriptor samplerDescriptor;    
