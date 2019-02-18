@@ -81,7 +81,7 @@ namespace
 }
 
 TextureMTL::TextureMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
-: Texture(descriptor)
+: Texture2d(descriptor)
 {
     _mtlDevice = mtlDevice;
     createTexture(mtlDevice, descriptor);

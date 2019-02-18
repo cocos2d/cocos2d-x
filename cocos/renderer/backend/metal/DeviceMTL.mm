@@ -8,6 +8,7 @@
 #include "BlendStateMTL.h"
 #include "Utils.h"
 #include "ProgramMTL.h"
+#include "base/ccMacros.h"
 
 
 CC_BACKEND_BEGIN
@@ -63,18 +64,21 @@ Buffer* DeviceMTL::newBuffer(unsigned int size, BufferType type, BufferUsage usa
     return new (std::nothrow) BufferMTL(_mtlDevice, size, type, usage);
 }
 
-Texture* DeviceMTL::newTexture2D(const TextureDescriptor& descriptor)
+Texture* DeviceMTL::newTexture(const TextureDescriptor& descriptor)
 {
-    return new (std::nothrow) TextureMTL(_mtlDevice, descriptor);
+    switch(descriptor.textureType)
+    {
+        case TextureType::TEXTURE_2D:
+            return new (std::nothrow) TextureMTL(_mtlDevice, descriptor);
+        case TextureType::TEXTURE_CUBE:
+            //TODO arnold
+            CCASSERT(false, "TextureCubMTL is not implemented!");
+            return nullptr;
+        default:
+            CCASSERT(false, "invalidate texture type");
+            return nullptr;
+    }
 }
-
-Texture* DeviceMTL::newTextureCube(const TextureDescriptor &descriptor)
-{
-    //TODO arnold
-    CCASSERT(false, "TextureCubMTL is not implemented!");
-    return nullptr;
-}
-
 
 ShaderModule* DeviceMTL::newShaderModule(ShaderStage stage, const std::string& source)
 {

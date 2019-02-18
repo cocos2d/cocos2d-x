@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
  Copyright (c) 2015-2016 Chukong Technologies Inc.
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
@@ -27,6 +27,7 @@
 #define __CCTEXTURECUBE_H__
 
 #include "renderer/CCTexture2D.h"
+#include "renderer/backend/Texture.h"
 
 #include <string>
 #include <unordered_map>
