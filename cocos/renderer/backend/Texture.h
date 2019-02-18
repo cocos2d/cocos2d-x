@@ -27,7 +27,7 @@ public:
     virtual void updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint8_t* data) = 0;
     
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) = 0;
-    virtual void updateImageData(TextureCubeSide side, Texture2D::PixelFormat format, int width, int height, void *data) = 0;
+    virtual void updateFaceData(TextureCubeFace side, Texture2D::PixelFormat format, int width, int height, void *data) = 0;
 
     inline uint32_t getWidth() const { return _width; }
     inline uint32_t getHeight() const { return _height; }

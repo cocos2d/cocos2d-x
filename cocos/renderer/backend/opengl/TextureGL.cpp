@@ -433,6 +433,7 @@ TextureCubeGL::~TextureCubeGL()
 {
     if(_texture)
         glDeleteTextures(1, &_texture);
+    _texture = 0;
 }
 
 void TextureCubeGL::updateSamplerDescriptor(const SamplerDescriptor &sampler)
@@ -454,13 +455,14 @@ void TextureCubeGL::apply(int index) const
 {
     glActiveTexture(GL_TEXTURE0+ index);
     glBindTexture(GL_TEXTURE_CUBE_MAP, _texture);
-
+    CHECK_GL_ERROR_DEBUG();
 }
 
-void TextureCubeGL::updateImageData(TextureCubeSide side, Texture2D::PixelFormat ePixelFmt, int width, int height, void *data)
+void TextureCubeGL::updateFaceData(TextureCubeFace side, Texture2D::PixelFormat ePixelFmt, int width, int height, void *data)
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_CUBE_MAP, _texture);
+    CHECK_GL_ERROR_DEBUG();
     int i = static_cast<int>(side);
     if (ePixelFmt == Texture2D::PixelFormat::RGBA8888 || ePixelFmt == Texture2D::PixelFormat::DEFAULT)
     {
@@ -490,6 +492,7 @@ void TextureCubeGL::updateImageData(TextureCubeSide side, Texture2D::PixelFormat
     {
         CCASSERT(false, "invalidate texture format");
     }
+    CHECK_GL_ERROR_DEBUG();
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 

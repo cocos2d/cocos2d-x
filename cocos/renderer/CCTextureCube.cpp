@@ -200,7 +200,7 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
 
         Texture2D::PixelFormat  ePixelFmt;
         unsigned char*          pData = getImageData(img, ePixelFmt);
-        _texture->updateImageData(static_cast<backend::TextureCubeSide>(i), ePixelFmt, img->getWidth(), img->getHeight(), pData);
+        _texture->updateFaceData(static_cast<backend::TextureCubeFace>(i), ePixelFmt, img->getWidth(), img->getHeight(), pData);
         if (pData != img->getData())
             delete[] pData;
     }
