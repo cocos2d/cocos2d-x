@@ -77,14 +77,14 @@ Texture::Texture(const TextureDescriptor& descriptor)
 Texture::~Texture()
 {}
 
-Texture2d::Texture2d(const TextureDescriptor& descriptor)
+Texture2D::Texture2D(const TextureDescriptor& descriptor)
     : Texture(descriptor)
     , _width(descriptor.width)
     , _height(descriptor.height)
 {
 }
 
-Texturecubemap::Texturecubemap(const TextureDescriptor &descriptor)
+TextureCubemap::TextureCubemap(const TextureDescriptor &descriptor)
     : Texture(descriptor)
     , _size(descriptor.width)
 {

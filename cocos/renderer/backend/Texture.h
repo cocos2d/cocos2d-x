@@ -24,12 +24,10 @@ class Texture : public Ref
 public:
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) = 0;
 
-
     inline TextureFormat getTextureFormat() const { return _textureFormat; }
     inline TextureUsage getTextureUsage() const { return _textureUsage; }
     inline TextureType getTextureType() const { return _textureType; }
 
-    inline void setCompressed(bool compressed) { _isCompressed = compressed; }
 protected:
     Texture(const TextureDescriptor& descriptor);
     virtual ~Texture();
@@ -45,7 +43,7 @@ protected:
 };
 
 
-class Texture2d : public Texture
+class Texture2D : public Texture
 {
 public:
     virtual void updateData(uint8_t* data) = 0;
@@ -53,18 +51,18 @@ public:
     inline uint32_t getWidth() const { return _width; }
     inline uint32_t getHeight() const { return _height; }
 protected:
-    Texture2d(const TextureDescriptor& descriptor);
+    Texture2D(const TextureDescriptor& descriptor);
     uint32_t _width = 0;
     uint32_t _height = 0;
 
 };
 
-class Texturecubemap : public Texture
+class TextureCubemap : public Texture
 {
 public:
     virtual void updateFaceData(TextureCubeFace side, int size, void *data) = 0;
 protected:
-    Texturecubemap(const TextureDescriptor& descriptor);
+    TextureCubemap(const TextureDescriptor& descriptor);
     uint32_t _size = 0;
 };
 

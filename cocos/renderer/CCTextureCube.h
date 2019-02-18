@@ -86,7 +86,7 @@ protected:
               const std::string& positive_z, const std::string& negative_z);
 private:
     std::vector<std::string> _imgPath;
-    backend::Texturecubemap *_texture = nullptr;
+    backend::TextureCubemap *_texture = nullptr;
 };
 
 // end of 3d group

@@ -273,7 +273,7 @@ void TextureInfoGL::toGLSamplerDescriptor(const SamplerDescriptor& descriptor, b
     }
 }
 
-Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : Texture2d(descriptor)
+Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : Texture2D(descriptor)
 {
     glGenTextures(1, &_texture);
     toGLTypes(_textureFormat, _internalFormat, _format, _type, _isCompressed);
@@ -281,14 +281,14 @@ Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : Texture2d(descri
     bool isPow2 = ISPOW2(_width) && ISPOW2(_height);
     _magFilterGL = toGLMagFilter(descriptor.samplerDescriptor.magFilter);
     _minFilterGL = toGLMinFilter(descriptor.samplerDescriptor.minFilter,
-                                 descriptor.samplerDescriptor.mipmapFilter, Texture::_isMipmapEnabled, isPow2);
+                                 descriptor.samplerDescriptor.mipmapFilter, _isMipmapEnabled, isPow2);
     
     _sAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.sAddressMode, isPow2);
     _tAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.tAddressMode, isPow2);
    
     // Update data here because `updateData()` may not be invoked later.
     // For example, a texture used as depth buffer will not invoke updateData().
-    uint8_t* data = (uint8_t*)malloc(_width * _height * Texture::_bitsPerElement / 8);
+    uint8_t* data = (uint8_t*)malloc(_width * _height * _bitsPerElement / 8);
     updateData(data);
     free(data);
 }
@@ -301,8 +301,8 @@ Texture2DGL::~Texture2DGL()
 
 void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
     bool isPow2 = ISPOW2(_width) && ISPOW2(_height);
-    bool needGenerateMipmap = !Texture::_isMipmapEnabled && sampler.mipmapEnabled;
-    Texture::_isMipmapEnabled = sampler.mipmapEnabled;
+    bool needGenerateMipmap = !_isMipmapEnabled && sampler.mipmapEnabled;
+    _isMipmapEnabled = sampler.mipmapEnabled;
 
     toGLSamplerDescriptor(sampler, isPow2);
 
@@ -337,9 +337,9 @@ void Texture2DGL::updateData(uint8_t* data)
     // TODO: support texture cube, and compressed data.
     
     //Set the row align only when mipmapsNum == 1 and the data is uncompressed
-    if(!Texture::_isMipmapEnabled && !_isCompressed)
+    if(!_isMipmapEnabled && !_isCompressed)
     {
-        unsigned int bytesPerRow = _width * Texture::_bitsPerElement / 8;
+        unsigned int bytesPerRow = _width * _bitsPerElement / 8;
         
         if(bytesPerRow % 8 == 0)
         {
@@ -373,7 +373,7 @@ void Texture2DGL::updateData(uint8_t* data)
 
     if(_isCompressed)
     {
-        auto datalen = _width * _height * Texture::_bitsPerElement / 8;
+        auto datalen = _width * _height * _bitsPerElement / 8;
         glCompressedTexImage2D(GL_TEXTURE_2D, 0, _internalFormat, (GLsizei)_width, (GLsizei)_height, 0, datalen, data);
     }
     else
@@ -421,15 +421,15 @@ void Texture2DGL::apply(int index) const
 
 void Texture2DGL::generateMipmpas() const
 {
-    if (Texture2d::_isMipmapEnabled &&
-        TextureUsage::RENDER_TARGET != Texture2d:: _textureUsage)
+    if (Texture2D::_isMipmapEnabled &&
+        TextureUsage::RENDER_TARGET != Texture2D:: _textureUsage)
         glGenerateMipmap(GL_TEXTURE_2D);
 }
 
 TextureCubeGL::TextureCubeGL(const TextureDescriptor& descriptor)
-    :Texturecubemap(descriptor)
+    :TextureCubemap(descriptor)
 {
-    Texture::_textureType = TextureType::TEXTURE_CUBE;
+    _textureType = TextureType::TEXTURE_CUBE;
     toGLTypes(_textureFormat, _internalFormat, _format, _type, _isCompressed);
     glGenTextures(1, &_texture);
     CHECK_GL_ERROR_DEBUG();

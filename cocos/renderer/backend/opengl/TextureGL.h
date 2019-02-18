@@ -24,7 +24,7 @@ protected:
     GLuint _texture = 0;
 };
 
-class Texture2DGL : public Texture2d, public TextureInfoGL
+class Texture2DGL : public Texture2D, public TextureInfoGL
 {
 public:
     Texture2DGL(const TextureDescriptor& descriptor);
@@ -43,7 +43,7 @@ private:
     TextureInfoGL _info;
 };
 
-class TextureCubeGL: public Texturecubemap, public TextureInfoGL
+class TextureCubeGL: public TextureCubemap, public TextureInfoGL
 {
 public:
     TextureCubeGL(const TextureDescriptor& descriptor);

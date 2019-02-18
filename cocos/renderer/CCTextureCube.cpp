@@ -153,7 +153,7 @@ TextureCube::TextureCube()
     backend::TextureDescriptor sd;
     sd.textureType = backend::TextureType::TEXTURE_CUBE;
     _imgPath.resize(6);
-    _texture = static_cast<backend::Texturecubemap*>(backend::Device::getInstance()->newTexture(sd));
+    _texture = static_cast<backend::TextureCubemap*>(backend::Device::getInstance()->newTexture(sd));
 }
 
 TextureCube::~TextureCube()
