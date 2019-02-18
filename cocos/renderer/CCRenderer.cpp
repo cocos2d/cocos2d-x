@@ -798,8 +798,9 @@ backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipeli
             continue;
         
         const auto& attributes = vertexLayout.getAttributes();
-        for (const auto& attribute : attributes)
+        for (const auto& it : attributes)
         {
+            auto &attribute = it.second;
             /*
              stepFunction:1     stride:15       offest:10       format:5        needNormalized:1
                 bit31           bit30 ~ bit16   bit15 ~ bit6    bit5 ~ bit1     bit0

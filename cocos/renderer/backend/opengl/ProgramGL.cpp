@@ -174,8 +174,9 @@ void ProgramGL::computeAttributeInfos(const RenderPipelineDescriptor& descriptor
         VertexAttributeArray vertexAttributeArray;
         
         const auto& attributes = vertexLayout.getAttributes();
-        for (const auto& attribute : attributes)
+        for (const auto& it : attributes)
         {
+            auto &attribute = it.second;
             AttributeInfo attributeInfo;
             
             if (!getAttributeLocation(attribute.name, attributeInfo.location))
