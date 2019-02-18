@@ -28,6 +28,7 @@
 #include "platform/CCFileUtils.h"
 #include "renderer/backend/Texture.h"
 #include "renderer/backend/Device.h"
+#include "renderer/CCTextureUtils.h"
 
 NS_CC_BEGIN
 
@@ -69,7 +70,7 @@ unsigned char* getImageData(Image* img, Texture2D::PixelFormat&  ePixFmt)
         {
             // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
             inPixel32 = (unsigned int*)img->getData();
-            pTmpData = new (std::nothrow) unsigned char[nWidth * nHeight * 2];
+            pTmpData = (unsigned char *)malloc(nWidth * nHeight * 2);
             outPixel16 = (unsigned short*)pTmpData;
 
             for (unsigned int i = 0; i < uLen; ++i, ++inPixel32)
@@ -83,7 +84,7 @@ unsigned char* getImageData(Image* img, Texture2D::PixelFormat&  ePixFmt)
         else
         {
             // Convert "RRRRRRRRGGGGGGGGBBBBBBBB" to "RRRRRGGGGGGBBBBB"
-            pTmpData = new (std::nothrow) unsigned char[nWidth * nHeight * 2];
+            pTmpData = (unsigned char *)malloc(nWidth * nHeight * 2);
             outPixel16 = (unsigned short*)pTmpData;
             inPixel8 = (unsigned char*)img->getData();
 
@@ -106,7 +107,7 @@ unsigned char* getImageData(Image* img, Texture2D::PixelFormat&  ePixFmt)
         // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRRRRGGGGGGGGBBBBBBBB"
         inPixel32 = (unsigned int*)img->getData();
 
-        pTmpData = new (std::nothrow) unsigned char[nWidth * nHeight * 3];
+        pTmpData = (unsigned char*)malloc(nWidth * nHeight * 3);
         unsigned char* outPixel8 = pTmpData;
 
         for (unsigned int i = 0; i < uLen; ++i, ++inPixel32)
@@ -150,8 +151,9 @@ Image* createImage(const std::string& path)
 TextureCube::TextureCube()
 {
     backend::TextureDescriptor sd;
+    sd.textureType = backend::TextureType::TEXTURE_CUBE;
     _imgPath.resize(6);
-    _texture = backend::Device::getInstance()->newTextureCube(sd);
+    _texture = static_cast<backend::Texturecubemap*>(backend::Device::getInstance()->newTexture(sd));
 }
 
 TextureCube::~TextureCube()
@@ -200,9 +202,32 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
 
         Texture2D::PixelFormat  ePixelFmt;
         unsigned char*          pData = getImageData(img, ePixelFmt);
-        _texture->updateFaceData(static_cast<backend::TextureCubeFace>(i), ePixelFmt, img->getWidth(), img->getHeight(), pData);
+        uint8_t *cData = nullptr;
+        uint8_t *useData = pData;
+        CCASSERT(img->getWidth() == img->getHeight(), "in texture of cubemap, width should be equal to height!");
+
+        //convert pixel format to RGBA
+        if (ePixelFmt != Texture2D::PixelFormat::RGBA8888)
+        {
+            ssize_t len = 0;
+            backend::PixelFormatUtils::convertDataToFormat(pData, img->getDataLen(), ePixelFmt, Texture2D::PixelFormat::RGBA8888, &cData, &len);
+            if (cData != pData) //convert error
+            {
+                useData = cData;
+            }
+            else
+            {
+                CCASSERT(false, "error: CubeMap texture may be incorrect, failed to convert pixel format data to RGBA8888");
+            }
+        }
+
+        _texture->updateFaceData(static_cast<backend::TextureCubeFace>(i), img->getWidth(), useData);
+        
+        if (cData != pData)
+            free(cData);
+
         if (pData != img->getData())
-            delete[] pData;
+            free(pData);
     }
 
     backend::SamplerDescriptor sd;

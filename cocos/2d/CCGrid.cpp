@@ -64,7 +64,7 @@ bool GridBase::initWithSize(const cocos2d::Size &gridSize, const cocos2d::Rect &
     descriptor.height = POTHigh;
     descriptor.textureUsage = backend::TextureUsage::RENDER_TARGET;
     descriptor.textureFormat = backend::TextureFormat::R8G8B8A8;
-    auto backendTexture = backend::Device::getInstance()->newTexture2D(descriptor);
+    auto backendTexture = backend::Device::getInstance()->newTexture(descriptor);
     texture->initWithBackendTexture(backendTexture);
     backendTexture->release();
     

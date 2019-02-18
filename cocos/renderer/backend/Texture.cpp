@@ -65,9 +65,7 @@ namespace
 }
 
 Texture::Texture(const TextureDescriptor& descriptor)
-    : _width(descriptor.width)
-    , _height(descriptor.height)
-    , _bitsPerElement(computeBitsPerElement(descriptor.textureFormat))
+    : _bitsPerElement(computeBitsPerElement(descriptor.textureFormat))
     , _isMipmapEnabled(descriptor.samplerDescriptor.mipmapEnabled)
     , _isCompressed(descriptor.compressed)
     , _textureType(descriptor.textureType)
@@ -78,5 +76,19 @@ Texture::Texture(const TextureDescriptor& descriptor)
 
 Texture::~Texture()
 {}
+
+Texture2d::Texture2d(const TextureDescriptor& descriptor)
+    : Texture(descriptor)
+    , _width(descriptor.width)
+    , _height(descriptor.height)
+{
+}
+
+Texturecubemap::Texturecubemap(const TextureDescriptor &descriptor)
+    : Texture(descriptor)
+    , _size(descriptor.width)
+{
+
+}
 
 CC_BACKEND_END

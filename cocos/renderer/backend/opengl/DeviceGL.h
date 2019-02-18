@@ -10,8 +10,7 @@ public:
 
     virtual CommandBuffer* newCommandBuffer() override;
     virtual Buffer* newBuffer(unsigned int size, BufferType type, BufferUsage usage) override;
-    virtual Texture* newTexture2D(const TextureDescriptor& descriptor) override;
-    virtual Texture* newTextureCube(const TextureDescriptor& descriptor) override;
+    virtual Texture* newTexture(const TextureDescriptor& descriptor) override;
     virtual DepthStencilState* createDepthStencilState(const DepthStencilDescriptor& descriptor) override;
     virtual BlendState* createBlendState(const BlendDescriptor& descriptor) override;
     virtual RenderPipeline* newRenderPipeline(const RenderPipelineDescriptor& descriptor) override;

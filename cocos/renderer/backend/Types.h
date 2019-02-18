@@ -245,7 +245,7 @@ struct AttributeBindInfo
     int         type        = 0;
 };
 
-enum class TextureCubeFace : int32_t
+enum class TextureCubeFace : uint32_t
 {
     POSITIVE_X = 0,
     NEGATIVE_X = 1,
