@@ -759,26 +759,40 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
     return true;
 }
 
-backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipelineDescriptor& descriptor)
+backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipelineDescriptor& renderPipelineDescriptor, const backend::BlendDescriptor blendDescriptor)
 {
     struct
     {
         void* program;
-        void* blendState;
         unsigned int vertexLayoutInfo[32];
         backend::TextureFormat colorAttachment;
         backend::TextureFormat depthAttachment;
         backend::TextureFormat stencilAttachment;
+        bool blendEnabled;
+        unsigned int writeMask;
+        unsigned int rgbBlendOperation;
+        unsigned int alphaBlendOperation;
+        unsigned int sourceRGBBlendFactor;
+        unsigned int destinationRGBBlendFactor;
+        unsigned int sourceAlphaBlendFactor;
+        unsigned int destinationAlphaBlendFactor;
     }hashMe;
     
     memset(&hashMe, 0, sizeof(hashMe));
-    hashMe.program = descriptor.programState->getProgram();
-    hashMe.blendState = descriptor.blendState;
-    hashMe.colorAttachment = descriptor.colorAttachmentsFormat[0];
-    hashMe.depthAttachment = descriptor.depthAttachmentFormat;
-    hashMe.stencilAttachment = descriptor.stencilAttachmentFormat;
+    hashMe.program = renderPipelineDescriptor.programState->getProgram();
+    hashMe.colorAttachment = renderPipelineDescriptor.colorAttachmentsFormat[0];
+    hashMe.depthAttachment = renderPipelineDescriptor.depthAttachmentFormat;
+    hashMe.stencilAttachment = renderPipelineDescriptor.stencilAttachmentFormat;
+    hashMe.blendEnabled = blendDescriptor.blendEnabled;
+    hashMe.writeMask = (unsigned int)blendDescriptor.writeMask;
+    hashMe.rgbBlendOperation = (unsigned int)blendDescriptor.rgbBlendOperation;
+    hashMe.alphaBlendOperation = (unsigned int)blendDescriptor.alphaBlendOperation;
+    hashMe.sourceRGBBlendFactor = (unsigned int)blendDescriptor.sourceRGBBlendFactor;
+    hashMe.destinationRGBBlendFactor = (unsigned int)blendDescriptor.destinationRGBBlendFactor;
+    hashMe.sourceAlphaBlendFactor = (unsigned int)blendDescriptor.sourceAlphaBlendFactor;
+    hashMe.destinationAlphaBlendFactor = (unsigned int)blendDescriptor.destinationAlphaBlendFactor;
     int index = 0;
-    for(const auto& vertexLayout : descriptor.vertexLayouts)
+    for(const auto& vertexLayout : renderPipelineDescriptor.vertexLayouts)
     {
         if (!vertexLayout.isValid())
             continue;
@@ -803,7 +817,7 @@ backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipeli
     auto iter = _renderPipelineCache.find(hash);
     if (_renderPipelineCache.end() == iter)
     {
-        auto renderPipeline = backend::Device::getInstance()->newRenderPipeline(descriptor);
+        auto renderPipeline = backend::Device::getInstance()->newRenderPipeline(renderPipelineDescriptor);
         _renderPipelineCache.emplace(hash, renderPipeline);
 
         return renderPipeline;
@@ -852,7 +866,7 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
             renderPipelineDescriptor.stencilAttachmentFormat = backend::TextureFormat::D24S8;
     }
 
-    _commandBuffer->setRenderPipeline(getRenderPipeline(renderPipelineDescriptor));
+    _commandBuffer->setRenderPipeline(getRenderPipeline(renderPipelineDescriptor, pipelineDescriptor.blendDescriptor));
     _commandBuffer->setDepthStencilState(depthStencilState);
 }
 
