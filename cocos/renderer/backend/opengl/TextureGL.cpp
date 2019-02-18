@@ -94,7 +94,7 @@ namespace
     }
 }
 
-void TextureGL::setSamplerDescriptor(const SamplerDescriptor& descriptor, bool isPow2)
+void TextureGL::toGLSamplerDescriptor(const SamplerDescriptor& descriptor, bool isPow2)
 {
     if (descriptor.magFilter != SamplerFilter::DONT_CARE)
     {
@@ -147,7 +147,7 @@ void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
     bool needGenerateMipmap = !_isMipmapEnabled && sampler.mipmapEnabled;
     _isMipmapEnabled = sampler.mipmapEnabled;
 
-    setSamplerDescriptor(sampler, isPow2);
+    toGLSamplerDescriptor(sampler, isPow2);
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture);
@@ -438,7 +438,7 @@ TextureCubeGL::~TextureCubeGL()
 
 void TextureCubeGL::updateSamplerDescriptor(const SamplerDescriptor &sampler)
 {
-    setSamplerDescriptor(sampler, true);
+    toGLSamplerDescriptor(sampler, true);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_CUBE_MAP, _texture);
     

@@ -14,7 +14,7 @@ public:
 protected:
     TextureGL(const TextureDescriptor& descriptor) : Texture(descriptor)
     {}
-    void setSamplerDescriptor(const SamplerDescriptor &desc, bool isPow2);
+    void toGLSamplerDescriptor(const SamplerDescriptor &desc, bool isPow2);
 
     GLint _magFilterGL = GL_LINEAR;
     GLint _minFilterGL = GL_LINEAR;
