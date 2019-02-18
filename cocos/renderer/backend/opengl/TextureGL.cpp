@@ -94,49 +94,49 @@ namespace
     }
 
 
-    void toGLTypes(TextureFormat _textureFormat, GLint &_internalFormat, GLuint &_format, GLenum &_type, bool &_isCompressed)
+    void toGLTypes(TextureFormat textureFormat, GLint &internalFormat, GLuint &format, GLenum &type, bool &isCompressed)
     {
-        switch (_textureFormat)
+        switch (textureFormat)
         {
         case TextureFormat::R8G8B8A8:
-            _internalFormat = GL_RGBA;
-            _format = GL_RGBA;
-            _type = GL_UNSIGNED_BYTE;
+            internalFormat = GL_RGBA;
+            format = GL_RGBA;
+            type = GL_UNSIGNED_BYTE;
             break;
         case TextureFormat::R8G8B8:
-            _internalFormat = GL_RGB;
-            _format = GL_RGB;
-            _type = GL_UNSIGNED_BYTE;
+            internalFormat = GL_RGB;
+            format = GL_RGB;
+            type = GL_UNSIGNED_BYTE;
             break;
         case TextureFormat::RGBA4444:
-            _internalFormat = GL_RGBA;
-            _format = GL_RGBA;
-            _type = GL_UNSIGNED_SHORT_4_4_4_4;
+            internalFormat = GL_RGBA;
+            format = GL_RGBA;
+            type = GL_UNSIGNED_SHORT_4_4_4_4;
             break;
         case TextureFormat::A8:
-            _internalFormat = GL_ALPHA;
-            _format = GL_ALPHA;
-            _type = GL_UNSIGNED_BYTE;
+            internalFormat = GL_ALPHA;
+            format = GL_ALPHA;
+            type = GL_UNSIGNED_BYTE;
             break;
         case TextureFormat::I8:
-            _internalFormat = GL_LUMINANCE;
-            _format = GL_LUMINANCE;
-            _type = GL_UNSIGNED_BYTE;
+            internalFormat = GL_LUMINANCE;
+            format = GL_LUMINANCE;
+            type = GL_UNSIGNED_BYTE;
             break;
         case TextureFormat::AI88:
-            _internalFormat = GL_LUMINANCE_ALPHA;
-            _format = GL_LUMINANCE_ALPHA;
-            _type = GL_UNSIGNED_BYTE;
+            internalFormat = GL_LUMINANCE_ALPHA;
+            format = GL_LUMINANCE_ALPHA;
+            type = GL_UNSIGNED_BYTE;
             break;
         case TextureFormat::RGB565:
-            _internalFormat = GL_RGB;
-            _format = GL_RGB;
-            _type = GL_UNSIGNED_SHORT_5_6_5;
+            internalFormat = GL_RGB;
+            format = GL_RGB;
+            type = GL_UNSIGNED_SHORT_5_6_5;
             break;
         case TextureFormat::RGB5A1:
-            _internalFormat = GL_RGBA;
-            _format = GL_RGBA;
-            _type = GL_UNSIGNED_SHORT_5_5_5_1;
+            internalFormat = GL_RGBA;
+            format = GL_RGBA;
+            type = GL_UNSIGNED_SHORT_5_5_5_1;
             break;
 #ifdef GL_ETC1_RGB8_OES
         case TextureFormat::ETC1:
@@ -204,26 +204,26 @@ namespace
 #endif
 #ifdef GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
         case TextureFormat::S3TC_DXT1:
-            _internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
+            internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
             break;
 #endif 
 #ifdef GL_COMPRESSED_RGBA_S3TC_DXT3_EXT
         case TextureFormat::S3TC_DXT3:
-            _internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
+            internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
             break;
 #endif
 #ifdef GL_COMPRESSED_RGBA_S3TC_DXT5_EXT
         case TextureFormat::S3TC_DXT5:
-            _internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
+            internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
             break;
 #endif
             //        case TextureFormat::D16:
@@ -236,9 +236,9 @@ namespace
             _internalFormat = GL_DEPTH_STENCIL_OES;
             _type = GL_UNSIGNED_INT_24_8_OES;
 #else
-            _format = GL_DEPTH_STENCIL;
-            _internalFormat = GL_DEPTH32F_STENCIL8;
-            _type = GL_FLOAT_32_UNSIGNED_INT_24_8_REV;
+            format = GL_DEPTH_STENCIL;
+            internalFormat = GL_DEPTH32F_STENCIL8;
+            type = GL_FLOAT_32_UNSIGNED_INT_24_8_REV;
 #endif
             break;
         default:
