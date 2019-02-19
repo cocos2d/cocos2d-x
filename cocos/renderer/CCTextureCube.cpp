@@ -199,8 +199,16 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
     for (int i = 0; i < 6; i++)
     {
         Image* img = images[i];
-        CCASSERT(img->getWidth() == img->getHeight(), "in TextureCubemap, width should be equal to height!");
-        CCASSERT(imageSize == img->getWidth(), "Texture of each face should have same dimension");
+        if(img->getWidth() != img->getHeight())
+        {
+            CCASSERT(false, "TextureCubemap: width should be equal to height!");
+            return false;
+        }
+        if(imageSize != img->getWidth())
+        {
+            CCASSERT(imageSize == img->getWidth(), "TextureCubmap: texture of each face should have same dimension");
+            return false;
+        }
     }
 
     _texture->setSize(imageSize);
