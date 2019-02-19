@@ -952,16 +952,16 @@ SpriteZVertex::SpriteZVertex()
     //
     // Configure shader to mimic glAlphaTest
     //
-    auto alphaTestShader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
-    GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
+//    auto alphaTestShader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+//    GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
+//
+//    // set alpha test value
+//    // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
+//    if (getGLProgram())
+//    {
+//        getGLProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
+//    }
 
-    // set alpha test value
-    // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-    if (getGLProgram())
-    {
-        getGLProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
-    }
-    
     
     _dir = 1;
     _time = 0;
@@ -982,7 +982,7 @@ SpriteZVertex::SpriteZVertex()
         auto sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*0, 121*1, 85, 121));
         sprite->setPosition( Vec2((i+1)*step, s.height/2) );
         sprite->setPositionZ( 10 + i*40 );
-        sprite->setGLProgram(alphaTestShader);
+//        sprite->setGLProgram(alphaTestShader);
         node->addChild(sprite, 0);
         
     }
@@ -992,7 +992,7 @@ SpriteZVertex::SpriteZVertex()
         auto sprite = Sprite::create("Images/grossini_dance_atlas.png", Rect(85*1, 121*0, 85, 121));
         sprite->setPosition( Vec2( (i+1)*step, s.height/2) );
         sprite->setPositionZ( 10 + (10-i)*40 );
-        sprite->setGLProgram(alphaTestShader);
+//        sprite->setGLProgram(alphaTestShader);
         node->addChild(sprite, 0);
     }
 
@@ -1042,16 +1042,16 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     //
     // Configure shader to mimic glAlphaTest
     //
-    auto alphaTestShader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
-    GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
+//    auto alphaTestShader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
+//    GLint alphaValueLocation = glGetUniformLocation(alphaTestShader->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
 
     // set alpha test value
     // NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-    if (getGLProgram())
-    {
-        getGLProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
-    }
-    
+//    if (getGLProgram())
+//    {
+//        getGLProgram()->setUniformLocationWith1f(alphaValueLocation, 0.0f);
+//    }
+
     auto s = Director::getInstance()->getWinSize();
     float step = s.width/12;
     
@@ -1063,7 +1063,7 @@ SpriteBatchNodeZVertex::SpriteBatchNodeZVertex()
     batch->setAnchorPoint( Vec2::ANCHOR_MIDDLE);
     batch->setPosition( Vec2(s.width/2, s.height/2));
     
-    batch->setGLProgram(alphaTestShader);
+//    batch->setGLProgram(alphaTestShader);
     addChild(batch, 0, kTagSpriteBatchNode);        
     
     for(int i=0;i<5;i++) 

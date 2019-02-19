@@ -31,7 +31,6 @@
 #include "renderer/CCCallbackCommand.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCMeshCommand.h"
-#include "renderer/CCGLProgramCache.h"
 #include "renderer/CCMaterial.h"
 #include "renderer/CCTechnique.h"
 #include "renderer/CCPass.h"

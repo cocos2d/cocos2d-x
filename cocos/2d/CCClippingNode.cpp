@@ -314,9 +314,10 @@ void ClippingNode::setStencil(Node *stencil)
             _stencil->onEnterTransitionDidFinish();
         }
     }
-    
-    if (_stencil != nullptr)
-        _originStencilProgram = _stencil->getGLProgram();
+
+//TODO minggo
+//    if (_stencil != nullptr)
+//        _originStencilProgram = _stencil->getGLProgram();
 }
 
 bool ClippingNode::hasContent() const

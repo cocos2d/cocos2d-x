@@ -33,8 +33,6 @@ THE SOFTWARE.
 */
 
 #include "renderer/CCTexture2D.h"
-
-#include "platform/CCGL.h"
 #include "platform/CCImage.h"
 #include "base/ccUtils.h"
 #include "platform/CCDevice.h"
@@ -44,8 +42,6 @@ THE SOFTWARE.
 #include "base/CCConfiguration.h"
 #include "platform/CCPlatformMacros.h"
 #include "base/CCDirector.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramCache.h"
 #include "base/CCNinePatchImageParser.h"
 #include "renderer/backend/Device.h"
 #include "renderer/backend/StringUtils.h"
