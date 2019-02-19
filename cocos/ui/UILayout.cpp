@@ -26,8 +26,6 @@ THE SOFTWARE.
 #include "ui/UILayout.h"
 #include "ui/UIHelper.h"
 #include "ui/UIScale9Sprite.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramCache.h"
 #include "renderer/CCRenderState.h"
 #include "base/CCDirector.h"
 #include "renderer/CCRenderer.h"

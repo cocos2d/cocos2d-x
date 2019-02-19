@@ -32,7 +32,6 @@
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventType.h"
 #include "2d/CCLight.h"
-#include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTexture2D.h"
@@ -228,7 +227,7 @@ void MeshCommand::batchDraw()
     }
     else
     {
-        _glProgramState->applyGLProgram(_mv);
+//        _glProgramState->applyGLProgram(_mv);
 
         // set render state
         applyRenderState();
@@ -277,7 +276,7 @@ void MeshCommand::execute()
     else
     {
         // set render state
-        _glProgramState->apply(_mv);
+//        _glProgramState->apply(_mv);
 
         applyRenderState();
 

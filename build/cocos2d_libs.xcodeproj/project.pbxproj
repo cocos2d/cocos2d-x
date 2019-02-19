@@ -1015,14 +1015,12 @@
 		507B39F91C31BDD30067B53E /* fastlz.c in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2FA51B04825B00E47F5F /* fastlz.c */; };
 		507B39FA1C31BDD30067B53E /* CCSAXParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBF291926664700A911A9 /* CCSAXParser.cpp */; };
 		507B3A091C31BDD30067B53E /* CCImage-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503DD8DC1926736A00CD74DD /* CCImage-ios.mm */; };
-		507B3A0E1C31BDD30067B53E /* CCGLProgramState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD6C1925AB4100A911A9 /* CCGLProgramState.cpp */; };
 		507B3A121C31BDD30067B53E /* CCAutoreleasePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBDC51925AB6E00A911A9 /* CCAutoreleasePool.cpp */; };
 		507B3A1A1C31BDD30067B53E /* RecastDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F7E1B04825B00E47F5F /* RecastDebugDraw.cpp */; };
 		507B3A1C1C31BDD30067B53E /* CCAction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570047180BC5A10088DEC7 /* CCAction.cpp */; };
 		507B3A1D1C31BDD30067B53E /* CCActionCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570049180BC5A10088DEC7 /* CCActionCamera.cpp */; };
 		507B3A261C31BDD30067B53E /* CCActionCatmullRom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57004B180BC5A10088DEC7 /* CCActionCatmullRom.cpp */; };
 		507B3A2B1C31BDD30067B53E /* CCActionEase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57004D180BC5A10088DEC7 /* CCActionEase.cpp */; };
-		507B3A2C1C31BDD30067B53E /* CCGLProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD681925AB4100A911A9 /* CCGLProgram.cpp */; };
 		507B3A311C31BDD30067B53E /* CCActionGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57004F180BC5A10088DEC7 /* CCActionGrid.cpp */; };
 		507B3A391C31BDD30067B53E /* HttpClient-apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2B1A5349A3004E4C60 /* HttpClient-apple.mm */; };
 		507B3A3E1C31BDD30067B53E /* CCClippingRectangleNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DABC9FA719E7DFA900FA252C /* CCClippingRectangleNode.cpp */; };
@@ -1113,7 +1111,6 @@
 		507B3B951C31BDD30067B53E /* CCFastTMXTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24AA983195A675C007B4522 /* CCFastTMXTiledMap.cpp */; };
 		507B3BA31C31BDD30067B53E /* CCFastTMXLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24AA981195A675C007B4522 /* CCFastTMXLayer.cpp */; };
 		507B3BA41C31BDD30067B53E /* CCParticleSystemQuad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57021F180BCC1A0088DEC7 /* CCParticleSystemQuad.cpp */; };
-		507B3BA51C31BDD30067B53E /* CCGLProgramCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD6A1925AB4100A911A9 /* CCGLProgramCache.cpp */; };
 		507B3BA91C31BDD30067B53E /* CCSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570276180BCC900088DEC7 /* CCSprite.cpp */; };
 		507B3BB81C31BDD30067B53E /* CCSpriteBatchNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570278180BCC900088DEC7 /* CCSpriteBatchNode.cpp */; };
 		507B3BBB1C31BDD30067B53E /* CCSpriteFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A57027A180BCC900088DEC7 /* CCSpriteFrame.cpp */; };
@@ -1205,7 +1202,6 @@
 		507B3CFA1C31BDD30067B53E /* DetourNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2F8F1B04825B00E47F5F /* DetourNode.cpp */; };
 		507B3CFE1C31BDD30067B53E /* CCEventMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBDEE1925AB6E00A911A9 /* CCEventMouse.cpp */; };
 		507B3D001C31BDD30067B53E /* CCProtectedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */; };
-		507B3D011C31BDD30067B53E /* CCGLProgramStateCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD6E1925AB4100A911A9 /* CCGLProgramStateCache.cpp */; };
 		507B3D051C31BDD30067B53E /* WebSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AAF5368180E3374000584C8 /* WebSocket.cpp */; };
 		507B3D071C31BDD30067B53E /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AAF5387180E35AC000584C8 /* libwebsockets.a */; };
 		507B3D081C31BDD30067B53E /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 292F1A5C1A5151CE00E479F8 /* libssl.a */; };
@@ -1227,7 +1223,6 @@
 		507B3D411C31BDD30067B53E /* CCEventMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDEF1925AB6E00A911A9 /* CCEventMouse.h */; };
 		507B3D461C31BDD30067B53E /* poly2tri.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB207D1AE7C57D00C31518 /* poly2tri.h */; };
 		507B3D491C31BDD30067B53E /* CCRef.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDFF1925AB6E00A911A9 /* CCRef.h */; };
-		507B3D4C1C31BDD30067B53E /* CCGLProgramState.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD6D1925AB4100A911A9 /* CCGLProgramState.h */; };
 		507B3D4E1C31BDD30067B53E /* ccShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD7C1925AB4100A911A9 /* ccShaders.h */; };
 		507B3D571C31BDD30067B53E /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDF41925AB6E00A911A9 /* ccFPSImages.h */; };
 		507B3D5C1C31BDD30067B53E /* ccCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDC81925AB6E00A911A9 /* ccCArray.h */; };
@@ -1286,7 +1281,6 @@
 		507B3E391C31BDD30067B53E /* CCMath.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD1F1925AB0000A911A9 /* CCMath.h */; };
 		507B3E3A1C31BDD30067B53E /* CCFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570183180BCB590088DEC7 /* CCFont.h */; };
 		507B3E401C31BDD30067B53E /* AudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E2BDADD19C030ED0055CDCD /* AudioEngine.h */; };
-		507B3E421C31BDD30067B53E /* CCGLProgramStateCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD6F1925AB4100A911A9 /* CCGLProgramStateCache.h */; };
 		507B3E451C31BDD30067B53E /* HttpRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAF5364180E3374000584C8 /* HttpRequest.h */; };
 		507B3E491C31BDD30067B53E /* CCTrianglesCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B230ED7019B417AE00364AA8 /* CCTrianglesCommand.h */; };
 		507B3E4F1C31BDD30067B53E /* CCGeometry.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD1E1925AB0000A911A9 /* CCGeometry.h */; };
@@ -1409,10 +1403,8 @@
 		507B401D1C31BDD30067B53E /* CCController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6176561960F89B00DE83F5 /* CCController.h */; };
 		507B40201C31BDD30067B53E /* CCGameController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E6176651960F89B00DE83F5 /* CCGameController.h */; };
 		507B40231C31BDD30067B53E /* CCEventListenerAcceleration.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDE31925AB6E00A911A9 /* CCEventListenerAcceleration.h */; };
-		507B40251C31BDD30067B53E /* CCGLProgramCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD6B1925AB4100A911A9 /* CCGLProgramCache.h */; };
 		507B40271C31BDD30067B53E /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBDFC1925AB6E00A911A9 /* CCProfiling.h */; };
 		507B402F1C31BDD30067B53E /* CCApplication-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 503DD8CE1926736A00CD74DD /* CCApplication-ios.h */; };
-		507B40341C31BDD30067B53E /* CCGLProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD691925AB4100A911A9 /* CCGLProgram.h */; };
 		507B40361C31BDD30067B53E /* CCApplicationProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBF201926664700A911A9 /* CCApplicationProtocol.h */; };
 		507B40371C31BDD30067B53E /* CCFontCharMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 1ABA68AD1888D700007D1BB4 /* CCFontCharMap.h */; };
 		507B403E1C31BDD30067B53E /* MathUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD271925AB0000A911A9 /* MathUtil.h */; };
@@ -1591,22 +1583,6 @@
 		50ABBD881925AB4100A911A9 /* CCCustomCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD661925AB4100A911A9 /* CCCustomCommand.cpp */; };
 		50ABBD891925AB4100A911A9 /* CCCustomCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD671925AB4100A911A9 /* CCCustomCommand.h */; };
 		50ABBD8A1925AB4100A911A9 /* CCCustomCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD671925AB4100A911A9 /* CCCustomCommand.h */; };
-		50ABBD8B1925AB4100A911A9 /* CCGLProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD681925AB4100A911A9 /* CCGLProgram.cpp */; };
-		50ABBD8C1925AB4100A911A9 /* CCGLProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD681925AB4100A911A9 /* CCGLProgram.cpp */; };
-		50ABBD8D1925AB4100A911A9 /* CCGLProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD691925AB4100A911A9 /* CCGLProgram.h */; };
-		50ABBD8E1925AB4100A911A9 /* CCGLProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD691925AB4100A911A9 /* CCGLProgram.h */; };
-		50ABBD8F1925AB4100A911A9 /* CCGLProgramCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD6A1925AB4100A911A9 /* CCGLProgramCache.cpp */; };
-		50ABBD901925AB4100A911A9 /* CCGLProgramCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD6A1925AB4100A911A9 /* CCGLProgramCache.cpp */; };
-		50ABBD911925AB4100A911A9 /* CCGLProgramCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD6B1925AB4100A911A9 /* CCGLProgramCache.h */; };
-		50ABBD921925AB4100A911A9 /* CCGLProgramCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD6B1925AB4100A911A9 /* CCGLProgramCache.h */; };
-		50ABBD931925AB4100A911A9 /* CCGLProgramState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD6C1925AB4100A911A9 /* CCGLProgramState.cpp */; };
-		50ABBD941925AB4100A911A9 /* CCGLProgramState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD6C1925AB4100A911A9 /* CCGLProgramState.cpp */; };
-		50ABBD951925AB4100A911A9 /* CCGLProgramState.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD6D1925AB4100A911A9 /* CCGLProgramState.h */; };
-		50ABBD961925AB4100A911A9 /* CCGLProgramState.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD6D1925AB4100A911A9 /* CCGLProgramState.h */; };
-		50ABBD971925AB4100A911A9 /* CCGLProgramStateCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD6E1925AB4100A911A9 /* CCGLProgramStateCache.cpp */; };
-		50ABBD981925AB4100A911A9 /* CCGLProgramStateCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD6E1925AB4100A911A9 /* CCGLProgramStateCache.cpp */; };
-		50ABBD991925AB4100A911A9 /* CCGLProgramStateCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD6F1925AB4100A911A9 /* CCGLProgramStateCache.h */; };
-		50ABBD9A1925AB4100A911A9 /* CCGLProgramStateCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD6F1925AB4100A911A9 /* CCGLProgramStateCache.h */; };
 		50ABBD9F1925AB4100A911A9 /* CCGroupCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD721925AB4100A911A9 /* CCGroupCommand.cpp */; };
 		50ABBDA01925AB4100A911A9 /* CCGroupCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ABBD721925AB4100A911A9 /* CCGroupCommand.cpp */; };
 		50ABBDA11925AB4100A911A9 /* CCGroupCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ABBD731925AB4100A911A9 /* CCGroupCommand.h */; };
@@ -3108,14 +3084,6 @@
 		50ABBD371925AB0000A911A9 /* Vec4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vec4.inl; sourceTree = "<group>"; };
 		50ABBD661925AB4100A911A9 /* CCCustomCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCCustomCommand.cpp; sourceTree = "<group>"; };
 		50ABBD671925AB4100A911A9 /* CCCustomCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCustomCommand.h; sourceTree = "<group>"; };
-		50ABBD681925AB4100A911A9 /* CCGLProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGLProgram.cpp; sourceTree = "<group>"; };
-		50ABBD691925AB4100A911A9 /* CCGLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLProgram.h; sourceTree = "<group>"; };
-		50ABBD6A1925AB4100A911A9 /* CCGLProgramCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGLProgramCache.cpp; sourceTree = "<group>"; };
-		50ABBD6B1925AB4100A911A9 /* CCGLProgramCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLProgramCache.h; sourceTree = "<group>"; };
-		50ABBD6C1925AB4100A911A9 /* CCGLProgramState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGLProgramState.cpp; sourceTree = "<group>"; };
-		50ABBD6D1925AB4100A911A9 /* CCGLProgramState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLProgramState.h; sourceTree = "<group>"; };
-		50ABBD6E1925AB4100A911A9 /* CCGLProgramStateCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGLProgramStateCache.cpp; sourceTree = "<group>"; };
-		50ABBD6F1925AB4100A911A9 /* CCGLProgramStateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGLProgramStateCache.h; sourceTree = "<group>"; };
 		50ABBD721925AB4100A911A9 /* CCGroupCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGroupCommand.cpp; sourceTree = "<group>"; };
 		50ABBD731925AB4100A911A9 /* CCGroupCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGroupCommand.h; sourceTree = "<group>"; };
 		50ABBD741925AB4100A911A9 /* CCQuadCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCQuadCommand.cpp; sourceTree = "<group>"; };
@@ -5067,14 +5035,6 @@
 				A045F6D51BA81577005076C7 /* CCTextureCube.h */,
 				50ABBD661925AB4100A911A9 /* CCCustomCommand.cpp */,
 				50ABBD671925AB4100A911A9 /* CCCustomCommand.h */,
-				50ABBD681925AB4100A911A9 /* CCGLProgram.cpp */,
-				50ABBD691925AB4100A911A9 /* CCGLProgram.h */,
-				50ABBD6A1925AB4100A911A9 /* CCGLProgramCache.cpp */,
-				50ABBD6B1925AB4100A911A9 /* CCGLProgramCache.h */,
-				50ABBD6C1925AB4100A911A9 /* CCGLProgramState.cpp */,
-				50ABBD6D1925AB4100A911A9 /* CCGLProgramState.h */,
-				50ABBD6E1925AB4100A911A9 /* CCGLProgramStateCache.cpp */,
-				50ABBD6F1925AB4100A911A9 /* CCGLProgramStateCache.h */,
 				50ABBD721925AB4100A911A9 /* CCGroupCommand.cpp */,
 				50ABBD731925AB4100A911A9 /* CCGroupCommand.h */,
 				461FE08E21CA129B00E5378F /* CCCallbackCommand.cpp */,
@@ -6010,14 +5970,12 @@
 				1A570083180BC5A10088DEC7 /* CCActionManager.h in Headers */,
 				1A40D1211E8E56C7002E363A /* filewritestream.h in Headers */,
 				1A570087180BC5A10088DEC7 /* CCActionPageTurn3D.h in Headers */,
-				50ABBD911925AB4100A911A9 /* CCGLProgramCache.h in Headers */,
 				ED9C6A9618599AD8000A5232 /* CCNodeGrid.h in Headers */,
 				460D4D0921ABD0C60075726E /* DeviceMTL.h in Headers */,
 				15FB20891AE7C57D00C31518 /* shapes.h in Headers */,
 				4631CB6921AFD9F90000D408 /* CCUITextInput.h in Headers */,
 				50ABBEC31925AB6F00A911A9 /* CCVector.h in Headers */,
 				1A57008B180BC5A10088DEC7 /* CCActionProgressTimer.h in Headers */,
-				50ABBD8D1925AB4100A911A9 /* CCGLProgram.h in Headers */,
 				50ABBEA11925AB6F00A911A9 /* CCScheduler.h in Headers */,
 				50ABBDB71925AB4100A911A9 /* CCTexture2D.h in Headers */,
 				4631CB9D21AFD9FA0000D408 /* UIScrollView.h in Headers */,
@@ -6178,7 +6136,6 @@
 				EDAF7C6F21F1797000E070B2 /* CCTextureUtils.h in Headers */,
 				50ABBD561925AB0000A911A9 /* TransformUtils.h in Headers */,
 				299754F6193EC95400A54AC3 /* ObjectFactory.h in Headers */,
-				50ABBD991925AB4100A911A9 /* CCGLProgramStateCache.h in Headers */,
 				1A40D11E1E8E56C7002E363A /* filereadstream.h in Headers */,
 				40FE105121F070640061C04F /* CCControl.h in Headers */,
 				A0534A6A1B87306E006B03E5 /* CCIDownloaderImpl.h in Headers */,
@@ -6446,7 +6403,6 @@
 				50ABC0171926664800A911A9 /* CCImage.h in Headers */,
 				B6DD2FCD1B04825B00E47F5F /* DetourNavMeshQuery.h in Headers */,
 				50ABBDA91925AB4100A911A9 /* CCRenderCommand.h in Headers */,
-				50ABBD951925AB4100A911A9 /* CCGLProgramState.h in Headers */,
 				50ABC0091926664800A911A9 /* CCCommon.h in Headers */,
 				50ABBE531925AB6F00A911A9 /* CCEventDispatcher.h in Headers */,
 				EDC78CA821CA19FC00E1863C /* Light3DReader.h in Headers */,
@@ -6476,7 +6432,6 @@
 				53E23A171E78B082009DD732 /* CCDevice-apple.h in Headers */,
 				507B3D461C31BDD30067B53E /* poly2tri.h in Headers */,
 				507B3D491C31BDD30067B53E /* CCRef.h in Headers */,
-				507B3D4C1C31BDD30067B53E /* CCGLProgramState.h in Headers */,
 				507B3D4E1C31BDD30067B53E /* ccShaders.h in Headers */,
 				507B3D571C31BDD30067B53E /* ccFPSImages.h in Headers */,
 				507B3D5C1C31BDD30067B53E /* ccCArray.h in Headers */,
@@ -6558,7 +6513,6 @@
 				507B3E3A1C31BDD30067B53E /* CCFont.h in Headers */,
 				50864CCF1C7BC1B100B3BAB1 /* cpRotaryLimitJoint.h in Headers */,
 				507B3E401C31BDD30067B53E /* AudioEngine.h in Headers */,
-				507B3E421C31BDD30067B53E /* CCGLProgramStateCache.h in Headers */,
 				507B3E451C31BDD30067B53E /* HttpRequest.h in Headers */,
 				507B3E491C31BDD30067B53E /* CCTrianglesCommand.h in Headers */,
 				507B3E4F1C31BDD30067B53E /* CCGeometry.h in Headers */,
@@ -6716,11 +6670,9 @@
 				507B401D1C31BDD30067B53E /* CCController.h in Headers */,
 				507B40201C31BDD30067B53E /* CCGameController.h in Headers */,
 				507B40231C31BDD30067B53E /* CCEventListenerAcceleration.h in Headers */,
-				507B40251C31BDD30067B53E /* CCGLProgramCache.h in Headers */,
 				50864CCC1C7BC1B100B3BAB1 /* cpRobust.h in Headers */,
 				507B40271C31BDD30067B53E /* CCProfiling.h in Headers */,
 				507B402F1C31BDD30067B53E /* CCApplication-ios.h in Headers */,
-				507B40341C31BDD30067B53E /* CCGLProgram.h in Headers */,
 				507B40361C31BDD30067B53E /* CCApplicationProtocol.h in Headers */,
 				507B40371C31BDD30067B53E /* CCFontCharMap.h in Headers */,
 				1A40D1111E8E56C7002E363A /* document.h in Headers */,
@@ -6802,7 +6754,6 @@
 				EDC78C1121CA19FB00E1863C /* CCActionTimelineNode.h in Headers */,
 				50ABBE9C1925AB6F00A911A9 /* CCRef.h in Headers */,
 				EDC78CB521CA19FC00E1863C /* WidgetReader.h in Headers */,
-				50ABBD961925AB4100A911A9 /* CCGLProgramState.h in Headers */,
 				EDC78BEB21CA19FB00E1863C /* CCDisplayManager.h in Headers */,
 				460D4CD421A5666E0075726E /* CCRenderer.h in Headers */,
 				50ABBDB41925AB4100A911A9 /* ccShaders.h in Headers */,
@@ -6946,7 +6897,6 @@
 				1A5701A0180BCB590088DEC7 /* CCFont.h in Headers */,
 				50864CCE1C7BC1B100B3BAB1 /* cpRotaryLimitJoint.h in Headers */,
 				3E2BDADE19C030ED0055CDCD /* AudioEngine.h in Headers */,
-				50ABBD9A1925AB4100A911A9 /* CCGLProgramStateCache.h in Headers */,
 				15AE1BBB19AADFF000C27E9E /* HttpRequest.h in Headers */,
 				B230ED7419B417AE00364AA8 /* CCTrianglesCommand.h in Headers */,
 				46AF3AA921F6B02400D5AFCD /* cocos3d.h in Headers */,
@@ -7200,13 +7150,11 @@
 				3E6176691960F89B00DE83F5 /* CCController.h in Headers */,
 				3E6176781960F89B00DE83F5 /* CCGameController.h in Headers */,
 				50ABBE641925AB6F00A911A9 /* CCEventListenerAcceleration.h in Headers */,
-				50ABBD921925AB4100A911A9 /* CCGLProgramCache.h in Headers */,
 				4631CBF221AFD9FA0000D408 /* UIHBox.h in Headers */,
 				50864CCB1C7BC1B100B3BAB1 /* cpRobust.h in Headers */,
 				50ABBE961925AB6F00A911A9 /* CCProfiling.h in Headers */,
 				EDC78D2F21CA19FC00E1863C /* CCSGUIReader.h in Headers */,
 				503DD8E01926736A00CD74DD /* CCApplication-ios.h in Headers */,
-				50ABBD8E1925AB4100A911A9 /* CCGLProgram.h in Headers */,
 				ED28C248219E629C0078D854 /* Buffer.h in Headers */,
 				46AF3A9721F6B02400D5AFCD /* CCSprite3D.h in Headers */,
 				1A40D1101E8E56C7002E363A /* document.h in Headers */,
@@ -7649,7 +7597,6 @@
 				4631CB2721AFD9F90000D408 /* UICheckBox.cpp in Sources */,
 				1A5702EA180BCE750088DEC7 /* CCTileMapAtlas.cpp in Sources */,
 				468A14F51EF223B700ECA675 /* idl_parser.cpp in Sources */,
-				50ABBD971925AB4100A911A9 /* CCGLProgramStateCache.cpp in Sources */,
 				EDC78CBA21CA19FC00E1863C /* NodeReader.cpp in Sources */,
 				1A2B22B21E6E54EC001D5EC9 /* Uri.cpp in Sources */,
 				4631CB9321AFD9FA0000D408 /* UIHelper.cpp in Sources */,
@@ -7686,7 +7633,6 @@
 				46AF3A2321F1877100D5AFCD /* CCPhysicsJoint.cpp in Sources */,
 				50ABC0011926664800A911A9 /* CCLock-apple.cpp in Sources */,
 				4631CBE321AFD9FA0000D408 /* UISlider.cpp in Sources */,
-				50ABBD931925AB4100A911A9 /* CCGLProgramState.cpp in Sources */,
 				EDC78BE621CA19FB00E1863C /* CCComController.cpp in Sources */,
 				EDC78CB021CA19FC00E1863C /* TextReader.cpp in Sources */,
 				1A57034B180BD09B0088DEC7 /* tinyxml2.cpp in Sources */,
@@ -7714,7 +7660,6 @@
 				15FB209B1AE7C57D00C31518 /* sweep_context.cc in Sources */,
 				46AF3AC221F6B02400D5AFCD /* CCFrustum.cpp in Sources */,
 				460D4D1821ABD0C60075726E /* CommandBufferMTL.mm in Sources */,
-				50ABBD8B1925AB4100A911A9 /* CCGLProgram.cpp in Sources */,
 				46AF3A7E21F6B02400D5AFCD /* CCRay.cpp in Sources */,
 				4631CB1F21AFD9F90000D408 /* UIPageView.cpp in Sources */,
 				ED150A9221E631DA00EFE7F7 /* ProgramCache.cpp in Sources */,
@@ -7729,7 +7674,6 @@
 				46AF3A8C21F6B02400D5AFCD /* CCSkeleton3D.cpp in Sources */,
 				40FE104E21F070640061C04F /* CCControl.cpp in Sources */,
 				826294341AAF003E00CB7CF7 /* HttpClient-apple.mm in Sources */,
-				50ABBD8F1925AB4100A911A9 /* CCGLProgramCache.cpp in Sources */,
 				EDE6457321F017220063F6E4 /* ShaderCache.cpp in Sources */,
 				50ABBD441925AB0000A911A9 /* CCVertex.cpp in Sources */,
 				EDC78D0C21CA19FC00E1863C /* CCActionFrame.cpp in Sources */,
@@ -7832,14 +7776,12 @@
 				507B39F91C31BDD30067B53E /* fastlz.c in Sources */,
 				507B39FA1C31BDD30067B53E /* CCSAXParser.cpp in Sources */,
 				507B3A091C31BDD30067B53E /* CCImage-ios.mm in Sources */,
-				507B3A0E1C31BDD30067B53E /* CCGLProgramState.cpp in Sources */,
 				507B3A121C31BDD30067B53E /* CCAutoreleasePool.cpp in Sources */,
 				507B3A1A1C31BDD30067B53E /* RecastDebugDraw.cpp in Sources */,
 				507B3A1C1C31BDD30067B53E /* CCAction.cpp in Sources */,
 				507B3A1D1C31BDD30067B53E /* CCActionCamera.cpp in Sources */,
 				507B3A261C31BDD30067B53E /* CCActionCatmullRom.cpp in Sources */,
 				507B3A2B1C31BDD30067B53E /* CCActionEase.cpp in Sources */,
-				507B3A2C1C31BDD30067B53E /* CCGLProgram.cpp in Sources */,
 				507B3A311C31BDD30067B53E /* CCActionGrid.cpp in Sources */,
 				507B3A391C31BDD30067B53E /* HttpClient-apple.mm in Sources */,
 				507B3A3E1C31BDD30067B53E /* CCClippingRectangleNode.cpp in Sources */,
@@ -7937,7 +7879,6 @@
 				507B3B951C31BDD30067B53E /* CCFastTMXTiledMap.cpp in Sources */,
 				507B3BA31C31BDD30067B53E /* CCFastTMXLayer.cpp in Sources */,
 				507B3BA41C31BDD30067B53E /* CCParticleSystemQuad.cpp in Sources */,
-				507B3BA51C31BDD30067B53E /* CCGLProgramCache.cpp in Sources */,
 				507B3BA91C31BDD30067B53E /* CCSprite.cpp in Sources */,
 				507B3BB81C31BDD30067B53E /* CCSpriteBatchNode.cpp in Sources */,
 				507B3BBB1C31BDD30067B53E /* CCSpriteFrame.cpp in Sources */,
@@ -8036,7 +7977,6 @@
 				507B3CFA1C31BDD30067B53E /* DetourNode.cpp in Sources */,
 				507B3CFE1C31BDD30067B53E /* CCEventMouse.cpp in Sources */,
 				507B3D001C31BDD30067B53E /* CCProtectedNode.cpp in Sources */,
-				507B3D011C31BDD30067B53E /* CCGLProgramStateCache.cpp in Sources */,
 				507B3D051C31BDD30067B53E /* WebSocket.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8072,7 +8012,6 @@
 				1A41ABC31DF00CEC00B5584C /* AudioDecoder.mm in Sources */,
 				503DD8EE1926736A00CD74DD /* CCImage-ios.mm in Sources */,
 				EDC78BFF21CA19FB00E1863C /* CocosStudioExtension.cpp in Sources */,
-				50ABBD941925AB4100A911A9 /* CCGLProgramState.cpp in Sources */,
 				50ABBE281925AB6F00A911A9 /* CCAutoreleasePool.cpp in Sources */,
 				EDC78C8521CA19FC00E1863C /* ListViewReader.cpp in Sources */,
 				B6DD2FB01B04825B00E47F5F /* RecastDebugDraw.cpp in Sources */,
@@ -8085,7 +8024,6 @@
 				1A57006A180BC5A10088DEC7 /* CCActionCatmullRom.cpp in Sources */,
 				1A57006E180BC5A10088DEC7 /* CCActionEase.cpp in Sources */,
 				4631CB4A21AFD9F90000D408 /* UIEditBox.cpp in Sources */,
-				50ABBD8C1925AB4100A911A9 /* CCGLProgram.cpp in Sources */,
 				1A570072180BC5A10088DEC7 /* CCActionGrid.cpp in Sources */,
 				46AF3AAD21F6B02400D5AFCD /* CCPlane.cpp in Sources */,
 				EDC78C9F21CA19FC00E1863C /* Node3DReader.cpp in Sources */,
@@ -8275,7 +8213,6 @@
 				B24AA986195A675C007B4522 /* CCFastTMXLayer.cpp in Sources */,
 				1A57022E180BCC1A0088DEC7 /* CCParticleSystemQuad.cpp in Sources */,
 				EDC78C8321CA19FC00E1863C /* GameNode3DReader.cpp in Sources */,
-				50ABBD901925AB4100A911A9 /* CCGLProgramCache.cpp in Sources */,
 				1A57027F180BCC900088DEC7 /* CCSprite.cpp in Sources */,
 				46E21B4821B900C900430A43 /* StringUtils.cpp in Sources */,
 				294D7D951D0E67B4002CE7B7 /* CCDevice-apple.mm in Sources */,
@@ -8454,7 +8391,6 @@
 				15EFA212198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */,
 				46AF3AC321F6B02400D5AFCD /* CCFrustum.cpp in Sources */,
 				4631CBA421AFD9FA0000D408 /* UIListView.cpp in Sources */,
-				50ABBD981925AB4100A911A9 /* CCGLProgramStateCache.cpp in Sources */,
 				46BD388121D35A5F002BD50F /* DepthStencilStateMTL.mm in Sources */,
 				15AE1BBF19AADFF000C27E9E /* WebSocket.cpp in Sources */,
 			);

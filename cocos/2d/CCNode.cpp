@@ -41,8 +41,6 @@ THE SOFTWARE.
 #include "2d/CCActionManager.h"
 #include "2d/CCScene.h"
 #include "2d/CCComponent.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramState.h"
 #include "renderer/CCMaterial.h"
 #include "math/TransformUtils.h"
 
@@ -164,9 +162,6 @@ Node::~Node()
     // User object has to be released before others, since userObject may have a weak reference of this node
     // It may invoke `node->stopAllActions();` while `_actionManager` is null if the next line is after `CC_SAFE_RELEASE_NULL(_actionManager)`.
     CC_SAFE_RELEASE_NULL(_userObject);
-    
-    // attributes
-    CC_SAFE_RELEASE_NULL(_glProgramState);
 
     for (auto& child : _children)
     {
@@ -724,42 +719,6 @@ void Node::setUserObject(Ref* userObject)
     CC_SAFE_RETAIN(userObject);
     CC_SAFE_RELEASE(_userObject);
     _userObject = userObject;
-}
-
-GLProgramState* Node::getGLProgramState() const
-{
-    return _glProgramState;
-}
-
-void Node::setGLProgramState(cocos2d::GLProgramState* glProgramState)
-{
-    if (glProgramState != _glProgramState)
-    {
-        CC_SAFE_RELEASE(_glProgramState);
-        _glProgramState = glProgramState;
-        CC_SAFE_RETAIN(_glProgramState);
-
-        if (_glProgramState)
-            _glProgramState->setNodeBinding(this);
-    }
-}
-
-
-void Node::setGLProgram(GLProgram* glProgram)
-{
-    if (_glProgramState == nullptr || (_glProgramState && _glProgramState->getGLProgram() != glProgram))
-    {
-        CC_SAFE_RELEASE(_glProgramState);
-        _glProgramState = GLProgramState::getOrCreateWithGLProgram(glProgram);
-        _glProgramState->retain();
-
-        _glProgramState->setNodeBinding(this);
-    }
-}
-
-GLProgram * Node::getGLProgram() const
-{
-    return _glProgramState ? _glProgramState->getGLProgram() : nullptr;
 }
 
 Scene* Node::getScene() const

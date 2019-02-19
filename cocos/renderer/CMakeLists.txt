@@ -48,10 +48,6 @@ set(COCOS_RENDERER_HEADER
 set(COCOS_RENDERER_SRC
     renderer/CCCallbackCommand.cpp
     renderer/CCCustomCommand.cpp
-    renderer/CCGLProgram.cpp
-    renderer/CCGLProgramCache.cpp
-    renderer/CCGLProgramState.cpp
-    renderer/CCGLProgramStateCache.cpp
     renderer/CCGroupCommand.cpp
     renderer/CCMaterial.cpp
     renderer/CCMeshCommand.cpp

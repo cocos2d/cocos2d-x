@@ -28,7 +28,6 @@
 #include "base/CCDirector.h"
 #include "2d/CCCamera.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCGLProgramCache.h"
 
 NS_CC_BEGIN
 

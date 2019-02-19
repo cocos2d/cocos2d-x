@@ -652,19 +652,19 @@ void RawStencilBufferTest::onBeforeDrawClip(int planeIndex, const Vec2& pt)
         Vec2(0, pt.y)
     };
     
-    auto glProgram= GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-    
-    int colorLocation = glProgram->getUniformLocation("u_color");
+//    auto glProgram= GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
+
+//    int colorLocation = glProgram->getUniformLocation("u_color");
     CHECK_GL_ERROR_DEBUG();
 
     Color4F color(1, 1, 1, 1);
-    
-    glProgram->use();
-    glProgram->setUniformsForBuiltins();
-    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
-    
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+//
+//    glProgram->use();
+//    glProgram->setUniformsForBuiltins();
+//    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
+//
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
@@ -682,18 +682,18 @@ void RawStencilBufferTest::onBeforeDrawSprite(int planeIndex, const Vec2& pt)
         Vec2(0, pt.y)
     };
 
-    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
+//    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
 
-    int colorLocation = glProgram->getUniformLocation("u_color");
+//    int colorLocation = glProgram->getUniformLocation("u_color");
     CHECK_GL_ERROR_DEBUG();
 
-    Color4F color = _planeColor[planeIndex];
-    glProgram->use();
-    glProgram->setUniformsForBuiltins();
-    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
-
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+//    Color4F color = _planeColor[planeIndex];
+//    glProgram->use();
+//    glProgram->setUniformsForBuiltins();
+//    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
+//
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
@@ -760,11 +760,11 @@ void RawStencilBufferTest3::setupStencilForDrawingOnPlane(GLint plane)
 void RawStencilBufferTestAlphaTest::setup()
 {
     RawStencilBufferTest::setup();
-    auto programState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
-    for(int i = 0; i < _planeCount; ++i)
-    {
-        _spritesStencil.at(i)->setGLProgramState(programState);
-    }
+//    auto programState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
+//    for(int i = 0; i < _planeCount; ++i)
+//    {
+//        _spritesStencil.at(i)->setGLProgramState(programState);
+//    }
 }
 //@implementation RawStencilBufferTest4
 
@@ -881,20 +881,20 @@ void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
         Vec2(0, pt.y)
     };
 
-    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
+//    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
 
-    int colorLocation = glProgram->getUniformLocation("u_color");
-    CHECK_GL_ERROR_DEBUG();
+//    int colorLocation = glProgram->getUniformLocation("u_color");
+//    CHECK_GL_ERROR_DEBUG();
+//
+//    Color4F color(1, 1, 1, 1);
+//
+//    glProgram->use();
+//    glProgram->setUniformsForBuiltins();
+//    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
 
-    Color4F color(1, 1, 1, 1);
-
-    glProgram->use();
-    glProgram->setUniformsForBuiltins();
-    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
-
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+//    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
     

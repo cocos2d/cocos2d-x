@@ -42,8 +42,6 @@ THE SOFTWARE.
 #include "2d/CCTransition.h"
 #include "2d/CCFontFreeType.h"
 #include "2d/CCLabelAtlas.h"
-#include "renderer/CCGLProgramCache.h"
-#include "renderer/CCGLProgramStateCache.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
@@ -1046,8 +1044,6 @@ void Director::reset()
     // purge all managed caches
     AnimationCache::destroyInstance();
     SpriteFrameCache::destroyInstance();
-    GLProgramCache::destroyInstance();
-    GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
     AsyncTaskPool::destroyInstance();
     backend::ProgramCache::destroyInstance();

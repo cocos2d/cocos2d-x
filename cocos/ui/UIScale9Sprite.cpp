@@ -29,7 +29,6 @@
 #include "base/CCVector.h"
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
-#include "renderer/CCGLProgram.h"
 #include "renderer/ccShaders.h"
 #include "platform/CCImage.h"
 #include "base/CCNinePatchImageParser.h"

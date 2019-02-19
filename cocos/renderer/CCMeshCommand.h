@@ -28,7 +28,6 @@
 
 #include <unordered_map>
 #include "renderer/CCRenderCommand.h"
-#include "renderer/CCGLProgram.h"
 #include "renderer/CCRenderState.h"
 #include "math/CCMath.h"
 
