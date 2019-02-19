@@ -32,34 +32,20 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
 #include "renderer/CCTextureCube.h"
+#include "renderer/ccShaders.h"
 #include "3d/CCSkybox.h"
 #include "2d/CCCamera.h"
 
 NS_CC_BEGIN
 
-Skybox::Skybox()
-    : _vao(0)
-    , _vertexBuffer(0)
-    , _indexBuffer(0)
-    ,_texture(nullptr)
+Skybox::Skybox():
+    _texture(nullptr)
 {
 }
 
 Skybox::~Skybox()
 {
-    glDeleteBuffers(1, &_vertexBuffer);
-    glDeleteBuffers(1, &_indexBuffer);
-
-    _vertexBuffer = 0;
-    _indexBuffer = 0;
-
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glDeleteVertexArrays(1, &_vao);
-        glBindVertexArray(0);
-        _vao = 0;
-    }
-
+    CC_SAFE_RELEASE_NULL(_programState);
     _texture->release();
 }
 
@@ -77,10 +63,22 @@ Skybox* Skybox::create(const std::string& positive_x, const std::string& negativ
 bool Skybox::init()
 {
     // create and set our custom shader
-    auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKYBOX);
-    auto state = GLProgramState::create(shader);
-    state->setVertexAttribPointer(GLProgram::ATTRIBUTE_NAME_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
-    setGLProgramState(state);
+
+    _programState = new backend::ProgramState(CC3D_skybox_vert, CC3D_skybox_frag);
+
+    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    auto &layout = pipelineDescriptor.vertexLayout;
+
+    pipelineDescriptor.programState = _programState;
+    // disable blend
+    pipelineDescriptor.blendDescriptor.blendEnabled = false; 
+
+    layout.setAtrribute(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
+    layout.setLayout(sizeof(Vec3), backend::VertexStepMode::VERTEX);
+
+    _uniformColorLoc = _programState->getUniformLocation("u_color");
+    _uniformCameraRotLoc = _programState->getUniformLocation("u_cameraRot");
+    _uniformEnvLoc = _programState->getUniformLocation("u_Env");
 
     initBuffers();
 
@@ -99,16 +97,13 @@ bool Skybox::init(const std::string& positive_x, const std::string& negative_x,
     
     init();
     setTexture(texture);
+    texture->release();
     return true;
 }
 
 void Skybox::initBuffers()
 {
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glGenVertexArrays(1, &_vao);
-        glBindVertexArray(_vao);
-    }
+
 	// The skybox is rendered using a purpose-built shader which makes use of
 	// the shader language's inherent support for cubemaps. Hence there is no
 	// need to build a cube mesh. All that is needed is a single quad that
@@ -136,116 +131,81 @@ void Skybox::initBuffers()
         Vec3(1, -1, -1), Vec3(1, 1, -1), Vec3(-1, 1, -1), Vec3(-1, -1, -1)
     };
 
-    glGenBuffers(1, &_vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vexBuf), vexBuf, GL_STATIC_DRAW);
+    uint16_t idxBuf[] = { 0, 1, 2, 0, 2, 3 };
 
-    // init index buffer object
-    const unsigned char idxBuf[] = {0, 1, 2, 0, 2, 3};
+    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    _customCommand.createVertexBuffer(sizeof(Vec3), sizeof(vexBuf), CustomCommand::BufferUsage::STATIC);
+    _customCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, 6, CustomCommand::BufferUsage::STATIC);
 
-    glGenBuffers(1, &_indexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(idxBuf), idxBuf, GL_STATIC_DRAW);
-
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-        getGLProgramState()->applyAttributes(false);
-
-        glBindVertexArray(0);
-    }
+    _customCommand.updateVertexBuffer(&vexBuf[0], sizeof(vexBuf));
+    _customCommand.updateIndexBuffer(&idxBuf[0], sizeof(idxBuf));
 }
 
 void Skybox::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.func = CC_CALLBACK_0(Skybox::onDraw, this, transform, flags);
     _customCommand.setTransparent(false);
     _customCommand.set3D(true);
-    renderer->addCommand(&_customCommand);
-}
 
-void Skybox::onDraw(const Mat4& transform, uint32_t /*flags*/)
-{
+    _beforeCommand.init(_globalZOrder);
+    _afterCommand.init(_globalZOrder);
+
+    _beforeCommand.func = CC_CALLBACK_0(Skybox::onBeforeDraw, this);
+    _afterCommand.func = CC_CALLBACK_0(Skybox::onAfterDraw, this);
+
+    renderer->addCommand(&_beforeCommand);
+    renderer->addCommand(&_customCommand);
+    renderer->addCommand(&_afterCommand);
+
     auto camera = Camera::getVisitingCamera();
-    
+
     Mat4 cameraModelMat = camera->getNodeToWorldTransform();
     Mat4 projectionMat = camera->getProjectionMatrix();
     // Ignore the translation
     cameraModelMat.m[12] = cameraModelMat.m[13] = cameraModelMat.m[14] = 0;
     // prescale the matrix to account for the camera fov
     cameraModelMat.scale(1 / projectionMat.m[0], 1 / projectionMat.m[5], 1.0);
-    
-    auto state = getGLProgramState();
-    state->apply(transform);
 
     Vec4 color(_displayedColor.r / 255.f, _displayedColor.g / 255.f, _displayedColor.b / 255.f, 1.f);
-    state->setUniformVec4("u_color", color);
-    state->setUniformMat4("u_cameraRot", cameraModelMat);
-
-    glEnable(GL_DEPTH_TEST);
-    RenderState::StateBlock::_defaultState->setDepthTest(true);
-
-    glDepthFunc(GL_LEQUAL);
-    RenderState::StateBlock::_defaultState->setDepthFunction(RenderState::DEPTH_LEQUAL);
-
-    glEnable(GL_CULL_FACE);
-    RenderState::StateBlock::_defaultState->setCullFace(true);
-
-    glCullFace(GL_BACK);
-    RenderState::StateBlock::_defaultState->setCullFaceSide(RenderState::CULL_FACE_SIDE_BACK);
-    
-    glDisable(GL_BLEND);
-    RenderState::StateBlock::_defaultState->setBlend(false);
-
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glBindVertexArray(_vao);
-    }
-    else
-    {
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-
-        glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-    }
-
-    glDrawElements(GL_TRIANGLES, (GLsizei)6, GL_UNSIGNED_BYTE, nullptr);
-
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glBindVertexArray(0);
-    }
-    else
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
+    _programState->setUniform(_uniformColorLoc, &color, sizeof(color));
+    _programState->setUniform(_uniformCameraRotLoc, cameraModelMat.m, sizeof(cameraModelMat.m));
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
-
-    CHECK_GL_ERROR_DEBUG();
 }
 
 void Skybox::setTexture(TextureCube* texture)
 {
     CCASSERT(texture != nullptr, __FUNCTION__);
-
+    CC_SAFE_RELEASE_NULL(_texture);
     texture->retain();
-
-    if (_texture)
-        _texture->release();
-
     _texture = texture;
-
-    getGLProgramState()->setUniformTexture("u_Env", _texture);
+    _programState->setTexture(_uniformEnvLoc, 0, _texture->getBackendTexture());
 }
 
 void Skybox::reload()
 {
     initBuffers();
+}
+
+void Skybox::onBeforeDraw()
+{
+    auto *renderer = Director::getInstance()->getRenderer();
+    
+    _rendererDepthTestEnabled = renderer->getDepthTest();
+    _rendererDepthCmpFunc = renderer->getDepthCompareFunction();
+    _rendererCullMode = renderer->getCullMode();
+
+    renderer->setDepthTest(true);
+    renderer->setDepthCompareFunction(backend::CompareFunction::LESS);
+    renderer->setCullMode(CullMode::BACK);
+}
+
+void Skybox::onAfterDraw()
+{
+    auto *renderer = Director::getInstance()->getRenderer();
+    renderer->setDepthTest(_rendererDepthTestEnabled);
+    renderer->setDepthCompareFunction(_rendererDepthCmpFunc);
+    renderer->setCullMode(_rendererCullMode);
 }
 
 NS_CC_END

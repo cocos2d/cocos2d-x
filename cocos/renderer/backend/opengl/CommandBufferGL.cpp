@@ -71,6 +71,36 @@ namespace
         else
             return GL_FRONT;
     }
+
+    GLuint getHandler(Texture *texture)
+    {
+        switch (texture->getTextureType())
+        {
+        case TextureType::TEXTURE_2D:
+            return static_cast<Texture2DGL*>(texture)->getHandler();
+        case TextureType::TEXTURE_CUBE:
+            return static_cast<TextureCubeGL*>(texture)->getHandler();
+        default:
+            assert(false);
+            return 0;
+        }
+    }
+
+    void applyTexture(Texture* texture, int slot)
+    {
+        switch (texture->getTextureType())
+        {
+        case TextureType::TEXTURE_2D:
+            static_cast<Texture2DGL*>(texture)->apply(slot);
+            break;
+        case TextureType::TEXTURE_CUBE:
+            static_cast<TextureCubeGL*>(texture)->apply(slot);
+            break;
+        default:
+            assert(false);
+            return ;
+        }
+    }
 }
 
 CommandBufferGL::CommandBufferGL()
@@ -114,22 +144,20 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
     
     if (useDepthAttachmentExternal)
     {
-        auto depthTexture = static_cast<TextureGL*>(descirptor.depthAttachmentTexture);
         glFramebufferTexture2D(GL_FRAMEBUFFER,
                                GL_DEPTH_ATTACHMENT,
                                GL_TEXTURE_2D,
-                               depthTexture->getHandler(),
+                               getHandler(descirptor.depthAttachmentTexture),
                                0);
         CHECK_GL_ERROR_DEBUG();
     }
         
     if (useStencilAttachmentExternal)
     {
-        auto stencilTexture = static_cast<TextureGL*>(descirptor.depthAttachmentTexture);
         glFramebufferTexture2D(GL_FRAMEBUFFER,
                                GL_STENCIL_ATTACHMENT,
                                GL_TEXTURE_2D,
-                               stencilTexture->getHandler(),
+                               getHandler(descirptor.depthAttachmentTexture),
                                0);
         CHECK_GL_ERROR_DEBUG();
     }
@@ -142,11 +170,10 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
             if (texture)
             {
                 // TODO: support texture cube
-                auto textureGL = static_cast<TextureGL*>(texture);
                 glFramebufferTexture2D(GL_FRAMEBUFFER,
                                        GL_COLOR_ATTACHMENT0 + i,
                                        GL_TEXTURE_2D,
-                                       textureGL->getHandler(),
+                                       getHandler(texture),
                                        0);
             }
             CHECK_GL_ERROR_DEBUG();
@@ -416,7 +443,7 @@ void CommandBufferGL::setUniforms(ProgramGL* program) const
             int i = 0;
             for (const auto& texture: textures)
             {
-                static_cast<TextureGL*>(texture)->apply(slot[i]);
+                applyTexture(texture, slot[i]);
                 ++i;
             }
             

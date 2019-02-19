@@ -112,8 +112,9 @@ void RenderPipelineMTL::setVertexLayout(MTLRenderPipelineDescriptor* mtlDescript
         mtlDescriptor.vertexDescriptor.layouts[vertexIndex].stepFunction = toMTLVertexStepFunction(vertexLayout.getVertexStepMode());
         
         const auto& attributes = vertexLayout.getAttributes();
-        for (const auto& attribute : attributes)
+        for (const auto& it : attributes)
         {
+            auto attribute = it.second;
             mtlDescriptor.vertexDescriptor.attributes[attribute.index].format = toMTLVertexFormat(attribute.format, attribute.needToBeNormallized);
             mtlDescriptor.vertexDescriptor.attributes[attribute.index].offset = attribute.offset;
             // Buffer index will always be 0;

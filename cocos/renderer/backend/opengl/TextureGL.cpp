@@ -92,19 +92,199 @@ namespace
         }
         return ret;
     }
+
+
+    void toGLTypes(TextureFormat textureFormat, GLint &internalFormat, GLuint &format, GLenum &type, bool &isCompressed)
+    {
+        switch (textureFormat)
+        {
+        case TextureFormat::R8G8B8A8:
+            internalFormat = GL_RGBA;
+            format = GL_RGBA;
+            type = GL_UNSIGNED_BYTE;
+            break;
+        case TextureFormat::R8G8B8:
+            internalFormat = GL_RGB;
+            format = GL_RGB;
+            type = GL_UNSIGNED_BYTE;
+            break;
+        case TextureFormat::RGBA4444:
+            internalFormat = GL_RGBA;
+            format = GL_RGBA;
+            type = GL_UNSIGNED_SHORT_4_4_4_4;
+            break;
+        case TextureFormat::A8:
+            internalFormat = GL_ALPHA;
+            format = GL_ALPHA;
+            type = GL_UNSIGNED_BYTE;
+            break;
+        case TextureFormat::I8:
+            internalFormat = GL_LUMINANCE;
+            format = GL_LUMINANCE;
+            type = GL_UNSIGNED_BYTE;
+            break;
+        case TextureFormat::AI88:
+            internalFormat = GL_LUMINANCE_ALPHA;
+            format = GL_LUMINANCE_ALPHA;
+            type = GL_UNSIGNED_BYTE;
+            break;
+        case TextureFormat::RGB565:
+            internalFormat = GL_RGB;
+            format = GL_RGB;
+            type = GL_UNSIGNED_SHORT_5_6_5;
+            break;
+        case TextureFormat::RGB5A1:
+            internalFormat = GL_RGBA;
+            format = GL_RGBA;
+            type = GL_UNSIGNED_SHORT_5_5_5_1;
+            break;
+#ifdef GL_ETC1_RGB8_OES
+        case TextureFormat::ETC1:
+            internalFormat = GL_ETC1_RGB8_OES;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
+            break;
+#endif // GL_ETC1_RGB8_OES
+#ifdef GL_ATC_RGB_AMD
+        case TextureFormat::ATC_RGB:
+            internalFormat = GL_ATC_RGB_AMD;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
+            break;
+#endif // GL_ATC_RGB_AMD
+#ifdef GL_ATC_RGBA_EXPLICIT_ALPHA_AMD
+        case TextureFormat::ATC_EXPLICIT_ALPHA:
+            internalFormat = GL_ATC_RGBA_EXPLICIT_ALPHA_AMD;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
+#endif // GL_ATC_RGBA_EXPLICIT_ALPHA_AMD
+#ifdef GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD
+        case TextureFormat::ATC_INTERPOLATED_ALPHA:
+            internalFormat = GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
+            break;
+#endif // GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD
+
+#ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
+        case TextureFormat::PVRTC2:
+            internalFormat = GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
+            break;
+#endif 
+#ifdef GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG
+        case TextureFormat::PVRTC2A:
+            internalFormat = GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
+            break;
+#endif
+#ifdef GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG
+        case TextureFormat::PVRTC4:
+            internalFormat = GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
+            break;
+#endif
+#ifdef GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG
+        case TextureFormat::PVRTC4A:
+            internalFormat = GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
+            break;
+#endif
+#ifdef GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
+        case TextureFormat::S3TC_DXT1:
+            internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
+            break;
+#endif 
+#ifdef GL_COMPRESSED_RGBA_S3TC_DXT3_EXT
+        case TextureFormat::S3TC_DXT3:
+            internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
+            break;
+#endif
+#ifdef GL_COMPRESSED_RGBA_S3TC_DXT5_EXT
+        case TextureFormat::S3TC_DXT5:
+            internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
+            break;
+#endif
+            //        case TextureFormat::D16:
+            //            format = GL_DEPTH_COMPONENT;
+            //            internalFormat = GL_DEPTH_COMPONENT;
+            //            type = GL_UNSIGNED_INT;
+        case TextureFormat::D24S8:
+#ifdef CC_USE_GLES
+            format = GL_DEPTH_STENCIL_OES;
+            internalFormat = GL_DEPTH_STENCIL_OES;
+            type = GL_UNSIGNED_INT_24_8_OES;
+#else
+            format = GL_DEPTH_STENCIL;
+            internalFormat = GL_DEPTH32F_STENCIL8;
+            type = GL_FLOAT_32_UNSIGNED_INT_24_8_REV;
+#endif
+            break;
+        default:
+            break;
+        }
+    }
+
 }
 
-TextureGL::TextureGL(const TextureDescriptor& descriptor) : Texture(descriptor)
+
+
+void TextureInfoGL::applySamplerDescriptor(const SamplerDescriptor& descriptor, bool isPow2)
 {
-    glGenTextures(1, &_texture);
-    toGLTypes();
+    if (descriptor.magFilter != SamplerFilter::DONT_CARE)
+    {
+        magFilterGL = toGLMagFilter(descriptor.magFilter);
+    }
+
+    if (descriptor.minFilter != SamplerFilter::DONT_CARE)
+    {
+        minFilterGL = toGLMinFilter(descriptor.minFilter, descriptor.mipmapFilter, descriptor.mipmapEnabled, isPow2);
+    }
+
+    if (descriptor.sAddressMode != SamplerAddressMode::DONT_CARE)
+    {
+        sAddressModeGL = toGLAddressMode(descriptor.sAddressMode, isPow2);
+    }
+
+    if (descriptor.tAddressMode != SamplerAddressMode::DONT_CARE)
+    {
+        tAddressModeGL = toGLAddressMode(descriptor.tAddressMode, isPow2);
+    }
+}
+
+Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : Texture2D(descriptor)
+{
+    glGenTextures(1, &_textureInfo.texture);
+    toGLTypes(_textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
+
     bool isPow2 = ISPOW2(_width) && ISPOW2(_height);
-    _magFilterGL = toGLMagFilter(descriptor.samplerDescriptor.magFilter);
-    _minFilterGL = toGLMinFilter(descriptor.samplerDescriptor.minFilter,
+    _textureInfo.magFilterGL = toGLMagFilter(descriptor.samplerDescriptor.magFilter);
+    _textureInfo.minFilterGL = toGLMinFilter(descriptor.samplerDescriptor.minFilter,
                                  descriptor.samplerDescriptor.mipmapFilter, _isMipmapEnabled, isPow2);
     
-    _sAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.sAddressMode, isPow2);
-    _tAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.tAddressMode, isPow2);
+    _textureInfo.sAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.sAddressMode, isPow2);
+    _textureInfo.tAddressModeGL = toGLAddressMode(descriptor.samplerDescriptor.tAddressMode, isPow2);
    
     // Update data here because `updateData()` may not be invoked later.
     // For example, a texture used as depth buffer will not invoke updateData().
@@ -113,48 +293,46 @@ TextureGL::TextureGL(const TextureDescriptor& descriptor) : Texture(descriptor)
     free(data);
 }
 
-TextureGL::~TextureGL()
+Texture2DGL::~Texture2DGL()
 {
-    if (_texture)
-        glDeleteTextures(1, &_texture);
+    if (_textureInfo.texture)
+        glDeleteTextures(1, &_textureInfo.texture);
 }
 
-void TextureGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
+void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
     bool isPow2 = ISPOW2(_width) && ISPOW2(_height);
     bool needGenerateMipmap = !_isMipmapEnabled && sampler.mipmapEnabled;
     _isMipmapEnabled = sampler.mipmapEnabled;
 
+    _textureInfo.applySamplerDescriptor(sampler, isPow2);
+
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _texture);
+    glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
 
     if (sampler.magFilter != SamplerFilter::DONT_CARE)
     {
-        _magFilterGL = toGLMagFilter(sampler.magFilter);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _magFilterGL);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _textureInfo.magFilterGL);
     }
 
     if (sampler.minFilter != SamplerFilter::DONT_CARE)
     {
-        _minFilterGL = toGLMinFilter(sampler.minFilter, sampler.mipmapFilter, _isMipmapEnabled, isPow2);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _minFilterGL);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _textureInfo.minFilterGL);
     }
 
     if (sampler.sAddressMode != SamplerAddressMode::DONT_CARE)
     {
-        _sAddressModeGL = toGLAddressMode(sampler.sAddressMode, isPow2);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _sAddressModeGL);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _textureInfo.sAddressModeGL);
     }
 
     if (sampler.tAddressMode != SamplerAddressMode::DONT_CARE)
     {
-        _tAddressModeGL = toGLAddressMode(sampler.tAddressMode, isPow2);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _tAddressModeGL);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _textureInfo.tAddressModeGL);
     }
 
     if (needGenerateMipmap) generateMipmpas();
 }
 
-void TextureGL::updateData(uint8_t* data)
+void Texture2DGL::updateData(uint8_t* data)
 {
     // TODO: support texture cube, and compressed data.
     
@@ -186,28 +364,28 @@ void TextureGL::updateData(uint8_t* data)
     }
     
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _texture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _magFilterGL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _minFilterGL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _sAddressModeGL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _tAddressModeGL);
+    glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _textureInfo.magFilterGL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _textureInfo.minFilterGL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _textureInfo.sAddressModeGL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _textureInfo.tAddressModeGL);
 
 
     if(_isCompressed)
     {
         auto datalen = _width * _height * _bitsPerElement / 8;
-        glCompressedTexImage2D(GL_TEXTURE_2D, 0, _internalFormat, (GLsizei)_width, (GLsizei)_height, 0, datalen, data);
+        glCompressedTexImage2D(GL_TEXTURE_2D, 0, _textureInfo.internalFormat, (GLsizei)_width, (GLsizei)_height, 0, datalen, data);
     }
     else
     {
         glTexImage2D(GL_TEXTURE_2D,
                      0,
-                     _internalFormat,
+                     _textureInfo.internalFormat,
                      _width,
                      _height,
                      0,
-                     _format,
-                     _type,
+                     _textureInfo.format,
+                     _textureInfo.type,
                      data);
     }
     CHECK_GL_ERROR_DEBUG();
@@ -216,18 +394,18 @@ void TextureGL::updateData(uint8_t* data)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void TextureGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data)
+void Texture2DGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data)
 {
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _texture);
+    glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
     glTexSubImage2D(GL_TEXTURE_2D,
                     0,
                     xoffset,
                     yoffset,
                     width,
                     height,
-                    _format,
-                    _type,
+                    _textureInfo.format,
+                    _textureInfo.type,
                     data);
     CHECK_GL_ERROR_DEBUG();
     
@@ -235,169 +413,75 @@ void TextureGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsign
     CHECK_GL_ERROR_DEBUG();
 }
 
-void TextureGL::apply(int index) const
+void Texture2DGL::apply(int index) const
 {
     glActiveTexture(GL_TEXTURE0 + index);
-    glBindTexture(GL_TEXTURE_2D, _texture);
+    glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
 }
 
-void TextureGL::generateMipmpas() const
+void Texture2DGL::generateMipmpas() const
 {
-    if (_isMipmapEnabled &&
-        TextureUsage::RENDER_TARGET != _textureUsage)
+    if (Texture2D::_isMipmapEnabled &&
+        TextureUsage::RENDER_TARGET != Texture2D:: _textureUsage)
         glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-void TextureGL::toGLTypes()
+TextureCubeGL::TextureCubeGL(const TextureDescriptor& descriptor)
+    :TextureCubemap(descriptor)
 {
-    switch (_textureFormat)
-    {
-        case TextureFormat::R8G8B8A8:
-            _internalFormat = GL_RGBA;
-            _format = GL_RGBA;
-            _type = GL_UNSIGNED_BYTE;
-            break;
-        case TextureFormat::R8G8B8:
-            _internalFormat = GL_RGB;
-            _format = GL_RGB;
-            _type = GL_UNSIGNED_BYTE;
-            break;
-        case TextureFormat::RGBA4444:
-            _internalFormat = GL_RGBA;
-            _format = GL_RGBA;
-            _type = GL_UNSIGNED_SHORT_4_4_4_4;
-            break;
-        case TextureFormat::A8:
-            _internalFormat = GL_ALPHA;
-            _format = GL_ALPHA;
-            _type = GL_UNSIGNED_BYTE;
-            break;
-        case TextureFormat::I8:
-            _internalFormat = GL_LUMINANCE;
-            _format = GL_LUMINANCE;
-            _type = GL_UNSIGNED_BYTE;
-            break;
-        case TextureFormat::AI88:
-            _internalFormat = GL_LUMINANCE_ALPHA;
-            _format = GL_LUMINANCE_ALPHA;
-            _type = GL_UNSIGNED_BYTE;
-            break;
-        case TextureFormat::RGB565:
-            _internalFormat = GL_RGB;
-            _format = GL_RGB;
-            _type = GL_UNSIGNED_SHORT_5_6_5;
-            break;
-        case TextureFormat::RGB5A1:
-            _internalFormat = GL_RGBA;
-            _format = GL_RGBA;
-            _type = GL_UNSIGNED_SHORT_5_5_5_1;
-            break;
-#ifdef GL_ETC1_RGB8_OES
-        case TextureFormat::ETC1:
-            _internalFormat = GL_ETC1_RGB8_OES;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
-            break;
-#endif // GL_ETC1_RGB8_OES
-#ifdef GL_ATC_RGB_AMD
-        case TextureFormat ::ATC_RGB:
-            _internalFormat = GL_ATC_RGB_AMD;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
-            break;
-#endif // GL_ATC_RGB_AMD
-#ifdef GL_ATC_RGBA_EXPLICIT_ALPHA_AMD
-        case TextureFormat::ATC_EXPLICIT_ALPHA:
-            _internalFormat = GL_ATC_RGBA_EXPLICIT_ALPHA_AMD;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
-#endif // GL_ATC_RGBA_EXPLICIT_ALPHA_AMD
-#ifdef GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD
-        case TextureFormat::ATC_INTERPOLATED_ALPHA:
-            _internalFormat = GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
-            break;
-#endif // GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD
+    assert(descriptor.width == descriptor.height);
+    _size = descriptor.width;
+    _textureType = TextureType::TEXTURE_CUBE;
+    toGLTypes(_textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
+    glGenTextures(1, &_textureInfo.texture);
+    CHECK_GL_ERROR_DEBUG();
+}
 
-#ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
-        case TextureFormat::PVRTC2:
-            _internalFormat = GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
-            break;
-#endif 
-#ifdef GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG
-        case TextureFormat::PVRTC2A:
-            _internalFormat = GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
-            break;
-#endif
-#ifdef GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG
-    case TextureFormat::PVRTC4:
-            _internalFormat = GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
-            break;
-#endif
-#ifdef GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG
-        case TextureFormat::PVRTC4A:
-            _internalFormat = GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
-            break;
-#endif
-#ifdef GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
-        case TextureFormat::S3TC_DXT1:
-            _internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
-            break;
-#endif 
-#ifdef GL_COMPRESSED_RGBA_S3TC_DXT3_EXT
-        case TextureFormat::S3TC_DXT3:
-            _internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
-            break;
-#endif
-#ifdef GL_COMPRESSED_RGBA_S3TC_DXT5_EXT
-        case TextureFormat::S3TC_DXT5:
-            _internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
-            break;
-#endif
-//        case TextureFormat::D16:
-//            _format = GL_DEPTH_COMPONENT;
-//            _internalFormat = GL_DEPTH_COMPONENT;
-//            _type = GL_UNSIGNED_INT;
-        case TextureFormat::D24S8:
-#ifdef CC_USE_GLES
-            _format = GL_DEPTH_STENCIL_OES;
-            _internalFormat = GL_DEPTH_STENCIL_OES;
-            _type = GL_UNSIGNED_INT_24_8_OES;
-#else
-            _format = GL_DEPTH_STENCIL;
-            _internalFormat = GL_DEPTH32F_STENCIL8;
-            _type = GL_FLOAT_32_UNSIGNED_INT_24_8_REV;
-#endif
-            break;
-        default:
-            break;
-    }
+TextureCubeGL::~TextureCubeGL()
+{
+    if(_textureInfo.texture)
+        glDeleteTextures(1, &_textureInfo.texture);
+    _textureInfo.texture = 0;
+}
+
+void TextureCubeGL::updateSamplerDescriptor(const SamplerDescriptor &sampler)
+{
+    _textureInfo.applySamplerDescriptor(sampler, true);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _textureInfo.texture);
+    
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, _textureInfo.minFilterGL);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, _textureInfo.magFilterGL);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, _textureInfo.sAddressModeGL);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, _textureInfo.tAddressModeGL);
+    
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+}
+
+void TextureCubeGL::apply(int index) const
+{
+    glActiveTexture(GL_TEXTURE0+ index);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _textureInfo.texture);
+    CHECK_GL_ERROR_DEBUG();
+}
+
+void TextureCubeGL::updateFaceData(TextureCubeFace side, void *data)
+{
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _textureInfo.texture);
+    CHECK_GL_ERROR_DEBUG();
+    int i = static_cast<int>(side);
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+        0,                  // level
+        GL_RGBA,            // internal format
+        _size,              // width
+        _size,              // height
+        0,                  // border
+        _textureInfo.internalFormat,            // format
+        _textureInfo.type,  // type
+        data);              // pixel data
+    CHECK_GL_ERROR_DEBUG();
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 
 CC_BACKEND_END

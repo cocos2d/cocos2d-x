@@ -59,7 +59,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DEmptyTest);
     ADD_TEST_CASE(UseCaseSprite3D);
     ADD_TEST_CASE(Sprite3DForceDepthTest);
-    //ADD_TEST_CASE(Sprite3DCubeMapTest);
+    ADD_TEST_CASE(Sprite3DCubeMapTest);
     //    ADD_TEST_CASE(NodeAnimationTest);
     //    ADD_TEST_CASE(Issue9767);
     //    ADD_TEST_CASE(Sprite3DClippingTest);
@@ -2055,139 +2055,139 @@ void UseCaseSprite3D::update(float delta)
 //    addChild(sprite);
 //    _sprites.push_back(sprite);
 //}
-//
-//Sprite3DCubeMapTest::Sprite3DCubeMapTest() :
-//    _textureCube(nullptr),
-//    _skyBox(nullptr),
-//    _teapot(nullptr)
-//{
-//    auto s = Director::getInstance()->getWinSize();
-//    addNewSpriteWithCoords(Vec2(s.width / 2, s.height / 2));
-//}
-//
-//Sprite3DCubeMapTest::~Sprite3DCubeMapTest()
-//{
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
-//#endif
-//
-//    _teapot->release();
-//    _skyBox->release();
-//    _textureCube->release();
-//}
-//
-//std::string Sprite3DCubeMapTest::title() const
-//{
-//    return "CubeMap & Skybox Test";
-//}
-//
-//std::string Sprite3DCubeMapTest::subtitle() const
-//{
-//    return "";
-//}
-//
-//void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
-//{
-//    Size visibleSize = Director::getInstance()->getVisibleSize();
-//    _camera = Camera::createPerspective(60, visibleSize.width / visibleSize.height, 10, 1000);
-//    _camera->setPosition3D(Vec3(0.f, 0.f, 50.f));
-//    _camera->setCameraFlag(CameraFlag::USER1);
-//
-//    auto listener = EventListenerTouchAllAtOnce::create();
-//    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DCubeMapTest::onTouchesMoved, this);
-//    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-//
-//    // create a teapot
-//    _teapot = Sprite3D::create("Sprite3DTest/teapot.c3b");
-//    _teapot->retain();
-//
-//    // create the second texture for cylinder
-//    _textureCube = TextureCube::create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
-//        "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
-//        "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg");
-//
-//    _textureCube->retain();
-//
-//    //set texture parameters
-//    Texture2D::TexParams tRepeatParams;
-//    tRepeatParams.magFilter = GL_LINEAR;
-//    tRepeatParams.minFilter = GL_LINEAR;
-//    tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
-//    tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
-//    _textureCube->setTexParameters(tRepeatParams);
-//
-//
-//    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/CubeMap.material");
-//    auto state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getProgramState();
-//    _teapot->setMaterial(mat);
-//
-//    // pass the texture sampler to our custom shader
-//    auto cubeTexLoc = state->getUniformLocation("u_cubeTex");
-//    state->setTexture(cubeTexLoc, 0, _textureCube->getBackendTexture());
-//
-//    _teapot->setPosition3D(Vec3(0, -5, 0));
-//    _teapot->setRotation3D(Vec3(-90, 180, 0));
-//
-//    auto rotate_action = RotateBy::create(1.5, Vec3(0, 30, 0));
-//    _teapot->runAction(RepeatForever::create(rotate_action));
-//
-//    addChild(_teapot);
-//
-//    {
-//        // config skybox
-//        _skyBox = Skybox::create();
-//        _skyBox->retain();
-//
-//        _skyBox->setTexture(_textureCube);
-//        addChild(_skyBox);
-//    }
-//
-//    addChild(_camera);
-//    setCameraMask(2);
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
-//        [this](EventCustom*)
-//    {
-//        CC_SAFE_RELEASE(_textureCube);
-//        _textureCube = TextureCube::create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
-//            "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
-//            "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg");
-//
-//        _textureCube->retain();
-//        //set texture parameters
-//        Texture2D::TexParams tRepeatParams;
-//        tRepeatParams.magFilter = GL_LINEAR;
-//        tRepeatParams.minFilter = GL_LINEAR;
-//        tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
-//        tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
-//        _textureCube->setTexParameters(tRepeatParams);
-//
-//        auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/CubeMap.material");
-//        auto state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getProgramState();
-//        _teapot->setMaterial(mat);
-//        _skyBox->setTexture(_textureCube);
-//        // pass the texture sampler to our custom shader
-//        auto cubeTexLoc = state->getUniformLocation("u_cubeTex");
-//        state->setTexture(cubeTexLoc, 0, _textureCube->getBackendTexture());
-//    }
-//    );
-//    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
-//#endif
-//}
-//
-//void Sprite3DCubeMapTest::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
-//{
-//    if (touches.size())
-//    {
-//        auto touch = touches[0];
-//        auto delta = touch->getDelta();
-//
-//        static float _angle = 0.f;
-//        _angle -= CC_DEGREES_TO_RADIANS(delta.x);
-//        _camera->setPosition3D(Vec3(50.0f * sinf(_angle), 0.0f, 50.0f * cosf(_angle)));
-//        _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
-//    }
-//}
+
+Sprite3DCubeMapTest::Sprite3DCubeMapTest() :
+    _textureCube(nullptr),
+    _skyBox(nullptr),
+    _teapot(nullptr)
+{
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords(Vec2(s.width / 2, s.height / 2));
+}
+
+Sprite3DCubeMapTest::~Sprite3DCubeMapTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
+
+    _teapot->release();
+    _skyBox->release();
+    _textureCube->release();
+}
+
+std::string Sprite3DCubeMapTest::title() const
+{
+    return "CubeMap & Skybox Test";
+}
+
+std::string Sprite3DCubeMapTest::subtitle() const
+{
+    return "";
+}
+
+void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
+{
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    _camera = Camera::createPerspective(60, visibleSize.width / visibleSize.height, 10, 1000);
+    _camera->setPosition3D(Vec3(0.f, 0.f, 50.f));
+    _camera->setCameraFlag(CameraFlag::USER1);
+
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesMoved = CC_CALLBACK_2(Sprite3DCubeMapTest::onTouchesMoved, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+    // create a teapot
+    _teapot = Sprite3D::create("Sprite3DTest/teapot.c3b");
+    _teapot->retain();
+
+    // create the second texture for cylinder
+    _textureCube = TextureCube::create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
+        "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
+        "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg");
+
+    _textureCube->retain();
+
+    //set texture parameters
+    Texture2D::TexParams tRepeatParams;
+    tRepeatParams.magFilter = GL_LINEAR;
+    tRepeatParams.minFilter = GL_LINEAR;
+    tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
+    tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
+    _textureCube->setTexParameters(tRepeatParams);
+
+
+    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/CubeMap.material");
+    auto state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getProgramState();
+    _teapot->setMaterial(mat);
+
+    // pass the texture sampler to our custom shader
+    auto cubeTexLoc = state->getUniformLocation("u_cubeTex");
+    state->setTexture(cubeTexLoc, 0, _textureCube->getBackendTexture());
+
+    _teapot->setPosition3D(Vec3(0, -5, 0));
+    _teapot->setRotation3D(Vec3(-90, 180, 0));
+
+    auto rotate_action = RotateBy::create(1.5, Vec3(0, 30, 0));
+    _teapot->runAction(RepeatForever::create(rotate_action));
+
+    addChild(_teapot);
+
+    {
+        // config skybox
+        _skyBox = Skybox::create();
+        _skyBox->retain();
+
+        _skyBox->setTexture(_textureCube);
+        addChild(_skyBox);
+    }
+
+    addChild(_camera);
+    setCameraMask(2);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+        [this](EventCustom*)
+    {
+        CC_SAFE_RELEASE(_textureCube);
+        _textureCube = TextureCube::create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
+            "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
+            "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg");
+
+        _textureCube->retain();
+        //set texture parameters
+        Texture2D::TexParams tRepeatParams;
+        tRepeatParams.magFilter = GL_LINEAR;
+        tRepeatParams.minFilter = GL_LINEAR;
+        tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
+        tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
+        _textureCube->setTexParameters(tRepeatParams);
+
+        auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/CubeMap.material");
+        auto state = mat->getTechniqueByIndex(0)->getPassByIndex(0)->getProgramState();
+        _teapot->setMaterial(mat);
+        _skyBox->setTexture(_textureCube);
+        // pass the texture sampler to our custom shader
+        auto cubeTexLoc = state->getUniformLocation("u_cubeTex");
+        state->setTexture(cubeTexLoc, 0, _textureCube->getBackendTexture());
+    }
+    );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
+#endif
+}
+
+void Sprite3DCubeMapTest::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
+{
+    if (touches.size())
+    {
+        auto touch = touches[0];
+        auto delta = touch->getDelta();
+
+        static float _angle = 0.f;
+        _angle -= CC_DEGREES_TO_RADIANS(delta.x);
+        _camera->setPosition3D(Vec3(50.0f * sinf(_angle), 0.0f, 50.0f * cosf(_angle)));
+        _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
+    }
+}
 
 //Issue9767::Issue9767()
 //{
