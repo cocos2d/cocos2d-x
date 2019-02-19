@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-const char* ccPosition_vert = R"(
+const char* position_vert = R"(
 
 attribute vec4 a_position;
 

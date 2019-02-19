@@ -22,18 +22,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
+#include "3d/CCSkybox.h"
 #include "base/ccMacros.h"
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramCache.h"
-#include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
 #include "renderer/CCTextureCube.h"
 #include "renderer/ccShaders.h"
-#include "3d/CCSkybox.h"
 #include "2d/CCCamera.h"
 
 NS_CC_BEGIN
@@ -133,7 +129,6 @@ void Skybox::initBuffers()
 
     uint16_t idxBuf[] = { 0, 1, 2, 0, 2, 3 };
 
-    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
     _customCommand.createVertexBuffer(sizeof(Vec3), sizeof(vexBuf), CustomCommand::BufferUsage::STATIC);
     _customCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, 6, CustomCommand::BufferUsage::STATIC);
 
