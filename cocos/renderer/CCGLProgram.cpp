@@ -148,12 +148,21 @@ const char* GLProgram::ATTRIBUTE_NAME_BINORMAL = "a_binormal";
 
 
 static const char * COCOS2D_SHADER_UNIFORMS =
+        "\n#ifdef GL_ES\n" // Some new Mali GPUs use FP16 for matrix that is not precise enough. Should be FP32. Tested on Mali-T880.
+        "uniform highp mat4 CC_PMatrix;\n"
+        "uniform highp mat4 CC_MultiViewPMatrix[4];\n"
+        "uniform highp mat4 CC_MVMatrix;\n"
+        "uniform highp mat4 CC_MVPMatrix;\n"
+        "uniform highp mat4 CC_MultiViewMVPMatrix[4];\n"
+        "uniform highp mat3 CC_NormalMatrix;\n"
+        "\n#else\n"
         "uniform mat4 CC_PMatrix;\n"
         "uniform mat4 CC_MultiViewPMatrix[4];\n"
         "uniform mat4 CC_MVMatrix;\n"
         "uniform mat4 CC_MVPMatrix;\n"
         "uniform mat4 CC_MultiViewMVPMatrix[4];\n"
         "uniform mat3 CC_NormalMatrix;\n"
+        "\n#endif\n"
         "uniform vec4 CC_Time;\n"
         "uniform vec4 CC_SinTime;\n"
         "uniform vec4 CC_CosTime;\n"
