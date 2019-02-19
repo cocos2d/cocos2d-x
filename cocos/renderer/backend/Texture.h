@@ -11,12 +11,11 @@ struct TextureDescriptor
     TextureType textureType = TextureType::TEXTURE_2D;
     TextureFormat textureFormat = TextureFormat::R8G8B8A8;
     TextureUsage textureUsage = TextureUsage::READ;
-    uint32_t depth = 0;
-    bool compressed = false;
-    SamplerDescriptor samplerDescriptor;    
-    
     uint32_t width = 0;
     uint32_t height = 0;
+    uint32_t depth = 0;
+    bool compressed = false;
+    SamplerDescriptor samplerDescriptor;
 };
 
 class Texture : public Ref
@@ -60,7 +59,8 @@ protected:
 class TextureCubemap : public Texture
 {
 public:
-    virtual void updateFaceData(TextureCubeFace side, int size, void *data) = 0;
+    virtual void updateFaceData(TextureCubeFace side, void *data) = 0;
+    void setSize(uint32_t size) { _size = size; }
 protected:
     TextureCubemap(const TextureDescriptor& descriptor);
     uint32_t _size = 0;

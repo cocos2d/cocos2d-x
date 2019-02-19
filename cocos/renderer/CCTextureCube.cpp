@@ -195,7 +195,16 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
     images[4] = createImage(positive_z);
     images[5] = createImage(negative_z);
 
+    int imageSize = images[0]->getHeight();
+    for (int i = 0; i < 6; i++)
+    {
+        Image* img = images[i];
+        CCASSERT(img->getWidth() == img->getHeight(), "in TextureCubemap, width should be equal to height!");
+        CCASSERT(imageSize == img->getWidth(), "Texture of each face should have same dimension");
+    }
 
+    _texture->setSize(imageSize);
+    
     for (int i = 0; i < 6; i++)
     {
         Image* img = images[i];
@@ -204,7 +213,6 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
         unsigned char*          pData = getImageData(img, ePixelFmt);
         uint8_t *cData = nullptr;
         uint8_t *useData = pData;
-        CCASSERT(img->getWidth() == img->getHeight(), "in texture of cubemap, width should be equal to height!");
 
         //convert pixel format to RGBA
         if (ePixelFmt != Texture2D::PixelFormat::RGBA8888)
@@ -221,7 +229,7 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
             }
         }
 
-        _texture->updateFaceData(static_cast<backend::TextureCubeFace>(i), img->getWidth(), useData);
+        _texture->updateFaceData(static_cast<backend::TextureCubeFace>(i), useData);
         
         if (cData != pData)
             free(cData);

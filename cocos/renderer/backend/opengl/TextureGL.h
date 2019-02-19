@@ -5,26 +5,24 @@
 
 CC_BACKEND_BEGIN
 
-class TextureInfoGL
+struct TextureInfoGL
 {
-public:
     void toGLSamplerDescriptor(const SamplerDescriptor &desc, bool isPow2);
-    GLuint getHandler() { return _texture; }
-protected:
-    GLint _magFilterGL = GL_LINEAR;
-    GLint _minFilterGL = GL_LINEAR;
-    GLint _sAddressModeGL = GL_REPEAT;
-    GLint _tAddressModeGL = GL_REPEAT;
+    GLuint getHandler() { return texture; }
+    GLint magFilterGL = GL_LINEAR;
+    GLint minFilterGL = GL_LINEAR;
+    GLint sAddressModeGL = GL_REPEAT;
+    GLint tAddressModeGL = GL_REPEAT;
 
     // Used in glTexImage2D().
-    GLint _internalFormat = GL_RGBA;
-    GLenum _format = GL_RGBA;
-    GLenum _type = GL_UNSIGNED_BYTE;
+    GLint internalFormat = GL_RGBA;
+    GLenum format = GL_RGBA;
+    GLenum type = GL_UNSIGNED_BYTE;
 
-    GLuint _texture = 0;
+    GLuint texture = 0;
 };
 
-class Texture2DGL : public Texture2D, public TextureInfoGL
+class Texture2DGL : public backend::Texture2D
 {
 public:
     Texture2DGL(const TextureDescriptor& descriptor);
@@ -34,25 +32,26 @@ public:
     virtual void updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data) override;
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler)  override;
     void apply(int index) const;
-
+    inline GLuint getHandler() const { return _textureInfo.texture; }
 private:
     void generateMipmpas() const;
     
     SamplerDescriptor _samplerDescriptor;
     bool _isCompressed = false;
-    TextureInfoGL _info;
+    TextureInfoGL _textureInfo;
 };
 
-class TextureCubeGL: public TextureCubemap, public TextureInfoGL
+class TextureCubeGL: public backend::TextureCubemap
 {
 public:
     TextureCubeGL(const TextureDescriptor& descriptor);
     ~TextureCubeGL();
     void apply(int index) const;
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) override;
-    virtual void updateFaceData(TextureCubeFace side, int size, void *data) override;
+    virtual void updateFaceData(TextureCubeFace side, void *data) override;
+    inline GLuint getHandler() const { return _textureInfo.texture; }
 private:
-    TextureInfoGL _info;
+    TextureInfoGL _textureInfo;
 };
 
 CC_BACKEND_END
