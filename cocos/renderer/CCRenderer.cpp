@@ -761,12 +761,10 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
 
 backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipelineDescriptor& renderPipelineDescriptor, const backend::BlendDescriptor blendDescriptor)
 {
-    const int MAX_VERTEX_LAYOUT_SAMPLE_CNT = 32;
     struct
     {
         void* program;
-        void* blendState;
-        unsigned int vertexLayoutInfo[MAX_VERTEX_LAYOUT_SAMPLE_CNT];
+        unsigned int vertexLayoutInfo[32];
         backend::TextureFormat colorAttachment;
         backend::TextureFormat depthAttachment;
         backend::TextureFormat stencilAttachment;
@@ -798,7 +796,7 @@ backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipeli
     {
         if (!vertexLayout.isValid())
             continue;
-
+        
         const auto& attributes = vertexLayout.getAttributes();
         for (const auto& it : attributes)
         {
@@ -813,8 +811,6 @@ backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipeli
                 ((unsigned int)attribute.offset & 0x3FF) << 6 |
                 ((unsigned int)attribute.format & 0x1F) << 1 |
                 ((unsigned int)attribute.needToBeNormallized & 0x1);
-
-            CCASSERT(index < MAX_VERTEX_LAYOUT_SAMPLE_CNT, "toomany vertex layouts");
         }
     }
     
