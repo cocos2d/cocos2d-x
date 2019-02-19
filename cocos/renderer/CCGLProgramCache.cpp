@@ -493,59 +493,59 @@ void GLProgramCache::reloadDefaultGLProgramsRelativeToLights()
 void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
 {
     switch (type) {
-        case kShaderType_PositionTextureColor:
-            p->initWithByteArrays(ccPositionTextureColor_vert, ccPositionTextureColor_frag);
-            break;
-        case kShaderType_PositionTextureColor_noMVP:
-            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccPositionTextureColor_noMVP_frag);
-            break;
-        case kShaderType_PositionTextureColorAlphaTest:
-            p->initWithByteArrays(ccPositionTextureColor_vert, ccPositionTextureColorAlphaTest_frag);
-            break;
-        case kShaderType_PositionTextureColorAlphaTestNoMV:
-            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccPositionTextureColorAlphaTest_frag);
-            break;
-        case kShaderType_PositionColor:
-            p->initWithByteArrays(ccPositionColor_vert ,ccPositionColor_frag);
-            break;
-        case kShaderType_PositionColorTextureAsPointsize:
-            p->initWithByteArrays(ccPositionColorTextureAsPointsize_vert ,ccPositionColor_frag);
-            break;
-        case kShaderType_PositionColor_noMVP:
-            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert ,ccPositionColor_frag);
-            break;
-        case kShaderType_PositionTexture:
-            p->initWithByteArrays(ccPositionTexture_vert ,ccPositionTexture_frag);
-            break;
-        case kShaderType_PositionTexture_uColor:
-            p->initWithByteArrays(ccPositionTexture_uColor_vert, ccPositionTexture_uColor_frag);
-            break;
-        case kShaderType_PositionTextureA8Color:
-            p->initWithByteArrays(ccPositionTextureA8Color_vert, ccPositionTextureA8Color_frag);
-            break;
-        case kShaderType_Position_uColor:
-            p->initWithByteArrays(ccPosition_uColor_vert, ccPosition_uColor_frag);
-            p->bindAttribLocation("aVertex", GLProgram::VERTEX_ATTRIB_POSITION);
-            break;
-        case kShaderType_PositionLengthTextureColor:
-            p->initWithByteArrays(ccPositionColorLengthTexture_vert, ccPositionColorLengthTexture_frag);
-            break;
-        case kShaderType_LabelDistanceFieldNormal:
-            p->initWithByteArrays(ccLabel_vert, ccLabelDistanceFieldNormal_frag);
-            break;
-        case kShaderType_LabelDistanceFieldGlow:
-            p->initWithByteArrays(ccLabel_vert, ccLabelDistanceFieldGlow_frag);
-            break;
-        case kShaderType_UIGrayScale:
-            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert,
-                                  ccPositionTexture_GrayScale_frag);
-            break;
-        case kShaderType_LabelNormal:
-            p->initWithByteArrays(ccLabel_vert, ccLabelNormal_frag);
-            break;
-        case kShaderType_LabelOutline:
-            p->initWithByteArrays(ccLabel_vert, ccLabelOutline_frag);
-            break;
+//        case kShaderType_PositionTextureColor:
+//            p->initWithByteArrays(ccPositionTextureColor_vert, ccPositionTextureColor_frag);
+//            break;
+//        case kShaderType_PositionTextureColor_noMVP:
+//            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccPositionTextureColor_noMVP_frag);
+//            break;
+//        case kShaderType_PositionTextureColorAlphaTest:
+//            p->initWithByteArrays(ccPositionTextureColor_vert, ccPositionTextureColorAlphaTest_frag);
+//            break;
+//        case kShaderType_PositionTextureColorAlphaTestNoMV:
+//            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccPositionTextureColorAlphaTest_frag);
+//            break;
+//        case kShaderType_PositionColor:
+//            p->initWithByteArrays(ccPositionColor_vert ,ccPositionColor_frag);
+//            break;
+//        case kShaderType_PositionColorTextureAsPointsize:
+//            p->initWithByteArrays(ccPositionColorTextureAsPointsize_vert ,ccPositionColor_frag);
+//            break;
+//        case kShaderType_PositionColor_noMVP:
+//            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert ,ccPositionColor_frag);
+//            break;
+//        case kShaderType_PositionTexture:
+//            p->initWithByteArrays(ccPositionTexture_vert ,ccPositionTexture_frag);
+//            break;
+//        case kShaderType_PositionTexture_uColor:
+//            p->initWithByteArrays(ccPositionTexture_uColor_vert, ccPositionTexture_uColor_frag);
+//            break;
+//        case kShaderType_PositionTextureA8Color:
+//            p->initWithByteArrays(ccPositionTextureA8Color_vert, ccPositionTextureA8Color_frag);
+//            break;
+//        case kShaderType_Position_uColor:
+//            p->initWithByteArrays(ccPosition_uColor_vert, ccPosition_uColor_frag);
+//            p->bindAttribLocation("aVertex", GLProgram::VERTEX_ATTRIB_POSITION);
+//            break;
+//        case kShaderType_PositionLengthTextureColor:
+//            p->initWithByteArrays(ccPositionColorLengthTexture_vert, ccPositionColorLengthTexture_frag);
+//            break;
+//        case kShaderType_LabelDistanceFieldNormal:
+//            p->initWithByteArrays(ccLabel_vert, ccLabelDistanceFieldNormal_frag);
+//            break;
+//        case kShaderType_LabelDistanceFieldGlow:
+//            p->initWithByteArrays(ccLabel_vert, ccLabelDistanceFieldGlow_frag);
+//            break;
+//        case kShaderType_UIGrayScale:
+//            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert,
+//                                  ccPositionTexture_GrayScale_frag);
+//            break;
+//        case kShaderType_LabelNormal:
+//            p->initWithByteArrays(ccLabel_vert, ccLabelNormal_frag);
+//            break;
+//        case kShaderType_LabelOutline:
+//            p->initWithByteArrays(ccLabel_vert, ccLabelOutline_frag);
+//            break;
 //        case kShaderType_3DPosition:
 //            p->initWithByteArrays(cc3D_PositionTex_vert, cc3D_Color_frag);
 //            break;
@@ -605,22 +605,22 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
 //            p->initWithByteArrays(ccCameraClearVert, ccCameraClearFrag);
 //            break;
             /// ETC1 ALPHA supports.
-        case kShaderType_ETC1ASPositionTextureColor:
-            p->initWithByteArrays(ccPositionTextureColor_vert, ccETC1ASPositionTextureColor_frag);
-            break;
-        case kShaderType_ETC1ASPositionTextureColor_noMVP:
-            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccETC1ASPositionTextureColor_frag);
-            break;
-            /// ETC1 GRAY supports.
-        case kShaderType_ETC1ASPositionTextureGray:
-            p->initWithByteArrays(ccPositionTextureColor_vert, ccETC1ASPositionTextureGray_frag);
-            break;
-        case kShaderType_ETC1ASPositionTextureGray_noMVP:
-            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccETC1ASPositionTextureGray_frag);
-            break;
-        case kShaderType_LayerRadialGradient:
-            p->initWithByteArrays(ccPosition_vert, ccShader_LayerRadialGradient_frag);
-            break;
+//        case kShaderType_ETC1ASPositionTextureColor:
+//            p->initWithByteArrays(ccPositionTextureColor_vert, ccETC1ASPositionTextureColor_frag);
+//            break;
+//        case kShaderType_ETC1ASPositionTextureColor_noMVP:
+//            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccETC1ASPositionTextureColor_frag);
+//            break;
+//            /// ETC1 GRAY supports.
+//        case kShaderType_ETC1ASPositionTextureGray:
+//            p->initWithByteArrays(ccPositionTextureColor_vert, ccETC1ASPositionTextureGray_frag);
+//            break;
+//        case kShaderType_ETC1ASPositionTextureGray_noMVP:
+//            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccETC1ASPositionTextureGray_frag);
+//            break;
+//        case kShaderType_LayerRadialGradient:
+//            p->initWithByteArrays(ccPosition_vert, ccShader_LayerRadialGradient_frag);
+//            break;
         default:
             CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);
             return;

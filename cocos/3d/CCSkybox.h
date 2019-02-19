@@ -121,7 +121,7 @@ private:
 
     bool _rendererDepthTestEnabled;
     backend::CompareFunction _rendererDepthCmpFunc;
-    CullMode _rendererCullMode;
+    backend::CullMode _rendererCullMode;
 };
 
 // end of 3d group
