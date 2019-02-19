@@ -7,8 +7,7 @@ CC_BACKEND_BEGIN
 
 struct TextureInfoGL
 {
-    void toGLSamplerDescriptor(const SamplerDescriptor &desc, bool isPow2);
-    GLuint getHandler() { return texture; }
+    void applySamplerDescriptor(const SamplerDescriptor &desc, bool isPow2);
     GLint magFilterGL = GL_LINEAR;
     GLint minFilterGL = GL_LINEAR;
     GLint sAddressModeGL = GL_REPEAT;
