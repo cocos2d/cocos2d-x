@@ -8,6 +8,7 @@ CC_BACKEND_BEGIN
 struct TextureInfoGL
 {
     void applySamplerDescriptor(const SamplerDescriptor &desc, bool isPow2);
+
     GLint magFilterGL = GL_LINEAR;
     GLint minFilterGL = GL_LINEAR;
     GLint sAddressModeGL = GL_REPEAT;
@@ -30,8 +31,10 @@ public:
     virtual void updateData(uint8_t* data) override;
     virtual void updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data) override;
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler)  override;
+
     void apply(int index) const;
     inline GLuint getHandler() const { return _textureInfo.texture; }
+
 private:
     void generateMipmpas() const;
     
@@ -45,10 +48,13 @@ class TextureCubeGL: public backend::TextureCubemap
 public:
     TextureCubeGL(const TextureDescriptor& descriptor);
     ~TextureCubeGL();
-    void apply(int index) const;
+    
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) override;
     virtual void updateFaceData(TextureCubeFace side, void *data) override;
+    
+    void apply(int index) const;
     inline GLuint getHandler() const { return _textureInfo.texture; }
+
 private:
     TextureInfoGL _textureInfo;
 };

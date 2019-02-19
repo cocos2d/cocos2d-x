@@ -140,66 +140,66 @@ namespace
             break;
 #ifdef GL_ETC1_RGB8_OES
         case TextureFormat::ETC1:
-            _internalFormat = GL_ETC1_RGB8_OES;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
+            internalFormat = GL_ETC1_RGB8_OES;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
             break;
 #endif // GL_ETC1_RGB8_OES
 #ifdef GL_ATC_RGB_AMD
         case TextureFormat::ATC_RGB:
-            _internalFormat = GL_ATC_RGB_AMD;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
+            internalFormat = GL_ATC_RGB_AMD;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
             break;
 #endif // GL_ATC_RGB_AMD
 #ifdef GL_ATC_RGBA_EXPLICIT_ALPHA_AMD
         case TextureFormat::ATC_EXPLICIT_ALPHA:
-            _internalFormat = GL_ATC_RGBA_EXPLICIT_ALPHA_AMD;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
+            internalFormat = GL_ATC_RGBA_EXPLICIT_ALPHA_AMD;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
 #endif // GL_ATC_RGBA_EXPLICIT_ALPHA_AMD
 #ifdef GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD
         case TextureFormat::ATC_INTERPOLATED_ALPHA:
-            _internalFormat = GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
+            internalFormat = GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
             break;
 #endif // GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD
 
 #ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
         case TextureFormat::PVRTC2:
-            _internalFormat = GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
+            internalFormat = GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
             break;
 #endif 
 #ifdef GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG
         case TextureFormat::PVRTC2A:
-            _internalFormat = GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
+            internalFormat = GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
             break;
 #endif
 #ifdef GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG
         case TextureFormat::PVRTC4:
-            _internalFormat = GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
+            internalFormat = GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
             break;
 #endif
 #ifdef GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG
         case TextureFormat::PVRTC4A:
-            _internalFormat = GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
-            _format = 0xFFFFFFFF;
-            _type = 0xFFFFFFFF;
-            _isCompressed = true;
+            internalFormat = GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
+            format = 0xFFFFFFFF;
+            type = 0xFFFFFFFF;
+            isCompressed = true;
             break;
 #endif
 #ifdef GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
@@ -227,14 +227,14 @@ namespace
             break;
 #endif
             //        case TextureFormat::D16:
-            //            _format = GL_DEPTH_COMPONENT;
-            //            _internalFormat = GL_DEPTH_COMPONENT;
-            //            _type = GL_UNSIGNED_INT;
+            //            format = GL_DEPTH_COMPONENT;
+            //            internalFormat = GL_DEPTH_COMPONENT;
+            //            type = GL_UNSIGNED_INT;
         case TextureFormat::D24S8:
 #ifdef CC_USE_GLES
-            _format = GL_DEPTH_STENCIL_OES;
-            _internalFormat = GL_DEPTH_STENCIL_OES;
-            _type = GL_UNSIGNED_INT_24_8_OES;
+            format = GL_DEPTH_STENCIL_OES;
+            internalFormat = GL_DEPTH_STENCIL_OES;
+            type = GL_UNSIGNED_INT_24_8_OES;
 #else
             format = GL_DEPTH_STENCIL;
             internalFormat = GL_DEPTH32F_STENCIL8;
