@@ -2108,6 +2108,12 @@
 		EDAF7C7021F1797000E070B2 /* CCTextureUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = EDAF7C6D21F1796F00E070B2 /* CCTextureUtils.h */; };
 		EDAF7C7121F1797000E070B2 /* CCTextureUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAF7C6E21F1797000E070B2 /* CCTextureUtils.cpp */; };
 		EDAF7C7221F1797000E070B2 /* CCTextureUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDAF7C6E21F1797000E070B2 /* CCTextureUtils.cpp */; };
+		EDB52968221BD31800DEC41A /* CCBillBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A6621F6B02400D5AFCD /* CCBillBoard.cpp */; };
+		EDB52969221BD31900DEC41A /* CCBillBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A6621F6B02400D5AFCD /* CCBillBoard.cpp */; };
+		EDB5296A221BD31900DEC41A /* CCBillBoard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A6621F6B02400D5AFCD /* CCBillBoard.cpp */; };
+		EDB5296B221BD31F00DEC41A /* CCBillBoard.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A4621F6B02300D5AFCD /* CCBillBoard.h */; };
+		EDB5296C221BD31F00DEC41A /* CCBillBoard.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A4621F6B02300D5AFCD /* CCBillBoard.h */; };
+		EDB5296D221BD32000DEC41A /* CCBillBoard.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A4621F6B02300D5AFCD /* CCBillBoard.h */; };
 		EDC78BD821CA19FB00E1863C /* CCComAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC789E021CA19FA00E1863C /* CCComAudio.cpp */; };
 		EDC78BD921CA19FB00E1863C /* CCComAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC789E021CA19FA00E1863C /* CCComAudio.cpp */; };
 		EDC78BDA21CA19FB00E1863C /* CCProcessBase.h in Headers */ = {isa = PBXBuildFile; fileRef = EDC789E121CA19FA00E1863C /* CCProcessBase.h */; };
@@ -6340,6 +6346,7 @@
 				503DD8F51926B0DB00CD74DD /* CCIMEDelegate.h in Headers */,
 				3EACC9A619F5014D00EB3C5E /* CCLight.h in Headers */,
 				50ABBD5A1925AB0000A911A9 /* Vec2.h in Headers */,
+				EDB5296B221BD31F00DEC41A /* CCBillBoard.h in Headers */,
 				1A40D15A1E8E56C7002E363A /* ostreamwrapper.h in Headers */,
 				1A40D12D1E8E56C7002E363A /* dtoa.h in Headers */,
 				B24AA987195A675C007B4522 /* CCFastTMXLayer.h in Headers */,
@@ -6634,6 +6641,7 @@
 				1A41ABC81DF00D1500B5584C /* AudioDecoder.h in Headers */,
 				507B3F331C31BDD30067B53E /* CCProtocols.h in Headers */,
 				507B3F351C31BDD30067B53E /* AudioEngine-inl.h in Headers */,
+				EDB5296D221BD32000DEC41A /* CCBillBoard.h in Headers */,
 				507B3F361C31BDD30067B53E /* HttpCookie.h in Headers */,
 				507B3F371C31BDD30067B53E /* CCMathBase.h in Headers */,
 				507B3F381C31BDD30067B53E /* CCProtectedNode.h in Headers */,
@@ -6802,6 +6810,7 @@
 				50ABBE861925AB6F00A911A9 /* ccFPSImages.h in Headers */,
 				50ABBE2E1925AB6F00A911A9 /* ccCArray.h in Headers */,
 				1A40D10D1E8E56C7002E363A /* document-wrapper.h in Headers */,
+				EDB5296C221BD31F00DEC41A /* CCBillBoard.h in Headers */,
 				50ABC0041926664800A911A9 /* CCLock-apple.h in Headers */,
 				EDC78CE121CA19FC00E1863C /* ComAudioReader.h in Headers */,
 				4631CB1021AFD9F90000D408 /* UIRadioButton.h in Headers */,
@@ -7731,6 +7740,7 @@
 				46AF3A9821F6B02400D5AFCD /* CCBundle3D.cpp in Sources */,
 				460D4D0E21ABD0C60075726E /* DepthStencilStateMTL.mm in Sources */,
 				ED93A75921EDBCBA00170050 /* Program.cpp in Sources */,
+				EDB52968221BD31800DEC41A /* CCBillBoard.cpp in Sources */,
 				460D4D1521ABD0C60075726E /* TextureMTL.mm in Sources */,
 				468A14E91EF223B700ECA675 /* idl_gen_fbs.cpp in Sources */,
 				4631CB7521AFD9F90000D408 /* CCUIMultilineTextField.m in Sources */,
@@ -7816,6 +7826,7 @@
 				507B39E71C31BDD30067B53E /* CCTrianglesCommand.cpp in Sources */,
 				507B39EB1C31BDD30067B53E /* CCNodeGrid.cpp in Sources */,
 				507B39F11C31BDD30067B53E /* CCEventFocus.cpp in Sources */,
+				EDB5296A221BD31900DEC41A /* CCBillBoard.cpp in Sources */,
 				507B39F31C31BDD30067B53E /* DetourTileCacheBuilder.cpp in Sources */,
 				507B39F41C31BDD30067B53E /* CCApplication-ios.mm in Sources */,
 				507B39F91C31BDD30067B53E /* fastlz.c in Sources */,
@@ -8431,6 +8442,7 @@
 				1ABA68AF1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */,
 				46F9B74A21B0CB44009DF858 /* UIWebViewImpl-ios.mm in Sources */,
 				EDC78C2321CA19FB00E1863C /* CCSkeletonNode.cpp in Sources */,
+				EDB52969221BD31900DEC41A /* CCBillBoard.cpp in Sources */,
 				EDC78C6321CA19FC00E1863C /* CCDataReaderHelper.cpp in Sources */,
 				4631CB8E21AFD9FA0000D408 /* UIScale9Sprite.cpp in Sources */,
 				EDC78D1121CA19FC00E1863C /* CCColliderDetector.cpp in Sources */,
