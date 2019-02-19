@@ -32,9 +32,11 @@ varying lowp vec4 v_position;
 varying vec4 v_position;
 #endif
 
+uniform mat4 u_MVPMatrix;
+
 void main()
 {
-    gl_Position = CC_MVPMatrix * a_position;
+    gl_Position = u_MVPMatrix * a_position;
     v_position = a_position;
 }
 )";
