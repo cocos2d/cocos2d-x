@@ -232,6 +232,7 @@ void BillBoard::draw(Renderer *renderer, const Mat4 &/*transform*/, uint32_t fla
     _trianglesCommand.init(0, _texture, _blendFunc, _polyInfo.triangles, _modelViewTransform, flags);
     _trianglesCommand.setTransparent(true);
     _trianglesCommand.set3D(true);
+    setMVPMatrixUniform(); //update uniform
     renderer->addCommand(&_trianglesCommand);
 }
 
