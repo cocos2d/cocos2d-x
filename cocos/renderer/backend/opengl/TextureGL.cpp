@@ -47,6 +47,8 @@ namespace
                             return GL_LINEAR_MIPMAP_LINEAR;
                         case SamplerFilter::NEAREST:
                             return GL_LINEAR_MIPMAP_NEAREST;
+                        case SamplerFilter::DONT_CARE:
+                            return GL_LINEAR_MIPMAP_NEAREST;
                     }
                 case SamplerFilter::NEAREST:
                     switch (mipmapFilter)
@@ -55,6 +57,8 @@ namespace
                             return GL_NEAREST_MIPMAP_LINEAR;
                         case SamplerFilter::NEAREST:
                             return GL_NEAREST_MIPMAP_NEAREST;
+                        case SamplerFilter::DONT_CARE:
+                            return GL_LINEAR_MIPMAP_NEAREST;
                     }
             }
         }
@@ -65,6 +69,7 @@ namespace
             else
                 return GL_NEAREST;
         }
+        return GL_NEAREST;
     }
     
     GLint toGLAddressMode(SamplerAddressMode addressMode, bool isPow2)
