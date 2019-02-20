@@ -45,6 +45,7 @@ NS_CC_BEGIN
 #include "renderer/shaders/positionColorLengthTexture.frag"
 #include "renderer/shaders/positionColorTextureAsPointsize.vert"
 #include "renderer/shaders/position.vert"
+#include "renderer/shaders/positionNoMVP.vert"
 #include "renderer/shaders/layer_radialGradient.frag"
 #include "renderer/shaders/ui_Gray.frag"
 #include "renderer/shaders/positionTextureUColor.vert"
