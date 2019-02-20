@@ -54,6 +54,7 @@ extern CC_DLL const char * positionColorLengthTexture_vert;
 extern CC_DLL const char * positionColorLengthTexture_frag;
 extern CC_DLL const char * positionColorTextureAsPointsize_vert;
 extern CC_DLL const char * position_vert;
+extern CC_DLL const char * positionNoMVP_vert;
 extern CC_DLL const char * layer_radialGradient_frag;
 extern CC_DLL const char * grayScale_frag;
 extern CC_DLL const char * positionTextureUColor_vert;
