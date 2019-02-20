@@ -216,7 +216,7 @@ std::vector<AttributeBindInfo> ProgramGL::getActiveAttributes() const {
 
     GLint numOfActiveAttributes = 0;
     glGetProgramiv(_program, GL_ACTIVE_ATTRIBUTES, &numOfActiveAttributes);
-    CHECK_GL_ERROR_DEBUG();
+
 
     if (numOfActiveAttributes <= 0)
         return attributes;

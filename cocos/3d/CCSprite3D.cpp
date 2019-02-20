@@ -353,6 +353,7 @@ bool Sprite3D::initFrom(const NodeDatas& nodeDatas, const MeshDatas& meshdatas, 
         }
     }
     genMaterial();
+    
     return true;
 }
 
@@ -534,6 +535,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                         mesh->setSkin(skin);
                     }
                     mesh->_visibleChanged = std::bind(&Sprite3D::onAABBDirty, this);
+
                     if (it->materialId == "" && materialdatas.materials.size())
                     {
                         const NTextureData* textureData = materialdatas.materials[0].getTextureData(NTextureData::Usage::Diffuse);
@@ -577,6 +579,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                             }
                         }
                     }
+                    
                     Vec3 pos;
                     Quaternion qua;
                     Vec3 scale;
@@ -628,6 +631,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
             } 
         }
     }
+
     auto size = nodedata->children.size();
     for(const auto& it : nodedata->children)
     {

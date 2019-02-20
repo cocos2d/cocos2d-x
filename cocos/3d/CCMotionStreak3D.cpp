@@ -408,7 +408,7 @@ void MotionStreak3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t fl
     _beforeCommand.func = CC_CALLBACK_0(MotionStreak3D::onBeforeDraw, this);
     _afterCommand.func = CC_CALLBACK_0(MotionStreak3D::onAfterDraw, this);
     
-    _customCommand.updateVertexBuffer(_vertexData.data(), sizeof(_vertexData[0]) * _vertexData.size());
+    _customCommand.updateVertexBuffer(_vertexData.data(), sizeof(_vertexData[0]) * _nuPoints * 2);
 
     _customCommand.setVertexDrawInfo(0, _nuPoints * 2);
 
