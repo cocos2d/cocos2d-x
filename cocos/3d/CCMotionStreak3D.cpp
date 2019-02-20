@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
+#include "renderer/ccShaders.h"
 
 NS_CC_BEGIN
 

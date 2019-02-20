@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "base/CCProtocols.h"
 #include "2d/CCNode.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCCallbackCommand.h"
 
 #include <vector>
 
@@ -219,7 +220,7 @@ private:
     void onBeforeDraw();
     void onAfterDraw();
 
-    CullMode _rendererCullface;
+    backend::CullMode _rendererCullface;
     bool _rendererDepthTest;
 };
 

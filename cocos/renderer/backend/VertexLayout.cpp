@@ -7,7 +7,7 @@ void VertexLayout::setAtrribute(const std::string &name, unsigned int index, Ver
 {
     if (_attributes.find(name) != _attributes.end())
     {
-        CCASSERT(false, "VertexAttribute already setup!");
+        assert(false); // "VertexAttribute already setup!";
     }
     _attributes[name] = { name, index, format, offset, needToBeNormallized };
 }
