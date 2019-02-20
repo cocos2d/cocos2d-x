@@ -112,7 +112,7 @@ bool MotionStreak3D::initWithFade(float fade, float minSeg, float stroke, const 
     _pointState.resize(_maxPoints);
     _pointVertexes.resize(_maxPoints);
 
-    _data.resize(_maxPoints * 2);
+    _vertexData.resize(_maxPoints * 2);
 
     // Set blend mode
     _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
@@ -152,7 +152,7 @@ void MotionStreak3D::initCustomCommand()
     _locMVP = _programState->getUniformLocation("u_MVPMatrix");
     _locTexture = _programState->getUniformLocation("u_texture");
 
-    _customCommand.createVertexBuffer(sizeof(VertexData), _data.size(), CustomCommand::BufferUsage::DYNAMIC);
+    _customCommand.createVertexBuffer(sizeof(VertexData), _vertexData.size(), CustomCommand::BufferUsage::DYNAMIC);
 }
 
 void MotionStreak3D::setPosition(const Vec2& position)
@@ -237,7 +237,7 @@ void MotionStreak3D::tintWithColor(const Color3B& colors)
     // Fast assignation
     for(unsigned int i = 0; i<_nuPoints*2; i++) 
     {
-        auto &color = _data[i].color;
+        auto &color = _vertexData[i].color;
         color.set(colors.r, colors.g, colors.b, color.a);
     }
 }
@@ -322,18 +322,18 @@ void MotionStreak3D::update(float delta)
                 // Move vertices
                 i2 = i*2;
                 newIdx2 = newIdx*2;
-                _data[newIdx2].pos = _data[i2].pos;
-                _data[newIdx2+1].pos = _data[i2+1].pos;
+                _vertexData[newIdx2].pos = _vertexData[i2].pos;
+                _vertexData[newIdx2+1].pos = _vertexData[i2+1].pos;
 
                 // Move color
-                _data[newIdx2].color = _data[i2].color;
-                _data[newIdx2 + 1].color = _data[i2 + 1].color;
+                _vertexData[newIdx2].color = _vertexData[i2].color;
+                _vertexData[newIdx2 + 1].color = _vertexData[i2 + 1].color;
             }else
                 newIdx2 = newIdx*2;
 
             const GLubyte op = (GLubyte)(_pointState[newIdx] * 255.0f);
-            _data[newIdx2].color.a = op;
-            _data[newIdx2+1].color.a = op;
+            _vertexData[newIdx2].color.a = op;
+            _vertexData[newIdx2+1].color.a = op;
         }
     }
     _nuPoints-=mov;
@@ -361,15 +361,15 @@ void MotionStreak3D::update(float delta)
         _pointState[_nuPoints] = 1.0f;
 
         // Color assignment
-        _data[_nuPoints * 2].color = Color4B(_displayedColor, 255);
-        _data[_nuPoints * 2 + 1].color = Color4B(_displayedColor, 255);
+        _vertexData[_nuPoints * 2].color = Color4B(_displayedColor, 255);
+        _vertexData[_nuPoints * 2 + 1].color = Color4B(_displayedColor, 255);
 
 
         // Generate polygon
         {
             float stroke = _stroke * 0.5f;
-            _data[_nuPoints * 2].pos = _pointVertexes[_nuPoints] + (_sweepAxis * stroke);
-            _data[_nuPoints * 2 + 1].pos = _pointVertexes[_nuPoints] - (_sweepAxis * stroke);
+            _vertexData[_nuPoints * 2].pos = _pointVertexes[_nuPoints] + (_sweepAxis * stroke);
+            _vertexData[_nuPoints * 2 + 1].pos = _pointVertexes[_nuPoints] - (_sweepAxis * stroke);
         }
 
         _nuPoints ++;
@@ -379,8 +379,8 @@ void MotionStreak3D::update(float delta)
     if( _nuPoints  && _previousNuPoints != _nuPoints ) {
         float texDelta = 1.0f / _nuPoints;
         for( i=0; i < _nuPoints; i++ ) {
-            _data[i*2].texPos = Tex2F(0, texDelta*i);
-            _data[i*2+1].texPos = Tex2F(1, texDelta*i);
+            _vertexData[i*2].texPos = Tex2F(0, texDelta*i);
+            _vertexData[i*2+1].texPos = Tex2F(1, texDelta*i);
         }
 
         _previousNuPoints = _nuPoints;
@@ -408,7 +408,7 @@ void MotionStreak3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t fl
     _beforeCommand.func = CC_CALLBACK_0(MotionStreak3D::onBeforeDraw, this);
     _afterCommand.func = CC_CALLBACK_0(MotionStreak3D::onAfterDraw, this);
     
-    _customCommand.updateVertexBuffer(_data.data(), sizeof(_data[0]) * _data.size());
+    _customCommand.updateVertexBuffer(_vertexData.data(), sizeof(_vertexData[0]) * _vertexData.size());
 
     _customCommand.setVertexDrawInfo(0, _nuPoints * 2);
 

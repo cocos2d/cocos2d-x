@@ -324,7 +324,6 @@ bool Sprite3D::initWithFile(const std::string& path)
 
 bool Sprite3D::initFrom(const NodeDatas& nodeDatas, const MeshDatas& meshdatas, const MaterialDatas& materialdatas)
 {
-    CHECK_GL_ERROR_ABORT();
     for(const auto& it : meshdatas.meshDatas)
     {
         if(it)
@@ -335,12 +334,10 @@ bool Sprite3D::initFrom(const NodeDatas& nodeDatas, const MeshDatas& meshdatas, 
             _meshVertexDatas.pushBack(meshvertex);
         }
     }
-    CHECK_GL_ERROR_ABORT();
     _skeleton = Skeleton3D::create(nodeDatas.skeleton);
     CC_SAFE_RETAIN(_skeleton);
     
     auto size = nodeDatas.nodes.size();
-    CHECK_GL_ERROR_ABORT();
     for(const auto& it : nodeDatas.nodes)
     {
         if(it)
@@ -348,7 +345,6 @@ bool Sprite3D::initFrom(const NodeDatas& nodeDatas, const MeshDatas& meshdatas, 
             createNode(it, this, materialdatas, size == 1);
         }
     }
-    CHECK_GL_ERROR_ABORT();
     for(const auto& it : nodeDatas.skeleton)
     {
         if(it)
@@ -356,9 +352,7 @@ bool Sprite3D::initFrom(const NodeDatas& nodeDatas, const MeshDatas& meshdatas, 
              createAttachSprite3DNode(it,materialdatas);
         }
     }
-    CHECK_GL_ERROR_ABORT();
     genMaterial();
-    CHECK_GL_ERROR_ABORT();
     return true;
 }
 
@@ -493,7 +487,6 @@ Material* Sprite3D::getMaterial(int meshIndex) const
 void Sprite3D::genMaterial(bool useLight)
 {
     _shaderUsingLight = useLight;
-    CHECK_GL_ERROR_ABORT();
 
     std::unordered_map<const MeshVertexData*, Sprite3DMaterial*> materials;
     for(auto meshVertexData : _meshVertexDatas)
@@ -503,7 +496,6 @@ void Sprite3D::genMaterial(bool useLight)
         materials[meshVertexData] = material;
     }
     
-    CHECK_GL_ERROR_ABORT();
     for (auto& mesh: _meshes)
     {
         auto material = materials[mesh->getMeshIndexData()->getMeshVertexData()];
@@ -524,7 +516,6 @@ void Sprite3D::genMaterial(bool useLight)
 void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& materialdatas, bool singleSprite)
 {
     Node* node=nullptr;
-    CHECK_GL_ERROR_ABORT();
     for(const auto& it : nodedata->modelNodeDatas)
     {
         if(it)
@@ -543,12 +534,10 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                         mesh->setSkin(skin);
                     }
                     mesh->_visibleChanged = std::bind(&Sprite3D::onAABBDirty, this);
-                    CHECK_GL_ERROR_ABORT();
                     if (it->materialId == "" && materialdatas.materials.size())
                     {
                         const NTextureData* textureData = materialdatas.materials[0].getTextureData(NTextureData::Usage::Diffuse);
                         mesh->setTexture(textureData->filename);
-                        CHECK_GL_ERROR_ABORT();
                     }
                     else
                     {
@@ -559,7 +548,6 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                             if(textureData)
                             {
                                 mesh->setTexture(textureData->filename);
-                                CHECK_GL_ERROR_ABORT();
                                 auto tex = mesh->getTexture();
                                 if(tex)
                                 {
@@ -569,11 +557,9 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                                     texParams.wrapS = textureData->wrapS;
                                     texParams.wrapT = textureData->wrapT;
                                     tex->setTexParameters(texParams);
-                                    CHECK_GL_ERROR_ABORT();
                                     mesh->_isTransparent = (materialData->getTextureData(NTextureData::Usage::Transparency) != nullptr);
                                 }
                             }
-                            CHECK_GL_ERROR_ABORT();
                             textureData = materialData->getTextureData(NTextureData::Usage::Normal);
                             if (textureData)
                             {
@@ -589,10 +575,8 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                                 }
                                 mesh->setTexture(tex, NTextureData::Usage::Normal);
                             }
-                            CHECK_GL_ERROR_ABORT();
                         }
                     }
-                    CHECK_GL_ERROR_ABORT();
                     Vec3 pos;
                     Quaternion qua;
                     Vec3 scale;
@@ -608,9 +592,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
             }
             else
             {
-                CHECK_GL_ERROR_ABORT();
                 auto sprite = createSprite3DNode(nodedata,it,materialdatas);
-                CHECK_GL_ERROR_ABORT();
                 if (sprite)
                 {
                     if(root)
@@ -622,7 +604,6 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
             } 
         }
     }
-    CHECK_GL_ERROR_ABORT();
     if(nodedata->modelNodeDatas.size() ==0 )
     {
         node= Node::create();
@@ -647,7 +628,6 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
             } 
         }
     }
-    CHECK_GL_ERROR_ABORT();
     auto size = nodedata->children.size();
     for(const auto& it : nodedata->children)
     {

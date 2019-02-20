@@ -1,4 +1,5 @@
 #include "VertexLayout.h"
+#include "base/ccMacros.h"
 #include <cassert>
 
 CC_BACKEND_BEGIN
@@ -7,7 +8,7 @@ void VertexLayout::setAtrribute(const std::string &name, unsigned int index, Ver
 {
     if (_attributes.find(name) != _attributes.end())
     {
-        assert(false); // "VertexAttribute already setup!";
+        CCLOG("VertexAttribute '%s' already setup", name.c_str());
     }
     _attributes[name] = { name, index, format, offset, needToBeNormallized };
 }
@@ -16,13 +17,6 @@ void VertexLayout::setLayout(unsigned int stride, VertexStepMode stepMode)
 {
     _stride = stride;
     _stepMode = stepMode;
-}
-
-void VertexLayout::reset()
-{
-    _attributes.clear();
-    _stride = 0;
-    _stepMode = VertexStepMode::VERTEX;
 }
 
 CC_BACKEND_END

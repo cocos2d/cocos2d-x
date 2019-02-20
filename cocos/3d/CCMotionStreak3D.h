@@ -198,14 +198,7 @@ protected:
     std::vector<Vec3> _pointVertexes;
     std::vector<float> _pointState;
 
-    // Opengl
-    /*
-    Vec3* _vertices;
-    GLubyte* _colorPointer;
-    Tex2F* _texCoords;
-    */
-
-    std::vector<VertexData> _data;
+    std::vector<VertexData> _vertexData;
     
     CustomCommand _customCommand;
 private:
