@@ -47,6 +47,8 @@ namespace
                             return GL_LINEAR_MIPMAP_LINEAR;
                         case SamplerFilter::NEAREST:
                             return GL_LINEAR_MIPMAP_NEAREST;
+                        case SamplerFilter::DONT_CARE:
+                            return GL_LINEAR_MIPMAP_NEAREST;
                     }
                 case SamplerFilter::NEAREST:
                     switch (mipmapFilter)
@@ -55,6 +57,8 @@ namespace
                             return GL_NEAREST_MIPMAP_LINEAR;
                         case SamplerFilter::NEAREST:
                             return GL_NEAREST_MIPMAP_NEAREST;
+                        case SamplerFilter::DONT_CARE:
+                            return GL_LINEAR_MIPMAP_NEAREST;
                     }
             }
         }
@@ -65,6 +69,7 @@ namespace
             else
                 return GL_NEAREST;
         }
+        return GL_NEAREST;
     }
     
     GLint toGLAddressMode(SamplerAddressMode addressMode, bool isPow2)
@@ -309,24 +314,29 @@ void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
 
+    CHECK_GL_ERROR_ABORT();
     if (sampler.magFilter != SamplerFilter::DONT_CARE)
     {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _textureInfo.magFilterGL);
+        CHECK_GL_ERROR_ABORT();
     }
 
     if (sampler.minFilter != SamplerFilter::DONT_CARE)
     {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _textureInfo.minFilterGL);
+        CHECK_GL_ERROR_ABORT();
     }
 
     if (sampler.sAddressMode != SamplerAddressMode::DONT_CARE)
     {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _textureInfo.sAddressModeGL);
+        CHECK_GL_ERROR_ABORT();
     }
 
     if (sampler.tAddressMode != SamplerAddressMode::DONT_CARE)
     {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _textureInfo.tAddressModeGL);
+        CHECK_GL_ERROR_ABORT();
     }
 
     if (needGenerateMipmap) generateMipmpas();

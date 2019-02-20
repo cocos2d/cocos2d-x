@@ -34,6 +34,8 @@ public:
         bool needToBeNormallized = false;
     };
     
+    void reset();
+
     void setAtrribute(const std::string& name, unsigned int index, VertexFormat format, unsigned int offset, bool needToBeNormallized);
     //FIXME: remove stepMode?
     void setLayout(unsigned int stride, VertexStepMode stepMode);

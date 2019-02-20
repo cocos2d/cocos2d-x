@@ -369,6 +369,7 @@ void Sprite::setVertexLayout()
     
     //set vertexLayout according to V3F_C4B_T2F structure
     auto& vertexLayout = _trianglesCommand.getPipelineDescriptor().vertexLayout;
+    vertexLayout.reset();
     vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
     vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset, false);
     vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, colorOffset, true);

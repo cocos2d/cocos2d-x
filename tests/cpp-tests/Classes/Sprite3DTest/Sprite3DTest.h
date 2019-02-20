@@ -571,21 +571,21 @@ protected:
 //    cocos2d::EventListenerCustom* _backToForegroundListener;
 //#endif
 //};
-//
-//class MotionStreak3DTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(MotionStreak3DTest);
-//    MotionStreak3DTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    virtual void update(float delta) override;
-//    
-//protected:
-//    cocos2d::Sprite3D* _sprite;
-//    cocos2d::MotionStreak3D* _streak;
-//};
-//
+
+class MotionStreak3DTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(MotionStreak3DTest);
+    MotionStreak3DTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void update(float delta) override;
+    
+protected:
+    cocos2d::Sprite3D* _sprite;
+    cocos2d::MotionStreak3D* _streak;
+};
+
 //class Sprite3DNormalMappingTest : public Sprite3DTestDemo
 //{
 //public:
