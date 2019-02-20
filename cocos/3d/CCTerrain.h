@@ -22,8 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef CC_TERRAIN_H
-#define CC_TERRAIN_H
+#pragma once
 
 #include <vector>
 
@@ -32,6 +31,8 @@ THE SOFTWARE.
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderState.h"
+#include "renderer/backend/Types.h"
+#include "renderer/backend/ProgramState.h"
 #include "3d/CCAABB.h"
 #include "3d/CCRay.h"
 #include "base/CCEventListenerCustom.h"
@@ -488,7 +489,6 @@ protected:
     Texture2D * _alphaMap;
     Texture2D * _lightMap;
     Vec3 _lightDir;
-    CustomCommand _customCommand;
     QuadTree * _quadRoot;
     Chunk * _chunkesArray[MAX_CHUNKES][MAX_CHUNKES];
     std::vector<TerrainVertexData> _vertices;
@@ -516,8 +516,15 @@ protected:
     GLint _lightMapLocation;
     GLint _detailMapSizeLocation[4];
     GLint _lightDirLocation;
-    RenderState::StateBlock _stateBlock;
-
+    struct {
+        bool blend;
+        bool depthWrite;
+        bool depthTest;
+        backend::CullMode cullFace;
+    } _stateBlock;
+private:
+    CustomCommand _customCommand;
+    backend::ProgramState *_programState = nullptr;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _backToForegroundListener;
 #endif
@@ -527,4 +534,3 @@ protected:
 /// @}
 
 NS_CC_END
-#endif

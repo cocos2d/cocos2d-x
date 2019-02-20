@@ -29,11 +29,9 @@ USING_NS_CC;
 #include <stdlib.h>
 #include <float.h>
 #include <set>
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramCache.h"
-#include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCGLProgramStateCache.h"
+#include "renderer/ccShaders.h"
+#include "renderer/backend/Program.h"
 #include "base/CCDirector.h"
 #include "base/CCEventType.h"
 #include "2d/CCCamera.h"
@@ -103,15 +101,15 @@ void cocos2d::Terrain::setLightDir(const Vec3& lightDir)
 
 bool Terrain::initProperties()
 {
-    auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_TERRAIN);
-    auto state = GLProgramState::create(shader);
+    CC_SAFE_RELEASE_NULL(_programState);
+    _programState =  new backend::ProgramState(CC3D_terrain_vert, CC3D_terrain_frag);
+    
+    _customCommand.getPipelineDescriptor().programState = _programState;
 
-    setGLProgramState(state);
-
-    _stateBlock.setBlend(false);
-    _stateBlock.setDepthWrite(true);
-    _stateBlock.setDepthTest(true);
-    _stateBlock.setCullFace(true);
+    _stateBlock.blend = false;
+    _stateBlock.depthWrite = true;
+    _stateBlock.depthTest = true;
+    _stateBlock.cullFace = backend::CullMode::FRONT;
 
     setDrawWire(false);
     setIsEnableFrustumCull(true);
@@ -486,6 +484,7 @@ Terrain::~Terrain()
     CC_SAFE_RELEASE(_alphaMap);
     CC_SAFE_RELEASE(_lightMap);
     CC_SAFE_RELEASE(_heightMapImage);
+    CC_SAFE_RELEASE_NULL(_programState);
     delete _quadRoot;
     for(int i=0;i<4;++i)
     {
