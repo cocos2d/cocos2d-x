@@ -49,6 +49,7 @@ namespace ui
 }
 
 namespace backend {
+    class Texture2D;
     class Texture;
 }
 
@@ -451,7 +452,7 @@ protected:
     int _pixelsHigh;
 
     /** texture name */
-    backend::Texture* _texture;
+    backend::Texture2D* _texture;
     
 
     /** texture max S */

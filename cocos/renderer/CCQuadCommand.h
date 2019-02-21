@@ -29,7 +29,6 @@
 #include <vector>
 
 #include "renderer/CCTrianglesCommand.h"
-#include "renderer/CCGLProgramState.h"
 
 /**
  * @addtogroup renderer
@@ -56,19 +55,12 @@ public:
     /** Initializes the command.
      @param globalOrder GlobalZOrder of the command.
      @param textureID The openGL handle of the used texture.
-     @param glProgramState The glProgram with its uniform.
      @param blendType Blend function for the command.
      @param quads Rendered quads for the command.
      @param quadCount The number of quads when rendering.
      @param mv ModelView matrix for the command.
      @param flags to indicate that the command is using 3D rendering or not.
      */
-    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
-              const Mat4& mv, uint32_t flags);
-
-    void init(float globalOrder, Texture2D* textureID, GLProgramState* glProgramState, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
-        const Mat4& mv, uint32_t flags);
-
     void init(float globalOrder, Texture2D* texture, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount, const Mat4& mv, uint32_t flags);
     
 protected:

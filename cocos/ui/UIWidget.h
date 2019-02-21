@@ -753,20 +753,6 @@ CC_CONSTRUCTOR_ACCESS:
     void  dispatchFocusEvent(Widget* widgetLoseFocus, Widget* widgetGetFocus);
     
 protected:
-    /**
-     * Get a normal state GLProgramState
-     *@since v3.4
-     */
-    
-    GLProgramState* getNormalGLProgramState(Texture2D* texture)const;
-    
-    /**
-     * Get a disabled state GLProgramState
-     *@since v3.4
-     */
-    GLProgramState* getGrayGLProgramState(Texture2D* texture)const;
-     
-    
     //call back function called when size changed.
     virtual void onSizeChanged();
 

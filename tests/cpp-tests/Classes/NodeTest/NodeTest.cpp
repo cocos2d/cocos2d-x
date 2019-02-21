@@ -61,8 +61,8 @@ CocosNodeTests::CocosNodeTests()
     ADD_TEST_CASE(NodeToWorld3D);
     ADD_TEST_CASE(SchedulerTest1);
     ADD_TEST_CASE(SchedulerCallbackTest);
+    ADD_TEST_CASE(CameraOrbitTest);
     // TODO: Camera has been removed from CCNode; add new feature to support it
-    // ADD_TEST_CASE(CameraOrbitTest);
     //ADD_TEST_CASE(CameraZoomTest);
     ADD_TEST_CASE(ConvertToNode);
     ADD_TEST_CASE(NodeOpaqueTest);
@@ -969,8 +969,8 @@ public:
         sprite->initWithFile(spritefilename);
         sprite->autorelease();
 
-        auto shaderState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
-        sprite->setGLProgramState(shaderState);
+//        auto shaderState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
+//        sprite->setGLProgramState(shaderState);
         return sprite;
     }
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
@@ -990,32 +990,32 @@ void MySprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
 void MySprite::onDraw(const Mat4 &transform, uint32_t flags)
 {
-    getGLProgram()->use();
-    getGLProgram()->setUniformsForBuiltins(transform);
+//    getGLProgram()->use();
+//    getGLProgram()->setUniformsForBuiltins(transform);
 
     cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture->getName());
     
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
 
     #define kQuadSize sizeof(_quad.bl)
-    size_t offset = (size_t)&_quad;
+//    size_t offset = (size_t)&_quad;
 
     // vertex
     int diff = offsetof( V3F_C4B_T2F, vertices);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
 
     // texCoords
     diff = offsetof( V3F_C4B_T2F, texCoords);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
 
     // color
     diff = offsetof( V3F_C4B_T2F, colors);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 

@@ -7,7 +7,7 @@ NS_CC_BEGIN
 
 namespace backend { 
     namespace PixelFormatUtils {
-        typedef Texture2D::PixelFormat PixelFormat;
+        typedef cocos2d::Texture2D::PixelFormat PixelFormat;
 
         /**convert functions*/
 

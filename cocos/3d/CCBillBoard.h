@@ -23,8 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCBILLBOARD_H__
-#define __CCBILLBOARD_H__
+#pragma once
 
 #include "2d/CCSprite.h"
 
@@ -131,6 +130,3 @@ private:
 /// @}
 
 NS_CC_END
-
-
-#endif // __CCBILLBOARD_H__

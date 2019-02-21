@@ -25,7 +25,6 @@
 #pragma once
 
 #include "renderer/CCRenderCommand.h"
-#include "renderer/CCGLProgramState.h"
 #include "renderer/CCPipelineDescriptor.h"
 
 /**
@@ -43,6 +42,9 @@ namespace backend {
     class Texture;
     class Program;
 }
+
+class Texture2D;
+
 class CC_DLL TrianglesCommand : public RenderCommand
 {
 public:
@@ -81,7 +83,7 @@ public:
      @param mv ModelView matrix for the command.
      @param flags to indicate that the command is using 3D rendering or not.
      */
-    void init(float globalOrder, Texture2D* texture, const BlendFunc& blendType,  const Triangles& triangles, const Mat4& mv, uint32_t flags);
+    void init(float globalOrder, cocos2d::Texture2D* texture, const BlendFunc& blendType,  const Triangles& triangles, const Mat4& mv, uint32_t flags);
     /**Get the material id of command.*/
     uint32_t getMaterialID() const { return _materialID; }
     /**Get a const reference of triangles.*/

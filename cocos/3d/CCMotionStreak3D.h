@@ -28,6 +28,9 @@ THE SOFTWARE.
 #include "base/CCProtocols.h"
 #include "2d/CCNode.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCCallbackCommand.h"
+
+#include <vector>
 
 NS_CC_BEGIN
 
@@ -163,7 +166,15 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     //renderer callback
-    void onDraw(const Mat4 &transform, uint32_t flags);
+
+    void initCustomCommand();
+
+    struct VertexData
+    {
+        Vec3 pos;
+        Tex2F texPos;
+        Color4B color;
+    };
 
     bool _startingPositionInitialized;
 
@@ -184,18 +195,26 @@ protected:
     unsigned int _previousNuPoints;
 
     /** Pointers */
-    Vec3* _pointVertexes;
-    float* _pointState;
+    std::vector<Vec3> _pointVertexes;
+    std::vector<float> _pointState;
 
-    // Opengl
-    Vec3* _vertices;
-    GLubyte* _colorPointer;
-    Tex2F* _texCoords;
+    std::vector<VertexData> _vertexData;
     
     CustomCommand _customCommand;
-
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(MotionStreak3D);
+
+    CallbackCommand _beforeCommand;
+    CallbackCommand _afterCommand;
+    backend::ProgramState *_programState = nullptr;
+    backend::UniformLocation _locMVP;
+    backend::UniformLocation _locTexture;
+
+    void onBeforeDraw();
+    void onAfterDraw();
+
+    backend::CullMode _rendererCullface;
+    bool _rendererDepthTest;
 };
 
 // end of _3d group

@@ -33,8 +33,6 @@ THE SOFTWARE.
 */
 
 #include "renderer/CCTexture2D.h"
-
-#include "platform/CCGL.h"
 #include "platform/CCImage.h"
 #include "base/ccUtils.h"
 #include "platform/CCDevice.h"
@@ -44,8 +42,6 @@ THE SOFTWARE.
 #include "base/CCConfiguration.h"
 #include "platform/CCPlatformMacros.h"
 #include "base/CCDirector.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramCache.h"
 #include "base/CCNinePatchImageParser.h"
 #include "renderer/backend/Device.h"
 #include "renderer/backend/StringUtils.h"
@@ -379,7 +375,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     
     textureDescriptor.compressed = info.compressed;
     
-    _texture = device->newTexture(textureDescriptor);
+    _texture = static_cast<backend::Texture2D*>(device->newTexture(textureDescriptor));
 
     _texture->updateData(outData);
     if(outData && outData != data && outDataLen > 0)
@@ -629,10 +625,10 @@ bool Texture2D::initWithBackendTexture(backend::Texture *texture)
 {
     CC_SAFE_RETAIN(texture);
     CC_SAFE_RELEASE(_texture);
-    _texture = texture;
-    
-    _pixelsWide = _contentSize.width = texture->getWidth();
-    _pixelsHigh = _contentSize.height = texture->getHeight();
+    _texture = dynamic_cast<backend::Texture2D*>(texture);
+    CC_ASSERT(_texture);
+    _pixelsWide = _contentSize.width = _texture->getWidth();
+    _pixelsHigh = _contentSize.height = _texture->getHeight();
     return true;
 }
 

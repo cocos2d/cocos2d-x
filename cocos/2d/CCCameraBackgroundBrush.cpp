@@ -29,9 +29,6 @@
 #include "base/ccUtils.h"
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramCache.h"
-#include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
 #include "renderer/CCTextureCube.h"
@@ -53,7 +50,6 @@ CameraBackgroundBrush::CameraBackgroundBrush()
 
 CameraBackgroundBrush::~CameraBackgroundBrush()
 {
-    CC_SAFE_RELEASE(_glProgramState);
 }
 
 CameraBackgroundBrush* CameraBackgroundBrush::createNoneBrush()
@@ -142,10 +138,11 @@ CameraBackgroundDepthBrush* CameraBackgroundDepthBrush::create(float depth)
 
 bool CameraBackgroundDepthBrush::init()
 {
-    auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_CAMERA_CLEAR);
-    _glProgramState = GLProgramState::getOrCreateWithGLProgram(shader);
-    _glProgramState->retain();
-    
+//TODO minggo
+//    auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_CAMERA_CLEAR);
+//    _glProgramState = GLProgramState::getOrCreateWithGLProgram(shader);
+//    _glProgramState->retain();
+
     _quad.bl.vertices = Vec3(-1,-1,0);
     _quad.br.vertices = Vec3(1,-1,0);
     _quad.tl.vertices = Vec3(-1,1,0);
@@ -179,21 +176,22 @@ void CameraBackgroundDepthBrush::initBuffer()
     glGenBuffers(1, &_indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-    
-    if (supportVAO)
-    {
-        // vertices
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof( V3F_C4B_T2F, vertices));
 
-        // colors
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof( V3F_C4B_T2F, colors));
-
-        // tex coords
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof( V3F_C4B_T2F, texCoords));
-    }
+    //TODO minggo
+//    if (supportVAO)
+//    {
+//        // vertices
+//        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof( V3F_C4B_T2F, vertices));
+//
+//        // colors
+//        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof( V3F_C4B_T2F, colors));
+//
+//        // tex coords
+//        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof( V3F_C4B_T2F, texCoords));
+//    }
 
     if (supportVAO)
         glBindVertexArray(0);
@@ -221,42 +219,44 @@ void CameraBackgroundDepthBrush::drawBackground(Camera* /*camera*/)
     }
     
     //draw
-    
-    _glProgramState->setUniformFloat("depth", _depth);
-    _glProgramState->apply(Mat4::IDENTITY);
-    
-    auto supportVAO = Configuration::getInstance()->supportsShareableVAO();
-    if (supportVAO)
-        glBindVertexArray(_vao);
-    else
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
 
-        // vertices
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, vertices));
-        
-        // colors
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, colors));
-        
-        // tex coords
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, texCoords));
-        
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-    }
-    
+    //TODO minggo
+//    _glProgramState->setUniformFloat("depth", _depth);
+//    _glProgramState->apply(Mat4::IDENTITY);
+//
+//    auto supportVAO = Configuration::getInstance()->supportsShareableVAO();
+//    if (supportVAO)
+//        glBindVertexArray(_vao);
+//    else
+//    {
+//        glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+//        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+//        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+//
+//        // vertices
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, vertices));
+//
+//        // colors
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, colors));
+//
+//        // tex coords
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_T2F, texCoords));
+//
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+//    }
+
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, nullptr);
-    
-    if (supportVAO)
-        glBindVertexArray(0);
-    else
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
-    
+
+ //TODO minggo
+//    if (supportVAO)
+//        glBindVertexArray(0);
+//    else
+//    {
+//        glBindBuffer(GL_ARRAY_BUFFER, 0);
+//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//    }
+
     
     {
         if(GL_FALSE == oldDepthTest)
@@ -455,13 +455,13 @@ void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
 
     Mat4 cameraModelMat = camera->getNodeToWorldTransform();
     
-    Vec4 color(1.f, 1.f, 1.f, 1.f);
-    _glProgramState->setUniformVec4("u_color", color);
-    cameraModelMat.m[12] = cameraModelMat.m[13] = cameraModelMat.m[14] = 0;
-    _glProgramState->setUniformMat4("u_cameraRot", cameraModelMat);
-    
-    _glProgramState->apply(Mat4::IDENTITY);
-    
+//    Vec4 color(1.f, 1.f, 1.f, 1.f);
+//    _glProgramState->setUniformVec4("u_color", color);
+//    cameraModelMat.m[12] = cameraModelMat.m[13] = cameraModelMat.m[14] = 0;
+//    _glProgramState->setUniformMat4("u_cameraRot", cameraModelMat);
+//
+//    _glProgramState->apply(Mat4::IDENTITY);
+
     //TODO arnold 
     //glEnable(GL_DEPTH_TEST);
     //RenderState::StateBlock::_globalState->setDepthTest(true);
@@ -487,11 +487,11 @@ void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
     }
     else
     {
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-        
-        glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
-        
+//        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//
+//        glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
+//
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     }
     
@@ -514,11 +514,11 @@ void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
 
 bool CameraBackgroundSkyBoxBrush::init()
 {
-    auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKYBOX);
-    _glProgramState = GLProgramState::create(shader);
-    _glProgramState->setVertexAttribPointer(GLProgram::ATTRIBUTE_NAME_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
-    _glProgramState->retain();
-    
+//    auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKYBOX);
+//    _glProgramState = GLProgramState::create(shader);
+//    _glProgramState->setVertexAttribPointer(GLProgram::ATTRIBUTE_NAME_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
+//    _glProgramState->retain();
+//
     initBuffer();
     
     return true;
@@ -570,9 +570,9 @@ void CameraBackgroundSkyBoxBrush::initBuffer()
     
     if (Configuration::getInstance()->supportsShareableVAO())
     {
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-        _glProgramState->applyAttributes(false);
-        
+//        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//        _glProgramState->applyAttributes(false);
+//        
         glBindVertexArray(0);
     }
 }
@@ -582,7 +582,8 @@ void CameraBackgroundSkyBoxBrush::setTexture(TextureCube*  texture)
     CC_SAFE_RETAIN(texture);
     CC_SAFE_RELEASE(_texture);
     _texture = texture;
-    _glProgramState->setUniformTexture("u_Env", _texture);
+    //TODO arnold
+    //_glProgramState->setUniformTexture("u_Env", _texture->getBackendTexture());
 }
 
 bool CameraBackgroundSkyBoxBrush::isActived() const

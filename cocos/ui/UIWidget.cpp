@@ -32,8 +32,6 @@ THE SOFTWARE.
 #include "base/CCEventFocus.h"
 #include "base/CCEventDispatcher.h"
 #include "ui/UILayoutComponent.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCGLProgramState.h"
 #include "renderer/ccShaders.h"
 #include "2d/CCCamera.h"
 #include "2d/CCSprite.h"
@@ -1165,16 +1163,6 @@ void Widget::copyClonedWidgetChildren(Widget* model)
             addChild(child->clone());
         }
     }
-}
-
-GLProgramState* Widget::getNormalGLProgramState(Texture2D* texture)const
-{
-    return GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP, texture);
-}
-
-GLProgramState* Widget::getGrayGLProgramState(Texture2D* texture)const
-{
-    return GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, texture);
 }
 
 void Widget::copySpecialProperties(Widget* /*model*/)

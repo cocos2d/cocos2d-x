@@ -1030,45 +1030,6 @@ public:
 
     /// @} end of Tag & User Data
 
-
-    /// @{
-    /// @name GLProgram
-    /**
-     * Return the GLProgram (shader) currently used for this node.
-     *
-     * @return The GLProgram (shader) currently used for this node.
-     */
-    GLProgram* getGLProgram() const;
-    
-    /**
-     * Sets the shader program for this node
-     *
-     * Since v2.0, each rendering node must set its shader program.
-     * It should be set in initialize phase.
-     @code
-     node->setGLProgram(GLProgramCache::getInstance()->getProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-     @endcode
-     *
-     * @param glprogram The shader program.
-     */
-    virtual void setGLProgram(GLProgram *glprogram);
-    
-    /**
-     * Return the GLProgramState currently used for this node.
-     *
-     * @return The GLProgramState currently used for this node.
-     */
-    GLProgramState *getGLProgramState() const;
-    /**
-     * Set the GLProgramState for this node.
-     *
-     * @param glProgramState The GLProgramState for this node.
-     */
-    virtual void setGLProgramState(GLProgramState *glProgramState);
-    
-    /// @} end of Shader Program
-
-
     /**
      * Returns whether or not the node is "running".
      *

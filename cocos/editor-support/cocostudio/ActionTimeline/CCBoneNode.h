@@ -22,10 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
-
-#ifndef __CCBONENODE_H__
-#define __CCBONENODE_H__
+#pragma once
 
 #include "base/CCProtocols.h"
 #include "2d/CCNode.h"
@@ -34,6 +31,9 @@ THE SOFTWARE.
 #include "editor-support/cocostudio/CocosStudioExport.h"
 #include "editor-support/cocostudio/ActionTimeline/CCSkinNode.h"
 
+namespace cocos2d{ namespace backend {
+    class ProgramState;
+}}
 
 NS_TIMELINE_BEGIN
 
@@ -159,7 +159,7 @@ public:
 #endif
 
 CC_CONSTRUCTOR_ACCESS:
-    BoneNode();
+    BoneNode() = default;
     virtual ~BoneNode();
     virtual bool init() override;
 
@@ -192,8 +192,6 @@ protected:
     virtual void disableCascadeOpacity() override;
     virtual void disableCascadeColor() override;
 
-    virtual void onDraw(const cocos2d::Mat4 &transform, uint32_t flags); 
-
     // override Node::visit, just visit bones in children
     virtual void visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& parentTransform, uint32_t parentFlags) override;
 
@@ -210,22 +208,28 @@ protected:
     void setRootSkeleton(BoneNode* bone, SkeletonNode* skeleton) const;
 protected:
     cocos2d::CustomCommand _customCommand;
-    cocos2d::BlendFunc     _blendFunc;
+    cocos2d::BlendFunc _blendFunc = cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
-    bool              _isRackShow;
-    cocos2d::Color4F  _rackColor;
-    int               _rackLength;
-    int               _rackWidth;
+    bool              _isRackShow = false;
+    cocos2d::Color4F  _rackColor = cocos2d::Color4F::WHITE;
+    int               _rackLength = 50;
+    int               _rackWidth = 20;
 
     cocos2d::Vector<BoneNode*> _childBones;
     cocos2d::Vector<SkinNode*> _boneSkins;
-    SkeletonNode*              _rootSkeleton;
+    SkeletonNode*              _rootSkeleton = nullptr;
 private:
-    cocos2d::Vec2          _squareVertices[4];
-    cocos2d::Color4F       _squareColors[4];
-    cocos2d::Vec3          _noMVPVertices[4];
+    struct VertexData
+    {
+        cocos2d::Color4F squareColor;
+        cocos2d::Vec3 noMVPVertices;
+    };
+
+    cocos2d::Vec2 _squareVertices[4];
+    VertexData _vertexData[4];
+
+    cocos2d::backend::ProgramState* _programState = nullptr;
     CC_DISALLOW_COPY_AND_ASSIGN(BoneNode);
 };
 
 NS_TIMELINE_END
-#endif //__CCBONENODE_H__

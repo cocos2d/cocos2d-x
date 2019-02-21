@@ -8,13 +8,13 @@ set(COCOS_3D_HEADER
     3d/CCRay.h
     3d/CCMesh.h
     3d/CCAnimate3D.h
-    3d/CCTerrain.h
+    # 3d/CCTerrain.h
     3d/CCAnimationCurve.h
     3d/CCSprite3D.h
     3d/CCOBB.h
     3d/CCAnimation3D.h
     3d/CCMotionStreak3D.h
-    # 3d/CCSkybox.h
+    3d/CCSkybox.h
     3d/CCMeshSkin.h
     3d/cocos3d.h
     3d/CCAABB.h
@@ -48,10 +48,10 @@ set(COCOS_3D_SRC
     3d/CCPlane.cpp
     3d/CCRay.cpp
     3d/CCSkeleton3D.cpp
-    # 3d/CCSkybox.cpp
+    3d/CCSkybox.cpp
     3d/CCSprite3D.cpp
     3d/CCSprite3DMaterial.cpp
-    3d/CCTerrain.cpp
+    # 3d/CCTerrain.cpp
     3d/CCVertexAttribBinding.cpp
     3d/CC3DProgramInfo.cpp
     )

@@ -28,7 +28,6 @@
 #include "base/CCDirector.h"
 #include "2d/CCCamera.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCGLProgramCache.h"
 
 NS_CC_BEGIN
 
@@ -232,6 +231,7 @@ void BillBoard::draw(Renderer *renderer, const Mat4 &/*transform*/, uint32_t fla
     _trianglesCommand.init(0, _texture, _blendFunc, _polyInfo.triangles, _modelViewTransform, flags);
     _trianglesCommand.setTransparent(true);
     _trianglesCommand.set3D(true);
+    setMVPMatrixUniform(); //update uniform
     renderer->addCommand(&_trianglesCommand);
 }
 

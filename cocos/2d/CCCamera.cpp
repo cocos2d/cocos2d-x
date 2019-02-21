@@ -32,7 +32,6 @@
 #include "2d/CCScene.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
-#include "renderer/CCGLProgramCache.h"
 
 NS_CC_BEGIN
 

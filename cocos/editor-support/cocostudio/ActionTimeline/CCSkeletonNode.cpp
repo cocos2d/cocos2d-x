@@ -27,7 +27,6 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "math/TransformUtils.h"
 #include "renderer/CCRenderer.h"
-#include "renderer/CCGLProgramState.h"
 #include "base/ccUtils.h"
 #include <stack>
 
@@ -50,7 +49,8 @@ bool SkeletonNode::init()
 {
     _rackLength = _rackWidth = 20;
     updateVertices();
-    setGLProgramState(cocos2d::GLProgramState::getOrCreateWithGLProgramName(cocos2d::GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
+    //TODO minggo
+//    setGLProgramState(cocos2d::GLProgramState::getOrCreateWithGLProgramName(cocos2d::GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
     _rootSkeleton = this;
     return true;
 }
@@ -229,17 +229,18 @@ void SkeletonNode::batchDrawAllSubBones(const cocos2d::Mat4 &transform)
         batchBoneDrawToSkeleton(bone);
     }
 
-    cocos2d::Vec3* vetices = _batchedBoneVetices.data();
-    cocos2d::Color4F* veticesColor = _batchedBoneColors.data();
-    getGLProgram()->use();
-    getGLProgram()->setUniformsForBuiltins(transform);
-
-    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION);
-    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, vetices);
-    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, veticesColor);
+//TODO minggo
+//    cocos2d::Vec3* vetices = _batchedBoneVetices.data();
+//    cocos2d::Color4F* veticesColor = _batchedBoneColors.data();
+//    getGLProgram()->use();
+//    getGLProgram()->setUniformsForBuiltins(transform);
+//
+//    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION);
+//    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR);
+//
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, vetices);
+//    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, veticesColor);
 
     cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
@@ -265,15 +266,16 @@ void SkeletonNode::batchDrawAllSubBones(const cocos2d::Mat4 &transform)
 
 void SkeletonNode::onDraw(const cocos2d::Mat4 &transform, uint32_t /*flags*/)
 {
-    getGLProgram()->use();
-    getGLProgram()->setUniformsForBuiltins(transform);
-
-    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION);
-    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
-    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
+//TODO minggo
+//    getGLProgram()->use();
+//    getGLProgram()->setUniformsForBuiltins(transform);
+//
+//    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION);
+//    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR);
+//
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
+//    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
 
     cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
 

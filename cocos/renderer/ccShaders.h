@@ -28,7 +28,6 @@ THE SOFTWARE.
 
 /// @cond DO_NOT_SHOW
 
-#include "platform/CCGL.h"
 #include "platform/CCPlatformMacros.h"
 
 /**
@@ -38,51 +37,6 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-extern CC_DLL const GLchar * ccPosition_uColor_frag;
-extern CC_DLL const GLchar * ccPosition_uColor_vert;
-
-extern CC_DLL const GLchar * ccPositionColor_frag;
-extern CC_DLL const GLchar * ccPositionColor_vert;
-
-extern CC_DLL const GLchar * ccPositionColorTextureAsPointsize_vert;
-
-extern CC_DLL const GLchar * ccPositionTexture_frag;
-extern CC_DLL const GLchar * ccPositionTexture_vert;
-
-extern CC_DLL const GLchar * ccPositionTextureA8Color_frag;
-extern CC_DLL const GLchar * ccPositionTextureA8Color_vert;
-
-extern CC_DLL const GLchar * ccPositionTextureColor_frag;
-extern CC_DLL const GLchar * ccPositionTextureColor_vert;
-
-extern CC_DLL const GLchar * ccPositionTextureColor_noMVP_frag;
-extern CC_DLL const GLchar * ccPositionTextureColor_noMVP_vert;
-
-extern CC_DLL const GLchar * ccPositionTextureColorAlphaTest_frag;
-
-extern CC_DLL const GLchar * ccPositionTexture_uColor_frag;
-extern CC_DLL const GLchar * ccPositionTexture_uColor_vert;
-
-extern CC_DLL const GLchar * ccPositionColorLengthTexture_frag;
-extern CC_DLL const GLchar * ccPositionColorLengthTexture_vert;
-
-extern CC_DLL const GLchar * ccPositionTexture_GrayScale_frag;
-
-extern CC_DLL const GLchar * ccLabelDistanceFieldNormal_frag;
-extern CC_DLL const GLchar * ccLabelDistanceFieldGlow_frag;
-extern CC_DLL const GLchar * ccLabelNormal_frag;
-extern CC_DLL const GLchar * ccLabelOutline_frag;
-
-extern CC_DLL const GLchar * ccLabel_vert;
-
-// ETC1 ALPHA supports.
-extern CC_DLL const GLchar* ccETC1ASPositionTextureColor_frag;
-extern CC_DLL const GLchar* ccETC1ASPositionTextureGray_frag;
-
-extern CC_DLL const GLchar* ccPosition_vert;
-extern CC_DLL const GLchar* ccShader_LayerRadialGradient_frag;
-
-//backend shader file
 extern CC_DLL const char * positionColor_vert;
 extern CC_DLL const char * positionColor_frag;
 extern CC_DLL const char * positionTexture_vert;
@@ -100,6 +54,7 @@ extern CC_DLL const char * positionColorLengthTexture_vert;
 extern CC_DLL const char * positionColorLengthTexture_frag;
 extern CC_DLL const char * positionColorTextureAsPointsize_vert;
 extern CC_DLL const char * position_vert;
+extern CC_DLL const char * positionNoMVP_vert;
 extern CC_DLL const char * layer_radialGradient_frag;
 extern CC_DLL const char * grayScale_frag;
 extern CC_DLL const char * positionTextureUColor_vert;

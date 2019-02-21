@@ -28,6 +28,7 @@
 
 #include "base/ccTypes.h"
 #include "base/CCRef.h"
+#include "base/CCEventListenerCustom.h"
 #include "3d/CCFrustum.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCCustomCommand.h"
