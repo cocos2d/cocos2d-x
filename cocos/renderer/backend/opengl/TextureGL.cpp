@@ -400,4 +400,10 @@ void TextureGL::toGLTypes()
     }
 }
 
+void TextureGL::getBytes(int x, int y, int width, int height, TextureFormat format, unsigned char* data)
+{
+    glPixelStorei(GL_PACK_ALIGNMENT, 1);
+    glReadPixels(x,y,width, _height,GL_RGBA,GL_UNSIGNED_BYTE, data);
+}
+
 CC_BACKEND_END

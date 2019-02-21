@@ -15,6 +15,7 @@ public:
     virtual void updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data) override;
     
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler)  override;
+    virtual void getBytes(int x, int y, int width, int height, TextureFormat format, unsigned char* data) override;
 
     void apply(int index) const;
     inline GLuint getHandler() const { return _texture; }

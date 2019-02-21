@@ -88,6 +88,14 @@ void CommandBufferGL::beginFrame()
 {
 }
 
+void CommandBufferGL::pushCommandBuffer()
+{
+}
+
+void CommandBufferGL::popCommandBuffer()
+{
+}
+
 void CommandBufferGL::beginRenderPass(const RenderPassDescriptor& descirptor)
 {
     applyRenderPassDescriptor(descirptor);
