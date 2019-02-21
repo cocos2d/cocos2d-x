@@ -1121,10 +1121,7 @@ void Director::purgeDirector()
         _openGLView->end();
         _openGLView = nullptr;
     }
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    EngineDataManager::destroy();
-#endif
+    
     // delete Director
     release();
 }
