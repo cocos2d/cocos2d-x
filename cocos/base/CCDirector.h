@@ -585,10 +585,6 @@ public:
 
 protected:
     void reset();
-    
-
-    virtual void startAnimation(SetIntervalReason reason);
-    virtual void setAnimationInterval(float interval, SetIntervalReason reason);
 
     void purgeDirector();
     bool _purgeDirectorInNextLoop = false; // this flag will be set to true in end()
