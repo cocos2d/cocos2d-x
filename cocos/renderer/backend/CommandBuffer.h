@@ -20,6 +20,8 @@ class DepthStencilState;
 class CommandBuffer : public cocos2d::Ref
 {
 public:
+    virtual void pushCommandBuffer() = 0;
+    virtual void popCommandBuffer() = 0;
     virtual void beginFrame() = 0;
     virtual void beginRenderPass(const RenderPassDescriptor& descriptor) = 0;
     virtual void setRenderPipeline(RenderPipeline* renderPipeline) = 0;

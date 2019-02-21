@@ -16,6 +16,7 @@ public:
     virtual void updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data) override;
     
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) override;
+    virtual void getBytes(int x, int y, int width, int height, TextureFormat format, unsigned char* data) override;
     
     inline id<MTLTexture> getMTLTexture() const { return _mtlTexture; }
     inline id<MTLSamplerState> getMTLSamplerState() const { return _mtlSamplerState; }
@@ -23,6 +24,7 @@ public:
 private:
     void createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor);
     void createSampler(id<MTLDevice> mtlDevice, const SamplerDescriptor& descriptor);
+    void synchronizeTexture(id<MTLTexture> dstTexture);
     
     MTLSamplerAddressMode _sAddressMode;
     MTLSamplerAddressMode _tAddressMode;
@@ -32,6 +34,7 @@ private:
     
     id<MTLDevice> _mtlDevice = nil;
     id<MTLTexture> _mtlTexture = nil;
+    id<MTLTexture> _copiedTexture = nil;
     id<MTLSamplerState> _mtlSamplerState = nil;
     unsigned int _bytesPerRow = 0;
 };

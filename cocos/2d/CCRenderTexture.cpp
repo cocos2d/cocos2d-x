@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/backend/Device.h"
 #include "renderer/backend/Texture.h"
+#include "renderer/backend/StringUtils.h"
 
 NS_CC_BEGIN
 
@@ -305,7 +306,8 @@ void RenderTexture::beginWithClear(float r, float g, float b, float a, float dep
 
 void RenderTexture::clear(float r, float g, float b, float a)
 {
-    setClearColor(Color4F(r, g, b, a));
+    this->beginWithClear(r, g, b, a);
+    this->end();
 }
 
 void RenderTexture::clearDepth(float depthValue)
@@ -389,7 +391,11 @@ bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format
 
 void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA)
 {
-    Image *image = newImage(true);
+    float flipImage = true;
+#ifdef CC_USE_METAL
+    flipImage = false;
+#endif
+    Image *image = newImage(flipImage);
     if (image)
     {
         image->saveToFile(filename, !isRGBA);
@@ -404,39 +410,36 @@ void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA)
 /* get buffer as Image */
 Image* RenderTexture::newImage(bool flipImage)
 {
-//    CCASSERT(_pixelFormat == Texture2D::PixelFormat::RGBA8888, "only RGBA8888 can be saved as image");
-//
-//    if (nullptr == _texture)
-//    {
-//        return nullptr;
-//    }
-//
-//    const Size& s = _texture->getContentSizeInPixels();
-//
-//    // to get the image size to save
-//    //        if the saving image domain exceeds the buffer texture domain,
-//    //        it should be cut
-//    int savedBufferWidth = (int)s.width;
-//    int savedBufferHeight = (int)s.height;
-//
-//    GLubyte *buffer = nullptr;
-//    GLubyte *tempData = nullptr;
+    CCASSERT(_pixelFormat == Texture2D::PixelFormat::RGBA8888, "only RGBA8888 can be saved as image");
+
+    if (nullptr == _texture2D)
+    {
+        return nullptr;
+    }
+
+    const Size& s = _texture2D->getContentSizeInPixels();
+
+    // to get the image size to save
+    //        if the saving image domain exceeds the buffer texture domain,
+    //        it should be cut
+    int savedBufferWidth = (int)s.width;
+    int savedBufferHeight = (int)s.height;
+
+    unsigned char *buffer = nullptr;
+    unsigned char *tempData = nullptr;
     Image *image = new (std::nothrow) Image();
 
-//    do
-//    {
-//        CC_BREAK_IF(! (buffer = new (std::nothrow) GLubyte[savedBufferWidth * savedBufferHeight * 4]));
-//
-//        if(! (tempData = new (std::nothrow) GLubyte[savedBufferWidth * savedBufferHeight * 4]))
-//        {
-//            delete[] buffer;
-//            buffer = nullptr;
-//            break;
-//        }
-//
-//        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
-//        glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
-//
+    do
+    {
+        CC_BREAK_IF(! (buffer = new (std::nothrow) unsigned char[savedBufferWidth * savedBufferHeight * 4]));
+
+        if(! (tempData = new (std::nothrow) unsigned char[savedBufferWidth * savedBufferHeight * 4]))
+        {
+            delete[] buffer;
+            buffer = nullptr;
+            break;
+        }
+
 //        // TODO: move this to configuration, so we don't check it every time
 //        /*  Certain Qualcomm Adreno GPU's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
 //         */
@@ -451,29 +454,33 @@ Image* RenderTexture::newImage(bool flipImage)
 //        glPixelStorei(GL_PACK_ALIGNMENT, 1);
 //        glReadPixels(0,0,savedBufferWidth, savedBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, tempData);
 //        glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
-//
-//        if ( flipImage ) // -- flip is only required when saving image to file
-//        {
-//            // to get the actual texture data
-//            // #640 the image read from rendertexture is dirty
-//            for (int i = 0; i < savedBufferHeight; ++i)
-//            {
-//                memcpy(&buffer[i * savedBufferWidth * 4],
-//                       &tempData[(savedBufferHeight - i - 1) * savedBufferWidth * 4],
-//                       savedBufferWidth * 4);
-//            }
-//
-//            image->initWithRawData(buffer, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
-//        }
-//        else
-//        {
-//            image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
-//        }
-//
-//    } while (0);
-//
-//    CC_SAFE_DELETE_ARRAY(buffer);
-//    CC_SAFE_DELETE_ARRAY(tempData);
+        
+        backend::StringUtils::PixelFormat pixelFormat = static_cast<backend::StringUtils::PixelFormat>(_pixelFormat);
+        TextureFormat format = backend::StringUtils::PixelFormat2TextureFormat(pixelFormat);
+        _texture2D->getBackendTexture()->getBytes(0, 0, savedBufferWidth, savedBufferHeight, format, tempData);
+
+        if ( flipImage ) // -- flip is only required when saving image to file
+        {
+            // to get the actual texture data
+            // #640 the image read from rendertexture is dirty
+            for (int i = 0; i < savedBufferHeight; ++i)
+            {
+                memcpy(&buffer[i * savedBufferWidth * 4],
+                       &tempData[(savedBufferHeight - i - 1) * savedBufferWidth * 4],
+                       savedBufferWidth * 4);
+            }
+
+            image->initWithRawData(buffer, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
+        }
+        else
+        {
+            image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
+        }
+
+    } while (0);
+
+    CC_SAFE_DELETE_ARRAY(buffer);
+    CC_SAFE_DELETE_ARRAY(tempData);
 
     return image;
 }
@@ -545,6 +552,7 @@ void RenderTexture::onBegin()
     _oldStencilAttachment = renderer->getStencilAttachment();
     _oldRenderTargetFlag = renderer->getRenderTargetFlag();
 
+    renderer->pushCommandBuffer();
     renderer->setRenderTarget(_renderTargetFlags, _texture2D, _depthStencilTexture, _depthStencilTexture);
 }
 
@@ -553,6 +561,7 @@ void RenderTexture::onEnd()
     Renderer *renderer =  Director::getInstance()->getRenderer();
     renderer->setViewPort(_oldViewport.x, _oldViewport.y, _oldViewport.w, _oldViewport.h);
 
+    renderer->popCommandBuffer();
     renderer->setRenderTarget(_oldRenderTargetFlag, _oldColorAttachment, _oldDepthAttachment, _oldStencilAttachment);
 }
 
@@ -626,6 +635,7 @@ void RenderTexture::clearColorAttachment()
     auto renderer = Director::getInstance()->getRenderer();
     _beforeClearAttachmentCommand.func = [=]() -> void {
         _oldColorAttachment = renderer->getColorAttachment();
+        renderer->pushCommandBuffer();
         renderer->setRenderTarget(RenderTargetFlag::COLOR, _texture2D, nullptr, nullptr);
     };
     renderer->addCommand(&_beforeClearAttachmentCommand);
@@ -634,6 +644,7 @@ void RenderTexture::clearColorAttachment()
     renderer->clear(ClearFlag::COLOR, color, 1, 0);
 
     _afterClearAttachmentCommand.func = [=]() -> void {
+        renderer->popCommandBuffer();
         renderer->setRenderTarget(RenderTargetFlag::COLOR, _oldColorAttachment, nullptr, nullptr);
     };
     renderer->addCommand(&_afterClearAttachmentCommand);

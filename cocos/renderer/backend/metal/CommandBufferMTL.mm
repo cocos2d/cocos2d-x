@@ -156,11 +156,36 @@ CommandBufferMTL::CommandBufferMTL(DeviceMTL* deviceMTL)
 : _mtlCommandQueue(deviceMTL->getMTLCommandQueue())
 , _frameBoundarySemaphore(dispatch_semaphore_create(MAX_INFLIGHT_BUFFER))
 {
+    _commandBufferStack = [NSMutableArray arrayWithCapacity:10];
+    [_commandBufferStack retain];
 }
 
 CommandBufferMTL::~CommandBufferMTL()
 {
     dispatch_semaphore_signal(_frameBoundarySemaphore);
+    [_commandBufferStack release];
+}
+
+void CommandBufferMTL::pushCommandBuffer()
+{
+    [_commandBufferStack addObject:_mtlCommandBuffer];
+    _mtlCommandBuffer = [_mtlCommandQueue commandBuffer];
+    [_mtlCommandBuffer retain];
+}
+
+void CommandBufferMTL::popCommandBuffer()
+{
+    [_mtlRenderEncoder endEncoding];
+    [_mtlRenderEncoder release];
+    _mtlRenderEncoder = nil;
+
+    [_mtlCommandBuffer commit];
+    [_mtlCommandBuffer release];
+
+    if(_commandBufferStack.count > 0)
+    {
+        _mtlCommandBuffer = [_commandBufferStack objectAtIndex:_commandBufferStack.count - 1];
+    }
 }
 
 void CommandBufferMTL::beginFrame()

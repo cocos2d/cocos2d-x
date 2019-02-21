@@ -882,6 +882,16 @@ void Renderer::beginRenderPass(RenderCommand* cmd)
     _commandBuffer->setStencilReferenceValue(_stencilRef);
 }
 
+void Renderer::pushCommandBuffer()
+{
+    _commandBuffer->pushCommandBuffer();
+}
+
+void Renderer::popCommandBuffer()
+{
+    _commandBuffer->popCommandBuffer();
+}
+
 void Renderer::setRenderTarget(RenderTargetFlag flags, Texture2D* colorAttachment, Texture2D* depthAttachment, Texture2D* stencilAttachment)
 {
     _renderTargetFlag = flags;

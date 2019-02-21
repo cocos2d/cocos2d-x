@@ -100,6 +100,7 @@ TextureMTL::~TextureMTL()
 {
     [_mtlTexture release];
     [_mtlSamplerState release];
+	[_copiedTexture release];
 }
 
 void TextureMTL::updateSamplerDescriptor(const SamplerDescriptor &sampler)
@@ -149,6 +150,9 @@ void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor&
                                                               width:descriptor.width
                                                              height:descriptor.height
                                                           mipmapped:TRUE];
+    
+    _copiedTexture = [mtlDevice newTextureWithDescriptor:textureDescriptor];
+
     if (TextureUsage::RENDER_TARGET == descriptor.textureUsage)
     {
         textureDescriptor.resourceOptions = MTLResourceStorageModePrivate;
@@ -180,6 +184,31 @@ void TextureMTL::createSampler(id<MTLDevice> mtlDevice, const SamplerDescriptor 
     _mtlSamplerState = [mtlDevice newSamplerStateWithDescriptor:mtlDescriptor];
     
     [mtlDescriptor release];
+}
+
+void TextureMTL::synchronizeTexture(id<MTLTexture> dstTexture)
+{
+    MTLRegion region = MTLRegionMake2D(0, 0, _width, _height);
+    auto commandQueue = static_cast<DeviceMTL*>(DeviceMTL::getInstance())->getMTLCommandQueue();
+    auto commandBuffer = [commandQueue commandBuffer];
+    id<MTLBlitCommandEncoder> commandEncoder = [commandBuffer blitCommandEncoder];
+    [commandEncoder copyFromTexture:_mtlTexture sourceSlice:0 sourceLevel:0 sourceOrigin:region.origin sourceSize:region.size toTexture:dstTexture destinationSlice:0 destinationLevel:0 destinationOrigin:region.origin];
+
+    if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    {
+        [commandEncoder synchronizeResource:dstTexture];
+    }
+    [commandEncoder endEncoding];
+    [commandBuffer commit];
+    [commandBuffer waitUntilCompleted];
+}
+
+void TextureMTL::getBytes(int x, int y, int width, int height, TextureFormat format, unsigned char* data)
+{
+    CC_ASSERT(width <= _width && height <= _height);
+    synchronizeTexture(_copiedTexture);
+    MTLRegion region = MTLRegionMake2D(x, y, width, height);
+    [_copiedTexture getBytes:data bytesPerRow:_bytesPerRow fromRegion:region mipmapLevel:0];
 }
 
 CC_BACKEND_END
