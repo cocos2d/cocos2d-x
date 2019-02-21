@@ -194,10 +194,9 @@ void TextureMTL::synchronizeTexture(id<MTLTexture> dstTexture)
     id<MTLBlitCommandEncoder> commandEncoder = [commandBuffer blitCommandEncoder];
     [commandEncoder copyFromTexture:_mtlTexture sourceSlice:0 sourceLevel:0 sourceOrigin:region.origin sourceSize:region.size toTexture:dstTexture destinationSlice:0 destinationLevel:0 destinationOrigin:region.origin];
 
-    if(CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    {
-        [commandEncoder synchronizeResource:dstTexture];
-    }
+#ifdef CC_USE_MAC
+    [commandEncoder synchronizeResource:dstTexture];
+#endif
     [commandEncoder endEncoding];
     [commandBuffer commit];
     [commandBuffer waitUntilCompleted];
