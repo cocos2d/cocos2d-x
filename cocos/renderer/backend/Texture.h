@@ -27,8 +27,9 @@ public:
     
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) = 0;
     virtual void getBytes(int x, int y, int width, int height, TextureFormat format, unsigned char* data) = 0;
+#ifndef CC_USE_METAL
     virtual void updateFBO() = 0;
-
+#endif
     inline TextureFormat getTextureFormat() const { return _textureFormat; }
     inline TextureUsage getTextureUsage() const { return _textureUsage; }
     inline uint32_t getWidth() const { return _width; }
