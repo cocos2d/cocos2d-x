@@ -301,7 +301,7 @@ void RenderTexture::beginWithClear(float r, float g, float b, float a, float dep
     setClearStencil(stencilValue);
     setClearFlags(flags);
     begin();
-    Director::getInstance()->getRenderer()->clear(_clearFlags, _clearColor, _clearDepth, _clearStencil);
+    Director::getInstance()->getRenderer()->clear(_clearFlags, _clearColor, _clearDepth, _clearStencil, _globalZOrder);
 }
 
 void RenderTexture::clear(float r, float g, float b, float a)
@@ -493,7 +493,7 @@ void RenderTexture::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
         begin();
 
         //clear screen
-        Director::getInstance()->getRenderer()->clear(_clearFlags, _clearColor, _clearDepth, _clearStencil);
+        Director::getInstance()->getRenderer()->clear(_clearFlags, _clearColor, _clearDepth, _clearStencil, _globalZOrder);
 
         //! make sure all children are drawn
         sortAllChildren();
@@ -641,7 +641,7 @@ void RenderTexture::clearColorAttachment()
     renderer->addCommand(&_beforeClearAttachmentCommand);
 
     Color4F color(0.f, 0.f, 0.f, 0.f);
-    renderer->clear(ClearFlag::COLOR, color, 1, 0);
+    renderer->clear(ClearFlag::COLOR, color, 1, 0, _globalZOrder);
 
     _afterClearAttachmentCommand.func = [=]() -> void {
         renderer->popCommandBuffer();

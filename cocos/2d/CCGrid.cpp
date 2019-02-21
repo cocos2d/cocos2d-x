@@ -214,7 +214,7 @@ void GridBase::beforeDraw()
         renderer->setRenderTarget(flags, _texture, nullptr, nullptr);
     };
     renderer->addCommand(&_beforeDrawCommand);
-    renderer->clear(ClearFlag::COLOR, _clearColor, 1, 0);
+    renderer->clear(ClearFlag::COLOR, _clearColor, 1, 0, 0.0);
 }
 
 void GridBase::afterDraw(cocos2d::Node * /*target*/)
