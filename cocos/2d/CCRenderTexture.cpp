@@ -561,6 +561,10 @@ void RenderTexture::onEnd()
     Renderer *renderer =  Director::getInstance()->getRenderer();
     renderer->setViewPort(_oldViewport.x, _oldViewport.y, _oldViewport.w, _oldViewport.h);
 
+#ifndef CC_USE_METAL
+    _texture2D->getBackendTexture()->updateFBO();
+#endif // !CC_USE_METAL
+
     renderer->popCommandBuffer();
     renderer->setRenderTarget(_oldRenderTargetFlag, _oldColorAttachment, _oldDepthAttachment, _oldStencilAttachment);
 }

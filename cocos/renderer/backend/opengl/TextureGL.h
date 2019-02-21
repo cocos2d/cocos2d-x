@@ -16,6 +16,7 @@ public:
     
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler)  override;
     virtual void getBytes(int x, int y, int width, int height, TextureFormat format, unsigned char* data) override;
+    virtual void updateFBO() override;
 
     void apply(int index) const;
     inline GLuint getHandler() const { return _texture; }
@@ -38,6 +39,7 @@ private:
     GLenum _type = GL_UNSIGNED_BYTE;
 
     bool _isCompressed = false;
+    GLint _frameBuffer = 0;
 };
 
 CC_BACKEND_END

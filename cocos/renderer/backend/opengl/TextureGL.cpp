@@ -400,10 +400,21 @@ void TextureGL::toGLTypes()
     }
 }
 
+void TextureGL::updateFBO()
+{
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_frameBuffer);
+}
+
 void TextureGL::getBytes(int x, int y, int width, int height, TextureFormat format, unsigned char* data)
 {
+    GLint defaultFBO = 0;
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &defaultFBO);
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, _frameBuffer);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture, 0);
     glPixelStorei(GL_PACK_ALIGNMENT, 1);
     glReadPixels(x,y,width, _height,GL_RGBA,GL_UNSIGNED_BYTE, data);
+    glBindFramebuffer(GL_FRAMEBUFFER, defaultFBO);
 }
 
 CC_BACKEND_END
