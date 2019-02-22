@@ -100,7 +100,7 @@ TextureMTL::~TextureMTL()
 {
     [_mtlTexture release];
     [_mtlSamplerState release];
-	[_copiedTexture release];
+    [_copiedTexture release];
 }
 
 void TextureMTL::updateSamplerDescriptor(const SamplerDescriptor &sampler)

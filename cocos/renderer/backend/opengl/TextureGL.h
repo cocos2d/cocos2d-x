@@ -33,7 +33,7 @@ public:
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler)  override;
     virtual void getBytes(int x, int y, int width, int height, TextureFormat format, unsigned char* data) override;
 #ifndef CC_USE_METAL
-            virtual void updateFBO() override;
+    virtual void updateFBO() override;
 #endif
 
     void apply(int index) const;
@@ -58,7 +58,7 @@ public:
     virtual void updateFaceData(TextureCubeFace side, void *data) override;
     virtual void getBytes(int x, int y, int width, int height, TextureFormat format, unsigned char* data) override;
 #ifndef CC_USE_METAL
-            virtual void updateFBO() override;
+    virtual void updateFBO() override;
 #endif
     
     void apply(int index) const;

@@ -156,14 +156,11 @@ CommandBufferMTL::CommandBufferMTL(DeviceMTL* deviceMTL)
 : _mtlCommandQueue(deviceMTL->getMTLCommandQueue())
 , _frameBoundarySemaphore(dispatch_semaphore_create(MAX_INFLIGHT_BUFFER))
 {
-    _commandBufferStack = [NSMutableArray arrayWithCapacity:10];
-    [_commandBufferStack retain];
 }
 
 CommandBufferMTL::~CommandBufferMTL()
 {
     dispatch_semaphore_signal(_frameBoundarySemaphore);
-    [_commandBufferStack release];
 }
 
 void CommandBufferMTL::beginFrame()
