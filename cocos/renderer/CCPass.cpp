@@ -105,8 +105,8 @@ Pass::Pass()
     
     //TODO: set _customCommand's vertex layout.
     //auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
-    //vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
-    //vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, 6 * sizeof(float), false);
+    //vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, 0, false);
+    //vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT2, 6 * sizeof(float), false);
     //vertexLayout.setLayout(8 * sizeof(float), backend::VertexStepMode::VERTEX);
 
     _beforeVisitCmd.func = CC_CALLBACK_0(Pass::onBeforeVisitCmd, this);
