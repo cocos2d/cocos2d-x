@@ -8,23 +8,23 @@ int MeshVertexAttrib::getAttribSizeBytes() const
     int ret = 0;
     switch (type)
     {
-    case backend::VertexFormat::FLOAT_R32G32B32A32:
-    case backend::VertexFormat::INT_R32G32B32A32:
+    case backend::VertexFormat::FLOAT4:
+    case backend::VertexFormat::INT4:
         return 16;
-    case backend::VertexFormat::FLOAT_R32G32B32:
-    case backend::VertexFormat::INT_R32G32B32:
+    case backend::VertexFormat::FLOAT3:
+    case backend::VertexFormat::INT3:
         return 12;
-    case backend::VertexFormat::FLOAT_R32G32:
-    case backend::VertexFormat::INT_R32G32:
-    case backend::VertexFormat::USHORT_R16G16B16A16:
+    case backend::VertexFormat::FLOAT2:
+    case backend::VertexFormat::INT2:
+    case backend::VertexFormat::USHORT4:
         return 8;
-    case backend::VertexFormat::FLOAT_R32:
-    case backend::VertexFormat::INT_R32:
-    case backend::VertexFormat::UBYTE_R8G8B8A8:
-    case backend::VertexFormat::UNORM_R8G8B8A8:
-    case backend::VertexFormat::USHORT_R16G16:
+    case backend::VertexFormat::FLOAT:
+    case backend::VertexFormat::INT:
+    case backend::VertexFormat::UBYTE4:
+    case backend::VertexFormat::UNORM4:
+    case backend::VertexFormat::USHORT2:
         return 4;
-    case backend::VertexFormat::UNORM_R8G8:
+    case backend::VertexFormat::UNORM2:
         return 2;
     default:
         CCASSERT(false, "VertexFormat convert to size error");

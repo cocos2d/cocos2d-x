@@ -69,7 +69,7 @@ bool Skybox::init()
     // disable blend
     pipelineDescriptor.blendDescriptor.blendEnabled = false; 
 
-    layout.setAtrribute(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
+    layout.setAtrribute(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, 0, backend::VertexFormat::FLOAT3, 0, false);
     layout.setLayout(sizeof(Vec3), backend::VertexStepMode::VERTEX);
 
     _uniformColorLoc = _programState->getUniformLocation("u_color");

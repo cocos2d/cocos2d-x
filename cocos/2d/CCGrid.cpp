@@ -118,8 +118,8 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipp
     uint32_t texcoordOffset = (VERTEX_POSITION_SIZE)*sizeof(float);
     uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float);
     auto& vertexLayout = _drawCommand.getPipelineDescriptor().vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
-    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, texcoordOffset, false);
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, 0, false);
+    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT2, texcoordOffset, false);
     vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
 
     calculateVertexPoints();
