@@ -285,11 +285,6 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
 
 function run_pull_request()
 {
-    echo "Building pull request ..."
-
-    # need to generate binding codes for all targets
-    genernate_binding_codes
-
     # linux
     if [ $BUILD_TARGET == 'linux' ]; then
         build_linux
@@ -327,6 +322,14 @@ function run_pull_request()
     if [ $BUILD_TARGET == 'ios' ]; then
         build_ios
     fi
+
+    if [ $BUILD_TARGET == 'mac_cmake' ]; then
+        build_mac_cmake
+    fi
+
+    if [ $BUILD_TARGET == 'ios_cmake' ]; then
+        build_ios_cmake
+    fi
 }
 
 function run_after_merge()
@@ -356,6 +359,12 @@ function run_after_merge()
 
 # build pull request
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
+
+    echo "Building pull request ..."
+
+    # need to generate binding codes for all targets
+    genernate_binding_codes
+
     if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
         source ../environment.sh
         pushd $COCOS2DX_ROOT
@@ -380,15 +389,6 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
         cd linux-build
         cmake ..
         cmake --build .
-        exit 0
-    fi
-    if [ $BUILD_TARGET == 'mac_cmake' ]; then
-        build_mac_cmake
-        exit 0
-    fi
-
-    if [ $BUILD_TARGET == 'ios_cmake' ]; then
-        build_ios_cmake
         exit 0
     fi
 
