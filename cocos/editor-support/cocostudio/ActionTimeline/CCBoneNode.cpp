@@ -417,8 +417,8 @@ bool BoneNode::init()
     pipelineDescriptor.programState = _programState;
 
     auto& vertexLayout = pipelineDescriptor.vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, cocos2d::backend::VertexFormat::FLOAT_R32G32B32, 0, false);
-    vertexLayout.setAtrribute("a_color", 1, cocos2d::backend::VertexFormat::FLOAT_R32G32B32A32, 3 * sizeof(float), false);
+    vertexLayout.setAtrribute("a_position", 0, cocos2d::backend::VertexFormat::FLOAT3, 0, false);
+    vertexLayout.setAtrribute("a_color", 1, cocos2d::backend::VertexFormat::FLOAT4, 3 * sizeof(float), false);
     vertexLayout.setLayout(7 * sizeof(float), cocos2d::backend::VertexStepMode::VERTEX);
 
     _customCommand.createVertexBuffer(sizeof(_vertexData[0].noMVPVertices), 4, cocos2d::CustomCommand::BufferUsage::DYNAMIC);

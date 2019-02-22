@@ -48,9 +48,9 @@ MotionStreak::MotionStreak()
     _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
     
     auto& vertexLayout = pipelineDescriptor.vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32, 0, false);
-    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, 2 * sizeof(float), false);
-    vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, 4 * sizeof(float), true);
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT2, 0, false);
+    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT2, 2 * sizeof(float), false);
+    vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE4, 4 * sizeof(float), true);
     vertexLayout.setLayout(4 * sizeof(float) + 4 * sizeof(uint8_t), backend::VertexStepMode::VERTEX);
 }
 

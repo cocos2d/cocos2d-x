@@ -402,9 +402,9 @@ void TMXLayer::updatePrimitives()
             command->setIndexDrawInfo(start * 6, iter.second * 6);
 
             auto& vertexLayout = command->getPipelineDescriptor().vertexLayout;
-            vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
-            vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, offsetof(V3F_C4B_T2F, texCoords), false);
-            vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, offsetof(V3F_C4B_T2F, colors), true);
+            vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, 0, false);
+            vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
+            vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
 
             vertexLayout.setLayout((unsigned int)sizeof(V3F_C4B_T2F), backend::VertexStepMode::VERTEX);
 

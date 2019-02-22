@@ -22,43 +22,37 @@ namespace
         MTLVertexFormat ret = MTLVertexFormatFloat4;
         switch (vertexFormat)
         {
-            case VertexFormat::FLOAT_R32G32B32A32:
+            case VertexFormat::FLOAT4:
                 ret = MTLVertexFormatFloat4;
                 break;
-            case VertexFormat::FLOAT_R32G32B32:
+            case VertexFormat::FLOAT3:
                 ret = MTLVertexFormatFloat3;
                 break;
-            case VertexFormat::FLOAT_R32G32:
+            case VertexFormat::FLOAT2:
                 ret = MTLVertexFormatFloat2;
                 break;
-            case VertexFormat::FLOAT_R32:
+            case VertexFormat::FLOAT:
                 ret = MTLVertexFormatFloat;
                 break;
-            case VertexFormat::INT_R32G32B32A32:
+            case VertexFormat::INT4:
                 ret = MTLVertexFormatInt4;
                 break;
-            case VertexFormat::INT_R32G32B32:
+            case VertexFormat::INT3:
                 ret = MTLVertexFormatInt3;
                 break;
-            case VertexFormat::INT_R32G32:
+            case VertexFormat::INT2:
                 ret = MTLVertexFormatInt2;
                 break;
-            case VertexFormat::INT_R32:
+            case VertexFormat::INT:
                 ret = MTLVertexFormatInt;
                 break;
-            case VertexFormat::USHORT_R16G16B16A16:
+            case VertexFormat::USHORT4:
                 ret = MTLVertexFormatUShort4;
                 break;
-            case VertexFormat::USHORT_R16G16:
+            case VertexFormat::USHORT2:
                 ret = MTLVertexFormatUShort2;
                 break;
-            case VertexFormat::UNORM_R8G8B8A8:
-                ret = MTLVertexFormatUChar4;
-                break;
-            case VertexFormat::UNORM_R8G8:
-                ret = MTLVertexFormatUChar2;
-                break;
-            case VertexFormat::UBYTE_R8G8B8A8:
+            case VertexFormat::UBYTE4:
                 if (needNormalize)
                     ret = MTLVertexFormatUChar4Normalized;
                 else

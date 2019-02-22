@@ -82,8 +82,8 @@ bool DrawNode3D::init()
     _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
     _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::LINE);
 
-    layout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
-    layout.setAtrribute("a_color", 1, backend::VertexFormat::UBYTE_R8G8B8A8, sizeof(Vec3), true);
+    layout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, 0, false);
+    layout.setAtrribute("a_color", 1, backend::VertexFormat::UBYTE4, sizeof(Vec3), true);
     layout.setLayout(sizeof(V3F_C4B), backend::VertexStepMode::VERTEX);
     
     _customCommand.createVertexBuffer(sizeof(V3F_C4B), INITIAL_VERTEX_BUFFER_LENGTH, CustomCommand::BufferUsage::DYNAMIC);

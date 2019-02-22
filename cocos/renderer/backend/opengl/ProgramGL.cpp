@@ -12,19 +12,19 @@ namespace
         GLenum ret = GL_INT;
         switch (vertexFormat)
         {
-            case VertexFormat::FLOAT_R32G32B32A32:
-            case VertexFormat::FLOAT_R32G32B32:
-            case VertexFormat::FLOAT_R32G32:
-            case VertexFormat::FLOAT_R32:
+            case VertexFormat::FLOAT4:
+            case VertexFormat::FLOAT3:
+            case VertexFormat::FLOAT2:
+            case VertexFormat::FLOAT:
                 ret = GL_FLOAT;
                 break;
-            case VertexFormat::INT_R32G32B32A32:
-            case VertexFormat::INT_R32G32B32:
-            case VertexFormat::INT_R32G32:
-            case VertexFormat::INT_R32:
+            case VertexFormat::INT4:
+            case VertexFormat::INT3:
+            case VertexFormat::INT2:
+            case VertexFormat::INT:
                 ret = GL_INT;
                 break;
-            case VertexFormat::UBYTE_R8G8B8A8:
+            case VertexFormat::UBYTE4:
                 ret = GL_UNSIGNED_BYTE;
                 break;
             default:
@@ -38,21 +38,21 @@ namespace
         GLsizei ret = 0;
         switch (vertexFormat)
         {
-            case VertexFormat::FLOAT_R32G32B32A32:
-            case VertexFormat::INT_R32G32B32A32:
-            case VertexFormat::UBYTE_R8G8B8A8:
+            case VertexFormat::FLOAT4:
+            case VertexFormat::INT4:
+            case VertexFormat::UBYTE4:
                 ret = 4;
                 break;
-            case VertexFormat::FLOAT_R32G32B32:
-            case VertexFormat::INT_R32G32B32:
+            case VertexFormat::FLOAT3:
+            case VertexFormat::INT3:
                 ret = 3;
                 break;
-            case VertexFormat::FLOAT_R32G32:
-            case VertexFormat::INT_R32G32:
+            case VertexFormat::FLOAT2:
+            case VertexFormat::INT2:
                 ret = 2;
                 break;
-            case VertexFormat::FLOAT_R32:
-            case VertexFormat::INT_R32:
+            case VertexFormat::FLOAT:
+            case VertexFormat::INT:
                 ret = 1;
                 break;
             default:
