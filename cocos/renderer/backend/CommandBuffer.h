@@ -9,6 +9,7 @@
 #include "RenderPassDescriptor.h"
 #include "CCStdC.h"
 #include "ProgramState.h"
+#include "renderer/CCCallbackCommand.h"
 
 CC_BACKEND_BEGIN
 
@@ -20,8 +21,6 @@ class DepthStencilState;
 class CommandBuffer : public cocos2d::Ref
 {
 public:
-    virtual void pushCommandBuffer() = 0;
-    virtual void popCommandBuffer() = 0;
     virtual void beginFrame() = 0;
     virtual void beginRenderPass(const RenderPassDescriptor& descriptor) = 0;
     virtual void setRenderPipeline(RenderPipeline* renderPipeline) = 0;
@@ -39,6 +38,7 @@ public:
     virtual void setLineWidth(float lineWidth) = 0;
     virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) = 0;
     virtual void setDepthStencilState(DepthStencilState* depthStencilState) = 0;
+    virtual void setCallBackCommand(RenderCommand* comand) = 0;
     
     void setStencilReferenceValue(unsigned int value);
     void setStencilReferenceValue(unsigned int frontRef, unsigned int backRef);

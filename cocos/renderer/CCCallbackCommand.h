@@ -53,6 +53,12 @@ public:
     std::function<void()> func;
 };
 
+class CC_DLL SynchronizedCallbackCommand : public CallbackCommand
+{
+public:
+    SynchronizedCallbackCommand();
+};
+
 NS_CC_END
 /**
  end of support group

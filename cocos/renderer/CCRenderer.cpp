@@ -323,7 +323,10 @@ void Renderer::processRenderCommand(RenderCommand* command)
             break;
         case RenderCommand::Type::CALLBACK_COMMAND:
             flush();
-            static_cast<CallbackCommand*>(command)->execute();
+           static_cast<CallbackCommand*>(command)->execute();
+            break;
+        case RenderCommand::Type::SYCHRONIZED_CALLBACK_COMMAND:
+            _commandBuffer->setCallBackCommand(command);
             break;
         default:
             assert(false);
@@ -880,16 +883,6 @@ void Renderer::beginRenderPass(RenderCommand* cmd)
      setRenderPipeline(cmd->getPipelineDescriptor(), _renderPassDescriptor);
 
     _commandBuffer->setStencilReferenceValue(_stencilRef);
-}
-
-void Renderer::pushCommandBuffer()
-{
-    _commandBuffer->pushCommandBuffer();
-}
-
-void Renderer::popCommandBuffer()
-{
-    _commandBuffer->popCommandBuffer();
 }
 
 void Renderer::setRenderTarget(RenderTargetFlag flags, Texture2D* colorAttachment, Texture2D* depthAttachment, Texture2D* stencilAttachment)

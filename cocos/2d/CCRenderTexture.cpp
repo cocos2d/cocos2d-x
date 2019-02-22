@@ -552,7 +552,6 @@ void RenderTexture::onBegin()
     _oldStencilAttachment = renderer->getStencilAttachment();
     _oldRenderTargetFlag = renderer->getRenderTargetFlag();
 
-    renderer->pushCommandBuffer();
     renderer->setRenderTarget(_renderTargetFlags, _texture2D, _depthStencilTexture, _depthStencilTexture);
 }
 
@@ -565,7 +564,6 @@ void RenderTexture::onEnd()
     _texture2D->getBackendTexture()->updateFBO();
 #endif // !CC_USE_METAL
 
-    renderer->popCommandBuffer();
     renderer->setRenderTarget(_oldRenderTargetFlag, _oldColorAttachment, _oldDepthAttachment, _oldStencilAttachment);
 }
 
@@ -639,7 +637,6 @@ void RenderTexture::clearColorAttachment()
     auto renderer = Director::getInstance()->getRenderer();
     _beforeClearAttachmentCommand.func = [=]() -> void {
         _oldColorAttachment = renderer->getColorAttachment();
-        renderer->pushCommandBuffer();
         renderer->setRenderTarget(RenderTargetFlag::COLOR, _texture2D, nullptr, nullptr);
     };
     renderer->addCommand(&_beforeClearAttachmentCommand);
@@ -648,7 +645,6 @@ void RenderTexture::clearColorAttachment()
     renderer->clear(ClearFlag::COLOR, color, 1, 0, _globalZOrder);
 
     _afterClearAttachmentCommand.func = [=]() -> void {
-        renderer->popCommandBuffer();
         renderer->setRenderTarget(RenderTargetFlag::COLOR, _oldColorAttachment, nullptr, nullptr);
     };
     renderer->addCommand(&_afterClearAttachmentCommand);

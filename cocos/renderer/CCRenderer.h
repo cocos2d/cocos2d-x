@@ -250,9 +250,6 @@ public:
 
     /** returns whether or not a rectangle is visible or not */
     bool checkVisibility(const Mat4& transform, const Size& size);
-	
-    void pushCommandBuffer();
-    void popCommandBuffer();
 
 protected:
     friend class Director;

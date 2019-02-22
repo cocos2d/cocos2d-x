@@ -32,8 +32,8 @@ public:
     virtual void setLineWidth(float lineWidth) override;
     virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) override;
     virtual void setDepthStencilState(DepthStencilState* depthStencilState) override;
-    virtual void pushCommandBuffer() override;
-    virtual void popCommandBuffer() override;
+    virtual void setCallBackCommand(RenderCommand* comand) override;
+    
 private:
     void prepareDrawing() const;
     void setTextures() const;
@@ -57,6 +57,8 @@ private:
     
     dispatch_semaphore_t _frameBoundarySemaphore;
     RenderPassDescriptor _prevRenderPassDescriptor;
+    
+    SynchronizedCallbackCommand* _synchronizedCallback = nullptr;
 };
 
 CC_BACKEND_END

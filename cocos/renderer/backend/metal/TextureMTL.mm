@@ -191,6 +191,7 @@ void TextureMTL::synchronizeTexture(id<MTLTexture> dstTexture)
     MTLRegion region = MTLRegionMake2D(0, 0, _width, _height);
     auto commandQueue = static_cast<DeviceMTL*>(DeviceMTL::getInstance())->getMTLCommandQueue();
     auto commandBuffer = [commandQueue commandBuffer];
+    [commandBuffer enqueue];
     id<MTLBlitCommandEncoder> commandEncoder = [commandBuffer blitCommandEncoder];
     [commandEncoder copyFromTexture:_mtlTexture sourceSlice:0 sourceLevel:0 sourceOrigin:region.origin sourceSize:region.size toTexture:dstTexture destinationSlice:0 destinationLevel:0 destinationOrigin:region.origin];
 

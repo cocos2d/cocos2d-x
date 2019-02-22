@@ -59,6 +59,8 @@ public:
         TRIANGLES_COMMAND,
         /**Callback command, used for calling callback for rendering.*/
         CALLBACK_COMMAND,
+        /**Synchrozied Callback command, used for calling callback after CommandBuffer executed by GPU.*/
+        SYCHRONIZED_CALLBACK_COMMAND,
     };
 
     /**

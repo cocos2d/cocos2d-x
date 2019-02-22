@@ -166,28 +166,6 @@ CommandBufferMTL::~CommandBufferMTL()
     [_commandBufferStack release];
 }
 
-void CommandBufferMTL::pushCommandBuffer()
-{
-    [_commandBufferStack addObject:_mtlCommandBuffer];
-    _mtlCommandBuffer = [_mtlCommandQueue commandBuffer];
-    [_mtlCommandBuffer retain];
-}
-
-void CommandBufferMTL::popCommandBuffer()
-{
-    [_mtlRenderEncoder endEncoding];
-    [_mtlRenderEncoder release];
-    _mtlRenderEncoder = nil;
-
-    [_mtlCommandBuffer commit];
-    [_mtlCommandBuffer release];
-
-    if(_commandBufferStack.count > 0)
-    {
-        _mtlCommandBuffer = [_commandBufferStack objectAtIndex:_commandBufferStack.count - 1];
-    }
-}
-
 void CommandBufferMTL::beginFrame()
 {
     dispatch_semaphore_wait(_frameBoundarySemaphore, DISPATCH_TIME_FOREVER);
@@ -309,6 +287,19 @@ void CommandBufferMTL::endRenderPass()
     afterDraw();
 }
 
+void CommandBufferMTL::setCallBackCommand(RenderCommand* command)
+{
+    auto commandType = command->getType();
+    switch (commandType) {
+        case RenderCommand::Type::SYCHRONIZED_CALLBACK_COMMAND:
+            _synchronizedCallback = static_cast<SynchronizedCallbackCommand*>(command);
+            break;
+        default:
+            break;
+    }
+    
+}
+
 void CommandBufferMTL::endFrame()
 {
     [_mtlRenderEncoder endEncoding];
@@ -324,6 +315,13 @@ void CommandBufferMTL::endFrame()
     }];
 
     [_mtlCommandBuffer commit];
+    
+    if(_synchronizedCallback)
+    {
+        _synchronizedCallback->execute();
+    }
+    _synchronizedCallback = nullptr;
+    
     [_mtlCommandBuffer release];
     DeviceMTL::resetCurrentDrawable();
 }
