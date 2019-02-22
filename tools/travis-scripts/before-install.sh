@@ -103,6 +103,8 @@ fi
 if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
     download_deps
     install_linux_environment
+    sudo python -m pip install retry
+    # set android ndk environment by setup_android.py
     python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py --ndk_only
     exit 0
 fi
