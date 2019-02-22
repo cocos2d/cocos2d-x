@@ -52,12 +52,6 @@ namespace
             case VertexFormat::USHORT2:
                 ret = MTLVertexFormatUShort2;
                 break;
-            case VertexFormat::UNORM4:
-                ret = MTLVertexFormatUChar4;
-                break;
-            case VertexFormat::UNORM2:
-                ret = MTLVertexFormatUChar2;
-                break;
             case VertexFormat::UBYTE4:
                 if (needNormalize)
                     ret = MTLVertexFormatUChar4Normalized;

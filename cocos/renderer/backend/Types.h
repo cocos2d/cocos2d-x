@@ -39,9 +39,7 @@ enum class VertexFormat : uint32_t
     INT,
     USHORT4,
     USHORT2,
-    UBYTE4,
-    UNORM4,
-    UNORM2
+    UBYTE4
 };
 
 enum class TextureFormat : uint32_t

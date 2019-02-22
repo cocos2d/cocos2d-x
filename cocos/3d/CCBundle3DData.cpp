@@ -21,11 +21,8 @@ int MeshVertexAttrib::getAttribSizeBytes() const
     case backend::VertexFormat::FLOAT:
     case backend::VertexFormat::INT:
     case backend::VertexFormat::UBYTE4:
-    case backend::VertexFormat::UNORM4:
     case backend::VertexFormat::USHORT2:
         return 4;
-    case backend::VertexFormat::UNORM2:
-        return 2;
     default:
         CCASSERT(false, "VertexFormat convert to size error");
     }
