@@ -25,7 +25,7 @@ matrix:
       sudo: required
     # android ndk-build
     - os: linux
-      env: BUILD_TARGET=android_ndk-build
+      env: BUILD_TARGET=android_cpp_ndk-build
       language: android
       sudo: required
     # android_lua ndk-build
@@ -35,7 +35,7 @@ matrix:
       sudo: required
     # android cmake
     - os: linux
-      env: BUILD_TARGET=android_cmake
+      env: BUILD_TARGET=android_cpp_cmake
       language: android
       sudo: required
     # android_lua cmake
@@ -61,12 +61,12 @@ matrix:
       osx_image: xcode9.3
       sudo: required
     - os: linux
-      env: BUILD_TARGET=android_cocos_new_test
+      env: BUILD_TARGET=android_cocos_new_cpp_test
       language: android
       sudo: required
     - os: linux
       dist: xenial
-      env: BUILD_TARGET=linux_cocos_new_test
+      env: BUILD_TARGET=linux_cocos_new_lua_test
       language: cpp
       sudo: required
 
