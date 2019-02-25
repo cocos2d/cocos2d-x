@@ -69,14 +69,6 @@ def delete_folder_except(folder_path, excepts):
             os.remove(full_path)
 
 
-class UnrecognizedFormat(Exception):
-    def __init__(self, prompt):
-        self._prompt = prompt
-
-    def __str__(self):
-        return self._prompt
-
-
 class CocosZipInstaller(object):
     def __init__(self, workpath, config_path, version_path, remote_version_key=None):
         self._workpath = workpath
@@ -107,7 +99,11 @@ class CocosZipInstaller(object):
             print("==> version file doesn't exist")
 
     def get_input_value(self, prompt):
-        ret = raw_input(prompt)
+        major_ver = sys.version_info[0]
+        if major_ver > 2:
+            ret = input(prompt)
+        else:
+            ret = raw_input(prompt)
         ret.rstrip(" \t")
         return ret
 
@@ -118,10 +114,16 @@ class CocosZipInstaller(object):
         except OSError:
             pass
         print("==> Ready to download '%s' from '%s'" % (self._filename, self._url))
-        import urllib2
+        #import urllib2
         try:
-            u = urllib2.urlopen(self._url)
-        except urllib2.HTTPError as e:
+            from urllib.request import urlopen
+            from urllib.error import HTTPError
+        except ImportError:
+            from urllib2 import urlopen
+            from urllib2 import HTTPError
+        try:
+            u = urlopen(self._url)
+        except HTTPError as e:
             if e.code == 404:
                 print("==> Error: Could not find the file from url: '%s'" % (self._url))
             print("==> Http request failed, error code: " + str(e.code) + ", reason: " + e.read())
@@ -129,10 +131,16 @@ class CocosZipInstaller(object):
 
         f = open(self._filename, 'wb')
         meta = u.info()
-        content_len = meta.getheaders("Content-Length")
+        if hasattr(meta, 'getheader'):
+            content_len = meta.getheader("Content-Length")
+        else:
+            content_len = meta.get("Content-Length")
         file_size = 0
         if content_len and len(content_len) > 0:
-            file_size = int(content_len[0])
+            if isinstance(content_len, list):
+                file_size = int(content_len[0])
+            else:
+                file_size = int(content_len)
         else:
             # github server may not reponse a header information which contains `Content-Length`,
             # therefore, the size needs to be written hardcode here. While server doesn't return
@@ -186,7 +194,7 @@ class CocosZipInstaller(object):
         """
 
         if not zipfile.is_zipfile(self._filename):
-            raise UnrecognizedFormat("%s is not a zip file" % (self._filename))
+            raise zipfile.BadZipfile("%s is not a zip file" % (self._filename))
 
         print("==> Extracting files, please wait ...")
         z = zipfile.ZipFile(self._filename)
@@ -234,8 +242,8 @@ class CocosZipInstaller(object):
             self.download_file_with_retry(5, 3)
         try:
             if not zipfile.is_zipfile(self._filename):
-                raise UnrecognizedFormat("%s is not a zip file" % (self._filename))
-        except UnrecognizedFormat as e:
+                raise zipfile.BadZipfile("%s is not a zip file" % (self._filename))
+        except zipfile.BadZipfile as e:
             print("==> Unrecognized zip format from your local '%s' file!" % (self._filename))
             if os.path.isfile(self._filename):
                 os.remove(self._filename)
@@ -243,7 +251,6 @@ class CocosZipInstaller(object):
             self.download_zip_file()
 
     def download_file_with_retry(self, times, delay):
-        import urllib2
         times_count = 0
         while(times_count < times):
             times_count += 1
@@ -336,21 +343,8 @@ class CocosZipInstaller(object):
             print("==> Download (%s) finish!" % self._filename)
 
 
-def _check_python_version():
-    major_ver = sys.version_info[0]
-    if major_ver > 2:
-        print ("The python version is %d.%d. But python 2.x is required. (Version 2.7 is well tested)\n"
-               "Download it here: https://www.python.org/" % (major_ver, sys.version_info[1]))
-        return False
-
-    return True
-
-
 def main():
     workpath = os.path.dirname(os.path.realpath(__file__))
-
-    if not _check_python_version():
-        exit()
 
     parser = OptionParser()
     parser.add_option('-r', '--remove-download',
