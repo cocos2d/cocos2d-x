@@ -95150,51 +95150,42 @@ int lua_cocos2dx_Application_setAnimationInterval(lua_State* tolua_S)
     int argc = 0;
     cocos2d::Application* cobj = nullptr;
     bool ok  = true;
+
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
 
+
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertype(tolua_S,1,"cc.Application",0,&tolua_err)) goto tolua_lerror;
 #endif
+
     cobj = (cocos2d::Application*)tolua_tousertype(tolua_S,1,0);
+
 #if COCOS2D_DEBUG >= 1
-    if (!cobj)
+    if (!cobj) 
     {
         tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Application_setAnimationInterval'", nullptr);
         return 0;
     }
 #endif
+
     argc = lua_gettop(tolua_S)-1;
-    do{
-        if (argc == 2) {
-            double arg0;
-            ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Application:setAnimationInterval");
+    if (argc == 1) 
+    {
+        double arg0;
 
-            if (!ok) { break; }
-            cocos2d::SetIntervalReason arg1;
-            ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.Application:setAnimationInterval");
-
-            if (!ok) { break; }
-            cobj->setAnimationInterval(arg0, arg1);
-            lua_settop(tolua_S, 1);
-            return 1;
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Application:setAnimationInterval");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Application_setAnimationInterval'", nullptr);
+            return 0;
         }
-    }while(0);
-    ok  = true;
-    do{
-        if (argc == 1) {
-            double arg0;
-            ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Application:setAnimationInterval");
-
-            if (!ok) { break; }
-            cobj->setAnimationInterval(arg0);
-            lua_settop(tolua_S, 1);
-            return 1;
-        }
-    }while(0);
-    ok  = true;
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.Application:setAnimationInterval",argc, 1);
+        cobj->setAnimationInterval(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Application:setAnimationInterval",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
