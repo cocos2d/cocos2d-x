@@ -68,10 +68,6 @@ THE SOFTWARE.
 #include "base/CCScriptSupport.h"
 #endif
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.h"
-#endif
-
 /**
  Position of the FPS
  
@@ -118,7 +114,7 @@ Director::Director()
 {
 }
 
-bool Director::init(void)
+bool Director::init()
 {
     setDefaultValues();
 
@@ -161,13 +157,10 @@ bool Director::init(void)
     _renderer = new (std::nothrow) Renderer;
     RenderState::initialize();
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    EngineDataManager::init();
-#endif
     return true;
 }
 
-Director::~Director(void)
+Director::~Director()
 {
     CCLOGINFO("deallocing Director: %p", this);
 
@@ -1128,10 +1121,7 @@ void Director::purgeDirector()
         _openGLView->end();
         _openGLView = nullptr;
     }
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    EngineDataManager::destroy();
-#endif
+    
     // delete Director
     release();
 }
@@ -1213,7 +1203,7 @@ void Director::pause()
     _oldAnimationInterval = _animationInterval;
 
     // when paused, don't consume CPU
-    setAnimationInterval(1 / 4.0, SetIntervalReason::BY_DIRECTOR_PAUSE);
+    setAnimationInterval(1 / 4.0);
     _paused = true;
 }
 
@@ -1224,7 +1214,7 @@ void Director::resume()
         return;
     }
 
-    setAnimationInterval(_oldAnimationInterval, SetIntervalReason::BY_ENGINE);
+    setAnimationInterval(_oldAnimationInterval);
 
     _paused = false;
     _deltaTime = 0;
@@ -1450,18 +1440,13 @@ void Director::setEventDispatcher(EventDispatcher* dispatcher)
 
 void Director::startAnimation()
 {
-    startAnimation(SetIntervalReason::BY_ENGINE);
-}
-
-void Director::startAnimation(SetIntervalReason reason)
-{
     _lastUpdate = std::chrono::steady_clock::now();
 
     _invalid = false;
 
     _cocos2d_thread_id = std::this_thread::get_id();
 
-    Application::getInstance()->setAnimationInterval(_animationInterval, reason);
+    Application::getInstance()->setAnimationInterval(_animationInterval);
 
     // fix issue #3509, skip one fps to avoid incorrect time calculation.
     setNextDeltaTimeZero(true);
@@ -1502,16 +1487,11 @@ void Director::stopAnimation()
 
 void Director::setAnimationInterval(float interval)
 {
-    setAnimationInterval(interval, SetIntervalReason::BY_GAME);
-}
-
-void Director::setAnimationInterval(float interval, SetIntervalReason reason)
-{
     _animationInterval = interval;
     if (! _invalid)
     {
         stopAnimation();
-        startAnimation(reason);
+        startAnimation();
     }
 }
 
