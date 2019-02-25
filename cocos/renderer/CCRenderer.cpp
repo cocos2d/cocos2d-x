@@ -326,7 +326,8 @@ void Renderer::processRenderCommand(RenderCommand* command)
            static_cast<CallbackCommand*>(command)->execute();
             break;
         case RenderCommand::Type::SYCHRONIZED_CALLBACK_COMMAND:
-            _commandBuffer->setCallBackCommand(command);
+//            _commandBuffer->setCallBackCommand(command);
+            static_cast<SynchronizedCallbackCommand*>(command)->execute();
             break;
         default:
             assert(false);

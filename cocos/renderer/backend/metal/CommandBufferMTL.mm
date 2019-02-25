@@ -316,11 +316,11 @@ void CommandBufferMTL::endFrame()
 
     [_mtlCommandBuffer commit];
     
-    if(_synchronizedCallback)
-    {
-        _synchronizedCallback->execute();
-    }
-    _synchronizedCallback = nullptr;
+//    if(_synchronizedCallback)
+//    {
+//        _synchronizedCallback->execute();
+//    }
+//    _synchronizedCallback = nullptr;
     
     [_mtlCommandBuffer release];
     DeviceMTL::resetCurrentDrawable();

@@ -206,9 +206,28 @@ void TextureMTL::synchronizeTexture(id<MTLTexture> dstTexture)
 void TextureMTL::getBytes(int x, int y, int width, int height, TextureFormat format, unsigned char* data)
 {
     CC_ASSERT(width <= _width && height <= _height);
-    synchronizeTexture(_copiedTexture);
-    MTLRegion region = MTLRegionMake2D(x, y, width, height);
-    [_copiedTexture getBytes:data bytesPerRow:_bytesPerRow fromRegion:region mipmapLevel:0];
+//    synchronizeTexture(_copiedTexture);
+    
+    MTLRegion region = MTLRegionMake2D(0, 0, _width, _height);
+    auto commandQueue = static_cast<DeviceMTL*>(DeviceMTL::getInstance())->getMTLCommandQueue();
+    auto commandBuffer = [commandQueue commandBuffer];
+    [commandBuffer enqueue];
+    id<MTLBlitCommandEncoder> commandEncoder = [commandBuffer blitCommandEncoder];
+    [commandEncoder copyFromTexture:_mtlTexture sourceSlice:0 sourceLevel:0 sourceOrigin:region.origin sourceSize:region.size toTexture:_copiedTexture destinationSlice:0 destinationLevel:0 destinationOrigin:region.origin];
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    [commandEncoder synchronizeResource:_copiedTexture];
+#endif
+    [commandEncoder endEncoding];
+//    [commandBuffer commit];
+//    [commandBuffer waitUntilCompleted];
+
+    [commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> _Nonnull) {
+        MTLRegion region1 = MTLRegionMake2D(x, y, width, height);
+        [_copiedTexture getBytes:data bytesPerRow:_bytesPerRow fromRegion:region1 mipmapLevel:0];
+    }];
+    
+    [commandBuffer commit];
 }
 
 CC_BACKEND_END
