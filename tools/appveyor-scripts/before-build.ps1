@@ -40,9 +40,11 @@ Download-Deps
 
 & python -m pip install retry
 
-# need to generate binding codes for all targets
-& $python -u .\tools\appveyor-scripts\setup_android.py --ndk_only
-Generate-Binding-Codes
+# don't need generate binding codes for cpp only target
+If ($env:build_type -ne "android_cpp_tests") {
+    & $python -u .\tools\appveyor-scripts\setup_android.py --ndk_only
+    Generate-Binding-Codes
+}
 
 If ($env:build_type -like "android*") {
     & choco install ninja
