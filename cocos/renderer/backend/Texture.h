@@ -4,6 +4,8 @@
 #include "base/CCRef.h"
 #include <cassert>
 
+#include <functional>
+
 CC_BACKEND_BEGIN
 
 struct TextureDescriptor
@@ -22,10 +24,7 @@ class Texture : public Ref
 {
 public:
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) = 0;
-    virtual void getBytes(int x, int y, int width, int height, TextureFormat format, unsigned char* data) = 0;
-#ifndef CC_USE_METAL
-    virtual void updateFBO() = 0;
-#endif
+    virtual void getBytes(int x, int y, int width, int height, TextureFormat format, bool flipImage, std::function<void(const unsigned char* imageRGBA)> callback) = 0;
 
     inline TextureFormat getTextureFormat() const { return _textureFormat; }
     inline TextureUsage getTextureUsage() const { return _textureUsage; }

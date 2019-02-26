@@ -61,8 +61,6 @@ RenderTexture::~RenderTexture()
     CC_SAFE_RELEASE(_sprite);
     CC_SAFE_RELEASE(_texture2DCopy);
     CC_SAFE_RELEASE(_depthStencilTexture);
-
-    CC_SAFE_DELETE(_UITextureImage);
 }
 
 void RenderTexture::listenToBackground(EventCustom* /*event*/)
@@ -70,25 +68,27 @@ void RenderTexture::listenToBackground(EventCustom* /*event*/)
     // We have not found a way to dispatch the enter background message before the texture data are destroyed.
     // So we disable this pair of message handler at present.
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    CC_SAFE_DELETE(_UITextureImage);
-    
     // to get the rendered texture data
-    _UITextureImage = newImage(false);
-
-    if (_UITextureImage)
-    {
-        const Size& s = _texture2D->getContentSizeInPixels();
-        VolatileTextureMgr::addDataTexture(_texture2D, _UITextureImage->getData(), s.width * s.height * 4, Texture2D::PixelFormat::RGBA8888, s);
-        
-        if ( _texture2DCopy )
+    auto func = [&](Image* uiTextureImage){
+        if (uiTextureImage)
         {
-            VolatileTextureMgr::addDataTexture(_texture2DCopy, _UITextureImage->getData(), s.width * s.height * 4, Texture2D::PixelFormat::RGBA8888, s);
+            const Size& s = _texture2D->getContentSizeInPixels();
+            VolatileTextureMgr::addDataTexture(_texture2D, uiTextureImage->getData(), s.width * s.height * 4, Texture2D::PixelFormat::RGBA8888, s);
+
+            if ( _texture2DCopy )
+            {
+                VolatileTextureMgr::addDataTexture(_texture2DCopy, uiTextureImage->getData(), s.width * s.height * 4, Texture2D::PixelFormat::RGBA8888, s);
+            }
         }
-    }
-    else
-    {
-        CCLOG("Cache rendertexture failed!");
-    }
+        else
+        {
+            CCLOG("Cache rendertexture failed!");
+        }
+        CC_SAFE_DELETE(uiTextureImage);
+    };
+    auto callback = std::bind(func, std::placeholders::_1);
+    newImage(callback, false);
+
 #endif
 }
 
@@ -391,30 +391,34 @@ bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format
 
 void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA)
 {
-    float flipImage = true;
+    bool flipImage = true;
 #ifdef CC_USE_METAL
     flipImage = false;
 #endif
-    Image *image = newImage(flipImage);
-    if (image)
-    {
-        image->saveToFile(filename, !isRGBA);
-    }
-    if(_saveFileCallback)
-    {
-        _saveFileCallback(this, filename);
-    }
-    CC_SAFE_DELETE(image);
+    
+    auto callbackFunc = [&](Image* image, const std::string& filePath, bool flipImage, bool isRGBA){
+        if (image)
+        {
+            image->saveToFile(filePath, !isRGBA);
+        }
+        if(_saveFileCallback)
+        {
+            _saveFileCallback(this, filePath);
+        }
+        CC_SAFE_DELETE(image);
+    };
+    auto callback = std::bind(callbackFunc, std::placeholders::_1, filename, flipImage, isRGBA);
+    newImage(callback, flipImage);
 }
 
 /* get buffer as Image */
-Image* RenderTexture::newImage(bool flipImage)
+void RenderTexture::newImage(std::function<void(Image*)> imageCallback, bool flipImage)
 {
     CCASSERT(_pixelFormat == Texture2D::PixelFormat::RGBA8888, "only RGBA8888 can be saved as image");
 
-    if (nullptr == _texture2D)
+    if ((nullptr == _texture2D))
     {
-        return nullptr;
+        return ;
     }
 
     const Size& s = _texture2D->getContentSizeInPixels();
@@ -424,65 +428,34 @@ Image* RenderTexture::newImage(bool flipImage)
     //        it should be cut
     int savedBufferWidth = (int)s.width;
     int savedBufferHeight = (int)s.height;
-
-    unsigned char *buffer = nullptr;
-    unsigned char *tempData = nullptr;
+    
     Image *image = new (std::nothrow) Image();
-
-    do
-    {
-        CC_BREAK_IF(! (buffer = new (std::nothrow) unsigned char[savedBufferWidth * savedBufferHeight * 4]));
-
-        if(! (tempData = new (std::nothrow) unsigned char[savedBufferWidth * savedBufferHeight * 4]))
-        {
-            delete[] buffer;
-            buffer = nullptr;
-            break;
-        }
-
-//        // TODO: move this to configuration, so we don't check it every time
-//        /*  Certain Qualcomm Adreno GPU's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
-//         */
-//        if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
-//        {
-//            // -- bind a temporary texture so we can clear the render buffer without losing our texture
-//            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _textureCopy->getName(), 0);
-//            CHECK_GL_ERROR_DEBUG();
-//            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-//            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture->getName(), 0);
-//        }
-//        glPixelStorei(GL_PACK_ALIGNMENT, 1);
-//        glReadPixels(0,0,savedBufferWidth, savedBufferHeight,GL_RGBA,GL_UNSIGNED_BYTE, tempData);
-//        glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
-        
-        backend::StringUtils::PixelFormat pixelFormat = static_cast<backend::StringUtils::PixelFormat>(_pixelFormat);
-        TextureFormat format = backend::StringUtils::PixelFormat2TextureFormat(pixelFormat);
-        _texture2D->getBackendTexture()->getBytes(0, 0, savedBufferWidth, savedBufferHeight, format, tempData);
-
-        if ( flipImage ) // -- flip is only required when saving image to file
-        {
-            // to get the actual texture data
-            // #640 the image read from rendertexture is dirty
-            for (int i = 0; i < savedBufferHeight; ++i)
-            {
-                memcpy(&buffer[i * savedBufferWidth * 4],
-                       &tempData[(savedBufferHeight - i - 1) * savedBufferWidth * 4],
-                       savedBufferWidth * 4);
-            }
-
-            image->initWithRawData(buffer, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
-        }
-        else
-        {
-            image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
-        }
-
-    } while (0);
-
-    CC_SAFE_DELETE_ARRAY(buffer);
-    CC_SAFE_DELETE_ARRAY(tempData);
-
-    return image;
+    _imageCallback = imageCallback;
+    
+    auto initCallback = [&](Image* image, const unsigned char* tempData, int savedBufferWidth, int savedBufferHeight){
+        image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
+        _imageCallback(image);
+    };
+    auto callback = std::bind(initCallback, image, std::placeholders::_1, savedBufferWidth, savedBufferHeight);
+    
+    backend::StringUtils::PixelFormat pixelFormat = static_cast<backend::StringUtils::PixelFormat>(_pixelFormat);
+    TextureFormat format = backend::StringUtils::PixelFormat2TextureFormat(pixelFormat);
+    _texture2D->getBackendTexture()->getBytes(0, 0, savedBufferWidth, savedBufferHeight, format, flipImage, callback);
+    
+//    do
+//    {
+////        // TODO: move this to configuration, so we don't check it every time
+////        /*  Certain Qualcomm Adreno GPU's will retain data in memory after a frame buffer switch which corrupts the render to the texture. The solution is to clear the frame buffer before rendering to the texture. However, calling glClear has the unintended result of clearing the current texture. Create a temporary texture to overcome this. At the end of RenderTexture::begin(), switch the attached texture to the second one, call glClear, and then switch back to the original texture. This solution is unnecessary for other devices as they don't have the same issue with switching frame buffers.
+////         */
+////        if (Configuration::getInstance()->checkForGLExtension("GL_QCOM"))
+////        {
+////            // -- bind a temporary texture so we can clear the render buffer without losing our texture
+////            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _textureCopy->getName(), 0);
+////            CHECK_GL_ERROR_DEBUG();
+////            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+////            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _texture->getName(), 0);
+////        }
+//    } while (0);
 }
 
 void RenderTexture::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
@@ -559,11 +532,6 @@ void RenderTexture::onEnd()
 {
     Renderer *renderer =  Director::getInstance()->getRenderer();
     renderer->setViewPort(_oldViewport.x, _oldViewport.y, _oldViewport.w, _oldViewport.h);
-
-#ifndef CC_USE_METAL
-    _texture2D->getBackendTexture()->updateFBO();
-#endif // !CC_USE_METAL
-
     renderer->setRenderTarget(_oldRenderTargetFlag, _oldColorAttachment, _oldDepthAttachment, _oldStencilAttachment);
 }
 
