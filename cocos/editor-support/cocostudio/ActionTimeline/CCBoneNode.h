@@ -208,6 +208,9 @@ protected:
     void setRootSkeleton(BoneNode* bone, SkeletonNode* skeleton) const;
 protected:
     cocos2d::CustomCommand _customCommand;
+    cocos2d::backend::ProgramState* _programState = nullptr;
+    cocos2d::backend::UniformLocation _mvpLocation;
+
     cocos2d::BlendFunc _blendFunc = cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED;
 
     bool              _isRackShow = false;
@@ -228,7 +231,6 @@ private:
     cocos2d::Vec2 _squareVertices[4];
     VertexData _vertexData[4];
 
-    cocos2d::backend::ProgramState* _programState = nullptr;
     CC_DISALLOW_COPY_AND_ASSIGN(BoneNode);
 };
 

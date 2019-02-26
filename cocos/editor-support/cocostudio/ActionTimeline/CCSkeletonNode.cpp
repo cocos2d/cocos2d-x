@@ -27,6 +27,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "math/TransformUtils.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/ccShaders.h"
 #include "base/ccUtils.h"
 #include <stack>
 
@@ -49,8 +50,31 @@ bool SkeletonNode::init()
 {
     _rackLength = _rackWidth = 20;
     updateVertices();
-    //TODO minggo
-//    setGLProgramState(cocos2d::GLProgramState::getOrCreateWithGLProgramName(cocos2d::GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP));
+
+    // init _customCommand  
+    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    _programState = new (std::nothrow) cocos2d::backend::ProgramState(cocos2d::position_vert, cocos2d::positionColor_frag);
+    pipelineDescriptor.programState = _programState;
+
+    _mvpLocation = _programState->getUniformLocation("u_MVPMatrix");
+
+    auto& vertexLayout = pipelineDescriptor.vertexLayout;
+    vertexLayout.setAtrribute("a_position", 0, cocos2d::backend::VertexFormat::FLOAT3, 0, false);
+    vertexLayout.setAtrribute("a_color", 1, cocos2d::backend::VertexFormat::FLOAT4, 3 * sizeof(float), false);
+    vertexLayout.setLayout(7 * sizeof(float), cocos2d::backend::VertexStepMode::VERTEX);
+
+    _customCommand.createVertexBuffer(sizeof(_vertexData[0]), 8, cocos2d::CustomCommand::BufferUsage::DYNAMIC);
+    _customCommand.createIndexBuffer(cocos2d::CustomCommand::IndexFormat::U_SHORT, 12, cocos2d::CustomCommand::BufferUsage::STATIC);
+    unsigned short indices[12] = {0, 1, 2,
+                                 1, 3, 2,
+                                 4, 5, 6,
+                                 5, 7, 6};
+    _customCommand.updateIndexBuffer(indices, sizeof(indices));
+
+    // init _batchBoneCommand
+    _batchBoneCommand.getPipelineDescriptor().vertexLayout = vertexLayout;
+    _batchBoneCommand.getPipelineDescriptor().programState = _programState;
+
     _rootSkeleton = this;
     return true;
 }
@@ -129,7 +153,6 @@ void SkeletonNode::updateVertices()
         _squareVertices[1].x = radiusl_2; _squareVertices[7].y = radiusw_2;
         _squareVertices[2].x = -radiusl_2; _squareVertices[4].y = -radiusw_2;
 
-
         for (int i = 0; i < 8; i++)
         {
             _squareVertices[i] += _anchorPointInPoints;
@@ -143,7 +166,7 @@ void SkeletonNode::updateColor()
 {
     for (unsigned int i = 0; i < 8; i++)
     {
-        _squareColors[i] = _rackColor;
+        _vertexData[i].color = _rackColor;
     }
     _transformUpdated = _transformDirty = _inverseDirty = _contentSizeDirty = true;
 }
@@ -193,9 +216,9 @@ void SkeletonNode::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& paren
     {
         this->draw(renderer, _modelViewTransform, flags);
         // batch draw all sub bones
-        _batchBoneCommand.init(_globalZOrder, _modelViewTransform, parentFlags);
-        _batchBoneCommand.func = CC_CALLBACK_0(SkeletonNode::batchDrawAllSubBones, this, _modelViewTransform);
+        _batchBoneCommand.init(_globalZOrder, _blendFunc);
         renderer->addCommand(&_batchBoneCommand);
+        batchDrawAllSubBones();
     }
     _director->popMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     // FIX ME: Why need to set _orderOfArrival to 0??
@@ -206,8 +229,7 @@ void SkeletonNode::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4& paren
 
 void SkeletonNode::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
 {
-    _customCommand.init(_globalZOrder, transform, flags);
-    _customCommand.func = CC_CALLBACK_0(SkeletonNode::onDraw, this, transform, flags);
+    _customCommand.init(_globalZOrder, _blendFunc);
     renderer->addCommand(&_customCommand);
     for (int i = 0; i < 8; ++i)
     {
@@ -215,11 +237,15 @@ void SkeletonNode::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transf
         pos.x = _squareVertices[i].x; pos.y = _squareVertices[i].y; pos.z = _positionZ;
         pos.w = 1;
         _modelViewTransform.transformVector(&pos);
-        _noMVPVertices[i] = cocos2d::Vec3(pos.x, pos.y, pos.z) / pos.w;
+        _vertexData[i].vertex = cocos2d::Vec3(pos.x, pos.y, pos.z) / pos.w;
     }
+    _customCommand.updateVertexBuffer(_vertexData, sizeof(_vertexData));
+
+    // custom command and batched draw command share the same program state, so just set one time.
+    _programState->setUniform(_mvpLocation, transform.m, sizeof(transform.m));
 }
 
-void SkeletonNode::batchDrawAllSubBones(const cocos2d::Mat4 &transform)
+void SkeletonNode::batchDrawAllSubBones()
 {
     checkSubBonesDirty();
 
@@ -229,60 +255,38 @@ void SkeletonNode::batchDrawAllSubBones(const cocos2d::Mat4 &transform)
         batchBoneDrawToSkeleton(bone);
     }
 
-//TODO minggo
-//    cocos2d::Vec3* vetices = _batchedBoneVetices.data();
-//    cocos2d::Color4F* veticesColor = _batchedBoneColors.data();
-//    getGLProgram()->use();
-//    getGLProgram()->setUniformsForBuiltins(transform);
-//
-//    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION);
-//    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR);
-//
-//    glBindBuffer(GL_ARRAY_BUFFER, 0);
-//    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, vetices);
-//    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, veticesColor);
+    _batchBoneCommand.createVertexBuffer(sizeof(VertexData), _batchedVeticesCount, cocos2d::CustomCommand::BufferUsage::DYNAMIC);
+    _batchBoneCommand.updateVertexBuffer(_batchedBoneVertexData.data(), sizeof(VertexData) * _batchedVeticesCount);
 
     cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
 #ifdef CC_STUDIO_ENABLED_VIEW
-    glLineWidth(1);
-    glEnable(GL_LINE_SMOOTH);
-    glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
-    for (int i = 0; i < _batchedVeticesCount; i += 4 )
-    {
-        glDrawArrays(GL_TRIANGLE_FAN, i, 4);
-        glDrawArrays(GL_LINE_LOOP, i, 4);
-    }
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _batchedVeticesCount);
+//TODO
+//    glLineWidth(1);
+//    glEnable(GL_LINE_SMOOTH);
+//    glHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+//    for (int i = 0; i < _batchedVeticesCount; i += 4 )
+//    {
+//        glDrawArrays(GL_TRIANGLE_FAN, i, 4);
+//        glDrawArrays(GL_LINE_LOOP, i, 4);
+//    }
+//    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _batchedVeticesCount);
 #else
+    unsigned short* indices = (unsigned short*)malloc(sizeof(unsigned short) * _batchedVeticesCount);
     for (int i = 0; i < _batchedVeticesCount; i += 4)
     {
-        glDrawArrays(GL_TRIANGLE_FAN, i, 4);
+        *indices++ = i;
+        *indices++ = i + 1;
+        *indices++ = i + 2;
+
+        *indices++ = i;
+        *indices++ = i + 2;
+        *indices++ = i + 3;
     }
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _batchedVeticesCount);
+    _batchBoneCommand.createIndexBuffer(cocos2d::CustomCommand::IndexFormat::U_SHORT, _batchedVeticesCount, cocos2d::CustomCommand::BufferUsage::DYNAMIC);
+    _batchBoneCommand.updateIndexBuffer(indices, sizeof(unsigned short) * _batchedVeticesCount);
+    free(indices);
 #endif //CC_STUDIO_ENABLED_VIEW
-}
-
-
-void SkeletonNode::onDraw(const cocos2d::Mat4 &transform, uint32_t /*flags*/)
-{
-//TODO minggo
-//    getGLProgram()->use();
-//    getGLProgram()->setUniformsForBuiltins(transform);
-//
-//    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION);
-//    glEnableVertexAttribArray(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR);
-//
-//    glBindBuffer(GL_ARRAY_BUFFER, 0);
-//    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
-//    glVertexAttribPointer(cocos2d::GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
-
-    cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
-
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    glDrawArrays(GL_TRIANGLE_STRIP, 4, 4);
-
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 8);
 }
 
 void SkeletonNode::changeSkins(const std::map<std::string, std::string>& boneSkinNameMap)
