@@ -32,7 +32,6 @@ public:
     virtual void setLineWidth(float lineWidth) override;
     virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) override;
     virtual void setDepthStencilState(DepthStencilState* depthStencilState) override;
-    virtual void setCallBackCommand(RenderCommand* comand) override;
     
 private:
     void prepareDrawing() const;
@@ -43,7 +42,6 @@ private:
     void afterDraw();
     id<MTLRenderCommandEncoder> getRenderCommandEncoder(const RenderPassDescriptor& renderPassDescriptor);
 
-    NSMutableArray* _commandBufferStack = nil;
     id<MTLCommandBuffer> _mtlCommandBuffer = nil;
     id<MTLCommandQueue> _mtlCommandQueue = nil;
     id<MTLRenderCommandEncoder> _mtlRenderEncoder = nil;
@@ -57,8 +55,6 @@ private:
     
     dispatch_semaphore_t _frameBoundarySemaphore;
     RenderPassDescriptor _prevRenderPassDescriptor;
-    
-    SynchronizedCallbackCommand* _synchronizedCallback = nullptr;
 };
 
 CC_BACKEND_END

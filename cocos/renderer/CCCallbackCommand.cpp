@@ -43,9 +43,4 @@ void CallbackCommand::execute()
    }
 }
 
-SynchronizedCallbackCommand::SynchronizedCallbackCommand()
-{
-    _type = RenderCommand::Type::SYCHRONIZED_CALLBACK_COMMAND;
-}
-
 NS_CC_END

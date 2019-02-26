@@ -137,6 +137,7 @@ public:
      * @param a Alpha.
      */
     void clear(float r, float g, float b, float a);
+    void clearColor(float r, float g, float b, float a);
 
     /** Clears the texture with a specified depth value. 
      *
@@ -364,7 +365,7 @@ protected:
      call saveToFile twice will overwrite this command and callback
      and the command and callback will be executed twice.
     */
-    SynchronizedCallbackCommand _saveToFileCommand;
+    CallbackCommand _saveToFileCommand;
     std::function<void (RenderTexture*, const std::string&)> _saveFileCallback = nullptr;
     std::function<void(Image*)> _imageCallback = nullptr;
     

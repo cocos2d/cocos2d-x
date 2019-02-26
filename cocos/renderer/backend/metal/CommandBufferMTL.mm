@@ -156,14 +156,11 @@ CommandBufferMTL::CommandBufferMTL(DeviceMTL* deviceMTL)
 : _mtlCommandQueue(deviceMTL->getMTLCommandQueue())
 , _frameBoundarySemaphore(dispatch_semaphore_create(MAX_INFLIGHT_BUFFER))
 {
-    _commandBufferStack = [NSMutableArray arrayWithCapacity:10];
-    [_commandBufferStack retain];
 }
 
 CommandBufferMTL::~CommandBufferMTL()
 {
     dispatch_semaphore_signal(_frameBoundarySemaphore);
-    [_commandBufferStack release];
 }
 
 void CommandBufferMTL::beginFrame()
@@ -288,19 +285,6 @@ void CommandBufferMTL::endRenderPass()
     afterDraw();
 }
 
-void CommandBufferMTL::setCallBackCommand(RenderCommand* command)
-{
-    auto commandType = command->getType();
-    switch (commandType) {
-        case RenderCommand::Type::SYCHRONIZED_CALLBACK_COMMAND:
-            _synchronizedCallback = static_cast<SynchronizedCallbackCommand*>(command);
-            break;
-        default:
-            break;
-    }
-    
-}
-
 void CommandBufferMTL::endFrame()
 {
     [_mtlRenderEncoder endEncoding];
@@ -316,13 +300,6 @@ void CommandBufferMTL::endFrame()
     }];
 
     [_mtlCommandBuffer commit];
-    
-//    if(_synchronizedCallback)
-//    {
-//        _synchronizedCallback->execute();
-//    }
-//    _synchronizedCallback = nullptr;
-    
     [_mtlCommandBuffer release];
     DeviceMTL::resetCurrentDrawable();
 }

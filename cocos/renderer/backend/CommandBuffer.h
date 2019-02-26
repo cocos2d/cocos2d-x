@@ -9,7 +9,6 @@
 #include "RenderPassDescriptor.h"
 #include "CCStdC.h"
 #include "ProgramState.h"
-#include "renderer/CCCallbackCommand.h"
 
 CC_BACKEND_BEGIN
 
@@ -38,7 +37,6 @@ public:
     virtual void setLineWidth(float lineWidth) = 0;
     virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) = 0;
     virtual void setDepthStencilState(DepthStencilState* depthStencilState) = 0;
-    virtual void setCallBackCommand(RenderCommand* comand) = 0;
     
     void setStencilReferenceValue(unsigned int value);
     void setStencilReferenceValue(unsigned int frontRef, unsigned int backRef);

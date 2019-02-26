@@ -310,6 +310,11 @@ void RenderTexture::clear(float r, float g, float b, float a)
     this->end();
 }
 
+void RenderTexture::clearColor(float r, float g, float b, float a)
+{
+    setClearColor(Color4F(r, g, b, a));
+}
+
 void RenderTexture::clearDepth(float depthValue)
 {
     setClearDepth(depthValue);
