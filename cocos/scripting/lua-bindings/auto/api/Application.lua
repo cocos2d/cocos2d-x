@@ -39,14 +39,13 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- @overload self, float, int         
--- @overload self, float         
--- @function [parent=#Application] setAnimationInterval
+-- brief    Callback by Director to limit FPS.<br>
+-- param interval The time, expressed in seconds, between current frame and next.
+-- @function [parent=#Application] setAnimationInterval 
 -- @param self
 -- @param #float interval
--- @param #int reason
 -- @return Application#Application self (return value: cc.Application)
-
+        
 --------------------------------
 -- brief    Get current application instance.<br>
 -- return Current application instance pointer.
