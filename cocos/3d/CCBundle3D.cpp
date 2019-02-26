@@ -1973,13 +1973,13 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton, bool singleSprit
 
 backend::VertexFormat Bundle3D::parseGLDataType(const std::string& str, int size)
 {
-    backend::VertexFormat ret = backend::VertexFormat::INT_R32;
+    backend::VertexFormat ret = backend::VertexFormat::INT;
     if (str == "GL_BYTE")
     {
         switch (size)
         {
         case 4: 
-            return backend::VertexFormat::UBYTE_R8G8B8A8;
+            return backend::VertexFormat::UBYTE4;
         default:
             CCLOGERROR("parseVertexType GL_BYTE x %d error", size);
         }
@@ -1989,7 +1989,7 @@ backend::VertexFormat Bundle3D::parseGLDataType(const std::string& str, int size
         switch (size)
         {
         case 4:
-            return backend::VertexFormat::UBYTE_R8G8B8A8;
+            return backend::VertexFormat::UBYTE4;
         default:
             CCLOGERROR("parseVertexType GL_UNSIGNED_BYTE x %d error", size);
         }
@@ -1999,9 +1999,9 @@ backend::VertexFormat Bundle3D::parseGLDataType(const std::string& str, int size
         switch (size)
         {
         case 2:
-            return backend::VertexFormat::USHORT_R16G16;
+            return backend::VertexFormat::USHORT2;
         case 4:
-            return backend::VertexFormat::USHORT_R16G16B16A16;
+            return backend::VertexFormat::USHORT4;
         default:
             CCLOGERROR("parseVertexType GL_SHORT x %d error", size);
         }
@@ -2011,9 +2011,9 @@ backend::VertexFormat Bundle3D::parseGLDataType(const std::string& str, int size
         switch (size)
         {
         case 2:
-            return backend::VertexFormat::USHORT_R16G16;
+            return backend::VertexFormat::USHORT2;
         case 4:
-            return backend::VertexFormat::USHORT_R16G16B16A16;
+            return backend::VertexFormat::USHORT4;
         default:
             CCLOGERROR("parseVertexType GL_UNSIGNED_SHORT x %d error", size);
         }
@@ -2023,13 +2023,13 @@ backend::VertexFormat Bundle3D::parseGLDataType(const std::string& str, int size
         switch (size)
         {
         case 1:
-            return backend::VertexFormat::INT_R32;
+            return backend::VertexFormat::INT;
         case 2:
-            return backend::VertexFormat::INT_R32G32;
+            return backend::VertexFormat::INT2;
         case 3:
-            return backend::VertexFormat::INT_R32G32B32;
+            return backend::VertexFormat::INT3;
         case 4:
-            return backend::VertexFormat::INT_R32G32B32A32;
+            return backend::VertexFormat::INT4;
         default:
             CCLOGERROR("parseVertexType GL_INT x %d error", size);
         }
@@ -2039,13 +2039,13 @@ backend::VertexFormat Bundle3D::parseGLDataType(const std::string& str, int size
         switch (size)
         {
         case 1:
-            return backend::VertexFormat::INT_R32;
+            return backend::VertexFormat::INT;
         case 2:
-            return backend::VertexFormat::INT_R32G32;
+            return backend::VertexFormat::INT2;
         case 3:
-            return backend::VertexFormat::INT_R32G32B32;
+            return backend::VertexFormat::INT3;
         case 4:
-            return backend::VertexFormat::INT_R32G32B32A32;
+            return backend::VertexFormat::INT4;
         default:
             CCLOGERROR("parseVertexType GL_UNSIGNED_INT x %d error", size);
         }
@@ -2055,13 +2055,13 @@ backend::VertexFormat Bundle3D::parseGLDataType(const std::string& str, int size
         switch(size)
         {
         case 1:
-            return backend::VertexFormat::FLOAT_R32;
+            return backend::VertexFormat::FLOAT;
         case 2:
-            return backend::VertexFormat::FLOAT_R32G32;
+            return backend::VertexFormat::FLOAT2;
         case 3:
-            return backend::VertexFormat::FLOAT_R32G32B32;
+            return backend::VertexFormat::FLOAT3;
         case 4:
-            return backend::VertexFormat::FLOAT_R32G32B32A32;
+            return backend::VertexFormat::FLOAT4;
         default:
             CCLOGERROR("parseVertexType GL_UNSIGNED_INT x %d error", size);
         }

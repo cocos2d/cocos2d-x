@@ -27,7 +27,7 @@ public:
         
         // name is used in opengl
         std::string name;
-        VertexFormat format = VertexFormat::INT_R32G32B32;
+        VertexFormat format = VertexFormat::INT3;
         unsigned int offset = 0;
         // index is used in metal
         unsigned int index = 0;

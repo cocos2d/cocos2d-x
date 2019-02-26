@@ -139,9 +139,9 @@ void MotionStreak3D::initCustomCommand()
 
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
     auto& layout = pipelineDescriptor.vertexLayout;
-    layout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
-    layout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT_R32G32, offsetof(VertexData, texPos), false);
-    layout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE_R8G8B8A8, offsetof(VertexData, color), true);
+    layout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, 0, false);
+    layout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT2, offsetof(VertexData, texPos), false);
+    layout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE4, offsetof(VertexData, color), true);
     layout.setLayout(sizeof(VertexData), backend::VertexStepMode::VERTEX);
 
     auto &blend = pipelineDescriptor.blendDescriptor;

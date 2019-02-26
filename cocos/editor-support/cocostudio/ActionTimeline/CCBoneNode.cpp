@@ -398,6 +398,8 @@ void BoneNode::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform,
         _vertexData[i].noMVPVertices = cocos2d::Vec3(pos.x, pos.y, pos.z) / pos.w;
     }
     _customCommand.updateVertexBuffer(_vertexData, sizeof(_vertexData));
+
+   _programState->setUniform(_mvpLocation, transform.m, sizeof(transform.m));
 }
 
 BoneNode::~BoneNode()
@@ -413,15 +415,17 @@ bool BoneNode::init()
     updateColor();
 
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    _programState = new (std::nothrow) cocos2d::backend::ProgramState(cocos2d::positionNoMVP_vert, cocos2d::positionColor_frag);
+    _programState = new (std::nothrow) cocos2d::backend::ProgramState(cocos2d::position_vert, cocos2d::positionColor_frag);
     pipelineDescriptor.programState = _programState;
 
+    _mvpLocation = _programState->getUniformLocation("u_MVPMatrix");
+
     auto& vertexLayout = pipelineDescriptor.vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, cocos2d::backend::VertexFormat::FLOAT_R32G32B32, 0, false);
-    vertexLayout.setAtrribute("a_color", 1, cocos2d::backend::VertexFormat::FLOAT_R32G32B32A32, 3 * sizeof(float), false);
+    vertexLayout.setAtrribute("a_position", 0, cocos2d::backend::VertexFormat::FLOAT3, 0, false);
+    vertexLayout.setAtrribute("a_color", 1, cocos2d::backend::VertexFormat::FLOAT4, 3 * sizeof(float), false);
     vertexLayout.setLayout(7 * sizeof(float), cocos2d::backend::VertexStepMode::VERTEX);
 
-    _customCommand.createVertexBuffer(sizeof(_vertexData[0].noMVPVertices), 4, cocos2d::CustomCommand::BufferUsage::DYNAMIC);
+    _customCommand.createVertexBuffer(sizeof(_vertexData[0]), 4, cocos2d::CustomCommand::BufferUsage::DYNAMIC);
     _customCommand.createIndexBuffer(cocos2d::CustomCommand::IndexFormat::U_SHORT, 6, cocos2d::CustomCommand::BufferUsage::STATIC);
     unsigned short indices[6] = {0, 1, 2,
                                  0, 2, 3};
@@ -592,15 +596,14 @@ void BoneNode::batchBoneDrawToSkeleton(BoneNode* bone) const
     }
 
     int count = bone->_rootSkeleton->_batchedVeticesCount;
-    if (count + 8 >(int)(bone->_rootSkeleton->_batchedBoneVetices.size()))
+    if (count + 8 >(int)(bone->_rootSkeleton->_batchedBoneVertexData.size()))
     {
-        bone->_rootSkeleton->_batchedBoneVetices.resize(count + 100);
-        bone->_rootSkeleton->_batchedBoneColors.resize(count + 100);
+        bone->_rootSkeleton->_batchedBoneVertexData.resize(count + 100);
     }
     for (int i = 0; i < 4; i++)
     {
-        bone->_rootSkeleton->_batchedBoneVetices[count + i] = vpos[i];
-        bone->_rootSkeleton->_batchedBoneColors[count + i] = bone->_vertexData[i].squareColor;
+        bone->_rootSkeleton->_batchedBoneVertexData[count + i].vertex = vpos[i];
+        bone->_rootSkeleton->_batchedBoneVertexData[count + i].color = bone->_vertexData[i].squareColor;
     }
     bone->_rootSkeleton->_batchedVeticesCount += 4;
 }

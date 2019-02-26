@@ -29,19 +29,17 @@ enum class ShaderStage : uint32_t
 //TODO: simplify name
 enum class VertexFormat : uint32_t
 {
-    FLOAT_R32G32B32A32,
-    FLOAT_R32G32B32,
-    FLOAT_R32G32,
-    FLOAT_R32,
-    INT_R32G32B32A32,
-    INT_R32G32B32,
-    INT_R32G32,
-    INT_R32,
-    USHORT_R16G16B16A16,
-    USHORT_R16G16,
-    UBYTE_R8G8B8A8,
-    UNORM_R8G8B8A8,
-    UNORM_R8G8
+    FLOAT4,
+    FLOAT3,
+    FLOAT2,
+    FLOAT,
+    INT4,
+    INT3,
+    INT2,
+    INT,
+    USHORT4,
+    USHORT2,
+    UBYTE4
 };
 
 enum class TextureFormat : uint32_t

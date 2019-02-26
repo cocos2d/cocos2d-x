@@ -36,7 +36,7 @@ int StencilStateManager::s_layer = -1;
 StencilStateManager::StencilStateManager()
 {
     auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32, 0, false);
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT2, 0, false);
     vertexLayout.setLayout(2 * sizeof(float), backend::VertexStepMode::VERTEX);
 
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();

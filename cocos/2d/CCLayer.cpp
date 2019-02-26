@@ -288,8 +288,8 @@ LayerColor::LayerColor()
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
     
     auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32B32, 0, false);
-    vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::FLOAT_R32G32B32A32, sizeof(_vertexData[0].vertices), false);
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, 0, false);
+    vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::FLOAT4, sizeof(_vertexData[0].vertices), false);
     vertexLayout.setLayout(sizeof(_vertexData[0]), backend::VertexStepMode::VERTEX);
     
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
@@ -705,7 +705,7 @@ LayerRadialGradient::LayerRadialGradient()
     _expandLocation = pipelineDescriptor.programState->getUniformLocation("u_expand");
 
     auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT_R32G32, 0, false);
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT2, 0, false);
     vertexLayout.setLayout(sizeof(_vertices[0]), backend::VertexStepMode::VERTEX);
 
     _customCommand.createVertexBuffer(sizeof(_vertices[0]), sizeof(_vertices) / sizeof(_vertices[0]), CustomCommand::BufferUsage::STATIC);
