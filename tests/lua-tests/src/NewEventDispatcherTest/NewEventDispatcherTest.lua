@@ -212,11 +212,11 @@ function TouchableSpriteTest:onEnter()
 
     local function onTouchBegan(touch, event)
         local target = event:getCurrentTarget()
-        
+
         local locationInNode = target:convertToNodeSpace(touch:getLocation())
         local s = target:getContentSize()
         local rect = cc.rect(0, 0, s.width, s.height)
-        
+
         if cc.rectContainsPoint(rect, locationInNode) then
             print(string.format("sprite began... x = %f, y = %f", locationInNode.x, locationInNode.y))
             target:setOpacity(180)
@@ -265,7 +265,7 @@ function TouchableSpriteTest:onEnter()
         nextMenuItem:setFontSizeObj(16)
         nextMenuItem:setPosition(cc.p(VisibleRect:right().x - 100, VisibleRect:right().y - 30))
         nextMenuItem:registerScriptTapHandler(self.nextCallback)
-        
+
         local menu2 = cc.Menu:create(nextMenuItem)
         menu2:setPosition(cc.p(0, 0))
         menu2:setAnchorPoint(cc.p(0, 0))
@@ -292,7 +292,7 @@ function TouchableSpriteTest.create()
         elseif event == "exit" then
         end
     end
-    
+
     layer:createMenu()
     layer:creatTitleAndSubTitle(curLayerIdx)
     layer:registerScriptHandler(onNodeEvent)
@@ -323,17 +323,17 @@ function TouchableSpriteWithFixedPriority:onEnter()
         local locationInNode = self:convertToNodeSpace(touch:getLocation())
         local s = self:getContentSize()
         local rect = cc.rect(0, 0, s.width, s.height)
-            
+
         if cc.rectContainsPoint(rect, locationInNode) then
             self:setColor(cc.c3b(255, 0, 0))
             return true
         end
 
-        return false    
+        return false
     end
 
     local function onTouchMoved(touch, event)
-        
+
     end
 
     local  function onTouchEnded(touch, event)
@@ -348,7 +348,7 @@ function TouchableSpriteWithFixedPriority:onEnter()
     local listener = cc.EventListenerTouchOneByOne:create()
     self._listener = listener
     listener:setSwallowTouches(true)
-    
+
     listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN )
     listener:registerScriptHandler(onTouchMoved,cc.Handler.EVENT_TOUCH_MOVED )
     listener:registerScriptHandler(onTouchEnded,cc.Handler.EVENT_TOUCH_ENDED )
@@ -391,7 +391,7 @@ function TouchableSpriteWithFixedPriority.create()
             touchableSprite:onExit()
         end
     end
-    
+
     touchableSprite:registerScriptHandler(onNodeEvent)
     return touchableSprite
 end
@@ -441,7 +441,7 @@ function FixedPriorityTest.create()
         elseif event == "exit" then
         end
     end
-    
+
     layer:createMenu()
     layer:creatTitleAndSubTitle(curLayerIdx)
     layer:registerScriptHandler(onNodeEvent)
@@ -478,7 +478,7 @@ function RemoveListenerWhenDispatchingTest:onEnter()
             sprite1:setColor(cc.c3b(255, 0, 0))
             return true
         end
-        
+
         return false
     end
 
@@ -533,7 +533,7 @@ function RemoveListenerWhenDispatchingTest.create()
         elseif event == "exit" then
         end
     end
-    
+
     layer:createMenu()
     layer:creatTitleAndSubTitle(curLayerIdx)
     layer:registerScriptHandler(onNodeEvent)
@@ -560,7 +560,7 @@ function CustomEventTest:onEnter()
     local size = cc.Director:getInstance():getVisibleSize()
     local count1 = 0
     local count2 = 0
-    
+
     cc.MenuItemFont:setFontSize(20)
 
     local statusLabel1 = cc.Label:createWithSystemFont("No custom event 1 received!", "", 20)
@@ -580,7 +580,7 @@ function CustomEventTest:onEnter()
 
     local function sendCallback1(tag, sender)
         count1 = count1 + 1
-        
+
         local event = cc.EventCustom:new("game_custom_event1")
         event._usedata = string.format("%d",count1)
         eventDispatcher:dispatchEvent(event)
@@ -605,7 +605,7 @@ function CustomEventTest:onEnter()
 
     local function sendCallback2(tag, sender)
         count2 = count2 + 1
-        
+
         local event = cc.EventCustom:new("game_custom_event2")
         event._usedata = string.format("%d",count2)
         eventDispatcher:dispatchEvent(event)
@@ -614,7 +614,26 @@ function CustomEventTest:onEnter()
     sendItem2:registerScriptTapHandler(sendCallback2)
     sendItem2:setPosition(cc.p(origin.x + size.width/2, origin.y + size.height/2 - 40))
 
-    local menu = cc.Menu:create(sendItem1, sendItem2)
+    -- addCustomEventListener test begin
+    local count3 = 0
+    local statusLabel3 = cc.Label:createWithSystemFont('addCustomEventListener: Received "event_custom" 0 times', "", 14)
+    statusLabel3:setAnchorPoint(cc.p(0.5, 0.5))
+    statusLabel3:setPosition(cc.p(origin.x + size.width/2, origin.y + size.height-140 ))
+    self:addChild(statusLabel3)
+
+    eventDispatcher:addCustomEventListener('event_custom' ,function(...)
+        count3 = count3 + 1
+        statusLabel3:setString('addCustomEventListener: Received "event_custom" ' .. count3 .. ' times')
+    end)
+
+    local sendItem3 = cc.MenuItemFont:create('dispatchCustomEvent("event_custom")')
+    sendItem3:registerScriptTapHandler(function (  )
+        eventDispatcher:dispatchCustomEvent("event_custom")
+    end)
+    sendItem3:setPosition(cc.p(origin.x + size.width/2, origin.y + size.height/2 - 80))
+    -- addCustomEventListener test end
+
+    local menu = cc.Menu:create(sendItem1, sendItem2, sendItem3)
     menu:setPosition(cc.p(0, 0))
     menu:setAnchorPoint(cc.p(0, 0))
     self:addChild(menu, -1)
@@ -624,6 +643,7 @@ function CustomEventTest:onExit()
     local eventDispatcher = self:getEventDispatcher()
     eventDispatcher:removeEventListener(self._listener1)
     eventDispatcher:removeEventListener(self._listener2)
+    eventDispatcher:removeCustomEventListeners('event_custom')
 end
 
 function CustomEventTest.create()
@@ -636,7 +656,7 @@ function CustomEventTest.create()
             layer:onExit()
         end
     end
-    
+
     layer:createMenu()
     layer:creatTitleAndSubTitle(curLayerIdx)
     layer:registerScriptHandler(onNodeEvent)
@@ -661,7 +681,7 @@ end
 function LabelKeyboardEventTest:onEnter()
     local origin = cc.Director:getInstance():getVisibleOrigin()
     local size = cc.Director:getInstance():getVisibleSize()
-    
+
     local statusLabel = cc.Label:createWithSystemFont("No keyboard event received!", "", 20)
     statusLabel:setAnchorPoint(cc.p(0.5, 0.5))
     statusLabel:setPosition(cc.p(origin.x + size.width/2,origin.y + size.height/2))
@@ -697,7 +717,7 @@ function LabelKeyboardEventTest.create()
         elseif event == "exit" then
         end
     end
-    
+
     layer:createMenu()
     layer:creatTitleAndSubTitle(curLayerIdx)
     layer:registerScriptHandler(onNodeEvent)
@@ -739,7 +759,7 @@ function SpriteAccelerationEventTest:onEnter()
         elseif ptNowX > maxX then
             ptNowX = maxX
         end
-      
+
         local minY  = math.floor(VisibleRect:bottom().y + ballSize.height / 2.0)
         local maxY  = math.floor(VisibleRect:top().y   - ballSize.height / 2.0)
         if ptNowY <   minY then
@@ -770,7 +790,7 @@ function SpriteAccelerationEventTest.create()
             layer:onExit()
         end
     end
-    
+
     layer:createMenu()
     layer:creatTitleAndSubTitle(curLayerIdx)
     layer:registerScriptHandler(onNodeEvent)
@@ -808,13 +828,13 @@ function RemoveAndRetainNodeTest:onEnter()
         local locationInNode = target:convertToNodeSpace(touch:getLocation())
         local s = target:getContentSize()
         local rect = cc.rect(0, 0, s.width, s.height)
-        
+
         if cc.rectContainsPoint(rect, locationInNode) then
             print(string.format("sprite began... x = %f, y = %f", locationInNode.x, locationInNode.y))
             target:setOpacity(180)
             return true
         end
-        return false 
+        return false
     end
 
     local function onTouchMoved(touch,event)
@@ -882,7 +902,7 @@ function RemoveAndRetainNodeTest.create()
             layer:onExit()
         end
     end
-    
+
     layer:createMenu()
     layer:creatTitleAndSubTitle(curLayerIdx)
     layer:registerScriptHandler(onNodeEvent)
@@ -933,7 +953,7 @@ function RemoveListenerAfterAddingTest:onEnter()
         local nextButton = cc.MenuItemFont:create("Please Click Me To Reset!")
         nextButton:registerScriptTapHandler(nextButtonCallback)
         nextButton:setPosition(cc.p(VisibleRect:center().x,  VisibleRect:center().y - 40))
-        
+
         local menu = cc.Menu:create(nextButton)
         menu:setPosition(VisibleRect:leftBottom())
         menu:setAnchorPoint(cc.p(0,0))
@@ -949,10 +969,10 @@ function RemoveListenerAfterAddingTest:onEnter()
 
         local listener = cc.EventListenerTouchOneByOne:create()
         listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN)
-        
+
         eventDispatcher:addEventListenerWithFixedPriority(listener, -1)
         eventDispatcher:removeEventListenersForType(cc.EVENT_TOUCH_ONE_BY_ONE)
-        
+
         addNextButton()
 
     end
@@ -970,10 +990,10 @@ function RemoveListenerAfterAddingTest:onEnter()
 
         local listener = cc.EventListenerTouchOneByOne:create()
         listener:registerScriptHandler(onTouchBegan,cc.Handler.EVENT_TOUCH_BEGAN)
-        
+
         eventDispatcher:addEventListenerWithFixedPriority(listener, -1)
         eventDispatcher:removeAllEventListeners()
-        
+
         addNextButton()
 
     end
@@ -1003,7 +1023,7 @@ function RemoveListenerAfterAddingTest.create()
             layer:onExit()
         end
     end
-    
+
     layer:createMenu()
     layer:creatTitleAndSubTitle(curLayerIdx)
     layer:registerScriptHandler(onNodeEvent)
@@ -1029,11 +1049,11 @@ end
 function GlobalZTouchTest:onEnter()
     local function onTouchBegan(touch, event)
         local target = event:getCurrentTarget()
-        
+
         local locationInNode = target:convertToNodeSpace(touch:getLocation())
         local s = target:getContentSize()
         local rect = cc.rect(0, 0, s.width, s.height)
-        
+
         if cc.rectContainsPoint(rect, locationInNode) then
             print(string.format("sprite began... x = %f, y = %f", locationInNode.x, locationInNode.y))
             target:setOpacity(180)
@@ -1104,7 +1124,7 @@ function GlobalZTouchTest.create()
             layer:onExit()
         end
     end
-    
+
     layer:createMenu()
     layer:creatTitleAndSubTitle(curLayerIdx)
     layer:registerScriptHandler(onNodeEvent)
@@ -1203,14 +1223,14 @@ function StopPropagationTest:onEnter()
             sprite = cc.Sprite:create("Images/CyanSquare.png")
             sprite:setTag(TAG_BLUE_SPRITE)
             self:addChild(sprite, 100)
-            
+
             sprite2 = cc.Sprite:create("Images/CyanSquare.png")
             sprite2:setTag(TAG_BLUE_SPRITE2)
             self:addChild(sprite2, 100)
         else
             sprite = cc.Sprite:create("Images/YellowSquare.png")
             self:addChild(sprite, 0)
-            
+
             sprite2 = cc.Sprite:create("Images/YellowSquare.png")
             self:addChild(sprite2, 0)
         end
@@ -1231,7 +1251,7 @@ function StopPropagationTest:onEnter()
 end
 
 function StopPropagationTest:onExit()
-    
+
 end
 
 function StopPropagationTest:isPointInNode(pt, node)
@@ -1249,7 +1269,7 @@ function StopPropagationTest:isPointInTopHalfAreaOfScreen(pt)
     if pt.y >= winSize.height / 2 then
         return true
     end
-    
+
     return false
 end
 
@@ -1267,7 +1287,7 @@ function StopPropagationTest.create()
     layer:createMenu()
     layer:creatTitleAndSubTitle(curLayerIdx)
     layer:registerScriptHandler(onNodeEvent)
-    
+
     return layer
 end
 
@@ -1286,17 +1306,17 @@ end
 function PauseResumeTargetTest:onEnter()
     local origin = cc.Director:getInstance():getVisibleOrigin()
     local size = cc.Director:getInstance():getVisibleSize()
-    
+
     local sprite1 = TouchableSpriteWithFixedPriority.create()
     sprite1:setTexture("Images/CyanSquare.png")
     sprite1:setPosition(cc.p(origin.x + size.width/2 - 80, origin.y + size.height/2 +  40))
     self:addChild(sprite1, -10)
-    
+
     local sprite2 = TouchableSpriteWithFixedPriority.create()
     sprite2:setTexture("Images/MagentaSquare.png")
     sprite2:setPosition(cc.p(origin.x + size.width/2, origin.y + size.height/2))
     self:addChild(sprite2, -20)
-    
+
     local sprite3 = TouchableSpriteWithFixedPriority.create()
     sprite3:setTexture("Images/YellowSquare.png")
     sprite3:setPosition(cc.p(0, 0))
@@ -1317,28 +1337,28 @@ function PauseResumeTargetTest:onEnter()
         local closeItem = cc.MenuItemFont:create("close")
         closeItem:registerScriptTapHandler(closePopUp)
         closeItem:setPosition(VisibleRect:center())
-        
+
         local closeMenu = cc.Menu:create(closeItem)
         closeMenu:setAnchorPoint(cc.p(0.0, 0.0))
         closeMenu:setPosition(cc.p(0.0, 0.0))
-        
+
         colorLayer:addChild(closeMenu)
 
     end
     local popUpItem = cc.MenuItemFont:create("Popup")
-    popUpItem:registerScriptTapHandler(popUp)    
+    popUpItem:registerScriptTapHandler(popUp)
     popUpItem:setAnchorPoint(cc.p(1.0, 0.5))
     popUpItem:setPosition(VisibleRect:right())
-    
+
     local menu = cc.Menu:create(popUpItem)
     menu:setAnchorPoint(cc.p(0.0, 0.0))
     menu:setPosition(cc.p(0.0, 0.0))
-    
+
     self:addChild(menu)
 end
 
 function PauseResumeTargetTest:onExit()
-    
+
 end
 
 function PauseResumeTargetTest.create()
@@ -1355,7 +1375,7 @@ function PauseResumeTargetTest.create()
     layer:createMenu()
     layer:creatTitleAndSubTitle(curLayerIdx)
     layer:registerScriptHandler(onNodeEvent)
-    
+
     return layer
 end
 
@@ -1381,7 +1401,7 @@ function Issue4129Test:onEnter()
         label:setAnchorPoint(cc.p(0, 0.5))
         label:setPosition(VisibleRect:left())
         self:addChild(label)
-        
+
         eventDispatcher:removeEventListener(self._customListener)
         self._customListener = nil
 
@@ -1394,9 +1414,9 @@ function Issue4129Test:onEnter()
     local function removeAllTouch(tag, sender)
         local senderItem = sender
         senderItem:setString("Only 'Reset' item could be clicked")
-        
+
         eventDispatcher:removeAllEventListeners()
-        
+
         local function next(tag, sender)
             assert(bugFixed, "This issue was not fixed!")
             self.restartCallback()
@@ -1405,12 +1425,12 @@ function Issue4129Test:onEnter()
         nextItem:registerScriptTapHandler(next)
         nextItem:setFontSizeObj(16)
         nextItem:setPosition(cc.p(VisibleRect:right().x - 100 , VisibleRect:right().y - 30))
-        
+
         local menu2 = cc.Menu:create(nextItem)
         menu2:setPosition(cc.p(0, 0))
         menu2:setAnchorPoint(cc.p(0, 0))
         self:addChild(menu2)
-        
+
         --Simulate to dispatch 'come to background' event
         local event = cc.EventCustom:new("event_come_to_background")
         eventDispatcher:dispatchEvent(event)
@@ -1420,7 +1440,7 @@ function Issue4129Test:onEnter()
     removeAllTouchItem:registerScriptTapHandler(removeAllTouch)
     removeAllTouchItem:setFontSizeObj(16)
     removeAllTouchItem:setPosition(cc.p(VisibleRect:right().x - 100, VisibleRect:right().y))
-    
+
     local menu = cc.Menu:create(removeAllTouchItem)
     menu:setPosition(cc.p(0, 0))
     menu:setAnchorPoint(cc.p(0, 0))
@@ -1448,7 +1468,7 @@ function Issue4129Test.create()
     layer:createMenu()
     layer:creatTitleAndSubTitle(curLayerIdx)
     layer:registerScriptHandler(onNodeEvent)
-    
+
     return layer
 end
 
@@ -1468,20 +1488,20 @@ end
 function Issue4160Test:onEnter()
     local origin = cc.Director:getInstance():getVisibleOrigin()
     local size = cc.Director:getInstance():getVisibleSize()
-    
+
     local sprite1 = TouchableSpriteWithFixedPriority.create()
     sprite1:setPriority(-30)
     sprite1:setTexture("Images/CyanSquare.png")
     sprite1:setPosition(cc.p(origin.x + size.width/2 - 80, origin.y + size.height/2 + 40))
     self:addChild(sprite1, -10)
-    
+
     local sprite2 = TouchableSpriteWithFixedPriority.create()
     sprite2:setPriority(-20)
     sprite2:setTexture("Images/MagentaSquare.png")
     sprite2:removeListenerOnTouchEnded(true)
     sprite2:setPosition(cc.p(origin.x + size.width/2, origin.y + size.height/2))
     self:addChild(sprite2, -20)
-    
+
     local sprite3 = TouchableSpriteWithFixedPriority.create()
     sprite3:setPriority(-10)
     sprite3:setTexture("Images/YellowSquare.png")
@@ -1507,7 +1527,7 @@ function Issue4160Test.create()
     layer:createMenu()
     layer:creatTitleAndSubTitle(curLayerIdx)
     layer:registerScriptHandler(onNodeEvent)
-    
+
     return layer
 end
 
