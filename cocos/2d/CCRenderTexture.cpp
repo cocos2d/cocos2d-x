@@ -391,19 +391,18 @@ bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format
 
 void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA)
 {
-    auto callbackFunc = [&](Image* image, const std::string& filePath, bool isRGBA){
+    auto callbackFunc = [&, filename, isRGBA](Image* image){
         if (image)
         {
-            image->saveToFile(filePath, !isRGBA);
+            image->saveToFile(filename, !isRGBA);
         }
         if(_saveFileCallback)
         {
-            _saveFileCallback(this, filePath);
+            _saveFileCallback(this, filename);
         }
         CC_SAFE_DELETE(image);
     };
-    auto callback = std::bind(callbackFunc, std::placeholders::_1, filename, isRGBA);
-    newImage(callback);
+    newImage(callbackFunc);
 }
 
 /* get buffer as Image */
@@ -425,13 +424,12 @@ void RenderTexture::newImage(std::function<void(Image*)> imageCallback, bool fli
     int savedBufferHeight = (int)s.height;
     
     Image *image = new (std::nothrow) Image();
-    _imageCallback = imageCallback;
     
-    auto initCallback = [&](Image* image, const unsigned char* tempData, int savedBufferWidth, int savedBufferHeight){
+    auto initCallback = [&, savedBufferWidth, savedBufferHeight, imageCallback](Image* image, const unsigned char* tempData){
         image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
-        _imageCallback(image);
+        imageCallback(image);
     };
-    auto callback = std::bind(initCallback, image, std::placeholders::_1, savedBufferWidth, savedBufferHeight);
+    auto callback = std::bind(initCallback, image, std::placeholders::_1);
     
     _texture2D->getBackendTexture()->getBytes(0, 0, savedBufferWidth, savedBufferHeight, flipImage, callback);
     

@@ -366,7 +366,6 @@ protected:
     */
     CallbackCommand _saveToFileCommand;
     std::function<void (RenderTexture*, const std::string&)> _saveFileCallback = nullptr;
-    std::function<void(Image*)> _imageCallback = nullptr;
     
     Mat4 _oldTransMatrix, _oldProjMatrix;
     Mat4 _transformMatrix, _projectionMatrix;
