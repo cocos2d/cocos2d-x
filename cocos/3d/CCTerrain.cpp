@@ -104,16 +104,11 @@ void cocos2d::Terrain::setLightDir(const Vec3& lightDir)
 
 bool Terrain::initProperties()
 {
-    CC_SAFE_RELEASE_NULL(_programState);
     _programState = new backend::ProgramState(CC3D_terrain_vert, CC3D_terrain_frag);
 
     _stateBlock.depthWrite = true;
     _stateBlock.depthTest = true;
     _stateBlock.cullFace = backend::CullMode::FRONT;
-
-
-    _beforeDraw.set3D(true);
-    _afterDraw.set3D(true);
 
     _beforeDraw.func = CC_CALLBACK_0(Terrain::onBeforeDraw, this);
     _afterDraw.func = CC_CALLBACK_0(Terrain::onAfterDraw, this);
@@ -155,7 +150,6 @@ void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, 
     //    }
     //#endif
 
-    //TODO arnold setup common uniforms
     auto pMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     auto finalMatrix = pMatrix * transform;
     _programState->setUniform(_mvpMatrixLocation, &finalMatrix.m, sizeof(finalMatrix.m));
@@ -173,14 +167,8 @@ void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, 
         for (int i = 0; i < _maxDetailMapValue; ++i)
         {
             _programState->setTexture(_detailMapLocation[i], i, _detailMapTextures[i]->getBackendTexture());
-            float mapSize = _terrainData._detailMaps[i]._detailMapSize;
-        
-        }
-        for (int i = 0; i < _maxDetailMapValue; ++i)
-        {
             detailMapSize[i] = _terrainData._detailMaps[i]._detailMapSize;
         }
-
         _programState->setUniform(_detailMapSizeLocation, detailMapSize, sizeof(detailMapSize));
 
         int hasAlphaMap = 1;
@@ -217,7 +205,7 @@ void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, 
     if (_isCameraViewChanged)
     {
         _quadRoot->resetNeedDraw(true);//reset it
-                                       //camera frustum culling
+        //camera frustum culling
         if (_isEnableFrustumCull)
         {
             _quadRoot->cullByCamera(camera, _terrainModelMatrix);
@@ -230,9 +218,8 @@ void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, 
     }
 
 
-    //TODO arnold why
-    //glActiveTexture(GL_TEXTURE0); //
     //TODO arnold
+    //glActiveTexture(GL_TEXTURE0); //
     //#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
     //    if (_isDrawWire)//reset state.
     //    {
@@ -517,16 +504,6 @@ Terrain::~Terrain()
                 delete _chunkesArray[i][j];
             }
         }
-    }
-
-    for (size_t i = 0, size = _chunkLodIndicesSet.size(); i < size; ++i)
-    {
-        CC_SAFE_RELEASE_NULL(_chunkLodIndicesSet[i]._chunkIndices._indexBuffer);
-    }
-
-    for (size_t i = 0, size = _chunkLodIndicesSkirtSet.size(); i < size; ++i)
-    {
-        CC_SAFE_RELEASE_NULL(_chunkLodIndicesSkirtSet[i]._chunkIndices._indexBuffer);
     }
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA

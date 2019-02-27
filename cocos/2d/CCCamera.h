@@ -203,7 +203,6 @@ public:
     /**
      * Is this aabb visible in frustum
      */
-    // minggo comment
     bool isVisibleInFrustum(const AABB* aabb) const;
     
     /**
