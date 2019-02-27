@@ -133,7 +133,7 @@ list(APPEND GAME_HEADER
     #  Classes/Camera3DTest/Camera3DTest.h
      Classes/TextInputTest/TextInputTest.h
      Classes/Texture2dTest/Texture2dTest.h
-     #Classes/TerrainTest/TerrainTest.h
+     Classes/TerrainTest/TerrainTest.h
      Classes/controller.h
      Classes/TransitionsTest/TransitionsTest.h
      Classes/TextureCacheTest/TextureCacheTest.h
@@ -288,7 +288,7 @@ list(APPEND GAME_SOURCE
      Classes/Sprite3DTest/Sprite3DTest.cpp
      Classes/SpritePolygonTest/SpritePolygonTest.cpp
      Classes/SpriteTest/SpriteTest.cpp
- #    Classes/TerrainTest/TerrainTest.cpp
+     Classes/TerrainTest/TerrainTest.cpp
      Classes/TextInputTest/TextInputTest.cpp
      Classes/Texture2dTest/Texture2dTest.cpp
      Classes/TextureCacheTest/TextureCacheTest.cpp

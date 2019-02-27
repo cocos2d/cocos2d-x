@@ -8,7 +8,7 @@ void VertexLayout::setAtrribute(const std::string &name, unsigned int index, Ver
 {
     if (_attributes.find(name) != _attributes.end())
     {
-        CCLOG("warning: vertex attribute '%s' already setup", name.c_str());
+        CCLOG("warning: vertex attribute '%s' already set", name.c_str());
     }
     _attributes[name] = { name, index, format, offset, needToBeNormallized };
 }

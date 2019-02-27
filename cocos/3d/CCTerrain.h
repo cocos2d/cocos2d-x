@@ -22,8 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#ifndef CC_TERRAIN_H
-#define CC_TERRAIN_H
+#pragma once
 
 #include <vector>
 
@@ -31,7 +30,11 @@ THE SOFTWARE.
 #include "2d/CCCamera.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCCallbackCommand.h"
+#include "renderer/CCGroupCommand.h"
 #include "renderer/CCRenderState.h"
+#include "renderer/backend/Types.h"
+#include "renderer/backend/ProgramState.h"
 #include "3d/CCAABB.h"
 #include "3d/CCRay.h"
 #include "base/CCEventListenerCustom.h"
@@ -160,8 +163,12 @@ private:
 
     struct ChunkIndices
     {
-        GLuint _indices;
-        unsigned short _size;
+        ChunkIndices() = default;
+        ChunkIndices(const ChunkIndices &);
+        ChunkIndices &operator = (const ChunkIndices &o);
+        ~ChunkIndices();
+        backend::Buffer *_indexBuffer = nullptr;
+        unsigned short _size = 0;
     };
 
     struct ChunkLODIndices
@@ -201,7 +208,7 @@ private:
     struct Chunk
     {
         /**Constructor*/
-        Chunk();
+        Chunk(Terrain *);
         /**destructor*/
         ~Chunk();
         /*vertices*/
@@ -210,7 +217,6 @@ private:
         struct LOD{
             std::vector<GLushort> _indices;
         };
-        GLuint _vbo;
         ChunkIndices _chunkIndices; 
         /**we now support four levels of detail*/
         LOD _lod[4];
@@ -263,6 +269,9 @@ private:
         std::vector<TerrainVertexData> _currentVertices;
 
         std::vector<Triangle> _trianglesList;
+
+        backend::Buffer *_buffer = nullptr;
+        CustomCommand _command;
     };
 
    /**
@@ -438,8 +447,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Terrain();
     bool initWithTerrainData(TerrainData &parameter, CrackFixedType fixedType);
 protected:
-    void onDraw(const Mat4 &transform, uint32_t flags);
-
+    
     /**
      * recursively set each chunk's LOD
      * @param cameraPos the camera position in world space
@@ -475,6 +483,11 @@ protected:
     
     Chunk * getChunkByIndex(int x,int y) const;
 
+private:
+    void onBeforeDraw();
+    
+    void onAfterDraw();
+    
 protected:
     std::vector <ChunkLODIndices> _chunkLodIndicesSet;
     std::vector<ChunkLODIndicesSkirt> _chunkLodIndicesSkirtSet;
@@ -488,7 +501,6 @@ protected:
     Texture2D * _alphaMap;
     Texture2D * _lightMap;
     Vec3 _lightDir;
-    CustomCommand _customCommand;
     QuadTree * _quadRoot;
     Chunk * _chunkesArray[MAX_CHUNKES][MAX_CHUNKES];
     std::vector<TerrainVertexData> _vertices;
@@ -501,23 +513,38 @@ protected:
     cocos2d::Image * _heightMapImage;
     Mat4 _oldCameraModelMatrix;
     Mat4 _terrainModelMatrix;
-    GLuint _normalLocation;
-    GLuint _positionLocation;
-    GLuint _texcoordLocation;
     float _maxHeight;
     float _minHeight;
     CrackFixedType _crackFixedType;
     float _skirtRatio;
     int _skirtVerticesOffset[4];
-    GLint _detailMapLocation[4];
-    GLint _alphaMapLocation;
-    GLint _alphaIsHasAlphaMapLocation;
-    GLint _lightMapCheckLocation;
-    GLint _lightMapLocation;
-    GLint _detailMapSizeLocation[4];
-    GLint _lightDirLocation;
-    RenderState::StateBlock _stateBlock;
+    struct StateBlock {
+       // bool blend;
+        bool depthWrite = true;
+        bool depthTest = true ;
+        backend::CullMode cullFace = backend::CullMode::FRONT;
+        void apply();
+        void save();
+    };
+    
+    StateBlock _stateBlock;
+    StateBlock _stateBlockOld;
+private:
+    GroupCommand _groupCommand;
+    CallbackCommand _beforeDraw;
+    CallbackCommand _afterDraw;
+    backend::VertexLayout _vertexLayout;
+    backend::ProgramState *_programState = nullptr;
+    //uniform locations
+    backend::UniformLocation _detailMapLocation[4];
+    backend::UniformLocation _alphaMapLocation;
+    backend::UniformLocation _alphaIsHasAlphaMapLocation;
+    backend::UniformLocation _lightMapCheckLocation;
+    backend::UniformLocation _lightMapLocation;
+    backend::UniformLocation _detailMapSizeLocation;
+    backend::UniformLocation _lightDirLocation;
 
+    backend::UniformLocation _mvpMatrixLocation;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _backToForegroundListener;
 #endif
@@ -527,4 +554,3 @@ protected:
 /// @}
 
 NS_CC_END
-#endif

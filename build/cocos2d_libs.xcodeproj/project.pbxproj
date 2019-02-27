@@ -2065,6 +2065,9 @@
 		ED35E1E3221D50B000AF657C /* CCMotionStreak3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A5F21F6B02300D5AFCD /* CCMotionStreak3D.h */; };
 		ED35E1E4221D50B100AF657C /* CCMotionStreak3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A5F21F6B02300D5AFCD /* CCMotionStreak3D.h */; };
 		ED35E1E5221D50B100AF657C /* CCMotionStreak3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 46AF3A5F21F6B02300D5AFCD /* CCMotionStreak3D.h */; };
+		ED35E2052226749700AF657C /* CCTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A5A21F6B02300D5AFCD /* CCTerrain.cpp */; };
+		ED35E2062226749700AF657C /* CCTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A5A21F6B02300D5AFCD /* CCTerrain.cpp */; };
+		ED35E2072226749800AF657C /* CCTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3A5A21F6B02300D5AFCD /* CCTerrain.cpp */; };
 		ED682BBA213F5FC7001BF6CB /* libuv_a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED682BB9213F5FC6001BF6CB /* libuv_a.a */; };
 		ED682BC1213F63CB001BF6CB /* libuv_a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED682BC0213F63CB001BF6CB /* libuv_a.a */; };
 		ED682BC3213F6C7A001BF6CB /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED682BC2213F6C7A001BF6CB /* libwebsockets.a */; };
@@ -7751,6 +7754,7 @@
 				4631CB8D21AFD9FA0000D408 /* UIScale9Sprite.cpp in Sources */,
 				4631CBC321AFD9FA0000D408 /* UIScrollView.cpp in Sources */,
 				B29594B41926D5EC003EEF37 /* CCMeshCommand.cpp in Sources */,
+				ED35E2052226749700AF657C /* CCTerrain.cpp in Sources */,
 				15AE1BB719AADFEF00C27E9E /* WebSocket.cpp in Sources */,
 				50ABBD381925AB0000A911A9 /* CCAffineTransform.cpp in Sources */,
 				ED318DFC21FFF02D00698BCB /* CCBundle3DData.cpp in Sources */,
@@ -7858,6 +7862,7 @@
 				507B3B2A1C31BDD30067B53E /* DetourNavMesh.cpp in Sources */,
 				507B3B381C31BDD30067B53E /* CCLabelTextFormatter.cpp in Sources */,
 				507B3B3A1C31BDD30067B53E /* CCNinePatchImageParser.cpp in Sources */,
+				ED35E2072226749800AF657C /* CCTerrain.cpp in Sources */,
 				507B3B3F1C31BDD30067B53E /* cdt.cc in Sources */,
 				507B3B441C31BDD30067B53E /* ObjectFactory.cpp in Sources */,
 				507B3B451C31BDD30067B53E /* CCLayer.cpp in Sources */,
@@ -8175,6 +8180,7 @@
 				1A5701E3180BCB8C0088DEC7 /* CCScene.cpp in Sources */,
 				4631CB2A21AFD9F90000D408 /* UITextAtlas.cpp in Sources */,
 				46AF3A9121F6B02400D5AFCD /* CCMeshSkin.cpp in Sources */,
+				ED35E2062226749700AF657C /* CCTerrain.cpp in Sources */,
 				50ABBD611925AB0000A911A9 /* Vec4.cpp in Sources */,
 				ED9188A72215619800B52056 /* CCVertexAttribBinding.cpp in Sources */,
 				46BD388921D35A68002BD50F /* TextureMTL.mm in Sources */,
