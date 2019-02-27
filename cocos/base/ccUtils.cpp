@@ -164,7 +164,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
  * Capture screen interface
  */
 static EventListenerCustom* s_captureScreenListener;
-static CustomCommand s_captureScreenCommand;
+static CallbackCommand s_captureScreenCommand;
 void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
 {
     if (s_captureScreenListener)
@@ -183,7 +183,7 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
     });
 }
 
-Image* captureNode(Node* startNode, float scale)
+void captureNode(Node* startNode, std::function<void(Image*)> imageCallback, float scale)
 { // The best snapshot API, support Scene and any Node
     auto& size = startNode->getContentSize();
 
@@ -223,7 +223,7 @@ Image* captureNode(Node* startNode, float scale)
 
     Director::getInstance()->getRenderer()->render();
 
-    return finalRtx->newImage();
+    finalRtx->newImage(imageCallback);
 }
 
 std::vector<Node*> findChildren(const Node &node, const std::string &name)

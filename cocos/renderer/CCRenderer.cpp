@@ -323,7 +323,7 @@ void Renderer::processRenderCommand(RenderCommand* command)
             break;
         case RenderCommand::Type::CALLBACK_COMMAND:
             flush();
-            static_cast<CallbackCommand*>(command)->execute();
+           static_cast<CallbackCommand*>(command)->execute();
             break;
         default:
             assert(false);
@@ -936,12 +936,12 @@ void Renderer::setRenderTarget(RenderTargetFlag flags, Texture2D* colorAttachmen
     }
 }
 
-void Renderer::clear(ClearFlag flags, const Color4F& color, float depth, unsigned int stencil)
+void Renderer::clear(ClearFlag flags, const Color4F& color, float depth, unsigned int stencil, float globalOrder)
 {
     _clearFlag = flags;
 
     CallbackCommand* command = new CallbackCommand();
-    command->init(-10000);
+    command->init(globalOrder);
     command->func = [=]() -> void {
         backend::RenderPassDescriptor descriptor;
 

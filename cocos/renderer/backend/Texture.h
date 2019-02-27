@@ -4,6 +4,8 @@
 #include "base/CCRef.h"
 #include <cassert>
 
+#include <functional>
+
 CC_BACKEND_BEGIN
 
 struct TextureDescriptor
@@ -22,6 +24,7 @@ class Texture : public Ref
 {
 public:
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) = 0;
+    virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*)> callback) = 0;
 
     inline TextureFormat getTextureFormat() const { return _textureFormat; }
     inline TextureUsage getTextureUsage() const { return _textureUsage; }
@@ -47,8 +50,10 @@ class Texture2D : public Texture
 public:
     virtual void updateData(uint8_t* data) = 0;
     virtual void updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint8_t* data) = 0;
+
     inline uint32_t getWidth() const { return _width; }
     inline uint32_t getHeight() const { return _height; }
+
 protected:
     Texture2D(const TextureDescriptor& descriptor);
     uint32_t _width = 0;

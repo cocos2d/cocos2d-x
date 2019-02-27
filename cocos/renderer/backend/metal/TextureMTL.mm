@@ -149,6 +149,7 @@ void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor&
                                                               width:descriptor.width
                                                              height:descriptor.height
                                                           mipmapped:TRUE];
+    
     if (TextureUsage::RENDER_TARGET == descriptor.textureUsage)
     {
         textureDescriptor.resourceOptions = MTLResourceStorageModePrivate;
@@ -180,6 +181,59 @@ void TextureMTL::createSampler(id<MTLDevice> mtlDevice, const SamplerDescriptor 
     _mtlSamplerState = [mtlDevice newSamplerStateWithDescriptor:mtlDescriptor];
     
     [mtlDescriptor release];
+}
+
+void TextureMTL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*)> callback)
+{
+    CC_ASSERT(width <= _width && height <= _height);
+    
+    MTLTextureDescriptor* textureDescriptor =
+    [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:Utils::toMTLPixelFormat(_textureFormat)
+                                                       width:_width
+                                                      height:_height
+                                                   mipmapped:NO];
+    id<MTLDevice> device = static_cast<DeviceMTL*>(Device::getInstance())->getMTLDevice();
+    id<MTLTexture> copiedTexture = [device newTextureWithDescriptor:textureDescriptor];
+    
+    MTLRegion region = MTLRegionMake2D(0, 0, _width, _height);
+    auto commandQueue = static_cast<DeviceMTL*>(DeviceMTL::getInstance())->getMTLCommandQueue();
+    auto commandBuffer = [commandQueue commandBuffer];
+    [commandBuffer enqueue];
+    id<MTLBlitCommandEncoder> commandEncoder = [commandBuffer blitCommandEncoder];
+    [commandEncoder copyFromTexture:_mtlTexture sourceSlice:0 sourceLevel:0 sourceOrigin:region.origin sourceSize:region.size toTexture:copiedTexture destinationSlice:0 destinationLevel:0 destinationOrigin:region.origin];
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    [commandEncoder synchronizeResource:copiedTexture];
+#endif
+    [commandEncoder endEncoding];
+    
+    [commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> commandBuffer) {
+        MTLRegion region = MTLRegionMake2D(0, 0, width, height);
+        auto bytePerRow = width * _bitsPerElement / 8;
+        unsigned char* image = new unsigned char[bytePerRow * height];
+        [copiedTexture getBytes:image bytesPerRow:_bytesPerRow fromRegion:region mipmapLevel:0];
+        
+        //consistent with opengl behavior
+        if(!flipImage)
+        {
+            unsigned char* flippedImage = new unsigned char[bytePerRow * height];
+            for (int i = 0; i < height; ++i)
+            {
+                memcpy(&flippedImage[i * bytePerRow],
+                       &image[(height - i - 1) * bytePerRow],
+                       bytePerRow);
+            }
+            callback(flippedImage);
+            CC_SAFE_DELETE_ARRAY(flippedImage);
+        }
+        else
+        {
+            callback(image);
+            CC_SAFE_DELETE_ARRAY(image);
+        }
+        [copiedTexture release];
+    }];
+    [commandBuffer commit];
 }
 
 CC_BACKEND_END

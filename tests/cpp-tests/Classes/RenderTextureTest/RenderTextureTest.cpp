@@ -100,8 +100,10 @@ void RenderTextureSave::saveImage(cocos2d::Ref *sender)
         sprite->setScale(0.3f);
         sprite->setPosition(Vec2(40, 40));
         sprite->setRotation(counter * 3);
+        rt->release();
     };
     
+    _target->retain();
     _target->saveToFile(png, Image::Format::PNG, true, callback);
     //Add this function to avoid crash if we switch to a new scene.
     Director::getInstance()->getRenderer()->render();
@@ -729,7 +731,11 @@ Issue16113Test::Issue16113Test()
         text->setPosition(winSize.width / 2,winSize.height/2);
         text->Node::visit();
         target->end();
-        target->saveToFile("issue16113.png", Image::Format::PNG);
+        auto callback = [&](RenderTexture* rt, const std::string& path){
+            rt->release();
+        };
+        target->retain();
+        target->saveToFile("issue16113.png", Image::Format::PNG, true, callback);
     });
     auto menu = Menu::create(item1, nullptr);
     this->addChild(menu);

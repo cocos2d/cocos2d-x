@@ -168,6 +168,7 @@ void CommandBufferMTL::beginFrame()
     dispatch_semaphore_wait(_frameBoundarySemaphore, DISPATCH_TIME_FOREVER);
 
     _mtlCommandBuffer = [_mtlCommandQueue commandBuffer];
+    [_mtlCommandBuffer enqueue];
     [_mtlCommandBuffer retain];
 
     BufferManager::beginFrame();

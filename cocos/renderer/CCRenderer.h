@@ -192,7 +192,7 @@ public:
     @depth The clear depth value.
     @stencil The clear stencil value.
     */
-    void clear(ClearFlag flags, const Color4F& color, float depth, unsigned int stencil);
+    void clear(ClearFlag flags, const Color4F& color, float depth, unsigned int stencil, float globalOrder);
     Texture2D* getColorAttachment() const;
     Texture2D* getDepthAttachment() const;
     Texture2D* getStencilAttachment() const;

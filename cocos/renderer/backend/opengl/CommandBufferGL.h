@@ -41,7 +41,6 @@ public:
     virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) override;
     virtual void setDepthStencilState(DepthStencilState* depthStencilState) override;
 
-    
 private:
     struct Viewport
     {

@@ -78,7 +78,7 @@ namespace utils
     * @since v3.11
     * !!! remark: Caller is responsible for releasing it by calling delete.
     */
-    CC_DLL Image* captureNode(Node* startNode, float scale = 1.0f);
+    CC_DLL void captureNode(Node* startNode, std::function<void(Image*)> imageCallback, float scale = 1.0f);
     
     /** Find children by name, it will return all child that has the same name.
      * It supports c++ 11 regular expression. It is  a helper function of `Node::enumerateChildren()`.
