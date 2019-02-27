@@ -183,12 +183,12 @@ void TextureMTL::createSampler(id<MTLDevice> mtlDevice, const SamplerDescriptor 
     [mtlDescriptor release];
 }
 
-void TextureMTL::getBytes(int x, int y, int width, int height, TextureFormat format, bool flipImage, std::function<void(const unsigned char* imageRGBA)> callback)
+void TextureMTL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*)> callback)
 {
     CC_ASSERT(width <= _width && height <= _height);
     
     MTLTextureDescriptor* textureDescriptor =
-    [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:Utils::toMTLPixelFormat(format)
+    [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:Utils::toMTLPixelFormat(_textureFormat)
                                                        width:_width
                                                       height:_height
                                                    mipmapped:NO];
@@ -209,25 +209,27 @@ void TextureMTL::getBytes(int x, int y, int width, int height, TextureFormat for
     
     [commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> commandBuffer) {
         MTLRegion region = MTLRegionMake2D(0, 0, width, height);
-        unsigned char* imageRGBA = new unsigned char[width * height *4];
-        [copiedTexture getBytes:imageRGBA bytesPerRow:width*4 fromRegion:region mipmapLevel:0];
+        auto bytePerRow = width * _bitsPerElement / 8;
+        unsigned char* image = new unsigned char[bytePerRow * height];
+        [copiedTexture getBytes:image bytesPerRow:_bytesPerRow fromRegion:region mipmapLevel:0];
         
-        if(flipImage)
+        //consistent with opengl behavior
+        if(!flipImage)
         {
-            unsigned char* flippedImage = new unsigned char[width * height *4];
+            unsigned char* flippedImage = new unsigned char[bytePerRow * height];
             for (int i = 0; i < height; ++i)
             {
-                memcpy(&flippedImage[i * width * 4],
-                       &imageRGBA[(height - i - 1) * width * 4],
-                       width * 4);
+                memcpy(&flippedImage[i * bytePerRow],
+                       &image[(height - i - 1) * bytePerRow],
+                       bytePerRow);
             }
             callback(flippedImage);
             CC_SAFE_DELETE_ARRAY(flippedImage);
         }
         else
         {
-            callback(imageRGBA);
-            CC_SAFE_DELETE_ARRAY(imageRGBA);
+            callback(image);
+            CC_SAFE_DELETE_ARRAY(image);
         }
         [copiedTexture release];
     }];

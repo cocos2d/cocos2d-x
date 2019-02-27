@@ -118,18 +118,6 @@ void CommandBufferGL::beginFrame()
 {
 }
 
-void CommandBufferGL::setCallBackCommand(RenderCommand* command)
-{
-    auto commandType = command->getType();
-    switch (commandType) {
-        case RenderCommand::Type::SYCHRONIZED_CALLBACK_COMMAND:
-            static_cast<SynchronizedCallbackCommand*>(command)->execute();
-            break;
-        default:
-            break;
-    }
-}
-
 void CommandBufferGL::beginRenderPass(const RenderPassDescriptor& descirptor)
 {
     applyRenderPassDescriptor(descirptor);

@@ -164,7 +164,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
  * Capture screen interface
  */
 static EventListenerCustom* s_captureScreenListener;
-static CustomCommand s_captureScreenCommand;
+static CallbackCommand s_captureScreenCommand;
 void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
 {
     if (s_captureScreenListener)

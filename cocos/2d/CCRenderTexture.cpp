@@ -310,11 +310,6 @@ void RenderTexture::clear(float r, float g, float b, float a)
     this->end();
 }
 
-void RenderTexture::clearColor(float r, float g, float b, float a)
-{
-    setClearColor(Color4F(r, g, b, a));
-}
-
 void RenderTexture::clearDepth(float depthValue)
 {
     setClearDepth(depthValue);
@@ -396,12 +391,7 @@ bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format
 
 void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA)
 {
-    bool flipImage = true;
-#ifdef CC_USE_METAL
-    flipImage = false;
-#endif
-    
-    auto callbackFunc = [&](Image* image, const std::string& filePath, bool flipImage, bool isRGBA){
+    auto callbackFunc = [&](Image* image, const std::string& filePath, bool isRGBA){
         if (image)
         {
             image->saveToFile(filePath, !isRGBA);
@@ -412,8 +402,8 @@ void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA)
         }
         CC_SAFE_DELETE(image);
     };
-    auto callback = std::bind(callbackFunc, std::placeholders::_1, filename, flipImage, isRGBA);
-    newImage(callback, flipImage);
+    auto callback = std::bind(callbackFunc, std::placeholders::_1, filename, isRGBA);
+    newImage(callback);
 }
 
 /* get buffer as Image */
@@ -443,9 +433,7 @@ void RenderTexture::newImage(std::function<void(Image*)> imageCallback, bool fli
     };
     auto callback = std::bind(initCallback, image, std::placeholders::_1, savedBufferWidth, savedBufferHeight);
     
-    backend::StringUtils::PixelFormat pixelFormat = static_cast<backend::StringUtils::PixelFormat>(_pixelFormat);
-    TextureFormat format = backend::StringUtils::PixelFormat2TextureFormat(pixelFormat);
-    _texture2D->getBackendTexture()->getBytes(0, 0, savedBufferWidth, savedBufferHeight, format, flipImage, callback);
+    _texture2D->getBackendTexture()->getBytes(0, 0, savedBufferWidth, savedBufferHeight, flipImage, callback);
     
 //    do
 //    {

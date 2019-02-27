@@ -137,7 +137,6 @@ public:
      * @param a Alpha.
      */
     void clear(float r, float g, float b, float a);
-    void clearColor(float r, float g, float b, float a);
 
     /** Clears the texture with a specified depth value. 
      *

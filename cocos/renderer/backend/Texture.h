@@ -24,7 +24,7 @@ class Texture : public Ref
 {
 public:
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) = 0;
-    virtual void getBytes(int x, int y, int width, int height, TextureFormat format, bool flipImage, std::function<void(const unsigned char* imageRGBA)> callback) = 0;
+    virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*)> callback) = 0;
 
     inline TextureFormat getTextureFormat() const { return _textureFormat; }
     inline TextureUsage getTextureUsage() const { return _textureUsage; }
