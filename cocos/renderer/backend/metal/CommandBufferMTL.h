@@ -51,6 +51,7 @@ private:
     ProgramState* _programState = nullptr;
     id<MTLDepthStencilState> _mtlDepthStencilState = nil;
     
+    unsigned int _renderTargetWidth = 0;
     unsigned int _renderTargetHeight = 0;
     
     dispatch_semaphore_t _frameBoundarySemaphore;

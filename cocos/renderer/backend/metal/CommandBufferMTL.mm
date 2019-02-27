@@ -193,6 +193,7 @@ id<MTLRenderCommandEncoder> CommandBufferMTL::getRenderCommandEncoder(const Rend
     }
 
     auto mtlDescriptor = toMTLRenderPassDescriptor(renderPassDescriptor);
+    _renderTargetWidth = (unsigned int)mtlDescriptor.colorAttachments[0].texture.width;
     _renderTargetHeight = (unsigned int)mtlDescriptor.colorAttachments[0].texture.height;
     id<MTLRenderCommandEncoder> mtlRenderEncoder = [_mtlCommandBuffer renderCommandEncoderWithDescriptor:mtlDescriptor];
     [mtlRenderEncoder retain];
@@ -421,15 +422,21 @@ void CommandBufferMTL::setLineWidth(float lineWidth)
 
 void CommandBufferMTL::setScissorRect(bool isEnabled, float x, float y, float width, float height)
 {
-    if(!isEnabled)
-        return;
-    
     MTLScissorRect scissorRect;
-    scissorRect.x = x;
-    scissorRect.y = _renderTargetHeight - height - y;
-    scissorRect.width = width;
-    scissorRect.height = height;
-    
+    if(isEnabled)
+    {
+        scissorRect.x = x;
+        scissorRect.y = _renderTargetHeight - height - y;
+        scissorRect.width = width;
+        scissorRect.height = height;
+    }
+    else
+    {
+        scissorRect.x = 0;
+        scissorRect.y = 0;
+        scissorRect.width = _renderTargetWidth;
+        scissorRect.height = _renderTargetHeight;
+    }
     [_mtlRenderEncoder setScissorRect:scissorRect];
 }
 
