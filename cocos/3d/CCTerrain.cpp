@@ -31,11 +31,14 @@ USING_NS_CC;
 #include <set>
 #include "renderer/CCRenderer.h"
 #include "renderer/ccShaders.h"
+#include "renderer/backend/Device.h"
 #include "renderer/backend/Program.h"
+#include "renderer/backend/Buffer.h"
 #include "base/CCDirector.h"
 #include "base/CCEventType.h"
 #include "2d/CCCamera.h"
 #include "platform/CCImage.h"
+#include "3d/CC3DProgramInfo.h"
 
 NS_CC_BEGIN
 
@@ -134,26 +137,23 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t /*flags*/)
         _quadRoot->preCalculateAABB(_terrainModelMatrix);
     }
 
-    auto glProgram = getGLProgram();
-    glProgram->use();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    if(_isDrawWire)
-    {
-        glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-    }else
-    {
-        glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-    }
-#endif
+//TODO arnold 
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+//    if(_isDrawWire)
+//    {
+//        glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+//    }else
+//    {
+//        glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+//        
+//    }
+//#endif
 
-    _stateBlock.bind(&pipelineDescriptor);
+    _stateBlock.apply();
 
-    glEnableVertexAttribArray(_positionLocation);
-    glEnableVertexAttribArray(_texcoordLocation);
-    glEnableVertexAttribArray(_normalLocation);
-    glProgram->setUniformsForBuiltins(transform);
-    _glProgramState->applyUniforms();
-    glUniform3f(_lightDirLocation,_lightDir.x,_lightDir.y,_lightDir.z);
+    //TODO arnold setup uniforms
+
+     glUniform3f(_lightDirLocation,_lightDir.x,_lightDir.y,_lightDir.z);
     if(!_alphaMap)
     {
         glActiveTexture(GL_TEXTURE0);
@@ -822,33 +822,39 @@ void Terrain::cacheUniformAttribLocation()
     _positionLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_position");
     _texcoordLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_texCoord");
     _normalLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_normal");
-    _alphaMapLocation = -1;
+
+
+    auto &layout = _customCommand.getPipelineDescriptor().vertexLayout;
+
+    layout.setAtrribute("a_position", backend::VertexFormat::)
+
+    _alphaMapLocation.reset();
     for(int i =0;i<4;++i)
     {
-        _detailMapLocation[i] = -1;
-        _detailMapSizeLocation[i] = -1;
+        _detailMapLocation[i].reset();
+        _detailMapSizeLocation[i].reset();
     }
-    auto glProgram = getGLProgram();
-    _alphaIsHasAlphaMapLocation = glGetUniformLocation(glProgram->getProgram(),"u_has_alpha");
-    _lightMapCheckLocation = glGetUniformLocation(glProgram->getProgram(), "u_has_light_map");
+    
+    _alphaIsHasAlphaMapLocation = _programState->getUniformLocation("u_has_alpha");
+    _lightMapCheckLocation = _programState->getUniformLocation("u_has_light_map");
     if(!_alphaMap)
     {
-        _detailMapLocation[0] = glGetUniformLocation(glProgram->getProgram(),"u_texture0");
+        _detailMapLocation[0] = _programState->getUniformLocation("u_texture0");
     }else
     {
         for(int i =0;i<_maxDetailMapValue;++i)
         {
             char str[20];
             sprintf(str,"u_texture%d",i);
-            _detailMapLocation[i] = glGetUniformLocation(glProgram->getProgram(),str);
+            _detailMapLocation[i] = _programState->getUniformLocation(str);
 
             sprintf(str,"u_detailSize[%d]",i);
-            _detailMapSizeLocation[i] = glGetUniformLocation(glProgram->getProgram(),str);
+            _detailMapSizeLocation[i] = _programState->getUniformLocation(str);
         }
-        _alphaMapLocation = glGetUniformLocation(glProgram->getProgram(),"u_alphaMap");
+        _alphaMapLocation = _programState->getUniformLocation("u_alphaMap");
     }
-    _lightMapLocation = glGetUniformLocation(glProgram->getProgram(),"u_lightMap");
-    _lightDirLocation = glGetUniformLocation(glProgram->getProgram(),"u_lightDir");
+    _lightMapLocation = _programState->getUniformLocation("u_lightMap");
+    _lightDirLocation = _programState->getUniformLocation("u_lightDir");
 }
 
 bool Terrain::initTextures()
@@ -930,13 +936,11 @@ void Terrain::Chunk::finish()
 {
     //generate two VBO ,the first for vertices, we just setup datas once ,won't changed at all
     //the second vbo for the indices, because we use level of detail technique to each chunk, so we will modified frequently
-    glGenBuffers(1,&_vbo);
+    
+    CC_SAFE_RELEASE_NULL(_buffer);
+    _buffer = backend::Device::getInstance()->newBuffer(sizeof(TerrainVertexData) * _originalVertices.size(), backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
 
-    //only set for vertices vbo
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(TerrainVertexData)*_originalVertices.size(), &_originalVertices[0], GL_STREAM_DRAW);
-
-    glBindBuffer(GL_ARRAY_BUFFER,0);
+    _buffer->updateData(&_originalVertices[0], sizeof(TerrainVertexData)*_originalVertices.size());
 
     calculateSlope();
 
@@ -953,7 +957,6 @@ void Terrain::Chunk::finish()
 
 void Terrain::Chunk::bindAndDraw()
 {
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
     if(_terrain->_isCameraViewChanged || _oldLod <0)
     {
         switch (_terrain->_crackFixedType)
@@ -970,16 +973,18 @@ void Terrain::Chunk::bindAndDraw()
             break;
         }
     }
+
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,_chunkIndices._indices);
     unsigned long offset = 0;
     //position
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(TerrainVertexData), (GLvoid *)offset);
+    glVertexAttribPointer(shaderinfos::VertexKey::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(TerrainVertexData), (GLvoid *)offset);
     offset +=sizeof(Vec3);
     //texcoord
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD,2,GL_FLOAT,GL_FALSE,sizeof(TerrainVertexData),(GLvoid *)offset);
+    glVertexAttribPointer(shaderinfos::VertexKey::VERTEX_ATTRIB_TEX_COORD,2,GL_FLOAT,GL_FALSE,sizeof(TerrainVertexData),(GLvoid *)offset);
     offset +=sizeof(Tex2F);
     //normal
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_NORMAL,3,GL_FLOAT,GL_FALSE,sizeof(TerrainVertexData),(GLvoid *)offset);
+    glVertexAttribPointer(shaderinfos::VertexKey::VERTEX_ATTRIB_NORMAL,3,GL_FLOAT,GL_FALSE,sizeof(TerrainVertexData),(GLvoid *)offset);
     glDrawElements(GL_TRIANGLES, (GLsizei)_chunkIndices._size, GL_UNSIGNED_SHORT, 0);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _chunkIndices._size);
 }
@@ -1389,7 +1394,7 @@ void Terrain::Chunk::updateVerticesForLOD()
 
 Terrain::Chunk::~Chunk()
 {
-    glDeleteBuffers(1,&_vbo);
+    CC_SAFE_RELEASE_NULL(_buffer);
 }
 
 void Terrain::Chunk::updateIndicesLODSkirt()

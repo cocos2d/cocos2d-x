@@ -211,7 +211,6 @@ private:
         struct LOD{
             std::vector<GLushort> _indices;
         };
-        GLuint _vbo;
         ChunkIndices _chunkIndices; 
         /**we now support four levels of detail*/
         LOD _lod[4];
@@ -264,6 +263,8 @@ private:
         std::vector<TerrainVertexData> _currentVertices;
 
         std::vector<Triangle> _trianglesList;
+
+        backend::Buffer *_buffer = nullptr;
     };
 
    /**
@@ -501,30 +502,29 @@ protected:
     cocos2d::Image * _heightMapImage;
     Mat4 _oldCameraModelMatrix;
     Mat4 _terrainModelMatrix;
-    GLuint _normalLocation;
-    GLuint _positionLocation;
-    GLuint _texcoordLocation;
     float _maxHeight;
     float _minHeight;
     CrackFixedType _crackFixedType;
     float _skirtRatio;
     int _skirtVerticesOffset[4];
-    GLint _detailMapLocation[4];
-    GLint _alphaMapLocation;
-    GLint _alphaIsHasAlphaMapLocation;
-    GLint _lightMapCheckLocation;
-    GLint _lightMapLocation;
-    GLint _detailMapSizeLocation[4];
-    GLint _lightDirLocation;
     struct {
         bool blend;
         bool depthWrite;
         bool depthTest;
         backend::CullMode cullFace;
+        void apply();
     } _stateBlock;
 private:
     CustomCommand _customCommand;
     backend::ProgramState *_programState = nullptr;
+    //uniform locations
+    backend::UniformLocation _detailMapLocation[4];
+    backend::UniformLocation _alphaMapLocation;
+    backend::UniformLocation _alphaIsHasAlphaMapLocation;
+    backend::UniformLocation _lightMapCheckLocation;
+    backend::UniformLocation _lightMapLocation;
+    backend::UniformLocation _detailMapSizeLocation[4];
+    backend::UniformLocation _lightDirLocation;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _backToForegroundListener;
 #endif

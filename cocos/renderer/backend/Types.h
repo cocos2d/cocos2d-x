@@ -231,8 +231,8 @@ struct UniformLocation
 {
     int location = -1;
     ShaderStage shaderStage = ShaderStage::VERTEX;
-
     operator bool() { return location >= 0; }
+    void reset() { location = -1; }
 };
 
 struct AttributeBindInfo
