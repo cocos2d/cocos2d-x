@@ -845,6 +845,9 @@
 		C8DE9E471F0EACE400B48C6B /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FC3FA01D74C15B001C936A /* GameController.framework */; };
 		C8DE9E491F0EAECD00B48C6B /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8DE9E481F0EAECD00B48C6B /* GameController.framework */; };
 		D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
+		ED35E2022226743A00AF657C /* TerrainTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED35E2002226743900AF657C /* TerrainTest.cpp */; };
+		ED35E2032226743A00AF657C /* TerrainTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED35E2002226743900AF657C /* TerrainTest.cpp */; };
+		ED35E2042226743A00AF657C /* TerrainTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED35E2002226743900AF657C /* TerrainTest.cpp */; };
 		ED545A6D1B68A18300C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A6C1B68A18300C3958E /* libiconv.dylib */; };
 		ED545A6E1B68A18B00C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A6C1B68A18300C3958E /* libiconv.dylib */; };
 		ED545A6F1B68A18C00C3958E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED545A6C1B68A18300C3958E /* libiconv.dylib */; };
@@ -1779,6 +1782,8 @@
 		C08689C018D370C90093E810 /* background.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.caf; path = "../tests/cpp-tests/Resources/background.caf"; sourceTree = "<group>"; };
 		C8DE9E481F0EAECD00B48C6B /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
+		ED35E2002226743900AF657C /* TerrainTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TerrainTest.cpp; path = TerrainTest/TerrainTest.cpp; sourceTree = "<group>"; };
+		ED35E2012226743900AF657C /* TerrainTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TerrainTest.h; path = TerrainTest/TerrainTest.h; sourceTree = "<group>"; };
 		ED545A6C1B68A18300C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		ED545A721B68A1AC00C3958E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/usr/lib/libiconv.dylib; sourceTree = DEVELOPER_DIR; };
 		EDB52963221BD2F600DEC41A /* BillBoardTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BillBoardTest.cpp; path = BillBoardTest/BillBoardTest.cpp; sourceTree = "<group>"; };
@@ -2455,6 +2460,7 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				ED35E1FF222673FE00AF657C /* TerrainTest */,
 				EDB52962221BD2D500DEC41A /* BillboardTest */,
 				1AC3593418CECF0A00F37B72 /* AppDelegate.cpp */,
 				1AC3593618CECF0A00F37B72 /* BaseTest.cpp */,
@@ -3463,6 +3469,15 @@
 				A5030C3419D059DA000E78E7 /* OpenURLTest.h */,
 			);
 			name = OpenURLTest;
+			sourceTree = "<group>";
+		};
+		ED35E1FF222673FE00AF657C /* TerrainTest */ = {
+			isa = PBXGroup;
+			children = (
+				ED35E2002226743900AF657C /* TerrainTest.cpp */,
+				ED35E2012226743900AF657C /* TerrainTest.h */,
+			);
+			name = TerrainTest;
 			sourceTree = "<group>";
 		};
 		EDB52962221BD2D500DEC41A /* BillboardTest */ = {
@@ -5048,6 +5063,7 @@
 				1AC35CA618CECF1E00F37B72 /* main.cpp in Sources */,
 				1AC35B3D18CECF0C00F37B72 /* Bug-422.cpp in Sources */,
 				1AC35B4F18CECF0C00F37B72 /* ClickAndMoveTest.cpp in Sources */,
+				ED35E2022226743A00AF657C /* TerrainTest.cpp in Sources */,
 				EDC7892521CA154800E1863C /* UIPageViewTest.cpp in Sources */,
 				EDC7892121CA154800E1863C /* UILoadingBarTest.cpp in Sources */,
 				463D7E7C1D227C5F00EA6BD1 /* Bug-14327.cpp in Sources */,
@@ -5097,6 +5113,7 @@
 				27C5CE031C6E0477000CA4B3 /* SpriteFrameCacheTest.cpp in Sources */,
 				507B418E1C31BEA60067B53E /* CurlTest.cpp in Sources */,
 				507B41921C31BEA60067B53E /* BaseTest.cpp in Sources */,
+				ED35E2042226743A00AF657C /* TerrainTest.cpp in Sources */,
 				507B41941C31BEA60067B53E /* main.m in Sources */,
 				507B41981C31BEA60067B53E /* DataVisitorTest.cpp in Sources */,
 				507B41991C31BEA60067B53E /* CurrentLanguageTest.cpp in Sources */,
@@ -5242,6 +5259,7 @@
 				1AC35B2E18CECF0C00F37B72 /* Box2dTest.cpp in Sources */,
 				EDC7892C21CA154800E1863C /* CocosGUIScene.cpp in Sources */,
 				1AC35B5818CECF0C00F37B72 /* ConsoleTest.cpp in Sources */,
+				ED35E2032226743A00AF657C /* TerrainTest.cpp in Sources */,
 				1AC35C0A18CECF0C00F37B72 /* IntervalTest.cpp in Sources */,
 				EDC7891E21CA154800E1863C /* UIImageViewTest.cpp in Sources */,
 				1AC35C5A18CECF0C00F37B72 /* TextureAtlasEncryptionTest.cpp in Sources */,
