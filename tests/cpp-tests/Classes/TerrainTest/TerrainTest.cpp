@@ -59,12 +59,13 @@ TerrainSimple::TerrainSimple()
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(TerrainSimple::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-    // add Particle3D for test blend
-    auto rootps = PUParticleSystem3D::create("Particle3D/scripts/mp_torch.pu");
-    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
-    rootps->startParticleSystem();
-    
-    this->addChild(rootps, 0, 0);
+    //TODO arnold remove comments
+////     add Particle3D for test blend
+//    auto rootps = PUParticleSystem3D::create("Particle3D/scripts/mp_torch.pu");
+//    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+//    rootps->startParticleSystem();
+//    
+//    this->addChild(rootps, 0, 0);
 }
 
 std::string TerrainSimple::title() const 
@@ -138,13 +139,14 @@ TerrainWalkThru::TerrainWalkThru()
     _player->setCameraMask(2);
     _player->setScale(0.08f);
     _player->setPositionY(_terrain->getHeight(_player->getPositionX(),_player->getPositionZ())+PLAYER_HEIGHT);
-    
-    // add Particle3D for test blend
-    auto rootps = PUParticleSystem3D::create("Particle3D/scripts/mp_torch.pu");
-    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
-    rootps->setScale(30.0f);
-    rootps->startParticleSystem();
-    _player->addChild(rootps);
+
+    //TODO arnold
+    //// add Particle3D for test blend
+    //auto rootps = PUParticleSystem3D::create("Particle3D/scripts/mp_torch.pu");
+    //rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    //rootps->setScale(30.0f);
+    //rootps->startParticleSystem();
+    //_player->addChild(rootps);
     
     // add BillBoard for test blend
     auto billboard = BillBoard::create("Images/btn-play-normal.png");

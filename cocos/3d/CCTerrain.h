@@ -30,6 +30,8 @@ THE SOFTWARE.
 #include "2d/CCCamera.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCCallbackCommand.h"
+#include "renderer/CCGroupCommand.h"
 #include "renderer/CCRenderState.h"
 #include "renderer/backend/Types.h"
 #include "renderer/backend/ProgramState.h"
@@ -161,8 +163,12 @@ private:
 
     struct ChunkIndices
     {
-        GLuint _indices;
-        unsigned short _size;
+        ChunkIndices() = default;
+        ChunkIndices(const ChunkIndices &);
+        ChunkIndices &operator = (const ChunkIndices &o);
+        ~ChunkIndices();
+        backend::Buffer *_indexBuffer = nullptr;
+        unsigned short _size = 0;
     };
 
     struct ChunkLODIndices
@@ -202,7 +208,7 @@ private:
     struct Chunk
     {
         /**Constructor*/
-        Chunk();
+        Chunk(Terrain *);
         /**destructor*/
         ~Chunk();
         /*vertices*/
@@ -265,6 +271,7 @@ private:
         std::vector<Triangle> _trianglesList;
 
         backend::Buffer *_buffer = nullptr;
+        CustomCommand _command;
     };
 
    /**
@@ -440,8 +447,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Terrain();
     bool initWithTerrainData(TerrainData &parameter, CrackFixedType fixedType);
 protected:
-    void onDraw(const Mat4 &transform, uint32_t flags);
-
+    
     /**
      * recursively set each chunk's LOD
      * @param cameraPos the camera position in world space
@@ -477,6 +483,9 @@ protected:
     
     Chunk * getChunkByIndex(int x,int y) const;
 
+    void onBeforeDraw();
+    void onAfterDraw();
+
 protected:
     std::vector <ChunkLODIndices> _chunkLodIndicesSet;
     std::vector<ChunkLODIndicesSkirt> _chunkLodIndicesSkirtSet;
@@ -507,15 +516,22 @@ protected:
     CrackFixedType _crackFixedType;
     float _skirtRatio;
     int _skirtVerticesOffset[4];
-    struct {
-        bool blend;
+    struct StateBlock {
+       // bool blend;
         bool depthWrite;
         bool depthTest;
         backend::CullMode cullFace;
         void apply();
-    } _stateBlock;
+        void save();
+    };
+    
+    StateBlock _stateBlock;
+    StateBlock _stateBlockOld;
 private:
-    CustomCommand _customCommand;
+    GroupCommand _groupCommand;
+    CallbackCommand _beforeDraw;
+    CallbackCommand _afterDraw;
+    backend::VertexLayout _vertexLayout;
     backend::ProgramState *_programState = nullptr;
     //uniform locations
     backend::UniformLocation _detailMapLocation[4];
@@ -523,8 +539,10 @@ private:
     backend::UniformLocation _alphaIsHasAlphaMapLocation;
     backend::UniformLocation _lightMapCheckLocation;
     backend::UniformLocation _lightMapLocation;
-    backend::UniformLocation _detailMapSizeLocation[4];
+    backend::UniformLocation _detailMapSizeLocation;
     backend::UniformLocation _lightDirLocation;
+
+    backend::UniformLocation _mvpMatrixLocation;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _backToForegroundListener;
 #endif

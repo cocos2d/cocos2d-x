@@ -331,16 +331,15 @@ void Camera::unprojectGL(const Size& viewport, const Vec3* src, Vec3* dst) const
     dst->set(screen.x, screen.y, screen.z);
 }
 
-// minggo comment
-// bool Camera::isVisibleInFrustum(const AABB* aabb) const
-// {
-//     if (_frustumDirty)
-//     {
-//         _frustum.initFrustum(this);
-//         _frustumDirty = false;
-//     }
-//     return !_frustum.isOutOfFrustum(*aabb);
-// }
+ bool Camera::isVisibleInFrustum(const AABB* aabb) const
+ {
+     if (_frustumDirty)
+     {
+         _frustum.initFrustum(this);
+         _frustumDirty = false;
+     }
+     return !_frustum.isOutOfFrustum(*aabb);
+ }
 
 float Camera::getDepthInView(const Mat4& transform) const
 {
