@@ -483,9 +483,11 @@ protected:
     
     Chunk * getChunkByIndex(int x,int y) const;
 
+private:
     void onBeforeDraw();
+    
     void onAfterDraw();
-
+    
 protected:
     std::vector <ChunkLODIndices> _chunkLodIndicesSet;
     std::vector<ChunkLODIndicesSkirt> _chunkLodIndicesSkirtSet;
@@ -518,9 +520,9 @@ protected:
     int _skirtVerticesOffset[4];
     struct StateBlock {
        // bool blend;
-        bool depthWrite;
-        bool depthTest;
-        backend::CullMode cullFace;
+        bool depthWrite = true;
+        bool depthTest = true ;
+        backend::CullMode cullFace = backend::CullMode::FRONT;
         void apply();
         void save();
     };
