@@ -77,9 +77,9 @@ GUIDynamicCreateTests::GUIDynamicCreateTests()
     addTest("TextField Test", [](){ return new (std::nothrow) UITextFieldTests; });
     addTest("Layout Test", [](){ return new (std::nothrow) UILayoutTests; });
     
-//    addTest("ScrollView Test", [](){ return new (std::nothrow) UIScrollViewTests; }); // failed assertion `When depth and stencil are ...
-//    addTest("PageView Test", [](){ return new (std::nothrow) UIPageViewTests; });
-//    addTest("ListView Test", [](){ return new (std::nothrow) UIListViewTests; });
+    addTest("ScrollView Test", [](){ return new (std::nothrow) UIScrollViewTests; });
+    addTest("PageView Test", [](){ return new (std::nothrow) UIPageViewTests; });
+    addTest("ListView Test", [](){ return new (std::nothrow) UIListViewTests; });
 
     addTest("WidgetAddNode Test", [](){ return new (std::nothrow) UIWidgetAddNodeTests; });
     addTest("RichText Test", [](){ return new (std::nothrow) UIRichTextTests; });
