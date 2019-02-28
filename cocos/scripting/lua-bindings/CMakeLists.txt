@@ -3,8 +3,6 @@ set(cocos_root ${COCOS2DX_ROOT_PATH})
 set(lua_bindings_manual_headers
     manual/CCComponentLua.h
     manual/3d/lua_cocos2dx_3d_manual.h
-    manual/cocosbuilder/CCBProxy.h
-    manual/cocosbuilder/lua_cocos2dx_cocosbuilder_manual.h
     manual/CCLuaStack.h
     manual/CCLuaEngine.h
     manual/lua_module_register.h
@@ -55,8 +53,6 @@ set(lua_bindings_manual_files
     manual/cocos2d/lua_cocos2dx_physics_manual.cpp
     manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.cpp
     manual/3d/lua_cocos2dx_3d_manual.cpp
-    manual/cocosbuilder/CCBProxy.cpp
-    manual/cocosbuilder/lua_cocos2dx_cocosbuilder_manual.cpp
     manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.cpp
     manual/cocostudio/CustomGUIReader.cpp
     manual/cocostudio/lua_cocos2dx_coco_studio_manual.cpp
@@ -96,13 +92,11 @@ set(lua_bindings_auto_headers
     auto/lua_cocos2dx_ui_auto.hpp
     auto/lua_cocos2dx_physics_auto.hpp
     auto/lua_cocos2dx_extension_auto.hpp
-    auto/lua_cocos2dx_cocosbuilder_auto.hpp
     )
 
 set(lua_bindings_auto_files
     auto/lua_cocos2dx_3d_auto.cpp
     auto/lua_cocos2dx_auto.cpp
-    auto/lua_cocos2dx_cocosbuilder_auto.cpp
     auto/lua_cocos2dx_cocosdenshion_auto.cpp
     auto/lua_cocos2dx_controller_auto.cpp
     auto/lua_cocos2dx_experimental_auto.cpp

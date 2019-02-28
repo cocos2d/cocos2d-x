@@ -311,7 +311,7 @@ static int lua_downloader_tostring(lua_State *L)
     return 1;
 }
 
-static const struct luaL_reg downloaderStaticFns[] = {
+static const struct luaL_Reg downloaderStaticFns[] = {
     { "new", lua_downloader_new }, 
     /* 
      * cocos2d::Downloader is not a subclass of cocos2d::Ref, 
@@ -322,7 +322,7 @@ static const struct luaL_reg downloaderStaticFns[] = {
     };
 
 
-static const struct luaL_reg downloaderMemberFns[] = {
+static const struct luaL_Reg downloaderMemberFns[] = {
     { "createDownloadDataTask", lua_downloader_createDownloadDataTask },
     { "createDownloadFileTask", lua_downloader_createDownloadFileTask },
     { "setOnFileTaskSuccess",   lua_downloader_setOnFileTaskSuccess },

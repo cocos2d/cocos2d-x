@@ -2372,8 +2372,6 @@
 		EDC78CE921CA19FC00E1863C /* NodeReaderProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC78A8521CA19FA00E1863C /* NodeReaderProtocol.cpp */; };
 		EDC78CEA21CA19FC00E1863C /* Particle3DReader.h in Headers */ = {isa = PBXBuildFile; fileRef = EDC78A8721CA19FA00E1863C /* Particle3DReader.h */; };
 		EDC78CEB21CA19FC00E1863C /* Particle3DReader.h in Headers */ = {isa = PBXBuildFile; fileRef = EDC78A8721CA19FA00E1863C /* Particle3DReader.h */; };
-		EDC78CEC21CA19FC00E1863C /* Particle3DReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC78A8821CA19FA00E1863C /* Particle3DReader.cpp */; };
-		EDC78CED21CA19FC00E1863C /* Particle3DReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EDC78A8821CA19FA00E1863C /* Particle3DReader.cpp */; };
 		EDC78CEE21CA19FC00E1863C /* CSBoneBinary_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = EDC78A8A21CA19FA00E1863C /* CSBoneBinary_generated.h */; };
 		EDC78CEF21CA19FC00E1863C /* CSBoneBinary_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = EDC78A8A21CA19FA00E1863C /* CSBoneBinary_generated.h */; };
 		EDC78CF021CA19FC00E1863C /* SkeletonNodeReader.h in Headers */ = {isa = PBXBuildFile; fileRef = EDC78A8B21CA19FA00E1863C /* SkeletonNodeReader.h */; };
@@ -7557,7 +7555,6 @@
 				EDC78BEE21CA19FB00E1863C /* CocoStudio.cpp in Sources */,
 				EDC78D0A21CA19FC00E1863C /* CCArmatureDefine.cpp in Sources */,
 				50ABBE411925AB6F00A911A9 /* CCDirector.cpp in Sources */,
-				EDC78CEC21CA19FC00E1863C /* Particle3DReader.cpp in Sources */,
 				1A570221180BCC1A0088DEC7 /* CCParticleBatchNode.cpp in Sources */,
 				ED28C27F219E629C0078D854 /* CommandBuffer.cpp in Sources */,
 				1A570225180BCC1A0088DEC7 /* CCParticleExamples.cpp in Sources */,
@@ -8088,7 +8085,6 @@
 				50ABBEC01925AB6F00A911A9 /* CCValue.cpp in Sources */,
 				50ABBD591925AB0000A911A9 /* Vec2.cpp in Sources */,
 				50ABBE421925AB6F00A911A9 /* CCDirector.cpp in Sources */,
-				EDC78CED21CA19FC00E1863C /* Particle3DReader.cpp in Sources */,
 				1A57007E180BC5A10088DEC7 /* CCActionInterval.cpp in Sources */,
 				46AF3A8921F6B02400D5AFCD /* CCOBB.cpp in Sources */,
 				46AF3AC521F6B02400D5AFCD /* CCAABB.cpp in Sources */,

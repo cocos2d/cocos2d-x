@@ -28,7 +28,6 @@
 #include "scripting/lua-bindings/manual/tolua_fix.h"
 
 #include "extensions/GUI/CCControlExtension/CCControl.h"
-#include "scripting/lua-bindings/manual/cocos2d/LuaOpengl.h"
 #include "scripting/lua-bindings/manual/cocos2d/lua_cocos2dx_manual.hpp"
 #include "scripting/lua-bindings/manual/extension/lua_cocos2dx_extension_manual.h"
 #include "scripting/lua-bindings/manual/cocostudio/lua_cocos2dx_coco_studio_manual.hpp"

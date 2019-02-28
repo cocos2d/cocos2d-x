@@ -31,7 +31,7 @@ extern "C" {
 #include "lua.h"
 }
 
-#include "deprecated/CCArray.h"
+#include "scripting/deprecated/CCArray.h"
 
 #include "scripting/lua-bindings/manual/CCLuaValue.h"
 

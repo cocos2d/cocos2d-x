@@ -562,6 +562,7 @@
 		463D7E7E1D227CA400EA6BD1 /* Bug-15776.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463D7E7A1D227C3800EA6BD1 /* Bug-15776.cpp */; };
 		463D7E7F1D227CAB00EA6BD1 /* Bug-15776.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463D7E7A1D227C3800EA6BD1 /* Bug-15776.cpp */; };
 		46535CDB21ABD689005B5370 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46535CDA21ABD689005B5370 /* Metal.framework */; };
+		4662466A222696810008FC75 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46535CDA21ABD689005B5370 /* Metal.framework */; };
 		46AF3AE621F740FB00D5AFCD /* Sprite3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3AE421F740FB00D5AFCD /* Sprite3DTest.cpp */; };
 		46AF3AE721F740FB00D5AFCD /* Sprite3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3AE421F740FB00D5AFCD /* Sprite3DTest.cpp */; };
 		46AF3AE821F740FB00D5AFCD /* DrawNode3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AF3AE521F740FB00D5AFCD /* DrawNode3D.cpp */; };
@@ -1989,6 +1990,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4662466A222696810008FC75 /* Metal.framework in Frameworks */,
 				4B5C5BA91CA1147F00D55A14 /* Security.framework in Frameworks */,
 				15EFA270198B25B9000C57D3 /* libcocos2d Mac.a in Frameworks */,
 				15EFA25B198A4A47000C57D3 /* libluacocos2d Mac.a in Frameworks */,
