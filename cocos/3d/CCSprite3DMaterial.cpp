@@ -108,7 +108,7 @@ void Sprite3DMaterial::createBuiltInMaterial()
         _diffuseMaterialSkin->_type = Sprite3DMaterial::MaterialType::DIFFUSE;
     }
 
-    _diffuseMaterialProgState = new (std::nothrow) backend::ProgramState(def + normalMapDef + CC3D_positionNormalTexture_vert, def + normalMapDef + CC3D_colorNormalTexture_frag);
+    _diffuseMaterialProgState = new (std::nothrow) backend::ProgramState(def  + CC3D_positionNormalTexture_vert, def + CC3D_colorNormalTexture_frag);
     _diffuseMaterial = new (std::nothrow) Sprite3DMaterial();
     if (_diffuseMaterial && _diffuseMaterial->initWithProgramState(_diffuseMaterialProgState))
     {

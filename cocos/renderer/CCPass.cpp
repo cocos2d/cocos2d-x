@@ -168,6 +168,7 @@ void Pass::initUniformLocations()
     _locNormalMatrix = ps->getUniformLocation("u_NormalMatrix");
 
     _locTexture = ps->getUniformLocation("u_texture");
+    _locNormalTexture = ps->getUniformLocation("u_normalTex");
     
     _locColor = ps->getUniformLocation("u_color");
     _locMatrixPalette = ps->getUniformLocation("u_matrixPalette");
@@ -334,6 +335,11 @@ VertexAttribBinding* Pass::getVertexAttributeBinding() const
 void Pass::setUniformTexture(uint32_t slot, backend::Texture *tex)
 {
     _programState->setTexture(_locTexture, slot, tex);
+}
+
+void Pass::setUniformNormTexture(uint32_t slot, backend::Texture *tex)
+{
+    _programState->setTexture(_locNormalTexture, slot, tex);
 }
 
 #define TRY_SET_UNIFORM(loc) \

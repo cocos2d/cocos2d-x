@@ -439,20 +439,20 @@ protected:
     std::string          _useCaseTitles[(int)USECASE::MAX_CASE_NUM];
 };
 
-//// node animation test, cocos2d-x supports both skeletal animation and node animation
-//class NodeAnimationTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(NodeAnimationTest);
-//    NodeAnimationTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//    void addNewSpriteWithCoords(cocos2d::Vec2 p);
-//protected:
-//    std::vector<cocos2d::Sprite3D*> _sprites;
-//    int _vectorIndex;
-//};
+// node animation test, cocos2d-x supports both skeletal animation and node animation
+class NodeAnimationTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(NodeAnimationTest);
+    NodeAnimationTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(cocos2d::Vec2 p);
+protected:
+    std::vector<cocos2d::Sprite3D*> _sprites;
+    int _vectorIndex;
+};
 
 namespace cocos2d
 {
@@ -484,93 +484,94 @@ protected:
 #endif
 };
 
-///// issue 9767 setGLProgram
-//class Issue9767 : public Sprite3DTestDemo
-//{
-//    enum class ShaderType
-//    {
-//        SHADER_TEX,
-//        SHADER_COLOR,
-//    };
-//public:
-//    CREATE_FUNC(Issue9767);
-//    Issue9767();
-//    ~Issue9767();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//    void menuCallback_SwitchShader(cocos2d::Ref* sender);
-//    
-//protected:
-//    ShaderType          _shaderType;
-//    cocos2d::Sprite3D*  _sprite;
-//};
-//
-///// Clipping Sprite3D
-//class Sprite3DClippingTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DClippingTest);
-//    Sprite3DClippingTest();
-//    ~Sprite3DClippingTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//};
-//
-//class Animate3DCallbackTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Animate3DCallbackTest);
-//    Animate3DCallbackTest();
-//    ~Animate3DCallbackTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//protected:
-//    cocos2d::Sprite3D* _sprite3d;
-//};
-//
-//class Sprite3DTestMeshLight : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DTestMeshLight);
-//    Sprite3DTestMeshLight();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//
-//protected:
-//    cocos2d::Sprite3D* _sprite;
-//};
-//
-//class CameraBackgroundClearTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(CameraBackgroundClearTest);
-//    CameraBackgroundClearTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//    void switch_CameraClearMode(cocos2d::Ref* sender);
-//protected:
-//    cocos2d::Camera* _camera;
-//    cocos2d::Label* _label;
-//};
-//
-//class Sprite3DVertexColorTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DVertexColorTest);
-//    Sprite3DVertexColorTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//    virtual ~Sprite3DVertexColorTest();
-//protected:
-//    cocos2d::Sprite3D* _sprite;
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    cocos2d::EventListenerCustom* _backToForegroundListener;
-//#endif
-//};
+/// issue 9767 setGLProgram
+class Issue9767 : public Sprite3DTestDemo
+{
+    enum class ShaderType
+    {
+        SHADER_TEX,
+        SHADER_COLOR,
+    };
+public:
+    CREATE_FUNC(Issue9767);
+    Issue9767();
+    ~Issue9767();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void menuCallback_SwitchShader(cocos2d::Ref* sender);
+    
+protected:
+    ShaderType          _shaderType;
+    cocos2d::Sprite3D*  _sprite;
+    cocos2d::backend::ProgramState* _programState = nullptr;
+};
+
+/// Clipping Sprite3D
+class Sprite3DClippingTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DClippingTest);
+    Sprite3DClippingTest();
+    ~Sprite3DClippingTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class Animate3DCallbackTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Animate3DCallbackTest);
+    Animate3DCallbackTest();
+    ~Animate3DCallbackTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+protected:
+    cocos2d::Sprite3D* _sprite3d;
+};
+
+class Sprite3DTestMeshLight : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DTestMeshLight);
+    Sprite3DTestMeshLight();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
+    cocos2d::Sprite3D* _sprite;
+};
+
+class CameraBackgroundClearTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(CameraBackgroundClearTest);
+    CameraBackgroundClearTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void switch_CameraClearMode(cocos2d::Ref* sender);
+protected:
+    cocos2d::Camera* _camera;
+    cocos2d::Label* _label;
+};
+
+class Sprite3DVertexColorTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DVertexColorTest);
+    Sprite3DVertexColorTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    virtual ~Sprite3DVertexColorTest();
+protected:
+    cocos2d::Sprite3D* _sprite;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    cocos2d::EventListenerCustom* _backToForegroundListener;
+#endif
+};
 
 class MotionStreak3DTest : public Sprite3DTestDemo
 {
@@ -586,43 +587,43 @@ protected:
     cocos2d::MotionStreak3D* _streak;
 };
 
-//class Sprite3DNormalMappingTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DNormalMappingTest);
-//    Sprite3DNormalMappingTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    virtual void update(float dt) override;
-//
-//    virtual ~Sprite3DNormalMappingTest();
-//};
-//
-//class Sprite3DPropertyTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DPropertyTest);
-//    Sprite3DPropertyTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    virtual void update(float delta) override;
-//
-//    void printMeshName(cocos2d::Ref* sender);
-//    void removeUsedTexture(cocos2d::Ref* sender);
-//    void resetTexture(cocos2d::Ref* sender);
-//
-//    void refreshSpriteRender();
-//protected:
-//    cocos2d::Sprite3D* _sprite;
-//    cocos2d::Texture2D* _meshTex;
-//    std::string _texFile;
-//};
-//
-//class Issue16155Test : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Issue16155Test);
-//    Issue16155Test();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//};
+class Sprite3DNormalMappingTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DNormalMappingTest);
+    Sprite3DNormalMappingTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void update(float dt) override;
+
+    virtual ~Sprite3DNormalMappingTest();
+};
+
+class Sprite3DPropertyTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DPropertyTest);
+    Sprite3DPropertyTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    virtual void update(float delta) override;
+
+    void printMeshName(cocos2d::Ref* sender);
+    void removeUsedTexture(cocos2d::Ref* sender);
+    void resetTexture(cocos2d::Ref* sender);
+
+    void refreshSpriteRender();
+protected:
+    cocos2d::Sprite3D* _sprite;
+    cocos2d::Texture2D* _meshTex;
+    std::string _texFile;
+};
+
+class Issue16155Test : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Issue16155Test);
+    Issue16155Test();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};

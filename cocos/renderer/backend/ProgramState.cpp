@@ -257,7 +257,6 @@ void ProgramState::setTexture(int location, uint32_t slot, backend::Texture* tex
 {
     if(location < 0)
         return;
-    
     TextureInfo info;
     info.slot = {slot};
     info.textures = {texture};
