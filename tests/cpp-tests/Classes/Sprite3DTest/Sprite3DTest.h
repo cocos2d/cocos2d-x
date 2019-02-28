@@ -439,20 +439,20 @@ protected:
     std::string          _useCaseTitles[(int)USECASE::MAX_CASE_NUM];
 };
 
-//// node animation test, cocos2d-x supports both skeletal animation and node animation
-//class NodeAnimationTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(NodeAnimationTest);
-//    NodeAnimationTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//    void addNewSpriteWithCoords(cocos2d::Vec2 p);
-//protected:
-//    std::vector<cocos2d::Sprite3D*> _sprites;
-//    int _vectorIndex;
-//};
+// node animation test, cocos2d-x supports both skeletal animation and node animation
+class NodeAnimationTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(NodeAnimationTest);
+    NodeAnimationTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(cocos2d::Vec2 p);
+protected:
+    std::vector<cocos2d::Sprite3D*> _sprites;
+    int _vectorIndex;
+};
 
 namespace cocos2d
 {
@@ -484,78 +484,78 @@ protected:
 #endif
 };
 
-///// issue 9767 setGLProgram
-//class Issue9767 : public Sprite3DTestDemo
-//{
-//    enum class ShaderType
-//    {
-//        SHADER_TEX,
-//        SHADER_COLOR,
-//    };
-//public:
-//    CREATE_FUNC(Issue9767);
-//    Issue9767();
-//    ~Issue9767();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//    void menuCallback_SwitchShader(cocos2d::Ref* sender);
-//    
-//protected:
-//    ShaderType          _shaderType;
-//    cocos2d::Sprite3D*  _sprite;
-//};
-//
-///// Clipping Sprite3D
-//class Sprite3DClippingTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DClippingTest);
-//    Sprite3DClippingTest();
-//    ~Sprite3DClippingTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//};
-//
-//class Animate3DCallbackTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Animate3DCallbackTest);
-//    Animate3DCallbackTest();
-//    ~Animate3DCallbackTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//protected:
-//    cocos2d::Sprite3D* _sprite3d;
-//};
-//
-//class Sprite3DTestMeshLight : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(Sprite3DTestMeshLight);
-//    Sprite3DTestMeshLight();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//
-//protected:
-//    cocos2d::Sprite3D* _sprite;
-//};
-//
-//class CameraBackgroundClearTest : public Sprite3DTestDemo
-//{
-//public:
-//    CREATE_FUNC(CameraBackgroundClearTest);
-//    CameraBackgroundClearTest();
-//    virtual std::string title() const override;
-//    virtual std::string subtitle() const override;
-//    
-//    void switch_CameraClearMode(cocos2d::Ref* sender);
-//protected:
-//    cocos2d::Camera* _camera;
-//    cocos2d::Label* _label;
-//};
-//
+/// issue 9767 setGLProgram
+class Issue9767 : public Sprite3DTestDemo
+{
+    enum class ShaderType
+    {
+        SHADER_TEX,
+        SHADER_COLOR,
+    };
+public:
+    CREATE_FUNC(Issue9767);
+    Issue9767();
+    ~Issue9767();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void menuCallback_SwitchShader(cocos2d::Ref* sender);
+    
+protected:
+    ShaderType          _shaderType;
+    cocos2d::Sprite3D*  _sprite;
+};
+
+/// Clipping Sprite3D
+class Sprite3DClippingTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DClippingTest);
+    Sprite3DClippingTest();
+    ~Sprite3DClippingTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class Animate3DCallbackTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Animate3DCallbackTest);
+    Animate3DCallbackTest();
+    ~Animate3DCallbackTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+protected:
+    cocos2d::Sprite3D* _sprite3d;
+};
+
+class Sprite3DTestMeshLight : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DTestMeshLight);
+    Sprite3DTestMeshLight();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
+    cocos2d::Sprite3D* _sprite;
+};
+
+class CameraBackgroundClearTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(CameraBackgroundClearTest);
+    CameraBackgroundClearTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void switch_CameraClearMode(cocos2d::Ref* sender);
+protected:
+    cocos2d::Camera* _camera;
+    cocos2d::Label* _label;
+};
+
 //class Sprite3DVertexColorTest : public Sprite3DTestDemo
 //{
 //public:
