@@ -42,7 +42,7 @@ AssureOutOfSourceBuilds()
 include(CocosBuildSet)
 
 # for metal-support alpha release, we only test cpp
-set(BUILD_LUA_LIBS OFF) 
+set(BUILD_LUA_LIBS ON) 
 set(BUILD_JS_LIBS OFF)
 
 add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)

@@ -53,7 +53,7 @@ if nil ~= sp then
     require "cocos.spine.SpineConstants"
 end
 
-require "cocos.cocos2d.deprecated"
+-- require "cocos.cocos2d.deprecated"
 
 -- Lua extensions
 require "cocos.cocos2d.bitExtend"
