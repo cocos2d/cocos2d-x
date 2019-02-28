@@ -25,7 +25,7 @@ function install_android_ndk()
 function install_linux_environment()
 {
     echo "Installing linux dependence packages ..."
-    echo -e "y" | bash $COCOS2DX_ROOT/build/install-deps-linux.sh
+    echo -e "y" | bash $COCOS2DX_ROOT/install-deps-linux.sh
     echo "Installing linux dependence packages finished!"
 }
 
