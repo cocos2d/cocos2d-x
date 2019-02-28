@@ -46,81 +46,6 @@ Download stable versions
 * [Cocos2d-x stable versions](http://www.cocos2d-x.org/download)
 * [Cocos2d-JS Lite version](http://www.cocos2d-x.org/filecenter/jsbuilder)
 
-How to start a new game
------------------------
-
-1. Download the code from [cocos2d download site][4] or clone this repo (instructions above)
-2. Run `setup.py`
-3. Run the `cocos` script
-
-Example:
-
-    $ cd cocos2d-x
-    $ ./setup.py
-    $ source FILE_TO_SAVE_SYSTEM_VARIABLE
-    $ cocos new MyGame -p com.your_company.mygame -l cpp -d NEW_PROJECTS_DIR
-    $ cd NEW_PROJECTS_DIR/MyGame
-
-You can also create a JS project or Lua project with `-l js` or `-l lua`.
-
-### Build and run a new project for Android ###
-
-Cocos2d-x supports Android Studio. Simple open the `proj.android` directory from within the Android Studio environment. More information can be found in our [documentation](http://www.cocos2d-x.org/docs/cocos2d-x/en/installation/Android-Studio.html).
-   
-### Build and run a new project for iOS ###
-
-    $ cocos run -p ios
-
-### Build and run a new project for OSX ###
-
-    $ cocos run -p mac
-
-### Build and run a new project for Linux ###
-
-If you never run cocos2d-x on Linux, you need to install all dependencies by the
-script in **cocos2d/build/install-deps-linux.sh**
-
-    $ cd cocos2d-x/build
-    $ ./install-deps-linux.sh
-
-Then
-
-    $ cd NEW_PROJECTS_DIR/MyGame
-    $ cocos run -p linux
-
-Run
-
-    $ bin/MyGame
-
-### Build and run new project for win32 ###
-
-    $ cocos run -p win32
-
-### Build and run new project for web ###
-
-Only JS project can be published to web platforms, so you will need to create a JS project first:
-
-    $ cocos new -l js WebGame
-
-Then you can run your game in a web browser:
-
-    $ cocos run -p web
-
-Or you can publish your game to `publish/html5/` folder:
-
-    $ cocos run -p web -m release [--advanced]
-
-Using CMake
---------------------------------
-
-Cocos2d-x supports CMake, a cross-platform build system. Example usage:
-
-    $ cd cocos2d-x
-    $ mkdir cmake-build && cd cmake-build
-    $ cmake ..
-
-* [Detail CMake Guide](cmake/README.md)
-
 Documentations and samples
 -------------
 * [All Docs in a single place!](http://cocos2d-x.org/docs/)
@@ -159,7 +84,7 @@ Main features
    * Resolution Independent
    * Language: C++, with Lua and JavaScript bindings
    * Open Source Commercial Friendly(MIT): Compatible with open and closed source projects
-   * OpenGL ES 2.0 (mobile) / OpenGL 2.1 (desktop) based
+   * OpenGL ES 2.0 (mobile) / OpenGL 2.1 (desktop) / metal(macos and iOS) based
 
 Build Requirements
 ------------------
@@ -180,68 +105,55 @@ Runtime Requirements
   * Windows 7+ for Win games
   * Modern browsers and IE 9+ for web games
 
+Environment Setup
+--------------------
+
+Should set up environment before starting a new game or running tests
+
+```
+$ cd cocos2d-x
+$ ./setup.py
+$ source FILE_TO_SAVE_SYSTEM_VARIABLE
+
+```
+
+Should invoke this script if using linux system
+
+```
+$ cd cocos2d-x
+$ ./install-linux-deps.sh
+```
+
 Running Tests
 --------------------
 
-Select the test you want from Xcode Scheme chooser.
-
-* Cocos Console
-
 ```
-// Enter cpp test folder
-cd tests/cpp-tests
-// Or enter js test folder
-cd tests/js-tests
-// Or enter lua test folder
-cd tests/lua-tests
-
-// Compile or run test case
-cocos compile -p ios|mac|android|win32|win8_1|metro|web -m debug|release
-cocos run -p ios|mac|android|win32|win8_1|metro|web -m debug|release
+$ cd cocos2d-x
+$ mkdir build
+$ cd build
+$ cocos run --proj-dir .. -p [mac|windows|android|linux|ios]
 ```
 
-* For OS X / iOS
+How to start a new game
+-----------------------
 
-```
-$ cd cocos2d-x/build
-$ open cocos2d_tests.xcodeproj
-```
+    $ cd cocos2d-x
+    $ ./setup.py
+    $ source FILE_TO_SAVE_SYSTEM_VARIABLE
+    $ cocos new MyGame -p com.your_company.mygame -l cpp -d NEW_PROJECTS_DIR
+    $ cd NEW_PROJECTS_DIR/MyGame
+    $ mkdir build
+    $ cd build
+    $ cocos run --proj-dir .. -p [mac|windows|android|linux|ios]
 
-* For Linux
+You can also create a JS project or Lua project with `-l js` or `-l lua`.
 
-```
-$ cd cocos2d-x/build
-$ ./install-deps-linux.sh
-$ mkdir linux-build
-$ cd linux-build
-$ cmake ../..
-```
+Using IDE
+----------------------------
 
-Run Samples
+If need to debug program, then it is more convinent to use IDE to run and debug it. All platforms other than Android can use CMake to generate corresponding project file. Can refer to [Detail CMake Guide](cmake/README.md) for detail information.
 
-```
-$ bin/Debug/cpp-empty-test/cpp-empty-test
-or
-$ bin/Debug/lua-empty-test/lua-empty-test
-```
-
-> You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target, you should make it to direct to a correct one. `install-deps-linux.sh` only has to be run once.
-
-* For Windows
-
-Open the `cocos2d-x/build/cocos2d-win32.sln`
-
-* For Android
-
-```
-$ cd cocos2d-x/build
-$ python ./android-build.py cpp-empty-test -p 14
-$ adb install ../tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk
-```
-
-Then click item on Android device to run tests. Available value of `-p` is the API level, cocos2d-x supports from level 14.
-
-Or you can import the project located at `tests/cpp-empty-test/proj.android` using Android Studio 3.0.0+.
+For Android, the Android Studio project file lies in `PROJECT_DIR/proj.android`. Can just use Android Studio to import the exsting project file.
 
 Learning Resources
 --------------------------------
