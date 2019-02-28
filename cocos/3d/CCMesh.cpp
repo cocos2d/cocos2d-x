@@ -278,12 +278,6 @@ void Mesh::setTexture(Texture2D* tex, NTextureData::Usage usage, bool cacheFileN
             auto technique = _material->_currentTechnique;
             for(auto& pass: technique->_passes)
             {
-                // FIXME: Ideally it should use glProgramState->setUniformTexture()
-                // and set CC_Texture0 that way. But trying to it, will trigger
-                // another bug
-                //TODO: pass->setTexture(tex); is not needed, and Pass::setTexture() doesn't need since
-                // texture is set in programstate.
-                // pass->setTexture(tex);
                 pass->setUniformTexture(0, tex->getBackendTexture());
             }
         }
@@ -298,9 +292,7 @@ void Mesh::setTexture(Texture2D* tex, NTextureData::Usage usage, bool cacheFileN
             auto technique = _material->_currentTechnique;
             for(auto& pass: technique->_passes)
             {
-                auto programState = pass->getProgramState();
-                auto location = programState->getUniformLocation("u_texture");
-                programState->setTexture(location, 0, tex->getBackendTexture());
+                pass->setUniformNormTexture(1, tex->getBackendTexture());
             }
         }
     }

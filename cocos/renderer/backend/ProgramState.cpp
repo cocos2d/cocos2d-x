@@ -257,7 +257,21 @@ void ProgramState::setTexture(int location, uint32_t slot, backend::Texture* tex
 {
     if(location < 0)
         return;
-    
+#if COCOS2D_DEBUG
+    {
+        for (auto &it : textureInfo)
+        {
+            for (int slt : it.second.slot)
+            {
+                if (slt == slot && location != it.first)
+                {
+                    CCLOG("warning: duplicate texture slot %d for location: %d", slot, location);
+                    CCASSERT(false, "duplicate slot value");
+                }
+            }
+        }
+    }
+#endif
     TextureInfo info;
     info.slot = {slot};
     info.textures = {texture};

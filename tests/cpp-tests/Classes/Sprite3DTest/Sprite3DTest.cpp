@@ -65,12 +65,12 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DClippingTest);
     ADD_TEST_CASE(Sprite3DTestMeshLight);
     ADD_TEST_CASE(Animate3DCallbackTest);
-    ADD_TEST_CASE(CameraBackgroundClearTest);
-    //    ADD_TEST_CASE(Sprite3DVertexColorTest);
+    //ADD_TEST_CASE(CameraBackgroundClearTest);
+    ADD_TEST_CASE(Sprite3DVertexColorTest);
     ADD_TEST_CASE(MotionStreak3DTest);
-    //    ADD_TEST_CASE(Sprite3DPropertyTest);
-    //    ADD_TEST_CASE(Sprite3DNormalMappingTest);
-    //    ADD_TEST_CASE(Issue16155Test);
+    ADD_TEST_CASE(Sprite3DPropertyTest);
+    ADD_TEST_CASE(Sprite3DNormalMappingTest);
+    ADD_TEST_CASE(Issue16155Test);
 };
 
 //------------------------------------------------------------------
@@ -2382,131 +2382,131 @@ std::string Sprite3DTestMeshLight::subtitle() const
     return "";
 }
 
-//Sprite3DVertexColorTest::Sprite3DVertexColorTest()
-//{
-//    auto s = Director::getInstance()->getWinSize();
-//
-//    auto sprite = Sprite3D::create("Sprite3DTest/box_VertexCol.c3t");
-//    sprite->setPosition(Vec2(0, 0));
-//    sprite->setScale(1.0f);
-//    sprite->setCameraMask(2);
-//    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/VertexColor.material");
-//    sprite->setMaterial(mat);
-//    sprite->runAction(RepeatForever::create(RotateBy::create(1.0f, Vec3(10.0f, 50.0f, 10.0f))));
-//
-//    this->addChild(sprite);
-//
-//    //setup camera
-//    auto camera = Camera::createPerspective(40, s.width / s.height, 0.01f, 1000.f);
-//    camera->setCameraFlag(CameraFlag::USER1);
-//    camera->setPosition3D(Vec3(0.0f, 0.0f, 10.f));
-//    camera->lookAt(Vec3(0.f, 0.f, 0.f));
-//    addChild(camera);
-//    
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
-//                                                            [=](EventCustom*)
-//                                                            {
-//                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/VertexColor.material");
-//                                                                sprite->setMaterial(mat);
-//                                                            }
-//                                                            );
-//    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
-//#endif
-//}
-//
-//Sprite3DVertexColorTest::~Sprite3DVertexColorTest()
-//{
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-//    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
-//#endif
-//}
-//
-//std::string Sprite3DVertexColorTest::title() const
-//{
-//    return "Testing Vertex Color";
-//}
-//
-//std::string Sprite3DVertexColorTest::subtitle() const
-//{
-//    return "";
-//}
-
-CameraBackgroundClearTest::CameraBackgroundClearTest()
+Sprite3DVertexColorTest::Sprite3DVertexColorTest()
 {
-    TTFConfig ttfConfig("fonts/arial.ttf", 20);
-    auto label1 = Label::createWithTTF(ttfConfig,"Clear Mode");
-    auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(CameraBackgroundClearTest::switch_CameraClearMode,this) );
-    
-    item1->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*4 ) );
-    
-    auto pMenu1 = Menu::create(item1, nullptr);
-    pMenu1->setPosition(Vec2(0,0));
-    this->addChild(pMenu1, 10);
-    
-    //setup camera
     auto s = Director::getInstance()->getWinSize();
-    _camera = Camera::createPerspective(40, s.width / s.height, 0.01f, 1000.f);
-    _camera->setCameraFlag(CameraFlag::USER1);
-    _camera->setPosition3D(Vec3(0.f, 30.f, 100.f));
-    _camera->lookAt(Vec3(0.f, 0.f, 0.f));
-    addChild(_camera);
-    
-    auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
-    addChild(sprite);
+
+    auto sprite = Sprite3D::create("Sprite3DTest/box_VertexCol.c3t");
+    sprite->setPosition(Vec2(0, 0));
+    sprite->setScale(1.0f);
     sprite->setCameraMask(2);
+    auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/VertexColor.material");
+    sprite->setMaterial(mat);
+    sprite->runAction(RepeatForever::create(RotateBy::create(1.0f, Vec3(10.0f, 50.0f, 10.0f))));
+
+    this->addChild(sprite);
+
+    //setup camera
+    auto camera = Camera::createPerspective(40, s.width / s.height, 0.01f, 1000.f);
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setPosition3D(Vec3(0.0f, 0.0f, 10.f));
+    camera->lookAt(Vec3(0.f, 0.f, 0.f));
+    addChild(camera);
     
-    _label = Label::createWithTTF(ttfConfig, "Depth Clear Brush");
-    addChild(_label);
-    _label->setPosition(s.width / 2.f , VisibleRect::top().y * 0.8f);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND,
+                                                            [=](EventCustom*)
+                                                            {
+                                                                auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/VertexColor.material");
+                                                                sprite->setMaterial(mat);
+                                                            }
+                                                            );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
+#endif
 }
 
-void CameraBackgroundClearTest::switch_CameraClearMode(cocos2d::Ref* sender)
+Sprite3DVertexColorTest::~Sprite3DVertexColorTest()
 {
-    auto brush = _camera->getBackgroundBrush();
-    CameraBackgroundBrush::BrushType type = CameraBackgroundBrush::BrushType::NONE;
-    if (!brush)
-    {
-        CCLOG("No brash found!");
-    }
-    else
-    {
-        type = brush->getBrushType();
-    }
-    
-    if (type == CameraBackgroundBrush::BrushType::NONE)
-    {
-        _camera->setBackgroundBrush(CameraBackgroundBrush::createDepthBrush(1.f));
-        _label->setString("Depth Clear Brush");
-        // Test brush valid when set by user scene setting
-        CCLOG("Background brush valid status is : %s", _camera->isBrushValid() ? "true" : "false");
-    }
-    else if (type == CameraBackgroundBrush::BrushType::DEPTH)
-    {
-        _camera->setBackgroundBrush(CameraBackgroundBrush::createColorBrush(Color4F(1.f, 0.f, 0.f, 1.f), 1.f));
-        _label->setString("Color Clear Brush");
-    }
-    else if (type == CameraBackgroundBrush::BrushType::COLOR)
-    {
-        _camera->setBackgroundBrush(CameraBackgroundBrush::createSkyboxBrush("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg","Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg","Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg"));
-        _label->setString("Skybox Clear Brush");
-    }
-    else if (type == CameraBackgroundBrush::BrushType::SKYBOX)
-    {
-        _camera->setBackgroundBrush(CameraBackgroundBrush::createNoneBrush());
-        _label->setString("None Clear Brush");
-    }
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
-std::string CameraBackgroundClearTest::title() const
+std::string Sprite3DVertexColorTest::title() const
 {
-    return "Camera Background Clear Brush";
+    return "Testing Vertex Color";
 }
 
-std::string CameraBackgroundClearTest::subtitle() const
+std::string Sprite3DVertexColorTest::subtitle() const
 {
     return "";
 }
+//
+//CameraBackgroundClearTest::CameraBackgroundClearTest()
+//{
+//    TTFConfig ttfConfig("fonts/arial.ttf", 20);
+//    auto label1 = Label::createWithTTF(ttfConfig,"Clear Mode");
+//    auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(CameraBackgroundClearTest::switch_CameraClearMode,this) );
+//    
+//    item1->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*4 ) );
+//    
+//    auto pMenu1 = Menu::create(item1, nullptr);
+//    pMenu1->setPosition(Vec2(0,0));
+//    this->addChild(pMenu1, 10);
+//    
+//    //setup camera
+//    auto s = Director::getInstance()->getWinSize();
+//    _camera = Camera::createPerspective(40, s.width / s.height, 0.01f, 1000.f);
+//    _camera->setCameraFlag(CameraFlag::USER1);
+//    _camera->setPosition3D(Vec3(0.f, 30.f, 100.f));
+//    _camera->lookAt(Vec3(0.f, 0.f, 0.f));
+//    addChild(_camera);
+//    
+//    auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+//    addChild(sprite);
+//    sprite->setCameraMask(2);
+//    
+//    _label = Label::createWithTTF(ttfConfig, "Depth Clear Brush");
+//    addChild(_label);
+//    _label->setPosition(s.width / 2.f , VisibleRect::top().y * 0.8f);
+//}
+//
+//void CameraBackgroundClearTest::switch_CameraClearMode(cocos2d::Ref* sender)
+//{
+//    auto brush = _camera->getBackgroundBrush();
+//    CameraBackgroundBrush::BrushType type = CameraBackgroundBrush::BrushType::NONE;
+//    if (!brush)
+//    {
+//        CCLOG("No brash found!");
+//    }
+//    else
+//    {
+//        type = brush->getBrushType();
+//    }
+//    
+//    if (type == CameraBackgroundBrush::BrushType::NONE)
+//    {
+//        _camera->setBackgroundBrush(CameraBackgroundBrush::createDepthBrush(1.f));
+//        _label->setString("Depth Clear Brush");
+//        // Test brush valid when set by user scene setting
+//        CCLOG("Background brush valid status is : %s", _camera->isBrushValid() ? "true" : "false");
+//    }
+//    else if (type == CameraBackgroundBrush::BrushType::DEPTH)
+//    {
+//        _camera->setBackgroundBrush(CameraBackgroundBrush::createColorBrush(Color4F(1.f, 0.f, 0.f, 1.f), 1.f));
+//        _label->setString("Color Clear Brush");
+//    }
+//    else if (type == CameraBackgroundBrush::BrushType::COLOR)
+//    {
+//        _camera->setBackgroundBrush(CameraBackgroundBrush::createSkyboxBrush("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg","Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg","Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg"));
+//        _label->setString("Skybox Clear Brush");
+//    }
+//    else if (type == CameraBackgroundBrush::BrushType::SKYBOX)
+//    {
+//        _camera->setBackgroundBrush(CameraBackgroundBrush::createNoneBrush());
+//        _label->setString("None Clear Brush");
+//    }
+//}
+//
+//std::string CameraBackgroundClearTest::title() const
+//{
+//    return "Camera Background Clear Brush";
+//}
+//
+//std::string CameraBackgroundClearTest::subtitle() const
+//{
+//    return "";
+//}
 
 MotionStreak3DTest::MotionStreak3DTest()
 {
@@ -2552,209 +2552,209 @@ void MotionStreak3DTest::update(float delta)
     _streak->setSweepAxis(Vec3(cosf(angle), 0, sinf(angle)));
 }
 
-//Sprite3DNormalMappingTest::Sprite3DNormalMappingTest()
-//{
-//    auto s = Director::getInstance()->getWinSize();
+Sprite3DNormalMappingTest::Sprite3DNormalMappingTest()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    {
+        auto sprite = Sprite3D::create("Sprite3DTest/sphere.c3b");
+        sprite->setPosition(Vec2(-30, 0));
+        sprite->setRotation3D(Vec3(90.0f, 0.0f, 0.0f));
+        sprite->setScale(2.0);
+        sprite->setCameraMask(2);
+        sprite->setTexture("Sprite3DTest/brickwork-texture.jpg");
+        addChild(sprite);
+    }
+
+    int maxAttributes;
+    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &maxAttributes);
+    CCASSERT(maxAttributes > 8, "attributes supported must be greater than 8");
+    if (maxAttributes > 8)
+    {
+        auto sprite = Sprite3D::create("Sprite3DTest/sphere_bumped.c3b");
+        sprite->setPosition(Vec2(30, 0));
+        sprite->setRotation3D(Vec3(90.0f, 0.0f, 0.0f));
+        sprite->setScale(20.0);
+        sprite->setCameraMask(2);
+        sprite->setTexture("Sprite3DTest/brickwork-texture.jpg");
+        addChild(sprite);
+    }
+
+    //setup camera
+    auto camera = Camera::createPerspective(60.0, s.width / s.height, 1.0f, 1000.f);
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setPosition3D(Vec3(0.f, 0.f, 100.f));
+    camera->lookAt(Vec3(0.f, 0.f, 0.f));
+    addChild(camera);
+
+    PointLight* light = PointLight::create(Vec3(0.0, 0.0, 0.0), Color3B(255, 255, 255), 1000);
+    light->setTag(100);
+    addChild(light);
+    
+    scheduleUpdate();
+}
+
+void Sprite3DNormalMappingTest::update(float dt)
+{
+    static float angle = 0.0f;
+    static bool reverseDir = false;
+    static float radius = 100.0f;
+    
+    auto light = static_cast<PointLight*>(getChildByTag(100));
+    light->setPosition3D(Vec3(radius * cos(angle), 0.0f, radius * sin(angle)));
+    if (reverseDir){
+        angle -= 0.01f;
+        if (angle < 0.0)
+            reverseDir = false;
+    }
+    else{
+        angle += 0.01f;
+        if (3.14159 < angle)
+            reverseDir = true;
+    }
+}
+
+Sprite3DNormalMappingTest::~Sprite3DNormalMappingTest()
+{
+
+}
+
+std::string Sprite3DNormalMappingTest::title() const
+{
+    return "NormalMapping Test";
+}
+
+std::string Sprite3DNormalMappingTest::subtitle() const
+{
+    return "";
+}
+
+
+
+
+Sprite3DPropertyTest::Sprite3DPropertyTest()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto camera = Camera::createPerspective(40, s.width / s.height, 0.01f, 1000.f);
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setPosition3D(Vec3(0.f, 50.f, 200.f));
+    camera->lookAt(Vec3(0.f, 0.f, 0.f));
+    addChild(camera);
+
+    _sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+    _sprite->setPosition(20.f, 0.f);
+    _sprite->setRotation3D(Vec3(0, 180, 0));
+    _meshTex = _sprite->getMesh()->getTexture();
+    _texFile = _meshTex->getPath();
+    addChild(_sprite);
+
+    setCameraMask(2);
+
+    //auto listener = EventListenerTouchAllAtOnce::create();
+    ////listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DReskinTest::onTouchesEnded, this);
+    //_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+    TTFConfig ttfConfig("fonts/arial.ttf", 20);
+
+    auto label1 = Label::createWithTTF(ttfConfig, "Print Mesh Name");
+    auto item1 = MenuItemLabel::create(label1, CC_CALLBACK_1(Sprite3DPropertyTest::printMeshName, this));
+    auto label2 = Label::createWithTTF(ttfConfig, "Remove Used Texture");
+    auto item2 = MenuItemLabel::create(label2, CC_CALLBACK_1(Sprite3DPropertyTest::removeUsedTexture, this));
+    auto label3 = Label::createWithTTF(ttfConfig, "Reset");
+    auto item3 = MenuItemLabel::create(label3, CC_CALLBACK_1(Sprite3DPropertyTest::resetTexture, this));
+
+    item1->setPosition(Vec2(VisibleRect::left().x + 100, VisibleRect::bottom().y + item1->getContentSize().height * 4));
+    item2->setPosition(Vec2(VisibleRect::left().x + 100, VisibleRect::bottom().y + item1->getContentSize().height * 5));
+    item3->setPosition(Vec2(VisibleRect::left().x + 100, VisibleRect::bottom().y + item1->getContentSize().height * 6));
+
+    auto pMenu1 = Menu::create(item1, item2, item3,nullptr);
+    pMenu1->setPosition(Vec2(0, 0));
+    this->addChild(pMenu1, 10);
+
+    scheduleUpdate();
+}
+std::string Sprite3DPropertyTest::title() const
+{
+    return "Sprite3DPropertyTest Test";
+}
+std::string Sprite3DPropertyTest::subtitle() const
+{
+    return "";
+}
+
+void Sprite3DPropertyTest::update(float delta)
+{
+
+}
+void Sprite3DPropertyTest::printMeshName(cocos2d::Ref* sender)
+{
+    CCLOG("MeshName Begin");
+    Vector<Mesh*> meshes =_sprite->getMeshes();
+    for(Mesh* mesh : meshes)
+    {
+        log("MeshName: %s ", mesh->getName().c_str());
+    }
+    CCLOG("MeshName End");
+}
+void Sprite3DPropertyTest::removeUsedTexture(cocos2d::Ref* sender)
+{
+    if (_meshTex != nullptr)
+    {
+        Director::getInstance()->getTextureCache()->removeTexture(_meshTex);
+        this->refreshSpriteRender();
+    }
+}
+
+void Sprite3DPropertyTest::resetTexture(cocos2d::Ref* sender)
+{
+    if (_meshTex != nullptr)
+    {
+        _meshTex = Director::getInstance()->getTextureCache()->addImage(_texFile);
+        this->refreshSpriteRender();
+    }
+}
+
+void Sprite3DPropertyTest::refreshSpriteRender()
+{
+    Vector<Mesh*> meshes = _sprite->getMeshes();
+    for (Mesh* mesh : meshes)
+    {
+        std::string file = mesh->getTextureFileName();
+        Texture2D* cacheTex = Director::getInstance()->getTextureCache()->getTextureForKey(file);
+        if (cacheTex == nullptr)
+        {
+            unsigned char data[] = { 255, 0, 0, 255 };//1*1 red picture
+            Image * image = new (std::nothrow) Image();
+            image->initWithRawData(data, sizeof(data), 1, 1, sizeof(unsigned char));
+            cacheTex = Director::getInstance()->getTextureCache()->addImage(image, "/dummyTexture");
+            image->release();
+        }
+        mesh->setTexture(cacheTex, cocos2d::NTextureData::Usage::Diffuse, false);
+    }
+}
+
 //
-//    {
-//        auto sprite = Sprite3D::create("Sprite3DTest/sphere.c3b");
-//        sprite->setPosition(Vec2(-30, 0));
-//        sprite->setRotation3D(Vec3(90.0f, 0.0f, 0.0f));
-//        sprite->setScale(2.0);
-//        sprite->setCameraMask(2);
-//        sprite->setTexture("Sprite3DTest/brickwork-texture.jpg");
-//        addChild(sprite);
-//    }
+// Issue16155Test
 //
-//    int maxAttributes;
-//    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &maxAttributes);
-//    CCASSERT(maxAttributes > 8, "attributes supported must be greater than 8");
-//    if (maxAttributes > 8)
-//    {
-//        auto sprite = Sprite3D::create("Sprite3DTest/sphere_bumped.c3b");
-//        sprite->setPosition(Vec2(30, 0));
-//        sprite->setRotation3D(Vec3(90.0f, 0.0f, 0.0f));
-//        sprite->setScale(20.0);
-//        sprite->setCameraMask(2);
-//        sprite->setTexture("Sprite3DTest/brickwork-texture.jpg");
-//        addChild(sprite);
-//    }
-//
-//    //setup camera
-//    auto camera = Camera::createPerspective(60.0, s.width / s.height, 1.0f, 1000.f);
-//    camera->setCameraFlag(CameraFlag::USER1);
-//    camera->setPosition3D(Vec3(0.f, 0.f, 100.f));
-//    camera->lookAt(Vec3(0.f, 0.f, 0.f));
-//    addChild(camera);
-//
-//    PointLight* light = PointLight::create(Vec3(0.0, 0.0, 0.0), Color3B(255, 255, 255), 1000);
-//    light->setTag(100);
-//    addChild(light);
-//    
-//    scheduleUpdate();
-//}
-//
-//void Sprite3DNormalMappingTest::update(float dt)
-//{
-//    static float angle = 0.0f;
-//    static bool reverseDir = false;
-//    static float radius = 100.0f;
-//    
-//    auto light = static_cast<PointLight*>(getChildByTag(100));
-//    light->setPosition3D(Vec3(radius * cos(angle), 0.0f, radius * sin(angle)));
-//    if (reverseDir){
-//        angle -= 0.01f;
-//        if (angle < 0.0)
-//            reverseDir = false;
-//    }
-//    else{
-//        angle += 0.01f;
-//        if (3.14159 < angle)
-//            reverseDir = true;
-//    }
-//}
-//
-//Sprite3DNormalMappingTest::~Sprite3DNormalMappingTest()
-//{
-//
-//}
-//
-//std::string Sprite3DNormalMappingTest::title() const
-//{
-//    return "NormalMapping Test";
-//}
-//
-//std::string Sprite3DNormalMappingTest::subtitle() const
-//{
-//    return "";
-//}
-//
-////
-////
-////
-//Sprite3DPropertyTest::Sprite3DPropertyTest()
-//{
-//    auto s = Director::getInstance()->getWinSize();
-//
-//    auto camera = Camera::createPerspective(40, s.width / s.height, 0.01f, 1000.f);
-//    camera->setCameraFlag(CameraFlag::USER1);
-//    camera->setPosition3D(Vec3(0.f, 50.f, 200.f));
-//    camera->lookAt(Vec3(0.f, 0.f, 0.f));
-//    addChild(camera);
-//
-//    _sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
-//    _sprite->setPosition(20.f, 0.f);
-//    _sprite->setRotation3D(Vec3(0, 180, 0));
-//    _meshTex = _sprite->getMesh()->getTexture();
-//    _texFile = _meshTex->getPath();
-//    addChild(_sprite);
-//
-//    setCameraMask(2);
-//
-//    //auto listener = EventListenerTouchAllAtOnce::create();
-//    ////listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DReskinTest::onTouchesEnded, this);
-//    //_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-//
-//    TTFConfig ttfConfig("fonts/arial.ttf", 20);
-//
-//    auto label1 = Label::createWithTTF(ttfConfig, "Print Mesh Name");
-//    auto item1 = MenuItemLabel::create(label1, CC_CALLBACK_1(Sprite3DPropertyTest::printMeshName, this));
-//    auto label2 = Label::createWithTTF(ttfConfig, "Remove Used Texture");
-//    auto item2 = MenuItemLabel::create(label2, CC_CALLBACK_1(Sprite3DPropertyTest::removeUsedTexture, this));
-//    auto label3 = Label::createWithTTF(ttfConfig, "Reset");
-//    auto item3 = MenuItemLabel::create(label3, CC_CALLBACK_1(Sprite3DPropertyTest::resetTexture, this));
-//
-//    item1->setPosition(Vec2(VisibleRect::left().x + 100, VisibleRect::bottom().y + item1->getContentSize().height * 4));
-//    item2->setPosition(Vec2(VisibleRect::left().x + 100, VisibleRect::bottom().y + item1->getContentSize().height * 5));
-//    item3->setPosition(Vec2(VisibleRect::left().x + 100, VisibleRect::bottom().y + item1->getContentSize().height * 6));
-//
-//    auto pMenu1 = Menu::create(item1, item2, item3,nullptr);
-//    pMenu1->setPosition(Vec2(0, 0));
-//    this->addChild(pMenu1, 10);
-//
-//    scheduleUpdate();
-//}
-//std::string Sprite3DPropertyTest::title() const
-//{
-//    return "Sprite3DPropertyTest Test";
-//}
-//std::string Sprite3DPropertyTest::subtitle() const
-//{
-//    return "";
-//}
-//
-//void Sprite3DPropertyTest::update(float delta)
-//{
-//
-//}
-//void Sprite3DPropertyTest::printMeshName(cocos2d::Ref* sender)
-//{
-//    CCLOG("MeshName Begin");
-//    Vector<Mesh*> meshes =_sprite->getMeshes();
-//    for(Mesh* mesh : meshes)
-//    {
-//        log("MeshName: %s ", mesh->getName().c_str());
-//    }
-//    CCLOG("MeshName End");
-//}
-//void Sprite3DPropertyTest::removeUsedTexture(cocos2d::Ref* sender)
-//{
-//    if (_meshTex != nullptr)
-//    {
-//        Director::getInstance()->getTextureCache()->removeTexture(_meshTex);
-//        this->refreshSpriteRender();
-//    }
-//}
-//
-//void Sprite3DPropertyTest::resetTexture(cocos2d::Ref* sender)
-//{
-//    if (_meshTex != nullptr)
-//    {
-//        _meshTex = Director::getInstance()->getTextureCache()->addImage(_texFile);
-//        this->refreshSpriteRender();
-//    }
-//}
-//
-//void Sprite3DPropertyTest::refreshSpriteRender()
-//{
-//    Vector<Mesh*> meshes = _sprite->getMeshes();
-//    for (Mesh* mesh : meshes)
-//    {
-//        std::string file = mesh->getTextureFileName();
-//        Texture2D* cacheTex = Director::getInstance()->getTextureCache()->getTextureForKey(file);
-//        if (cacheTex == nullptr)
-//        {
-//            unsigned char data[] = { 255, 0, 0, 255 };//1*1 red picture
-//            Image * image = new (std::nothrow) Image();
-//            image->initWithRawData(data, sizeof(data), 1, 1, sizeof(unsigned char));
-//            cacheTex = Director::getInstance()->getTextureCache()->addImage(image, "/dummyTexture");
-//            image->release();
-//        }
-//        mesh->setTexture(cacheTex, cocos2d::NTextureData::Usage::Diffuse, false);
-//    }
-//}
-//
-////
-//// Issue16155Test
-////
-//Issue16155Test::Issue16155Test()
-//{
-//    auto s = Director::getInstance()->getWinSize();
-//
-//    auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
-//
-//    int rcBefore = sprite->getMeshByIndex(0)->getTexture()->getReferenceCount();
-//    addChild(sprite);
-//    removeChild(sprite);
-//
-//    cocos2d::log("Issue 16155: Ref count:%d. Run this test again. RC should be the same", rcBefore);
-//}
-//
-//std::string Issue16155Test::title() const
-//{
-//    return "Issue16155 Test";
-//}
-//std::string Issue16155Test::subtitle() const
-//{
-//    return "Should not leak texture. See console";
-//}
+Issue16155Test::Issue16155Test()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+
+    int rcBefore = sprite->getMeshByIndex(0)->getTexture()->getReferenceCount();
+    addChild(sprite);
+    removeChild(sprite);
+
+    cocos2d::log("Issue 16155: Ref count:%d. Run this test again. RC should be the same", rcBefore);
+}
+
+std::string Issue16155Test::title() const
+{
+    return "Issue16155 Test";
+}
+std::string Issue16155Test::subtitle() const
+{
+    return "Should not leak texture. See console";
+}

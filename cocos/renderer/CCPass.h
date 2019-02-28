@@ -110,7 +110,8 @@ public:
     void setTechnique(Technique *technique);
 
     
-    void setUniformTexture(uint32_t slot, backend::Texture *); //u_texture
+    void setUniformTexture(uint32_t slot, backend::Texture *);      //u_texture
+    void setUniformNormTexture(uint32_t slot, backend::Texture *);  //u_texture
 
     void setUniformColor(const void *, size_t);                 //ucolor
     void setUniformMatrixPalette(const void *, size_t);         //u_matrixPalette
@@ -167,6 +168,7 @@ private:
     backend::UniformLocation _locNormalMatrix;
 
     backend::UniformLocation _locTexture;               //u_texture
+    backend::UniformLocation _locNormalTexture;         //u_normalTex
 
     backend::UniformLocation _locColor;                 //ucolor
     backend::UniformLocation _locMatrixPalette;         //u_matrixPalette
