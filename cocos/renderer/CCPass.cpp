@@ -150,7 +150,7 @@ void Pass::setProgramState(backend::ProgramState* programState)
     if (_programState != programState)
     {
         CC_SAFE_RELEASE(_programState);
-        _programState = programState->clone();
+        _programState = programState;
         CC_SAFE_RETAIN(_programState);
         _customCommand.getPipelineDescriptor().programState = _programState;
         initUniformLocations();

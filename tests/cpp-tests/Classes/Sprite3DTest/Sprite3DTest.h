@@ -504,6 +504,7 @@ public:
 protected:
     ShaderType          _shaderType;
     cocos2d::Sprite3D*  _sprite;
+    cocos2d::backend::ProgramState* _programState = nullptr;
 };
 
 /// Clipping Sprite3D

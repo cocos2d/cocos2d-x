@@ -2214,26 +2214,25 @@ Issue9767::Issue9767()
 
 Issue9767::~Issue9767()
 {
-
+    CC_SAFE_RELEASE_NULL(_programState);
 }
 
 void Issue9767::menuCallback_SwitchShader(cocos2d::Ref* sender)
 {
-    backend::ProgramState* programState = nullptr;
+    CC_SAFE_RELEASE_NULL(_programState);
     if (_shaderType == Issue9767::ShaderType::SHADER_TEX)
     {
         _shaderType = Issue9767::ShaderType::SHADER_COLOR;
         //programState = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
-        programState = new backend::ProgramState(CC3D_positionTexture_vert, CC3D_color_frag);
+        _programState = new backend::ProgramState(CC3D_positionTexture_vert, CC3D_color_frag);
     }
     else
     {
         _shaderType = Issue9767::ShaderType::SHADER_TEX;
         //programState = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
-        programState = new backend::ProgramState(CC3D_positionTexture_vert, CC3D_colorTexture_frag);
+        _programState = new backend::ProgramState(CC3D_positionTexture_vert, CC3D_colorTexture_frag);
     }
-    _sprite->setProgramState(programState);
-    CC_SAFE_RELEASE_NULL(programState);
+    _sprite->setProgramState(_programState);
 }
 
 std::string Issue9767::title() const
