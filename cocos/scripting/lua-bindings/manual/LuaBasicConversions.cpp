@@ -25,11 +25,11 @@
 
 #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 #include "scripting/lua-bindings/manual/tolua_fix.h"
-#include "deprecated/CCBool.h"
+#include "scripting/deprecated/CCBool.h"
 
-#include "deprecated/CCDouble.h"
-#include "deprecated/CCFloat.h"
-#include "deprecated/CCInteger.h"
+#include "scripting/deprecated/CCDouble.h"
+#include "scripting/deprecated/CCFloat.h"
+#include "scripting/deprecated/CCInteger.h"
 
 std::unordered_map<std::string, std::string>  g_luaType;
 std::unordered_map<std::string, std::string>  g_typeCast;
@@ -422,15 +422,16 @@ bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::BlendFunc* outValue, con
 
     if (ok)
     {
-        lua_pushstring(L, "src");
-        lua_gettable(L, lo);
-        outValue->src = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
-        lua_pop(L, 1);
-
-        lua_pushstring(L, "dst");
-        lua_gettable(L, lo);
-        outValue->dst = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
-        lua_pop(L, 1);
+    //TODO minggo
+//        lua_pushstring(L, "src");
+//        lua_gettable(L, lo);
+//        outValue->src = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+//        lua_pop(L, 1);
+//
+//        lua_pushstring(L, "dst");
+//        lua_gettable(L, lo);
+//        outValue->dst = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+//        lua_pop(L, 1);
     }
     return ok;
 }
@@ -999,95 +1000,6 @@ bool luaval_to_ttfconfig(lua_State* L,int lo, cocos2d::TTFConfig* outValue, cons
         lua_pushstring(L, "outlineSize");
         lua_gettable(L, lo);
         outValue->outlineSize = lua_isnumber(L, -1)?(int)lua_tointeger(L, -1) : 0;
-        lua_pop(L, 1);
-
-        return true;
-    }
-
-    return false;
-}
-
-
-bool luaval_to_uniform(lua_State* L, int lo, cocos2d::Uniform* outValue, const char* funcName)
-{
-    if (nullptr == L || nullptr == outValue)
-        return false;
-
-    bool ok = true;
-
-    tolua_Error tolua_err;
-    if (!tolua_istable(L, lo, 0, &tolua_err) )
-    {
-#if COCOS2D_DEBUG >=1
-        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
-#endif
-        ok = false;
-    }
-
-    if (ok)
-    {
-        lua_pushstring(L, "location");             /* L: paramStack key */
-        lua_gettable(L,lo);                        /* L: paramStack paramStack[lo][key] */
-        outValue->location = lua_isnumber(L, -1)? (GLint)lua_tointeger(L, -1) : 0;
-        lua_pop(L,1);                              /* L: paramStack*/
-
-        lua_pushstring(L, "size");
-        lua_gettable(L,lo);
-        outValue->size = lua_isnumber(L, -1)?(GLint)lua_tointeger(L, -1) : 0;
-        lua_pop(L,1);
-
-        lua_pushstring(L, "type");
-        lua_gettable(L, lo);
-        outValue->type = lua_isnumber(L, -1)?(GLenum)lua_tointeger(L, -1) : 0;
-        lua_pop(L, 1);
-
-        lua_pushstring(L, "name");
-        lua_gettable(L, lo);
-        outValue->name = lua_isstring(L, -1)?lua_tostring(L, -1) : "";
-        lua_pop(L, 1);
-
-        return true;
-    }
-
-    return false;
-}
-
-bool luaval_to_vertexattrib(lua_State* L, int lo, cocos2d::VertexAttrib* outValue, const char* funcName)
-{
-    if (nullptr == L || nullptr == outValue)
-        return false;
-
-    bool ok = true;
-
-    tolua_Error tolua_err;
-    if (!tolua_istable(L, lo, 0, &tolua_err) )
-    {
-#if COCOS2D_DEBUG >=1
-        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
-#endif
-        ok = false;
-    }
-
-    if (ok)
-    {
-        lua_pushstring(L, "index");                 /* L: paramStack key */
-        lua_gettable(L,lo);                         /* L: paramStack paramStack[lo][key] */
-        outValue->index = lua_isnumber(L, -1)? (GLint)lua_tointeger(L, -1) : 0;
-        lua_pop(L,1);                              /* L: paramStack*/
-
-        lua_pushstring(L, "size");
-        lua_gettable(L,lo);
-        outValue->size = lua_isnumber(L, -1)?(GLint)lua_tointeger(L, -1) : 0;
-        lua_pop(L,1);
-
-        lua_pushstring(L, "type");
-        lua_gettable(L, lo);
-        outValue->type = lua_isnumber(L, -1)?(GLenum)lua_tointeger(L, -1) : 0;
-        lua_pop(L, 1);
-
-        lua_pushstring(L, "name");
-        lua_gettable(L, lo);
-        outValue->name = lua_isstring(L, -1)?lua_tostring(L, -1) : "";
         lua_pop(L, 1);
 
         return true;
@@ -1916,25 +1828,26 @@ bool luaval_to_mesh_vertex_attrib(lua_State* L, int lo, cocos2d::MeshVertexAttri
 
     if (ok)
     {
-        lua_pushstring(L, "size");                  /* L: paramStack key */
-        lua_gettable(L,lo);                         /* L: paramStack paramStack[lo][key] */
-        ret->size  = (GLint)lua_tonumber(L, -1);
-        lua_pop(L,1);
-
-        lua_pushstring(L, "type");                  /* L: paramStack key */
-        lua_gettable(L,lo);                         /* L: paramStack paramStack[lo][key] */
-        ret->type  = (GLenum)lua_tonumber(L, -1);
-        lua_pop(L,1);
-
-        lua_pushstring(L, "vertexAttrib");          /* L: paramStack key */
-        lua_gettable(L,lo);                         /* L: paramStack paramStack[lo][key] */
-        ret->type  = (GLenum)lua_tonumber(L, -1);
-        lua_pop(L,1);
-
-        lua_pushstring(L, "attribSizeBytes");       /* L: paramStack key */
-        lua_gettable(L,lo);                         /* L: paramStack paramStack[lo][key] */
-        ret->type  = (GLenum)lua_tonumber(L, -1);
-        lua_pop(L,1);
+    //TODO minggo
+//        lua_pushstring(L, "size");                  /* L: paramStack key */
+//        lua_gettable(L,lo);                         /* L: paramStack paramStack[lo][key] */
+//        ret->size  = (GLint)lua_tonumber(L, -1);
+//        lua_pop(L,1);
+//
+//        lua_pushstring(L, "type");                  /* L: paramStack key */
+//        lua_gettable(L,lo);                         /* L: paramStack paramStack[lo][key] */
+//        ret->type  = (GLenum)lua_tonumber(L, -1);
+//        lua_pop(L,1);
+//
+//        lua_pushstring(L, "vertexAttrib");          /* L: paramStack key */
+//        lua_gettable(L,lo);                         /* L: paramStack paramStack[lo][key] */
+//        ret->type  = (GLenum)lua_tonumber(L, -1);
+//        lua_pop(L,1);
+//
+//        lua_pushstring(L, "attribSizeBytes");       /* L: paramStack key */
+//        lua_gettable(L,lo);                         /* L: paramStack paramStack[lo][key] */
+//        ret->type  = (GLenum)lua_tonumber(L, -1);
+//        lua_pop(L,1);
     }
 
     return ok;
@@ -3136,77 +3049,29 @@ void ttfconfig_to_luaval(lua_State* L, const cocos2d::TTFConfig& config)
     lua_rawset(L, -3);
 }
 
-
-void uniform_to_luaval(lua_State* L, const cocos2d::Uniform& uniform)
-{
-    if (nullptr == L)
-        return;
-
-    lua_newtable(L);
-
-    lua_pushstring(L, "location");
-    lua_pushnumber(L, (lua_Number)uniform.location);
-    lua_rawset(L, -3);
-
-    lua_pushstring(L, "size");
-    lua_pushnumber(L, (lua_Number)uniform.size);
-    lua_rawset(L, -3);
-
-    lua_pushstring(L, "type");
-    lua_pushnumber(L, (lua_Number)uniform.type);
-    lua_rawset(L, -3);
-
-    lua_pushstring(L, "name");
-    tolua_pushcppstring(L, uniform.name);
-    lua_rawset(L, -3);
-}
-
-void vertexattrib_to_luaval(lua_State* L, const cocos2d::VertexAttrib& verAttrib)
-{
-    if (nullptr == L)
-        return;
-
-    lua_newtable(L);
-
-    lua_pushstring(L, "index");
-    lua_pushnumber(L, (lua_Number)verAttrib.index);
-    lua_rawset(L, -3);
-
-    lua_pushstring(L, "size");
-    lua_pushnumber(L, (lua_Number)verAttrib.size);
-    lua_rawset(L, -3);
-
-    lua_pushstring(L, "type");
-    lua_pushnumber(L, (lua_Number)verAttrib.type);
-    lua_rawset(L, -3);
-
-    lua_pushstring(L, "name");
-    tolua_pushcppstring(L, verAttrib.name);
-    lua_rawset(L, -3);
-}
-
 void mesh_vertex_attrib_to_luaval(lua_State* L, const cocos2d::MeshVertexAttrib& inValue)
 {
     if (nullptr == L)
         return;
 
-    lua_newtable(L);
-
-    lua_pushstring(L, "size");
-    lua_pushnumber(L, (lua_Number)inValue.size);
-    lua_rawset(L, -3);
-
-    lua_pushstring(L, "type");
-    lua_pushnumber(L, (lua_Number)inValue.type);
-    lua_rawset(L, -3);
-
-    lua_pushstring(L, "vertexAttrib");
-    lua_pushnumber(L, (lua_Number)inValue.vertexAttrib);
-    lua_rawset(L, -3);
-
-    lua_pushstring(L, "attribSizeBytes");
-    lua_pushnumber(L, (lua_Number)inValue.attribSizeBytes);
-    lua_rawset(L, -3);
+//TODO minggo
+//    lua_newtable(L);
+//
+//    lua_pushstring(L, "size");
+//    lua_pushnumber(L, (lua_Number)inValue.size);
+//    lua_rawset(L, -3);
+//
+//    lua_pushstring(L, "type");
+//    lua_pushnumber(L, (lua_Number)inValue.type);
+//    lua_rawset(L, -3);
+//
+//    lua_pushstring(L, "vertexAttrib");
+//    lua_pushnumber(L, (lua_Number)inValue.vertexAttrib);
+//    lua_rawset(L, -3);
+//
+//    lua_pushstring(L, "attribSizeBytes");
+//    lua_pushnumber(L, (lua_Number)inValue.attribSizeBytes);
+//    lua_rawset(L, -3);
 }
 
 

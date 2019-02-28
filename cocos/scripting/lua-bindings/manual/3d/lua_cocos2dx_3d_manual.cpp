@@ -68,8 +68,9 @@ CC_DEPRECATED_ATTRIBUTE int lua_cocos2dx_3d_Sprite3D_setBlendFunc01(lua_State* L
         if (!luaval_to_int32(L, 3, (int32_t*)&dst, "cc.Sprite3D:setBlendFunc"))
             return 0;
 
-        BlendFunc blendFunc = {src, dst};
-        cobj->setBlendFunc(blendFunc);
+//TODO minggo
+//        BlendFunc blendFunc = {src, dst};
+//        cobj->setBlendFunc(blendFunc);
 
         lua_settop(L, 1);
         return 1;

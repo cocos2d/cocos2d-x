@@ -1,19 +1,19 @@
 /****************************************************************************
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,52 +22,63 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef __LUA_OPENGL_H__
-#define __LUA_OPENGL_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include "tolua++.h"
-#ifdef __cplusplus
-}
-#endif
+#ifndef __CCINTEGER_H__
+#define __CCINTEGER_H__
+/// @cond DO_NOT_SHOW
 
-#include "2d/CCNode.h"
-#include "renderer/CCCustomCommand.h"
+#include "base/CCRef.h"
+#include "base/CCConsole.h"
+#include "scripting/deprecated/CCDataVisitor.h"
+#include "platform/CCCommon.h"
+
+NS_CC_BEGIN
 
 /**
- * @addtogroup lua
+ * @addtogroup data_structures
  * @{
  */
 
-/**
- * The GLNode is wrapped to call the callback function about draw in the Lua.
- */
-class GLNode:public cocos2d::Node
+class CC_DLL __Integer : public Ref, public Clonable
 {
 public:
+    static __Integer* create(int v)
+    {
+        __Integer* pRet = new (std::nothrow) __Integer(v);
+        pRet->autorelease();
+        return pRet;
+    }
     /**
-     * Destructor.
-     *
-     * @lua NA
      * @js NA
      */
-    virtual ~GLNode(){}
+    __Integer(int v)
+        : _value(v) {}
+    int getValue() const {return _value;}
+    /**
+     * @js NA
+     * @lua NA
+     */
+    virtual ~__Integer() {
+        CCLOGINFO("deallocing ~__Integer: %p", this);
+    }
+
+    /* override functions */
+    virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
+
+    // overrides
+    virtual __Integer* clone() const override
+    {
+        return __Integer::create(_value);
+    }
     
-    // @cond
-    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
-    // @endcond
-protected:
-    cocos2d::CustomCommand _renderCmd;
-    void onDraw(const cocos2d::Mat4 &transform, uint32_t flags);
+private:
+    int _value;
 };
 
-/// @cond
-TOLUA_API int tolua_opengl_open(lua_State* tolua_S);
-TOLUA_API int register_glnode_manual(lua_State* tolua_S);
-/// @endcond
-
-// end group
+// end of data_structure group
 /// @}
-#endif //__LUA_OPENGL_H__
+
+NS_CC_END
+
+/// @endcond
+#endif /* __CCINTEGER_H__ */

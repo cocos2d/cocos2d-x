@@ -3,8 +3,6 @@ set(cocos_root ${COCOS2DX_ROOT_PATH})
 set(lua_bindings_manual_headers
     manual/CCComponentLua.h
     manual/3d/lua_cocos2dx_3d_manual.h
-    manual/cocosbuilder/CCBProxy.h
-    manual/cocosbuilder/lua_cocos2dx_cocosbuilder_manual.h
     manual/CCLuaStack.h
     manual/CCLuaEngine.h
     manual/lua_module_register.h
@@ -24,7 +22,6 @@ set(lua_bindings_manual_headers
     manual/navmesh/lua_cocos2dx_navmesh_manual.h
     manual/navmesh/lua_cocos2dx_navmesh_conversions.h
     manual/cocos2d/lua_cocos2dx_deprecated.h
-    manual/cocos2d/LuaOpengl.h
     manual/cocos2d/LuaScriptHandlerMgr.h
     manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.h
     manual/Cocos2dxLuaLoader.h
@@ -36,7 +33,7 @@ set(lua_bindings_manual_headers
     manual/ui/lua_cocos2dx_experimental_video_manual.hpp
     manual/controller/lua_cocos2dx_controller_manual.hpp
     )
-
+#TOTO minggo
 set(lua_bindings_manual_files
     manual/CCLuaBridge.cpp
     manual/CCLuaEngine.cpp
@@ -47,16 +44,13 @@ set(lua_bindings_manual_files
     manual/lua_module_register.cpp
     manual/tolua_fix.cpp
     manual/CCComponentLua.cpp
-    manual/cocos2d/LuaOpengl.cpp
     manual/cocos2d/LuaScriptHandlerMgr.cpp
     manual/cocos2d/lua_cocos2dx_deprecated.cpp
     manual/cocos2d/lua_cocos2dx_experimental_manual.cpp
     manual/cocos2d/lua_cocos2dx_manual.cpp
     manual/cocos2d/lua_cocos2dx_physics_manual.cpp
     manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.cpp
-    manual/3d/lua_cocos2dx_3d_manual.cpp
-    manual/cocosbuilder/CCBProxy.cpp
-    manual/cocosbuilder/lua_cocos2dx_cocosbuilder_manual.cpp
+    #manual/3d/lua_cocos2dx_3d_manual.cpp
     manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.cpp
     manual/cocostudio/CustomGUIReader.cpp
     manual/cocostudio/lua_cocos2dx_coco_studio_manual.cpp
@@ -69,12 +63,12 @@ set(lua_bindings_manual_files
     manual/network/Lua_web_socket.cpp
     manual/network/lua_xml_http_request.cpp
     manual/network/lua_downloader.cpp
-    manual/spine/lua_cocos2dx_spine_manual.cpp
+    #manual/spine/lua_cocos2dx_spine_manual.cpp
     manual/spine/LuaSkeletonAnimation.cpp
     manual/ui/lua_cocos2dx_experimental_video_manual.cpp
     manual/ui/lua_cocos2dx_ui_manual.cpp
     manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
-    manual/physics3d/lua_cocos2dx_physics3d_manual.cpp
+    #manual/physics3d/lua_cocos2dx_physics3d_manual.cpp
     manual/navmesh/lua_cocos2dx_navmesh_conversions.cpp
     manual/navmesh/lua_cocos2dx_navmesh_manual.cpp
     )
@@ -96,25 +90,23 @@ set(lua_bindings_auto_headers
     auto/lua_cocos2dx_ui_auto.hpp
     auto/lua_cocos2dx_physics_auto.hpp
     auto/lua_cocos2dx_extension_auto.hpp
-    auto/lua_cocos2dx_cocosbuilder_auto.hpp
     )
 
 set(lua_bindings_auto_files
-    auto/lua_cocos2dx_3d_auto.cpp
+    #auto/lua_cocos2dx_3d_auto.cpp
     auto/lua_cocos2dx_auto.cpp
-    auto/lua_cocos2dx_cocosbuilder_auto.cpp
     auto/lua_cocos2dx_cocosdenshion_auto.cpp
     auto/lua_cocos2dx_controller_auto.cpp
     auto/lua_cocos2dx_experimental_auto.cpp
     auto/lua_cocos2dx_experimental_video_auto.cpp
-    auto/lua_cocos2dx_extension_auto.cpp
+    #auto/lua_cocos2dx_extension_auto.cpp
     auto/lua_cocos2dx_physics_auto.cpp
-    auto/lua_cocos2dx_spine_auto.cpp
+    #auto/lua_cocos2dx_spine_auto.cpp
     auto/lua_cocos2dx_studio_auto.cpp
     auto/lua_cocos2dx_csloader_auto.cpp
     auto/lua_cocos2dx_ui_auto.cpp
     auto/lua_cocos2dx_audioengine_auto.cpp
-    auto/lua_cocos2dx_physics3d_auto.cpp
+    #auto/lua_cocos2dx_physics3d_auto.cpp
     auto/lua_cocos2dx_navmesh_auto.cpp
     )
 
@@ -153,13 +145,17 @@ elseif(ANDROID)
         )
 endif()
 
+include(../deprecated/CMakeLists.txt)
+
 set(lua_bindings_files
     ${lua_bindings_manual_files}
     ${lua_bindings_auto_files}
+    ${COCOS_DEPRECATED_SRC}
     )
 set(lua_bindings_headers
     ${lua_bindings_manual_headers}
     ${lua_bindings_auto_headers}
+    ${COCOS_DEPRECATED_HEADER}
     )
 
 list(APPEND lua_bindings_files ${lua_bindings_headers})

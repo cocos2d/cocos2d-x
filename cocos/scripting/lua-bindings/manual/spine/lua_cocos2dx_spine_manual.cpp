@@ -65,8 +65,9 @@ static int tolua_cocos2dx_setBlendFunc(lua_State* tolua_S,const char* className)
         if (!luaval_to_int32(tolua_S, 3, (int32_t*)&dst,StringUtils::format("%s%s",className,":setBlendFunc").c_str()))
             return 0;
 
-        BlendFunc blendFunc = {src, dst};
-        self->setBlendFunc(blendFunc);
+//TODO minggo
+//        BlendFunc blendFunc = {src, dst};
+//        self->setBlendFunc(blendFunc);
         return 0;
     }
 

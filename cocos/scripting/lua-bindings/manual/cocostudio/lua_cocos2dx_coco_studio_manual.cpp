@@ -262,7 +262,7 @@ static int lua_cocos2dx_ArmatureDataManager_addArmatureFileInfoAsyncCallFunc(lua
         
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)wrapper, handler, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
         
-        self->addArmatureFileInfoAsync(configFilePath, wrapper, schedule_selector(LuaArmatureWrapper::addArmatureFileInfoAsyncCallback));
+        self->addArmatureFileInfoAsync(configFilePath, wrapper, CC_SCHEDULE_SELECTOR(LuaArmatureWrapper::addArmatureFileInfoAsyncCallback));
         
         return 0;
     }
@@ -288,7 +288,7 @@ static int lua_cocos2dx_ArmatureDataManager_addArmatureFileInfoAsyncCallFunc(lua
         
         ScriptHandlerMgr::getInstance()->addObjectHandler((void*)wrapper, handler, ScriptHandlerMgr::HandlerType::ARMATURE_EVENT);
         
-        self->addArmatureFileInfoAsync(imagePath, plistPath,configFilePath,wrapper, schedule_selector(LuaArmatureWrapper::addArmatureFileInfoAsyncCallback));
+        self->addArmatureFileInfoAsync(imagePath, plistPath,configFilePath,wrapper, CC_SCHEDULE_SELECTOR(LuaArmatureWrapper::addArmatureFileInfoAsyncCallback));
         
         return 0;
     }

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2016 Chukong Technologies Inc.
+ Copyright (c) 2013-2017 Chukong Technologies
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
@@ -22,34 +22,54 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#ifndef COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_LUA_COCOS2DX_COCOSBUILDER_H
-#define COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_LUA_COCOS2DX_COCOSBUILDER_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include "tolua++.h"
-#ifdef __cplusplus
-}
-#endif
+#ifndef __CCFLOAT_H__
+#define __CCFLOAT_H__
+/// @cond DO_NOT_SHOW
 
-TOLUA_API int register_all_cocos2dx_cocosbuilder_manual(lua_State* tolua_S);
+#include "base/CCRef.h"
+#include "scripting/deprecated/CCDataVisitor.h"
+
+NS_CC_BEGIN
 
 /**
- * @addtogroup lua
+ * @addtogroup data_structures
  * @{
  */
 
-/**
- * Call this function can import the lua bindings for the cocosbuilder module.
- * After registering, we could call the related cocosbuilder code conveniently in the lua.eg,.cc.CCBProxy:create().
- * If you don't want to use the cocosbuilder module in the lua, you only don't call this registering function.
- * If you don't register the cocosbuilder module, the package size would become smaller .
- * The current mechanism,this registering function is called in the lua_module_register.h
- */
-TOLUA_API int register_cocosbuilder_module(lua_State* tolua_S);
+class CC_DLL __Float : public Ref, public Clonable
+{
+public:
+    __Float(float v)
+        : _value(v) {}
+    float getValue() const {return _value;}
 
-// end group
+    static __Float* create(float v)
+    {
+        __Float* pRet = new (std::nothrow) __Float(v);
+        if (pRet)
+        {
+            pRet->autorelease();
+        }
+        return pRet;
+    }
+
+    /* override functions */
+    virtual void acceptVisitor(DataVisitor &visitor) { visitor.visit(this); }
+    
+    virtual __Float* clone() const override
+    {
+        return __Float::create(_value);
+    }
+    
+private:
+    float _value;
+};
+
+// end of data_structure group
 /// @}
 
-#endif // #ifndef COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_LUA_COCOS2DX_COCOSBUILDER_H
+NS_CC_END
+
+/// @endcond
+#endif /* __CCFLOAT_H__ */

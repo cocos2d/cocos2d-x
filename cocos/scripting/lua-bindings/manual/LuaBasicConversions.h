@@ -41,14 +41,12 @@ extern "C" {
 #include "3d/CCBundle3D.h"
 #include "base/CCValue.h"
 #include "base/ccTypes.h"
-#include "deprecated/CCArray.h"
-#include "deprecated/CCDictionary.h"
+#include "scripting/deprecated/CCArray.h"
+#include "scripting/deprecated/CCDictionary.h"
 #include "physics/CCPhysicsContact.h"
 #include "physics/CCPhysicsJoint.h"
 #include "physics/CCPhysicsShape.h"
 #include "physics/CCPhysicsWorld.h"
-#include "renderer/CCGLProgram.h"
-
 
 using namespace cocos2d;
 
@@ -449,33 +447,6 @@ extern bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::BlendFunc* outVal
  * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_ttfconfig(lua_State* L, int lo, cocos2d::TTFConfig* outValue, const char* funcName = "");
-
-/**
- * Get a Uniform object value from the given acceptable index of stack.
- * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
- * If the table has the `location`, `size`, `type` and `name` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be given the default value.
- *
- * @param L the current lua_State.
- * @param lo the given acceptable index of stack.
- * @param outValue the pointer to a Uniform object which stores the values from the Lua table.
- * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- */
-extern bool luaval_to_uniform(lua_State* L, int lo, cocos2d::Uniform* outValue, const char* funcName = "");
-
-/**
- * Get a VertexAttrib object value from the given acceptable index of stack.
- * If the value at the given acceptable index of stack is a table it returns true, otherwise returns false.
- * If the table has the `index`, `size`, `type` and `name` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue. Otherwise, the value of members of outValue would be given the default value.
- *
- * @param L the current lua_State.
- * @param lo the given acceptable index of stack.
- * @param outValue the pointer to a VertexAttrib object which stores the values from the Lua table.
- * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given acceptable index of stack is a table, otherwise return false.
- */
-extern bool luaval_to_vertexattrib(lua_State* L, int lo, cocos2d::VertexAttrib* outValue, const char* funcName = "");
-
 
 /**
  * Get a Vec2 object value from the given acceptable index of stack.
@@ -1021,25 +992,6 @@ extern void blendfunc_to_luaval(lua_State* L, const cocos2d::BlendFunc& func);
  * @param config a cocos2d::TTFConfig object.
  */
 extern void ttfconfig_to_luaval(lua_State* L, const cocos2d::TTFConfig& config);
-
-/**
- * Push a table converted from a cocos2d::Uniform object into the Lua stack.
- * The format of table as follows: {location=numberValue1, size=numberValue2, type=numberValue3, name=stringValue1}
- *
- * @param L the current lua_State.
- * @param uniform a cocos2d::Uniform object.
- */
-extern void uniform_to_luaval(lua_State* L, const cocos2d::Uniform& uniform);
-
-/**
- * Push a table converted from a cocos2d::VertexAttrib object into the Lua stack.
- * The format of table as follows: {index=numberValue1, size=numberValue2, type=numberValue3, name=stringValue1}
- *
- * @param L the current lua_State.
- * @param verAttrib a cocos2d::VertexAttrib object.
- */
-extern void vertexattrib_to_luaval(lua_State* L, const cocos2d::VertexAttrib& verAttrib);
-
 
 static inline void point_to_luaval(lua_State* L,const cocos2d::Vec2& pt)
 {
