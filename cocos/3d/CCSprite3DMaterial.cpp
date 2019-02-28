@@ -143,7 +143,7 @@ void Sprite3DMaterial::createBuiltInMaterial()
         _bumpedDiffuseMaterial->_type = Sprite3DMaterial::MaterialType::BUMPED_DIFFUSE;
     }
 
-    _bumpedDiffuseMaterialSkinProgState = new (std::nothrow) backend::ProgramState(def + CC3D_skinPositionNormalTexture_vert, def + CC3D_colorNormalTexture_frag);
+    _bumpedDiffuseMaterialSkinProgState = new (std::nothrow) backend::ProgramState(def + normalMapDef + CC3D_skinPositionNormalTexture_vert, def + normalMapDef + CC3D_colorNormalTexture_frag);
     _bumpedDiffuseMaterialSkin = new (std::nothrow) Sprite3DMaterial();
     if (_bumpedDiffuseMaterialSkin && _bumpedDiffuseMaterialSkin->initWithProgramState(_bumpedDiffuseMaterialSkinProgState))
     {
