@@ -864,10 +864,7 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
             renderPipelineDescriptor.stencilAttachmentFormat = backend::TextureFormat::D24S8;
     }
 
-    auto renderPipeline = backend::Device::getInstance()->newRenderPipeline(renderPipelineDescriptor);
-    _commandBuffer->setRenderPipeline(renderPipeline);
-
-    //_commandBuffer->setRenderPipeline(getRenderPipeline(renderPipelineDescriptor, pipelineDescriptor.blendDescriptor));
+    _commandBuffer->setRenderPipeline(getRenderPipeline(renderPipelineDescriptor, pipelineDescriptor.blendDescriptor));
     _commandBuffer->setDepthStencilState(depthStencilState);
 }
 

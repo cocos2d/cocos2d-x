@@ -141,20 +141,20 @@ bool CameraBackgroundDepthBrush::init()
     layout.setAtrribute("a_color", 1, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
     layout.setAtrribute("a_texCoord", 2, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), true);
     layout.setLayout(sizeof(_vertices[0]), backend::VertexStepMode::VERTEX);
-   
+
     _vertices.resize(4);
-    _vertices[0].vertices = Vec3(-1,-1,0);
-    _vertices[1].vertices = Vec3(1,-1,0);
+    _vertices[0].vertices = Vec3(-1, -1, 0);
+    _vertices[1].vertices = Vec3(1, -1, 0);
     _vertices[2].vertices = Vec3(1, 1, 0);
-    _vertices[3].vertices = Vec3(-1,1,0);
-    
-    _vertices[0].colors = _vertices[1].colors = _vertices[2].colors = _vertices[3].colors = Color4B(0,0,0,1);
-    
-    _vertices[0].texCoords = Tex2F(0,0);
-    _vertices[1].texCoords = Tex2F(1,0);
+    _vertices[3].vertices = Vec3(-1, 1, 0);
+
+    _vertices[0].colors = _vertices[1].colors = _vertices[2].colors = _vertices[3].colors = Color4B(0, 0, 0, 1);
+
+    _vertices[0].texCoords = Tex2F(0, 0);
+    _vertices[1].texCoords = Tex2F(1, 0);
     _vertices[2].texCoords = Tex2F(1, 1);
-    _vertices[3].texCoords = Tex2F(0,1);
-    
+    _vertices[3].texCoords = Tex2F(0, 1);
+
 
     initBuffer();
     return true;
@@ -162,10 +162,10 @@ bool CameraBackgroundDepthBrush::init()
 
 void CameraBackgroundDepthBrush::initBuffer()
 {
-    uint16_t indices[6] = { 0, 1, 2, 2, 3, 0 }; // CCW
+    uint16_t indices[6] = { 0, 1, 2, 2, 3, 0 };
     _customCommand.createVertexBuffer(sizeof(_vertices[0]), _vertices.size(), CustomCommand::BufferUsage::STATIC);
-    _customCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, sizeof(indices)/sizeof(indices[0]), CustomCommand::BufferUsage::STATIC);
-    
+    _customCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, sizeof(indices) / sizeof(indices[0]), CustomCommand::BufferUsage::STATIC);
+
     _customCommand.updateVertexBuffer(_vertices.data(), sizeof(_vertices[0]) * _vertices.size());
     _customCommand.updateIndexBuffer(indices, sizeof(indices));
 }
@@ -188,9 +188,7 @@ void CameraBackgroundDepthBrush::drawBackground(Camera* /*camera*/)
 
     //draw
     _programState->setUniform(_locDepth, &_depth, sizeof(_depth));
-//    _glProgramState->apply(Mat4::IDENTITY);
-//
-
+    
     renderer->addCommand(&_beforeCommand);
     renderer->addCommand(&_customCommand);
     renderer->addCommand(&_afterCommand);
@@ -369,7 +367,7 @@ void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
         return;
 
     Mat4 cameraModelMat = camera->getNodeToWorldTransform();
-    
+
     auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
     pipelineDescriptor.blendDescriptor.blendEnabled = false;
 
@@ -413,7 +411,7 @@ bool CameraBackgroundSkyBoxBrush::init()
     layout.setLayout(sizeof(Vec3), backend::VertexStepMode::VERTEX);
 
     initBuffer();
-    
+
     return true;
 }
 
@@ -425,12 +423,12 @@ void CameraBackgroundSkyBoxBrush::initBuffer()
         Vec3(1, -1, 1),  Vec3(1, 1, 1),  Vec3(-1, 1, 1),  Vec3(-1, -1, 1),
         Vec3(1, -1, -1), Vec3(1, 1, -1), Vec3(-1, 1, -1), Vec3(-1, -1, -1)
     };
-    
+
     _customCommand.createVertexBuffer(sizeof(vexBuf[0]), sizeof(vexBuf) / sizeof(vexBuf[0]), CustomCommand::BufferUsage::STATIC);
     _customCommand.updateVertexBuffer(vexBuf, sizeof(vexBuf));
-    
+
     // init index buffer object
-    uint16_t idxBuf[] = {  2, 1, 0, 3, 2, 0, // font
+    uint16_t idxBuf[] = { 2, 1, 0, 3, 2, 0, // font
         1, 5, 4, 1, 4, 0, // right
         4, 5, 6, 4, 6, 7, // back
         7, 6, 2, 7, 2, 3, // left
