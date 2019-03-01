@@ -54,6 +54,9 @@ NS_CC_BEGIN
 #include "renderer/shaders/positionUColor.frag"
 #include "renderer/shaders/etc1.frag"
 #include "renderer/shaders/etc1_Gray.frag"
+#include "renderer/shaders/cameraClear.vert"
+#include "renderer/shaders/cameraClear.frag"
+
 
 #include "renderer/shaders/3D_color.frag"
 #include "renderer/shaders/3D_colorNormal.frag"
