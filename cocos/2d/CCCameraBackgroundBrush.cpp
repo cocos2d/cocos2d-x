@@ -127,6 +127,7 @@ bool CameraBackgroundDepthBrush::init()
     _beforeCommand.func = CC_CALLBACK_0(CameraBackgroundDepthBrush::onBeforeDraw, this);
     _afterCommand.func = CC_CALLBACK_0(CameraBackgroundDepthBrush::onAfterDraw, this);
 
+    CC_SAFE_RELEASE_NULL(_programState);
     _programState = new backend::ProgramState(cameraClear_vert, cameraClear_frag);
 
     _locDepth = _programState->getUniformLocation("dpeth");
@@ -171,17 +172,9 @@ void CameraBackgroundDepthBrush::initBuffer()
 
 void CameraBackgroundDepthBrush::drawBackground(Camera* /*camera*/)
 {
-    GLboolean oldDepthTest;
-    GLint oldDepthFunc;
-    GLboolean oldDepthMask;
-    {
-        glColorMask(_clearColor, _clearColor, _clearColor, _clearColor);
-        glStencilMask(0);
-        
-        oldDepthTest = glIsEnabled(GL_DEPTH_TEST);
-        glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
-        glGetBooleanv(GL_DEPTH_WRITEMASK, &oldDepthMask);
-    }
+    _beforeCommand.init(0.0f);
+    _customCommand.init(0.0f);
+    _afterCommand.init(0.0f);
 
     auto *renderer = Director::getInstance()->getRenderer();
 
@@ -248,14 +241,11 @@ void CameraBackgroundColorBrush::drawBackground(Camera* camera)
 
 void CameraBackgroundColorBrush::setColor(const Color4F& color)
 {
-    _quad.bl.colors = _quad.br.colors = _quad.tl.colors = _quad.tr.colors = Color4B(color);
-    
-    if (_vertexBuffer)
+    for (auto &vert : _vertices)
     {
-        glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(_quad), &_quad, GL_STATIC_DRAW);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        vert.colors = Color4B(color);
     }
+    _customCommand.updateVertexBuffer(_vertices.data(), sizeof(_vertices[0]) * _vertices.size());
 }
 
 CameraBackgroundColorBrush* CameraBackgroundColorBrush::create(const Color4F& color, float depth)
@@ -278,10 +268,7 @@ CameraBackgroundColorBrush* CameraBackgroundColorBrush::create(const Color4F& co
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 CameraBackgroundSkyBoxBrush::CameraBackgroundSkyBoxBrush()
-: _vao(0)
-, _vertexBuffer(0)
-, _indexBuffer(0)
-, _texture(nullptr)
+: _texture(nullptr)
 , _actived(true)
 , _textureValid(true)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -305,19 +292,6 @@ CameraBackgroundSkyBoxBrush::CameraBackgroundSkyBoxBrush()
 CameraBackgroundSkyBoxBrush::~CameraBackgroundSkyBoxBrush()
 {
     CC_SAFE_RELEASE(_texture);
-    
-    glDeleteBuffers(1, &_vertexBuffer);
-    glDeleteBuffers(1, &_indexBuffer);
-    
-    _vertexBuffer = 0;
-    _indexBuffer = 0;
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glDeleteVertexArrays(1, &_vao);
-        glBindVertexArray(0);
-        _vao = 0;
-    }
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
@@ -386,75 +360,58 @@ CameraBackgroundSkyBoxBrush* CameraBackgroundSkyBoxBrush::create()
 
 void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
 {
+
+    _beforeCommand.init(0.0f);
+    _customCommand.init(0.0f);
+    _afterCommand.init(0.0f);
+
     if (!_actived)
         return;
 
     Mat4 cameraModelMat = camera->getNodeToWorldTransform();
     
-//    Vec4 color(1.f, 1.f, 1.f, 1.f);
-//    _glProgramState->setUniformVec4("u_color", color);
-//    cameraModelMat.m[12] = cameraModelMat.m[13] = cameraModelMat.m[14] = 0;
-//    _glProgramState->setUniformMat4("u_cameraRot", cameraModelMat);
-//
-//    _glProgramState->apply(Mat4::IDENTITY);
+    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    pipelineDescriptor.blendDescriptor.blendEnabled = false;
 
-    //TODO arnold 
-    //glEnable(GL_DEPTH_TEST);
-    //RenderState::StateBlock::_globalState->setDepthTest(true);
-    //
-    //glDepthMask(GL_TRUE);
-    //RenderState::StateBlock::_globalState->setDepthWrite(true);
-    //
-    //glDepthFunc(GL_ALWAYS);
-    //RenderState::StateBlock::_globalState->setDepthFunction(DepthFunction::ALWAYS);
-    //
-    //glEnable(GL_CULL_FACE);
-    //RenderState::StateBlock::_globalState->setCullFace(true);
-    //
-    //glCullFace(GL_BACK);
-    //RenderState::StateBlock::_globalState->setCullFaceSide(CullMode::BACK);
-    //
-    //glDisable(GL_BLEND);
-    //RenderState::StateBlock::_globalState->setBlend(false);
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glBindVertexArray(_vao);
-    }
-    else
-    {
-//        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-//
-//        glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
-//
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-    }
-    
-    glDrawElements(GL_TRIANGLES, (GLsizei)36, GL_UNSIGNED_BYTE, nullptr);
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glBindVertexArray(0);
-    }
-    else
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
-    
+    Vec4 color(1.f, 1.f, 1.f, 1.f);
+    cameraModelMat.m[12] = cameraModelMat.m[13] = cameraModelMat.m[14] = 0;
+
+    _programState->setUniform(_uniformColorLoc, &color, sizeof(color));
+    _programState->setUniform(_uniformCameraRotLoc, cameraModelMat.m, sizeof(cameraModelMat.m));
+
+    auto *renderer = Director::getInstance()->getRenderer();
+
+    renderer->addCommand(&_beforeCommand);
+    renderer->addCommand(&_customCommand);
+    renderer->addCommand(&_afterCommand);
+   
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 8);
     
-    CHECK_GL_ERROR_DEBUG();
 }
 
 bool CameraBackgroundSkyBoxBrush::init()
 {
-//    auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_SKYBOX);
-//    _glProgramState = GLProgramState::create(shader);
-//    _glProgramState->setVertexAttribPointer(GLProgram::ATTRIBUTE_NAME_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
-//    _glProgramState->retain();
-//
+
+    _beforeCommand.func = CC_CALLBACK_0(CameraBackgroundSkyBoxBrush::onBeforeDraw, this);
+    _afterCommand.func = CC_CALLBACK_0(CameraBackgroundSkyBoxBrush::onAfterDraw, this);
+
+
+    CC_SAFE_RELEASE_NULL(_programState);
+    _programState = new backend::ProgramState(CC3D_skybox_vert, CC3D_skybox_frag);
+    _uniformColorLoc = _programState->getUniformLocation("u_color");
+    _uniformCameraRotLoc = _programState->getUniformLocation("u_cameraRot");
+    _uniformEnvLoc = _programState->getUniformLocation("u_Env");
+
+
+    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    auto &layout = pipelineDescriptor.vertexLayout;
+
+    pipelineDescriptor.programState = _programState;
+    // disable blend
+    pipelineDescriptor.blendDescriptor.blendEnabled = false;
+    layout.setAtrribute(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, 0, backend::VertexFormat::FLOAT3, 0, false);
+    layout.setLayout(sizeof(Vec3), backend::VertexStepMode::VERTEX);
+
     initBuffer();
     
     return true;
@@ -462,24 +419,6 @@ bool CameraBackgroundSkyBoxBrush::init()
 
 void CameraBackgroundSkyBoxBrush::initBuffer()
 {
-    if (_vertexBuffer)
-        glDeleteBuffers(1, &_vertexBuffer);
-    if (_indexBuffer)
-        glDeleteBuffers(1, &_indexBuffer);
-    
-    if (Configuration::getInstance()->supportsShareableVAO() && _vao)
-    {
-        glDeleteVertexArrays(1, &_vao);
-        glBindVertexArray(0);
-        _vao = 0;
-    }
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glGenVertexArrays(1, &_vao);
-        glBindVertexArray(_vao);
-    }
-    
     // init vertex buffer object
     Vec3 vexBuf[] =
     {
@@ -487,30 +426,19 @@ void CameraBackgroundSkyBoxBrush::initBuffer()
         Vec3(1, -1, -1), Vec3(1, 1, -1), Vec3(-1, 1, -1), Vec3(-1, -1, -1)
     };
     
-    glGenBuffers(1, &_vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vexBuf), vexBuf, GL_STATIC_DRAW);
+    _customCommand.createVertexBuffer(sizeof(vexBuf[0]), sizeof(vexBuf) / sizeof(vexBuf[0]), CustomCommand::BufferUsage::STATIC);
+    _customCommand.updateVertexBuffer(vexBuf, sizeof(vexBuf));
     
     // init index buffer object
-    const unsigned char idxBuf[] = {  2, 1, 0, 3, 2, 0, // font
+    uint16_t idxBuf[] = {  2, 1, 0, 3, 2, 0, // font
         1, 5, 4, 1, 4, 0, // right
         4, 5, 6, 4, 6, 7, // back
         7, 6, 2, 7, 2, 3, // left
         2, 6, 5, 2, 5, 1, // up
         3, 0, 4, 3, 4, 7  // down
     };
-    
-    glGenBuffers(1, &_indexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(idxBuf), idxBuf, GL_STATIC_DRAW);
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-//        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-//        _glProgramState->applyAttributes(false);
-//        
-        glBindVertexArray(0);
-    }
+    _customCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, sizeof(idxBuf) / sizeof(idxBuf[0]), CustomCommand::BufferUsage::STATIC);
+    _customCommand.updateIndexBuffer(idxBuf, sizeof(idxBuf));
 }
 
 void CameraBackgroundSkyBoxBrush::setTexture(TextureCube*  texture)
@@ -518,8 +446,7 @@ void CameraBackgroundSkyBoxBrush::setTexture(TextureCube*  texture)
     CC_SAFE_RETAIN(texture);
     CC_SAFE_RELEASE(_texture);
     _texture = texture;
-    //TODO arnold
-    //_glProgramState->setUniformTexture("u_Env", _texture->getBackendTexture());
+    _programState->setTexture(_uniformEnvLoc, 0, _texture->getBackendTexture());
 }
 
 bool CameraBackgroundSkyBoxBrush::isActived() const
@@ -539,6 +466,24 @@ void CameraBackgroundSkyBoxBrush::setTextureValid(bool valid)
 bool CameraBackgroundSkyBoxBrush::isValid()
 {
     return _actived;
+}
+
+void CameraBackgroundSkyBoxBrush::onBeforeDraw()
+{
+    auto *renderer = Director::getInstance()->getRenderer();
+    _stateBlock.depthTest = renderer->getDepthTest();
+    _stateBlock.depthWrite = renderer->getDepthWrite();
+    _stateBlock.depthFunc = renderer->getDepthCompareFunction();
+    _stateBlock.cullMode = renderer->getCullMode();
+}
+
+void CameraBackgroundSkyBoxBrush::onAfterDraw()
+{
+    auto *renderer = Director::getInstance()->getRenderer();
+    renderer->setDepthTest(_stateBlock.depthTest);
+    renderer->setDepthWrite(_stateBlock.depthWrite);
+    renderer->setDepthCompareFunction(_stateBlock.depthFunc);
+    renderer->setCullMode(_stateBlock.cullMode);
 }
 
 NS_CC_END
