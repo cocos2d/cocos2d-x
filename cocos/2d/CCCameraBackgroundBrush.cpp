@@ -89,9 +89,6 @@ CameraBackgroundDepthBrush::CameraBackgroundDepthBrush()
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*)
         {
-            _vao = 0;
-            _vertexBuffer = 0;
-            _indexBuffer = 0;
             initBuffer();
         }
     );
@@ -277,9 +274,6 @@ CameraBackgroundSkyBoxBrush::CameraBackgroundSkyBoxBrush()
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                             [this](EventCustom*)
                                                             {
-                                                                _vao = 0;
-                                                                _vertexBuffer = 0;
-                                                                _indexBuffer = 0;
                                                                 initBuffer();
                                                             }
                                                             );

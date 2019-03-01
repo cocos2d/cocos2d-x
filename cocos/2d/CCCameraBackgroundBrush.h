@@ -32,6 +32,7 @@
 #include "3d/CCFrustum.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCCallbackCommand.h"
 #include "renderer/backend/Types.h"
 #include <vector>
 
