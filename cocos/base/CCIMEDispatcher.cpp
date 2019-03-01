@@ -266,6 +266,13 @@ const std::string& IMEDispatcher::getContentText()
     return STD_STRING_EMPTY;
 }
 
+bool IMEDispatcher::isAnyDelegateAttachedWithIME() const
+{
+    if (!_impl)
+        return false;
+    return _impl->_delegateWithIme != nullptr;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // dispatch keyboard message
 //////////////////////////////////////////////////////////////////////////
