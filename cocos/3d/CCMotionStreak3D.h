@@ -172,8 +172,8 @@ protected:
     struct VertexData
     {
         Vec3 pos;
-        Tex2F texPos;
         Color4B color;
+        Tex2F texPos;
     };
 
     bool _startingPositionInitialized;

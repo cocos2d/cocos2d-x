@@ -32,15 +32,21 @@
 #include "3d/CCFrustum.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCCallbackCommand.h"
+#include "renderer/backend/Types.h"
+#include <vector>
 
 NS_CC_BEGIN
 
 class CameraBackgroundColorBrush;
 class CameraBackgroundDepthBrush;
 class CameraBackgroundSkyBoxBrush;
-
-class GLProgramState;
 class Camera;
+
+namespace backend {
+    class ProgramState;
+    class Buffer;
+}
 
 /**
  * Defines a brush to clear the background of camera.
@@ -114,7 +120,7 @@ CC_CONSTRUCTOR_ACCESS :
     virtual bool init() { return true; }
     
 protected:
-    GLProgramState* _glProgramState;
+    backend::ProgramState* _programState = nullptr;
 };
 
 /**
@@ -152,7 +158,9 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~CameraBackgroundDepthBrush();
 
     virtual bool init() override;
-
+private:
+    void onBeforeDraw();
+    void onAfterDraw();
 protected:
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _backToForegroundListener;
@@ -161,13 +169,18 @@ protected:
 
 protected:
     float _depth;
-    
+    backend::UniformLocation _locDepth;
+    CustomCommand _customCommand;
+    CallbackCommand _beforeCommand;
+    CallbackCommand _afterCommand;
     GLboolean _clearColor;
-    
-    V3F_C4B_T2F_Quad _quad;
-    GLuint      _vao;
-    GLuint      _vertexBuffer;
-    GLuint      _indexBuffer;
+    std::vector<V3F_C4B_T2F> _vertices;
+    struct {
+        uint32_t stencilWriteMask = 0;
+        bool depthTest = true;
+        backend::CompareFunction compareFunc = backend::CompareFunction::ALWAYS;
+    } _stateBlock;
+
 };
 
 /**
@@ -267,13 +280,13 @@ CC_CONSTRUCTOR_ACCESS :
      * init Skybox.
      */
     virtual bool init() override;
-    
+
+private:
+    void onBeforeDraw();
+    void onAfterDraw();
+
 protected:
     void initBuffer();
-    
-    GLuint      _vao;
-    GLuint      _vertexBuffer;
-    GLuint      _indexBuffer;
     
     TextureCube*  _texture;
     
@@ -284,6 +297,21 @@ protected:
 private:
     bool _actived;
     bool _textureValid;
+
+    CustomCommand _customCommand;
+    CallbackCommand _beforeCommand;
+    CallbackCommand _afterCommand;
+
+    backend::UniformLocation _uniformColorLoc;
+    backend::UniformLocation _uniformCameraRotLoc;
+    backend::UniformLocation _uniformEnvLoc;
+
+    struct {
+        bool depthTest = true;
+        bool depthWrite = true;
+        backend::CompareFunction depthFunc = backend::CompareFunction::ALWAYS;
+        backend::CullMode cullMode = backend::CullMode::BACK;
+    }_stateBlock;
 };
 
 NS_CC_END

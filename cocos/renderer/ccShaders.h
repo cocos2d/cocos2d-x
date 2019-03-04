@@ -63,6 +63,8 @@ extern CC_DLL const char * positionUColor_vert;
 extern CC_DLL const char * positionUColor_frag;
 extern CC_DLL const char * etc1_frag;
 extern CC_DLL const char * etc1Gray_frag;
+extern CC_DLL const char * cameraClear_vert;
+extern CC_DLL const char * cameraClear_frag;
 
 extern CC_DLL const char * CC3D_color_frag;
 extern CC_DLL const char * CC3D_colorNormal_frag;
