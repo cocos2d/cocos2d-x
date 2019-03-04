@@ -847,13 +847,24 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
             renderPipelineDescriptor.colorAttachmentsFormat[0] = renderPassDescriptor.colorAttachmentsTexture[0]->getTextureFormat();
     }
     
-    if (renderPassDescriptor.depthTestEnabled && renderPassDescriptor.depthAttachmentTexture)
+    if (renderPassDescriptor.depthTestEnabled || renderPassDescriptor.stencilTestEnabled)
     {
-        renderPipelineDescriptor.depthAttachmentFormat = renderPassDescriptor.depthAttachmentTexture->getTextureFormat();
-    }
-    if (renderPassDescriptor.stencilTestEnabled && renderPassDescriptor.stencilAttachmentTexture)
-    {
-        renderPipelineDescriptor.stencilAttachmentFormat = renderPassDescriptor.stencilAttachmentTexture->getTextureFormat();
+        if(renderPassDescriptor.depthAttachmentTexture)
+        {
+            renderPipelineDescriptor.depthAttachmentFormat = renderPassDescriptor.depthAttachmentTexture->getTextureFormat();
+        }
+        else
+        {
+            renderPipelineDescriptor.depthAttachmentFormat = TextureFormat::D24S8;
+        }
+        if (renderPassDescriptor.stencilAttachmentTexture)
+        {
+            renderPipelineDescriptor.stencilAttachmentFormat = renderPassDescriptor.stencilAttachmentTexture->getTextureFormat();
+        }
+        else
+        {
+            renderPipelineDescriptor.stencilAttachmentFormat = TextureFormat::D24S8;
+        }
     }
 
     _commandBuffer->setRenderPipeline(getRenderPipeline(renderPipelineDescriptor, pipelineDescriptor.blendDescriptor));

@@ -112,40 +112,43 @@ namespace
             mtlDescritpor.colorAttachments[0].storeAction = MTLStoreActionStore;
         }
         
-        // Set depth attachment
+        if(descriptor.depthTestEnabled || descriptor.stencilTestEnabled)
         {
-            if (descriptor.depthAttachmentTexture)
-                mtlDescritpor.depthAttachment.texture = static_cast<TextureMTL*>(descriptor.depthAttachmentTexture)->getMTLTexture();
-            else
-                mtlDescritpor.depthAttachment.texture = Utils::getDefaultDepthStencilTexture();
-            
-            if (descriptor.needClearDepth)
+            // Set depth attachment
             {
-                mtlDescritpor.depthAttachment.loadAction = MTLLoadActionClear;
-                mtlDescritpor.depthAttachment.clearDepth = descriptor.clearDepthValue;
-            }
-            else
-                mtlDescritpor.depthAttachment.loadAction = MTLLoadActionLoad;
+                if (descriptor.depthAttachmentTexture)
+                    mtlDescritpor.depthAttachment.texture = static_cast<TextureMTL*>(descriptor.depthAttachmentTexture)->getMTLTexture();
+                else
+                    mtlDescritpor.depthAttachment.texture = Utils::getDefaultDepthStencilTexture();
+                
+                if (descriptor.needClearDepth)
+                {
+                    mtlDescritpor.depthAttachment.loadAction = MTLLoadActionClear;
+                    mtlDescritpor.depthAttachment.clearDepth = descriptor.clearDepthValue;
+                }
+                else
+                    mtlDescritpor.depthAttachment.loadAction = MTLLoadActionLoad;
 
-            mtlDescritpor.depthAttachment.storeAction = MTLStoreActionStore;
-        }
-        
-        // Set stencil attachment
-        {
-            if (descriptor.stencilAttachmentTexture)
-                mtlDescritpor.stencilAttachment.texture = static_cast<TextureMTL*>(descriptor.stencilAttachmentTexture)->getMTLTexture();
-            else
-                mtlDescritpor.stencilAttachment.texture = Utils::getDefaultDepthStencilTexture();
+                mtlDescritpor.depthAttachment.storeAction = MTLStoreActionStore;
+            }
             
-            if (descriptor.needClearStencil)
+            // Set stencil attachment
             {
-                mtlDescritpor.stencilAttachment.loadAction = MTLLoadActionClear;
-                mtlDescritpor.stencilAttachment.clearStencil = descriptor.clearStencilValue;
-            }
-            else
-                mtlDescritpor.stencilAttachment.loadAction = MTLLoadActionLoad;
+                if (descriptor.stencilAttachmentTexture)
+                    mtlDescritpor.stencilAttachment.texture = static_cast<TextureMTL*>(descriptor.stencilAttachmentTexture)->getMTLTexture();
+                else
+                    mtlDescritpor.stencilAttachment.texture = Utils::getDefaultDepthStencilTexture();
+                
+                if (descriptor.needClearStencil)
+                {
+                    mtlDescritpor.stencilAttachment.loadAction = MTLLoadActionClear;
+                    mtlDescritpor.stencilAttachment.clearStencil = descriptor.clearStencilValue;
+                }
+                else
+                    mtlDescritpor.stencilAttachment.loadAction = MTLLoadActionLoad;
 
-            mtlDescritpor.stencilAttachment.storeAction = MTLStoreActionStore;
+                mtlDescritpor.stencilAttachment.storeAction = MTLStoreActionStore;
+            }
         }
         
         return mtlDescritpor;
