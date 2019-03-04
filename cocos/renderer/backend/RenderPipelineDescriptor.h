@@ -18,8 +18,8 @@ struct RenderPipelineDescriptor
     BlendState* blendState = nullptr;
     std::vector<VertexLayout> vertexLayouts;
     TextureFormat colorAttachmentsFormat[MAX_COLOR_ATTCHMENT] = { TextureFormat::SYSTEM_DEFAULT };
-    TextureFormat depthAttachmentFormat = TextureFormat::NONE;
-    TextureFormat stencilAttachmentFormat = TextureFormat::NONE;
+    TextureFormat depthAttachmentFormat = TextureFormat::D24S8;
+    TextureFormat stencilAttachmentFormat = TextureFormat::D24S8;
 };
 
 CC_BACKEND_END

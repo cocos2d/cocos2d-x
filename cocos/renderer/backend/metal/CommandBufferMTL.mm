@@ -112,8 +112,7 @@ namespace
             mtlDescritpor.colorAttachments[0].storeAction = MTLStoreActionStore;
         }
         
-        // Set depth/stencil attachment
-        if (descriptor.needDepthAttachment)
+        // Set depth attachment
         {
             if (descriptor.depthAttachmentTexture)
                 mtlDescritpor.depthAttachment.texture = static_cast<TextureMTL*>(descriptor.depthAttachmentTexture)->getMTLTexture();
@@ -130,7 +129,8 @@ namespace
 
             mtlDescritpor.depthAttachment.storeAction = MTLStoreActionStore;
         }
-        if (descriptor.needStencilAttachment)
+        
+        // Set stencil attachment
         {
             if (descriptor.stencilAttachmentTexture)
                 mtlDescritpor.stencilAttachment.texture = static_cast<TextureMTL*>(descriptor.stencilAttachmentTexture)->getMTLTexture();
