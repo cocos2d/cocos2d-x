@@ -300,7 +300,7 @@ long FileUtilsAndroid::getFileSize(const std::string& filepath) const
 std::vector<std::string> FileUtilsAndroid::listFiles(const std::string& dirPath) const
 {
 
-    if(isAbsolutePath(dirPath)) return FileUtils::listFiles(dirPath);
+    if(!dirPath.empty() && dirPath[0] == '/') return FileUtils::listFiles(dirPath);
 
     std::vector<std::string> fileList;
     string fullPath = fullPathForDirectory(dirPath);
