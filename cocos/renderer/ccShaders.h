@@ -72,7 +72,7 @@ extern CC_DLL const char * CC3D_colorNormalTexture_frag;
 extern CC_DLL const char * CC3D_colorTexture_frag;
 extern CC_DLL const char * CC3D_particleTexture_frag;
 extern CC_DLL const char * CC3D_particleColor_frag;
-extern CC_DLL const char * cc3D_particle_vert;
+extern CC_DLL const char * CC3D_particle_vert;
 extern CC_DLL const char * CC3D_positionNormalTexture_vert;
 extern CC_DLL const char * CC3D_skinPositionNormalTexture_vert;
 extern CC_DLL const char * CC3D_positionTexture_vert;

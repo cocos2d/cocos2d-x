@@ -93,7 +93,7 @@ list(APPEND GAME_HEADER
      Classes/AppDelegate.h
 #     Classes/LabelTest/LabelTestNew.h
 #     Classes/LabelTest/LabelTest.h
-#     Classes/Particle3DTest/Particle3DTest.h
+     Classes/Particle3DTest/Particle3DTest.h
 #     Classes/AllocatorTest/AllocatorTest.h
      Classes/VibrateTest/VibrateTest.h
      Classes/ClippingNodeTest/ClippingNodeTest.h
@@ -273,7 +273,7 @@ list(APPEND GAME_SOURCE
      Classes/NodeTest/NodeTest.cpp
      Classes/OpenURLTest/OpenURLTest.cpp
      Classes/ParallaxTest/ParallaxTest.cpp
-#     Classes/Particle3DTest/Particle3DTest.cpp
+     Classes/Particle3DTest/Particle3DTest.cpp
      Classes/ParticleTest/ParticleTest.cpp
      Classes/ReleasePoolTest/ReleasePoolTest.cpp
      Classes/RenderTextureTest/RenderTextureTest.cpp

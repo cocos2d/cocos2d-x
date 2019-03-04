@@ -43,6 +43,7 @@ class RootTests : public TestList
 public:
     RootTests()
     {
+        addTest("Node: Particle3D (PU)", [](){return new Particle3DTests(); });
 //        addTest("Node: Scene3D", [](){return new (std::nothrow) Scene3DTests(); });
         addTest("ActionManager", [](){return new (std::nothrow) ActionManagerTests(); });
         addTest("Actions - Basic", [](){ return new (std::nothrow) ActionsTests(); });
@@ -91,7 +92,7 @@ public:
         addTest("Node: Node", [](){return new CocosNodeTests(); });
         addTest("Node: Parallax", [](){return new ParallaxTests(); });
         addTest("Node: Particles", [](){return new ParticleTests(); });
-//        addTest("Node: Particle3D (PU)", [](){return new Particle3DTests(); });
+        addTest("Node: Particle3D (PU)", [](){return new Particle3DTests(); });
 #if CC_USE_PHYSICS
 //       addTest("Node: Physics", []() { return new PhysicsTests(); });
 #endif

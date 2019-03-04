@@ -23,14 +23,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_PARTICLE_3D_RENDER_H__
-#define __CC_PARTICLE_3D_RENDER_H__
+#pragma once
 
 #include <vector>
 
 #include "renderer/CCRenderState.h"
+#include "renderer/backend/Types.h"
 #include "base/CCRef.h"
 #include "math/CCMath.h"
+
 
 
 NS_CC_BEGIN
@@ -82,7 +83,7 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     ParticleSystem3D *_particleSystem;
-    RenderState::StateBlock* _stateBlock;
+    RenderState::StateBlock _stateBlock;
     bool  _isVisible;
     Vec3 _rendererScale;
     bool _depthTest;
@@ -105,13 +106,18 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
 
     bool initQuadRender(const std::string& texFile);
+
+    void onBeforeDraw();
+    void onAfterDraw();
     
 protected:
-    MeshCommand*           _meshCommand;
-    Texture2D*             _texture;
-    GLProgramState*        _glProgramState;
-    IndexBuffer*           _indexBuffer; //index buffer
-    VertexBuffer*          _vertexBuffer; // vertex buffer
+    CustomCommand           _customCommand;
+    CallbackCommand         _beforeCommand;
+    CallbackCommand         _afterCommand;
+    Texture2D*             _texture         = nullptr;
+    backend::ProgramState* _programState    = nullptr;
+    backend::Buffer*       _indexBuffer     = nullptr; //index buffer
+    backend::Buffer*       _vertexBuffer    = nullptr; // vertex buffer
     
     struct posuvcolor
     {
@@ -121,8 +127,18 @@ protected:
     };
 
     std::vector<posuvcolor> _posuvcolors;   //vertex data
-    std::vector<unsigned short> _indexData; //index data
+    std::vector<uint16_t> _indexData; //index data
     std::string _texFile;
+
+    backend::UniformLocation    _locColor;
+    backend::UniformLocation    _locTexture;
+    backend::UniformLocation    _locPMatrix;
+
+    bool _rendererDepthTestEnabled;
+    backend::CompareFunction _rendererDepthCmpFunc;
+    backend::CullMode _rendererCullMode;
+    backend::Winding _rendererWinding;
+    bool _rendererDepthWrite;
 };
 
 // particle render for Sprite3D
@@ -146,5 +162,3 @@ protected:
 };
 
 NS_CC_END
-
-#endif
