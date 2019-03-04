@@ -425,13 +425,13 @@ void Renderer::clean()
 void Renderer::setDepthTest(bool value)
 {
     _depthStencilDescriptor.depthTestEnabled = value;
-    _renderPassDescriptor.needDepthAttachment = value;
+    _renderPassDescriptor.depthTestEnabled = value;
 }
 
 void Renderer::setDepthWrite(bool value)
 {
     _depthStencilDescriptor.depthWriteEnabled = value;
-    _renderPassDescriptor.needDepthAttachment = value;
+    _renderPassDescriptor.depthTestEnabled = value;
 }
 
 void Renderer::setDepthCompareFunction(backend::CompareFunction func)
@@ -457,9 +457,7 @@ bool Renderer::getDepthWrite() const
 void Renderer::setStencilTest(bool value)
 {
     _depthStencilDescriptor.stencilTestEnabled = value;
-    _renderPassDescriptor.needStencilAttachment = value;
-
-    _renderPassDescriptor.needStencilAttachment = value;
+    _renderPassDescriptor.stencilTestEnabled = value;
 }
 
 void Renderer::setStencilCompareFunction(backend::CompareFunction func, unsigned int ref, unsigned int readMask)
@@ -849,19 +847,24 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
             renderPipelineDescriptor.colorAttachmentsFormat[0] = renderPassDescriptor.colorAttachmentsTexture[0]->getTextureFormat();
     }
     
-    if (renderPassDescriptor.needDepthAttachment)
+    if (renderPassDescriptor.depthTestEnabled || renderPassDescriptor.stencilTestEnabled)
     {
-        if (renderPassDescriptor.depthAttachmentTexture)
+        if(renderPassDescriptor.depthAttachmentTexture)
+        {
             renderPipelineDescriptor.depthAttachmentFormat = renderPassDescriptor.depthAttachmentTexture->getTextureFormat();
+        }
         else
-            renderPipelineDescriptor.depthAttachmentFormat = backend::TextureFormat::D24S8;
-    }
-    if (renderPassDescriptor.needStencilAttachment)
-    {
+        {
+            renderPipelineDescriptor.depthAttachmentFormat = TextureFormat::D24S8;
+        }
         if (renderPassDescriptor.stencilAttachmentTexture)
+        {
             renderPipelineDescriptor.stencilAttachmentFormat = renderPassDescriptor.stencilAttachmentTexture->getTextureFormat();
+        }
         else
-            renderPipelineDescriptor.stencilAttachmentFormat = backend::TextureFormat::D24S8;
+        {
+            renderPipelineDescriptor.stencilAttachmentFormat = TextureFormat::D24S8;
+        }
     }
 
     _commandBuffer->setRenderPipeline(getRenderPipeline(renderPipelineDescriptor, pipelineDescriptor.blendDescriptor));
@@ -902,7 +905,7 @@ void Renderer::setRenderTarget(RenderTargetFlag flags, Texture2D* colorAttachmen
 
     if (flags & RenderTargetFlag::DEPTH)
     {
-        _renderPassDescriptor.needDepthAttachment = true;
+        _renderPassDescriptor.depthTestEnabled = true;
         if (depthAttachment)
             _renderPassDescriptor.depthAttachmentTexture = depthAttachment->getBackendTexture();
         else
@@ -912,7 +915,7 @@ void Renderer::setRenderTarget(RenderTargetFlag flags, Texture2D* colorAttachmen
     }
     else
     {
-        _renderPassDescriptor.needDepthAttachment = false;
+        _renderPassDescriptor.depthTestEnabled = false;
         _renderPassDescriptor.depthAttachmentTexture = nullptr;
         _depthAttachment = nullptr;
     }
@@ -920,7 +923,7 @@ void Renderer::setRenderTarget(RenderTargetFlag flags, Texture2D* colorAttachmen
     if (flags & RenderTargetFlag::STENCIL)
     {
         _stencilAttachment = stencilAttachment;
-        _renderPassDescriptor.needStencilAttachment = true;
+        _renderPassDescriptor.stencilTestEnabled = true;
         if (_stencilAttachment)
             _renderPassDescriptor.stencilAttachmentTexture = stencilAttachment->getBackendTexture();
         else
@@ -929,7 +932,7 @@ void Renderer::setRenderTarget(RenderTargetFlag flags, Texture2D* colorAttachmen
     else
     {
         _stencilAttachment = nullptr;
-        _renderPassDescriptor.needStencilAttachment = false;
+        _renderPassDescriptor.stencilTestEnabled = false;
         _renderPassDescriptor.stencilAttachmentTexture = nullptr;
     }
 }
@@ -955,14 +958,14 @@ void Renderer::clear(ClearFlag flags, const Color4F& color, float depth, unsigne
         {
             descriptor.clearDepthValue = depth;
             descriptor.needClearDepth = true;
-            descriptor.needDepthAttachment = true;
+            descriptor.depthTestEnabled = true;
             descriptor.depthAttachmentTexture = _renderPassDescriptor.depthAttachmentTexture;
         }
         if (flags & ClearFlag::STENCIL)
         {
             descriptor.clearStencilValue = stencil;
             descriptor.needClearStencil = true;
-            descriptor.needStencilAttachment = true;
+            descriptor.stencilTestEnabled = true;
             descriptor.stencilAttachmentTexture = _renderPassDescriptor.stencilAttachmentTexture;
         }
 

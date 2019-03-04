@@ -8,8 +8,8 @@ RenderPassDescriptor& RenderPassDescriptor::operator=(const RenderPassDescriptor
     clearStencilValue = descriptor.clearStencilValue;
     clearColorValue = descriptor.clearColorValue;
     needColorAttachment = descriptor.needColorAttachment;
-    needDepthAttachment = descriptor.needDepthAttachment;
-    needStencilAttachment = descriptor.needStencilAttachment;
+    depthTestEnabled = descriptor.depthTestEnabled;
+    stencilTestEnabled = descriptor.stencilTestEnabled;
     needClearColor = descriptor.needClearColor;
     needClearDepth = descriptor.needClearDepth;
     needClearStencil = descriptor.needClearStencil;
@@ -26,8 +26,8 @@ bool RenderPassDescriptor::operator==(const RenderPassDescriptor& descriptor)
         clearStencilValue == descriptor.clearStencilValue &&
         clearColorValue == descriptor.clearColorValue &&
         needColorAttachment == descriptor.needColorAttachment &&
-        needDepthAttachment == descriptor.needDepthAttachment &&
-        needStencilAttachment == descriptor.needStencilAttachment &&
+        depthTestEnabled == descriptor.depthTestEnabled &&
+        stencilTestEnabled == descriptor.stencilTestEnabled &&
         needClearColor == descriptor.needClearColor &&
         needClearDepth == descriptor.needClearDepth &&
         needClearStencil == descriptor.needClearStencil &&
