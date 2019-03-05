@@ -235,8 +235,6 @@ public:
     //void getWorldTransforms(Matrix4*) const;
     /// @copydoc MovableObject::visitRenderables
 
-    //GLuint getTextureName();
-
 protected:
 
     /// Setup the STL collections

@@ -162,15 +162,9 @@ void PUBillboardChain::setupBuffers(void)
         CC_SAFE_RELEASE_NULL(_indexBuffer);
 
         GLsizei stride = sizeof(VertexInfo);
-        //_vertexBuffer = VertexBuffer::create(stride, (int)_chainElementList.size() * 2);
-        //_vertexBuffer->retain();
         _vertexBuffer = backend::Device::getInstance()->newBuffer(stride * _chainElementList.size() * 2, backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
         VertexInfo vi = {Vec3(0.0f, 0.0f, 0.0f), Vec2(0.0f, 0.0f), Vec4::ONE};
         _vertices.resize(_chainElementList.size() * 2, vi);
-
-
-        //_indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, (int)(_chainCount * _maxElementsPerChain * 6));
-        //_indexBuffer->retain();
 
         _indexBuffer = backend::Device::getInstance()->newBuffer((_chainCount * _maxElementsPerChain * 6) * sizeof(uint16_t), backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
 
@@ -577,8 +571,6 @@ void PUBillboardChain::updateVertexBuffer(const Mat4 &camMat)
 
     } // each segment
 
-
-    //_vertexBuffer->updateVertices(&_vertices[0], (int)_vertices.size(), 0);
     _vertexBuffer->updateData(&_vertices[0], sizeof(_vertices[0]) * _vertices.size());
     //pBuffer->unlock();
     //_vertexCameraUsed = cam;
@@ -735,7 +727,6 @@ void PUBillboardChain::render( Renderer* renderer, const Mat4 &transform, Partic
 
             _customCommand.setIndexDrawInfo(0, _indices.size());
 
-            //TODO arnold 
             renderer->addCommand(&_beforeCommand);
             renderer->addCommand(&_customCommand);
             renderer->addCommand(&_afterCommand);
@@ -781,24 +772,6 @@ void PUBillboardChain::onAfterDraw()
     renderer->setDepthWrite(_rendererDepthWrite);
     renderer->setWinding(_rendererWinding);
 }
-
-//GLuint PUBillboardChain::getTextureName()
-//{
-//    if (Director::getInstance()->getTextureCache()->getTextureForKey(_texFile) == nullptr)
-//    {
-//        _texture = nullptr;
-//        this->init("");
-//    }
-//    else if (_texture == nullptr)
-//    {
-//        this->init(_texFile);
-//    }
-//
-//    if (_texture == nullptr)
-//        return 0;
-//
-//    return _texture->getName();
-//}
 
 //-----------------------------------------------------------------------
 //void PUBillboardChain::_updateRenderQueue(RenderQueue* queue)

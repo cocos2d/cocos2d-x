@@ -80,8 +80,6 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
     
     if (_vertexBuffer == nullptr){
         GLsizei stride = sizeof(VertexInfo);
-        //_vertexBuffer = VertexBuffer::create(stride, 4 * particleSystem->getParticleQuota());
-        //_vertexBuffer->retain();
         _vertexBuffer = backend::Device::getInstance()->newBuffer(stride * 4 * particleSystem->getParticleQuota(), backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
         if (_vertexBuffer == nullptr)
         {
@@ -91,8 +89,6 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
     }
 
     if (_indexBuffer == nullptr){
-        //_indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 6 * particleSystem->getParticleQuota());
-        //_indexBuffer->retain();
         _indexBuffer = backend::Device::getInstance()->newBuffer(6 * particleSystem->getParticleQuota()* sizeof(uint16_t), backend::BufferType::INDEX, backend::BufferUsage::DYNAMIC);
         if (_indexBuffer == nullptr)
         {
@@ -685,8 +681,6 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
 
     if (_vertexBuffer == nullptr && _indexBuffer == nullptr){
         GLsizei stride = sizeof(VertexInfo);
-        //_vertexBuffer = VertexBuffer::create(stride, 8 * particleSystem->getParticleQuota());
-        //_vertexBuffer->retain();
         _vertexBuffer = backend::Device::getInstance()->newBuffer(stride * 8 * particleSystem->getParticleQuota(), backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
         if (_vertexBuffer == nullptr)
         {
@@ -695,8 +689,6 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
         }
         _vertices.resize(8 * particleSystem->getParticleQuota());
 
-        //_indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 36 * particleSystem->getParticleQuota());
-        //_indexBuffer->retain();
         _indexBuffer = backend::Device::getInstance()->newBuffer(sizeof(uint16_t) * 36 * particleSystem->getParticleQuota(), backend::BufferType::INDEX, backend::BufferUsage::DYNAMIC);
         if (_indexBuffer == nullptr)
         {
@@ -757,9 +749,7 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
     }
 
     if (!_vertices.empty() && !_indices.empty()){
-        //_vertexBuffer->updateVertices(&_vertices[0], vertexindex/* * sizeof(_posuvcolors[0])*/, 0);
         _vertexBuffer->updateData(&_vertices[0], vertexindex * sizeof(_vertices[0]));
-        //_indexBuffer->updateIndices(&_indices[0], index/* * sizeof(unsigned short)*/, 0);
         _indexBuffer->updateData(&_indices[0], sizeof(_indices[0]) * sizeof(uint16_t));
 
         GLuint texId = (_texture ? _texture->getName() : 0);
@@ -872,8 +862,6 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
     unsigned int indexCount = 6 * _numberOfRings * (_numberOfSegments + 1);
     if (_vertexBuffer == nullptr && _indexBuffer == nullptr){
         GLsizei stride = sizeof(VertexInfo);
-        //_vertexBuffer = VertexBuffer::create(stride, vertexCount * particleSystem->getParticleQuota());
-        //_vertexBuffer->retain();
         _vertexBuffer = backend::Device::getInstance()->newBuffer(stride * vertexCount * particleSystem->getParticleQuota(), backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
         if (_vertexBuffer == nullptr)
         {
@@ -882,8 +870,6 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
         }
         _vertices.resize(vertexCount * particleSystem->getParticleQuota());
 
-        //_indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, indexCount * particleSystem->getParticleQuota());
-        //_indexBuffer->retain();
         _indexBuffer = backend::Device::getInstance()->newBuffer(sizeof(uint16_t) * indexCount * particleSystem->getParticleQuota(), backend::BufferType::INDEX, backend::BufferUsage::DYNAMIC);
         if (_indexBuffer == nullptr)
         {
