@@ -29,6 +29,9 @@
 
 #include "renderer/CCRenderState.h"
 #include "renderer/backend/Types.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCCallbackCommand.h"
+#include "renderer/backend/Buffer.h"
 #include "base/CCRef.h"
 #include "math/CCMath.h"
 
