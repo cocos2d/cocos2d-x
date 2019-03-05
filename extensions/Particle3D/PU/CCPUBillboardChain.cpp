@@ -166,7 +166,7 @@ void PUBillboardChain::setupBuffers(void)
         VertexInfo vi = {Vec3(0.0f, 0.0f, 0.0f), Vec2(0.0f, 0.0f), Vec4::ONE};
         _vertices.resize(_chainElementList.size() * 2, vi);
 
-        _indexBuffer = backend::Device::getInstance()->newBuffer((_chainCount * _maxElementsPerChain * 6) * sizeof(uint16_t), backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
+        _indexBuffer = backend::Device::getInstance()->newBuffer(_chainCount * _maxElementsPerChain * 6 * sizeof(uint16_t), backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
 
         _indices.resize(_chainCount * _maxElementsPerChain * 6, 0);
 
@@ -638,7 +638,6 @@ void PUBillboardChain::updateIndexBuffer(void)
 
         }
 
-        //_indexBuffer->updateIndices(&_indices[0], (int)_indices.size(), 0);
         _indexBuffer->updateData(&_indices[0], sizeof(_indices[0]) * _indices.size());
         //_indexData->indexBuffer->unlock();
         _indexContentDirty = false;

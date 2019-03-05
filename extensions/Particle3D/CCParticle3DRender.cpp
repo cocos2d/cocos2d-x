@@ -156,8 +156,11 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     _vertexBuffer->updateData(&_posuvcolors[0], vertexindex * sizeof(_posuvcolors[0]));
     _indexBuffer->updateData(&_indexData[0], index * sizeof(_indexData[0]));
     
-    GLuint texId = (_texture ? _texture->getName() : 0);
     float depthZ = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
+
+    _beforeCommand.init(depthZ);
+    _customCommand.init(depthZ);
+    _afterCommand.init(depthZ);
 
     _customCommand.setVertexBuffer(_vertexBuffer);
     _customCommand.setIndexBuffer(_indexBuffer, CustomCommand::IndexFormat::U_SHORT);
