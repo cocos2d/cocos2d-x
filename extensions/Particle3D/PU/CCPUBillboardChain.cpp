@@ -720,8 +720,8 @@ void PUBillboardChain::render( Renderer* renderer, const Mat4 &transform, Partic
             _afterCommand.init(0.0);
 
             auto pMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-            
             _programState->setUniform(_locPMatrix, &pMatrix.m, sizeof(pMatrix.m));
+
             if (_texture)
             {
                 _programState->setTexture(_locTexture, 0, _texture->getBackendTexture());

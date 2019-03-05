@@ -167,9 +167,8 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     _customCommand.setIndexBuffer(_indexBuffer, CustomCommand::IndexFormat::U_SHORT);
 
     auto pMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    auto fMatrix = pMatrix * transform;
+    _programState->setUniform(_locPMatrix, &pMatrix.m, sizeof(pMatrix.m));
 
-    _programState->setUniform(_locPMatrix, &fMatrix.m, sizeof(fMatrix.m));
     if (_texture)
     {
         _programState->setTexture(_locTexture, 0, _texture->getBackendTexture());
@@ -178,7 +177,6 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     auto uColor = Vec4(1, 1, 1, 1);
     _programState->setUniform(_locColor, &uColor, sizeof(uColor));
 
-    _stateBlock.bind(&_customCommand.getPipelineDescriptor());
 
     _customCommand.setIndexDrawInfo(0, index);
     

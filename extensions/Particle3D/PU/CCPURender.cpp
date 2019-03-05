@@ -244,9 +244,7 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
     _indices.erase(_indices.begin() + index, _indices.end());
     
     if (!_vertices.empty() && !_indices.empty()){
-        //_vertexBuffer->updateVertices(&_vertices[0], vertexindex/* * sizeof(_posuvcolors[0])*/, 0);
         _vertexBuffer->updateData(&_vertices[0], vertexindex * sizeof(_vertices[0]));
-        //_indexBuffer->updateIndices(&_indices[0], index/* * sizeof(unsigned short)*/, 0);
         _indexBuffer->updateData(&_indices[0], index * sizeof(_indices[0]));
 
         _stateBlock.setBlendFunc(particleSystem->getBlendFunc());
@@ -259,6 +257,7 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
 
         _customCommand.setVertexBuffer(_vertexBuffer);
         _customCommand.setIndexBuffer(_indexBuffer, CustomCommand::IndexFormat::U_SHORT);
+        _customCommand.setIndexDrawInfo(0, index);
 
         if (_texture)
         {
@@ -269,10 +268,7 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
         _programState->setUniform(_locColor, &uColor, sizeof(uColor));
 
         auto pMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        auto fMatrix = pMatrix * transform;
-        _programState->setUniform(_locPMatrix, &fMatrix.m, sizeof(fMatrix.m));
-
-        _customCommand.setIndexDrawInfo(0, _indices.size());
+        _programState->setUniform(_locPMatrix, &pMatrix.m, sizeof(pMatrix.m));
 
         renderer->addCommand(&_beforeCommand);
         renderer->addCommand(&_customCommand);
@@ -778,8 +774,7 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
         }
 
         auto pMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        auto fMatrix = pMatrix * transform;
-        _programState->setUniform(_locPMatrix, &fMatrix.m, sizeof(fMatrix.m));
+        _programState->setUniform(_locPMatrix, &pMatrix.m, sizeof(pMatrix.m));
 
         _customCommand.setIndexDrawInfo(0, _indices.size());
 
@@ -931,13 +926,16 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
     }
 
     if (!_vertices.empty() && !_indices.empty()){
-        
-        _vertexBuffer->updateData(&_vertices[0], vertexindex * sizeof(_vertices[0]));
-        _indexBuffer->updateData(&_indices[0], index * sizeof(_indices[0]));
-
         _customCommand.init(0.0f);
         _beforeCommand.init(0.0f);
         _afterCommand.init(0.0f);
+
+        _vertexBuffer->updateData(&_vertices[0], vertexindex * sizeof(_vertices[0]));
+        _indexBuffer->updateData(&_indices[0], index * sizeof(_indices[0]));
+
+        _customCommand.setVertexBuffer(_vertexBuffer);
+        _customCommand.setIndexBuffer(_indexBuffer, CustomCommand::IndexFormat::U_SHORT);
+        _customCommand.setIndexDrawInfo(0, index);
 
         auto uColor = Vec4(1, 1, 1, 1);
         _programState->setUniform(_locColor, &uColor, sizeof(uColor));
@@ -948,10 +946,8 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
         }
 
         auto pMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        auto fMatrix = pMatrix * transform;
-        _programState->setUniform(_locPMatrix, &fMatrix.m, sizeof(fMatrix.m));
+        _programState->setUniform(_locPMatrix, &pMatrix.m, sizeof(pMatrix.m));
 
-        _customCommand.setIndexDrawInfo(0, _indices.size());
 
         renderer->addCommand(&_beforeCommand);
         renderer->addCommand(&_customCommand);
