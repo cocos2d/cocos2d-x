@@ -263,7 +263,7 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
         auto uColor = Vec4(1, 1, 1, 1);
         _programState->setUniform(_locColor, &uColor, sizeof(uColor));
 
-        auto projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        auto &projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         _programState->setUniform(_locPMatrix, &projectionMatrix.m, sizeof(projectionMatrix.m));
 
         renderer->addCommand(&_beforeCommand);
@@ -759,7 +759,7 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
             _programState->setTexture(_locTexture, 0, _texture->getBackendTexture());
         }
 
-        auto projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        auto &projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         _programState->setUniform(_locPMatrix, &projectionMatrix.m, sizeof(projectionMatrix.m));
 
         _customCommand.setIndexDrawInfo(0, _indices.size());
@@ -927,7 +927,7 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
             _programState->setTexture(_locTexture, 0, _texture->getBackendTexture());
         }
 
-        auto projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        auto &projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         _programState->setUniform(_locPMatrix, &projectionMatrix.m, sizeof(projectionMatrix.m));
 
         renderer->addCommand(&_beforeCommand);

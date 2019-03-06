@@ -150,7 +150,7 @@ void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, 
     //    }
     //#endif
 
-    auto projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    auto &projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     auto finalMatrix = projectionMatrix * transform;
     _programState->setUniform(_mvpMatrixLocation, &finalMatrix.m, sizeof(finalMatrix.m));
 

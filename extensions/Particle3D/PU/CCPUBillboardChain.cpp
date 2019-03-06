@@ -710,7 +710,7 @@ void PUBillboardChain::render( Renderer* renderer, const Mat4 &transform, Partic
             _customCommand.init(0.0, transform, Node::FLAGS_RENDER_AS_3D);
             _afterCommand.init(0.0);
 
-            auto projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+            auto &projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
             _programState->setUniform(_locPMatrix, &projectionMatrix.m, sizeof(projectionMatrix.m));
 
             if (_texture)
