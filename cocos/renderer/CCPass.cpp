@@ -101,17 +101,8 @@ bool Pass::initWithProgramState(Technique* technique, backend::ProgramState *pro
 
 Pass::Pass()
 {
-    //_customCommand.set3D(true);
-    
-    //TODO: set _customCommand's vertex layout.
-    //auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
-    //vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, 0, false);
-    //vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT2, 6 * sizeof(float), false);
-    //vertexLayout.setLayout(8 * sizeof(float), backend::VertexStepMode::VERTEX);
-
     _beforeVisitCmd.func = CC_CALLBACK_0(Pass::onBeforeVisitCmd, this);
     _afterVisitCmd.func = CC_CALLBACK_0(Pass::onAfterVisitCmd, this);
-
 }
 
 Pass::~Pass()
@@ -152,7 +143,7 @@ void Pass::setProgramState(backend::ProgramState* programState)
         CC_SAFE_RELEASE(_programState);
         _programState = programState;
         CC_SAFE_RETAIN(_programState);
-        _customCommand.getPipelineDescriptor().programState = _programState;
+        _meshCommand.getPipelineDescriptor().programState = _programState;
         initUniformLocations();
         _hashDirty = true;
     }
@@ -228,14 +219,14 @@ void Pass::initUniformLocations()
 //}
 
 void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
-                CustomCommand::PrimitiveType primitive, CustomCommand::IndexFormat indexFormat,
+                MeshCommand::PrimitiveType primitive, MeshCommand::IndexFormat indexFormat,
                 unsigned int indexCount, const Mat4& modelView)
 {
-    _customCommand.init(globalZOrder, BlendFunc::ALPHA_PREMULTIPLIED);
-    _customCommand.setPrimitiveType(primitive);
-    _customCommand.setIndexBuffer(indexBuffer, indexFormat);
-    _customCommand.setVertexBuffer(vertexBuffer);
-    _customCommand.setIndexDrawInfo(0, indexCount);
+    _meshCommand.init(globalZOrder, BlendFunc::ALPHA_PREMULTIPLIED);
+    _meshCommand.setPrimitiveType(primitive);
+    _meshCommand.setIndexBuffer(indexBuffer, indexFormat);
+    _meshCommand.setVertexBuffer(vertexBuffer);
+    _meshCommand.setIndexDrawInfo(0, indexCount);
 
     auto &matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     auto mvp = matrixP * modelView;
@@ -262,7 +253,7 @@ void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buff
     _afterVisitCmd.init(globalZOrder);
 
     renderer->addCommand(&_beforeVisitCmd);
-    renderer->addCommand(&_customCommand);
+    renderer->addCommand(&_meshCommand);
     renderer->addCommand(&_afterVisitCmd);
 }
 
@@ -271,7 +262,7 @@ void Pass::onBeforeVisitCmd()
     auto *renderer = Director::getInstance()->getRenderer();
     //_oldDepthEnabledState = renderer->getDepthTest();
 
-    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    auto &pipelineDescriptor = _meshCommand.getPipelineDescriptor();
 
     _rendererDepthTestEnabled = renderer->getDepthTest();
     _rendererDepthCmpFunc = renderer->getDepthCompareFunction();

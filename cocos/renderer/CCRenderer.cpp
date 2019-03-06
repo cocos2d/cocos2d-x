@@ -285,34 +285,8 @@ void Renderer::processRenderCommand(RenderCommand* command)
         }
             break;
         case RenderCommand::Type::MESH_COMMAND:
-        {
             flush2D();
-            auto cmd = static_cast<MeshCommand*>(command);
-            
-            if (cmd->isSkipBatching() || _lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
-            {
-                flush3D();
-
-                if(cmd->isSkipBatching())
-                {
-                    // XXX: execute() will call bind() and unbind()
-                    // but unbind() shouldn't be call if the next command is a MESH_COMMAND with Material.
-                    // Once most of cocos2d-x moves to Pass/StateBlock, only bind() should be used.
-                    cmd->execute();
-                }
-                else
-                {
-                    cmd->preBatchDraw();
-                    cmd->batchDraw();
-                    _lastBatchedMeshCommand = cmd;
-                }
-            }
-            else
-            {
-                //            CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_MESH_COMMAND");
-                cmd->batchDraw();
-            }
-        }
+            drawMeshCommand(command);
             break;
         case RenderCommand::Type::GROUP_COMMAND:
             processGroupCommand(static_cast<GroupCommand*>(command));
@@ -696,6 +670,37 @@ void Renderer::drawCustomCommand(RenderCommand *command)
     _commandBuffer->endRenderPass();
 }
 
+void Renderer::drawMeshCommand(RenderCommand *command)
+{
+    auto cmd = static_cast<MeshCommand*>(command);
+
+    beginRenderPass(command);
+    _commandBuffer->setVertexBuffer(0, cmd->getVertexBuffer());
+    _commandBuffer->setProgramState(cmd->getPipelineDescriptor().programState);
+
+    auto drawType = cmd->getDrawType();
+    _commandBuffer->setLineWidth(cmd->getLineWidth());
+    if (CustomCommand::DrawType::ELEMENT == drawType)
+    {
+        _commandBuffer->setIndexBuffer(cmd->getIndexBuffer());
+        _commandBuffer->drawElements(cmd->getPrimitiveType(),
+            cmd->getIndexFormat(),
+            cmd->getIndexDrawCount(),
+            cmd->getIndexDrawOffset());
+        _drawnVertices += cmd->getIndexDrawCount();
+    }
+    else
+    {
+        _commandBuffer->drawArrays(cmd->getPrimitiveType(),
+            cmd->getVertexDrawStart(),
+            cmd->getVertexDrawCount());
+        _drawnVertices += cmd->getVertexDrawCount();
+    }
+    _drawnBatches++;
+    _commandBuffer->endRenderPass();
+}
+
+
 void Renderer::flush()
 {
     flush2D();
@@ -711,7 +716,7 @@ void Renderer::flush3D()
 {
     if (_lastBatchedMeshCommand)
     {
-        _lastBatchedMeshCommand->postBatchDraw();
+        //_lastBatchedMeshCommand->postBatchDraw();
         _lastBatchedMeshCommand = nullptr;
     }
 }

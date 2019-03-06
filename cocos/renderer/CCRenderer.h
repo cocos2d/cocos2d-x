@@ -277,6 +277,7 @@ protected:
     inline GroupCommandManager * getGroupCommandManager() const { return _groupCommandManager; }
     void drawBatchedTriangles();
     void drawCustomCommand(RenderCommand* command);
+    void drawMeshCommand(RenderCommand* command);
 
     void beginFrame();
     void endFrame();

@@ -530,7 +530,6 @@ protected:
     StateBlock _stateBlock;
     StateBlock _stateBlockOld;
 private:
-    GroupCommand _groupCommand;
     CallbackCommand _beforeDraw;
     CallbackCommand _afterDraw;
     backend::VertexLayout _vertexLayout;

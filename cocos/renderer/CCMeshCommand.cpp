@@ -44,17 +44,8 @@ NS_CC_BEGIN
 
 
 MeshCommand::MeshCommand()
-: _displayColor(1.0f, 1.0f, 1.0f, 1.0f)
-, _matrixPalette(nullptr)
-, _matrixPaletteSize(0)
-, _materialID(0)
-, _vao(0)
-, _material(nullptr)
-, _glProgramState(nullptr)
-, _stateBlock(nullptr)
-, _textureID(0)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-, _rendererRecreatedListener(nullptr)
+ : _rendererRecreatedListener(nullptr)
 #endif
 {
     _type = RenderCommand::Type::MESH_COMMAND;
@@ -67,271 +58,35 @@ MeshCommand::MeshCommand()
 }
 
 void MeshCommand::init(float globalZOrder,
-                       Material* material,
-                       GLuint vertexBuffer,
-                       GLuint indexBuffer,
-                       GLenum primitive,
-                       GLenum indexFormat,
-                       ssize_t indexCount,
                        const cocos2d::Mat4 &mv,
                        uint32_t flags)
 {
-    CCASSERT(material, "material cannot be null");
-
     RenderCommand::init(globalZOrder, mv, flags);
-
     _globalOrder = globalZOrder;
-    _material = material;
-    
-    _vertexBuffer = vertexBuffer;
-    _indexBuffer = indexBuffer;
-    _primitive = primitive;
-    _indexFormat = indexFormat;
-    _indexCount = indexCount;
-    _mv.set(mv);
-
     _is3D = true;
 }
 
-void MeshCommand::init(float globalZOrder,
-                       GLuint textureID,
-                       GLProgramState* glProgramState,
-                       RenderState::StateBlock* stateBlock,
-                       GLuint vertexBuffer,
-                       GLuint indexBuffer,
-                       GLenum primitive,
-                       GLenum indexFormat,
-                       ssize_t indexCount,
-                       const cocos2d::Mat4& mv,
-                       uint32_t flags)
+void MeshCommand::init(float globalZOrder, const BlendFunc& blendFunc)
 {
-    CCASSERT(glProgramState, "GLProgramState cannot be null");
-    CCASSERT(stateBlock, "StateBlock cannot be null");
-    CCASSERT(!_material, "cannot init with GLProgramState if previously inited without GLProgramState");
-
-    RenderCommand::init(globalZOrder, mv, flags);
-    
-    _globalOrder = globalZOrder;
-    _textureID = textureID;
-
-    // weak ref
-    _glProgramState = glProgramState;
-    _stateBlock = stateBlock;
-    
-    _vertexBuffer = vertexBuffer;
-    _indexBuffer = indexBuffer;
-    _primitive = primitive;
-    _indexFormat = indexFormat;
-    _indexCount = indexCount;
-    _mv.set(mv);
-    
-    _is3D = true;
-
+    CustomCommand::init(globalZOrder, blendFunc);
 }
 
-
-void MeshCommand::setDisplayColor(const Vec4& color)
+void MeshCommand::init(float globalZOrder)
 {
-    CCASSERT(!_material, "If using material, you should set the color as a uniform: use u_color");
-
-    _displayColor = color;
-}
-
-void MeshCommand::setMatrixPalette(const Vec4* matrixPalette)
-{
-    CCASSERT(!_material, "If using material, you should set the color as a uniform: use u_matrixPalette");
-
-    _matrixPalette = matrixPalette;
-}
-
-void MeshCommand::setMatrixPaletteSize(int size)
-{
-    CCASSERT(!_material, "If using material, you should set the color as a uniform: use u_matrixPalette with its size");
-
-    _matrixPaletteSize = size;
+    CustomCommand::init(globalZOrder);
 }
 
 MeshCommand::~MeshCommand()
 {
-    releaseVAO();
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     Director::getInstance()->getEventDispatcher()->removeEventListener(_rendererRecreatedListener);
 #endif
 }
 
-void MeshCommand::applyRenderState()
-{
-    CCASSERT(!_material, "Must not be called when using materials");
-    CCASSERT(_stateBlock, "StateBlock must be non null");
-
-    // blend and texture
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _textureID);
-
-    auto &pipelineDescriptor = getPipelineDescriptor();
-
-    _stateBlock->bind(&pipelineDescriptor);
-}
-
-void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, BlendFunc blend)
-{
-    int intArray[7] = {0};
-    intArray[0] = (int)texID;
-    *(int**)&intArray[1] = (int*) glProgramState;
-    intArray[3] = (int) vertexBuffer;
-    intArray[4] = (int) indexBuffer;
-    intArray[5] = (int) blend.src;
-    intArray[6] = (int) blend.dst;
-    _materialID = XXH32((const void*)intArray, sizeof(intArray), 0);
-}
-
-uint32_t MeshCommand::getMaterialID() const
-{
-    return _materialID;
-}
-
-void MeshCommand::preBatchDraw()
-{
-    // Do nothing if using material since each pass needs to bind its own VAO
-    if (!_material)
-    {
-        if (Configuration::getInstance()->supportsShareableVAO() && _vao == 0)
-            buildVAO();
-        if (_vao)
-        {
-            glBindVertexArray(_vao);
-        }
-        else
-        {
-            glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-
-            // FIXME: Assumes that all the passes in the Material share the same Vertex Attribs
-//            GLProgramState* programState = _material
-//                                            ? _material->_currentTechnique->_passes.at(0)->getGLProgramState()
-//                                            : _glProgramState;
-//            programState->applyAttributes();
-//            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-        }
-    }
-}
-
-void MeshCommand::batchDraw()
-{
-    if (_material)
-    {
-        for(const auto& pass: _material->_currentTechnique->_passes)
-        {
-            glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
-            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
-        }
-    }
-    else
-    {
-//        _glProgramState->applyGLProgram(_mv);
-
-        // set render state
-        applyRenderState();
-
-        // Draw
-        glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
-        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
-    }
-}
-void MeshCommand::postBatchDraw()
-{
-    // when using material, unbind is after draw
-    if (!_material)
-    {
-        if (_vao)
-        {
-            glBindVertexArray(0);
-        }
-        else
-        {
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
-        }
-
-        // restore the default state since we don't know
-        // if the next command will need the default state or not
-        //TODO arnold
-        //RenderState::StateBlock::restoreGlobalState(0);
-    }
-}
-
-void MeshCommand::execute()
-{
-    // Draw without VAO
-    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-
-    if (_material)
-    {
-        for(const auto& pass: _material->_currentTechnique->_passes)
-        {
-            glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
-            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
-        }
-    }
-    else
-    {
-        // set render state
-//        _glProgramState->apply(_mv);
-
-        applyRenderState();
-
-        // Draw
-        glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
-        
-        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
-    }
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
-
-void MeshCommand::buildVAO()
-{
-    // FIXME: Assumes that all the passes in the Material share the same Vertex Attribs
-//    GLProgramState* programState = (_material != nullptr)
-//                                    ? _material->_currentTechnique->_passes.at(0)->getGLProgramState()
-//                                    : _glProgramState;
-//
-//    releaseVAO();
-//    glGenVertexArrays(1, &_vao);
-//    glBindVertexArray(_vao);
-//    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-//    auto flags = programState->getVertexAttribsFlags();
-//    for (int i = 0; flags > 0; i++) {
-//        int flag = 1 << i;
-//        if (flag & flags)
-//            glEnableVertexAttribArray(i);
-//        flags &= ~flag;
-//    }
-//    programState->applyAttributes(false);
-//    
-//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-//    
-//    glBindVertexArray(0);
-//    glBindBuffer(GL_ARRAY_BUFFER, 0);
-//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
-void MeshCommand::releaseVAO()
-{
-    if (_vao)
-    {
-        glDeleteVertexArrays(1, &_vao);
-        _vao = 0;
-        glBindVertexArray(0);
-    }
-}
-
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 void MeshCommand::listenRendererRecreated(EventCustom* event)
 {
-    _vao = 0;
 }
-
 #endif
 
 NS_CC_END

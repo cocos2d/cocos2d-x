@@ -121,13 +121,8 @@ bool Terrain::initProperties()
 
 void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
 {
-    _groupCommand.init(_globalZOrder);
-
     _beforeDraw.init(-1); //to ensure callbackcommand run before others
     _afterDraw.init(100000.0);
-
-    renderer->addCommand(&_groupCommand);
-    renderer->pushGroup(_groupCommand.getRenderQueueID());
 
     renderer->addCommand(&_beforeDraw);
 
@@ -229,7 +224,6 @@ void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, 
 
 
     renderer->addCommand(&_afterDraw);
-    renderer->popGroup();
 }
 
 bool Terrain::initHeightMap(const std::string& heightMap)
