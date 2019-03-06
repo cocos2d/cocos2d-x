@@ -89,7 +89,7 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     }
 
     if (_indexBuffer == nullptr){
-        _vertexBuffer = backend::Device::getInstance()->newBuffer(sizeof(uint16_t) * 6 * particleSystem->getParticleQuota(), backend::BufferType::INDEX, backend::BufferUsage::DYNAMIC);
+        _indexBuffer = backend::Device::getInstance()->newBuffer(sizeof(uint16_t) * 6 * particleSystem->getParticleQuota(), backend::BufferType::INDEX, backend::BufferUsage::DYNAMIC);
         if (_indexBuffer == nullptr)
         {
             CCLOG("Particle3DQuadRender::render create index buffer failed");
@@ -165,8 +165,8 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     _customCommand.setVertexBuffer(_vertexBuffer);
     _customCommand.setIndexBuffer(_indexBuffer, CustomCommand::IndexFormat::U_SHORT);
 
-    auto pMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    _programState->setUniform(_locPMatrix, &pMatrix.m, sizeof(pMatrix.m));
+    auto projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    _programState->setUniform(_locPMatrix, &projectionMatrix.m, sizeof(projectionMatrix.m));
 
     if (_texture)
     {
@@ -202,8 +202,6 @@ bool Particle3DQuadRender::initQuadRender( const std::string& texFile )
     {
         _programState = new backend::ProgramState(CC3D_particle_vert, CC3D_particleColor_frag);
     }
-
-    GLsizei stride = sizeof(posuvcolor);
 
     auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
     pipelineDescriptor.programState = _programState;
@@ -248,7 +246,6 @@ void Particle3DQuadRender::onBeforeDraw()
 void Particle3DQuadRender::onAfterDraw()
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
     renderer->setDepthTest(_rendererDepthTestEnabled);
     renderer->setDepthCompareFunction(_rendererDepthCmpFunc);
     renderer->setCullMode(_rendererCullMode);

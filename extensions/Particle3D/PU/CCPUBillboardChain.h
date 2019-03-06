@@ -344,11 +344,12 @@ protected:
     backend::UniformLocation    _locTexture;
     backend::UniformLocation    _locPMatrix;
 
-    bool _rendererDepthTestEnabled;
-    backend::CompareFunction _rendererDepthCmpFunc;
-    backend::CullMode _rendererCullMode;
-    backend::Winding _rendererWinding;
-    bool _rendererDepthWrite;
+    //renderer state cache variables
+    bool                        _rendererDepthTestEnabled   = true;
+    backend::CompareFunction    _rendererDepthCmpFunc       = backend::CompareFunction::LESS;
+    backend::CullMode           _rendererCullMode           = backend::CullMode::BACK;
+    backend::Winding            _rendererWinding            = backend::Winding::COUNTER_CLOCK_WISE;
+    bool                        _rendererDepthWrite         = false;
 };
 
 NS_CC_END

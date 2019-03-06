@@ -104,8 +104,8 @@ protected:
     cocos2d::CustomCommand _customCommand;
     cocos2d::CallbackCommand _beforeCommand;
     cocos2d::CallbackCommand _afterCommand;
-    backend::ProgramState* _programStateLine = nullptr;
-    backend::DepthStencilDescriptor *_depthstencilDescriptor = nullptr;
+    backend::ProgramState* _programStateLine                    = nullptr;
+    backend::DepthStencilDescriptor *_depthstencilDescriptor    = nullptr;
     backend::UniformLocation _locMVPMatrix;
     std::vector<V3F_C4B> _bufferLines;
     
@@ -113,8 +113,8 @@ protected:
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode3D);
 
-    bool _isDirty = true;
-    bool _rendererDepthTestEnabled;
+    bool _isDirty                   = true;
+    bool _rendererDepthTestEnabled  = true;
 };
 
 NS_CC_END

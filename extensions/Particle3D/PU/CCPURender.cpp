@@ -263,8 +263,8 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
         auto uColor = Vec4(1, 1, 1, 1);
         _programState->setUniform(_locColor, &uColor, sizeof(uColor));
 
-        auto pMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        _programState->setUniform(_locPMatrix, &pMatrix.m, sizeof(pMatrix.m));
+        auto projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        _programState->setUniform(_locPMatrix, &projectionMatrix.m, sizeof(projectionMatrix.m));
 
         renderer->addCommand(&_beforeCommand);
         renderer->addCommand(&_customCommand);
@@ -288,7 +288,6 @@ void PUParticle3DEntityRender::onBeforeDraw()
 void PUParticle3DEntityRender::onAfterDraw()
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
     renderer->setDepthTest(_rendererDepthTestEnabled);
     renderer->setDepthCompareFunction(_rendererDepthCmpFunc);
     renderer->setCullMode(_rendererCullMode);
@@ -606,8 +605,6 @@ bool PUParticle3DEntityRender::initRender( const std::string &texFile )
         _programState = new backend::ProgramState(CC3D_particle_vert, CC3D_particleColor_frag);
     }
     
-    GLsizei stride = sizeof(VertexInfo);
-
     auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
     pipelineDescriptor.programState = _programState;
     auto &layout = pipelineDescriptor.vertexLayout;
@@ -752,7 +749,6 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
         _vertexBuffer->updateData(&_vertices[0], vertexindex * sizeof(_vertices[0]));
         _indexBuffer->updateData(&_indices[0], sizeof(_indices[0]) * sizeof(uint16_t));
 
-        GLuint texId = (_texture ? _texture->getName() : 0);
         _stateBlock.setBlendFunc(_particleSystem->getBlendFunc());
 
         auto uColor = Vec4(1, 1, 1, 1);
@@ -763,8 +759,8 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
             _programState->setTexture(_locTexture, 0, _texture->getBackendTexture());
         }
 
-        auto pMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        _programState->setUniform(_locPMatrix, &pMatrix.m, sizeof(pMatrix.m));
+        auto projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        _programState->setUniform(_locPMatrix, &projectionMatrix.m, sizeof(projectionMatrix.m));
 
         _customCommand.setIndexDrawInfo(0, _indices.size());
 
@@ -931,9 +927,8 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
             _programState->setTexture(_locTexture, 0, _texture->getBackendTexture());
         }
 
-        auto pMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        _programState->setUniform(_locPMatrix, &pMatrix.m, sizeof(pMatrix.m));
-
+        auto projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        _programState->setUniform(_locPMatrix, &projectionMatrix.m, sizeof(projectionMatrix.m));
 
         renderer->addCommand(&_beforeCommand);
         renderer->addCommand(&_customCommand);
