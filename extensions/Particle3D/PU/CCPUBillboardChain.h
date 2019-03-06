@@ -29,6 +29,9 @@
 
 #include <vector>
 #include "renderer/CCRenderState.h"
+#include "renderer/CCCustomCommand.h"
+#include "renderer/CCCallbackCommand.h"
+#include "renderer/backend/Buffer.h"
 #include "base/CCRef.h"
 #include "math/CCMath.h"
 
@@ -235,8 +238,6 @@ public:
     //void getWorldTransforms(Matrix4*) const;
     /// @copydoc MovableObject::visitRenderables
 
-    GLuint getTextureName();
-
 protected:
 
     /// Setup the STL collections
@@ -251,6 +252,12 @@ protected:
     virtual void updateIndexBuffer(void);
 
     void init(const std::string& texFile);
+
+private:
+
+    void onBeforeDraw();
+
+    void onAfterDraw();
 
 protected:
 
@@ -318,17 +325,31 @@ protected:
         Vec2 uv;
         Vec4 color;
     };
-    MeshCommand*            _meshCommand;
-    RenderState::StateBlock* _stateBlock;
-    Texture2D*              _texture;
-    GLProgramState*         _glProgramState;
-    IndexBuffer*            _indexBuffer; //index buffer
-    VertexBuffer*           _vertexBuffer; // vertex buffer
+    //MeshCommand*            _meshCommand    = nullptr;
+    CustomCommand           _customCommand;
+    CallbackCommand         _beforeCommand;
+    CallbackCommand         _afterCommand;
+    RenderState::StateBlock _stateBlock;
+    Texture2D*              _texture        = nullptr;
+    backend::ProgramState*  _programState   = nullptr;
+    backend::Buffer*        _indexBuffer    = nullptr; //index buffer
+    backend::Buffer*        _vertexBuffer   = nullptr; //vertex buffer
 
     std::vector<VertexInfo> _vertices;
-    std::vector<unsigned short> _indices;
+    std::vector<uint16_t>   _indices;
 
-    std::string            _texFile;
+    std::string             _texFile;
+
+    backend::UniformLocation    _locColor;
+    backend::UniformLocation    _locTexture;
+    backend::UniformLocation    _locPMatrix;
+
+    //renderer state cache variables
+    bool                        _rendererDepthTestEnabled   = true;
+    backend::CompareFunction    _rendererDepthCmpFunc       = backend::CompareFunction::LESS;
+    backend::CullMode           _rendererCullMode           = backend::CullMode::BACK;
+    backend::Winding            _rendererWinding            = backend::Winding::COUNTER_CLOCK_WISE;
+    bool                        _rendererDepthWrite         = false;
 };
 
 NS_CC_END

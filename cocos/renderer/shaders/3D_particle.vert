@@ -1,5 +1,5 @@
 
-const char* cc3D_particle_vert = R"(
+const char* CC3D_particle_vert = R"(
                                               
 attribute vec4 a_position;
 attribute vec4 a_color;

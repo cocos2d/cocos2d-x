@@ -31,10 +31,9 @@
 #include "renderer/CCMeshCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/CCGLProgramCache.h"
-#include "renderer/CCVertexIndexBuffer.h"
-#include "renderer/CCVertexAttribBinding.h"
+#include "renderer/ccShaders.h"
+#include "renderer/backend/Device.h"
+#include "renderer/backend/Buffer.h"
 #include "base/CCDirector.h"
 #include "3d/CCSprite3D.h"
 #include "3d/CCMesh.h"
@@ -81,23 +80,21 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
     
     if (_vertexBuffer == nullptr){
         GLsizei stride = sizeof(VertexInfo);
-        _vertexBuffer = VertexBuffer::create(stride, 4 * particleSystem->getParticleQuota());
+        _vertexBuffer = backend::Device::getInstance()->newBuffer(stride * 4 * particleSystem->getParticleQuota(), backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
         if (_vertexBuffer == nullptr)
         {
             CCLOG("PUParticle3DQuadRender::render create vertex buffer failed");
             return;
         }
-        _vertexBuffer->retain();
     }
 
     if (_indexBuffer == nullptr){
-        _indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 6 * particleSystem->getParticleQuota());
+        _indexBuffer = backend::Device::getInstance()->newBuffer(6 * particleSystem->getParticleQuota()* sizeof(uint16_t), backend::BufferType::INDEX, backend::BufferUsage::DYNAMIC);
         if (_indexBuffer == nullptr)
         {
             CCLOG("PUParticle3DQuadRender::render create index buffer failed");
             return;
         }
-        _indexBuffer->retain();
     }
     const ParticlePool::PoolList &activeParticleList = particlePool.getActiveDataList();
     if (_vertices.size() < activeParticleList.size() * 4)
@@ -243,28 +240,59 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
     _indices.erase(_indices.begin() + index, _indices.end());
     
     if (!_vertices.empty() && !_indices.empty()){
-        _vertexBuffer->updateVertices(&_vertices[0], vertexindex/* * sizeof(_posuvcolors[0])*/, 0);
-        _indexBuffer->updateIndices(&_indices[0], index/* * sizeof(unsigned short)*/, 0);
+        _vertexBuffer->updateData(&_vertices[0], vertexindex * sizeof(_vertices[0]));
+        _indexBuffer->updateData(&_indices[0], index * sizeof(_indices[0]));
 
-        _stateBlock->setBlendFunc(particleSystem->getBlendFunc());
+        _stateBlock.setBlendFunc(particleSystem->getBlendFunc());
         
-        GLuint texId = (_texture ? _texture->getName() : 0);
-        _meshCommand->init(0,
-                           texId,
-                           _glProgramState,
-                           _stateBlock,
-                           _vertexBuffer->getVBO(),
-                           _indexBuffer->getVBO(),
-                           GL_TRIANGLES,
-                           GL_UNSIGNED_SHORT,
-                           index,
-                           transform,
-                           Node::FLAGS_RENDER_AS_3D);
-        _meshCommand->setSkipBatching(true);
-        _meshCommand->setTransparent(true);
-        _glProgramState->setUniformVec4("u_color", Vec4(1,1,1,1));
-        renderer->addCommand(_meshCommand);
+        _beforeCommand.init(0.0);
+        _afterCommand.init(0.0);
+        _customCommand.init(0.0);
+        _customCommand.setSkipBatching(true);
+        _customCommand.setTransparent(true);
+
+        _customCommand.setVertexBuffer(_vertexBuffer);
+        _customCommand.setIndexBuffer(_indexBuffer, CustomCommand::IndexFormat::U_SHORT);
+        _customCommand.setIndexDrawInfo(0, index);
+
+        if (_texture)
+        {
+            _programState->setTexture(_locTexture, 0, _texture->getBackendTexture());
+        }
+
+        auto uColor = Vec4(1, 1, 1, 1);
+        _programState->setUniform(_locColor, &uColor, sizeof(uColor));
+
+        auto &projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        _programState->setUniform(_locPMatrix, &projectionMatrix.m, sizeof(projectionMatrix.m));
+
+        renderer->addCommand(&_beforeCommand);
+        renderer->addCommand(&_customCommand);
+        renderer->addCommand(&_afterCommand);
     }
+}
+
+void PUParticle3DEntityRender::onBeforeDraw()
+{
+    auto *renderer = Director::getInstance()->getRenderer();
+    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    _rendererDepthTestEnabled = renderer->getDepthTest();
+    _rendererDepthCmpFunc = renderer->getDepthCompareFunction();
+    _rendererCullMode = renderer->getCullMode();
+    _rendererDepthWrite = renderer->getDepthWrite();
+    _rendererWinding = renderer->getWinding();
+    _stateBlock.bind(&pipelineDescriptor);
+    renderer->setDepthTest(true);
+}
+
+void PUParticle3DEntityRender::onAfterDraw()
+{
+    auto *renderer = Director::getInstance()->getRenderer();
+    renderer->setDepthTest(_rendererDepthTestEnabled);
+    renderer->setDepthCompareFunction(_rendererDepthCmpFunc);
+    renderer->setCullMode(_rendererCullMode);
+    renderer->setDepthWrite(_rendererDepthWrite);
+    renderer->setWinding(_rendererWinding);
 }
 
 PUParticle3DQuadRender::PUParticle3DQuadRender()
@@ -411,9 +439,9 @@ void PUParticle3DQuadRender::setType( Type type )
 {
     _type = type;
     if (_type == PERPENDICULAR_COMMON || _type == PERPENDICULAR_SELF){
-        _stateBlock->setCullFace(false);
+        _stateBlock.setCullFace(false);
     }else{
-        _stateBlock->setCullFace(true);
+        _stateBlock.setCullFace(true);
     }
 }
 
@@ -539,65 +567,68 @@ void PUParticle3DModelRender::reset()
 
 
 PUParticle3DEntityRender::PUParticle3DEntityRender()
-    : _meshCommand(nullptr)
-    , _texture(nullptr)
-    , _glProgramState(nullptr)
+    : _texture(nullptr)
+    , _programState(nullptr)
     , _indexBuffer(nullptr)
     , _vertexBuffer(nullptr)
 {
-    _stateBlock = RenderState::StateBlock::create();
-    CC_SAFE_RETAIN(_stateBlock);
-
-    _stateBlock->setCullFace(false);
-    _stateBlock->setCullFaceSide(RenderState::CULL_FACE_SIDE_BACK);
-    _stateBlock->setDepthTest(false);
-    _stateBlock->setDepthWrite(false);
-    _stateBlock->setBlend(true);
+    _stateBlock.setCullFace(false);
+    _stateBlock.setCullFaceSide(backend::CullMode::BACK);
+    _stateBlock.setDepthTest(false);
+    _stateBlock.setDepthWrite(false);
+    _stateBlock.setBlend(true);
 }
 
 PUParticle3DEntityRender::~PUParticle3DEntityRender()
-{
-    CC_SAFE_DELETE(_meshCommand);
-    CC_SAFE_RELEASE(_stateBlock);
+{;
     //CC_SAFE_RELEASE(_texture);
-    CC_SAFE_RELEASE(_glProgramState);
+    CC_SAFE_RELEASE(_programState);
     CC_SAFE_RELEASE(_vertexBuffer);
     CC_SAFE_RELEASE(_indexBuffer);
 }
 
 bool PUParticle3DEntityRender::initRender( const std::string &texFile )
 {
-    GLProgram* glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_PARTICLE_COLOR);
+    CC_SAFE_RELEASE_NULL(_programState);
     if (!texFile.empty())
     {
         auto tex = Director::getInstance()->getTextureCache()->addImage(texFile);
         if (tex)
         {
             _texture = tex;
-            glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_PARTICLE_TEXTURE);
+            _programState = new backend::ProgramState(CC3D_particle_vert, CC3D_particleTexture_frag);
         }
-        else
-            _texture = nullptr;
     }
-    auto glProgramState = GLProgramState::create(glProgram);
-    glProgramState->retain();
 
-    GLsizei stride = sizeof(VertexInfo);
+    if (!_programState)
+    {
+        _programState = new backend::ProgramState(CC3D_particle_vert, CC3D_particleColor_frag);
+    }
+    
+    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    pipelineDescriptor.programState = _programState;
+    auto &layout = pipelineDescriptor.vertexLayout;
 
-    glProgramState->setVertexAttribPointer(s_attributeNames[GLProgram::VERTEX_ATTRIB_POSITION], 3, GL_FLOAT, GL_FALSE, stride, (GLvoid*)offsetof(VertexInfo, position));
-    glProgramState->setVertexAttribPointer(s_attributeNames[GLProgram::VERTEX_ATTRIB_TEX_COORD], 2, GL_FLOAT, GL_FALSE, stride, (GLvoid*)offsetof(VertexInfo, uv));
-    glProgramState->setVertexAttribPointer(s_attributeNames[GLProgram::VERTEX_ATTRIB_COLOR], 4, GL_FLOAT, GL_FALSE, stride, (GLvoid*)offsetof(VertexInfo, color));
+    layout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(VertexInfo, position), false);
+    layout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT2, offsetof(VertexInfo, uv), false);
+    layout.setAtrribute("a_color", 2, backend::VertexFormat::FLOAT4, offsetof(VertexInfo, color), false);
+    layout.setLayout(sizeof(VertexInfo), backend::VertexStepMode::VERTEX);
 
-    _glProgramState = glProgramState;
+    _locColor = _programState->getUniformLocation("u_color");
+    _locPMatrix = _programState->getUniformLocation("u_PMatrix");
+    _locTexture = _programState->getUniformLocation("u_texture");
 
-    _meshCommand = new (std::nothrow) MeshCommand();
-    _meshCommand->setSkipBatching(true);
-    _meshCommand->setTransparent(true);
+    _customCommand.setTransparent(true);
+    _customCommand.setSkipBatching(true);
 
-    _stateBlock->setDepthTest(_depthTest);
-    _stateBlock->setDepthWrite(_depthWrite);
-    _stateBlock->setCullFaceSide(RenderState::CULL_FACE_SIDE_BACK);
-    _stateBlock->setCullFace(true);
+    _stateBlock.setDepthTest(true);
+    _stateBlock.setDepthWrite(false);
+    _stateBlock.setCullFaceSide(backend::CullMode::BACK);
+    _stateBlock.setCullFace(true);
+
+    _beforeCommand.func = CC_CALLBACK_0(PUParticle3DEntityRender::onBeforeDraw, this);
+    _afterCommand.func = CC_CALLBACK_0(PUParticle3DEntityRender::onAfterDraw, this);
+
     return true;
 }
 
@@ -647,22 +678,20 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
 
     if (_vertexBuffer == nullptr && _indexBuffer == nullptr){
         GLsizei stride = sizeof(VertexInfo);
-        _vertexBuffer = VertexBuffer::create(stride, 8 * particleSystem->getParticleQuota());
+        _vertexBuffer = backend::Device::getInstance()->newBuffer(stride * 8 * particleSystem->getParticleQuota(), backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
         if (_vertexBuffer == nullptr)
         {
             CCLOG("PUParticle3DBoxRender::render create vertex buffer failed");
             return;
         }
-        _vertexBuffer->retain();
         _vertices.resize(8 * particleSystem->getParticleQuota());
 
-        _indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 36 * particleSystem->getParticleQuota());
+        _indexBuffer = backend::Device::getInstance()->newBuffer(sizeof(uint16_t) * 36 * particleSystem->getParticleQuota(), backend::BufferType::INDEX, backend::BufferUsage::DYNAMIC);
         if (_indexBuffer == nullptr)
         {
             CCLOG("PUParticle3DBoxRender::render create index buffer failed");
             return;
         }
-        _indexBuffer->retain();
         _indices.resize(36 * particleSystem->getParticleQuota());
         reBuildIndices(particleSystem->getParticleQuota());
     }
@@ -717,27 +746,27 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
     }
 
     if (!_vertices.empty() && !_indices.empty()){
-        _vertexBuffer->updateVertices(&_vertices[0], vertexindex/* * sizeof(_posuvcolors[0])*/, 0);
-        _indexBuffer->updateIndices(&_indices[0], index/* * sizeof(unsigned short)*/, 0);
+        _vertexBuffer->updateData(&_vertices[0], vertexindex * sizeof(_vertices[0]));
+        _indexBuffer->updateData(&_indices[0], sizeof(_indices[0]) * sizeof(uint16_t));
 
-        GLuint texId = (_texture ? _texture->getName() : 0);
-        _stateBlock->setBlendFunc(_particleSystem->getBlendFunc());
-        _meshCommand->init(0,
-                           texId,
-                           _glProgramState,
-                           _stateBlock,
-                           _vertexBuffer->getVBO(),
-                           _indexBuffer->getVBO(),
-                           GL_TRIANGLES,
-                           GL_UNSIGNED_SHORT,
-                           index,
-                           transform,
-                           Node::FLAGS_RENDER_AS_3D);
-        _meshCommand->setSkipBatching(true);
-        _meshCommand->setTransparent(true);
+        _stateBlock.setBlendFunc(_particleSystem->getBlendFunc());
 
-        _glProgramState->setUniformVec4("u_color", Vec4(1,1,1,1));
-        renderer->addCommand(_meshCommand);
+        auto uColor = Vec4(1, 1, 1, 1);
+        _programState->setUniform(_locColor, &uColor, sizeof(uColor));
+        
+        if (_texture)
+        {
+            _programState->setTexture(_locTexture, 0, _texture->getBackendTexture());
+        }
+
+        auto &projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        _programState->setUniform(_locPMatrix, &projectionMatrix.m, sizeof(projectionMatrix.m));
+
+        _customCommand.setIndexDrawInfo(0, _indices.size());
+
+        renderer->addCommand(&_beforeCommand);
+        renderer->addCommand(&_customCommand);
+        renderer->addCommand(&_afterCommand);
     }
 }
 
@@ -829,22 +858,20 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
     unsigned int indexCount = 6 * _numberOfRings * (_numberOfSegments + 1);
     if (_vertexBuffer == nullptr && _indexBuffer == nullptr){
         GLsizei stride = sizeof(VertexInfo);
-        _vertexBuffer = VertexBuffer::create(stride, vertexCount * particleSystem->getParticleQuota());
+        _vertexBuffer = backend::Device::getInstance()->newBuffer(stride * vertexCount * particleSystem->getParticleQuota(), backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
         if (_vertexBuffer == nullptr)
         {
             CCLOG("PUSphereRender::render create vertex buffer failed");
             return;
         }
-        _vertexBuffer->retain();
         _vertices.resize(vertexCount * particleSystem->getParticleQuota());
 
-        _indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, indexCount * particleSystem->getParticleQuota());
+        _indexBuffer = backend::Device::getInstance()->newBuffer(sizeof(uint16_t) * indexCount * particleSystem->getParticleQuota(), backend::BufferType::INDEX, backend::BufferUsage::DYNAMIC);
         if (_indexBuffer == nullptr)
         {
             CCLOG("PUSphereRender::render create index buffer failed");
             return;
         }
-        _indexBuffer->retain();
         _indices.resize(indexCount * particleSystem->getParticleQuota());
 
         buildBuffers(particleSystem->getParticleQuota());
@@ -881,28 +908,31 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
     }
 
     if (!_vertices.empty() && !_indices.empty()){
-        _vertexBuffer->updateVertices(&_vertices[0], vertexindex/* * sizeof(_posuvcolors[0])*/, 0);
-        _indexBuffer->updateIndices(&_indices[0], index/* * sizeof(unsigned short)*/, 0);
+        _customCommand.init(0.0f);
+        _beforeCommand.init(0.0f);
+        _afterCommand.init(0.0f);
 
-        GLuint texId = (_texture ? _texture->getName() : 0);
-        _stateBlock->setBlendFunc(particleSystem->getBlendFunc());
-        _meshCommand->init(
-                           0,
-                           texId,
-                           _glProgramState,
-                           _stateBlock,
-                           _vertexBuffer->getVBO(),
-                           _indexBuffer->getVBO(),
-                           GL_TRIANGLES,
-                           GL_UNSIGNED_SHORT,
-                           index,
-                           transform,
-                           Node::FLAGS_RENDER_AS_3D);
-        _meshCommand->setSkipBatching(true);
-        _meshCommand->setTransparent(true);
+        _vertexBuffer->updateData(&_vertices[0], vertexindex * sizeof(_vertices[0]));
+        _indexBuffer->updateData(&_indices[0], index * sizeof(_indices[0]));
 
-        _glProgramState->setUniformVec4("u_color", Vec4(1,1,1,1));
-        renderer->addCommand(_meshCommand);
+        _customCommand.setVertexBuffer(_vertexBuffer);
+        _customCommand.setIndexBuffer(_indexBuffer, CustomCommand::IndexFormat::U_SHORT);
+        _customCommand.setIndexDrawInfo(0, index);
+
+        auto uColor = Vec4(1, 1, 1, 1);
+        _programState->setUniform(_locColor, &uColor, sizeof(uColor));
+
+        if (_texture)
+        {
+            _programState->setTexture(_locTexture, 0, _texture->getBackendTexture());
+        }
+
+        auto &projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        _programState->setUniform(_locPMatrix, &projectionMatrix.m, sizeof(projectionMatrix.m));
+
+        renderer->addCommand(&_beforeCommand);
+        renderer->addCommand(&_customCommand);
+        renderer->addCommand(&_afterCommand);
     }
 }
 

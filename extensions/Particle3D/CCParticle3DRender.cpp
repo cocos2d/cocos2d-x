@@ -28,10 +28,10 @@
 #include "renderer/CCMeshCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/CCGLProgramCache.h"
-#include "renderer/CCVertexIndexBuffer.h"
-#include "renderer/CCVertexAttribBinding.h"
+#include "renderer/backend/ProgramState.h"
+#include "renderer/backend/Buffer.h"
+#include "renderer/backend/Device.h"
+#include "renderer/ccShaders.h"
 #include "base/CCDirector.h"
 #include "3d/CCSprite3D.h"
 #include "2d/CCCamera.h"
@@ -39,9 +39,8 @@
 NS_CC_BEGIN
 
 Particle3DQuadRender::Particle3DQuadRender()
-: _meshCommand(nullptr)
-, _texture(nullptr)
-, _glProgramState(nullptr)
+: _texture(nullptr)
+, _programState(nullptr)
 , _indexBuffer(nullptr)
 , _vertexBuffer(nullptr)
 , _texFile("")
@@ -50,9 +49,8 @@ Particle3DQuadRender::Particle3DQuadRender()
 
 Particle3DQuadRender::~Particle3DQuadRender()
 {
-    CC_SAFE_DELETE(_meshCommand);
     //CC_SAFE_RELEASE(_texture);
-    CC_SAFE_RELEASE(_glProgramState);
+    CC_SAFE_RELEASE(_programState);
     CC_SAFE_RELEASE(_vertexBuffer);
     CC_SAFE_RELEASE(_indexBuffer);
 }
@@ -82,23 +80,21 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     
     if (_vertexBuffer == nullptr){
         GLsizei stride = sizeof(Particle3DQuadRender::posuvcolor);
-        _vertexBuffer = VertexBuffer::create(stride, 4 * particleSystem->getParticleQuota());
+        _vertexBuffer = backend::Device::getInstance()->newBuffer(stride * 4 * particleSystem->getParticleQuota(), backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
         if (_vertexBuffer == nullptr)
         {
             CCLOG("Particle3DQuadRender::render create vertex buffer failed");
             return;
         }
-        _vertexBuffer->retain();
     }
 
     if (_indexBuffer == nullptr){
-        _indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 6 * particleSystem->getParticleQuota());
+        _indexBuffer = backend::Device::getInstance()->newBuffer(sizeof(uint16_t) * 6 * particleSystem->getParticleQuota(), backend::BufferType::INDEX, backend::BufferUsage::DYNAMIC);
         if (_indexBuffer == nullptr)
         {
             CCLOG("Particle3DQuadRender::render create index buffer failed");
             return;
         }
-        _indexBuffer->retain();
     }
     ParticlePool::PoolList activeParticleList = particlePool.getActiveDataList();
     if (_posuvcolors.size() < activeParticleList.size() * 4)
@@ -157,65 +153,104 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     _posuvcolors.erase(_posuvcolors.begin() + vertexindex, _posuvcolors.end());
     _indexData.erase(_indexData.begin() + index, _indexData.end());
     
-    _vertexBuffer->updateVertices(&_posuvcolors[0], vertexindex/* * sizeof(_posuvcolors[0])*/, 0);
-    _indexBuffer->updateIndices(&_indexData[0], index/* * sizeof(unsigned short)*/, 0);
+    _vertexBuffer->updateData(&_posuvcolors[0], vertexindex * sizeof(_posuvcolors[0]));
+    _indexBuffer->updateData(&_indexData[0], index * sizeof(_indexData[0]));
     
-    GLuint texId = (_texture ? _texture->getName() : 0);
     float depthZ = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
 
-    _meshCommand->init(
-                       depthZ,
-                       texId,
-                       _glProgramState,
-                       _stateBlock,
-                       _vertexBuffer->getVBO(),
-                       _indexBuffer->getVBO(),
-                       GL_TRIANGLES,
-                       GL_UNSIGNED_SHORT,
-                       index,
-                       transform,
-                       0);
-    _glProgramState->setUniformVec4("u_color", Vec4(1,1,1,1));
-    renderer->addCommand(_meshCommand);
+    _beforeCommand.init(depthZ);
+    _customCommand.init(depthZ);
+    _afterCommand.init(depthZ);
+
+    _customCommand.setVertexBuffer(_vertexBuffer);
+    _customCommand.setIndexBuffer(_indexBuffer, CustomCommand::IndexFormat::U_SHORT);
+
+    auto &projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    _programState->setUniform(_locPMatrix, &projectionMatrix.m, sizeof(projectionMatrix.m));
+
+    if (_texture)
+    {
+        _programState->setTexture(_locTexture, 0, _texture->getBackendTexture());
+    }
+    _stateBlock.setBlendFunc(particleSystem->getBlendFunc());
+    auto uColor = Vec4(1, 1, 1, 1);
+    _programState->setUniform(_locColor, &uColor, sizeof(uColor));
+
+
+    _customCommand.setIndexDrawInfo(0, index);
+    
+    renderer->addCommand(&_beforeCommand);
+    renderer->addCommand(&_customCommand);
+    renderer->addCommand(&_afterCommand);
 }
 
 bool Particle3DQuadRender::initQuadRender( const std::string& texFile )
 {
-    GLProgram* glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_PARTICLE_COLOR);
+    CC_SAFE_RELEASE_NULL(_programState);
+
     if (!texFile.empty())
     {
         auto tex = Director::getInstance()->getTextureCache()->addImage(texFile);
         if (tex)
         {
             _texture = tex;
-            glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_PARTICLE_TEXTURE);
+            _programState = new backend::ProgramState(CC3D_particle_vert, CC3D_particleTexture_frag);
         }
-        else
-            _texture = nullptr;
     }
-    auto glProgramState = GLProgramState::create(glProgram);
-    glProgramState->retain();
 
-    GLsizei stride = sizeof(Particle3DQuadRender::posuvcolor);
+    if (!_programState)
+    {
+        _programState = new backend::ProgramState(CC3D_particle_vert, CC3D_particleColor_frag);
+    }
 
-    glProgramState->setVertexAttribPointer(s_attributeNames[GLProgram::VERTEX_ATTRIB_POSITION], 3, GL_FLOAT, GL_FALSE, stride, (GLvoid*)offsetof(posuvcolor, position));
-    glProgramState->setVertexAttribPointer(s_attributeNames[GLProgram::VERTEX_ATTRIB_TEX_COORD], 2, GL_FLOAT, GL_FALSE, stride, (GLvoid*)offsetof(posuvcolor, uv));
-    glProgramState->setVertexAttribPointer(s_attributeNames[GLProgram::VERTEX_ATTRIB_COLOR], 4, GL_FLOAT, GL_FALSE, stride, (GLvoid*)offsetof(posuvcolor, color));
+    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    pipelineDescriptor.programState = _programState;
+    auto &layout = pipelineDescriptor.vertexLayout;
 
-    _glProgramState = glProgramState;
-    //ret->_vertexBuffer = VertexBuffer::create(stride, 4 * 10000);
-    //ret->_vertexBuffer->retain();
-    //ret->_indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 6 * 10000);
-    //ret->_indexBuffer->retain();
+    layout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(posuvcolor, position), false);
+    layout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT2, offsetof(posuvcolor, uv), false);
+    layout.setAtrribute("a_color", 2, backend::VertexFormat::FLOAT4, offsetof(posuvcolor, color), false);
+    layout.setLayout(sizeof(posuvcolor), backend::VertexStepMode::VERTEX);
 
-    _meshCommand = new (std::nothrow) MeshCommand();
-    _meshCommand->setSkipBatching(true);
-    _meshCommand->setTransparent(true);
-    _stateBlock->setDepthTest(_depthTest);
-    _stateBlock->setDepthWrite(_depthWrite);
-    _stateBlock->setCullFace(true);
-    _stateBlock->setCullFaceSide(RenderState::CULL_FACE_SIDE_BACK);
+    _locColor = _programState->getUniformLocation("u_color");
+    _locPMatrix = _programState->getUniformLocation("u_PMatrix");
+    _locTexture = _programState->getUniformLocation("u_texture");
+
+    _customCommand.setTransparent(true);
+    _customCommand.setSkipBatching(true);
+
+    _stateBlock.setDepthTest(true);
+    _stateBlock.setDepthWrite(false);
+    _stateBlock.setCullFaceSide(backend::CullMode::BACK);
+    _stateBlock.setCullFace(true);
+
+    _beforeCommand.func = CC_CALLBACK_0(Particle3DQuadRender::onBeforeDraw, this);
+    _afterCommand.func = CC_CALLBACK_0(Particle3DQuadRender::onAfterDraw, this);
     return true;
+}
+
+
+void Particle3DQuadRender::onBeforeDraw()
+{
+    auto *renderer = Director::getInstance()->getRenderer();
+    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    _rendererDepthTestEnabled = renderer->getDepthTest();
+    _rendererDepthCmpFunc = renderer->getDepthCompareFunction();
+    _rendererCullMode = renderer->getCullMode();
+    _rendererDepthWrite = renderer->getDepthWrite();
+    _rendererWinding = renderer->getWinding();
+    _stateBlock.bind(&pipelineDescriptor);
+    renderer->setDepthTest(true);
+}
+
+void Particle3DQuadRender::onAfterDraw()
+{
+    auto *renderer = Director::getInstance()->getRenderer();
+    renderer->setDepthTest(_rendererDepthTestEnabled);
+    renderer->setDepthCompareFunction(_rendererDepthCmpFunc);
+    renderer->setCullMode(_rendererCullMode);
+    renderer->setDepthWrite(_rendererDepthWrite);
+    renderer->setWinding(_rendererWinding);
 }
 
 void Particle3DQuadRender::reset()
@@ -311,27 +346,20 @@ Particle3DRender::Particle3DRender()
 , _depthTest(true)
 , _depthWrite(false)
 {
-    _stateBlock = RenderState::StateBlock::create();
-    _stateBlock->retain();
-
-    _stateBlock->setCullFace(false);
-    _stateBlock->setCullFaceSide(RenderState::CULL_FACE_SIDE_BACK);
-    _stateBlock->setDepthTest(false);
-    _stateBlock->setDepthWrite(false);
-    _stateBlock->setBlend(true);
+    _stateBlock.setCullFace(false);
+    _stateBlock.setCullFaceSide(backend::CullMode::BACK);
+    _stateBlock.setDepthTest(false);
+    _stateBlock.setDepthWrite(false);
+    _stateBlock.setBlend(true);
 };
 
 Particle3DRender::~Particle3DRender()
 {
-    _stateBlock->release();
 }
 
 void Particle3DRender::copyAttributesTo (Particle3DRender *render)
 {
-    CC_SAFE_RELEASE(render->_stateBlock);
     render->_stateBlock = _stateBlock;
-    CC_SAFE_RETAIN(render->_stateBlock);
-
     render->_isVisible = _isVisible;
     render->_rendererScale = _rendererScale;
     render->_depthTest = _depthTest;
@@ -356,18 +384,18 @@ void Particle3DRender::notifyRescaled( const Vec3& scale )
 void Particle3DRender::setDepthTest( bool isDepthTest )
 {
     _depthTest = isDepthTest;
-    _stateBlock->setDepthTest(_depthTest);
+    _stateBlock.setDepthTest(_depthTest);
 }
 
 void Particle3DRender::setDepthWrite( bool isDepthWrite )
 {
     _depthWrite = isDepthWrite;
-    _stateBlock->setDepthWrite(_depthWrite);
+    _stateBlock.setDepthWrite(_depthWrite);
 }
 
 void Particle3DRender::setBlendFunc(const BlendFunc &blendFunc)
 {
-    _stateBlock->setBlendFunc(blendFunc);
+    _stateBlock.setBlendFunc(blendFunc);
 }
 
 NS_CC_END

@@ -2303,10 +2303,10 @@ Animate3DCallbackTest::Animate3DCallbackTest()
     _sprite3d->getMeshByName("Girl_Hair02")->setVisible(false);
 
     //TODO arnold particlesystem3d not unimpl
-    //auto rootps = PUParticleSystem3D::create("explosionSystem.pu");
-    //rootps->stopParticleSystem();
-    //rootps->setScale(4.0f);
-    //this->addChild(rootps, 0, 100);
+    auto rootps = PUParticleSystem3D::create("explosionSystem.pu");
+    rootps->stopParticleSystem();
+    rootps->setScale(4.0f);
+    this->addChild(rootps, 0, 100);
 
     auto animation = Animation3D::create("Sprite3DTest/ReskinGirl.c3b");
     if (animation)
@@ -2319,18 +2319,17 @@ Animate3DCallbackTest::Animate3DCallbackTest()
 
         auto listener = EventListenerCustom::create(Animate3DDisplayedNotification, [&](EventCustom* event)
         {
-            //TODO arnold particlesystem3d not unimpl
-            //auto info = (Animate3D::Animate3DDisplayedEventInfo*)event->getUserData();
-            //auto node = getChildByTag(100);
-            //if (node)
-            //{
-            //    auto mat = _sprite3d->getNodeToWorldTransform() * _sprite3d->getSkeleton()->getBoneByName("Bip01 R Hand")->getWorldMat();
-            //    node->setPosition3D(Vec3(mat.m[12] + 100, mat.m[13], mat.m[14]));
-            //    ((PUParticleSystem3D*)node)->startParticleSystem();
-            //}
+            auto info = (Animate3D::Animate3DDisplayedEventInfo*)event->getUserData();
+            auto node = getChildByTag(100);
+            if (node)
+            {
+                auto mat = _sprite3d->getNodeToWorldTransform() * _sprite3d->getSkeleton()->getBoneByName("Bip01 R Hand")->getWorldMat();
+                node->setPosition3D(Vec3(mat.m[12] + 100, mat.m[13], mat.m[14]));
+                ((PUParticleSystem3D*)node)->startParticleSystem();
+            }
 
 
-            //cocos2d::log("frame %d", info->frame);
+            cocos2d::log("frame %d", info->frame);
         });
         Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
     }
