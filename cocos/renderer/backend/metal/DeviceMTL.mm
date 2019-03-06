@@ -71,9 +71,7 @@ Texture* DeviceMTL::newTexture(const TextureDescriptor& descriptor)
         case TextureType::TEXTURE_2D:
             return new (std::nothrow) TextureMTL(_mtlDevice, descriptor);
         case TextureType::TEXTURE_CUBE:
-            //TODO arnold
-            CCASSERT(false, "TextureCubMTL is not implemented!");
-            return nullptr;
+            return new (std::nothrow) TextureCubeMTL(_mtlDevice, descriptor);
         default:
             CCASSERT(false, "invalidate texture type");
             return nullptr;

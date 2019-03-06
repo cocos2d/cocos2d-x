@@ -413,6 +413,9 @@ unsigned int CommandBufferMTL::fillUniformBuffer(uint8_t* buffer, const std::vec
     for(const auto& iter : unifornInfo)
     {
         const auto& bindUniformInfo = iter.uniformInfo;
+        if(bindUniformInfo.location == -1)
+            continue;
+        CC_ASSERT(iter.data.size() <= bindUniformInfo.bufferSize);
         memcpy(buffer + bindUniformInfo.location, iter.data.data(), iter.data.size());
         offset += bindUniformInfo.bufferSize;
     }

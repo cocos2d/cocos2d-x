@@ -221,7 +221,7 @@ enum class Winding: uint32_t
 struct UniformInfo
 {
     int count = 0;
-    int location = 0;
+    int location = -1;
     unsigned int type = 0;
     bool isArray = false;
     unsigned int bufferSize = 0;

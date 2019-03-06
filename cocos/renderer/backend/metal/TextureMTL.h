@@ -37,4 +37,32 @@ private:
     unsigned int _bytesPerRow = 0;
 };
 
+class TextureCubeMTL : public backend::TextureCubemap
+{
+public:
+    TextureCubeMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor);
+    ~TextureCubeMTL();
+    
+    virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) override;
+    virtual void updateFaceData(TextureCubeFace side, void *data) override;
+    virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*)> callback) override;
+    
+private:
+    void createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor);
+    void createSampler(id<MTLDevice> mtlDevice, const SamplerDescriptor& descriptor);
+    
+    MTLSamplerAddressMode _sAddressMode;
+    MTLSamplerAddressMode _tAddressMode;
+    MTLSamplerMinMagFilter _minFilter;
+    MTLSamplerMinMagFilter _magFilter;
+    MTLSamplerMipFilter _mipFilter;
+    
+    id<MTLDevice> _mtlDevice = nil;
+    id<MTLTexture> _mtlTexture = nil;
+    id<MTLSamplerState> _mtlSamplerState = nil;
+    MTLRegion _region;
+    unsigned int _bytesPerImage = 0;
+    unsigned int _bytesPerRow = 0;
+};
+
 CC_BACKEND_END

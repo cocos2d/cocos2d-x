@@ -77,9 +77,6 @@ bool Skybox::init()
     _uniformEnvLoc = _programState->getUniformLocation("u_Env");
 
     initBuffers();
-
-    CHECK_GL_ERROR_DEBUG();
-
     return true;
 }
 

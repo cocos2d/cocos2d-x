@@ -475,6 +475,7 @@ TextureCubeGL::TextureCubeGL(const TextureDescriptor& descriptor)
     _textureType = TextureType::TEXTURE_CUBE;
     toGLTypes(_textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
     glGenTextures(1, &_textureInfo.texture);
+    updateSamplerDescriptor(descriptor.samplerDescriptor);
     CHECK_GL_ERROR_DEBUG();
 }
 
@@ -532,7 +533,7 @@ void TextureCubeGL::getBytes(int x, int y, int width, int height, bool flipImage
     GLuint frameBuffer = 0;
     glGenFramebuffers(1, &frameBuffer);
     glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _textureInfo.texture, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP, _textureInfo.texture, 0);
     glPixelStorei(GL_PACK_ALIGNMENT, 1);
 
     auto bytePerRow = width * _bitsPerElement / 8;
