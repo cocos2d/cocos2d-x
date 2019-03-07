@@ -24,8 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_PU_PARTICLE_3D_BILLBOARD_CHAIN_H__
-#define __CC_PU_PARTICLE_3D_BILLBOARD_CHAIN_H__
+#pragma once
 
 #include <vector>
 #include "renderer/CCRenderState.h"
@@ -325,7 +324,6 @@ protected:
         Vec2 uv;
         Vec4 color;
     };
-    //MeshCommand*            _meshCommand    = nullptr;
     MeshCommand             _meshCommand;
     CallbackCommand         _beforeCommand;
     CallbackCommand         _afterCommand;
@@ -353,4 +351,3 @@ protected:
 };
 
 NS_CC_END
-#endif
