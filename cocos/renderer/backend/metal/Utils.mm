@@ -66,6 +66,7 @@ MTLPixelFormat Utils::toMTLPixelFormat(TextureFormat textureFormat)
             return MTLPixelFormatA8Unorm;
             // Not all devices supports MTLPixelFormatDepth24Unorm_Stencil8, so change to MTLPixelFormatDepth32Float_Stencil8.
         case TextureFormat::D24S8:
+            //on mac, D24S8 means MTLPixelFormatDepth24Unorm_Stencil8, while on ios it means MTLPixelFormatDepth32Float_Stencil8
             return DEPTH_STENCIL_ATTACHMENT_PIXEL_FORMAT;
         case TextureFormat::SYSTEM_DEFAULT:
             return COLOR_ATTAHCMENT_PIXEL_FORMAT;

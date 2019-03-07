@@ -59,6 +59,7 @@ namespace
                 //ios use MTLPixelFormatDepth32Float_Stencil8 as DepthStencil combined format, its 64 bits
                 return byte(8);
 #else
+                //mac and opengl use Depth24_Stnicl8 combined format, its 32 bits
                 return byte(4);
 #endif
             default:
