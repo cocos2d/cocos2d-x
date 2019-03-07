@@ -325,8 +325,6 @@ protected:
         Vec4 color;
     };
     MeshCommand             _meshCommand;
-    CallbackCommand         _beforeCommand;
-    CallbackCommand         _afterCommand;
     RenderState::StateBlock _stateBlock;
     Texture2D*              _texture        = nullptr;
     backend::ProgramState*  _programState   = nullptr;

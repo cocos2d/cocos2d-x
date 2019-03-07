@@ -687,8 +687,8 @@ void PUBillboardChain::init( const std::string &texFile )
     _stateBlock.setCullFaceSide(backend::CullMode::BACK);
     _stateBlock.setCullFace(true);
 
-    _beforeCommand.func = CC_CALLBACK_0(PUBillboardChain::onBeforeDraw, this);
-    _afterCommand.func  = CC_CALLBACK_0(PUBillboardChain::onAfterDraw,  this);
+    _meshCommand.setBeforeCallback(CC_CALLBACK_0(PUBillboardChain::onBeforeDraw, this));
+    _meshCommand.setAfterCallback(CC_CALLBACK_0(PUBillboardChain::onAfterDraw, this));
 }
 
 void PUBillboardChain::render( Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem )
@@ -703,12 +703,12 @@ void PUBillboardChain::render( Renderer* renderer, const Mat4 &transform, Partic
 
         _meshCommand.setVertexBuffer(_vertexBuffer);
         _meshCommand.setIndexBuffer(_indexBuffer, MeshCommand::IndexFormat::U_SHORT);
+        _meshCommand.setIndexDrawInfo(0, _indices.size());
 
         if (!_vertices.empty() && !_indices.empty())
         {
-            _beforeCommand.init(0.0);
             _meshCommand.init(0.0);
-            _afterCommand.init(0.0);
+            _stateBlock.setBlendFunc(particleSystem->getBlendFunc());
 
             auto &projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
             _programState->setUniform(_locPMatrix, &projectionMatrix.m, sizeof(projectionMatrix.m));
@@ -717,18 +717,11 @@ void PUBillboardChain::render( Renderer* renderer, const Mat4 &transform, Partic
             {
                 _programState->setTexture(_locTexture, 0, _texture->getBackendTexture());
             }
-            _stateBlock.setBlendFunc(particleSystem->getBlendFunc());
+
             auto uColor = Vec4(1, 1, 1, 1);
             _programState->setUniform(_locColor, &uColor, sizeof(uColor));
 
-            _stateBlock.bind(&_meshCommand.getPipelineDescriptor());
-
-
-            _meshCommand.setIndexDrawInfo(0, _indices.size());
-
-            renderer->addCommand(&_beforeCommand);
             renderer->addCommand(&_meshCommand);
-            renderer->addCommand(&_afterCommand);
         }
     }
 }

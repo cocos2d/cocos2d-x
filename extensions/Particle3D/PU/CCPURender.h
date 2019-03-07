@@ -89,9 +89,7 @@ protected:
         Vec4 color;
     };
     
-    CustomCommand           _customCommand;
-    CallbackCommand         _beforeCommand;
-    CallbackCommand         _afterCommand;
+    MeshCommand           _meshCommand;
 
     RenderState::StateBlock     _stateBlock;
     Texture2D*                  _texture        = nullptr;
