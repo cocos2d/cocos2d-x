@@ -140,7 +140,6 @@ void DrawNode3D::updateCommand(cocos2d::Renderer* renderer,const Mat4 &transform
     cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _bufferLines.size());
-    CHECK_GL_ERROR_DEBUG();
 }
 
 void DrawNode3D::drawLine(const Vec3 &from, const Vec3 &to, const Color4F &color)

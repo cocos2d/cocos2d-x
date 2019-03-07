@@ -32,6 +32,37 @@
 
 NS_CC_BEGIN
 
+namespace {
+    //TODO coulsonwang remove GL keyword
+    backend::SamplerFilter toBackendFilter(GLint filter)
+    {
+        switch (filter)
+        {
+            case GL_LINEAR:
+                return backend::SamplerFilter::LINEAR;
+            case GL_NEAREST:
+                return backend::SamplerFilter::NEAREST;
+            default:
+                return backend::SamplerFilter::LINEAR;
+        }
+    }
+
+    backend::SamplerAddressMode toBackendAddressMode(GLint addressMode)
+    {
+        switch (addressMode)
+        {
+            case GL_REPEAT:
+                return backend::SamplerAddressMode::REPEAT;
+            case GL_MIRRORED_REPEAT:
+                return backend::SamplerAddressMode::MIRROR_REPEAT;
+            case GL_CLAMP_TO_EDGE:
+                return backend::SamplerAddressMode::CLAMP_TO_EDGE;
+            default:
+                return backend::SamplerAddressMode::REPEAT;
+        }
+    }
+}
+
 unsigned char* getImageData(Image* img, Texture2D::PixelFormat&  ePixFmt)
 {
     unsigned char*    pTmpData = img->getData();
@@ -150,10 +181,7 @@ Image* createImage(const std::string& path)
 
 TextureCube::TextureCube()
 {
-    backend::TextureDescriptor sd;
-    sd.textureType = backend::TextureType::TEXTURE_CUBE;
     _imgPath.resize(6);
-    _texture = static_cast<backend::TextureCubemap*>(backend::Device::getInstance()->newTexture(sd));
 }
 
 TextureCube::~TextureCube()
@@ -211,8 +239,16 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
         }
     }
 
-    _texture->setSize(imageSize);
-    
+    backend::TextureDescriptor textureDescriptor;
+    textureDescriptor.width = textureDescriptor.height = imageSize;
+    textureDescriptor.textureType = backend::TextureType::TEXTURE_CUBE;
+    textureDescriptor.samplerDescriptor.minFilter = backend::SamplerFilter::LINEAR;
+    textureDescriptor.samplerDescriptor.magFilter = backend::SamplerFilter::LINEAR;
+    textureDescriptor.samplerDescriptor.sAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+    textureDescriptor.samplerDescriptor.tAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+    _texture = static_cast<backend::TextureCubemap*>(backend::Device::getInstance()->newTexture(textureDescriptor));
+    CCASSERT(_texture != nullptr, "TextureCubemap: texture can not be nullptr");
+
     for (int i = 0; i < 6; i++)
     {
         Image* img = images[i];
@@ -246,14 +282,6 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
             free(pData);
     }
 
-    backend::SamplerDescriptor sd;
-    sd.minFilter = backend::SamplerFilter::LINEAR;
-    sd.magFilter= backend::SamplerFilter::LINEAR;
-    sd.sAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
-    sd.tAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
-
-    _texture->updateSamplerDescriptor(sd);
-
     for (auto img: images)
     {
         CC_SAFE_RELEASE(img);
@@ -264,19 +292,12 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
 
 void TextureCube::setTexParameters(const Texture2D::TexParams& texParams)
 {
-    //TODO arnold
-//    CCASSERT(_name != 0, __FUNCTION__);
-//
-//    glActiveTexture(GL_TEXTURE0);
-//    glBindTexture(GL_TEXTURE_CUBE_MAP, _name);
-//
-//    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, texParams.minFilter);
-//    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, texParams.magFilter);
-//    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, texParams.wrapS);
-//    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, texParams.wrapT);
-//
-//    glActiveTexture(GL_TEXTURE0);
-//    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+    backend::SamplerDescriptor samplerDescriptor;
+    samplerDescriptor.minFilter = toBackendFilter(texParams.minFilter);
+    samplerDescriptor.magFilter = toBackendFilter(texParams.magFilter);
+    samplerDescriptor.tAddressMode = toBackendAddressMode(texParams.wrapT);
+    samplerDescriptor.sAddressMode = toBackendAddressMode(texParams.wrapS);
+    _texture->updateSamplerDescriptor(samplerDescriptor);
 }
 
 bool TextureCube::reloadTexture()
