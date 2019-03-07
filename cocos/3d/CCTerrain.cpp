@@ -1086,8 +1086,8 @@ Terrain::Chunk::Chunk(Terrain *terrain)
     _command.init(_terrain->_globalZOrder);
     _command.setTransparent(false);
     _command.set3D(true);
-    _command.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE);
-    _command.setDrawType(CustomCommand::DrawType::ELEMENT);
+    _command.setPrimitiveType(MeshCommand::PrimitiveType::TRIANGLE);
+    _command.setDrawType(MeshCommand::DrawType::ELEMENT);
     auto &pipelineDescriptor = _command.getPipelineDescriptor();
     pipelineDescriptor.blendDescriptor.blendEnabled = false;
 }

@@ -393,7 +393,6 @@ void Renderer::clean()
 
     // Clear batch commands
     _queuedTriangleCommands.clear();
-    _lastBatchedMeshCommand = nullptr;
 }
 
 void Renderer::setDepthTest(bool value)
@@ -626,11 +625,11 @@ void Renderer::drawBatchedTriangles()
                                      _triBatchesToDraw[i].indicesToDraw,
                                      _triBatchesToDraw[i].offset * sizeof(_indices[0]));
         _commandBuffer->endRenderPass();
-        
+
         _drawnBatches++;
         _drawnVertices += _triBatchesToDraw[i].indicesToDraw;
     }
-    
+
     /************** 3: Cleanup *************/
     _queuedTriangleCommands.clear();
 
@@ -672,32 +671,8 @@ void Renderer::drawCustomCommand(RenderCommand *command)
 
 void Renderer::drawMeshCommand(RenderCommand *command)
 {
-    auto cmd = static_cast<MeshCommand*>(command);
-
-    beginRenderPass(command);
-    _commandBuffer->setVertexBuffer(0, cmd->getVertexBuffer());
-    _commandBuffer->setProgramState(cmd->getPipelineDescriptor().programState);
-
-    auto drawType = cmd->getDrawType();
-    _commandBuffer->setLineWidth(cmd->getLineWidth());
-    if (CustomCommand::DrawType::ELEMENT == drawType)
-    {
-        _commandBuffer->setIndexBuffer(cmd->getIndexBuffer());
-        _commandBuffer->drawElements(cmd->getPrimitiveType(),
-            cmd->getIndexFormat(),
-            cmd->getIndexDrawCount(),
-            cmd->getIndexDrawOffset());
-        _drawnVertices += cmd->getIndexDrawCount();
-    }
-    else
-    {
-        _commandBuffer->drawArrays(cmd->getPrimitiveType(),
-            cmd->getVertexDrawStart(),
-            cmd->getVertexDrawCount());
-        _drawnVertices += cmd->getVertexDrawCount();
-    }
-    _drawnBatches++;
-    _commandBuffer->endRenderPass();
+    //MeshCommand and CustomCommand are identical while rendering.
+    drawCustomCommand(command);
 }
 
 
@@ -714,11 +689,7 @@ void Renderer::flush2D()
 
 void Renderer::flush3D()
 {
-    if (_lastBatchedMeshCommand)
-    {
-        //_lastBatchedMeshCommand->postBatchDraw();
-        _lastBatchedMeshCommand = nullptr;
-    }
+    //TODO 3d batch rendering
 }
 
 void Renderer::flushTriangles()

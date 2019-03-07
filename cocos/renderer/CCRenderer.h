@@ -313,7 +313,6 @@ protected:
     
     std::vector<RenderQueue> _renderGroups;
 
-    MeshCommand* _lastBatchedMeshCommand = nullptr;
     std::vector<TrianglesCommand*> _queuedTriangleCommands;
 
     //for TrianglesCommand

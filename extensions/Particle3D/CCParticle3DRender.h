@@ -29,7 +29,7 @@
 
 #include "renderer/CCRenderState.h"
 #include "renderer/backend/Types.h"
-#include "renderer/CCCustomCommand.h"
+#include "renderer/CCMeshCommand.h"
 #include "renderer/CCCallbackCommand.h"
 #include "renderer/backend/Buffer.h"
 #include "base/CCRef.h"
@@ -114,13 +114,13 @@ protected:
     void onAfterDraw();
     
 protected:
-    CustomCommand           _customCommand;
+    MeshCommand             _meshCommand;
     CallbackCommand         _beforeCommand;
     CallbackCommand         _afterCommand;
-    Texture2D*             _texture         = nullptr;
-    backend::ProgramState* _programState    = nullptr;
-    backend::Buffer*       _indexBuffer     = nullptr; //index buffer
-    backend::Buffer*       _vertexBuffer    = nullptr; // vertex buffer
+    Texture2D*              _texture         = nullptr;
+    backend::ProgramState*  _programState    = nullptr;
+    backend::Buffer*        _indexBuffer     = nullptr; //index buffer
+    backend::Buffer*        _vertexBuffer    = nullptr; // vertex buffer
     
     struct posuvcolor
     {

@@ -29,7 +29,7 @@
 
 #include <vector>
 #include "renderer/CCRenderState.h"
-#include "renderer/CCCustomCommand.h"
+#include "renderer/CCMeshCommand.h"
 #include "renderer/CCCallbackCommand.h"
 #include "renderer/backend/Buffer.h"
 #include "base/CCRef.h"
@@ -326,7 +326,7 @@ protected:
         Vec4 color;
     };
     //MeshCommand*            _meshCommand    = nullptr;
-    CustomCommand           _customCommand;
+    MeshCommand             _meshCommand;
     CallbackCommand         _beforeCommand;
     CallbackCommand         _afterCommand;
     RenderState::StateBlock _stateBlock;
