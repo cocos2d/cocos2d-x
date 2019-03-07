@@ -707,7 +707,7 @@ void PUBillboardChain::render( Renderer* renderer, const Mat4 &transform, Partic
         if (!_vertices.empty() && !_indices.empty())
         {
             _beforeCommand.init(0.0);
-            _meshCommand.init(0.0, transform, Node::FLAGS_RENDER_AS_3D);
+            _meshCommand.init(0.0);
             _afterCommand.init(0.0);
 
             auto &projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);

@@ -49,26 +49,12 @@ MeshCommand::MeshCommand()
 #endif
 {
     _type = RenderCommand::Type::MESH_COMMAND;
-
+    _is3D = true;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // listen the event that renderer was recreated on Android/WP8
     _rendererRecreatedListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(MeshCommand::listenRendererRecreated, this));
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_rendererRecreatedListener, -1);
 #endif
-}
-
-void MeshCommand::init(float globalZOrder,
-                       const cocos2d::Mat4 &mv,
-                       uint32_t flags)
-{
-    RenderCommand::init(globalZOrder, mv, flags);
-    _globalOrder = globalZOrder;
-    _is3D = true;
-}
-
-void MeshCommand::init(float globalZOrder, const BlendFunc& blendFunc)
-{
-    CustomCommand::init(globalZOrder, blendFunc);
 }
 
 void MeshCommand::init(float globalZOrder)

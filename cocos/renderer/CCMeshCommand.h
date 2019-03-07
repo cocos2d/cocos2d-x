@@ -59,24 +59,12 @@ public:
 
     MeshCommand();
     virtual ~MeshCommand();
-    /**
-    Init function.
-    @param globalZOrder GlobalZOrder of the render command.
-    @param modelViewTransform When in 3D mode, depth sorting needs modelViewTransform.
-    @param flags Use to identify that the render command is 3D mode or not.
-    */
-    void init(float globalZOrder, const cocos2d::Mat4 &mv, uint32_t flags);
+
     /**
     Init function. The render command will be in 2D mode.
     @param globalZOrder GlobalZOrder of the render command.
     */
     void init(float globalZOrder);
-    /**
-    Init function. The render command will be in 2D mode.
-    @param globalZOrder GlobalZOrder of the render command.
-    @param blendFunc blend function of the render command.
-    */
-    void init(float globalZOrder, const BlendFunc& blendFunc);
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     void listenRendererRecreated(EventCustom* event);

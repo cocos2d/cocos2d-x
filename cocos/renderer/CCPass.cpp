@@ -222,7 +222,7 @@ void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buff
                 MeshCommand::PrimitiveType primitive, MeshCommand::IndexFormat indexFormat,
                 unsigned int indexCount, const Mat4& modelView)
 {
-    _meshCommand.init(globalZOrder, BlendFunc::ALPHA_PREMULTIPLIED);
+    _meshCommand.init(globalZOrder);
     _meshCommand.setPrimitiveType(primitive);
     _meshCommand.setIndexBuffer(indexBuffer, indexFormat);
     _meshCommand.setVertexBuffer(vertexBuffer);
