@@ -57,6 +57,8 @@ public:
     */
     using IndexFormat = backend::IndexFormat;
 
+    typedef std::function<void()> CallBackFunc;
+
     MeshCommand();
     virtual ~MeshCommand();
 
@@ -66,11 +68,22 @@ public:
     */
     void init(float globalZOrder);
 
+    void setBeforeCallback(const CallBackFunc &before) { _beforeCallback = before; }
+
+    void setAfterCallback(const CallBackFunc &after){ _afterCallback = after; }
+
+    const CallBackFunc &getBeforeCallback() { return _beforeCallback; }
+
+    const CallBackFunc &getAfterCallback() { return _afterCallback; }
+
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     void listenRendererRecreated(EventCustom* event);
 #endif
 
 protected:
+
+    CallBackFunc _beforeCallback;
+    CallBackFunc _afterCallback;
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _rendererRecreatedListener;

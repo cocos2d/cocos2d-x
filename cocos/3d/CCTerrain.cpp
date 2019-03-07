@@ -110,9 +110,6 @@ bool Terrain::initProperties()
     _stateBlock.depthTest = true;
     _stateBlock.cullFace = backend::CullMode::FRONT;
 
-    _beforeDraw.func = CC_CALLBACK_0(Terrain::onBeforeDraw, this);
-    _afterDraw.func = CC_CALLBACK_0(Terrain::onAfterDraw, this);
-
     setDrawWire(false);
     setIsEnableFrustumCull(true);
     setAnchorPoint(Vec2(0, 0));
@@ -121,29 +118,12 @@ bool Terrain::initProperties()
 
 void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
 {
-    _beforeDraw.init(-1); //to ensure callbackcommand run before others
-    _afterDraw.init(100000.0);
-
-    renderer->addCommand(&_beforeDraw);
-
     auto modelMatrix = getNodeToWorldTransform();
     if (memcmp(&modelMatrix, &_terrainModelMatrix, sizeof(Mat4)) != 0)
     {
         _terrainModelMatrix = modelMatrix;
         _quadRoot->preCalculateAABB(_terrainModelMatrix);
     }
-
-    //TODO arnold 
-    //#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    //    if(_isDrawWire)
-    //    {
-    //        glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-    //    }else
-    //    {
-    //        glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-    //        
-    //    }
-    //#endif
 
     auto &projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     auto finalMatrix = projectionMatrix * transform;
@@ -212,18 +192,6 @@ void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, 
         _isCameraViewChanged = false;
     }
 
-
-    //TODO arnold
-    //glActiveTexture(GL_TEXTURE0); //
-    //#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    //    if (_isDrawWire)//reset state.
-    //    {
-    //        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    //    }
-    //#endif
-
-
-    renderer->addCommand(&_afterDraw);
 }
 
 bool Terrain::initHeightMap(const std::string& heightMap)
@@ -1088,6 +1056,11 @@ Terrain::Chunk::Chunk(Terrain *terrain)
     _command.set3D(true);
     _command.setPrimitiveType(MeshCommand::PrimitiveType::TRIANGLE);
     _command.setDrawType(MeshCommand::DrawType::ELEMENT);
+
+
+    _command.setBeforeCallback(CC_CALLBACK_0(Terrain::onBeforeDraw, terrain));
+    _command.setAfterCallback(CC_CALLBACK_0(Terrain::onAfterDraw, terrain));
+
     auto &pipelineDescriptor = _command.getPipelineDescriptor();
     pipelineDescriptor.blendDescriptor.blendEnabled = false;
 }

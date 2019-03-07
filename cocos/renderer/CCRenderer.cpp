@@ -671,8 +671,14 @@ void Renderer::drawCustomCommand(RenderCommand *command)
 
 void Renderer::drawMeshCommand(RenderCommand *command)
 {
+    auto cmd = static_cast<MeshCommand*>(command);
+
+    if (cmd->getBeforeCallback()) cmd->getBeforeCallback()();
+
     //MeshCommand and CustomCommand are identical while rendering.
     drawCustomCommand(command);
+
+    if (cmd->getAfterCallback()) cmd->getAfterCallback()();
 }
 
 
