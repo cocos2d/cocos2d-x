@@ -285,34 +285,8 @@ void Renderer::processRenderCommand(RenderCommand* command)
         }
             break;
         case RenderCommand::Type::MESH_COMMAND:
-        {
             flush2D();
-            auto cmd = static_cast<MeshCommand*>(command);
-            
-            if (cmd->isSkipBatching() || _lastBatchedMeshCommand == nullptr || _lastBatchedMeshCommand->getMaterialID() != cmd->getMaterialID())
-            {
-                flush3D();
-
-                if(cmd->isSkipBatching())
-                {
-                    // XXX: execute() will call bind() and unbind()
-                    // but unbind() shouldn't be call if the next command is a MESH_COMMAND with Material.
-                    // Once most of cocos2d-x moves to Pass/StateBlock, only bind() should be used.
-                    cmd->execute();
-                }
-                else
-                {
-                    cmd->preBatchDraw();
-                    cmd->batchDraw();
-                    _lastBatchedMeshCommand = cmd;
-                }
-            }
-            else
-            {
-                //            CCGL_DEBUG_INSERT_EVENT_MARKER("RENDERER_MESH_COMMAND");
-                cmd->batchDraw();
-            }
-        }
+            drawMeshCommand(command);
             break;
         case RenderCommand::Type::GROUP_COMMAND:
             processGroupCommand(static_cast<GroupCommand*>(command));
@@ -419,7 +393,6 @@ void Renderer::clean()
 
     // Clear batch commands
     _queuedTriangleCommands.clear();
-    _lastBatchedMeshCommand = nullptr;
 }
 
 void Renderer::setDepthTest(bool value)
@@ -652,11 +625,11 @@ void Renderer::drawBatchedTriangles()
                                      _triBatchesToDraw[i].indicesToDraw,
                                      _triBatchesToDraw[i].offset * sizeof(_indices[0]));
         _commandBuffer->endRenderPass();
-        
+
         _drawnBatches++;
         _drawnVertices += _triBatchesToDraw[i].indicesToDraw;
     }
-    
+
     /************** 3: Cleanup *************/
     _queuedTriangleCommands.clear();
 
@@ -696,6 +669,13 @@ void Renderer::drawCustomCommand(RenderCommand *command)
     _commandBuffer->endRenderPass();
 }
 
+void Renderer::drawMeshCommand(RenderCommand *command)
+{
+    //MeshCommand and CustomCommand are identical while rendering.
+    drawCustomCommand(command);
+}
+
+
 void Renderer::flush()
 {
     flush2D();
@@ -709,11 +689,7 @@ void Renderer::flush2D()
 
 void Renderer::flush3D()
 {
-    if (_lastBatchedMeshCommand)
-    {
-        _lastBatchedMeshCommand->postBatchDraw();
-        _lastBatchedMeshCommand = nullptr;
-    }
+    //TODO 3d batch rendering
 }
 
 void Renderer::flushTriangles()

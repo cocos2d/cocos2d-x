@@ -34,7 +34,7 @@
 #include "base/CCRef.h"
 #include "base/CCVector.h"
 #include "math/CCMath.h"
-#include "renderer/CCCustomCommand.h"
+#include "renderer/CCMeshCommand.h"
 
 
 NS_CC_BEGIN
@@ -76,8 +76,8 @@ public:
     const std::string& getId() const { return _id; }
     
     /**primitive type setter & getter*/
-    CustomCommand::PrimitiveType getPrimitiveType() const { return _primitiveType; }
-    void   setPrimitiveType(CustomCommand::PrimitiveType primitive) { _primitiveType = primitive; }
+    MeshCommand::PrimitiveType getPrimitiveType() const { return _primitiveType; }
+    void   setPrimitiveType(MeshCommand::PrimitiveType primitive) { _primitiveType = primitive; }
     
 CC_CONSTRUCTOR_ACCESS:
     MeshIndexData() = default;
@@ -88,7 +88,7 @@ protected:
     MeshVertexData*     _vertexData = nullptr; //vertex buffer, weak ref
     AABB                _aabb; // original aabb of the submesh
     std::string         _id; //id
-    CustomCommand::PrimitiveType   _primitiveType = CustomCommand::PrimitiveType::TRIANGLE;
+    MeshCommand::PrimitiveType   _primitiveType = MeshCommand::PrimitiveType::TRIANGLE;
     
     friend class MeshVertexData;
     friend class Sprite3D;

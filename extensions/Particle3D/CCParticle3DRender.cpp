@@ -159,11 +159,11 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     float depthZ = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
 
     _beforeCommand.init(depthZ);
-    _customCommand.init(depthZ);
+    _meshCommand.init(depthZ);
     _afterCommand.init(depthZ);
 
-    _customCommand.setVertexBuffer(_vertexBuffer);
-    _customCommand.setIndexBuffer(_indexBuffer, CustomCommand::IndexFormat::U_SHORT);
+    _meshCommand.setVertexBuffer(_vertexBuffer);
+    _meshCommand.setIndexBuffer(_indexBuffer, MeshCommand::IndexFormat::U_SHORT);
 
     auto &projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     _programState->setUniform(_locPMatrix, &projectionMatrix.m, sizeof(projectionMatrix.m));
@@ -177,10 +177,10 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     _programState->setUniform(_locColor, &uColor, sizeof(uColor));
 
 
-    _customCommand.setIndexDrawInfo(0, index);
+    _meshCommand.setIndexDrawInfo(0, index);
     
     renderer->addCommand(&_beforeCommand);
-    renderer->addCommand(&_customCommand);
+    renderer->addCommand(&_meshCommand);
     renderer->addCommand(&_afterCommand);
 }
 
@@ -203,7 +203,7 @@ bool Particle3DQuadRender::initQuadRender( const std::string& texFile )
         _programState = new backend::ProgramState(CC3D_particle_vert, CC3D_particleColor_frag);
     }
 
-    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    auto &pipelineDescriptor = _meshCommand.getPipelineDescriptor();
     pipelineDescriptor.programState = _programState;
     auto &layout = pipelineDescriptor.vertexLayout;
 
@@ -216,8 +216,8 @@ bool Particle3DQuadRender::initQuadRender( const std::string& texFile )
     _locPMatrix = _programState->getUniformLocation("u_PMatrix");
     _locTexture = _programState->getUniformLocation("u_texture");
 
-    _customCommand.setTransparent(true);
-    _customCommand.setSkipBatching(true);
+    _meshCommand.setTransparent(true);
+    _meshCommand.setSkipBatching(true);
 
     _stateBlock.setDepthTest(true);
     _stateBlock.setDepthWrite(false);
@@ -233,7 +233,7 @@ bool Particle3DQuadRender::initQuadRender( const std::string& texFile )
 void Particle3DQuadRender::onBeforeDraw()
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    auto &pipelineDescriptor = _meshCommand.getPipelineDescriptor();
     _rendererDepthTestEnabled = renderer->getDepthTest();
     _rendererDepthCmpFunc = renderer->getDepthCompareFunction();
     _rendererCullMode = renderer->getCullMode();

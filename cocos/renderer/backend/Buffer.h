@@ -16,9 +16,9 @@ public:
 
 protected:
     Buffer(unsigned int size, BufferType type, BufferUsage usage)
-    : _size(size)
+    : _usage(usage)
     , _type(type)
-    , _usage(usage)
+    , _size(size)
     {}
     
     virtual ~Buffer() = default;

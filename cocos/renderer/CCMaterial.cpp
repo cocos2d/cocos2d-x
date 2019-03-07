@@ -301,9 +301,7 @@ bool Material::parseSampler(backend::ProgramState* programState, Properties* sam
 
     auto textureName = samplerProperties->getId();
     auto location = programState->getUniformLocation(textureName);
-    //TODO arnold: slot may be incorrect
-    //programState->setTexture(location, 0,  texture->getBackendTexture());
-
+    
     if (!location)
     {
         CCLOG("warning: failed to find texture uniform location %s when parsing material", textureName);

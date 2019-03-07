@@ -277,6 +277,7 @@ protected:
     inline GroupCommandManager * getGroupCommandManager() const { return _groupCommandManager; }
     void drawBatchedTriangles();
     void drawCustomCommand(RenderCommand* command);
+    void drawMeshCommand(RenderCommand* command);
 
     void beginFrame();
     void endFrame();
@@ -312,7 +313,6 @@ protected:
     
     std::vector<RenderQueue> _renderGroups;
 
-    MeshCommand* _lastBatchedMeshCommand = nullptr;
     std::vector<TrianglesCommand*> _queuedTriangleCommands;
 
     //for TrianglesCommand

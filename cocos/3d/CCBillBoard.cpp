@@ -35,6 +35,8 @@ BillBoard::BillBoard()
 : _mode(Mode::VIEW_POINT_ORIENTED)
 , _modeDirty(false)
 {
+    _trianglesCommand.setTransparent(true);
+    _trianglesCommand.set3D(true);
     Node::setAnchorPoint(Vec2(0.5f,0.5f));
 }
 
@@ -229,8 +231,6 @@ void BillBoard::draw(Renderer *renderer, const Mat4 &/*transform*/, uint32_t fla
     //FIXME: frustum culling here
     flags |= Node::FLAGS_RENDER_AS_3D;
     _trianglesCommand.init(0, _texture, _blendFunc, _polyInfo.triangles, _modelViewTransform, flags);
-    _trianglesCommand.setTransparent(true);
-    _trianglesCommand.set3D(true);
     setMVPMatrixUniform(); //update uniform
     renderer->addCommand(&_trianglesCommand);
 }

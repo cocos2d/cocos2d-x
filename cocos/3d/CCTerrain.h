@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "2d/CCNode.h"
 #include "2d/CCCamera.h"
 #include "renderer/CCTexture2D.h"
-#include "renderer/CCCustomCommand.h"
+#include "renderer/CCMeshCommand.h"
 #include "renderer/CCCallbackCommand.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCRenderState.h"
@@ -271,7 +271,7 @@ private:
         std::vector<Triangle> _trianglesList;
 
         backend::Buffer *_buffer = nullptr;
-        CustomCommand _command;
+        MeshCommand _command;
     };
 
    /**
@@ -530,7 +530,6 @@ protected:
     StateBlock _stateBlock;
     StateBlock _stateBlockOld;
 private:
-    GroupCommand _groupCommand;
     CallbackCommand _beforeDraw;
     CallbackCommand _afterDraw;
     backend::VertexLayout _vertexLayout;

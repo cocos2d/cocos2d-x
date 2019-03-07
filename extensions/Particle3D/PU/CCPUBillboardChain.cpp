@@ -666,7 +666,7 @@ void PUBillboardChain::init( const std::string &texFile )
 
     GLsizei stride = sizeof(VertexInfo);
 
-    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    auto &pipelineDescriptor = _meshCommand.getPipelineDescriptor();
     pipelineDescriptor.programState = _programState;
     auto &layout = pipelineDescriptor.vertexLayout;
 
@@ -679,8 +679,8 @@ void PUBillboardChain::init( const std::string &texFile )
     _locPMatrix = _programState->getUniformLocation("u_PMatrix");
     _locTexture = _programState->getUniformLocation("u_texture");
 
-    _customCommand.setTransparent(true);
-    _customCommand.setSkipBatching(true);
+    _meshCommand.setTransparent(true);
+    _meshCommand.setSkipBatching(true);
 
     _stateBlock.setDepthTest(true);
     _stateBlock.setDepthWrite(false);
@@ -701,13 +701,13 @@ void PUBillboardChain::render( Renderer* renderer, const Mat4 &transform, Partic
         updateVertexBuffer(cameraMat);
         updateIndexBuffer();
 
-        _customCommand.setVertexBuffer(_vertexBuffer);
-        _customCommand.setIndexBuffer(_indexBuffer, CustomCommand::IndexFormat::U_SHORT);
+        _meshCommand.setVertexBuffer(_vertexBuffer);
+        _meshCommand.setIndexBuffer(_indexBuffer, MeshCommand::IndexFormat::U_SHORT);
 
         if (!_vertices.empty() && !_indices.empty())
         {
             _beforeCommand.init(0.0);
-            _customCommand.init(0.0, transform, Node::FLAGS_RENDER_AS_3D);
+            _meshCommand.init(0.0);
             _afterCommand.init(0.0);
 
             auto &projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -721,13 +721,13 @@ void PUBillboardChain::render( Renderer* renderer, const Mat4 &transform, Partic
             auto uColor = Vec4(1, 1, 1, 1);
             _programState->setUniform(_locColor, &uColor, sizeof(uColor));
 
-            _stateBlock.bind(&_customCommand.getPipelineDescriptor());
+            _stateBlock.bind(&_meshCommand.getPipelineDescriptor());
 
 
-            _customCommand.setIndexDrawInfo(0, _indices.size());
+            _meshCommand.setIndexDrawInfo(0, _indices.size());
 
             renderer->addCommand(&_beforeCommand);
-            renderer->addCommand(&_customCommand);
+            renderer->addCommand(&_meshCommand);
             renderer->addCommand(&_afterCommand);
         }
     }
@@ -751,7 +751,7 @@ void PUBillboardChain::setBlendFunc(const BlendFunc& blendFunc)
 void PUBillboardChain::onBeforeDraw()
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    auto &pipelineDescriptor = _meshCommand.getPipelineDescriptor();
     _rendererDepthTestEnabled = renderer->getDepthTest();
     _rendererDepthCmpFunc = renderer->getDepthCompareFunction();
     _rendererCullMode = renderer->getCullMode();
@@ -764,7 +764,7 @@ void PUBillboardChain::onBeforeDraw()
 void PUBillboardChain::onAfterDraw()
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    auto &pipelineDescriptor = _meshCommand.getPipelineDescriptor();
     renderer->setDepthTest(_rendererDepthTestEnabled);
     renderer->setDepthCompareFunction(_rendererDepthCmpFunc);
     renderer->setCullMode(_rendererCullMode);

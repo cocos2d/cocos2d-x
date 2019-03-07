@@ -29,7 +29,6 @@
 #include "base/ccTypes.h"
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCCustomCommand.h"
-#include "renderer/CCGroupCommand.h"
 #include "renderer/CCCallbackCommand.h"
 #include "2d/CCNode.h"
 #include "renderer/backend/ProgramState.h"

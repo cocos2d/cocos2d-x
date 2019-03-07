@@ -52,7 +52,7 @@ void RenderState::bindPass(Pass* pass)
     assert(pass->_technique && pass->_technique->_material);
     auto *technique = pass->_technique;
     auto *material = technique->_material;
-    auto &pipelineDescriptor = pass->_customCommand.getPipelineDescriptor();
+    auto &pipelineDescriptor = pass->_meshCommand.getPipelineDescriptor();
 
     //need reset all state
     //pipelineDescriptor.blendDescriptor.blendEnabled = true;
@@ -73,7 +73,7 @@ void RenderState::bindPass(Pass* pass)
 
 void RenderState::unbindPass(Pass* pass)
 {
-    auto &pipelineDescriptor = pass->_customCommand.getPipelineDescriptor();
+    auto &pipelineDescriptor = pass->_meshCommand.getPipelineDescriptor();
     RenderState::StateBlock::restore(0, &pipelineDescriptor);
 }
 

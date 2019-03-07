@@ -33,7 +33,7 @@
 
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderState.h"
-#include "renderer/CCCustomCommand.h"
+#include "renderer/CCMeshCommand.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCallbackCommand.h"
 
@@ -66,7 +66,7 @@ public:
     /** Returns the ProgramState */
     backend::ProgramState* getProgramState() const;
 
-    backend::VertexLayout* getVertexLayout() { return &(_customCommand.getPipelineDescriptor().vertexLayout); }
+    backend::VertexLayout* getVertexLayout() { return &(_meshCommand.getPipelineDescriptor().vertexLayout); }
 
     /** Binds the GLProgramState and the RenderState.
      This method must be called before call the actual draw call.
@@ -75,7 +75,7 @@ public:
     //void bind(const Mat4& modelView, bool bindAttributes);
 
     void draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
-              CustomCommand::PrimitiveType primitive, CustomCommand::IndexFormat indexFormat,
+              MeshCommand::PrimitiveType primitive, MeshCommand::IndexFormat indexFormat,
               unsigned int indexCount, const Mat4& modelView);
 
     /** Unbinds the Pass.
@@ -143,7 +143,7 @@ protected:
     Node* getTarget() const;
 
     VertexAttribBinding* _vertexAttribBinding = nullptr;
-    CustomCommand _customCommand;
+    MeshCommand _meshCommand;
     Technique * _technique = nullptr;
     bool _hashDirty = true;
     RenderState _renderState;
