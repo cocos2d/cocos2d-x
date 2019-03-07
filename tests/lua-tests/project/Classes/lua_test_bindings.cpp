@@ -167,49 +167,50 @@ void DrawNode3D::ensureCapacity(int count)
 
 bool DrawNode3D::init()
 {
-    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-    
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_COLOR));
-    
-    ensureCapacity(512);
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glGenVertexArrays(1, &_vao);
-        glBindVertexArray(_vao);
-    }
-    
-    glGenBuffers(1, &_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4B)* _bufferCapacity, _buffer, GL_STREAM_DRAW);
-    
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B), (GLvoid *)offsetof(V3F_C4B, vertices));
-    
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B), (GLvoid *)offsetof(V3F_C4B, colors));
-    
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glBindVertexArray(0);
-    }
-    
-    CHECK_GL_ERROR_DEBUG();
-    
-    _dirty = true;
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    // Need to listen the event only when not use batchnode, because it will use VBO
-    auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
-        /** listen the event that coming to foreground on Android */
-        this->init();
-    });
-    
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-#endif
-    
+//TODO minggo
+//    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+//
+//    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_COLOR));
+//
+//    ensureCapacity(512);
+//
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+//        glGenVertexArrays(1, &_vao);
+//        glBindVertexArray(_vao);
+//    }
+//
+//    glGenBuffers(1, &_vbo);
+//    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4B)* _bufferCapacity, _buffer, GL_STREAM_DRAW);
+//
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B), (GLvoid *)offsetof(V3F_C4B, vertices));
+//
+//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B), (GLvoid *)offsetof(V3F_C4B, colors));
+//
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+//        glBindVertexArray(0);
+//    }
+//
+//    CHECK_GL_ERROR_DEBUG();
+//
+//    _dirty = true;
+//
+//#if CC_ENABLE_CACHE_TEXTURE_DATA
+//    // Need to listen the event only when not use batchnode, because it will use VBO
+//    auto listener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom* event){
+//        /** listen the event that coming to foreground on Android */
+//        this->init();
+//    });
+//
+//    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+//#endif
+
     return true;
 }
 
@@ -222,41 +223,41 @@ void DrawNode3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
 void DrawNode3D::onDraw(const Mat4 &transform, uint32_t flags)
 {
-    auto glProgram = getGLProgram();
-    glProgram->use();
-    glProgram->setUniformsForBuiltins(transform);
-    glEnable(GL_DEPTH_TEST);
-    utils::setBlending(_blendFunc.src, _blendFunc.dst);
-    
-    if (_dirty)
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4B)*_bufferCapacity, _buffer, GL_STREAM_DRAW);
-        _dirty = false;
-    }
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glBindVertexArray(_vao);
-    }
-    else
-    {
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-        
-        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-        // vertex
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B), (GLvoid *)offsetof(V3F_C4B, vertices));
-        
-        // color
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B), (GLvoid *)offsetof(V3F_C4B, colors));
-    }
-    
-    glDrawArrays(GL_LINES, 0, _bufferCount);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCount);
-	glDisable(GL_DEPTH_TEST);
-    CHECK_GL_ERROR_DEBUG();
+//    auto glProgram = getGLProgram();
+//    glProgram->use();
+//    glProgram->setUniformsForBuiltins(transform);
+//    glEnable(GL_DEPTH_TEST);
+//    utils::setBlending(_blendFunc.src, _blendFunc.dst);
+//
+//    if (_dirty)
+//    {
+//        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+//        glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4B)*_bufferCapacity, _buffer, GL_STREAM_DRAW);
+//        _dirty = false;
+//    }
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+//        glBindVertexArray(_vao);
+//    }
+//    else
+//    {
+//        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+//        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+//
+//        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+//        // vertex
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B), (GLvoid *)offsetof(V3F_C4B, vertices));
+//
+//        // color
+//        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B), (GLvoid *)offsetof(V3F_C4B, colors));
+//    }
+//
+//    glDrawArrays(GL_LINES, 0, _bufferCount);
+//    glBindBuffer(GL_ARRAY_BUFFER, 0);
+//
+//    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCount);
+//glDisable(GL_DEPTH_TEST);
+//    CHECK_GL_ERROR_DEBUG();
 }
 
 void DrawNode3D::drawLine(const Vec3 &from, const Vec3 &to, const Color4F &color)
@@ -452,50 +453,6 @@ tolua_lerror:
 #endif
     
     return 0;
-}
-
-CC_DEPRECATED_ATTRIBUTE int lua_cocos2dx_DrawNode3D_setBlendFunc01(lua_State* L)
-{
-    int argc = 0;
-    cocos2d::DrawNode3D* cobj = nullptr;
-    tolua_Error tolua_err;
-    
-    if (!tolua_isusertype(L,1,"cc.DrawNode3D",0,&tolua_err)) goto tolua_lerror;
-    
-    cobj = (cocos2d::DrawNode3D*)tolua_tousertype(L,1,0);
-    
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(L,"invalid 'cobj' in function 'lua_cocos2dx_DrawNode3D_setBlendFunc'", nullptr);
-        return 0;
-    }
-#endif
-    
-    argc = lua_gettop(L)-1;
-    if (argc != 2)
-    {
-        goto tolua_lerror;
-    }
-    else
-    {
-        CCLOG("setBlendFunc of cc.DrawNode3D will deprecate two int parameter form,please pass a table like {src = xx, dst = xx} as a parameter");
-        
-        GLenum src, dst;
-        if (!luaval_to_int32(L, 2, (int32_t*)&src, "cc.DrawNode3D:setBlendFunc"))
-            return 0;
-        
-        if (!luaval_to_int32(L, 3, (int32_t*)&dst, "cc.DrawNode3D:setBlendFunc"))
-            return 0;
-        
-        BlendFunc blendFunc = {src, dst};
-        cobj->setBlendFunc(blendFunc);
-        lua_settop(L, 1);
-        return 1;
-    }
-    
-tolua_lerror:
-    return lua_cocos2dx_DrawNode3D_setBlendFunc(L);
 }
 
 int lua_cocos2dx_DrawNode3D_drawLine(lua_State* L)
@@ -712,7 +669,6 @@ int lua_register_cocos2dx_DrawNode3D(lua_State* L)
     
     tolua_beginmodule(L,"DrawNode3D");
     tolua_function(L,"getBlendFunc",lua_cocos2dx_DrawNode3D_getBlendFunc);
-    tolua_function(L,"setBlendFunc",lua_cocos2dx_DrawNode3D_setBlendFunc01);
     tolua_function(L,"drawLine",lua_cocos2dx_DrawNode3D_drawLine);
     tolua_function(L,"clear",lua_cocos2dx_DrawNode3D_clear);
     tolua_function(L,"drawCube",lua_cocos2dx_DrawNode3D_drawCube);

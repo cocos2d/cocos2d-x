@@ -1,4 +1,3 @@
-require "ExtensionTest/CocosBuilderTest"
 require "ExtensionTest/WebProxyTest"
 
 local LINE_SPACE = 40
