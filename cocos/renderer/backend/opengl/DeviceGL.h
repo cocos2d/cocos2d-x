@@ -14,6 +14,7 @@ public:
     virtual DepthStencilState* createDepthStencilState(const DepthStencilDescriptor& descriptor) override;
     virtual BlendState* createBlendState(const BlendDescriptor& descriptor) override;
     virtual RenderPipeline* newRenderPipeline(const RenderPipelineDescriptor& descriptor) override;
+    virtual void GetIntegerv(DeviceProperty property, int *params) override;
 
 protected:
     virtual ShaderModule* newShaderModule(ShaderStage stage, const std::string& source) override;

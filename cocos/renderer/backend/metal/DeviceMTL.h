@@ -26,7 +26,8 @@ public:
     virtual DepthStencilState* createDepthStencilState(const DepthStencilDescriptor& descriptor) override;
     virtual BlendState* createBlendState(const BlendDescriptor& descriptor) override;
     virtual RenderPipeline* newRenderPipeline(const RenderPipelineDescriptor& descriptor) override;
-        
+    virtual void GetIntegerv(DeviceProperty property, int *params) override;
+
     inline id<MTLDevice> getMTLDevice() const { return _mtlDevice; }
     inline id<MTLCommandQueue> getMTLCommandQueue() const { return _mtlCommandQueue; }
     

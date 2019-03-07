@@ -253,4 +253,10 @@ enum class TextureCubeFace : uint32_t
     NEGATIVE_Z = 5
 };
 
+enum class DeviceProperty : uint32_t
+{
+    MAX_VERTEX_ATTRIBS,
+    TOTOAL_PROPERTY
+};
+
 CC_BACKEND_END

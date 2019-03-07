@@ -16,6 +16,12 @@ CC_BACKEND_BEGIN
 CAMetalLayer* DeviceMTL::_metalLayer = nil;
 id<CAMetalDrawable> DeviceMTL::_currentDrawable = nil;
 
+namespace {
+    static int s_PorpertyIntegerv[(int)DeviceProperty::TOTOAL_PROPERTY] = {
+        31 //MAX_VERTEX_ATTRIBS
+    };
+}
+
 Device* Device::getInstance()
 {
     if (! Device::_instance)
@@ -109,6 +115,12 @@ RenderPipeline* DeviceMTL::newRenderPipeline(const RenderPipelineDescriptor& des
 Program* DeviceMTL::newProgram(const std::string& vertexShader, const std::string& fragmentShader)
 {
     return new (std::nothrow) ProgramMTL(_mtlDevice, vertexShader, fragmentShader);
+}
+
+//todo coulsonwang
+void DeviceMTL::GetIntegerv(DeviceProperty property, int *params)
+{
+    *params = s_PorpertyIntegerv[(int)property];
 }
 
 CC_BACKEND_END

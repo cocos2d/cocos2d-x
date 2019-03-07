@@ -3,7 +3,6 @@ attribute vec3 a_normal;
 attribute vec4 a_blendWeight;
 attribute vec4 a_blendIndex;
 
-attribute vec2 a_texCoord;
 uniform float OutlineWidth;
 
 const int SKINNING_JOINT_COUNT = 60;

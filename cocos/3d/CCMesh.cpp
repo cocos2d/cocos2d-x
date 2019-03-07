@@ -39,6 +39,7 @@
 #include "renderer/CCPass.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/backend/Buffer.h"
+#include "renderer/backend/Program.h"
 #include "math/Mat4.h"
 
 using namespace std;
@@ -328,6 +329,16 @@ void Mesh::setMaterial(Material* material)
         {
             for (auto pass: technique->getPasses())
             {
+                //make it crashed when missing attribute data
+                if(_material->getTechnique()->getName().compare(technique->getName()) == 0)
+                {
+                    auto program = pass->getProgramState()->getProgram();
+                    auto attributes = program->getActiveAttributes();
+                    auto meshVertexData = _meshIndexData->getMeshVertexData();
+                    auto attributeCount = meshVertexData->getMeshVertexAttribCount();
+                    CCASSERT(attributes.size() <= attributeCount, "missing attribute data");
+                }
+
                 //TODO
                 auto vertexAttribBinding = VertexAttribBinding::create(_meshIndexData, pass);
                 pass->setVertexAttribBinding(vertexAttribBinding);

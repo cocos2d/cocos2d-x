@@ -34,6 +34,7 @@
 
 #include <algorithm>
 #include "../testResource.h"
+#include "renderer/backend/Device.h"
 
 USING_NS_CC;
 
@@ -63,7 +64,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(NodeAnimationTest);
     ADD_TEST_CASE(Issue9767);
     ADD_TEST_CASE(Sprite3DClippingTest);
-    ADD_TEST_CASE(Sprite3DTestMeshLight);
+//    ADD_TEST_CASE(Sprite3DTestMeshLight);
     ADD_TEST_CASE(Animate3DCallbackTest);
     ADD_TEST_CASE(CameraBackgroundClearTest);
     ADD_TEST_CASE(Sprite3DVertexColorTest);
@@ -2566,7 +2567,8 @@ Sprite3DNormalMappingTest::Sprite3DNormalMappingTest()
     }
 
     int maxAttributes;
-    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &maxAttributes);
+    auto device = backend::Device::getInstance();
+    device->GetIntegerv(backend::DeviceProperty::MAX_VERTEX_ATTRIBS, &maxAttributes);
     CCASSERT(maxAttributes > 8, "attributes supported must be greater than 8");
     if (maxAttributes > 8)
     {
