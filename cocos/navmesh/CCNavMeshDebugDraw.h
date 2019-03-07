@@ -29,8 +29,6 @@
 #include "base/ccConfig.h"
 #if CC_USE_NAVMESH
 
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderState.h"
 #include "math/Vec3.h"
 #include "recast/DebugUtils/DebugDraw.h"
@@ -91,9 +89,9 @@ private:
 
     std::vector<V3F_C4F> _vertices;
     std::vector<Primitive*> _primitiveList;
-    Primitive *_currentPrimitive;
-    GLProgram *_program;
-    CustomCommand _customCmd;
+    // Primitive *_currentPrimitive;
+    // GLProgram *_program;
+    // CustomCommand _customCmd;
     RenderState::StateBlock* _stateBlock;
     GLenum _primitiveType;
     bool _currentDepthMask;
