@@ -999,7 +999,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
                     if (listener->onTouchBegan)
                     {
                         isClaimed = listener->onTouchBegan(touches, event);
-                        if (isClaimed && listener->_isRegistered)
+                        if (isClaimed && listener->_isRegistered && listener->_isEnabled && !listener->_paused)
                         {
                             listener->_claimedTouches.push_back(touches);
                         }
