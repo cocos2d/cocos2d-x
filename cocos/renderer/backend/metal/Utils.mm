@@ -2,7 +2,12 @@
 #include "DeviceMTL.h"
 
 #define COLOR_ATTAHCMENT_PIXEL_FORMAT MTLPixelFormatBGRA8Unorm
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #define DEPTH_STENCIL_ATTACHMENT_PIXEL_FORMAT MTLPixelFormatDepth32Float_Stencil8
+#else
+#define DEPTH_STENCIL_ATTACHMENT_PIXEL_FORMAT MTLPixelFormatDepth24Unorm_Stencil8
+#endif
 
 CC_BACKEND_BEGIN
 
@@ -61,7 +66,7 @@ MTLPixelFormat Utils::toMTLPixelFormat(TextureFormat textureFormat)
             return MTLPixelFormatA8Unorm;
             // Not all devices supports MTLPixelFormatDepth24Unorm_Stencil8, so change to MTLPixelFormatDepth32Float_Stencil8.
         case TextureFormat::D24S8:
-            return MTLPixelFormatDepth32Float_Stencil8;
+            return DEPTH_STENCIL_ATTACHMENT_PIXEL_FORMAT;
         case TextureFormat::SYSTEM_DEFAULT:
             return COLOR_ATTAHCMENT_PIXEL_FORMAT;
         case TextureFormat::NONE:

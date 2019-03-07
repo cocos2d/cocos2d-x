@@ -55,7 +55,12 @@ namespace
             case TextureFormat::MTL_ABGR4:
                 return byte(2);
             case TextureFormat::D24S8:
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+                //ios use MTLPixelFormatDepth32Float_Stencil8 as DepthStencil combined format, its 64 bits
                 return byte(8);
+#else
+                return byte(4);
+#endif
             default:
                 assert(false); //"textureFormat pixel size in bytes not defined!";
                 break;

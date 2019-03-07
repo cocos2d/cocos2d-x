@@ -22,6 +22,8 @@ struct UniformBuffer
     ~UniformBuffer();
     UniformBuffer& operator =(UniformBuffer&& rhs);
     
+    inline const bool isValid() const { return uniformInfo.location != -1; }
+    
     backend::UniformInfo uniformInfo;
     std::vector<char> data;
 
