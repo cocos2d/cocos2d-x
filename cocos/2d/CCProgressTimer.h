@@ -194,6 +194,12 @@ protected:
     backend::ProgramState* _programState = nullptr;
     backend::ProgramState* _programState2 = nullptr;
 
+    backend::UniformLocation _locMVP1;
+    backend::UniformLocation _locTex1;
+
+    backend::UniformLocation _locMVP2;
+    backend::UniformLocation _locTex2;
+
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ProgressTimer);
 };

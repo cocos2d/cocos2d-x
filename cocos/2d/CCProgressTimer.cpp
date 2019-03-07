@@ -44,7 +44,7 @@ const char kProgressTextureCoords = 0x4b;
 
 namespace
 {
-    void initPipelineDescriptor(cocos2d::CustomCommand& command, bool ridal)
+    backend::ProgramState* initPipelineDescriptor(cocos2d::CustomCommand& command, bool ridal, backend::UniformLocation &locMVP, backend::UniformLocation &locTexture)
     {
         auto& pipelieDescriptor = command.getPipelineDescriptor();
         auto programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColor_frag);
@@ -52,17 +52,11 @@ namespace
         pipelieDescriptor.programState = programState;
         
         //set vertexLayout according to V2F_C4B_T2F structure
-    #define VERTEX_POSITION_SIZE 2
-    #define VERTEX_TEXCOORD_SIZE 2
-    #define VERTEX_COLOR_SIZE 4
-        uint32_t colorOffset = (VERTEX_POSITION_SIZE)*sizeof(float);
-        uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
-        uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
         auto& vertexLayout = pipelieDescriptor.vertexLayout;
-        vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT2, 0, false);
-        vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT2, texcoordOffset, false);
-        vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE4, colorOffset, true);
-        vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
+        vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT2, offsetof(V2F_C4B_T2F, vertices), false);
+        vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::UBYTE4, offsetof(V2F_C4B_T2F, colors), true);
+        vertexLayout.setAtrribute("a_texCoord", 2, backend::VertexFormat::FLOAT2, offsetof(V2F_C4B_T2F, texCoords), false);
+        vertexLayout.setLayout(sizeof(V2F_C4B_T2F), backend::VertexStepMode::VERTEX);
 
         if (ridal)
         {
@@ -74,6 +68,12 @@ namespace
             command.setDrawType(CustomCommand::DrawType::ARRAY);
             command.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE_STRIP);
         }
+
+
+        locMVP = programState->getUniformLocation("u_MVPMatrix");
+        locTexture = programState->getUniformLocation("u_texture");
+
+        return programState;
     }
 }
 
@@ -100,8 +100,8 @@ bool ProgressTimer::initWithSprite(Sprite* sp)
 
     CC_SAFE_RELEASE(_programState);
     CC_SAFE_RELEASE(_programState2);
-    initPipelineDescriptor(_customCommand, true);
-    initPipelineDescriptor(_customCommand2, false);
+    _programState = initPipelineDescriptor(_customCommand, true, _locMVP1, _locTex1); 
+    _programState2 = initPipelineDescriptor(_customCommand2, false, _locMVP2, _locTex2);
     
     return true;
 }
@@ -558,11 +558,8 @@ void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
 
     const cocos2d::Mat4& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     Mat4 finalMat = projectionMat * transform;
-    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    auto mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
-    auto textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
-    pipelineDescriptor.programState->setUniform(mvpMatrixLocation, finalMat.m, sizeof(finalMat.m));
-    pipelineDescriptor.programState->setTexture(textureLocation, 0, _sprite->getTexture()->getBackendTexture());
+    _programState->setUniform(_locMVP1, finalMat.m, sizeof(finalMat.m));
+    _programState->setTexture(_locTex1, 0, _sprite->getTexture()->getBackendTexture());
 
     if(_type == Type::BAR)
     {
@@ -577,11 +574,8 @@ void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
             renderer->addCommand(&_customCommand);
 
             _customCommand2.init(_globalZOrder, _sprite->getBlendFunc());
-            auto& pipelineDescriptor2 = _customCommand2.getPipelineDescriptor();
-            mvpMatrixLocation = pipelineDescriptor2.programState->getUniformLocation("u_MVPMatrix");
-            auto textureLocaiton = pipelineDescriptor2.programState->getUniformLocation("u_texture");
-            pipelineDescriptor2.programState->setUniform(mvpMatrixLocation, finalMat.m, sizeof(finalMat.m));
-            pipelineDescriptor2.programState->setTexture(textureLocaiton, 0, _sprite->getTexture()->getBackendTexture());
+            _programState2->setUniform(_locMVP2, finalMat.m, sizeof(finalMat.m));
+            _programState2->setTexture(_locTex2, 0, _sprite->getTexture()->getBackendTexture());
             renderer->addCommand(&_customCommand2);
         }
     }
