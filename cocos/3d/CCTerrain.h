@@ -530,8 +530,6 @@ protected:
     StateBlock _stateBlock;
     StateBlock _stateBlockOld;
 private:
-    CallbackCommand _beforeDraw;
-    CallbackCommand _afterDraw;
     backend::VertexLayout _vertexLayout;
     backend::ProgramState *_programState = nullptr;
     //uniform locations

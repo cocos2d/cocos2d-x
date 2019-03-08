@@ -159,9 +159,6 @@ private:
 
     backend::ProgramState* _programState = nullptr;
 
-    CallbackCommand _beforeVisitCmd;
-    CallbackCommand _afterVisitCmd;
-
     backend::UniformLocation _locMVPMatrix;
     backend::UniformLocation _locMVMatrix;
     backend::UniformLocation _locPMatrix;

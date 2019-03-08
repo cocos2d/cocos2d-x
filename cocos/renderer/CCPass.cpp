@@ -101,8 +101,8 @@ bool Pass::initWithProgramState(Technique* technique, backend::ProgramState *pro
 
 Pass::Pass()
 {
-    _beforeVisitCmd.func = CC_CALLBACK_0(Pass::onBeforeVisitCmd, this);
-    _afterVisitCmd.func = CC_CALLBACK_0(Pass::onAfterVisitCmd, this);
+    _meshCommand.setBeforeCallback(CC_CALLBACK_0(Pass::onBeforeVisitCmd, this));
+    _meshCommand.setAfterCallback(CC_CALLBACK_0(Pass::onAfterVisitCmd, this));
 }
 
 Pass::~Pass()
@@ -249,12 +249,7 @@ void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buff
 
     auto *renderer = Director::getInstance()->getRenderer();
 
-    _beforeVisitCmd.init(globalZOrder);
-    _afterVisitCmd.init(globalZOrder);
-
-    renderer->addCommand(&_beforeVisitCmd);
     renderer->addCommand(&_meshCommand);
-    renderer->addCommand(&_afterVisitCmd);
 }
 
 void Pass::onBeforeVisitCmd()

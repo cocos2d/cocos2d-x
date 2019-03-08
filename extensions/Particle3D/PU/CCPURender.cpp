@@ -245,15 +245,13 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
 
         _stateBlock.setBlendFunc(particleSystem->getBlendFunc());
         
-        _beforeCommand.init(0.0);
-        _afterCommand.init(0.0);
-        _customCommand.init(0.0);
-        _customCommand.setSkipBatching(true);
-        _customCommand.setTransparent(true);
+        _meshCommand.init(0.0);
+        _meshCommand.setSkipBatching(true);
+        _meshCommand.setTransparent(true);
 
-        _customCommand.setVertexBuffer(_vertexBuffer);
-        _customCommand.setIndexBuffer(_indexBuffer, CustomCommand::IndexFormat::U_SHORT);
-        _customCommand.setIndexDrawInfo(0, index);
+        _meshCommand.setVertexBuffer(_vertexBuffer);
+        _meshCommand.setIndexBuffer(_indexBuffer, MeshCommand::IndexFormat::U_SHORT);
+        _meshCommand.setIndexDrawInfo(0, index);
 
         if (_texture)
         {
@@ -266,16 +264,14 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
         auto &projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         _programState->setUniform(_locPMatrix, &projectionMatrix.m, sizeof(projectionMatrix.m));
 
-        renderer->addCommand(&_beforeCommand);
-        renderer->addCommand(&_customCommand);
-        renderer->addCommand(&_afterCommand);
+        renderer->addCommand(&_meshCommand);
     }
 }
 
 void PUParticle3DEntityRender::onBeforeDraw()
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    auto &pipelineDescriptor = _meshCommand.getPipelineDescriptor();
     _rendererDepthTestEnabled = renderer->getDepthTest();
     _rendererDepthCmpFunc = renderer->getDepthCompareFunction();
     _rendererCullMode = renderer->getCullMode();
@@ -605,7 +601,7 @@ bool PUParticle3DEntityRender::initRender( const std::string &texFile )
         _programState = new backend::ProgramState(CC3D_particle_vert, CC3D_particleColor_frag);
     }
     
-    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    auto &pipelineDescriptor = _meshCommand.getPipelineDescriptor();
     pipelineDescriptor.programState = _programState;
     auto &layout = pipelineDescriptor.vertexLayout;
 
@@ -618,16 +614,16 @@ bool PUParticle3DEntityRender::initRender( const std::string &texFile )
     _locPMatrix = _programState->getUniformLocation("u_PMatrix");
     _locTexture = _programState->getUniformLocation("u_texture");
 
-    _customCommand.setTransparent(true);
-    _customCommand.setSkipBatching(true);
+    _meshCommand.setTransparent(true);
+    _meshCommand.setSkipBatching(true);
 
     _stateBlock.setDepthTest(true);
     _stateBlock.setDepthWrite(false);
     _stateBlock.setCullFaceSide(backend::CullMode::BACK);
     _stateBlock.setCullFace(true);
 
-    _beforeCommand.func = CC_CALLBACK_0(PUParticle3DEntityRender::onBeforeDraw, this);
-    _afterCommand.func = CC_CALLBACK_0(PUParticle3DEntityRender::onAfterDraw, this);
+    _meshCommand.setBeforeCallback(CC_CALLBACK_0(PUParticle3DEntityRender::onBeforeDraw, this));
+    _meshCommand.setAfterCallback(CC_CALLBACK_0(PUParticle3DEntityRender::onAfterDraw, this));
 
     return true;
 }
@@ -762,11 +758,9 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
         auto &projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         _programState->setUniform(_locPMatrix, &projectionMatrix.m, sizeof(projectionMatrix.m));
 
-        _customCommand.setIndexDrawInfo(0, _indices.size());
+        _meshCommand.setIndexDrawInfo(0, _indices.size());
 
-        renderer->addCommand(&_beforeCommand);
-        renderer->addCommand(&_customCommand);
-        renderer->addCommand(&_afterCommand);
+        renderer->addCommand(&_meshCommand);
     }
 }
 
@@ -908,16 +902,14 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
     }
 
     if (!_vertices.empty() && !_indices.empty()){
-        _customCommand.init(0.0f);
-        _beforeCommand.init(0.0f);
-        _afterCommand.init(0.0f);
+        _meshCommand.init(0.0f);
 
         _vertexBuffer->updateData(&_vertices[0], vertexindex * sizeof(_vertices[0]));
         _indexBuffer->updateData(&_indices[0], index * sizeof(_indices[0]));
 
-        _customCommand.setVertexBuffer(_vertexBuffer);
-        _customCommand.setIndexBuffer(_indexBuffer, CustomCommand::IndexFormat::U_SHORT);
-        _customCommand.setIndexDrawInfo(0, index);
+        _meshCommand.setVertexBuffer(_vertexBuffer);
+        _meshCommand.setIndexBuffer(_indexBuffer, MeshCommand::IndexFormat::U_SHORT);
+        _meshCommand.setIndexDrawInfo(0, index);
 
         auto uColor = Vec4(1, 1, 1, 1);
         _programState->setUniform(_locColor, &uColor, sizeof(uColor));
@@ -930,9 +922,7 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
         auto &projectionMatrix = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         _programState->setUniform(_locPMatrix, &projectionMatrix.m, sizeof(projectionMatrix.m));
 
-        renderer->addCommand(&_beforeCommand);
-        renderer->addCommand(&_customCommand);
-        renderer->addCommand(&_afterCommand);
+        renderer->addCommand(&_meshCommand);
     }
 }
 
