@@ -242,6 +242,7 @@ private:
 	static std::string		s_configfile;
     
 protected:
+    GLint           _maxAttributes = 0;
     GLint           _maxTextureSize;
     GLint           _maxModelviewStackDepth;
     bool            _supportsPVRTC;

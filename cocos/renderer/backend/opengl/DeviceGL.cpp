@@ -10,12 +10,6 @@
 
 CC_BACKEND_BEGIN
 
-namespace {
-    static int s_PorpertyIntegerv[(int)DeviceProperty::TOTOAL_PROPERTY] = {
-            GL_MAX_VERTEX_ATTRIBS //MAX_VERTEX_ATTRIBS
-    };
-}
-
 Device* Device::getInstance()
 {
     if (!_instance)
@@ -88,11 +82,6 @@ RenderPipeline* DeviceGL::newRenderPipeline(const RenderPipelineDescriptor& desc
 Program* DeviceGL::newProgram(const std::string& vertexShader, const std::string& fragmentShader)
 {
     return new (std::nothrow) ProgramGL(vertexShader, fragmentShader);
-}
-
-void DeviceGL::GetIntegerv(DeviceProperty property, int *params)
-{
-    glGetIntegerv(s_PorpertyIntegerv[int(property)], params);
 }
 
 CC_BACKEND_END

@@ -121,6 +121,10 @@ void Configuration::gatherGPUInfo()
     _supportsPVRTC = false;
 #endif
     _supportsETC1 = false; //support etc2;
+    
+    //TODO coulsonwang  There is currently no API for querying most Metal implementation limits.
+    _maxAttributes = 31;
+    _valueDict["max_vertex_attributes"] = Value((int)_maxAttributes);
 }
 #else
 void Configuration::gatherGPUInfo()
@@ -180,7 +184,9 @@ void Configuration::gatherGPUInfo()
     _supportsOESPackedDepthStencil = checkForGLExtension("GL_OES_packed_depth_stencil");
     _valueDict["gl.supports_OES_packed_depth_stencil"] = Value(_supportsOESPackedDepthStencil);
 
-
+    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &_maxAttributes);
+    _valueDict["max_vertex_attributes"] = Value((int)_maxAttributes);
+    
     CHECK_GL_ERROR_DEBUG();
 }
 

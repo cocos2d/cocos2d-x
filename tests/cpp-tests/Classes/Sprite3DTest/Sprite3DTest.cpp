@@ -34,7 +34,6 @@
 
 #include <algorithm>
 #include "../testResource.h"
-#include "renderer/backend/Device.h"
 
 USING_NS_CC;
 
@@ -2567,8 +2566,7 @@ Sprite3DNormalMappingTest::Sprite3DNormalMappingTest()
     }
 
     int maxAttributes;
-    auto device = backend::Device::getInstance();
-    device->GetIntegerv(backend::DeviceProperty::MAX_VERTEX_ATTRIBS, &maxAttributes);
+    maxAttributes = Configuration::getInstance()->getValue("max_vertex_attributes").asInt();
     CCASSERT(maxAttributes > 8, "attributes supported must be greater than 8");
     if (maxAttributes > 8)
     {

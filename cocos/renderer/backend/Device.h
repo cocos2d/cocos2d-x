@@ -44,15 +44,12 @@ public:
     virtual BlendState* createBlendState(const BlendDescriptor& descriptor) = 0;
     // Create a render pipeline, not auto released.
     virtual RenderPipeline* newRenderPipeline(const RenderPipelineDescriptor& descriptor) = 0;
-    virtual void GetIntegerv(DeviceProperty property, int *params) = 0;
 
 protected:
     // Create a auto released shader module.
     virtual ShaderModule* newShaderModule(ShaderStage stage, const std::string& source) = 0;
     // Create a auto released program.
     virtual Program* newProgram(const std::string& vertexShader, const std::string& fragmentShader) = 0;
-
-    static int _totalProperty;
     
 private:
     static Device* _instance;
