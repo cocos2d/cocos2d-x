@@ -68,8 +68,14 @@ public:
     */
     void init(float globalZOrder);
 
+    /**
+    * set a callback which will be invoke before rendering
+    */
     void setBeforeCallback(const CallBackFunc &before) { _beforeCallback = before; }
 
+    /**
+    * set a callback which will be invoke after rendering
+    */
     void setAfterCallback(const CallBackFunc &after){ _afterCallback = after; }
 
     const CallBackFunc &getBeforeCallback() { return _beforeCallback; }
@@ -82,8 +88,8 @@ public:
 
 protected:
 
-    CallBackFunc _beforeCallback;
-    CallBackFunc _afterCallback;
+    CallBackFunc _beforeCallback    = nullptr;
+    CallBackFunc _afterCallback     = nullptr;
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _rendererRecreatedListener;
