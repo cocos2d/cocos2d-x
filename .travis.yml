@@ -18,11 +18,11 @@ matrix:
       osx_image: xcode9.3
       sudo: required
     # iOS_cmake
-    - os: osx
-      env: BUILD_TARGET=ios_cmake
-      language: cpp
-      osx_image: xcode9.3
-      sudo: required
+    # - os: osx
+    #   env: BUILD_TARGET=ios_cmake
+    #   language: cpp
+    #   osx_image: xcode9.3
+    #   sudo: required
     # android cmake
     - os: linux
       env: BUILD_TARGET=android_cmake
