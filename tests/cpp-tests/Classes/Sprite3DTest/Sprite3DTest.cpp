@@ -63,7 +63,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(NodeAnimationTest);
     ADD_TEST_CASE(Issue9767);
     ADD_TEST_CASE(Sprite3DClippingTest);
-    ADD_TEST_CASE(Sprite3DTestMeshLight);
+//    ADD_TEST_CASE(Sprite3DTestMeshLight); //TODO coulsonwang missing attibute data in Sprite3DTest/mesh_model.c3b
     ADD_TEST_CASE(Animate3DCallbackTest);
     ADD_TEST_CASE(CameraBackgroundClearTest);
     ADD_TEST_CASE(Sprite3DVertexColorTest);
@@ -2566,7 +2566,7 @@ Sprite3DNormalMappingTest::Sprite3DNormalMappingTest()
     }
 
     int maxAttributes;
-    glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &maxAttributes);
+    maxAttributes = Configuration::getInstance()->getValue("max_vertex_attributes").asInt();
     CCASSERT(maxAttributes > 8, "attributes supported must be greater than 8");
     if (maxAttributes > 8)
     {
