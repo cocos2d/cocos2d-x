@@ -30,29 +30,11 @@ function do_retry()
 function build_linux()
 {
     echo "Building tests ..."
-    cd $COCOS2DX_ROOT/build
+    cd $COCOS2DX_ROOT
     mkdir -p linux-build
     cd linux-build
-    cmake ../..
+    cmake ..
     cmake --build .
-}
-
-function build_mac()
-{
-    NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
-
-    xcodebuild -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "build all tests Mac" -jobs $NUM_OF_CORES -arch x86_64 build | xcpretty
-    ##xcpretty has a bug, some xcodebuid fails return value would be treated as 0.
-    xcodebuild -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "build all tests Mac" -jobs $NUM_OF_CORES -arch x86_64 build
-}
-
-function build_ios()
-{
-    NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
-
-    xcodebuild -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "build all tests iOS" -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build | xcpretty
-    #the following commands must not be removed
-    xcodebuild -project $COCOS2DX_ROOT/build/cocos2d_tests.xcodeproj -scheme "build all tests iOS" -jobs $NUM_OF_CORES  -destination "platform=iOS Simulator,name=iPhone Retina (4-inch)" build
 }
 
 function build_mac_cmake()
@@ -94,29 +76,6 @@ function build_ios_cmake()
     exit 0
 }
 
-function build_android_ndk-build()
-{
-    # Build all samples
-    echo "Building Android samples ..."
-    source ../environment.sh
-
-    # build cpp-empty-test
-    # pushd $COCOS2DX_ROOT/tests/cpp-empty-test
-    # cocos compile -p android --android-studio
-    # popd
-
-    # build cpp-tests
-    pushd $COCOS2DX_ROOT/tests/cpp-tests/proj.android
-    do_retry ./gradlew assembleRelease -PPROP_BUILD_TYPE=ndk-build --parallel --info
-    popd
-
-    # build js-tests
-    # should uncomon it when building time not exceed time limit
-    # pushd $COCOS2DX_ROOT/tests/js-tests
-    # cocos compile -p android
-    # popd
-}
-
 function build_android_cmake()
 {
     # Build all samples
@@ -127,19 +86,6 @@ function build_android_cmake()
     pushd $COCOS2DX_ROOT/tests/cpp-tests/proj.android
     do_retry ./gradlew assembleRelease -PPROP_BUILD_TYPE=cmake --parallel --info
     popd
-}
-
-function build_android_lua_ndk-build()
-{
-    # Build all samples
-    echo "Building Android samples lua ..."
-    source ../environment.sh
-
-    # build lua-tests
-    pushd $COCOS2DX_ROOT/tests/lua-tests/project/proj.android
-    do_retry ./gradlew assembleDebug -PPROP_BUILD_TYPE=ndk-build --parallel --info
-    popd
-
 }
 
 function build_android_lua_cmake()
@@ -296,18 +242,8 @@ function run_pull_request()
     fi
 
     # android
-    if [ $BUILD_TARGET == 'android_ndk-build' ]; then
-        build_android_ndk-build
-    fi
-
-    # android
     if [ $BUILD_TARGET == 'android_cmake' ]; then
         build_android_cmake
-    fi
-
-    # android_lua
-    if [ $BUILD_TARGET == 'android_lua_ndk-build' ]; then
-        build_android_lua_ndk-build
     fi
 
     # android_lua
@@ -318,14 +254,6 @@ function run_pull_request()
     # android_js
     if [ $BUILD_TARGET == 'android_js_cmake' ]; then
         build_android_js_cmake
-    fi
-
-    if [ $BUILD_TARGET == 'mac' ]; then
-        build_mac
-    fi
-
-    if [ $BUILD_TARGET == 'ios' ]; then
-        build_ios
     fi
 }
 
