@@ -329,6 +329,7 @@ void Mesh::setMaterial(Material* material)
         {
             for (auto pass: technique->getPasses())
             {
+#ifdef COCOS2D_DEBUG
                 //make it crashed when missing attribute data
                 if(_material->getTechnique()->getName().compare(technique->getName()) == 0)
                 {
@@ -338,7 +339,7 @@ void Mesh::setMaterial(Material* material)
                     auto attributeCount = meshVertexData->getMeshVertexAttribCount();
                     CCASSERT(attributes.size() <= attributeCount, "missing attribute data");
                 }
-
+#endif
                 //TODO
                 auto vertexAttribBinding = VertexAttribBinding::create(_meshIndexData, pass);
                 pass->setVertexAttribBinding(vertexAttribBinding);
