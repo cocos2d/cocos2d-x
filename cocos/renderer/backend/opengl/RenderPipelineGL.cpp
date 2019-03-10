@@ -17,6 +17,8 @@ RenderPipelineGL::RenderPipelineGL(const RenderPipelineDescriptor& descriptor)
     const auto& blendState = descriptor.blendState;
     CC_SAFE_RETAIN(blendState);
     _blendState = static_cast<BlendStateGL*>(blendState);
+
+    _vertexLayouts = descriptor.vertexLayouts;
 }
 
 RenderPipelineGL::~RenderPipelineGL()

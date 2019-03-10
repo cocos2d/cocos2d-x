@@ -6,7 +6,7 @@
 #include "ProgramGL.h"
 #include "BlendStateGL.h"
 #include "base/ccMacros.h"
-
+#include "renderer/backend/opengl/UtilsGL.h"
 #include <algorithm>
 
 CC_BACKEND_BEGIN
@@ -384,23 +384,27 @@ void CommandBufferGL::bindVertexBuffer(ProgramGL *program) const
     // Bind vertex buffers and set the attributes.
     int i = 0;
     const auto& attributeInfos = program->getAttributeInfos();
+    const auto& vertexLayouts = _renderPipeline->getVertexLayouts();
     for (const auto& vertexBuffer : _vertexBuffers)
     {
         if (! vertexBuffer)
             continue;
         
         glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->getHandler());
+
         
         const auto& attributeInfo = attributeInfos[i];
+        const auto &layouts = vertexLayouts[i];
         for (const auto& attribute : attributeInfo)
         {
+            const auto &layoutInfo = layouts.getAttributes().at(attribute.name);
             glEnableVertexAttribArray(attribute.location);
             glVertexAttribPointer(attribute.location,
-                                  attribute.size,
-                                  attribute.type,
-                                  attribute.needToBeNormallized,
-                                  attribute.stride,
-                                  (GLvoid*)attribute.offset);
+                                  UtilsGL::getGLAttributeSize(layoutInfo.format),
+                                  UtilsGL::toGLAttributeType(layoutInfo.format),
+                                  layoutInfo.needToBeNormallized,
+                                  layouts.getStride(),
+                                  (GLvoid*)layoutInfo.offset);
         }
         
         ++i;

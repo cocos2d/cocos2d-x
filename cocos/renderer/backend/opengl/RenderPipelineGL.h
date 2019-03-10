@@ -20,10 +20,11 @@ public:
     
     inline ProgramGL* getProgram() const { return _programGL; }
     inline BlendStateGL* getBlendState() const { return _blendState; }
-    
+    inline const std::vector<VertexLayout> & getVertexLayouts() const{ return _vertexLayouts; }
 private:
     ProgramGL* _programGL = nullptr;
     BlendStateGL* _blendState = nullptr;
+    std::vector<VertexLayout> _vertexLayouts;
 };
 
 CC_BACKEND_END

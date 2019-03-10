@@ -87,6 +87,7 @@ list(APPEND COCOS_RENDERER_HEADER
     renderer/backend/opengl/RenderPipelineGL.h
     renderer/backend/opengl/ShaderModuleGL.h
     renderer/backend/opengl/TextureGL.h
+    renderer/backend/opengl/UtilsGL.h
 )
 
 list(APPEND COCOS_RENDERER_SRC
@@ -99,6 +100,7 @@ list(APPEND COCOS_RENDERER_SRC
     renderer/backend/opengl/RenderPipelineGL.cpp
     renderer/backend/opengl/ShaderModuleGL.cpp
     renderer/backend/opengl/TextureGL.cpp
+    renderer/backend/opengl/UtilsGL.cpp
 )
 
 else()

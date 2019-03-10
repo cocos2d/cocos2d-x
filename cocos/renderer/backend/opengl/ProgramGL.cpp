@@ -2,114 +2,10 @@
 #include "ShaderModuleGL.h"
 #include "renderer/backend/Types.h"
 #include "base/ccMacros.h"
+#include "renderer/backend/opengl/UtilsGL.h"
 
 CC_BACKEND_BEGIN
 
-namespace
-{
-    GLenum toGLAttributeType(VertexFormat vertexFormat)
-    {
-        GLenum ret = GL_INT;
-        switch (vertexFormat)
-        {
-            case VertexFormat::FLOAT4:
-            case VertexFormat::FLOAT3:
-            case VertexFormat::FLOAT2:
-            case VertexFormat::FLOAT:
-                ret = GL_FLOAT;
-                break;
-            case VertexFormat::INT4:
-            case VertexFormat::INT3:
-            case VertexFormat::INT2:
-            case VertexFormat::INT:
-                ret = GL_INT;
-                break;
-            case VertexFormat::UBYTE4:
-                ret = GL_UNSIGNED_BYTE;
-                break;
-            default:
-                break;
-        }
-        return ret;
-    }
-    
-    GLsizei getGLAttributeSize(VertexFormat vertexFormat)
-    {
-        GLsizei ret = 0;
-        switch (vertexFormat)
-        {
-            case VertexFormat::FLOAT4:
-            case VertexFormat::INT4:
-            case VertexFormat::UBYTE4:
-                ret = 4;
-                break;
-            case VertexFormat::FLOAT3:
-            case VertexFormat::INT3:
-                ret = 3;
-                break;
-            case VertexFormat::FLOAT2:
-            case VertexFormat::INT2:
-                ret = 2;
-                break;
-            case VertexFormat::FLOAT:
-            case VertexFormat::INT:
-                ret = 1;
-                break;
-            default:
-                break;
-        }
-        return ret;
-    }
-    
-    GLsizei getGLDataTypeSize(GLenum size)
-    {
-        GLsizei ret = 0;
-        switch (size)
-        {
-            case GL_BOOL:
-            case GL_BYTE:
-            case GL_UNSIGNED_BYTE:
-                ret = sizeof(GLbyte);
-                break;
-            case GL_BOOL_VEC2:
-            case GL_SHORT:
-            case GL_UNSIGNED_SHORT:
-                ret = sizeof(GLshort);
-                break;
-            case GL_BOOL_VEC3:
-                ret = sizeof(GLboolean);
-                break;
-            case GL_BOOL_VEC4:
-            case GL_INT:
-            case GL_UNSIGNED_INT:
-            case GL_FLOAT:
-                ret = sizeof(GLfloat);
-                break;
-            case GL_FLOAT_VEC2:
-            case GL_INT_VEC2:
-                ret = sizeof(GLfloat) * 2;
-                break;
-            case GL_FLOAT_VEC3:
-            case GL_INT_VEC3:
-                ret = sizeof(GLfloat) * 3;
-                break;
-            case GL_FLOAT_MAT2:
-            case GL_FLOAT_VEC4:
-            case GL_INT_VEC4:
-                ret = sizeof(GLfloat) * 4;
-                break;
-            case GL_FLOAT_MAT3:
-                ret = sizeof(GLfloat) * 9;
-                break;
-            case GL_FLOAT_MAT4:
-                ret = sizeof(GLfloat) * 16;
-                break;
-            default:
-                break;
-        }
-        return ret;
-    }
-}
 
 ProgramGL::ProgramGL(const std::string& vertexShader, const std::string& fragmentShader)
 : Program(vertexShader, fragmentShader)
@@ -184,10 +80,11 @@ void ProgramGL::computeAttributeInfos(const RenderPipelineDescriptor& descriptor
             
             attributeInfo.stride = vertexLayout.getStride();
             attributeInfo.offset = attribute.offset;
-            attributeInfo.type = toGLAttributeType(attribute.format);
-            attributeInfo.size = getGLAttributeSize(attribute.format);
+            attributeInfo.type = UtilsGL::toGLAttributeType(attribute.format);
+            attributeInfo.size = UtilsGL::getGLAttributeSize(attribute.format);
             attributeInfo.needToBeNormallized = attribute.needToBeNormallized;
-            
+            attributeInfo.name = attribute.name;
+
             vertexAttributeArray.push_back(attributeInfo);
         }
         
@@ -238,7 +135,7 @@ std::vector<AttributeBindInfo> ProgramGL::getActiveAttributes() const {
         info.attributeName = std::string(attrName.data(), attrName.data() + attrNameLen);
         info.location = glGetAttribLocation(_program, info.attributeName.c_str());
         info.type = attrType;
-        info.size = getGLDataTypeSize(attrType) * attrSize;
+        info.size = UtilsGL::getGLDataTypeSize(attrType) * attrSize;
         CHECK_GL_ERROR_DEBUG();
         attributes.push_back(info);
     }
@@ -277,7 +174,7 @@ void ProgramGL::computeUniformInfos()
             }
         }
         uniform.location = glGetUniformLocation(_program, uniformName);
-        uniform.bufferSize = getGLDataTypeSize(uniform.type);
+        uniform.bufferSize = UtilsGL::getGLDataTypeSize(uniform.type);
         _uniformInfos[uniformName] = uniform;
 
         _maxLocation = _maxLocation <= uniform.location ? (uniform.location + 1) : _maxLocation;
