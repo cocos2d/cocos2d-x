@@ -41,6 +41,7 @@ NewRendererTests::NewRendererTests()
     ADD_TEST_CASE(RendererBatchQuadTri);
     // ADD_TEST_CASE(RendererUniformBatch); // TODO shouldn't call OpenGL API directly
     // ADD_TEST_CASE(RendererUniformBatch2);
+    ADD_TEST_CASE(NonBatchSprites);
 };
 
 std::string MultiSceneTest::title() const
@@ -771,3 +772,46 @@ std::string RendererBatchQuadTri::subtitle() const
 //{
 //    return "Mixing different shader states should work ok";
 //}
+
+NonBatchSprites::NonBatchSprites()
+{
+    Size s = Director::getInstance()->getWinSize();
+    Node* parent = Node::create();
+    parent->setPosition(0, 0);
+    addChild(parent);
+
+    for (int i = 0; i < 2000; ++i)
+    {
+        Sprite* sprite = nullptr;
+        if (i % 2 == 0)
+        {
+            sprite = Sprite::create("Images/grossini_dance_05.png");
+        }
+        else
+        {
+            sprite = Sprite::create("Images/grossini_dance_01.png");
+        }
+        sprite->setScale(0.1f, 0.1f);
+        float x = ((float)std::rand()) / RAND_MAX;
+        float y = ((float)std::rand()) / RAND_MAX;
+        
+        sprite->setPosition(Vec2(x * s.width, y * s.height));
+        parent->addChild(sprite);
+    }
+}
+
+NonBatchSprites::~NonBatchSprites()
+{
+
+}
+
+std::string NonBatchSprites::title() const
+{
+    return "Non Batched Sprites";
+}
+
+std::string NonBatchSprites::subtitle() const
+{
+    return "simulate lots of sprites";
+}
+

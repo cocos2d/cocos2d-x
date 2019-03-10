@@ -400,11 +400,19 @@ void CommandBufferGL::bindVertexBuffer(ProgramGL *program) const
             const auto &layoutInfo = layouts.getAttributes().at(attribute.name);
             glEnableVertexAttribArray(attribute.location);
             glVertexAttribPointer(attribute.location,
-                                  UtilsGL::getGLAttributeSize(layoutInfo.format),
-                                  UtilsGL::toGLAttributeType(layoutInfo.format),
-                                  layoutInfo.needToBeNormallized,
-                                  layouts.getStride(),
-                                  (GLvoid*)layoutInfo.offset);
+#if 0
+                UtilsGL::getGLAttributeSize(layoutInfo.format),
+                UtilsGL::toGLAttributeType(layoutInfo.format),
+                layoutInfo.needToBeNormallized,
+                layouts.getStride(),
+                (GLvoid*)layoutInfo.offset);
+#else
+                attribute.size,
+                attribute.type,
+                attribute.needToBeNormallized,
+                attribute.stride,
+                (GLvoid*)attribute.offset);
+#endif
         }
         
         ++i;
