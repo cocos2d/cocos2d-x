@@ -326,7 +326,7 @@ void CommandBufferGL::bindVertexBuffer(ProgramGL *program) const
     // Bind vertex buffers and set the attributes.
     int i = 0;
     const auto& attributeInfos = program->getAttributeInfos();
-    const auto& vertexLayouts = _renderPipeline->getVertexLayouts();
+    const auto& vertexLayouts = getVertexLayouts();
     for (const auto& vertexBuffer : _vertexBuffers)
     {
         if (! vertexBuffer)

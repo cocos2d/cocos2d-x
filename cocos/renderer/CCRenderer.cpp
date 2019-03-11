@@ -797,14 +797,10 @@ backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipeli
     {
         auto renderPipeline = backend::Device::getInstance()->newRenderPipeline(renderPipelineDescriptor);
         _renderPipelineCache.emplace(hash, renderPipeline);
-
         return renderPipeline;
     }
     else
     {
-#ifndef CC_USE_METAL
-        iter->second->updateVertexLayouts(renderPipelineDescriptor.vertexLayouts);
-#endif
         return iter->second;
     }
 }
@@ -856,6 +852,9 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
 
     _commandBuffer->setRenderPipeline(getRenderPipeline(renderPipelineDescriptor, pipelineDescriptor.blendDescriptor));
     _commandBuffer->setDepthStencilState(depthStencilState);
+#ifndef CC_USE_METAL
+    _commandBuffer->updateVertexLayouts(renderPipelineDescriptor.vertexLayouts);
+#endif
 }
 
 void Renderer::beginRenderPass(RenderCommand* cmd)
