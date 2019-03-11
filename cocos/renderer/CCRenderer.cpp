@@ -736,7 +736,7 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
     return ret;
 }
 
-backend::RenderPipeline* Renderer::getRenderPipeline(backend::RenderPipelineDescriptor& renderPipelineDescriptor, const backend::BlendDescriptor blendDescriptor)
+backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipelineDescriptor& renderPipelineDescriptor, const backend::BlendDescriptor blendDescriptor)
 {
     struct
     {
@@ -802,7 +802,9 @@ backend::RenderPipeline* Renderer::getRenderPipeline(backend::RenderPipelineDesc
     }
     else
     {
-        iter->second->setVertexLayouts(renderPipelineDescriptor.vertexLayouts);
+#ifndef CC_USE_METAL
+        iter->second->updateVertexLayouts(renderPipelineDescriptor.vertexLayouts);
+#endif
         return iter->second;
     }
 }

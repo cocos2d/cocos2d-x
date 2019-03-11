@@ -301,7 +301,7 @@ protected:
     
     void setRenderPipeline(const PipelineDescriptor&, const backend::RenderPassDescriptor&);
 
-    backend::RenderPipeline* getRenderPipeline(backend::RenderPipelineDescriptor& renderPipelineDescriptor, const backend::BlendDescriptor blendDescriptor);
+    backend::RenderPipeline* getRenderPipeline(const backend::RenderPipelineDescriptor& renderPipelineDescriptor, const backend::BlendDescriptor blendDescriptor);
 
     std::unordered_map<unsigned int, backend::RenderPipeline*> _renderPipelineCache;
 

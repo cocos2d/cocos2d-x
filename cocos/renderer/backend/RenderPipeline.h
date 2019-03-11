@@ -13,7 +13,7 @@ class RenderPipeline : public cocos2d::Ref
 {
 public:
     inline const std::shared_ptr<std::vector<VertexLayout>> getVertexLayouts() const { return _vertexLayouts; }
-    void setVertexLayouts(const std::shared_ptr<std::vector<VertexLayout>> &layout) { _vertexLayouts = layout; }
+    void updateVertexLayouts(const std::shared_ptr<std::vector<VertexLayout>> &layout) { _vertexLayouts = layout; }
 protected:
     virtual ~RenderPipeline() = default;
     std::shared_ptr<std::vector<VertexLayout>> _vertexLayouts;
