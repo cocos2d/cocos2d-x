@@ -95,7 +95,7 @@ RenderPipelineMTL::~RenderPipelineMTL()
 
 void RenderPipelineMTL::setVertexLayout(MTLRenderPipelineDescriptor* mtlDescriptor, const RenderPipelineDescriptor& descriptor)
 {
-    const auto& vertexLayouts = descriptor.vertexLayouts;
+    const auto& vertexLayouts = *descriptor.vertexLayouts;
     int vertexIndex = 0;
     for (const auto& vertexLayout : vertexLayouts)
     {
