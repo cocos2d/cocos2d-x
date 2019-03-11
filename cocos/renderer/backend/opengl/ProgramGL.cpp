@@ -62,7 +62,7 @@ void ProgramGL::computeAttributeInfos(const RenderPipelineDescriptor& descriptor
 {
     _attributeInfos.clear();
     const auto& vertexLayouts = descriptor.vertexLayouts;
-    for (const auto& vertexLayout : vertexLayouts)
+    for (const auto& vertexLayout : *vertexLayouts)
     {
         if (! vertexLayout.isValid())
             continue;

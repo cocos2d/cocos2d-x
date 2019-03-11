@@ -336,7 +336,7 @@ void CommandBufferGL::bindVertexBuffer(ProgramGL *program) const
 
         
         const auto& attributeInfo = attributeInfos[i];
-        const auto &layouts = vertexLayouts[i];
+        const auto &layouts = vertexLayouts->at(i);
         for (const auto& attribute : attributeInfo)
         {
             const auto &layoutInfo = layouts.getAttributes().at(attribute.name);

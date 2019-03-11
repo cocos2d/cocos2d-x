@@ -736,7 +736,7 @@ bool Renderer::checkVisibility(const Mat4 &transform, const Size &size)
     return ret;
 }
 
-backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipelineDescriptor& renderPipelineDescriptor, const backend::BlendDescriptor blendDescriptor)
+backend::RenderPipeline* Renderer::getRenderPipeline(backend::RenderPipelineDescriptor& renderPipelineDescriptor, const backend::BlendDescriptor blendDescriptor)
 {
     struct
     {
@@ -769,7 +769,7 @@ backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipeli
     hashMe.sourceAlphaBlendFactor = (unsigned int)blendDescriptor.sourceAlphaBlendFactor;
     hashMe.destinationAlphaBlendFactor = (unsigned int)blendDescriptor.destinationAlphaBlendFactor;
     int index = 0;
-    for(const auto& vertexLayout : renderPipelineDescriptor.vertexLayouts)
+    for(const auto& vertexLayout : *renderPipelineDescriptor.vertexLayouts)
     {
         if (!vertexLayout.isValid())
             continue;
@@ -801,14 +801,17 @@ backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipeli
         return renderPipeline;
     }
     else
+    {
+        iter->second->setVertexLayouts(renderPipelineDescriptor.vertexLayouts);
         return iter->second;
+    }
 }
 
 void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, const backend::RenderPassDescriptor& renderPassDescriptor)
 {
     backend::RenderPipelineDescriptor renderPipelineDescriptor;
     renderPipelineDescriptor.programState = pipelineDescriptor.programState;
-    renderPipelineDescriptor.vertexLayouts.push_back(pipelineDescriptor.vertexLayout);
+    renderPipelineDescriptor.vertexLayouts->push_back(pipelineDescriptor.vertexLayout);
     
     auto device = backend::Device::getInstance();
     auto blendState = device->createBlendState(pipelineDescriptor.blendDescriptor);
