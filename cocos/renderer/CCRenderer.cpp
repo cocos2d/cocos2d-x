@@ -853,6 +853,7 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
     _commandBuffer->setRenderPipeline(getRenderPipeline(renderPipelineDescriptor, pipelineDescriptor.blendDescriptor));
     _commandBuffer->setDepthStencilState(depthStencilState);
 #ifndef CC_USE_METAL
+    // Extra layout info is required in OpenGL 
     _commandBuffer->updateVertexLayouts(renderPipelineDescriptor.vertexLayouts);
 #endif
 }
