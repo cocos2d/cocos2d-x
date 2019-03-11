@@ -191,8 +191,7 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
     #Set git user for cocos2d-lua repo
     git config user.email ${GH_EMAIL}
     git config user.name ${GH_USER}#Set remotes
-    # git remote add upstream "$COCOS_ROBOT_REMOTE" 2> /dev/null > /dev/null
-    git remote add upstream "$COCOS_ROBOT_REMOTE"
+    git remote add upstream "$COCOS_ROBOT_REMOTE" 2> /dev/null > /dev/null
 
     # Run status to record the output in the log
     git status
@@ -223,7 +222,9 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
     git commit -m "$COMMITTAG"
 
     echo "Pushing to Robot's repo ..."
-    git push -fq upstream "$COCOS_BRANCH" 2> /dev/null
+    # git push -fq upstream "$COCOS_BRANCH" 2> /dev/null
+    git push -fq upstream "$COCOS_BRANCH"
+
 
     echo "Sending Pull Request to base repo ..."
     curl --user "${GH_USER}:${GH_PASSWORD}" --request POST --data "{ \"title\": \"$COMMITTAG\", \"body\": \"\", \"head\": \"${GH_USER}:${COCOS_BRANCH}\", \"base\": \"${TRAVIS_BRANCH}\"}" "${PULL_REQUEST_REPO}" 2> /dev/null > /dev/null
