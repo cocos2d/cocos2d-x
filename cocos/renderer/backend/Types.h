@@ -218,6 +218,13 @@ enum class Winding: uint32_t
     COUNTER_CLOCK_WISE
 };
 
+enum class BasicType: uint32_t
+{
+    FLOAT,
+    INT,
+    BOOL
+};
+
 struct UniformInfo
 {
     int count = 0;
@@ -225,6 +232,8 @@ struct UniformInfo
     unsigned int type = 0;
     bool isArray = false;
     unsigned int bufferSize = 0;
+    bool isMatrix = false;
+    bool needConvert = false;
 };
 
 struct UniformLocation

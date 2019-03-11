@@ -6,6 +6,30 @@
 
 CC_BACKEND_BEGIN
 
+namespace {
+#define MAT3_SIZE 36
+#define MAT4_SIZE 64
+#define VEC3_SIZE 12
+#define VEC4_SIZE 16
+    
+    void convertVec3ToVec4(const float* src, float* dst)
+    {
+        dst[0] = src[0];
+        dst[1] = src[1];
+        dst[2] = src[2];
+        dst[3] = 0.0f;
+    }
+    
+    void convertMat3ToMat3x4(const float* src, float* dst)
+    {
+        dst[3] = dst[7] = dst[11] = 0.0f;
+        dst[0] = src[0]; dst[1] = src[1]; dst[2] = src[2];
+        dst[4] = src[3]; dst[5] = src[4]; dst[6] = src[5];
+        dst[8] = src[6]; dst[9] = src[7]; dst[10] = src[8];
+    }
+}
+
+
 UniformBuffer::UniformBuffer(const backend::UniformInfo &_uniformInfo)
 : uniformInfo(_uniformInfo)
 {
@@ -200,11 +224,57 @@ void ProgramState::setUniform(const backend::UniformLocation& uniformLocation, c
     }
 }
 
+void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, std::vector<char>& uniformData)
+{
+    auto basicType = static_cast<BasicType>(uniformInfo.type);
+    char* convertedData = new char[uniformInfo.bufferSize];
+    memset(convertedData, 0, uniformInfo.bufferSize);
+    switch (basicType) {
+        case BasicType::FLOAT:
+        {
+            for (int i=0; i<uniformInfo.count; i++)
+            {
+                int offset = 0;
+                if(uniformInfo.isMatrix)
+                {
+                    offset = i*MAT3_SIZE;
+                    if(offset >= srcSize)
+                        break;
+                    
+                    convertMat3ToMat3x4((float*)srcData + offset, (float*)convertedData + i * MAT4_SIZE);
+                }
+                else
+                {
+                    offset = i*VEC3_SIZE;
+                    if(offset >= srcSize)
+                        break;
+                    convertVec3ToVec4((float*)srcData +offset, (float*)convertedData + i * VEC4_SIZE);
+                }
+                
+            }
+            
+            uniformData.assign(convertedData, convertedData + uniformInfo.bufferSize);
+            break;
+        }
+        default:
+            CCLOGINFO("Not yet implemented...");
+            break;
+    }
+    CC_SAFE_DELETE_ARRAY(convertedData);
+}
+
 void ProgramState::setVertexUniform(int location, const void* data, uint32_t size)
 {
     if(location < 0)
         return;
-    
+#ifdef CC_USE_METAL
+    auto uniformInfo = _vertexUniformInfos[location].uniformInfo;
+    if(uniformInfo.needConvert)
+    {
+        convertUniformData(uniformInfo, data, size, _vertexUniformInfos[location].data);
+        return;
+    }
+#endif
     _vertexUniformInfos[location].data.assign((char*)data, (char*)data + size);
 }
 
@@ -212,6 +282,14 @@ void ProgramState::setFragmentUniform(int location, const void* data, uint32_t s
 {
     if(location < 0)
         return;
+#ifdef CC_USE_METAL
+    auto uniformInfo = _fragmentUniformInfos[location].uniformInfo;
+    if(uniformInfo.needConvert)
+    {
+        convertUniformData(uniformInfo, data, size, _fragmentUniformInfos[location].data);
+        return;
+    }
+#endif
     _fragmentUniformInfos[location].data.assign((char *)data, (char *)data + size);
 }
 
