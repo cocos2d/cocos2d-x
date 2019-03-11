@@ -9,6 +9,10 @@
 #include "RenderPassDescriptor.h"
 #include "CCStdC.h"
 #include "ProgramState.h"
+#include "VertexLayout.h"
+
+#include <memory>
+#include <vector>
 
 CC_BACKEND_BEGIN
 
@@ -16,6 +20,7 @@ class RenderPass;
 class RenderPipeline;
 class Buffer;
 class DepthStencilState;
+
 
 class CommandBuffer : public cocos2d::Ref
 {

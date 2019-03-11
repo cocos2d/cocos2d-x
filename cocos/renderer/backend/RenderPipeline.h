@@ -2,11 +2,7 @@
 
 #include "Macros.h"
 #include "Types.h"
-#include "VertexLayout.h"
 #include "base/CCRef.h"
-
-#include <memory>
-#include <vector>
 
 CC_BACKEND_BEGIN
 
