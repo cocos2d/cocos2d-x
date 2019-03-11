@@ -2,7 +2,7 @@
 
 #include "base/ccMacros.h"
 #include "renderer/backend/Types.h"
-
+#include "platform/CCGL.h"
 
 #ifdef CC_USE_METAL
 #error "this header should only included in opengl"
