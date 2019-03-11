@@ -1,12 +1,9 @@
 #pragma once
 
 #include "base/ccMacros.h"
-#include "renderer/backend/Types.h"
 #include "platform/CCGL.h"
+#include "renderer/backend/Types.h"
 
-#ifdef CC_USE_METAL
-#error "this header should only included in opengl"
-#endif
 CC_BACKEND_BEGIN
 
 class UtilsGL
@@ -26,6 +23,11 @@ public:
 
     static GLenum toGLBlendOperation(BlendOperation blendOperation);
     static GLenum toGLBlendFactor(BlendFactor blendFactor);
+
+    static GLenum toGLFrontFace(Winding winding);
+    static GLenum toGLPrimitiveType(PrimitiveType primitiveType);
+    static GLenum toGLIndexType(IndexFormat indexType);
+    static GLenum toGLCullMode(CullMode mode);
 };
 
 CC_BACKEND_END

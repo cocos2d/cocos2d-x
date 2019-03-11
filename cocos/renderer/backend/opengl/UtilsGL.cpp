@@ -485,4 +485,63 @@ GLenum UtilsGL::toGLBlendFactor(BlendFactor blendFactor)
     return ret;
 }
 
+GLenum UtilsGL::toGLFrontFace(Winding winding)
+{
+    if (Winding::CLOCK_WISE == winding)
+        return GL_CW;
+    else
+        return GL_CCW;
+}
+
+GLenum UtilsGL::toGLPrimitiveType(PrimitiveType primitiveType)
+{
+    GLenum ret = GL_TRIANGLES;
+    switch (primitiveType)
+    {
+    case PrimitiveType::POINT:
+        ret = GL_POINTS;
+        break;
+    case PrimitiveType::LINE:
+        ret = GL_LINES;
+        break;
+    case PrimitiveType::LINE_STRIP:
+        ret = GL_LINE_STRIP;
+        break;
+    case PrimitiveType::TRIANGLE:
+        ret = GL_TRIANGLES;
+        break;
+    case PrimitiveType::TRIANGLE_STRIP:
+        ret = GL_TRIANGLE_STRIP;
+        break;
+    default:
+        break;
+    }
+    return ret;
+}
+
+GLenum UtilsGL::toGLIndexType(IndexFormat indexType)
+{
+    GLenum ret = GL_BYTE;
+    switch (indexType)
+    {
+    case IndexFormat::U_INT:
+        ret = GL_UNSIGNED_INT;
+        break;
+    case IndexFormat::U_SHORT:
+        ret = GL_UNSIGNED_SHORT;
+        break;
+    default:
+        break;
+    }
+    return ret;
+}
+
+GLenum UtilsGL::toGLCullMode(CullMode mode)
+{
+    if (CullMode::BACK == mode)
+        return GL_BACK;
+    else
+        return GL_FRONT;
+}
+
 CC_BACKEND_END
