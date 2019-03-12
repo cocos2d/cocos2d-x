@@ -23,7 +23,7 @@
 # ****************************************************************************/
 cmake_minimum_required(VERSION 3.6)
 
-set(APP_NAME HelloLua)
+set(APP_NAME MyLuaGame)
 
 project(${APP_NAME})
 
@@ -99,21 +99,13 @@ elseif(APPLE)
              )
     elseif(MACOSX)
         list(APPEND GAME_HEADER
-             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/SimulatorApp.h
-             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/ConsoleWindowController.h
              )
         set(APP_UI_RES
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Base.lproj/MainMenu.xib
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/en.lproj/MainMenu.xib
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/zh-Hans.lproj/MainMenu.xib
-            ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/ConsoleWindow.xib
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Icon.icns
             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Info.plist
             )
         list(APPEND GAME_SOURCE
-             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.m
-             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/SimulatorApp.mm
-             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/ConsoleWindowController.m
+             ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/main.cpp
              ${RUNTIME_SRC_ROOT}/proj.ios_mac/mac/Prefix.pch
              ${APP_UI_RES}
              )
@@ -136,11 +128,6 @@ endif()
 
 target_link_libraries(${APP_NAME} luacocos2d)
 target_include_directories(${APP_NAME} PRIVATE ${RUNTIME_SRC_ROOT}/Classes)
-
-if(WINDOWS OR MACOSX)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator ${ENGINE_BINARY_PATH}/cocos/simulatorlib)
-    target_link_libraries(${APP_NAME} simulatorlib)
-endif()
 
 # mark app resources, resource will be copy auto after mark
 setup_cocos_app_config(${APP_NAME})
