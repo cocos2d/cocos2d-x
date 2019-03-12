@@ -38,15 +38,15 @@ matrix:
     #   env: BUILD_TARGET=android_js_cmake
     #   language: android
     #   sudo: required
-    # - os: linux
-    #   env: BUILD_TARGET=android_cocos_new_test
-    #   language: android
-    #   sudo: required
-    # - os: linux
-    #   dist: xenial
-    #   env: BUILD_TARGET=linux_cocos_new_test
-    #   language: cpp
-    #   sudo: required
+    - os: linux
+      env: BUILD_TARGET=android_cocos_new_test
+      language: android
+      sudo: required
+    - os: linux
+      dist: xenial
+      env: BUILD_TARGET=linux_cocos_new_test
+      language: cpp
+      sudo: required
 
 script:
 - tools/travis-scripts/run-script.sh
