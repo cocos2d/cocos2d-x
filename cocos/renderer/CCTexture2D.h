@@ -156,10 +156,10 @@ public:
      Extension to set the Min / Mag filter
      */
     typedef struct _TexParams {
-        GLuint    minFilter;
-        GLuint    magFilter;
-        GLuint    wrapS;
-        GLuint    wrapT;
+        backend::SamplerFilter      minFilter;
+        backend::SamplerFilter      magFilter;
+        backend::SamplerAddressMode wrapS;
+        backend::SamplerAddressMode wrapT;
     }TexParams;
     
 public:
@@ -300,9 +300,6 @@ public:
     //TODO: minggo: is it resaonable?
     bool initWithBackendTexture(backend::Texture* texture);
 
-    /** Set sampler properties
-    */
-    void setSamplerDescriptor(const backend::SamplerDescriptor& texParams);
     
     //TODO: should be remove later
     void setTexParameters(const TexParams &params);
@@ -405,6 +402,11 @@ private:
         Rect capInsetSize;
         std::unordered_map<SpriteFrame*, Rect> capInsetMap;
     };
+
+
+    /** Set sampler properties
+    */
+    void setSamplerDescriptor(const backend::SamplerDescriptor& texParams);
 
     /**
      * Whether the texture contains a 9-patch capInset info or not.

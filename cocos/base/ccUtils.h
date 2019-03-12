@@ -198,6 +198,10 @@ namespace utils
 
     CC_DLL int toGLBlendFactor(backend::BlendFactor blendFactor);
 
+    CC_DLL backend::SamplerFilter toBackendSamplerFilter(int mode);
+
+    CC_DLL backend::SamplerAddressMode toBackendAddressMode(int mode);
+
     // Adjust matrix for metal.
     CC_DLL const Mat4& getAdjustMatrix();
 

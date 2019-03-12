@@ -633,6 +633,42 @@ int toGLBlendFactor(backend::BlendFactor blendFactor)
     return ret;
 }
 
+backend::SamplerFilter toBackendSamplerFilter(int mode)
+{
+    switch (mode)
+    {
+    case GLTexParamConst::LINEAR:
+    case GLTexParamConst::LINEAR_MIPMAP_LINEAR:
+    case GLTexParamConst::LINEAR_MIPMAP_NEAREST:
+    case GLTexParamConst::NEAREST_MIPMAP_LINEAR:
+        return backend::SamplerFilter::LINEAR;
+    case GLTexParamConst::NEAREST:
+    case GLTexParamConst::NEAREST_MIPMAP_NEAREST:
+        return backend::SamplerFilter::NEAREST;
+    default:
+        CCASSERT(false, "invalid GL sampler filter!");
+        return backend::SamplerFilter::LINEAR;
+    }
+}
+
+backend::SamplerAddressMode toBackendAddressMode(int mode)
+{
+    switch (mode)
+    {
+    case GLTexParamConst::REPEAT:
+    case GLTexParamConst::TEXTURE_WRAP_S:
+    case GLTexParamConst::TEXTURE_WRAP_T:
+        return backend::SamplerAddressMode::REPEAT;
+    case GLTexParamConst::CLAMP:
+        return backend::SamplerAddressMode::CLAMP_TO_EDGE;
+    case GLTexParamConst::MIRROR_REPEAT:
+        return backend::SamplerAddressMode::MIRROR_REPEAT;
+    default:
+        CCASSERT(false, "invalid GL address mode");
+        return backend::SamplerAddressMode::REPEAT;
+    }
+}
+
 const Mat4& getAdjustMatrix()
 {
     static cocos2d::Mat4 adjustMatrix = {

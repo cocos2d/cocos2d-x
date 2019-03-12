@@ -293,10 +293,12 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
 void TextureCube::setTexParameters(const Texture2D::TexParams& texParams)
 {
     backend::SamplerDescriptor samplerDescriptor;
-    samplerDescriptor.minFilter = toBackendFilter(texParams.minFilter);
-    samplerDescriptor.magFilter = toBackendFilter(texParams.magFilter);
-    samplerDescriptor.tAddressMode = toBackendAddressMode(texParams.wrapT);
-    samplerDescriptor.sAddressMode = toBackendAddressMode(texParams.wrapS);
+    samplerDescriptor.mipmapEnabled = true;
+    samplerDescriptor.mipmapFilter = backend::SamplerFilter::LINEAR;
+    samplerDescriptor.minFilter = texParams.minFilter;
+    samplerDescriptor.magFilter = texParams.magFilter;
+    samplerDescriptor.tAddressMode = texParams.wrapT;
+    samplerDescriptor.sAddressMode = texParams.wrapS;
     _texture->updateSamplerDescriptor(samplerDescriptor);
 }
 

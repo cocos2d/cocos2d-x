@@ -389,10 +389,10 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
                     if(tex)
                     {
                         Texture2D::TexParams texParams;
-                        texParams.minFilter = GL_LINEAR;
-                        texParams.magFilter = GL_LINEAR;
-                        texParams.wrapS = textureData->wrapS;
-                        texParams.wrapT = textureData->wrapT;
+                        texParams.minFilter = backend::SamplerFilter::LINEAR;
+                        texParams.magFilter = backend::SamplerFilter::LINEAR;
+                        texParams.wrapS = utils::toBackendAddressMode(textureData->wrapS);
+                        texParams.wrapT = utils::toBackendAddressMode(textureData->wrapT);
                         tex->setTexParameters(texParams);
                         mesh->_isTransparent = (materialData->getTextureData(NTextureData::Usage::Transparency) != nullptr);
                     }
@@ -404,10 +404,10 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
                     if(tex)
                     {
                         Texture2D::TexParams texParams;
-                        texParams.minFilter = GL_LINEAR;
-                        texParams.magFilter = GL_LINEAR;
-                        texParams.wrapS = textureData->wrapS;
-                        texParams.wrapT = textureData->wrapT;
+                        texParams.minFilter = backend::SamplerFilter::LINEAR;
+                        texParams.magFilter = backend::SamplerFilter::LINEAR;
+                        texParams.wrapS = utils::toBackendAddressMode(textureData->wrapS);
+                        texParams.wrapT = utils::toBackendAddressMode(textureData->wrapT);
                         tex->setTexParameters(texParams);
                     }
                     mesh->setTexture(tex, NTextureData::Usage::Normal);
@@ -554,10 +554,10 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                                 if(tex)
                                 {
                                     Texture2D::TexParams texParams;
-                                    texParams.minFilter = GL_LINEAR;
-                                    texParams.magFilter = GL_LINEAR;
-                                    texParams.wrapS = textureData->wrapS;
-                                    texParams.wrapT = textureData->wrapT;
+                                    texParams.minFilter = backend::SamplerFilter::LINEAR;
+                                    texParams.magFilter = backend::SamplerFilter::LINEAR;
+                                    texParams.wrapS = utils::toBackendAddressMode(textureData->wrapS);
+                                    texParams.wrapT = utils::toBackendAddressMode(textureData->wrapT);
                                     tex->setTexParameters(texParams);
                                     mesh->_isTransparent = (materialData->getTextureData(NTextureData::Usage::Transparency) != nullptr);
                                 }
@@ -569,10 +569,10 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                                 if (tex)
                                 {
                                     Texture2D::TexParams texParams;
-                                    texParams.minFilter = GL_LINEAR;
-                                    texParams.magFilter = GL_LINEAR;
-                                    texParams.wrapS = textureData->wrapS;
-                                    texParams.wrapT = textureData->wrapT;
+                                    texParams.minFilter = backend::SamplerFilter::LINEAR;
+                                    texParams.magFilter = backend::SamplerFilter::LINEAR;
+                                    texParams.wrapS = utils::toBackendAddressMode(textureData->wrapS);
+                                    texParams.wrapT = utils::toBackendAddressMode(textureData->wrapT);
                                     tex->setTexParameters(texParams);
                                 }
                                 mesh->setTexture(tex, NTextureData::Usage::Normal);
