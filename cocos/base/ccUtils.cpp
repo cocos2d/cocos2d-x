@@ -656,8 +656,6 @@ backend::SamplerAddressMode toBackendAddressMode(int mode)
     switch (mode)
     {
     case GLTexParamConst::REPEAT:
-    case GLTexParamConst::TEXTURE_WRAP_S:
-    case GLTexParamConst::TEXTURE_WRAP_T:
         return backend::SamplerAddressMode::REPEAT;
     case GLTexParamConst::CLAMP:
         return backend::SamplerAddressMode::CLAMP_TO_EDGE;
