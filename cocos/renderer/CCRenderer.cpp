@@ -642,7 +642,9 @@ void Renderer::drawBatchedTriangles()
 void Renderer::drawCustomCommand(RenderCommand *command)
 {
     auto cmd = static_cast<CustomCommand*>(command);
-    
+
+    if (cmd->getBeforeCallback()) cmd->getBeforeCallback()();
+
     beginRenderPass(command);
     _commandBuffer->setVertexBuffer(0, cmd->getVertexBuffer());
     _commandBuffer->setProgramState(cmd->getPipelineDescriptor().programState);
@@ -667,18 +669,14 @@ void Renderer::drawCustomCommand(RenderCommand *command)
     }
     _drawnBatches++;
     _commandBuffer->endRenderPass();
+
+    if (cmd->getAfterCallback()) cmd->getAfterCallback()();
 }
 
 void Renderer::drawMeshCommand(RenderCommand *command)
 {
-    auto cmd = static_cast<MeshCommand*>(command);
-
-    if (cmd->getBeforeCallback()) cmd->getBeforeCallback()();
-
     //MeshCommand and CustomCommand are identical while rendering.
     drawCustomCommand(command);
-
-    if (cmd->getAfterCallback()) cmd->getAfterCallback()();
 }
 
 
