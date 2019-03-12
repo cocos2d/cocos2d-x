@@ -168,6 +168,7 @@ void CameraBackgroundDepthBrush::initBuffer()
 
 void CameraBackgroundDepthBrush::drawBackground(Camera* /*camera*/)
 {
+    // `clear screen` should be executed before other commands
     _groupCommand.init(-1.0f);
     _customCommand.init(0.0f);
 
@@ -358,7 +359,7 @@ CameraBackgroundSkyBoxBrush* CameraBackgroundSkyBoxBrush::create()
 
 void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
 {
-
+    // `clear screen` should be executed before other commands
     _groupCommand.init(-1.0f);
     _customCommand.init(0.0f);
 

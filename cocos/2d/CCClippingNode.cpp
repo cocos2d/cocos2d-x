@@ -230,6 +230,9 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     int i = 0;
     bool visibleByCamera = isVisitableByVisitingCamera();
     
+
+    // `_groupCommandChildren` is used as a barrier
+    // to ensure commands above be executed before children nodes
     _groupCommandChildren.init(_globalZOrder);
     renderer->addCommand(&_groupCommandChildren);
 
