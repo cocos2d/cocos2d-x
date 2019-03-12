@@ -62,7 +62,7 @@ If ($env:build_type -eq "android_cpp_tests") {
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tests\lua-tests\project\proj.android\
     # tocheck, release mode failed on "LuaTests:mergeReleaseAssets"
     Retry-Command -ScriptBlock {
-        & ./gradlew assembleDebug -PPROP_BUILD_TYPE=ndk-build --parallel --info
+        & ./gradlew assembleDebug -PPROP_BUILD_TYPE=cmake --parallel --info
     } -Maximum 5
 
     if ($lastexitcode -ne 0) {throw}
