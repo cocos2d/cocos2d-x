@@ -34,6 +34,7 @@
 #include "base/CCDirector.h"
 #include "base/CCAsyncTaskPool.h"
 #include "base/ccUTF8.h"
+#include "base/ccUtils.h"
 #include "2d/CCLight.h"
 #include "2d/CCCamera.h"
 #include "base/ccMacros.h"

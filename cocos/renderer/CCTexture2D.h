@@ -300,8 +300,10 @@ public:
     //TODO: minggo: is it resaonable?
     bool initWithBackendTexture(backend::Texture* texture);
 
-    
-    //TODO: should be remove later
+    /** Set sampler properties
+    */
+    void setSamplerDescriptor(const backend::SamplerDescriptor& texParams);
+
     void setTexParameters(const TexParams &params);
 
     /** Generates mipmap images for the texture.
@@ -402,11 +404,6 @@ private:
         Rect capInsetSize;
         std::unordered_map<SpriteFrame*, Rect> capInsetMap;
     };
-
-
-    /** Set sampler properties
-    */
-    void setSamplerDescriptor(const backend::SamplerDescriptor& texParams);
 
     /**
      * Whether the texture contains a 9-patch capInset info or not.
