@@ -7,7 +7,6 @@
          "project_rename":{
             "src_project_name":"HelloCpp",
             "files":[
-               "proj.ios_mac/PROJECT_NAME.xcodeproj"
             ]
          },
          "project_replace_project_name":{
@@ -19,7 +18,6 @@
                "proj.android/app/res/values/strings.xml",
                "proj.ios_mac/ios/main.m",
                "proj.ios_mac/ios/Prefix.pch",
-               "proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
                "CMakeLists.txt"
             ]
          },

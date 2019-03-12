@@ -116,8 +116,6 @@
                 "proj.android/bin",
                 "proj.android/assets",
                 "proj.android/libs",
-                "proj.ios_mac/HelloLua.xcodeproj/project.xcworkspace",
-                "proj.ios_mac/HelloLua.xcodeproj/xcuserdata",
                 "proj.win32/Debug.win32",
                 "proj.win32/Release.win32",
                 "proj.win32/HelloLua.sdf"
@@ -129,14 +127,6 @@
         },
         "append_dir": [
             {
-                "from": "tools/simulator/libsimulator",
-                "to": "frameworks/cocos2d-x/tools/simulator/libsimulator",
-                "exclude": [
-                    "proj.win32/Debug",
-                    "proj.win32/Release"
-                ]
-            },
-            {
                 "from": "cocos/scripting/lua-bindings/manual/lua_module_register.h",
                 "to": "frameworks/runtime-src/Classes/"
             }
@@ -144,7 +134,6 @@
         "project_rename": {
             "src_project_name": "HelloLua",
             "files": [
-                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj"
             ]
         },
         "project_replace_project_name": {
@@ -157,8 +146,6 @@
                 "frameworks/runtime-src/proj.android/app/res/values/strings.xml",
                 "frameworks/runtime-src/proj.ios_mac/ios/main.m",
                 "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
-                "frameworks/runtime-src/proj.ios_mac/mac/SimulatorApp.mm",
-                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
                 "CMakeLists.txt"
             ]
         },

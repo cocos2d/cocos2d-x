@@ -222,9 +222,7 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
     git commit -m "$COMMITTAG"
 
     echo "Pushing to Robot's repo ..."
-    # git push -fq upstream "$COCOS_BRANCH" 2> /dev/null
-    git push -fq upstream "$COCOS_BRANCH"
-
+    git push -fq upstream "$COCOS_BRANCH" 2> /dev/null
 
     echo "Sending Pull Request to base repo ..."
     curl --user "${GH_USER}:${GH_PASSWORD}" --request POST --data "{ \"title\": \"$COMMITTAG\", \"body\": \"\", \"head\": \"${GH_USER}:${COCOS_BRANCH}\", \"base\": \"${TRAVIS_BRANCH}\"}" "${PULL_REQUEST_REPO}" 2> /dev/null > /dev/null
