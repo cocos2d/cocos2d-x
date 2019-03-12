@@ -45,7 +45,6 @@ import distutils
 import fileinput
 import json
 
-
 from optparse import OptionParser
 from time import time
 from time import sleep
