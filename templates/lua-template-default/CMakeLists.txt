@@ -23,7 +23,7 @@
 # ****************************************************************************/
 cmake_minimum_required(VERSION 3.6)
 
-set(APP_NAME MyLuaGame)
+set(APP_NAME HelloLua)
 
 project(${APP_NAME})
 
