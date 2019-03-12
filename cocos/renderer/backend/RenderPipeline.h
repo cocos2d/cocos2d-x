@@ -2,7 +2,6 @@
 
 #include "Macros.h"
 #include "Types.h"
-
 #include "base/CCRef.h"
 
 CC_BACKEND_BEGIN

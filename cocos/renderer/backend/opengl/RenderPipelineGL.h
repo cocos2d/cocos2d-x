@@ -20,7 +20,6 @@ public:
     
     inline ProgramGL* getProgram() const { return _programGL; }
     inline BlendStateGL* getBlendState() const { return _blendState; }
-    
 private:
     ProgramGL* _programGL = nullptr;
     BlendStateGL* _blendState = nullptr;

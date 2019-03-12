@@ -769,7 +769,7 @@ backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipeli
     hashMe.sourceAlphaBlendFactor = (unsigned int)blendDescriptor.sourceAlphaBlendFactor;
     hashMe.destinationAlphaBlendFactor = (unsigned int)blendDescriptor.destinationAlphaBlendFactor;
     int index = 0;
-    for(const auto& vertexLayout : renderPipelineDescriptor.vertexLayouts)
+    for(const auto& vertexLayout : *renderPipelineDescriptor.vertexLayouts)
     {
         if (!vertexLayout.isValid())
             continue;
@@ -797,18 +797,19 @@ backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipeli
     {
         auto renderPipeline = backend::Device::getInstance()->newRenderPipeline(renderPipelineDescriptor);
         _renderPipelineCache.emplace(hash, renderPipeline);
-
         return renderPipeline;
     }
     else
+    {
         return iter->second;
+    }
 }
 
 void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, const backend::RenderPassDescriptor& renderPassDescriptor)
 {
     backend::RenderPipelineDescriptor renderPipelineDescriptor;
     renderPipelineDescriptor.programState = pipelineDescriptor.programState;
-    renderPipelineDescriptor.vertexLayouts.push_back(pipelineDescriptor.vertexLayout);
+    renderPipelineDescriptor.vertexLayouts->push_back(pipelineDescriptor.vertexLayout);
     
     auto device = backend::Device::getInstance();
     auto blendState = device->createBlendState(pipelineDescriptor.blendDescriptor);
@@ -851,6 +852,10 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
 
     _commandBuffer->setRenderPipeline(getRenderPipeline(renderPipelineDescriptor, pipelineDescriptor.blendDescriptor));
     _commandBuffer->setDepthStencilState(depthStencilState);
+#ifndef CC_USE_METAL
+    // Extra layout info is required in OpenGL, which can not be quried from ProgramGL
+    _commandBuffer->updateVertexLayouts(renderPipelineDescriptor.vertexLayouts);
+#endif
 }
 
 void Renderer::beginRenderPass(RenderCommand* cmd)

@@ -6,6 +6,7 @@
 #include "renderer/backend/ProgramState.h"
 
 #include <vector>
+#include <memory>
 
 CC_BACKEND_BEGIN
 
@@ -16,7 +17,7 @@ struct RenderPipelineDescriptor
 {
     ProgramState* programState = nullptr;
     BlendState* blendState = nullptr;
-    std::vector<VertexLayout> vertexLayouts;
+    std::shared_ptr<std::vector<VertexLayout>> vertexLayouts = std::make_shared<std::vector<VertexLayout>>();
     TextureFormat colorAttachmentsFormat[MAX_COLOR_ATTCHMENT] = { TextureFormat::SYSTEM_DEFAULT };
     TextureFormat depthAttachmentFormat = TextureFormat::NONE;
     TextureFormat stencilAttachmentFormat = TextureFormat::NONE;

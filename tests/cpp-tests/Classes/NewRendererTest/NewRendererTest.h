@@ -218,4 +218,16 @@ protected:
 //    cocos2d::GLProgramState* createSepiaGLProgramState();
 //};
 
+class NonBatchSprites : public MultiSceneTest
+{
+public:
+    CREATE_FUNC(NonBatchSprites);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
+    NonBatchSprites();
+    virtual ~NonBatchSprites();
+};
+
 #endif //__NewRendererTest_H_

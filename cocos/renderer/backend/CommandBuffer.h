@@ -9,6 +9,10 @@
 #include "RenderPassDescriptor.h"
 #include "CCStdC.h"
 #include "ProgramState.h"
+#include "VertexLayout.h"
+
+#include <memory>
+#include <vector>
 
 CC_BACKEND_BEGIN
 
@@ -16,6 +20,7 @@ class RenderPass;
 class RenderPipeline;
 class Buffer;
 class DepthStencilState;
+
 
 class CommandBuffer : public cocos2d::Ref
 {
@@ -40,12 +45,16 @@ public:
     
     void setStencilReferenceValue(unsigned int value);
     void setStencilReferenceValue(unsigned int frontRef, unsigned int backRef);
-    
+
+    inline const std::shared_ptr<std::vector<VertexLayout>>& getVertexLayouts() const { return _vertexLayouts; }
+    void updateVertexLayouts(const std::shared_ptr<std::vector<VertexLayout>> &layout) { _vertexLayouts = layout; }
+
 protected:
     virtual ~CommandBuffer() = default;
     
     unsigned int _stencilReferenceValueFront = 0;
     unsigned int _stencilReferenceValueBack = 0;
+    std::shared_ptr<std::vector<VertexLayout>> _vertexLayouts;
 };
 
 CC_BACKEND_END

@@ -6,71 +6,13 @@
 #include "ProgramGL.h"
 #include "BlendStateGL.h"
 #include "base/ccMacros.h"
-
+#include "renderer/backend/opengl/UtilsGL.h"
 #include <algorithm>
 
 CC_BACKEND_BEGIN
 
 namespace
 {
-    GLenum toGLFrontFace(Winding winding)
-    {
-        if (Winding::CLOCK_WISE == winding)
-            return GL_CW;
-        else
-            return GL_CCW;
-    }
-
-    GLenum toGLPrimitiveType(PrimitiveType primitiveType)
-    {
-        GLenum ret = GL_TRIANGLES;
-        switch (primitiveType)
-        {
-            case PrimitiveType::POINT:
-                ret = GL_POINTS;
-                break;
-            case PrimitiveType::LINE:
-                ret = GL_LINES;
-                break;
-            case PrimitiveType::LINE_STRIP:
-                ret = GL_LINE_STRIP;
-                break;
-            case PrimitiveType::TRIANGLE:
-                ret = GL_TRIANGLES;
-                break;
-            case PrimitiveType::TRIANGLE_STRIP:
-                ret = GL_TRIANGLE_STRIP;
-                break;
-            default:
-                break;
-        }
-        return ret;
-    }
-    
-    GLenum toGLIndexType(IndexFormat indexType)
-    {
-        GLenum ret = GL_BYTE;
-        switch (indexType)
-        {
-            case IndexFormat::U_INT:
-                ret = GL_UNSIGNED_INT;
-                break;
-            case IndexFormat::U_SHORT:
-                ret = GL_UNSIGNED_SHORT;
-                break;
-            default:
-                break;
-        }
-        return ret;
-    }
-    
-    GLenum toGLCullMode(CullMode mode)
-    {
-        if (CullMode::BACK == mode)
-            return GL_BACK;
-        else
-            return GL_FRONT;
-    }
 
     GLuint getHandler(Texture *texture)
     {
@@ -271,7 +213,7 @@ void CommandBufferGL::setCullMode(CullMode mode)
 
 void CommandBufferGL::setWinding(Winding winding)
 {
-    glFrontFace(toGLFrontFace(winding));
+    glFrontFace(UtilsGL::toGLFrontFace(winding));
 }
 
 void CommandBufferGL::setIndexBuffer(Buffer* buffer)
@@ -310,7 +252,7 @@ void CommandBufferGL::setProgramState(ProgramState* programState)
 void CommandBufferGL::drawArrays(PrimitiveType primitiveType, unsigned int start,  unsigned int count)
 {
     prepareDrawing();
-    glDrawArrays(toGLPrimitiveType(primitiveType), start, count);
+    glDrawArrays(UtilsGL::toGLPrimitiveType(primitiveType), start, count);
     
     cleanResources();
 }
@@ -319,7 +261,7 @@ void CommandBufferGL::drawElements(PrimitiveType primitiveType, IndexFormat inde
 {
     prepareDrawing();
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer->getHandler());
-    glDrawElements(toGLPrimitiveType(primitiveType), count, toGLIndexType(indexType), (GLvoid*)offset);
+    glDrawElements(UtilsGL::toGLPrimitiveType(primitiveType), count, UtilsGL::toGLIndexType(indexType), (GLvoid*)offset);
     CHECK_GL_ERROR_DEBUG();
     cleanResources();
 }
@@ -375,7 +317,7 @@ void CommandBufferGL::prepareDrawing() const
     else
     {
         glEnable(GL_CULL_FACE);
-        glCullFace(toGLCullMode(_cullMode));
+        glCullFace(UtilsGL::toGLCullMode(_cullMode));
     }
 }
 
@@ -384,23 +326,27 @@ void CommandBufferGL::bindVertexBuffer(ProgramGL *program) const
     // Bind vertex buffers and set the attributes.
     int i = 0;
     const auto& attributeInfos = program->getAttributeInfos();
+    const auto& vertexLayouts = getVertexLayouts();
     for (const auto& vertexBuffer : _vertexBuffers)
     {
         if (! vertexBuffer)
             continue;
         
         glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->getHandler());
+
         
         const auto& attributeInfo = attributeInfos[i];
+        const auto &layouts = vertexLayouts->at(i);
         for (const auto& attribute : attributeInfo)
         {
+            const auto &layoutInfo = layouts.getAttributes().at(attribute.name);
             glEnableVertexAttribArray(attribute.location);
             glVertexAttribPointer(attribute.location,
-                                  attribute.size,
-                                  attribute.type,
-                                  attribute.needToBeNormallized,
-                                  attribute.stride,
-                                  (GLvoid*)attribute.offset);
+                UtilsGL::getGLAttributeSize(layoutInfo.format),
+                UtilsGL::toGLAttributeType(layoutInfo.format),
+                layoutInfo.needToBeNormallized,
+                layouts.getStride(),
+                (GLvoid*)layoutInfo.offset);
         }
         
         ++i;

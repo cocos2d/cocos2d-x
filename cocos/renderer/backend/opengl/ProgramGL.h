@@ -23,6 +23,7 @@ struct AttributeInfo
     GLsizei stride = 0;
     unsigned int offset = 0;
     GLboolean needToBeNormallized = GL_FALSE;
+    std::string name;
 };
 
 class ProgramGL : public Program
