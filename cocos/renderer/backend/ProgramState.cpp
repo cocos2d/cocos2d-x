@@ -3,6 +3,7 @@
 #include "renderer/backend/Program.h"
 #include "renderer/backend/Texture.h"
 #include "renderer/backend/Types.h"
+#include "glsl_optimizer.h"
 
 CC_BACKEND_BEGIN
 
@@ -246,12 +247,12 @@ void ProgramState::setUniform(const backend::UniformLocation& uniformLocation, c
 
 void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, std::vector<char>& uniformData)
 {
-    auto basicType = static_cast<UniformBasicType>(uniformInfo.type);
+    auto basicType = static_cast<glslopt_basic_type>(uniformInfo.type);
     char* convertedData = new char[uniformInfo.bufferSize];
     memset(convertedData, 0, uniformInfo.bufferSize);
     switch (basicType)
     {
-        case UniformBasicType::FLOAT:
+        case kGlslTypeFloat:
         {
             for (int i=0; i<uniformInfo.count; i++)
             {
@@ -274,7 +275,7 @@ void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, c
             }
             break;
         }
-        case UniformBasicType::BOOL:
+        case kGlslTypeBool:
         {
             for (int i=0; i<uniformInfo.count; i++)
             {
@@ -287,7 +288,7 @@ void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, c
             }
             break;
         }
-        case UniformBasicType::INT:
+        case kGlslTypeInt:
         {
             for (int i=0; i<uniformInfo.count; i++)
             {

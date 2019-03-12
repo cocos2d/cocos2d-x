@@ -218,20 +218,17 @@ enum class Winding: uint32_t
     COUNTER_CLOCK_WISE
 };
 
-enum class UniformBasicType: uint32_t
-{
-    FLOAT,
-    INT,
-    BOOL
-};
-
 struct UniformInfo
 {
     int count = 0;
     int location = -1;
+    
+    //in opengl, type means uniform data type, i.e. GL_FLOAT_VEC2, while in metal type means data basic type, i.e. float
     unsigned int type = 0;
     bool isArray = false;
     unsigned int bufferSize = 0;
+
+    //only used in metal
     bool isMatrix = false;
     bool needConvert = false;
 };
