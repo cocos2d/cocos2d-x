@@ -160,8 +160,10 @@ public:
         backend::SamplerFilter      magFilter;
         backend::SamplerAddressMode wrapS;
         backend::SamplerAddressMode wrapT;
+        bool                        mipmapEnabled   = true;
+        backend::SamplerFilter      mipmapFilter    = backend::SamplerFilter::LINEAR;
     }TexParams;
-    
+
 public:
     /** sets the default pixel format for UIImagescontains alpha channel.
      
@@ -300,9 +302,6 @@ public:
     //TODO: minggo: is it resaonable?
     bool initWithBackendTexture(backend::Texture* texture);
 
-    /** Set sampler properties
-    */
-    void setSamplerDescriptor(const backend::SamplerDescriptor& texParams);
 
     void setTexParameters(const TexParams &params);
 

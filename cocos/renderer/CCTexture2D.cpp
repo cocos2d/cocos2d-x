@@ -707,21 +707,20 @@ void Texture2D::setAliasTexParameters()
         backend::SamplerAddressMode::DONT_CARE,
         backend::SamplerAddressMode::DONT_CARE
     );
-
-    setSamplerDescriptor(descriptor);
+    _texture->updateSamplerDescriptor(descriptor);
 }
 
 void Texture2D::setAntiAliasTexParameters()
 {
 
-    backend::SamplerDescriptor descriptor(false,
+    backend::SamplerDescriptor descriptor(true,
         backend::SamplerFilter::LINEAR,
         backend::SamplerFilter::LINEAR,
         backend::SamplerFilter::LINEAR,
         backend::SamplerAddressMode::DONT_CARE,
         backend::SamplerAddressMode::DONT_CARE
     );
-    setSamplerDescriptor(descriptor);
+    _texture->updateSamplerDescriptor(descriptor);
 }
 
 const char* Texture2D::getStringForFormat() const
@@ -909,12 +908,6 @@ Texture2D* Texture2D::getAlphaTexture() const
     return _alphaTexture;
 }
 
-void Texture2D::setSamplerDescriptor(const backend::SamplerDescriptor &texParams)
-{
-    _texture->updateSamplerDescriptor(texParams);
-}
-
-//TODO: should be reform later
 void Texture2D::setTexParameters(const Texture2D::TexParams &params)
 {
     backend::SamplerDescriptor sd;
@@ -924,7 +917,7 @@ void Texture2D::setTexParameters(const Texture2D::TexParams &params)
     sd.magFilter        = params.magFilter;
     sd.sAddressMode     = params.wrapS;
     sd.tAddressMode     = params.wrapT;
-    setSamplerDescriptor(sd);
+    _texture->updateSamplerDescriptor(sd);
 }
 
 //  TODO coulsonwang
