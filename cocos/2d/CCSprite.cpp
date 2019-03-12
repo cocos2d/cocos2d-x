@@ -360,20 +360,25 @@ void Sprite::setTexture(const std::string &filename)
 
 void Sprite::setVertexLayout()
 {
-#define VERTEX_POSITION_SIZE 3
-#define VERTEX_TEXCOORD_SIZE 2
-#define VERTEX_COLOR_SIZE 4
-    uint32_t colorOffset = (VERTEX_POSITION_SIZE)*sizeof(float);
-    uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
-    uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
-    
     //set vertexLayout according to V3F_C4B_T2F structure
     auto& vertexLayout = _trianglesCommand.getPipelineDescriptor().vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, 0, false);
-    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT2, texcoordOffset, false);
-    vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE4, colorOffset, true);
-    
-    vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
+    const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
+    auto iter = attributeInfo.find("a_position");
+    if(iter != attributeInfo.end())
+    {
+        vertexLayout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
+    }
+    iter = attributeInfo.find("a_texCoord");
+    if(iter != attributeInfo.end())
+    {
+        vertexLayout.setAtrribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
+    }
+    iter = attributeInfo.find("a_color");
+    if(iter != attributeInfo.end())
+    {
+        vertexLayout.setAtrribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
+    }
+    vertexLayout.setLayout(sizeof(V3F_C4B_T2F), backend::VertexStepMode::VERTEX);
 }
 
 void Sprite::updateShaders(const char* vert, const char* frag)

@@ -229,21 +229,26 @@ void DrawNode::updateShader()
 
 void DrawNode::setVertexLayout(CustomCommand& cmd)
 {
-#define VERTEX_POSITION_SIZE 2
-#define VERTEX_TEXCOORD_SIZE 2
-#define VERTEX_COLOR_SIZE 4
-    //set vertexLayout according to V2F_C4B_T2F structure
-    uint32_t colorOffset = (VERTEX_POSITION_SIZE)*sizeof(float);
-    uint32_t texcoordOffset = VERTEX_POSITION_SIZE*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
-    uint32_t totalSize = (VERTEX_POSITION_SIZE+VERTEX_TEXCOORD_SIZE)*sizeof(float) + VERTEX_COLOR_SIZE*sizeof(unsigned char);
-
-    backend::VertexLayout vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT2, 0, false);
-    vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT2, texcoordOffset, false);
-    vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE4, colorOffset, true);
-    vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
-    auto& pipelineDescriptor = cmd.getPipelineDescriptor();
-    pipelineDescriptor.vertexLayout = vertexLayout;
+    auto& layout = cmd.getPipelineDescriptor().vertexLayout;
+    const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
+    auto iter = attributeInfo.find("a_position");
+    if(iter != attributeInfo.end())
+    {
+        layout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
+    }
+    
+    iter = attributeInfo.find("a_texCoord");
+    if(iter != attributeInfo.end())
+    {
+        layout.setAtrribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V2F_C4B_T2F, texCoords), false);
+    }
+    
+    iter = attributeInfo.find("a_color");
+    if(iter != attributeInfo.end())
+    {
+        layout.setAtrribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V2F_C4B_T2F, colors), true);
+    }
+    layout.setLayout(sizeof(V2F_C4B_T2F), backend::VertexStepMode::VERTEX);
 }
 
 void DrawNode::updateBlendState(CustomCommand& cmd)

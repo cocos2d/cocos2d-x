@@ -401,13 +401,6 @@ void TMXLayer::updatePrimitives()
 
             command->setIndexDrawInfo(start * 6, iter.second * 6);
 
-            auto& vertexLayout = command->getPipelineDescriptor().vertexLayout;
-            vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, 0, false);
-            vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
-            vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
-
-            vertexLayout.setLayout((unsigned int)sizeof(V3F_C4B_T2F), backend::VertexStepMode::VERTEX);
-
             auto& pipelineDescriptor = command->getPipelineDescriptor();
 
             if (_useAutomaticVertexZ)
@@ -424,8 +417,25 @@ void TMXLayer::updatePrimitives()
                 CC_SAFE_RELEASE(pipelineDescriptor.programState);
                 auto programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColor_frag);
                 pipelineDescriptor.programState = programState;
-                
             }
+            auto& vertexLayout = pipelineDescriptor.vertexLayout;
+            const auto& attributeInfo = pipelineDescriptor.programState->getProgram()->getActiveAttributes();
+            auto iterAttribute = attributeInfo.find("a_position");
+            if(iterAttribute != attributeInfo.end())
+            {
+                vertexLayout.setAtrribute("a_position", iterAttribute->second.location, backend::VertexFormat::FLOAT3, 0, false);
+            }
+            iterAttribute = attributeInfo.find("a_texCoord");
+            if(iterAttribute != attributeInfo.end())
+            {
+                vertexLayout.setAtrribute("a_texCoord", iterAttribute->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
+            }
+            iterAttribute = attributeInfo.find("a_color");
+            if(iterAttribute != attributeInfo.end())
+            {
+                vertexLayout.setAtrribute("a_color", iterAttribute->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
+            }
+
             _mvpMatrixLocaiton = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
             _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
             pipelineDescriptor.programState->setTexture(_textureLocation, 0, _texture->getBackendTexture());

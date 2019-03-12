@@ -287,14 +287,24 @@ LayerColor::LayerColor()
     // default blend function
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
     
-    auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, 0, false);
-    vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::FLOAT4, sizeof(_vertexData[0].vertices), false);
-    vertexLayout.setLayout(sizeof(_vertexData[0]), backend::VertexStepMode::VERTEX);
-    
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
     _programState = new (std::nothrow) backend::ProgramState(positionColor_vert, positionColor_frag);
     pipelineDescriptor.programState = _programState;
+    
+    auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
+    const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
+    auto iter = attributeInfo.find("a_position");
+    if(iter != attributeInfo.end())
+    {
+        vertexLayout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
+    }
+    iter = attributeInfo.find("a_color");
+    if(iter != attributeInfo.end())
+    {
+        vertexLayout.setAtrribute("a_color", iter->second.location, backend::VertexFormat::FLOAT4, sizeof(_vertexData[0].vertices), false);
+    }
+    vertexLayout.setLayout(sizeof(_vertexData[0]), backend::VertexStepMode::VERTEX);
+    
     _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     
     _customCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, 6, CustomCommand::BufferUsage::STATIC);

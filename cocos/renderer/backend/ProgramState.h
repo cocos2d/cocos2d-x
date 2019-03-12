@@ -7,10 +7,10 @@
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
 #include "renderer/backend/Types.h"
+#include "renderer/backend/Program.h"
 
 CC_BACKEND_BEGIN
 
-class Program;
 class Texture;
 
 struct UniformBuffer

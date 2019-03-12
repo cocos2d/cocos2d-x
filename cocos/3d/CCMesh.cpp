@@ -334,7 +334,7 @@ void Mesh::setMaterial(Material* material)
                 if(_material->getTechnique()->getName().compare(technique->getName()) == 0)
                 {
                     auto program = pass->getProgramState()->getProgram();
-                    auto attributes = program->getActiveAttributes();
+                    auto& attributes = program->getActiveAttributes();
                     auto meshVertexData = _meshIndexData->getMeshVertexData();
                     auto attributeCount = meshVertexData->getMeshVertexAttribCount();
                     CCASSERT(attributes.size() <= attributeCount, "missing attribute data");

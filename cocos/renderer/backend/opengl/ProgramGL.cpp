@@ -105,9 +105,9 @@ bool ProgramGL::getAttributeLocation(const std::string& attributeName, unsigned 
     return true;
 }
 
-std::vector<AttributeBindInfo> ProgramGL::getActiveAttributes() const {
-
-    std::vector<AttributeBindInfo> attributes;
+const std::unordered_map<std::string, AttributeBindInfo> ProgramGL::getActiveAttributes() const
+{
+    std::unordered_map<std::string, AttributeBindInfo> attributes;
 
     if (!_program) return attributes;
 
@@ -137,7 +137,7 @@ std::vector<AttributeBindInfo> ProgramGL::getActiveAttributes() const {
         info.type = attrType;
         info.size = UtilsGL::getGLDataTypeSize(attrType) * attrSize;
         CHECK_GL_ERROR_DEBUG();
-        attributes.push_back(info);
+        attributes[info.attributeName] = info;
     }
 
     return attributes;

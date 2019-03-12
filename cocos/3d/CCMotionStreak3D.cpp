@@ -136,12 +136,26 @@ void MotionStreak3D::initCustomCommand()
     _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
     _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE_STRIP);
 
-
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
     auto& layout = pipelineDescriptor.vertexLayout;
-    layout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, 0, false);
-    layout.setAtrribute("a_color", 1, backend::VertexFormat::UBYTE4, offsetof(VertexData, color), true);
-    layout.setAtrribute("a_texCoord", 2, backend::VertexFormat::FLOAT2, offsetof(VertexData, texPos), false);
+    const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
+    auto iter = attributeInfo.find("a_position");
+    if(iter != attributeInfo.end())
+    {
+        layout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
+    }
+    
+    iter = attributeInfo.find("a_color");
+    if(iter != attributeInfo.end())
+    {
+        layout.setAtrribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(VertexData, color), true);
+    }
+    
+    iter = attributeInfo.find("a_texCoord");
+    if(iter != attributeInfo.end())
+    {
+        layout.setAtrribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(VertexData, texPos), false);
+    }
     layout.setLayout(sizeof(VertexData), backend::VertexStepMode::VERTEX);
 
     auto &blend = pipelineDescriptor.blendDescriptor;

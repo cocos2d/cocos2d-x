@@ -53,9 +53,22 @@ namespace
         
         //set vertexLayout according to V2F_C4B_T2F structure
         auto& vertexLayout = pipelieDescriptor.vertexLayout;
-        vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT2, offsetof(V2F_C4B_T2F, vertices), false);
-        vertexLayout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT2, offsetof(V2F_C4B_T2F, texCoords), false);
-        vertexLayout.setAtrribute("a_color", 2, backend::VertexFormat::UBYTE4, offsetof(V2F_C4B_T2F, colors), true);
+        const auto& attributeInfo = programState->getProgram()->getActiveAttributes();
+        auto iter = attributeInfo.find("a_position");
+        if(iter != attributeInfo.end())
+        {
+            vertexLayout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
+        }
+        iter = attributeInfo.find("a_texCoord");
+        if(iter != attributeInfo.end())
+        {
+            vertexLayout.setAtrribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V2F_C4B_T2F, texCoords), false);
+        }
+        iter = attributeInfo.find("a_color");
+        if(iter != attributeInfo.end())
+        {
+            vertexLayout.setAtrribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V2F_C4B_T2F, colors), true);
+        }
         vertexLayout.setLayout(sizeof(V2F_C4B_T2F), backend::VertexStepMode::VERTEX);
 
         if (ridal)
