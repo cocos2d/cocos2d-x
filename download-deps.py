@@ -45,6 +45,7 @@ import distutils
 import fileinput
 import json
 
+
 from optparse import OptionParser
 from time import time
 from time import sleep
@@ -119,7 +120,9 @@ class CocosZipInstaller(object):
             pass
         print("==> Ready to download '%s' from '%s'" % (self._filename, self._url))
         import urllib2
+        import ssl
         try:
+            ssl._create_default_https_context = ssl._create_unverified_context
             u = urllib2.urlopen(self._url)
         except urllib2.HTTPError as e:
             if e.code == 404:
