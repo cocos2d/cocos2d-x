@@ -1096,6 +1096,8 @@
         "cocos/renderer/backend/opengl/ShaderModuleGL.h", 
         "cocos/renderer/backend/opengl/TextureGL.cpp", 
         "cocos/renderer/backend/opengl/TextureGL.h", 
+        "cocos/renderer/backend/opengl/UtilsGL.cpp", 
+        "cocos/renderer/backend/opengl/UtilsGL.h", 
         "cocos/renderer/ccShaders.cpp", 
         "cocos/renderer/ccShaders.h", 
         "cocos/renderer/shaders/3D_color.frag", 
