@@ -246,12 +246,12 @@ void ProgramState::setUniform(const backend::UniformLocation& uniformLocation, c
 
 void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, std::vector<char>& uniformData)
 {
-    auto basicType = static_cast<BasicType>(uniformInfo.type);
+    auto basicType = static_cast<UniformBasicType>(uniformInfo.type);
     char* convertedData = new char[uniformInfo.bufferSize];
     memset(convertedData, 0, uniformInfo.bufferSize);
     switch (basicType)
     {
-        case BasicType::FLOAT:
+        case UniformBasicType::FLOAT:
         {
             for (int i=0; i<uniformInfo.count; i++)
             {
@@ -274,7 +274,7 @@ void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, c
             }
             break;
         }
-        case BasicType::BOOL:
+        case UniformBasicType::BOOL:
         {
             for (int i=0; i<uniformInfo.count; i++)
             {
@@ -287,7 +287,7 @@ void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, c
             }
             break;
         }
-        case BasicType::INT:
+        case UniformBasicType::INT:
         {
             for (int i=0; i<uniformInfo.count; i++)
             {
@@ -316,7 +316,7 @@ void ProgramState::setVertexUniform(int location, const void* data, uint32_t siz
     
 //float3 etc in Metal has both sizeof and alignment same as float4, need convert to correct laytout
 #ifdef CC_USE_METAL
-    auto uniformInfo = _vertexUniformInfos[location].uniformInfo;
+    auto& uniformInfo = _vertexUniformInfos[location].uniformInfo;
     if(uniformInfo.needConvert)
     {
         convertUniformData(uniformInfo, data, size, _vertexUniformInfos[location].data);
@@ -333,7 +333,7 @@ void ProgramState::setFragmentUniform(int location, const void* data, uint32_t s
    
 //float3 etc in Metal has both sizeof and alignment same as float4, need convert to correct laytout
 #ifdef CC_USE_METAL
-    auto uniformInfo = _fragmentUniformInfos[location].uniformInfo;
+    auto& uniformInfo = _fragmentUniformInfos[location].uniformInfo;
     if(uniformInfo.needConvert)
     {
         convertUniformData(uniformInfo, data, size, _fragmentUniformInfos[location].data);

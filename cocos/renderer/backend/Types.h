@@ -218,7 +218,7 @@ enum class Winding: uint32_t
     COUNTER_CLOCK_WISE
 };
 
-enum class BasicType: uint32_t
+enum class UniformBasicType: uint32_t
 {
     FLOAT,
     INT,
