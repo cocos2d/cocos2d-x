@@ -8,9 +8,29 @@ CC_BACKEND_BEGIN
 
 namespace {
 #define MAT3_SIZE 36
-#define MAT4_SIZE 64
+#define MAT4X3_SIZE 48
 #define VEC3_SIZE 12
 #define VEC4_SIZE 16
+#define BVEC3_SIZE 3
+#define BVEC4_SIZE 4
+#define IVEC3_SIZE 12
+#define IVEC4_SIZE 16
+    
+    void convertbVec3TobVec4(const bool* src, bool* dst)
+    {
+        dst[0] = src[0];
+        dst[1] = src[1];
+        dst[2] = src[2];
+        dst[3] = false;
+    }
+    
+    void convertiVec3ToiVec4(const int* src, int* dst)
+    {
+        dst[0] = src[0];
+        dst[1] = src[1];
+        dst[2] = src[2];
+        dst[3] = 0;
+    }
     
     void convertVec3ToVec4(const float* src, float* dst)
     {
@@ -20,7 +40,7 @@ namespace {
         dst[3] = 0.0f;
     }
     
-    void convertMat3ToMat3x4(const float* src, float* dst)
+    void convertMat3ToMat4x3(const float* src, float* dst)
     {
         dst[3] = dst[7] = dst[11] = 0.0f;
         dst[0] = src[0]; dst[1] = src[1]; dst[2] = src[2];
@@ -229,7 +249,8 @@ void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, c
     auto basicType = static_cast<BasicType>(uniformInfo.type);
     char* convertedData = new char[uniformInfo.bufferSize];
     memset(convertedData, 0, uniformInfo.bufferSize);
-    switch (basicType) {
+    switch (basicType)
+    {
         case BasicType::FLOAT:
         {
             for (int i=0; i<uniformInfo.count; i++)
@@ -241,7 +262,7 @@ void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, c
                     if(offset >= srcSize)
                         break;
                     
-                    convertMat3ToMat3x4((float*)srcData + offset, (float*)convertedData + i * MAT4_SIZE);
+                    convertMat3ToMat4x3((float*)srcData + offset, (float*)convertedData + i * MAT4X3_SIZE);
                 }
                 else
                 {
@@ -250,16 +271,41 @@ void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, c
                         break;
                     convertVec3ToVec4((float*)srcData +offset, (float*)convertedData + i * VEC4_SIZE);
                 }
-                
             }
-            
-            uniformData.assign(convertedData, convertedData + uniformInfo.bufferSize);
+            break;
+        }
+        case BasicType::BOOL:
+        {
+            for (int i=0; i<uniformInfo.count; i++)
+            {
+                int offset = 0;
+                offset = i*BVEC3_SIZE;
+                if(offset >= srcSize)
+                    break;
+                
+                convertbVec3TobVec4((bool*)srcData + offset, (bool*)convertedData + i * BVEC4_SIZE);
+            }
+            break;
+        }
+        case BasicType::INT:
+        {
+            for (int i=0; i<uniformInfo.count; i++)
+            {
+                int offset = 0;
+                offset = i*IVEC3_SIZE;
+                if(offset >= srcSize)
+                    break;
+                
+                convertiVec3ToiVec4((int*)srcData + offset, (int*)convertedData + i * IVEC4_SIZE);
+            }
             break;
         }
         default:
-            CCLOGINFO("Not yet implemented...");
+            CC_ASSERT(false);
             break;
     }
+    
+    uniformData.assign(convertedData, convertedData + uniformInfo.bufferSize);
     CC_SAFE_DELETE_ARRAY(convertedData);
 }
 
@@ -267,6 +313,8 @@ void ProgramState::setVertexUniform(int location, const void* data, uint32_t siz
 {
     if(location < 0)
         return;
+    
+//float3 etc in Metal has both sizeof and alignment same as float4, need convert to correct laytout
 #ifdef CC_USE_METAL
     auto uniformInfo = _vertexUniformInfos[location].uniformInfo;
     if(uniformInfo.needConvert)
@@ -282,6 +330,8 @@ void ProgramState::setFragmentUniform(int location, const void* data, uint32_t s
 {
     if(location < 0)
         return;
+   
+//float3 etc in Metal has both sizeof and alignment same as float4, need convert to correct laytout
 #ifdef CC_USE_METAL
     auto uniformInfo = _fragmentUniformInfos[location].uniformInfo;
     if(uniformInfo.needConvert)
