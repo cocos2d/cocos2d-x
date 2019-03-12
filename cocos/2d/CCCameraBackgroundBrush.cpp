@@ -121,9 +121,6 @@ CameraBackgroundDepthBrush* CameraBackgroundDepthBrush::create(float depth)
 
 bool CameraBackgroundDepthBrush::init()
 {
-    _beforeCommand.func = CC_CALLBACK_0(CameraBackgroundDepthBrush::onBeforeDraw, this);
-    _afterCommand.func = CC_CALLBACK_0(CameraBackgroundDepthBrush::onAfterDraw, this);
-
     CC_SAFE_RELEASE_NULL(_programState);
     _programState = new backend::ProgramState(cameraClear_vert, cameraClear_frag);
 
@@ -135,7 +132,7 @@ bool CameraBackgroundDepthBrush::init()
     auto &layout = pipelineDescriptor.vertexLayout;
 
     layout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(V3F_C4B_T2F, vertices), false);
-    layout.setAtrribute("a_color", 1, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
+    layout.setAtrribute("a_color",    1, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
     layout.setAtrribute("a_texCoord", 2, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), true);
     layout.setLayout(sizeof(_vertices[0]), backend::VertexStepMode::VERTEX);
 
@@ -152,6 +149,8 @@ bool CameraBackgroundDepthBrush::init()
     _vertices[2].texCoords = Tex2F(1, 1);
     _vertices[3].texCoords = Tex2F(0, 1);
 
+    _customCommand.setBeforeCallback(CC_CALLBACK_0(CameraBackgroundDepthBrush::onBeforeDraw, this));
+    _customCommand.setAfterCallback(CC_CALLBACK_0(CameraBackgroundDepthBrush::onAfterDraw, this));
 
     initBuffer();
     return true;
@@ -169,34 +168,36 @@ void CameraBackgroundDepthBrush::initBuffer()
 
 void CameraBackgroundDepthBrush::drawBackground(Camera* /*camera*/)
 {
-    _beforeCommand.init(0.0f);
+    _groupCommand.init(-1.0f);
     _customCommand.init(0.0f);
-    _afterCommand.init(0.0f);
 
     auto *renderer = Director::getInstance()->getRenderer();
 
-    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    auto& blend = pipelineDescriptor.blendDescriptor;
-    blend.writeMask = _clearColor ? backend::ColorWriteMask::ALL : backend::ColorWriteMask::NONE;
+    renderer->addCommand(&_groupCommand);
+    renderer->pushGroup(_groupCommand.getRenderQueueID());
 
-    renderer->setStencilWriteMask(0);
-    renderer->setDepthTest(true);
-    renderer->setDepthCompareFunction(backend::CompareFunction::ALWAYS);
+    auto &pipelineDescriptor    = _customCommand.getPipelineDescriptor();
+    auto &blend                 = pipelineDescriptor.blendDescriptor;
+    blend.writeMask             = _clearColor ? backend::ColorWriteMask::ALL : backend::ColorWriteMask::NONE;
 
     //draw
     _programState->setUniform(_locDepth, &_depth, sizeof(_depth));
     
-    renderer->addCommand(&_beforeCommand);
     renderer->addCommand(&_customCommand);
-    renderer->addCommand(&_afterCommand);
+
+    renderer->popGroup();
 }
 
 void CameraBackgroundDepthBrush::onBeforeDraw()
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    _stateBlock.stencilWriteMask = renderer->getStencilWriteMask();
-    _stateBlock.depthTest = renderer->getDepthTest();
-    _stateBlock.compareFunc = renderer->getDepthCompareFunction();
+    _stateBlock.stencilWriteMask    = renderer->getStencilWriteMask();
+    _stateBlock.depthTest           = renderer->getDepthTest();
+    _stateBlock.compareFunc         = renderer->getDepthCompareFunction();
+
+    renderer->setStencilWriteMask(0);
+    renderer->setDepthTest(true);
+    renderer->setDepthCompareFunction(backend::CompareFunction::ALWAYS);
 }
 
 void CameraBackgroundDepthBrush::onAfterDraw()
@@ -229,7 +230,12 @@ bool CameraBackgroundColorBrush::init()
 
 void CameraBackgroundColorBrush::drawBackground(Camera* camera)
 {
-    utils::setBlending(BlendFunc::ALPHA_NON_PREMULTIPLIED.src, BlendFunc::ALPHA_NON_PREMULTIPLIED.dst);
+    BlendFunc op = { BlendFunc::ALPHA_NON_PREMULTIPLIED.src, BlendFunc::ALPHA_NON_PREMULTIPLIED.dst };
+
+    auto &blend = _customCommand.getPipelineDescriptor().blendDescriptor;
+    blend.sourceRGBBlendFactor      = blend.sourceAlphaBlendFactor = op.src;
+    blend.destinationRGBBlendFactor = blend.destinationAlphaBlendFactor = op.dst;
+    blend.blendEnabled              = true;
 
     CameraBackgroundDepthBrush::drawBackground(camera);
 }
@@ -313,8 +319,8 @@ CameraBackgroundSkyBoxBrush* CameraBackgroundSkyBoxBrush::create(
         Texture2D::TexParams tRepeatParams;
         tRepeatParams.magFilter = GL_LINEAR;
         tRepeatParams.minFilter = GL_LINEAR;
-        tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
-        tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
+        tRepeatParams.wrapS     = GL_CLAMP_TO_EDGE;
+        tRepeatParams.wrapT     = GL_CLAMP_TO_EDGE;
         texture->setTexParameters(tRepeatParams);
 
         ret = new (std::nothrow) CameraBackgroundSkyBoxBrush;
@@ -353,9 +359,8 @@ CameraBackgroundSkyBoxBrush* CameraBackgroundSkyBoxBrush::create()
 void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
 {
 
-    _beforeCommand.init(0.0f);
+    _groupCommand.init(-1.0f);
     _customCommand.init(0.0f);
-    _afterCommand.init(0.0f);
 
     if (!_actived)
         return;
@@ -373,9 +378,12 @@ void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
 
     auto *renderer = Director::getInstance()->getRenderer();
 
-    renderer->addCommand(&_beforeCommand);
+    renderer->addCommand(&_groupCommand);
+    renderer->pushGroup(_groupCommand.getRenderQueueID());
+
     renderer->addCommand(&_customCommand);
-    renderer->addCommand(&_afterCommand);
+
+    renderer->popGroup();
    
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 8);
     
@@ -384,23 +392,22 @@ void CameraBackgroundSkyBoxBrush::drawBackground(Camera* camera)
 bool CameraBackgroundSkyBoxBrush::init()
 {
 
-    _beforeCommand.func = CC_CALLBACK_0(CameraBackgroundSkyBoxBrush::onBeforeDraw, this);
-    _afterCommand.func = CC_CALLBACK_0(CameraBackgroundSkyBoxBrush::onAfterDraw, this);
-
+    _customCommand.setBeforeCallback(CC_CALLBACK_0(CameraBackgroundSkyBoxBrush::onBeforeDraw, this));
+    _customCommand.setAfterCallback(CC_CALLBACK_0(CameraBackgroundSkyBoxBrush::onAfterDraw, this));
 
     CC_SAFE_RELEASE_NULL(_programState);
-    _programState = new backend::ProgramState(CC3D_skybox_vert, CC3D_skybox_frag);
-    _uniformColorLoc = _programState->getUniformLocation("u_color");
-    _uniformCameraRotLoc = _programState->getUniformLocation("u_cameraRot");
-    _uniformEnvLoc = _programState->getUniformLocation("u_Env");
+    _programState           = new backend::ProgramState(CC3D_skybox_vert, CC3D_skybox_frag);
+    _uniformColorLoc        = _programState->getUniformLocation("u_color");
+    _uniformCameraRotLoc    = _programState->getUniformLocation("u_cameraRot");
+    _uniformEnvLoc          = _programState->getUniformLocation("u_Env");
 
 
-    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
-    auto &layout = pipelineDescriptor.vertexLayout;
-
-    pipelineDescriptor.programState = _programState;
+    auto &pipelineDescriptor                            = _customCommand.getPipelineDescriptor();
+    auto &layout                                        = pipelineDescriptor.vertexLayout;
+    pipelineDescriptor.programState                     = _programState;
     // disable blend
-    pipelineDescriptor.blendDescriptor.blendEnabled = false;
+    pipelineDescriptor.blendDescriptor.blendEnabled     = false;
+
     layout.setAtrribute(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, 0, backend::VertexFormat::FLOAT3, 0, false);
     layout.setLayout(sizeof(Vec3), backend::VertexStepMode::VERTEX);
 
@@ -422,7 +429,8 @@ void CameraBackgroundSkyBoxBrush::initBuffer()
     _customCommand.updateVertexBuffer(vexBuf, sizeof(vexBuf));
 
     // init index buffer object
-    uint16_t idxBuf[] = { 2, 1, 0, 3, 2, 0, // font
+    uint16_t idxBuf[] = { 
+        2, 1, 0, 3, 2, 0, // font
         1, 5, 4, 1, 4, 0, // right
         4, 5, 6, 4, 6, 7, // back
         7, 6, 2, 7, 2, 3, // left
@@ -447,12 +455,12 @@ bool CameraBackgroundSkyBoxBrush::isActived() const
 }
 void CameraBackgroundSkyBoxBrush::setActived(bool actived)
 {
-    _actived = actived;
+    _actived        = actived;
 }
 
 void CameraBackgroundSkyBoxBrush::setTextureValid(bool valid)
 {
-    _textureValid = valid;
+    _textureValid   = valid;
 }
 
 bool CameraBackgroundSkyBoxBrush::isValid()
@@ -463,10 +471,10 @@ bool CameraBackgroundSkyBoxBrush::isValid()
 void CameraBackgroundSkyBoxBrush::onBeforeDraw()
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    _stateBlock.depthTest = renderer->getDepthTest();
-    _stateBlock.depthWrite = renderer->getDepthWrite();
-    _stateBlock.depthFunc = renderer->getDepthCompareFunction();
-    _stateBlock.cullMode = renderer->getCullMode();
+    _stateBlock.depthTest   = renderer->getDepthTest();
+    _stateBlock.depthWrite  = renderer->getDepthWrite();
+    _stateBlock.depthFunc   = renderer->getDepthCompareFunction();
+    _stateBlock.cullMode    = renderer->getCullMode();
 }
 
 void CameraBackgroundSkyBoxBrush::onAfterDraw()

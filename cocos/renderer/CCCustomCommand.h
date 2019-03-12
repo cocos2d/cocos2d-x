@@ -62,7 +62,10 @@ public:
     cases.
     */
     using IndexFormat = backend::IndexFormat;
-        
+
+
+    typedef std::function<void()> CallBackFunc;
+
 	/**Constructor.*/
     CustomCommand();
     /**Destructor.*/
@@ -192,6 +195,20 @@ public:
     //TODO:minggo: should remove it.
     std::function<void()> func;
 
+    /**
+    * set a callback which will be invoke before rendering
+    */
+    void setBeforeCallback(const CallBackFunc &before) { _beforeCallback = before; }
+
+    /**
+    * set a callback which will be invoke after rendering
+    */
+    void setAfterCallback(const CallBackFunc &after) { _afterCallback = after; }
+
+    const CallBackFunc &getBeforeCallback() { return _beforeCallback; }
+
+    const CallBackFunc &getAfterCallback() { return _afterCallback; }
+
 protected:
     unsigned int computeIndexSize() const;
 
@@ -214,6 +231,10 @@ protected:
 
     unsigned int _vertexCapacity = 0;
     unsigned int _indexCapacity = 0;
+
+
+    CallBackFunc _beforeCallback = nullptr;
+    CallBackFunc _afterCallback = nullptr;
 };
 
 NS_CC_END

@@ -23,8 +23,7 @@
  THE SOFTWARE.
  
  ****************************************************************************/
-#ifndef _CCCAMERA_BACKGROUND_BRUSH_H__
-#define _CCCAMERA_BACKGROUND_BRUSH_H__
+#pragma once
 
 #include "base/ccTypes.h"
 #include "base/CCRef.h"
@@ -32,7 +31,7 @@
 #include "3d/CCFrustum.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCCustomCommand.h"
-#include "renderer/CCCallbackCommand.h"
+#include "renderer/CCGroupCommand.h"
 #include "renderer/backend/Types.h"
 #include <vector>
 
@@ -171,8 +170,8 @@ protected:
     float _depth;
     backend::UniformLocation _locDepth;
     CustomCommand _customCommand;
-    CallbackCommand _beforeCommand;
-    CallbackCommand _afterCommand;
+    GroupCommand _groupCommand;
+
     GLboolean _clearColor;
     std::vector<V3F_C4B_T2F> _vertices;
     struct {
@@ -299,8 +298,7 @@ private:
     bool _textureValid;
 
     CustomCommand _customCommand;
-    CallbackCommand _beforeCommand;
-    CallbackCommand _afterCommand;
+    GroupCommand _groupCommand;
 
     backend::UniformLocation _uniformColorLoc;
     backend::UniformLocation _uniformCameraRotLoc;
@@ -316,4 +314,3 @@ private:
 
 NS_CC_END
 
-#endif// _CCCAMERA_BACKGROUND_BRUSH_H__

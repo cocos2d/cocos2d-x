@@ -56,6 +56,8 @@ private:
      */
     void drawFullScreenQuadClearStencil(float globalZOrder);
     
+    void onBeforeDrawQuadCmd(int maskLayer);
+    void onAfterDrawQuadCmd(int maskLayer);
     
     float _alphaThreshold = 1.f;
     bool _inverted = false;
@@ -77,8 +79,6 @@ private:
     unsigned int _mask_layer_le = 0;
 
     CustomCommand _customCommand;
-    CallbackCommand _beforeDrawQuadCmd;
-    CallbackCommand _afterDrawQuadCmd;
     CallbackCommand _afterDrawStencilCmd;
     CallbackCommand _afterVisitCmd;
     

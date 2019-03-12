@@ -46,7 +46,6 @@ NS_CC_BEGIN
 
 ClippingNode::ClippingNode()
 : _stencil(nullptr)
-, _originStencilProgram(nullptr)
 , _stencilStateManager(new StencilStateManager())
 {
 }
@@ -196,10 +195,10 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
 
     //Add group command
         
-    _groupCommand.init(_globalZOrder);
-    renderer->addCommand(&_groupCommand);
+    _groupCommandStencil.init(_globalZOrder);
+    renderer->addCommand(&_groupCommandStencil);
 
-    renderer->pushGroup(_groupCommand.getRenderQueueID());
+    renderer->pushGroup(_groupCommandStencil.getRenderQueueID());
 
     // _beforeVisitCmd.init(_globalZOrder);
     // _beforeVisitCmd.func = CC_CALLBACK_0(StencilStateManager::onBeforeVisit, _stencilStateManager);
@@ -231,6 +230,11 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     int i = 0;
     bool visibleByCamera = isVisitableByVisitingCamera();
     
+    _groupCommandChildren.init(_globalZOrder);
+    renderer->addCommand(&_groupCommandChildren);
+
+    renderer->pushGroup(_groupCommandChildren.getRenderQueueID());
+
     if(!_children.empty())
     {
         sortAllChildren();
@@ -255,6 +259,9 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     {
         this->draw(renderer, _modelViewTransform, flags);
     }
+
+
+    renderer->popGroup();
 
     _afterVisitCmd.init(_globalZOrder);
     _afterVisitCmd.func = CC_CALLBACK_0(StencilStateManager::onAfterVisit, _stencilStateManager);

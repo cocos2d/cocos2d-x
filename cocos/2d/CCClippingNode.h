@@ -154,13 +154,11 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init(Node *stencil);
 
 protected:
-    Node* _stencil;
-    GLProgram* _originStencilProgram;
-   
-    StencilStateManager* _stencilStateManager;
+    Node* _stencil                              = nullptr;
+    StencilStateManager* _stencilStateManager   = nullptr;
     
-    GroupCommand _groupCommand;
-    CallbackCommand _beforeVisitCmd;
+    GroupCommand _groupCommandStencil;
+    GroupCommand _groupCommandChildren;
     CallbackCommand _afterDrawStencilCmd;
     CallbackCommand _afterVisitCmd;
 

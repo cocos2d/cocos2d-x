@@ -23,8 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _CC_MESHCOMMAND_H_
-#define _CC_MESHCOMMAND_H_
+#pragma once
 
 #include <unordered_map>
 #include "renderer/CCRenderCommand.h"
@@ -57,8 +56,6 @@ public:
     */
     using IndexFormat = backend::IndexFormat;
 
-    typedef std::function<void()> CallBackFunc;
-
     MeshCommand();
     virtual ~MeshCommand();
 
@@ -68,29 +65,11 @@ public:
     */
     void init(float globalZOrder);
 
-    /**
-    * set a callback which will be invoke before rendering
-    */
-    void setBeforeCallback(const CallBackFunc &before) { _beforeCallback = before; }
-
-    /**
-    * set a callback which will be invoke after rendering
-    */
-    void setAfterCallback(const CallBackFunc &after){ _afterCallback = after; }
-
-    const CallBackFunc &getBeforeCallback() { return _beforeCallback; }
-
-    const CallBackFunc &getAfterCallback() { return _afterCallback; }
-
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     void listenRendererRecreated(EventCustom* event);
 #endif
 
 protected:
-
-    CallBackFunc _beforeCallback    = nullptr;
-    CallBackFunc _afterCallback     = nullptr;
-
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _rendererRecreatedListener;
 #endif
@@ -98,4 +77,3 @@ protected:
 
 NS_CC_END
 
-#endif //_CC_MESHCOMMAND_H_

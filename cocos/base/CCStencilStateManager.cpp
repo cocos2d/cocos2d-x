@@ -72,7 +72,7 @@ void StencilStateManager::drawFullScreenQuadClearStencil(float globalZOrder)
 {
     _customCommand.init(globalZOrder);
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
-    _customCommand.getPipelineDescriptor().programState->setUniform(_mvpMatrixLocaiton, Mat4::IDENTITY.m, sizeof(Mat4::IDENTITY.m));
+    _programState->setUniform(_mvpMatrixLocaiton, Mat4::IDENTITY.m, sizeof(Mat4::IDENTITY.m));
 }
 
 
@@ -110,70 +110,68 @@ void StencilStateManager::onBeforeVisit(float globalZOrder)
     // mask of all layers less than or equal to the current (ie: for layer 3: 00000111)
     _mask_layer_le = mask_layer | mask_layer_l;
 
-    _beforeDrawQuadCmd.init(globalZOrder);
-    _beforeDrawQuadCmd.func = [=]() -> void {
-
-        // manually save the stencil state
-        _currentStencilEnabled = renderer->getStencilTest();
-        _currentStencilWriteMask = renderer->getStencilWriteMask();
-        _currentStencilFunc = renderer->getStencilCompareFunction();
-        _currentStencilRef = renderer->getStencilReferenceValue();
-        _currentStencilReadMask = renderer->getStencilReadMask();
-        _currentStencilFail = renderer->getStencilFailureOperation();
-        _currentStencilPassDepthFail = renderer->getStencilPassDepthFailureOperation();
-        _currentStencilPassDepthPass = renderer->getStencilDepthPassOperation();
-
-        // enable stencil use
-        renderer->setStencilTest(true);
-
-        // all bits on the stencil buffer are readonly, except the current layer bit,
-        // this means that operation like glClear or glStencilOp will be masked with this value
-        renderer->setStencilWriteMask(mask_layer);
-
-        // manually save the depth test state
-
-        _currentDepthWriteMask = renderer->getDepthWrite();
-
-        // disable update to the depth buffer while drawing the stencil,
-        // as the stencil is not meant to be rendered in the real scene,
-        // it should never prevent something else to be drawn,
-        // only disabling depth buffer update should do
-        renderer->setDepthWrite(false);
-
-        ///////////////////////////////////
-        // CLEAR STENCIL BUFFER
-
-        // manually clear the stencil buffer by drawing a fullscreen rectangle on it
-        // setup the stencil test func like this:
-        // for each pixel in the fullscreen rectangle
-        //     never draw it into the frame buffer
-        //     if not in inverted mode: set the current layer value to 0 in the stencil buffer
-        //     if in inverted mode: set the current layer value to 1 in the stencil buffer
-        renderer->setStencilCompareFunction(backend::CompareFunction::NEVER, mask_layer, mask_layer);
-        renderer->setStencilOperation(!_inverted ? backend::StencilOperation::ZERO : backend::StencilOperation::REPLACE,
-                                      backend::StencilOperation::KEEP,
-                                      backend::StencilOperation::KEEP);
-    };
-    renderer->addCommand(&_beforeDrawQuadCmd);
+    _customCommand.setBeforeCallback(CC_CALLBACK_0(StencilStateManager::onBeforeDrawQuadCmd, this, (int)mask_layer));
+    _customCommand.setAfterCallback(CC_CALLBACK_0(StencilStateManager::onAfterDrawQuadCmd, this, (int)mask_layer));
 
     // draw a fullscreen solid rectangle to clear the stencil buffer
     drawFullScreenQuadClearStencil(globalZOrder);
 
-    _afterDrawQuadCmd.init(globalZOrder);
-    _afterDrawQuadCmd.func = [=]() -> void {
-        // setup the stencil test func like this:
-        // for each pixel in the stencil node
-        //     never draw it into the frame buffer
-        //     if not in inverted mode: set the current layer value to 1 in the stencil buffer
-        //     if in inverted mode: set the current layer value to 0 in the stencil buffer
-        auto renderer = Director::getInstance()->getRenderer();
-        renderer->setStencilCompareFunction(backend::CompareFunction::NEVER, mask_layer, mask_layer);
+}
 
-        renderer->setStencilOperation(!_inverted ? backend::StencilOperation::REPLACE : backend::StencilOperation::ZERO,
-                                      backend::StencilOperation::KEEP,
-                                      backend::StencilOperation::KEEP);
-    };
-    renderer->addCommand(&_afterDrawQuadCmd);
+void StencilStateManager::onBeforeDrawQuadCmd(int mask_layer)
+{
+    auto renderer = Director::getInstance()->getRenderer();
+
+    // manually save the stencil state
+    _currentStencilEnabled = renderer->getStencilTest();
+    _currentStencilWriteMask = renderer->getStencilWriteMask();
+    _currentStencilFunc = renderer->getStencilCompareFunction();
+    _currentStencilRef = renderer->getStencilReferenceValue();
+    _currentStencilReadMask = renderer->getStencilReadMask();
+    _currentStencilFail = renderer->getStencilFailureOperation();
+    _currentStencilPassDepthFail = renderer->getStencilPassDepthFailureOperation();
+    _currentStencilPassDepthPass = renderer->getStencilDepthPassOperation();
+
+    // enable stencil use
+    renderer->setStencilTest(true);
+
+    // all bits on the stencil buffer are readonly, except the current layer bit,
+    // this means that operation like glClear or glStencilOp will be masked with this value
+    renderer->setStencilWriteMask(mask_layer);
+
+    // manually save the depth test state
+
+    _currentDepthWriteMask = renderer->getDepthWrite();
+
+    // disable update to the depth buffer while drawing the stencil,
+    // as the stencil is not meant to be rendered in the real scene,
+    // it should never prevent something else to be drawn,
+    // only disabling depth buffer update should do
+    renderer->setDepthWrite(false);
+
+    ///////////////////////////////////
+    // CLEAR STENCIL BUFFER
+
+    // manually clear the stencil buffer by drawing a fullscreen rectangle on it
+    // setup the stencil test func like this:
+    // for each pixel in the fullscreen rectangle
+    //     never draw it into the frame buffer
+    //     if not in inverted mode: set the current layer value to 0 in the stencil buffer
+    //     if in inverted mode: set the current layer value to 1 in the stencil buffer
+    renderer->setStencilCompareFunction(backend::CompareFunction::NEVER, mask_layer, mask_layer);
+    renderer->setStencilOperation(!_inverted ? backend::StencilOperation::ZERO : backend::StencilOperation::REPLACE,
+        backend::StencilOperation::KEEP,
+        backend::StencilOperation::KEEP);
+}
+
+void StencilStateManager::onAfterDrawQuadCmd(int mask_layer)
+{
+    auto renderer = Director::getInstance()->getRenderer();
+    renderer->setStencilCompareFunction(backend::CompareFunction::NEVER, mask_layer, mask_layer);
+
+    renderer->setStencilOperation(!_inverted ? backend::StencilOperation::REPLACE : backend::StencilOperation::ZERO,
+        backend::StencilOperation::KEEP,
+        backend::StencilOperation::KEEP);
 }
 
 void StencilStateManager::onAfterDrawStencil()
