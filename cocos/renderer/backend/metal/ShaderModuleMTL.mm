@@ -122,6 +122,9 @@ void ShaderModuleMTL::parseUniform(id<MTLDevice> mtlDevice, glslopt_shader* shad
         uniform.location = location;
         uniform.isArray = parArrSize;
         uniform.bufferSize = nextLocation - location;
+        uniform.needConvert = (parVecSize == 3) ? true : false;
+        uniform.type = static_cast<unsigned int>(parType);
+        uniform.isMatrix = (parMatSize > 1) ? true : false;
         _uniformInfos[parName] = uniform;
         
         _maxLocation = _maxLocation < location ? (location + 1) : _maxLocation;

@@ -3,8 +3,55 @@
 #include "renderer/backend/Program.h"
 #include "renderer/backend/Texture.h"
 #include "renderer/backend/Types.h"
+#ifdef CC_USE_METAL
+#include "glsl_optimizer.h"
+#endif
 
 CC_BACKEND_BEGIN
+
+namespace {
+#define MAT3_SIZE 36
+#define MAT4X3_SIZE 48
+#define VEC3_SIZE 12
+#define VEC4_SIZE 16
+#define BVEC3_SIZE 3
+#define BVEC4_SIZE 4
+#define IVEC3_SIZE 12
+#define IVEC4_SIZE 16
+    
+    void convertbVec3TobVec4(const bool* src, bool* dst)
+    {
+        dst[0] = src[0];
+        dst[1] = src[1];
+        dst[2] = src[2];
+        dst[3] = false;
+    }
+    
+    void convertiVec3ToiVec4(const int* src, int* dst)
+    {
+        dst[0] = src[0];
+        dst[1] = src[1];
+        dst[2] = src[2];
+        dst[3] = 0;
+    }
+    
+    void convertVec3ToVec4(const float* src, float* dst)
+    {
+        dst[0] = src[0];
+        dst[1] = src[1];
+        dst[2] = src[2];
+        dst[3] = 0.0f;
+    }
+    
+    void convertMat3ToMat4x3(const float* src, float* dst)
+    {
+        dst[3] = dst[7] = dst[11] = 0.0f;
+        dst[0] = src[0]; dst[1] = src[1]; dst[2] = src[2];
+        dst[4] = src[3]; dst[5] = src[4]; dst[6] = src[5];
+        dst[8] = src[6]; dst[9] = src[7]; dst[10] = src[8];
+    }
+}
+
 
 UniformBuffer::UniformBuffer(const backend::UniformInfo &_uniformInfo)
 : uniformInfo(_uniformInfo)
@@ -200,11 +247,87 @@ void ProgramState::setUniform(const backend::UniformLocation& uniformLocation, c
     }
 }
 
+#ifdef CC_USE_METAL
+void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, std::vector<char>& uniformData)
+{
+    auto basicType = static_cast<glslopt_basic_type>(uniformInfo.type);
+    char* convertedData = new char[uniformInfo.bufferSize];
+    memset(convertedData, 0, uniformInfo.bufferSize);
+    switch (basicType)
+    {
+        case kGlslTypeFloat:
+        {
+            for (int i=0; i<uniformInfo.count; i++)
+            {
+                int offset = 0;
+                if(uniformInfo.isMatrix)
+                {
+                    offset = i*MAT3_SIZE;
+                    if(offset >= srcSize)
+                        break;
+                    
+                    convertMat3ToMat4x3((float*)srcData + offset, (float*)convertedData + i * MAT4X3_SIZE);
+                }
+                else
+                {
+                    offset = i*VEC3_SIZE;
+                    if(offset >= srcSize)
+                        break;
+                    convertVec3ToVec4((float*)srcData +offset, (float*)convertedData + i * VEC4_SIZE);
+                }
+            }
+            break;
+        }
+        case kGlslTypeBool:
+        {
+            for (int i=0; i<uniformInfo.count; i++)
+            {
+                int offset = 0;
+                offset = i*BVEC3_SIZE;
+                if(offset >= srcSize)
+                    break;
+                
+                convertbVec3TobVec4((bool*)srcData + offset, (bool*)convertedData + i * BVEC4_SIZE);
+            }
+            break;
+        }
+        case kGlslTypeInt:
+        {
+            for (int i=0; i<uniformInfo.count; i++)
+            {
+                int offset = 0;
+                offset = i*IVEC3_SIZE;
+                if(offset >= srcSize)
+                    break;
+                
+                convertiVec3ToiVec4((int*)srcData + offset, (int*)convertedData + i * IVEC4_SIZE);
+            }
+            break;
+        }
+        default:
+            CC_ASSERT(false);
+            break;
+    }
+    
+    uniformData.assign(convertedData, convertedData + uniformInfo.bufferSize);
+    CC_SAFE_DELETE_ARRAY(convertedData);
+}
+#endif
+
 void ProgramState::setVertexUniform(int location, const void* data, uint32_t size)
 {
     if(location < 0)
         return;
     
+//float3 etc in Metal has both sizeof and alignment same as float4, need convert to correct laytout
+#ifdef CC_USE_METAL
+    auto& uniformInfo = _vertexUniformInfos[location].uniformInfo;
+    if(uniformInfo.needConvert)
+    {
+        convertUniformData(uniformInfo, data, size, _vertexUniformInfos[location].data);
+        return;
+    }
+#endif
     _vertexUniformInfos[location].data.assign((char*)data, (char*)data + size);
 }
 
@@ -212,6 +335,16 @@ void ProgramState::setFragmentUniform(int location, const void* data, uint32_t s
 {
     if(location < 0)
         return;
+   
+//float3 etc in Metal has both sizeof and alignment same as float4, need convert to correct laytout
+#ifdef CC_USE_METAL
+    auto& uniformInfo = _fragmentUniformInfos[location].uniformInfo;
+    if(uniformInfo.needConvert)
+    {
+        convertUniformData(uniformInfo, data, size, _fragmentUniformInfos[location].data);
+        return;
+    }
+#endif
     _fragmentUniformInfos[location].data.assign((char *)data, (char *)data + size);
 }
 
