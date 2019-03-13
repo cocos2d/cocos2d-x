@@ -130,10 +130,22 @@ bool CameraBackgroundDepthBrush::init()
     pipelineDescriptor.programState = _programState;
 
     auto &layout = pipelineDescriptor.vertexLayout;
-
-    layout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(V3F_C4B_T2F, vertices), false);
-    layout.setAtrribute("a_color",    1, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
-    layout.setAtrribute("a_texCoord", 2, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), true);
+    const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
+    auto iter = attributeInfo.find("a_position");
+    if(iter != attributeInfo.end())
+    {
+        layout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, offsetof(V3F_C4B_T2F, vertices), false);
+    }
+    iter = attributeInfo.find("a_color");
+    if(iter != attributeInfo.end())
+    {
+        layout.setAtrribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
+    }
+    iter = attributeInfo.find("a_texCoord");
+    if(iter != attributeInfo.end())
+    {
+        layout.setAtrribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), true);
+    }
     layout.setLayout(sizeof(_vertices[0]), backend::VertexStepMode::VERTEX);
 
     _vertices.resize(4);

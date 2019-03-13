@@ -83,7 +83,7 @@ void ShaderModuleMTL::parseAttibute(id<MTLDevice> mtlDevice, glslopt_shader* sha
         AttributeBindInfo attributeInfo;
         attributeInfo.attributeName = parName;
         attributeInfo.location = location;
-        _attributeInfo.push_back(attributeInfo);
+        _attributeInfo[parName] = attributeInfo;
     }
 }
 

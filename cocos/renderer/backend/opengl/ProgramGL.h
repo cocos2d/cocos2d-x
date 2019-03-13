@@ -46,7 +46,7 @@ public:
     virtual int getMaxVertexLocation() const override;
     virtual int getMaxFragmentLocation() const override;
 
-    virtual std::vector<AttributeBindInfo> getActiveAttributes() const override;
+    virtual const std::unordered_map<std::string, AttributeBindInfo> getActiveAttributes() const override;
 
 private:
     void compileProgram();

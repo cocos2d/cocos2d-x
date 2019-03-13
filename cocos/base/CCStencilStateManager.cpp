@@ -35,13 +35,19 @@ int StencilStateManager::s_layer = -1;
 
 StencilStateManager::StencilStateManager()
 {
-    auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT2, 0, false);
-    vertexLayout.setLayout(2 * sizeof(float), backend::VertexStepMode::VERTEX);
-
     auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
     _programState = new (std::nothrow) backend::ProgramState(positionUColor_vert, positionUColor_frag);
     pipelineDescriptor.programState = _programState;
+    
+    auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
+    const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
+    auto iter = attributeInfo.find("a_position");
+    if(iter != attributeInfo.end())
+    {
+        vertexLayout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
+    }
+    vertexLayout.setLayout(2 * sizeof(float), backend::VertexStepMode::VERTEX);
+
     _mvpMatrixLocaiton = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     _colorUniformLocation = pipelineDescriptor.programState->getUniformLocation("u_color");
     

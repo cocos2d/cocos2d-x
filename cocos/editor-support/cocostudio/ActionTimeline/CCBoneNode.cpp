@@ -421,8 +421,17 @@ bool BoneNode::init()
     _mvpLocation = _programState->getUniformLocation("u_MVPMatrix");
 
     auto& vertexLayout = pipelineDescriptor.vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, cocos2d::backend::VertexFormat::FLOAT3, 0, false);
-    vertexLayout.setAtrribute("a_color", 1, cocos2d::backend::VertexFormat::FLOAT4, 3 * sizeof(float), false);
+    const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
+    auto iter = attributeInfo.find("a_position");
+    if(iter != attributeInfo.end())
+    {
+        vertexLayout.setAtrribute("a_position", iter->second.location, cocos2d::backend::VertexFormat::FLOAT3, 0, false);
+    }
+    iter = attributeInfo.find("a_color");
+    if(iter != attributeInfo.end())
+    {
+        vertexLayout.setAtrribute("a_color", iter->second.location, cocos2d::backend::VertexFormat::FLOAT4, 3 * sizeof(float), false);
+    }
     vertexLayout.setLayout(7 * sizeof(float), cocos2d::backend::VertexStepMode::VERTEX);
 
     _customCommand.createVertexBuffer(sizeof(_vertexData[0]), 4, cocos2d::CustomCommand::BufferUsage::DYNAMIC);

@@ -68,8 +68,12 @@ bool Skybox::init()
     pipelineDescriptor.programState = _programState;
     // disable blend
     pipelineDescriptor.blendDescriptor.blendEnabled = false; 
-
-    layout.setAtrribute(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, 0, backend::VertexFormat::FLOAT3, 0, false);
+    const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
+    const auto& iter = attributeInfo.find(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION);
+    if(iter != attributeInfo.end())
+    {
+        layout.setAtrribute(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
+    }
     layout.setLayout(sizeof(Vec3), backend::VertexStepMode::VERTEX);
 
     _uniformColorLoc = _programState->getUniformLocation("u_color");
