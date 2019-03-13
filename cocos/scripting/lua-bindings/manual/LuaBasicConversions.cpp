@@ -31,6 +31,8 @@
 #include "scripting/deprecated/CCFloat.h"
 #include "scripting/deprecated/CCInteger.h"
 
+#include "base/ccUtils.h"
+
 std::unordered_map<std::string, std::string>  g_luaType;
 std::unordered_map<std::string, std::string>  g_typeCast;
 
@@ -1995,22 +1997,22 @@ bool luaval_to_texparams(lua_State* L,int lo,cocos2d::Texture2D::TexParams* outV
     {
         lua_pushstring(L, "minFilter");
         lua_gettable(L, lo);
-        outValue->minFilter = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->minFilter = utils::toBackendSamplerFilter(lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1));
         lua_pop(L, 1);
 
         lua_pushstring(L, "magFilter");
         lua_gettable(L, lo);
-        outValue->magFilter = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->magFilter = utils::toBackendSamplerFilter(lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1));
         lua_pop(L, 1);
 
         lua_pushstring(L, "wrapS");
         lua_gettable(L, lo);
-        outValue->wrapS = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->sAddressMode = utils::toBackendAddressMode(lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1));
         lua_pop(L, 1);
 
         lua_pushstring(L, "wrapT");
         lua_gettable(L, lo);
-        outValue->wrapT = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        outValue->tAddressMode = utils::toBackendAddressMode(lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1));
         lua_pop(L, 1);
     }
     return ok;
