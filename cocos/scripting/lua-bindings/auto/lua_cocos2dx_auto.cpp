@@ -19423,6 +19423,217 @@ int lua_register_cocos2dx_Image(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_ShaderCache_removeUnusedShader(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::backend::ShaderCache* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ShaderCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::backend::ShaderCache*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ShaderCache_removeUnusedShader'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ShaderCache_removeUnusedShader'", nullptr);
+            return 0;
+        }
+        cobj->removeUnusedShader();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ShaderCache:removeUnusedShader",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ShaderCache_removeUnusedShader'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_ShaderCache_destroyInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.ShaderCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ShaderCache_destroyInstance'", nullptr);
+            return 0;
+        }
+        cocos2d::backend::ShaderCache::destroyInstance();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.ShaderCache:destroyInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ShaderCache_destroyInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_ShaderCache_newVertexShaderModule(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.ShaderCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        std::string arg0;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.ShaderCache:newVertexShaderModule");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ShaderCache_newVertexShaderModule'", nullptr);
+            return 0;
+        }
+        cocos2d::backend::ShaderModule* ret = cocos2d::backend::ShaderCache::newVertexShaderModule(arg0);
+        object_to_luaval<cocos2d::backend::ShaderModule>(tolua_S, "cc.ShaderModule",(cocos2d::backend::ShaderModule*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.ShaderCache:newVertexShaderModule",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ShaderCache_newVertexShaderModule'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_ShaderCache_newFragmentShaderModule(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.ShaderCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        std::string arg0;
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.ShaderCache:newFragmentShaderModule");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ShaderCache_newFragmentShaderModule'", nullptr);
+            return 0;
+        }
+        cocos2d::backend::ShaderModule* ret = cocos2d::backend::ShaderCache::newFragmentShaderModule(arg0);
+        object_to_luaval<cocos2d::backend::ShaderModule>(tolua_S, "cc.ShaderModule",(cocos2d::backend::ShaderModule*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.ShaderCache:newFragmentShaderModule",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ShaderCache_newFragmentShaderModule'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_ShaderCache_getInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.ShaderCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ShaderCache_getInstance'", nullptr);
+            return 0;
+        }
+        cocos2d::backend::ShaderCache* ret = cocos2d::backend::ShaderCache::getInstance();
+        object_to_luaval<cocos2d::backend::ShaderCache>(tolua_S, "cc.ShaderCache",(cocos2d::backend::ShaderCache*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.ShaderCache:getInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ShaderCache_getInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+static int lua_cocos2dx_ShaderCache_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (ShaderCache)");
+    return 0;
+}
+
+int lua_register_cocos2dx_ShaderCache(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.ShaderCache");
+    tolua_cclass(tolua_S,"ShaderCache","cc.ShaderCache","cc.Ref",nullptr);
+
+    tolua_beginmodule(tolua_S,"ShaderCache");
+        tolua_function(tolua_S,"removeUnusedShader",lua_cocos2dx_ShaderCache_removeUnusedShader);
+        tolua_function(tolua_S,"destroyInstance", lua_cocos2dx_ShaderCache_destroyInstance);
+        tolua_function(tolua_S,"newVertexShaderModule", lua_cocos2dx_ShaderCache_newVertexShaderModule);
+        tolua_function(tolua_S,"newFragmentShaderModule", lua_cocos2dx_ShaderCache_newFragmentShaderModule);
+        tolua_function(tolua_S,"getInstance", lua_cocos2dx_ShaderCache_getInstance);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::ShaderCache).name();
+    g_luaType[typeName] = "cc.ShaderCache";
+    g_typeCast["ShaderCache"] = "cc.ShaderCache";
+    return 1;
+}
+
 int lua_cocos2dx_PolygonInfo_getFilename(lua_State* tolua_S)
 {
     int argc = 0;
@@ -100688,13 +100899,13 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_JumpBy(tolua_S);
 	lua_register_cocos2dx_EventListener(tolua_S);
 	lua_register_cocos2dx_EventListenerKeyboard(tolua_S);
-	lua_register_cocos2dx_ActionEase(tolua_S);
-	lua_register_cocos2dx_EaseBounceIn(tolua_S);
+	lua_register_cocos2dx_EventListenerMouse(tolua_S);
 	lua_register_cocos2dx_TransitionRotoZoom(tolua_S);
 	lua_register_cocos2dx_Event(tolua_S);
 	lua_register_cocos2dx_EventController(tolua_S);
 	lua_register_cocos2dx_Director(tolua_S);
 	lua_register_cocos2dx_Scheduler(tolua_S);
+	lua_register_cocos2dx_ActionEase(tolua_S);
 	lua_register_cocos2dx_EaseElastic(tolua_S);
 	lua_register_cocos2dx_EaseElasticOut(tolua_S);
 	lua_register_cocos2dx_EaseQuadraticActionInOut(tolua_S);
@@ -100793,6 +101004,7 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_Image(tolua_S);
 	lua_register_cocos2dx_LayerMultiplex(tolua_S);
 	lua_register_cocos2dx_Blink(tolua_S);
+	lua_register_cocos2dx_ShaderCache(tolua_S);
 	lua_register_cocos2dx_JumpTo(tolua_S);
 	lua_register_cocos2dx_ParticleExplosion(tolua_S);
 	lua_register_cocos2dx_TransitionJumpZoom(tolua_S);
@@ -100803,7 +101015,7 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_NodeGrid(tolua_S);
 	lua_register_cocos2dx_TMXLayerInfo(tolua_S);
 	lua_register_cocos2dx_EaseSineIn(tolua_S);
-	lua_register_cocos2dx_EventListenerMouse(tolua_S);
+	lua_register_cocos2dx_EaseBounceIn(tolua_S);
 	lua_register_cocos2dx_Camera(tolua_S);
 	lua_register_cocos2dx_TMXObjectGroup(tolua_S);
 	lua_register_cocos2dx_ParticleGalaxy(tolua_S);
