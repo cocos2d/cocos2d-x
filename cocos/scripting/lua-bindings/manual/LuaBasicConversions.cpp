@@ -3178,10 +3178,10 @@ void texParams_to_luaval(lua_State* L, const cocos2d::Texture2D::TexParams& inVa
     lua_pushnumber(L, (lua_Number) inValue.magFilter);   /* L: table key value*/
     lua_rawset(L, -3);
     lua_pushstring(L, "wrapS");                          /* L: table key */
-    lua_pushnumber(L, (lua_Number) inValue.wrapS);       /* L: table key value*/
+    lua_pushnumber(L, (lua_Number) inValue.sAddressMode);       /* L: table key value*/
     lua_rawset(L, -3);
     lua_pushstring(L, "wrapT");                          /* L: table key */
-    lua_pushnumber(L, (lua_Number) inValue.wrapT);       /* L: table key value*/
+    lua_pushnumber(L, (lua_Number) inValue.tAddressMode);       /* L: table key value*/
     lua_rawset(L, -3);
 }
 

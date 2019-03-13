@@ -2113,8 +2113,8 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
     Texture2D::TexParams tRepeatParams;
     tRepeatParams.magFilter = backend::SamplerFilter::LINEAR;
     tRepeatParams.minFilter = backend::SamplerFilter::LINEAR;
-    tRepeatParams.wrapS = backend::SamplerAddressMode::CLAMP_TO_EDGE;
-    tRepeatParams.wrapT = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+    tRepeatParams.sAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+    tRepeatParams.tAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
     _textureCube->setTexParameters(tRepeatParams);
 
 

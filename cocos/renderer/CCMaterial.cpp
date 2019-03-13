@@ -253,9 +253,9 @@ bool Material::parseSampler(backend::ProgramState* programState, Properties* sam
         // valid options: REPEAT, CLAMP
         const char* wrapS = getOptionalString(samplerProperties, "wrapS", "CLAMP_TO_EDGE");
         if (strcasecmp(wrapS, "REPEAT")==0)
-            texParams.wrapS = backend::SamplerAddressMode::REPEAT;
+            texParams.sAddressMode = backend::SamplerAddressMode::REPEAT;
         else if(strcasecmp(wrapS, "CLAMP_TO_EDGE")==0)
-            texParams.wrapS = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+            texParams.sAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
         else
             CCLOG("Invalid wrapS: %s", wrapS);
 
@@ -263,9 +263,9 @@ bool Material::parseSampler(backend::ProgramState* programState, Properties* sam
         // valid options: REPEAT, CLAMP
         const char* wrapT = getOptionalString(samplerProperties, "wrapT", "CLAMP_TO_EDGE");
         if (strcasecmp(wrapT, "REPEAT")==0)
-            texParams.wrapT = backend::SamplerAddressMode::REPEAT;
+            texParams.tAddressMode = backend::SamplerAddressMode::REPEAT;
         else if(strcasecmp(wrapT, "CLAMP_TO_EDGE")==0)
-            texParams.wrapT = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+            texParams.tAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
         else
             CCLOG("Invalid wrapT: %s", wrapT);
 

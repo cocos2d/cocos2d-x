@@ -320,8 +320,8 @@ CameraBackgroundSkyBoxBrush* CameraBackgroundSkyBoxBrush::create(
         Texture2D::TexParams tRepeatParams;
         tRepeatParams.magFilter = backend::SamplerFilter::LINEAR;
         tRepeatParams.minFilter = backend::SamplerFilter::LINEAR;
-        tRepeatParams.wrapS = backend::SamplerAddressMode::CLAMP_TO_EDGE;
-        tRepeatParams.wrapT = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+        tRepeatParams.sAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+        tRepeatParams.tAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
         texture->setTexParameters(tRepeatParams);
 
         ret = new (std::nothrow) CameraBackgroundSkyBoxBrush;

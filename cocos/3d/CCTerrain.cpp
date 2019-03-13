@@ -91,8 +91,8 @@ void cocos2d::Terrain::setLightMap(const std::string& fileName)
 
     Texture2D::TexParams tRepeatParams;//set texture parameters
     tRepeatParams.magFilter = tRepeatParams.minFilter = backend::SamplerFilter::LINEAR;
-    tRepeatParams.wrapS = backend::SamplerAddressMode::REPEAT;
-    tRepeatParams.wrapT = backend::SamplerAddressMode::REPEAT;
+    tRepeatParams.sAddressMode = backend::SamplerAddressMode::REPEAT;
+    tRepeatParams.tAddressMode = backend::SamplerAddressMode::REPEAT;
     _lightMap->setTexParameters(tRepeatParams);
 
 }
@@ -824,8 +824,8 @@ bool Terrain::initTextures()
     }
 
     Texture2D::TexParams texParam;
-    texParam.wrapS = backend::SamplerAddressMode::REPEAT;
-    texParam.wrapT = backend::SamplerAddressMode::REPEAT;
+    texParam.sAddressMode = backend::SamplerAddressMode::REPEAT;
+    texParam.tAddressMode = backend::SamplerAddressMode::REPEAT;
     if (_terrainData._alphaMapSrc.empty())
     {
         auto textImage = new (std::nothrow)Image();
@@ -846,8 +846,8 @@ bool Terrain::initTextures()
         image->initWithImageFile(_terrainData._alphaMapSrc);
         _alphaMap = new (std::nothrow)Texture2D();
         _alphaMap->initWithImage(image);
-        texParam.wrapS = backend::SamplerAddressMode::CLAMP_TO_EDGE;
-        texParam.wrapT = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+        texParam.sAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+        texParam.tAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
         texParam.minFilter = backend::SamplerFilter::LINEAR;
         texParam.magFilter = backend::SamplerFilter::LINEAR;
         _alphaMap->setTexParameters(texParam);
@@ -863,8 +863,8 @@ bool Terrain::initTextures()
             texture->generateMipmap();
             _detailMapTextures[i] = texture;
 
-            texParam.wrapS = backend::SamplerAddressMode::REPEAT;
-            texParam.wrapT = backend::SamplerAddressMode::REPEAT;
+            texParam.sAddressMode = backend::SamplerAddressMode::REPEAT;
+            texParam.tAddressMode = backend::SamplerAddressMode::REPEAT;
             texParam.minFilter = backend::SamplerFilter::LINEAR;
             texParam.magFilter = backend::SamplerFilter::LINEAR;
             texture->setTexParameters(texParam);

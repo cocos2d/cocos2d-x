@@ -908,19 +908,7 @@ Texture2D* Texture2D::getAlphaTexture() const
     return _alphaTexture;
 }
 
-void Texture2D::setTexParameters(const Texture2D::TexParams &params)
-{
-    backend::SamplerDescriptor sd;
-    sd.mipmapEnabled    = true;
-    sd.mipmapFilter     = backend::SamplerFilter::DONT_CARE;
-    sd.minFilter        = params.minFilter;
-    sd.magFilter        = params.magFilter;
-    sd.sAddressMode     = params.wrapS;
-    sd.tAddressMode     = params.wrapT;
-    _texture->updateSamplerDescriptor(sd);
-}
-
-void Texture2D::setTexParameters(const backend::SamplerDescriptor &desc)
+void Texture2D::setTexParameters(const Texture2D::TexParams &desc)
 {
     _texture->updateSamplerDescriptor(desc);
 }

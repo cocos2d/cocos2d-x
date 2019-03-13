@@ -25,8 +25,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCTEXTURE2D_H__
-#define __CCTEXTURE2D_H__
+#pragma once
 
 #include <string>
 #include <map>
@@ -153,23 +152,9 @@ public:
     typedef std::map<Texture2D::PixelFormat, const PixelFormatInfo> PixelFormatInfoMap;
     
     /**
-     Extension to set the Min / Mag filter
+     * Extension to set the Min / Mag filter
      */
-    struct TexParams {
-        backend::SamplerFilter      minFilter;
-        backend::SamplerFilter      magFilter;
-        backend::SamplerAddressMode wrapS;
-        backend::SamplerAddressMode wrapT;
-        bool                        mipmapEnabled   = true;
-        backend::SamplerFilter      mipmapFilter    = backend::SamplerFilter::LINEAR;
-        
-        TexParams(backend::SamplerFilter _minFilter, backend::SamplerFilter _magFilter,
-                  backend::SamplerAddressMode _wrapS, backend::SamplerAddressMode _wrapT)
-            :minFilter(_minFilter), magFilter(_magFilter), wrapS(_wrapS), wrapT(_wrapT)
-        {}
-        
-        TexParams() = default;
-    };
+    using TexParams = backend::SamplerDescriptor;
 
 public:
     /** sets the default pixel format for UIImagescontains alpha channel.
@@ -311,7 +296,6 @@ public:
 
 
     void setTexParameters(const TexParams &params);
-    void setTexParameters(const backend::SamplerDescriptor &desc);
     
     /** Generates mipmap images for the texture.
      It only works if the texture size is POT (power of 2).
@@ -495,6 +479,3 @@ protected:
 /// @}
 
 NS_CC_END
-
-#endif //__CCTEXTURE2D_H__
-
