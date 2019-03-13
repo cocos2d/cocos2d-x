@@ -42,13 +42,24 @@ USING_NS_CC;
 
 NS_CC_BEGIN
 
-// check a number is power of two.
-static bool isPOT(int number)
-{
-    bool flag = false;
-    if ((number > 0) && (number&(number - 1)) == 0)
-        flag = true;
-    return flag;
+namespace {
+    //It's used for creating a default texture when lightMap is nullpter
+    static unsigned char cc_2x2_white_image[] = {
+        // RGBA8888
+        0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF
+    };
+
+    // check a number is power of two.
+    static bool isPOT(int number)
+    {
+        bool flag = false;
+        if ((number > 0) && (number&(number - 1)) == 0)
+            flag = true;
+        return flag;
+    }
 }
 
 Terrain * Terrain::create(TerrainData &parameter, CrackFixedType fixedType)
@@ -160,6 +171,9 @@ void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, 
     {
         int hasLightMap = 0;
         _programState->setUniform(_lightMapCheckLocation, &hasLightMap, sizeof(hasLightMap));
+#ifdef CC_USE_METAL
+        _programState->setTexture(_lightMapLocation, 5, _dummyTexture->getBackendTexture());
+#endif
     }
     auto camera = Camera::getVisitingCamera();
 
@@ -259,6 +273,14 @@ Terrain::Terrain()
     }
     );
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
+#endif
+#ifdef CC_USE_METAL
+    auto image = new (std::nothrow)Image();
+    bool CC_UNUSED isOK = image->initWithRawData(cc_2x2_white_image, sizeof(cc_2x2_white_image), 2, 2, 8);
+    CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
+    _dummyTexture = new (std::nothrow)Texture2D();
+    _dummyTexture->initWithImage(image);
+    CC_SAFE_RELEASE(image);
 #endif
 }
 
@@ -448,6 +470,7 @@ Terrain::~Terrain()
     CC_SAFE_RELEASE(_alphaMap);
     CC_SAFE_RELEASE(_lightMap);
     CC_SAFE_RELEASE(_heightMapImage);
+    CC_SAFE_RELEASE(_dummyTexture);
     CC_SAFE_RELEASE_NULL(_programState);
     delete _quadRoot;
     for (int i = 0; i < 4; ++i)
