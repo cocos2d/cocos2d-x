@@ -804,10 +804,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
 void Sprite3D::setProgramState(backend::ProgramState* programState)
 {
-    //TODO
-    //Node::setGLProgramState(glProgramState);
     for (auto state : _meshes) {
-        //state->setProgramState(programState->clone());
         state->setProgramState(programState);
     }
 }
@@ -820,10 +817,7 @@ void Sprite3D::setProgramState(backend::ProgramState* programState)
 
 void Sprite3D::setVertexLayout(const backend::VertexLayout& vertexLayout)
 {
-    //TODO
-    //Node::setGLProgramState(glProgramState);
     for (auto state : _meshes) {
-        //state->setProgramState(programState->clone());
         state->setVertexLayout(vertexLayout);
     }
 }
