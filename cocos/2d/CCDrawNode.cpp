@@ -292,7 +292,7 @@ void DrawNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     {
         updateBlendState(_customCommand);
         updateUniforms(transform, _customCommand);
-        _customCommand.init(_globalZOrder, transform, flags);
+        _customCommand.init(_globalZOrder);
         renderer->addCommand(&_customCommand);
     }
     
@@ -300,7 +300,7 @@ void DrawNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     {
         updateBlendState(_customCommandGLPoint);
         updateUniforms(transform, _customCommandGLPoint);
-        _customCommandGLPoint.init(_globalZOrder, transform, flags);
+        _customCommandGLPoint.init(_globalZOrder);
         renderer->addCommand(&_customCommandGLPoint);
     }
     

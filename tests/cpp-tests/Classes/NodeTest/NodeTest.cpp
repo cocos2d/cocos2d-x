@@ -993,7 +993,7 @@ void MySprite::onDraw(const Mat4 &transform, uint32_t flags)
 //    getGLProgram()->use();
 //    getGLProgram()->setUniformsForBuiltins(transform);
 
-    cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
+//    cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _texture->getName());

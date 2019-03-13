@@ -26,7 +26,6 @@ enum class ShaderStage : uint32_t
     VERTEX_AND_FRAGMENT
 };
 
-//TODO: simplify name
 enum class VertexFormat : uint32_t
 {
     FLOAT4,

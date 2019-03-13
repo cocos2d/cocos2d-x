@@ -190,10 +190,7 @@ namespace utils
     * @lua NA
     */
     CC_DLL LanguageType getLanguageTypeByISO2(const char* code);
-
-    CC_DLL void setBlending(backend::BlendFactor sfactor, backend::BlendFactor dfactor);
     
-    //TODO: minggo: should remove it.
     CC_DLL backend::BlendFactor toBackendBlendFactor(int factor);
 
     CC_DLL int toGLBlendFactor(backend::BlendFactor blendFactor);

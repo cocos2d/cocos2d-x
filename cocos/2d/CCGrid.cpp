@@ -673,11 +673,11 @@ void TiledGrid3D::calculateVertexPoints()
     _vertices = malloc(numQuads*4*sizeof(Vec3));
     _originalVertices = malloc(numQuads*4*sizeof(Vec3));
     _texCoordinates = malloc(numQuads*4*sizeof(Vec2));
-    _indices = (GLushort*)malloc(numQuads*6*sizeof(GLushort));
+    _indices = (unsigned short*)malloc(numQuads*6*sizeof(unsigned short));
     _vertexBuffer = malloc(numQuads * 4 * (sizeof(Vec3) + sizeof(Vec2) ) );
 
-    float *vertArray = (GLfloat*)_vertices;
-    float *texArray = (GLfloat*)_texCoordinates;
+    float *vertArray = (float*)_vertices;
+    float *texArray = (float*)_texCoordinates;
     unsigned short *idxArray = _indices;
     
 

@@ -49,12 +49,10 @@ public:
     QuadCommand();
     /**Destructor.*/
     ~QuadCommand();
-
-    //TODO: remove textureID, program st
     
     /** Initializes the command.
      @param globalOrder GlobalZOrder of the command.
-     @param textureID The openGL handle of the used texture.
+     @param texture The texture used in the command.
      @param blendType Blend function for the command.
      @param quads Rendered quads for the command.
      @param quadCount The number of quads when rendering.
