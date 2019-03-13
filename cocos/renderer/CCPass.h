@@ -68,6 +68,8 @@ public:
 
     backend::VertexLayout* getVertexLayout() { return &(_meshCommand.getPipelineDescriptor().vertexLayout); }
 
+    void setVertexLayout(const backend::VertexLayout &vertexLayout);
+
     /** Binds the GLProgramState and the RenderState.
      This method must be called before call the actual draw call.
      */
@@ -99,6 +101,7 @@ public:
      * @return The vertex attribute binding for this pass.
      */
     VertexAttribBinding* getVertexAttributeBinding() const;
+
 
     //TODO arnold
     //uint32_t getHash() const;

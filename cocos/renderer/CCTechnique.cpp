@@ -125,4 +125,12 @@ const Vector<Pass*>& Technique::getPasses() const
     return _passes;
 }
 
+void Technique::setVertexLayout(const backend::VertexLayout & layout)
+{
+    for (auto &pass : _passes)
+    {
+        pass->setVertexLayout(layout);
+    }
+}
+
 NS_CC_END

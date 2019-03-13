@@ -84,6 +84,8 @@ public:
 
     void setMaterial(Material * material) { _material = material; }
 
+    void setVertexLayout(const backend::VertexLayout &vertexLayout);
+
     RenderState::StateBlock &getStateBlock() { return _renderState.getStateBlock(); }
 
 protected:

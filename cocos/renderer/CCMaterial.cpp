@@ -543,6 +543,14 @@ void Material::setTechnique(const std::string& techniqueName)
         _currentTechnique = technique;
 }
 
+void Material::setVertexLayout(const backend::VertexLayout &vertexLayout)
+{
+    for (const auto& technique : _techniques) {
+        technique->setVertexLayout(vertexLayout);
+    }
+}
+
+
 ssize_t Material::getTechniqueCount() const
 {
     return _techniques.size();

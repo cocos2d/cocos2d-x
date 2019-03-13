@@ -459,6 +459,15 @@ void Mesh::setProgramState(backend::ProgramState* programState)
     setMaterial(material);
 }
 
+void Mesh::setVertexLayout(const backend::VertexLayout& vertexLayout)
+{
+    if (_material)
+    {
+        _material->setVertexLayout(vertexLayout);
+    }
+}
+
+
 backend::ProgramState* Mesh::getProgramState() const
 {
     return _material ? _material->_currentTechnique->_passes.at(0)->getProgramState() : nullptr;

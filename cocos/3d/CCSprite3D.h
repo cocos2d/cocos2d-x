@@ -122,6 +122,9 @@ public:
     //TODO minggo: should change Node::setGLProgramState(), then override
     /** set ProgramState, you should bind attributes by yourself */
     virtual void setProgramState(backend::ProgramState *programState);
+
+    virtual void setVertexLayout(const backend::VertexLayout &vertexLayout);
+
     /** just remember bind attributes */
     //TODO arnold: impl setProgram
     //virtual void setGLProgram(GLProgram *glprogram) override;

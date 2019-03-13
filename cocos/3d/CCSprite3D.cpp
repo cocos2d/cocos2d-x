@@ -807,7 +807,8 @@ void Sprite3D::setProgramState(backend::ProgramState* programState)
     //TODO
     //Node::setGLProgramState(glProgramState);
     for (auto state : _meshes) {
-        state->setProgramState(programState->clone());
+        //state->setProgramState(programState->clone());
+        state->setProgramState(programState);
     }
 }
 //TODO add setProgram
@@ -816,6 +817,16 @@ void Sprite3D::setProgramState(backend::ProgramState* programState)
 //    auto glProgramState = GLProgramState::create(glprogram);
 //    setGLProgramState(glProgramState);
 //}
+
+void Sprite3D::setVertexLayout(const backend::VertexLayout& vertexLayout)
+{
+    //TODO
+    //Node::setGLProgramState(glProgramState);
+    for (auto state : _meshes) {
+        //state->setProgramState(programState->clone());
+        state->setVertexLayout(vertexLayout);
+    }
+}
 
 void Sprite3D::setBlendFunc(const BlendFunc& blendFunc)
 {

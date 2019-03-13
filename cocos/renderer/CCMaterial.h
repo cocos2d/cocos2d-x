@@ -130,6 +130,9 @@ public:
     /** Sets the current technique */
     void setTechnique(const std::string& techniqueName);
 
+    void setVertexLayout(const backend::VertexLayout &vertexLayout);
+
+
     /** returns a clone (deep-copy) of the material */
     virtual Material* clone() const;
 
