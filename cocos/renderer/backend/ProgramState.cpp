@@ -3,7 +3,9 @@
 #include "renderer/backend/Program.h"
 #include "renderer/backend/Texture.h"
 #include "renderer/backend/Types.h"
+#ifdef CC_USE_METAL
 #include "glsl_optimizer.h"
+#endif
 
 CC_BACKEND_BEGIN
 
@@ -245,6 +247,7 @@ void ProgramState::setUniform(const backend::UniformLocation& uniformLocation, c
     }
 }
 
+#ifdef CC_USE_METAL
 void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, std::vector<char>& uniformData)
 {
     auto basicType = static_cast<glslopt_basic_type>(uniformInfo.type);
@@ -309,6 +312,7 @@ void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, c
     uniformData.assign(convertedData, convertedData + uniformInfo.bufferSize);
     CC_SAFE_DELETE_ARRAY(convertedData);
 }
+#endif
 
 void ProgramState::setVertexUniform(int location, const void* data, uint32_t size)
 {
