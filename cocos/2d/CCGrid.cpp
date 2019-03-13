@@ -374,6 +374,9 @@ void Grid3D::beforeBlit()
     {
         _oldDepthTest = renderer->getDepthTest();
         renderer->setDepthTest(true);
+
+        _oldDepthWrite = renderer->getDepthWrite();
+        renderer->setDepthWrite(true);
     }
 }
 
@@ -382,8 +385,8 @@ void Grid3D::afterBlit()
     auto renderer = Director::getInstance()->getRenderer();
     if(_needDepthTestForBlit)
     {
-       //TODO:minggo
        renderer->setDepthTest(_oldDepthTest);
+       renderer->setDepthWrite(_oldDepthWrite);
     }
 }
 
