@@ -267,8 +267,6 @@ void SkeletonNode::batchDrawAllSubBones()
     _batchBoneCommand.createVertexBuffer(sizeof(VertexData), _batchedVeticesCount, cocos2d::CustomCommand::BufferUsage::DYNAMIC);
     _batchBoneCommand.updateVertexBuffer(_batchedBoneVertexData.data(), sizeof(VertexData) * _batchedVeticesCount);
 
-    cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
-
 #ifdef CC_STUDIO_ENABLED_VIEW
 //TODO
 //    glLineWidth(1);

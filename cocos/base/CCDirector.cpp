@@ -377,7 +377,6 @@ void Director::setOpenGLView(GLView *openGLView)
     {
         // Configuration. Gather GPU info
         Configuration *conf = Configuration::getInstance();
-        //TODO: minggo
         conf->gatherGPUInfo();
         CCLOG("%s\n",conf->getInfo().c_str());
 

@@ -528,25 +528,6 @@ LanguageType getLanguageTypeByISO2(const char* code)
     }
     return ret;
 }
-
-void setBlending(backend::BlendFactor sfactor, backend::BlendFactor dfactor)
-{
-    //TODO arnold: global state is removal
-    //if (sfactor == backend::BlendFactor::ONE && dfactor == backend::BlendFactor::ZERO)
-    //{
-    //    glDisable(GL_BLEND);
-    //    RenderState::StateBlock::_globalState->setBlend(false);
-    //}
-    //else
-    //{
-    //    glEnable(GL_BLEND);
-    //    glBlendFunc(toGLBlendFactor(sfactor), toGLBlendFactor(dfactor));
-
-    //    RenderState::StateBlock::_globalState->setBlend(true);
-    //    RenderState::StateBlock::_globalState->setBlendSrc(sfactor);
-    //    RenderState::StateBlock::_globalState->setBlendDst(dfactor);
-    //}
-}
     
 backend::BlendFactor toBackendBlendFactor(int factor)
 {
