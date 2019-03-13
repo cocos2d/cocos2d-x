@@ -715,7 +715,12 @@ LayerRadialGradient::LayerRadialGradient()
     _expandLocation = pipelineDescriptor.programState->getUniformLocation("u_expand");
 
     auto& vertexLayout = _customCommand.getPipelineDescriptor().vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT2, 0, false);
+    const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
+    auto iter = attributeInfo.find("a_position");
+    if(iter != attributeInfo.end())
+    {
+        vertexLayout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
+    }
     vertexLayout.setLayout(sizeof(_vertices[0]), backend::VertexStepMode::VERTEX);
 
     _customCommand.createVertexBuffer(sizeof(_vertices[0]), sizeof(_vertices) / sizeof(_vertices[0]), CustomCommand::BufferUsage::STATIC);

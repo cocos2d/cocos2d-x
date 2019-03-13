@@ -664,15 +664,25 @@ void PUBillboardChain::init( const std::string &texFile )
         _programState = new backend::ProgramState(CC3D_particle_vert, CC3D_particleColor_frag);
     }
 
-    GLsizei stride = sizeof(VertexInfo);
-
     auto &pipelineDescriptor = _meshCommand.getPipelineDescriptor();
     pipelineDescriptor.programState = _programState;
     auto &layout = pipelineDescriptor.vertexLayout;
-
-    layout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(VertexInfo, position), false);
-    layout.setAtrribute("a_texCoord", 1, backend::VertexFormat::FLOAT2, offsetof(VertexInfo, uv), false);
-    layout.setAtrribute("a_color", 2, backend::VertexFormat::FLOAT4, offsetof(VertexInfo, color), false);
+    const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
+    auto iter = attributeInfo.find("a_position");
+    if(iter != attributeInfo.end())
+    {
+        layout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, offsetof(VertexInfo, position), false);
+    }
+    iter = attributeInfo.find("a_texCoord");
+    if(iter != attributeInfo.end())
+    {
+        layout.setAtrribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(VertexInfo, uv), false);
+    }
+    iter = attributeInfo.find("a_color");
+    if(iter != attributeInfo.end())
+    {
+        layout.setAtrribute("a_color", iter->second.location, backend::VertexFormat::FLOAT4, offsetof(VertexInfo, color), false);
+    }
     layout.setLayout(sizeof(VertexInfo), backend::VertexStepMode::VERTEX);
     
     _locColor = _programState->getUniformLocation("u_color");
