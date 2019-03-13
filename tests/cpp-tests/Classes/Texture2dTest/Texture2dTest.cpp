@@ -1592,12 +1592,12 @@ void TextureGlClamp::onEnter()
     auto sprite = Sprite::create("Images/pattern1.png", Rect(0,0,512,256));
     addChild(sprite, -1, kTagSprite1);
     sprite->setPosition(Vec2(size.width/2,size.height/2));
-    Texture2D::TexParams texParams= {
+    Texture2D::TexParams texParams(
         backend::SamplerFilter::LINEAR,
         backend::SamplerFilter::LINEAR,
         backend::SamplerAddressMode::CLAMP_TO_EDGE,
-        backend::SamplerAddressMode::CLAMP_TO_EDGE,
-    };
+        backend::SamplerAddressMode::CLAMP_TO_EDGE
+    );
     sprite->getTexture()->setTexParameters(texParams);
     auto rotate = RotateBy::create(4, 360);
     sprite->runAction(rotate);

@@ -920,6 +920,11 @@ void Texture2D::setTexParameters(const Texture2D::TexParams &params)
     _texture->updateSamplerDescriptor(sd);
 }
 
+void Texture2D::setTexParameters(const backend::SamplerDescriptor &desc)
+{
+    _texture->updateSamplerDescriptor(desc);
+}
+
 //  TODO coulsonwang
 //// implementation Texture2D (GLFilter)
 void Texture2D::generateMipmap()

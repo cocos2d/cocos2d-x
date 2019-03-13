@@ -155,14 +155,21 @@ public:
     /**
      Extension to set the Min / Mag filter
      */
-    typedef struct _TexParams {
+    struct TexParams {
         backend::SamplerFilter      minFilter;
         backend::SamplerFilter      magFilter;
         backend::SamplerAddressMode wrapS;
         backend::SamplerAddressMode wrapT;
         bool                        mipmapEnabled   = true;
         backend::SamplerFilter      mipmapFilter    = backend::SamplerFilter::LINEAR;
-    }TexParams;
+        
+        TexParams(backend::SamplerFilter _minFilter, backend::SamplerFilter _magFilter,
+                  backend::SamplerAddressMode _wrapS, backend::SamplerAddressMode _wrapT)
+            :minFilter(_minFilter), magFilter(_magFilter), wrapS(_wrapS), wrapT(_wrapT)
+        {}
+        
+        TexParams() = default;
+    };
 
 public:
     /** sets the default pixel format for UIImagescontains alpha channel.
@@ -304,7 +311,8 @@ public:
 
 
     void setTexParameters(const TexParams &params);
-
+    void setTexParameters(const backend::SamplerDescriptor &desc);
+    
     /** Generates mipmap images for the texture.
      It only works if the texture size is POT (power of 2).
      @since v0.99.0
