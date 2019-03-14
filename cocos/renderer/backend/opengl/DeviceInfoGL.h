@@ -8,7 +8,7 @@ class DeviceInfoGL: public DeviceInfo
 {
 public:
     DeviceInfoGL() = default;
-	virtual ~DeviceInfoGL() = default;
+    virtual ~DeviceInfoGL() = default;
 
     virtual bool init() override;
     
