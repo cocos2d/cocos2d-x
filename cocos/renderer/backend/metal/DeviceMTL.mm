@@ -9,6 +9,7 @@
 #include "Utils.h"
 #include "ProgramMTL.h"
 #include "base/ccMacros.h"
+#include "DeviceInfoMTL.h"
 
 
 CC_BACKEND_BEGIN
@@ -47,10 +48,12 @@ DeviceMTL::DeviceMTL()
     _mtlDevice = DeviceMTL::_metalLayer.device;
     _mtlCommandQueue = [_mtlDevice newCommandQueue];
     ProgramCache::getInstance();
+    DeviceInfo::getInstance();
 }
 
 DeviceMTL::~DeviceMTL()
 {
+    DeviceInfo::destroyInstance();
     ProgramCache::destroyInstance();
 }
 

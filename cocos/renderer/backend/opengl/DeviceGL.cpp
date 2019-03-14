@@ -7,6 +7,7 @@
 #include "DepthStencilStateGL.h"
 #include "BlendStateGL.h"
 #include "ProgramGL.h"
+#include "DeviceInfoGL.h"
 
 CC_BACKEND_BEGIN
 
@@ -21,11 +22,13 @@ Device* Device::getInstance()
 DeviceGL::DeviceGL()
 {
     ProgramCache::getInstance();
+    DeviceInfo::getInstance();
 }
 
 DeviceGL::~DeviceGL()
 {
     ProgramCache::destroyInstance();
+    DeviceInfo::destroyInstance();
 }
 
 CommandBuffer* DeviceGL::newCommandBuffer()
