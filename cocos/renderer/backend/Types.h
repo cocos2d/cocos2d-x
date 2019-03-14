@@ -188,7 +188,7 @@ enum class ColorWriteMask: uint32_t
 
 struct SamplerDescriptor
 {
-    bool mipmapEnabled = true;
+    bool mipmapEnabled = false;
     SamplerFilter magFilter = SamplerFilter::LINEAR;
     SamplerFilter minFilter = SamplerFilter::LINEAR;
     SamplerFilter mipmapFilter = SamplerFilter::LINEAR;
