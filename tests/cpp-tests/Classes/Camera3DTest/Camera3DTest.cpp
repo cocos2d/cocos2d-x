@@ -1342,16 +1342,27 @@ void FogTestDemo::onEnter()
                                                             [this](EventCustom*)
                                                             {
                                                                 Director::getInstance()->setClearColor(Color4F(0.5,0.5,0.5,1));
-                                                                auto glProgram = _state->getGLProgram();
-                                                                glProgram->reset();
-                                                                glProgram->initWithFilenames("Sprite3DTest/fog.vert","Sprite3DTest/fog.frag");
-                                                                glProgram->link();
-                                                                glProgram->updateUniforms();
+                                                                CC_SAFE_RELEASE_NULL(_programState1);
+                                                                CC_SAFE_RELEASE_NULL(_programState2);
+
+                                                                auto vertexSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.vert");
+                                                                auto fragSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.frag");
+
+                                                                _programState1 = new backend::ProgramState(vertexSource, fragSource);
+                                                                _programState2 = new backend::ProgramState(vertexSource, fragSource);
+
+                                                                _sprite3D1->setProgramState(_programState1);
+                                                                _sprite3D2->setProgramState(_programState2);
                                                                 
-                                                                _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-                                                                _state->setUniformFloat("u_fogStart",10);
-                                                                _state->setUniformFloat("u_fogEnd",60);
-                                                                _state->setUniformInt("u_fogEquation" ,0);
+                                                                auto    fogColor    = Vec4(0.5, 0.5, 0.5, 1.0);
+                                                                float   fogStart    = 10;
+                                                                float   fogEnd      = 60;
+                                                                int     fogEquation = 0;
+
+                                                                SET_UNIFORM("u_fogColor",    &fogColor,      sizeof(fogColor));
+                                                                SET_UNIFORM("u_fogStart",    &fogStart,      sizeof(fogStart));
+                                                                SET_UNIFORM("u_fogEnd",      &fogEnd,        sizeof(fogEnd));
+                                                                SET_UNIFORM("u_fogEquation", &fogEquation,   sizeof(fogEquation));
                                                             }
                                                             );
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
