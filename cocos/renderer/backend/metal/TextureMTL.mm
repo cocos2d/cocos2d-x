@@ -139,7 +139,7 @@ void TextureMTL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsig
     
     // metal doesn't generate mipmaps automatically, so should generate it manually.
     if (_isMipmapEnabled)
-        Utils::generateMipmaps(_mtlTexture);
+        generateMipmaps();
 }
 
 void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
@@ -148,7 +148,7 @@ void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor&
            [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:Utils::toMTLPixelFormat(descriptor.textureFormat)
                                                               width:descriptor.width
                                                              height:descriptor.height
-                                                          mipmapped:TRUE];
+                                                          mipmapped:YES];
     
     if (TextureUsage::RENDER_TARGET == descriptor.textureUsage)
     {
@@ -239,6 +239,15 @@ void TextureMTL::getBytes(int x, int y, int width, int height, bool flipImage, s
     [commandBuffer commit];
 }
 
+void TextureMTL::generateMipmaps()
+{
+    if (TextureUsage::RENDER_TARGET == _textureUsage)
+        return;
+    
+    Utils::generateMipmaps(_mtlTexture);
+    _isMipmapEnabled = true;
+}
+
 TextureCubeMTL::TextureCubeMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
 : backend::TextureCubemap(descriptor)
 {
@@ -267,7 +276,7 @@ TextureCubeMTL::~TextureCubeMTL()
 void TextureCubeMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
 {
     MTLTextureDescriptor* textureDescriptor =
-    [MTLTextureDescriptor textureCubeDescriptorWithPixelFormat:Utils::toMTLPixelFormat(descriptor.textureFormat) size:descriptor.width mipmapped:NO];
+    [MTLTextureDescriptor textureCubeDescriptorWithPixelFormat:Utils::toMTLPixelFormat(descriptor.textureFormat) size:descriptor.width mipmapped:YES];
     
     if (TextureUsage::RENDER_TARGET == descriptor.textureUsage)
     {
@@ -319,6 +328,8 @@ void TextureCubeMTL::updateFaceData(TextureCubeFace side, void *data)
                      withBytes:data
                    bytesPerRow:_bytesPerRow
                  bytesPerImage:_bytesPerImage];
+    if(_isMipmapEnabled)
+        generateMipmaps();
 }
 
 void TextureCubeMTL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*)> callback)
@@ -376,5 +387,13 @@ void TextureCubeMTL::getBytes(int x, int y, int width, int height, bool flipImag
     [commandBuffer commit];
 }
 
+void TextureCubeMTL::generateMipmaps()
+{
+    if (TextureUsage::RENDER_TARGET == _textureUsage)
+        return;
+    
+    Utils::generateMipmaps(_mtlTexture);
+    _isMipmapEnabled = true;
+}
 
 CC_BACKEND_END

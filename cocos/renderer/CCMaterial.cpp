@@ -245,8 +245,7 @@ bool Material::parseSampler(backend::ProgramState* programState, Properties* sam
         bool usemipmap = false;
         const char* mipmap = getOptionalString(samplerProperties, "mipmap", "false");
         if (mipmap && strcasecmp(mipmap, "true")==0) {
-//            TODO coulsonwang
-//            texture->generateMipmap();
+            texture->generateMipmap();
             usemipmap = true;
         }
 

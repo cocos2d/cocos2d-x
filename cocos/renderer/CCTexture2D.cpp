@@ -927,18 +927,15 @@ void Texture2D::setTexParameters(const Texture2D::TexParams &params)
     setSamplerDescriptor(sd);
 }
 
-//  TODO coulsonwang
-//// implementation Texture2D (GLFilter)
 void Texture2D::generateMipmap()
 {
-//    CCASSERT(_pixelsWide == ccNextPOT(_pixelsWide) && _pixelsHigh == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
-//    glActiveTexture(GL_TEXTURE0);
-//    glBindTexture(GL_TEXTURE_2D, _name);
-//    glGenerateMipmap(GL_TEXTURE_2D);
-//    _hasMipmaps = true;
-//#if CC_ENABLE_CACHE_TEXTURE_DATA
-//    VolatileTextureMgr::setHasMipmaps(this, _hasMipmaps);
-//#endif
+    CCASSERT(_pixelsWide == ccNextPOT(_pixelsWide) && _pixelsHigh == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
+
+    _texture->generateMipmaps();
+    _hasMipmaps = true;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    VolatileTextureMgr::setHasMipmaps(this, _hasMipmaps);
+#endif
 }
 
 
