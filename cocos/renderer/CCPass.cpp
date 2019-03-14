@@ -120,7 +120,7 @@ Pass* Pass::clone() const
         pass->_renderState = _renderState;
 
         pass->setProgramState(_programState->clone());
-        
+
         pass->_vertexAttribBinding = _vertexAttribBinding;
         CC_SAFE_RETAIN(pass->_vertexAttribBinding);
 
@@ -266,8 +266,8 @@ void Pass::onBeforeVisitCmd()
     _rendererDepthWrite = renderer->getDepthWrite();
     _rendererWinding = renderer->getWinding();
 
-    _renderState.bindPass(this);
     renderer->setDepthTest(true);
+    _renderState.bindPass(this);
 }
 
 void Pass::onAfterVisitCmd()

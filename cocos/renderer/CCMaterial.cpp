@@ -35,7 +35,7 @@
 #include "base/CCProperties.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
-
+#include "base/CCConsole.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #define strcasecmp _stricmp
@@ -194,6 +194,8 @@ bool Material::parsePass(Technique* technique, Properties* passProperties)
     auto pass = Pass::create(technique);
     technique->addPass(pass);
 
+    pass->setName(passProperties->getId());
+
     // Pass can have 3 different namespaces:
     //  - one or more "sampler"
     //  - one "renderState"
@@ -339,7 +341,22 @@ bool Material::parseShader(Pass* pass, Properties* shaderProperties)
 
         auto vertShaderSrc = fu->getStringFromFile(vertShader);
         auto fragShaderSrc = fu->getStringFromFile(fragShader);
-        std::string defs = compileTimeDefines;
+
+        auto defineParts = Console::Utility::split(compileTimeDefines, ';');
+        std::stringstream ss;
+        for (auto &p : defineParts)
+        {
+            if (p.find("#define ") == std::string::npos)
+            {
+                ss << "#define " << p << std::endl;
+            }
+            else
+            {
+                ss << p << std::endl;
+            }
+        }
+
+        std::string defs = ss.str();
 
         vertShaderSrc = defs + "\n" + vertShaderSrc;
         fragShaderSrc = defs + "\n" + fragShaderSrc;

@@ -263,7 +263,7 @@ list(APPEND GAME_SOURCE
  #    Classes/LabelTest/LabelTestNew.cpp
      Classes/LayerTest/LayerTest.cpp
 #     Classes/LightTest/LightTest.cpp
-#     Classes/MaterialSystemTest/MaterialSystemTest.cpp
+     Classes/MaterialSystemTest/MaterialSystemTest.cpp
      Classes/MenuTest/MenuTest.cpp
      Classes/MotionStreakTest/MotionStreakTest.cpp
      Classes/MultiTouchTest/MultiTouchTest.cpp

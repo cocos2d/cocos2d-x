@@ -100,6 +100,9 @@ public:
      */
     VertexAttribBinding* getVertexAttributeBinding() const;
 
+    void setName(const std::string &name) { _name = name; }
+    const std::string &getName() const { return _name; }
+
     //TODO arnold
     //uint32_t getHash() const;
 
@@ -147,7 +150,7 @@ protected:
     Technique * _technique = nullptr;
     bool _hashDirty = true;
     RenderState _renderState;
-
+    std::string _name;
 
 private:
     
