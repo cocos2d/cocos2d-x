@@ -500,6 +500,7 @@ protected:
     Texture2D * _detailMapTextures[4];
     Texture2D * _alphaMap;
     Texture2D * _lightMap;
+    Texture2D * _dummyTexture = nullptr;
     Vec3 _lightDir;
     QuadTree * _quadRoot;
     Chunk * _chunkesArray[MAX_CHUNKES][MAX_CHUNKES];
