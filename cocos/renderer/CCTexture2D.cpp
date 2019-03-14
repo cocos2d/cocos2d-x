@@ -713,7 +713,7 @@ void Texture2D::setAliasTexParameters()
 void Texture2D::setAntiAliasTexParameters()
 {
 
-    backend::SamplerDescriptor descriptor(true,
+    backend::SamplerDescriptor descriptor(false,
         backend::SamplerFilter::LINEAR,
         backend::SamplerFilter::LINEAR,
         backend::SamplerFilter::LINEAR,
