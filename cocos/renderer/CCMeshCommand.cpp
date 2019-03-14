@@ -62,6 +62,12 @@ void MeshCommand::init(float globalZOrder)
     CustomCommand::init(globalZOrder);
 }
 
+void MeshCommand::init(float globalZOrder, const Mat4 &transform)
+{
+    CustomCommand::init(globalZOrder);
+    _mv = transform;
+}
+
 MeshCommand::~MeshCommand()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA

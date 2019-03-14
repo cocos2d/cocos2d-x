@@ -329,7 +329,7 @@ void Material_clone::onEnter()
     sprite2->setScale(3);
     this->addChild(sprite2);
     sprite2->setPositionNormalized(Vec2(0.5, 0.5));
-    sprite2->setMaterial(mat->clone());
+    sprite2->setMaterial(mat);
     sprite2->runAction(repeat->clone());
 
     // sprite 3... using cloned material

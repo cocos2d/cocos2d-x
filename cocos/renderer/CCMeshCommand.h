@@ -58,12 +58,15 @@ public:
 
     MeshCommand();
     virtual ~MeshCommand();
+    MeshCommand(const MeshCommand &) = default;
 
     /**
     Init function. The render command will be in 2D mode.
     @param globalZOrder GlobalZOrder of the render command.
     */
     void init(float globalZOrder);
+
+    void init(float globalZOrder, const Mat4 &transform);
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     void listenRendererRecreated(EventCustom* event);

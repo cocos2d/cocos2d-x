@@ -37,6 +37,7 @@
 
 #include "renderer/CCPipelineDescriptor.h"
 #include "renderer/backend/Types.h"
+#include "renderer/CCMeshCommand.h"
 
 NS_CC_BEGIN
 
@@ -64,10 +65,10 @@ public:
      * Binds the render state for this RenderState and any of its parents, top-down,
      * for the given pass.
      */
-    void bindPass(Pass* pass);
+    void bindPass(Pass* pass, MeshCommand *);
 
 
-    void unbindPass(Pass* pass);
+    void unbindPass(Pass* pass, MeshCommand *);
 
     /**
      * Defines a block of fixed-function render states that can be applied to a

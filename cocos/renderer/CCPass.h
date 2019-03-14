@@ -66,7 +66,7 @@ public:
     /** Returns the ProgramState */
     backend::ProgramState* getProgramState() const;
 
-    backend::VertexLayout* getVertexLayout() { return &(_meshCommand.getPipelineDescriptor().vertexLayout); }
+    //backend::VertexLayout* getVertexLayout();
 
     /** Binds the GLProgramState and the RenderState.
      This method must be called before call the actual draw call.
@@ -74,7 +74,7 @@ public:
     //void bind(const Mat4& modelView);
     //void bind(const Mat4& modelView, bool bindAttributes);
 
-    void draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
+    void draw(MeshCommand *meshCommand, float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
               MeshCommand::PrimitiveType primitive, MeshCommand::IndexFormat indexFormat,
               unsigned int indexCount, const Mat4& modelView);
 
@@ -112,6 +112,7 @@ public:
 
     void setTechnique(Technique *technique);
 
+    void updateMVPUniform(const Mat4& modelView);
     
     void setUniformTexture(uint32_t slot, backend::Texture *);      //u_texture
     void setUniformNormTexture(uint32_t slot, backend::Texture *);  //u_texture
@@ -145,22 +146,21 @@ protected:
     void setProgramState(backend::ProgramState* programState);
     Node* getTarget() const;
 
-    VertexAttribBinding* _vertexAttribBinding = nullptr;
-    MeshCommand _meshCommand;
-    Technique * _technique = nullptr;
-    bool _hashDirty = true;
-    RenderState _renderState;
-    std::string _name;
+    VertexAttribBinding*        _vertexAttribBinding    = nullptr;
+    backend::ProgramState *     _programState           = nullptr;
+    Technique *                 _technique              = nullptr;
+    bool                        _hashDirty              = true;
+    RenderState                 _renderState;
+    std::string                 _name;
+    //std::weak_ptr<MeshCommand>  _meshCommand;
 
 private:
     
 
     //bool _oldDepthEnabledState;
     void initUniformLocations();
-    void onBeforeVisitCmd();
-    void onAfterVisitCmd();
-
-    backend::ProgramState* _programState = nullptr;
+    void onBeforeVisitCmd(MeshCommand *);
+    void onAfterVisitCmd(MeshCommand *);
 
     backend::UniformLocation _locMVPMatrix;
     backend::UniformLocation _locMVMatrix;

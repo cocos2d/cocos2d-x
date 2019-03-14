@@ -101,8 +101,7 @@ bool Pass::initWithProgramState(Technique* technique, backend::ProgramState *pro
 
 Pass::Pass()
 {
-    _meshCommand.setBeforeCallback(CC_CALLBACK_0(Pass::onBeforeVisitCmd, this));
-    _meshCommand.setAfterCallback(CC_CALLBACK_0(Pass::onAfterVisitCmd, this));
+
 }
 
 Pass::~Pass()
@@ -136,6 +135,15 @@ backend::ProgramState* Pass::getProgramState() const
    return _programState;
 }
 
+//backend::VertexLayout* Pass::getVertexLayout()
+//{
+//    if (auto command = _meshCommand.lock())
+//    {
+//        return &(command->getPipelineDescriptor().vertexLayout);
+//    }
+//    return nullptr;
+//}
+
 void Pass::setProgramState(backend::ProgramState* programState)
 {
     if (_programState != programState)
@@ -143,7 +151,6 @@ void Pass::setProgramState(backend::ProgramState* programState)
         CC_SAFE_RELEASE(_programState);
         _programState = programState;
         CC_SAFE_RETAIN(_programState);
-        _meshCommand.getPipelineDescriptor().programState = _programState;
         initUniformLocations();
         _hashDirty = true;
     }
@@ -218,24 +225,36 @@ void Pass::initUniformLocations()
 //    RenderState::bind(this);
 //}
 
-void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
+void Pass::draw(MeshCommand *meshCommand, float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
                 MeshCommand::PrimitiveType primitive, MeshCommand::IndexFormat indexFormat,
                 unsigned int indexCount, const Mat4& modelView)
 {
-    _meshCommand.init(globalZOrder);
-    _meshCommand.setPrimitiveType(primitive);
-    _meshCommand.setIndexBuffer(indexBuffer, indexFormat);
-    _meshCommand.setVertexBuffer(vertexBuffer);
-    _meshCommand.setIndexDrawInfo(0, indexCount);
 
+    meshCommand->setBeforeCallback(CC_CALLBACK_0(Pass::onBeforeVisitCmd, this, meshCommand));
+    meshCommand->setAfterCallback(CC_CALLBACK_0(Pass::onAfterVisitCmd, this, meshCommand));
+    meshCommand->init(globalZOrder, modelView);
+    meshCommand->setPrimitiveType(primitive);
+    meshCommand->setIndexBuffer(indexBuffer, indexFormat);
+    meshCommand->setVertexBuffer(vertexBuffer);
+    meshCommand->setIndexDrawInfo(0, indexCount);
+    meshCommand->getPipelineDescriptor().programState = _programState;
+
+
+    auto *renderer = Director::getInstance()->getRenderer();
+
+    renderer->addCommand(meshCommand);
+}
+
+void Pass::updateMVPUniform(const Mat4& modelView)
+{
     auto &matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     auto mvp = matrixP * modelView;
     _programState->setUniform(_locMVPMatrix, mvp.m, sizeof(mvp.m));
-    if (_locMVMatrix) 
+    if (_locMVMatrix)
     {
         _programState->setUniform(_locMVMatrix, modelView.m, sizeof(modelView.m));
     }
-    
+
     if (_locPMatrix)
     {
         _programState->setUniform(_locPMatrix, matrixP.m, sizeof(matrixP.m));
@@ -247,17 +266,11 @@ void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buff
         _programState->setUniform(_locNormalMatrix, normalMatrix.data(), sizeof(normalMatrix[0]) * normalMatrix.size());
     }
 
-    auto *renderer = Director::getInstance()->getRenderer();
-
-    renderer->addCommand(&_meshCommand);
 }
 
-void Pass::onBeforeVisitCmd()
+void Pass::onBeforeVisitCmd(MeshCommand *command)
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    //_oldDepthEnabledState = renderer->getDepthTest();
-
-    auto &pipelineDescriptor = _meshCommand.getPipelineDescriptor();
 
     _rendererDepthTestEnabled = renderer->getDepthTest();
     _rendererDepthCmpFunc = renderer->getDepthCompareFunction();
@@ -265,15 +278,16 @@ void Pass::onBeforeVisitCmd()
     
     _rendererDepthWrite = renderer->getDepthWrite();
     _rendererWinding = renderer->getWinding();
-
     renderer->setDepthTest(true);
-    _renderState.bindPass(this);
+    _renderState.bindPass(this, command);
+
+    updateMVPUniform(command->getMV());
 }
 
-void Pass::onAfterVisitCmd()
+void Pass::onAfterVisitCmd(MeshCommand *command)
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    _renderState.unbindPass(this);
+    _renderState.unbindPass(this, command);
     renderer->setDepthTest(_rendererDepthTestEnabled);
     renderer->setDepthCompareFunction(_rendererDepthCmpFunc);
     renderer->setCullMode(_rendererCullMode);
