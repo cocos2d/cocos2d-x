@@ -16,7 +16,7 @@ public:
 private:
     void getTextureSizeInfo();
     
-    MTLFeatureSet _currentFeatureSet;
+    //MTLFeatureSet _currentFeatureSet;
 };
 
 CC_BACKEND_END

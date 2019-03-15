@@ -50,14 +50,16 @@ DeviceMTL::DeviceMTL()
     _deviceInfo = new (std::nothrow) DeviceInfoMTL(_mtlDevice);
     if(!_deviceInfo || _deviceInfo->init() == false)
     {
-        CC_SAFE_RELEASE_NULL(_deviceInfo);
+        delete _deviceInfo;
+        _deviceInfo = nullptr;
     }
 }
 
 DeviceMTL::~DeviceMTL()
 {
     ProgramCache::destroyInstance();
-    CC_SAFE_RELEASE_NULL(_deviceInfo);
+    delete _deviceInfo;
+    _deviceInfo = nullptr;
 }
 
 CommandBuffer* DeviceMTL::newCommandBuffer()

@@ -3,13 +3,13 @@
 #include <string>
 
 #include "Macros.h"
-#include "base/CCRef.h"
 
 CC_BACKEND_BEGIN
 
-class DeviceInfo : public Ref
+class DeviceInfo
 {
 public:
+    virtual ~DeviceInfo() = default;
     virtual bool init() = 0;
    
     inline int getMaxTextureSize() const { return _maxTextureSize; }
@@ -17,7 +17,6 @@ public:
     
 protected:
     DeviceInfo() = default;
-    virtual ~DeviceInfo() = default;
     
     int _maxAttributes = 0;
     int _maxTextureSize = 0;
