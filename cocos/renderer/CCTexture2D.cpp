@@ -707,8 +707,7 @@ void Texture2D::setAliasTexParameters()
         backend::SamplerAddressMode::DONT_CARE,
         backend::SamplerAddressMode::DONT_CARE
     );
-
-    setSamplerDescriptor(descriptor);
+    _texture->updateSamplerDescriptor(descriptor);
 }
 
 void Texture2D::setAntiAliasTexParameters()
@@ -721,7 +720,7 @@ void Texture2D::setAntiAliasTexParameters()
         backend::SamplerAddressMode::DONT_CARE,
         backend::SamplerAddressMode::DONT_CARE
     );
-    setSamplerDescriptor(descriptor);
+    _texture->updateSamplerDescriptor(descriptor);
 }
 
 const char* Texture2D::getStringForFormat() const
@@ -909,22 +908,9 @@ Texture2D* Texture2D::getAlphaTexture() const
     return _alphaTexture;
 }
 
-void Texture2D::setSamplerDescriptor(const backend::SamplerDescriptor &texParams)
+void Texture2D::setTexParameters(const Texture2D::TexParams &desc)
 {
-    _texture->updateSamplerDescriptor(texParams);
-}
-
-//TODO: should be reform later
-void Texture2D::setTexParameters(const Texture2D::TexParams &params)
-{
-    backend::SamplerDescriptor sd;
-    sd.minFilter = GLToBackendMagFilter(params.minFilter);
-    sd.magFilter = GLToBackendMagFilter(params.magFilter);
-    sd.mipmapEnabled = true;
-    sd.mipmapFilter = backend::SamplerFilter::DONT_CARE;
-    sd.tAddressMode = GLToBackendAddressMode(params.wrapT);
-    sd.sAddressMode = GLToBackendAddressMode(params.wrapS);
-    setSamplerDescriptor(sd);
+    _texture->updateSamplerDescriptor(desc);
 }
 
 //  TODO coulsonwang

@@ -101,9 +101,9 @@ void cocos2d::Terrain::setLightMap(const std::string& fileName)
     _lightMap->initWithImage(image);
 
     Texture2D::TexParams tRepeatParams;//set texture parameters
-    tRepeatParams.magFilter = tRepeatParams.minFilter = GL_LINEAR;
-    tRepeatParams.wrapS = GL_REPEAT;
-    tRepeatParams.wrapT = GL_REPEAT;
+    tRepeatParams.magFilter = tRepeatParams.minFilter = backend::SamplerFilter::LINEAR;
+    tRepeatParams.sAddressMode = backend::SamplerAddressMode::REPEAT;
+    tRepeatParams.tAddressMode = backend::SamplerAddressMode::REPEAT;
     _lightMap->setTexParameters(tRepeatParams);
 
 }
@@ -859,8 +859,8 @@ bool Terrain::initTextures()
     }
 
     Texture2D::TexParams texParam;
-    texParam.wrapS = GL_REPEAT;
-    texParam.wrapT = GL_REPEAT;
+    texParam.sAddressMode = backend::SamplerAddressMode::REPEAT;
+    texParam.tAddressMode = backend::SamplerAddressMode::REPEAT;
     if (_terrainData._alphaMapSrc.empty())
     {
         auto textImage = new (std::nothrow)Image();
@@ -869,8 +869,8 @@ bool Terrain::initTextures()
         texture->initWithImage(textImage);
         texture->generateMipmap();
         _detailMapTextures[0] = texture;
-        texParam.minFilter = GL_LINEAR_MIPMAP_LINEAR;
-        texParam.magFilter = GL_LINEAR;
+        texParam.minFilter = backend::SamplerFilter::LINEAR;
+        texParam.magFilter = backend::SamplerFilter::LINEAR;
         texture->setTexParameters(texParam);
         delete textImage;
     }
@@ -881,10 +881,10 @@ bool Terrain::initTextures()
         image->initWithImageFile(_terrainData._alphaMapSrc);
         _alphaMap = new (std::nothrow)Texture2D();
         _alphaMap->initWithImage(image);
-        texParam.wrapS = GL_CLAMP_TO_EDGE;
-        texParam.wrapT = GL_CLAMP_TO_EDGE;
-        texParam.minFilter = GL_LINEAR;
-        texParam.magFilter = GL_LINEAR;
+        texParam.sAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+        texParam.tAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+        texParam.minFilter = backend::SamplerFilter::LINEAR;
+        texParam.magFilter = backend::SamplerFilter::LINEAR;
         _alphaMap->setTexParameters(texParam);
         delete image;
 
@@ -898,10 +898,10 @@ bool Terrain::initTextures()
             texture->generateMipmap();
             _detailMapTextures[i] = texture;
 
-            texParam.wrapS = GL_REPEAT;
-            texParam.wrapT = GL_REPEAT;
-            texParam.minFilter = GL_LINEAR_MIPMAP_LINEAR;
-            texParam.magFilter = GL_LINEAR;
+            texParam.sAddressMode = backend::SamplerAddressMode::REPEAT;
+            texParam.tAddressMode = backend::SamplerAddressMode::REPEAT;
+            texParam.minFilter = backend::SamplerFilter::LINEAR;
+            texParam.magFilter = backend::SamplerFilter::LINEAR;
             texture->setTexParameters(texParam);
         }
     }

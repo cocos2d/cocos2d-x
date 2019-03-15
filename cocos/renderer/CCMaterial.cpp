@@ -253,9 +253,9 @@ bool Material::parseSampler(backend::ProgramState* programState, Properties* sam
         // valid options: REPEAT, CLAMP
         const char* wrapS = getOptionalString(samplerProperties, "wrapS", "CLAMP_TO_EDGE");
         if (strcasecmp(wrapS, "REPEAT")==0)
-            texParams.wrapS = GL_REPEAT;
+            texParams.sAddressMode = backend::SamplerAddressMode::REPEAT;
         else if(strcasecmp(wrapS, "CLAMP_TO_EDGE")==0)
-            texParams.wrapS = GL_CLAMP_TO_EDGE;
+            texParams.sAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
         else
             CCLOG("Invalid wrapS: %s", wrapS);
 
@@ -263,9 +263,9 @@ bool Material::parseSampler(backend::ProgramState* programState, Properties* sam
         // valid options: REPEAT, CLAMP
         const char* wrapT = getOptionalString(samplerProperties, "wrapT", "CLAMP_TO_EDGE");
         if (strcasecmp(wrapT, "REPEAT")==0)
-            texParams.wrapT = GL_REPEAT;
+            texParams.tAddressMode = backend::SamplerAddressMode::REPEAT;
         else if(strcasecmp(wrapT, "CLAMP_TO_EDGE")==0)
-            texParams.wrapT = GL_CLAMP_TO_EDGE;
+            texParams.tAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
         else
             CCLOG("Invalid wrapT: %s", wrapT);
 
@@ -273,26 +273,26 @@ bool Material::parseSampler(backend::ProgramState* programState, Properties* sam
         // valid options: NEAREST, LINEAR, NEAREST_MIPMAP_NEAREST, LINEAR_MIPMAP_NEAREST, NEAREST_MIPMAP_LINEAR, LINEAR_MIPMAP_LINEAR
         const char* minFilter = getOptionalString(samplerProperties, "minFilter", usemipmap ? "LINEAR_MIPMAP_NEAREST" : "LINEAR");
         if (strcasecmp(minFilter, "NEAREST")==0)
-            texParams.minFilter = GL_NEAREST;
+            texParams.minFilter = backend::SamplerFilter::NEAREST;
         else if(strcasecmp(minFilter, "LINEAR")==0)
-            texParams.minFilter = GL_LINEAR;
+            texParams.minFilter = backend::SamplerFilter::LINEAR;
         else if(strcasecmp(minFilter, "NEAREST_MIPMAP_NEAREST")==0)
-            texParams.minFilter = GL_NEAREST_MIPMAP_NEAREST;
+            texParams.minFilter = backend::SamplerFilter::NEAREST;
         else if(strcasecmp(minFilter, "LINEAR_MIPMAP_NEAREST")==0)
-            texParams.minFilter = GL_LINEAR_MIPMAP_NEAREST;
+            texParams.minFilter = backend::SamplerFilter::LINEAR;
         else if(strcasecmp(minFilter, "NEAREST_MIPMAP_LINEAR")==0)
-            texParams.minFilter = GL_NEAREST_MIPMAP_LINEAR;
+            texParams.minFilter = backend::SamplerFilter::LINEAR;
         else if(strcasecmp(minFilter, "LINEAR_MIPMAP_LINEAR")==0)
-            texParams.minFilter = GL_LINEAR_MIPMAP_LINEAR;
+            texParams.minFilter = backend::SamplerFilter::LINEAR;
         else
             CCLOG("Invalid minFilter: %s", minFilter);
 
         // valid options: NEAREST, LINEAR
         const char* magFilter = getOptionalString(samplerProperties, "magFilter", "LINEAR");
         if (strcasecmp(magFilter, "NEAREST")==0)
-            texParams.magFilter = GL_NEAREST;
+            texParams.magFilter = backend::SamplerFilter::NEAREST;
         else if(strcasecmp(magFilter, "LINEAR")==0)
-            texParams.magFilter = GL_LINEAR;
+            texParams.magFilter = backend::SamplerFilter::LINEAR;
         else
             CCLOG("Invalid magFilter: %s", magFilter);
 

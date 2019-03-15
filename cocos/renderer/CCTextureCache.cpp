@@ -887,7 +887,7 @@ void VolatileTextureMgr::reloadAllTextures()
         if (vt->_hasMipmaps) {
             vt->_texture->generateMipmap();
         }
-        vt->_texture->setSamplerDescriptor(vt->_samplerDescriptor);
+        vt->_texture->setTexParameters(vt->_samplerDescriptor);
     }
 
     _isReloading = false;

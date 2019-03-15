@@ -34,6 +34,7 @@
 #include "base/CCDirector.h"
 #include "base/CCAsyncTaskPool.h"
 #include "base/ccUTF8.h"
+#include "base/ccUtils.h"
 #include "2d/CCLight.h"
 #include "2d/CCCamera.h"
 #include "base/ccMacros.h"
@@ -389,10 +390,10 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
                     if(tex)
                     {
                         Texture2D::TexParams texParams;
-                        texParams.minFilter = GL_LINEAR;
-                        texParams.magFilter = GL_LINEAR;
-                        texParams.wrapS = textureData->wrapS;
-                        texParams.wrapT = textureData->wrapT;
+                        texParams.minFilter = backend::SamplerFilter::LINEAR;
+                        texParams.magFilter = backend::SamplerFilter::LINEAR;
+                        texParams.sAddressMode = utils::toBackendAddressMode(textureData->wrapS);
+                        texParams.tAddressMode = utils::toBackendAddressMode(textureData->wrapT);
                         tex->setTexParameters(texParams);
                         mesh->_isTransparent = (materialData->getTextureData(NTextureData::Usage::Transparency) != nullptr);
                     }
@@ -404,10 +405,10 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
                     if(tex)
                     {
                         Texture2D::TexParams texParams;
-                        texParams.minFilter = GL_LINEAR;
-                        texParams.magFilter = GL_LINEAR;
-                        texParams.wrapS = textureData->wrapS;
-                        texParams.wrapT = textureData->wrapT;
+                        texParams.minFilter = backend::SamplerFilter::LINEAR;
+                        texParams.magFilter = backend::SamplerFilter::LINEAR;
+                        texParams.sAddressMode = utils::toBackendAddressMode(textureData->wrapS);
+                        texParams.tAddressMode = utils::toBackendAddressMode(textureData->wrapT);
                         tex->setTexParameters(texParams);
                     }
                     mesh->setTexture(tex, NTextureData::Usage::Normal);
@@ -554,10 +555,10 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                                 if(tex)
                                 {
                                     Texture2D::TexParams texParams;
-                                    texParams.minFilter = GL_LINEAR;
-                                    texParams.magFilter = GL_LINEAR;
-                                    texParams.wrapS = textureData->wrapS;
-                                    texParams.wrapT = textureData->wrapT;
+                                    texParams.minFilter = backend::SamplerFilter::LINEAR;
+                                    texParams.magFilter = backend::SamplerFilter::LINEAR;
+                                    texParams.sAddressMode = utils::toBackendAddressMode(textureData->wrapS);
+                                    texParams.tAddressMode = utils::toBackendAddressMode(textureData->wrapT);
                                     tex->setTexParameters(texParams);
                                     mesh->_isTransparent = (materialData->getTextureData(NTextureData::Usage::Transparency) != nullptr);
                                 }
@@ -569,10 +570,10 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                                 if (tex)
                                 {
                                     Texture2D::TexParams texParams;
-                                    texParams.minFilter = GL_LINEAR;
-                                    texParams.magFilter = GL_LINEAR;
-                                    texParams.wrapS = textureData->wrapS;
-                                    texParams.wrapT = textureData->wrapT;
+                                    texParams.minFilter = backend::SamplerFilter::LINEAR;
+                                    texParams.magFilter = backend::SamplerFilter::LINEAR;
+                                    texParams.sAddressMode = utils::toBackendAddressMode(textureData->wrapS);
+                                    texParams.tAddressMode = utils::toBackendAddressMode(textureData->wrapT);
                                     tex->setTexParameters(texParams);
                                 }
                                 mesh->setTexture(tex, NTextureData::Usage::Normal);

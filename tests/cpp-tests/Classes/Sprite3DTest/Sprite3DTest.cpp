@@ -2111,10 +2111,10 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
 
     //set texture parameters
     Texture2D::TexParams tRepeatParams;
-    tRepeatParams.magFilter = GL_LINEAR;
-    tRepeatParams.minFilter = GL_LINEAR;
-    tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
-    tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
+    tRepeatParams.magFilter = backend::SamplerFilter::LINEAR;
+    tRepeatParams.minFilter = backend::SamplerFilter::LINEAR;
+    tRepeatParams.sAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+    tRepeatParams.tAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
     _textureCube->setTexParameters(tRepeatParams);
 
 
@@ -2157,10 +2157,10 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
         _textureCube->retain();
         //set texture parameters
         Texture2D::TexParams tRepeatParams;
-        tRepeatParams.magFilter = GL_LINEAR;
-        tRepeatParams.minFilter = GL_LINEAR;
-        tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
-        tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
+        tRepeatParams.magFilter     = backend::SamplerFilter::LINEAR;
+        tRepeatParams.minFilter     = backend::SamplerFilter::LINEAR;
+        tRepeatParams.sAddressMode  = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+        tRepeatParams.tAddressMode  = backend::SamplerAddressMode::CLAMP_TO_EDGE;
         _textureCube->setTexParameters(tRepeatParams);
 
         auto mat = Sprite3DMaterial::createWithFilename("Sprite3DTest/CubeMap.material");
