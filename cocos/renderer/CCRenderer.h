@@ -183,6 +183,8 @@ public:
 
     /** set color for clear screen */
     void setClearColor(const Color4F& clearColor);
+    /** get color for clear screen */
+    const Color4F& getClearColor() const { return _clearColor; };
     /* returns the number of drawn batches in the last frame */
     ssize_t getDrawnBatches() const { return _drawnBatches; }
     /* RenderCommands (except) TrianglesCommand should update this value */
