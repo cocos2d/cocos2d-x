@@ -385,6 +385,13 @@ void CommandBufferMTL::setUniformBuffer() const
 {
     if (_programState)
     {
+        auto &callbackUniforms = _programState->getUniformCallbacks();
+        
+        for(auto &cb : callbackUniforms)
+        {
+            cb.second(_programState, cb.first);
+        }
+        
         // Uniform buffer is bound to index 1.
         const auto& vertexUniformBuffer = _renderPipelineMTL->getVertexUniformBuffer();
         const auto& vertexUniformInfo = _programState->getVertexUniformInfos();
