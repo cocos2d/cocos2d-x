@@ -115,7 +115,6 @@ Pass* Pass::clone() const
     auto pass = new (std::nothrow) Pass();
     if (pass)
     {
-        //RenderState::cloneInto(pass);
         pass->_renderState = _renderState;
 
         pass->setProgramState(_programState->clone());
@@ -134,15 +133,6 @@ backend::ProgramState* Pass::getProgramState() const
 {
    return _programState;
 }
-
-//backend::VertexLayout* Pass::getVertexLayout()
-//{
-//    if (auto command = _meshCommand.lock())
-//    {
-//        return &(command->getPipelineDescriptor().vertexLayout);
-//    }
-//    return nullptr;
-//}
 
 void Pass::setProgramState(backend::ProgramState* programState)
 {
@@ -187,43 +177,6 @@ void Pass::initUniformLocations()
 
     _locAmbientLigthColor = ps->getUniformLocation(s_ambientLightUniformColorName);
 }
-
-//uint32_t Pass::getHash() const
-//{
-//    if (_hashDirty || _state->isDirty())
-//    {
-//        //FIXME: loose information?
-//        uint32_t program = (uint32_t)(intptr_t)(_programState->getProgram());
-//        uint32_t textureid = _texture ? _texture->getName() : -1;
-//        uint32_t stateblockid = _state->getHash();
-//
-//        _hash = program ^ textureid ^ stateblockid;
-//
-//        _hashDirty = false;
-//    }
-//
-//    return _hash;
-//}
-
-//void Pass::bind(const Mat4& modelView)
-//{
-//    bind(modelView, true);
-//}
-
-//void Pass::bind(const Mat4& modelView, bool bindAttributes)
-//{
-//    // vertex attribs
-//    if (bindAttributes && _vertexAttribBinding)
-//        _vertexAttribBinding->bind();
-//
-//    auto glprogramstate = _glProgramState ? _glProgramState : getTarget()->getGLProgramState();
-//
-//    glprogramstate->applyGLProgram(modelView);
-//    glprogramstate->applyUniforms();
-//
-//    //set render state
-//    RenderState::bind(this);
-//}
 
 void Pass::draw(MeshCommand *meshCommand, float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
                 MeshCommand::PrimitiveType primitive, MeshCommand::IndexFormat indexFormat,
@@ -308,14 +261,6 @@ void Pass::setTechnique(Technique *technique)
 {
     _technique = technique; //weak reference
 }
-
-
-//void Pass::unbind()
-//{
-//    RenderState::StateBlock::restore(0);
-//
-////    _vertexAttribBinding->unbind();
-//}
 
 void Pass::setVertexAttribBinding(VertexAttribBinding* binding)
 {
@@ -422,7 +367,5 @@ void Pass::setUniformAmbientLigthColor(const void *data, size_t dataLen)
 {
     TRY_SET_UNIFORM(_locAmbientLigthColor);
 }
-
-
 
 NS_CC_END

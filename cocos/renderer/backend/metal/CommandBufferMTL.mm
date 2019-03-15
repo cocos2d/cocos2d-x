@@ -385,7 +385,7 @@ void CommandBufferMTL::setUniformBuffer() const
 {
     if (_programState)
     {
-        auto &callbackUniforms = _programState->getUniformCallbacks();
+        auto &callbackUniforms = _programState->getCallbackUniforms();
         
         for(auto &cb : callbackUniforms)
         {

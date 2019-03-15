@@ -66,22 +66,9 @@ public:
     /** Returns the ProgramState */
     backend::ProgramState* getProgramState() const;
 
-    //backend::VertexLayout* getVertexLayout();
-
-    /** Binds the GLProgramState and the RenderState.
-     This method must be called before call the actual draw call.
-     */
-    //void bind(const Mat4& modelView);
-    //void bind(const Mat4& modelView, bool bindAttributes);
-
     void draw(MeshCommand *meshCommand, float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
               MeshCommand::PrimitiveType primitive, MeshCommand::IndexFormat indexFormat,
               unsigned int indexCount, const Mat4& modelView);
-
-    /** Unbinds the Pass.
-     This method must be called AFTER calling the actual draw call
-     */
-    //void unbind();
 
     /**
      * Sets a vertex attribute binding for this pass.
@@ -102,9 +89,6 @@ public:
 
     void setName(const std::string &name) { _name = name; }
     const std::string &getName() const { return _name; }
-
-    //TODO arnold
-    //uint32_t getHash() const;
 
     /**
      * Returns a clone (deep-copy) of this instance */
@@ -152,12 +136,9 @@ protected:
     bool                        _hashDirty              = true;
     RenderState                 _renderState;
     std::string                 _name;
-    //std::weak_ptr<MeshCommand>  _meshCommand;
 
 private:
     
-
-    //bool _oldDepthEnabledState;
     void initUniformLocations();
     void onBeforeVisitCmd(MeshCommand *);
     void onAfterVisitCmd(MeshCommand *);

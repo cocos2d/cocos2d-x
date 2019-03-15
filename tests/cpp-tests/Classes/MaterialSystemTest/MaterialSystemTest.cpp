@@ -143,16 +143,16 @@ void Material_2DEffects::onEnter()
 
     timeUniforms.clear();
 
-#define PUSH_LOCATION(sprite) do {                                          \
+#define FETCH_CCTIME_LOCATION(sprite) do {                                  \
         auto programState = sprite->getProgramState();                      \
         auto location     = programState->getUniformLocation("CC_Time");    \
         timeUniforms.emplace_back(programState, location);                  \
     }while(0)
 
-    PUSH_LOCATION(spriteBlur);
-    PUSH_LOCATION(spriteOutline);
-    PUSH_LOCATION(spriteNoise);
-    PUSH_LOCATION(spriteEdgeDetect);
+    FETCH_CCTIME_LOCATION(spriteBlur);
+    FETCH_CCTIME_LOCATION(spriteOutline);
+    FETCH_CCTIME_LOCATION(spriteNoise);
+    FETCH_CCTIME_LOCATION(spriteEdgeDetect);
 
     schedule(CC_SCHEDULE_SELECTOR(Material_2DEffects::updateCCTimeUniforms));
 
@@ -195,13 +195,13 @@ bool EffectAutoBindingResolver::resolveAutoBinding(backend::ProgramState* progra
     if (autoBinding.compare("DYNAMIC_RADIUS")==0)
     {
         auto loc = programState->getUniformLocation(uniform);
-        programState->setUniformCallback(loc, CC_CALLBACK_2(EffectAutoBindingResolver::callbackRadius, this));
+        programState->setCallbackUniform(loc, CC_CALLBACK_2(EffectAutoBindingResolver::callbackRadius, this));
         return true;
     }
     else if (autoBinding.compare("OUTLINE_COLOR")==0)
     {
         auto loc = programState->getUniformLocation(uniform);
-        programState->setUniformCallback(loc, CC_CALLBACK_2(EffectAutoBindingResolver::callbackColor, this));
+        programState->setCallbackUniform(loc, CC_CALLBACK_2(EffectAutoBindingResolver::callbackColor, this));
         return true;
     }
     return false;

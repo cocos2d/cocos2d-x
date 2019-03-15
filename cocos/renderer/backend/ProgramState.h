@@ -69,7 +69,7 @@ public:
     inline std::vector<UniformBuffer>& getVertexUniformInfos() { return _vertexUniformInfos; }
     inline const std::vector<UniformBuffer>& getFragmentUniformInfos() const { return _fragmentUniformInfos; }
 
-    void setUniformCallback(const backend::UniformLocation&, const UniformCallback &);
+    void setCallbackUniform(const backend::UniformLocation&, const UniformCallback &);
 
     //set textures
     void setTexture(const backend::UniformLocation& uniformLocation, uint32_t slot, backend::Texture* texture);
@@ -77,7 +77,7 @@ public:
 
     inline const std::unordered_map<int, TextureInfo>& getVertexTextureInfos() const { return _vertexTextureInfos; }
     inline const std::unordered_map<int, TextureInfo>& getFragmentTextureInfos() const { return _fragmentTextureInfos; }
-    inline const std::unordered_map<UniformLocation, UniformCallback, UniformLocation>& getUniformCallbacks() const { return _callbackUniforms; }
+    inline const std::unordered_map<UniformLocation, UniformCallback, UniformLocation>& getCallbackUniforms() const { return _callbackUniforms; }
 
     class CC_DLL AutoBindingResolver {
     public:
