@@ -10,7 +10,7 @@ bool UniformLocation::operator==(const UniformLocation &other) const
 }
 
 std::size_t UniformLocation::operator()(const UniformLocation &uniform) const {
-    return (size_t)(shaderStage) || (size_t)(location & 0xFFFFFFF0);
+    return (size_t)(shaderStage) || (size_t)((location << 4)& 0xFFFFFFF0);
 }
 
 CC_BACKEND_END
