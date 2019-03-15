@@ -43,6 +43,7 @@ NS_CC_BEGIN
 
 class Texture2D;
 class Pass;
+class MeshCommand;
 
 using CullFaceSide = backend::CullMode;
 using FrontFace = backend::Winding;
