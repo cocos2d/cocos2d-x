@@ -45,6 +45,27 @@
 
 NS_CC_BEGIN
 
+namespace {
+    std::string replaceDefines(const std::string &compileTimeDefines) {
+
+        auto defineParts = Console::Utility::split(compileTimeDefines, ';');
+        std::stringstream ss;
+        for (auto &p : defineParts)
+        {
+            if (p.find("#define ") == std::string::npos)
+            {
+                ss << "#define " << p << std::endl;
+            }
+            else
+            {
+                ss << p << std::endl;
+            }
+        }
+        return ss.str();
+
+    }
+}
+
 // Helpers declaration
 static const char* getOptionalString(Properties* properties, const char* key, const char* defaultValue);
 static bool isValidUniform(const char* name);
@@ -346,21 +367,7 @@ bool Material::parseShader(Pass* pass, Properties* shaderProperties)
         auto vertShaderSrc = fu->getStringFromFile(vertShader);
         auto fragShaderSrc = fu->getStringFromFile(fragShader);
 
-        auto defineParts = Console::Utility::split(compileTimeDefines, ';');
-        std::stringstream ss;
-        for (auto &p : defineParts)
-        {
-            if (p.find("#define ") == std::string::npos)
-            {
-                ss << "#define " << p << std::endl;
-            }
-            else
-            {
-                ss << p << std::endl;
-            }
-        }
-
-        std::string defs = ss.str();
+        auto defs = replaceDefines(compileTimeDefines);
 
         vertShaderSrc = defs + "\n" + vertShaderSrc;
         fragShaderSrc = defs + "\n" + fragShaderSrc;
