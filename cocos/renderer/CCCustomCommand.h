@@ -71,7 +71,6 @@ public:
     /**Destructor.*/
     ~CustomCommand();
     
-    CustomCommand(const CustomCommand &) = default;
 
 public:
 	/**
