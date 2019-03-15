@@ -52,6 +52,8 @@ namespace {
     }
 }
 
+//static field
+std::vector<ProgramState::AutoBindingResolver*> ProgramState::_customAutoBindingResolvers;
 
 UniformBuffer::UniformBuffer(const backend::UniformInfo &_uniformInfo)
 : uniformInfo(_uniformInfo)
@@ -226,6 +228,11 @@ void ProgramState::createFragmentUniformBuffer()
 backend::UniformLocation ProgramState::getUniformLocation(const std::string& uniform) const
 {
     return _program->getUniformLocation(uniform);
+}
+
+void ProgramState::setUniformCallback(const backend::UniformLocation& uniformLocation,const UniformCallback& callback)
+{
+    _callbackUniforms[uniformLocation] = callback;
 }
 
 void ProgramState::setUniform(const backend::UniformLocation& uniformLocation, const void* data, uint32_t size)
@@ -405,6 +412,33 @@ void ProgramState::setTextureArray(int location, const std::vector<uint32_t>& sl
     info.textures = textures;
     info.retainTextures();
     textureInfo[location] = std::move(info);
+}
+
+void ProgramState::setParameterAutoBinding(const std::string &uniform, const std::string &autoBinding)
+{
+    _autoBindings.emplace(uniform, autoBinding);
+    applyAutoBinding(uniform, autoBinding);
+}
+
+void ProgramState::applyAutoBinding(const std::string &uniformName, const std::string &autoBinding)
+{
+    bool resolved = false;
+    for (const auto resolver : _customAutoBindingResolvers)
+    {
+        resolved = resolver->resolveAutoBinding(this, uniformName, autoBinding);
+        if (resolved) break;
+    }
+}
+
+ProgramState::AutoBindingResolver::AutoBindingResolver()
+{
+    _customAutoBindingResolvers.emplace_back(this);
+}
+
+ProgramState::AutoBindingResolver::~AutoBindingResolver()
+{
+    auto it = std::find(std::begin(_customAutoBindingResolvers), std::end(_customAutoBindingResolvers), this);
+    if (it != std::end(_customAutoBindingResolvers)) _customAutoBindingResolvers.erase(it);
 }
 
 CC_BACKEND_END

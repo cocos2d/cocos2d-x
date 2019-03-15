@@ -446,11 +446,8 @@ bool Material::parseUniform(backend::ProgramState* programState, Properties* pro
         case Properties::Type::STRING:
         default:
         {
-
-            CCASSERT(false, "auto binding is nolonger supported");
-            //TODO arnold
             // Assume this is a parameter auto-binding.
-            //programState->setParameterAutoBinding(uniformName, properties->getString());
+            programState->setParameterAutoBinding(uniformName, properties->getString());
             break;
         }
     }

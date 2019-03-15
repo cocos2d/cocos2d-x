@@ -43,7 +43,7 @@ static void printProperties(Properties* properties, int indent);
 MaterialSystemTest::MaterialSystemTest()
 {
     ADD_TEST_CASE(Material_2DEffects);
-    //ADD_TEST_CASE(Material_AutoBindings);
+    ADD_TEST_CASE(Material_AutoBindings);
     ADD_TEST_CASE(Material_setTechnique);
     ADD_TEST_CASE(Material_clone);
     ADD_TEST_CASE(Material_MultipleSprite3D);
@@ -141,6 +141,21 @@ void Material_2DEffects::onEnter()
     this->addChild(spriteEdgeDetect);
     spriteEdgeDetect->setProgramState(mat1->getTechniqueByName("edge_detect")->getPassByIndex(0)->getProgramState());
 
+    timeUniforms.clear();
+
+#define PUSH_LOCATION(sprite) do {                                          \
+        auto programState = sprite->getProgramState();                      \
+        auto location     = programState->getUniformLocation("CC_Time");    \
+        timeUniforms.emplace_back(programState, location);                  \
+    }while(0)
+
+    PUSH_LOCATION(spriteBlur);
+    PUSH_LOCATION(spriteOutline);
+    PUSH_LOCATION(spriteNoise);
+    PUSH_LOCATION(spriteEdgeDetect);
+
+    schedule(CC_SCHEDULE_SELECTOR(Material_2DEffects::updateCCTimeUniforms));
+
     // properties is not a "Ref" object
     CC_SAFE_DELETE(properties);
 }
@@ -150,102 +165,126 @@ std::string Material_2DEffects::subtitle() const
     return "Testing effects on Sprite";
 }
 
-////
-//// MARK: Material_AutoBindings
-////
+void Material_2DEffects::updateCCTimeUniforms(float)
+{
+    float time = Director::getInstance()->getTotalFrames() * Director::getInstance()->getAnimationInterval();
+    Vec4 random(time / 10.0f, time, time * 2.0f, time * 4.0f);
+    for (auto &loc : timeUniforms)
+    {
+        loc.programState->setUniform(loc.location, &random, sizeof(random));
+    }
+}
+
 //
-///*
-// * Custom material auto-binding resolver for terrain.
-// */
-//class EffectAutoBindingResolver : public GLProgramState::AutoBindingResolver
-//{
-//    bool resolveAutoBinding(GLProgramState* glProgramState, Node* node, const std::string& uniform, const std::string& autoBinding);
+// MARK: Material_AutoBindings
 //
-//    void callbackRadius(GLProgram* glProgram, Uniform* uniform);
-//    void callbackColor(GLProgram* glProgram, Uniform* uniform);
-//};
-//
-//bool EffectAutoBindingResolver::resolveAutoBinding(GLProgramState* glProgramState, Node* node, const std::string& uniform, const std::string& autoBinding)
-//{
-//    if (autoBinding.compare("DYNAMIC_RADIUS")==0)
-//    {
-//        glProgramState->setUniformCallback(uniform, CC_CALLBACK_2(EffectAutoBindingResolver::callbackRadius, this));
-//        return true;
-//    }
-//    else if (autoBinding.compare("OUTLINE_COLOR")==0)
-//    {
-//        glProgramState->setUniformCallback(uniform, CC_CALLBACK_2(EffectAutoBindingResolver::callbackColor, this));
-//        return true;
-//    }
-//    return false;
-//}
-//
-//void EffectAutoBindingResolver::callbackRadius(GLProgram* glProgram, Uniform* uniform)
-//{
-//    float f = CCRANDOM_0_1() * 10;
-//    glProgram->setUniformLocationWith1f(uniform->location, f);
-//}
-//
-//void EffectAutoBindingResolver::callbackColor(GLProgram* glProgram, Uniform* uniform)
-//{
-//    float r = CCRANDOM_0_1();
-//    float g = CCRANDOM_0_1();
-//    float b = CCRANDOM_0_1();
-//
-//    glProgram->setUniformLocationWith3f(uniform->location, r, g, b);
-//}
-//
-//Material_AutoBindings::Material_AutoBindings()
-//{
-//    _resolver = new EffectAutoBindingResolver;
-//}
-//
-//Material_AutoBindings::~Material_AutoBindings()
-//{
-//    delete _resolver;
-//}
-//
-//
-//void Material_AutoBindings::onEnter()
-//{
-//    MaterialSystemBaseTest::onEnter();
-//
-////    auto properties = Properties::createNonRefCounted("Materials/2d_effects.material#sample");
-//    auto properties = Properties::createNonRefCounted("Materials/auto_binding_test.material#sample");
-//
-//    // Print the properties of every namespace within this one.
-//    printProperties(properties, 0);
-//
-//    Material *mat1 = Material::createWithProperties(properties);
-//
-//    auto spriteBlur = Sprite::create("Images/grossini.png");
-//    spriteBlur->setPositionNormalized(Vec2(0.2f, 0.5f));
-//    this->addChild(spriteBlur);
-//    spriteBlur->setGLProgramState(mat1->getTechniqueByName("blur")->getPassByIndex(0)->getGLProgramState());
-//
-//    auto spriteOutline = Sprite::create("Images/grossini.png");
-//    spriteOutline->setPositionNormalized(Vec2(0.4f, 0.5f));
-//    this->addChild(spriteOutline);
-//    spriteOutline->setGLProgramState(mat1->getTechniqueByName("outline")->getPassByIndex(0)->getGLProgramState());
-//
-//    auto spriteNoise = Sprite::create("Images/grossini.png");
-//    spriteNoise->setPositionNormalized(Vec2(0.6f, 0.5f));
-//    this->addChild(spriteNoise);
-//    spriteNoise->setGLProgramState(mat1->getTechniqueByName("noise")->getPassByIndex(0)->getGLProgramState());
-//
-//    auto spriteEdgeDetect = Sprite::create("Images/grossini.png");
-//    spriteEdgeDetect->setPositionNormalized(Vec2(0.8f, 0.5f));
-//    this->addChild(spriteEdgeDetect);
-//    spriteEdgeDetect->setGLProgramState(mat1->getTechniqueByName("edge_detect")->getPassByIndex(0)->getGLProgramState());
-//
-//    // properties is not a "Ref" object
-//    CC_SAFE_DELETE(properties);
-//}
-//
-//std::string Material_AutoBindings::subtitle() const
-//{
-//    return "Testing auto-bindings uniforms";
-//}
+
+/*
+ * Custom material auto-binding resolver for terrain.
+ */
+class EffectAutoBindingResolver : public backend::ProgramState::AutoBindingResolver
+{
+    virtual bool resolveAutoBinding(backend::ProgramState* programState,/* Node* node,*/ const std::string& uniform, const std::string& autoBinding) override;
+
+    void callbackRadius(backend::ProgramState* programState, backend::UniformLocation uniform);
+    void callbackColor(backend::ProgramState* programState, backend::UniformLocation uniform);
+};
+
+bool EffectAutoBindingResolver::resolveAutoBinding(backend::ProgramState* programState, /*Node* node,*/ const std::string& uniform, const std::string& autoBinding)
+{
+    if (autoBinding.compare("DYNAMIC_RADIUS")==0)
+    {
+        auto loc = programState->getUniformLocation(uniform);
+        programState->setUniformCallback(loc, CC_CALLBACK_2(EffectAutoBindingResolver::callbackRadius, this));
+        return true;
+    }
+    else if (autoBinding.compare("OUTLINE_COLOR")==0)
+    {
+        auto loc = programState->getUniformLocation(uniform);
+        programState->setUniformCallback(loc, CC_CALLBACK_2(EffectAutoBindingResolver::callbackColor, this));
+        return true;
+    }
+    return false;
+}
+
+void EffectAutoBindingResolver::callbackRadius(backend::ProgramState *programState, backend::UniformLocation uniform)
+{
+    float f = CCRANDOM_0_1() * 10;
+    programState->setUniform(uniform, &f, sizeof(f));
+}
+
+void EffectAutoBindingResolver::callbackColor(backend::ProgramState *programState, backend::UniformLocation uniform)
+{
+    float r = CCRANDOM_0_1();
+    float g = CCRANDOM_0_1();
+    float b = CCRANDOM_0_1();
+    Vec3 color(r, g, b);
+
+    programState->setUniform(uniform, &color, sizeof(color));
+}
+
+Material_AutoBindings::Material_AutoBindings()
+{
+    _resolver = new EffectAutoBindingResolver;
+}
+
+Material_AutoBindings::~Material_AutoBindings()
+{
+    delete _resolver;
+}
+
+
+void Material_AutoBindings::onEnter()
+{
+    MaterialSystemBaseTest::onEnter();
+
+//    auto properties = Properties::createNonRefCounted("Materials/2d_effects.material#sample");
+    auto properties = Properties::createNonRefCounted("Materials/auto_binding_test.material#sample");
+
+    // Print the properties of every namespace within this one.
+    printProperties(properties, 0);
+
+    Material *mat1 = Material::createWithProperties(properties);
+
+    auto spriteBlur = Sprite::create("Images/grossini.png");
+    spriteBlur->setPositionNormalized(Vec2(0.2f, 0.5f));
+    this->addChild(spriteBlur);
+    spriteBlur->setProgramState(mat1->getTechniqueByName("blur")->getPassByIndex(0)->getProgramState());
+
+    auto spriteOutline = Sprite::create("Images/grossini.png");
+    spriteOutline->setPositionNormalized(Vec2(0.4f, 0.5f));
+    this->addChild(spriteOutline);
+    spriteOutline->setProgramState(mat1->getTechniqueByName("outline")->getPassByIndex(0)->getProgramState());
+
+    auto spriteNoise = Sprite::create("Images/grossini.png");
+    spriteNoise->setPositionNormalized(Vec2(0.6f, 0.5f));
+    this->addChild(spriteNoise);
+    spriteNoise->setProgramState(mat1->getTechniqueByName("noise")->getPassByIndex(0)->getProgramState());
+
+    auto spriteEdgeDetect = Sprite::create("Images/grossini.png");
+    spriteEdgeDetect->setPositionNormalized(Vec2(0.8f, 0.5f));
+    this->addChild(spriteEdgeDetect);
+    spriteEdgeDetect->setProgramState(mat1->getTechniqueByName("edge_detect")->getPassByIndex(0)->getProgramState());
+
+    _noiseProgramState = spriteNoise->getProgramState();
+    _locationTime = _noiseProgramState->getUniformLocation("CC_Time");
+    
+    schedule(CC_SCHEDULE_SELECTOR(Material_AutoBindings::updateUniformTime));
+    // properties is not a "Ref" object
+    CC_SAFE_DELETE(properties);
+}
+
+std::string Material_AutoBindings::subtitle() const
+{
+    return "Testing auto-bindings uniforms";
+}
+
+void Material_AutoBindings::updateUniformTime(float dt)
+{
+    float time = Director::getInstance()->getTotalFrames() * Director::getInstance()->getAnimationInterval();
+    Vec4 random(time / 10.0f, time, time * 2.0f, time * 4.0f);
+    _noiseProgramState->setUniform(_locationTime, &random, sizeof(random));
+}
 
 //
 //

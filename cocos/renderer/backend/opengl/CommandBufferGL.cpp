@@ -357,7 +357,14 @@ void CommandBufferGL::setUniforms(ProgramGL* program) const
 {
     if (_programState)
     {
+        auto& callbacks = _programState->getUniformCallbacks();
         auto& uniformInfos = _programState->getVertexUniformInfos();
+
+        for (auto &cb : callbacks)
+        {
+            cb.second(_programState, cb.first);
+        }
+
         int i = 0;
         for(auto& iter : uniformInfos)
         {

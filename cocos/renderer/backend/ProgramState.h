@@ -48,6 +48,9 @@ struct TextureInfo
 class ProgramState : public Ref
 {
 public:
+
+    using UniformCallback = std::function<void(ProgramState*, const UniformLocation &)>;
+
     ProgramState(const std::string& vertexShader, const std::string& fragmentShader);
     virtual ~ProgramState();
     
@@ -66,13 +69,27 @@ public:
     inline std::vector<UniformBuffer>& getVertexUniformInfos() { return _vertexUniformInfos; }
     inline const std::vector<UniformBuffer>& getFragmentUniformInfos() const { return _fragmentUniformInfos; }
 
+    void setUniformCallback(const backend::UniformLocation&, const UniformCallback &);
+
     //set textures
     void setTexture(const backend::UniformLocation& uniformLocation, uint32_t slot, backend::Texture* texture);
     void setTextureArray(const backend::UniformLocation& uniformLocation, const std::vector<uint32_t>& slots, const std::vector<backend::Texture*> textures);
 
     inline const std::unordered_map<int, TextureInfo>& getVertexTextureInfos() const { return _vertexTextureInfos; }
     inline const std::unordered_map<int, TextureInfo>& getFragmentTextureInfos() const { return _fragmentTextureInfos; }
-    
+    inline const std::unordered_map<UniformLocation, UniformCallback, UniformLocation>& getUniformCallbacks() const { return _callbackUniforms; }
+
+    class CC_DLL AutoBindingResolver {
+    public:
+        virtual ~AutoBindingResolver();
+        //TODO doc
+        virtual bool resolveAutoBinding(ProgramState *, const std::string &uniformName, const std::string &autoBinding) = 0;
+    protected:
+        AutoBindingResolver();
+    };
+
+    void setParameterAutoBinding(const std::string &, const std::string &);
+
 protected:
 
     ProgramState();
@@ -89,12 +106,19 @@ protected:
     void convertUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, std::vector<char>& uniformData);
 #endif
     
-    backend::Program* _program = nullptr;
-    std::vector<UniformBuffer> _vertexUniformInfos;
-    std::vector<UniformBuffer> _fragmentUniformInfos;
+    void applyAutoBinding(const std::string &, const std::string &);
+
+    backend::Program*                                       _program = nullptr;
+    std::vector<UniformBuffer>                              _vertexUniformInfos;
+    std::vector<UniformBuffer>                              _fragmentUniformInfos;
+    std::unordered_map<UniformLocation, UniformCallback, UniformLocation>   _callbackUniforms;
     
-    std::unordered_map<int, TextureInfo> _vertexTextureInfos;
-    std::unordered_map<int, TextureInfo> _fragmentTextureInfos;
+    std::unordered_map<int, TextureInfo>                    _vertexTextureInfos;
+    std::unordered_map<int, TextureInfo>                    _fragmentTextureInfos;
+
+    std::unordered_map<std::string, std::string>            _autoBindings;
+
+    static std::vector<AutoBindingResolver*>                _customAutoBindingResolvers;
 };
 
 CC_BACKEND_END
