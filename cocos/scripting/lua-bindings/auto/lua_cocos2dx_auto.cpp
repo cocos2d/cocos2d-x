@@ -89200,7 +89200,7 @@ int lua_cocos2dx_Pass_getVertexAttributeBinding(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Pass_setUniformPointLightRangeInverse(lua_State* tolua_S)
+int lua_cocos2dx_Pass_setUniformSpotLightOuterAngleCos(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Pass* cobj = nullptr;
@@ -89220,7 +89220,7 @@ int lua_cocos2dx_Pass_setUniformPointLightRangeInverse(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Pass_setUniformPointLightRangeInverse'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Pass_setUniformSpotLightOuterAngleCos'", nullptr);
         return 0;
     }
 #endif
@@ -89234,22 +89234,22 @@ int lua_cocos2dx_Pass_setUniformPointLightRangeInverse(lua_State* tolua_S)
         #pragma warning NO CONVERSION TO NATIVE FOR void*
 		ok = false;
 
-        ok &= luaval_to_uint32(tolua_S, 3,&arg1, "cc.Pass:setUniformPointLightRangeInverse");
+        ok &= luaval_to_uint32(tolua_S, 3,&arg1, "cc.Pass:setUniformSpotLightOuterAngleCos");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Pass_setUniformPointLightRangeInverse'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Pass_setUniformSpotLightOuterAngleCos'", nullptr);
             return 0;
         }
-        cobj->setUniformPointLightRangeInverse(arg0, arg1);
+        cobj->setUniformSpotLightOuterAngleCos(arg0, arg1);
         lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Pass:setUniformPointLightRangeInverse",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Pass:setUniformSpotLightOuterAngleCos",argc, 2);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Pass_setUniformPointLightRangeInverse'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Pass_setUniformSpotLightOuterAngleCos'.",&tolua_err);
 #endif
 
     return 0;
@@ -89484,7 +89484,7 @@ int lua_cocos2dx_Pass_draw(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Pass_getVertexLayout(lua_State* tolua_S)
+int lua_cocos2dx_Pass_setUniformPointLightRangeInverse(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Pass* cobj = nullptr;
@@ -89504,29 +89504,36 @@ int lua_cocos2dx_Pass_getVertexLayout(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Pass_getVertexLayout'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Pass_setUniformPointLightRangeInverse'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
+    if (argc == 2) 
     {
+        const void* arg0;
+        unsigned int arg1;
+
+        #pragma warning NO CONVERSION TO NATIVE FOR void*
+		ok = false;
+
+        ok &= luaval_to_uint32(tolua_S, 3,&arg1, "cc.Pass:setUniformPointLightRangeInverse");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Pass_getVertexLayout'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Pass_setUniformPointLightRangeInverse'", nullptr);
             return 0;
         }
-        cocos2d::backend::VertexLayout* ret = cobj->getVertexLayout();
-        object_to_luaval<cocos2d::backend::VertexLayout>(tolua_S, "cc.VertexLayout",(cocos2d::backend::VertexLayout*)ret);
+        cobj->setUniformPointLightRangeInverse(arg0, arg1);
+        lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Pass:getVertexLayout",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Pass:setUniformPointLightRangeInverse",argc, 2);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Pass_getVertexLayout'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Pass_setUniformPointLightRangeInverse'.",&tolua_err);
 #endif
 
     return 0;
@@ -90051,60 +90058,6 @@ int lua_cocos2dx_Pass_setUniformTexture(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Pass_setUniformSpotLightOuterAngleCos(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Pass* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Pass",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Pass*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Pass_setUniformSpotLightOuterAngleCos'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 2) 
-    {
-        const void* arg0;
-        unsigned int arg1;
-
-        #pragma warning NO CONVERSION TO NATIVE FOR void*
-		ok = false;
-
-        ok &= luaval_to_uint32(tolua_S, 3,&arg1, "cc.Pass:setUniformSpotLightOuterAngleCos");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Pass_setUniformSpotLightOuterAngleCos'", nullptr);
-            return 0;
-        }
-        cobj->setUniformSpotLightOuterAngleCos(arg0, arg1);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Pass:setUniformSpotLightOuterAngleCos",argc, 2);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Pass_setUniformSpotLightOuterAngleCos'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_Pass_setUniformColor(lua_State* tolua_S)
 {
     int argc = 0;
@@ -90303,12 +90256,12 @@ int lua_register_cocos2dx_Pass(lua_State* tolua_S)
         tolua_function(tolua_S,"setUniformSpotLightInnerAngleCos",lua_cocos2dx_Pass_setUniformSpotLightInnerAngleCos);
         tolua_function(tolua_S,"setTechnique",lua_cocos2dx_Pass_setTechnique);
         tolua_function(tolua_S,"getVertexAttributeBinding",lua_cocos2dx_Pass_getVertexAttributeBinding);
-        tolua_function(tolua_S,"setUniformPointLightRangeInverse",lua_cocos2dx_Pass_setUniformPointLightRangeInverse);
+        tolua_function(tolua_S,"setUniformSpotLightOuterAngleCos",lua_cocos2dx_Pass_setUniformSpotLightOuterAngleCos);
         tolua_function(tolua_S,"setUniformSpotLightDir",lua_cocos2dx_Pass_setUniformSpotLightDir);
         tolua_function(tolua_S,"setUniformMatrixPalette",lua_cocos2dx_Pass_setUniformMatrixPalette);
         tolua_function(tolua_S,"setUniformSpotLightRangeInverse",lua_cocos2dx_Pass_setUniformSpotLightRangeInverse);
         tolua_function(tolua_S,"draw",lua_cocos2dx_Pass_draw);
-        tolua_function(tolua_S,"getVertexLayout",lua_cocos2dx_Pass_getVertexLayout);
+        tolua_function(tolua_S,"setUniformPointLightRangeInverse",lua_cocos2dx_Pass_setUniformPointLightRangeInverse);
         tolua_function(tolua_S,"setUniformNormTexture",lua_cocos2dx_Pass_setUniformNormTexture);
         tolua_function(tolua_S,"clone",lua_cocos2dx_Pass_clone);
         tolua_function(tolua_S,"setUniformDirLightDir",lua_cocos2dx_Pass_setUniformDirLightDir);
@@ -90319,7 +90272,6 @@ int lua_register_cocos2dx_Pass(lua_State* tolua_S)
         tolua_function(tolua_S,"setUniformSpotLightPosition",lua_cocos2dx_Pass_setUniformSpotLightPosition);
         tolua_function(tolua_S,"setVertexAttribBinding",lua_cocos2dx_Pass_setVertexAttribBinding);
         tolua_function(tolua_S,"setUniformTexture",lua_cocos2dx_Pass_setUniformTexture);
-        tolua_function(tolua_S,"setUniformSpotLightOuterAngleCos",lua_cocos2dx_Pass_setUniformSpotLightOuterAngleCos);
         tolua_function(tolua_S,"setUniformColor",lua_cocos2dx_Pass_setUniformColor);
         tolua_function(tolua_S,"setUniformPointLightColor",lua_cocos2dx_Pass_setUniformPointLightColor);
         tolua_function(tolua_S,"createWithProgramState", lua_cocos2dx_Pass_createWithProgramState);

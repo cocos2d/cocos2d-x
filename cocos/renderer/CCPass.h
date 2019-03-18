@@ -56,6 +56,7 @@ class CC_DLL Pass : public Ref
     friend class Material;
     friend class Technique;
     friend class RenderState;
+    friend class VertexAttribBinding;
 public:
     /** Creates a Pass with a GLProgramState.
      */
@@ -65,10 +66,6 @@ public:
 
     /** Returns the ProgramState */
     backend::ProgramState* getProgramState() const;
-
-    backend::VertexLayout* getVertexLayout() { return &(_meshCommand.getPipelineDescriptor().vertexLayout); }
-
-    void setVertexLayout(const backend::VertexLayout &vertexLayout);
 
     /** Binds the GLProgramState and the RenderState.
      This method must be called before call the actual draw call.
@@ -144,6 +141,9 @@ protected:
 
     void setProgramState(backend::ProgramState* programState);
     Node* getTarget() const;
+    
+    backend::VertexLayout* getVertexLayout() { return &(_meshCommand.getPipelineDescriptor().vertexLayout); }
+    void setVertexLayout(const backend::VertexLayout &vertexLayout);
 
     VertexAttribBinding* _vertexAttribBinding = nullptr;
     MeshCommand _meshCommand;

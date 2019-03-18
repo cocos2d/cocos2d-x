@@ -84,14 +84,14 @@ public:
 
     void setMaterial(Material * material) { _material = material; }
 
-    void setVertexLayout(const backend::VertexLayout &vertexLayout);
-
     RenderState::StateBlock &getStateBlock() { return _renderState.getStateBlock(); }
 
 protected:
     Technique();
     ~Technique();
     bool init(Material* parent);
+
+    void setVertexLayout(const backend::VertexLayout &vertexLayout);
 
     void setName(const std::string& name);
     RenderState _renderState;
