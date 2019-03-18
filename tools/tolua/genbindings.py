@@ -71,14 +71,18 @@ def _find_llvm_include_path():
     versionFile = _find_first_file_in_dir(_check_ndk_root_env(), "AndroidVersion.txt")
     if versionFile is None:
         return ""
-    llvmIncludePath = os.path.join(os.path.dirname(versionFile), "lib64/clang/include") 
+    versionDir = os.path.dirname(versionFile)
+    includeDir = _find_first_file_in_dir(versionDir, "stdarg.h")
+    llvmIncludePath = os.path.dirname(includeDir)
     return "-I"+llvmIncludePath
   
 
 def _defaultIncludePath():
     llvmInclude = _find_llvm_include_path()
     toolchainInclude = _find_toolchain_include_path()
-    return llvmInclude + " " + toolchainInclude
+    exactIncludes =  llvmInclude + " " + toolchainInclude
+    print("exact include " + exactIncludes)
+    return exactIncludes
 
 
 class CmdError(Exception):
