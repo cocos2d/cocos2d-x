@@ -57,7 +57,7 @@ ClippingNodeTests::ClippingNodeTests()
 //    ADD_TEST_CASE(NestedTest);
     ADD_TEST_CASE(RawStencilBufferTest);
     ADD_TEST_CASE(RawStencilBufferTest2);
-//    ADD_TEST_CASE(RawStencilBufferTest3);
+    ADD_TEST_CASE(RawStencilBufferTest3);
 //    ADD_TEST_CASE(RawStencilBufferTest4);
 //    ADD_TEST_CASE(RawStencilBufferTest5);
 //    ADD_TEST_CASE(RawStencilBufferTest6);
@@ -740,14 +740,14 @@ std::string RawStencilBufferTest3::subtitle() const
 void RawStencilBufferTest3::setupStencilForClippingOnPlane(GLint plane)
 {
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
-    glDisable(GL_DEPTH_TEST);
-    glDepthMask(GL_FALSE);
+    auto renderer = Director::getInstance()->getRenderer();
+    renderer->setDepthTest(false);
+    renderer->setDepthWrite(false);
 }
 
 void RawStencilBufferTest3::setupStencilForDrawingOnPlane(GLint plane)
 {
-    glDepthMask(GL_TRUE);
-    //glEnable(GL_DEPTH_TEST);
+    Director::getInstance()->getRenderer()->setDepthWrite(true);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
 }
 
