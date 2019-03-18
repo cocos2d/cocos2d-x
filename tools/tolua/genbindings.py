@@ -81,7 +81,6 @@ def _defaultIncludePath():
     llvmInclude = _find_llvm_include_path()
     toolchainInclude = _find_toolchain_include_path()
     exactIncludes =  llvmInclude + " " + toolchainInclude
-    print("exact include " + exactIncludes)
     return exactIncludes
 
 
