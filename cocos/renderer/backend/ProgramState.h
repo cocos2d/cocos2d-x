@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <cstdint>
+#include <functional>
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
 #include "renderer/backend/Types.h"

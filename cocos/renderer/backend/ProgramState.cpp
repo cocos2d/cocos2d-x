@@ -3,6 +3,9 @@
 #include "renderer/backend/Program.h"
 #include "renderer/backend/Texture.h"
 #include "renderer/backend/Types.h"
+
+#include <algorithm>
+
 #ifdef CC_USE_METAL
 #include "glsl_optimizer.h"
 #endif
@@ -437,8 +440,8 @@ ProgramState::AutoBindingResolver::AutoBindingResolver()
 
 ProgramState::AutoBindingResolver::~AutoBindingResolver()
 {
-    auto it = std::find(std::begin(_customAutoBindingResolvers), std::end(_customAutoBindingResolvers), this);
-    if (it != std::end(_customAutoBindingResolvers)) _customAutoBindingResolvers.erase(it);
+    auto &list = _customAutoBindingResolvers;
+    list.erase(std::remove(list.begin(), list.end(), this), list.end());
 }
 
 CC_BACKEND_END
