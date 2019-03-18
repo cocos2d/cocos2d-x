@@ -112,7 +112,7 @@ namespace
             mtlDescritpor.colorAttachments[0].storeAction = MTLStoreActionStore;
         }
         
-        if(descriptor.depthTestEnabled || descriptor.stencilTestEnabled)
+//        if(descriptor.depthTestEnabled || descriptor.stencilTestEnabled)
         {
             // Set depth attachment
             {

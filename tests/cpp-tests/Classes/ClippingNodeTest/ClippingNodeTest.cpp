@@ -55,8 +55,8 @@ ClippingNodeTests::ClippingNodeTests()
 //    ADD_TEST_CASE(SpriteNoAlphaTest);
 //    ADD_TEST_CASE(SpriteInvertedTest);
 //    ADD_TEST_CASE(NestedTest);
-    ADD_TEST_CASE(RawStencilBufferTest); // TODO shouldn't call OpenGL API directly
-//    ADD_TEST_CASE(RawStencilBufferTest2);
+    ADD_TEST_CASE(RawStencilBufferTest);
+    ADD_TEST_CASE(RawStencilBufferTest2);
 //    ADD_TEST_CASE(RawStencilBufferTest3);
 //    ADD_TEST_CASE(RawStencilBufferTest4);
 //    ADD_TEST_CASE(RawStencilBufferTest5);
@@ -718,15 +718,15 @@ std::string RawStencilBufferTest2::subtitle() const
 	return "2:DepthMask:FALSE";
 }
 
-void RawStencilBufferTest2::setupStencilForClippingOnPlane(GLint plane)
+void RawStencilBufferTest2::setupStencilForClippingOnPlane(int plane)
 {
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
-    glDepthMask(GL_FALSE);
+    Director::getInstance()->getRenderer()->setDepthWrite(false);
 }
 
-void RawStencilBufferTest2::setupStencilForDrawingOnPlane(GLint plane)
+void RawStencilBufferTest2::setupStencilForDrawingOnPlane(int plane)
 {
-    glDepthMask(GL_TRUE);
+    Director::getInstance()->getRenderer()->setDepthWrite(true);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
 }
 

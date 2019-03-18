@@ -404,7 +404,7 @@ void Renderer::setDepthTest(bool value)
 void Renderer::setDepthWrite(bool value)
 {
     _depthStencilDescriptor.depthWriteEnabled = value;
-    _renderPassDescriptor.depthTestEnabled = value;
+//    _renderPassDescriptor.depthTestEnabled = value;
 }
 
 void Renderer::setDepthCompareFunction(backend::CompareFunction func)
@@ -812,11 +812,12 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
     auto device = backend::Device::getInstance();
     auto blendState = device->createBlendState(pipelineDescriptor.blendDescriptor);
     renderPipelineDescriptor.blendState = blendState;
-    
+
+//    bool needDepthStencilAttachment = _depthStencilDescriptor.depthTestEnabled ||
+//                                      _depthStencilDescriptor.depthWriteEnabled ||
+//                                      _depthStencilDescriptor.stencilTestEnabled;
     backend::DepthStencilState* depthStencilState = nullptr;
-    if (_depthStencilDescriptor.depthTestEnabled ||
-        _depthStencilDescriptor.depthWriteEnabled ||
-        _depthStencilDescriptor.stencilTestEnabled)
+//    if (needDepthStencilAttachment)
     {
         depthStencilState = device->createDepthStencilState(_depthStencilDescriptor);
     }
@@ -828,7 +829,7 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
             renderPipelineDescriptor.colorAttachmentsFormat[0] = renderPassDescriptor.colorAttachmentsTexture[0]->getTextureFormat();
     }
     
-    if (renderPassDescriptor.depthTestEnabled || renderPassDescriptor.stencilTestEnabled)
+//    if (needDepthStencilAttachment)
     {
         if(renderPassDescriptor.depthAttachmentTexture)
         {
