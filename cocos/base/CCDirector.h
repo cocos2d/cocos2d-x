@@ -395,6 +395,11 @@ public:
      */
     void setClearColor(const Color4F& clearColor);
 
+    /** Gets clear values for the color buffers.
+     * @js NA
+     */
+    const Color4F& getClearColor() const;
+
     /** Enables/disables OpenGL depth test. */
     void setDepthTest(bool on);
 
