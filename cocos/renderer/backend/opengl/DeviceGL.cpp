@@ -24,14 +24,16 @@ DeviceGL::DeviceGL()
     _deviceInfo = new (std::nothrow) DeviceInfoGL();
     if(!_deviceInfo || _deviceInfo->init() == false)
     {
-        CC_SAFE_RELEASE_NULL(_deviceInfo);
+        delete _deviceInfo;
+        _deviceInfo = nullptr;
     }
 }
 
 DeviceGL::~DeviceGL()
 {
     ProgramCache::destroyInstance();
-    CC_SAFE_RELEASE_NULL(_deviceInfo);
+    delete _deviceInfo;
+    _deviceInfo = nullptr;
 }
 
 CommandBuffer* DeviceGL::newCommandBuffer()
