@@ -735,6 +735,11 @@ void Director::setClearColor(const Color4F& clearColor)
     _renderer->setClearColor(clearColor);
 }
 
+const Color4F& Director::getClearColor() const
+{
+    return _renderer->getClearColor();
+}
+
 static void GLToClipTransform(Mat4 *transformOut)
 {
     if(nullptr == transformOut) return;
