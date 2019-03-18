@@ -120,8 +120,7 @@ public:
         * that other auto binding resolvers get a chance to handle the parameter.
         * Otherwise, the parameter should be set or bound and true should be returned.
         *
-        * @param glProgramState The glProgramState
-        * @param node The node that the material is attached to.
+        * @param programState The ProgramState
         * @param uniformName Name of the uniform
         * @param autoBinding Name of the auto binding to be resolved.
         *
@@ -140,7 +139,7 @@ public:
     * @param uniformName The name of the material parameter to store an auto-binding for.
     * @param autoBinding A string matching one of the built-in AutoBinding enum constants.
     */
-    void setParameterAutoBinding(const std::string &, const std::string &);
+    void setParameterAutoBinding(const std::string &uniformName, const std::string &autoBinding);
 
 protected:
 
