@@ -329,7 +329,7 @@ void CommandBufferGL::bindVertexBuffer(ProgramGL *program) const
     const auto& vertexLayouts = getVertexLayouts();
     for (const auto& vertexBuffer : _vertexBuffers)
     {
-        if (! vertexBuffer || attributeInfos.empty())
+        if (! vertexBuffer)
             continue;
         
         glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->getHandler());
