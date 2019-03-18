@@ -331,10 +331,11 @@ void CommandBufferGL::bindVertexBuffer(ProgramGL *program) const
     {
         if (! vertexBuffer)
             continue;
+        if (i >= attributeInfos.size())
+            break;
         
         glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->getHandler());
 
-        
         const auto& attributeInfo = attributeInfos[i];
         const auto &layouts = vertexLayouts->at(i);
         for (const auto& attribute : attributeInfo)
