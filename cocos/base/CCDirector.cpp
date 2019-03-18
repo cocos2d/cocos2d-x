@@ -667,21 +667,6 @@ float Director::getZEye(void) const
     return (_winSizeInPoints.height / 1.154700538379252f);//(2 * tanf(M_PI/6))
 }
 
-void Director::setAlphaBlending(bool on)
-{
-    //TODO: minggo
-//    if (on)
-//    {
-//        utils::setBlending(CC_BLEND_SRC, CC_BLEND_DST);
-//    }
-//    else
-//    {
-//        utils::setBlending(BlendFactor::ONE, BlendFactor::ZERO);
-//    }
-//
-//    CHECK_GL_ERROR_DEBUG();
-}
-
 void Director::setDepthTest(bool on)
 {
     if (on)
