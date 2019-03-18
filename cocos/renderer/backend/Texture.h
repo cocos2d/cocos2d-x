@@ -39,6 +39,7 @@ protected:
     uint8_t _bitsPerElement = 0;
     bool _isMipmapEnabled = false;
     bool _isCompressed = false;
+    bool _isMipmapGenerated = false;
 
     TextureType _textureType = TextureType::TEXTURE_2D;
     TextureFormat _textureFormat = TextureFormat::R8G8B8;

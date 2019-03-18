@@ -49,6 +49,9 @@ public:
     virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*)> callback) override;
     virtual void generateMipmaps() override;
     
+    inline id<MTLTexture> getMTLTexture() const { return _mtlTexture; }
+    inline id<MTLSamplerState> getMTLSamplerState() const { return _mtlSamplerState; }
+    
 private:
     void createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor);
     void createSampler(id<MTLDevice> mtlDevice, const SamplerDescriptor& descriptor);

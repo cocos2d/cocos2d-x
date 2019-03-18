@@ -147,7 +147,10 @@ void Texture2DGL::updateData(uint8_t* data)
     CHECK_GL_ERROR_DEBUG();
 
     if(_isMipmapEnabled)
+    {
+        _isMipmapGenerated = false;
         generateMipmaps();
+    }
     CHECK_GL_ERROR_DEBUG();
 }
 
@@ -167,7 +170,10 @@ void Texture2DGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsi
     CHECK_GL_ERROR_DEBUG();
 
     if(_isMipmapEnabled)
+    {
+        _isMipmapGenerated = false;
         generateMipmaps();
+    }
     CHECK_GL_ERROR_DEBUG();
 }
 
@@ -182,8 +188,11 @@ void Texture2DGL::generateMipmaps()
     if (TextureUsage::RENDER_TARGET == _textureUsage)
         return;
 
-    _isMipmapEnabled = true;
-    glGenerateMipmap(GL_TEXTURE_2D);
+    if(!_isMipmapGenerated)
+    {
+        _isMipmapGenerated = true;
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
 }
 
 void Texture2DGL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*)> callback)
@@ -283,7 +292,10 @@ void TextureCubeGL::updateFaceData(TextureCubeFace side, void *data)
         _textureInfo.type,  // type
         data);              // pixel data
     if(_isMipmapEnabled)
+    {
+        _isMipmapGenerated = false;
         generateMipmaps();
+    }
     CHECK_GL_ERROR_DEBUG();
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
@@ -328,8 +340,11 @@ void TextureCubeGL::generateMipmaps()
     if (TextureUsage::RENDER_TARGET == _textureUsage)
         return;
 
-    _isMipmapEnabled = true;
-    glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+    if(!_isMipmapGenerated)
+    {
+        _isMipmapGenerated = true;
+        glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+    }
 }
 
 CC_BACKEND_END

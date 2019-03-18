@@ -920,7 +920,7 @@ void Texture2D::setTexParameters(const Texture2D::TexParams &params)
     backend::SamplerDescriptor sd;
     sd.minFilter = GLToBackendMagFilter(params.minFilter);
     sd.magFilter = GLToBackendMagFilter(params.magFilter);
-    sd.mipmapEnabled = true;
+    sd.mipmapEnabled = false;
     sd.mipmapFilter = backend::SamplerFilter::DONT_CARE;
     sd.tAddressMode = GLToBackendAddressMode(params.wrapT);
     sd.sAddressMode = GLToBackendAddressMode(params.wrapS);

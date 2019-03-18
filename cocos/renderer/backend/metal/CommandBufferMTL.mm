@@ -153,6 +153,34 @@ namespace
         
         return mtlDescritpor;
     }
+    
+    id<MTLTexture> getMTLTexture(Texture* texture)
+    {
+        switch (texture->getTextureType())
+        {
+            case TextureType::TEXTURE_2D:
+                return static_cast<TextureMTL*>(texture)->getMTLTexture();
+            case TextureType::TEXTURE_CUBE:
+                return static_cast<TextureCubeMTL*>(texture)->getMTLTexture();
+            default:
+                assert(false);
+                return nil;
+        }
+    }
+    
+    id<MTLSamplerState> getMTLSamplerState(Texture* texture)
+    {
+        switch (texture->getTextureType())
+        {
+            case TextureType::TEXTURE_2D:
+                return static_cast<TextureMTL*>(texture)->getMTLSamplerState();
+            case TextureType::TEXTURE_CUBE:
+                return static_cast<TextureCubeMTL*>(texture)->getMTLSamplerState();
+            default:
+                assert(false);
+                return nil;
+        }
+    }
 }
 
 CommandBufferMTL::CommandBufferMTL(DeviceMTL* deviceMTL)
@@ -355,30 +383,29 @@ void CommandBufferMTL::doSetTextures(bool isVertex) const
     const auto& bindTextureInfos = (isVertex) ? _programState->getVertexTextureInfos() : _programState->getFragmentTextureInfos();
 
     for(const auto& iter : bindTextureInfos)
-        {
-            //FIXME: should support texture array.
+    {
+        //FIXME: should support texture array.
         int i = 0;
         auto location = iter.first;
         const auto& textures = iter.second.textures;
-        const auto& mtlTexture = static_cast<TextureMTL*>(textures[i]);
-            
-            if (isVertex)
-            {
-                [_mtlRenderEncoder setVertexTexture:mtlTexture->getMTLTexture()
-                                        atIndex:location];
-                [_mtlRenderEncoder setVertexSamplerState:mtlTexture->getMTLSamplerState()
-                                             atIndex:location];
-            }
-            else
-            {
-                [_mtlRenderEncoder setFragmentTexture:mtlTexture->getMTLTexture()
-                                          atIndex:location];
-                [_mtlRenderEncoder setFragmentSamplerState:mtlTexture->getMTLSamplerState()
-                                               atIndex:location];
-            }
-            
-            ++i;
+        
+        if (isVertex)
+        {
+            [_mtlRenderEncoder setVertexTexture:getMTLTexture(textures[i])
+                                    atIndex:location];
+            [_mtlRenderEncoder setVertexSamplerState:getMTLSamplerState(textures[i])
+                                         atIndex:location];
         }
+        else
+        {
+            [_mtlRenderEncoder setFragmentTexture:getMTLTexture(textures[i])
+                                      atIndex:location];
+            [_mtlRenderEncoder setFragmentSamplerState:getMTLSamplerState(textures[i])
+                                           atIndex:location];
+        }
+        
+        ++i;
+    }
 }
 
 void CommandBufferMTL::setUniformBuffer() const
