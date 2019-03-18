@@ -60,6 +60,10 @@ def _find_all_files_match(dir, cond, all):
 
 
 def _find_toolchain_include_path():
+    '''
+    Search gcc prebuilt include path
+    for instance: "$NDK_ROOT/toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64/lib/gcc/arm-linux-androideabi/4.9.x/include"
+    '''
     foundFiles = []
     _find_all_files_match(os.path.join(_check_ndk_root_env(), "toolchains"), lambda x : os.path.basename(x) == "stdarg.h" and "arm-linux-androideabi" in x , foundFiles)
     if len(foundFiles) == 0:
@@ -68,6 +72,10 @@ def _find_toolchain_include_path():
         return "-I" + os.path.dirname(foundFiles[0])
 
 def _find_llvm_include_path():
+    '''
+    Search llvm prebuilt include path.
+    for instance: "$NDK_ROOT/toolchains/llvm/prebuilt/windows-x86_64/lib64/clang/6.0.2/include"
+    '''
     versionFile = _find_first_file_in_dir(_check_ndk_root_env(), "AndroidVersion.txt")
     if versionFile is None:
         return ""
@@ -78,6 +86,8 @@ def _find_llvm_include_path():
   
 
 def _defaultIncludePath():
+    '''default include path for libclang, llvm & gcc include path
+    '''
     llvmInclude = _find_llvm_include_path()
     toolchainInclude = _find_toolchain_include_path()
     exactIncludes =  llvmInclude + " " + toolchainInclude
