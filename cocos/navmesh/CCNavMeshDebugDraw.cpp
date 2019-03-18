@@ -25,7 +25,7 @@
 #include "navmesh/CCNavMeshDebugDraw.h"
 #if CC_USE_NAVMESH
 
-#include "renderer/CCGLProgramCache.h"
+#include "renderer/backend/ProgramState.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
 #include "base/CCDirector.h"

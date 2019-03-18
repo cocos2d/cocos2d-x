@@ -283,7 +283,7 @@ THE SOFTWARE.
 
 /** Use 3D navigation API */
 #ifndef CC_USE_NAVMESH
-#define CC_USE_NAVMESH 0
+#define CC_USE_NAVMESH 1
 #endif
 
 /** Use culling or not. */
