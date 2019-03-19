@@ -469,9 +469,12 @@ void Mesh::setProgramState(backend::ProgramState* programState)
 
 void Mesh::setVertexLayout(const backend::VertexLayout& vertexLayout)
 {
-    if (_material)
+    for(auto &p : _meshCommands)
     {
-        _material->setVertexLayout(vertexLayout);
+        for(auto &cmd: p.second)
+        {
+            cmd.getPipelineDescriptor().vertexLayout = vertexLayout;
+        }
     }
 }
 

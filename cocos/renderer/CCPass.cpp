@@ -146,11 +146,6 @@ void Pass::setProgramState(backend::ProgramState* programState)
     }
 }
 
-void Pass::setVertexLayout(const backend::VertexLayout &vertexLayout)
-{
-    _meshCommand.getPipelineDescriptor().vertexLayout = vertexLayout;
-}
-
 void Pass::initUniformLocations()
 {
     auto *ps = _programState;

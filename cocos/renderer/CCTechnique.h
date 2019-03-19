@@ -91,8 +91,6 @@ protected:
     ~Technique();
     bool init(Material* parent);
 
-    void setVertexLayout(const backend::VertexLayout &vertexLayout);
-
     void setName(const std::string& name);
     RenderState _renderState;
     std::string _name;

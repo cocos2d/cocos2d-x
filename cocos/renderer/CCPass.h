@@ -130,9 +130,6 @@ protected:
 
     void setProgramState(backend::ProgramState* programState);
     Node* getTarget() const;
-    
-    backend::VertexLayout* getVertexLayout() { return &(_meshCommand.getPipelineDescriptor().vertexLayout); }
-    void setVertexLayout(const backend::VertexLayout &vertexLayout);
 
     VertexAttribBinding*        _vertexAttribBinding    = nullptr;
     backend::ProgramState *     _programState           = nullptr;

@@ -149,7 +149,6 @@ protected:
     bool initWithProperties(Properties* materialProperties);
 
     void setTarget(Node* target);
-    void setVertexLayout(const backend::VertexLayout &vertexLayout);
 
     bool parseProperties(Properties* properties);
     bool parseTechnique(Properties* properties);
