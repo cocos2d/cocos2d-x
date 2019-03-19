@@ -392,15 +392,10 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
 //                      flags);
 
 
-   if (isTransparent && !forceDepthWrite)
-       _material->getStateBlock().setDepthWrite(false);
-   else
+    if (isTransparent && !forceDepthWrite)
+        _material->getStateBlock().setDepthWrite(false);
+    else
         _material->getStateBlock().setDepthWrite(true);
-   
-    //TODO arnold
-    //_meshCommand.setSkipBatching(isTransparent);
-    //_meshCommand.setTransparent(isTransparent);
-    //_meshCommand.set3D(!_force2DQueue);
 
     _material->getStateBlock().setBlend(_force2DQueue || isTransparent);
 
@@ -415,13 +410,21 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
         if (_skin)
             pass->setUniformMatrixPalette(_skin->getMatrixPalette(), _skin->getMatrixPaletteSizeInBytes());
 
-        //TODO arnold
         if (scene && scene->getLights().size() > 0)
         {
             setLightUniforms(pass, scene, color, lightMask);
         }
     }
     auto &commands = _meshCommands[technique->getName()];
+
+    for (auto &command : commands)
+    {
+        command.init(globalZ, transform);
+        command.setSkipBatching(isTransparent);
+        command.setTransparent(isTransparent);
+        command.set3D(!_force2DQueue);
+    }
+
     _material->draw(commands.data(), globalZ,
                     getVertexBuffer(),
                     getIndexBuffer(),
@@ -430,8 +433,6 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
                     getIndexCount(),
                     transform);
 
-
-//    renderer->addCommand(&_meshCommand);
 }
 
 void Mesh::setSkin(MeshSkin* skin)

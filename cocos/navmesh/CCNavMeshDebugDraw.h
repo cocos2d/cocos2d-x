@@ -23,8 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCNAV_MESH_DEBUG_DRAW_H__
-#define __CCNAV_MESH_DEBUG_DRAW_H__
+#pragma once
 
 #include "base/ccConfig.h"
 #if CC_USE_NAVMESH
@@ -35,6 +34,9 @@
 #include "renderer/backend/Buffer.h"
 #include "math/Vec3.h"
 #include "recast/DebugUtils/DebugDraw.h"
+#include "renderer/CCGroupCommand.h"
+#include "renderer/CCCallbackCommand.h"
+#include "renderer/CCCustomCommand.h"
 #include <string>
 #include <vector>
 
@@ -124,5 +126,3 @@ private:
 NS_CC_END
 
 #endif //CC_USE_NAVMESH
-
-#endif // __CCNAV_MESH_DEBUG_DRAW_H__

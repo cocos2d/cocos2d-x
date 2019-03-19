@@ -159,8 +159,10 @@ backend::PrimitiveType NavMeshDebugDraw::getPrimitiveType(duDebugDrawPrimitives 
 
 void NavMeshDebugDraw::draw(Renderer* renderer)
 {
-
     auto &transform = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+
+    _beforeCommand.init(0, Mat4::IDENTITY, Node::FLAGS_RENDER_AS_3D);
+    _beforeCommand.init(0, Mat4::IDENTITY, Node::FLAGS_RENDER_AS_3D);
 
     _programState->setUniform(_locMVP, transform.m, sizeof(transform.m));
 
@@ -206,6 +208,7 @@ void NavMeshDebugDraw::draw(Renderer* renderer)
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, iter->end - iter->start);
         idx++;
     }
+
     renderer->addCommand(&_afterCommand);
 }
 
@@ -221,7 +224,7 @@ void NavMeshDebugDraw::onBeforeVisitCmd()
     _rendererDepthWrite = renderer->getDepthWrite();
     _rendererWinding = renderer->getWinding();
 
-    renderer->setCullMode(backend::CullMode::BACK);
+    renderer->setCullMode(backend::CullMode::NONE);
     renderer->setDepthTest(true);
 }
 

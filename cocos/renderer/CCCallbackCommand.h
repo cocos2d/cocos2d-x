@@ -44,6 +44,7 @@ public:
     CallbackCommand();
 
     void init(float globalZOrder);
+    void init(float globalZorder, const Mat4 &transform, unsigned int);
 
     /**
      Execute the render command and call callback functions.

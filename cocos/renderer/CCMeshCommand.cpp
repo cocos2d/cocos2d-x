@@ -64,7 +64,11 @@ void MeshCommand::init(float globalZOrder)
 
 void MeshCommand::init(float globalZOrder, const Mat4 &transform)
 {
-    CustomCommand::init(globalZOrder);
+    CustomCommand::init(globalZOrder);        
+    if (Camera::getVisitingCamera())
+    {
+        _depth = Camera::getVisitingCamera()->getDepthInView(transform);
+    }
     _mv = transform;
 }
 
