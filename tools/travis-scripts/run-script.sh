@@ -237,6 +237,43 @@ function run_pull_request()
     # need to generate binding codes for all targets
     genernate_binding_codes
 
+    if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
+        source ../environment.sh
+        pushd $COCOS2DX_ROOT
+        update_cocos_files
+        python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
+        popd
+        pushd $COCOS2DX_ROOT/cocos_new_test/proj.android
+        do_retry ./gradlew build
+        popd
+        exit 0
+    fi
+
+    if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
+        pushd $COCOS2DX_ROOT
+        update_cocos_files
+        python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l lua -p my.pack.qqqq cocos_new_test
+        popd
+
+        echo "Building tests ..."
+        cd $COCOS2DX_ROOT/cocos_new_test
+        mkdir -p linux-build
+        cd linux-build
+        cmake ..
+        cmake --build .
+        exit 0
+    fi
+    
+    if [ $BUILD_TARGET == 'mac_cmake' ]; then
+        build_mac_cmake
+        exit 0
+    fi
+
+    if [ $BUILD_TARGET == 'ios_cmake' ]; then
+        build_ios_cmake
+        exit 0
+    fi
+
     # linux
     if [ $BUILD_TARGET == 'linux' ]; then
         build_linux
@@ -285,42 +322,6 @@ function run_after_merge()
 
 # build pull request
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
-    if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
-        source ../environment.sh
-        pushd $COCOS2DX_ROOT
-        update_cocos_files
-        python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l cpp -p my.pack.qqqq cocos_new_test
-        popd
-        pushd $COCOS2DX_ROOT/cocos_new_test/proj.android
-        do_retry ./gradlew build
-        popd
-        exit 0
-    fi
-
-    if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
-        pushd $COCOS2DX_ROOT
-        update_cocos_files
-        python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l lua -p my.pack.qqqq cocos_new_test
-        popd
-
-        echo "Building tests ..."
-        cd $COCOS2DX_ROOT/cocos_new_test
-        mkdir -p linux-build
-        cd linux-build
-        cmake ..
-        cmake --build .
-        exit 0
-    fi
-    if [ $BUILD_TARGET == 'mac_cmake' ]; then
-        build_mac_cmake
-        exit 0
-    fi
-
-    if [ $BUILD_TARGET == 'ios_cmake' ]; then
-        build_ios_cmake
-        exit 0
-    fi
-
     run_pull_request
 fi
 
