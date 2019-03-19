@@ -32,6 +32,7 @@
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventType.h"
 #include "2d/CCLight.h"
+#include "2d/CCCamera.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTexture2D.h"
