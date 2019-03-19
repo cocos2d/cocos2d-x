@@ -47,20 +47,20 @@ enum {
 
 ClippingNodeTests::ClippingNodeTests()
 {
-//    ADD_TEST_CASE(ScrollViewDemo);
-//    ADD_TEST_CASE(HoleDemo);
-//    ADD_TEST_CASE(ShapeTest);
-//    ADD_TEST_CASE(ShapeInvertedTest);
-//    ADD_TEST_CASE(SpriteTest);
-//    ADD_TEST_CASE(SpriteNoAlphaTest);
-//    ADD_TEST_CASE(SpriteInvertedTest);
-//    ADD_TEST_CASE(NestedTest);
+    ADD_TEST_CASE(ScrollViewDemo);
+    ADD_TEST_CASE(HoleDemo);
+    ADD_TEST_CASE(ShapeTest);
+    ADD_TEST_CASE(ShapeInvertedTest);
+    ADD_TEST_CASE(SpriteTest);
+    ADD_TEST_CASE(SpriteNoAlphaTest);
+    ADD_TEST_CASE(SpriteInvertedTest);
+    ADD_TEST_CASE(NestedTest);
     ADD_TEST_CASE(RawStencilBufferTest);
     ADD_TEST_CASE(RawStencilBufferTest2);
     ADD_TEST_CASE(RawStencilBufferTest3);
     ADD_TEST_CASE(RawStencilBufferTest4);
     ADD_TEST_CASE(RawStencilBufferTest5);
-//    ADD_TEST_CASE(RawStencilBufferTest6);
+    ADD_TEST_CASE(RawStencilBufferTest6);
     ADD_TEST_CASE(ClippingToRenderTextureTest);
     ADD_TEST_CASE(ClippingRectangleNodeTest);
 }
@@ -517,8 +517,6 @@ void ScrollViewDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event  *
 
 //#if COCOS2D_DEBUG > 1
 
-static int _stencilBits = -1;
-
 static const float _alphaThreshold = 0.05f;
 
 static const int _planeCount = 8;
@@ -775,7 +773,7 @@ void RawStencilBufferTest4::setupStencilForClippingOnPlane(int plane)
     renderer->setDepthWrite(false);
 }
 
-void RawStencilBufferTest4::setupStencilForDrawingOnPlane(GLint plane)
+void RawStencilBufferTest4::setupStencilForDrawingOnPlane(int plane)
 {
     Director::getInstance()->getRenderer()->setDepthWrite(true);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
@@ -788,7 +786,7 @@ std::string RawStencilBufferTest5::subtitle() const
 	return "5:DepthTest:DISABLE,DepthMask:FALSE,AlphaTest:ENABLE";
 }
 
-void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
+void RawStencilBufferTest5::setupStencilForClippingOnPlane(int plane)
 {
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
     auto renderer = Director::getInstance()->getRenderer();
@@ -796,7 +794,7 @@ void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
     renderer->setDepthTest(false);
 }
 
-void RawStencilBufferTest5::setupStencilForDrawingOnPlane(GLint plane)
+void RawStencilBufferTest5::setupStencilForDrawingOnPlane(int plane)
 {
     auto renderer = Director::getInstance()->getRenderer();
     renderer->setDepthWrite(false);
@@ -813,88 +811,24 @@ std::string RawStencilBufferTest6::subtitle() const
 void RawStencilBufferTest6::setup()
 {
     RawStencilBufferTestAlphaTest::setup();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    auto winPoint = Vec2(Director::getInstance()->getWinSize());
-    //by default, glReadPixels will pack data with 4 bytes alignment
-    unsigned char bits[4] = {0,0,0,0};
-    glStencilMask(~0);
-    glClearStencil(0);
-    glClear(GL_STENCIL_BUFFER_BIT);
-    glFlush();
-    glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
-    auto clearToZeroLabel = Label::createWithTTF(StringUtils::format("00=%02x", bits[0]), "fonts/arial.ttf", 20);
-    clearToZeroLabel->setPosition((winPoint.x / 3) * 1, winPoint.y - 10);
-    this->addChild(clearToZeroLabel);
-    glStencilMask(0x0F);
-    glClearStencil(0xAA);
-    glClear(GL_STENCIL_BUFFER_BIT);
-    glFlush();
-    glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
-    auto clearToMaskLabel = Label::createWithTTF(StringUtils::format("0a=%02x", bits[0]), "fonts/arial.ttf", 20);
-    clearToMaskLabel->setPosition((winPoint.x / 3) * 2, winPoint.y - 10);
-    this->addChild(clearToMaskLabel);
-#endif
-    glStencilMask(~0);
+    Director::getInstance()->getRenderer()->setStencilWriteMask(~0);
 }
 
-void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
+void RawStencilBufferTest6::setupStencilForClippingOnPlane(int plane)
 {
-    GLint planeMask = 0x1 << plane;
-    glStencilMask(planeMask);
-    glStencilFunc(GL_NEVER, 0, planeMask);
-    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-  
-    Vec2 pt = Director::getInstance()->getWinSize();
-    Vec2 vertices[] = {
-        Vec2::ZERO,
-        Vec2(pt.x, 0),
-        pt,
-        Vec2(0, pt.y)
-    };
-
-//    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-
-//    int colorLocation = glProgram->getUniformLocation("u_color");
-//    CHECK_GL_ERROR_DEBUG();
-//
-//    Color4F color(1, 1, 1, 1);
-//
-//    glProgram->use();
-//    glProgram->setUniformsForBuiltins();
-//    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
-
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-//    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
-    
-    glStencilFunc(GL_NEVER, planeMask, planeMask);
-    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-    glDisable(GL_DEPTH_TEST);
-    glDepthMask(GL_FALSE);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    glEnable(GL_ALPHA_TEST);
-    glAlphaFunc(GL_GREATER, _alphaThreshold);
-#else
-    //TODO use backend::Program
-    //auto program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
-    //GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-    //program->use();
-    //program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-#endif
-    glFlush();
+    int planeMask = 0x1 << plane;
+    auto renderer = Director::getInstance()->getRenderer();
+    renderer->setStencilCompareFunction(backend::CompareFunction::NEVER, planeMask, planeMask);
+    renderer->setStencilOperation(backend::StencilOperation::REPLACE, backend::StencilOperation::KEEP, backend::StencilOperation::KEEP);
+    renderer->setDepthTest(false);
+    renderer->setDepthWrite(false);
 }
 
-void RawStencilBufferTest6::setupStencilForDrawingOnPlane(GLint plane)
+void RawStencilBufferTest6::setupStencilForDrawingOnPlane(int plane)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    glDisable(GL_ALPHA_TEST);
-#endif
-    glDepthMask(GL_TRUE);
-    //glEnable(GL_DEPTH_TEST);
+    auto renderer = Director::getInstance()->getRenderer();
+    renderer->setDepthWrite(true);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
-    glFlush();
 }
 
 //#endif // COCOS2D_DEBUG > 1
