@@ -9,6 +9,7 @@
 #include "BlendState.h"
 #include "ProgramCache.h"
 #include "ShaderCache.h"
+#include "DeviceInfo.h"
 
 #include "base/CCRef.h"
 
@@ -45,11 +46,14 @@ public:
     // Create a render pipeline, not auto released.
     virtual RenderPipeline* newRenderPipeline(const RenderPipelineDescriptor& descriptor) = 0;
 
+    inline DeviceInfo* getDeviceInfo() const { return _deviceInfo; }
 protected:
     // Create a auto released shader module.
     virtual ShaderModule* newShaderModule(ShaderStage stage, const std::string& source) = 0;
     // Create a auto released program.
     virtual Program* newProgram(const std::string& vertexShader, const std::string& fragmentShader) = 0;
+    
+    DeviceInfo* _deviceInfo = nullptr;
     
 private:
     static Device* _instance;

@@ -8,8 +8,9 @@
 #include "BlendStateMTL.h"
 #include "Utils.h"
 #include "ProgramMTL.h"
-#include "base/ccMacros.h"
+#include "DeviceInfoMTL.h"
 
+#include "base/ccMacros.h"
 
 CC_BACKEND_BEGIN
 
@@ -46,12 +47,19 @@ DeviceMTL::DeviceMTL()
 {
     _mtlDevice = DeviceMTL::_metalLayer.device;
     _mtlCommandQueue = [_mtlDevice newCommandQueue];
-    ProgramCache::getInstance();
+    _deviceInfo = new (std::nothrow) DeviceInfoMTL(_mtlDevice);
+    if(!_deviceInfo || _deviceInfo->init() == false)
+    {
+        delete _deviceInfo;
+        _deviceInfo = nullptr;
+    }
 }
 
 DeviceMTL::~DeviceMTL()
 {
     ProgramCache::destroyInstance();
+    delete _deviceInfo;
+    _deviceInfo = nullptr;
 }
 
 CommandBuffer* DeviceMTL::newCommandBuffer()
