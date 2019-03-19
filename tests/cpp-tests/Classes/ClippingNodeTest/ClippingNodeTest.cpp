@@ -59,7 +59,7 @@ ClippingNodeTests::ClippingNodeTests()
     ADD_TEST_CASE(RawStencilBufferTest2);
     ADD_TEST_CASE(RawStencilBufferTest3);
     ADD_TEST_CASE(RawStencilBufferTest4);
-//    ADD_TEST_CASE(RawStencilBufferTest5);
+    ADD_TEST_CASE(RawStencilBufferTest5);
 //    ADD_TEST_CASE(RawStencilBufferTest6);
     ADD_TEST_CASE(ClippingToRenderTextureTest);
     ADD_TEST_CASE(ClippingRectangleNodeTest);
@@ -791,28 +791,15 @@ std::string RawStencilBufferTest5::subtitle() const
 void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
 {
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
-    glDisable(GL_DEPTH_TEST);
-    glDepthMask(GL_FALSE);
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    glEnable(GL_ALPHA_TEST);
-    glAlphaFunc(GL_GREATER, _alphaThreshold);
-#else
-    //TODO use backend::Program
-//    auto program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
-//    GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-//    program->use();
-//    program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-#endif
+    auto renderer = Director::getInstance()->getRenderer();
+    renderer->setDepthWrite(false);
+    renderer->setDepthTest(false);
 }
 
 void RawStencilBufferTest5::setupStencilForDrawingOnPlane(GLint plane)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    glDisable(GL_ALPHA_TEST);
-#endif
-    glDepthMask(GL_TRUE);
-    //glEnable(GL_DEPTH_TEST);
+    auto renderer = Director::getInstance()->getRenderer();
+    renderer->setDepthWrite(false);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
 }
 
