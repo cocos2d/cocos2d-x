@@ -229,6 +229,9 @@ public:
     virtual std::string subtitle() const override;
     virtual void setupStencilForClippingOnPlane(GLint plane) override;
     virtual void setupStencilForDrawingOnPlane(GLint plane) override;
+
+private:
+    cocos2d::backend::UniformLocation _alphaMVPMatrix;
 };
 
 class RawStencilBufferTest5 : public RawStencilBufferTestAlphaTest

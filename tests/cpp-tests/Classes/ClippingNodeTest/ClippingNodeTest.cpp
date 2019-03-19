@@ -58,7 +58,7 @@ ClippingNodeTests::ClippingNodeTests()
     ADD_TEST_CASE(RawStencilBufferTest);
     ADD_TEST_CASE(RawStencilBufferTest2);
     ADD_TEST_CASE(RawStencilBufferTest3);
-//    ADD_TEST_CASE(RawStencilBufferTest4);
+    ADD_TEST_CASE(RawStencilBufferTest4);
 //    ADD_TEST_CASE(RawStencilBufferTest5);
 //    ADD_TEST_CASE(RawStencilBufferTest6);
     ADD_TEST_CASE(ClippingToRenderTextureTest);
@@ -737,7 +737,7 @@ std::string RawStencilBufferTest3::subtitle() const
 	return "3:DepthTest:DISABLE,DepthMask:FALSE";
 }
 
-void RawStencilBufferTest3::setupStencilForClippingOnPlane(GLint plane)
+void RawStencilBufferTest3::setupStencilForClippingOnPlane(int plane)
 {
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
     auto renderer = Director::getInstance()->getRenderer();
@@ -745,7 +745,7 @@ void RawStencilBufferTest3::setupStencilForClippingOnPlane(GLint plane)
     renderer->setDepthWrite(false);
 }
 
-void RawStencilBufferTest3::setupStencilForDrawingOnPlane(GLint plane)
+void RawStencilBufferTest3::setupStencilForDrawingOnPlane(int plane)
 {
     Director::getInstance()->getRenderer()->setDepthWrite(true);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
@@ -754,11 +754,12 @@ void RawStencilBufferTest3::setupStencilForDrawingOnPlane(GLint plane)
 void RawStencilBufferTestAlphaTest::setup()
 {
     RawStencilBufferTest::setup();
-//    auto programState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
-//    for(int i = 0; i < _planeCount; ++i)
-//    {
-//        _spritesStencil.at(i)->setGLProgramState(programState);
-//    }
+    for(int i = 0; i < _planeCount; ++i)
+    {
+        _spritesStencil.at(i)->updateShaders(positionTextureColor_vert, positionTextureColorAlphaTest_frag);
+        auto programState = _spritesStencil.at(i)->getProgramState();
+        programState->setUniform(programState->getUniformLocation("u_alpha_value"), &_alphaThreshold, sizeof(_alphaThreshold));
+    }
 }
 //@implementation RawStencilBufferTest4
 
@@ -767,29 +768,16 @@ std::string RawStencilBufferTest4::subtitle() const
 	return "4:DepthMask:FALSE,AlphaTest:ENABLE";
 }
 
-void RawStencilBufferTest4::setupStencilForClippingOnPlane(GLint plane)
+void RawStencilBufferTest4::setupStencilForClippingOnPlane(int plane)
 {
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
-    glDepthMask(GL_FALSE);
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    glEnable(GL_ALPHA_TEST);
-    glAlphaFunc(GL_GREATER, _alphaThreshold);
-#else
-    //TODO use backend::Program
-//    auto program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
-//    GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-//    program->use();
-//    program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-#endif
+    auto renderer = Director::getInstance()->getRenderer();
+    renderer->setDepthWrite(false);
 }
 
 void RawStencilBufferTest4::setupStencilForDrawingOnPlane(GLint plane)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    glDisable(GL_ALPHA_TEST);
-#endif
-    glDepthMask(GL_TRUE);
+    Director::getInstance()->getRenderer()->setDepthWrite(true);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
 }
 
