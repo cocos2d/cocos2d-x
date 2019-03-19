@@ -331,10 +331,11 @@ void CommandBufferGL::bindVertexBuffer(ProgramGL *program) const
     {
         if (! vertexBuffer)
             continue;
+        if (i >= attributeInfos.size())
+            break;
         
         glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->getHandler());
 
-        
         const auto& attributeInfo = attributeInfos[i];
         const auto &layouts = vertexLayouts->at(i);
         for (const auto& attribute : attributeInfo)
@@ -357,7 +358,14 @@ void CommandBufferGL::setUniforms(ProgramGL* program) const
 {
     if (_programState)
     {
+        auto& callbacks = _programState->getCallbackUniforms();
         auto& uniformInfos = _programState->getVertexUniformInfos();
+
+        for (auto &cb : callbacks)
+        {
+            cb.second(_programState, cb.first);
+        }
+
         int i = 0;
         for(auto& iter : uniformInfos)
         {

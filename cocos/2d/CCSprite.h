@@ -419,6 +419,16 @@ public:
     TextureAtlas* getTextureAtlas() const { return _textureAtlas; }
 
     /**
+    * Set ProgramState
+    */
+    void setProgramState(backend::ProgramState *programState);
+
+    /**
+    * Get current ProgramState
+    */
+    inline backend::ProgramState *getProgramState() const { return _programState; }
+
+    /**
      * Sets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode.
      */
     void setTextureAtlas(TextureAtlas *textureAtlas) { _textureAtlas = textureAtlas; }

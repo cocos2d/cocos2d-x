@@ -247,18 +247,18 @@ protected:
     bool                _force2DQueue; // add this mesh to 2D render queue
     
     std::string         _name;
-    //MeshCommand         _meshCommand;
     MeshIndexData*      _meshIndexData;
     //GLProgramState*     _glProgramState;
     BlendFunc           _blend;
     bool                _blendDirty;
     Material*           _material;
     AABB                _aabb;
-    std::function<void()> _visibleChanged;
+    std::function<void()>       _visibleChanged;
+    std::unordered_map<std::string, std::vector<MeshCommand> >    _meshCommands;
     
     ///light parameters
-    std::vector<Vec3> _dirLightUniformColorValues;
-    std::vector<Vec3> _dirLightUniformDirValues;
+    std::vector<Vec3>   _dirLightUniformColorValues;
+    std::vector<Vec3>   _dirLightUniformDirValues;
     
     std::vector<Vec3> _pointLightUniformColorValues;
     std::vector<Vec3> _pointLightUniformPositionValues;

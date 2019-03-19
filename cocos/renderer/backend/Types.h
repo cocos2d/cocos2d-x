@@ -247,9 +247,14 @@ struct UniformLocation
 {
     int location = -1;
     ShaderStage shaderStage = ShaderStage::VERTEX;
+    UniformLocation() = default;
     operator bool() { return location >= 0; }
     void reset() { location = -1; }
+
+    bool operator == (const UniformLocation &other) const;
+    std::size_t operator()(const UniformLocation &uniform) const;
 };
+
 
 struct AttributeBindInfo
 {

@@ -6,11 +6,12 @@ varying vec4 v_fragmentColor;
 varying vec2 v_texCoord;
 
 uniform vec2 resolution;
+uniform sampler2D u_texture;
 
 float lookup(vec2 p, float dx, float dy)
 {
     vec2 uv = p.xy + vec2(dx , dy ) / resolution.xy;
-    vec4 c = texture2D(CC_Texture0, uv.xy);
+    vec4 c = texture2D(u_texture, uv.xy);
     return 0.2126*c.r + 0.7152*c.g + 0.0722*c.b;
 }
 
