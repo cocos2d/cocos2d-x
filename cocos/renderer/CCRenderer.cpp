@@ -344,6 +344,7 @@ void Renderer::doVisitRenderQueue(const std::vector<RenderCommand*>& renderComma
 
 void Renderer::render()
 {
+    _name = std::to_string(_id++);
     //TODO: setup camera or MVP
     _isRendering = true;
 //    if (_glViewAssigned)
@@ -555,7 +556,7 @@ void Renderer::drawBatchedTriangles()
     _triBatchesToDraw[0].cmd = nullptr;
     
     int batchesTotal = 0;
-    int prevMaterialID = -1;
+    unsigned int prevMaterialID = 0;
     bool firstCommand = true;
 
     _filledVertex = 0;

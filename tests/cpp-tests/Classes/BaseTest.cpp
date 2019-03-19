@@ -392,34 +392,34 @@ bool TestCase::init()
     if (Scene::init())
     {
         // add title and subtitle
-        TTFConfig ttfConfig("fonts/arial.ttf", 26);
-        _titleLabel = Label::createWithTTF(ttfConfig, title());
-        addChild(_titleLabel, 9999);
-        _titleLabel->setPosition(VisibleRect::center().x, VisibleRect::top().y - 30);
-        
-        ttfConfig.fontSize = 16;
-        _subtitleLabel = Label::createWithTTF(ttfConfig, subtitle());
-        _subtitleLabel->setMaxLineWidth(VisibleRect::getVisibleRect().size.width);
-        addChild(_subtitleLabel, 9999);
-        _subtitleLabel->setPosition(VisibleRect::center().x, VisibleRect::top().y - 60);
-        
-        _priorTestItem = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(TestCase::priorTestCallback, this));
-        _restartTestItem = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(TestCase::restartTestCallback, this));
-        _nextTestItem = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(TestCase::nextTestCallback, this));
-        
-        ttfConfig.fontSize = 20;
-        auto backLabel = Label::createWithTTF(ttfConfig, "Back");
-        auto backItem = MenuItemLabel::create(backLabel, CC_CALLBACK_1(TestCase::onBackCallback, this));
-
-        auto menu = Menu::create(_priorTestItem, _restartTestItem, _nextTestItem, backItem, nullptr);
-
-        menu->setPosition(Vec2::ZERO);
-        _priorTestItem->setPosition(VisibleRect::center().x - _restartTestItem->getContentSize().width * 2, VisibleRect::bottom().y + _restartTestItem->getContentSize().height / 2);
-        _restartTestItem->setPosition(VisibleRect::center().x, VisibleRect::bottom().y + _restartTestItem->getContentSize().height / 2);
-        _nextTestItem->setPosition(VisibleRect::center().x + _restartTestItem->getContentSize().width * 2, VisibleRect::bottom().y + _restartTestItem->getContentSize().height / 2);
-        backItem->setPosition(Vec2(VisibleRect::right().x - 50, VisibleRect::bottom().y + 25));
-
-        addChild(menu, 9999);
+//        TTFConfig ttfConfig("fonts/arial.ttf", 26);
+//        _titleLabel = Label::createWithTTF(ttfConfig, title());
+//        addChild(_titleLabel, 9999);
+//        _titleLabel->setPosition(VisibleRect::center().x, VisibleRect::top().y - 30);
+//
+//        ttfConfig.fontSize = 16;
+//        _subtitleLabel = Label::createWithTTF(ttfConfig, subtitle());
+//        _subtitleLabel->setMaxLineWidth(VisibleRect::getVisibleRect().size.width);
+//        addChild(_subtitleLabel, 9999);
+//        _subtitleLabel->setPosition(VisibleRect::center().x, VisibleRect::top().y - 60);
+//
+//        _priorTestItem = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(TestCase::priorTestCallback, this));
+//        _restartTestItem = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(TestCase::restartTestCallback, this));
+//        _nextTestItem = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(TestCase::nextTestCallback, this));
+//
+//        ttfConfig.fontSize = 20;
+//        auto backLabel = Label::createWithTTF(ttfConfig, "Back");
+//        auto backItem = MenuItemLabel::create(backLabel, CC_CALLBACK_1(TestCase::onBackCallback, this));
+//
+//        auto menu = Menu::create(_priorTestItem, _restartTestItem, _nextTestItem, backItem, nullptr);
+//
+//        menu->setPosition(Vec2::ZERO);
+//        _priorTestItem->setPosition(VisibleRect::center().x - _restartTestItem->getContentSize().width * 2, VisibleRect::bottom().y + _restartTestItem->getContentSize().height / 2);
+//        _restartTestItem->setPosition(VisibleRect::center().x, VisibleRect::bottom().y + _restartTestItem->getContentSize().height / 2);
+//        _nextTestItem->setPosition(VisibleRect::center().x + _restartTestItem->getContentSize().width * 2, VisibleRect::bottom().y + _restartTestItem->getContentSize().height / 2);
+//        backItem->setPosition(Vec2(VisibleRect::right().x - 50, VisibleRect::bottom().y + 25));
+//
+//        addChild(menu, 9999);
 
         return true;
     }
@@ -436,22 +436,22 @@ void TestCase::onEnter()
         setTestSuite(TestController::getInstance()->getCurrTestSuite());
     }
 
-    if (_testSuite)
-    {
-        _titleLabel->setString(StringUtils::format("%d", static_cast<int>(_testSuite->getCurrTestIndex() + 1)) + ":" + title());
-    }
-    else
-    {
-        _titleLabel->setString(title());
-    }
-    _subtitleLabel->setString(subtitle());
-
-    if (_testSuite && _testSuite->getChildTestCount() < 2)
-    {
-        _priorTestItem->setVisible(false);
-        _nextTestItem->setVisible(false);
-        _restartTestItem->setVisible(false);
-    }
+//    if (_testSuite)
+//    {
+//        _titleLabel->setString(StringUtils::format("%d", static_cast<int>(_testSuite->getCurrTestIndex() + 1)) + ":" + title());
+//    }
+//    else
+//    {
+//        _titleLabel->setString(title());
+//    }
+//    _subtitleLabel->setString(subtitle());
+//
+//    if (_testSuite && _testSuite->getChildTestCount() < 2)
+//    {
+//        _priorTestItem->setVisible(false);
+//        _nextTestItem->setVisible(false);
+//        _restartTestItem->setVisible(false);
+//    }
 }
 
 void TestCase::restartTestCallback(Ref* sender)

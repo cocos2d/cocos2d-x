@@ -249,6 +249,7 @@ void Director::setGLDefaultValues()
 // Draw the Scene
 void Director::drawScene()
 {
+    _renderer->_id = 0;
     _renderer->beginFrame();
 
     // calculate "global" dt
@@ -291,7 +292,9 @@ void Director::drawScene()
         
         //render the scene
         if(_openGLView)
+        {
             _openGLView->renderScene(_runningScene, _renderer);
+        }
         
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
     }

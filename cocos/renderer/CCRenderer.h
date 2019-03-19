@@ -128,7 +128,8 @@ Whenever possible prefer to use `TrianglesCommand` objects since the renderer wi
 class CC_DLL Renderer
 {
 public:
-    
+    std::string _name;
+    int _id = 0;
     /**The max number of vertices in a vertex buffer object.*/
     static const int VBO_SIZE = 65536;
     /**The max number of indices in a index buffer.*/

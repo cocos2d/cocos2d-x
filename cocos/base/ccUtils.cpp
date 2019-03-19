@@ -185,49 +185,50 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
 
 void captureNode(Node* startNode, std::function<void(Image*)> imageCallback, float scale)
 { // The best snapshot API, support Scene and any Node
-    auto& size = startNode->getContentSize();
-
-    Director::getInstance()->setNextDeltaTimeZero(true);
-
-    RenderTexture* finalRtx = nullptr;
-    static int id = 0;
-    auto rtx = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8, "RenderTexture_"+std::to_string(id));
-    // rtx->setKeepMatrix(true);
-    Point savedPos = startNode->getPosition();
-    Point anchor;
-    if (!startNode->isIgnoreAnchorPointForPosition()) {
-        anchor = startNode->getAnchorPoint();
-    }
-    startNode->setPosition(Point(size.width * anchor.x, size.height * anchor.y));
-    rtx->begin();
+//    auto& size = startNode->getContentSize();
+//
+//    Director::getInstance()->setNextDeltaTimeZero(true);
+//
+//    RenderTexture* finalRtx = nullptr;
+//    static int id = 0;
+//    auto rtx = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8, "RenderTexture_"+std::to_string(id));
+//     rtx->setKeepMatrix(true);
+//    Point savedPos = startNode->getPosition();
+//    Point anchor;
+//    if (!startNode->isIgnoreAnchorPointForPosition()) {
+//        anchor = startNode->getAnchorPoint();
+//    }
+//    startNode->setPosition(Point(size.width * anchor.x, size.height * anchor.y));
+//    rtx->begin();
     startNode->visit();
-    rtx->end();
-    startNode->setPosition(savedPos);
-
-    if (std::abs(scale - 1.0f) < 1e-6f/* no scale */)
-        finalRtx = rtx;
-    else {
-        /* scale */
-        auto finalRect = Rect(0, 0, size.width, size.height);
-        Sprite *sprite = Sprite::createWithTexture(rtx->getSprite()->getTexture(), finalRect);
-        sprite->setAnchorPoint(Point(0, 0));
-//        sprite->setFlippedY(true);
-        sprite->_trianglesCommand.name = "scale_RenderTexture_" + std::to_string(id);
-        finalRtx = RenderTexture::create(size.width * scale, size.height * scale, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8, "scale_RenderTexture"+std::to_string(id));
-
-        sprite->setScale(scale); // or use finalRtx->setKeepMatrix(true);
-        finalRtx->begin(); 
-        sprite->visit();
-        finalRtx->end();
-    }
-    id++;
+//    rtx->end();
+//    startNode->setPosition(savedPos);
+//
+//    if (std::abs(scale - 1.0f) < 1e-6f/* no scale */)
+//        finalRtx = rtx;
+//    else {
+//        /* scale */
+//        auto finalRect = Rect(0, 0, size.width, size.height);
+//        Sprite *sprite = Sprite::createWithTexture(rtx->getSprite()->getTexture(), finalRect);
+//        sprite->setAnchorPoint(Point(0, 0));
+////        sprite->setFlippedY(true);
+//        sprite->_trianglesCommand.name = "scale_RenderTexture_" + std::to_string(id);
+//        finalRtx = RenderTexture::create(size.width * scale, size.height * scale, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8, "scale_RenderTexture_"+std::to_string(id));
+//
+//        sprite->setScale(scale); // or use finalRtx->setKeepMatrix(true);
+//        finalRtx->begin();
+//        sprite->visit();
+//        finalRtx->end();
+//    }
+//    id++;
+   
     Director::getInstance()->getRenderer()->render();
-    finalRtx->retain();
-    auto releaseCallback = [&](RenderTexture* rt)
-    {
-        rt->release();
-    };
-    finalRtx->newImage(imageCallback, releaseCallback);
+//    finalRtx->retain();
+//    auto releaseCallback = [&](RenderTexture* rt)
+//    {
+//        rt->release();
+//    };
+//    finalRtx->newImage(imageCallback, releaseCallback);
 }
 
 std::vector<Node*> findChildren(const Node &node, const std::string &name)
