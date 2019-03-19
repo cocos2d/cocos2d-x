@@ -533,6 +533,10 @@ void RenderTexture::onBegin()
 
 void RenderTexture::onEnd()
 {
+    Director *director = Director::getInstance();
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _oldProjMatrix);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _oldTransMatrix);
+    
     Renderer *renderer =  Director::getInstance()->getRenderer();
     renderer->setViewPort(_oldViewport.x, _oldViewport.y, _oldViewport.w, _oldViewport.h);
     renderer->setRenderTarget(_oldRenderTargetFlag, _oldColorAttachment, _oldDepthAttachment, _oldStencilAttachment);
