@@ -67,7 +67,7 @@ namespace
     std::string getShaderMacrosForLight()
     {
     //TODO: minggo
-        GLchar def[256];
+        char def[256];
 //        auto conf = Configuration::getInstance();
 //
 //        snprintf(def, sizeof(def)-1, "\n#define MAX_DIRECTIONAL_LIGHT_NUM %d \n"

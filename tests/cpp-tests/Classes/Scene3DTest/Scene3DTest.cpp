@@ -395,8 +395,8 @@ void Scene3DTestScene::createWorld3D()
     Texture2D::TexParams tRepeatParams;
     tRepeatParams.magFilter = GL_LINEAR;
     tRepeatParams.minFilter = GL_LINEAR;
-    tRepeatParams.wrapS = GL_MIRRORED_REPEAT;
-    tRepeatParams.wrapT = GL_MIRRORED_REPEAT;
+    tRepeatParams.sAddressMode = GL_MIRRORED_REPEAT;
+    tRepeatParams.tAddressMode = GL_MIRRORED_REPEAT;
     _textureCube->setTexParameters(tRepeatParams);
     
     // pass the texture sampler to our custom shader

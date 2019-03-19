@@ -26,6 +26,10 @@
 #pragma once
 
 #include "../BaseTest.h"
+#include "renderer/backend/Types.h"
+#include "renderer/backend/ProgramState.h"
+
+#include <vector>
 
 DEFINE_TEST_SUITE(MaterialSystemTest);
 
@@ -42,6 +46,7 @@ public:
 
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
+
 };
 
 class Material_MultipleSprite3D : public MaterialSystemBaseTest
@@ -60,6 +65,17 @@ public:
 
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
+    void updateCCTimeUniforms(float);
+    
+private:
+    struct Locations {
+        Locations(cocos2d::backend::ProgramState *ps, cocos2d::backend::UniformLocation loc)
+            : programState(ps), location(loc) {}
+           
+        cocos2d::backend::ProgramState *programState = nullptr;
+        cocos2d::backend::UniformLocation location;
+    };
+    std::vector<Locations> timeUniforms;
 };
 
 class EffectAutoBindingResolver;
@@ -74,8 +90,12 @@ public:
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
 
+    void updateUniformTime(float);
+
 private:
-    EffectAutoBindingResolver *_resolver;
+    cocos2d::backend::UniformLocation _locationTime;
+    EffectAutoBindingResolver       *_resolver          = nullptr;
+    cocos2d::backend::ProgramState  *_noiseProgramState = nullptr;
 };
 
 class Material_setTechnique : public MaterialSystemBaseTest
@@ -114,31 +134,5 @@ protected:
     unsigned int _maxParsingCoumt;
 };
 
-class Material_invalidate : public MaterialSystemBaseTest
-{
-public:
-    CREATE_FUNC(Material_invalidate);
-
-    virtual void onEnter() override;
-    virtual std::string subtitle() const override;
-
-    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
-
-    cocos2d::CustomCommand _customCommand;
-};
-
-class Material_renderState : public MaterialSystemBaseTest
-{
-public:
-    CREATE_FUNC(Material_renderState);
-
-    virtual void onEnter() override;
-    virtual std::string subtitle() const override;
-
-    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
-
-    cocos2d::RenderState::StateBlock _stateBlock;
-    cocos2d::CustomCommand _customCommand;
-};
 
 

@@ -71,6 +71,7 @@ public:
     /**Destructor.*/
     ~CustomCommand();
     
+
 public:
 	/**
     TODO: should remove it.

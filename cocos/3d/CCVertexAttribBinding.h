@@ -72,7 +72,7 @@ public:
      * 
      * @return A VertexAttribBinding for the requested parameters.
      */
-    static VertexAttribBinding* create(MeshIndexData* meshIndexData, Pass *pass);
+    static VertexAttribBinding* create(MeshIndexData* meshIndexData, Pass *pass, MeshCommand *);
 
     /**
      * Binds this vertex array object.
@@ -107,7 +107,7 @@ private:
      */
     VertexAttribBinding& operator=(const VertexAttribBinding&);
     
-    bool init(MeshIndexData* meshIndexData, Pass *pass);
+    bool init(MeshIndexData* meshIndexData, Pass *pass, MeshCommand *);
     void setVertexAttribPointer(const std::string& name, backend::VertexFormat type, GLboolean normalized, int offset, int flag);
     backend::AttributeBindInfo* getVertexAttribValue(const std::string &name);
     void parseAttributes();

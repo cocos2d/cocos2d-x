@@ -60,7 +60,7 @@ ClippingNodeTests::ClippingNodeTests()
 //    ADD_TEST_CASE(RawStencilBufferTest5);
 //    ADD_TEST_CASE(RawStencilBufferTest6);
     ADD_TEST_CASE(ClippingToRenderTextureTest);
-//    ADD_TEST_CASE(ClippingRectangleNodeTest); // TODO for unfinished CCClippingNode Impl
+    ADD_TEST_CASE(ClippingRectangleNodeTest);
 }
 
 //// Demo examples start here

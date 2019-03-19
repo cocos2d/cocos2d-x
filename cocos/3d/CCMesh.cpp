@@ -322,11 +322,18 @@ void Mesh::setMaterial(Material* material)
         _material = material;
         CC_SAFE_RETAIN(_material);
     }
+    _meshCommands.clear();
 
     if (_material)
     {
         for (auto technique: _material->getTechniques())
         {
+            //allocate MeshCommand vector for technique
+            //allocate MeshCommand for each pass
+            _meshCommands[technique->getName()] = std::vector<MeshCommand>(technique->getPasses().size());
+            auto &list = _meshCommands[technique->getName()];
+            
+            int i = 0;
             for (auto pass: technique->getPasses())
             {
 #ifdef COCOS2D_DEBUG
@@ -341,8 +348,9 @@ void Mesh::setMaterial(Material* material)
                 }
 #endif
                 //TODO
-                auto vertexAttribBinding = VertexAttribBinding::create(_meshIndexData, pass);
+                auto vertexAttribBinding = VertexAttribBinding::create(_meshIndexData, pass, &list[i]);
                 pass->setVertexAttribBinding(vertexAttribBinding);
+                i += 1;
             }
         }
     }
@@ -413,8 +421,8 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
             setLightUniforms(pass, scene, color, lightMask);
         }
     }
-
-    _material->draw(globalZ,
+    auto &commands = _meshCommands[technique->getName()];
+    _material->draw(commands.data(), globalZ,
                     getVertexBuffer(),
                     getIndexBuffer(),
                     getPrimitiveType(),

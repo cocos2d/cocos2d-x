@@ -190,13 +190,14 @@ namespace utils
     * @lua NA
     */
     CC_DLL LanguageType getLanguageTypeByISO2(const char* code);
-
-    CC_DLL void setBlending(backend::BlendFactor sfactor, backend::BlendFactor dfactor);
     
-    //TODO: minggo: should remove it.
     CC_DLL backend::BlendFactor toBackendBlendFactor(int factor);
 
     CC_DLL int toGLBlendFactor(backend::BlendFactor blendFactor);
+
+    CC_DLL backend::SamplerFilter toBackendSamplerFilter(int mode);
+
+    CC_DLL backend::SamplerAddressMode toBackendAddressMode(int mode);
 
     // Adjust matrix for metal.
     CC_DLL const Mat4& getAdjustMatrix();

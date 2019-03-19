@@ -528,25 +528,6 @@ LanguageType getLanguageTypeByISO2(const char* code)
     }
     return ret;
 }
-
-void setBlending(backend::BlendFactor sfactor, backend::BlendFactor dfactor)
-{
-    //TODO arnold: global state is removal
-    //if (sfactor == backend::BlendFactor::ONE && dfactor == backend::BlendFactor::ZERO)
-    //{
-    //    glDisable(GL_BLEND);
-    //    RenderState::StateBlock::_globalState->setBlend(false);
-    //}
-    //else
-    //{
-    //    glEnable(GL_BLEND);
-    //    glBlendFunc(toGLBlendFactor(sfactor), toGLBlendFactor(dfactor));
-
-    //    RenderState::StateBlock::_globalState->setBlend(true);
-    //    RenderState::StateBlock::_globalState->setBlendSrc(sfactor);
-    //    RenderState::StateBlock::_globalState->setBlendDst(dfactor);
-    //}
-}
     
 backend::BlendFactor toBackendBlendFactor(int factor)
 {
@@ -631,6 +612,40 @@ int toGLBlendFactor(backend::BlendFactor blendFactor)
         break;
     }
     return ret;
+}
+
+backend::SamplerFilter toBackendSamplerFilter(int mode)
+{
+    switch (mode)
+    {
+    case GLTexParamConst::LINEAR:
+    case GLTexParamConst::LINEAR_MIPMAP_LINEAR:
+    case GLTexParamConst::LINEAR_MIPMAP_NEAREST:
+    case GLTexParamConst::NEAREST_MIPMAP_LINEAR:
+        return backend::SamplerFilter::LINEAR;
+    case GLTexParamConst::NEAREST:
+    case GLTexParamConst::NEAREST_MIPMAP_NEAREST:
+        return backend::SamplerFilter::NEAREST;
+    default:
+        CCASSERT(false, "invalid GL sampler filter!");
+        return backend::SamplerFilter::LINEAR;
+    }
+}
+
+backend::SamplerAddressMode toBackendAddressMode(int mode)
+{
+    switch (mode)
+    {
+    case GLTexParamConst::REPEAT:
+        return backend::SamplerAddressMode::REPEAT;
+    case GLTexParamConst::CLAMP:
+        return backend::SamplerAddressMode::CLAMP_TO_EDGE;
+    case GLTexParamConst::MIRROR_REPEAT:
+        return backend::SamplerAddressMode::MIRROR_REPEAT;
+    default:
+        CCASSERT(false, "invalid GL address mode");
+        return backend::SamplerAddressMode::REPEAT;
+    }
 }
 
 const Mat4& getAdjustMatrix()

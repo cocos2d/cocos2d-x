@@ -42,13 +42,24 @@ USING_NS_CC;
 
 NS_CC_BEGIN
 
-// check a number is power of two.
-static bool isPOT(int number)
-{
-    bool flag = false;
-    if ((number > 0) && (number&(number - 1)) == 0)
-        flag = true;
-    return flag;
+namespace {
+    //It's used for creating a default texture when lightMap is nullpter
+    static unsigned char cc_2x2_white_image[] = {
+        // RGBA8888
+        0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF,
+        0xFF, 0xFF, 0xFF, 0xFF
+    };
+
+    // check a number is power of two.
+    static bool isPOT(int number)
+    {
+        bool flag = false;
+        if ((number > 0) && (number&(number - 1)) == 0)
+            flag = true;
+        return flag;
+    }
 }
 
 Terrain * Terrain::create(TerrainData &parameter, CrackFixedType fixedType)
@@ -90,9 +101,9 @@ void cocos2d::Terrain::setLightMap(const std::string& fileName)
     _lightMap->initWithImage(image);
 
     Texture2D::TexParams tRepeatParams;//set texture parameters
-    tRepeatParams.magFilter = tRepeatParams.minFilter = GL_LINEAR;
-    tRepeatParams.wrapS = GL_REPEAT;
-    tRepeatParams.wrapT = GL_REPEAT;
+    tRepeatParams.magFilter = tRepeatParams.minFilter = backend::SamplerFilter::LINEAR;
+    tRepeatParams.sAddressMode = backend::SamplerAddressMode::REPEAT;
+    tRepeatParams.tAddressMode = backend::SamplerAddressMode::REPEAT;
     _lightMap->setTexParameters(tRepeatParams);
 
 }
@@ -160,6 +171,9 @@ void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, 
     {
         int hasLightMap = 0;
         _programState->setUniform(_lightMapCheckLocation, &hasLightMap, sizeof(hasLightMap));
+#ifdef CC_USE_METAL
+        _programState->setTexture(_lightMapLocation, 5, _dummyTexture->getBackendTexture());
+#endif
     }
     auto camera = Camera::getVisitingCamera();
 
@@ -259,6 +273,14 @@ Terrain::Terrain()
     }
     );
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
+#endif
+#ifdef CC_USE_METAL
+    auto image = new (std::nothrow)Image();
+    bool CC_UNUSED isOK = image->initWithRawData(cc_2x2_white_image, sizeof(cc_2x2_white_image), 2, 2, 8);
+    CCASSERT(isOK, "The 2x2 empty texture was created unsuccessfully.");
+    _dummyTexture = new (std::nothrow)Texture2D();
+    _dummyTexture->initWithImage(image);
+    CC_SAFE_RELEASE(image);
 #endif
 }
 
@@ -448,6 +470,7 @@ Terrain::~Terrain()
     CC_SAFE_RELEASE(_alphaMap);
     CC_SAFE_RELEASE(_lightMap);
     CC_SAFE_RELEASE(_heightMapImage);
+    CC_SAFE_RELEASE(_dummyTexture);
     CC_SAFE_RELEASE_NULL(_programState);
     delete _quadRoot;
     for (int i = 0; i < 4; ++i)
@@ -836,8 +859,8 @@ bool Terrain::initTextures()
     }
 
     Texture2D::TexParams texParam;
-    texParam.wrapS = GL_REPEAT;
-    texParam.wrapT = GL_REPEAT;
+    texParam.sAddressMode = backend::SamplerAddressMode::REPEAT;
+    texParam.tAddressMode = backend::SamplerAddressMode::REPEAT;
     if (_terrainData._alphaMapSrc.empty())
     {
         auto textImage = new (std::nothrow)Image();
@@ -846,8 +869,8 @@ bool Terrain::initTextures()
         texture->initWithImage(textImage);
         texture->generateMipmap();
         _detailMapTextures[0] = texture;
-        texParam.minFilter = GL_LINEAR_MIPMAP_LINEAR;
-        texParam.magFilter = GL_LINEAR;
+        texParam.minFilter = backend::SamplerFilter::LINEAR;
+        texParam.magFilter = backend::SamplerFilter::LINEAR;
         texture->setTexParameters(texParam);
         delete textImage;
     }
@@ -858,10 +881,10 @@ bool Terrain::initTextures()
         image->initWithImageFile(_terrainData._alphaMapSrc);
         _alphaMap = new (std::nothrow)Texture2D();
         _alphaMap->initWithImage(image);
-        texParam.wrapS = GL_CLAMP_TO_EDGE;
-        texParam.wrapT = GL_CLAMP_TO_EDGE;
-        texParam.minFilter = GL_LINEAR;
-        texParam.magFilter = GL_LINEAR;
+        texParam.sAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+        texParam.tAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+        texParam.minFilter = backend::SamplerFilter::LINEAR;
+        texParam.magFilter = backend::SamplerFilter::LINEAR;
         _alphaMap->setTexParameters(texParam);
         delete image;
 
@@ -875,10 +898,10 @@ bool Terrain::initTextures()
             texture->generateMipmap();
             _detailMapTextures[i] = texture;
 
-            texParam.wrapS = GL_REPEAT;
-            texParam.wrapT = GL_REPEAT;
-            texParam.minFilter = GL_LINEAR_MIPMAP_LINEAR;
-            texParam.magFilter = GL_LINEAR;
+            texParam.sAddressMode = backend::SamplerAddressMode::REPEAT;
+            texParam.tAddressMode = backend::SamplerAddressMode::REPEAT;
+            texParam.minFilter = backend::SamplerFilter::LINEAR;
+            texParam.magFilter = backend::SamplerFilter::LINEAR;
             texture->setTexParameters(texParam);
         }
     }
@@ -1548,7 +1571,6 @@ void Terrain::QuadTree::resetNeedDraw(bool value)
 
 void Terrain::QuadTree::cullByCamera(const Camera * camera, const Mat4 & worldTransform)
 {
-    //TODO new-renderer: interface  isVisibleInFrustum removal
     if(!camera->isVisibleInFrustum(&_worldSpaceAABB))
     {
         this->resetNeedDraw(false);
@@ -1559,7 +1581,6 @@ void Terrain::QuadTree::cullByCamera(const Camera * camera, const Mat4 & worldTr
         _bl->cullByCamera(camera, worldTransform);
         _br->cullByCamera(camera, worldTransform);
     }
-    //    }
 }
 
 void Terrain::QuadTree::preCalculateAABB(const Mat4 & worldTransform)

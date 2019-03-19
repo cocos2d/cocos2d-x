@@ -46,13 +46,13 @@ std::string RenderState::getName() const
 }
 
 
-void RenderState::bindPass(Pass* pass)
+void RenderState::bindPass(Pass* pass, MeshCommand* command)
 {
     CC_ASSERT(pass);
     assert(pass->_technique && pass->_technique->_material);
     auto *technique = pass->_technique;
     auto *material = technique->_material;
-    auto &pipelineDescriptor = pass->_meshCommand.getPipelineDescriptor();
+    auto &pipelineDescriptor = command->getPipelineDescriptor();
 
     //need reset all state
     //pipelineDescriptor.blendDescriptor.blendEnabled = true;
@@ -71,9 +71,9 @@ void RenderState::bindPass(Pass* pass)
 
 }
 
-void RenderState::unbindPass(Pass* pass)
+void RenderState::unbindPass(Pass* pass, MeshCommand* command)
 {
-    auto &pipelineDescriptor = pass->_meshCommand.getPipelineDescriptor();
+    auto &pipelineDescriptor = command->getPipelineDescriptor();
     RenderState::StateBlock::restore(0, &pipelineDescriptor);
 }
 

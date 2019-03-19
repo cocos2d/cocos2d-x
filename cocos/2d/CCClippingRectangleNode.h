@@ -25,13 +25,10 @@
  * THE SOFTWARE.
  *
  */
-
-#ifndef __MISCNODE_CCCLIPPING_RECTANGLE_NODE_H__
-#define __MISCNODE_CCCLIPPING_RECTANGLE_NODE_H__
+#pragma once
 
 #include "2d/CCNode.h"
-#include "renderer/CCCustomCommand.h"
-#include "platform/CCGL.h"
+#include "renderer/CCCallbackCommand.h"
 
 NS_CC_BEGIN
 
@@ -94,25 +91,21 @@ public:
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
 protected:
-    ClippingRectangleNode()
-    : _clippingEnabled(true)
-    {
-    }
+    ClippingRectangleNode() = default;
     
     void onBeforeVisitScissor();
     void onAfterVisitScissor();
     
     Rect _clippingRegion;
-    bool _clippingEnabled;
+    bool _clippingEnabled = true;
+
+    bool _oldScissorTest = false;
     
-    CustomCommand _beforeVisitCmdScissor;
-    CustomCommand _afterVisitCmdScissor;
+    CallbackCommand _beforeVisitCmdScissor;
+    CallbackCommand _afterVisitCmdScissor;
 };
 
 // end of _2d group
 /// @}
 
 NS_CC_END
-
-#endif
-

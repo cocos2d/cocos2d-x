@@ -26,7 +26,6 @@ enum class ShaderStage : uint32_t
     VERTEX_AND_FRAGMENT
 };
 
-//TODO: simplify name
 enum class VertexFormat : uint32_t
 {
     FLOAT4,
@@ -194,15 +193,26 @@ struct SamplerDescriptor
     SamplerFilter mipmapFilter = SamplerFilter::LINEAR;
     SamplerAddressMode sAddressMode = SamplerAddressMode::CLAMP_TO_EDGE;
     SamplerAddressMode tAddressMode = SamplerAddressMode::CLAMP_TO_EDGE;
-    
-    SamplerDescriptor(bool _mipmapEnabled = false,
-                      SamplerFilter _magFilter = SamplerFilter::LINEAR,
-                      SamplerFilter _minFilter = SamplerFilter::LINEAR,
-                      SamplerFilter _mipmapFilter = SamplerFilter::LINEAR,
-                      SamplerAddressMode _sAddressMode = SamplerAddressMode::CLAMP_TO_EDGE,
-                      SamplerAddressMode _tAddressMode = SamplerAddressMode::CLAMP_TO_EDGE
-                      ):mipmapEnabled(_mipmapEnabled), magFilter(_magFilter), minFilter(_minFilter),
-    mipmapFilter(_mipmapFilter), sAddressMode(_sAddressMode), tAddressMode(_tAddressMode) {}
+
+    SamplerDescriptor() {}
+
+    SamplerDescriptor(
+        SamplerFilter _magFilter,
+        SamplerFilter _minFilter,
+        SamplerAddressMode _sAddressMode,
+        SamplerAddressMode _tAddressMode
+    ) : magFilter(_magFilter), minFilter(_minFilter),
+        sAddressMode(_sAddressMode), tAddressMode(_tAddressMode) {}
+
+    SamplerDescriptor(bool _mipmapEnabled,
+        SamplerFilter _magFilter,
+        SamplerFilter _minFilter,
+        SamplerFilter _mipmapFilter,
+        SamplerAddressMode _sAddressMode,
+        SamplerAddressMode _tAddressMode
+    ) :mipmapEnabled(_mipmapEnabled), magFilter(_magFilter), minFilter(_minFilter),
+        mipmapFilter(_mipmapFilter), sAddressMode(_sAddressMode), tAddressMode(_tAddressMode) {}
+
 };
 
 enum class CullMode: uint32_t
@@ -222,18 +232,29 @@ struct UniformInfo
 {
     int count = 0;
     int location = -1;
+    
+    //in opengl, type means uniform data type, i.e. GL_FLOAT_VEC2, while in metal type means data basic type, i.e. float
     unsigned int type = 0;
     bool isArray = false;
     unsigned int bufferSize = 0;
+
+    //only used in metal
+    bool isMatrix = false;
+    bool needConvert = false;
 };
 
 struct UniformLocation
 {
     int location = -1;
     ShaderStage shaderStage = ShaderStage::VERTEX;
+    UniformLocation() = default;
     operator bool() { return location >= 0; }
     void reset() { location = -1; }
+
+    bool operator == (const UniformLocation &other) const;
+    std::size_t operator()(const UniformLocation &uniform) const;
 };
+
 
 struct AttributeBindInfo
 {

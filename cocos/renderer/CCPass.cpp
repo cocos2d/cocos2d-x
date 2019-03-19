@@ -101,8 +101,7 @@ bool Pass::initWithProgramState(Technique* technique, backend::ProgramState *pro
 
 Pass::Pass()
 {
-    _meshCommand.setBeforeCallback(CC_CALLBACK_0(Pass::onBeforeVisitCmd, this));
-    _meshCommand.setAfterCallback(CC_CALLBACK_0(Pass::onAfterVisitCmd, this));
+
 }
 
 Pass::~Pass()
@@ -116,11 +115,10 @@ Pass* Pass::clone() const
     auto pass = new (std::nothrow) Pass();
     if (pass)
     {
-        //RenderState::cloneInto(pass);
         pass->_renderState = _renderState;
 
         pass->setProgramState(_programState->clone());
-        
+
         pass->_vertexAttribBinding = _vertexAttribBinding;
         CC_SAFE_RETAIN(pass->_vertexAttribBinding);
 
@@ -143,7 +141,6 @@ void Pass::setProgramState(backend::ProgramState* programState)
         CC_SAFE_RELEASE(_programState);
         _programState = programState;
         CC_SAFE_RETAIN(_programState);
-        _meshCommand.getPipelineDescriptor().programState = _programState;
         initUniformLocations();
         _hashDirty = true;
     }
@@ -186,61 +183,36 @@ void Pass::initUniformLocations()
     _locAmbientLigthColor = ps->getUniformLocation(s_ambientLightUniformColorName);
 }
 
-//uint32_t Pass::getHash() const
-//{
-//    if (_hashDirty || _state->isDirty())
-//    {
-//        //FIXME: loose information?
-//        uint32_t program = (uint32_t)(intptr_t)(_programState->getProgram());
-//        uint32_t textureid = _texture ? _texture->getName() : -1;
-//        uint32_t stateblockid = _state->getHash();
-//
-//        _hash = program ^ textureid ^ stateblockid;
-//
-//        _hashDirty = false;
-//    }
-//
-//    return _hash;
-//}
-
-//void Pass::bind(const Mat4& modelView)
-//{
-//    bind(modelView, true);
-//}
-
-//void Pass::bind(const Mat4& modelView, bool bindAttributes)
-//{
-//    // vertex attribs
-//    if (bindAttributes && _vertexAttribBinding)
-//        _vertexAttribBinding->bind();
-//
-//    auto glprogramstate = _glProgramState ? _glProgramState : getTarget()->getGLProgramState();
-//
-//    glprogramstate->applyGLProgram(modelView);
-//    glprogramstate->applyUniforms();
-//
-//    //set render state
-//    RenderState::bind(this);
-//}
-
-void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
+void Pass::draw(MeshCommand *meshCommand, float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
                 MeshCommand::PrimitiveType primitive, MeshCommand::IndexFormat indexFormat,
                 unsigned int indexCount, const Mat4& modelView)
 {
-    _meshCommand.init(globalZOrder);
-    _meshCommand.setPrimitiveType(primitive);
-    _meshCommand.setIndexBuffer(indexBuffer, indexFormat);
-    _meshCommand.setVertexBuffer(vertexBuffer);
-    _meshCommand.setIndexDrawInfo(0, indexCount);
 
+    meshCommand->setBeforeCallback(CC_CALLBACK_0(Pass::onBeforeVisitCmd, this, meshCommand));
+    meshCommand->setAfterCallback(CC_CALLBACK_0(Pass::onAfterVisitCmd, this, meshCommand));
+    meshCommand->init(globalZOrder, modelView);
+    meshCommand->setPrimitiveType(primitive);
+    meshCommand->setIndexBuffer(indexBuffer, indexFormat);
+    meshCommand->setVertexBuffer(vertexBuffer);
+    meshCommand->setIndexDrawInfo(0, indexCount);
+    meshCommand->getPipelineDescriptor().programState = _programState;
+
+
+    auto *renderer = Director::getInstance()->getRenderer();
+
+    renderer->addCommand(meshCommand);
+}
+
+void Pass::updateMVPUniform(const Mat4& modelView)
+{
     auto &matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     auto mvp = matrixP * modelView;
     _programState->setUniform(_locMVPMatrix, mvp.m, sizeof(mvp.m));
-    if (_locMVMatrix) 
+    if (_locMVMatrix)
     {
         _programState->setUniform(_locMVMatrix, modelView.m, sizeof(modelView.m));
     }
-    
+
     if (_locPMatrix)
     {
         _programState->setUniform(_locPMatrix, matrixP.m, sizeof(matrixP.m));
@@ -252,17 +224,11 @@ void Pass::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buff
         _programState->setUniform(_locNormalMatrix, normalMatrix.data(), sizeof(normalMatrix[0]) * normalMatrix.size());
     }
 
-    auto *renderer = Director::getInstance()->getRenderer();
-
-    renderer->addCommand(&_meshCommand);
 }
 
-void Pass::onBeforeVisitCmd()
+void Pass::onBeforeVisitCmd(MeshCommand *command)
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    //_oldDepthEnabledState = renderer->getDepthTest();
-
-    auto &pipelineDescriptor = _meshCommand.getPipelineDescriptor();
 
     _rendererDepthTestEnabled = renderer->getDepthTest();
     _rendererDepthCmpFunc = renderer->getDepthCompareFunction();
@@ -270,15 +236,16 @@ void Pass::onBeforeVisitCmd()
     
     _rendererDepthWrite = renderer->getDepthWrite();
     _rendererWinding = renderer->getWinding();
-
-    _renderState.bindPass(this);
     renderer->setDepthTest(true);
+    _renderState.bindPass(this, command);
+
+    updateMVPUniform(command->getMV());
 }
 
-void Pass::onAfterVisitCmd()
+void Pass::onAfterVisitCmd(MeshCommand *command)
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    _renderState.unbindPass(this);
+    _renderState.unbindPass(this, command);
     renderer->setDepthTest(_rendererDepthTestEnabled);
     renderer->setDepthCompareFunction(_rendererDepthCmpFunc);
     renderer->setCullMode(_rendererCullMode);
@@ -299,14 +266,6 @@ void Pass::setTechnique(Technique *technique)
 {
     _technique = technique; //weak reference
 }
-
-
-//void Pass::unbind()
-//{
-//    RenderState::StateBlock::restore(0);
-//
-////    _vertexAttribBinding->unbind();
-//}
 
 void Pass::setVertexAttribBinding(VertexAttribBinding* binding)
 {
@@ -413,7 +372,5 @@ void Pass::setUniformAmbientLigthColor(const void *data, size_t dataLen)
 {
     TRY_SET_UNIFORM(_locAmbientLigthColor);
 }
-
-
 
 NS_CC_END

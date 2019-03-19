@@ -3771,10 +3771,10 @@ static int tolua_cocos2dx_Texture2D_setTexParameters(lua_State* tolua_S)
 
     int argc = 0;
     Texture2D* self = nullptr;
-    GLuint arg1 = 0;
-    GLuint arg2 = 0;
-    GLuint arg3 = 0;
-    GLuint arg4 = 0;
+    backend::SamplerFilter      arg1;
+    backend::SamplerFilter      arg2;
+    backend::SamplerAddressMode arg3;
+    backend::SamplerAddressMode arg4;
 
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
@@ -3805,12 +3805,12 @@ static int tolua_cocos2dx_Texture2D_setTexParameters(lua_State* tolua_S)
         }
 #endif
 
-        arg1 = (GLuint)tolua_tonumber(tolua_S, 2, 0);
-        arg2 = (GLuint)tolua_tonumber(tolua_S, 3, 0);
-        arg3 = (GLuint)tolua_tonumber(tolua_S, 4, 0);
-        arg4 = (GLuint)tolua_tonumber(tolua_S, 5, 0);
+        arg1 = utils::toBackendSamplerFilter((GLuint)tolua_tonumber(tolua_S, 2, 0));
+        arg2 = utils::toBackendSamplerFilter((GLuint)tolua_tonumber(tolua_S, 3, 0));
+        arg3 = utils::toBackendAddressMode((GLuint)tolua_tonumber(tolua_S, 4, 0));
+        arg4 = utils::toBackendAddressMode((GLuint)tolua_tonumber(tolua_S, 5, 0));
 
-        Texture2D::TexParams param = { arg1, arg2, arg3, arg4 };
+        Texture2D::TexParams param(arg1, arg2, arg3, arg4);
 
         self->setTexParameters(param);
 

@@ -146,7 +146,7 @@ void DrawNode3D::updateCommand(cocos2d::Renderer* renderer,const Mat4 &transform
     //TODO arnold
     //RenderState::StateBlock::_globalState->setDepthTest(true);
 
-    cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
+//    cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _bufferLines.size());
 }
