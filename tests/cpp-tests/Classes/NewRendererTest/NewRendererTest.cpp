@@ -29,19 +29,19 @@ USING_NS_CC;
 
 NewRendererTests::NewRendererTests()
 {
-    ADD_TEST_CASE(NewSpriteTest);
-    ADD_TEST_CASE(GroupCommandTest);
-//    ADD_TEST_CASE(NewClippingNodeTest); // When depth and stencil are used together, ...
-    ADD_TEST_CASE(NewDrawNodeTest);
-    ADD_TEST_CASE(NewCullingTest);
-    ADD_TEST_CASE(VBOFullTest);
-    ADD_TEST_CASE(CaptureScreenTest);
+//    ADD_TEST_CASE(NewSpriteTest);
+//    ADD_TEST_CASE(GroupCommandTest);
+////    ADD_TEST_CASE(NewClippingNodeTest); // When depth and stencil are used together, ...
+//    ADD_TEST_CASE(NewDrawNodeTest);
+//    ADD_TEST_CASE(NewCullingTest);
+//    ADD_TEST_CASE(VBOFullTest);
+//    ADD_TEST_CASE(CaptureScreenTest);
     ADD_TEST_CASE(CaptureNodeTest);
-    ADD_TEST_CASE(BugAutoCulling);
-    ADD_TEST_CASE(RendererBatchQuadTri);
-    // ADD_TEST_CASE(RendererUniformBatch); // TODO shouldn't call OpenGL API directly
-    // ADD_TEST_CASE(RendererUniformBatch2);
-    ADD_TEST_CASE(NonBatchSprites);
+//    ADD_TEST_CASE(BugAutoCulling);
+//    ADD_TEST_CASE(RendererBatchQuadTri);
+//    // ADD_TEST_CASE(RendererUniformBatch); // TODO shouldn't call OpenGL API directly
+//    // ADD_TEST_CASE(RendererUniformBatch2);
+//    ADD_TEST_CASE(NonBatchSprites);
 };
 
 std::string MultiSceneTest::title() const
@@ -545,16 +545,16 @@ void CaptureNodeTest::onCaptured(Ref*)
         addChild(sp, 0, childTag);
         Size s = Director::getInstance()->getWinSize();
         sp->setPosition(s.width / 2, s.height / 2);
-        
+
         // store to disk
         image->saveToFile(_filename);
-        
+
         // release the captured image
         image->release();
     };
     
     auto callbackFunction = std::bind(callback, std::placeholders::_1);
-    utils::captureNode(this, callbackFunction, 0.5);
+    utils::captureNode(this, callbackFunction, 1.0);
 }
 
 BugAutoCulling::BugAutoCulling()

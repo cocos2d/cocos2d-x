@@ -158,6 +158,7 @@ public:
      * @js NA
      */
     void newImage(std::function<void(Image*)> imageCallback, bool flipImage = true);
+    void newImage(std::function<void(Image*)> imageCallback, std::function<void(RenderTexture*)> releaseCallback);
     
     /** Saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
      * Returns true if the operation is successful.
@@ -366,6 +367,7 @@ protected:
     */
     CallbackCommand _saveToFileCommand;
     std::function<void (RenderTexture*, const std::string&)> _saveFileCallback = nullptr;
+    std::function<void (RenderTexture*)> _releaseCallback = nullptr;
     
     Mat4 _oldTransMatrix, _oldProjMatrix;
     Mat4 _transformMatrix, _projectionMatrix;

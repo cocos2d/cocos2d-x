@@ -221,9 +221,13 @@ void captureNode(Node* startNode, std::function<void(Image*)> imageCallback, flo
         finalRtx->end();
     }
 
-    Director::getInstance()->getRenderer()->render();
-
-    finalRtx->newImage(imageCallback);
+    //Director::getInstance()->getRenderer()->render();
+    finalRtx->retain();
+    auto releaseCallback = [&](RenderTexture* rt)
+    {
+        rt->release();
+    };
+    finalRtx->newImage(imageCallback, releaseCallback);
 }
 
 std::vector<Node*> findChildren(const Node &node, const std::string &name)

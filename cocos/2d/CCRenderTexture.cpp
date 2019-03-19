@@ -200,6 +200,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         }
         else
             break;
+//        _texture2D->retain();
 
         _renderTargetFlags = RenderTargetFlag::COLOR;
 
@@ -405,6 +406,12 @@ void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA)
     newImage(callbackFunc);
 }
 
+void RenderTexture::newImage(std::function<void(Image*)> imageCallback, std::function<void(RenderTexture*)> releaseCallback)
+{
+    newImage(imageCallback);
+    _releaseCallback = releaseCallback;
+}
+
 /* get buffer as Image */
 void RenderTexture::newImage(std::function<void(Image*)> imageCallback, bool flipImage)
 {
@@ -428,6 +435,8 @@ void RenderTexture::newImage(std::function<void(Image*)> imageCallback, bool fli
     auto initCallback = [&, savedBufferWidth, savedBufferHeight, imageCallback](Image* image, const unsigned char* tempData){
         image->initWithRawData(tempData, savedBufferWidth * savedBufferHeight * 4, savedBufferWidth, savedBufferHeight, 8);
         imageCallback(image);
+        if(_releaseCallback)
+            _releaseCallback(this);
     };
     auto callback = std::bind(initCallback, image, std::placeholders::_1);
     

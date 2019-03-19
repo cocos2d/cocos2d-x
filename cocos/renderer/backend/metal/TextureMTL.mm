@@ -210,11 +210,14 @@ void TextureMTL::getBytes(int x, int y, int width, int height, bool flipImage, s
 #endif
     [commandEncoder endEncoding];
     
+    int bitsPerElement = _bitsPerElement;
+    int bytesPerRow = _bytesPerRow;
+    
     [commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> commandBuffer) {
         MTLRegion region = MTLRegionMake2D(0, 0, width, height);
-        auto bytePerRow = width * _bitsPerElement / 8;
+        auto bytePerRow = width * bitsPerElement / 8;
         unsigned char* image = new unsigned char[bytePerRow * height];
-        [copiedTexture getBytes:image bytesPerRow:_bytesPerRow fromRegion:region mipmapLevel:0];
+        [copiedTexture getBytes:image bytesPerRow:bytesPerRow fromRegion:region mipmapLevel:0];
         
         //consistent with opengl behavior
         if(!flipImage)
