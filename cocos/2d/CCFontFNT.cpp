@@ -32,6 +32,7 @@
 #include "base/CCMap.h"
 #include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
+#include "renderer/backend/Device.h"
 
 #include <cmath>
 #include <set>
@@ -524,15 +525,14 @@ void BMFontConfiguration::parseCommonArguments(const char* line)
     tmp = strstr(tmp, "scaleW=") + 7;
     sscanf(tmp, "%d", &value);
 
-    //TODO coulsonwang
-//    int maxTextureSize = Configuration::getInstance()->getMaxTextureSize();
-//    CCASSERT(value <= maxTextureSize, "CCLabelBMFont: page can't be larger than supported");
+    auto deviceInfo = backend::Device::getInstance()->getDeviceInfo();
+    int maxTextureSize = deviceInfo->getMaxTextureSize();
+    CCASSERT(value <= maxTextureSize, "CCLabelBMFont: page can't be larger than supported");
 
     // scaleH. sanity check
     tmp = strstr(tmp, "scaleH=") + 7;
     sscanf(tmp, "%d", &value);
-    //TODO coulsonwang
-//    CCASSERT(value <= maxTextureSize, "CCLabelBMFont: page can't be larger than supported");
+    CCASSERT(value <= maxTextureSize, "CCLabelBMFont: page can't be larger than supported");
 
     // pages. sanity check
     tmp = strstr(tmp, "pages=") + 6;

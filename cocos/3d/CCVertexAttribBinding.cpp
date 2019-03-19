@@ -58,7 +58,7 @@ VertexAttribBinding::~VertexAttribBinding()
     }
 }
 
-VertexAttribBinding* VertexAttribBinding::create(MeshIndexData* meshIndexData, Pass* pass)
+VertexAttribBinding* VertexAttribBinding::create(MeshIndexData* meshIndexData, Pass* pass, MeshCommand *command)
 {
     CCASSERT(meshIndexData && pass && pass->getProgramState(), "Invalid MeshIndexData and/or programState");
 
@@ -71,12 +71,13 @@ VertexAttribBinding* VertexAttribBinding::create(MeshIndexData* meshIndexData, P
         if (b->_meshIndexData == meshIndexData && b->_programState == pass->getProgramState())
         {
             // Found a match!
+            command->getPipelineDescriptor().vertexLayout = *b->_vertexLayout;
             return b;
         }
     }
 
     b = new (std::nothrow) VertexAttribBinding();
-    if (b && b->init(meshIndexData, pass))
+    if (b && b->init(meshIndexData, pass, command))
     {
         b->autorelease();
         __vertexAttribBindingCache.push_back(b);
@@ -85,14 +86,14 @@ VertexAttribBinding* VertexAttribBinding::create(MeshIndexData* meshIndexData, P
     return b;
 }
 
-bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass)
+bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass, MeshCommand *command)
 {
 
     CCASSERT(meshIndexData && pass && pass->getProgramState(), "Invalid arguments");
 
     auto programState = pass->getProgramState();
 
-    _vertexLayout = pass->getVertexLayout();
+    _vertexLayout = &command->getPipelineDescriptor().vertexLayout;
 
     // One-time initialization.
     //TODO arnold

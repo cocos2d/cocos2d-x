@@ -383,17 +383,29 @@ void Sprite::setVertexLayout()
 
 void Sprite::updateShaders(const char* vert, const char* frag)
 {
+    auto programState = new (std::nothrow) backend::ProgramState(vert, frag);
+    setProgramState(programState);
+    CC_SAFE_RELEASE_NULL(programState);
+}
+
+void Sprite::setProgramState(backend::ProgramState *programState)
+{
+    CCASSERT(programState, "argument should not be nullptr");
     auto& pipelineDescriptor = _trianglesCommand.getPipelineDescriptor();
-    CC_SAFE_RELEASE(_programState);
-    _programState = new (std::nothrow) backend::ProgramState(vert, frag);
+    if (_programState != programState)
+    {
+        CC_SAFE_RELEASE(_programState);
+        _programState = programState;
+        CC_SAFE_RETAIN(programState);
+    }
     pipelineDescriptor.programState = _programState;
-    
+
     _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     setMVPMatrixUniform();
 
     _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
     _alphaTextureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture1");
-    
+
     setVertexLayout();
     updateProgramState();
 }

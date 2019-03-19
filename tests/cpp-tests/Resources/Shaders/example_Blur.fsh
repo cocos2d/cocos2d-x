@@ -9,6 +9,8 @@ uniform vec2 resolution;
 uniform float blurRadius;
 uniform float sampleNum;
 
+uniform sampler2D u_texture;
+
 vec4 blur(vec2);
 
 void main(void)
@@ -34,7 +36,7 @@ vec4 blur(vec2 p)
             for(float y = -r; y < r; y += sampleStep)
             {
                 float weight = (r - abs(x)) * (r - abs(y));
-                col += texture2D(CC_Texture0, p + vec2(x * unit.x, y * unit.y)) * weight;
+                col += texture2D(u_texture, p + vec2(x * unit.x, y * unit.y)) * weight;
                 count += weight;
             }
         }
@@ -42,5 +44,5 @@ vec4 blur(vec2 p)
         return col / count;
     }
     
-    return texture2D(CC_Texture0, p);
+    return texture2D(u_texture, p);
 }

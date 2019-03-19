@@ -95,6 +95,8 @@ public:
     // Can use the result to change the descriptor content.
     inline PipelineDescriptor& getPipelineDescriptor() { return _pipelineDescriptor; }
 
+    const Mat4 & getMV() const { return _mv; }
+
 protected:
     /**Constructor.*/
     RenderCommand();
@@ -123,6 +125,8 @@ protected:
     
     /** Depth from the model view matrix.*/
     float _depth = 0.f;
+
+    Mat4 _mv;
 
     PipelineDescriptor _pipelineDescriptor;
 };

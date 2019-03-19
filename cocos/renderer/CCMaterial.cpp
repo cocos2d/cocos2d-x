@@ -35,13 +35,36 @@
 #include "base/CCProperties.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
+#include "base/CCConsole.h"
 
+#include <sstream>
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #define strcasecmp _stricmp
 #endif
 
 NS_CC_BEGIN
+
+namespace {
+    std::string replaceDefines(const std::string &compileTimeDefines) {
+
+        auto defineParts = Console::Utility::split(compileTimeDefines, ';');
+        std::stringstream ss;
+        for (auto &p : defineParts)
+        {
+            if (p.find("#define ") == std::string::npos)
+            {
+                ss << "#define " << p << std::endl;
+            }
+            else
+            {
+                ss << p << std::endl;
+            }
+        }
+        return ss.str();
+
+    }
+}
 
 // Helpers declaration
 static const char* getOptionalString(Properties* properties, const char* key, const char* defaultValue);
@@ -118,13 +141,15 @@ bool Material::initWithProperties(Properties* materialProperties)
     return parseProperties(materialProperties);
 }
 
-void Material::draw(float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
+void Material::draw(MeshCommand* meshCommands, float globalZOrder, backend::Buffer* vertexBuffer, backend::Buffer* indexBuffer,
                     CustomCommand::PrimitiveType primitive, CustomCommand::IndexFormat indexFormat,
                     unsigned int indexCount, const Mat4& modelView)
 {
+    int i = 0;
     for (const auto& pass: _currentTechnique->_passes)
     {
-        pass->draw(globalZOrder, vertexBuffer, indexBuffer,primitive, indexFormat, indexCount, modelView);
+        pass->draw(&meshCommands[i], globalZOrder, vertexBuffer, indexBuffer,primitive, indexFormat, indexCount, modelView);
+        i++;
     }
 }
 
@@ -193,6 +218,8 @@ bool Material::parsePass(Technique* technique, Properties* passProperties)
 {
     auto pass = Pass::create(technique);
     technique->addPass(pass);
+
+    pass->setName(passProperties->getId());
 
     // Pass can have 3 different namespaces:
     //  - one or more "sampler"
@@ -339,7 +366,8 @@ bool Material::parseShader(Pass* pass, Properties* shaderProperties)
 
         auto vertShaderSrc = fu->getStringFromFile(vertShader);
         auto fragShaderSrc = fu->getStringFromFile(fragShader);
-        std::string defs = compileTimeDefines;
+
+        auto defs = replaceDefines(compileTimeDefines);
 
         vertShaderSrc = defs + "\n" + vertShaderSrc;
         fragShaderSrc = defs + "\n" + fragShaderSrc;
@@ -427,11 +455,8 @@ bool Material::parseUniform(backend::ProgramState* programState, Properties* pro
         case Properties::Type::STRING:
         default:
         {
-
-            CCASSERT(false, "auto binding is nolonger supported");
-            //TODO arnold
             // Assume this is a parameter auto-binding.
-            //programState->setParameterAutoBinding(uniformName, properties->getString());
+            programState->setParameterAutoBinding(uniformName, properties->getString());
             break;
         }
     }

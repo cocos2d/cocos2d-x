@@ -8,6 +8,8 @@ varying vec4 v_fragmentColor;
 varying vec2 v_texCoord;
 
 uniform vec2 resolution;
+uniform sampler2D u_texture;
+uniform vec4 CC_Time;
 
 const float intensity = 0.05;
 vec3 noise(vec2 uv)
@@ -21,6 +23,6 @@ vec3 noise(vec2 uv)
 void main(void)
 {
 	gl_FragColor.xyz = intensity * noise(gl_FragCoord.xy / sin(resolution.xy * CC_Time[1] * 0.01)) + (1. - intensity) *
-			texture2D(CC_Texture0,v_texCoord.xy).xyz;
+			texture2D(u_texture,v_texCoord.xy).xyz;
 	gl_FragColor.w = 1.;
 }
