@@ -197,6 +197,7 @@ void TextureMTL::getBytes(int x, int y, int width, int height, bool flipImage, s
                                                    mipmapped:NO];
     id<MTLDevice> device = static_cast<DeviceMTL*>(Device::getInstance())->getMTLDevice();
     id<MTLTexture> copiedTexture = [device newTextureWithDescriptor:textureDescriptor];
+    [copiedTexture retain];
     
     MTLRegion region = MTLRegionMake2D(0, 0, _width, _height);
     auto commandQueue = static_cast<DeviceMTL*>(DeviceMTL::getInstance())->getMTLCommandQueue();
@@ -218,7 +219,7 @@ void TextureMTL::getBytes(int x, int y, int width, int height, bool flipImage, s
         auto bytePerRow = width * bitsPerElement / 8;
         unsigned char* image = new unsigned char[bytePerRow * height];
         [copiedTexture getBytes:image bytesPerRow:bytesPerRow fromRegion:region mipmapLevel:0];
-        
+
         //consistent with opengl behavior
         if(!flipImage)
         {

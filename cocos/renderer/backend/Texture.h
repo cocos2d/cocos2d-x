@@ -19,10 +19,11 @@ struct TextureDescriptor
     bool compressed = false;
     SamplerDescriptor samplerDescriptor;
 };
-
+#include <string>
 class Texture : public Ref
 {
 public:
+    std::string name;
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) = 0;
     virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*)> callback) = 0;
 

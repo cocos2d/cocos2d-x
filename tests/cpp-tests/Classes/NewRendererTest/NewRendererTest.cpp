@@ -495,12 +495,14 @@ CaptureNodeTest::CaptureNodeTest()
     Vec2 right(s.width / 4 * 3, s.height / 2);
 
     auto sp1 = Sprite::create("Images/grossini.png");
+    sp1->_trianglesCommand.name = "grossini.png";
     sp1->setPosition(left);
     auto move1 = MoveBy::create(1, Vec2(s.width / 2, 0));
     auto seq1 = RepeatForever::create(Sequence::create(move1, move1->reverse(), nullptr));
     addChild(sp1);
     sp1->runAction(seq1);
     auto sp2 = Sprite::create("Images/grossinis_sister1.png");
+    sp2->_trianglesCommand.name = "grossinis_sister1.png";
     sp2->setPosition(right);
     auto move2 = MoveBy::create(1, Vec2(-s.width / 2, 0));
     auto seq2 = RepeatForever::create(Sequence::create(move2, move2->reverse(), nullptr));
@@ -508,6 +510,7 @@ CaptureNodeTest::CaptureNodeTest()
     sp2->runAction(seq2);
 
     auto label1 = Label::createWithTTF(TTFConfig("fonts/arial.ttf"), "capture this scene");
+    label1->_customCommand.name = "capture this scene";
     auto mi1 = MenuItemLabel::create(label1, CC_CALLBACK_1(CaptureNodeTest::onCaptured, this));
     auto menu = Menu::create(mi1, nullptr);
     addChild(menu);
@@ -542,6 +545,7 @@ void CaptureNodeTest::onCaptured(Ref*)
     auto callback = [&](Image* image){
         // create a sprite with the captured image directly
         auto sp = Sprite::createWithTexture(Director::getInstance()->getTextureCache()->addImage(image, _filename));
+        sp->_trianglesCommand.name = _filename;
         addChild(sp, 0, childTag);
         Size s = Director::getInstance()->getWinSize();
         sp->setPosition(s.width / 2, s.height / 2);
@@ -554,7 +558,7 @@ void CaptureNodeTest::onCaptured(Ref*)
     };
     
     auto callbackFunction = std::bind(callback, std::placeholders::_1);
-    utils::captureNode(this, callbackFunction, 1.0);
+    utils::captureNode(this, callbackFunction, 0.5);
 }
 
 BugAutoCulling::BugAutoCulling()

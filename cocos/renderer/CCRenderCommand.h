@@ -39,9 +39,11 @@ NS_CC_BEGIN
 *
  The `Renderer` knows how to render `RenderCommands` objects.
  */
+#include <string>
 class CC_DLL RenderCommand
 {
 public:
+    std::string name;
     /**Enum the type of render command. */
     enum class Type
     {

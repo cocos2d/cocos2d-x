@@ -124,6 +124,7 @@ class GroupCommandManager;
 
 Whenever possible prefer to use `TrianglesCommand` objects since the renderer will automatically batch them.
  */
+#include <string>
 class CC_DLL Renderer
 {
 public:
@@ -192,7 +193,7 @@ public:
     @depth The clear depth value.
     @stencil The clear stencil value.
     */
-    void clear(ClearFlag flags, const Color4F& color, float depth, unsigned int stencil, float globalOrder);
+    void clear(ClearFlag flags, const Color4F& color, float depth, unsigned int stencil, float globalOrder, std::string name = "defaultClear");
     Texture2D* getColorAttachment() const;
     Texture2D* getDepthAttachment() const;
     Texture2D* getStencilAttachment() const;

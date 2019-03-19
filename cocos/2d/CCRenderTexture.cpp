@@ -123,11 +123,11 @@ RenderTexture * RenderTexture::create(int w, int h, Texture2D::PixelFormat eForm
     return nullptr;
 }
 
-RenderTexture * RenderTexture::create(int w ,int h, Texture2D::PixelFormat eFormat, TextureFormat uDepthStencilFormat)
+RenderTexture * RenderTexture::create(int w ,int h, Texture2D::PixelFormat eFormat, TextureFormat uDepthStencilFormat, std::string names)
 {
     RenderTexture *ret = new (std::nothrow) RenderTexture();
 
-    if(ret && ret->initWithWidthAndHeight(w, h, eFormat, uDepthStencilFormat))
+    if(ret && ret->initWithWidthAndHeight(w, h, eFormat, uDepthStencilFormat, names))
     {
         ret->autorelease();
         return ret;
@@ -154,8 +154,9 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
     return initWithWidthAndHeight(w, h, eFormat, TextureFormat::NONE);
 }
 
-bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, TextureFormat depthStencilFormat)
+bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, TextureFormat depthStencilFormat, std::string names)
 {
+    name = names;
     CCASSERT(format != Texture2D::PixelFormat::A8, "only RGB and RGBA formats are valid for a render texture");
 
     bool ret = false;
@@ -201,7 +202,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         else
             break;
 //        _texture2D->retain();
-
+        _texture2D->name = name;
         _renderTargetFlags = RenderTargetFlag::COLOR;
 
         clearColorAttachment();
@@ -268,6 +269,7 @@ void RenderTexture::setSprite(Sprite* sprite)
     CC_SAFE_RETAIN(sprite);
     CC_SAFE_RELEASE(_sprite);
     _sprite = sprite;
+    _sprite->_trianglesCommand.name = "SpriteInRT_" + name;
 }
 
 void RenderTexture::setVirtualViewport(const Vec2& rtBegin, const Rect& fullRect, const Rect& fullViewport)
@@ -385,7 +387,7 @@ bool RenderTexture::saveToFile(const std::string& fileName, Image::Format format
     std::string fullpath = FileUtils::getInstance()->getWritablePath() + fileName;
     _saveToFileCommand.init(_globalZOrder);
     _saveToFileCommand.func = CC_CALLBACK_0(RenderTexture::onSaveToFile, this, fullpath, isRGBA);
-    
+    _saveToFileCommand.name = name + "_call onSaveToFile";
     Director::getInstance()->getRenderer()->addCommand(&_saveToFileCommand);
     return true;
 }
@@ -408,6 +410,7 @@ void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA)
 
 void RenderTexture::newImage(std::function<void(Image*)> imageCallback, std::function<void(RenderTexture*)> releaseCallback)
 {
+    
     newImage(imageCallback);
     _releaseCallback = releaseCallback;
 }
@@ -564,11 +567,11 @@ void RenderTexture::begin()
     }
 
     _groupCommand.init(_globalZOrder);
-
+    _groupCommand.name = name + "_GroupCommand";
     Renderer *renderer =  Director::getInstance()->getRenderer();
     renderer->addCommand(&_groupCommand);
     renderer->pushGroup(_groupCommand.getRenderQueueID());
-
+    _beginCommand.name = name + "_call onBegin";
     _beginCommand.init(_globalZOrder);
     _beginCommand.func = CC_CALLBACK_0(RenderTexture::onBegin, this);
     renderer->addCommand(&_beginCommand);
@@ -576,6 +579,7 @@ void RenderTexture::begin()
 
 void RenderTexture::end()
 {
+    _endCommand.name = name + "_call onEnd";
     _endCommand.init(_globalZOrder);
     _endCommand.func = CC_CALLBACK_0(RenderTexture::onEnd, this);
 
@@ -607,14 +611,16 @@ void RenderTexture::clearColorAttachment()
         _oldColorAttachment = renderer->getColorAttachment();
         renderer->setRenderTarget(RenderTargetFlag::COLOR, _texture2D, nullptr, nullptr);
     };
+    _beforeClearAttachmentCommand.name = name + "_set RenderTarget";
     renderer->addCommand(&_beforeClearAttachmentCommand);
 
     Color4F color(0.f, 0.f, 0.f, 0.f);
-    renderer->clear(ClearFlag::COLOR, color, 1, 0, _globalZOrder);
+    renderer->clear(ClearFlag::COLOR, color, 1, 0, _globalZOrder, name + "_clearColorAttachment");
 
     _afterClearAttachmentCommand.func = [=]() -> void {
         renderer->setRenderTarget(RenderTargetFlag::COLOR, _oldColorAttachment, nullptr, nullptr);
     };
+    _afterClearAttachmentCommand.name = name + "_restore RenderTarget";
     renderer->addCommand(&_afterClearAttachmentCommand);
 }
 

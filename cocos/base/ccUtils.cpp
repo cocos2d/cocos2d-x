@@ -190,8 +190,8 @@ void captureNode(Node* startNode, std::function<void(Image*)> imageCallback, flo
     Director::getInstance()->setNextDeltaTimeZero(true);
 
     RenderTexture* finalRtx = nullptr;
-
-    auto rtx = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8);
+    static int id = 0;
+    auto rtx = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8, "RenderTexture_"+std::to_string(id));
     // rtx->setKeepMatrix(true);
     Point savedPos = startNode->getPosition();
     Point anchor;
@@ -199,7 +199,7 @@ void captureNode(Node* startNode, std::function<void(Image*)> imageCallback, flo
         anchor = startNode->getAnchorPoint();
     }
     startNode->setPosition(Point(size.width * anchor.x, size.height * anchor.y));
-    rtx->begin(); 
+    rtx->begin();
     startNode->visit();
     rtx->end();
     startNode->setPosition(savedPos);
@@ -211,17 +211,17 @@ void captureNode(Node* startNode, std::function<void(Image*)> imageCallback, flo
         auto finalRect = Rect(0, 0, size.width, size.height);
         Sprite *sprite = Sprite::createWithTexture(rtx->getSprite()->getTexture(), finalRect);
         sprite->setAnchorPoint(Point(0, 0));
-        sprite->setFlippedY(true);
-
-        finalRtx = RenderTexture::create(size.width * scale, size.height * scale, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8);
+//        sprite->setFlippedY(true);
+        sprite->_trianglesCommand.name = "scale_RenderTexture_" + std::to_string(id);
+        finalRtx = RenderTexture::create(size.width * scale, size.height * scale, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8, "scale_RenderTexture"+std::to_string(id));
 
         sprite->setScale(scale); // or use finalRtx->setKeepMatrix(true);
         finalRtx->begin(); 
         sprite->visit();
         finalRtx->end();
     }
-
-    //Director::getInstance()->getRenderer()->render();
+    id++;
+    Director::getInstance()->getRenderer()->render();
     finalRtx->retain();
     auto releaseCallback = [&](RenderTexture* rt)
     {

@@ -106,10 +106,12 @@ class EventListener;
  - A Node is a "void" object. If you want to draw something on the screen, you should use a Sprite instead. Or subclass Node and override `draw`.
 
  */
+#include <string>
 
 class CC_DLL Node : public Ref
 {
 public:
+    std::string name;
     /** Default tag used for all the nodes */
     static const int INVALID_TAG = -1;
 

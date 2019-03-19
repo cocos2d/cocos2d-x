@@ -922,11 +922,12 @@ void Renderer::setRenderTarget(RenderTargetFlag flags, Texture2D* colorAttachmen
     }
 }
 
-void Renderer::clear(ClearFlag flags, const Color4F& color, float depth, unsigned int stencil, float globalOrder)
+void Renderer::clear(ClearFlag flags, const Color4F& color, float depth, unsigned int stencil, float globalOrder, std::string name)
 {
     _clearFlag = flags;
 
     CallbackCommand* command = new CallbackCommand();
+    command->name = name;
     command->init(globalOrder);
     command->func = [=]() -> void {
         backend::RenderPassDescriptor descriptor;

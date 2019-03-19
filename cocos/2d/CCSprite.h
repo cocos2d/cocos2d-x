@@ -652,8 +652,9 @@ protected:
     BlendFunc _blendFunc;            /// It's required for TextureProtocol inheritance
     Texture2D* _texture = nullptr;   /// Texture2D object that is used to render the sprite
     SpriteFrame* _spriteFrame = nullptr;
+public:
     TrianglesCommand _trianglesCommand;
-    
+protected:
     backend::UniformLocation _mvpMatrixLocation;
     backend::UniformLocation _textureLocation;
     backend::UniformLocation _alphaTextureLocation;

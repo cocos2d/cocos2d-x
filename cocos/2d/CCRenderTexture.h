@@ -66,7 +66,7 @@ public:
      * @param format In Points and a pixel format( only RGB and RGBA formats are valid ).
      * @param depthStencilFormat The depthStencil format.
      */
-    static RenderTexture * create(int w ,int h, Texture2D::PixelFormat format, TextureFormat depthStencilFormat);
+    static RenderTexture * create(int w ,int h, Texture2D::PixelFormat format, TextureFormat depthStencilFormat, std::string names = "defaultRenderTexture");
 
     /** Creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid. 
      *
@@ -313,7 +313,7 @@ public:
      * @param depthStencilFormat The depthStencil format.
      * @return If succeed, it will return true.
      */
-    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, TextureFormat depthStencilFormat);
+    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, TextureFormat depthStencilFormat, std::string names = "");
 
 protected:
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, ClearFlag flags);

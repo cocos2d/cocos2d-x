@@ -741,12 +741,12 @@ protected:
     Color4F _effectColorF;
     Color4B _textColor;
     Color4F _textColorF;
-
+public:
     QuadCommand _quadCommand;
     CustomCommand _customCommand;
     CustomCommand _customCommandOutLine;
     CustomCommand _customCommandShadow;
-    
+protected:
     Mat4  _shadowTransform;
     GLint _uniformEffectColor;
     GLint _uniformEffectType; // 0: None, 1: Outline, 2: Shadow; Only used when outline is enabled.
