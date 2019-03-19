@@ -37,11 +37,6 @@ NS_CC_BEGIN
 
 NavMeshDebugDraw::NavMeshDebugDraw()
 {
-    //_stateBlock.setCullFace(true);
-    //_stateBlock.setCullFaceSide(backend::CullMode::BACK);
-    //_stateBlock.setDepthTest(true);
-
-    CC_SAFE_RELEASE(_programState);
     _programState = new backend::ProgramState(positionColor_vert, positionColor_frag);
     _locMVP = _programState->getUniformLocation("u_MVPMatrix");
 
