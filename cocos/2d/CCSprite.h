@@ -520,8 +520,6 @@ public:
     int getResourceType() const { return _fileType; }
     const std::string& getResourceName() const { return _fileName; }
 
-    backend::ProgramState* getProgramState() const { return _programState; }
-
 CC_CONSTRUCTOR_ACCESS :
 	/**
      * @js ctor

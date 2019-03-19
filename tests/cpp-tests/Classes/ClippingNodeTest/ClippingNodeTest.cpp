@@ -754,9 +754,9 @@ void RawStencilBufferTestAlphaTest::setup()
     RawStencilBufferTest::setup();
     for(int i = 0; i < _planeCount; ++i)
     {
-        _spritesStencil.at(i)->updateShaders(positionTextureColor_vert, positionTextureColorAlphaTest_frag);
-        auto programState = _spritesStencil.at(i)->getProgramState();
+        auto programState = new backend::ProgramState(positionTextureColor_vert, positionTextureColorAlphaTest_frag);
         programState->setUniform(programState->getUniformLocation("u_alpha_value"), &_alphaThreshold, sizeof(_alphaThreshold));
+        _spritesStencil.at(i)->setProgramState(programState);
     }
 }
 //@implementation RawStencilBufferTest4
