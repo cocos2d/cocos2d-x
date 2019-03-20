@@ -1054,6 +1054,7 @@
         "cocos/renderer/backend/StringUtils.h", 
         "cocos/renderer/backend/Texture.cpp", 
         "cocos/renderer/backend/Texture.h", 
+        "cocos/renderer/backend/Types.cpp", 
         "cocos/renderer/backend/Types.h", 
         "cocos/renderer/backend/VertexLayout.cpp", 
         "cocos/renderer/backend/VertexLayout.h", 
