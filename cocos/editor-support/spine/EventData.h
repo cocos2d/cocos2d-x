@@ -28,42 +28,60 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_EVENTDATA_H_
-#define SPINE_EVENTDATA_H_
+#ifndef Spine_EventData_h
+#define Spine_EventData_h
 
-#include <spine/dll.h>
+#include <spine/SpineObject.h>
+#include <spine/SpineString.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace spine {
+/// Stores the setup pose values for an Event.
+class SP_API EventData : public SpineObject {
+	friend class SkeletonBinary;
 
-typedef struct spEventData {
-	const char* const name;
-	int intValue;
-	float floatValue;
-	const char* stringValue;
+	friend class SkeletonJson;
 
-#ifdef __cplusplus
-	spEventData() :
-		name(0),
-		intValue(0),
-		floatValue(0),
-		stringValue(0) {
-	}
-#endif
-} spEventData;
+	friend class Event;
 
-SP_API spEventData* spEventData_create (const char* name);
-SP_API void spEventData_dispose (spEventData* self);
+public:
+	explicit EventData(const String &name);
 
-#ifdef SPINE_SHORT_NAMES
-typedef spEventData EventData;
-#define EventData_create(...) spEventData_create(__VA_ARGS__)
-#define EventData_dispose(...) spEventData_dispose(__VA_ARGS__)
-#endif
+	/// The name of the event, which is unique within the skeleton.
+	const String &getName() const;
 
-#ifdef __cplusplus
+	int getIntValue();
+
+	void setIntValue(int inValue);
+
+	float getFloatValue();
+
+	void setFloatValue(float inValue);
+
+	const String &getStringValue();
+
+	void setStringValue(const String &inValue);
+
+	const String &getAudioPath();
+
+	void setAudioPath(const String &inValue);
+
+	float getVolume();
+
+	void setVolume(float inValue);
+
+	float getBalance();
+
+	void setBalance(float inValue);
+
+private:
+	const String _name;
+	int _intValue;
+	float _floatValue;
+	String _stringValue;
+	String _audioPath;
+	float _volume;
+	float _balance;
+};
 }
-#endif
 
-#endif /* SPINE_EVENTDATA_H_ */
+#endif /* Spine_EventData_h */

@@ -357,3 +357,7 @@ THE SOFTWARE.
 #ifndef CC_STRIP_FPS
 #define CC_STRIP_FPS 0
 #endif
+
+#ifndef CC_USE_NEW_RENDERER
+#define CC_USE_NEW_RENDERER 1
+#endif

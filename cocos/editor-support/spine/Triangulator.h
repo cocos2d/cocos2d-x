@@ -28,36 +28,38 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_TRIANGULATOR_H
-#define SPINE_TRIANGULATOR_H
+#ifndef Spine_Triangulator_h
+#define Spine_Triangulator_h
 
-#include <spine/dll.h>
-#include <spine/Array.h>
+#include <spine/Vector.h>
+#include <spine/Pool.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace spine {
+class SP_API Triangulator : public SpineObject {
+public:
+	~Triangulator();
 
-typedef struct spTriangulator {
-	spArrayFloatArray* convexPolygons;
-	spArrayShortArray* convexPolygonsIndices;
+	Vector<int> &triangulate(Vector<float> &vertices);
 
-	spShortArray* indicesArray;
-	spIntArray* isConcaveArray;
-	spShortArray* triangles;
+	Vector< Vector<float>* > &decompose(Vector<float> &vertices, Vector<int> &triangles);
 
-	spArrayFloatArray* polygonPool;
-	spArrayShortArray* polygonIndicesPool;
-} spTriangulator;
+private:
+	Vector<Vector < float>* > _convexPolygons;
+	Vector<Vector < int>* > _convexPolygonsIndices;
 
-SP_API spTriangulator* spTriangulator_create();
-SP_API spShortArray* spTriangulator_triangulate(spTriangulator* self, spFloatArray* verticesArray);
-SP_API spArrayFloatArray* spTriangulator_decompose(spTriangulator* self, spFloatArray* verticesArray, spShortArray* triangles);
-SP_API void spTriangulator_dispose(spTriangulator* self);
+	Vector<int> _indices;
+	Vector<bool> _isConcaveArray;
+	Vector<int> _triangles;
 
+	Pool <Vector<float> > _polygonPool;
+	Pool <Vector<int> > _polygonIndicesPool;
 
-#ifdef __cplusplus
+	static bool isConcave(int index, int vertexCount, Vector<float> &vertices, Vector<int> &indices);
+
+	static bool positiveArea(float p1x, float p1y, float p2x, float p2y, float p3x, float p3y);
+
+	static int winding(float p1x, float p1y, float p2x, float p2y, float p3x, float p3y);
+};
 }
-#endif
 
-#endif /* SPINE_TRIANGULATOR_H_ */
+#endif /* Spine_Triangulator_h */

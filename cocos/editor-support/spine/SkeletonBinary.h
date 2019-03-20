@@ -28,45 +28,103 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_SKELETONBINARY_H_
-#define SPINE_SKELETONBINARY_H_
+#ifndef Spine_SkeletonBinary_h
+#define Spine_SkeletonBinary_h
 
-#include <spine/dll.h>
-#include <spine/Attachment.h>
-#include <spine/AttachmentLoader.h>
-#include <spine/SkeletonData.h>
-#include <spine/Atlas.h>
+#include <spine/TransformMode.h>
+#include <spine/Vector.h>
+#include <spine/SpineObject.h>
+#include <spine/SpineString.h>
+#include <spine/Color.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace spine {
+    class SkeletonData;
+    class Atlas;
+    class AttachmentLoader;
+    class LinkedMesh;
+    class Skin;
+    class Attachment;
+    class VertexAttachment;
+    class Animation;
+    class CurveTimeline;
+    
+    class SP_API SkeletonBinary : public SpineObject {
+    public:
+        static const int BONE_ROTATE;
+        static const int BONE_TRANSLATE;
+        static const int BONE_SCALE;
+        static const int BONE_SHEAR;
+        
+        static const int SLOT_ATTACHMENT;
+        static const int SLOT_COLOR;
+        static const int SLOT_TWO_COLOR;
+        
+        static const int PATH_POSITION;
+        static const int PATH_SPACING;
+        static const int PATH_MIX;
+        
+        static const int CURVE_LINEAR;
+        static const int CURVE_STEPPED;
+        static const int CURVE_BEZIER;
 
-struct spAtlasAttachmentLoader;
+        explicit SkeletonBinary(Atlas* atlasArray);
 
-typedef struct spSkeletonBinary {
-	float scale;
-	spAttachmentLoader* attachmentLoader;
-	const char* const error;
-} spSkeletonBinary;
+        explicit SkeletonBinary(AttachmentLoader* attachmentLoader);
+        
+        ~SkeletonBinary();
+        
+        SkeletonData* readSkeletonData(const unsigned char* binary, int length);
+        
+        SkeletonData* readSkeletonDataFile(const String& path);
 
-SP_API spSkeletonBinary* spSkeletonBinary_createWithLoader (spAttachmentLoader* attachmentLoader);
-SP_API spSkeletonBinary* spSkeletonBinary_create (spAtlas* atlas);
-SP_API void spSkeletonBinary_dispose (spSkeletonBinary* self);
+        void setScale(float scale) { _scale = scale; }
 
-SP_API spSkeletonData* spSkeletonBinary_readSkeletonData (spSkeletonBinary* self, const unsigned char* binary, const int length);
-SP_API spSkeletonData* spSkeletonBinary_readSkeletonDataFile (spSkeletonBinary* self, const char* path);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spSkeletonBinary SkeletonBinary;
-#define SkeletonBinary_createWithLoader(...) spSkeletonBinary_createWithLoader(__VA_ARGS__)
-#define SkeletonBinary_create(...) spSkeletonBinary_create(__VA_ARGS__)
-#define SkeletonBinary_dispose(...) spSkeletonBinary_dispose(__VA_ARGS__)
-#define SkeletonBinary_readSkeletonData(...) spSkeletonBinary_readSkeletonData(__VA_ARGS__)
-#define SkeletonBinary_readSkeletonDataFile(...) spSkeletonBinary_readSkeletonDataFile(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
+        String& getError() { return _error; }
+        
+    private:
+        struct DataInput : public SpineObject {
+            const unsigned char* cursor;
+            const unsigned char* end;
+        };
+        
+        AttachmentLoader* _attachmentLoader;
+        Vector<LinkedMesh*> _linkedMeshes;
+        String _error;
+        float _scale;
+        const bool _ownsLoader;
+        
+        void setError(const char* value1, const char* value2);
+        
+        char* readString(DataInput* input);
+        
+        float readFloat(DataInput* input);
+        
+        unsigned char readByte(DataInput* input);
+        
+        signed char readSByte(DataInput* input);
+        
+        bool readBoolean(DataInput* input);
+        
+        int readInt(DataInput* input);
+        
+        void readColor(DataInput* input, Color& color);
+        
+        int readVarint(DataInput* input, bool optimizePositive);
+        
+        Skin* readSkin(DataInput* input, const String& skinName, SkeletonData* skeletonData, bool nonessential);
+        
+        Attachment* readAttachment(DataInput* input, Skin* skin, int slotIndex, const String& attachmentName, SkeletonData* skeletonData, bool nonessential);
+        
+        void readVertices(DataInput* input, VertexAttachment* attachment, int vertexCount);
+        
+        void readFloatArray(DataInput *input, int n, float scale, Vector<float>& array);
+        
+        void readShortArray(DataInput *input, Vector<unsigned short>& array);
+        
+        Animation* readAnimation(const String& name, DataInput* input, SkeletonData *skeletonData);
+        
+        void readCurve(DataInput* input, int frameIndex, CurveTimeline* timeline);
+    };
 }
-#endif
 
-#endif /* SPINE_SKELETONBINARY_H_ */
+#endif /* Spine_SkeletonBinary_h */

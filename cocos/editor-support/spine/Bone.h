@@ -28,100 +28,222 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_BONE_H_
-#define SPINE_BONE_H_
+#ifndef Spine_Bone_h
+#define Spine_Bone_h
 
-#include <spine/dll.h>
-#include <spine/BoneData.h>
+#include <spine/Updatable.h>
+#include <spine/SpineObject.h>
+#include <spine/Vector.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace spine {
+class BoneData;
 
-struct spSkeleton;
+class Skeleton;
 
-typedef struct spBone spBone;
-struct spBone {
-	spBoneData* const data;
-	struct spSkeleton* const skeleton;
-	spBone* const parent;
-	int childrenCount;
-	spBone** const children;
-	float x, y, rotation, scaleX, scaleY, shearX, shearY;
-	float ax, ay, arotation, ascaleX, ascaleY, ashearX, ashearY;
-	int /*bool*/ appliedValid;
+/// Stores a bone's current pose.
+///
+/// A bone has a local transform which is used to compute its world transform. A bone also has an applied transform, which is a
+/// local transform that can be applied to compute the world transform. The local transform and applied transform may differ if a
+/// constraint or application code modifies the world transform after it was computed from the local transform.
+class SP_API Bone : public Updatable {
+	friend class AnimationState;
 
-	float const a, b, worldX;
-	float const c, d, worldY;
+	friend class RotateTimeline;
 
-	int/*bool*/ sorted;
+	friend class IkConstraint;
 
-#ifdef __cplusplus
-	spBone() :
-		data(0),
-		skeleton(0),
-		parent(0),
-		childrenCount(0), children(0),
-		x(0), y(0), rotation(0), scaleX(0), scaleY(0),
-		ax(0), ay(0), arotation(0), ascaleX(0), ascaleY(0), ashearX(0), ashearY(0),
-		appliedValid(0),
+	friend class TransformConstraint;
 
-		a(0), b(0), worldX(0),
-		c(0), d(0), worldY(0),
+	friend class VertexAttachment;
 
-		sorted(0) {
-	}
-#endif
+	friend class PathConstraint;
+
+	friend class Skeleton;
+
+	friend class RegionAttachment;
+
+	friend class PointAttachment;
+
+	friend class ScaleTimeline;
+
+	friend class ShearTimeline;
+
+	friend class TranslateTimeline;
+
+RTTI_DECL
+
+public:
+	static void setYDown(bool inValue);
+
+	static bool isYDown();
+
+	/// @param parent May be NULL.
+	Bone(BoneData &data, Skeleton &skeleton, Bone *parent = NULL);
+
+	/// Same as updateWorldTransform. This method exists for Bone to implement Spine::Updatable.
+	virtual void update();
+
+	/// Computes the world transform using the parent bone and this bone's local transform.
+	void updateWorldTransform();
+
+	/// Computes the world transform using the parent bone and the specified local transform.
+	void updateWorldTransform(float x, float y, float rotation, float scaleX, float scaleY, float shearX, float shearY);
+
+	void setToSetupPose();
+
+	void worldToLocal(float worldX, float worldY, float &outLocalX, float &outLocalY);
+
+	void localToWorld(float localX, float localY, float &outWorldX, float &outWorldY);
+
+	float worldToLocalRotation(float worldRotation);
+
+	float localToWorldRotation(float localRotation);
+
+	///
+	/// Rotates the world transform the specified amount and sets isAppliedValid to false.
+	///
+	/// @param degrees Degrees.
+	void rotateWorld(float degrees);
+
+	float getWorldToLocalRotationX();
+
+	float getWorldToLocalRotationY();
+
+	BoneData &getData();
+
+	Skeleton &getSkeleton();
+
+	Bone *getParent();
+
+	Vector<Bone *> &getChildren();
+
+	/// The local X translation.
+	float getX();
+
+	void setX(float inValue);
+
+	/// The local Y translation.
+	float getY();
+
+	void setY(float inValue);
+
+	/// The local rotation.
+	float getRotation();
+
+	void setRotation(float inValue);
+
+	/// The local scaleX.
+	float getScaleX();
+
+	void setScaleX(float inValue);
+
+	/// The local scaleY.
+	float getScaleY();
+
+	void setScaleY(float inValue);
+
+	/// The local shearX.
+	float getShearX();
+
+	void setShearX(float inValue);
+
+	/// The local shearY.
+	float getShearY();
+
+	void setShearY(float inValue);
+
+	/// The rotation, as calculated by any constraints.
+	float getAppliedRotation();
+
+	void setAppliedRotation(float inValue);
+
+	/// The applied local x translation.
+	float getAX();
+
+	void setAX(float inValue);
+
+	/// The applied local y translation.
+	float getAY();
+
+	void setAY(float inValue);
+
+	/// The applied local scaleX.
+	float getAScaleX();
+
+	void setAScaleX(float inValue);
+
+	/// The applied local scaleY.
+	float getAScaleY();
+
+	void setAScaleY(float inValue);
+
+	/// The applied local shearX.
+	float getAShearX();
+
+	void setAShearX(float inValue);
+
+	/// The applied local shearY.
+	float getAShearY();
+
+	void setAShearY(float inValue);
+
+	float getA();
+
+	void setA(float inValue);
+
+	float getB();
+
+	void setB(float inValue);
+
+	float getC();
+
+	void setC(float inValue);
+
+	float getD();
+
+	void setD(float inValue);
+
+	float getWorldX();
+
+	void setWorldX(float inValue);
+
+	float getWorldY();
+
+	void setWorldY(float inValue);
+
+	float getWorldRotationX();
+
+	float getWorldRotationY();
+
+	/// Returns the magnitide (always positive) of the world scale X.
+	float getWorldScaleX();
+
+	/// Returns the magnitide (always positive) of the world scale Y.
+	float getWorldScaleY();
+
+	bool isAppliedValid();
+	void setAppliedValid(bool valid);
+
+private:
+	static bool yDown;
+
+	BoneData &_data;
+	Skeleton &_skeleton;
+	Bone *_parent;
+	Vector<Bone *> _children;
+	float _x, _y, _rotation, _scaleX, _scaleY, _shearX, _shearY;
+	float _ax, _ay, _arotation, _ascaleX, _ascaleY, _ashearX, _ashearY;
+	bool _appliedValid;
+	float _a, _b, _worldX;
+	float _c, _d, _worldY;
+	bool _sorted;
+
+	/// Computes the individual applied transform values from the world transform. This can be useful to perform processing using
+	/// the applied transform after the world transform has been modified directly (eg, by a constraint)..
+	///
+	/// Some information is ambiguous in the world transform, such as -1,-1 scale versus 180 rotation.
+	void updateAppliedTransform();
 };
-
-SP_API void spBone_setYDown (int/*bool*/yDown);
-SP_API int/*bool*/spBone_isYDown ();
-
-/* @param parent May be 0. */
-SP_API spBone* spBone_create (spBoneData* data, struct spSkeleton* skeleton, spBone* parent);
-SP_API void spBone_dispose (spBone* self);
-
-SP_API void spBone_setToSetupPose (spBone* self);
-
-SP_API void spBone_updateWorldTransform (spBone* self);
-SP_API void spBone_updateWorldTransformWith (spBone* self, float x, float y, float rotation, float scaleX, float scaleY, float shearX, float shearY);
-
-SP_API float spBone_getWorldRotationX (spBone* self);
-SP_API float spBone_getWorldRotationY (spBone* self);
-SP_API float spBone_getWorldScaleX (spBone* self);
-SP_API float spBone_getWorldScaleY (spBone* self);
-
-SP_API void spBone_updateAppliedTransform (spBone* self);
-
-SP_API void spBone_worldToLocal (spBone* self, float worldX, float worldY, float* localX, float* localY);
-SP_API void spBone_localToWorld (spBone* self, float localX, float localY, float* worldX, float* worldY);
-SP_API float spBone_worldToLocalRotation (spBone* self, float worldRotation);
-SP_API float spBone_localToWorldRotation (spBone* self, float localRotation);
-SP_API void spBone_rotateWorld (spBone* self, float degrees);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spBone Bone;
-#define Bone_setYDown(...) spBone_setYDown(__VA_ARGS__)
-#define Bone_isYDown() spBone_isYDown()
-#define Bone_create(...) spBone_create(__VA_ARGS__)
-#define Bone_dispose(...) spBone_dispose(__VA_ARGS__)
-#define Bone_setToSetupPose(...) spBone_setToSetupPose(__VA_ARGS__)
-#define Bone_updateWorldTransform(...) spBone_updateWorldTransform(__VA_ARGS__)
-#define Bone_updateWorldTransformWith(...) spBone_updateWorldTransformWith(__VA_ARGS__)
-#define Bone_getWorldRotationX(...) spBone_getWorldRotationX(__VA_ARGS__)
-#define Bone_getWorldRotationY(...) spBone_getWorldRotationY(__VA_ARGS__)
-#define Bone_getWorldScaleX(...) spBone_getWorldScaleX(__VA_ARGS__)
-#define Bone_getWorldScaleY(...) spBone_getWorldScaleY(__VA_ARGS__)
-#define Bone_updateAppliedTransform(...) spBone_updateAppliedTransform(__VA_ARGS__)
-#define Bone_worldToLocal(...) spBone_worldToLocal(__VA_ARGS__)
-#define Bone_localToWorld(...) spBone_localToWorld(__VA_ARGS__)
-#define Bone_worldToLocalRotation(...) spBone_worldToLocalRotation(__VA_ARGS__)
-#define Bone_localToWorldRotation(...) spBone_localToWorldRotation(__VA_ARGS__)
-#define Bone_rotateWorld(...) spBone_rotateWorld(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
 }
-#endif
 
-#endif /* SPINE_BONE_H_ */
+#endif /* Spine_Bone_h */

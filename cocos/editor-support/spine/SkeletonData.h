@@ -28,90 +28,152 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_SKELETONDATA_H_
-#define SPINE_SKELETONDATA_H_
+#ifndef Spine_SkeletonData_h
+#define Spine_SkeletonData_h
 
-#include <spine/dll.h>
-#include <spine/BoneData.h>
-#include <spine/SlotData.h>
-#include <spine/Skin.h>
-#include <spine/EventData.h>
-#include <spine/Animation.h>
-#include <spine/IkConstraintData.h>
-#include <spine/TransformConstraintData.h>
-#include <spine/PathConstraintData.h>
+#include <spine/Vector.h>
+#include <spine/SpineString.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace spine {
+class BoneData;
 
-typedef struct spSkeletonData {
-	const char* version;
-	const char* hash;
-	float width, height;
+class SlotData;
 
-	int bonesCount;
-	spBoneData** bones;
+class Skin;
 
-	int slotsCount;
-	spSlotData** slots;
+class EventData;
 
-	int skinsCount;
-	spSkin** skins;
-	spSkin* defaultSkin;
+class Animation;
 
-	int eventsCount;
-	spEventData** events;
+class IkConstraintData;
 
-	int animationsCount;
-	spAnimation** animations;
+class TransformConstraintData;
 
-	int ikConstraintsCount;
-	spIkConstraintData** ikConstraints;
+class PathConstraintData;
 
-	int transformConstraintsCount;
-	spTransformConstraintData** transformConstraints;
+/// Stores the setup pose and all of the stateless data for a skeleton.
+class SP_API SkeletonData : public SpineObject {
+	friend class SkeletonBinary;
 
-	int pathConstraintsCount;
-	spPathConstraintData** pathConstraints;
-} spSkeletonData;
+	friend class SkeletonJson;
 
-SP_API spSkeletonData* spSkeletonData_create ();
-SP_API void spSkeletonData_dispose (spSkeletonData* self);
+	friend class Skeleton;
 
-SP_API spBoneData* spSkeletonData_findBone (const spSkeletonData* self, const char* boneName);
-SP_API int spSkeletonData_findBoneIndex (const spSkeletonData* self, const char* boneName);
+public:
+	SkeletonData();
 
-SP_API spSlotData* spSkeletonData_findSlot (const spSkeletonData* self, const char* slotName);
-SP_API int spSkeletonData_findSlotIndex (const spSkeletonData* self, const char* slotName);
+	~SkeletonData();
 
-SP_API spSkin* spSkeletonData_findSkin (const spSkeletonData* self, const char* skinName);
+	/// Finds a bone by comparing each bone's name.
+	/// It is more efficient to cache the results of this method than to call it multiple times.
+	/// @return May be NULL.
+	BoneData *findBone(const String &boneName);
 
-SP_API spEventData* spSkeletonData_findEvent (const spSkeletonData* self, const char* eventName);
+	/// @return -1 if the bone was not found.
+	int findBoneIndex(const String &boneName);
 
-SP_API spAnimation* spSkeletonData_findAnimation (const spSkeletonData* self, const char* animationName);
+	/// @return May be NULL.
+	SlotData *findSlot(const String &slotName);
 
-SP_API spIkConstraintData* spSkeletonData_findIkConstraint (const spSkeletonData* self, const char* constraintName);
+	/// @return -1 if the slot was not found.
+	int findSlotIndex(const String &slotName);
 
-SP_API spTransformConstraintData* spSkeletonData_findTransformConstraint (const spSkeletonData* self, const char* constraintName);
+	/// @return May be NULL.
+	Skin *findSkin(const String &skinName);
 
-SP_API spPathConstraintData* spSkeletonData_findPathConstraint (const spSkeletonData* self, const char* constraintName);
+	/// @return May be NULL.
+	spine::EventData *findEvent(const String &eventDataName);
 
-#ifdef SPINE_SHORT_NAMES
-typedef spSkeletonData SkeletonData;
-#define SkeletonData_create(...) spSkeletonData_create(__VA_ARGS__)
-#define SkeletonData_dispose(...) spSkeletonData_dispose(__VA_ARGS__)
-#define SkeletonData_findBone(...) spSkeletonData_findBone(__VA_ARGS__)
-#define SkeletonData_findBoneIndex(...) spSkeletonData_findBoneIndex(__VA_ARGS__)
-#define SkeletonData_findSlot(...) spSkeletonData_findSlot(__VA_ARGS__)
-#define SkeletonData_findSlotIndex(...) spSkeletonData_findSlotIndex(__VA_ARGS__)
-#define SkeletonData_findSkin(...) spSkeletonData_findSkin(__VA_ARGS__)
-#define SkeletonData_findEvent(...) spSkeletonData_findEvent(__VA_ARGS__)
-#define SkeletonData_findAnimation(...) spSkeletonData_findAnimation(__VA_ARGS__)
-#endif
+	/// @return May be NULL.
+	Animation *findAnimation(const String &animationName);
 
-#ifdef __cplusplus
+	/// @return May be NULL.
+	IkConstraintData *findIkConstraint(const String &constraintName);
+
+	/// @return May be NULL.
+	TransformConstraintData *findTransformConstraint(const String &constraintName);
+
+	/// @return May be NULL.
+	PathConstraintData *findPathConstraint(const String &constraintName);
+
+	/// @return -1 if the path constraint was not found.
+	int findPathConstraintIndex(const String &pathConstraintName);
+
+	const String &getName();
+
+	void setName(const String &inValue);
+
+	/// The skeleton's bones, sorted parent first. The root bone is always the first bone.
+	Vector<BoneData *> &getBones();
+
+	Vector<SlotData *> &getSlots();
+
+	/// All skins, including the default skin.
+	Vector<Skin *> &getSkins();
+
+	/// The skeleton's default skin.
+	/// By default this skin contains all attachments that were not in a skin in Spine.
+	///
+	/// @return May be NULL.
+	Skin *getDefaultSkin();
+
+	void setDefaultSkin(Skin *inValue);
+
+	Vector<spine::EventData *> &getEvents();
+
+	Vector<Animation *> &getAnimations();
+
+	Vector<IkConstraintData *> &getIkConstraints();
+
+	Vector<TransformConstraintData *> &getTransformConstraints();
+
+	Vector<PathConstraintData *> &getPathConstraints();
+
+	float getWidth();
+
+	void setWidth(float inValue);
+
+	float getHeight();
+
+	void setHeight(float inValue);
+
+	/// The Spine version used to export this data, or NULL.
+	const String &getVersion();
+
+	void setVersion(const String &inValue);
+
+	const String &getHash();
+
+	void setHash(const String &inValue);
+
+	const String &getImagesPath();
+
+	void setImagesPath(const String &inValue);
+
+	/// The dopesheet FPS in Spine. Available only when nonessential data was exported.
+	float getFps();
+
+	void setFps(float inValue);
+
+private:
+	String _name;
+	Vector<BoneData *> _bones; // Ordered parents first
+	Vector<SlotData *> _slots; // Setup pose draw order.
+	Vector<Skin *> _skins;
+	Skin *_defaultSkin;
+	Vector<EventData *> _events;
+	Vector<Animation *> _animations;
+	Vector<IkConstraintData *> _ikConstraints;
+	Vector<TransformConstraintData *> _transformConstraints;
+	Vector<PathConstraintData *> _pathConstraints;
+	float _width, _height;
+	String _version;
+	String _hash;
+
+	// Nonessential.
+	float _fps;
+	String _imagesPath;
+};
 }
-#endif
 
-#endif /* SPINE_SKELETONDATA_H_ */
+#endif /* Spine_SkeletonData_h */

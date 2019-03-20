@@ -28,147 +28,220 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_SKELETON_H_
-#define SPINE_SKELETON_H_
+#ifndef Spine_Skeleton_h
+#define Spine_Skeleton_h
 
-#include <spine/dll.h>
-#include <spine/SkeletonData.h>
-#include <spine/Slot.h>
-#include <spine/Skin.h>
-#include <spine/IkConstraint.h>
-#include <spine/TransformConstraint.h>
-#include <spine/PathConstraint.h>
+#include <spine/Vector.h>
+#include <spine/MathUtil.h>
+#include <spine/SpineObject.h>
+#include <spine/SpineString.h>
+#include <spine/Color.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <limits> // std::numeric_limits
 
-typedef struct spSkeleton {
-	spSkeletonData* const data;
+namespace spine {
+class SkeletonData;
 
-	int bonesCount;
-	spBone** bones;
-	spBone* const root;
+class Bone;
 
-	int slotsCount;
-	spSlot** slots;
-	spSlot** drawOrder;
+class Updatable;
 
-	int ikConstraintsCount;
-	spIkConstraint** ikConstraints;
+class Slot;
 
-	int transformConstraintsCount;
-	spTransformConstraint** transformConstraints;
+class IkConstraint;
 
-	int pathConstraintsCount;
-	spPathConstraint** pathConstraints;
+class PathConstraint;
 
-	spSkin* const skin;
-	spColor color;
-	float time;
-	int/*bool*/flipX, flipY;
-	float x, y;
+class TransformConstraint;
 
-#ifdef __cplusplus
-	spSkeleton() :
-		data(0),
-		bonesCount(0),
-		bones(0),
-		root(0),
-		slotsCount(0),
-		slots(0),
-		drawOrder(0),
+class Skin;
 
-		ikConstraintsCount(0),
-		ikConstraints(0),
+class Attachment;
 
-		transformConstraintsCount(0),
-		transformConstraints(0),
+class SP_API Skeleton : public SpineObject {
+	friend class AnimationState;
 
-		skin(0),
-		color(),
-		time(0),
-		flipX(0),
-		flipY(0),
-		x(0), y(0) {
-	}
-#endif
-} spSkeleton;
+	friend class SkeletonBounds;
 
-SP_API spSkeleton* spSkeleton_create (spSkeletonData* data);
-SP_API void spSkeleton_dispose (spSkeleton* self);
+	friend class SkeletonClipping;
 
-/* Caches information about bones and constraints. Must be called if bones or constraints, or weighted path attachments
- * are added or removed. */
-SP_API void spSkeleton_updateCache (spSkeleton* self);
-SP_API void spSkeleton_updateWorldTransform (const spSkeleton* self);
+	friend class AttachmentTimeline;
 
-/* Sets the bones, constraints, and slots to their setup pose values. */
-SP_API void spSkeleton_setToSetupPose (const spSkeleton* self);
-/* Sets the bones and constraints to their setup pose values. */
-SP_API void spSkeleton_setBonesToSetupPose (const spSkeleton* self);
-SP_API void spSkeleton_setSlotsToSetupPose (const spSkeleton* self);
+	friend class ColorTimeline;
 
-/* Returns 0 if the bone was not found. */
-SP_API spBone* spSkeleton_findBone (const spSkeleton* self, const char* boneName);
-/* Returns -1 if the bone was not found. */
-SP_API int spSkeleton_findBoneIndex (const spSkeleton* self, const char* boneName);
+	friend class DeformTimeline;
 
-/* Returns 0 if the slot was not found. */
-SP_API spSlot* spSkeleton_findSlot (const spSkeleton* self, const char* slotName);
-/* Returns -1 if the slot was not found. */
-SP_API int spSkeleton_findSlotIndex (const spSkeleton* self, const char* slotName);
+	friend class DrawOrderTimeline;
 
-/* Sets the skin used to look up attachments before looking in the SkeletonData defaultSkin. Attachments from the new skin are
- * attached if the corresponding attachment from the old skin was attached. If there was no old skin, each slot's setup mode
- * attachment is attached from the new skin.
- * @param skin May be 0.*/
-SP_API void spSkeleton_setSkin (spSkeleton* self, spSkin* skin);
-/* Returns 0 if the skin was not found. See spSkeleton_setSkin.
- * @param skinName May be 0. */
-SP_API int spSkeleton_setSkinByName (spSkeleton* self, const char* skinName);
+	friend class EventTimeline;
 
-/* Returns 0 if the slot or attachment was not found. */
-SP_API spAttachment* spSkeleton_getAttachmentForSlotName (const spSkeleton* self, const char* slotName, const char* attachmentName);
-/* Returns 0 if the slot or attachment was not found. */
-SP_API spAttachment* spSkeleton_getAttachmentForSlotIndex (const spSkeleton* self, int slotIndex, const char* attachmentName);
-/* Returns 0 if the slot or attachment was not found.
- * @param attachmentName May be 0. */
-SP_API int spSkeleton_setAttachment (spSkeleton* self, const char* slotName, const char* attachmentName);
+	friend class IkConstraintTimeline;
 
-/* Returns 0 if the IK constraint was not found. */
-SP_API spIkConstraint* spSkeleton_findIkConstraint (const spSkeleton* self, const char* constraintName);
+	friend class PathConstraintMixTimeline;
 
-/* Returns 0 if the transform constraint was not found. */
-SP_API spTransformConstraint* spSkeleton_findTransformConstraint (const spSkeleton* self, const char* constraintName);
+	friend class PathConstraintPositionTimeline;
 
-/* Returns 0 if the path constraint was not found. */
-SP_API spPathConstraint* spSkeleton_findPathConstraint (const spSkeleton* self, const char* constraintName);
+	friend class PathConstraintSpacingTimeline;
 
-SP_API void spSkeleton_update (spSkeleton* self, float deltaTime);
+	friend class ScaleTimeline;
 
-#ifdef SPINE_SHORT_NAMES
-typedef spSkeleton Skeleton;
-#define Skeleton_create(...) spSkeleton_create(__VA_ARGS__)
-#define Skeleton_dispose(...) spSkeleton_dispose(__VA_ARGS__)
-#define Skeleton_updateWorldTransform(...) spSkeleton_updateWorldTransform(__VA_ARGS__)
-#define Skeleton_setToSetupPose(...) spSkeleton_setToSetupPose(__VA_ARGS__)
-#define Skeleton_setBonesToSetupPose(...) spSkeleton_setBonesToSetupPose(__VA_ARGS__)
-#define Skeleton_setSlotsToSetupPose(...) spSkeleton_setSlotsToSetupPose(__VA_ARGS__)
-#define Skeleton_findBone(...) spSkeleton_findBone(__VA_ARGS__)
-#define Skeleton_findBoneIndex(...) spSkeleton_findBoneIndex(__VA_ARGS__)
-#define Skeleton_findSlot(...) spSkeleton_findSlot(__VA_ARGS__)
-#define Skeleton_findSlotIndex(...) spSkeleton_findSlotIndex(__VA_ARGS__)
-#define Skeleton_setSkin(...) spSkeleton_setSkin(__VA_ARGS__)
-#define Skeleton_setSkinByName(...) spSkeleton_setSkinByName(__VA_ARGS__)
-#define Skeleton_getAttachmentForSlotName(...) spSkeleton_getAttachmentForSlotName(__VA_ARGS__)
-#define Skeleton_getAttachmentForSlotIndex(...) spSkeleton_getAttachmentForSlotIndex(__VA_ARGS__)
-#define Skeleton_setAttachment(...) spSkeleton_setAttachment(__VA_ARGS__)
-#define Skeleton_update(...) spSkeleton_update(__VA_ARGS__)
-#endif
+	friend class ShearTimeline;
 
-#ifdef __cplusplus
+	friend class TransformConstraintTimeline;
+
+	friend class TranslateTimeline;
+
+	friend class TwoColorTimeline;
+
+public:
+	explicit Skeleton(SkeletonData *skeletonData);
+
+	~Skeleton();
+
+	/// Caches information about bones and constraints. Must be called if bones, constraints or weighted path attachments are added
+	/// or removed.
+	void updateCache();
+
+	void printUpdateCache();
+
+	/// Updates the world transform for each bone and applies constraints.
+	void updateWorldTransform();
+
+	/// Sets the bones, constraints, and slots to their setup pose values.
+	void setToSetupPose();
+
+	/// Sets the bones and constraints to their setup pose values.
+	void setBonesToSetupPose();
+
+	void setSlotsToSetupPose();
+
+	/// @return May be NULL.
+	Bone *findBone(const String &boneName);
+
+	/// @return -1 if the bone was not found.
+	int findBoneIndex(const String &boneName);
+
+	/// @return May be NULL.
+	Slot *findSlot(const String &slotName);
+
+	/// @return -1 if the bone was not found.
+	int findSlotIndex(const String &slotName);
+
+	/// Sets a skin by name (see setSkin).
+	void setSkin(const String &skinName);
+
+	/// Attachments from the new skin are attached if the corresponding attachment from the old skin was attached.
+	/// If there was no old skin, each slot's setup mode attachment is attached from the new skin.
+	/// After changing the skin, the visible attachments can be reset to those attached in the setup pose by calling
+	/// See Skeleton::setSlotsToSetupPose()
+	/// Also, often AnimationState::apply(Skeleton&) is called before the next time the
+	/// skeleton is rendered to allow any attachment keys in the current animation(s) to hide or show attachments from the new skin.
+	///
+	/// @param newSkin May be NULL.
+	void setSkin(Skin *newSkin);
+
+	/// @return May be NULL.
+	Attachment *getAttachment(const String &slotName, const String &attachmentName);
+
+	/// @return May be NULL.
+	Attachment *getAttachment(int slotIndex, const String &attachmentName);
+
+	/// @param attachmentName May be empty.
+	void setAttachment(const String &slotName, const String &attachmentName);
+
+	/// @return May be NULL.
+	IkConstraint *findIkConstraint(const String &constraintName);
+
+	/// @return May be NULL.
+	TransformConstraint *findTransformConstraint(const String &constraintName);
+
+	/// @return May be NULL.
+	PathConstraint *findPathConstraint(const String &constraintName);
+
+	void update(float delta);
+
+	/// Returns the axis aligned bounding box (AABB) of the region and mesh attachments for the current pose.
+	/// @param outX The horizontal distance between the skeleton origin and the left side of the AABB.
+	/// @param outY The vertical distance between the skeleton origin and the bottom side of the AABB.
+	/// @param outWidth The width of the AABB
+	/// @param outHeight The height of the AABB.
+	/// @param outVertexBuffer Reference to hold a Vector of floats. This method will assign it with new floats as needed.
+	void getBounds(float &outX, float &outY, float &outWidth, float &outHeight, Vector<float> &outVertexBuffer);
+
+	Bone *getRootBone();
+
+	SkeletonData *getData();
+
+	Vector<Bone *> &getBones();
+
+	Vector<Updatable *> &getUpdateCacheList();
+
+	Vector<Slot *> &getSlots();
+
+	Vector<Slot *> &getDrawOrder();
+
+	Vector<IkConstraint *> &getIkConstraints();
+
+	Vector<PathConstraint *> &getPathConstraints();
+
+	Vector<TransformConstraint *> &getTransformConstraints();
+
+	Skin *getSkin();
+
+	Color &getColor();
+
+	float getTime();
+
+	void setTime(float inValue);
+
+	void setPosition(float x, float y);
+
+	float getX();
+
+	void setX(float inValue);
+
+	float getY();
+
+	void setY(float inValue);
+
+	float getScaleX();
+
+	void setScaleX(float inValue);
+
+	float getScaleY();
+
+	void setScaleY(float inValue);
+
+private:
+	SkeletonData *_data;
+	Vector<Bone *> _bones;
+	Vector<Slot *> _slots;
+	Vector<Slot *> _drawOrder;
+	Vector<IkConstraint *> _ikConstraints;
+	Vector<TransformConstraint *> _transformConstraints;
+	Vector<PathConstraint *> _pathConstraints;
+	Vector<Updatable *> _updateCache;
+	Vector<Bone *> _updateCacheReset;
+	Skin *_skin;
+	Color _color;
+	float _time;
+	float _scaleX, _scaleY;
+	float _x, _y;
+
+	void sortIkConstraint(IkConstraint *constraint);
+
+	void sortPathConstraint(PathConstraint *constraint);
+
+	void sortTransformConstraint(TransformConstraint *constraint);
+
+	void sortPathConstraintAttachment(Skin *skin, size_t slotIndex, Bone &slotBone);
+
+	void sortPathConstraintAttachment(Attachment *attachment, Bone &slotBone);
+
+	void sortBone(Bone *bone);
+
+	static void sortReset(Vector<Bone *> &bones);
+};
 }
-#endif
 
-#endif /* SPINE_SKELETON_H_*/
+#endif /* Spine_Skeleton_h */

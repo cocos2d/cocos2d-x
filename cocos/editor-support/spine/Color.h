@@ -27,52 +27,68 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
+#ifndef SPINE_COLOR_H
+#define SPINE_COLOR_H
 
-#ifndef SPINE_COLOR_H_
-#define SPINE_COLOR_H_
+#include <spine/MathUtil.h>
 
-#include <spine/dll.h>
+namespace spine {
+class SP_API Color : public SpineObject {
+public:
+	Color() : r(0), g(0), b(0), a(0) {
+	}
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+	Color(float r, float g, float b, float a) : r(r), g(g), b(b), a(a) {
+		clamp();
+	}
 
-typedef struct spColor {
+	inline Color &set(float _r, float _g, float _b, float _a) {
+		this->r = _r;
+		this->g = _g;
+		this->b = _b;
+		this->a = _a;
+		clamp();
+		return *this;
+	}
+
+	inline Color &set(const Color &other) {
+		r = other.r;
+		g = other.g;
+		b = other.b;
+		a = other.a;
+		clamp();
+		return *this;
+	}
+
+	inline Color &add(float _r, float _g, float _b, float _a) {
+		this->r += _r;
+		this->g += _g;
+		this->b += _b;
+		this->a += _a;
+		clamp();
+		return *this;
+	}
+
+	inline Color &add(const Color &other) {
+		r += other.r;
+		g += other.g;
+		b += other.b;
+		a += other.a;
+		clamp();
+		return *this;
+	}
+
+	inline Color &clamp() {
+		r = MathUtil::clamp(this->r, 0, 1);
+		g = MathUtil::clamp(this->g, 0, 1);
+		b = MathUtil::clamp(this->b, 0, 1);
+		a = MathUtil::clamp(this->a, 0, 1);
+		return *this;
+	}
+
 	float r, g, b, a;
-
-#ifdef __cplusplus
-	spColor() :
-		r(0), g(0), b(0), a(0) {
-	}
-
-	bool operator==(const spColor& rhs) {
-		return r == rhs.r && g == rhs.g && b == rhs.b && a == rhs.a;
-	}
-#endif
-} spColor;
-
-/* @param attachmentName May be 0 for no setup pose attachment. */
-SP_API spColor* spColor_create();
-SP_API void spColor_dispose(spColor* self);
-SP_API void spColor_setFromFloats(spColor* color, float r, float g, float b, float a);
-SP_API void spColor_setFromColor(spColor* color, spColor* otherColor);
-SP_API void spColor_addFloats(spColor* color, float r, float g, float b, float a);
-SP_API void spColor_addColor(spColor* color, spColor* otherColor);
-SP_API void spColor_clamp(spColor* color);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spColor color;
-#define Color_create() spColor_create()
-#define Color_dispose(...) spColor_dispose(__VA_ARGS__)
-#define Color_setFromFloats(...) spColor_setFromFloats(__VA_ARGS__)
-#define Color_setFromColor(...) spColor_setFromColor(__VA_ARGS__)
-#define Color_addColor(...) spColor_addColor(__VA_ARGS__)
-#define Color_addFloats(...) spColor_addFloats(__VA_ARGS__)
-#define Color_clamp(...) spColor_clamp(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
+};
 }
-#endif
 
-#endif /* SPINE_COLOR_H_ */
+
+#endif //SPINE_COLOR_H
