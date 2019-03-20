@@ -129,7 +129,7 @@ function genernate_binding_codes()
     fi
     which python
 
-    # source ../environment.sh
+    source ../environment.sh
 
     # Generate binding glue codes
 
