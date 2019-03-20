@@ -89,11 +89,11 @@ private:
 
     struct Primitive
     {
-        backend::PrimitiveType  type;
-        bool                    depthMask;
-        unsigned short          start;
-        unsigned short          end;
-        float                   size;
+        backend::PrimitiveType  type        = backend::PrimitiveType::LINE;
+        bool                    depthMask   = false;
+        unsigned short          start       = 0;
+        unsigned short          end         = 0;
+        float                   size        = 1.0f;
     };
 
     Primitive             * _currentPrimitive   = nullptr;
@@ -114,11 +114,11 @@ private:
     CallbackCommand             _afterCommand;
 
     //renderer state cache variables
-    bool                        _rendererDepthTestEnabled = true;
-    backend::CompareFunction    _rendererDepthCmpFunc = backend::CompareFunction::LESS;
-    backend::CullMode           _rendererCullMode = backend::CullMode::BACK;
-    backend::Winding            _rendererWinding = backend::Winding::COUNTER_CLOCK_WISE;
-    bool                        _rendererDepthWrite = false;
+    bool                        _rendererDepthTestEnabled   = true;
+    backend::CompareFunction    _rendererDepthCmpFunc       = backend::CompareFunction::LESS;
+    backend::CullMode           _rendererCullMode           = backend::CullMode::BACK;
+    backend::Winding            _rendererWinding            = backend::Winding::COUNTER_CLOCK_WISE;
+    bool                        _rendererDepthWrite         = false;
 };
 
 /** @} */

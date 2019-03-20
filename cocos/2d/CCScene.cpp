@@ -229,7 +229,7 @@ void Scene::render(Renderer* renderer, const Mat4& eyeTransform, const Mat4* eye
 
         renderer->render();
 
-       director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
         // we shouldn't restore the transform matrix since it could be used
         // from "update" or other parts of the game to calculate culling or something else.
