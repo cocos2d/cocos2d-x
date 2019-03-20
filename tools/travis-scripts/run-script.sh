@@ -263,17 +263,20 @@ function run_pull_request()
     fi
     
     if [ $BUILD_TARGET == 'mac_cmake' ]; then
+        genernate_binding_codes
         build_mac_cmake
         exit 0
     fi
 
     if [ $BUILD_TARGET == 'ios_cmake' ]; then
+        genernate_binding_codes
         build_ios_cmake
         exit 0
     fi
 
     # linux
     if [ $BUILD_TARGET == 'linux' ]; then
+        genernate_binding_codes
         build_linux
     fi
 
