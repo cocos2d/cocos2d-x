@@ -124,10 +124,6 @@ public:
 
     virtual void setVertexLayout(const backend::VertexLayout &vertexLayout);
 
-    /** just remember bind attributes */
-    //TODO arnold: impl setProgram
-    //virtual void setGLProgram(GLProgram *glprogram) override;
-    
     /*
      * Get AABB
      * If the sprite has animation, it can't be calculated accurately,

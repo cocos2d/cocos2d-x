@@ -47,17 +47,8 @@ NS_CC_BEGIN
 */
 struct MeshVertexAttrib
 {
-    //attribute size
-    //GLint size;
-    //GL_FLOAT
     backend::VertexFormat type;
-
-    //TODO arnold change vertexAttrib to std::string
-    //VERTEX_ATTRIB_POSITION,VERTEX_ATTRIB_COLOR,VERTEX_ATTRIB_TEX_COORD,VERTEX_ATTRIB_NORMAL, VERTEX_ATTRIB_BLEND_WEIGHT, VERTEX_ATTRIB_BLEND_INDEX, GLProgram for detail
     shaderinfos::VertexKey vertexAttrib;
-    //size in bytes
-    //int attribSizeBytes;
-
     int getAttribSizeBytes() const;
 };
 

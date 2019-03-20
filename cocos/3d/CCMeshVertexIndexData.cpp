@@ -82,12 +82,7 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
     //CC_SAFE_RETAIN(vertexdata->_vertexBuffer);
     
     int offset = 0;
-    //TODO arnold set layout
-    //for (int i = 0; i < meshdata.attribs.size(); i ++) {
-    //    auto& it = meshdata.attribs[i];
-    //    auto attr = VertexStreamAttribute(offset, it.vertexAttrib, it.type);
-    //    offset += it.getAttribSizeBytes();
-    //}
+
     vertexdata->_sizePerVertex = meshdata.getPerVertexSize();
 
     vertexdata->_attribs = meshdata.attribs;

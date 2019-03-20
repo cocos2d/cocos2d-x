@@ -65,7 +65,6 @@ int ProgramMTL::getMaxFragmentLocation() const
 
 const std::unordered_map<std::string, AttributeBindInfo> ProgramMTL::getActiveAttributes() const
 {
-    //TODO arnold
     return _vertexShader->getAttributeInfo();
 }
 

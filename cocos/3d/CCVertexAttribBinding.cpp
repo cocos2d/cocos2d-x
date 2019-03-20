@@ -95,21 +95,6 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass, MeshCom
 
     _vertexLayout = &command->getPipelineDescriptor().vertexLayout;
 
-    // One-time initialization.
-    //TODO arnold
-//    if (__maxVertexAttribs == 0)
-//    {
-//        GLint temp;
-//        glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &temp);
-//
-//        __maxVertexAttribs = temp;
-//        if (__maxVertexAttribs <= 0)
-//        {
-//            CCLOGERROR("The maximum number of vertex attributes supported by OpenGL on the current device is 0 or less.");
-//            return false;
-//        }
-//    }
-
     _meshIndexData = meshIndexData;
     _meshIndexData->retain();
     _programState = programState;
