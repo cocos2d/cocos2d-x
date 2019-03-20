@@ -207,12 +207,6 @@ public:
 
     void draw(Renderer* renderer, float globalZ, const Mat4& transform, uint32_t flags, unsigned int lightMask, const Vec4& color, bool forceDepthWrite);
 
-    /** 
-     * Get the MeshCommand.
-     */
-    //TODO arnold
-    //MeshCommand& getMeshCommand() { return _meshCommand; }
-
     /**skin setter*/
     void setSkin(MeshSkin* skin);
     /**Mesh index data setter*/

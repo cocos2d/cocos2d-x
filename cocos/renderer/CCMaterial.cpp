@@ -264,7 +264,6 @@ bool Material::parseSampler(backend::ProgramState* programState, Properties* sam
     }
 
     // optionals
-    //TODO arnold setSamplerDescriptor
     {
         Texture2D::TexParams texParams;
 

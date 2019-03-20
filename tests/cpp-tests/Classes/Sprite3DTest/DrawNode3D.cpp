@@ -141,12 +141,11 @@ void DrawNode3D::updateCommand(cocos2d::Renderer* renderer,const Mat4 &transform
 
     _programStateLine->setUniform(_locMVPMatrix, mvp.m, sizeof(mvp.m));
 
-    //TODO arnold: _customcommand should support enable depth !!!
-    // glEnable(GL_DEPTH_TEST);
-    //TODO arnold
-    //RenderState::StateBlock::_globalState->setDepthTest(true);
 
-//    cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
+    auto &blend = _customCommand.getPipelineDescriptor().blendDescriptor;
+    blend.blendEnabled = true;
+    blend.sourceRGBBlendFactor = blend.sourceAlphaBlendFactor = _blendFunc.src;
+    blend.destinationRGBBlendFactor = blend.destinationAlphaBlendFactor = _blendFunc.dst;
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _bufferLines.size());
 }

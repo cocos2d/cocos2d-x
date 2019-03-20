@@ -2303,7 +2303,6 @@ Animate3DCallbackTest::Animate3DCallbackTest()
     _sprite3d->getMeshByName("Girl_Shoes02")->setVisible(false);
     _sprite3d->getMeshByName("Girl_Hair02")->setVisible(false);
 
-    //TODO arnold particlesystem3d not unimpl
     auto rootps = PUParticleSystem3D::create("explosionSystem.pu");
     rootps->stopParticleSystem();
     rootps->setScale(4.0f);
