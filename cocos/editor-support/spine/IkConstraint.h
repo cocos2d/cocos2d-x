@@ -28,60 +28,79 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_IKCONSTRAINT_H_
-#define SPINE_IKCONSTRAINT_H_
+#ifndef Spine_IkConstraint_h
+#define Spine_IkConstraint_h
 
-#include <spine/dll.h>
-#include <spine/IkConstraintData.h>
-#include <spine/Bone.h>
+#include <spine/Constraint.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <spine/Vector.h>
 
-struct spSkeleton;
+namespace spine {
+class IkConstraintData;
 
-typedef struct spIkConstraint {
-	spIkConstraintData* const data;
+class Skeleton;
 
-	int bonesCount;
-	spBone** bones;
+class Bone;
 
-	spBone* target;
-	int bendDirection;
-	float mix;
+class SP_API IkConstraint : public Constraint {
+	friend class Skeleton;
 
-#ifdef __cplusplus
-	spIkConstraint() :
-		data(0),
-		bonesCount(0),
-		bones(0),
-		target(0),
-		bendDirection(0),
-		mix(0) {
-	}
-#endif
-} spIkConstraint;
+	friend class IkConstraintTimeline;
 
-SP_API spIkConstraint* spIkConstraint_create (spIkConstraintData* data, const struct spSkeleton* skeleton);
-SP_API void spIkConstraint_dispose (spIkConstraint* self);
+RTTI_DECL
 
-SP_API void spIkConstraint_apply (spIkConstraint* self);
+public:
+	/// Adjusts the bone rotation so the tip is as close to the target position as possible. The target is specified
+	/// in the world coordinate system.
+	static void apply(Bone &bone, float targetX, float targetY, bool compress, bool stretch, bool uniform, float alpha);
 
-SP_API void spIkConstraint_apply1 (spBone* bone, float targetX, float targetY, float alpha);
-SP_API void spIkConstraint_apply2 (spBone* parent, spBone* child, float targetX, float targetY, int bendDirection, float alpha);
+	/// Adjusts the parent and child bone rotations so the tip of the child is as close to the target position as
+	/// possible. The target is specified in the world coordinate system.
+	/// @param child A direct descendant of the parent bone.
+	static void apply(Bone &parent, Bone &child, float targetX, float targetY, int bendDir, bool stretch, float alpha);
 
-#ifdef SPINE_SHORT_NAMES
-typedef spIkConstraint IkConstraint;
-#define IkConstraint_create(...) spIkConstraint_create(__VA_ARGS__)
-#define IkConstraint_dispose(...) spIkConstraint_dispose(__VA_ARGS__)
-#define IkConstraint_apply(...) spIkConstraint_apply(__VA_ARGS__)
-#define IkConstraint_apply1(...) spIkConstraint_apply1(__VA_ARGS__)
-#define IkConstraint_apply2(...) spIkConstraint_apply2(__VA_ARGS__)
-#endif
+	IkConstraint(IkConstraintData &data, Skeleton &skeleton);
 
-#ifdef __cplusplus
+	/// Applies the constraint to the constrained bones.
+	void apply();
+
+	virtual void update();
+
+	virtual int getOrder();
+
+	IkConstraintData &getData();
+
+	Vector<Bone *> &getBones();
+
+	Bone *getTarget();
+
+	void setTarget(Bone *inValue);
+
+	int getBendDirection();
+
+	void setBendDirection(int inValue);
+
+	bool getCompress();
+
+	void setCompress(bool inValue);
+
+	bool getStretch();
+
+	void setStretch(bool inValue);
+
+	float getMix();
+
+	void setMix(float inValue);
+
+private:
+	IkConstraintData &_data;
+	Vector<Bone *> _bones;
+	int _bendDirection;
+	bool _compress;
+	bool _stretch;
+	float _mix;
+	Bone *_target;
+};
 }
-#endif
 
-#endif /* SPINE_IKCONSTRAINT_H_ */
+#endif /* Spine_IkConstraint_h */

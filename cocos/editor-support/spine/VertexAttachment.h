@@ -28,41 +28,64 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_VERTEXATTACHMENT_H_
-#define SPINE_VERTEXATTACHMENT_H_
+#ifndef Spine_VertexAttachment_h
+#define Spine_VertexAttachment_h
 
-#include <spine/dll.h>
 #include <spine/Attachment.h>
-#include <spine/Slot.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <spine/Vector.h>
 
-typedef struct spVertexAttachment spVertexAttachment;
-struct spVertexAttachment {
-	spAttachment super;
+namespace spine {
+    class Slot;
+    
+    /// An attachment with vertices that are transformed by one or more bones and can be deformed by a slot's vertices.
+    class SP_API VertexAttachment : public Attachment {
+        friend class SkeletonBinary;
+        friend class SkeletonJson;
+        friend class DeformTimeline;
+        
+        RTTI_DECL
+        
+    public:
+        explicit VertexAttachment(const String& name);
 
-	int bonesCount;
-	int* bones;
-
-	int verticesCount;
-	float* vertices;
-
-	int worldVerticesLength;
-
-	int id;
-};
-
-SP_API void spVertexAttachment_computeWorldVertices (spVertexAttachment* self, spSlot* slot, int start, int count, float* worldVertices, int offset, int stride);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spVertexAttachment VertexAttachment;
-#define VertexAttachment_computeWorldVertices(...) spVertexAttachment_computeWorldVertices(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
+        virtual ~VertexAttachment();
+		
+		void computeWorldVertices(Slot& slot, float* worldVertices);
+        void computeWorldVertices(Slot& slot, Vector<float>& worldVertices);
+        
+        /// Transforms local vertices to world coordinates.
+        /// @param start The index of the first Vertices value to transform. Each vertex has 2 values, x and y.
+        /// @param count The number of world vertex values to output. Must be less than or equal to WorldVerticesLength - start.
+        /// @param worldVertices The output world vertices. Must have a length greater than or equal to offset + count.
+        /// @param offset The worldVertices index to begin writing values.
+        /// @param stride The number of worldVertices entries between the value pairs written.
+		void computeWorldVertices(Slot& slot, size_t start, size_t count, float* worldVertices, size_t offset, size_t stride = 2);
+        void computeWorldVertices(Slot& slot, size_t start, size_t count, Vector<float>& worldVertices, size_t offset, size_t stride = 2);
+        
+        /// @return true if a deform originally applied to the specified attachment should be applied to this attachment.
+        virtual bool applyDeform(VertexAttachment* sourceAttachment);
+        
+        /// Gets a unique ID for this attachment.
+        int getId();
+        
+        Vector<size_t>& getBones();
+        
+        Vector<float>& getVertices();
+        
+        size_t getWorldVerticesLength();
+        void setWorldVerticesLength(size_t inValue);
+        
+    protected:
+        Vector<size_t> _bones;
+        Vector<float> _vertices;
+        size_t _worldVerticesLength;
+        
+    private:
+        const int _id;
+        
+        static int getNextID();
+    };
 }
-#endif
 
-#endif /* SPINE_VERTEXATTACHMENT_H_ */
+#endif /* Spine_VertexAttachment_h */

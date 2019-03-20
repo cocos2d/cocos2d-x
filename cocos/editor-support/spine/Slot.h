@@ -28,66 +28,100 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_SLOT_H_
-#define SPINE_SLOT_H_
+#ifndef Spine_Slot_h
+#define Spine_Slot_h
 
-#include <spine/dll.h>
-#include <spine/Bone.h>
-#include <spine/Attachment.h>
-#include <spine/SlotData.h>
+#include <spine/Vector.h>
+#include <spine/SpineObject.h>
+#include <spine/Color.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <string>
 
-typedef struct spSlot {
-	spSlotData* const data;
-	spBone* const bone;
-	spColor color;
-	spColor* darkColor;
-	spAttachment* const attachment;
+namespace spine {
+class SlotData;
 
-	int attachmentVerticesCapacity;
-	int attachmentVerticesCount;
-	float* attachmentVertices;
+class Bone;
 
-#ifdef __cplusplus
-	spSlot() :
-		data(0),
-		bone(0),
-		color(),
-		darkColor(0),
-		attachment(0),
-		attachmentVerticesCapacity(0),
-		attachmentVerticesCount(0),
-		attachmentVertices(0) {
-	}
-#endif
-} spSlot;
+class Skeleton;
 
-SP_API spSlot* spSlot_create (spSlotData* data, spBone* bone);
-SP_API void spSlot_dispose (spSlot* self);
+class Attachment;
 
-/* @param attachment May be 0 to clear the attachment for the slot. */
-SP_API void spSlot_setAttachment (spSlot* self, spAttachment* attachment);
+class SP_API Slot : public SpineObject {
+	friend class VertexAttachment;
 
-SP_API void spSlot_setAttachmentTime (spSlot* self, float time);
-SP_API float spSlot_getAttachmentTime (const spSlot* self);
+	friend class Skeleton;
 
-SP_API void spSlot_setToSetupPose (spSlot* self);
+	friend class SkeletonBounds;
 
-#ifdef SPINE_SHORT_NAMES
-typedef spSlot Slot;
-#define Slot_create(...) spSlot_create(__VA_ARGS__)
-#define Slot_dispose(...) spSlot_dispose(__VA_ARGS__)
-#define Slot_setAttachment(...) spSlot_setAttachment(__VA_ARGS__)
-#define Slot_setAttachmentTime(...) spSlot_setAttachmentTime(__VA_ARGS__)
-#define Slot_getAttachmentTime(...) spSlot_getAttachmentTime(__VA_ARGS__)
-#define Slot_setToSetupPose(...) spSlot_setToSetupPose(__VA_ARGS__)
-#endif
+	friend class SkeletonClipping;
 
-#ifdef __cplusplus
+	friend class AttachmentTimeline;
+
+	friend class ColorTimeline;
+
+	friend class DeformTimeline;
+
+	friend class DrawOrderTimeline;
+
+	friend class EventTimeline;
+
+	friend class IkConstraintTimeline;
+
+	friend class PathConstraintMixTimeline;
+
+	friend class PathConstraintPositionTimeline;
+
+	friend class PathConstraintSpacingTimeline;
+
+	friend class ScaleTimeline;
+
+	friend class ShearTimeline;
+
+	friend class TransformConstraintTimeline;
+
+	friend class TranslateTimeline;
+
+	friend class TwoColorTimeline;
+
+public:
+	Slot(SlotData &data, Bone &bone);
+
+	void setToSetupPose();
+
+	SlotData &getData();
+
+	Bone &getBone();
+
+	Skeleton &getSkeleton();
+
+	Color &getColor();
+
+	Color &getDarkColor();
+
+	bool hasDarkColor();
+
+	/// May be NULL.
+	Attachment *getAttachment();
+
+	void setAttachment(Attachment *inValue);
+
+	float getAttachmentTime();
+
+	void setAttachmentTime(float inValue);
+
+	Vector<float> &getAttachmentVertices();
+
+private:
+	SlotData &_data;
+	Bone &_bone;
+	Skeleton &_skeleton;
+	Color _color;
+	Color _darkColor;
+	bool _hasDarkColor;
+	Attachment *_attachment;
+	float _attachmentTime;
+	Vector<float> _attachmentVertices;
+};
 }
-#endif
 
-#endif /* SPINE_SLOT_H_ */
+#endif /* Spine_Slot_h */

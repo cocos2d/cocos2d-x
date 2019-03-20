@@ -33,6 +33,14 @@ using namespace cocos2d;
 using namespace std;
 using namespace spine;
 
+
+#define NUM_SKELETONS 50
+static Cocos2dTextureLoader textureLoader;
+
+PowInterpolation pow2(2);
+PowOutInterpolation powOut2(2);
+SwirlVertexEffect effect(400, powOut2);
+
 //------------------------------------------------------------------
 //
 // SpineTestScene
@@ -65,43 +73,53 @@ bool BatchingExample::init () {
     _title = "BatchingExample";
     
     // Load the texture atlas.
-    _atlas = spAtlas_createFromFile("spine/spineboy.atlas", 0);
+    // Load the texture atlas. Note that the texture loader has to live
+    // as long as the Atlas, as the Atlas destructor will call TextureLoader::unload.
+    _atlas = new (__FILE__, __LINE__) Atlas("spine/spineboy.atlas", &textureLoader);
     CCASSERT(_atlas, "Error reading atlas file.");
-    
+
     // This attachment loader configures attachments with data needed for cocos2d-x rendering.
     // Do not dispose the attachment loader until the skeleton data is disposed!
-    _attachmentLoader = (spAttachmentLoader*)Cocos2dAttachmentLoader_create(_atlas);
-    
+    _attachmentLoader = new (__FILE__, __LINE__) Cocos2dAtlasAttachmentLoader(_atlas);
+
     // Load the skeleton data.
-    spSkeletonJson* json = spSkeletonJson_createWithLoader(_attachmentLoader);
-    json->scale = 0.6f; // Resizes skeleton data to 60% of the size it was in Spine.
-    _skeletonData = spSkeletonJson_readSkeletonDataFile(json, "spine/spineboy-ess.json");
-    CCASSERT(_skeletonData, json->error ? json->error : "Error reading skeleton data file.");
-    spSkeletonJson_dispose(json);
-    
+    SkeletonJson* json = new (__FILE__, __LINE__) SkeletonJson(_attachmentLoader);
+    json->setScale(0.6f); // Resizes skeleton data to 60% of the size it was in Spine.
+    _skeletonData = json->readSkeletonDataFile("spine/spineboy-pro.json");
+    CCASSERT(_skeletonData, json->getError().isEmpty() ? json->getError().buffer() : "Error reading skeleton data file.");
+    delete json;
+
     // Setup mix times.
-    _stateData = spAnimationStateData_create(_skeletonData);
-    spAnimationStateData_setMixByName(_stateData, "walk", "jump", 0.2f);
-    spAnimationStateData_setMixByName(_stateData, "jump", "run", 0.2f);
-    
+    _stateData = new (__FILE__, __LINE__) AnimationStateData(_skeletonData);
+    _stateData->setMix("walk", "jump", 0.2f);
+    _stateData->setMix("jump", "run", 0.2f);
+
     int xMin = _contentSize.width * 0.10f, xMax = _contentSize.width * 0.90f;
     int yMin = 0, yMax = _contentSize.height * 0.7f;
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < NUM_SKELETONS; i++) {
         // Each skeleton node shares the same atlas, skeleton data, and mix times.
         SkeletonAnimation* skeletonNode = SkeletonAnimation::createWithData(_skeletonData, false);
         skeletonNode->setAnimationStateData(_stateData);
-        
+
         skeletonNode->setAnimation(0, "walk", true);
-        skeletonNode->addAnimation(0, "jump", false, 3);
+        skeletonNode->addAnimation(0, "jump", true, RandomHelper::random_int(0, 300) / 100.0f);
         skeletonNode->addAnimation(0, "run", true);
-        
+
+        // alternative setting two color tint for groups of 10 skeletons
+        // should end up with #skeletons / 10 batches
+        // if (j++ < 10)
+        //			skeletonNode->setTwoColorTint(true);
+        //		if (j == 20) j = 0;
+        // skeletonNode->setTwoColorTint(true);
+
         skeletonNode->setPosition(Vec2(
-                                       RandomHelper::random_int(xMin, xMax),
-                                       RandomHelper::random_int(yMin, yMax)
-                                       ));
-        skeletonNode->setScale(0.8);
+            RandomHelper::random_int(xMin, xMax),
+            RandomHelper::random_int(yMin, yMax)
+        ));
         addChild(skeletonNode);
     }
+
+    scheduleUpdate();
     
     return true;
 }
@@ -109,10 +127,10 @@ bool BatchingExample::init () {
 BatchingExample::~BatchingExample () {
     // SkeletonAnimation instances are cocos2d-x nodes and are disposed of automatically as normal, but the data created
     // manually to be shared across multiple SkeletonAnimations needs to be disposed of manually.
-    spSkeletonData_dispose(_skeletonData);
-    spAnimationStateData_dispose(_stateData);
-    spAttachmentLoader_dispose(_attachmentLoader);
-    spAtlas_dispose(_atlas);
+    delete _skeletonData;
+    delete _stateData;
+    delete _attachmentLoader;
+    delete _atlas;
 }
 
 // CoinExample
@@ -122,11 +140,13 @@ bool CoinExample::init () {
     
     _title = "CoinExample";
     
-    skeletonNode = SkeletonAnimation::createWithJsonFile("spine/coin-pro.json", "spine/coin.atlas", 1.f);
-    skeletonNode->setAnimation(0, "rotate", true);
-    
-    skeletonNode->setPosition(Vec2(_contentSize.width / 2, 100));
+    skeletonNode = SkeletonAnimation::createWithBinaryFile("spine/coin-pro.skel", "spine/coin.atlas", 1);
+    skeletonNode->setAnimation(0, "animation", true);
+
+    skeletonNode->setPosition(Vec2(_contentSize.width / 2, _contentSize.height / 2));
     addChild(skeletonNode);
+
+    scheduleUpdate();
     
     return true;
 }
@@ -155,14 +175,19 @@ bool RaptorExample::init () {
     
     _title = "RaptorExample";
     skeletonNode = SkeletonAnimation::createWithJsonFile("spine/raptor-pro.json", "spine/raptor.atlas", 0.5f);
-    
     skeletonNode->setAnimation(0, "walk", true);
-    skeletonNode->setAnimation(1, "empty", false);
-    skeletonNode->addAnimation(1, "gungrab", false, 2);
-    
+    skeletonNode->addAnimation(1, "gun-grab", false, 2);
+    skeletonNode->setTwoColorTint(true);
+
+    effect.setCenterY(200);
+    swirlTime = 0;
+
+    skeletonNode->setVertexEffect(&effect);
+
     skeletonNode->setPosition(Vec2(_contentSize.width / 2, 20));
-    skeletonNode->setScale(0.6);
     addChild(skeletonNode);
+
+    scheduleUpdate();
     return true;
 }
 
@@ -172,43 +197,44 @@ bool SpineboyExample::init () {
     if (!SpineTestLayer::init()) return false;
     
     _title = "SpineboyExample";
-    skeletonNode = SkeletonAnimation::createWithJsonFile("spine/spineboy-ess.json", "spine/spineboy.atlas", 0.6f);
-    skeletonNode->setStartListener( [] (spTrackEntry* entry) {
-        log("%d start: %s", entry->trackIndex, entry->animation->name);
+
+    skeletonNode = SkeletonAnimation::createWithJsonFile("spine/spineboy-pro.json", "spine/spineboy.atlas", 0.6f);
+
+    skeletonNode->setStartListener([](TrackEntry* entry) {
+        log("%d start: %s", entry->getTrackIndex(), entry->getAnimation()->getName().buffer());
     });
-    skeletonNode->setInterruptListener( [] (spTrackEntry* entry) {
-        log("%d interrupt", entry->trackIndex);
+    skeletonNode->setInterruptListener([](TrackEntry* entry) {
+        log("%d interrupt", entry->getTrackIndex());
     });
-    skeletonNode->setEndListener( [] (spTrackEntry* entry) {
-        log("%d end", entry->trackIndex);
+    skeletonNode->setEndListener([](TrackEntry* entry) {
+        log("%d end", entry->getTrackIndex());
     });
-    skeletonNode->setCompleteListener( [] (spTrackEntry* entry) {
-        log("%d complete", entry->trackIndex);
+    skeletonNode->setCompleteListener([](TrackEntry* entry) {
+        log("%d complete", entry->getTrackIndex());
     });
-    skeletonNode->setDisposeListener( [] (spTrackEntry* entry) {
-        log("%d dispose", entry->trackIndex);
+    skeletonNode->setDisposeListener([](TrackEntry* entry) {
+        log("%d dispose", entry->getTrackIndex());
     });
-    skeletonNode->setEventListener( [] (spTrackEntry* entry, spEvent* event) {
-        log("%d event: %s, %d, %f, %s", entry->trackIndex, event->data->name, event->intValue, event->floatValue, event->stringValue);
+    skeletonNode->setEventListener([](TrackEntry* entry, spine::Event* event) {
+        log("%d event: %s, %d, %f, %s", entry->getTrackIndex(), event->getData().getName().buffer(), event->getIntValue(), event->getFloatValue(), event->getStringValue().buffer());
     });
-    
+
     skeletonNode->setMix("walk", "jump", 0.4);
     skeletonNode->setMix("jump", "run", 0.4);
     skeletonNode->setAnimation(0, "walk", true);
-    spTrackEntry* jumpEntry = skeletonNode->addAnimation(0, "jump", false, 1);
+    TrackEntry* jumpEntry = skeletonNode->addAnimation(0, "jump", false, 1);
     skeletonNode->addAnimation(0, "run", true);
-    
-    skeletonNode->setTrackStartListener(jumpEntry, [] (spTrackEntry* entry) {
+
+    skeletonNode->setTrackStartListener(jumpEntry, [](TrackEntry* entry) {
         log("jumped!");
     });
-    
+
     // skeletonNode->addAnimation(1, "test", true);
     // skeletonNode->runAction(RepeatForever::create(Sequence::create(FadeOut::create(1), FadeIn::create(1), DelayTime::create(5), NULL)));
-    
+
     skeletonNode->setPosition(Vec2(_contentSize.width / 2, 20));
-    skeletonNode->setScale(0.8);
     addChild(skeletonNode);
-    
+
     scheduleUpdate();
     
     return true;
@@ -225,12 +251,13 @@ bool TankExample::init () {
     if (!SpineTestLayer::init()) return false;
     
     _title = "TankExample";
-    skeletonNode = SkeletonAnimation::createWithJsonFile("spine/tank-pro.json", "spine/tank.atlas", 0.5f);
-    skeletonNode->setAnimation(0, "drive", true);
-    
+    skeletonNode = SkeletonAnimation::createWithBinaryFile("spine/tank-pro.skel", "spine/tank.atlas", 0.5f);
+    skeletonNode->setAnimation(0, "shoot", true);
+
     skeletonNode->setPosition(Vec2(_contentSize.width / 2 + 400, 20));
-    skeletonNode->setScale(0.8);
     addChild(skeletonNode);
+
+    scheduleUpdate();
     
     return true;
 }

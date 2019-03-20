@@ -28,52 +28,49 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_ATTACHMENTLOADER_H_
-#define SPINE_ATTACHMENTLOADER_H_
+#ifndef Spine_AttachmentLoader_h
+#define Spine_AttachmentLoader_h
 
-#include <spine/dll.h>
-#include <spine/Attachment.h>
-#include <spine/Skin.h>
+#include <spine/RTTI.h>
+#include <spine/SpineObject.h>
+#include <spine/SpineString.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace spine {
+    class Skin;
+    class Attachment;
+    class RegionAttachment;
+    class MeshAttachment;
+    class BoundingBoxAttachment;
+    class PathAttachment;
+    class PointAttachment;
+    class ClippingAttachment;
+    
+    class SP_API AttachmentLoader : public SpineObject {
+	public:
+        RTTI_DECL
+        
+        AttachmentLoader();
+        
+        virtual ~AttachmentLoader();
+        
+        /// @return May be NULL to not load any attachment.
+        virtual RegionAttachment* newRegionAttachment(Skin& skin, const String& name, const String& path) = 0;
+        
+        /// @return May be NULL to not load any attachment.
+        virtual MeshAttachment* newMeshAttachment(Skin& skin, const String& name, const String& path) = 0;
+        
+        /// @return May be NULL to not load any attachment.
+        virtual BoundingBoxAttachment* newBoundingBoxAttachment(Skin& skin, const String& name) = 0;
+        
+        /// @return May be NULL to not load any attachment
+        virtual PathAttachment* newPathAttachment(Skin& skin, const String& name) = 0;
+        
+        virtual PointAttachment* newPointAttachment(Skin& skin, const String& name) = 0;
+        
+        virtual ClippingAttachment* newClippingAttachment(Skin& skin, const String& name) = 0;
 
-typedef struct spAttachmentLoader {
-	const char* error1;
-	const char* error2;
-
-	const void* const vtable;
-#ifdef __cplusplus
-	spAttachmentLoader () :
-					error1(0),
-					error2(0),
-					vtable(0) {
-	}
-#endif
-} spAttachmentLoader;
-
-SP_API void spAttachmentLoader_dispose (spAttachmentLoader* self);
-
-/* Called to create each attachment. Returns 0 to not load an attachment. If 0 is returned and _spAttachmentLoader_setError was
- * called, an error occurred. */
-SP_API spAttachment* spAttachmentLoader_createAttachment (spAttachmentLoader* self, spSkin* skin, spAttachmentType type, const char* name,
-		const char* path);
-/* Called after the attachment has been fully configured. */
-SP_API void spAttachmentLoader_configureAttachment (spAttachmentLoader* self, spAttachment* attachment);
-/* Called just before the attachment is disposed. This can release allocations made in spAttachmentLoader_configureAttachment. */
-SP_API void spAttachmentLoader_disposeAttachment (spAttachmentLoader* self, spAttachment* attachment);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spAttachmentLoader AttachmentLoader;
-#define AttachmentLoader_dispose(...) spAttachmentLoader_dispose(__VA_ARGS__)
-#define AttachmentLoader_createAttachment(...) spAttachmentLoader_createAttachment(__VA_ARGS__)
-#define AttachmentLoader_configureAttachment(...) spAttachmentLoader_configureAttachment(__VA_ARGS__)
-#define AttachmentLoader_disposeAttachment(...) spAttachmentLoader_disposeAttachment(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
+        virtual void configureAttachment(Attachment* attachment) = 0;
+    };
 }
-#endif
 
-#endif /* SPINE_ATTACHMENTLOADER_H_ */
+#endif /* Spine_AttachmentLoader_h */

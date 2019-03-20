@@ -50,10 +50,10 @@ public:
     virtual bool init ();
     
 protected:
-    spAtlas* _atlas;
-    spAttachmentLoader* _attachmentLoader;
-    spSkeletonData* _skeletonData;
-    spAnimationStateData* _stateData;
+    spine::Atlas * _atlas;
+    spine::AttachmentLoader* _attachmentLoader;
+    spine::SkeletonData* _skeletonData;
+    spine::AnimationStateData* _stateData;
 };
 
 class CoinExample: public SpineTestLayer
@@ -85,6 +85,7 @@ public:
     
 private:
     spine::SkeletonAnimation* skeletonNode;
+    float swirlTime;
 };
 
 class SpineboyExample : public SpineTestLayer {

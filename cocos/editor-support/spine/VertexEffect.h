@@ -28,58 +28,79 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_VERTEXEFFECT_H_
-#define SPINE_VERTEXEFFECT_H_
+#ifndef Spine_VertexEffect_h
+#define Spine_VertexEffect_h
 
-#include <spine/dll.h>
-#include <spine/Skeleton.h>
-#include <spine/Color.h>
+#include <spine/SpineObject.h>
+#include <spine/MathUtil.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace spine {
 
-struct spVertexEffect;
+class Skeleton;
+class Color;
 
-typedef void (*spVertexEffectBegin)(struct spVertexEffect *self, spSkeleton *skeleton);
+class SP_API VertexEffect: public SpineObject {
+public:
+	virtual void begin(Skeleton& skeleton) = 0;
+	virtual void transform(float& x, float& y, float &u, float &v, Color &light, Color &dark) = 0;
+	virtual void end() = 0;
+};
 
-typedef void (*spVertexEffectTransform)(struct spVertexEffect *self, float *x, float *y, float *u, float *v,
-										spColor *light, spColor *dark);
+class SP_API JitterVertexEffect: public VertexEffect {
+public:
+	JitterVertexEffect(float jitterX, float jitterY);
 
-typedef void (*spVertexEffectEnd)(struct spVertexEffect *self);
+	void begin(Skeleton& skeleton);
+	void transform(float& x, float& y, float &u, float &v, Color &light, Color &dark);
+	void end();
 
-typedef struct spVertexEffect {
-	spVertexEffectBegin begin;
-	spVertexEffectTransform transform;
-	spVertexEffectEnd end;
-} spVertexEffect;
+	void setJitterX(float jitterX);
+	float getJitterX();
 
-typedef struct spJitterVertexEffect {
-	spVertexEffect super;
-	float jitterX;
-	float jitterY;
-} spJitterVertexEffect;
+	void setJitterY(float jitterY);
+	float getJitterY();
 
-typedef struct spSwirlVertexEffect {
-	spVertexEffect super;
-	float centerX;
-	float centerY;
-	float radius;
-	float angle;
-	float worldX;
-	float worldY;
-} spSwirlVertexEffect;
+protected:
+	float _jitterX;
+	float _jitterY;
+};
 
-SP_API spJitterVertexEffect *spJitterVertexEffect_create(float jitterX, float jitterY);
+class SP_API SwirlVertexEffect: public VertexEffect {
+public:
+	SwirlVertexEffect(float radius, Interpolation &interpolation);
 
-SP_API void spJitterVertexEffect_dispose(spJitterVertexEffect *effect);
+	void begin(Skeleton& skeleton);
+	void transform(float& x, float& y, float &u, float &v, Color &light, Color &dark);
+	void end();
 
-SP_API spSwirlVertexEffect *spSwirlVertexEffect_create(float radius);
+	void setCenterX(float centerX);
+	float getCenterX();
 
-SP_API void spSwirlVertexEffect_dispose(spSwirlVertexEffect *effect);
+	void setCenterY(float centerY);
+	float getCenterY();
 
-#ifdef __cplusplus
+	void setRadius(float radius);
+	float getRadius();
+
+	void setAngle(float angle);
+	float getAngle();
+
+	void setWorldX(float worldX);
+	float getWorldX();
+
+	void setWorldY(float worldY);
+	float getWorldY();
+
+protected:
+	float _centerX;
+	float _centerY;
+	float _radius;
+	float _angle;
+	float _worldX;
+	float _worldY;
+
+	Interpolation& _interpolation;
+};
 }
-#endif
 
-#endif /* SPINE_VERTEX_EFFECT_H_ */
+#endif /* Spine_VertexEffect_h */

@@ -28,46 +28,65 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_SKELETONJSON_H_
-#define SPINE_SKELETONJSON_H_
+#ifndef Spine_SkeletonJson_h
+#define Spine_SkeletonJson_h
 
-#include <spine/dll.h>
-#include <spine/Attachment.h>
-#include <spine/AttachmentLoader.h>
-#include <spine/SkeletonData.h>
-#include <spine/Atlas.h>
-#include <spine/Animation.h>
+#include <spine/Vector.h>
+#include <spine/SpineObject.h>
+#include <spine/SpineString.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+namespace spine {
+class CurveTimeline;
 
-struct spAtlasAttachmentLoader;
+class VertexAttachment;
 
-typedef struct spSkeletonJson {
-	float scale;
-	spAttachmentLoader* attachmentLoader;
-	const char* const error;
-} spSkeletonJson;
+class Animation;
 
-SP_API spSkeletonJson* spSkeletonJson_createWithLoader (spAttachmentLoader* attachmentLoader);
-SP_API spSkeletonJson* spSkeletonJson_create (spAtlas* atlas);
-SP_API void spSkeletonJson_dispose (spSkeletonJson* self);
+class Json;
 
-SP_API spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const char* json);
-SP_API spSkeletonData* spSkeletonJson_readSkeletonDataFile (spSkeletonJson* self, const char* path);
+class SkeletonData;
 
-#ifdef SPINE_SHORT_NAMES
-typedef spSkeletonJson SkeletonJson;
-#define SkeletonJson_createWithLoader(...) spSkeletonJson_createWithLoader(__VA_ARGS__)
-#define SkeletonJson_create(...) spSkeletonJson_create(__VA_ARGS__)
-#define SkeletonJson_dispose(...) spSkeletonJson_dispose(__VA_ARGS__)
-#define SkeletonJson_readSkeletonData(...) spSkeletonJson_readSkeletonData(__VA_ARGS__)
-#define SkeletonJson_readSkeletonDataFile(...) spSkeletonJson_readSkeletonDataFile(__VA_ARGS__)
-#endif
+class Atlas;
 
-#ifdef __cplusplus
+class AttachmentLoader;
+
+class LinkedMesh;
+
+class String;
+
+class SP_API SkeletonJson : public SpineObject {
+public:
+	explicit SkeletonJson(Atlas *atlas);
+
+	explicit SkeletonJson(AttachmentLoader *attachmentLoader);
+
+	~SkeletonJson();
+
+	SkeletonData *readSkeletonDataFile(const String &path);
+
+	SkeletonData *readSkeletonData(const char *json);
+
+	void setScale(float scale) { _scale = scale; }
+
+	String &getError() { return _error; }
+
+private:
+	AttachmentLoader *_attachmentLoader;
+	Vector<LinkedMesh *> _linkedMeshes;
+	float _scale;
+	const bool _ownsLoader;
+	String _error;
+
+	static float toColor(const char *value, size_t index);
+
+	static void readCurve(Json *frame, CurveTimeline *timeline, size_t frameIndex);
+
+	Animation *readAnimation(Json *root, SkeletonData *skeletonData);
+
+	void readVertices(Json *attachmentMap, VertexAttachment *attachment, size_t verticesLength);
+
+	void setError(Json *root, const String &value1, const String &value2);
+};
 }
-#endif
 
-#endif /* SPINE_SKELETONJSON_H_ */
+#endif /* Spine_SkeletonJson_h */

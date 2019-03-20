@@ -28,38 +28,46 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#ifndef SPINE_POINTATTACHMENT_H_
-#define SPINE_POINTATTACHMENT_H_
+#ifndef Spine_PointAttachment_h
+#define Spine_PointAttachment_h
 
-#include <spine/dll.h>
 #include <spine/Attachment.h>
-#include <spine/VertexAttachment.h>
-#include <spine/Atlas.h>
-#include <spine/Slot.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-typedef struct spPointAttachment {
-	spVertexAttachment super;
-	float x, y, rotation;
-	spColor color;
-} spPointAttachment;
-
-SP_API spPointAttachment* spPointAttachment_create (const char* name);
-SP_API void spPointAttachment_computeWorldPosition (spPointAttachment* self, spBone* bone, float* x, float* y);
-SP_API float spPointAttachment_computeWorldRotation (spPointAttachment* self, spBone* bone);
-
-#ifdef SPINE_SHORT_NAMES
-typedef spPointAttachment PointAttachment;
-#define PointAttachment_create(...) spPointAttachment_create(__VA_ARGS__)
-#define PointAttachment_computeWorldPosition(...) spPointAttachment_computeWorldPosition(__VA_ARGS__)
-#define PointAttachment_computeWorldRotation(...) spPointAttachment_computeWorldRotation(__VA_ARGS__)
-#endif
-
-#ifdef __cplusplus
+namespace spine {
+    class Bone;
+    
+    /// 
+    /// An attachment which is a single point and a rotation. This can be used to spawn projectiles, particles, etc. A bone can be
+    /// used in similar ways, but a PointAttachment is slightly less expensive to compute and can be hidden, shown, and placed in a
+    /// skin.
+    ///
+    /// See http://esotericsoftware.com/spine-point-attachments for Point Attachments in the Spine User Guide.
+    /// 
+    class SP_API PointAttachment : public Attachment {
+        friend class SkeletonBinary;
+        friend class SkeletonJson;
+        
+        RTTI_DECL
+        
+    public:
+        explicit PointAttachment(const String& name);
+        
+        void computeWorldPosition(Bone& bone, float& ox, float& oy);
+        
+        float computeWorldRotation(Bone& bone);
+        
+        float getX();
+        void setX(float inValue);
+        
+        float getY();
+        void setY(float inValue);
+        
+        float getRotation();
+        void setRotation(float inValue);
+        
+    private:
+        float _x, _y, _rotation;
+    };
 }
-#endif
 
-#endif /* SPINE_POINTATTACHMENT_H_ */
+#endif /* Spine_PointAttachment_h */
