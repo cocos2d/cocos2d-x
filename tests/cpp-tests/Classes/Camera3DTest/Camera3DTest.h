@@ -23,11 +23,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef _CAMERA3D_TEST_H_
-#define _CAMERA3D_TEST_H_
+#pragma once
 
 #include "../BaseTest.h"
 #include "../Sprite3DTest/DrawNode3D.h"
+
+#include "renderer/backend/ProgramState.h"
+#include "renderer/backend/Types.h"
+
 #include <string>
 
 namespace cocos2d {
@@ -243,30 +246,30 @@ public:
     void switchTypeCallback(cocos2d::Ref* sender,int type);
     
 protected:
-    cocos2d::Layer*                  _layer3D;
-    CameraType              _cameraType;
-    cocos2d::Camera*                 _camera;
-    cocos2d::Sprite3D*               _sprite3D1;
-    cocos2d::Sprite3D*               _sprite3D2;
-    cocos2d::GLProgram*              _shader;
-    cocos2d::GLProgramState*         _state;
+    CameraType                      _cameraType;
+    cocos2d::Layer*                 _layer3D        = nullptr;
+    cocos2d::Camera*                _camera         = nullptr;
+    cocos2d::Sprite3D*              _sprite3D1      = nullptr;
+    cocos2d::Sprite3D*              _sprite3D2      = nullptr;
+    cocos2d::backend::ProgramState* _programState1  = nullptr;
+    cocos2d::backend::ProgramState* _programState2  = nullptr;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     cocos2d::EventListenerCustom* _backToForegroundListener;
 #endif
 };
 
-class CameraFrameBufferTest : public CameraBaseTest
-{
-public:
-    CREATE_FUNC(CameraFrameBufferTest);
-    CameraFrameBufferTest(void);
-    virtual ~CameraFrameBufferTest(void);
-    // overrides
-    virtual std::string title() const override;
-    
-    virtual void onEnter() override;
-};
+//class CameraFrameBufferTest : public CameraBaseTest
+//{
+//public:
+//    CREATE_FUNC(CameraFrameBufferTest);
+//    CameraFrameBufferTest(void);
+//    virtual ~CameraFrameBufferTest(void);
+//    // overrides
+//    virtual std::string title() const override;
+//    
+//    virtual void onEnter() override;
+//};
 
 class BackgroundColorBrushTest : public CameraBaseTest
 {
@@ -282,4 +285,3 @@ public:
     virtual void onEnter() override;
 };
 
-#endif

@@ -1231,7 +1231,7 @@ TMXTilePropertyTest::TMXTilePropertyTest()
 {
     auto map = TMXTiledMap::create("TileMaps/ortho-tile-property.tmx");
     addChild(map ,0 ,kTagTileMap);
-
+    
     for(int i=1;i<=20;i++){
         for(const auto& value : map->getPropertiesForGID(i).asValueMap())
         {

@@ -8,9 +8,11 @@ uniform float u_fogStart; // This is only for linear fog
 uniform float u_fogEnd; // This is only for linear fog
 uniform int u_fogEquation; // 0 = linear, 1 = exp, 2 = exp2
 
+uniform mat4 u_MVPMatrix;
+
 void main(void)
 {
-    gl_Position = CC_MVPMatrix * a_position;
+    gl_Position = u_MVPMatrix * a_position;
     v_texture_coord = a_texCoord; 
 
     float fogFragCoord = abs(gl_Position.z);                                       //get fog distance

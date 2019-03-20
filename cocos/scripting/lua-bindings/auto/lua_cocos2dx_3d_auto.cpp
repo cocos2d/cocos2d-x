@@ -2088,7 +2088,7 @@ int lua_cocos2dx_3d_Mesh_getMeshVertexAttribute(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_3d_Mesh_calculateAABB(lua_State* tolua_S)
+int lua_cocos2dx_3d_Mesh_setVertexLayout(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Mesh* cobj = nullptr;
@@ -2108,29 +2108,32 @@ int lua_cocos2dx_3d_Mesh_calculateAABB(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Mesh_calculateAABB'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Mesh_setVertexLayout'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
+    if (argc == 1) 
     {
+        cocos2d::backend::VertexLayout arg0;
+
+        ok &= luaval_to_object<cocos2d::backend::VertexLayout>(tolua_S, 2, "cc.VertexLayout",&arg0, "cc.Mesh:setVertexLayout");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Mesh_calculateAABB'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Mesh_setVertexLayout'", nullptr);
             return 0;
         }
-        cobj->calculateAABB();
+        cobj->setVertexLayout(arg0);
         lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:calculateAABB",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:setVertexLayout",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Mesh_calculateAABB'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Mesh_setVertexLayout'.",&tolua_err);
 #endif
 
     return 0;
@@ -2346,6 +2349,53 @@ int lua_cocos2dx_3d_Mesh_setMeshIndexData(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Mesh_setMeshIndexData'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_3d_Mesh_calculateAABB(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Mesh* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Mesh",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Mesh*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Mesh_calculateAABB'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Mesh_calculateAABB'", nullptr);
+            return 0;
+        }
+        cobj->calculateAABB();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:calculateAABB",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Mesh_calculateAABB'.",&tolua_err);
 #endif
 
     return 0;
@@ -2747,11 +2797,12 @@ int lua_register_cocos2dx_3d_Mesh(lua_State* tolua_S)
         tolua_function(tolua_S,"setMaterial",lua_cocos2dx_3d_Mesh_setMaterial);
         tolua_function(tolua_S,"getName",lua_cocos2dx_3d_Mesh_getName);
         tolua_function(tolua_S,"getMeshVertexAttribute",lua_cocos2dx_3d_Mesh_getMeshVertexAttribute);
-        tolua_function(tolua_S,"calculateAABB",lua_cocos2dx_3d_Mesh_calculateAABB);
+        tolua_function(tolua_S,"setVertexLayout",lua_cocos2dx_3d_Mesh_setVertexLayout);
         tolua_function(tolua_S,"draw",lua_cocos2dx_3d_Mesh_draw);
         tolua_function(tolua_S,"getBlendFunc",lua_cocos2dx_3d_Mesh_getBlendFunc);
         tolua_function(tolua_S,"setName",lua_cocos2dx_3d_Mesh_setName);
         tolua_function(tolua_S,"setMeshIndexData",lua_cocos2dx_3d_Mesh_setMeshIndexData);
+        tolua_function(tolua_S,"calculateAABB",lua_cocos2dx_3d_Mesh_calculateAABB);
         tolua_function(tolua_S,"getProgramState",lua_cocos2dx_3d_Mesh_getProgramState);
         tolua_function(tolua_S,"getMeshVertexAttribCount",lua_cocos2dx_3d_Mesh_getMeshVertexAttribCount);
         tolua_function(tolua_S,"setBlendFunc",lua_cocos2dx_3d_Mesh_setBlendFunc);
@@ -4052,6 +4103,56 @@ int lua_cocos2dx_3d_Sprite3D_getMeshCount(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_3d_Sprite3D_setVertexLayout(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Sprite3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Sprite3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Sprite3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Sprite3D_setVertexLayout'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::backend::VertexLayout arg0;
+
+        ok &= luaval_to_object<cocos2d::backend::VertexLayout>(tolua_S, 2, "cc.VertexLayout",&arg0, "cc.Sprite3D:setVertexLayout");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Sprite3D_setVertexLayout'", nullptr);
+            return 0;
+        }
+        cobj->setVertexLayout(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite3D:setVertexLayout",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Sprite3D_setVertexLayout'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_3d_Sprite3D_getMeshByIndex(lua_State* tolua_S)
 {
     int argc = 0;
@@ -4787,6 +4888,7 @@ int lua_register_cocos2dx_3d_Sprite3D(lua_State* tolua_S)
         tolua_function(tolua_S,"setMaterial",lua_cocos2dx_3d_Sprite3D_setMaterial);
         tolua_function(tolua_S,"getMesh",lua_cocos2dx_3d_Sprite3D_getMesh);
         tolua_function(tolua_S,"getMeshCount",lua_cocos2dx_3d_Sprite3D_getMeshCount);
+        tolua_function(tolua_S,"setVertexLayout",lua_cocos2dx_3d_Sprite3D_setVertexLayout);
         tolua_function(tolua_S,"getMeshByIndex",lua_cocos2dx_3d_Sprite3D_getMeshByIndex);
         tolua_function(tolua_S,"isForceDepthWrite",lua_cocos2dx_3d_Sprite3D_isForceDepthWrite);
         tolua_function(tolua_S,"getBlendFunc",lua_cocos2dx_3d_Sprite3D_getBlendFunc);

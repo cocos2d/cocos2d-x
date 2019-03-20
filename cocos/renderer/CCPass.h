@@ -56,6 +56,7 @@ class CC_DLL Pass : public Ref
     friend class Material;
     friend class Technique;
     friend class RenderState;
+    friend class VertexAttribBinding;
 public:
     /** Creates a Pass with a GLProgramState.
      */

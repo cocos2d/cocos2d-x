@@ -27,8 +27,16 @@ THE SOFTWARE.
 #include "Camera3DTest.h"
 #include "testResource.h"
 #include "ui/UISlider.h"
+#include  "platform/CCFileUtils.h"
 
 USING_NS_CC;
+
+#define SET_UNIFORM(name, addr, size) do {                      \
+        auto _loc_ = _programState1->getUniformLocation(name);  \
+        _programState1->setUniform(_loc_, (addr), (size));      \
+        _loc_ = _programState2->getUniformLocation(name);       \
+        _programState2->setUniform(_loc_, (addr), (size));      \
+    } while(false) 
 
 enum
 {
@@ -44,7 +52,7 @@ Camera3DTests::Camera3DTests()
     ADD_TEST_CASE(CameraCullingDemo);
     ADD_TEST_CASE(FogTestDemo);
     ADD_TEST_CASE(CameraArcBallDemo);
-    ADD_TEST_CASE(CameraFrameBufferTest);
+    //ADD_TEST_CASE(CameraFrameBufferTest); //TODO render target
     ADD_TEST_CASE(BackgroundColorBrushTest);
 }
 
@@ -138,7 +146,7 @@ CameraRotationTest::CameraRotationTest()
 
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(_lis, this);
     
-    schedule(schedule_selector(CameraRotationTest::update));
+    schedule(CC_SCHEDULE_SELECTOR(CameraRotationTest::update));
 }
 
 CameraRotationTest::~CameraRotationTest()
@@ -724,7 +732,7 @@ void CameraCullingDemo::onEnter()
 {
     CameraBaseTest::onEnter();
 
-    schedule(schedule_selector(CameraCullingDemo::update), 0.0f);
+    schedule(CC_SCHEDULE_SELECTOR(CameraCullingDemo::update), 0.0f);
     
     auto s = Director::getInstance()->getWinSize();
     /*auto listener = EventListenerTouchAllAtOnce::create();
@@ -797,24 +805,23 @@ void CameraCullingDemo::onExit()
 
 void CameraCullingDemo::update(float dt)
 {
-    //TODO minggo
-//    _drawAABB->clear();
-//
-//    if(_cameraType == CameraType::ThirdPerson)
-//        drawCameraFrustum();
-//
-//    Vector<Node*>& children = _layer3D->getChildren();
-//    Vec3 corners[8];
-//
-//    for (const auto& iter: children)
-//    {
-//        const AABB& aabb = static_cast<Sprite3D*>(iter)->getAABB();
-//        if (_cameraFirst->isVisibleInFrustum(&aabb))
-//        {
-//            aabb.getCorners(corners);
-//            _drawAABB->drawCube(corners, Color4F(0, 1, 0, 1));
-//        }
-//    }
+    _drawAABB->clear();
+
+    if(_cameraType == CameraType::ThirdPerson)
+        drawCameraFrustum();
+
+    Vector<Node*>& children = _layer3D->getChildren();
+    Vec3 corners[8];
+
+    for (const auto& iter: children)
+    {
+        const AABB& aabb = static_cast<Sprite3D*>(iter)->getAABB();
+        if (_cameraFirst->isVisibleInFrustum(&aabb))
+        {
+            aabb.getCorners(corners);
+            _drawAABB->drawCube(corners, Color4F(0, 1, 0, 1));
+        }
+    }
 }
 
 void CameraCullingDemo::reachEndCallBack()
@@ -1010,7 +1017,7 @@ void CameraArcBallDemo::onEnter()
 {
     CameraBaseTest::onEnter();
     _rotationQuat.set(0.0f, 0.0f, 0.0f, 1.0f);
-    schedule(schedule_selector(CameraArcBallDemo::update), 0.0f);
+    schedule(CC_SCHEDULE_SELECTOR(CameraArcBallDemo::update), 0.0f);
     auto s = Director::getInstance()->getWinSize();
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(CameraArcBallDemo::onTouchsMoved, this);
@@ -1209,12 +1216,14 @@ FogTestDemo::FogTestDemo(void)
 , _layer3D(nullptr)
 , _cameraType(CameraType::Free)
 , _camera(nullptr)
-, _shader(nullptr)
-, _state(nullptr)
+, _programState1(nullptr)
+, _programState2(nullptr)
 {
 }
 FogTestDemo::~FogTestDemo(void)
 {
+    CC_SAFE_RELEASE_NULL(_programState1);
+    CC_SAFE_RELEASE_NULL(_programState2);
 }
 
 std::string FogTestDemo::title() const
@@ -1225,7 +1234,7 @@ std::string FogTestDemo::title() const
 void FogTestDemo::onEnter()
 {
     CameraBaseTest::onEnter();
-    schedule(schedule_selector(FogTestDemo::update), 0.0f);
+    schedule(CC_SCHEDULE_SELECTOR(FogTestDemo::update), 0.0f);
     Director::getInstance()->setClearColor(Color4F(0.5,0.5,0.5,1));
 
     auto s = Director::getInstance()->getWinSize();
@@ -1256,45 +1265,55 @@ void FogTestDemo::onEnter()
     addChild(layer3D,0);
     _layer3D=layer3D;
 
-    _shader =GLProgram::createWithFilenames("Sprite3DTest/fog.vert","Sprite3DTest/fog.frag");
-    _state = GLProgramState::create(_shader);
+    CC_SAFE_RELEASE_NULL(_programState1);
+    CC_SAFE_RELEASE_NULL(_programState2);
 
+    auto vertexSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.vert");
+    auto fragSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.frag");
+
+    _programState1 = new backend::ProgramState(vertexSource, fragSource);
+    _programState2 = new backend::ProgramState(vertexSource, fragSource);
+    
     _sprite3D1 = Sprite3D::create("Sprite3DTest/teapot.c3b");
     _sprite3D2 = Sprite3D::create("Sprite3DTest/teapot.c3b");
 
-    _sprite3D1->setGLProgramState(_state);
-    _sprite3D2->setGLProgramState(_state);
+    _sprite3D1->setProgramState(_programState1);
+    _sprite3D2->setProgramState(_programState2);
+
     //pass mesh's attribute to shader
     long offset = 0; 
     auto attributeCount = _sprite3D1->getMesh()->getMeshVertexAttribCount();
+    backend::VertexLayout layout1;
     for (auto i = 0; i < attributeCount; i++) {
         auto meshattribute = _sprite3D1->getMesh()->getMeshVertexAttribute(i);
-        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
-            meshattribute.size, 
-            meshattribute.type,
-            GL_FALSE,
-            _sprite3D1->getMesh()->getVertexSizeInBytes(),
-            (GLvoid*)offset);
-        offset += meshattribute.attribSizeBytes;
+        auto attributeName = shaderinfos::getAttributeName(meshattribute.vertexAttrib);
+        layout1.setAtrribute(attributeName, i, meshattribute.type, offset, false);
+        offset += meshattribute.getAttribSizeBytes();
     }
+    layout1.setLayout(offset, backend::VertexStepMode::VERTEX);
+    _sprite3D1->setVertexLayout(layout1);
 
+    backend::VertexLayout layout2;
     long offset1 = 0; 
     auto attributeCount1 = _sprite3D2->getMesh()->getMeshVertexAttribCount();
     for (auto i = 0; i < attributeCount1; i++) {
         auto meshattribute = _sprite3D2->getMesh()->getMeshVertexAttribute(i);
-        _state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
-            meshattribute.size, 
-            meshattribute.type,
-            GL_FALSE,
-            _sprite3D2->getMesh()->getVertexSizeInBytes(),
-            (GLvoid*)offset1);
-        offset1 += meshattribute.attribSizeBytes;
+        auto attributeName = shaderinfos::getAttributeName(meshattribute.vertexAttrib);
+        layout2.setAtrribute(attributeName, i, meshattribute.type, offset1, false);
+        offset1 += meshattribute.getAttribSizeBytes();
     }
+    layout2.setLayout(offset1, backend::VertexStepMode::VERTEX);
+    _sprite3D2->setVertexLayout(layout2);
 
-    _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-    _state->setUniformFloat("u_fogStart",10);
-    _state->setUniformFloat("u_fogEnd",60);
-    _state->setUniformInt("u_fogEquation" ,0);
+    auto    fogColor    = Vec4(0.5, 0.5, 0.5, 1.0);
+    float   fogStart    = 10;
+    float   fogEnd      = 60;
+    int     fogEquation = 0;
+
+    SET_UNIFORM("u_fogColor",    &fogColor,      sizeof(fogColor));
+    SET_UNIFORM("u_fogStart",    &fogStart,      sizeof(fogStart));
+    SET_UNIFORM("u_fogEnd",      &fogEnd,        sizeof(fogEnd));
+    SET_UNIFORM("u_fogEquation", &fogEquation,   sizeof(fogEquation));
 
     _layer3D->addChild(_sprite3D1);
     _sprite3D1->setPosition3D( Vec3( 0, 0,0 ) );
@@ -1323,16 +1342,27 @@ void FogTestDemo::onEnter()
                                                             [this](EventCustom*)
                                                             {
                                                                 Director::getInstance()->setClearColor(Color4F(0.5,0.5,0.5,1));
-                                                                auto glProgram = _state->getGLProgram();
-                                                                glProgram->reset();
-                                                                glProgram->initWithFilenames("Sprite3DTest/fog.vert","Sprite3DTest/fog.frag");
-                                                                glProgram->link();
-                                                                glProgram->updateUniforms();
+                                                                CC_SAFE_RELEASE_NULL(_programState1);
+                                                                CC_SAFE_RELEASE_NULL(_programState2);
+
+                                                                auto vertexSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.vert");
+                                                                auto fragSource = FileUtils::getInstance()->getStringFromFile("Sprite3DTest/fog.frag");
+
+                                                                _programState1 = new backend::ProgramState(vertexSource, fragSource);
+                                                                _programState2 = new backend::ProgramState(vertexSource, fragSource);
+
+                                                                _sprite3D1->setProgramState(_programState1);
+                                                                _sprite3D2->setProgramState(_programState2);
                                                                 
-                                                                _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-                                                                _state->setUniformFloat("u_fogStart",10);
-                                                                _state->setUniformFloat("u_fogEnd",60);
-                                                                _state->setUniformInt("u_fogEquation" ,0);
+                                                                auto    fogColor    = Vec4(0.5, 0.5, 0.5, 1.0);
+                                                                float   fogStart    = 10;
+                                                                float   fogEnd      = 60;
+                                                                int     fogEquation = 0;
+
+                                                                SET_UNIFORM("u_fogColor",    &fogColor,      sizeof(fogColor));
+                                                                SET_UNIFORM("u_fogStart",    &fogStart,      sizeof(fogStart));
+                                                                SET_UNIFORM("u_fogEnd",      &fogEnd,        sizeof(fogEnd));
+                                                                SET_UNIFORM("u_fogEquation", &fogEquation,   sizeof(fogEquation));
                                                             }
                                                             );
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
@@ -1344,31 +1374,36 @@ void FogTestDemo::switchTypeCallback(Ref* sender,int type)
 {
     if(type == 0)
     {
-        _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-        _state->setUniformFloat("u_fogStart",10);
-        _state->setUniformFloat("u_fogEnd",60);
-        _state->setUniformInt("u_fogEquation" ,0);
+        auto fogColor   = Vec4(0.5, 0.5, 0.5, 1.0);
+        float fogStart  = 10;
+        float fogEnd    = 60;
+        int fogEquation = 0;
 
-        _sprite3D1->setGLProgramState(_state);
-        _sprite3D2->setGLProgramState(_state);
+        SET_UNIFORM("u_fogColor",    &fogColor,      sizeof(fogColor));
+        SET_UNIFORM("u_fogStart",    &fogStart,      sizeof(fogStart));
+        SET_UNIFORM("u_fogEnd",      &fogEnd,        sizeof(fogEnd));
+        SET_UNIFORM("u_fogEquation", &fogEquation,   sizeof(fogEquation));
+
     }
     else if(type == 1)
     {
-        _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-        _state->setUniformFloat("u_fogDensity",0.03f);
-        _state->setUniformInt("u_fogEquation" ,1);
+        auto    fogColor    = Vec4(0.5, 0.5, 0.5, 1.0);
+        float   fogDensity  = 0.03f;
+        int     fogEquation = 1;
 
-        _sprite3D1->setGLProgramState(_state);
-        _sprite3D2->setGLProgramState(_state);
+        SET_UNIFORM("u_fogColor",    &fogColor,      sizeof(fogColor));
+        SET_UNIFORM("u_fogDensity",  &fogDensity,    sizeof(fogDensity));
+        SET_UNIFORM("u_fogEquation", &fogEquation,   sizeof(fogEquation));
     }
     else if(type == 2)
     {
-        _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-        _state->setUniformFloat("u_fogDensity",0.03f);
-        _state->setUniformInt("u_fogEquation" ,2);
+        auto    fogColor = Vec4(0.5, 0.5, 0.5, 1.0);
+        float   fogDensity = 0.03f;
+        int     fogEquation = 2;
 
-        _sprite3D1->setGLProgramState(_state);
-        _sprite3D2->setGLProgramState(_state);
+        SET_UNIFORM("u_fogColor",    &fogColor,      sizeof(fogColor));
+        SET_UNIFORM("u_fogDensity",  &fogDensity,    sizeof(fogDensity));
+        SET_UNIFORM("u_fogEquation", &fogEquation,   sizeof(fogEquation));
     }
 }
 
@@ -1415,71 +1450,71 @@ void FogTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Ev
     }
 }
 
-CameraFrameBufferTest::CameraFrameBufferTest()
-{
-    
-}
-
-CameraFrameBufferTest::~CameraFrameBufferTest()
-{
-    
-}
-
-std::string CameraFrameBufferTest::title() const
-{
-    return "Camera FrameBuffer Object Test";
-}
-
-void CameraFrameBufferTest::onEnter()
-{
-    auto sizeInpixels = Director::getInstance()->getWinSizeInPixels();
-    auto size = Director::getInstance()->getWinSize();
-    auto fboSize = Size(sizeInpixels.width * 1, sizeInpixels.height * 1.5);
-    auto fbo = experimental::FrameBuffer::create(1, fboSize.width, fboSize.height);
-    
-    CameraBaseTest::onEnter();
-    //auto sprite = Sprite::createWithTexture(fbo);
-    //sprite->setPosition(Vec2(100,100));
-    //std::string filename = "Sprite3DTest/girl.c3b";
-    //auto sprite = Sprite3D::create(filename);
-    //sprite->setScale(1.0);
-    //auto animation = Animation3D::create(filename);
-    //if (animation)
-    //{
-    //    auto animate = Animate3D::create(animation);
-        
-    //    sprite->runAction(RepeatForever::create(animate));
-    //}
-    //sprite->setPosition(Vec2(100,100));
-    auto rt = experimental::RenderTarget::create(fboSize.width, fboSize.height);
-    auto rtDS = experimental::RenderTargetDepthStencil::create(fboSize.width, fboSize.height);
-    fbo->attachRenderTarget(rt);
-    fbo->attachDepthStencilTarget(rtDS);
-    auto sprite = Sprite::createWithTexture(fbo->getRenderTarget()->getTexture());
-    sprite->setScale(0.3f);
-    sprite->runAction(RepeatForever::create(RotateBy::create(1, 90)));
-    sprite->setPosition(size.width/2, size.height/2);
-    addChild(sprite);
-    
-    auto sprite2 = Sprite::create(s_pathGrossini);
-    sprite2->setPosition(Vec2(size.width/5,size.height/5));
-    addChild(sprite2);
-    sprite2->setCameraMask((unsigned short)CameraFlag::USER1);
-    auto move = MoveBy::create(1.0, Vec2(100,100));
-    sprite2->runAction(
-                       RepeatForever::create(
-                                             Sequence::createWithTwoActions(
-                                                                            move, move->reverse())
-                                             )
-                       );
-    
-    auto camera = Camera::create();
-    camera->setCameraFlag(CameraFlag::USER1);
-    camera->setDepth(-1);
-    camera->setFrameBufferObject(fbo);
-    fbo->setClearColor(Color4F(1,1,1,1));
-    addChild(camera);
-}
+//CameraFrameBufferTest::CameraFrameBufferTest()
+//{
+//    
+//}
+//
+//CameraFrameBufferTest::~CameraFrameBufferTest()
+//{
+//    
+//}
+//
+//std::string CameraFrameBufferTest::title() const
+//{
+//    return "Camera FrameBuffer Object Test";
+//}
+//
+//void CameraFrameBufferTest::onEnter()
+//{
+//    auto sizeInpixels = Director::getInstance()->getWinSizeInPixels();
+//    auto size = Director::getInstance()->getWinSize();
+//    auto fboSize = Size(sizeInpixels.width * 1, sizeInpixels.height * 1.5);
+//    auto fbo = experimental::FrameBuffer::create(1, fboSize.width, fboSize.height);
+//    
+//    CameraBaseTest::onEnter();
+//    //auto sprite = Sprite::createWithTexture(fbo);
+//    //sprite->setPosition(Vec2(100,100));
+//    //std::string filename = "Sprite3DTest/girl.c3b";
+//    //auto sprite = Sprite3D::create(filename);
+//    //sprite->setScale(1.0);
+//    //auto animation = Animation3D::create(filename);
+//    //if (animation)
+//    //{
+//    //    auto animate = Animate3D::create(animation);
+//        
+//    //    sprite->runAction(RepeatForever::create(animate));
+//    //}
+//    //sprite->setPosition(Vec2(100,100));
+//    auto rt = experimental::RenderTarget::create(fboSize.width, fboSize.height);
+//    auto rtDS = experimental::RenderTargetDepthStencil::create(fboSize.width, fboSize.height);
+//    fbo->attachRenderTarget(rt);
+//    fbo->attachDepthStencilTarget(rtDS);
+//    auto sprite = Sprite::createWithTexture(fbo->getRenderTarget()->getTexture());
+//    sprite->setScale(0.3f);
+//    sprite->runAction(RepeatForever::create(RotateBy::create(1, 90)));
+//    sprite->setPosition(size.width/2, size.height/2);
+//    addChild(sprite);
+//    
+//    auto sprite2 = Sprite::create(s_pathGrossini);
+//    sprite2->setPosition(Vec2(size.width/5,size.height/5));
+//    addChild(sprite2);
+//    sprite2->setCameraMask((unsigned short)CameraFlag::USER1);
+//    auto move = MoveBy::create(1.0, Vec2(100,100));
+//    sprite2->runAction(
+//                       RepeatForever::create(
+//                                             Sequence::createWithTwoActions(
+//                                                                            move, move->reverse())
+//                                             )
+//                       );
+//    
+//    auto camera = Camera::create();
+//    camera->setCameraFlag(CameraFlag::USER1);
+//    camera->setDepth(-1);
+//    camera->setFrameBufferObject(fbo);
+//    fbo->setClearColor(Color4F(1,1,1,1));
+//    addChild(camera);
+//}
 
 BackgroundColorBrushTest::BackgroundColorBrushTest()
 {
