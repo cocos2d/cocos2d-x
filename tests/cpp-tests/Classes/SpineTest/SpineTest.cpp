@@ -35,11 +35,22 @@ using namespace spine;
 
 
 #define NUM_SKELETONS 50
+#define SPINNODE_SCALE_FACTOR 0.6
+
 static Cocos2dTextureLoader textureLoader;
 
 PowInterpolation pow2(2);
 PowOutInterpolation powOut2(2);
 SwirlVertexEffect effect(400, powOut2);
+
+#if 0 
+#define ENABLE_DEBUG_DRAW(skeletonNode) {           \
+        skeletonNode->setDebugBonesEnabled(true);   \
+        skeletonNode->setDebugSlotsEnabled(true);   \
+    } while(0)
+#else
+#define ENABLE_DEBUG_DRAW(skeletonNode) ((void)0)
+#endif
 
 //------------------------------------------------------------------
 //
@@ -84,7 +95,7 @@ bool BatchingExample::init () {
 
     // Load the skeleton data.
     SkeletonJson* json = new (__FILE__, __LINE__) SkeletonJson(_attachmentLoader);
-    json->setScale(0.6f); // Resizes skeleton data to 60% of the size it was in Spine.
+    json->setScale(SPINNODE_SCALE_FACTOR); // Resizes skeleton data to 60% of the size it was in Spine.
     _skeletonData = json->readSkeletonDataFile("spine/spineboy-pro.json");
     CCASSERT(_skeletonData, json->getError().isEmpty() ? json->getError().buffer() : "Error reading skeleton data file.");
     delete json;
@@ -144,6 +155,7 @@ bool CoinExample::init () {
     skeletonNode->setAnimation(0, "animation", true);
 
     skeletonNode->setPosition(Vec2(_contentSize.width / 2, _contentSize.height / 2));
+    skeletonNode->setScale(SPINNODE_SCALE_FACTOR);
     addChild(skeletonNode);
 
     scheduleUpdate();
@@ -163,7 +175,7 @@ bool GoblinsExample::init () {
     skeletonNode->setSkin("goblin");
     
     skeletonNode->setPosition(Vec2(_contentSize.width / 2, 20));
-    skeletonNode->setScale(0.6);
+    skeletonNode->setScale(SPINNODE_SCALE_FACTOR);
     addChild(skeletonNode);
     return true;
 }
@@ -178,6 +190,8 @@ bool RaptorExample::init () {
     skeletonNode->setAnimation(0, "walk", true);
     skeletonNode->addAnimation(1, "gun-grab", false, 2);
     skeletonNode->setTwoColorTint(true);
+    
+    ENABLE_DEBUG_DRAW(skeletonNode);
 
     effect.setCenterY(200);
     swirlTime = 0;
@@ -185,6 +199,7 @@ bool RaptorExample::init () {
     skeletonNode->setVertexEffect(&effect);
 
     skeletonNode->setPosition(Vec2(_contentSize.width / 2, 20));
+    skeletonNode->setScale(SPINNODE_SCALE_FACTOR);
     addChild(skeletonNode);
 
     scheduleUpdate();
@@ -233,6 +248,7 @@ bool SpineboyExample::init () {
     // skeletonNode->runAction(RepeatForever::create(Sequence::create(FadeOut::create(1), FadeIn::create(1), DelayTime::create(5), NULL)));
 
     skeletonNode->setPosition(Vec2(_contentSize.width / 2, 20));
+    skeletonNode->setScale(SPINNODE_SCALE_FACTOR);
     addChild(skeletonNode);
 
     scheduleUpdate();
@@ -254,7 +270,10 @@ bool TankExample::init () {
     skeletonNode = SkeletonAnimation::createWithBinaryFile("spine/tank-pro.skel", "spine/tank.atlas", 0.5f);
     skeletonNode->setAnimation(0, "shoot", true);
 
+    ENABLE_DEBUG_DRAW(skeletonNode);
+
     skeletonNode->setPosition(Vec2(_contentSize.width / 2 + 400, 20));
+    skeletonNode->setScale(SPINNODE_SCALE_FACTOR);
     addChild(skeletonNode);
 
     scheduleUpdate();
