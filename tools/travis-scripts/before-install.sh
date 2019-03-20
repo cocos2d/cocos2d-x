@@ -102,6 +102,7 @@ if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
     download_deps
     install_linux_environment
     # linux new lua project, so need to install
+    sudo python -m pip install retry
     python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py --ndk_only
     exit 0
 fi
