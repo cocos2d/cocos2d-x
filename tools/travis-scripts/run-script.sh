@@ -234,9 +234,6 @@ function run_pull_request()
 {
     echo "Building pull request ..."
 
-    # need to generate binding codes for all targets
-    genernate_binding_codes
-
     if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
         source ../environment.sh
         pushd $COCOS2DX_ROOT
@@ -250,6 +247,7 @@ function run_pull_request()
     fi
 
     if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
+        genernate_binding_codes
         pushd $COCOS2DX_ROOT
         update_cocos_files
         python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l lua -p my.pack.qqqq cocos_new_test
@@ -286,11 +284,13 @@ function run_pull_request()
 
     # android_lua
     if [ $BUILD_TARGET == 'android_lua_cmake' ]; then
+        genernate_binding_codes
         build_android_lua_cmake
     fi
 
     # android_js
     if [ $BUILD_TARGET == 'android_js_cmake' ]; then
+        genernate_binding_codes
         build_android_js_cmake
     fi
 }
