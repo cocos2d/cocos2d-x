@@ -32,6 +32,7 @@
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventType.h"
 #include "2d/CCLight.h"
+#include "2d/CCCamera.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTexture2D.h"
@@ -64,7 +65,11 @@ void MeshCommand::init(float globalZOrder)
 
 void MeshCommand::init(float globalZOrder, const Mat4 &transform)
 {
-    CustomCommand::init(globalZOrder);
+    CustomCommand::init(globalZOrder);        
+    if (Camera::getVisitingCamera())
+    {
+        _depth = Camera::getVisitingCamera()->getDepthInView(transform);
+    }
     _mv = transform;
 }
 

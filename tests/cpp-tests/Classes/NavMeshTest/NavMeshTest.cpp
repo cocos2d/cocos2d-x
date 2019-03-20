@@ -52,7 +52,7 @@ NavMeshTests::NavMeshTests()
 void NavMeshDisabled::onEnter()
 {
     TTFConfig ttfConfig("fonts/arial.ttf", 16);
-    auto label = Label::createWithTTF(ttfConfig, "Should define CC_USE_NAVMESH\n to run this test case");
+    auto label = Label::createWithTTF(ttfConfig, "Should define CC_USE_NAVMESH & CC_USE_PHYSICS\n to run this test case");
     
     auto size = Director::getInstance()->getWinSize();
     label->setPosition(Vec2(size.width / 2, size.height / 2));

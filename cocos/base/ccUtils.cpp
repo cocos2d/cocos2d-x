@@ -639,6 +639,7 @@ backend::SamplerAddressMode toBackendAddressMode(int mode)
     case GLTexParamConst::REPEAT:
         return backend::SamplerAddressMode::REPEAT;
     case GLTexParamConst::CLAMP:
+    case GLTexParamConst::CLAMP_TO_EDGE:
         return backend::SamplerAddressMode::CLAMP_TO_EDGE;
     case GLTexParamConst::MIRROR_REPEAT:
         return backend::SamplerAddressMode::MIRROR_REPEAT;
