@@ -135,17 +135,14 @@ set(COCOS_SPINE_SRC
     editor-support/spine/ShearTimeline.cpp
     editor-support/spine/Skeleton.cpp
     editor-support/spine/SkeletonAnimation.cpp
-    editor-support/spine/SkeletonBatch-v4.cpp
-    #editor-support/spine/SkeletonBatch.cpp
+    editor-support/spine/SkeletonBatch.cpp
     editor-support/spine/SkeletonBinary.cpp
     editor-support/spine/SkeletonBounds.cpp
     editor-support/spine/SkeletonClipping.cpp
     editor-support/spine/SkeletonData.cpp
     editor-support/spine/SkeletonJson.cpp
-    editor-support/spine/SkeletonRenderer-v4.cpp
-    #editor-support/spine/SkeletonRenderer.cpp
-    editor-support/spine/SkeletonTwoColorBatch-v4.cpp
-    #editor-support/spine/SkeletonTwoColorBatch.cpp
+    editor-support/spine/SkeletonRenderer.cpp
+    editor-support/spine/SkeletonTwoColorBatch.cpp
     editor-support/spine/Skin.cpp
     editor-support/spine/Slot.cpp
     editor-support/spine/SlotData.cpp
