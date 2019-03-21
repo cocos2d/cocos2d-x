@@ -29,7 +29,6 @@
 #include "base/ccTypes.h"
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCCustomCommand.h"
-#include "renderer/CCCallbackCommand.h"
 #include "2d/CCNode.h"
 #include "renderer/backend/ProgramState.h"
 
@@ -104,9 +103,6 @@ protected:
     
     backend::ProgramState *_programState = nullptr;
     CustomCommand _customCommand;
-    CallbackCommand _beforeCommand;
-    CallbackCommand _afterCommand;
-
     TextureCube*  _texture;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Skybox);

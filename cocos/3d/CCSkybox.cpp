@@ -58,6 +58,12 @@ Skybox* Skybox::create(const std::string& positive_x, const std::string& negativ
 
 bool Skybox::init()
 {
+    _customCommand.setTransparent(false);
+    _customCommand.set3D(true);
+
+    _customCommand.setBeforeCallback(CC_CALLBACK_0(Skybox::onBeforeDraw, this));
+    _customCommand.setAfterCallback(CC_CALLBACK_0(Skybox::onAfterDraw, this));
+
     // create and set our custom shader
 
     _programState = new backend::ProgramState(CC3D_skybox_vert, CC3D_skybox_frag);
@@ -140,18 +146,8 @@ void Skybox::initBuffers()
 void Skybox::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
 {
     _customCommand.init(_globalZOrder);
-    _customCommand.setTransparent(false);
-    _customCommand.set3D(true);
 
-    _beforeCommand.init(_globalZOrder);
-    _afterCommand.init(_globalZOrder);
-
-    _beforeCommand.func = CC_CALLBACK_0(Skybox::onBeforeDraw, this);
-    _afterCommand.func = CC_CALLBACK_0(Skybox::onAfterDraw, this);
-
-    renderer->addCommand(&_beforeCommand);
     renderer->addCommand(&_customCommand);
-    renderer->addCommand(&_afterCommand);
 
     auto camera = Camera::getVisitingCamera();
 
@@ -192,7 +188,7 @@ void Skybox::onBeforeDraw()
     _rendererCullMode = renderer->getCullMode();
 
     renderer->setDepthTest(true);
-    renderer->setDepthCompareFunction(backend::CompareFunction::LESS);
+    renderer->setDepthCompareFunction(backend::CompareFunction::LESS_EQUAL);
     renderer->setCullMode(CullMode::BACK);
 }
 
