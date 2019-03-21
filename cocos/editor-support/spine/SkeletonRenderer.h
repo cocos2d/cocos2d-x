@@ -143,9 +143,7 @@ namespace spine {
 		bool _ownsAtlas;
 		Atlas* _atlas;
 		AttachmentLoader* _attachmentLoader;
-#ifndef CC_USE_NEW_RENDERER
-		cocos2d::CustomCommand _debugCommand;
-#endif
+
 		cocos2d::BlendFunc _blendFunc;
 		bool _premultipliedAlpha;
 		Skeleton* _skeleton;
@@ -155,9 +153,7 @@ namespace spine {
 		bool _debugMeshes;
 		SkeletonClipping* _clipper;
 		VertexEffect* _effect;
-#if CC_USE_NEW_RENDERER        		
         bool _twoColorTintEnabled = false;
-#endif 
 		int _startSlotIndex;
 		int _endSlotIndex;
 	};

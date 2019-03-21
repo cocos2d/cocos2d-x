@@ -58,12 +58,11 @@ namespace spine {
 		void reset ();
 		
 		cocos2d::TrianglesCommand* nextFreeCommand ();
-#if CC_USE_NEW_RENDERER
+
         cocos2d::TrianglesCommand* createNewTrianglesCommand();
         cocos2d::backend::ProgramState      *   _programState = nullptr;
         cocos2d::backend::UniformLocation       _locMVP;
         cocos2d::backend::UniformLocation       _locTexture;
-#endif
 		
 		// pool of commands
 		std::vector<cocos2d::TrianglesCommand*> _commandsPool;

@@ -31,6 +31,9 @@
 #include <spine/Extension.h>
 #include <algorithm>
 
+#include "xxhash.h"
+#include "renderer/ccShaders.h"
+
 USING_NS_CC;
 #define EVENT_AFTER_DRAW_RESET_POSITION "director_after_draw"
 using std::max;
@@ -40,73 +43,9 @@ using std::max;
 
 #define STRINGIFY(A)  #A
 
-namespace spine {
-
-TwoColorTrianglesCommand::TwoColorTrianglesCommand() :_materialID(0), _textureID(0), _glProgramState(nullptr), _glProgram(nullptr), _blendType(BlendFunc::DISABLE), _alphaTextureID(0) {
-	_type = RenderCommand::Type::CUSTOM_COMMAND;
-	func = [this]() { draw(); };
-}
-
-void TwoColorTrianglesCommand::init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, const TwoColorTriangles& triangles, const Mat4& mv, uint32_t flags) {
-	CCASSERT(glProgramState, "Invalid GLProgramState");
-	CCASSERT(glProgramState->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
-
-	RenderCommand::init(globalOrder, mv, flags);
-
-	_triangles = triangles;
-	if(_triangles.indexCount % 3 != 0) {
-	int count = _triangles.indexCount;
-		_triangles.indexCount = count / 3 * 3;
-		CCLOGERROR("Resize indexCount from %d to %d, size must be multiple times of 3", count, _triangles.indexCount);
-	}
-	_mv = mv;
-
-	if( _textureID != textureID || _blendType.src != blendType.src || _blendType.dst != blendType.dst ||
-		_glProgramState != glProgramState ||
-		_glProgram != glProgramState->getGLProgram()) {
-		_textureID = textureID;
-		_blendType = blendType;
-		_glProgramState = glProgramState;
-		_glProgram = glProgramState->getGLProgram();
-
-		generateMaterialID();
-	}
-}
-
-TwoColorTrianglesCommand::~TwoColorTrianglesCommand() {
-}
-
-void TwoColorTrianglesCommand::generateMaterialID() {
-	// do not batch if using custom uniforms (since we cannot batch) it
-	if(_glProgramState->getUniformCount() > 0) {
-		_materialID = Renderer::MATERIAL_ID_DO_NOT_BATCH;
-		setSkipBatching(true);
-	}
-	else {
-		int glProgram = (int)_glProgram->getProgram();		
-		_materialID = glProgram + (int)_textureID + (int)_blendType.src + (int)_blendType.dst;
-	}
-}
-
-void TwoColorTrianglesCommand::useMaterial() const {
-	//Set texture
-	GL::bindTexture2D(_textureID);
-	
-	if (_alphaTextureID > 0) {
-		// ANDROID ETC1 ALPHA supports.
-		GL::bindTexture2DN(1, _alphaTextureID);
-	}
-	//set blend mode
-	GL::blendFunc(_blendType.src, _blendType.dst);
-	
-	_glProgramState->apply(_mv);
-}
-	
-void TwoColorTrianglesCommand::draw() {
-	SkeletonTwoColorBatch::getInstance()->batch(this);
-}
 
 const char* TWO_COLOR_TINT_VERTEX_SHADER = STRINGIFY(
+uniform mat4 u_PMatrix;
 attribute vec4 a_position;
 attribute vec4 a_color;
 attribute vec4 a_color2;
@@ -124,10 +63,10 @@ varying vec2 v_texCoord;
 \n#endif\n
 
 void main() {
-	v_light = a_color;
-	v_dark = a_color2;
-	v_texCoord = a_texCoords;
-	gl_Position = CC_PMatrix * a_position;
+    v_light = a_color;
+    v_dark = a_color2;
+    v_texCoord = a_texCoords;
+    gl_Position = u_PMatrix * a_position;
 }
 );
 
@@ -135,18 +74,130 @@ const char* TWO_COLOR_TINT_FRAGMENT_SHADER = STRINGIFY(
 \n#ifdef GL_ES\n
 precision lowp float;
 \n#endif\n
-
+uniform sampler2D u_texture;
 varying vec4 v_light;
 varying vec4 v_dark;
 varying vec2 v_texCoord;
 
 void main() {
-	vec4 texColor = texture2D(CC_Texture0, v_texCoord);
-	float alpha = texColor.a * v_light.a;
-	gl_FragColor.a = alpha;	
-	gl_FragColor.rgb = ((texColor.a - 1.0) * v_dark.a + 1.0 - texColor.rgb) * v_dark.rgb + texColor.rgb * v_light.rgb;
+    vec4 texColor = texture2D(u_texture, v_texCoord);
+    float alpha = texColor.a * v_light.a;
+    gl_FragColor.a = alpha;
+    gl_FragColor.rgb = ((texColor.a - 1.0) * v_dark.a + 1.0 - texColor.rgb) * v_dark.rgb + texColor.rgb * v_light.rgb;
 }
 );
+
+
+namespace spine {
+
+TwoColorTrianglesCommand::TwoColorTrianglesCommand() :_materialID(0), _texture(nullptr), _blendType(BlendFunc::DISABLE), _alphaTextureID(0) {
+	_type = RenderCommand::Type::CUSTOM_COMMAND;
+	//func = [this]() { draw(); };
+    updateCommandPipelineDescriptor();
+}
+
+void TwoColorTrianglesCommand::init(float globalOrder, cocos2d::Texture2D *texture, BlendFunc blendType, const TwoColorTriangles& triangles, const Mat4& mv, uint32_t flags) {
+
+    const cocos2d::Mat4& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    
+    auto finalMatrix = projectionMat * mv;
+
+    _programState->setUniform(_locPMatrix, finalMatrix.m, sizeof(finalMatrix.m));
+    _programState->setTexture(_locTexture, 0, texture->getBackendTexture());
+
+
+    RenderCommand::init(globalOrder, mv, flags);
+
+    _triangles = triangles;
+    if (_triangles.indexCount % 3 != 0) {
+        int count = _triangles.indexCount;
+        _triangles.indexCount = count / 3 * 3;
+        CCLOGERROR("Resize indexCount from %d to %d, size must be multiple times of 3", count, _triangles.indexCount);
+    }
+
+    _mv = mv;
+
+    if (_blendType.src != blendType.src || _blendType.dst != blendType.dst ||
+        _texture != texture->getBackendTexture() || _pipelineDescriptor.programState != _programState) 
+    {
+		_texture = texture->getBackendTexture();
+		_blendType = blendType;
+		
+        _prog = _programState->getProgram();
+
+        auto& blendDescriptor = _pipelineDescriptor.blendDescriptor;
+        blendDescriptor.blendEnabled = true;
+        blendDescriptor.sourceRGBBlendFactor = blendDescriptor.sourceAlphaBlendFactor = blendType.src;
+        blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor = blendType.dst;
+
+		generateMaterialID();
+	}
+}
+
+void TwoColorTrianglesCommand::updateCommandPipelineDescriptor()
+{
+    CC_SAFE_RELEASE_NULL(_programState);
+
+    _programState = new backend::ProgramState(TWO_COLOR_TINT_VERTEX_SHADER, TWO_COLOR_TINT_FRAGMENT_SHADER);
+    
+    _locPMatrix = _programState->getUniformLocation("u_PMatrix");
+    _locTexture = _programState->getUniformLocation("u_texture");
+
+    auto &pipelineDescriptor = _pipelineDescriptor;
+    pipelineDescriptor.programState = _programState;
+
+    auto &vertexLayout = pipelineDescriptor.vertexLayout;
+    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(V3F_C4B_C4B_T2F, position), false);
+    vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_C4B_T2F, color), true);
+    vertexLayout.setAtrribute("a_color2", 2, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_C4B_T2F, color2), true);
+    vertexLayout.setAtrribute("a_texCoords", 3, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_C4B_T2F, texCoords), false);
+    vertexLayout.setLayout(sizeof(V3F_C4B_C4B_T2F), backend::VertexStepMode::VERTEX);
+}
+
+TwoColorTrianglesCommand::~TwoColorTrianglesCommand() 
+{
+    CC_SAFE_RELEASE_NULL(_programState);
+}
+
+void TwoColorTrianglesCommand::generateMaterialID() {
+	// do not batch if using custom uniforms (since we cannot batch) it
+
+
+    struct
+    {
+        void* texture;
+        void* prog;
+        backend::BlendFactor src;
+        backend::BlendFactor dst;
+    }hashMe;
+
+    // NOTE: Initialize hashMe struct to make the value of padding bytes be filled with zero.
+    // It's important since XXH32 below will also consider the padding bytes which probably
+    // are set to random values by different compilers.
+    memset(&hashMe, 0, sizeof(hashMe));
+
+    hashMe.texture = _texture;
+    hashMe.src = _blendType.src;
+    hashMe.dst = _blendType.dst;
+    hashMe.prog = _prog;
+    _materialID = XXH32((const void*)&hashMe, sizeof(hashMe), 0);
+}
+
+	
+void TwoColorTrianglesCommand::draw(Renderer *r) {
+	SkeletonTwoColorBatch::getInstance()->batch(r, this);
+}
+
+void TwoColorTrianglesCommand::updateVertexAndIndexBuffer(Renderer *r, V3F_C4B_C4B_T2F *vertices, int verticesSize, uint16_t *indices, int indicesSize)
+{
+    if(verticesSize != _vertexCapacity)
+        createVertexBuffer(sizeof(V3F_C4B_C4B_T2F), verticesSize, CustomCommand::BufferUsage::DYNAMIC);
+    if(indicesSize != _indexCapacity)
+        createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, indicesSize, CustomCommand::BufferUsage::DYNAMIC);
+    
+    updateVertexBuffer(vertices, sizeof(V3F_C4B_C4B_T2F) * verticesSize);
+    updateIndexBuffer(indices, sizeof(uint16_t) * indicesSize);
+}
 
 
 static SkeletonTwoColorBatch* instance = nullptr;
@@ -176,18 +227,6 @@ SkeletonTwoColorBatch::SkeletonTwoColorBatch () : _vertexBuffer(0), _indexBuffer
 		this->update(0);
 	});
 	
-	_twoColorTintShader = cocos2d::GLProgram::createWithByteArrays(TWO_COLOR_TINT_VERTEX_SHADER, TWO_COLOR_TINT_FRAGMENT_SHADER);
-	_twoColorTintShaderState = GLProgramState::getOrCreateWithGLProgram(_twoColorTintShader);
-	_twoColorTintShaderState->retain();
-	
-	glGenBuffers(1, &_vertexBufferHandle);
-	_vertexBuffer = new V3F_C4B_C4B_T2F[MAX_VERTICES];
-	glGenBuffers(1, &_indexBufferHandle);
-	_indexBuffer = new unsigned short[MAX_INDICES];
-	_positionAttributeLocation = _twoColorTintShader->getAttribLocation("a_position");
-	_colorAttributeLocation = _twoColorTintShader->getAttribLocation("a_color");
-	_color2AttributeLocation = _twoColorTintShader->getAttribLocation("a_color2");
-	_texCoordsAttributeLocation = _twoColorTintShader->getAttribLocation("a_texCoords");
 }
 
 SkeletonTwoColorBatch::~SkeletonTwoColorBatch () {
@@ -197,7 +236,7 @@ SkeletonTwoColorBatch::~SkeletonTwoColorBatch () {
 		delete _commandsPool[i];
 		_commandsPool[i] = nullptr;
 	}
-	_twoColorTintShader->release();
+
 	delete[] _vertexBuffer;
 	delete[] _indexBuffer;
 }
@@ -253,21 +292,22 @@ void SkeletonTwoColorBatch::deallocateIndices(uint32_t numIndices) {
 	_indices.setSize(_indices.size() - numIndices, 0);
 }
 
-TwoColorTrianglesCommand* SkeletonTwoColorBatch::addCommand(cocos2d::Renderer* renderer, float globalOrder, GLuint textureID, cocos2d::GLProgramState* glProgramState, cocos2d::BlendFunc blendType, const TwoColorTriangles& triangles, const cocos2d::Mat4& mv, uint32_t flags) {
+TwoColorTrianglesCommand* SkeletonTwoColorBatch::addCommand(cocos2d::Renderer* renderer, float globalOrder, cocos2d::Texture2D* texture, cocos2d::BlendFunc blendType, const TwoColorTriangles& triangles, const cocos2d::Mat4& mv, uint32_t flags) {
 	TwoColorTrianglesCommand* command = nextFreeCommand();
-	command->init(globalOrder, textureID, glProgramState, blendType, triangles, mv, flags);
+	command->init(globalOrder, texture, blendType, triangles, mv, flags);
+    command->updateVertexAndIndexBuffer(renderer, triangles.verts, triangles.vertCount, triangles.indices, triangles.indexCount);
 	renderer->addCommand(command);	
 	return command;
 }
 	
-void SkeletonTwoColorBatch::batch (TwoColorTrianglesCommand* command) {
+void SkeletonTwoColorBatch::batch (cocos2d::Renderer *renderer, TwoColorTrianglesCommand* command) {
 	if (_numVerticesBuffer + command->getTriangles().vertCount >= MAX_VERTICES || _numIndicesBuffer + command->getTriangles().indexCount >= MAX_INDICES) {
-		flush(_lastCommand);
+		flush(renderer, _lastCommand);
 	}
 	
 	uint32_t materialID = command->getMaterialID();
 	if (_lastCommand && _lastCommand->getMaterialID() != materialID) {
-		flush(_lastCommand);
+		flush(renderer, _lastCommand);
 	}
 	
 	memcpy(_vertexBuffer + _numVerticesBuffer, command->getTriangles().verts, sizeof(V3F_C4B_C4B_T2F) * command->getTriangles().vertCount);
@@ -286,39 +326,20 @@ void SkeletonTwoColorBatch::batch (TwoColorTrianglesCommand* command) {
 	_numIndicesBuffer += command->getTriangles().indexCount;
 	
 	if (command->isForceFlush()) {
-		flush(command);
+		flush(renderer, command);
 	}
 	_lastCommand = command;
 }
 	
-void SkeletonTwoColorBatch::flush (TwoColorTrianglesCommand* materialCommand) {
+void SkeletonTwoColorBatch::flush (cocos2d::Renderer *renderer, TwoColorTrianglesCommand* materialCommand) {
 	if (!materialCommand)
 		return;
 	
-	materialCommand->useMaterial();
-	
-	glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferHandle);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4B_C4B_T2F) * _numVerticesBuffer , _vertexBuffer, GL_DYNAMIC_DRAW);
-	
-	glEnableVertexAttribArray(_positionAttributeLocation);
-	glEnableVertexAttribArray(_colorAttributeLocation);
-	glEnableVertexAttribArray(_color2AttributeLocation);
-	glEnableVertexAttribArray(_texCoordsAttributeLocation);
-	
-	glVertexAttribPointer(_positionAttributeLocation, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_C4B_T2F, position));
-	glVertexAttribPointer(_colorAttributeLocation, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_C4B_T2F, color));
-	glVertexAttribPointer(_color2AttributeLocation, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_C4B_T2F, color2));
-	glVertexAttribPointer(_texCoordsAttributeLocation, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_C4B_T2F), (GLvoid*)offsetof(V3F_C4B_C4B_T2F, texCoords));
-	
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBufferHandle);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned short) * _numIndicesBuffer, _indexBuffer, GL_STATIC_DRAW);
-	
-	glDrawElements(GL_TRIANGLES, (GLsizei)_numIndicesBuffer, GL_UNSIGNED_SHORT, 0);
-	
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	
-	_numVerticesBuffer = 0;
+    materialCommand->updateVertexAndIndexBuffer(renderer, _vertexBuffer, _numVerticesBuffer, _indexBuffer, _numIndicesBuffer);
+
+    renderer->addCommand(materialCommand);
+
+    _numVerticesBuffer = 0;
 	_numIndicesBuffer = 0;
 	_numBatches++;
 }
