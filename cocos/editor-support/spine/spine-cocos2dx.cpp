@@ -77,7 +77,7 @@ void Cocos2dAtlasAttachmentLoader::configureAttachment(Attachment* attachment) {
 	}
 }
 
-#if COCOS2D_VERSION >0x0040000
+#if COCOS2D_VERSION >= 0x0040000
 
 backend::SamplerAddressMode wrap (TextureWrap wrap) {
 	return wrap ==  TextureWrap_ClampToEdge ? backend::SamplerAddressMode::CLAMP_TO_EDGE : backend::SamplerAddressMode::REPEAT;
