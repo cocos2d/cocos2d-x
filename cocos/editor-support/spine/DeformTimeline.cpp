@@ -74,8 +74,8 @@ void DeformTimeline::apply(Skeleton &skeleton, float lastTime, float time, Vecto
 		return;
 	}
 
-	VertexAttachment *vertexAttachment = static_cast<VertexAttachment *>(slotAttachment);
-	if (!vertexAttachment->applyDeform(_attachment)) {
+	VertexAttachment *attachment = static_cast<VertexAttachment *>(slotAttachment);
+	if (!attachment->applyDeform(_attachment)) {
 		return;
 	}
 
@@ -100,9 +100,9 @@ void DeformTimeline::apply(Skeleton &skeleton, float lastTime, float time, Vecto
 			}
 			verticesArray.setSize(vertexCount, 0);
 			Vector<float> &vertices = verticesArray;
-			if (vertexAttachment->getBones().size() == 0) {
+			if (attachment->getBones().size() == 0) {
 				// Unweighted vertex positions.
-				Vector<float> &setupVertices = vertexAttachment->getVertices();
+				Vector<float> &setupVertices = attachment->getVertices();
 				for (size_t i = 0; i < vertexCount; i++)
 					vertices[i] += (setupVertices[i] - vertices[i]) * alpha;
 			} else {

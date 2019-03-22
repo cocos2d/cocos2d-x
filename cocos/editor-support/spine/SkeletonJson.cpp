@@ -137,6 +137,9 @@ SkeletonData *SkeletonJson::readSkeletonData(const char *json) {
 		skeletonData->_version = Json::getString(skeleton, "spine", 0);
 		skeletonData->_width = Json::getFloat(skeleton, "width", 0);
 		skeletonData->_height = Json::getFloat(skeleton, "height", 0);
+		skeletonData->_fps = Json::getFloat(skeleton, "fps", 30);
+		skeletonData->_audioPath = Json::getString(skeleton, "audio", 0);
+		skeletonData->_imagesPath = Json::getString(skeleton, "images", 0);
 	}
 
 	/* Bones. */
@@ -643,7 +646,8 @@ SkeletonData *SkeletonJson::readSkeletonData(const char *json) {
 	}
 
 	/* Linked meshes. */
-	for (int i = 0, n = _linkedMeshes.size(); i < n; ++i) {
+	int n = _linkedMeshes.size();
+	for (i = 0; i < n; ++i) {
 		LinkedMesh *linkedMesh = _linkedMeshes[i];
 		Skin *skin = linkedMesh->_skin.length() == 0 ? skeletonData->getDefaultSkin() : skeletonData->findSkin(
 				linkedMesh->_skin);
@@ -1062,8 +1066,8 @@ Animation *SkeletonJson::readAnimation(Json *root, SkeletonData *skeletonData) {
 				VertexAttachment *attachment = static_cast<VertexAttachment *>(baseAttachment);
 
 				weighted = attachment->_bones.size() != 0;
-				Vector<float> &vertices = attachment->_vertices;
-				deformLength = weighted ? vertices.size() / 3 * 2 : vertices.size();
+				Vector<float> &verts = attachment->_vertices;
+				deformLength = weighted ? verts.size() / 3 * 2 : verts.size();
 
 				timeline = new(__FILE__, __LINE__) DeformTimeline(timelineMap->_size);
 
@@ -1072,34 +1076,34 @@ Animation *SkeletonJson::readAnimation(Json *root, SkeletonData *skeletonData) {
 
 				for (valueMap = timelineMap->_child, frameIndex = 0; valueMap; valueMap = valueMap->_next, ++frameIndex) {
 					Json *vertices = Json::getItem(valueMap, "vertices");
-					Vector<float> deform;
+					Vector<float> deformed;
 					if (!vertices) {
 						if (weighted) {
-							deform.setSize(deformLength, 0);
+							deformed.setSize(deformLength, 0);
 						} else {
-							deform.clearAndAddAll(attachment->_vertices);
+							deformed.clearAndAddAll(attachment->_vertices);
 						}
 					} else {
 						int v, start = Json::getInt(valueMap, "offset", 0);
 						Json *vertex;
-						deform.setSize(deformLength, 0);
+						deformed.setSize(deformLength, 0);
 						if (_scale == 1) {
 							for (vertex = vertices->_child, v = start; vertex; vertex = vertex->_next, ++v) {
-								deform[v] = vertex->_valueFloat;
+								deformed[v] = vertex->_valueFloat;
 							}
 						} else {
 							for (vertex = vertices->_child, v = start; vertex; vertex = vertex->_next, ++v) {
-								deform[v] = vertex->_valueFloat * _scale;
+								deformed[v] = vertex->_valueFloat * _scale;
 							}
 						}
 						if (!weighted) {
 							Vector<float> &verticesAttachment = attachment->_vertices;
 							for (v = 0; v < deformLength; ++v) {
-								deform[v] += verticesAttachment[v];
+								deformed[v] += verticesAttachment[v];
 							}
 						}
 					}
-					timeline->setFrame(frameIndex, Json::getFloat(valueMap, "time", 0), deform);
+					timeline->setFrame(frameIndex, Json::getFloat(valueMap, "time", 0), deformed);
 					readCurve(valueMap, timeline, frameIndex);
 				}
 

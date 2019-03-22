@@ -171,6 +171,8 @@ void TrackEntry::reset() {
 	_mixingFrom = NULL;
 	_mixingTo = NULL;
 
+	setRendererObject(NULL);
+
 	_timelineMode.clear();
 	_timelineHoldMix.clear();
 	_timelinesRotation.clear();
@@ -334,7 +336,7 @@ void AnimationState::update(float delta) {
 			float nextTime = current._trackLast - next->_delay;
 			if (nextTime >= 0) {
 				next->_delay = 0;
-				next->_trackTime = (nextTime / current._timeScale + delta) * next->_timeScale;
+				next->_trackTime = current._timeScale == 0 ? 0 : (nextTime / current._timeScale + delta) * next->_timeScale;
 				current._trackTime += currentDelta;
 				setCurrent(i, next, true);
 				while (next->_mixingFrom != NULL) {
@@ -642,34 +644,39 @@ void AnimationState::applyRotateTimeline(RotateTimeline *rotateTimeline, Skeleto
 
 	Bone *bone = skeleton._bones[rotateTimeline->_boneIndex];
 	Vector<float>& frames = rotateTimeline->_frames;
+	float r1, r2;
 	if (time < frames[0]) {
-		if (blend == MixBlend_Setup) {
-			bone->_rotation = bone->_data._rotation;
+		switch (blend) {
+			case MixBlend_Setup:
+				bone->_rotation = bone->_data._rotation;
+			default:
+				return;
+			case MixBlend_First:
+				r1 = bone->_rotation;
+				r2 = bone->_data._rotation;
 		}
-		return;
-	}
-
-	float r2;
-	if (time >= frames[frames.size() - RotateTimeline::ENTRIES]) {
-		// Time is after last frame.
-		r2 = bone->_data._rotation + frames[frames.size() + RotateTimeline::PREV_ROTATION];
 	} else {
-		// Interpolate between the previous frame and the current frame.
-		int frame = Animation::binarySearch(frames, time, RotateTimeline::ENTRIES);
-		float prevRotation = frames[frame + RotateTimeline::PREV_ROTATION];
-		float frameTime = frames[frame];
-		float percent = rotateTimeline->getCurvePercent((frame >> 1) - 1, 1 - (time - frameTime) / (frames[frame +
-																										   RotateTimeline::PREV_TIME] -
-																									frameTime));
+		r1 = blend == MixBlend_Setup ? bone->_data._rotation : bone->_rotation;
+		if (time >= frames[frames.size() - RotateTimeline::ENTRIES]) {
+			// Time is after last frame.
+			r2 = bone->_data._rotation + frames[frames.size() + RotateTimeline::PREV_ROTATION];
+		} else {
+			// Interpolate between the previous frame and the current frame.
+			int frame = Animation::binarySearch(frames, time, RotateTimeline::ENTRIES);
+			float prevRotation = frames[frame + RotateTimeline::PREV_ROTATION];
+			float frameTime = frames[frame];
+			float percent = rotateTimeline->getCurvePercent((frame >> 1) - 1, 1 - (time - frameTime) / (frames[frame +
+																											   RotateTimeline::PREV_TIME] -
+																										frameTime));
 
-		r2 = frames[frame + RotateTimeline::ROTATION] - prevRotation;
-		r2 -= (16384 - (int) (16384.499999999996 - r2 / 360)) * 360;
-		r2 = prevRotation + r2 * percent + bone->_data._rotation;
-		r2 -= (16384 - (int) (16384.499999999996 - r2 / 360)) * 360;
+			r2 = frames[frame + RotateTimeline::ROTATION] - prevRotation;
+			r2 -= (16384 - (int) (16384.499999999996 - r2 / 360)) * 360;
+			r2 = prevRotation + r2 * percent + bone->_data._rotation;
+			r2 -= (16384 - (int) (16384.499999999996 - r2 / 360)) * 360;
+		}
 	}
 
 	// Mix between rotations using the direction of the shortest route on the first frame while detecting crosses.
-	float r1 = blend == MixBlend_Setup ? bone->_data._rotation : bone->_rotation;
 	float total, diff = r2 - r1;
 	diff -= (16384 - (int) (16384.499999999996 - diff / 360)) * 360;
 	if (diff == 0) {

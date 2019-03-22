@@ -150,6 +150,10 @@ public:
 
 	void setImagesPath(const String &inValue);
 
+	const String &getAudioPath();
+
+	void setAudioPath(const String &inValue);
+
 	/// The dopesheet FPS in Spine. Available only when nonessential data was exported.
 	float getFps();
 
@@ -173,6 +177,7 @@ private:
 	// Nonessential.
 	float _fps;
 	String _imagesPath;
+	String _audioPath;
 };
 }
 
