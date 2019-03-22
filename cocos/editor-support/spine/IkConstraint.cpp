@@ -60,7 +60,7 @@ void IkConstraint::apply(Bone &bone, float targetX, float targetY, bool compress
 	float sy = bone._ascaleY;
 	if (compress || stretch) {
 		float b = bone._data.getLength() * sx, dd = MathUtil::sqrt(tx * tx + ty * ty);
-		if ((compress && dd < b) || (stretch && dd > b) && b > 0.0001f) {
+		if (((compress && dd < b) || (stretch && dd > b)) && (b > 0.0001f)) {
 			float s = (dd / b - 1) * alpha + 1;
 			sx *= s;
 			if (uniform) sy *= s;

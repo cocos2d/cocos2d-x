@@ -176,7 +176,8 @@ void Skeleton::updateCache() {
 		}
 	}
 
-	for (size_t i = 0, n = _bones.size(); i < n; ++i) {
+	size_t n = _bones.size();
+	for (i = 0; i < n; ++i) {
 		sortBone(_bones[i]);
 	}
 }

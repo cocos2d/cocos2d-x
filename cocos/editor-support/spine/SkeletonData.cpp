@@ -204,6 +204,15 @@ void SkeletonData::setImagesPath(const String &inValue) {
 	_imagesPath = inValue;
 }
 
+
+const String &SkeletonData::getAudioPath() {
+	return _audioPath;
+}
+
+void SkeletonData::setAudioPath(const String &inValue) {
+	_audioPath = inValue;
+}
+
 float SkeletonData::getFps() {
 	return _fps;
 }
