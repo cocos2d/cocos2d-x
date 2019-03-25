@@ -119,10 +119,10 @@ bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag
     layout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT2, 0, false);
 
     float w = SIZE_X, h = SIZE_Y;
-    GLfloat vertices[12] = { 0,0, w,0, w,h, 0,0, 0,h, w,h };
-    layout.setLayout(sizeof(GLfloat) * 2, backend::VertexStepMode::VERTEX);
+    Vec2 vertices[6] = { Vec2(0,0), Vec2(w,0), Vec2(w,h), Vec2(0,0), Vec2(0,h), Vec2(w,h) };
+    layout.setLayout(sizeof(Vec2), backend::VertexStepMode::VERTEX);
 
-    _customCommand.createVertexBuffer(sizeof(GLfloat) * 2, 6, CustomCommand::BufferUsage::STATIC);
+    _customCommand.createVertexBuffer(sizeof(Vec2), 6, CustomCommand::BufferUsage::STATIC);
     _customCommand.updateVertexBuffer(vertices, sizeof(vertices));
 
     _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
@@ -141,7 +141,7 @@ void ShaderNode::loadShaderVertex(const std::string &vert, const std::string &fr
     // vert
     std::string vertSource;
     if (vert.empty()) {
-        vertSource = positionTextureColor_vert;
+        vertSource = position_vert; 
     } else {
         std::string vertexFilePath = fileUtiles->fullPathForFilename(vert);
         vertSource = fileUtiles->getStringFromFile(vertexFilePath);
@@ -789,7 +789,7 @@ bool ShaderMultiTexture::init()
         _sprite->setProgramState(programState);
 
         SET_TEXTURE(programState, "u_texture1", 1,  right->getTexture()->getBackendTexture());
-        SET_UNIFORM(programState, "u_interpolate",0.5);
+        SET_UNIFORM(programState, "u_interpolate",0.5f);
 
         // slider
         createSliderCtl();
