@@ -193,11 +193,9 @@ Effect::Effect()
     _backgroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                       [this](EventCustom*)
                                                       {
-                                                          auto glProgram = _glprogramstate->getGLProgram();
-                                                          glProgram->reset();
-                                                          glProgram->initWithByteArrays(ccPositionTextureColor_noMVP_vert, _fragSource.c_str());
-                                                          glProgram->link();
-                                                          glProgram->updateUniforms();
+                                                          CC_SAFE_RELEASE(_programState);
+                                                          auto *programState = new backend::ProgramState(positionTextureColor_vert, _fragSource.c_str());
+                                                          _programState = programState;
                                                       }
                                                       );
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backgroundListener, -1);

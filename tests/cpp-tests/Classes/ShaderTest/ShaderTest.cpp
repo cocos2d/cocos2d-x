@@ -97,7 +97,7 @@ bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag
     _fragFileName = frag;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
-            this->setGLProgramState(nullptr);
+            this->setProgramState(nullptr);
             loadShaderVertex(_vertFileName, _fragFileName);
         });
 
@@ -449,7 +449,7 @@ bool SpriteBlur::initWithTexture(Texture2D* texture, const Rect& rect)
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
-                initGLProgram();
+                initProgram();
             });
 
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
