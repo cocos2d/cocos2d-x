@@ -145,17 +145,14 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
     s_captureScreenCommand.init(std::numeric_limits<float>::max());
     s_captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     
-    s_captureScreenListener =
-        Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW,
-                                                                              [](EventCustom* /*event*/)
-                                                {
-                                                    auto director = Director::getInstance();
-                                                    director->getEventDispatcher()->removeEventListener((EventListener*)(s_captureScreenListener));
-                                                    s_captureScreenListener = nullptr;
-                                                    director->getRenderer()->addCommand(&s_captureScreenCommand);
-                                                    director->getRenderer()->render();
-                                                }
-    );
+    s_captureScreenListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [](EventCustom* /*event*/) {
+        auto director = Director::getInstance();
+        director->getEventDispatcher()->removeEventListener((EventListener*)(s_captureScreenListener));
+        s_captureScreenListener = nullptr;
+        director->getRenderer()->addCommand(&s_captureScreenCommand);
+        director->getRenderer()->render();
+    });
+
 }
 
 void captureNode(Node* startNode, std::function<void(Image*)> imageCallback, float scale)
