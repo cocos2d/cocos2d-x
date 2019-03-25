@@ -7,13 +7,15 @@ precision highp float;
 uniform vec2 center;
 uniform vec2 resolution;
 
+uniform vec4 u_Time;
+
 //float u( float x ) { return 0.5+0.5*sign(x); }
 float u( float x ) { return (x>0.0)?1.0:0.0; }
 //float u( float x ) { return abs(x)/x; }
 
 void main(void)
 {
-	float time = CC_Time[1];
+	float time = u_Time[1];
 	vec2 p = 2.0 * (gl_FragCoord.xy - center.xy) / resolution.xy;
 	
 	float a = atan(p.x,p.y);

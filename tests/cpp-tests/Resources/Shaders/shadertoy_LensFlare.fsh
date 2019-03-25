@@ -16,6 +16,8 @@ vec4      iMouse = vec4(0,0,0,0);                // mouse pixel coords. xy: curr
  
  muuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuusk!*/
 
+uniform vec4 u_Time;
+
 float noise(float t)
 {
 	return 0.;
@@ -80,7 +82,7 @@ vec3 cc(vec3 color, float factor,float factor2) // color modifier
 void main(void)
 {
     vec2   iResolution = resolution;           // viewport resolution (in pixels)
-    float  iGlobalTime = CC_Time[1];           // shader playback time (in seconds)
+    float  iGlobalTime = u_Time[1];           // shader playback time (in seconds)
 
 	//vec2 uv = gl_FragCoord.xy / iResolution.xy - 0.5;
     vec2 uv = (gl_FragCoord.xy - center.xy) / iResolution.xy;

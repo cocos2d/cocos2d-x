@@ -9,11 +9,12 @@ vec4      iMouse = vec4(0,0,0,0);                // mouse pixel coords. xy: curr
 //uniform sampler2D iChannel0;          // input channel. XX = 2D/Cube
 
 
+uniform vec4 u_Time;
 
 void main(void)
 {
     vec2   iResolution = resolution;           // viewport resolution (in pixels)
-    float  iGlobalTime = CC_Time[1];           // shader playback time (in seconds)
+    float  iGlobalTime = u_Time[1];           // shader playback time (in seconds)
 
 	float pointRadius = 0.06;
 	float linkSize = 0.04;

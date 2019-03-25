@@ -7,9 +7,11 @@ precision highp float;
 uniform vec2 center;
 uniform vec2 resolution;
 
+uniform vec4 u_Time;
+
 void main(void)
 {
-    float time = CC_Time[1];
+    float time = u_Time[1];
     vec2 p = 2.0 * (gl_FragCoord.xy - center.xy) / resolution.xy;
 
     // animate

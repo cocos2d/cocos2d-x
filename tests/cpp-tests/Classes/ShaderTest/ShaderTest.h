@@ -22,8 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _SHADER_TEST_H_
-#define _SHADER_TEST_H_
+#pragma once
 
 #include "ui/CocosGUI.h"
 
@@ -154,14 +153,37 @@ protected:
     bool initWithVertex(const std::string &vert, const std::string &frag);
     void loadShaderVertex(const std::string &vert, const std::string &frag);
 
-    void onDraw(const cocos2d::Mat4& transform, uint32_t flags);
+    void setProgramState(cocos2d::backend::ProgramState *programState)
+    {
+        if (programState != _programState)
+        {
+            CC_SAFE_RELEASE_NULL(_programState);
+            _programState = programState;
+            CC_SAFE_RETAIN(_programState);
+        }
+        _customCommand.getPipelineDescriptor().programState = programState;
+        updateUniforms();
+    }
 
-    cocos2d::Vec2 _center;
-    cocos2d::Vec2 _resolution;
-    float      _time;
-    std::string _vertFileName;
-    std::string _fragFileName;
-    cocos2d::CustomCommand _customCommand;
+    void updateUniforms();
+
+    //cocos2d::backend::ProgramState * getProgramState() const { return _programState; }
+
+    cocos2d::Vec2                   _center;
+    cocos2d::Vec2                   _resolution;
+    float                           _time;
+    std::string                     _vertFileName;
+    std::string                     _fragFileName;
+    cocos2d::CustomCommand          _customCommand;
+    cocos2d::backend::ProgramState  *_programState = nullptr;
+
+    cocos2d::backend::UniformLocation   _locResolution;
+    cocos2d::backend::UniformLocation   _locCenter;
+    cocos2d::backend::UniformLocation   _locMVP;
+    cocos2d::backend::UniformLocation   _locTime;
+    cocos2d::backend::UniformLocation   _locSinTime;
+    cocos2d::backend::UniformLocation   _locCosTime;
+    cocos2d::backend::UniformLocation   _locPMatrix;
 };
 
 class ShaderLensFlare : public ShaderTestDemo
@@ -202,4 +224,3 @@ public:
     virtual bool init() override;
 };
 
-#endif

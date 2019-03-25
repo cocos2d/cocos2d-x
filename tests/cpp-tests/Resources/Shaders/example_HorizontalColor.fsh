@@ -8,6 +8,8 @@ varying vec2 v_texCoord;
 
 vec4 colors[10];
 
+uniform sampler2D u_texture;
+
 void main(void)
 {
 	colors[0] = vec4(1,0,0,1);
@@ -23,5 +25,5 @@ void main(void)
 	
 	// inline to prevent "float" loss and keep using lowp
 	int y = int( mod(gl_FragCoord.y / 3.0, 10.0 ) );
-	gl_FragColor = colors[y] * texture2D(CC_Texture0, v_texCoord);
+	gl_FragColor = colors[y] * texture2D(u_texture, v_texCoord);
 }

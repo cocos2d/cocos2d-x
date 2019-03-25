@@ -7,6 +7,8 @@ varying vec2 v_texCoord;
 
 uniform vec2 resolution;
 
+uniform sampler2D u_texture;
+
 vec4 blur(vec2);
 
 void main(void)
@@ -27,7 +29,7 @@ vec4 blur(vec2 p)
             for(float y = -4.0; y <= 4.0; y += 2.0)
             {
                 float weight = (4.0 - abs(x)) * (4.0 - abs(y));
-                col += texture2D(CC_Texture0, p + vec2(x * unit.x, y * unit.y)) * weight;
+                col += texture2D(u_texture, p + vec2(x * unit.x, y * unit.y)) * weight;
                 count += weight;
             }
         }
