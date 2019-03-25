@@ -16,7 +16,7 @@ public:
     virtual void updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data) override;
     
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) override;
-    virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*)> callback) override;
+    virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) override;
     
     inline id<MTLTexture> getMTLTexture() const { return _mtlTexture; }
     inline id<MTLSamplerState> getMTLSamplerState() const { return _mtlSamplerState; }
@@ -45,7 +45,7 @@ public:
     
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) override;
     virtual void updateFaceData(TextureCubeFace side, void *data) override;
-    virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*)> callback) override;
+    virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) override;
     
 private:
     void createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor);

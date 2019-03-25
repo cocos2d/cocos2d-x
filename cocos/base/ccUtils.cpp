@@ -64,7 +64,7 @@ namespace utils
 /**
 * Capture screen implementation, don't use it directly.
 */
-void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
+void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename, const unsigned char* imageData, int width, int height)
 {
     static bool startedCapture = false;
 
@@ -82,45 +82,15 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
         startedCapture = true;
     }
 
-
-    auto glView = Director::getInstance()->getOpenGLView();
-    auto frameSize = glView->getFrameSize();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    frameSize = frameSize * glView->getFrameZoomFactor() * glView->getRetinaFactor();
-#endif
-
-    int width = static_cast<int>(frameSize.width);
-    int height = static_cast<int>(frameSize.height);
-
     bool succeed = false;
     std::string outputFile = "";
 
     do
     {
-        std::shared_ptr<GLubyte> buffer(new GLubyte[width * height * 4], [](GLubyte* p){ CC_SAFE_DELETE_ARRAY(p); });
-        if (!buffer)
-        {
-            break;
-        }
-
-        glPixelStorei(GL_PACK_ALIGNMENT, 1);
-        glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
-
-        std::shared_ptr<GLubyte> flippedBuffer(new GLubyte[width * height * 4], [](GLubyte* p) { CC_SAFE_DELETE_ARRAY(p); });
-        if (!flippedBuffer)
-        {
-            break;
-        }
-
-        for (int row = 0; row < height; ++row)
-        {
-            memcpy(flippedBuffer.get() + (height - row - 1) * width * 4, buffer.get() + row * width * 4, width * 4);
-        }
-
         Image* image = new (std::nothrow) Image;
         if (image)
         {
-            image->initWithRawData(flippedBuffer.get(), width * height * 4, width, height, 8);
+            image->initWithRawData(imageData, width * height * 4, width, height, 8);
             if (FileUtils::getInstance()->isAbsolutePath(filename))
             {
                 outputFile = filename;
@@ -164,7 +134,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
  * Capture screen interface
  */
 static EventListenerCustom* s_captureScreenListener;
-static CallbackCommand s_captureScreenCommand;
+static CaptureScreenCallbackCommand s_captureScreenCommand;
 void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
 {
     if (s_captureScreenListener)
@@ -173,14 +143,19 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
         return;
     }
     s_captureScreenCommand.init(std::numeric_limits<float>::max());
-    s_captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename);
-    s_captureScreenListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [](EventCustom* /*event*/) {
-        auto director = Director::getInstance();
-        director->getEventDispatcher()->removeEventListener((EventListener*)(s_captureScreenListener));
-        s_captureScreenListener = nullptr;
-        director->getRenderer()->addCommand(&s_captureScreenCommand);
-        director->getRenderer()->render();
-    });
+    s_captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    
+    s_captureScreenListener =
+        Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW,
+                                                                              [](EventCustom* /*event*/)
+                                                {
+                                                    auto director = Director::getInstance();
+                                                    director->getEventDispatcher()->removeEventListener((EventListener*)(s_captureScreenListener));
+                                                    s_captureScreenListener = nullptr;
+                                                    director->getRenderer()->addCommand(&s_captureScreenCommand);
+                                                    director->getRenderer()->render();
+                                                }
+    );
 }
 
 void captureNode(Node* startNode, std::function<void(Image*)> imageCallback, float scale)

@@ -278,6 +278,7 @@ protected:
     void drawBatchedTriangles();
     void drawCustomCommand(RenderCommand* command);
     void drawMeshCommand(RenderCommand* command);
+    void captureScreen(RenderCommand* command);
 
     void beginFrame();
     void endFrame();

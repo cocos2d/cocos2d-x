@@ -42,6 +42,7 @@ public:
     virtual void setLineWidth(float lineWidth) = 0;
     virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) = 0;
     virtual void setDepthStencilState(DepthStencilState* depthStencilState) = 0;
+    virtual void captureScreen(std::function<void(const unsigned char*, int, int)> callback) = 0;
     
     void setStencilReferenceValue(unsigned int value);
     void setStencilReferenceValue(unsigned int frontRef, unsigned int backRef);

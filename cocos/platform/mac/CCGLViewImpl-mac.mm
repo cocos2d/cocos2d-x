@@ -328,7 +328,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     CAMetalLayer* layer = [CAMetalLayer layer];
     [layer setDevice:MTLCreateSystemDefaultDevice()];
     [layer setPixelFormat:MTLPixelFormatBGRA8Unorm];
-    [layer setFramebufferOnly:YES];
+    [layer setFramebufferOnly:NO];
     [layer setDrawableSize:size];
     [contentView setLayer:layer];
     backend::DeviceMTL::setCAMetalLayer(layer);

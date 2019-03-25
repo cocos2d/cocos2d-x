@@ -299,10 +299,19 @@ void Renderer::processRenderCommand(RenderCommand* command)
             flush();
            static_cast<CallbackCommand*>(command)->execute();
             break;
+        case RenderCommand::Type::CAPTURE_SCREEN_COMMAND:
+            flush();
+            captureScreen(command);
+            break;
         default:
             assert(false);
             break;
     }
+}
+
+void Renderer::captureScreen(RenderCommand *command)
+{
+    _commandBuffer->captureScreen(static_cast<CaptureScreenCallbackCommand*>(command)->func);
 }
 
 void Renderer::visitRenderQueue(RenderQueue& queue)

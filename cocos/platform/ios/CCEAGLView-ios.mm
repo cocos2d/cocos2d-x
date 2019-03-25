@@ -141,6 +141,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         CAMetalLayer* metalLayer = (CAMetalLayer*)[self layer];
         metalLayer.device = MTLCreateSystemDefaultDevice();
         metalLayer.pixelFormat = MTLPixelFormatBGRA8Unorm;
+        metalLayer.framebufferOnly = NO;
         cocos2d::backend::DeviceMTL::setCAMetalLayer(metalLayer);
     }
     
