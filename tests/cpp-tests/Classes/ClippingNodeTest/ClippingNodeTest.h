@@ -21,13 +21,15 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
-#ifndef __CLIPPINGNODETEST_H__
-#define __CLIPPINGNODETEST_H__
+#pragma once
 
 #include "../BaseTest.h"
 #include "renderer/CCCustomCommand.h"
 #include <list>
+
+namespace cocos2d { namespace backend {
+class ProgramState;
+}}
 
 DEFINE_TEST_SUITE(ClippingNodeTests);
 
@@ -175,18 +177,22 @@ public:
     virtual void setup() override;
     virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
 
-	virtual void setupStencilForClippingOnPlane(GLint plane);
-	virtual void setupStencilForDrawingOnPlane(GLint plane);
+	virtual void setupStencilForClippingOnPlane(int plane);
+	virtual void setupStencilForDrawingOnPlane(int plane);
 
 protected:
-    std::list<cocos2d::CustomCommand> _renderCmds;
-    void onEnableStencil();
-    void onDisableStencil();
-    void onBeforeDrawClip(int planeIndex, const cocos2d::Vec2& pt);
-    void onBeforeDrawSprite(int planeIndex, const cocos2d::Vec2& pt);
-protected:
+    void onBeforeDrawClip(int planeIndex);
+    void onBeforeDrawSprite(int planeIndex);
+    void initCommands();
+
+    std::vector<cocos2d::CustomCommand> _renderCmds;
+    cocos2d::CallbackCommand _enableStencilCallback;
+    cocos2d::CallbackCommand _disableStencilCallback;
     cocos2d::Vector<cocos2d::Sprite*> _sprites;
     cocos2d::Vector<cocos2d::Sprite*> _spritesStencil;
+    cocos2d::backend::ProgramState* _programState = nullptr;
+    cocos2d::backend::UniformLocation _locColor;
+    cocos2d::backend::UniformLocation _locMVPMatrix;
 };
 
 class RawStencilBufferTest2 : public RawStencilBufferTest
@@ -223,6 +229,9 @@ public:
     virtual std::string subtitle() const override;
     virtual void setupStencilForClippingOnPlane(GLint plane) override;
     virtual void setupStencilForDrawingOnPlane(GLint plane) override;
+
+private:
+    cocos2d::backend::UniformLocation _alphaMVPMatrix;
 };
 
 class RawStencilBufferTest5 : public RawStencilBufferTestAlphaTest
@@ -273,5 +282,3 @@ public:
     virtual std::string subtitle() const override;
     virtual void setup() override;
 };
-
-#endif //__CLIPPINGNODETEST_H__

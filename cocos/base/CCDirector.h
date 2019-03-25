@@ -373,9 +373,6 @@ public:
      * @js NA
      */
     void setGLDefaultValues();
-
-    /** Enables/disables OpenGL alpha blending. */
-    void setAlphaBlending(bool on);
     
     /** Sets clear values for the color buffers,
      * value range of each element is [0.0, 1.0].

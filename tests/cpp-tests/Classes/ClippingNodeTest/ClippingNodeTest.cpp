@@ -32,6 +32,8 @@
 #include "ClippingNodeTest.h"
 #include "../testResource.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/backend/ProgramState.h"
+#include "renderer/ccShaders.h"
 
 USING_NS_CC;
 
@@ -53,12 +55,12 @@ ClippingNodeTests::ClippingNodeTests()
     ADD_TEST_CASE(SpriteNoAlphaTest);
     ADD_TEST_CASE(SpriteInvertedTest);
     ADD_TEST_CASE(NestedTest);
-//    ADD_TEST_CASE(RawStencilBufferTest); // TODO shouldn't call OpenGL API directly
-//    ADD_TEST_CASE(RawStencilBufferTest2);
-//    ADD_TEST_CASE(RawStencilBufferTest3);
-//    ADD_TEST_CASE(RawStencilBufferTest4);
-//    ADD_TEST_CASE(RawStencilBufferTest5);
-//    ADD_TEST_CASE(RawStencilBufferTest6);
+    ADD_TEST_CASE(RawStencilBufferTest);
+    ADD_TEST_CASE(RawStencilBufferTest2);
+    ADD_TEST_CASE(RawStencilBufferTest3);
+    ADD_TEST_CASE(RawStencilBufferTest4);
+    ADD_TEST_CASE(RawStencilBufferTest5);
+    ADD_TEST_CASE(RawStencilBufferTest6);
     ADD_TEST_CASE(ClippingToRenderTextureTest);
     ADD_TEST_CASE(ClippingRectangleNodeTest);
 }
@@ -515,25 +517,23 @@ void ScrollViewDemo::onTouchesEnded(const std::vector<Touch*>& touches, Event  *
 
 //#if COCOS2D_DEBUG > 1
 
-static GLint _stencilBits = -1;
-
-static const GLfloat _alphaThreshold = 0.05f;
+static const float _alphaThreshold = 0.05f;
 
 static const int _planeCount = 8;
-static const Color4F _planeColor[] = {
-    Color4F(0, 0, 0, 0.65f),
-    Color4F(0.7f, 0, 0, 0.6f),
-    Color4F(0, 0.7f, 0, 0.55f),
-    Color4F(0, 0, 0.7f, 0.5f),
-    Color4F(0.7f, 0.7f, 0, 0.45f),
-    Color4F(0, 0.7f, 0.7f, 0.4f),
-    Color4F(0.7f, 0, 0.7f, 0.35f),
-    Color4F(0.7f, 0.7f, 0.7f, 0.3f),
+static const float _planeColor[][4] = {
+    {0, 0, 0, 0.65f},
+    {0.7f, 0, 0, 0.6f},
+    {0, 0.7f, 0, 0.55f},
+    {0, 0, 0.7f, 0.5f},
+    {0.7f, 0.7f, 0, 0.45f},
+    {0, 0.7f, 0.7f, 0.4f},
+    {0.7f, 0, 0.7f, 0.35f},
+    {0.7f, 0.7f, 0.7f, 0.3f},
 };
 
 RawStencilBufferTest::~RawStencilBufferTest()
 {
-
+    delete _programState;
 }
 
 std::string RawStencilBufferTest::title() const
@@ -548,11 +548,6 @@ std::string RawStencilBufferTest::subtitle() const
 
 void RawStencilBufferTest::setup()
 {
-    glGetIntegerv(GL_STENCIL_BITS, &_stencilBits);
-    if (_stencilBits < 3) {
-        CCLOGWARN("Stencil must be enabled for the current GLView.");
-    }
-    
     for(int i = 0; i < _planeCount; ++i)
     {
         Sprite* sprite = Sprite::create(s_pathGrossini);
@@ -566,43 +561,102 @@ void RawStencilBufferTest::setup()
         _spritesStencil.pushBack(sprite2);
     }
 
-    Director::getInstance()->setAlphaBlending(true);
+    initCommands();
+}
+
+void RawStencilBufferTest::initCommands()
+{
+    auto renderer = Director::getInstance()->getRenderer();
+    _enableStencilCallback.func = [=](){
+        renderer->setStencilTest(true);
+    };
+    _enableStencilCallback.init(_globalZOrder);
+
+    _disableStencilCallback.func = [=](){
+        renderer->setStencilTest(false);
+    };
+    _disableStencilCallback.init(_globalZOrder);
+
+    _programState = new (std::nothrow) backend::ProgramState(positionUColor_vert, positionUColor_frag);
+    _locColor = _programState->getProgram()->getUniformLocation("u_color");
+    _locMVPMatrix = _programState->getProgram()->getUniformLocation("u_MVPMatrix");
+    const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    _programState->setUniform(_locMVPMatrix, projectionMat.m, sizeof(projectionMat.m));
+
+    size_t neededCmdSize = _planeCount * 2;
+    _renderCmds.resize(neededCmdSize);
+    auto winPoint = Vec2(Director::getInstance()->getWinSize());
+    auto planeSize = winPoint * (1.0 / _planeCount);
+    BlendFunc blend;
+    blend.src = backend::BlendFactor::ONE;
+    blend.dst = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+    for (int i = 0, cmdIndex = 0; i < _planeCount; i++)
+    {
+        auto stencilPoint = planeSize * (_planeCount - i);
+        stencilPoint.x = winPoint.x;
+
+        auto& cmd = _renderCmds[cmdIndex];
+        cmdIndex++;
+        cmd.init(_globalZOrder, blend);
+        cmd.setBeforeCallback( CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawClip, this, i) );
+        Vec2 vertices[] = {
+            Vec2::ZERO,
+            Vec2(stencilPoint.x, 0),
+            stencilPoint,
+            Vec2(0, stencilPoint.y)
+        };
+        unsigned short indices[] = {0, 2, 1, 0, 3, 2};
+        cmd.createVertexBuffer(sizeof(Vec2), 4, backend::BufferUsage::STATIC);
+        cmd.updateVertexBuffer(vertices, sizeof(vertices));
+        cmd.createIndexBuffer(backend::IndexFormat::U_SHORT, 6, backend::BufferUsage::STATIC);
+        cmd.updateIndexBuffer(indices, sizeof(indices));
+        cmd.getPipelineDescriptor().programState = _programState;
+        auto& vertexLayout = cmd.getPipelineDescriptor().vertexLayout;
+        auto& attributes = _programState->getProgram()->getActiveAttributes();
+        auto iter = attributes.find("a_position");
+        if (iter != attributes.end())
+            vertexLayout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
+        vertexLayout.setLayout(sizeof(Vec2), backend::VertexStepMode::VERTEX);
+
+
+        auto& cmd2 = _renderCmds[cmdIndex];
+        cmdIndex++;
+        cmd2.init(_globalZOrder, blend);
+        cmd2.setBeforeCallback(CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawSprite, this, i));
+        Vec2 vertices2[] = {
+            Vec2::ZERO,
+            Vec2(winPoint.x, 0),
+            winPoint,
+            Vec2(0, winPoint.y)
+        };
+        cmd2.createVertexBuffer(sizeof(Vec2), 4, backend::BufferUsage::STATIC);
+        cmd2.updateVertexBuffer(vertices2, sizeof(vertices2));
+        cmd2.createIndexBuffer(backend::IndexFormat::U_SHORT, 6, backend::BufferUsage::STATIC);
+        cmd2.updateIndexBuffer(indices, sizeof(indices));
+        cmd2.getPipelineDescriptor().vertexLayout = vertexLayout;
+        cmd2.getPipelineDescriptor().programState = _programState;
+    }
 }
 
 void RawStencilBufferTest::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {    
     auto winPoint = Vec2(Director::getInstance()->getWinSize());
-    
     auto planeSize = winPoint * (1.0 / _planeCount);
-    
-    size_t neededCmdSize = _planeCount * 2 + 2;
-    if(_renderCmds.size() != neededCmdSize)
-    {
-        _renderCmds.resize(neededCmdSize);
-    }
-    
-    auto iter = _renderCmds.begin();
-    
-    iter->init(_globalZOrder);
-    iter->func = CC_CALLBACK_0(RawStencilBufferTest::onEnableStencil, this);
-    renderer->addCommand(&(*iter));
-    ++iter;
 
-    for (int i = 0; i < _planeCount; i++) {
-        
-        auto stencilPoint = planeSize * (_planeCount - i);
-        stencilPoint.x = winPoint.x;
-        
+    renderer->addCommand(&_enableStencilCallback);
+
+    for (int i = 0, cmdIndex = 0; i < _planeCount; i++)
+    {
         auto spritePoint = planeSize * i;
         spritePoint.x += planeSize.x / 2;
         spritePoint.y = 0;
         _sprites.at(i)->setPosition( spritePoint );
         _spritesStencil.at(i)->setPosition( spritePoint );
 
-        iter->init(_globalZOrder);
-        iter->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawClip, this, i, stencilPoint);
-        renderer->addCommand(&(*iter));
-        ++iter;
+        renderer->clear(ClearFlag::STENCIL, Color4F::BLACK, 0.f, 0x0, _globalZOrder);
+
+        renderer->addCommand(&_renderCmds[cmdIndex]);
+        cmdIndex++;
         
         Director* director = Director::getInstance();
         CCASSERT(nullptr != director, "Director is null when setting matrix stack");
@@ -612,109 +666,47 @@ void RawStencilBufferTest::draw(Renderer *renderer, const Mat4 &transform, uint3
         _spritesStencil.at(i)->visit(renderer, _modelViewTransform, flags);
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
                 
-        iter->init(_globalZOrder);
-        iter->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawSprite, this, i, winPoint);
-        renderer->addCommand(&(*iter));
-        ++iter;
+        renderer->addCommand(&_renderCmds[cmdIndex]);
+        cmdIndex++;
         
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
         _modelViewTransform = this->transform(transform);
         _sprites.at(i)->visit(renderer, _modelViewTransform, flags);
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     }
-    
-    iter->init(_globalZOrder);
-    iter->func = CC_CALLBACK_0(RawStencilBufferTest::onDisableStencil, this);
-    renderer->addCommand(&(*iter));
+
+    renderer->addCommand(&_disableStencilCallback);
 }
 
-void RawStencilBufferTest::onEnableStencil()
-{
-    glEnable(GL_STENCIL_TEST);
-    CHECK_GL_ERROR_DEBUG();
-}
-
-void RawStencilBufferTest::onDisableStencil()
-{
-    glDisable(GL_STENCIL_TEST);
-    CHECK_GL_ERROR_DEBUG();
-}
-
-void RawStencilBufferTest::onBeforeDrawClip(int planeIndex, const Vec2& pt)
+void RawStencilBufferTest::onBeforeDrawClip(int planeIndex)
 {
     this->setupStencilForClippingOnPlane(planeIndex);
-    CHECK_GL_ERROR_DEBUG();
-
-    Vec2 vertices[] = {
-        Vec2::ZERO,
-        Vec2(pt.x, 0),
-        pt,
-        Vec2(0, pt.y)
-    };
-    
-//    auto glProgram= GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-
-//    int colorLocation = glProgram->getUniformLocation("u_color");
-    CHECK_GL_ERROR_DEBUG();
-
-    Color4F color(1, 1, 1, 1);
-//
-//    glProgram->use();
-//    glProgram->setUniformsForBuiltins();
-//    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
-//
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-    
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
+    float color[4] = {1.f, 1.f, 1.f, 1.f};
+    _programState->setUniform(_locColor, color, sizeof(color));
 }
 
-void RawStencilBufferTest::onBeforeDrawSprite(int planeIndex, const Vec2& pt)
+void RawStencilBufferTest::onBeforeDrawSprite(int planeIndex)
 {
     this->setupStencilForDrawingOnPlane(planeIndex);
-    CHECK_GL_ERROR_DEBUG();
-
-    Vec2 vertices[] = {
-        Vec2::ZERO,
-        Vec2(pt.x, 0),
-        pt,
-        Vec2(0, pt.y)
-    };
-
-//    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-
-//    int colorLocation = glProgram->getUniformLocation("u_color");
-    CHECK_GL_ERROR_DEBUG();
-
-//    Color4F color = _planeColor[planeIndex];
-//    glProgram->use();
-//    glProgram->setUniformsForBuiltins();
-//    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
-//
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
+    auto& color = _planeColor[planeIndex];
+    _programState->setUniform(_locColor, (void*)color, sizeof(color));
 }
 
-void RawStencilBufferTest::setupStencilForClippingOnPlane(GLint plane)
+void RawStencilBufferTest::setupStencilForClippingOnPlane(int plane)
 {
-    GLint planeMask = 0x1 << plane;
-    glStencilMask(planeMask);
-    glClearStencil(0x0);
-    glClear(GL_STENCIL_BUFFER_BIT);
-    glFlush();
-    glStencilFunc(GL_NEVER, planeMask, planeMask);
-    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
+    auto renderer = Director::getInstance()->getRenderer();
+    unsigned int planeMask = 0x1 << plane;
+    renderer->setStencilWriteMask(planeMask);
+    renderer->setStencilCompareFunction(backend::CompareFunction::NEVER, planeMask, planeMask);
+    renderer->setStencilOperation(backend::StencilOperation::REPLACE, backend::StencilOperation::KEEP, backend::StencilOperation::KEEP);
 }
 
-void RawStencilBufferTest::setupStencilForDrawingOnPlane(GLint plane)
+void RawStencilBufferTest::setupStencilForDrawingOnPlane(int plane)
 {
-    GLint planeMask = 0x1 << plane;
-    glStencilFunc(GL_EQUAL, planeMask, planeMask);
-    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+    auto renderer = Director::getInstance()->getRenderer();
+    unsigned int planeMask = 0x1 << plane;
+    renderer->setStencilCompareFunction(backend::CompareFunction::EQUAL, planeMask, planeMask);
+    renderer->setStencilOperation(backend::StencilOperation::KEEP, backend::StencilOperation::KEEP, backend::StencilOperation::KEEP);
 }
 
 //@implementation RawStencilBufferTest2
@@ -724,15 +716,15 @@ std::string RawStencilBufferTest2::subtitle() const
 	return "2:DepthMask:FALSE";
 }
 
-void RawStencilBufferTest2::setupStencilForClippingOnPlane(GLint plane)
+void RawStencilBufferTest2::setupStencilForClippingOnPlane(int plane)
 {
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
-    glDepthMask(GL_FALSE);
+    Director::getInstance()->getRenderer()->setDepthWrite(false);
 }
 
-void RawStencilBufferTest2::setupStencilForDrawingOnPlane(GLint plane)
+void RawStencilBufferTest2::setupStencilForDrawingOnPlane(int plane)
 {
-    glDepthMask(GL_TRUE);
+    Director::getInstance()->getRenderer()->setDepthWrite(true);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
 }
 
@@ -743,28 +735,29 @@ std::string RawStencilBufferTest3::subtitle() const
 	return "3:DepthTest:DISABLE,DepthMask:FALSE";
 }
 
-void RawStencilBufferTest3::setupStencilForClippingOnPlane(GLint plane)
+void RawStencilBufferTest3::setupStencilForClippingOnPlane(int plane)
 {
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
-    glDisable(GL_DEPTH_TEST);
-    glDepthMask(GL_FALSE);
+    auto renderer = Director::getInstance()->getRenderer();
+    renderer->setDepthTest(false);
+    renderer->setDepthWrite(false);
 }
 
-void RawStencilBufferTest3::setupStencilForDrawingOnPlane(GLint plane)
+void RawStencilBufferTest3::setupStencilForDrawingOnPlane(int plane)
 {
-    glDepthMask(GL_TRUE);
-    //glEnable(GL_DEPTH_TEST);
+    Director::getInstance()->getRenderer()->setDepthWrite(true);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
 }
 
 void RawStencilBufferTestAlphaTest::setup()
 {
     RawStencilBufferTest::setup();
-//    auto programState = GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
-//    for(int i = 0; i < _planeCount; ++i)
-//    {
-//        _spritesStencil.at(i)->setGLProgramState(programState);
-//    }
+    for(int i = 0; i < _planeCount; ++i)
+    {
+        auto programState = new backend::ProgramState(positionTextureColor_vert, positionTextureColorAlphaTest_frag);
+        programState->setUniform(programState->getUniformLocation("u_alpha_value"), &_alphaThreshold, sizeof(_alphaThreshold));
+        _spritesStencil.at(i)->setProgramState(programState);
+    }
 }
 //@implementation RawStencilBufferTest4
 
@@ -773,29 +766,16 @@ std::string RawStencilBufferTest4::subtitle() const
 	return "4:DepthMask:FALSE,AlphaTest:ENABLE";
 }
 
-void RawStencilBufferTest4::setupStencilForClippingOnPlane(GLint plane)
+void RawStencilBufferTest4::setupStencilForClippingOnPlane(int plane)
 {
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
-    glDepthMask(GL_FALSE);
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    glEnable(GL_ALPHA_TEST);
-    glAlphaFunc(GL_GREATER, _alphaThreshold);
-#else
-    //TODO use backend::Program
-//    auto program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
-//    GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-//    program->use();
-//    program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-#endif
+    auto renderer = Director::getInstance()->getRenderer();
+    renderer->setDepthWrite(false);
 }
 
-void RawStencilBufferTest4::setupStencilForDrawingOnPlane(GLint plane)
+void RawStencilBufferTest4::setupStencilForDrawingOnPlane(int plane)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    glDisable(GL_ALPHA_TEST);
-#endif
-    glDepthMask(GL_TRUE);
+    Director::getInstance()->getRenderer()->setDepthWrite(true);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
 }
 
@@ -806,31 +786,18 @@ std::string RawStencilBufferTest5::subtitle() const
 	return "5:DepthTest:DISABLE,DepthMask:FALSE,AlphaTest:ENABLE";
 }
 
-void RawStencilBufferTest5::setupStencilForClippingOnPlane(GLint plane)
+void RawStencilBufferTest5::setupStencilForClippingOnPlane(int plane)
 {
     RawStencilBufferTest::setupStencilForClippingOnPlane(plane);
-    glDisable(GL_DEPTH_TEST);
-    glDepthMask(GL_FALSE);
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    glEnable(GL_ALPHA_TEST);
-    glAlphaFunc(GL_GREATER, _alphaThreshold);
-#else
-    //TODO use backend::Program
-//    auto program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
-//    GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-//    program->use();
-//    program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-#endif
+    auto renderer = Director::getInstance()->getRenderer();
+    renderer->setDepthWrite(false);
+    renderer->setDepthTest(false);
 }
 
-void RawStencilBufferTest5::setupStencilForDrawingOnPlane(GLint plane)
+void RawStencilBufferTest5::setupStencilForDrawingOnPlane(int plane)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    glDisable(GL_ALPHA_TEST);
-#endif
-    glDepthMask(GL_TRUE);
-    //glEnable(GL_DEPTH_TEST);
+    auto renderer = Director::getInstance()->getRenderer();
+    renderer->setDepthWrite(false);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
 }
 
@@ -844,88 +811,24 @@ std::string RawStencilBufferTest6::subtitle() const
 void RawStencilBufferTest6::setup()
 {
     RawStencilBufferTestAlphaTest::setup();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    auto winPoint = Vec2(Director::getInstance()->getWinSize());
-    //by default, glReadPixels will pack data with 4 bytes alignment
-    unsigned char bits[4] = {0,0,0,0};
-    glStencilMask(~0);
-    glClearStencil(0);
-    glClear(GL_STENCIL_BUFFER_BIT);
-    glFlush();
-    glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
-    auto clearToZeroLabel = Label::createWithTTF(StringUtils::format("00=%02x", bits[0]), "fonts/arial.ttf", 20);
-    clearToZeroLabel->setPosition((winPoint.x / 3) * 1, winPoint.y - 10);
-    this->addChild(clearToZeroLabel);
-    glStencilMask(0x0F);
-    glClearStencil(0xAA);
-    glClear(GL_STENCIL_BUFFER_BIT);
-    glFlush();
-    glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
-    auto clearToMaskLabel = Label::createWithTTF(StringUtils::format("0a=%02x", bits[0]), "fonts/arial.ttf", 20);
-    clearToMaskLabel->setPosition((winPoint.x / 3) * 2, winPoint.y - 10);
-    this->addChild(clearToMaskLabel);
-#endif
-    glStencilMask(~0);
+    Director::getInstance()->getRenderer()->setStencilWriteMask(~0);
 }
 
-void RawStencilBufferTest6::setupStencilForClippingOnPlane(GLint plane)
+void RawStencilBufferTest6::setupStencilForClippingOnPlane(int plane)
 {
-    GLint planeMask = 0x1 << plane;
-    glStencilMask(planeMask);
-    glStencilFunc(GL_NEVER, 0, planeMask);
-    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-  
-    Vec2 pt = Director::getInstance()->getWinSize();
-    Vec2 vertices[] = {
-        Vec2::ZERO,
-        Vec2(pt.x, 0),
-        pt,
-        Vec2(0, pt.y)
-    };
-
-//    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-
-//    int colorLocation = glProgram->getUniformLocation("u_color");
-//    CHECK_GL_ERROR_DEBUG();
-//
-//    Color4F color(1, 1, 1, 1);
-//
-//    glProgram->use();
-//    glProgram->setUniformsForBuiltins();
-//    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
-
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-//    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
-    
-    glStencilFunc(GL_NEVER, planeMask, planeMask);
-    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-    glDisable(GL_DEPTH_TEST);
-    glDepthMask(GL_FALSE);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    glEnable(GL_ALPHA_TEST);
-    glAlphaFunc(GL_GREATER, _alphaThreshold);
-#else
-    //TODO use backend::Program
-    //auto program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
-    //GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-    //program->use();
-    //program->setUniformLocationWith1f(alphaValueLocation, _alphaThreshold);
-#endif
-    glFlush();
+    int planeMask = 0x1 << plane;
+    auto renderer = Director::getInstance()->getRenderer();
+    renderer->setStencilCompareFunction(backend::CompareFunction::NEVER, planeMask, planeMask);
+    renderer->setStencilOperation(backend::StencilOperation::REPLACE, backend::StencilOperation::KEEP, backend::StencilOperation::KEEP);
+    renderer->setDepthTest(false);
+    renderer->setDepthWrite(false);
 }
 
-void RawStencilBufferTest6::setupStencilForDrawingOnPlane(GLint plane)
+void RawStencilBufferTest6::setupStencilForDrawingOnPlane(int plane)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    glDisable(GL_ALPHA_TEST);
-#endif
-    glDepthMask(GL_TRUE);
-    //glEnable(GL_DEPTH_TEST);
+    auto renderer = Director::getInstance()->getRenderer();
+    renderer->setDepthWrite(true);
     RawStencilBufferTest::setupStencilForDrawingOnPlane(plane);
-    glFlush();
 }
 
 //#endif // COCOS2D_DEBUG > 1
