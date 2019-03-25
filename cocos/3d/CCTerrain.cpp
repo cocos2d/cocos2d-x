@@ -1774,6 +1774,7 @@ void Terrain::StateBlock::save()
     depthWrite = renderer->getDepthWrite();
     depthTest = renderer->getDepthTest();
     cullFace = renderer->getCullMode();
+    winding = renderer->getWinding();
 }
 
 void Terrain::StateBlock::apply()
@@ -1782,6 +1783,7 @@ void Terrain::StateBlock::apply()
     renderer->setDepthTest(depthTest);
     renderer->setDepthWrite(depthWrite);
     renderer->setCullMode(cullFace);
+    renderer->setWinding(winding);
 }
 
 NS_CC_END

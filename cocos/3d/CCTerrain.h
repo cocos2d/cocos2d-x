@@ -522,8 +522,9 @@ protected:
     struct StateBlock {
        // bool blend;
         bool depthWrite = true;
-        bool depthTest = true ;
+        bool depthTest  = true ;
         backend::CullMode cullFace = backend::CullMode::FRONT;
+        backend::Winding  winding  = backend::Winding::CLOCK_WISE;
         void apply();
         void save();
     };
