@@ -48,6 +48,8 @@ enum
 #define ARRAY_SIZE_Y 3
 #define ARRAY_SIZE_Z 4
 
+static cocos2d::Scene *physicsScene = nullptr;
+
 Physics3DTests::Physics3DTests()
 {
 #if CC_USE_3D_PHYSICS == 0
