@@ -112,7 +112,7 @@ public:
         addTest("Renderer", []() { return new NewRendererTests(); });
         addTest("ReleasePool", [](){ return new ReleasePoolTests(); });
         addTest("Rotate World", [](){return new RotateWorldTests(); });
-        // addTest("Scheduler", [](){return new SchedulerTests(); });
+        addTest("Scheduler", [](){return new SchedulerTests(); });
         addTest("Shader - Basic", []() { return new ShaderTests(); });
         addTest("Shader - Sprite", []() { return new Shader2Tests(); });
         addTest("Texture2D", [](){return new Texture2DTests(); });
@@ -127,9 +127,9 @@ public:
         addTest("Vibrate", []() { return new VibrateTests(); });
 #endif
         addTest("Zwoptex", []() { return new ZwoptexTests(); });
-//        addTest("SpriteFrameCache", []() { return new SpriteFrameCacheTests(); }); // TODO
+        addTest("SpriteFrameCache", []() { return new SpriteFrameCacheTests(); }); // TODO
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-//        addTest("Window Test", []() { return new WindowTests(); }); // TODO wrong effect
+        addTest("Window Test", []() { return new WindowTests(); }); // TODO wrong effect
 #endif
     }
 };
