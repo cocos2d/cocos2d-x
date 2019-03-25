@@ -183,11 +183,11 @@ void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     _programState->setUniform(_locPMatrix, projectionMatrix.m, sizeof(projectionMatrix.m));
 
     float time = Director::getInstance()->getTotalFrames() * Director::getInstance()->getAnimationInterval();
-    Vec4 random(time / 10.0f, time, time * 2.0f, time * 4.0f);
-    _programState->setUniform(_locTime, &random, sizeof(random));
-    
+    Vec4 uTime(time / 10.0f, time, time * 2.0f, time * 4.0f);
     Vec4 sinTime(time / 8.0f, time / 4.0f, time / 2.0f, sinf(time));
     Vec4 cosTime(time / 8.0f, time / 4.0f, time / 2.0f, cosf(time));
+
+    _programState->setUniform(_locTime, &uTime, sizeof(uTime));
     _programState->setUniform(_locSinTime, &sinTime, sizeof(sinTime));
     _programState->setUniform(_locCosTime, &cosTime, sizeof(cosTime));
 

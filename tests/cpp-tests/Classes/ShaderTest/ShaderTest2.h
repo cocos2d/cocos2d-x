@@ -45,14 +45,14 @@ class EffectSprite;
 class Effect : public cocos2d::Ref
 {
 public:
-    cocos2d::GLProgramState* getGLProgramState() const { return _glprogramstate; }
+    cocos2d::backend::ProgramState* getProgramState() const { return _programState; }
     virtual void setTarget(EffectSprite *sprite){}
 
 protected:
-    bool initGLProgramState(const std::string &fragmentFilename);
+    bool initProgramState(const std::string &fragmentFilename);
     Effect();
     virtual ~Effect();
-    cocos2d::GLProgramState* _glprogramstate;
+    cocos2d::backend::ProgramState* _programState = nullptr;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     std::string _fragSource;
     cocos2d::EventListenerCustom* _backgroundListener;
