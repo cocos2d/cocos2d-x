@@ -13570,56 +13570,6 @@ int lua_cocos2dx_Director_setActionManager(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Director_setAlphaBlending(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Director* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.Director",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::Director*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Director_setAlphaBlending'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        bool arg0;
-
-        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.Director:setAlphaBlending");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Director_setAlphaBlending'", nullptr);
-            return 0;
-        }
-        cobj->setAlphaBlending(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Director:setAlphaBlending",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Director_setAlphaBlending'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_Director_popToRootScene(lua_State* tolua_S)
 {
     int argc = 0;
@@ -16380,7 +16330,6 @@ int lua_register_cocos2dx_Director(lua_State* tolua_S)
         tolua_function(tolua_S,"getSafeAreaRect",lua_cocos2dx_Director_getSafeAreaRect);
         tolua_function(tolua_S,"setGLDefaultValues",lua_cocos2dx_Director_setGLDefaultValues);
         tolua_function(tolua_S,"setActionManager",lua_cocos2dx_Director_setActionManager);
-        tolua_function(tolua_S,"setAlphaBlending",lua_cocos2dx_Director_setAlphaBlending);
         tolua_function(tolua_S,"popToRootScene",lua_cocos2dx_Director_popToRootScene);
         tolua_function(tolua_S,"loadMatrix",lua_cocos2dx_Director_loadMatrix);
         tolua_function(tolua_S,"getNotificationNode",lua_cocos2dx_Director_getNotificationNode);
