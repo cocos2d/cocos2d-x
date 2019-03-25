@@ -306,8 +306,8 @@ protected:
     std::unordered_map<unsigned int, backend::RenderPipeline*> _renderPipelineCache;
 
     Viewport _viewport;
-    CullMode _cullMode = CullMode::NONE;
-    Winding _winding = Winding::CLOCK_WISE;
+    CullMode _cullMode  = CullMode::NONE;
+    Winding _winding    = Winding::COUNTER_CLOCK_WISE; //default front face is CCW in GL
 
     std::stack<int> _commandGroupStack;
     
