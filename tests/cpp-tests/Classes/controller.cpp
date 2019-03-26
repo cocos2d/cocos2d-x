@@ -113,8 +113,8 @@ public:
         addTest("ReleasePool", [](){ return new ReleasePoolTests(); });
         addTest("Rotate World", [](){return new RotateWorldTests(); });
         // addTest("Scheduler", [](){return new SchedulerTests(); });
-        // addTest("Shader - Basic", []() { return new ShaderTests(); });
-        // addTest("Shader - Sprite", []() { return new Shader2Tests(); });
+        addTest("Shader - Basic", []() { return new ShaderTests(); });
+        addTest("Shader - Sprite", []() { return new Shader2Tests(); });
         addTest("Texture2D", [](){return new Texture2DTests(); });
         addTest("TextureCache", []() { return new TextureCacheTests(); });
         addTest("TexturePacker Encryption", []() { return new TextureAtlasEncryptionTests(); });

@@ -5,6 +5,7 @@ precision lowp float;
 #endif
 
 varying vec2 v_texCoord;
+uniform sampler2D u_texture;
 
 vec4 getColorByCoord(int y){
     if(y < 5){
@@ -39,5 +40,5 @@ void main(void) {
     //int y = int( mod(( (gl_FragCoord.y+gl_FragCoord.x)*mod(CC_Time[0],5.0)) / 10.0, 10.0 ) );
 	//int y = int( mod( CC_Time[3] + (gl_FragCoord.y + gl_FragCoord.x) / 10.0, 10.0 ) );
 	int y = int( mod(gl_FragCoord.y / 10.0, 10.0 ) );
-	gl_FragColor = getColorByCoord(y) * texture2D(CC_Texture0, v_texCoord);
+	gl_FragColor = getColorByCoord(y) * texture2D(u_texture, v_texCoord);
 }

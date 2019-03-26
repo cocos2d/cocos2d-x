@@ -7,9 +7,11 @@ precision highp float;
 uniform vec2 center;
 uniform vec2 resolution;
 
+uniform vec4 u_Time;
+
 void main(void)
 {
-   float time = CC_Time[1];
+   float time = u_Time[1];
     float x = gl_FragCoord.x - (center.x - resolution.x / 2.0);
    float y = gl_FragCoord.y - (center.y - resolution.y / 2.0);
    float mov0 = x+y+cos(sin(time)*2.)*100.+sin(x/100.)*1000.;

@@ -568,6 +568,21 @@ void Label::setVertexLayout(PipelineDescriptor& pipelineDescriptor)
     _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE);
 }
 
+void Label::setProgramState(backend::ProgramState *programState)
+{
+    if (_programState != programState)
+    {
+        CC_SAFE_RELEASE_NULL(_programState);
+        _programState = programState;
+        CC_SAFE_RETAIN(programState);
+    }
+
+    auto &pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    pipelineDescriptor.programState = programState;
+    updateUniformLocations();
+    setVertexLayout(pipelineDescriptor);
+}
+
 void Label::updateShaderProgram()
 {
     const char* vert = nullptr;
@@ -638,13 +653,19 @@ void Label::updateShaderProgram()
     CC_SAFE_RELEASE(_programState);
     _programState = new (std::nothrow) backend::ProgramState(vert, frag);
     pipelineDescriptor.programState = _programState;
+    updateUniformLocations();
+    setVertexLayout(pipelineDescriptor);
+}
+
+void Label::updateUniformLocations()
+{
+    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
     _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
     _alphaTextureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture1");
     _textColorLocation = pipelineDescriptor.programState->getUniformLocation("u_textColor");
     _effectColorLocation = pipelineDescriptor.programState->getUniformLocation("u_effectColor");
     _effectTypeLocation = pipelineDescriptor.programState->getUniformLocation("u_effectType");
-    setVertexLayout(pipelineDescriptor);
 }
 
 void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false */, bool useA8Shader /* = false */)

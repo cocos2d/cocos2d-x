@@ -145,7 +145,7 @@ void Material_2DEffects::onEnter()
 
 #define FETCH_CCTIME_LOCATION(sprite) do {                                  \
         auto programState = sprite->getProgramState();                      \
-        auto location     = programState->getUniformLocation("CC_Time");    \
+        auto location     = programState->getUniformLocation("u_Time");    \
         timeUniforms.emplace_back(programState, location);                  \
     }while(0)
 
@@ -267,7 +267,7 @@ void Material_AutoBindings::onEnter()
     spriteEdgeDetect->setProgramState(mat1->getTechniqueByName("edge_detect")->getPassByIndex(0)->getProgramState());
 
     _noiseProgramState = spriteNoise->getProgramState();
-    _locationTime = _noiseProgramState->getUniformLocation("CC_Time");
+    _locationTime = _noiseProgramState->getUniformLocation("u_Time");
     
     schedule(CC_SCHEDULE_SELECTOR(Material_AutoBindings::updateUniformTime));
     // properties is not a "Ref" object

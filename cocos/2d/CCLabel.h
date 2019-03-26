@@ -585,6 +585,11 @@ public:
      */
     float getAdditionalKerning() const;
 
+    /**
+    * set ProgramState of current render command
+    */
+    void setProgramState(backend::ProgramState *programState);
+
     FontAtlas* getFontAtlas() { return _fontAtlas; }
 
     virtual const BlendFunc& getBlendFunc() const override { return _blendFunc; }
@@ -687,6 +692,7 @@ protected:
 
     virtual void updateColor() override;
     
+    void updateUniformLocations();
     void setVertexLayout(PipelineDescriptor& vertexLayout);
     void updateBlendState();
     void updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer, const Mat4 &transform);

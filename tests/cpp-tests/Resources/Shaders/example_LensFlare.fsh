@@ -8,6 +8,10 @@ varying vec2 v_texCoord;
 uniform vec2 resolution;
 uniform vec2 textureResolution;
 
+
+uniform vec4 u_Time;
+uniform sampler2D u_texture;
+
 /*by musk License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
  
  Trying to get some interesting looking lens flares.
@@ -19,11 +23,11 @@ uniform vec2 textureResolution;
 
 float noise(float t)
 {
-	return texture2D(CC_Texture0,vec2(t,.0)/textureResolution.xy).x;
+	return texture2D(u_texture,vec2(t,.0)/textureResolution.xy).x;
 }
 float noise(vec2 t)
 {
-	return texture2D(CC_Texture0,t/textureResolution.xy).x;
+	return texture2D(u_texture,t/textureResolution.xy).x;
 }
 
 vec3 lensflare(vec2 uv,vec2 pos)
@@ -90,8 +94,8 @@ void main(void)
 //	}
     vec3 mouse;
     mouse.z = 0.5;
-    mouse.x=sin(CC_Time[1])*.5;
-    mouse.y=sin(CC_Time[1]*.913)*.5;
+    mouse.x=sin(u_Time[1])*.5;
+    mouse.y=sin(u_Time[1]*.913)*.5;
 	
 	vec3 color = vec3(1.4,1.2,1.0)*lensflare(uv,mouse.xy);
 	color -= noise(v_texCoord * resolution)*.015;

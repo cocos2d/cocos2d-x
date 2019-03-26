@@ -1738,7 +1738,7 @@ void Sprite::setMVPMatrixUniform()
 {
     const auto& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     auto programState = _trianglesCommand.getPipelineDescriptor().programState;
-    if (programState)
+    if (programState && _mvpMatrixLocation)
         programState->setUniform(_mvpMatrixLocation, projectionMat.m, sizeof(projectionMat.m));
 }
 
