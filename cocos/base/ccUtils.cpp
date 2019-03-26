@@ -66,6 +66,12 @@ namespace utils
 */
 void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename, const unsigned char* imageData, int width, int height)
 {
+    if(!imageData)
+    {
+        afterCaptured(false, "");
+        return;
+    }
+    
     static bool startedCapture = false;
 
     if (startedCapture)

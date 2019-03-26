@@ -138,6 +138,9 @@ void Utils::generateMipmaps(id<MTLTexture> texture)
 
 void Utils::swizzleImage(unsigned char *image, int width, int height, MTLPixelFormat format)
 {
+    if(!image)
+        return;
+    
     auto len = width * height;
     switch (format) {
         //convert to RGBA
@@ -184,7 +187,7 @@ void Utils::getTextureBytes(int origX, int origY, int rectWidth, int rectHeight,
    
     [commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> commandBufferMTL) {
         auto bytePerRow = rectWidth * getBitsPerElement(texture.pixelFormat) / 8;
-        unsigned char* image = new unsigned char[bytePerRow * rectHeight];
+        unsigned char* image = new (std::nothrow) unsigned char[bytePerRow * rectHeight];
         [copiedTexture getBytes:image bytesPerRow:bytePerRow fromRegion:imageRegion mipmapLevel:0];
         
         swizzleImage(image, rectWidth, rectHeight, texture.pixelFormat);
@@ -196,7 +199,7 @@ void Utils::getTextureBytes(int origX, int origY, int rectWidth, int rectHeight,
     [commandBuffer commit];
 #else
     auto bytePerRow = rectWidth * getBitsPerElement(texture.pixelFormat) / 8;
-    unsigned char* image = new unsigned char[bytePerRow * rectHeight];
+    unsigned char* image = new (std::nothrow) unsigned char[bytePerRow * rectHeight];
     [texture getBytes:image bytesPerRow:bytePerRow fromRegion:imageRegion mipmapLevel:0];
     swizzleImage(image, rectWidth, rectHeight, texture.pixelFormat);
     callback(image, rectWidth, rectHeight);
