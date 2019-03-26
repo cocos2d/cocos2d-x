@@ -5,8 +5,8 @@ set(COCOS_EXTENSIONS_HEADER
     ../extensions/assets-manager/CCEventListenerAssetsManagerEx.h
     ../extensions/assets-manager/AssetsManager.h
     ../extensions/assets-manager/CCEventAssetsManagerEx.h
-    # ../extensions/physics-nodes/CCPhysicsSprite.h
-    # ../extensions/physics-nodes/CCPhysicsDebugNode.h
+    ../extensions/physics-nodes/CCPhysicsSprite.h
+    ../extensions/physics-nodes/CCPhysicsDebugNode.h
     ../extensions/Particle3D/CCParticleSystem3D.h
     ../extensions/Particle3D/PU/CCPUDoExpireEventHandler.h
     ../extensions/Particle3D/PU/CCPUParticleSystem3D.h
@@ -199,8 +199,8 @@ set(COCOS_EXTENSIONS_SRC
     ../extensions/GUI/CCScrollView/CCScrollView.cpp
     ../extensions/GUI/CCScrollView/CCTableView.cpp
     ../extensions/GUI/CCScrollView/CCTableViewCell.cpp
-    # ../extensions/physics-nodes/CCPhysicsDebugNode.cpp
-    # ../extensions/physics-nodes/CCPhysicsSprite.cpp
+    ../extensions/physics-nodes/CCPhysicsDebugNode.cpp
+    ../extensions/physics-nodes/CCPhysicsSprite.cpp
     ../extensions/Particle3D/CCParticle3DAffector.cpp
     ../extensions/Particle3D/CCParticle3DEmitter.cpp
     ../extensions/Particle3D/CCParticle3DRender.cpp

@@ -419,20 +419,20 @@ list(APPEND GAME_SOURCE
      )
 
 list(APPEND GAME_HEADER
-    #  Classes/Physics3DTest/Physics3DTest.h
+     Classes/Physics3DTest/Physics3DTest.h
      Classes/NavMeshTest/NavMeshTest.h
      )
 list(APPEND GAME_SOURCE
-    #  Classes/Physics3DTest/Physics3DTest.cpp
+     Classes/Physics3DTest/Physics3DTest.cpp
      Classes/NavMeshTest/NavMeshTest.cpp
      )
 list(APPEND GAME_HEADER
-    #  Classes/PhysicsTest/PhysicsTest.h
-    #  Classes/ChipmunkTest/ChipmunkTest.h
+     Classes/PhysicsTest/PhysicsTest.h
+     Classes/ChipmunkTest/ChipmunkTest.h
      )
 list(APPEND GAME_SOURCE
-    #  Classes/PhysicsTest/PhysicsTest.cpp
-    #  Classes/ChipmunkTest/ChipmunkTest.cpp
+     Classes/PhysicsTest/PhysicsTest.cpp
+     Classes/ChipmunkTest/ChipmunkTest.cpp
      )
 
 if(NOT LINUX)
