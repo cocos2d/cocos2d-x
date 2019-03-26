@@ -38,6 +38,7 @@
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCRenderCommand.h"
 #include "base/CCDirector.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
@@ -444,6 +445,8 @@ Label::~Label()
     CC_SAFE_RELEASE_NULL(_shadowNode);
     
     CC_SAFE_RELEASE(_programState);
+    CC_SAFE_RELEASE(_programStateShadow);
+    CC_SAFE_RELEASE(_programStateOutline);
 }
 
 void Label::reset()
@@ -655,6 +658,18 @@ void Label::updateShaderProgram()
     pipelineDescriptor.programState = _programState;
     updateUniformLocations();
     setVertexLayout(pipelineDescriptor);
+
+    CC_SAFE_RELEASE_NULL(_programStateShadow);
+    _programStateShadow = new (std::nothrow) backend::ProgramState(vert, frag);
+    auto &pipelineShadow = _customCommandShadow.getPipelineDescriptor();
+    pipelineShadow.programState = _programStateShadow;
+    setVertexLayout(pipelineShadow);
+
+    CC_SAFE_RELEASE_NULL(_programStateOutline);
+    _programStateOutline = new (std::nothrow) backend::ProgramState(vert, frag);
+    auto &pipelineOutline = _customCommandOutLine.getPipelineDescriptor();
+    pipelineOutline.programState = _programStateOutline;
+    setVertexLayout(pipelineOutline);
 }
 
 void Label::updateUniformLocations()
@@ -1173,6 +1188,7 @@ void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */
                 _fontConfig.outlineSize = outlineSize;
                 setTTFConfig(_fontConfig);
             }
+            _currLabelEffect = LabelEffect::OUTLINE;
         }
         else if (_effectColorF != outlineColor || _outlineSize != outlineSize)
         {
@@ -1539,27 +1555,22 @@ void Label::updateBuffer(TextureAtlas* textureAtlas, CustomCommand& customComman
     if (textureAtlas->getTotalQuads() > customCommand.getVertexCapacity())
     {
         customCommand.createVertexBuffer((unsigned int)sizeof(V3F_C4B_T2F_Quad), (unsigned int)textureAtlas->getTotalQuads(), CustomCommand::BufferUsage::DYNAMIC);
-        customCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, (unsigned int)textureAtlas->getTotalQuads()*6, CustomCommand::BufferUsage::DYNAMIC);
+        customCommand.createIndexBuffer(CustomCommand::IndexFormat::U_SHORT, (unsigned int)textureAtlas->getTotalQuads() * 6, CustomCommand::BufferUsage::DYNAMIC);
     }
-   customCommand.updateVertexBuffer(textureAtlas->getQuads(), (unsigned int)(textureAtlas->getTotalQuads() * sizeof(V3F_C4B_T2F_Quad)) );
-   customCommand.updateIndexBuffer(textureAtlas->getIndices(), (unsigned int)(textureAtlas->getTotalQuads()*6*sizeof(unsigned short)) );
-   customCommand.setIndexDrawInfo(0, (unsigned int)(textureAtlas->getTotalQuads()*6));
+    customCommand.updateVertexBuffer(textureAtlas->getQuads(), (unsigned int)(textureAtlas->getTotalQuads() * sizeof(V3F_C4B_T2F_Quad)));
+    customCommand.updateIndexBuffer(textureAtlas->getIndices(), (unsigned int)(textureAtlas->getTotalQuads() * 6 * sizeof(unsigned short)));
+    customCommand.setIndexDrawInfo(0, (unsigned int)(textureAtlas->getTotalQuads() * 6));
 }
 
 void Label::updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer, const Mat4 &transform)
 {
     updateBuffer(textureAtlas, _customCommand);
-    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
     if (_shadowEnabled) {
         updateBuffer(textureAtlas, _customCommandShadow);
-        auto& pipelineShadow = _customCommandShadow.getPipelineDescriptor();
-        pipelineShadow = pipelineDescriptor;
-        pipelineShadow.programState = pipelineDescriptor.programState;
-        const auto& matrixP = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        Mat4 matrixMVP = matrixP * _shadowTransform;
-        pipelineShadow.programState->setUniform(_mvpMatrixLocation, matrixMVP.m, sizeof(matrixMVP.m));
     }
+
     
+
     if(_currentLabelType == LabelType::TTF)
     {
         switch (_currLabelEffect) {
@@ -1572,10 +1583,9 @@ void Label::updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer,
                 if(_shadowEnabled)
                 {
                     effectType = 2;
-                    auto& pipelineShadow = _customCommandShadow.getPipelineDescriptor();
                     Vec4 shadowColor = Vec4(_shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
-                    pipelineShadow.programState->setUniform(_effectColorLocation, &shadowColor, sizeof(Vec4));
-                    pipelineShadow.programState->setUniform(_effectTypeLocation, &effectType, sizeof(effectType));
+                    _programStateShadow->setUniform(_effectColorLocation, &shadowColor, sizeof(Vec4));
+                    _programStateShadow->setUniform(_effectTypeLocation, &effectType, sizeof(effectType));
                     _customCommandShadow.init(_globalZOrder);
                     renderer->addCommand(&_customCommandShadow);
                 }
@@ -1584,11 +1594,8 @@ void Label::updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer,
                 {
                     effectType = 1;
                     updateBuffer(textureAtlas, _customCommandOutLine);
-                    auto& pipelineOutline = _customCommandOutLine.getPipelineDescriptor();
-                    pipelineOutline = pipelineDescriptor;
-                    pipelineOutline.programState = pipelineDescriptor.programState;
-                    pipelineOutline.programState->setUniform(_effectColorLocation, &effectColor, sizeof(Vec4));
-                    pipelineOutline.programState->setUniform(_effectTypeLocation, &effectType, sizeof(effectType));
+                    _programStateOutline->setUniform(_effectColorLocation, &effectColor, sizeof(Vec4));
+                    _programStateOutline->setUniform(_effectTypeLocation, &effectType, sizeof(effectType));
                     _customCommandOutLine.init(_globalZOrder);
                     renderer->addCommand(&_customCommandOutLine);
                 }
@@ -1596,17 +1603,16 @@ void Label::updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer,
                 //draw text
                 {
                     effectType = 0;
-                    pipelineDescriptor.programState->setUniform(_effectColorLocation, &effectColor, sizeof(Vec4));
-                    pipelineDescriptor.programState->setUniform(_effectTypeLocation, &effectType, sizeof(effectType));
+                    _programState->setUniform(_effectColorLocation, &effectColor, sizeof(effectColor));
+                    _programState->setUniform(_effectTypeLocation, &effectType, sizeof(effectType));
                 }
             }
                 break;
             case LabelEffect::NORMAL:
             {
                 if (_shadowEnabled) {
-                    auto& pipelineShadow = _customCommandShadow.getPipelineDescriptor();
                     Vec4 shadowColor = Vec4(_shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
-                    pipelineShadow.programState->setUniform(_textColorLocation, &shadowColor, sizeof(Vec4));
+                    _programStateShadow->setUniform(_textColorLocation, &shadowColor, sizeof(Vec4));
                     _customCommandShadow.init(_globalZOrder);
                     renderer->addCommand(&_customCommandShadow);
                 }
@@ -1617,16 +1623,15 @@ void Label::updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer,
                 //draw shadow
                 if(_shadowEnabled)
                 {
-                    auto& pipelineShadow = _customCommandShadow.getPipelineDescriptor();
                     Vec4 shadowColor = Vec4(_shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
-                    pipelineShadow.programState->setUniform(_textColorLocation, &shadowColor, sizeof(Vec4));
-                    pipelineShadow.programState->setUniform(_effectColorLocation, &shadowColor, sizeof(Vec4));
+                    _programStateShadow->setUniform(_textColorLocation, &shadowColor, sizeof(Vec4));
+                    _programStateShadow->setUniform(_effectColorLocation, &shadowColor, sizeof(Vec4));
                     _customCommandShadow.init(_globalZOrder);
                     renderer->addCommand(&_customCommandShadow);
                 }
                 
                 Vec4 effectColor(_effectColorF.r, _effectColorF.g, _effectColorF.b, _effectColorF.a);
-                pipelineDescriptor.programState->setUniform(_effectColorLocation, &effectColor, sizeof(Vec4));
+                _programState->setUniform(_effectColorLocation, &effectColor, sizeof(Vec4));
             }
                 break;
             default:
@@ -1676,7 +1681,6 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 #endif
     {
         updateBlendState();
-        auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
         cocos2d::Mat4 matrixProjection = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         if (!_shadowEnabled && (_currentLabelType == LabelType::BMFONT || _currentLabelType == LabelType::CHARMAP))
         {
@@ -1691,8 +1695,7 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             
             auto texture = textureAtlas->getTexture();
             auto& pipelineQuad = _quadCommand.getPipelineDescriptor();
-            pipelineQuad = pipelineDescriptor;
-            pipelineQuad.programState = pipelineDescriptor.programState;
+            pipelineQuad = _customCommand.getPipelineDescriptor();
             pipelineQuad.programState->setUniform(_mvpMatrixLocation, matrixProjection.m, sizeof(matrixProjection.m));
             pipelineQuad.programState->setTexture(_textureLocation, 0, texture->getBackendTexture());
             auto alphaTexture = textureAtlas->getTexture()->getAlphaTexture();
@@ -1705,23 +1708,29 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         }
         else
         {
+            cocos2d::Mat4 matrixMVP = matrixProjection * transform;
+
+            std::array<backend::ProgramState*, 3> states = { _programState, _programStateOutline, _programStateShadow };
+
             for (auto&& batchNode : _batchNodes)
             {
                 auto textureAtlas = batchNode->getTextureAtlas();
                 if(!textureAtlas->getTotalQuads())
                     return;
                 
-                cocos2d::Mat4 matrixMVP = matrixProjection * transform;
-                pipelineDescriptor.programState->setUniform(_mvpMatrixLocation, matrixMVP.m, sizeof(matrixMVP.m));
-                Vec4 textColor(_textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
-                pipelineDescriptor.programState->setUniform(_textColorLocation, &textColor, sizeof(Vec4));
-                pipelineDescriptor.programState->setTexture(_textureLocation, 0, textureAtlas->getTexture()->getBackendTexture());
-                auto alphaTexture = textureAtlas->getTexture()->getAlphaTexture();
-                if(alphaTexture && alphaTexture->getBackendTexture())
+                for (auto programState : states)
                 {
-                    pipelineDescriptor.programState->setTexture(_alphaTextureLocation, 1, alphaTexture->getBackendTexture());
+                    programState->setUniform(_mvpMatrixLocation, matrixMVP.m, sizeof(matrixMVP.m));
+                    Vec4 textColor(_textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
+                    programState->setUniform(_textColorLocation, &textColor, sizeof(Vec4));
+                    programState->setTexture(_textureLocation, 0, textureAtlas->getTexture()->getBackendTexture());
+                    auto alphaTexture = textureAtlas->getTexture()->getAlphaTexture();
+                    if (alphaTexture && alphaTexture->getBackendTexture())
+                    {
+                        programState->setTexture(_alphaTextureLocation, 1, alphaTexture->getBackendTexture());
+                    }
                 }
-                updateEffectUniforms(textureAtlas, renderer, transform);
+               updateEffectUniforms(textureAtlas, renderer, transform);
             }
         }
     }
@@ -1729,23 +1738,26 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
 void Label::updateBlendState()
 {
-    backend::BlendDescriptor& blendDescriptor = _customCommand.getPipelineDescriptor().blendDescriptor;
-    blendDescriptor.blendEnabled = true;
-    if (_blendFunc == BlendFunc::ALPHA_NON_PREMULTIPLIED)
-    {
-        blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::SRC_ALPHA;
-        blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-        blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::SRC_ALPHA;
-        blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-        setOpacityModifyRGB(false);
-    }
-    else
-    {
-        blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::ONE;
-        blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-        blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::ONE;
-        blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-        setOpacityModifyRGB(true);
+    std::array<RenderCommand *, 3> commands = { &_customCommand, &_customCommandOutLine, &_customCommandShadow };
+    for(auto *command : commands) {
+        backend::BlendDescriptor& blendDescriptor = command->getPipelineDescriptor().blendDescriptor;
+        blendDescriptor.blendEnabled = true;
+        if (_blendFunc == BlendFunc::ALPHA_NON_PREMULTIPLIED)
+        {
+            blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::SRC_ALPHA;
+            blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+            blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::SRC_ALPHA;
+            blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+            setOpacityModifyRGB(false);
+        }
+        else
+        {
+            blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::ONE;
+            blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+            blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::ONE;
+            blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+            setOpacityModifyRGB(true);
+        }
     }
 }
 

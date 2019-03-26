@@ -804,7 +804,9 @@ protected:
     backend::UniformLocation _effectColorLocation;
     backend::UniformLocation _effectTypeLocation;
     
-    backend::ProgramState* _programState = nullptr;
+    backend::ProgramState* _programState        = nullptr;
+    backend::ProgramState* _programStateShadow  = nullptr;
+    backend::ProgramState* _programStateOutline = nullptr;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);
