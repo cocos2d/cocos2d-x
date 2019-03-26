@@ -122,6 +122,12 @@ bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag
     Vec2 vertices[6] = { Vec2(0,0), Vec2(w,0), Vec2(w,h), Vec2(0,0), Vec2(0,h), Vec2(w,h) };
     layout.setLayout(sizeof(Vec2), backend::VertexStepMode::VERTEX);
 
+    /*
+     * TODO: the Y-coordinate of subclasses are flipped in metal
+     *
+     * keywords: CC_USE_METAL , CC_USE_GL
+     */
+    
     _customCommand.createVertexBuffer(sizeof(Vec2), 6, CustomCommand::BufferUsage::STATIC);
     _customCommand.updateVertexBuffer(vertices, sizeof(vertices));
 
