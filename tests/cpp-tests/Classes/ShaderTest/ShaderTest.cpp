@@ -186,8 +186,6 @@ void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
     _programState->setUniform(_locMVP, finalMatrix.m, sizeof(finalMatrix.m));
 
-    _programState->setUniform(_locPMatrix, projectionMatrix.m, sizeof(projectionMatrix.m));
-
     float time = Director::getInstance()->getTotalFrames() * Director::getInstance()->getAnimationInterval();
     Vec4 uTime(time / 10.0f, time, time * 2.0f, time * 4.0f);
     Vec4 sinTime(time / 8.0f, time / 4.0f, time / 2.0f, sinf(time));
@@ -209,7 +207,6 @@ void ShaderNode::updateUniforms()
     _locTime        = _programState->getUniformLocation("u_Time");
     _locSinTime     = _programState->getUniformLocation("u_SinTime");
     _locCosTime     = _programState->getUniformLocation("u_CosTime");
-    _locPMatrix     = _programState->getUniformLocation("u_PMatrix");
 }
 
 /// ShaderMonjori
@@ -474,7 +471,7 @@ void SpriteBlur::initProgram()
     std::string fragSource = FileUtils::getInstance()->getStringFromFile(
         FileUtils::getInstance()->fullPathForFilename("Shaders/example_Blur.fsh"));
 
-    auto programState = new backend::ProgramState(positionTextureColorNoMVP_vert, fragSource.data());
+    auto programState = new backend::ProgramState(positionTextureColor_vert, fragSource.data());
     setProgramState(programState);
     CC_SAFE_RELEASE_NULL(programState);
     
