@@ -59,8 +59,9 @@ enum {
 
 NewLabelTests::NewLabelTests()
 {
-    ADD_TEST_CASE(LabelOutlineAndGlowTest);
-    ADD_TEST_CASE(LabelMultilineWithOutline);
+    //ADD_TEST_CASE(LabelOutlineAndGlowTest);
+    //ADD_TEST_CASE(LabelMultilineWithOutline);
+    ADD_TEST_CASE(LabelIssue11585Test);
 
     ADD_TEST_CASE(LabelFNTGlyphDesigner);
     ADD_TEST_CASE(LabelFNTColor);
@@ -1285,21 +1286,21 @@ LabelOutlineAndGlowTest::LabelOutlineAndGlowTest()
     label1->setPosition( Vec2(size.width/2, size.height*0.7) );
     label1->setTextColor( Color4B::GREEN );
     label1->enableGlow(Color4B::YELLOW);
-    //addChild(label1);
+    addChild(label1);
 
     ttfConfig.outlineSize = 1;
     auto label2 = Label::createWithTTF(ttfConfig,"Outline", TextHAlignment::CENTER, size.width);
     label2->setPosition( Vec2(size.width/2, size.height*0.6) );
     label2->setTextColor( Color4B::RED );
     label2->enableOutline(Color4B::BLUE);
-    //addChild(label2);
+    addChild(label2);
 
     ttfConfig.outlineSize = 2;
     auto label3 = Label::createWithTTF(ttfConfig,"Outline", TextHAlignment::CENTER, size.width);
     label3->setPosition( Vec2(size.width/2, size.height*0.48) );
     label3->setTextColor( Color4B::RED );
     label3->enableOutline(Color4B::BLUE);
-    //addChild(label3);
+    addChild(label3);
 
     ttfConfig.outlineSize = 3;
     auto label4 = Label::createWithTTF(ttfConfig,"Outline", TextHAlignment::CENTER, size.width);

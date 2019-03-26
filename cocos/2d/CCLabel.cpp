@@ -1565,8 +1565,13 @@ void Label::updateBuffer(TextureAtlas* textureAtlas, CustomCommand& customComman
 void Label::updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer, const Mat4 &transform)
 {
     updateBuffer(textureAtlas, _customCommand);
+
+    auto & matrixProjection = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+
     if (_shadowEnabled) {
         updateBuffer(textureAtlas, _customCommandShadow);
+        auto shadowMatrix = matrixProjection * _shadowTransform;
+        _programStateShadow->setUniform(_mvpMatrixLocation, shadowMatrix.m, sizeof(shadowMatrix.m));
     }
 
     
@@ -1715,12 +1720,11 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             for (auto&& batchNode : _batchNodes)
             {
                 auto textureAtlas = batchNode->getTextureAtlas();
-                if(!textureAtlas->getTotalQuads())
+                if (!textureAtlas->getTotalQuads())
                     return;
-                
+
                 for (auto programState : states)
                 {
-                    programState->setUniform(_mvpMatrixLocation, matrixMVP.m, sizeof(matrixMVP.m));
                     Vec4 textColor(_textColorF.r, _textColorF.g, _textColorF.b, _textColorF.a);
                     programState->setUniform(_textColorLocation, &textColor, sizeof(Vec4));
                     programState->setTexture(_textureLocation, 0, textureAtlas->getTexture()->getBackendTexture());
@@ -1730,7 +1734,9 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
                         programState->setTexture(_alphaTextureLocation, 1, alphaTexture->getBackendTexture());
                     }
                 }
-               updateEffectUniforms(textureAtlas, renderer, transform);
+                _programState->setUniform(_mvpMatrixLocation, matrixMVP.m, sizeof(matrixMVP.m));
+                _programStateOutline->setUniform(_mvpMatrixLocation, matrixMVP.m, sizeof(matrixMVP.m));
+                updateEffectUniforms(textureAtlas, renderer, transform);
             }
         }
     }
