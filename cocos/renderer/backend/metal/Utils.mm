@@ -188,10 +188,11 @@ void Utils::getTextureBytes(int origX, int origY, int rectWidth, int rectHeight,
     [commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> commandBufferMTL) {
         auto bytePerRow = rectWidth * getBitsPerElement(texture.pixelFormat) / 8;
         unsigned char* image = new (std::nothrow) unsigned char[bytePerRow * rectHeight];
-        [copiedTexture getBytes:image bytesPerRow:bytePerRow fromRegion:imageRegion mipmapLevel:0];
-        
-        swizzleImage(image, rectWidth, rectHeight, texture.pixelFormat);
-        
+        if(image != nullptr)
+        {
+            [copiedTexture getBytes:image bytesPerRow:bytePerRow fromRegion:imageRegion mipmapLevel:0];
+            swizzleImage(image, rectWidth, rectHeight, texture.pixelFormat);
+        }
         callback(image, rectWidth, rectHeight);
         CC_SAFE_DELETE_ARRAY(image);
         [copiedTexture release];
@@ -200,8 +201,11 @@ void Utils::getTextureBytes(int origX, int origY, int rectWidth, int rectHeight,
 #else
     auto bytePerRow = rectWidth * getBitsPerElement(texture.pixelFormat) / 8;
     unsigned char* image = new (std::nothrow) unsigned char[bytePerRow * rectHeight];
-    [texture getBytes:image bytesPerRow:bytePerRow fromRegion:imageRegion mipmapLevel:0];
-    swizzleImage(image, rectWidth, rectHeight, texture.pixelFormat);
+    if(image != nullptr)
+    {
+        [texture getBytes:image bytesPerRow:bytePerRow fromRegion:imageRegion mipmapLevel:0];
+        swizzleImage(image, rectWidth, rectHeight, texture.pixelFormat);
+    }
     callback(image, rectWidth, rectHeight);
     CC_SAFE_DELETE_ARRAY(image);
 #endif
