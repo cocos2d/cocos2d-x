@@ -405,6 +405,8 @@ bool FontAtlas::prepareLetterDefinitions(const std::u32string& utf32Text)
                     memset(_currentPageData, 0, _currentPageDataSize);
                     _currentPage++;
                     auto tex = new (std::nothrow) Texture2D;
+                    tex->initWithData(_currentPageData, _currentPageDataSize,
+                        pixelFormat, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth, CacheTextureHeight));
                     if (_antialiasEnabled)
                     {
                         tex->setAntiAliasTexParameters();
@@ -413,9 +415,8 @@ bool FontAtlas::prepareLetterDefinitions(const std::u32string& utf32Text)
                     {
                         tex->setAliasTexParameters();
                     }
-                    tex->initWithData(_currentPageData, _currentPageDataSize,
-                        pixelFormat, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth, CacheTextureHeight));
                     addTexture(tex, _currentPage);
+                    
                     tex->release();
                 }
             }

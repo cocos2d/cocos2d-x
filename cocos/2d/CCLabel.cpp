@@ -1717,6 +1717,11 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
             std::array<backend::ProgramState*, 3> states = { _programState, _programStateOutline, _programStateShadow };
 
+            for (auto &&it : _letters)
+            {
+                it.second->updateTransform();
+            }
+
             for (auto&& batchNode : _batchNodes)
             {
                 auto textureAtlas = batchNode->getTextureAtlas();
