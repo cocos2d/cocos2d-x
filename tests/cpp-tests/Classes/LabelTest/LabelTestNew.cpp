@@ -59,10 +59,6 @@ enum {
 
 NewLabelTests::NewLabelTests()
 {
-    //ADD_TEST_CASE(LabelOutlineAndGlowTest);
-    //ADD_TEST_CASE(LabelMultilineWithOutline);
-    ADD_TEST_CASE(LabelIssue11699Test);
-
     ADD_TEST_CASE(LabelFNTGlyphDesigner);
     ADD_TEST_CASE(LabelFNTColor);
     ADD_TEST_CASE(LabelFNTOpacity);

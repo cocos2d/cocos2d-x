@@ -626,7 +626,7 @@ void Label::setProgramState(backend::ProgramState *programState)
     updateUniformLocations();
     for (auto &batch : _batchCommands)
     {
-        updateBatchCommand(batch, nullptr, nullptr);
+        updateBatchCommand(batch);
     }
 
     auto &quadPipeline = _quadCommand.getPipelineDescriptor();
@@ -708,7 +708,7 @@ void Label::updateShaderProgram()
 
     for (auto &batch : _batchCommands)
     {
-        updateBatchCommand(batch, vert, frag);
+        updateBatchCommand(batch);
     }
 
     auto &quadPipeline = _quadCommand.getPipelineDescriptor();
@@ -716,23 +716,23 @@ void Label::updateShaderProgram()
     quadPipeline.programState = _programState;
 }
 
-void Label::updateBatchCommand(Label::BatchCommand &batch, const char *vert, const char *frag)
+void Label::updateBatchCommand(Label::BatchCommand &batch)
 {
     CC_ASSERT(_programState, "_programState should be set!");
 
     auto& pipelineDescriptor = batch.textCommand.getPipelineDescriptor();
     CC_SAFE_RELEASE_NULL(pipelineDescriptor.programState);
-    pipelineDescriptor.programState = (vert && frag) ? new backend::ProgramState(vert, frag) : _programState->clone();
+    pipelineDescriptor.programState = _programState->clone();
     setVertexLayout(pipelineDescriptor);
 
     auto &pipelineShadow = batch.shadowCommand.getPipelineDescriptor();
     CC_SAFE_RELEASE_NULL(pipelineShadow.programState);
-    pipelineShadow.programState = (vert && frag) ? new backend::ProgramState(vert, frag) : _programState->clone();;
+    pipelineShadow.programState = _programState->clone();;
     setVertexLayout(pipelineShadow);
 
     auto &pipelineOutline = batch.outLineCommand.getPipelineDescriptor();
     CC_SAFE_RELEASE_NULL(pipelineOutline.programState);
-    pipelineOutline.programState = (vert && frag) ? new backend::ProgramState(vert, frag) : _programState->clone();
+    pipelineOutline.programState = _programState->clone();
     setVertexLayout(pipelineOutline);
 
 }
@@ -1252,7 +1252,6 @@ void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */
                 _fontConfig.outlineSize = outlineSize;
                 setTTFConfig(_fontConfig);
             }
-            _currLabelEffect = LabelEffect::OUTLINE;
         }
         else if (_effectColorF != outlineColor || _outlineSize != outlineSize)
         {
@@ -1830,9 +1829,8 @@ void Label::updateBlendState()
     setOpacityModifyRGB(_blendFunc == BlendFunc::ALPHA_NON_PREMULTIPLIED);
     for(auto &batch: _batchCommands)
     {
-        std::array<CustomCommand *, 3>&& commands = batch.getCommandArray();
-        for(auto *command : commands) {
-            backend::BlendDescriptor& blendDescriptor = command->getPipelineDescriptor().blendDescriptor;
+        for(auto *command : batch.getCommandArray()) {
+            auto & blendDescriptor = command->getPipelineDescriptor().blendDescriptor;
             updateBlend(blendDescriptor, _blendFunc);
         }
     }

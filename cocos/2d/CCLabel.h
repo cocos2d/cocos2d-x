@@ -709,7 +709,7 @@ protected:
     void updateEffectUniforms(BatchCommand &batch, TextureAtlas* textureAtlas, Renderer *renderer, const Mat4 &transform);
     void updateBuffer(TextureAtlas* textureAtlas, CustomCommand& customCommand);
 
-    void updateBatchCommand(BatchCommand &, const char *vert, const char *frag);
+    void updateBatchCommand(BatchCommand &batch);
 
     LabelType _currentLabelType;
     bool _contentDirty;
