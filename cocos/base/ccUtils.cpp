@@ -161,48 +161,69 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
 
 }
 
+static std::vector<Node*> s_captureNode;
+static std::vector<EventListenerCustom*> s_captureNodeListener;
 void captureNode(Node* startNode, std::function<void(Image*)> imageCallback, float scale)
-{ // The best snapshot API, support Scene and any Node
-    auto& size = startNode->getContentSize();
-
-    Director::getInstance()->setNextDeltaTimeZero(true);
-
-    RenderTexture* finalRtx = nullptr;
-
-    auto rtx = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8);
-    // rtx->setKeepMatrix(true);
-    Point savedPos = startNode->getPosition();
-    Point anchor;
-    if (!startNode->isIgnoreAnchorPointForPosition()) {
-        anchor = startNode->getAnchorPoint();
+{
+    if (std::find(s_captureNode.begin(), s_captureNode.end(), startNode) != s_captureNode.end())
+    {
+        CCLOG("Warning: current node has been captured already");
+        return;
     }
-    startNode->setPosition(Point(size.width * anchor.x, size.height * anchor.y));
-    rtx->begin(); 
-    startNode->visit();
-    rtx->end();
-    startNode->setPosition(savedPos);
 
-    if (std::abs(scale - 1.0f) < 1e-6f/* no scale */)
-        finalRtx = rtx;
-    else {
-        /* scale */
-        auto finalRect = Rect(0, 0, size.width, size.height);
-        Sprite *sprite = Sprite::createWithTexture(rtx->getSprite()->getTexture(), finalRect);
-        sprite->setAnchorPoint(Point(0, 0));
+    auto listenerID = s_captureNodeListener.size();
+    auto callback = [startNode, scale, imageCallback, listenerID](EventCustom* /*event*/) {
+        
+        auto director = Director::getInstance();
+        auto captureNodeListener = s_captureNodeListener[listenerID];
+        director->getEventDispatcher()->removeEventListener((EventListener*)(captureNodeListener));
+        s_captureNodeListener.erase(s_captureNodeListener.begin() + listenerID);
+        s_captureNode.erase(s_captureNode.begin() + listenerID);
+        auto& size = startNode->getContentSize();
+        
+        Director::getInstance()->setNextDeltaTimeZero(true);
+        
+        RenderTexture* finalRtx = nullptr;
+        
+        auto rtx = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8);
+        // rtx->setKeepMatrix(true);
+        Point savedPos = startNode->getPosition();
+        Point anchor;
+        if (!startNode->isIgnoreAnchorPointForPosition()) {
+            anchor = startNode->getAnchorPoint();
+        }
+        startNode->setPosition(Point(size.width * anchor.x, size.height * anchor.y));
+        rtx->begin();
+        startNode->visit();
+        rtx->end();
+        startNode->setPosition(savedPos);
+        
+        if (std::abs(scale - 1.0f) < 1e-6f/* no scale */)
+            finalRtx = rtx;
+        else {
+            /* scale */
+            auto finalRect = Rect(0, 0, size.width, size.height);
+            Sprite *sprite = Sprite::createWithTexture(rtx->getSprite()->getTexture(), finalRect);
+            sprite->setAnchorPoint(Point(0, 0));
 #ifndef CC_USE_METAL
-        sprite->setFlippedY(true);
+            sprite->setFlippedY(true);
 #endif
-        finalRtx = RenderTexture::create(size.width * scale, size.height * scale, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8);
-
-        sprite->setScale(scale); // or use finalRtx->setKeepMatrix(true);
-        finalRtx->begin(); 
-        sprite->visit();
-        finalRtx->end();
-    }
-
-    Director::getInstance()->getRenderer()->render();
-
-    finalRtx->newImage(imageCallback);
+            finalRtx = RenderTexture::create(size.width * scale, size.height * scale, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8);
+            
+            sprite->setScale(scale); // or use finalRtx->setKeepMatrix(true);
+            finalRtx->begin();
+            sprite->visit();
+            finalRtx->end();
+        }
+        Director::getInstance()->getRenderer()->render();
+        
+        finalRtx->newImage(imageCallback);
+    };
+    
+    auto listener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_BEFORE_DRAW, callback);
+    
+    s_captureNodeListener.push_back(listener);
+    s_captureNode.push_back(startNode);
 }
 
 std::vector<Node*> findChildren(const Node &node, const std::string &name)

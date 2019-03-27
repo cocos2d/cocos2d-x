@@ -165,8 +165,6 @@ void Utils::getTextureBytes(int origX, int origY, int rectWidth, int rectHeight,
     MTLRegion region = MTLRegionMake2D(0, 0, texWidth, texHeight);
     MTLRegion imageRegion = MTLRegionMake2D(origX, origY, rectWidth, rectHeight);
     
-    //Default storage mode on mac is managed, need blit it.
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     MTLTextureDescriptor* textureDescriptor =
     [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:[texture pixelFormat]
                                                        width:texWidth
@@ -182,7 +180,9 @@ void Utils::getTextureBytes(int origX, int origY, int rectWidth, int rectHeight,
     id<MTLBlitCommandEncoder> blitCommandEncoder = [commandBuffer blitCommandEncoder];
     [blitCommandEncoder copyFromTexture:texture sourceSlice:0 sourceLevel:0 sourceOrigin:region.origin sourceSize:region.size toTexture:copiedTexture destinationSlice:0 destinationLevel:0 destinationOrigin:region.origin];
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     [blitCommandEncoder synchronizeResource:copiedTexture];
+#endif
     [blitCommandEncoder endEncoding];
    
     [commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> commandBufferMTL) {
@@ -198,17 +198,6 @@ void Utils::getTextureBytes(int origX, int origY, int rectWidth, int rectHeight,
         [copiedTexture release];
     }];
     [commandBuffer commit];
-#else
-    auto bytePerRow = rectWidth * getBitsPerElement(texture.pixelFormat) / 8;
-    unsigned char* image = new (std::nothrow) unsigned char[bytePerRow * rectHeight];
-    if(image != nullptr)
-    {
-        [texture getBytes:image bytesPerRow:bytePerRow fromRegion:imageRegion mipmapLevel:0];
-        swizzleImage(image, rectWidth, rectHeight, texture.pixelFormat);
-    }
-    callback(image, rectWidth, rectHeight);
-    CC_SAFE_DELETE_ARRAY(image);
-#endif
 }
 
 CC_BACKEND_END
