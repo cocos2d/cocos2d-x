@@ -28,7 +28,7 @@
 
 #include "cocos2d.h"
 #include "../BaseTest.h"
-#include <spine/spine-cocos2dx.h>
+#include "spine/spine-cocos2dx.h"
 
 DEFINE_TEST_SUITE(SpineTests);
 

@@ -31,11 +31,11 @@
 #ifndef SPINE_ANIMATIONSTATE_H_
 #define SPINE_ANIMATIONSTATE_H_
 
-#include <spine/dll.h>
-#include <spine/Animation.h>
-#include <spine/AnimationStateData.h>
-#include <spine/Event.h>
-#include <spine/Array.h>
+#include "spine/dll.h"
+#include "spine/Animation.h"
+#include "spine/AnimationStateData.h"
+#include "spine/Event.h"
+#include "spine/Array.h"
 
 #ifdef __cplusplus
 extern "C" {

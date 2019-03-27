@@ -475,6 +475,7 @@
 				1A5410A418B785A10016A3AF /* libjscocos2d Mac.a */,
 				1A119E4118BDF19200352BAA /* manual */,
 				507B427D1C31DCC60067B53E /* libjscocos2d tvOS.a */,
+				46AF3B3822154F3100D5AFCD /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -714,6 +715,14 @@
 				4B22F4A81B159A7A0044C14E /* jsb_cocos2dx_experimental_webView_manual.h */,
 			);
 			name = experimental;
+			sourceTree = "<group>";
+		};
+		46AF3B3822154F3100D5AFCD /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				4BE089EA1ADF967400D65D4B /* jsb_cocos2dx_experimental_webView_manual.h */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		BA9FD5CF1BAC0A4600996C85 /* component */ = {
@@ -1171,7 +1180,7 @@
 		1551A34A158F2AB200E66CFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -1208,7 +1217,7 @@
 		1551A34B158F2AB200E66CFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_BOOL_CONVERSION = YES;

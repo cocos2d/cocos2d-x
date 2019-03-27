@@ -341,7 +341,7 @@ protected:
     void disabledTextureScaleChangedWithSize();
 
     virtual void adaptRenderers() override;
-    void updateTitleLocation();
+    virtual void updateTitleLocation();
     void updateContentSize();
     virtual void createTitleRenderer();
     bool createTitleRendererIfNull();

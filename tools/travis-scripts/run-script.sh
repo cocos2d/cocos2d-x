@@ -94,7 +94,7 @@ function build_ios_cmake()
     exit 0
 }
 
-function build_android_ndk-build()
+function build_android_cpp_ndk-build()
 {
     # Build all samples
     echo "Building Android samples ..."
@@ -117,7 +117,7 @@ function build_android_ndk-build()
     # popd
 }
 
-function build_android_cmake()
+function build_android_cpp_cmake()
 {
     # Build all samples
     echo "Building Android samples ..."
@@ -285,47 +285,58 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
 
 function run_pull_request()
 {
-    echo "Building pull request ..."
-
-    # need to generate binding codes for all targets
-    genernate_binding_codes
-
     # linux
     if [ $BUILD_TARGET == 'linux' ]; then
+        genernate_binding_codes
         build_linux
     fi
 
     # android
-    if [ $BUILD_TARGET == 'android_ndk-build' ]; then
-        build_android_ndk-build
+    if [ $BUILD_TARGET == 'android_cpp_ndk-build' ]; then
+        build_android_cpp_ndk-build
     fi
 
     # android
-    if [ $BUILD_TARGET == 'android_cmake' ]; then
-        build_android_cmake
+    if [ $BUILD_TARGET == 'android_cpp_cmake' ]; then
+        build_android_cpp_cmake
     fi
 
     # android_lua
     if [ $BUILD_TARGET == 'android_lua_ndk-build' ]; then
+        genernate_binding_codes
         build_android_lua_ndk-build
     fi
 
     # android_lua
     if [ $BUILD_TARGET == 'android_lua_cmake' ]; then
+        genernate_binding_codes
         build_android_lua_cmake
     fi
 
     # android_js
     if [ $BUILD_TARGET == 'android_js_cmake' ]; then
+        genernate_binding_codes
         build_android_js_cmake
     fi
 
     if [ $BUILD_TARGET == 'mac' ]; then
+        genernate_binding_codes
         build_mac
     fi
 
     if [ $BUILD_TARGET == 'ios' ]; then
+        genernate_binding_codes
         build_ios
+    fi
+
+    if [ $BUILD_TARGET == 'mac_cmake' ]; then
+        genernate_binding_codes
+        build_mac_cmake
+    fi
+
+    if [ $BUILD_TARGET == 'ios_cmake' ]; then
+        genernate_binding_codes
+        build_ios_cmake
     fi
 }
 
@@ -356,7 +367,10 @@ function run_after_merge()
 
 # build pull request
 if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
-    if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
+
+    echo "Building pull request ..."
+
+    if [ "$BUILD_TARGET" == "android_cocos_new_cpp_test" ]; then
         source ../environment.sh
         pushd $COCOS2DX_ROOT
         update_cocos_files
@@ -368,7 +382,8 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
         exit 0
     fi
 
-    if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
+    if [ "$BUILD_TARGET" == "linux_cocos_new_lua_test" ]; then
+        genernate_binding_codes
         pushd $COCOS2DX_ROOT
         update_cocos_files
         python -u tools/cocos2d-console/bin/cocos.py --agreement n new -l lua -p my.pack.qqqq cocos_new_test
@@ -380,15 +395,6 @@ if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then
         cd linux-build
         cmake ..
         cmake --build .
-        exit 0
-    fi
-    if [ $BUILD_TARGET == 'mac_cmake' ]; then
-        build_mac_cmake
-        exit 0
-    fi
-
-    if [ $BUILD_TARGET == 'ios_cmake' ]; then
-        build_ios_cmake
         exit 0
     fi
 

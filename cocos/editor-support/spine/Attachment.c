@@ -28,9 +28,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/Attachment.h>
-#include <spine/extension.h>
-#include <spine/Slot.h>
+#include "spine/Attachment.h"
+#include "spine/extension.h"
+#include "spine/Slot.h"
 
 typedef struct _spAttachmentVtable {
 	void (*dispose) (spAttachment* self);

@@ -3398,6 +3398,16 @@ getAnimationInterval : function (
 },
 
 /**
+ * @method getClearColor
+ * @return {color4f_object}
+ */
+getClearColor : function (
+)
+{
+    return cc.Color4F;
+},
+
+/**
  * @method isPaused
  * @return {bool}
  */
@@ -6731,6 +6741,16 @@ supportsMapBuffer : function (
 )
 {
     return false;
+},
+
+/**
+ * @method getInfoAsMap
+ * @return {map_object}
+ */
+getInfoAsMap : function (
+)
+{
+    return map_object;
 },
 
 /**

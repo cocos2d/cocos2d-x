@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/EventData.h>
-#include <spine/extension.h>
+#include "spine/EventData.h"
+#include "spine/extension.h"
 
 spEventData* spEventData_create (const char* name) {
 	spEventData* self = NEW(spEventData);

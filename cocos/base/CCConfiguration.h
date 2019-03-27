@@ -229,6 +229,15 @@ public:
      * @return The Configuration info.
      */
     std::string getInfo() const;
+    
+    /**
+     Returns the configuration as value map
+     @return the configuration map
+     @since 3.18
+     @js NA
+     @lua NA
+    */
+    const ValueMap& getInfoAsMap()const { return _valueDict; }
 
 	/** Gathers OpenGL / GPU information.
      */

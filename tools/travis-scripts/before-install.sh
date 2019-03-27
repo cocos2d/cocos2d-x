@@ -11,9 +11,9 @@ CURL="curl --retry 999 --retry-max-time 0"
 function install_android_ndk()
 {
     sudo python -m pip install retry
-    if [ "$BUILD_TARGET" == "android_ndk-build" ]\
+    if [ "$BUILD_TARGET" == "android_cpp_ndk-build" ]\
         || [ "$BUILD_TARGET" == "android_lua_ndk-build" ]\
-        || [ "$BUILD_TARGET" == "android_cmake" ]\
+        || [ "$BUILD_TARGET" == "android_cpp_cmake" ]\
         || [ "$BUILD_TARGET" == "android_js_cmake" ]\
         || [ "$BUILD_TARGET" == "android_lua_cmake" ] ; then
         python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py
@@ -90,7 +90,7 @@ function install_environement_for_after_merge()
     download_deps
 }
 
-if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
+if [ "$BUILD_TARGET" == "android_cocos_new_cpp_test" ]; then
     sudo apt-get update
     sudo apt-get install ninja-build
     ninja --version
@@ -100,9 +100,12 @@ if [ "$BUILD_TARGET" == "android_cocos_new_test" ]; then
     exit 0
 fi
 
-if [ "$BUILD_TARGET" == "linux_cocos_new_test" ]; then
+if [ "$BUILD_TARGET" == "linux_cocos_new_lua_test" ]; then
     download_deps
     install_linux_environment
+    sudo python -m pip install retry
+    # set android ndk environment by setup_android.py
+    python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py --ndk_only
     exit 0
 fi
 

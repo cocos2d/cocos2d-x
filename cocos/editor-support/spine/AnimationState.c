@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/AnimationState.h>
-#include <spine/extension.h>
+#include "spine/AnimationState.h"
+#include "spine/extension.h"
 #include <limits.h>
 
 #define SUBSEQUENT 0
