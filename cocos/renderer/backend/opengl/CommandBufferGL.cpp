@@ -542,6 +542,7 @@ void CommandBufferGL::captureScreen(std::function<void(const unsigned char*, int
 {
     int bufferSize = _viewPort.w * _viewPort.h *4;
     std::shared_ptr<GLubyte> buffer(new GLubyte[bufferSize], [](GLubyte* p){ CC_SAFE_DELETE_ARRAY(p); });
+    memset(buffer.get(), 0, bufferSize);
     if (!buffer)
     {
         callback(nullptr, 0, 0);
@@ -551,6 +552,7 @@ void CommandBufferGL::captureScreen(std::function<void(const unsigned char*, int
     glReadPixels(0, 0, _viewPort.w, _viewPort.h, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
 
     std::shared_ptr<GLubyte> flippedBuffer(new GLubyte[bufferSize], [](GLubyte* p) { CC_SAFE_DELETE_ARRAY(p); });
+    memset(flippedBuffer.get(), 0, bufferSize);
     if (!flippedBuffer)
     {
         callback(nullptr, 0, 0);
