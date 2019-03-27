@@ -36,6 +36,7 @@
 #include "2d/CCDrawNode.h"
 #include "2d/CCCamera.h"
 #include "base/ccUTF8.h"
+#include "base/ccMacros.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderCommand.h"
@@ -718,7 +719,7 @@ void Label::updateShaderProgram()
 
 void Label::updateBatchCommand(Label::BatchCommand &batch)
 {
-    CC_ASSERT(_programState, "_programState should be set!");
+    CCASSERT(_programState, "programState should be set!");
 
     auto& pipelineDescriptor = batch.textCommand.getPipelineDescriptor();
     CC_SAFE_RELEASE_NULL(pipelineDescriptor.programState);
