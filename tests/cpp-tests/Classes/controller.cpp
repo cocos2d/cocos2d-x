@@ -50,13 +50,13 @@ public:
         addTest("Actions - Progress", [](){return new (std::nothrow) ActionsProgressTests(); });
         addTest("Audio - CocosDenshion", []() { return new (std::nothrow) CocosDenshionTests(); }); // implement simple audio engine by audio engine
         addTest("Audio - NewAudioEngine", []() { return new (std::nothrow) AudioEngineTests(); });
-//#if CC_ENABLE_BOX2D_INTEGRATION
-//        addTest("Box2d - Basic", []() { return new (std::nothrow) Box2DTests(); });
-//        addTest("Box2d - TestBed", []() { return new (std::nothrow) Box2dTestBedSuite(); });
-//#endif
-//#if CC_ENABLE_CHIPMUNK_INTEGRATION
-//        addTest("Chipmunk", []() { return new ChipmunkTests(); });
-//#endif
+#if CC_ENABLE_BOX2D_INTEGRATION
+       addTest("Box2d - Basic", []() { return new (std::nothrow) Box2DTests(); });
+       addTest("Box2d - TestBed", []() { return new (std::nothrow) Box2dTestBedSuite(); });
+#endif
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
+       addTest("Chipmunk", []() { return new ChipmunkTests(); });
+#endif
         addTest("Bugs", []() { return new BugsTests(); });
         addTest("Click and Move", [](){return new ClickAndMoveTest(); });
         addTest("Configuration", []() { return new ConfigurationTests(); });
@@ -83,9 +83,9 @@ public:
         addTest("Node: Camera 3D Test", [](){  return new Camera3DTests(); });
         addTest("Node: Clipping", []() { return new ClippingNodeTests(); });
         addTest("Node: Draw", [](){return new DrawPrimitivesTests(); });
-        // addTest("Node: Label - New API", [](){return new NewLabelTests(); });
+        addTest("Node: Label - New API", [](){return new NewLabelTests(); });
         addTest("Node: Layer", [](){return new LayerTests(); });
-        // addTest("Node: Light", [](){return new LightTests(); });
+        addTest("Node: Light", [](){return new LightTests(); });
         addTest("Node: Menu", [](){return new MenuTests(); });
         addTest("Node: MotionStreak", [](){return new MotionStreakTests(); });
         addTest("Node: Node", [](){return new CocosNodeTests(); });
@@ -112,7 +112,7 @@ public:
         addTest("Renderer", []() { return new NewRendererTests(); });
         addTest("ReleasePool", [](){ return new ReleasePoolTests(); });
         addTest("Rotate World", [](){return new RotateWorldTests(); });
-        // addTest("Scheduler", [](){return new SchedulerTests(); });
+        addTest("Scheduler", [](){return new SchedulerTests(); });
         addTest("Shader - Basic", []() { return new ShaderTests(); });
         addTest("Shader - Sprite", []() { return new Shader2Tests(); });
         addTest("Texture2D", [](){return new Texture2DTests(); });
@@ -127,9 +127,9 @@ public:
         addTest("Vibrate", []() { return new VibrateTests(); });
 #endif
         addTest("Zwoptex", []() { return new ZwoptexTests(); });
-//        addTest("SpriteFrameCache", []() { return new SpriteFrameCacheTests(); }); // TODO
+        addTest("SpriteFrameCache", []() { return new SpriteFrameCacheTests(); }); // TODO
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-//        addTest("Window Test", []() { return new WindowTests(); }); // TODO wrong effect
+        addTest("Window Test", []() { return new WindowTests(); }); // TODO wrong effect
 #endif
     }
 };

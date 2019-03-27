@@ -91,8 +91,8 @@ list(APPEND GAME_HEADER
      Classes/ConfigurationTest/ConfigurationTest.h
      Classes/CurrentLanguageTest/CurrentLanguageTest.h
      Classes/AppDelegate.h
-#     Classes/LabelTest/LabelTestNew.h
-#     Classes/LabelTest/LabelTest.h
+     Classes/LabelTest/LabelTestNew.h
+    #  Classes/LabelTest/LabelTest.h
      Classes/Particle3DTest/Particle3DTest.h
 #     Classes/AllocatorTest/AllocatorTest.h
      Classes/VibrateTest/VibrateTest.h
@@ -259,10 +259,10 @@ list(APPEND GAME_SOURCE
      Classes/FontTest/FontTest.cpp
      Classes/InputTest/MouseTest.cpp
      Classes/IntervalTest/IntervalTest.cpp
- #    Classes/LabelTest/LabelTest.cpp
- #    Classes/LabelTest/LabelTestNew.cpp
+    #  Classes/LabelTest/LabelTest.cpp
+     Classes/LabelTest/LabelTestNew.cpp
      Classes/LayerTest/LayerTest.cpp
-#     Classes/LightTest/LightTest.cpp
+     Classes/LightTest/LightTest.cpp
      Classes/MaterialSystemTest/MaterialSystemTest.cpp
      Classes/MenuTest/MenuTest.cpp
      Classes/MotionStreakTest/MotionStreakTest.cpp
