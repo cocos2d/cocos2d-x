@@ -205,6 +205,11 @@ public:
     void setPercent(int percent);
     
     /**
+     * Updates the visual elements of the slider.
+     */
+    void updateVisualSlider();
+    
+    /**
      * Gets the progress direction of slider.
      *
      * @return percent Percent value from 1 to 100.
