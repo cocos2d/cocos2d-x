@@ -113,17 +113,10 @@ void FontAtlas::reinit()
     memset(_currentPageData, 0, _currentPageDataSize);
     
     //metal do no support AI88 format
-    if(outlineSize > 0)
-    {
-        texture->initWithData(_currentPageDataRGBA, _currentPageDataSizeRGBA,
-                              Texture2D::PixelFormat::RGBA8888, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth,CacheTextureHeight) );
-    }
-    else
-    {
-        texture->initWithData(_currentPageData, _currentPageDataSize,
-                              Texture2D::PixelFormat::A8, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth,CacheTextureHeight) );
-        
-    }
+    _currentPixelFormat = outlineSize > 0 ? Texture2D::PixelFormat::RGBA8888 : Texture2D::PixelFormat::A8;
+    
+    initTextureWithZeros(texture);
+
     addTexture(texture,0);
     texture->release();
 }
@@ -151,6 +144,16 @@ FontAtlas::~FontAtlas()
         _iconv = nullptr;
     }
 #endif
+}
+
+void FontAtlas::initTextureWithZeros(Texture2D *texture)
+{
+    char *zeros = nullptr;
+    size_t cnt = _currentPixelFormat == Texture2D::PixelFormat::RGBA8888 ? CacheTextureWidth * CacheTextureWidth * 4 : CacheTextureWidth * CacheTextureWidth;
+    zeros = new char[cnt];
+    std::fill(zeros, zeros + cnt, 0);
+    texture->initWithData(zeros, cnt, _currentPixelFormat, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth, CacheTextureHeight));
+    delete[] zeros;
 }
 
 void FontAtlas::reset()
@@ -405,8 +408,9 @@ bool FontAtlas::prepareLetterDefinitions(const std::u32string& utf32Text)
                     memset(_currentPageData, 0, _currentPageDataSize);
                     _currentPage++;
                     auto tex = new (std::nothrow) Texture2D;
-                    tex->initWithData(_currentPageData, _currentPageDataSize,
-                        pixelFormat, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth, CacheTextureHeight));
+                    
+                    initTextureWithZeros(tex);
+
                     if (_antialiasEnabled)
                     {
                         tex->setAntiAliasTexParameters();
@@ -470,6 +474,7 @@ void FontAtlas::updateTextureContent(Texture2D::PixelFormat format, int startY)
     {
         int nLen = CacheTextureWidth * (_currentPageOrigY - startY + _currLineHeight);
         data = _currentPageData + CacheTextureWidth * (int)startY * 2;
+        memset(_currentPageDataRGBA, 0, 4 * nLen);
         for (auto i = 0; i < nLen; i++)
         {
             _currentPageDataRGBA[i*4] = data[i*2];

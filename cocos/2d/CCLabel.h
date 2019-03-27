@@ -647,6 +647,17 @@ protected:
         int lineIndex;
     };
 
+    struct BatchCommand {
+        BatchCommand();
+        ~BatchCommand();
+
+        CustomCommand textCommand;
+        CustomCommand outLineCommand;
+        CustomCommand shadowCommand;
+
+        std::array<CustomCommand*, 3> getCommandArray();
+    };
+
     virtual void setFontAtlas(FontAtlas* atlas, bool distanceFieldEnabled = false, bool useA8Shader = false);
     bool getFontLetterDef(char32_t character, FontLetterDefinition& letterDef) const;
 
@@ -695,8 +706,10 @@ protected:
     void updateUniformLocations();
     void setVertexLayout(PipelineDescriptor& vertexLayout);
     void updateBlendState();
-    void updateEffectUniforms(TextureAtlas* textureAtlas, Renderer *renderer, const Mat4 &transform);
+    void updateEffectUniforms(BatchCommand &batch, TextureAtlas* textureAtlas, Renderer *renderer, const Mat4 &transform);
     void updateBuffer(TextureAtlas* textureAtlas, CustomCommand& customCommand);
+
+    void updateBatchCommand(BatchCommand &, const char *vert, const char *frag);
 
     LabelType _currentLabelType;
     bool _contentDirty;
@@ -749,9 +762,8 @@ protected:
     Color4F _textColorF;
 
     QuadCommand _quadCommand;
-    CustomCommand _customCommand;
-    CustomCommand _customCommandOutLine;
-    CustomCommand _customCommandShadow;
+
+    std::vector<BatchCommand> _batchCommands;
     
     Mat4  _shadowTransform;
     GLint _uniformEffectColor;
@@ -805,8 +817,6 @@ protected:
     backend::UniformLocation _effectTypeLocation;
     
     backend::ProgramState* _programState        = nullptr;
-    backend::ProgramState* _programStateShadow  = nullptr;
-    backend::ProgramState* _programStateOutline = nullptr;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);
