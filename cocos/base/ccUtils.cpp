@@ -161,7 +161,6 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
 
 }
 
-static std::vector<Node*> s_captureNode;
 static std::unordered_map<Node*, EventListenerCustom*> s_captureNodeListener;
 void captureNode(Node* startNode, std::function<void(Image*)> imageCallback, float scale)
 {
