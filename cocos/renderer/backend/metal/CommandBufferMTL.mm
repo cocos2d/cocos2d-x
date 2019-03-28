@@ -289,6 +289,13 @@ void CommandBufferMTL::endRenderPass()
     afterDraw();
 }
 
+void CommandBufferMTL::captureScreen(std::function<void(const unsigned char*, int, int)> callback)
+{
+    [_mtlCommandBuffer addCompletedHandler:^(id<MTLCommandBuffer> commandBufferMTL) {
+        Utils::getTextureBytes(0, 0, _drawableTexture.width, _drawableTexture.height, _drawableTexture, callback);
+    }];
+}
+
 void CommandBufferMTL::endFrame()
 {
     [_mtlRenderEncoder endEncoding];
@@ -296,7 +303,7 @@ void CommandBufferMTL::endFrame()
     _mtlRenderEncoder = nil;
     
     [_mtlCommandBuffer presentDrawable:DeviceMTL::getCurrentDrawable()];
-
+    _drawableTexture = DeviceMTL::getCurrentDrawable().texture;
     [_mtlCommandBuffer addCompletedHandler:^(id<MTLCommandBuffer> commandBuffer) {
         // GPU work is complete
         // Signal the semaphore to start the CPU work

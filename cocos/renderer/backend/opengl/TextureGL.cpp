@@ -182,7 +182,7 @@ void Texture2DGL::generateMipmpas() const
         glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-void Texture2DGL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*)> callback)
+void Texture2DGL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback)
 {
     GLint defaultFBO = 0;
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &defaultFBO);
@@ -206,11 +206,11 @@ void Texture2DGL::getBytes(int x, int y, int width, int height, bool flipImage, 
                    &image[(height - i - 1) * bytePerRow],
                    bytePerRow);
         }
-        callback(flippedImage);
+        callback(flippedImage, width, height);
         CC_SAFE_DELETE_ARRAY(flippedImage);
     } else
     {
-        callback(image);
+        callback(image, width, height);
         CC_SAFE_DELETE_ARRAY(image);
     }
 
@@ -277,7 +277,7 @@ void TextureCubeGL::updateFaceData(TextureCubeFace side, void *data)
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 
-void TextureCubeGL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*)> callback)
+void TextureCubeGL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback)
 {
     GLint defaultFBO = 0;
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &defaultFBO);
@@ -300,11 +300,11 @@ void TextureCubeGL::getBytes(int x, int y, int width, int height, bool flipImage
                    &image[(height - i - 1) * bytePerRow],
                    bytePerRow);
         }
-        callback(flippedImage);
+        callback(flippedImage, width, height);
         CC_SAFE_DELETE_ARRAY(flippedImage);
     } else
     {
-        callback(image);
+        callback(image, width, height);
         CC_SAFE_DELETE_ARRAY(image);
     }
 

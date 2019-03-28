@@ -54,6 +54,16 @@ public:
     std::function<void()> func;
 };
 
+class CC_DLL CaptureScreenCallbackCommand : public RenderCommand
+{
+public:
+    CaptureScreenCallbackCommand();
+    
+    void init(float globalZOrder);
+    
+    std::function<void(const unsigned char*, int, int)> func;
+};
+
 NS_CC_END
 /**
  end of support group

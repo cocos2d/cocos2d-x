@@ -3,6 +3,7 @@
 #include "../Macros.h"
 #include "../Types.h"
 #import <Metal/Metal.h>
+#include <functional>
 
 CC_BACKEND_BEGIN
 
@@ -17,6 +18,8 @@ public:
     
     static MTLPixelFormat toMTLPixelFormat(TextureFormat textureFormat);
     static void generateMipmaps(id<MTLTexture> texture);
+    static void getTextureBytes(int origX, int origY, int rectWidth, int rectHeight, id<MTLTexture> texture, std::function<void(const unsigned char*, int, int)> callback);
+    static void swizzleImage(unsigned char* image, int width, int height, MTLPixelFormat format);
     
 private:
     static id<MTLTexture> createDepthStencilAttachmentTexture();

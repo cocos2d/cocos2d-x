@@ -32,6 +32,7 @@ public:
     virtual void setLineWidth(float lineWidth) override;
     virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) override;
     virtual void setDepthStencilState(DepthStencilState* depthStencilState) override;
+    virtual void captureScreen(std::function<void(const unsigned char*, int, int)> callback) override;
     
 private:
     void prepareDrawing() const;
@@ -46,6 +47,7 @@ private:
     id<MTLCommandQueue> _mtlCommandQueue = nil;
     id<MTLRenderCommandEncoder> _mtlRenderEncoder = nil;
     id<MTLBuffer> _mtlIndexBuffer = nil;
+    id<MTLTexture> _drawableTexture = nil;
     
     RenderPipelineMTL* _renderPipelineMTL = nullptr;
     ProgramState* _programState = nullptr;

@@ -152,7 +152,9 @@ void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor&
     
     if (TextureUsage::RENDER_TARGET == descriptor.textureUsage)
     {
-        textureDescriptor.resourceOptions = MTLResourceStorageModePrivate;
+        //DepthStencil, and Multisample textures must be allocated with the MTLResourceStorageModePrivate resource option
+        if(TextureFormat::D24S8 == descriptor.textureFormat)
+            textureDescriptor.resourceOptions = MTLResourceStorageModePrivate;
         textureDescriptor.usage = MTLTextureUsageRenderTarget | MTLTextureUsageShaderRead;
     }
     _mtlTexture = [mtlDevice newTextureWithDescriptor:textureDescriptor];
@@ -186,39 +188,14 @@ void TextureMTL::createSampler(id<MTLDevice> mtlDevice, const SamplerDescriptor 
     [mtlDescriptor release];
 }
 
-void TextureMTL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*)> callback)
+void TextureMTL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback)
 {
     CC_ASSERT(width <= _width && height <= _height);
     
-    MTLTextureDescriptor* textureDescriptor =
-    [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:Utils::toMTLPixelFormat(_textureFormat)
-                                                       width:_width
-                                                      height:_height
-                                                   mipmapped:NO];
-    id<MTLDevice> device = static_cast<DeviceMTL*>(Device::getInstance())->getMTLDevice();
-    id<MTLTexture> copiedTexture = [device newTextureWithDescriptor:textureDescriptor];
-    
-    MTLRegion region = MTLRegionMake2D(0, 0, _width, _height);
-    auto commandQueue = static_cast<DeviceMTL*>(DeviceMTL::getInstance())->getMTLCommandQueue();
-    auto commandBuffer = [commandQueue commandBuffer];
-    [commandBuffer enqueue];
-    id<MTLBlitCommandEncoder> commandEncoder = [commandBuffer blitCommandEncoder];
-    [commandEncoder copyFromTexture:_mtlTexture sourceSlice:0 sourceLevel:0 sourceOrigin:region.origin sourceSize:region.size toTexture:copiedTexture destinationSlice:0 destinationLevel:0 destinationOrigin:region.origin];
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    [commandEncoder synchronizeResource:copiedTexture];
-#endif
-    [commandEncoder endEncoding];
-    
     auto bitsPerElement = _bitsPerElement;
-    auto bytesPerRow = _bytesPerRow;
-    [commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> commandBuffer) {
-        MTLRegion region = MTLRegionMake2D(0, 0, width, height);
-        auto bytePerRow = width * bitsPerElement / 8;
-        unsigned char* image = new unsigned char[bytePerRow * height];
-        [copiedTexture getBytes:image bytesPerRow:bytesPerRow fromRegion:region mipmapLevel:0];
-
+    auto flipImageFunc = [callback, flipImage, bitsPerElement](const unsigned char* image, int width, int height){
         //consistent with opengl behavior
+        auto bytePerRow = width * bitsPerElement / 8;
         if(!flipImage)
         {
             unsigned char* flippedImage = new unsigned char[bytePerRow * height];
@@ -228,17 +205,16 @@ void TextureMTL::getBytes(int x, int y, int width, int height, bool flipImage, s
                        &image[(height - i - 1) * bytePerRow],
                        bytePerRow);
             }
-            callback(flippedImage);
+            callback(flippedImage, width, height);
             CC_SAFE_DELETE_ARRAY(flippedImage);
         }
         else
         {
-            callback(image);
-            CC_SAFE_DELETE_ARRAY(image);
+            callback(image, width, height);
         }
-        [copiedTexture release];
-    }];
-    [commandBuffer commit];
+    };
+    auto flipImageCallback = std::bind(flipImageFunc, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    Utils::getTextureBytes(x, y, width, height, _mtlTexture, flipImageCallback);
 }
 
 TextureCubeMTL::TextureCubeMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
@@ -323,39 +299,14 @@ void TextureCubeMTL::updateFaceData(TextureCubeFace side, void *data)
                  bytesPerImage:_bytesPerImage];
 }
 
-void TextureCubeMTL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*)> callback)
+void TextureCubeMTL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback)
 {
     CC_ASSERT(width <= _mtlTexture.width && height <= _mtlTexture.height);
     
-    MTLTextureDescriptor* textureDescriptor =
-    [MTLTextureDescriptor textureCubeDescriptorWithPixelFormat:Utils::toMTLPixelFormat(_textureFormat)
-                                                          size:_mtlTexture.width
-                                                     mipmapped:NO];
-
-    id<MTLDevice> device = static_cast<DeviceMTL*>(Device::getInstance())->getMTLDevice();
-    id<MTLTexture> copiedTexture = [device newTextureWithDescriptor:textureDescriptor];
-    
-    auto commandQueue = static_cast<DeviceMTL*>(DeviceMTL::getInstance())->getMTLCommandQueue();
-    auto commandBuffer = [commandQueue commandBuffer];
-    [commandBuffer enqueue];
-    id<MTLBlitCommandEncoder> commandEncoder = [commandBuffer blitCommandEncoder];
-    for(int slice = 0; slice < 6; slice++)
-    {
-        [commandEncoder copyFromTexture:_mtlTexture sourceSlice:slice sourceLevel:0 sourceOrigin:_region.origin sourceSize:_region.size toTexture:copiedTexture destinationSlice:slice destinationLevel:0 destinationOrigin:_region.origin];
-    }
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    [commandEncoder synchronizeResource:copiedTexture];
-#endif
-    [commandEncoder endEncoding];
-    
-    [commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> commandBuffer) {
-        MTLRegion region = MTLRegionMake2D(0, 0, width, height);
-        auto bytePerRow = width * _bitsPerElement / 8;
-        unsigned char* image = new unsigned char[bytePerRow * height];
-        [copiedTexture getBytes:image bytesPerRow:_bytesPerRow fromRegion:region mipmapLevel:0];
-        
+    auto bitsPerElement = _bitsPerElement;
+    auto flipImageFunc = [callback, flipImage, bitsPerElement](const unsigned char* image, int width, int height){
         //consistent with opengl behavior
+        auto bytePerRow = width * bitsPerElement / 8;
         if(!flipImage)
         {
             unsigned char* flippedImage = new unsigned char[bytePerRow * height];
@@ -365,17 +316,16 @@ void TextureCubeMTL::getBytes(int x, int y, int width, int height, bool flipImag
                        &image[(height - i - 1) * bytePerRow],
                        bytePerRow);
             }
-            callback(flippedImage);
+            callback(flippedImage, width, height);
             CC_SAFE_DELETE_ARRAY(flippedImage);
         }
         else
         {
-            callback(image);
-            CC_SAFE_DELETE_ARRAY(image);
+            callback(image, width, height);
         }
-        [copiedTexture release];
-    }];
-    [commandBuffer commit];
+    };
+    auto flipImageCallback = std::bind(flipImageFunc, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    Utils::getTextureBytes(x, y, width, height, _mtlTexture, flipImageCallback);
 }
 
 

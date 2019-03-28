@@ -14,6 +14,41 @@ CC_BACKEND_BEGIN
 id<MTLTexture> Utils::_defaultColorAttachmentTexture = nil;
 id<MTLTexture> Utils::_defaultDepthStencilAttachmentTexture = nil;
 
+namespace {
+#define byte(n) ((n) * 8)
+#define bit(n) (n)
+    
+    uint8_t getBitsPerElement(MTLPixelFormat pixleFormat)
+    {
+        switch (pixleFormat)
+        {
+            case MTLPixelFormatDepth32Float_Stencil8:
+                return byte(8);
+            case MTLPixelFormatBGRA8Unorm:
+            case MTLPixelFormatRGBA8Unorm:
+            case MTLPixelFormatDepth32Float:
+                return byte(4);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+            case MTLPixelFormatDepth24Unorm_Stencil8:
+                return byte(4);
+#else
+            case MTLPixelFormatABGR4Unorm:
+            case MTLPixelFormatBGR5A1Unorm:
+            case MTLPixelFormatB5G6R5Unorm:
+            case MTLPixelFormatA1BGR5Unorm:
+                return byte(2);
+#endif
+            case MTLPixelFormatA8Unorm:
+            case MTLPixelFormatR8Unorm:
+                return byte(1);
+            default:
+                assert(false);
+                break;
+        }
+        return 0;
+    }
+}
+
 MTLPixelFormat Utils::getDefaultDepthStencilAttachmentPixelFormat()
 {
     return DEPTH_STENCIL_ATTACHMENT_PIXEL_FORMAT;
@@ -98,6 +133,70 @@ void Utils::generateMipmaps(id<MTLTexture> texture)
     id<MTLBlitCommandEncoder> commandEncoder = [commandBuffer blitCommandEncoder];
     [commandEncoder generateMipmapsForTexture:texture];
     [commandEncoder endEncoding];
+    [commandBuffer commit];
+}
+
+void Utils::swizzleImage(unsigned char *image, int width, int height, MTLPixelFormat format)
+{
+    if(!image)
+        return;
+    
+    auto len = width * height;
+    switch (format) {
+        //convert to RGBA
+        case MTLPixelFormatBGRA8Unorm:
+            for(int i=0; i<len; i++)
+            {
+                unsigned char temp = image[i*4];
+                image[i*4] = image[i*4+2];
+                image[i*4+2] = temp;
+            }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+void Utils::getTextureBytes(int origX, int origY, int rectWidth, int rectHeight, id<MTLTexture> texture, std::function<void(const unsigned char*, int, int)> callback)
+{
+    NSUInteger texWidth = texture.width;
+    NSUInteger texHeight = texture.height;
+    MTLRegion region = MTLRegionMake2D(0, 0, texWidth, texHeight);
+    MTLRegion imageRegion = MTLRegionMake2D(origX, origY, rectWidth, rectHeight);
+    
+    MTLTextureDescriptor* textureDescriptor =
+    [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:[texture pixelFormat]
+                                                       width:texWidth
+                                                      height:texHeight
+                                                   mipmapped:NO];
+    id<MTLDevice> device = static_cast<DeviceMTL*>(DeviceMTL::getInstance())->getMTLDevice();
+    id<MTLTexture> copiedTexture = [device newTextureWithDescriptor:textureDescriptor];
+    
+    id<MTLCommandQueue> commandQueue = static_cast<DeviceMTL*>(DeviceMTL::getInstance())->getMTLCommandQueue();
+    auto commandBuffer = [commandQueue commandBuffer];
+    [commandBuffer enqueue];
+    
+    id<MTLBlitCommandEncoder> blitCommandEncoder = [commandBuffer blitCommandEncoder];
+    [blitCommandEncoder copyFromTexture:texture sourceSlice:0 sourceLevel:0 sourceOrigin:region.origin sourceSize:region.size toTexture:copiedTexture destinationSlice:0 destinationLevel:0 destinationOrigin:region.origin];
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    [blitCommandEncoder synchronizeResource:copiedTexture];
+#endif
+    [blitCommandEncoder endEncoding];
+   
+    [commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> commandBufferMTL) {
+        auto bytePerRow = rectWidth * getBitsPerElement(texture.pixelFormat) / 8;
+        unsigned char* image = new (std::nothrow) unsigned char[bytePerRow * rectHeight];
+        if(image != nullptr)
+        {
+            [copiedTexture getBytes:image bytesPerRow:bytePerRow fromRegion:imageRegion mipmapLevel:0];
+            swizzleImage(image, rectWidth, rectHeight, texture.pixelFormat);
+        }
+        callback(image, rectWidth, rectHeight);
+        CC_SAFE_DELETE_ARRAY(image);
+        [copiedTexture release];
+    }];
     [commandBuffer commit];
 }
 

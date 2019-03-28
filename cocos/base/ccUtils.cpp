@@ -64,8 +64,14 @@ namespace utils
 /**
 * Capture screen implementation, don't use it directly.
 */
-void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
+void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename, const unsigned char* imageData, int width, int height)
 {
+    if(!imageData)
+    {
+        afterCaptured(false, "");
+        return;
+    }
+    
     static bool startedCapture = false;
 
     if (startedCapture)
@@ -82,45 +88,15 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
         startedCapture = true;
     }
 
-
-    auto glView = Director::getInstance()->getOpenGLView();
-    auto frameSize = glView->getFrameSize();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    frameSize = frameSize * glView->getFrameZoomFactor() * glView->getRetinaFactor();
-#endif
-
-    int width = static_cast<int>(frameSize.width);
-    int height = static_cast<int>(frameSize.height);
-
     bool succeed = false;
     std::string outputFile = "";
 
     do
     {
-        std::shared_ptr<GLubyte> buffer(new GLubyte[width * height * 4], [](GLubyte* p){ CC_SAFE_DELETE_ARRAY(p); });
-        if (!buffer)
-        {
-            break;
-        }
-
-        glPixelStorei(GL_PACK_ALIGNMENT, 1);
-        glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
-
-        std::shared_ptr<GLubyte> flippedBuffer(new GLubyte[width * height * 4], [](GLubyte* p) { CC_SAFE_DELETE_ARRAY(p); });
-        if (!flippedBuffer)
-        {
-            break;
-        }
-
-        for (int row = 0; row < height; ++row)
-        {
-            memcpy(flippedBuffer.get() + (height - row - 1) * width * 4, buffer.get() + row * width * 4, width * 4);
-        }
-
         Image* image = new (std::nothrow) Image;
         if (image)
         {
-            image->initWithRawData(flippedBuffer.get(), width * height * 4, width, height, 8);
+            image->initWithRawData(imageData, width * height * 4, width, height, 8);
             if (FileUtils::getInstance()->isAbsolutePath(filename))
             {
                 outputFile = filename;
@@ -164,7 +140,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
  * Capture screen interface
  */
 static EventListenerCustom* s_captureScreenListener;
-static CallbackCommand s_captureScreenCommand;
+static CaptureScreenCallbackCommand s_captureScreenCommand;
 void captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename)
 {
     if (s_captureScreenListener)
@@ -173,7 +149,8 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
         return;
     }
     s_captureScreenCommand.init(std::numeric_limits<float>::max());
-    s_captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename);
+    s_captureScreenCommand.func = std::bind(onCaptureScreen, afterCaptured, filename, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    
     s_captureScreenListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_AFTER_DRAW, [](EventCustom* /*event*/) {
         auto director = Director::getInstance();
         director->getEventDispatcher()->removeEventListener((EventListener*)(s_captureScreenListener));
@@ -181,50 +158,72 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
         director->getRenderer()->addCommand(&s_captureScreenCommand);
         director->getRenderer()->render();
     });
+
 }
 
+static std::vector<Node*> s_captureNode;
+static std::vector<EventListenerCustom*> s_captureNodeListener;
 void captureNode(Node* startNode, std::function<void(Image*)> imageCallback, float scale)
-{ // The best snapshot API, support Scene and any Node
-    auto& size = startNode->getContentSize();
-
-    Director::getInstance()->setNextDeltaTimeZero(true);
-
-    RenderTexture* finalRtx = nullptr;
-
-    auto rtx = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8);
-    // rtx->setKeepMatrix(true);
-    Point savedPos = startNode->getPosition();
-    Point anchor;
-    if (!startNode->isIgnoreAnchorPointForPosition()) {
-        anchor = startNode->getAnchorPoint();
+{
+    if (std::find(s_captureNode.begin(), s_captureNode.end(), startNode) != s_captureNode.end())
+    {
+        CCLOG("Warning: current node has been captured already");
+        return;
     }
-    startNode->setPosition(Point(size.width * anchor.x, size.height * anchor.y));
-    rtx->begin(); 
-    startNode->visit();
-    rtx->end();
-    startNode->setPosition(savedPos);
 
-    if (std::abs(scale - 1.0f) < 1e-6f/* no scale */)
-        finalRtx = rtx;
-    else {
-        /* scale */
-        auto finalRect = Rect(0, 0, size.width, size.height);
-        Sprite *sprite = Sprite::createWithTexture(rtx->getSprite()->getTexture(), finalRect);
-        sprite->setAnchorPoint(Point(0, 0));
+    auto listenerID = s_captureNodeListener.size();
+    auto callback = [startNode, scale, imageCallback, listenerID](EventCustom* /*event*/) {
+        
+        auto director = Director::getInstance();
+        auto captureNodeListener = s_captureNodeListener[listenerID];
+        director->getEventDispatcher()->removeEventListener((EventListener*)(captureNodeListener));
+        s_captureNodeListener.erase(s_captureNodeListener.begin() + listenerID);
+        s_captureNode.erase(s_captureNode.begin() + listenerID);
+        auto& size = startNode->getContentSize();
+        
+        Director::getInstance()->setNextDeltaTimeZero(true);
+        
+        RenderTexture* finalRtx = nullptr;
+        
+        auto rtx = RenderTexture::create(size.width, size.height, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8);
+        // rtx->setKeepMatrix(true);
+        Point savedPos = startNode->getPosition();
+        Point anchor;
+        if (!startNode->isIgnoreAnchorPointForPosition()) {
+            anchor = startNode->getAnchorPoint();
+        }
+        startNode->setPosition(Point(size.width * anchor.x, size.height * anchor.y));
+        rtx->begin();
+        startNode->visit();
+        rtx->end();
+        startNode->setPosition(savedPos);
+        
+        if (std::abs(scale - 1.0f) < 1e-6f/* no scale */)
+            finalRtx = rtx;
+        else {
+            /* scale */
+            auto finalRect = Rect(0, 0, size.width, size.height);
+            Sprite *sprite = Sprite::createWithTexture(rtx->getSprite()->getTexture(), finalRect);
+            sprite->setAnchorPoint(Point(0, 0));
 #ifndef CC_USE_METAL
-        sprite->setFlippedY(true);
+            sprite->setFlippedY(true);
 #endif
-        finalRtx = RenderTexture::create(size.width * scale, size.height * scale, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8);
-
-        sprite->setScale(scale); // or use finalRtx->setKeepMatrix(true);
-        finalRtx->begin(); 
-        sprite->visit();
-        finalRtx->end();
-    }
-
-    Director::getInstance()->getRenderer()->render();
-
-    finalRtx->newImage(imageCallback);
+            finalRtx = RenderTexture::create(size.width * scale, size.height * scale, Texture2D::PixelFormat::RGBA8888, TextureFormat::D24S8);
+            
+            sprite->setScale(scale); // or use finalRtx->setKeepMatrix(true);
+            finalRtx->begin();
+            sprite->visit();
+            finalRtx->end();
+        }
+        Director::getInstance()->getRenderer()->render();
+        
+        finalRtx->newImage(imageCallback);
+    };
+    
+    auto listener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_BEFORE_DRAW, callback);
+    
+    s_captureNodeListener.push_back(listener);
+    s_captureNode.push_back(startNode);
 }
 
 std::vector<Node*> findChildren(const Node &node, const std::string &name)

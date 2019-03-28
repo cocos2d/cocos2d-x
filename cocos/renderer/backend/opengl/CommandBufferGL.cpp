@@ -204,6 +204,10 @@ void CommandBufferGL::setRenderPipeline(RenderPipeline* renderPipeline)
 void CommandBufferGL::setViewport(int x, int y, unsigned int w, unsigned int h)
 {
     glViewport(x, y, w, h);
+    _viewPort.x = x;
+    _viewPort.y = y;
+    _viewPort.w = w;
+    _viewPort.h = h;
 }
 
 void CommandBufferGL::setCullMode(CullMode mode)
@@ -532,6 +536,34 @@ void CommandBufferGL::setScissorRect(bool isEnabled, float x, float y, float wid
     {
         glDisable(GL_SCISSOR_TEST);
     }
+}
+
+void CommandBufferGL::captureScreen(std::function<void(const unsigned char*, int, int)> callback)
+{
+    int bufferSize = _viewPort.w * _viewPort.h *4;
+    std::shared_ptr<GLubyte> buffer(new GLubyte[bufferSize], [](GLubyte* p){ CC_SAFE_DELETE_ARRAY(p); });
+    memset(buffer.get(), 0, bufferSize);
+    if (!buffer)
+    {
+        callback(nullptr, 0, 0);
+        return;
+    }
+    glPixelStorei(GL_PACK_ALIGNMENT, 1);
+    glReadPixels(0, 0, _viewPort.w, _viewPort.h, GL_RGBA, GL_UNSIGNED_BYTE, buffer.get());
+
+    std::shared_ptr<GLubyte> flippedBuffer(new GLubyte[bufferSize], [](GLubyte* p) { CC_SAFE_DELETE_ARRAY(p); });
+    memset(flippedBuffer.get(), 0, bufferSize);
+    if (!flippedBuffer)
+    {
+        callback(nullptr, 0, 0);
+        return;
+    }
+    for (int row = 0; row < _viewPort.h; ++row)
+    {
+        memcpy(flippedBuffer.get() + (_viewPort.h - row - 1) * _viewPort.w * 4, buffer.get() + row * _viewPort.w * 4, _viewPort.w * 4);
+    }
+
+    callback(flippedBuffer.get(), _viewPort.w, _viewPort.h);
 }
 
 CC_BACKEND_END

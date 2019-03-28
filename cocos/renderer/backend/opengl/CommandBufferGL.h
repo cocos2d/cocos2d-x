@@ -40,6 +40,7 @@ public:
     
     virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) override;
     virtual void setDepthStencilState(DepthStencilState* depthStencilState) override;
+    virtual void captureScreen(std::function<void(const unsigned char*, int, int)> callback) override ;
 
 private:
     struct Viewport
@@ -66,6 +67,7 @@ private:
     RenderPipelineGL* _renderPipeline = nullptr;
     CullMode _cullMode = CullMode::NONE;
     DepthStencilStateGL* _depthStencilStateGL = nullptr;
+    Viewport _viewPort;
 };
 
 CC_BACKEND_END
