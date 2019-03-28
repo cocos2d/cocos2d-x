@@ -57,9 +57,6 @@ Texture2DGL::~Texture2DGL()
 
 void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
     bool isPow2 = ISPOW2(_width) && ISPOW2(_height);
-    bool needGenerateMipmap = !_isMipmapEnabled && sampler.mipmapEnabled;
-    _isMipmapEnabled = sampler.mipmapEnabled;
-
     _textureInfo.applySamplerDescriptor(sampler, isPow2);
 
     glActiveTexture(GL_TEXTURE0);
@@ -84,8 +81,6 @@ void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
     {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _textureInfo.tAddressModeGL);
     }
-
-    if (needGenerateMipmap) generateMipmpas();
 }
 
 void Texture2DGL::updateData(uint8_t* data)
@@ -145,8 +140,12 @@ void Texture2DGL::updateData(uint8_t* data)
                      data);
     }
     CHECK_GL_ERROR_DEBUG();
-    
-    generateMipmpas();
+
+    if(_isMipmapEnabled)
+    {
+        _isMipmapGenerated = false;
+        generateMipmaps();
+    }
     CHECK_GL_ERROR_DEBUG();
 }
 
@@ -164,8 +163,12 @@ void Texture2DGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsi
                     _textureInfo.type,
                     data);
     CHECK_GL_ERROR_DEBUG();
-    
-    generateMipmpas();
+
+    if(_isMipmapEnabled)
+    {
+        _isMipmapGenerated = false;
+        generateMipmaps();
+    }
     CHECK_GL_ERROR_DEBUG();
 }
 
@@ -175,11 +178,16 @@ void Texture2DGL::apply(int index) const
     glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
 }
 
-void Texture2DGL::generateMipmpas() const
+void Texture2DGL::generateMipmaps()
 {
-    if (Texture2D::_isMipmapEnabled &&
-        TextureUsage::RENDER_TARGET != Texture2D:: _textureUsage)
+    if (TextureUsage::RENDER_TARGET == _textureUsage)
+        return;
+
+    if(!_isMipmapGenerated)
+    {
+        _isMipmapGenerated = true;
         glGenerateMipmap(GL_TEXTURE_2D);
+    }
 }
 
 void Texture2DGL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback)
@@ -247,7 +255,7 @@ void TextureCubeGL::updateSamplerDescriptor(const SamplerDescriptor &sampler)
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, _textureInfo.magFilterGL);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, _textureInfo.sAddressModeGL);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, _textureInfo.tAddressModeGL);
-    
+
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 
@@ -273,6 +281,11 @@ void TextureCubeGL::updateFaceData(TextureCubeFace side, void *data)
         _textureInfo.internalFormat,            // format
         _textureInfo.type,  // type
         data);              // pixel data
+    if(_isMipmapEnabled)
+    {
+        _isMipmapGenerated = false;
+        generateMipmaps();
+    }
     CHECK_GL_ERROR_DEBUG();
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
@@ -310,6 +323,18 @@ void TextureCubeGL::getBytes(int x, int y, int width, int height, bool flipImage
 
     glBindFramebuffer(GL_FRAMEBUFFER, defaultFBO);
     glDeleteFramebuffers(1, &frameBuffer);
+}
+
+void TextureCubeGL::generateMipmaps()
+{
+    if (TextureUsage::RENDER_TARGET == _textureUsage)
+        return;
+
+    if(!_isMipmapGenerated)
+    {
+        _isMipmapGenerated = true;
+        glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+    }
 }
 
 CC_BACKEND_END

@@ -78,6 +78,24 @@ namespace
         }
         return converted;
     }
+    
+    bool isColorRenderable(TextureFormat textureFormat)
+    {
+        switch (textureFormat)
+        {
+            case TextureFormat::R8G8B8A8:
+            case TextureFormat::R8G8B8:
+            case TextureFormat::RGBA4444:
+            case TextureFormat::RGB565:
+            case TextureFormat::RGB5A1:
+            case TextureFormat::MTL_BGR5A1:
+            case TextureFormat::MTL_B5G6R5:
+            case TextureFormat::MTL_ABGR4:
+                return true;
+            default:
+                return false;
+        }
+    }
 }
 
 TextureMTL::TextureMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
@@ -106,7 +124,6 @@ void TextureMTL::updateSamplerDescriptor(const SamplerDescriptor &sampler)
 {
     createSampler(_mtlDevice, sampler);
 }
-
 
 void TextureMTL::updateData(uint8_t* data)
 {
@@ -139,7 +156,10 @@ void TextureMTL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsig
     
     // metal doesn't generate mipmaps automatically, so should generate it manually.
     if (_isMipmapEnabled)
-        Utils::generateMipmaps(_mtlTexture);
+    {
+        _isMipmapGenerated = false;
+        generateMipmaps();
+    }
 }
 
 void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
@@ -148,7 +168,7 @@ void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor&
            [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:Utils::toMTLPixelFormat(descriptor.textureFormat)
                                                               width:descriptor.width
                                                              height:descriptor.height
-                                                          mipmapped:TRUE];
+                                                          mipmapped:YES];
     
     if (TextureUsage::RENDER_TARGET == descriptor.textureUsage)
     {
@@ -217,6 +237,19 @@ void TextureMTL::getBytes(int x, int y, int width, int height, bool flipImage, s
     Utils::getTextureBytes(x, y, width, height, _mtlTexture, flipImageCallback);
 }
 
+void TextureMTL::generateMipmaps()
+{
+    if (TextureUsage::RENDER_TARGET == _textureUsage || isColorRenderable(_textureFormat) == false)
+        return;
+    
+    if(!_isMipmapGenerated)
+    {
+        _isMipmapGenerated = true;
+        Utils::generateMipmaps(_mtlTexture);
+        
+    }
+}
+
 TextureCubeMTL::TextureCubeMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
 : backend::TextureCubemap(descriptor)
 {
@@ -245,7 +278,7 @@ TextureCubeMTL::~TextureCubeMTL()
 void TextureCubeMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
 {
     MTLTextureDescriptor* textureDescriptor =
-    [MTLTextureDescriptor textureCubeDescriptorWithPixelFormat:Utils::toMTLPixelFormat(descriptor.textureFormat) size:descriptor.width mipmapped:NO];
+    [MTLTextureDescriptor textureCubeDescriptorWithPixelFormat:Utils::toMTLPixelFormat(descriptor.textureFormat) size:descriptor.width mipmapped:YES];
     
     if (TextureUsage::RENDER_TARGET == descriptor.textureUsage)
     {
@@ -297,6 +330,11 @@ void TextureCubeMTL::updateFaceData(TextureCubeFace side, void *data)
                      withBytes:data
                    bytesPerRow:_bytesPerRow
                  bytesPerImage:_bytesPerImage];
+    if(_isMipmapEnabled)
+    {
+        _isMipmapGenerated = true;
+        generateMipmaps();
+    }
 }
 
 void TextureCubeMTL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback)
@@ -328,5 +366,16 @@ void TextureCubeMTL::getBytes(int x, int y, int width, int height, bool flipImag
     Utils::getTextureBytes(x, y, width, height, _mtlTexture, flipImageCallback);
 }
 
+void TextureCubeMTL::generateMipmaps()
+{
+    if (TextureUsage::RENDER_TARGET == _textureUsage || isColorRenderable(_textureFormat) == false)
+        return;
+    
+    if(!_isMipmapGenerated)
+    {
+        _isMipmapGenerated = true;
+        Utils::generateMipmaps(_mtlTexture);
+    }
+}
 
 CC_BACKEND_END
