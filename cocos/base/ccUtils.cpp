@@ -161,24 +161,20 @@ void captureScreen(const std::function<void(bool, const std::string&)>& afterCap
 
 }
 
-static std::vector<Node*> s_captureNode;
-static std::vector<EventListenerCustom*> s_captureNodeListener;
+static std::unordered_map<Node*, EventListenerCustom*> s_captureNodeListener;
 void captureNode(Node* startNode, std::function<void(Image*)> imageCallback, float scale)
 {
-    if (std::find(s_captureNode.begin(), s_captureNode.end(), startNode) != s_captureNode.end())
+    if (s_captureNodeListener.find(startNode) != s_captureNodeListener.end())
     {
         CCLOG("Warning: current node has been captured already");
         return;
     }
 
-    auto listenerID = s_captureNodeListener.size();
-    auto callback = [startNode, scale, imageCallback, listenerID](EventCustom* /*event*/) {
-        
+    auto callback = [startNode, scale, imageCallback](EventCustom* /*event*/) {
         auto director = Director::getInstance();
-        auto captureNodeListener = s_captureNodeListener[listenerID];
+        auto captureNodeListener = s_captureNodeListener[startNode];
         director->getEventDispatcher()->removeEventListener((EventListener*)(captureNodeListener));
-        s_captureNodeListener.erase(s_captureNodeListener.begin() + listenerID);
-        s_captureNode.erase(s_captureNode.begin() + listenerID);
+        s_captureNodeListener.erase(startNode);
         auto& size = startNode->getContentSize();
         
         Director::getInstance()->setNextDeltaTimeZero(true);
@@ -222,8 +218,7 @@ void captureNode(Node* startNode, std::function<void(Image*)> imageCallback, flo
     
     auto listener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_BEFORE_DRAW, callback);
     
-    s_captureNodeListener.push_back(listener);
-    s_captureNode.push_back(startNode);
+    s_captureNodeListener[startNode] = listener;
 }
 
 std::vector<Node*> findChildren(const Node &node, const std::string &name)
