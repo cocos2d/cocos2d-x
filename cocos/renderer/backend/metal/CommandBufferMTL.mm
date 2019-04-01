@@ -113,6 +113,7 @@ namespace
         }
         
 //        if(descriptor.depthTestEnabled || descriptor.stencilTestEnabled)
+        if(descriptor.needDepthAttachment || descriptor.needStencilAttachment)
         {
             // Set depth attachment
             {
