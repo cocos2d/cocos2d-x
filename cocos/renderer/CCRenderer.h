@@ -304,6 +304,10 @@ protected:
 
     backend::RenderPipeline* getRenderPipeline(const backend::RenderPipelineDescriptor& renderPipelineDescriptor, const backend::BlendDescriptor blendDescriptor);
 
+    void saveStateBlock(unsigned int flags);
+
+    void restoreStateBlock();
+
     std::unordered_map<unsigned int, backend::RenderPipeline*> _renderPipelineCache;
 
     Viewport _viewport;
@@ -372,6 +376,21 @@ protected:
     };
     ScissorState _scissorState;
     
+    enum StateFlag {
+        DEPTH_TEST = 1 << 0,
+        DEPTH_WRITE = 1 << 1,
+        CULL_FACE = 1 << 2,
+    };
+
+    struct StateBlock{
+        uint32_t modifiedStates = 0;
+        bool depthTest = false;
+        bool depthWrite = false;
+        backend::CullMode  cullMode = backend::CullMode::BACK;
+    };
+
+    std::deque<StateBlock> _stateBlockStack;
+
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _cacheTextureListener = nullptr;
 #endif

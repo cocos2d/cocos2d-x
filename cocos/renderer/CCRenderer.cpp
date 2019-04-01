@@ -319,18 +319,45 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     //
     //Process Global-Z < 0 Objects
     //
+    if (_isDepthTestFor2D)
+    {
+        saveStateBlock(StateFlag::DEPTH_TEST | StateFlag::DEPTH_WRITE);
+        setDepthTest(true);
+        setDepthWrite(true);
+    }
     doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_NEG));
-    
+    if (_isDepthTestFor2D)
+    {
+        restoreStateBlock();
+    }
+
     //
     //Process Opaque Object
     //
+    saveStateBlock(StateFlag::DEPTH_TEST | StateFlag::CULL_FACE | StateFlag::DEPTH_WRITE);
+    setDepthTest(true);
+    setDepthWrite(true);
+    setCullMode(backend::CullMode::BACK);
     doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::OPAQUE_3D));
+    restoreStateBlock();
     
     //
     //Process 3D Transparent object
     //
+    saveStateBlock(StateFlag::DEPTH_TEST | StateFlag::CULL_FACE | StateFlag::DEPTH_WRITE);
+    setDepthTest(true); //enable depth test in all 3D
+    setDepthWrite(false);
+    setCullMode(backend::CullMode::BACK);
     doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::TRANSPARENT_3D));
-    
+    restoreStateBlock();
+
+    if (_isDepthTestFor2D)
+    {
+        saveStateBlock(StateFlag::DEPTH_TEST | StateFlag::DEPTH_WRITE);
+        setDepthTest(true);
+        setDepthWrite(true);
+    }
+
     //
     //Process Global-Z = 0 Queue
     //
@@ -340,6 +367,11 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     //Process Global-Z > 0 Queue
     //
     doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_POS));
+
+    if (_isDepthTestFor2D)
+    {
+        restoreStateBlock();
+    }
 }
 
 void Renderer::doVisitRenderQueue(const std::vector<RenderCommand*>& renderCommands)
@@ -1120,6 +1152,43 @@ void Renderer::TriangleCommandBufferManager::createBuffer()
 
     _vertexBufferPool.push_back(vertexBuffer);
     _indexBufferPool.push_back(indexBuffer);
+}
+
+void Renderer::saveStateBlock(unsigned int flags)
+{
+    StateBlock block;
+    if (flags & StateFlag::DEPTH_TEST)
+    {
+        block.depthTest = getDepthTest();
+    }
+    if (flags & StateFlag::DEPTH_WRITE)
+    {
+        block.depthWrite = getDepthWrite();
+    }
+    if(flags & StateFlag::CULL_FACE)
+    {
+        block.cullMode = getCullMode();
+    }
+    _stateBlockStack.emplace_back(block);
+}
+
+void Renderer::restoreStateBlock()
+{
+    auto & block = _stateBlockStack.back();
+
+    if (block.modifiedStates & StateFlag::DEPTH_TEST)
+    {
+        setDepthTest(block.depthTest);
+    }
+    if (block.modifiedStates & StateFlag::DEPTH_WRITE)
+    {
+        setDepthWrite(block.depthWrite);
+    }
+    if (block.modifiedStates & StateFlag::CULL_FACE)
+    {
+        setCullMode(block.cullMode);
+    }
+    _stateBlockStack.pop_back();
 }
 
 NS_CC_END
