@@ -1157,6 +1157,7 @@ void Renderer::TriangleCommandBufferManager::createBuffer()
 void Renderer::saveStateBlock(unsigned int flags)
 {
     StateBlock block;
+    block.modifiedStates = flags;
     if (flags & StateFlag::DEPTH_TEST)
     {
         block.depthTest = getDepthTest();
