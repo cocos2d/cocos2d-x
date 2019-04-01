@@ -1827,7 +1827,7 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
 void Label::updateBlendState()
 {
-    setOpacityModifyRGB(_blendFunc == BlendFunc::ALPHA_NON_PREMULTIPLIED);
+    setOpacityModifyRGB(_blendFunc != BlendFunc::ALPHA_NON_PREMULTIPLIED);
     for(auto &batch: _batchCommands)
     {
         for(auto *command : batch.getCommandArray()) {

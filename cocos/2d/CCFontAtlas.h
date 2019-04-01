@@ -141,7 +141,6 @@ protected:
     void* _iconv;
 
     // Dynamic GlyphCollection related stuff
-    Texture2D::PixelFormat _currentPixelFormat;
     int _currentPage;
     unsigned char *_currentPageData;
     unsigned char *_currentPageDataRGBA;

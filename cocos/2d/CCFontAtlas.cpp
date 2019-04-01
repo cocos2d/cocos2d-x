@@ -112,9 +112,6 @@ void FontAtlas::reinit()
     _currentPageData = new (std::nothrow) unsigned char[_currentPageDataSize];
     memset(_currentPageData, 0, _currentPageDataSize);
     
-    //metal do no support AI88 format
-    _currentPixelFormat = outlineSize > 0 ? Texture2D::PixelFormat::RGBA8888 : Texture2D::PixelFormat::A8;
-    
     initTextureWithZeros(texture);
 
     addTexture(texture,0);
@@ -148,11 +145,24 @@ FontAtlas::~FontAtlas()
 
 void FontAtlas::initTextureWithZeros(Texture2D *texture)
 {
-    char *zeros = nullptr;
-    size_t cnt = _currentPixelFormat == Texture2D::PixelFormat::RGBA8888 ? CacheTextureWidth * CacheTextureWidth * 4 : CacheTextureWidth * CacheTextureWidth;
-    zeros = new char[cnt];
-    std::fill(zeros, zeros + cnt, 0);
-    texture->initWithData(zeros, cnt, _currentPixelFormat, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth, CacheTextureHeight));
+    char *zeros = nullptr;    
+    Texture2D::PixelFormat pixelFormat;
+    float outlineSize = _fontFreeType->getOutlineSize();
+    size_t zeroBytes = 0;
+    if (outlineSize > 0)
+    {    
+        //metal do no support AI88 format
+        pixelFormat = Texture2D::PixelFormat::RGBA8888;
+        zeroBytes = CacheTextureWidth * CacheTextureWidth * 4;
+    }
+    else
+    {
+        pixelFormat = Texture2D::PixelFormat::A8;
+        zeroBytes = CacheTextureWidth * CacheTextureWidth;
+    }
+    zeros = new char[zeroBytes]();
+    //std::fill(zeros, zeros + cnt, 0);
+    texture->initWithData(zeros, zeroBytes, pixelFormat, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth, CacheTextureHeight));
     delete[] zeros;
 }
 
