@@ -32,7 +32,7 @@ void BufferGL::updateData(void* data, unsigned int size)
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
         }
         CHECK_GL_ERROR_DEBUG();
-        _bufferAllocated = true;
+        _bufferAllocated = size;
     }
 }
 
@@ -41,9 +41,8 @@ void BufferGL::updateSubData(void* data, unsigned int offset, unsigned int size)
     assert(offset + size <= _size);
     
     //invoke updateData if buffer is not allocated
-    if (!_bufferAllocated)
+    if (0 == _bufferAllocated)
     {
-        CCASSERT(offset == 0, "offset should be zero when allocate buffer");
         if (size < _size)
         {
             //ensure the size parameter of `updateData` is not less than `_size`
@@ -58,6 +57,8 @@ void BufferGL::updateSubData(void* data, unsigned int offset, unsigned int size)
         }
         return;
     }
+
+    assert(offset + size <= _bufferAllocated);
 
     if (_buffer)
     {
