@@ -33,6 +33,7 @@ void BufferGL::updateData(void* data, unsigned int size)
         }
         CHECK_GL_ERROR_DEBUG();
         _bufferAllocated = true;
+        _size = size;
     }
 }
 
