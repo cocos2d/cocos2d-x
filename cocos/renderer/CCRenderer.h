@@ -27,6 +27,7 @@
 #include <vector>
 #include <stack>
 #include <array>
+#include <deque>
 
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderCommand.h"
