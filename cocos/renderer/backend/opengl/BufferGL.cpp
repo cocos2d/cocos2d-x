@@ -44,7 +44,19 @@ void BufferGL::updateSubData(void* data, unsigned int offset, unsigned int size)
     if (!_bufferAllocated)
     {
         CCASSERT(offset == 0, "offset should be zero when allocate buffer");
-        updateData(data, size);
+        if (size < _size)
+        {
+            //ensure the size parameter of `updateData` is not less then `_size`
+            uint8_t *zeros = new uint8_t[_size]();
+            updateData(zeros, _size);
+            delete[] zeros;
+            updateSubData(data, offset, size);
+        }
+        else
+        {
+            updateData(data, size);
+        }
+
         return;
     }
 
