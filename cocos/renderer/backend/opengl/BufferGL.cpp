@@ -17,7 +17,7 @@ BufferGL::~BufferGL()
 
 void BufferGL::updateData(void* data, unsigned int size)
 {
-    assert(size);
+    assert(size && size <= _size);
     
     if (_buffer)
     {
@@ -33,7 +33,6 @@ void BufferGL::updateData(void* data, unsigned int size)
         }
         CHECK_GL_ERROR_DEBUG();
         _bufferAllocated = true;
-        _size = size;
     }
 }
 
@@ -47,7 +46,7 @@ void BufferGL::updateSubData(void* data, unsigned int offset, unsigned int size)
         CCASSERT(offset == 0, "offset should be zero when allocate buffer");
         if (size < _size)
         {
-            //ensure the size parameter of `updateData` is not less then `_size`
+            //ensure the size parameter of `updateData` is not less than `_size`
             uint8_t *zeros = new uint8_t[_size]();
             updateData(zeros, _size);
             delete[] zeros;
@@ -57,7 +56,6 @@ void BufferGL::updateSubData(void* data, unsigned int offset, unsigned int size)
         {
             updateData(data, size);
         }
-
         return;
     }
 
@@ -68,7 +66,6 @@ void BufferGL::updateSubData(void* data, unsigned int offset, unsigned int size)
         {
             glBindBuffer(GL_ARRAY_BUFFER, _buffer);
             glBufferSubData(GL_ARRAY_BUFFER, offset, size, data);
-            
         }
         else
         {
