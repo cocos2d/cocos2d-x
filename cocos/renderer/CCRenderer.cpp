@@ -319,23 +319,13 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     //
     //Process Global-Z < 0 Objects
     //
-    if (_isDepthTestFor2D)
-    {
-        saveStateBlock(StateFlag::DEPTH_TEST | StateFlag::DEPTH_WRITE);
-        setDepthTest(true);
-        setDepthWrite(true);
-    }
     doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_NEG));
-    if (_isDepthTestFor2D)
-    {
-        restoreStateBlock();
-    }
 
     //
     //Process Opaque Object
     //
     saveStateBlock(StateFlag::DEPTH_TEST | StateFlag::CULL_FACE | StateFlag::DEPTH_WRITE);
-    setDepthTest(true);
+    setDepthTest(true); //enable depth test in 3D queue by default
     setDepthWrite(true);
     setCullMode(backend::CullMode::BACK);
     doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::OPAQUE_3D));
@@ -345,18 +335,11 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     //Process 3D Transparent object
     //
     saveStateBlock(StateFlag::DEPTH_TEST | StateFlag::CULL_FACE | StateFlag::DEPTH_WRITE);
-    setDepthTest(true); //enable depth test in all 3D
+    setDepthTest(true); //enable depth test in 3D queue by default
     setDepthWrite(false);
     setCullMode(backend::CullMode::BACK);
     doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::TRANSPARENT_3D));
     restoreStateBlock();
-
-    if (_isDepthTestFor2D)
-    {
-        saveStateBlock(StateFlag::DEPTH_TEST | StateFlag::DEPTH_WRITE);
-        setDepthTest(true);
-        setDepthWrite(true);
-    }
 
     //
     //Process Global-Z = 0 Queue
@@ -368,10 +351,6 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     //
     doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_POS));
 
-    if (_isDepthTestFor2D)
-    {
-        restoreStateBlock();
-    }
 }
 
 void Renderer::doVisitRenderQueue(const std::vector<RenderCommand*>& renderCommands)
