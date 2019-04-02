@@ -174,12 +174,14 @@ public:
                 wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
                 if (pwszBuffer)
                 {
-                    if (AddFontResource(pwszBuffer))
-                    {
-                        PostMessage(_wnd, WM_FONTCHANGE, 0, 0);
-                    }
-                    delete[] pwszBuffer;
-                    pwszBuffer = nullptr;
+                    std::thread([&pwszBuffer, this]() {
+                        if (AddFontResource(pwszBuffer))
+                        {
+                            PostMessage(_wnd, WM_FONTCHANGE, 0, 0);
+                        }
+                        delete[] pwszBuffer;
+                        pwszBuffer = nullptr;
+                    }).detach();
                 }
             }
 
@@ -431,10 +433,12 @@ private:
             wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
             if (pwszBuffer)
             {
-                RemoveFontResource(pwszBuffer);
-                PostMessage(_wnd, WM_FONTCHANGE, 0, 0);
-                delete[] pwszBuffer;
-                pwszBuffer = nullptr;
+                std::thread([&pwszBuffer, this]() {
+                    RemoveFontResource(pwszBuffer);
+                    PostMessage(_wnd, WM_FONTCHANGE, 0, 0);
+                    delete[] pwszBuffer;
+                    pwszBuffer = nullptr;
+                }).detach();
             }
             _curFontPath.clear();
         }
