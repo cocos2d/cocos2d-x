@@ -31,6 +31,8 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "platform/CCStdC.h"
 
+#include <thread>
+
 NS_CC_BEGIN
 
 int Device::getDPI()
