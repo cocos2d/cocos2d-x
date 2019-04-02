@@ -242,7 +242,14 @@ void Renderer::processGroupCommand(GroupCommand* command)
     flush();
 
     int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
+
+    pushStateBlock();
+    //apply default state for all render queues
+    setDepthTest(false);
+    setDepthWrite(false);
+    setCullMode(backend::CullMode::NONE);
     visitRenderQueue(_renderGroups[renderQueueID]);
+    popStateBlock();
 }
 
 void Renderer::processRenderCommand(RenderCommand* command)
@@ -324,22 +331,18 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     //
     //Process Opaque Object
     //
-    saveStateBlock(StateFlag::DEPTH_TEST | StateFlag::CULL_FACE | StateFlag::DEPTH_WRITE);
+    pushStateBlock();
     setDepthTest(true); //enable depth test in 3D queue by default
     setDepthWrite(true);
     setCullMode(backend::CullMode::BACK);
     doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::OPAQUE_3D));
-    restoreStateBlock();
     
     //
     //Process 3D Transparent object
     //
-    saveStateBlock(StateFlag::DEPTH_TEST | StateFlag::CULL_FACE | StateFlag::DEPTH_WRITE);
-    setDepthTest(true); //enable depth test in 3D queue by default
     setDepthWrite(false);
-    setCullMode(backend::CullMode::BACK);
     doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::TRANSPARENT_3D));
-    restoreStateBlock();
+    popStateBlock();
 
     //
     //Process Global-Z = 0 Queue
@@ -1133,41 +1136,21 @@ void Renderer::TriangleCommandBufferManager::createBuffer()
     _indexBufferPool.push_back(indexBuffer);
 }
 
-void Renderer::saveStateBlock(unsigned int flags)
+void Renderer::pushStateBlock()
 {
     StateBlock block;
-    block.modifiedStates = flags;
-    if (flags & StateFlag::DEPTH_TEST)
-    {
-        block.depthTest = getDepthTest();
-    }
-    if (flags & StateFlag::DEPTH_WRITE)
-    {
-        block.depthWrite = getDepthWrite();
-    }
-    if(flags & StateFlag::CULL_FACE)
-    {
-        block.cullMode = getCullMode();
-    }
+    block.depthTest = getDepthTest();
+    block.depthWrite = getDepthWrite();
+    block.cullMode = getCullMode();
     _stateBlockStack.emplace_back(block);
 }
 
-void Renderer::restoreStateBlock()
+void Renderer::popStateBlock()
 {
     auto & block = _stateBlockStack.back();
-
-    if (block.modifiedStates & StateFlag::DEPTH_TEST)
-    {
-        setDepthTest(block.depthTest);
-    }
-    if (block.modifiedStates & StateFlag::DEPTH_WRITE)
-    {
-        setDepthWrite(block.depthWrite);
-    }
-    if (block.modifiedStates & StateFlag::CULL_FACE)
-    {
-        setCullMode(block.cullMode);
-    }
+    setDepthTest(block.depthTest);
+    setDepthWrite(block.depthWrite);
+    setCullMode(block.cullMode);
     _stateBlockStack.pop_back();
 }
 
