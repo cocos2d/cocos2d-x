@@ -109,7 +109,7 @@ namespace {
         {
             HWND hwnd = Director::getInstance()->getOpenGLView()->getWin32Window();
             // use non-block version of SendMessage 
-            SendNotifyMessageA(hwnd,
+            PostMessage(hwnd,
                 WM_COPYDATA,
                 (WPARAM)(HWND)hwnd,
                 (LPARAM)(LPVOID)&myCDS);
