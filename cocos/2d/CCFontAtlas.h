@@ -122,6 +122,8 @@ protected:
 
     void conversionU32TOGB2312(const std::u32string& u32Text, std::unordered_map<unsigned int, unsigned int>& charCodeMap);
 
+    void initTextureWithZeros(Texture2D *texture);
+
     /**
      * Scale each font letter by scaleFactor.
      *
