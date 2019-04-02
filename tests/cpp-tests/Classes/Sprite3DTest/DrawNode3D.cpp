@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 #include "DrawNode3D.h"
-
+#include "renderer/backend/Buffer.h"
 NS_CC_BEGIN
 
 
