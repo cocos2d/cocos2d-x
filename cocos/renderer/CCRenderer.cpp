@@ -242,7 +242,14 @@ void Renderer::processGroupCommand(GroupCommand* command)
     flush();
 
     int renderQueueID = ((GroupCommand*) command)->getRenderQueueID();
+
+    pushStateBlock();
+    //apply default state for all render queues
+    setDepthTest(false);
+    setDepthWrite(false);
+    setCullMode(backend::CullMode::NONE);
     visitRenderQueue(_renderGroups[renderQueueID]);
+    popStateBlock();
 }
 
 void Renderer::processRenderCommand(RenderCommand* command)
@@ -320,17 +327,23 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     //Process Global-Z < 0 Objects
     //
     doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_NEG));
-    
+
     //
     //Process Opaque Object
     //
+    pushStateBlock();
+    setDepthTest(true); //enable depth test in 3D queue by default
+    setDepthWrite(true);
+    setCullMode(backend::CullMode::BACK);
     doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::OPAQUE_3D));
     
     //
     //Process 3D Transparent object
     //
+    setDepthWrite(false);
     doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::TRANSPARENT_3D));
-    
+    popStateBlock();
+
     //
     //Process Global-Z = 0 Queue
     //
@@ -340,6 +353,7 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     //Process Global-Z > 0 Queue
     //
     doVisitRenderQueue(queue.getSubQueue(RenderQueue::QUEUE_GROUP::GLOBALZ_POS));
+
 }
 
 void Renderer::doVisitRenderQueue(const std::vector<RenderCommand*>& renderCommands)
@@ -1124,6 +1138,24 @@ void Renderer::TriangleCommandBufferManager::createBuffer()
 
     _vertexBufferPool.push_back(vertexBuffer);
     _indexBufferPool.push_back(indexBuffer);
+}
+
+void Renderer::pushStateBlock()
+{
+    StateBlock block;
+    block.depthTest = getDepthTest();
+    block.depthWrite = getDepthWrite();
+    block.cullMode = getCullMode();
+    _stateBlockStack.emplace_back(block);
+}
+
+void Renderer::popStateBlock()
+{
+    auto & block = _stateBlockStack.back();
+    setDepthTest(block.depthTest);
+    setDepthWrite(block.depthWrite);
+    setCullMode(block.cullMode);
+    _stateBlockStack.pop_back();
 }
 
 NS_CC_END

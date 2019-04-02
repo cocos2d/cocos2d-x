@@ -1861,7 +1861,7 @@ void UseCaseSprite3D::switchCase()
         circleBack->addChild(circle);
         circle->runAction(RepeatForever::create(RotateBy::create(3, Vec3(0.f, 0.f, 360.f))));
 
-        circleBack->setRotation3D(Vec3(90, 90, 0));
+        circleBack->setRotation3D(Vec3(-90, -90, 0));
 
         auto pos = sprite->getPosition3D();
         circleBack->setPosition3D(Vec3(pos.x, pos.y, pos.z - 1));

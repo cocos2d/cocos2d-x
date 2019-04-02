@@ -27,6 +27,7 @@
 #include <vector>
 #include <stack>
 #include <array>
+#include <deque>
 
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderCommand.h"
@@ -304,6 +305,10 @@ protected:
 
     backend::RenderPipeline* getRenderPipeline(const backend::RenderPipelineDescriptor& renderPipelineDescriptor, const backend::BlendDescriptor blendDescriptor);
 
+    void pushStateBlock();
+
+    void popStateBlock();
+
     std::unordered_map<unsigned int, backend::RenderPipeline*> _renderPipelineCache;
 
     Viewport _viewport;
@@ -372,6 +377,14 @@ protected:
     };
     ScissorState _scissorState;
     
+    struct StateBlock{
+        bool depthTest = false;
+        bool depthWrite = false;
+        backend::CullMode  cullMode = backend::CullMode::NONE;
+    };
+
+    std::deque<StateBlock> _stateBlockStack;
+
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _cacheTextureListener = nullptr;
 #endif
