@@ -38,28 +38,10 @@ void BufferGL::updateData(void* data, unsigned int size)
 
 void BufferGL::updateSubData(void* data, unsigned int offset, unsigned int size)
 {
-    assert(offset + size <= _size);
-    
-    //invoke updateData if buffer is not allocated
-    if (0 == _bufferAllocated)
-    {
-        if (size < _size)
-        {
-            //ensure the size parameter of `updateData` is not less than `_size`
-            uint8_t *zeros = new uint8_t[_size]();
-            updateData(zeros, _size);
-            delete[] zeros;
-            updateSubData(data, offset, size);
-        }
-        else
-        {
-            updateData(data, size);
-        }
-        return;
-    }
 
-    assert(offset + size <= _bufferAllocated);
-
+    CCASSERT(_bufferAllocated != 0, "updateData should be invoke before updateSubData");
+    CCASSERT(offset + size <= _bufferAllocated, "buffer size overflow");
+ 
     if (_buffer)
     {
         CHECK_GL_ERROR_DEBUG();

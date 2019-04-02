@@ -119,6 +119,11 @@ void DrawNode3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
     if (_isDirty && !_bufferLines.empty())
     {
+        if (_customCommand.getVertexBuffer()->getSize() < (_bufferLines.size() * sizeof(_bufferLines[0])))
+        {
+            _customCommand.createVertexBuffer(sizeof(V3F_C4B), _bufferLines.size(),CustomCommand::BufferUsage::DYNAMIC);
+        }
+
         _customCommand.updateVertexBuffer(_bufferLines.data(), (unsigned int)(_bufferLines.size() * sizeof(_bufferLines[0])));
         _isDirty = false;
     }
