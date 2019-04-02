@@ -25,6 +25,7 @@ class Texture : public Ref
 public:
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) = 0;
     virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) = 0;
+    virtual void generateMipmaps() = 0;
 
     inline TextureFormat getTextureFormat() const { return _textureFormat; }
     inline TextureUsage getTextureUsage() const { return _textureUsage; }
@@ -38,6 +39,7 @@ protected:
     uint8_t _bitsPerElement = 0;
     bool _isMipmapEnabled = false;
     bool _isCompressed = false;
+    bool _isMipmapGenerated = false;
 
     TextureType _textureType = TextureType::TEXTURE_2D;
     TextureFormat _textureFormat = TextureFormat::R8G8B8;

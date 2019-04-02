@@ -17,6 +17,7 @@ public:
     
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) override;
     virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) override;
+    virtual void generateMipmaps() override;
     
     inline id<MTLTexture> getMTLTexture() const { return _mtlTexture; }
     inline id<MTLSamplerState> getMTLSamplerState() const { return _mtlSamplerState; }
@@ -46,6 +47,10 @@ public:
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) override;
     virtual void updateFaceData(TextureCubeFace side, void *data) override;
     virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) override;
+    virtual void generateMipmaps() override;
+    
+    inline id<MTLTexture> getMTLTexture() const { return _mtlTexture; }
+    inline id<MTLSamplerState> getMTLSamplerState() const { return _mtlSamplerState; }
     
 private:
     void createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor);

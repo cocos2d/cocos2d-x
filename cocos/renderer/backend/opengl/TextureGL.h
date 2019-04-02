@@ -32,13 +32,12 @@ public:
     virtual void updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data) override;
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler)  override;
     virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) override;
+    virtual void generateMipmaps() override;
 
     void apply(int index) const;
     inline GLuint getHandler() const { return _textureInfo.texture; }
 
 private:
-    void generateMipmpas() const;
-    
     SamplerDescriptor _samplerDescriptor;
     bool _isCompressed = false;
     TextureInfoGL _textureInfo;
@@ -53,7 +52,8 @@ public:
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) override;
     virtual void updateFaceData(TextureCubeFace side, void *data) override;
     virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) override;
-    
+    virtual void generateMipmaps() override;
+
     void apply(int index) const;
     inline GLuint getHandler() const { return _textureInfo.texture; }
 
