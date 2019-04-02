@@ -108,10 +108,12 @@ namespace {
         if (Director::getInstance()->getOpenGLView())
         {
             HWND hwnd = Director::getInstance()->getOpenGLView()->getWin32Window();
-            SendMessage(hwnd,
-                        WM_COPYDATA,
-                        (WPARAM)(HWND)hwnd,
-                        (LPARAM)(LPVOID)&myCDS);
+            // use non-block version of SendMessage 
+            PostMessage(hwnd,
+                WM_COPYDATA,
+                (WPARAM)(HWND)hwnd,
+                (LPARAM)(LPVOID)&myCDS);
+
         }
     }
 #endif

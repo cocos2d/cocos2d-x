@@ -176,7 +176,7 @@ public:
                 {
                     if (AddFontResource(pwszBuffer))
                     {
-                        SendMessage(_wnd, WM_FONTCHANGE, 0, 0);
+                        PostMessage(_wnd, WM_FONTCHANGE, 0, 0);
                     }
                     delete[] pwszBuffer;
                     pwszBuffer = nullptr;
@@ -471,7 +471,7 @@ private:
             if (pwszBuffer)
             {
                 RemoveFontResource(pwszBuffer);
-                SendMessage(_wnd, WM_FONTCHANGE, 0, 0);
+                PostMessage(_wnd, WM_FONTCHANGE, 0, 0);
                 delete[] pwszBuffer;
                 pwszBuffer = nullptr;
             }
