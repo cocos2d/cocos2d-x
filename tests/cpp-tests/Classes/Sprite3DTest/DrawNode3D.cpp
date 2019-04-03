@@ -64,7 +64,7 @@ void DrawNode3D::ensureCapacity(int count)
 
     if (!_customCommand.getVertexBuffer() || _customCommand.getVertexBuffer()->getSize() < (EXTENDED_SIZE * sizeof(_bufferLines[0])))
     {
-        _customCommand.createVertexBuffer(sizeof(V3F_C4B), EXTENDED_SIZE, CustomCommand::BufferUsage::DYNAMIC);
+        _customCommand.createVertexBuffer(sizeof(V3F_C4B), EXTENDED_SIZE + (EXTENDED_SIZE >> 1), CustomCommand::BufferUsage::DYNAMIC);
     }
 
 }
