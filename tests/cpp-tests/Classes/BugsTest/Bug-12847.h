@@ -32,6 +32,9 @@ class Bug12847Layer : public BugsTestBase
 public:
     CREATE_FUNC(Bug12847Layer);
     
+    Bug12847Layer();
+    virtual ~Bug12847Layer();
+
     virtual bool init() override;
     
 protected:
@@ -45,6 +48,8 @@ private:
     cocos2d::Sprite* sprite2;
     cocos2d::Sprite* sprite3;
     cocos2d::Sprite* sprite4;
+
+    cocos2d::Director::Projection _projection = cocos2d::Director::Projection::_3D;
 };
 
 #endif /* defined(__cocos2d_tests__Bug_12847__) */

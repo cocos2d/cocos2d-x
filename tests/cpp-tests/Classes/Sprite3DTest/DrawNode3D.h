@@ -102,8 +102,6 @@ protected:
 
     BlendFunc   _blendFunc;
     cocos2d::CustomCommand _customCommand;
-    cocos2d::CallbackCommand _beforeCommand;
-    cocos2d::CallbackCommand _afterCommand;
     backend::ProgramState* _programStateLine                    = nullptr;
     backend::DepthStencilDescriptor *_depthstencilDescriptor    = nullptr;
     backend::UniformLocation _locMVPMatrix;

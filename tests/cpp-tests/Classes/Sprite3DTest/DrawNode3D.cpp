@@ -70,9 +70,8 @@ bool DrawNode3D::init()
     
     _locMVPMatrix = _programStateLine->getUniformLocation("u_MVPMatrix");
 
-    _beforeCommand.func = CC_CALLBACK_0(DrawNode3D::onBeforeDraw, this);
-    _afterCommand.func = CC_CALLBACK_0(DrawNode3D::onAfterDraw, this);
-
+    _customCommand.setBeforeCallback(CC_CALLBACK_0(DrawNode3D::onBeforeDraw, this));
+    _customCommand.setAfterCallback(CC_CALLBACK_0(DrawNode3D::onAfterDraw, this));
 
     auto &layout = _customCommand.getPipelineDescriptor().vertexLayout;
 #define INITIAL_VERTEX_BUFFER_LENGTH 512
@@ -125,12 +124,7 @@ void DrawNode3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
     if (!_bufferLines.empty())
     {
-        _beforeCommand.init(_globalZOrder);
-        _afterCommand.init(_globalZOrder);
-
-        renderer->addCommand(&_beforeCommand);
         renderer->addCommand(&_customCommand);
-        renderer->addCommand(&_afterCommand);
     }
 }
 

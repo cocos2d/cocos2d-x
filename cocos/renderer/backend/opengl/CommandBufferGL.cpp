@@ -522,6 +522,9 @@ void CommandBufferGL::setLineWidth(float lineWidth)
 {
     if(lineWidth > 0.0f)
         glLineWidth(lineWidth);
+    else
+        glLineWidth(1.0f);
+    
 }
 
 

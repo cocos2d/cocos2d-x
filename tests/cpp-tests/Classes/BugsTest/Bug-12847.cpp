@@ -35,6 +35,17 @@
 
 USING_NS_CC;
 
+Bug12847Layer::Bug12847Layer()
+{
+    _projection = Director::getInstance()->getProjection();
+}
+
+Bug12847Layer::~Bug12847Layer()
+{
+    Director::getInstance()->setProjection(_projection);
+}
+
+
 bool Bug12847Layer::init()
 {
     if (BugsTestBase::init())
