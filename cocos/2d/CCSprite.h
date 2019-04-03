@@ -45,7 +45,6 @@ class Rect;
 class Size;
 class Texture2D;
 struct transformValues_;
-class EventListenerCustom;
 
 #ifdef SPRITE_RENDER_IN_SUBPIXEL
 #undef SPRITE_RENDER_IN_SUBPIXEL
@@ -642,7 +641,6 @@ protected:
     void updateStretchFactor();
     void populateTriangle(int quadIndex, const V3F_C4B_T2F_Quad& quad);
     void setMVPMatrixUniform();
-    void onProjectionChanged(EventCustom* event);
 
     //
     // Data used when the sprite is rendered using a SpriteSheet
@@ -710,8 +708,6 @@ protected:
     int _fileType = 0;
 
     bool _stretchEnabled = true;
-
-    EventListenerCustom* _projectionChangedEvent = nullptr;
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sprite);

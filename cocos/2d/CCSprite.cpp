@@ -42,8 +42,6 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ProgramState.h"
-#include "base/CCEventDispatcher.h"
-#include "base/CCEventListenerCustom.h"
 
 NS_CC_BEGIN
 
@@ -304,9 +302,6 @@ Sprite::Sprite()
     _debugDrawNode = DrawNode::create();
     addChild(_debugDrawNode);
 #endif //CC_SPRITE_DEBUG_DRAW
-
-    _projectionChangedEvent = Director::getInstance()->getEventDispatcher()->addCustomEventListener(Director::EVENT_PROJECTION_CHANGED, std::bind(&Sprite::onProjectionChanged, this, std::placeholders::_1));
-    _projectionChangedEvent->retain();
 }
 
 Sprite::~Sprite()
@@ -316,9 +311,6 @@ Sprite::~Sprite()
     CC_SAFE_RELEASE(_spriteFrame);
     CC_SAFE_RELEASE(_texture);
     CC_SAFE_RELEASE(_programState);
-
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_projectionChangedEvent);
-    CC_SAFE_RELEASE(_projectionChangedEvent);
 }
 
 /*
@@ -401,8 +393,6 @@ void Sprite::setProgramState(backend::ProgramState *programState)
     pipelineDescriptor.programState = _programState;
 
     _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
-    setMVPMatrixUniform();
-
     _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
     _alphaTextureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture1");
 
@@ -1740,11 +1730,6 @@ void Sprite::setMVPMatrixUniform()
     auto programState = _trianglesCommand.getPipelineDescriptor().programState;
     if (programState && _mvpMatrixLocation)
         programState->setUniform(_mvpMatrixLocation, projectionMat.m, sizeof(projectionMat.m));
-}
-
-void Sprite::onProjectionChanged(EventCustom* /*event*/)
-{
-    setMVPMatrixUniform();
 }
 
 NS_CC_END
