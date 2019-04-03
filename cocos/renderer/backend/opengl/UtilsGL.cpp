@@ -343,8 +343,8 @@ void UtilsGL::toGLTypes(TextureFormat textureFormat, GLint &internalFormat, GLui
         type = GL_UNSIGNED_INT_24_8_OES;
 #else
         format = GL_DEPTH_STENCIL;
-        internalFormat = GL_DEPTH32F_STENCIL8;
-        type = GL_FLOAT_32_UNSIGNED_INT_24_8_REV;
+        internalFormat = GL_DEPTH24_STENCIL8;
+        type = GL_UNSIGNED_INT_24_8;
 #endif
         break;
     default:
