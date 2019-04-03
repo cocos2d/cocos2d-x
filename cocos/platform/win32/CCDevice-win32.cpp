@@ -173,18 +173,16 @@ public:
             if (fontPath.size() > 0)
             {
                 _curFontPath = fontPath;
-                std::thread([fontPath, wnd = _wnd, this]() {
-                    wchar_t * pwszBuffer = utf8ToUtf16(fontPath);
-                    if (pwszBuffer)
+                wchar_t * pwszBuffer = utf8ToUtf16(fontPath);
+                if (pwszBuffer)
+                {
+                    if (AddFontResource(pwszBuffer))
                     {
-                        if (AddFontResource(pwszBuffer))
-                        {
-                            PostMessage(wnd, WM_FONTCHANGE, 0, 0);
-                        }
-                        delete[] pwszBuffer;
-                        pwszBuffer = nullptr;
+                        PostMessage(_wnd, WM_FONTCHANGE, 0, 0);
                     }
-                }).detach();
+                    delete[] pwszBuffer;
+                    pwszBuffer = nullptr;
+                }
             }
 
             _font = nullptr;
@@ -432,16 +430,14 @@ private:
         // release temp font resource
         if (_curFontPath.size() > 0)
         {
-            std::thread([curFontPath = _curFontPath, wnd = _wnd, this]() {
-                wchar_t * pwszBuffer = utf8ToUtf16(curFontPath);
-                if (pwszBuffer)
-                {
-                    RemoveFontResource(pwszBuffer);
-                    PostMessage(wnd, WM_FONTCHANGE, 0, 0);
-                    delete[] pwszBuffer;
-                    pwszBuffer = nullptr;
-                }
-            }).detach();
+            wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
+            if (pwszBuffer)
+            {
+                RemoveFontResource(pwszBuffer);
+                PostMessage(_wnd, WM_FONTCHANGE, 0, 0);
+                delete[] pwszBuffer;
+                pwszBuffer = nullptr;
+            }
             _curFontPath.clear();
         }
     }
