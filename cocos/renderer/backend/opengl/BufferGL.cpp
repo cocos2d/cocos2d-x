@@ -17,7 +17,7 @@ BufferGL::~BufferGL()
 
 void BufferGL::updateData(void* data, unsigned int size)
 {
-    assert(size);
+    assert(size && size <= _size);
     
     if (_buffer)
     {
@@ -32,22 +32,16 @@ void BufferGL::updateData(void* data, unsigned int size)
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
         }
         CHECK_GL_ERROR_DEBUG();
-        _bufferAllocated = true;
+        _bufferAllocated = size;
     }
 }
 
 void BufferGL::updateSubData(void* data, unsigned int offset, unsigned int size)
 {
-    assert(offset + size <= _size);
-    
-    //invoke updateData if buffer is not allocated
-    if (!_bufferAllocated)
-    {
-        CCASSERT(offset == 0, "offset should be zero when allocate buffer");
-        updateData(data, size);
-        return;
-    }
 
+    CCASSERT(_bufferAllocated != 0, "updateData should be invoke before updateSubData");
+    CCASSERT(offset + size <= _bufferAllocated, "buffer size overflow");
+ 
     if (_buffer)
     {
         CHECK_GL_ERROR_DEBUG();
@@ -55,7 +49,6 @@ void BufferGL::updateSubData(void* data, unsigned int offset, unsigned int size)
         {
             glBindBuffer(GL_ARRAY_BUFFER, _buffer);
             glBufferSubData(GL_ARRAY_BUFFER, offset, size, data);
-            
         }
         else
         {
