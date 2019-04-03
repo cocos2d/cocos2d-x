@@ -31,6 +31,8 @@ THE SOFTWARE.
 #include "platform/CCFileUtils.h"
 #include "platform/CCStdC.h"
 
+#include <thread>
+
 NS_CC_BEGIN
 
 int Device::getDPI()
@@ -171,16 +173,18 @@ public:
             if (fontPath.size() > 0)
             {
                 _curFontPath = fontPath;
-                wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
-                if (pwszBuffer)
-                {
-                    if (AddFontResource(pwszBuffer))
+                std::thread([fontPath, wnd = _wnd, this]() {
+                    wchar_t * pwszBuffer = utf8ToUtf16(fontPath);
+                    if (pwszBuffer)
                     {
-                        SendMessage(_wnd, WM_FONTCHANGE, 0, 0);
+                        if (AddFontResource(pwszBuffer))
+                        {
+                            PostMessage(wnd, WM_FONTCHANGE, 0, 0);
+                        }
+                        delete[] pwszBuffer;
+                        pwszBuffer = nullptr;
                     }
-                    delete[] pwszBuffer;
-                    pwszBuffer = nullptr;
-                }
+                }).detach();
             }
 
             _font = nullptr;
@@ -428,14 +432,16 @@ private:
         // release temp font resource
         if (_curFontPath.size() > 0)
         {
-            wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
-            if (pwszBuffer)
-            {
-                RemoveFontResource(pwszBuffer);
-                SendMessage(_wnd, WM_FONTCHANGE, 0, 0);
-                delete[] pwszBuffer;
-                pwszBuffer = nullptr;
-            }
+            std::thread([curFontPath = _curFontPath, wnd = _wnd, this]() {
+                wchar_t * pwszBuffer = utf8ToUtf16(curFontPath);
+                if (pwszBuffer)
+                {
+                    RemoveFontResource(pwszBuffer);
+                    PostMessage(wnd, WM_FONTCHANGE, 0, 0);
+                    delete[] pwszBuffer;
+                    pwszBuffer = nullptr;
+                }
+            }).detach();
             _curFontPath.clear();
         }
     }
