@@ -51,7 +51,10 @@ _bytes(nullptr),
 _size(0)
 {
     CCLOGINFO("In the copy constructor of Data.");
-    copy(other._bytes, other._size);
+    if (other._bytes && other._size)
+    {
+        copy(other._bytes, other._size);
+    }
 }
 
 Data::~Data()
