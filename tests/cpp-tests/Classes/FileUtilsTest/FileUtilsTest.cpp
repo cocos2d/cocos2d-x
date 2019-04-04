@@ -1408,10 +1408,24 @@ void TestListFiles::onEnter()
     this->addChild(cntLabel);
     cntLabel->setPosition(winSize.width / 2, winSize.height / 3);
     // writeTest
-    auto list = FileUtils::getInstance()->listFiles("fonts");
+    std::vector<std::string> listFonts = FileUtils::getInstance()->listFiles("fonts");
+    auto defaultPath = FileUtils::getInstance()->getDefaultResourceRootPath();
+    std::vector<std::string> list = FileUtils::getInstance()->listFiles (defaultPath);
 
     char cntBuffer[200] = { 0 };
-    snprintf(cntBuffer, 200, "%d", list.size());
+    snprintf(cntBuffer, 200, "'fonts/' %d, $defaultResourceRootPath %d",listFonts.size(), list.size());
+
+    for(int i=0;i<listFonts.size();i++)
+    {
+        CCLOG("fonts/ %d: \t %s", i, listFonts[i].c_str());
+    }
+
+    for(int i=0;i<list.size();i++)
+    {
+        CCLOG("defResRootPath %d: \t %s", i, list[i].c_str());
+    }
+
+
     cntLabel->setString(cntBuffer);
 
 }

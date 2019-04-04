@@ -35,8 +35,9 @@ set(UNIX True)
 set(APPLE True)
 set(IOS True)
 
-# Required as of cmake 2.8.10
-set(CMAKE_OSX_DEPLOYMENT_TARGET "" CACHE STRING "Force unset of the deployment target for iOS" FORCE)
+# support iOS on cmake 3.11+
+# cmake 3.11 milestone feature, https://gitlab.kitware.com/cmake/cmake/issues/17431 
+set(CMAKE_OSX_DEPLOYMENT_TARGET "8.0" CACHE STRING "set of the deployment target for iOS" FORCE)
 
 # Determine the cmake host system version so we know where to find the iOS SDKs
 find_program(CMAKE_UNAME uname /bin /usr/bin /usr/local/bin)
@@ -204,3 +205,12 @@ macro(find_host_package)
     set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
     set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 endmacro(find_host_package)
+
+# This macro lets you find library on the host system
+macro(find_host_library)
+    set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY NEVER)
+
+    find_library(${ARGN})
+
+    set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+endmacro(find_host_library)

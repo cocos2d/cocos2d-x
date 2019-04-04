@@ -8,7 +8,7 @@ CMake is an open-source, cross-platform family of tools designed to build, test 
   ```sh
   cmake --version
   ```
-if the CMake version is lower than 3.1, please upgrade.
+if the CMake version is lower than 3.6, please upgrade.
 
 2. You should use __out-of-source__ builds, this means you need to create a different directory than __cocos2d-x__ to execute the `cmake` command.
 
@@ -33,7 +33,14 @@ mkdir win32-build && cd win32-build
 cmake .. -G"Visual Studio 15 2017" -Tv141
 ```
 
-Execute `cmake --build .` to compile, or open __Cocos2d-x.sln__ in Explorer to use the generated project. 
+Execute `cmake --build .` to compile,
+```
+cmake --build . --config Debug
+cmake --build . --config Release
+```
+or open __Cocos2d-x.sln__ in Explorer to use the generated project. 
+
+If can't found `MSVCR110.dll` issue occurs to you, please install this [Visual C++ Runtime Libraries](https://www.microsoft.com/en-us/download/details.aspx?id=30679), when runing the cpp-tests project
 
 ### Generate macOS Project
 
@@ -53,7 +60,9 @@ cmake .. -GXcode -DCMAKE_TOOLCHAIN_FILE=../cmake/ios.toolchain.cmake
 open Cocos2d-x.xcodeproj
 ```
 
-The default build is for running on actual iOS hardware, if you want to run in the simulator, please add `-DIOS_PLATFORM=SIMULATOR` for architecture i386 or `-DIOS_PLATFORM=SIMULATOR64` for x86_64.
+The default build is for running on iOS device, if you want to run in the simulator, please add `-DIOS_PLATFORM=SIMULATOR` for architecture i386 or `-DIOS_PLATFORM=SIMULATOR64` for x86_64, but remember you can't run metal-support app in simulator because Apple limitation.
+
+if you want to sign iOS app in CMake, you will need to fill development team ID into `set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "")`, or select to sign in Xcode after project files generated.
 
 ### Android Studio
 
@@ -90,6 +99,11 @@ If you want to add cmake build arguments, please add it at [external Native Buil
 1. __`--build  <dir>`__, build a CMake-generated project binary tree, for example
 
     * `cmake --build ./msvc_build`, cmake will sellect corresponding build tools.
+
+## Tips
+
+1. Use `cmake ..` to refersh resources and code files, after you modify `Resources` or `CMakeLists.txt`.
+1. Don't need `CMAKE_BUILD_TYPE` options when `-G` Xcode or Visual Studio, CMake scripts will generate both configurations, so you can switch `Debug` and `Release` in IDE.
 
 ## Useful Links
 

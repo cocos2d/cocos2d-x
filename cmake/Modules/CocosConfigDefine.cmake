@@ -25,41 +25,35 @@
          set(MACOSX TRUE)
          set(PLATFORM_FOLDER mac)
      endif()
-else()
+ else()
      message(FATAL_ERROR "Unsupported platform, CMake will exit")
      return()
  endif()
 
- # build mode, Debug is default value
- if(NOT CMAKE_BUILD_TYPE)
-     if(DEBUG_MODE)
-         set(CMAKE_BUILD_TYPE Debug)
-     else()
-         set(CMAKE_BUILD_TYPE Release)
-     endif()
- endif()
+# generators that are capable of organizing into a hierarchy of folders
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+# simplify generator condition, please use them everywhere
+if(CMAKE_GENERATOR STREQUAL Xcode)
+    set(XCODE TRUE)
+elseif(CMAKE_GENERATOR MATCHES Visual)
+    set(VS TRUE)
+endif()
+message(STATUS "CMAKE_GENERATOR: ${CMAKE_GENERATOR}")
 
- if(CMAKE_GENERATOR)
-    # generators that are capable of organizing into a hierarchy of folders
-    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-    # simplify generator condition judgement
-    if(CMAKE_GENERATOR STREQUAL Xcode)
-        set(XCODE TRUE)
-    elseif(CMAKE_GENERATOR MATCHES Visual)
-        set(VS TRUE)
+if(CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Reset the configurations to what we need" FORCE)
+    message(STATUS "CMAKE_CONFIGURATION_TYPES: ${CMAKE_CONFIGURATION_TYPES}")
+else()
+    if(NOT CMAKE_BUILD_TYPE)
+        if(DEBUG_MODE) # build mode, Debug is default value
+            set(CMAKE_BUILD_TYPE Debug)
+        else()
+            set(CMAKE_BUILD_TYPE Release)
+        endif()
     endif()
-    # make configurations type keep same to cmake build type.
-    set(CMAKE_CONFIGURATION_TYPES "${CMAKE_BUILD_TYPE}" CACHE STRING "Reset the configurations to what we need" FORCE)
- endif()
- message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
+    message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
+endif()
 
-
-# custom target property for dll collect
-define_property(TARGET
-    PROPERTY CC_DEPEND_DLLS
-    BRIEF_DOCS "depend dlls of a target"
-    FULL_DOCS "use to save depend dlls of a target"
-)
 # custom target property for lua/js link
 define_property(TARGET
     PROPERTY CC_JS_DEPEND
@@ -96,7 +90,7 @@ endif()
 
  # Set macro definitions for special platforms
  function(use_cocos2dx_compile_define target)
-    target_compile_definitions(${target} PUBLIC "COCOS2D_DEBUG$<$<CONFIG:Debug>:=1>")
+    target_compile_definitions(${target} PUBLIC $<$<CONFIG:Debug>:COCOS2D_DEBUG=1>)
     if(APPLE)
         target_compile_definitions(${target} PUBLIC __APPLE__)
         target_compile_definitions(${target} PUBLIC USE_FILE32API)

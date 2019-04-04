@@ -31,9 +31,9 @@
 #ifndef SPINE_VERTEXEFFECT_H_
 #define SPINE_VERTEXEFFECT_H_
 
-#include <spine/dll.h>
-#include <spine/Skeleton.h>
-#include <spine/Color.h>
+#include "spine/dll.h"
+#include "spine/Skeleton.h"
+#include "spine/Color.h"
 
 #ifdef __cplusplus
 extern "C" {

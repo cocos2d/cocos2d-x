@@ -4294,6 +4294,14 @@ getCapInsetsBarRenderer : function (
 },
 
 /**
+ * @method updateVisualSlider
+ */
+updateVisualSlider : function (
+)
+{
+},
+
+/**
  * @method getCapInsetsProgressBarRenderer
  * @return {rect_object}
  */

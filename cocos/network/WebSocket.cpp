@@ -51,9 +51,10 @@
 #define WS_RX_BUFFER_SIZE (65536)
 #define WS_RESERVE_RECEIVE_BUFFER_SIZE (4096)
 
+//#define WEBSOCKETS_LOGGING
 #define  LOG_TAG    "WebSocket.cpp"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) && defined(WEBSOCKETS_LOGGING)
 // log, CCLOG aren't threadsafe, since we uses sub threads for parsing pcm data, threadsafe log output
 // is needed. Define the following macros (ALOGV, ALOGD, ALOGI, ALOGW, ALOGE) for threadsafe log output.
 
@@ -122,7 +123,7 @@ static void wsLog(const char * format, ...)
 
 // Since CCLOG isn't thread safe, we uses LOGD for multi-thread logging.
 #ifdef ANDROID
-    #if COCOS2D_DEBUG > 0
+    #ifdef WEBSOCKETS_LOGGING
         #define LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG,__VA_ARGS__)
     #else
         #define LOGD(...)
@@ -130,7 +131,7 @@ static void wsLog(const char * format, ...)
 
     #define LOGE(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG,__VA_ARGS__)
 #else
-    #if COCOS2D_DEBUG > 0
+    #ifdef WEBSOCKETS_LOGGING
         #define LOGD(fmt, ...) wsLog("D/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "", ##__VA_ARGS__)
     #else
         #define LOGD(fmt, ...)
@@ -139,9 +140,9 @@ static void wsLog(const char * format, ...)
     #define LOGE(fmt, ...) wsLog("E/" LOG_TAG " (" QUOTEME(__LINE__) "): " fmt "", ##__VA_ARGS__)
 #endif
 
+#ifdef WEBSOCKETS_LOGGING
 static void printWebSocketLog(int level, const char *line)
 {
-#if COCOS2D_DEBUG > 0
     static const char * const log_level_names[] = {
         "ERR",
         "WARN",
@@ -155,20 +156,18 @@ static void printWebSocketLog(int level, const char *line)
         "LATENCY",
     };
 
-    char buf[30] = {0};
-    int n;
+    const char* level_name = "";
 
-    for (n = 0; n < LLL_COUNT; n++) {
+    for (int n = 0; n < LLL_COUNT; n++) {
         if (level != (1 << n))
             continue;
-        sprintf(buf, "%s: ", log_level_names[n]);
+        level_name = log_level_names[n];
         break;
     }
 
-    LOGD("%s%s\n", buf, line);
-
-#endif // #if COCOS2D_DEBUG > 0
+    LOGD("%s: %s", level_name, line);
 }
+#endif // #ifdef WEBSOCKETS_LOGGING
 
 NS_NETWORK_BEGIN
 
@@ -389,8 +388,10 @@ void WsThreadHelper::onSubThreadLoop()
 
 void WsThreadHelper::onSubThreadStarted()
 {
+#ifdef WEBSOCKETS_LOGGING
     int log_level = LLL_ERR | LLL_WARN | LLL_NOTICE | LLL_INFO/* | LLL_DEBUG | LLL_PARSER | LLL_HEADER*/ | LLL_EXT | LLL_CLIENT | LLL_LATENCY;
     lws_set_log_level(log_level, printWebSocketLog);
+#endif
 
     memset(__defaultProtocols, 0, 2 * sizeof(struct lws_protocols));
 
@@ -922,7 +923,7 @@ void WebSocket::onClientOpenConnectionRequest()
 
         if (nullptr == _wsInstance)
         {
-            onConnectionError();
+            onConnectionError(nullptr, 0);
             return;
         }
     }
@@ -1197,11 +1198,19 @@ int WebSocket::onConnectionOpened()
     return 0;
 }
 
-int WebSocket::onConnectionError()
+int WebSocket::onConnectionError(void* in, ssize_t len)
 {
+    std::string error;
+
     {
         std::lock_guard<std::mutex> lk(_readyStateMutex);
-        LOGD("WebSocket (%p) onConnectionError, state: %d ...\n", this, (int)_readyState);
+        if (len > 0)
+        {
+            error.assign((char*)in, (char*)in + len);
+        }
+
+        LOGD("WebSocket (%p) onConnectionError, state: %d, error: %s\n", this, (int)_readyState, error.c_str());
+
         if (_readyState == State::CLOSED)
         {
             return 0;
@@ -1210,13 +1219,14 @@ int WebSocket::onConnectionError()
     }
 
     std::shared_ptr<std::atomic<bool>> isDestroyed = _isDestroyed;
-    __wsHelper->sendMessageToCocosThread([this, isDestroyed](){
+    __wsHelper->sendMessageToCocosThread([this, isDestroyed, error](){
         if (*isDestroyed)
         {
             LOGD("WebSocket instance was destroyed!\n");
         }
         else
         {
+            CCLOGERROR("WebSocket connection error: %s", error.c_str());
             _delegate->onError(this, ErrorCode::CONNECTION_FAILURE);
         }
     });
@@ -1301,7 +1311,7 @@ int WebSocket::onSocketCallback(struct lws *wsi,
             break;
 
         case LWS_CALLBACK_CLIENT_CONNECTION_ERROR:
-            ret = onConnectionError();
+            ret = onConnectionError(in, len);
             break;
 
         case LWS_CALLBACK_WSI_DESTROY:
@@ -1318,9 +1328,17 @@ int WebSocket::onSocketCallback(struct lws *wsi,
         case LWS_CALLBACK_CHANGE_MODE_POLL_FD:
         case LWS_CALLBACK_LOCK_POLL:
         case LWS_CALLBACK_UNLOCK_POLL:
+        case LWS_CALLBACK_ADD_POLL_FD:
+        case LWS_CALLBACK_DEL_POLL_FD:
+        case LWS_CALLBACK_CLOSED_CLIENT_HTTP:
+        case LWS_CALLBACK_CLIENT_FILTER_PRE_ESTABLISH:
+        case LWS_CALLBACK_CLIENT_APPEND_HANDSHAKE_HEADER:
             break;
         case LWS_CALLBACK_PROTOCOL_INIT:
             LOGD("protocol init...");
+            break;
+        case LWS_CALLBACK_WSI_CREATE:
+            LOGD("protocol create...");
             break;
         case LWS_CALLBACK_PROTOCOL_DESTROY:
             LOGD("protocol destroy...");
