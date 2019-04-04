@@ -70,7 +70,7 @@ public:
         addTest("EventDispatcher", []() { return new EventDispatcherTests(); });
         addTest("Effects - Advanced", []() { return new EffectAdvanceTests(); });
         addTest("Effects - Basic", [](){return new EffectTests(); });
-//        addTest("Extensions", []() { return new ExtensionsTests(); });
+        addTest("Extensions", []() { return new ExtensionsTests(); });
         addTest("FileUtils", []() { return new FileUtilsTests(); });
         addTest("Fonts", []() { return new FontTests(); });
         addTest("Interval", [](){return new IntervalTests(); });

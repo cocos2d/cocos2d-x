@@ -398,6 +398,7 @@ void Sprite::setProgramState(backend::ProgramState *programState)
 
     setVertexLayout();
     updateProgramState();
+    setMVPMatrixUniform();
 }
 
 void Sprite::setTexture(Texture2D *texture)
