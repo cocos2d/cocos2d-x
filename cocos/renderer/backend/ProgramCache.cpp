@@ -119,7 +119,7 @@ void ProgramCache::removeUnusedProgram()
     }
 }
 
-void ProgramCache::removeAllProgram()
+void ProgramCache::removeAllPrograms()
 {
     for (auto& program : _cachedPrograms)
     {

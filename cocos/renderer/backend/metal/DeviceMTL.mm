@@ -88,7 +88,7 @@ Texture* DeviceMTL::newTexture(const TextureDescriptor& descriptor)
 
 ShaderModule* DeviceMTL::newShaderModule(ShaderStage stage, const std::string& source)
 {
-    return new (std::nothrow) ShaderModuleMTL(_mtlDevice, stage, source);;
+    return new (std::nothrow) ShaderModuleMTL(_mtlDevice, stage, source);
 }
 
 DepthStencilState* DeviceMTL::createDepthStencilState(const DepthStencilDescriptor& descriptor)

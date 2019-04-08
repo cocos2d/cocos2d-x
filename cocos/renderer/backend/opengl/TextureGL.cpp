@@ -51,7 +51,8 @@ Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : Texture2D(descri
 
 Texture2DGL::~Texture2DGL()
 {
-    releaseGLTexture();
+    if (_textureInfo.texture)
+        glDeleteTextures(1, &_textureInfo.texture);
 }
 
 void Texture2DGL::releaseGLTexture()
