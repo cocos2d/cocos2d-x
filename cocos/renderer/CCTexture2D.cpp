@@ -897,9 +897,10 @@ void Texture2D::removeSpriteFrameCapInset(SpriteFrame* spriteFrame)
 void Texture2D::setAlphaTexture(Texture2D* alphaTexture)
 {
     if (alphaTexture != nullptr) {
-        this->_alphaTexture = alphaTexture;
-        this->_alphaTexture->retain();
-        this->_hasPremultipliedAlpha = true; // PremultipliedAlpha should be true.
+        alphaTexture->retain();
+        CC_SAFE_RELEASE(_alphaTexture);
+        _alphaTexture = alphaTexture;
+        _hasPremultipliedAlpha = true; // PremultipliedAlpha should be true.
     }
 }
 
