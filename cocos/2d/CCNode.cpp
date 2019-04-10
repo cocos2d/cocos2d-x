@@ -1189,7 +1189,7 @@ void Node::sortAllChildren()
 void Node::draw()
 {
     auto renderer = _director->getRenderer();
-    draw(renderer, _modelViewTransform, true);
+    draw(renderer, _modelViewTransform, FLAGS_TRANSFORM_DIRTY);
 }
 
 void Node::draw(Renderer* /*renderer*/, const Mat4 & /*transform*/, uint32_t /*flags*/)
@@ -1200,7 +1200,7 @@ void Node::visit()
 {
     auto renderer = _director->getRenderer();
     auto& parentTransform = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    visit(renderer, parentTransform, true);
+    visit(renderer, parentTransform, FLAGS_TRANSFORM_DIRTY);
 }
 
 uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFlags)

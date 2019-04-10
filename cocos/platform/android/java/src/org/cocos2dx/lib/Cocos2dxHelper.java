@@ -25,7 +25,9 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.graphics.Rect;
 import android.media.AudioManager;
 import android.app.Activity;
 import android.content.ComponentName;
@@ -47,6 +49,11 @@ import android.preference.PreferenceManager.OnActivityResultListener;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.DisplayCutout;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
+import android.view.ViewConfiguration;
+import android.view.Window;
 import android.view.WindowManager;
 
 import com.android.vending.expansion.zipfile.APKExpansionSupport;
@@ -61,6 +68,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -750,6 +758,100 @@ public class Cocos2dxHelper {
             e.printStackTrace();
             return -1;
         }
+    }
+
+    /**
+     * Returns whether the screen has a round shape. Apps may choose to change styling based
+     * on this property, such as the alignment or layout of text or informational icons.
+     *
+     * @return true if the screen is rounded, false otherwise
+     */
+    public static boolean isScreenRound() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (sActivity.getResources().getConfiguration().isScreenRound()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns whether the window is always allowed to extend into the DisplayCutout areas on the short edges of the screen.
+     *
+     * @return true if the window in display cutout mode on the short edges of the screen, false otherwise
+     */
+    @SuppressLint("InlinedApi")
+    public static boolean isCutoutEnabled() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            WindowManager.LayoutParams lp = sActivity.getWindow().getAttributes();
+            return lp.layoutInDisplayCutoutMode == WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns safe insets array.
+     *
+     * @return array of int with safe insets values
+     */
+    @SuppressLint("NewApi") 
+    public static int[] getSafeInsets() {
+        final int[] safeInsets = new int[]{0, 0, 0, 0};
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            Window cocosWindow = sActivity.getWindow();
+            DisplayCutout displayCutout = cocosWindow.getDecorView().getRootWindowInsets().getDisplayCutout();
+            // Judge whether it is cutouts (aka notch) screen phone by judge cutout equle to null
+            if (displayCutout != null) {
+                List<Rect> rects = displayCutout.getBoundingRects();
+                // Judge whether it is cutouts (aka notch) screen phone by judge cutout rects is null or zero size
+                if (rects != null && rects.size() != 0) {
+                    safeInsets[0] = displayCutout.getSafeInsetBottom();
+                    safeInsets[1] = displayCutout.getSafeInsetLeft();
+                    safeInsets[2] = displayCutout.getSafeInsetRight();
+                    safeInsets[3] = displayCutout.getSafeInsetTop();
+                }
+            }
+        }
+
+        return safeInsets;
+    }
+
+    /**
+     * Queries about whether any physical keys exist on the
+     * any keyboard attached to the device and returns <code>true</code>
+     * if the device does not have physical keys
+     *
+     * @return Returns <code>true</code> if the device have no physical keys,
+     * otherwise <code>false</code> will returned.
+     */
+    public static boolean hasSoftKeys() {
+        boolean hasSoftwareKeys = true;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            Display display = sActivity.getWindowManager().getDefaultDisplay();
+
+            DisplayMetrics realDisplayMetrics = new DisplayMetrics();
+            display.getRealMetrics(realDisplayMetrics);
+
+            int realHeight = realDisplayMetrics.heightPixels;
+            int realWidth = realDisplayMetrics.widthPixels;
+
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            display.getMetrics(displayMetrics);
+
+            int displayHeight = displayMetrics.heightPixels;
+            int displayWidth = displayMetrics.widthPixels;
+
+            hasSoftwareKeys = (realWidth - displayWidth) > 0 ||
+                    (realHeight - displayHeight) > 0;
+        } else {
+            boolean hasMenuKey = ViewConfiguration.get(sActivity).hasPermanentMenuKey();
+            boolean hasBackKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_BACK);
+            hasSoftwareKeys = !hasMenuKey && !hasBackKey;
+        }
+        return hasSoftwareKeys;
     }
 
     //Enhance API modification end     

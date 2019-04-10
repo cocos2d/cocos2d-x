@@ -1143,6 +1143,7 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     auto textDef = textDefinition;
     auto contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
     textDef._fontSize *= contentScaleFactor;
+    textDef._lineSpacing *= contentScaleFactor;
     textDef._dimensions.width *= contentScaleFactor;
     textDef._dimensions.height *= contentScaleFactor;
     textDef._stroke._strokeSize *= contentScaleFactor;
@@ -1498,10 +1499,12 @@ void Texture2D::removeSpriteFrameCapInset(SpriteFrame* spriteFrame)
 /// halx99 spec, ANDROID ETC1 ALPHA supports.
 void Texture2D::setAlphaTexture(Texture2D* alphaTexture)
 {
-    if (alphaTexture != nullptr) {
-        this->_alphaTexture = alphaTexture;
-        this->_alphaTexture->retain();
-        this->_hasPremultipliedAlpha = true; // PremultipliedAlpha should be true.
+    if (alphaTexture != nullptr)
+    {
+        alphaTexture->retain();
+        CC_SAFE_RELEASE(_alphaTexture);
+        _alphaTexture = alphaTexture;
+        _hasPremultipliedAlpha = true; // PremultipliedAlpha should be true.
     }
 }
 

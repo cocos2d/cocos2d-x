@@ -24,9 +24,9 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.6)
 
-set(APP_NAME TemplateJS)
+set(APP_NAME HelloJavascript)
 
 project(${APP_NAME})
 
@@ -35,10 +35,8 @@ set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/frameworks/cocos2d-x)
 set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
 include(CocosBuildSet)
-if(NOT USE_COCOS_PREBUILT)
-    set(BUILD_JS_LIBS ON)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-endif()
+set(BUILD_JS_LIBS ON)
+add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 
 # script and source files info, not need to compile
 set(res_main_files
@@ -65,13 +63,6 @@ endif()
 # record sources, headers
 set(GAME_SOURCE ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp)
 set(GAME_HEADER ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.h)
-
-# sources need to compile info, include dirs and source files
-include_directories(
-        ${RUNTIME_SRC_ROOT}/Classes
-        ${COCOS2DX_ROOT_PATH}/cocos/editor-support
-        ${COCOS2DX_ROOT_PATH}/external/spidermonkey/include/${PLATFORM_FOLDER}
-)
 
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
@@ -122,13 +113,21 @@ endif()
 set(APP_SRC ${GAME_HEADER} ${GAME_SOURCE})
 
 # mark app complie info and libs info
-cocos_build_app(${APP_NAME}
-                APP_SRC "${APP_SRC}"
-                DEPEND_COMMON_LIBS "jscocos2d" "cocos2d"
-                DEPEND_ANDROID_LIBS "cocos2d_android"
-                )
+if(NOT ANDROID)
+    add_executable(${APP_NAME} ${APP_SRC})
+else()
+    add_library(${APP_NAME} SHARED ${APP_SRC})
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/platform/android ${ENGINE_BINARY_PATH}/cocos/platform)
+    target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
+    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings/proj.android ${ENGINE_BINARY_PATH}/cocos/js-android)
+    target_link_libraries(${APP_NAME} -Wl,--whole-archive js_android_spec -Wl,--no-whole-archive)
+endif()
+
+target_link_libraries(${APP_NAME} jscocos2d)
+target_include_directories(${APP_NAME} PRIVATE ${RUNTIME_SRC_ROOT}/Classes)
 
 # mark app resources, resource will be copy auto after mark
+setup_cocos_app_config(${APP_NAME})
 if(APPLE)
     set_target_properties(${APP_NAME} PROPERTIES RESOURCE "${APP_UI_RES}")
     if(MACOSX)
@@ -138,15 +137,18 @@ if(APPLE)
     elseif(IOS)
         cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in")
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
+        set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "")
+        set_xcode_property(${APP_NAME} CODE_SIGN_IDENTITY "iPhone Developer")
     endif()
 elseif(WINDOWS)
-    cocos_copy_target_dll(${APP_NAME} COPY_TO ${APP_RES_DIR})
+    cocos_copy_target_dll(${APP_NAME})
 endif()
 # copy resource on linux or WINDOWS
 if(LINUX OR WINDOWS)
-    cocos_copy_res(COPY_TO ${APP_RES_DIR} FILES ${res_main_files})
-    cocos_copy_res(COPY_TO ${APP_RES_DIR}/res FOLDERS ${res_res_folders})
-    cocos_copy_res(COPY_TO ${APP_RES_DIR}/src FOLDERS ${res_src_folders})
-    cocos_copy_res(COPY_TO ${APP_RES_DIR}/script FOLDERS ${res_script_folders})
+    set(APP_RES_DIR "$<TARGET_FILE_DIR:${APP_NAME}>/Resources")
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR} FILES ${res_main_files})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/res FOLDERS ${res_res_folders})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/src FOLDERS ${res_src_folders})
+    cocos_copy_target_res(${APP_NAME} COPY_TO ${APP_RES_DIR}/script FOLDERS ${res_script_folders})
 endif()
 

@@ -270,6 +270,7 @@ void PhysicsWorld::debugDraw()
     if (_debugDraw == nullptr)
     {
         _debugDraw = DrawNode::create();
+        _debugDraw->setIsolated(true);
         _debugDraw->retain();
         Director::getInstance()->getRunningScene()->addChild(_debugDraw);
     }
@@ -700,6 +701,10 @@ void PhysicsWorld::updateJoints()
         doRemoveJoint(joint);
     }
     _delayRemoveJoints.clear();
+
+    for (auto joint : _joints) {
+        joint->flushDelayTasks();
+    }
 }
 
 void PhysicsWorld::removeShape(PhysicsShape* shape)
@@ -871,6 +876,9 @@ void PhysicsWorld::step(float delta)
 
 void PhysicsWorld::update(float delta, bool userCall/* = false*/)
 {
+
+    if(_preUpdateCallback) _preUpdateCallback(); //fix #11154
+
     if(!_delayAddBodies.empty())
     {
         updateBodies();
@@ -879,7 +887,7 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
     {
         updateBodies();
     }
-    
+
     auto sceneToWorldTransform = _scene->getNodeToParentTransform();
     beforeSimulation(_scene, sceneToWorldTransform, 1.f, 1.f, 0.f);
 
@@ -887,12 +895,12 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
     {
         updateJoints();
     }
-    
+
     if (delta < FLT_EPSILON)
     {
         return;
     }
-    
+
     if (userCall)
     {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
@@ -949,6 +957,8 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
     // Update physics position, should loop as the same sequence as node tree.
     // PhysicsWorld::afterSimulation() will depend on the sequence.
     afterSimulation(_scene, sceneToWorldTransform, 0.f);
+
+    if(_postUpdateCallback) _postUpdateCallback(); //fix #11154
 }
 
 PhysicsWorld* PhysicsWorld::construct(Scene* scene)
@@ -1030,6 +1040,16 @@ void PhysicsWorld::afterSimulation(Node *node, const Mat4& parentToWorldTransfor
 
     for (auto child : node->getChildren())
         afterSimulation(child, nodeToWorldTransform, nodeRotation);
+}
+
+void PhysicsWorld::setPostUpdateCallback(const std::function<void()> &callback)
+{
+    _postUpdateCallback = callback;
+}
+
+void PhysicsWorld::setPreUpdateCallback(const std::function<void()> &callback)
+{
+    _preUpdateCallback = callback;
 }
 
 NS_CC_END

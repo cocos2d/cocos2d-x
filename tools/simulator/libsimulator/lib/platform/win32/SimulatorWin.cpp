@@ -43,6 +43,14 @@
 
 #include "SimulatorWin.h"
 
+#ifndef GLFW_EXPOSE_NATIVE_WIN32
+#define GLFW_EXPOSE_NATIVE_WIN32
+#endif
+#ifndef GLFW_EXPOSE_NATIVE_WGL
+#define GLFW_EXPOSE_NATIVE_WGL
+#endif
+/* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */
+
 #include "glfw3.h"
 #include "glfw3native.h"
 

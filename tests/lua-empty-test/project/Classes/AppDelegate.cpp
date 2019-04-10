@@ -42,7 +42,6 @@ AppDelegate::~AppDelegate()
 {
     // end simple audio engine here, or it may crashed on win32
     SimpleAudioEngine::getInstance()->end();
-    //CCScriptEngineManager::destroyInstance();
 }
 
 void AppDelegate::initGLContextAttrs()

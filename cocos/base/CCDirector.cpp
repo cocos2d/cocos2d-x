@@ -68,10 +68,6 @@ THE SOFTWARE.
 #include "base/CCScriptSupport.h"
 #endif
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.h"
-#endif
-
 /**
  Position of the FPS
  
@@ -115,53 +111,18 @@ Director* Director::getInstance()
 }
 
 Director::Director()
-: _deltaTimePassedByCaller(false)
-, _isStatusLabelUpdated(true)
-, _invalid(true)
 {
 }
 
-bool Director::init(void)
+bool Director::init()
 {
     setDefaultValues();
-
-    // scenes
-    _runningScene = nullptr;
-    _nextScene = nullptr;
-
-    _notificationNode = nullptr;
 
     _scenesStack.reserve(15);
 
     // FPS
-    _accumDt = 0.0f;
-    _frameRate = 0.0f;
-    _FPSLabel = _drawnBatchesLabel = _drawnVerticesLabel = nullptr;
-    _totalFrames = 0;
     _lastUpdate = std::chrono::steady_clock::now();
     
-    _secondsPerFrame = 1.0f;
-    _frames = 0;
-
-    // paused ?
-    _paused = false;
-
-    // purge ?
-    _purgeDirectorInNextLoop = false;
-    
-    // restart ?
-    _restartDirectorInNextLoop = false;
-    
-    // invalid ?
-    _invalid = false;
-
-    _winSizeInPoints = Size::ZERO;
-
-    _openGLView = nullptr;
-    _defaultFBO = nullptr;
-    
-    _contentScaleFactor = 1.0f;
-
     _console = new (std::nothrow) Console;
 
     // scheduler
@@ -196,13 +157,10 @@ bool Director::init(void)
     _renderer = new (std::nothrow) Renderer;
     RenderState::initialize();
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    EngineDataManager::init();
-#endif
     return true;
 }
 
-Director::~Director(void)
+Director::~Director()
 {
     CCLOGINFO("deallocing Director: %p", this);
 
@@ -214,7 +172,6 @@ Director::~Director(void)
     CC_SAFE_RELEASE(_notificationNode);
     CC_SAFE_RELEASE(_scheduler);
     CC_SAFE_RELEASE(_actionManager);
-    CC_SAFE_DELETE(_defaultFBO);
 
     CC_SAFE_RELEASE(_beforeSetNextScene);
     CC_SAFE_RELEASE(_afterSetNextScene);
@@ -235,6 +192,14 @@ Director::~Director(void)
     ObjectFactory::destroyInstance();
 
     s_SharedDirector = nullptr;
+
+#if CC_ENABLE_SCRIPT_BINDING
+    ScriptEngineManager::destroyInstance();
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    exit(0);
+#endif
 }
 
 void Director::setDefaultValues(void)
@@ -376,6 +341,7 @@ void Director::calculateDeltaTime()
     {
         _deltaTime = 0;
         _nextDeltaTimeZero = false;
+        _lastUpdate = std::chrono::steady_clock::now();
     }
     else
     {
@@ -436,9 +402,6 @@ void Director::setOpenGLView(GLView *openGLView)
         {
             _eventDispatcher->setEnabled(true);
         }
-        
-        _defaultFBO = experimental::FrameBuffer::getOrCreateDefaultFBO(_openGLView);
-        _defaultFBO->retain();
     }
 }
 
@@ -770,9 +733,11 @@ void Director::setDepthTest(bool on)
 void Director::setClearColor(const Color4F& clearColor)
 {
     _renderer->setClearColor(clearColor);
-    auto defaultFBO = experimental::FrameBuffer::getOrCreateDefaultFBO(_openGLView);
-    
-    if(defaultFBO) defaultFBO->setClearColor(clearColor);
+}
+
+const Color4F& Director::getClearColor() const
+{
+    return _renderer->getClearColor();
 }
 
 static void GLToClipTransform(Mat4 *transformOut)
@@ -817,17 +782,17 @@ Vec2 Director::convertToUI(const Vec2& glPoint)
     Vec4 glCoord(glPoint.x, glPoint.y, 0.0, 1);
     transform.transformVector(glCoord, &clipCoord);
 
-	/*
-	BUG-FIX #5506
+    /*
+    BUG-FIX #5506
 
-	a = (Vx, Vy, Vz, 1)
-	b = (a×M)T
-	Out = 1 ⁄ bw(bx, by, bz)
-	*/
+    a = (Vx, Vy, Vz, 1)
+    b = (a×M)T
+    Out = 1 ⁄ bw(bx, by, bz)
+    */
 	
-	clipCoord.x = clipCoord.x / clipCoord.w;
-	clipCoord.y = clipCoord.y / clipCoord.w;
-	clipCoord.z = clipCoord.z / clipCoord.w;
+    clipCoord.x = clipCoord.x / clipCoord.w;
+    clipCoord.y = clipCoord.y / clipCoord.w;
+    clipCoord.z = clipCoord.z / clipCoord.w;
 
     Size glSize = _openGLView->getDesignResolutionSize();
     float factor = 1.0f / glCoord.w;
@@ -1161,10 +1126,7 @@ void Director::purgeDirector()
         _openGLView->end();
         _openGLView = nullptr;
     }
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    EngineDataManager::destroy();
-#endif
+    
     // delete Director
     release();
 }
@@ -1246,7 +1208,7 @@ void Director::pause()
     _oldAnimationInterval = _animationInterval;
 
     // when paused, don't consume CPU
-    setAnimationInterval(1 / 4.0, SetIntervalReason::BY_DIRECTOR_PAUSE);
+    setAnimationInterval(1 / 4.0);
     _paused = true;
 }
 
@@ -1257,7 +1219,7 @@ void Director::resume()
         return;
     }
 
-    setAnimationInterval(_oldAnimationInterval, SetIntervalReason::BY_ENGINE);
+    setAnimationInterval(_oldAnimationInterval);
 
     _paused = false;
     _deltaTime = 0;
@@ -1436,18 +1398,19 @@ void Director::setContentScaleFactor(float scaleFactor)
 
 void Director::setNotificationNode(Node *node)
 {
-	if (_notificationNode != nullptr){
-		_notificationNode->onExitTransitionDidStart();
-		_notificationNode->onExit();
-		_notificationNode->cleanup();
-	}
-	CC_SAFE_RELEASE(_notificationNode);
+    if (_notificationNode != nullptr)
+    {
+        _notificationNode->onExitTransitionDidStart();
+        _notificationNode->onExit();
+        _notificationNode->cleanup();
+    }
+    CC_SAFE_RELEASE(_notificationNode);
 
-	_notificationNode = node;
-	if (node == nullptr)
-		return;
-	_notificationNode->onEnter();
-	_notificationNode->onEnterTransitionDidFinish();
+    _notificationNode = node;
+    if (node == nullptr)
+        return;
+    _notificationNode->onEnter();
+    _notificationNode->onEnterTransitionDidFinish();
     CC_SAFE_RETAIN(_notificationNode);
 }
 
@@ -1483,18 +1446,13 @@ void Director::setEventDispatcher(EventDispatcher* dispatcher)
 
 void Director::startAnimation()
 {
-    startAnimation(SetIntervalReason::BY_ENGINE);
-}
-
-void Director::startAnimation(SetIntervalReason reason)
-{
     _lastUpdate = std::chrono::steady_clock::now();
 
     _invalid = false;
 
     _cocos2d_thread_id = std::this_thread::get_id();
 
-    Application::getInstance()->setAnimationInterval(_animationInterval, reason);
+    Application::getInstance()->setAnimationInterval(_animationInterval);
 
     // fix issue #3509, skip one fps to avoid incorrect time calculation.
     setNextDeltaTimeZero(true);
@@ -1535,16 +1493,11 @@ void Director::stopAnimation()
 
 void Director::setAnimationInterval(float interval)
 {
-    setAnimationInterval(interval, SetIntervalReason::BY_GAME);
-}
-
-void Director::setAnimationInterval(float interval, SetIntervalReason reason)
-{
     _animationInterval = interval;
     if (! _invalid)
     {
         stopAnimation();
-        startAnimation(reason);
+        startAnimation();
     }
 }
 

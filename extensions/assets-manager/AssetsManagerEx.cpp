@@ -989,7 +989,7 @@ void AssetsManagerEx::fileSuccess(const std::string &customId, const std::string
         // Reduce count only when unit found in _downloadUnits
         _totalWaitToDownload--;
         
-        _percentByFile = 100 * (float)(_totalToDownload - _totalWaitToDownload) / _totalToDownload;
+        _percent = _percentByFile = 100 * (float)(_totalToDownload - _totalWaitToDownload) / _totalToDownload;
         // Notify progression event
         dispatchUpdateEvent(EventAssetsManagerEx::EventCode::UPDATE_PROGRESSION, "");
     }

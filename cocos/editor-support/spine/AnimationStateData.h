@@ -31,9 +31,9 @@
 #ifndef SPINE_ANIMATIONSTATEDATA_H_
 #define SPINE_ANIMATIONSTATEDATA_H_
 
-#include <spine/dll.h>
-#include <spine/Animation.h>
-#include <spine/SkeletonData.h>
+#include "spine/dll.h"
+#include "spine/Animation.h"
+#include "spine/SkeletonData.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -4457,6 +4457,10 @@
 		DABC9FAA19E7DFA900FA252C /* CCClippingRectangleNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DABC9FA719E7DFA900FA252C /* CCClippingRectangleNode.cpp */; };
 		DABC9FAB19E7DFA900FA252C /* CCClippingRectangleNode.h in Headers */ = {isa = PBXBuildFile; fileRef = DABC9FA819E7DFA900FA252C /* CCClippingRectangleNode.h */; };
 		DABC9FAC19E7DFA900FA252C /* CCClippingRectangleNode.h in Headers */ = {isa = PBXBuildFile; fileRef = DABC9FA819E7DFA900FA252C /* CCClippingRectangleNode.h */; };
+		ED682BBA213F5FC7001BF6CB /* libuv_a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED682BB9213F5FC6001BF6CB /* libuv_a.a */; };
+		ED682BC1213F63CB001BF6CB /* libuv_a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED682BC0213F63CB001BF6CB /* libuv_a.a */; };
+		ED682BC3213F6C7A001BF6CB /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED682BC2213F6C7A001BF6CB /* libwebsockets.a */; };
+		ED682BC5213F6CBF001BF6CB /* libuv_a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED682BC4213F6CBE001BF6CB /* libuv_a.a */; };
 		ED74D7691A5B8A2600157FD4 /* CCPhysicsHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = ED74D7681A5B8A2600157FD4 /* CCPhysicsHelper.h */; };
 		ED74D76A1A5B8A2600157FD4 /* CCPhysicsHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = ED74D7681A5B8A2600157FD4 /* CCPhysicsHelper.h */; };
 		ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
@@ -6072,6 +6076,10 @@
 		DA8C62A119E52C6400000516 /* ioapi_mem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi_mem.h; sourceTree = "<group>"; };
 		DABC9FA719E7DFA900FA252C /* CCClippingRectangleNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCClippingRectangleNode.cpp; sourceTree = "<group>"; };
 		DABC9FA819E7DFA900FA252C /* CCClippingRectangleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClippingRectangleNode.h; sourceTree = "<group>"; };
+		ED682BB9213F5FC6001BF6CB /* libuv_a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv_a.a; path = ../external/uv/prebuilt/mac/libuv_a.a; sourceTree = "<group>"; };
+		ED682BC0213F63CB001BF6CB /* libuv_a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv_a.a; path = ../external/uv/prebuilt/ios/libuv_a.a; sourceTree = "<group>"; };
+		ED682BC2213F6C7A001BF6CB /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../external/websockets/prebuilt/tvos/libwebsockets.a; sourceTree = "<group>"; };
+		ED682BC4213F6CBE001BF6CB /* libuv_a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv_a.a; path = ../external/uv/prebuilt/tvos/libuv_a.a; sourceTree = "<group>"; };
 		ED74D7681A5B8A2600157FD4 /* CCPhysicsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsHelper.h; sourceTree = "<group>"; };
 		ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCNodeGrid.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeGrid.h; sourceTree = "<group>"; };
@@ -6082,6 +6090,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED682BBA213F5FC7001BF6CB /* libuv_a.a in Frameworks */,
 				46BDE4A81FA32D3400104C05 /* libbox2d.a in Frameworks */,
 				46270FA41E1CC6A200AAA098 /* libcrypto.a in Frameworks */,
 				468A197D1EF3BA6500ECA675 /* libMiniCL.a in Frameworks */,
@@ -6110,6 +6119,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED682BC5213F6CBF001BF6CB /* libuv_a.a in Frameworks */,
+				ED682BC3213F6C7A001BF6CB /* libwebsockets.a in Frameworks */,
 				507B3D071C31BDD30067B53E /* libwebsockets.a in Frameworks */,
 				507B3D081C31BDD30067B53E /* libssl.a in Frameworks */,
 				507B3D091C31BDD30067B53E /* Foundation.framework in Frameworks */,
@@ -6127,6 +6138,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED682BC1213F63CB001BF6CB /* libuv_a.a in Frameworks */,
 				46BDE4AA1FA3316A00104C05 /* libbox2d.a in Frameworks */,
 				466F05251EF7659300B80080 /* libBulletCollision.a in Frameworks */,
 				466F05261EF7659300B80080 /* libBulletDynamics.a in Frameworks */,
@@ -6225,6 +6237,10 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ED682BC4213F6CBE001BF6CB /* libuv_a.a */,
+				ED682BC2213F6C7A001BF6CB /* libwebsockets.a */,
+				ED682BB9213F5FC6001BF6CB /* libuv_a.a */,
+				ED682BC0213F63CB001BF6CB /* libuv_a.a */,
 				46BDE4A91FA3316A00104C05 /* libbox2d.a */,
 				46BDE4A71FA32D3400104C05 /* libbox2d.a */,
 				466F05201EF7659300B80080 /* libBulletCollision.a */,
@@ -11555,7 +11571,7 @@
 		1551A336158F2AB200E66CFE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "";
 			};
 			buildConfigurationList = 1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "cocos2d_libs" */;
@@ -13599,12 +13615,18 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -13648,12 +13670,18 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -13690,7 +13718,8 @@
 		1551A34D158F2AB200E66CFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_EXTENSION = a;
 				EXECUTABLE_PREFIX = "";
@@ -13719,17 +13748,19 @@
 					"$(SRCROOT)/../external/openssl/prebuilt/mac",
 					"$(SRCROOT)/../external/bullet/prebuilt/mac",
 					"$(SRCROOT)/../external/Box2D/prebuilt/mac",
+					"$(SRCROOT)/../external/uv/prebuilt/mac",
 				);
 				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = "-llibsql3";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/curl/include/mac $(SRCROOT)/../external/freetype2/include/mac/freetype2 $(SRCROOT)/../external/openssl/include/mac $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/bullet/include/bullet";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/curl/include/mac $(SRCROOT)/../external/freetype2/include/mac/freetype2 $(SRCROOT)/../external/openssl/include/mac $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/uv/include";
 			};
 			name = Debug;
 		};
 		1551A34E158F2AB200E66CFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_EXTENSION = a;
 				EXECUTABLE_PREFIX = "";
@@ -13759,10 +13790,11 @@
 					"$(SRCROOT)/../external/openssl/prebuilt/mac",
 					"$(SRCROOT)/../external/bullet/prebuilt/mac",
 					"$(SRCROOT)/../external/Box2D/prebuilt/mac",
+					"$(SRCROOT)/../external/uv/prebuilt/mac",
 				);
 				MACH_O_TYPE = staticlib;
 				OTHER_LDFLAGS = "-llibsql3";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/curl/include/mac $(SRCROOT)/../external/freetype2/include/mac/freetype2 $(SRCROOT)/../external/openssl/include/mac $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/bullet/include/bullet";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/png/include/mac $(SRCROOT)/../external/tiff/include/mac $(SRCROOT)/../external/webp/include/mac $(SRCROOT)/../external/jpeg/include/mac $(SRCROOT)/../external/freetype2/include/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/websockets/include/mac $(SRCROOT)/../external/curl/include/mac $(SRCROOT)/../external/freetype2/include/mac/freetype2 $(SRCROOT)/../external/openssl/include/mac $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/uv/include";
 			};
 			name = Release;
 		};
@@ -13770,6 +13802,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				EXECUTABLE_PREFIX = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "../cocos/platform/ios/cocos2d-prefix.pch";
@@ -13790,12 +13823,13 @@
 					"\"$(SRCROOT)/../external/websockets/prebuilt/tvos\"",
 					"\"$(SRCROOT)/../external/chipmunk/prebuilt/tvos\"",
 					"\"$(SRCROOT)/../external/openssl/prebuilt/tvos\"",
+					"$(SRCROOT)/../external/uv/prebuilt/tvos",
 				);
 				OTHER_LDFLAGS = "-llibsql3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/tvos $(SRCROOT)/../external/curl/include/tvos $(SRCROOT)/../external/webp/include/tvos $(SRCROOT)/../external/tiff/include/tvos $(SRCROOT)/../external/jpeg/include/tvos $(SRCROOT)/../external/png/include/tvos $(SRCROOT)/../external/websockets/include/tvos $(SRCROOT)/../external/freetype2/include/tvos/freetype2 $(SRCROOT)/../external/openssl/include/tvos";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/tvos $(SRCROOT)/../external/curl/include/tvos $(SRCROOT)/../external/webp/include/tvos $(SRCROOT)/../external/tiff/include/tvos $(SRCROOT)/../external/jpeg/include/tvos $(SRCROOT)/../external/png/include/tvos $(SRCROOT)/../external/websockets/include/tvos $(SRCROOT)/../external/freetype2/include/tvos/freetype2 $(SRCROOT)/../external/openssl/include/tvos $(SRCROOT)/../external/uv/include";
 			};
 			name = Debug;
 		};
@@ -13803,6 +13837,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -13824,19 +13859,21 @@
 					"\"$(SRCROOT)/../external/websockets/prebuilt/tvos\"",
 					"\"$(SRCROOT)/../external/chipmunk/prebuilt/tvos\"",
 					"\"$(SRCROOT)/../external/openssl/prebuilt/tvos\"",
+					"$(SRCROOT)/../external/uv/prebuilt/tvos",
 				);
 				OTHER_LDFLAGS = "-llibsql3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/tvos $(SRCROOT)/../external/curl/include/tvos $(SRCROOT)/../external/webp/include/tvos $(SRCROOT)/../external/tiff/include/tvos $(SRCROOT)/../external/jpeg/include/tvos $(SRCROOT)/../external/png/include/tvos $(SRCROOT)/../external/websockets/include/tvos $(SRCROOT)/../external/freetype2/include/tvos/freetype2 $(SRCROOT)/../external/openssl/include/tvos";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/tvos $(SRCROOT)/../external/curl/include/tvos $(SRCROOT)/../external/webp/include/tvos $(SRCROOT)/../external/tiff/include/tvos $(SRCROOT)/../external/jpeg/include/tvos $(SRCROOT)/../external/png/include/tvos $(SRCROOT)/../external/websockets/include/tvos $(SRCROOT)/../external/freetype2/include/tvos/freetype2 $(SRCROOT)/../external/openssl/include/tvos $(SRCROOT)/../external/uv/include";
 			};
 			name = Release;
 		};
 		A07A4D621783777C0073F6A7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				ENABLE_BITCODE = NO;
 				EXECUTABLE_PREFIX = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -13860,19 +13897,20 @@
 					"\"$(SRCROOT)/../external/openssl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/bullet/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/Box2D/prebuilt/ios\"",
+					"$(SRCROOT)/../external/uv/prebuilt/ios",
 				);
 				OTHER_LDFLAGS = "-llibsql3";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios/freetype2 $(SRCROOT)/../external/openssl/include/ios $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/bullet/include";
-				VALID_ARCHS = "arm64 armv7";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios/freetype2 $(SRCROOT)/../external/openssl/include/ios $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/uv/include";
 			};
 			name = Debug;
 		};
 		A07A4D631783777C0073F6A7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				ENABLE_BITCODE = NO;
 				EXECUTABLE_PREFIX = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
@@ -13897,12 +13935,12 @@
 					"\"$(SRCROOT)/../external/openssl/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/bullet/prebuilt/ios\"",
 					"\"$(SRCROOT)/../external/Box2D/prebuilt/ios\"",
+					"$(SRCROOT)/../external/uv/prebuilt/ios",
 				);
 				OTHER_LDFLAGS = "-llibsql3";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios/freetype2 $(SRCROOT)/../external/openssl/include/ios $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/bullet/include";
-				VALID_ARCHS = "arm64 armv7";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../external/freetype2/include/ios $(SRCROOT)/../external/curl/include/ios $(SRCROOT)/../external/webp/include/ios $(SRCROOT)/../external/tiff/include/ios $(SRCROOT)/../external/jpeg/include/ios $(SRCROOT)/../external/png/include/ios $(SRCROOT)/../external/websockets/include/ios $(SRCROOT)/../external/freetype2/include/ios/freetype2 $(SRCROOT)/../external/openssl/include/ios $(SRCROOT)/../external/bullet/include/bullet $(SRCROOT)/../external/bullet/include $(SRCROOT)/../external/uv/include";
 			};
 			name = Release;
 		};

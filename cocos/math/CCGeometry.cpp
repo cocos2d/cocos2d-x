@@ -175,15 +175,10 @@ float Rect::getMinY() const
 
 bool Rect::containsPoint(const Vec2& point) const
 {
-    bool bRet = false;
-
-    if (point.x >= getMinX() && point.x <= getMaxX()
-        && point.y >= getMinY() && point.y <= getMaxY())
-    {
-        bRet = true;
-    }
-
-    return bRet;
+    return (point.x >= getMinX() &&
+            point.x <= getMaxX() &&
+            point.y >= getMinY() &&
+            point.y <= getMaxY());
 }
 
 bool Rect::intersectsRect(const Rect& rect) const

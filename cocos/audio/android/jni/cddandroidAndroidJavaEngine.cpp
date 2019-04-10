@@ -39,7 +39,7 @@ THE SOFTWARE.
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 // Java class
-static const std::string helperClassName = "org/cocos2dx/lib/Cocos2dxHelper";
+static const std::string helperClassName = "org.cocos2dx.lib.Cocos2dxHelper";
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;

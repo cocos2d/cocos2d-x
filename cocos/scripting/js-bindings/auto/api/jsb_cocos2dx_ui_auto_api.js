@@ -4294,6 +4294,14 @@ getCapInsetsBarRenderer : function (
 },
 
 /**
+ * @method updateVisualSlider
+ */
+updateVisualSlider : function (
+)
+{
+},
+
+/**
  * @method getCapInsetsProgressBarRenderer
  * @return {rect_object}
  */
@@ -7123,6 +7131,24 @@ getText : function (
 },
 
 /**
+ * @method setMaxLength
+ * @param {int} arg0
+ */
+setMaxLength : function (
+int 
+)
+{
+},
+
+/**
+ * @method openKeyboard
+ */
+openKeyboard : function (
+)
+{
+},
+
+/**
  * @method setFontSize
  * @param {int} arg0
  */
@@ -7140,6 +7166,24 @@ getInputMode : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method initWithSizeAndBackgroundSprite
+* @param {size_object|size_object|size_object} size
+* @param {ccui.Scale9Sprite|String|ccui.Scale9Sprite} scale9sprite
+* @param {ccui.Widget::TextureResType|ccui.Scale9Sprite} texturerestype
+* @param {ccui.Scale9Sprite} scale9sprite
+* @return {bool|bool|bool}
+*/
+initWithSizeAndBackgroundSprite : function(
+size,
+scale9sprite,
+scale9sprite,
+scale9sprite 
+)
+{
+    return false;
 },
 
 /**
@@ -7173,6 +7217,16 @@ getPlaceholderFontSize : function (
 },
 
 /**
+ * @method getCapInsetsDisabledRenderer
+ * @return {rect_object}
+ */
+getCapInsetsDisabledRenderer : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
  * @method getPlaceHolder
  * @return {char}
  */
@@ -7203,11 +7257,33 @@ char
 },
 
 /**
+ * @method setCapInsetsDisabledRenderer
+ * @param {rect_object} arg0
+ */
+setCapInsetsDisabledRenderer : function (
+rect 
+)
+{
+},
+
+/**
  * @method setPlaceholderFontSize
  * @param {int} arg0
  */
 setPlaceholderFontSize : function (
 int 
+)
+{
+},
+
+/**
+ * @method loadTextureDisabled
+ * @param {String} arg0
+ * @param {ccui.Widget::TextureResType} arg1
+ */
+loadTextureDisabled : function (
+str, 
+texturerestype 
 )
 {
 },
@@ -7263,6 +7339,28 @@ getFontName : function (
 },
 
 /**
+ * @method setCapInsetsNormalRenderer
+ * @param {rect_object} arg0
+ */
+setCapInsetsNormalRenderer : function (
+rect 
+)
+{
+},
+
+/**
+ * @method loadTexturePressed
+ * @param {String} arg0
+ * @param {ccui.Widget::TextureResType} arg1
+ */
+loadTexturePressed : function (
+str, 
+texturerestype 
+)
+{
+},
+
+/**
  * @method getFontColor
  * @return {color4b_object}
  */
@@ -7283,6 +7381,26 @@ getInputFlag : function (
 },
 
 /**
+ * @method initWithSizeAndTexture
+ * @param {size_object} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {String} arg3
+ * @param {ccui.Widget::TextureResType} arg4
+ * @return {bool}
+ */
+initWithSizeAndTexture : function (
+size, 
+str, 
+str, 
+str, 
+texturerestype 
+)
+{
+    return false;
+},
+
+/**
  * @method getTextHorizontalAlignment
  * @return {cc.TextHAlignment}
  */
@@ -7293,31 +7411,39 @@ getTextHorizontalAlignment : function (
 },
 
 /**
- * @method setPlaceholderFont
- * @param {char} arg0
- * @param {int} arg1
+ * @method getCapInsetsNormalRenderer
+ * @return {rect_object}
  */
-setPlaceholderFont : function (
-char, 
-int 
+getCapInsetsNormalRenderer : function (
 )
 {
+    return cc.Rect;
 },
 
 /**
- * @method initWithSizeAndBackgroundSprite
-* @param {size_object|size_object} size
-* @param {ccui.Scale9Sprite|String} scale9sprite
-* @param {ccui.Widget::TextureResType} texturerestype
-* @return {bool|bool}
-*/
-initWithSizeAndBackgroundSprite : function(
-size,
-str,
+ * @method getCapInsetsPressedRenderer
+ * @return {rect_object}
+ */
+getCapInsetsPressedRenderer : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
+ * @method loadTextures
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @param {ccui.Widget::TextureResType} arg3
+ */
+loadTextures : function (
+str, 
+str, 
+str, 
 texturerestype 
 )
 {
-    return false;
 },
 
 /**
@@ -7326,16 +7452,6 @@ texturerestype
  */
 setPlaceHolder : function (
 char 
-)
-{
-},
-
-/**
- * @method setReturnType
- * @param {ccui.EditBox::KeyboardReturnType} arg0
- */
-setReturnType : function (
-keyboardreturntype 
 )
 {
 },
@@ -7351,6 +7467,28 @@ inputflag
 },
 
 /**
+ * @method setReturnType
+ * @param {ccui.EditBox::KeyboardReturnType} arg0
+ */
+setReturnType : function (
+keyboardreturntype 
+)
+{
+},
+
+/**
+ * @method loadTextureNormal
+ * @param {String} arg0
+ * @param {ccui.Widget::TextureResType} arg1
+ */
+loadTextureNormal : function (
+str, 
+texturerestype 
+)
+{
+},
+
+/**
  * @method getMaxLength
  * @return {int}
  */
@@ -7358,6 +7496,28 @@ getMaxLength : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setCapInsetsPressedRenderer
+ * @param {rect_object} arg0
+ */
+setCapInsetsPressedRenderer : function (
+rect 
+)
+{
+},
+
+/**
+ * @method setPlaceholderFont
+ * @param {char} arg0
+ * @param {int} arg1
+ */
+setPlaceholderFont : function (
+char, 
+int 
+)
+{
 },
 
 /**
@@ -7371,11 +7531,11 @@ getPlaceholderFontColor : function (
 },
 
 /**
- * @method setMaxLength
- * @param {int} arg0
+ * @method setCapInsets
+ * @param {rect_object} arg0
  */
-setMaxLength : function (
-int 
+setCapInsets : function (
+rect 
 )
 {
 },
@@ -7404,17 +7564,19 @@ texthalignment
 
 /**
  * @method create
-* @param {size_object|size_object} size
-* @param {String|ccui.Scale9Sprite} str
-* @param {ccui.Widget::TextureResType|ccui.Scale9Sprite} texturerestype
-* @param {ccui.Scale9Sprite} scale9sprite
-* @return {ccui.EditBox|ccui.EditBox}
+* @param {size_object|size_object|size_object} size
+* @param {String|ccui.Scale9Sprite|String} str
+* @param {ccui.Widget::TextureResType|ccui.Scale9Sprite|String} texturerestype
+* @param {ccui.Scale9Sprite|String} scale9sprite
+* @param {ccui.Widget::TextureResType} texturerestype
+* @return {ccui.EditBox|ccui.EditBox|ccui.EditBox}
 */
 create : function(
 size,
-scale9sprite,
-scale9sprite,
-scale9sprite 
+str,
+str,
+str,
+texturerestype 
 )
 {
     return ccui.EditBox;

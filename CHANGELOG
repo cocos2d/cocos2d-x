@@ -1,3 +1,86 @@
+cocos2d-x-3.17.1 Nov.19 2018
+
+[REFINE]        Renderer: properly reduce clear buffer times to save energy
+[REFINE]        Engine: improve the reuse logic of sprite frames cache
+[REFINE]        Engine: add `GLView::setCursor` for desktop platforms
+[REFINE]        Engine: add methods to change icons for desktop platforms
+[REFINE]        UI: improve iPhone X home indicator handling behavior
+[REFINE]        UI: add line spacing support for system font on iOS and Android
+[REFINE]        UI: add support for pressed and disabled image in EditBox
+[REFINE]        UI: shrink extra label text if too long, prevent label too long crash
+[REFINE]        LUA: add binding code for cocos2d::Downloader
+[REFINE]        Android: add supporting SafeArea for most edge screens devices
+[REFINE]        Android: change default value of PROP_BUILD_TYPE from ndk-build to CMake
+[REFINE]        Android: update project config to gradle 4.6, sdk 28, android gradle plugin 3.1.0
+[REFINE]        Android: add ability to not stop music on game start in android
+[REFINE]        Windows: refine CCDevice-win32 BitmapDC
+[REFINE]        Windows: improve binary folder structure, copy resources to "Resources/" folder
+[REFINE]        Action: add ui::LoadingBar support to Progress actions
+[REFINE]        Network: support multiple parameters in SocketIO emit/send method
+[REFINE]        FileUtils: improve thread safety (use single recursive_mutex)
+[REFINE]        FileUtils: add getFileSize impl for Windows
+[REFINE]        FileUtils: add listFiles impl for Android and Windows platform
+[REFINE]        FileUtils: exact fullPathForDirectory from fullPathForFilename, fullPathForFilename should not accept directory
+[REFINE]        CMake: improve libraries link, compile options config
+[REFINE]        CMake: remove un-elegant prebuilt feature at internal cmake build scripts
+[REFINE]        3rd: upgrade libwebsockets to 2.4.2 with libuv enabled
+[REFINE]        3rd: improve cmake build scripts for external libs
+[REFINE]        3rd: upgrade luajit to 2.1.0-beta3, fix random crash in Android release mode
+[REFINE]        3rd: external/lua/lua is not referenced in cmake and it will be removed in the near future
+[REFINE]        Tests: add websocket latency test
+[REFINE]        Tests: add download multi task test case
+[REFINE]        Tests: improve part test cases UI shows
+[REFINE]        cocos console: disable "gen-libs" command
+[REFINE]        Others: add another xbox 360 configuration
+[REFINE]        Others: remove ANT_ROOT env check on setup.py
+[REFINE]        Others: improve cmake tests in travis CI scripts
+
+[FIX]           Renderer: handle opengl recreate event for CameraBackgroundDepthBrush
+[FIX]           Renderer: fix some EVENT_RENDERER_RECREATED problem
+[FIX]           Engine: fix the last update time was not corrected if next delta time was zeroed 
+[FIX]           Engine: be safe to handle operator= in CCData
+[FIX]           Engine: aviod reading outside of the buffer when print log
+[FIX]           Engine: avoid duplicate find action when already found
+[FIX]           Engine: prevent free _bytes when src and dest are identical in CCData
+[FIX]           Engine: fix Console::loop() consumes 100% of CPU usage
+[FIX]           Engine: fix Action doesn't work when follow Node added PhysicsBody
+[FIX]           UI: fix locate image path relative to tsx file error in TiledMap
+[FIX]           UI: fix several bugs with button's title, include memory leak
+[FIX]           UI: fix LabelLetter::isVisible always return false
+[FIX]           UI: fix not support sprite frame when ignoreContentAdaptWithSize is false
+[FIX]           UI: fix out of range access in Label 
+[FIX]           UI: fix Widget::getAncestorWidget error
+[FIX]           UI: fix iOS editbox EndAction wrong when single line mode (UITextField)
+[FIX]           UI: Fix for Label and UIRichEdit text trailing space trimming
+[FXI]           JavaScript: fix crash if garbage collection runs between TouchStart and TouchEnd event
+[FIX]           Audio: fix AudioEngine rotateBufferThread crash on iOS
+[FIX]           Audio: add extra init checks in pcm audio service, avoid crash in PcmAudioService 
+[FIX]           Audio: fix AVAudioSessionErrorCodeCannotStartPlaying error may occur on Apple
+[FIX]           Audio: fix background music may resumes even the application is on the background on Android
+[FIX]           Audio: fix AudioCache* holding invalid pointer value
+[FIX]           Network: fix memory leaks in WebSocket
+[FIX]           Network: fix websocket memory zereoing size error
+[FIX]           Network: fix https downloader timeout on win/mac
+[FIX]           Network: fix "cc.loader.load" convert url error
+[FIX]           iOS: fix project build warnings in Xcode
+[FIX]           iOS: fix crash when saving gray colorspace image
+[FIX]           iOS: `js/lua tests` fix double free issue on app exits. 
+[FIX]           Android: shorten C++ build path, reduce long path error on Windows
+[FIX]           Android: keep cocos2dx activity at task root by mark "singleTask" in manifest
+[FIX]           Android: fix crash caused by JNIEnv null pointer in getStringUTFCharsJNI function
+[FIX]           Android: use 'Binary names' style on JNI for ClassLoader.loadClass
+[FIX]           Android: allow cleartext HTTP traffic by default for all tests project
+[FIX]           Windows: Support VS2017 in release mode
+[FIX]           Action: fix repeat CallFunc for some times, may never stop
+[FIX]           Physics: fix PhysicsJointMotor setRate and getRate Bad Access Crash
+[FIX]           FileUtils: fix removeDirectory() failure on win32
+[FIX]           FileUtils: let getContents return an error code when the filename is a directory
+[FIX]           FileUtils: let isFileExistInternal return false when folder as parameter on Linux
+[FIX]           LUA: performance drop bug introduced in 3.17
+[FIX]           CMake: fix project name always be "TemplateCpp" when create a new project
+[FIX]           Tests: fix auto test stop in cpp-tests project
+[FIX]           cocos console: do uninstall only when that app is installed for android
+
 cocos2d-x-3.17 May.21 2018
 
 [HIGHLIGHT]     Android: support Android Studio 3.0, NDK 16
@@ -1164,7 +1247,7 @@ cocos2d-x-3.7rc0  July.1 2015
     [NEW]           C++: Added ActionFloat
     [NEW]           C++: Supported physical keyboard on WinRT
     [NEW]           FileUtils: checked filename case characters on windows
-    [NEW]           FileUitls: added supporting loading files that which file path include utf-8 characters
+    [NEW]           FileUtils: added supporting loading files that which file path include utf-8 characters
     [NEW]           PhysicsShape: added sensor property
     [NEW]           Sprite: used triangle command
     [NEW]           3d: Added `getFarPlane` and `getNearPlane` in `Camera` class

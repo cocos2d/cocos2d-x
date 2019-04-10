@@ -1,32 +1,17 @@
 include(CMakeParseArguments)
 
-# find a prebuilt lib by `lib_name` and save the result in `lib_out`
-function(cocos_find_prebuilt_lib_by_name lib_name lib_out)
-    set(search_path ${COCOS_PREBUILT_PATH})
-    if(XCODE OR VS)
-        set(search_path ${COCOS_PREBUILT_PATH}/${CMAKE_BUILD_TYPE})
-    endif()
-    message(STATUS "search_path cocos prebuilt library: ${search_path}")
-    find_library(found_lib ${lib_name} PATHS ${search_path} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
-
-    if(found_lib)
-        message(STATUS "found cocos prebuilt library: ${found_lib}")
-    else()
-        message(STATUS "can't found cocos prebuilt library: ${lib_name}")
-    endif()
-    set(${lib_out} ${found_lib} PARENT_SCOPE)
-    unset(found_lib CACHE)
-endfunction()
-
-# copy resource `FILES` and `FOLDERS` to `COPY_TO` folder
-function(cocos_copy_res)
+# copy resource `FILES` and `FOLDERS` to TARGET_FILE_DIR/Resources
+function(cocos_copy_target_res cocos_target)
     set(oneValueArgs COPY_TO)
     set(multiValueArgs FILES FOLDERS)
     cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
     # copy files
     foreach(cc_file ${opt_FILES})
         get_filename_component(file_name ${cc_file} NAME)
-        configure_file(${cc_file} "${opt_COPY_TO}/${file_name}" COPYONLY)
+        add_custom_command(TARGET ${cocos_target} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E echo "copy file into Resources: ${file_name} ..."
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different ${cc_file} "${opt_COPY_TO}/${file_name}"
+        )
     endforeach()
     # copy folders files
     foreach(cc_folder ${opt_FOLDERS})
@@ -35,7 +20,10 @@ function(cocos_copy_res)
         foreach(res_file ${folder_files})
             get_filename_component(res_file_abs_path ${res_file} ABSOLUTE)
             file(RELATIVE_PATH res_file_relat_path ${folder_abs_path} ${res_file_abs_path})
-            configure_file(${res_file} "${opt_COPY_TO}/${res_file_relat_path}" COPYONLY)
+            add_custom_command(TARGET ${cocos_target} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E echo "copy file into Resources: ${res_file_relat_path} ..."
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${res_file} "${opt_COPY_TO}/${res_file_relat_path}"
+            )
         endforeach()
     endforeach()
 endfunction()
@@ -63,25 +51,18 @@ function(cocos_mark_multi_resources res_out)
     set(${res_out} ${tmp_file_list} PARENT_SCOPE)
 endfunction()
 
-# get `cocos_target` depend all dlls, save the result in `all_depend_dlls_out`
-function(get_target_depends_ext_dlls cocos_target all_depend_dlls_out)
-    set(all_depend_ext_dlls)
+# get all linked libraries including transitive ones, recursive
+function(search_depend_libs_recursive cocos_target all_depends_out)
+    set(all_depends_inner)
     set(targets_prepare_search ${cocos_target})
-    # targets_prepare_search, target need find ext libs
-    set(have_searched_targets)
-    set(need_search_targets)
     while(true)
         foreach(tmp_target ${targets_prepare_search})
             get_target_property(tmp_depend_libs ${tmp_target} LINK_LIBRARIES)
             list(REMOVE_ITEM targets_prepare_search ${tmp_target})
-            # target itself use_cocos_pkg
             list(APPEND tmp_depend_libs ${tmp_target})
             foreach(depend_lib ${tmp_depend_libs})
                 if(TARGET ${depend_lib})
-                    get_target_property(tmp_dlls ${depend_lib} DEPEND_DLLS)
-                    if(tmp_dlls)
-                        list(APPEND all_depend_ext_dlls ${tmp_dlls})
-                    endif()
+                    list(APPEND all_depends_inner ${depend_lib})
                     if(NOT (depend_lib STREQUAL tmp_target))
                         list(APPEND targets_prepare_search ${depend_lib})
                     endif()
@@ -93,37 +74,42 @@ function(get_target_depends_ext_dlls cocos_target all_depend_dlls_out)
             break()
         endif()
     endwhile(true)
+    set(${all_depends_out} ${all_depends_inner} PARENT_SCOPE)
+endfunction()
+
+# get `cocos_target` depend all dlls, save the result in `all_depend_dlls_out`
+function(get_target_depends_ext_dlls cocos_target all_depend_dlls_out)
+
+    set(depend_libs)
+    set(all_depend_ext_dlls)
+    search_depend_libs_recursive(${cocos_target} depend_libs)
+    foreach(depend_lib ${depend_libs})
+        if(TARGET ${depend_lib})
+            get_target_property(found_shared_lib ${depend_lib} IMPORTED_IMPLIB)
+            if(found_shared_lib)
+                get_target_property(tmp_dlls ${depend_lib} IMPORTED_LOCATION)
+                list(APPEND all_depend_ext_dlls ${tmp_dlls})
+            endif()
+        endif()
+    endforeach()
 
     set(${all_depend_dlls_out} ${all_depend_ext_dlls} PARENT_SCOPE)
 endfunction()
 
-# copy the `cocos_target` needed dlls into `COPY_TO` folder
+# copy the `cocos_target` needed dlls into TARGET_FILE_DIR
 function(cocos_copy_target_dll cocos_target)
-    set(oneValueArgs COPY_TO)
-    cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
     get_target_depends_ext_dlls(${cocos_target} all_depend_dlls)
     # remove repeat items
-    list(REMOVE_DUPLICATES all_depend_dlls)
-    message(STATUS "prepare to copy external dlls for ${cocos_target}:${all_depend_dlls}")
+    if(all_depend_dlls)
+        list(REMOVE_DUPLICATES all_depend_dlls)
+    endif()
     foreach(cc_dll_file ${all_depend_dlls})
         get_filename_component(cc_dll_name ${cc_dll_file} NAME)
-        configure_file(${cc_dll_file} "${opt_COPY_TO}/${cc_dll_name}" COPYONLY)
+        add_custom_command(TARGET ${cocos_target} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E echo "copy dll into target file dir: ${cc_dll_name} ..."
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different ${cc_dll_file} "$<TARGET_FILE_DIR:${cocos_target}>/${cc_dll_name}"
+        )
     endforeach()
-endfunction()
-
-# find dlls in a dir which `LIB_ABS_PATH` located, and save the result in `dlls_out`
-function(cocos_find_dlls_for_lib dlls_out)
-    set(oneValueArgs LIB_ABS_PATH)
-    cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-    get_filename_component(lib_dir ${opt_LIB_ABS_PATH} DIRECTORY)
-    file(GLOB lib_dir_files "${lib_dir}/*")
-    set(cc_dlls)
-    foreach(dir_file ${lib_dir_files})
-        if(${dir_file} MATCHES "dll$")
-            list(APPEND cc_dlls ${dir_file})
-        endif()
-    endforeach()
-    set(${dlls_out} ${cc_dlls} PARENT_SCOPE)
 endfunction()
 
 # mark `FILES` as resources, files will be put into sub-dir tree depend on its absolute path
@@ -188,98 +174,21 @@ function(source_group_single_file single_file)
     source_group("${ide_file_group}" FILES ${single_file})
 endfunction()
 
-# build a cocos application
-# hrough compile the files `APP_SRC`, link the libs in `*LIBS`, use the packages in `*.PKGS`
-# this method hide the link lib details, those is prebuilt libs or not
-function(cocos_build_app app_name)
-    set(multiValueArgs
-        APP_SRC
-        DEPEND_COMMON_LIBS
-        DEPEND_ANDROID_LIBS
-        COMMON_USE_PKGS
-        LINUX_USE_PKGS
-        DEPEND_MACOSX_LIBS
-        DEPEND_WINDOWS_LIBS
-        )
-    cmake_parse_arguments(opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-
-    if(ANDROID)
-        add_library(${app_name} SHARED ${opt_APP_SRC})
-        foreach(android_lib ${opt_DEPEND_ANDROID_LIBS})
-            if(USE_COCOS_PREBUILT)
-                target_link_libraries(${app_name} -Wl,-whole-archive "${${_${android_lib}_prefix}_LIBRARIES}" -Wl,-no-whole-archive)
-            else()
-                target_link_libraries(${app_name} -Wl,-whole-archive ${android_lib} -Wl,-no-whole-archive)
-                add_dependencies(${app_name} ${android_lib})
-            endif()
-        endforeach()
-    else()
-        add_executable(${app_name} ${opt_APP_SRC})
-    endif()
-    # set target PROPERTIES, depend different platforms
+# setup a cocos application
+function(setup_cocos_app_config app_name)
+    # put all output app into bin/${app_name}
+    set_target_properties(${app_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin/${app_name}")
     if(APPLE)
-        set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
-        set_target_properties(${app_name} PROPERTIES MACOSX_BUNDLE 1
-                              )
+        # output macOS/iOS .app
+        set_target_properties(${app_name} PROPERTIES MACOSX_BUNDLE 1)
     elseif(MSVC)
-        # only Debug and Release mode was supported when using MSVC.
-        set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/$<CONFIG>")
-        set(APP_RES_DIR "${CMAKE_BINARY_DIR}/bin/${APP_NAME}/${CMAKE_BUILD_TYPE}")
-        #Visual Studio Defaults to wrong type
-        set_target_properties(${app_name} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS")
-    else(LINUX)
-        set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}/${APP_NAME}")
-        set(APP_RES_DIR "${APP_BIN_DIR}/Resources")
+        # visual studio default is Console app, but we need Windows app
+        set_property(TARGET ${app_name} APPEND PROPERTY LINK_FLAGS "/SUBSYSTEM:WINDOWS")
     endif()
-    set_target_properties(${app_name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${APP_BIN_DIR}")
-
-    if(MACOSX)
-        list(APPEND opt_DEPEND_COMMON_LIBS ${opt_DEPEND_MACOSX_LIBS})
-    elseif(WINDOWS)
-        list(APPEND opt_DEPEND_COMMON_LIBS ${opt_DEPEND_WINDOWS_LIBS})
-    endif()
-    # link commom libs, and common libs need external or system libs
-    if(USE_COCOS_PREBUILT)
-        include(CocosUseLibs)
-        foreach(common_lib ${opt_DEPEND_COMMON_LIBS})
-            message(STATUS "${app_name} prepare to link engine lib: ${common_lib}")
-            cocos_use_pkg(${app_name} ${_${common_lib}_prefix})
-            if(common_lib STREQUAL "cocos2d")
-                target_use_cocos2d_depend_libs(${app_name})
-            elseif(common_lib STREQUAL "jscocos2d")
-                target_use_jscocos2d_depend_libs(${app_name})
-            elseif(common_lib STREQUAL "luacocos2d")
-                target_use_luacocos2d_depend_libs(${app_name})
-            elseif(common_lib STREQUAL "simulator")
-                target_use_simulator_depend_libs(${app_name})
-            endif()
-        endforeach()
-    else()
-        foreach(common_lib ${opt_DEPEND_COMMON_LIBS})
-            target_link_libraries(${app_name} ${common_lib})
-            add_dependencies(${app_name} ${common_lib})
-        endforeach()
-    endif()
-
-    if(LINUX)
-        foreach(_pkg ${opt_LINUX_USE_PKGS})
-            cocos_use_pkg(${app_name} ${_pkg})
-        endforeach()
-    endif()
-    foreach(_pkg ${opt_COMMON_USE_PKGS})
-        cocos_use_pkg(${app_name} ${_pkg})
-    endforeach()
     # auto mark code files for IDE when mark app
     if(XCODE OR VS)
-        cocos_mark_code_files(${APP_NAME})
+        cocos_mark_code_files(${app_name})
     endif()
-    # generate prebuilt auto when build app if GEN_COCOS_PREBUILT=ON
-    if(GEN_COCOS_PREBUILT)
-        add_dependencies(${APP_NAME} prebuilt)
-    endif()
-
-    set(APP_BIN_DIR ${APP_BIN_DIR} PARENT_SCOPE)
-    set(APP_RES_DIR ${APP_RES_DIR} PARENT_SCOPE)
 endfunction()
 
 # if cc_variable not set, then set it cc_value
@@ -328,26 +237,18 @@ macro(cocos_pak_xcode cocos_target)
     set(MACOSX_BUNDLE_LONG_VERSION_STRING ${COCOS_APP_LONG_VERSION_STRING})
     set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${COCOS_APP_SHORT_VERSION_STRING})
 
-    message("cocos package: ${cocos_target}, plist file: ${COCOS_APP_INFO_PLIST}")
+    message(STATUS "cocos package: ${cocos_target}, plist file: ${COCOS_APP_INFO_PLIST}")
 
    cocos_config_app_xcode_property(${cocos_target})
 endmacro()
 
 # set Xcode property for application, include all depend target
 macro(cocos_config_app_xcode_property cocos_app)
-    cocos_config_target_xcode_property(${cocos_app})
-    # for example, cocos_target: cpp-tests link engine_lib: cocos2d
-    get_target_property(engine_libs ${cocos_app} LINK_LIBRARIES)
-    foreach(engine_lib ${engine_libs})
-        if(TARGET ${engine_lib})
-            cocos_config_target_xcode_property(${engine_lib})
-            # for example, engine_lib: cocos2d link external_lib: flatbuffers
-            get_target_property(external_libs ${engine_lib} LINK_LIBRARIES)
-            foreach(external_lib ${external_libs})
-                if(TARGET ${external_lib})
-                    cocos_config_target_xcode_property(${external_lib})
-                endif()
-            endforeach()
+    set(depend_libs)
+    search_depend_libs_recursive(${cocos_app} depend_libs)
+    foreach(depend_lib ${depend_libs})
+        if(TARGET ${depend_lib})
+            cocos_config_target_xcode_property(${depend_lib})
         endif()
     endforeach()
 endmacro()
@@ -368,7 +269,7 @@ endfunction(set_xcode_property)
 
 # works same as find_package, but do additional care to properly find
 macro(cocos_find_package pkg_name pkg_prefix)
-    if(NOT USE_EXTERNAL_PREBUILT OR NOT ${pkg_prefix}_FOUND)
+    if(NOT ${pkg_prefix}_FOUND)
         find_package(${pkg_name} ${ARGN})
     endif()
     if(NOT ${pkg_prefix}_INCLUDE_DIRS AND ${pkg_prefix}_INCLUDE_DIR)
@@ -440,13 +341,13 @@ function(cocos_use_pkg target pkg)
             # message(STATUS "${target} add dll: ${_dlls}")
             get_property(pre_dlls
                          TARGET ${target}
-                         PROPERTY DEPEND_DLLS)
+                         PROPERTY CC_DEPEND_DLLS)
             if(pre_dlls)
                 set(_dlls ${pre_dlls} ${_dlls})
             endif()
             set_property(TARGET ${target}
                          PROPERTY
-                         DEPEND_DLLS ${_dlls}
+                         CC_DEPEND_DLLS ${_dlls}
                          )
         endif()
     endif()

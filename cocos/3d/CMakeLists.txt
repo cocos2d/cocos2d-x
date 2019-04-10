@@ -1,8 +1,3 @@
-
-if(WINDOWS AND BUILD_SHARED_LIBS)
-    add_definitions(-D_USE3DDLL)
-endif()
-
 set(COCOS_3D_HEADER
 
     3d/CCBillBoard.h

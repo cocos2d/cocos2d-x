@@ -198,7 +198,7 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
     
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP)
+        if( mUserInputEnabled && ((event.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP))
         {
             if (isPlaying()) {
                 pause();
@@ -211,6 +211,8 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
     }
     
     private boolean mIsAssetRouse = false;
+    private boolean mLooping = false;
+    private boolean mUserInputEnabled = true;
     private String mVideoFilePath = null;
     private static final String AssetResourceRoot = "assets/";
     
@@ -245,6 +247,14 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
         openVideo();
         requestLayout();
         invalidate();
+    }
+
+    public void setLooping(boolean looping) {
+        mLooping = looping;
+    }
+
+    public void setUserInputEnabled(boolean enableInput) {
+        mUserInputEnabled = enableInput;
     }
     
     public void stopPlayback() {
@@ -291,12 +301,16 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
                 mMediaPlayer.setDisplay(mSurfaceHolder);
                 mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 mMediaPlayer.setScreenOnWhilePlaying(true);
+                mMediaPlayer.setLooping(mLooping); // CROWDSTAR
             //}
             
             mDuration = -1;
             mCurrentBufferPercentage = 0;
             if (mIsAssetRouse) {
                 AssetFileDescriptor afd = mCocos2dxActivity.getAssets().openFd(mVideoFilePath);
+                if (afd == null && Cocos2dxHelper.getObbFile() != null) {
+                    afd = Cocos2dxHelper.getObbFile() .getAssetFileDescriptor(mVideoFilePath);
+                }
                 mMediaPlayer.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
             } else {
                 mMediaPlayer.setDataSource(mCocos2dxActivity, mVideoUri);
@@ -425,8 +439,13 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
         public void onCompletion(MediaPlayer mp) {
             mCurrentState = STATE_PLAYBACK_COMPLETED;
             mTargetState = STATE_PLAYBACK_COMPLETED;
-            
-            release(true);
+
+            // Do not release the player if we are looping as we still need the
+            // the player resources to exist
+            if (!mLooping) {
+                release(true);
+            }
+
             if (mOnVideoEventListener != null) {
                 mOnVideoEventListener.onVideoEvent(mViewTag,EVENT_COMPLETED);
             }
@@ -438,7 +457,8 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
     private static final int EVENT_PAUSED = 1;
     private static final int EVENT_STOPPED = 2;
     private static final int EVENT_COMPLETED = 3;
-    
+    private static final int EVENT_ERROR = 4;
+
     public interface OnVideoEventListener
     {
         void onVideoEvent(int tag,int event);
@@ -450,6 +470,10 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
             Log.d(TAG, "Error: " + framework_err + "," + impl_err);
             mCurrentState = STATE_ERROR;
             mTargetState = STATE_ERROR;
+
+            if (mOnVideoEventListener != null) {
+                mOnVideoEventListener.onVideoEvent(mViewTag, EVENT_ERROR);
+            }
 
             /* If an error handler has been supplied, use it and finish. */
             if (mOnErrorListener != null) {

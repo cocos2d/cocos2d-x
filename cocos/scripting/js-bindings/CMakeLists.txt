@@ -25,14 +25,11 @@
 set(cocos_root ${COCOS2DX_ROOT_PATH})
 
 #platform
-if(WIN32) # Win32
-    add_definitions(-D_USRJSSTATIC)
-elseif(APPLE)# osx or ios
+if(APPLE)# osx or ios
     set(PLATFORM_HEADER manual/platform/ios/JavaScriptObjCBridge.h)
     set(PLATFORM_SRC manual/platform/ios/JavaScriptObjCBridge.mm)
 elseif(ANDROID)
-    set(PLATFORM_HEADER manual/platform/android/CCJavascriptJavaBridge.h)
-    set(PLATFORM_SRC manual/platform/android/CCJavascriptJavaBridge.cpp)
+    # refer to: cocos/scripting/js-bindings/proj.android
 endif()
 
 if(ANDROID OR IOS)
@@ -151,11 +148,6 @@ set(JSBINDING_SRC
     manual/navmesh/jsb_cocos2dx_navmesh_manual.cpp
     )
 
-include_directories(
-        ${cocos_root}/cocos/platform/${PLATFORM_FOLDER}
-        ${cocos_root}/external/spidermonkey/include/${PLATFORM_FOLDER}
-)
-
 list(APPEND JSBINDING_SRC ${JSBINDING_HEADER} ${PLATFORM_HEADER})
 
 add_library(jscocos2d STATIC
@@ -165,8 +157,17 @@ add_library(jscocos2d STATIC
 target_link_libraries(jscocos2d cocos2d)
 add_dependencies(jscocos2d cocos2d)
 
-# use necessary external libs and system libs
-target_use_jscocos2d_depend_libs(jscocos2d)
+get_target_property(js_ext_depend external CC_JS_DEPEND)
+target_link_libraries(jscocos2d ${js_ext_depend})
+
+target_include_directories(jscocos2d
+        INTERFACE ${cocos_root}/cocos/scripting/js-bindings/auto
+        INTERFACE ${cocos_root}/cocos/scripting/js-bindings/manual
+)
+
+if(WINDOWS)
+    target_compile_definitions(jscocos2d PRIVATE _USRJSSTATIC)
+endif()
 
 set_target_properties(jscocos2d
                       PROPERTIES
@@ -177,4 +178,11 @@ set_target_properties(jscocos2d
 
 if(XCODE OR VS)
     cocos_mark_code_files("jscocos2d")
+endif()
+
+if(WINDOWS)
+    # precompiled header
+    target_sources(jscocos2d PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp")
+    set_target_properties(jscocos2d PROPERTIES COMPILE_FLAGS "/Yuprecheader.h /FIprecheader.h")
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp" PROPERTIES COMPILE_FLAGS "/Ycprecheader.h")
 endif()

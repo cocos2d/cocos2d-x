@@ -140,6 +140,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue16717);
     ADD_TEST_CASE(LabelIssueLineGap);
     ADD_TEST_CASE(LabelIssue17902);
+    ADD_TEST_CASE(LabelLetterColorsTest);
 };
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
@@ -604,7 +605,7 @@ bool LabelFNTMultiLineAlignment::init()
     this->_arrowsBar = Sprite::create("Images/arrowsBar.png");
     this->_arrows = Sprite::create("Images/arrows.png");
 
-    MenuItemFont::setFontSize(20);
+    MenuItemFont::setFontSize(15);
     auto longSentences = MenuItemFont::create("Long Flowing Sentences", CC_CALLBACK_1(LabelFNTMultiLineAlignment::stringChanged, this));
     auto lineBreaks    = MenuItemFont::create("Short Sentences With Intentional Line Breaks", CC_CALLBACK_1(LabelFNTMultiLineAlignment::stringChanged, this));
     auto mixed         = MenuItemFont::create("Long Sentences Mixed With Intentional Line Breaks", CC_CALLBACK_1(LabelFNTMultiLineAlignment::stringChanged, this));
@@ -619,7 +620,7 @@ bool LabelFNTMultiLineAlignment::init()
     _menuItems.push_back(lineBreaks);
     _menuItems.push_back(mixed);
 
-    MenuItemFont::setFontSize(30);
+    MenuItemFont::setFontSize(20);
 
     auto left = MenuItemFont::create("Left", CC_CALLBACK_1(LabelFNTMultiLineAlignment::alignmentChanged, this));
     auto center = MenuItemFont::create("Center", CC_CALLBACK_1(LabelFNTMultiLineAlignment::alignmentChanged, this));
@@ -641,8 +642,8 @@ bool LabelFNTMultiLineAlignment::init()
     this->_arrowsBar->setScaleX(arrowsWidth / this->_arrowsBar->getContentSize().width);
     this->_arrowsBar->setPosition(Vec2(((ArrowsMax + ArrowsMin) / 2) * size.width, this->_label->getPosition().y));
 
-    stringMenu->setPosition(Vec2(size.width/2, size.height - menuItemPaddingCenter));
-    alignmentMenu->setPosition(Vec2(size.width/2, menuItemPaddingCenter+15));
+    stringMenu->setPosition(VisibleRect::top() + Vec2(0, - menuItemPaddingCenter));
+    alignmentMenu->setPosition(VisibleRect::bottom() + Vec2(0, menuItemPaddingCenter + 15));
 
     this->selectSentenceItem(longSentences);
     this->selectAlignmentItem(center);
@@ -1061,12 +1062,12 @@ LabelTTFCJKWrappingTest::LabelTTFCJKWrappingTest()
         Vec2(size.width * 0.85, size.height * 0.8),
         Vec2(size.width * 0.85, 0), 1, Color4F(1, 0, 0, 1));
     
-    TTFConfig ttfConfig("fonts/HKYuanMini.ttf", 25, GlyphCollection::DYNAMIC);
+    TTFConfig ttfConfig("fonts/HKYuanMini.ttf", 20, GlyphCollection::DYNAMIC);
     auto label1 = Label::createWithTTF(ttfConfig,
         "你好，Cocos2d-x v3的New Label.", TextHAlignment::LEFT, size.width * 0.75);
     if(label1) {
         label1->setTextColor(Color4B(128, 255, 255, 255));
-        label1->setPosition(Vec2(size.width * 0.1, size.height * 0.6));
+        label1->setPosition(Vec2(size.width * 0.1, VisibleRect::top().y * 0.7));
         label1->setAnchorPoint(Vec2(0, 0.5));
         this->addChild(label1);
         // Demo for unloadFontAtlasTTF function, after it been called, all UI widget
@@ -1079,7 +1080,7 @@ LabelTTFCJKWrappingTest::LabelTTFCJKWrappingTest()
         "早上好，Cocos2d-x v3的New Label.", TextHAlignment::LEFT, size.width * 0.75);
     if(label2) {
         label2->setTextColor(Color4B(255, 128, 255, 255));
-        label2->setPosition(Vec2(size.width * 0.1, size.height * 0.4));
+        label2->setPosition(Vec2(size.width * 0.1, VisibleRect::top().y * 0.5));
         label2->setAnchorPoint(Vec2(0, 0.5));
         this->addChild(label2);
     }
@@ -1088,7 +1089,7 @@ LabelTTFCJKWrappingTest::LabelTTFCJKWrappingTest()
         "美好的一天啊美好的一天啊美好的一天啊", TextHAlignment::LEFT, size.width * 0.75);
     if(label3) {
         label3->setTextColor(Color4B(255, 255, 128, 255));
-        label3->setPosition(Vec2(size.width * 0.1, size.height * 0.2));
+        label3->setPosition(Vec2(size.width * 0.1, VisibleRect::top().y * 0.3));
         label3->setAnchorPoint(Vec2(0, 0.5));
         this->addChild(label3);
     }
@@ -3567,4 +3568,35 @@ std::string LabelIssue17902::subtitle() const
     return "";
 }
 
+//
+// LabelLetterColorsTest
+//
+LabelLetterColorsTest::LabelLetterColorsTest() {
+    auto center = VisibleRect::center();
 
+    auto label = Label::createWithTTF("", "fonts/arial.ttf", 24);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+
+    label->setString("1\n2\n3");
+    setLetterColors(label, Color3B::RED);
+
+    label->setString("abcd\ne");  // Must not crash at here.
+}
+
+std::string LabelLetterColorsTest::title() const {
+    return "Test for letter colors";
+}
+
+std::string LabelLetterColorsTest::subtitle() const {
+    return "Should not crash!";
+}
+
+void LabelLetterColorsTest::setLetterColors(cocos2d::Label* label, const cocos2d::Color3B& color) {
+    int n = label->getStringLength();
+    for (int i = 0; i < n; ++i) {
+        Sprite* letter = label->getLetter(i);
+        if (letter != nullptr)
+            letter->setColor(color);
+    }
+}

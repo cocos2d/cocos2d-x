@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/VertexAttachment.h>
-#include <spine/extension.h>
+#include "spine/VertexAttachment.h"
+#include "spine/extension.h"
 
 /* FIXME this is not thread-safe */
 static int nextID = 0;

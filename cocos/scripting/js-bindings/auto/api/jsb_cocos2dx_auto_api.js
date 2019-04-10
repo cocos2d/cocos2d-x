@@ -2401,6 +2401,16 @@ float
 },
 
 /**
+ * @method getVR
+ * @return {cc.VRIRenderer}
+ */
+getVR : function (
+)
+{
+    return cc.VRIRenderer;
+},
+
+/**
  * @method getContentScaleFactor
  * @return {float}
  */
@@ -2431,13 +2441,19 @@ getSafeAreaRect : function (
 },
 
 /**
- * @method getVR
- * @return {cc.VRIRenderer}
+ * @method setViewPortInPoints
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
  */
-getVR : function (
+setViewPortInPoints : function (
+float, 
+float, 
+float, 
+float 
 )
 {
-    return cc.VRIRenderer;
 },
 
 /**
@@ -2515,16 +2531,6 @@ getVisibleOrigin : function (
 },
 
 /**
- * @method getFrameSize
- * @return {size_object}
- */
-getFrameSize : function (
-)
-{
-    return cc.Size;
-},
-
-/**
  * @method setFrameZoomFactor
  * @param {float} arg0
  */
@@ -2560,6 +2566,14 @@ getDesignResolutionSize : function (
 */
 setIcon : function(
 str 
+)
+{
+},
+
+/**
+ * @method setDefaultCursor
+ */
+setDefaultCursor : function (
 )
 {
 },
@@ -2631,19 +2645,13 @@ vrirenderer
 },
 
 /**
- * @method setViewPortInPoints
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
+ * @method getFrameSize
+ * @return {size_object}
  */
-setViewPortInPoints : function (
-float, 
-float, 
-float, 
-float 
+getFrameSize : function (
 )
 {
+    return cc.Size;
 },
 
 /**
@@ -2654,6 +2662,18 @@ getScissorRect : function (
 )
 {
     return cc.Rect;
+},
+
+/**
+ * @method setCursor
+ * @param {String} arg0
+ * @param {vec2_object} arg1
+ */
+setCursor : function (
+str, 
+vec2 
+)
+{
 },
 
 /**
@@ -3375,6 +3395,16 @@ getAnimationInterval : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method getClearColor
+ * @return {color4f_object}
+ */
+getClearColor : function (
+)
+{
+    return cc.Color4F;
 },
 
 /**
@@ -6711,6 +6741,16 @@ supportsMapBuffer : function (
 )
 {
     return false;
+},
+
+/**
+ * @method getInfoAsMap
+ * @return {map_object}
+ */
+getInfoAsMap : function (
+)
+{
+    return map_object;
 },
 
 /**
@@ -12148,6 +12188,16 @@ color4f
 },
 
 /**
+ * @method setIsolated
+ * @param {bool} arg0
+ */
+setIsolated : function (
+bool 
+)
+{
+},
+
+/**
  * @method drawRect
 * @param {vec2_object|vec2_object} vec2
 * @param {vec2_object|vec2_object} vec2
@@ -12450,6 +12500,16 @@ color4f
 },
 
 /**
+ * @method isIsolated
+ * @return {bool}
+ */
+isIsolated : function (
+)
+{
+    return false;
+},
+
+/**
  * @method drawCubicBezier
  * @param {vec2_object} arg0
  * @param {vec2_object} arg1
@@ -12563,6 +12623,16 @@ disableEffect : function(
 labeleffect 
 )
 {
+},
+
+/**
+ * @method getLabelType
+ * @return {cc.Label::LabelType}
+ */
+getLabelType : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -12937,6 +13007,16 @@ setLineSpacing : function (
 float 
 )
 {
+},
+
+/**
+ * @method getRenderingFontSize
+ * @return {float}
+ */
+getRenderingFontSize : function (
+)
+{
+    return 0;
 },
 
 /**

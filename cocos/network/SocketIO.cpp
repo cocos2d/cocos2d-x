@@ -1039,7 +1039,7 @@ SIOClient::SIOClient(const std::string& path, SIOClientImpl* impl, SocketIO::SIO
     , _socket(impl)
     , _delegate(&delegate)
 {
-
+    CC_SAFE_RETAIN(_socket);
 }
 
 SIOClient::~SIOClient()
@@ -1048,6 +1048,7 @@ SIOClient::~SIOClient()
     {
         _socket->disconnectFromEndpoint(_path);
     }
+    CC_SAFE_RELEASE(_socket);
 }
 
 void SIOClient::onOpen()
@@ -1129,7 +1130,7 @@ void SIOClient::socketClosed()
 
 bool SIOClient::isConnected() const
 {
-    return _socket && _socket->_connected && _connected;
+    return _connected && _socket && _socket->_connected ;
 }
 
 void SIOClient::setConnected(bool connected) 

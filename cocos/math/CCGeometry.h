@@ -190,7 +190,7 @@ public:
      */
     bool equals(const Rect& rect) const;
     /**
-    Check if the points is contained in the rect.
+    Check if the points is contained inclusively in the rect.
      * @js NA
      */
     bool containsPoint(const Vec2& point) const;

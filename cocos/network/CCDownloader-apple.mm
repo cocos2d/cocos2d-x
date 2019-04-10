@@ -614,11 +614,10 @@ namespace cocos2d { namespace network {
 {
 //    NSLog(@"DownloaderAppleImpl downloadTask: \"%@\" received: %lld total: %lld", downloadTask.originalRequest.URL, totalBytesWritten, totalBytesExpectedToWrite);
 
-    if (nullptr == _outer)
+    if (nullptr == _outer || totalBytesExpectedToWrite == NSURLSessionTransferSizeUnknown)
     {
         return;
     }
-
     DownloadTaskWrapper *wrapper = [self.taskDict objectForKey:downloadTask];
 
     std::function<int64_t(void *, int64_t)> transferDataToBuffer;   // just a placeholder

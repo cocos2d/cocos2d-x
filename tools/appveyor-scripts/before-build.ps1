@@ -1,5 +1,7 @@
 Set-PSDebug -Trace 1
 $python = "C:\\Python27\\python.exe"
+$git_retry = "$pyhon $env:APPVEYOR_BUILD_FOLDER\tools\appveyor-scripts\git_retry.py"
+
 
 function Download-Deps
 {
@@ -27,8 +29,8 @@ function Generate-Binding-Codes
 function Update-SubModule
 {
     Push-Location $env:APPVEYOR_BUILD_FOLDER
-    & git submodule init
-    & git submodule update --recursive --depth=1
+    & $git_retry submodule init
+    & $git_retry submodule update --recursive --depth=1
     Pop-Location
 }
 
@@ -36,10 +38,17 @@ Update-SubModule
 
 Download-Deps
 
-If ($env:build_type -eq "windows32") {
+& python -m pip install retry
+
+# don't need generate binding codes for cpp only target
+If ($env:build_type -ne "android_cpp_tests") {
     & $python -u .\tools\appveyor-scripts\setup_android.py --ndk_only
     Generate-Binding-Codes
-} elseif ($env:build_type -like "android*") {
+}
+
+If ($env:build_type -like "android*") {
+    & choco install ninja
+    & ninja --version
     & $python -u .\tools\appveyor-scripts\setup_android.py
     if ($lastexitcode -ne 0) {throw}
 }

@@ -422,8 +422,11 @@ GLProgramState::GLProgramState()
 , _vertexAttribsFlags(0)
 , _glprogram(nullptr)
 , _nodeBinding(nullptr)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+, _backToForegroundlistener(nullptr)
+#endif
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     /** listen the event that renderer was recreated on Android/WP8 */
     CCLOG("create rendererRecreatedListener for GLProgramState");
     _backToForegroundlistener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, 
@@ -438,7 +441,7 @@ GLProgramState::GLProgramState()
 
 GLProgramState::~GLProgramState()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundlistener);
 #endif
 
@@ -995,7 +998,7 @@ void GLProgramState::setNodeBinding(Node* target)
     // weak ref
     _nodeBinding = target;
 
-    for (const auto autobinding: _autoBindings)
+    for (const auto& autobinding: _autoBindings)
         applyAutoBinding(autobinding.first, autobinding.second);
 }
 

@@ -30,13 +30,9 @@
 # build jscocos2d if BUILD_JS_LIBS=ON
 
 # The version number
-set(COCOS2D_X_VERSION 3.17)
+set(COCOS2D_X_VERSION 3.17.1)
 
 set(COCOS_CORE_LIB cocos2d)
-
-if(WINDOWS)
-    add_definitions(-DUNICODE -D_UNICODE)
-endif()
 
 include(2d/CMakeLists.txt)
 include(3d/CMakeLists.txt)
@@ -53,6 +49,12 @@ include(ui/CMakeLists.txt)
 include(network/CMakeLists.txt)
 include(audio/CMakeLists.txt)
 include(storage/CMakeLists.txt)
+
+# default value for cocos2dx extensions modules build
+option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
+option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
+option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
+option(BUILD_EXTENSIONS "Build extension library" ON)
 
 if(BUILD_EDITOR_COCOSBUILDER)
     include(editor-support/cocosbuilder/CMakeLists.txt)
@@ -113,17 +115,31 @@ set(COCOS_SRC cocos2d.cpp
     ${COCOS_STORAGE_SRC}
     )
 
-#todo: provide prebuild versions of the xx libs for all platforms
-include_directories(../external/xxtea)
-include_directories(../external/clipper)
-
 list(APPEND COCOS_SRC ${COCOS_HEADER})
 
 add_library(cocos2d ${COCOS_SRC})
 
-# use necessary external libs and system libs
-include(CocosUseLibs)
-target_use_cocos2d_depend_libs(cocos2d)
+# use external libs
+add_subdirectory(${COCOS2DX_ROOT_PATH}/external ${ENGINE_BINARY_PATH}/external)
+target_link_libraries(cocos2d external)
+
+# add base macro define and compile options
+use_cocos2dx_compile_define(cocos2d)
+use_cocos2dx_compile_options(cocos2d)
+
+# use all platform related system libs
+use_cocos2dx_libs_depend(cocos2d)
+
+target_include_directories(cocos2d
+    PUBLIC ${COCOS2DX_ROOT_PATH}
+    PUBLIC ${COCOS2DX_ROOT_PATH}/cocos
+    PUBLIC ${COCOS2DX_ROOT_PATH}/extensions
+    PUBLIC ${COCOS2DX_ROOT_PATH}/cocos/platform
+    INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/base
+    INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/editor-support
+    INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/audio/include
+    INTERFACE ${COCOS2DX_ROOT_PATH}/cocos/platform/${PLATFORM_FOLDER}
+)
 
 set_target_properties(cocos2d
                       PROPERTIES
@@ -133,32 +149,6 @@ set_target_properties(cocos2d
                       FOLDER "Internal"
                       )
 
-# set custom target: prebuilt, to copy all libs to prebuilt libs folder
-if(GEN_COCOS_PREBUILT)
-    add_custom_target(prebuilt ALL)
-    add_dependencies(prebuilt cocos2d)
-    set_target_properties(prebuilt
-                          PROPERTIES
-                          FOLDER "Internal"
-                          )
-    add_custom_command(TARGET "prebuilt"
-                       POST_BUILD
-                       COMMAND ${CMAKE_COMMAND} -E copy_directory
-                       "${CMAKE_BINARY_DIR}/lib"
-                       "${COCOS_PREBUILT_PATH}"
-                       COMMENT "copy library directory:${CMAKE_BINARY_DIR}/lib to directory:${COCOS_PREBUILT_PATH}"
-                       )
-    if(BUILD_LUA_LIBS)
-        add_dependencies(prebuilt luacocos2d)
-    endif()
-    if(BUILD_JS_LIBS)
-        add_dependencies(prebuilt jscocos2d)
-    endif()
-    if(BUILD_SIMU_LIB AND (MACOSX OR WINDOWS))
-        add_dependencies(prebuilt simulator)
-    endif()
-endif()
-
 ## Lua bindings lib
 if(BUILD_LUA_LIBS)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings ${ENGINE_BINARY_PATH}/cocos/lua-bindings)
@@ -167,11 +157,16 @@ endif()
 if(BUILD_JS_LIBS)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings ${ENGINE_BINARY_PATH}/cocos/js-bindings)
 endif()
-# simulator
-if(BUILD_SIMU_LIB AND (MACOSX OR WINDOWS))
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator ${ENGINE_BINARY_PATH}/cocos/libsimulator)
-endif()
 
 if(XCODE OR VS)
     cocos_mark_code_files("cocos2d")
+endif()
+
+if(WINDOWS)
+    # precompiled header. Compilation time speedup ~4x.
+    target_sources(cocos2d PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp")
+    set_target_properties(cocos2d PROPERTIES COMPILE_FLAGS "/Yuprecheader.h /FIprecheader.h")
+    set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp" PROPERTIES COMPILE_FLAGS "/Ycprecheader.h")
+    # compile c as c++. needed for precompiled header
+    set_source_files_properties(${COCOS_SPINE_SRC} base/ccFPSImages.c PROPERTIES LANGUAGE CXX)
 endif()

@@ -166,7 +166,9 @@
                 "frameworks/runtime-src/proj.ios_mac/ios/main.m",
                 "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
                 "frameworks/runtime-src/proj.ios_mac/mac/SimulatorApp.mm",
-                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj"            ]
+                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
+                "CMakeLists.txt"
+            ]
         },
         "project_replace_package_name": {
             "src_package_name": "org.cocos2dx.hellolua",

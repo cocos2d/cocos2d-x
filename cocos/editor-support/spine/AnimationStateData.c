@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/AnimationStateData.h>
-#include <spine/extension.h>
+#include "spine/AnimationStateData.h"
+#include "spine/extension.h"
 
 typedef struct _ToEntry _ToEntry;
 struct _ToEntry {

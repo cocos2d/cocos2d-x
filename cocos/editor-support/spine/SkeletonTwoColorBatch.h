@@ -31,7 +31,7 @@
 #ifndef SPINE_SKELETONTWOCOLORBATCH_H_
 #define SPINE_SKELETONTWOCOLORBATCH_H_
 
-#include <spine/spine.h>
+#include "spine/spine.h"
 #include "cocos2d.h"
 #include <vector>
 

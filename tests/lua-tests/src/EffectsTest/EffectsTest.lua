@@ -48,7 +48,7 @@ end
 
 local function nextAction()
     ActionIdx = ActionIdx + 1
-    ActionIdx = math.mod(ActionIdx, MAX_LAYER)
+    ActionIdx = math.fmod(ActionIdx, MAX_LAYER)
 
     return CreateEffectsTestLayer()
 end

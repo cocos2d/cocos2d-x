@@ -57,12 +57,12 @@ var IntervalLayer = cc.LayerGradient.extend({
         sun.setLife(0.6);
         this.addChild(sun);
 
-        // timers
-        this.label0 = new cc.LabelTTF("0", "Arial", 24);
-        this.label1 = new cc.LabelTTF("0", "Arial", 24);
-        this.label2 = new cc.LabelTTF("0", "Arial", 24);
-        this.label3 = new cc.LabelTTF("0", "Arial", 24);
-        this.label4 = new cc.LabelTTF("0", "Arial", 24);
+        // timers, font "fonts/bitmapFontTest4.fnt"
+        this.label0 = cc.Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+        this.label1 = cc.Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+        this.label2 = cc.Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+        this.label3 = cc.Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
+        this.label4 = cc.Label.createWithBMFont("fonts/bitmapFontTest4.fnt", 24);
 
         this.scheduleUpdate();
         this.schedule(this.step1);

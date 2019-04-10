@@ -211,8 +211,9 @@ bool TMXMapInfo::parseXMLFile(const std::string& xmlFilename)
     }
     
     parser.setDelegator(this);
-
-    return parser.parse(FileUtils::getInstance()->fullPathForFilename(xmlFilename));
+    auto fullPath = FileUtils::getInstance()->fullPathForFilename(xmlFilename);
+    CCASSERT(FileUtils::getInstance()->isFileExist(fullPath), "TMXMapInfo::parseXMLFile xml file not exists");
+    return parser.parse(fullPath);
 }
 
 // the XML parser calls here with all the elements
@@ -314,7 +315,7 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
                 _currentFirstGID = 0;
             }
             _recordFirstGID = false;
-            
+            _externalTilesetFullPath = externalTilesetFilename;
             tmxMapInfo->parseXMLFile(externalTilesetFilename);
         }
         else
@@ -431,7 +432,12 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
         std::string imagename = attributeDict["source"].asString();
         tileset->_originSourceImage = imagename;
 
-        if (_TMXFileName.find_last_of("/") != string::npos)
+        if (!_externalTilesetFullPath.empty())
+        {
+            string dir = _externalTilesetFullPath.substr(0, _externalTilesetFullPath.find_last_of("/") + 1);
+            tileset->_sourceImage = dir + imagename;
+        }
+        else if (_TMXFileName.find_last_of("/") != string::npos)
         {
             string dir = _TMXFileName.substr(0, _TMXFileName.find_last_of("/") + 1);
             tileset->_sourceImage = dir + imagename;

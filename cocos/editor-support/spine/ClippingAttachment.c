@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/ClippingAttachment.h>
-#include <spine/extension.h>
+#include "spine/ClippingAttachment.h"
+#include "spine/extension.h"
 
 void _spClippingAttachment_dispose (spAttachment* attachment) {
 	spClippingAttachment* self = SUB_CAST(spClippingAttachment, attachment);

@@ -29,12 +29,35 @@
 
 #include "scripting/js-bindings/manual/network/XMLHTTPRequest.h"
 #include <string>
+#include <cctype>
 #include <algorithm>
 #include <sstream>
 #include "base/CCDirector.h"
+#include "base/ZipUtils.h"
 #include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 
 using namespace std;
+
+
+// trim from start (in place)
+static inline void ltrim(std::string &s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) {
+        return !std::isspace(ch);
+    }));
+}
+
+// trim from end (in place)
+static inline void rtrim(std::string &s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) {
+        return !std::isspace(ch);
+    }).base(), s.end());
+}
+
+// trim from both ends (in place)
+static inline void trim(std::string &s) {
+    ltrim(s);
+    rtrim(s);
+}
 
 
 //#pragma mark - MinXmlHttpRequest
@@ -186,6 +209,41 @@ void MinXmlHttpRequest::_setHttpRequestData(const char *data, size_t len)
     }
 }
 
+MinXmlHttpRequest::EncodingType MinXmlHttpRequest::_getEncodingType() const
+{
+    auto it = _httpHeader.find("content-encoding");
+    if (it == _httpHeader.end()) {
+        return EncodingType::IDENTITY;
+    }
+
+    std::string encodingTypeStr = it->second;
+    trim(encodingTypeStr);
+    if (encodingTypeStr.empty())
+    {
+        return EncodingType::IDENTITY;
+    }
+    else if (encodingTypeStr == "gzip")
+    {
+        return EncodingType::GZIP;
+    }
+    else if (encodingTypeStr == "deflate")
+    {
+        return EncodingType::DEFLATE;
+    }
+    else if (encodingTypeStr == "br")
+    {
+        return EncodingType::BR;
+    }
+    else if (encodingTypeStr == "compress")
+    {
+        return EncodingType::COMPRESS;
+    }
+    else
+    {
+        CCLOG("[error] bad unrecongized Content-Encoding value ", encodingTypeStr.c_str(), ", use \"identity\" as default");
+        return EncodingType::IDENTITY;
+    }
+}
 /**
  *  @brief Callback for HTTPRequest. Handles the response and invokes Callback.
  *  @param sender   Object which initialized callback
@@ -271,11 +329,37 @@ void MinXmlHttpRequest::handle_requestResponse(cocos2d::network::HttpClient *sen
     _status = statusCode;
     _readyState = DONE;
 
+    const auto encodingType = _getEncodingType();
+
+#if ( CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 )
+    if (encodingType == EncodingType::GZIP && 
+        cocos2d::ZipUtils::ccIsGZipBuffer((unsigned char *)buffer->data(), buffer->size()))
+    {
+        unsigned char *deflatedBuffer = nullptr;
+        auto deflatedSize = cocos2d::ZipUtils::ccInflateMemory((unsigned char *)buffer->data(), buffer->size(), &deflatedBuffer);
+        CCASSERT(deflatedSize > 0, "ZipUtils::ccInflateMemory error");
+        CC_SAFE_DELETE(_data);
+        _dataSize = deflatedSize;
+        _data = (char*)malloc(_dataSize + 1);
+        _data[_dataSize] = 0;
+        memcpy((void*)_data, (const void*)deflatedBuffer, _dataSize);
+        free(deflatedBuffer);
+    }
+    else
+    {
+        _dataSize = static_cast<uint32_t>(buffer->size());
+        CC_SAFE_FREE(_data);
+        _data = (char*) malloc(_dataSize + 1);
+        _data[_dataSize] = 0;
+        memcpy((void*)_data, (const void*)buffer->data(), _dataSize);
+    }
+#else
     _dataSize = static_cast<uint32_t>(buffer->size());
     CC_SAFE_FREE(_data);
-    _data = (char*) malloc(_dataSize + 1);
-    _data[_dataSize] = '\0';
+    _data = (char*)malloc(_dataSize + 1);
+    _data[_dataSize] = 0;
     memcpy((void*)_data, (const void*)buffer->data(), _dataSize);
+#endif
 
     JS::RootedObject callback(_cx);
     if (_onreadystateCallback)

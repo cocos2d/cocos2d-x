@@ -108,17 +108,8 @@ const Camera* Camera::getVisitingCamera()
 // end static methods
 
 Camera::Camera()
-: _scene(nullptr)
-, _viewProjectionDirty(true)
-, _viewProjectionUpdated(false)
-, _cameraFlag(1)
-, _frustumDirty(true)
-, _depth(-1)
-, _fbo(nullptr)
 {
     _frustum.setClipZ(true);
-    _clearBrush = CameraBackgroundBrush::createDepthBrush(1.f);
-    _clearBrush->retain();
 }
 
 Camera::~Camera()

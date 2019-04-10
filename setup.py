@@ -30,7 +30,6 @@ This script will install environment variables needed to by cocos2d-x. It will s
 https://github.com/cocos2d/cocos2d-console
 * NDK_ROOT: used to build android native codes
 * ANDROID_SDK_ROOT: used to generate applicatoin on Android through commands
-* ANT_ROOT: used to generate applicatoin on Android through commands
 * COCOS_X_ROOT: path where cocos2d-x is installed
 * COCOS_TEMPLATES_ROOT: path where cocos2d-x's templates are installed
 
@@ -61,7 +60,6 @@ COCOS_X_ROOT = 'COCOS_X_ROOT'
 COCOS_TEMPLATES_ROOT = 'COCOS_TEMPLATES_ROOT'
 NDK_ROOT = 'NDK_ROOT'
 ANDROID_SDK_ROOT = 'ANDROID_SDK_ROOT'
-ANT_ROOT = 'ANT_ROOT'
 
 
 def _check_python_version():
@@ -341,8 +339,6 @@ class SetEnvVar(object):
             ret = self._is_ndk_root_valid(value)
         elif var_name == ANDROID_SDK_ROOT:
             ret = self._is_android_sdk_root_valid(value)
-        elif var_name == ANT_ROOT:
-            ret = self._is_ant_root_valid(value)
         else:
             ret = False
 
@@ -376,19 +372,6 @@ class SetEnvVar(object):
         else:
             android_path = os.path.join(android_sdk_root, 'tools', 'android')
         if os.path.isfile(android_path):
-            return True
-        else:
-            return False
-
-    def _is_ant_root_valid(self, ant_root):
-
-        ant_path = ''
-        if self._isWindows():
-            ant_path = os.path.join(ant_root, 'ant.bat')
-        else:
-            ant_path = os.path.join(ant_root, 'ant')
-
-        if os.path.isfile(ant_path):
             return True
         else:
             return False
@@ -591,9 +574,6 @@ class SetEnvVar(object):
             ret = self._force_update_unix_env(var_name, value)
         return ret
 
-    def _get_ant_path(self):
-        return self._get_sdkpath_for_cmd("ant", False)
-
     def _get_androidsdk_path(self):
         return self._get_sdkpath_for_cmd("android")
 
@@ -620,9 +600,7 @@ class SetEnvVar(object):
         return ret
 
     def _find_value_from_sys(self, var_name):
-        if var_name == ANT_ROOT:
-            return self._get_ant_path()
-        elif var_name == NDK_ROOT:
+        if var_name == NDK_ROOT:
             return self._get_ndkbuild_path()
         elif var_name == ANDROID_SDK_ROOT:
             return self._get_androidsdk_path()
@@ -680,7 +658,7 @@ class SetEnvVar(object):
         else:
             return SetEnvVar.RESULT_DO_NOTHING
 
-    def set_environment_variables(self, ndk_root, android_sdk_root, ant_root, quiet):
+    def set_environment_variables(self, ndk_root, android_sdk_root, quiet):
 
         print('\nSetting up cocos2d-x...')
 
@@ -699,7 +677,6 @@ class SetEnvVar(object):
         if(quiet) :
             ndk_ret = self.set_variable(NDK_ROOT, ndk_root)
             sdk_ret = self.set_variable(ANDROID_SDK_ROOT, android_sdk_root)
-            ant_ret = self.set_variable(ANT_ROOT, ant_root)
 
         # tip the backup file
         if (self.backup_file is not None) and (os.path.exists(self.backup_file)):
@@ -723,16 +700,13 @@ if __name__ == '__main__':
     parser.add_option('-a', '--androidsdkroot',
                       dest='android_sdk_root', help='directory of android sdk root')
     parser.add_option(
-        '-t', '--antroot', dest='ant_root', help='directory that contains ant/ant.bat')
-
-    parser.add_option(
-        '-q', '--quiet', dest='quiet',action="store_false", default = True, help='setup without setting NDK,SDK,ANT')
+        '-q', '--quiet', dest='quiet',action="store_false", default = True, help='setup without setting NDK,SDK')
     opts, args = parser.parse_args()
 
     # set environment variables
     env = SetEnvVar()
     env.set_environment_variables(
-        opts.ndk_root, opts.android_sdk_root, opts.ant_root, opts.quiet)
+        opts.ndk_root, opts.android_sdk_root, opts.quiet)
 
     if env._isWindows():
         import ctypes

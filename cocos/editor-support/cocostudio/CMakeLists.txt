@@ -1,10 +1,3 @@
-
-if(WINDOWS AND BUILD_SHARED_LIBS)
-    add_definitions(-D_USRSTUDIODLL)
-endif()
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ")
-
 set(COCOS_CS_HEADER
 
     editor-support/cocostudio/CCProcessBase.h

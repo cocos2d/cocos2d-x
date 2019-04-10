@@ -71,6 +71,7 @@ namespace ui {
 
     EditBoxImplWin::EditBoxImplWin(EditBox* pEditText)
         : EditBoxImplCommon(pEditText),
+        _hwndEdit(NULL),
         _changedTextManually(false),
         _hasFocus(false),
         _endAction(EditBoxDelegate::EditBoxEndAction::UNKNOWN)

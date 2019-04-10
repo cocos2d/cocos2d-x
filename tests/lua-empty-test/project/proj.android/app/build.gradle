@@ -18,19 +18,24 @@ android {
                     targets 'lua_empty_test'
                     arguments 'NDK_TOOLCHAIN_VERSION=clang'
                     arguments '-j' + Runtime.runtime.availableProcessors()
+
+                    def module_paths = [project.file("../../../../..").absolutePath,
+                                        project.file("../../../../../cocos").absolutePath,
+                                        project.file("../../../../../external").absolutePath]
+                    if (OperatingSystem.current().isWindows()) {
+                        module_paths = module_paths.collect {it.replaceAll('\\\\', '/')}
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(";")
+                    }
+                    else {
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(':')
+                    }
                 }
             }
             else if (PROP_BUILD_TYPE == 'cmake') {
                 cmake {
                     targets "lua_empty_test"
-                    arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", \
-                              "-DUSE_CHIPMUNK=TRUE", "-DUSE_BULLET=TRUE", "-DBUILD_LUA_LIBS=TRUE"
-                    cppFlags "-frtti -fexceptions"
-                    // prebuilt root must be defined as a directory which you have right to access or create if you use prebuilt
-                    // set "-DGEN_COCOS_PREBUILT=ON" and "-DUSE_COCOS_PREBUILT=OFF" to generate prebuilt,  this way build cocos2d-x libs
-                    // set "-DGEN_COCOS_PREBUILT=OFF" and "-DUSE_COCOS_PREBUILT=ON" to use prebuilt, this way not build cocos2d-x libs
-                    //arguments "-DCOCOS_PREBUILT_ROOT=/Users/laptop/cocos-prebuilt"
-                    //arguments "-DGEN_COCOS_PREBUILT=OFF", "-DUSE_COCOS_PREBUILT=OFF"
+                    arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE"
+                    cppFlags "-frtti -fexceptions -fsigned-char"
                 }
             }
         }

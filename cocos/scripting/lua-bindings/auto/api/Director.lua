@@ -516,6 +516,13 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+--  Gets clear values for the color buffers.<br>
+-- js NA
+-- @function [parent=#Director] getClearColor 
+-- @param self
+-- @return color4f_table#color4f_table ret (return value: color4f_table)
+        
+--------------------------------
 --  Whether or not the Director is paused. 
 -- @function [parent=#Director] isPaused 
 -- @param self

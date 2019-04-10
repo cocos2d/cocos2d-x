@@ -32,7 +32,7 @@
 #include "2d/CCFont.h"
 
 #include <string>
-#include <ft2build.h>
+#include "ft2build.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #define generic GenericFromFreeTypeLibrary
@@ -73,6 +73,7 @@ public:
     
     int getFontAscender() const;
     const char* getFontFamily() const;
+    std::string getFontName() const { return _fontName; }
 
     virtual FontAtlas* createFontAtlas() override;
     virtual int getFontMaxHeight() const override { return _lineHeight; }

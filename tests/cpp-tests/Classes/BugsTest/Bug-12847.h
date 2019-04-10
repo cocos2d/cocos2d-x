@@ -34,6 +34,7 @@ public:
     
     virtual bool init() override;
     
+    virtual std::string title() const override { return "12874";}
 protected:
     virtual void update(float dt) override;
     virtual void onEnter() override;

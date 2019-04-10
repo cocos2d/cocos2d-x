@@ -72,8 +72,6 @@ _disabledFileName(""),
 _normalTexType(TextureResType::LOCAL),
 _pressedTexType(TextureResType::LOCAL),
 _disabledTexType(TextureResType::LOCAL),
-_fontSize(10),
-_type(FontType::SYSTEM),
 _fontName("")
 {
     setTouchEnabled(true);
@@ -115,18 +113,15 @@ bool Button::init(const std::string &normalImage,
                   const std::string& disableImage,
                   TextureResType texType)
 {
-    bool ret = true;
-    do
-    {
-        if (!Widget::init())
-        {
-            ret = false;
-            break;
-        }
 
-        this->loadTextures(normalImage, selectedImage, disableImage,texType);
-    } while (0);
-    return ret;
+    // invoke an overridden init() at first
+    if (!Widget::init()) {
+        return false;
+    }
+
+    loadTextures(normalImage, selectedImage, disableImage, texType);
+    
+    return true;
 }
 
 bool Button::init()
@@ -151,22 +146,29 @@ void Button::initRenderer()
     addProtectedChild(_buttonClickedRenderer, PRESSED_RENDERER_Z, -1);
     addProtectedChild(_buttonDisabledRenderer, DISABLED_RENDERER_Z, -1);
 }
+    
+bool Button::createTitleRendererIfNull() {
+    if( !_titleRenderer ) {
+        createTitleRenderer();
+        return true;
+    }
+    
+    return false;
+}
 
 void Button::createTitleRenderer()
 {
-    _titleRenderer = Label::create();
-    _titleRenderer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-    addProtectedChild(_titleRenderer, TITLE_RENDERER_Z, -1);
+    setTitleLabel(Label::create());
 }
 
 /** replaces the current Label node with a new one */
 void Button::setTitleLabel(Label* label)
 {
-    if (_titleRenderer != label) {
-        CC_SAFE_RELEASE(_titleRenderer);
-        _titleRenderer = label;
-        CC_SAFE_RETAIN(_titleRenderer);
+    if (label && _titleRenderer != label) {
 
+        if (_titleRenderer) removeProtectedChild(_titleRenderer);
+
+        _titleRenderer = label;
         addProtectedChild(_titleRenderer, TITLE_RENDERER_Z, -1);
         updateTitleLocation();
     }
@@ -702,53 +704,45 @@ void Button::setPressedActionEnabled(bool enabled)
 
 void Button::setTitleAlignment(TextHAlignment hAlignment)
 {
-    if (nullptr == _titleRenderer)
-    {
-        this->createTitleRenderer();
-    }
+    createTitleRendererIfNull();
     _titleRenderer->setAlignment(hAlignment);
 }
 
 void Button::setTitleAlignment(TextHAlignment hAlignment, TextVAlignment vAlignment)
 {
-    if (nullptr == _titleRenderer)
-    {
-        this->createTitleRenderer();
-    }
+    createTitleRendererIfNull();
     _titleRenderer->setAlignment(hAlignment, vAlignment);
 }
 
 void Button::setTitleText(const std::string& text)
 {
-    if (text == getTitleText())
-    {
+    if (text.compare(getTitleText()) == 0) {
         return;
     }
-    if(nullptr == _titleRenderer)
-    {
-        this->createTitleRenderer();
+    
+    createTitleRendererIfNull();
+    
+    if(getTitleFontSize() <= 0) {
+        setTitleFontSize(CC_DEFAULT_FONT_LABEL_SIZE);
     }
     _titleRenderer->setString(text);
-    this->setTitleFontSize(_fontSize);
+
     updateContentSize();
     updateTitleLocation();
 }
 
 std::string Button::getTitleText() const
 {
-    if(nullptr == _titleRenderer)
-    {
+    if(!_titleRenderer) {
         return "";
     }
+    
     return _titleRenderer->getString();
 }
 
 void Button::setTitleColor(const Color3B& color)
 {
-    if(nullptr == _titleRenderer)
-    {
-        this->createTitleRenderer();
-    }
+    createTitleRendererIfNull();
     _titleRenderer->setTextColor(Color4B(color));
 }
 
@@ -763,32 +757,30 @@ Color3B Button::getTitleColor() const
 
 void Button::setTitleFontSize(float size)
 {
-    if (nullptr == _titleRenderer)
-    {
-        this->createTitleRenderer();
-    }
+    createTitleRendererIfNull();
 
-    _fontSize = size;
-    if (_type == FontType::SYSTEM)
-    {
-        _titleRenderer->setSystemFontSize(_fontSize);
-    }
-    else if (_type == FontType::TTF)
-    {
+    Label::LabelType titleLabelType = _titleRenderer->getLabelType();
+    if(titleLabelType == Label::LabelType::TTF) {
         TTFConfig config = _titleRenderer->getTTFConfig();
-        config.fontSize = _fontSize;
+        config.fontSize = size;
         _titleRenderer->setTTFConfig(config);
+    } else if (titleLabelType == Label::LabelType::STRING_TEXTURE) {
+        // the system font
+        _titleRenderer->setSystemFontSize(size);
     }
+    
     //we can't change font size of BMFont.
-    if(FontType::BMFONT != _type)
-    {
+    if(titleLabelType != Label::LabelType::BMFONT) {
         updateContentSize();
     }
 }
 
-float Button::getTitleFontSize() const
-{
-    return _fontSize;
+float Button::getTitleFontSize() const {
+    if(_titleRenderer) {
+        return _titleRenderer->getRenderingFontSize();
+    }
+    
+    return -1;
 }
 
 void Button::setZoomScale(float scale)
@@ -803,40 +795,23 @@ float Button::getZoomScale()const
 
 void Button::setTitleFontName(const std::string& fontName)
 {
-    if(nullptr == _titleRenderer)
-    {
-        this->createTitleRenderer();
-    }
-    if(FileUtils::getInstance()->isFileExist(fontName))
-    {
+    createTitleRendererIfNull();
+    
+    if(FileUtils::getInstance()->isFileExist(fontName)) {
         std::string lowerCasedFontName = fontName;
         std::transform(lowerCasedFontName.begin(), lowerCasedFontName.end(), lowerCasedFontName.begin(), ::tolower);
-        if (lowerCasedFontName.find(".fnt") != std::string::npos)
-        {
+        if (lowerCasedFontName.find(".fnt") != std::string::npos) {
             _titleRenderer->setBMFontFilePath(fontName);
-            _type = FontType::BMFONT;
-        }
-        else
-        {
+        } else {
             TTFConfig config = _titleRenderer->getTTFConfig();
             config.fontFilePath = fontName;
-            config.fontSize = _fontSize;
             _titleRenderer->setTTFConfig(config);
-            _type = FontType::TTF;
         }
-    }
-    else
-    {
+    } else {
         _titleRenderer->setSystemFontName(fontName);
-        if (_type == FontType::TTF)
-        {
-            _titleRenderer->requestSystemFontRefresh();
-        }
-        _titleRenderer->setSystemFontSize(_fontSize);
-        _type = FontType::SYSTEM;
     }
     _fontName = fontName;
-    this->updateContentSize();
+    updateContentSize();
 }
 
 Label* Button::getTitleRenderer()const
@@ -846,25 +821,18 @@ Label* Button::getTitleRenderer()const
 
 std::string Button::getTitleFontName() const
 {
-    if (nullptr != _titleRenderer)
-    {
-        if (this->_type == FontType::SYSTEM)
-        {
+    if (_titleRenderer) {
+        Label::LabelType titleLabelType = _titleRenderer->getLabelType();
+        if (titleLabelType == Label::LabelType::STRING_TEXTURE) {
             return _titleRenderer->getSystemFontName();
-        }
-        else if (this->_type == FontType::TTF)
-        {
+        } else if (titleLabelType == Label::LabelType::TTF) {
             return  _titleRenderer->getTTFConfig().fontFilePath;
-        }
-        else
-        {
+        } else if (titleLabelType == Label::LabelType::BMFONT) {
             return _titleRenderer->getBMFontFilePath();
         }
     }
-    else
-    {
-        return _fontName;
-    }
+    
+    return "";
 }
 
 std::string Button::getDescription() const

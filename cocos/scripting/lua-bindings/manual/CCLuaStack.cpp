@@ -136,7 +136,7 @@ bool LuaStack::init(void)
     toluafix_open(_state);
 
     // Register our version of the global "print" function
-    const luaL_reg global_functions [] = {
+    const luaL_Reg global_functions [] = {
         {"print", lua_print},
         {"release_print",lua_release_print},
         {nullptr, nullptr}

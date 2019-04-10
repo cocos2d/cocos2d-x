@@ -1,10 +1,3 @@
-include_directories(
-        ../external/ConvertUTF
-        ../external/poly2tri
-        ../external/poly2tri/common
-        ../external/poly2tri/sweep
-)
-
 set(COCOS_2D_HEADER
 
     2d/CCActionPageTurn3D.h
@@ -144,7 +137,6 @@ set(COCOS_2D_SRC
     2d/CCSpriteFrameCache.cpp
     2d/CCSpriteFrame.cpp
     2d/CCAutoPolygon.cpp
-    ../external/clipper/clipper.cpp
     2d/CCTextFieldTTF.cpp
     2d/CCTileMapAtlas.cpp
     2d/CCTMXLayer.cpp

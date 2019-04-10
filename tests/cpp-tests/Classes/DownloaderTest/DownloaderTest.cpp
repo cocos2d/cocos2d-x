@@ -29,6 +29,7 @@
 #include "../testResource.h"
 
 #include "ui/UILoadingBar.h"
+#include "ui/UIButton.h"
 #include "network/CCDownloader.h"
 
 USING_NS_CC;
@@ -36,15 +37,15 @@ USING_NS_CC;
 static const char* sURLList[] =
 {
     "http://www.cocos2d-x.org/attachments/802/cocos2dx_landscape.png",
-    "http://www.cocos2d-x.org/docs/manual/framework/native/wiki/logo-resources-of-cocos2d-x/res/2dx_icon_512_rounded.png",
+    "http://cocos2d-x.org/images/logo.png",
     "http://www.cocos2d-x.org/attachments/1503/no_exist.txt",  // try to download no exist file
-    "http://download.sdkbox.com/installer/v1/sdkbox-iap_v2.3.6.1.tar.gz",
+    "https://github.com/openssl/openssl/archive/OpenSSL_1_1_1a.zip",
 };
 const static int sListSize = (sizeof(sURLList)/sizeof(sURLList[0]));
 static const char* sNameList[sListSize] =
 {
     "cocos2dx_landscape.png",
-    "2dx_icon_512_rounded.png",
+    "logo.png",
     "inexist file",
     "big file",
 };

@@ -36,7 +36,12 @@ THE SOFTWARE.
 #include <regex>
 #include <sstream>
 
+#include <sys/types.h>  
+#include <sys/stat.h>  
+
 using namespace std;
+
+#define DECLARE_GUARD std::lock_guard<std::recursive_mutex> mutexGuard(_mutex)
 
 NS_CC_BEGIN
 
@@ -100,8 +105,9 @@ FileUtilsWin32::FileUtilsWin32()
 
 bool FileUtilsWin32::init()
 {
+    DECLARE_GUARD;
     _checkPath();
-    _defaultResRootPath = s_resourcePath;
+    _defaultResRootPath = s_resourcePath + "Resources/";
     return FileUtils::init();
 }
 
@@ -136,6 +142,7 @@ long FileUtilsWin32::getFileSize(const std::string &filepath)
 
 bool FileUtilsWin32::isFileExistInternal(const std::string& strFilePath) const
 {
+    DECLARE_GUARD;
     if (strFilePath.empty())
     {
         return false;
@@ -165,7 +172,7 @@ bool FileUtilsWin32::isAbsolutePath(const std::string& strPath) const
 }
 
 
-FileUtils::Status FileUtilsWin32::getContents(const std::string& filename, ResizableBuffer* buffer)
+FileUtils::Status FileUtilsWin32::getContents(const std::string& filename, ResizableBuffer* buffer) const
 {
     if (filename.empty())
         return FileUtils::Status::NotExists;
@@ -213,12 +220,12 @@ std::string FileUtilsWin32::getPathForFilename(const std::string& filename, cons
     return FileUtils::getPathForFilename(unixFileName, unixResolutionDirectory, unixSearchPath);
 }
 
-std::string FileUtilsWin32::getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename) const
+std::string FileUtilsWin32::getFullPathForFilenameWithinDirectory(const std::string& strDirectory, const std::string& strFilename) const
 {
     std::string unixDirectory = convertPathFormatToUnixStyle(strDirectory);
     std::string unixFilename = convertPathFormatToUnixStyle(strFilename);
 
-    return FileUtils::getFullPathForDirectoryAndFilename(unixDirectory, unixFilename);
+    return FileUtils::getFullPathForFilenameWithinDirectory(unixDirectory, unixFilename);
 }
 
 void FileUtilsWin32::listFilesRecursively(const std::string& dirPath, std::vector<std::string> *files) const
@@ -267,9 +274,19 @@ void FileUtilsWin32::listFilesRecursively(const std::string& dirPath, std::vecto
     }
 }
 
+long FileUtilsWin32::getFileSize(const std::string &filepath) const
+{
+    struct _stat tmp;
+    if (_stat(filepath.c_str(), &tmp) == 0)
+    {
+        return (long)tmp.st_size;
+    }
+    return 0;
+}
+
 std::vector<std::string> FileUtilsWin32::listFiles(const std::string& dirPath) const
 {
-    std::string fullpath = fullPathForFilename(dirPath);
+    std::string fullpath = fullPathForDirectory(dirPath);
     std::vector<std::string> files;
     if (isDirectoryExist(fullpath))
     {
@@ -308,6 +325,7 @@ std::vector<std::string> FileUtilsWin32::listFiles(const std::string& dirPath) c
 
 string FileUtilsWin32::getWritablePath() const
 {
+    DECLARE_GUARD;
     if (_writablePath.length())
     {
         return _writablePath;
@@ -359,7 +377,7 @@ string FileUtilsWin32::getWritablePath() const
     return convertPathFormatToUnixStyle(StringWideCharToUtf8(retPath));
 }
 
-bool FileUtilsWin32::renameFile(const std::string &oldfullpath, const std::string& newfullpath)
+bool FileUtilsWin32::renameFile(const std::string &oldfullpath, const std::string& newfullpath) const
 {
     CCASSERT(!oldfullpath.empty(), "Invalid path");
     CCASSERT(!newfullpath.empty(), "Invalid path");
@@ -386,7 +404,7 @@ bool FileUtilsWin32::renameFile(const std::string &oldfullpath, const std::strin
     }
 }
 
-bool FileUtilsWin32::renameFile(const std::string &path, const std::string &oldname, const std::string &name)
+bool FileUtilsWin32::renameFile(const std::string &path, const std::string &oldname, const std::string &name) const
 {
     CCASSERT(!path.empty(), "Invalid path");
     std::string oldPath = path + oldname;
@@ -399,7 +417,7 @@ bool FileUtilsWin32::renameFile(const std::string &path, const std::string &oldn
     return renameFile(_old, _new);
 }
 
-bool FileUtilsWin32::createDirectory(const std::string& dirPath)
+bool FileUtilsWin32::createDirectory(const std::string& dirPath) const
 {
     CCASSERT(!dirPath.empty(), "Invalid path");
 
@@ -456,7 +474,7 @@ bool FileUtilsWin32::createDirectory(const std::string& dirPath)
     return true;
 }
 
-bool FileUtilsWin32::removeFile(const std::string &filepath)
+bool FileUtilsWin32::removeFile(const std::string &filepath) const
 {
     std::regex pat("\\/");
     std::string win32path = std::regex_replace(filepath, pat, "\\");
@@ -472,9 +490,14 @@ bool FileUtilsWin32::removeFile(const std::string &filepath)
     }
 }
 
-bool FileUtilsWin32::removeDirectory(const std::string& dirPath)
+bool FileUtilsWin32::removeDirectory(const std::string& dirPath) const
 {
-    std::wstring wpath = StringUtf8ToWideChar(dirPath);
+    std::string dirPathCopy = dirPath;
+    if (dirPath.length() > 0 && dirPath[dirPath.length() - 1] != '/' && dirPath[dirPath.length() - 1] != '\\')
+    {
+        dirPathCopy.append("/");
+    }
+    std::wstring wpath = StringUtf8ToWideChar(dirPathCopy);
     std::wstring files = wpath + L"*.*";
     WIN32_FIND_DATA wfd;
     HANDLE  search = FindFirstFileEx(files.c_str(), FindExInfoStandard, &wfd, FindExSearchNameMatch, NULL, 0);

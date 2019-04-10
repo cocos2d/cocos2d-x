@@ -79,11 +79,21 @@ int Application::run()
     
     // Retain glview to avoid glview being released in the while loop
     glview->retain();
-    
+
+    unsigned int ctx_updated_count = 0;
+
     while (!glview->windowShouldClose())
     {
         lastTime = getCurrentMillSecond();
-        
+
+        // hack to fix issue #19080, black screen on macOS 10.14
+        // stevetranby: look into doing this outside loop to get rid of condition test per frame
+        if(ctx_updated_count < 2) {
+            ctx_updated_count++;
+            NSOpenGLContext* ctx = (NSOpenGLContext*)glview->getNSGLContext();
+            [ctx update];
+        }
+
         director->mainLoop();
         glview->pollEvents();
 
@@ -113,11 +123,6 @@ int Application::run()
 void Application::setAnimationInterval(float interval)
 {
     _animationInterval = interval*1000.0f;
-}
-
-void Application::setAnimationInterval(float interval, SetIntervalReason reason)
-{
-    setAnimationInterval(interval);
 }
 
 Application::Platform Application::getTargetPlatform()

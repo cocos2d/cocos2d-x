@@ -32,6 +32,7 @@ class Bug914Layer : public BugsTestBase
 public:
     virtual bool init() override;
 
+    virtual std::string title() const override { return "Bug914";}
     void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     void restart(cocos2d::Ref* sender);

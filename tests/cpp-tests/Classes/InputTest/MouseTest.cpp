@@ -32,6 +32,7 @@ MouseTests::MouseTests()
 {
     ADD_TEST_CASE(MouseEventTest);
     ADD_TEST_CASE(HideMouseTest);
+    ADD_TEST_CASE(CursorTest);
 }
 
 //------------------------------------------------------------------
@@ -144,5 +145,48 @@ std::string HideMouseTest::title() const
 std::string HideMouseTest::subtitle() const
 {
     return "Click to hide mouse";
+}
+
+//------------------------------------------------------------------
+//
+// CursorTest
+//
+//------------------------------------------------------------------
+
+CursorTest::CursorTest()
+{
+    _cursor = 0;
+    _lis = EventListenerMouse::create();
+    _lis->onMouseDown = [this](Event* e){
+        _cursor = (_cursor + 1) % 3;
+        switch (_cursor) {
+            case 1:
+                Director::getInstance()->getOpenGLView()->setCursor("InputTest/cursor1.png");
+                break;
+            case 2:
+                Director::getInstance()->getOpenGLView()->setCursor("InputTest/cursor2.png", Point::ANCHOR_MIDDLE);
+                break;
+            default:
+                Director::getInstance()->getOpenGLView()->setDefaultCursor();
+                break;
+        }
+    };
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(_lis, this);
+}
+
+CursorTest::~CursorTest()
+{
+    _eventDispatcher->removeEventListener(_lis);
+}
+
+std::string CursorTest::title() const
+{
+    return "Custom Mouse Cursor";
+}
+
+std::string CursorTest::subtitle() const
+{
+    return "Click to change cursor";
 }
 

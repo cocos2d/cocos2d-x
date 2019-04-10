@@ -278,14 +278,17 @@ Terrain::Terrain()
 , _lightMap(nullptr)
 , _lightDir(-1.f, -1.f, 0.f)
 , _stateBlock(nullptr)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+, _backToForegroundListener(nullptr)
+#endif
 {
     _stateBlock = RenderState::StateBlock::create();
     CC_SAFE_RETAIN(_stateBlock);
 
     _customCommand.setTransparent(false);
     _customCommand.set3D(true);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    auto _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
         [this](EventCustom*)
     {
         reload();
@@ -510,7 +513,7 @@ Terrain::~Terrain()
         glDeleteBuffers(1,&(_chunkLodIndicesSkirtSet[i]._chunkIndices._indices));
     }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }

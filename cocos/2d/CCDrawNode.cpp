@@ -101,28 +101,19 @@ static inline Tex2F __t(const Vec2 &v)
 // implementation of DrawNode
 
 DrawNode::DrawNode(GLfloat lineWidth)
-: _vao(0)
-, _vbo(0)
-, _vaoGLPoint(0)
-, _vboGLPoint(0)
-, _vaoGLLine(0)
-, _vboGLLine(0)
-, _bufferCapacity(0)
-, _bufferCount(0)
-, _buffer(nullptr)
-, _bufferCapacityGLPoint(0)
-, _bufferCountGLPoint(0)
-, _bufferGLPoint(nullptr)
-, _bufferCapacityGLLine(0)
-, _bufferCountGLLine(0)
-, _bufferGLLine(nullptr)
-, _dirty(false)
-, _dirtyGLPoint(false)
-, _dirtyGLLine(false)
-, _lineWidth(lineWidth)
+: _lineWidth(lineWidth)
 , _defaultLineWidth(lineWidth)
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    // Need to listen the event only when not use batchnode, because it will use VBO
+    auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
+        /** listen the event that renderer was recreated on Android/WP8 */
+        this->setupBuffer();
+    });
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+#endif
 }
 
 DrawNode::~DrawNode()
@@ -199,16 +190,8 @@ void DrawNode::ensureCapacityGLLine(int count)
     }
 }
 
-bool DrawNode::init()
+void DrawNode::setupBuffer()
 {
-    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR));
-    
-    ensureCapacity(512);
-    ensureCapacityGLPoint(64);
-    ensureCapacityGLLine(256);
-    
     if (Configuration::getInstance()->supportsShareableVAO())
     {
         glGenVertexArrays(1, &_vao);
@@ -225,7 +208,7 @@ bool DrawNode::init()
         // texcoord
         glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
-        
+
         glGenVertexArrays(1, &_vaoGLLine);
         GL::bindVAO(_vaoGLLine);
         glGenBuffers(1, &_vboGLLine);
@@ -240,7 +223,7 @@ bool DrawNode::init()
         // texcoord
         glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
-        
+
         glGenVertexArrays(1, &_vaoGLPoint);
         GL::bindVAO(_vaoGLPoint);
         glGenBuffers(1, &_vboGLPoint);
@@ -255,44 +238,46 @@ bool DrawNode::init()
         // Texture coord as pointsize
         glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
         glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V2F_C4B_T2F), (GLvoid *)offsetof(V2F_C4B_T2F, texCoords));
-        
+
         GL::bindVAO(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-        
+
     }
     else
     {
         glGenBuffers(1, &_vbo);
         glBindBuffer(GL_ARRAY_BUFFER, _vbo);
         glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)* _bufferCapacity, _buffer, GL_STREAM_DRAW);
-        
+
         glGenBuffers(1, &_vboGLLine);
         glBindBuffer(GL_ARRAY_BUFFER, _vboGLLine);
         glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLLine, _bufferGLLine, GL_STREAM_DRAW);
-        
+
         glGenBuffers(1, &_vboGLPoint);
         glBindBuffer(GL_ARRAY_BUFFER, _vboGLPoint);
         glBufferData(GL_ARRAY_BUFFER, sizeof(V2F_C4B_T2F)*_bufferCapacityGLPoint, _bufferGLPoint, GL_STREAM_DRAW);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
-    
+
     CHECK_GL_ERROR_DEBUG();
+}
+
+bool DrawNode::init()
+{
+    _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+
+    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR));
+    
+    ensureCapacity(512);
+    ensureCapacityGLPoint(64);
+    ensureCapacityGLLine(256);
+    
+    setupBuffer();
     
     _dirty = true;
     _dirtyGLLine = true;
-    _dirtyGLPoint = true;
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    // Need to listen the event only when not use batchnode, because it will use VBO
-    auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
-   /** listen the event that renderer was recreated on Android/WP8 */
-        this->init();
-    });
-
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-#endif
-    
+    _dirtyGLPoint = true; 
     return true;
 }
 
@@ -948,5 +933,17 @@ GLfloat DrawNode::getLineWidth()
     return this->_lineWidth;
 }
 
+void DrawNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+{
+    if (_isolated)
+    {
+        //ignore `parentTransform` from parent
+        Node::visit(renderer, Mat4::IDENTITY, parentFlags);
+    }
+    else
+    {
+        Node::visit(renderer, parentTransform, parentFlags);
+    }
+}
 
 NS_CC_END

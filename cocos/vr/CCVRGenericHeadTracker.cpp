@@ -212,8 +212,8 @@ void VRGenericHeadTracker::startTracking()
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     _deviceToDisplay = getRotateEulerMatrix(0.f, 0.f, -90.f);
     _worldToInertialReferenceFrame = getRotateEulerMatrix(-90.f, 0.f, 90.f);
-    JniHelper::callStaticVoidMethod("org/cocos2dx/lib/Cocos2dxHelper", "enableAccelerometer");
-    JniHelper::callStaticVoidMethod("org/cocos2dx/lib/Cocos2dxHelper", "enableCompass");
+    JniHelper::callStaticVoidMethod("org.cocos2dx.lib.Cocos2dxHelper", "enableAccelerometer");
+    JniHelper::callStaticVoidMethod("org.cocos2dx.lib.Cocos2dxHelper", "enableCompass");
 #endif
 }
 
@@ -251,8 +251,8 @@ Mat4 VRGenericHeadTracker::getLocalRotation()
     static Vec3 prevAccel = Vec3(0,0,0);
     static Vec3 prevCompass = Vec3(0,0,0);
 
-    Vec3 accel = JniHelper::callStaticVec3Method("org/cocos2dx/lib/Cocos2dxHelper", "getAccelValue");
-    Vec3 compass = JniHelper::callStaticVec3Method("org/cocos2dx/lib/Cocos2dxHelper", "getCompassValue");
+    Vec3 accel = JniHelper::callStaticVec3Method("org.cocos2dx.lib.Cocos2dxHelper", "getAccelValue");
+    Vec3 compass = JniHelper::callStaticVec3Method("org.cocos2dx.lib.Cocos2dxHelper", "getCompassValue");
 
 //    CCLOG("accel: %f, %f, %f.... compass: %f, %f, %f", accel.x, accel.y, accel.z, compass.x, compass.y, compass.z);
     prevAccel = lowPass(accel, prevAccel);
