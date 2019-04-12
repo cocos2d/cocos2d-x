@@ -32,3 +32,5 @@ namespace ui {
 const Margin MarginZero =  Margin::ZERO ;
     
 }
+ 
+NS_CC_END
