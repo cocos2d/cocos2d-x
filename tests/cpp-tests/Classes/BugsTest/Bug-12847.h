@@ -36,6 +36,7 @@ public:
     virtual ~Bug12847Layer();
 
     virtual bool init() override;
+    virtual std::string title() const override { return "Bug1287";}
     
 protected:
     virtual void update(float dt) override;

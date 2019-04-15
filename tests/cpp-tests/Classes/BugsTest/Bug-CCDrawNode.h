@@ -33,6 +33,7 @@ public:
     CREATE_FUNC(BugDrawNodeLayer);
 
     virtual bool init() override;
+    virtual std::string title() const override { return "BugDrawNode";}
 };
 
 #endif

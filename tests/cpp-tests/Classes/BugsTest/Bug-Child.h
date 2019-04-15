@@ -41,6 +41,7 @@ public:
     CREATE_FUNC(BugChild);
 
     virtual bool init() override;
+    virtual std::string title() const override { return "BugChild";}
     
     void switchChild(cocos2d::Ref* sender);
     
@@ -60,6 +61,7 @@ public:
     CREATE_FUNC(BugCameraMask);
     
     virtual bool init() override;
+    virtual std::string title() const override { return "BugCameraMask";}
     
     void switchSpriteFlag(cocos2d::Ref* sender);
     void updateSpriteMaskLabel();

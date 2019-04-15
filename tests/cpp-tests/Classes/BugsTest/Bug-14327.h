@@ -38,6 +38,7 @@ public:
     CREATE_FUNC(Bug14327Layer);
 
     virtual bool init() override;
+    virtual std::string title() const override { return "Bug14327";}
 
     virtual void editBoxEditingDidBegin(cocos2d::ui::EditBox* editBox) override;
     virtual void editBoxEditingDidEndWithAction(cocos2d::ui::EditBox* editBox, cocos2d::ui::EditBoxDelegate::EditBoxEndAction EditBoxEndAction) override;

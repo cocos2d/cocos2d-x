@@ -33,6 +33,7 @@ public:
     CREATE_FUNC(Bug886Layer);
 
     virtual bool init() override;
+    virtual std::string title() const override { return "Bug886";}
 };
 
 #endif // __BUG_886_H__
