@@ -33,6 +33,7 @@ public:
     CREATE_FUNC(Bug422Layer);
 
     virtual bool init() override;
+    virtual std::string title() const override { return "Bug422";}
 
     void reset();
     void check(Node* target);

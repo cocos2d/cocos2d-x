@@ -32,6 +32,7 @@ class Bug1159Layer : public BugsTestBase
 public:
     virtual bool init() override;
     virtual void onExit() override;
+    virtual std::string title() const override { return "Bug1159";}
 
     void callBack(cocos2d::Ref* sender);
 
