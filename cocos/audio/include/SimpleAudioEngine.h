@@ -183,9 +183,10 @@ public:
      * @param gain  Volume, in the range of [0..1]. The normal value is 1.
      * @return The sound id.
      * 
-     * @note Full support is under development, now there are limitations:
-     *     - no pitch effect on Samsung Galaxy S2 with OpenSL backend enabled;
-     *     - no pitch/pan/gain on win32.
+     * @note Now use Audio Engine to implement SimpleAudioEngine, and Audio Engine doesn't support
+     *       - pitch
+     *       - pan
+     *       - gain
      */
     virtual unsigned int playEffect(const char* filePath, bool loop = false,
                                     float pitch = 1.0f, float pan = 0.0f, float gain = 1.0f);
