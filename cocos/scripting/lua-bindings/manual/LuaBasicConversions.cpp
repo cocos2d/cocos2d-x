@@ -3269,3 +3269,16 @@ void node_to_luaval(lua_State* L, const char* type, cocos2d::Node* node)
 {
     object_to_luaval<cocos2d::Node>(L, type, node);
 }
+
+
+bool luaval_to_vertexLayout(lua_State* L, int pos, cocos2d::backend::VertexLayout& outLayout,  char *message)
+{
+    cocos2d::backend::VertexLayout *tmp = nullptr;
+    auto ret = luaval_to_object<cocos2d::backend::VertexLayout>(L, pos, "cc.VertexLayout", &tmp, message);
+    if (!tmp)
+    {
+        return false;
+    }
+    outLayout = *tmp;
+    return ret;
+}

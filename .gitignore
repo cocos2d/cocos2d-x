@@ -171,4 +171,7 @@ cmake_build*
 metal-support*.zip
 **/.project
 
+**/.classpath
+**/org.eclipse.buildship.core.prefs
+
 desktop.ini

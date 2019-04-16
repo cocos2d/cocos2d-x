@@ -46,7 +46,7 @@ int lua_module_register(lua_State* L)
  //TODO minggo
 //    register_extension_module(L);
 //    register_spine_module(L);
-//    register_cocos3d_module(L);
+    register_cocos3d_module(L);
     register_audioengine_module(L);
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     register_physics3d_module(L);

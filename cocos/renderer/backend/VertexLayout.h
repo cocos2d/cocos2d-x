@@ -33,6 +33,8 @@ public:
         unsigned int index = 0;
         bool needToBeNormallized = false;
     };
+
+    VertexLayout() = default;
     
     void setAtrribute(const std::string& name, unsigned int index, VertexFormat format, unsigned int offset, bool needToBeNormallized);
     //FIXME: remove stepMode?
