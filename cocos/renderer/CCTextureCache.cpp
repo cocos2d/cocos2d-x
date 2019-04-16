@@ -840,8 +840,7 @@ void VolatileTextureMgr::reloadAllTextures()
     // we need to release all of the glTextures to avoid collisions of texture id's when reloading the textures onto the GPU
     for (auto& item : _textures)
     {
-        //TODO new-renderer: interface releaseGLTexture removal
-    //    item->_texture->releaseGLTexture();
+        item->_texture->releasebackendTexture();
     }
 
     CCLOG("reload all texture");

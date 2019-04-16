@@ -338,6 +338,11 @@ void ProgramState::setVertexUniform(int location, const void* data, uint32_t siz
         return;
     }
 #endif
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    auto mappedLocation = _program->getMappedLocation(location);
+    _vertexUniformInfos[location].uniformInfo.location = mappedLocation;
+#endif
     _vertexUniformInfos[location].data.assign((char*)data, (char*)data + size);
 }
 
@@ -404,7 +409,14 @@ void ProgramState::setTexture(int location, uint32_t slot, backend::Texture* tex
     info.slot = {slot};
     info.textures = {texture};
     info.retainTextures();
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    auto mappedLocation = _program->getMappedLocation(location);
+    textureInfo.erase(location);
+    textureInfo[mappedLocation] = std::move(info);
+#else
     textureInfo[location] = std::move(info);
+#endif
 }
 
 void ProgramState::setTextureArray(int location, const std::vector<uint32_t>& slots, const std::vector<backend::Texture*> textures, std::unordered_map<int, TextureInfo>& textureInfo)
@@ -414,7 +426,13 @@ void ProgramState::setTextureArray(int location, const std::vector<uint32_t>& sl
     info.slot = slots;
     info.textures = textures;
     info.retainTextures();
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    auto mappedLocation = _program->getMappedLocation(location);
+    textureInfo.erase(location);
+    textureInfo[mappedLocation] = std::move(info);
+#else
     textureInfo[location] = std::move(info);
+#endif
 }
 
 void ProgramState::setParameterAutoBinding(const std::string &uniform, const std::string &autoBinding)

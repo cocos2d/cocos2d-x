@@ -23,6 +23,7 @@ public:
     void removeProgram(backend::Program* program);
     void removeUnusedProgram();
     void removeAllProgram();
+    void reloadDefaultProgram();
     
 protected:
     ProgramCache() = default;

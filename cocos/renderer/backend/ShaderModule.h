@@ -12,11 +12,15 @@ class ShaderModule : public cocos2d::Ref
 {
 public:
     ShaderStage getShaderStage() const;
-    
+
 protected:
     ShaderModule(ShaderStage stage);
     virtual ~ShaderModule();
-    
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    virtual void deleteShader() = 0;
+#endif
+
     ShaderStage _stage = ShaderStage::VERTEX;
 };
 

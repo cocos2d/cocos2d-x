@@ -51,8 +51,15 @@ Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : Texture2D(descri
 
 Texture2DGL::~Texture2DGL()
 {
+    releaseGLTexture();
+}
+
+void Texture2DGL::releaseGLTexture()
+{
     if (_textureInfo.texture)
         glDeleteTextures(1, &_textureInfo.texture);
+
+    glGenTextures(1, &_textureInfo.texture);
 }
 
 void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
@@ -239,6 +246,11 @@ TextureCubeGL::TextureCubeGL(const TextureDescriptor& descriptor)
 }
 
 TextureCubeGL::~TextureCubeGL()
+{
+    releaseGLTexture();
+}
+
+void TextureCubeGL::releaseGLTexture()
 {
     if(_textureInfo.texture)
         glDeleteTextures(1, &_textureInfo.texture);

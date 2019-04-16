@@ -17,12 +17,45 @@ ProgramGL::ProgramGL(const std::string& vertexShader, const std::string& fragmen
     CC_SAFE_RETAIN(_fragmentShaderModule);
     compileProgram();
     computeUniformInfos();
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    for(const auto& uniform: _uniformInfos)
+    {
+        UniformLocation uniformLocation;
+        uniformLocation.location = glGetUniformLocation(_program, uniform.first.c_str());
+        _originalUniformLocations[uniform.first] = uniformLocation;
+        _uniformLocationMap[uniform.second.location] = uniform.second.location;
+    }
+#endif
 }
 
 ProgramGL::~ProgramGL()
 {
     CC_SAFE_RELEASE(_vertexShaderModule);
     CC_SAFE_RELEASE(_fragmentShaderModule);
+    if (_program)
+        glDeleteProgram(_program);
+}
+
+void ProgramGL::reloadGLProgram()
+{
+    static_cast<ShaderModuleGL*>(_vertexShaderModule)->compileShader(backend::ShaderStage::VERTEX, _vertexShader);
+    static_cast<ShaderModuleGL*>(_fragmentShaderModule)->compileShader(backend::ShaderStage::FRAGMENT, _fragmentShader);
+    compileProgram();
+    computeUniformInfos();
+
+    for(const auto& uniform : _uniformInfos)
+    {
+        auto location = _originalUniformLocations[uniform.first].location;
+        _uniformLocationMap[location] = uniform.second.location;
+    }
+}
+
+void ProgramGL::releaseGLProgram()
+{
+    _vertexShaderModule->deleteShader();
+    _fragmentShaderModule->deleteShader();
+    _uniformInfos.clear();
     if (_program)
         glDeleteProgram(_program);
 }
@@ -144,7 +177,6 @@ const std::unordered_map<std::string, AttributeBindInfo> ProgramGL::getActiveAtt
 
 }
 
-
 void ProgramGL::computeUniformInfos()
 {
     if (!_program)
@@ -185,6 +217,13 @@ void ProgramGL::computeUniformInfos()
 UniformLocation ProgramGL::getUniformLocation(const std::string& uniform) const
 {
     UniformLocation uniformLocation;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    if(_originalUniformLocations.find(uniform) != _originalUniformLocations.end())
+        return _originalUniformLocations.at(uniform);
+    else
+        return uniformLocation;
+#endif
+
     uniformLocation.location = glGetUniformLocation(_program, uniform.c_str());
     return uniformLocation;
 }
@@ -206,6 +245,14 @@ int ProgramGL::getMaxVertexLocation() const
 int ProgramGL::getMaxFragmentLocation() const
 {
     return _maxLocation;
+}
+
+int ProgramGL::getMappedLocation(int location) const
+{
+    if(_uniformLocationMap.find(location) != _uniformLocationMap.end())
+        return _uniformLocationMap.at(location);
+    else
+        return -1;
 }
 
 CC_BACKEND_END

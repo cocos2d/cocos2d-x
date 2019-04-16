@@ -47,6 +47,11 @@ public:
     virtual int getMaxFragmentLocation() const override;
 
     virtual const std::unordered_map<std::string, AttributeBindInfo> getActiveAttributes() const override;
+#ifdef CC_ENABLE_CACHE_TEXTURE_DATA
+    virtual void reloadGLProgram()  override;
+    virtual void releaseGLProgram() override;
+    virtual int getMappedLocation(int location) const override;
+#endif
 
 private:
     void compileProgram();
@@ -59,6 +64,10 @@ private:
     
     std::vector<VertexAttributeArray> _attributeInfos;
     std::unordered_map<std::string, UniformInfo> _uniformInfos;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    std::unordered_map<std::string, UniformLocation> _originalUniformLocations;
+    std::unordered_map<int, int> _uniformLocationMap;
+#endif
     
     int _maxLocation = -1;
 };

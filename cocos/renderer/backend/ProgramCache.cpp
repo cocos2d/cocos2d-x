@@ -121,10 +121,22 @@ void ProgramCache::removeUnusedProgram()
 
 void ProgramCache::removeAllProgram()
 {
-    for (auto& program : _cachedPrograms) {
+    for (auto& program : _cachedPrograms)
+    {
         program.second->release();
     }
     _cachedPrograms.clear();
+}
+
+void ProgramCache::reloadDefaultProgram()
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    for (auto& program : _cachedPrograms)
+    {
+        program.second->releaseGLProgram();
+        program.second->reloadGLProgram();
+    }
+#endif
 }
 
 CC_BACKEND_END

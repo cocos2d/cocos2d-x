@@ -26,6 +26,12 @@ public:
     virtual int getMaxFragmentLocation() const = 0;
     virtual const std::unordered_map<std::string, AttributeBindInfo> getActiveAttributes() const = 0;
 
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    virtual void reloadGLProgram() = 0;
+    virtual void releaseGLProgram() = 0;
+    virtual int getMappedLocation(int location) const = 0;
+#endif
+
     const std::string& getVertexShader() const { return _vertexShader; }
     const std::string& getFragmentShader() const { return _fragmentShader; }
     

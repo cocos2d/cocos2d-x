@@ -33,9 +33,13 @@ public:
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler)  override;
     virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) override;
     virtual void generateMipmaps() override;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    virtual void releaseGLTexture() override ;
+#endif
+
+    inline GLuint getHandler() const { return _textureInfo.texture; }
 
     void apply(int index) const;
-    inline GLuint getHandler() const { return _textureInfo.texture; }
 
 private:
     SamplerDescriptor _samplerDescriptor;
@@ -53,9 +57,13 @@ public:
     virtual void updateFaceData(TextureCubeFace side, void *data) override;
     virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) override;
     virtual void generateMipmaps() override;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    virtual void releaseGLTexture() override ;
+#endif
+
+    inline GLuint getHandler() const { return _textureInfo.texture; }
 
     void apply(int index) const;
-    inline GLuint getHandler() const { return _textureInfo.texture; }
 
 private:
     TextureInfoGL _textureInfo;

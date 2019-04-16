@@ -194,6 +194,8 @@ public:
      */
     virtual ~Texture2D();
 
+    void releasebackendTexture();
+
     /** Initializes with a texture2d with data.
      
      @param data Specifies a pointer to the image data in memory.

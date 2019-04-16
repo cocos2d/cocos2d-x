@@ -223,6 +223,12 @@ Texture2D::~Texture2D()
     CC_SAFE_RELEASE(_texture);
 }
 
+void Texture2D::releasebackendTexture()
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    _texture->releaseGLTexture();
+#endif
+}
 
 Texture2D::PixelFormat Texture2D::getPixelFormat() const
 {
@@ -341,6 +347,23 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
         return false;
     }
 
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    if (_antialiasEnabled)
+    {
+        TexParams texParams = {_hasMipmaps,
+                               backend::SamplerFilter::LINEAR, backend::SamplerFilter::LINEAR, backend::SamplerFilter::LINEAR,
+                               backend::SamplerAddressMode ::DONT_CARE, backend::SamplerAddressMode::DONT_CARE};
+        VolatileTextureMgr::setSamplerDescriptor(this, texParams);
+    }
+    else
+    {
+        TexParams texParams = {_hasMipmaps,
+                               backend::SamplerFilter ::NEAREST, backend::SamplerFilter ::NEAREST, backend::SamplerFilter ::NEAREST,
+                               backend::SamplerAddressMode ::DONT_CARE, backend::SamplerAddressMode ::DONT_CARE};
+        VolatileTextureMgr::setSamplerDescriptor(this, texParams);
+    }
+#endif
+
     auto device = backend::Device::getInstance();
     backend::TextureDescriptor textureDescriptor;
     textureDescriptor.width = pixelsWide;
@@ -374,8 +397,12 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     CCASSERT(textureDescriptor.textureFormat != backend::TextureFormat::NONE, "TextureFormat should not be NONE");
     
     textureDescriptor.compressed = info.compressed;
-    
-    _texture = static_cast<backend::Texture2D*>(device->newTexture(textureDescriptor));
+
+    if(_texture == nullptr || _texture->getTextureFormat() != textureDescriptor.textureFormat)
+    {
+        CC_SAFE_RELEASE(_texture);
+        _texture = static_cast<backend::Texture2D*>(device->newTexture(textureDescriptor));
+    }
 
     _texture->updateData(outData);
     if(outData && outData != data && outDataLen > 0)
@@ -708,6 +735,13 @@ void Texture2D::setAliasTexParameters()
         backend::SamplerAddressMode::DONT_CARE
     );
     _texture->updateSamplerDescriptor(descriptor);
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    TexParams texParams = {_hasMipmaps,
+                           backend::SamplerFilter::NEAREST, backend::SamplerFilter::NEAREST, backend::SamplerFilter::NEAREST,
+                           backend::SamplerAddressMode::DONT_CARE, backend::SamplerAddressMode::DONT_CARE};
+    VolatileTextureMgr::setSamplerDescriptor(this, texParams);
+#endif
 }
 
 void Texture2D::setAntiAliasTexParameters()
@@ -721,6 +755,13 @@ void Texture2D::setAntiAliasTexParameters()
         backend::SamplerAddressMode::DONT_CARE
     );
     _texture->updateSamplerDescriptor(descriptor);
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    TexParams texParams = {_hasMipmaps,
+                           backend::SamplerFilter::LINEAR, backend::SamplerFilter::LINEAR, backend::SamplerFilter::LINEAR,
+                           backend::SamplerAddressMode::DONT_CARE, backend::SamplerAddressMode::DONT_CARE};
+    VolatileTextureMgr::setSamplerDescriptor(this, texParams);
+#endif
 }
 
 const char* Texture2D::getStringForFormat() const
@@ -912,6 +953,10 @@ Texture2D* Texture2D::getAlphaTexture() const
 void Texture2D::setTexParameters(const Texture2D::TexParams &desc)
 {
     _texture->updateSamplerDescriptor(desc);
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    VolatileTextureMgr::setSamplerDescriptor(this, desc);
+#endif
 }
 
 void Texture2D::generateMipmap()
