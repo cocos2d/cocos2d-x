@@ -24,6 +24,7 @@ message(STATUS "ENGINE_BINARY_PATH:" ${ENGINE_BINARY_PATH})
 
 # the default behavior of build module
 option(DEBUG_MODE "Debug or Release?" ON)
+option(BUILD_TESTS "Build tests" ON)
 option(BUILD_LUA_LIBS "Build lua libraries" OFF)
 option(BUILD_JS_LIBS "Build js libraries" OFF)
 
