@@ -47,6 +47,8 @@ extern "C" {
 #include "physics/CCPhysicsJoint.h"
 #include "physics/CCPhysicsShape.h"
 #include "physics/CCPhysicsWorld.h"
+#include "renderer/backend/Types.h"
+#include "renderer/backend/VertexLayout.h"
 
 using namespace cocos2d;
 
@@ -1267,6 +1269,12 @@ void std_map_string_string_to_luaval(lua_State* L, const std::map<std::string, s
 // Follow 2 function is added for Cocos Studio to make lua lib can be compile as dynamic library
 CC_LUA_DLL extern bool luaval_to_node(lua_State* L, int lo, const char* type, cocos2d::Node** node);
 CC_LUA_DLL extern void node_to_luaval(lua_State* L, const char* type, cocos2d::Node* node);
+
+
+/**
+* convert lua object VertexLayout to native object
+*/
+CC_LUA_DLL bool luaval_to_vertexLayout(lua_State* L, int pos, cocos2d::backend::VertexLayout& outLayout, char *message);
 
 // end group
 /// @}

@@ -2118,7 +2118,7 @@ int lua_cocos2dx_3d_Mesh_setVertexLayout(lua_State* tolua_S)
     {
         cocos2d::backend::VertexLayout arg0;
 
-        ok &= luaval_to_object<cocos2d::backend::VertexLayout>(tolua_S, 2, "cc.VertexLayout",&arg0, "cc.Mesh:setVertexLayout");
+        ok &= luaval_to_vertexLayout(tolua_S, 2, arg0, "cc.Mesh:setVertexLayout");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Mesh_setVertexLayout'", nullptr);
@@ -4133,7 +4133,7 @@ int lua_cocos2dx_3d_Sprite3D_setVertexLayout(lua_State* tolua_S)
     {
         cocos2d::backend::VertexLayout arg0;
 
-        ok &= luaval_to_object<cocos2d::backend::VertexLayout>(tolua_S, 2, "cc.VertexLayout",&arg0, "cc.Sprite3D:setVertexLayout");
+        ok &= luaval_to_vertexLayout(tolua_S, 2, arg0, "cc.Sprite3D:setVertexLayout");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Sprite3D_setVertexLayout'", nullptr);
