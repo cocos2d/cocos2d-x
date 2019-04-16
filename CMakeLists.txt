@@ -41,6 +41,9 @@ AssureOutOfSourceBuilds()
 # works before build libcocos2d
 include(CocosBuildSet)
 
+# build options
+option(BUILD_TESTS "Build tests" ON)
+
 # default tests include lua, js test project, so we set those option on to build libs
 set(BUILD_LUA_LIBS ON)
 set(BUILD_JS_LIBS ON)
