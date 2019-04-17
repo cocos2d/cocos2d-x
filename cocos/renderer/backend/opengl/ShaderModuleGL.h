@@ -18,9 +18,7 @@ private:
     void compileShader(ShaderStage stage, const std::string& source);
     char* getErrorLog(GLuint shader) const;
 
-#ifdef CC_ENABLE_CACHE_TEXTURE_DATA
     virtual void deleteShader() override ;
-#endif
     
     GLuint _shader = 0;
     friend class ProgramGL;

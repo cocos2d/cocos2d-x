@@ -35,8 +35,7 @@ protected:
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     typedef std::function<void()> CallBackFunc;
     virtual void reloadGLProgram() = 0;
-    virtual void releaseGLProgram() = 0;
-    virtual int getMappedLocation(int location) const = 0;
+    virtual int getMappedLocation(int location) const = 0; //get the ture location after opengl program reload
     virtual const std::unordered_map<std::string, UniformLocation> getAllUniformsLocation() const = 0;
     virtual void setCallback(const CallBackFunc& callback) = 0;
     friend class ProgramState;

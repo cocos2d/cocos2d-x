@@ -54,7 +54,6 @@ private:
     void computeUniformInfos();
 #ifdef CC_ENABLE_CACHE_TEXTURE_DATA
     virtual void reloadGLProgram()  override;
-    virtual void releaseGLProgram() override;
     virtual int getMappedLocation(int location) const override;
     virtual const std::unordered_map<std::string, UniformLocation> getAllUniformsLocation() const override { return _originalUniformLocations; }
     virtual void setCallback(const CallBackFunc& callback) override  { _callback = callback; };

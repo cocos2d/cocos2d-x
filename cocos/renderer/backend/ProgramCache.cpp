@@ -128,12 +128,11 @@ void ProgramCache::removeAllProgram()
     _cachedPrograms.clear();
 }
 
-void ProgramCache::reloadDefaultProgram()
+void ProgramCache::reloadAllPrograms()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     for (auto& program : _cachedPrograms)
     {
-        program.second->releaseGLProgram();
         program.second->reloadGLProgram();
     }
 #endif

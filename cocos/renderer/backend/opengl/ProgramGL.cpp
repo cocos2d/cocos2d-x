@@ -39,6 +39,12 @@ ProgramGL::~ProgramGL()
 
 void ProgramGL::reloadGLProgram()
 {
+    _vertexShaderModule->deleteShader();
+    _fragmentShaderModule->deleteShader();
+    _uniformInfos.clear();
+    if (_program)
+        glDeleteProgram(_program);
+
     static_cast<ShaderModuleGL*>(_vertexShaderModule)->compileShader(backend::ShaderStage::VERTEX, _vertexShader);
     static_cast<ShaderModuleGL*>(_fragmentShaderModule)->compileShader(backend::ShaderStage::FRAGMENT, _fragmentShader);
     compileProgram();
@@ -52,15 +58,6 @@ void ProgramGL::reloadGLProgram()
 
     if(_callback)
         _callback();
-}
-
-void ProgramGL::releaseGLProgram()
-{
-    _vertexShaderModule->deleteShader();
-    _fragmentShaderModule->deleteShader();
-    _uniformInfos.clear();
-    if (_program)
-        glDeleteProgram(_program);
 }
 
 void ProgramGL::compileProgram()

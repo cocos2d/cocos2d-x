@@ -23,7 +23,6 @@ public:
     void removeProgram(backend::Program* program);
     void removeUnusedProgram();
     void removeAllProgram();
-    void reloadDefaultProgram();
     
 protected:
     ProgramCache() = default;
@@ -31,6 +30,7 @@ protected:
     
     bool init();
     void addProgram(const std::string& vertexShader, const std::string& fragmentShader);
+    void reloadAllPrograms();
     
     static std::unordered_map<std::size_t, backend::Program*> _cachedPrograms;
     static ProgramCache *_sharedProgramCache;
