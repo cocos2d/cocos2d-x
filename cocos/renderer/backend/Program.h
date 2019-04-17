@@ -26,17 +26,22 @@ public:
     virtual int getMaxFragmentLocation() const = 0;
     virtual const std::unordered_map<std::string, AttributeBindInfo> getActiveAttributes() const = 0;
 
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    virtual void reloadGLProgram() = 0;
-    virtual void releaseGLProgram() = 0;
-    virtual int getMappedLocation(int location) const = 0;
-#endif
-
     const std::string& getVertexShader() const { return _vertexShader; }
     const std::string& getFragmentShader() const { return _fragmentShader; }
     
 protected:
     Program(const std::string& vs, const std::string& fs);
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    typedef std::function<void()> CallBackFunc;
+    virtual void reloadGLProgram() = 0;
+    virtual void releaseGLProgram() = 0;
+    virtual int getMappedLocation(int location) const = 0;
+    virtual const std::unordered_map<std::string, UniformLocation> getAllUniformsLocation() const = 0;
+    virtual void setCallback(const CallBackFunc& callback) = 0;
+    friend class ProgramState;
+    friend class ProgramCache;
+#endif
     
     std::string _vertexShader;
     std::string _fragmentShader;

@@ -4,6 +4,10 @@
 #include "renderer/backend/Texture.h"
 #include "renderer/backend/Types.h"
 
+#include "base/CCEventType.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCDirector.h"
+
 #include <algorithm>
 
 #ifdef CC_USE_METAL
@@ -178,6 +182,36 @@ ProgramState::ProgramState(const std::string& vertexShader, const std::string& f
         _fragmentUniformInfos.resize(maxFragmentLocaiton);
         createFragmentUniformBuffer();
     }
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    _program->setCallback(CC_CALLBACK_0(ProgramState::resetUniforms, this));
+#endif
+}
+
+void ProgramState::resetUniforms()
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    if(_program == nullptr)
+        return;
+
+    const auto& uniforms = _program->getAllUniformsLocation();
+    const auto& uniformInfos = _program->getVertexUniformInfos();
+    for(const auto& uniform : uniforms)
+    {
+        auto location = uniform.second.location;
+        auto mappedLocation = _program->getMappedLocation(location);
+        bool isTextureLocation = uniformInfos.at(uniform.first).bufferSize == 0;
+
+        if(isTextureLocation)
+        {
+            _vertexTextureInfos[location].location = mappedLocation;
+        }
+        else
+        {
+            _vertexUniformInfos[location].uniformInfo.location = mappedLocation;
+        }
+    }
+#endif
 }
 
 ProgramState::ProgramState()
@@ -186,7 +220,7 @@ ProgramState::ProgramState()
 
 ProgramState::~ProgramState()
 {
-    CC_SAFE_RELEASE(_program);
+    CC_SAFE_RELEASE_NULL(_program);
     
     _vertexUniformInfos.clear();
     _fragmentUniformInfos.clear();
@@ -339,10 +373,6 @@ void ProgramState::setVertexUniform(int location, const void* data, uint32_t siz
     }
 #endif
 
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    auto mappedLocation = _program->getMappedLocation(location);
-    _vertexUniformInfos[location].uniformInfo.location = mappedLocation;
-#endif
     _vertexUniformInfos[location].data.assign((char*)data, (char*)data + size);
 }
 
@@ -409,14 +439,10 @@ void ProgramState::setTexture(int location, uint32_t slot, backend::Texture* tex
     info.slot = {slot};
     info.textures = {texture};
     info.retainTextures();
-
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    auto mappedLocation = _program->getMappedLocation(location);
-    textureInfo.erase(location);
-    textureInfo[mappedLocation] = std::move(info);
-#else
-    textureInfo[location] = std::move(info);
+    info.location = location;
 #endif
+    textureInfo[location] = std::move(info);
 }
 
 void ProgramState::setTextureArray(int location, const std::vector<uint32_t>& slots, const std::vector<backend::Texture*> textures, std::unordered_map<int, TextureInfo>& textureInfo)
@@ -427,12 +453,10 @@ void ProgramState::setTextureArray(int location, const std::vector<uint32_t>& sl
     info.textures = textures;
     info.retainTextures();
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    auto mappedLocation = _program->getMappedLocation(location);
-    textureInfo.erase(location);
-    textureInfo[mappedLocation] = std::move(info);
-#else
-    textureInfo[location] = std::move(info);
+    info.location = location;
 #endif
+    textureInfo[location] = std::move(info);
+
 }
 
 void ProgramState::setParameterAutoBinding(const std::string &uniform, const std::string &autoBinding)

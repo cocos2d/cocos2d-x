@@ -397,7 +397,10 @@ void CommandBufferGL::setUniforms(ProgramGL* program) const
         {
             const auto& textures = iter.second.textures;
             const auto& slot = iter.second.slot;
-            
+            auto location = iter.first;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+            location = iter.second.location;
+#endif
             int i = 0;
             for (const auto& texture: textures)
             {
@@ -407,9 +410,9 @@ void CommandBufferGL::setUniforms(ProgramGL* program) const
             
             auto arrayCount = slot.size();
             if (arrayCount > 1)
-                glUniform1iv(iter.first, (uint32_t)arrayCount, (GLint*)slot.data());
+                glUniform1iv(location, (uint32_t)arrayCount, (GLint*)slot.data());
             else
-                glUniform1i(iter.first, slot[0]);
+                glUniform1i(location, slot[0]);
         }
     }
 }

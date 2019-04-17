@@ -49,6 +49,9 @@ void ProgramGL::reloadGLProgram()
         auto location = _originalUniformLocations[uniform.first].location;
         _uniformLocationMap[location] = uniform.second.location;
     }
+
+    if(_callback)
+        _callback();
 }
 
 void ProgramGL::releaseGLProgram()
