@@ -74,12 +74,12 @@ void PURendererTranslator::translate(PUScriptCompiler* compiler, PUAbstractNode 
          PUMaterial *material = PUMaterialCache::Instance()->getMaterial(system->getMaterialName());
          std::string texFolder = "textures/";
          if (material){
-             std::string::size_type pos = obj->file.find_last_of("/");
+             std::string::size_type pos = obj->file.find_last_of('/');
              //if (pos != std::string::npos)
              //    texFolder = obj->file.substr(0, pos + 1) + texFolder;
              if (pos != std::string::npos){
                  std::string temp = obj->file.substr(0, pos);
-                 pos = temp.find_last_of("/");
+                 pos = temp.find_last_of('/');
                  if (pos != std::string::npos){
                      texFolder = temp.substr(0, pos + 1) + texFolder;
                  }
@@ -261,7 +261,7 @@ void PURendererTranslator::translate(PUScriptCompiler* compiler, PUAbstractNode 
                             std::string val;
                             if(getString(*prop->values.front(), &val))
                             {
-                                std::string::size_type pos = val.find_last_of(".");
+                                std::string::size_type pos = val.find_last_of('.');
                                 val = val.substr(0, pos + 1) + std::string("c3b");
                                 if (material) 
                                     _renderer = PUParticle3DModelRender::create(val, texFolder + material->textureFile);

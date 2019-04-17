@@ -124,7 +124,7 @@ void onCaptureScreen(const std::function<void(bool, const std::string&)>& afterC
             }
             else
             {
-                CCASSERT(filename.find("/") == std::string::npos, "The existence of a relative path is not guaranteed!");
+                CCASSERT(filename.find('/') == std::string::npos, "The existence of a relative path is not guaranteed!");
                 outputFile = FileUtils::getInstance()->getWritablePath() + filename;
             }
 
