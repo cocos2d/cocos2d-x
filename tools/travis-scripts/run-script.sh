@@ -101,19 +101,6 @@ function build_android_lua_cmake()
 
 }
 
-function build_android_js_cmake()
-{
-    # Build all samples
-    echo "Building Android samples js ..."
-    source ../environment.sh
-
-    # build lua-tests
-    pushd $COCOS2DX_ROOT/tests/js-tests/project/proj.android
-    do_retry ./gradlew assembleDebug -PPROP_BUILD_TYPE=cmake --parallel --info
-    popd
-
-}
-
 function genernate_binding_codes()
 {
     if [ $TRAVIS_OS_NAME == "linux" ]; then
@@ -137,16 +124,6 @@ function genernate_binding_codes()
     pushd "$COCOS2DX_ROOT/tools/tolua"
     python ./genbindings.py
     popd
-
-    # We don't support building js projects for linux platform,
-    # therefore, don't generate js-binding code for it.
-    # comment it, currently doesn't support JSB
-    # if [ $TRAVIS_OS_NAME != "linux" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-    #     echo "Create auto-generated jsbinding glue codes."
-    #     pushd "$COCOS2DX_ROOT/tools/tojs"
-    #     python ./genbindings.py
-    #     popd
-    # fi
 }
 
 # generate cocos_files.json and check diff
@@ -289,12 +266,6 @@ function run_pull_request()
     if [ $BUILD_TARGET == 'android_lua_cmake' ]; then
         genernate_binding_codes
         build_android_lua_cmake
-    fi
-
-    # android_js
-    if [ $BUILD_TARGET == 'android_js_cmake' ]; then
-        genernate_binding_codes
-        build_android_js_cmake
     fi
 }
 

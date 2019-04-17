@@ -27,7 +27,6 @@
 # this CMakeLists is to generate Cocos2d-x Engine Library
 # build libcocos2d
 # build luacocos2d if BUILD_LUA_LIBS=ON
-# build jscocos2d if BUILD_JS_LIBS=ON
 
 # The version number
 set(COCOS2D_X_VERSION 3.18)
@@ -82,7 +81,6 @@ set(COCOS_HEADER cocos2d.h
     ${COCOS_NETWORK_HEADER}
     ${COCOS_EDITOR_SUPPORT_HEADER}
     ${COCOS_EXTENSIONS_HEADER}
-    ${COCOS_STORAGE_HEADER}
     )
 
 set(COCOS_SRC cocos2d.cpp
@@ -140,10 +138,6 @@ set_target_properties(cocos2d
 ## Lua bindings lib
 if(BUILD_LUA_LIBS)
     add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/lua-bindings ${ENGINE_BINARY_PATH}/cocos/lua-bindings)
-endif()
-## JS bindings lib
-if(BUILD_JS_LIBS)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos/scripting/js-bindings ${ENGINE_BINARY_PATH}/cocos/js-bindings)
 endif()
 
 if(XCODE OR VS)

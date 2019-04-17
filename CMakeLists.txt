@@ -41,9 +41,7 @@ AssureOutOfSourceBuilds()
 # works before build libcocos2d
 include(CocosBuildSet)
 
-# for metal-support alpha release, we only test cpp
 set(BUILD_LUA_LIBS ON) 
-set(BUILD_JS_LIBS OFF)
 
 add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 
@@ -58,10 +56,6 @@ if(BUILD_LUA_LIBS)
   add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/lua-empty-test/project ${ENGINE_BINARY_PATH}/tests/lua-empty-test)
   add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/lua-tests/project ${ENGINE_BINARY_PATH}/tests/lua-test)
 endif(BUILD_LUA_LIBS)
-
-if(BUILD_JS_LIBS)
-  add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/js-tests/project ${ENGINE_BINARY_PATH}/tests/js-tests)
-endif()
 
 # add cpp-template-default into project(Cocos2d-x) for tmp test
 add_subdirectory(${COCOS2DX_ROOT_PATH}/templates/cpp-template-default ${ENGINE_BINARY_PATH}/tests/HelloCpp)
