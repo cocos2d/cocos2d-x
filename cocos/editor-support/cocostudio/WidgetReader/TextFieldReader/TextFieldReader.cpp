@@ -324,7 +324,7 @@ namespace cocostudio
         {
             ILocalizationManager* lm = LocalizationHelper::getCurrentManager();
             std::string localizedTxt = lm->getLocalizationString(text);
-            std::string::size_type newlineIndex = localizedTxt.find("\n");
+            std::string::size_type newlineIndex = localizedTxt.find('\n');
             if (newlineIndex != std::string::npos)
                 localizedTxt = localizedTxt.substr(0, newlineIndex);
             textField->setString(localizedTxt);

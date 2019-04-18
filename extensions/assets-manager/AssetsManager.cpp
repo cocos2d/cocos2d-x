@@ -328,7 +328,7 @@ bool AssetsManager::uncompress()
             
             size_t startIndex=0;
             
-            size_t index=fileNameStr.find("/",startIndex);
+            size_t index=fileNameStr.find('/',startIndex);
             
             while(index != std::string::npos)
             {
@@ -356,7 +356,7 @@ bool AssetsManager::uncompress()
                 
                 startIndex=index+1;
                 
-                index=fileNameStr.find("/",startIndex);
+                index=fileNameStr.find('/',startIndex);
                 
             }
 

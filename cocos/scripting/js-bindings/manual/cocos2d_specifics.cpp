@@ -5255,7 +5255,7 @@ void get_or_create_js_obj(const std::string &name, JS::MutableHandleObject jsObj
     JS::RootedObject prop(cx);
 
     size_t start = 0;
-    size_t found = name.find_first_of(".", start);
+    size_t found = name.find_first_of('.', start);
     std::string subProp;
 
     while (found != std::string::npos)
@@ -5268,7 +5268,7 @@ void get_or_create_js_obj(const std::string &name, JS::MutableHandleObject jsObj
         }
 
         start = found+1;
-        found = name.find_first_of(".", start);
+        found = name.find_first_of('.', start);
     }
     if (start < name.length())
     {

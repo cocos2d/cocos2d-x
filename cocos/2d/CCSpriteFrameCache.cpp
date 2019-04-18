@@ -410,7 +410,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
         texturePath = plist;
 
         // remove .xxx
-        size_t startPos = texturePath.find_last_of("."); 
+        size_t startPos = texturePath.find_last_of('.'); 
         texturePath = texturePath.erase(startPos);
 
         // append .png
@@ -712,7 +712,7 @@ bool SpriteFrameCache::reloadTexture(const std::string& plist)
         texturePath = plist;
 
         // remove .xxx
-        size_t startPos = texturePath.find_last_of(".");
+        size_t startPos = texturePath.find_last_of('.');
         texturePath = texturePath.erase(startPos);
 
         // append .png

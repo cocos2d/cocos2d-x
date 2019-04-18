@@ -147,7 +147,7 @@ std::string DisplayData::changeDisplayToTexture(const std::string& displayName)
 {
     // remove .xxx
     std::string textureName = displayName;
-    size_t startPos = textureName.find_last_of(".");
+    size_t startPos = textureName.find_last_of('.');
 
     if(startPos != std::string::npos)
     {

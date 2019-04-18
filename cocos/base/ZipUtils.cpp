@@ -627,7 +627,7 @@ std::vector<std::string> ZipFile::listFiles(const std::string &pathname) const
         if(filename.substr(0, dirname.length()) == dirname)
         {
             std::string suffix = filename.substr(dirname.length());
-            auto pos = suffix.find("/");
+            auto pos = suffix.find('/');
             if (pos == std::string::npos)
             {
                 fileSet.insert(suffix);
