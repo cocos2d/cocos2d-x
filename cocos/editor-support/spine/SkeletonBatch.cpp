@@ -59,6 +59,14 @@ SkeletonBatch::SkeletonBatch () {
     
     _programState = new backend::ProgramState(positionTextureColor_vert, positionTextureColor_frag);
 
+    _vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(V3F_C4B_T2F, vertices), false);
+    _vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
+    _vertexLayout.setAtrribute("a_texCoord", 2, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
+    _vertexLayout.setLayout(sizeof(_vertices[0]), backend::VertexStepMode::VERTEX);
+
+    _locMVP     = _programState->getUniformLocation("u_MVPMatrix");
+    _locTexture = _programState->getUniformLocation("u_texture");
+
 	for (unsigned int i = 0; i < INITIAL_SIZE; i++) {
 		_commandsPool.push_back(createNewTrianglesCommand());
 	}
@@ -74,6 +82,7 @@ SkeletonBatch::~SkeletonBatch () {
 	Director::getInstance()->getEventDispatcher()->removeCustomEventListeners(EVENT_AFTER_DRAW_RESET_POSITION);
 	
 	for (unsigned int i = 0; i < _commandsPool.size(); i++) {
+        CC_SAFE_RELEASE(_commandsPool[i]->getPipelineDescriptor().programState);
 		delete _commandsPool[i];
 		_commandsPool[i] = nullptr;
 	}
@@ -131,15 +140,13 @@ void SkeletonBatch::deallocateIndices(uint32_t numIndices) {
 }
 
 	
-cocos2d::TrianglesCommand* SkeletonBatch::addCommand(cocos2d::Renderer* renderer, float globalOrder, cocos2d::Texture2D* texture, cocos2d::GLProgramState* glProgramState, cocos2d::BlendFunc blendType, const cocos2d::TrianglesCommand::Triangles& triangles, const cocos2d::Mat4& mv, uint32_t flags) {
+cocos2d::TrianglesCommand* SkeletonBatch::addCommand(cocos2d::Renderer* renderer, float globalOrder, cocos2d::Texture2D* texture, cocos2d::BlendFunc blendType, const cocos2d::TrianglesCommand::Triangles& triangles, const cocos2d::Mat4& mv, uint32_t flags) {
 	TrianglesCommand* command = nextFreeCommand();
     const cocos2d::Mat4& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     auto &pipelineDescriptor = command->getPipelineDescriptor();
 
     auto programState = command->getPipelineDescriptor().programState;
     CCASSERT(programState, "programState should not be null");
-    _locMVP = programState->getUniformLocation("u_MVPMatrix");
-    _locTexture = programState->getUniformLocation("u_texture");
 
     programState->setUniform(_locMVP, projectionMat.m, sizeof(projectionMat.m));
     programState->setTexture(_locTexture, 0, texture->getBackendTexture());
@@ -162,21 +169,19 @@ cocos2d::TrianglesCommand* SkeletonBatch::nextFreeCommand() {
 			_commandsPool.push_back(createNewTrianglesCommand());
 		}
 	}
-	return _commandsPool[_nextFreeCommand++];
+	auto *command =  _commandsPool[_nextFreeCommand++];
+    auto& pipelineDescriptor = command->getPipelineDescriptor();
+    if (pipelineDescriptor.programState == nullptr)
+    {
+        CCASSERT(_programState, "programState should not be null");
+        pipelineDescriptor.programState = _programState->clone();
+        pipelineDescriptor.vertexLayout = _vertexLayout;
+    }
+    return command;
 }
 
 cocos2d::TrianglesCommand *SkeletonBatch::createNewTrianglesCommand() {
     auto* command = new TrianglesCommand();
-    auto& pipelineDescriptor = command->getPipelineDescriptor();
-    CCASSERT(_programState, "programState should not be null");
-    pipelineDescriptor.programState = _programState;
-
-    auto& vertexlayout = pipelineDescriptor.vertexLayout;
-    vertexlayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(V3F_C4B_T2F, vertices), false);
-    vertexlayout.setAtrribute("a_color", 1, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
-    vertexlayout.setAtrribute("a_texCoord", 2, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
-    vertexlayout.setLayout(sizeof(_vertices[0]), backend::VertexStepMode::VERTEX);
-
     return command;
 }
 }

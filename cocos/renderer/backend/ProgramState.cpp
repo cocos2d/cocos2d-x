@@ -284,7 +284,6 @@ ProgramState *ProgramState::clone() const
     cp->_vertexUniformBuffer = _vertexUniformBuffer;
     cp->_fragmentUniformBuffer = _fragmentUniformBuffer;
     CC_SAFE_RETAIN(cp->_program);
-
     return cp;
 }
 
