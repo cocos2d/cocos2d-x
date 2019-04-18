@@ -296,7 +296,7 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
 
     //! find the base file path
     std::string basefilePath = filePath;
-    size_t pos = basefilePath.find_last_of("/");
+    size_t pos = basefilePath.find_last_of('/');
 
     if (pos != std::string::npos)
     {
@@ -362,7 +362,7 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
 
     //! find the base file path
     std::string basefilePath = filePath;
-    size_t pos = basefilePath.find_last_of("/");
+    size_t pos = basefilePath.find_last_of('/');
 
     if (pos != std::string::npos)
     {
@@ -1305,7 +1305,7 @@ void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, Data
             }
 
             std::string filePath = path;
-            filePath = filePath.erase(filePath.find_last_of("."));
+            filePath = filePath.erase(filePath.find_last_of('.'));
 
             if (dataInfo->asyncStruct)
             {
@@ -1844,7 +1844,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                             }
 
                             std::string filePath = path;
-                            filePath = filePath.erase(filePath.find_last_of("."));
+                            filePath = filePath.erase(filePath.find_last_of('.'));
 
                             if (dataInfo->asyncStruct)
                             {
