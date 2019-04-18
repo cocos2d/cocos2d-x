@@ -813,9 +813,9 @@ function Sprite3DWithOBBPerfromanceTest:delOBBWithCount( value )
     if #self._obb >= 10 then
         for i= 1, 10 do
             table.remove(self._obb)
-        end
+        end 
         self._drawOBB:clear()
-    end
+    end 
 end
 
 function Sprite3DWithOBBPerfromanceTest:initDrawBox()

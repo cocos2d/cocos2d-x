@@ -16,6 +16,7 @@ require "ClickAndMoveTest/ClickAndMoveTest"
 require "CocosDenshionTest/CocosDenshionTest"
 require "ComponentTest/main"
 require "CurrentLanguageTest/CurrentLanguageTest"
+require "DownloaderTest/DownloaderTest"
 require "EffectsTest/EffectsTest"
 require "EffectsAdvancedTest/EffectsAdvancedTest"
 require "ExtensionTest/ExtensionTest"
@@ -36,8 +37,7 @@ require "ParticleTest/ParticleTest"
 require "Particle3DTest/Particle3DTest"
 require "RenderTextureTest/RenderTextureTest"
 require "RotateWorldTest/RotateWorldTest"
--- TODO minggo
--- require "Sprite3DTest/Sprite3DTest"
+require "Sprite3DTest/Sprite3DTest"
 require "SpriteTest/SpriteTest"
 require "SceneTest/SceneTest"
 require "SpineTest/SpineTest"
@@ -87,6 +87,8 @@ if (currPlatform == cc.PLATFORM_OS_TIZEN) then
 end
 
 local _allTests = {
+    { isSupported = true,  name = "Sprite3DTest"           , create_func   =                Sprite3DTest    },
+
     { isSupported = true,  name = "Accelerometer"          , create_func=             AccelerometerMain  },
     { isSupported = true,  name = "ActionManagerTest"      , create_func   =         ActionManagerTestMain  },
     { isSupported = true,  name = "ActionsEaseTest"        , create_func   =           EaseActionsTest      },
@@ -100,17 +102,18 @@ local _allTests = {
     { isSupported = true,  name = "BillBoardTest"           , create_func=              BillBoardTestMain},
     { isSupported = true,  name = "BugsTest"               , create_func=              BugsTestMain      },
     { isSupported = true,  name = "Camera3DTest"     ,        create_func=       Camera3DTestMain  },
-    { isSupported = true,  name = "CaptureScreenTest"       , create_func   =         CaptureScreenTestMain  },
-    { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
+    { isSupported = true,  name = "CaptureScreenTest"       , create_func  =         CaptureScreenTestMain  },
+    { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func  =    ChipmunkAccelTouchTestMain  },
     { isSupported = true,  name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
     { isSupported = true,  name = "ComponentTest"          , create_func   =         ComponentTestMain  },
-    { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
-    { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
-    { isSupported = true,  name = "DrawPrimitivesTest"     , create_func=        DrawPrimitivesTest      },
+    { isSupported = false,  name = "CurlTest"              , create_func   =                  CurlTestMain  },
+    { isSupported = true,  name = "CurrentLanguageTest"    , create_func   =   CurrentLanguageTestMain      },
+    { isSupported = true,  name = "DownloaderTest"         , create_func   =            DownloaderTestMain  },
+    { isSupported = true,  name = "DrawPrimitivesTest"     , create_func   =        DrawPrimitivesTest      },
     { isSupported = true,  name = "EffectsTest"            , create_func   =               EffectsTest      },
     { isSupported = true,  name = "EffectAdvancedTest"     , create_func   =        EffectAdvancedTestMain  },
-    { isSupported = true,  name = "ExtensionsTest"         , create_func=        ExtensionsTestMain      },
+    { isSupported = true,  name = "ExtensionsTest"         , create_func   =        ExtensionsTestMain      },
     { isSupported = true,  name = "FastTiledMapTest"       , create_func   =              FastTiledMapTestMain},
     { isSupported = true,  name = "FileUtilsTest"          , create_func   =              FileUtilsTestMain},
     { isSupported = true,  name = "FontTest"               , create_func   =              FontTestMain      },
@@ -119,7 +122,7 @@ local _allTests = {
     { isSupported = true,  name = "LabelTest"              , create_func   =                 LabelTest      },
     { isSupported = true,  name = "LabelTestNew"           , create_func   =                 LabelTestNew      },
     { isSupported = true,  name = "LayerTest"              , create_func   =                 LayerTestMain  },
-    { isSupported = true,  name = "LightTest"          , create_func   =                 LightTestMain  },
+    { isSupported = true,  name = "LightTest"              , create_func   =                 LightTestMain  },
     { isSupported = true,  name = "LuaBridgeTest"          , create_func   =        LuaBridgeMainTest },
     { isSupported = true,  name = "LuaLoaderTest"          , create_func   =        LuaLoaderMain },
     { isSupported = true,  name = "MaterialSystemTest"     , create_func   =        MaterialSystemTest },
