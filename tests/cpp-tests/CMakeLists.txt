@@ -276,8 +276,8 @@ list(APPEND GAME_SOURCE
      Classes/RotateWorldTest/RotateWorldTest.cpp
      Classes/SceneTest/SceneTest.cpp
      Classes/SchedulerTest/SchedulerTest.cpp
-     #Classes/ShaderTest/ShaderTest.cpp
-     #Classes/ShaderTest/ShaderTest2.cpp
+     Classes/ShaderTest/ShaderTest.cpp
+     Classes/ShaderTest/ShaderTest2.cpp
      Classes/SpineTest/SpineTest.cpp
 #     Classes/Scene3DTest/Scene3DTest.cpp
      Classes/Sprite3DTest/DrawNode3D.cpp
