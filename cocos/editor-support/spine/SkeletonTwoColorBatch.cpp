@@ -43,61 +43,88 @@ using std::max;
 
 #define STRINGIFY(A)  #A
 
+namespace {
 
-const char* TWO_COLOR_TINT_VERTEX_SHADER = STRINGIFY(
-uniform mat4 u_PMatrix;
-attribute vec4 a_position;
-attribute vec4 a_color;
-attribute vec4 a_color2;
-attribute vec2 a_texCoords;
+    const char* TWO_COLOR_TINT_VERTEX_SHADER = STRINGIFY(
+    uniform mat4 u_PMatrix;
+    attribute vec4 a_position;
+    attribute vec4 a_color;
+    attribute vec4 a_color2;
+    attribute vec2 a_texCoords;
 
-\n#ifdef GL_ES\n
-varying lowp vec4 v_light;
-varying lowp vec4 v_dark;
-varying mediump vec2 v_texCoord;
-\n#else\n
-varying vec4 v_light;
-varying vec4 v_dark;
-varying vec2 v_texCoord;
+    \n#ifdef GL_ES\n
+        varying lowp vec4 v_light;
+    varying lowp vec4 v_dark;
+    varying mediump vec2 v_texCoord;
+    \n#else\n
+        varying vec4 v_light;
+    varying vec4 v_dark;
+    varying vec2 v_texCoord;
 
-\n#endif\n
+    \n#endif\n
 
-void main() {
-    v_light = a_color;
-    v_dark = a_color2;
-    v_texCoord = a_texCoords;
-    gl_Position = u_PMatrix * a_position;
+        void main() {
+        v_light = a_color;
+        v_dark = a_color2;
+        v_texCoord = a_texCoords;
+        gl_Position = u_PMatrix * a_position;
+    }
+    );
+
+    const char* TWO_COLOR_TINT_FRAGMENT_SHADER = STRINGIFY(
+        \n#ifdef GL_ES\n
+        precision lowp float;
+    \n#endif\n
+        uniform sampler2D u_texture;
+    varying vec4 v_light;
+    varying vec4 v_dark;
+    varying vec2 v_texCoord;
+
+    void main() {
+        vec4 texColor = texture2D(u_texture, v_texCoord);
+        float alpha = texColor.a * v_light.a;
+        gl_FragColor.a = alpha;
+        gl_FragColor.rgb = ((texColor.a - 1.0) * v_dark.a + 1.0 - texColor.rgb) * v_dark.rgb + texColor.rgb * v_light.rgb;
+    }
+    );
+
+
+    std::shared_ptr<backend::ProgramState>  __twoColorProgramState = nullptr;
+    backend::VertexLayout                   __vertexLayout;
+    backend::UniformLocation                __locPMatrix;
+    backend::UniformLocation                __locTexture;
+
+    void initTwoColorProgramState()
+    {
+        if (__twoColorProgramState)
+        {
+            return;
+        }
+        auto *programState = new backend::ProgramState(TWO_COLOR_TINT_VERTEX_SHADER, TWO_COLOR_TINT_FRAGMENT_SHADER);
+
+        __locPMatrix = programState->getUniformLocation("u_PMatrix");
+        __locTexture = programState->getUniformLocation("u_texture");
+
+        __vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(spine::V3F_C4B_C4B_T2F, position), false);
+        __vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::UBYTE4, offsetof(spine::V3F_C4B_C4B_T2F, color), true);
+        __vertexLayout.setAtrribute("a_color2", 2, backend::VertexFormat::UBYTE4, offsetof(spine::V3F_C4B_C4B_T2F, color2), true);
+        __vertexLayout.setAtrribute("a_texCoords", 3, backend::VertexFormat::FLOAT2, offsetof(spine::V3F_C4B_C4B_T2F, texCoords), false);
+        __vertexLayout.setLayout(sizeof(spine::V3F_C4B_C4B_T2F), backend::VertexStepMode::VERTEX);
+
+        __twoColorProgramState = std::shared_ptr<backend::ProgramState>(programState);
+    }
+
 }
-);
-
-const char* TWO_COLOR_TINT_FRAGMENT_SHADER = STRINGIFY(
-\n#ifdef GL_ES\n
-precision lowp float;
-\n#endif\n
-uniform sampler2D u_texture;
-varying vec4 v_light;
-varying vec4 v_dark;
-varying vec2 v_texCoord;
-
-void main() {
-    vec4 texColor = texture2D(u_texture, v_texCoord);
-    float alpha = texColor.a * v_light.a;
-    gl_FragColor.a = alpha;
-    gl_FragColor.rgb = ((texColor.a - 1.0) * v_dark.a + 1.0 - texColor.rgb) * v_dark.rgb + texColor.rgb * v_light.rgb;
-}
-);
-
 
 namespace spine {
 
 TwoColorTrianglesCommand::TwoColorTrianglesCommand() :_materialID(0), _texture(nullptr), _blendType(BlendFunc::DISABLE), _alphaTextureID(0) {
 	_type = RenderCommand::Type::CUSTOM_COMMAND;
-	//func = [this]() { draw(); };
-    updateCommandPipelineDescriptor();
 }
 
 void TwoColorTrianglesCommand::init(float globalOrder, cocos2d::Texture2D *texture, BlendFunc blendType, const TwoColorTriangles& triangles, const Mat4& mv, uint32_t flags) {
 
+    updateCommandPipelineDescriptor();
     const cocos2d::Mat4& projectionMat = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     
     auto finalMatrix = projectionMat * mv;
@@ -134,24 +161,21 @@ void TwoColorTrianglesCommand::init(float globalOrder, cocos2d::Texture2D *textu
 	}
 }
 
+
+
 void TwoColorTrianglesCommand::updateCommandPipelineDescriptor()
 {
+    if (!__twoColorProgramState)
+    {
+        initTwoColorProgramState();
+    }
+
     CC_SAFE_RELEASE_NULL(_programState);
-
-    _programState = new backend::ProgramState(TWO_COLOR_TINT_VERTEX_SHADER, TWO_COLOR_TINT_FRAGMENT_SHADER);
-    
-    _locPMatrix = _programState->getUniformLocation("u_PMatrix");
-    _locTexture = _programState->getUniformLocation("u_texture");
-
-    auto &pipelineDescriptor = _pipelineDescriptor;
-    pipelineDescriptor.programState = _programState;
-
-    auto &vertexLayout = pipelineDescriptor.vertexLayout;
-    vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(V3F_C4B_C4B_T2F, position), false);
-    vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_C4B_T2F, color), true);
-    vertexLayout.setAtrribute("a_color2", 2, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_C4B_T2F, color2), true);
-    vertexLayout.setAtrribute("a_texCoords", 3, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_C4B_T2F, texCoords), false);
-    vertexLayout.setLayout(sizeof(V3F_C4B_C4B_T2F), backend::VertexStepMode::VERTEX);
+    _programState                           = __twoColorProgramState->clone();
+    _locPMatrix                             = __locPMatrix;
+    _locTexture                             = __locTexture;
+    _pipelineDescriptor.programState        = _programState;
+    _pipelineDescriptor.vertexLayout        = __vertexLayout;
 }
 
 TwoColorTrianglesCommand::~TwoColorTrianglesCommand() 
@@ -183,7 +207,7 @@ void TwoColorTrianglesCommand::generateMaterialID() {
     _materialID = XXH32((const void*)&hashMe, sizeof(hashMe), 0);
 }
 
-	
+
 void TwoColorTrianglesCommand::draw(Renderer *r) {
 	SkeletonTwoColorBatch::getInstance()->batch(r, this);
 }
@@ -215,6 +239,7 @@ void SkeletonTwoColorBatch::destroyInstance () {
 }
 
 SkeletonTwoColorBatch::SkeletonTwoColorBatch () : _vertexBuffer(0), _indexBuffer(0) {
+    _commandsPool.reserve(INITIAL_SIZE);
 	for (unsigned int i = 0; i < INITIAL_SIZE; i++) {
 		_commandsPool.push_back(new TwoColorTrianglesCommand());
 	}
