@@ -241,6 +241,7 @@ protected:
     void createCommandTouch();
     void createCommandUpload();
     void createCommandVersion();
+    void createCommandTrap();
 
     // Add commands here
     void commandAllocator(int fd, const std::string& args);
