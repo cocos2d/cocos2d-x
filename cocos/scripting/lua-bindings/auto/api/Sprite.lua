@@ -328,7 +328,7 @@
 -- Creates a sprite with an sprite frame name.<br>
 -- A SpriteFrame will be fetched from the SpriteFrameCache by spriteFrameName param.<br>
 -- If the SpriteFrame doesn't exist it will raise an exception.<br>
--- param   spriteFrameName A null terminated string which indicates the sprite frame name.<br>
+-- param   spriteFrameName The name of sprite frame.<br>
 -- return  An autoreleased sprite object.
 -- @function [parent=#Sprite] createWithSpriteFrameName 
 -- @param self
