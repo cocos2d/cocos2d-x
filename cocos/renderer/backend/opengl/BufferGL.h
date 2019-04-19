@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Buffer.h"
+#include <vector>
 
 #include "platform/CCGL.h"
 
@@ -14,10 +15,14 @@ public:
     
     virtual void updateData(void* data, unsigned int size) override;
     virtual void updateSubData(void* data, unsigned int offset, unsigned int size) override;
+    virtual void reCreateBuffer() override ;
+    virtual void beginFrame() override {};
     
     inline GLuint getHandler() const { return _buffer; }
-    
+
 private:
+    friend class BufferManager;
+
     GLuint _buffer = 0;
     unsigned int _bufferAllocated = 0;
 };

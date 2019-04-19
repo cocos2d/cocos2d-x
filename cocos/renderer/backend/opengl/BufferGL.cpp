@@ -1,18 +1,33 @@
 #include "BufferGL.h"
 #include <cassert>
 #include "base/ccMacros.h"
+#include "renderer/backend/BufferManager.h"
 CC_BACKEND_BEGIN
 
 BufferGL::BufferGL(unsigned int size, BufferType type, BufferUsage usage)
 : Buffer(size, type, usage)
 {
     glGenBuffers(1, &_buffer);
+    BufferManager::addBuffer(this);
 }
 
 BufferGL::~BufferGL()
 {
     if (_buffer)
         glDeleteBuffers(1, &_buffer);
+
+    BufferManager::removeBuffer(this);
+}
+
+void BufferGL::reCreateBuffer()
+{
+    if (_buffer)
+        glDeleteBuffers(1, &_buffer);
+
+    glGenBuffers(1, &_buffer);
+    char* zeros = new (std::nothrow) char[_bufferAllocated];
+    updateData(zeros, _bufferAllocated);
+    CC_SAFE_DELETE_ARRAY(zeros);
 }
 
 void BufferGL::updateData(void* data, unsigned int size)

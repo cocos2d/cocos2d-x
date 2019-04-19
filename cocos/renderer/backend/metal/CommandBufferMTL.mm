@@ -5,7 +5,7 @@
 #include "TextureMTL.h"
 #include "Utils.h"
 #include "../Macros.h"
-#include "BufferManager.h"
+#include "../BufferManager.h"
 #include "DepthStencilStateMTL.h"
 
 CC_BACKEND_BEGIN

@@ -178,10 +178,6 @@ Renderer::~Renderer()
     _groupCommandManager->release();
     
     free(_triBatchesToDraw);
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_cacheTextureListener);
-#endif
     
     CC_SAFE_RELEASE(_commandBuffer);
     
@@ -201,17 +197,6 @@ void Renderer::init()
 
     auto device = backend::Device::getInstance();
     _commandBuffer = device->newCommandBuffer();
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    _cacheTextureListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
-        /** listen the event that renderer was recreated on Android/WP8 */
-        _triangleCommandBufferManager.init();
-        _vertexBuffer = _triangleCommandBufferManager.getVertexBuffer();
-        _indexBuffer = _triangleCommandBufferManager.getIndexBuffer();
-    });
-
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_cacheTextureListener, -1);
-#endif
 }
 
 void Renderer::addCommand(RenderCommand* command)
