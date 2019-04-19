@@ -3,10 +3,7 @@
 #include "renderer/backend/Program.h"
 #include "renderer/backend/Texture.h"
 #include "renderer/backend/Types.h"
-
-#include "base/CCEventType.h"
-#include "base/CCEventDispatcher.h"
-#include "base/CCDirector.h"
+#include "base/CCMacros.h"
 
 #include <algorithm>
 
