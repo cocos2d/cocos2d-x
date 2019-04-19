@@ -275,18 +275,18 @@ public:
     static void addStringTexture(Texture2D *tt, const char* text, const FontDefinition& fontDefinition);
     static void addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2D::PixelFormat pixelFormat, const Size& contentSize);
     static void addImage(Texture2D *tt, Image *image);
-
-    static void setHasMipmaps(Texture2D *t, bool hasMipmaps);
-    static void setSamplerDescriptor(Texture2D *t, const backend::SamplerDescriptor &samplerDescriptor);
     static void removeTexture(Texture2D *t);
     static void reloadAllTextures();
+
 public:
     static std::list<VolatileTexture*> _textures;
     static bool _isReloading;
-private:
+
     // find VolatileTexture by Texture2D*
     // if not found, create a new one
     static VolatileTexture* findVolotileTexture(Texture2D *tt);
+
+private:
     static void reloadTexture(Texture2D* texture, const std::string& filename, Texture2D::PixelFormat pixelFormat);
 };
 

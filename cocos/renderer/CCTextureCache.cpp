@@ -807,18 +807,6 @@ void VolatileTextureMgr::addStringTexture(Texture2D *tt, const char* text, const
     vt->_fontDefinition = fontDefinition;
 }
 
-void VolatileTextureMgr::setHasMipmaps(Texture2D *t, bool hasMipmaps)
-{
-    VolatileTexture *vt = findVolotileTexture(t);
-    vt->_hasMipmaps = hasMipmaps;
-}
-
-void VolatileTextureMgr::setSamplerDescriptor(Texture2D *t, const backend::SamplerDescriptor &desc)
-{
-    VolatileTexture *vt = findVolotileTexture(t);
-    vt->_samplerDescriptor = desc;
-}
-
 void VolatileTextureMgr::removeTexture(Texture2D *t)
 {
     for (auto& item : _textures)
