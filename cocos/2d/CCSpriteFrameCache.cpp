@@ -79,23 +79,20 @@ SpriteFrameCache::~SpriteFrameCache()
 
 void SpriteFrameCache::parseIntegerList(const std::string &string, std::vector<int> &res)
 {
-    std::string delim(" ");
-
     size_t n = std::count(string.begin(), string.end(), ' ');
-    res.resize(n+1);
-    
-    size_t start  = 0U;
-    size_t end = string.find(delim);
-    
-    int i=0;
-    while (end != std::string::npos)
-    {
-        res[i++] = atoi(string.substr(start, end - start).c_str());
-        start = end + delim.length();
-        end = string.find(delim, start);
-    }
-    
-    res[i] = atoi(string.substr(start, end).c_str());
+    res.resize(n + 1);
+
+    const char *cStr = string.c_str();
+    char *endptr;
+
+    int i = 0;
+    do {
+        long int val = strtol(cStr, &endptr, 10);
+        if (endptr == cStr)
+            return;
+        res[i++] = static_cast<int>(val);
+        cStr = endptr;
+    } while (*endptr != '\0');
 }
 
 void SpriteFrameCache::initializePolygonInfo(const Size &textureSize,
