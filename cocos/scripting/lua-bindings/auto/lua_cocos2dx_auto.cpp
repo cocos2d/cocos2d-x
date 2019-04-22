@@ -1,5 +1,6 @@
 #include "scripting/lua-bindings/auto/lua_cocos2dx_auto.hpp"
 #include "cocos2d.h"
+#include "renderer/backend/Types.h"
 #include "2d/CCProtectedNode.h"
 #include "base/CCAsyncTaskPool.h"
 #include "scripting/lua-bindings/manual/CCComponentLua.h"
@@ -587,6 +588,378 @@ int lua_register_cocos2dx_Console(lua_State* tolua_S)
     std::string typeName = typeid(cocos2d::Console).name();
     g_luaType[typeName] = "cc.Console";
     g_typeCast["Console"] = "cc.Console";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_BufferUsage(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.BufferUsage");
+    tolua_module(tolua_S, "BufferUsage", 0);
+    tolua_beginmodule(tolua_S,"BufferUsage");
+        tolua_constant(tolua_S, "STATIC", 0);
+        tolua_constant(tolua_S, "DYNAMIC", 1);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::BufferUsage).name();
+    g_luaType[typeName] = "cc.BufferUsage";
+    g_typeCast["BufferUsage"] = "cc.BufferUsage";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_BufferType(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.BufferType");
+    tolua_module(tolua_S, "BufferType", 0);
+    tolua_beginmodule(tolua_S,"BufferType");
+        tolua_constant(tolua_S, "VERTEX", 0);
+        tolua_constant(tolua_S, "INDEX", 1);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::BufferType).name();
+    g_luaType[typeName] = "cc.BufferType";
+    g_typeCast["BufferType"] = "cc.BufferType";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_ShaderStage(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.ShaderStage");
+    tolua_module(tolua_S, "ShaderStage", 0);
+    tolua_beginmodule(tolua_S,"ShaderStage");
+        tolua_constant(tolua_S, "VERTEX", 0);
+        tolua_constant(tolua_S, "FRAGMENT", 1);
+        tolua_constant(tolua_S, "VERTEX_AND_FRAGMENT", 2);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::ShaderStage).name();
+    g_luaType[typeName] = "cc.ShaderStage";
+    g_typeCast["ShaderStage"] = "cc.ShaderStage";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_VertexFormat(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.VertexFormat");
+    tolua_module(tolua_S, "VertexFormat", 0);
+    tolua_beginmodule(tolua_S,"VertexFormat");
+        tolua_constant(tolua_S, "FLOAT4", 0);
+        tolua_constant(tolua_S, "FLOAT3", 1);
+        tolua_constant(tolua_S, "FLOAT2", 2);
+        tolua_constant(tolua_S, "FLOAT", 3);
+        tolua_constant(tolua_S, "INT4", 4);
+        tolua_constant(tolua_S, "INT3", 5);
+        tolua_constant(tolua_S, "INT2", 6);
+        tolua_constant(tolua_S, "INT", 7);
+        tolua_constant(tolua_S, "USHORT4", 8);
+        tolua_constant(tolua_S, "USHORT2", 9);
+        tolua_constant(tolua_S, "UBYTE4", 10);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::VertexFormat).name();
+    g_luaType[typeName] = "cc.VertexFormat";
+    g_typeCast["VertexFormat"] = "cc.VertexFormat";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_TextureFormat(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.TextureFormat");
+    tolua_module(tolua_S, "TextureFormat", 0);
+    tolua_beginmodule(tolua_S,"TextureFormat");
+        tolua_constant(tolua_S, "NONE", 0);
+        tolua_constant(tolua_S, "R8G8B8A8", 1);
+        tolua_constant(tolua_S, "R8G8B8", 2);
+        tolua_constant(tolua_S, "A8", 3);
+        tolua_constant(tolua_S, "D24S8", 4);
+        tolua_constant(tolua_S, "I8", 5);
+        tolua_constant(tolua_S, "AI88", 6);
+        tolua_constant(tolua_S, "RGBA4444", 7);
+        tolua_constant(tolua_S, "RGB565", 8);
+        tolua_constant(tolua_S, "RGB5A1", 9);
+        tolua_constant(tolua_S, "MTL_B5G6R5", 10);
+        tolua_constant(tolua_S, "MTL_BGR5A1", 11);
+        tolua_constant(tolua_S, "MTL_ABGR4", 12);
+        tolua_constant(tolua_S, "ETC1", 13);
+        tolua_constant(tolua_S, "ATC_RGB", 14);
+        tolua_constant(tolua_S, "ATC_EXPLICIT_ALPHA", 15);
+        tolua_constant(tolua_S, "ATC_INTERPOLATED_ALPHA", 16);
+        tolua_constant(tolua_S, "PVRTC2", 17);
+        tolua_constant(tolua_S, "PVRTC2A", 18);
+        tolua_constant(tolua_S, "PVRTC4", 19);
+        tolua_constant(tolua_S, "PVRTC4A", 20);
+        tolua_constant(tolua_S, "S3TC_DXT1", 21);
+        tolua_constant(tolua_S, "S3TC_DXT3", 22);
+        tolua_constant(tolua_S, "S3TC_DXT5", 23);
+        tolua_constant(tolua_S, "SYSTEM_DEFAULT", 24);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::TextureFormat).name();
+    g_luaType[typeName] = "cc.TextureFormat";
+    g_typeCast["TextureFormat"] = "cc.TextureFormat";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_TextureUsage(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.TextureUsage");
+    tolua_module(tolua_S, "TextureUsage", 0);
+    tolua_beginmodule(tolua_S,"TextureUsage");
+        tolua_constant(tolua_S, "READ", 0);
+        tolua_constant(tolua_S, "WRITE", 1);
+        tolua_constant(tolua_S, "RENDER_TARGET", 2);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::TextureUsage).name();
+    g_luaType[typeName] = "cc.TextureUsage";
+    g_typeCast["TextureUsage"] = "cc.TextureUsage";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_IndexFormat(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.IndexFormat");
+    tolua_module(tolua_S, "IndexFormat", 0);
+    tolua_beginmodule(tolua_S,"IndexFormat");
+        tolua_constant(tolua_S, "U_SHORT", 0);
+        tolua_constant(tolua_S, "U_INT", 1);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::IndexFormat).name();
+    g_luaType[typeName] = "cc.IndexFormat";
+    g_typeCast["IndexFormat"] = "cc.IndexFormat";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_VertexStepMode(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.VertexStepMode");
+    tolua_module(tolua_S, "VertexStepMode", 0);
+    tolua_beginmodule(tolua_S,"VertexStepMode");
+        tolua_constant(tolua_S, "VERTEX", 0);
+        tolua_constant(tolua_S, "INSTANCE", 1);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::VertexStepMode).name();
+    g_luaType[typeName] = "cc.VertexStepMode";
+    g_typeCast["VertexStepMode"] = "cc.VertexStepMode";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_PrimitiveType(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.PrimitiveType");
+    tolua_module(tolua_S, "PrimitiveType", 0);
+    tolua_beginmodule(tolua_S,"PrimitiveType");
+        tolua_constant(tolua_S, "POINT", 0);
+        tolua_constant(tolua_S, "LINE", 1);
+        tolua_constant(tolua_S, "LINE_STRIP", 2);
+        tolua_constant(tolua_S, "TRIANGLE", 3);
+        tolua_constant(tolua_S, "TRIANGLE_STRIP", 4);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::PrimitiveType).name();
+    g_luaType[typeName] = "cc.PrimitiveType";
+    g_typeCast["PrimitiveType"] = "cc.PrimitiveType";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_TextureType(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.TextureType");
+    tolua_module(tolua_S, "TextureType", 0);
+    tolua_beginmodule(tolua_S,"TextureType");
+        tolua_constant(tolua_S, "TEXTURE_2D", 0);
+        tolua_constant(tolua_S, "TEXTURE_CUBE", 1);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::TextureType).name();
+    g_luaType[typeName] = "cc.TextureType";
+    g_typeCast["TextureType"] = "cc.TextureType";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_SamplerAddressMode(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.SamplerAddressMode");
+    tolua_module(tolua_S, "SamplerAddressMode", 0);
+    tolua_beginmodule(tolua_S,"SamplerAddressMode");
+        tolua_constant(tolua_S, "REPEAT", 0);
+        tolua_constant(tolua_S, "MIRROR_REPEAT", 1);
+        tolua_constant(tolua_S, "CLAMP_TO_EDGE", 2);
+        tolua_constant(tolua_S, "DONT_CARE", 3);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::SamplerAddressMode).name();
+    g_luaType[typeName] = "cc.SamplerAddressMode";
+    g_typeCast["SamplerAddressMode"] = "cc.SamplerAddressMode";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_SamplerFilter(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.SamplerFilter");
+    tolua_module(tolua_S, "SamplerFilter", 0);
+    tolua_beginmodule(tolua_S,"SamplerFilter");
+        tolua_constant(tolua_S, "NEAREST", 0);
+        tolua_constant(tolua_S, "LINEAR", 1);
+        tolua_constant(tolua_S, "DONT_CARE", 2);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::SamplerFilter).name();
+    g_luaType[typeName] = "cc.SamplerFilter";
+    g_typeCast["SamplerFilter"] = "cc.SamplerFilter";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_StencilOperation(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.StencilOperation");
+    tolua_module(tolua_S, "StencilOperation", 0);
+    tolua_beginmodule(tolua_S,"StencilOperation");
+        tolua_constant(tolua_S, "KEEP", 0);
+        tolua_constant(tolua_S, "ZERO", 1);
+        tolua_constant(tolua_S, "REPLACE", 2);
+        tolua_constant(tolua_S, "INVERT", 3);
+        tolua_constant(tolua_S, "INCREMENT_WRAP", 4);
+        tolua_constant(tolua_S, "DECREMENT_WRAP", 5);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::StencilOperation).name();
+    g_luaType[typeName] = "cc.StencilOperation";
+    g_typeCast["StencilOperation"] = "cc.StencilOperation";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_CompareFunction(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.CompareFunction");
+    tolua_module(tolua_S, "CompareFunction", 0);
+    tolua_beginmodule(tolua_S,"CompareFunction");
+        tolua_constant(tolua_S, "NEVER", 0);
+        tolua_constant(tolua_S, "LESS", 1);
+        tolua_constant(tolua_S, "LESS_EQUAL", 2);
+        tolua_constant(tolua_S, "GREATER", 3);
+        tolua_constant(tolua_S, "GREATER_EQUAL", 4);
+        tolua_constant(tolua_S, "EQUAL", 5);
+        tolua_constant(tolua_S, "NOT_EQUAL", 6);
+        tolua_constant(tolua_S, "ALWAYS", 7);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::CompareFunction).name();
+    g_luaType[typeName] = "cc.CompareFunction";
+    g_typeCast["CompareFunction"] = "cc.CompareFunction";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_BlendOperation(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.BlendOperation");
+    tolua_module(tolua_S, "BlendOperation", 0);
+    tolua_beginmodule(tolua_S,"BlendOperation");
+        tolua_constant(tolua_S, "ADD", 0);
+        tolua_constant(tolua_S, "SUBTRACT", 1);
+        tolua_constant(tolua_S, "RESERVE_SUBTRACT", 2);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::BlendOperation).name();
+    g_luaType[typeName] = "cc.BlendOperation";
+    g_typeCast["BlendOperation"] = "cc.BlendOperation";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_BlendFactor(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.BlendFactor");
+    tolua_module(tolua_S, "BlendFactor", 0);
+    tolua_beginmodule(tolua_S,"BlendFactor");
+        tolua_constant(tolua_S, "ZERO", 0);
+        tolua_constant(tolua_S, "ONE", 1);
+        tolua_constant(tolua_S, "SRC_COLOR", 2);
+        tolua_constant(tolua_S, "ONE_MINUS_SRC_COLOR", 3);
+        tolua_constant(tolua_S, "SRC_ALPHA", 4);
+        tolua_constant(tolua_S, "ONE_MINUS_SRC_ALPHA", 5);
+        tolua_constant(tolua_S, "DST_COLOR", 6);
+        tolua_constant(tolua_S, "ONE_MINUS_DST_COLOR", 7);
+        tolua_constant(tolua_S, "DST_ALPHA", 8);
+        tolua_constant(tolua_S, "ONE_MINUS_DST_ALPHA", 9);
+        tolua_constant(tolua_S, "CONSTANT_ALPHA", 10);
+        tolua_constant(tolua_S, "SRC_ALPHA_SATURATE", 11);
+        tolua_constant(tolua_S, "ONE_MINUS_CONSTANT_ALPHA", 12);
+        tolua_constant(tolua_S, "BLEND_CLOLOR", 13);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::BlendFactor).name();
+    g_luaType[typeName] = "cc.BlendFactor";
+    g_typeCast["BlendFactor"] = "cc.BlendFactor";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_ColorWriteMask(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.ColorWriteMask");
+    tolua_module(tolua_S, "ColorWriteMask", 0);
+    tolua_beginmodule(tolua_S,"ColorWriteMask");
+        tolua_constant(tolua_S, "NONE", 0);
+        tolua_constant(tolua_S, "RED", 1);
+        tolua_constant(tolua_S, "GREEN", 2);
+        tolua_constant(tolua_S, "BLUE", 4);
+        tolua_constant(tolua_S, "ALPHA", 8);
+        tolua_constant(tolua_S, "ALL", 15);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::ColorWriteMask).name();
+    g_luaType[typeName] = "cc.ColorWriteMask";
+    g_typeCast["ColorWriteMask"] = "cc.ColorWriteMask";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_CullMode(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.CullMode");
+    tolua_module(tolua_S, "CullMode", 0);
+    tolua_beginmodule(tolua_S,"CullMode");
+        tolua_constant(tolua_S, "NONE", 0);
+        tolua_constant(tolua_S, "BACK", 1);
+        tolua_constant(tolua_S, "FRONT", 2);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::CullMode).name();
+    g_luaType[typeName] = "cc.CullMode";
+    g_typeCast["CullMode"] = "cc.CullMode";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_Winding(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.Winding");
+    tolua_module(tolua_S, "Winding", 0);
+    tolua_beginmodule(tolua_S,"Winding");
+        tolua_constant(tolua_S, "CLOCK_WISE", 0);
+        tolua_constant(tolua_S, "COUNTER_CLOCK_WISE", 1);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::Winding).name();
+    g_luaType[typeName] = "cc.Winding";
+    g_typeCast["Winding"] = "cc.Winding";
+    return 1;
+}
+
+
+int lua_register_cocos2dx_TextureCubeFace(lua_State* tolua_S)
+{
+    //tolua_usertype(tolua_S,"cc.TextureCubeFace");
+    tolua_module(tolua_S, "TextureCubeFace", 0);
+    tolua_beginmodule(tolua_S,"TextureCubeFace");
+        tolua_constant(tolua_S, "POSITIVE_X", 0);
+        tolua_constant(tolua_S, "NEGATIVE_X", 1);
+        tolua_constant(tolua_S, "POSITIVE_Y", 2);
+        tolua_constant(tolua_S, "NEGATIVE_Y", 3);
+        tolua_constant(tolua_S, "POSITIVE_Z", 4);
+        tolua_constant(tolua_S, "NEGATIVE_Z", 5);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::backend::TextureCubeFace).name();
+    g_luaType[typeName] = "cc.TextureCubeFace";
+    g_typeCast["TextureCubeFace"] = "cc.TextureCubeFace";
     return 1;
 }
 
@@ -101627,7 +102000,12 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	tolua_beginmodule(tolua_S,"cc");
 
 	lua_register_cocos2dx_Ref(tolua_S);
-	lua_register_cocos2dx_Material(tolua_S);
+	lua_register_cocos2dx_Action(tolua_S);
+	lua_register_cocos2dx_FiniteTimeAction(tolua_S);
+	lua_register_cocos2dx_ActionInterval(tolua_S);
+	lua_register_cocos2dx_ActionEase(tolua_S);
+	lua_register_cocos2dx_EaseElastic(tolua_S);
+	lua_register_cocos2dx_EaseElasticIn(tolua_S);
 	lua_register_cocos2dx_Console(tolua_S);
 	lua_register_cocos2dx_Node(tolua_S);
 	lua_register_cocos2dx_Scene(tolua_S);
@@ -101637,44 +102015,47 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_TransitionMoveInB(tolua_S);
 	lua_register_cocos2dx_AtlasNode(tolua_S);
 	lua_register_cocos2dx_TileMapAtlas(tolua_S);
+	lua_register_cocos2dx_PrimitiveType(tolua_S);
 	lua_register_cocos2dx_TransitionMoveInT(tolua_S);
 	lua_register_cocos2dx_TMXTilesetInfo(tolua_S);
 	lua_register_cocos2dx_TransitionMoveInR(tolua_S);
-	lua_register_cocos2dx_Action(tolua_S);
-	lua_register_cocos2dx_FiniteTimeAction(tolua_S);
 	lua_register_cocos2dx_ActionInstant(tolua_S);
 	lua_register_cocos2dx_Hide(tolua_S);
-	lua_register_cocos2dx_ParticleSystem(tolua_S);
-	lua_register_cocos2dx_ParticleSystemQuad(tolua_S);
-	lua_register_cocos2dx_ParticleSpiral(tolua_S);
+	lua_register_cocos2dx_Scheduler(tolua_S);
 	lua_register_cocos2dx_GridBase(tolua_S);
 	lua_register_cocos2dx_AnimationCache(tolua_S);
-	lua_register_cocos2dx_ActionInterval(tolua_S);
 	lua_register_cocos2dx_ActionCamera(tolua_S);
 	lua_register_cocos2dx_ProgressFromTo(tolua_S);
 	lua_register_cocos2dx_MoveBy(tolua_S);
 	lua_register_cocos2dx_MoveTo(tolua_S);
 	lua_register_cocos2dx_JumpBy(tolua_S);
+	lua_register_cocos2dx_GridAction(tolua_S);
+	lua_register_cocos2dx_Grid3DAction(tolua_S);
+	lua_register_cocos2dx_FlipX3D(tolua_S);
+	lua_register_cocos2dx_FlipY3D(tolua_S);
 	lua_register_cocos2dx_EventListener(tolua_S);
 	lua_register_cocos2dx_EventListenerKeyboard(tolua_S);
 	lua_register_cocos2dx_EventListenerMouse(tolua_S);
 	lua_register_cocos2dx_TransitionRotoZoom(tolua_S);
+	lua_register_cocos2dx_MenuItem(tolua_S);
+	lua_register_cocos2dx_MenuItemLabel(tolua_S);
+	lua_register_cocos2dx_MenuItemFont(tolua_S);
 	lua_register_cocos2dx_Event(tolua_S);
 	lua_register_cocos2dx_EventController(tolua_S);
 	lua_register_cocos2dx_Director(tolua_S);
-	lua_register_cocos2dx_Scheduler(tolua_S);
-	lua_register_cocos2dx_ActionEase(tolua_S);
-	lua_register_cocos2dx_EaseElastic(tolua_S);
+	lua_register_cocos2dx_GLView(tolua_S);
+	lua_register_cocos2dx_GLViewImpl(tolua_S);
+	lua_register_cocos2dx_Texture2D(tolua_S);
 	lua_register_cocos2dx_EaseElasticOut(tolua_S);
 	lua_register_cocos2dx_EaseQuadraticActionInOut(tolua_S);
 	lua_register_cocos2dx_EaseBackOut(tolua_S);
-	lua_register_cocos2dx_Texture2D(tolua_S);
 	lua_register_cocos2dx_TransitionSceneOriented(tolua_S);
 	lua_register_cocos2dx_TransitionFlipX(tolua_S);
 	lua_register_cocos2dx_CameraBackgroundBrush(tolua_S);
 	lua_register_cocos2dx_CameraBackgroundDepthBrush(tolua_S);
 	lua_register_cocos2dx_CameraBackgroundColorBrush(tolua_S);
-	lua_register_cocos2dx_GridAction(tolua_S);
+	lua_register_cocos2dx_ParticleSystem(tolua_S);
+	lua_register_cocos2dx_ParticleSystemQuad(tolua_S);
 	lua_register_cocos2dx_TiledGrid3DAction(tolua_S);
 	lua_register_cocos2dx_FadeOutTRTiles(tolua_S);
 	lua_register_cocos2dx_FadeOutUpTiles(tolua_S);
@@ -101688,15 +102069,13 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_TransitionProgressVertical(tolua_S);
 	lua_register_cocos2dx_Layer(tolua_S);
 	lua_register_cocos2dx_TMXTiledMap(tolua_S);
-	lua_register_cocos2dx_Grid3DAction(tolua_S);
 	lua_register_cocos2dx_BaseLight(tolua_S);
 	lua_register_cocos2dx_SpotLight(tolua_S);
 	lua_register_cocos2dx_FadeTo(tolua_S);
 	lua_register_cocos2dx_FadeIn(tolua_S);
 	lua_register_cocos2dx_DirectionLight(tolua_S);
 	lua_register_cocos2dx_EventListenerCustom(tolua_S);
-	lua_register_cocos2dx_FlipX3D(tolua_S);
-	lua_register_cocos2dx_FlipY3D(tolua_S);
+	lua_register_cocos2dx_BufferUsage(tolua_S);
 	lua_register_cocos2dx_EaseSineInOut(tolua_S);
 	lua_register_cocos2dx_TransitionFlipAngular(tolua_S);
 	lua_register_cocos2dx_EaseElasticInOut(tolua_S);
@@ -101705,13 +102084,12 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_FadeOut(tolua_S);
 	lua_register_cocos2dx_CallFunc(tolua_S);
 	lua_register_cocos2dx_EventMouse(tolua_S);
-	lua_register_cocos2dx_GLView(tolua_S);
 	lua_register_cocos2dx_EaseBezierAction(tolua_S);
-	lua_register_cocos2dx_ParticleFireworks(tolua_S);
-	lua_register_cocos2dx_MenuItem(tolua_S);
+	lua_register_cocos2dx_Winding(tolua_S);
 	lua_register_cocos2dx_MenuItemSprite(tolua_S);
 	lua_register_cocos2dx_MenuItemImage(tolua_S);
 	lua_register_cocos2dx_AutoPolygon(tolua_S);
+	lua_register_cocos2dx_ShaderStage(tolua_S);
 	lua_register_cocos2dx_ParticleSmoke(tolua_S);
 	lua_register_cocos2dx_TransitionZoomFlipAngular(tolua_S);
 	lua_register_cocos2dx_EaseRateAction(tolua_S);
@@ -101730,18 +102108,22 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_TMXLayer(tolua_S);
 	lua_register_cocos2dx_AsyncTaskPool(tolua_S);
 	lua_register_cocos2dx_ParticleSnow(tolua_S);
-	lua_register_cocos2dx_EaseElasticIn(tolua_S);
+	lua_register_cocos2dx_ClippingNode(tolua_S);
+	lua_register_cocos2dx_SamplerFilter(tolua_S);
+	lua_register_cocos2dx_ParticleFire(tolua_S);
 	lua_register_cocos2dx_EaseCircleActionInOut(tolua_S);
 	lua_register_cocos2dx_TransitionFadeTR(tolua_S);
 	lua_register_cocos2dx_EaseQuarticActionOut(tolua_S);
 	lua_register_cocos2dx_EventAcceleration(tolua_S);
 	lua_register_cocos2dx_EaseCubicActionIn(tolua_S);
-	lua_register_cocos2dx_TextureCache(tolua_S);
+	lua_register_cocos2dx_BlendFactor(tolua_S);
+	lua_register_cocos2dx_Sprite(tolua_S);
 	lua_register_cocos2dx_ActionTween(tolua_S);
 	lua_register_cocos2dx_TransitionFadeDown(tolua_S);
 	lua_register_cocos2dx_ParticleSun(tolua_S);
 	lua_register_cocos2dx_TransitionProgressHorizontal(tolua_S);
-	lua_register_cocos2dx_ParticleFire(tolua_S);
+	lua_register_cocos2dx_VertexFormat(tolua_S);
+	lua_register_cocos2dx_BlendOperation(tolua_S);
 	lua_register_cocos2dx_FlipX(tolua_S);
 	lua_register_cocos2dx_FlipY(tolua_S);
 	lua_register_cocos2dx_EventKeyboard(tolua_S);
@@ -101751,11 +102133,12 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_Place(tolua_S);
 	lua_register_cocos2dx_EventListenerAcceleration(tolua_S);
 	lua_register_cocos2dx_TiledGrid3D(tolua_S);
-	lua_register_cocos2dx_EaseBounceOut(tolua_S);
+	lua_register_cocos2dx_StencilOperation(tolua_S);
 	lua_register_cocos2dx_RenderTexture(tolua_S);
+	lua_register_cocos2dx_CompareFunction(tolua_S);
 	lua_register_cocos2dx_TintBy(tolua_S);
 	lua_register_cocos2dx_TransitionShrinkGrow(tolua_S);
-	lua_register_cocos2dx_ClippingNode(tolua_S);
+	lua_register_cocos2dx_TextureUsage(tolua_S);
 	lua_register_cocos2dx_ActionFloat(tolua_S);
 	lua_register_cocos2dx_ParticleFlower(tolua_S);
 	lua_register_cocos2dx_EaseCircleActionIn(tolua_S);
@@ -101768,8 +102151,7 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_TransitionJumpZoom(tolua_S);
 	lua_register_cocos2dx_Pass(tolua_S);
 	lua_register_cocos2dx_Touch(tolua_S);
-	lua_register_cocos2dx_CardinalSplineBy(tolua_S);
-	lua_register_cocos2dx_CatmullRomBy(tolua_S);
+	lua_register_cocos2dx_AnimationFrame(tolua_S);
 	lua_register_cocos2dx_NodeGrid(tolua_S);
 	lua_register_cocos2dx_TMXLayerInfo(tolua_S);
 	lua_register_cocos2dx_EaseSineIn(tolua_S);
@@ -101777,35 +102159,38 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_Camera(tolua_S);
 	lua_register_cocos2dx_TMXObjectGroup(tolua_S);
 	lua_register_cocos2dx_ParticleGalaxy(tolua_S);
-	lua_register_cocos2dx_Twirl(tolua_S);
-	lua_register_cocos2dx_MenuItemLabel(tolua_S);
+	lua_register_cocos2dx_TextureType(tolua_S);
+	lua_register_cocos2dx_EaseBounceOut(tolua_S);
 	lua_register_cocos2dx_EaseQuinticActionIn(tolua_S);
 	lua_register_cocos2dx_LayerColor(tolua_S);
 	lua_register_cocos2dx_FadeOutBLTiles(tolua_S);
 	lua_register_cocos2dx_LayerGradient(tolua_S);
 	lua_register_cocos2dx_EventListenerTouchAllAtOnce(tolua_S);
-	lua_register_cocos2dx_GLViewImpl(tolua_S);
+	lua_register_cocos2dx_IndexFormat(tolua_S);
 	lua_register_cocos2dx_ToggleVisibility(tolua_S);
 	lua_register_cocos2dx_Repeat(tolua_S);
+	lua_register_cocos2dx_CardinalSplineBy(tolua_S);
 	lua_register_cocos2dx_TransitionFlipY(tolua_S);
 	lua_register_cocos2dx_TurnOffTiles(tolua_S);
 	lua_register_cocos2dx_TintTo(tolua_S);
 	lua_register_cocos2dx_EaseBackInOut(tolua_S);
+	lua_register_cocos2dx_DrawNode(tolua_S);
 	lua_register_cocos2dx_TransitionFadeBL(tolua_S);
 	lua_register_cocos2dx_TargetedAction(tolua_S);
-	lua_register_cocos2dx_DrawNode(tolua_S);
+	lua_register_cocos2dx_TextureCubeFace(tolua_S);
 	lua_register_cocos2dx_VertexLayout(tolua_S);
 	lua_register_cocos2dx_RotateTo(tolua_S);
-	lua_register_cocos2dx_TransitionSplitRows(tolua_S);
+	lua_register_cocos2dx_ParticleFireworks(tolua_S);
 	lua_register_cocos2dx_Device(tolua_S);
 	lua_register_cocos2dx_TransitionTurnOffTiles(tolua_S);
-	lua_register_cocos2dx_ScaleTo(tolua_S);
+	lua_register_cocos2dx_EventListenerFocus(tolua_S);
 	lua_register_cocos2dx_TransitionPageTurn(tolua_S);
 	lua_register_cocos2dx_RenderState(tolua_S);
 	lua_register_cocos2dx_Properties(tolua_S);
 	lua_register_cocos2dx_BezierBy(tolua_S);
 	lua_register_cocos2dx_BezierTo(tolua_S);
-	lua_register_cocos2dx_ParticleMeteor(tolua_S);
+	lua_register_cocos2dx_Twirl(tolua_S);
+	lua_register_cocos2dx_TextureCache(tolua_S);
 	lua_register_cocos2dx_SpriteFrame(tolua_S);
 	lua_register_cocos2dx_Liquid(tolua_S);
 	lua_register_cocos2dx_UserDefault(tolua_S);
@@ -101818,17 +102203,20 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_TransitionCrossFade(tolua_S);
 	lua_register_cocos2dx_Ripple3D(tolua_S);
 	lua_register_cocos2dx_Lens3D(tolua_S);
-	lua_register_cocos2dx_EventListenerFocus(tolua_S);
+	lua_register_cocos2dx_Material(tolua_S);
+	lua_register_cocos2dx_ScaleTo(tolua_S);
 	lua_register_cocos2dx_Spawn(tolua_S);
 	lua_register_cocos2dx_EaseQuarticActionInOut(tolua_S);
 	lua_register_cocos2dx_ShakyTiles3D(tolua_S);
 	lua_register_cocos2dx_PageTurn3D(tolua_S);
 	lua_register_cocos2dx_PolygonInfo(tolua_S);
 	lua_register_cocos2dx_Grid3D(tolua_S);
+	lua_register_cocos2dx_CullMode(tolua_S);
 	lua_register_cocos2dx_EventListenerController(tolua_S);
 	lua_register_cocos2dx_TransitionProgressInOut(tolua_S);
 	lua_register_cocos2dx_EaseCubicActionInOut(tolua_S);
 	lua_register_cocos2dx_ParticleData(tolua_S);
+	lua_register_cocos2dx_Animation(tolua_S);
 	lua_register_cocos2dx_EaseBackIn(tolua_S);
 	lua_register_cocos2dx_SplitRows(tolua_S);
 	lua_register_cocos2dx_Follow(tolua_S);
@@ -101836,18 +102224,20 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_ShuffleTiles(tolua_S);
 	lua_register_cocos2dx_CameraBackgroundSkyBoxBrush(tolua_S);
 	lua_register_cocos2dx_ProgressTimer(tolua_S);
+	lua_register_cocos2dx_ParticleMeteor(tolua_S);
 	lua_register_cocos2dx_EaseQuarticActionIn(tolua_S);
+	lua_register_cocos2dx_ColorWriteMask(tolua_S);
 	lua_register_cocos2dx_Menu(tolua_S);
 	lua_register_cocos2dx_EaseInOut(tolua_S);
 	lua_register_cocos2dx_TransitionZoomFlipY(tolua_S);
 	lua_register_cocos2dx_ScaleBy(tolua_S);
 	lua_register_cocos2dx_EventTouch(tolua_S);
-	lua_register_cocos2dx_Animation(tolua_S);
 	lua_register_cocos2dx_TMXMapInfo(tolua_S);
 	lua_register_cocos2dx_EaseExponentialIn(tolua_S);
 	lua_register_cocos2dx_ReuseGrid(tolua_S);
 	lua_register_cocos2dx_EaseQuinticActionOut(tolua_S);
 	lua_register_cocos2dx_EventDispatcher(tolua_S);
+	lua_register_cocos2dx_TextureFormat(tolua_S);
 	lua_register_cocos2dx_MenuItemAtlasFont(tolua_S);
 	lua_register_cocos2dx_ActionManager(tolua_S);
 	lua_register_cocos2dx_OrbitCamera(tolua_S);
@@ -101863,12 +102253,14 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_MotionStreak3D(tolua_S);
 	lua_register_cocos2dx_EaseOut(tolua_S);
 	lua_register_cocos2dx_TransitionSlideInL(tolua_S);
-	lua_register_cocos2dx_MenuItemFont(tolua_S);
+	lua_register_cocos2dx_TransitionSplitRows(tolua_S);
+	lua_register_cocos2dx_SamplerAddressMode(tolua_S);
 	lua_register_cocos2dx_TransitionFadeUp(tolua_S);
 	lua_register_cocos2dx_LayerRadialGradient(tolua_S);
 	lua_register_cocos2dx_EaseSineOut(tolua_S);
 	lua_register_cocos2dx_JumpTiles3D(tolua_S);
 	lua_register_cocos2dx_MenuItemToggle(tolua_S);
+	lua_register_cocos2dx_VertexStepMode(tolua_S);
 	lua_register_cocos2dx_RemoveSelf(tolua_S);
 	lua_register_cocos2dx_TransitionProgressRadialCCW(tolua_S);
 	lua_register_cocos2dx_SplitCols(tolua_S);
@@ -101876,11 +102268,12 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_MotionStreak(tolua_S);
 	lua_register_cocos2dx_RotateBy(tolua_S);
 	lua_register_cocos2dx_FileUtils(tolua_S);
-	lua_register_cocos2dx_Sprite(tolua_S);
+	lua_register_cocos2dx_ParticleSpiral(tolua_S);
 	lua_register_cocos2dx_TransitionSlideInT(tolua_S);
 	lua_register_cocos2dx_ProgressTo(tolua_S);
 	lua_register_cocos2dx_TransitionProgressOutIn(tolua_S);
-	lua_register_cocos2dx_AnimationFrame(tolua_S);
+	lua_register_cocos2dx_CatmullRomBy(tolua_S);
+	lua_register_cocos2dx_BufferType(tolua_S);
 	lua_register_cocos2dx_Sequence(tolua_S);
 	lua_register_cocos2dx_Shaky3D(tolua_S);
 	lua_register_cocos2dx_TransitionProgressRadialCW(tolua_S);
