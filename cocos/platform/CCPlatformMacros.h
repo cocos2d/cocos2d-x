@@ -79,6 +79,15 @@ CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
     } \
 }
 
+/** @def CC_OPTIMIZE_ITEM
+ * enable optimization for OPPO.
+ */
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#define CC_OPTIMIZE_MASK(name, value) Application::getInstance()->setOptimise(name, value)
+#else
+#define CC_OPTIMIZE_MASK(itemName, itemValue) do{}while(0)
+#endif
+
 /** @def CC_ENABLE_CACHE_TEXTURE_DATA
  * Enable it if you want to cache the texture data.
  * Not enabling for Emscripten any more -- doesn't seem necessary and don't want

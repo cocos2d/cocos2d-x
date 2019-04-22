@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "base/CCEventListenerCustom.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
+#include "platform/CCApplication.h"
 
 NS_CC_BEGIN
 
@@ -127,6 +128,7 @@ GLProgramCache::~GLProgramCache()
 
 bool GLProgramCache::init()
 {
+    CC_OPTIMIZE_MASK("shader_compile", 1);
     loadDefaultGLPrograms();
     
     auto listener = EventListenerCustom::create(Configuration::CONFIG_FILE_LOADED, [this](EventCustom* /*event*/){
@@ -134,7 +136,7 @@ bool GLProgramCache::init()
     });
     
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
-    
+    CC_OPTIMIZE_MASK("shader_compile", 0);
     return true;
 }
 

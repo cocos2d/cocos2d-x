@@ -126,6 +126,15 @@ public:
     /** override function */
     virtual void removeAllChildren() override;
     
+    /**
+     * Event callback that is invoked every time when Node enters the 'stage'.
+     * If the Node enters the 'stage' with a transition, this event is called when the transition starts.
+     * During onEnter you can't access a "sister/brother" node.
+     * If you override onEnter, you shall call its parent's one, e.g., Node::onEnter().
+     * @lua NA
+     */
+    virtual void onEnter() override;
+    
 CC_CONSTRUCTOR_ACCESS:
     Scene();
     virtual ~Scene();
