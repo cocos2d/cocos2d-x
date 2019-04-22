@@ -27,10 +27,6 @@ public:
     virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) = 0;
     virtual void generateMipmaps() = 0;
 
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    virtual void releaseGLTexture() = 0; //used to release opengl generated texture
-#endif
-
     inline TextureFormat getTextureFormat() const { return _textureFormat; }
     inline TextureUsage getTextureUsage() const { return _textureUsage; }
     inline TextureType getTextureType() const { return _textureType; }

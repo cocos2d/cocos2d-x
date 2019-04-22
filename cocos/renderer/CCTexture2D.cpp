@@ -223,13 +223,6 @@ Texture2D::~Texture2D()
     CC_SAFE_RELEASE(_texture);
 }
 
-void Texture2D::releasebackendTexture()
-{
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    _texture->releaseGLTexture();
-#endif
-}
-
 Texture2D::PixelFormat Texture2D::getPixelFormat() const
 {
     return _pixelFormat;
@@ -385,7 +378,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     
     textureDescriptor.compressed = info.compressed;
 
-    if(_texture == nullptr || _texture->getTextureFormat() != textureDescriptor.textureFormat)
+    if(_texture == nullptr)
     {
         CC_SAFE_RELEASE(_texture);
         _texture = static_cast<backend::Texture2D*>(device->newTexture(textureDescriptor));

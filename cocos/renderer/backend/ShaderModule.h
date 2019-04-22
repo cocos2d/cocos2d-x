@@ -17,8 +17,6 @@ protected:
     ShaderModule(ShaderStage stage);
     virtual ~ShaderModule();
 
-    virtual void deleteShader() = 0;
-
     ShaderStage _stage = ShaderStage::VERTEX;
 };
 

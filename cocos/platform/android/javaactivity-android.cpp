@@ -100,12 +100,12 @@ JNIEXPORT void Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit(JNIEnv*  env, j
     {
         cocos2d::Director::getInstance()->resetMatrixStack();
         cocos2d::backend::ProgramCache::getInstance()->reloadAllPrograms();
-        cocos2d::VolatileTextureMgr::reloadAllTextures();
         cocos2d::backend::BufferManager::reloadAllBuffers();
 
         cocos2d::EventCustom recreatedEvent(EVENT_RENDERER_RECREATED);
         director->getEventDispatcher()->dispatchEvent(&recreatedEvent);
         director->setGLDefaultValues();
+        cocos2d::VolatileTextureMgr::reloadAllTextures();
     }
     cocos2d::network::_preloadJavaDownloaderClass();
 }

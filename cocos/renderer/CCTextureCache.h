@@ -261,9 +261,6 @@ protected:
 
     std::string _fileName;
 
-    bool                      _hasMipmaps;
-    //Texture2D::TexParams      _texParams;
-    backend::SamplerDescriptor _samplerDescriptor;
     std::string               _text;
     FontDefinition            _fontDefinition;
 };

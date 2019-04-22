@@ -720,7 +720,6 @@ VolatileTexture::VolatileTexture(Texture2D *t)
 , _textureData(nullptr)
 , _pixelFormat(Texture2D::PixelFormat::RGBA8888)
 , _fileName("")
-, _hasMipmaps(false)
 , _text("")
 {
 }
@@ -753,6 +752,7 @@ void VolatileTextureMgr::addImage(Texture2D *tt, Image *image)
     image->retain();
     vt->_uiImage = image;
     vt->_cashedImageType = VolatileTexture::kImage;
+    vt->_pixelFormat = tt->getPixelFormat();
 }
 
 VolatileTexture* VolatileTextureMgr::findVolotileTexture(Texture2D *tt)
@@ -824,13 +824,6 @@ void VolatileTextureMgr::removeTexture(Texture2D *t)
 void VolatileTextureMgr::reloadAllTextures()
 {
     _isReloading = true;
-
-    // we need to release all of the glTextures to avoid collisions of texture id's when reloading the textures onto the GPU
-    for (auto& item : _textures)
-    {
-        item->_texture->releasebackendTexture();
-    }
-
     CCLOG("reload all texture");
 
     for (auto& texture : _textures)
@@ -865,16 +858,12 @@ void VolatileTextureMgr::reloadAllTextures()
         break;
         case VolatileTexture::kImage:
         {
-            vt->_texture->initWithImage(vt->_uiImage);
+            vt->_texture->initWithImage(vt->_uiImage, vt->_pixelFormat);
         }
         break;
         default:
             break;
         }
-        if (vt->_hasMipmaps) {
-            vt->_texture->generateMipmap();
-        }
-        vt->_texture->setTexParameters(vt->_samplerDescriptor);
     }
 
     _isReloading = false;

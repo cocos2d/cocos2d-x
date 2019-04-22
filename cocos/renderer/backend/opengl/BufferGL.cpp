@@ -21,9 +21,6 @@ BufferGL::~BufferGL()
 
 void BufferGL::reCreateBuffer()
 {
-    if (_buffer)
-        glDeleteBuffers(1, &_buffer);
-
     glGenBuffers(1, &_buffer);
     char* zeros = new (std::nothrow) char[_bufferAllocated];
     updateData(zeros, _bufferAllocated);

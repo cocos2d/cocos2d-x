@@ -1,7 +1,12 @@
 #include "TextureGL.h"
 #include "base/ccMacros.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventType.h"
+#include "base/CCDirector.h"
 #include "platform/CCPlatformConfig.h"
 #include "renderer/backend/opengl/UtilsGL.h"
+
 CC_BACKEND_BEGIN
 
 #define ISPOW2(n) (((n) & (n-1)) == 0)
@@ -47,20 +52,24 @@ Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : Texture2D(descri
     uint8_t* data = (uint8_t*)malloc(_width * _height * _bitsPerElement / 8);
     updateData(data);
     free(data);
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    // Listen this event to restored texture id after coming to foreground on Android.
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
+        glGenTextures(1, &(this->_textureInfo.texture));
+    });
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
 }
 
 Texture2DGL::~Texture2DGL()
 {
     if (_textureInfo.texture)
         glDeleteTextures(1, &_textureInfo.texture);
-}
-
-void Texture2DGL::releaseGLTexture()
-{
-    if (_textureInfo.texture)
-        glDeleteTextures(1, &_textureInfo.texture);
-
-    glGenTextures(1, &_textureInfo.texture);
+    _textureInfo.texture = 0;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
@@ -243,19 +252,26 @@ TextureCubeGL::TextureCubeGL(const TextureDescriptor& descriptor)
     UtilsGL::toGLTypes(_textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
     glGenTextures(1, &_textureInfo.texture);
     updateSamplerDescriptor(descriptor.samplerDescriptor);
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    // Listen this event to restored texture id after coming to foreground on Android.
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom*){
+        glGenTextures(1, &(this->_textureInfo.texture));
+    });
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
     CHECK_GL_ERROR_DEBUG();
 }
 
 TextureCubeGL::~TextureCubeGL()
 {
-    releaseGLTexture();
-}
-
-void TextureCubeGL::releaseGLTexture()
-{
     if(_textureInfo.texture)
         glDeleteTextures(1, &_textureInfo.texture);
     _textureInfo.texture = 0;
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 void TextureCubeGL::updateSamplerDescriptor(const SamplerDescriptor &sampler)

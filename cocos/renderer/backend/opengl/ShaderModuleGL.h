@@ -17,8 +17,7 @@ public:
 private:
     void compileShader(ShaderStage stage, const std::string& source);
     char* getErrorLog(GLuint shader) const;
-
-    virtual void deleteShader() override ;
+    void deleteShader();
     
     GLuint _shader = 0;
     friend class ProgramGL;

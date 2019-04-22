@@ -26,7 +26,6 @@ public:
     inline const std::unordered_map<std::string, AttributeBindInfo> getAttributeInfo() const { return _attributeInfo; }
     
 private:
-    virtual void deleteShader() override {};
     void parseAttibute(id<MTLDevice> mtlDevice, glslopt_shader* shader);
     void parseUniform(id<MTLDevice> mtlDevice, glslopt_shader* shader);
     void parseTexture(id<MTLDevice> mtlDevice, glslopt_shader* shader);
