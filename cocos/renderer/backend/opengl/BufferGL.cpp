@@ -19,12 +19,25 @@ BufferGL::~BufferGL()
     BufferManager::removeBuffer(this);
 }
 
-void BufferGL::reCreateBuffer()
+void BufferGL::reloadBuffer(void* data, unsigned int size)
 {
     glGenBuffers(1, &_buffer);
-    char* zeros = new (std::nothrow) char[_bufferAllocated];
-    updateData(zeros, _bufferAllocated);
-    CC_SAFE_DELETE_ARRAY(zeros);
+    char* bufferData = nullptr;
+    unsigned int bufferSize = size;
+    if(size == 0)
+    {
+        bufferData = new (std::nothrow) char[_bufferAllocated];
+        bufferSize = _bufferAllocated;
+    }
+    else
+    {
+        bufferData = (char*)data;
+    }
+
+    updateData(bufferData, bufferSize);
+
+    if(size == 0)
+        CC_SAFE_DELETE_ARRAY(bufferData);
 }
 
 void BufferGL::updateData(void* data, unsigned int size)
@@ -46,6 +59,11 @@ void BufferGL::updateData(void* data, unsigned int size)
         CHECK_GL_ERROR_DEBUG();
         _bufferAllocated = size;
     }
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    if(BufferUsage::STATIC ==  _usage)
+        BufferManager::addBufferData(this, data, size);
+#endif
 }
 
 void BufferGL::updateSubData(void* data, unsigned int offset, unsigned int size)
