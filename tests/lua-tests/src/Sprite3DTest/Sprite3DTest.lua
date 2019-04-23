@@ -941,7 +941,7 @@ function Sprite3DMirrorTest.create()
     sprite = cc.Sprite3D:create(fileName)
     sprite:setScale(5)
     sprite:setScaleX(-5)
-    sprite:setCullFace(cc.CullMode.FRONT)
+    sprite:setCullFace(ccbackend.CullMode.FRONT)
     sprite:setRotation3D({x = 0, y = 180,z = 0})
     layer:addChild(sprite)
     sprite:setPosition( cc.p( size.width/2 + 80, size.height/2))
@@ -1126,14 +1126,14 @@ function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
     local vertexShader = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/cube_map.vert")
     local fragmentShader = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/cube_map.frag")
 
-    local programState = cc.ProgramState:new(vertexShader, fragmentShader)
+    local programState = ccbackend.ProgramState:new(vertexShader, fragmentShader)
 
     self._textureCube = cc.TextureCube:create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
         "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
         "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg")
 
     --set texture parameters
-    local tRepeatParams = { magFilter=cc.SamplerFilter.LINEAR , minFilter=cc.SamplerFilter.LINEAR , sAddressMode=cc.SamplerAddressMode.MIRROR_REPEAT  , tAddressMode=cc.SamplerAddressMode.MIRROR_REPEAT }
+    local tRepeatParams = { magFilter=ccbackend.SamplerFilter.LINEAR , minFilter=ccbackend.SamplerFilter.LINEAR , sAddressMode=ccbackend.SamplerAddressMode.MIRROR_REPEAT  , tAddressMode=ccbackend.SamplerAddressMode.MIRROR_REPEAT }
     self._textureCube:setTexParameters(tRepeatParams)
 
     --pass the texture sampler to our custom shader

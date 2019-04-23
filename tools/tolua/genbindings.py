@@ -200,6 +200,7 @@ def main():
 
         cmd_args = {
                     'cocos2dx.ini' : ('cocos2d-x', 'lua_cocos2dx_auto'), \
+                    'cocos2dx_backend.ini' : ('cocos2d-backend', 'lua_cocos2dx_backend_auto'), \
                     'cocos2dx_extension.ini' : ('cocos2dx_extension', 'lua_cocos2dx_extension_auto'), \
                     'cocos2dx_ui.ini' : ('cocos2dx_ui', 'lua_cocos2dx_ui_auto'), \
                     'cocos2dx_studio.ini' : ('cocos2dx_studio', 'lua_cocos2dx_studio_auto'), \
