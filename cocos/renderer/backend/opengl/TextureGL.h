@@ -40,6 +40,8 @@ public:
     void apply(int index) const;
 
 private:
+    void initWithZeros();
+
     SamplerDescriptor _samplerDescriptor;
     bool _isCompressed = false;
     TextureInfoGL _textureInfo;
@@ -62,6 +64,8 @@ public:
     void apply(int index) const;
 
 private:
+    void setTexParameters();
+
     TextureInfoGL _textureInfo;
     EventListener* _backToForegroundListener = nullptr;
 };

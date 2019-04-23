@@ -2,7 +2,7 @@
 
 #include "../Macros.h"
 #include "../CommandBuffer.h"
-
+#include "base/CCEventListenerCustom.h"
 #include "platform/CCGL.h"
 
 #include "CCStdC.h"
@@ -68,6 +68,10 @@ private:
     CullMode _cullMode = CullMode::NONE;
     DepthStencilStateGL* _depthStencilStateGL = nullptr;
     Viewport _viewPort;
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    EventListenerCustom* _backToForegroundListener = nullptr;
+#endif
 };
 
 CC_BACKEND_END

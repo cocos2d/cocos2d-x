@@ -49,17 +49,25 @@ Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : Texture2D(descri
    
     // Update data here because `updateData()` may not be invoked later.
     // For example, a texture used as depth buffer will not invoke updateData().
-    uint8_t* data = (uint8_t*)malloc(_width * _height * _bitsPerElement / 8);
-    updateData(data);
-    free(data);
+    initWithZeros();
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Listen this event to restored texture id after coming to foreground on Android.
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
         glGenTextures(1, &(this->_textureInfo.texture));
+        this->initWithZeros();
     });
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
 #endif
+}
+
+void Texture2DGL::initWithZeros()
+{
+    auto size = _width * _height * _bitsPerElement / 8;
+    uint8_t* data = (uint8_t*)malloc(size);
+    memset(data, 0, size);
+    updateData(data);
+    free(data);
 }
 
 Texture2DGL::~Texture2DGL()
@@ -257,10 +265,24 @@ TextureCubeGL::TextureCubeGL(const TextureDescriptor& descriptor)
     // Listen this event to restored texture id after coming to foreground on Android.
     _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom*){
         glGenTextures(1, &(this->_textureInfo.texture));
+        this->setTexParameters();
     });
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
 #endif
     CHECK_GL_ERROR_DEBUG();
+}
+
+void TextureCubeGL::setTexParameters()
+{
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _textureInfo.texture);
+
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, _textureInfo.minFilterGL);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, _textureInfo.magFilterGL);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, _textureInfo.sAddressModeGL);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, _textureInfo.tAddressModeGL);
+
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
 
 TextureCubeGL::~TextureCubeGL()
@@ -277,15 +299,7 @@ TextureCubeGL::~TextureCubeGL()
 void TextureCubeGL::updateSamplerDescriptor(const SamplerDescriptor &sampler)
 {
     _textureInfo.applySamplerDescriptor(sampler, true);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, _textureInfo.texture);
-    
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, _textureInfo.minFilterGL);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, _textureInfo.magFilterGL);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, _textureInfo.sAddressModeGL);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, _textureInfo.tAddressModeGL);
-
-    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+    setTexParameters();
 }
 
 void TextureCubeGL::apply(int index) const

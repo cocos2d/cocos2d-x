@@ -6,6 +6,9 @@
 #include "ProgramGL.h"
 #include "BlendStateGL.h"
 #include "base/ccMacros.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventType.h"
+#include "base/CCDirector.h"
 #include "renderer/backend/opengl/UtilsGL.h"
 #include <algorithm>
 
@@ -48,12 +51,24 @@ namespace
 CommandBufferGL::CommandBufferGL()
 {
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_defaultFBO);
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
+       if(_frameBuffer)
+           glGenFramebuffers(1, &_frameBuffer); //recreate framebuffer
+    });
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
 }
 
 CommandBufferGL::~CommandBufferGL()
 {
     glDeleteFramebuffers(1, &_frameBuffer);
     cleanResources();
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 void CommandBufferGL::beginFrame()
