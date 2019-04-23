@@ -34,7 +34,7 @@ THE SOFTWARE.
 #include "base/ccUTF8.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCFrameBuffer.h"
-#include "platform/CCApplication.h"
+#include "platform/CCDataManager.h"
 
 #if CC_USE_PHYSICS
 #include "physics/CCPhysicsWorld.h"
@@ -78,13 +78,18 @@ Scene::Scene()
     
     Camera::_visitingCamera = nullptr;
 
-    CC_OPTIMIZE_MASK("load_scene", 1);
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    DataManager::onSecneEnter();
+#endif
 }
 
 void Scene::onEnter()
 {
     Node::onEnter();
-    CC_OPTIMIZE_MASK("load_scene", 0);
+    
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    DataManager::onSceneExit();
+#endif
 }
 
 Scene::~Scene()

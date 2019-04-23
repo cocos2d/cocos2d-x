@@ -149,13 +149,6 @@ public:
      * @lua NA
      */
     virtual bool openURL(const std::string &url) = 0;
-    
-    /**
-     @brief send optimization codes for devices.
-     * @js NA
-     * @lua NA
-     */
-    virtual void setOptimise(const char* name, const float value) {};
 };
 
 // end of platform group

@@ -131,10 +131,6 @@ void Application::applicationScreenSizeChanged(int newWidth, int newHeight) {
 
 }
 
-void Application::setOptimise(const char* name, const float value) {
-    JniHelper::callStaticVoidMethod(helperClassName, "setOptimise", name, value);
-}
-
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
