@@ -39,6 +39,7 @@ THE SOFTWARE.
 #include "base/CCNS.h"
 #include "base/ccMacros.h"
 #include "base/ccUTF8.h"
+#include "base/ccUtils.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCTextureCache.h"
@@ -75,24 +76,6 @@ bool SpriteFrameCache::init()
 
 SpriteFrameCache::~SpriteFrameCache()
 {
-}
-
-void SpriteFrameCache::parseIntegerList(const std::string &string, std::vector<int> &res)
-{
-    size_t n = std::count(string.begin(), string.end(), ' ');
-    res.resize(n + 1);
-
-    const char *cStr = string.c_str();
-    char *endptr;
-
-    int i = 0;
-    do {
-        long int val = strtol(cStr, &endptr, 10);
-        if (endptr == cStr)
-            return;
-        res[i++] = static_cast<int>(val);
-        cStr = endptr;
-    } while (*endptr != '\0');
 }
 
 void SpriteFrameCache::initializePolygonInfo(const Size &textureSize,
@@ -260,12 +243,10 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
 
             if(frameDict.find("vertices") != frameDict.end())
             {
-                std::vector<int> vertices;
-                parseIntegerList(frameDict["vertices"].asString(), vertices);
-                std::vector<int> verticesUV;
-                parseIntegerList(frameDict["verticesUV"].asString(), verticesUV);
-                std::vector<int> indices;
-                parseIntegerList(frameDict["triangles"].asString(), indices);
+                using cocos2d::utils::parseIntegerList;
+                std::vector<int> vertices = parseIntegerList(frameDict["vertices"].asString());
+                std::vector<int> verticesUV = parseIntegerList(frameDict["verticesUV"].asString());
+                std::vector<int> indices = parseIntegerList(frameDict["triangles"].asString());
 
                 PolygonInfo info;
                 initializePolygonInfo(textureSize, spriteSourceSize, vertices, verticesUV, indices, info);
