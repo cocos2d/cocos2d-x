@@ -41,10 +41,10 @@ public class Cocos2dxDataManager {
     public static void setFrameSize(int width, int height){
         setOptimise("buffer_size", width * height);
     }
-    public static void onSecneEnter(){
+    public static void onSceneLoaderBegin(){
         setOptimise("load_scene", 1);
     }
-    public static void onSceneExit(){
+    public static void onSceneLoaderEnd(){
         setOptimise("load_scene", 0);
     }
     public static void onShaderLoaderBegin(){

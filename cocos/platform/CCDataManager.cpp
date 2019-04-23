@@ -43,14 +43,14 @@ void DataManager::setFrameSize(int width, int height){
     JniHelper::callStaticVoidMethod(DataManagerClassName, "setFrameSize", width, height);
 #endif
 }
-void DataManager::onSecneEnter(){
+void DataManager::onSceneLoaderBegin(){
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    JniHelper::callStaticVoidMethod(DataManagerClassName, "onSecneEnter");
+    JniHelper::callStaticVoidMethod(DataManagerClassName, "onSceneLoaderBegin");
 #endif
 }
-void DataManager::onSceneExit(){
+void DataManager::onSceneLoaderEnd(){
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    JniHelper::callStaticVoidMethod(DataManagerClassName, "onSceneExit");
+    JniHelper::callStaticVoidMethod(DataManagerClassName, "onSceneLoaderEnd");
 #endif
 }
 void DataManager::onShaderLoaderBegin(){

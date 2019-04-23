@@ -42,8 +42,8 @@ class CC_DLL DataManager
 public:
     static void setProcessID(int pid);
     static void setFrameSize(int width, int height);
-    static void onSecneEnter();
-    static void onSceneExit();
+    static void onSceneLoaderBegin();
+    static void onSceneLoaderEnd();
     static void onShaderLoaderBegin();
     static void onShaderLoaderEnd();
 };

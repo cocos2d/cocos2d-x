@@ -79,7 +79,7 @@ Scene::Scene()
     Camera::_visitingCamera = nullptr;
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    DataManager::onSceneExit();
+    DataManager::onSceneLoaderBegin();
 #endif
 }
 
@@ -88,7 +88,7 @@ void Scene::onEnter()
     Node::onEnter();
     
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    DataManager::onSecneEnter();
+    DataManager::onSceneLoaderEnd();
 #endif
 }
 
