@@ -63,6 +63,7 @@
 #include "platform/CCFileUtils.h"
 #include "platform/CCGLView.h"
 #include "renderer/CCTextureCache.h"
+#include "renderer/ccShaders.h"
 
 static int tolua_cocos2d_MenuItemImage_create(lua_State* tolua_S)
 {
@@ -7987,6 +7988,67 @@ int register_all_cocos2dx_math_manual(lua_State* tolua_S)
         tolua_function(tolua_S, "mat4_createTranslation", tolua_cocos2d_Mat4_createTranslation);
         tolua_function(tolua_S, "mat4_createRotation", tolua_cocos2d_Mat4_createRotation);
         tolua_function(tolua_S, "vec3_cross", tolua_cocos2d_Vec3_cross);
+    tolua_endmodule(tolua_S);
+    return 0;
+}
+
+
+int register_all_cocos2dx_shaders_manual(lua_State *tolua_S) 
+{
+    if (nullptr == tolua_S)
+        return 0;
+#define set_lua_field(field) do {\
+    lua_pushstring(tolua_S, #field); \
+    lua_pushstring(tolua_S, field); \
+    lua_rawset(tolua_S, -3); \
+    } while(false)
+
+    tolua_open(tolua_S);
+    tolua_module(tolua_S, "cc", 0);
+    tolua_beginmodule(tolua_S, "cc");
+        set_lua_field(positionColor_vert);
+        set_lua_field(positionColor_frag);
+        set_lua_field(positionTexture_vert);
+        set_lua_field(positionTexture_frag);
+        set_lua_field(positionTextureColor_vert);
+        set_lua_field(positionTextureColor_frag);
+        set_lua_field(positionTextureColorAlphaTest_frag);
+        set_lua_field(label_normal_frag);
+        set_lua_field(label_distanceNormal_frag);
+        set_lua_field(labelOutline_frag);
+        set_lua_field(labelDistanceFieldGlow_frag);
+        set_lua_field(lineColor3D_frag);
+        set_lua_field(lineColor3D_vert);
+        set_lua_field(positionColorLengthTexture_vert);
+        set_lua_field(positionColorLengthTexture_frag);
+        set_lua_field(positionColorTextureAsPointsize_vert);
+        set_lua_field(position_vert);
+        set_lua_field(positionNoMVP_vert);
+        set_lua_field(layer_radialGradient_frag);
+        set_lua_field(grayScale_frag);
+        set_lua_field(positionTextureUColor_vert);
+        set_lua_field(positionTextureUColor_frag);
+        set_lua_field(positionUColor_vert);
+        set_lua_field(positionUColor_frag);
+        set_lua_field(etc1_frag);
+        set_lua_field(etc1Gray_frag);
+        set_lua_field(cameraClear_vert);
+        set_lua_field(cameraClear_frag);
+        set_lua_field(CC3D_color_frag);
+        set_lua_field(CC3D_colorNormal_frag);
+        set_lua_field(CC3D_colorNormalTexture_frag);
+        set_lua_field(CC3D_colorTexture_frag);
+        set_lua_field(CC3D_particleTexture_frag);
+        set_lua_field(CC3D_particleColor_frag);
+        set_lua_field(CC3D_particle_vert);
+        set_lua_field(CC3D_positionNormalTexture_vert);
+        set_lua_field(CC3D_skinPositionNormalTexture_vert);
+        set_lua_field(CC3D_positionTexture_vert);
+        set_lua_field(CC3D_skinPositionTexture_vert);
+        set_lua_field(CC3D_skybox_frag);
+        set_lua_field(CC3D_skybox_vert);
+        set_lua_field(CC3D_terrain_frag);
+        set_lua_field(CC3D_terrain_vert);
     tolua_endmodule(tolua_S);
     return 0;
 }

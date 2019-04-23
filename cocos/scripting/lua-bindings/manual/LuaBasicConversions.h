@@ -1276,6 +1276,21 @@ CC_LUA_DLL extern void node_to_luaval(lua_State* L, const char* type, cocos2d::N
 */
 CC_LUA_DLL bool luaval_to_vertexLayout(lua_State* L, int pos, cocos2d::backend::VertexLayout& outLayout, char *message);
 
+/**
+* convert lua object SamplerDescriptor to native object
+*/
+CC_LUA_DLL bool luaval_to_samplerDescriptor(lua_State* L, int pos, cocos2d::backend::SamplerDescriptor& desc, char *message);
+
+/**
+* convert lua object to cocos2d::backend::UniformLocation
+*/
+CC_LUA_DLL bool luaval_to_uniformLocation(lua_State* L, int pos, cocos2d::backend::UniformLocation& desc, char *message);
+
+/**
+* convert cocos2d::backend::UniformLocation to lua object
+*/
+CC_LUA_DLL void uniformLocation_to_luaval(lua_State* L, const cocos2d::backend::UniformLocation& desc);
+
 // end group
 /// @}
 #endif //__COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__

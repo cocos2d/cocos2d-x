@@ -3179,11 +3179,17 @@ void texParams_to_luaval(lua_State* L, const cocos2d::Texture2D::TexParams& inVa
     lua_pushstring(L, "magFilter");                      /* L: table key */
     lua_pushnumber(L, (lua_Number) inValue.magFilter);   /* L: table key value*/
     lua_rawset(L, -3);
-    lua_pushstring(L, "wrapS");                          /* L: table key */
+    lua_pushstring(L, "sAddressMode");                          /* L: table key */
     lua_pushnumber(L, (lua_Number) inValue.sAddressMode);       /* L: table key value*/
     lua_rawset(L, -3);
-    lua_pushstring(L, "wrapT");                          /* L: table key */
+    lua_pushstring(L, "sAddressMode");                          /* L: table key */
     lua_pushnumber(L, (lua_Number) inValue.tAddressMode);       /* L: table key value*/
+    lua_rawset(L, -3);
+    lua_pushstring(L, "mipmapFilter");
+    lua_pushnumber(L, (lua_Number)inValue.mipmapFilter);
+    lua_rawset(L, -3);
+    lua_pushstring(L, "mipmapEnabled");
+    lua_pushboolean(L, inValue.mipmapEnabled);
     lua_rawset(L, -3);
 }
 
@@ -3273,6 +3279,9 @@ void node_to_luaval(lua_State* L, const char* type, cocos2d::Node* node)
 
 bool luaval_to_vertexLayout(lua_State* L, int pos, cocos2d::backend::VertexLayout& outLayout,  char *message)
 {
+    if (L == nullptr)
+        return false;
+
     cocos2d::backend::VertexLayout *tmp = nullptr;
     auto ret = luaval_to_object<cocos2d::backend::VertexLayout>(L, pos, "cc.VertexLayout", &tmp, message);
     if (!tmp)
@@ -3281,4 +3290,98 @@ bool luaval_to_vertexLayout(lua_State* L, int pos, cocos2d::backend::VertexLayou
     }
     outLayout = *tmp;
     return ret;
+}
+
+
+bool luaval_to_samplerDescriptor(lua_State* L, int pos, cocos2d::backend::SamplerDescriptor& output, char *message)
+{
+    if (L == nullptr)
+        return false;
+
+    lua_pushstring(L, "magFilter");
+    lua_gettable(L, pos);
+    if (!lua_isnil(L, -1))
+    {
+        output.magFilter = static_cast<cocos2d::backend::SamplerFilter>(lua_tointeger(L, -1));
+    }
+    lua_pop(L, 1);
+
+    lua_pushstring(L, "minFilter");
+    lua_gettable(L, pos);
+    if (!lua_isnil(L, -1))
+    {
+        output.minFilter = static_cast<cocos2d::backend::SamplerFilter>(lua_tointeger(L, -1));
+    }
+    lua_pop(L, 1);
+
+    lua_pushstring(L, "mipmapFilter");
+    lua_gettable(L, pos);
+    if (!lua_isnil(L, -1))
+    {
+        output.mipmapFilter = static_cast<cocos2d::backend::SamplerFilter>(lua_tointeger(L, -1));
+    }
+    lua_pop(L, 1);
+
+    lua_pushstring(L, "sAddressMode");
+    lua_gettable(L, pos);
+    if (!lua_isnil(L, -1))
+    {
+        output.sAddressMode = static_cast<cocos2d::backend::SamplerAddressMode>(lua_tointeger(L, -1));
+    }
+    lua_pop(L, 1);
+
+    lua_pushstring(L, "tAddressMode");
+    lua_gettable(L, pos);
+    if (!lua_isnil(L, -1))
+    {
+        output.tAddressMode = static_cast<cocos2d::backend::SamplerAddressMode>(lua_tointeger(L, -1));
+    }
+    lua_pop(L, 1);
+
+    lua_pushstring(L, "mipmapEnabled");
+    lua_gettable(L, pos);
+    if (!lua_isnil(L, -1))
+    {
+        output.mipmapEnabled = lua_toboolean(L, -1);
+    }
+    lua_pop(L, 1);
+    return true;
+}
+
+bool luaval_to_uniformLocation(lua_State* L, int pos, cocos2d::backend::UniformLocation& loc, char *message)
+{
+    if (L == nullptr)
+        return false;
+
+    lua_pushstring(L, "location");
+    lua_gettable(L, pos);
+    if (lua_isnil(L, -1)) {
+        CCASSERT(false, "invalidate UniformLocation value");
+    }
+    loc.location = lua_tointeger(L, -1);
+    lua_pop(L, 1);
+
+    lua_pushstring(L, "shaderStage");
+    lua_gettable(L, pos);
+    if (lua_isnil(L, -1)) {
+        CCASSERT(false, "invalidate UniformLocation value");
+    }
+    loc.shaderStage = static_cast<cocos2d::backend::ShaderStage>(lua_tointeger(L, -1));
+    lua_pop(L, 1);
+    return true;
+}
+
+void uniformLocation_to_luaval(lua_State* L, const cocos2d::backend::UniformLocation& loc)
+{
+    if (L == nullptr)
+        return;
+
+    lua_newtable(L);
+
+    lua_pushstring(L, "location");
+    lua_pushinteger(L, static_cast<int>(loc.location));
+    lua_rawset(L, -3);
+    lua_pushstring(L, "shaderStage");
+    lua_pushinteger(L, static_cast<int>(loc.shaderStage));
+    lua_rawset(L, -3);
 }

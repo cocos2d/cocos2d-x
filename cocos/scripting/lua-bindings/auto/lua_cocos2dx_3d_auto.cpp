@@ -1257,8 +1257,7 @@ int lua_cocos2dx_3d_TextureCube_setTexParameters(lua_State* tolua_S)
     {
         cocos2d::backend::SamplerDescriptor arg0;
 
-        #pragma warning NO CONVERSION TO NATIVE FOR SamplerDescriptor
-		ok = false;
+        ok &= luaval_to_samplerDescriptor(tolua_S, 2, arg0, "cc.TextureCube:setTexParameters");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_TextureCube_setTexParameters'", nullptr);
