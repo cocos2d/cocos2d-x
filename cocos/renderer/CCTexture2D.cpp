@@ -205,8 +205,10 @@ Texture2D::Texture2D()
 , _ninePatchInfo(nullptr)
 , _valid(true)
 , _alphaTexture(nullptr)
-, _texture(nullptr)
 {
+    backend::TextureDescriptor textureDescriptor;
+    textureDescriptor.textureFormat = TextureFormat::NONE;
+    _texture = static_cast<backend::Texture2D*>(backend::Device::getInstance()->newTexture(textureDescriptor));
 }
 
 Texture2D::~Texture2D()
@@ -378,11 +380,8 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     
     textureDescriptor.compressed = info.compressed;
 
-    if(_texture == nullptr)
-    {
-        CC_SAFE_RELEASE(_texture);
-        _texture = static_cast<backend::Texture2D*>(device->newTexture(textureDescriptor));
-    }
+    if(_texture->getTextureFormat() != textureDescriptor.textureFormat)
+        _texture->updateTextureDescriptor(textureDescriptor);
 
     _texture->updateData(outData);
     if(outData && outData != data && outDataLen > 0)

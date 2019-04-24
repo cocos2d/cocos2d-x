@@ -7,6 +7,7 @@
 #include <functional>
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
+#include "base/CCEventListenerCustom.h"
 #include "renderer/backend/Types.h"
 #include "renderer/backend/Program.h"
 
@@ -180,6 +181,10 @@ protected:
     std::unordered_map<std::string, std::string>            _autoBindings;
 
     static std::vector<AutoBindingResolver*>                _customAutoBindingResolvers;
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    EventListenerCustom* _backToForegroundListener = nullptr;
+#endif
 };
 
 CC_BACKEND_END

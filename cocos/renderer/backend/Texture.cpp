@@ -63,8 +63,7 @@ namespace
                 return byte(4);
 #endif
             default:
-                assert(false); //"textureFormat pixel size in bytes not defined!";
-                break;
+                return byte(0); //"textureFormat pixel size in bytes not defined!";
         }
         return 0;
     }
@@ -82,6 +81,16 @@ Texture::Texture(const TextureDescriptor& descriptor)
 
 Texture::~Texture()
 {}
+
+void Texture::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
+{
+    _bitsPerElement = computeBitsPerElement(descriptor.textureFormat);
+    _isMipmapEnabled = descriptor.samplerDescriptor.mipmapEnabled;
+    _isCompressed = descriptor.compressed;
+    _textureType = descriptor.textureType;
+    _textureFormat = descriptor.textureFormat;
+    _textureUsage = descriptor.textureUsage;
+}
 
 Texture2D::Texture2D(const TextureDescriptor& descriptor)
     : Texture(descriptor)

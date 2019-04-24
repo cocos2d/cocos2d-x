@@ -11,8 +11,6 @@ class Buffer : public cocos2d::Ref
 public:
     virtual void updateData(void* data, unsigned int size) = 0;
     virtual void updateSubData(void* data, unsigned int offset, unsigned int size) = 0;
-    virtual void reloadBuffer(void* data, unsigned int size) = 0;
-    virtual void beginFrame() = 0;
     
     unsigned int getSize() const { return _size; }
 
@@ -28,7 +26,6 @@ protected:
     BufferUsage _usage = BufferUsage::DYNAMIC;
     BufferType _type = BufferType::VERTEX;
     unsigned int _size = 0;
-    friend class BufferManager;
 };
 
 CC_BACKEND_END

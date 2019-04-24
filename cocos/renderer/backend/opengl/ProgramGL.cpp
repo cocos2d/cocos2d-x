@@ -2,6 +2,9 @@
 #include "ShaderModuleGL.h"
 #include "renderer/backend/Types.h"
 #include "base/ccMacros.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventType.h"
 #include "renderer/backend/opengl/UtilsGL.h"
 
 CC_BACKEND_BEGIN
@@ -26,6 +29,11 @@ ProgramGL::ProgramGL(const std::string& vertexShader, const std::string& fragmen
         _originalUniformLocations[uniform.first] = uniformLocation;
         _uniformLocationMap[uniform.second.location] = uniform.second.location;
     }
+
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
+        this->reloadProgram();
+    });
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
 #endif
 }
 
@@ -37,7 +45,7 @@ ProgramGL::~ProgramGL()
         glDeleteProgram(_program);
 }
 
-void ProgramGL::reloadGLProgram()
+void ProgramGL::reloadProgram()
 {
     _uniformInfos.clear();
     static_cast<ShaderModuleGL*>(_vertexShaderModule)->compileShader(backend::ShaderStage::VERTEX, _vertexShader);
@@ -50,9 +58,6 @@ void ProgramGL::reloadGLProgram()
         auto location = _originalUniformLocations[uniform.first].location;
         _uniformLocationMap[location] = uniform.second.location;
     }
-
-    if(_callback)
-        _callback();
 }
 
 void ProgramGL::compileProgram()

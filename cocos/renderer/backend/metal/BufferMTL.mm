@@ -1,6 +1,6 @@
 #include "BufferMTL.h"
 #include "../Macros.h"
-#include "../BufferManager.h"
+#include "BufferManager.h"
 
 CC_BACKEND_BEGIN
 

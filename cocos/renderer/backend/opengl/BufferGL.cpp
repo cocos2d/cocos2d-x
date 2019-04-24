@@ -1,14 +1,23 @@
 #include "BufferGL.h"
 #include <cassert>
 #include "base/ccMacros.h"
-#include "renderer/backend/BufferManager.h"
+#include "base/CCDirector.h"
+#include "base/CCEventType.h"
+#include "base/CCEventDispatcher.h"
+
 CC_BACKEND_BEGIN
 
 BufferGL::BufferGL(unsigned int size, BufferType type, BufferUsage usage)
 : Buffer(size, type, usage)
 {
     glGenBuffers(1, &_buffer);
-    BufferManager::addBuffer(this);
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
+        this->reloadBuffer();
+    });
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
 }
 
 BufferGL::~BufferGL()
@@ -16,27 +25,32 @@ BufferGL::~BufferGL()
     if (_buffer)
         glDeleteBuffers(1, &_buffer);
 
-    BufferManager::removeBuffer(this);
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
-void BufferGL::reloadBuffer(void* data, unsigned int size)
+void BufferGL::reloadBuffer()
 {
     glGenBuffers(1, &_buffer);
     char* bufferData = nullptr;
-    unsigned int bufferSize = size;
-    if(size == 0)
+    unsigned int bufferSize = 0;
+    bool needRelease = false;
+    if(_data.size() == 0)
     {
         bufferData = new (std::nothrow) char[_bufferAllocated];
         bufferSize = _bufferAllocated;
+        needRelease = true;
     }
     else
     {
-        bufferData = (char*)data;
+        bufferData = (char*)_data.data();
+        bufferSize = _data.size();
     }
 
     updateData(bufferData, bufferSize);
 
-    if(size == 0)
+    if(needRelease)
         CC_SAFE_DELETE_ARRAY(bufferData);
 }
 
@@ -58,12 +72,12 @@ void BufferGL::updateData(void* data, unsigned int size)
         }
         CHECK_GL_ERROR_DEBUG();
         _bufferAllocated = size;
-    }
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    if(BufferUsage::STATIC ==  _usage)
-        BufferManager::addBufferData(this, data, size);
+        if(BufferUsage::STATIC ==  _usage)
+            _data.assign((char*)data, (char*)data + size);
 #endif
+    }
 }
 
 void BufferGL::updateSubData(void* data, unsigned int offset, unsigned int size)

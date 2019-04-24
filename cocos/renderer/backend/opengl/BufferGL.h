@@ -1,9 +1,10 @@
 #pragma once
 
 #include "../Buffer.h"
-#include <vector>
-
 #include "platform/CCGL.h"
+#include "base/CCEventListenerCustom.h"
+
+#include <vector>
 
 CC_BACKEND_BEGIN
 
@@ -15,16 +16,19 @@ public:
     
     virtual void updateData(void* data, unsigned int size) override;
     virtual void updateSubData(void* data, unsigned int offset, unsigned int size) override;
-    virtual void reloadBuffer(void* data, unsigned int size) override ;
-    virtual void beginFrame() override {};
     
     inline GLuint getHandler() const { return _buffer; }
 
 private:
-    friend class BufferManager;
+    void reloadBuffer();
 
     GLuint _buffer = 0;
     unsigned int _bufferAllocated = 0;
+    std::vector<char> _data;
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    EventListenerCustom* _backToForegroundListener = nullptr;
+#endif
 };
 
 CC_BACKEND_END

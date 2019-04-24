@@ -70,6 +70,16 @@ void Texture2DGL::initWithZeros()
     free(data);
 }
 
+void Texture2DGL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
+{
+    Texture::updateTextureDescriptor(descriptor);
+    UtilsGL::toGLTypes(descriptor.textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
+    _width = descriptor.width;
+    _height = descriptor.height;
+    updateSamplerDescriptor(descriptor.samplerDescriptor);
+    initWithZeros();
+}
+
 Texture2DGL::~Texture2DGL()
 {
     if (_textureInfo.texture)
@@ -283,6 +293,14 @@ void TextureCubeGL::setTexParameters()
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, _textureInfo.tAddressModeGL);
 
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+}
+
+void TextureCubeGL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
+{
+    UtilsGL::toGLTypes(descriptor.textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
+    _textureFormat = descriptor.textureFormat;
+    _size = descriptor.width;
+    updateSamplerDescriptor(descriptor.samplerDescriptor);
 }
 
 TextureCubeGL::~TextureCubeGL()

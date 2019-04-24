@@ -40,7 +40,6 @@ set(COCOS_RENDERER_HEADER
     renderer/backend/ProgramState.h
     renderer/backend/ShaderCache.h
     renderer/backend/DeviceInfo.h
-    renderer/backend/BufferManager.h
     )
 
 set(COCOS_RENDERER_SRC
@@ -77,7 +76,6 @@ set(COCOS_RENDERER_SRC
     renderer/backend/ProgramState.cpp
     renderer/backend/ShaderCache.cpp
     renderer/backend/RenderPassDescriptor.cpp
-    renderer/backend/BufferManager.cpp
     )
 
 if(ANDROID OR WINDOWS OR LINUX) 
@@ -114,6 +112,7 @@ else()
 list(APPEND COCOS_RENDERER_HEADER
     renderer/backend/metal/BlendStateMTL.h
     renderer/backend/metal/BufferMTL.h
+    renderer/backend/metal/BufferManager.h
     renderer/backend/metal/CommandBufferMTL.h
     renderer/backend/metal/DepthStencilStateMTL.h
     renderer/backend/metal/DeviceMTL.h
@@ -128,6 +127,7 @@ list(APPEND COCOS_RENDERER_HEADER
 list(APPEND COCOS_RENDERER_SRC
     renderer/backend/metal/BlendStateMTL.mm
     renderer/backend/metal/BufferMTL.mm
+    renderer/backend/metal/BufferManager.mm
     renderer/backend/metal/CommandBufferMTL.mm
     renderer/backend/metal/DepthStencilStateMTL.mm
     renderer/backend/metal/DeviceMTL.mm

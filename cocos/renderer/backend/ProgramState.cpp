@@ -4,6 +4,9 @@
 #include "renderer/backend/Texture.h"
 #include "renderer/backend/Types.h"
 #include "base/CCMacros.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventType.h"
+#include "base/CCDirector.h"
 
 #include <algorithm>
 
@@ -181,7 +184,11 @@ ProgramState::ProgramState(const std::string& vertexShader, const std::string& f
     }
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    _program->setCallback(CC_CALLBACK_0(ProgramState::resetUniforms, this));
+//    _program->setCallback(CC_CALLBACK_0(ProgramState::resetUniforms, this));
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
+        this->resetUniforms();
+    });
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
 #endif
 }
 
@@ -223,6 +230,10 @@ ProgramState::~ProgramState()
     _fragmentUniformInfos.clear();
     _vertexTextureInfos.clear();
     _fragmentTextureInfos.clear();
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 ProgramState *ProgramState::clone() const

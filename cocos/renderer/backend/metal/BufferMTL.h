@@ -13,10 +13,9 @@ public:
     
     virtual void updateData(void* data, unsigned int size) override;
     virtual void updateSubData(void* data, unsigned int offset, unsigned int size) override;
-    virtual void reloadBuffer(void* data, unsigned int size) override {};
-    virtual void beginFrame() override;
     
     id<MTLBuffer> getMTLBuffer() const;
+    void beginFrame();
     
 private:
     void updateIndex();
