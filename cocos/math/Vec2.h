@@ -94,18 +94,6 @@ public:
     Vec2(const Vec2& p1, const Vec2& p2);
 
     /**
-     * Constructs a new vector that is a copy of the specified vector.
-     *
-     * @param copy The vector to copy.
-     */
-    Vec2(const Vec2& copy);
-
-    /**
-     * Destructor.
-     */
-    ~Vec2();
-
-    /**
      * Indicates whether this vector contains all zeros.
      *
      * @return true if this vector contains all zeros, false otherwise.
