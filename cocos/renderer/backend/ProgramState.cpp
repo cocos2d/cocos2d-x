@@ -184,7 +184,6 @@ ProgramState::ProgramState(const std::string& vertexShader, const std::string& f
     }
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-//    _program->setCallback(CC_CALLBACK_0(ProgramState::resetUniforms, this));
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
         this->resetUniforms();
     });
@@ -208,7 +207,11 @@ void ProgramState::resetUniforms()
 
         if(isTextureLocation)
         {
-            _vertexTextureInfos[location].location = mappedLocation;
+            //check if current location had been set before
+            if(_vertexTextureInfos.find(location) != _vertexTextureInfos.end())
+            {
+                _vertexTextureInfos[location].location = mappedLocation;
+            }
         }
         else
         {

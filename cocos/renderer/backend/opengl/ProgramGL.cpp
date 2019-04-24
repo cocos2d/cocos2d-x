@@ -43,6 +43,10 @@ ProgramGL::~ProgramGL()
     CC_SAFE_RELEASE(_fragmentShaderModule);
     if (_program)
         glDeleteProgram(_program);
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 void ProgramGL::reloadProgram()
@@ -207,6 +211,7 @@ void ProgramGL::computeUniformInfos()
         }
         uniform.location = glGetUniformLocation(_program, uniformName);
         uniform.bufferSize = UtilsGL::getGLDataTypeSize(uniform.type);
+        uniform.name = uniformName;
         _uniformInfos[uniformName] = uniform;
 
         _maxLocation = _maxLocation <= uniform.location ? (uniform.location + 1) : _maxLocation;
@@ -222,10 +227,10 @@ UniformLocation ProgramGL::getUniformLocation(const std::string& uniform) const
         return _originalUniformLocations.at(uniform);
     else
         return uniformLocation;
-#endif
-
+#else
     uniformLocation.location = glGetUniformLocation(_program, uniform.c_str());
     return uniformLocation;
+#endif
 }
 
 const std::unordered_map<std::string, UniformInfo>& ProgramGL::getVertexUniformInfos() const
