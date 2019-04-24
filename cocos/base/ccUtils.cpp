@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "base/CCAsyncTaskPool.h"
 #include "base/CCEventDispatcher.h"
 #include "base/base64.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"
@@ -524,6 +525,24 @@ LanguageType getLanguageTypeByISO2(const char* code)
         ret = LanguageType::BELARUSIAN;
     }
     return ret;
+}
+
+std::vector<int> parseIntegerList(const std::string &intsString) {
+    std::vector<int> result;
+
+    const char *cStr = intsString.c_str();
+    char *endptr;
+
+    for (long int i = strtol(cStr, &endptr, 10); endptr != cStr; i = strtol(cStr, &endptr, 10)) {
+        if (errno == ERANGE) {
+            errno = 0;
+            CCLOGWARN("%s contains out of range integers", intsString.c_str());
+        }
+        result.push_back(static_cast<int>(i));
+        cStr= endptr;
+    }
+
+    return result;
 }
 
 }

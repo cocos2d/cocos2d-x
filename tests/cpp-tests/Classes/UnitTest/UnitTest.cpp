@@ -26,6 +26,7 @@
 #include "RefPtrTest.h"
 #include "ui/UIHelper.h"
 #include "network/Uri.h"
+#include "base/ccUtils.h"
 
 USING_NS_CC;
 using namespace cocos2d::network;
@@ -75,6 +76,7 @@ UnitTests::UnitTests()
     ADD_TEST_CASE(RefPtrTest);
     ADD_TEST_CASE(UTFConversionTest);
     ADD_TEST_CASE(UIHelperSubStringTest);
+    ADD_TEST_CASE(ParseIntegerListTest);
     ADD_TEST_CASE(ParseUriTest);
     ADD_TEST_CASE(ResizableBufferAdapterTest);
 #ifdef UNIT_TEST_FOR_OPTIMIZED_MATH_UTIL
@@ -906,6 +908,35 @@ void UIHelperSubStringTest::onEnter()
 std::string UIHelperSubStringTest::subtitle() const
 {
     return "ui::Helper::getSubStringOfUTF8String Test";
+}
+
+// ParseIntegerListTest
+void ParseIntegerListTest::onEnter() {
+    UnitTestDemo::onEnter();
+
+    {
+        using cocos2d::utils::parseIntegerList;
+
+        std::vector<int> res1{};
+        EXPECT_EQ(res1, parseIntegerList(""));
+
+        std::vector<int> res2{1};
+        EXPECT_EQ(res2, parseIntegerList("1"));
+
+        std::vector<int> res3{1, 2};
+        EXPECT_EQ(res3, parseIntegerList("1 2"));
+
+        std::vector<int> res4{2, 4, 3, 1, 4, 2, 0, 4, 1, 0, 4, 5};
+        EXPECT_EQ(res4, parseIntegerList("2 4 3 1 4 2 0 4 1 0 4 5"));
+
+        std::vector<int> res5{73, 48, 57, 117, 27, 117, 29, 77, 14, 62, 26, 7, 55, 2};
+        EXPECT_EQ(res5, parseIntegerList("73 48 57 117 27 117 29 77 14 62 26 7 55 2"));
+    }
+}
+
+std::string ParseIntegerListTest::subtitle() const
+{
+    return "utils::parseIntegerList Test";
 }
 
 // ParseUriTest
