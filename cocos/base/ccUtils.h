@@ -207,6 +207,13 @@ namespace utils
     */
     CC_DLL std::vector<float> getNormalMat3OfMat4(const Mat4 &mat);
 
+    /**
+    @brief Parses a list of space-separated integers.
+    @return Vector of ints.
+    * @js NA
+    * @lua NA
+    */
+    CC_DLL std::vector<int> parseIntegerList(const std::string &intsString);
 }
 
 NS_CC_END

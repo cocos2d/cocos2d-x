@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "base/CCEventDispatcher.h"
 #include "base/base64.h"
 #include "base/ccConstants.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"
@@ -665,6 +666,24 @@ std::vector<float> getNormalMat3OfMat4(const Mat4 &mat)
     normalMat[3] = mvInverse.m[4]; normalMat[4] = mvInverse.m[5]; normalMat[5] = mvInverse.m[6];
     normalMat[6] = mvInverse.m[8]; normalMat[7] = mvInverse.m[9]; normalMat[8] = mvInverse.m[10];
     return normalMat;
+}
+
+std::vector<int> parseIntegerList(const std::string &intsString) {
+    std::vector<int> result;
+
+    const char *cStr = intsString.c_str();
+    char *endptr;
+
+    for (long int i = strtol(cStr, &endptr, 10); endptr != cStr; i = strtol(cStr, &endptr, 10)) {
+        if (errno == ERANGE) {
+            errno = 0;
+            CCLOGWARN("%s contains out of range integers", intsString.c_str());
+        }
+        result.push_back(static_cast<int>(i));
+        cStr= endptr;
+    }
+
+    return result;
 }
 
 }
