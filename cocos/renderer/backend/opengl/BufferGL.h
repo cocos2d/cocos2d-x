@@ -24,7 +24,7 @@ private:
 
     GLuint _buffer = 0;
     unsigned int _bufferAllocated = 0;
-    std::vector<char> _data;
+    char* _data = nullptr;
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _backToForegroundListener = nullptr;

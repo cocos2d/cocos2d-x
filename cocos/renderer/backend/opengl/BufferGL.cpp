@@ -11,7 +11,8 @@ BufferGL::BufferGL(unsigned int size, BufferType type, BufferUsage usage)
 : Buffer(size, type, usage)
 {
     glGenBuffers(1, &_buffer);
-
+    _data = new (std::nothrow) char[_size];
+    memset(_data, 0, _size);
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
         this->reloadBuffer();
@@ -25,6 +26,7 @@ BufferGL::~BufferGL()
     if (_buffer)
         glDeleteBuffers(1, &_buffer);
 
+    CC_SAFE_DELETE_ARRAY(_data);
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
@@ -33,25 +35,7 @@ BufferGL::~BufferGL()
 void BufferGL::reloadBuffer()
 {
     glGenBuffers(1, &_buffer);
-    char* bufferData = nullptr;
-    unsigned int bufferSize = 0;
-    bool needRelease = false;
-    if(_data.size() == 0)
-    {
-        bufferData = new (std::nothrow) char[_bufferAllocated];
-        bufferSize = _bufferAllocated;
-        needRelease = true;
-    }
-    else
-    {
-        bufferData = (char*)_data.data();
-        bufferSize = _data.size();
-    }
-
-    updateData(bufferData, bufferSize);
-
-    if(needRelease)
-        CC_SAFE_DELETE_ARRAY(bufferData);
+    updateData(_data, _bufferAllocated);
 }
 
 void BufferGL::updateData(void* data, unsigned int size)
@@ -75,7 +59,7 @@ void BufferGL::updateData(void* data, unsigned int size)
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         if(BufferUsage::STATIC ==  _usage)
-            _data.assign((char*)data, (char*)data + size);
+            memcpy(_data, data, size);
 #endif
     }
 }
@@ -99,6 +83,11 @@ void BufferGL::updateSubData(void* data, unsigned int offset, unsigned int size)
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffer);
             glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, offset, size, data);
         }
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+        if(BufferUsage::STATIC ==  _usage)
+            memcpy(_data + offset, data, size);
+#endif
         CHECK_GL_ERROR_DEBUG();
     }
 }
