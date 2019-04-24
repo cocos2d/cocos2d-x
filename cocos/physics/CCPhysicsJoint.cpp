@@ -180,7 +180,7 @@ bool PhysicsJoint::initJoint()
 
 void PhysicsJoint::flushDelayTasks()
 {
-    for (auto tsk : _delayTasks)
+    for (const auto& tsk : _delayTasks)
     {
         tsk();
     }

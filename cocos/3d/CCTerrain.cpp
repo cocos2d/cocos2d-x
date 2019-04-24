@@ -1335,7 +1335,7 @@ bool Terrain::Chunk::getIntersectPointWithRay(const Ray& ray, Vec3& intersectPoi
 
     float minDist = FLT_MAX;
     bool isFind = false;
-    for (auto triangle : _trianglesList)
+    for (const auto& triangle : _trianglesList)
     {
         Vec3 p;
         if (triangle.getIntersectPoint(ray, p))

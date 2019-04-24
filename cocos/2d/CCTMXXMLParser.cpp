@@ -752,7 +752,7 @@ void TMXMapInfo::endElement(void* /*ctx*/, const char *name)
             }
 
             uint32_t* bufferPtr = reinterpret_cast<uint32_t*>(buffer);
-            for(auto gidToken : gidTokens) {
+            for(const auto& gidToken : gidTokens) {
                 auto tileGid = (uint32_t)strtoul(gidToken.c_str(), nullptr, 10);
                 *bufferPtr = tileGid;
                 bufferPtr++;
