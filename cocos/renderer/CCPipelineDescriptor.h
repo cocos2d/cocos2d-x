@@ -35,12 +35,35 @@
 
 NS_CC_BEGIN
 
-struct CC_DLL PipelineDescriptor final
+class CC_DLL PipelineDescriptor final
 {
-    backend::ProgramState* programState = nullptr;
-    backend::BlendDescriptor blendDescriptor;
-    backend::RenderPassDescriptor renderPassDescriptor;
-    backend::VertexLayout vertexLayout;
+public:
+    PipelineDescriptor() = default;
+
+    inline backend::ProgramState* getProgramState() { return programState; }
+    inline void setProgramState(backend::ProgramState *p) { programState = p; }
+
+    inline backend::VertexLayout* getVertexLayout() { return &vertexLayout; }
+    inline void setVertexLayout(const backend::VertexLayout *layout)
+    {
+        if (layout != &vertexLayout) {
+            vertexLayout = *layout;
+        }
+    }
+
+    inline backend::BlendDescriptor *getBlendDescriptor() { return &blendDescriptor; }
+    inline void setBlendDescriptor(const backend::BlendDescriptor *b)
+    {
+        if (b != &blendDescriptor)
+        {
+            blendDescriptor = *b;
+        }
+    }
+
+    backend::ProgramState*          programState = nullptr;
+    backend::BlendDescriptor        blendDescriptor;
+    backend::RenderPassDescriptor   renderPassDescriptor;
+    backend::VertexLayout           vertexLayout;
 };
 
 NS_CC_END

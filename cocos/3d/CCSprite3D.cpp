@@ -816,7 +816,7 @@ void Sprite3D::setProgramState(backend::ProgramState* programState)
 //    setGLProgramState(glProgramState);
 //}
 
-void Sprite3D::setVertexLayout(const backend::VertexLayout& vertexLayout)
+void Sprite3D::setVertexLayout(const backend::VertexLayout* vertexLayout)
 {
     for (auto state : _meshes) {
         state->setVertexLayout(vertexLayout);

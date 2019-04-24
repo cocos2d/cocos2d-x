@@ -3056,24 +3056,19 @@ void mesh_vertex_attrib_to_luaval(lua_State* L, const cocos2d::MeshVertexAttrib&
     if (nullptr == L)
         return;
 
-//TODO minggo
-//    lua_newtable(L);
-//
-//    lua_pushstring(L, "size");
-//    lua_pushnumber(L, (lua_Number)inValue.size);
-//    lua_rawset(L, -3);
-//
-//    lua_pushstring(L, "type");
-//    lua_pushnumber(L, (lua_Number)inValue.type);
-//    lua_rawset(L, -3);
-//
-//    lua_pushstring(L, "vertexAttrib");
-//    lua_pushnumber(L, (lua_Number)inValue.vertexAttrib);
-//    lua_rawset(L, -3);
-//
-//    lua_pushstring(L, "attribSizeBytes");
-//    lua_pushnumber(L, (lua_Number)inValue.attribSizeBytes);
-//    lua_rawset(L, -3);
+    lua_newtable(L);
+
+    lua_pushstring(L, "type");
+    lua_pushnumber(L, (lua_Number)inValue.type);
+    lua_rawset(L, -3);
+
+    lua_pushstring(L, "vertexAttrib");
+    lua_pushnumber(L, (lua_Number)inValue.vertexAttrib);
+    lua_rawset(L, -3);
+
+    lua_pushstring(L, "attribSizeBytes");
+    lua_pushnumber(L, (lua_Number)inValue.getAttribSizeBytes());
+    lua_rawset(L, -3);
 }
 
 
@@ -3384,4 +3379,39 @@ void uniformLocation_to_luaval(lua_State* L, const cocos2d::backend::UniformLoca
     lua_pushstring(L, "shaderStage");
     lua_pushinteger(L, static_cast<int>(loc.shaderStage));
     lua_rawset(L, -3);
+}
+
+
+void program_activeattrs_to_luaval(lua_State *L , const std::unordered_map<std::string, cocos2d::backend::AttributeBindInfo> &attrs)
+{
+    if (L == nullptr) return;
+
+    lua_newtable(L);
+
+    for (auto &p : attrs)
+    {
+        if (p.first.empty())
+            continue;
+
+        lua_newtable(L);
+        lua_pushstring(L, "attributeName");
+        lua_pushstring(L, p.second.attributeName.c_str());
+        lua_rawset(L, -3);
+
+        lua_pushstring(L, "location");
+        lua_pushinteger(L, p.second.location);
+        lua_rawset(L, -3);
+
+        lua_pushstring(L, "size");
+        lua_pushinteger(L, p.second.size);
+        lua_rawset(L, -3);
+
+        lua_pushstring(L, "type");
+        lua_pushinteger(L, p.second.type);
+        lua_rawset(L, -3);
+
+        lua_pushstring(L, p.first.c_str());
+        lua_insert(L, -2);
+        lua_rawset(L, -3);
+    }
 }

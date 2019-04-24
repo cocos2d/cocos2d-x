@@ -1163,18 +1163,26 @@ function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
         "a_blendIndex",
     }
 
+    local attributes = programState:getProgram():getActiveAttributes();
+
     local offset = 0
     local attributeCount = self._teapot:getMesh():getMeshVertexAttribCount()
+    local layout = ccbackend.VertexLayout:new()
     for i = 1, attributeCount do
         local meshattribute = self._teapot:getMesh():getMeshVertexAttribute(i - 1)
-        state:setVertexAttribPointer(attributeNames[meshattribute.vertexAttrib+1],
-            meshattribute.size,
-            meshattribute.type,
-            false,
-            self._teapot:getMesh():getVertexSizeInBytes(),
-            offset)
+        --state:setVertexAttribPointer(attributeNames[meshattribute.vertexAttrib+1],
+        --    meshattribute.size,
+        --    meshattribute.type,
+        --    false,
+        --    self._teapot:getMesh():getVertexSizeInBytes(),
+        --    offset)
         offset = offset + meshattribute.attribSizeBytes
+        layout:setAttribute(attributeNames[meshattribute.vertexAttrib+1], i, meshattribute.type, offset, false)
+  
     end
+
+    layout:setLayout(offset, ccbackend.VertexStepMode.VERTEX)
+    self._teapot:setVertexLayout(layout)
 
     self:addChild(self._teapot)
 

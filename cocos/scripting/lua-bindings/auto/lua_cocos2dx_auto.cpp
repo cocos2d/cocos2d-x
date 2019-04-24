@@ -3,6 +3,7 @@
 #include "2d/CCProtectedNode.h"
 #include "base/CCAsyncTaskPool.h"
 #include "scripting/lua-bindings/manual/CCComponentLua.h"
+#include "renderer/CCPipelineDescriptor.h"
 #include "scripting/lua-bindings/manual/tolua_fix.h"
 #include "scripting/lua-bindings/manual/LuaBasicConversions.h"
 
@@ -19809,6 +19810,359 @@ int lua_register_cocos2dx_ShaderCache(lua_State* tolua_S)
     std::string typeName = typeid(cocos2d::backend::ShaderCache).name();
     g_luaType[typeName] = "ccbakend.ShaderCache";
     g_typeCast["ShaderCache"] = "ccbakend.ShaderCache";
+    return 1;
+}
+
+int lua_cocos2dx_PipelineDescriptor_getVertexLayout(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PipelineDescriptor* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PipelineDescriptor",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PipelineDescriptor*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_PipelineDescriptor_getVertexLayout'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_PipelineDescriptor_getVertexLayout'", nullptr);
+            return 0;
+        }
+        cocos2d::backend::VertexLayout* ret = cobj->getVertexLayout();
+        object_to_luaval<cocos2d::backend::VertexLayout>(tolua_S, "ccbakend.VertexLayout",(cocos2d::backend::VertexLayout*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PipelineDescriptor:getVertexLayout",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_PipelineDescriptor_getVertexLayout'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_PipelineDescriptor_getBlendDescriptor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PipelineDescriptor* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PipelineDescriptor",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PipelineDescriptor*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_PipelineDescriptor_getBlendDescriptor'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_PipelineDescriptor_getBlendDescriptor'", nullptr);
+            return 0;
+        }
+        cocos2d::backend::BlendDescriptor* ret = cobj->getBlendDescriptor();
+        #pragma warning NO CONVERSION FROM NATIVE FOR BlendDescriptor*;
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PipelineDescriptor:getBlendDescriptor",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_PipelineDescriptor_getBlendDescriptor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_PipelineDescriptor_setBlendDescriptor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PipelineDescriptor* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PipelineDescriptor",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PipelineDescriptor*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_PipelineDescriptor_setBlendDescriptor'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        const cocos2d::backend::BlendDescriptor* arg0;
+
+        #pragma warning NO CONVERSION TO NATIVE FOR BlendDescriptor*
+		ok = false;
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_PipelineDescriptor_setBlendDescriptor'", nullptr);
+            return 0;
+        }
+        cobj->setBlendDescriptor(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PipelineDescriptor:setBlendDescriptor",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_PipelineDescriptor_setBlendDescriptor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_PipelineDescriptor_getProgramState(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PipelineDescriptor* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PipelineDescriptor",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PipelineDescriptor*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_PipelineDescriptor_getProgramState'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_PipelineDescriptor_getProgramState'", nullptr);
+            return 0;
+        }
+        cocos2d::backend::ProgramState* ret = cobj->getProgramState();
+        object_to_luaval<cocos2d::backend::ProgramState>(tolua_S, "ccbakend.ProgramState",(cocos2d::backend::ProgramState*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PipelineDescriptor:getProgramState",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_PipelineDescriptor_getProgramState'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_PipelineDescriptor_setProgramState(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PipelineDescriptor* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PipelineDescriptor",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PipelineDescriptor*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_PipelineDescriptor_setProgramState'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::backend::ProgramState* arg0;
+
+        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 2, "ccbakend.ProgramState",&arg0, "cc.PipelineDescriptor:setProgramState");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_PipelineDescriptor_setProgramState'", nullptr);
+            return 0;
+        }
+        cobj->setProgramState(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PipelineDescriptor:setProgramState",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_PipelineDescriptor_setProgramState'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_PipelineDescriptor_setVertexLayout(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PipelineDescriptor* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PipelineDescriptor",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PipelineDescriptor*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_PipelineDescriptor_setVertexLayout'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        const cocos2d::backend::VertexLayout* arg0;
+
+        ok &= luaval_to_object<const cocos2d::backend::VertexLayout>(tolua_S, 2, "ccbakend.VertexLayout",&arg0, "cc.PipelineDescriptor:setVertexLayout");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_PipelineDescriptor_setVertexLayout'", nullptr);
+            return 0;
+        }
+        cobj->setVertexLayout(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PipelineDescriptor:setVertexLayout",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_PipelineDescriptor_setVertexLayout'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_PipelineDescriptor_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PipelineDescriptor* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_PipelineDescriptor_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocos2d::PipelineDescriptor();
+        tolua_pushusertype(tolua_S,(void*)cobj,"cc.PipelineDescriptor");
+        tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PipelineDescriptor:PipelineDescriptor",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_PipelineDescriptor_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_PipelineDescriptor_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (PipelineDescriptor)");
+    return 0;
+}
+
+int lua_register_cocos2dx_PipelineDescriptor(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.PipelineDescriptor");
+    tolua_cclass(tolua_S,"PipelineDescriptor","cc.PipelineDescriptor","",nullptr);
+
+    tolua_beginmodule(tolua_S,"PipelineDescriptor");
+        tolua_function(tolua_S,"new",lua_cocos2dx_PipelineDescriptor_constructor);
+        tolua_function(tolua_S,"getVertexLayout",lua_cocos2dx_PipelineDescriptor_getVertexLayout);
+        tolua_function(tolua_S,"getBlendDescriptor",lua_cocos2dx_PipelineDescriptor_getBlendDescriptor);
+        tolua_function(tolua_S,"setBlendDescriptor",lua_cocos2dx_PipelineDescriptor_setBlendDescriptor);
+        tolua_function(tolua_S,"getProgramState",lua_cocos2dx_PipelineDescriptor_getProgramState);
+        tolua_function(tolua_S,"setProgramState",lua_cocos2dx_PipelineDescriptor_setProgramState);
+        tolua_function(tolua_S,"setVertexLayout",lua_cocos2dx_PipelineDescriptor_setVertexLayout);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::PipelineDescriptor).name();
+    g_luaType[typeName] = "cc.PipelineDescriptor";
+    g_typeCast["PipelineDescriptor"] = "cc.PipelineDescriptor";
     return 1;
 }
 
@@ -101400,6 +101754,7 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_TransitionZoomFlipAngular(tolua_S);
 	lua_register_cocos2dx_EaseRateAction(tolua_S);
 	lua_register_cocos2dx_EaseIn(tolua_S);
+	lua_register_cocos2dx_PipelineDescriptor(tolua_S);
 	lua_register_cocos2dx_EaseExponentialInOut(tolua_S);
 	lua_register_cocos2dx_CardinalSplineTo(tolua_S);
 	lua_register_cocos2dx_CatmullRomTo(tolua_S);

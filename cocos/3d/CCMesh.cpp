@@ -468,13 +468,13 @@ void Mesh::setProgramState(backend::ProgramState* programState)
     setMaterial(material);
 }
 
-void Mesh::setVertexLayout(const backend::VertexLayout& vertexLayout)
+void Mesh::setVertexLayout(const backend::VertexLayout* vertexLayout)
 {
     for(auto &p : _meshCommands)
     {
         for(auto &cmd: p.second)
         {
-            cmd.getPipelineDescriptor().vertexLayout = vertexLayout;
+            cmd.getPipelineDescriptor().vertexLayout = *vertexLayout;
         }
     }
 }
