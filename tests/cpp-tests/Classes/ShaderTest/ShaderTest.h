@@ -28,7 +28,6 @@
 
 #include "extensions/cocos-ext.h"
 #include "../BaseTest.h"
-#include "base/CCEventListenerCustom.h"
 
 DEFINE_TEST_SUITE(ShaderTests);
 
@@ -183,10 +182,6 @@ protected:
     cocos2d::backend::UniformLocation   _locTime;
     cocos2d::backend::UniformLocation   _locSinTime;
     cocos2d::backend::UniformLocation   _locCosTime;
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    cocos2d::EventListenerCustom* _backToForegroundListener = nullptr;
-#endif
 };
 
 class ShaderLensFlare : public ShaderTestDemo

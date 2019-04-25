@@ -80,10 +80,6 @@ ShaderNode::ShaderNode()
 ShaderNode::~ShaderNode()
 {
     CC_SAFE_RELEASE(_programState);
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    _eventDispatcher->removeEventListener(_backToForegroundListener);
-#endif
 }
 
 ShaderNode* ShaderNode::shaderNodeWithVertex(const std::string &vert, const std::string& frag)
@@ -99,14 +95,6 @@ bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag
 {
     _vertFileName = vert;
     _fragFileName = frag;
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
-            this->setProgramState(nullptr);
-            loadShaderVertex(_vertFileName, _fragFileName);
-        });
-
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(_backToForegroundListener, this);
-#endif
 
     loadShaderVertex(vert, frag);
 
