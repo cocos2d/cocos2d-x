@@ -49,6 +49,7 @@ ProgramGL::~ProgramGL()
 #endif
 }
 
+#if CC_ENABLE_CACHE_TEXTURE_DATA
 void ProgramGL::reloadProgram()
 {
     _uniformInfos.clear();
@@ -63,6 +64,7 @@ void ProgramGL::reloadProgram()
         _uniformLocationMap[location] = uniform.second.location;
     }
 }
+#endif
 
 void ProgramGL::compileProgram()
 {
@@ -251,6 +253,7 @@ int ProgramGL::getMaxFragmentLocation() const
     return _maxLocation;
 }
 
+#if CC_ENABLE_CACHE_TEXTURE_DATA
 int ProgramGL::getMappedLocation(int location) const
 {
     if(_uniformLocationMap.find(location) != _uniformLocationMap.end())
@@ -258,5 +261,6 @@ int ProgramGL::getMappedLocation(int location) const
     else
         return -1;
 }
+#endif
 
 CC_BACKEND_END

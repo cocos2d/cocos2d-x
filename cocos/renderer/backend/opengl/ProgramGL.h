@@ -53,7 +53,7 @@ private:
     void compileProgram();
     bool getAttributeLocation(const std::string& attributeName, unsigned int& location) const;
     void computeUniformInfos();
-#ifdef CC_ENABLE_CACHE_TEXTURE_DATA
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     virtual void reloadProgram();
     virtual int getMappedLocation(int location) const override;
     virtual const std::unordered_map<std::string, UniformLocation> getAllUniformsLocation() const override { return _originalUniformLocations; }
