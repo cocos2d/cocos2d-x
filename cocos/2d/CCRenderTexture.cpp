@@ -61,6 +61,7 @@ RenderTexture::~RenderTexture()
     CC_SAFE_RELEASE(_sprite);
     CC_SAFE_RELEASE(_texture2DCopy);
     CC_SAFE_RELEASE(_depthStencilTexture);
+    CC_SAFE_RELEASE(_UITextureImage);
 }
 
 void RenderTexture::listenToBackground(EventCustom* /*event*/)
@@ -72,6 +73,9 @@ void RenderTexture::listenToBackground(EventCustom* /*event*/)
     auto func = [&](Image* uiTextureImage){
         if (uiTextureImage)
         {
+            CC_SAFE_RELEASE(_UITextureImage);
+            _UITextureImage = uiTextureImage;
+            CC_SAFE_RETAIN(_UITextureImage);
             const Size& s = _texture2D->getContentSizeInPixels();
             VolatileTextureMgr::addDataTexture(_texture2D, uiTextureImage->getData(), s.width * s.height * 4, Texture2D::PixelFormat::RGBA8888, s);
 
@@ -84,7 +88,7 @@ void RenderTexture::listenToBackground(EventCustom* /*event*/)
         {
             CCLOG("Cache rendertexture failed!");
         }
-        CC_SAFE_DELETE(uiTextureImage);
+        CC_SAFE_RELEASE(uiTextureImage);
     };
     auto callback = std::bind(func, std::placeholders::_1);
     newImage(callback, false);
