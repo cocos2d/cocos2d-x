@@ -151,8 +151,8 @@ bool LuaStack::init(void)
     register_all_cocos2dx_math_manual(_state);
     register_all_cocos2dx_shaders_manual(_state);
     register_all_cocos2dx_bytearray_manual(_state);
-    //TODO minggo
-    // register_all_cocos2dx_experimental(_state);
+    
+    register_all_cocos2dx_experimental(_state);
     register_all_cocos2dx_experimental_manual(_state);
 
 #if CC_USE_PHYSICS
