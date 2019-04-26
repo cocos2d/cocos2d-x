@@ -108,6 +108,31 @@ bool luaval_to_ushort(lua_State* L, int lo, unsigned short* outValue, const char
     return ok;
 }
 
+bool luaval_to_float(lua_State* L, int lo, float* outValue, const char* funcName)
+{
+    if (NULL == L || NULL == outValue)
+        return false;
+
+    bool ok = true;
+
+    tolua_Error tolua_err;
+    if (!tolua_isnumber(L, lo, 0, &tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L, "#ferror:", &tolua_err, funcName);
+#endif
+        ok = false;
+    }
+
+    if (ok)
+    {
+        *outValue = (float)lua_tonumber(L, lo);
+    }
+
+    return ok;
+}
+
+
 
 bool luaval_to_int32(lua_State* L,int lo,int* outValue, const char* funcName)
 {

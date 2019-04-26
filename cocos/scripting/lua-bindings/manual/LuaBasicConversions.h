@@ -117,6 +117,18 @@ extern bool luaval_to_ulong(lua_State* L,int lo, unsigned long* outValue, const 
 extern bool luaval_to_ushort(lua_State* L, int lo, unsigned short* outValue, const char* funcName = "");
 
 /**
+* Get a float value from the given acceptable index of stack.
+* If the value at the given acceptable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
+*
+* @param L the current lua_State.
+* @param lo the given acceptable index of stack.
+* @param outValue the pointer to store the float value converted from the Lua value.
+* @param funcName the name of calling function, it is used for error output in the debug model.
+* @return Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
+*/
+extern bool luaval_to_float(lua_State* L, int lo, float* outValue, const char* funcName = "");
+
+/**
  * Get a int value from the given acceptable index of stack.
  * If the value at the given acceptable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
  *

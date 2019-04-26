@@ -64,6 +64,8 @@ TOLUA_API int register_all_cocos2dx_math_manual(lua_State* tolua_S);
 
 TOLUA_API int register_all_cocos2dx_shaders_manual(lua_State *tolua_S);
 
+TOLUA_API int register_all_cocos2dx_bytearray_manual(lua_State *tulua_S);
+
 struct LuaEventAccelerationData
 {
     void* acc;

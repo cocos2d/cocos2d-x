@@ -293,7 +293,7 @@ void Pass::setUniformNormTexture(uint32_t slot, backend::Texture *tex)
     } \
     else \
     { \
-     CCLOG("warning: failed to set uniform in %s", __FUNCTION__); \
+        CCLOG("warning: failed to set uniform in %s", __FUNCTION__); \
     }
 
 

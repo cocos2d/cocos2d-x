@@ -7154,9 +7154,9 @@ static void extendPipelineDescriptor(lua_State *tolua_S)
     lua_pop(tolua_S, 1);
 }
 
-template<typename NUMTYPE>
-static int lua_cocos2dx_ProgramState_setUniform_numeric(lua_State *tolua_S)
+static int lua_cocos2dx_ProgramState_setUniform(lua_State *tolua_S)
 {
+    bool ok = true;
     int argc = 0;
     cocos2d::backend::ProgramState* self = nullptr;
 
@@ -7179,13 +7179,29 @@ static int lua_cocos2dx_ProgramState_setUniform_numeric(lua_State *tolua_S)
     if (2 == argc)
     {
         cocos2d::backend::UniformLocation location;
-        NUMTYPE value;
-
-        if (lua_isstring(tolua_S, -2) && lua_isnumber(tolua_S, -1))
+        
+        if (lua_isstring(tolua_S, -2))
         {
             location = self->getUniformLocation(lua_tostring(tolua_S, -2));
-            value = (NUMTYPE)lua_tonumber(tolua_S, -1);
-            self->setUniform(location, &value, sizeof(NUMTYPE));
+        } 
+        else if (lua_istable(tolua_S, -2))
+        {
+            ok &= luaval_to_uniformLocation(tolua_S, -2, location, "lua_cocos2dx_ProgramState_setUniform");
+        }
+
+        if (ok & lua_istable(tolua_S, -1))
+        {
+            int len = lua_objlen(tolua_S, -1);
+            std::vector<uint8_t> buffer(len);
+
+            for (int i = 0; i < len; i++)
+            {
+                lua_rawgeti(tolua_S, -1, i + 1);
+                buffer[i] = lua_tointeger(tolua_S, -1);
+                lua_pop(tolua_S, 1);
+            }
+
+            self->setUniform(location, buffer.data(), buffer.size());
         }
         else
         {
@@ -7205,62 +7221,6 @@ static int lua_cocos2dx_ProgramState_setUniform_numeric(lua_State *tolua_S)
 }
 
 
-template<typename T, void* CONV >
-static int lua_cocos2dx_ProgramState_setUniform_luatype(lua_State *tolua_S)
-{
-    typedef bool (*convert_func) (lua_State *, int, T*, const char *);
-    void *P = CONV;
-    convert_func converter = (convert_func)CONV;
-
-    int argc = 0;
-    cocos2d::backend::ProgramState* self = nullptr;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-    if (!tolua_isusertype(tolua_S, 1, "ccbackend.ProgramState", 0, &tolua_err)) goto tolua_lerror;
-#endif
-
-    self = (cocos2d::backend::ProgramState*) tolua_tousertype(tolua_S, 1, 0);
-#if COCOS2D_DEBUG >= 1
-    if (nullptr == self)
-    {
-        tolua_error(tolua_S, "invalid 'self' in function 'lua_cocos2dx_ProgramState_setUniform'\n", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    if (2 == argc)
-    {
-        tolua_Error error;
-
-        cocos2d::backend::UniformLocation location;
-        T value;
-
-        if (lua_isstring(tolua_S, -2) && lua_istable(tolua_S, -1))
-        {
-            location = self->getUniformLocation(lua_tostring(tolua_S, -2));
-            converter(tolua_S, -1, &value, "lua_cocos2dx_ProgramState_setUniform_luatype");
-            self->setUniform(location, &value, sizeof(T));
-        }
-        else
-        {
-            luaL_error(tolua_S, "`lua_cocos2dx_ProgramState_setUniform` argument invalidate");
-
-        }
-        return 0;
-    }
-
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-                tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_set_PipelineDescriptor_vertexLayout'.", &tolua_err);
-                return 0;
-#endif
-}
-
 static void extendProgramState(lua_State *tolua_S)
 {
     //lua_pushstring(tolua_S, "ccbackend.ProgramState");
@@ -7270,12 +7230,7 @@ static void extendProgramState(lua_State *tolua_S)
     tolua_beginmodule(tolua_S, "ProgramState");
     if (lua_istable(tolua_S, -1))
     {
-        tolua_function(tolua_S, "setUniformInt", lua_cocos2dx_ProgramState_setUniform_numeric<int>);
-        tolua_function(tolua_S, "setUniformFloat", lua_cocos2dx_ProgramState_setUniform_numeric<float>);
-        tolua_function(tolua_S, "setUniformVec2", lua_cocos2dx_ProgramState_setUniform_luatype<cocos2d::Vec2, luaval_to_vec2>);
-        tolua_function(tolua_S, "setUniformVec3", lua_cocos2dx_ProgramState_setUniform_luatype<cocos2d::Vec3, luaval_to_vec3>);
-        tolua_function(tolua_S, "setUniformVec4", lua_cocos2dx_ProgramState_setUniform_luatype<cocos2d::Vec4, luaval_to_vec4>);
-        tolua_function(tolua_S, "setUniformMat4", lua_cocos2dx_ProgramState_setUniform_luatype<cocos2d::Mat4, luaval_to_mat4>);
+        tolua_function(tolua_S, "setUniform", lua_cocos2dx_ProgramState_setUniform);
     }
     tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
@@ -8331,6 +8286,125 @@ int register_all_cocos2dx_shaders_manual(lua_State *tolua_S)
         set_lua_field(CC3D_skybox_vert);
         set_lua_field(CC3D_terrain_frag);
         set_lua_field(CC3D_terrain_vert);
+    tolua_endmodule(tolua_S);
+    return 0;
+}
+template<typename T, bool IS_TABLE, void *C>
+int tolua_cocos2d_bytearray_template(lua_State *L)
+{
+    typedef bool(*convert_func) (lua_State *, int, T*, const char *);
+    convert_func converter = (convert_func)C;
+
+    bool ok = true;
+    int argc = lua_gettop(L);
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    if (argc == 1)
+    {
+#if COCOS2D_DEBUG >= 1
+
+        if (IS_TABLE && !tolua_istable(L, 1, 0, &tolua_err))
+            goto tolua_lerror;
+        else
+#endif
+        {
+            T arg;
+            ok &= converter(L, 1, &arg, "tolua_cocos2d_bytearray_template");
+            if (!ok)
+                return 0;
+
+            lua_pop(L, 1);
+            lua_newtable(L);
+            uint8_t *bytes = (uint8_t*)&arg;
+            for (auto idx = 0; idx < sizeof(arg); idx++)
+            {
+                lua_pushnumber(L, bytes[idx]);
+                lua_rawseti(L, 1, idx + 1);
+            }
+            return 1;
+        }
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+                tolua_error(L, "#ferror in function 'tolua_cocos2d_bytearray_template'.", &tolua_err);
+                return 0;
+#endif
+}
+
+template<typename E, void *C>
+int tolua_cocos2d_bytearray_elev(lua_State *L)
+{
+    typedef bool(*convert_func) (lua_State *, int, E*, const char *);
+    convert_func elementConverter = (convert_func)C;
+
+    bool ok = true;
+    int argc = lua_gettop(L);
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    if (argc == 1)
+    {
+#if COCOS2D_DEBUG >= 1
+
+        if (!tolua_istable(L, 1, 0, &tolua_err))
+            goto tolua_lerror;
+        else
+#endif
+        {
+            int size = lua_objlen(L, 1);
+            std::vector<uint8_t> arg(size * sizeof(E));
+
+            E e;
+            E *p = (E*)arg.data();
+
+            for (auto idx = 0; idx < size; idx++)
+            {
+                lua_rawgeti(L, 1, idx + 1);
+                elementConverter(L, -1, &e, "tolua_cocos2d_bytearray_elev");
+                p[idx] = e;
+                lua_pop(L, 1);
+            }
+            lua_pop(L, 1);
+            lua_newtable(L);
+            for (auto idx = 0; idx < arg.size(); idx++)
+            {
+                lua_pushnumber(L, arg[idx]);
+                lua_rawseti(L, 1, idx + 1);
+            }
+            return 1;
+        }
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+                tolua_error(L, "#ferror in function 'tolua_cocos2d_bytearray_elev'.", &tolua_err);
+                return 0;
+#endif
+}
+
+
+int register_all_cocos2dx_bytearray_manual(lua_State *tolua_S)
+{
+    if (nullptr == tolua_S)
+        return 0;
+
+    tolua_module(tolua_S, "cc", 0);
+    tolua_beginmodule(tolua_S, "cc");
+    tolua_module(tolua_S, "bytearray",0);
+    tolua_beginmodule(tolua_S, "bytearray");
+        tolua_function(tolua_S, "from_vec2", tolua_cocos2d_bytearray_template<cocos2d::Vec2, true, luaval_to_vec2>);
+        tolua_function(tolua_S, "from_vec3", tolua_cocos2d_bytearray_template<cocos2d::Vec3, true, luaval_to_vec3>);
+        tolua_function(tolua_S, "from_vec4", tolua_cocos2d_bytearray_template<cocos2d::Vec4, true, luaval_to_vec4>);
+        tolua_function(tolua_S, "from_mat4", tolua_cocos2d_bytearray_template<cocos2d::Mat4, true, luaval_to_mat4>);
+        tolua_function(tolua_S, "from_int", tolua_cocos2d_bytearray_template<int, false, luaval_to_int32>);
+        tolua_function(tolua_S, "from_float", tolua_cocos2d_bytearray_template<float, false, luaval_to_float>);
+        tolua_function(tolua_S, "from_intv", tolua_cocos2d_bytearray_elev<int, luaval_to_int32>);
+        tolua_function(tolua_S, "from_floatv", tolua_cocos2d_bytearray_elev<float, luaval_to_float>);
+    tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
     return 0;
 }
