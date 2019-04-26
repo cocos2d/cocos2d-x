@@ -27,13 +27,23 @@ function do_retry()
 	done
 }
 
+function run_clang_tidy()
+{
+    echo "Building tests ..."
+    # cd into build directory
+    cd $1
+    cp $COCOS2DX_ROOT/tools/travis-scripts/run-clang-tidy.py .
+    python run-clang-tidy.py -header-filter='.*' -checks='-*,performance-faster-string-find,performance-for-range-copy' -warnings-as-errors='*'
+}
+
 function build_linux()
 {
     echo "Building tests ..."
     cd $COCOS2DX_ROOT/build
     mkdir -p linux-build
     cd linux-build
-    cmake ../..
+    cmake ../.. -DCMAKE_EXPORT_COMPILE_COMMANDS=on
+    run_clang_tidy $PWD
     cmake --build .
 }
 
