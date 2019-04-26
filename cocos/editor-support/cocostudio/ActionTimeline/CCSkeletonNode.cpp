@@ -63,12 +63,12 @@ bool SkeletonNode::init()
     auto iter = attributeInfo.find("a_position");
     if(iter != attributeInfo.end())
     {
-        vertexLayout.setAtrribute("a_position", iter->second.location, cocos2d::backend::VertexFormat::FLOAT3, 0, false);
+        vertexLayout.setAttribute("a_position", iter->second.location, cocos2d::backend::VertexFormat::FLOAT3, 0, false);
     }
     iter = attributeInfo.find("a_color");
     if(iter != attributeInfo.end())
     {
-        vertexLayout.setAtrribute("a_color", iter->second.location, cocos2d::backend::VertexFormat::FLOAT4, 3 * sizeof(float), false);
+        vertexLayout.setAttribute("a_color", iter->second.location, cocos2d::backend::VertexFormat::FLOAT4, 3 * sizeof(float), false);
     }
     vertexLayout.setLayout(7 * sizeof(float), cocos2d::backend::VertexStepMode::VERTEX);
 

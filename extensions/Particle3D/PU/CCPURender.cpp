@@ -608,17 +608,17 @@ bool PUParticle3DEntityRender::initRender( const std::string &texFile )
     auto iter = attributeInfo.find("a_position");
     if(iter != attributeInfo.end())
     {
-        layout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, offsetof(VertexInfo, position), false);
+        layout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, offsetof(VertexInfo, position), false);
     }
     iter = attributeInfo.find("a_texCoord");
     if(iter != attributeInfo.end())
     {
-        layout.setAtrribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(VertexInfo, uv), false);
+        layout.setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(VertexInfo, uv), false);
     }
     iter = attributeInfo.find("a_color");
     if(iter != attributeInfo.end())
     {
-        layout.setAtrribute("a_color", iter->second.location, backend::VertexFormat::FLOAT4, offsetof(VertexInfo, color), false);
+        layout.setAttribute("a_color", iter->second.location, backend::VertexFormat::FLOAT4, offsetof(VertexInfo, color), false);
     }
     layout.setLayout(sizeof(VertexInfo), backend::VertexStepMode::VERTEX);
 

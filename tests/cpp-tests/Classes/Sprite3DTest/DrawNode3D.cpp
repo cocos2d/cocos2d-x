@@ -93,12 +93,12 @@ bool DrawNode3D::init()
     auto iter = attributeInfo.find("a_position");
     if(iter != attributeInfo.end())
     {
-        layout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
+        layout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
     }
     iter = attributeInfo.find("a_color");
     if(iter != attributeInfo.end())
     {
-        layout.setAtrribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, sizeof(Vec3), true);
+        layout.setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, sizeof(Vec3), true);
     }
     layout.setLayout(sizeof(V3F_C4B), backend::VertexStepMode::VERTEX);
     

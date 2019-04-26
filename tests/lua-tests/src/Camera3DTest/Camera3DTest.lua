@@ -703,14 +703,17 @@ function FogTestDemo:createLayer3D()
     self:addChild(layer3D,0)
     self._layer3D = layer3D
 
-    self._shader = cc.GLProgram:createWithFilenames("Sprite3DTest/fog.vert","Sprite3DTest/fog.frag")
-    self._state  = cc.GLProgramState:create(self._shader)
+    local vertexShader = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/fog.vert")
+    local fragmentShader = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/fog.frag")
+
+    self._shader1 = ccbackend.ProgramState:new(vertexShader, fragmentShader)
+    self._shader2 = self._shader1:clone()
 
     self._sprite3D1 = cc.Sprite3D:create("Sprite3DTest/teapot.c3b")
     self._sprite3D2 = cc.Sprite3D:create("Sprite3DTest/teapot.c3b")
 
-    self._sprite3D1:setGLProgramState(self._state)
-    self._sprite3D2:setGLProgramState(self._state)
+    self._sprite3D1:setProgramState(self._shader1)
+    self._sprite3D2:setProgramState(self._shader2)
 
     --pass mesh's attribute to shader
     local attributeNames = 
@@ -725,37 +728,40 @@ function FogTestDemo:createLayer3D()
         "a_blendWeight",
         "a_blendIndex",
     }
-
+    ---- update vertex layout of sprite3d -1
     local offset = 0 
     local attributeCount = self._sprite3D1:getMesh():getMeshVertexAttribCount()
+    local vertexLayout = ccbackend.VertexLayout:new()
     for i = 1, attributeCount do
         local meshattribute = self._sprite3D1:getMesh():getMeshVertexAttribute(i - 1)
-        self._state:setVertexAttribPointer(attributeNames[meshattribute.vertexAttrib + 1],
-            meshattribute.size, 
-            meshattribute.type,
-            false,
-            self._sprite3D1:getMesh():getVertexSizeInBytes(),
-            offset)
+        vertexLayout:setAttribute(attributeNames[meshattribute.vertexAttrib+1], i, meshattribute.type, offset, false)        
         offset = offset + meshattribute.attribSizeBytes
     end
-
+    
+    vertexLayout:setLayout(offset, ccbackend.VertexStepMode.VERTEX)
+    self._sprite3D1:setVertexLayout(vertexLayout)
+    
+    ---- update vertex layout of sprite3d -2 
     local offset1 = 0
     local attributeCount1 = self._sprite3D2:getMesh():getMeshVertexAttribCount()
+    local vertexLayout2 = ccbackend.VertexLayout:new()
     for i = 1,  attributeCount1 do
         local meshattribute = self._sprite3D2:getMesh():getMeshVertexAttribute(i - 1)
-        self._state:setVertexAttribPointer(attributeNames[meshattribute.vertexAttrib + 1],
-            meshattribute.size, 
-            meshattribute.type,
-            false,
-            self._sprite3D2:getMesh():getVertexSizeInBytes(),
-            offset1)
+        vertexLayout:setAttribute(attributeNames[meshattribute.vertexAttrib+1], i, meshattribute.type, offset1, false)        
         offset1 = offset1 + meshattribute.attribSizeBytes
     end
+    vertexLayout2:setLayout(offset1, ccbackend.VertexStepMode.VERTEX)
+    self._sprite3D2:setVertexLayout(vertexLayout2)
 
-    self._state:setUniformVec4("u_fogColor", cc.vec4(0.5,0.5,0.5,1.0))
-    self._state:setUniformFloat("u_fogStart",10)
-    self._state:setUniformFloat("u_fogEnd",60)
-    self._state:setUniformInt("u_fogEquation" ,0)
+    self._shader1:setUniformVec4("u_fogColor", cc.vec4(0.5,0.5,0.5,1.0))
+    self._shader1:setUniformFloat("u_fogStart",10)
+    self._shader1:setUniformFloat("u_fogEnd",60)
+    self._shader1:setUniformInt("u_fogEquation" ,0)
+
+    self._shader2:setUniformVec4("u_fogColor", cc.vec4(0.5,0.5,0.5,1.0))
+    self._shader2:setUniformFloat("u_fogStart",10)
+    self._shader2:setUniformFloat("u_fogEnd",60)
+    self._shader2:setUniformInt("u_fogEquation" ,0)
 
     self._layer3D:addChild(self._sprite3D1)
     self._sprite3D1:setPosition3D( cc.vec3( 0, 0,0 ) )

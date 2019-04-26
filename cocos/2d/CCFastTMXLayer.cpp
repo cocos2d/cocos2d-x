@@ -423,17 +423,17 @@ void TMXLayer::updatePrimitives()
             auto iterAttribute = attributeInfo.find("a_position");
             if(iterAttribute != attributeInfo.end())
             {
-                vertexLayout.setAtrribute("a_position", iterAttribute->second.location, backend::VertexFormat::FLOAT3, 0, false);
+                vertexLayout.setAttribute("a_position", iterAttribute->second.location, backend::VertexFormat::FLOAT3, 0, false);
             }
             iterAttribute = attributeInfo.find("a_texCoord");
             if(iterAttribute != attributeInfo.end())
             {
-                vertexLayout.setAtrribute("a_texCoord", iterAttribute->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
+                vertexLayout.setAttribute("a_texCoord", iterAttribute->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
             }
             iterAttribute = attributeInfo.find("a_color");
             if(iterAttribute != attributeInfo.end())
             {
-                vertexLayout.setAtrribute("a_color", iterAttribute->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
+                vertexLayout.setAttribute("a_color", iterAttribute->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
             }
             vertexLayout.setLayout(sizeof(V3F_C4B_T2F), backend::VertexStepMode::VERTEX);
             _mvpMatrixLocaiton = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");

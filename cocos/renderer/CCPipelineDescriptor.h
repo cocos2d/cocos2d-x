@@ -40,26 +40,6 @@ class CC_DLL PipelineDescriptor final
 public:
     PipelineDescriptor() = default;
 
-    inline backend::ProgramState* getProgramState() { return programState; }
-    inline void setProgramState(backend::ProgramState *p) { programState = p; }
-
-    inline backend::VertexLayout* getVertexLayout() { return &vertexLayout; }
-    inline void setVertexLayout(const backend::VertexLayout *layout)
-    {
-        if (layout != &vertexLayout) {
-            vertexLayout = *layout;
-        }
-    }
-
-    inline backend::BlendDescriptor *getBlendDescriptor() { return &blendDescriptor; }
-    inline void setBlendDescriptor(const backend::BlendDescriptor *b)
-    {
-        if (b != &blendDescriptor)
-        {
-            blendDescriptor = *b;
-        }
-    }
-
     backend::ProgramState*          programState = nullptr;
     backend::BlendDescriptor        blendDescriptor;
     backend::RenderPassDescriptor   renderPassDescriptor;

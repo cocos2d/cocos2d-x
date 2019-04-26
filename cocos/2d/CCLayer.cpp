@@ -296,12 +296,12 @@ LayerColor::LayerColor()
     auto iter = attributeInfo.find("a_position");
     if(iter != attributeInfo.end())
     {
-        vertexLayout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
+        vertexLayout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
     }
     iter = attributeInfo.find("a_color");
     if(iter != attributeInfo.end())
     {
-        vertexLayout.setAtrribute("a_color", iter->second.location, backend::VertexFormat::FLOAT4, sizeof(_vertexData[0].vertices), false);
+        vertexLayout.setAttribute("a_color", iter->second.location, backend::VertexFormat::FLOAT4, sizeof(_vertexData[0].vertices), false);
     }
     vertexLayout.setLayout(sizeof(_vertexData[0]), backend::VertexStepMode::VERTEX);
     
@@ -719,7 +719,7 @@ LayerRadialGradient::LayerRadialGradient()
     auto iter = attributeInfo.find("a_position");
     if(iter != attributeInfo.end())
     {
-        vertexLayout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
+        vertexLayout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
     }
     vertexLayout.setLayout(sizeof(_vertices[0]), backend::VertexStepMode::VERTEX);
 

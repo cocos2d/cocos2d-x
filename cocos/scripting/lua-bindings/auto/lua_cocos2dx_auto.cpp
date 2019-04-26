@@ -1720,7 +1720,7 @@ int lua_cocos2dx_Texture2D_getBackendTexture(lua_State* tolua_S)
             return 0;
         }
         cocos2d::backend::Texture* ret = cobj->getBackendTexture();
-        object_to_luaval<cocos2d::backend::Texture>(tolua_S, "ccbakend.Texture",(cocos2d::backend::Texture*)ret);
+        object_to_luaval<cocos2d::backend::Texture>(tolua_S, "ccbackend.Texture",(cocos2d::backend::Texture*)ret);
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Texture2D:getBackendTexture",argc, 0);
@@ -1904,7 +1904,7 @@ int lua_cocos2dx_Texture2D_initWithBackendTexture(lua_State* tolua_S)
     {
         cocos2d::backend::Texture* arg0;
 
-        ok &= luaval_to_object<cocos2d::backend::Texture>(tolua_S, 2, "ccbakend.Texture",&arg0, "cc.Texture2D:initWithBackendTexture");
+        ok &= luaval_to_object<cocos2d::backend::Texture>(tolua_S, 2, "ccbackend.Texture",&arg0, "cc.Texture2D:initWithBackendTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Texture2D_initWithBackendTexture'", nullptr);
@@ -19614,7 +19614,7 @@ int lua_cocos2dx_ShaderCache_removeUnusedShader(lua_State* tolua_S)
 
 
 #if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"ccbakend.ShaderCache",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(tolua_S,1,"ccbackend.ShaderCache",0,&tolua_err)) goto tolua_lerror;
 #endif
 
     cobj = (cocos2d::backend::ShaderCache*)tolua_tousertype(tolua_S,1,0);
@@ -19639,7 +19639,7 @@ int lua_cocos2dx_ShaderCache_removeUnusedShader(lua_State* tolua_S)
         lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccbakend.ShaderCache:removeUnusedShader",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccbackend.ShaderCache:removeUnusedShader",argc, 0);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -19659,7 +19659,7 @@ int lua_cocos2dx_ShaderCache_destroyInstance(lua_State* tolua_S)
 #endif
 
 #if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"ccbakend.ShaderCache",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertable(tolua_S,1,"ccbackend.ShaderCache",0,&tolua_err)) goto tolua_lerror;
 #endif
 
     argc = lua_gettop(tolua_S) - 1;
@@ -19675,7 +19675,7 @@ int lua_cocos2dx_ShaderCache_destroyInstance(lua_State* tolua_S)
         lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccbakend.ShaderCache:destroyInstance",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccbackend.ShaderCache:destroyInstance",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -19693,7 +19693,7 @@ int lua_cocos2dx_ShaderCache_newVertexShaderModule(lua_State* tolua_S)
 #endif
 
 #if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"ccbakend.ShaderCache",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertable(tolua_S,1,"ccbackend.ShaderCache",0,&tolua_err)) goto tolua_lerror;
 #endif
 
     argc = lua_gettop(tolua_S) - 1;
@@ -19701,17 +19701,17 @@ int lua_cocos2dx_ShaderCache_newVertexShaderModule(lua_State* tolua_S)
     if (argc == 1)
     {
         std::string arg0;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccbakend.ShaderCache:newVertexShaderModule");
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccbackend.ShaderCache:newVertexShaderModule");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ShaderCache_newVertexShaderModule'", nullptr);
             return 0;
         }
         cocos2d::backend::ShaderModule* ret = cocos2d::backend::ShaderCache::newVertexShaderModule(arg0);
-        object_to_luaval<cocos2d::backend::ShaderModule>(tolua_S, "ccbakend.ShaderModule",(cocos2d::backend::ShaderModule*)ret);
+        object_to_luaval<cocos2d::backend::ShaderModule>(tolua_S, "ccbackend.ShaderModule",(cocos2d::backend::ShaderModule*)ret);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccbakend.ShaderCache:newVertexShaderModule",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccbackend.ShaderCache:newVertexShaderModule",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -19729,7 +19729,7 @@ int lua_cocos2dx_ShaderCache_newFragmentShaderModule(lua_State* tolua_S)
 #endif
 
 #if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"ccbakend.ShaderCache",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertable(tolua_S,1,"ccbackend.ShaderCache",0,&tolua_err)) goto tolua_lerror;
 #endif
 
     argc = lua_gettop(tolua_S) - 1;
@@ -19737,17 +19737,17 @@ int lua_cocos2dx_ShaderCache_newFragmentShaderModule(lua_State* tolua_S)
     if (argc == 1)
     {
         std::string arg0;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccbakend.ShaderCache:newFragmentShaderModule");
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccbackend.ShaderCache:newFragmentShaderModule");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ShaderCache_newFragmentShaderModule'", nullptr);
             return 0;
         }
         cocos2d::backend::ShaderModule* ret = cocos2d::backend::ShaderCache::newFragmentShaderModule(arg0);
-        object_to_luaval<cocos2d::backend::ShaderModule>(tolua_S, "ccbakend.ShaderModule",(cocos2d::backend::ShaderModule*)ret);
+        object_to_luaval<cocos2d::backend::ShaderModule>(tolua_S, "ccbackend.ShaderModule",(cocos2d::backend::ShaderModule*)ret);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccbakend.ShaderCache:newFragmentShaderModule",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccbackend.ShaderCache:newFragmentShaderModule",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -19765,7 +19765,7 @@ int lua_cocos2dx_ShaderCache_getInstance(lua_State* tolua_S)
 #endif
 
 #if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"ccbakend.ShaderCache",0,&tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertable(tolua_S,1,"ccbackend.ShaderCache",0,&tolua_err)) goto tolua_lerror;
 #endif
 
     argc = lua_gettop(tolua_S) - 1;
@@ -19778,10 +19778,10 @@ int lua_cocos2dx_ShaderCache_getInstance(lua_State* tolua_S)
             return 0;
         }
         cocos2d::backend::ShaderCache* ret = cocos2d::backend::ShaderCache::getInstance();
-        object_to_luaval<cocos2d::backend::ShaderCache>(tolua_S, "ccbakend.ShaderCache",(cocos2d::backend::ShaderCache*)ret);
+        object_to_luaval<cocos2d::backend::ShaderCache>(tolua_S, "ccbackend.ShaderCache",(cocos2d::backend::ShaderCache*)ret);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccbakend.ShaderCache:getInstance",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccbackend.ShaderCache:getInstance",argc, 0);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
@@ -19797,8 +19797,8 @@ static int lua_cocos2dx_ShaderCache_finalize(lua_State* tolua_S)
 
 int lua_register_cocos2dx_ShaderCache(lua_State* tolua_S)
 {
-    tolua_usertype(tolua_S,"ccbakend.ShaderCache");
-    tolua_cclass(tolua_S,"ShaderCache","ccbakend.ShaderCache","cc.Ref",nullptr);
+    tolua_usertype(tolua_S,"ccbackend.ShaderCache");
+    tolua_cclass(tolua_S,"ShaderCache","ccbackend.ShaderCache","cc.Ref",nullptr);
 
     tolua_beginmodule(tolua_S,"ShaderCache");
         tolua_function(tolua_S,"removeUnusedShader",lua_cocos2dx_ShaderCache_removeUnusedShader);
@@ -19808,303 +19808,11 @@ int lua_register_cocos2dx_ShaderCache(lua_State* tolua_S)
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_ShaderCache_getInstance);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::backend::ShaderCache).name();
-    g_luaType[typeName] = "ccbakend.ShaderCache";
-    g_typeCast["ShaderCache"] = "ccbakend.ShaderCache";
+    g_luaType[typeName] = "ccbackend.ShaderCache";
+    g_typeCast["ShaderCache"] = "ccbackend.ShaderCache";
     return 1;
 }
 
-int lua_cocos2dx_PipelineDescriptor_getVertexLayout(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::PipelineDescriptor* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.PipelineDescriptor",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::PipelineDescriptor*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_PipelineDescriptor_getVertexLayout'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_PipelineDescriptor_getVertexLayout'", nullptr);
-            return 0;
-        }
-        cocos2d::backend::VertexLayout* ret = cobj->getVertexLayout();
-        object_to_luaval<cocos2d::backend::VertexLayout>(tolua_S, "ccbakend.VertexLayout",(cocos2d::backend::VertexLayout*)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PipelineDescriptor:getVertexLayout",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_PipelineDescriptor_getVertexLayout'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_PipelineDescriptor_getBlendDescriptor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::PipelineDescriptor* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.PipelineDescriptor",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::PipelineDescriptor*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_PipelineDescriptor_getBlendDescriptor'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_PipelineDescriptor_getBlendDescriptor'", nullptr);
-            return 0;
-        }
-        cocos2d::backend::BlendDescriptor* ret = cobj->getBlendDescriptor();
-        #pragma warning NO CONVERSION FROM NATIVE FOR BlendDescriptor*;
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PipelineDescriptor:getBlendDescriptor",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_PipelineDescriptor_getBlendDescriptor'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_PipelineDescriptor_setBlendDescriptor(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::PipelineDescriptor* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.PipelineDescriptor",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::PipelineDescriptor*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_PipelineDescriptor_setBlendDescriptor'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        const cocos2d::backend::BlendDescriptor* arg0;
-
-        #pragma warning NO CONVERSION TO NATIVE FOR BlendDescriptor*
-		ok = false;
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_PipelineDescriptor_setBlendDescriptor'", nullptr);
-            return 0;
-        }
-        cobj->setBlendDescriptor(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PipelineDescriptor:setBlendDescriptor",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_PipelineDescriptor_setBlendDescriptor'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_PipelineDescriptor_getProgramState(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::PipelineDescriptor* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.PipelineDescriptor",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::PipelineDescriptor*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_PipelineDescriptor_getProgramState'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
-    {
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_PipelineDescriptor_getProgramState'", nullptr);
-            return 0;
-        }
-        cocos2d::backend::ProgramState* ret = cobj->getProgramState();
-        object_to_luaval<cocos2d::backend::ProgramState>(tolua_S, "ccbakend.ProgramState",(cocos2d::backend::ProgramState*)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PipelineDescriptor:getProgramState",argc, 0);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_PipelineDescriptor_getProgramState'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_PipelineDescriptor_setProgramState(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::PipelineDescriptor* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.PipelineDescriptor",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::PipelineDescriptor*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_PipelineDescriptor_setProgramState'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        cocos2d::backend::ProgramState* arg0;
-
-        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 2, "ccbakend.ProgramState",&arg0, "cc.PipelineDescriptor:setProgramState");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_PipelineDescriptor_setProgramState'", nullptr);
-            return 0;
-        }
-        cobj->setProgramState(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PipelineDescriptor:setProgramState",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_PipelineDescriptor_setProgramState'.",&tolua_err);
-#endif
-
-    return 0;
-}
-int lua_cocos2dx_PipelineDescriptor_setVertexLayout(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::PipelineDescriptor* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.PipelineDescriptor",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::PipelineDescriptor*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_PipelineDescriptor_setVertexLayout'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        const cocos2d::backend::VertexLayout* arg0;
-
-        ok &= luaval_to_object<const cocos2d::backend::VertexLayout>(tolua_S, 2, "ccbakend.VertexLayout",&arg0, "cc.PipelineDescriptor:setVertexLayout");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_PipelineDescriptor_setVertexLayout'", nullptr);
-            return 0;
-        }
-        cobj->setVertexLayout(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PipelineDescriptor:setVertexLayout",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_PipelineDescriptor_setVertexLayout'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_PipelineDescriptor_constructor(lua_State* tolua_S)
 {
     int argc = 0;
@@ -20153,12 +19861,6 @@ int lua_register_cocos2dx_PipelineDescriptor(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"PipelineDescriptor");
         tolua_function(tolua_S,"new",lua_cocos2dx_PipelineDescriptor_constructor);
-        tolua_function(tolua_S,"getVertexLayout",lua_cocos2dx_PipelineDescriptor_getVertexLayout);
-        tolua_function(tolua_S,"getBlendDescriptor",lua_cocos2dx_PipelineDescriptor_getBlendDescriptor);
-        tolua_function(tolua_S,"setBlendDescriptor",lua_cocos2dx_PipelineDescriptor_setBlendDescriptor);
-        tolua_function(tolua_S,"getProgramState",lua_cocos2dx_PipelineDescriptor_getProgramState);
-        tolua_function(tolua_S,"setProgramState",lua_cocos2dx_PipelineDescriptor_setProgramState);
-        tolua_function(tolua_S,"setVertexLayout",lua_cocos2dx_PipelineDescriptor_setVertexLayout);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::PipelineDescriptor).name();
     g_luaType[typeName] = "cc.PipelineDescriptor";
@@ -52807,7 +52509,7 @@ int lua_cocos2dx_Label_setProgramState(lua_State* tolua_S)
     {
         cocos2d::backend::ProgramState* arg0;
 
-        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 2, "ccbakend.ProgramState",&arg0, "cc.Label:setProgramState");
+        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 2, "ccbackend.ProgramState",&arg0, "cc.Label:setProgramState");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Label_setProgramState'", nullptr);
@@ -74328,7 +74030,7 @@ int lua_cocos2dx_Sprite_setProgramState(lua_State* tolua_S)
     {
         cocos2d::backend::ProgramState* arg0;
 
-        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 2, "ccbakend.ProgramState",&arg0, "cc.Sprite:setProgramState");
+        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 2, "ccbackend.ProgramState",&arg0, "cc.Sprite:setProgramState");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Sprite_setProgramState'", nullptr);
@@ -75415,7 +75117,7 @@ int lua_cocos2dx_Sprite_getProgramState(lua_State* tolua_S)
             return 0;
         }
         cocos2d::backend::ProgramState* ret = cobj->getProgramState();
-        object_to_luaval<cocos2d::backend::ProgramState>(tolua_S, "ccbakend.ProgramState",(cocos2d::backend::ProgramState*)ret);
+        object_to_luaval<cocos2d::backend::ProgramState>(tolua_S, "ccbackend.ProgramState",(cocos2d::backend::ProgramState*)ret);
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Sprite:getProgramState",argc, 0);
@@ -88859,7 +88561,7 @@ int lua_cocos2dx_Technique_createWithProgramState(lua_State* tolua_S)
         cocos2d::Material* arg0;
         cocos2d::backend::ProgramState* arg1;
         ok &= luaval_to_object<cocos2d::Material>(tolua_S, 2, "cc.Material",&arg0, "cc.Technique:createWithProgramState");
-        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 3, "ccbakend.ProgramState",&arg1, "cc.Technique:createWithProgramState");
+        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 3, "ccbackend.ProgramState",&arg1, "cc.Technique:createWithProgramState");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Technique_createWithProgramState'", nullptr);
@@ -89029,9 +88731,9 @@ int lua_cocos2dx_Material_draw(lua_State* tolua_S)
 
         ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.Material:draw");
 
-        ok &= luaval_to_object<cocos2d::backend::Buffer>(tolua_S, 4, "ccbakend.Buffer",&arg2, "cc.Material:draw");
+        ok &= luaval_to_object<cocos2d::backend::Buffer>(tolua_S, 4, "ccbackend.Buffer",&arg2, "cc.Material:draw");
 
-        ok &= luaval_to_object<cocos2d::backend::Buffer>(tolua_S, 5, "ccbakend.Buffer",&arg3, "cc.Material:draw");
+        ok &= luaval_to_object<cocos2d::backend::Buffer>(tolua_S, 5, "ccbackend.Buffer",&arg3, "cc.Material:draw");
 
         ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4, "cc.Material:draw");
 
@@ -89634,7 +89336,7 @@ int lua_cocos2dx_Material_createWithProgramState(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::backend::ProgramState* arg0;
-        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 2, "ccbakend.ProgramState",&arg0, "cc.Material:createWithProgramState");
+        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 2, "ccbackend.ProgramState",&arg0, "cc.Material:createWithProgramState");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Material_createWithProgramState'", nullptr);
@@ -90292,9 +89994,9 @@ int lua_cocos2dx_Pass_draw(lua_State* tolua_S)
 
         ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.Pass:draw");
 
-        ok &= luaval_to_object<cocos2d::backend::Buffer>(tolua_S, 4, "ccbakend.Buffer",&arg2, "cc.Pass:draw");
+        ok &= luaval_to_object<cocos2d::backend::Buffer>(tolua_S, 4, "ccbackend.Buffer",&arg2, "cc.Pass:draw");
 
-        ok &= luaval_to_object<cocos2d::backend::Buffer>(tolua_S, 5, "ccbakend.Buffer",&arg3, "cc.Pass:draw");
+        ok &= luaval_to_object<cocos2d::backend::Buffer>(tolua_S, 5, "ccbackend.Buffer",&arg3, "cc.Pass:draw");
 
         ok &= luaval_to_int32(tolua_S, 6,(int *)&arg4, "cc.Pass:draw");
 
@@ -90409,7 +90111,7 @@ int lua_cocos2dx_Pass_setUniformNormTexture(lua_State* tolua_S)
 
         ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.Pass:setUniformNormTexture");
 
-        ok &= luaval_to_object<cocos2d::backend::Texture>(tolua_S, 3, "ccbakend.Texture",&arg1, "cc.Pass:setUniformNormTexture");
+        ok &= luaval_to_object<cocos2d::backend::Texture>(tolua_S, 3, "ccbackend.Texture",&arg1, "cc.Pass:setUniformNormTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Pass_setUniformNormTexture'", nullptr);
@@ -90567,7 +90269,7 @@ int lua_cocos2dx_Pass_getProgramState(lua_State* tolua_S)
             return 0;
         }
         cocos2d::backend::ProgramState* ret = cobj->getProgramState();
-        object_to_luaval<cocos2d::backend::ProgramState>(tolua_S, "ccbakend.ProgramState",(cocos2d::backend::ProgramState*)ret);
+        object_to_luaval<cocos2d::backend::ProgramState>(tolua_S, "ccbackend.ProgramState",(cocos2d::backend::ProgramState*)ret);
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Pass:getProgramState",argc, 0);
@@ -90879,7 +90581,7 @@ int lua_cocos2dx_Pass_setUniformTexture(lua_State* tolua_S)
 
         ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.Pass:setUniformTexture");
 
-        ok &= luaval_to_object<cocos2d::backend::Texture>(tolua_S, 3, "ccbakend.Texture",&arg1, "cc.Pass:setUniformTexture");
+        ok &= luaval_to_object<cocos2d::backend::Texture>(tolua_S, 3, "ccbackend.Texture",&arg1, "cc.Pass:setUniformTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Pass_setUniformTexture'", nullptr);
@@ -91027,7 +90729,7 @@ int lua_cocos2dx_Pass_createWithProgramState(lua_State* tolua_S)
         cocos2d::Technique* arg0;
         cocos2d::backend::ProgramState* arg1;
         ok &= luaval_to_object<cocos2d::Technique>(tolua_S, 2, "cc.Technique",&arg0, "cc.Pass:createWithProgramState");
-        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 3, "ccbakend.ProgramState",&arg1, "cc.Pass:createWithProgramState");
+        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 3, "ccbackend.ProgramState",&arg1, "cc.Pass:createWithProgramState");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Pass_createWithProgramState'", nullptr);

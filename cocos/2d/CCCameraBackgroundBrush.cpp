@@ -134,17 +134,17 @@ bool CameraBackgroundDepthBrush::init()
     auto iter = attributeInfo.find("a_position");
     if(iter != attributeInfo.end())
     {
-        layout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, offsetof(V3F_C4B_T2F, vertices), false);
+        layout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, offsetof(V3F_C4B_T2F, vertices), false);
     }
     iter = attributeInfo.find("a_color");
     if(iter != attributeInfo.end())
     {
-        layout.setAtrribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
+        layout.setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
     }
     iter = attributeInfo.find("a_texCoord");
     if(iter != attributeInfo.end())
     {
-        layout.setAtrribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), true);
+        layout.setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), true);
     }
     layout.setLayout(sizeof(_vertices[0]), backend::VertexStepMode::VERTEX);
 
@@ -421,7 +421,7 @@ bool CameraBackgroundSkyBoxBrush::init()
     // disable blend
     pipelineDescriptor.blendDescriptor.blendEnabled     = false;
 
-    layout.setAtrribute(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, 0, backend::VertexFormat::FLOAT3, 0, false);
+    layout.setAttribute(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, 0, backend::VertexFormat::FLOAT3, 0, false);
     layout.setLayout(sizeof(Vec3), backend::VertexStepMode::VERTEX);
 
     initBuffer();

@@ -116,7 +116,7 @@ bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag
     
     // init custom command
     auto &layout = _customCommand.getPipelineDescriptor().vertexLayout;
-    layout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT2, 0, false);
+    layout.setAttribute("a_position", 0, backend::VertexFormat::FLOAT2, 0, false);
 
     float w = SIZE_X, h = SIZE_Y;
     Vec2 vertices[6] = { Vec2(0,0), Vec2(w,0), Vec2(w,h), Vec2(0,0), Vec2(0,h), Vec2(w,h) };

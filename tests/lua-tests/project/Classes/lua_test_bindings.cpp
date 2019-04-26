@@ -166,12 +166,12 @@ bool DrawNode3D::init()
     const auto &attributeInfo = _programState->getProgram()->getActiveAttributes();
     auto iter = attributeInfo.find("a_position");
     if (iter != attributeInfo.end()) {
-        layout.setAtrribute(iter->first, iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
+        layout.setAttribute(iter->first, iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
     }
     iter = attributeInfo.find("a_color");
     if (iter != attributeInfo.end())
     {
-        layout.setAtrribute(iter->first, iter->second.location, backend::VertexFormat::UBYTE4, sizeof(Vec3), true);
+        layout.setAttribute(iter->first, iter->second.location, backend::VertexFormat::UBYTE4, sizeof(Vec3), true);
     }
     layout.setLayout(sizeof(V3F_C4B), backend::VertexStepMode::VERTEX);
 

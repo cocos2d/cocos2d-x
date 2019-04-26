@@ -806,17 +806,17 @@ void Terrain::cacheUniformAttribLocation()
     auto iter = attributeInfo.find("a_position");
     if(iter != attributeInfo.end())
     {
-        _vertexLayout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
+        _vertexLayout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
     }
     iter = attributeInfo.find("a_texCoord");
     if(iter != attributeInfo.end())
     {
-        _vertexLayout.setAtrribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(TerrainVertexData, _texcoord), false);
+        _vertexLayout.setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(TerrainVertexData, _texcoord), false);
     }
     iter = attributeInfo.find("a_normal");
     if(iter != attributeInfo.end())
     {
-        _vertexLayout.setAtrribute("a_normal", iter->second.location, backend::VertexFormat::FLOAT3, offsetof(TerrainVertexData, _normal), false);
+        _vertexLayout.setAttribute("a_normal", iter->second.location, backend::VertexFormat::FLOAT3, offsetof(TerrainVertexData, _normal), false);
     }
     _vertexLayout.setLayout(sizeof(TerrainVertexData), backend::VertexStepMode::VERTEX);
 

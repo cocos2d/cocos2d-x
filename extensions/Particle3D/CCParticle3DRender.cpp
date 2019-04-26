@@ -210,17 +210,17 @@ bool Particle3DQuadRender::initQuadRender( const std::string& texFile )
     auto iter = attributeInfo.find("a_position");
     if(iter != attributeInfo.end())
     {
-        layout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, offsetof(posuvcolor, position), false);
+        layout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, offsetof(posuvcolor, position), false);
     }
     iter = attributeInfo.find("a_texCoord");
     if(iter != attributeInfo.end())
     {
-        layout.setAtrribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(posuvcolor, uv), false);
+        layout.setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(posuvcolor, uv), false);
     }
     iter = attributeInfo.find("a_color");
     if(iter != attributeInfo.end())
     {
-        layout.setAtrribute("a_color", iter->second.location, backend::VertexFormat::FLOAT4, offsetof(posuvcolor, color), false);
+        layout.setAttribute("a_color", iter->second.location, backend::VertexFormat::FLOAT4, offsetof(posuvcolor, color), false);
     }
     layout.setLayout(sizeof(posuvcolor), backend::VertexStepMode::VERTEX);
 

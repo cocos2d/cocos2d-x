@@ -33,6 +33,8 @@
 #include <sys/socket.h>
 #endif
 
+#include <functional>
+
 #include "2d/CCActionCamera.h"
 #include "2d/CCActionCatmullRom.h"
 #include "2d/CCActionGrid.h"
@@ -6984,6 +6986,143 @@ static int lua_collect_PolygonInfo (lua_State* tolua_S)
     return 0;
 }
 
+
+int lua_cocos2dx_get_PipelineDescriptor_programState(lua_State* tolua_S)
+{
+    cocos2d::PipelineDescriptor* cobj = nullptr;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S, 1, "cc.PipelineDescriptor", 0, &tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PipelineDescriptor*)  tolua_tousertype(tolua_S, 1, 0);
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == cobj)
+    {
+        tolua_error(tolua_S, "invalid 'self' in function 'lua_cocos2dx_get_PipelineDescriptor_programState'\n", nullptr);
+        return 0;
+    }
+#endif
+    tolua_pushusertype(tolua_S, cobj->programState, "ccbackend.ProgramState");
+    return 1;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+                tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_get_PipelineDescriptor_programState'.", &tolua_err);
+                return 0;
+#endif
+}
+
+
+
+int lua_cocos2dx_set_PipelineDescriptor_programState(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PipelineDescriptor* self = nullptr;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S, 1, "cc.PipelineDescriptor", 0, &tolua_err)) goto tolua_lerror;
+#endif
+
+    self = (cocos2d::PipelineDescriptor*)  tolua_tousertype(tolua_S, 1, 0);
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(tolua_S, "invalid 'self' in function 'lua_cocos2dx_set_PipelineDescriptor_programState'\n", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (1 == argc)
+    {
+        cocos2d::backend::ProgramState *programState = nullptr;
+        luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 2, "ccbackend.ProgramState", &programState, "lua_cocos2dx_set_PipelineDescriptor_programState");
+        self->programState = programState;
+        return 0;
+    }
+
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+                tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_set_PipelineDescriptor_programState'.", &tolua_err);
+                return 0;
+#endif
+}
+
+
+
+int lua_cocos2dx_get_PipelineDescriptor_vertexLayout(lua_State* tolua_S)
+{
+    cocos2d::PipelineDescriptor* cobj = nullptr;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S, 1, "cc.PipelineDescriptor", 0, &tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PipelineDescriptor*)  tolua_tousertype(tolua_S, 1, 0);
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == cobj)
+    {
+        tolua_error(tolua_S, "invalid 'self' in function 'lua_cocos2dx_get_PipelineDescriptor_vertexLayout'\n", nullptr);
+        return 0;
+    }
+#endif
+    tolua_pushusertype(tolua_S, &cobj->vertexLayout, "ccbackend.VertexLayout");
+    return 1;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+                tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_get_PipelineDescriptor_vertexLayout'.", &tolua_err);
+                return 0;
+#endif
+}
+
+
+
+int lua_cocos2dx_set_PipelineDescriptor_vertexLayout(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PipelineDescriptor* self = nullptr;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S, 1, "cc.PipelineDescriptor", 0, &tolua_err)) goto tolua_lerror;
+#endif
+
+    self = (cocos2d::PipelineDescriptor*)  tolua_tousertype(tolua_S, 1, 0);
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(tolua_S, "invalid 'self' in function 'lua_cocos2dx_set_PipelineDescriptor_vertexLayout'\n", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (1 == argc)
+    {
+        cocos2d::backend::VertexLayout *layout = nullptr;
+        luaval_to_object<cocos2d::backend::VertexLayout>(tolua_S, 2, "ccbackend.VertexLayout", &layout, "lua_cocos2dx_set_PipelineDescriptor_programState");
+        self->vertexLayout = *layout;
+        return 0;
+    }
+
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+                tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_set_PipelineDescriptor_vertexLayout'.", &tolua_err);
+                return 0;
+#endif
+}
+
 static void extendPolygonInfo(lua_State* tolua_S)
 {
     lua_pushstring(tolua_S, "cc.PolygonInfo");
@@ -7002,6 +7141,147 @@ static void extendPolygonInfo(lua_State* tolua_S)
     }
     lua_pop(tolua_S, 1);
 }
+
+static void extendPipelineDescriptor(lua_State *tolua_S)
+{
+    lua_pushstring(tolua_S, "cc.PipelineDescriptor");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S, -1))
+    {
+        tolua_variable(tolua_S, "programState", lua_cocos2dx_get_PipelineDescriptor_programState, lua_cocos2dx_set_PipelineDescriptor_programState);
+        tolua_variable(tolua_S, "vertexLayout", lua_cocos2dx_get_PipelineDescriptor_vertexLayout, lua_cocos2dx_set_PipelineDescriptor_vertexLayout);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+template<typename NUMTYPE>
+static int lua_cocos2dx_ProgramState_setUniform_numeric(lua_State *tolua_S)
+{
+    int argc = 0;
+    cocos2d::backend::ProgramState* self = nullptr;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S, 1, "ccbackend.ProgramState", 0, &tolua_err)) goto tolua_lerror;
+#endif
+
+    self = (cocos2d::backend::ProgramState*) tolua_tousertype(tolua_S, 1, 0);
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(tolua_S, "invalid 'self' in function 'lua_cocos2dx_ProgramState_setUniform'\n", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (2 == argc)
+    {
+        cocos2d::backend::UniformLocation location;
+        NUMTYPE value;
+
+        if (lua_isstring(tolua_S, -2) && lua_isnumber(tolua_S, -1))
+        {
+            location = self->getUniformLocation(lua_tostring(tolua_S, -2));
+            value = (NUMTYPE)lua_tonumber(tolua_S, -1);
+            self->setUniform(location, &value, sizeof(NUMTYPE));
+        }
+        else
+        {
+            luaL_error(tolua_S, "`lua_cocos2dx_ProgramState_setUniform` argument invalidate");
+            
+        }
+        return 0;
+    }
+
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+                tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_set_PipelineDescriptor_vertexLayout'.", &tolua_err);
+                return 0;
+#endif
+}
+
+
+template<typename T, void* CONV >
+static int lua_cocos2dx_ProgramState_setUniform_luatype(lua_State *tolua_S)
+{
+    typedef bool (*convert_func) (lua_State *, int, T*, const char *);
+    void *P = CONV;
+    convert_func converter = (convert_func)CONV;
+
+    int argc = 0;
+    cocos2d::backend::ProgramState* self = nullptr;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(tolua_S, 1, "ccbackend.ProgramState", 0, &tolua_err)) goto tolua_lerror;
+#endif
+
+    self = (cocos2d::backend::ProgramState*) tolua_tousertype(tolua_S, 1, 0);
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(tolua_S, "invalid 'self' in function 'lua_cocos2dx_ProgramState_setUniform'\n", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (2 == argc)
+    {
+        tolua_Error error;
+
+        cocos2d::backend::UniformLocation location;
+        T value;
+
+        if (lua_isstring(tolua_S, -2) && lua_istable(tolua_S, -1))
+        {
+            location = self->getUniformLocation(lua_tostring(tolua_S, -2));
+            converter(tolua_S, -1, &value, "lua_cocos2dx_ProgramState_setUniform_luatype");
+            self->setUniform(location, &value, sizeof(T));
+        }
+        else
+        {
+            luaL_error(tolua_S, "`lua_cocos2dx_ProgramState_setUniform` argument invalidate");
+
+        }
+        return 0;
+    }
+
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+                tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_set_PipelineDescriptor_vertexLayout'.", &tolua_err);
+                return 0;
+#endif
+}
+
+static void extendProgramState(lua_State *tolua_S)
+{
+    //lua_pushstring(tolua_S, "ccbackend.ProgramState");
+    //lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    
+    tolua_beginmodule(tolua_S, "ccbackend");
+    tolua_beginmodule(tolua_S, "ProgramState");
+    if (lua_istable(tolua_S, -1))
+    {
+        tolua_function(tolua_S, "setUniformInt", lua_cocos2dx_ProgramState_setUniform_numeric<int>);
+        tolua_function(tolua_S, "setUniformFloat", lua_cocos2dx_ProgramState_setUniform_numeric<float>);
+        tolua_function(tolua_S, "setUniformVec2", lua_cocos2dx_ProgramState_setUniform_luatype<cocos2d::Vec2, luaval_to_vec2>);
+        tolua_function(tolua_S, "setUniformVec3", lua_cocos2dx_ProgramState_setUniform_luatype<cocos2d::Vec3, luaval_to_vec3>);
+        tolua_function(tolua_S, "setUniformVec4", lua_cocos2dx_ProgramState_setUniform_luatype<cocos2d::Vec4, luaval_to_vec4>);
+        tolua_function(tolua_S, "setUniformMat4", lua_cocos2dx_ProgramState_setUniform_luatype<cocos2d::Mat4, luaval_to_mat4>);
+    }
+    tolua_endmodule(tolua_S);
+    tolua_endmodule(tolua_S);
+    //lua_pop(tolua_S, 1);
+}
+
 
 int lua_cocos2dx_AutoPolygon_generatePolygon(lua_State* tolua_S)
 {
@@ -7161,6 +7441,8 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendEventListenerAcceleration(tolua_S);
     extendActionCamera(tolua_S);
     extendGridAction(tolua_S);
+    extendPipelineDescriptor(tolua_S);
+    extendProgramState(tolua_S);
 
     extendMotionStreak(tolua_S);
     extendAtlasNode(tolua_S);

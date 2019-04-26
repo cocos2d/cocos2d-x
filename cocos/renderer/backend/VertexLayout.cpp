@@ -4,7 +4,7 @@
 
 CC_BACKEND_BEGIN
 
-void VertexLayout::setAtrribute(const std::string &name, unsigned int index, VertexFormat format, unsigned int offset, bool needToBeNormallized)
+void VertexLayout::setAttribute(const std::string &name, unsigned int index, VertexFormat format, unsigned int offset, bool needToBeNormallized)
 {
     if (_attributes.find(name) != _attributes.end())
     {
