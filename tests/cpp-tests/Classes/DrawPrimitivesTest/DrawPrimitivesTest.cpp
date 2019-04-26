@@ -265,6 +265,10 @@ DrawNodeTest::DrawNodeTest()
     Vec2 points[] = { Vec2(s.height/4,0), Vec2(s.width,s.height/5), Vec2(s.width/3*2,s.height) };
     draw->drawPolygon(points, sizeof(points)/sizeof(points[0]), Color4F(1,0,0,0.5), 4, Color4F(0,0,1,0.5));
     
+    // Draw concave polygons
+    Vec2 concavePoints[] = { Vec2(0,130), Vec2(140,130), Vec2(140,160),Vec2(120,145),Vec2(30,145),Vec2(0,160) };
+    draw->drawPolygon(concavePoints, sizeof(concavePoints)/sizeof(concavePoints[0]), Color4F(1,0,0,0.5), 4, Color4F(0,0,1,0.5));
+    
     // star poly (triggers buggs)
     {
         const float o=80;

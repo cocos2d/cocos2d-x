@@ -41,6 +41,28 @@ NS_CC_BEGIN
 
 static const int DEFAULT_LINE_WIDTH = 2;
 
+class Triangulate
+{
+public:
+    
+    // triangulate a contour/polygon, places results in STL vector
+    // as series of triangles.
+    static V2F_C4B_T2F_Triangle * Process(const Vec2 *verts,V2F_C4B_T2F_Triangle * triangles,int n,const Color4F &fillColor);
+
+    // compute area of a contour/polygon
+    static float Area(const Vec2 *verts,int n);
+    
+    // decide if point Px/Py is inside triangle defined by
+    // (Ax,Ay) (Bx,By) (Cx,Cy)
+    static bool InsideTriangle(float Ax, float Ay,
+                               float Bx, float By,
+                               float Cx, float Cy,
+                               float Px, float Py);
+    
+private:
+    static bool Snip(const Vec2 *verts,int u,int v,int w,int n,int *V);
+};
+
 class PointArray;
 /**
  * @addtogroup _2d
