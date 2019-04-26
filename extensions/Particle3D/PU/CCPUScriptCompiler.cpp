@@ -185,7 +185,7 @@ PUScriptCompiler::PUScriptCompiler():_current(nullptr),_nodes(nullptr), _PUParti
 }
 PUScriptCompiler::~PUScriptCompiler()
 {
-    for (auto iter : _compiledScripts){
+    for (const auto& iter : _compiledScripts){
         for (auto miter : iter.second){
             delete miter;
         }

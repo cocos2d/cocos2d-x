@@ -87,8 +87,9 @@ Animation3D::Animation3D()
 
 Animation3D::~Animation3D()
 {
-    for (auto itor : _boneCurves) {
-        CC_SAFE_DELETE(itor.second);
+    for (const auto& itor : _boneCurves) {
+        Curve* curve = itor.second;
+        CC_SAFE_DELETE(curve);
     }
 }
 

@@ -73,7 +73,7 @@ void PURibbonTrailRender::render( Renderer* renderer, const Mat4 &transform, Par
 
     const PUParticleSystem3D::ParticlePoolMap &emitterPool = static_cast<PUParticleSystem3D *>(particleSystem)->getEmittedEmitterParticlePool();
     if (!emitterPool.empty()){
-        for (auto iter : emitterPool){
+        for (const auto& iter : emitterPool){
             updateParticles(iter.second);
             needDraw = true;
         }
@@ -81,7 +81,7 @@ void PURibbonTrailRender::render( Renderer* renderer, const Mat4 &transform, Par
 
     const PUParticleSystem3D::ParticlePoolMap &systemPool = static_cast<PUParticleSystem3D *>(particleSystem)->getEmittedSystemParticlePool();
     if (!systemPool.empty()){
-        for (auto iter : systemPool){
+        for (const auto& iter : systemPool){
             updateParticles(iter.second);
             needDraw = true;
         }

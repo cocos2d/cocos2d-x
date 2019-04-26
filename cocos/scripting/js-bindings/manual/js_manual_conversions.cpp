@@ -2730,7 +2730,7 @@ jsval std_vector_string_to_jsval( JSContext *cx, const std::vector<std::string>&
     JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, v.size()));
 
     int i = 0;
-    for (const std::string obj : v)
+    for (const std::string& obj : v)
     {
         JS::RootedValue arrElement(cx);
         arrElement = std_string_to_jsval(cx, obj);
