@@ -773,7 +773,7 @@ bool SpriteFrameCache::PlistFramesCache::erasePlistIndex(const std::string &plis
     if (it == _indexPlist2Frames.end()) return false;
 
     auto &frames = it->second;
-    for (auto f : frames)
+    for (const auto& f : frames)
     {
         // !!do not!! call `_spriteFrames.erase(f);` to erase SpriteFrame
         // only erase index here

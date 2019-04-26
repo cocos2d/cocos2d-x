@@ -760,7 +760,7 @@ int lua_cocos2dx_physics3d_Physics3DObject_setCollisionCallback(lua_State* L)
             {
                 int vecIndex = 1;
                 lua_newtable(L);
-                for (auto value : ci.collisionPointList)
+                for (const auto& value : ci.collisionPointList)
                 {
                     lua_pushnumber(L, vecIndex);
                     CollisionPoint_to_luaval(L, value);
