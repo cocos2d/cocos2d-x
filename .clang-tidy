@@ -1,7 +1,7 @@
 ---
 Checks: "-*,\
+performance-faster-string-find,\
 performance-for-range-copy,\
-readability-const-return-type,\
 "
 WarningsAsErrors: '*'
 HeaderFilterRegex: '/(?!external)/.*'
