@@ -44,7 +44,7 @@ function build_linux_clang_tidy()
     mkdir -p clang-tidy-build
     cd clang-tidy-build
     cmake ../.. -DCMAKE_EXPORT_COMPILE_COMMANDS=on
-    python /usr/local/clang-7.0.0/share/clang/run-clang-tidy.py -config=$COCOS2DX_ROOT/.clang-tidy
+    python /usr/local/clang-7.0.0/share/clang/run-clang-tidy.py
 }
 
 function build_mac()

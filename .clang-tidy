@@ -1,8 +1,38 @@
 ---
-Checks: "-*,\
-performance-faster-string-find,\
-performance-for-range-copy,\
-"
+Checks:          'clang-diagnostic-*,clang-analyzer-*,-*,performance-faster-string-find,performance-for-range-copy,'
 WarningsAsErrors: '*'
 HeaderFilterRegex: '/(?!external)/.*'
+AnalyzeTemporaryDtors: false
+FormatStyle:     none
+CheckOptions:    
+  - key:             cert-dcl16-c.NewSuffixes
+    value:           'L;LL;LU;LLU'
+  - key:             cppcoreguidelines-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic
+    value:           '1'
+  - key:             google-readability-braces-around-statements.ShortStatementLines
+    value:           '1'
+  - key:             google-readability-function-size.StatementThreshold
+    value:           '800'
+  - key:             google-readability-namespace-comments.ShortNamespaceLines
+    value:           '10'
+  - key:             google-readability-namespace-comments.SpacesBeforeComments
+    value:           '2'
+  - key:             modernize-loop-convert.MaxCopySize
+    value:           '16'
+  - key:             modernize-loop-convert.MinConfidence
+    value:           reasonable
+  - key:             modernize-loop-convert.NamingStyle
+    value:           CamelCase
+  - key:             modernize-pass-by-value.IncludeStyle
+    value:           llvm
+  - key:             modernize-replace-auto-ptr.IncludeStyle
+    value:           llvm
+  - key:             modernize-use-nullptr.NullMacros
+    value:           'NULL'
+  - key:             performance-faster-string-find.StringLikeClasses
+    value:           'std::basic_string'
+  - key:             performance-for-range-copy.AllowedTypes
+    value:           ''
+  - key:             performance-for-range-copy.WarnOnAllAutoCopies
+    value:           '0'
 ...
