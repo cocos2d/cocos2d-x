@@ -69,6 +69,12 @@ matrix:
       env: BUILD_TARGET=linux_cocos_new_lua_test
       language: cpp
       sudo: required
+    # clang-tidy
+    - os: linux
+      dist: xenial
+      env: BUILD_TARGET=linux_clang_tidy
+      language: cpp
+      sudo: required
 
 script:
 - tools/travis-scripts/run-script.sh

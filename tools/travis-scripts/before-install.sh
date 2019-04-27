@@ -65,6 +65,9 @@ function install_environement_for_pull_request()
         if [ "$BUILD_TARGET" == "linux" ]; then
             install_linux_environment
         fi
+        if [ "$BUILD_TARGET" == "linux_clang_tidy" ]; then
+            install_linux_environment
+        fi
     fi
 
     if [ "$TRAVIS_OS_NAME" == "osx" ]; then
