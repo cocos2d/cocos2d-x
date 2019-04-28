@@ -760,22 +760,7 @@ function FogTestDemo:createLayer3D()
     
     vertexLayout:setLayout(offset, ccbackend.VertexStepMode.VERTEX)
     self._sprite3D1:setVertexLayout(vertexLayout)
-    
-    ---- update vertex layout of sprite3d -2 
-    local offset1 = 0
-    local attributeCount1 = self._sprite3D2:getMesh():getMeshVertexAttribCount()
-    local vertexLayout2 = ccbackend.VertexLayout:new()
-    for i = 1,  attributeCount1 do
-        local meshattribute = self._sprite3D2:getMesh():getMeshVertexAttribute(i - 1)
-        local attrName = attributeNames[meshattribute.vertexAttrib+1]
-
-        if (attributes[attrName] ~= nil) then
-            vertexLayout2:setAttribute(attrName, attributes[attrName].location, meshattribute.type, offset, false)
-        end
-        offset1 = offset1 + meshattribute.attribSizeBytes
-    end
-    vertexLayout2:setLayout(offset1, ccbackend.VertexStepMode.VERTEX)
-    self._sprite3D2:setVertexLayout(vertexLayout2)
+    self._sprite3D2:setVertexLayout(vertexLayout)
 
     self._shader1:setUniform("u_fogColor", cc.bytearray.from_vec4(cc.vec4(0.5,0.5,0.5,1.0)))
     self._shader1:setUniform("u_fogStart",cc.bytearray.from_float(10))
