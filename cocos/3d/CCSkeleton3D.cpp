@@ -202,7 +202,7 @@ void Bone3D::updateLocalMat()
         Quaternion quat(Quaternion::ZERO);
         
         float total = 0.f;
-        for (auto it: _blendStates) {
+        for (const auto& it: _blendStates) {
             total += it.weight;
         }
         if (total)

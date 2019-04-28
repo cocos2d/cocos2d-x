@@ -341,7 +341,7 @@ ValueTypeJudgeInTable* ValueTypeJudgeInTable::create(ValueMap valueMap)
     }
     
     int index = 0;
-    for (auto iter : valueMap)
+    for (const auto& iter : valueMap)
     {
         Value::Type type = iter.second.getType();
         if (type == Value::Type::STRING) {
