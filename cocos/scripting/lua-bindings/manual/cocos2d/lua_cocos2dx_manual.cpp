@@ -8289,8 +8289,9 @@ int register_all_cocos2dx_shaders_manual(lua_State *tolua_S)
     tolua_endmodule(tolua_S);
     return 0;
 }
+
 template<typename T, bool IS_TABLE, void *C>
-int tolua_cocos2d_bytearray_template(lua_State *L)
+static int tolua_cocos2d_bytearray_template(lua_State *L)
 {
     typedef bool(*convert_func) (lua_State *, int, T*, const char *);
     convert_func converter = (convert_func)C;
@@ -8334,13 +8335,254 @@ int tolua_cocos2d_bytearray_template(lua_State *L)
 #endif
 }
 
-template<typename E, void *C>
-int tolua_cocos2d_bytearray_elev(lua_State *L)
+static int tolua_cocos2d_bytearray_vec2(lua_State *L)
 {
-    typedef bool(*convert_func) (lua_State *, int, E*, const char *);
-    convert_func elementConverter = (convert_func)C;
-
     bool ok = true;
+    int argc = lua_gettop(L);
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    if (argc == 1)
+    {
+#if COCOS2D_DEBUG >= 1
+        
+        if (!tolua_istable(L, 1, 0, &tolua_err))
+            goto tolua_lerror;
+        else
+#endif
+        {
+            cocos2d::Vec2 arg;
+            ok &= luaval_to_vec2(L, 1, &arg, "tolua_cocos2d_bytearray_template");
+            if (!ok)
+                return 0;
+            
+            lua_pop(L, 1);
+            lua_newtable(L);
+            uint8_t *bytes = (uint8_t*)&arg;
+            for (auto idx = 0; idx < sizeof(arg); idx++)
+            {
+                lua_pushnumber(L, bytes[idx]);
+                lua_rawseti(L, 1, idx + 1);
+            }
+            return 1;
+        }
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L, "#ferror in function 'tolua_cocos2d_bytearray_template'.", &tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_cocos2d_bytearray_vec3(lua_State *L)
+{
+    bool ok = true;
+    int argc = lua_gettop(L);
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    if (argc == 1)
+    {
+#if COCOS2D_DEBUG >= 1
+        
+        if (!tolua_istable(L, 1, 0, &tolua_err))
+            goto tolua_lerror;
+        else
+#endif
+        {
+            cocos2d::Vec3 arg;
+            ok &= luaval_to_vec3(L, 1, &arg, "tolua_cocos2d_bytearray_template");
+            if (!ok)
+                return 0;
+            
+            lua_pop(L, 1);
+            lua_newtable(L);
+            uint8_t *bytes = (uint8_t*)&arg;
+            for (auto idx = 0; idx < sizeof(arg); idx++)
+            {
+                lua_pushnumber(L, bytes[idx]);
+                lua_rawseti(L, 1, idx + 1);
+            }
+            return 1;
+        }
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L, "#ferror in function 'tolua_cocos2d_bytearray_template'.", &tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_cocos2d_bytearray_vec4(lua_State *L)
+{
+    bool ok = true;
+    int argc = lua_gettop(L);
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    if (argc == 1)
+    {
+#if COCOS2D_DEBUG >= 1
+        
+        if (!tolua_istable(L, 1, 0, &tolua_err))
+            goto tolua_lerror;
+        else
+#endif
+        {
+            cocos2d::Vec4 arg;
+            ok &= luaval_to_vec4(L, 1, &arg, "tolua_cocos2d_bytearray_template");
+            if (!ok)
+                return 0;
+            
+            lua_pop(L, 1);
+            lua_newtable(L);
+            uint8_t *bytes = (uint8_t*)&arg;
+            for (auto idx = 0; idx < sizeof(arg); idx++)
+            {
+                lua_pushnumber(L, bytes[idx]);
+                lua_rawseti(L, 1, idx + 1);
+            }
+            return 1;
+        }
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L, "#ferror in function 'tolua_cocos2d_bytearray_template'.", &tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_cocos2d_bytearray_mat4(lua_State *L)
+{
+    bool ok = true;
+    int argc = lua_gettop(L);
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    if (argc == 1)
+    {
+#if COCOS2D_DEBUG >= 1
+        
+        if (!tolua_istable(L, 1, 0, &tolua_err))
+            goto tolua_lerror;
+        else
+#endif
+        {
+            cocos2d::Mat4 arg;
+            ok &= luaval_to_mat4(L, 1, &arg, "tolua_cocos2d_bytearray_template");
+            if (!ok)
+                return 0;
+            
+            lua_pop(L, 1);
+            lua_newtable(L);
+            uint8_t *bytes = (uint8_t*)&arg;
+            for (auto idx = 0; idx < sizeof(arg); idx++)
+            {
+                lua_pushnumber(L, bytes[idx]);
+                lua_rawseti(L, 1, idx + 1);
+            }
+            return 1;
+        }
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L, "#ferror in function 'tolua_cocos2d_bytearray_template'.", &tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_cocos2d_bytearray_int(lua_State *L)
+{
+    bool ok = true;
+    int argc = lua_gettop(L);
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    if (argc == 1)
+    {
+#if COCOS2D_DEBUG >= 1
+        
+        if (!tolua_isnumber(L, 1, 0, &tolua_err))
+            goto tolua_lerror;
+        else
+#endif
+        {
+            int arg;
+            ok &= luaval_to_int32(L, 1, &arg, "tolua_cocos2d_bytearray_template");
+            if (!ok)
+                return 0;
+            
+            lua_pop(L, 1);
+            lua_newtable(L);
+            uint8_t *bytes = (uint8_t*)&arg;
+            for (auto idx = 0; idx < sizeof(arg); idx++)
+            {
+                lua_pushnumber(L, bytes[idx]);
+                lua_rawseti(L, 1, idx + 1);
+            }
+            return 1;
+        }
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L, "#ferror in function 'tolua_cocos2d_bytearray_template'.", &tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_cocos2d_bytearray_float(lua_State *L)
+{
+    bool ok = true;
+    int argc = lua_gettop(L);
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    if (argc == 1)
+    {
+#if COCOS2D_DEBUG >= 1
+        
+        if (!tolua_isnumber(L, 1, 0, &tolua_err))
+            goto tolua_lerror;
+        else
+#endif
+        {
+            float arg;
+            ok &= luaval_to_float(L, 1, &arg, "tolua_cocos2d_bytearray_template");
+            if (!ok)
+                return 0;
+            
+            lua_pop(L, 1);
+            lua_newtable(L);
+            uint8_t *bytes = (uint8_t*)&arg;
+            for (auto idx = 0; idx < sizeof(arg); idx++)
+            {
+                lua_pushnumber(L, bytes[idx]);
+                lua_rawseti(L, 1, idx + 1);
+            }
+            return 1;
+        }
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L, "#ferror in function 'tolua_cocos2d_bytearray_template'.", &tolua_err);
+    return 0;
+#endif
+}
+
+static int tolua_cocos2d_bytearray_intv(lua_State *L)
+{
     int argc = lua_gettop(L);
 
 #if COCOS2D_DEBUG >= 1
@@ -8356,15 +8598,15 @@ int tolua_cocos2d_bytearray_elev(lua_State *L)
 #endif
         {
             int size = lua_objlen(L, 1);
-            std::vector<uint8_t> arg(size * sizeof(E));
+            std::vector<uint8_t> arg(size * sizeof(int));
 
-            E e;
-            E *p = (E*)arg.data();
+            int e;
+            int *p = (int*)arg.data();
 
             for (auto idx = 0; idx < size; idx++)
             {
                 lua_rawgeti(L, 1, idx + 1);
-                elementConverter(L, -1, &e, "tolua_cocos2d_bytearray_elev");
+                luaval_to_int32(L, -1, &e, "tolua_cocos2d_bytearray_elev");
                 p[idx] = e;
                 lua_pop(L, 1);
             }
@@ -8386,6 +8628,52 @@ int tolua_cocos2d_bytearray_elev(lua_State *L)
 #endif
 }
 
+static int tolua_cocos2d_bytearray_floatv(lua_State *L)
+{
+    int argc = lua_gettop(L);
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    if (argc == 1)
+    {
+#if COCOS2D_DEBUG >= 1
+        
+        if (!tolua_istable(L, 1, 0, &tolua_err))
+            goto tolua_lerror;
+        else
+#endif
+        {
+            int size = lua_objlen(L, 1);
+            std::vector<uint8_t> arg(size * sizeof(float));
+            
+            float e;
+            float *p = (float*)arg.data();
+            
+            for (auto idx = 0; idx < size; idx++)
+            {
+                lua_rawgeti(L, 1, idx + 1);
+                luaval_to_float(L, -1, &e, "tolua_cocos2d_bytearray_elev");
+                p[idx] = e;
+                lua_pop(L, 1);
+            }
+            lua_pop(L, 1);
+            lua_newtable(L);
+            for (auto idx = 0; idx < arg.size(); idx++)
+            {
+                lua_pushnumber(L, arg[idx]);
+                lua_rawseti(L, 1, idx + 1);
+            }
+            return 1;
+        }
+    }
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L, "#ferror in function 'tolua_cocos2d_bytearray_elev'.", &tolua_err);
+    return 0;
+#endif
+}
 
 int register_all_cocos2dx_bytearray_manual(lua_State *tolua_S)
 {
@@ -8396,14 +8684,14 @@ int register_all_cocos2dx_bytearray_manual(lua_State *tolua_S)
     tolua_beginmodule(tolua_S, "cc");
     tolua_module(tolua_S, "bytearray",0);
     tolua_beginmodule(tolua_S, "bytearray");
-        tolua_function(tolua_S, "from_vec2", tolua_cocos2d_bytearray_template<cocos2d::Vec2, true, luaval_to_vec2>);
-        tolua_function(tolua_S, "from_vec3", tolua_cocos2d_bytearray_template<cocos2d::Vec3, true, luaval_to_vec3>);
-        tolua_function(tolua_S, "from_vec4", tolua_cocos2d_bytearray_template<cocos2d::Vec4, true, luaval_to_vec4>);
-        tolua_function(tolua_S, "from_mat4", tolua_cocos2d_bytearray_template<cocos2d::Mat4, true, luaval_to_mat4>);
-        tolua_function(tolua_S, "from_int", tolua_cocos2d_bytearray_template<int, false, luaval_to_int32>);
-        tolua_function(tolua_S, "from_float", tolua_cocos2d_bytearray_template<float, false, luaval_to_float>);
-        tolua_function(tolua_S, "from_intv", tolua_cocos2d_bytearray_elev<int, luaval_to_int32>);
-        tolua_function(tolua_S, "from_floatv", tolua_cocos2d_bytearray_elev<float, luaval_to_float>);
+        tolua_function(tolua_S, "from_vec2", tolua_cocos2d_bytearray_vec2);
+        tolua_function(tolua_S, "from_vec3", tolua_cocos2d_bytearray_vec3);
+        tolua_function(tolua_S, "from_vec4", tolua_cocos2d_bytearray_vec4);
+        tolua_function(tolua_S, "from_mat4", tolua_cocos2d_bytearray_mat4);
+        tolua_function(tolua_S, "from_int", tolua_cocos2d_bytearray_int);
+        tolua_function(tolua_S, "from_float", tolua_cocos2d_bytearray_float);
+        tolua_function(tolua_S, "from_intv", tolua_cocos2d_bytearray_intv);
+        tolua_function(tolua_S, "from_floatv", tolua_cocos2d_bytearray_floatv);
     tolua_endmodule(tolua_S);
     tolua_endmodule(tolua_S);
     return 0;

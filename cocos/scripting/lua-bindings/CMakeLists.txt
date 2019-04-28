@@ -23,6 +23,7 @@ set(lua_bindings_manual_headers
     manual/navmesh/lua_cocos2dx_navmesh_conversions.h
     manual/cocos2d/lua_cocos2dx_deprecated.h
     manual/cocos2d/LuaScriptHandlerMgr.h
+    manual/cocos2d/lua_cocos2dx_manual.hpp
     manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.h
     manual/Cocos2dxLuaLoader.h
     manual/CCLuaValue.h
