@@ -115,7 +115,7 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass, MeshCom
                                meshattribute.type,
                                GL_FALSE,
                                offset, 
-                               1 << k //FIXME: wrong flag
+                               1 << k 
             );
         offset += meshattribute.getAttribSizeBytes();
     }
@@ -124,71 +124,8 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass, MeshCom
 
     CCASSERT(offset == meshVertexData->getSizePerVertex(), "vertex layout mismatch!");
 
-    //// VAO hardware
-    //if (Configuration::getInstance()->supportsShareableVAO())
-    //{
-    //    glGenVertexArrays(1, &_handle);
-    //    glBindVertexArray(_handle);
-    //    glBindBuffer(GL_ARRAY_BUFFER, meshVertexData->getVertexBuffer()->getVBO());
-
-    //    enableVertexAttributes(_vertexAttribsFlags);
-
-    //    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, meshIndexData->getIndexBuffer()->getVBO());
-
-    //    for(auto &attribute : _attributes)
-    //    {
-    //        attribute.second.apply();
-    //    }
-
-    //    glBindVertexArray(0);
-    //    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    //    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    //}
-
     return true;
 }
-
-//void VertexAttribBinding::bind(backend::VertexLayout &layout)
-//{
-//
-//    if (_handle)
-//    {
-//        // hardware
-//        glBindVertexArray(_handle);
-//    }
-//    else
-//    {
-//        // software
-//        auto meshVertexData = _meshIndexData->getMeshVertexData();
-//        glBindBuffer(GL_ARRAY_BUFFER, meshVertexData->getVertexBuffer()->getVBO());
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _meshIndexData->getIndexBuffer()->getVBO());
-//
-//        // Software mode
-//        enableVertexAttributes(_vertexAttribsFlags);
-//        // set attributes
-//        for(auto &attribute : _attributes)
-//        {
-//            attribute.second.apply();
-//        }
-//        
-//    }
-//    
-//}
-
-//void VertexAttribBinding::unbind()
-//{
-//    if (_handle)
-//    {
-//        // Hardware
-//        glBindVertexArray(0);
-//    }
-//    else
-//    {
-//        // Software
-//        glBindBuffer(GL_ARRAY_BUFFER, 0);
-//        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-//    }
-//}
 
 uint32_t VertexAttribBinding::getVertexAttribsFlags() const
 {
@@ -212,19 +149,6 @@ bool VertexAttribBinding::hasAttribute(const shaderinfos::VertexKey &key) const
     auto &name = shaderinfos::getAttributeName(key);
     return _attributes.find(name) != _attributes.end();
 }
-
-//void VertexAttribBinding::enableVertexAttributes(uint32_t flags) const
-//{
-//    auto tmpFlags = flags;
-//    for (int i = 0; tmpFlags > 0; i++)
-//    {
-//        int flag = 1 << i;
-//        if (flag & tmpFlags)
-//            glEnableVertexAttribArray(i);
-//        
-//        tmpFlags &= ~flag;
-//    }
-//}
 
 backend::AttributeBindInfo* VertexAttribBinding::getVertexAttribValue(const std::string& name)
 {
