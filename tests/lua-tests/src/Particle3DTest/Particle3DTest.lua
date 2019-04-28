@@ -11,6 +11,8 @@ local function baseInit(self)
     if targetPlatform == cc.PLATFORM_OS_MAC  or targetPlatform == cc.PLATFORM_OS_IPHONE  or targetPlatform == cc.PLATFORM_OS_IPAD or targetPlatform == cc.PLATFORM_OS_TIZEN then
         cc.FileUtils:getInstance():addSearchPath("Particle3D/materials")
         cc.FileUtils:getInstance():addSearchPath("Particle3D/scripts")
+        cc.FileUtils:getInstance():addSearchPath("res/Particle3D/materials")
+        cc.FileUtils:getInstance():addSearchPath("res/Particle3D/scripts")
     else
         cc.FileUtils:getInstance():addSearchPath("res/Particle3D/materials")
         cc.FileUtils:getInstance():addSearchPath("res/Particle3D/scripts")

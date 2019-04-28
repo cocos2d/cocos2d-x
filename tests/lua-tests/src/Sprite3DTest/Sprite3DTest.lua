@@ -1002,7 +1002,7 @@ function AsyncLoadSprite3DTest:onEnter()
     ttfConfig.fontFilePath = "fonts/arial.ttf"
     ttfConfig.fontSize = 15
 
-    local paths = {"Sprite3DTest/boss.obj", "Sprite3DTest/girl.c3b", "Sprite3DTest/orc.c3b", "Sprite3DTest/ReskinGirl.c3b", "Sprite3DTest/axe.c3b"}
+    local paths = {"Sprite3DTest/girl.c3b", "Sprite3DTest/orc.c3b", "Sprite3DTest/ReskinGirl.c3b", "Sprite3DTest/axe.c3b"}
 
     local label1 = cc.Label:createWithTTF(ttfConfig,"AsyncLoad Sprite3D")
     local item1 = cc.MenuItemLabel:create(label1)
