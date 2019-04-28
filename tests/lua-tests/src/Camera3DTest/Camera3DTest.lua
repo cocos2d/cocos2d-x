@@ -728,6 +728,8 @@ function FogTestDemo:createLayer3D()
 
     self._sprite3D1:setProgramState(self._shader1)
     self._sprite3D2:setProgramState(self._shader2)
+    
+    local attributes = self._shader1:getProgram():getActiveAttributes();
 
     --pass mesh's attribute to shader
     local attributeNames = 
