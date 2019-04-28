@@ -1,3 +1,9 @@
+ <!-- uncommment lines to show your screenshot -->
+<!--
+<div align="center"><img width="100%" height="100%" style="margin:auto" src="Screenshot.png"></div>
+<hr>  -->
+
+
 <img src="http://www.cocos2d-x.org/attachments/801/cocos2dx_portrait.png" width=200>
 
 
@@ -15,7 +21,7 @@ It works on iOS, Android, OS X, Windows, Linux and Web platforms.
 
 **Cocos2d-x Framework Architecture**:
 
-![](docs/framework_architecture.jpg "")
+![](https://raw.githubusercontent.com/cocos2d/cocos2d-x/v3/docs/framework_architecture.jpg "")
 
 cocos2d-x is:
 
