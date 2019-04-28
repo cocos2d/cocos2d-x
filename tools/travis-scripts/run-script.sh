@@ -44,7 +44,7 @@ function build_linux_clang_tidy()
     mkdir -p clang-tidy-build
     cd clang-tidy-build
     cmake ../.. -DCMAKE_EXPORT_COMPILE_COMMANDS=on
-    python /usr/local/clang-7.0.0/share/clang/run-clang-tidy.py
+    python $(dirname $(dirname $(readlink -f `which clang-tidy`)))/share/clang/run-clang-tidy.py
 }
 
 function build_mac()
