@@ -35,6 +35,7 @@ THE SOFTWARE.
 #include "base/CCEventListenerCustom.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
+#include "platform/CCDataManager.h"
 
 NS_CC_BEGIN
 
@@ -127,12 +128,17 @@ GLProgramCache::~GLProgramCache()
 
 bool GLProgramCache::init()
 {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    DataManager::onShaderLoaderBegin();
+#endif
     loadDefaultGLPrograms();
     
     auto listener = EventListenerCustom::create(Configuration::CONFIG_FILE_LOADED, [this](EventCustom* /*event*/){
         reloadDefaultGLProgramsRelativeToLights();
     });
-    
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    DataManager::onShaderLoaderEnd();
+#endif
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
     
     return true;
