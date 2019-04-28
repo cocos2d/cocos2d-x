@@ -44,9 +44,9 @@ local function showFont(ret, pFont)
     local centerColor = cc.LayerColor:create(cc.c4b(200, 100, 100, 255), blockSize.width, blockSize.height)
     local rightColor = cc.LayerColor:create(cc.c4b(100, 100, 200, 255), blockSize.width, blockSize.height)
 
-    leftColor:ignoreAnchorPointForPosition(false)
-    centerColor:ignoreAnchorPointForPosition(false)
-    rightColor:ignoreAnchorPointForPosition(false)
+    leftColor:setIgnoreAnchorPointForPosition(false)
+    centerColor:setIgnoreAnchorPointForPosition(false)
+    rightColor:setIgnoreAnchorPointForPosition(false)
 
     top:setAnchorPoint(cc.p(0.5, 1))
     left:setAnchorPoint(cc.p(0,0.5))

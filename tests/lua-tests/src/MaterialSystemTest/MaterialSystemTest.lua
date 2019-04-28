@@ -145,22 +145,22 @@ function Material_2DEffects:onEnter()
     local spriteBlur = cc.Sprite:create("Images/grossini.png")
     spriteBlur:setNormalizedPosition(cc.p(0.2, 0.5))
     self:addChild(spriteBlur)
-    spriteBlur:setGLProgramState(mat1:getTechniqueByName("blur"):getPassByIndex(0):getGLProgramState())
+    spriteBlur:setProgramState(mat1:getTechniqueByName("blur"):getPassByIndex(0):getProgramState())
 
     local spriteOutline = cc.Sprite:create("Images/grossini.png")
     spriteOutline:setNormalizedPosition(cc.p(0.4, 0.5))
     self:addChild(spriteOutline)
-    spriteOutline:setGLProgramState(mat1:getTechniqueByName("outline"):getPassByIndex(0):getGLProgramState())
+    spriteOutline:setProgramState(mat1:getTechniqueByName("outline"):getPassByIndex(0):getProgramState())
 
     local spriteNoise = cc.Sprite:create("Images/grossini.png")
     spriteNoise:setNormalizedPosition(cc.p(0.6, 0.5))
     self:addChild(spriteNoise)
-    spriteNoise:setGLProgramState(mat1:getTechniqueByName("noise"):getPassByIndex(0):getGLProgramState())
+    spriteNoise:setProgramState(mat1:getTechniqueByName("noise"):getPassByIndex(0):getProgramState())
 
     local spriteEdgeDetect = cc.Sprite:create("Images/grossini.png")
     spriteEdgeDetect:setNormalizedPosition(cc.p(0.8, 0.5))
     self:addChild(spriteEdgeDetect)
-    spriteEdgeDetect:setGLProgramState(mat1:getTechniqueByName("edge_detect"):getPassByIndex(0):getGLProgramState())
+    spriteEdgeDetect:setProgramState(mat1:getTechniqueByName("edge_detect"):getPassByIndex(0):getProgramState())
 end
 
 ----------------------------------------
