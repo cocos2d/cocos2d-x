@@ -1170,13 +1170,10 @@ function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
     local layout = ccbackend.VertexLayout:new()
     for i = 1, attributeCount do
         local meshattribute = self._teapot:getMesh():getMeshVertexAttribute(i - 1)
-        --state:setVertexAttribPointer(attributeNames[meshattribute.vertexAttrib+1],
-        --    meshattribute.size,
-        --    meshattribute.type,
-        --    false,
-        --    self._teapot:getMesh():getVertexSizeInBytes(),
-        --    offset)
-        layout:setAttribute(attributeNames[meshattribute.vertexAttrib+1], i, meshattribute.type, offset, false)
+        local attrName = attributeNames[meshattribute.vertexAttrib+1]
+        if(attributes[attrName] ~= nil) then
+            layout:setAttribute(attrName, attributes[attrName].location, meshattribute.type, offset, false)
+        end
   
         offset = offset + meshattribute.attribSizeBytes
     end

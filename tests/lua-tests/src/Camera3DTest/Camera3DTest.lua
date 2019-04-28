@@ -748,7 +748,11 @@ function FogTestDemo:createLayer3D()
     local vertexLayout = ccbackend.VertexLayout:new()
     for i = 1, attributeCount do
         local meshattribute = self._sprite3D1:getMesh():getMeshVertexAttribute(i - 1)
-        vertexLayout:setAttribute(attributeNames[meshattribute.vertexAttrib+1], i, meshattribute.type, offset, false)        
+        local attrName = attributeNames[meshattribute.vertexAttrib+1]
+
+        if (attributes[attrName] ~= nil) then
+            vertexLayout:setAttribute(attrName, attributes[attrName].location, meshattribute.type, offset, false)
+        end
         offset = offset + meshattribute.attribSizeBytes
     end
     
@@ -761,7 +765,11 @@ function FogTestDemo:createLayer3D()
     local vertexLayout2 = ccbackend.VertexLayout:new()
     for i = 1,  attributeCount1 do
         local meshattribute = self._sprite3D2:getMesh():getMeshVertexAttribute(i - 1)
-        vertexLayout2:setAttribute(attributeNames[meshattribute.vertexAttrib+1], i, meshattribute.type, offset1, false)        
+        local attrName = attributeNames[meshattribute.vertexAttrib+1]
+
+        if (attributes[attrName] ~= nil) then
+            vertexLayout2:setAttribute(attrName, attributes[attrName].location, meshattribute.type, offset, false)
+        end
         offset1 = offset1 + meshattribute.attribSizeBytes
     end
     vertexLayout2:setLayout(offset1, ccbackend.VertexStepMode.VERTEX)
