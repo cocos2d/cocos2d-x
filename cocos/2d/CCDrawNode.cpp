@@ -99,7 +99,7 @@ static inline Tex2F __t(const Vec2 &v)
 }
 
 static const float EPSILON=0.0000000001f;
-float Triangulate::Area(const Vec2 *verts,int n)
+float Triangulate::computeArea(const Vec2 *verts,int n)
 {
     float A=0.0f;
     for(int p=n-1,q=0; q<n; p=q++)
@@ -110,10 +110,10 @@ float Triangulate::Area(const Vec2 *verts,int n)
 }
 
 /*
- InsideTriangle decides if a point P is Inside of the triangle
+ isInsideTriangle decides if a point P is Inside of the triangle
  defined by A, B, C.
  */
-bool Triangulate::InsideTriangle(float Ax, float Ay,
+bool Triangulate::isInsideTriangle(float Ax, float Ay,
                                  float Bx, float By,
                                  float Cx, float Cy,
                                  float Px, float Py)
@@ -135,7 +135,7 @@ bool Triangulate::InsideTriangle(float Ax, float Ay,
     return ((aCROSSbp >= 0.0f) && (bCROSScp >= 0.0f) && (cCROSSap >= 0.0f));
 };
 
-bool Triangulate::Snip(const Vec2 *verts,int u,int v,int w,int n,int *V)
+bool Triangulate::checkSnip(const Vec2 *verts,int u,int v,int w,int n,int *V)
 {
     int p;
     float Ax, Ay, Bx, By, Cx, Cy, Px, Py;
@@ -156,19 +156,19 @@ bool Triangulate::Snip(const Vec2 *verts,int u,int v,int w,int n,int *V)
         if( (p == u) || (p == v) || (p == w) ) continue;
         Px = verts[V[p]].x;
         Py = verts[V[p]].y;
-        if (InsideTriangle(Ax,Ay,Bx,By,Cx,Cy,Px,Py)) return false;
+        if (isInsideTriangle(Ax,Ay,Bx,By,Cx,Cy,Px,Py)) return false;
     }
     
     return true;
 }
 
-V2F_C4B_T2F_Triangle * Triangulate::Process(const Vec2 *verts,V2F_C4B_T2F_Triangle * triangles,int n,const Color4F &fillColor)
+V2F_C4B_T2F_Triangle * Triangulate::processTriangles(const Vec2 *verts,V2F_C4B_T2F_Triangle * triangles,int n,const Color4F &fillColor)
 {
     if ( n < 3 ) return triangles;
     
     int *V = new int[n];
     /* we want a counter-clockwise polygon in V */
-    if ( 0.0f < Area(verts,n) )
+    if ( 0.0f < computeArea(verts,n) )
         for (int v=0; v<n; v++) V[v] = v;
     else
         for(int v=0; v<n; v++) V[v] = (n-1)-v;
@@ -189,7 +189,7 @@ V2F_C4B_T2F_Triangle * Triangulate::Process(const Vec2 *verts,V2F_C4B_T2F_Triang
         v = u+1; if (nv <= v) v = 0;     /* new v    */
         int w = v+1; if (nv <= w) w = 0;     /* next     */
         
-        if ( Snip(verts,u,v,w,nv,V) )
+        if ( checkSnip(verts,u,v,w,nv,V) )
         {
             int a,b,c,s,t;
             /* true names of the vertices */
@@ -878,7 +878,7 @@ void DrawNode::drawPolygon(const Vec2 *verts, int count, const Color4F &fillColo
     V2F_C4B_T2F_Triangle *triangles = (V2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
     V2F_C4B_T2F_Triangle *cursor = triangles;
     
-    cursor = Triangulate::Process(verts,cursor,count,fillColor);
+    cursor = Triangulate::processTriangles(verts,cursor,count,fillColor);
     
     if(outline)
     {
