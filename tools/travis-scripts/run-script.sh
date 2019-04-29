@@ -303,7 +303,6 @@ function run_pull_request()
 
     # linux_clang_tidy_test
     if [ $BUILD_TARGET == 'linux_clang_tidy' ]; then
-        genernate_binding_codes
         build_linux_clang_tidy
     fi
 
