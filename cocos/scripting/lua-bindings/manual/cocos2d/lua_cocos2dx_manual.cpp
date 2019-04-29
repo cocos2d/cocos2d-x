@@ -33,8 +33,6 @@
 #include <sys/socket.h>
 #endif
 
-#include <functional>
-
 #include "2d/CCActionCamera.h"
 #include "2d/CCActionCatmullRom.h"
 #include "2d/CCActionGrid.h"
@@ -8288,51 +8286,6 @@ int register_all_cocos2dx_shaders_manual(lua_State *tolua_S)
         set_lua_field(CC3D_terrain_vert);
     tolua_endmodule(tolua_S);
     return 0;
-}
-
-template<typename T, bool IS_TABLE, void *C>
-static int tolua_cocos2d_bytearray_template(lua_State *L)
-{
-    typedef bool(*convert_func) (lua_State *, int, T*, const char *);
-    convert_func converter = (convert_func)C;
-
-    bool ok = true;
-    int argc = lua_gettop(L);
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-    if (argc == 1)
-    {
-#if COCOS2D_DEBUG >= 1
-
-        if (IS_TABLE && !tolua_istable(L, 1, 0, &tolua_err))
-            goto tolua_lerror;
-        else
-#endif
-        {
-            T arg;
-            ok &= converter(L, 1, &arg, "tolua_cocos2d_bytearray_template");
-            if (!ok)
-                return 0;
-
-            lua_pop(L, 1);
-            lua_newtable(L);
-            uint8_t *bytes = (uint8_t*)&arg;
-            for (auto idx = 0; idx < sizeof(arg); idx++)
-            {
-                lua_pushnumber(L, bytes[idx]);
-                lua_rawseti(L, 1, idx + 1);
-            }
-            return 1;
-        }
-    }
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-                tolua_error(L, "#ferror in function 'tolua_cocos2d_bytearray_template'.", &tolua_err);
-                return 0;
-#endif
 }
 
 static int tolua_cocos2d_bytearray_vec2(lua_State *L)
