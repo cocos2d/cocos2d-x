@@ -134,7 +134,7 @@ public:
     //TODO: will be removed!
     bool hasVertexAttrib(shaderinfos::VertexKey attrib) const;
 
-    void setMeshData(const MeshData& meshdata);
+    void setMeshData(const std::vector<float> &vertexData);
     
 CC_CONSTRUCTOR_ACCESS:
     MeshVertexData();
@@ -148,7 +148,7 @@ protected:
     std::vector<MeshVertexAttrib> _attribs; //vertex attributes
     
     int _vertexCount = 0; //vertex count
-    MeshData _meshData;
+    std::vector<float> _vertexData;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _backToForegroundListener = nullptr;
 #endif

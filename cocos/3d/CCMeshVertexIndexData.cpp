@@ -82,6 +82,8 @@ MeshIndexData::MeshIndexData()
 void MeshIndexData::setIndexData(const cocos2d::MeshData::IndexArray &indexdata)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
+    if(_indexData.size() > 0)
+        return;
     _indexData = indexdata;
 #endif
 }
@@ -89,15 +91,18 @@ void MeshIndexData::setIndexData(const cocos2d::MeshData::IndexArray &indexdata)
 MeshIndexData::~MeshIndexData()
 {
     CC_SAFE_RELEASE(_indexBuffer);
+    _indexData.clear();
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
 
-void MeshVertexData::setMeshData(const cocos2d::MeshData &meshdata)
+void MeshVertexData::setMeshData(const std::vector<float> &vertexData)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    _meshData = meshdata;
+    if(_vertexData.size() > 0)
+        return;
+    _vertexData = vertexData;
 #endif
 }
 
@@ -117,7 +122,7 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
     if(vertexdata->_vertexBuffer)
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-        vertexdata->setMeshData(meshdata);
+        vertexdata->setMeshData(meshdata.vertex);
         vertexdata->_vertexBuffer->needReloadExternal(true);
 #endif
         vertexdata->_vertexBuffer->updateData((void*)&meshdata.vertex[0], meshdata.vertex.size() * sizeof(meshdata.vertex[0]));
@@ -174,7 +179,7 @@ MeshVertexData::MeshVertexData()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
-        _vertexBuffer->reloadBufferData((void*)&_meshData.vertex[0], _meshData.vertex.size() * sizeof(_meshData.vertex[0]));
+        _vertexBuffer->reloadBufferData((void*)_vertexData.data(), _vertexData.size() * sizeof(_vertexData[0]));
     });
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
 #endif
@@ -184,7 +189,7 @@ MeshVertexData::~MeshVertexData()
 {
     CC_SAFE_RELEASE(_vertexBuffer);
     _indexs.clear();
-
+    _vertexData.clear();
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
