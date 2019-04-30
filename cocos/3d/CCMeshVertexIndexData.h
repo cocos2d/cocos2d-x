@@ -134,7 +134,7 @@ public:
     //TODO: will be removed!
     bool hasVertexAttrib(shaderinfos::VertexKey attrib) const;
 
-    void setMeshData(const std::vector<float> &vertexData);
+    void setVertexData(const std::vector<float> &vertexData);
     
 CC_CONSTRUCTOR_ACCESS:
     MeshVertexData();

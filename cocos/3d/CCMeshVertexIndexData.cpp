@@ -97,7 +97,7 @@ MeshIndexData::~MeshIndexData()
 #endif
 }
 
-void MeshVertexData::setMeshData(const std::vector<float> &vertexData)
+void MeshVertexData::setVertexData(const std::vector<float> &vertexData)
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     if(_vertexData.size() > 0)
@@ -122,7 +122,7 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
     if(vertexdata->_vertexBuffer)
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-        vertexdata->setMeshData(meshdata.vertex);
+        vertexdata->setVertexData(meshdata.vertex);
         vertexdata->_vertexBuffer->needReloadExternal(true);
 #endif
         vertexdata->_vertexBuffer->updateData((void*)&meshdata.vertex[0], meshdata.vertex.size() * sizeof(meshdata.vertex[0]));
