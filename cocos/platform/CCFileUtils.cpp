@@ -898,7 +898,7 @@ std::string FileUtils::fullPathForDirectory(const std::string &dir) const
     {
         for (const auto& resolutionIt : _searchResolutionsOrderArray)
         {
-            fullpath = searchIt + longdir + resolutionIt;
+            fullpath.append(searchIt).append(longdir).append(resolutionIt);
             auto exists = isDirectoryExistInternal(fullpath);
 
             if (exists && !fullpath.empty())
@@ -1180,7 +1180,7 @@ bool FileUtils::isDirectoryExist(const std::string& dirPath) const
         for (const auto& resolutionIt : _searchResolutionsOrderArray)
         {
             // searchPath + file_path + resourceDirectory
-            fullpath = fullPathForDirectory(searchIt + dirPath + resolutionIt);
+            fullpath = fullPathForDirectory(std::string(searchIt).append(dirPath).append(resolutionIt));
             if (isDirectoryExistInternal(fullpath))
             {
                 _fullPathCacheDir.emplace(dirPath, fullpath);

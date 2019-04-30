@@ -526,7 +526,8 @@ long cc_utf8_strlen (const char * p, int /*max*/)
 unsigned int cc_utf8_find_last_not_char(const std::vector<unsigned short>& str, unsigned short c)
 {
     std::vector<char16_t> char16Vector;
-    for (const auto& e : str)
+    char16Vector.reserve(str.size());
+for (const auto& e : str)
     {
         char16Vector.push_back(e);
     }
