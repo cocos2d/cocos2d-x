@@ -13,14 +13,13 @@ public:
     
     virtual void updateData(void* data, unsigned int size) override;
     virtual void updateSubData(void* data, unsigned int offset, unsigned int size) override;
+    virtual void usingDefaultStoredData(bool needDefaultStoredData) override {};
     
     id<MTLBuffer> getMTLBuffer() const;
     void beginFrame();
     
 private:
     void updateIndex();
-    virtual void reloadBufferData(void* data, unsigned int size) override {}
-    virtual void needReloadExternal(bool needReloadExternal) override {}
 
     id<MTLBuffer> _mtlBuffer = nil;
     NSMutableArray* _dynamicDataBuffers = nil;

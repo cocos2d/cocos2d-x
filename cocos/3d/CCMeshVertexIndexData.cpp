@@ -73,9 +73,9 @@ MeshIndexData::MeshIndexData()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
-        _indexBuffer->reloadBufferData((void*)_indexData.data(), _indexData.size() * sizeof(_indexData[0]));
+        _indexBuffer->updateData((void*)_indexData.data(), _indexData.size() * sizeof(_indexData[0]));
     });
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
 #endif
 }
 
@@ -123,7 +123,7 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
     {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
         vertexdata->setVertexData(meshdata.vertex);
-        vertexdata->_vertexBuffer->needReloadExternal(true);
+        vertexdata->_vertexBuffer->usingDefaultStoredData(false);
 #endif
         vertexdata->_vertexBuffer->updateData((void*)&meshdata.vertex[0], meshdata.vertex.size() * sizeof(meshdata.vertex[0]));
     }
@@ -134,7 +134,7 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
         auto& index = meshdata.subMeshIndices[i];
         auto indexBuffer = backend::Device::getInstance()->newBuffer(index.size() * sizeof(index[0]), backend::BufferType::INDEX, backend::BufferUsage::STATIC);
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-        indexBuffer->needReloadExternal(true);
+        indexBuffer->usingDefaultStoredData(false);
 #endif
         indexBuffer->updateData((void*)index.data(), index.size() * sizeof(index[0]));
         
@@ -179,9 +179,9 @@ MeshVertexData::MeshVertexData()
 {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
-        _vertexBuffer->reloadBufferData((void*)_vertexData.data(), _vertexData.size() * sizeof(_vertexData[0]));
+        _vertexBuffer->updateData((void*)_vertexData.data(), _vertexData.size() * sizeof(_vertexData[0]));
     });
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
 #endif
 }
 

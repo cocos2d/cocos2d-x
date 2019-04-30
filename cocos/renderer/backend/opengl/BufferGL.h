@@ -16,12 +16,9 @@ public:
     
     virtual void updateData(void* data, unsigned int size) override;
     virtual void updateSubData(void* data, unsigned int offset, unsigned int size) override;
+    virtual void usingDefaultStoredData(bool needDefaultStoredData) override ;
 
     inline GLuint getHandler() const { return _buffer; }
-
-private:
-    virtual void reloadBufferData(void* data, unsigned int size) override ;
-    virtual void needReloadExternal(bool needReloadExternal) override ;
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     void reloadBuffer();
@@ -34,7 +31,7 @@ private:
     GLuint _buffer = 0;
     unsigned int _bufferAllocated = 0;
     char* _data = nullptr;
-    bool _needReloadExternal = false;
+    bool _needDefaultStoredData = true;
 };
 
 CC_BACKEND_END
