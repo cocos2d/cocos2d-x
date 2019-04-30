@@ -24,8 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CC_EGLViewIMPL_DESKTOP_H__
-#define __CC_EGLViewIMPL_DESKTOP_H__
+#pragma once
 
 #include "base/CCRef.h"
 #include "platform/CCCommon.h"
@@ -268,5 +267,3 @@ private:
 };
 
 NS_CC_END   // end of namespace   cocos2d
-
-#endif  // end of __CC_EGLViewImpl_DESKTOP_H__

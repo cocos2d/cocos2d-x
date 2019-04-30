@@ -1008,9 +1008,7 @@ static bool glew_dynamic_binding()
 bool GLViewImpl::initGlew()
 {
 
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-//#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
     GLenum GlewInitResult = glewInit();
     if (GLEW_OK != GlewInitResult)
     {
@@ -1037,12 +1035,15 @@ bool GLViewImpl::initGlew()
     }
 
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     if(glew_dynamic_binding() == false)
     {
         MessageBox("No OpenGL framebuffer support. Please upgrade the driver of your video card.", "OpenGL error");
         return false;
     }
-#endif
+#endif //#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+
+#endif //#if (CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
 
     return true;
 }
