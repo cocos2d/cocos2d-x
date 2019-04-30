@@ -442,6 +442,11 @@ void TMXLayer::updatePrimitives()
     }
 }
 
+void TMXLayer::setOpacity(GLubyte opacity) {
+    Node::setOpacity(opacity);
+    _quadsDirty = true;
+}
+
 void TMXLayer::updateTotalQuads()
 {
     if(_quadsDirty)
@@ -453,6 +458,15 @@ void TMXLayer::updateTotalQuads()
         _indices.resize(6 * int(_layerSize.width * _layerSize.height));
         _tileToQuadIndex.resize(int(_layerSize.width * _layerSize.height),-1);
         _indicesVertexZOffsets.clear();
+
+        auto color = Color4B::WHITE;
+        color.a = getDisplayedOpacity();
+
+        if (_texture->hasPremultipliedAlpha()) {
+            color.r *= color.a / 255.0f;
+            color.g *= color.a / 255.0f;
+            color.b *= color.a / 255.0f;
+        }
         
         int quadIndex = 0;
         for(int y = 0; y < _layerSize.height; ++y)
@@ -551,11 +565,11 @@ void TMXLayer::updateTotalQuads()
                 quad.tl.texCoords.v = top;
                 quad.tr.texCoords.u = right;
                 quad.tr.texCoords.v = top;
-                
-                quad.bl.colors = Color4B::WHITE;
-                quad.br.colors = Color4B::WHITE;
-                quad.tl.colors = Color4B::WHITE;
-                quad.tr.colors = Color4B::WHITE;
+
+                quad.bl.colors = color;
+                quad.br.colors = color;
+                quad.tl.colors = color;
+                quad.tr.colors = color;
                 
                 ++quadIndex;
             }
