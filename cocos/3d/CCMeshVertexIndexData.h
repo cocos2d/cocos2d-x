@@ -79,8 +79,10 @@ public:
     MeshCommand::PrimitiveType getPrimitiveType() const { return _primitiveType; }
     void   setPrimitiveType(MeshCommand::PrimitiveType primitive) { _primitiveType = primitive; }
     
+    void setIndexData(const MeshData::IndexArray& indexdata);
+    
 CC_CONSTRUCTOR_ACCESS:
-    MeshIndexData() = default;
+    MeshIndexData();
     virtual ~MeshIndexData();
     
 protected:
@@ -89,14 +91,18 @@ protected:
     AABB                _aabb; // original aabb of the submesh
     std::string         _id; //id
     MeshCommand::PrimitiveType   _primitiveType = MeshCommand::PrimitiveType::TRIANGLE;
-    
+    MeshData::IndexArray _indexData;
+
     friend class MeshVertexData;
     friend class Sprite3D;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    EventListenerCustom* _backToForegroundListener = nullptr;
+#endif
 };
 
 /**
  * the MeshVertexData class.
- * @brief the MeshIndexData contain all of the vertices data which mesh need.
+ * @brief the MeshVertexData contain all of the vertices data which mesh need.
  */
 class CC_DLL MeshVertexData : public Ref
 {
@@ -127,9 +133,11 @@ public:
     /**has vertex attribute?*/
     //TODO: will be removed!
     bool hasVertexAttrib(shaderinfos::VertexKey attrib) const;
+
+    void setMeshData(const MeshData& meshdata);
     
 CC_CONSTRUCTOR_ACCESS:
-    MeshVertexData() = default;
+    MeshVertexData();
     virtual ~MeshVertexData();
 
 protected:
@@ -140,6 +148,10 @@ protected:
     std::vector<MeshVertexAttrib> _attribs; //vertex attributes
     
     int _vertexCount = 0; //vertex count
+    MeshData _meshData;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    EventListenerCustom* _backToForegroundListener = nullptr;
+#endif
 };
 
 // end of 3d group

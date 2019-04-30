@@ -69,9 +69,36 @@ backend::Buffer* MeshIndexData::getVertexBuffer() const
     return _vertexData->getVertexBuffer();
 }
 
+MeshIndexData::MeshIndexData()
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
+        _indexBuffer->reloadBufferData((void*)_indexData.data(), _indexData.size() * sizeof(_indexData[0]));
+    });
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
+}
+
+void MeshIndexData::setIndexData(const cocos2d::MeshData::IndexArray &indexdata)
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    _indexData = indexdata;
+#endif
+}
+
 MeshIndexData::~MeshIndexData()
 {
     CC_SAFE_RELEASE(_indexBuffer);
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
+}
+
+void MeshVertexData::setMeshData(const cocos2d::MeshData &meshdata)
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    _meshData = meshdata;
+#endif
 }
 
 MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
@@ -89,14 +116,21 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
     
     if(vertexdata->_vertexBuffer)
     {
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+        vertexdata->setMeshData(meshdata);
+        vertexdata->_vertexBuffer->needReloadExternal(true);
+#endif
         vertexdata->_vertexBuffer->updateData((void*)&meshdata.vertex[0], meshdata.vertex.size() * sizeof(meshdata.vertex[0]));
     }
     
     bool needCalcAABB = (meshdata.subMeshAABB.size() != meshdata.subMeshIndices.size());
-    for (size_t i = 0, size = meshdata.subMeshIndices.size(); i < size; ++i) {
-
+    for (size_t i = 0, size = meshdata.subMeshIndices.size(); i < size; ++i)
+    {
         auto& index = meshdata.subMeshIndices[i];
         auto indexBuffer = backend::Device::getInstance()->newBuffer(index.size() * sizeof(index[0]), backend::BufferType::INDEX, backend::BufferUsage::STATIC);
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+        indexBuffer->needReloadExternal(true);
+#endif
         indexBuffer->updateData((void*)index.data(), index.size() * sizeof(index[0]));
         
         std::string id = (i < meshdata.subMeshIds.size() ? meshdata.subMeshIds[i] : "");
@@ -108,7 +142,9 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
         }
         else
             indexdata = MeshIndexData::create(id, vertexdata, indexBuffer, meshdata.subMeshAABB[i]);
-        
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+        indexdata->setIndexData(index);
+#endif
         vertexdata->_indexs.pushBack(indexdata);
     }
     
@@ -134,10 +170,24 @@ bool MeshVertexData::hasVertexAttrib(shaderinfos::VertexKey attrib) const
     return false;
 }
 
+MeshVertexData::MeshVertexData()
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
+        _vertexBuffer->reloadBufferData((void*)&_meshData.vertex[0], _meshData.vertex.size() * sizeof(_meshData.vertex[0]));
+    });
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
+}
+
 MeshVertexData::~MeshVertexData()
 {
     CC_SAFE_RELEASE(_vertexBuffer);
     _indexs.clear();
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 NS_CC_END

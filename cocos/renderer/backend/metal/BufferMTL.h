@@ -19,6 +19,8 @@ public:
     
 private:
     void updateIndex();
+    virtual void reloadBufferData(void* data, unsigned int size) override {}
+    virtual void needReloadExternal(bool needReloadExternal) override {}
 
     id<MTLBuffer> _mtlBuffer = nil;
     NSMutableArray* _dynamicDataBuffers = nil;

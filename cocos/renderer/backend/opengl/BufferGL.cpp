@@ -31,9 +31,28 @@ BufferGL::~BufferGL()
 #endif
 }
 
+void BufferGL::reloadBufferData(void* data, unsigned int size)
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    assert(_bufferAllocated == size);
+    glGenBuffers(1, &_buffer);
+    updateData(data, size);
+#endif
+}
+
+void BufferGL::needReloadExternal(bool needReloadExternal)
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    _needReloadExternal = needReloadExternal;
+#endif
+}
+
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 void BufferGL::reloadBuffer()
 {
+    if(_needReloadExternal)
+        return;
+
     _bufferAlreadyFilled = true;
     glGenBuffers(1, &_buffer);
     updateData(_data, _bufferAllocated);
@@ -41,7 +60,7 @@ void BufferGL::reloadBuffer()
 
 void BufferGL::fillBuffer(void* data, unsigned int offset, unsigned int size)
 {
-    if(_bufferAlreadyFilled)
+    if(_bufferAlreadyFilled || _needReloadExternal || BufferUsage::STATIC != _usage)
         return;
 
     if(_data == nullptr)
@@ -49,10 +68,8 @@ void BufferGL::fillBuffer(void* data, unsigned int offset, unsigned int size)
         _data = new (std::nothrow) char[_bufferAllocated];
     }
 
-    if(BufferUsage::STATIC ==  _usage)
-    {
-        memcpy(_data + offset, data, size);
-    }
+    memcpy(_data + offset, data, size);
+
 }
 #endif
 

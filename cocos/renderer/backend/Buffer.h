@@ -4,6 +4,11 @@
 #include "Types.h"
 #include "base/CCRef.h"
 
+namespace cocos2d {
+    class MeshVertexData;
+    class MeshIndexData;
+}
+
 CC_BACKEND_BEGIN
 
 class Buffer : public cocos2d::Ref
@@ -22,10 +27,19 @@ protected:
     {}
     
     virtual ~Buffer() = default;
+
+    //using external data to reload buffer when it comes to foreground
+    virtual void reloadBufferData(void* data, unsigned int size) = 0;
+
+    //true means reload data ouside the buffer, otherwise reload data from the inside of the buffer.
+    virtual void needReloadExternal(bool needReloadExternal) = 0;
     
     BufferUsage _usage = BufferUsage::DYNAMIC;
     BufferType _type = BufferType::VERTEX;
     unsigned int _size = 0;
+
+    friend class cocos2d::MeshVertexData;
+    friend class cocos2d::MeshIndexData;
 };
 
 CC_BACKEND_END
