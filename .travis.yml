@@ -11,6 +11,12 @@ matrix:
         - secure: M5lyDs0qai15mWHzJdkh0WPfVJJmVZu6SWtYULxatukGPXVwoQvmEtYAwAW+iz6aM+tXksQ/mk6nW5L8UFbHm+n6yrsa5bZU9sGXjilPE8p8bLFYDmIbPRazU+E6pBP3J2CDoAm0XnWkiYQ8feTxKTo6ysLnHAEjyaHTw0+Q1GM=
       sudo: required
       language: cpp
+    # clang-tidy
+    - os: linux
+      dist: xenial
+      env: BUILD_TARGET=linux_clang_tidy
+      language: cpp
+      sudo: required
     # mac_cmake
     - os: osx
       env: BUILD_TARGET=mac_cmake

@@ -1,0 +1,10 @@
+---
+Checks: >
+  -*,
+  performance-faster-string-find,
+  performance-for-range-copy,
+
+WarningsAsErrors: '*'
+HeaderFilterRegex: '/(?!external)/.*'
+AnalyzeTemporaryDtors: false
+FormatStyle:     none

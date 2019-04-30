@@ -37,6 +37,16 @@ function build_linux()
     cmake --build .
 }
 
+function build_linux_clang_tidy()
+{
+    echo "Building clang tidy test on Linux ..."
+    cd $COCOS2DX_ROOT/build
+    mkdir -p clang-tidy-build
+    cd clang-tidy-build
+    cmake ../.. -DCMAKE_EXPORT_COMPILE_COMMANDS=on
+    python $(dirname $(dirname $(readlink -f `which clang-tidy`)))/share/clang/run-clang-tidy.py
+}
+
 function build_mac()
 {
     NUM_OF_CORES=`getconf _NPROCESSORS_ONLN`
@@ -289,6 +299,11 @@ function run_pull_request()
     if [ $BUILD_TARGET == 'linux' ]; then
         genernate_binding_codes
         build_linux
+    fi
+
+    # linux_clang_tidy_test
+    if [ $BUILD_TARGET == 'linux_clang_tidy' ]; then
+        build_linux_clang_tidy
     fi
 
     # android
