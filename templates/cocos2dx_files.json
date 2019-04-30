@@ -1,6 +1,7 @@
 {
     "common": [
         ".appveyor.yml", 
+        ".clang-tidy", 
         "AUTHORS", 
         "CHANGELOG", 
         "CMakeLists.txt", 
