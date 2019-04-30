@@ -95,14 +95,6 @@ bool ShaderNode::initWithVertex(const std::string &vert, const std::string &frag
 {
     _vertFileName = vert;
     _fragFileName = frag;
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    auto listener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
-            this->setProgramState(nullptr);
-            loadShaderVertex(_vertFileName, _fragFileName);
-        });
-
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-#endif
 
     loadShaderVertex(vert, frag);
 
@@ -201,6 +193,9 @@ void ShaderNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
 void ShaderNode::updateUniforms()
 {
+    if(_programState == nullptr)
+        return;
+
     _locResolution  = _programState->getUniformLocation("resolution");
     _locCenter      = _programState->getUniformLocation("center");
     _locMVP         = _programState->getUniformLocation("u_MVPMatrix");

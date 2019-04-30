@@ -11,7 +11,7 @@ class ShaderModuleGL : public ShaderModule
 public:
     ShaderModuleGL(ShaderStage stage, const std::string& source);
     ~ShaderModuleGL();
-    
+
     inline GLuint getShader() const { return _shader; }
     
 private:
@@ -20,6 +20,7 @@ private:
     void deleteShader();
     
     GLuint _shader = 0;
+    friend class ProgramGL;
 };
 
 CC_BACKEND_END

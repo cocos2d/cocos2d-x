@@ -12,11 +12,11 @@ class ShaderModule : public cocos2d::Ref
 {
 public:
     ShaderStage getShaderStage() const;
-    
+
 protected:
     ShaderModule(ShaderStage stage);
     virtual ~ShaderModule();
-    
+
     ShaderStage _stage = ShaderStage::VERTEX;
 };
 

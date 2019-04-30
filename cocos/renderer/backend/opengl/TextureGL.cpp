@@ -1,7 +1,12 @@
 #include "TextureGL.h"
 #include "base/ccMacros.h"
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventType.h"
+#include "base/CCDirector.h"
 #include "platform/CCPlatformConfig.h"
 #include "renderer/backend/opengl/UtilsGL.h"
+
 CC_BACKEND_BEGIN
 
 #define ISPOW2(n) (((n) & (n-1)) == 0)
@@ -44,15 +49,45 @@ Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : Texture2D(descri
    
     // Update data here because `updateData()` may not be invoked later.
     // For example, a texture used as depth buffer will not invoke updateData().
-    uint8_t* data = (uint8_t*)malloc(_width * _height * _bitsPerElement / 8);
+    initWithZeros();
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    // Listen this event to restored texture id after coming to foreground on Android.
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
+        glGenTextures(1, &(this->_textureInfo.texture));
+        this->initWithZeros();
+    });
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
+}
+
+void Texture2DGL::initWithZeros()
+{
+    auto size = _width * _height * _bitsPerElement / 8;
+    uint8_t* data = (uint8_t*)malloc(size);
+    memset(data, 0, size);
     updateData(data);
     free(data);
+}
+
+void Texture2DGL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
+{
+    Texture::updateTextureDescriptor(descriptor);
+    UtilsGL::toGLTypes(descriptor.textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
+    _width = descriptor.width;
+    _height = descriptor.height;
+    updateSamplerDescriptor(descriptor.samplerDescriptor);
+    initWithZeros();
 }
 
 Texture2DGL::~Texture2DGL()
 {
     if (_textureInfo.texture)
         glDeleteTextures(1, &_textureInfo.texture);
+    _textureInfo.texture = 0;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
@@ -235,7 +270,37 @@ TextureCubeGL::TextureCubeGL(const TextureDescriptor& descriptor)
     UtilsGL::toGLTypes(_textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
     glGenTextures(1, &_textureInfo.texture);
     updateSamplerDescriptor(descriptor.samplerDescriptor);
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    // Listen this event to restored texture id after coming to foreground on Android.
+    _backToForegroundListener = EventListenerCustom::create(EVENT_COME_TO_FOREGROUND, [this](EventCustom*){
+        glGenTextures(1, &(this->_textureInfo.texture));
+        this->setTexParameters();
+    });
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
     CHECK_GL_ERROR_DEBUG();
+}
+
+void TextureCubeGL::setTexParameters()
+{
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _textureInfo.texture);
+
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, _textureInfo.minFilterGL);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, _textureInfo.magFilterGL);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, _textureInfo.sAddressModeGL);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, _textureInfo.tAddressModeGL);
+
+    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+}
+
+void TextureCubeGL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
+{
+    UtilsGL::toGLTypes(descriptor.textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
+    _textureFormat = descriptor.textureFormat;
+    _size = descriptor.width;
+    updateSamplerDescriptor(descriptor.samplerDescriptor);
 }
 
 TextureCubeGL::~TextureCubeGL()
@@ -243,20 +308,16 @@ TextureCubeGL::~TextureCubeGL()
     if(_textureInfo.texture)
         glDeleteTextures(1, &_textureInfo.texture);
     _textureInfo.texture = 0;
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 void TextureCubeGL::updateSamplerDescriptor(const SamplerDescriptor &sampler)
 {
     _textureInfo.applySamplerDescriptor(sampler, true);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, _textureInfo.texture);
-    
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, _textureInfo.minFilterGL);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, _textureInfo.magFilterGL);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, _textureInfo.sAddressModeGL);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, _textureInfo.tAddressModeGL);
-
-    glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+    setTexParameters();
 }
 
 void TextureCubeGL::apply(int index) const

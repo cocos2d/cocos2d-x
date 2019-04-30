@@ -2,6 +2,9 @@
 #include "ShaderModuleGL.h"
 #include "renderer/backend/Types.h"
 #include "base/ccMacros.h"
+#include "base/CCDirector.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventType.h"
 #include "renderer/backend/opengl/UtilsGL.h"
 
 CC_BACKEND_BEGIN
@@ -17,6 +20,21 @@ ProgramGL::ProgramGL(const std::string& vertexShader, const std::string& fragmen
     CC_SAFE_RETAIN(_fragmentShaderModule);
     compileProgram();
     computeUniformInfos();
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    for(const auto& uniform: _uniformInfos)
+    {
+        UniformLocation uniformLocation;
+        uniformLocation.location = glGetUniformLocation(_program, uniform.first.c_str());
+        _originalUniformLocations[uniform.first] = uniformLocation;
+        _uniformLocationMap[uniform.second.location] = uniform.second.location;
+    }
+
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
+        this->reloadProgram();
+    });
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
 }
 
 ProgramGL::~ProgramGL()
@@ -25,7 +43,28 @@ ProgramGL::~ProgramGL()
     CC_SAFE_RELEASE(_fragmentShaderModule);
     if (_program)
         glDeleteProgram(_program);
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+void ProgramGL::reloadProgram()
+{
+    _uniformInfos.clear();
+    static_cast<ShaderModuleGL*>(_vertexShaderModule)->compileShader(backend::ShaderStage::VERTEX, _vertexShader);
+    static_cast<ShaderModuleGL*>(_fragmentShaderModule)->compileShader(backend::ShaderStage::FRAGMENT, _fragmentShader);
+    compileProgram();
+    computeUniformInfos();
+
+    for(const auto& uniform : _uniformInfos)
+    {
+        auto location = _originalUniformLocations[uniform.first].location;
+        _uniformLocationMap[location] = uniform.second.location;
+    }
+}
+#endif
 
 void ProgramGL::compileProgram()
 {
@@ -144,7 +183,6 @@ const std::unordered_map<std::string, AttributeBindInfo> ProgramGL::getActiveAtt
 
 }
 
-
 void ProgramGL::computeUniformInfos()
 {
     if (!_program)
@@ -185,8 +223,15 @@ void ProgramGL::computeUniformInfos()
 UniformLocation ProgramGL::getUniformLocation(const std::string& uniform) const
 {
     UniformLocation uniformLocation;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    if(_originalUniformLocations.find(uniform) != _originalUniformLocations.end())
+        return _originalUniformLocations.at(uniform);
+    else
+        return uniformLocation;
+#else
     uniformLocation.location = glGetUniformLocation(_program, uniform.c_str());
     return uniformLocation;
+#endif
 }
 
 const std::unordered_map<std::string, UniformInfo>& ProgramGL::getVertexUniformInfos() const
@@ -207,5 +252,15 @@ int ProgramGL::getMaxFragmentLocation() const
 {
     return _maxLocation;
 }
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+int ProgramGL::getMappedLocation(int location) const
+{
+    if(_uniformLocationMap.find(location) != _uniformLocationMap.end())
+        return _uniformLocationMap.at(location);
+    else
+        return -1;
+}
+#endif
 
 CC_BACKEND_END

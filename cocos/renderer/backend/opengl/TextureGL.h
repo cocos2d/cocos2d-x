@@ -2,6 +2,7 @@
 
 #include "../Texture.h"
 #include "platform/CCGL.h"
+#include "base/CCEventListenerCustom.h"
 
 CC_BACKEND_BEGIN
 
@@ -33,14 +34,19 @@ public:
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler)  override;
     virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) override;
     virtual void generateMipmaps() override;
+    virtual void updateTextureDescriptor(const TextureDescriptor& descriptor) override;
 
-    void apply(int index) const;
     inline GLuint getHandler() const { return _textureInfo.texture; }
 
+    void apply(int index) const;
+
 private:
+    void initWithZeros();
+
     SamplerDescriptor _samplerDescriptor;
     bool _isCompressed = false;
     TextureInfoGL _textureInfo;
+    EventListener* _backToForegroundListener = nullptr;
 };
 
 class TextureCubeGL: public backend::TextureCubemap
@@ -53,12 +59,17 @@ public:
     virtual void updateFaceData(TextureCubeFace side, void *data) override;
     virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) override;
     virtual void generateMipmaps() override;
+    virtual void updateTextureDescriptor(const TextureDescriptor& descriptor) override ;
 
-    void apply(int index) const;
     inline GLuint getHandler() const { return _textureInfo.texture; }
 
+    void apply(int index) const;
+
 private:
+    void setTexParameters();
+
     TextureInfoGL _textureInfo;
+    EventListener* _backToForegroundListener = nullptr;
 };
 
 CC_BACKEND_END

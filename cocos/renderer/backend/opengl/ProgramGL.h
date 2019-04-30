@@ -4,6 +4,7 @@
 #include "../Types.h"
 #include "../RenderPipelineDescriptor.h"
 #include "base/CCRef.h"
+#include "base/CCEventListenerCustom.h"
 #include "platform/CCGL.h"
 #include "../Program.h"
 
@@ -52,6 +53,11 @@ private:
     void compileProgram();
     bool getAttributeLocation(const std::string& attributeName, unsigned int& location) const;
     void computeUniformInfos();
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    virtual void reloadProgram();
+    virtual int getMappedLocation(int location) const override;
+    virtual const std::unordered_map<std::string, UniformLocation> getAllUniformsLocation() const override { return _originalUniformLocations; }
+#endif
     
     GLuint _program = 0;
     ShaderModuleGL* _vertexShaderModule = nullptr;
@@ -59,6 +65,11 @@ private:
     
     std::vector<VertexAttributeArray> _attributeInfos;
     std::unordered_map<std::string, UniformInfo> _uniformInfos;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    std::unordered_map<std::string, UniformLocation> _originalUniformLocations;
+    std::unordered_map<int, int> _uniformLocationMap;
+    EventListenerCustom* _backToForegroundListener = nullptr;
+#endif
     
     int _maxLocation = -1;
 };

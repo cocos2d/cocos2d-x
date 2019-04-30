@@ -205,8 +205,10 @@ Texture2D::Texture2D()
 , _ninePatchInfo(nullptr)
 , _valid(true)
 , _alphaTexture(nullptr)
-, _texture(nullptr)
 {
+    backend::TextureDescriptor textureDescriptor;
+    textureDescriptor.textureFormat = TextureFormat::NONE;
+    _texture = static_cast<backend::Texture2D*>(backend::Device::getInstance()->newTexture(textureDescriptor));
 }
 
 Texture2D::~Texture2D()
@@ -222,7 +224,6 @@ Texture2D::~Texture2D()
 
     CC_SAFE_RELEASE(_texture);
 }
-
 
 Texture2D::PixelFormat Texture2D::getPixelFormat() const
 {
@@ -341,6 +342,10 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
         return false;
     }
 
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    VolatileTextureMgr::findVolotileTexture(this);
+#endif
+
     auto device = backend::Device::getInstance();
     backend::TextureDescriptor textureDescriptor;
     textureDescriptor.width = pixelsWide;
@@ -374,8 +379,9 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     CCASSERT(textureDescriptor.textureFormat != backend::TextureFormat::NONE, "TextureFormat should not be NONE");
     
     textureDescriptor.compressed = info.compressed;
-    
-    _texture = static_cast<backend::Texture2D*>(device->newTexture(textureDescriptor));
+
+    if(_texture->getTextureFormat() != textureDescriptor.textureFormat)
+        _texture->updateTextureDescriptor(textureDescriptor);
 
     _texture->updateData(outData);
     if(outData && outData != data && outDataLen > 0)
@@ -920,9 +926,6 @@ void Texture2D::generateMipmap()
 
     _texture->generateMipmaps();
     _hasMipmaps = true;
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    VolatileTextureMgr::setHasMipmaps(this, _hasMipmaps);
-#endif
 }
 
 

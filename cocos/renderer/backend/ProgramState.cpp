@@ -3,6 +3,9 @@
 #include "renderer/backend/Program.h"
 #include "renderer/backend/Texture.h"
 #include "renderer/backend/Types.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventType.h"
+#include "base/CCDirector.h"
 
 #include <algorithm>
 
@@ -178,6 +181,43 @@ ProgramState::ProgramState(const std::string& vertexShader, const std::string& f
         _fragmentUniformInfos.resize(maxFragmentLocaiton);
         createFragmentUniformBuffer();
     }
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
+        this->resetUniforms();
+    });
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
+}
+
+void ProgramState::resetUniforms()
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    if(_program == nullptr)
+        return;
+
+    const auto& uniforms = _program->getAllUniformsLocation();
+    const auto& uniformInfos = _program->getVertexUniformInfos();
+    for(const auto& uniform : uniforms)
+    {
+        auto location = uniform.second.location;
+        auto mappedLocation = _program->getMappedLocation(location);
+        bool isTextureLocation = uniformInfos.at(uniform.first).bufferSize == 0;
+
+        if(isTextureLocation)
+        {
+            //check if current location had been set before
+            if(_vertexTextureInfos.find(location) != _vertexTextureInfos.end())
+            {
+                _vertexTextureInfos[location].location = mappedLocation;
+            }
+        }
+        else
+        {
+            _vertexUniformInfos[location].uniformInfo.location = mappedLocation;
+        }
+    }
+#endif
 }
 
 ProgramState::ProgramState()
@@ -186,12 +226,16 @@ ProgramState::ProgramState()
 
 ProgramState::~ProgramState()
 {
-    CC_SAFE_RELEASE(_program);
+    CC_SAFE_RELEASE_NULL(_program);
     
     _vertexUniformInfos.clear();
     _fragmentUniformInfos.clear();
     _vertexTextureInfos.clear();
     _fragmentTextureInfos.clear();
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 ProgramState *ProgramState::clone() const
@@ -338,6 +382,7 @@ void ProgramState::setVertexUniform(int location, const void* data, uint32_t siz
         return;
     }
 #endif
+
     _vertexUniformInfos[location].data.assign((char*)data, (char*)data + size);
 }
 
@@ -404,6 +449,9 @@ void ProgramState::setTexture(int location, uint32_t slot, backend::Texture* tex
     info.slot = {slot};
     info.textures = {texture};
     info.retainTextures();
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    info.location = location;
+#endif
     textureInfo[location] = std::move(info);
 }
 
@@ -414,7 +462,11 @@ void ProgramState::setTextureArray(int location, const std::vector<uint32_t>& sl
     info.slot = slots;
     info.textures = textures;
     info.retainTextures();
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    info.location = location;
+#endif
     textureInfo[location] = std::move(info);
+
 }
 
 void ProgramState::setParameterAutoBinding(const std::string &uniform, const std::string &autoBinding)

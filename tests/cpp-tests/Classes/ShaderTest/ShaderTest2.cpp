@@ -189,25 +189,11 @@ bool Effect::initProgramState(const std::string &fragmentFilename)
 
 Effect::Effect()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    _backgroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
-                                                      [this](EventCustom*)
-                                                      {
-                                                          CC_SAFE_RELEASE(_programState);
-                                                          auto *programState = new backend::ProgramState(positionTextureColor_vert, _fragSource.c_str());
-                                                          _programState = programState;
-                                                      }
-                                                      );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backgroundListener, -1);
-#endif
 }
 
 Effect::~Effect()
 {
     CC_SAFE_RELEASE_NULL(_programState);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_backgroundListener);
-#endif
 }
 
 // Blur

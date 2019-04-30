@@ -31,6 +31,13 @@ public:
     
 protected:
     Program(const std::string& vs, const std::string& fs);
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    virtual int getMappedLocation(int location) const = 0; //get the ture location after opengl program reload
+    virtual const std::unordered_map<std::string, UniformLocation> getAllUniformsLocation() const = 0;
+    friend class ProgramState;
+    friend class ProgramCache;
+#endif
     
     std::string _vertexShader;
     std::string _fragmentShader;

@@ -6,6 +6,9 @@
 #include "ProgramGL.h"
 #include "BlendStateGL.h"
 #include "base/ccMacros.h"
+#include "base/CCEventDispatcher.h"
+#include "base/CCEventType.h"
+#include "base/CCDirector.h"
 #include "renderer/backend/opengl/UtilsGL.h"
 #include <algorithm>
 
@@ -48,12 +51,24 @@ namespace
 CommandBufferGL::CommandBufferGL()
 {
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_defaultFBO);
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
+       if(_frameBuffer)
+           glGenFramebuffers(1, &_frameBuffer); //recreate framebuffer
+    });
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
 }
 
 CommandBufferGL::~CommandBufferGL()
 {
     glDeleteFramebuffers(1, &_frameBuffer);
     cleanResources();
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 void CommandBufferGL::beginFrame()
@@ -397,7 +412,10 @@ void CommandBufferGL::setUniforms(ProgramGL* program) const
         {
             const auto& textures = iter.second.textures;
             const auto& slot = iter.second.slot;
-            
+            auto location = iter.first;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+            location = iter.second.location;
+#endif
             int i = 0;
             for (const auto& texture: textures)
             {
@@ -407,9 +425,9 @@ void CommandBufferGL::setUniforms(ProgramGL* program) const
             
             auto arrayCount = slot.size();
             if (arrayCount > 1)
-                glUniform1iv(iter.first, (uint32_t)arrayCount, (GLint*)slot.data());
+                glUniform1iv(location, (uint32_t)arrayCount, (GLint*)slot.data());
             else
-                glUniform1i(iter.first, slot[0]);
+                glUniform1i(location, slot[0]);
         }
     }
 }

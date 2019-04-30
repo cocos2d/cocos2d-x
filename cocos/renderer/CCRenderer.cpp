@@ -178,10 +178,6 @@ Renderer::~Renderer()
     _groupCommandManager->release();
     
     free(_triBatchesToDraw);
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_cacheTextureListener);
-#endif
     
     CC_SAFE_RELEASE(_commandBuffer);
     

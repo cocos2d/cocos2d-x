@@ -720,7 +720,6 @@ VolatileTexture::VolatileTexture(Texture2D *t)
 , _textureData(nullptr)
 , _pixelFormat(Texture2D::PixelFormat::RGBA8888)
 , _fileName("")
-, _hasMipmaps(false)
 , _text("")
 {
 }
@@ -753,6 +752,7 @@ void VolatileTextureMgr::addImage(Texture2D *tt, Image *image)
     image->retain();
     vt->_uiImage = image;
     vt->_cashedImageType = VolatileTexture::kImage;
+    vt->_pixelFormat = tt->getPixelFormat();
 }
 
 VolatileTexture* VolatileTextureMgr::findVolotileTexture(Texture2D *tt)
@@ -807,18 +807,6 @@ void VolatileTextureMgr::addStringTexture(Texture2D *tt, const char* text, const
     vt->_fontDefinition = fontDefinition;
 }
 
-void VolatileTextureMgr::setHasMipmaps(Texture2D *t, bool hasMipmaps)
-{
-    VolatileTexture *vt = findVolotileTexture(t);
-    vt->_hasMipmaps = hasMipmaps;
-}
-
-void VolatileTextureMgr::setSamplerDescriptor(Texture2D *t, const backend::SamplerDescriptor &desc)
-{
-    VolatileTexture *vt = findVolotileTexture(t);
-    vt->_samplerDescriptor = desc;
-}
-
 void VolatileTextureMgr::removeTexture(Texture2D *t)
 {
     for (auto& item : _textures)
@@ -836,14 +824,6 @@ void VolatileTextureMgr::removeTexture(Texture2D *t)
 void VolatileTextureMgr::reloadAllTextures()
 {
     _isReloading = true;
-
-    // we need to release all of the glTextures to avoid collisions of texture id's when reloading the textures onto the GPU
-    for (auto& item : _textures)
-    {
-        //TODO new-renderer: interface releaseGLTexture removal
-    //    item->_texture->releaseGLTexture();
-    }
-
     CCLOG("reload all texture");
 
     for (auto& texture : _textures)
@@ -878,16 +858,12 @@ void VolatileTextureMgr::reloadAllTextures()
         break;
         case VolatileTexture::kImage:
         {
-            vt->_texture->initWithImage(vt->_uiImage);
+            vt->_texture->initWithImage(vt->_uiImage, vt->_pixelFormat);
         }
         break;
         default:
             break;
         }
-        if (vt->_hasMipmaps) {
-            vt->_texture->generateMipmap();
-        }
-        vt->_texture->setTexParameters(vt->_samplerDescriptor);
     }
 
     _isReloading = false;

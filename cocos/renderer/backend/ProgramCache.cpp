@@ -119,9 +119,10 @@ void ProgramCache::removeUnusedProgram()
     }
 }
 
-void ProgramCache::removeAllProgram()
+void ProgramCache::removeAllPrograms()
 {
-    for (auto& program : _cachedPrograms) {
+    for (auto& program : _cachedPrograms)
+    {
         program.second->release();
     }
     _cachedPrograms.clear();

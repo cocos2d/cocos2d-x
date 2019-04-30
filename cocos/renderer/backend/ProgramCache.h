@@ -22,7 +22,7 @@ public:
     backend::Program* newProgram(const std::string& vertexShader, const std::string& fragmentShader);
     void removeProgram(backend::Program* program);
     void removeUnusedProgram();
-    void removeAllProgram();
+    void removeAllPrograms();
     
 protected:
     ProgramCache() = default;

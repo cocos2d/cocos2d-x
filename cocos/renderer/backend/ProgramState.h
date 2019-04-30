@@ -7,6 +7,7 @@
 #include <functional>
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
+#include "base/CCEventListenerCustom.h"
 #include "renderer/backend/Types.h"
 #include "renderer/backend/Program.h"
 
@@ -44,6 +45,9 @@ struct TextureInfo
     
     std::vector<uint32_t> slot;
     std::vector<backend::Texture*> textures;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    int location = -1;
+#endif
 };
 
 class ProgramState : public Ref
@@ -152,6 +156,7 @@ protected:
     void createFragmentUniformBuffer();
     void setTexture(int location, uint32_t slot, backend::Texture* texture, std::unordered_map<int, TextureInfo>& textureInfo);
     void setTextureArray(int location, const std::vector<uint32_t>& slots, const std::vector<backend::Texture*> textures, std::unordered_map<int, TextureInfo>& textureInfo);
+    void resetUniforms();
     
 #ifdef CC_USE_METAL
     //float3 etc in Metal has both sizeof and alignment same as float4, convert it before fill into uniform buffer
@@ -176,6 +181,10 @@ protected:
     std::unordered_map<std::string, std::string>            _autoBindings;
 
     static std::vector<AutoBindingResolver*>                _customAutoBindingResolvers;
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    EventListenerCustom* _backToForegroundListener = nullptr;
+#endif
 };
 
 CC_BACKEND_END

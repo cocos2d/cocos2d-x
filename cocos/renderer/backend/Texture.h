@@ -26,6 +26,7 @@ public:
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) = 0;
     virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) = 0;
     virtual void generateMipmaps() = 0;
+    virtual void updateTextureDescriptor(const TextureDescriptor& descriptor);
 
     inline TextureFormat getTextureFormat() const { return _textureFormat; }
     inline TextureUsage getTextureUsage() const { return _textureUsage; }

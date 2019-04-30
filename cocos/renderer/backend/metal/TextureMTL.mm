@@ -102,16 +102,7 @@ TextureMTL::TextureMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descrip
 : backend::Texture2D(descriptor)
 {
     _mtlDevice = mtlDevice;
-    createTexture(mtlDevice, descriptor);
-    createSampler(mtlDevice, descriptor.samplerDescriptor);
-    
-    // Metal doesn't support RGB888/RGBA4444, so should convert to RGBA888;
-    if (TextureFormat::R8G8B8 == _textureFormat)
-    {
-        _bitsPerElement = 4 * 8;
-    }
-    
-    _bytesPerRow = descriptor.width * _bitsPerElement / 8 ;
+    updateTextureDescriptor(descriptor);
 }
 
 TextureMTL::~TextureMTL()
@@ -123,6 +114,19 @@ TextureMTL::~TextureMTL()
 void TextureMTL::updateSamplerDescriptor(const SamplerDescriptor &sampler)
 {
     createSampler(_mtlDevice, sampler);
+}
+
+void TextureMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
+{
+    Texture::updateTextureDescriptor(descriptor);
+    createTexture(_mtlDevice, descriptor);
+    updateSamplerDescriptor(descriptor.samplerDescriptor);
+    if (TextureFormat::R8G8B8 == _textureFormat)
+    {
+        _bitsPerElement = 4 * 8;
+    }
+    
+    _bytesPerRow = descriptor.width * _bitsPerElement / 8 ;
 }
 
 void TextureMTL::updateData(uint8_t* data)
@@ -164,8 +168,12 @@ void TextureMTL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsig
 
 void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
 {
+    MTLPixelFormat pixelFormat = Utils::toMTLPixelFormat(descriptor.textureFormat);
+    if(pixelFormat == MTLPixelFormatInvalid)
+        return;
+    
     MTLTextureDescriptor* textureDescriptor =
-           [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:Utils::toMTLPixelFormat(descriptor.textureFormat)
+           [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:pixelFormat
                                                               width:descriptor.width
                                                              height:descriptor.height
                                                           mipmapped:YES];
@@ -177,6 +185,9 @@ void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor&
             textureDescriptor.resourceOptions = MTLResourceStorageModePrivate;
         textureDescriptor.usage = MTLTextureUsageRenderTarget | MTLTextureUsageShaderRead;
     }
+    
+    if(_mtlTexture)
+        [_mtlTexture release];
     _mtlTexture = [mtlDevice newTextureWithDescriptor:textureDescriptor];
 }
 
@@ -254,8 +265,20 @@ TextureCubeMTL::TextureCubeMTL(id<MTLDevice> mtlDevice, const TextureDescriptor&
 : backend::TextureCubemap(descriptor)
 {
     _mtlDevice = mtlDevice;
-    createTexture(mtlDevice, descriptor);
-    createSampler(mtlDevice, descriptor.samplerDescriptor);
+    updateTextureDescriptor(descriptor);
+}
+
+TextureCubeMTL::~TextureCubeMTL()
+{
+    [_mtlTexture release];
+    [_mtlSamplerState release];
+}
+
+void TextureCubeMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
+{
+    Texture::updateTextureDescriptor(descriptor);
+    createTexture(_mtlDevice, descriptor);
+    updateSamplerDescriptor(descriptor.samplerDescriptor);
     
     // Metal doesn't support RGB888/RGBA4444, so should convert to RGBA888;
     if (TextureFormat::R8G8B8 == _textureFormat)
@@ -266,25 +289,25 @@ TextureCubeMTL::TextureCubeMTL(id<MTLDevice> mtlDevice, const TextureDescriptor&
     _bytesPerRow = descriptor.width * _bitsPerElement / 8 ;
     _bytesPerImage = _bytesPerRow * descriptor.width;
     _region = MTLRegionMake2D(0, 0, descriptor.width, descriptor.height);
-
-}
-
-TextureCubeMTL::~TextureCubeMTL()
-{
-    [_mtlTexture release];
-    [_mtlSamplerState release];
 }
 
 void TextureCubeMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
 {
+    MTLPixelFormat pixelFormat = Utils::toMTLPixelFormat(descriptor.textureFormat);
+    if(pixelFormat == MTLPixelFormatInvalid)
+        return;
+    
     MTLTextureDescriptor* textureDescriptor =
-    [MTLTextureDescriptor textureCubeDescriptorWithPixelFormat:Utils::toMTLPixelFormat(descriptor.textureFormat) size:descriptor.width mipmapped:YES];
+    [MTLTextureDescriptor textureCubeDescriptorWithPixelFormat:pixelFormat size:descriptor.width mipmapped:YES];
     
     if (TextureUsage::RENDER_TARGET == descriptor.textureUsage)
     {
         textureDescriptor.resourceOptions = MTLResourceStorageModePrivate;
         textureDescriptor.usage = MTLTextureUsageRenderTarget | MTLTextureUsageShaderRead;
     }
+    
+    if(_mtlTexture)
+        [_mtlTexture release];
     _mtlTexture = [mtlDevice newTextureWithDescriptor:textureDescriptor];
 }
 

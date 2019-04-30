@@ -384,10 +384,6 @@ protected:
     };
 
     std::deque<StateBlock> _stateBlockStack;
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    EventListenerCustom* _cacheTextureListener = nullptr;
-#endif
 };
 
 NS_CC_END
