@@ -121,10 +121,7 @@ void Configuration::gatherGPUInfo()
     _supportsPVRTC = false;
 #endif
     _supportsETC1 = false; //support etc2;
-    
-    //TODO coulsonwang  There is currently no API for querying most Metal implementation limits.
-    _maxAttributes = 31;
-    _valueDict["max_vertex_attributes"] = Value((int)_maxAttributes);
+    _supportsNPOT = true;
 }
 #else
 void Configuration::gatherGPUInfo()
