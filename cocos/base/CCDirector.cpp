@@ -1065,7 +1065,11 @@ void Director::reset()
         }
     }
 #endif // CC_ENABLE_GC_FOR_NATIVE_OBJECTS
-    _scenesStack.clear();
+
+    while (!_scenesStack.empty())
+    {
+        _scenesStack.popBack();
+    }
     
     stopAnimation();
     
