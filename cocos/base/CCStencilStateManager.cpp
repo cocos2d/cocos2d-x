@@ -44,7 +44,7 @@ StencilStateManager::StencilStateManager()
     auto iter = attributeInfo.find("a_position");
     if(iter != attributeInfo.end())
     {
-        vertexLayout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
+        vertexLayout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
     }
     vertexLayout.setLayout(2 * sizeof(float), backend::VertexStepMode::VERTEX);
 

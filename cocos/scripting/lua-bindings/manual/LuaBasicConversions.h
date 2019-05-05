@@ -47,6 +47,8 @@ extern "C" {
 #include "physics/CCPhysicsJoint.h"
 #include "physics/CCPhysicsShape.h"
 #include "physics/CCPhysicsWorld.h"
+#include "renderer/backend/Types.h"
+#include "renderer/backend/VertexLayout.h"
 
 using namespace cocos2d;
 
@@ -113,6 +115,18 @@ extern bool luaval_to_ulong(lua_State* L,int lo, unsigned long* outValue, const 
  * @return Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
  */
 extern bool luaval_to_ushort(lua_State* L, int lo, unsigned short* outValue, const char* funcName = "");
+
+/**
+* Get a float value from the given acceptable index of stack.
+* If the value at the given acceptable index of stack is a number or a string convertible to a number it returns true, otherwise returns false.
+*
+* @param L the current lua_State.
+* @param lo the given acceptable index of stack.
+* @param outValue the pointer to store the float value converted from the Lua value.
+* @param funcName the name of calling function, it is used for error output in the debug model.
+* @return Return true if the value at the given acceptable index of stack is a number or a string convertible to a number, otherwise return false.
+*/
+extern bool luaval_to_float(lua_State* L, int lo, float* outValue, const char* funcName = "");
 
 /**
  * Get a int value from the given acceptable index of stack.
@@ -1267,6 +1281,30 @@ void std_map_string_string_to_luaval(lua_State* L, const std::map<std::string, s
 // Follow 2 function is added for Cocos Studio to make lua lib can be compile as dynamic library
 CC_LUA_DLL extern bool luaval_to_node(lua_State* L, int lo, const char* type, cocos2d::Node** node);
 CC_LUA_DLL extern void node_to_luaval(lua_State* L, const char* type, cocos2d::Node* node);
+
+
+/**
+* convert lua object VertexLayout to native object
+*/
+CC_LUA_DLL bool luaval_to_vertexLayout(lua_State* L, int pos, cocos2d::backend::VertexLayout& outLayout, char *message);
+
+/**
+* convert lua object SamplerDescriptor to native object
+*/
+CC_LUA_DLL bool luaval_to_samplerDescriptor(lua_State* L, int pos, cocos2d::backend::SamplerDescriptor& desc, char *message);
+
+/**
+* convert lua object to cocos2d::backend::UniformLocation
+*/
+CC_LUA_DLL bool luaval_to_uniformLocation(lua_State* L, int pos, cocos2d::backend::UniformLocation& desc, char *message);
+
+/**
+* convert cocos2d::backend::UniformLocation to lua object
+*/
+CC_LUA_DLL void uniformLocation_to_luaval(lua_State* L, const cocos2d::backend::UniformLocation& desc);
+
+CC_LUA_DLL void program_activeattrs_to_luaval(lua_State *L , const std::unordered_map<std::string, cocos2d::backend::AttributeBindInfo> &map);
+
 
 // end group
 /// @}

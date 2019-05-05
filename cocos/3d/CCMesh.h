@@ -196,7 +196,7 @@ public:
      */
     void setProgramState(backend::ProgramState* programState);
 
-    virtual void setVertexLayout(const backend::VertexLayout &vertexLayout);
+    virtual void setVertexLayout(const backend::VertexLayout *vertexLayout);
 
 
     /** Sets a new Material to the Mesh */

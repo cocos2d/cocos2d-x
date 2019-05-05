@@ -133,8 +133,8 @@ void Physics3DDebugDrawer::init()
     _locMVP = _programState->getUniformLocation("u_MVPMatrix");
     
     auto &layout = _customCommand.getPipelineDescriptor().vertexLayout;
-    layout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(V3F_V4F, vertex), false);
-    layout.setAtrribute("a_color", 1, backend::VertexFormat::FLOAT4, offsetof(V3F_V4F, color), false);
+    layout.setAttribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(V3F_V4F, vertex), false);
+    layout.setAttribute("a_color", 1, backend::VertexFormat::FLOAT4, offsetof(V3F_V4F, color), false);
     layout.setLayout(sizeof(V3F_V4F), backend::VertexStepMode::VERTEX);
 
     _buffer.reserve(512);

@@ -1287,11 +1287,11 @@ void FogTestDemo::onEnter()
     for (auto i = 0; i < attributeCount; i++) {
         auto meshattribute = _sprite3D1->getMesh()->getMeshVertexAttribute(i);
         auto attributeName = shaderinfos::getAttributeName(meshattribute.vertexAttrib);
-        layout1.setAtrribute(attributeName, i, meshattribute.type, offset, false);
+        layout1.setAttribute(attributeName, i, meshattribute.type, offset, false);
         offset += meshattribute.getAttribSizeBytes();
     }
     layout1.setLayout(offset, backend::VertexStepMode::VERTEX);
-    _sprite3D1->setVertexLayout(layout1);
+    _sprite3D1->setVertexLayout(&layout1);
 
     backend::VertexLayout layout2;
     long offset1 = 0; 
@@ -1299,11 +1299,11 @@ void FogTestDemo::onEnter()
     for (auto i = 0; i < attributeCount1; i++) {
         auto meshattribute = _sprite3D2->getMesh()->getMeshVertexAttribute(i);
         auto attributeName = shaderinfos::getAttributeName(meshattribute.vertexAttrib);
-        layout2.setAtrribute(attributeName, i, meshattribute.type, offset1, false);
+        layout2.setAttribute(attributeName, i, meshattribute.type, offset1, false);
         offset1 += meshattribute.getAttribSizeBytes();
     }
     layout2.setLayout(offset1, backend::VertexStepMode::VERTEX);
-    _sprite3D2->setVertexLayout(layout2);
+    _sprite3D2->setVertexLayout(&layout2);
 
     auto    fogColor    = Vec4(0.5, 0.5, 0.5, 1.0);
     float   fogStart    = 10;

@@ -53,6 +53,7 @@ extern "C" {
 #include "scripting/lua-bindings/auto/lua_cocos2dx_physics_auto.hpp"
 #include "scripting/lua-bindings/manual/cocos2d/lua_cocos2dx_physics_manual.hpp"
 #include "scripting/lua-bindings/auto/lua_cocos2dx_experimental_auto.hpp"
+#include "scripting/lua-bindings/auto/lua_cocos2dx_backend_auto.hpp"
 #include "scripting/lua-bindings/manual/cocos2d/lua_cocos2dx_experimental_manual.hpp"
 #include "base/ZipUtils.h"
 #include "scripting/deprecated/CCBool.h"
@@ -144,11 +145,14 @@ bool LuaStack::init(void)
 
     g_luaType.clear();
     register_all_cocos2dx(_state);
+    register_all_cocos2dx_backend(_state);
     register_all_cocos2dx_manual(_state);
     register_all_cocos2dx_module_manual(_state);
     register_all_cocos2dx_math_manual(_state);
-    //TODO minggo
-    // register_all_cocos2dx_experimental(_state);
+    register_all_cocos2dx_shaders_manual(_state);
+    register_all_cocos2dx_bytearray_manual(_state);
+    
+    register_all_cocos2dx_experimental(_state);
     register_all_cocos2dx_experimental_manual(_state);
 
 #if CC_USE_PHYSICS

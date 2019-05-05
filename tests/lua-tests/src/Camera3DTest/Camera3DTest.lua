@@ -656,34 +656,48 @@ function FogTestDemo:createMenu()
     local label1 = cc.Label:createWithTTF(ttfConfig,"Linear ")
     local menuItem1 = cc.MenuItemLabel:create(label1)
     menuItem1:registerScriptTapHandler(function (tag, sender )
-        self._state:setUniformVec4("u_fogColor", cc.vec4(0.5,0.5,0.5,1.0))
-        self._state:setUniformFloat("u_fogStart",10)
-        self._state:setUniformFloat("u_fogEnd",60)
-        self._state:setUniformInt("u_fogEquation" ,0)
+        self._shader1:setUniform("u_fogColor", cc.bytearray.from_vec4( cc.vec4(0.5,0.5,0.5,1.0)))
+        self._shader1:setUniform("u_fogStart",cc.bytearray.from_float( 10))
+        self._shader1:setUniform("u_fogEnd",cc.bytearray.from_float( 60))
+        self._shader1:setUniform("u_fogEquation" ,cc.bytearray.from_int(0))
 
-        self._sprite3D1:setGLProgramState(self._state)
-        self._sprite3D2:setGLProgramState(self._state)
+        self._shader2:setUniform("u_fogColor", cc.bytearray.from_vec4( cc.vec4(0.5,0.5,0.5,1.0)))
+        self._shader2:setUniform("u_fogStart",cc.bytearray.from_float( 10))
+        self._shader2:setUniform("u_fogEnd",cc.bytearray.from_float( 60))
+        self._shader2:setUniform("u_fogEquation" ,cc.bytearray.from_int(0))
+
+
+        self._sprite3D1:setProgramState(self._shader1)
+        self._sprite3D2:setProgramState(self._shader2)
     end)
 
     local label2 = cc.Label:createWithTTF(ttfConfig,"Exp")
     local menuItem2 = cc.MenuItemLabel:create(label2)
     menuItem2:registerScriptTapHandler(function (tag, sender )
-        self._state:setUniformVec4("u_fogColor", cc.vec4(0.5,0.5,0.5,1.0))
-        self._state:setUniformFloat("u_fogDensity",0.03)
-        self._state:setUniformInt("u_fogEquation" ,1)
+        self._shader1:setUniform("u_fogColor", cc.bytearray.from_vec4( cc.vec4(0.5,0.5,0.5,1.0)))
+        self._shader1:setUniform("u_fogDensity",cc.bytearray.from_float( 0.03))
+        self._shader1:setUniform("u_fogEquation" ,cc.bytearray.from_int(1))
 
-        self._sprite3D1:setGLProgramState(self._state)
-        self._sprite3D2:setGLProgramState(self._state)
+        self._shader2:setUniform("u_fogColor", cc.bytearray.from_vec4( cc.vec4(0.5,0.5,0.5,1.0)))
+        self._shader2:setUniform("u_fogDensity",cc.bytearray.from_float( 0.03))
+        self._shader2:setUniform("u_fogEquation" ,cc.bytearray.from_int(1))
+
+        self._sprite3D1:setProgramState(self._shader1)
+        self._sprite3D2:setProgramState(self._shader2)
     end)
     local label3 = cc.Label:createWithTTF(ttfConfig,"Exp2")
     local menuItem3 = cc.MenuItemLabel:create(label3)
     menuItem3:registerScriptTapHandler(function (tag, sender )
-        self._state:setUniformVec4("u_fogColor", cc.vec4(0.5,0.5,0.5,1.0))
-        self._state:setUniformFloat("u_fogDensity",0.03)
-        self._state:setUniformInt("u_fogEquation" ,2)
+        self._shader1:setUniform("u_fogColor", cc.bytearray.from_vec4( cc.vec4(0.5,0.5,0.5,1.0)))
+        self._shader1:setUniform("u_fogDensity",cc.bytearray.from_float( 0.03))
+        self._shader1:setUniform("u_fogEquation" ,cc.bytearray.from_int(2))
 
-        self._sprite3D1:setGLProgramState(self._state)
-        self._sprite3D2:setGLProgramState(self._state)
+        self._shader2:setUniform("u_fogColor", cc.bytearray.from_vec4( cc.vec4(0.5,0.5,0.5,1.0)))
+        self._shader2:setUniform("u_fogDensity",cc.bytearray.from_float( 0.03))
+        self._shader2:setUniform("u_fogEquation" ,cc.bytearray.from_int(2))
+
+        self._sprite3D1:setProgramState(self._shader1)
+        self._sprite3D2:setProgramState(self._shader2)
     end)
     local menu = cc.Menu:create(menuItem1, menuItem2, menuItem3)
     
@@ -703,14 +717,19 @@ function FogTestDemo:createLayer3D()
     self:addChild(layer3D,0)
     self._layer3D = layer3D
 
-    self._shader = cc.GLProgram:createWithFilenames("Sprite3DTest/fog.vert","Sprite3DTest/fog.frag")
-    self._state  = cc.GLProgramState:create(self._shader)
+    local vertexShader = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/fog.vert")
+    local fragmentShader = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/fog.frag")
+
+    self._shader1 = ccb.ProgramState:new(vertexShader, fragmentShader)
+    self._shader2 = self._shader1:clone()
 
     self._sprite3D1 = cc.Sprite3D:create("Sprite3DTest/teapot.c3b")
     self._sprite3D2 = cc.Sprite3D:create("Sprite3DTest/teapot.c3b")
 
-    self._sprite3D1:setGLProgramState(self._state)
-    self._sprite3D2:setGLProgramState(self._state)
+    self._sprite3D1:setProgramState(self._shader1)
+    self._sprite3D2:setProgramState(self._shader2)
+    
+    local attributes = self._shader1:getProgram():getActiveAttributes();
 
     --pass mesh's attribute to shader
     local attributeNames = 
@@ -725,37 +744,33 @@ function FogTestDemo:createLayer3D()
         "a_blendWeight",
         "a_blendIndex",
     }
-
+    ---- update vertex layout of sprite3d -1
     local offset = 0 
     local attributeCount = self._sprite3D1:getMesh():getMeshVertexAttribCount()
+    local vertexLayout = ccb.VertexLayout:new()
     for i = 1, attributeCount do
         local meshattribute = self._sprite3D1:getMesh():getMeshVertexAttribute(i - 1)
-        self._state:setVertexAttribPointer(attributeNames[meshattribute.vertexAttrib + 1],
-            meshattribute.size, 
-            meshattribute.type,
-            false,
-            self._sprite3D1:getMesh():getVertexSizeInBytes(),
-            offset)
+        local attrName = attributeNames[meshattribute.vertexAttrib+1]
+
+        if (attributes[attrName] ~= nil) then
+            vertexLayout:setAttribute(attrName, attributes[attrName].location, meshattribute.type, offset, false)
+        end
         offset = offset + meshattribute.attribSizeBytes
     end
+    
+    vertexLayout:setLayout(offset, ccb.VertexStepMode.VERTEX)
+    self._sprite3D1:setVertexLayout(vertexLayout)
+    self._sprite3D2:setVertexLayout(vertexLayout)
 
-    local offset1 = 0
-    local attributeCount1 = self._sprite3D2:getMesh():getMeshVertexAttribCount()
-    for i = 1,  attributeCount1 do
-        local meshattribute = self._sprite3D2:getMesh():getMeshVertexAttribute(i - 1)
-        self._state:setVertexAttribPointer(attributeNames[meshattribute.vertexAttrib + 1],
-            meshattribute.size, 
-            meshattribute.type,
-            false,
-            self._sprite3D2:getMesh():getVertexSizeInBytes(),
-            offset1)
-        offset1 = offset1 + meshattribute.attribSizeBytes
-    end
+    self._shader1:setUniform("u_fogColor", cc.bytearray.from_vec4(cc.vec4(0.5,0.5,0.5,1.0)))
+    self._shader1:setUniform("u_fogStart",cc.bytearray.from_float(10))
+    self._shader1:setUniform("u_fogEnd",cc.bytearray.from_float(60))
+    self._shader1:setUniform("u_fogEquation" ,cc.bytearray.from_int(0))
 
-    self._state:setUniformVec4("u_fogColor", cc.vec4(0.5,0.5,0.5,1.0))
-    self._state:setUniformFloat("u_fogStart",10)
-    self._state:setUniformFloat("u_fogEnd",60)
-    self._state:setUniformInt("u_fogEquation" ,0)
+    self._shader2:setUniform("u_fogColor", cc.bytearray.from_vec4(cc.vec4(0.5,0.5,0.5,1.0)))
+    self._shader2:setUniform("u_fogStart",cc.bytearray.from_float(10))
+    self._shader2:setUniform("u_fogEnd",cc.bytearray.from_float(60))
+    self._shader2:setUniform("u_fogEquation" ,cc.bytearray.from_int(0))
 
     self._layer3D:addChild(self._sprite3D1)
     self._sprite3D1:setPosition3D( cc.vec3( 0, 0,0 ) )
@@ -777,25 +792,6 @@ function FogTestDemo:createLayer3D()
     end
 
     self._layer3D:setCameraMask(2)
-
-    local targetPlatform = cc.Application:getInstance():getTargetPlatform()
-    if targetPlatform == cc.PLATFORM_OS_ANDROID  or targetPlatform == cc.PLATFORM_OS_WINRT  or targetPlatform == cc.PLATFORM_OS_WP8  then
-        self._backToForegroundListener = cc.EventListenerCustom:create("event_renderer_recreated", function (eventCustom)
-            -- body
-            cc.Director:getInstance():setClearColor(cc.c4f(0.5,0.5,0.5,1))
-            local glProgram = self._state:getGLProgram()
-            glProgram:reset()
-            glProgram:initWithFilenames("Sprite3DTest/fog.vert","Sprite3DTest/fog.frag")
-            glProgram:link()
-            glProgram:updateUniforms()
-            
-            self._state:setUniformVec4("u_fogColor", cc.vec4(0.5,0.5,0.5,1.0))
-            self._state:setUniformFloat("u_fogStart",10)
-            self._state:setUniformFloat("u_fogEnd",60)
-            self._state:setUniformInt("u_fogEquation" ,0)
-        end)
-        cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(self._backToForegroundListener, -1)
-    end
 end
 
 function FogTestDemo:onEnter()

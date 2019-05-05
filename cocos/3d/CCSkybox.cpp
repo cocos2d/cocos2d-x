@@ -78,7 +78,7 @@ bool Skybox::init()
     const auto& iter = attributeInfo.find(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION);
     if(iter != attributeInfo.end())
     {
-        layout.setAtrribute(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
+        layout.setAttribute(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
     }
     layout.setLayout(sizeof(Vec3), backend::VertexStepMode::VERTEX);
 

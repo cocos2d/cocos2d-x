@@ -126,17 +126,17 @@ void SpriteBatchNode::updateShaders(const std::string &vertexShader, const std::
     auto iter = attributeInfo.find("a_position");
     if(iter != attributeInfo.end())
     {
-        vertexLayout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
+        vertexLayout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
     }
     iter = attributeInfo.find("a_texCoord");
     if(iter != attributeInfo.end())
     {
-        vertexLayout.setAtrribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
+        vertexLayout.setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
     }
     iter = attributeInfo.find("a_color");
     if(iter != attributeInfo.end())
     {
-        vertexLayout.setAtrribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
+        vertexLayout.setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
     }
     vertexLayout.setLayout(sizeof(V3F_C4B_T2F), backend::VertexStepMode::VERTEX);
 }
