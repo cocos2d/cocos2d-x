@@ -69,8 +69,6 @@ public:
     void bindPass(Pass* pass, MeshCommand *);
 
 
-    void unbindPass(Pass* pass, MeshCommand *);
-
     /**
      * Defines a block of fixed-function render states that can be applied to a
      * RenderState object.

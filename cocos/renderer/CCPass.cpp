@@ -225,13 +225,13 @@ void Pass::onBeforeVisitCmd(MeshCommand *command)
 {
     auto *renderer = Director::getInstance()->getRenderer();
 
+    //save renderer states
     _rendererDepthTestEnabled = renderer->getDepthTest();
     _rendererDepthCmpFunc = renderer->getDepthCompareFunction();
     _rendererCullMode = renderer->getCullMode();
-    
     _rendererDepthWrite = renderer->getDepthWrite();
     _rendererWinding = renderer->getWinding();
-    renderer->setDepthTest(true);
+    //apply state blocks
     _renderState.bindPass(this, command);
 
     updateMVPUniform(command->getMV());
@@ -240,7 +240,7 @@ void Pass::onBeforeVisitCmd(MeshCommand *command)
 void Pass::onAfterVisitCmd(MeshCommand *command)
 {
     auto *renderer = Director::getInstance()->getRenderer();
-    _renderState.unbindPass(this, command);
+    // restore renderer states
     renderer->setDepthTest(_rendererDepthTestEnabled);
     renderer->setDepthCompareFunction(_rendererDepthCmpFunc);
     renderer->setCullMode(_rendererCullMode);

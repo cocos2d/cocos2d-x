@@ -71,11 +71,6 @@ void RenderState::bindPass(Pass* pass, MeshCommand* command)
 
 }
 
-void RenderState::unbindPass(Pass* pass, MeshCommand* command)
-{
-    auto &pipelineDescriptor = command->getPipelineDescriptor();
-    RenderState::StateBlock::restore(0, &pipelineDescriptor);
-}
 
 RenderState::StateBlock& RenderState::getStateBlock() const
 {
@@ -359,14 +354,7 @@ uint32_t RenderState::StateBlock::getHash() const
 void RenderState::StateBlock::setBlend(bool enabled)
 {
     _blendEnabled = enabled;
-    if (enabled)
-    {
-        _modifiedBits &= ~RS_BLEND;
-    }
-    else
-    {
-        _modifiedBits |= RS_BLEND;
-    }
+    _modifiedBits |= RS_BLEND;
 }
 
 void RenderState::StateBlock::setBlendFunc(const BlendFunc& blendFunc)
@@ -378,110 +366,49 @@ void RenderState::StateBlock::setBlendFunc(const BlendFunc& blendFunc)
 void RenderState::StateBlock::setBlendSrc(backend::BlendFactor blend)
 {
     _blendSrc = blend;
-    if (_blendSrc == backend::BlendFactor::ONE && _blendDst == backend::BlendFactor::ZERO)
-    {
-        // Default blend func
-        _modifiedBits &= ~RS_BLEND_FUNC;
-    }
-    else
-    {
-        _modifiedBits |= RS_BLEND_FUNC;
-    }
+    _modifiedBits |= RS_BLEND_FUNC;
 }
 
 void RenderState::StateBlock::setBlendDst(backend::BlendFactor blend)
 {
     _blendDst = blend;
-    if (_blendSrc == backend::BlendFactor::ONE && _blendDst == backend::BlendFactor::ZERO)
-    {
-        // Default blend func
-        _modifiedBits &= ~RS_BLEND_FUNC;
-    }
-    else
-    {
-        _modifiedBits |= RS_BLEND_FUNC;
-    }
+    _modifiedBits |= RS_BLEND_FUNC;
 }
 
 void RenderState::StateBlock::setCullFace(bool enabled)
 {
     _cullFaceEnabled = enabled;
-    if (!enabled)
-    {
-        _modifiedBits &= ~RS_CULL_FACE;
-    }
-    else
-    {
-        _modifiedBits |= RS_CULL_FACE;
-    }
+    _modifiedBits |= RS_CULL_FACE;
 }
 
 void RenderState::StateBlock::setCullFaceSide(CullFaceSide side)
 {
     _cullFaceSide = side;
-    if (_cullFaceSide == CullFaceSide::BACK)
-    {
-        // Default cull side
-        _modifiedBits &= ~RS_CULL_FACE_SIDE;
-    }
-    else
-    {
-        _modifiedBits |= RS_CULL_FACE_SIDE;
-    }
+    _modifiedBits |= RS_CULL_FACE_SIDE;
 }
 
 void RenderState::StateBlock::setFrontFace(FrontFace winding)
 {
     _frontFace = winding;
-    if (_frontFace == FrontFace::COUNTER_CLOCK_WISE)
-    {
-        // Default front face
-        _modifiedBits &= ~RS_FRONT_FACE;
-    }
-    else
-    {
-        _modifiedBits |= RS_FRONT_FACE;
-    }
+    _modifiedBits |= RS_FRONT_FACE;
 }
 
 void RenderState::StateBlock::setDepthTest(bool enabled)
 {
     _depthTestEnabled = enabled;
-    if (enabled)
-    {
-        _modifiedBits &= ~RS_DEPTH_TEST;
-    }
-    else
-    {
-        _modifiedBits |= RS_DEPTH_TEST;
-    }
+    _modifiedBits |= RS_DEPTH_TEST;
 }
 
 void RenderState::StateBlock::setDepthWrite(bool enabled)
 {
     _depthWriteEnabled = enabled;
-    if (!enabled)
-    {
-        _modifiedBits &= ~RS_DEPTH_WRITE;
-    }
-    else
-    {
-        _modifiedBits |= RS_DEPTH_WRITE;
-    }
+    _modifiedBits |= RS_DEPTH_WRITE;
 }
 
 void RenderState::StateBlock::setDepthFunction(DepthFunction func)
 {
     _depthFunction = func;
-    if (_depthFunction == DepthFunction::LESS)
-    {
-        // Default depth function
-        _modifiedBits &= ~RS_DEPTH_FUNC;
-    }
-    else
-    {
-        _modifiedBits |= RS_DEPTH_FUNC;
-    }
+    _modifiedBits |= RS_DEPTH_FUNC;
 }
 
 NS_CC_END
