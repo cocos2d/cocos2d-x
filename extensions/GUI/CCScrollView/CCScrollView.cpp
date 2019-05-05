@@ -787,7 +787,7 @@ void ScrollView::onTouchMoved(Touch* touch, Event* /*event*/)
                 }
             }
 
-            if (!_touchMoved && fabs(convertDistanceFromPointToInch(dis)) < MOVE_INCH )
+            if (!_touchMoved && std::fabs(convertDistanceFromPointToInch(dis)) < MOVE_INCH )
             {
                 //CCLOG("Invalid movement, distance = [%f, %f], disInch = %f", moveDistance.x, moveDistance.y);
                 return;

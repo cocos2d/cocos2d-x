@@ -426,13 +426,13 @@ void CocosDenshionTest::addChildAt(Node *node, float percentageX, float percenta
 void CocosDenshionTest::updateVolumes(float)
 {
     const float musicVolume = _sliderMusicVolume->getValue();
-    if (fabs(musicVolume - _musicVolume) > 0.001) {
+    if (std::fabs(musicVolume - _musicVolume) > 0.001) {
         _musicVolume = musicVolume;
         SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(_musicVolume);
     }
 
     const float effectsVolume = _sliderEffectsVolume->getValue();
-    if (fabs(effectsVolume - _effectsVolume) > 0.001) {
+    if (std::fabs(effectsVolume - _effectsVolume) > 0.001) {
         _effectsVolume = effectsVolume;
         SimpleAudioEngine::getInstance()->setEffectsVolume(_effectsVolume);
     }
