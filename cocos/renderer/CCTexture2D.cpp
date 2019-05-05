@@ -975,6 +975,8 @@ void Texture2D::setupProgram(float globalZOrder)
         blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
     }
     
+    _programState->setTexture(_textureLocation, 0, _texture);
+    
     _customCommand.init(globalZOrder, blendFunc);
 }
 
@@ -1001,7 +1003,6 @@ void Texture2D::drawInRect(const Rect& rect)
         rect.size.width + rect.origin.x,    rect.size.height  + rect.origin.y,  _maxS,  0.0f };
     
     _programState->setUniform(_mvpMatrixLocation, matrixMVP.m, sizeof(matrixMVP.m));
-    _programState->setTexture(_textureLocation, 0, _texture);
     _customCommand.updateVertexBuffer(vertexData, sizeof(vertexData));
     Director::getInstance()->getRenderer()->addCommand(&_customCommand);
 }
