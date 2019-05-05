@@ -45,7 +45,10 @@ THE SOFTWARE.
 #include "base/CCNinePatchImageParser.h"
 #include "renderer/backend/Device.h"
 #include "renderer/backend/StringUtils.h"
+#include "renderer/backend/ProgramState.h"
+#include "renderer/ccShaders.h"
 #include "renderer/CCTextureUtils.h"
+#include "renderer/CCRenderer.h"
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     #include "renderer/CCTextureCache.h"
@@ -223,6 +226,7 @@ Texture2D::~Texture2D()
     CC_SAFE_DELETE(_ninePatchInfo);
 
     CC_SAFE_RELEASE(_texture);
+    CC_SAFE_RELEASE(_programState);
 }
 
 Texture2D::PixelFormat Texture2D::getPixelFormat() const
@@ -928,6 +932,78 @@ void Texture2D::generateMipmap()
     _hasMipmaps = true;
 }
 
+void Texture2D::setupProgram(float globalZOrder)
+{
+    if(_programState != nullptr)
+        return;
+    
+    auto& pipelineDescriptor = _customCommand.getPipelineDescriptor();
+    //create program state
+    _programState = new (std::nothrow) cocos2d::backend::ProgramState(
+                                                                      positionTexture_vert, positionTexture_frag);
+    _mvpMatrixLocation = _programState->getUniformLocation("u_MVPMatrix");
+    _textureLocation = _programState->getUniformLocation("u_texture");
+    
+    pipelineDescriptor.programState = _programState;
+    
+    //setup vertex layout
+    auto& vertexLayout = pipelineDescriptor.vertexLayout;
+    auto& attributes = _programState->getProgram()->getActiveAttributes();
+    auto iter = attributes.find("a_position");
+    if(iter != attributes.end())
+        vertexLayout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
+    
+    iter = attributes.find("a_texCoord");
+    if(iter != attributes.end())
+        vertexLayout.setAtrribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, 2 * sizeof(float), false);
+    
+    vertexLayout.setLayout(4 * sizeof(float), backend::VertexStepMode::VERTEX);
+    
+    //create vertex buffer
+    _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
+    _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE_STRIP);
+    _customCommand.createVertexBuffer(4 * sizeof(float), 4, CustomCommand::BufferUsage::DYNAMIC);
+    
+    //setup blend state
+    BlendFunc blendFunc;
+    if(hasPremultipliedAlpha())
+    {
+        blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+    }
+    else
+    {
+        blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+    }
+    
+    _customCommand.init(globalZOrder, blendFunc);
+}
 
+void Texture2D::drawAtPoint(const Vec2 &point)
+{
+    float width = (float)_pixelsWide * _maxS;
+    float height = (float)_pixelsHigh * _maxT;
+    Rect rect = { point.x, point.y, width, height };
+    drawInRect(rect);
+}
+
+void Texture2D::drawInRect(const Rect& rect)
+{
+    auto director = Director::getInstance();
+    const auto& modelView = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    const auto& projection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    
+    Mat4 matrixMVP = projection * modelView;
+    
+    float vertexData[] = {
+        rect.origin.x,                      rect.origin.y,                      0.0f,   _maxT,
+        rect.size.width + rect.origin.x,    rect.origin.y,                      _maxS,  _maxT,
+        rect.origin.x,                      rect.size.height  + rect.origin.y,  0.0f,   0.0f,
+        rect.size.width + rect.origin.x,    rect.size.height  + rect.origin.y,  _maxS,  0.0f };
+    
+    _programState->setUniform(_mvpMatrixLocation, matrixMVP.m, sizeof(matrixMVP.m));
+    _programState->setTexture(_textureLocation, 0, _texture);
+    _customCommand.updateVertexBuffer(vertexData, sizeof(vertexData));
+    Director::getInstance()->getRenderer()->addCommand(&_customCommand);
+}
 
 NS_CC_END

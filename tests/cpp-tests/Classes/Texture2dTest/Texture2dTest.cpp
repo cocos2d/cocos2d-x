@@ -1770,6 +1770,9 @@ void TextureDrawAtPoint::onEnter()
     _tex1 = Director::getInstance()->getTextureCache()->addImage("Images/grossinis_sister1.png");
     _Tex2F = Director::getInstance()->getTextureCache()->addImage("Images/grossinis_sister2.png");
 
+    _tex1->setupProgram(_globalZOrder);
+    _Tex2F->setupProgram(_globalZOrder);
+    
     _tex1->retain();
     _Tex2F->retain();
 }
@@ -1794,11 +1797,7 @@ void TextureDrawAtPoint::draw(Renderer *renderer, const Mat4 &transform, uint32_
 {
     TextureDemo::draw(renderer, transform, flags);
     
-    _renderCmd.init(_globalZOrder, transform, flags);
-    //TODO: impl new CustomRenderer
-    //_renderCmd.func = CC_CALLBACK_0(TextureDrawAtPoint::onDraw, this, transform, flags);
-    //renderer->addCommand(&_renderCmd);
-
+    onDraw(transform, flags);
 }
 
 void TextureDrawAtPoint::onDraw(const Mat4 &transform, uint32_t flags)
@@ -1810,9 +1809,8 @@ void TextureDrawAtPoint::onDraw(const Mat4 &transform, uint32_t flags)
 
     auto s = Director::getInstance()->getWinSize();
     
-    //TODO: minggo
-//    _tex1->drawAtPoint(Vec2(s.width/2-50, s.height/2 - 50));
-//    _Tex2F->drawAtPoint(Vec2(s.width/2+50, s.height/2 - 50));
+    _tex1->drawAtPoint(Vec2(s.width/2-50, s.height/2 - 50));
+    _Tex2F->drawAtPoint(Vec2(s.width/2+50, s.height/2 - 50));
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
@@ -1825,6 +1823,9 @@ void TextureDrawInRect::onEnter()
     _tex1 = Director::getInstance()->getTextureCache()->addImage("Images/grossinis_sister1.png");
     _Tex2F = Director::getInstance()->getTextureCache()->addImage("Images/grossinis_sister2.png");
 
+    _tex1->setupProgram(_globalZOrder);
+    _Tex2F->setupProgram(_globalZOrder);
+    
     _tex1->retain();
     _Tex2F->retain();
 }
@@ -1838,11 +1839,7 @@ TextureDrawInRect::~TextureDrawInRect()
 void TextureDrawInRect::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     TextureDemo::draw(renderer, transform, flags);
-
-    _renderCmd.init(_globalZOrder, transform, flags);
-    _renderCmd.func = CC_CALLBACK_0(TextureDrawInRect::onDraw, this, transform, flags);
-    //TODO: impl new CustomRenderer
-    //renderer->addCommand(&_renderCmd);
+    onDraw(transform, flags);
 }
 
 void TextureDrawInRect::onDraw(const Mat4 &transform, uint32_t flags)
@@ -1857,9 +1854,8 @@ void TextureDrawInRect::onDraw(const Mat4 &transform, uint32_t flags)
     auto rect1 = Rect( s.width/2 - 80, 20, _tex1->getContentSize().width * 0.5f, _tex1->getContentSize().height *2 );
     auto rect2 = Rect( s.width/2 + 80, s.height/2, _tex1->getContentSize().width * 2, _tex1->getContentSize().height * 0.5f );
     
-    //TODO: minggo
-//    _tex1->drawInRect(rect1);
-//    _Tex2F->drawInRect(rect2);
+    _tex1->drawInRect(rect1);
+    _Tex2F->drawInRect(rect2);
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }

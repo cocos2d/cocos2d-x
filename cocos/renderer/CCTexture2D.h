@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "math/CCGeometry.h"
 #include "base/ccTypes.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -50,6 +51,7 @@ namespace ui
 namespace backend {
     class Texture2D;
     class Texture;
+    class ProgramState;
 }
 
 /**
@@ -245,9 +247,9 @@ public:
     These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.
     */
     /** Draws a texture at a given point. */
-//    void drawAtPoint(const Vec2& point);
+    void drawAtPoint(const Vec2& point);
     /** Draws a texture inside a rect.*/
-//    void drawInRect(const Rect& rect);
+    void drawInRect(const Rect& rect);
 
     /**
     Extensions to make it easy to create a Texture2D object from an image file.
@@ -380,6 +382,9 @@ public:
     Texture2D* getAlphaTexture() const;
 
     bool getAlphaTextureName() const;
+    
+    void setupProgram(float globalZOrder);
+    
 public:
     /** Get pixel info map, the key-value pairs is PixelFormat and PixelFormatInfo.*/
     static const PixelFormatInfoMap& getPixelFormatInfoMap();
@@ -427,10 +432,7 @@ private:
      * @param capInsets The parsed capInset from a .9 patch image.
      */
     void addSpriteFrameCapInset(SpriteFrame* spritframe, const Rect& capInsets);
-
-
-
-    
+   
 protected:
     /** pixel format of the texture */
     Texture2D::PixelFormat _pixelFormat;
@@ -472,6 +474,10 @@ protected:
     std::string _filePath;
 
     Texture2D* _alphaTexture;
+    backend::ProgramState* _programState = nullptr;
+    backend::UniformLocation _mvpMatrixLocation;
+    backend::UniformLocation _textureLocation;
+    CustomCommand _customCommand;
 };
 
 
