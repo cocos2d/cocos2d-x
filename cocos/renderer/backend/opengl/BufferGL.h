@@ -20,6 +20,7 @@ public:
 
     inline GLuint getHandler() const { return _buffer; }
 
+private:
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     void reloadBuffer();
     void fillBuffer(void* data, unsigned int offset, unsigned int size);
