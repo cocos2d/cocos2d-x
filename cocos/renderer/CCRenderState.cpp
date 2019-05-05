@@ -63,7 +63,7 @@ void RenderState::bindPass(Pass* pass, MeshCommand* command)
     overrideBits |= material->getStateBlock()._modifiedBits;
 
     // Restore renderer state to its default, except for explicitly specified states
-    RenderState::StateBlock::restore(overrideBits, &pipelineDescriptor);
+    RenderState::StateBlock::restoreUnmodifiedStates(overrideBits, &pipelineDescriptor);
 
     material->getStateBlock().apply(&pipelineDescriptor);
     technique->getStateBlock().apply(&pipelineDescriptor);
@@ -85,7 +85,7 @@ void RenderState::StateBlock::bind(PipelineDescriptor *pipelineDescriptor)
     // irrespective of whether it belongs to a hierarchy of RenderStates.
     // Therefore, we call restore() here with only this StateBlock's override
     // bits to restore state before applying the new state.
-    StateBlock::restore(_modifiedBits, pipelineDescriptor);
+    StateBlock::restoreUnmodifiedStates(_modifiedBits, pipelineDescriptor);
 
     apply(pipelineDescriptor);
 }
@@ -140,7 +140,7 @@ void RenderState::StateBlock::apply(PipelineDescriptor *pipelineDescriptor)
     }
 }
 
-void RenderState::StateBlock::restore(long overrideBits, PipelineDescriptor *programState)
+void RenderState::StateBlock::restoreUnmodifiedStates(long overrideBits, PipelineDescriptor *programState)
 {
     auto renderer = Director::getInstance()->getRenderer();
     auto &blend = programState->blendDescriptor;
