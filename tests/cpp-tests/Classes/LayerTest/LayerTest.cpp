@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "LayerTest.h"
+#include <cmath>
 #include "../testResource.h"
 #include "../cocos/ui/UIText.h"
 

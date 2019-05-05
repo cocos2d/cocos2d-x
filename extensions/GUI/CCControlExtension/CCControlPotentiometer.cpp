@@ -28,6 +28,7 @@
  */
 
 #include "CCControlPotentiometer.h"
+#include <cmath>
 
 NS_CC_EXT_BEGIN
 

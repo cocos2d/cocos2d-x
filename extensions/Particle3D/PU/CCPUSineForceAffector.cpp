@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 #include "CCPUSineForceAffector.h"
+#include <cmath>
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN

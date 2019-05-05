@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "Scene3DTest.h"
-
+#include <cmath>
 #include "ui/CocosGUI.h"
 #include "renderer/CCRenderState.h"
 #include "spine/spine-cocos2dx.h"

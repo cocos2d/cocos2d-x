@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 #include "CCPUMeshSurfaceEmitter.h"
+#include <cmath>
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
 #include "extensions/Particle3D/PU/CCPUUtil.h"
 

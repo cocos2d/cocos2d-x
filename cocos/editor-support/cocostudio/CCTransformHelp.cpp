@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "editor-support/cocostudio/CCTransformHelp.h"
+#include <cmath>
 #include "editor-support/cocostudio/CCUtilMath.h"
 
 using namespace cocos2d;

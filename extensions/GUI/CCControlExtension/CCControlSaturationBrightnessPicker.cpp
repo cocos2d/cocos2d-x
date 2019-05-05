@@ -32,6 +32,7 @@
  */
 
 #include "CCControlSaturationBrightnessPicker.h"
+#include <cmath>
 
 NS_CC_EXT_BEGIN
 

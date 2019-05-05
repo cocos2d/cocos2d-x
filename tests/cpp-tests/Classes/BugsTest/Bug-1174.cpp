@@ -28,6 +28,7 @@
 //
 
 #include "Bug-1174.h"
+#include <cmath>
 
 USING_NS_CC;
 

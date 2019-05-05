@@ -31,7 +31,7 @@
 #include "3d/CCMotionStreak3D.h"
 
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
-
+#include <cmath>
 #include <algorithm>
 #include "../testResource.h"
 

@@ -25,6 +25,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "Camera3DTest.h"
+#include <cmath>
 #include "testResource.h"
 #include "ui/UISlider.h"
 

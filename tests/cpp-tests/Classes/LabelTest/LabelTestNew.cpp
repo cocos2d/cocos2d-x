@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "LabelTestNew.h"
+#include <cmath>
 #include "../testResource.h"
 #include "renderer/CCRenderer.h"
 #include "2d/CCFontAtlasCache.h"

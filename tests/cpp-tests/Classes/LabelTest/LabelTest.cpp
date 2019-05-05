@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "LabelTest.h"
+#include <cmath>
 #include "../testResource.h"
 #include "cocos2d.h"
 

@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCTweenFunction.h"
+#include <cmath>
 
 #define _USE_MATH_DEFINES // needed for M_PI and M_PI2
 #include <math.h> // M_PI

@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "editor-support/cocostudio/CCUtilMath.h"
+#include <cmath>
 
 using namespace cocos2d;
 

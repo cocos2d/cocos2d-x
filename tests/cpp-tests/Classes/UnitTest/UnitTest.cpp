@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "UnitTest.h"
+#include <cmath>
 #include "RefPtrTest.h"
 #include "ui/UIHelper.h"
 #include "network/Uri.h"

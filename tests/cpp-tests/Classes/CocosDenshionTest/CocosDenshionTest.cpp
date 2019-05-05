@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "CocosDenshionTest.h"
+#include <cmath>
 #include "cocos2d.h"
 #include "extensions/GUI/CCControlExtension/CCControlSlider.h"
 #include "audio/include/SimpleAudioEngine.h"

@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "ClickAndMoveTest.h"
+#include <cmath>
 #include "../testResource.h"
 
 USING_NS_CC;
