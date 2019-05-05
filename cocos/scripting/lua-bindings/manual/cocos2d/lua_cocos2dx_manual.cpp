@@ -7002,7 +7002,7 @@ int lua_cocos2dx_get_PipelineDescriptor_programState(lua_State* tolua_S)
         return 0;
     }
 #endif
-    tolua_pushusertype(tolua_S, cobj->programState, "ccbackend.ProgramState");
+    tolua_pushusertype(tolua_S, cobj->programState, "ccb.ProgramState");
     return 1;
 
 #if COCOS2D_DEBUG >= 1
@@ -7038,7 +7038,7 @@ int lua_cocos2dx_set_PipelineDescriptor_programState(lua_State* tolua_S)
     if (1 == argc)
     {
         cocos2d::backend::ProgramState *programState = nullptr;
-        luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 2, "ccbackend.ProgramState", &programState, "lua_cocos2dx_set_PipelineDescriptor_programState");
+        luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 2, "ccb.ProgramState", &programState, "lua_cocos2dx_set_PipelineDescriptor_programState");
         self->programState = programState;
         return 0;
     }
@@ -7071,7 +7071,7 @@ int lua_cocos2dx_get_PipelineDescriptor_vertexLayout(lua_State* tolua_S)
         return 0;
     }
 #endif
-    tolua_pushusertype(tolua_S, &cobj->vertexLayout, "ccbackend.VertexLayout");
+    tolua_pushusertype(tolua_S, &cobj->vertexLayout, "ccb.VertexLayout");
     return 1;
 
 #if COCOS2D_DEBUG >= 1
@@ -7107,7 +7107,7 @@ int lua_cocos2dx_set_PipelineDescriptor_vertexLayout(lua_State* tolua_S)
     if (1 == argc)
     {
         cocos2d::backend::VertexLayout *layout = nullptr;
-        luaval_to_object<cocos2d::backend::VertexLayout>(tolua_S, 2, "ccbackend.VertexLayout", &layout, "lua_cocos2dx_set_PipelineDescriptor_programState");
+        luaval_to_object<cocos2d::backend::VertexLayout>(tolua_S, 2, "ccb.VertexLayout", &layout, "lua_cocos2dx_set_PipelineDescriptor_programState");
         self->vertexLayout = *layout;
         return 0;
     }
@@ -7160,7 +7160,7 @@ static int lua_cocos2dx_ProgramState_setUniform(lua_State *tolua_S)
 
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-    if (!tolua_isusertype(tolua_S, 1, "ccbackend.ProgramState", 0, &tolua_err)) goto tolua_lerror;
+    if (!tolua_isusertype(tolua_S, 1, "ccb.ProgramState", 0, &tolua_err)) goto tolua_lerror;
 #endif
 
     self = (cocos2d::backend::ProgramState*) tolua_tousertype(tolua_S, 1, 0);
@@ -7221,10 +7221,10 @@ static int lua_cocos2dx_ProgramState_setUniform(lua_State *tolua_S)
 
 static void extendProgramState(lua_State *tolua_S)
 {
-    //lua_pushstring(tolua_S, "ccbackend.ProgramState");
+    //lua_pushstring(tolua_S, "ccb.ProgramState");
     //lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     
-    tolua_beginmodule(tolua_S, "ccbackend");
+    tolua_beginmodule(tolua_S, "ccb");
     tolua_beginmodule(tolua_S, "ProgramState");
     if (lua_istable(tolua_S, -1))
     {

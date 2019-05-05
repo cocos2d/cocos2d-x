@@ -87,9 +87,6 @@ if (currPlatform == cc.PLATFORM_OS_TIZEN) then
 end
 
 local _allTests = {
-    { isSupported = true,  name = "ParticleTest"           , create_func   =              ParticleTest      }, 
-    { isSupported = true,  name = "Particle3D (PU)"        , create_func   =              Particle3DTest  },
-   
     { isSupported = true,  name = "Accelerometer"          , create_func=             AccelerometerMain  },
     { isSupported = true,  name = "ActionManagerTest"      , create_func   =         ActionManagerTestMain  },
     { isSupported = true,  name = "ActionsEaseTest"        , create_func   =           EaseActionsTest      },

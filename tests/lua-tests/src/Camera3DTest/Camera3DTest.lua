@@ -720,7 +720,7 @@ function FogTestDemo:createLayer3D()
     local vertexShader = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/fog.vert")
     local fragmentShader = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/fog.frag")
 
-    self._shader1 = ccbackend.ProgramState:new(vertexShader, fragmentShader)
+    self._shader1 = ccb.ProgramState:new(vertexShader, fragmentShader)
     self._shader2 = self._shader1:clone()
 
     self._sprite3D1 = cc.Sprite3D:create("Sprite3DTest/teapot.c3b")
@@ -747,7 +747,7 @@ function FogTestDemo:createLayer3D()
     ---- update vertex layout of sprite3d -1
     local offset = 0 
     local attributeCount = self._sprite3D1:getMesh():getMeshVertexAttribCount()
-    local vertexLayout = ccbackend.VertexLayout:new()
+    local vertexLayout = ccb.VertexLayout:new()
     for i = 1, attributeCount do
         local meshattribute = self._sprite3D1:getMesh():getMeshVertexAttribute(i - 1)
         local attrName = attributeNames[meshattribute.vertexAttrib+1]
@@ -758,7 +758,7 @@ function FogTestDemo:createLayer3D()
         offset = offset + meshattribute.attribSizeBytes
     end
     
-    vertexLayout:setLayout(offset, ccbackend.VertexStepMode.VERTEX)
+    vertexLayout:setLayout(offset, ccb.VertexStepMode.VERTEX)
     self._sprite3D1:setVertexLayout(vertexLayout)
     self._sprite3D2:setVertexLayout(vertexLayout)
 

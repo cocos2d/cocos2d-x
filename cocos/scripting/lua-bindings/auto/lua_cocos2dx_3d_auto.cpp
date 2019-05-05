@@ -1214,7 +1214,7 @@ int lua_cocos2dx_3d_TextureCube_getBackendTexture(lua_State* tolua_S)
             return 0;
         }
         cocos2d::backend::Texture* ret = cobj->getBackendTexture();
-        object_to_luaval<cocos2d::backend::Texture>(tolua_S, "ccbackend.Texture",(cocos2d::backend::Texture*)ret);
+        object_to_luaval<cocos2d::backend::Texture>(tolua_S, "ccb.Texture",(cocos2d::backend::Texture*)ret);
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TextureCube:getBackendTexture",argc, 0);
@@ -1920,7 +1920,7 @@ int lua_cocos2dx_3d_Mesh_setProgramState(lua_State* tolua_S)
     {
         cocos2d::backend::ProgramState* arg0;
 
-        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 2, "ccbackend.ProgramState",&arg0, "cc.Mesh:setProgramState");
+        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 2, "ccb.ProgramState",&arg0, "cc.Mesh:setProgramState");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Mesh_setProgramState'", nullptr);
@@ -2117,7 +2117,7 @@ int lua_cocos2dx_3d_Mesh_setVertexLayout(lua_State* tolua_S)
     {
         const cocos2d::backend::VertexLayout* arg0;
 
-        ok &= luaval_to_object<const cocos2d::backend::VertexLayout>(tolua_S, 2, "ccbackend.VertexLayout",&arg0, "cc.Mesh:setVertexLayout");
+        ok &= luaval_to_object<const cocos2d::backend::VertexLayout>(tolua_S, 2, "ccb.VertexLayout",&arg0, "cc.Mesh:setVertexLayout");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Mesh_setVertexLayout'", nullptr);
@@ -2433,7 +2433,7 @@ int lua_cocos2dx_3d_Mesh_getProgramState(lua_State* tolua_S)
             return 0;
         }
         cocos2d::backend::ProgramState* ret = cobj->getProgramState();
-        object_to_luaval<cocos2d::backend::ProgramState>(tolua_S, "ccbackend.ProgramState",(cocos2d::backend::ProgramState*)ret);
+        object_to_luaval<cocos2d::backend::ProgramState>(tolua_S, "ccb.ProgramState",(cocos2d::backend::ProgramState*)ret);
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Mesh:getProgramState",argc, 0);
@@ -3835,7 +3835,7 @@ int lua_cocos2dx_3d_Sprite3D_setProgramState(lua_State* tolua_S)
     {
         cocos2d::backend::ProgramState* arg0;
 
-        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 2, "ccbackend.ProgramState",&arg0, "cc.Sprite3D:setProgramState");
+        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 2, "ccb.ProgramState",&arg0, "cc.Sprite3D:setProgramState");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Sprite3D_setProgramState'", nullptr);
@@ -4132,7 +4132,7 @@ int lua_cocos2dx_3d_Sprite3D_setVertexLayout(lua_State* tolua_S)
     {
         const cocos2d::backend::VertexLayout* arg0;
 
-        ok &= luaval_to_object<const cocos2d::backend::VertexLayout>(tolua_S, 2, "ccbackend.VertexLayout",&arg0, "cc.Sprite3D:setVertexLayout");
+        ok &= luaval_to_object<const cocos2d::backend::VertexLayout>(tolua_S, 2, "ccb.VertexLayout",&arg0, "cc.Sprite3D:setVertexLayout");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Sprite3D_setVertexLayout'", nullptr);
@@ -5350,7 +5350,7 @@ int lua_cocos2dx_3d_Sprite3DMaterial_createWithProgramState(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::backend::ProgramState* arg0;
-        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 2, "ccbackend.ProgramState",&arg0, "cc.Sprite3DMaterial:createWithProgramState");
+        ok &= luaval_to_object<cocos2d::backend::ProgramState>(tolua_S, 2, "ccb.ProgramState",&arg0, "cc.Sprite3DMaterial:createWithProgramState");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Sprite3DMaterial_createWithProgramState'", nullptr);
