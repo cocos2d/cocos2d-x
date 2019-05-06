@@ -14,7 +14,7 @@ ProgramGL::ProgramGL(const std::string& vertexShader, const std::string& fragmen
 : Program(vertexShader, fragmentShader)
 {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    headersDef.insert(0, "#version 100\n precision highp float;\n precision highp int;\n");
+    string headersDef("#version 100\n precision highp float;\n precision highp int;\n");
     _vertexShader.insert(0, headersDef);
     _fragmentShader.insert(0, headersDef);
 #endif
