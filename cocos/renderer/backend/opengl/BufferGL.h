@@ -16,7 +16,8 @@ public:
     
     virtual void updateData(void* data, unsigned int size) override;
     virtual void updateSubData(void* data, unsigned int offset, unsigned int size) override;
-    
+    virtual void usingDefaultStoredData(bool needDefaultStoredData) override ;
+
     inline GLuint getHandler() const { return _buffer; }
 
 private:
@@ -25,15 +26,13 @@ private:
     void fillBuffer(void* data, unsigned int offset, unsigned int size);
 
     bool _bufferAlreadyFilled = false;
+    EventListenerCustom* _backToForegroundListener = nullptr;
 #endif
 
     GLuint _buffer = 0;
     unsigned int _bufferAllocated = 0;
     char* _data = nullptr;
-
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    EventListenerCustom* _backToForegroundListener = nullptr;
-#endif
+    bool _needDefaultStoredData = true;
 };
 
 CC_BACKEND_END

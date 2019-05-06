@@ -31,17 +31,28 @@ BufferGL::~BufferGL()
 #endif
 }
 
+void BufferGL::usingDefaultStoredData(bool needDefaultStoredData)
+{
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    _needDefaultStoredData = needDefaultStoredData;
+#endif
+}
+
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 void BufferGL::reloadBuffer()
 {
-    _bufferAlreadyFilled = true;
     glGenBuffers(1, &_buffer);
+
+    if(!_needDefaultStoredData)
+        return;
+
+    _bufferAlreadyFilled = true;
     updateData(_data, _bufferAllocated);
 }
 
 void BufferGL::fillBuffer(void* data, unsigned int offset, unsigned int size)
 {
-    if(_bufferAlreadyFilled)
+    if(_bufferAlreadyFilled || !_needDefaultStoredData || BufferUsage::STATIC != _usage)
         return;
 
     if(_data == nullptr)
@@ -49,10 +60,8 @@ void BufferGL::fillBuffer(void* data, unsigned int offset, unsigned int size)
         _data = new (std::nothrow) char[_bufferAllocated];
     }
 
-    if(BufferUsage::STATIC ==  _usage)
-    {
-        memcpy(_data + offset, data, size);
-    }
+    memcpy(_data + offset, data, size);
+
 }
 #endif
 
