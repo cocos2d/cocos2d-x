@@ -41,6 +41,10 @@ NS_CC_BEGIN
 
 static const int DEFAULT_LINE_WIDTH = 2;
 
+/*
+ * Code of Triangulate copied & pasted from http://www.flipcode.com/archives/Efficient_Polygon_Triangulation.shtml,
+ * Added some changes for cocos2d
+ */
 class Triangulate
 {
 public:
