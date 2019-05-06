@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 #include "CCPUMeshSurfaceEmitter.h"
+#include <cmath>
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
 #include "extensions/Particle3D/PU/CCPUUtil.h"
 
@@ -48,14 +49,14 @@ inline void PUTriangle::calculateSquareSurface (void)
     */
 
     // a, b and c are the length of each triangle
-    float a = sqrt (	(v1.x - v3.x) * (v1.x - v3.x) + 
-                        (v1.y - v3.y) * (v1.y - v3.y) + 
+    float a = std::sqrt ((v1.x - v3.x) * (v1.x - v3.x) +
+                        (v1.y - v3.y) * (v1.y - v3.y) +
                         (v1.z - v3.z) * (v1.z - v3.z));
-    float b = sqrt (	(v2.x - v1.x) * (v2.x - v1.x) + 
-                        (v2.y - v1.y) * (v2.y - v1.y) + 
+    float b = std::sqrt ((v2.x - v1.x) * (v2.x - v1.x) +
+                        (v2.y - v1.y) * (v2.y - v1.y) +
                         (v2.z - v1.z) * (v2.z - v1.z));
-    float c = sqrt (	(v3.x - v2.x) * (v3.x - v2.x) + 
-                        (v3.y - v2.y) * (v3.y - v2.y) + 
+    float c = std::sqrt ((v3.x - v2.x) * (v3.x - v2.x) +
+                        (v3.y - v2.y) * (v3.y - v2.y) +
                         (v3.z - v2.z) * (v3.z - v2.z));
     float p = 0.5f * (a + b + c);
 
@@ -203,7 +204,7 @@ inline float MeshInfo::getGaussianRandom (float high, float cutoff)
         
     } while (w >= 1.0f);
     
-    w = sqrt((-2.0f * ::log(w)) / w);
+    w = std::sqrt((-2.0f * std::log(w)) / w);
     y1 = std::abs(x1 * w);
     y1 = y1 > cutoff ? cutoff : y1;
     y1 *= high / cutoff;

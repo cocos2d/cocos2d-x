@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 #include "CCPUSineForceAffector.h"
+#include <cmath>
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
@@ -50,7 +51,7 @@ void PUSineForceAffector::preUpdateAffector(float deltaTime)
 {
     // Scale by time
     _angle += _frequency * deltaTime;
-    float sineValue = sin(_angle);
+    float sineValue = std::sin(_angle);
     _scaledVector = _forceVector * deltaTime * sineValue;
 
     if (_angle > M_PI * 2.0f)

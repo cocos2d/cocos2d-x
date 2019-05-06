@@ -31,7 +31,7 @@
 #include "3d/CCMotionStreak3D.h"
 
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
-
+#include <cmath>
 #include <algorithm>
 #include "../testResource.h"
 
@@ -2576,7 +2576,7 @@ void Sprite3DNormalMappingTest::update(float dt)
     static float radius = 100.0f;
     
     auto light = static_cast<PointLight*>(getChildByTag(100));
-    light->setPosition3D(Vec3(radius * cos(angle), 0.0f, radius * sin(angle)));
+    light->setPosition3D(Vec3(radius * std::cos(angle), 0.0f, radius * std::sin(angle)));
     if (reverseDir){
         angle -= 0.01f;
         if (angle < 0.0)

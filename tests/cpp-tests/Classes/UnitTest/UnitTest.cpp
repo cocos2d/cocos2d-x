@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "UnitTest.h"
+#include <cmath>
 #include "RefPtrTest.h"
 #include "ui/UIHelper.h"
 #include "network/Uri.h"
@@ -1467,7 +1468,7 @@ static void __checkMathUtilResult(const char* description, const float* a1, cons
     // Check whether the result of the optimized instruction is the same as which is implemented in C
     for (int i = 0; i < size; ++i)
     {
-        bool r = fabs(a1[i] - a2[i]) < 0.00001f;//FLT_EPSILON;
+        bool r = std::fabs(a1[i] - a2[i]) < 0.00001f;//FLT_EPSILON;
         if (r)
         {
             log("Correct: a1[%d]=%f, a2[%d]=%f", i, a1[i], i, a2[i]);

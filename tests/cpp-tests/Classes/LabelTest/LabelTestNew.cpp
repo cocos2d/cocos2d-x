@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "LabelTestNew.h"
+#include <cmath>
 #include "../testResource.h"
 #include "renderer/CCRenderer.h"
 #include "2d/CCFontAtlasCache.h"
@@ -785,7 +786,7 @@ void LabelFNTMultiLineAlignment::onTouchesMoved(const std::vector<Touch*>& touch
     this->_arrows->setPosition(Vec2(MAX(MIN(location.x, ArrowsMax*winSize.width), ArrowsMin*winSize.width), 
         this->_arrows->getPosition().y));
 
-    float labelWidth = fabs(this->_arrows->getPosition().x - this->_label->getPosition().x) * 2;
+    float labelWidth = std::fabs(this->_arrows->getPosition().x - this->_label->getPosition().x) * 2;
 
     this->_label->setMaxLineWidth(labelWidth);
 }
