@@ -168,7 +168,7 @@ AssetsManager::~AssetsManager()
 
 void AssetsManager::checkStoragePath()
 {
-    if (_storagePath.size() > 0 && _storagePath[_storagePath.size() - 1] != '/')
+    if (!_storagePath.empty() && _storagePath[_storagePath.size() - 1] != '/')
     {
         _storagePath.append("/");
     }
@@ -196,7 +196,7 @@ std::string AssetsManager::keyOfDownloadedVersion() const
 
 bool AssetsManager::checkUpdate()
 {
-    if (_versionFileUrl.size() == 0 || _isDownloading) return false;
+    if (_versionFileUrl.empty() || _isDownloading) return false;
     
     // Clear _version before assign new value.
     _version.clear();

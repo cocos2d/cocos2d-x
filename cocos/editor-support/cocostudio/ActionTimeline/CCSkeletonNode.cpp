@@ -348,7 +348,7 @@ void SkeletonNode::updateOrderedAllbones()
             boneStack.push(bone);
     }
 
-    while (boneStack.size() > 0)
+    while (!boneStack.empty())
     {
         auto top = boneStack.top();
         _subOrderedAllBones.pushBack(top);

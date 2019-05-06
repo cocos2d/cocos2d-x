@@ -99,7 +99,7 @@ void TemplateVectorTest::onEnter()
     Vector<Node*> vec;
     CCASSERT(vec.empty(), "vec should be empty.");
     CCASSERT(vec.capacity() == 0, "vec.capacity should be 0.");
-    CCASSERT(vec.size() == 0, "vec.size should be 0.");
+    CCASSERT(vec.empty(), "vec.size should be 0.");
     CCASSERT(vec.max_size() > 0, "vec.max_size should > 0.");
 
     auto node1 = Node::create();
@@ -175,7 +175,7 @@ void TemplateVectorTest::onEnter()
     vec5.reserve(20);
     CCASSERT(vec5.capacity() == 20, "vec5's capacity should be 20.");
 
-    CCASSERT(vec5.size() == 0, "vec5's size should be 0.");
+    CCASSERT(vec5.empty(), "vec5's size should be 0.");
     CCASSERT(vec5.empty(), "vec5 is empty now.");
 
     auto toRemovedNode = Node::create();
@@ -385,7 +385,7 @@ void TemplateMapTest::onEnter()
     // Default constructor
     Map<std::string, Node*> map1;
     CCASSERT(map1.empty(), "map1 is empty.");
-    CCASSERT(map1.size() == 0, "map1's size is 0.");
+    CCASSERT(map1.empty(), "map1's size is 0.");
     CCASSERT(map1.keys().empty(), "map1's keys are empty.");
     CCASSERT(map1.keys(Node::create()).empty(), "map1's keys don't contain a empty Node.");
 
@@ -820,45 +820,45 @@ void UIHelperSubStringTest::onEnter()
         std::string source = "";
 
         // OK
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1).empty());
 
         // Error: These cases cause "out of range" error
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1).empty());
     }
     {
         // Ascii
         std::string source = "abc";
 
         // OK
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 2, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 3, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 2, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 3, 0).empty());
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 3) == "abc");
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 4) == "abc");
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 2) == "bc");
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 3) == "bc");
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 2, 1) == "c");
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 2, 2) == "c");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 3, 1) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 3, 2) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 3, 1).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 3, 2).empty());
 
         // Error: These cases cause "out of range" error
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 4, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 4, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 4, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 4, 1).empty());
     }
     {
         // CJK characters
         std::string source = "这里是中文测试例";
 
         // OK
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 7, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 8, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 8, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 7, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 8, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 8, 1).empty());
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1) == "\xe8\xbf\x99");
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 4) == "\xe8\xbf\x99\xe9\x87\x8c\xe6\x98\xaf\xe4\xb8\xad");
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 8) == "\xe8\xbf\x99\xe9\x87\x8c\xe6\x98\xaf\xe4\xb8\xad\xe6\x96\x87\xe6\xb5\x8b\xe8\xaf\x95\xe4\xbe\x8b");
@@ -868,41 +868,41 @@ void UIHelperSubStringTest::onEnter()
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 6, 100) == "\xe8\xaf\x95\xe4\xbe\x8b");
 
         // Error: These cases cause "out of range" error
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 9, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 9, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 9, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 9, 1).empty());
     }
     {
         // Redundant UTF-8 sequence for Directory traversal attack (1)
         std::string source = "\xC0\xAF";
 
         // Error: Can't convert string to correct encoding such as UTF-32
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 2) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 2).empty());
     }
     {
         // Redundant UTF-8 sequence for Directory traversal attack (2)
         std::string source = "\xE0\x80\xAF";
 
         // Error: Can't convert string to correct encoding such as UTF-32
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 3) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 3).empty());
     }
     {
         // Redundant UTF-8 sequence for Directory traversal attack (3)
         std::string source = "\xF0\x80\x80\xAF";
 
         // Error: Can't convert string to correct encoding such as UTF-32
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 4) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 4).empty());
     }
 }
 

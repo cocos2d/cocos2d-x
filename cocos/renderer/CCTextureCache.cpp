@@ -404,7 +404,7 @@ Texture2D * TextureCache::addImage(const std::string &path)
     // Needed since addImageAsync calls this method from a different thread
 
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(path);
-    if (fullpath.size() == 0)
+    if (fullpath.empty())
     {
         return nullptr;
     }
@@ -527,7 +527,7 @@ bool TextureCache::reloadTexture(const std::string& fileName)
     Image * image = nullptr;
 
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(fileName);
-    if (fullpath.size() == 0)
+    if (fullpath.empty())
     {
         return false;
     }

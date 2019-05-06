@@ -238,7 +238,7 @@ void EditBoxImplCommon::refreshInactiveText()
 
     refreshLabelAlignment();
     if (!_editingMode) {
-        if (_text.size() == 0) {
+        if (_text.empty()) {
             _label->setVisible(false);
             _labelPlaceHolder->setVisible(true);
         } else {

@@ -119,7 +119,7 @@ EffectSprite3D* EffectSprite3D::createFromObjFileAndTexture(const std::string &o
     if (sprite && sprite->initWithFile(objFilePath))
     {
         sprite->autorelease();
-        if(textureFilePath.size() > 0)
+        if(!textureFilePath.empty())
             sprite->setTexture(textureFilePath);
         return sprite;
     }

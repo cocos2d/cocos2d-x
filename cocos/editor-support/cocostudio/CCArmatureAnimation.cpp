@@ -229,7 +229,7 @@ void ArmatureAnimation::play(const std::string& animationName, int durationTo,  
         movementBoneData = static_cast<MovementBoneData *>(_movementData->movBoneDataDic.at(bone->getName()));
 
         Tween *tween = bone->getTween();
-        if(movementBoneData && movementBoneData->frameList.size() > 0)
+        if(movementBoneData && !movementBoneData->frameList.empty())
         {
             _tweenList.push_back(tween);
             movementBoneData->duration = _movementData->duration;
@@ -353,13 +353,13 @@ void ArmatureAnimation::update(float dt)
         tween->update(dt);
     }
 
-    if(_frameEventQueue.size() > 0 || _movementEventQueue.size() > 0)
+    if(!_frameEventQueue.empty() || !_movementEventQueue.empty())
     {
         _armature->retain();
         _armature->autorelease();
     }
 
-    while (_frameEventQueue.size() > 0)
+    while (!_frameEventQueue.empty())
     {
         FrameEvent *event = _frameEventQueue.front();
         _frameEventQueue.pop();
@@ -382,7 +382,7 @@ void ArmatureAnimation::update(float dt)
         CC_SAFE_DELETE(event);
     }
 
-    while (_movementEventQueue.size() > 0)
+    while (!_movementEventQueue.empty())
     {
         MovementEvent *event = _movementEventQueue.front();
         _movementEventQueue.pop();

@@ -215,7 +215,7 @@ Sprite3DMaterial* Sprite3DMaterial::createBuiltInMaterial(MaterialType type, boo
 Sprite3DMaterial* Sprite3DMaterial::createWithFilename(const std::string& path)
 {
     auto validfilename = FileUtils::getInstance()->fullPathForFilename(path);
-    if (validfilename.size() > 0) {
+    if (!validfilename.empty()) {
         auto it = _materials.find(validfilename);
         if (it != _materials.end())
             return (Sprite3DMaterial*)it->second->clone();

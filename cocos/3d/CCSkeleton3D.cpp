@@ -196,7 +196,7 @@ Bone3D::~Bone3D()
 
 void Bone3D::updateLocalMat()
 {
-    if (_blendStates.size())
+    if (!_blendStates.empty())
     {
         Vec3 translate, scale;
         Quaternion quat(Quaternion::ZERO);

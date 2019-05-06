@@ -648,7 +648,7 @@ namespace cocostudio
         auto imageFileNameDic = options->backGroundImageData();
         int imageFileNameType = imageFileNameDic->resourceType();
         std::string imageFileName = imageFileNameDic->path()->c_str();
-        if (imageFileName != "")
+        if (!imageFileName.empty())
         {
             switch (imageFileNameType)
             {

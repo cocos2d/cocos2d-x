@@ -110,7 +110,7 @@ bool SpritePolygonTestCase::init()
 
 void SpritePolygonTestCase::updateDrawNode()
 {
-    if (_isDebugDraw && _drawNodes.size() > 0) {
+    if (_isDebugDraw && !_drawNodes.empty()) {
         for (int i = 0; i < _drawNodes.size(); i++)
         {
                 auto drawnode = _drawNodes.at(i);
@@ -327,7 +327,7 @@ void SpritePolygonTestSlider::changeEpsilon(cocos2d::Ref *pSender, cocos2d::ui::
         float epsilon = powf(slider->getPercent()/100.0,2)*19.0f + 1.0f;
         for(auto child : _children)
         {
-            if(child->getName().size())
+            if(!child->getName().empty())
             {
                 Sprite *sp = (Sprite*)child;
                 auto file = sp->getName();

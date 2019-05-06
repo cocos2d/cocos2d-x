@@ -138,7 +138,7 @@ void MeshSkin::addSkinBone(Bone3D* bone)
 Bone3D* MeshSkin::getRootBone() const
 {
     Bone3D* root = nullptr;
-    if (_skinBones.size())
+    if (!_skinBones.empty())
     {
         root = _skinBones.at(0);
         while (root->getParentBone()) {
