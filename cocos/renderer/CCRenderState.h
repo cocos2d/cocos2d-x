@@ -69,8 +69,6 @@ public:
     void bindPass(Pass* pass, MeshCommand *);
 
 
-    void unbindPass(Pass* pass, MeshCommand *);
-
     /**
      * Defines a block of fixed-function render states that can be applied to a
      * RenderState object.
@@ -229,7 +227,7 @@ public:
         */
         void apply(PipelineDescriptor *pipelineDescriptor);
 
-        static void restore(long flags, PipelineDescriptor *pipelineDescriptor);
+        static void restoreUnmodifiedStates(long flags, PipelineDescriptor *pipelineDescriptor);
 
 
         bool _cullFaceEnabled = false;

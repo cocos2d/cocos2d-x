@@ -91,6 +91,8 @@ public:
     void setName(const std::string &name) { _name = name; }
     const std::string &getName() const { return _name; }
 
+    inline RenderState::StateBlock &getStateBlock() { return _renderState._state; }
+
     /**
      * Returns a clone (deep-copy) of this instance */
     Pass* clone() const;
@@ -120,7 +122,6 @@ public:
     void setUniformSpotLightRangeInverse(const void *, size_t);
 
     void setUniformAmbientLigthColor(const void *, size_t);
-
 
 protected:
     Pass();
