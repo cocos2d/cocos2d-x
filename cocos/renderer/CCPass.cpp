@@ -287,14 +287,10 @@ void Pass::setUniformNormTexture(uint32_t slot, backend::Texture *tex)
     _programState->setTexture(_locNormalTexture, slot, tex);
 }
 
-#define TRY_SET_UNIFORM(loc) \
-    if(loc) { \
-        _programState->setUniform(loc, data, (uint32_t)dataLen) ; \
-    } \
-    else \
-    { \
-        CCLOG("warning: failed to set uniform in %s", __FUNCTION__); \
-    }
+#define TRY_SET_UNIFORM(loc) do {                                   \
+    if(loc) {                                                       \
+        _programState->setUniform(loc, data, (uint32_t)dataLen);    \
+    } } while(false)
 
 
 void Pass::setUniformColor(const void *data, size_t dataLen)
