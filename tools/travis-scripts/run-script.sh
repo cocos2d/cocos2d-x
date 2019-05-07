@@ -44,7 +44,8 @@ function build_linux_clang_tidy()
     mkdir -p clang-tidy-build
     cd clang-tidy-build
     cmake ../.. -DCMAKE_EXPORT_COMPILE_COMMANDS=on
-    python $(dirname $(dirname $(readlink -f `which clang-tidy`)))/share/clang/run-clang-tidy.py
+    clang_tidy_script=$(dirname $(dirname $(readlink -f `which clang-tidy`)))/share/clang/run-clang-tidy.py 
+    python $clang_tidy_script '^((?!/cocos2d-x/external/).)*$'
 }
 
 function build_mac()
