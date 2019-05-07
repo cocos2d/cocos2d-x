@@ -96,4 +96,16 @@ public:
 
 };
 
+class Issue19641Test : public DrawPrimitivesBaseTest
+{
+public:
+    CREATE_FUNC(Issue19641Test);
+    
+    Issue19641Test();
+    
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+};
+
 #endif
