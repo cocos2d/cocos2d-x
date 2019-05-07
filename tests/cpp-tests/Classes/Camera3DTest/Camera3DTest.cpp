@@ -283,7 +283,7 @@ void Camera3DTestDemo::onEnter()
     
     auto containerForLabel1 = Node::create();
     _ZoomOutlabel = Label::createWithTTF(ttfConfig,"zoom out");
-    _ZoomOutlabel->setPosition(s.width-50, VisibleRect::top().y-30);
+    _ZoomOutlabel->setPosition(s.width-50, VisibleRect::top().y-20);
     containerForLabel1->addChild(_ZoomOutlabel);
     addChild(containerForLabel1, 10);
     
@@ -297,7 +297,7 @@ void Camera3DTestDemo::onEnter()
     
     auto containerForLabel2 = Node::create();
     _ZoomInlabel = Label::createWithTTF(ttfConfig,"zoom in");
-    _ZoomInlabel->setPosition(s.width-50, VisibleRect::top().y-100);
+    _ZoomInlabel->setPosition(s.width-50, VisibleRect::top().y-70);
     containerForLabel2->addChild(_ZoomInlabel);
     addChild(containerForLabel2, 10);
     
@@ -311,7 +311,7 @@ void Camera3DTestDemo::onEnter()
     
     auto containerForLabel3 = Node::create();
     _RotateLeftlabel = Label::createWithTTF(ttfConfig,"rotate left");
-    _RotateLeftlabel->setPosition(s.width-50, VisibleRect::top().y-170);
+    _RotateLeftlabel->setPosition(s.width-50, VisibleRect::top().y-120);
     containerForLabel3->addChild(_RotateLeftlabel);
     addChild(containerForLabel3, 10);
     
@@ -325,7 +325,7 @@ void Camera3DTestDemo::onEnter()
     
     auto containerForLabel4 = Node::create();
     _RotateRightlabel = Label::createWithTTF(ttfConfig,"rotate right");
-    _RotateRightlabel->setPosition(s.width-50, VisibleRect::top().y-240);
+    _RotateRightlabel->setPosition(s.width-50, VisibleRect::top().y-170);
     containerForLabel4->addChild(_RotateRightlabel);
     addChild(containerForLabel4, 10);
     
