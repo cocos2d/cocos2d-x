@@ -319,12 +319,18 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
         return false;
     }
     
+    
+    int fbWidth, fbHeight;
+    glfwGetFramebufferSize(_mainWindow, &fbWidth, &fbHeight);
+    
+    
+    CGSize size;
+    size.width = static_cast<CGFloat>(fbWidth);
+    size.height = static_cast<CGFloat>(fbHeight);
+    
     // Initialize device.
     NSView* contentView = [getCocoaWindow() contentView];
     [contentView setWantsLayer: YES];
-    CGSize size;
-    size.width = rect.size.width;
-    size.height = rect.size.height;
     CAMetalLayer* layer = [CAMetalLayer layer];
     [layer setDevice:MTLCreateSystemDefaultDevice()];
     [layer setPixelFormat:MTLPixelFormatBGRA8Unorm];
@@ -614,21 +620,20 @@ void GLViewImpl::updateFrameSize()
         int frameBufferW = 0, frameBufferH = 0;
         glfwGetFramebufferSize(_mainWindow, &frameBufferW, &frameBufferH);
 
-        //TODO coulsonwang
-//        if (frameBufferW == 2 * w && frameBufferH == 2 * h)
-//        {
-//            if (_isRetinaEnabled)
-//            {
-//                _retinaFactor = 1;
-//            }
-//            else
-//            {
-//                _retinaFactor = 2;
-//            }
-//            glfwSetWindowSize(_mainWindow, _screenSize.width/2 * _retinaFactor * _frameZoomFactor, _screenSize.height/2 * _retinaFactor * _frameZoomFactor);
-//            _isInRetinaMonitor = true;
-//        }
-//        else
+       if (frameBufferW == 2 * w && frameBufferH == 2 * h)
+       {
+           if (_isRetinaEnabled)
+           {
+               _retinaFactor = 1;
+           }
+           else
+           {
+               _retinaFactor = 2;
+           }
+           glfwSetWindowSize(_mainWindow, _screenSize.width/2 * _retinaFactor * _frameZoomFactor, _screenSize.height/2 * _retinaFactor * _frameZoomFactor);
+           _isInRetinaMonitor = true;
+       }
+       else
         {
             if (_isInRetinaMonitor)
             {
@@ -650,10 +655,10 @@ void GLViewImpl::setFrameSize(float width, float height)
 void GLViewImpl::setViewPortInPoints(float x , float y , float w , float h)
 {
     Viewport vp;
-    vp.x = x * _scaleX * _frameZoomFactor + _viewPortRect.origin.x * _frameZoomFactor;
-    vp.y  = y * _scaleY * _frameZoomFactor + _viewPortRect.origin.y * _frameZoomFactor;
-    vp.w = w * _scaleX * _frameZoomFactor;
-    vp.h = h * _scaleY * _frameZoomFactor;
+    vp.x = x * _scaleX * _retinaFactor * _frameZoomFactor + _viewPortRect.origin.x * _retinaFactor *_frameZoomFactor;
+    vp.y  = y * _scaleY * _retinaFactor *_frameZoomFactor + _viewPortRect.origin.y * _retinaFactor *_frameZoomFactor;
+    vp.w = w * _scaleX *_retinaFactor * _frameZoomFactor;
+    vp.h = h * _scaleY * _retinaFactor * _frameZoomFactor;
     Camera::setDefaultViewport(vp);
 }
 
