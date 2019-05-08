@@ -547,8 +547,7 @@ void FileUtils::destroyInstance()
 
 void FileUtils::setDelegate(FileUtils *delegate)
 {
-    if (s_sharedFileUtils)
-        delete s_sharedFileUtils;
+    delete s_sharedFileUtils;
 
     s_sharedFileUtils = delegate;
 }

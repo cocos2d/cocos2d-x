@@ -1343,8 +1343,7 @@ void Director::createStatsLabel()
     Image* image = new (std::nothrow) Image();
     bool isOK = image ? image->initWithImageData(data, dataLength) : false;
     if (! isOK) {
-        if(image)
-            delete image;
+        delete image;
         CCLOGERROR("%s", "Fails: init fps_images");
         return;
     }

@@ -104,10 +104,7 @@ ComponentJS::~ComponentJS()
             jsb_remove_proxy(proxy);
     }
     // Delete rooted object
-    if (jsObj != nullptr)
-    {
-        delete jsObj;
-    }
+    delete jsObj;
 }
 
 void* ComponentJS::getScriptObject() const

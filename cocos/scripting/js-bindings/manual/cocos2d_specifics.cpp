@@ -5608,8 +5608,7 @@ void js_cocos2d_PolygonInfo_finalize(JSFreeOp *fop, JSObject *obj) {
     if (proxy)
     {
         cocos2d::PolygonInfo *nobj = static_cast<cocos2d::PolygonInfo *>(proxy->ptr);
-        if (nobj)
-            delete nobj;
+        delete nobj;
         jsb_remove_proxy(proxy);
     }
 }
@@ -5766,8 +5765,7 @@ void js_cocos2d_AutoPolygon_finalize(JSFreeOp *fop, JSObject *obj) {
     auto proxy = jsb_get_js_proxy(jsobj);
     if (proxy) {
         cocos2d::AutoPolygon *nobj = static_cast<cocos2d::AutoPolygon *>(proxy->ptr);
-        if (nobj)
-            delete nobj;
+        delete nobj;
         jsb_remove_proxy(proxy);
     }
 }
