@@ -4517,7 +4517,7 @@ bool js_cocos2dx_SpriteBatchNode_getDescendants(JSContext *cx, uint32_t argc, js
         JS::RootedValue jsret(cx);
 
         js_type_class_t *typeClass = nullptr;
-        if (ret.size() > 0)
+        if (!ret.empty())
             typeClass = js_get_type_from_native<cocos2d::Sprite>(ret[0]);
         for (size_t i = 0; i < vSize; i++)
         {

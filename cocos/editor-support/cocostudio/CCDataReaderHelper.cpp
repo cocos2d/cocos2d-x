@@ -462,7 +462,7 @@ void DataReaderHelper::addDataAsyncCallBack(float /*dt*/)
         AsyncStruct *pAsyncStruct = pDataInfo->asyncStruct;
 
 
-        if (pAsyncStruct->imagePath != "" && pAsyncStruct->plistPath != "")
+        if (!pAsyncStruct->imagePath.empty() && !pAsyncStruct->plistPath.empty())
         {
             _getFileMutex.lock();
             ArmatureDataManager::getInstance()->addSpriteFrameFromFile(pAsyncStruct->plistPath, pAsyncStruct->imagePath, pDataInfo->filename);
@@ -1586,7 +1586,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(const rapidjson::Value& j
 
     if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
     {
-        if (movementBoneData->frameList.size() > 0)
+        if (!movementBoneData->frameList.empty())
         {
             FrameData *frameData = new (std::nothrow) FrameData();
             frameData->copy((FrameData *)movementBoneData->frameList.back());
@@ -2271,7 +2271,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
 
         if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
         {
-            if (movementBoneData->frameList.size() > 0)
+            if (!movementBoneData->frameList.empty())
             {
                 auto frameData = movementBoneData->frameList.at(framesizemusone);
                 movementBoneData->addFrameData(frameData);

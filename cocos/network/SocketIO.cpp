@@ -151,7 +151,7 @@ std::string SocketIOPacket::toString()const
     encoded << this->_separator;
 
     // Add the endpoint for the namespace to be used if not the default namespace "" or "/", and as long as it is not an ACK, heartbeat, or disconnect packet
-    if (_endpoint != "/" && _endpoint != "" && _type != "ack" && _type != "heartbeat" && _type != "disconnect") {
+    if (_endpoint != "/" && !_endpoint.empty() && _type != "ack" && _type != "heartbeat" && _type != "disconnect") {
         encoded << _endpoint << _endpointseparator;
     }
     encoded << this->_separator;
@@ -819,7 +819,7 @@ void SIOClientImpl::onMessage(WebSocket* /*ws*/, const WebSocket::Data& data)
                 endpoint = payload;
             }
 
-            if (endpoint == "") endpoint = "/";
+            if (endpoint.empty()) endpoint = "/";
 
             c = getClient(endpoint);
 
@@ -934,14 +934,14 @@ void SIOClientImpl::onMessage(WebSocket* /*ws*/, const WebSocket::Data& data)
                 }
 
                 // we didn't find and endpoint and we are in the default namespace
-                if (endpoint == "") endpoint = "/";
+                if (endpoint.empty()) endpoint = "/";
 
                 c = getClient(endpoint);
 
                 payload = payload.substr(1);
 
                 if (endpoint != "/") payload = payload.substr(endpoint.size());
-                if (endpoint != "/" && payload != "") payload = payload.substr(1);
+                if (endpoint != "/" && !payload.empty()) payload = payload.substr(1);
 
                 switch (control2)
                 {
@@ -1208,7 +1208,7 @@ SIOClient* SocketIO::connect(const std::string& uri, SocketIO::SIODelegate& dele
     SIOClient *c = nullptr;
 
     std::string path = uriObj.getPath();
-    if (path == "")
+    if (path.empty())
         path = "/";
 
     if (socket == nullptr)

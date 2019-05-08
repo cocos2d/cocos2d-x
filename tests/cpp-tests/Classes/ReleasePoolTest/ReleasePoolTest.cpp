@@ -43,7 +43,7 @@ public:
     
     ~TestObject()
     {
-        if (_name.size() > 0)
+        if (!_name.empty())
             CCLOG("TestObject:%s is destroyed", _name.c_str());
     }
     

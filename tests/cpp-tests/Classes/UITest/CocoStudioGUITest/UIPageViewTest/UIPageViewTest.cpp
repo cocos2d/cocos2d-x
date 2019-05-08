@@ -571,7 +571,7 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         button2->setTitleColor(Color3B::RED);
         button2->addClickEventListener([=](Ref* sender)
         {
-            if (pageView->getItems().size() > 0)
+            if (!pageView->getItems().empty())
             {
                 pageView->removeItem(pageView->getItems().size()-1);
             }

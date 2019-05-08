@@ -941,7 +941,7 @@ void FileUtils::setSearchResolutionsOrder(const std::vector<std::string>& search
     for(const auto& iter : searchResolutionsOrder)
     {
         std::string resolutionDirectory = iter;
-        if (!existDefault && resolutionDirectory == "")
+        if (!existDefault && resolutionDirectory.empty())
         {
             existDefault = true;
         }
@@ -1116,7 +1116,7 @@ std::string FileUtils::getFullPathForFilenameWithinDirectory(const std::string& 
 {
     // get directory+filename, safely adding '/' as necessary
     std::string ret = directory;
-    if (directory.size() && directory[directory.size()-1] != '/'){
+    if (!directory.empty() && directory[directory.size()-1] != '/'){
         ret += '/';
     }
     ret += filename;

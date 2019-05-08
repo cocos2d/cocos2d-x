@@ -578,7 +578,7 @@ void TabHeaderReader::setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuf
     bool fileExist = false;
     std::string errorFilePath = "";
     std::string path = resourceData->path()->c_str();
-    if (path != "")
+    if (!path.empty())
     {
         if (FileUtils::getInstance()->isFileExist(path))
         {

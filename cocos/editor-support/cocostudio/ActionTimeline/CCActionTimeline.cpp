@@ -194,7 +194,7 @@ ActionTimeline* ActionTimeline::clone() const
 
 void ActionTimeline::step(float delta)
 {
-    if (!_playing || _timelineMap.size() == 0 || _duration == 0)
+    if (!_playing || _timelineMap.empty() || _duration == 0)
     {
         return;
     }

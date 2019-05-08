@@ -522,11 +522,11 @@ Timeline* ActionTimelineCache::loadTimelineWithFlatBuffers(const flatbuffers::Ti
     
     // property
     std::string property = flatbuffers->property()->c_str();
-    if(property == "")
+    if(property.empty())
         return nullptr;
     
     
-    if(property != "")
+    if(!property.empty())
     {
         timeline = Timeline::create();
         
@@ -800,7 +800,7 @@ Frame* ActionTimelineCache::loadEventFrameWithFlatBuffers(const flatbuffers::Eve
     
     std::string event = flatbuffers->value()->c_str();
     
-    if (event != "")
+    if (!event.empty())
         frame->setEvent(event);    
     
     int frameIndex = flatbuffers->frameIndex();

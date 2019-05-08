@@ -120,7 +120,7 @@ bool Animation3D::init(const Animation3DData &data)
             _boneCurves[iter.first] = curve;
         }
         
-        if(iter.second.size() == 0) continue;
+        if(iter.second.empty()) continue;
         std::vector<float> keys;
         std::vector<float> values;
         for(const auto& keyIter : iter.second)
@@ -144,7 +144,7 @@ bool Animation3D::init(const Animation3DData &data)
             _boneCurves[iter.first] = curve;
         }
         
-        if(iter.second.size() == 0) continue;
+        if(iter.second.empty()) continue;
         std::vector<float> keys;
         std::vector<float> values;
         for(const auto& keyIter : iter.second)
@@ -169,7 +169,7 @@ bool Animation3D::init(const Animation3DData &data)
             _boneCurves[iter.first] = curve;
         }
         
-        if(iter.second.size() == 0) continue;
+        if(iter.second.empty()) continue;
         std::vector<float> keys;
         std::vector<float> values;
         for(const auto& keyIter : iter.second)
