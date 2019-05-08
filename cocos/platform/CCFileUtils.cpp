@@ -1518,7 +1518,7 @@ std::vector<std::string> FileUtils::listFiles(const std::string& dirPath) const
 {
     std::vector<std::string> files;
     std::string fullpath = fullPathForDirectory(dirPath);
-    if (isDirectoryExist(fullpath))
+    if (!fullpath.empty() && isDirectoryExist(fullpath))
     {
         tinydir_dir dir;
         std::string fullpathstr = fullpath;
