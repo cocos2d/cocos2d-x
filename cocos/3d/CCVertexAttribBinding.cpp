@@ -168,7 +168,7 @@ void VertexAttribBinding::setVertexAttribPointer(const std::string &name, backen
     }
     else
     {
-        CCLOG("cocos2d: warning: Attribute not found: %s", name.c_str());
+        // CCLOG("cocos2d: warning: Attribute not found: %s", name.c_str());
     }
 }
 
