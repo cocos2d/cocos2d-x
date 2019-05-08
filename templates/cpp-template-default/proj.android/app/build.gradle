@@ -111,13 +111,16 @@ android {
 }
 
 android.applicationVariants.all { variant ->
+    def dest_assets_folder = "${buildDir}/intermediates/merged_assets/${variant.dirName}/out"
+    // ${buildDir}/intermediates/assets/${variant.dirName}/
+
     // delete previous files first
-    delete "${buildDir}/intermediates/assets/${variant.dirName}"
+    delete dest_assets_folder
 
     variant.mergeAssets.doLast {
         copy {
             from "${buildDir}/../../../Resources"
-            into "${buildDir}/intermediates/assets/${variant.dirName}"
+            into dest_assets_folder
             exclude "**/*.gz"
         }
     }
