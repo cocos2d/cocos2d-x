@@ -642,66 +642,6 @@ bool Texture2D::initWithBackendTexture(backend::Texture *texture)
     return true;
 }
 
-
-//// implementation Texture2D (Drawing)
-//
-//void Texture2D::drawAtPoint(const Vec2& point)
-//{
-//    GLfloat    coordinates[] = {
-//        0.0f,    _maxT,
-//        _maxS,_maxT,
-//        0.0f,    0.0f,
-//        _maxS,0.0f };
-//
-//    GLfloat    width = (GLfloat)_pixelsWide * _maxS,
-//        height = (GLfloat)_pixelsHigh * _maxT;
-//
-//    GLfloat        vertices[] = {    
-//        point.x,            point.y,
-//        width + point.x,    point.y,
-//        point.x,            height  + point.y,
-//        width + point.x,    height  + point.y };
-//
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-//    _shaderProgram->use();
-//    _shaderProgram->setUniformsForBuiltins();
-//
-//    glActiveTexture(GL_TEXTURE0);
-//    glBindTexture(GL_TEXTURE_2D, _name);
-//
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
-//
-//    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-//}
-//
-//void Texture2D::drawInRect(const Rect& rect)
-//{
-//    GLfloat    coordinates[] = {    
-//        0.0f,    _maxT,
-//        _maxS,_maxT,
-//        0.0f,    0.0f,
-//        _maxS,0.0f };
-//
-//    GLfloat    vertices[] = {    rect.origin.x,        rect.origin.y,                            /*0.0f,*/
-//        rect.origin.x + rect.size.width,        rect.origin.y,                            /*0.0f,*/
-//        rect.origin.x,                            rect.origin.y + rect.size.height,        /*0.0f,*/
-//        rect.origin.x + rect.size.width,        rect.origin.y + rect.size.height,        /*0.0f*/ };
-//
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-//    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-//    _shaderProgram->use();
-//    _shaderProgram->setUniformsForBuiltins();
-//
-//    glActiveTexture(GL_TEXTURE0);
-//    glBindTexture(GL_TEXTURE_2D, _name);
-//
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
-//    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-//}
-
 bool Texture2D::hasMipmaps() const
 {
     return _hasMipmaps;
@@ -951,11 +891,11 @@ void Texture2D::setupProgram(float globalZOrder)
     auto& attributes = _programState->getProgram()->getActiveAttributes();
     auto iter = attributes.find("a_position");
     if(iter != attributes.end())
-        vertexLayout.setAtrribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
+        vertexLayout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
     
     iter = attributes.find("a_texCoord");
     if(iter != attributes.end())
-        vertexLayout.setAtrribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, 2 * sizeof(float), false);
+        vertexLayout.setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, 2 * sizeof(float), false);
     
     vertexLayout.setLayout(4 * sizeof(float), backend::VertexStepMode::VERTEX);
     
