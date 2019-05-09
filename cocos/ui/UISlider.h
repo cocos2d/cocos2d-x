@@ -292,8 +292,6 @@ protected:
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
 
-    void onDelayedProgressChanged(float);
-
     void setupBarTexture();
     void loadBarTexture(SpriteFrame* spriteframe);
     void setupProgressBarTexture();

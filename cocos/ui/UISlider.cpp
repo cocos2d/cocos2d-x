@@ -28,8 +28,6 @@ THE SOFTWARE.
 #include "ui/UIHelper.h"
 #include "2d/CCSprite.h"
 #include "2d/CCCamera.h"
-#include "base/CCScheduler.h"
-
 #include "editor-support/cocostudio/CocosStudioExtension.h"
 #include "renderer/ccShaders.h"
 NS_CC_BEGIN
@@ -461,7 +459,7 @@ void Slider::setPercent(int percent)
     {
         _percent = percent;
         updateVisualSlider();
-        scheduleOnce(CC_SCHEDULE_SELECTOR(Slider::onDelayedProgressChanged), 0.0f);
+        percentChangedEvent(EventType::ON_PERCENTAGE_CHANGED);
     }
 }
 
@@ -560,12 +558,7 @@ void Slider::onSizeChanged()
     _barRendererAdaptDirty = true;
     _progressBarRendererDirty = true;
 }
-
-void Slider::onDelayedProgressChanged(float _dt)
-{
-    percentChangedEvent(EventType::ON_PERCENTAGE_CHANGED);
-}
-
+    
 void Slider::adaptRenderers()
 {
     if (_barRendererAdaptDirty)
