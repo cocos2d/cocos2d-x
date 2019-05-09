@@ -46,8 +46,8 @@ FileUtilsTests::FileUtilsTests()
     ADD_TEST_CASE(TestFileFuncsAsync);
     ADD_TEST_CASE(TestWriteStringAsync);
     ADD_TEST_CASE(TestWriteDataAsync);
-//    ADD_TEST_CASE(TestListFiles); // TODO assert failed on iPhone X
-    // ADD_TEST_CASE(TestIsFileExistRejectFolder);
+    ADD_TEST_CASE(TestListFiles);
+    ADD_TEST_CASE(TestIsFileExistRejectFolder);
 }
 
 // TestResolutionDirectories
@@ -1322,7 +1322,7 @@ void TestListFiles::onEnter()
     std::vector<std::string> list = FileUtils::getInstance()->listFiles (defaultPath);
 
     char cntBuffer[200] = { 0 };
-    snprintf(cntBuffer, 200, "'fonts/' %d, $defaultResourceRootPath %d",listFonts.size(), list.size());
+    snprintf(cntBuffer, 200, "'fonts/' %d, $defaultResourceRootPath %d", (int)listFonts.size(), (int)list.size());
 
     for(int i=0;i<listFonts.size();i++)
     {
@@ -1373,7 +1373,7 @@ void TestIsFileExistRejectFolder::onEnter()
     auto isDirectory = FileUtils::getInstance()->isDirectoryExist("NavMesh/maps");
 
     char cntBuffer[200] = { 0 };
-    snprintf(cntBuffer, 200, "isDir: %s, isFile: %s,  %s", isDirectory ? "true": "false" , exists ? "true" : "false", exists ? "failure!" : "ok!" );
+    snprintf(cntBuffer, 200, "isDir: %s, isFile: %s", isDirectory ? "true": "false" , exists ? "true" : "false");
     cntLabel->setString(cntBuffer);
 
 }
