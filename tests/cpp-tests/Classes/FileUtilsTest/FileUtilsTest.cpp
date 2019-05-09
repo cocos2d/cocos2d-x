@@ -1465,7 +1465,7 @@ void TestIsFileExistRejectFolder::onEnter()
     auto isDirectory = FileUtils::getInstance()->isDirectoryExist("NavMesh/maps");
 
     char cntBuffer[200] = { 0 };
-    snprintf(cntBuffer, 200, "isDir: %s, isFile: %s,  %s", isDirectory ? "true": "false" , exists ? "true" : "false", exists ? "failure!" : "ok!" );
+    snprintf(cntBuffer, 200, "isDir: %s, isFile: %s", isDirectory ? "true": "false" , exists ? "true" : "false");
     cntLabel->setString(cntBuffer);
 
 }
