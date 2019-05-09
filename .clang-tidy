@@ -8,6 +8,7 @@ Checks: >
   performance-inefficient-vector-operation,
   performance-move-const-arg,
   performance-type-promotion-in-math-fn,
+  readability-container-size-empty,
 
 WarningsAsErrors: '*'
 HeaderFilterRegex: '/(?!external)/.*'

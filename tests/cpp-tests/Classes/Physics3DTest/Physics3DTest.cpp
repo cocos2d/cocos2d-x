@@ -143,7 +143,7 @@ void Physics3DTestDemo::onTouchesBegan(const std::vector<Touch*>& touches, cocos
 
 void Physics3DTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
-    if (touches.size() && _camera)
+    if (!touches.empty() && _camera)
     {
         auto touch = touches[0];
         auto delta = touch->getDelta();

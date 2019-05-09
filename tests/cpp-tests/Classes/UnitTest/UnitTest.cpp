@@ -99,7 +99,7 @@ void TemplateVectorTest::onEnter()
     Vector<Node*> vec;
     CCASSERT(vec.empty(), "vec should be empty.");
     CCASSERT(vec.capacity() == 0, "vec.capacity should be 0.");
-    CCASSERT(vec.size() == 0, "vec.size should be 0.");
+    CCASSERT(vec.empty(), "vec.size should be 0.");
     CCASSERT(vec.max_size() > 0, "vec.max_size should > 0.");
 
     auto node1 = Node::create();
@@ -175,7 +175,7 @@ void TemplateVectorTest::onEnter()
     vec5.reserve(20);
     CCASSERT(vec5.capacity() == 20, "vec5's capacity should be 20.");
 
-    CCASSERT(vec5.size() == 0, "vec5's size should be 0.");
+    CCASSERT(vec5.empty(), "vec5's size should be 0.");
     CCASSERT(vec5.empty(), "vec5 is empty now.");
 
     auto toRemovedNode = Node::create();
@@ -385,7 +385,7 @@ void TemplateMapTest::onEnter()
     // Default constructor
     Map<std::string, Node*> map1;
     CCASSERT(map1.empty(), "map1 is empty.");
-    CCASSERT(map1.size() == 0, "map1's size is 0.");
+    CCASSERT(map1.empty(), "map1's size is 0.");
     CCASSERT(map1.keys().empty(), "map1's keys are empty.");
     CCASSERT(map1.keys(Node::create()).empty(), "map1's keys don't contain a empty Node.");
 
@@ -820,45 +820,45 @@ void UIHelperSubStringTest::onEnter()
         std::string source = "";
 
         // OK
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1).empty());
 
         // Error: These cases cause "out of range" error
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1).empty());
     }
     {
         // Ascii
         std::string source = "abc";
 
         // OK
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 2, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 3, 0) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 2, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 3, 0).empty());
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 3) == "abc");
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 4) == "abc");
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 2) == "bc");
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 3) == "bc");
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 2, 1) == "c");
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 2, 2) == "c");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 3, 1) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 3, 2) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 3, 1).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 3, 2).empty());
 
         // Error: These cases cause "out of range" error
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 4, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 4, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 4, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 4, 1).empty());
     }
     {
         // CJK characters
         std::string source = "这里是中文测试例";
 
         // OK
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 7, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 8, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 8, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 7, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 8, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 8, 1).empty());
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1) == "\xe8\xbf\x99");
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 4) == "\xe8\xbf\x99\xe9\x87\x8c\xe6\x98\xaf\xe4\xb8\xad");
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 8) == "\xe8\xbf\x99\xe9\x87\x8c\xe6\x98\xaf\xe4\xb8\xad\xe6\x96\x87\xe6\xb5\x8b\xe8\xaf\x95\xe4\xbe\x8b");
@@ -868,41 +868,41 @@ void UIHelperSubStringTest::onEnter()
         CC_ASSERT(Helper::getSubStringOfUTF8String(source, 6, 100) == "\xe8\xaf\x95\xe4\xbe\x8b");
 
         // Error: These cases cause "out of range" error
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 9, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 9, 1) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 9, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 9, 1).empty());
     }
     {
         // Redundant UTF-8 sequence for Directory traversal attack (1)
         std::string source = "\xC0\xAF";
 
         // Error: Can't convert string to correct encoding such as UTF-32
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 2) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 2).empty());
     }
     {
         // Redundant UTF-8 sequence for Directory traversal attack (2)
         std::string source = "\xE0\x80\xAF";
 
         // Error: Can't convert string to correct encoding such as UTF-32
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 3) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 3).empty());
     }
     {
         // Redundant UTF-8 sequence for Directory traversal attack (3)
         std::string source = "\xF0\x80\x80\xAF";
 
         // Error: Can't convert string to correct encoding such as UTF-32
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1) == "");
-        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 4) == "");
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 1).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 0).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 1, 1).empty());
+        CC_ASSERT(Helper::getSubStringOfUTF8String(source, 0, 4).empty());
     }
 }
 
@@ -949,8 +949,8 @@ void ParseUriTest::onEnter()
         std::string s("http://www.facebook.com/hello/world?query#fragment");
         Uri u = Uri::parse(s);
         EXPECT_EQ("http", u.getScheme());
-        EXPECT_EQ("", u.getUserName());
-        EXPECT_EQ("", u.getPassword());
+        EXPECT_TRUE(u.getUserName().empty());
+        EXPECT_TRUE(u.getPassword().empty());
         EXPECT_EQ("www.facebook.com", u.getHost());
         EXPECT_EQ(0, u.getPort());
         EXPECT_EQ("www.facebook.com", u.getAuthority());
@@ -964,8 +964,8 @@ void ParseUriTest::onEnter()
         std::string s("http://www.facebook.com:8080/hello/world?query#fragment");
         Uri u = Uri::parse(s);
         EXPECT_EQ("http", u.getScheme());
-        EXPECT_EQ("", u.getUserName());
-        EXPECT_EQ("", u.getPassword());
+        EXPECT_TRUE(u.getUserName().empty());
+        EXPECT_TRUE(u.getPassword().empty());
         EXPECT_EQ("www.facebook.com", u.getHost());
         EXPECT_EQ(8080, u.getPort());
         EXPECT_EQ("www.facebook.com:8080", u.getAuthority());
@@ -979,8 +979,8 @@ void ParseUriTest::onEnter()
         std::string s("http://127.0.0.1:8080/hello/world?query#fragment");
         Uri u = Uri::parse(s);
         EXPECT_EQ("http", u.getScheme());
-        EXPECT_EQ("", u.getUserName());
-        EXPECT_EQ("", u.getPassword());
+        EXPECT_TRUE(u.getUserName().empty());
+        EXPECT_TRUE(u.getPassword().empty());
         EXPECT_EQ("127.0.0.1", u.getHost());
         EXPECT_EQ(8080, u.getPort());
         EXPECT_EQ("127.0.0.1:8080", u.getAuthority());
@@ -994,8 +994,8 @@ void ParseUriTest::onEnter()
         std::string s("http://[::1]:8080/hello/world?query#fragment");
         Uri u = Uri::parse(s);
         EXPECT_EQ("http", u.getScheme());
-        EXPECT_EQ("", u.getUserName());
-        EXPECT_EQ("", u.getPassword());
+        EXPECT_TRUE(u.getUserName().empty());
+        EXPECT_TRUE(u.getPassword().empty());
         EXPECT_EQ("[::1]", u.getHost());
         EXPECT_EQ("::1", u.getHostName());
         EXPECT_EQ(8080, u.getPort());
@@ -1010,15 +1010,15 @@ void ParseUriTest::onEnter()
         std::string s("http://[2401:db00:20:7004:face:0:29:0]:8080/hello/world?query");
         Uri u = Uri::parse(s);
         EXPECT_EQ("http", u.getScheme());
-        EXPECT_EQ("", u.getUserName());
-        EXPECT_EQ("", u.getPassword());
+        EXPECT_TRUE(u.getUserName().empty());
+        EXPECT_TRUE(u.getPassword().empty());
         EXPECT_EQ("[2401:db00:20:7004:face:0:29:0]", u.getHost());
         EXPECT_EQ("2401:db00:20:7004:face:0:29:0", u.getHostName());
         EXPECT_EQ(8080, u.getPort());
         EXPECT_EQ("[2401:db00:20:7004:face:0:29:0]:8080", u.getAuthority());
         EXPECT_EQ("/hello/world", u.getPath());
         EXPECT_EQ("query", u.getQuery());
-        EXPECT_EQ("", u.getFragment());
+        EXPECT_TRUE(u.getFragment().empty());
         EXPECT_EQ(s, u.toString());  // canonical
     }
 
@@ -1026,15 +1026,15 @@ void ParseUriTest::onEnter()
         std::string s("http://[2401:db00:20:7004:face:0:29:0]/hello/world?query");
         Uri u = Uri::parse(s);
         EXPECT_EQ("http", u.getScheme());
-        EXPECT_EQ("", u.getUserName());
-        EXPECT_EQ("", u.getPassword());
+        EXPECT_TRUE(u.getUserName().empty());
+        EXPECT_TRUE(u.getPassword().empty());
         EXPECT_EQ("[2401:db00:20:7004:face:0:29:0]", u.getHost());
         EXPECT_EQ("2401:db00:20:7004:face:0:29:0", u.getHostName());
         EXPECT_EQ(0, u.getPort());
         EXPECT_EQ("[2401:db00:20:7004:face:0:29:0]", u.getAuthority());
         EXPECT_EQ("/hello/world", u.getPath());
         EXPECT_EQ("query", u.getQuery());
-        EXPECT_EQ("", u.getFragment());
+        EXPECT_TRUE(u.getFragment().empty());
         EXPECT_EQ(s, u.toString());  // canonical
     }
 
@@ -1048,8 +1048,8 @@ void ParseUriTest::onEnter()
         EXPECT_EQ(0, u.getPort());
         EXPECT_EQ("user:pass@host.com", u.getAuthority());
         EXPECT_EQ("/", u.getPath());
-        EXPECT_EQ("", u.getQuery());
-        EXPECT_EQ("", u.getFragment());
+        EXPECT_TRUE(u.getQuery().empty());
+        EXPECT_TRUE(u.getFragment().empty());
         EXPECT_EQ(s, u.toString());
     }
 
@@ -1058,13 +1058,13 @@ void ParseUriTest::onEnter()
         Uri u = Uri::parse(s);
         EXPECT_EQ("http", u.getScheme());
         EXPECT_EQ("user", u.getUserName());
-        EXPECT_EQ("", u.getPassword());
+        EXPECT_TRUE(u.getPassword().empty());
         EXPECT_EQ("host.com", u.getHost());
         EXPECT_EQ(0, u.getPort());
         EXPECT_EQ("user@host.com", u.getAuthority());
         EXPECT_EQ("/", u.getPath());
-        EXPECT_EQ("", u.getQuery());
-        EXPECT_EQ("", u.getFragment());
+        EXPECT_TRUE(u.getQuery().empty());
+        EXPECT_TRUE(u.getFragment().empty());
         EXPECT_EQ(s, u.toString());
     }
 
@@ -1073,13 +1073,13 @@ void ParseUriTest::onEnter()
         Uri u = Uri::parse(s);
         EXPECT_EQ("http", u.getScheme());
         EXPECT_EQ("user", u.getUserName());
-        EXPECT_EQ("", u.getPassword());
+        EXPECT_TRUE(u.getPassword().empty());
         EXPECT_EQ("host.com", u.getHost());
         EXPECT_EQ(0, u.getPort());
         EXPECT_EQ("user@host.com", u.getAuthority());
         EXPECT_EQ("/", u.getPath());
-        EXPECT_EQ("", u.getQuery());
-        EXPECT_EQ("", u.getFragment());
+        EXPECT_TRUE(u.getQuery().empty());
+        EXPECT_TRUE(u.getFragment().empty());
         EXPECT_EQ("http://user@host.com/", u.toString());
     }
 
@@ -1087,14 +1087,14 @@ void ParseUriTest::onEnter()
         std::string s("http://:pass@host.com/");
         Uri u = Uri::parse(s);
         EXPECT_EQ("http", u.getScheme());
-        EXPECT_EQ("", u.getUserName());
+        EXPECT_TRUE(u.getUserName().empty());
         EXPECT_EQ("pass", u.getPassword());
         EXPECT_EQ("host.com", u.getHost());
         EXPECT_EQ(0, u.getPort());
         EXPECT_EQ(":pass@host.com", u.getAuthority());
         EXPECT_EQ("/", u.getPath());
-        EXPECT_EQ("", u.getQuery());
-        EXPECT_EQ("", u.getFragment());
+        EXPECT_TRUE(u.getQuery().empty());
+        EXPECT_TRUE(u.getFragment().empty());
         EXPECT_EQ(s, u.toString());
     }
 
@@ -1102,14 +1102,14 @@ void ParseUriTest::onEnter()
         std::string s("http://@host.com/");
         Uri u = Uri::parse(s);
         EXPECT_EQ("http", u.getScheme());
-        EXPECT_EQ("", u.getUserName());
-        EXPECT_EQ("", u.getPassword());
+        EXPECT_TRUE(u.getUserName().empty());
+        EXPECT_TRUE(u.getPassword().empty());
         EXPECT_EQ("host.com", u.getHost());
         EXPECT_EQ(0, u.getPort());
         EXPECT_EQ("host.com", u.getAuthority());
         EXPECT_EQ("/", u.getPath());
-        EXPECT_EQ("", u.getQuery());
-        EXPECT_EQ("", u.getFragment());
+        EXPECT_TRUE(u.getQuery().empty());
+        EXPECT_TRUE(u.getFragment().empty());
         EXPECT_EQ("http://host.com/", u.toString());
     }
 
@@ -1117,14 +1117,14 @@ void ParseUriTest::onEnter()
         std::string s("http://:@host.com/");
         Uri u = Uri::parse(s);
         EXPECT_EQ("http", u.getScheme());
-        EXPECT_EQ("", u.getUserName());
-        EXPECT_EQ("", u.getPassword());
+        EXPECT_TRUE(u.getUserName().empty());
+        EXPECT_TRUE(u.getPassword().empty());
         EXPECT_EQ("host.com", u.getHost());
         EXPECT_EQ(0, u.getPort());
         EXPECT_EQ("host.com", u.getAuthority());
         EXPECT_EQ("/", u.getPath());
-        EXPECT_EQ("", u.getQuery());
-        EXPECT_EQ("", u.getFragment());
+        EXPECT_TRUE(u.getQuery().empty());
+        EXPECT_TRUE(u.getFragment().empty());
         EXPECT_EQ("http://host.com/", u.toString());
     }
 
@@ -1132,14 +1132,14 @@ void ParseUriTest::onEnter()
         std::string s("file:///etc/motd");
         Uri u = Uri::parse(s);
         EXPECT_EQ("file", u.getScheme());
-        EXPECT_EQ("", u.getUserName());
-        EXPECT_EQ("", u.getPassword());
-        EXPECT_EQ("", u.getHost());
+        EXPECT_TRUE(u.getUserName().empty());
+        EXPECT_TRUE(u.getPassword().empty());
+        EXPECT_TRUE(u.getHost().empty());
         EXPECT_EQ(0, u.getPort());
-        EXPECT_EQ("", u.getAuthority());
+        EXPECT_TRUE(u.getAuthority().empty());
         EXPECT_EQ("/etc/motd", u.getPath());
-        EXPECT_EQ("", u.getQuery());
-        EXPECT_EQ("", u.getFragment());
+        EXPECT_TRUE(u.getQuery().empty());
+        EXPECT_TRUE(u.getFragment().empty());
         EXPECT_EQ(s, u.toString());
     }
 
@@ -1147,14 +1147,14 @@ void ParseUriTest::onEnter()
         std::string s("file://etc/motd");
         Uri u = Uri::parse(s);
         EXPECT_EQ("file", u.getScheme());
-        EXPECT_EQ("", u.getUserName());
-        EXPECT_EQ("", u.getPassword());
+        EXPECT_TRUE(u.getUserName().empty());
+        EXPECT_TRUE(u.getPassword().empty());
         EXPECT_EQ("etc", u.getHost());
         EXPECT_EQ(0, u.getPort());
         EXPECT_EQ("etc", u.getAuthority());
         EXPECT_EQ("/motd", u.getPath());
-        EXPECT_EQ("", u.getQuery());
-        EXPECT_EQ("", u.getFragment());
+        EXPECT_TRUE(u.getQuery().empty());
+        EXPECT_TRUE(u.getFragment().empty());
         EXPECT_EQ(s, u.toString());
     }
 
@@ -1170,9 +1170,9 @@ void ParseUriTest::onEnter()
         EXPECT_EQ(3, params.size());
         EXPECT_EQ("foo", params["key1"]);
         EXPECT_NE(params.end(), params.find("key2"));
-        EXPECT_EQ("", params["key2"]);
+        EXPECT_TRUE(params["key2"].empty());
         EXPECT_NE(params.end(), params.find("key3"));
-        EXPECT_EQ("", params["key3"]);
+        EXPECT_TRUE(params["key3"].empty());
     }
 
     {
@@ -1194,7 +1194,7 @@ void ParseUriTest::onEnter()
         }
         EXPECT_EQ(2, params.size());
         EXPECT_NE(params.end(), params.find("key2"));
-        EXPECT_EQ("", params["key2"]);
+        EXPECT_TRUE(params["key2"].empty());
         EXPECT_EQ("foo", params["key3"]);
     }
 
@@ -1209,7 +1209,7 @@ void ParseUriTest::onEnter()
         }
         EXPECT_EQ(1, params.size());
         EXPECT_NE(params.end(), params.find("key3"));
-        EXPECT_EQ("", params["key3"]);
+        EXPECT_TRUE(params["key3"].empty());
     }
 
     {
@@ -1232,9 +1232,9 @@ void ParseUriTest::onEnter()
             EXPECT_EQ("ws", v.getScheme());
             EXPECT_EQ("localhost", v.getHost());
             EXPECT_EQ("localhost", v.getHostName());
-            EXPECT_EQ("", v.getPath());
+            EXPECT_TRUE(v.getPath().empty());
             EXPECT_EQ(90, v.getPort());
-            EXPECT_EQ("", v.getFragment());
+            EXPECT_TRUE(v.getFragment().empty());
             EXPECT_EQ("key1=foo=bar&key2=foobar&", v.getQuery());
             EXPECT_EQ(u, v);
         }
@@ -1247,9 +1247,9 @@ void ParseUriTest::onEnter()
             EXPECT_EQ("ws", v.getScheme());
             EXPECT_EQ("localhost", v.getHost());
             EXPECT_EQ("localhost", v.getHostName());
-            EXPECT_EQ("", v.getPath());
+            EXPECT_TRUE(v.getPath().empty());
             EXPECT_EQ(90, v.getPort());
-            EXPECT_EQ("", v.getFragment());
+            EXPECT_TRUE(v.getFragment().empty());
             EXPECT_EQ("key1=foo=bar&key2=foobar&", v.getQuery());
             EXPECT_EQ(u, v);
         }
@@ -1274,9 +1274,9 @@ void ParseUriTest::onEnter()
             EXPECT_EQ("ws", v.getScheme());
             EXPECT_EQ("localhost", v.getHost());
             EXPECT_EQ("localhost", v.getHostName());
-            EXPECT_EQ("", v.getPath());
+            EXPECT_TRUE(v.getPath().empty());
             EXPECT_EQ(90, v.getPort());
-            EXPECT_EQ("", v.getFragment());
+            EXPECT_TRUE(v.getFragment().empty());
             EXPECT_EQ("key1=foo=bar&key2=foobar&", v.getQuery());
             u = std::move(v);
         }
@@ -1290,9 +1290,9 @@ void ParseUriTest::onEnter()
             EXPECT_EQ("ws", v.getScheme());
             EXPECT_EQ("localhost", v.getHost());
             EXPECT_EQ("localhost", v.getHostName());
-            EXPECT_EQ("", v.getPath());
+            EXPECT_TRUE(v.getPath().empty());
             EXPECT_EQ(90, v.getPort());
-            EXPECT_EQ("", v.getFragment());
+            EXPECT_TRUE(v.getFragment().empty());
             EXPECT_EQ("key1=foo=bar&key2=foobar&", v.getQuery());
             u = v;
         }
@@ -1406,28 +1406,28 @@ void ParseUriTest::onEnter()
         EXPECT_EQ(u2.getPort(), 0);
         EXPECT_EQ(u2.getPath(), "/foo");
 
-        EXPECT_EQ(u3.getScheme(), "");
+        EXPECT_TRUE(u3.getScheme().empty());
         EXPECT_EQ(u3.getHost(), "localhost");
         EXPECT_EQ(u3.getPort(), 0);
         EXPECT_EQ(u3.getPath(), "/foo");
 
-        EXPECT_EQ(u4.getScheme(), "");
+        EXPECT_TRUE(u4.getScheme().empty());
         EXPECT_EQ(u4.getHost(), "localhost");
         EXPECT_EQ(u4.getPort(), 8080);
-        EXPECT_EQ(u4.getPath(), "");
-        EXPECT_EQ(u4.getPathEtc(), "");
+        EXPECT_TRUE(u4.getPath().empty());
+        EXPECT_TRUE(u4.getPathEtc().empty());
 
         EXPECT_EQ(u5.getScheme(), "bb");
         EXPECT_EQ(u5.getHost(), "localhost");
         EXPECT_EQ(u5.getPort(), 0);
-        EXPECT_EQ(u5.getPath(), "");
+        EXPECT_TRUE(u5.getPath().empty());
         EXPECT_EQ(u5.getPathEtc(), "?&foo=12:4&ccc=13");
         EXPECT_EQ(u5.getQuery(), "&foo=12:4&ccc=13");
 
         EXPECT_EQ(u6.getScheme(), "cc");
         EXPECT_EQ(u6.getHost(), "localhost");
         EXPECT_EQ(u6.getPort(), 91);
-        EXPECT_EQ(u6.getPath(), "");
+        EXPECT_TRUE(u6.getPath().empty());
         EXPECT_EQ(u6.getPathEtc(), "?&foo=321&bbb=1");
         EXPECT_EQ(u6.getQuery(), "&foo=321&bbb=1");
     }

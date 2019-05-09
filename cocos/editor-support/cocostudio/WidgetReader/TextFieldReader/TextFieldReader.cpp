@@ -361,7 +361,7 @@ namespace cocostudio
         std::string errorFilePath = "";
         auto resourceData = options->fontResource();
         std::string path = resourceData->path()->c_str();
-        if (path != "")
+        if (!path.empty())
         {
             if (FileUtils::getInstance()->isFileExist(path))
             {

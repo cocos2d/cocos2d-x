@@ -722,7 +722,7 @@ Sequence*  CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* ch
             }
         }
     }
-    if(actions.size() < 1) return nullptr;
+    if(actions.empty()) return nullptr;
     
     return Sequence::create(actions);
 }
@@ -764,7 +764,7 @@ Sequence*  CCBAnimationManager::actionForSoundChannel(CCBSequenceProperty* chann
         actions.pushBack(CCBSoundEffect::actionWithSoundFile(soundFile, pitch, pan, gain));
     }
 
-    if(actions.size() < 1) return nullptr;
+    if(actions.empty()) return nullptr;
     
     return Sequence::create(actions);
 }

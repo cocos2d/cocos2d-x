@@ -115,7 +115,7 @@ void NavMeshBaseTestDemo::onTouchesBegan(const std::vector<cocos2d::Touch*>& tou
 
 void NavMeshBaseTestDemo::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
 {
-    if (touches.size() && _camera)
+    if (!touches.empty() && _camera)
     {
         auto touch = touches[0];
         auto delta = touch->getDelta();

@@ -1509,7 +1509,7 @@ void Sprite3DWithOBBPerformanceTest::update(float dt)
         _obbt.getCorners(corners);
         _drawDebug->drawCube(corners, Color4F(0,0,1,1));
     }
-    if(_obb.size() > 0)
+    if(!_obb.empty())
     {
         _drawOBB->clear();
         auto obbSize = _obb.size();
@@ -2159,7 +2159,7 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
 
 void Sprite3DCubeMapTest::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
-    if (touches.size())
+    if (!touches.empty())
     {
         auto touch = touches[0];
         auto delta = touch->getDelta();

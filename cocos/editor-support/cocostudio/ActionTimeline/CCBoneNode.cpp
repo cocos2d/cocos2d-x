@@ -518,7 +518,7 @@ cocos2d::Vector<BoneNode*> BoneNode::getAllSubBones() const
         boneStack.push(bone);
     }
 
-    while (boneStack.size() > 0)
+    while (!boneStack.empty())
     {
         auto top = boneStack.top();
         allBones.pushBack(top);

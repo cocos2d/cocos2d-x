@@ -343,7 +343,7 @@ void SpriteFrameCache::addSpriteFramesWithFileContent(const std::string& plist_c
 
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName)
 {
-    CCASSERT(textureFileName.size()>0, "texture name should not be null");
+    CCASSERT(!textureFileName.empty(), "texture name should not be null");
     const std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
     ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
     addSpriteFramesWithDictionary(dict, textureFileName, plist);
@@ -656,7 +656,7 @@ void SpriteFrameCache::reloadSpriteFramesWithDictionary(ValueMap& dictionary, Te
 
 bool SpriteFrameCache::reloadTexture(const std::string& plist)
 {
-    CCASSERT(plist.size()>0, "plist filename should not be nullptr");
+    CCASSERT(!plist.empty(), "plist filename should not be nullptr");
 
     if (_spriteFramesCache.isPlistUsed(plist)) {
         _spriteFramesCache.erasePlistIndex(plist);
@@ -784,7 +784,7 @@ bool SpriteFrameCache::PlistFramesCache::hasFrame(const std::string &frame) cons
 bool SpriteFrameCache::PlistFramesCache::isPlistUsed(const std::string &plist) const
 {
     auto frames = _indexPlist2Frames.find(plist);
-    return frames != _indexPlist2Frames.end() && frames->second.size() > 0;
+    return frames != _indexPlist2Frames.end() && !frames->second.empty();
 } 
 
 SpriteFrame * SpriteFrameCache::PlistFramesCache::at(const std::string &frame)

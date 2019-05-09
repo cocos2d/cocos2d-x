@@ -293,7 +293,7 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
     {
         // If this is an external tileset then start parsing that
         std::string externalTilesetFilename = attributeDict["source"].asString();
-        if (externalTilesetFilename != "")
+        if (!externalTilesetFilename.empty())
         {
             _externalTilesetFilename = externalTilesetFilename;
 
@@ -444,7 +444,7 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
         }
         else 
         {
-            tileset->_sourceImage = _resources + (_resources.size() ? "/" : "") + imagename;
+            tileset->_sourceImage = _resources + (!_resources.empty() ? "/" : "") + imagename;
         }
     } 
     else if (elementName == "data")
@@ -452,7 +452,7 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
         std::string encoding = attributeDict["encoding"].asString();
         std::string compression = attributeDict["compression"].asString();
 
-        if (encoding == "")
+        if (encoding.empty())
         {
             tmxMapInfo->setLayerAttribs(tmxMapInfo->getLayerAttribs() | TMXLayerAttribNone);
             
@@ -482,7 +482,7 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
                 layerAttribs = tmxMapInfo->getLayerAttribs();
                 tmxMapInfo->setLayerAttribs(layerAttribs | TMXLayerAttribZlib);
             }
-            CCASSERT( compression == "" || compression == "gzip" || compression == "zlib", "TMX: unsupported compression method" );
+            CCASSERT( compression.empty() || compression == "gzip" || compression == "zlib", "TMX: unsupported compression method" );
         }
         else if (encoding == "csv")
         {

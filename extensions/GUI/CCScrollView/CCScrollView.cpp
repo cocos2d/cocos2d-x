@@ -850,7 +850,7 @@ void ScrollView::onTouchEnded(Touch* touch, Event* /*event*/)
         _touches.erase(touchIter);
     } 
 
-    if (_touches.size() == 0)
+    if (_touches.empty())
     {
         _dragging = false;    
         _touchMoved = false;
@@ -871,7 +871,7 @@ void ScrollView::onTouchCancelled(Touch* touch, Event* /*event*/)
     
     _touches.erase(touchIter);
     
-    if (_touches.size() == 0)
+    if (_touches.empty())
     {
         _dragging = false;    
         _touchMoved = false;

@@ -179,7 +179,7 @@ namespace cocostudio
                 {
                     Size size = layerInfo->_layerSize;
                     auto& tilesets = mapInfo->getTilesets();
-                    if (tilesets.size()>0)
+                    if (!tilesets.empty())
                     {
                         TMXTilesetInfo* tileset = nullptr;
                         for (auto iter = tilesets.crbegin(); iter != tilesets.crend(); ++iter)
