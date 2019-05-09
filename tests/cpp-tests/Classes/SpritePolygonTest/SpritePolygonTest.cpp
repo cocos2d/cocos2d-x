@@ -297,15 +297,16 @@ void SpritePolygonTestSlider::initSliders()
     slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
     slider->loadProgressBarTexture("cocosui/sliderProgress.png");
     slider->setPosition(Vec2(vsize.width/2, vsize.height/4));
-    
-    slider->addEventListener(CC_CALLBACK_2(SpritePolygonTestSlider::changeEpsilon, this));
-    slider->setPercent((int)(sqrtf(1.0f/19.0f)*100));
-    
+
     auto ttfConfig = TTFConfig("fonts/arial.ttf", 8);
     _epsilonLabel = Label::createWithTTF(ttfConfig, "Epsilon: 2.0");
     addChild(_epsilonLabel);
     _epsilonLabel->setPosition(Vec2(vsize.width/2, vsize.height/4 + 15));
     addChild(slider);
+
+    slider->addEventListener(CC_CALLBACK_2(SpritePolygonTestSlider::changeEpsilon, this));
+    slider->setPercent((int)(sqrtf(1.0f/19.0f)*100));
+
 }
 
 void SpritePolygonTestSlider::makeSprites(const std::string* list, const int count, const float y)
