@@ -280,7 +280,7 @@ public class Cocos2dxMusic {
                 mediaPlayer.setDataSource(fis.getFD());
                 fis.close();
             } else {
-                if (Cocos2dxHelper.getObbFile() != null) {
+                if (Cocos2dxHelper.getObbFile() != null && Cocos2dxHelper.getObbFile().getAssetFileDescriptor(path) != null) {
                     final AssetFileDescriptor assetFileDescriptor = Cocos2dxHelper.getObbFile().getAssetFileDescriptor(path);
                     mediaPlayer.setDataSource(assetFileDescriptor.getFileDescriptor(), assetFileDescriptor.getStartOffset(), assetFileDescriptor.getLength());
                 } else {
