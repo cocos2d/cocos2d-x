@@ -37,7 +37,7 @@ varying vec4 v_fragmentColor;
 
 void main()
 {
-    gl_Position = u_MVPMatrix *  vec4(a_position, 1.0f);
+    gl_Position = u_MVPMatrix *  vec4(a_position, 1.0);
     v_fragmentColor = a_color;
 }
 )";
