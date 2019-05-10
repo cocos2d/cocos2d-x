@@ -47,5 +47,14 @@
     <array>
         <string>${MACOSX_BUNDLE_ICON_FILE}</string>
     </array>
+    <key>UIAppFonts</key>
+    <array>
+        <string>fonts/A Damn Mess.ttf</string>
+        <string>fonts/Abberancy.ttf</string>
+        <string>fonts/Abduction.ttf</string>
+        <string>fonts/Paint Boy.ttf</string>
+        <string>fonts/Schwarzwald.ttf</string>
+        <string>fonts/Scissor Cuts.ttf</string>
+    </array>
 </dict>
 </plist>
