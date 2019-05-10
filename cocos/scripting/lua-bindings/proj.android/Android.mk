@@ -9,7 +9,7 @@ LOCAL_MODULE_FILENAME := libluaccandroid
 LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := ../manual/platform/android/CCLuaJavaBridge.cpp \
-                   ../manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.cpp
+                   ../manual/platform/android/jni/Cocos2dxLuaJavaBridge.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../.. \
                     $(LOCAL_PATH)/../manual \
