@@ -7,6 +7,21 @@
 
 CC_BACKEND_BEGIN
 
+namespace {
+    GLenum toGLUsage(const BufferUsage& usage)
+    {
+        switch (usage)
+        {
+            case BufferUsage::STATIC:
+                return GL_STATIC_DRAW;
+            case BufferUsage::DYNAMIC:
+                return GL_DYNAMIC_DRAW;
+            default:
+                return GL_DYNAMIC_DRAW;
+        }
+    }
+}
+
 BufferGL::BufferGL(unsigned int size, BufferType type, BufferUsage usage)
 : Buffer(size, type, usage)
 {
@@ -74,12 +89,12 @@ void BufferGL::updateData(void* data, unsigned int size)
         if (BufferType::VERTEX == _type)
         {
             glBindBuffer(GL_ARRAY_BUFFER, _buffer);
-            glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+            glBufferData(GL_ARRAY_BUFFER, size, data, toGLUsage(_usage));
         }
         else
         {
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffer);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, toGLUsage(_usage));
         }
         CHECK_GL_ERROR_DEBUG();
         _bufferAllocated = size;
