@@ -175,3 +175,10 @@ metal-support*.zip
 **/org.eclipse.buildship.core.prefs
 
 desktop.ini
+# tmp folder for temp usage
+tmp/
+temp/
+
+# external libs zip
+*.zip
+**/simulator/
