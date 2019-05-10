@@ -314,7 +314,8 @@ void AssetsManagerEx::setStoragePath(const std::string& storagePath)
     _fileUtils->createDirectory(_storagePath);
     
     _tempStoragePath = _storagePath;
-    _tempStoragePath.insert(_storagePath.size() - 1, TEMP_PACKAGE_SUFFIX);
+    _tempStoragePath.insert(_storagePath.size(), TEMP_PACKAGE_SUFFIX);
+    adjustPath(_tempStoragePath);
     _fileUtils->createDirectory(_tempStoragePath);
 }
 
