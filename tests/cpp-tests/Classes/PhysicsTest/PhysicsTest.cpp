@@ -1593,8 +1593,6 @@ void PhysicsPositionRotationTest::onEnter()
     body->setRotationOffset(45);
     body->setTag(DRAG_BODYS_TAG);
     addChild(offsetPosNode);
-    
-    return;
 }
 
 std::string PhysicsPositionRotationTest::title() const

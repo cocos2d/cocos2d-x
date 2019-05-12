@@ -10,6 +10,7 @@ Checks: >
   performance-type-promotion-in-math-fn,
   readability-container-size-empty,
   readability-delete-null-pointer,
+  readability-redundant-control-flow,
 
 WarningsAsErrors: '*'
 HeaderFilterRegex: '/(?!external)/.*'

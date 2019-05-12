@@ -2425,7 +2425,6 @@ DelayTime* DelayTime::clone() const
 
 void DelayTime::update(float /*time*/)
 {
-    return;
 }
 
 DelayTime* DelayTime::reverse() const
