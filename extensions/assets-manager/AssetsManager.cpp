@@ -226,7 +226,7 @@ void AssetsManager::downloadAndUncompress()
             Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this] {
                 
                 // Record new version code.
-                UserDefault::getInstance()->setStringForKey(this->keyOfVersion().c_str(), this->_version.c_str());
+                UserDefault::getInstance()->setStringForKey(this->keyOfVersion().c_str(), this->_version);
                 
                 // Unrecord downloaded version code.
                 UserDefault::getInstance()->setStringForKey(this->keyOfDownloadedVersion().c_str(), "");

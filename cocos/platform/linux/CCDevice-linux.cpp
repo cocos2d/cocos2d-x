@@ -349,7 +349,7 @@ public:
         std::string lowerCasePath = fontPath;
         std::transform(lowerCasePath.begin(), lowerCasePath.end(), lowerCasePath.begin(), ::tolower);
         if ( lowerCasePath.find(".ttf") != std::string::npos ) {
-            fontPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(fontPath.c_str());
+            fontPath = cocos2d::FileUtils::getInstance()->fullPathForFilename(fontPath);
 
             FILE *f = fopen(fontPath.c_str(), "r");
             if ( f ) {

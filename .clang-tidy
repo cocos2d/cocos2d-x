@@ -11,6 +11,7 @@ Checks: >
   readability-container-size-empty,
   readability-delete-null-pointer,
   readability-redundant-control-flow,
+  readability-redundant-string-cstr,
 
 WarningsAsErrors: '*'
 HeaderFilterRegex: '/(?!external)/.*'

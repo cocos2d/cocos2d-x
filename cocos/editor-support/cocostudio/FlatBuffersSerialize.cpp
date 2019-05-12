@@ -577,7 +577,7 @@ Offset<NodeAction> FlatBuffersSerialize::createNodeAction(const tinyxml2::XMLEle
         }
         else if (name == "ActivedAnimationName")
         {
-            currentAnimationName = value.c_str();
+            currentAnimationName = value;
         }
         
         attribute = attribute->Next();
