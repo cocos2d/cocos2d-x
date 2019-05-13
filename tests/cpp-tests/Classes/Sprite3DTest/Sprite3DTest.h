@@ -531,18 +531,6 @@ protected:
     cocos2d::Sprite3D* _sprite3d;
 };
 
-class Sprite3DTestMeshLight : public Sprite3DTestDemo
-{
-public:
-    CREATE_FUNC(Sprite3DTestMeshLight);
-    Sprite3DTestMeshLight();
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-
-protected:
-    cocos2d::Sprite3D* _sprite;
-};
-
 class CameraBackgroundClearTest : public Sprite3DTestDemo
 {
 public:
