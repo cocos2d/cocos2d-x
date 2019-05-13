@@ -49,12 +49,7 @@
     </array>
     <key>UIAppFonts</key>
     <array>
-        <string>fonts/A Damn Mess.ttf</string>
-        <string>fonts/Abberancy.ttf</string>
-        <string>fonts/Abduction.ttf</string>
-        <string>fonts/Paint Boy.ttf</string>
-        <string>fonts/Schwarzwald.ttf</string>
-        <string>fonts/Scissor Cuts.ttf</string>
+        ${MACOSX_CUSTOM_FONT_FILE}
     </array>
 </dict>
 </plist>
