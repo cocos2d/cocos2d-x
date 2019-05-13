@@ -39,8 +39,8 @@ NewRendererTests::NewRendererTests()
     ADD_TEST_CASE(CaptureNodeTest);
     ADD_TEST_CASE(BugAutoCulling);
     ADD_TEST_CASE(RendererBatchQuadTri);
-    // ADD_TEST_CASE(RendererUniformBatch); // TODO shouldn't call OpenGL API directly
-    // ADD_TEST_CASE(RendererUniformBatch2);
+    ADD_TEST_CASE(RendererUniformBatch); 
+    ADD_TEST_CASE(RendererUniformBatch2);
     ADD_TEST_CASE(NonBatchSprites);
 };
 
@@ -629,149 +629,164 @@ std::string RendererBatchQuadTri::subtitle() const
 // RendererUniformBatch
 //
 
-//RendererUniformBatch::RendererUniformBatch()
-//{
-//    Size s = Director::getInstance()->getWinSize();
-//
-//    auto glBlurState = createBlurGLProgramState();
-//    auto glSepiaState = createSepiaGLProgramState();
-//
-//    auto x_inc = s.width / 20;
-//    auto y_inc = s.height / 6;
-//
-//    for (int y=0; y<6; ++y)
-//    {
-//        for (int x=0; x<20; ++x)
-//        {
-//            auto sprite = Sprite::create("Images/grossini.png");
-//            sprite->setPosition(Vec2(x * x_inc, y * y_inc));
-//            sprite->setScale(0.4);
-//            addChild(sprite);
-//
-//            if (y>=4) {
-//                sprite->setGLProgramState(glSepiaState);
-//            } else if(y>=2) {
-//                sprite->setGLProgramState(glBlurState);
-//            }
-//        }
-//    }
-//}
-//
-//GLProgramState* RendererUniformBatch::createBlurGLProgramState()
-//{
-//    const std::string shaderName("Shaders/example_Blur.fsh");
-//    // outline shader
-//    auto fileUtiles = FileUtils::getInstance();
-//    auto fragmentFullPath = fileUtiles->fullPathForFilename(shaderName);
-//    auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
-//    auto glprogram = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource.c_str());
-//    auto glprogramstate = (glprogram == nullptr ? nullptr : GLProgramState::getOrCreateWithGLProgram(glprogram));
-//
-//    glprogramstate->setUniformVec2("resolution", Vec2(85,121));
-//    glprogramstate->setUniformFloat("blurRadius", 10);
-//    glprogramstate->setUniformFloat("sampleNum", 5);
-//
-//    return glprogramstate;
-//}
-//
-//GLProgramState* RendererUniformBatch::createSepiaGLProgramState()
-//{
-//    const std::string shaderName("Shaders/example_Sepia.fsh");
-//
-//    // outline shader
-//    auto fileUtiles = FileUtils::getInstance();
-//    auto fragmentFullPath = fileUtiles->fullPathForFilename(shaderName);
-//    auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
-//    auto glprogram = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource.c_str());
-//    auto glprogramstate = (glprogram == nullptr ? nullptr : GLProgramState::getOrCreateWithGLProgram(glprogram));
-//
-//    return glprogramstate;
-//}
-//
-//std::string RendererUniformBatch::title() const
-//{
-//    return "RendererUniformBatch";
-//}
-//
-//std::string RendererUniformBatch::subtitle() const
-//{
-//    return "Only 9 draw calls should appear";
-//}
-//
-//
+RendererUniformBatch::RendererUniformBatch()
+{
+    Size s = Director::getInstance()->getWinSize();
+
+    auto blurState = createBlurProgramState();
+    auto sepiaState = createSepiaProgramState();
+
+    auto x_inc = s.width / 20;
+    auto y_inc = s.height / 6;
+
+    for (int y=0; y<6; ++y)
+    {
+        for (int x=0; x<20; ++x)
+        {
+            auto sprite = Sprite::create("Images/grossini.png");
+            sprite->setPosition(Vec2(x * x_inc, y * y_inc));
+            sprite->setScale(0.4);
+            addChild(sprite);
+
+            if (y>=4) {
+                sprite->setProgramState(sepiaState);
+            } else if(y>=2) {
+                sprite->setProgramState(blurState);
+            }
+        }
+    }
+}
+
+cocos2d::backend::ProgramState* RendererUniformBatch::createBlurProgramState()
+{
+    const std::string shaderName("Shaders/example_Blur.fsh");
+    // outline shader
+    auto fileUtiles = FileUtils::getInstance();
+    auto fragmentFullPath = fileUtiles->fullPathForFilename(shaderName);
+    auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
+    auto programState = new backend::ProgramState(positionTextureColor_vert, fragSource.c_str());
+
+
+
+    backend::UniformLocation loc = programState->getUniformLocation("resolution");
+    auto resolution = Vec2(85, 121);
+    programState->setUniform(loc, &resolution, sizeof(resolution));
+
+    loc = programState->getUniformLocation("blurRadius");
+    float blurRadius = 10.0f;
+    programState->setUniform(loc, &blurRadius, sizeof(blurRadius));
+
+    loc = programState->getUniformLocation("sampleNum");
+    float sampleNum = 5.0f;
+    programState->setUniform(loc, &sampleNum, sizeof(sampleNum));
+
+    return programState;
+}
+
+cocos2d::backend::ProgramState* RendererUniformBatch::createSepiaProgramState()
+{
+    const std::string shaderName("Shaders/example_Sepia.fsh");
+
+    // outline shader
+    auto fileUtiles = FileUtils::getInstance();
+    auto fragmentFullPath = fileUtiles->fullPathForFilename(shaderName);
+    auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
+    auto glprogram = new backend::ProgramState(positionTextureColor_vert, fragSource.c_str());
+    
+    return glprogram;
+}
+
+std::string RendererUniformBatch::title() const
+{
+    return "RendererUniformBatch";
+}
+
+std::string RendererUniformBatch::subtitle() const
+{
+    return "Only 9 draw calls should appear";
+}
+
+
 ////
 //// RendererUniformBatch2
 ////
-//
-//RendererUniformBatch2::RendererUniformBatch2()
-//{
-//    Size s = Director::getInstance()->getWinSize();
-//
-//    auto glBlurState = createBlurGLProgramState();
-//    auto glSepiaState = createSepiaGLProgramState();
-//
-//    auto x_inc = s.width / 20;
-//    auto y_inc = s.height / 6;
-//
-//    for (int y=0; y<6; ++y)
-//    {
-//        for (int x=0; x<20; ++x)
-//        {
-//            auto sprite = Sprite::create("Images/grossini.png");
-//            sprite->setPosition(Vec2(x * x_inc, y * y_inc));
-//            sprite->setScale(0.4);
-//            addChild(sprite);
-//
-//            auto r = CCRANDOM_0_1();
-//            if (r < 0.33)
-//                sprite->setGLProgramState(glSepiaState);
-//            else if (r < 0.66)
-//                sprite->setGLProgramState(glBlurState);
-//        }
-//    }
-//}
-//
-//GLProgramState* RendererUniformBatch2::createBlurGLProgramState()
-//{
-//    const std::string shaderName("Shaders/example_Blur.fsh");
-//
-//    // outline shader
-//    auto fileUtiles = FileUtils::getInstance();
-//    auto fragmentFullPath = fileUtiles->fullPathForFilename(shaderName);
-//    auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
-//    auto glprogram = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource.c_str());
-//    auto glprogramstate = (glprogram == nullptr ? nullptr : GLProgramState::getOrCreateWithGLProgram(glprogram));
-//
-//    glprogramstate->setUniformVec2("resolution", Vec2(85,121));
-//    glprogramstate->setUniformFloat("blurRadius", 10);
-//    glprogramstate->setUniformFloat("sampleNum", 5);
-//
-//    return glprogramstate;
-//}
-//
-//GLProgramState* RendererUniformBatch2::createSepiaGLProgramState()
-//{
-//    const std::string shaderName("Shaders/example_Sepia.fsh");
-//
-//    // outline shader
-//    auto fileUtiles = FileUtils::getInstance();
-//    auto fragmentFullPath = fileUtiles->fullPathForFilename(shaderName);
-//    auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
-//    auto glprogram = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource.c_str());
-//    auto glprogramstate = (glprogram == nullptr ? nullptr : GLProgramState::getOrCreateWithGLProgram(glprogram));
-//
-//    return glprogramstate;
-//}
-//
-//std::string RendererUniformBatch2::title() const
-//{
-//    return "RendererUniformBatch 2";
-//}
-//
-//std::string RendererUniformBatch2::subtitle() const
-//{
-//    return "Mixing different shader states should work ok";
-//}
+
+RendererUniformBatch2::RendererUniformBatch2()
+{
+    Size s = Director::getInstance()->getWinSize();
+
+    auto blurState = createBlurProgramState();
+    auto sepiaState = createSepiaProgramState();
+
+    auto x_inc = s.width / 20;
+    auto y_inc = s.height / 6;
+
+    for (int y=0; y<6; ++y)
+    {
+        for (int x=0; x<20; ++x)
+        {
+            auto sprite = Sprite::create("Images/grossini.png");
+            sprite->setPosition(Vec2(x * x_inc, y * y_inc));
+            sprite->setScale(0.4);
+            addChild(sprite);
+
+            auto r = CCRANDOM_0_1();
+            if (r < 0.33)
+                sprite->setProgramState(sepiaState);
+            else if (r < 0.66)
+                sprite->setProgramState(blurState);
+        }
+    }
+}
+
+backend::ProgramState* RendererUniformBatch2::createBlurProgramState()
+{
+    const std::string shaderName("Shaders/example_Blur.fsh");
+
+    // outline shader
+    auto fileUtiles = FileUtils::getInstance();
+    auto fragmentFullPath = fileUtiles->fullPathForFilename(shaderName);
+    auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
+    
+    auto programState = new backend::ProgramState(positionTextureColor_vert, fragSource.c_str());
+
+    backend::UniformLocation loc = programState->getUniformLocation("resolution");
+    auto resolution = Vec2(85, 121);
+    programState->setUniform(loc, &resolution, sizeof(resolution));
+
+    loc = programState->getUniformLocation("blurRadius");
+    float blurRadius = 10.0f;
+    programState->setUniform(loc, &blurRadius, sizeof(blurRadius));
+
+    loc = programState->getUniformLocation("sampleNum");
+    float sampleNum = 5.0f;
+    programState->setUniform(loc, &sampleNum, sizeof(sampleNum));
+
+    return programState;
+}
+
+backend::ProgramState*  RendererUniformBatch2::createSepiaProgramState()
+{
+    const std::string shaderName("Shaders/example_Sepia.fsh");
+
+    // outline shader
+    auto fileUtiles = FileUtils::getInstance();
+    auto fragmentFullPath = fileUtiles->fullPathForFilename(shaderName);
+    auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
+    auto glprogram = new backend::ProgramState(positionTextureColor_vert, fragSource.c_str());
+
+    return glprogram;
+}
+
+std::string RendererUniformBatch2::title() const
+{
+    return "RendererUniformBatch 2";
+}
+
+std::string RendererUniformBatch2::subtitle() const
+{
+    return "Mixing different shader states should work ok";
+}
 
 NonBatchSprites::NonBatchSprites()
 {
@@ -791,9 +806,13 @@ NonBatchSprites::NonBatchSprites()
         {
             sprite = Sprite::create("Images/grossini_dance_01.png");
         }
+
+        if (!sprite) break;
+
         sprite->setScale(0.1f, 0.1f);
         float x = ((float)std::rand()) / RAND_MAX;
         float y = ((float)std::rand()) / RAND_MAX;
+        sprite->runAction(RepeatForever::create(RotateBy::create(1, 45)));
         
         sprite->setPosition(Vec2(x * s.width, y * s.height));
         parent->addChild(sprite);
