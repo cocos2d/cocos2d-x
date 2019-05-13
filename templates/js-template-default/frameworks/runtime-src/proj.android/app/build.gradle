@@ -49,6 +49,7 @@ android {
         res.srcDir "res"
         jniLibs.srcDir "libs"
         manifest.srcFile "AndroidManifest.xml"
+        assets.srcDir "assets"
     }
 
     externalNativeBuild {
@@ -146,13 +147,12 @@ def compileJS(srcDir, dstDir) {
 
 android.applicationVariants.all { variant ->
     def project_root_folder = "${buildDir}/../../../../.."
-    def dest_assets_folder = "${buildDir}/intermediates/merged_assets/${variant.dirName}/out"
-    // ${buildDir}/intermediates/assets/${variant.dirName}/
+    def dest_assets_folder = "${buildDir}/../assets"
 
     // delete previous files first
     delete dest_assets_folder
 
-    variant.mergeAssets.doLast {
+    variant.mergeAssets.doFirst {
         copy {
            from project_root_folder + "/res"
            into dest_assets_folder + "/res"
