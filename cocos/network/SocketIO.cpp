@@ -441,8 +441,6 @@ void SIOClientImpl::handshake()
     HttpClient::getInstance()->send(request);
 
     request->release();
-
-    return;
 }
 
 void SIOClientImpl::handshakeResponse(HttpClient* /*sender*/, HttpResponse *response)
@@ -562,9 +560,6 @@ void SIOClientImpl::handshakeResponse(HttpClient* /*sender*/, HttpResponse *resp
     _timeout = timeout;
 
     openSocket();
-
-    return;
-
 }
 
 void SIOClientImpl::openSocket()
@@ -593,8 +588,6 @@ void SIOClientImpl::openSocket()
     {
         CC_SAFE_DELETE(_ws);
     }
-
-    return;
 }
 
 bool SIOClientImpl::init()
@@ -1004,8 +997,6 @@ void SIOClientImpl::onMessage(WebSocket* /*ws*/, const WebSocket::Data& data)
         }
         break;
     }
-
-    return;
 }
 
 void SIOClientImpl::onClose(WebSocket* /*ws*/)

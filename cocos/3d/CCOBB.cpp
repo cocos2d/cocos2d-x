@@ -178,7 +178,6 @@ static void _getEigenVectors(Mat4* vout, Vec3* dout, Mat4 a)
     v.transpose();
     *vout = v;
     *dout = d;
-    return;
 }
 
 static Mat4 _getOBBOrientation(const Vec3* vertPos, int num)
