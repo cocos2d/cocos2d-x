@@ -329,10 +329,17 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
     size.height = static_cast<CGFloat>(fbHeight);
     
     // Initialize device.
+    id<MTLDevice> device = MTLCreateSystemDefaultDevice();
+    if (!device)
+    {
+        CCLOG("Doesn't support metal.");
+        return false;
+    }
+
     NSView* contentView = [getCocoaWindow() contentView];
     [contentView setWantsLayer: YES];
     CAMetalLayer* layer = [CAMetalLayer layer];
-    [layer setDevice:MTLCreateSystemDefaultDevice()];
+    [layer setDevice:device];
     [layer setPixelFormat:MTLPixelFormatBGRA8Unorm];
     [layer setFramebufferOnly:NO];
     [layer setDrawableSize:size];
