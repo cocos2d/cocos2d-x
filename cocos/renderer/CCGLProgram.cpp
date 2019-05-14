@@ -148,21 +148,12 @@ const char* GLProgram::ATTRIBUTE_NAME_BINORMAL = "a_binormal";
 
 
 static const char * COCOS2D_SHADER_UNIFORMS =
-        "\n#ifdef GL_ES\n" // Some new Mali GPUs use FP16 for matrix that is not precise enough. Should be FP32. Tested on Mali-T880.
-        "uniform highp mat4 CC_PMatrix;\n"
-        "uniform highp mat4 CC_MultiViewPMatrix[4];\n"
-        "uniform highp mat4 CC_MVMatrix;\n"
-        "uniform highp mat4 CC_MVPMatrix;\n"
-        "uniform highp mat4 CC_MultiViewMVPMatrix[4];\n"
-        "uniform highp mat3 CC_NormalMatrix;\n"
-        "\n#else\n"
         "uniform mat4 CC_PMatrix;\n"
         "uniform mat4 CC_MultiViewPMatrix[4];\n"
         "uniform mat4 CC_MVMatrix;\n"
         "uniform mat4 CC_MVPMatrix;\n"
         "uniform mat4 CC_MultiViewMVPMatrix[4];\n"
         "uniform mat3 CC_NormalMatrix;\n"
-        "\n#endif\n"
         "uniform vec4 CC_Time;\n"
         "uniform vec4 CC_SinTime;\n"
         "uniform vec4 CC_CosTime;\n"
@@ -497,7 +488,9 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
         headersDef = (type == GL_VERTEX_SHADER ? "precision mediump float;\n precision mediump int;\n" : "precision mediump float;\n precision mediump int;\n");
 // Bugfix to make shader variables types constant to be understood by the current Android Virtual Devices or Emulators. This will also eliminate the 0x501 and 0x502 OpenGL Errors during emulation.
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-        headersDef = "#version 100\n precision mediump float;\n precision mediump int;\n";
+        headersDef = (type == GL_VERTEX_SHADER ?
+            "#version 100\n precision highp float;\n precision highp int;\n" :
+            "#version 100\n precision mediump float;\n precision mediump int;\n");
 #elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_LINUX && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
         headersDef = (type == GL_VERTEX_SHADER ? "precision highp float;\n precision highp int;\n" : "precision mediump float;\n precision mediump int;\n");
 #endif
