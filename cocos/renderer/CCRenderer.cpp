@@ -848,8 +848,9 @@ void Renderer::drawBatchedTriangles()
         _triBatchesToDraw[i].cmd->useMaterial();
         glDrawElements(GL_TRIANGLES, (GLsizei) _triBatchesToDraw[i].indicesToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (_triBatchesToDraw[i].offset*sizeof(_indices[0])) );
         _drawnBatches++;
-        _drawnVertices += _triBatchesToDraw[i].indicesToDraw;
     }
+ 
+    _drawnVertices += _filledVertex;
 
     /************** 4: Cleanup *************/
     if (conf->supportsShareableVAO() && conf->supportsMapBuffer())
