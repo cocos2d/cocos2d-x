@@ -117,7 +117,7 @@ android.applicationVariants.all { variant ->
     // delete previous files first
     delete dest_assets_folder
 
-    variant.mergeAssets.doFirst {
+    variant.mergeAssetsProvider.get().doFirst {
         copy {
             from project_root_folder + "/Resources"
             into dest_assets_folder

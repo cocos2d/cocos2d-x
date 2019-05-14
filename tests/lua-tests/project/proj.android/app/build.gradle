@@ -163,7 +163,7 @@ android.applicationVariants.all { variant ->
     // delete previous files first
     delete "${buildDir}/intermediates/assets/${variant.dirName}"
 
-    variant.mergeAssets.doLast {
+    variant.mergeAssetsProvider.get().doLast {
         copy {
            from "${buildDir}/../../../../res"
            into "${buildDir}/intermediates/assets/${variant.dirName}/res"
