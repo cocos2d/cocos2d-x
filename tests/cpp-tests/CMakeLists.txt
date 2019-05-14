@@ -94,7 +94,6 @@ list(APPEND GAME_HEADER
      Classes/LabelTest/LabelTestNew.h
     #  Classes/LabelTest/LabelTest.h
      Classes/Particle3DTest/Particle3DTest.h
-#     Classes/AllocatorTest/AllocatorTest.h
      Classes/VibrateTest/VibrateTest.h
      Classes/ClippingNodeTest/ClippingNodeTest.h
      Classes/UserDefaultTest/UserDefaultTest.h
@@ -214,7 +213,6 @@ list(APPEND GAME_SOURCE
      Classes/ActionsEaseTest/ActionsEaseTest.cpp
      Classes/ActionsProgressTest/ActionsProgressTest.cpp
      Classes/ActionsTest/ActionsTest.cpp
-#     Classes/AllocatorTest/AllocatorTest.cpp
      Classes/AppDelegate.cpp
      Classes/BaseTest.cpp
      Classes/BillBoardTest/BillBoardTest.cpp
