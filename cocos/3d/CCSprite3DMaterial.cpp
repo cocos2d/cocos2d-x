@@ -29,6 +29,7 @@
 #include "renderer/CCTexture2D.h"
 #include "base/CCDirector.h"
 #include "base/CCEventType.h"
+#include "base/CCConfiguration.h"
 #include "renderer/backend/ProgramState.h"
 #include "renderer/ccShaders.h"
 #include "renderer/CCPass.h"
@@ -66,23 +67,15 @@ namespace
 {
     std::string getShaderMacrosForLight()
     {
-    //TODO: minggo
         char def[256];
-//        auto conf = Configuration::getInstance();
-//
-//        snprintf(def, sizeof(def)-1, "\n#define MAX_DIRECTIONAL_LIGHT_NUM %d \n"
-//                "\n#define MAX_POINT_LIGHT_NUM %d \n"
-//                "\n#define MAX_SPOT_LIGHT_NUM %d \n",
-//                 conf->getMaxSupportDirLightInShader(),
-//                 conf->getMaxSupportPointLightInShader(),
-//                 conf->getMaxSupportSpotLightInShader());
+        auto conf = Configuration::getInstance();
 
         snprintf(def, sizeof(def)-1, "\n#define MAX_DIRECTIONAL_LIGHT_NUM %d \n"
                 "\n#define MAX_POINT_LIGHT_NUM %d \n"
                 "\n#define MAX_SPOT_LIGHT_NUM %d \n",
-                 5,
-                 5,
-                 5);
+                 conf->getMaxSupportDirLightInShader(),
+                 conf->getMaxSupportPointLightInShader(),
+                 conf->getMaxSupportSpotLightInShader());
 
         return std::string(def);
     }

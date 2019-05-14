@@ -174,18 +174,16 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         int powW = 0;
         int powH = 0;
 
-//        if (Configuration::getInstance()->supportsNPOT())
-//        {
-//            powW = w;
-//            powH = h;
-//        }
-//        else
-//        {
-//            powW = ccNextPOT(w);
-//            powH = ccNextPOT(h);
-//        }
-        powW = w;
-        powH = h;
+        if (Configuration::getInstance()->supportsNPOT())
+        {
+            powW = w;
+            powH = h;
+        }
+        else
+        {
+            powW = ccNextPOT(w);
+            powH = ccNextPOT(h);
+        }
         
         backend::TextureDescriptor descriptor;
         descriptor.width = powW;

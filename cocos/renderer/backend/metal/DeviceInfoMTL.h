@@ -12,9 +12,16 @@ public:
 	virtual ~DeviceInfoMTL() = default;
 
     virtual bool init() override;
+    virtual const char* getVendor() const override;
+    virtual const char* getRenderer() const override;
+    virtual const char* getVersion() const override;
+    virtual const char* getExtension() const override;
+    virtual bool checkForFeatureSupported(const FeaturesInfo& feature) override;
     
 private:
     void getTextureSizeInfo();
+    std::string _features;
+    std::string _deviceName;
     
     //MTLFeatureSet _currentFeatureSet;
 };
