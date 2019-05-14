@@ -138,8 +138,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
             self.contentScaleFactor = [[UIScreen mainScreen] scale];
         }
 
+        id<MTLDevice> device = MTLCreateSystemDefaultDevice();
+        if (!device)
+        {
+             CCLOG("Doesn't support metal.");
+             return nil;
+        }
         CAMetalLayer* metalLayer = (CAMetalLayer*)[self layer];
-        metalLayer.device = MTLCreateSystemDefaultDevice();
+        metalLayer.device = device;
         metalLayer.pixelFormat = MTLPixelFormatBGRA8Unorm;
         metalLayer.framebufferOnly = NO;
         cocos2d::backend::DeviceMTL::setCAMetalLayer(metalLayer);
