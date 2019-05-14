@@ -19,11 +19,7 @@ public:
     virtual bool checkForFeatureSupported(const FeaturesInfo& feature) override;
     
 private:
-    void getTextureSizeInfo();
-    std::string _features;
     std::string _deviceName;
-    
-    //MTLFeatureSet _currentFeatureSet;
 };
 
 CC_BACKEND_END

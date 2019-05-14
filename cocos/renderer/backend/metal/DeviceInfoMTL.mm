@@ -1,6 +1,6 @@
+
 #include "DeviceInfoMTL.h"
 #include "base/ccMacros.h"
-
 CC_BACKEND_BEGIN
 
 DeviceInfoMTL::DeviceInfoMTL(id<MTLDevice> device)
@@ -11,30 +11,17 @@ DeviceInfoMTL::DeviceInfoMTL(id<MTLDevice> device)
 bool DeviceInfoMTL::init()
 {
     _maxAttributes = 31;
-    //glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &_maxTextureUnits);
+    _maxSamplesAllowed = 16;
     
-        //ifdef ios
-    //glGetIntegerv(GL_MAX_SAMPLES_APPLE, &_maxSamplesAllowed);
-    getTextureSizeInfo();
-
-//support PVRTC/EAC/ETC2/ASTC/BC/YUV
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    _features += "GL_IMG_texture_compression_pvrtc";
+    _maxTextureUnits = 31;
+     _maxTextureSize = 4096;
 #else
-    _features += "GL_OES_packed_depth_stencil";
-#endif
-    return true;
-}
-
-//todo coulsonwang
-void DeviceInfoMTL::getTextureSizeInfo()
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    _maxTextureSize = 4096;
-        
-#else
+    _maxTextureUnits = 128;
     _maxTextureSize = 16384;
 #endif
+    
+    return true;
 }
 
 const char* DeviceInfoMTL::getVendor() const
@@ -54,7 +41,7 @@ const char* DeviceInfoMTL::getVersion() const
 
 const char* DeviceInfoMTL::getExtension() const
 {
-    return _features.c_str();
+    return "";
 }
 
 bool DeviceInfoMTL::checkForFeatureSupported(const FeaturesInfo& feature)
@@ -65,17 +52,13 @@ bool DeviceInfoMTL::checkForFeatureSupported(const FeaturesInfo& feature)
     case FeaturesInfo::PVRTC:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         featureSupported = true;
-#else
-        featureSupported = false;
 #endif
         break;
     case FeaturesInfo::IMG_FORMAT_BGRA8888:
         featureSupported = true;
         break;
     case FeaturesInfo::PACKED_DEPTH_STENCIL:
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        featureSupported = false;
-#else
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
         featureSupported = true;
 #endif
         break;
