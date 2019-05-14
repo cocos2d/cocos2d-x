@@ -185,7 +185,7 @@ bool Configuration::checkForGLExtension(const std::string &searchName) const
 int Configuration::getMaxTextureSize() const
 {
     auto _deviceInfo = backend::Device::getInstance()->getDeviceInfo();
-	return _deviceInfo->getMaxTextureSize();
+    return _deviceInfo->getMaxTextureSize();
 }
 
 int Configuration::getMaxModelviewStackDepth() const
@@ -196,7 +196,7 @@ int Configuration::getMaxModelviewStackDepth() const
 int Configuration::getMaxTextureUnits() const
 {
     auto _deviceInfo = backend::Device::getInstance()->getDeviceInfo();
-	return _deviceInfo->getMaxTextureUnits();
+    return _deviceInfo->getMaxTextureUnits();
 }
 
 bool Configuration::supportsNPOT() const
