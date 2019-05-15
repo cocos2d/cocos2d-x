@@ -123,34 +123,34 @@ void Configuration::gatherGPUInfo()
     _supportsNPOT = true;
     _valueDict["supports_NPOT"] = Value(_supportsNPOT);
     
-    _supportsETC1 = _deviceInfo->checkForFeatureSupported(backend::FeaturesInfo::ETC1);
+    _supportsETC1 = _deviceInfo->checkForFeatureSupported(backend::FeatureType::ETC1);
     _valueDict["supports_ETC1"] = Value(_supportsETC1);
     
-    _supportsS3TC = _deviceInfo->checkForFeatureSupported(backend::FeaturesInfo::S3TC);
+    _supportsS3TC = _deviceInfo->checkForFeatureSupported(backend::FeatureType::S3TC);
     _valueDict["supports_S3TC"] = Value(_supportsS3TC);
     
-    _supportsATITC = _deviceInfo->checkForFeatureSupported(backend::FeaturesInfo::AMD_COMPRESSED_ATC);
+    _supportsATITC = _deviceInfo->checkForFeatureSupported(backend::FeatureType::AMD_COMPRESSED_ATC);
     _valueDict["supports_ATITC"] = Value(_supportsATITC);
     
-    _supportsPVRTC = _deviceInfo->checkForFeatureSupported(backend::FeaturesInfo::PVRTC);
+    _supportsPVRTC = _deviceInfo->checkForFeatureSupported(backend::FeatureType::PVRTC);
     _valueDict["supports_PVRTC"] = Value(_supportsPVRTC);
     
-    _supportsBGRA8888 = _deviceInfo->checkForFeatureSupported(backend::FeaturesInfo::IMG_FORMAT_BGRA8888);
+    _supportsBGRA8888 = _deviceInfo->checkForFeatureSupported(backend::FeatureType::IMG_FORMAT_BGRA8888);
     _valueDict["supports_BGRA8888"] = Value(_supportsBGRA8888);
     
-    _supportsDiscardFramebuffer = _deviceInfo->checkForFeatureSupported(backend::FeaturesInfo::DISCARD_FRAMEBUFFER);
+    _supportsDiscardFramebuffer = _deviceInfo->checkForFeatureSupported(backend::FeatureType::DISCARD_FRAMEBUFFER);
     _valueDict["supports_discard_framebuffer"] = Value(_supportsDiscardFramebuffer);
     
-    _supportsOESPackedDepthStencil = _deviceInfo->checkForFeatureSupported(backend::FeaturesInfo::PACKED_DEPTH_STENCIL);
+    _supportsOESPackedDepthStencil = _deviceInfo->checkForFeatureSupported(backend::FeatureType::PACKED_DEPTH_STENCIL);
     _valueDict["supports_OES_packed_depth_stencil"] = Value(_supportsOESPackedDepthStencil);
     
-    _supportsShareableVAO = _deviceInfo->checkForFeatureSupported(backend::FeaturesInfo::VAO);
+    _supportsShareableVAO = _deviceInfo->checkForFeatureSupported(backend::FeatureType::VAO);
     _valueDict["supports_vertex_array_object"] = Value(_supportsShareableVAO);
     
-    _supportsOESMapBuffer = _deviceInfo->checkForFeatureSupported(backend::FeaturesInfo::MAPBUFFER);
+    _supportsOESMapBuffer = _deviceInfo->checkForFeatureSupported(backend::FeatureType::MAPBUFFER);
     _valueDict["supports_OES_map_buffer"] = Value(_supportsOESMapBuffer);
     
-    _supportsOESDepth24 = _deviceInfo->checkForFeatureSupported(backend::FeaturesInfo::DEPTH24);
+    _supportsOESDepth24 = _deviceInfo->checkForFeatureSupported(backend::FeatureType::DEPTH24);
     _valueDict["supports_OES_depth24"] = Value(_supportsOESDepth24);
     
     _glExtensions = _deviceInfo->getExtension();

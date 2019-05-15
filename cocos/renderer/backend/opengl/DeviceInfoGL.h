@@ -15,7 +15,7 @@ public:
     virtual const char* getRenderer() const override;
     virtual const char* getVersion() const override;
     virtual const char* getExtension() const override;
-    virtual bool checkForFeatureSupported(const FeaturesInfo& feature) override;
+    virtual bool checkForFeatureSupported(FeatureType feature) override;
     
 private:
     bool checkForGLExtension(const std::string &searchName) const;

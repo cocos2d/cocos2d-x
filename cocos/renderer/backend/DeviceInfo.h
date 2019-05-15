@@ -6,7 +6,7 @@
 
 CC_BACKEND_BEGIN
 
-enum class FeaturesInfo : uint32_t
+enum class FeatureType : uint32_t
 {
     ETC1,
     S3TC,
@@ -17,7 +17,8 @@ enum class FeaturesInfo : uint32_t
     PACKED_DEPTH_STENCIL,
     VAO,
     MAPBUFFER,
-    DEPTH24
+    DEPTH24,
+    ASTC
 };
 
 class DeviceInfo
@@ -29,7 +30,7 @@ public:
     virtual const char* getRenderer() const = 0;
     virtual const char* getVersion() const = 0;
     virtual const char* getExtension() const = 0;
-    virtual bool checkForFeatureSupported(const FeaturesInfo& feature) = 0;
+    virtual bool checkForFeatureSupported(FeatureType feature) = 0;
     
     inline int getMaxTextureSize() const { return _maxTextureSize; }
     inline int getMaxAttributes() const { return _maxAttributes; }
