@@ -27,6 +27,7 @@
 
 #include "renderer/CCRenderState.h"
 
+#include <cctype>
 #include <string>
 
 #include "renderer/CCTexture2D.h"
