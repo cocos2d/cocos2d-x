@@ -359,9 +359,9 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
     unsigned char *data = mipmaps[0].address;
 
-    ssize_t dataLen = mipmaps[0].len;
+    size_t dataLen = mipmaps[0].len;
     unsigned char *outData = data;
-    ssize_t outDataLen;
+    size_t outDataLen;
     
     if(renderFormat != pixelFormat) //need conversion
     {
@@ -594,7 +594,7 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
 
     PixelFormat      pixelFormat = g_defaultAlphaPixelFormat;
     unsigned char* outTempData = nullptr;
-    ssize_t outTempDataLen = 0;
+    size_t outTempDataLen = 0;
 
     int imageWidth;
     int imageHeight;
