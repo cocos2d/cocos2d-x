@@ -1,4 +1,4 @@
-cocos2d-x-3.17.2 ??
+cocos2d-x-3.17.2 May.21 2019
 
 [NEW]           Network: added clear requests and responses method to httpclient
 [NEW]           UI: VideoPlayer added ability to enable/disable looping, resonding user input
