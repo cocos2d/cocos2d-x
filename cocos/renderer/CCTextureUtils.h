@@ -25,6 +25,7 @@ namespace backend {
         PixelFormat convertRGB565ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen);
         PixelFormat convertA8ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen);
         PixelFormat convertRGBA4444ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen);
+        PixelFormat convertBGRA8888ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen);
 
         //I8 to XXX
         void convertI8ToRGB888(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
@@ -66,6 +67,9 @@ namespace backend {
         void convertRGB565ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
         void convertA8ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
         void convertRGBA4444ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
+        
+        //BGRA8888 to XXX
+        void convertBGRA8888ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
     };
 }
 NS_CC_END

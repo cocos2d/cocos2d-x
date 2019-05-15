@@ -11,6 +11,7 @@ namespace
         switch (textureFormat)
         {
             case TextureFormat::R8G8B8A8:
+            case TextureFormat::BGRA8888:
                 return byte(4);
             case TextureFormat::R8G8B8:
                 return byte(3);

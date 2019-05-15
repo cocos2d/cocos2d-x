@@ -549,6 +549,17 @@ namespace backend { namespace PixelFormatUtils {
         }
     }
     
+    void convertBGRA8888ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    {
+        const uint32_t pixelCounts = dataLen / 4;
+        for (uint32_t i = 0; i < pixelCounts; i++)
+        {
+            *outData++ = data[i*4 + 2];
+            *outData++ = data[i*4 + 1];
+            *outData++ = data[i*4 + 0];
+            *outData++ = data[i*4 + 3];
+        }
+    }
     
     // converter function end
     //////////////////////////////////////////////////////////////////////////
@@ -938,6 +949,22 @@ namespace backend { namespace PixelFormatUtils {
         
         return format;
     }
+    
+    PixelFormat convertBGRA8888ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen)
+    {
+        switch (format) {
+            case PixelFormat::RGBA8888:
+                *outDataLen = dataLen;
+                *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+                convertBGRA8888ToRGBA8888(data, dataLen, *outData);
+                break;
+                
+            default:
+                break;
+        }
+        return format;
+    }
+    
     /*
      convert map:
      1.PixelFormat::RGBA8888
@@ -986,6 +1013,8 @@ namespace backend { namespace PixelFormatUtils {
                 return convertA8ToFormat(data, dataLen, format, outData, outDataLen);
                 
 #endif
+            case PixelFormat::BGRA8888:
+                return convertBGRA8888ToFormat(data, dataLen, format, outData, outDataLen);
             default:
                 CCLOG("unsupported conversion from format %d to format %d", static_cast<int>(originFormat), static_cast<int>(format));
                 *outData = (unsigned char*)data;
@@ -993,7 +1022,6 @@ namespace backend { namespace PixelFormatUtils {
                 return originFormat;
         }
     }
-    
 }
 }
 

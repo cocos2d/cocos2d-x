@@ -99,6 +99,8 @@ MTLPixelFormat Utils::toMTLPixelFormat(TextureFormat textureFormat)
             return MTLPixelFormatRGBA8Unorm;
         case TextureFormat::A8:
             return MTLPixelFormatA8Unorm;
+        case TextureFormat::BGRA8888:
+            return MTLPixelFormatBGRA8Unorm;
            
         //on mac, D24S8 means MTLPixelFormatDepth24Unorm_Stencil8, while on ios it means MTLPixelFormatDepth32Float_Stencil8
         case TextureFormat::D24S8:
