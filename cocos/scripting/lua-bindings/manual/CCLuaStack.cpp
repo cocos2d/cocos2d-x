@@ -801,7 +801,7 @@ int LuaStack::luaLoadChunksFromZIP(lua_State *L)
             std::string filename = zip->getFirstFilename();
             while (filename.length()) {
                 ssize_t bufferSize = 0;
-                unsigned char *zbuffer = zip->getFileData(filename.c_str(), &bufferSize);
+                unsigned char *zbuffer = zip->getFileData(filename, &bufferSize);
                 if (bufferSize) {
                     // remove .lua or .luac extension
                     size_t pos = filename.find_last_of('.');

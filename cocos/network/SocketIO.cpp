@@ -720,7 +720,7 @@ void SIOClientImpl::send(SocketIOPacket *packet)
     if (_connected)
     {
         CCLOGINFO("-->SEND:%s", req.data());
-        _ws->send(req.data());
+        _ws->send(req);
     }
     else
         CCLOGINFO("Cant send the message (%s) because disconnected", req.c_str());
@@ -757,7 +757,7 @@ void SIOClientImpl::onOpen(WebSocket* /*ws*/)
     if (_version == SocketIOPacket::SocketIOVersion::V10x)
     {
         std::string s = "5";//That's a ping https://github.com/Automattic/engine.io-parser/blob/1b8e077b2218f4947a69f5ad18be2a512ed54e93/lib/index.js#L21
-        _ws->send(s.data());
+        _ws->send(s);
     }
 
     Director::getInstance()->getScheduler()->schedule(CC_SCHEDULE_SELECTOR(SIOClientImpl::heartbeat), this, (_heartbeat * .9f), false);
