@@ -53,7 +53,7 @@ static bool isValidUniform(const char* name);
 Material* Material::createWithFilename(const std::string& filepath)
 {
     auto validfilename = FileUtils::getInstance()->fullPathForFilename(filepath);
-    if (validfilename.size() > 0) {
+    if (!validfilename.empty()) {
         auto mat = new (std::nothrow) Material();
         if (mat && mat->initWithFile(validfilename))
         {

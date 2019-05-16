@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "LayerTest.h"
+#include <cmath>
 #include "../testResource.h"
 #include "../cocos/ui/UIText.h"
 
@@ -407,7 +408,7 @@ void LayerTest1::updateSize(Vec2 &touchLocation)
 {    
     auto s = Director::getInstance()->getWinSize();
     
-    auto newSize = Size( fabs(touchLocation.x - s.width/2)*2, fabs(touchLocation.y - s.height/2)*2);
+    auto newSize = Size( std::fabs(touchLocation.x - s.width/2)*2, std::fabs(touchLocation.y - s.height/2)*2);
     
     auto l = (LayerColor*) getChildByTag(kTagLayer);
 

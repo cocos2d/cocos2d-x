@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010-2013 cocos2d-x.org
-Copyright (c) Microsoft Open Technologies, Inc.
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+Copyright (c) 2019 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -24,35 +25,33 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+#ifndef __CC_DataManager_H__
+#define __CC_DataManager_H__
 
-#include "platform/CCPlatformConfig.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-
-#include "platform/winrt/CCPThreadWinRT.h"
+#include "platform/CCPlatformMacros.h"
+#include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
-void pthread_mutex_init(pthread_mutex_t* m, void* attributes) {
-	*m = CreateMutexEx(NULL,FALSE,0,NULL);
-}
+/**
+ * @addtogroup platform
+ * @{
+ */
 
-int pthread_mutex_lock(pthread_mutex_t* m) {
-	return WaitForSingleObjectEx(*m,INFINITE,FALSE);
-}
-
-int pthread_mutex_unlock(pthread_mutex_t* m) {
-	return ReleaseMutex(*m);
-}
-
-void pthread_mutex_destroy(pthread_mutex_t* m) 
+class CC_DLL DataManager
 {
-	if(m)
-	{
-		CloseHandle(*m);
-	}
-}
+public:
+    static void setProcessID(int pid);
+    static void setFrameSize(int width, int height);
+    static void onSceneLoaderBegin();
+    static void onSceneLoaderEnd();
+    static void onShaderLoaderBegin();
+    static void onShaderLoaderEnd();
+};
 
+// end of platform group
+/** @} */
 
 NS_CC_END
 
-#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#endif    // __CC_DataManager_H__

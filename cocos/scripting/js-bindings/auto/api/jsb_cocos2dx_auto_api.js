@@ -3398,6 +3398,16 @@ getAnimationInterval : function (
 },
 
 /**
+ * @method getClearColor
+ * @return {color4f_object}
+ */
+getClearColor : function (
+)
+{
+    return cc.Color4F;
+},
+
+/**
  * @method isPaused
  * @return {bool}
  */

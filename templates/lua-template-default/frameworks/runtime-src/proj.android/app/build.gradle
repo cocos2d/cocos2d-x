@@ -50,6 +50,7 @@ android {
         res.srcDir "res"
         jniLibs.srcDir "libs"
         manifest.srcFile "AndroidManifest.xml"
+        assets.srcDir "assets"
     }
 
     externalNativeBuild {
@@ -160,23 +161,26 @@ def compileLua(srcDir, dstDir, doCompile, is64bit, doEncrypt) {
 }
 
 android.applicationVariants.all { variant ->
-    // delete previous files first
-    delete "${buildDir}/intermediates/assets/${variant.dirName}"
+    def project_root_folder = "${buildDir}/../../../../.."
+    def dest_assets_folder = "${buildDir}/../assets"
 
-    variant.mergeAssets.doLast {
+    // delete previous files first
+    delete dest_assets_folder
+
+    variant.mergeAssets.doFirst {
         copy {
-           from "${buildDir}/../../../../../res"
-           into "${buildDir}/intermediates/assets/${variant.dirName}/res"
+           from project_root_folder + "/res"
+           into dest_assets_folder + "/res"
         }
 
         copy {
-            from "${buildDir}/../../../../../src"
-            into "${buildDir}/intermediates/assets/${variant.dirName}/src"
+            from project_root_folder + "/src"
+            into dest_assets_folder + "/src"
         }
 
         // copy {
         //     from "${buildDir}/../../../../cocos2d-x/cocos/scripting/lua-bindings/script"
-        //     into  "${buildDir}/intermediates/assets/${variant.dirName}/src/cocos"
+        //     into  dest_assets_folder + "/src/cocos"
         // }
 
         // compile & encrypt the scripts if necessary
@@ -220,32 +224,32 @@ android.applicationVariants.all { variant ->
             // invoke cocos command to compile & encrypt the lua files
             switch (buildType) {
                 case -1:
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
+                    compileLua(dest_assets_folder + "/src",
+                               dest_assets_folder + "/src",
                                false, false, encryptLua)
                     break
                 case 0:
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
+                    compileLua(dest_assets_folder + "/src",
+                               dest_assets_folder + "/src",
                                true, false, encryptLua)
                     break
                 case 1:
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src/64bit",
+                    compileLua(dest_assets_folder + "/src",
+                               dest_assets_folder + "/src/64bit",
                                true, true, encryptLua)
 
                     // remove the lua files in src dir
-                    delete fileTree("${buildDir}/intermediates/assets/${variant.dirName}/src") {
+                    delete fileTree(dest_assets_folder + "/src") {
                         include '**/*.lua'
                     }
-                    delete "${buildDir}/intermediates/assets/${variant.dirName}/src/cocos"
+                    delete dest_assets_folder + "/src/cocos"
                     break
                 case 2:
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src/64bit",
+                    compileLua(dest_assets_folder + "/src",
+                               dest_assets_folder + "/src/64bit",
                                true, true, encryptLua)
-                    compileLua("${buildDir}/intermediates/assets/${variant.dirName}/src",
-                               "${buildDir}/intermediates/assets/${variant.dirName}/src",
+                    compileLua(dest_assets_folder + "/src",
+                               dest_assets_folder + "/src",
                                true, false, encryptLua)
                     break
             }

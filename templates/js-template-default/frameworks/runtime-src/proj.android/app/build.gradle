@@ -49,6 +49,7 @@ android {
         res.srcDir "res"
         jniLibs.srcDir "libs"
         manifest.srcFile "AndroidManifest.xml"
+        assets.srcDir "assets"
     }
 
     externalNativeBuild {
@@ -145,29 +146,32 @@ def compileJS(srcDir, dstDir) {
 }
 
 android.applicationVariants.all { variant ->
+    def project_root_folder = "${buildDir}/../../../../.."
+    def dest_assets_folder = "${buildDir}/../assets"
+
     // delete previous files first
-    delete "${buildDir}/intermediates/assets/${variant.dirName}"
+    delete dest_assets_folder
 
-    variant.mergeAssets.doLast {
+    variant.mergeAssets.doFirst {
         copy {
-           from "${buildDir}/../../../../../res"
-           into "${buildDir}/intermediates/assets/${variant.dirName}/res"
+           from project_root_folder + "/res"
+           into dest_assets_folder + "/res"
         }
 
         copy {
-            from "${buildDir}/../../../../../src"
-            into "${buildDir}/intermediates/assets/${variant.dirName}/src"
+            from project_root_folder + "/src"
+            into dest_assets_folder + "/src"
         }
 
         copy {
-            from "${buildDir}/../../../../cocos2d-x/cocos/scripting/js-bindings/script"
-            into  "${buildDir}/intermediates/assets/${variant.dirName}/script"
+            from project_root_folder + "/frameworks/cocos2d-x/cocos/scripting/js-bindings/script"
+            into dest_assets_folder + "/script"
         }
 
         copy {
-            from "${buildDir}/../../../../../main.js"
-            from "${buildDir}/../../../../../project.json"
-            into "${buildDir}/intermediates/assets/${variant.dirName}"
+            from project_root_folder + "/main.js"
+            from project_root_folder + "/project.json"
+            into dest_assets_folder
         }
 
         // compile the scripts if necessary
@@ -177,8 +181,7 @@ android.applicationVariants.all { variant ->
         }
 
         if (compileScript) {
-            compileJS("${buildDir}/intermediates/assets/${variant.dirName}",
-                      "${buildDir}/intermediates/assets/${variant.dirName}")
+            compileJS(dest_assets_folder, dest_assets_folder)
         }
     }
 }

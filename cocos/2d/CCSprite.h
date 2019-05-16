@@ -184,7 +184,7 @@ public:
      * A SpriteFrame will be fetched from the SpriteFrameCache by spriteFrameName param.
      * If the SpriteFrame doesn't exist it will raise an exception.
      *
-     * @param   spriteFrameName A null terminated string which indicates the sprite frame name.
+     * @param   spriteFrameName The name of sprite frame.
      * @return  An autoreleased sprite object.
      */
     static Sprite* createWithSpriteFrameName(const std::string& spriteFrameName);

@@ -87,7 +87,7 @@ public:
         JSContext* cx = ScriptingCore::getInstance()->getGlobalContext();
 
         jsval args;
-        if(data == "")
+        if(data.empty())
         {
             args = JSVAL_NULL;
         } else

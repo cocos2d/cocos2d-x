@@ -308,6 +308,9 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
             mCurrentBufferPercentage = 0;
             if (mIsAssetRouse) {
                 AssetFileDescriptor afd = mCocos2dxActivity.getAssets().openFd(mVideoFilePath);
+                if (afd == null && Cocos2dxHelper.getObbFile() != null) {
+                    afd = Cocos2dxHelper.getObbFile() .getAssetFileDescriptor(mVideoFilePath);
+                }
                 mMediaPlayer.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
             } else {
                 mMediaPlayer.setDataSource(mCocos2dxActivity, mVideoUri);

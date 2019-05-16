@@ -324,7 +324,7 @@ namespace cocostudio
         {
             ILocalizationManager* lm = LocalizationHelper::getCurrentManager();
             std::string localizedTxt = lm->getLocalizationString(text);
-            std::string::size_type newlineIndex = localizedTxt.find("\n");
+            std::string::size_type newlineIndex = localizedTxt.find('\n');
             if (newlineIndex != std::string::npos)
                 localizedTxt = localizedTxt.substr(0, newlineIndex);
             textField->setString(localizedTxt);
@@ -361,7 +361,7 @@ namespace cocostudio
         std::string errorFilePath = "";
         auto resourceData = options->fontResource();
         std::string path = resourceData->path()->c_str();
-        if (path != "")
+        if (!path.empty())
         {
             if (FileUtils::getInstance()->isFileExist(path))
             {

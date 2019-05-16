@@ -114,7 +114,7 @@ namespace {
         if (Director::getInstance()->getOpenGLView())
         {
             HWND hwnd = Director::getInstance()->getOpenGLView()->getWin32Window();
-            SendMessage(hwnd,
+            PostMessage(hwnd,
                         WM_COPYDATA,
                         (WPARAM)(HWND)hwnd,
                         (LPARAM)(LPVOID)&myCDS);
@@ -454,7 +454,7 @@ void Console::Command::commandGeneric(int fd, const std::string& args)
 {
     // The first argument (including the empty)
     std::string key(args);
-    auto pos = args.find(" ");
+    auto pos = args.find(' ');
     if ((pos != std::string::npos) && (0 < pos)) {
         key = args.substr(0, pos);
     }

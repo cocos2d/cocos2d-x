@@ -1411,7 +1411,7 @@ bool ScriptingCore::handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::Eve
     js_type_class_t *typeClassEvent = nullptr;
     js_type_class_t *typeClassTouch = nullptr;
 
-    if (touches.size()>0)
+    if (!touches.empty())
         typeClassTouch = js_get_type_from_native<cocos2d::Touch>(touches[0]);
     typeClassEvent = js_get_type_from_native<cocos2d::EventTouch>((cocos2d::EventTouch*)event);
 

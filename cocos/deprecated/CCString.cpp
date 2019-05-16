@@ -260,7 +260,7 @@ __String* __String::createWithFormat(const char* format, ...)
 __String* __String::createWithContentsOfFile(const std::string &filename)
 {
     std::string str = FileUtils::getInstance()->getStringFromFile(filename);
-    return __String::create(std::move(str));
+    return __String::create(str);
 }
 
 void __String::acceptVisitor(DataVisitor &visitor)

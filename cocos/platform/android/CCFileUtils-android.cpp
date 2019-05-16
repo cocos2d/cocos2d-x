@@ -31,7 +31,6 @@ THE SOFTWARE.
 #include "platform/CCCommon.h"
 #include "platform/android/jni/JniHelper.h"
 #include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
-#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxEngineDataManager.h"
 #include "android/asset_manager.h"
 #include "android/asset_manager_jni.h"
 #include "base/ZipUtils.h"
@@ -301,7 +300,7 @@ long FileUtilsAndroid::getFileSize(const std::string& filepath) const
 std::vector<std::string> FileUtilsAndroid::listFiles(const std::string& dirPath) const
 {
 
-    if(isAbsolutePath(dirPath)) return FileUtils::listFiles(dirPath);
+    if(!dirPath.empty() && dirPath[0] == '/') return FileUtils::listFiles(dirPath);
 
     std::vector<std::string> fileList;
     string fullPath = fullPathForDirectory(dirPath);
@@ -347,8 +346,6 @@ std::vector<std::string> FileUtilsAndroid::listFiles(const std::string& dirPath)
 
 FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer) const
 {
-    EngineDataManager::onBeforeReadFile();
-
     static const std::string apkprefix("assets/");
     if (filename.empty())
         return FileUtils::Status::NotExists;

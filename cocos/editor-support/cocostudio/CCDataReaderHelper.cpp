@@ -296,7 +296,7 @@ void DataReaderHelper::addDataFromFile(const std::string& filePath)
 
     //! find the base file path
     std::string basefilePath = filePath;
-    size_t pos = basefilePath.find_last_of("/");
+    size_t pos = basefilePath.find_last_of('/');
 
     if (pos != std::string::npos)
     {
@@ -362,7 +362,7 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
 
     //! find the base file path
     std::string basefilePath = filePath;
-    size_t pos = basefilePath.find_last_of("/");
+    size_t pos = basefilePath.find_last_of('/');
 
     if (pos != std::string::npos)
     {
@@ -462,7 +462,7 @@ void DataReaderHelper::addDataAsyncCallBack(float /*dt*/)
         AsyncStruct *pAsyncStruct = pDataInfo->asyncStruct;
 
 
-        if (pAsyncStruct->imagePath != "" && pAsyncStruct->plistPath != "")
+        if (!pAsyncStruct->imagePath.empty() && !pAsyncStruct->plistPath.empty())
         {
             _getFileMutex.lock();
             ArmatureDataManager::getInstance()->addSpriteFrameFromFile(pAsyncStruct->plistPath, pAsyncStruct->imagePath, pDataInfo->filename);
@@ -1305,7 +1305,7 @@ void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, Data
             }
 
             std::string filePath = path;
-            filePath = filePath.erase(filePath.find_last_of("."));
+            filePath = filePath.erase(filePath.find_last_of('.'));
 
             if (dataInfo->asyncStruct)
             {
@@ -1586,7 +1586,7 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(const rapidjson::Value& j
 
     if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
     {
-        if (movementBoneData->frameList.size() > 0)
+        if (!movementBoneData->frameList.empty())
         {
             FrameData *frameData = new (std::nothrow) FrameData();
             frameData->copy((FrameData *)movementBoneData->frameList.back());
@@ -1844,7 +1844,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
                             }
 
                             std::string filePath = path;
-                            filePath = filePath.erase(filePath.find_last_of("."));
+                            filePath = filePath.erase(filePath.find_last_of('.'));
 
                             if (dataInfo->asyncStruct)
                             {
@@ -2271,7 +2271,7 @@ void DataReaderHelper::decodeNode(BaseData *node, const rapidjson::Value& json, 
 
         if (dataInfo->cocoStudioVersion < VERSION_COMBINED)
         {
-            if (movementBoneData->frameList.size() > 0)
+            if (!movementBoneData->frameList.empty())
             {
                 auto frameData = movementBoneData->frameList.at(framesizemusone);
                 movementBoneData->addFrameData(frameData);

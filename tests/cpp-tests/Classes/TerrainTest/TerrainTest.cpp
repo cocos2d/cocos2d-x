@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "TerrainTest.h"
+#include <cmath>
 
 USING_NS_CC;
 
@@ -196,7 +197,7 @@ void TerrainWalkThru::onTouchesEnd(const std::vector<cocos2d::Touch*>& touches, 
             dir = collisionPoint - _player->getPosition3D();
             dir.y = 0;
             dir.normalize();
-            _player->_headingAngle =  -1*acos(dir.dot(Vec3(0,0,-1)));
+            _player->_headingAngle =  -1*std::acos(dir.dot(Vec3(0,0,-1)));
             dir.cross(dir,Vec3(0,0,-1),&_player->_headingAxis);
             _player->_targetPos=collisionPoint;
             _player->forward();

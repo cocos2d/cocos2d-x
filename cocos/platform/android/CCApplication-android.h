@@ -53,7 +53,6 @@ public:
     @param interval The time, expressed in seconds, between current frame and next.
     */
     virtual void setAnimationInterval(float interval) override;
-    virtual void setAnimationInterval(float interval, SetIntervalReason reason) override;
 
     /**
     @brief    Run the message loop.

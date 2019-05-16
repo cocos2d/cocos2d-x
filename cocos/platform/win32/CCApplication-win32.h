@@ -67,7 +67,6 @@ public:
     
     /* override functions */
     virtual void setAnimationInterval(float interval) override;
-    virtual void setAnimationInterval(float interval, SetIntervalReason reason) override;
 
     virtual LanguageType getCurrentLanguage();
 

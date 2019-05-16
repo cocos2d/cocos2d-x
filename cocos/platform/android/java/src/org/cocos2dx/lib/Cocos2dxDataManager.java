@@ -1,7 +1,8 @@
 /****************************************************************************
-Copyright (c) 2010 cocos2d-x.org
-Copyright (c) Microsoft Open Technologies, Inc.
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2016 Chukong Technologies Inc.
 Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+Copyright (c) 2019 Xiamen Yaji Software Co., Ltd.
 
 http://www.cocos2d-x.org
 
@@ -22,44 +23,35 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-****************************************************************************/
+ ****************************************************************************/
 
-#ifndef __CCPTHREADWINRT_H__
-#define __CCPTHREADWINRT_H__
+package org.cocos2dx.lib;
+import android.util.Log;
 
+import com.oppo.oiface.engine.OifaceGameEngineManager;
 
-#include "platform/CCPlatformConfig.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+public class Cocos2dxDataManager {
+    public static void setOptimise(String thing, float value){
+        String jsonStr = "{\"" + thing + "\":" + String.valueOf(value) + "}";
+        OifaceGameEngineManager.getInstance().updateGameEngineInfo(jsonStr);
+    }
 
-#ifndef WIN32_LEAN_AND_MEAN
-#define WIN32_LEAN_AND_MEAN
-#endif
-#include <Windows.h>
-#include "platform/CCPlatformMacros.h"
-
-
-NS_CC_BEGIN
-
-typedef HANDLE pthread_t;
-typedef HANDLE pthread_mutex_t;
-typedef int pthread_cond_t;
-#define pthread_cond_wait(x, y)
-
-void pthread_mutex_init(pthread_mutex_t* m, void* attributes);
-
-int pthread_mutex_lock(pthread_mutex_t* m);
-
-int pthread_mutex_unlock(pthread_mutex_t* m);
-
-void pthread_mutex_destroy(pthread_mutex_t* m);
-
-#define pthread_cond_destroy(x)
-#define pthread_cond_signal(x)
-#define pthread_cond_init(x, y)
-
-NS_CC_END
-
-
-#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-
-#endif // __CCPTHREADWINRT_H__
+    public static void setProcessID(int pid){
+        setOptimise("render_pid", pid);
+    }
+    public static void setFrameSize(int width, int height){
+        setOptimise("buffer_size", width * height);
+    }
+    public static void onSceneLoaderBegin(){
+        setOptimise("load_scene", 1);
+    }
+    public static void onSceneLoaderEnd(){
+        setOptimise("load_scene", 0);
+    }
+    public static void onShaderLoaderBegin(){
+        setOptimise("shader_compile", 1);
+    }
+    public static void onShaderLoaderEnd(){
+        setOptimise("shader_compile", 0);
+    }
+}

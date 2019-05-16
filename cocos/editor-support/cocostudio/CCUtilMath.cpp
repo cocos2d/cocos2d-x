@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "editor-support/cocostudio/CCUtilMath.h"
+#include <cmath>
 
 using namespace cocos2d;
 
@@ -72,8 +73,8 @@ Vec2 circleTo(float t, Vec2 &center, float radius, float fromRadian, float radia
 {
     Vec2 p;
 
-    p.x = center.x + radius * cos(fromRadian + radianDif * t);
-    p.y = center.y + radius * sin(fromRadian + radianDif * t);
+    p.x = center.x + radius * std::cos(fromRadian + radianDif * t);
+    p.y = center.y + radius * std::sin(fromRadian + radianDif * t);
 
     return p;
 }

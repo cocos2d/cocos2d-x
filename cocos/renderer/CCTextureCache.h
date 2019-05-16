@@ -110,7 +110,7 @@ public:
     * Object and it will return it. It will use the filename as a key.
     * Otherwise it will return a reference of a previously loaded image.
     * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr.
-     @param filepath A null terminated string.
+     @param filepath The file path.
     */
     Texture2D* addImage(const std::string &filepath);
 
@@ -119,7 +119,7 @@ public:
     * Otherwise it will load a texture in a new thread, and when the image is loaded, the callback will be called with the Texture2D as a parameter.
     * The callback will be called from the main thread, so it is safe to create any cocos2d object from the callback.
     * Supported image extensions: .png, .jpg
-     @param filepath A null terminated string.
+     @param filepath The file path.
      @param callback A callback function would be invoked after the image is loaded.
      @since v0.8
     */

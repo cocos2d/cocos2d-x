@@ -951,7 +951,7 @@ bool CCBReader::readSequences()
 
 std::string CCBReader::lastPathComponent(const char* pPath) {
     std::string path(pPath);
-    size_t slashPos = path.find_last_of("/");
+    size_t slashPos = path.find_last_of('/');
     if(slashPos != std::string::npos) {
         return path.substr(slashPos + 1, path.length() - slashPos);
     }
@@ -960,7 +960,7 @@ std::string CCBReader::lastPathComponent(const char* pPath) {
 
 std::string CCBReader::deletePathExtension(const char* pPath) {
     std::string path(pPath);
-    size_t dotPos = path.find_last_of(".");
+    size_t dotPos = path.find_last_of('.');
     if(dotPos != std::string::npos) {
         return path.substr(0, dotPos);
     }

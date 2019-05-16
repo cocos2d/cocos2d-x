@@ -28,6 +28,7 @@
  */
 
 #include "CCControlPotentiometer.h"
+#include <cmath>
 
 NS_CC_EXT_BEGIN
 
@@ -206,7 +207,7 @@ float ControlPotentiometer::distanceBetweenPointAndPoint(Vec2 point1, Vec2 point
 {
     float dx = point1.x - point2.x;
     float dy = point1.y - point2.y;
-    return sqrt(dx*dx + dy*dy);
+    return std::sqrt(dx*dx + dy*dy);
 }
 
 float ControlPotentiometer::angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint(
@@ -220,8 +221,8 @@ float ControlPotentiometer::angleInDegreesBetweenLineFromPoint_toPoint_toLineFro
     float c = endLineB.x - beginLineB.x;
     float d = endLineB.y - beginLineB.y;
     
-    float atanA = atan2(a, b);
-    float atanB = atan2(c, d);
+    float atanA = std::atan2(a, b);
+    float atanB = std::atan2(c, d);
     
     // convert radiants to degrees
     return (atanA - atanB) * 180 / M_PI;

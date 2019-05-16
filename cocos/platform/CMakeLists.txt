@@ -157,6 +157,7 @@ set(COCOS_PLATFORM_HEADER
 
 set(COCOS_PLATFORM_SRC
     ${COCOS_PLATFORM_SPECIFIC_SRC}
+    platform/CCDataManager.cpp
     platform/CCSAXParser.cpp
     platform/CCThread.cpp
     platform/CCGLView.cpp

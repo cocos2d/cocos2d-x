@@ -88,7 +88,7 @@ Properties::Properties(Data* data, ssize_t* dataIdx, const std::string& name, co
 
 Properties* Properties::createNonRefCounted(const std::string& url)
 {
-    if (url.size() == 0)
+    if (url.empty())
     {
         CCLOGERROR("Attempting to create a Properties object from an empty URL!");
         return nullptr;
@@ -1117,12 +1117,12 @@ void calculateNamespacePath(const std::string& urlString, std::string& fileStrin
 {
     // If the url references a specific namespace within the file,
     // calculate the full namespace path to the final namespace.
-    size_t loc = urlString.rfind("#");
+    size_t loc = urlString.rfind('#');
     if (loc != std::string::npos)
     {
         fileString = urlString.substr(0, loc);
         std::string namespacePathString = urlString.substr(loc + 1);
-        while ((loc = namespacePathString.find("/")) != std::string::npos)
+        while ((loc = namespacePathString.find('/')) != std::string::npos)
         {
             namespacePath.push_back(namespacePathString.substr(0, loc));
             namespacePathString = namespacePathString.substr(loc + 1);
@@ -1139,7 +1139,7 @@ Properties* getPropertiesFromNamespacePath(Properties* properties, const std::ve
 {
     // If the url references a specific namespace within the file,
     // return the specified namespace or notify the user if it cannot be found.
-    if (namespacePath.size() > 0)
+    if (!namespacePath.empty())
     {
         size_t size = namespacePath.size();
         properties->rewind();

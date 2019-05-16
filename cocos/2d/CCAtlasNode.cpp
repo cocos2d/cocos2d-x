@@ -71,7 +71,7 @@ AtlasNode * AtlasNode::create(const std::string& tile, int tileWidth, int tileHe
 
 bool AtlasNode::initWithTileFile(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender)
 {
-    CCASSERT(tile.size() > 0, "file size should not be empty");
+    CCASSERT(!tile.empty(), "file size should not be empty");
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(tile);
     return initWithTexture(texture, tileWidth, tileHeight, itemsToRender);
 }

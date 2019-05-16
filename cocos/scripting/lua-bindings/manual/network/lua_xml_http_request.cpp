@@ -168,7 +168,7 @@ void LuaMinXmlHttpRequest::_gotHeader(const std::string& header)
     char * cstr = new (std::nothrow) char [header.length()+1];
     
     // check for colon.
-    size_t found_header_field = header.find_first_of(":");
+    size_t found_header_field = header.find_first_of(':');
     
     if (found_header_field != std::string::npos)
     {

@@ -57,16 +57,7 @@ namespace cocos2d { namespace network {
 
 ////////////////////////////////////////////////////////////////////////////////
 //  Implement Downloader
-    Downloader::Downloader()
-    {
-        DownloaderHints hints =
-        {
-            6,
-            45,
-            ".tmp"
-        };
-        new(this)Downloader(hints);
-    }
+    Downloader::Downloader() : Downloader(DownloaderHints{6, 45, ".tmp"}) { }
 
     Downloader::Downloader(const DownloaderHints& hints)
     {
