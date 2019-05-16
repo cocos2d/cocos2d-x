@@ -235,6 +235,8 @@ public:
 	void loadConfigFile(const std::string& filename);
     
     static const char* CONFIG_FILE_LOADED;
+    
+    int getMaxAttributes() const;
 
 private:
     Configuration(void);
@@ -242,8 +244,6 @@ private:
 	static std::string		s_configfile;
     
 protected:
-    GLint           _maxAttributes = 0;
-    GLint           _maxTextureSize;
     GLint           _maxModelviewStackDepth;
     bool            _supportsPVRTC;
     bool            _supportsETC1;
@@ -257,9 +257,7 @@ protected:
     bool            _supportsOESDepth24;
     bool            _supportsOESPackedDepthStencil;
     
-    GLint           _maxSamplesAllowed;
-    GLint           _maxTextureUnits;
-    char *          _glExtensions;
+    std::string     _glExtensions;
     int             _maxDirLightInShader; //max support directional light in shader
     int             _maxPointLightInShader; // max support point light in shader
     int             _maxSpotLightInShader; // max support spot light in shader

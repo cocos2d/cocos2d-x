@@ -60,7 +60,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // FIXME:: This should be loaded before the Director is initialized,
     // FIXME:: but at this point, the director is already initialized
     Configuration::getInstance()->loadConfigFile("configs/config-example.plist");
-
+    
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
@@ -68,7 +68,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         glview = GLViewImpl::create("Cpp Tests");   
         director->setOpenGLView(glview);
     }
-
+    
     director->setDisplayStats(true);
     director->setAnimationInterval(1.0f / 60);
 

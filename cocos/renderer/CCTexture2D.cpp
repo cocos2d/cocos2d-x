@@ -345,8 +345,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     VolatileTextureMgr::findVolotileTexture(this);
 #endif
-
-    auto device = backend::Device::getInstance();
+    
     backend::TextureDescriptor textureDescriptor;
     textureDescriptor.width = pixelsWide;
     textureDescriptor.height = pixelsHigh;
@@ -432,14 +431,14 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
     int imageWidth = image->getWidth();
     int imageHeight = image->getHeight();
     this->_filePath = image->getFilePath();
-//    Configuration *conf = Configuration::getInstance();
-//
-//    int maxTextureSize = conf->getMaxTextureSize();
-//    if (imageWidth > maxTextureSize || imageHeight > maxTextureSize)
-//    {
-//        CCLOG("cocos2d: WARNING: Image (%u x %u) is bigger than the supported %u x %u", imageWidth, imageHeight, maxTextureSize, maxTextureSize);
-//        return false;
-//    }
+    Configuration *conf = Configuration::getInstance();
+
+    int maxTextureSize = conf->getMaxTextureSize();
+    if (imageWidth > maxTextureSize || imageHeight > maxTextureSize)
+    {
+        CCLOG("cocos2d: WARNING: Image (%u x %u) is bigger than the supported %u x %u", imageWidth, imageHeight, maxTextureSize, maxTextureSize);
+        return false;
+    }
 
     unsigned char*   tempData = image->getData();
     Size             imageSize = Size((float)imageWidth, (float)imageHeight);
