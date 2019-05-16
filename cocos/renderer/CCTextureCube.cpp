@@ -261,7 +261,7 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
         //convert pixel format to RGBA
         if (ePixelFmt != Texture2D::PixelFormat::RGBA8888)
         {
-            ssize_t len = 0;
+            size_t len = 0;
             backend::PixelFormatUtils::convertDataToFormat(pData, img->getDataLen(), ePixelFmt, Texture2D::PixelFormat::RGBA8888, &cData, &len);
             if (cData != pData) //convert error
             {

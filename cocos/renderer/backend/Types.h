@@ -44,6 +44,7 @@ enum class VertexFormat : uint32_t
 enum class TextureFormat : uint32_t
 {
     NONE,
+    BGRA8888,
     // Four 8-bit normalized unsigned integer components in RGBA order.
     R8G8B8A8,
     // Three 8-bit normalized unsigned integer components in RGB order.

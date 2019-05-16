@@ -9,9 +9,9 @@ namespace backend { namespace PixelFormatUtils {
     //convertor function
     
     // IIIIIIII -> RRRRRRRRGGGGGGGGGBBBBBBBB
-    void convertI8ToRGB888(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertI8ToRGB888(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
-        for (ssize_t i = 0; i < dataLen; ++i)
+        for (size_t i = 0; i < dataLen; ++i)
         {
             *outData++ = data[i];     //R
             *outData++ = data[i];     //G
@@ -20,7 +20,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // IIIIIIIIAAAAAAAA -> RRRRRRRRGGGGGGGGBBBBBBBB
-    void convertAI88ToRGB888(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertAI88ToRGB888(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         for (ssize_t i = 0, l = dataLen - 1; i < l; i += 2)
         {
@@ -31,9 +31,9 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // IIIIIIII -> RRRRRRRRGGGGGGGGGBBBBBBBBAAAAAAAA
-    void convertI8ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertI8ToRGBA8888(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
-        for (ssize_t i = 0; i < dataLen; ++i)
+        for (size_t i = 0; i < dataLen; ++i)
         {
             *outData++ = data[i];     //R
             *outData++ = data[i];     //G
@@ -43,7 +43,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // IIIIIIIIAAAAAAAA -> RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA
-    void convertAI88ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertAI88ToRGBA8888(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         for (ssize_t i = 0, l = dataLen - 1; i < l; i += 2)
         {
@@ -55,10 +55,10 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // IIIIIIII -> RRRRRGGGGGGBBBBB
-    void convertI8ToRGB565(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertI8ToRGB565(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         unsigned short* out16 = (unsigned short*)outData;
-        for (int i = 0; i < dataLen; ++i)
+        for (size_t i = 0; i < dataLen; ++i)
         {
             *out16++ = (data[i] & 0x00F8) << 8    //R
             | (data[i] & 0x00FC) << 3         //G
@@ -67,7 +67,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // IIIIIIIIAAAAAAAA -> RRRRRGGGGGGBBBBB
-    void convertAI88ToRGB565(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertAI88ToRGB565(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         unsigned short* out16 = (unsigned short*)outData;
         for (ssize_t i = 0, l = dataLen - 1; i < l; i += 2)
@@ -79,10 +79,10 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // IIIIIIII -> RRRRGGGGBBBBAAAA
-    void convertI8ToRGBA4444(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertI8ToRGBA4444(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         unsigned short* out16 = (unsigned short*)outData;
-        for (ssize_t i = 0; i < dataLen; ++i)
+        for (size_t i = 0; i < dataLen; ++i)
         {
             *out16++ = (data[i] & 0x00F0) << 8    //R
             | (data[i] & 0x00F0) << 4             //G
@@ -92,7 +92,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // IIIIIIIIAAAAAAAA -> RRRRGGGGBBBBAAAA
-    void convertAI88ToRGBA4444(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertAI88ToRGBA4444(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         unsigned short* out16 = (unsigned short*)outData;
         for (ssize_t i = 0, l = dataLen - 1; i < l; i += 2)
@@ -105,7 +105,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // IIIIIIIIAAAAAAAA -> BBBBBGGG GGGRRRR
-    void convertAI88ToBGR565(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertAI88ToBGR565(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         uint16_t* out16 = (uint16_t*)outData;
         for (ssize_t i = 0, l = dataLen - 1; i < l; i += 2)
@@ -117,7 +117,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // IIIIIIIIAAAAAAAA -> BBBBBGGG GGRRRRRA
-    void convertAI88ToBGR5A1(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertAI88ToBGR5A1(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         uint16_t* out16 = (uint16_t*)outData;
         for (ssize_t i = 0, l = dataLen - 1; i < l; i += 2)
@@ -130,7 +130,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // IIIIIIIIAAAAAAAA -> AAAABBBB GGGGRRRR
-    void convertAI88ToABGR4(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertAI88ToABGR4(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         uint16_t* out16 = (uint16_t*)outData;
         for (ssize_t i = 0, l = dataLen - 1; i < l; i += 2)
@@ -144,10 +144,10 @@ namespace backend { namespace PixelFormatUtils {
     
     
     // IIIIIIII -> RRRRRGGGGGBBBBBA
-    void convertI8ToRGB5A1(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertI8ToRGB5A1(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         unsigned short* out16 = (unsigned short*)outData;
-        for (int i = 0; i < dataLen; ++i)
+        for (size_t i = 0; i < dataLen; ++i)
         {
             *out16++ = (data[i] & 0x00F8) << 8    //R
             | (data[i] & 0x00F8) << 3         //G
@@ -157,10 +157,10 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     /// IIIIIIII -> BBBBBGGG GGRRRRRA
-    void convertI8ToBGR5A1(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertI8ToBGR5A1(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         uint16_t *out16 = (uint16_t*)outData;
-        for (int i = 0; i < dataLen; ++i)
+        for (size_t i = 0; i < dataLen; ++i)
         {
             *out16++ = (data[i] & 0xF8) << 7    //R
             | (data[i] & 0xF8) << 2             //G
@@ -170,10 +170,10 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // IIIIIIIII -> BBBBBGGG GGGRRRRR
-    void convertI8ToBGR565(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertI8ToBGR565(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         uint16_t *out16 = (uint16_t*)outData;
-        for (int i = 0; i < dataLen; ++i)
+        for (size_t i = 0; i < dataLen; ++i)
         {
             *out16++ = (data[i] & 0xF8) << 8    //R
             | (data[i] & 0xFC) << 3             //G
@@ -183,10 +183,10 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // IIIIIIIII -> AAAABBBBB GGGGRRRR
-    void convertI8ToABGR4(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertI8ToABGR4(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         uint16_t *out16 = (uint16_t*)outData;
-        for (int i = 0; i < dataLen; ++i)
+        for (size_t i = 0; i < dataLen; ++i)
         {
             *out16++ = (data[i] & 0xF0) << 8    //R
             | (data[i] & 0xF0) << 4             //G
@@ -196,7 +196,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // IIIIIIIIAAAAAAAA -> RRRRRGGGGGBBBBBA
-    void convertAI88ToRGB5A1(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertAI88ToRGB5A1(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         unsigned short* out16 = (unsigned short*)outData;
         for (ssize_t i = 0, l = dataLen - 1; i < l; i += 2)
@@ -209,10 +209,10 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // IIIIIIII -> IIIIIIIIAAAAAAAA
-    void convertI8ToAI88(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertI8ToAI88(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         unsigned short* out16 = (unsigned short*)outData;
-        for (ssize_t i = 0; i < dataLen; ++i)
+        for (size_t i = 0; i < dataLen; ++i)
         {
             *out16++ = 0xFF00     //A
             | data[i];            //I
@@ -220,16 +220,16 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // IIIIIIIIAAAAAAAA -> AAAAAAAA
-    void convertAI88ToA8(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertAI88ToA8(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
-        for (ssize_t i = 1; i < dataLen; i += 2)
+        for (size_t i = 1; i < dataLen; i += 2)
         {
             *outData++ = data[i]; //A
         }
     }
     
     // IIIIIIIIAAAAAAAA -> IIIIIIII
-    void convertAI88ToI8(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertAI88ToI8(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         for (ssize_t i = 0, l = dataLen - 1; i < l; i += 2)
         {
@@ -238,7 +238,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA
-    void convertRGB888ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertRGB888ToRGBA8888(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         for (ssize_t i = 0, l = dataLen - 2; i < l; i += 3)
         {
@@ -250,7 +250,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> RRRRRRRRGGGGGGGGBBBBBBBB
-    void convertRGBA8888ToRGB888(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertRGBA8888ToRGB888(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         for (ssize_t i = 0, l = dataLen - 3; i < l; i += 4)
         {
@@ -261,7 +261,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRGGGGGGBBBBB
-    void convertRGB888ToRGB565(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertRGB888ToRGB565(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         unsigned short* out16 = (unsigned short*)outData;
         for (ssize_t i = 0, l = dataLen - 2; i < l; i += 3)
@@ -273,7 +273,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> RRRRRGGGGGGBBBBB
-    void convertRGBA8888ToRGB565(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertRGBA8888ToRGB565(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         unsigned short* out16 = (unsigned short*)outData;
         for (ssize_t i = 0, l = dataLen - 3; i < l; i += 4)
@@ -285,7 +285,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBB -> AAAAAAAA
-    void convertRGB888ToA8(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertRGB888ToA8(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         for (ssize_t i = 0, l = dataLen - 2; i < l; i += 3)
         {
@@ -294,7 +294,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBB -> IIIIIIII
-    void convertRGB888ToI8(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertRGB888ToI8(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         for (ssize_t i = 0, l = dataLen - 2; i < l; i += 3)
         {
@@ -303,7 +303,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> IIIIIIII
-    void convertRGBA8888ToI8(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertRGBA8888ToI8(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         for (ssize_t i = 0, l = dataLen - 3; i < l; i += 4)
         {
@@ -312,7 +312,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> AAAAAAAA
-    void convertRGBA8888ToA8(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertRGBA8888ToA8(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         for (ssize_t i = 0, l = dataLen - 3; i < l; i += 4)
         {
@@ -321,7 +321,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBB -> IIIIIIIIAAAAAAAA
-    void convertRGB888ToAI88(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertRGB888ToAI88(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         for (ssize_t i = 0, l = dataLen - 2; i < l; i += 3)
         {
@@ -332,7 +332,7 @@ namespace backend { namespace PixelFormatUtils {
     
     
     // RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> IIIIIIIIAAAAAAAA
-    void convertRGBA8888ToAI88(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertRGBA8888ToAI88(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         for (ssize_t i = 0, l = dataLen - 3; i < l; i += 4)
         {
@@ -342,7 +342,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRGGGGBBBBAAAA
-    void convertRGB888ToRGBA4444(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertRGB888ToRGBA4444(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         unsigned short* out16 = (unsigned short*)outData;
         for (ssize_t i = 0, l = dataLen - 2; i < l; i += 3)
@@ -355,7 +355,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> RRRRGGGGBBBBAAAA
-    void convertRGBA8888ToRGBA4444(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertRGBA8888ToRGBA4444(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         unsigned short* out16 = (unsigned short*)outData;
         for (ssize_t i = 0, l = dataLen - 3; i < l; i += 4)
@@ -368,7 +368,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBB -> RRRRRGGGGGBBBBBA
-    void convertRGB888ToRGB5A1(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertRGB888ToRGB5A1(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         unsigned short* out16 = (unsigned short*)outData;
         for (ssize_t i = 0, l = dataLen - 2; i < l; i += 3)
@@ -381,10 +381,10 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBB -> BBBBBGGG GGGRRRRR
-    void convertRGB888ToB5G6R5(const unsigned char *data, ssize_t dataLen, unsigned char *out)
+    void convertRGB888ToB5G6R5(const unsigned char *data, size_t dataLen, unsigned char *out)
     {
         uint16_t *outData = (uint16_t*) out;
-        for(int i = 0;i < dataLen ; i += 3)
+        for(size_t i = 0;i < dataLen ; i += 3)
         {
             *outData++ = ((data[i] & 0xF8) << 8)|
             ((data[i + 1] &0xFC) << 3) |
@@ -393,10 +393,10 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBB -> BBBBBGGG GGRRRRRA
-    void convertRGB888ToBGR5A1(const unsigned char *data, ssize_t dataLen, unsigned char *out)
+    void convertRGB888ToBGR5A1(const unsigned char *data, size_t dataLen, unsigned char *out)
     {
         uint16_t *outData = (uint16_t*) out;
-        for(int i = 0;i < dataLen ; i += 3)
+        for(size_t i = 0;i < dataLen ; i += 3)
         {
             *outData++ = ((data[i] & 0xF8) << 7) |
             ((data[i + 1] & 0xF8) << 2) |
@@ -405,10 +405,10 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBB -> AAAABBBB GGGGRRRR
-    void convertRGB888ToABGR4(const unsigned char *data, ssize_t dataLen, unsigned char *out)
+    void convertRGB888ToABGR4(const unsigned char *data, size_t dataLen, unsigned char *out)
     {
         uint16_t *outData = (uint16_t*) out;
-        for(int i = 0;i < dataLen ; i += 3)
+        for(size_t i = 0;i < dataLen ; i += 3)
         {
             *outData++ = ((data[i] & 0xF0) << 8) | //r
             ((data[i + 1] & 0xF0) << 4) |          //g
@@ -418,7 +418,7 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> RRRRRGGG GGBBBBBA
-    void convertRGBA8888ToRGB5A1(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertRGBA8888ToRGB5A1(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         unsigned short* out16 = (unsigned short*)outData;
         for (ssize_t i = 0, l = dataLen - 2; i < l; i += 4)
@@ -431,11 +431,11 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> BBBBBGGG GGGRRRR
-    void convertRGBA8888ToBGR565(const unsigned char *data, ssize_t dataLen, unsigned char *out)
+    void convertRGBA8888ToBGR565(const unsigned char *data, size_t dataLen, unsigned char *out)
     {
         uint16_t *outData = (uint16_t*)out;
-        const ssize_t pixelCnt = dataLen / 4;
-        for(int i=0;i < pixelCnt; i++ )
+        const size_t pixelCnt = dataLen / 4;
+        for(size_t i=0;i < pixelCnt; i++ )
         {
             outData[i] = ((data[i*4 + 2] & 0xF8) >> 3) |     //b
             ((data[i * 4 + 1] & 0xFC ) << 3) |           //g
@@ -444,10 +444,10 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> AAAABBBB GGGGRRRR
-    void convertRGBA8888ToABGR4(const unsigned char *data, ssize_t dataLen, unsigned char *out)
+    void convertRGBA8888ToABGR4(const unsigned char *data, size_t dataLen, unsigned char *out)
     {
         uint16_t *outData = (uint16_t*)out;
-        for(int i=0;i < dataLen; i+=4 )
+        for(size_t i=0;i < dataLen; i+=4 )
         {
             *outData++ = ((data[i] & 0xF0) << 8) |     //r
             ((data[i + 1] & 0xF0) << 4) |              //g
@@ -457,10 +457,10 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // RRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA -> BBBBBGGG GGRRRRRA
-    void convertRGBA8888ToBGR5A1(const unsigned char *data, ssize_t dataLen, unsigned char *out)
+    void convertRGBA8888ToBGR5A1(const unsigned char *data, size_t dataLen, unsigned char *out)
     {
         uint16_t *outData = (uint16_t*)out;
-        for(int i = 0; i < dataLen; i += 4)
+        for(size_t i = 0; i < dataLen; i += 4)
         {
             *outData++ = ((data[i + 2] & 0xF8) >> 3)|     //b
             ((data[i + 1] & 0xF8 ) << 2) |                //g
@@ -470,12 +470,12 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     
-    void convertRGB5A1ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertRGB5A1ToRGBA8888(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         uint16_t *inData = (uint16_t*)data;
-        const uint16_t pixelLen = dataLen / 2;
+        const size_t pixelLen = dataLen / 2;
         uint16_t pixel;
-        for (uint32_t i = 0; i < pixelLen; i++)
+        for (size_t i = 0; i < pixelLen; i++)
         {
             pixel = inData[i];
             *outData++ = (pixel & (0x001F << 11)) >> 8;
@@ -486,13 +486,13 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     // ABBBBBGG GGGRRRRR  -> BBBBBGGG GGRRRRRA
-    void convertRGB5A1ToBGR5A1(const unsigned char *data, ssize_t dataLen, unsigned char *out)
+    void convertRGB5A1ToBGR5A1(const unsigned char *data, size_t dataLen, unsigned char *out)
     {
         const size_t pixelLen = dataLen / 2;
         const uint16_t *inData = (uint16_t*) data;
         uint16_t *outData = (uint16_t*) out;
         uint16_t pixel;
-        for (uint32_t i = 0; i < pixelLen; i++ )
+        for (size_t i = 0; i < pixelLen; i++ )
         {
             pixel = inData[i];
             outData[i] = (pixel >> 1) | ((pixel & 0x0001) << 15);
@@ -500,12 +500,12 @@ namespace backend { namespace PixelFormatUtils {
     }
     
     
-    void convertRGB565ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertRGB565ToRGBA8888(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         uint16_t *inData = (uint16_t*)data;
-        const uint16_t pixelLen = dataLen / 2;
+        const size_t pixelLen = dataLen / 2;
         uint16_t pixel;
-        for (uint32_t i = 0; i < pixelLen; i++)
+        for (size_t i = 0; i < pixelLen; i++)
         {
             pixel = inData[i];
             *outData++ = (pixel & (0x001F << 11)) >> 8;
@@ -519,12 +519,12 @@ namespace backend { namespace PixelFormatUtils {
     // void convertRGB565ToB5G6R5(const unsigned char *data, ssize_t dataLen, unsigned char *out)
     
     
-    void convertRGBA4444ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertRGBA4444ToRGBA8888(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
         uint16_t *inData = (uint16_t*)data;
-        const uint16_t pixelLen = dataLen / 2;
+        const size_t pixelLen = dataLen / 2;
         uint16_t pixel;
-        for (uint32_t i = 0; i < pixelLen; i++)
+        for (size_t i = 0; i < pixelLen; i++)
         {
             pixel = inData[i];
             *outData++ = ((pixel & 0xF000) >> 12) * 17;
@@ -538,9 +538,9 @@ namespace backend { namespace PixelFormatUtils {
     // AAAABBBBGGGGRRRR -> AAAABBBB GGGGRRRR
     //void convertRGBA4444ToABGR4444(const unsigned char *data, ssize_t dataLen, unsigned char *out)
     
-    void convertA8ToRGBA8888(const unsigned char* data, ssize_t dataLen, unsigned char* outData)
+    void convertA8ToRGBA8888(const unsigned char* data, size_t dataLen, unsigned char* outData)
     {
-        for (uint32_t i = 0; i < dataLen; i++)
+        for (size_t i = 0; i < dataLen; i++)
         {
             *outData++ = 0;
             *outData++ = 0;
@@ -549,13 +549,24 @@ namespace backend { namespace PixelFormatUtils {
         }
     }
     
+    void convertBGRA8888ToRGBA8888(const unsigned char* data, size_t dataLen, unsigned char* outData)
+    {
+        const size_t pixelCounts = dataLen / 4;
+        for (size_t i = 0; i < pixelCounts; i++)
+        {
+            *outData++ = data[i*4 + 2];
+            *outData++ = data[i*4 + 1];
+            *outData++ = data[i*4 + 0];
+            *outData++ = data[i*4 + 3];
+        }
+    }
     
     // converter function end
     //////////////////////////////////////////////////////////////////////////
     
     
     
-    cocos2d::Texture2D::PixelFormat convertI8ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen)
+    cocos2d::Texture2D::PixelFormat convertI8ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         switch (format)
         {
@@ -623,7 +634,7 @@ namespace backend { namespace PixelFormatUtils {
         return format;
     }
     
-    cocos2d::Texture2D::PixelFormat convertAI88ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen)
+    cocos2d::Texture2D::PixelFormat convertAI88ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         switch (format)
         {
@@ -693,7 +704,7 @@ namespace backend { namespace PixelFormatUtils {
         return format;
     }
     
-    cocos2d::Texture2D::PixelFormat convertRGB888ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen)
+    cocos2d::Texture2D::PixelFormat convertRGB888ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         switch (format)
         {
@@ -761,7 +772,7 @@ namespace backend { namespace PixelFormatUtils {
         return format;
     }
     
-    cocos2d::Texture2D::PixelFormat convertRGBA8888ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen)
+    cocos2d::Texture2D::PixelFormat convertRGBA8888ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         
         switch (format)
@@ -831,7 +842,7 @@ namespace backend { namespace PixelFormatUtils {
         return format;
     }
     
-    cocos2d::Texture2D::PixelFormat convertRGB5A1ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen)
+    cocos2d::Texture2D::PixelFormat convertRGB5A1ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         switch (format)
         {
@@ -859,7 +870,7 @@ namespace backend { namespace PixelFormatUtils {
         return format;
     }
     
-    cocos2d::Texture2D::PixelFormat convertRGB565ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen)
+    cocos2d::Texture2D::PixelFormat convertRGB565ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         switch (format)
         {
@@ -888,7 +899,7 @@ namespace backend { namespace PixelFormatUtils {
         return format;
     }
     
-    cocos2d::Texture2D::PixelFormat convertA8ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen)
+    cocos2d::Texture2D::PixelFormat convertA8ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         switch (format)
         {
@@ -911,7 +922,7 @@ namespace backend { namespace PixelFormatUtils {
         return format;
     }
     
-    cocos2d::Texture2D::PixelFormat convertRGBA4444ToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat format, unsigned char** outData, ssize_t* outDataLen)
+    cocos2d::Texture2D::PixelFormat convertRGBA4444ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         switch (format)
         {
@@ -938,6 +949,22 @@ namespace backend { namespace PixelFormatUtils {
         
         return format;
     }
+    
+    PixelFormat convertBGRA8888ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
+    {
+        switch (format) {
+            case PixelFormat::RGBA8888:
+                *outDataLen = dataLen;
+                *outData = (unsigned char*)malloc(sizeof(unsigned char) * (*outDataLen));
+                convertBGRA8888ToRGBA8888(data, dataLen, *outData);
+                break;
+                
+            default:
+                break;
+        }
+        return format;
+    }
+    
     /*
      convert map:
      1.PixelFormat::RGBA8888
@@ -955,7 +982,7 @@ namespace backend { namespace PixelFormatUtils {
      rgba(1) -> 12345678
      
      */
-    cocos2d::Texture2D::PixelFormat convertDataToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat originFormat, PixelFormat format, unsigned char** outData, ssize_t* outDataLen)
+    cocos2d::Texture2D::PixelFormat convertDataToFormat(const unsigned char* data, size_t dataLen, PixelFormat originFormat, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         // don't need to convert
         if (format == originFormat || format == PixelFormat::AUTO)
@@ -986,6 +1013,8 @@ namespace backend { namespace PixelFormatUtils {
                 return convertA8ToFormat(data, dataLen, format, outData, outDataLen);
                 
 #endif
+            case PixelFormat::BGRA8888:
+                return convertBGRA8888ToFormat(data, dataLen, format, outData, outDataLen);
             default:
                 CCLOG("unsupported conversion from format %d to format %d", static_cast<int>(originFormat), static_cast<int>(format));
                 *outData = (unsigned char*)data;
@@ -993,7 +1022,6 @@ namespace backend { namespace PixelFormatUtils {
                 return originFormat;
         }
     }
-    
 }
 }
 

@@ -200,6 +200,8 @@ std::string StringUtils::BlendFactor2String(const BlendFactor& blendFactor)
 TextureFormat StringUtils::PixelFormat2TextureFormat(const PixelFormat& pixleFormat)
 {
     switch (pixleFormat) {
+        case PixelFormat::BGRA8888:
+            return TextureFormat::BGRA8888;
         case PixelFormat::RGBA8888:
             return TextureFormat::R8G8B8A8;
         case PixelFormat::RGB888:
