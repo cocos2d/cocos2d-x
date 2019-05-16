@@ -872,7 +872,7 @@ void Texture2D::generateMipmap()
     _hasMipmaps = true;
 }
 
-void Texture2D::setupProgram(float globalZOrder)
+void Texture2D::initProgram()
 {
     if(_programState != nullptr)
         return;
@@ -915,21 +915,26 @@ void Texture2D::setupProgram(float globalZOrder)
         blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
     }
     
-    _programState->setTexture(_textureLocation, 0, _texture);
+    auto& blendDescriptor = pipelineDescriptor.blendDescriptor;
+    blendDescriptor.blendEnabled = true;
+    blendDescriptor.sourceRGBBlendFactor = blendDescriptor.sourceAlphaBlendFactor = blendFunc.src;
+    blendDescriptor.destinationRGBBlendFactor = blendDescriptor.destinationAlphaBlendFactor = blendFunc.dst;
     
-    _customCommand.init(globalZOrder, blendFunc);
+    _programState->setTexture(_textureLocation, 0, _texture);
 }
 
-void Texture2D::drawAtPoint(const Vec2 &point)
+void Texture2D::drawAtPoint(const Vec2 &point, float globalZOrder)
 {
     float width = (float)_pixelsWide * _maxS;
     float height = (float)_pixelsHigh * _maxT;
     Rect rect = { point.x, point.y, width, height };
-    drawInRect(rect);
+    drawInRect(rect, globalZOrder);
 }
 
-void Texture2D::drawInRect(const Rect& rect)
+void Texture2D::drawInRect(const Rect& rect, float globalZOrder)
 {
+    initProgram();
+    _customCommand.init(globalZOrder);
     auto director = Director::getInstance();
     const auto& modelView = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     const auto& projection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);

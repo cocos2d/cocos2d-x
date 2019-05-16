@@ -247,9 +247,9 @@ public:
     These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.
     */
     /** Draws a texture at a given point. */
-    void drawAtPoint(const Vec2& point);
+    void drawAtPoint(const Vec2& point, float globalZOrder);
     /** Draws a texture inside a rect.*/
-    void drawInRect(const Rect& rect);
+    void drawInRect(const Rect& rect, float globalZOrder);
 
     /**
     Extensions to make it easy to create a Texture2D object from an image file.
@@ -383,8 +383,6 @@ public:
 
     bool getAlphaTextureName() const;
     
-    void setupProgram(float globalZOrder);
-    
 public:
     /** Get pixel info map, the key-value pairs is PixelFormat and PixelFormatInfo.*/
     static const PixelFormatInfoMap& getPixelFormatInfoMap();
@@ -432,6 +430,8 @@ private:
      * @param capInsets The parsed capInset from a .9 patch image.
      */
     void addSpriteFrameCapInset(SpriteFrame* spritframe, const Rect& capInsets);
+    
+    void initProgram();
    
 protected:
     /** pixel format of the texture */
