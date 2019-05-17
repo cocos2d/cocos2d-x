@@ -38,7 +38,7 @@
 
 NS_CC_EXT_BEGIN
 
-#define TEMP_PACKAGE_SUFFIX     "_temp"
+#define TEMP_FOLDERNAME     "_temp"
 #define VERSION_FILENAME        "version.manifest"
 #define TEMP_MANIFEST_FILENAME  "project.manifest.temp"
 #define MANIFEST_FILENAME       "project.manifest"
@@ -314,7 +314,8 @@ void AssetsManagerEx::setStoragePath(const std::string& storagePath)
     _fileUtils->createDirectory(_storagePath);
     
     _tempStoragePath = _storagePath;
-    _tempStoragePath.insert(_storagePath.size() - 1, TEMP_PACKAGE_SUFFIX);
+    _tempStoragePath.append(TEMP_FOLDERNAME);
+    adjustPath(_tempStoragePath);
     _fileUtils->createDirectory(_tempStoragePath);
 }
 
