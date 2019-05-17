@@ -134,7 +134,7 @@ def getCocosCommandPath() {
         }
         return new File(console_path + '/cocos').absolutePath;
     }
-}}
+}
 
 // a method used to invoke the cocos jscompile command
 def compileJS(srcDir, dstDir) {
