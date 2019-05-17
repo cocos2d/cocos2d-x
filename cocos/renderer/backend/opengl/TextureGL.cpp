@@ -76,6 +76,7 @@ void Texture2DGL::updateTextureDescriptor(const cocos2d::backend::TextureDescrip
     UtilsGL::toGLTypes(descriptor.textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
     _width = descriptor.width;
     _height = descriptor.height;
+    _datalen = descriptor.datalen;
     updateSamplerDescriptor(descriptor.samplerDescriptor);
     initWithZeros();
 }
@@ -159,8 +160,7 @@ void Texture2DGL::updateData(uint8_t* data)
 
     if(_isCompressed)
     {
-        auto datalen = _width * _height * _bitsPerElement / 8;
-        glCompressedTexImage2D(GL_TEXTURE_2D, 0, _textureInfo.internalFormat, (GLsizei)_width, (GLsizei)_height, 0, datalen, data);
+        glCompressedTexImage2D(GL_TEXTURE_2D, 0, _textureInfo.internalFormat, (GLsizei)_width, (GLsizei)_height, 0, _datalen, data);
     }
     else
     {

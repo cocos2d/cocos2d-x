@@ -364,7 +364,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
     size_t dataLen = mipmaps[0].len;
     unsigned char *outData = data;
-    size_t outDataLen;
+    size_t outDataLen = dataLen;
     
     if(renderFormat != pixelFormat) //need conversion
     {
@@ -374,7 +374,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 #endif
         if(convertedFormat == renderFormat) pixelFormat = renderFormat;
     }
-
+    textureDescriptor.datalen = outDataLen;
     backend::StringUtils::PixelFormat format = static_cast<backend::StringUtils::PixelFormat>(pixelFormat);
     CCASSERT(format != backend::StringUtils::PixelFormat::NONE, "PixelFormat should not be NONE");
     

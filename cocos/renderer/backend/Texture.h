@@ -16,6 +16,7 @@ struct TextureDescriptor
     uint32_t width = 0;
     uint32_t height = 0;
     uint32_t depth = 0;
+    uint32_t datalen = 0;
     bool compressed = false;
     SamplerDescriptor samplerDescriptor;
 };
@@ -61,7 +62,7 @@ protected:
     Texture2D(const TextureDescriptor& descriptor);
     uint32_t _width = 0;
     uint32_t _height = 0;
-
+    uint32_t _datalen = 0;
 };
 
 class TextureCubemap : public Texture
