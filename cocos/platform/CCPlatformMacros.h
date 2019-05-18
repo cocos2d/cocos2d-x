@@ -42,18 +42,15 @@ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 #define CREATE_FUNC(__TYPE__) \
 static __TYPE__* create() \
 { \
-    __TYPE__ *pRet = new(std::nothrow) __TYPE__(); \
+    auto *pRet = new(std::nothrow) __TYPE__(); \
     if (pRet && pRet->init()) \
     { \
         pRet->autorelease(); \
         return pRet; \
     } \
-    else \
-    { \
-        delete pRet; \
-        pRet = nullptr; \
-        return nullptr; \
-    } \
+    delete pRet; \
+    pRet = nullptr; \
+    return nullptr; \
 }
 
 /** @def NODE_FUNC(__TYPE__)
