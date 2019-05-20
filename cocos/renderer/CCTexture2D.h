@@ -359,8 +359,6 @@ public:
     /** Gets the height of the texture in pixels. */
     int getPixelsHigh() const;
     
-    /** Gets the texture name. */
-    GLuint getName() const;
     backend::Texture* getBackendTexture() const;
     
     /** Gets max S. */

@@ -244,14 +244,6 @@ int Texture2D::getPixelsHigh() const
     return _pixelsHigh;
 }
 
-GLuint Texture2D::getName() const
-{
-    //TODO coulsonwang
-    //TODO arnold too many logs
-    //cocos2d::log("Error in %s %s %d, TODO", __FILE__, __FUNCTION__, __LINE__);
-    return 0;
-}
-
 backend::Texture* Texture2D::getBackendTexture() const
 {
     return _texture;

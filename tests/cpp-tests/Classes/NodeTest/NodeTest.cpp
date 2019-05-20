@@ -995,8 +995,8 @@ void MySprite::onDraw(const Mat4 &transform, uint32_t flags)
 
 //    cocos2d::utils::setBlending(_blendFunc.src, _blendFunc.dst);
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _texture->getName());
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, _texture->getName());
     
 //    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
 //    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);

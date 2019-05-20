@@ -176,7 +176,7 @@ void ParticleBatchNode::addChild(Node * aChild, int zOrder, int tag)
     CCASSERT( aChild != nullptr, "Argument must be non-nullptr");
     CCASSERT( dynamic_cast<ParticleSystem*>(aChild) != nullptr, "CCParticleBatchNode only supports QuadParticleSystems as children");
     ParticleSystem* child = static_cast<ParticleSystem*>(aChild);
-    CCASSERT( child->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "CCParticleSystem is not using the same texture id");
+    CCASSERT( child->getTexture()->getBackendTexture() == _textureAtlas->getTexture()->getBackendTexture(), "CCParticleSystem is not using the same texture id");
     
     addChildByTagOrName(child, zOrder, tag, "", true);
 }
@@ -186,7 +186,7 @@ void ParticleBatchNode::addChild(Node * aChild, int zOrder, const std::string &n
     CCASSERT( aChild != nullptr, "Argument must be non-nullptr");
     CCASSERT( dynamic_cast<ParticleSystem*>(aChild) != nullptr, "CCParticleBatchNode only supports QuadParticleSystems as children");
     ParticleSystem* child = static_cast<ParticleSystem*>(aChild);
-    CCASSERT( child->getTexture()->getName() == _textureAtlas->getTexture()->getName(), "CCParticleSystem is not using the same texture id");
+    CCASSERT( child->getTexture()->getBackendTexture() == _textureAtlas->getTexture()->getBackendTexture(), "CCParticleSystem is not using the same texture id");
    
     addChildByTagOrName(child, zOrder, 0, name, false);
 }
