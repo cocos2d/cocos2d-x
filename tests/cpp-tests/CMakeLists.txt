@@ -498,6 +498,6 @@ endif()
 if(WINDOWS)
     # precompiled header. Compilation time speedup ~4x.
     target_sources(${APP_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Classes/precheader.cpp")
-    set_target_properties(${APP_NAME} PROPERTIES COMPILE_FLAGS "/Yuprecheader.h /FIprecheader.h")
+    set_property(TARGET ${APP_NAME} APPEND_STRING PROPERTY COMPILE_FLAGS "/Yuprecheader.h /FIprecheader.h /wd4244 /wd4305")
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/Classes/precheader.cpp" PROPERTIES COMPILE_FLAGS "/Ycprecheader.h")
 endif()

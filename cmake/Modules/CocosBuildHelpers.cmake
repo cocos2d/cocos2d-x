@@ -188,7 +188,7 @@ function(setup_cocos_app_config app_name)
         set_target_properties(${app_name} PROPERTIES MACOSX_BUNDLE 1)
     elseif(MSVC)
         # visual studio default is Console app, but we need Windows app
-        set_property(TARGET ${app_name} APPEND PROPERTY LINK_FLAGS "/SUBSYSTEM:WINDOWS")
+        set_property(TARGET ${app_name} APPEND_STRING PROPERTY LINK_FLAGS "/SUBSYSTEM:WINDOWS /IGNORE:4099")
     endif()
     # auto mark code files for IDE when mark app
     if(XCODE OR VS)
