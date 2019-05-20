@@ -403,11 +403,9 @@ void Sprite::setProgramState(backend::ProgramState *programState)
 
 void Sprite::setTexture(Texture2D *texture)
 {
-    if(_programState == nullptr)
-    {
-        auto isETC1 = texture && texture->getAlphaTextureName();
-        updateShaders(positionTextureColor_vert, (isETC1) ? etc1_frag : positionTextureColor_frag);
-    }
+    auto isETC1 = texture && texture->getAlphaTextureName();
+    updateShaders(positionTextureColor_vert, (isETC1) ? etc1_frag : positionTextureColor_frag);
+    
     CCASSERT(! _batchNode || (texture &&  texture == _batchNode->getTexture()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
     CCASSERT( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
