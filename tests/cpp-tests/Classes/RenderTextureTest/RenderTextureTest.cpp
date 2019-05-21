@@ -38,7 +38,7 @@ RenderTextureTests::RenderTextureTests()
     ADD_TEST_CASE(RenderTexturePartTest);
     ADD_TEST_CASE(Issue16113Test);
     ADD_TEST_CASE(RenderTextureWithSprite3DIssue16894);
-};
+}
 
 /**
 * Implementation of RenderTextureSave

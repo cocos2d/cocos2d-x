@@ -184,7 +184,7 @@ bool JSTouchDelegate::onTouchBegan(Touch *touch, Event* /*event*/)
     }
 
     return bRet;
-};
+}
 // optional
 
 void JSTouchDelegate::onTouchMoved(Touch *touch, Event* /*event*/)

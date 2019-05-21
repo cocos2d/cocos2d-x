@@ -45,7 +45,7 @@ PUGeometryRotator::PUGeometryRotator() :
 {
     _dynRotationSpeed = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
-};
+}
 //-----------------------------------------------------------------------
 PUGeometryRotator::~PUGeometryRotator()
 {

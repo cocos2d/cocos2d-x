@@ -136,7 +136,7 @@ public: \
     virtual ActionEase* reverse() const override; \
 private: \
     CC_DISALLOW_COPY_AND_ASSIGN(CLASSNAME); \
-};
+}
 
 /**
  @class EaseExponentialIn
@@ -394,7 +394,7 @@ private: \
  \f${ time }^{ rate }\f$.
  @ingroup Actions
  */
-EASERATE_TEMPLATE_DECL_CLASS(EaseIn);
+EASERATE_TEMPLATE_DECL_CLASS(EaseIn)
 
 /**
  @class EaseOut
@@ -403,7 +403,7 @@ EASERATE_TEMPLATE_DECL_CLASS(EaseIn);
  \f${ time }^ { (1/rate) }\f$.
  @ingroup Actions
  */
-EASERATE_TEMPLATE_DECL_CLASS(EaseOut);
+EASERATE_TEMPLATE_DECL_CLASS(EaseOut)
 
 /**
  @class EaseInOut
@@ -414,7 +414,7 @@ EASERATE_TEMPLATE_DECL_CLASS(EaseOut);
  \f$1.0-0.5*{ 2-time }^{ rate }\f$.
  @ingroup Actions
  */
-EASERATE_TEMPLATE_DECL_CLASS(EaseInOut);
+EASERATE_TEMPLATE_DECL_CLASS(EaseInOut)
 
 /**
  @class EaseElastic
@@ -472,7 +472,7 @@ public: \
     virtual EaseElastic* reverse() const override; \
 private: \
     CC_DISALLOW_COPY_AND_ASSIGN(CLASSNAME); \
-};
+}
 
 /**
  @class EaseElasticIn

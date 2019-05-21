@@ -71,7 +71,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DPropertyTest);
     ADD_TEST_CASE(Sprite3DNormalMappingTest);
     ADD_TEST_CASE(Issue16155Test);
-};
+}
 
 //------------------------------------------------------------------
 //

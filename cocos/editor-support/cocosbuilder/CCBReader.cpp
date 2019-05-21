@@ -1098,4 +1098,4 @@ void CCBReader::setResolutionScale(float scale)
     __ccbResolutionScale = scale;
 }
 
-};
+}

@@ -61,7 +61,7 @@ SchedulerTests::SchedulerTests()
     ADD_TEST_CASE(SchedulerIssue17149);
     ADD_TEST_CASE(SchedulerRemoveEntryWhileUpdate);
     ADD_TEST_CASE(SchedulerRemoveSelectorDuringCall);
-};
+}
 
 //------------------------------------------------------------------
 //

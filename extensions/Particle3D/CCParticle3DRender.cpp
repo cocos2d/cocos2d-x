@@ -319,7 +319,7 @@ Particle3DRender::Particle3DRender()
     _stateBlock->setDepthTest(false);
     _stateBlock->setDepthWrite(false);
     _stateBlock->setBlend(true);
-};
+}
 
 Particle3DRender::~Particle3DRender()
 {

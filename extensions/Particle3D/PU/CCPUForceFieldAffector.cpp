@@ -63,11 +63,11 @@ PUForceFieldAffector::PUForceFieldAffector() :
     _movementFrequencyCount(0.0f),
     _suppressGeneration(false)
 {
-};
+}
 //-----------------------------------------------------------------------
 PUForceFieldAffector::~PUForceFieldAffector()
 {
-};
+}
 //-----------------------------------------------------------------------
 PUForceField::ForceFieldType PUForceFieldAffector::getForceFieldType() const
 {

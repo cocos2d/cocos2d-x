@@ -150,7 +150,7 @@ static std::string readFileContent(const std::string& filename, bool binary) {
     else
         s = fs->getStringFromFile(filename);
     return s;
-};
+}
 
 namespace cocostudio {
 
