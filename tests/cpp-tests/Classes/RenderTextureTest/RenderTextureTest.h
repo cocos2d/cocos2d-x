@@ -175,6 +175,21 @@ public:
     virtual std::string subtitle() const override;
 
 private:
+    bool _premultiplied;
+    cocos2d::RenderTexture* _rend;
+    cocos2d::Sprite* _spriteDraw;
+};
+
+class Issue16113Test2 : public RenderTextureTest
+{
+public:
+    CREATE_FUNC(Issue16113Test2);
+    Issue16113Test2();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+private:
+    bool _premultiplied;
     cocos2d::RenderTexture* _rend;
     cocos2d::Sprite* _spriteDraw;
 };

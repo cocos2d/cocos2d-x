@@ -37,6 +37,7 @@ RenderTextureTests::RenderTextureTests()
     ADD_TEST_CASE(SpriteRenderTextureBug);
     ADD_TEST_CASE(RenderTexturePartTest);
     ADD_TEST_CASE(Issue16113Test);
+    ADD_TEST_CASE(Issue16113Test2);
     ADD_TEST_CASE(RenderTextureWithSprite3DIssue16894);
 };
 
@@ -759,6 +760,69 @@ std::string Issue16113Test::title() const
 std::string Issue16113Test::subtitle() const
 {
     return "aaa.png file without white border on iOS";
+}
+
+//
+// Issue16113Test2
+//
+Issue16113Test2::Issue16113Test2()
+{
+    // left text (origin)
+    auto s = Director::getInstance()->getWinSize();
+    auto layer = LayerColor::create(Color4B::WHITE, s.width / 2 - 5, s.height / 2);
+    auto text = Label::createWithTTF("hello world", "fonts/Marker Felt.ttf", 40);
+    text->setPosition(s.width / 4, s.width / 4);
+    text->setTextColor(Color4B::WHITE);
+    layer->addChild(text);
+    layer->setName("layer");
+    layer->setAnchorPoint(Vec2(0, 0));
+    this->addChild(layer);
+    // render
+    _rend = RenderTexture::create(s.width / 2 - 5, s.height / 2, Texture2D::PixelFormat::RGBA8888);
+    _rend->retain();
+    _rend->beginWithClear(0,0,0,0);
+    layer->visit();
+    _rend->end();
+    // right text (render texture)
+    auto createSprite = [&](Issue16113Test2* thisCase, bool premultiplied){
+        auto s = Director::getInstance()->getWinSize();
+        auto texture = thisCase->_rend->getSprite()->getTexture();
+        texture->setPremultipliedAlpha(premultiplied);
+        auto sprite = Sprite::createWithTexture(texture);
+        sprite->setAnchorPoint(Vec2(0, 0));
+        sprite->setFlippedY(true);
+        sprite->setPosition(s.width / 2 + 5, 0);
+        return sprite;
+    };
+    _premultiplied = false;
+    auto sprite = createSprite(this, _premultiplied);
+    sprite->setName("result");
+    this->addChild(sprite);
+    // switch premultiplied value to find difference
+    MenuItemFont::setFontSize(16);
+    auto item1 = MenuItemFont::create("Switch Texture Premultiplied", [&](Ref* ref){
+        auto thisCase = dynamic_cast<Issue16113Test2*>(dynamic_cast<Node*>(ref)->getParent()->getParent());
+        auto sprite = thisCase->getChildByName("result");
+        sprite->removeFromParent();
+        thisCase->_premultiplied = !thisCase->_premultiplied;
+        sprite = createSprite(thisCase, thisCase->_premultiplied);
+        sprite->setName("result");
+        thisCase->addChild(sprite);
+    });
+    auto menu = Menu::create(item1, nullptr);
+    this->addChild(menu);
+    item1->setPosition(Vec2(s.width / 4, 0));
+    menu->setPosition(s.width / 3, 2 * s.height / 3);
+}
+
+std::string Issue16113Test2::title() const
+{
+    return "Github Issue 16113 Test2";
+}
+
+std::string Issue16113Test2::subtitle() const
+{
+    return "switch render label grey border";
 }
 
 //
