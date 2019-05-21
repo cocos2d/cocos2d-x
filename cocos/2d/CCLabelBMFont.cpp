@@ -159,7 +159,7 @@ void LabelBMFont::setLineBreakWithoutSpace( bool breakWithoutSpace )
 // LabelBMFont - FntFile
 void LabelBMFont::setFntFile(const std::string& fntFile, const Vec2& imageOffset /* = Vec2::ZERO */)
 {
-    if (_fntFile.compare(fntFile) != 0)
+    if (_fntFile != fntFile)
     {
         _fntFile = fntFile;
         _label->setBMFontFilePath(fntFile,imageOffset);

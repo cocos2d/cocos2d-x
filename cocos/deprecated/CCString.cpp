@@ -210,7 +210,7 @@ bool __String::isEqual(const Ref* pObject)
     const __String* pStr = dynamic_cast<const __String*>(pObject);
     if (pStr != nullptr)
     {
-        if (0 == _string.compare(pStr->_string))
+        if (pStr->_string == _string)
         {
             bRet = true;
         }

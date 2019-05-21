@@ -454,7 +454,7 @@ void RenderState::StateBlock::cloneInto(StateBlock* state) const
 
 static bool parseBoolean(const std::string& value)
 {
-    return (value.compare("true")==0);
+    return value == "true";
 }
 
 //static int parseInt(const std::string& value)
@@ -637,39 +637,39 @@ static RenderState::FrontFace parseFrontFace(const std::string& value)
 
 void RenderState::StateBlock::setState(const std::string& name, const std::string& value)
 {
-    if (name.compare("blend") == 0)
+    if (name == "blend")
     {
         setBlend(parseBoolean(value));
     }
-    else if (name.compare("blendSrc") == 0)
+    else if (name == "blendSrc")
     {
         setBlendSrc(parseBlend(value));
     }
-    else if (name.compare("blendDst") == 0)
+    else if (name == "blendDst")
     {
         setBlendDst(parseBlend(value));
     }
-    else if (name.compare("cullFace") == 0)
+    else if (name == "cullFace")
     {
         setCullFace(parseBoolean(value));
     }
-    else if (name.compare("cullFaceSide") == 0)
+    else if (name == "cullFaceSide")
     {
         setCullFaceSide(parseCullFaceSide(value));
     }
-    else if (name.compare("frontFace") == 0)
+    else if (name == "frontFace")
     {
         setFrontFace(parseFrontFace(value));
     }
-    else if (name.compare("depthTest") == 0)
+    else if (name == "depthTest")
     {
         setDepthTest(parseBoolean(value));
     }
-    else if (name.compare("depthWrite") == 0)
+    else if (name == "depthWrite")
     {
         setDepthWrite(parseBoolean(value));
     }
-    else if (name.compare("depthFunc") == 0)
+    else if (name == "depthFunc")
     {
         setDepthFunction(parseDepthFunc(value));
     }

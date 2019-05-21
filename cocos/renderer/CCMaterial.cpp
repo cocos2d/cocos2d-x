@@ -465,7 +465,7 @@ const Vector<Technique*>& Material::getTechniques() const
 Technique* Material::getTechniqueByName(const std::string& name)
 {
     for(const auto& technique : _techniques) {
-        if (technique->getName().compare(name)==0)
+        if (technique->getName() == name)
             return technique;
     }
     return nullptr;

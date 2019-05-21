@@ -145,7 +145,7 @@ flatbuffers::Offset<flatbuffers::Table> TabControlReader::createOptionsWithFlatB
                 
                 if (attriname == "ctype")
                 {
-                    if (value.compare("TabItemObjectData") == 0)
+                    if (value == "TabItemObjectData")
                     {
                         auto itemOption = TabItemReader::getInstance()->createTabItemOptionWithFlatBuffers(child, builder);
                         tabItems.push_back(itemOption);
@@ -284,11 +284,11 @@ flatbuffers::Offset<flatbuffers::Table> TabHeaderReader::createOptionsWithFlatBu
         std::string attriname = attribute->Name();
         std::string value = attribute->Value();
         
-        if (attriname.compare("FontSize") == 0)
+        if (attriname == "FontSize")
         {
             fontsize = atoi(value.c_str());
         }
-        else if (attriname.compare("TitleText") == 0)
+        else if (attriname == "TitleText")
         {
             text = value;
         }
@@ -958,15 +958,15 @@ flatbuffers::Offset<flatbuffers::TabItemOption> TabItemReader::createTabItemOpti
     while (child)
     {
         std::string attriName = child->Name();
-        if (attriName.compare("Children") == 0)
+        if (attriName == "Children")
         {
             containerChildrenData = const_cast<tinyxml2::XMLElement*>(child);
         }
-        if (attriName.compare("Header") == 0)
+        if (attriName == "Header")
         {
             header = TabHeaderReader::getInstance()->createOptionsWithFlatBuffers(child, builder);
         }
-        else if (attriName.compare("Container") == 0)
+        else if (attriName == "Container")
         {
             containerData = const_cast<tinyxml2::XMLElement*>(child);
         }

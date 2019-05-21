@@ -812,7 +812,7 @@ Node* Node::getChildByName(const std::string& name) const
     for (const auto& child : _children)
     {
         // Different strings may have the same hash code, but can use it to compare first for speed
-        if(child->_hashOfName == hash && child->_name.compare(name) == 0)
+        if(child->_hashOfName == hash && child->_name == name)
             return child;
     }
     return nullptr;

@@ -205,7 +205,7 @@ TMXLayer * TMXTiledMap::getLayer(const std::string& layerName) const
         TMXLayer* layer = dynamic_cast<TMXLayer*>(child);
         if(layer)
         {
-            if(layerName.compare( layer->getLayerName()) == 0)
+            if(layerName == layer->getLayerName())
             {
                 return layer;
             }
