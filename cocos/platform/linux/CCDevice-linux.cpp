@@ -34,6 +34,7 @@ THE SOFTWARE.
 #include <stdio.h>
 
 #include <algorithm>
+#include <cmath>
 #include <vector>
 #include <map>
 #include <string>
@@ -98,7 +99,7 @@ int Device::getDPI()
          */
         double xres = ((((double) DisplayWidth(dpy,scr)) * 25.4) / 
             ((double) DisplayWidthMM(dpy,scr)));
-        dpi = (int) (xres + 0.5);
+        dpi = std::lround(xres);
         //printf("dpi = %d\n", dpi);
         XCloseDisplay (dpy);
     }

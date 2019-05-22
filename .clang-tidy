@@ -18,6 +18,9 @@ Checks: >
   bugprone-dangling-handle,
   bugprone-fold-init-type,
   bugprone-forward-declaration-namespace,
+  bugprone-forwarding-reference-overload,
+  bugprone-inaccurate-erase,
+  bugprone-incorrect-roundings,
 
 WarningsAsErrors: '*'
 HeaderFilterRegex: '/(?!external)/.*'
