@@ -42,7 +42,7 @@ Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 #define CREATE_FUNC(__TYPE__) \
 static __TYPE__* create() \
 { \
-    auto *pRet = new(std::nothrow) __TYPE__(); \
+    auto pRet = new(std::nothrow) __TYPE__(); \
     if (pRet && pRet->init()) \
     { \
         pRet->autorelease(); \
