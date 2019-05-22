@@ -369,6 +369,21 @@ public:
         last->release();
     }
     
+    /** Removes from arr all objects in minusArr. For each object in minusArr,
+    * the first matching instance in arr will be removed.
+    *  @param minusArr The array to be minus from main array.
+    *  @param removeAll Whether to remove all elements with the same value.
+    *                   If its value is 'false', it will just erase the first occurrence.
+    */
+    void eraseObjectsInArray(Vector<T> minusArr, bool removeAll = false)
+    {
+    	for (auto iter = minusArr.begin(); iter != minusArr.end();) 
+	{
+    	    eraseObject(*iter, removeAll);
+            ++iter;
+    	}
+    }
+	
     /** Remove a certain object in Vector.
      *  @param object The object to be removed.
      *  @param removeAll Whether to remove all elements with the same value.
