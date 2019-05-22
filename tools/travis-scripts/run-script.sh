@@ -138,7 +138,7 @@ function update_cocos_files()
     git diff FETCH_HEAD --stat --exit-code "$COCOSFILE_PATH"
     COCOSFILE_DIFF_RETVAL=$?
 
-    if [ $LUA_DIFF_RETVAL -eq 0 ] && [ $JS_DIFF_RETVAL -eq 0 ] && [ $COCOSFILE_DIFF_RETVAL -eq 0 ]; then
+    if [ $LUA_DIFF_RETVAL -eq 0 ] && [ $COCOSFILE_DIFF_RETVAL -eq 0 ]; then
         echo
         echo "No differences in generated files"
         echo "Exiting with success."
@@ -182,9 +182,6 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
     set +e
     git diff FETCH_HEAD --stat --exit-code "$LUA_AUTO_GENERATE_SCRIPT_PATH"
     LUA_DIFF_RETVAL=$?
-
-    git diff FETCH_HEAD --stat --exit-code "$JS_AUTO_GENERATE_SCRIPT_PATH"
-    JS_DIFF_RETVAL=$?
 
     # generate cocos_files.json and check diff
     update_cocos_files
