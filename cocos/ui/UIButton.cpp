@@ -716,7 +716,7 @@ void Button::setTitleAlignment(TextHAlignment hAlignment, TextVAlignment vAlignm
 
 void Button::setTitleText(const std::string& text)
 {
-    if (text.compare(getTitleText()) == 0) {
+    if (text == getTitleText()) {
         return;
     }
     

@@ -849,19 +849,19 @@ static int lua_cocos2dx_XMLHttpRequest_open(lua_State* L)
         
         if (nullptr != self->getHttpRequest())
         {
-            if (method.compare("post") == 0 || method.compare("POST") == 0)
+            if (method == "post" || method == "POST")
             {
                 self->getHttpRequest()->setRequestType(network::HttpRequest::Type::POST);
             }
-            else if(method.compare("get") == 0 || method.compare("GET") == 0)
+            else if(method == "get" || method == "GET")
             {
                 self->getHttpRequest()->setRequestType(network::HttpRequest::Type::GET);
             }
-            else if(method.compare("put") == 0 || method.compare("PUT") == 0)
+            else if(method == "put" || method == "PUT")
             {
                 self->getHttpRequest()->setRequestType(network::HttpRequest::Type::PUT);
             }
-            else if(method.compare("delete") == 0 || method.compare("DELETE") == 0)
+            else if(method == "delete" || method == "DELETE")
             {
                 self->getHttpRequest()->setRequestType(network::HttpRequest::Type::DELETE);
             }
@@ -929,8 +929,8 @@ static int lua_cocos2dx_XMLHttpRequest_send(lua_State* L)
     }
     
     if (size > 0 &&
-        (self->getMethod().compare("post") == 0 || self->getMethod().compare("POST") == 0
-         || self->getMethod().compare("put") == 0 || self->getMethod().compare("PUT") == 0 )&&
+        (self->getMethod() == "post" || self->getMethod() == "POST"
+         || self->getMethod() == "put" || self->getMethod() == "PUT" )&&
         nullptr != self->getHttpRequest())
     {
         self->getHttpRequest()->setRequestData(data,size);

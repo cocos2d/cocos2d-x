@@ -284,7 +284,7 @@ int CCBAnimationManager::getSequenceId(const char* pSequenceName)
     string seqName(pSequenceName);
     for (auto& seq : _sequences)
     {
-        if (seqName.compare(seq->getName()) == 0)
+        if (seqName == seq->getName())
         {
             return seq->getSequenceId();
         }

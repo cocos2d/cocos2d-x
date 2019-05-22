@@ -1165,7 +1165,7 @@ void Console::commandDebugMsg(int fd, const std::string& /*args*/)
 
 void Console::commandDebugMsgSubCommandOnOff(int /*fd*/, const std::string& args)
 {
-    _sendDebugStrings = (args.compare("on") == 0);
+    _sendDebugStrings = (args == "on");
 }
 
 void Console::commandDirectorSubCommandPause(int /*fd*/, const std::string& /*args*/)
@@ -1233,7 +1233,7 @@ void Console::commandFps(int fd, const std::string& /*args*/)
 
 void Console::commandFpsSubCommandOnOff(int /*fd*/, const std::string& args)
 {
-    bool state = (args.compare("on") == 0);
+    bool state = (args == "on");
     Director *dir = Director::getInstance();
     Scheduler *sched = dir->getScheduler();
     sched->performFunctionInCocosThread( std::bind(&Director::setDisplayStats, dir, state));
