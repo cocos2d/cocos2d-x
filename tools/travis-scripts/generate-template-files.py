@@ -127,8 +127,6 @@ class CocosFileList:
 
                 if foundLuaModule:
                     self.fileList_lua.append(relativePath)
-                elif foundJSModule:
-                    self.fileList_js.append(relativePath)
                 else:
                     self.fileList_com.append(relativePath)
 
