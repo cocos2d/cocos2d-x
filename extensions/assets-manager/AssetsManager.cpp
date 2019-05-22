@@ -38,7 +38,7 @@
 #include "unzip.h"
 #endif
 
-NS_CC_EXT_BEGIN;
+NS_CC_EXT_BEGIN
 
 using namespace std;
 using namespace cocos2d;
@@ -513,4 +513,4 @@ AssetsManager* AssetsManager::create(const char* packageUrl, const char* version
     return manager;
 }
 
-NS_CC_EXT_END;
+NS_CC_EXT_END

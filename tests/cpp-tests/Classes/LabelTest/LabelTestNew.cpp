@@ -142,7 +142,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssueLineGap);
     ADD_TEST_CASE(LabelIssue17902);
     ADD_TEST_CASE(LabelLetterColorsTest);
-};
+}
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
 {

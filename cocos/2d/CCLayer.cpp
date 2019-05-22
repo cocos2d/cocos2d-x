@@ -125,7 +125,7 @@ int Layer::executeScriptTouchesHandler(EventTouch::EventCode eventType, const st
     return 0;
 }
 
-bool Layer::ccTouchBegan(Touch* /*pTouch*/, Event* /*pEvent*/) {return false;};
+bool Layer::ccTouchBegan(Touch* /*pTouch*/, Event* /*pEvent*/) {return false;}
 void Layer::ccTouchMoved(Touch* /*pTouch*/, Event* /*pEvent*/) {}
 void Layer::ccTouchEnded(Touch* /*pTouch*/, Event* /*pEvent*/) {}
 void Layer::ccTouchCancelled(Touch* /*pTouch*/, Event* /*pEvent*/) {}

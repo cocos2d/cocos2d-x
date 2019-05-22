@@ -83,7 +83,7 @@ UnitTests::UnitTests()
 #ifdef UNIT_TEST_FOR_OPTIMIZED_MATH_UTIL
     ADD_TEST_CASE(MathUtilTest);
 #endif
-};
+}
 
 std::string UnitTestDemo::title() const
 {

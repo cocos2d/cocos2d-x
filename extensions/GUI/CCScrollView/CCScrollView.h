@@ -54,12 +54,12 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void scrollViewDidScroll(ScrollView* view) {};
+    virtual void scrollViewDidScroll(ScrollView* view) {}
     /**
      * @js NA
      * @lua NA
      */
-    virtual void scrollViewDidZoom(ScrollView* view) {};
+    virtual void scrollViewDidZoom(ScrollView* view) {}
 };
 
 

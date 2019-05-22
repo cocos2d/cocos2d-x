@@ -133,7 +133,7 @@ bool Triangulate::isInsideTriangle(float Ax, float Ay,
     bCROSScp = bx*cpy - by*cpx;
     
     return ((aCROSSbp >= 0.0f) && (bCROSScp >= 0.0f) && (cCROSSap >= 0.0f));
-};
+}
 
 bool Triangulate::checkSnip(const Vec2 *verts,int u,int v,int w,int n,int *V)
 {

@@ -137,7 +137,7 @@ SpriteTests::SpriteTests()
     ADD_TEST_CASE(SpriteSlice9Test9);
     ADD_TEST_CASE(SpriteSlice9Test10);
     ADD_TEST_CASE(Issue17119);
-};
+}
 
 //------------------------------------------------------------------
 //

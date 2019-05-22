@@ -205,7 +205,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onError(AssetsManager::ErrorCode errorCode) {};
+    virtual void onError(AssetsManager::ErrorCode errorCode) {}
     /** @brief Call back function for recording downloading percent
         @param percent How much percent downloaded
         @warning    This call back function just for recording downloading percent.
@@ -214,18 +214,18 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void onProgress(int percent) {};
+    virtual void onProgress(int percent) {}
     /** @brief Call back function for success
      * @js NA
      * @lua NA
      */
-    virtual void onSuccess() {};
+    virtual void onSuccess() {}
 };
 
 // Deprecated declaration
 CC_DEPRECATED_ATTRIBUTE typedef AssetsManager CCAssetsManager;
 CC_DEPRECATED_ATTRIBUTE typedef AssetsManagerDelegateProtocol CCAssetsManagerDelegateProtocol;
 
-NS_CC_EXT_END;
+NS_CC_EXT_END
 
 #endif /* defined(__AssetsManager__) */

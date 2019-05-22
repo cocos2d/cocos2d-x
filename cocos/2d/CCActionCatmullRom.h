@@ -41,7 +41,7 @@
 #include "2d/CCActionInterval.h"
 #include "math/CCGeometry.h"
 
-NS_CC_BEGIN;
+NS_CC_BEGIN
 
 class Node;
 
@@ -343,6 +343,6 @@ extern CC_DLL Vec2 ccCardinalSplineAt(const Vec2 &p0, const Vec2 &p1, const Vec2
 // end of actions group
 /// @}
 
-NS_CC_END;
+NS_CC_END
 
 #endif // __CCACTION_CATMULLROM_H__

@@ -109,7 +109,7 @@ Texture2DTests::Texture2DTests()
     ADD_TEST_CASE(TextureConvertRGBA8888);
     ADD_TEST_CASE(TextureConvertI8);
     ADD_TEST_CASE(TextureConvertAI88);
-};
+}
 
 //------------------------------------------------------------------
 //

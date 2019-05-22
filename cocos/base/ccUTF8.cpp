@@ -272,7 +272,7 @@ bool utfConvert(
     to = std::move(working);
 
     return true;
-};
+}
 
 
 bool UTF8ToUTF16(const std::string& utf8, std::u16string& outUtf16)

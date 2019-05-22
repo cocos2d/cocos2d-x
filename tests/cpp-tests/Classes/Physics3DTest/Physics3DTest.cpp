@@ -62,7 +62,7 @@ Physics3DTests::Physics3DTests()
     ADD_TEST_CASE(Physics3DColliderDemo);
     ADD_TEST_CASE(Physics3DTerrainDemo);
 #endif
-};
+}
 
 #if CC_USE_3D_PHYSICS == 0
 void Physics3DDemoDisabled::onEnter()

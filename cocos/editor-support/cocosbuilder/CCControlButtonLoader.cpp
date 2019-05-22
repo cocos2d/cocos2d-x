@@ -27,7 +27,7 @@
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
-namespace cocosbuilder {;
+namespace cocosbuilder {
 
 #define PROPERTY_ZOOMONTOUCHDOWN "zoomOnTouchDown"
 #define PROPERTY_TITLE_NORMAL "title|1"
@@ -139,4 +139,4 @@ void ControlButtonLoader::onHandlePropTypeColor3(Node * pNode, Node * pParent, c
     }
 }
 
-};
+}

@@ -37,7 +37,7 @@ const bool PUOnTimeObserver::DEFAULT_SINCE_START_SYSTEM = false;
 static bool almostEquals(float a, float b, float epsilon = std::numeric_limits<float>::epsilon())
 {
     return std::fabs(a - b) <= ( (std::fabs(a) < std::fabs(b) ? std::fabs(b) : std::fabs(a)) * epsilon);
-};
+}
 
 //-----------------------------------------------------------------------
 PUOnTimeObserver::PUOnTimeObserver(void) : PUObserver(),
@@ -45,7 +45,7 @@ PUOnTimeObserver::PUOnTimeObserver(void) : PUObserver(),
     _compare(CO_GREATER_THAN),
     _sinceStartSystem(DEFAULT_SINCE_START_SYSTEM)
 {
-};
+}
 //-----------------------------------------------------------------------
 void PUOnTimeObserver::preUpdateObserver(float deltaTime)
 {

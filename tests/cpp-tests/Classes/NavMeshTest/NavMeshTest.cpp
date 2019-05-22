@@ -46,7 +46,7 @@ NavMeshTests::NavMeshTests()
     ADD_TEST_CASE(NavMeshBasicTestDemo);
     ADD_TEST_CASE(NavMeshAdvanceTestDemo);
 #endif
-};
+}
 
 #if ( CC_USE_NAVMESH == 0 ) || ( CC_USE_PHYSICS == 0 )
 void NavMeshDisabled::onEnter()
