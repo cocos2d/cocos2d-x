@@ -209,6 +209,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
 
         if (TextureFormat::D24S8 == depthStencilFormat)
         {
+            _renderTargetFlags = RenderTargetFlag::ALL;
             descriptor.textureFormat = depthStencilFormat;
             texture = backend::Device::getInstance()->newTexture(descriptor);
             if (! texture)
