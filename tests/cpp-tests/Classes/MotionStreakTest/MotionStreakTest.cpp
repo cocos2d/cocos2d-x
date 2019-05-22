@@ -134,6 +134,11 @@ std::string MotionStreakTest2::title() const
     return "MotionStreak test";
 }
 
+std::string MotionStreakTest2::subtitle() const
+{
+    return "Need Touch Movement";
+}
+
 //------------------------------------------------------------------
 //
 // Issue1358
