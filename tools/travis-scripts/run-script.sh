@@ -158,10 +158,9 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
 {
     COCOS_ROBOT_REMOTE="https://${GH_USER}:${GH_PASSWORD}@github.com/${GH_USER}/cocos2d-x.git"
     LUA_AUTO_GENERATE_SCRIPT_PATH="$COCOS2DX_ROOT/cocos/scripting/lua-bindings/auto"
-    JS_AUTO_GENERATE_SCRIPT_PATH="$COCOS2DX_ROOT/cocos/scripting/js-bindings/auto"
     ELAPSEDSECS=`date +%s`
     COCOS_BRANCH="update_lua_bindings_$ELAPSEDSECS"
-    COMMITTAG="[ci skip][AUTO]: updating luabinding & jsbinding & cocos_file.json automatically"
+    COMMITTAG="[ci skip][AUTO]: updating luabinding & cocos_file.json automatically"
     PULL_REQUEST_REPO="https://api.github.com/repos/cocos2d/cocos2d-x/pulls"
 
     pushd "$COCOS2DX_ROOT"
@@ -190,7 +189,6 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
     set -e
 
     git add -f --all "$LUA_AUTO_GENERATE_SCRIPT_PATH"
-    git add -f --all "$JS_AUTO_GENERATE_SCRIPT_PATH"
     git add -f --all "$COCOSFILE_PATH"
     git checkout -b "$COCOS_BRANCH"
     git commit -m "$COMMITTAG"
