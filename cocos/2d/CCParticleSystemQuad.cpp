@@ -228,7 +228,7 @@ void ParticleSystemQuad::updateTexCoords()
 void ParticleSystemQuad::setTextureWithRect(Texture2D *texture, const Rect& rect)
 {
     // Only update the texture if is different from the current one
-    if( !_texture || texture->getName() != _texture->getName() )
+    if( !_texture || texture->getBackendTexture() != _texture->getBackendTexture() )
     {
         ParticleSystem::setTexture(texture);
     }

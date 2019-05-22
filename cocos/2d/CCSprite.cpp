@@ -1705,13 +1705,13 @@ void Sprite::updateBlendFunc(void)
 
 std::string Sprite::getDescription() const
 {
-    int texture_id = -1;
+    char textureDescriptor[100];
     if (_renderMode == RenderMode::QUAD_BATCHNODE)
-        texture_id = _batchNode->getTextureAtlas()->getTexture()->getName();
+        sprintf(textureDescriptor, "<Sprite | Tag = %d, TextureID = %p>", _tag, _batchNode->getTextureAtlas()->getTexture()->getBackendTexture());
     else
-        texture_id = _texture->getName();
-        
-    return StringUtils::format("<Sprite | Tag = %d, TextureID = %d>", _tag, texture_id );
+        sprintf(textureDescriptor, "<Sprite | Tag = %d, TextureID = %p>", _tag, _texture->getBackendTexture());
+    
+    return textureDescriptor;
 }
 
 const PolygonInfo& Sprite::getPolygonInfo() const

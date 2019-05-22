@@ -661,10 +661,10 @@ std::string TextureCache::getCachedTextureInfo() const
         auto bytes = tex->getPixelsWide() * tex->getPixelsHigh() * bpp / 8;
         totalBytes += bytes;
         count++;
-        snprintf(buftmp, sizeof(buftmp) - 1, "\"%s\" rc=%lu id=%lu %lu x %lu @ %ld bpp => %lu KB\n",
+        snprintf(buftmp, sizeof(buftmp) - 1, "\"%s\" rc=%lu id=%p %lu x %lu @ %ld bpp => %lu KB\n",
             texture.first.c_str(),
             (long)tex->getReferenceCount(),
-            (long)tex->getName(),
+            tex->getBackendTexture(),
             (long)tex->getPixelsWide(),
             (long)tex->getPixelsHigh(),
             (long)bpp,
