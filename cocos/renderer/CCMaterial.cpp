@@ -172,7 +172,7 @@ bool Material::parseTechnique(Properties* techniqueProperties)
         }
         else if (strcmp(name, "renderState") == 0)
         {
-            parseRenderState(this, space);
+            parseRenderState(technique, space);
         }
 
         space = techniqueProperties->getNextNamespace();
