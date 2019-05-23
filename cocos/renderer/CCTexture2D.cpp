@@ -352,39 +352,50 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
         textureDescriptor.samplerDescriptor.mipmapFilter = backend::SamplerFilter::NEAREST;
     }
 
-    unsigned char *data = mipmaps[0].address;
-
-    size_t dataLen = mipmaps[0].len;
-    unsigned char *outData = data;
-    size_t outDataLen;
-    
-    if(renderFormat != pixelFormat) //need conversion
-    {
-        auto convertedFormat = backend::PixelFormatUtils::convertDataToFormat(data, dataLen, pixelFormat, renderFormat, &outData, &outDataLen);
-#ifdef CC_USE_METAL
-        CCASSERT(convertedFormat == renderFormat, "PixelFormat convert failed!");
-#endif
-        if(convertedFormat == renderFormat) pixelFormat = renderFormat;
-    }
-
     backend::StringUtils::PixelFormat format = static_cast<backend::StringUtils::PixelFormat>(pixelFormat);
     CCASSERT(format != backend::StringUtils::PixelFormat::NONE, "PixelFormat should not be NONE");
     
     textureDescriptor.textureFormat = backend::StringUtils::PixelFormat2TextureFormat(format);
     CCASSERT(textureDescriptor.textureFormat != backend::TextureFormat::NONE, "TextureFormat should not be NONE");
     
-    textureDescriptor.compressed = info.compressed;
-
     if(_texture->getTextureFormat() != textureDescriptor.textureFormat)
         _texture->updateTextureDescriptor(textureDescriptor);
 
-    _texture->updateData(outData);
-    if(outData && outData != data && outDataLen > 0)
+    int width = pixelsWide;
+    int height = pixelsHigh;
+    for (int i = 0; i < mipmapsNum; ++i)
     {
-        free(outData);
-        outData = nullptr;
-        outDataLen = 0;
+        unsigned char *data = mipmaps[i].address;
+        size_t dataLen = mipmaps[i].len;
+        unsigned char *outData = data;
+        size_t outDataLen = dataLen;
+        
+        if(renderFormat != pixelFormat) //need conversion
+        {
+            auto convertedFormat = backend::PixelFormatUtils::convertDataToFormat(data, dataLen, pixelFormat, renderFormat, &outData, &outDataLen);
+#ifdef CC_USE_METAL
+            CCASSERT(convertedFormat == renderFormat, "PixelFormat convert failed!");
+#endif
+            if(convertedFormat == renderFormat) pixelFormat = renderFormat;
+        }
+        
+        _texture->updateData(outData, width, height, dataLen, i);
+        if(outData && outData != data && outDataLen > 0)
+        {
+            free(outData);
+            outData = nullptr;
+            outDataLen = 0;
+        }
+        
+        if (i > 0 && (width != height || ccNextPOT(width) != width ))
+        {
+            CCLOG("cocos2d: Texture2D. WARNING. Mipmap level %u is not squared. Texture won't render correctly. width=%d != height=%d", i, width, height);
+        }
+        
+        width = MAX(width >> 1, 1);
+        height = MAX(height >> 1, 1);
     }
+    
     
     _contentSize = Size((float)pixelsWide, (float)pixelsHigh);
     _pixelsWide = pixelsWide;

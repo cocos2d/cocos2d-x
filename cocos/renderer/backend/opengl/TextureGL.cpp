@@ -120,12 +120,23 @@ void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
 
 void Texture2DGL::updateData(uint8_t* data)
 {
-    // TODO: support texture cube, and compressed data.
-    
+    auto bytesPerRow = _width * _bitsPerElement / 8;
+    auto dataLen = bytesPerRow * _height;
+    updateData(data, _width, _height, dataLen, 0);
+    if(_isMipmapEnabled)
+    {
+        _isMipmapGenerated = false;
+        generateMipmaps();
+    }
+    CHECK_GL_ERROR_DEBUG();
+}
+
+void Texture2DGL::updateData(uint8_t* data, uint32_t width , uint32_t height, uint32_t dataLen, uint32_t level)
+{
     //Set the row align only when mipmapsNum == 1 and the data is uncompressed
     if(!_isMipmapEnabled && !_isCompressed)
     {
-        unsigned int bytesPerRow = _width * _bitsPerElement / 8;
+        unsigned int bytesPerRow = width * _bitsPerElement / 8;
         
         if(bytesPerRow % 8 == 0)
         {
@@ -156,26 +167,30 @@ void Texture2DGL::updateData(uint8_t* data)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _textureInfo.sAddressModeGL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _textureInfo.tAddressModeGL);
 
-
     if(_isCompressed)
     {
-        auto datalen = _width * _height * _bitsPerElement / 8;
-        glCompressedTexImage2D(GL_TEXTURE_2D, 0, _textureInfo.internalFormat, (GLsizei)_width, (GLsizei)_height, 0, datalen, data);
+        glCompressedTexImage2D(GL_TEXTURE_2D, level, _textureInfo.internalFormat, (GLsizei)width, (GLsizei)height, 0, dataLen, data);
     }
     else
     {
         glTexImage2D(GL_TEXTURE_2D,
-                     0,
-                     _textureInfo.internalFormat,
-                     _width,
-                     _height,
-                     0,
-                     _textureInfo.format,
-                     _textureInfo.type,
-                     data);
+                    level,
+                    _textureInfo.internalFormat,
+                    width,
+                    height,
+                    0,
+                    _textureInfo.format,
+                    _textureInfo.type,
+                    data);
     }
     CHECK_GL_ERROR_DEBUG();
+}
 
+void Texture2DGL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint8_t* data)
+{
+    auto bytesPerRow = width * _bitsPerElement / 8;
+    auto dataLen = bytesPerRow * height;
+    updateSubData(xoffset, yoffset, width, height, dataLen, 0, data);
     if(_isMipmapEnabled)
     {
         _isMipmapGenerated = false;
@@ -184,26 +199,35 @@ void Texture2DGL::updateData(uint8_t* data)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void Texture2DGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data)
+void Texture2DGL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t dataLen, uint32_t level, uint8_t* data)
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
-    glTexSubImage2D(GL_TEXTURE_2D,
-                    0,
-                    xoffset,
-                    yoffset,
-                    width,
-                    height,
-                    _textureInfo.format,
-                    _textureInfo.type,
-                    data);
-    CHECK_GL_ERROR_DEBUG();
-
-    if(_isMipmapEnabled)
+    if(_isCompressed)
     {
-        _isMipmapGenerated = false;
-        generateMipmaps();
+        glCompressedTexSubImage2D(GL_TEXTURE_2D,
+                                 level, 
+                                 xoffset,
+                                 yoffset, 
+                                 width, 
+                                 height, 
+                                 _textureInfo.format,
+                                 dataLen,
+                                 data);
     }
+    else
+    {
+        glTexSubImage2D(GL_TEXTURE_2D,
+                        0,
+                        xoffset,
+                        yoffset,
+                        width,
+                        height,
+                        _textureInfo.format,
+                        _textureInfo.type,
+                        data);
+    }
+
     CHECK_GL_ERROR_DEBUG();
 }
 
@@ -264,8 +288,7 @@ void Texture2DGL::getBytes(int x, int y, int width, int height, bool flipImage, 
 TextureCubeGL::TextureCubeGL(const TextureDescriptor& descriptor)
     :TextureCubemap(descriptor)
 {
-    assert(descriptor.width == descriptor.height);
-    _size = descriptor.width;
+    assert(_width == _height);
     _textureType = TextureType::TEXTURE_CUBE;
     UtilsGL::toGLTypes(_textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
     glGenTextures(1, &_textureInfo.texture);
@@ -299,7 +322,6 @@ void TextureCubeGL::updateTextureDescriptor(const cocos2d::backend::TextureDescr
 {
     UtilsGL::toGLTypes(descriptor.textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
     _textureFormat = descriptor.textureFormat;
-    _size = descriptor.width;
     updateSamplerDescriptor(descriptor.samplerDescriptor);
 }
 
@@ -336,8 +358,8 @@ void TextureCubeGL::updateFaceData(TextureCubeFace side, void *data)
     glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
         0,                  // level
         GL_RGBA,            // internal format
-        _size,              // width
-        _size,              // height
+        _width,              // width
+        _height,              // height
         0,                  // border
         _textureInfo.internalFormat,            // format
         _textureInfo.type,  // type

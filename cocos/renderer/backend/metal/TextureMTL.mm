@@ -96,6 +96,19 @@ namespace
                 return false;
         }
     }
+    
+    bool isCompressedFormat(TextureFormat textureFormat)
+    {
+        MTLPixelFormat pixelFormat = Utils::toMTLPixelFormat(textureFormat);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        bool isCompressed = (pixelFormat >= MTLPixelFormatPVRTC_RGB_2BPP &&
+                                   pixelFormat <= MTLPixelFormatASTC_12x12_LDR);
+#else
+        bool isCompressed = (pixelFormat >= MTLPixelFormatBC1_RGBA &&
+                                   pixelFormat <= MTLPixelFormatBC7_RGBAUnorm_sRGB);
+#endif
+        return isCompressed;
+    }
 }
 
 TextureMTL::TextureMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
@@ -103,6 +116,7 @@ TextureMTL::TextureMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descrip
 {
     _mtlDevice = mtlDevice;
     updateTextureDescriptor(descriptor);
+    _isCompressed = isCompressedFormat(descriptor.textureFormat);
 }
 
 TextureMTL::~TextureMTL()
@@ -131,10 +145,16 @@ void TextureMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescript
 
 void TextureMTL::updateData(uint8_t* data)
 {
-    updateSubData(0, 0, (unsigned int)_mtlTexture.width, (unsigned int)_mtlTexture.height, data);
+    auto dataLen = _bytesPerRow * _height;
+    updateData(data, _width, _height, dataLen, 0);
 }
 
-void TextureMTL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data)
+void TextureMTL::updateData(uint8_t* data, uint32_t width , uint32_t height, uint32_t dataLen, uint32_t level)
+{
+    updateSubData(0, 0, width, height, dataLen, level, data);
+}
+
+void TextureMTL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t dataLen, uint32_t level, uint8_t* data)
 {
     MTLRegion region =
     {
@@ -147,16 +167,24 @@ void TextureMTL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsig
                                  (uint32_t)(width * height),
                                  _textureFormat, &convertedData);
     
+    //TODO coulsonwang, it seems that only PVRTC has such limitation.
     //when pixel format is a compressed one, bytePerRow should be set to ZERO
     int bytesPerRow = _isCompressed ? 0 : _bytesPerRow;
     
     [_mtlTexture replaceRegion:region
-                   mipmapLevel:0
+                   mipmapLevel:level
                      withBytes:convertedData
                    bytesPerRow:bytesPerRow];
     
     if (converted)
         free(convertedData);
+}
+
+void TextureMTL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data)
+{
+    auto bytesPerrow = width * _bitsPerElement / 8;
+    auto dataLen = bytesPerrow * height;
+    updateSubData(xoffset, yoffset, width, height, dataLen, 0, data);
     
     // metal doesn't generate mipmaps automatically, so should generate it manually.
     if (_isMipmapEnabled)

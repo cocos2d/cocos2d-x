@@ -73,10 +73,11 @@ namespace
 Texture::Texture(const TextureDescriptor& descriptor)
     : _bitsPerElement(computeBitsPerElement(descriptor.textureFormat))
     , _isMipmapEnabled(descriptor.samplerDescriptor.mipmapEnabled)
-    , _isCompressed(descriptor.compressed)
     , _textureType(descriptor.textureType)
     , _textureFormat(descriptor.textureFormat)
     , _textureUsage(descriptor.textureUsage)
+    , _width(descriptor.width)
+    , _height(descriptor.height)
 {
 }
 
@@ -87,22 +88,20 @@ void Texture::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor 
 {
     _bitsPerElement = computeBitsPerElement(descriptor.textureFormat);
     _isMipmapEnabled = descriptor.samplerDescriptor.mipmapEnabled;
-    _isCompressed = descriptor.compressed;
     _textureType = descriptor.textureType;
     _textureFormat = descriptor.textureFormat;
     _textureUsage = descriptor.textureUsage;
+    _width = descriptor.width;
+    _height = descriptor.height;
 }
 
 Texture2D::Texture2D(const TextureDescriptor& descriptor)
     : Texture(descriptor)
-    , _width(descriptor.width)
-    , _height(descriptor.height)
 {
 }
 
 TextureCubemap::TextureCubemap(const TextureDescriptor &descriptor)
     : Texture(descriptor)
-    , _size(descriptor.width)
 {
 
 }
