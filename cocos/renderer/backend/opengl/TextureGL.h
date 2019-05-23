@@ -46,7 +46,6 @@ private:
     void initWithZeros();
 
     SamplerDescriptor _samplerDescriptor;
-    // bool _isCompressed = false;
     TextureInfoGL _textureInfo;
     EventListener* _backToForegroundListener = nullptr;
 };
