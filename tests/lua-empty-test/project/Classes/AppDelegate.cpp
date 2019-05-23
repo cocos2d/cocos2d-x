@@ -61,6 +61,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     //The call was commented because it will lead to ZeroBrane Studio can't find correct context when debugging
     //engine->executeScriptFile("src/hello.lua");
     
+    LuaStack* stack = engine->getLuaStack();
+    stack->setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));
+    
 #if CC_64BITS
     FileUtils::getInstance()->addSearchPath("src/64bit");
 #endif
