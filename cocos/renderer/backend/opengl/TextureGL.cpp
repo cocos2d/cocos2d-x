@@ -218,7 +218,7 @@ void Texture2DGL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t wid
     else
     {
         glTexSubImage2D(GL_TEXTURE_2D,
-                        0,
+                        level,
                         xoffset,
                         yoffset,
                         width,

@@ -145,8 +145,7 @@ void TextureMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescript
 
 void TextureMTL::updateData(uint8_t* data)
 {
-    auto dataLen = _bytesPerRow * _height;
-    updateData(data, _width, _height, dataLen, 0);
+    updateSubData(0, 0, _width, _height, data);
 }
 
 void TextureMTL::updateData(uint8_t* data, uint32_t width , uint32_t height, uint32_t dataLen, uint32_t level)
@@ -169,7 +168,7 @@ void TextureMTL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t widt
     
     //TODO coulsonwang, it seems that only PVRTC has such limitation.
     //when pixel format is a compressed one, bytePerRow should be set to ZERO
-    int bytesPerRow = _isCompressed ? 0 : _bytesPerRow;
+    int bytesPerRow = _isCompressed ? 0 : (width * _bitsPerElement / 8);
     
     [_mtlTexture replaceRegion:region
                    mipmapLevel:level
