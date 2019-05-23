@@ -137,18 +137,7 @@ function update_cocos_files()
     $COCOS2DX_ROOT/tools/travis-scripts/generate-template-files.py
     git diff FETCH_HEAD --stat --exit-code "$COCOSFILE_PATH"
     COCOSFILE_DIFF_RETVAL=$?
-
-    if [ $LUA_DIFF_RETVAL -eq 0 ] && [ $COCOSFILE_DIFF_RETVAL -eq 0 ]; then
-        echo
-        echo "No differences in generated files"
-        echo "Exiting with success."
-        echo
-        exit 0
-    else
-        echo
-        echo "Generated files differ from HEAD. Continuing."
-        echo
-    fi
+    echo COCOSFILE_DIFF_RETVAL
 
     # Exit on error
     set -e
@@ -156,12 +145,12 @@ function update_cocos_files()
 
 function generate_pull_request_for_binding_codes_and_cocosfiles()
 {
-    COCOS_ROBOT_REMOTE="https://${GH_USER}:${GH_PASSWORD}@github.com/${GH_USER}/cocos2d-x.git"
-    LUA_AUTO_GENERATE_SCRIPT_PATH="$COCOS2DX_ROOT/cocos/scripting/lua-bindings/auto"
-    ELAPSEDSECS=`date +%s`
-    COCOS_BRANCH="update_lua_bindings_$ELAPSEDSECS"
-    COMMITTAG="[ci skip][AUTO]: updating luabinding & cocos_file.json automatically"
-    PULL_REQUEST_REPO="https://api.github.com/repos/cocos2d/cocos2d-x/pulls"
+    local COCOS_ROBOT_REMOTE="https://${GH_USER}:${GH_PASSWORD}@github.com/${GH_USER}/cocos2d-x.git"
+    local LUA_AUTO_GENERATE_SCRIPT_PATH="$COCOS2DX_ROOT/cocos/scripting/lua-bindings/auto"
+    local ELAPSEDSECS=`date +%s`
+    local COCOS_BRANCH="update_lua_bindings_$ELAPSEDSECS"
+    local COMMITTAG="[ci skip][AUTO]: updating luabinding & cocos_file.json automatically"
+    local PULL_REQUEST_REPO="https://api.github.com/repos/cocos2d/cocos2d-x/pulls"
 
     pushd "$COCOS2DX_ROOT"
     #Set git user for cocos2d-lua repo
@@ -180,10 +169,15 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
     # Don't exit on non-zero return value
     set +e
     git diff FETCH_HEAD --stat --exit-code "$LUA_AUTO_GENERATE_SCRIPT_PATH"
-    LUA_DIFF_RETVAL=$?
+    local lua_binding_codes_diff=$?
 
     # generate cocos_files.json and check diff
-    update_cocos_files
+    local cocos_file_diff=$(update_cocos_files)
+    if [ $lua_binding_codes_diff -eq 0 ] && [ $cocos_file_diff -eq 0 ]; then
+        echo "lua binding codes and cocos file are not differences"
+        exit 0
+    fi
+
 
     # Exit on error
     set -e
