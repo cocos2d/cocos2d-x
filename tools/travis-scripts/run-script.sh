@@ -137,7 +137,7 @@ function update_cocos_files()
     $COCOS2DX_ROOT/tools/travis-scripts/generate-template-files.py
     git diff FETCH_HEAD --stat --exit-code "$COCOSFILE_PATH"
     COCOSFILE_DIFF_RETVAL=$?
-    echo COCOSFILE_DIFF_RETVAL
+    echo $COCOSFILE_DIFF_RETVAL
 
     # Exit on error
     set -e
