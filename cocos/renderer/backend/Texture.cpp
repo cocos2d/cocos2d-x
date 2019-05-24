@@ -72,7 +72,6 @@ namespace
 
 Texture::Texture(const TextureDescriptor& descriptor)
     : _bitsPerElement(computeBitsPerElement(descriptor.textureFormat))
-    , _isMipmapEnabled(descriptor.samplerDescriptor.mipmapEnabled)
     , _textureType(descriptor.textureType)
     , _textureFormat(descriptor.textureFormat)
     , _textureUsage(descriptor.textureUsage)
@@ -87,7 +86,6 @@ Texture::~Texture()
 void Texture::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
 {
     _bitsPerElement = computeBitsPerElement(descriptor.textureFormat);
-    _isMipmapEnabled = descriptor.samplerDescriptor.mipmapEnabled;
     _textureType = descriptor.textureType;
     _textureFormat = descriptor.textureFormat;
     _textureUsage = descriptor.textureUsage;

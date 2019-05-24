@@ -30,6 +30,7 @@ public:
     inline TextureFormat getTextureFormat() const { return _textureFormat; }
     inline TextureUsage getTextureUsage() const { return _textureUsage; }
     inline TextureType getTextureType() const { return _textureType; }
+    inline bool hasMipmaps() const { return _hasMipmaps; }
 
 protected:
     Texture(const TextureDescriptor& descriptor);
@@ -37,9 +38,8 @@ protected:
         
     // The bytes of all components.
     uint8_t _bitsPerElement = 0;
-    bool _isMipmapEnabled = false;
+    bool _hasMipmaps = false;
     bool _isCompressed = false;
-    bool _isMipmapGenerated = false;
     uint32_t _width = 0;
     uint32_t _height = 0;
 
@@ -52,10 +52,10 @@ protected:
 class Texture2D : public Texture
 {
 public:
-    virtual void updateData(uint8_t* data) = 0;
-    virtual void updateData(uint8_t* data, uint32_t width , uint32_t height, uint32_t dataLen, uint32_t level) = 0;
-    virtual void updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint8_t* data) = 0;
-    virtual void updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t dataLen, uint32_t level, uint8_t* data) = 0;
+    virtual void updateData(uint8_t* data, uint32_t width , uint32_t height, uint32_t level) = 0;
+    virtual void updateCompressedData(uint8_t* data, uint32_t width , uint32_t height, uint32_t dataLen, uint32_t level) = 0;
+    virtual void updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t level, uint8_t* data) = 0;
+    virtual void updateCompressedSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t dataLen, uint32_t level, uint8_t* data) = 0;
 
     inline uint32_t getWidth() const { return _width; }
     inline uint32_t getHeight() const { return _height; }

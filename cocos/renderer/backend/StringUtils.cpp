@@ -78,10 +78,9 @@ std::string StringUtils::SamplerAddressMode2String(const SamplerAddressMode& add
 
 std::string StringUtils::SamplerDescriptor2String(const SamplerDescriptor& descriptor)
 {
-    std::string samplerInfo = descriptor.mipmapEnabled ? "mipmapEnable":"mipmapDisable";
+    std::string samplerInfo;
     samplerInfo += SamplerFilterType2String(descriptor.magFilter);
     samplerInfo += SamplerFilterType2String(descriptor.minFilter);
-    samplerInfo += SamplerFilterType2String(descriptor.mipmapFilter);
     samplerInfo += SamplerAddressMode2String(descriptor.sAddressMode);
     samplerInfo += SamplerAddressMode2String(descriptor.tAddressMode);
     return samplerInfo;

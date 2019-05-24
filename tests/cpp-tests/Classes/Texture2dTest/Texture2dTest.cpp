@@ -306,7 +306,7 @@ void TextureMipMap::onEnter()
     auto texture0 = Director::getInstance()->getTextureCache()->addImage("Images/grossini_dance_atlas.png");
     texture0->generateMipmap();
     Texture2D::TexParams texParams = {
-        backend::SamplerFilter::LINEAR,
+        backend::SamplerFilter::LINEAR_MIPMAP_LINEAR,
         backend::SamplerFilter::LINEAR,
         backend::SamplerAddressMode::CLAMP_TO_EDGE,
         backend::SamplerAddressMode::CLAMP_TO_EDGE };
@@ -366,7 +366,7 @@ void TexturePVRMipMap::onEnter()
 
         // support mipmap filtering
         Texture2D::TexParams texParams = {
-            backend::SamplerFilter::LINEAR,
+            backend::SamplerFilter::LINEAR_MIPMAP_LINEAR,
             backend::SamplerFilter::LINEAR,
             backend::SamplerAddressMode::CLAMP_TO_EDGE,
             backend::SamplerAddressMode::CLAMP_TO_EDGE };
@@ -416,7 +416,7 @@ void TexturePVRMipMap2::onEnter()
     
     // support mipmap filtering
     Texture2D::TexParams texParams = {
-        backend::SamplerFilter::LINEAR,
+        backend::SamplerFilter::LINEAR_MIPMAP_LINEAR,
         backend::SamplerFilter::LINEAR,
         backend::SamplerAddressMode::CLAMP_TO_EDGE,
         backend::SamplerAddressMode::CLAMP_TO_EDGE };

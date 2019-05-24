@@ -345,12 +345,14 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     backend::TextureDescriptor textureDescriptor;
     textureDescriptor.width = pixelsWide;
     textureDescriptor.height = pixelsHigh;
-    textureDescriptor.samplerDescriptor.minFilter = (_antialiasEnabled) ? backend::SamplerFilter::LINEAR : backend::SamplerFilter::NEAREST;
     textureDescriptor.samplerDescriptor.magFilter = (_antialiasEnabled) ? backend::SamplerFilter::LINEAR : backend::SamplerFilter::NEAREST;
-    if (mipmapsNum > 1)
+    if (mipmapsNum == 1)
     {
-        textureDescriptor.samplerDescriptor.mipmapFilter = backend::SamplerFilter::NEAREST;
-        textureDescriptor.samplerDescriptor.mipmapEnabled = true;
+        textureDescriptor.samplerDescriptor.minFilter = (_antialiasEnabled) ? backend::SamplerFilter::LINEAR : backend::SamplerFilter::NEAREST;
+    }
+    else
+    {
+        textureDescriptor.samplerDescriptor.minFilter = (_antialiasEnabled) ? backend::SamplerFilter::LINEAR_MIPMAP_NEAREST : backend::SamplerFilter::NEAREST_MIPMAP_NEAREST;
     }
 
     int width = pixelsWide;
@@ -362,8 +364,8 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
         size_t dataLen = mipmaps[i].len;
         unsigned char *outData = data;
         size_t outDataLen = dataLen;
-        
-        if(renderFormat != oriPixelFormat) //need conversion
+
+        if(renderFormat != oriPixelFormat && !info.compressed) //need conversion
         {
             auto convertedFormat = backend::PixelFormatUtils::convertDataToFormat(data, dataLen, oriPixelFormat, renderFormat, &outData, &outDataLen);
 #ifdef CC_USE_METAL
@@ -371,17 +373,25 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 #endif
             if(convertedFormat == renderFormat) pixelFormat = renderFormat;
         }
-        
+
         backend::StringUtils::PixelFormat format = static_cast<backend::StringUtils::PixelFormat>(pixelFormat);
         CCASSERT(format != backend::StringUtils::PixelFormat::NONE, "PixelFormat should not be NONE");
-        
+
         textureDescriptor.textureFormat = backend::StringUtils::PixelFormat2TextureFormat(format);
         CCASSERT(textureDescriptor.textureFormat != backend::TextureFormat::NONE, "TextureFormat should not be NONE");
-        
+
         if(_texture->getTextureFormat() != textureDescriptor.textureFormat)
             _texture->updateTextureDescriptor(textureDescriptor);
-        
-        _texture->updateData(outData, width, height, dataLen, i);
+
+        if(info.compressed)
+        {
+            _texture->updateCompressedData(data, width, height, dataLen, i);
+        }
+        else
+        {
+            _texture->updateData(outData, width, height, i);
+        }
+
         if(outData && outData != data && outDataLen > 0)
         {
             free(outData);
@@ -416,7 +426,7 @@ bool Texture2D::updateWithData(void *data,int offsetX,int offsetY,int width,int 
     if (_texture && width > 0 && height > 0)
     {
         uint8_t* textureData = static_cast<uint8_t*>(data);
-        _texture->updateSubData(offsetX, offsetY, width, height, textureData);
+        _texture->updateSubData(offsetX, offsetY, width, height, 0, textureData);
         return true;
     }
     return false;
@@ -647,32 +657,41 @@ bool Texture2D::initWithBackendTexture(backend::Texture *texture)
 
 bool Texture2D::hasMipmaps() const
 {
-    return _hasMipmaps;
+    return _texture->hasMipmaps();
 }
 
 void Texture2D::setAliasTexParameters()
 {
 
-    backend::SamplerDescriptor descriptor(false,
-        backend::SamplerFilter::NEAREST,
-        backend::SamplerFilter::NEAREST,
-        backend::SamplerFilter::NEAREST,
-        backend::SamplerAddressMode::DONT_CARE,
-        backend::SamplerAddressMode::DONT_CARE
-    );
+    if (! _antialiasEnabled)
+    {
+        return;
+    }
+
+    _antialiasEnabled = false;
+
+    backend::SamplerDescriptor descriptor;
+    descriptor.minFilter = (_texture->hasMipmaps()) ? backend::SamplerFilter::NEAREST_MIPMAP_NEAREST : backend::SamplerFilter::NEAREST;
+    descriptor.magFilter = backend::SamplerFilter::NEAREST;
+    descriptor.sAddressMode = descriptor.tAddressMode = backend::SamplerAddressMode::DONT_CARE;
+
     _texture->updateSamplerDescriptor(descriptor);
 }
 
 void Texture2D::setAntiAliasTexParameters()
 {
 
-    backend::SamplerDescriptor descriptor(false,
-        backend::SamplerFilter::LINEAR,
-        backend::SamplerFilter::LINEAR,
-        backend::SamplerFilter::LINEAR,
-        backend::SamplerAddressMode::DONT_CARE,
-        backend::SamplerAddressMode::DONT_CARE
-    );
+    if ( _antialiasEnabled )
+    {
+        return;
+    }
+    _antialiasEnabled = true;
+
+    backend::SamplerDescriptor descriptor;
+    descriptor.minFilter = (_texture->hasMipmaps()) ? backend::SamplerFilter::LINEAR_MIPMAP_NEAREST : backend::SamplerFilter::LINEAR;
+    descriptor.magFilter = backend::SamplerFilter::LINEAR;
+    descriptor.sAddressMode = descriptor.tAddressMode = backend::SamplerAddressMode::DONT_CARE;
+
     _texture->updateSamplerDescriptor(descriptor);
 }
 
@@ -872,7 +891,6 @@ void Texture2D::generateMipmap()
     CCASSERT(_pixelsWide == ccNextPOT(_pixelsWide) && _pixelsHigh == ccNextPOT(_pixelsHigh), "Mipmap texture only works in POT textures");
 
     _texture->generateMipmaps();
-    _hasMipmaps = true;
 }
 
 void Texture2D::initProgram()

@@ -397,6 +397,9 @@ const char* DeviceInfoMTL::getExtension() const
 
 bool DeviceInfoMTL::checkForFeatureSupported(FeatureType feature)
 {
+    //TODO coulsonwang, removed it later.
+    return false;
+    
     bool featureSupported = false;
     switch (feature)
     {

@@ -8,7 +8,7 @@ CC_BACKEND_BEGIN
 
 struct TextureInfoGL
 {
-    void applySamplerDescriptor(const SamplerDescriptor &desc, bool isPow2);
+    void applySamplerDescriptor(const SamplerDescriptor &desc, bool isPow2, bool hasMipmaps);
 
     GLint magFilterGL = GL_LINEAR;
     GLint minFilterGL = GL_LINEAR;
@@ -29,10 +29,10 @@ public:
     Texture2DGL(const TextureDescriptor& descriptor);
     ~Texture2DGL();
     
-    virtual void updateData(uint8_t* data) override;
-    virtual void updateData(uint8_t* data, uint32_t width , uint32_t height, uint32_t dataLen, uint32_t level) override;
-    virtual void updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint8_t* data) override;
-    virtual void updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t dataLen, uint32_t level, uint8_t* data) override;
+    virtual void updateData(uint8_t* data, uint32_t width , uint32_t height, uint32_t level) override;
+    virtual void updateCompressedData(uint8_t* data, uint32_t width , uint32_t height, uint32_t dataLen, uint32_t level) override;
+    virtual void updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t level, uint8_t* data) override;
+    virtual void updateCompressedSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t dataLen, uint32_t level, uint8_t* data) override;
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler)  override;
     virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) override;
     virtual void generateMipmaps() override;

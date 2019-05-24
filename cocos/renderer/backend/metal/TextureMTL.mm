@@ -29,8 +29,12 @@ namespace
     {
         switch (mode) {
             case SamplerFilter::NEAREST:
+            case SamplerFilter::NEAREST_MIPMAP_LINEAR:
+            case SamplerFilter::NEAREST_MIPMAP_NEAREST:
                 return MTLSamplerMinMagFilterNearest;
             case SamplerFilter::LINEAR:
+            case SamplerFilter::LINEAR_MIPMAP_LINEAR:
+            case SamplerFilter::LINEAR_MIPMAP_NEAREST:
                 return MTLSamplerMinMagFilterLinear;
             case SamplerFilter::DONT_CARE:
                 return MTLSamplerMinMagFilterNearest;
@@ -40,8 +44,12 @@ namespace
     MTLSamplerMipFilter toMTLSamplerMipFilter(SamplerFilter mode) {
         switch (mode) {
             case SamplerFilter::NEAREST:
+            case SamplerFilter::LINEAR_MIPMAP_NEAREST:
+            case SamplerFilter::NEAREST_MIPMAP_NEAREST:
                 return MTLSamplerMipFilterNearest;
             case SamplerFilter::LINEAR:
+            case SamplerFilter::LINEAR_MIPMAP_LINEAR:
+            case SamplerFilter::NEAREST_MIPMAP_LINEAR:
                 return MTLSamplerMipFilterLinear;
             case SamplerFilter::DONT_CARE:
                 return MTLSamplerMipFilterNearest;
@@ -143,17 +151,12 @@ void TextureMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescript
     _bytesPerRow = descriptor.width * _bitsPerElement / 8 ;
 }
 
-void TextureMTL::updateData(uint8_t* data)
+void TextureMTL::updateData(uint8_t* data, uint32_t width , uint32_t height, uint32_t level)
 {
-    updateSubData(0, 0, _width, _height, data);
+    updateSubData(0, 0, width, height, level, data);
 }
 
-void TextureMTL::updateData(uint8_t* data, uint32_t width , uint32_t height, uint32_t dataLen, uint32_t level)
-{
-    updateSubData(0, 0, width, height, dataLen, level, data);
-}
-
-void TextureMTL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t dataLen, uint32_t level, uint8_t* data)
+void TextureMTL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t level, uint8_t* data)
 {
     MTLRegion region =
     {
@@ -177,20 +180,19 @@ void TextureMTL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t widt
     
     if (converted)
         free(convertedData);
+    
+    if(!_hasMipmaps && level > 0)
+        _hasMipmaps = true;
 }
 
-void TextureMTL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data)
+void TextureMTL::updateCompressedData(uint8_t *data, uint32_t width, uint32_t height, uint32_t dataLen, uint32_t level)
 {
-    auto bytesPerrow = width * _bitsPerElement / 8;
-    auto dataLen = bytesPerrow * height;
-    updateSubData(xoffset, yoffset, width, height, dataLen, 0, data);
-    
-    // metal doesn't generate mipmaps automatically, so should generate it manually.
-    if (_isMipmapEnabled)
-    {
-        _isMipmapGenerated = false;
-        generateMipmaps();
-    }
+    updateCompressedSubData(0, 0, width, height, dataLen, level, data);
+}
+
+void TextureMTL::updateCompressedSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t dataLen, uint32_t level, uint8_t *data)
+{
+    updateSubData(xoffset, yoffset, width, height, level, data);
 }
 
 void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
@@ -226,8 +228,6 @@ void TextureMTL::createSampler(id<MTLDevice> mtlDevice, const SamplerDescriptor 
     
     mtlDescriptor.minFilter = descriptor.minFilter == SamplerFilter::DONT_CARE ? _minFilter : toMTLSamplerMinMagFilter(descriptor.minFilter);
     mtlDescriptor.magFilter = descriptor.magFilter == SamplerFilter::DONT_CARE ? _magFilter : toMTLSamplerMinMagFilter(descriptor.magFilter);
-    if (_isMipmapEnabled)
-        mtlDescriptor.mipFilter = descriptor.mipmapFilter == SamplerFilter::DONT_CARE ? _mipFilter : toMTLSamplerMipFilter(descriptor.mipmapFilter);
     
     if(_mtlSamplerState)
     {
@@ -280,9 +280,9 @@ void TextureMTL::generateMipmaps()
     if (TextureUsage::RENDER_TARGET == _textureUsage || isColorRenderable(_textureFormat) == false)
         return;
     
-    if(!_isMipmapGenerated)
+    if(!_hasMipmaps)
     {
-        _isMipmapGenerated = true;
+        _hasMipmaps = true;
         Utils::generateMipmaps(_mtlTexture);
         
     }
@@ -346,8 +346,6 @@ void TextureCubeMTL::createSampler(id<MTLDevice> mtlDevice, const SamplerDescrip
     
     mtlDescriptor.minFilter = descriptor.minFilter == SamplerFilter::DONT_CARE ? _minFilter : toMTLSamplerMinMagFilter(descriptor.minFilter);
     mtlDescriptor.magFilter = descriptor.magFilter == SamplerFilter::DONT_CARE ? _magFilter : toMTLSamplerMinMagFilter(descriptor.magFilter);
-    if (_isMipmapEnabled)
-        mtlDescriptor.mipFilter = descriptor.mipmapFilter == SamplerFilter::DONT_CARE ? _mipFilter : toMTLSamplerMipFilter(descriptor.mipmapFilter);
     
     if(_mtlSamplerState)
     {
@@ -380,11 +378,6 @@ void TextureCubeMTL::updateFaceData(TextureCubeFace side, void *data)
                      withBytes:data
                    bytesPerRow:_bytesPerRow
                  bytesPerImage:_bytesPerImage];
-    if(_isMipmapEnabled)
-    {
-        _isMipmapGenerated = true;
-        generateMipmaps();
-    }
 }
 
 void TextureCubeMTL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback)
@@ -421,9 +414,9 @@ void TextureCubeMTL::generateMipmaps()
     if (TextureUsage::RENDER_TARGET == _textureUsage || isColorRenderable(_textureFormat) == false)
         return;
     
-    if(!_isMipmapGenerated)
+    if(!_hasMipmaps)
     {
-        _isMipmapGenerated = true;
+        _hasMipmaps = true;
         Utils::generateMipmaps(_mtlTexture);
     }
 }

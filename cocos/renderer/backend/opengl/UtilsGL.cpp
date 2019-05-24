@@ -126,50 +126,35 @@ GLint UtilsGL::toGLMagFilter(SamplerFilter magFilter)
     return ret;
 }
 
-GLint UtilsGL::toGLMinFilter(SamplerFilter minFilter, SamplerFilter mipmapFilter, bool mipmapEnabled, bool isPow2)
+GLint UtilsGL::toGLMinFilter(SamplerFilter minFilter, bool hasMipmaps, bool isPow2)
 {
-    if (mipmapEnabled)
+    if (hasMipmaps && !isPow2)
     {
-        if (!isPow2)
-        {
-            cocos2d::log("Change minification filter to either NEAREST or LINEAR since non-power-of-two texture occur in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
-            if (SamplerFilter::LINEAR == minFilter)
-                return GL_LINEAR;
-            else
-                return GL_NEAREST;
-        }
-
-        switch (minFilter)
-        {
-        case SamplerFilter::LINEAR:
-            switch (mipmapFilter)
-            {
-            case SamplerFilter::LINEAR:
-                return GL_LINEAR_MIPMAP_LINEAR;
-            case SamplerFilter::NEAREST:
-                return GL_LINEAR_MIPMAP_NEAREST;
-            case SamplerFilter::DONT_CARE:
-                return GL_LINEAR_MIPMAP_NEAREST;
-            }
-        case SamplerFilter::NEAREST:
-            switch (mipmapFilter)
-            {
-            case SamplerFilter::LINEAR:
-                return GL_NEAREST_MIPMAP_LINEAR;
-            case SamplerFilter::NEAREST:
-                return GL_NEAREST_MIPMAP_NEAREST;
-            case SamplerFilter::DONT_CARE:
-                return GL_LINEAR_MIPMAP_NEAREST;
-            }
-        }
-    }
-    else
-    {
+        cocos2d::log("Change minification filter to either NEAREST or LINEAR since non-power-of-two texture occur in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
         if (SamplerFilter::LINEAR == minFilter)
             return GL_LINEAR;
         else
             return GL_NEAREST;
     }
+
+    switch (minFilter)
+    {
+        case SamplerFilter::LINEAR:
+            return GL_LINEAR;
+        case SamplerFilter::LINEAR_MIPMAP_LINEAR:
+            return GL_LINEAR_MIPMAP_LINEAR;
+        case SamplerFilter::LINEAR_MIPMAP_NEAREST:
+            return GL_LINEAR_MIPMAP_NEAREST;
+        case SamplerFilter::NEAREST:
+            return GL_NEAREST;
+        case SamplerFilter::NEAREST_MIPMAP_NEAREST:
+            return GL_NEAREST_MIPMAP_NEAREST;
+        case SamplerFilter::NEAREST_MIPMAP_LINEAR:
+            return GL_NEAREST_MIPMAP_LINEAR;
+        default:
+            break;
+    }
+
     return GL_NEAREST;
 }
 
