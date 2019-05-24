@@ -101,19 +101,6 @@ function build_android_lua_cmake()
 
 }
 
-function build_android_js_cmake()
-{
-    # Build all samples
-    echo "Building Android samples js ..."
-    source ../environment.sh
-
-    # build lua-tests
-    pushd $COCOS2DX_ROOT/tests/js-tests/project/proj.android
-    do_retry ./gradlew assembleDebug -PPROP_BUILD_TYPE=cmake --parallel --info
-    popd
-
-}
-
 function genernate_binding_codes()
 {
     if [ $TRAVIS_OS_NAME == "linux" ]; then
@@ -137,16 +124,6 @@ function genernate_binding_codes()
     pushd "$COCOS2DX_ROOT/tools/tolua"
     python ./genbindings.py
     popd
-
-    # We don't support building js projects for linux platform,
-    # therefore, don't generate js-binding code for it.
-    # comment it, currently doesn't support JSB
-    # if [ $TRAVIS_OS_NAME != "linux" ] || [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-    #     echo "Create auto-generated jsbinding glue codes."
-    #     pushd "$COCOS2DX_ROOT/tools/tojs"
-    #     python ./genbindings.py
-    #     popd
-    # fi
 }
 
 # generate cocos_files.json and check diff
@@ -160,18 +137,7 @@ function update_cocos_files()
     $COCOS2DX_ROOT/tools/travis-scripts/generate-template-files.py
     git diff FETCH_HEAD --stat --exit-code "$COCOSFILE_PATH"
     COCOSFILE_DIFF_RETVAL=$?
-
-    if [ $LUA_DIFF_RETVAL -eq 0 ] && [ $JS_DIFF_RETVAL -eq 0 ] && [ $COCOSFILE_DIFF_RETVAL -eq 0 ]; then
-        echo
-        echo "No differences in generated files"
-        echo "Exiting with success."
-        echo
-        exit 0
-    else
-        echo
-        echo "Generated files differ from HEAD. Continuing."
-        echo
-    fi
+    echo $COCOSFILE_DIFF_RETVAL
 
     # Exit on error
     set -e
@@ -179,13 +145,12 @@ function update_cocos_files()
 
 function generate_pull_request_for_binding_codes_and_cocosfiles()
 {
-    COCOS_ROBOT_REMOTE="https://${GH_USER}:${GH_PASSWORD}@github.com/${GH_USER}/cocos2d-x.git"
-    LUA_AUTO_GENERATE_SCRIPT_PATH="$COCOS2DX_ROOT/cocos/scripting/lua-bindings/auto"
-    JS_AUTO_GENERATE_SCRIPT_PATH="$COCOS2DX_ROOT/cocos/scripting/js-bindings/auto"
-    ELAPSEDSECS=`date +%s`
-    COCOS_BRANCH="update_lua_bindings_$ELAPSEDSECS"
-    COMMITTAG="[ci skip][AUTO]: updating luabinding & jsbinding & cocos_file.json automatically"
-    PULL_REQUEST_REPO="https://api.github.com/repos/cocos2d/cocos2d-x/pulls"
+    local COCOS_ROBOT_REMOTE="https://${GH_USER}:${GH_PASSWORD}@github.com/${GH_USER}/cocos2d-x.git"
+    local LUA_AUTO_GENERATE_SCRIPT_PATH="$COCOS2DX_ROOT/cocos/scripting/lua-bindings/auto"
+    local ELAPSEDSECS=`date +%s`
+    local COCOS_BRANCH="update_lua_bindings_$ELAPSEDSECS"
+    local COMMITTAG="[ci skip][AUTO]: updating luabinding & cocos_file.json automatically"
+    local PULL_REQUEST_REPO="https://api.github.com/repos/cocos2d/cocos2d-x/pulls"
 
     pushd "$COCOS2DX_ROOT"
     #Set git user for cocos2d-lua repo
@@ -204,19 +169,20 @@ function generate_pull_request_for_binding_codes_and_cocosfiles()
     # Don't exit on non-zero return value
     set +e
     git diff FETCH_HEAD --stat --exit-code "$LUA_AUTO_GENERATE_SCRIPT_PATH"
-    LUA_DIFF_RETVAL=$?
-
-    git diff FETCH_HEAD --stat --exit-code "$JS_AUTO_GENERATE_SCRIPT_PATH"
-    JS_DIFF_RETVAL=$?
+    local lua_binding_codes_diff=$?
 
     # generate cocos_files.json and check diff
-    update_cocos_files
+    local cocos_file_diff=$(update_cocos_files)
+    if [ $lua_binding_codes_diff -eq 0 ] && [ $cocos_file_diff -eq 0 ]; then
+        echo "lua binding codes and cocos file are not differences"
+        exit 0
+    fi
+
 
     # Exit on error
     set -e
 
     git add -f --all "$LUA_AUTO_GENERATE_SCRIPT_PATH"
-    git add -f --all "$JS_AUTO_GENERATE_SCRIPT_PATH"
     git add -f --all "$COCOSFILE_PATH"
     git checkout -b "$COCOS_BRANCH"
     git commit -m "$COMMITTAG"
@@ -289,12 +255,6 @@ function run_pull_request()
     if [ $BUILD_TARGET == 'android_lua_cmake' ]; then
         genernate_binding_codes
         build_android_lua_cmake
-    fi
-
-    # android_js
-    if [ $BUILD_TARGET == 'android_js_cmake' ]; then
-        genernate_binding_codes
-        build_android_js_cmake
     fi
 }
 

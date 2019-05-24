@@ -12,7 +12,6 @@ function install_android_ndk()
 {
     sudo python -m pip install retry
     if [ "$BUILD_TARGET" == "android_cmake" ]\
-        || [ "$BUILD_TARGET" == "android_js_cmake" ]\
         || [ "$BUILD_TARGET" == "android_lua_cmake" ] ; then
         python $COCOS2DX_ROOT/tools/appveyor-scripts/setup_android.py
     else

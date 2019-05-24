@@ -20,10 +20,6 @@ function Generate-Binding-Codes
     Push-Location $env:APPVEYOR_BUILD_FOLDER\tools\tolua
     & $python $env:APPVEYOR_BUILD_FOLDER\tools\tolua\genbindings.py
     Pop-Location
-
-    #Push-Location $env:APPVEYOR_BUILD_FOLDER\tools\tojs
-    #& $python $env:APPVEYOR_BUILD_FOLDER\tools\tojs\genbindings.py
-    #Pop-Location
 }
 
 function Update-SubModule
