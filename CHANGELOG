@@ -1,3 +1,27 @@
+cocos2d-x-3.17.2 May.21 2019
+
+[NEW]           Network: added clear requests and responses method to httpclient
+[NEW]           UI: VideoPlayer added ability to enable/disable looping, resonding user input
+[NEW]           UI: VideoPlayer added function to set style
+[NEW]           IMEDispacher: added a function to check if any IME dispatcher is active
+[NEW]           Renderer: add a function to get current clearing color
+[NEW]           Lua: added binding codes for `EventDispathcer::addCustomEventListener()`
+
+[REFINE]        Android: added optimization codes for OPPO devcies
+[REFINE]        Network: improved websocket traces
+[REFINE]        Android: supported Android P cutout area
+[REFINE]        FontAtlas: font atlas texture initialization delayed
+[REFINE]        LOG: CCLOG may block thread on windows
+
+[FIX]           FileUtils:fixed a bug that `listFiles()` can not work correctly if the file path starts with `assets/` on Android
+[FIX]           AssetsManager: fixed a bug that `_percent` is always be 0 during the update process
+[FIX]           Texture2D: fixed memory leak if `Texture2D::setAlphaTexture()` is invoked many times
+[FIX]           FontAtlasCache: avoided crash if a file path is too long
+[FIX]           Audio: fixed crash on iOS
+[FIX]           UI: VideoPlayer could not play video in obb file on Android
+[FIX]           SpriteFrame: fixed performance issue in parsing plist files
+[FIX]           3rd: unzip failed to uncompress files
+
 cocos2d-x-3.17.1 Nov.19 2018
 
 [REFINE]        Renderer: properly reduce clear buffer times to save energy

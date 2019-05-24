@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 
-#include "scripting/lua-bindings/manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.h"
+#include "scripting/lua-bindings/manual/platform/android/jni/Cocos2dxLuaJavaBridge.h"
 
 #include <android/log.h>
 
