@@ -64,14 +64,14 @@ void PUGeometryRotator::setRotationAxis(const Vec3& rotationAxis)
     _rotationAxisSet = true;
 }
 //-----------------------------------------------------------------------
-void PUGeometryRotator::resetRotationAxis(void)
+void PUGeometryRotator::resetRotationAxis()
 {
     _dynRotationSpeed = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
     _rotationAxisSet = false;
 }
 //-----------------------------------------------------------------------
-PUDynamicAttribute* PUGeometryRotator::getRotationSpeed(void) const
+PUDynamicAttribute* PUGeometryRotator::getRotationSpeed() const
 {
     return _dynRotationSpeed;
 }
@@ -83,7 +83,7 @@ void PUGeometryRotator::setRotationSpeed(PUDynamicAttribute* dynRotationSpeed)
     _dynRotationSpeed = dynRotationSpeed;
 }
 //-----------------------------------------------------------------------
-bool PUGeometryRotator::useOwnRotationSpeed (void) const
+bool PUGeometryRotator::useOwnRotationSpeed () const
 {
     return _useOwnRotationSpeed;
 }

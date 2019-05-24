@@ -94,7 +94,7 @@ Armature::Armature()
 }
 
 
-Armature::~Armature(void)
+Armature::~Armature()
 {
     _boneDic.clear();
     _topBoneList.clear();

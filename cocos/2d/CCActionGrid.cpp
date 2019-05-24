@@ -131,7 +131,7 @@ Rect Grid3DAction::getGridRect() const
 
 // implementation of TiledGrid3DAction
 
-GridBase* TiledGrid3DAction::getGrid(void)
+GridBase* TiledGrid3DAction::getGrid()
 {
     return TiledGrid3D::create(_gridSize, _gridNodeTarget->getGridRect());
 }

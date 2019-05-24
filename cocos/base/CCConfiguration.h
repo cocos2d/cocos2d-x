@@ -252,7 +252,7 @@ public:
     static const char* CONFIG_FILE_LOADED;
 
 private:
-    Configuration(void);
+    Configuration();
     static Configuration    *s_sharedConfiguration;
 	static std::string		s_configfile;
     

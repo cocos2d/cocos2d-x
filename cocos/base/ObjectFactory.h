@@ -37,15 +37,15 @@ NS_CC_BEGIN
 class CC_DLL ObjectFactory
 {
 public:
-    typedef cocos2d::Ref* (*Instance)(void);
-    typedef std::function<cocos2d::Ref* (void)> InstanceFunc;
+    typedef cocos2d::Ref* (*Instance)();
+    typedef std::function<cocos2d::Ref* ()> InstanceFunc;
     struct CC_DLL TInfo
     {
-        TInfo(void);
+        TInfo();
         TInfo(const std::string& type, Instance ins = nullptr);
         TInfo(const std::string& type, InstanceFunc ins = nullptr);
         TInfo(const TInfo &t);
-        ~TInfo(void);
+        ~TInfo();
         TInfo& operator= (const TInfo &t);
         std::string _class;
         Instance _fun;
@@ -61,8 +61,8 @@ public:
     void removeAll();
 
 protected:
-    ObjectFactory(void);
-    virtual ~ObjectFactory(void);
+    ObjectFactory();
+    virtual ~ObjectFactory();
 private:
     static ObjectFactory *_sharedFactory;
     FactoryMap _typeMap;

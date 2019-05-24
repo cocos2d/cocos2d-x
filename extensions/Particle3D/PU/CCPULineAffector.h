@@ -53,29 +53,29 @@ public:
     virtual void firstParticleUpdate(PUParticle3D *particle, float deltaTime) override;
     /** 
     */
-    float getMaxDeviation(void) const;
+    float getMaxDeviation() const;
     void setMaxDeviation(float maxDeviation);
 
     /** 
     */
-    const Vec3& getEnd(void) const;
+    const Vec3& getEnd() const;
     void setEnd(const Vec3& end);
 
     /** 
     */
-    float getTimeStep(void) const;
+    float getTimeStep() const;
     void setTimeStep(float timeStep);
 
     /** 
     */
-    float getDrift(void) const;
+    float getDrift() const;
     void setDrift(float drift);
 
     virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:          
-    PULineAffector(void);
-    virtual ~PULineAffector(void);
+    PULineAffector();
+    virtual ~PULineAffector();
 
 protected:
 

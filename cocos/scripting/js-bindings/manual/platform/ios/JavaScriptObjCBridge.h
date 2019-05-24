@@ -74,12 +74,12 @@ private:
         ,m_returnType(TypeVoid)
         {
         }
-        ~CallInfo(void);
-        bool isValid(void) {
+        ~CallInfo();
+        bool isValid() {
             return m_valid;
         }
         
-        int getErrorCode(void) {
+        int getErrorCode() {
             return m_error;
         }
         ValueType getReturnValueType(){

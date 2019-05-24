@@ -33,9 +33,9 @@ NS_CC_BEGIN
 const float PUOnRandomObserver::DEFAULT_THRESHOLD = 0.5f;
 
 //-----------------------------------------------------------------------
-PUOnRandomObserver::PUOnRandomObserver(void) : 
-    PUObserver(),
-    _threshold(DEFAULT_THRESHOLD)
+PUOnRandomObserver::PUOnRandomObserver()
+: PUObserver()
+, _threshold(DEFAULT_THRESHOLD)
 {
 }
 //-----------------------------------------------------------------------

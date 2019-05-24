@@ -82,7 +82,7 @@ Bone::Bone()
 }
 
 
-Bone::~Bone(void)
+Bone::~Bone()
 {
     CC_SAFE_DELETE(_tweenData);
     CC_SAFE_DELETE(_tween);

@@ -175,7 +175,7 @@ public:
      * Default constructor of LuaValue.
      * Set the default value for _type(LuaValueTypeInt) and _ccobjectType(nullptr),and init the _field.
      */
-    LuaValue(void)
+    LuaValue()
     : _type(LuaValueTypeInt)
     , _ccobjectType(nullptr)
     {
@@ -195,7 +195,7 @@ public:
     /**
      * Destructor.
      */
-    ~LuaValue(void);
+    ~LuaValue();
     
     /**
      * Get the type of LuaValue object.
@@ -211,7 +211,7 @@ public:
      *
      * @return the reference of _ccobjectType.
      */
-    const std::string& getObjectTypename(void) const {
+    const std::string& getObjectTypename() const {
         return *_ccobjectType;
     }
     
@@ -220,7 +220,7 @@ public:
      *
      * @return the int value.
      */
-    int intValue(void) const {
+    int intValue() const {
         return _field.intValue;
     }
     
@@ -229,7 +229,7 @@ public:
      *
      * @return the float value.
      */
-    float floatValue(void) const {
+    float floatValue() const {
         return _field.floatValue;
     }
     
@@ -238,7 +238,7 @@ public:
      *
      * @return the boolean value.
      */
-    bool booleanValue(void) const {
+    bool booleanValue() const {
         return _field.booleanValue;
     }
     
@@ -247,7 +247,7 @@ public:
      *
      * @return the reference about string value.
      */
-    const std::string& stringValue(void) const {
+    const std::string& stringValue() const {
         return *_field.stringValue;
     }
     
@@ -256,7 +256,7 @@ public:
      *
      * @return the LuaValueDict value.
      */
-    const LuaValueDict& dictValue(void) const {
+    const LuaValueDict& dictValue() const {
         return *_field.dictValue;
     }
     
@@ -265,7 +265,7 @@ public:
      *
      * @return the LuaValueArray value.
      */
-    const LuaValueArray& arrayValue(void) const {
+    const LuaValueArray& arrayValue() const {
         return *_field.arrayValue;
     }
     
@@ -274,7 +274,7 @@ public:
      *
      * @return the pointer point to a Ref object.
      */
-    Ref* ccobjectValue(void) const {
+    Ref* ccobjectValue() const {
         return _field.ccobjectValue;
     }
     

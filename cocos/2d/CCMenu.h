@@ -173,7 +173,7 @@ public:
     virtual void onEnter() override;
     virtual void onExit() override;
     virtual void setOpacityModifyRGB(bool value) override;
-    virtual bool isOpacityModifyRGB(void) const override;
+    virtual bool isOpacityModifyRGB() const override;
 
     virtual std::string getDescription() const override;
 

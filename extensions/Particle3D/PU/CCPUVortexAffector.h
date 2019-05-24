@@ -47,7 +47,7 @@ public:
     virtual void updatePUAffector(PUParticle3D *particle, float deltaTime) override;
     /** 
     */
-    const Vec3& getRotationVector(void) const;
+    const Vec3& getRotationVector() const;
 
     /** 
     */
@@ -55,7 +55,7 @@ public:
 
     /** 
     */
-    PUDynamicAttribute* getRotationSpeed(void) const;
+    PUDynamicAttribute* getRotationSpeed() const;
 
     /** 
     */
@@ -64,14 +64,14 @@ public:
     virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:	      
-    PUVortexAffector(void);
-    virtual ~PUVortexAffector(void);
+    PUVortexAffector();
+    virtual ~PUVortexAffector();
 
 protected:
 
     /** 
     */
-    float calculateRotationSpeed(void);
+    float calculateRotationSpeed();
 
 protected:
     Vec3 _rotationVector;

@@ -58,8 +58,8 @@ public:
     virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:	
-    PUSineForceAffector(void);
-    virtual ~PUSineForceAffector(void);
+    PUSineForceAffector();
+    virtual ~PUSineForceAffector();
 
 protected:
     float _angle;

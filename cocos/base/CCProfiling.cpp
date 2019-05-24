@@ -51,7 +51,7 @@ Profiler* Profiler::getInstance()
 }
 
 // FIXME:: deprecated
-Profiler* Profiler::sharedProfiler(void)
+Profiler* Profiler::sharedProfiler()
 {
     return Profiler::getInstance();
 }
@@ -81,7 +81,7 @@ bool Profiler::init()
     return true;
 }
 
-Profiler::~Profiler(void)
+Profiler::~Profiler()
 {
 }
 
@@ -112,7 +112,7 @@ bool ProfilingTimer::initWithName(const char* timerName)
     return true;
 }
 
-ProfilingTimer::~ProfilingTimer(void)
+ProfilingTimer::~ProfilingTimer()
 {
     
 }

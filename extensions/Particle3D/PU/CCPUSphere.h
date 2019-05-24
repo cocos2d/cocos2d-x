@@ -54,13 +54,13 @@ public:
     PUSphere(const Vec3& center, float radius);
 
     /** Returns the radius of the sphere. */
-    float getRadius(void) const { return _radius; }
+    float getRadius() const { return _radius; }
 
     /** Sets the radius of the sphere. */
     void setRadius(float radius) { _radius = radius; }
 
     /** Returns the center point of the sphere. */
-    const Vec3& getCenter(void) const { return _center; }
+    const Vec3& getCenter() const { return _center; }
 
     /** Sets the center point of the sphere. */
     void setCenter(const Vec3& center) { _center = center; }

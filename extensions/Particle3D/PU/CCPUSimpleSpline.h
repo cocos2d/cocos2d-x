@@ -45,10 +45,10 @@ public:
     const Vec3& getPoint(unsigned short index) const;
 
     /** Gets the number of control points in the spline. */
-    unsigned short getNumPoints(void) const;
+    unsigned short getNumPoints() const;
 
     /** Clears all the points in the spline. */
-    void clear(void);
+    void clear();
 
     /** Updates a single point in the spline. 
     @remarks
@@ -90,7 +90,7 @@ public:
         If you tell the spline not to update on demand by calling setAutoCalculate(false)
         then you must call this after completing your updates to the spline points.
     */
-    void recalcTangents(void);
+    void recalcTangents();
 
 protected:
 

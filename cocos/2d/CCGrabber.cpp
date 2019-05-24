@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-Grabber::Grabber(void)
+Grabber::Grabber()
     : _FBO(0)
     , _oldFBO(0)
 {

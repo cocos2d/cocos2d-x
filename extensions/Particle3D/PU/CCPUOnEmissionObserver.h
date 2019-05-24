@@ -47,10 +47,10 @@ public:
     virtual bool observe (PUParticle3D* particle, float timeElapsed) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUOnEmissionObserver(void) : PUObserver()
+    PUOnEmissionObserver() : PUObserver()
     {
     }
-    virtual ~PUOnEmissionObserver(void) {};
+    virtual ~PUOnEmissionObserver() {};
 };
 
 NS_CC_END

@@ -40,8 +40,8 @@ protected:
     PUAffector* _affector;
     
 public:
-    PUAffectorTranslator(void);
-    virtual ~PUAffectorTranslator(void){};
+    PUAffectorTranslator();
+    virtual ~PUAffectorTranslator(){};
     virtual void translate(PUScriptCompiler* compiler, PUAbstractNode *node);
 };
 

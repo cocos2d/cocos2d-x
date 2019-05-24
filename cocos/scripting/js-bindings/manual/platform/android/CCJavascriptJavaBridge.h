@@ -86,17 +86,17 @@ private:
             memset(&m_ret, 0, sizeof(m_ret));
             m_valid =  validateMethodSig() && getMethodInfo();
         }
-        ~CallInfo(void);
+        ~CallInfo();
 
-        bool isValid(void) {
+        bool isValid() {
             return m_valid;
         }
 
-        int getErrorCode(void) {
+        int getErrorCode() {
             return m_error;
         }
 
-        JNIEnv *getEnv(void) {
+        JNIEnv *getEnv() {
             return m_env;
         }
 
@@ -116,7 +116,7 @@ private:
         	return m_ret;
         }
 
-        bool execute(void);
+        bool execute();
         bool executeWithArgs(jvalue *args);
 
 
@@ -137,8 +137,8 @@ private:
         jclass      m_classID;
         jmethodID   m_methodID;
 
-        bool validateMethodSig(void);
-        bool getMethodInfo(void);
+        bool validateMethodSig();
+        bool getMethodInfo();
         ValueType checkType(const string& sig, size_t *pos);
     };
 

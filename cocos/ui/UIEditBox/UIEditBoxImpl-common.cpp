@@ -300,7 +300,7 @@ void EditBoxImplCommon::draw(Renderer* /*renderer*/, const Mat4& /*transform*/, 
     }
 }
 
-void EditBoxImplCommon::onEnter(void)
+void EditBoxImplCommon::onEnter()
 {
     const char* pText = getText();
     if (pText) {

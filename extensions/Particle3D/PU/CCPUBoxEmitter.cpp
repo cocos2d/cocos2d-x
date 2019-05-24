@@ -35,7 +35,7 @@ const float CCPUBoxEmitter::DEFAULT_HEIGHT = 100.0f;
 const float CCPUBoxEmitter::DEFAULT_DEPTH = 100.0f;
 
 //-----------------------------------------------------------------------
-CCPUBoxEmitter::CCPUBoxEmitter(void) : 
+CCPUBoxEmitter::CCPUBoxEmitter() : 
     PUEmitter(),
     _height(DEFAULT_HEIGHT),
     _width(DEFAULT_WIDTH),

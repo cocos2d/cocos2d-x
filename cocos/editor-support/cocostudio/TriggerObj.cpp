@@ -29,11 +29,11 @@ using namespace cocos2d;
 
 namespace cocostudio {
     
-BaseTriggerCondition::BaseTriggerCondition(void)
+BaseTriggerCondition::BaseTriggerCondition()
 {
 }
 
-BaseTriggerCondition::~BaseTriggerCondition(void)
+BaseTriggerCondition::~BaseTriggerCondition()
 {
 }
 
@@ -60,11 +60,11 @@ void BaseTriggerCondition::removeAll()
 {
 }
 
-BaseTriggerAction::BaseTriggerAction(void)
+BaseTriggerAction::BaseTriggerAction()
 {
 }
 
-BaseTriggerAction::~BaseTriggerAction(void)
+BaseTriggerAction::~BaseTriggerAction()
 {
 }
 
@@ -90,13 +90,13 @@ void BaseTriggerAction::removeAll()
 {
 }
 
-TriggerObj::TriggerObj(void)
+TriggerObj::TriggerObj()
 :_id(UINT_MAX)
 ,_enabled(true)
 {
 }
 
-TriggerObj::~TriggerObj(void)
+TriggerObj::~TriggerObj()
 {
 }
 

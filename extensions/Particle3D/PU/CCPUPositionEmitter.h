@@ -41,7 +41,7 @@ public:
     static PUPositionEmitter* create();
     /** 
     */
-    bool isRandomized(void) const;
+    bool isRandomized() const;
 
     /** 
     */
@@ -49,7 +49,7 @@ public:
 
     /** Returns a list with positions
     */
-    const std::vector<Vec3>& getPositions(void) const;
+    const std::vector<Vec3>& getPositions() const;
 
     /** Add a new position to this emitter
     */
@@ -57,11 +57,11 @@ public:
 
     /** Remove all positions from this emitter
     */
-    void removeAllPositions(void);
+    void removeAllPositions();
 
     /** See ParticleEmitter
     */
-    void notifyStart(void) override;
+    void notifyStart() override;
 
     /** See ParticleEmitter
     */
@@ -75,8 +75,8 @@ public:
     virtual void copyAttributesTo (PUEmitter* emitter) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUPositionEmitter(void);
-    virtual ~PUPositionEmitter(void) {};
+    PUPositionEmitter();
+    virtual ~PUPositionEmitter() {};
 
 protected:
     std::vector<Vec3> _positionList;

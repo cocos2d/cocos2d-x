@@ -2425,7 +2425,7 @@ bool Image::saveImageToJPG(const std::string& filePath)
             while (cinfo.next_scanline < cinfo.image_height)
             {
                 row_pointer[0] = & tempData[cinfo.next_scanline * row_stride];
-                (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
+                (void)jpeg_write_scanlines(&cinfo, row_pointer, 1);
             }
 
             if (tempData != nullptr)
@@ -2437,7 +2437,7 @@ bool Image::saveImageToJPG(const std::string& filePath)
         {
             while (cinfo.next_scanline < cinfo.image_height) {
                 row_pointer[0] = & _data[cinfo.next_scanline * row_stride];
-                (void) jpeg_write_scanlines(&cinfo, row_pointer, 1);
+                (void)jpeg_write_scanlines(&cinfo, row_pointer, 1);
             }
         }
 

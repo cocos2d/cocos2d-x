@@ -57,7 +57,7 @@ public:
     @remarks
         If value is true, the collision is inside of the box.
     */
-    bool isInnerCollision(void) const;
+    bool isInnerCollision() const;
 
     /** Set indication whether the collision is inside or outside of the box
     @remarks
@@ -72,8 +72,8 @@ public:
     virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:	
-    PUSphereCollider(void);
-    virtual ~PUSphereCollider(void);
+    PUSphereCollider();
+    virtual ~PUSphereCollider();
 
 protected:
     float _radius;

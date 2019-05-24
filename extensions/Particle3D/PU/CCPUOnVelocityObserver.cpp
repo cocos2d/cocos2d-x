@@ -39,10 +39,10 @@ static bool almostEquals(float a, float b, float epsilon = std::numeric_limits<f
 const float PUOnVelocityObserver::DEFAULT_VELOCITY_THRESHOLD = 0.0f;
 
 //-----------------------------------------------------------------------
-PUOnVelocityObserver::PUOnVelocityObserver(void) : 
-    PUObserver(),
-    _threshold(DEFAULT_VELOCITY_THRESHOLD),
-    _compare(CO_LESS_THAN)
+PUOnVelocityObserver::PUOnVelocityObserver()
+: PUObserver()
+, _threshold(DEFAULT_VELOCITY_THRESHOLD)
+, _compare(CO_LESS_THAN)
 {
 }
 //-----------------------------------------------------------------------

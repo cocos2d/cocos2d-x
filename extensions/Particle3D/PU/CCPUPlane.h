@@ -124,7 +124,7 @@ public:
             will be no changes made to their components.
         @return The previous length of the plane's normal.
     */
-    float normalize(void);
+    float normalize();
 
 	Vec3 normal;
     float d;

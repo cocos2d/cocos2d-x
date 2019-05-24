@@ -39,8 +39,8 @@ protected:
     PUEventHandler* _handler;
     
 public:
-    PUEventHandlerTranslator(void);
-    virtual ~PUEventHandlerTranslator(void){};
+    PUEventHandlerTranslator();
+    virtual ~PUEventHandlerTranslator(){};
     virtual void translate(PUScriptCompiler* compiler, PUAbstractNode *node);
 };
 
