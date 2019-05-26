@@ -857,13 +857,11 @@ do {                                                                            
             (HASH_BLOOM_BYTELEN)))
 
 #ifdef NO_DECLTYPE
-#define HASH_ITER(hh,head,el,tmp)                                                \
-for((el)=(head), (*(char**)(&(tmp)))=(char*)((head)?(head)->hh.next:NULL);       \
-  el; (el)=(tmp),(*(char**)(&(tmp)))=(char*)((tmp)?(tmp)->hh.next:NULL)) 
+#define HASH_ITER(hh,head,el)                                                    \
+  for( (el)=(head);  el;  (*(char**)(&(el)))=(char*)((el)?(el)->hh.next:NULL) )
 #else
-#define HASH_ITER(hh,head,el,tmp)                                                \
-for((el)=(head),(tmp)=DECLTYPE(el)((head)?(head)->hh.next:NULL);                 \
-  el; (el)=(tmp),(tmp)=DECLTYPE(el)((tmp)?(tmp)->hh.next:NULL))
+#define HASH_ITER(hh,head,el)                                                    \
+  for( (el)=(head);  el;  (el)=DECLTYPE(el)((el)?(el)->hh.next:NULL) )
 #endif
 
 /* obtain a count of items in the hash */

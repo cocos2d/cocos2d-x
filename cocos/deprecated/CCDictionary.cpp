@@ -102,10 +102,10 @@ __Array* __Dictionary::allKeys()
 
     __Array* array = __Array::createWithCapacity(iKeyCount);
 
-    DictElement *pElement, *tmp;
+    DictElement *pElement;
     if (_dictType == kDictStr)
     {
-        HASH_ITER(hh, _elements, pElement, tmp) 
+        HASH_ITER(hh, _elements, pElement)
         {
             __String* pOneKey = new (std::nothrow) __String(pElement->_strKey);
             array->addObject(pOneKey);
@@ -114,7 +114,7 @@ __Array* __Dictionary::allKeys()
     }
     else if (_dictType == kDictInt)
     {
-        HASH_ITER(hh, _elements, pElement, tmp) 
+        HASH_ITER(hh, _elements, pElement)
         {
             __Integer* pOneKey = new (std::nothrow) __Integer(static_cast<int>(pElement->_intKey));
             array->addObject(pOneKey);
@@ -131,11 +131,11 @@ __Array* __Dictionary::allKeysForObject(Ref* object)
     if (iKeyCount <= 0) return nullptr;
     __Array* array = __Array::create();
 
-    DictElement *pElement, *tmp;
+    DictElement *pElement;
 
     if (_dictType == kDictStr)
     {
-        HASH_ITER(hh, _elements, pElement, tmp) 
+        HASH_ITER(hh, _elements, pElement)
         {
             if (object == pElement->_object)
             {
@@ -147,7 +147,7 @@ __Array* __Dictionary::allKeysForObject(Ref* object)
     }
     else if (_dictType == kDictInt)
     {
-        HASH_ITER(hh, _elements, pElement, tmp) 
+        HASH_ITER(hh, _elements, pElement)
         {
             if (object == pElement->_object)
             {
@@ -332,8 +332,8 @@ void __Dictionary::removeObjectForElememt(DictElement* pElement)
 
 void __Dictionary::removeAllObjects()
 {
-    DictElement *pElement, *tmp;
-    HASH_ITER(hh, _elements, pElement, tmp) 
+    DictElement *pElement;
+    HASH_ITER(hh, _elements, pElement)
     {
         HASH_DEL(_elements, pElement);
         pElement->_object->release();
@@ -572,8 +572,7 @@ __Dictionary* __Dictionary::clone() const
     Clonable* obj = nullptr;
     if (_dictType == kDictInt)
     {
-        DictElement* tmp = nullptr;
-        HASH_ITER(hh, _elements, element, tmp)
+        HASH_ITER(hh, _elements, element)
         {
             obj = dynamic_cast<Clonable*>(element->getObject());
             if (obj)
@@ -592,8 +591,7 @@ __Dictionary* __Dictionary::clone() const
     }
     else if (_dictType == kDictStr)
     {
-        DictElement* tmp = nullptr;
-        HASH_ITER(hh, _elements, element, tmp)
+        HASH_ITER(hh, _elements, element)
         {
             obj = dynamic_cast<Clonable*>(element->getObject());
             if (obj)

@@ -985,8 +985,8 @@ void JSScheduleWrapper::removeAllTargets()
     dump();
 
     {
-        schedFunc_proxy_t *current, *tmp;
-        HASH_ITER(hh, _schedFunc_target_ht, current, tmp) {
+        schedFunc_proxy_t *current;
+        HASH_ITER(hh, _schedFunc_target_ht, current) {
             current->targets->clear();
             delete current->targets;
             HASH_DEL(_schedFunc_target_ht, current);
@@ -995,8 +995,8 @@ void JSScheduleWrapper::removeAllTargets()
     }
 
     {
-        schedTarget_proxy_t *current, *tmp;
-        HASH_ITER(hh, _schedObj_target_ht, current, tmp) {
+        schedTarget_proxy_t *current;
+        HASH_ITER(hh, _schedObj_target_ht, current) {
             current->targets->clear();
             delete current->targets;
             HASH_DEL(_schedObj_target_ht, current);
@@ -1014,8 +1014,8 @@ void JSScheduleWrapper::removeAllTargetsForMinPriority(int minPriority)
     dump();
 
     {
-        schedFunc_proxy_t *current, *tmp;
-        HASH_ITER(hh, _schedFunc_target_ht, current, tmp) {
+        schedFunc_proxy_t *current;
+        HASH_ITER(hh, _schedFunc_target_ht, current) {
             std::vector<Ref*> objectsNeedToBeReleased;
             auto targets = current->targets;
             for (const auto& pObj : *targets)
@@ -1044,8 +1044,8 @@ void JSScheduleWrapper::removeAllTargetsForMinPriority(int minPriority)
     }
 
     {
-        schedTarget_proxy_t *current, *tmp;
-        HASH_ITER(hh, _schedObj_target_ht, current, tmp) {
+        schedTarget_proxy_t *current;
+        HASH_ITER(hh, _schedObj_target_ht, current) {
             std::vector<Ref*> objectsNeedToBeReleased;
             auto targets = current->targets;
             for (const auto& pObj : *targets)
@@ -1092,8 +1092,8 @@ void JSScheduleWrapper::removeAllTargetsForJSObject(JS::HandleObject jsTargetObj
 
     if (removeNativeTargets == nullptr) return;
 
-    schedFunc_proxy_t *current, *tmp;
-    HASH_ITER(hh, _schedFunc_target_ht, current, tmp) {
+    schedFunc_proxy_t *current;
+    HASH_ITER(hh, _schedFunc_target_ht, current) {
         std::vector<Ref*> objectsNeedToBeReleased;
         auto targets = current->targets;
         for (const auto& pObj : *targets)
@@ -1141,9 +1141,9 @@ void JSScheduleWrapper::removeTargetForJSObject(JS::HandleObject jsTargetObj, JS
         }
     }
 
-    schedFunc_proxy_t *current, *tmp, *removed=nullptr;
+    schedFunc_proxy_t *current, *removed=nullptr;
 
-    HASH_ITER(hh, _schedFunc_target_ht, current, tmp) {
+    HASH_ITER(hh, _schedFunc_target_ht, current) {
         auto targets = current->targets;
         for (const auto& pObj : *targets)
         {
@@ -1176,9 +1176,9 @@ void JSScheduleWrapper::dump()
 #if COCOS2D_DEBUG > 1
     CCLOG("\n---------JSScheduleWrapper dump begin--------------\n");
     CCLOG("target hash count = %d, func hash count = %d", HASH_COUNT(_schedObj_target_ht), HASH_COUNT(_schedFunc_target_ht));
-    schedTarget_proxy_t *current, *tmp;
+    schedTarget_proxy_t *current;
     int nativeTargetsCount = 0;
-    HASH_ITER(hh, _schedObj_target_ht, current, tmp) {
+    HASH_ITER(hh, _schedObj_target_ht, current) {
         auto targets = current->targets;
         for (const auto& pObj : *targets)
         {
@@ -1189,9 +1189,9 @@ void JSScheduleWrapper::dump()
 
     CCLOG("\n-----------------------------\n");
 
-    schedFunc_proxy_t *current_func, *tmp_func;
+    schedFunc_proxy_t *current_func;
     int jsfuncTargetCount = 0;
-    HASH_ITER(hh, _schedFunc_target_ht, current_func, tmp_func)
+    HASH_ITER(hh, _schedFunc_target_ht, current_func)
     {
         auto targets = current_func->targets;
         for (const auto& pObj : *targets)

@@ -1075,8 +1075,8 @@ void JSB_cpSpace_finalize(JSFreeOp *fop, JSObject *jsthis)
         cpSpace *space = (cpSpace*) proxy->handle;
 
         // Remove collision handlers, since the user might have forgotten to manually remove them
-        struct collision_handler *current = nullptr, *tmp = nullptr;
-        HASH_ITER(hh, collision_handler_hash, current, tmp)
+        struct collision_handler *current = nullptr;
+        HASH_ITER(hh, collision_handler_hash, current)
         {
             if( current->space == space )
             {

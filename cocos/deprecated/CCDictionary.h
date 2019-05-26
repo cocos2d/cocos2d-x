@@ -143,9 +143,8 @@ public:
  *        It's also safe to remove elements while traversing.
  */
 #define CCDICT_FOREACH(__dict__, __el__) \
-    DictElement* pTmp##__dict__##__el__ = nullptr; \
     if (__dict__) \
-    HASH_ITER(hh, (__dict__)->_elements, __el__, pTmp##__dict__##__el__)
+    HASH_ITER(hh, (__dict__)->_elements, __el__)
 
 
 
