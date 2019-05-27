@@ -91,7 +91,7 @@ public class Cocos2dxDownloader {
         Cocos2dxHelper.runOnGLThread(new Runnable() {
             @Override
             public void run() {
-                nativeOnFinish(_id, id, errCode.getValue(), errStr == null ?  "No error"  : errStr, data  == null ? new byte[0] : data);
+                nativeOnFinish(_id, id, errCode.getValue(), errStr, data);
             }
         });
         runNextTaskIfExists();
