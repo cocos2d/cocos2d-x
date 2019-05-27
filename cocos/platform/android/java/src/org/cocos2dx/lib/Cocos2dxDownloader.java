@@ -119,11 +119,10 @@ public class Cocos2dxDownloader {
         return downloader;
     }
 
-    public static void createTask(final Cocos2dxDownloader downloader, int id_, String url_, String path_, String []header_) {
+    public static void createTask(final Cocos2dxDownloader downloader, int id_, String url_, String path_) {
         final int id = id_;
         final String url = url_;
         final String path = path_;
-        final String[] header = header_;
 
         Runnable taskRunnable = new Runnable() {
             String domain = null;
@@ -180,9 +179,7 @@ public class Cocos2dxDownloader {
                     }
 
                     final Request.Builder builder = new Request.Builder().url(url);
-                    for (int i = 0; i < header.length / 2; i++) {
-                        builder.addHeader(header[i * 2], header[(i * 2) + 1]);
-                    }
+
                     if (downloadStart > 0) {
                         builder.addHeader("RANGE", "bytes=" + downloadStart + "-");
                     }
