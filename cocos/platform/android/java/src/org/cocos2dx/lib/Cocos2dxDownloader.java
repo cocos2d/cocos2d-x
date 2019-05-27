@@ -63,7 +63,8 @@ public class Cocos2dxDownloader {
         ERROR_NO_ERROR(0),
         ERROR_INVALID_PARAMS(-1),
         ERROR_FILE_OP_FAILED(-2),
-        ERROR_IMPL_INTERNAL(-3);
+        ERROR_IMPL_INTERNAL(-3),
+        ERROR_SERVER_CODE(-4);
         private final int value;
 
         ErrorCode(int v) {
@@ -90,7 +91,7 @@ public class Cocos2dxDownloader {
         Cocos2dxHelper.runOnGLThread(new Runnable() {
             @Override
             public void run() {
-                nativeOnFinish(_id, id, errCode.getValue(), errStr, data);
+                nativeOnFinish(_id, id, errCode.getValue(), errStr == null ?  "No error"  : errStr, data  == null ? new byte[0] : data);
             }
         });
         runNextTaskIfExists();
@@ -199,6 +200,12 @@ public class Cocos2dxDownloader {
                             FileOutputStream fos = null;
 
                             try {
+
+                                if(response.code() != 200) {
+                                    downloader.onFinish(id, ErrorCode.ERROR_SERVER_CODE, response.message(), null);
+                                    return;
+                                }
+
                                 long total = response.body().contentLength();
                                 if (path.length() > 0 && !_resumingSupport.containsKey(host)) {
                                     if (total > 0) {

@@ -45,6 +45,7 @@ namespace cocos2d { namespace network {
         const static int ERROR_INVALID_PARAMS = -1;
         const static int ERROR_FILE_OP_FAILED = -2;
         const static int ERROR_IMPL_INTERNAL = -3;
+        const static int ERROR_SERVER_CODE = -4;
 
         std::string identifier;
         std::string requestURL;
