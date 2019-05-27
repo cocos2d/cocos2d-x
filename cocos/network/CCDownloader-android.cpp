@@ -157,13 +157,17 @@ namespace cocos2d { namespace network {
             if (JniHelper::getStaticMethodInfo(methodInfo,
                                                J_BINARY_CLS_DOWNLOADER,
                                                "createTask",
-                                               "(" JARG_DOWNLOADER "I" JARG_STR JARG_STR")V"))
+                                               "(" JARG_DOWNLOADER "I" JARG_STR JARG_STR "[" JARG_STR ")V"))
             {
                 jstring jstrURL = methodInfo.env->NewStringUTF(task->requestURL.c_str());
                 jstring jstrPath= methodInfo.env->NewStringUTF(task->storagePath.c_str());
-                methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, _impl, coTask->id, jstrURL, jstrPath);
+                //TODO allow set headers
+                jobjectArray jheaders = methodInfo.env->NewObjectArray(0, methodInfo.env->FindClass("java/lang/String"), nullptr);
+
+                methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, _impl, coTask->id, jstrURL, jstrPath, jheaders);
                 methodInfo.env->DeleteLocalRef(jstrURL);
                 methodInfo.env->DeleteLocalRef(jstrPath);
+                methodInfo.env->DeleteLocalRef(jheaders);
                 methodInfo.env->DeleteLocalRef(methodInfo.classID);
             }
 

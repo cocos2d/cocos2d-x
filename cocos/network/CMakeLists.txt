@@ -1,14 +1,15 @@
 if(ANDROID)
     set(COCOS_NETWORK_HEADER
         network/CCDownloader-android.h
+        network/CCWebSocket-android.h
         )
     set(COCOS_NETWORK_SRC
         network/HttpClient-android.cpp
         network/SocketIO.cpp
-        network/WebSocket.cpp
         network/CCDownloader.cpp
         network/CCDownloader-android.cpp
         network/Uri.cpp
+        network/CCWebSocket-android.cpp
         )
 elseif(APPLE)
     set(COCOS_NETWORK_HEADER

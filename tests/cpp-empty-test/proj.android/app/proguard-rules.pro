@@ -30,6 +30,13 @@
 -keep class org.apache.http.** { *; }
 -dontwarn org.apache.http.**
 
+-keep class okhttp3.** { *; }
+-dontwarn okhttp3.**
+
+-keep class okio.** { *; }
+-dontwarn okio.**
+
+
 # Proguard Android Webivew for release. uncomment if you are using a webview in cocos2d-x
 #-keep public class android.net.http.SslError
 #-keep public class android.webkit.WebViewClient

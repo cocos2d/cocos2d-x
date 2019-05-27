@@ -22,3 +22,9 @@
 -keepclassmembers public class org.cocos2dx.lib.** { *; }
 -keep public class com.oppo.oiface.engine.** { *; }
 -dontwarn com.oppo.oiface.engine.**
+
+-keep class okhttp3.** { *; }
+-dontwarn okhttp3.**
+
+-keep class okio.** { *; }
+-dontwarn okio.**

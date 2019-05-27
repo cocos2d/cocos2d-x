@@ -96,7 +96,7 @@ public:
     std::string subtitle() const override { return "Click close button, Program should close without crash."; }
 
 private:
-    cocos2d::network::WebSocket* _wsiTest;
+    cocos2d::network::WebSocket* _wsiTest = nullptr;
 };
 
 #endif /* defined(__TestCpp__WebSocketTest__) */
