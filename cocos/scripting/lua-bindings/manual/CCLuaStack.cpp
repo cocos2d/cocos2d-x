@@ -113,7 +113,7 @@ LuaStack::~LuaStack()
     }
 }
 
-LuaStack *LuaStack::create(void)
+LuaStack *LuaStack::create()
 {
     LuaStack *stack = new (std::nothrow) LuaStack();
     stack->init();
@@ -129,7 +129,7 @@ LuaStack *LuaStack::attach(lua_State *L)
     return stack;
 }
 
-bool LuaStack::init(void)
+bool LuaStack::init()
 {
     _state = lua_open();
     luaL_openlibs(_state);
@@ -304,7 +304,7 @@ int LuaStack::executeGlobalFunction(const char* functionName)
     return executeFunction(0);
 }
 
-void LuaStack::clean(void)
+void LuaStack::clean()
 {
     lua_settop(_state, 0);
 }
@@ -339,7 +339,7 @@ void LuaStack::pushString(const char* stringValue, int length)
     lua_pushlstring(_state, stringValue, length);
 }
 
-void LuaStack::pushNil(void)
+void LuaStack::pushNil()
 {
     lua_pushnil(_state);
 }

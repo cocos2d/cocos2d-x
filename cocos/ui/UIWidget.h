@@ -159,7 +159,7 @@ public:
      * @js ctor
      * @lua new
      */
-    Widget(void);
+    Widget();
     
     /**
      * Default destructor

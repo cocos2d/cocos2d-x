@@ -101,30 +101,30 @@ public:
 
     /** Getters and Setters
     */
-    bool isUseVertexColors(void) const;
+    bool isUseVertexColors() const;
     void setUseVertexColors(bool useVertexColours);
 
-    size_t getMaxChainElements(void) const;
+    size_t getMaxChainElements() const;
     void setMaxChainElements(size_t maxChainElements);
 
-    float getTrailLength(void) const;
+    float getTrailLength() const;
     void setTrailLength(float trailLength);
 
-    float getTrailWidth(void) const;
+    float getTrailWidth() const;
     void setTrailWidth(float trailWidth);
 
-    bool isRandomInitialColor(void) const;
+    bool isRandomInitialColor() const;
     void setRandomInitialColor(bool randomInitialColour);
 
-    const Vec4& getInitialColor(void) const;
+    const Vec4& getInitialColor() const;
     void setInitialColor(const Vec4& initialColour);
 
-    const Vec4& getColorChange(void) const;
+    const Vec4& getColorChange() const;
     void setColorChange(const Vec4& colourChange);
 
         /** Deletes all ChildSceneNodes en Entities.
     */
-    void destroyAll(void);
+    void destroyAll();
 
     virtual PURibbonTrailRender* clone() override;
     void copyAttributesTo(PURibbonTrailRender *render);

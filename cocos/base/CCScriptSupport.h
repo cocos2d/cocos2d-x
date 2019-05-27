@@ -92,7 +92,7 @@ public:
      * @lua NA
      * @js NA
      */
-    int getHandler(void) {
+    int getHandler() {
         return _handler;
     }
     
@@ -103,7 +103,7 @@ public:
      * @lua NA
      * @js NA
      */
-    int getEntryId(void) {
+    int getEntryId() {
         return _entryId;
     }
     
@@ -154,7 +154,7 @@ public:
      * @js NA
      * @lua NA
      */
-    TimerScriptHandler* getTimer(void) {
+    TimerScriptHandler* getTimer() {
         return _timer;
     }
     
@@ -165,7 +165,7 @@ public:
      * @js NA
      * @lua NA
      */
-    bool isPaused(void) {
+    bool isPaused() {
         return _paused;
     }
     /**
@@ -173,7 +173,7 @@ public:
      * @js NA
      * @lua NA
      */
-    void markedForDeletion(void) {
+    void markedForDeletion() {
         _markedForDeletion = true;
     }
     /**
@@ -183,7 +183,7 @@ public:
      * @js NA
      * @lua NA
      */
-    bool isMarkedForDeletion(void) {
+    bool isMarkedForDeletion() {
         return _markedForDeletion;
     }
     
@@ -215,15 +215,15 @@ public:
 
     virtual ~TouchScriptHandlerEntry();
 
-    bool isMultiTouches(void) {
+    bool isMultiTouches() {
         return _isMultiTouches;
     }
 
-    int getPriority(void) {
+    int getPriority() {
         return _priority;
     }
 
-    bool getSwallowsTouches(void) {
+    bool getSwallowsTouches() {
         return _swallowsTouches;
     }
     
@@ -824,7 +824,7 @@ public:
      * @lua NA
      * @js NA
      */
-    ~ScriptEngineManager(void);
+    ~ScriptEngineManager();
     /** 
      * Get the ScriptEngineProtocol object.
      *
@@ -833,7 +833,7 @@ public:
      * @lua NA
      * @js NA
      */
-    ScriptEngineProtocol* getScriptEngine(void) {
+    ScriptEngineProtocol* getScriptEngine() {
         return _scriptEngine;
     }
     /**
@@ -853,7 +853,7 @@ public:
      * @lua NA
      * @js NA
      */
-    void removeScriptEngine(void);
+    void removeScriptEngine();
     /**
      * Get the instance of ScriptEngineManager object.
      *
@@ -917,7 +917,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedManager() { ScriptEngineManager::destroyInstance(); };
     
 private:
-    ScriptEngineManager(void)
+    ScriptEngineManager()
     : _scriptEngine(nullptr)
     {
     }

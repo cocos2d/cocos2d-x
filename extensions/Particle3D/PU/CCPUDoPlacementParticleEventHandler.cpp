@@ -34,7 +34,7 @@ NS_CC_BEGIN
 const unsigned int PUDoPlacementParticleEventHandler::DEFAULT_NUMBER_OF_PARTICLES = 1;
 
 //-----------------------------------------------------------------------
-PUDoPlacementParticleEventHandler::PUDoPlacementParticleEventHandler(void) : 
+PUDoPlacementParticleEventHandler::PUDoPlacementParticleEventHandler() : 
     PUEventHandler(),
     PUListener(),
     _numberOfParticles(DEFAULT_NUMBER_OF_PARTICLES),
@@ -56,7 +56,7 @@ PUDoPlacementParticleEventHandler::PUDoPlacementParticleEventHandler(void) :
 {
 }
 //-----------------------------------------------------------------------
-PUDoPlacementParticleEventHandler::~PUDoPlacementParticleEventHandler(void)
+PUDoPlacementParticleEventHandler::~PUDoPlacementParticleEventHandler()
 {
     // We cannot remove this listener from mTechnique, because it is undetermined whether the ParticleTechnique 
     // still exist.
@@ -232,12 +232,12 @@ void PUDoPlacementParticleEventHandler::setForceEmitterName(const std::string& f
     _forceEmitterName = forceEmitterName;
 }
 //-----------------------------------------------------------------------
-PUEmitter* PUDoPlacementParticleEventHandler::getForceEmitter(void) const
+PUEmitter* PUDoPlacementParticleEventHandler::getForceEmitter() const
 {
     return _emitter;
 }
 //-----------------------------------------------------------------------
-void PUDoPlacementParticleEventHandler::removeAsListener(void)
+void PUDoPlacementParticleEventHandler::removeAsListener()
 {
     // Reset some values and remove this as a listener from the old technique.
     if (_system)

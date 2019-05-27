@@ -50,8 +50,8 @@ public:
      */
     static Tween *create(Bone *bone);
 public:
-    Tween(void);
-    virtual ~Tween(void);
+    Tween();
+    virtual ~Tween();
 
     /**
      * Init with a Bone

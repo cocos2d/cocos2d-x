@@ -59,14 +59,14 @@ public:
 
     /** 
     */
-    float getThreshold(void) const {return _threshold;};
+    float getThreshold() const {return _threshold;};
     void setThreshold(float threshold){_threshold = threshold;};
 
     virtual void copyAttributesTo (PUObserver* observer) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUOnRandomObserver(void);
-    virtual ~PUOnRandomObserver(void) {};
+    PUOnRandomObserver();
+    virtual ~PUOnRandomObserver() {};
 
 protected:
     float _threshold; // Value between 0..1

@@ -155,7 +155,7 @@ Vec3 PUPlane::projectVector(const Vec3& p) const
 
 }
 //-----------------------------------------------------------------------
-float PUPlane::normalize(void)
+float PUPlane::normalize()
 {
 	float fLength = normal.length();
 

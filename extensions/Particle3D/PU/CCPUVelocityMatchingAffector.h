@@ -44,7 +44,7 @@ public:
     virtual void updatePUAffector(PUParticle3D *particle, float deltaTime) override;
     /** Todo
     */
-    float getRadius(void) const;
+    float getRadius() const;
 
     /** Todo
     */
@@ -59,8 +59,8 @@ public:
     //virtual void _unprepare(ParticleTechnique* particleTechnique);
 
 CC_CONSTRUCTOR_ACCESS:	
-    PUVelocityMatchingAffector(void);
-    virtual ~PUVelocityMatchingAffector(void);
+    PUVelocityMatchingAffector();
+    virtual ~PUVelocityMatchingAffector();
         
 protected:
     float _radius;

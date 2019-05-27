@@ -33,17 +33,17 @@ NS_CC_BEGIN
 const Vec3 PUPlaneCollider::DEFAULT_NORMAL(0, 0, 0);
 
 //-----------------------------------------------------------------------
-PUPlaneCollider::PUPlaneCollider(void) : 
-    PUBaseCollider(),
-    _normal(DEFAULT_NORMAL)
+PUPlaneCollider::PUPlaneCollider()
+: PUBaseCollider()
+, _normal(DEFAULT_NORMAL)
 {
 }
-PUPlaneCollider::~PUPlaneCollider( void )
+PUPlaneCollider::~PUPlaneCollider()
 {
 
 }
 //-----------------------------------------------------------------------
-const Vec3 PUPlaneCollider::getNormal(void) const
+const Vec3 PUPlaneCollider::getNormal() const
 {
     return _normal;
 }

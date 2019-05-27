@@ -55,7 +55,7 @@ public:
     /**
      * Create a LuaStack object, it will new a lua_State.
      */
-    static LuaStack *create(void);
+    static LuaStack *create();
     /**
      * Create a LuaStack object with the existed lua_State.
      */
@@ -69,7 +69,7 @@ public:
      *
      * @return A pointer to the lua_State that the script module is attached to.
      */
-    lua_State* getLuaState(void) {
+    lua_State* getLuaState() {
         return _state;
     }
     
@@ -149,7 +149,7 @@ public:
     /**
      * Set the stack top index 0.
      */
-    virtual void clean(void);
+    virtual void clean();
     
     /**
      * Pushes a integer number with value intValue onto the stack.
@@ -197,7 +197,7 @@ public:
     /**
      * Pushes a nil value onto the stack.
      */
-    virtual void pushNil(void);
+    virtual void pushNil();
     
     /**
      * Pushes a Ref object onto the stack.
@@ -339,7 +339,7 @@ public:
     int luaLoadChunksFromZIP(lua_State *L);
     
 protected:
-    LuaStack(void)
+    LuaStack()
     : _state(nullptr)
     , _callFromLua(0)
     , _xxteaEnabled(false)
@@ -350,7 +350,7 @@ protected:
     {
     }
     
-    bool init(void);
+    bool init();
     bool initWithLuaState(lua_State *L);
     
     lua_State *_state;

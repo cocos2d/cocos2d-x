@@ -37,15 +37,15 @@ public:
     /**
      * @js ctor
      */
-    Lock(void);
+    Lock();
     /**
      * @js NA
      * @lua NA
      */
-    ~Lock(void);
+    ~Lock();
 
-    void lock(void);
-    void unlock(void);
+    void lock();
+    void unlock();
 };
 
 NS_CC_END

@@ -85,7 +85,7 @@ void PUBoxCollider::setDepth(const float depth)
     _depth = depth;
 }
 //-----------------------------------------------------------------------
-bool PUBoxCollider::isInnerCollision(void) const
+bool PUBoxCollider::isInnerCollision() const
 {
     return _innerCollision;
 }

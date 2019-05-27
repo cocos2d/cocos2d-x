@@ -2375,7 +2375,7 @@ unsigned char cc_fps_images_png[] = {
     0x00, 0x00, 0x00, 0x49, 0x45, 0x4e, 0x44, 0xae, 0x42, 0x60, 0x82
 };
 
-unsigned int cc_fps_images_len(void)
+unsigned int cc_fps_images_len()
 {
 	return sizeof(cc_fps_images_png);
 }

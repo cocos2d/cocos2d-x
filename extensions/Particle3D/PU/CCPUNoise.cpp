@@ -44,15 +44,15 @@ NS_CC_BEGIN
 };
 
 //-----------------------------------------------------------------------
-PUNoise3D::PUNoise3D(void) : 
-    _octaves(2),
-    _frequency(1.0f),
-    _amplitude(1.0f),
-    _persistence(1.0f)
+PUNoise3D::PUNoise3D() 
+: _octaves(2)
+, _frequency(1.0f)
+, _amplitude(1.0f)
+, _persistence(1.0f)
 {
 }
 //-----------------------------------------------------------------------
-PUNoise3D::~PUNoise3D(void)
+PUNoise3D::~PUNoise3D()
 {
 }
 //-----------------------------------------------------------------------

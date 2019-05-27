@@ -71,7 +71,7 @@
 #include "base/allocator/CCAllocatorDiagnostics.h"
 NS_CC_BEGIN
 
-extern const char* cocos2dVersion(void);
+extern const char* cocos2dVersion();
 
 #define PROMPT  "> "
 #define DEFAULT_COMMAND_SEPARATOR '|'

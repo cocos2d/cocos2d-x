@@ -53,7 +53,7 @@ ScriptHandlerEntry* ScriptHandlerEntry::create(int handler)
     return entry;
 }
 
-ScriptHandlerEntry::~ScriptHandlerEntry(void)
+ScriptHandlerEntry::~ScriptHandlerEntry()
 {
     if (_handler != 0 )
     {
@@ -83,7 +83,7 @@ bool SchedulerScriptHandlerEntry::init(float interval, bool paused)
     return true;
 }
 
-SchedulerScriptHandlerEntry::~SchedulerScriptHandlerEntry(void)
+SchedulerScriptHandlerEntry::~SchedulerScriptHandlerEntry()
 {
     _timer->release();
     LUALOG("[LUA] DEL script schedule %d, entryID: %d", _handler, _entryId);
@@ -104,7 +104,7 @@ TouchScriptHandlerEntry* TouchScriptHandlerEntry::create(int handler,
     return entry;
 }
 
-TouchScriptHandlerEntry::~TouchScriptHandlerEntry(void)
+TouchScriptHandlerEntry::~TouchScriptHandlerEntry()
 {
 }
 
@@ -123,7 +123,7 @@ bool TouchScriptHandlerEntry::init(bool isMultiTouches, int priority, bool swall
 static ScriptEngineManager* s_pSharedScriptEngineManager = nullptr;
 
 
-ScriptEngineManager::~ScriptEngineManager(void)
+ScriptEngineManager::~ScriptEngineManager()
 {
     removeScriptEngine();
 }
@@ -137,7 +137,7 @@ void ScriptEngineManager::setScriptEngine(ScriptEngineProtocol *scriptEngine)
 	}
 }
 
-void ScriptEngineManager::removeScriptEngine(void)
+void ScriptEngineManager::removeScriptEngine()
 {
     if (_scriptEngine)
     {

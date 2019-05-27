@@ -50,8 +50,8 @@ class CC_STUDIO_DLL DecorativeDisplay: public cocos2d::Ref
 public:
     static DecorativeDisplay *create();
 public:
-    DecorativeDisplay(void);
-    ~DecorativeDisplay(void);
+    DecorativeDisplay();
+    ~DecorativeDisplay();
 
     virtual bool init();
 

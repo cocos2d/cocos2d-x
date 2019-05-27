@@ -43,7 +43,7 @@ NS_CC_BEGIN
 
 LuaEngine* LuaEngine::_defaultEngine = nullptr;
 
-LuaEngine* LuaEngine::getInstance(void)
+LuaEngine* LuaEngine::getInstance()
 {
     if (!_defaultEngine)
     {
@@ -53,13 +53,13 @@ LuaEngine* LuaEngine::getInstance(void)
     return _defaultEngine;
 }
 
-LuaEngine::~LuaEngine(void)
+LuaEngine::~LuaEngine()
 {
     CC_SAFE_RELEASE(_stack);
     _defaultEngine = nullptr;
 }
 
-bool LuaEngine::init(void)
+bool LuaEngine::init()
 {
     _stack = LuaStack::create();
     _stack->retain();
