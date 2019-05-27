@@ -7,7 +7,7 @@ project(${target_name})
 
 set(${target_name}_src
   ../manual/platform/android/CCLuaJavaBridge.cpp
-  ../manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.cpp
+  ../manual/platform/android/jni/Cocos2dxLuaJavaBridge.cpp
 )
 
 add_library(${target_name} STATIC
