@@ -55,10 +55,6 @@ namespace {
 
         virtual ~ConnectionCV() {
             std::lock_guard<std::mutex> guard(_mtx);
-            for(auto &it : _conditions)
-            {
-                delete it.second;
-            }
             _conditions.clear();
         }
 
@@ -66,7 +62,7 @@ namespace {
         {
             std::lock_guard<std::mutex> guard(_mtx);
             CCASSERT(_conditions.find(id) == _conditions.end(), "id should not be registered before");
-            auto * p = new ConditionVariable();
+            auto p = std::make_shared<ConditionVariable>();
             _conditions.emplace(id, p);
         }
 
@@ -78,41 +74,42 @@ namespace {
             {
                 return;
             }
-            delete itr->second;
             _conditions.erase(itr);
         }
 
         void notifyClosed(int64_t id)
         {
-            ConditionVariable *p = nullptr;
-            std::lock_guard<std::mutex> guard(_mtx);
-            auto itr = _conditions.find(id);
-            if(itr == _conditions.end())
+            std::shared_ptr<ConditionVariable> p = nullptr;
             {
-                return;
+                std::lock_guard<std::mutex> guard(_mtx);
+                auto itr = _conditions.find(id);
+                if(itr == _conditions.end())
+                {
+                    return;
+                }
+                p = itr->second;
             }
-            p = itr->second;
             std::unique_lock<std::mutex> guard(p->mutex);
             p->cond.notify_all();
         }
 
         void waitForClosing(int64_t id, std::chrono::duration<float> timeout)
         {
-            ConditionVariable *p = nullptr;
-
-            std::lock_guard<std::mutex> guard(_mtx);
-            auto itr = _conditions.find(id);
-            if(itr == _conditions.end())
+            std::shared_ptr<ConditionVariable> p = nullptr;
             {
-                return;
+                std::lock_guard<std::mutex> guard(_mtx);
+                auto itr = _conditions.find(id);
+                if (itr == _conditions.end()) {
+                    return;
+                }
+                p = itr->second;
             }
-            p = itr->second;
             std::unique_lock<std::mutex> ul(p->mutex);
             p->cond.wait_for(ul, timeout);
         }
     private:
         std::mutex _mtx;
-        std::unordered_map<int64_t, ConditionVariable*> _conditions;
+        std::unordered_map<int64_t, std::shared_ptr<ConditionVariable>> _conditions;
     };
 }
 
