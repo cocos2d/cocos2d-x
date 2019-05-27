@@ -68,6 +68,7 @@ public class Cocos2dxWebSocket {
         }
 
         synchronized void release() {
+            this._refCount--;
             if(this._refCount<= 0) {
                 this.shutdown();
             }
