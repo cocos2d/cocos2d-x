@@ -219,6 +219,8 @@ public class Cocos2dxDownloader {
                                 is = response.body().byteStream();
 
                                 if (path.length() > 0) {
+                                    //a file task
+
                                     if (downloadStart > 0) {
                                         fos = new FileOutputStream(tempFile, true);
                                     } else {
@@ -254,7 +256,7 @@ public class Cocos2dxDownloader {
                                     else
                                         downloader.onFinish(id, ErrorCode.ERROR_IMPL_INTERNAL, errStr, null);
                                 } else {
-                                    // 非文件
+                                    // data task
                                     ByteArrayOutputStream buffer;
                                     if(total > 0) {
                                         buffer = new ByteArrayOutputStream((int) total);

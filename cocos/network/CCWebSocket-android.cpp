@@ -69,12 +69,7 @@ namespace {
         void unwatchConnection(int64_t id)
         {
             std::lock_guard<std::mutex> guard(_mtx);
-            auto itr = _conditions.find(id);
-            if(itr == _conditions.end())
-            {
-                return;
-            }
-            _conditions.erase(itr);
+            _conditions.erase(id);
         }
 
         void notifyClosed(int64_t id)
