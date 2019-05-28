@@ -77,37 +77,37 @@ MTLPixelFormat Utils::toMTLPixelFormat(TextureFormat textureFormat)
     switch (textureFormat)
     {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        case TextureFormat::MTL_ABGR4:
+        case PixelFormat::MTL_ABGR4:
             return MTLPixelFormatABGR4Unorm;
-        case TextureFormat::MTL_BGR5A1:
+        case PixelFormat::MTL_BGR5A1:
             return MTLPixelFormatBGR5A1Unorm;
-        case TextureFormat::MTL_B5G6R5:
+        case PixelFormat::MTL_B5G6R5:
             return MTLPixelFormatB5G6R5Unorm;
-        case TextureFormat::PVRTC4A:
+        case PixelFormat::PVRTC4A:
             return MTLPixelFormatPVRTC_RGBA_4BPP;
-        case TextureFormat::PVRTC4:
+        case PixelFormat::PVRTC4:
             return MTLPixelFormatPVRTC_RGB_4BPP;
-        case TextureFormat::PVRTC2A:
+        case PixelFormat::PVRTC2A:
             return MTLPixelFormatPVRTC_RGBA_2BPP;
-        case TextureFormat::PVRTC2:
+        case PixelFormat::PVRTC2:
             return MTLPixelFormatPVRTC_RGB_2BPP;
 #endif
-        case TextureFormat::R8G8B8A8:
+        case PixelFormat::R8G8B8A8:
             return MTLPixelFormatRGBA8Unorm;
             // Should transfer the data to match pixel format when updating data.
-        case TextureFormat::R8G8B8:
+        case PixelFormat::R8G8B8:
             return MTLPixelFormatRGBA8Unorm;
-        case TextureFormat::A8:
+        case PixelFormat::A8:
             return MTLPixelFormatA8Unorm;
-        case TextureFormat::BGRA8888:
+        case PixelFormat::BGRA8888:
             return MTLPixelFormatBGRA8Unorm;
            
         //on mac, D24S8 means MTLPixelFormatDepth24Unorm_Stencil8, while on ios it means MTLPixelFormatDepth32Float_Stencil8
-        case TextureFormat::D24S8:
+        case PixelFormat::D24S8:
             return DEPTH_STENCIL_ATTACHMENT_PIXEL_FORMAT;
-        case TextureFormat::SYSTEM_DEFAULT:
+        case PixelFormat::DEFAULT:
             return COLOR_ATTAHCMENT_PIXEL_FORMAT;
-        case TextureFormat::NONE:
+        case PixelFormat::NONE:
         default:
             return MTLPixelFormatInvalid;
     }

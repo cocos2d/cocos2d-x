@@ -3,6 +3,7 @@
 #include "Types.h"
 #include "base/CCRef.h"
 #include <cassert>
+#include "renderer/CCTexture2D.h"
 
 #include <functional>
 
@@ -11,7 +12,7 @@ CC_BACKEND_BEGIN
 struct TextureDescriptor
 {
     TextureType textureType = TextureType::TEXTURE_2D;
-    TextureFormat textureFormat = TextureFormat::R8G8B8A8;
+    PixelFormat textureFormat = PixelFormat::RGBA8888;
     TextureUsage textureUsage = TextureUsage::READ;
     uint32_t width = 0;
     uint32_t height = 0;
@@ -27,7 +28,7 @@ public:
     virtual void generateMipmaps() = 0;
     virtual void updateTextureDescriptor(const TextureDescriptor& descriptor);
 
-    inline TextureFormat getTextureFormat() const { return _textureFormat; }
+    inline PixelFormat getTextureFormat() const { return _textureFormat; }
     inline TextureUsage getTextureUsage() const { return _textureUsage; }
     inline TextureType getTextureType() const { return _textureType; }
     inline bool hasMipmaps() const { return _hasMipmaps; }
@@ -44,7 +45,7 @@ protected:
     uint32_t _height = 0;
 
     TextureType _textureType = TextureType::TEXTURE_2D;
-    TextureFormat _textureFormat = TextureFormat::R8G8B8;
+    PixelFormat _textureFormat = PixelFormat::RGBA8888;
     TextureUsage _textureUsage = TextureUsage::READ;
 };
 

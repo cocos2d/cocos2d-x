@@ -48,7 +48,7 @@
         <key>textureSubPath</key>
         <string></string>
         <key>textureFormat</key>
-        <enum type="SettingsBase::TextureFormat">pvr2ccz</enum>
+        <enum type="SettingsBase::PixelFormat">pvr2ccz</enum>
         <key>borderPadding</key>
         <uint>2</uint>
         <key>maxTextureSize</key>

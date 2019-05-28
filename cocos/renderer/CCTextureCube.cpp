@@ -63,7 +63,7 @@ namespace {
     }
 }
 
-unsigned char* getImageData(Image* img, Texture2D::PixelFormat&  ePixFmt)
+unsigned char* getImageData(Image* img, backend::PixelFormat&  ePixFmt)
 {
     unsigned char*    pTmpData = img->getData();
     unsigned int*     inPixel32 = nullptr;
@@ -78,24 +78,24 @@ unsigned char* getImageData(Image* img, Texture2D::PixelFormat&  ePixFmt)
     // compute pixel format
     if (bHasAlpha)
     {
-        ePixFmt = Texture2D::PixelFormat::DEFAULT;
+        ePixFmt = backend::PixelFormat::DEFAULT;
     }
     else
     {
         if (uBPP >= 8)
         {
-            ePixFmt = Texture2D::PixelFormat::RGB888;
+            ePixFmt = backend::PixelFormat::RGB888;
         }
         else
         {
-            ePixFmt = Texture2D::PixelFormat::RGB565;
+            ePixFmt = backend::PixelFormat::RGB565;
         }
     }
 
     // Repack the pixel data into the right format
     unsigned int uLen = nWidth * nHeight;
 
-    if (ePixFmt == Texture2D::PixelFormat::RGB565)
+    if (ePixFmt == backend::PixelFormat::RGB565)
     {
         if (bHasAlpha)
         {
@@ -133,7 +133,7 @@ unsigned char* getImageData(Image* img, Texture2D::PixelFormat&  ePixFmt)
         }
     }
 
-    if (bHasAlpha && ePixFmt == Texture2D::PixelFormat::RGB888)
+    if (bHasAlpha && ePixFmt == backend::PixelFormat::RGB888)
     {
         // Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRRRRGGGGGGGGBBBBBBBB"
         inPixel32 = (unsigned int*)img->getData();
@@ -253,16 +253,16 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
     {
         Image* img = images[i];
 
-        Texture2D::PixelFormat  ePixelFmt;
+        backend::PixelFormat  ePixelFmt;
         unsigned char*          pData = getImageData(img, ePixelFmt);
         uint8_t *cData = nullptr;
         uint8_t *useData = pData;
 
         //convert pixel format to RGBA
-        if (ePixelFmt != Texture2D::PixelFormat::RGBA8888)
+        if (ePixelFmt != backend::PixelFormat::RGBA8888)
         {
             size_t len = 0;
-            backend::PixelFormatUtils::convertDataToFormat(pData, img->getDataLen(), ePixelFmt, Texture2D::PixelFormat::RGBA8888, &cData, &len);
+            backend::PixelFormatUtils::convertDataToFormat(pData, img->getDataLen(), ePixelFmt, backend::PixelFormat::RGBA8888, &cData, &len);
             if (cData != pData) //convert error
             {
                 useData = cData;

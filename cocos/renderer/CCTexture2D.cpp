@@ -44,7 +44,6 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/CCNinePatchImageParser.h"
 #include "renderer/backend/Device.h"
-#include "renderer/backend/StringUtils.h"
 #include "renderer/backend/ProgramState.h"
 #include "renderer/ccShaders.h"
 #include "renderer/CCTextureUtils.h"
@@ -62,127 +61,72 @@ namespace {
     typedef Texture2D::PixelFormatInfoMap::value_type PixelFormatInfoMapValue;
     static const PixelFormatInfoMapValue TexturePixelFormatInfoTablesValue[] =
     {
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::BGRA8888, Texture2D::PixelFormatInfo(GL_BGRA, GL_BGRA, GL_UNSIGNED_BYTE, 32, false, true)),
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::RGBA8888, Texture2D::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 32, false, true)),
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::RGBA4444, Texture2D::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, 16, false, true)),
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::RGB5A1, Texture2D::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, 16, false, true)),
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::RGB565, Texture2D::PixelFormatInfo(GL_RGB, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, 16, false, false)),
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::RGB888, Texture2D::PixelFormatInfo(GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, 24, false, false)),
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::A8, Texture2D::PixelFormatInfo(GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE, 8, false, false)),
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::I8, Texture2D::PixelFormatInfo(GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE, 8, false, false)),
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::AI88, Texture2D::PixelFormatInfo(GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, false, true)),
+        PixelFormatInfoMapValue(backend::PixelFormat::BGRA8888, Texture2D::PixelFormatInfo(GL_BGRA, GL_BGRA, GL_UNSIGNED_BYTE, 32, false, true)),
+        PixelFormatInfoMapValue(backend::PixelFormat::RGBA8888, Texture2D::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 32, false, true)),
+        PixelFormatInfoMapValue(backend::PixelFormat::RGBA4444, Texture2D::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, 16, false, true)),
+        PixelFormatInfoMapValue(backend::PixelFormat::RGB5A1, Texture2D::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, 16, false, true)),
+        PixelFormatInfoMapValue(backend::PixelFormat::RGB565, Texture2D::PixelFormatInfo(GL_RGB, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, 16, false, false)),
+        PixelFormatInfoMapValue(backend::PixelFormat::RGB888, Texture2D::PixelFormatInfo(GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, 24, false, false)),
+        PixelFormatInfoMapValue(backend::PixelFormat::A8, Texture2D::PixelFormatInfo(GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE, 8, false, false)),
+        PixelFormatInfoMapValue(backend::PixelFormat::I8, Texture2D::PixelFormatInfo(GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE, 8, false, false)),
+        PixelFormatInfoMapValue(backend::PixelFormat::AI88, Texture2D::PixelFormatInfo(GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, false, true)),
 #ifndef CC_USE_METAL
         //OpenGL only
 #ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC2, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, false)),
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC2A, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, true)),
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC4, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC4A, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, true)),
+        PixelFormatInfoMapValue(backend::PixelFormat::PVRTC2, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, false)),
+        PixelFormatInfoMapValue(backend::PixelFormat::PVRTC2A, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, true)),
+        PixelFormatInfoMapValue(backend::PixelFormat::PVRTC4, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
+        PixelFormatInfoMapValue(backend::PixelFormat::PVRTC4A, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, true)),
 #endif
 #else
         //Metal && iOS
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC2, Texture2D::PixelFormatInfo(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, false)),
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC2A, Texture2D::PixelFormatInfo(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, true)),
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC4, Texture2D::PixelFormatInfo(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::PVRTC4A, Texture2D::PixelFormatInfo(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, true)),
+        PixelFormatInfoMapValue(backend::PixelFormat::PVRTC2, Texture2D::PixelFormatInfo(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, false)),
+        PixelFormatInfoMapValue(backend::PixelFormat::PVRTC2A, Texture2D::PixelFormatInfo(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 2, true, true)),
+        PixelFormatInfoMapValue(backend::PixelFormat::PVRTC4, Texture2D::PixelFormatInfo(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
+        PixelFormatInfoMapValue(backend::PixelFormat::PVRTC4A, Texture2D::PixelFormatInfo(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, true)),
 #endif
 #endif
         
 #ifdef GL_ETC1_RGB8_OES
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::ETC, Texture2D::PixelFormatInfo(GL_ETC1_RGB8_OES, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
+        PixelFormatInfoMapValue(backend::PixelFormat::ETC, Texture2D::PixelFormatInfo(GL_ETC1_RGB8_OES, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
 #endif
         
 #ifdef GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_DXT1, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT1_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
+        PixelFormatInfoMapValue(backend::PixelFormat::S3TC_DXT1, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT1_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
 #endif
         
 #ifdef GL_COMPRESSED_RGBA_S3TC_DXT3_EXT
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_DXT3, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT3_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
+        PixelFormatInfoMapValue(backend::PixelFormat::S3TC_DXT3, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT3_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
 #endif
         
 #ifdef GL_COMPRESSED_RGBA_S3TC_DXT5_EXT
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::S3TC_DXT5, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
+        PixelFormatInfoMapValue(backend::PixelFormat::S3TC_DXT5, Texture2D::PixelFormatInfo(GL_COMPRESSED_RGBA_S3TC_DXT5_EXT, 0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
 #endif
         
 #ifdef GL_ATC_RGB_AMD
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::ATC_RGB, Texture2D::PixelFormatInfo(GL_ATC_RGB_AMD,
+        PixelFormatInfoMapValue(backend::PixelFormat::ATC_RGB, Texture2D::PixelFormatInfo(GL_ATC_RGB_AMD,
             0xFFFFFFFF, 0xFFFFFFFF, 4, true, false)),
 #endif
         
 #ifdef GL_ATC_RGBA_EXPLICIT_ALPHA_AMD
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::ATC_EXPLICIT_ALPHA, Texture2D::PixelFormatInfo(GL_ATC_RGBA_EXPLICIT_ALPHA_AMD,
+        PixelFormatInfoMapValue(backend::PixelFormat::ATC_EXPLICIT_ALPHA, Texture2D::PixelFormatInfo(GL_ATC_RGBA_EXPLICIT_ALPHA_AMD,
             0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
 #endif
         
 #ifdef GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::ATC_INTERPOLATED_ALPHA, Texture2D::PixelFormatInfo(GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD,
+        PixelFormatInfoMapValue(backend::PixelFormat::ATC_INTERPOLATED_ALPHA, Texture2D::PixelFormatInfo(GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD,
             0xFFFFFFFF, 0xFFFFFFFF, 8, true, false)),
 #endif
         //metal formats
 #ifdef CC_USE_METAL
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::MTL_ABGR4, Texture2D::PixelFormatInfo(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 16, false, true)),
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::MTL_B5G6R5, Texture2D::PixelFormatInfo(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 16, false, false)),
-        PixelFormatInfoMapValue(Texture2D::PixelFormat::MTL_BGR5A1, Texture2D::PixelFormatInfo(0xFFFFFFFF,0xFFFFFFFF, 0xFFFFFFFF, 16, false, true)),
+        PixelFormatInfoMapValue(backend::PixelFormat::MTL_ABGR4, Texture2D::PixelFormatInfo(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 16, false, true)),
+        PixelFormatInfoMapValue(backend::PixelFormat::MTL_B5G6R5, Texture2D::PixelFormatInfo(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 16, false, false)),
+        PixelFormatInfoMapValue(backend::PixelFormat::MTL_BGR5A1, Texture2D::PixelFormatInfo(0xFFFFFFFF,0xFFFFFFFF, 0xFFFFFFFF, 16, false, true)),
 #endif
 #endif
     };
-
-    backend::SamplerFilter GLToBackendMagFilter(GLint magFilter)
-    {
-        switch (magFilter)
-        {
-        case GL_LINEAR:
-            return backend::SamplerFilter::LINEAR;
-        case GL_NEAREST:
-            return backend::SamplerFilter::NEAREST;
-        default:
-            return backend::SamplerFilter::LINEAR;
-        }
-    }
-
-
-    GLint toGLAddressMode(backend::SamplerAddressMode addressMode, bool isPow2)
-    {
-        GLint ret = GL_REPEAT;
-        if (!isPow2 && (addressMode != backend::SamplerAddressMode::CLAMP_TO_EDGE))
-        {
-            cocos2d::log("Change texture wrap mode to CLAMP_TO_EDGE since non-power-of-two texture occur in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
-            return GL_CLAMP_TO_EDGE;
-        }
-
-        switch (addressMode)
-        {
-        case backend::SamplerAddressMode::REPEAT:
-            ret = GL_REPEAT;
-            break;
-        case backend::SamplerAddressMode::MIRROR_REPEAT:
-            ret = GL_MIRRORED_REPEAT;
-            break;
-        case backend::SamplerAddressMode::CLAMP_TO_EDGE:
-            ret = GL_CLAMP_TO_EDGE;
-            break;
-        default:
-            break;
-        }
-        return ret;
-    }
-
-    backend::SamplerAddressMode GLToBackendAddressMode(int addressMode)
-    {
-        switch (addressMode)
-        {
-        case GL_REPEAT:
-            return backend::SamplerAddressMode::REPEAT;
-        case GL_MIRRORED_REPEAT:
-            return backend::SamplerAddressMode::MIRROR_REPEAT;
-        case GL_CLAMP_TO_EDGE:
-            return backend::SamplerAddressMode::CLAMP_TO_EDGE;
-        default:
-            return backend::SamplerAddressMode::REPEAT;
-        }
-    }
 }
 
 //CLASS IMPLEMENTATIONS:
@@ -193,11 +137,11 @@ const Texture2D::PixelFormatInfoMap Texture2D::_pixelFormatInfoTables(TexturePix
 
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
 // Default is: RGBA8888 (32-bit textures)
-static Texture2D::PixelFormat g_defaultAlphaPixelFormat = Texture2D::PixelFormat::DEFAULT;
+static backend::PixelFormat g_defaultAlphaPixelFormat = backend::PixelFormat::DEFAULT;
 
 
 Texture2D::Texture2D()
-: _pixelFormat(Texture2D::PixelFormat::DEFAULT)
+: _pixelFormat(backend::PixelFormat::DEFAULT)
 , _pixelsWide(0)
 , _pixelsHigh(0)
 , _maxS(0.0)
@@ -210,7 +154,7 @@ Texture2D::Texture2D()
 , _alphaTexture(nullptr)
 {
     backend::TextureDescriptor textureDescriptor;
-    textureDescriptor.textureFormat = TextureFormat::NONE;
+    textureDescriptor.textureFormat = PixelFormat::NONE;
     _texture = static_cast<backend::Texture2D*>(backend::Device::getInstance()->newTexture(textureDescriptor));
 }
 
@@ -229,7 +173,7 @@ Texture2D::~Texture2D()
     CC_SAFE_RELEASE(_programState);
 }
 
-Texture2D::PixelFormat Texture2D::getPixelFormat() const
+backend::PixelFormat Texture2D::getPixelFormat() const
 {
     return _pixelFormat;
 }
@@ -293,7 +237,7 @@ bool Texture2D::hasPremultipliedAlpha() const
     return _hasPremultipliedAlpha;
 }
 
-bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, Texture2D::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, const Size& /*contentSize*/)
+bool Texture2D::initWithData(const void *data, ssize_t dataLen, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, const Size& /*contentSize*/)
 {
     CCASSERT(dataLen>0 && pixelsWide>0 && pixelsHigh>0, "Invalid size");
 
@@ -304,7 +248,7 @@ bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::Pixel
     return initWithMipmaps(&mipmap, 1, pixelFormat, renderFormat, pixelsWide, pixelsHigh);
 }
 
-bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, PixelFormat renderFormat, int pixelsWide, int pixelsHigh)
+bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh)
 {
     //the pixelFormat must be a certain value 
     CCASSERT(pixelFormat != PixelFormat::NONE && pixelFormat != PixelFormat::AUTO, "the \"pixelFormat\" param must be a certain value!");
@@ -357,7 +301,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 
     int width = pixelsWide;
     int height = pixelsHigh;
-    PixelFormat oriPixelFormat = pixelFormat;
+    backend::PixelFormat oriPixelFormat = pixelFormat;
     for (int i = 0; i < mipmapsNum; ++i)
     {
         unsigned char *data = mipmaps[i].address;
@@ -373,12 +317,9 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
 #endif
             if(convertedFormat == renderFormat) pixelFormat = renderFormat;
         }
-
-        backend::StringUtils::PixelFormat format = static_cast<backend::StringUtils::PixelFormat>(pixelFormat);
-        CCASSERT(format != backend::StringUtils::PixelFormat::NONE, "PixelFormat should not be NONE");
-
-        textureDescriptor.textureFormat = backend::StringUtils::PixelFormat2TextureFormat(format);
-        CCASSERT(textureDescriptor.textureFormat != backend::TextureFormat::NONE, "TextureFormat should not be NONE");
+       
+        textureDescriptor.textureFormat = pixelFormat;
+        CCASSERT(textureDescriptor.textureFormat != backend::PixelFormat::NONE, "PixelFormat should not be NONE");
 
         if(_texture->getTextureFormat() != textureDescriptor.textureFormat)
             _texture->updateTextureDescriptor(textureDescriptor);
@@ -438,7 +379,7 @@ bool Texture2D::initWithImage(Image *image)
     return initWithImage(image, g_defaultAlphaPixelFormat);
 }
 
-bool Texture2D::initWithImage(Image *image, PixelFormat format)
+bool Texture2D::initWithImage(Image *image, backend::PixelFormat format)
 {
     if (image == nullptr)
     {
@@ -460,8 +401,8 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
 
     unsigned char*   tempData = image->getData();
     Size             imageSize = Size((float)imageWidth, (float)imageHeight);
-    PixelFormat      renderFormat = ((PixelFormat::NONE == format) || (PixelFormat::AUTO == format)) ? image->getPixelFormat() : format;
-    PixelFormat      imagePixelFormat = image->getPixelFormat();
+    backend::PixelFormat      renderFormat = ((PixelFormat::NONE == format) || (PixelFormat::AUTO == format)) ? image->getPixelFormat() : format;
+    backend::PixelFormat      imagePixelFormat = image->getPixelFormat();
     size_t           tempDataLen = image->getDataLen();
 
     
@@ -670,11 +611,12 @@ void Texture2D::setAliasTexParameters()
 
     _antialiasEnabled = false;
 
-    backend::SamplerDescriptor descriptor;
-    descriptor.minFilter = (_texture->hasMipmaps()) ? backend::SamplerFilter::NEAREST_MIPMAP_NEAREST : backend::SamplerFilter::NEAREST;
-    descriptor.magFilter = backend::SamplerFilter::NEAREST;
-    descriptor.sAddressMode = descriptor.tAddressMode = backend::SamplerAddressMode::DONT_CARE;
-
+    backend::SamplerDescriptor descriptor(
+        backend::SamplerFilter::NEAREST, //magFilter
+        (_texture->hasMipmaps()) ? backend::SamplerFilter::NEAREST_MIPMAP_NEAREST : backend::SamplerFilter::NEAREST, //minFilter
+        backend::SamplerAddressMode::DONT_CARE, //sAddressMode
+        backend::SamplerAddressMode::DONT_CARE//tAddressMode
+    );
     _texture->updateSamplerDescriptor(descriptor);
 }
 
@@ -687,11 +629,12 @@ void Texture2D::setAntiAliasTexParameters()
     }
     _antialiasEnabled = true;
 
-    backend::SamplerDescriptor descriptor;
-    descriptor.minFilter = (_texture->hasMipmaps()) ? backend::SamplerFilter::LINEAR_MIPMAP_NEAREST : backend::SamplerFilter::LINEAR;
-    descriptor.magFilter = backend::SamplerFilter::LINEAR;
-    descriptor.sAddressMode = descriptor.tAddressMode = backend::SamplerAddressMode::DONT_CARE;
-
+    backend::SamplerDescriptor descriptor(
+        backend::SamplerFilter::LINEAR, //magFilter
+        (_texture->hasMipmaps()) ? backend::SamplerFilter::LINEAR_MIPMAP_NEAREST : backend::SamplerFilter::LINEAR, //minFilter
+        backend::SamplerAddressMode::DONT_CARE, //sAddressMode
+        backend::SamplerAddressMode::DONT_CARE //tAddressMode
+    );
     _texture->updateSamplerDescriptor(descriptor);
 }
 
@@ -699,70 +642,70 @@ const char* Texture2D::getStringForFormat() const
 {
     switch (_pixelFormat) 
     {
-        case Texture2D::PixelFormat::RGBA8888:
+        case backend::PixelFormat::RGBA8888:
             return  "RGBA8888";
 
-        case Texture2D::PixelFormat::RGB888:
+        case backend::PixelFormat::RGB888:
             return  "RGB888";
 
-        case Texture2D::PixelFormat::RGB565:
+        case backend::PixelFormat::RGB565:
             return  "RGB565";
 
-        case Texture2D::PixelFormat::RGBA4444:
+        case backend::PixelFormat::RGBA4444:
             return  "RGBA4444";
 
-        case Texture2D::PixelFormat::RGB5A1:
+        case backend::PixelFormat::RGB5A1:
             return  "RGB5A1";
 
-        case Texture2D::PixelFormat::AI88:
+        case backend::PixelFormat::AI88:
             return  "AI88";
 
-        case Texture2D::PixelFormat::A8:
+        case backend::PixelFormat::A8:
             return  "A8";
 
-        case Texture2D::PixelFormat::I8:
+        case backend::PixelFormat::I8:
             return  "I8";
 
-        case Texture2D::PixelFormat::PVRTC4:
+        case backend::PixelFormat::PVRTC4:
             return  "PVRTC4";
 
-        case Texture2D::PixelFormat::PVRTC2:
+        case backend::PixelFormat::PVRTC2:
             return  "PVRTC2";
 
-        case Texture2D::PixelFormat::PVRTC2A:
+        case backend::PixelFormat::PVRTC2A:
             return "PVRTC2A";
         
-        case Texture2D::PixelFormat::PVRTC4A:
+        case backend::PixelFormat::PVRTC4A:
             return "PVRTC4A";
             
-        case Texture2D::PixelFormat::ETC:
+        case backend::PixelFormat::ETC:
             return "ETC";
 
-        case Texture2D::PixelFormat::S3TC_DXT1:
+        case backend::PixelFormat::S3TC_DXT1:
             return "S3TC_DXT1";
             
-        case Texture2D::PixelFormat::S3TC_DXT3:
+        case backend::PixelFormat::S3TC_DXT3:
             return "S3TC_DXT3";
 
-        case Texture2D::PixelFormat::S3TC_DXT5:
+        case backend::PixelFormat::S3TC_DXT5:
             return "S3TC_DXT5";
             
-        case Texture2D::PixelFormat::ATC_RGB:
+        case backend::PixelFormat::ATC_RGB:
             return "ATC_RGB";
 
-        case Texture2D::PixelFormat::ATC_EXPLICIT_ALPHA:
+        case backend::PixelFormat::ATC_EXPLICIT_ALPHA:
             return "ATC_EXPLICIT_ALPHA";
 
-        case Texture2D::PixelFormat::ATC_INTERPOLATED_ALPHA:
+        case backend::PixelFormat::ATC_INTERPOLATED_ALPHA:
             return "ATC_INTERPOLATED_ALPHA";
         
-        case Texture2D::PixelFormat::MTL_ABGR4:
+        case backend::PixelFormat::MTL_ABGR4:
             return "MTL_ABGR4";
         
-        case Texture2D::PixelFormat::MTL_B5G6R5:
+        case backend::PixelFormat::MTL_B5G6R5:
             return "MTL_RGB565";
         
-        case Texture2D::PixelFormat::MTL_BGR5A1:
+        case backend::PixelFormat::MTL_BGR5A1:
             return "MTL_BGR5A1";
             
         default:
@@ -779,17 +722,17 @@ const char* Texture2D::getStringForFormat() const
 //
 // implementation Texture2D (PixelFormat)
 
-void Texture2D::setDefaultAlphaPixelFormat(Texture2D::PixelFormat format)
+void Texture2D::setDefaultAlphaPixelFormat(backend::PixelFormat format)
 {
     g_defaultAlphaPixelFormat = format;
 }
 
-Texture2D::PixelFormat Texture2D::getDefaultAlphaPixelFormat()
+backend::PixelFormat Texture2D::getDefaultAlphaPixelFormat()
 {
     return g_defaultAlphaPixelFormat;
 }
 
-unsigned int Texture2D::getBitsPerPixelForFormat(Texture2D::PixelFormat format) const
+unsigned int Texture2D::getBitsPerPixelForFormat(backend::PixelFormat format) const
 {
     if (format == PixelFormat::NONE || format == PixelFormat::DEFAULT)
     {

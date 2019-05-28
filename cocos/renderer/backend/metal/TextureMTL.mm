@@ -74,7 +74,7 @@ namespace
         bool converted = false;
         switch (format)
         {
-            case TextureFormat::R8G8B8:
+            case PixelFormat::R8G8B8:
                 {
                     *out = (uint8_t*)malloc(length * 4);
                     convertRGB2RGBA(src, *out, length);
@@ -91,14 +91,14 @@ namespace
     {
         switch (textureFormat)
         {
-            case TextureFormat::R8G8B8A8:
-            case TextureFormat::R8G8B8:
-            case TextureFormat::RGBA4444:
-            case TextureFormat::RGB565:
-            case TextureFormat::RGB5A1:
-            case TextureFormat::MTL_BGR5A1:
-            case TextureFormat::MTL_B5G6R5:
-            case TextureFormat::MTL_ABGR4:
+            case PixelFormat::R8G8B8A8:
+            case PixelFormat::R8G8B8:
+            case PixelFormat::RGBA4444:
+            case PixelFormat::RGB565:
+            case PixelFormat::RGB5A1:
+            case PixelFormat::MTL_BGR5A1:
+            case PixelFormat::MTL_B5G6R5:
+            case PixelFormat::MTL_ABGR4:
                 return true;
             default:
                 return false;
@@ -143,7 +143,7 @@ void TextureMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescript
     Texture::updateTextureDescriptor(descriptor);
     createTexture(_mtlDevice, descriptor);
     updateSamplerDescriptor(descriptor.samplerDescriptor);
-    if (TextureFormat::R8G8B8 == _textureFormat)
+    if (PixelFormat::R8G8B8 == _textureFormat)
     {
         _bitsPerElement = 4 * 8;
     }
@@ -210,7 +210,7 @@ void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor&
     if (TextureUsage::RENDER_TARGET == descriptor.textureUsage)
     {
         //DepthStencil, and Multisample textures must be allocated with the MTLResourceStorageModePrivate resource option
-        if(TextureFormat::D24S8 == descriptor.textureFormat)
+        if(PixelFormat::D24S8 == descriptor.textureFormat)
             textureDescriptor.resourceOptions = MTLResourceStorageModePrivate;
         textureDescriptor.usage = MTLTextureUsageRenderTarget | MTLTextureUsageShaderRead;
     }
@@ -308,7 +308,7 @@ void TextureCubeMTL::updateTextureDescriptor(const cocos2d::backend::TextureDesc
     updateSamplerDescriptor(descriptor.samplerDescriptor);
     
     // Metal doesn't support RGB888/RGBA4444, so should convert to RGBA888;
-    if (TextureFormat::R8G8B8 == _textureFormat)
+    if (PixelFormat::R8G8B8 == _textureFormat)
     {
         _bitsPerElement = 4 * 8;
     }

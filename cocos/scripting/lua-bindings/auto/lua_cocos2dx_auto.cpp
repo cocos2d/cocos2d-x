@@ -762,7 +762,7 @@ int lua_cocos2dx_Texture2D_initWithImage(lua_State* tolua_S)
             ok &= luaval_to_object<cocos2d::Image>(tolua_S, 2, "cc.Image",&arg0, "cc.Texture2D:initWithImage");
 
             if (!ok) { break; }
-            cocos2d::Texture2D::PixelFormat arg1;
+            cocos2d::backend::PixelFormat arg1;
             ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.Texture2D:initWithImage");
 
             if (!ok) { break; }
@@ -1005,7 +1005,7 @@ int lua_cocos2dx_Texture2D_getBitsPerPixelForFormat(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     do{
         if (argc == 1) {
-            cocos2d::Texture2D::PixelFormat arg0;
+            cocos2d::backend::PixelFormat arg0;
             ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.Texture2D:getBitsPerPixelForFormat");
 
             if (!ok) { break; }
@@ -1066,7 +1066,7 @@ int lua_cocos2dx_Texture2D_getName(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Texture2D_getName'", nullptr);
             return 0;
         }
-        unsigned int ret = cobj->getName();
+        unsigned int ret = 0;//cobj->getBackendTexture();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }
@@ -1991,7 +1991,7 @@ int lua_cocos2dx_Texture2D_setDefaultAlphaPixelFormat(lua_State* tolua_S)
 
     if (argc == 1)
     {
-        cocos2d::Texture2D::PixelFormat arg0;
+        cocos2d::backend::PixelFormat arg0;
         ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.Texture2D:setDefaultAlphaPixelFormat");
         if(!ok)
         {
@@ -77406,11 +77406,11 @@ int lua_cocos2dx_RenderTexture_initWithWidthAndHeight(lua_State* tolua_S)
             ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.RenderTexture:initWithWidthAndHeight");
 
             if (!ok) { break; }
-            cocos2d::Texture2D::PixelFormat arg2;
+            cocos2d::backend::PixelFormat arg2;
             ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "cc.RenderTexture:initWithWidthAndHeight");
 
             if (!ok) { break; }
-            cocos2d::backend::TextureFormat arg3;
+            cocos2d::backend::PixelFormat arg3;
             ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "cc.RenderTexture:initWithWidthAndHeight");
 
             if (!ok) { break; }
@@ -77430,7 +77430,7 @@ int lua_cocos2dx_RenderTexture_initWithWidthAndHeight(lua_State* tolua_S)
             ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.RenderTexture:initWithWidthAndHeight");
 
             if (!ok) { break; }
-            cocos2d::Texture2D::PixelFormat arg2;
+            cocos2d::backend::PixelFormat arg2;
             ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "cc.RenderTexture:initWithWidthAndHeight");
 
             if (!ok) { break; }
@@ -77474,7 +77474,7 @@ int lua_cocos2dx_RenderTexture_create(lua_State* tolua_S)
             int arg1;
             ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.RenderTexture:create");
             if (!ok) { break; }
-            cocos2d::Texture2D::PixelFormat arg2;
+            cocos2d::backend::PixelFormat arg2;
             ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "cc.RenderTexture:create");
             if (!ok) { break; }
             cocos2d::RenderTexture* ret = cocos2d::RenderTexture::create(arg0, arg1, arg2);
@@ -77493,10 +77493,10 @@ int lua_cocos2dx_RenderTexture_create(lua_State* tolua_S)
             int arg1;
             ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.RenderTexture:create");
             if (!ok) { break; }
-            cocos2d::Texture2D::PixelFormat arg2;
+            cocos2d::backend::PixelFormat arg2;
             ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "cc.RenderTexture:create");
             if (!ok) { break; }
-            cocos2d::backend::TextureFormat arg3;
+            cocos2d::backend::PixelFormat arg3;
             ok &= luaval_to_int32(tolua_S, 5,(int *)&arg3, "cc.RenderTexture:create");
             if (!ok) { break; }
             cocos2d::RenderTexture* ret = cocos2d::RenderTexture::create(arg0, arg1, arg2, arg3);

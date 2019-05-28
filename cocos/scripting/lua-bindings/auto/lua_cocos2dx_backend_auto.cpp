@@ -75,8 +75,8 @@ int lua_register_cocos2dx_backend_VertexFormat(lua_State* tolua_S)
 
 int lua_register_cocos2dx_backend_TextureFormat(lua_State* tolua_S)
 {
-    tolua_module(tolua_S, "TextureFormat", 0);
-    tolua_beginmodule(tolua_S,"TextureFormat");
+    tolua_module(tolua_S, "PixelFormat", 0);
+    tolua_beginmodule(tolua_S,"PixelFormat");
         tolua_constant(tolua_S, "NONE", 0);
         tolua_constant(tolua_S, "R8G8B8A8", 1);
         tolua_constant(tolua_S, "R8G8B8", 2);
@@ -103,9 +103,9 @@ int lua_register_cocos2dx_backend_TextureFormat(lua_State* tolua_S)
         tolua_constant(tolua_S, "S3TC_DXT5", 23);
         tolua_constant(tolua_S, "SYSTEM_DEFAULT", 24);
     tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::backend::TextureFormat).name();
-    g_luaType[typeName] = "ccb.TextureFormat";
-    g_typeCast["TextureFormat"] = "ccb.TextureFormat";
+    std::string typeName = typeid(cocos2d::backend::PixelFormat).name();
+    g_luaType[typeName] = "ccb.PixelFormat";
+    g_typeCast["PixelFormat"] = "ccb.PixelFormat";
     return 1;
 }
 

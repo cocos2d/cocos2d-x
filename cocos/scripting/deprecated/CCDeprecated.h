@@ -873,19 +873,19 @@ CC_DEPRECATED_ATTRIBUTE const TextHAlignment kCCTextAlignmentLeft = TextHAlignme
 CC_DEPRECATED_ATTRIBUTE const TextHAlignment kCCTextAlignmentCenter = TextHAlignment::CENTER;
 CC_DEPRECATED_ATTRIBUTE const TextHAlignment kCCTextAlignmentRight = TextHAlignment::RIGHT;
 
-CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGBA8888 = Texture2D::PixelFormat::RGBA8888;
-CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB888 = Texture2D::PixelFormat::RGB888;
-CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB565 = Texture2D::PixelFormat::RGB565;
-CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_A8 = Texture2D::PixelFormat::A8;
-CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_I8 = Texture2D::PixelFormat::I8;
-CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_AI88 = Texture2D::PixelFormat::AI88;
-CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGBA4444 = Texture2D::PixelFormat::RGBA4444;
-CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_RGB5A1 = Texture2D::PixelFormat::RGB5A1;
-CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC4 = Texture2D::PixelFormat::PVRTC4;
-CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_PVRTC2 = Texture2D::PixelFormat::PVRTC2;
-CC_DEPRECATED_ATTRIBUTE const Texture2D::PixelFormat kCCTexture2DPixelFormat_Default = Texture2D::PixelFormat::DEFAULT;
+CC_DEPRECATED_ATTRIBUTE const backend::PixelFormat kCCTexture2DPixelFormat_RGBA8888 = backend::PixelFormat::RGBA8888;
+CC_DEPRECATED_ATTRIBUTE const backend::PixelFormat kCCTexture2DPixelFormat_RGB888 = backend::PixelFormat::RGB888;
+CC_DEPRECATED_ATTRIBUTE const backend::PixelFormat kCCTexture2DPixelFormat_RGB565 = backend::PixelFormat::RGB565;
+CC_DEPRECATED_ATTRIBUTE const backend::PixelFormat kCCTexture2DPixelFormat_A8 = backend::PixelFormat::A8;
+CC_DEPRECATED_ATTRIBUTE const backend::PixelFormat kCCTexture2DPixelFormat_I8 = backend::PixelFormat::I8;
+CC_DEPRECATED_ATTRIBUTE const backend::PixelFormat kCCTexture2DPixelFormat_AI88 = backend::PixelFormat::AI88;
+CC_DEPRECATED_ATTRIBUTE const backend::PixelFormat kCCTexture2DPixelFormat_RGBA4444 = backend::PixelFormat::RGBA4444;
+CC_DEPRECATED_ATTRIBUTE const backend::PixelFormat kCCTexture2DPixelFormat_RGB5A1 = backend::PixelFormat::RGB5A1;
+CC_DEPRECATED_ATTRIBUTE const backend::PixelFormat kCCTexture2DPixelFormat_PVRTC4 = backend::PixelFormat::PVRTC4;
+CC_DEPRECATED_ATTRIBUTE const backend::PixelFormat kCCTexture2DPixelFormat_PVRTC2 = backend::PixelFormat::PVRTC2;
+CC_DEPRECATED_ATTRIBUTE const backend::PixelFormat kCCTexture2DPixelFormat_Default = backend::PixelFormat::DEFAULT;
 
-CC_DEPRECATED_ATTRIBUTE typedef Texture2D::PixelFormat CCTexture2DPixelFormat;
+CC_DEPRECATED_ATTRIBUTE typedef backend::PixelFormat CCTexture2DPixelFormat;
 
 
 CC_DEPRECATED_ATTRIBUTE const int kCCParticleDurationInfinity = ParticleSystem::DURATION_INFINITY;

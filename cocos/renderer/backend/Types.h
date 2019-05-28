@@ -41,43 +41,68 @@ enum class VertexFormat : uint32_t
     UBYTE4
 };
 
-enum class TextureFormat : uint32_t
+/** @typedef backend::PixelFormat
+     Possible texture pixel formats
+     */
+enum class PixelFormat
 {
-    NONE,
+    //! auto detect the type
+    AUTO,
+    //! 32-bit texture: BGRA8888
     BGRA8888,
-    // Four 8-bit normalized unsigned integer components in RGBA order.
-    R8G8B8A8,
-    // Three 8-bit normalized unsigned integer components in RGB order.
-    R8G8B8,
-    // One 8-bit normalized unsigned integer component.
-    A8,
-    // A packed 32-bit combined depth and stencil pixel format with two nomorlized unsigned integer
-    // components: 24 bits, typically used for a depth render target, and 8 bits, typically used for
-    // a stencil render target.
-    D24S8,
-    I8,
-    AI88,
-    RGBA4444,
+    //! 32-bit texture: RGBA8888
+    RGBA8888,
+    //! 24-bit texture: RGBA888
+    RGB888,
+    //! 16-bit texture without Alpha channel
     RGB565,
+    //! 8-bit textures used as masks
+    A8,
+    //! 8-bit intensity texture
+    I8,
+    //! 16-bit textures used as masks
+    AI88,
+    //! 16-bit textures: RGBA4444
+    RGBA4444,
+    //! 16-bit textures: RGB5A1
     RGB5A1,
-    //metal 16 bits pixel formats
+    //! 4-bit PVRTC-compressed texture: PVRTC4
+    PVRTC4,
+    //! 4-bit PVRTC-compressed texture: PVRTC4 (has alpha channel)
+    PVRTC4A,
+    //! 2-bit PVRTC-compressed texture: PVRTC2
+    PVRTC2,
+    //! 2-bit PVRTC-compressed texture: PVRTC2 (has alpha channel)
+    PVRTC2A,
+    //! ETC-compressed texture: ETC
+    ETC,
+    //! S3TC-compressed texture: S3TC_Dxt1
+    S3TC_DXT1,
+    //! S3TC-compressed texture: S3TC_Dxt3
+    S3TC_DXT3,
+    //! S3TC-compressed texture: S3TC_Dxt5
+    S3TC_DXT5,
+    //! ATITC-compressed texture: ATC_RGB
+    ATC_RGB,
+    //! ATITC-compressed texture: ATC_EXPLICIT_ALPHA
+    ATC_EXPLICIT_ALPHA,
+    //! ATITC-compressed texture: ATC_INTERPOLATED_ALPHA
+    ATC_INTERPOLATED_ALPHA,
+    //! Default texture format: AUTO
+
     MTL_B5G6R5,
     //MTL_A1BGR5,
     MTL_BGR5A1,
     MTL_ABGR4,
-    // compressed format
-    ETC1,
-    ATC_RGB,
-    ATC_EXPLICIT_ALPHA,
-    ATC_INTERPOLATED_ALPHA,
-    PVRTC2,
-    PVRTC2A,
-    PVRTC4,
-    PVRTC4A,
-    S3TC_DXT1,
-    S3TC_DXT3,
-    S3TC_DXT5,
-    SYSTEM_DEFAULT
+
+    // A packed 32-bit combined depth and stencil pixel format with two nomorlized unsigned integer
+    // components: 24 bits, typically used for a depth render target, and 8 bits, typically used for
+    // a stencil render target.
+    D24S8,
+
+    DEFAULT = AUTO,
+
+    NONE = -1
 };
 
 enum class TextureUsage : uint32_t
