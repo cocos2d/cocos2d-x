@@ -1,13 +1,8 @@
 #include "Utils.h"
 #include "DeviceMTL.h"
+#include "base/CCConfiguration.h"
 
 #define COLOR_ATTAHCMENT_PIXEL_FORMAT MTLPixelFormatBGRA8Unorm
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#define DEPTH_STENCIL_ATTACHMENT_PIXEL_FORMAT MTLPixelFormatDepth32Float_Stencil8
-#else
-#define DEPTH_STENCIL_ATTACHMENT_PIXEL_FORMAT MTLPixelFormatDepth24Unorm_Stencil8
-#endif
 
 CC_BACKEND_BEGIN
 
@@ -47,11 +42,22 @@ namespace {
         }
         return 0;
     }
+    
+    MTLPixelFormat getSupportedDepthStencilFormat()
+    {
+        MTLPixelFormat pixelFormat = MTLPixelFormatDepth32Float_Stencil8;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        bool isDepth24Stencil8PixelFormatSupported = Configuration::getInstance()->supportsOESPackedDepthStencil();
+        if(isDepth24Stencil8PixelFormatSupported)
+            pixelFormat = MTLPixelFormatDepth24Unorm_Stencil8;
+#endif
+        return pixelFormat;
+    }
 }
 
 MTLPixelFormat Utils::getDefaultDepthStencilAttachmentPixelFormat()
 {
-    return DEPTH_STENCIL_ATTACHMENT_PIXEL_FORMAT;
+    return getSupportedDepthStencilFormat();
 }
 
 MTLPixelFormat Utils::getDefaultColorAttachmentPixelFormat()
@@ -104,7 +110,7 @@ MTLPixelFormat Utils::toMTLPixelFormat(TextureFormat textureFormat)
            
         //on mac, D24S8 means MTLPixelFormatDepth24Unorm_Stencil8, while on ios it means MTLPixelFormatDepth32Float_Stencil8
         case TextureFormat::D24S8:
-            return DEPTH_STENCIL_ATTACHMENT_PIXEL_FORMAT;
+            return getSupportedDepthStencilFormat();
         case TextureFormat::SYSTEM_DEFAULT:
             return COLOR_ATTAHCMENT_PIXEL_FORMAT;
         case TextureFormat::NONE:
@@ -119,7 +125,7 @@ id<MTLTexture> Utils::createDepthStencilAttachmentTexture()
     MTLTextureDescriptor* textureDescriptor = [[MTLTextureDescriptor alloc] init];
     textureDescriptor.width = CAMetalLayer.drawableSize.width;
     textureDescriptor.height = CAMetalLayer.drawableSize.height;
-    textureDescriptor.pixelFormat = DEPTH_STENCIL_ATTACHMENT_PIXEL_FORMAT;
+    textureDescriptor.pixelFormat = getSupportedDepthStencilFormat();
     textureDescriptor.resourceOptions = MTLResourceStorageModePrivate;
     textureDescriptor.usage = MTLTextureUsageRenderTarget;
     auto ret = [CAMetalLayer.device newTextureWithDescriptor:textureDescriptor];
