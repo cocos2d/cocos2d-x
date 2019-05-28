@@ -229,8 +229,9 @@ void DrawNode::updateShader()
 
 void DrawNode::setVertexLayout(CustomCommand& cmd)
 {
+    auto* programState = cmd.getPipelineDescriptor().programState;
     auto& layout = cmd.getPipelineDescriptor().vertexLayout;
-    const auto& attributeInfo = _programState->getProgram()->getActiveAttributes();
+    const auto& attributeInfo = programState->getProgram()->getActiveAttributes();
     auto iter = attributeInfo.find("a_position");
     if(iter != attributeInfo.end())
     {
@@ -316,9 +317,6 @@ void DrawNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
 void DrawNode::drawPoint(const Vec2& position, const float pointSize, const Color4F &color)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    drawDot(position, pointSize*0.5, color);
-#else
     ensureCapacityGLPoint(1);
     
     V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLPoint + _bufferCountGLPoint);
@@ -329,7 +327,6 @@ void DrawNode::drawPoint(const Vec2& position, const float pointSize, const Colo
     _bufferCountGLPoint += 1;
     _dirtyGLPoint = true;
     _customCommandGLPoint.setVertexDrawInfo(0, _bufferCountGLPoint);
-#endif
 }
 
 void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, const Color4F &color)
@@ -339,12 +336,6 @@ void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, con
 
 void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, const float pointSize, const Color4F &color)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    for(unsigned int i=0; i < numberOfPoints; i++)
-    {
-        drawDot(position[i], pointSize*0.5, color);
-    }
-#else
     ensureCapacityGLPoint(numberOfPoints);
     
     V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLPoint + _bufferCountGLPoint);
@@ -358,14 +349,10 @@ void DrawNode::drawPoints(const Vec2 *position, unsigned int numberOfPoints, con
     _bufferCountGLPoint += numberOfPoints;
     _dirtyGLPoint = true;
     _customCommandGLPoint.setVertexDrawInfo(0, _bufferCountGLPoint);
-#endif
 }
 
 void DrawNode::drawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-    drawSegment(origin, destination, _lineWidth, color);
-#else
     ensureCapacityGLLine(2);
     
     V2F_C4B_T2F *point = (V2F_C4B_T2F*)(_bufferGLLine + _bufferCountGLLine);
@@ -380,7 +367,6 @@ void DrawNode::drawLine(const Vec2 &origin, const Vec2 &destination, const Color
     _bufferCountGLLine += 2;
     _dirtyGLLine = true;
     _customCommandGLLine.setVertexDrawInfo(0, _bufferCountGLLine);
-#endif
 }
 
 void DrawNode::drawRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
