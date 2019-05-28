@@ -44,9 +44,21 @@ using namespace std;
 
 namespace {
 
-    struct ConditionVariable {
-        std::mutex mutex;
-        std::condition_variable cond;
+    class ConditionVariable {
+    public:
+
+        void wait_for(const std::chrono::duration<float>& timeout) {
+            std::unique_lock<std::mutex> lock(_mutex);
+            _cond.wait_for(lock, timeout);
+        }
+
+        void notify_all() {
+            _cond.notify_all();
+        }
+
+    private:
+        std::mutex _mutex;
+        std::condition_variable _cond;
     };
 
     class ConnectionCV {
@@ -84,8 +96,7 @@ namespace {
                 }
                 p = itr->second;
             }
-            std::unique_lock<std::mutex> guard(p->mutex);
-            p->cond.notify_all();
+            p->notify_all();
         }
 
         void waitForClosing(int64_t id, std::chrono::duration<float> timeout)
@@ -99,8 +110,7 @@ namespace {
                 }
                 p = itr->second;
             }
-            std::unique_lock<std::mutex> ul(p->mutex);
-            p->cond.wait_for(ul, timeout);
+            p->wait_for(timeout);
         }
     private:
         std::mutex _mtx;
@@ -109,12 +119,12 @@ namespace {
 }
 
 
-namespace cocos2d{
+namespace {
 
+    using namespace cocos2d;
 
-
-    int64_t _callJavaConnect(const std::string &url,const std::vector<std::string> *protocals, const std::string & caFile)
-    {
+    int64_t _callJavaConnect(const std::string &url, const std::vector<std::string> *protocals,
+                             const std::string &caFile) {
         jlong connectionID = -1;
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
@@ -125,7 +135,7 @@ namespace cocos2d{
 
             //read text content of `caFile`
             std::string caContent;
-            if(!caFile.empty()) {
+            if (!caFile.empty()) {
                 caContent = FileUtils::getInstance()->getStringFromFile(caFile);
             }
 
@@ -135,14 +145,18 @@ namespace cocos2d{
 
             size_t protocalLength = protocals == nullptr ? 0 : protocals->size();
 
-            jobjectArray jprotocals = methodInfo.env->NewObjectArray((jsize)protocalLength, stringClass, methodInfo.env->NewStringUTF(""));
-            for(unsigned int i = 0 ; i < protocalLength ; i++ )
-            {
+            jobjectArray jprotocals = methodInfo.env->NewObjectArray((jsize) protocalLength,
+                                                                     stringClass,
+                                                                     methodInfo.env->NewStringUTF(
+                                                                             ""));
+            for (unsigned int i = 0; i < protocalLength; i++) {
                 jstring item = methodInfo.env->NewStringUTF(protocals->at(i).c_str());
                 methodInfo.env->SetObjectArrayElement(jprotocals, i, item);
             }
 
-            connectionID = methodInfo.env->CallStaticLongMethod(methodInfo.classID, methodInfo.methodID, jurl, jprotocals, jcaFile);
+            connectionID = methodInfo.env->CallStaticLongMethod(methodInfo.classID,
+                                                                methodInfo.methodID, jurl,
+                                                                jprotocals, jcaFile);
             methodInfo.env->DeleteLocalRef(jurl);
             methodInfo.env->DeleteLocalRef(jcaFile);
             methodInfo.env->DeleteLocalRef(stringClass);
@@ -152,23 +166,22 @@ namespace cocos2d{
         return connectionID;
     }
 
-    void _callJavaDisconnect(int64_t cid, bool syncClose)
-    {
+    void _callJavaDisconnect(int64_t cid, bool syncClose) {
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
                                            J_BINARY_CLS_WEBSOCKET,
                                            "disconnect",
                                            "(JZ)V")) {
             jlong connectionID = cid;
-            methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, connectionID, (jboolean) syncClose);
+            methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID,
+                                                 connectionID, (jboolean) syncClose);
             methodInfo.env->DeleteLocalRef(methodInfo.classID);
         }
 
     }
 
 
-    void _callJavaSendBinary(int64_t cid, const unsigned char *data, size_t len)
-    {
+    void _callJavaSendBinary(int64_t cid, const unsigned char *data, size_t len) {
 
         JniMethodInfo methodInfo;
         if (JniHelper::getStaticMethodInfo(methodInfo,
@@ -176,9 +189,10 @@ namespace cocos2d{
                                            "sendBinary",
                                            "(J[B)V")) {
             jlong connectionID = cid;
-            jbyteArray jdata = methodInfo.env->NewByteArray((jsize)len);
-            methodInfo.env->SetByteArrayRegion(jdata, 0, (jsize)len, (const jbyte *)data);
-            methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, connectionID, jdata);
+            jbyteArray jdata = methodInfo.env->NewByteArray((jsize) len);
+            methodInfo.env->SetByteArrayRegion(jdata, 0, (jsize) len, (const jbyte *) data);
+            methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID,
+                                                 connectionID, jdata);
             methodInfo.env->DeleteLocalRef(jdata);
             methodInfo.env->DeleteLocalRef(methodInfo.classID);
         }
@@ -193,29 +207,27 @@ namespace cocos2d{
                                            "(J"  JARG_STR ")V")) {
             jlong connectionID = cid;
             jstring jdata = methodInfo.env->NewStringUTF(data.c_str());
-            methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, connectionID, jdata);
+            methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID,
+                                                 connectionID, jdata);
             methodInfo.env->DeleteLocalRef(jdata);
             methodInfo.env->DeleteLocalRef(methodInfo.classID);
         }
     }
 
     static JNINativeMethod sMethodTable[] = {
-            { "triggerEvent", "(J" JARG_STR JARG_STR "Z)V", (void*)cocos2d::network::_WebSocketAndroidNativeTriggerEvent}
+            {"triggerEvent", "(J" JARG_STR JARG_STR "Z)V", (void *) cocos2d::network::_WebSocketAndroidNativeTriggerEvent}
     };
 
-    static bool _registerNativeMethods(JNIEnv* env)
-    {
+    static bool _registerNativeMethods(JNIEnv *env) {
         jclass clazz = env->FindClass(JCLS_WEBSOCKET);
-        if (clazz == nullptr)
-        {
+        if (clazz == nullptr) {
             CCLOGERROR("_registerNativeMethods: can't find java class:%s", JARG_DOWNLOADER);
             return false;
         }
-        if (JNI_OK != env->RegisterNatives(clazz, sMethodTable, sizeof(sMethodTable) / sizeof(sMethodTable[0])))
-        {
+        if (JNI_OK != env->RegisterNatives(clazz, sMethodTable,
+                                           sizeof(sMethodTable) / sizeof(sMethodTable[0]))) {
             CCLOGERROR("_registerNativeMethods: failed");
-            if (env->ExceptionCheck())
-            {
+            if (env->ExceptionCheck()) {
                 env->ExceptionClear();
             }
             return false;
@@ -227,6 +239,9 @@ namespace cocos2d{
     static ConnectionCV __syncPipe;
     static std::recursive_mutex __socketMapMtx;
     static std::unordered_map<int64_t, cocos2d::network::WebSocket *> __socketMap;
+}
+
+namespace cocos2d {
 
     namespace network {
 
