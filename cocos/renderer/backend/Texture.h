@@ -3,7 +3,6 @@
 #include "Types.h"
 #include "base/CCRef.h"
 #include <cassert>
-#include "renderer/CCTexture2D.h"
 
 #include <functional>
 
