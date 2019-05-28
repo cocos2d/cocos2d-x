@@ -311,7 +311,7 @@ namespace cocos2d{
 
         void WebSocket::close()
         {
-            _callJavaDisconnect(_connectionID, true);
+            _callJavaDisconnect(_connectionID, /* syncClose */ true);
             __syncPipe.waitForClosing(_connectionID, std::chrono::seconds(5));
             //invoke callback in current thread
             _readyState = State::CLOSED;
@@ -320,7 +320,7 @@ namespace cocos2d{
 
         void WebSocket::closeAsync()
         {
-            _callJavaDisconnect(_connectionID, false);
+            _callJavaDisconnect(_connectionID, /* syncClose */ false);
         }
 
         void WebSocket::triggerEvent(const std::string &eventName, const std::string &data,
