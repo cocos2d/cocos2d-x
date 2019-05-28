@@ -83,6 +83,7 @@ void Mesh::resetLightUniformValues()
     _spotLightUniformColorValues.assign(maxSpotLight, Vec3::ZERO);
     _spotLightUniformPositionValues.assign(maxSpotLight, Vec3::ZERO);
     
+    //TODO It's strange that init _spotLightUniformDirValues to zeros will cause no light effects on iPhone6 and iPhone6s, but works well on iPhoneX
     //fix no light effects on iPhone6 and iPhone6s
     _spotLightUniformDirValues.assign(maxSpotLight, Vec3(FLT_EPSILON, 0.0f, 0.0f));
     _spotLightUniformInnerAngleCosValues.assign(maxSpotLight, 1.0f);
