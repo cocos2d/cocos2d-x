@@ -326,6 +326,10 @@ namespace cocos2d {
 
         void WebSocket::close()
         {
+            if(_readyState == State::CLOSED) {
+                return;
+            }
+
             _callJavaDisconnect(_connectionID, /* syncClose */ true);
             __syncPipe.waitForClosing(_connectionID, std::chrono::seconds(5));
             //invoke callback in current thread
