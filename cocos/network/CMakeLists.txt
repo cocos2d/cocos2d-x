@@ -1,7 +1,7 @@
 if(ANDROID)
     set(COCOS_NETWORK_HEADER
         network/CCDownloader-android.h
-        network/CCWebSocket-android.h
+        network/WebSocket-android.h
         )
     set(COCOS_NETWORK_SRC
         network/HttpClient-android.cpp
@@ -9,11 +9,13 @@ if(ANDROID)
         network/CCDownloader.cpp
         network/CCDownloader-android.cpp
         network/Uri.cpp
+        network/WebSocket.cpp
         network/CCWebSocket-android.cpp
         )
 elseif(APPLE)
     set(COCOS_NETWORK_HEADER
         network/CCDownloader-apple.h
+        network/WebSocket-libwebsocket.h
         network/HttpAsynConnection-apple.h
         )
     set(COCOS_NETWORK_SRC
@@ -21,15 +23,20 @@ elseif(APPLE)
         network/HttpClient.cpp
         network/SocketIO.cpp
         network/WebSocket.cpp
+        network/WebSocket-libwebsocket.cpp
         network/CCDownloader.cpp
         network/CCDownloader-curl.cpp
         network/Uri.cpp
         )
 else()
+    set(COCOS_NETWORK_HEADER
+        network/WebSocket-libwebsocket.h
+        )
     set(COCOS_NETWORK_SRC
         network/HttpClient.cpp
         network/SocketIO.cpp
         network/WebSocket.cpp
+        network/WebSocket-libwebsocket.cpp
         network/CCDownloader.cpp
         network/CCDownloader-curl.cpp
         network/Uri.cpp

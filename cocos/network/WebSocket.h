@@ -40,17 +40,8 @@
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCStdC.h"
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-#include "platform/android/jni/JniHelper.h"
-#endif
 
-struct lws;
-struct lws_protocols;
-struct lws_vhost;
-/**
- * @addtogroup network
- * @{
- */
+
 
 NS_CC_BEGIN
 
@@ -58,12 +49,7 @@ class EventListenerCustom;
 
 namespace network {
 
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-void _WebSocketAndroidNativeTriggerEvent(JNIEnv *env, jclass *klass, jlong cid, jstring eventName, jstring data, jboolean isBinary);
-#endif
-
-class WsThreadHelper;
+class WebSocketImpl;
 
 /**
  * WebSocket is wrapper of the libwebsockets-protocol, let the develop could call the websocket easily.
@@ -135,7 +121,7 @@ public:
     {
     public:
         /** Destructor of Delegate. */
-        virtual ~Delegate() {}
+        virtual ~Delegate()  = default;
         /**
          * This function to be called after the client connection complete a handshake with the remote server.
          * This means that the WebSocket connection is ready to send and receive data.
@@ -224,74 +210,17 @@ public:
     /**
      *  @brief Gets the URL of websocket connection.
      */
-    inline const std::string& getUrl() const { return _url; }
+    const std::string& getUrl() const;
 
     /**
      *  @brief Gets the protocol selected by websocket server.
      */
-    inline const std::string& getProtocol() const { return _selectedProtocol; }
+    const std::string& getProtocol() const;
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
+protected:
 
-private:
+    std::shared_ptr<WebSocketImpl> _impl;
 
-    // The following callback functions are invoked in websocket thread
-    void onClientOpenConnectionRequest();
-    int onSocketCallback(struct lws *wsi, int reason, void *in, ssize_t len);
-
-    int onClientWritable();
-    int onClientReceivedData(void* in, ssize_t len);
-    int onConnectionOpened();
-    int onConnectionError(void* in, ssize_t len);
-    int onConnectionClosed();
-
-    struct lws_vhost* createVhost(struct lws_protocols* protocols, int& sslConnection);
-
-private:
-
-    std::vector<char> _receivedData;
-
-    struct lws* _wsInstance;
-    struct lws_protocols* _lwsProtocols;
-    std::string _clientSupportedProtocols;
-
-    std::shared_ptr<std::atomic<bool>> _isDestroyed;
-
-    std::mutex _closeMutex;
-    std::condition_variable _closeCondition;
-    std::vector<char*> _protocolNames;
-
-    enum class CloseState
-    {
-        NONE,
-        SYNC_CLOSING,
-        SYNC_CLOSED,
-        ASYNC_CLOSING
-    };
-    
-    CloseState _closeState;
-    std::mutex  _readyStateMutex;
-    EventListenerCustom* _resetDirectorListener;
-
-    friend class WsThreadHelper;
-    friend class WebSocketCallbackWrapper;
-#else //Android platform
-private:
-    int64_t     _connectionID = -1;
-//public:
-    void triggerEvent(const std::string& eventName, const std::string &data, bool binary);
-
-    friend void cocos2d::network::_WebSocketAndroidNativeTriggerEvent(JNIEnv *env, jclass *klass, jlong cid, jstring eventName, jstring data, jboolean isBinary);
-#endif
-
-private:
-
-    State       _readyState;
-    Delegate*   _delegate  = nullptr;
-    std::string _selectedProtocol;
-    std::string _caFilePath;
-
-    std::string _url;
 };
 
 } // namespace network {

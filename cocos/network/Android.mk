@@ -9,6 +9,7 @@ LOCAL_ARM_MODE := arm
 
 LOCAL_SRC_FILES := HttpClient-android.cpp \
 SocketIO.cpp \
+WebSocket.cpp \
 CCWebSocket-android.cpp \
 CCDownloader.cpp \
 CCDownloader-android.cpp \

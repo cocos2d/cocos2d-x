@@ -39,7 +39,7 @@ THE SOFTWARE.
 #include "platform/android/jni/JniHelper.h"
 #include "platform/CCDataManager.h"
 #include "network/CCDownloader-android.h"
-#include "network/CCWebSocket-android.h"
+#include "network/WebSocket-android.h"
 #include <unistd.h>
 #include <android/log.h>
 #include <android/api-level.h>

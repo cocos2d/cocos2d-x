@@ -184,3 +184,5 @@ temp/
 *.zip
 
 **/.project
+**/.classpath
+**/.settings

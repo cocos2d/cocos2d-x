@@ -22,7 +22,7 @@
  ****************************************************************************/
 
 
-#include "network/CCWebSocket-android.h"
+#include "network/WebSocket-android.h"
 #include "network/WebSocket.h"
 #include "platform/CCFileUtils.h"
 #include "platform/android/jni/JniHelper.h"
@@ -238,7 +238,7 @@ namespace {
     static bool __registered = false;
     static ConnectionCV __syncPipe;
     static std::recursive_mutex __socketMapMtx;
-    static std::unordered_map<int64_t, cocos2d::network::WebSocket *> __socketMap;
+    static std::unordered_map<int64_t, cocos2d::network::WebSocketImpl *> __socketMap;
 }
 
 namespace cocos2d {
@@ -267,11 +267,11 @@ namespace cocos2d {
             }
         }
 
-        WebSocket::WebSocket()
+        WebSocketImpl::WebSocketImpl(WebSocket *ws): _socket(ws)
         {
         }
 
-        WebSocket::~WebSocket()
+        WebSocketImpl::~WebSocketImpl()
         {
             if(_connectionID > 0)
             {
@@ -290,14 +290,14 @@ namespace cocos2d {
             __socketMap.clear();
         }
 
-        bool WebSocket::init(const cocos2d::network::WebSocket::Delegate &delegate,
+        bool WebSocketImpl::init(const cocos2d::network::WebSocket::Delegate &delegate,
                              const std::string &url, const std::vector<std::string> *protocols,
                              const std::string &caFilePath) {
 
-            _delegate = const_cast<Delegate*>(&delegate);
+            _delegate = const_cast<WebSocket::Delegate*>(&delegate);
             _url = url;
             _caFilePath = caFilePath;
-            _readyState = State::CONNECTING;
+            _readyState = WebSocket::State::CONNECTING;
 
             if(_url.empty()) return false;
 
@@ -314,61 +314,65 @@ namespace cocos2d {
             return true;
         }
 
-        void WebSocket::send(const std::string &message)
+        void WebSocketImpl::send(const std::string &message)
         {
             _callJavaSendString(_connectionID, message);
         }
 
-        void WebSocket::send(const unsigned char *binaryMsg, unsigned int len)
+        void WebSocketImpl::send(const unsigned char *binaryMsg, unsigned int len)
         {
             _callJavaSendBinary(_connectionID, binaryMsg, len);
         }
 
-        void WebSocket::close()
+        void WebSocketImpl::close()
         {
-            if(_readyState == State::CLOSED) {
+            if(_readyState == WebSocket::State::CLOSED || _readyState == WebSocket::State::CLOSING) {
                 return;
             }
 
             _callJavaDisconnect(_connectionID, /* syncClose */ true);
             __syncPipe.waitForClosing(_connectionID, std::chrono::seconds(5));
             //invoke callback in current thread
-            _readyState = State::CLOSED;
-            _delegate->onClose(this);
+            _readyState = WebSocket::State::CLOSED;
+            _delegate->onClose(this->_socket);
         }
 
-        void WebSocket::closeAsync()
+        void WebSocketImpl::closeAsync()
         {
+            if(_readyState == WebSocket::State::CLOSED || _readyState == WebSocket::State::CLOSING) {
+                return;
+            }
+
             _callJavaDisconnect(_connectionID, /* syncClose */ false);
         }
 
-        void WebSocket::triggerEvent(const std::string &eventName, const std::string &data,
+        void WebSocketImpl::triggerEvent(const std::string &eventName, const std::string &data,
                                      bool binary)
                                      {
             //all events except "sync-closed" are running in GL-thread
 
             if(eventName == "open")
             {
-                _readyState = State::OPEN;
-                _delegate->onOpen(this);
+                _readyState = WebSocket::State::OPEN;
+                _delegate->onOpen(this->_socket);
             }
             else if(eventName == "message")
             {
-                Data msg;
+                WebSocket::Data msg;
                 msg.bytes = const_cast<char*>(data.c_str());
                 msg.len = data.size();
                 msg.isBinary = binary;
-                _delegate->onMessage(this, msg);
+                _delegate->onMessage(this->_socket, msg);
             }
             else if(eventName == "closing")
             {
-                _readyState = State::CLOSING;
+                _readyState = WebSocket::State::CLOSING;
             }
             else if(eventName == "closed")
             {
-                _readyState = State::CLOSED;
+                _readyState = WebSocket::State::CLOSED;
                 __syncPipe.notifyClosed(_connectionID);
-                _delegate->onClose(this);
+                _delegate->onClose(this->_socket);
             }
             else if(eventName == "sync-closed")
             {
@@ -376,16 +380,16 @@ namespace cocos2d {
             }
             else if(eventName == "error")
             {
-                _readyState = State::CLOSED;
-                ErrorCode code = ErrorCode::UNKNOWN;
+                _readyState = WebSocket::State::CLOSED;
+                WebSocket::ErrorCode code = WebSocket::ErrorCode::UNKNOWN;
                 if(data == "TIME_OUT") {
-                    code = ErrorCode::TIME_OUT;
+                    code = WebSocket::ErrorCode::TIME_OUT;
                 } else if (data == "CONNECTION_FAILURE") {
-                    code = ErrorCode::CONNECTION_FAILURE;
+                    code = WebSocket::ErrorCode::CONNECTION_FAILURE;
                 } else {
                     CCLOGERROR("WebSocket unkown error %s", data.c_str());
                 }
-                _delegate->onError(this, code);
+                _delegate->onError(this->_socket, code);
                 __syncPipe.notifyClosed(_connectionID);
             }
             else
@@ -395,9 +399,6 @@ namespace cocos2d {
 
         }
 
-        WebSocket::State WebSocket::getReadyState() {
-            return _readyState;
-        }
     }
 }
 
