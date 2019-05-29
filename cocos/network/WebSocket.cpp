@@ -23,19 +23,6 @@
  ****************************************************************************/
 
 #include "network/WebSocket.h"
-#include "network/Uri.h"
-#include "base/CCDirector.h"
-#include "base/CCScheduler.h"
-#include "base/CCEventDispatcher.h"
-#include "base/CCEventListenerCustom.h"
-#include "platform/CCFileUtils.h"
-
-#include <thread>
-#include <mutex>
-#include <queue>
-#include <list>
-#include <signal.h>
-#include <errno.h>
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 #include "WebSocket-android.h"

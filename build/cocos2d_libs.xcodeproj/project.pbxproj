@@ -4461,6 +4461,12 @@
 		ED682BC1213F63CB001BF6CB /* libuv_a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED682BC0213F63CB001BF6CB /* libuv_a.a */; };
 		ED682BC3213F6C7A001BF6CB /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED682BC2213F6C7A001BF6CB /* libwebsockets.a */; };
 		ED682BC5213F6CBF001BF6CB /* libuv_a.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED682BC4213F6CBE001BF6CB /* libuv_a.a */; };
+		ED6BF8BF229E73DE00D071B0 /* WebSocket-libwebsocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED6BF8BD229E73DE00D071B0 /* WebSocket-libwebsocket.cpp */; };
+		ED6BF8C0229E73DE00D071B0 /* WebSocket-libwebsocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED6BF8BD229E73DE00D071B0 /* WebSocket-libwebsocket.cpp */; };
+		ED6BF8C1229E73DE00D071B0 /* WebSocket-libwebsocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED6BF8BD229E73DE00D071B0 /* WebSocket-libwebsocket.cpp */; };
+		ED6BF8C2229E73DE00D071B0 /* WebSocket-libwebsocket.h in Headers */ = {isa = PBXBuildFile; fileRef = ED6BF8BE229E73DE00D071B0 /* WebSocket-libwebsocket.h */; };
+		ED6BF8C3229E73DE00D071B0 /* WebSocket-libwebsocket.h in Headers */ = {isa = PBXBuildFile; fileRef = ED6BF8BE229E73DE00D071B0 /* WebSocket-libwebsocket.h */; };
+		ED6BF8C4229E73DE00D071B0 /* WebSocket-libwebsocket.h in Headers */ = {isa = PBXBuildFile; fileRef = ED6BF8BE229E73DE00D071B0 /* WebSocket-libwebsocket.h */; };
 		ED74D7691A5B8A2600157FD4 /* CCPhysicsHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = ED74D7681A5B8A2600157FD4 /* CCPhysicsHelper.h */; };
 		ED74D76A1A5B8A2600157FD4 /* CCPhysicsHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = ED74D7681A5B8A2600157FD4 /* CCPhysicsHelper.h */; };
 		ED9C6A9418599AD8000A5232 /* CCNodeGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */; };
@@ -6080,6 +6086,8 @@
 		ED682BC0213F63CB001BF6CB /* libuv_a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv_a.a; path = ../external/uv/prebuilt/ios/libuv_a.a; sourceTree = "<group>"; };
 		ED682BC2213F6C7A001BF6CB /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../external/websockets/prebuilt/tvos/libwebsockets.a; sourceTree = "<group>"; };
 		ED682BC4213F6CBE001BF6CB /* libuv_a.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libuv_a.a; path = ../external/uv/prebuilt/tvos/libuv_a.a; sourceTree = "<group>"; };
+		ED6BF8BD229E73DE00D071B0 /* WebSocket-libwebsocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "WebSocket-libwebsocket.cpp"; sourceTree = "<group>"; };
+		ED6BF8BE229E73DE00D071B0 /* WebSocket-libwebsocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebSocket-libwebsocket.h"; sourceTree = "<group>"; };
 		ED74D7681A5B8A2600157FD4 /* CCPhysicsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsHelper.h; sourceTree = "<group>"; };
 		ED9C6A9218599AD8000A5232 /* CCNodeGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCNodeGrid.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		ED9C6A9318599AD8000A5232 /* CCNodeGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNodeGrid.h; sourceTree = "<group>"; };
@@ -8157,6 +8165,8 @@
 		507003271B69821300E83DDD /* WebSocket */ = {
 			isa = PBXGroup;
 			children = (
+				ED6BF8BD229E73DE00D071B0 /* WebSocket-libwebsocket.cpp */,
+				ED6BF8BE229E73DE00D071B0 /* WebSocket-libwebsocket.h */,
 				1AAF5368180E3374000584C8 /* WebSocket.cpp */,
 				1AAF5369180E3374000584C8 /* WebSocket.h */,
 			);
@@ -9638,6 +9648,7 @@
 				15AE1BA419AADFDF00C27E9E /* UILayoutManager.h in Headers */,
 				2962D5E81C61CBF9004821A3 /* CCUITextInput.h in Headers */,
 				1A01C69418F57BE800EFE3A6 /* CCFloat.h in Headers */,
+				ED6BF8C2229E73DE00D071B0 /* WebSocket-libwebsocket.h in Headers */,
 				46BDE4D01FA86C7F00104C05 /* Triangulator.h in Headers */,
 				50864CB81C7BC1B000B3BAB1 /* cpMarch.h in Headers */,
 				1A57034D180BD09B0088DEC7 /* tinyxml2.h in Headers */,
@@ -10451,6 +10462,7 @@
 				503341A11D9DC7B400770EC7 /* SkeletonBinary.h in Headers */,
 				507B3FCC1C31BDD30067B53E /* CCPUSphereColliderTranslator.h in Headers */,
 				50864CBD1C7BC1B000B3BAB1 /* cpPinJoint.h in Headers */,
+				ED6BF8C4229E73DE00D071B0 /* WebSocket-libwebsocket.h in Headers */,
 				46BDE4F21FA87D6F00104C05 /* Triangulator.h in Headers */,
 				507B3FCD1C31BDD30067B53E /* utlist.h in Headers */,
 				507B3FCE1C31BDD30067B53E /* unzip.h in Headers */,
@@ -11264,6 +11276,7 @@
 				294D7D971D0E67B4002CE7B7 /* CCDevice-apple.h in Headers */,
 				B665E4051AA80A6600DDB1C5 /* CCPUSphereColliderTranslator.h in Headers */,
 				50864CBC1C7BC1B000B3BAB1 /* cpPinJoint.h in Headers */,
+				ED6BF8C3229E73DE00D071B0 /* WebSocket-libwebsocket.h in Headers */,
 				46BDE4F11FA87D6F00104C05 /* Triangulator.h in Headers */,
 				50ABBED61925AB6F00A911A9 /* utlist.h in Headers */,
 				1A57035B180BD0B00088DEC7 /* unzip.h in Headers */,
@@ -12087,6 +12100,7 @@
 				50ABBEA71925AB6F00A911A9 /* CCTouch.cpp in Sources */,
 				15AE191319AAD35000C27E9E /* CCSGUIReader.cpp in Sources */,
 				B6DD2FBD1B04825B00E47F5F /* DetourCommon.cpp in Sources */,
+				ED6BF8BF229E73DE00D071B0 /* WebSocket-libwebsocket.cpp in Sources */,
 				15AE186819AAD31D00C27E9E /* CDXMacOSXSupport.mm in Sources */,
 				B665E3221AA80A6500DDB1C5 /* CCPUOnCollisionObserver.cpp in Sources */,
 				15AE191519AAD35000C27E9E /* CCSkin.cpp in Sources */,
@@ -12363,6 +12377,7 @@
 				507B3A341C31BDD30067B53E /* CCPULinearForceAffectorTranslator.cpp in Sources */,
 				507B3A351C31BDD30067B53E /* CCPUUtil.cpp in Sources */,
 				507B3A361C31BDD30067B53E /* CCPUGeometryRotator.cpp in Sources */,
+				ED6BF8C1229E73DE00D071B0 /* WebSocket-libwebsocket.cpp in Sources */,
 				507B3A391C31BDD30067B53E /* HttpClient-apple.mm in Sources */,
 				507B3A3B1C31BDD30067B53E /* CCPUBaseForceAffectorTranslator.cpp in Sources */,
 				507B3A3C1C31BDD30067B53E /* FlatBuffersSerialize.cpp in Sources */,
@@ -13033,6 +13048,7 @@
 				B665E4271AA80A6600DDB1C5 /* CCPUUtil.cpp in Sources */,
 				5020A15D1D49912500E80C72 /* AnimationStateData.c in Sources */,
 				B665E2BF1AA80A6500DDB1C5 /* CCPUGeometryRotator.cpp in Sources */,
+				ED6BF8C0229E73DE00D071B0 /* WebSocket-libwebsocket.cpp in Sources */,
 				52B47A301A5349A3004E4C60 /* HttpClient-apple.mm in Sources */,
 				1A2B22B31E6E54EC001D5EC9 /* Uri.cpp in Sources */,
 				B665E2131AA80A6500DDB1C5 /* CCPUBaseForceAffectorTranslator.cpp in Sources */,

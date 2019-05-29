@@ -31,16 +31,10 @@
 #pragma once
 
 #include <string>
-#include <vector>
-#include <mutex>
 #include <memory>  // for std::shared_ptr
-#include <atomic>
-#include <condition_variable>
 
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCStdC.h"
-
-
 
 
 NS_CC_BEGIN
