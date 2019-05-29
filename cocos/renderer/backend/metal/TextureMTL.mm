@@ -68,13 +68,13 @@ namespace
     }
 
     
-    bool convertData(uint8_t* src, unsigned int length, TextureFormat format, uint8_t** out)
+    bool convertData(uint8_t* src, unsigned int length, PixelFormat format, uint8_t** out)
     {
         *out = src;
         bool converted = false;
         switch (format)
         {
-            case PixelFormat::R8G8B8:
+            case PixelFormat::RGB888:
                 {
                     *out = (uint8_t*)malloc(length * 4);
                     convertRGB2RGBA(src, *out, length);
@@ -87,12 +87,12 @@ namespace
         return converted;
     }
     
-    bool isColorRenderable(TextureFormat textureFormat)
+    bool isColorRenderable(PixelFormat textureFormat)
     {
         switch (textureFormat)
         {
-            case PixelFormat::R8G8B8A8:
-            case PixelFormat::R8G8B8:
+            case PixelFormat::RGBA8888:
+            case PixelFormat::RGB888:
             case PixelFormat::RGBA4444:
             case PixelFormat::RGB565:
             case PixelFormat::RGB5A1:
@@ -105,7 +105,7 @@ namespace
         }
     }
     
-    bool isCompressedFormat(TextureFormat textureFormat)
+    bool isCompressedFormat(PixelFormat textureFormat)
     {
         MTLPixelFormat pixelFormat = Utils::toMTLPixelFormat(textureFormat);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -143,7 +143,7 @@ void TextureMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescript
     Texture::updateTextureDescriptor(descriptor);
     createTexture(_mtlDevice, descriptor);
     updateSamplerDescriptor(descriptor.samplerDescriptor);
-    if (PixelFormat::R8G8B8 == _textureFormat)
+    if (PixelFormat::RGB888 == _textureFormat)
     {
         _bitsPerElement = 4 * 8;
     }
@@ -308,7 +308,7 @@ void TextureCubeMTL::updateTextureDescriptor(const cocos2d::backend::TextureDesc
     updateSamplerDescriptor(descriptor.samplerDescriptor);
     
     // Metal doesn't support RGB888/RGBA4444, so should convert to RGBA888;
-    if (PixelFormat::R8G8B8 == _textureFormat)
+    if (PixelFormat::RGB888 == _textureFormat)
     {
         _bitsPerElement = 4 * 8;
     }

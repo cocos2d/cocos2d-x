@@ -72,7 +72,7 @@ void Utils::updateDefaultColorAttachmentTexture(id<MTLTexture> texture)
     Utils::_defaultColorAttachmentTexture = texture;
 }
 
-MTLPixelFormat Utils::toMTLPixelFormat(TextureFormat textureFormat)
+MTLPixelFormat Utils::toMTLPixelFormat(PixelFormat textureFormat)
 {
     switch (textureFormat)
     {
@@ -92,10 +92,10 @@ MTLPixelFormat Utils::toMTLPixelFormat(TextureFormat textureFormat)
         case PixelFormat::PVRTC2:
             return MTLPixelFormatPVRTC_RGB_2BPP;
 #endif
-        case PixelFormat::R8G8B8A8:
+        case PixelFormat::RGBA8888:
             return MTLPixelFormatRGBA8Unorm;
             // Should transfer the data to match pixel format when updating data.
-        case PixelFormat::R8G8B8:
+        case PixelFormat::RGB888:
             return MTLPixelFormatRGBA8Unorm;
         case PixelFormat::A8:
             return MTLPixelFormatA8Unorm;
