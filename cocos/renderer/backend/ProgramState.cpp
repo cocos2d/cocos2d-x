@@ -146,6 +146,10 @@ TextureInfo& TextureInfo::operator=(TextureInfo&& rhs)
         //release the textures before cleaning the vertor
         rhs.releaseTextures();
         rhs.textures.clear();
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+        location = rhs.location;
+#endif
     }
     return *this;
 }
@@ -157,6 +161,10 @@ TextureInfo& TextureInfo::operator=(const TextureInfo& rhs)
         slot = rhs.slot;
         textures = rhs.textures;
         retainTextures();
+
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+        location = rhs.location;
+#endif
     }
     return *this;
 }
