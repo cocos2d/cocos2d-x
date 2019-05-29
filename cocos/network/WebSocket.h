@@ -32,6 +32,7 @@
 
 #include <string>
 #include <memory>  // for std::shared_ptr
+#include <vector>
 
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCStdC.h"
