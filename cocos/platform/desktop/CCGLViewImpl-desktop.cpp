@@ -491,7 +491,7 @@ void GLViewImpl::setIcon(const std::vector<std::string>& filelist) const {
     GLFWwindow* window = this->getWindow();
     glfwSetWindowIcon(window, iconsCount, images);
 
-    CC_SAFE_DELETE(images);
+    CC_SAFE_DELETE_ARRAY(images);
     for (auto& icon: icons) {
         CC_SAFE_DELETE(icon);
     }

@@ -41,8 +41,8 @@ public:
      virtual void copyAttributesTo (PUEmitter* emitter) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUPointEmitter(void);
-    virtual ~PUPointEmitter(void);
+    PUPointEmitter();
+    virtual ~PUPointEmitter();
 
 };
 NS_CC_END

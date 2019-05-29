@@ -39,8 +39,8 @@ class TriggerObj;
 class CC_STUDIO_DLL ArmatureMovementDispatcher : public cocos2d::Ref
 {
 public:
-	ArmatureMovementDispatcher(void);
-	~ArmatureMovementDispatcher(void);
+	ArmatureMovementDispatcher();
+	~ArmatureMovementDispatcher();
 public:
 	void addAnimationEventCallBack(cocos2d::Ref*pTarget, SEL_MovementEventCallFunc mecf);
 	void removeAnnimationEventCallBack(cocos2d::Ref*pTarget, SEL_MovementEventCallFunc mecf);
@@ -54,8 +54,8 @@ private:
 class CC_STUDIO_DLL TriggerMng
 {
 public:
-    TriggerMng(void);
-    virtual ~TriggerMng(void);
+    TriggerMng();
+    virtual ~TriggerMng();
 
 public:
     static TriggerMng* getInstance();
@@ -65,12 +65,12 @@ public:
 public:
     void parse(const rapidjson::Value &root);
     void parse(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
-    void removeAll(void);
+    void removeAll();
     cocos2d::Vector<TriggerObj*>* get(unsigned int event) const;
     TriggerObj* getTriggerObj(unsigned int id) const;
     bool removeTriggerObj(TriggerObj *Obj);
     bool removeTriggerObj(unsigned int id);
-    bool isEmpty(void) const;
+    bool isEmpty() const;
 
     void addArmatureMovementCallBack(Armature *pAr, cocos2d::Ref *pTarget, SEL_MovementEventCallFunc mecf);
     void removeArmatureMovementCallBack(Armature *pAr, cocos2d::Ref *pTarget, SEL_MovementEventCallFunc mecf);

@@ -334,7 +334,7 @@ bool MenuItemAtlasFont::initWithString(const std::string& value, const std::stri
 
 bool MenuItemAtlasFont::initWithString(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback)
 {
-    CCASSERT( value.size() != 0, "value length must be greater than 0");
+    CCASSERT( !value.empty(), "value length must be greater than 0");
     LabelAtlas *label = LabelAtlas::create();
     label->initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap);
     if (MenuItemLabel::initWithLabel(label, callback))
@@ -667,7 +667,7 @@ MenuItemImage* MenuItemImage::create()
     return nullptr;
 }
 
-bool MenuItemImage::init(void)
+bool MenuItemImage::init()
 {
     return initWithNormalImage("", "", "", (const ccMenuCallback&)nullptr);
 }
@@ -736,17 +736,17 @@ bool MenuItemImage::initWithNormalImage(const std::string& normalImage, const st
     Node *selectedSprite = nullptr;
     Node *disabledSprite = nullptr;
 
-    if (normalImage.size() >0)
+    if (!normalImage.empty())
     {
         normalSprite = Sprite::create(normalImage);
     }
 
-    if (selectedImage.size() >0)
+    if (!selectedImage.empty())
     {
         selectedSprite = Sprite::create(selectedImage);
     }
 
-    if(disabledImage.size() >0)
+    if(!disabledImage.empty())
     {
         disabledSprite = Sprite::create(disabledImage);
     }
@@ -952,7 +952,7 @@ void MenuItemToggle::cleanup()
 
 void MenuItemToggle::setSelectedIndex(unsigned int index)
 {
-    if( index != _selectedIndex && _subItems.size() > 0 )
+    if( index != _selectedIndex && !_subItems.empty() )
     {
         _selectedIndex = index;
         if (_selectedItem)

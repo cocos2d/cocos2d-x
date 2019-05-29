@@ -67,7 +67,7 @@ public:
     /** Creates a TextureAtlas with an filename and with an initial capacity for Quads.
 
      * The TextureAtlas capacity can be increased in runtime.
-     @param file A null terminated string contains the file path.
+     @param file The file path.
      @param capacity Capacity for Quads.
     */
     static TextureAtlas* create(const std::string& file , ssize_t capacity);
@@ -94,7 +94,7 @@ public:
     * The TextureAtlas capacity can be increased in runtime.
     *
      @attention Do not reinitialize the TextureAtlas because it will leak memory (issue #706).
-     @param file A null terminated string contains the file path.
+     @param file The file path.
      @param capacity Capacity for Quads.
     */
     bool initWithFile(const std::string& file, ssize_t capacity);

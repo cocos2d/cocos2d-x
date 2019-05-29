@@ -105,7 +105,7 @@ LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& fnt
 bool LabelAtlas::initWithString(const std::string& theString, const std::string& fntFile)
 {
     std::string pathStr = FileUtils::getInstance()->fullPathForFilename(fntFile);
-    std::string relPathStr = pathStr.substr(0, pathStr.find_last_of("/"))+"/";
+    std::string relPathStr = pathStr.substr(0, pathStr.find_last_of('/'))+"/";
     
     ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(pathStr);
 
@@ -222,7 +222,7 @@ void LabelAtlas::setString(const std::string &label)
     _quadsToDraw = len;
 }
 
-const std::string& LabelAtlas::getString(void) const
+const std::string& LabelAtlas::getString() const
 {
     return _string;
 }

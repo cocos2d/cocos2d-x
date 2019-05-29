@@ -164,7 +164,7 @@ endif()
 
 if(WINDOWS)
     # precompiled header. Compilation time speedup ~4x.
-    target_sources(cocos2d PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp")
+    target_sources(cocos2d PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp")
     set_target_properties(cocos2d PROPERTIES COMPILE_FLAGS "/Yuprecheader.h /FIprecheader.h")
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/precheader.cpp" PROPERTIES COMPILE_FLAGS "/Ycprecheader.h")
     # compile c as c++. needed for precompiled header

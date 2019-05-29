@@ -433,8 +433,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u32string& utf32Text)
             tempDef.V = tempDef.V / scaleFactor;
         }
         else{
-            if(bitmap)
-                delete[] bitmap;
+            delete[] bitmap;
             if (tempDef.xAdvance)
                 tempDef.validDefinition = true;
             else
@@ -487,9 +486,9 @@ std::string FontAtlas::getFontName() const
 {
     std::string fontName = _fontFreeType ? _fontFreeType->getFontName() : "";
     if(fontName.empty()) return fontName;
-    auto idx = fontName.rfind("/");
+    auto idx = fontName.rfind('/');
     if (idx != std::string::npos) { return fontName.substr(idx + 1); }
-    idx = fontName.rfind("\\");
+    idx = fontName.rfind('\\');
     if (idx != std::string::npos) { return fontName.substr(idx + 1); }
     return fontName;
 }

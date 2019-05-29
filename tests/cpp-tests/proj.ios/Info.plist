@@ -33,12 +33,28 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>fonts/A Damn Mess.ttf</string>
-		<string>fonts/Abberancy.ttf</string>
+		<string>fonts/American Typewriter.ttf</string>
 		<string>fonts/Abduction.ttf</string>
+		<string>fonts/ThonburiBold.ttf</string>
+		<string>fonts/Fingerpop.ttf</string>
 		<string>fonts/Paint Boy.ttf</string>
-		<string>fonts/Schwarzwald.ttf</string>
+		<string>fonts/A Damn Mess.ttf</string>
+		<string>fonts/Schwarzwald Regular.ttf</string>
+		<string>fonts/Courier New.ttf</string>
+		<string>fonts/Japanese.ttf</string>
+		<string>fonts/xingkai-incomplete.ttf</string>
+		<string>fonts/arial.ttf</string>
 		<string>fonts/Scissor Cuts.ttf</string>
+		<string>fonts/FingerpopGap.ttf</string>
+		<string>fonts/NotoEmoji-Regular.ttf</string>
+		<string>fonts/Marker Felt.ttf</string>
+		<string>fonts/Schwarzwald.ttf</string>
+		<string>fonts/cyril.ttf</string>
+		<string>fonts/tahoma.ttf</string>
+		<string>fonts/HKYuanMini.ttf</string>
+		<string>fonts/cyrillic.ttf</string>
+		<string>fonts/Abberancy.ttf</string>
+		<string>fonts/Thonburi.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

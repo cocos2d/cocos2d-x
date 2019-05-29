@@ -30,12 +30,12 @@
 NS_CC_BEGIN
 
 
-PUPointEmitter::PUPointEmitter( void )
+PUPointEmitter::PUPointEmitter()
 {
 
 }
 
-PUPointEmitter::~PUPointEmitter( void )
+PUPointEmitter::~PUPointEmitter()
 {
 
 }

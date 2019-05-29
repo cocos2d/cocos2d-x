@@ -886,7 +886,7 @@ namespace cocostudio
         bool fileExist = false;
         std::string errorFilePath = "";
         std::string path = resourceData->path()->c_str();
-        if (path != "")
+        if (!path.empty())
         {
             if (FileUtils::getInstance()->isFileExist(path))
             {

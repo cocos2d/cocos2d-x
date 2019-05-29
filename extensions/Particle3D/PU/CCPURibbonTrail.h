@@ -74,7 +74,7 @@ public:
     */
     virtual void setTrailLength(float len);
     /** Get the length of the trail. */
-    virtual float getTrailLength(void) const { return _trailLength; }
+    virtual float getTrailLength() const { return _trailLength; }
 
     /** @copydoc BillboardChain::setMaxChainElements */
     void setMaxChainElements(size_t maxElements) override;
@@ -144,13 +144,13 @@ public:
 protected:
 
     /// Manage updates to the time controller
-    void manageController(void);
+    void manageController();
     /// Node has changed position, update
     void updateTrail(size_t index, const Node* node);
     /// Reset the tracked chain to initial state
     void resetTrail(size_t index, const Node* node);
     /// Reset all tracked chains to initial state
-    void resetAllTrails(void);
+    void resetAllTrails();
 
 protected:
 

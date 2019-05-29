@@ -263,7 +263,7 @@ namespace DrawPrimitives
      */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL setPointSize(GLfloat pointSize);
 
-};
+}
 
 // end of global group
 /** @} */

@@ -532,7 +532,7 @@ namespace cocos2d { namespace network {
                     }
                 }
 
-                if (coTaskMap.size())
+                if (!coTaskMap.empty())
                 {
                     mcode = CURLM_CALL_MULTI_PERFORM;
                     while(CURLM_CALL_MULTI_PERFORM == mcode)
@@ -637,7 +637,7 @@ namespace cocos2d { namespace network {
                     TaskWrapper wrapper;
                     {
                         lock_guard<mutex> lock(_requestMutex);
-                        if (_requestQueue.size())
+                        if (!_requestQueue.empty())
                         {
                             wrapper = _requestQueue.front();
                             _requestQueue.pop_front();
@@ -681,7 +681,7 @@ namespace cocos2d { namespace network {
                     lock_guard<mutex> lock(_processMutex);
                     _processSet.insert(wrapper);
                 }
-            } while (coTaskMap.size());
+            } while (!coTaskMap.empty());
 
             curl_multi_cleanup(curlmHandle);
             this->stop();

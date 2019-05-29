@@ -31,7 +31,7 @@
 #include "3d/CCMotionStreak3D.h"
 
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
-
+#include <cmath>
 #include <algorithm>
 #include "../testResource.h"
 
@@ -71,7 +71,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DPropertyTest);
     ADD_TEST_CASE(Sprite3DNormalMappingTest);
     ADD_TEST_CASE(Issue16155Test);
-};
+}
 
 //------------------------------------------------------------------
 //
@@ -1509,7 +1509,7 @@ void Sprite3DWithOBBPerformanceTest::update(float dt)
         _obbt.getCorners(corners);
         _drawDebug->drawCube(corners, Color4F(0,0,1,1));
     }
-    if(_obb.size() > 0)
+    if(!_obb.empty())
     {
         _drawOBB->clear();
         auto obbSize = _obb.size();
@@ -2159,7 +2159,7 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
 
 void Sprite3DCubeMapTest::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
-    if (touches.size())
+    if (!touches.empty())
     {
         auto touch = touches[0];
         auto delta = touch->getDelta();
@@ -2576,7 +2576,7 @@ void Sprite3DNormalMappingTest::update(float dt)
     static float radius = 100.0f;
     
     auto light = static_cast<PointLight*>(getChildByTag(100));
-    light->setPosition3D(Vec3(radius * cos(angle), 0.0f, radius * sin(angle)));
+    light->setPosition3D(Vec3(radius * std::cos(angle), 0.0f, radius * std::sin(angle)));
     if (reverseDir){
         angle -= 0.01f;
         if (angle < 0.0)

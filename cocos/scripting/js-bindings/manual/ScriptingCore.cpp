@@ -306,7 +306,7 @@ bool JSBCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
     args.rval().set(INT_TO_JSVAL((int)platform));
 
     return true;
-};
+}
 
 bool JSBCore_version(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -324,7 +324,7 @@ bool JSBCore_version(JSContext *cx, uint32_t argc, jsval *vp)
     args.rval().set(STRING_TO_JSVAL(js_version));
 
     return true;
-};
+}
 
 bool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -364,7 +364,7 @@ bool JSBCore_os(JSContext *cx, uint32_t argc, jsval *vp)
     args.rval().set(STRING_TO_JSVAL(os));
 
     return true;
-};
+}
 
 bool JSB_cleanScript(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -383,7 +383,7 @@ bool JSB_cleanScript(JSContext *cx, uint32_t argc, jsval *vp)
     args.rval().setUndefined();
 
     return true;
-};
+}
 
 bool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -392,13 +392,13 @@ bool JSB_core_restartVM(JSContext *cx, uint32_t argc, jsval *vp)
     ScriptingCore::getInstance()->reset();
     args.rval().setUndefined();
     return true;
-};
+}
 
 bool JSB_closeWindow(JSContext *cx, uint32_t argc, jsval *vp)
 {
     Director::getInstance()->end();
     return true;
-};
+}
 
 void registerDefaultClasses(JSContext* cx, JS::HandleObject global) {
     // first, try to get the ns
@@ -940,7 +940,7 @@ void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorRepor
             report->filename ? report->filename : "<no filename=\"filename\">",
             (unsigned int) report->lineno,
             message);
-};
+}
 
 
 bool ScriptingCore::log(JSContext* cx, uint32_t argc, jsval *vp)
@@ -1411,7 +1411,7 @@ bool ScriptingCore::handleTouchesEvent(void* nativeObj, cocos2d::EventTouch::Eve
     js_type_class_t *typeClassEvent = nullptr;
     js_type_class_t *typeClassTouch = nullptr;
 
-    if (touches.size()>0)
+    if (!touches.empty())
         typeClassTouch = js_get_type_from_native<cocos2d::Touch>(touches[0]);
     typeClassEvent = js_get_type_from_native<cocos2d::EventTouch>((cocos2d::EventTouch*)event);
 

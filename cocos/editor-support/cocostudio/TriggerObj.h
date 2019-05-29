@@ -36,9 +36,9 @@ namespace cocostudio {
 class CC_STUDIO_DLL BaseTriggerCondition : public cocos2d::Ref
 {
 protected:
-    BaseTriggerCondition(void);
+    BaseTriggerCondition();
 public:
-    virtual ~BaseTriggerCondition(void);
+    virtual ~BaseTriggerCondition();
     virtual bool init();
     virtual bool detect();
     virtual void serialize(const rapidjson::Value &val);
@@ -49,9 +49,9 @@ public:
 class CC_STUDIO_DLL BaseTriggerAction : public cocos2d::Ref
 {
 protected:
-    BaseTriggerAction(void);
+    BaseTriggerAction();
 public:
-    virtual ~BaseTriggerAction(void);
+    virtual ~BaseTriggerAction();
     virtual bool init();
     virtual void done();
     virtual void serialize(const rapidjson::Value &val);
@@ -63,10 +63,10 @@ public:
 class CC_STUDIO_DLL TriggerObj : public cocos2d::Ref
 {
 public:
-    TriggerObj(void);
-    virtual ~TriggerObj(void);
+    TriggerObj();
+    virtual ~TriggerObj();
     virtual bool init();
-    static TriggerObj* create(void);
+    static TriggerObj* create();
     
     virtual bool detect();
     virtual void done();

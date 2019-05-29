@@ -70,7 +70,7 @@ public:
      *
      * @return the LuaStack object.
      */
-    static LuaStack *getStack(void);
+    static LuaStack *getStack();
     /**
      * Push the function pointer corresponding to functionId on the top of lua stack by searching the `lua_bridge_function_id` table.
      * If it don't find the function pointer corresponding to functionId, it will reset stack top index to the index before searching.

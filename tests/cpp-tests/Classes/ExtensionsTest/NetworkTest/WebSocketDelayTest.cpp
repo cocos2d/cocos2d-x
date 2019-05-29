@@ -213,6 +213,6 @@ void WebSocketDelayTest::onMenuSendTextClicked(cocos2d::Ref *sender)
     {
         std::string warningStr = "send text websocket instance wasn't ready...";
         log("%s", warningStr.c_str());
-        _sendTextStatus->setString(warningStr.c_str());
+        _sendTextStatus->setString(warningStr);
     }
 }

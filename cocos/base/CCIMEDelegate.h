@@ -46,12 +46,12 @@ extern const std::string CC_DLL STD_STRING_EMPTY;
 /**
  * Keyboard notification event type.
  */
-typedef struct
+struct IMEKeyboardNotificationInfo
 {
     Rect  begin;              // the soft keyboard rectangle when animation begins
     Rect  end;                // the soft keyboard rectangle when animation ends
     float     duration;           // the soft keyboard animation duration
-} IMEKeyboardNotificationInfo;
+};
 
 /**
  *@brief    Input method editor delegate.
@@ -60,21 +60,21 @@ class CC_DLL IMEDelegate
 {
 public:
     /**
-     * Default constructor.
+     * Destructor.
      * @js NA
      * @lua NA
      */
     virtual ~IMEDelegate();
     
     /**
-     * Default destructor.
+     * Attach the delegate to IME. Return true if succesful.
      * @js NA
      * @lua NA
      */
     virtual bool attachWithIME();
     
     /**
-     * Determine whether the IME is detached or not.
+     * Detach the delegate from IME. Return true if succesful.
      * @js NA
      * @lua NA
      */
@@ -166,6 +166,7 @@ protected:
 
 protected:
     /**
+     * Default constructor.
      * @js NA
      * @lua NA
      */

@@ -667,7 +667,7 @@ bool Label::setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& ima
 
 void Label::setString(const std::string& text)
 {
-    if (text.compare(_utf8Text))
+    if (text != _utf8Text)
     {
         _utf8Text = text;
         _contentDirty = true;

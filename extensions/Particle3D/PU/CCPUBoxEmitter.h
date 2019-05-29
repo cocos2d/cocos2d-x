@@ -61,8 +61,8 @@ public:
     virtual void copyAttributesTo (PUEmitter* emitter) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    CCPUBoxEmitter(void);
-    virtual ~CCPUBoxEmitter(void) {};
+    CCPUBoxEmitter();
+    virtual ~CCPUBoxEmitter() {};
 
 protected:
 

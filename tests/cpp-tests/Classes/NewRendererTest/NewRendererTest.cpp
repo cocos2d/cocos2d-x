@@ -41,7 +41,7 @@ NewRendererTests::NewRendererTests()
     ADD_TEST_CASE(RendererBatchQuadTri);
     ADD_TEST_CASE(RendererUniformBatch);
     ADD_TEST_CASE(RendererUniformBatch2);
-};
+}
 
 std::string MultiSceneTest::title() const
 {

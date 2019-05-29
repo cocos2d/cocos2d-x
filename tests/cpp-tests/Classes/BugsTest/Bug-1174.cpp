@@ -28,6 +28,7 @@
 //
 
 #include "Bug-1174.h"
+#include <cmath>
 
 USING_NS_CC;
 
@@ -47,7 +48,7 @@ int check_for_error( Vec2 p1, Vec2 p2, Vec2 p3, Vec2 p4, float s, float t )
     auto hitPoint2 = p1 + p2_p1_s;
     
     // Since float has rounding errors, only check if diff is < 0.05
-    if( (fabs( hitPoint1.x - hitPoint2.x) > 0.1f) || ( fabs(hitPoint1.y - hitPoint2.y) > 0.1f) )
+    if( (std::fabs( hitPoint1.x - hitPoint2.x) > 0.1f) || ( std::fabs(hitPoint1.y - hitPoint2.y) > 0.1f) )
     {
         log("ERROR: (%f,%f) != (%f,%f)", hitPoint1.x, hitPoint1.y, hitPoint2.x, hitPoint2.y);
         return 1;

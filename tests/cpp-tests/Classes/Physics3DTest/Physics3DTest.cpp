@@ -62,7 +62,7 @@ Physics3DTests::Physics3DTests()
     ADD_TEST_CASE(Physics3DColliderDemo);
     ADD_TEST_CASE(Physics3DTerrainDemo);
 #endif
-};
+}
 
 #if CC_USE_3D_PHYSICS == 0
 void Physics3DDemoDisabled::onEnter()
@@ -143,7 +143,7 @@ void Physics3DTestDemo::onTouchesBegan(const std::vector<Touch*>& touches, cocos
 
 void Physics3DTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
-    if (touches.size() && _camera)
+    if (!touches.empty() && _camera)
     {
         auto touch = touches[0];
         auto delta = touch->getDelta();

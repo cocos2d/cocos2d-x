@@ -291,15 +291,15 @@ void IndexBuffer::recreateVBO() const
 {
     CCLOG("come to foreground of IndexBuffer");
     glGenBuffers(1, &_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vbo);
     const void* buffer = nullptr;
     if(isShadowCopyEnabled())
     {
         buffer = &_shadowCopy[0];
     }
     CCLOG("recreate IndexBuffer with size %d %d ", getSizePerIndex(), _indexNumber);
-    glBufferData(GL_ARRAY_BUFFER, getSize(), buffer, _usage);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, getSize(), buffer, _usage);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     if(!glIsBuffer(_vbo))
     {
         CCLOGERROR("recreate IndexBuffer Error");

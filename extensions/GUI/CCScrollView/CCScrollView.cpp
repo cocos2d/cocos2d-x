@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 #include "CCScrollView.h"
+#include <cmath>
 #include "platform/CCDevice.h"
 #include "2d/CCActionInstant.h"
 #include "2d/CCActionInterval.h"
@@ -787,7 +788,7 @@ void ScrollView::onTouchMoved(Touch* touch, Event* /*event*/)
                 }
             }
 
-            if (!_touchMoved && fabs(convertDistanceFromPointToInch(dis)) < MOVE_INCH )
+            if (!_touchMoved && std::fabs(convertDistanceFromPointToInch(dis)) < MOVE_INCH )
             {
                 //CCLOG("Invalid movement, distance = [%f, %f], disInch = %f", moveDistance.x, moveDistance.y);
                 return;
@@ -849,7 +850,7 @@ void ScrollView::onTouchEnded(Touch* touch, Event* /*event*/)
         _touches.erase(touchIter);
     } 
 
-    if (_touches.size() == 0)
+    if (_touches.empty())
     {
         _dragging = false;    
         _touchMoved = false;
@@ -870,7 +871,7 @@ void ScrollView::onTouchCancelled(Touch* touch, Event* /*event*/)
     
     _touches.erase(touchIter);
     
-    if (_touches.size() == 0)
+    if (_touches.empty())
     {
         _dragging = false;    
         _touchMoved = false;

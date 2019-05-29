@@ -42,7 +42,7 @@ void traceScriptParserCell(PUConcreteNodeList& nodes,int level)
     for(const auto& node : nodes)
     {
         printf("%s,##%d\n",node->token.c_str(),level);
-        if(node->children.size() != 0)
+        if(!node->children.empty())
         {
             traceScriptParserCell(node->children,level+1);
         }

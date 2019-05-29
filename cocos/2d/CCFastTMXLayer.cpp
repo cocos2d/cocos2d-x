@@ -36,6 +36,7 @@ THE SOFTWARE.
 
  */
 #include "2d/CCFastTMXLayer.h"
+#include <cmath>
 #include "2d/CCFastTMXTiledMap.h"
 #include "2d/CCSprite.h"
 #include "2d/CCCamera.h"
@@ -209,10 +210,10 @@ void TMXLayer::updateTiles(const Rect& culledRect)
     visibleTiles.origin.y += 1;
     
     // if x=0.7, width=9.5, we need to draw number 0~10 of tiles, and so is height.
-    visibleTiles.size.width = ceil(visibleTiles.origin.x + visibleTiles.size.width)  - floor(visibleTiles.origin.x);
-    visibleTiles.size.height = ceil(visibleTiles.origin.y + visibleTiles.size.height) - floor(visibleTiles.origin.y);
-    visibleTiles.origin.x = floor(visibleTiles.origin.x);
-    visibleTiles.origin.y = floor(visibleTiles.origin.y);
+    visibleTiles.size.width = std::ceil(visibleTiles.origin.x + visibleTiles.size.width)  - std::floor(visibleTiles.origin.x);
+    visibleTiles.size.height = std::ceil(visibleTiles.origin.y + visibleTiles.size.height) - std::floor(visibleTiles.origin.y);
+    visibleTiles.origin.x = std::floor(visibleTiles.origin.x);
+    visibleTiles.origin.y = std::floor(visibleTiles.origin.y);
 
     // for the bigger tiles.
     int tilesOverX = 0;
@@ -221,8 +222,8 @@ void TMXLayer::updateTiles(const Rect& culledRect)
     float tileSizeMax = std::max(tileSize.width, tileSize.height);
     if (_layerOrientation == FAST_TMX_ORIENTATION_ORTHO)
     {
-        tilesOverX = ceil(tileSizeMax / mapTileSize.width) - 1;
-        tilesOverY = ceil(tileSizeMax / mapTileSize.height) - 1;
+        tilesOverX = std::ceil(tileSizeMax / mapTileSize.width) - 1;
+        tilesOverY = std::ceil(tileSizeMax / mapTileSize.height) - 1;
         
         if (tilesOverX < 0) tilesOverX = 0;
         if (tilesOverY < 0) tilesOverY = 0;
@@ -234,8 +235,8 @@ void TMXLayer::updateTiles(const Rect& culledRect)
         if (overTileRect.size.height < 0) overTileRect.size.height = 0;
         overTileRect = RectApplyTransform(overTileRect, nodeToTileTransform);
         
-        tilesOverX = ceil(overTileRect.origin.x + overTileRect.size.width) - floor(overTileRect.origin.x);
-        tilesOverY = ceil(overTileRect.origin.y + overTileRect.size.height) - floor(overTileRect.origin.y);
+        tilesOverX = std::ceil(overTileRect.origin.x + overTileRect.size.width) - std::floor(overTileRect.origin.x);
+        tilesOverY = std::ceil(overTileRect.origin.y + overTileRect.size.height) - std::floor(overTileRect.origin.y);
     }
     else
     {
@@ -346,15 +347,15 @@ void TMXLayer::setupTiles()
     switch (_layerOrientation)
     {
         case FAST_TMX_ORIENTATION_ORTHO:
-            _screenGridSize.width = ceil(screenSize.width / _mapTileSize.width) + 1;
-            _screenGridSize.height = ceil(screenSize.height / _mapTileSize.height) + 1;
+            _screenGridSize.width = std::ceil(screenSize.width / _mapTileSize.width) + 1;
+            _screenGridSize.height = std::ceil(screenSize.height / _mapTileSize.height) + 1;
 
             // tiles could be bigger than the grid, add additional rows if needed
             _screenGridSize.height += _tileSet->_tileSize.height / _mapTileSize.height;
             break;
         case FAST_TMX_ORIENTATION_ISO:
-            _screenGridSize.width = ceil(screenSize.width / _mapTileSize.width) + 2;
-            _screenGridSize.height = ceil(screenSize.height / (_mapTileSize.height/2)) + 4;
+            _screenGridSize.width = std::ceil(screenSize.width / _mapTileSize.width) + 2;
+            _screenGridSize.height = std::ceil(screenSize.height / (_mapTileSize.height/2)) + 4;
             break;
         case FAST_TMX_ORIENTATION_HEX:
         default:

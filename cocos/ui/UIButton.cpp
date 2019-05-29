@@ -648,7 +648,7 @@ Size Button::getVirtualRendererSize() const
     if (nullptr != _titleRenderer)
     {
         Size titleSize = _titleRenderer->getContentSize();
-        if (!_normalTextureLoaded && _titleRenderer->getString().size() > 0)
+        if (!_normalTextureLoaded && !_titleRenderer->getString().empty())
         {
             return titleSize;
         }
@@ -716,7 +716,7 @@ void Button::setTitleAlignment(TextHAlignment hAlignment, TextVAlignment vAlignm
 
 void Button::setTitleText(const std::string& text)
 {
-    if (text.compare(getTitleText()) == 0) {
+    if (text == getTitleText()) {
         return;
     }
     

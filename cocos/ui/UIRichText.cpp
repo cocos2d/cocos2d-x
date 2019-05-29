@@ -544,7 +544,7 @@ std::string MyXMLVisitor::getFace() const
 {
     for (auto i = _fontElements.rbegin(), iRend = _fontElements.rend(); i != iRend; ++i)
     {
-        if (i->face.size() != 0)
+        if (!i->face.empty())
             return i->face;
     }
     return "fonts/Marker Felt.ttf";
@@ -554,7 +554,7 @@ std::string MyXMLVisitor::getURL() const
 {
     for (auto i = _fontElements.rbegin(), iRend = _fontElements.rend(); i != iRend; ++i)
     {
-        if (i->url.size() != 0)
+        if (!i->url.empty())
             return i->url;
     }
     return "";
@@ -789,7 +789,7 @@ void MyXMLVisitor::textHandler(void* /*ctx*/, const char *str, size_t len)
         flags |= RichElementText::UNDERLINE_FLAG;
     if (strikethrough)
         flags |= RichElementText::STRIKETHROUGH_FLAG;
-    if (url.size() > 0)
+    if (!url.empty())
         flags |= RichElementText::URL_FLAG;
     if (std::get<0>(outline))
         flags |= RichElementText::OUTLINE_FLAG;
@@ -1942,7 +1942,7 @@ void RichText::adaptRenderers()
 
 void RichText::pushToContainer(cocos2d::Node *renderer)
 {
-    if (_elementRenders.size() <= 0)
+    if (_elementRenders.empty())
     {
         return;
     }

@@ -74,7 +74,7 @@ void MouseEventTest::onMouseDown(Event *event)
     EventMouse* e = (EventMouse*)event;
     std::string str = "Mouse Down detected, Key: ";
     str += tostr(static_cast<int>(e->getMouseButton()));
-    _labelAction->setString(str.c_str());
+    _labelAction->setString(str);
 }
 
 void MouseEventTest::onMouseUp(Event *event)
@@ -82,7 +82,7 @@ void MouseEventTest::onMouseUp(Event *event)
     EventMouse* e = (EventMouse*)event;
     std::string str = "Mouse Up detected, Key: ";
     str += tostr(static_cast<int>(e->getMouseButton()));
-    _labelAction->setString(str.c_str());
+    _labelAction->setString(str);
 }
 
 void MouseEventTest::onMouseMove(Event *event)
@@ -90,7 +90,7 @@ void MouseEventTest::onMouseMove(Event *event)
     EventMouse* e = (EventMouse*)event;
     std::string str = "MousePosition X:";
     str = str + tostr(e->getCursorX()) + " Y:" + tostr(e->getCursorY());
-    _labelPosition->setString(str.c_str());
+    _labelPosition->setString(str);
 }
 
 void MouseEventTest::onMouseScroll(Event *event)
@@ -98,7 +98,7 @@ void MouseEventTest::onMouseScroll(Event *event)
     EventMouse* e = (EventMouse*)event;
     std::string str = "Mouse Scroll detected, X: ";
     str = str + tostr(e->getScrollX()) + " Y: " + tostr(e->getScrollY());
-    _labelAction->setString(str.c_str());
+    _labelAction->setString(str);
 }
 
 std::string MouseEventTest::title() const

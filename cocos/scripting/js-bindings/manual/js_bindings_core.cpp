@@ -49,7 +49,7 @@ static void reportError(JSContext *cx, const char *message, JSErrorReport *repor
             report->filename ? report->filename : "<no filename=\"filename\">",
             (unsigned int) report->lineno,
             message);
-};
+}
 
 
 // Hash of JSObject -> proxy

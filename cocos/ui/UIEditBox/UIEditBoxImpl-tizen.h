@@ -71,9 +71,9 @@ public:
     virtual bool isEditing();
 
     virtual void setText(const char* pText);
-    virtual const char* getText(void);
+    virtual const char* getText();
     virtual void setPlaceHolder(const char* pText);
-    virtual const char* getPlaceHolder(void);
+    virtual const char* getPlaceHolder();
 
     virtual const char* getFontName() override { return _fontName.c_str(); }
     virtual int getFontSize() override { return _fontSize; }
@@ -96,12 +96,12 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void visit(void);
+    virtual void visit();
     /**
      * @js NA
      * @lua NA
      */
-    virtual void onEnter(void);
+    virtual void onEnter();
     virtual void doAnimationWhenKeyboardMove(float duration, float distance);
     virtual void openKeyboard();
     virtual void closeKeyboard();

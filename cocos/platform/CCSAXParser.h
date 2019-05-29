@@ -74,7 +74,7 @@ public:
      * @js NA
      * @lua NA
      */
-    ~SAXParser(void);
+    ~SAXParser();
     /**
      * @js NA
      * @lua NA

@@ -38,7 +38,7 @@
 
 NS_CC_EXT_BEGIN
 
-#define TEMP_PACKAGE_SUFFIX     "_temp"
+#define TEMP_FOLDERNAME     "_temp"
 #define VERSION_FILENAME        "version.manifest"
 #define TEMP_MANIFEST_FILENAME  "project.manifest.temp"
 #define MANIFEST_FILENAME       "project.manifest"
@@ -224,7 +224,7 @@ void AssetsManagerEx::loadLocalManifest(const std::string& /*manifestUrl*/)
     {
         std::vector<std::string> cacheSearchPaths = cachedManifest->getSearchPaths();
         std::vector<std::string> trimmedPaths = searchPaths;
-        for (auto path : cacheSearchPaths)
+        for (const auto& path : cacheSearchPaths)
         {
             const auto pos = std::find(trimmedPaths.begin(), trimmedPaths.end(), path);
             if (pos != trimmedPaths.end())
@@ -314,13 +314,14 @@ void AssetsManagerEx::setStoragePath(const std::string& storagePath)
     _fileUtils->createDirectory(_storagePath);
     
     _tempStoragePath = _storagePath;
-    _tempStoragePath.insert(_storagePath.size() - 1, TEMP_PACKAGE_SUFFIX);
+    _tempStoragePath.append(TEMP_FOLDERNAME);
+    adjustPath(_tempStoragePath);
     _fileUtils->createDirectory(_tempStoragePath);
 }
 
 void AssetsManagerEx::adjustPath(std::string &path)
 {
-    if (path.size() > 0 && path[path.size() - 1] != '/')
+    if (!path.empty() && path[path.size() - 1] != '/')
     {
         path.append("/");
     }
@@ -548,7 +549,7 @@ void AssetsManagerEx::downloadVersion()
 
     std::string versionUrl = _localManifest->getVersionFileUrl();
 
-    if (versionUrl.size() > 0)
+    if (!versionUrl.empty())
     {
         _updateState = State::DOWNLOADING_VERSION;
         // Download version file asynchronously
@@ -616,7 +617,7 @@ void AssetsManagerEx::downloadManifest()
         manifestUrl = _localManifest->getManifestFileUrl();
     }
 
-    if (manifestUrl.size() > 0)
+    if (!manifestUrl.empty())
     {
         _updateState = State::DOWNLOADING_MANIFEST;
         // Download version file asynchronously
@@ -710,7 +711,7 @@ void AssetsManagerEx::startUpdate()
         
         // Check difference between local manifest and remote manifest
         std::unordered_map<std::string, Manifest::AssetDiff> diff_map = _localManifest->genDiff(_remoteManifest);
-        if (diff_map.size() == 0)
+        if (diff_map.empty())
         {
             updateSucceed();
         }
@@ -1133,7 +1134,7 @@ void AssetsManagerEx::destroyDownloadedVersion()
 void AssetsManagerEx::batchDownload()
 {
     _queue.clear();
-    for(auto iter : _downloadUnits)
+    for(const auto& iter : _downloadUnits)
     {
         const DownloadUnit& unit = iter.second;
         if (unit.size > 0)
@@ -1161,7 +1162,7 @@ void AssetsManagerEx::queueDowload()
         return;
     }
     
-    while (_currConcurrentTask < _maxConcurrentTask && _queue.size() > 0)
+    while (_currConcurrentTask < _maxConcurrentTask && !_queue.empty())
     {
         std::string key = _queue.back();
         _queue.pop_back();
@@ -1184,7 +1185,7 @@ void AssetsManagerEx::queueDowload()
 void AssetsManagerEx::onDownloadUnitsFinished()
 {
     // Finished with error check
-    if (_failedUnits.size() > 0)
+    if (!_failedUnits.empty())
     {
         // Save current download manifest information for resuming
         _tempManifest->saveToFile(_tempManifestPath);

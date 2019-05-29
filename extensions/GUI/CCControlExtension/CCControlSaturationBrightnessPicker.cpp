@@ -32,6 +32,7 @@
  */
 
 #include "CCControlSaturationBrightnessPicker.h"
+#include <cmath>
 
 NS_CC_EXT_BEGIN
 
@@ -154,8 +155,8 @@ void ControlSaturationBrightnessPicker::updateSliderPosition(Vec2 sliderPosition
     else if (sliderPosition.y > _startPos.y + boxPos + boxSize)        sliderPosition.y = _startPos.y + boxPos + boxSize;
     
     // Use the position / slider width to determine the percentage the dragger is at
-    _saturation = 1.0f - fabs((_startPos.x + (float)boxPos - sliderPosition.x)/(float)boxSize);
-    _brightness = fabs((_startPos.y + (float)boxPos - sliderPosition.y)/(float)boxSize);
+    _saturation = 1.0f - std::fabs((_startPos.x + (float)boxPos - sliderPosition.x)/(float)boxSize);
+    _brightness = std::fabs((_startPos.y + (float)boxPos - sliderPosition.y)/(float)boxSize);
 }
 
 bool ControlSaturationBrightnessPicker::checkSliderPosition(Vec2 location)

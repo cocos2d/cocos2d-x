@@ -170,7 +170,7 @@ public:
     /** Creates an animation.
      * @since v0.99.5
      */
-    static Animation* create(void);
+    static Animation* create();
 
     /* Creates an animation with an array of SpriteFrame and a delay between frames in seconds.
      * The frames will be added with one "delay unit".
@@ -284,7 +284,7 @@ public:
     
 CC_CONSTRUCTOR_ACCESS:
     Animation();
-    virtual ~Animation(void);
+    virtual ~Animation();
     
     /** Initializes a Animation. */
     bool init();

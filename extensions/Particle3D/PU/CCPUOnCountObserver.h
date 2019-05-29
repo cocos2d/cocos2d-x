@@ -54,7 +54,7 @@ public:
     static const PUComparisionOperator DEFAULT_COMPARE;
     /** 
     */
-    virtual void notifyStart (void) override;
+    virtual void notifyStart () override;
 
     /** 
     */
@@ -62,7 +62,7 @@ public:
 
     /** 
     */
-    unsigned int getThreshold(void) const {return _threshold;};
+    unsigned int getThreshold() const {return _threshold;};
     void setThreshold(unsigned int threshold){_threshold = threshold;};
 
     /** 
@@ -73,8 +73,8 @@ public:
     virtual void copyAttributesTo (PUObserver* observer) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUOnCountObserver(void);
-    virtual ~PUOnCountObserver(void) {};
+    PUOnCountObserver();
+    virtual ~PUOnCountObserver() {};
 };
 
 NS_CC_END
