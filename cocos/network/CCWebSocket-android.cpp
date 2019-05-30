@@ -33,13 +33,13 @@
 #define JARG_STR        "Ljava/lang/String;"
 #define JARG_DOWNLOADER "L" JCLS_WEBSOCKET ";"
 
+#include "base/ccUTF8.h"
+
 #include <string>
 #include <mutex>
 #include <unordered_map>
 #include <condition_variable>
 #include <chrono>
-
-using namespace std;
 
 
 namespace {
@@ -63,12 +63,6 @@ namespace {
 
     class ConnectionCV {
     public:
-        ConnectionCV() = default;
-
-        virtual ~ConnectionCV() {
-            std::lock_guard<std::mutex> guard(_mtx);
-            _conditions.clear();
-        }
 
         void watchConnection(int64_t id)
         {
@@ -86,7 +80,7 @@ namespace {
 
         void notifyClosed(int64_t id)
         {
-            std::shared_ptr<ConditionVariable> p = nullptr;
+            std::shared_ptr<ConditionVariable> p;
             {
                 std::lock_guard<std::mutex> guard(_mtx);
                 auto itr = _conditions.find(id);
@@ -101,7 +95,7 @@ namespace {
 
         void waitForClosing(int64_t id, std::chrono::duration<float> timeout)
         {
-            std::shared_ptr<ConditionVariable> p = nullptr;
+            std::shared_ptr<ConditionVariable> p;
             {
                 std::lock_guard<std::mutex> guard(_mtx);
                 auto itr = _conditions.find(id);
@@ -116,18 +110,12 @@ namespace {
         std::mutex _mtx;
         std::unordered_map<int64_t, std::shared_ptr<ConditionVariable>> _conditions;
     };
-}
-
-
-namespace {
-
-    using namespace cocos2d;
 
     int64_t _callJavaConnect(const std::string &url, const std::vector<std::string> *protocals,
                              const std::string &caFile) {
         jlong connectionID = -1;
-        JniMethodInfo methodInfo;
-        if (JniHelper::getStaticMethodInfo(methodInfo,
+        cocos2d::JniMethodInfo methodInfo;
+        if (cocos2d::JniHelper::getStaticMethodInfo(methodInfo,
                                            J_BINARY_CLS_WEBSOCKET,
                                            "connect",
                                            "(" JARG_STR "[" JARG_STR JARG_STR")J")) {
@@ -136,7 +124,7 @@ namespace {
             //read text content of `caFile`
             std::string caContent;
             if (!caFile.empty()) {
-                caContent = FileUtils::getInstance()->getStringFromFile(caFile);
+                caContent = cocos2d::FileUtils::getInstance()->getStringFromFile(caFile);
             }
 
             jstring jcaFile = methodInfo.env->NewStringUTF(caContent.c_str());
@@ -159,6 +147,7 @@ namespace {
                                                                 jprotocals, jcaFile);
             methodInfo.env->DeleteLocalRef(jurl);
             methodInfo.env->DeleteLocalRef(jcaFile);
+            methodInfo.env->DeleteLocalRef(jprotocals);
             methodInfo.env->DeleteLocalRef(stringClass);
             methodInfo.env->DeleteLocalRef(methodInfo.classID);
         }
@@ -167,8 +156,8 @@ namespace {
     }
 
     void _callJavaDisconnect(int64_t cid, bool syncClose) {
-        JniMethodInfo methodInfo;
-        if (JniHelper::getStaticMethodInfo(methodInfo,
+        cocos2d::JniMethodInfo methodInfo;
+        if (cocos2d::JniHelper::getStaticMethodInfo(methodInfo,
                                            J_BINARY_CLS_WEBSOCKET,
                                            "disconnect",
                                            "(JZ)V")) {
@@ -183,8 +172,8 @@ namespace {
 
     void _callJavaSendBinary(int64_t cid, const unsigned char *data, size_t len) {
 
-        JniMethodInfo methodInfo;
-        if (JniHelper::getStaticMethodInfo(methodInfo,
+        cocos2d::JniMethodInfo methodInfo;
+        if (cocos2d::JniHelper::getStaticMethodInfo(methodInfo,
                                            J_BINARY_CLS_WEBSOCKET,
                                            "sendBinary",
                                            "(J[B)V")) {
@@ -200,8 +189,8 @@ namespace {
     }
 
     void _callJavaSendString(int64_t cid, const std::string &data) {
-        JniMethodInfo methodInfo;
-        if (JniHelper::getStaticMethodInfo(methodInfo,
+        cocos2d::JniMethodInfo methodInfo;
+        if (cocos2d::JniHelper::getStaticMethodInfo(methodInfo,
                                            J_BINARY_CLS_WEBSOCKET,
                                            "sendString",
                                            "(J"  JARG_STR ")V")) {
@@ -214,11 +203,11 @@ namespace {
         }
     }
 
-    static JNINativeMethod sMethodTable[] = {
+    JNINativeMethod sMethodTable[] = {
             {"triggerEvent", "(J" JARG_STR JARG_STR "Z)V", (void *) cocos2d::network::_WebSocketAndroidNativeTriggerEvent}
     };
 
-    static bool _registerNativeMethods(JNIEnv *env) {
+    bool _registerNativeMethods(JNIEnv *env) {
         jclass clazz = env->FindClass(JCLS_WEBSOCKET);
         if (clazz == nullptr) {
             CCLOGERROR("_registerNativeMethods: can't find java class:%s", JARG_DOWNLOADER);
@@ -235,10 +224,10 @@ namespace {
         return true;
     }
 
-    static bool __registered = false;
-    static ConnectionCV __syncPipe;
-    static std::recursive_mutex __socketMapMtx;
-    static std::unordered_map<int64_t, cocos2d::network::WebSocket *> __socketMap;
+    bool _registered = false;
+    ConnectionCV _syncPipe;
+    std::recursive_mutex _socketMapMtx;
+    std::unordered_map<int64_t, cocos2d::network::WebSocket *> _socketMap;
 }
 
 namespace cocos2d {
@@ -248,22 +237,27 @@ namespace cocos2d {
         void _WebSocketAndroidNativeTriggerEvent(JNIEnv *env, jclass *klass, jlong cid,
                                                  jstring eventName, jstring data,
                                                  jboolean isBinary) {
-            std::lock_guard<std::recursive_mutex> guard(__socketMapMtx);
-            auto itr = __socketMap.find(cid);
-            if (itr != __socketMap.end()) {
-                const char *ceventName = env->GetStringUTFChars(eventName, nullptr);
-                const char *cdata = env->GetStringUTFChars(data, nullptr);
-                itr->second->triggerEvent(ceventName, cdata, (bool) isBinary);
-                env->ReleaseStringUTFChars(eventName, ceventName);
-                env->ReleaseStringUTFChars(data, cdata);
+            std::lock_guard<std::recursive_mutex> guard(_socketMapMtx);
+            auto itr = _socketMap.find(cid);
+            if (itr != _socketMap.end()) {
+                bool retEventName = false;
+                bool retCdata = false;
+
+                std::string ceventName = cocos2d::StringUtils::getStringUTFCharsJNI(env, eventName, &retEventName);
+                std::string cdata = cocos2d::StringUtils::getStringUTFCharsJNI(env, data, &retCdata);
+                if(retEventName && retCdata) {
+                    itr->second->triggerEvent(ceventName, cdata, (bool) isBinary);
+                } else {
+                    CCLOGERROR("failed to allocate string from JNIEnv");
+                }
             }
         }
 
         void _preloadJavaWebSocketClass()
         {
-            if(!__registered)
+            if(!_registered)
             {
-                __registered = _registerNativeMethods(JniHelper::getEnv());
+                _registered = _registerNativeMethods(JniHelper::getEnv());
             }
         }
 
@@ -275,19 +269,19 @@ namespace cocos2d {
         {
             if(_connectionID > 0)
             {
-                std::lock_guard<std::recursive_mutex> guard(__socketMapMtx);
-                __socketMap.erase(_connectionID);
+                std::lock_guard<std::recursive_mutex> guard(_socketMapMtx);
+                _socketMap.erase(_connectionID);
             }
-            __syncPipe.unwatchConnection(_connectionID);
+            _syncPipe.unwatchConnection(_connectionID);
         }
 
         void WebSocket::closeAllConnections()
         {
-            std::lock_guard<std::recursive_mutex> guard(__socketMapMtx);
-            for(auto it : __socketMap) {
+            std::lock_guard<std::recursive_mutex> guard(_socketMapMtx);
+            for(auto it : _socketMap) {
                 it.second->closeAsync();
             }
-            __socketMap.clear();
+            _socketMap.clear();
         }
 
         bool WebSocket::init(const cocos2d::network::WebSocket::Delegate &delegate,
@@ -305,11 +299,11 @@ namespace cocos2d {
 
             if(_connectionID > 0)
             {
-                std::lock_guard<std::recursive_mutex> guard(__socketMapMtx);
-                __socketMap.emplace(_connectionID, this);
+                std::lock_guard<std::recursive_mutex> guard(_socketMapMtx);
+                _socketMap.emplace(_connectionID, this);
             }
 
-            __syncPipe.watchConnection(_connectionID);
+            _syncPipe.watchConnection(_connectionID);
 
             return true;
         }
@@ -331,7 +325,7 @@ namespace cocos2d {
             }
 
             _callJavaDisconnect(_connectionID, /* syncClose */ true);
-            __syncPipe.waitForClosing(_connectionID, std::chrono::seconds(5));
+            _syncPipe.waitForClosing(_connectionID, std::chrono::seconds(5));
             //invoke callback in current thread
             _readyState = State::CLOSED;
             _delegate->onClose(this);
@@ -367,12 +361,12 @@ namespace cocos2d {
             else if(eventName == "closed")
             {
                 _readyState = State::CLOSED;
-                __syncPipe.notifyClosed(_connectionID);
+                _syncPipe.notifyClosed(_connectionID);
                 _delegate->onClose(this);
             }
             else if(eventName == "sync-closed")
             {
-                __syncPipe.notifyClosed(_connectionID);
+                _syncPipe.notifyClosed(_connectionID);
             }
             else if(eventName == "error")
             {
@@ -386,7 +380,7 @@ namespace cocos2d {
                     CCLOGERROR("WebSocket unkown error %s", data.c_str());
                 }
                 _delegate->onError(this, code);
-                __syncPipe.notifyClosed(_connectionID);
+                _syncPipe.notifyClosed(_connectionID);
             }
             else
             {
