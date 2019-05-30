@@ -230,7 +230,7 @@ void UtilsGL::toGLTypes(PixelFormat textureFormat, GLint &internalFormat, GLuint
         type = GL_UNSIGNED_SHORT_5_5_5_1;
         break;
 #ifdef GL_ETC1_RGB8_OES
-    case PixelFormat::ETC1:
+    case PixelFormat::ETC:
         internalFormat = GL_ETC1_RGB8_OES;
         format = 0xFFFFFFFF;
         type = 0xFFFFFFFF;
