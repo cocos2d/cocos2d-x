@@ -126,50 +126,35 @@ GLint UtilsGL::toGLMagFilter(SamplerFilter magFilter)
     return ret;
 }
 
-GLint UtilsGL::toGLMinFilter(SamplerFilter minFilter, SamplerFilter mipmapFilter, bool mipmapEnabled, bool isPow2)
+GLint UtilsGL::toGLMinFilter(SamplerFilter minFilter, bool hasMipmaps, bool isPow2)
 {
-    if (mipmapEnabled)
+    if (hasMipmaps && !isPow2)
     {
-        if (!isPow2)
-        {
-            cocos2d::log("Change minification filter to either NEAREST or LINEAR since non-power-of-two texture occur in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
-            if (SamplerFilter::LINEAR == minFilter)
-                return GL_LINEAR;
-            else
-                return GL_NEAREST;
-        }
-
-        switch (minFilter)
-        {
-        case SamplerFilter::LINEAR:
-            switch (mipmapFilter)
-            {
-            case SamplerFilter::LINEAR:
-                return GL_LINEAR_MIPMAP_LINEAR;
-            case SamplerFilter::NEAREST:
-                return GL_LINEAR_MIPMAP_NEAREST;
-            case SamplerFilter::DONT_CARE:
-                return GL_LINEAR_MIPMAP_NEAREST;
-            }
-        case SamplerFilter::NEAREST:
-            switch (mipmapFilter)
-            {
-            case SamplerFilter::LINEAR:
-                return GL_NEAREST_MIPMAP_LINEAR;
-            case SamplerFilter::NEAREST:
-                return GL_NEAREST_MIPMAP_NEAREST;
-            case SamplerFilter::DONT_CARE:
-                return GL_LINEAR_MIPMAP_NEAREST;
-            }
-        }
-    }
-    else
-    {
+        CCLOG("Change minification filter to either NEAREST or LINEAR since non-power-of-two texture occur in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
         if (SamplerFilter::LINEAR == minFilter)
             return GL_LINEAR;
         else
             return GL_NEAREST;
     }
+
+    switch (minFilter)
+    {
+        case SamplerFilter::LINEAR:
+            return GL_LINEAR;
+        case SamplerFilter::LINEAR_MIPMAP_LINEAR:
+            return GL_LINEAR_MIPMAP_LINEAR;
+        case SamplerFilter::LINEAR_MIPMAP_NEAREST:
+            return GL_LINEAR_MIPMAP_NEAREST;
+        case SamplerFilter::NEAREST:
+            return GL_NEAREST;
+        case SamplerFilter::NEAREST_MIPMAP_NEAREST:
+            return GL_NEAREST_MIPMAP_NEAREST;
+        case SamplerFilter::NEAREST_MIPMAP_LINEAR:
+            return GL_NEAREST_MIPMAP_LINEAR;
+        default:
+            break;
+    }
+
     return GL_NEAREST;
 }
 
@@ -178,7 +163,7 @@ GLint UtilsGL::toGLAddressMode(SamplerAddressMode addressMode, bool isPow2)
     GLint ret = GL_REPEAT;
     if (!isPow2 && (addressMode != SamplerAddressMode::CLAMP_TO_EDGE))
     {
-        cocos2d::log("Change texture wrap mode to CLAMP_TO_EDGE since non-power-of-two texture occur in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
+        CCLOG("Change texture wrap mode to CLAMP_TO_EDGE since non-power-of-two texture occur in %s %s %d", __FILE__, __FUNCTION__, __LINE__);
         return GL_CLAMP_TO_EDGE;
     }
 
@@ -200,52 +185,52 @@ GLint UtilsGL::toGLAddressMode(SamplerAddressMode addressMode, bool isPow2)
 }
 
 
-void UtilsGL::toGLTypes(TextureFormat textureFormat, GLint &internalFormat, GLuint &format, GLenum &type, bool &isCompressed)
+void UtilsGL::toGLTypes(PixelFormat textureFormat, GLint &internalFormat, GLuint &format, GLenum &type, bool &isCompressed)
 {
     switch (textureFormat)
     {
-    case TextureFormat::R8G8B8A8:
+    case PixelFormat::RGBA8888:
         internalFormat = GL_RGBA;
         format = GL_RGBA;
         type = GL_UNSIGNED_BYTE;
         break;
-    case TextureFormat::R8G8B8:
+    case PixelFormat::RGB888:
         internalFormat = GL_RGB;
         format = GL_RGB;
         type = GL_UNSIGNED_BYTE;
         break;
-    case TextureFormat::RGBA4444:
+    case PixelFormat::RGBA4444:
         internalFormat = GL_RGBA;
         format = GL_RGBA;
         type = GL_UNSIGNED_SHORT_4_4_4_4;
         break;
-    case TextureFormat::A8:
+    case PixelFormat::A8:
         internalFormat = GL_ALPHA;
         format = GL_ALPHA;
         type = GL_UNSIGNED_BYTE;
         break;
-    case TextureFormat::I8:
+    case PixelFormat::I8:
         internalFormat = GL_LUMINANCE;
         format = GL_LUMINANCE;
         type = GL_UNSIGNED_BYTE;
         break;
-    case TextureFormat::AI88:
+    case PixelFormat::AI88:
         internalFormat = GL_LUMINANCE_ALPHA;
         format = GL_LUMINANCE_ALPHA;
         type = GL_UNSIGNED_BYTE;
         break;
-    case TextureFormat::RGB565:
+    case PixelFormat::RGB565:
         internalFormat = GL_RGB;
         format = GL_RGB;
         type = GL_UNSIGNED_SHORT_5_6_5;
         break;
-    case TextureFormat::RGB5A1:
+    case PixelFormat::RGB5A1:
         internalFormat = GL_RGBA;
         format = GL_RGBA;
         type = GL_UNSIGNED_SHORT_5_5_5_1;
         break;
 #ifdef GL_ETC1_RGB8_OES
-    case TextureFormat::ETC1:
+    case PixelFormat::ETC:
         internalFormat = GL_ETC1_RGB8_OES;
         format = 0xFFFFFFFF;
         type = 0xFFFFFFFF;
@@ -253,7 +238,7 @@ void UtilsGL::toGLTypes(TextureFormat textureFormat, GLint &internalFormat, GLui
         break;
 #endif // GL_ETC1_RGB8_OES
 #ifdef GL_ATC_RGB_AMD
-    case TextureFormat::ATC_RGB:
+    case PixelFormat::ATC_RGB:
         internalFormat = GL_ATC_RGB_AMD;
         format = 0xFFFFFFFF;
         type = 0xFFFFFFFF;
@@ -261,14 +246,14 @@ void UtilsGL::toGLTypes(TextureFormat textureFormat, GLint &internalFormat, GLui
         break;
 #endif // GL_ATC_RGB_AMD
 #ifdef GL_ATC_RGBA_EXPLICIT_ALPHA_AMD
-    case TextureFormat::ATC_EXPLICIT_ALPHA:
+    case PixelFormat::ATC_EXPLICIT_ALPHA:
         internalFormat = GL_ATC_RGBA_EXPLICIT_ALPHA_AMD;
         format = 0xFFFFFFFF;
         type = 0xFFFFFFFF;
         isCompressed = true;
 #endif // GL_ATC_RGBA_EXPLICIT_ALPHA_AMD
 #ifdef GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD
-    case TextureFormat::ATC_INTERPOLATED_ALPHA:
+    case PixelFormat::ATC_INTERPOLATED_ALPHA:
         internalFormat = GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD;
         format = 0xFFFFFFFF;
         type = 0xFFFFFFFF;
@@ -277,7 +262,7 @@ void UtilsGL::toGLTypes(TextureFormat textureFormat, GLint &internalFormat, GLui
 #endif // GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD
 
 #ifdef GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG
-    case TextureFormat::PVRTC2:
+    case PixelFormat::PVRTC2:
         internalFormat = GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
         format = 0xFFFFFFFF;
         type = 0xFFFFFFFF;
@@ -285,7 +270,7 @@ void UtilsGL::toGLTypes(TextureFormat textureFormat, GLint &internalFormat, GLui
         break;
 #endif 
 #ifdef GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG
-    case TextureFormat::PVRTC2A:
+    case PixelFormat::PVRTC2A:
         internalFormat = GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
         format = 0xFFFFFFFF;
         type = 0xFFFFFFFF;
@@ -293,7 +278,7 @@ void UtilsGL::toGLTypes(TextureFormat textureFormat, GLint &internalFormat, GLui
         break;
 #endif
 #ifdef GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG
-    case TextureFormat::PVRTC4:
+    case PixelFormat::PVRTC4:
         internalFormat = GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
         format = 0xFFFFFFFF;
         type = 0xFFFFFFFF;
@@ -301,7 +286,7 @@ void UtilsGL::toGLTypes(TextureFormat textureFormat, GLint &internalFormat, GLui
         break;
 #endif
 #ifdef GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG
-    case TextureFormat::PVRTC4A:
+    case PixelFormat::PVRTC4A:
         internalFormat = GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
         format = 0xFFFFFFFF;
         type = 0xFFFFFFFF;
@@ -309,7 +294,7 @@ void UtilsGL::toGLTypes(TextureFormat textureFormat, GLint &internalFormat, GLui
         break;
 #endif
 #ifdef GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
-    case TextureFormat::S3TC_DXT1:
+    case PixelFormat::S3TC_DXT1:
         internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT1_EXT;
         format = 0xFFFFFFFF;
         type = 0xFFFFFFFF;
@@ -317,7 +302,7 @@ void UtilsGL::toGLTypes(TextureFormat textureFormat, GLint &internalFormat, GLui
         break;
 #endif 
 #ifdef GL_COMPRESSED_RGBA_S3TC_DXT3_EXT
-    case TextureFormat::S3TC_DXT3:
+    case PixelFormat::S3TC_DXT3:
         internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
         format = 0xFFFFFFFF;
         type = 0xFFFFFFFF;
@@ -325,18 +310,18 @@ void UtilsGL::toGLTypes(TextureFormat textureFormat, GLint &internalFormat, GLui
         break;
 #endif
 #ifdef GL_COMPRESSED_RGBA_S3TC_DXT5_EXT
-    case TextureFormat::S3TC_DXT5:
+    case PixelFormat::S3TC_DXT5:
         internalFormat = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
         format = 0xFFFFFFFF;
         type = 0xFFFFFFFF;
         isCompressed = true;
         break;
 #endif
-        //        case TextureFormat::D16:
+        //        case PixelFormat::D16:
         //            format = GL_DEPTH_COMPONENT;
         //            internalFormat = GL_DEPTH_COMPONENT;
         //            type = GL_UNSIGNED_INT;
-    case TextureFormat::D24S8:
+    case PixelFormat::D24S8:
 #ifdef CC_USE_GLES
         format = GL_DEPTH_STENCIL_OES;
         internalFormat = GL_DEPTH_STENCIL_OES;

@@ -49,7 +49,7 @@ RenderTextureSave::RenderTextureSave()
     auto s = Director::getInstance()->getWinSize();
 
     // create a render texture, this is what we are going to draw into
-    _target = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
+    _target = RenderTexture::create(s.width, s.height, backend::PixelFormat::RGBA8888);
     _target->retain();
     _target->setPosition(Vec2(s.width / 2, s.height / 2));
 
@@ -191,7 +191,7 @@ RenderTextureIssue937::RenderTextureIssue937()
     spr_nonpremulti->setPosition(Vec2(s.width/2-16, s.height/2-16));
     
     /* A2 & B2 setup */
-    auto rend = RenderTexture::create(32, 64, Texture2D::PixelFormat::RGBA8888);
+    auto rend = RenderTexture::create(32, 64, backend::PixelFormat::RGBA8888);
 
     if (nullptr == rend)
     {
@@ -393,7 +393,7 @@ RenderTexturePartTest::RenderTexturePartTest()
     addChild(sprite2);
     addChild(sprite22);
     
-    _rend = RenderTexture::create(200, 200, Texture2D::PixelFormat::RGBA8888);
+    _rend = RenderTexture::create(200, 200, backend::PixelFormat::RGBA8888);
     _rend->retain();
     _rend->setKeepMatrix(true);
     Size pixelSize = Director::getInstance()->getWinSizeInPixels();
@@ -448,7 +448,7 @@ RenderTextureTestDepthStencil::RenderTextureTestDepthStencil()
     //! move sprite half width and height, and draw only where not marked
     _spriteDraw->setPosition(_spriteDraw->getPosition() + Vec2(_spriteDraw->getContentSize().width * _spriteDraw->getScale() * 0.5, _spriteDraw->getContentSize().height * _spriteDraw->getScale() * 0.5));
     
-    _rend = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444, TextureFormat::D24S8);
+    _rend = RenderTexture::create(s.width, s.height, backend::PixelFormat::RGBA4444, PixelFormat::D24S8);
 
     _rend->setPosition(Vec2(s.width * 0.5f, s.height * 0.5f));
 
@@ -549,7 +549,7 @@ RenderTextureTargetNode::RenderTextureTargetNode()
     auto s = Director::getInstance()->getWinSize();
     
     /* Create the render texture */
-    auto renderTexture = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA4444);
+    auto renderTexture = RenderTexture::create(s.width, s.height, backend::PixelFormat::RGBA4444);
     this->renderTexture = renderTexture;
     
     renderTexture->setPosition(Vec2(s.width/2, s.height/2));
@@ -638,7 +638,7 @@ void SpriteRenderTextureBug::SimpleSprite::draw(Renderer *renderer, const Mat4 &
     if (_rt == nullptr)
     {
 		auto s = Director::getInstance()->getWinSize();
-        _rt = RenderTexture::create(s.width, s.height, Texture2D::PixelFormat::RGBA8888);
+        _rt = RenderTexture::create(s.width, s.height, backend::PixelFormat::RGBA8888);
         _rt->retain();
 	}
 	_rt->beginWithClear(0.0f, 0.0f, 0.0f, 1.0f);
@@ -726,7 +726,7 @@ Issue16113Test::Issue16113Test()
         auto winSize = Director::getInstance()->getVisibleSize();
         auto text = Label::createWithTTF("hello world", "fonts/Marker Felt.ttf", 40);
         text->setTextColor(Color4B::RED);
-        auto target = RenderTexture::create(winSize.width, winSize.height, Texture2D::PixelFormat::RGBA8888);
+        auto target = RenderTexture::create(winSize.width, winSize.height, backend::PixelFormat::RGBA8888);
         target->beginWithClear(0,0,0,0);
         text->setPosition(winSize.width / 2,winSize.height/2);
         text->Node::visit();
@@ -783,12 +783,12 @@ RenderTextureWithSprite3DIssue16894::RenderTextureWithSprite3DIssue16894()
     // }
 
     // // RenderTextures
-    // _renderTexDefault = RenderTexture::create(visibleSize.width, visibleSize.height, Texture2D::PixelFormat::RGBA8888);
+    // _renderTexDefault = RenderTexture::create(visibleSize.width, visibleSize.height, backend::PixelFormat::RGBA8888);
     // _renderTexDefault->setKeepMatrix(true);
     // addChild(_renderTexDefault);
     // _renderTexDefault->setPosition(visibleSize.width/4 * 3, visibleSize.height/2);
 
-    // _renderTexWithBuffer = RenderTexture::create(visibleSize.width, visibleSize.height, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
+    // _renderTexWithBuffer = RenderTexture::create(visibleSize.width, visibleSize.height, backend::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
     // _renderTexWithBuffer->setKeepMatrix(true);
     // addChild(_renderTexWithBuffer);
     // _renderTexWithBuffer->setPosition(visibleSize.width/4 * 4, visibleSize.height/2);

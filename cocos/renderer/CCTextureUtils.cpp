@@ -566,7 +566,7 @@ namespace backend { namespace PixelFormatUtils {
     
     
     
-    cocos2d::Texture2D::PixelFormat convertI8ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
+    cocos2d::backend::PixelFormat convertI8ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         switch (format)
         {
@@ -634,7 +634,7 @@ namespace backend { namespace PixelFormatUtils {
         return format;
     }
     
-    cocos2d::Texture2D::PixelFormat convertAI88ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
+    cocos2d::backend::PixelFormat convertAI88ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         switch (format)
         {
@@ -704,7 +704,7 @@ namespace backend { namespace PixelFormatUtils {
         return format;
     }
     
-    cocos2d::Texture2D::PixelFormat convertRGB888ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
+    cocos2d::backend::PixelFormat convertRGB888ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         switch (format)
         {
@@ -772,7 +772,7 @@ namespace backend { namespace PixelFormatUtils {
         return format;
     }
     
-    cocos2d::Texture2D::PixelFormat convertRGBA8888ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
+    cocos2d::backend::PixelFormat convertRGBA8888ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         
         switch (format)
@@ -842,7 +842,7 @@ namespace backend { namespace PixelFormatUtils {
         return format;
     }
     
-    cocos2d::Texture2D::PixelFormat convertRGB5A1ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
+    cocos2d::backend::PixelFormat convertRGB5A1ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         switch (format)
         {
@@ -870,7 +870,7 @@ namespace backend { namespace PixelFormatUtils {
         return format;
     }
     
-    cocos2d::Texture2D::PixelFormat convertRGB565ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
+    cocos2d::backend::PixelFormat convertRGB565ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         switch (format)
         {
@@ -899,7 +899,7 @@ namespace backend { namespace PixelFormatUtils {
         return format;
     }
     
-    cocos2d::Texture2D::PixelFormat convertA8ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
+    cocos2d::backend::PixelFormat convertA8ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         switch (format)
         {
@@ -922,7 +922,7 @@ namespace backend { namespace PixelFormatUtils {
         return format;
     }
     
-    cocos2d::Texture2D::PixelFormat convertRGBA4444ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
+    cocos2d::backend::PixelFormat convertRGBA4444ToFormat(const unsigned char* data, size_t dataLen, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         switch (format)
         {
@@ -982,7 +982,7 @@ namespace backend { namespace PixelFormatUtils {
      rgba(1) -> 12345678
      
      */
-    cocos2d::Texture2D::PixelFormat convertDataToFormat(const unsigned char* data, size_t dataLen, PixelFormat originFormat, PixelFormat format, unsigned char** outData, size_t* outDataLen)
+    cocos2d::backend::PixelFormat convertDataToFormat(const unsigned char* data, size_t dataLen, PixelFormat originFormat, PixelFormat format, unsigned char** outData, size_t* outDataLen)
     {
         // don't need to convert
         if (format == originFormat || format == PixelFormat::AUTO)

@@ -72,66 +72,6 @@ namespace backend {
 class CC_DLL Texture2D : public Ref
 {
 public:
-    /** @typedef Texture2D::PixelFormat
-     Possible texture pixel formats
-     */
-    enum class PixelFormat
-    {
-        //! auto detect the type
-        AUTO,
-        //! 32-bit texture: BGRA8888
-        BGRA8888,
-        //! 32-bit texture: RGBA8888
-        RGBA8888,
-        //! 24-bit texture: RGBA888
-        RGB888,
-        //! 16-bit texture without Alpha channel
-        RGB565,
-        //! 8-bit textures used as masks
-        A8,
-        //! 8-bit intensity texture
-        I8,
-        //! 16-bit textures used as masks
-        AI88,
-        //! 16-bit textures: RGBA4444
-        RGBA4444,
-        //! 16-bit textures: RGB5A1
-        RGB5A1,
-        //! 4-bit PVRTC-compressed texture: PVRTC4
-        PVRTC4,
-        //! 4-bit PVRTC-compressed texture: PVRTC4 (has alpha channel)
-        PVRTC4A,
-        //! 2-bit PVRTC-compressed texture: PVRTC2
-        PVRTC2,
-        //! 2-bit PVRTC-compressed texture: PVRTC2 (has alpha channel)
-        PVRTC2A,
-        //! ETC-compressed texture: ETC
-        ETC,
-        //! S3TC-compressed texture: S3TC_Dxt1
-        S3TC_DXT1,
-        //! S3TC-compressed texture: S3TC_Dxt3
-        S3TC_DXT3,
-        //! S3TC-compressed texture: S3TC_Dxt5
-        S3TC_DXT5,
-        //! ATITC-compressed texture: ATC_RGB
-        ATC_RGB,
-        //! ATITC-compressed texture: ATC_EXPLICIT_ALPHA
-        ATC_EXPLICIT_ALPHA,
-        //! ATITC-compressed texture: ATC_INTERPOLATED_ALPHA
-        ATC_INTERPOLATED_ALPHA,
-        //! Default texture format: AUTO
-        
-        MTL_B5G6R5,
-        //MTL_A1BGR5,
-        MTL_BGR5A1,
-        MTL_ABGR4,
-        
-        DEFAULT = AUTO,
-        
-        NONE = -1
-    };
-    
-    
     struct PixelFormatInfo {
 
         PixelFormatInfo(int aBpp, bool aCompressed, bool anAlpha)
@@ -145,7 +85,7 @@ public:
         bool alpha;
     };
     
-    typedef std::map<Texture2D::PixelFormat, const PixelFormatInfo> PixelFormatInfoMap;
+    typedef std::map<backend::PixelFormat, const PixelFormatInfo> PixelFormatInfoMap;
     
     /**
      * Extension to set the Min / Mag filter
@@ -157,12 +97,12 @@ public:
      
      @param format
      If the UIImage contains alpha channel, then the options are:
-     - generate 32-bit textures: Texture2D::PixelFormat::RGBA8888 (default one)
-     - generate 24-bit textures: Texture2D::PixelFormat::RGB888
-     - generate 16-bit textures: Texture2D::PixelFormat::RGBA4444
-     - generate 16-bit textures: Texture2D::PixelFormat::RGB5A1
-     - generate 16-bit textures: Texture2D::PixelFormat::RGB565
-     - generate 8-bit textures: Texture2D::PixelFormat::A8 (only use it if you use just 1 color)
+     - generate 32-bit textures: backend::PixelFormat::RGBA8888 (default one)
+     - generate 24-bit textures: backend::PixelFormat::RGB888
+     - generate 16-bit textures: backend::PixelFormat::RGBA4444
+     - generate 16-bit textures: backend::PixelFormat::RGB5A1
+     - generate 16-bit textures: backend::PixelFormat::RGB565
+     - generate 8-bit textures: backend::PixelFormat::A8 (only use it if you use just 1 color)
 
      How does it work ?
      - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
@@ -172,12 +112,12 @@ public:
 
      @since v0.8
      */
-    static void setDefaultAlphaPixelFormat(Texture2D::PixelFormat format);
+    static void setDefaultAlphaPixelFormat(backend::PixelFormat format);
 
     /** Returns the alpha pixel format.
      @since v0.8
      */
-    static Texture2D::PixelFormat getDefaultAlphaPixelFormat();
+    static backend::PixelFormat getDefaultAlphaPixelFormat();
     
 public:
     /**
@@ -201,7 +141,7 @@ public:
      * @js NA
      * @lua NA
      */
-    bool initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& contentSize) { return initWithData(data, dataLen, pixelFormat, pixelFormat, pixelsWide, pixelsHigh, contentSize);}
+    bool initWithData(const void *data, ssize_t dataLen, backend::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& contentSize) { return initWithData(data, dataLen, pixelFormat, pixelFormat, pixelsWide, pixelsHigh, contentSize);}
 
     /** Initializes with a texture2d with data.
      
@@ -215,7 +155,7 @@ public:
      * @js NA
      * @lua NA
      */
-    bool initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, Texture2D::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, const Size& contentSize);
+    bool initWithData(const void *data, ssize_t dataLen, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh, const Size& contentSize);
     
     /** Initializes with mipmaps. 
      
@@ -225,7 +165,7 @@ public:
      @param pixelsWide The image width.
      @param pixelsHigh The image height.
      */
-    bool initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, Texture2D::PixelFormat pixelFormat, Texture2D::PixelFormat renderFormat, int pixelsWide, int pixelsHigh);
+    bool initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, backend::PixelFormat pixelFormat, backend::PixelFormat renderFormat, int pixelsWide, int pixelsHigh);
     
     /** Update with texture data.
      
@@ -265,7 +205,7 @@ public:
     @param image An UIImage object.
     @param format Texture pixel formats.
     **/
-    bool initWithImage(Image * image, PixelFormat format);
+    bool initWithImage(Image * image, backend::PixelFormat format);
 
     /** Initializes a texture from a string with dimensions, alignment, font name and font size. 
      
@@ -333,7 +273,7 @@ public:
     /** Helper functions that returns bits per pixels for a given format.
      @since v2.0
      */
-    unsigned int getBitsPerPixelForFormat(Texture2D::PixelFormat format) const;
+    unsigned int getBitsPerPixelForFormat(backend::PixelFormat format) const;
 
     /** Get content size. */
     const Size& getContentSizeInPixels();
@@ -345,7 +285,7 @@ public:
     bool hasMipmaps() const;
 
     /** Gets the pixel format of the texture. */
-    Texture2D::PixelFormat getPixelFormat() const;
+    backend::PixelFormat getPixelFormat() const;
     
     /** Gets the width of the texture in pixels. */
     int getPixelsWide() const;
@@ -427,7 +367,7 @@ private:
    
 protected:
     /** pixel format of the texture */
-    Texture2D::PixelFormat _pixelFormat;
+    backend::PixelFormat _pixelFormat;
 
     /** width in pixels */
     int _pixelsWide;

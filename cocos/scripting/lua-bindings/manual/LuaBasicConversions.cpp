@@ -3205,12 +3205,6 @@ void texParams_to_luaval(lua_State* L, const cocos2d::Texture2D::TexParams& inVa
     lua_pushstring(L, "sAddressMode");                          /* L: table key */
     lua_pushnumber(L, (lua_Number) inValue.tAddressMode);       /* L: table key value*/
     lua_rawset(L, -3);
-    lua_pushstring(L, "mipmapFilter");
-    lua_pushnumber(L, (lua_Number)inValue.mipmapFilter);
-    lua_rawset(L, -3);
-    lua_pushstring(L, "mipmapEnabled");
-    lua_pushboolean(L, inValue.mipmapEnabled);
-    lua_rawset(L, -3);
 }
 
 void std_vector_vec3_to_luaval(lua_State* L, const std::vector<cocos2d::Vec3>& inValue)
@@ -3334,14 +3328,6 @@ bool luaval_to_samplerDescriptor(lua_State* L, int pos, cocos2d::backend::Sample
     }
     lua_pop(L, 1);
 
-    lua_pushstring(L, "mipmapFilter");
-    lua_gettable(L, pos);
-    if (!lua_isnil(L, -1))
-    {
-        output.mipmapFilter = static_cast<cocos2d::backend::SamplerFilter>(lua_tointeger(L, -1));
-    }
-    lua_pop(L, 1);
-
     lua_pushstring(L, "sAddressMode");
     lua_gettable(L, pos);
     if (!lua_isnil(L, -1))
@@ -3358,13 +3344,6 @@ bool luaval_to_samplerDescriptor(lua_State* L, int pos, cocos2d::backend::Sample
     }
     lua_pop(L, 1);
 
-    lua_pushstring(L, "mipmapEnabled");
-    lua_gettable(L, pos);
-    if (!lua_isnil(L, -1))
-    {
-        output.mipmapEnabled = lua_toboolean(L, -1);
-    }
-    lua_pop(L, 1);
     return true;
 }
 

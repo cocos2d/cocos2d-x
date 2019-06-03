@@ -653,10 +653,8 @@ enum class RenderTargetFlag : uint8_t
     ALL = COLOR | DEPTH | STENCIL
 };
 ENABLE_BITMASK_OPERATORS(RenderTargetFlag)
-
-// export backend types to cocos2d namespance
-using TextureFormat = backend::TextureFormat;
 using TextureUsage = backend::TextureUsage;
+using PixelFormat = backend::PixelFormat;
 
 NS_CC_END
 // end group

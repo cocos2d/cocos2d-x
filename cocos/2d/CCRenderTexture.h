@@ -32,6 +32,7 @@ THE SOFTWARE.
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCCallbackCommand.h"
+#include "renderer/backend/Types.h"
 
 NS_CC_BEGIN
 
@@ -66,7 +67,7 @@ public:
      * @param format In Points and a pixel format( only RGB and RGBA formats are valid ).
      * @param depthStencilFormat The depthStencil format.
      */
-    static RenderTexture * create(int w ,int h, Texture2D::PixelFormat format, TextureFormat depthStencilFormat);
+    static RenderTexture * create(int w ,int h, backend::PixelFormat format, backend::PixelFormat depthStencilFormat);
 
     /** Creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid. 
      *
@@ -74,7 +75,7 @@ public:
      * @param h The RenderTexture object height.
      * @param format In Points and a pixel format( only RGB and RGBA formats are valid ).
      */
-    static RenderTexture * create(int w, int h, Texture2D::PixelFormat format);
+    static RenderTexture * create(int w, int h, backend::PixelFormat format);
 
     /** Creates a RenderTexture object with width and height in Points, pixel format is RGBA8888. 
      *
@@ -303,7 +304,7 @@ public:
      * @param format In Points and a pixel format( only RGB and RGBA formats are valid ).
      * @return If succeed, it will return true.
      */
-    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format);
+    bool initWithWidthAndHeight(int w, int h, backend::PixelFormat format);
     /** Initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format. 
      *
      * @param w The RenderTexture object width.
@@ -312,7 +313,7 @@ public:
      * @param depthStencilFormat The depthStencil format.
      * @return If succeed, it will return true.
      */
-    bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, TextureFormat depthStencilFormat);
+    bool initWithWidthAndHeight(int w, int h, backend::PixelFormat format, backend::PixelFormat depthStencilFormat);
 
 protected:
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue, ClearFlag flags);
@@ -339,7 +340,7 @@ protected:
     RenderTargetFlag _renderTargetFlags;
     RenderTargetFlag _oldRenderTargetFlag;
     Image*     _UITextureImage = nullptr;
-    Texture2D::PixelFormat _pixelFormat = Texture2D::PixelFormat::RGBA8888;
+    backend::PixelFormat _pixelFormat = backend::PixelFormat::RGBA8888;
     
     Color4F _clearColor;
     float _clearDepth = 1.f;

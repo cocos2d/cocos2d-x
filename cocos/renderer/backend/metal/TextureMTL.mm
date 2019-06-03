@@ -68,13 +68,13 @@ namespace
     }
 
     
-    bool convertData(uint8_t* src, unsigned int length, TextureFormat format, uint8_t** out)
+    bool convertData(uint8_t* src, unsigned int length, PixelFormat format, uint8_t** out)
     {
         *out = src;
         bool converted = false;
         switch (format)
         {
-            case TextureFormat::R8G8B8:
+            case PixelFormat::RGB888:
                 {
                     *out = (uint8_t*)malloc(length * 4);
                     convertRGB2RGBA(src, *out, length);
@@ -87,18 +87,18 @@ namespace
         return converted;
     }
     
-    bool isColorRenderable(TextureFormat textureFormat)
+    bool isColorRenderable(PixelFormat textureFormat)
     {
         switch (textureFormat)
         {
-            case TextureFormat::R8G8B8A8:
-            case TextureFormat::R8G8B8:
-            case TextureFormat::RGBA4444:
-            case TextureFormat::RGB565:
-            case TextureFormat::RGB5A1:
-            case TextureFormat::MTL_BGR5A1:
-            case TextureFormat::MTL_B5G6R5:
-            case TextureFormat::MTL_ABGR4:
+            case PixelFormat::RGBA8888:
+            case PixelFormat::RGB888:
+            case PixelFormat::RGBA4444:
+            case PixelFormat::RGB565:
+            case PixelFormat::RGB5A1:
+            case PixelFormat::MTL_BGR5A1:
+            case PixelFormat::MTL_B5G6R5:
+            case PixelFormat::MTL_ABGR4:
                 return true;
             default:
                 return false;
@@ -152,22 +152,22 @@ namespace
         return bytesPerRow;
     }
     
-    uint32_t getBytesPerRow(TextureFormat textureFormat, uint32_t width, uint32_t bitsPerElement)
+    uint32_t getBytesPerRow(PixelFormat textureFormat, uint32_t width, uint32_t bitsPerElement)
     {
         MTLPixelFormat pixelFormat = Utils::toMTLPixelFormat(textureFormat);
         uint32_t bytesPerRow = 0;
         
-        if(textureFormat >= TextureFormat::PVRTC2 &&
-           textureFormat <= TextureFormat::PVRTC4A)
+        if(textureFormat >= PixelFormat::PVRTC2 &&
+           textureFormat <= PixelFormat::PVRTC4A)
         {
             bytesPerRow = 0;
         }
-        else if (textureFormat == TextureFormat::ETC1)
+        else if (textureFormat == PixelFormat::ETC)
         {
             bytesPerRow = getBytesPerRowETC(pixelFormat, width);
         }
-        else if(textureFormat >= TextureFormat::S3TC_DXT1 &&
-                textureFormat <= TextureFormat::S3TC_DXT5)
+        else if(textureFormat >= PixelFormat::S3TC_DXT1 &&
+                textureFormat <= PixelFormat::S3TC_DXT5)
         {
             bytesPerRow = getBytesPerRowS3TC(pixelFormat, width);
         }
@@ -202,7 +202,7 @@ void TextureMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescript
     Texture::updateTextureDescriptor(descriptor);
     createTexture(_mtlDevice, descriptor);
     updateSamplerDescriptor(descriptor.samplerDescriptor);
-    if (TextureFormat::R8G8B8 == _textureFormat)
+    if (PixelFormat::RGB888 == _textureFormat)
     {
         _bitsPerElement = 4 * 8;
     }
@@ -229,7 +229,7 @@ void TextureMTL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t widt
                                  _textureFormat, &convertedData);
     
     int bytesPerRow = getBytesPerRow(_textureFormat, width, _bitsPerElement);
-
+    
     [_mtlTexture replaceRegion:region
                    mipmapLevel:level
                      withBytes:convertedData
@@ -267,7 +267,7 @@ void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor&
     if (TextureUsage::RENDER_TARGET == descriptor.textureUsage)
     {
         //DepthStencil, and Multisample textures must be allocated with the MTLResourceStorageModePrivate resource option
-        if(TextureFormat::D24S8 == descriptor.textureFormat)
+        if(PixelFormat::D24S8 == descriptor.textureFormat)
             textureDescriptor.resourceOptions = MTLResourceStorageModePrivate;
         textureDescriptor.usage = MTLTextureUsageRenderTarget | MTLTextureUsageShaderRead;
     }
@@ -365,7 +365,7 @@ void TextureCubeMTL::updateTextureDescriptor(const cocos2d::backend::TextureDesc
     updateSamplerDescriptor(descriptor.samplerDescriptor);
     
     // Metal doesn't support RGB888/RGBA4444, so should convert to RGBA888;
-    if (TextureFormat::R8G8B8 == _textureFormat)
+    if (PixelFormat::RGB888 == _textureFormat)
     {
         _bitsPerElement = 4 * 8;
     }

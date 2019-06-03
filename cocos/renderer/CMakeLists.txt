@@ -33,7 +33,6 @@ set(COCOS_RENDERER_HEADER
     renderer/backend/RenderPipeline.h
     renderer/backend/RenderPipelineDescriptor.h
     renderer/backend/ShaderModule.h
-    renderer/backend/StringUtils.h
     renderer/backend/Texture.h
     renderer/backend/Types.h
     renderer/backend/VertexLayout.h
@@ -67,7 +66,6 @@ set(COCOS_RENDERER_SRC
     renderer/backend/DepthStencilState.cpp
     renderer/backend/Device.cpp
     renderer/backend/ShaderModule.cpp
-    renderer/backend/StringUtils.cpp
     renderer/backend/Texture.cpp
     renderer/backend/Types.cpp
     renderer/backend/VertexLayout.cpp
