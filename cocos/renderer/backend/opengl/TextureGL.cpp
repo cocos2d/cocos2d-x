@@ -269,6 +269,7 @@ void Texture2DGL::generateMipmaps()
     if(!_hasMipmaps)
     {
         _hasMipmaps = true;
+        glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
         glGenerateMipmap(GL_TEXTURE_2D);
     }
 }
@@ -436,6 +437,7 @@ void TextureCubeGL::generateMipmaps()
     if(!_hasMipmaps)
     {
         _hasMipmaps = true;
+        glBindTexture(GL_TEXTURE_CUBE_MAP, _textureInfo.texture);
         glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
     }
 }
