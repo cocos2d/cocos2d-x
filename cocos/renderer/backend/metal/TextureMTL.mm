@@ -105,17 +105,77 @@ namespace
         }
     }
     
-    bool isCompressedFormat(PixelFormat textureFormat)
+    uint32_t getBytesPerRowETC(MTLPixelFormat pixleFormat, uint32_t width)
+    {
+        uint32_t bytesPerRow = 0;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        uint32_t bytesPerBlock = 0, blockWidth = 4;
+        switch (pixleFormat) {
+            case MTLPixelFormatETC2_RGB8:
+            case MTLPixelFormatETC2_RGB8A1:
+            case MTLPixelFormatEAC_R11Unorm:
+                bytesPerBlock = 8;
+                break;
+            case MTLPixelFormatEAC_RGBA8:
+            case MTLPixelFormatEAC_RG11Unorm:
+                bytesPerBlock = 16;
+                break;
+            default:
+                assert(false); //TODO coulsonwang
+                break;
+        }
+        auto blocksPerRow = (width + (blockWidth - 1)) / blockWidth;
+        bytesPerRow = blocksPerRow * bytesPerBlock;
+#endif
+        return bytesPerRow;
+    }
+    
+    uint32_t getBytesPerRowS3TC(MTLPixelFormat pixleFormat, uint32_t width)
+    {
+        uint32_t bytesPerRow = 0;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+        uint32_t bytesPerBlock = 0, blockWidth = 4;
+        switch (pixleFormat) {
+            case MTLPixelFormatBC1_RGBA:
+                bytesPerBlock = 8;
+                break;
+            case MTLPixelFormatBC2_RGBA:
+            case MTLPixelFormatBC3_RGBA:
+                bytesPerBlock = 16;
+                break;
+            default:
+                break;
+        }
+        auto blocksPerRow = (width + (blockWidth - 1)) / blockWidth;
+        bytesPerRow = blocksPerRow * bytesPerBlock;
+#endif
+        return bytesPerRow;
+    }
+    
+    uint32_t getBytesPerRow(PixelFormat textureFormat, uint32_t width, uint32_t bitsPerElement)
     {
         MTLPixelFormat pixelFormat = Utils::toMTLPixelFormat(textureFormat);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        bool isCompressed = (pixelFormat >= MTLPixelFormatPVRTC_RGB_2BPP &&
-                                   pixelFormat <= MTLPixelFormatASTC_12x12_LDR);
-#else
-        bool isCompressed = (pixelFormat >= MTLPixelFormatBC1_RGBA &&
-                                   pixelFormat <= MTLPixelFormatBC7_RGBAUnorm_sRGB);
-#endif
-        return isCompressed;
+        uint32_t bytesPerRow = 0;
+        
+        if(textureFormat >= PixelFormat::PVRTC2 &&
+           textureFormat <= PixelFormat::PVRTC4A)
+        {
+            bytesPerRow = 0;
+        }
+        else if (textureFormat == PixelFormat::ETC)
+        {
+            bytesPerRow = getBytesPerRowETC(pixelFormat, width);
+        }
+        else if(textureFormat >= PixelFormat::S3TC_DXT1 &&
+                textureFormat <= PixelFormat::S3TC_DXT5)
+        {
+            bytesPerRow = getBytesPerRowS3TC(pixelFormat, width);
+        }
+        else
+        {
+            bytesPerRow = width * bitsPerElement / 8;
+        }
+        return bytesPerRow;
     }
 }
 
@@ -124,7 +184,6 @@ TextureMTL::TextureMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descrip
 {
     _mtlDevice = mtlDevice;
     updateTextureDescriptor(descriptor);
-    _isCompressed = isCompressedFormat(descriptor.textureFormat);
 }
 
 TextureMTL::~TextureMTL()
@@ -169,9 +228,7 @@ void TextureMTL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t widt
                                  (uint32_t)(width * height),
                                  _textureFormat, &convertedData);
     
-    //TODO coulsonwang, it seems that only PVRTC has such limitation.
-    //when pixel format is a compressed one, bytePerRow should be set to ZERO
-    int bytesPerRow = _isCompressed ? 0 : (width * _bitsPerElement / 8);
+    int bytesPerRow = getBytesPerRow(_textureFormat, width, _bitsPerElement);
     
     [_mtlTexture replaceRegion:region
                    mipmapLevel:level

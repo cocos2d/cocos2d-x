@@ -1634,7 +1634,7 @@ bool Image::initWithETCData(const unsigned char * data, ssize_t dataLen)
     if (Configuration::getInstance()->supportsETC())
     {
         //old opengl version has no define for GL_ETC1_RGB8_OES, add macro to make compiler happy. 
-#ifdef GL_ETC1_RGB8_OES
+#if defined(GL_ETC1_RGB8_OES) || defined(CC_USE_METAL)
         _pixelFormat = backend::PixelFormat::ETC;
         _dataLen = dataLen - ETC_PKM_HEADER_SIZE;
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));

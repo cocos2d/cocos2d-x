@@ -74,18 +74,12 @@ class CC_DLL Texture2D : public Ref
 public:
     struct PixelFormatInfo {
 
-        PixelFormatInfo(GLenum anInternalFormat, GLenum aFormat, GLenum aType, int aBpp, bool aCompressed, bool anAlpha)
-            : internalFormat(anInternalFormat)
-            , format(aFormat)
-            , type(aType)
-            , bpp(aBpp)
+        PixelFormatInfo(int aBpp, bool aCompressed, bool anAlpha)
+            : bpp(aBpp)
             , compressed(aCompressed)
             , alpha(anAlpha)
         {}
-
-        GLenum internalFormat;
-        GLenum format;
-        GLenum type;
+        
         int bpp;
         bool compressed;
         bool alpha;

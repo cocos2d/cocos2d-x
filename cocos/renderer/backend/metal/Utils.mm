@@ -97,6 +97,15 @@ MTLPixelFormat Utils::toMTLPixelFormat(PixelFormat textureFormat)
             return MTLPixelFormatPVRTC_RGBA_2BPP;
         case PixelFormat::PVRTC2:
             return MTLPixelFormatPVRTC_RGB_2BPP;
+        case TextureFormat::ETC1:
+            return MTLPixelFormatETC2_RGB8;
+#else
+        case PixelFormat::S3TC_DXT1:
+            return MTLPixelFormatBC1_RGBA;
+        case PixelFormat::S3TC_DXT3:
+            return MTLPixelFormatBC2_RGBA;
+        case PixelFormat::S3TC_DXT5:
+            return MTLPixelFormatBC3_RGBA;
 #endif
         case PixelFormat::RGBA8888:
             return MTLPixelFormatRGBA8Unorm;
