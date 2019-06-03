@@ -14,9 +14,9 @@ public:
     static GLsizei getGLDataTypeSize(GLenum size);
 
     static GLint toGLMagFilter(SamplerFilter magFilter);
-    static GLint toGLMinFilter(SamplerFilter minFilter, SamplerFilter mipmapFilter, bool mipmapEnabled, bool isPow2);
+    static GLint toGLMinFilter(SamplerFilter minFilter, bool hasMipmaps, bool isPow2);
     static GLint toGLAddressMode(SamplerAddressMode addressMode, bool isPow2);
-    static void toGLTypes(TextureFormat textureFormat, GLint &internalFormat, GLuint &format, GLenum &type, bool &isCompressed);
+    static void toGLTypes(PixelFormat textureFormat, GLint &internalFormat, GLuint &format, GLenum &type, bool &isCompressed);
 
     static GLenum toGLComareFunction(CompareFunction compareFunction);
     static GLenum toGLStencilOperation(StencilOperation stencilOperation);

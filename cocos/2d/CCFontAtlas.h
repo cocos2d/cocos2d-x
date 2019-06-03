@@ -131,7 +131,7 @@ protected:
      */
     void scaleFontLetterDefinition(float scaleFactor);
     
-    void updateTextureContent(Texture2D::PixelFormat format, int startY);
+    void updateTextureContent(backend::PixelFormat format, int startY);
 
     std::unordered_map<ssize_t, Texture2D*> _atlasTextures;
     std::unordered_map<char32_t, FontLetterDefinition> _letterDefinitions;

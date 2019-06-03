@@ -29,8 +29,12 @@ namespace
     {
         switch (mode) {
             case SamplerFilter::NEAREST:
+            case SamplerFilter::NEAREST_MIPMAP_LINEAR:
+            case SamplerFilter::NEAREST_MIPMAP_NEAREST:
                 return MTLSamplerMinMagFilterNearest;
             case SamplerFilter::LINEAR:
+            case SamplerFilter::LINEAR_MIPMAP_LINEAR:
+            case SamplerFilter::LINEAR_MIPMAP_NEAREST:
                 return MTLSamplerMinMagFilterLinear;
             case SamplerFilter::DONT_CARE:
                 return MTLSamplerMinMagFilterNearest;
@@ -40,8 +44,12 @@ namespace
     MTLSamplerMipFilter toMTLSamplerMipFilter(SamplerFilter mode) {
         switch (mode) {
             case SamplerFilter::NEAREST:
+            case SamplerFilter::LINEAR_MIPMAP_NEAREST:
+            case SamplerFilter::NEAREST_MIPMAP_NEAREST:
                 return MTLSamplerMipFilterNearest;
             case SamplerFilter::LINEAR:
+            case SamplerFilter::LINEAR_MIPMAP_LINEAR:
+            case SamplerFilter::NEAREST_MIPMAP_LINEAR:
                 return MTLSamplerMipFilterLinear;
             case SamplerFilter::DONT_CARE:
                 return MTLSamplerMipFilterNearest;
@@ -60,13 +68,13 @@ namespace
     }
 
     
-    bool convertData(uint8_t* src, unsigned int length, TextureFormat format, uint8_t** out)
+    bool convertData(uint8_t* src, unsigned int length, PixelFormat format, uint8_t** out)
     {
         *out = src;
         bool converted = false;
         switch (format)
         {
-            case TextureFormat::R8G8B8:
+            case PixelFormat::RGB888:
                 {
                     *out = (uint8_t*)malloc(length * 4);
                     convertRGB2RGBA(src, *out, length);
@@ -79,22 +87,35 @@ namespace
         return converted;
     }
     
-    bool isColorRenderable(TextureFormat textureFormat)
+    bool isColorRenderable(PixelFormat textureFormat)
     {
         switch (textureFormat)
         {
-            case TextureFormat::R8G8B8A8:
-            case TextureFormat::R8G8B8:
-            case TextureFormat::RGBA4444:
-            case TextureFormat::RGB565:
-            case TextureFormat::RGB5A1:
-            case TextureFormat::MTL_BGR5A1:
-            case TextureFormat::MTL_B5G6R5:
-            case TextureFormat::MTL_ABGR4:
+            case PixelFormat::RGBA8888:
+            case PixelFormat::RGB888:
+            case PixelFormat::RGBA4444:
+            case PixelFormat::RGB565:
+            case PixelFormat::RGB5A1:
+            case PixelFormat::MTL_BGR5A1:
+            case PixelFormat::MTL_B5G6R5:
+            case PixelFormat::MTL_ABGR4:
                 return true;
             default:
                 return false;
         }
+    }
+    
+    bool isCompressedFormat(PixelFormat textureFormat)
+    {
+        MTLPixelFormat pixelFormat = Utils::toMTLPixelFormat(textureFormat);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        bool isCompressed = (pixelFormat >= MTLPixelFormatPVRTC_RGB_2BPP &&
+                                   pixelFormat <= MTLPixelFormatASTC_12x12_LDR);
+#else
+        bool isCompressed = (pixelFormat >= MTLPixelFormatBC1_RGBA &&
+                                   pixelFormat <= MTLPixelFormatBC7_RGBAUnorm_sRGB);
+#endif
+        return isCompressed;
     }
 }
 
@@ -103,6 +124,7 @@ TextureMTL::TextureMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descrip
 {
     _mtlDevice = mtlDevice;
     updateTextureDescriptor(descriptor);
+    _isCompressed = isCompressedFormat(descriptor.textureFormat);
 }
 
 TextureMTL::~TextureMTL()
@@ -121,7 +143,7 @@ void TextureMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescript
     Texture::updateTextureDescriptor(descriptor);
     createTexture(_mtlDevice, descriptor);
     updateSamplerDescriptor(descriptor.samplerDescriptor);
-    if (TextureFormat::R8G8B8 == _textureFormat)
+    if (PixelFormat::RGB888 == _textureFormat)
     {
         _bitsPerElement = 4 * 8;
     }
@@ -129,12 +151,12 @@ void TextureMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescript
     _bytesPerRow = descriptor.width * _bitsPerElement / 8 ;
 }
 
-void TextureMTL::updateData(uint8_t* data)
+void TextureMTL::updateData(uint8_t* data, uint32_t width , uint32_t height, uint32_t level)
 {
-    updateSubData(0, 0, (unsigned int)_mtlTexture.width, (unsigned int)_mtlTexture.height, data);
+    updateSubData(0, 0, width, height, level, data);
 }
 
-void TextureMTL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data)
+void TextureMTL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t level, uint8_t* data)
 {
     MTLRegion region =
     {
@@ -147,23 +169,30 @@ void TextureMTL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsig
                                  (uint32_t)(width * height),
                                  _textureFormat, &convertedData);
     
+    //TODO coulsonwang, it seems that only PVRTC has such limitation.
     //when pixel format is a compressed one, bytePerRow should be set to ZERO
-    int bytesPerRow = _isCompressed ? 0 : _bytesPerRow;
+    int bytesPerRow = _isCompressed ? 0 : (width * _bitsPerElement / 8);
     
     [_mtlTexture replaceRegion:region
-                   mipmapLevel:0
+                   mipmapLevel:level
                      withBytes:convertedData
                    bytesPerRow:bytesPerRow];
     
     if (converted)
         free(convertedData);
     
-    // metal doesn't generate mipmaps automatically, so should generate it manually.
-    if (_isMipmapEnabled)
-    {
-        _isMipmapGenerated = false;
-        generateMipmaps();
-    }
+    if(!_hasMipmaps && level > 0)
+        _hasMipmaps = true;
+}
+
+void TextureMTL::updateCompressedData(uint8_t *data, uint32_t width, uint32_t height, uint32_t dataLen, uint32_t level)
+{
+    updateCompressedSubData(0, 0, width, height, dataLen, level, data);
+}
+
+void TextureMTL::updateCompressedSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t dataLen, uint32_t level, uint8_t *data)
+{
+    updateSubData(xoffset, yoffset, width, height, level, data);
 }
 
 void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
@@ -181,7 +210,7 @@ void TextureMTL::createTexture(id<MTLDevice> mtlDevice, const TextureDescriptor&
     if (TextureUsage::RENDER_TARGET == descriptor.textureUsage)
     {
         //DepthStencil, and Multisample textures must be allocated with the MTLResourceStorageModePrivate resource option
-        if(TextureFormat::D24S8 == descriptor.textureFormat)
+        if(PixelFormat::D24S8 == descriptor.textureFormat)
             textureDescriptor.resourceOptions = MTLResourceStorageModePrivate;
         textureDescriptor.usage = MTLTextureUsageRenderTarget | MTLTextureUsageShaderRead;
     }
@@ -199,8 +228,6 @@ void TextureMTL::createSampler(id<MTLDevice> mtlDevice, const SamplerDescriptor 
     
     mtlDescriptor.minFilter = descriptor.minFilter == SamplerFilter::DONT_CARE ? _minFilter : toMTLSamplerMinMagFilter(descriptor.minFilter);
     mtlDescriptor.magFilter = descriptor.magFilter == SamplerFilter::DONT_CARE ? _magFilter : toMTLSamplerMinMagFilter(descriptor.magFilter);
-    if (_isMipmapEnabled)
-        mtlDescriptor.mipFilter = descriptor.mipmapFilter == SamplerFilter::DONT_CARE ? _mipFilter : toMTLSamplerMipFilter(descriptor.mipmapFilter);
     
     if(_mtlSamplerState)
     {
@@ -253,9 +280,9 @@ void TextureMTL::generateMipmaps()
     if (TextureUsage::RENDER_TARGET == _textureUsage || isColorRenderable(_textureFormat) == false)
         return;
     
-    if(!_isMipmapGenerated)
+    if(!_hasMipmaps)
     {
-        _isMipmapGenerated = true;
+        _hasMipmaps = true;
         Utils::generateMipmaps(_mtlTexture);
         
     }
@@ -281,7 +308,7 @@ void TextureCubeMTL::updateTextureDescriptor(const cocos2d::backend::TextureDesc
     updateSamplerDescriptor(descriptor.samplerDescriptor);
     
     // Metal doesn't support RGB888/RGBA4444, so should convert to RGBA888;
-    if (TextureFormat::R8G8B8 == _textureFormat)
+    if (PixelFormat::RGB888 == _textureFormat)
     {
         _bitsPerElement = 4 * 8;
     }
@@ -319,8 +346,6 @@ void TextureCubeMTL::createSampler(id<MTLDevice> mtlDevice, const SamplerDescrip
     
     mtlDescriptor.minFilter = descriptor.minFilter == SamplerFilter::DONT_CARE ? _minFilter : toMTLSamplerMinMagFilter(descriptor.minFilter);
     mtlDescriptor.magFilter = descriptor.magFilter == SamplerFilter::DONT_CARE ? _magFilter : toMTLSamplerMinMagFilter(descriptor.magFilter);
-    if (_isMipmapEnabled)
-        mtlDescriptor.mipFilter = descriptor.mipmapFilter == SamplerFilter::DONT_CARE ? _mipFilter : toMTLSamplerMipFilter(descriptor.mipmapFilter);
     
     if(_mtlSamplerState)
     {
@@ -353,11 +378,6 @@ void TextureCubeMTL::updateFaceData(TextureCubeFace side, void *data)
                      withBytes:data
                    bytesPerRow:_bytesPerRow
                  bytesPerImage:_bytesPerImage];
-    if(_isMipmapEnabled)
-    {
-        _isMipmapGenerated = true;
-        generateMipmaps();
-    }
 }
 
 void TextureCubeMTL::getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback)
@@ -394,9 +414,9 @@ void TextureCubeMTL::generateMipmaps()
     if (TextureUsage::RENDER_TARGET == _textureUsage || isColorRenderable(_textureFormat) == false)
         return;
     
-    if(!_isMipmapGenerated)
+    if(!_hasMipmaps)
     {
-        _isMipmapGenerated = true;
+        _hasMipmaps = true;
         Utils::generateMipmaps(_mtlTexture);
     }
 }

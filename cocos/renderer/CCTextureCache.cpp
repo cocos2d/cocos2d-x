@@ -101,7 +101,7 @@ public:
     std::string callbackKey;
     Image image;
     Image imageAlpha;
-    Texture2D::PixelFormat pixelFormat;
+    backend::PixelFormat pixelFormat;
     bool loadSuccess;
 };
 
@@ -718,7 +718,7 @@ VolatileTexture::VolatileTexture(Texture2D *t)
 , _uiImage(nullptr)
 , _cashedImageType(kInvalid)
 , _textureData(nullptr)
-, _pixelFormat(Texture2D::PixelFormat::RGBA8888)
+, _pixelFormat(backend::PixelFormat::RGBA8888)
 , _fileName("")
 , _text("")
 {
@@ -777,7 +777,7 @@ VolatileTexture* VolatileTextureMgr::findVolotileTexture(Texture2D *tt)
     return vt;
 }
 
-void VolatileTextureMgr::addDataTexture(Texture2D *tt, void* data, int dataLen, Texture2D::PixelFormat pixelFormat, const Size& contentSize)
+void VolatileTextureMgr::addDataTexture(Texture2D *tt, void* data, int dataLen, backend::PixelFormat pixelFormat, const Size& contentSize)
 {
     if (_isReloading)
     {
@@ -869,7 +869,7 @@ void VolatileTextureMgr::reloadAllTextures()
     _isReloading = false;
 }
 
-void VolatileTextureMgr::reloadTexture(Texture2D* texture, const std::string& filename, Texture2D::PixelFormat pixelFormat)
+void VolatileTextureMgr::reloadTexture(Texture2D* texture, const std::string& filename, backend::PixelFormat pixelFormat)
 {
     if (!texture)
         return;

@@ -6,56 +6,56 @@ CC_BACKEND_BEGIN
 #define bit(n) (n)
 namespace
 {
-    uint8_t computeBitsPerElement(TextureFormat textureFormat)
+    uint8_t computeBitsPerElement(PixelFormat textureFormat)
     {
         switch (textureFormat)
         {
-            case TextureFormat::R8G8B8A8:
-            case TextureFormat::BGRA8888:
+            case PixelFormat::RGBA8888:
+            case PixelFormat::BGRA8888:
                 return byte(4);
-            case TextureFormat::R8G8B8:
+            case PixelFormat::RGB888:
                 return byte(3);
-            case TextureFormat::RGBA4444:
+            case PixelFormat::RGBA4444:
                 return byte(2);
-            case TextureFormat::A8:
+            case PixelFormat::A8:
                 return byte(1);
-            case TextureFormat::I8:
+            case PixelFormat::I8:
                 return byte(1);
-            case TextureFormat::RGB565:
+            case PixelFormat::RGB565:
                 return byte(2);
-            case TextureFormat::RGB5A1:
+            case PixelFormat::RGB5A1:
                 return byte(2);
-            case TextureFormat::AI88:
+            case PixelFormat::AI88:
                 return byte(2);
-            case TextureFormat::ETC1:
+            case PixelFormat::ETC:
                 return bit(4);
-            case TextureFormat::ATC_RGB:
+            case PixelFormat::ATC_RGB:
                 return bit(4);
-            case TextureFormat::ATC_EXPLICIT_ALPHA:
+            case PixelFormat::ATC_EXPLICIT_ALPHA:
                 return byte(1);
-            case TextureFormat::ATC_INTERPOLATED_ALPHA:
+            case PixelFormat::ATC_INTERPOLATED_ALPHA:
                 return byte(1);
-            case TextureFormat::PVRTC2:
+            case PixelFormat::PVRTC2:
                 return bit(2);
-            case TextureFormat::PVRTC2A:
+            case PixelFormat::PVRTC2A:
                 return bit(2);
-            case TextureFormat::PVRTC4:
+            case PixelFormat::PVRTC4:
                 return bit(4);
-            case TextureFormat::PVRTC4A:
+            case PixelFormat::PVRTC4A:
                 return bit(4);
-            case TextureFormat::S3TC_DXT1:
+            case PixelFormat::S3TC_DXT1:
                 return bit(4);
-            case TextureFormat::S3TC_DXT3:
+            case PixelFormat::S3TC_DXT3:
                 return byte(1);
-            case TextureFormat::S3TC_DXT5:
+            case PixelFormat::S3TC_DXT5:
                 return byte(1);
-            case TextureFormat::MTL_BGR5A1:
+            case PixelFormat::MTL_BGR5A1:
                 return byte(2);
-            case TextureFormat::MTL_B5G6R5:
+            case PixelFormat::MTL_B5G6R5:
                 return byte(2);
-            case TextureFormat::MTL_ABGR4:
+            case PixelFormat::MTL_ABGR4:
                 return byte(2);
-            case TextureFormat::D24S8:
+            case PixelFormat::D24S8:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
                 //ios use MTLPixelFormatDepth32Float_Stencil8 as DepthStencil combined format, its 64 bits
                 return byte(8);
@@ -72,11 +72,11 @@ namespace
 
 Texture::Texture(const TextureDescriptor& descriptor)
     : _bitsPerElement(computeBitsPerElement(descriptor.textureFormat))
-    , _isMipmapEnabled(descriptor.samplerDescriptor.mipmapEnabled)
-    , _isCompressed(descriptor.compressed)
     , _textureType(descriptor.textureType)
     , _textureFormat(descriptor.textureFormat)
     , _textureUsage(descriptor.textureUsage)
+    , _width(descriptor.width)
+    , _height(descriptor.height)
 {
 }
 
@@ -86,23 +86,20 @@ Texture::~Texture()
 void Texture::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
 {
     _bitsPerElement = computeBitsPerElement(descriptor.textureFormat);
-    _isMipmapEnabled = descriptor.samplerDescriptor.mipmapEnabled;
-    _isCompressed = descriptor.compressed;
     _textureType = descriptor.textureType;
     _textureFormat = descriptor.textureFormat;
     _textureUsage = descriptor.textureUsage;
+    _width = descriptor.width;
+    _height = descriptor.height;
 }
 
 Texture2D::Texture2D(const TextureDescriptor& descriptor)
     : Texture(descriptor)
-    , _width(descriptor.width)
-    , _height(descriptor.height)
 {
 }
 
 TextureCubemap::TextureCubemap(const TextureDescriptor &descriptor)
     : Texture(descriptor)
-    , _size(descriptor.width)
 {
 
 }

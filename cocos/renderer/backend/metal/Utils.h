@@ -16,7 +16,7 @@ public:
     static id<MTLTexture> getDefaultDepthStencilTexture();
 
     
-    static MTLPixelFormat toMTLPixelFormat(TextureFormat textureFormat);
+    static MTLPixelFormat toMTLPixelFormat(PixelFormat textureFormat);
     static void generateMipmaps(id<MTLTexture> texture);
     static void getTextureBytes(int origX, int origY, int rectWidth, int rectHeight, id<MTLTexture> texture, std::function<void(const unsigned char*, int, int)> callback);
     static void swizzleImage(unsigned char* image, int width, int height, MTLPixelFormat format);

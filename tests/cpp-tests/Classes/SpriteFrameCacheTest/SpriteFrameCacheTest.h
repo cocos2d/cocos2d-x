@@ -41,7 +41,7 @@ public:
     SpriteFrameCachePixelFormatTest();
     
 private:
-    void loadSpriteFrames(const std::string &file, cocos2d::Texture2D::PixelFormat expectedFormat);
+    void loadSpriteFrames(const std::string &file, cocos2d::backend::PixelFormat expectedFormat);
     
 private:
     cocos2d::Label *infoLabel;
@@ -58,7 +58,7 @@ public:
     SpriteFrameCacheLoadMultipleTimes();
 
 private:
-    void loadSpriteFrames(const std::string &file, cocos2d::Texture2D::PixelFormat expectedFormat);
+    void loadSpriteFrames(const std::string &file, cocos2d::backend::PixelFormat expectedFormat);
 
 };
 
@@ -74,6 +74,6 @@ public:
     SpriteFrameCacheFullCheck();
 
 private:
-    void loadSpriteFrames(const std::string &file, cocos2d::Texture2D::PixelFormat expectedFormat);
+    void loadSpriteFrames(const std::string &file, cocos2d::backend::PixelFormat expectedFormat);
 
 };

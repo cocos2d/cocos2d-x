@@ -12,8 +12,10 @@ public:
     TextureMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor);
     ~TextureMTL();
     
-    virtual void updateData(uint8_t* data) override;
-    virtual void updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data) override;
+    virtual void updateData(uint8_t* data, uint32_t width , uint32_t height, uint32_t level) override;
+    virtual void updateCompressedData(uint8_t* data, uint32_t width , uint32_t height, uint32_t dataLen, uint32_t level) override;
+    virtual void updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t level, uint8_t* data) override;
+    virtual void updateCompressedSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t dataLen, uint32_t level, uint8_t* data) override;
     
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) override;
     virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) override;

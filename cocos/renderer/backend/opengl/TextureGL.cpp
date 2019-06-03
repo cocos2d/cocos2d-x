@@ -11,7 +11,24 @@ CC_BACKEND_BEGIN
 
 #define ISPOW2(n) (((n) & (n-1)) == 0)
 
-void TextureInfoGL::applySamplerDescriptor(const SamplerDescriptor& descriptor, bool isPow2)
+namespace {
+    bool isMipmapEnabled(GLint filter)
+    {
+        switch(filter)
+        {
+            case GL_LINEAR_MIPMAP_LINEAR:
+            case GL_LINEAR_MIPMAP_NEAREST:
+            case GL_NEAREST_MIPMAP_NEAREST:
+            case GL_NEAREST_MIPMAP_LINEAR:
+                return true;
+            default:
+                break;
+        }
+        return false;
+    }
+}
+
+void TextureInfoGL::applySamplerDescriptor(const SamplerDescriptor& descriptor, bool isPow2, bool hasMipmaps)
 {
     if (descriptor.magFilter != SamplerFilter::DONT_CARE)
     {
@@ -20,7 +37,7 @@ void TextureInfoGL::applySamplerDescriptor(const SamplerDescriptor& descriptor, 
 
     if (descriptor.minFilter != SamplerFilter::DONT_CARE)
     {
-        minFilterGL = UtilsGL::toGLMinFilter(descriptor.minFilter, descriptor.mipmapFilter, descriptor.mipmapEnabled, isPow2);
+        minFilterGL = UtilsGL::toGLMinFilter(descriptor.minFilter, hasMipmaps, isPow2);
     }
 
     if (descriptor.sAddressMode != SamplerAddressMode::DONT_CARE)
@@ -37,19 +54,8 @@ void TextureInfoGL::applySamplerDescriptor(const SamplerDescriptor& descriptor, 
 Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : Texture2D(descriptor)
 {
     glGenTextures(1, &_textureInfo.texture);
-    UtilsGL::toGLTypes(_textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
 
-    bool isPow2 = ISPOW2(_width) && ISPOW2(_height);
-    _textureInfo.magFilterGL = UtilsGL::toGLMagFilter(descriptor.samplerDescriptor.magFilter);
-    _textureInfo.minFilterGL = UtilsGL::toGLMinFilter(descriptor.samplerDescriptor.minFilter,
-                                 descriptor.samplerDescriptor.mipmapFilter, _isMipmapEnabled, isPow2);
-    
-    _textureInfo.sAddressModeGL = UtilsGL::toGLAddressMode(descriptor.samplerDescriptor.sAddressMode, isPow2);
-    _textureInfo.tAddressModeGL = UtilsGL::toGLAddressMode(descriptor.samplerDescriptor.tAddressMode, isPow2);
-   
-    // Update data here because `updateData()` may not be invoked later.
-    // For example, a texture used as depth buffer will not invoke updateData().
-    initWithZeros();
+    updateTextureDescriptor(descriptor);
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     // Listen this event to restored texture id after coming to foreground on Android.
@@ -66,7 +72,7 @@ void Texture2DGL::initWithZeros()
     auto size = _width * _height * _bitsPerElement / 8;
     uint8_t* data = (uint8_t*)malloc(size);
     memset(data, 0, size);
-    updateData(data);
+    updateData(data, _width, _height, 0);
     free(data);
 }
 
@@ -74,9 +80,18 @@ void Texture2DGL::updateTextureDescriptor(const cocos2d::backend::TextureDescrip
 {
     Texture::updateTextureDescriptor(descriptor);
     UtilsGL::toGLTypes(descriptor.textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
-    _width = descriptor.width;
-    _height = descriptor.height;
+
+    bool isPow2 = ISPOW2(_width) && ISPOW2(_height);
+    _textureInfo.magFilterGL = UtilsGL::toGLMagFilter(descriptor.samplerDescriptor.magFilter);
+    _textureInfo.minFilterGL = UtilsGL::toGLMinFilter(descriptor.samplerDescriptor.minFilter, _hasMipmaps, isPow2);
+
+    _textureInfo.sAddressModeGL = UtilsGL::toGLAddressMode(descriptor.samplerDescriptor.sAddressMode, isPow2);
+    _textureInfo.tAddressModeGL = UtilsGL::toGLAddressMode(descriptor.samplerDescriptor.tAddressMode, isPow2);
+
     updateSamplerDescriptor(descriptor.samplerDescriptor);
+
+    // Update data here because `updateData()` may not be invoked later.
+    // For example, a texture used as depth buffer will not invoke updateData().
     initWithZeros();
 }
 
@@ -92,7 +107,7 @@ Texture2DGL::~Texture2DGL()
 
 void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
     bool isPow2 = ISPOW2(_width) && ISPOW2(_height);
-    _textureInfo.applySamplerDescriptor(sampler, isPow2);
+    _textureInfo.applySamplerDescriptor(sampler, isPow2, _hasMipmaps);
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
@@ -118,15 +133,14 @@ void Texture2DGL::updateSamplerDescriptor(const SamplerDescriptor &sampler) {
     }
 }
 
-void Texture2DGL::updateData(uint8_t* data)
+void Texture2DGL::updateData(uint8_t* data, uint32_t width , uint32_t height, uint32_t level)
 {
-    // TODO: support texture cube, and compressed data.
-    
     //Set the row align only when mipmapsNum == 1 and the data is uncompressed
-    if(!_isMipmapEnabled && !_isCompressed)
+    auto mipmapEnalbed = isMipmapEnabled(_textureInfo.minFilterGL) || isMipmapEnabled(_textureInfo.magFilterGL);
+    if(!mipmapEnalbed)
     {
-        unsigned int bytesPerRow = _width * _bitsPerElement / 8;
-        
+        unsigned int bytesPerRow = width * _bitsPerElement / 8;
+
         if(bytesPerRow % 8 == 0)
         {
             glPixelStorei(GL_UNPACK_ALIGNMENT, 8);
@@ -148,7 +162,7 @@ void Texture2DGL::updateData(uint8_t* data)
     {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     }
-    
+
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _textureInfo.magFilterGL);
@@ -157,39 +171,55 @@ void Texture2DGL::updateData(uint8_t* data)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _textureInfo.tAddressModeGL);
 
 
-    if(_isCompressed)
-    {
-        auto datalen = _width * _height * _bitsPerElement / 8;
-        glCompressedTexImage2D(GL_TEXTURE_2D, 0, _textureInfo.internalFormat, (GLsizei)_width, (GLsizei)_height, 0, datalen, data);
-    }
-    else
-    {
-        glTexImage2D(GL_TEXTURE_2D,
-                     0,
-                     _textureInfo.internalFormat,
-                     _width,
-                     _height,
-                     0,
-                     _textureInfo.format,
-                     _textureInfo.type,
-                     data);
-    }
+    glTexImage2D(GL_TEXTURE_2D,
+                level,
+                _textureInfo.internalFormat,
+                width,
+                height,
+                0,
+                _textureInfo.format,
+                _textureInfo.type,
+                data);
     CHECK_GL_ERROR_DEBUG();
 
-    if(_isMipmapEnabled)
-    {
-        _isMipmapGenerated = false;
-        generateMipmaps();
-    }
-    CHECK_GL_ERROR_DEBUG();
+    if(!_hasMipmaps && level > 0)
+        _hasMipmaps = true;
 }
 
-void Texture2DGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsigned int width, unsigned int height, uint8_t* data)
+void Texture2DGL::updateCompressedData(uint8_t *data, uint32_t width, uint32_t height,
+                                       uint32_t dataLen, uint32_t level)
+{
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, _textureInfo.magFilterGL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _textureInfo.minFilterGL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, _textureInfo.sAddressModeGL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, _textureInfo.tAddressModeGL);
+
+
+    glCompressedTexImage2D(GL_TEXTURE_2D,
+                           level,
+                           _textureInfo.internalFormat,
+                           (GLsizei)width,
+                           (GLsizei)height,
+                           0,
+                           dataLen,
+                           data);
+    CHECK_GL_ERROR_DEBUG();
+
+    if(!_hasMipmaps && level > 0)
+        _hasMipmaps = true;
+}
+
+void Texture2DGL::updateSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width, uint32_t height, uint32_t level, uint8_t* data)
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
+
     glTexSubImage2D(GL_TEXTURE_2D,
-                    0,
+                    level,
                     xoffset,
                     yoffset,
                     width,
@@ -199,12 +229,30 @@ void Texture2DGL::updateSubData(unsigned int xoffset, unsigned int yoffset, unsi
                     data);
     CHECK_GL_ERROR_DEBUG();
 
-    if(_isMipmapEnabled)
-    {
-        _isMipmapGenerated = false;
-        generateMipmaps();
-    }
+    if(!_hasMipmaps && level > 0)
+        _hasMipmaps = true;
+}
+
+void Texture2DGL::updateCompressedSubData(uint32_t xoffset, uint32_t yoffset, uint32_t width,
+                                          uint32_t height, uint32_t dataLen, uint32_t level,
+                                          uint8_t *data)
+{
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _textureInfo.texture);
+
+    glCompressedTexSubImage2D(GL_TEXTURE_2D,
+                              level,
+                              xoffset,
+                              yoffset,
+                              width,
+                              height,
+                              _textureInfo.format,
+                              dataLen,
+                              data);
     CHECK_GL_ERROR_DEBUG();
+
+    if(!_hasMipmaps && level > 0)
+        _hasMipmaps = true;
 }
 
 void Texture2DGL::apply(int index) const
@@ -218,9 +266,9 @@ void Texture2DGL::generateMipmaps()
     if (TextureUsage::RENDER_TARGET == _textureUsage)
         return;
 
-    if(!_isMipmapGenerated)
+    if(!_hasMipmaps)
     {
-        _isMipmapGenerated = true;
+        _hasMipmaps = true;
         glGenerateMipmap(GL_TEXTURE_2D);
     }
 }
@@ -264,8 +312,7 @@ void Texture2DGL::getBytes(int x, int y, int width, int height, bool flipImage, 
 TextureCubeGL::TextureCubeGL(const TextureDescriptor& descriptor)
     :TextureCubemap(descriptor)
 {
-    assert(descriptor.width == descriptor.height);
-    _size = descriptor.width;
+    assert(_width == _height);
     _textureType = TextureType::TEXTURE_CUBE;
     UtilsGL::toGLTypes(_textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
     glGenTextures(1, &_textureInfo.texture);
@@ -299,7 +346,6 @@ void TextureCubeGL::updateTextureDescriptor(const cocos2d::backend::TextureDescr
 {
     UtilsGL::toGLTypes(descriptor.textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
     _textureFormat = descriptor.textureFormat;
-    _size = descriptor.width;
     updateSamplerDescriptor(descriptor.samplerDescriptor);
 }
 
@@ -316,7 +362,7 @@ TextureCubeGL::~TextureCubeGL()
 
 void TextureCubeGL::updateSamplerDescriptor(const SamplerDescriptor &sampler)
 {
-    _textureInfo.applySamplerDescriptor(sampler, true);
+    _textureInfo.applySamplerDescriptor(sampler, true, _hasMipmaps);
     setTexParameters();
 }
 
@@ -336,17 +382,13 @@ void TextureCubeGL::updateFaceData(TextureCubeFace side, void *data)
     glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
         0,                  // level
         GL_RGBA,            // internal format
-        _size,              // width
-        _size,              // height
+        _width,              // width
+        _height,              // height
         0,                  // border
         _textureInfo.internalFormat,            // format
         _textureInfo.type,  // type
         data);              // pixel data
-    if(_isMipmapEnabled)
-    {
-        _isMipmapGenerated = false;
-        generateMipmaps();
-    }
+
     CHECK_GL_ERROR_DEBUG();
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 }
@@ -391,9 +433,9 @@ void TextureCubeGL::generateMipmaps()
     if (TextureUsage::RENDER_TARGET == _textureUsage)
         return;
 
-    if(!_isMipmapGenerated)
+    if(!_hasMipmaps)
     {
-        _isMipmapGenerated = true;
+        _hasMipmaps = true;
         glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
     }
 }

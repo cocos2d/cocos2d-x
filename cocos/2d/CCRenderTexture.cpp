@@ -38,7 +38,6 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/backend/Device.h"
 #include "renderer/backend/Texture.h"
-#include "renderer/backend/StringUtils.h"
 
 NS_CC_BEGIN
 
@@ -77,11 +76,11 @@ void RenderTexture::listenToBackground(EventCustom* /*event*/)
             _UITextureImage = uiTextureImage;
             CC_SAFE_RETAIN(_UITextureImage);
             const Size& s = _texture2D->getContentSizeInPixels();
-            VolatileTextureMgr::addDataTexture(_texture2D, uiTextureImage->getData(), s.width * s.height * 4, Texture2D::PixelFormat::RGBA8888, s);
+            VolatileTextureMgr::addDataTexture(_texture2D, uiTextureImage->getData(), s.width * s.height * 4, backend::PixelFormat::RGBA8888, s);
 
             if ( _texture2DCopy )
             {
-                VolatileTextureMgr::addDataTexture(_texture2DCopy, uiTextureImage->getData(), s.width * s.height * 4, Texture2D::PixelFormat::RGBA8888, s);
+                VolatileTextureMgr::addDataTexture(_texture2DCopy, uiTextureImage->getData(), s.width * s.height * 4, backend::PixelFormat::RGBA8888, s);
             }
         }
         else
@@ -114,7 +113,7 @@ void RenderTexture::listenToForeground(EventCustom* /*event*/)
 #endif
 }
 
-RenderTexture * RenderTexture::create(int w, int h, Texture2D::PixelFormat eFormat)
+RenderTexture * RenderTexture::create(int w, int h, backend::PixelFormat eFormat)
 {
     RenderTexture *ret = new (std::nothrow) RenderTexture();
 
@@ -127,7 +126,7 @@ RenderTexture * RenderTexture::create(int w, int h, Texture2D::PixelFormat eForm
     return nullptr;
 }
 
-RenderTexture * RenderTexture::create(int w ,int h, Texture2D::PixelFormat eFormat, TextureFormat uDepthStencilFormat)
+RenderTexture * RenderTexture::create(int w ,int h, backend::PixelFormat eFormat, PixelFormat uDepthStencilFormat)
 {
     RenderTexture *ret = new (std::nothrow) RenderTexture();
 
@@ -144,7 +143,7 @@ RenderTexture * RenderTexture::create(int w, int h)
 {
     RenderTexture *ret = new (std::nothrow) RenderTexture();
 
-    if(ret && ret->initWithWidthAndHeight(w, h, Texture2D::PixelFormat::RGBA8888, TextureFormat::NONE))
+    if(ret && ret->initWithWidthAndHeight(w, h, backend::PixelFormat::RGBA8888, PixelFormat::NONE))
     {
         ret->autorelease();
         return ret;
@@ -153,14 +152,14 @@ RenderTexture * RenderTexture::create(int w, int h)
     return nullptr;
 }
 
-bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat eFormat)
+bool RenderTexture::initWithWidthAndHeight(int w, int h, backend::PixelFormat eFormat)
 {
-    return initWithWidthAndHeight(w, h, eFormat, TextureFormat::NONE);
+    return initWithWidthAndHeight(w, h, eFormat, PixelFormat::NONE);
 }
 
-bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, TextureFormat depthStencilFormat)
+bool RenderTexture::initWithWidthAndHeight(int w, int h, backend::PixelFormat format, PixelFormat depthStencilFormat)
 {
-    CCASSERT(format != Texture2D::PixelFormat::A8, "only RGB and RGBA formats are valid for a render texture");
+    CCASSERT(format != backend::PixelFormat::A8, "only RGB and RGBA formats are valid for a render texture");
 
     bool ret = false;
     do
@@ -189,7 +188,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
         descriptor.width = powW;
         descriptor.height = powH;
         descriptor.textureUsage = TextureUsage::RENDER_TARGET;
-        descriptor.textureFormat = TextureFormat::R8G8B8A8;
+        descriptor.textureFormat = PixelFormat::RGBA8888;
         auto texture = backend::Device::getInstance()->newTexture(descriptor);
         if (! texture)
             break;
@@ -207,7 +206,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat 
 
         clearColorAttachment();
 
-        if (TextureFormat::D24S8 == depthStencilFormat)
+        if (PixelFormat::D24S8 == depthStencilFormat)
         {
             _renderTargetFlags = RenderTargetFlag::ALL;
             descriptor.textureFormat = depthStencilFormat;
@@ -411,7 +410,7 @@ void RenderTexture::onSaveToFile(const std::string& filename, bool isRGBA)
 /* get buffer as Image */
 void RenderTexture::newImage(std::function<void(Image*)> imageCallback, bool flipImage)
 {
-    CCASSERT(_pixelFormat == Texture2D::PixelFormat::RGBA8888, "only RGBA8888 can be saved as image");
+    CCASSERT(_pixelFormat == backend::PixelFormat::RGBA8888, "only RGBA8888 can be saved as image");
 
     if ((nullptr == _texture2D))
     {

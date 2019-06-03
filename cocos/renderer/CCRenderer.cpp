@@ -758,9 +758,9 @@ backend::RenderPipeline* Renderer::getRenderPipeline(const backend::RenderPipeli
     {
         void* program;
         unsigned int vertexLayoutInfo[32];
-        backend::TextureFormat colorAttachment;
-        backend::TextureFormat depthAttachment;
-        backend::TextureFormat stencilAttachment;
+        backend::PixelFormat colorAttachment;
+        backend::PixelFormat depthAttachment;
+        backend::PixelFormat stencilAttachment;
         bool blendEnabled;
         unsigned int writeMask;
         unsigned int rgbBlendOperation;
@@ -850,7 +850,7 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
         }
         else
         {
-            renderPipelineDescriptor.depthAttachmentFormat = TextureFormat::D24S8;
+            renderPipelineDescriptor.depthAttachmentFormat = PixelFormat::D24S8;
         }
     
         if (renderPassDescriptor.stencilAttachmentTexture)
@@ -859,7 +859,7 @@ void Renderer::setRenderPipeline(const PipelineDescriptor& pipelineDescriptor, c
         }
         else
         {
-            renderPipelineDescriptor.stencilAttachmentFormat = TextureFormat::D24S8;
+            renderPipelineDescriptor.stencilAttachmentFormat = PixelFormat::D24S8;
         }
     }
 

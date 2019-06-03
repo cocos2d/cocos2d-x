@@ -148,7 +148,7 @@ void RenderPipelineMTL::setBlendStateAndFormat(const RenderPipelineDescriptor& d
 {
     for (int i = 0; i < MAX_COLOR_ATTCHMENT; ++i)
     {
-        if (TextureFormat::NONE == descriptor.colorAttachmentsFormat[i])
+        if (PixelFormat::NONE == descriptor.colorAttachmentsFormat[i])
             continue;
         
         _mtlRenderPipelineDescriptor.colorAttachments[i].pixelFormat = Utils::toMTLPixelFormat(descriptor.colorAttachmentsFormat[i]);
