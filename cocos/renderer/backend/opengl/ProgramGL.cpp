@@ -13,15 +13,18 @@ CC_BACKEND_BEGIN
 ProgramGL::ProgramGL(const std::string& vertexShader, const std::string& fragmentShader)
 : Program(vertexShader, fragmentShader)
 {
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    std::string headersDef("#version 100\n precision highp float;\n precision highp int;\n");
-    _vertexShader.insert(0, headersDef);
-    _fragmentShader.insert(0, headersDef);
-#endif
-    
-
     _vertexShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newVertexShaderModule(_vertexShader));
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    std::string headersDef("#ifdef GL_FRAGMENT_PRECISION_HIGH\n" \
+                           "precision highp float;\n precision highp int;\n" \
+                           "#else\n" \
+                           "precision mediump float;\n precision mediump int;\n"
+                           "#endif\n");
+    headersDef.append(fragmentShader);
+    _fragmentShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newFragmentShaderModule(headersDef));
+#else
     _fragmentShaderModule = static_cast<ShaderModuleGL*>(ShaderCache::newFragmentShaderModule(_fragmentShader));
+#endif
 
     CC_SAFE_RETAIN(_vertexShaderModule);
     CC_SAFE_RETAIN(_fragmentShaderModule);
