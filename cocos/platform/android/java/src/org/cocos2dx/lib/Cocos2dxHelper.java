@@ -229,12 +229,12 @@ public class Cocos2dxHelper {
             return;
         }
         if (file.isDirectory()) {
-            File[] childFile = file.listFiles();
-            if (childFile == null || childFile.length == 0) {
+            File[] childrenFile = file.listFiles();
+            if (childrenFile == null || childrenFile.length == 0) {
                 file.delete();
                 return;
             }
-            for (File f : childFile) {
+            for (File f : childrenFile) {
                 recursionDeleteFile(f);
             }
             file.delete();
