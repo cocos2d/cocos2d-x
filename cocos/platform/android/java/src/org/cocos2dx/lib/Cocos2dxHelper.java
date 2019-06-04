@@ -207,6 +207,39 @@ public class Cocos2dxHelper {
         
         return Cocos2dxHelper.sAssetsPath;
     }
+
+    //remove directory 
+    public static boolean RemoveDirectory(final String directory)
+    {
+        try{
+            File file = new File(directory);
+            RecursionDeleteFile(file);
+            return true;
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+
+    private static void RecursionDeleteFile(File file)
+    {
+        if (file.isFile()) {
+            file.delete();
+            return;
+        }
+        if (file.isDirectory()) {
+            File[] childFile = file.listFiles();
+            if (childFile == null || childFile.length == 0) {
+                file.delete();
+                return;
+            }
+            for (File f : childFile) {
+                RecursionDeleteFile(f);
+            }
+            file.delete();
+        }
+    }
     
     public static ZipResourceFile getObbFile() {
         if (null == sOBBFile) {

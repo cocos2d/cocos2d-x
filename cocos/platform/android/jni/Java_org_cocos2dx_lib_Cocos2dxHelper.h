@@ -34,6 +34,7 @@ extern const char * getApkPath();
 extern std::string getPackageNameJNI();
 extern int getObbAssetFileDescriptorJNI(const char* path, long* startOffset, long* size);
 extern void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharset, char* dst, const char* newCharset);
+extern bool removeDirectoryJNI(const char* path);
 
 extern int getDeviceSampleRate();
 extern int getDeviceAudioBufferSizeInFrames();
