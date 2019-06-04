@@ -41,21 +41,6 @@ namespace
         }
     }
     
-    MTLSamplerMipFilter toMTLSamplerMipFilter(SamplerFilter mode) {
-        switch (mode) {
-            case SamplerFilter::NEAREST:
-            case SamplerFilter::LINEAR_MIPMAP_NEAREST:
-            case SamplerFilter::NEAREST_MIPMAP_NEAREST:
-                return MTLSamplerMipFilterNearest;
-            case SamplerFilter::LINEAR:
-            case SamplerFilter::LINEAR_MIPMAP_LINEAR:
-            case SamplerFilter::NEAREST_MIPMAP_LINEAR:
-                return MTLSamplerMipFilterLinear;
-            case SamplerFilter::DONT_CARE:
-                return MTLSamplerMipFilterNearest;
-        }
-    }
-    
     void convertRGB2RGBA(uint8_t* src, uint8_t* dst, uint32_t length)
     {
         for (uint32_t i = 0; i < length; ++i)
@@ -157,8 +142,8 @@ namespace
         MTLPixelFormat pixelFormat = Utils::toMTLPixelFormat(textureFormat);
         uint32_t bytesPerRow = 0;
         
-        if(textureFormat >= PixelFormat::PVRTC2 &&
-           textureFormat <= PixelFormat::PVRTC4A)
+        if(textureFormat >= PixelFormat::PVRTC4 &&
+           textureFormat <= PixelFormat::PVRTC2A)
         {
             bytesPerRow = 0;
         }
