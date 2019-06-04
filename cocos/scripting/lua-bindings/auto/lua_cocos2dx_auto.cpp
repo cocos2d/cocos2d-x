@@ -19918,6 +19918,53 @@ int lua_cocos2dx_Image_hasPremultipliedAlpha(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Image_reversePremultipliedAlpha(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Image* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Image",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Image*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_reversePremultipliedAlpha'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Image_reversePremultipliedAlpha'", nullptr);
+            return 0;
+        }
+        cobj->reversePremultipliedAlpha();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Image:reversePremultipliedAlpha",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Image_reversePremultipliedAlpha'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Image_saveToFile(lua_State* tolua_S)
 {
     int argc = 0;
@@ -20122,6 +20169,53 @@ int lua_cocos2dx_Image_getHeight(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Image_getHeight'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_Image_premultiplyAlpha(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Image* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Image",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Image*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Image_premultiplyAlpha'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Image_premultiplyAlpha'", nullptr);
+            return 0;
+        }
+        cobj->premultiplyAlpha();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Image:premultiplyAlpha",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Image_premultiplyAlpha'.",&tolua_err);
 #endif
 
     return 0;
@@ -20581,10 +20675,12 @@ int lua_register_cocos2dx_Image(lua_State* tolua_S)
     tolua_beginmodule(tolua_S,"Image");
         tolua_function(tolua_S,"new",lua_cocos2dx_Image_constructor);
         tolua_function(tolua_S,"hasPremultipliedAlpha",lua_cocos2dx_Image_hasPremultipliedAlpha);
+        tolua_function(tolua_S,"reversePremultipliedAlpha",lua_cocos2dx_Image_reversePremultipliedAlpha);
         tolua_function(tolua_S,"saveToFile",lua_cocos2dx_Image_saveToFile);
         tolua_function(tolua_S,"hasAlpha",lua_cocos2dx_Image_hasAlpha);
         tolua_function(tolua_S,"isCompressed",lua_cocos2dx_Image_isCompressed);
         tolua_function(tolua_S,"getHeight",lua_cocos2dx_Image_getHeight);
+        tolua_function(tolua_S,"premultiplyAlpha",lua_cocos2dx_Image_premultiplyAlpha);
         tolua_function(tolua_S,"initWithImageFile",lua_cocos2dx_Image_initWithImageFile);
         tolua_function(tolua_S,"getWidth",lua_cocos2dx_Image_getWidth);
         tolua_function(tolua_S,"getBitPerPixel",lua_cocos2dx_Image_getBitPerPixel);
@@ -78809,6 +78905,117 @@ int lua_cocos2dx_RenderTexture_isAutoDraw(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_RenderTexture_saveToFileAsNonPMA(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::RenderTexture* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.RenderTexture",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::RenderTexture*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_RenderTexture_saveToFileAsNonPMA'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 4) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.RenderTexture:saveToFileAsNonPMA");
+
+            if (!ok) { break; }
+            cocos2d::Image::Format arg1;
+            ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.RenderTexture:saveToFileAsNonPMA");
+
+            if (!ok) { break; }
+            bool arg2;
+            ok &= luaval_to_boolean(tolua_S, 4,&arg2, "cc.RenderTexture:saveToFileAsNonPMA");
+
+            if (!ok) { break; }
+            std::function<void (cocos2d::RenderTexture *, const std::string&)> arg3;
+            do {
+			// Lambda binding for lua is not supported.
+			assert(false);
+		} while(0)
+		;
+
+            if (!ok) { break; }
+            bool ret = cobj->saveToFileAsNonPMA(arg0, arg1, arg2, arg3);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.RenderTexture:saveToFileAsNonPMA");
+
+            if (!ok) { break; }
+            bool ret = cobj->saveToFileAsNonPMA(arg0);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 2) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.RenderTexture:saveToFileAsNonPMA");
+
+            if (!ok) { break; }
+            bool arg1;
+            ok &= luaval_to_boolean(tolua_S, 3,&arg1, "cc.RenderTexture:saveToFileAsNonPMA");
+
+            if (!ok) { break; }
+            bool ret = cobj->saveToFileAsNonPMA(arg0, arg1);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 3) {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.RenderTexture:saveToFileAsNonPMA");
+
+            if (!ok) { break; }
+            bool arg1;
+            ok &= luaval_to_boolean(tolua_S, 3,&arg1, "cc.RenderTexture:saveToFileAsNonPMA");
+
+            if (!ok) { break; }
+            std::function<void (cocos2d::RenderTexture *, const std::string&)> arg2;
+            do {
+			// Lambda binding for lua is not supported.
+			assert(false);
+		} while(0)
+		;
+
+            if (!ok) { break; }
+            bool ret = cobj->saveToFileAsNonPMA(arg0, arg1, arg2);
+            tolua_pushboolean(tolua_S,(bool)ret);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.RenderTexture:saveToFileAsNonPMA",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_RenderTexture_saveToFileAsNonPMA'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_RenderTexture_setKeepMatrix(lua_State* tolua_S)
 {
     int argc = 0;
@@ -79891,6 +80098,7 @@ int lua_register_cocos2dx_RenderTexture(lua_State* tolua_S)
         tolua_function(tolua_S,"setSprite",lua_cocos2dx_RenderTexture_setSprite);
         tolua_function(tolua_S,"getSprite",lua_cocos2dx_RenderTexture_getSprite);
         tolua_function(tolua_S,"isAutoDraw",lua_cocos2dx_RenderTexture_isAutoDraw);
+        tolua_function(tolua_S,"saveToFileAsNonPMA",lua_cocos2dx_RenderTexture_saveToFileAsNonPMA);
         tolua_function(tolua_S,"setKeepMatrix",lua_cocos2dx_RenderTexture_setKeepMatrix);
         tolua_function(tolua_S,"setClearFlags",lua_cocos2dx_RenderTexture_setClearFlags);
         tolua_function(tolua_S,"begin",lua_cocos2dx_RenderTexture_begin);
