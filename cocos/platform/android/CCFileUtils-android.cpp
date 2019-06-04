@@ -349,8 +349,7 @@ bool FileUtilsAndroid::removeDirectory(const std::string& path) const
     if (path.empty())
         return false;
     
-    bool suc = removeDirectoryJNI(path.c_str());
-    return suc;
+    return removeDirectoryJNI(path.c_str());
 }
 
 FileUtils::Status FileUtilsAndroid::getContents(const std::string& filename, ResizableBuffer* buffer) const
