@@ -209,11 +209,11 @@ public class Cocos2dxHelper {
     }
 
     //remove directory 
-    public static boolean RemoveDirectory(final String directory)
+    public static boolean removeDirectory(final String directory)
     {
         try{
             File file = new File(directory);
-            RecursionDeleteFile(file);
+            recursionDeleteFile(file);
             return true;
         }catch(Exception ex){
             ex.printStackTrace();
@@ -222,7 +222,7 @@ public class Cocos2dxHelper {
     }
 
 
-    private static void RecursionDeleteFile(File file)
+    private static void recursionDeleteFile(File file)
     {
         if (file.isFile()) {
             file.delete();
@@ -235,7 +235,7 @@ public class Cocos2dxHelper {
                 return;
             }
             for (File f : childFile) {
-                RecursionDeleteFile(f);
+                recursionDeleteFile(f);
             }
             file.delete();
         }

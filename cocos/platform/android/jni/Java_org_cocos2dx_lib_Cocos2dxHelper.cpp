@@ -159,7 +159,7 @@ void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharse
 bool removeDirectoryJNI(const char* path)
 {
     JniMethodInfo methodInfo;
-    if (JniHelper::getStaticMethodInfo(methodInfo,className.c_str(),"RemoveDirectory","(Ljava/lang/String;)Z"))
+    if (JniHelper::getStaticMethodInfo(methodInfo,className.c_str(),"removeDirectory","(Ljava/lang/String;)Z"))
     {
         jstring stringArgPath = methodInfo.env->NewStringUTF(path);
         jboolean suc = methodInfo.env->CallStaticBooleanMethod(methodInfo.classID,methodInfo.methodID,stringArgPath);
