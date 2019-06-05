@@ -673,8 +673,6 @@ void Director::setDepthTest(bool on)
     }
     else
         _renderer->setDepthTest(false);
-
-    _renderer->setDepthWrite(on);
 }
 
 void Director::setClearColor(const Color4F& clearColor)
