@@ -1,12 +1,8 @@
 #!/usr/bin/env python
-'''
-aaa
-'''
 import os
 import urllib
 import zipfile
 import platform
-import sys
 import subprocess
 import tempfile
 import argparse
@@ -18,7 +14,7 @@ COCOS2D_X = os.path.abspath(os.path.join(DIR_PATH, "../.."))
 # ROOT_DIR/cocos2d-x
 ROOT_DIR = os.path.abspath(os.path.join(COCOS2D_X, ".."))
 
-ANDROID_NDK = os.path.join(ROOT_DIR, "android-ndk-r16b")
+ANDROID_NDK = os.path.join(ROOT_DIR, "android-ndk-r19c")
 ANDROID_SDK = os.path.join(ROOT_DIR, "android-sdk")
 SDK_MANAGER = os.path.join(ROOT_DIR, "sdk_tools/tools/bin/sdkmanager")
 SYSTEM = platform.system().lower()
@@ -52,6 +48,7 @@ def unzip(zip_file, directory):
         cmd = "unzip -d " + directory + " " + zip_file
         subprocess.check_output(cmd.split())
 
+
 def download(url, zip_file):
     print("=" * 80)
     print("Download: " + url + ", file: " + zip_file)
@@ -64,12 +61,13 @@ def download(url, zip_file):
 
 @retry(Exception, tries=5, delay=1, backoff=1)
 def install_android_ndk():
-    file_name = "android-ndk-r16b-" + SYSTEM + "-x86_64.zip"
+    file_name = "android-ndk-r19c-" + SYSTEM + "-x86_64.zip"
     url = "https://dl.google.com/android/repository/" + file_name
     zip_file = os.path.abspath(os.path.join(ROOT_DIR, file_name))
 
     download(url, zip_file)
     unzip(zip_file, ROOT_DIR)
+
 
 @retry(Exception, tries=5, delay=1, backoff=1)
 def install_android_sdk_tools():
@@ -104,6 +102,7 @@ def export_environment(ndk_only):
             myfile.write("export ANDROID_SDK_ROOT=" + ANDROID_SDK + "\n")
         myfile.write("export ANDROID_NDK_HOME=" + ANDROID_NDK + "\n")
         myfile.write("export NDK_ROOT=" + ANDROID_NDK + "\n")
+        myfile.write("export ANDROID_NDK_ROOT=" + ANDROID_NDK + "\n")
 
     with open(os.path.join(ROOT_DIR, "environment.ps1"), "a") as myfile:
         if not ndk_only:
@@ -111,6 +110,7 @@ def export_environment(ndk_only):
             myfile.write("$env:ANDROID_SDK_ROOT=\"" + ANDROID_SDK + "\"\n")
         myfile.write("$env:ANDROID_NDK_HOME=\"" + ANDROID_NDK + "\"\n")
         myfile.write("$env:NDK_ROOT=\"" + ANDROID_NDK + "\"\n")
+        myfile.write("$env:ANDROID_NDK_ROOT=\"" + ANDROID_NDK + "\"\n")
 
 
 def main(ndk_only):

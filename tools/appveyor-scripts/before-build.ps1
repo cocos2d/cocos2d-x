@@ -11,7 +11,7 @@ function Download-Deps
 
 function Generate-Binding-Codes
 {
-    $env:NDK_ROOT=$env:APPVEYOR_BUILD_FOLDER + "\..\android-ndk-r16b"
+    $env:NDK_ROOT=$env:APPVEYOR_BUILD_FOLDER + "\..\android-ndk-r19c"
 
     # install python module
     & pip install PyYAML Cheetah
