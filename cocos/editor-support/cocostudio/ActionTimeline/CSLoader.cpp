@@ -270,7 +270,7 @@ void CSLoader::init()
 
 Node* CSLoader::createNode(const std::string& filename)
 {
-    std::string path = filename;
+    const std::string& path = filename;
     size_t pos = path.find_last_of('.');
     std::string suffix = path.substr(pos + 1, path.length());
     
@@ -290,7 +290,7 @@ Node* CSLoader::createNode(const std::string& filename)
 
 Node* CSLoader::createNode(const std::string &filename, const ccNodeLoadCallback &callback)
 {
-    std::string path = filename;
+    const std::string& path = filename;
     size_t pos = path.find_last_of('.');
     std::string suffix = path.substr(pos + 1, path.length());
     
@@ -330,7 +330,7 @@ Node* CSLoader::createNodeWithVisibleSize(const std::string &filename, const ccN
 
 std::string CSLoader::getExtentionName(const std::string& name)
 {
-    std::string path = name;
+    const std::string& path = name;
     size_t pos = path.find_last_of('.');
     std::string result = path.substr(pos + 1, path.length());
 
