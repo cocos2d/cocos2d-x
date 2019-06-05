@@ -821,7 +821,7 @@ const Color3B& Layout::getBackGroundEndColor()const
     return _gEndColor;
 }
 
-void Layout::setBackGroundColorOpacity(GLubyte opacity)
+void Layout::setBackGroundColorOpacity(uint8_t opacity)
 {
     _cOpacity = opacity;
     switch (_colorType)
@@ -839,7 +839,7 @@ void Layout::setBackGroundColorOpacity(GLubyte opacity)
     }
 }
     
-GLubyte Layout::getBackGroundColorOpacity()const
+uint8_t Layout::getBackGroundColorOpacity()const
 {
     return _cOpacity;
 }
@@ -864,7 +864,7 @@ void Layout::setBackGroundImageColor(const Color3B &color)
     updateBackGroundImageColor();
 }
 
-void Layout::setBackGroundImageOpacity(GLubyte opacity)
+void Layout::setBackGroundImageOpacity(uint8_t opacity)
 {
     _backGroundImageOpacity = opacity;
     updateBackGroundImageOpacity();
@@ -875,7 +875,7 @@ const Color3B& Layout::getBackGroundImageColor()const
     return _backGroundImageColor;
 }
 
-GLubyte Layout::getBackGroundImageOpacity()const
+uint8_t Layout::getBackGroundImageOpacity()const
 {
     return _backGroundImageOpacity;
 }

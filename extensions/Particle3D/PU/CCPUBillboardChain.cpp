@@ -161,7 +161,7 @@ void PUBillboardChain::setupBuffers(void)
         CC_SAFE_RELEASE_NULL(_vertexBuffer);
         CC_SAFE_RELEASE_NULL(_indexBuffer);
 
-        GLsizei stride = sizeof(VertexInfo);
+        size_t stride = sizeof(VertexInfo);
         _vertexBuffer = backend::Device::getInstance()->newBuffer(stride * _chainElementList.size() * 2, backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
         VertexInfo vi = {Vec3(0.0f, 0.0f, 0.0f), Vec2(0.0f, 0.0f), Vec4::ONE};
         _vertices.resize(_chainElementList.size() * 2, vi);

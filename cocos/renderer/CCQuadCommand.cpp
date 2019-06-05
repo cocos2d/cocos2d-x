@@ -36,7 +36,7 @@
 NS_CC_BEGIN
 
 int QuadCommand::__indexCapacity = -1;
-GLushort* QuadCommand::__indices = nullptr;
+uint16_t* QuadCommand::__indices = nullptr;
 
 QuadCommand::QuadCommand():
 _indexSize(-1),
@@ -69,18 +69,18 @@ void QuadCommand::reIndex(int indicesCount)
         CCLOG("cocos2d: QuadCommand: resizing index size from [%d] to [%d]", __indexCapacity, indicesCount);
 
         _ownedIndices.push_back(__indices);
-        __indices = new (std::nothrow) GLushort[indicesCount];
+        __indices = new (std::nothrow) uint16_t[indicesCount];
         __indexCapacity = indicesCount;
     }
 
     for( int i=0; i < __indexCapacity/6; i++)
     {
-        __indices[i*6+0] = (GLushort) (i*4+0);
-        __indices[i*6+1] = (GLushort) (i*4+1);
-        __indices[i*6+2] = (GLushort) (i*4+2);
-        __indices[i*6+3] = (GLushort) (i*4+3);
-        __indices[i*6+4] = (GLushort) (i*4+2);
-        __indices[i*6+5] = (GLushort) (i*4+1);
+        __indices[i*6+0] = (uint16_t) (i*4+0);
+        __indices[i*6+1] = (uint16_t) (i*4+1);
+        __indices[i*6+2] = (uint16_t) (i*4+2);
+        __indices[i*6+3] = (uint16_t) (i*4+3);
+        __indices[i*6+4] = (uint16_t) (i*4+2);
+        __indices[i*6+5] = (uint16_t) (i*4+1);
     }
 
     _indexSize = indicesCount;

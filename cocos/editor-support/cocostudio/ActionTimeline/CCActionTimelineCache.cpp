@@ -361,9 +361,9 @@ Frame* ActionTimelineCache::loadColorFrame(const rapidjson::Value& json)
 {
     ColorFrame* frame = ColorFrame::create();
 
-    GLubyte red   = (GLubyte)DICTOOL->getIntValue_json(json, RED);
-    GLubyte green = (GLubyte)DICTOOL->getIntValue_json(json, GREEN);
-    GLubyte blue  = (GLubyte)DICTOOL->getIntValue_json(json, BLUE);
+    uint8_t red   = (uint8_t)DICTOOL->getIntValue_json(json, RED);
+    uint8_t green = (uint8_t)DICTOOL->getIntValue_json(json, GREEN);
+    uint8_t blue  = (uint8_t)DICTOOL->getIntValue_json(json, BLUE);
 
     frame->setColor(Color3B(red, green, blue));
 

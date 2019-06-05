@@ -1336,7 +1336,7 @@ const Color3B& ScrollView::getScrollBarColor() const
     return Color3B::WHITE;
 }
 
-void ScrollView::setScrollBarOpacity(GLubyte opacity)
+void ScrollView::setScrollBarOpacity(uint8_t opacity)
 {
     CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
     if(_verticalScrollBar != nullptr)
@@ -1349,7 +1349,7 @@ void ScrollView::setScrollBarOpacity(GLubyte opacity)
     }
 }
 
-GLubyte ScrollView::getScrollBarOpacity() const
+uint8_t ScrollView::getScrollBarOpacity() const
 {
     CCASSERT(_scrollBarEnabled, "Scroll bar should be enabled!");
     if(_verticalScrollBar != nullptr)

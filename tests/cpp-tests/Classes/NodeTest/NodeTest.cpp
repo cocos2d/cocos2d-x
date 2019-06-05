@@ -1017,9 +1017,10 @@ void MySprite::onDraw(const Mat4 &transform, uint32_t flags)
     diff = offsetof( V3F_C4B_T2F, colors);
 //    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
 
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-    CHECK_GL_ERROR_DEBUG();
+    //TODO coulsonwang
+//    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+//
+//    CHECK_GL_ERROR_DEBUG();
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,4);
 }
 //------------------------------------------------------------------

@@ -72,7 +72,7 @@ public:
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
     virtual const Color3B& getColor(void) const override;
     virtual void setColor(const Color3B& color) override;
-    virtual void setOpacity(GLubyte opacity) override;
+    virtual void setOpacity(uint8_t opacity) override;
     
     /**
      * @code

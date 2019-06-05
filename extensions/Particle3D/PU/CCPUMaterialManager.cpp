@@ -55,7 +55,7 @@ PUMaterial::PUMaterial()
 , shininess(0.0f)
 , depthTest(true)
 , depthWrite(true)
-, wrapMode(GL_CLAMP_TO_EDGE)
+, wrapMode(backend::SamplerAddressMode::CLAMP_TO_EDGE)
 {
     blendFunc.src = backend::BlendFactor::ONE;
     blendFunc.dst = backend::BlendFactor::ZERO;

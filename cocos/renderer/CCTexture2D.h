@@ -296,14 +296,14 @@ public:
     backend::Texture* getBackendTexture() const;
     
     /** Gets max S. */
-    GLfloat getMaxS() const;
+    float getMaxS() const;
     /** Sets max S. */
-    void setMaxS(GLfloat maxS);
+    void setMaxS(float maxS);
     
     /** Gets max T. */
-    GLfloat getMaxT() const;
+    float getMaxT() const;
     /** Sets max T. */
-    void setMaxT(GLfloat maxT);
+    void setMaxT(float maxT);
     
     /** Get the texture content size.*/
     Size getContentSize() const;
@@ -380,10 +380,10 @@ protected:
     
 
     /** texture max S */
-    GLfloat _maxS;
+    float _maxS;
     
     /** texture max T */
-    GLfloat _maxT;
+    float _maxT;
 
     /** content size */
     Size _contentSize;

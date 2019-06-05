@@ -191,7 +191,6 @@ void Box2DView::onDraw(const Mat4 &transform, uint32_t flags)
 //    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
     m_test->Step(&settings);
     m_test->m_world->DrawDebugData();
-    CHECK_GL_ERROR_DEBUG();
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }

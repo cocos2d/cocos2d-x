@@ -27,7 +27,6 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTexture2D.h"
 #include "base//ccUtils.h"
-#include "renderer/backend/opengl/TextureGL.h"
 
 NS_CC_BEGIN
 

@@ -81,7 +81,7 @@ CameraBackgroundSkyBoxBrush* CameraBackgroundBrush::createSkyboxBrush(const std:
 
 CameraBackgroundDepthBrush::CameraBackgroundDepthBrush()
 : _depth(0.f)
-, _clearColor(GL_FALSE)
+, _clearColor(false)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     , _backToForegroundListener(nullptr)
 #endif
@@ -237,7 +237,7 @@ CameraBackgroundColorBrush::~CameraBackgroundColorBrush()
 bool CameraBackgroundColorBrush::init()
 {
     CameraBackgroundDepthBrush::init();
-    this->_clearColor = GL_TRUE;
+    this->_clearColor = true;
     return true;
 }
 

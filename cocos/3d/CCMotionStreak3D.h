@@ -138,8 +138,8 @@ public:
     * @lua NA
     */
     virtual const BlendFunc& getBlendFunc() const override;
-    virtual GLubyte getOpacity() const override;
-    virtual void setOpacity(GLubyte opacity) override;
+    virtual uint8_t getOpacity() const override;
+    virtual void setOpacity(uint8_t opacity) override;
     virtual void setOpacityModifyRGB(bool value) override;
     virtual bool isOpacityModifyRGB() const override;
     

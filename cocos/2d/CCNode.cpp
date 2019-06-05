@@ -2008,24 +2008,24 @@ void Node::removeAllComponents()
 
 // MARK: Opacity and Color
 
-GLubyte Node::getOpacity(void) const
+uint8_t Node::getOpacity(void) const
 {
     return _realOpacity;
 }
 
-GLubyte Node::getDisplayedOpacity() const
+uint8_t Node::getDisplayedOpacity() const
 {
     return _displayedOpacity;
 }
 
-void Node::setOpacity(GLubyte opacity)
+void Node::setOpacity(uint8_t opacity)
 {
     _displayedOpacity = _realOpacity = opacity;
     
     updateCascadeOpacity();
 }
 
-void Node::updateDisplayedOpacity(GLubyte parentOpacity)
+void Node::updateDisplayedOpacity(uint8_t parentOpacity)
 {
     _displayedOpacity = _realOpacity * parentOpacity/255.0;
     updateColor();
@@ -2065,7 +2065,7 @@ void Node::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
 
 void Node::updateCascadeOpacity()
 {
-    GLubyte parentOpacity = 255;
+    uint8_t parentOpacity = 255;
     
     if (_parent != nullptr && _parent->isCascadeOpacityEnabled())
     {

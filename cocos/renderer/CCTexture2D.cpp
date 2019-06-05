@@ -197,22 +197,22 @@ const Size& Texture2D::getContentSizeInPixels()
     return _contentSize;
 }
 
-GLfloat Texture2D::getMaxS() const
+float Texture2D::getMaxS() const
 {
     return _maxS;
 }
 
-void Texture2D::setMaxS(GLfloat maxS)
+void Texture2D::setMaxS(float maxS)
 {
     _maxS = maxS;
 }
 
-GLfloat Texture2D::getMaxT() const
+float Texture2D::getMaxT() const
 {
     return _maxT;
 }
 
-void Texture2D::setMaxT(GLfloat maxT)
+void Texture2D::setMaxT(float maxT)
 {
     _maxT = maxT;
 }

@@ -100,9 +100,8 @@ static inline Tex2F __t(const Vec2 &v)
 
 // implementation of DrawNode
 
-DrawNode::DrawNode(GLfloat lineWidth)
+DrawNode::DrawNode(float lineWidth)
 : _lineWidth(lineWidth)
-, _defaultLineWidth(lineWidth)
 {
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -132,7 +131,7 @@ DrawNode::~DrawNode()
     CC_SAFE_RELEASE(_programStateLine);
 }
 
-DrawNode* DrawNode::create(GLfloat defaultLineWidth)
+DrawNode* DrawNode::create(float defaultLineWidth)
 {
     DrawNode* ret = new (std::nothrow) DrawNode(defaultLineWidth);
     if (ret && ret->init())
@@ -427,8 +426,8 @@ void DrawNode::drawCircle(const Vec2& center, float radius, float angle, unsigne
     
     for(unsigned int i = 0;i <= segments; i++) {
         float rads = i*coef;
-        GLfloat j = radius * cosf(rads + angle) * scaleX + center.x;
-        GLfloat k = radius * sinf(rads + angle) * scaleY + center.y;
+        float j = radius * cosf(rads + angle) * scaleX + center.x;
+        float k = radius * sinf(rads + angle) * scaleY + center.y;
         
         vertices[i].x = j;
         vertices[i].y = k;
@@ -752,8 +751,8 @@ void DrawNode::drawSolidCircle(const Vec2& center, float radius, float angle, un
     for(unsigned int i = 0;i < segments; i++)
     {
         float rads = i*coef;
-        GLfloat j = radius * cosf(rads + angle) * scaleX + center.x;
-        GLfloat k = radius * sinf(rads + angle) * scaleY + center.y;
+        float j = radius * cosf(rads + angle) * scaleX + center.x;
+        float k = radius * sinf(rads + angle) * scaleY + center.y;
         
         vertices[i].x = j;
         vertices[i].y = k;
@@ -797,7 +796,7 @@ void DrawNode::clear()
     _dirtyGLLine = true;
     _bufferCountGLPoint = 0;
     _dirtyGLPoint = true;
-    _lineWidth = _defaultLineWidth;
+    _lineWidth = 0;
 }
 
 const BlendFunc& DrawNode::getBlendFunc() const
@@ -810,12 +809,12 @@ void DrawNode::setBlendFunc(const BlendFunc &blendFunc)
     _blendFunc = blendFunc;
 }
 
-void DrawNode::setLineWidth(GLfloat lineWidth)
+void DrawNode::setLineWidth(float lineWidth)
 {
     _lineWidth = lineWidth;
 }
 
-GLfloat DrawNode::getLineWidth()
+float DrawNode::getLineWidth()
 {
     return this->_lineWidth;
 }

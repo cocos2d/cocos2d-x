@@ -108,14 +108,10 @@ private:
     VertexAttribBinding& operator=(const VertexAttribBinding&);
     
     bool init(MeshIndexData* meshIndexData, Pass *pass, MeshCommand *);
-    void setVertexAttribPointer(const std::string& name, backend::VertexFormat type, GLboolean normalized, int offset, int flag);
+    void setVertexAttribPointer(const std::string& name, backend::VertexFormat type, bool normalized, int offset, int flag);
     backend::AttributeBindInfo* getVertexAttribValue(const std::string &name);
     void parseAttributes();
-    //void enableVertexAttributes(uint32_t flags) const;
-
-
-    GLuint _handle;
-
+    
     MeshIndexData* _meshIndexData;
     backend::ProgramState* _programState;
     backend::VertexLayout* _vertexLayout; //weak reference

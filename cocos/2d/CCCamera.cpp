@@ -202,7 +202,7 @@ bool Camera::initDefault()
         case Director::Projection::_3D:
         {
             float zeye = Director::getInstance()->getZEye();
-            initPerspective(60, (GLfloat)size.width / size.height, 10, zeye + size.height / 2.0f);
+            initPerspective(60, (float)size.width / size.height, 10, zeye + size.height / 2.0f);
             Vec3 eye(size.width/2, size.height/2.0f, zeye), center(size.width/2, size.height/2, 0.0f), up(0.0f, 1.0f, 0.0f);
             setPosition3D(eye);
             lookAt(center, up);

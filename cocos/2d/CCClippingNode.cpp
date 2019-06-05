@@ -335,12 +335,12 @@ bool ClippingNode::hasContent() const
     return _children.size() > 0;
 }
 
-GLfloat ClippingNode::getAlphaThreshold() const
+float ClippingNode::getAlphaThreshold() const
 {
     return _stencilStateManager->getAlphaThreshold();
 }
 
-void ClippingNode::setAlphaThreshold(GLfloat alphaThreshold)
+void ClippingNode::setAlphaThreshold(float alphaThreshold)
 {
 //TODO: minggo
 //#if CC_CLIPPING_NODE_OPENGLES

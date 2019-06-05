@@ -421,15 +421,15 @@ void PUMaterialTextureUnitTranslator::translate( PUScriptCompiler* compiler, PUA
                     {
                         if (val == matToken[TOKEN_MAT_TEXTURE_CLAMP])
                         {
-                            material->wrapMode = GL_CLAMP_TO_EDGE;
+                            material->wrapMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
                         }
                         else if (val == matToken[TOKEN_MAT_TEXTURE_REPEAT])
                         {
-                            material->wrapMode = GL_REPEAT;
+                            material->wrapMode = backend::SamplerAddressMode::REPEAT;
                         }
                         else if (val == matToken[TOKEN_MAT_TEXTURE_MIRROR])
                         {
-                            material->wrapMode = GL_MIRRORED_REPEAT;//GL_MIRROR_CLAMP_EXT;
+                            material->wrapMode = backend::SamplerAddressMode::MIRROR_REPEAT;//GL_MIRROR_CLAMP_EXT;
                         }
                     }
                 }

@@ -1716,7 +1716,7 @@ void Label::updateEffectUniforms(BatchCommand &batch, TextureAtlas* textureAtlas
     {
         if (_shadowEnabled) {
             Color3B oldColor = _realColor;
-            GLubyte oldOPacity = _displayedOpacity;
+            uint8_t oldOPacity = _displayedOpacity;
             _displayedOpacity = _shadowColor4F.a * (oldOPacity / 255.0f) * 255;
             setColor(Color3B(_shadowColor4F));
             batch.shadowCommand.updateVertexBuffer(textureAtlas->getQuads(), (unsigned int)(textureAtlas->getTotalQuads() * sizeof(V3F_C4B_T2F_Quad)) );
@@ -2151,7 +2151,7 @@ void Label::updateDisplayedColor(const Color3B& parentColor)
     }
 }
 
-void Label::updateDisplayedOpacity(GLubyte parentOpacity)
+void Label::updateDisplayedOpacity(uint8_t parentOpacity)
 {
     Node::updateDisplayedOpacity(parentOpacity);
 

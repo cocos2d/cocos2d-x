@@ -44,7 +44,7 @@ public:
     void onBeforeVisit(float globalZOrder);
     void onAfterDrawStencil();
     void onAfterVisit();
-    void setAlphaThreshold(GLfloat alphaThreshold);
+    void setAlphaThreshold(float alphaThreshold);
     void setInverted(bool inverted);
     bool isInverted()const;
     float getAlphaThreshold()const;
@@ -71,10 +71,6 @@ private:
     backend::StencilOperation _currentStencilPassDepthFail = backend::StencilOperation::KEEP;
     backend::StencilOperation _currentStencilPassDepthPass = backend::StencilOperation::KEEP;
     bool _currentDepthWriteMask = true;
-    
-    bool _currentAlphaTestEnabled = false;
-//    GLenum _currentAlphaTestFunc;
-//    GLclampf _currentAlphaTestRef;
 
     unsigned int _mask_layer_le = 0;
 

@@ -258,7 +258,7 @@ static cpSpaceDebugColor ColorForShape(cpShape *shape, cpDataPointer /*data*/)
             return LAColor(0.66f, 0.3f);
         } else {
             
-            GLfloat intensity = (cpBodyGetType(body) == CP_BODY_TYPE_STATIC ? 0.15f : 0.75f);
+            float intensity = (cpBodyGetType(body) == CP_BODY_TYPE_STATIC ? 0.15f : 0.75f);
             return RGBAColor(intensity, 0.0f, 0.0f, 0.3f);
         }
     }

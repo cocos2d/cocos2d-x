@@ -468,14 +468,14 @@ public:
      *
      * @param the scroll bar's opacity
      */
-    void setScrollBarOpacity(GLubyte opacity);
+    void setScrollBarOpacity(uint8_t opacity);
     
     /**
      * @brief Get the scroll bar's opacity
      *
      * @return the scroll bar's opacity
      */
-    GLubyte getScrollBarOpacity() const;
+    uint8_t getScrollBarOpacity() const;
     
     /**
      * @brief Set scroll bar auto hide state

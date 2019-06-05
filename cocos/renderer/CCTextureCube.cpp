@@ -32,37 +32,6 @@
 
 NS_CC_BEGIN
 
-namespace {
-    //TODO coulsonwang remove GL keyword
-    backend::SamplerFilter toBackendFilter(GLint filter)
-    {
-        switch (filter)
-        {
-            case GL_LINEAR:
-                return backend::SamplerFilter::LINEAR;
-            case GL_NEAREST:
-                return backend::SamplerFilter::NEAREST;
-            default:
-                return backend::SamplerFilter::LINEAR;
-        }
-    }
-
-    backend::SamplerAddressMode toBackendAddressMode(GLint addressMode)
-    {
-        switch (addressMode)
-        {
-            case GL_REPEAT:
-                return backend::SamplerAddressMode::REPEAT;
-            case GL_MIRRORED_REPEAT:
-                return backend::SamplerAddressMode::MIRROR_REPEAT;
-            case GL_CLAMP_TO_EDGE:
-                return backend::SamplerAddressMode::CLAMP_TO_EDGE;
-            default:
-                return backend::SamplerAddressMode::REPEAT;
-        }
-    }
-}
-
 unsigned char* getImageData(Image* img, backend::PixelFormat&  ePixFmt)
 {
     unsigned char*    pTmpData = img->getData();

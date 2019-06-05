@@ -786,7 +786,7 @@ void LayerRadialGradient::setContentSize(const Size& size)
     _customCommand.updateVertexBuffer(_vertices, sizeof(_vertices));
 }
 
-void LayerRadialGradient::setStartOpacity(GLubyte opacity)
+void LayerRadialGradient::setStartOpacity(uint8_t opacity)
 {
     _startColorRend.a = opacity / 255.0f;
     _startColor.a = opacity;

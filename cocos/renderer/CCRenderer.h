@@ -115,7 +115,7 @@ protected:
     /**Depth test enable state.*/
     bool _isDepthEnabled;
     /**Depth buffer write state.*/
-    GLboolean _isDepthWrite;
+    bool _isDepthWrite;
 };
 
 class GroupCommandManager;

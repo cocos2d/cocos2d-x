@@ -157,7 +157,7 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     CCASSERT(_quads == nullptr && _indices == nullptr, "_quads and _indices should be nullptr.");
 
     _quads = (V3F_C4B_T2F_Quad*)malloc( _capacity * sizeof(V3F_C4B_T2F_Quad) );
-    _indices = (GLushort *)malloc( _capacity * 6 * sizeof(GLushort) );
+    _indices = (uint16_t *)malloc( _capacity * 6 * sizeof(uint16_t) );
     
     if( ! ( _quads && _indices) && _capacity > 0) 
     {
@@ -172,7 +172,7 @@ bool TextureAtlas::initWithTexture(Texture2D *texture, ssize_t capacity)
     }
 
     memset( _quads, 0, _capacity * sizeof(V3F_C4B_T2F_Quad) );
-    memset( _indices, 0, _capacity * 6 * sizeof(GLushort) );
+    memset( _indices, 0, _capacity * 6 * sizeof(uint16_t) );
     
     this->setupIndices();
 
@@ -359,7 +359,7 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
     _capacity = newCapacity;
 
     V3F_C4B_T2F_Quad* tmpQuads = nullptr;
-    GLushort* tmpIndices = nullptr;
+    uint16_t* tmpIndices = nullptr;
 
     // when calling initWithTexture(fileName, 0) on bada device, calloc(0, 1) will fail and return nullptr,
     // so here must judge whether _quads and _indices is nullptr.
@@ -389,7 +389,7 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
 
     if (_indices == nullptr)
     {
-        tmpIndices = (GLushort*)malloc(new_size);
+        tmpIndices = (uint16_t*)malloc(new_size);
         if (tmpIndices != nullptr)
         {
             memset(tmpIndices, 0, new_size);
@@ -397,7 +397,7 @@ bool TextureAtlas::resizeCapacity(ssize_t newCapacity)
     }
     else
     {
-        tmpIndices = (GLushort*)realloc(_indices, new_size);
+        tmpIndices = (uint16_t*)realloc(_indices, new_size);
         if (tmpIndices != nullptr && _capacity > oldCapacity)
         {
             memset(tmpIndices + oldCapacity, 0, (_capacity - oldCapacity) * 6 * _indices_size);

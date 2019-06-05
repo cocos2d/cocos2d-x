@@ -726,7 +726,7 @@ Terrain::ChunkIndices Terrain::lookForIndicesLOD(int neighborLod[4], int selfLod
     return tmp;
 }
 
-Terrain::ChunkIndices Terrain::insertIndicesLOD(int neighborLod[4], int selfLod, GLushort * indices, int size)
+Terrain::ChunkIndices Terrain::insertIndicesLOD(int neighborLod[4], int selfLod, uint16_t * indices, int size)
 {
     ChunkLODIndices lodIndices;
     memcpy(lodIndices._relativeLod, neighborLod, sizeof(int[4]));
@@ -764,14 +764,14 @@ Terrain::ChunkIndices Terrain::lookForIndicesLODSkrit(int selfLod, bool * result
     return badResult;
 }
 
-Terrain::ChunkIndices Terrain::insertIndicesLODSkirt(int selfLod, GLushort * indices, int size)
+Terrain::ChunkIndices Terrain::insertIndicesLODSkirt(int selfLod, uint16_t * indices, int size)
 {
     ChunkLODIndicesSkirt skirtIndices;
     skirtIndices._selfLod = selfLod;
     skirtIndices._chunkIndices._size = size;
 
     auto buffer = backend::Device::getInstance()->newBuffer(sizeof(uint16_t) * size, backend::BufferType::INDEX, backend::BufferUsage::STATIC);
-    buffer->updateData(indices, sizeof(GLushort)*size);
+    buffer->updateData(indices, sizeof(uint16_t)*size);
 
     CC_SAFE_RELEASE_NULL(skirtIndices._chunkIndices._indexBuffer);
     skirtIndices._chunkIndices._indexBuffer = buffer;
@@ -1402,7 +1402,8 @@ void Terrain::Chunk::updateVerticesForLOD()
             }
     }
 
-    glBufferData(GL_ARRAY_BUFFER, sizeof(TerrainVertexData)*_currentVertices.size(), &_currentVertices[0], GL_STREAM_DRAW);
+    //TODO coulsonwang
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(TerrainVertexData)*_currentVertices.size(), &_currentVertices[0], GL_STREAM_DRAW);
     _oldLod = _currentLod;
 }
 

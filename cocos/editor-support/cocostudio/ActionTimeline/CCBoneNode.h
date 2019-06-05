@@ -188,7 +188,7 @@ protected:
 
     // bone's color and opacity cannot cascade to bone
     virtual void updateDisplayedColor(const cocos2d::Color3B& parentColor) override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
+    virtual void updateDisplayedOpacity(uint8_t parentOpacity) override;
     virtual void disableCascadeOpacity() override;
     virtual void disableCascadeColor() override;
 

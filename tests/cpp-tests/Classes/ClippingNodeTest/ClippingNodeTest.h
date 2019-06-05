@@ -201,8 +201,8 @@ public:
     CREATE_FUNC(RawStencilBufferTest2);
 
     virtual std::string subtitle() const override;
-    virtual void setupStencilForClippingOnPlane(GLint plane) override;
-    virtual void setupStencilForDrawingOnPlane(GLint plane) override;
+    virtual void setupStencilForClippingOnPlane(int plane) override;
+    virtual void setupStencilForDrawingOnPlane(int plane) override;
 };
 
 class RawStencilBufferTest3 : public RawStencilBufferTest
@@ -211,8 +211,8 @@ public:
     CREATE_FUNC(RawStencilBufferTest3);
 
     virtual std::string subtitle() const override;
-    virtual void setupStencilForClippingOnPlane(GLint plane) override;
-    virtual void setupStencilForDrawingOnPlane(GLint plane) override;
+    virtual void setupStencilForClippingOnPlane(int plane) override;
+    virtual void setupStencilForDrawingOnPlane(int plane) override;
 };
 
 class RawStencilBufferTestAlphaTest : public RawStencilBufferTest
@@ -227,8 +227,8 @@ public:
     CREATE_FUNC(RawStencilBufferTest4);
 
     virtual std::string subtitle() const override;
-    virtual void setupStencilForClippingOnPlane(GLint plane) override;
-    virtual void setupStencilForDrawingOnPlane(GLint plane) override;
+    virtual void setupStencilForClippingOnPlane(int plane) override;
+    virtual void setupStencilForDrawingOnPlane(int plane) override;
 
 private:
     cocos2d::backend::UniformLocation _alphaMVPMatrix;
@@ -240,8 +240,8 @@ public:
     CREATE_FUNC(RawStencilBufferTest5);
 
     virtual std::string subtitle() const override;
-    virtual void setupStencilForClippingOnPlane(GLint plane) override;
-    virtual void setupStencilForDrawingOnPlane(GLint plane) override;
+    virtual void setupStencilForClippingOnPlane(int plane) override;
+    virtual void setupStencilForDrawingOnPlane(int plane) override;
 };
 
 class RawStencilBufferTest6 : public RawStencilBufferTestAlphaTest
@@ -249,8 +249,8 @@ class RawStencilBufferTest6 : public RawStencilBufferTestAlphaTest
 public:
     CREATE_FUNC(RawStencilBufferTest6);
 
-    virtual void setupStencilForClippingOnPlane(GLint plane) override;
-    virtual void setupStencilForDrawingOnPlane(GLint plane) override;
+    virtual void setupStencilForClippingOnPlane(int plane) override;
+    virtual void setupStencilForDrawingOnPlane(int plane) override;
 
     // override
     virtual void setup() override;

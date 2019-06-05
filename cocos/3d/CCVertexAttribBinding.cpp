@@ -30,11 +30,11 @@
 NS_CC_BEGIN
 
 
-static GLuint __maxVertexAttribs = 0;
+static uint32_t __maxVertexAttribs = 0;
 static std::vector<VertexAttribBinding*> __vertexAttribBindingCache;
 
 VertexAttribBinding::VertexAttribBinding() :
-    _handle(0), _meshIndexData(nullptr), _programState(nullptr), _attributes()
+    _meshIndexData(nullptr), _programState(nullptr), _attributes()
 {
 }
 
@@ -50,12 +50,6 @@ VertexAttribBinding::~VertexAttribBinding()
     CC_SAFE_RELEASE(_meshIndexData);
     CC_SAFE_RELEASE(_programState);
     _attributes.clear();
-
-    if (_handle)
-    {
-        glDeleteVertexArrays(1, &_handle);
-        _handle = 0;
-    }
 }
 
 VertexAttribBinding* VertexAttribBinding::create(MeshIndexData* meshIndexData, Pass* pass, MeshCommand *command)
@@ -113,7 +107,7 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass, MeshCom
         setVertexAttribPointer(
                                shaderinfos::getAttributeName(meshattribute.vertexAttrib),
                                meshattribute.type,
-                               GL_FALSE,
+                               false,
                                offset, 
                                1 << k 
             );
@@ -158,7 +152,7 @@ backend::AttributeBindInfo* VertexAttribBinding::getVertexAttribValue(const std:
     return nullptr;
 }
 
-void VertexAttribBinding::setVertexAttribPointer(const std::string &name, backend::VertexFormat type, GLboolean normalized, int offset, int flag)
+void VertexAttribBinding::setVertexAttribPointer(const std::string &name, backend::VertexFormat type, bool normalized, int offset, int flag)
 {
     auto v = getVertexAttribValue(name);
     if(v) {

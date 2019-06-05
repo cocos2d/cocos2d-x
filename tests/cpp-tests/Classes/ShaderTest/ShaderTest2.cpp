@@ -253,8 +253,8 @@ public:
         initProgramState("Shaders/example_Outline.fsh");
 
         Vec3 color(1.0f, 0.2f, 0.3f);
-        GLfloat radius = 0.01f;
-        GLfloat threshold = 1.75;
+        float radius = 0.01f;
+        float threshold = 1.75;
 
         SET_UNIFORM(_programState, "u_outlineColor", color);
         SET_UNIFORM(_programState, "u_radius", radius);
