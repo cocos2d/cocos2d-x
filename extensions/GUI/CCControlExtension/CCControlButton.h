@@ -185,8 +185,8 @@ public:
     virtual void onTouchEnded(Touch *touch, Event *event) override;
     virtual void onTouchCancelled(Touch *touch, Event *event) override;
 
-    virtual void setOpacity(GLubyte var) override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
+    virtual void setOpacity(uint8_t var) override;
+    virtual void updateDisplayedOpacity(uint8_t parentOpacity) override;
 	virtual void setColor(const Color3B&) override;
     virtual void updateDisplayedColor(const Color3B& parentColor) override;
 

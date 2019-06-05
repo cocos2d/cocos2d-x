@@ -244,7 +244,7 @@ private:
 	static std::string		s_configfile;
     
 protected:
-    GLint           _maxModelviewStackDepth;
+    int             _maxModelviewStackDepth;
     bool            _supportsPVRTC;
     bool            _supportsETC1;
     bool            _supportsS3TC;

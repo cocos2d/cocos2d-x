@@ -277,28 +277,28 @@ public:
      *
      * @param color New opacity for selected (current) index.
      */
-    void setIndicatorSelectedIndexOpacity(GLubyte opacity);
+    void setIndicatorSelectedIndexOpacity(uint8_t opacity);
     
     /**
      * @brief Get the opacity of page indicator's selected index.
      *
      * @return opacity
      */
-    GLubyte getIndicatorSelectedIndexOpacity() const;
+    uint8_t getIndicatorSelectedIndexOpacity() const;
     
     /**
      * @brief Set opacity of page indicator's index nodes.
      *
      * @param opacity New indicator node opacity.
      */
-    void setIndicatorIndexNodesOpacity(GLubyte opacity);
+    void setIndicatorIndexNodesOpacity(uint8_t opacity);
     
     /**
      * @brief Get the opacity of page indicator's index nodes.
      *
      * @return opacity
      */
-    GLubyte getIndicatorIndexNodesOpacity() const;
+    uint8_t getIndicatorIndexNodesOpacity() const;
     
     /**
      * @brief Set scale of page indicator's index nodes.

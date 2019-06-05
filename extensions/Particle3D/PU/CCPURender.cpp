@@ -79,7 +79,7 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
         return;
     
     if (_vertexBuffer == nullptr){
-        GLsizei stride = sizeof(VertexInfo);
+        size_t stride = sizeof(VertexInfo);
         _vertexBuffer = backend::Device::getInstance()->newBuffer(stride * 4 * particleSystem->getParticleQuota(), backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
         if (_vertexBuffer == nullptr)
         {
@@ -685,7 +685,7 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
     Vec3 backward(cameraMat.m[8], cameraMat.m[9], cameraMat.m[10]);
 
     if (_vertexBuffer == nullptr && _indexBuffer == nullptr){
-        GLsizei stride = sizeof(VertexInfo);
+        size_t stride = sizeof(VertexInfo);
         _vertexBuffer = backend::Device::getInstance()->newBuffer(stride * 8 * particleSystem->getParticleQuota(), backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
         if (_vertexBuffer == nullptr)
         {
@@ -863,7 +863,7 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
     unsigned int vertexCount = (_numberOfRings + 1) * (_numberOfSegments + 1);
     unsigned int indexCount = 6 * _numberOfRings * (_numberOfSegments + 1);
     if (_vertexBuffer == nullptr && _indexBuffer == nullptr){
-        GLsizei stride = sizeof(VertexInfo);
+        size_t stride = sizeof(VertexInfo);
         _vertexBuffer = backend::Device::getInstance()->newBuffer(stride * vertexCount * particleSystem->getParticleQuota(), backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
         if (_vertexBuffer == nullptr)
         {

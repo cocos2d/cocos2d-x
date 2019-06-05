@@ -561,9 +561,9 @@ void Mesh::setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigne
     {
         resetLightUniformValues();
 
-        GLint enabledDirLightNum = 0;
-        GLint enabledPointLightNum = 0;
-        GLint enabledSpotLightNum = 0;
+        int enabledDirLightNum = 0;
+        int enabledPointLightNum = 0;
+        int enabledSpotLightNum = 0;
         Vec3 ambientColor;
         for (const auto& light : lights)
         {

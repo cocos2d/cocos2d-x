@@ -78,7 +78,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual GLubyte getDisplayedOpacity() const = 0;
+    virtual unsigned char getDisplayedOpacity() const = 0;
     /**
      * Returns the opacity.
      *
@@ -89,7 +89,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual GLubyte getOpacity() const = 0;
+    virtual unsigned char getOpacity() const = 0;
     
     /**
      * Changes the opacity.
@@ -98,7 +98,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void setOpacity(GLubyte opacity) = 0;
+    virtual void setOpacity(unsigned char opacity) = 0;
     
     // optional
     
@@ -160,7 +160,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual void updateDisplayedOpacity(GLubyte opacity) = 0;
+    virtual void updateDisplayedOpacity(unsigned char opacity) = 0;
 };
 
 /**

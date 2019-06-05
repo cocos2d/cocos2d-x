@@ -124,7 +124,7 @@ BillBoardTest::BillBoardTest()
     auto s = Director::getInstance()->getWinSize();
     if (_camera == nullptr)
     {
-        _camera=Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 500);
+        _camera=Camera::createPerspective(60, (float)s.width/s.height, 1, 500);
         _camera->setCameraFlag(CameraFlag::USER1);
         _layerBillBoard->addChild(_camera);
     }

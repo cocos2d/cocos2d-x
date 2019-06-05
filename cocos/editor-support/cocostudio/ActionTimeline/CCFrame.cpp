@@ -769,7 +769,7 @@ void AlphaFrame::onApply(float percent)
 {
     if (nullptr != _node)
     {
-        GLubyte alpha = _alpha + _betweenAlpha * percent;
+        uint8_t alpha = _alpha + _betweenAlpha * percent;
         _node->setOpacity(alpha);
     }
 }

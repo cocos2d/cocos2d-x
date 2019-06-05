@@ -2191,7 +2191,7 @@ FadeTo* FadeOut::reverse() const
 // FadeTo
 //
 
-FadeTo* FadeTo::create(float duration, GLubyte opacity)
+FadeTo* FadeTo::create(float duration, uint8_t opacity)
 {
     FadeTo *fadeTo = new (std::nothrow) FadeTo();
     if (fadeTo && fadeTo->initWithDuration(duration, opacity))
@@ -2204,7 +2204,7 @@ FadeTo* FadeTo::create(float duration, GLubyte opacity)
     return nullptr;
 }
 
-bool FadeTo::initWithDuration(float duration, GLubyte opacity)
+bool FadeTo::initWithDuration(float duration, uint8_t opacity)
 {
     if (ActionInterval::initWithDuration(duration))
     {
@@ -2241,14 +2241,14 @@ void FadeTo::update(float time)
 {
     if (_target)
     {
-        _target->setOpacity((GLubyte)(_fromOpacity + (_toOpacity - _fromOpacity) * time));
+        _target->setOpacity((uint8_t)(_fromOpacity + (_toOpacity - _fromOpacity) * time));
     }
 }
 
 //
 // TintTo
 //
-TintTo* TintTo::create(float duration, GLubyte red, GLubyte green, GLubyte blue)
+TintTo* TintTo::create(float duration, uint8_t red, uint8_t green, uint8_t blue)
 {
     TintTo *tintTo = new (std::nothrow) TintTo();
     if (tintTo && tintTo->initWithDuration(duration, red, green, blue))
@@ -2266,7 +2266,7 @@ TintTo* TintTo::create(float duration, const Color3B& color)
     return create(duration, color.r, color.g, color.b);
 }
 
-bool TintTo::initWithDuration(float duration, GLubyte red, GLubyte green, GLubyte blue)
+bool TintTo::initWithDuration(float duration, uint8_t red, uint8_t green, uint8_t blue)
 {
     if (ActionInterval::initWithDuration(duration))
     {
@@ -2302,9 +2302,9 @@ void TintTo::update(float time)
 {
     if (_target)
     {
-        _target->setColor(Color3B(GLubyte(_from.r + (_to.r - _from.r) * time),
-            (GLubyte)(_from.g + (_to.g - _from.g) * time),
-            (GLubyte)(_from.b + (_to.b - _from.b) * time)));
+        _target->setColor(Color3B(uint8_t(_from.r + (_to.r - _from.r) * time),
+            (uint8_t)(_from.g + (_to.g - _from.g) * time),
+            (uint8_t)(_from.b + (_to.b - _from.b) * time)));
     }
 }
 
@@ -2312,7 +2312,7 @@ void TintTo::update(float time)
 // TintBy
 //
 
-TintBy* TintBy::create(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue)
+TintBy* TintBy::create(float duration, int16_t deltaRed, int16_t deltaGreen, int16_t deltaBlue)
 {
     TintBy *tintBy = new (std::nothrow) TintBy();
     if (tintBy && tintBy->initWithDuration(duration, deltaRed, deltaGreen, deltaBlue))
@@ -2325,7 +2325,7 @@ TintBy* TintBy::create(float duration, GLshort deltaRed, GLshort deltaGreen, GLs
     return nullptr;
 }
 
-bool TintBy::initWithDuration(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue)
+bool TintBy::initWithDuration(float duration, int16_t deltaRed, int16_t deltaGreen, int16_t deltaBlue)
 {
     if (ActionInterval::initWithDuration(duration))
     {
@@ -2362,9 +2362,9 @@ void TintBy::update(float time)
 {
     if (_target)
     {
-        _target->setColor(Color3B((GLubyte)(_fromR + _deltaR * time),
-            (GLubyte)(_fromG + _deltaG * time),
-            (GLubyte)(_fromB + _deltaB * time)));
+        _target->setColor(Color3B((uint8_t)(_fromR + _deltaR * time),
+            (uint8_t)(_fromG + _deltaG * time),
+            (uint8_t)(_fromB + _deltaB * time)));
     }    
 }
 

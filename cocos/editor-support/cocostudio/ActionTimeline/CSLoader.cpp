@@ -576,10 +576,10 @@ void CSLoader::initNode(Node* node, const rapidjson::Value& json)
     float skewy         = DICTOOL->getFloatValue_json(json, SKEW_Y);
     float anchorx       = DICTOOL->getFloatValue_json(json, ANCHOR_X, 0.5f);
     float anchory       = DICTOOL->getFloatValue_json(json, ANCHOR_Y, 0.5f);
-    GLubyte alpha       = (GLubyte)DICTOOL->getIntValue_json(json, ALPHA, 255);
-    GLubyte red         = (GLubyte)DICTOOL->getIntValue_json(json, RED, 255);
-    GLubyte green       = (GLubyte)DICTOOL->getIntValue_json(json, GREEN, 255);
-    GLubyte blue        = (GLubyte)DICTOOL->getIntValue_json(json, BLUE, 255);
+    uint8_t alpha       = (uint8_t)DICTOOL->getIntValue_json(json, ALPHA, 255);
+    uint8_t red         = (uint8_t)DICTOOL->getIntValue_json(json, RED, 255);
+    uint8_t green       = (uint8_t)DICTOOL->getIntValue_json(json, GREEN, 255);
+    uint8_t blue        = (uint8_t)DICTOOL->getIntValue_json(json, BLUE, 255);
     int zorder          = DICTOOL->getIntValue_json(json, ZORDER);
     int tag             = DICTOOL->getIntValue_json(json, TAG);
     int actionTag       = DICTOOL->getIntValue_json(json, ACTION_TAG);

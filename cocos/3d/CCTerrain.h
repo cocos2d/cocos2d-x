@@ -215,7 +215,7 @@ private:
         std::vector<TerrainVertexData> _originalVertices;
         /*LOD indices*/
         struct LOD{
-            std::vector<GLushort> _indices;
+            std::vector<uint16_t> _indices;
         };
         ChunkIndices _chunkIndices; 
         /**we now support four levels of detail*/
@@ -477,9 +477,9 @@ protected:
 
     ChunkIndices lookForIndicesLOD(int neighborLod[4], int selfLod, bool * result);
 
-    ChunkIndices insertIndicesLOD(int neighborLod[4], int selfLod, GLushort * indices, int size);
+    ChunkIndices insertIndicesLOD(int neighborLod[4], int selfLod, uint16_t * indices, int size);
 
-    ChunkIndices insertIndicesLODSkirt(int selfLod, GLushort * indices, int size);
+    ChunkIndices insertIndicesLODSkirt(int selfLod, uint16_t * indices, int size);
     
     Chunk * getChunkByIndex(int x,int y) const;
 

@@ -282,12 +282,12 @@ const BlendFunc& MotionStreak3D::getBlendFunc(void) const
     return _blendFunc;
 }
 
-void MotionStreak3D::setOpacity(GLubyte /*opacity*/)
+void MotionStreak3D::setOpacity(uint8_t /*opacity*/)
 {
     CCASSERT(false, "Set opacity no supported");
 }
 
-GLubyte MotionStreak3D::getOpacity(void) const
+uint8_t MotionStreak3D::getOpacity(void) const
 {
     CCASSERT(false, "Opacity no supported");
     return 0;
@@ -345,7 +345,7 @@ void MotionStreak3D::update(float delta)
             }else
                 newIdx2 = newIdx*2;
 
-            const GLubyte op = (GLubyte)(_pointState[newIdx] * 255.0f);
+            const uint8_t op = (uint8_t)(_pointState[newIdx] * 255.0f);
             _vertexData[newIdx2].color.a = op;
             _vertexData[newIdx2+1].color.a = op;
         }

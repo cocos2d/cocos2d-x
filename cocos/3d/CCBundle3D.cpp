@@ -233,8 +233,8 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
             NTextureData tex;
             tex.filename = material.diffuse_texname.empty() ? material.diffuse_texname : dir + material.diffuse_texname;
             tex.type = NTextureData::Usage::Diffuse;
-            tex.wrapS = GL_CLAMP_TO_EDGE;
-            tex.wrapT = GL_CLAMP_TO_EDGE;
+            tex.wrapS = backend::SamplerAddressMode::CLAMP_TO_EDGE;
+            tex.wrapT = backend::SamplerAddressMode::CLAMP_TO_EDGE;
             
             sprintf(str, "%d", ++i);
             materialdata.textures.push_back(tex);
@@ -942,8 +942,8 @@ bool Bundle3D::loadMaterialsBinary(MaterialDatas& materialdatas)
             float  uvdata[4];
             _binaryReader.read(&uvdata,sizeof(float), 4);
             textureData.type  = parseGLTextureType(_binaryReader.readString());
-            textureData.wrapS= parseGLAddressMode(_binaryReader.readString());
-            textureData.wrapT= parseGLAddressMode(_binaryReader.readString());
+            textureData.wrapS= parseSamplerAddressMode(_binaryReader.readString());
+            textureData.wrapT= parseSamplerAddressMode(_binaryReader.readString());
             materialData.textures.push_back(textureData);
         }
         materialdatas.materials.push_back(materialData);
@@ -1036,8 +1036,8 @@ bool  Bundle3D::loadMaterialsJson(MaterialDatas& materialdatas)
                 std::string filename = texture_val[FILENAME].GetString();
                 textureData.filename = filename.empty() ? filename : _modelPath + filename;
                 textureData.type  = parseGLTextureType(texture_val["type"].GetString());
-                textureData.wrapS = parseGLAddressMode(texture_val["wrapModeU"].GetString());
-                textureData.wrapT = parseGLAddressMode(texture_val["wrapModeV"].GetString());
+                textureData.wrapS = parseSamplerAddressMode(texture_val["wrapModeU"].GetString());
+                textureData.wrapT = parseSamplerAddressMode(texture_val["wrapModeV"].GetString());
                 materialData.textures.push_back(textureData);
             }
         }
@@ -2085,24 +2085,6 @@ backend::SamplerAddressMode Bundle3D::parseSamplerAddressMode(const std::string 
     {
         CCASSERT(false, "Invalid GL type");
         return backend::SamplerAddressMode::REPEAT;
-    }
-}
-
-GLenum Bundle3D::parseGLAddressMode(const std::string &str)
-{
-
-    if (str == "REPEAT")
-    {
-        return GL_REPEAT;
-    }
-    else if (str == "CLAMP")
-    {
-        return GL_CLAMP_TO_EDGE;
-    }
-    else
-    {
-        CCASSERT(false, "Invalid GL type");
-        return GL_REPEAT;
     }
 }
 

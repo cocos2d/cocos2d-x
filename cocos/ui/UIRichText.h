@@ -81,7 +81,7 @@ public:
      * @param opacity A opacity value in `GLubyte`.
      * @return True if initialize success, false otherwise.
      */
-    bool init(int tag, const Color3B& color, GLubyte opacity);
+    bool init(int tag, const Color3B& color, uint8_t opacity);
     
     bool equalType(Type type);
     void setColor(const Color3B& color);
@@ -89,7 +89,7 @@ protected:
     Type _type;             /*!< Rich element type. */
     int _tag;               /*!< A integer tag value. */
     Color3B _color;         /*!< A color in `Color3B`. */
-    GLubyte _opacity;       /*!< A opacity value in `GLubyte`. */
+    uint8_t _opacity;       /*!< A opacity value in `GLubyte`. */
     friend class RichText;
 };
     
@@ -145,7 +145,7 @@ public:
      * @param glowColor glow color
      * @return True if initialize success, false otherwise.
      */
-    bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& text,
+    bool init(int tag, const Color3B& color, uint8_t opacity, const std::string& text,
               const std::string& fontName, float fontSize, uint32_t flags, const std::string& url,
               const Color3B& outlineColor = Color3B::WHITE, int outlineSize = -1,
               const Color3B& shadowColor = Color3B::BLACK, const cocos2d::Size& shadowOffset = Size(2.0, -2.0), int shadowBlurRadius = 0,
@@ -170,7 +170,7 @@ public:
      * @param glowColor glow color
      * @return RichElementText instance.
      */
-    static RichElementText* create(int tag, const Color3B& color, GLubyte opacity, const std::string& text,
+    static RichElementText* create(int tag, const Color3B& color, uint8_t opacity, const std::string& text,
                                    const std::string& fontName, float fontSize, uint32_t flags=0, const std::string& url="",
                                    const Color3B& outlineColor = Color3B::WHITE, int outlineSize = -1,
                                    const Color3B& shadowColor = Color3B::BLACK, const cocos2d::Size& shadowOffset = Size(2.0, -2.0), int shadowBlurRadius = 0,
@@ -225,7 +225,7 @@ public:
      * @param texType texture type, may be a valid file path, or a sprite frame name
      * @return True if initialize success, false otherwise.
      */
-    bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& filePath, const std::string& url = "", Widget::TextureResType texType = Widget::TextureResType::LOCAL);
+    bool init(int tag, const Color3B& color, uint8_t opacity, const std::string& filePath, const std::string& url = "", Widget::TextureResType texType = Widget::TextureResType::LOCAL);
 
     
     /**
@@ -239,7 +239,7 @@ public:
      * @param texType texture type, may be a valid file path, or a sprite frame name
      * @return A RichElementImage instance.
      */
-    static RichElementImage* create(int tag, const Color3B& color, GLubyte opacity, const std::string& filePath, const std::string& url = "", Widget::TextureResType texType = Widget::TextureResType::LOCAL);
+    static RichElementImage* create(int tag, const Color3B& color, uint8_t opacity, const std::string& filePath, const std::string& url = "", Widget::TextureResType texType = Widget::TextureResType::LOCAL);
 
     void setWidth(int width);
     void setHeight(int height);
@@ -286,7 +286,7 @@ public:
      * @param customNode A custom node pointer.
      * @return True if initialize success, false otherwise.
      */
-    bool init(int tag, const Color3B& color, GLubyte opacity, Node* customNode);
+    bool init(int tag, const Color3B& color, uint8_t opacity, Node* customNode);
     
     /**
      * @brief Create a RichElementCustomNode with various arguments.
@@ -297,7 +297,7 @@ public:
      * @param customNode A custom node pointer.
      * @return A RichElementCustomNode instance.
      */
-    static RichElementCustomNode* create(int tag, const Color3B& color, GLubyte opacity, Node* customNode);
+    static RichElementCustomNode* create(int tag, const Color3B& color, uint8_t opacity, Node* customNode);
 protected:
     Node* _customNode;
     friend class RichText;
@@ -333,7 +333,7 @@ public:
      * @param opacity A opacity in GLubyte.
      * @return A RichElementNewLine instance.
      */
-    static RichElementNewLine* create(int tag, const Color3B& color, GLubyte opacity);
+    static RichElementNewLine* create(int tag, const Color3B& color, uint8_t opacity);
 protected:
     friend class RichText;
 };
@@ -561,11 +561,11 @@ protected:
     virtual void initRenderer() override;
     void pushToContainer(Node* renderer);
     void handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize, const Color3B& color,
-                            GLubyte opacity, uint32_t flags, const std::string& url = "",
+                            uint8_t opacity, uint32_t flags, const std::string& url = "",
                             const Color3B& outlineColor = Color3B::WHITE, int outlineSize = -1,
                             const Color3B& shadowColor = Color3B::BLACK, const Size& shadowOffset = Size(2.0, -2.0), int shadowBlurRadius = 0,
                             const Color3B& glowColor = Color3B::WHITE);
-    void handleImageRenderer(const std::string& filePath, const Color3B& color, GLubyte opacity, int width, int height, const std::string& url);
+    void handleImageRenderer(const std::string& filePath, const Color3B& color, uint8_t opacity, int width, int height, const std::string& url);
     void handleCustomRenderer(Node* renderer);
     void formatRenderers();
     void addNewLine();

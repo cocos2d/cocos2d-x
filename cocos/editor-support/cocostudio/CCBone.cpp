@@ -262,7 +262,7 @@ void Bone::updateDisplayedColor(const Color3B &parentColor)
     Node::updateDisplayedColor(parentColor);
 }
 
-void Bone::updateDisplayedOpacity(GLubyte parentOpacity)
+void Bone::updateDisplayedOpacity(uint8_t parentOpacity)
 {
 #ifdef CC_STUDIO_ENABLED_VIEW
     _realOpacity = 255;

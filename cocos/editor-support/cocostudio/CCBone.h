@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
 Copyright (c) 2013-2016 Chukong Technologies Inc.
 Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
 
@@ -138,7 +138,7 @@ public:
     void update(float delta) override;
 
     void updateDisplayedColor(const cocos2d::Color3B &parentColor) override;
-    void updateDisplayedOpacity(GLubyte parentOpacity) override;
+    void updateDisplayedOpacity(uint8_t parentOpacity) override;
 
     //! Update color to render display
     virtual void updateColor() override;

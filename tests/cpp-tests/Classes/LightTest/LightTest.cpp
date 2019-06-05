@@ -41,7 +41,7 @@ LightTest::LightTest()
     scheduleUpdate();
 
     auto s = Director::getInstance()->getWinSize();
-    auto camera = Camera::createPerspective(60, (GLfloat)s.width/s.height, 1.0f, 1000.0f);
+    auto camera = Camera::createPerspective(60, (float)s.width/s.height, 1.0f, 1000.0f);
     camera->setCameraFlag(CameraFlag::USER1);
     camera->setPosition3D(Vec3(0.0, 100, 100));
     camera->lookAt(Vec3(0.0, 0.0, 0.0), Vec3(0.0, 1.0, 0.0));

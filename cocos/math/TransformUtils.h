@@ -45,8 +45,8 @@ struct AffineTransform;
  @param m The Mat4*4 pointer.
  @param t Affine transform.
  */
-CC_DLL void CGAffineToGL(const AffineTransform &t, GLfloat *m);
-CC_DLL void GLToCGAffine(const GLfloat *m, AffineTransform *t);
+CC_DLL void CGAffineToGL(const AffineTransform &t, float *m);
+CC_DLL void GLToCGAffine(const float *m, AffineTransform *t);
 /**@}*/
 }//namespace   cocos2d 
 /**

@@ -1643,24 +1643,24 @@ public:
      * Return the node's opacity.
      * @return A GLubyte value.
      */
-    virtual GLubyte getOpacity() const;
+    virtual uint8_t getOpacity() const;
     /**
      * Return the node's display opacity.
      * The difference between opacity and displayedOpacity is:
      * The displayedOpacity is what's the final rendering opacity of node.
      * @return A GLubyte value.
      */
-    virtual GLubyte getDisplayedOpacity() const;
+    virtual uint8_t getDisplayedOpacity() const;
     /**
      * Change node opacity.
      * @param opacity A GLubyte opacity value.
      */
-    virtual void setOpacity(GLubyte opacity);
+    virtual void setOpacity(uint8_t opacity);
     /**
      * Update the displayed opacity of node with it's parent opacity;
      * @param parentOpacity The opacity of parent node.
      */
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity);
+    virtual void updateDisplayedOpacity(uint8_t parentOpacity);
     /**
      * Whether cascadeOpacity is enabled or not.
      * @return A boolean value.
@@ -1912,8 +1912,8 @@ protected:
     ComponentContainer *_componentContainer;        ///< Dictionary of components
     
     // opacity controls
-    GLubyte     _displayedOpacity;
-    GLubyte     _realOpacity;
+    uint8_t     _displayedOpacity;
+    uint8_t     _realOpacity;
     Color3B     _displayedColor;
     Color3B     _realColor;
     bool        _cascadeColorEnabled;

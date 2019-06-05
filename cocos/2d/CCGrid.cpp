@@ -420,7 +420,7 @@ void Grid3D::calculateVertexPoints()
     _originalVertices = malloc(numOfPoints * sizeof(Vec3));
     _texCoordinates = malloc(numOfPoints * sizeof(Vec2));
     _vertexBuffer = malloc(numOfPoints * (sizeof(Vec3) + sizeof(Vec2)));
-    _indices = (GLushort*)malloc(_gridSize.width * _gridSize.height * sizeof(GLushort) * 6);
+    _indices = (unsigned short*)malloc(_gridSize.width * _gridSize.height * sizeof(unsigned short) * 6);
 
     float *vertArray = (float*)_vertices;
     float *texArray = (float*)_texCoordinates;
@@ -776,7 +776,7 @@ void TiledGrid3D::reuse()
     {
         int numQuads = _gridSize.width * _gridSize.height;
 
-        memcpy(_originalVertices, _vertices, numQuads * 12 * sizeof(GLfloat));
+        memcpy(_originalVertices, _vertices, numQuads * 12 * sizeof(float));
         --_reuseGrid;
     }
 }

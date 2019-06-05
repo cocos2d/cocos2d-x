@@ -256,10 +256,10 @@ void GLView::setViewPortInPoints(float x , float y , float w , float h)
 void GLView::setScissorInPoints(float x , float y , float w , float h)
 {
     auto renderer = Director::getInstance()->getRenderer();
-    renderer->setScissorRect((GLint)(x * _scaleX + _viewPortRect.origin.x),
-                             (GLint)(y * _scaleY + _viewPortRect.origin.y),
-                             (GLsizei)(w * _scaleX),
-                             (GLsizei)(h * _scaleY));
+    renderer->setScissorRect((int)(x * _scaleX + _viewPortRect.origin.x),
+                             (int)(y * _scaleY + _viewPortRect.origin.y),
+                             (int)(w * _scaleX),
+                             (int)(h * _scaleY));
 }
 
 bool GLView::isScissorEnabled()

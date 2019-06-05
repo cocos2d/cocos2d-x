@@ -32,7 +32,7 @@ class GLESDebugDraw : public b2Draw
 {
     float32 mRatio;
     cocos2d::GLProgram* mShaderProgram;
-    GLint        mColorLocation;
+    int        mColorLocation;
 
     void initShader( void );
 public:

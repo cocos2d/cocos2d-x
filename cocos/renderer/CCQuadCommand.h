@@ -65,11 +65,11 @@ protected:
     void reIndex(int indices);
 
     int _indexSize;
-    std::vector<GLushort*> _ownedIndices;
+    std::vector<uint16_t*> _ownedIndices;
 
     // shared across all instances
     static int __indexCapacity;
-    static GLushort* __indices;
+    static uint16_t* __indices;
 };
 
 NS_CC_END

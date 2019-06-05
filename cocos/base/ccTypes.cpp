@@ -41,7 +41,7 @@ const ssize_t CC_INVALID_INDEX = -1;
 Color3B::Color3B()
 {}
 
-Color3B::Color3B(GLubyte _r, GLubyte _g, GLubyte _b)
+Color3B::Color3B(uint8_t _r, uint8_t _g, uint8_t _b)
 : r(_r)
 , g(_g)
 , b(_b)
@@ -103,7 +103,7 @@ Color4B::Color4B(uint8_t _r, uint8_t _g, uint8_t _b, uint8_t _a)
 , a(_a)
 {}
 
-Color4B::Color4B(const Color3B& color, GLubyte _a)
+Color4B::Color4B(const Color3B& color, uint8_t _a)
 : r(color.r)
 , g(color.g)
 , b(color.b)

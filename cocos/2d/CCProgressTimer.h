@@ -153,8 +153,8 @@ public:
     virtual void setAnchorPoint(const Vec2& anchorPoint) override;
     virtual void setColor(const Color3B &color) override;
     virtual const Color3B& getColor() const override;
-    virtual void setOpacity(GLubyte opacity) override;
-    virtual GLubyte getOpacity() const override;
+    virtual void setOpacity(uint8_t opacity) override;
+    virtual uint8_t getOpacity() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     /**

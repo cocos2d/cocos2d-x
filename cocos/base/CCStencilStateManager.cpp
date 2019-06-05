@@ -82,12 +82,12 @@ void StencilStateManager::drawFullScreenQuadClearStencil(float globalZOrder)
 }
 
 
-void StencilStateManager::setAlphaThreshold(GLfloat alphaThreshold)
+void StencilStateManager::setAlphaThreshold(float alphaThreshold)
 {
     _alphaThreshold = alphaThreshold;
 }
 
-GLfloat StencilStateManager::getAlphaThreshold()const
+float StencilStateManager::getAlphaThreshold()const
 {
     return _alphaThreshold;
 }
@@ -104,15 +104,13 @@ bool StencilStateManager::isInverted()const
 
 void StencilStateManager::onBeforeVisit(float globalZOrder)
 {
-    auto renderer = Director::getInstance()->getRenderer();
-
     // increment the current layer
     s_layer++;
 
     // mask of the current layer (ie: for layer 3: 00000100)
-    GLint mask_layer = 0x1 << s_layer;
+    int mask_layer = 0x1 << s_layer;
     // mask of all layers less than the current (ie: for layer 3: 00000011)
-    GLint mask_layer_l = mask_layer - 1;
+    int mask_layer_l = mask_layer - 1;
     // mask of all layers less than or equal to the current (ie: for layer 3: 00000111)
     _mask_layer_le = mask_layer | mask_layer_l;
 

@@ -248,12 +248,12 @@ const BlendFunc& MotionStreak::getBlendFunc(void) const
     return _blendFunc;
 }
 
-void MotionStreak::setOpacity(GLubyte /*opacity*/)
+void MotionStreak::setOpacity(uint8_t /*opacity*/)
 {
     CCASSERT(false, "Set opacity no supported");
 }
 
-GLubyte MotionStreak::getOpacity(void) const
+uint8_t MotionStreak::getOpacity(void) const
 {
     CCASSERT(false, "Opacity no supported");
     return 0;

@@ -595,7 +595,7 @@ bool ShaderRetroEffect::init()
     if( ShaderTestDemo::init() ) {
         
         auto fragStr = FileUtils::getInstance()->getStringFromFile(FileUtils::getInstance()->fullPathForFilename("Shaders/example_HorizontalColor.fsh"));
-        GLchar * fragSource = (GLchar*)fragStr.c_str();
+        char * fragSource = (char*)fragStr.c_str();
 
         auto p = new backend::ProgramState(positionTextureColor_vert, fragSource);
 

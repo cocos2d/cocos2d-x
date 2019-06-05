@@ -324,8 +324,8 @@ struct NTextureData
      std::string id;
      std::string filename;
      Usage type;
-     GLenum wrapS;
-     GLenum wrapT;
+     backend::SamplerAddressMode wrapS;
+     backend::SamplerAddressMode wrapT;
 } ;
 struct NMaterialData
 {

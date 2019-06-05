@@ -303,7 +303,7 @@ void MenuLayer2::menuCallback(Ref* sender)
 void MenuLayer2::menuCallbackOpacity(Ref* sender)
 {
     auto menu = static_cast<Menu*>( static_cast<Node*>(sender)->getParent() );
-    GLubyte opacity = menu->getOpacity();
+    uint8_t opacity = menu->getOpacity();
     if( opacity == 128 )
         menu->setOpacity(255);
     else

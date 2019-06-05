@@ -598,7 +598,7 @@ public:
     virtual bool isOpacityModifyRGB() const override { return _isOpacityModifyRGB; }
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
     virtual void updateDisplayedColor(const Color3B& parentColor) override;
-    virtual void updateDisplayedOpacity(GLubyte parentOpacity) override;
+    virtual void updateDisplayedOpacity(uint8_t parentOpacity) override;
 
     virtual std::string getDescription() const override;
 
@@ -766,9 +766,9 @@ protected:
     std::vector<BatchCommand> _batchCommands;
     
     Mat4  _shadowTransform;
-    GLint _uniformEffectColor;
-    GLint _uniformEffectType; // 0: None, 1: Outline, 2: Shadow; Only used when outline is enabled.
-    GLint _uniformTextColor;
+    int  _uniformEffectColor;
+    int  _uniformEffectType; // 0: None, 1: Outline, 2: Shadow; Only used when outline is enabled.
+    int  _uniformTextColor;
     bool _useDistanceField;
     bool _useA8Shader;
 
@@ -778,7 +778,7 @@ protected:
     
     Color4F _shadowColor4F;
     Color3B _shadowColor3B;
-    GLubyte _shadowOpacity;
+    uint8_t _shadowOpacity;
     float _shadowBlurRadius;
 
     bool _clipEnabled;

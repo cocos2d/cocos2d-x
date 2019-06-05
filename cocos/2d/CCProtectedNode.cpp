@@ -396,7 +396,7 @@ void ProtectedNode::onExit()
         child->onExit();
 }
 
-void ProtectedNode::updateDisplayedOpacity(GLubyte parentOpacity)
+void ProtectedNode::updateDisplayedOpacity(uint8_t parentOpacity)
 {
 	_displayedOpacity = _realOpacity * parentOpacity/255.0;
     updateColor();

@@ -34,7 +34,7 @@ NS_CC_BEGIN
 
 namespace {
     static const float SPACE_BETWEEN_INDEX_NODES_DEFAULT = 23;
-    static const GLubyte INDEX_NODES_OPACITY_DEFAULT = 0.3*255;
+    static const uint8_t INDEX_NODES_OPACITY_DEFAULT = 0.3*255;
 }
 
 namespace ui {
@@ -165,7 +165,7 @@ void PageViewIndicator::setIndexNodesColor(const Color3B& indexNodesColor)
     }
 }
     
-void PageViewIndicator::setIndexNodesOpacity(GLubyte opacity) {
+void PageViewIndicator::setIndexNodesOpacity(uint8_t opacity) {
     _indexNodesOpacity = opacity;
     for ( auto& indexNode : _indexNodes )
         indexNode->setOpacity(opacity);

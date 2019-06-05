@@ -87,8 +87,8 @@ public:
     CC_SYNTHESIZE(float, _offPosition, OffPosition)
     
     CC_SYNTHESIZE_RETAIN(Texture2D*, _maskTexture, MaskTexture)
-    CC_SYNTHESIZE(GLuint, _textureLocation, TextureLocation)
-    CC_SYNTHESIZE(GLuint, _maskLocation, MaskLocation)
+    CC_SYNTHESIZE(uint32_t, _textureLocation, TextureLocation)
+    CC_SYNTHESIZE(uint32_t, _maskLocation, MaskLocation)
     
     CC_SYNTHESIZE_RETAIN(Sprite*, _onSprite, OnSprite)
     CC_SYNTHESIZE_RETAIN(Sprite*, _offSprite, OffSprite)

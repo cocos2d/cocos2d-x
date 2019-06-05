@@ -79,7 +79,7 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
         return;
     
     if (_vertexBuffer == nullptr){
-        GLsizei stride = sizeof(Particle3DQuadRender::posuvcolor);
+        size_t stride = sizeof(Particle3DQuadRender::posuvcolor);
         _vertexBuffer = backend::Device::getInstance()->newBuffer(stride * 4 * particleSystem->getParticleQuota(), backend::BufferType::VERTEX, backend::BufferUsage::DYNAMIC);
         if (_vertexBuffer == nullptr)
         {

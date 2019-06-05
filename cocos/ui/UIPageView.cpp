@@ -419,7 +419,7 @@ const Color3B& PageView::getIndicatorIndexNodesColor() const
     return _indicator->getIndexNodesColor();
 }
     
-void PageView::setIndicatorSelectedIndexOpacity(GLubyte opacity)
+void PageView::setIndicatorSelectedIndexOpacity(uint8_t opacity)
 {
     if(_indicator != nullptr)
     {
@@ -427,13 +427,13 @@ void PageView::setIndicatorSelectedIndexOpacity(GLubyte opacity)
     }
 }
 
-GLubyte PageView::getIndicatorSelectedIndexOpacity() const
+uint8_t PageView::getIndicatorSelectedIndexOpacity() const
 {
     CCASSERT(_indicator != nullptr, "");
     return _indicator->getSelectedIndexOpacity();
 }
 
-void PageView::setIndicatorIndexNodesOpacity(GLubyte opacity)
+void PageView::setIndicatorIndexNodesOpacity(uint8_t opacity)
 {
     if(_indicator != nullptr)
     {
@@ -441,7 +441,7 @@ void PageView::setIndicatorIndexNodesOpacity(GLubyte opacity)
     }
 }
 
-GLubyte PageView::getIndicatorIndexNodesOpacity() const
+uint8_t PageView::getIndicatorIndexNodesOpacity() const
 {
     CCASSERT(_indicator != nullptr, "");
     return _indicator->getIndexNodesOpacity();

@@ -92,13 +92,13 @@ public:
      *
      * @return The alpha threshold value,Should be a float between 0 and 1.
      */
-    GLfloat getAlphaThreshold() const;
+    float getAlphaThreshold() const;
     
     /** Set the alpha threshold. 
      * 
      * @param alphaThreshold The alpha threshold.
      */
-    void setAlphaThreshold(GLfloat alphaThreshold);
+    void setAlphaThreshold(float alphaThreshold);
     
     /** Inverted. If this is set to true,
      * the stencil is inverted, so the content is drawn where the stencil is NOT drawn.

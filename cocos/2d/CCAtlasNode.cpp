@@ -186,7 +186,7 @@ void AtlasNode::setColor(const Color3B& color3)
     Node::setColor(tmp);
 }
 
-void AtlasNode::setOpacity(GLubyte opacity)
+void AtlasNode::setOpacity(uint8_t opacity)
 {
     Node::setOpacity(opacity);
 

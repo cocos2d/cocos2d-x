@@ -1200,7 +1200,7 @@ public:
      * @param opacity A certain opacity, the range is from 0 to 255.
      * @return An autoreleased FadeTo object.
      */
-    static FadeTo* create(float duration, GLubyte opacity);
+    static FadeTo* create(float duration, uint8_t opacity);
 
     //
     // Overrides
@@ -1221,11 +1221,11 @@ CC_CONSTRUCTOR_ACCESS:
      * initializes the action with duration and opacity 
      * @param duration in seconds
      */
-    bool initWithDuration(float duration, GLubyte opacity);
+    bool initWithDuration(float duration, uint8_t opacity);
 
 protected:
-    GLubyte _toOpacity;
-    GLubyte _fromOpacity;
+    uint8_t _toOpacity;
+    uint8_t _fromOpacity;
     friend class FadeOut;
     friend class FadeIn;
 private:
@@ -1316,7 +1316,7 @@ public:
      * @param blue Blue Color, from 0 to 255.
      * @return An autoreleased TintTo object.
      */
-    static TintTo* create(float duration, GLubyte red, GLubyte green, GLubyte blue);
+    static TintTo* create(float duration, uint8_t red, uint8_t green, uint8_t blue);
     /**
      * Creates an action with duration and color.
      * @param duration Duration time, in seconds.
@@ -1341,7 +1341,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~TintTo() {}
 
     /** initializes the action with duration and color */
-    bool initWithDuration(float duration, GLubyte red, GLubyte green, GLubyte blue);
+    bool initWithDuration(float duration, uint8_t red, uint8_t green, uint8_t blue);
 
 protected:
     Color3B _to;
@@ -1366,7 +1366,7 @@ public:
      * @param deltaBlue Delta blue color.
      * @return An autoreleased TintBy object.
      */
-    static TintBy* create(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
+    static TintBy* create(float duration, int16_t deltaRed, int16_t deltaGreen, int16_t deltaBlue);
 
     //
     // Overrides
@@ -1384,16 +1384,16 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~TintBy() {}
 
     /** initializes the action with duration and color */
-    bool initWithDuration(float duration, GLshort deltaRed, GLshort deltaGreen, GLshort deltaBlue);
+    bool initWithDuration(float duration, int16_t deltaRed, int16_t deltaGreen, int16_t deltaBlue);
 
 protected:
-    GLshort _deltaR;
-    GLshort _deltaG;
-    GLshort _deltaB;
+    int16_t _deltaR;
+    int16_t _deltaG;
+    int16_t _deltaB;
 
-    GLshort _fromR;
-    GLshort _fromG;
-    GLshort _fromB;
+    int16_t _fromR;
+    int16_t _fromG;
+    int16_t _fromB;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TintBy);

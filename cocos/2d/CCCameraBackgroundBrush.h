@@ -172,7 +172,7 @@ protected:
     CustomCommand _customCommand;
     GroupCommand _groupCommand;
 
-    GLboolean _clearColor;
+    bool _clearColor;
     std::vector<V3F_C4B_T2F> _vertices;
     struct {
         uint32_t stencilWriteMask = 0;

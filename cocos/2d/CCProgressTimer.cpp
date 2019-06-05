@@ -280,13 +280,13 @@ const Color3B& ProgressTimer::getColor() const
     return _sprite->getColor();
 }
 
-void ProgressTimer::setOpacity(GLubyte opacity)
+void ProgressTimer::setOpacity(uint8_t opacity)
 {
     _sprite->setOpacity(opacity);
     updateColor();
 }
 
-GLubyte ProgressTimer::getOpacity() const
+uint8_t ProgressTimer::getOpacity() const
 {
     return _sprite->getOpacity();
 }

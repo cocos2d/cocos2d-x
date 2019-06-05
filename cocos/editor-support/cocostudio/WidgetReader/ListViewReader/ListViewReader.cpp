@@ -129,7 +129,7 @@ namespace cocostudio
         Color3B bgStartColor;
         Color3B bgEndColor;
         int colorType = 0;
-        GLubyte bgColorOpacity = 255;
+        uint8_t bgColorOpacity = 255;
         Vec2 colorVector(0.0f, -0.5f);
         Rect capInsets;
         Size scale9Size;

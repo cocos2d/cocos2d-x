@@ -72,10 +72,6 @@ public:
     */
     static backend::SamplerAddressMode parseSamplerAddressMode(const std::string& str);
 
-    //TODO should be removed later
-    static GLenum parseGLAddressMode(const std::string& str);
-
-
     /**
      * load a file. You must load a file first, then call loadMeshData, loadSkinData, and so on
      * @param path File to be loaded

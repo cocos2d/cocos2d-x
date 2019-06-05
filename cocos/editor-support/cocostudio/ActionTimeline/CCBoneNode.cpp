@@ -481,7 +481,7 @@ void BoneNode::updateDisplayedColor(const cocos2d::Color3B& /*parentColor*/)
     }
 }
 
-void BoneNode::updateDisplayedOpacity(GLubyte /*parentOpacity*/)
+void BoneNode::updateDisplayedOpacity(uint8_t /*parentOpacity*/)
 {
     if (_cascadeOpacityEnabled)
     {
