@@ -152,7 +152,7 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
     if( flags != 0 || _dirty || _quadsDirty || isViewProjectionUpdated)
     {
         Size s = Director::getInstance()->getVisibleSize();
-        Vec2 anchor = getAnchorPoint();
+        const Vec2 &anchor = getAnchorPoint();
         auto rect = Rect(Camera::getVisitingCamera()->getPositionX() - s.width * anchor.x,
                      Camera::getVisitingCamera()->getPositionY() - s.height * anchor.y,
                      s.width,
