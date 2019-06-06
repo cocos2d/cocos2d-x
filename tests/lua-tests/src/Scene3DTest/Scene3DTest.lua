@@ -330,8 +330,11 @@ function Scene3DTest:create3DWorld()
 
     --then, create skybox
     --create and set our custom shader
-    local shader = cc.GLProgram:createWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag")
-    local state  = cc.GLProgramState:create(shader)
+
+    local cmVert = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/cube_map.vert")
+    local cmFrag = cc.FileUtils:getInstance():getStringFromFile("Sprite3DTest/cube_map.frag")
+
+    local state = ccb.ProgramState:new(cmVert, cmFrag)
 
     --create the second texture for cylinder
     self._textureCube = cc.TextureCube:create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
@@ -339,11 +342,12 @@ function Scene3DTest:create3DWorld()
                                        "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg")
 
     --set texture parameters
-    local tRepeatParams = { magFilter = gl.LINEAR , minFilter = gl.LINEAR , wrapS = gl.MIRRORED_REPEAT  , wrapT = gl.MIRRORED_REPEAT }
+    local tRepeatParams = { magFilter = ccb.SamplerFilter.LINEAR , minFilter = ccb.SamplerFilter.LINEAR , wrapS = ccb.SamplerAddressMode.MIRRORED_REPEAT  , wrapT = ccb.SamplerAddressMode.MIRRORED_REPEAT }
     self._textureCube:setTexParameters(tRepeatParams)
 
     --pass the texture sampler to our custom shader
-    state:setUniformTexture("u_cubeTex", self._textureCube)
+    local cubeTexLoc = state:getUniformLocation("u_cubeTex")
+    state:setTexture(cubeTexLoc, 0, self._textureCube:getBackendTexture())
 
     --add skybox
     self._skyBox = cc.Skybox:create()
@@ -351,28 +355,6 @@ function Scene3DTest:create3DWorld()
     self._skyBox:setTexture(self._textureCube)
     self:addChild(self._skyBox)
 
-    local targetPlatform = cc.Application:getInstance():getTargetPlatform()
-    if targetPlatform == cc.PLATFORM_OS_ANDROID  or targetPlatform == cc.PLATFORM_OS_WINRT  or targetPlatform == cc.PLATFORM_OS_WP8  then
-        self._backToForegroundListener = cc.EventListenerCustom:create("event_renderer_recreated", function (eventCustom)
-
-                local state = self._skyBox:getGLProgramState()
-                local glProgram = state:getGLProgram()
-                glProgram:reset()
-                glProgram:initWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag")
-                glProgram:link()
-                glProgram:updateUniforms()
-                
-                self._textureCube:reloadTexture()
-                
-                local tRepeatParams = { magFilter = gl.NEAREST , minFilter = gl.NEAREST , wrapS = gl.MIRRORED_REPEAT  , wrapT = gl.MIRRORED_REPEAT }
-                self._textureCube:setTexParameters(tRepeatParams)
-                state:setUniformTexture("u_cubeTex", self._textureCube)
-                
-                self._skyBox:reload()
-                self._skyBox:setTexture(self._textureCube)
-        end)
-        cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(self._backToForegroundListener, 1)
-    end
 end
 
 function Scene3DTest:createUI()
@@ -510,6 +492,7 @@ function Scene3DTest:createDetailDlg()
     self._detailDlg:addChild(title)
     
     -- add a spine ffd animation on it
+    -- TODO: spine is not enable in V4.0
     local skeletonNode = sp.SkeletonAnimation:create("spine/goblins-pro.json", "spine/goblins.atlas", 1.5)
     skeletonNode:setAnimation(0, "walk", true)
     skeletonNode:setSkin("goblin")

@@ -2,7 +2,7 @@
 
 local function drawPrimitivesMainLayer()
     local kItemTagBasic = 1000
-    local testCount = 2
+    local testCount = 1
     local maxCases = testCount
     local curCase  = 0
     local size = cc.Director:getInstance():getWinSize()
@@ -49,19 +49,11 @@ local function drawPrimitivesMainLayer()
     end
 
     local function GetTitle()
-        if 0 == curCase then
-            return "Draw primitives"
-        elseif 1 == curCase then
-            return "Test DrawNode"
-        end
+        return "Test DrawNode"
     end
     
     local function GetSubTitle()
-        if 0 == curCase then
-            return "Drawing Primitives by call gl funtions"
-        elseif 1 == curCase then
-            return "Testing DrawNode - batched draws. Concave polygons are BROKEN"
-        end
+        return "Testing DrawNode - batched draws. Concave polygons are BROKEN"
     end
 
     local function InitTitle(layer)
