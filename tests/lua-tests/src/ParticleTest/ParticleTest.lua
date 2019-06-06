@@ -1542,7 +1542,7 @@ local function PremultipliedAlphaTest()
         emitter = cc.ParticleSystemQuad:create("Particles/BoilingFoam.plist")
         emitter:retain()
 
-        emitter:setBlendFunc(cc.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA))
+        emitter:setBlendFunc(cc.blendFunc(ccb.BlendFactor.ONE, ccb.BlendFactor.ONE_MINUS_SRC_ALPHA))
 
         --assert(emitter:getOpacityModifyRGB(), "Particle texture does not have premultiplied alpha, test is useless")
 

@@ -92,7 +92,7 @@ local function TextureMipMap()
     local texture0 = cc.Director:getInstance():getTextureCache():addImage(
         "Images/grossini_dance_atlas.png")
     texture0:generateMipmap()
-    texture0:setTexParameters(gl.LINEAR_MIPMAP_LINEAR, gl.LINEAR, gl.CLAMP_TO_EDGE, gl.CLAMP_TO_EDGE)
+    texture0:setTexParameters(ccb.SamplerFilter.LINEAR_MIPMAP_LINEAR, ccb.SamplerFilter.LINEAR, ccb.SamplerAddressMode.CLAMP_TO_EDGE, ccb.SamplerAddressMode.CLAMP_TO_EDGE)
 
     local texture1 = cc.Director:getInstance():getTextureCache():addImage(
         "Images/grossini_dance_atlas_nomipmap.png")
@@ -131,12 +131,12 @@ local function TexturePVRMipMap()
     local s = cc.Director:getInstance():getWinSize()
 
     local imgMipMap = cc.Sprite:create("Images/logo-mipmap.pvr")
-    if imgMipMap ~= nil then
+    if imgMipMap ~= nil and imgMipMap:getTexture() ~= nil then
         imgMipMap:setPosition(cc.p( s.width/2.0-100, s.height/2.0))
         ret:addChild(imgMipMap)
 
         -- support mipmap filtering
-        imgMipMap:getTexture():setTexParameters(gl.LINEAR_MIPMAP_LINEAR, gl.LINEAR, gl.CLAMP_TO_EDGE, gl.CLAMP_TO_EDGE)
+        imgMipMap:getTexture():setTexParameters(ccb.SamplerFilter.LINEAR_MIPMAP_LINEAR, ccb.SamplerFilter.LINEAR, ccb.SamplerAddressMode.CLAMP_TO_EDGE, ccb.SamplerAddressMode.CLAMP_TO_EDGE)
     end
 
     local img = cc.Sprite:create("Images/logo-nomipmap.pvr")
@@ -173,7 +173,7 @@ local function TexturePVRMipMap2()
     ret:addChild(imgMipMap)
 
     -- support mipmap filtering
-    imgMipMap:getTexture():setTexParameters(gl.LINEAR_MIPMAP_LINEAR, gl.LINEAR, gl.CLAMP_TO_EDGE, gl.CLAMP_TO_EDGE)
+    imgMipMap:getTexture():setTexParameters(ccb.SamplerFilter.LINEAR_MIPMAP_LINEAR, ccb.SamplerFilter.LINEAR, ccb.SamplerAddressMode.CLAMP_TO_EDGE, ccb.SamplerAddressMode.CLAMP_TO_EDGE)
 
     local img = cc.Sprite:create("Images/test_image.png")
     img:setPosition(cc.p( s.width/2.0+100, s.height/2.0))
@@ -779,9 +779,9 @@ local function TextureAlias()
     local s = cc.Director:getInstance():getWinSize()
 
     --
-    -- Sprite 1: gl.LINEAR
+    -- Sprite 1: ccb.SamplerFilter.LINEAR
     --
-    -- Default filter is gl.LINEAR
+    -- Default filter is ccb.SamplerFilter.LINEAR
 
     local sprite = cc.Sprite:create("Images/grossinis_sister1.png")
     sprite:setPosition(cc.p( s.width/3.0, s.height/2.0))
@@ -927,21 +927,21 @@ local function TextureBlend()
         local cloud = cc.Sprite:create("Images/test_blend.png")
         ret:addChild(cloud, i+1, 100+i)
         cloud:setPosition(cc.p(50+25*i, 80))
-        cloud:setBlendFunc(cc.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA))
+        cloud:setBlendFunc(cc.blendFunc(ccb.BlendFactor.ONE, ccb.BlendFactor.ONE_MINUS_SRC_ALPHA))
 
         -- CENTER sprites have also alpha pre-multiplied
         -- they use by default GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
         cloud = cc.Sprite:create("Images/test_blend.png")
         ret:addChild(cloud, i+1, 200+i)
         cloud:setPosition(cc.p(50+25*i, 160))
-        cloud:setBlendFunc(cc.blendFunc(gl.ONE_MINUS_DST_COLOR , gl.ZERO))
+        cloud:setBlendFunc(cc.blendFunc(ccb.BlendFactor.ONE_MINUS_DST_COLOR , ccb.BlendFactor.ZERO))
 
         -- UPPER sprites are using custom blending function
         -- You can set any blend function to your sprites
         cloud = cc.Sprite:create("Images/test_blend.png")
         ret:addChild(cloud, i+1, 200+i)
         cloud:setPosition(cc.p(50+25*i, 320-80))
-        cloud:setBlendFunc(cc.blendFunc(gl.SRC_ALPHA, gl.ONE))  -- additive blending
+        cloud:setBlendFunc(cc.blendFunc(ccb.BlendFactor.SRC_ALPHA, ccb.BlendFactor.ONE))  -- additive blending
     end
     return ret
 end
@@ -1033,7 +1033,7 @@ local function TextureGlClamp()
     local sprite = cc.Sprite:create("Images/pattern1.png", cc.rect(0,0,512,256))
     ret:addChild(sprite, -1, kTagSprite1)
     sprite:setPosition(cc.p(size.width/2,size.height/2))
-    sprite:getTexture():setTexParameters(gl.LINEAR, gl.LINEAR, gl.CLAMP_TO_EDGE, gl.CLAMP_TO_EDGE)
+    sprite:getTexture():setTexParameters(ccb.SamplerFilter.LINEAR, ccb.SamplerFilter.LINEAR, ccb.SamplerAddressMode.CLAMP_TO_EDGE, ccb.SamplerAddressMode.CLAMP_TO_EDGE)
 
     local  rotate = cc.RotateBy:create(4, 360)
     sprite:runAction(rotate)
@@ -1058,7 +1058,7 @@ end
 --
 --------------------------------------------------------------------
 local function TextureGlRepeat()
-    local ret = createTestLayer("Texture gl.REPEAT")
+    local ret = createTestLayer("Texture ccb.SamplerFilter.REPEAT")
 
     local size = cc.Director:getInstance():getWinSize()
 
@@ -1067,7 +1067,7 @@ local function TextureGlRepeat()
     local sprite = cc.Sprite:create("Images/pattern1.png", cc.rect(0, 0, 4096, 4096))
     ret:addChild(sprite, -1, kTagSprite1)
     sprite:setPosition(cc.p(size.width/2,size.height/2))
-    sprite:getTexture():setTexParameters(gl.LINEAR, gl.LINEAR, gl.REPEAT, gl.REPEAT)
+    sprite:getTexture():setTexParameters(ccb.SamplerFilter.LINEAR, ccb.SamplerFilter.LINEAR, ccb.SamplerAddressMode.REPEAT, ccb.SamplerAddressMode.REPEAT)
 
     local  rotate = cc.RotateBy:create(4, 360)
     sprite:runAction(rotate)
@@ -1198,11 +1198,11 @@ local function TextureDrawAtPoint()
     m_pTex1:retain()
     m_pTex2F:retain()
 
-    local glNode  = gl.glNodeCreate()
-    glNode:setContentSize(cc.size(256, 256))
-    glNode:setAnchorPoint(cc.p(0, 0))
-    glNode:registerScriptDrawHandler(draw)
-    ret:addChild(glNode)
+    --local glNode  = gl.glNodeCreate()
+    --glNode:setContentSize(cc.size(256, 256))
+    --glNode:setAnchorPoint(cc.p(0, 0))
+    --glNode:registerScriptDrawHandler(draw)
+    --ret:addChild(glNode)
 
     local function onNodeEvent(event)
         if event == "exit" then
@@ -1244,11 +1244,11 @@ local function TextureDrawInRect()
     m_pTex1:retain()
     m_pTex2F:retain()
 
-    local glNode  = gl.glNodeCreate()
-    glNode:setContentSize(cc.size(256, 256))
-    glNode:setAnchorPoint(cc.p(0, 0))
-    glNode:registerScriptDrawHandler(draw)
-    ret:addChild(glNode)
+    --local glNode  = gl.glNodeCreate()
+    --glNode:setContentSize(cc.size(256, 256))
+    --glNode:setAnchorPoint(cc.p(0, 0))
+    --glNode:registerScriptDrawHandler(draw)
+    --ret:addChild(glNode)
 
     local function onNodeEvent(event)
         if event == "exit" then
