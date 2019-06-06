@@ -26,7 +26,7 @@ local function TestNode()
             result[#result+1] = 'Loading by path "'..tab[1]..'", filename "'..tab[2]..'": '..(ok and 'success' or 'failure')
             package.path = oldPath
         end
-        local label = cc.LabelTTF:create(table.concat(result, '\n'), "Marker Felt", 10)
+        local label = cc.Label:createWithTTF(table.concat(result, '\n'), "fonts/Marker Felt.ttf", 10)
         node:addChild(label, 1)
         label:setAnchorPoint(cc.p(0.5, 0.5))
         label:setPosition(VisibleRect:center())
