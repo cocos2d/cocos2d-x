@@ -1192,28 +1192,6 @@ function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
     self:addChild(camera)
     self:setCameraMask(2)
 
-    local targetPlatform = cc.Application:getInstance():getTargetPlatform()
-    if targetPlatform == cc.PLATFORM_OS_ANDROID  or targetPlatform == cc.PLATFORM_OS_WINRT  or targetPlatform == cc.PLATFORM_OS_WP8  then
-        self._backToForegroundListener = cc.EventListenerCustom:create("event_renderer_recreated", function (eventCustom)
-                
-            local state = self._teapot:getGLProgramState()
-            local glProgram = state:getGLProgram()
-            glProgramreset()
-            glProgram:initWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag")
-            glProgram:link()
-            glProgram:updateUniforms()
-
-            self._textureCube:reloadTexture()
-
-            local tRepeatParams = { magFilter=gl.NEAREST , minFilter=gl.NEAREST , wrapS=gl.MIRRORED_REPEAT  , wrapT=gl.MIRRORED_REPEAT }
-            self._textureCube:setTexParameters(tRepeatParams)
-            state:setUniformTexture("u_cubeTex", self._textureCube)
-
-            self._skyBox:reload()
-            self._skyBox:setTexture(self._textureCube)
-        end)
-        cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(self._backToForegroundListener, -1)
-    end
 end
 
 ----------------------------------------
