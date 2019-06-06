@@ -1,7 +1,6 @@
 
 set(COCOS_AUDIO_SRC
     audio/AudioEngine.cpp
-    audio/SimpleAudioEngine.cpp
     )
 
 if(WINDOWS)
@@ -136,7 +135,6 @@ endif()
 set(COCOS_AUDIO_HEADER
     audio/include/AudioEngine.h
     audio/include/Export.h
-    audio/include/SimpleAudioEngine.h
     ${COCOS_AUDIO_PLATFORM_HEADER}
     )
 list(APPEND COCOS_AUDIO_SRC ${COCOS_AUDIO_PLATFORM_SRC})

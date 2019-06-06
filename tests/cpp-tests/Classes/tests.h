@@ -60,7 +60,6 @@
 #include "BugsTest/BugsTest.h"
 #include "Camera3DTest/Camera3DTest.h"
 #include "ClickAndMoveTest/ClickAndMoveTest.h"
-#include "CocosDenshionTest/CocosDenshionTest.h"
 #include "ConfigurationTest/ConfigurationTest.h"
 #include "ConsoleTest/ConsoleTest.h"
 #include "CurrentLanguageTest/CurrentLanguageTest.h"

@@ -150,7 +150,6 @@ list(APPEND GAME_HEADER
      Classes/BaseTest.h
      Classes/SceneTest/SceneTest.h
      Classes/ReleasePoolTest/ReleasePoolTest.h
-     Classes/CocosDenshionTest/CocosDenshionTest.h
      Classes/InputTest/MouseTest.h
 #     Classes/SpineTest/SpineTest.h
 #     Classes/Scene3DTest/Scene3DTest.h
@@ -235,7 +234,6 @@ list(APPEND GAME_SOURCE
      Classes/Camera3DTest/Camera3DTest.cpp
      Classes/ClickAndMoveTest/ClickAndMoveTest.cpp
      Classes/ClippingNodeTest/ClippingNodeTest.cpp
-     Classes/CocosDenshionTest/CocosDenshionTest.cpp
      Classes/ConfigurationTest/ConfigurationTest.cpp
      Classes/ConsoleTest/ConsoleTest.cpp
      Classes/CurlTest/CurlTest.cpp
