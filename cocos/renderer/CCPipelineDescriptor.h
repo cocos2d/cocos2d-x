@@ -37,7 +37,6 @@ NS_CC_BEGIN
 
 struct CC_DLL PipelineDescriptor
 {
-public:
     backend::ProgramState*          programState = nullptr;
     backend::BlendDescriptor        blendDescriptor;
     backend::RenderPassDescriptor   renderPassDescriptor;
