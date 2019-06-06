@@ -73,35 +73,37 @@ int lua_register_cocos2dx_backend_VertexFormat(lua_State* tolua_S)
 }
 
 
-int lua_register_cocos2dx_backend_TextureFormat(lua_State* tolua_S)
+int lua_register_cocos2dx_backend_PixelFormat(lua_State* tolua_S)
 {
     tolua_module(tolua_S, "PixelFormat", 0);
     tolua_beginmodule(tolua_S,"PixelFormat");
-        tolua_constant(tolua_S, "NONE", 0);
-        tolua_constant(tolua_S, "R8G8B8A8", 1);
-        tolua_constant(tolua_S, "R8G8B8", 2);
-        tolua_constant(tolua_S, "A8", 3);
-        tolua_constant(tolua_S, "D24S8", 4);
-        tolua_constant(tolua_S, "I8", 5);
-        tolua_constant(tolua_S, "AI88", 6);
-        tolua_constant(tolua_S, "RGBA4444", 7);
-        tolua_constant(tolua_S, "RGB565", 8);
+        tolua_constant(tolua_S, "AUTO", 0);
+        tolua_constant(tolua_S, "BGRA8888", 1);
+        tolua_constant(tolua_S, "RGBA8888", 2);
+        tolua_constant(tolua_S, "RGB888", 3);
+        tolua_constant(tolua_S, "RGB565", 4);
+        tolua_constant(tolua_S, "A8", 5);
+        tolua_constant(tolua_S, "I8", 6);
+        tolua_constant(tolua_S, "AI88", 7);
+        tolua_constant(tolua_S, "RGBA4444", 8);
         tolua_constant(tolua_S, "RGB5A1", 9);
-        tolua_constant(tolua_S, "MTL_B5G6R5", 10);
-        tolua_constant(tolua_S, "MTL_BGR5A1", 11);
-        tolua_constant(tolua_S, "MTL_ABGR4", 12);
-        tolua_constant(tolua_S, "ETC1", 13);
-        tolua_constant(tolua_S, "ATC_RGB", 14);
-        tolua_constant(tolua_S, "ATC_EXPLICIT_ALPHA", 15);
-        tolua_constant(tolua_S, "ATC_INTERPOLATED_ALPHA", 16);
-        tolua_constant(tolua_S, "PVRTC2", 17);
-        tolua_constant(tolua_S, "PVRTC2A", 18);
-        tolua_constant(tolua_S, "PVRTC4", 19);
-        tolua_constant(tolua_S, "PVRTC4A", 20);
-        tolua_constant(tolua_S, "S3TC_DXT1", 21);
-        tolua_constant(tolua_S, "S3TC_DXT3", 22);
-        tolua_constant(tolua_S, "S3TC_DXT5", 23);
-        tolua_constant(tolua_S, "SYSTEM_DEFAULT", 24);
+        tolua_constant(tolua_S, "PVRTC4", 10);
+        tolua_constant(tolua_S, "PVRTC4A", 11);
+        tolua_constant(tolua_S, "PVRTC2", 12);
+        tolua_constant(tolua_S, "PVRTC2A", 13);
+        tolua_constant(tolua_S, "ETC", 14);
+        tolua_constant(tolua_S, "S3TC_DXT1", 15);
+        tolua_constant(tolua_S, "S3TC_DXT3", 16);
+        tolua_constant(tolua_S, "S3TC_DXT5", 17);
+        tolua_constant(tolua_S, "ATC_RGB", 18);
+        tolua_constant(tolua_S, "ATC_EXPLICIT_ALPHA", 19);
+        tolua_constant(tolua_S, "ATC_INTERPOLATED_ALPHA", 20);
+        tolua_constant(tolua_S, "MTL_B5G6R5", 21);
+        tolua_constant(tolua_S, "MTL_BGR5A1", 22);
+        tolua_constant(tolua_S, "MTL_ABGR4", 23);
+        tolua_constant(tolua_S, "D24S8", 24);
+        tolua_constant(tolua_S, "DEFAULT", 0);
+        tolua_constant(tolua_S, "NONE", -1);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::backend::PixelFormat).name();
     g_luaType[typeName] = "ccb.PixelFormat";
@@ -205,8 +207,12 @@ int lua_register_cocos2dx_backend_SamplerFilter(lua_State* tolua_S)
     tolua_module(tolua_S, "SamplerFilter", 0);
     tolua_beginmodule(tolua_S,"SamplerFilter");
         tolua_constant(tolua_S, "NEAREST", 0);
-        tolua_constant(tolua_S, "LINEAR", 1);
-        tolua_constant(tolua_S, "DONT_CARE", 2);
+        tolua_constant(tolua_S, "NEAREST_MIPMAP_NEAREST", 1);
+        tolua_constant(tolua_S, "NEAREST_MIPMAP_LINEAR", 2);
+        tolua_constant(tolua_S, "LINEAR", 3);
+        tolua_constant(tolua_S, "LINEAR_MIPMAP_LINEAR", 4);
+        tolua_constant(tolua_S, "LINEAR_MIPMAP_NEAREST", 5);
+        tolua_constant(tolua_S, "DONT_CARE", 6);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::backend::SamplerFilter).name();
     g_luaType[typeName] = "ccb.SamplerFilter";
@@ -1231,6 +1237,53 @@ int lua_cocos2dx_backend_Texture_getTextureUsage(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_backend_Texture_hasMipmaps(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::backend::Texture* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccb.Texture",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::backend::Texture*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_backend_Texture_hasMipmaps'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_backend_Texture_hasMipmaps'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->hasMipmaps();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccb.Texture:hasMipmaps",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_backend_Texture_hasMipmaps'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_backend_Texture_generateMipmaps(lua_State* tolua_S)
 {
     int argc = 0;
@@ -1364,6 +1417,7 @@ int lua_register_cocos2dx_backend_Texture(lua_State* tolua_S)
         tolua_function(tolua_S,"updateSamplerDescriptor",lua_cocos2dx_backend_Texture_updateSamplerDescriptor);
         tolua_function(tolua_S,"updateTextureDescriptor",lua_cocos2dx_backend_Texture_updateTextureDescriptor);
         tolua_function(tolua_S,"getTextureUsage",lua_cocos2dx_backend_Texture_getTextureUsage);
+        tolua_function(tolua_S,"hasMipmaps",lua_cocos2dx_backend_Texture_hasMipmaps);
         tolua_function(tolua_S,"generateMipmaps",lua_cocos2dx_backend_Texture_generateMipmaps);
         tolua_function(tolua_S,"getBytes",lua_cocos2dx_backend_Texture_getBytes);
     tolua_endmodule(tolua_S);
@@ -1701,7 +1755,6 @@ TOLUA_API int register_all_cocos2dx_backend(lua_State* tolua_S)
 	lua_register_cocos2dx_backend_SamplerAddressMode(tolua_S);
 	lua_register_cocos2dx_backend_ProgramState(tolua_S);
 	lua_register_cocos2dx_backend_IndexFormat(tolua_S);
-	lua_register_cocos2dx_backend_TextureFormat(tolua_S);
 	lua_register_cocos2dx_backend_SamplerFilter(tolua_S);
 	lua_register_cocos2dx_backend_TextureCubeFace(tolua_S);
 	lua_register_cocos2dx_backend_VertexLayout(tolua_S);
@@ -1716,6 +1769,7 @@ TOLUA_API int register_all_cocos2dx_backend(lua_State* tolua_S)
 	lua_register_cocos2dx_backend_BufferType(tolua_S);
 	lua_register_cocos2dx_backend_CullMode(tolua_S);
 	lua_register_cocos2dx_backend_Winding(tolua_S);
+	lua_register_cocos2dx_backend_PixelFormat(tolua_S);
 	lua_register_cocos2dx_backend_Program(tolua_S);
 	lua_register_cocos2dx_backend_BlendOperation(tolua_S);
 	lua_register_cocos2dx_backend_ShaderStage(tolua_S);
