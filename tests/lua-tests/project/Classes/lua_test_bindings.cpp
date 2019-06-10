@@ -205,6 +205,11 @@ void DrawNode3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     auto mvp = matrixP * transform;
     _programState->setUniform(_locMVPMatrix, mvp.m, sizeof(mvp.m));
 
+    if (_customCommand.getVertexCapacity() < _buffer.size()) {
+        auto s = _buffer.size();
+        _customCommand.createVertexBuffer(sizeof(V3F_C4B), s + s/2, CustomCommand::BufferUsage::DYNAMIC);
+    }
+
     if (_dirty && !_buffer.empty())
     {
         _customCommand.updateVertexBuffer(_buffer.data(), (unsigned int)(_buffer.size() * sizeof(_buffer[0])));
