@@ -264,8 +264,8 @@ function SpriteFrameTest.onEnter()
     local animation = cc.Animation:createWithSpriteFrames(animFrames, 0.3)
     SpriteFrameTest.m_pSprite1:runAction( cc.RepeatForever:create( cc.Animate:create(animation) ) )
 
-    SpriteFrameTest.m_pSprite1:setFlipX(false)
-    SpriteFrameTest.m_pSprite1:setFlipY(false)
+    SpriteFrameTest.m_pSprite1:setFlippedX(false)
+    SpriteFrameTest.m_pSprite1:setFlippedY(false)
 
     SpriteFrameTest.m_pSprite2 = cc.Sprite:createWithSpriteFrameName("grossini_dance_01.png")
     SpriteFrameTest.m_pSprite2:setPosition( cc.p( s.width/2 + 80, s.height/2) )
@@ -292,8 +292,8 @@ function SpriteFrameTest.onEnter()
 
     SpriteFrameTest.m_pSprite2:runAction(cc.RepeatForever:create( cc.Animate:create(animMixed) ) )
 
-    SpriteFrameTest.m_pSprite2:setFlipX(false)
-    SpriteFrameTest.m_pSprite2:setFlipY(false)
+    SpriteFrameTest.m_pSprite2:setFlippedX(false)
+    SpriteFrameTest.m_pSprite2:setFlippedY(false)
 
 
     performWithDelay(Helper.currentLayer,SpriteFrameTest.startIn05Secs, 0.5)
@@ -332,10 +332,10 @@ function SpriteFrameTest.flipSprites(dt)
         fy = true
     end
 
-    SpriteFrameTest.m_pSprite1:setFlipX(fx)
-    SpriteFrameTest.m_pSprite1:setFlipY(fy)
-    SpriteFrameTest.m_pSprite2:setFlipX(fx)
-    SpriteFrameTest.m_pSprite2:setFlipY(fy)
+    SpriteFrameTest.m_pSprite1:setFlippedX(fx)
+    SpriteFrameTest.m_pSprite1:setFlippedY(fy)
+    SpriteFrameTest.m_pSprite2:setFlippedX(fx)
+    SpriteFrameTest.m_pSprite2:setFlippedY(fy)
 end
 
 
