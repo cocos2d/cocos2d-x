@@ -35,11 +35,8 @@
 
 NS_CC_BEGIN
 
-class CC_DLL PipelineDescriptor final
+struct CC_DLL PipelineDescriptor
 {
-public:
-    PipelineDescriptor() = default;
-
     backend::ProgramState*          programState = nullptr;
     backend::BlendDescriptor        blendDescriptor;
     backend::RenderPassDescriptor   renderPassDescriptor;
