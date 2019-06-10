@@ -75,7 +75,6 @@ set(lua_bindings_manual_files
     )
 
 set(lua_bindings_auto_headers
-    auto/lua_cocos2dx_cocosdenshion_auto.hpp
     auto/lua_cocos2dx_audioengine_auto.hpp
     auto/lua_cocos2dx_3d_auto.hpp
     auto/lua_cocos2dx_controller_auto.hpp
@@ -97,7 +96,6 @@ set(lua_bindings_auto_headers
 set(lua_bindings_auto_files
     auto/lua_cocos2dx_3d_auto.cpp
     auto/lua_cocos2dx_auto.cpp
-    auto/lua_cocos2dx_cocosdenshion_auto.cpp
     auto/lua_cocos2dx_controller_auto.cpp
     auto/lua_cocos2dx_experimental_auto.cpp
     auto/lua_cocos2dx_experimental_video_auto.cpp
