@@ -333,7 +333,7 @@ end
 
 -- sprite:setPosition(cc.p(256, 256))
 -- sprite:setOpacity(182)
--- sprite:setFlipY(1)
+-- sprite:setFlippedY(1)
 -- this:addChild(sprite, 999999)
 -- sprite:setColor(cc.c3b::GREEN)
 
