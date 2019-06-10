@@ -328,7 +328,6 @@ bool AudioControlTest::init()
     timeSlider->addEventListener([&](Ref* sender, Slider::EventType event){
         SliderEx *slider = dynamic_cast<SliderEx *>(sender);
         switch(event){
-            case Slider::EventType::ON_PERCENTAGE_CHANGED:
             case Slider::EventType::ON_SLIDEBALL_DOWN:
                 _updateTimeSlider = false;
                 break;
@@ -340,6 +339,9 @@ bool AudioControlTest::init()
                 }
             case Slider::EventType::ON_SLIDEBALL_CANCEL:
                 _updateTimeSlider = true;
+            case Slider::EventType::ON_PERCENTAGE_CHANGED:
+            default:
+                //ignore
                 break;
         }
     });
