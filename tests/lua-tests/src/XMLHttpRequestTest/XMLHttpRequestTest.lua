@@ -26,7 +26,7 @@ local function XMLHttpRequestLayer()
         local function onMenuGetClicked()
             local xhr = cc.XMLHttpRequest:new()
             xhr.responseType = cc.XMLHTTPREQUEST_RESPONSE_STRING
-            xhr:open("GET", "http://httpbin.org/get")
+            xhr:open("GET", "https://httpbin.org/get")
 
             local function onReadyStateChanged()
                 if xhr.readyState == 4 and (xhr.status >= 200 and xhr.status < 207) then
@@ -59,7 +59,7 @@ local function XMLHttpRequestLayer()
         local function onMenuPostClicked()
             local xhr = cc.XMLHttpRequest:new()
             xhr.responseType = cc.XMLHTTPREQUEST_RESPONSE_STRING
-            xhr:open("POST", "http://httpbin.org/post")
+            xhr:open("POST", "https://httpbin.org/post")
             local function onReadyStateChanged()
                 if xhr.readyState == 4 and (xhr.status >= 200 and xhr.status < 207) then
                     if not tolua.isnull(labelStatusCode) then
@@ -90,7 +90,7 @@ local function XMLHttpRequestLayer()
         local function onMenuPostBinaryClicked()
             local xhr = cc.XMLHttpRequest:new()
             xhr.responseType = cc.XMLHTTPREQUEST_RESPONSE_ARRAY_BUFFER
-            xhr:open("POST", "http://httpbin.org/post")
+            xhr:open("POST", "https://httpbin.org/post")
 
             local function onReadyStateChanged()
                 if xhr.readyState == 4 and (xhr.status >= 200 and xhr.status < 207) then
@@ -137,7 +137,7 @@ local function XMLHttpRequestLayer()
         local function onMenuPostJsonClicked()
             local xhr = cc.XMLHttpRequest:new()
             xhr.responseType = cc.XMLHTTPREQUEST_RESPONSE_JSON
-            xhr:open("POST", "http://httpbin.org/post")
+            xhr:open("POST", "https://httpbin.org/post")
 
             local function onReadyStateChanged()
                 if xhr.readyState == 4 and (xhr.status >= 200 and xhr.status < 207) then
