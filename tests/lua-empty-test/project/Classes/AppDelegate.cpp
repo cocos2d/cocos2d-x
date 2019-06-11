@@ -24,13 +24,11 @@
 
 #include "cocos2d.h"
 #include "AppDelegate.h"
-#include "audio/include/SimpleAudioEngine.h"
 #include "base/CCScriptSupport.h"
 #include "scripting/lua-bindings/manual/CCLuaEngine.h"
 #include "scripting/lua-bindings/manual/lua_module_register.h"
 
 USING_NS_CC;
-using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
 {
@@ -40,8 +38,6 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    // end simple audio engine here, or it may crashed on win32
-    SimpleAudioEngine::getInstance()->end();
 }
 
 void AppDelegate::initGLContextAttrs()
@@ -75,12 +71,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();
-    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
     Director::getInstance()->startAnimation();
-    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }

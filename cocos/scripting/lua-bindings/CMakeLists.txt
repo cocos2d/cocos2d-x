@@ -24,7 +24,6 @@ set(lua_bindings_manual_headers
     manual/cocos2d/lua_cocos2dx_deprecated.h
     manual/cocos2d/LuaScriptHandlerMgr.h
     manual/cocos2d/lua_cocos2dx_manual.hpp
-    manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.h
     manual/Cocos2dxLuaLoader.h
     manual/CCLuaValue.h
     manual/physics3d/lua_cocos2dx_physics3d_manual.h
@@ -50,9 +49,7 @@ set(lua_bindings_manual_files
     manual/cocos2d/lua_cocos2dx_experimental_manual.cpp
     manual/cocos2d/lua_cocos2dx_manual.cpp
     manual/cocos2d/lua_cocos2dx_physics_manual.cpp
-    manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.cpp
     manual/3d/lua_cocos2dx_3d_manual.cpp
-    manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.cpp
     manual/cocostudio/CustomGUIReader.cpp
     manual/cocostudio/lua_cocos2dx_coco_studio_manual.cpp
     manual/cocostudio/lua-cocos-studio-conversions.cpp
