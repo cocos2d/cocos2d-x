@@ -331,7 +331,7 @@ void TextureMTL::generateMipmaps()
 }
 
 TextureCubeMTL::TextureCubeMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
-: backend::TextureCubemap(descriptor)
+: backend::TextureBackendCubemap(descriptor)
 {
     _mtlDevice = mtlDevice;
     updateTextureDescriptor(descriptor);

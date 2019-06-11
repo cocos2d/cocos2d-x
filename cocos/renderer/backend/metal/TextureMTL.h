@@ -41,7 +41,7 @@ private:
     unsigned int _bytesPerRow = 0;
 };
 
-class TextureCubeMTL : public backend::TextureCubemap
+class TextureCubeMTL : public backend::TextureBackendCubemap
 {
 public:
     TextureCubeMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor);
