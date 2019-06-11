@@ -93,12 +93,12 @@ void Texture::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor 
     _height = descriptor.height;
 }
 
-Texture2D::Texture2D(const TextureDescriptor& descriptor)
+TextureBackend2D::TextureBackend2D(const TextureDescriptor& descriptor)
     : Texture(descriptor)
 {
 }
 
-TextureCubemap::TextureCubemap(const TextureDescriptor &descriptor)
+TextureBackendCubemap::TextureBackendCubemap(const TextureDescriptor &descriptor)
     : Texture(descriptor)
 {
 

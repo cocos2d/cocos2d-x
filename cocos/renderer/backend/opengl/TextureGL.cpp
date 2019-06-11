@@ -51,7 +51,7 @@ void TextureInfoGL::applySamplerDescriptor(const SamplerDescriptor& descriptor, 
     }
 }
 
-Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : Texture2D(descriptor)
+Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : TextureBackend2D(descriptor)
 {
     glGenTextures(1, &_textureInfo.texture);
 
@@ -311,7 +311,7 @@ void Texture2DGL::getBytes(int x, int y, int width, int height, bool flipImage, 
 }
 
 TextureCubeGL::TextureCubeGL(const TextureDescriptor& descriptor)
-    :TextureCubemap(descriptor)
+    :TextureBackendCubemap(descriptor)
 {
     assert(_width == _height);
     _textureType = TextureType::TEXTURE_CUBE;

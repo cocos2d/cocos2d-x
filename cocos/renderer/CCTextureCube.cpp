@@ -215,7 +215,7 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
     textureDescriptor.samplerDescriptor.magFilter = backend::SamplerFilter::LINEAR;
     textureDescriptor.samplerDescriptor.sAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
     textureDescriptor.samplerDescriptor.tAddressMode = backend::SamplerAddressMode::CLAMP_TO_EDGE;
-    _texture = static_cast<backend::TextureCubemap*>(backend::Device::getInstance()->newTexture(textureDescriptor));
+    _texture = static_cast<backend::TextureBackendCubemap*>(backend::Device::getInstance()->newTexture(textureDescriptor));
     CCASSERT(_texture != nullptr, "TextureCubemap: texture can not be nullptr");
 
     for (int i = 0; i < 6; i++)

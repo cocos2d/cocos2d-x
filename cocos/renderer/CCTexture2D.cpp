@@ -140,7 +140,7 @@ Texture2D::Texture2D()
 {
     backend::TextureDescriptor textureDescriptor;
     textureDescriptor.textureFormat = PixelFormat::NONE;
-    _texture = static_cast<backend::Texture2D*>(backend::Device::getInstance()->newTexture(textureDescriptor));
+    _texture = static_cast<backend::TextureBackend2D*>(backend::Device::getInstance()->newTexture(textureDescriptor));
 }
 
 Texture2D::~Texture2D()
@@ -574,7 +574,7 @@ bool Texture2D::initWithBackendTexture(backend::Texture *texture)
 {
     CC_SAFE_RETAIN(texture);
     CC_SAFE_RELEASE(_texture);
-    _texture = dynamic_cast<backend::Texture2D*>(texture);
+    _texture = dynamic_cast<backend::TextureBackend2D*>(texture);
     CC_ASSERT(_texture);
     _pixelsWide = _contentSize.width = _texture->getWidth();
     _pixelsHigh = _contentSize.height = _texture->getHeight();

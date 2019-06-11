@@ -49,7 +49,7 @@ protected:
 };
 
 
-class Texture2D : public Texture
+class TextureBackend2D : public Texture
 {
 public:
     virtual void updateData(uint8_t* data, uint32_t width , uint32_t height, uint32_t level) = 0;
@@ -61,16 +61,16 @@ public:
     inline uint32_t getHeight() const { return _height; }
 
 protected:
-    Texture2D(const TextureDescriptor& descriptor);
+    TextureBackend2D(const TextureDescriptor& descriptor);
 };
 
-class TextureCubemap : public Texture
+class TextureBackendCubemap : public Texture
 {
 public:
     virtual void updateFaceData(TextureCubeFace side, void *data) = 0;
         
 protected:
-    TextureCubemap(const TextureDescriptor& descriptor);
+    TextureBackendCubemap(const TextureDescriptor& descriptor);
 };
 
 CC_BACKEND_END

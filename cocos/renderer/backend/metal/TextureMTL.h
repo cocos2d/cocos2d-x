@@ -6,7 +6,7 @@
 
 CC_BACKEND_BEGIN
 
-class TextureMTL : public backend::Texture2D
+class TextureMTL : public backend::TextureBackend2D
 {
 public:
     TextureMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor);

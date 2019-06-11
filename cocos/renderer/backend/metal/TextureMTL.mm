@@ -165,7 +165,7 @@ namespace
 }
 
 TextureMTL::TextureMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
-: backend::Texture2D(descriptor)
+: backend::TextureBackend2D(descriptor)
 {
     _mtlDevice = mtlDevice;
     updateTextureDescriptor(descriptor);
