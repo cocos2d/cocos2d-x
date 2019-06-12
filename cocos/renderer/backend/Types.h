@@ -295,7 +295,7 @@ enum class TextureCubeFace : uint32_t
 struct AlphaTestState
 {
     bool enabled = false;
-    float referenceValue = 1.0f;
+    float referenceValue = 0.0f;
     backend::CompareFunction func = backend::CompareFunction::ALWAYS;
 };
 

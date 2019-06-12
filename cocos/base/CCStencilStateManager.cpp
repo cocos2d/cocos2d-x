@@ -143,9 +143,9 @@ void StencilStateManager::onBeforeDrawQuadCmd(int mask_layer)
     _currentStencilPassDepthPass = renderer->getStencilDepthPassOperation();
     
     // manually save the alpha test state
-    _currentAlphaTestEnabled = renderer->getAlphaTest();
-    _currentAlphaTestFunc = renderer->getAlphaTestFunction();
-    _currentAlphaTestRef = renderer->getAlphaTestReferenceValue();
+    _alphaTestState.enabled = renderer->getAlphaTest();
+    _alphaTestState.func = renderer->getAlphaTestFunction();
+    _alphaTestState.referenceValue = renderer->getAlphaTestReferenceValue();
 
     // enable stencil use
     renderer->setStencilTest(true);
@@ -207,8 +207,8 @@ void StencilStateManager::onAfterDrawStencil()
     {
 #if !CC_CLIPPING_NODE_OPENGLES
         // manually restore the alpha test state
-        renderer->setAlphaTestFunction(_currentAlphaTestFunc, _currentAlphaTestRef);
-        if (!_currentAlphaTestEnabled)
+        renderer->setAlphaTestFunction(_alphaTestState.func, _alphaTestState.referenceValue);
+        if (!_alphaTestState.enabled)
         {
             renderer->setAlphaTest(false);
         }
