@@ -277,12 +277,12 @@ VertexAttribBinding* Pass::getVertexAttributeBinding() const
     return _vertexAttribBinding;
 }
 
-void Pass::setUniformTexture(uint32_t slot, backend::Texture *tex)
+void Pass::setUniformTexture(uint32_t slot, backend::TextureBackend *tex)
 {
     _programState->setTexture(_locTexture, slot, tex);
 }
 
-void Pass::setUniformNormTexture(uint32_t slot, backend::Texture *tex)
+void Pass::setUniformNormTexture(uint32_t slot, backend::TextureBackend *tex)
 {
     _programState->setTexture(_locNormalTexture, slot, tex);
 }

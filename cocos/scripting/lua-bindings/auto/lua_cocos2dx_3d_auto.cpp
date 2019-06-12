@@ -1213,8 +1213,8 @@ int lua_cocos2dx_3d_TextureCube_getBackendTexture(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_TextureCube_getBackendTexture'", nullptr);
             return 0;
         }
-        cocos2d::backend::Texture* ret = cobj->getBackendTexture();
-        object_to_luaval<cocos2d::backend::Texture>(tolua_S, "ccb.Texture",(cocos2d::backend::Texture*)ret);
+        cocos2d::backend::TextureBackend* ret = cobj->getBackendTexture();
+        object_to_luaval<cocos2d::backend::TextureBackend>(tolua_S, "ccb.TextureBackend",(cocos2d::backend::TextureBackend*)ret);
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TextureCube:getBackendTexture",argc, 0);

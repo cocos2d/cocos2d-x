@@ -369,7 +369,8 @@ local function StressTest2()
     sublayer:addChild(sp1, 1)
 
     local fire = cc.ParticleFire:create()
-    fire:setTexture(cc.Director:getInstance():getTextureCache():addImage("Images/fire.png"))
+    local fireTexture = cc.Director:getInstance():getTextureCache():addImage("Images/fire.png")
+    fire:setTexture(fireTexture)
     fire:setPosition(80, s.height / 2 - 50)
 
     local copy_seq3 = seq3:clone()

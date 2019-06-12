@@ -102,7 +102,7 @@ UniformBuffer& UniformBuffer::operator=(UniformBuffer&& rhs)
     return *this;
 }
 
-TextureInfo::TextureInfo(const std::vector<uint32_t>& _slots, const std::vector<backend::Texture*> _textures)
+TextureInfo::TextureInfo(const std::vector<uint32_t>& _slots, const std::vector<backend::TextureBackend*> _textures)
 : slot(_slots)
 , textures(_textures)
 {
@@ -411,7 +411,7 @@ void ProgramState::setFragmentUniform(int location, const void* data, uint32_t s
     _fragmentUniformInfos[location].data.assign((char *)data, (char *)data + size);
 }
 
-void ProgramState::setTexture(const backend::UniformLocation& uniformLocation, uint32_t slot, backend::Texture* texture)
+void ProgramState::setTexture(const backend::UniformLocation& uniformLocation, uint32_t slot, backend::TextureBackend* texture)
 {
     switch (uniformLocation.shaderStage)
     {
@@ -430,7 +430,7 @@ void ProgramState::setTexture(const backend::UniformLocation& uniformLocation, u
     }
 }
 
-void ProgramState::setTextureArray(const backend::UniformLocation& uniformLocation, const std::vector<uint32_t>& slots, const std::vector<backend::Texture*> textures)
+void ProgramState::setTextureArray(const backend::UniformLocation& uniformLocation, const std::vector<uint32_t>& slots, const std::vector<backend::TextureBackend*> textures)
 {
     switch (uniformLocation.shaderStage)
     {
@@ -449,7 +449,7 @@ void ProgramState::setTextureArray(const backend::UniformLocation& uniformLocati
     }
 }
 
-void ProgramState::setTexture(int location, uint32_t slot, backend::Texture* texture, std::unordered_map<int, TextureInfo>& textureInfo)
+void ProgramState::setTexture(int location, uint32_t slot, backend::TextureBackend* texture, std::unordered_map<int, TextureInfo>& textureInfo)
 {
     if(location < 0)
         return;
@@ -463,7 +463,7 @@ void ProgramState::setTexture(int location, uint32_t slot, backend::Texture* tex
     textureInfo[location] = std::move(info);
 }
 
-void ProgramState::setTextureArray(int location, const std::vector<uint32_t>& slots, const std::vector<backend::Texture*> textures, std::unordered_map<int, TextureInfo>& textureInfo)
+void ProgramState::setTextureArray(int location, const std::vector<uint32_t>& slots, const std::vector<backend::TextureBackend*> textures, std::unordered_map<int, TextureInfo>& textureInfo)
 {
     assert(slots.size() == textures.size());
     TextureInfo info;

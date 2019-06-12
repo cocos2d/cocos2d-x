@@ -8,7 +8,7 @@
 
 CC_BACKEND_BEGIN
 
-class Texture;
+class TextureBackend;
 
 struct RenderPassDescriptor
 {
@@ -24,9 +24,9 @@ struct RenderPassDescriptor
     bool needClearColor = false;
     bool needClearDepth = false;
     bool needClearStencil = false;
-    Texture* depthAttachmentTexture = nullptr;
-    Texture* stencilAttachmentTexture = nullptr;
-    Texture* colorAttachmentsTexture[MAX_COLOR_ATTCHMENT] = { nullptr };
+    TextureBackend* depthAttachmentTexture = nullptr;
+    TextureBackend* stencilAttachmentTexture = nullptr;
+    TextureBackend* colorAttachmentsTexture[MAX_COLOR_ATTCHMENT] = { nullptr };
 };
 
 CC_BACKEND_END

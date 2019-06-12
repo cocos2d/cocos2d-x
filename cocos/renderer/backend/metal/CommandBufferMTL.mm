@@ -154,7 +154,7 @@ namespace
         return mtlDescritpor;
     }
     
-    id<MTLTexture> getMTLTexture(Texture* texture)
+    id<MTLTexture> getMTLTexture(TextureBackend* texture)
     {
         switch (texture->getTextureType())
         {
@@ -168,7 +168,7 @@ namespace
         }
     }
     
-    id<MTLSamplerState> getMTLSamplerState(Texture* texture)
+    id<MTLSamplerState> getMTLSamplerState(TextureBackend* texture)
     {
         switch (texture->getTextureType())
         {

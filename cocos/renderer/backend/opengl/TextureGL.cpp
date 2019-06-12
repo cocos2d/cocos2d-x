@@ -51,7 +51,7 @@ void TextureInfoGL::applySamplerDescriptor(const SamplerDescriptor& descriptor, 
     }
 }
 
-Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : Texture2D(descriptor)
+Texture2DGL::Texture2DGL(const TextureDescriptor& descriptor) : Texture2DBackend(descriptor)
 {
     glGenTextures(1, &_textureInfo.texture);
 
@@ -78,7 +78,7 @@ void Texture2DGL::initWithZeros()
 
 void Texture2DGL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
 {
-    Texture::updateTextureDescriptor(descriptor);
+    TextureBackend::updateTextureDescriptor(descriptor);
     UtilsGL::toGLTypes(descriptor.textureFormat, _textureInfo.internalFormat, _textureInfo.format, _textureInfo.type, _isCompressed);
 
     bool isPow2 = ISPOW2(_width) && ISPOW2(_height);
@@ -311,7 +311,7 @@ void Texture2DGL::getBytes(int x, int y, int width, int height, bool flipImage, 
 }
 
 TextureCubeGL::TextureCubeGL(const TextureDescriptor& descriptor)
-    :TextureCubemap(descriptor)
+    :TextureCubemapBackend(descriptor)
 {
     assert(_width == _height);
     _textureType = TextureType::TEXTURE_CUBE;

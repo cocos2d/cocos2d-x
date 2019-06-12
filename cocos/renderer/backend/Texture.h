@@ -19,7 +19,7 @@ struct TextureDescriptor
     SamplerDescriptor samplerDescriptor;
 };
 
-class Texture : public Ref
+class TextureBackend : public Ref
 {
 public:
     virtual void updateSamplerDescriptor(const SamplerDescriptor &sampler) = 0;
@@ -33,8 +33,8 @@ public:
     inline bool hasMipmaps() const { return _hasMipmaps; }
 
 protected:
-    Texture(const TextureDescriptor& descriptor);
-    virtual ~Texture();
+    TextureBackend(const TextureDescriptor& descriptor);
+    virtual ~TextureBackend();
         
     // The bytes of all components.
     uint8_t _bitsPerElement = 0;
@@ -49,7 +49,7 @@ protected:
 };
 
 
-class Texture2D : public Texture
+class Texture2DBackend : public TextureBackend
 {
 public:
     virtual void updateData(uint8_t* data, uint32_t width , uint32_t height, uint32_t level) = 0;
@@ -61,16 +61,16 @@ public:
     inline uint32_t getHeight() const { return _height; }
 
 protected:
-    Texture2D(const TextureDescriptor& descriptor);
+    Texture2DBackend(const TextureDescriptor& descriptor);
 };
 
-class TextureCubemap : public Texture
+class TextureCubemapBackend : public TextureBackend
 {
 public:
     virtual void updateFaceData(TextureCubeFace side, void *data) = 0;
         
 protected:
-    TextureCubemap(const TextureDescriptor& descriptor);
+    TextureCubemapBackend(const TextureDescriptor& descriptor);
 };
 
 CC_BACKEND_END
