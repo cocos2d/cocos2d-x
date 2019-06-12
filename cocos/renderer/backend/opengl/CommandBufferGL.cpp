@@ -587,4 +587,17 @@ void CommandBufferGL::captureScreen(std::function<void(const unsigned char*, int
     callback(flippedBuffer.get(), _viewPort.w, _viewPort.h);
 }
 
+void CommandBufferGL::setAlphaTest(AlphaTestState alphaTestState)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+    glAlphaFunc(toGLComareFunction(alphaTestState.func), alphaTestState.referenceValue);
+
+    if(_alphaTestEnabled != alphaTestState.enabled)
+    {
+        _alphaTestEnabled = alphaTestState.enabled;
+        _alphaTestEnabled ? glEnable(GL_ALPHA_TEST) : glDisable(GL_ALPHA_TEST);
+    }
+#endif
+}
+
 CC_BACKEND_END

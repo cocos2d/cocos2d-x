@@ -81,6 +81,10 @@ private:
     backend::UniformLocation _mvpMatrixLocaiton;
     backend::UniformLocation _colorUniformLocation;
     backend::ProgramState* _programState = nullptr;
+    
+    bool _currentAlphaTestEnabled = false;
+    backend::CompareFunction _currentAlphaTestFunc = backend::CompareFunction::ALWAYS;
+    float _currentAlphaTestRef = 1.0f;
 };
 
 NS_CC_END

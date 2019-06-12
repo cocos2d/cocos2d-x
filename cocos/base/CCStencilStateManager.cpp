@@ -29,6 +29,12 @@
 #include "renderer/ccShaders.h"
 #include "renderer/backend/ProgramState.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#define CC_CLIPPING_NODE_OPENGLES 0
+#else
+#define CC_CLIPPING_NODE_OPENGLES 1
+#endif
+
 NS_CC_BEGIN
 
 int StencilStateManager::s_layer = -1;
@@ -135,6 +141,11 @@ void StencilStateManager::onBeforeDrawQuadCmd(int mask_layer)
     _currentStencilFail = renderer->getStencilFailureOperation();
     _currentStencilPassDepthFail = renderer->getStencilPassDepthFailureOperation();
     _currentStencilPassDepthPass = renderer->getStencilDepthPassOperation();
+    
+    // manually save the alpha test state
+    _currentAlphaTestEnabled = renderer->getAlphaTest();
+    _currentAlphaTestFunc = renderer->getAlphaTestFunction();
+    _currentAlphaTestRef = renderer->getAlphaTestReferenceValue();
 
     // enable stencil use
     renderer->setStencilTest(true);
@@ -176,24 +187,33 @@ void StencilStateManager::onAfterDrawQuadCmd(int mask_layer)
     renderer->setStencilOperation(!_inverted ? backend::StencilOperation::REPLACE : backend::StencilOperation::ZERO,
         backend::StencilOperation::KEEP,
         backend::StencilOperation::KEEP);
+    
+    // enable alpha test only if the alpha threshold < 1,
+    // indeed if alpha threshold == 1, every pixel will be drawn anyways
+    if (_alphaThreshold < 1) {
+#if !CC_CLIPPING_NODE_OPENGLES
+        // enable alpha testing
+        renderer->setAlphaTest(true);
+        // pixel will be drawn only if greater than an alpha threshold
+        renderer->setAlphaTestFunction(backend::CompareFunction::GREATER, _alphaThreshold);
+#endif
+    }
 }
 
 void StencilStateManager::onAfterDrawStencil()
 {
-//    // restore alpha test state
-//    if (_alphaThreshold < 1)
-//    {
-//#if CC_CLIPPING_NODE_OPENGLES
-//        // FIXME: we need to find a way to restore the shaders of the stencil node and its children
-//#else
-//        // manually restore the alpha test state
-//        glAlphaFunc(_currentAlphaTestFunc, _currentAlphaTestRef);
-//        if (!_currentAlphaTestEnabled)
-//        {
-//            glDisable(GL_ALPHA_TEST);
-//        }
-//#endif
-//    }
+    // restore alpha test state
+    if (_alphaThreshold < 1)
+    {
+#if !CC_CLIPPING_NODE_OPENGLES
+        // manually restore the alpha test state
+        renderer->setAlphaTestFunction(_currentAlphaTestFunc, _currentAlphaTestRef);
+        if (!_currentAlphaTestEnabled)
+        {
+            renderer->setAlphaTest(false);
+        }
+#endif
+    }
 
     // restore the depth test state
 //    glDepthMask(_currentDepthWriteMask);

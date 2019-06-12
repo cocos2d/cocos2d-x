@@ -39,7 +39,6 @@ class BaseLight;
 class Renderer;
 class EventListenerCustom;
 class EventCustom;
-class RendererBackend;
 #if CC_USE_PHYSICS
 class PhysicsWorld;
 #endif

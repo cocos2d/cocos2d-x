@@ -161,6 +161,7 @@ protected:
     GroupCommand _groupCommandChildren;
     CallbackCommand _afterDrawStencilCmd;
     CallbackCommand _afterVisitCmd;
+    backend::ProgramState* _originalStencilProgramState = nullptr;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ClippingNode);

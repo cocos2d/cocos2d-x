@@ -58,12 +58,13 @@ class EventDispatcher;
 class Scene;
 class Renderer;
 class Director;
-class GLProgram;
-class GLProgramState;
 class Material;
 class Camera;
 class PhysicsBody;
-class RendererBackend;
+
+namespace backend{
+    class ProgramState;
+}
 
 /**
  * @addtogroup _2d
@@ -1109,7 +1110,6 @@ public:
      * @param flags Renderer flag.
      */
     virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags);
-    virtual void draw(RendererBackend *renderer, const Mat4& transform, uint32_t flags);
     virtual void draw() final;
 
     /**
@@ -1120,7 +1120,6 @@ public:
      * @param parentFlags Renderer flag.
      */
     virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags);
-    virtual void visit(RendererBackend *renderer, const Mat4& parentTransform, uint32_t parentFlags);
     virtual void visit() final;
 
 
@@ -1767,6 +1766,9 @@ public:
      * @param applyChildren A boolean value to determine whether the mask bit should apply to its children or not.
      */
     virtual void setCameraMask(unsigned short mask, bool applyChildren = true);
+    
+    virtual void setProgramState(backend::ProgramState* programState);
+    virtual backend::ProgramState* getProgramState() const;
 
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
@@ -1884,9 +1886,7 @@ protected:
 
     void *_userData;                ///< A user assigned void pointer, Can be point to any cpp object
     Ref *_userObject;               ///< A user assigned Object
-
-    GLProgramState *_glProgramState; ///< OpenGL Program State
-
+    
     Scheduler *_scheduler;          ///< scheduler used to schedule timers and updates
 
     ActionManager *_actionManager;  ///< a pointer to ActionManager singleton, which is used to handle all the actions
@@ -1949,6 +1949,8 @@ public:
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
+    
+    backend::ProgramState* _programState = nullptr;
 };
 
 /**

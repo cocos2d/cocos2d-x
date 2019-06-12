@@ -251,6 +251,13 @@ public:
 
     /** returns whether or not a rectangle is visible or not */
     bool checkVisibility(const Mat4& transform, const Size& size);
+    
+    /* Enable/disable alpha test. */
+    void setAlphaTest(bool enabled);
+    void setAlphaTestFunction(backend::CompareFunction func, float refValue);
+    inline bool getAlphaTest() const { return _alphaTestState.enabled; }
+    inline backend::CompareFunction getAlphaTestFunction() const { return _alphaTestState.func; }
+    inline float getAlphaTestReferenceValue() const { return _alphaTestState.referenceValue; }
 
 protected:
     friend class Director;
@@ -384,6 +391,8 @@ protected:
     };
 
     std::deque<StateBlock> _stateBlockStack;
+
+    backend::AlphaTestState _alphaTestState;
 };
 
 NS_CC_END

@@ -420,12 +420,12 @@ public:
     /**
     * Set ProgramState
     */
-    void setProgramState(backend::ProgramState *programState);
+    virtual void setProgramState(backend::ProgramState *programState) override;
 
     /**
     * Get current ProgramState
     */
-    inline backend::ProgramState *getProgramState() const { return _programState; }
+    virtual inline backend::ProgramState *getProgramState() const override { return _programState; }
 
     /**
      * Sets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode.

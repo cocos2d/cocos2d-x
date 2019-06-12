@@ -1145,4 +1145,15 @@ void Renderer::popStateBlock()
     _stateBlockStack.pop_back();
 }
 
+void Renderer::setAlphaTest(bool enabled)
+{
+    _alphaTestState.enabled = enabled;
+}
+
+void Renderer::setAlphaTestFunction(backend::CompareFunction func, float refValue)
+{
+    _alphaTestState.func = func;
+    _alphaTestState.referenceValue = refValue;
+}
+
 NS_CC_END
