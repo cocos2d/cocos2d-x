@@ -881,6 +881,7 @@ void Renderer::beginRenderPass(RenderCommand* cmd)
      setRenderPipeline(cmd->getPipelineDescriptor(), _renderPassDescriptor);
 
     _commandBuffer->setStencilReferenceValue(_stencilRef);
+    _commandBuffer->setAlphaTest(_alphaTestState);
 }
 
 void Renderer::setRenderTarget(RenderTargetFlag flags, Texture2D* colorAttachment, Texture2D* depthAttachment, Texture2D* stencilAttachment)

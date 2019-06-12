@@ -204,11 +204,13 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     auto alphaThreshold = this->getAlphaThreshold();
     if (alphaThreshold < 1)
     {
+#if CC_CLIPPING_NODE_OPENGLES
         auto programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColorAlphaTest_frag);
         _stencil->setProgramState(programState);
         auto alphaLocation = programState->getUniformLocation("u_alpha_value");
         programState->setUniform(alphaLocation, &alphaThreshold, sizeof(alphaThreshold));
         CC_SAFE_RELEASE_NULL(programState);
+#endif
     }
     _stencil->visit(renderer, _modelViewTransform, flags);
 
