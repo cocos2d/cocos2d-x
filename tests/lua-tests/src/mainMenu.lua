@@ -13,7 +13,6 @@ require "BillBoardTest/BillBoardTest"
 require "BugsTest/BugsTest"
 require "Camera3DTest/Camera3DTest"
 require "ClickAndMoveTest/ClickAndMoveTest"
-require "CocosDenshionTest/CocosDenshionTest"
 require "ComponentTest/main"
 require "CurrentLanguageTest/CurrentLanguageTest"
 require "DownloaderTest/DownloaderTest"
@@ -103,7 +102,6 @@ local _allTests = {
     { isSupported = true,  name = "CaptureScreenTest"       , create_func  =         CaptureScreenTestMain  },
     { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func  =    ChipmunkAccelTouchTestMain  },
     { isSupported = true,  name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
-    { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
     { isSupported = true,  name = "ComponentTest"          , create_func   =         ComponentTestMain  },
     { isSupported = false,  name = "CurlTest"              , create_func   =                  CurlTestMain  },
     { isSupported = true,  name = "CurrentLanguageTest"    , create_func   =   CurrentLanguageTestMain      },

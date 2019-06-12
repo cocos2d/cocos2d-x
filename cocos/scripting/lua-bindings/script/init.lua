@@ -69,10 +69,6 @@ require "cocos.cocos2d.bitExtend"
 --     require "cocos.cocostudio.DeprecatedCocoStudioFunc"
 -- end
 
--- register_cocosdenshion_module
--- require "cocos.cocosdenshion.DeprecatedCocosDenshionClass"
--- require "cocos.cocosdenshion.DeprecatedCocosDenshionFunc"
-
 -- register_extension_module
 -- require "cocos.extension.DeprecatedExtensionClass"
 -- require "cocos.extension.DeprecatedExtensionEnum"

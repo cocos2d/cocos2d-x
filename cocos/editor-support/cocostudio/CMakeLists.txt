@@ -1,5 +1,5 @@
 set(COCOS_CS_HEADER
-
+    editor-support/cocostudio/SimpleAudioEngine.h
     editor-support/cocostudio/CCProcessBase.h
     editor-support/cocostudio/TriggerMng.h
     editor-support/cocostudio/CCDataReaderHelper.h
@@ -96,7 +96,7 @@ set(COCOS_CS_HEADER
     )
 
 set(COCOS_CS_SRC
-
+    editor-support/cocostudio/SimpleAudioEngine.cpp
     editor-support/cocostudio/CCActionFrame.cpp
     editor-support/cocostudio/CCActionFrameEasing.cpp
     editor-support/cocostudio/CCActionManagerEx.cpp

@@ -24,7 +24,6 @@
 
 #include "scripting/lua-bindings/manual/lua_module_register.h"
 
-#include "scripting/lua-bindings/manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.h"
 #include "scripting/lua-bindings/manual/network/lua_cocos2dx_network_manual.h"
 #include "scripting/lua-bindings/manual/cocostudio/lua_cocos2dx_coco_studio_manual.hpp"
 #include "scripting/lua-bindings/manual/extension/lua_cocos2dx_extension_manual.h"
@@ -39,7 +38,6 @@
 int lua_module_register(lua_State* L)
 {
     // Don't change the module register order unless you know what your are doing
-    register_cocosdenshion_module(L);
     register_network_module(L);
     register_cocostudio_module(L);
     register_ui_module(L);

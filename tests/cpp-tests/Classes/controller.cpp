@@ -48,7 +48,6 @@ public:
         addTest("Actions - Basic", [](){ return new (std::nothrow) ActionsTests(); });
         addTest("Actions - Ease", [](){return new (std::nothrow) ActionsEaseTests(); });
         addTest("Actions - Progress", [](){return new (std::nothrow) ActionsProgressTests(); });
-        addTest("Audio - CocosDenshion", []() { return new (std::nothrow) CocosDenshionTests(); }); // implement simple audio engine by audio engine
         addTest("Audio - NewAudioEngine", []() { return new (std::nothrow) AudioEngineTests(); });
 #if CC_ENABLE_BOX2D_INTEGRATION
        addTest("Box2d - Basic", []() { return new (std::nothrow) Box2DTests(); });

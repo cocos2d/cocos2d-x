@@ -78,7 +78,7 @@ Main features
    * Render To Texture
    * Touch/Accelerometer on mobile devices
    * Touch/Mouse/Keyboard on desktop
-   * Sound Engine support (CocosDenshion library) based on OpenAL
+   * Sound Engine support
    * Integrated Slow motion/Fast forward
    * Fast and compressed textures: PVR compressed and uncompressed textures, ETC1 compressed textures, and more
    * Resolution Independent

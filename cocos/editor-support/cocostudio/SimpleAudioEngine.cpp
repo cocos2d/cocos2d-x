@@ -23,7 +23,7 @@
  ****************************************************************************/
 #include <iostream>
 
-#include "audio/include/SimpleAudioEngine.h"
+#include "editor-support/cocostudio/SimpleAudioEngine.h"
 #include "audio/include/AudioEngine.h"
 
 using namespace CocosDenshion;

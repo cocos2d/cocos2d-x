@@ -25,12 +25,9 @@
 #include "cocos2d.h"
 #include "AppDelegate.h"
 #include "scripting/lua-bindings/manual/CCLuaEngine.h"
-#include "audio/include/SimpleAudioEngine.h"
 #include "lua_assetsmanager_test_sample.h"
 #include "scripting/lua-bindings/manual/lua_module_register.h"
 #include "lua_test_bindings.h"
-
-using namespace CocosDenshion;
 
 USING_NS_CC;
 
@@ -40,7 +37,6 @@ AppDelegate::AppDelegate()
 
 AppDelegate::~AppDelegate()
 {
-    SimpleAudioEngine::end();
 }
 
 void AppDelegate::initGLContextAttrs()
@@ -88,14 +84,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 void AppDelegate::applicationDidEnterBackground()
 {
     Director::getInstance()->stopAnimation();
-
-    SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground()
 {
     Director::getInstance()->startAnimation();
-
-    SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }
