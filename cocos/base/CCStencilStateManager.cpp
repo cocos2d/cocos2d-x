@@ -202,6 +202,8 @@ void StencilStateManager::onAfterDrawQuadCmd(int mask_layer)
 
 void StencilStateManager::onAfterDrawStencil()
 {
+    auto renderer = Director::getInstance()->getRenderer();
+
     // restore alpha test state
     if (_alphaThreshold < 1)
     {
@@ -217,7 +219,6 @@ void StencilStateManager::onAfterDrawStencil()
 
     // restore the depth test state
 //    glDepthMask(_currentDepthWriteMask);
-    auto renderer = Director::getInstance()->getRenderer();
     renderer->setDepthWrite(_currentDepthWriteMask);
     //if (currentDepthTestEnabled) {
     //    glEnable(GL_DEPTH_TEST);
