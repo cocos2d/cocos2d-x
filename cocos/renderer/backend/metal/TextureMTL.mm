@@ -165,7 +165,7 @@ namespace
 }
 
 TextureMTL::TextureMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
-: backend::TextureBackend2D(descriptor)
+: backend::Texture2DBackend(descriptor)
 {
     _mtlDevice = mtlDevice;
     updateTextureDescriptor(descriptor);
@@ -331,7 +331,7 @@ void TextureMTL::generateMipmaps()
 }
 
 TextureCubeMTL::TextureCubeMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
-: backend::TextureBackendCubemap(descriptor)
+: backend::TextureCubemapBackend(descriptor)
 {
     _mtlDevice = mtlDevice;
     updateTextureDescriptor(descriptor);

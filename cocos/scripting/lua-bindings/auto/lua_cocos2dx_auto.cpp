@@ -2257,8 +2257,8 @@ int lua_cocos2dx_Texture2D_getBackendTexture(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Texture2D_getBackendTexture'", nullptr);
             return 0;
         }
-        cocos2d::backend::Texture* ret = cobj->getBackendTexture();
-        object_to_luaval<cocos2d::backend::Texture>(tolua_S, "ccb.Texture",(cocos2d::backend::Texture*)ret);
+        cocos2d::backend::TextureBackend* ret = cobj->getBackendTexture();
+        object_to_luaval<cocos2d::backend::TextureBackend>(tolua_S, "ccb.TextureBackend",(cocos2d::backend::TextureBackend*)ret);
         return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Texture2D:getBackendTexture",argc, 0);
@@ -2493,9 +2493,9 @@ int lua_cocos2dx_Texture2D_initWithBackendTexture(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1) 
     {
-        cocos2d::backend::Texture* arg0;
+        cocos2d::backend::TextureBackend* arg0;
 
-        ok &= luaval_to_object<cocos2d::backend::Texture>(tolua_S, 2, "ccb.Texture",&arg0, "cc.Texture2D:initWithBackendTexture");
+        ok &= luaval_to_object<cocos2d::backend::TextureBackend>(tolua_S, 2, "ccb.TextureBackend",&arg0, "cc.Texture2D:initWithBackendTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Texture2D_initWithBackendTexture'", nullptr);
@@ -90058,11 +90058,11 @@ int lua_cocos2dx_Pass_setUniformNormTexture(lua_State* tolua_S)
     if (argc == 2) 
     {
         unsigned int arg0;
-        cocos2d::backend::Texture* arg1;
+        cocos2d::backend::TextureBackend* arg1;
 
         ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.Pass:setUniformNormTexture");
 
-        ok &= luaval_to_object<cocos2d::backend::Texture>(tolua_S, 3, "ccb.Texture",&arg1, "cc.Pass:setUniformNormTexture");
+        ok &= luaval_to_object<cocos2d::backend::TextureBackend>(tolua_S, 3, "ccb.TextureBackend",&arg1, "cc.Pass:setUniformNormTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Pass_setUniformNormTexture'", nullptr);
@@ -90474,11 +90474,11 @@ int lua_cocos2dx_Pass_setUniformTexture(lua_State* tolua_S)
     if (argc == 2) 
     {
         unsigned int arg0;
-        cocos2d::backend::Texture* arg1;
+        cocos2d::backend::TextureBackend* arg1;
 
         ok &= luaval_to_uint32(tolua_S, 2,&arg0, "cc.Pass:setUniformTexture");
 
-        ok &= luaval_to_object<cocos2d::backend::Texture>(tolua_S, 3, "ccb.Texture",&arg1, "cc.Pass:setUniformTexture");
+        ok &= luaval_to_object<cocos2d::backend::TextureBackend>(tolua_S, 3, "ccb.TextureBackend",&arg1, "cc.Pass:setUniformTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Pass_setUniformTexture'", nullptr);

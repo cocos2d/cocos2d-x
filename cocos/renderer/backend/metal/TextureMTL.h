@@ -6,7 +6,7 @@
 
 CC_BACKEND_BEGIN
 
-class TextureMTL : public backend::TextureBackend2D
+class TextureMTL : public backend::Texture2DBackend
 {
 public:
     TextureMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor);
@@ -41,7 +41,7 @@ private:
     unsigned int _bytesPerRow = 0;
 };
 
-class TextureCubeMTL : public backend::TextureBackendCubemap
+class TextureCubeMTL : public backend::TextureCubemapBackend
 {
 public:
     TextureCubeMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor);

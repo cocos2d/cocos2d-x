@@ -38,7 +38,7 @@ NS_CC_BEGIN
 
 namespace backend
 {
-    class Texture;
+    class TextureBackend;
 }
 
 class EventCustom;

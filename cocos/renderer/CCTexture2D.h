@@ -49,8 +49,8 @@ namespace ui
 }
 
 namespace backend {
-    class TextureBackend2D;
-    class Texture;
+    class Texture2DBackend;
+    class TextureBackend;
     class ProgramState;
 }
 
@@ -228,7 +228,7 @@ public:
     bool initWithString(const char *text, const FontDefinition& textDefinition);
     
     //TODO: minggo: is it resaonable?
-    bool initWithBackendTexture(backend::Texture* texture);
+    bool initWithBackendTexture(backend::TextureBackend* texture);
 
 
     void setTexParameters(const TexParams &params);
@@ -293,7 +293,7 @@ public:
     /** Gets the height of the texture in pixels. */
     int getPixelsHigh() const;
     
-    backend::Texture* getBackendTexture() const;
+    backend::TextureBackend* getBackendTexture() const;
     
     /** Gets max S. */
     float getMaxS() const;
@@ -376,7 +376,7 @@ protected:
     int _pixelsHigh;
 
     /** texture name */
-    backend::TextureBackend2D* _texture;
+    backend::Texture2DBackend* _texture;
     
 
     /** texture max S */

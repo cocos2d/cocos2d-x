@@ -65,7 +65,7 @@ public:
     */
     void setTexParameters(const Texture2D::TexParams&);
 
-    backend::Texture* getBackendTexture() { return _texture; }
+    backend::TextureBackend* getBackendTexture() { return _texture; }
 
     /** reload texture cube after GLESContext reconstructed.*/
     bool reloadTexture();
@@ -86,7 +86,7 @@ protected:
               const std::string& positive_z, const std::string& negative_z);
 private:
     std::vector<std::string> _imgPath;
-    backend::TextureBackendCubemap *_texture = nullptr;
+    backend::TextureCubemapBackend *_texture = nullptr;
 };
 
 // end of 3d group

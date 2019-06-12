@@ -46,7 +46,7 @@ Buffer* DeviceGL::newBuffer(unsigned int size, BufferType type, BufferUsage usag
     return new (std::nothrow) BufferGL(size, type, usage);
 }
 
-Texture* DeviceGL::newTexture(const TextureDescriptor& descriptor)
+TextureBackend* DeviceGL::newTexture(const TextureDescriptor& descriptor)
 {
     switch (descriptor.textureType)
     {

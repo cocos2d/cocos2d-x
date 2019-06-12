@@ -23,7 +23,7 @@ struct TextureInfoGL
     GLuint texture = 0;
 };
 
-class Texture2DGL : public backend::TextureBackend2D
+class Texture2DGL : public backend::Texture2DBackend
 {
 public:
     Texture2DGL(const TextureDescriptor& descriptor);
@@ -50,7 +50,7 @@ private:
     EventListener* _backToForegroundListener = nullptr;
 };
 
-class TextureCubeGL: public backend::TextureBackendCubemap
+class TextureCubeGL: public backend::TextureCubemapBackend
 {
 public:
     TextureCubeGL(const TextureDescriptor& descriptor);

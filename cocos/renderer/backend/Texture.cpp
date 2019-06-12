@@ -70,7 +70,7 @@ namespace
     }
 }
 
-Texture::Texture(const TextureDescriptor& descriptor)
+TextureBackend::TextureBackend(const TextureDescriptor& descriptor)
     : _bitsPerElement(computeBitsPerElement(descriptor.textureFormat))
     , _textureType(descriptor.textureType)
     , _textureFormat(descriptor.textureFormat)
@@ -80,10 +80,10 @@ Texture::Texture(const TextureDescriptor& descriptor)
 {
 }
 
-Texture::~Texture()
+TextureBackend::~TextureBackend()
 {}
 
-void Texture::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
+void TextureBackend::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
 {
     _bitsPerElement = computeBitsPerElement(descriptor.textureFormat);
     _textureType = descriptor.textureType;
@@ -93,13 +93,13 @@ void Texture::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor 
     _height = descriptor.height;
 }
 
-TextureBackend2D::TextureBackend2D(const TextureDescriptor& descriptor)
-    : Texture(descriptor)
+Texture2DBackend::Texture2DBackend(const TextureDescriptor& descriptor)
+    : TextureBackend(descriptor)
 {
 }
 
-TextureBackendCubemap::TextureBackendCubemap(const TextureDescriptor &descriptor)
-    : Texture(descriptor)
+TextureCubemapBackend::TextureCubemapBackend(const TextureDescriptor &descriptor)
+    : TextureBackend(descriptor)
 {
 
 }

@@ -13,7 +13,7 @@
 
 CC_BACKEND_BEGIN
 
-class Texture;
+class TextureBackend;
 
 struct UniformBuffer
 {
@@ -33,7 +33,7 @@ struct UniformBuffer
 
 struct TextureInfo
 {
-    TextureInfo(const std::vector<uint32_t>& _slots, const std::vector<backend::Texture*> _textures);
+    TextureInfo(const std::vector<uint32_t>& _slots, const std::vector<backend::TextureBackend*> _textures);
     TextureInfo() = default;
     TextureInfo(const TextureInfo &);
     ~TextureInfo();
@@ -44,7 +44,7 @@ struct TextureInfo
     void releaseTextures();
     
     std::vector<uint32_t> slot;
-    std::vector<backend::Texture*> textures;
+    std::vector<backend::TextureBackend*> textures;
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     int location = -1;
 #endif
@@ -77,8 +77,8 @@ public:
     void setCallbackUniform(const backend::UniformLocation&, const UniformCallback &);
 
     //set textures
-    void setTexture(const backend::UniformLocation& uniformLocation, uint32_t slot, backend::Texture* texture);
-    void setTextureArray(const backend::UniformLocation& uniformLocation, const std::vector<uint32_t>& slots, const std::vector<backend::Texture*> textures);
+    void setTexture(const backend::UniformLocation& uniformLocation, uint32_t slot, backend::TextureBackend* texture);
+    void setTextureArray(const backend::UniformLocation& uniformLocation, const std::vector<uint32_t>& slots, const std::vector<backend::TextureBackend*> textures);
 
     inline const std::unordered_map<int, TextureInfo>& getVertexTextureInfos() const { return _vertexTextureInfos; }
     inline const std::unordered_map<int, TextureInfo>& getFragmentTextureInfos() const { return _fragmentTextureInfos; }
@@ -154,8 +154,8 @@ protected:
     void setFragmentUniform(int location, const void* data, uint32_t size);
     void createVertexUniformBuffer();
     void createFragmentUniformBuffer();
-    void setTexture(int location, uint32_t slot, backend::Texture* texture, std::unordered_map<int, TextureInfo>& textureInfo);
-    void setTextureArray(int location, const std::vector<uint32_t>& slots, const std::vector<backend::Texture*> textures, std::unordered_map<int, TextureInfo>& textureInfo);
+    void setTexture(int location, uint32_t slot, backend::TextureBackend* texture, std::unordered_map<int, TextureInfo>& textureInfo);
+    void setTextureArray(int location, const std::vector<uint32_t>& slots, const std::vector<backend::TextureBackend*> textures, std::unordered_map<int, TextureInfo>& textureInfo);
     void resetUniforms();
     
 #ifdef CC_USE_METAL

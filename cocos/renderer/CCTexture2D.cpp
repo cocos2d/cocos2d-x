@@ -140,7 +140,7 @@ Texture2D::Texture2D()
 {
     backend::TextureDescriptor textureDescriptor;
     textureDescriptor.textureFormat = PixelFormat::NONE;
-    _texture = static_cast<backend::TextureBackend2D*>(backend::Device::getInstance()->newTexture(textureDescriptor));
+    _texture = static_cast<backend::Texture2DBackend*>(backend::Device::getInstance()->newTexture(textureDescriptor));
 }
 
 Texture2D::~Texture2D()
@@ -173,7 +173,7 @@ int Texture2D::getPixelsHigh() const
     return _pixelsHigh;
 }
 
-backend::Texture* Texture2D::getBackendTexture() const
+backend::TextureBackend* Texture2D::getBackendTexture() const
 {
     return _texture;
 }
@@ -570,11 +570,11 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     return ret;
 }
 
-bool Texture2D::initWithBackendTexture(backend::Texture *texture)
+bool Texture2D::initWithBackendTexture(backend::TextureBackend *texture)
 {
     CC_SAFE_RETAIN(texture);
     CC_SAFE_RELEASE(_texture);
-    _texture = dynamic_cast<backend::TextureBackend2D*>(texture);
+    _texture = dynamic_cast<backend::Texture2DBackend*>(texture);
     CC_ASSERT(_texture);
     _pixelsWide = _contentSize.width = _texture->getWidth();
     _pixelsHigh = _contentSize.height = _texture->getHeight();
