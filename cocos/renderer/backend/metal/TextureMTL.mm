@@ -184,7 +184,7 @@ void TextureMTL::updateSamplerDescriptor(const SamplerDescriptor &sampler)
 
 void TextureMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
 {
-    Texture::updateTextureDescriptor(descriptor);
+    TextureBackend::updateTextureDescriptor(descriptor);
     createTexture(_mtlDevice, descriptor);
     updateSamplerDescriptor(descriptor.samplerDescriptor);
     if (PixelFormat::RGB888 == _textureFormat)
@@ -345,7 +345,7 @@ TextureCubeMTL::~TextureCubeMTL()
 
 void TextureCubeMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
 {
-    Texture::updateTextureDescriptor(descriptor);
+    TextureBackend::updateTextureDescriptor(descriptor);
     createTexture(_mtlDevice, descriptor);
     updateSamplerDescriptor(descriptor.samplerDescriptor);
     
