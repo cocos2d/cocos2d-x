@@ -237,7 +237,6 @@ public:
      It only works if the texture size is POT (power of 2).
      @since v0.99.0
      */
-//    TODO coulsonwang
     void generateMipmap();
     
     /** Sets antialias texture parameters:

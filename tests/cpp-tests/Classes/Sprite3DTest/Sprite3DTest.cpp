@@ -839,8 +839,6 @@ void Sprite3DEffectTest::onTouchesEnded(const std::vector<Touch*>& touches, Even
 
 AsyncLoadSprite3DTest::AsyncLoadSprite3DTest()
 {
-    //TODO coulsonwang missing Texture infomation for *.obj file
-//    _paths.push_back("Sprite3DTest/boss.obj");
     _paths.push_back("Sprite3DTest/girl.c3b");
     _paths.push_back("Sprite3DTest/orc.c3b");
     _paths.push_back("Sprite3DTest/ReskinGirl.c3b");
