@@ -477,7 +477,7 @@ if(APPLE)
             string(APPEND GAME_CUSTOM_FONT "\n<string>${font}</string>")
         endforeach()
 
-        cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in" CUSTOM_FONT ${GAME_CUSTOM_FONT})
+        cocos_pak_xcode(${APP_NAME} INFO_PLIST "iOSBundleInfo.plist.in" CUSTOM_FONT ${GAME_CUSTOM_FONT} ALLOWARBITRARYLOADS "true")
         set_xcode_property(${APP_NAME} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon-${APP_NAME}")
         set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "")
         set_xcode_property(${APP_NAME} CODE_SIGN_IDENTITY "iPhone Developer")

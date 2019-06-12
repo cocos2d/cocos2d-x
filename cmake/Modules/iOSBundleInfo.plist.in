@@ -51,5 +51,10 @@
     <array>
         ${MACOSX_CUSTOM_FONT_FILE}
     </array>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <${MACOSX_CUSTOM_ALLOWARBITRARYLOADS}/>
+    </dict>
 </dict>
 </plist>
