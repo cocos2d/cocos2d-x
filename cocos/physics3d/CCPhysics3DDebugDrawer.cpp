@@ -41,8 +41,6 @@ NS_CC_BEGIN
 
 void Physics3DDebugDrawer::drawLine( const btVector3& from,const btVector3& to,const btVector3& color )
 {
-    int count = 2;
-
     Vec3 col = convertbtVector3ToVec3(color);
 
     V3F_V4F a, b;
@@ -129,12 +127,16 @@ Physics3DDebugDrawer::~Physics3DDebugDrawer()
 void Physics3DDebugDrawer::init()
 {
     CC_SAFE_RELEASE_NULL(_programState);
-    _programState = new backend::ProgramState(positionColor_frag, positionColor_vert);
+    _programState = new backend::ProgramState(positionColor_vert, positionColor_frag);
     _locMVP = _programState->getUniformLocation("u_MVPMatrix");
     
+    auto attributes = _programState->getProgram()->getActiveAttributes();
+    auto locPosition = attributes["a_position"];
+    auto locColor = attributes["a_color"];
+    
     auto &layout = _customCommand.getPipelineDescriptor().vertexLayout;
-    layout.setAttribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(V3F_V4F, vertex), false);
-    layout.setAttribute("a_color", 1, backend::VertexFormat::FLOAT4, offsetof(V3F_V4F, color), false);
+    layout.setAttribute(locPosition.attributeName.c_str(), locPosition.location, backend::VertexFormat::FLOAT3, offsetof(V3F_V4F, vertex), false);
+    layout.setAttribute(locColor.attributeName.c_str(), locColor.location, backend::VertexFormat::FLOAT4, offsetof(V3F_V4F, color), false);
     layout.setLayout(sizeof(V3F_V4F), backend::VertexStepMode::VERTEX);
 
     _buffer.reserve(512);
