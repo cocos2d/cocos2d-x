@@ -81,8 +81,6 @@ private:
     backend::UniformLocation _mvpMatrixLocaiton;
     backend::UniformLocation _colorUniformLocation;
     backend::ProgramState* _programState = nullptr;
-    
-    backend::AlphaTestState _alphaTestState;
 };
 
 NS_CC_END

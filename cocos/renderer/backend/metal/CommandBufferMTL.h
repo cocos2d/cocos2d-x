@@ -33,7 +33,6 @@ public:
     virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) override;
     virtual void setDepthStencilState(DepthStencilState* depthStencilState) override;
     virtual void captureScreen(std::function<void(const unsigned char*, int, int)> callback) override;
-    virtual void setAlphaTest(AlphaTestState alphaTestState) override {}
     
 private:
     void prepareDrawing() const;

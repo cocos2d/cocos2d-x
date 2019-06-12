@@ -881,7 +881,6 @@ void Renderer::beginRenderPass(RenderCommand* cmd)
      setRenderPipeline(cmd->getPipelineDescriptor(), _renderPassDescriptor);
 
     _commandBuffer->setStencilReferenceValue(_stencilRef);
-    _commandBuffer->setAlphaTest(_alphaTestState);
 }
 
 void Renderer::setRenderTarget(RenderTargetFlag flags, Texture2D* colorAttachment, Texture2D* depthAttachment, Texture2D* stencilAttachment)
@@ -1144,17 +1143,6 @@ void Renderer::popStateBlock()
     setDepthWrite(block.depthWrite);
     setCullMode(block.cullMode);
     _stateBlockStack.pop_back();
-}
-
-void Renderer::setAlphaTest(bool enabled)
-{
-    _alphaTestState.enabled = enabled;
-}
-
-void Renderer::setAlphaTestFunction(backend::CompareFunction func, float refValue)
-{
-    _alphaTestState.func = func;
-    _alphaTestState.referenceValue = refValue;
 }
 
 NS_CC_END

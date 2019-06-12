@@ -32,12 +32,6 @@
 #include "base/CCDirector.h"
 #include "base/CCStencilStateManager.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-#define CC_CLIPPING_NODE_OPENGLES 0
-#else
-#define CC_CLIPPING_NODE_OPENGLES 1
-#endif
-
 NS_CC_BEGIN
 
 ClippingNode::ClippingNode()
@@ -204,13 +198,11 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     auto alphaThreshold = this->getAlphaThreshold();
     if (alphaThreshold < 1)
     {
-#if CC_CLIPPING_NODE_OPENGLES
         auto programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColorAlphaTest_frag);
         _stencil->setProgramState(programState);
         auto alphaLocation = programState->getUniformLocation("u_alpha_value");
         programState->setUniform(alphaLocation, &alphaThreshold, sizeof(alphaThreshold));
         CC_SAFE_RELEASE_NULL(programState);
-#endif
     }
     _stencil->visit(renderer, _modelViewTransform, flags);
 
@@ -332,15 +324,12 @@ float ClippingNode::getAlphaThreshold() const
 
 void ClippingNode::setAlphaThreshold(float alphaThreshold)
 {
-#if CC_CLIPPING_NODE_OPENGLES
     if (alphaThreshold == 1 && alphaThreshold != _stencilStateManager->getAlphaThreshold())
     {
         // should reset program used by _stencil
         if (_stencil)
             _stencil->setProgramState(_originalStencilProgramState);
     }
-#endif
-
     _stencilStateManager->setAlphaThreshold(alphaThreshold);
 }
 

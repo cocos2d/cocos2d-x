@@ -292,11 +292,4 @@ enum class TextureCubeFace : uint32_t
     NEGATIVE_Z = 5
 };
 
-struct AlphaTestState
-{
-    bool enabled = false;
-    float referenceValue = 0.0f;
-    backend::CompareFunction func = backend::CompareFunction::ALWAYS;
-};
-
 CC_BACKEND_END
