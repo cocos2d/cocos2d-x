@@ -231,7 +231,7 @@ macro(cocos_pak_xcode cocos_target)
     cocos_fake_set(COCOS_APP_LONG_VERSION_STRING "1.0.0")
     cocos_fake_set(COCOS_APP_SHORT_VERSION_STRING "1.0")
     cocos_fake_set(COCOS_APP_CUSTOM_FONT "")
-    cocos_fake_set(ALLOWARBITRARYLOADS "false")
+    cocos_fake_set(COCOS_APP_ALLOWARBITRARYLOADS "false")
     # set bundle info
     set_target_properties(${cocos_target}
                           PROPERTIES
