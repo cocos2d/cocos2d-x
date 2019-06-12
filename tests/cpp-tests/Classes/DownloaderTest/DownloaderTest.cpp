@@ -36,9 +36,9 @@ USING_NS_CC;
 
 static const char* sURLList[] =
 {
-    "http://www.cocos2d-x.org/attachments/802/cocos2dx_landscape.png",
-    "http://cocos2d-x.org/images/logo.png",
-    "http://www.cocos2d-x.org/attachments/1503/no_exist.txt",  // try to download no exist file
+    "https://www.cocos2d-x.org/attachments/802/cocos2dx_landscape.png",
+    "https://cocos2d-x.org/images/logo.png",
+    "https://www.cocos2d-x.org/attachments/1503/no_exist.txt",  // try to download no exist file
     "https://github.com/openssl/openssl/archive/OpenSSL_1_1_1a.zip",
 };
 const static int sListSize = (sizeof(sURLList)/sizeof(sURLList[0]));

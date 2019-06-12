@@ -127,7 +127,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::Ref *sender, bool isImmediate
     // test 1
     {
         HttpRequest* request = new (std::nothrow) HttpRequest();
-        request->setUrl("http://just-make-this-request-failed.com");
+        request->setUrl("https://just-make-this-request-failed.com");
         request->setRequestType(HttpRequest::Type::GET);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
         if (isImmediate)
@@ -146,7 +146,7 @@ void HttpClientTest::onMenuGetTestClicked(cocos2d::Ref *sender, bool isImmediate
     {
         HttpRequest* request = new (std::nothrow) HttpRequest();
         // required fields
-        request->setUrl("http://httpbin.org/ip");
+        request->setUrl("https://httpbin.org/ip");
         request->setRequestType(HttpRequest::Type::GET);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
         if (isImmediate)
@@ -190,7 +190,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::Ref *sender, bool isImmediat
     // test 1
     {
         HttpRequest* request = new (std::nothrow) HttpRequest();
-        request->setUrl("http://httpbin.org/post");
+        request->setUrl("https://httpbin.org/post");
         request->setRequestType(HttpRequest::Type::POST);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
         
@@ -212,7 +212,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::Ref *sender, bool isImmediat
     // test 2: set Content-Type
     {
         HttpRequest* request = new (std::nothrow) HttpRequest();
-        request->setUrl("http://httpbin.org/post");
+        request->setUrl("https://httpbin.org/post");
         request->setRequestType(HttpRequest::Type::POST);
         std::vector<std::string> headers;
         headers.push_back("Content-Type: application/json; charset=utf-8");
@@ -241,7 +241,7 @@ void HttpClientTest::onMenuPostTestClicked(cocos2d::Ref *sender, bool isImmediat
 void HttpClientTest::onMenuPostBinaryTestClicked(cocos2d::Ref *sender, bool isImmediate)
 {
     HttpRequest* request = new (std::nothrow) HttpRequest();
-    request->setUrl("http://httpbin.org/post");
+    request->setUrl("https://httpbin.org/post");
     request->setRequestType(HttpRequest::Type::POST);
     request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
     
@@ -270,7 +270,7 @@ void HttpClientTest::onMenuPutTestClicked(Ref *sender, bool isImmediate)
     // test 1
     {
         HttpRequest* request = new (std::nothrow) HttpRequest();
-        request->setUrl("http://httpbin.org/put");
+        request->setUrl("https://httpbin.org/put");
         request->setRequestType(HttpRequest::Type::PUT);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
 
@@ -292,7 +292,7 @@ void HttpClientTest::onMenuPutTestClicked(Ref *sender, bool isImmediate)
     // test 2: set Content-Type
     {
         HttpRequest* request = new (std::nothrow) HttpRequest();
-        request->setUrl("http://httpbin.org/put");
+        request->setUrl("https://httpbin.org/put");
         request->setRequestType(HttpRequest::Type::PUT);
         std::vector<std::string> headers;
         headers.push_back("Content-Type: application/json; charset=utf-8");
@@ -323,7 +323,7 @@ void HttpClientTest::onMenuDeleteTestClicked(Ref *sender, bool isImmediate)
     // test 1
     {
         HttpRequest* request = new (std::nothrow) HttpRequest();
-        request->setUrl("http://just-make-this-request-failed.com");
+        request->setUrl("https://just-make-this-request-failed.com");
         request->setRequestType(HttpRequest::Type::DELETE);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
         if (isImmediate)
@@ -341,7 +341,7 @@ void HttpClientTest::onMenuDeleteTestClicked(Ref *sender, bool isImmediate)
     // test 2
     {
         HttpRequest* request = new (std::nothrow) HttpRequest();
-        request->setUrl("http://httpbin.org/delete");
+        request->setUrl("https://httpbin.org/delete");
         request->setRequestType(HttpRequest::Type::DELETE);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientTest::onHttpRequestCompleted, this));
         if (isImmediate)
@@ -454,7 +454,7 @@ void HttpClientClearRequestsTest::onMenuCancelAllClicked(cocos2d::Ref *sender)
     {
         HttpRequest* request = new (std::nothrow) HttpRequest();
         std::stringstream url;
-        url << "http://cocos2d-x.org/images/logo.png?id=" << std::to_string(i);
+        url << "https://cocos2d-x.org/images/logo.png?id=" << std::to_string(i);
         request->setUrl(url.str());
         request->setRequestType(HttpRequest::Type::GET);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientClearRequestsTest::onHttpRequestCompleted, this));
@@ -484,7 +484,7 @@ void HttpClientClearRequestsTest::onMenuCancelSomeClicked(cocos2d::Ref *sender)
     {
         HttpRequest* request = new (std::nothrow) HttpRequest();
         std::stringstream url;
-        url << "http://cocos2d-x.org/images/logo.png?id=" << std::to_string(i);
+        url << "https://cocos2d-x.org/images/logo.png?id=" << std::to_string(i);
         request->setUrl(url.str());
         request->setRequestType(HttpRequest::Type::GET);
         request->setResponseCallback(CC_CALLBACK_2(HttpClientClearRequestsTest::onHttpRequestCompleted, this));
