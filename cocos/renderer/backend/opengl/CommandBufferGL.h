@@ -8,6 +8,7 @@
 #include "CCStdC.h"
 
 #include <vector>
+#include <unordered_map>
 
 CC_BACKEND_BEGIN
 
@@ -58,7 +59,7 @@ private:
     void cleanResources();
     void applyRenderPassDescriptor(const RenderPassDescriptor& descirptor);
 
-    GLuint _frameBuffer = 0;
+    std::unordered_map<unsigned int, GLuint> _frameBuffer;
     GLint _defaultFBO = 0;
     GLuint _currentFBO = 0;
     std::vector<BufferGL*> _vertexBuffers;

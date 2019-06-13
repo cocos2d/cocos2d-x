@@ -10,6 +10,7 @@
 #include "base/CCEventType.h"
 #include "base/CCDirector.h"
 #include "renderer/backend/opengl/UtilsGL.h"
+#include "xxhash.h"
 #include <algorithm>
 
 CC_BACKEND_BEGIN
@@ -46,6 +47,23 @@ namespace
             return ;
         }
     }
+
+    unsigned int getRenderPassDescritporHash(const RenderPassDescriptor& descriptor)
+    {
+        struct
+        {
+            void* depthAttachmentTexture = nullptr;
+            void* stencilAttachmentTexture = nullptr;
+            void* colorAttachmentTexture = nullptr;
+        }hashMe;
+
+        memset(&hashMe, 0, sizeof(hashMe));
+        hashMe.depthAttachmentTexture = descriptor.depthAttachmentTexture;
+        hashMe.stencilAttachmentTexture = descriptor.stencilAttachmentTexture;
+        hashMe.colorAttachmentTexture = descriptor.colorAttachmentsTexture[0];
+
+        return XXH32((const void*)&hashMe, sizeof(hashMe), 0);
+    }
 }
 
 CommandBufferGL::CommandBufferGL()
@@ -63,7 +81,12 @@ CommandBufferGL::CommandBufferGL()
 
 CommandBufferGL::~CommandBufferGL()
 {
-    glDeleteFramebuffers(1, &_frameBuffer);
+    for (auto iter = _frameBuffer.begin(); iter != _frameBuffer.end(); iter++)
+    {
+        glDeleteFramebuffers(1, &iter->second);
+    }
+    _frameBuffer.clear();
+   
     cleanResources();
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -87,11 +110,14 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
     bool useStencilAttachmentExternal = descirptor.stencilTestEnabled && descirptor.stencilAttachmentTexture;
     if (useColorAttachmentExternal || useDepthAttachmentExternal || useStencilAttachmentExternal)
     {
-        if(_frameBuffer == 0)
+        auto hashValue = getRenderPassDescritporHash(descirptor);
+        if(_frameBuffer.find(hashValue) == _frameBuffer.end())
         {
-            glGenFramebuffers(1, &_frameBuffer);
+            GLuint frameBuffer = 0;
+            glGenFramebuffers(1, &frameBuffer);
+            _frameBuffer[hashValue] = frameBuffer;
         }
-        _currentFBO = _frameBuffer;
+        _currentFBO = _frameBuffer[hashValue];
     }
     else
     {

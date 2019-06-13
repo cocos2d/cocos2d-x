@@ -13,7 +13,7 @@ class TextureBackend;
 struct RenderPassDescriptor
 {
     RenderPassDescriptor& operator=(const RenderPassDescriptor& descriptor);
-    bool operator==(const RenderPassDescriptor& descriptor);
+    bool operator==(const RenderPassDescriptor& descriptor) const;
 
     float clearDepthValue = 0.f;
     float clearStencilValue = 0.f;
@@ -28,5 +28,6 @@ struct RenderPassDescriptor
     TextureBackend* stencilAttachmentTexture = nullptr;
     TextureBackend* colorAttachmentsTexture[MAX_COLOR_ATTCHMENT] = { nullptr };
 };
+
 
 CC_BACKEND_END
