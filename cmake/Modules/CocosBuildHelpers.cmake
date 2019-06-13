@@ -204,7 +204,7 @@ macro(cocos_fake_set cc_variable cc_value)
 endmacro()
 
 # generate macOS app package infomations, need improve for example, the using of info.plist
-macro(cocos_pak_xcode cocos_target)
+function(cocos_pak_xcode cocos_target)
     set(oneValueArgs
         INFO_PLIST
         BUNDLE_NAME
@@ -247,7 +247,7 @@ macro(cocos_pak_xcode cocos_target)
     message(STATUS "cocos package: ${cocos_target}, plist file: ${COCOS_APP_INFO_PLIST}")
 
    cocos_config_app_xcode_property(${cocos_target})
-endmacro()
+endfunction()
 
 # set Xcode property for application, include all depend target
 macro(cocos_config_app_xcode_property cocos_app)
