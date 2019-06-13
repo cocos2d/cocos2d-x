@@ -1784,7 +1784,7 @@ static int tolua_cocos2d_RenderTexture_newImage(lua_State* tolua_S)
 #endif
     
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 1)
+    if (argc == 1 || argc == 2)
     {
         ok &= toluafix_isfunction(tolua_S, 2, "LUA_FUNCTION", 0, &tolua_err);
         if(!ok)
@@ -1799,29 +1799,20 @@ static int tolua_cocos2d_RenderTexture_newImage(lua_State* tolua_S)
             stack->pushObject(image, "cc.Image");
             stack->executeFunctionByHandler(handler, 1);
         };
-        cobj->newImage(callback);
-        return 0;
-    }
-    else if (argc == 2)
-    {
-        bool flipImage;
-        ok &= toluafix_isfunction(tolua_S, 2, "LUA_FUNCTION", 0, &tolua_err);
-        ok &= luaval_to_boolean(tolua_S, 3,&flipImage, "cc.RenderTexture:newImage");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'tolua_cocos2d_RenderTexture_newImage'", nullptr);
-            return 0;
-        }
         
-        LUA_FUNCTION handler = toluafix_ref_function(tolua_S, 2, 0);
-        auto callback = [=](cocos2d::Image* image){
-            auto stack = LuaEngine::getInstance()->getLuaStack();
-            stack->pushObject(image, "cc.Image");
-            stack->executeFunctionByHandler(handler, 1);
-        };
-        cobj->newImage(callback, flipImage);
+        if(argc == 2)
+        {
+            bool flipImage;
+            ok &= luaval_to_boolean(tolua_S, 3,&flipImage, "cc.RenderTexture:newImage");
+            cobj->newImage(callback, flipImage);
+        }
+        else
+        {
+            cobj->newImage(callback);
+        }
         return 0;
     }
+    
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.RenderTexture:newImage",argc, 2);
     return 0;
     
