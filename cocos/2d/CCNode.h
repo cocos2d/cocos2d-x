@@ -1926,6 +1926,8 @@ protected:
     std::function<void()> _onExitCallback;
     std::function<void()> _onEnterTransitionDidFinishCallback;
     std::function<void()> _onExitTransitionDidStartCallback;
+    
+    backend::ProgramState* _programState = nullptr;
 
 //Physics:remaining backwardly compatible  
 #if CC_USE_PHYSICS
@@ -1949,8 +1951,6 @@ public:
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
-    
-    backend::ProgramState* _programState = nullptr;
 };
 
 /**

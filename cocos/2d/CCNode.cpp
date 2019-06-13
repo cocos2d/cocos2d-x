@@ -186,6 +186,7 @@ Node::~Node()
     CC_SAFE_RELEASE(_eventDispatcher);
 
     delete[] _additionalTransform;
+    CC_SAFE_RELEASE(_programState);
 }
 
 bool Node::init()
@@ -2177,9 +2178,12 @@ int Node::getAttachedNodeCount()
 
 void Node::setProgramState(backend::ProgramState* programState)
 {
-    CC_SAFE_RELEASE(_programState);
-    _programState = programState;
-    CC_SAFE_RETAIN(programState);
+    if (_programState != programState)
+    {
+        CC_SAFE_RELEASE(_programState);
+        _programState = programState;
+        CC_SAFE_RETAIN(programState);
+    }
 }
 
 backend::ProgramState* Node::getProgramState() const

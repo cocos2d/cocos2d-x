@@ -425,7 +425,7 @@ public:
     /**
     * Get current ProgramState
     */
-    virtual inline backend::ProgramState *getProgramState() const override { return _programState; }
+    virtual backend::ProgramState *getProgramState() const override;
 
     /**
      * Sets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode.
@@ -665,9 +665,7 @@ protected:
     backend::UniformLocation _mvpMatrixLocation;
     backend::UniformLocation _textureLocation;
     backend::UniformLocation _alphaTextureLocation;
-    
-    backend::ProgramState* _programState = nullptr;
-    
+        
 #if CC_SPRITE_DEBUG_DRAW
     DrawNode *_debugDrawNode = nullptr;
 #endif //CC_SPRITE_DEBUG_DRAW
