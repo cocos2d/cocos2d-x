@@ -22,18 +22,16 @@ local function RenderTextureSave()
         target:saveToFile(png, cc.IMAGE_FORMAT_PNG)
         target:saveToFile(jpg, cc.IMAGE_FORMAT_JPEG)
 
-        local pImage = target:newImage()
+        local function callback(image)
+            local tex = cc.Director:getInstance():getTextureCache():addImage(image, png)
+            local sprite = cc.Sprite:createWithTexture(tex)
+            sprite:setScale(0.3)
+            ret:addChild(sprite)
+            sprite:setPosition(cc.p(40, 40))
+            sprite:setRotation(counter * 3)
+        end
 
-        local tex = cc.Director:getInstance():getTextureCache():addUIImage(pImage, png)
-
-        pImage:release()
-
-        local sprite = cc.Sprite:createWithTexture(tex)
-
-        sprite:setScale(0.3)
-        ret:addChild(sprite)
-        sprite:setPosition(cc.p(40, 40))
-        sprite:setRotation(counter * 3)
+        target:newImage(callback)
 
         cclog("Image saved %s and %s", png, jpg)
         counter = counter + 1
