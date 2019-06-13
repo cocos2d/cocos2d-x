@@ -47,9 +47,5 @@
     <array>
         <string>${MACOSX_BUNDLE_ICON_FILE}</string>
     </array>
-    <key>UIAppFonts</key>
-    <array>
-        ${MACOSX_CUSTOM_FONT_FILE}
-    </array>
 </dict>
 </plist>

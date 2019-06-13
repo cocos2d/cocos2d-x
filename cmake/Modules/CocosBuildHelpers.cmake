@@ -215,21 +215,21 @@ macro(cocos_pak_xcode cocos_target)
         INFO_STRING
         LONG_VERSION_STRING
         SHORT_VERSION_STRING
-        CUSTOM_FONT
         )
     set(multiValueArgs)
     cmake_parse_arguments(COCOS_APP "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+
+    string(TIMESTAMP COCOS_APP_COPYRIGHT_YEAR "%Y")
     # set default value
     cocos_fake_set(COCOS_APP_INFO_PLIST "MacOSXBundleInfo.plist.in")
     cocos_fake_set(COCOS_APP_BUNDLE_NAME "\${PRODUCT_NAME}")
     cocos_fake_set(COCOS_APP_BUNDLE_VERSION "1")
-    cocos_fake_set(COCOS_APP_COPYRIGHT "Copyright © 2018. All rights reserved.")
+    cocos_fake_set(COCOS_APP_COPYRIGHT "Copyright © ${COCOS_APP_COPYRIGHT_YEAR}. All rights reserved.")
     cocos_fake_set(COCOS_APP_GUI_IDENTIFIER "org.cocos2dx.${APP_NAME}")
     cocos_fake_set(COCOS_APP_ICON_FILE "Icon")
     cocos_fake_set(COCOS_APP_INFO_STRING "cocos2d-x app")
     cocos_fake_set(COCOS_APP_LONG_VERSION_STRING "1.0.0")
     cocos_fake_set(COCOS_APP_SHORT_VERSION_STRING "1.0")
-    cocos_fake_set(COCOS_APP_CUSTOM_FONT "")
     # set bundle info
     set_target_properties(${cocos_target}
                           PROPERTIES
@@ -243,7 +243,6 @@ macro(cocos_pak_xcode cocos_target)
     set(MACOSX_BUNDLE_INFO_STRING ${COCOS_APP_INFO_STRING})
     set(MACOSX_BUNDLE_LONG_VERSION_STRING ${COCOS_APP_LONG_VERSION_STRING})
     set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${COCOS_APP_SHORT_VERSION_STRING})
-    set(MACOSX_CUSTOM_FONT_FILE ${COCOS_APP_CUSTOM_FONT})
 
     message(STATUS "cocos package: ${cocos_target}, plist file: ${COCOS_APP_INFO_PLIST}")
 
