@@ -3806,10 +3806,10 @@ static int tolua_cocos2dx_Texture2D_setTexParameters(lua_State* tolua_S)
         }
 #endif
 
-        arg1 = utils::toBackendSamplerFilter((GLuint)tolua_tonumber(tolua_S, 2, 0));
-        arg2 = utils::toBackendSamplerFilter((GLuint)tolua_tonumber(tolua_S, 3, 0));
-        arg3 = utils::toBackendAddressMode((GLuint)tolua_tonumber(tolua_S, 4, 0));
-        arg4 = utils::toBackendAddressMode((GLuint)tolua_tonumber(tolua_S, 5, 0));
+        arg1 = (backend::SamplerFilter)(int)tolua_tonumber(tolua_S, 2, 0);
+        arg2 = (backend::SamplerFilter)(int)tolua_tonumber(tolua_S, 3, 0);
+        arg3 = (backend::SamplerAddressMode)(int)tolua_tonumber(tolua_S, 4, 0);
+        arg4 = (backend::SamplerAddressMode)(int)tolua_tonumber(tolua_S, 5, 0);
 
         Texture2D::TexParams param(arg1, arg2, arg3, arg4);
 
@@ -3818,12 +3818,12 @@ static int tolua_cocos2dx_Texture2D_setTexParameters(lua_State* tolua_S)
         return 0;
     }
 
-    luaL_error(tolua_S, "'setSamplerDescriptor' function of Texture2D wrong number of arguments: %d, was expecting %d\n", argc,4);
+    luaL_error(tolua_S, "'setTexParameters' function of Texture2D wrong number of arguments: %d, was expecting %d\n", argc,4);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'setSamplerDescriptor'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'setTexParameters'.",&tolua_err);
     return 0;
 #endif
 }
@@ -4018,7 +4018,7 @@ static void extendTexture2D(lua_State* tolua_S)
     lua_rawget(tolua_S, LUA_REGISTRYINDEX);
     if (lua_istable(tolua_S,-1))
     {
-        lua_pushstring(tolua_S,"setSamplerDescriptor");
+        lua_pushstring(tolua_S,"setTexParameters");
         lua_pushcfunction(tolua_S,tolua_cocos2dx_Texture2D_setTexParameters );
         lua_rawset(tolua_S,-3);
     }

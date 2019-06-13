@@ -72,7 +72,7 @@ Buffer* DeviceMTL::newBuffer(unsigned int size, BufferType type, BufferUsage usa
     return new (std::nothrow) BufferMTL(_mtlDevice, size, type, usage);
 }
 
-Texture* DeviceMTL::newTexture(const TextureDescriptor& descriptor)
+TextureBackend* DeviceMTL::newTexture(const TextureDescriptor& descriptor)
 {
     switch(descriptor.textureType)
     {

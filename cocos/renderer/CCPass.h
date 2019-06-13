@@ -101,8 +101,8 @@ public:
 
     void updateMVPUniform(const Mat4& modelView);
     
-    void setUniformTexture(uint32_t slot, backend::Texture *);      //u_texture
-    void setUniformNormTexture(uint32_t slot, backend::Texture *);  //u_texture
+    void setUniformTexture(uint32_t slot, backend::TextureBackend *);      //u_texture
+    void setUniformNormTexture(uint32_t slot, backend::TextureBackend *);  //u_texture
 
     void setUniformColor(const void *, size_t);                 //ucolor
     void setUniformMatrixPalette(const void *, size_t);         //u_matrixPalette

@@ -165,7 +165,7 @@ namespace
 }
 
 TextureMTL::TextureMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
-: backend::Texture2D(descriptor)
+: backend::Texture2DBackend(descriptor)
 {
     _mtlDevice = mtlDevice;
     updateTextureDescriptor(descriptor);
@@ -184,7 +184,7 @@ void TextureMTL::updateSamplerDescriptor(const SamplerDescriptor &sampler)
 
 void TextureMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
 {
-    Texture::updateTextureDescriptor(descriptor);
+    TextureBackend::updateTextureDescriptor(descriptor);
     createTexture(_mtlDevice, descriptor);
     updateSamplerDescriptor(descriptor.samplerDescriptor);
     if (PixelFormat::RGB888 == _textureFormat)
@@ -331,7 +331,7 @@ void TextureMTL::generateMipmaps()
 }
 
 TextureCubeMTL::TextureCubeMTL(id<MTLDevice> mtlDevice, const TextureDescriptor& descriptor)
-: backend::TextureCubemap(descriptor)
+: backend::TextureCubemapBackend(descriptor)
 {
     _mtlDevice = mtlDevice;
     updateTextureDescriptor(descriptor);
@@ -345,7 +345,7 @@ TextureCubeMTL::~TextureCubeMTL()
 
 void TextureCubeMTL::updateTextureDescriptor(const cocos2d::backend::TextureDescriptor &descriptor)
 {
-    Texture::updateTextureDescriptor(descriptor);
+    TextureBackend::updateTextureDescriptor(descriptor);
     createTexture(_mtlDevice, descriptor);
     updateSamplerDescriptor(descriptor.samplerDescriptor);
     

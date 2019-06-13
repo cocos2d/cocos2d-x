@@ -17,7 +17,7 @@ CC_BACKEND_BEGIN
 namespace
 {
 
-    GLuint getHandler(Texture *texture)
+    GLuint getHandler(TextureBackend *texture)
     {
         switch (texture->getTextureType())
         {
@@ -31,7 +31,7 @@ namespace
         }
     }
 
-    void applyTexture(Texture* texture, int slot)
+    void applyTexture(TextureBackend* texture, int slot)
     {
         switch (texture->getTextureType())
         {

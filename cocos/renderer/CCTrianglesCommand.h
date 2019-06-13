@@ -39,7 +39,7 @@ NS_CC_BEGIN
  if the material id is the same, these TrianglesCommands could be batched to save draw call.
 */
 namespace backend {
-    class Texture;
+    class TextureBackend;
     class Program;
 }
 
@@ -116,7 +116,7 @@ protected:
     // Cached value to determine to generate material id or not.
     BlendFunc _blendType = BlendFunc::DISABLE;
     backend::Program* _program = nullptr;
-    backend::Texture* _texture = nullptr;
+    backend::TextureBackend* _texture = nullptr;
 };
 
 NS_CC_END
