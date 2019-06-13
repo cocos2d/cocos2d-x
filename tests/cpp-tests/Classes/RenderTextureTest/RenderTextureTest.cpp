@@ -409,7 +409,9 @@ RenderTexturePartTest::RenderTexturePartTest()
     _spriteDraw = Sprite::createWithTexture(_rend->getSprite()->getTexture());
     FiniteTimeAction* baseAction = MoveBy::create(1, Vec2(size.width,0));
     _spriteDraw->setPosition(0,size.height/2);
+#ifndef CC_USE_METAL
     _spriteDraw->setScaleY(-1);
+#endif
     _spriteDraw->runAction(RepeatForever::create(Sequence::create
                                           (baseAction,baseAction->reverse(), nullptr)));
     addChild(_spriteDraw);
