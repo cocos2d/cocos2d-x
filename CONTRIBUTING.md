@@ -74,6 +74,10 @@ The patch must be _complete_. And by that, we mean:
 
 __TBD__: Is this applicable for big features ? What is the best way to merge big features ?
 
+## Issue triage [![Open Source Helpers](https://www.codetriage.com/cocos2d/cocos2d-x/badges/users.svg)](https://www.codetriage.com/cocos2d/cocos2d-x)
+
+You can contribute by triaging issues which may include reproducing bug reports or asking for vital information, such as version numbers or reproduction instructions. If you would like to start triaging issues, one easy way to get started is to [subscribe to cocos2d-x on CodeTriage](https://www.codetriage.com/cocos2d/cocos2d-x).
+
 # Promoting cocos2d
 
 Help us promote cocos2d-x by using the cocos2d logo in your game, or by mentioning cocos2d in the credits.
