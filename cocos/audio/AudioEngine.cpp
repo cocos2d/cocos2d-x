@@ -400,10 +400,7 @@ void AudioEngine::uncache(const std::string &filePath)
         _audioPathIDMap.erase(filePath);
     }
 
-    if (_audioEngineImpl)
-    {
-        _audioEngineImpl->uncache(filePath);
-    }
+    _audioEngineImpl->uncache(filePath);
 }
 
 void AudioEngine::uncacheAll()
