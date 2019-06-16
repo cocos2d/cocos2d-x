@@ -375,7 +375,7 @@ static bool js_cocos2dx_studio_Frame_getEasingParams(JSContext *cx, uint32_t arg
     JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
     if(argc == 0)
     {
-        const std::vector<float> ret = cobj->getEasingParams();
+        const std::vector<float>& ret = cobj->getEasingParams();
 
         JS::RootedObject jsobj(cx, JS_NewArrayObject(cx, ret.size()));
         bool ok = true;

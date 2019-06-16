@@ -95,7 +95,7 @@ Properties* Properties::createNonRefCounted(const std::string& url)
     }
 
     // Calculate the file and full namespace path from the specified url.
-    std::string urlString = url;
+    const std::string& urlString = url;
     std::string fileString;
     std::vector<std::string> namespacePath;
     calculateNamespacePath(urlString, fileString, namespacePath);

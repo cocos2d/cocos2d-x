@@ -155,9 +155,9 @@ protected:
     friend class Renderer;
     
     std::vector<Camera*> _cameras; //weak ref to Camera
-    Camera*              _defaultCamera; //weak ref, default camera created by scene, _cameras[0], Caution that the default camera can not be added to _cameras before onEnter is called
-    bool                 _cameraOrderDirty; // order is dirty, need sort
-    EventListenerCustom*       _event;
+    Camera*              _defaultCamera = nullptr; //weak ref, default camera created by scene, _cameras[0], Caution that the default camera can not be added to _cameras before onEnter is called
+    bool                 _cameraOrderDirty = true; // order is dirty, need sort
+    EventListenerCustom*       _event = nullptr;
 
     std::vector<BaseLight *> _lights;
     
@@ -201,12 +201,12 @@ protected:
     void addChildToPhysicsWorld(Node* child);
 
 #if CC_USE_PHYSICS
-    PhysicsWorld* _physicsWorld;
+    PhysicsWorld* _physicsWorld = nullptr;
 #endif
     
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
-    Physics3DWorld*            _physics3DWorld;
-    Camera*                    _physics3dDebugCamera; //
+    Physics3DWorld*            _physics3DWorld = nullptr;
+    Camera*                    _physics3dDebugCamera = nullptr;
 #endif
 #endif // (CC_USE_PHYSICS || CC_USE_3D_PHYSICS)
     
@@ -222,8 +222,8 @@ public:
     void setNavMeshDebugCamera(Camera *camera);
 
 protected:
-    NavMesh*        _navMesh;
-    Camera *        _navMeshDebugCamera;
+    NavMesh*        _navMesh = nullptr;
+    Camera *        _navMeshDebugCamera = nullptr;
 #endif
     
 #if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)

@@ -149,7 +149,7 @@ public:
         
         jsval dataVal[2];
         dataVal[0] = OBJECT_TO_JSVAL(p->obj);
-        std::string arg1 = text;
+        const std::string& arg1 = text;
         dataVal[1] = std_string_to_jsval(cx, arg1);
         
         JS::RootedValue delegateVal(cx, _JSDelegate);

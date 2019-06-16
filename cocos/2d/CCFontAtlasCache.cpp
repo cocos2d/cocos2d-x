@@ -119,7 +119,7 @@ FontAtlas* FontAtlasCache::getFontAtlasFNT(const std::string& fontFileName, cons
 
 FontAtlas* FontAtlasCache::getFontAtlasCharMap(const std::string& plistFile)
 {
-    std::string atlasName = plistFile;
+    const std::string& atlasName = plistFile;
     
     auto it = _atlasMap.find(atlasName);
     if ( it == _atlasMap.end() )
