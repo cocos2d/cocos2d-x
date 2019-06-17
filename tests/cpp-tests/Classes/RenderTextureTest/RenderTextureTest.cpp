@@ -37,7 +37,7 @@ RenderTextureTests::RenderTextureTests()
     ADD_TEST_CASE(SpriteRenderTextureBug);
     ADD_TEST_CASE(RenderTexturePartTest);
     ADD_TEST_CASE(Issue16113Test);
-    ADD_TEST_CASE(RenderTextureWithSprite3DIssue16894);
+//    ADD_TEST_CASE(RenderTextureWithSprite3DIssue16894); this Test makes no sense
 };
 
 /**
@@ -756,7 +756,6 @@ std::string Issue16113Test::subtitle() const
 //
 RenderTextureWithSprite3DIssue16894::RenderTextureWithSprite3DIssue16894()
 {
-    //TODO: minggo
      auto visibleSize = Director::getInstance()->getVisibleSize();
      Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
