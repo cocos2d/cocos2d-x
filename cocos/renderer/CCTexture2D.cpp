@@ -581,6 +581,11 @@ bool Texture2D::initWithBackendTexture(backend::TextureBackend *texture)
     return true;
 }
 
+void Texture2D::setRenderTarget(bool renderTarget)
+{
+    _isRenderTarget = renderTarget;
+}
+
 bool Texture2D::hasMipmaps() const
 {
     return _texture->hasMipmaps();

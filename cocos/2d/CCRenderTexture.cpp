@@ -197,6 +197,7 @@ bool RenderTexture::initWithWidthAndHeight(int w, int h, backend::PixelFormat fo
         if (_texture2D)
         {
             _texture2D->initWithBackendTexture(texture);
+            _texture2D->setRenderTarget(true);
             texture->release();
         }
         else
