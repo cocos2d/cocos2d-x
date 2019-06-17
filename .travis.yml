@@ -39,6 +39,12 @@ matrix:
       env: BUILD_TARGET=android_lua_ndk-build
       language: android
       sudo: required
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
     # android cmake
     - os: linux
       env: BUILD_TARGET=android_cpp_cmake
@@ -49,11 +55,23 @@ matrix:
       env: BUILD_TARGET=android_lua_cmake
       language: android
       sudo: required
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
     # android_js cmake
     - os: linux
       env: BUILD_TARGET=android_js_cmake
       language: android
       sudo: required
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
     # mac
     - os: osx
       env: BUILD_TARGET=mac
