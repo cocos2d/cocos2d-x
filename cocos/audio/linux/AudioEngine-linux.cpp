@@ -107,6 +107,7 @@ int AudioEngineImpl::play2d(const std::string &fileFullPath, bool loop, float vo
     int id = preload(fileFullPath, nullptr);
     if (id >= 0) {
         mapChannelInfo[id].loop=loop;
+        // channel is null here. Don't dereference it. It's only set in resume(id).
         //mapChannelInfo[id].channel->setPaused(true);
         mapChannelInfo[id].volume = volume;
         AudioEngine::_audioIDInfoMap[id].state = AudioEngine::AudioState::PAUSED;
