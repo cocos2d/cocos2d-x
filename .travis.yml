@@ -36,9 +36,9 @@ matrix:
       addons:
         apt:
           sources:
-            - llvm-toolchain-trusty-5.0
+            - ubuntu-toolchain-r-test
           packages:
-            - clang-5.0
+            - g++-6
     # android_js cmake
     # - os: linux
     #   env: BUILD_TARGET=android_js_cmake
