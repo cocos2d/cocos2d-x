@@ -33,6 +33,12 @@ matrix:
       env: BUILD_TARGET=android_lua_cmake
       language: android
       sudo: required
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-7
     # android_js cmake
     # - os: linux
     #   env: BUILD_TARGET=android_js_cmake
