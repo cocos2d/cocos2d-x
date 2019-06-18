@@ -22,474 +22,450 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+#define LOG_TAG "AudioEngine-Android"
 
-#define LOG_TAG "AudioEngineImpl"
+#include "platform/CCPlatformConfig.h"
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #include "audio/android/AudioEngine-inl.h"
 
-#include <unistd.h>
-// for native asset manager
-#include <sys/types.h>
-#include <android/asset_manager.h>
-#include <android/asset_manager_jni.h>
+#ifdef OPENAL_PLAIN_INCLUDES
+#include "AL/alc.h"
+#include "AL/alc.h"
+#include "AL/alext.h"
 
-#include <unordered_map>
-#include "platform/android/jni/JniHelper.h"
-#include <android/log.h>
-#include <jni.h>
+#include "audio/android/cutils/log.h"
+
 #include "audio/include/AudioEngine.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
-#include "base/CCEventDispatcher.h"
-#include "base/CCEventType.h"
-#include "base/CCEventListenerCustom.h"
-#include "base/ccUTF8.h"
-#include "platform/android/CCFileUtils-android.h"
-#include "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxHelper.h"
+#include "platform/CCFileUtils.h"
+#include "audio/android/AudioDecoderManager.h"
 
-#include "audio/android/IAudioPlayer.h"
-#include "audio/android/ICallerThreadUtils.h"
-#include "audio/android/AudioPlayerProvider.h"
-#include "audio/android/cutils/log.h"
-#include "audio/android/UrlAudioPlayer.h"
+
+// log, CCLOG aren't threadsafe, since we uses sub threads for parsing pcm data, threadsafe log output
+// is needed. Define the following macros (ALOGV, ALOGD, ALOGI, ALOGW, ALOGE) for threadsafe log output.
+
+//FIXME: Move _winLog, winLog to a separated file
+
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;
 
-// Audio focus values synchronized with which in cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxActivity.java
-static const int AUDIOFOCUS_GAIN = 0;
-static const int AUDIOFOCUS_LOST = 1;
-static const int AUDIOFOCUS_LOST_TRANSIENT = 2;
-static const int AUDIOFOCUS_LOST_TRANSIENT_CAN_DUCK = 3;
+static ALCdevice *s_ALDevice = nullptr;
+static ALCcontext *s_ALContext = nullptr;
 
-static int __currentAudioFocus = AUDIOFOCUS_GAIN;
-static AudioEngineImpl* __impl = nullptr;
-
-class CallerThreadUtils : public ICallerThreadUtils
-{
-public:
-    virtual void performFunctionInCallerThread(const std::function<void()>& func)
-    {
-        Director::getInstance()->getScheduler()->performFunctionInCocosThread(func);
-    };
-
-    virtual std::thread::id getCallerThreadId()
-    {
-        return _tid;
-    };
-
-    void setCallerThreadId(std::thread::id tid)
-    {
-        _tid = tid;
-    };
-
-private:
-    std::thread::id _tid;
-};
-
-static CallerThreadUtils __callerThreadUtils;
-
-static int fdGetter(const std::string& url, off_t* start, off_t* length)
-{
-    int fd = -1;
-    if (cocos2d::FileUtilsAndroid::getObbFile() != nullptr)
-    {
-        fd = getObbAssetFileDescriptorJNI(url.c_str(), start, length);
-    } 
-    
-    if (fd <= 0)
-    {
-        auto asset = AAssetManager_open(cocos2d::FileUtilsAndroid::getAssetManager(), url.c_str(), AASSET_MODE_UNKNOWN);
-        // open asset as file descriptor
-        fd = AAsset_openFileDescriptor(asset, start, length);
-        AAsset_close(asset);
-    }
-
-    if (fd <= 0)
-    {
-        ALOGE("Failed to open file descriptor for '%s'", url.c_str());
-    }
-
-    return fd;
-};
-
-//====================================================
 AudioEngineImpl::AudioEngineImpl()
-    : _engineObject(nullptr)
-    , _engineEngine(nullptr)
-    , _outputMixObject(nullptr)
-    , _audioPlayerProvider(nullptr)
-    , _onPauseListener(nullptr)
-    , _onResumeListener(nullptr)
-    , _audioIDIndex(0)
-    , _lazyInitLoop(true)
+: _lazyInitLoop(true)
+, _currentAudioID(0)
+, _scheduler(nullptr)
 {
-    __callerThreadUtils.setCallerThreadId(std::this_thread::get_id());
-    __impl = this;
+
 }
 
 AudioEngineImpl::~AudioEngineImpl()
 {
-    if (_audioPlayerProvider != nullptr)
+    if (_scheduler != nullptr)
     {
-        delete _audioPlayerProvider;
-        _audioPlayerProvider = nullptr;
+        _scheduler->unschedule(CC_SCHEDULE_SELECTOR(AudioEngineImpl::update), this);
     }
 
-    if (_outputMixObject)
-    {
-        (*_outputMixObject)->Destroy(_outputMixObject);
-    }
-    if (_engineObject)
-    {
-        (*_engineObject)->Destroy(_engineObject);
+    if (s_ALContext) {
+        alDeleteSources(MAX_AUDIOINSTANCES, _alSources);
+
+        _audioCaches.clear();
+
+        alcMakeContextCurrent(nullptr);
+        alcDestroyContext(s_ALContext);
+        s_ALContext = nullptr;
     }
 
-    if (_onPauseListener != nullptr)
-    {
-        Director::getInstance()->getEventDispatcher()->removeEventListener(_onPauseListener);
+    if (s_ALDevice) {
+        alcCloseDevice(s_ALDevice);
+        s_ALDevice = nullptr;
     }
 
-    if (_onResumeListener != nullptr)
-    {
-        Director::getInstance()->getEventDispatcher()->removeEventListener(_onResumeListener);
-    }
-
-    __impl = nullptr;
+    AudioDecoderManager::destroy();
 }
 
 bool AudioEngineImpl::init()
 {
     bool ret = false;
     do{
+        s_ALDevice = alcOpenDevice(nullptr);
 
-        // create engine
-        auto result = slCreateEngine(&_engineObject, 0, nullptr, 0, nullptr, nullptr);
-        if(SL_RESULT_SUCCESS != result){ ERRORLOG("create opensl engine fail"); break; }
+        if (s_ALDevice) {
+            alGetError();
+            s_ALContext = alcCreateContext(s_ALDevice, nullptr);
+            alcMakeContextCurrent(s_ALContext);
 
-        // realize the engine
-        result = (*_engineObject)->Realize(_engineObject, SL_BOOLEAN_FALSE);
-        if(SL_RESULT_SUCCESS != result){ ERRORLOG("realize the engine fail"); break; }
+            alGenSources(MAX_AUDIOINSTANCES, _alSources);
+            auto alError = alGetError();
+            if(alError != AL_NO_ERROR)
+            {
+                ALOGE("%s:generating sources failed! error = %x\n", __FUNCTION__, alError);
+                break;
+            }
 
-        // get the engine interface, which is needed in order to create other objects
-        result = (*_engineObject)->GetInterface(_engineObject, SL_IID_ENGINE, &_engineEngine);
-        if(SL_RESULT_SUCCESS != result){ ERRORLOG("get the engine interface fail"); break; }
+            for (int i = 0; i < MAX_AUDIOINSTANCES; ++i) {
+                _alSourceUsed[_alSources[i]] = false;
+            }
 
-        // create output mix
-        const SLInterfaceID outputMixIIDs[] = {};
-        const SLboolean outputMixReqs[] = {};
-        result = (*_engineEngine)->CreateOutputMix(_engineEngine, &_outputMixObject, 0, outputMixIIDs, outputMixReqs);           
-        if(SL_RESULT_SUCCESS != result){ ERRORLOG("create output mix fail"); break; }
-
-        // realize the output mix
-        result = (*_outputMixObject)->Realize(_outputMixObject, SL_BOOLEAN_FALSE);
-        if(SL_RESULT_SUCCESS != result){ ERRORLOG("realize the output mix fail"); break; }
-
-        _audioPlayerProvider = new AudioPlayerProvider(_engineEngine, _outputMixObject, getDeviceSampleRate(), getDeviceAudioBufferSizeInFrames(), fdGetter, &__callerThreadUtils);
-
-        _onPauseListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_COME_TO_BACKGROUND, CC_CALLBACK_1(AudioEngineImpl::onEnterBackground, this));
-
-        _onResumeListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_COME_TO_FOREGROUND, CC_CALLBACK_1(AudioEngineImpl::onEnterForeground, this));
-
-        ret = true;
+            _scheduler = Director::getInstance()->getScheduler();
+            ret = AudioDecoderManager::init();
+            ALOGI("OpenAL was initialized successfully!");
+        }
     }while (false);
 
     return ret;
 }
 
-void AudioEngineImpl::onEnterBackground(EventCustom* event)
+AudioCache* AudioEngineImpl::preload(const std::string& filePath, std::function<void(bool)> callback)
 {
-    // _audioPlayerProvider->pause() pauses AudioMixer and PcmAudioService,
-    // but UrlAudioPlayers could not be paused.
-    if (_audioPlayerProvider != nullptr)
-    {
-        _audioPlayerProvider->pause();
+    AudioCache* audioCache = nullptr;
+
+    auto it = _audioCaches.find(filePath);
+    if (it == _audioCaches.end()) {
+        audioCache = &_audioCaches[filePath];
+        audioCache->_fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+        unsigned int cacheId = audioCache->_id;
+        auto isCacheDestroyed = audioCache->_isDestroyed;
+        AudioEngine::addTask([audioCache, cacheId, isCacheDestroyed](){
+            if (*isCacheDestroyed)
+            {
+                ALOGV("AudioCache (id=%u) was destroyed, no need to launch readDataTask.", cacheId);
+                audioCache->setSkipReadDataTask(true);
+                return;
+            }
+            audioCache->readDataTask(cacheId);
+        });
+    }
+    else {
+        audioCache = &it->second;
     }
 
-    // pause UrlAudioPlayers which are playing.
-    for (auto&& e : _audioPlayers)
+    if (audioCache && callback)
     {
-        auto player = e.second;
-        if (dynamic_cast<UrlAudioPlayer*>(player) != nullptr
-            && player->getState() == IAudioPlayer::State::PLAYING)
-        {
-            _urlAudioPlayersNeedResume.emplace(e.first, player);
-            player->pause();
-        }
+        audioCache->addLoadCallback(callback);
     }
-}
-
-void AudioEngineImpl::onEnterForeground(EventCustom* event)
-{
-    // _audioPlayerProvider->resume() resumes AudioMixer and PcmAudioService,
-    // but UrlAudioPlayers could not be resumed.
-    if (_audioPlayerProvider != nullptr)
-    {
-        _audioPlayerProvider->resume();
-    }
-
-    // resume UrlAudioPlayers
-    for (auto&& iter : _urlAudioPlayersNeedResume)
-    {
-        iter.second->resume();
-    }
-    _urlAudioPlayersNeedResume.clear();
-}
-
-void AudioEngineImpl::setAudioFocusForAllPlayers(bool isFocus)
-{
-    for (const auto& e : _audioPlayers)
-    {
-        e.second->setAudioFocus(isFocus);
-    }
+    return audioCache;
 }
 
 int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume)
 {
-    ALOGV("play2d, _audioPlayers.size=%d", (int)_audioPlayers.size());
-    auto audioId = AudioEngine::INVALID_AUDIO_ID;
+    if (s_ALDevice == nullptr) {
+        return AudioEngine::INVALID_AUDIO_ID;
+    }
 
-    do 
-    {
-        if (_engineEngine == nullptr || _audioPlayerProvider == nullptr)
+    bool sourceFlag = false;
+    ALuint alSource = 0;
+    for (int i = 0; i < MAX_AUDIOINSTANCES; ++i) {
+        alSource = _alSources[i];
+
+        if ( !_alSourceUsed[alSource]) {
+            sourceFlag = true;
             break;
+        }
+    }
+    if(!sourceFlag){
+        return AudioEngine::INVALID_AUDIO_ID;
+    }
 
-        auto fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+    auto player = new (std::nothrow) AudioPlayer;
+    if (player == nullptr) {
+        return AudioEngine::INVALID_AUDIO_ID;
+    }
 
-        audioId = _audioIDIndex++;
+    player->_alSource = alSource;
+    player->_loop = loop;
+    player->_volume = volume;
 
-        auto player = _audioPlayerProvider->getAudioPlayer(fullPath);
-        if (player != nullptr)
-        {
-            player->setId(audioId);
-            _audioPlayers.insert(std::make_pair(audioId, player));
+    auto audioCache = preload(filePath, nullptr);
+    if (audioCache == nullptr) {
+        delete player;
+        return AudioEngine::INVALID_AUDIO_ID;
+    }
 
-            player->setPlayEventCallback([this, player, filePath](IAudioPlayer::State state){
+    player->setCache(audioCache);
+    _threadMutex.lock();
+    _audioPlayers[_currentAudioID] = player;
+    _threadMutex.unlock();
 
-                if (state != IAudioPlayer::State::OVER && state != IAudioPlayer::State::STOPPED)
-                {
-                    ALOGV("Ignore state: %d", static_cast<int>(state));
-                    return;
-                }
+    _alSourceUsed[alSource] = true;
 
-                int id = player->getId();
+    audioCache->addPlayCallback(std::bind(&AudioEngineImpl::_play2d,this,audioCache,_currentAudioID));
 
-                ALOGV("Removing player id=%d, state:%d", id, (int)state);
+    if (_lazyInitLoop) {
+        _lazyInitLoop = false;
+        _scheduler->schedule(CC_SCHEDULE_SELECTOR(AudioEngineImpl::update), this, 0.05f, false);
+    }
 
-                AudioEngine::remove(id);
-                if (_audioPlayers.find(id) != _audioPlayers.end())
-                {
-                    _audioPlayers.erase(id);
-                }
-                if (_urlAudioPlayersNeedResume.find(id) != _urlAudioPlayersNeedResume.end())
-                {
-                    _urlAudioPlayersNeedResume.erase(id);
-                }
+    return _currentAudioID++;
+}
 
-                auto iter = _callbackMap.find(id);
-                if (iter != _callbackMap.end())
-                {
-                    if (state == IAudioPlayer::State::OVER)
-                    {
-                        iter->second(id, filePath);
-                    }
-                    _callbackMap.erase(iter);
+void AudioEngineImpl::_play2d(AudioCache *cache, int audioID)
+{
+    //Note: It may bn in sub thread or main thread :(
+    if (!*cache->_isDestroyed && cache->_state == AudioCache::State::READY)
+    {
+        _threadMutex.lock();
+        auto playerIt = _audioPlayers.find(audioID);
+        if (playerIt != _audioPlayers.end() && playerIt->second->play2d()) {
+            _scheduler->performFunctionInCocosThread([audioID](){
+
+                if (AudioEngine::_audioIDInfoMap.find(audioID) != AudioEngine::_audioIDInfoMap.end()) {
+                    AudioEngine::_audioIDInfoMap[audioID].state = AudioEngine::AudioState::PLAYING;
                 }
             });
-
-            player->setLoop(loop);
-            player->setVolume(volume);
-            player->setAudioFocus(__currentAudioFocus == AUDIOFOCUS_GAIN);
-            player->play();
-        } 
-        else
-        {
-            ALOGE("Oops, player is null ...");
-            return AudioEngine::INVALID_AUDIO_ID;
         }
-
-        AudioEngine::_audioIDInfoMap[audioId].state = AudioEngine::AudioState::PLAYING;
-        
-    } while (0);
-
-    return audioId;
+        _threadMutex.unlock();
+    }
+    else
+    {
+        ALOGD("AudioEngineImpl::_play2d, cache was destroyed or not ready!");
+        auto iter = _audioPlayers.find(audioID);
+        if (iter != _audioPlayers.end())
+        {
+            iter->second->_removeByAudioEngine = true;
+        }
+    }
 }
 
 void AudioEngineImpl::setVolume(int audioID,float volume)
 {
-    auto iter = _audioPlayers.find(audioID);
-    if (iter != _audioPlayers.end())
-    {
-        auto player = iter->second;
-        player->setVolume(volume);
+    auto player = _audioPlayers[audioID];
+    player->_volume = volume;
+
+    if (player->_ready) {
+        alSourcef(_audioPlayers[audioID]->_alSource, AL_GAIN, volume);
+
+        auto error = alGetError();
+        if (error != AL_NO_ERROR) {
+            ALOGE("%s: audio id = %d, error = %x", __FUNCTION__,audioID,error);
+        }
     }
 }
 
 void AudioEngineImpl::setLoop(int audioID, bool loop)
 {
-    auto iter = _audioPlayers.find(audioID);
-    if (iter != _audioPlayers.end())
-    {
-        auto player = iter->second;
-        player->setLoop(loop);
+    auto player = _audioPlayers[audioID];
+
+    if (player->_ready) {
+        if (player->_streamingSource) {
+            player->setLoop(loop);
+        } else {
+            if (loop) {
+                alSourcei(player->_alSource, AL_LOOPING, AL_TRUE);
+            } else {
+                alSourcei(player->_alSource, AL_LOOPING, AL_FALSE);
+            }
+
+            auto error = alGetError();
+            if (error != AL_NO_ERROR) {
+                ALOGE("%s: audio id = %d, error = %x", __FUNCTION__,audioID,error);
+            }
+        }
+    }
+    else {
+        player->_loop = loop;
     }
 }
 
-void AudioEngineImpl::pause(int audioID)
+bool AudioEngineImpl::pause(int audioID)
 {
-    auto iter = _audioPlayers.find(audioID);
-    if (iter != _audioPlayers.end())
-    {
-        auto player = iter->second;
-        player->pause();
+    bool ret = true;
+    alSourcePause(_audioPlayers[audioID]->_alSource);
+
+    auto error = alGetError();
+    if (error != AL_NO_ERROR) {
+        ret = false;
+        ALOGE("%s: audio id = %d, error = %x\n", __FUNCTION__,audioID,error);
     }
+
+    return ret;
 }
 
-void AudioEngineImpl::resume(int audioID)
+bool AudioEngineImpl::resume(int audioID)
 {
-    auto iter = _audioPlayers.find(audioID);
-    if (iter != _audioPlayers.end())
-    {
-        auto player = iter->second;
-        player->resume();
+    bool ret = true;
+    alSourcePlay(_audioPlayers[audioID]->_alSource);
+
+    auto error = alGetError();
+    if (error != AL_NO_ERROR) {
+        ret = false;
+        ALOGE("%s: audio id = %d, error = %x\n", __FUNCTION__,audioID,error);
     }
+
+    return ret;
 }
 
 void AudioEngineImpl::stop(int audioID)
 {
-    auto iter = _audioPlayers.find(audioID);
-    if (iter != _audioPlayers.end())
-    {
-        auto player = iter->second;
-        player->stop();
-    }
+    auto player = _audioPlayers[audioID];
+    player->destroy();
+    //Note: Don't set the flag to false here, it should be set in 'update' function.
+    // Otherwise, the state got from alSourceState may be wrong
+//    _alSourceUsed[player->_alSource] = false;
+
+    // Call 'update' method to cleanup immediately since the schedule may be cancelled without any notification.
+    update(0.0f);
 }
 
 void AudioEngineImpl::stopAll()
 {
-    if (_audioPlayers.empty())
+    for(auto&& player : _audioPlayers)
     {
-        return;
+        player.second->destroy();
     }
+    //Note: Don't set the flag to false here, it should be set in 'update' function.
+    // Otherwise, the state got from alSourceState may be wrong
+//    for(int index = 0; index < MAX_AUDIOINSTANCES; ++index)
+//    {
+//        _alSourceUsed[_alSources[index]] = false;
+//    }
 
-    // Create a temporary vector for storing all players since
-    // p->stop() will trigger _audioPlayers.erase, 
-    // and it will cause a crash as it's already in for loop
-    std::vector<IAudioPlayer*> players;
-    players.reserve(_audioPlayers.size());
-
-    for (const auto& e : _audioPlayers)
-    {
-        players.push_back(e.second);
-    }
-
-    for (auto p : players)
-    {
-        p->stop();
-    }
+    // Call 'update' method to cleanup immediately since the schedule may be cancelled without any notification.
+    update(0.0f);
 }
 
 float AudioEngineImpl::getDuration(int audioID)
 {
-    auto iter = _audioPlayers.find(audioID);
-    if (iter != _audioPlayers.end())
-    {
-        auto player = iter->second;
-        return player->getDuration();
+    auto player = _audioPlayers[audioID];
+    if(player->_ready){
+        return player->_audioCache->_duration;
+    } else {
+        return AudioEngine::TIME_UNKNOWN;
     }
-    return 0.0f;
 }
 
 float AudioEngineImpl::getCurrentTime(int audioID)
 {
-    auto iter = _audioPlayers.find(audioID);
-    if (iter != _audioPlayers.end())
-    {
-        auto player = iter->second;
-        return player->getPosition();
+    float ret = 0.0f;
+    auto player = _audioPlayers[audioID];
+    if(player->_ready){
+        if (player->_streamingSource) {
+            ret = player->getTime();
+        } else {
+            alGetSourcef(player->_alSource, AL_SEC_OFFSET, &ret);
+
+            auto error = alGetError();
+            if (error != AL_NO_ERROR) {
+                ALOGE("%s, audio id:%d,error code:%x", __FUNCTION__,audioID,error);
+            }
+        }
     }
-    return 0.0f;
+
+    return ret;
 }
 
 bool AudioEngineImpl::setCurrentTime(int audioID, float time)
 {
-    auto iter = _audioPlayers.find(audioID);
-    if (iter != _audioPlayers.end())
-    {
-        auto player = iter->second;
-        return player->setPosition(time);
-    }
-    return false;
+    bool ret = false;
+    auto player = _audioPlayers[audioID];
+
+    do {
+        if (!player->_ready) {
+            break;
+        }
+
+        if (player->_streamingSource) {
+            ret = player->setTime(time);
+            break;
+        }
+        else {
+            if (player->_audioCache->_framesRead != player->_audioCache->_totalFrames &&
+                (time * player->_audioCache->_sampleRate) > player->_audioCache->_framesRead) {
+                ALOGE("%s: audio id = %d", __FUNCTION__,audioID);
+                break;
+            }
+
+            alSourcef(player->_alSource, AL_SEC_OFFSET, time);
+
+            auto error = alGetError();
+            if (error != AL_NO_ERROR) {
+                ALOGE("%s: audio id = %d, error = %x", __FUNCTION__,audioID,error);
+            }
+            ret = true;
+        }
+    } while (0);
+
+    return ret;
 }
 
 void AudioEngineImpl::setFinishCallback(int audioID, const std::function<void (int, const std::string &)> &callback)
 {
-    _callbackMap[audioID] = callback;
+    _audioPlayers[audioID]->_finishCallbak = callback;
 }
 
-void AudioEngineImpl::preload(const std::string& filePath, const std::function<void(bool)>& callback)
+void AudioEngineImpl::update(float dt)
 {
-    if (_audioPlayerProvider != nullptr)
-    {
-        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-        _audioPlayerProvider->preloadEffect(fullPath, [callback](bool succeed, PcmData data){
-            if (callback != nullptr)
-            {
-                callback(succeed);
-            }
-        });
-    }
-    else
-    {
-        if (callback != nullptr)
+    ALint sourceState;
+    int audioID;
+    AudioPlayer* player;
+    ALuint alSource;
+
+//    ALOGV("AudioPlayer count: %d", (int)_audioPlayers.size());
+
+    for (auto it = _audioPlayers.begin(); it != _audioPlayers.end(); ) {
+        audioID = it->first;
+        player = it->second;
+        alSource = player->_alSource;
+        alGetSourcei(alSource, AL_SOURCE_STATE, &sourceState);
+
+        if (player->_removeByAudioEngine)
         {
-            callback(false);
+            AudioEngine::remove(audioID);
+            _threadMutex.lock();
+            it = _audioPlayers.erase(it);
+            _threadMutex.unlock();
+            delete player;
+            _alSourceUsed[alSource] = false;
+        }
+        else if (player->_ready && sourceState == AL_STOPPED) {
+
+            std::string filePath;
+            if (player->_finishCallbak) {
+                auto& audioInfo = AudioEngine::_audioIDInfoMap[audioID];
+                filePath = *audioInfo.filePath;
+                player->setCache(nullptr); // it's safe for player didn't free audio cache
+            }
+
+            AudioEngine::remove(audioID);
+            
+            _threadMutex.lock();
+            it = _audioPlayers.erase(it);
+            _threadMutex.unlock();
+
+            if (player->_finishCallbak) {
+                player->_finishCallbak(audioID, filePath); //FIXME: callback will delay 50ms
+            }
+            delete player;
+            _alSourceUsed[alSource] = false;
+        }
+        else{
+            ++it;
         }
     }
+
+    if(_audioPlayers.empty()){
+        _lazyInitLoop = true;
+        _scheduler->unschedule(CC_SCHEDULE_SELECTOR(AudioEngineImpl::update), this);
+    }
 }
 
-void AudioEngineImpl::uncache(const std::string& filePath)
+void AudioEngineImpl::uncache(const std::string &filePath)
 {
-    if (_audioPlayerProvider != nullptr)
-    {
-        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-        _audioPlayerProvider->clearPcmCache(fullPath);
-    }
+    _audioCaches.erase(filePath);
 }
 
 void AudioEngineImpl::uncacheAll()
 {
-    if (_audioPlayerProvider != nullptr)
+    _audioCaches.clear();
+    for(auto&& player : _audioPlayers)
     {
-        _audioPlayerProvider->clearAllPcmCaches();
-    }
-}
-
-// It's invoked from javaactivity-android.cpp
-void cocos_audioengine_focus_change(int focusChange)
-{
-    if (focusChange < AUDIOFOCUS_GAIN || focusChange > AUDIOFOCUS_LOST_TRANSIENT_CAN_DUCK)
-    {
-        CCLOGERROR("cocos_audioengine_focus_change: unknown value: %d", focusChange);
-        return;
-    }
-    CCLOG("cocos_audioengine_focus_change: %d", focusChange);
-    __currentAudioFocus = focusChange;
-
-    if (__impl == nullptr)
-    {
-        CCLOGWARN("cocos_audioengine_focus_change: AudioEngineImpl isn't ready!");
-        return;
-    }
-
-    if (__currentAudioFocus == AUDIOFOCUS_GAIN)
-    {
-        __impl->setAudioFocusForAllPlayers(true);
-    }
-    else
-    {
-        __impl->setAudioFocusForAllPlayers(false);
+        // prevent player hold invalid AudioCache* pointer, since all audio caches purged
+        player.second->setCache(nullptr);
     }
 }
 
