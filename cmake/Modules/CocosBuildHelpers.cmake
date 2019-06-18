@@ -197,14 +197,14 @@ function(setup_cocos_app_config app_name)
 endfunction()
 
 # if cc_variable not set, then set it cc_value
-macro(cocos_fake_set cc_variable cc_value)
+macro(cocos_set_default_value cc_variable cc_value)
     if(NOT DEFINED ${cc_variable})
         set(${cc_variable} ${cc_value})
     endif()
 endmacro()
 
 # generate macOS app package infomations, need improve for example, the using of info.plist
-macro(cocos_pak_xcode cocos_target)
+function(cocos_pak_xcode cocos_target)
     set(oneValueArgs
         INFO_PLIST
         BUNDLE_NAME
@@ -215,40 +215,39 @@ macro(cocos_pak_xcode cocos_target)
         INFO_STRING
         LONG_VERSION_STRING
         SHORT_VERSION_STRING
-        CUSTOM_FONT
         )
     set(multiValueArgs)
-    cmake_parse_arguments(COCOS_APP "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+    cmake_parse_arguments(ARGS "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+
+    string(TIMESTAMP ARGS_COPYRIGHT_YEAR "%Y")
     # set default value
-    cocos_fake_set(COCOS_APP_INFO_PLIST "MacOSXBundleInfo.plist.in")
-    cocos_fake_set(COCOS_APP_BUNDLE_NAME "\${PRODUCT_NAME}")
-    cocos_fake_set(COCOS_APP_BUNDLE_VERSION "1")
-    cocos_fake_set(COCOS_APP_COPYRIGHT "Copyright © 2018. All rights reserved.")
-    cocos_fake_set(COCOS_APP_GUI_IDENTIFIER "org.cocos2dx.${APP_NAME}")
-    cocos_fake_set(COCOS_APP_ICON_FILE "Icon")
-    cocos_fake_set(COCOS_APP_INFO_STRING "cocos2d-x app")
-    cocos_fake_set(COCOS_APP_LONG_VERSION_STRING "1.0.0")
-    cocos_fake_set(COCOS_APP_SHORT_VERSION_STRING "1.0")
-    cocos_fake_set(COCOS_APP_CUSTOM_FONT "")
-    # set bundle info
+    cocos_set_default_value(ARGS_INFO_PLIST "MacOSXBundleInfo.plist.in")
+    cocos_set_default_value(ARGS_BUNDLE_NAME "\${PRODUCT_NAME}")
+    cocos_set_default_value(ARGS_BUNDLE_VERSION "1")
+    cocos_set_default_value(ARGS_COPYRIGHT "Copyright © ${ARGS_COPYRIGHT_YEAR}. All rights reserved.")
+    cocos_set_default_value(ARGS_GUI_IDENTIFIER "org.cocos2dx.${APP_NAME}")
+    cocos_set_default_value(ARGS_ICON_FILE "Icon")
+    cocos_set_default_value(ARGS_INFO_STRING "cocos2d-x app")
+    cocos_set_default_value(ARGS_LONG_VERSION_STRING "1.0.0")
+    cocos_set_default_value(ARGS_SHORT_VERSION_STRING "1.0")
+    # set default values for Info.plist template
     set_target_properties(${cocos_target}
                           PROPERTIES
-                          MACOSX_BUNDLE_INFO_PLIST ${COCOS_APP_INFO_PLIST}
+                          MACOSX_BUNDLE_INFO_PLIST ${ARGS_INFO_PLIST}
                           )
-    set(MACOSX_BUNDLE_BUNDLE_NAME ${COCOS_APP_BUNDLE_NAME})
-    set(MACOSX_BUNDLE_BUNDLE_VERSION ${COCOS_APP_BUNDLE_VERSION})
-    set(MACOSX_BUNDLE_COPYRIGHT ${COCOS_APP_COPYRIGHT})
-    set(MACOSX_BUNDLE_GUI_IDENTIFIER ${COCOS_APP_GUI_IDENTIFIER})
-    set(MACOSX_BUNDLE_ICON_FILE ${COCOS_APP_ICON_FILE})
-    set(MACOSX_BUNDLE_INFO_STRING ${COCOS_APP_INFO_STRING})
-    set(MACOSX_BUNDLE_LONG_VERSION_STRING ${COCOS_APP_LONG_VERSION_STRING})
-    set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${COCOS_APP_SHORT_VERSION_STRING})
-    set(MACOSX_CUSTOM_FONT_FILE ${COCOS_APP_CUSTOM_FONT})
+    set(MACOSX_BUNDLE_BUNDLE_NAME ${ARGS_BUNDLE_NAME} PARENT_SCOPE)
+    set(MACOSX_BUNDLE_BUNDLE_VERSION ${ARGS_BUNDLE_VERSION} PARENT_SCOPE)
+    set(MACOSX_BUNDLE_COPYRIGHT ${ARGS_COPYRIGHT} PARENT_SCOPE)
+    set(MACOSX_BUNDLE_GUI_IDENTIFIER ${ARGS_GUI_IDENTIFIER} PARENT_SCOPE)
+    set(MACOSX_BUNDLE_ICON_FILE ${ARGS_ICON_FILE} PARENT_SCOPE)
+    set(MACOSX_BUNDLE_INFO_STRING ${ARGS_INFO_STRING} PARENT_SCOPE)
+    set(MACOSX_BUNDLE_LONG_VERSION_STRING ${ARGS_LONG_VERSION_STRING} PARENT_SCOPE)
+    set(MACOSX_BUNDLE_SHORT_VERSION_STRING ${ARGS_SHORT_VERSION_STRING} PARENT_SCOPE)
 
-    message(STATUS "cocos package: ${cocos_target}, plist file: ${COCOS_APP_INFO_PLIST}")
+    message(STATUS "cocos package: ${cocos_target}, plist file: ${ARGS_INFO_PLIST}")
 
    cocos_config_app_xcode_property(${cocos_target})
-endmacro()
+endfunction()
 
 # set Xcode property for application, include all depend target
 macro(cocos_config_app_xcode_property cocos_app)
