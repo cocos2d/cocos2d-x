@@ -119,4 +119,9 @@ Program* DeviceMTL::newProgram(const std::string& vertexShader, const std::strin
     return new (std::nothrow) ProgramMTL(_mtlDevice, vertexShader, fragmentShader);
 }
 
+void DeviceMTL::setFrameBufferOnly(bool frameBufferOnly)
+{
+    [DeviceMTL::_metalLayer setFramebufferOnly:frameBufferOnly];
+}
+
 CC_BACKEND_END

@@ -321,6 +321,7 @@ void CommandBufferMTL::captureScreen(std::function<void(const unsigned char*, in
 {
     [_mtlCommandBuffer addCompletedHandler:^(id<MTLCommandBuffer> commandBufferMTL) {
         Utils::getTextureBytes(0, 0, _drawableTexture.width, _drawableTexture.height, _drawableTexture, callback);
+        Device::getInstance()->setFrameBufferOnly(true);
     }];
 }
 
