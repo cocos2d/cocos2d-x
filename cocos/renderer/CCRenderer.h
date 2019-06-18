@@ -251,7 +251,7 @@ public:
 
     /** returns whether or not a rectangle is visible or not */
     bool checkVisibility(const Mat4& transform, const Size& size);
-
+    
 protected:
     friend class Director;
     friend class GroupCommand;

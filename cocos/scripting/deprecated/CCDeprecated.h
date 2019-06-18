@@ -614,7 +614,6 @@ CC_DEPRECATED_ATTRIBUTE typedef Action CCAction;
 CC_DEPRECATED_ATTRIBUTE typedef FiniteTimeAction CCFiniteTimeAction;
 CC_DEPRECATED_ATTRIBUTE typedef Speed CCSpeed;
 CC_DEPRECATED_ATTRIBUTE typedef Follow CCFollow;
-CC_DEPRECATED_ATTRIBUTE typedef GLProgram CCGLProgram;
 CC_DEPRECATED_ATTRIBUTE typedef Touch CCTouch;
 CC_DEPRECATED_ATTRIBUTE typedef Texture2D CCTexture2D;
 CC_DEPRECATED_ATTRIBUTE typedef Node CCNode;

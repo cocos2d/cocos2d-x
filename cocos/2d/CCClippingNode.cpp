@@ -27,22 +27,12 @@
  */
 #include "2d/CCClippingNode.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/ccShaders.h"
+#include "renderer/backend/ProgramState.h"
 #include "base/CCDirector.h"
 #include "base/CCStencilStateManager.h"
 
 NS_CC_BEGIN
-
-//namespace
-//{
-//    void setProgram(Node *n, GLProgram *p)
-//    {
-//        n->setGLProgram(p);
-//
-//        auto& children = n->getChildren();
-//        for(const auto &child : children)
-//            setProgram(child, p);
-//    }
-//}
 
 ClippingNode::ClippingNode()
 : _stencil(nullptr)
@@ -208,18 +198,11 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     auto alphaThreshold = this->getAlphaThreshold();
     if (alphaThreshold < 1)
     {
-          //TODO: minggo: it is hard to do it in current design, and it is a bad design.
-          // We may not support it.
-//        // since glAlphaTest do not exists in OES, use a shader that writes
-//        // pixel only if greater than an alpha threshold
-//        GLProgram *program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
-//        GLint alphaValueLocation = glGetUniformLocation(program->getProgram(), GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE);
-//        // set our alphaThreshold
-//        program->use();
-//        program->setUniformLocationWith1f(alphaValueLocation, alphaThreshold);
-//        // we need to recursively apply this shader to all the nodes in the stencil node
-//        // FIXME: we should have a way to apply shader to all nodes without having to do this
-//        setProgram(_stencil, program);
+        auto programState = new (std::nothrow) backend::ProgramState(positionTextureColor_vert, positionTextureColorAlphaTest_frag);
+        _stencil->setProgramState(programState);
+        auto alphaLocation = programState->getUniformLocation("u_alpha_value");
+        programState->setUniform(alphaLocation, &alphaThreshold, sizeof(alphaThreshold));
+        CC_SAFE_RELEASE_NULL(programState);
     }
     _stencil->visit(renderer, _modelViewTransform, flags);
 
@@ -325,9 +308,8 @@ void ClippingNode::setStencil(Node *stencil)
         }
     }
 
-//TODO minggo
-//    if (_stencil != nullptr)
-//        _originStencilProgram = _stencil->getGLProgram();
+    if (_stencil != nullptr)
+        _originalStencilProgramState = _stencil->getProgramState();
 }
 
 bool ClippingNode::hasContent() const
@@ -342,16 +324,12 @@ float ClippingNode::getAlphaThreshold() const
 
 void ClippingNode::setAlphaThreshold(float alphaThreshold)
 {
-//TODO: minggo
-//#if CC_CLIPPING_NODE_OPENGLES
-//    if (alphaThreshold == 1 && alphaThreshold !cpp= _stencilStateManager->getAlphaThreshold())
-//    {
-//        // should reset program used by _stencil
-//        if (_stencil)
-//            setProgram(_stencil, _originStencilProgram);
-//    }
-//#endif
-
+    if (alphaThreshold == 1 && alphaThreshold != _stencilStateManager->getAlphaThreshold())
+    {
+        // should reset program used by _stencil
+        if (_stencil)
+            _stencil->setProgramState(_originalStencilProgramState);
+    }
     _stencilStateManager->setAlphaThreshold(alphaThreshold);
 }
 

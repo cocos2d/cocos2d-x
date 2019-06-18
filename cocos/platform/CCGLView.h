@@ -94,7 +94,6 @@ NS_CC_BEGIN
 
 class Scene;
 class Renderer;
-class RendererBackend;
 
 /**
  * @addtogroup platform

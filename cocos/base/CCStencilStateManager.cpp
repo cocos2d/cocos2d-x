@@ -180,21 +180,6 @@ void StencilStateManager::onAfterDrawQuadCmd(int mask_layer)
 
 void StencilStateManager::onAfterDrawStencil()
 {
-//    // restore alpha test state
-//    if (_alphaThreshold < 1)
-//    {
-//#if CC_CLIPPING_NODE_OPENGLES
-//        // FIXME: we need to find a way to restore the shaders of the stencil node and its children
-//#else
-//        // manually restore the alpha test state
-//        glAlphaFunc(_currentAlphaTestFunc, _currentAlphaTestRef);
-//        if (!_currentAlphaTestEnabled)
-//        {
-//            glDisable(GL_ALPHA_TEST);
-//        }
-//#endif
-//    }
-
     // restore the depth test state
 //    glDepthMask(_currentDepthWriteMask);
     auto renderer = Director::getInstance()->getRenderer();

@@ -68,6 +68,7 @@ private:
     CullMode _cullMode = CullMode::NONE;
     DepthStencilStateGL* _depthStencilStateGL = nullptr;
     Viewport _viewPort;
+    GLboolean _alphaTestEnabled = false;
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _backToForegroundListener = nullptr;

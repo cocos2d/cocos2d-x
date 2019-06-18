@@ -310,7 +310,6 @@ Sprite::~Sprite()
     CC_SAFE_FREE(_trianglesIndex);
     CC_SAFE_RELEASE(_spriteFrame);
     CC_SAFE_RELEASE(_texture);
-    CC_SAFE_RELEASE(_programState);
 }
 
 /*
@@ -1739,6 +1738,11 @@ void Sprite::setMVPMatrixUniform()
     auto programState = _trianglesCommand.getPipelineDescriptor().programState;
     if (programState && _mvpMatrixLocation)
         programState->setUniform(_mvpMatrixLocation, projectionMat.m, sizeof(projectionMat.m));
+}
+
+backend::ProgramState* Sprite::getProgramState() const
+{
+    return _programState;
 }
 
 NS_CC_END
