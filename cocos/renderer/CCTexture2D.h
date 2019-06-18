@@ -229,6 +229,8 @@ public:
     
     //TODO: minggo: is it resaonable?
     bool initWithBackendTexture(backend::TextureBackend* texture);
+    void setRenderTarget(bool renderTarget);
+    inline bool isRenderTarget() const { return _isRenderTarget; }
 
 
     void setTexParameters(const TexParams &params);
@@ -409,6 +411,8 @@ protected:
     backend::UniformLocation _mvpMatrixLocation;
     backend::UniformLocation _textureLocation;
     CustomCommand _customCommand;
+    
+    bool _isRenderTarget = false;
 };
 
 

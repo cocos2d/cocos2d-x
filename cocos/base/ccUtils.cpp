@@ -201,9 +201,7 @@ void captureNode(Node* startNode, std::function<void(Image*)> imageCallback, flo
             auto finalRect = Rect(0, 0, size.width, size.height);
             Sprite *sprite = Sprite::createWithTexture(rtx->getSprite()->getTexture(), finalRect);
             sprite->setAnchorPoint(Point(0, 0));
-#ifndef CC_USE_METAL
             sprite->setFlippedY(true);
-#endif
             finalRtx = RenderTexture::create(size.width * scale, size.height * scale, backend::PixelFormat::RGBA8888, PixelFormat::D24S8);
             
             sprite->setScale(scale); // or use finalRtx->setKeepMatrix(true);
