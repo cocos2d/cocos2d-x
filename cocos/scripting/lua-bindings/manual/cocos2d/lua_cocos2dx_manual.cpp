@@ -1786,13 +1786,14 @@ static int tolua_cocos2d_RenderTexture_newImage(lua_State* tolua_S)
     argc = lua_gettop(tolua_S)-1;
     if (argc == 1 || argc == 2)
     {
+#if COCOS2D_DEBUG >= 1
         ok &= toluafix_isfunction(tolua_S, 2, "LUA_FUNCTION", 0, &tolua_err);
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'tolua_cocos2d_RenderTexture_newImage'", nullptr);
             return 0;
         }
-        
+#endif
         LUA_FUNCTION handler = toluafix_ref_function(tolua_S, 2, 0);
         auto callback = [=](cocos2d::Image* image){
             auto stack = LuaEngine::getInstance()->getLuaStack();
