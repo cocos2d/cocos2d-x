@@ -45,6 +45,7 @@ public:
     virtual BlendState* createBlendState(const BlendDescriptor& descriptor) = 0;
     // Create a render pipeline, not auto released.
     virtual RenderPipeline* newRenderPipeline(const RenderPipelineDescriptor& descriptor) = 0;
+    virtual void setFrameBufferOnly(bool frameBufferOnly) = 0;
 
     inline DeviceInfo* getDeviceInfo() const { return _deviceInfo; }
 protected:

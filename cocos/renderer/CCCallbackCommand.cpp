@@ -22,6 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "renderer/CCCallbackCommand.h"
+#include "renderer/backend/Device.h"
 
 NS_CC_BEGIN
 
@@ -55,6 +56,7 @@ CaptureScreenCallbackCommand::CaptureScreenCallbackCommand()
 
 void CaptureScreenCallbackCommand::init(float globalOrder)
 {
+    backend::Device::getInstance()->setFrameBufferOnly(false);
     _globalOrder = globalOrder;
 }
 
