@@ -32,13 +32,12 @@ RenderTextureTests::RenderTextureTests()
     ADD_TEST_CASE(RenderTextureSave);
     ADD_TEST_CASE(RenderTextureIssue937);
     ADD_TEST_CASE(RenderTextureZbuffer);
-//    ADD_TEST_CASE(RenderTextureTestDepthStencil);
+    ADD_TEST_CASE(RenderTextureTestDepthStencil);
     ADD_TEST_CASE(RenderTextureTargetNode);
     ADD_TEST_CASE(SpriteRenderTextureBug);
     ADD_TEST_CASE(RenderTexturePartTest);
     ADD_TEST_CASE(Issue16113Test);
-    //TODO minggo
-//    ADD_TEST_CASE(RenderTextureWithSprite3DIssue16894);
+//    ADD_TEST_CASE(RenderTextureWithSprite3DIssue16894); this Test makes no sense
 };
 
 /**
@@ -757,56 +756,55 @@ std::string Issue16113Test::subtitle() const
 //
 RenderTextureWithSprite3DIssue16894::RenderTextureWithSprite3DIssue16894()
 {
-    //TODO: minggo
-    // auto visibleSize = Director::getInstance()->getVisibleSize();
-    // Vec2 origin = Director::getInstance()->getVisibleOrigin();
+     auto visibleSize = Director::getInstance()->getVisibleSize();
+     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    // for (int i = 0; i < 3; ++i)
-    // {
-    //     // Ship - Model is from cocos2d-x test project
-    //     auto ship = Sprite3D::create("Sprite3DTest/boss.c3b");
-    //     ship->setScale(6);
-    //     ship->setRotation3D(Vec3(180,45,0));
-    //     ship->setPosition(Vec2(visibleSize.width/4 + origin.x, visibleSize.height/2 + origin.y));
-    //     ship->setForce2DQueue(true);
-    //     ship->retain();
+     for (int i = 0; i < 3; ++i)
+     {
+         // Ship - Model is from cocos2d-x test project
+         auto ship = Sprite3D::create("Sprite3DTest/boss.c3b");
+         ship->setScale(6);
+         ship->setRotation3D(Vec3(180,45,0));
+         ship->setPosition(Vec2(visibleSize.width/4 + origin.x, visibleSize.height/2 + origin.y));
+         ship->setForce2DQueue(true);
+         ship->retain();
 
-    //     if (i == 0)
-    //     {
-    //         addChild(ship, 1);
-    //         // Rotate Ship
-    //         auto spin = RotateBy::create(4, Vec3(0,180,0));
-    //         auto repeatspin = RepeatForever::create(spin);
-    //         ship->runAction(repeatspin);
-    //     }
-    //     _ship[i] = ship;
-    // }
+         if (i == 0)
+         {
+             addChild(ship, 1);
+             //// Rotate Ship
+             auto spin = RotateBy::create(4, Vec3(0,180,0));
+             auto repeatspin = RepeatForever::create(spin);
+             ship->runAction(repeatspin);
+         }
+         _ship[i] = ship;
+     }
 
-    // // RenderTextures
-    // _renderTexDefault = RenderTexture::create(visibleSize.width, visibleSize.height, backend::PixelFormat::RGBA8888);
-    // _renderTexDefault->setKeepMatrix(true);
-    // addChild(_renderTexDefault);
-    // _renderTexDefault->setPosition(visibleSize.width/4 * 3, visibleSize.height/2);
+     // RenderTextures
+     _renderTexDefault = RenderTexture::create(visibleSize.width, visibleSize.height, backend::PixelFormat::RGBA8888);
+     _renderTexDefault->setKeepMatrix(true);
+     addChild(_renderTexDefault);
+     _renderTexDefault->setPosition(visibleSize.width/4 * 3, visibleSize.height/2);
 
-    // _renderTexWithBuffer = RenderTexture::create(visibleSize.width, visibleSize.height, backend::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
-    // _renderTexWithBuffer->setKeepMatrix(true);
-    // addChild(_renderTexWithBuffer);
-    // _renderTexWithBuffer->setPosition(visibleSize.width/4 * 4, visibleSize.height/2);
+     _renderTexWithBuffer = RenderTexture::create(visibleSize.width, visibleSize.height, backend::PixelFormat::RGBA8888, backend::PixelFormat::D24S8);
+     _renderTexWithBuffer->setKeepMatrix(true);
+     addChild(_renderTexWithBuffer);
+     _renderTexWithBuffer->setPosition(visibleSize.width/4 * 4, visibleSize.height/2);
 
-    // // Update
-    // scheduleUpdate();
+     // Update
+     scheduleUpdate();
 
-    // auto label1 = Label::createWithTTF("Normal Sprite3D\n", "fonts/arial.ttf", 10);
-    // label1->setPosition(Vec2(visibleSize.width/4 * 1, 60));
-    // this->addChild(label1, 1);
+     auto label1 = Label::createWithTTF("Normal Sprite3D\n", "fonts/arial.ttf", 10);
+     label1->setPosition(Vec2(visibleSize.width/4 * 1, 60));
+     this->addChild(label1, 1);
 
-    // auto label2 = Label::createWithTTF("RenderTexture\nDefault - No depth buffer", "fonts/arial.ttf", 10);
-    // label2->setPosition(Vec2(visibleSize.width/4 * 2, 60));
-    // this->addChild(label2, 1);
+     auto label2 = Label::createWithTTF("RenderTexture\nDefault - No depth buffer", "fonts/arial.ttf", 10);
+     label2->setPosition(Vec2(visibleSize.width/4 * 2, 60));
+     this->addChild(label2, 1);
 
-    // auto label3 = Label::createWithTTF("RenderTexture\nGL_DEPTH24_STENCIL8", "fonts/arial.ttf", 10);
-    // label3->setPosition(Vec2(visibleSize.width/4 * 3, 60));
-    // this->addChild(label3, 1);
+     auto label3 = Label::createWithTTF("RenderTexture\nGL_DEPTH24_STENCIL8", "fonts/arial.ttf", 10);
+     label3->setPosition(Vec2(visibleSize.width/4 * 3, 60));
+     this->addChild(label3, 1);
 }
 
 RenderTextureWithSprite3DIssue16894::~RenderTextureWithSprite3DIssue16894()

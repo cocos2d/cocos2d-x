@@ -20,7 +20,7 @@ RenderPassDescriptor& RenderPassDescriptor::operator=(const RenderPassDescriptor
     return *this;
 }
 
-bool RenderPassDescriptor::operator==(const RenderPassDescriptor& descriptor)
+bool RenderPassDescriptor::operator==(const RenderPassDescriptor& descriptor) const
 {
     if( clearDepthValue == descriptor.clearDepthValue &&
         clearStencilValue == descriptor.clearStencilValue &&
