@@ -345,7 +345,7 @@ void AudioEngine::remove(int audioID)
             it->second.profileHelper->audioIDs.remove(audioID);
         }
         _audioPathIDMap[*it->second.filePath].remove(audioID);
-        _audioIDInfoMap.erase(audioID);
+        _audioIDInfoMap.erase(it);
     }
 }
 
@@ -390,16 +390,13 @@ void AudioEngine::uncache(const std::string &filePath)
                 {
                     itInfo->second.profileHelper->audioIDs.remove(audioID);
                 }
-                _audioIDInfoMap.erase(audioID);
+                _audioIDInfoMap.erase(itInfo);
             }
         }
         _audioPathIDMap.erase(filePath);
     }
 
-    if (_audioEngineImpl)
-    {
-        _audioEngineImpl->uncache(filePath);
-    }
+    _audioEngineImpl->uncache(filePath);
 }
 
 void AudioEngine::uncacheAll()
