@@ -48,6 +48,7 @@
 #include "2d/CCSpriteBatchNode.h"
 #include "2d/CCTMXLayer.h"
 #include "2d/CCTMXTiledMap.h"
+#include "2d/CCRenderTexture.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerKeyboard.h"
 #include "base/CCEventListenerMouse.h"
@@ -1755,6 +1756,73 @@ tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_Scheduler_unscheduleScriptEntry'.",&tolua_err);
     return 0;
 #endif
+}
+
+static int tolua_cocos2d_RenderTexture_newImage(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::RenderTexture* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.RenderTexture",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::RenderTexture*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'tolua_cocos2d_RenderTexture_newImage'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1 || argc == 2)
+    {
+#if COCOS2D_DEBUG >= 1
+        ok &= toluafix_isfunction(tolua_S, 2, "LUA_FUNCTION", 0, &tolua_err);
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'tolua_cocos2d_RenderTexture_newImage'", nullptr);
+            return 0;
+        }
+#endif
+        LUA_FUNCTION handler = toluafix_ref_function(tolua_S, 2, 0);
+        auto callback = [=](cocos2d::Image* image){
+            auto stack = LuaEngine::getInstance()->getLuaStack();
+            stack->pushObject(image, "cc.Image");
+            stack->executeFunctionByHandler(handler, 1);
+        };
+        
+        if(argc == 2)
+        {
+            bool flipImage;
+            ok &= luaval_to_boolean(tolua_S, 3,&flipImage, "cc.RenderTexture:newImage");
+            cobj->newImage(callback, flipImage);
+        }
+        else
+        {
+            cobj->newImage(callback);
+        }
+        return 0;
+    }
+    
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.RenderTexture:newImage",argc, 2);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2d_RenderTexture_newImage'.",&tolua_err);
+#endif
+    
+    return 0;
 }
 
 int tolua_cocos2d_Sequence_create(lua_State* tolua_S)
@@ -4220,6 +4288,20 @@ static void extendScheduler(lua_State* tolua_S)
     }
     lua_pop(tolua_S, 1);
 }
+
+static void extendRenderTexture(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S,"cc.RenderTexture");
+    lua_rawget(tolua_S,LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        lua_pushstring(tolua_S,"newImage");
+        lua_pushcfunction(tolua_S,tolua_cocos2d_RenderTexture_newImage);
+        lua_rawset(tolua_S,-3);
+    }
+    lua_pop(tolua_S, 1);
+}
+
 
 static void extendSequence(lua_State* tolua_S)
 {
@@ -7412,6 +7494,7 @@ int register_all_cocos2dx_manual(lua_State* tolua_S)
     extendProperties(tolua_S);
     extendAutoPolygon(tolua_S);
     extendPolygonInfo(tolua_S);
+    extendRenderTexture(tolua_S);
     return 0;
 }
 
