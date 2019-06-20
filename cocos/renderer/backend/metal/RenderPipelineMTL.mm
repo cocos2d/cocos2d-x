@@ -137,11 +137,9 @@ void RenderPipelineMTL::setShaderModules(const RenderPipelineDescriptor& descrip
 {
     auto vertexShaderModule = static_cast<ProgramMTL*>(descriptor.programState->getProgram())->getVertexShader();
     _mtlRenderPipelineDescriptor.vertexFunction = vertexShaderModule->getMTLFunction();
-    _vertexUniformBuffer = vertexShaderModule->getUniformBuffer();
     
     auto fragShaderModule = static_cast<ProgramMTL*>(descriptor.programState->getProgram())->getFragmentShader();
     _mtlRenderPipelineDescriptor.fragmentFunction = fragShaderModule->getMTLFunction();
-    _fragementUniformBuffer = fragShaderModule->getUniformBuffer();
 }
 
 void RenderPipelineMTL::setBlendStateAndFormat(const RenderPipelineDescriptor& descriptor)

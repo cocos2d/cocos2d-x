@@ -20,7 +20,6 @@ public:
     ~ShaderModuleMTL();
     
     inline id<MTLFunction> getMTLFunction() const { return _mtlFunction; }
-    inline const std::shared_ptr<uint8_t>& getUniformBuffer() const { return _uniformBuffer; }
     inline const std::unordered_map<std::string, UniformInfo>& getUniforms() const { return _uniformInfos; }
     inline const int getMaxLocation() const { return _maxLocation; }
     inline const std::unordered_map<std::string, AttributeBindInfo> getAttributeInfo() const { return _attributeInfo; }
@@ -32,7 +31,6 @@ private:
     
     id<MTLFunction> _mtlFunction = nil;
     
-    std::shared_ptr<uint8_t> _uniformBuffer = nullptr;
     std::unordered_map<std::string, UniformInfo> _uniformInfos;
     std::unordered_map<std::string, AttributeBindInfo> _attributeInfo;
     

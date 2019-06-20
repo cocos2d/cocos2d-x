@@ -254,6 +254,8 @@ ProgramState *ProgramState::clone() const
     cp->_fragmentUniformInfos = _fragmentUniformInfos;
     cp->_vertexTextureInfos = _vertexTextureInfos;
     cp->_fragmentTextureInfos = _fragmentTextureInfos;
+    cp->_vertexUniformBuffer = _vertexUniformBuffer;
+    cp->_fragmentUniformBuffer = _fragmentUniformBuffer;
     CC_SAFE_RETAIN(cp->_program);
 
     return cp;
@@ -262,22 +264,44 @@ ProgramState *ProgramState::clone() const
 
 void ProgramState::createVertexUniformBuffer()
 {
+    uint32_t totalUniformsSize = 0;
     const auto& vertexUniformInfos = _program->getVertexUniformInfos();
     for(const auto& uniformInfo : vertexUniformInfos)
     {
         if(uniformInfo.second.bufferSize)
+        {
             _vertexUniformInfos[uniformInfo.second.location] = uniformInfo.second; 
+            totalUniformsSize += uniformInfo.second.bufferSize;
+        }
     }
+#ifdef CC_USE_METAL
+    if (totalUniformsSize > 0)
+    {
+        _vertexUniformBuffer.resize(totalUniformsSize);
+        std::fill(_vertexUniformBuffer.begin(), _vertexUniformBuffer.end(), 0);
+    }
+#endif
 }
 
 void ProgramState::createFragmentUniformBuffer()
 {
+    uint32_t totalUniformsSize = 0;
     const auto& fragmentUniformInfos = _program->getFragmentUniformInfos();
     for(const auto& uniformInfo : fragmentUniformInfos)
     {
         if(uniformInfo.second.bufferSize)
+        {
             _fragmentUniformInfos[uniformInfo.second.location] = uniformInfo.second;
+            totalUniformsSize += uniformInfo.second.bufferSize;
+        }
     }
+#ifdef CC_USE_METAL
+    if (totalUniformsSize > 0)
+    {
+        _fragmentUniformBuffer.resize(totalUniformsSize);
+        std::fill(_fragmentUniformBuffer.begin(), _fragmentUniformBuffer.end(), 0);
+    }
+#endif
 }
 
 backend::UniformLocation ProgramState::getUniformLocation(const std::string& uniform) const
@@ -371,7 +395,7 @@ void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, c
             break;
     }
     
-    uniformData.assign(convertedData, convertedData + uniformInfo.bufferSize);
+    memcpy(uniformData.data() + uniformInfo.location, convertedData, uniformInfo.bufferSize);
     CC_SAFE_DELETE_ARRAY(convertedData);
 }
 #endif
@@ -386,12 +410,15 @@ void ProgramState::setVertexUniform(int location, const void* data, uint32_t siz
     auto& uniformInfo = _vertexUniformInfos[location].uniformInfo;
     if(uniformInfo.needConvert)
     {
-        convertUniformData(uniformInfo, data, size, _vertexUniformInfos[location].data);
-        return;
+        convertUniformData(uniformInfo, data, size, _vertexUniformBuffer);
     }
-#endif
-
+    else
+    {
+        memcpy(_vertexUniformBuffer.data() + location, data, size);
+    }
+#else
     _vertexUniformInfos[location].data.assign((char*)data, (char*)data + size);
+#endif
 }
 
 void ProgramState::setFragmentUniform(int location, const void* data, uint32_t size)
@@ -404,11 +431,16 @@ void ProgramState::setFragmentUniform(int location, const void* data, uint32_t s
     auto& uniformInfo = _fragmentUniformInfos[location].uniformInfo;
     if(uniformInfo.needConvert)
     {
-        convertUniformData(uniformInfo, data, size, _fragmentUniformInfos[location].data);
-        return;
+        convertUniformData(uniformInfo, data, size, _fragmentUniformBuffer);
+       
     }
-#endif
+    else
+    {
+        memcpy(_fragmentUniformBuffer.data() + location, data, size);
+    }
+#else
     _fragmentUniformInfos[location].data.assign((char *)data, (char *)data + size);
+#endif
 }
 
 void ProgramState::setTexture(const backend::UniformLocation& uniformLocation, uint32_t slot, backend::TextureBackend* texture)

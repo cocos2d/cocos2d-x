@@ -428,40 +428,21 @@ void CommandBufferMTL::setUniformBuffer() const
         }
         
         // Uniform buffer is bound to index 1.
-        const auto& vertexUniformBuffer = _renderPipelineMTL->getVertexUniformBuffer();
-        const auto& vertexUniformInfo = _programState->getVertexUniformInfos();
-        if (vertexUniformBuffer)
+        auto vertexUniformBuffer = _programState->getVertexUniformBuffer();
+        if(vertexUniformBuffer.size() > 0)
         {
-            uint32_t size = fillUniformBuffer(vertexUniformBuffer.get(), vertexUniformInfo);
-            [_mtlRenderEncoder setVertexBytes:vertexUniformBuffer.get()
-                                       length:size atIndex:1];
+            [_mtlRenderEncoder setVertexBytes:vertexUniformBuffer.data()
+                                       length:vertexUniformBuffer.size() atIndex:1];
         }
         
-        const auto& fragUniformBuffer = _renderPipelineMTL->getFragmentUniformBuffer();
-        const auto& fragUniformInfo = _programState->getFragmentUniformInfos();
-        if (fragUniformBuffer)
+        auto fragmentUniformBuffer = _programState->getFragmentUniformBuffer();
+        if(fragmentUniformBuffer.size() > 0)
         {
-            uint32_t size = fillUniformBuffer(fragUniformBuffer.get(), fragUniformInfo);
-            [_mtlRenderEncoder setFragmentBytes:fragUniformBuffer.get()
-                                         length:size
+            [_mtlRenderEncoder setFragmentBytes:fragmentUniformBuffer.data()
+                                         length:fragmentUniformBuffer.size()
                                         atIndex:1];
         }
     }
-}
-
-unsigned int CommandBufferMTL::fillUniformBuffer(uint8_t* buffer, const std::vector<UniformBuffer>& unifornInfo) const
-{
-    uint32_t offset = 0;
-    for(const auto& iter : unifornInfo)
-    {
-        if(!iter.isValid())
-            continue;
-        const auto& bindUniformInfo = iter.uniformInfo;
-        CC_ASSERT(iter.data.size() <= bindUniformInfo.bufferSize);
-        memcpy(buffer + bindUniformInfo.location, iter.data.data(), iter.data.size());
-        offset += bindUniformInfo.bufferSize;
-    }
-    return offset;
 }
 
 void CommandBufferMTL::setLineWidth(float lineWidth)

@@ -91,11 +91,6 @@ void ShaderModuleMTL::parseUniform(id<MTLDevice> mtlDevice, glslopt_shader* shad
 {
     const int uniformCount = glslopt_shader_get_uniform_count(shader);
     const int uniformSize = glslopt_shader_get_uniform_total_size(shader);
-    if (uniformSize > 0)
-    {
-        std::shared_ptr<uint8_t> sp(new uint8_t[uniformSize], [](uint8_t *p) { delete[] p; });
-        _uniformBuffer = sp;
-    }
     
     for (int i = 0; i < uniformCount; ++i)
     {
