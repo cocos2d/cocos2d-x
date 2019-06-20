@@ -449,6 +449,7 @@ bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::BlendFunc* outValue, con
 
     if (ok)
     {
+<<<<<<< HEAD
         lua_pushstring(L, "src");
         lua_gettable(L, lo);
         if(!lua_isnil(L, -1))
@@ -464,6 +465,17 @@ bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::BlendFunc* outValue, con
             outValue->dst = static_cast<cocos2d::backend::BlendFactor>(lua_tointeger(L, -1));
         }
         lua_pop(L, 1);
+=======
+       lua_pushstring(L, "src");
+       lua_gettable(L, lo);
+       outValue->src = (backend::BlendFactor)(int)(lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1));
+       lua_pop(L, 1);
+
+       lua_pushstring(L, "dst");
+       lua_gettable(L, lo);
+       outValue->dst = (backend::BlendFactor)(int)(lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1));
+       lua_pop(L, 1);
+>>>>>>> remove todos
     }
     return ok;
 }
@@ -1860,26 +1872,16 @@ bool luaval_to_mesh_vertex_attrib(lua_State* L, int lo, cocos2d::MeshVertexAttri
 
     if (ok)
     {
-    //TODO minggo
-//        lua_pushstring(L, "size");                  /* L: paramStack key */
-//        lua_gettable(L,lo);                         /* L: paramStack paramStack[lo][key] */
-//        ret->size  = (GLint)lua_tonumber(L, -1);
-//        lua_pop(L,1);
-//
-//        lua_pushstring(L, "type");                  /* L: paramStack key */
-//        lua_gettable(L,lo);                         /* L: paramStack paramStack[lo][key] */
-//        ret->type  = (GLenum)lua_tonumber(L, -1);
-//        lua_pop(L,1);
-//
-//        lua_pushstring(L, "vertexAttrib");          /* L: paramStack key */
-//        lua_gettable(L,lo);                         /* L: paramStack paramStack[lo][key] */
-//        ret->type  = (GLenum)lua_tonumber(L, -1);
-//        lua_pop(L,1);
-//
-//        lua_pushstring(L, "attribSizeBytes");       /* L: paramStack key */
-//        lua_gettable(L,lo);                         /* L: paramStack paramStack[lo][key] */
-//        ret->type  = (GLenum)lua_tonumber(L, -1);
-//        lua_pop(L,1);
+
+       lua_pushstring(L, "type");                  /* L: paramStack key */
+       lua_gettable(L,lo);                         /* L: paramStack paramStack[lo][key] */
+       ret->type  = (backend::VertexFormat)(int)lua_tonumber(L, -1);
+       lua_pop(L,1);
+
+       lua_pushstring(L, "vertexAttrib");          /* L: paramStack key */
+       lua_gettable(L,lo);                         /* L: paramStack paramStack[lo][key] */
+       ret->vertexAttrib = (shaderinfos::VertexKey)(int)lua_tonumber(L, -1);
+       lua_pop(L,1);
     }
 
     return ok;
