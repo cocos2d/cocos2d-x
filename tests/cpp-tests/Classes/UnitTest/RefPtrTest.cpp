@@ -47,13 +47,13 @@ void RefPtrTest::onEnter()
         CC_ASSERT((__String*) nullptr == ref3.get());
         
         // Copy constructor
-        RefPtr<__String> ref4(ref2);
+        RefPtr<__String> ref4(ref2); // NOLINT(performance-unnecessary-copy-initialization)
         CC_ASSERT(strcmp("Hello", ref4->getCString()) == 0);
         CC_ASSERT(3 == ref2->getReferenceCount());
         CC_ASSERT(3 == ref4->getReferenceCount());
         
         // Copy constructor with nullptr reference
-        RefPtr<Ref> ref5(ref1);
+        RefPtr<Ref> ref5(ref1); // NOLINT(performance-unnecessary-copy-initialization)
         CC_ASSERT((Ref*) nullptr == ref5.get());
     }
     

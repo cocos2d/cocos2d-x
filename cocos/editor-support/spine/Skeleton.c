@@ -28,10 +28,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/Skeleton.h>
+#include "spine/Skeleton.h"
 #include <stdlib.h>
 #include <string.h>
-#include <spine/extension.h>
+#include "spine/extension.h"
 
 typedef enum {
 	SP_UPDATE_BONE, SP_UPDATE_IK_CONSTRAINT, SP_UPDATE_PATH_CONSTRAINT, SP_UPDATE_TRANSFORM_CONSTRAINT

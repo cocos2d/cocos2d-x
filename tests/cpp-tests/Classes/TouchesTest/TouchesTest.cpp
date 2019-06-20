@@ -166,7 +166,7 @@ std::string ForceTouchTest::title() const
 
 std::string ForceTouchTest::subtitle() const
 {
-    return std::string("Touch with force to see info label changes\nOnly work on iPhone6s / iPhone6s Plus");
+    return std::string("Touch with force to see info label changes\n work on iPhone6s+");
 }
     
 void ForceTouchTest::onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)

@@ -97,8 +97,9 @@ public:
      *  @note This method will copy the whole buffer.
      *        Developer should free the pointer after invoking this method.
      *  @see Data::fastSet
+     * @return The size of bytes copied, return 0 if size <= 0
      */
-    void copy(const unsigned char* bytes, const ssize_t size);
+    ssize_t copy(const unsigned char* bytes, const ssize_t size);
 
     /** Fast set the buffer pointer and its size. Please use it carefully.
      *  @param bytes The buffer pointer, note that it have to be allocated by 'malloc' or 'calloc',

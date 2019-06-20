@@ -8,7 +8,7 @@ CMake is an open-source, cross-platform family of tools designed to build, test 
   ```sh
   cmake --version
   ```
-if the CMake version is lower than 3.1, please upgrade.
+if the CMake version is lower than 3.6, please upgrade.
 
 2. You should use __out-of-source__ builds, this means you need to create a different directory than __cocos2d-x__ to execute the `cmake` command.
 
@@ -33,7 +33,14 @@ mkdir win32-build && cd win32-build
 cmake .. -G"Visual Studio 15 2017" -Tv141
 ```
 
-Execute `cmake --build .` to compile, or open __Cocos2d-x.sln__ in Explorer to use the generated project. 
+Execute `cmake --build .` to compile,
+```
+cmake --build . --config Debug
+cmake --build . --config Release
+```
+or open __Cocos2d-x.sln__ in Explorer to use the generated project. 
+
+If can't found `MSVCR110.dll` issue occurs to you, please install this [Visual C++ Runtime Libraries](https://www.microsoft.com/en-us/download/details.aspx?id=30679), when runing the cpp-tests project
 
 ### Generate macOS Project
 
@@ -53,7 +60,9 @@ cmake .. -GXcode -DCMAKE_TOOLCHAIN_FILE=../cmake/ios.toolchain.cmake
 open Cocos2d-x.xcodeproj
 ```
 
-The default build is for running on actual iOS hardware, if you want to run in the simulator, please add `-DIOS_PLATFORM=SIMULATOR` for architecture i386 or `-DIOS_PLATFORM=SIMULATOR64` for x86_64.
+The default build is for running on iOS device, if you want to run in the simulator, please add `-DIOS_PLATFORM=SIMULATOR` for architecture i386 or `-DIOS_PLATFORM=SIMULATOR64` for x86_64, but remember you can't run metal-support app in simulator because Apple limitation.
+
+if you want to sign iOS app in CMake, you will need to fill development team ID into `set_xcode_property(${APP_NAME} DEVELOPMENT_TEAM "")`, or select to sign in Xcode after project files generated.
 
 ### Android Studio
 
@@ -69,42 +78,6 @@ PROP_BUILD_TYPE=cmake
 
 If you want to add cmake build arguments, please add it at [external Native Build](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/app/build.gradle#L25) block of __app/build.gradle__ file.
 
-## Prebuilt libraries feature
-
-To solve long compilation times of the engine source code one can use prebuilt libraries. Using this feature you only need build engine sources once for a specific environment or again when the engine version changes and you wish to utilize the new version.
-
-### Example
-
-This is an example of building c++ libs once, and use them in different c++ projects.
-
-```sh
-cocos new -l cpp -p my.pack.app1 test_app1
-mkdir app1_build && cd app1_build
-cmake ../test_app1 -DGEN_COCOS_PREBUILT=ON
-make prebuilt
-```
-
-Change option `GEN_COCOS_PREBUILT` and use instead `USE_COCOS_PREBUILT` to use prebuilt in the same project
-
-```sh
-cmake ../test_app1 -DGEN_COCOS_PREBUILT=OFF -DUSE_COCOS_PREBUILT=ON
-make TemplateCpp
-open bin/TemplateCpp.app
-```
-
-Add `-DUSE_COCOS_PREBUILT=ON` to use prebuilt libs in another cmake build.
-
-```sh
-cocos new -l cpp -p my.pack.app2 test_app2
-mkdir app2_build && cd app2_build
-cmake ../test_app2 -DUSE_COCOS_PREBUILT=ON
-make TemplateCpp
-open bin/TemplateCpp.app
-```
-
-> Any other cpp project can use prebuilt in this way
-
-When using the prebuilt libraries on Android there is a small difference as CMake can't find system environment when built using Gradle. You need to [supply a path](https://github.com/cocos2d/cocos2d-x/blob/c087be314c2c56a757bf66163b173746b5d6ad34/tests/cpp-empty-test/proj.android/app/build.gradle#L34) as the location of prebuilt libs.
 
 ## Build Options
 
@@ -127,21 +100,10 @@ When using the prebuilt libraries on Android there is a small difference as CMak
 
     * `cmake --build ./msvc_build`, cmake will sellect corresponding build tools.
 
-### Cocos2d-x Options
+## Tips
 
-1. __`GEN_COCOS_PREBUILT`__, control the project have the feature to generate pre-build libraries or not. Default value is `OFF`
-
-    * `-DGEN_COCOS_PREBUILT=ON`, will add target prebuilt, build this target will generate prebuilt libraries
-
-1. __`USE_COCOS_PREBUILT`__, control the project have the feature to use pre-build libraries or not. Default value is `OFF`
-
-    * `-DUSE_COCOS_PREBUILT=ON`, will disable libraries target, and make app target use prebuilt libraries
-
-1. __`COCOS_PREBUILT_ROOT`__, a path means the prebuilt libraries root location, it's not optional for Android Project on Android Studio, optional for other supported platforms. the default value is $cocos2dx_root/prebuilt if the cmake can access to cocos2d-x environment variable. for example
-
-    * `arguments "-DCOCOS_PREBUILT_ROOT=/Users/laptop/cocos-prebuilt"` set this value on [cmake block](https://github.com/cocos2d/cocos2d-x/blob/84be684e3858393a6f3efc50e3f95d4e0ac92a20/tests/cpp-empty-test/proj.android/app/build.gradle#L31) of build.gradle file.
-
-1. Any options in [SelectModule.cmake](./Modules/SelectModule.cmake) can be set manually. Do it if you know what you're doing.
+1. Use `cmake ..` to refersh resources and code files, after you modify `Resources` or `CMakeLists.txt`.
+1. Don't need `CMAKE_BUILD_TYPE` options when `-G` Xcode or Visual Studio, CMake scripts will generate both configurations, so you can switch `Debug` and `Release` in IDE.
 
 ## Useful Links
 

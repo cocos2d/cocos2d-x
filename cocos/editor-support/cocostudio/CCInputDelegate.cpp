@@ -35,7 +35,7 @@ using namespace cocos2d;
 
 namespace cocostudio {
 
-InputDelegate::InputDelegate(void)
+InputDelegate::InputDelegate()
 : _touchEnabled(false)
 , _touchListener(nullptr)
 , _accelerometerEnabled(false)
@@ -48,7 +48,7 @@ InputDelegate::InputDelegate(void)
 
 }
 
-InputDelegate::~InputDelegate(void)
+InputDelegate::~InputDelegate()
 {
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     dispatcher->removeEventListener(_touchListener);

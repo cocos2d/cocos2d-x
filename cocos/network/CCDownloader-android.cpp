@@ -31,6 +31,7 @@
 #include <mutex>
 
 #define JCLS_DOWNLOADER "org/cocos2dx/lib/Cocos2dxDownloader"
+#define J_BINARY_CLS_DOWNLOADER "org.cocos2dx.lib.Cocos2dxDownloader"
 #define JCLS_TASK       "com/loopj/android/http/RequestHandle"
 #define JARG_STR        "Ljava/lang/String;"
 #define JARG_DOWNLOADER "L" JCLS_DOWNLOADER ";"
@@ -98,7 +99,7 @@ namespace cocos2d { namespace network {
             DLLOG("Construct DownloaderAndroid: %p", this);
             JniMethodInfo methodInfo;
             if (JniHelper::getStaticMethodInfo(methodInfo,
-                                               JCLS_DOWNLOADER,
+                                               J_BINARY_CLS_DOWNLOADER,
                                                "createDownloader",
                                                "(II" JARG_STR "I)" JARG_DOWNLOADER))
             {
@@ -128,7 +129,7 @@ namespace cocos2d { namespace network {
             {
                 JniMethodInfo methodInfo;
                 if (JniHelper::getStaticMethodInfo(methodInfo,
-                                                   JCLS_DOWNLOADER,
+                                                   J_BINARY_CLS_DOWNLOADER,
                                                    "cancelAllRequests",
                                                    "(" JARG_DOWNLOADER ")V"))
                 {
@@ -154,7 +155,7 @@ namespace cocos2d { namespace network {
 
             JniMethodInfo methodInfo;
             if (JniHelper::getStaticMethodInfo(methodInfo,
-                                               JCLS_DOWNLOADER,
+                                               J_BINARY_CLS_DOWNLOADER,
                                                "createTask",
                                                "(" JARG_DOWNLOADER "I" JARG_STR JARG_STR")V"))
             {

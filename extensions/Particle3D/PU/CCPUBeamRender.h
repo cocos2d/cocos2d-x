@@ -102,30 +102,30 @@ public:
 
         /** Getters and Setters
     */
-    bool isUseVertexColours(void) const;
+    bool isUseVertexColours() const;
     void setUseVertexColours(bool useVertexColours);
 
-    size_t getMaxChainElements(void) const;
+    size_t getMaxChainElements() const;
     void setMaxChainElements(size_t maxChainElements);
 
-    float getUpdateInterval(void) const;
+    float getUpdateInterval() const;
     void setUpdateInterval(float updateInterval);
 
-    float getDeviation(void) const;
+    float getDeviation() const;
     void setDeviation(float deviation);
 
-    size_t getNumberOfSegments(void) const;
+    size_t getNumberOfSegments() const;
     void setNumberOfSegments(size_t numberOfSegments);
 
-    bool isJump(void) const;
+    bool isJump() const;
     void setJump(bool jump);
 
-    PUBillboardChain::TexCoordDirection getTexCoordDirection(void) const;
+    PUBillboardChain::TexCoordDirection getTexCoordDirection() const;
     void setTexCoordDirection(PUBillboardChain::TexCoordDirection texCoordDirection);
 
     /** Destroys the BillboarChain
     */
-    void destroyAll(void);
+    void destroyAll();
 
     virtual PUBeamRender* clone() override;
     void copyAttributesTo(PUBeamRender *render);

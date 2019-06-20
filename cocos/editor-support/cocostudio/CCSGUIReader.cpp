@@ -117,19 +117,19 @@ int GUIReader::getVersionInteger(const char *str)
     {
         return 0;
     }
-    size_t pos = strVersion.find_first_of(".");
+    size_t pos = strVersion.find_first_of('.');
     std::string t = strVersion.substr(0,pos);
     strVersion = strVersion.substr(pos+1,strVersion.length()-1);
     
-    pos = strVersion.find_first_of(".");
+    pos = strVersion.find_first_of('.');
     std::string h = strVersion.substr(0,pos);
     strVersion = strVersion.substr(pos+1,strVersion.length()-1);
     
-    pos = strVersion.find_first_of(".");
+    pos = strVersion.find_first_of('.');
     std::string te = strVersion.substr(0,pos);
     strVersion = strVersion.substr(pos+1,strVersion.length()-1);
     
-    pos = strVersion.find_first_of(".");
+    pos = strVersion.find_first_of('.');
     std::string s = strVersion.substr(0,pos);
     
     int it = atoi(t.c_str());

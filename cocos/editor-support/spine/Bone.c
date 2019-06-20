@@ -28,8 +28,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/Bone.h>
-#include <spine/extension.h>
+#include "spine/Bone.h"
+#include "spine/extension.h"
 #include <stdio.h>
 static int yDown;
 
@@ -166,7 +166,7 @@ void spBone_updateWorldTransformWith (spBone* self, float x, float y, float rota
 			za *= s;
 			zc *= s;
 			s = SQRT(za * za + zc * zc);
-			r = PI / 2 + atan2(zc, za);
+			r = PI / 2 + atan2f(zc, za);
 			zb = COS(r) * s;
 			zd = SIN(r) * s;
 			la = COS_DEG(shearX) * scaleX;

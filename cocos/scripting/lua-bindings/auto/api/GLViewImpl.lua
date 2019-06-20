@@ -40,4 +40,10 @@
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
+--------------------------------
+-- 
+-- @function [parent=#GLViewImpl] getSafeAreaRect 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
 return nil

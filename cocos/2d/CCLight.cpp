@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "2d/CCLight.h"
+#include <cmath>
 #include "2d/CCScene.h"
 
 NS_CC_BEGIN
@@ -60,7 +61,7 @@ void BaseLight::onExit()
 
 void BaseLight::setRotationFromDirection( const Vec3 &direction )
 {
-    float projLen = sqrt(direction.x * direction.x + direction.z * direction.z);
+    float projLen = std::sqrt(direction.x * direction.x + direction.z * direction.z);
     float rotY = CC_RADIANS_TO_DEGREES(atan2f(-direction.x, -direction.z));
     float rotX = -CC_RADIANS_TO_DEGREES(atan2f(-direction.y, projLen));
     setRotation3D(Vec3(rotX, rotY, 0.0f));

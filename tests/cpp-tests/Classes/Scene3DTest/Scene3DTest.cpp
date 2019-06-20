@@ -23,10 +23,10 @@
  ****************************************************************************/
 
 #include "Scene3DTest.h"
-
+#include <cmath>
 #include "ui/CocosGUI.h"
 #include "renderer/CCRenderState.h"
-#include <spine/spine-cocos2dx.h>
+#include "spine/spine-cocos2dx.h"
 
 #include "../testResource.h"
 #include "../TerrainTest/TerrainTest.h"
@@ -917,7 +917,7 @@ void Scene3DTestScene::onTouchEnd(Touch* touch, Event* event)
             dir = collisionPoint - _player->getPosition3D();
             dir.y = 0;
             dir.normalize();
-            _player->_headingAngle =  -1*acos(dir.dot(Vec3(0,0,-1)));
+            _player->_headingAngle =  -1*std::acos(dir.dot(Vec3(0,0,-1)));
             dir.cross(dir,Vec3(0,0,-1),&_player->_headingAxis);
             _player->_targetPos=collisionPoint;
             _player->forward();

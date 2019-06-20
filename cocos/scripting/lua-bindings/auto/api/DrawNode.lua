@@ -18,6 +18,14 @@
 -- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
+-- When isolated is set, the position of the node is no longer affected by parent nodes.<br>
+-- Which means it will be drawn just like a root node.
+-- @function [parent=#DrawNode] setIsolated 
+-- @param self
+-- @param #bool isolated
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
+        
+--------------------------------
 -- @overload self, vec2_table, vec2_table, vec2_table, vec2_table, color4f_table         
 -- @overload self, vec2_table, vec2_table, color4f_table         
 -- @function [parent=#DrawNode] drawRect
@@ -205,6 +213,12 @@
 -- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
+-- 
+-- @function [parent=#DrawNode] isIsolated 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Draw a cubic bezier curve with color and number of segments<br>
 -- param origin The origin of the bezier path.<br>
 -- param control1 The first control of the bezier path.<br>
@@ -236,6 +250,15 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
+        
+--------------------------------
+-- 
+-- @function [parent=#DrawNode] visit 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #mat4_table parentTransform
+-- @param #unsigned int parentFlags
 -- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------

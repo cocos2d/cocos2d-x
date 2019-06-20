@@ -1,9 +1,9 @@
 LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocostudio_static
+LOCAL_MODULE := ccs
 
-LOCAL_MODULE_FILENAME := libcocostudio
+LOCAL_MODULE_FILENAME := libccs
 
 LOCAL_ARM_MODE := arm
 
@@ -96,8 +96,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/.. \
 
 LOCAL_CFLAGS += -fexceptions
 
-LOCAL_STATIC_LIBRARIES := cocos_ui_static
-LOCAL_STATIC_LIBRARIES += cocosdenshion_static
-LOCAL_STATIC_LIBRARIES += cocos_flatbuffers_static
+LOCAL_STATIC_LIBRARIES := ccui
+LOCAL_STATIC_LIBRARIES += ccds
+LOCAL_STATIC_LIBRARIES += ext_flatbuffers
 
 include $(BUILD_STATIC_LIBRARY)

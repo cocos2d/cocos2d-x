@@ -31,10 +31,10 @@
 #ifndef SPINE_REGIONATTACHMENT_H_
 #define SPINE_REGIONATTACHMENT_H_
 
-#include <spine/dll.h>
-#include <spine/Attachment.h>
-#include <spine/Atlas.h>
-#include <spine/Slot.h>
+#include "spine/dll.h"
+#include "spine/Attachment.h"
+#include "spine/Atlas.h"
+#include "spine/Slot.h"
 
 #ifdef __cplusplus
 extern "C" {

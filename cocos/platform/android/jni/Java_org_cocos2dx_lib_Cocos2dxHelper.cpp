@@ -37,7 +37,7 @@ THE SOFTWARE.
 #define  LOG_TAG    "Java_org_cocos2dx_lib_Cocos2dxHelper.cpp"
 #define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
-static const std::string className = "org/cocos2dx/lib/Cocos2dxHelper";
+static const std::string className = "org.cocos2dx.lib.Cocos2dxHelper";
 
 static EditTextCallback s_editTextCallback = nullptr;
 static void* s_ctx = nullptr;
@@ -153,4 +153,22 @@ void conversionEncodingJNI(const char* src, int byteSize, const char* fromCharse
         methodInfo.env->DeleteLocalRef(newArray);
         methodInfo.env->DeleteLocalRef(methodInfo.classID);
     }
+}
+
+
+bool removeDirectoryJNI(const char* path)
+{
+    JniMethodInfo methodInfo;
+    if (JniHelper::getStaticMethodInfo(methodInfo,className.c_str(),"removeDirectory","(Ljava/lang/String;)Z"))
+    {
+        jstring stringArgPath = methodInfo.env->NewStringUTF(path);
+        jboolean suc = methodInfo.env->CallStaticBooleanMethod(methodInfo.classID,methodInfo.methodID,stringArgPath);
+
+        methodInfo.env->DeleteLocalRef(methodInfo.classID);
+        methodInfo.env->DeleteLocalRef(stringArgPath);
+
+        return suc;
+    }
+
+    return false;
 }

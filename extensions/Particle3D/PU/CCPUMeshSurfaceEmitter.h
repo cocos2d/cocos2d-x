@@ -59,25 +59,25 @@ public:
     Vec3 en3;			// Normal of edge v3-v1
 
     /** Constructor **/
-    PUTriangle(void){};
+    PUTriangle(){};
 
     /** Calculate the (square) surface of the triangle **/
-    void calculateSquareSurface (void);
+    void calculateSquareSurface ();
 
     /** Calculate the surface normal of the triangle **/
-    void calculateSurfaceNormal (void);
+    void calculateSurfaceNormal ();
 
     /** Calculate the edge normals of the 3 edges  **/
-    void calculateEdgeNormals (void);
+    void calculateEdgeNormals ();
 
     /** Determine a random position on this triangle **/
-    const Vec3 getRandomTrianglePosition (void);
+    const Vec3 getRandomTrianglePosition ();
 
     /** Determine a random position including its normal on a one of the edges **/
-    const PositionAndNormal getRandomEdgePositionAndNormal (void);
+    const PositionAndNormal getRandomEdgePositionAndNormal ();
 
     /** Determine a random vertex including its normal of this triangle **/
-    const PositionAndNormal getRandomVertexAndNormal (void);
+    const PositionAndNormal getRandomVertexAndNormal ();
 };
 
 /** Comparer used for sorting vector in ascending order
@@ -132,7 +132,7 @@ public:
         const Vec3& scale = Vec3::ZERO);
 
     /** Destructor **/
-    ~MeshInfo (void);
+    ~MeshInfo ();
 
     /** Generate a random number. The high argument determines that numbers are 
         returned between [0..high] **/
@@ -180,7 +180,7 @@ public:
 
     /** Returns the mesh name.
     */
-    const std::string& getMeshName(void) const;
+    const std::string& getMeshName() const;
 
     /** Sets the mesh name.
     */
@@ -188,7 +188,7 @@ public:
 
     /** Returns true if normals are used for the particle direction.
     */
-    bool useNormals (void) const;
+    bool useNormals () const;
 
     /** Set indication whether normals are used for the particle direction.
     */
@@ -207,7 +207,7 @@ public:
 
     /** Returns the scale of the mesh.
     */
-    const Vec3& getScale (void) const;
+    const Vec3& getScale () const;
 
     /** Set the scale of the mesh.
     @remarks
@@ -217,7 +217,7 @@ public:
 
     /** Build all the data needed to generate the particles.
     */
-    void build(void);
+    void build();
 
     /** Build the data if the mesh name has been set.
     */
@@ -243,8 +243,8 @@ public:
     virtual void copyAttributesTo (PUEmitter* emitter) override;
 
 CC_CONSTRUCTOR_ACCESS:
-    PUMeshSurfaceEmitter(void);
-    virtual ~PUMeshSurfaceEmitter(void);
+    PUMeshSurfaceEmitter();
+    virtual ~PUMeshSurfaceEmitter();
 
 protected:
     std::string _meshName;

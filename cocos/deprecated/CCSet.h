@@ -47,13 +47,13 @@ public:
     /**
      * @js ctor
      */
-    __Set(void);
+    __Set();
     __Set(const __Set &rSetObject);
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~__Set(void);
+    virtual ~__Set();
 
     /**
     * @brief Create and return a new empty set.

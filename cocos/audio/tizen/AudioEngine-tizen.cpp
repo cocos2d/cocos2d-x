@@ -64,7 +64,7 @@ private:
     std::thread _threads;
     std::queue< std::function<void ()> > _tasks;
 
-    void threadFunc(void) {
+    void threadFunc() {
         while (true) {
             std::function<void ()> task = nullptr;
 

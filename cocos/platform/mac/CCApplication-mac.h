@@ -54,7 +54,6 @@ public:
     @param interval The time, which expressed in second in second, between current frame and next.
     */
     virtual void setAnimationInterval(float interval) override;
-    virtual void setAnimationInterval(float interval, SetIntervalReason reason) override;
 
     /**
     @brief  Run the message loop.
@@ -111,11 +110,11 @@ public:
      *  Gets the Resource root path.
      *  @deprecated Please use FileUtils::getInstance()->getSearchPaths() instead. 
      */
-    CC_DEPRECATED_ATTRIBUTE const std::string& getResourceRootPath(void);
+    CC_DEPRECATED_ATTRIBUTE const std::string& getResourceRootPath();
     
     void setStartupScriptFilename(const std::string& startupScriptFile);
     
-    const std::string& getStartupScriptFilename(void);
+    const std::string& getStartupScriptFilename();
     
 protected:
     static Application * sm_pSharedApplication;

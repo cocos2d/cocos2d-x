@@ -30,7 +30,7 @@
 NS_CC_BEGIN
 
 //-----------------------------------------------------------------------
-void PUOnClearObserver::notifyStart (void)
+void PUOnClearObserver::notifyStart ()
 {
     PUObserver::notifyStart();
     _continue = false;

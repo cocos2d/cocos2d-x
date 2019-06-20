@@ -272,7 +272,7 @@ bool utfConvert(
     to = std::move(working);
 
     return true;
-};
+}
 
 
 bool UTF8ToUTF16(const std::string& utf8, std::u16string& outUtf16)
@@ -309,7 +309,7 @@ bool UTF32ToUTF16(const std::u32string& utf32, std::u16string& outUtf16)
 std::string getStringUTFCharsJNI(JNIEnv* env, jstring srcjStr, bool* ret)
 {
     std::string utf8Str;
-    if(srcjStr != nullptr)
+    if(srcjStr != nullptr && env != nullptr)
     {
         const unsigned short * unicodeChar = ( const unsigned short *)env->GetStringChars(srcjStr, nullptr);
         size_t unicodeCharLength = env->GetStringLength(srcjStr);
@@ -526,6 +526,7 @@ long cc_utf8_strlen (const char * p, int /*max*/)
 unsigned int cc_utf8_find_last_not_char(const std::vector<unsigned short>& str, unsigned short c)
 {
     std::vector<char16_t> char16Vector;
+    char16Vector.reserve(str.size());
     for (const auto& e : str)
     {
         char16Vector.push_back(e);

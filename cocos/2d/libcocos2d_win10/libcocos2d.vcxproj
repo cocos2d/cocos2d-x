@@ -1507,9 +1507,6 @@
     <None Include="..\cocos2d.def" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\external\Box2D\proj-win10\libbox2d.vcxproj">
-      <Project>{0c32d479-46d5-46c3-9aa9-0a8ff8320516}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\external\recast\proj.win10\librecast.vcxproj">
       <Project>{f551524d-8a70-4b2f-a7c2-28ae61150022}</Project>
     </ProjectReference>

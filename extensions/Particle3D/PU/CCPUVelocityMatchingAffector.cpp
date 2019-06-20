@@ -32,19 +32,19 @@ NS_CC_BEGIN
 const float PUVelocityMatchingAffector::DEFAULT_RADIUS = 100.0f;
 
 //-----------------------------------------------------------------------
-PUVelocityMatchingAffector::PUVelocityMatchingAffector(void) : 
-    PUAffector(),
-    _radius(DEFAULT_RADIUS)
+PUVelocityMatchingAffector::PUVelocityMatchingAffector()
+: PUAffector()
+, _radius(DEFAULT_RADIUS)
 {
 }
 
-PUVelocityMatchingAffector::~PUVelocityMatchingAffector( void )
+PUVelocityMatchingAffector::~PUVelocityMatchingAffector()
 {
 
 }
 
 //-----------------------------------------------------------------------
-float PUVelocityMatchingAffector::getRadius(void) const
+float PUVelocityMatchingAffector::getRadius() const
 {
     return _radius;
 }

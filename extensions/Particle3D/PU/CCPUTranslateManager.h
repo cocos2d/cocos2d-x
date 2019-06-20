@@ -66,7 +66,7 @@ public:
     static PUTranslateManager* Instance();
     /**
      */
-    //virtual size_t getNumTranslators(void) const;
+    //virtual size_t getNumTranslators() const;
     
     /**
      */

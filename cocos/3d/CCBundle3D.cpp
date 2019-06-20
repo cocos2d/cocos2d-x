@@ -225,7 +225,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
         int i = 0;
         char str[20];
         std::string dir = "";
-        auto last = fullPath.rfind("/");
+        auto last = fullPath.rfind('/');
         if (last != std::string::npos)
             dir = fullPath.substr(0, last + 1);
         for (auto& material : materials) {
@@ -253,7 +253,7 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
             attrib.size = 3;
             attrib.type = GL_FLOAT;
             
-            if (mesh.positions.size())
+            if (!mesh.positions.empty())
             {
                 attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_POSITION;
                 attrib.attribSizeBytes = attrib.size * sizeof(float);
@@ -261,14 +261,14 @@ bool Bundle3D::loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeD
                 
             }
             bool hasnormal = false, hastex = false;
-            if (mesh.normals.size())
+            if (!mesh.normals.empty())
             {
                 hasnormal = true;
                 attrib.vertexAttrib = GLProgram::VERTEX_ATTRIB_NORMAL;
                 attrib.attribSizeBytes = attrib.size * sizeof(float);
                 meshdata->attribs.push_back(attrib);
             }
-            if (mesh.texcoords.size())
+            if (!mesh.texcoords.empty())
             {
                 hastex = true;
                 attrib.size = 2;
@@ -1544,7 +1544,7 @@ bool Bundle3D::loadAnimationDataBinary(const std::string& id, Animation3DData* a
     {
         // if id is not a null string, we need to add a suffix of "animation" for seeding.
         std::string id_ = id;
-        if(id != "") id_ = id + "animation";
+        if(!id.empty()) id_ = id + "animation";
         
         if (!seekToFirstType(BUNDLE_TYPE_ANIMATIONS, id_))
             return false;
@@ -1730,7 +1730,7 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue, bo
             modelnodedata->subMeshId = part[MESHPARTID].GetString();
             modelnodedata->materialId = part[MATERIALID].GetString();
 
-            if (modelnodedata->subMeshId == "" || modelnodedata->materialId == "")
+            if (modelnodedata->subMeshId.empty() || modelnodedata->materialId.empty())
             {
                 CCLOG("warning: Node %s part is missing meshPartId or materialId", nodedata->id.c_str());
                 CC_SAFE_DELETE(modelnodedata);
@@ -1874,7 +1874,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton, bool singleSprit
             modelnodedata->subMeshId = _binaryReader.readString();
             modelnodedata->materialId = _binaryReader.readString();
 
-            if (modelnodedata->subMeshId == "" || modelnodedata->materialId == "")
+            if (modelnodedata->subMeshId.empty() || modelnodedata->materialId.empty())
             {
                 std::string err = "Node " + nodedata->id + " part is missing meshPartId or materialId";
                 CCLOG("Node %s part is missing meshPartId or materialId", nodedata->id.c_str());
@@ -2158,7 +2158,7 @@ Reference* Bundle3D::seekToFirstType(unsigned int type, const std::string& id)
         if (ref->type == type)
         {
             // if id is not a null string, we also need to check the Reference's id.
-            if (id != "" && id != ref->id)
+            if (!id.empty() && id != ref->id)
             {
                 continue;
             }
@@ -2210,7 +2210,7 @@ std::vector<Vec3> Bundle3D::getTrianglesList(const std::string& path)
     Bundle3D::destroyBundle(bundle);
     for (auto iter : meshs.meshDatas){
         int preVertexSize = iter->getPerVertexSize() / sizeof(float);
-        for (auto indexArray : iter->subMeshIndices){
+        for (const auto& indexArray : iter->subMeshIndices){
             for (auto i : indexArray){
                 trianglesList.push_back(Vec3(iter->vertex[i * preVertexSize], iter->vertex[i * preVertexSize + 1], iter->vertex[i * preVertexSize + 2]));
             }

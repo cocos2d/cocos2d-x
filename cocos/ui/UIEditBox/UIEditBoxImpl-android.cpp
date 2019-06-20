@@ -41,7 +41,7 @@
 
 NS_CC_BEGIN
 
-static const std::string editBoxClassName = "org/cocos2dx/lib/Cocos2dxEditBoxHelper";
+static const std::string editBoxClassName = "org.cocos2dx.lib.Cocos2dxEditBoxHelper";
 
 namespace ui {
 

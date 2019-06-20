@@ -236,7 +236,7 @@ public:
     /**
      * Sets a new label using a string
      *
-     * @param label A null terminated string
+     * @param label The name of the new label.
      * @js NA
      * @lua NA
      */

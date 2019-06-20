@@ -561,6 +561,7 @@ public:
         : _fontSize(0)
         , _alignment(TextHAlignment::CENTER)
         , _vertAlignment(TextVAlignment::TOP)
+        , _lineSpacing(0.0f)
         , _dimensions(Size::ZERO)
         , _fontFillColor(Color3B::WHITE)
         , _fontAlpha(255)
@@ -575,7 +576,9 @@ public:
     /// horizontal alignment
     TextHAlignment        _alignment;
     /// vertical alignment
-    TextVAlignment _vertAlignment;
+    TextVAlignment        _vertAlignment;
+    /// line spacing
+    float                 _lineSpacing;
     /// rendering box
     Size                  _dimensions;
     /// font color
@@ -630,15 +633,6 @@ public:
 
 extern const std::string CC_DLL STD_STRING_EMPTY;
 extern const ssize_t CC_DLL CC_INVALID_INDEX;
-
-enum class SetIntervalReason : char
-{
-    BY_GAME = 0,
-    BY_ENGINE,
-    BY_SYSTEM,
-    BY_SCENE_CHANGE,
-    BY_DIRECTOR_PAUSE
-};
 
 NS_CC_END
 // end group

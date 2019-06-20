@@ -28,9 +28,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-#include <spine/PathConstraint.h>
-#include <spine/Skeleton.h>
-#include <spine/extension.h>
+#include "spine/PathConstraint.h"
+#include "spine/Skeleton.h"
+#include "spine/extension.h"
 
 #define PATHCONSTRAINT_NONE -1
 #define PATHCONSTRAINT_BEFORE -2

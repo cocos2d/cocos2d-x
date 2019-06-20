@@ -878,9 +878,7 @@ namespace cocostudio
         Color3B titleColor(textColor->r(), textColor->g(), textColor->b());
         button->setTitleColor(titleColor);
         
-        int titleFontSize = options->fontSize();
-        button->setTitleFontSize(titleFontSize);
-        
+
         std::string titleFontName = options->fontName()->c_str();
         button->setTitleFontName(titleFontName);
         
@@ -888,7 +886,7 @@ namespace cocostudio
         bool fileExist = false;
         std::string errorFilePath = "";
         std::string path = resourceData->path()->c_str();
-        if (path != "")
+        if (!path.empty())
         {
             if (FileUtils::getInstance()->isFileExist(path))
             {
@@ -905,6 +903,9 @@ namespace cocostudio
             }
         }
         
+        int titleFontSize = options->fontSize();
+        button->setTitleFontSize(titleFontSize);
+
         bool displaystate = options->displaystate() != 0;
         button->setBright(displaystate);
         button->setEnabled(displaystate);

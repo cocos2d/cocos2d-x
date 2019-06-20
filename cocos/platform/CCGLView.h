@@ -196,6 +196,19 @@ public:
     virtual float getFrameZoomFactor() const { return 1.0; }
     
     /**
+     * Sets the cursor for the window with custom image.
+     *
+     * @param filename A path to image file, e.g., "cursors/custom.png".
+     * @param hotspot Cursor hotspot, as a anchor point, default is top left (0, 1)
+     */
+    virtual void setCursor(const std::string& filename, Vec2 hotspot = Vec2::ANCHOR_TOP_LEFT) {}
+
+    /**
+     * Sets the cursor for the window back to default.
+     */
+    virtual void setDefaultCursor() {}
+
+    /**
      * Hide or Show the mouse cursor if there is one.
      *
      * @param isVisible Hide or Show the mouse cursor if there is one.
@@ -363,22 +376,22 @@ public:
 
     /** Set window icon (implemented for windows and linux).
      *
-     * @param filename A path to image file, e.g., "icons/cusom.png". 
+     * @param filename A path to image file, e.g., "icons/custom.png".
      */
-    virtual void setIcon(const std::string& filename) const {};
+    virtual void setIcon(const std::string& filename) const {}
 
     /** Set window icon (implemented for windows and linux).
      * Best icon (based on size) will be auto selected.
      * 
      * @param filelist The array contains icons.
      */
-    virtual void setIcon(const std::vector<std::string>& filelist) const {};
+    virtual void setIcon(const std::vector<std::string>& filelist) const {}
 
     /** Set default window icon (implemented for windows and linux).
      * On windows it will use icon from .exe file (if included).
      * On linux it will use default window icon.
      */
-    virtual void setDefaultIcon() const {};
+    virtual void setDefaultIcon() const {}
 
     /**
      * Get the opengl view port rectangle.
@@ -420,6 +433,7 @@ public:
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     virtual id getCocoaWindow() = 0;
+    virtual id getNSGLContext() = 0; // stevetranby: added
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) */
 
     /**

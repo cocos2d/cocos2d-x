@@ -33,10 +33,10 @@ using namespace cocosbuilder;
 
 static void removeSelector(std::string &str) {
     size_t found;
-    found = str.find(":");
+    found = str.find(':');
     while (found!=std::string::npos){
         str.replace(found, found+1, "");
-        found = str.find(":");
+        found = str.find(':');
     }
 }
 

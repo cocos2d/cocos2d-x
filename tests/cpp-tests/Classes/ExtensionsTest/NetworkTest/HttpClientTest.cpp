@@ -33,6 +33,7 @@ using namespace cocos2d::network;
 HttpClientTests::HttpClientTests()
 {
     ADD_TEST_CASE(HttpClientTest);
+    ADD_TEST_CASE(HttpClientClearRequestsTest);
 }
 
 HttpClientTest::HttpClientTest() 
@@ -396,5 +397,151 @@ void HttpClientTest::onHttpRequestCompleted(HttpClient *sender, HttpResponse *re
     if (response->getHttpRequest()->getReferenceCount() != 2)
     {
         log("request ref count not 2, is %d", response->getHttpRequest()->getReferenceCount());
+    }
+}
+
+
+
+
+HttpClientClearRequestsTest::HttpClientClearRequestsTest()
+: _labelStatusCode(nullptr)
+{
+    auto winSize = Director::getInstance()->getWinSize();
+    
+    const int MARGIN = 40;
+    const int SPACE = 35;
+    
+    const int CENTER = winSize.width / 2;
+    
+    auto menuRequest = Menu::create();
+    menuRequest->setPosition(Vec2::ZERO);
+    addChild(menuRequest);
+    
+    // Get
+    auto labelGet = Label::createWithTTF("Test Clear all Get", "fonts/arial.ttf", 22);
+    auto itemGet = MenuItemLabel::create(labelGet, CC_CALLBACK_1(HttpClientClearRequestsTest::onMenuCancelAllClicked, this));
+    itemGet->setPosition(CENTER, winSize.height - MARGIN - SPACE);
+    menuRequest->addChild(itemGet);
+    
+    // Post
+    auto labelPost = Label::createWithTTF("Test Clear but only with the tag DELETE", "fonts/arial.ttf", 22);
+    auto itemPost = MenuItemLabel::create(labelPost, CC_CALLBACK_1(HttpClientClearRequestsTest::onMenuCancelSomeClicked, this));
+    itemPost->setPosition(CENTER, winSize.height - MARGIN - 2 * SPACE);
+    menuRequest->addChild(itemPost);
+    
+    // Response Code Label
+    _labelStatusCode = Label::createWithTTF("HTTP Status Code", "fonts/arial.ttf", 18);
+    _labelStatusCode->setPosition(winSize.width / 2,  winSize.height - MARGIN - 6 * SPACE);
+    addChild(_labelStatusCode);
+    
+    // Tracking Data Label
+    _labelTrakingData = Label::createWithTTF("Got 0 of 0 expected http requests", "fonts/arial.ttf", 16);
+    _labelTrakingData->setPosition(CENTER,  winSize.height - MARGIN - 5 * SPACE);
+    addChild(_labelTrakingData);
+    
+    _totalExpectedRequests = 0;
+    _totalProcessedRequests = 0;
+}
+
+HttpClientClearRequestsTest::~HttpClientClearRequestsTest()
+{
+    HttpClient::destroyInstance();
+}
+
+void HttpClientClearRequestsTest::onMenuCancelAllClicked(cocos2d::Ref *sender)
+{
+    for (int i=0; i < 10; i++)
+    {
+        HttpRequest* request = new (std::nothrow) HttpRequest();
+        std::stringstream url;
+        url << "http://cocos2d-x.org/images/logo.png?id=" << std::to_string(i);
+        request->setUrl(url.str());
+        request->setRequestType(HttpRequest::Type::GET);
+        request->setResponseCallback(CC_CALLBACK_2(HttpClientClearRequestsTest::onHttpRequestCompleted, this));
+        
+        url.str("");
+        url << "TEST_" << std::to_string(i);
+        request->setTag(url.str());
+        HttpClient::getInstance()->send(request);
+        request->release();
+    }
+    
+    _totalProcessedRequests = 0;
+    _totalExpectedRequests = 1;
+    
+    HttpClient::getInstance()->setClearRequestPredicate(nullptr);
+    HttpClient::getInstance()->setClearResponsePredicate(nullptr);
+    HttpClient::getInstance()->clearResponseAndRequestQueue();
+    
+    // waiting
+    _labelStatusCode->setString("waiting...");
+}
+
+void HttpClientClearRequestsTest::onMenuCancelSomeClicked(cocos2d::Ref *sender)
+{
+    // test 1
+    for (int i=0; i < 10; i++)
+    {
+        HttpRequest* request = new (std::nothrow) HttpRequest();
+        std::stringstream url;
+        url << "http://cocos2d-x.org/images/logo.png?id=" << std::to_string(i);
+        request->setUrl(url.str());
+        request->setRequestType(HttpRequest::Type::GET);
+        request->setResponseCallback(CC_CALLBACK_2(HttpClientClearRequestsTest::onHttpRequestCompleted, this));
+        
+        url.str("");
+        if (i < 5) {
+            url << "TEST_" << std::to_string(i);
+            _totalExpectedRequests++;
+        }
+        else {
+            url << "DELETE_" << std::to_string(i);
+        }
+        request->setTag(url.str());
+        HttpClient::getInstance()->send(request);
+        request->release();
+    }
+    
+    HttpClient::getInstance()->setClearRequestPredicate([&](HttpRequest* req)
+                                                         {
+                                                             auto r = !!strstr(req->getTag(), "DELETE_");
+                                                             return r;
+                                                         });
+    HttpClient::getInstance()->setClearResponsePredicate(nullptr);
+    HttpClient::getInstance()->clearResponseAndRequestQueue();
+    
+    
+    // waiting
+    _labelStatusCode->setString("waiting...");
+    
+}
+
+void HttpClientClearRequestsTest::onHttpRequestCompleted(HttpClient *sender, HttpResponse *response)
+{
+    if (!response)
+    {
+        return;
+    }
+    
+    // You can get original request type from: response->request->reqType
+    if (0 != strlen(response->getHttpRequest()->getTag()))
+    {
+        log("%s completed", response->getHttpRequest()->getTag());
+    }
+    
+    long statusCode = response->getResponseCode();
+    char statusString[64] = {};
+    sprintf(statusString, "HTTP Status Code: %ld, tag = %s", statusCode, response->getHttpRequest()->getTag());
+    _labelStatusCode->setString(statusString);
+    log("response code: %ld", statusCode);
+    
+    _totalProcessedRequests++;
+    sprintf(statusString, "Got %d of %d expected http requests", _totalProcessedRequests, _totalExpectedRequests);
+    _labelTrakingData->setString(statusString);
+    
+    if (!response->isSucceed())
+    {
+        log("response failed");
+        log("error buffer: %s", response->getErrorBuffer());
     }
 }

@@ -114,7 +114,7 @@ TextFieldTTF * TextFieldTTF::textFieldWithPlaceHolder(const std::string& placeho
     if(ret && ret->initWithPlaceHolder("", dimensions, alignment, fontName, fontSize))
     {
         ret->autorelease();
-        if (placeholder.size()>0)
+        if (!placeholder.empty())
         {
             ret->setPlaceHolder(placeholder);
         }
@@ -130,7 +130,7 @@ TextFieldTTF * TextFieldTTF::textFieldWithPlaceHolder(const std::string& placeho
     if(ret && ret->initWithPlaceHolder("", fontName, fontSize))
     {
         ret->autorelease();
-        if (placeholder.size()>0)
+        if (!placeholder.empty())
         {
             ret->setPlaceHolder(placeholder);
         }
@@ -387,7 +387,7 @@ void TextFieldTTF::setCursorFromPoint(const Vec2 &point, const Camera* camera)
                     auto sprite = getLetter(latterPosition);
                     if (sprite)
                     {
-                        rect.size = sprite->getContentSize();
+                        rect.size = Size(sprite->getContentSize().width, _lineHeight);
                         if (isScreenPointInRect(point, camera, sprite->getWorldToNodeTransform(), rect, nullptr))
                         {
                             setCursorPosition(latterPosition);

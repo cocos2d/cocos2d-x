@@ -38,7 +38,7 @@
 
 //-----------------------------------------------------------------------------------------------------------
 
-static const std::string videoHelperClassName = "org/cocos2dx/lib/Cocos2dxVideoHelper";
+static const std::string videoHelperClassName = "org.cocos2dx.lib.Cocos2dxVideoHelper";
 
 USING_NS_CC;
 
@@ -65,6 +65,26 @@ int createVideoWidgetJNI()
     return ret;
 }
 
+void setLoopingJNI(int index, bool looping)
+{
+    JniMethodInfo t;
+    if (JniHelper::getStaticMethodInfo(t, videoHelperClassName.c_str(), "setLooping", "(IZ)V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, looping);
+
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
+void setUserInputEnabledJNI(int index, bool enableInput)
+{
+    JniMethodInfo t;
+    if (JniHelper::getStaticMethodInfo(t, videoHelperClassName.c_str(), "setUserInputEnabled", "(IZ)V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, index, enableInput);
+
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
 //-----------------------------------------------------------------------------------------------------------
 
 using namespace cocos2d::experimental::ui;
@@ -77,6 +97,10 @@ VideoPlayer::VideoPlayer()
 , _keepAspectRatioEnabled(false)
 , _videoPlayerIndex(-1)
 , _eventCallback(nullptr)
+, _isPlaying(false)
+, _isLooping(false)
+, _isUserInputEnabled(true)
+, _styleType(StyleType::DEFAULT)
 {
     _videoPlayerIndex = createVideoWidgetJNI();
     s_allVideoPlayers[_videoPlayerIndex] = this;
@@ -107,6 +131,23 @@ void VideoPlayer::setURL(const std::string& videoUrl)
     _videoSource = VideoPlayer::Source::URL;
     JniHelper::callStaticVoidMethod(videoHelperClassName, "setVideoUrl", _videoPlayerIndex,
                                     (int)Source::URL,_videoURL);
+}
+
+void VideoPlayer::setLooping(bool looping)
+{
+    _isLooping = looping;
+    setLoopingJNI(_videoPlayerIndex, _isLooping);
+}
+
+void VideoPlayer::setUserInputEnabled(bool enableInput)
+{
+    _isUserInputEnabled = enableInput;
+    setUserInputEnabledJNI(_videoPlayerIndex, enableInput);
+}
+
+void VideoPlayer::setStyle(StyleType style)
+{
+    _styleType = style;
 }
 
 void VideoPlayer::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
@@ -231,6 +272,16 @@ bool VideoPlayer::isPlaying() const
     return _isPlaying;
 }
 
+bool VideoPlayer::isLooping() const
+{
+    return _isLooping;
+}
+
+bool VideoPlayer::isUserInputEnabled() const
+{
+    return _isUserInputEnabled;
+}
+
 void VideoPlayer::setVisible(bool visible)
 {
     cocos2d::ui::Widget::setVisible(visible);
@@ -294,6 +345,9 @@ void VideoPlayer::copySpecialProperties(Widget *widget)
     if (videoPlayer)
     {
         _isPlaying = videoPlayer->_isPlaying;
+        _isLooping = videoPlayer->_isLooping;
+        _isUserInputEnabled = videoPlayer->_isUserInputEnabled;
+        _styleType = videoPlayer->_styleType;
         _fullScreenEnabled = videoPlayer->_fullScreenEnabled;
         _fullScreenDirty = videoPlayer->_fullScreenDirty;
         _videoURL = videoPlayer->_videoURL;

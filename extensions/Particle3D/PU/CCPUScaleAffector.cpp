@@ -36,13 +36,13 @@ const float PUScaleAffector::DEFAULT_Z_SCALE = 1.0f;
 const float PUScaleAffector::DEFAULT_XYZ_SCALE = 1.0f;
 
 //-----------------------------------------------------------------------
-PUScaleAffector::PUScaleAffector(void) : 
-    PUAffector(),
-    _dynScaleXSet(false),
-    _dynScaleYSet(false),
-    _dynScaleZSet(false),
-    _dynScaleXYZSet(false),
-    _sinceStartSystem(false)
+PUScaleAffector::PUScaleAffector()
+: PUAffector()
+, _dynScaleXSet(false)
+, _dynScaleYSet(false)
+, _dynScaleZSet(false)
+, _dynScaleXYZSet(false)
+, _sinceStartSystem(false)
 {
     _dynScaleX = new (std::nothrow) PUDynamicAttributeFixed();
     _dynScaleY = new (std::nothrow) PUDynamicAttributeFixed();
@@ -55,7 +55,7 @@ PUScaleAffector::PUScaleAffector(void) :
     _latestTimeElapsed = 1.0f;
 }
 //-----------------------------------------------------------------------
-PUScaleAffector::~PUScaleAffector(void)
+PUScaleAffector::~PUScaleAffector()
 {
     if (_dynScaleX)
     {

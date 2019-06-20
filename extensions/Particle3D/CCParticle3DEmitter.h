@@ -49,7 +49,7 @@ public:
      */
     void setEnabled (bool enabled) { _isEnabled = enabled; }
     
-    bool isEnabled(void) const { return _isEnabled; }
+    bool isEnabled() const { return _isEnabled; }
 
 CC_CONSTRUCTOR_ACCESS:
     Particle3DEmitter();

@@ -369,7 +369,7 @@ bool Label::isHorizontalClamp()
     return letterClamp;
 }
 
-void Label::shrinkLabelToContentSize(const std::function<bool(void)>& lambda)
+void Label::shrinkLabelToContentSize(const std::function<bool()>& lambda)
 {
     float fontSize = this->getRenderingFontSize();
 

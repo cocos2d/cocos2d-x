@@ -527,6 +527,7 @@ public:
     
 protected:
     cocos2d::Sprite3D* _sprite3d;
+    cocos2d::EventListenerCustom *_customEventListener = nullptr;
 };
 
 class Sprite3DTestMeshLight : public Sprite3DTestDemo

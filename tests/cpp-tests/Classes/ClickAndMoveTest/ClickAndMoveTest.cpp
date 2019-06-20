@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "ClickAndMoveTest.h"
+#include <cmath>
 #include "../testResource.h"
 
 USING_NS_CC;
@@ -78,12 +79,12 @@ void ClickAndMoveTestCase::onTouchEnded(Touch* touch, Event  *event)
     float a = location.y - s->getPosition().y;
     float at = (float) CC_RADIANS_TO_DEGREES( atanf( o/a) );
     
-    if( a < 0 ) 
+    if( a < 0)
     {
-        if(  o < 0 )
-            at = 180 + fabs(at);
+        if( o < 0 )
+            at = 180 + std::fabs(at);
         else
-            at = 180 - fabs(at);    
+            at = 180 - std::fabs(at);
     }
     
     s->runAction( RotateTo::create(1, at) );

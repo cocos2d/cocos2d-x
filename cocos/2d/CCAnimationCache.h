@@ -81,7 +81,7 @@ public:
     /** @deprecated Use destroyInstance() instead. */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedAnimationCache() { return AnimationCache::destroyInstance(); }
 
-    bool init(void);
+    bool init();
 
     /** Adds a Animation with a name.
      *

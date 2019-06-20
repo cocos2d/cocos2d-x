@@ -35,7 +35,7 @@ NS_CC_BEGIN
 
 // implementation of Size
 
-Size::Size(void) : width(0), height(0)
+Size::Size() : width(0), height(0)
 {
 }
 
@@ -100,7 +100,7 @@ const Size Size::ZERO = Size(0, 0);
 
 // implementation of Rect
 
-Rect::Rect(void)
+Rect::Rect()
 {
     setRect(0.0f, 0.0f, 0.0f, 0.0f);
 }
@@ -175,15 +175,10 @@ float Rect::getMinY() const
 
 bool Rect::containsPoint(const Vec2& point) const
 {
-    bool bRet = false;
-
-    if (point.x >= getMinX() && point.x <= getMaxX()
-        && point.y >= getMinY() && point.y <= getMaxY())
-    {
-        bRet = true;
-    }
-
-    return bRet;
+    return (point.x >= getMinX() &&
+            point.x <= getMaxX() &&
+            point.y >= getMinY() &&
+            point.y <= getMaxY());
 }
 
 bool Rect::intersectsRect(const Rect& rect) const

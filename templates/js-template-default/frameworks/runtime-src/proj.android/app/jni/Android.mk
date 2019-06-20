@@ -11,11 +11,10 @@ LOCAL_SRC_FILES := hellojavascript/main.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes
 
-LOCAL_STATIC_LIBRARIES := cocos2d_js_static
+LOCAL_STATIC_LIBRARIES := ccjs_static
 
 LOCAL_EXPORT_CFLAGS := -DCOCOS2D_DEBUG=2 -DCOCOS2D_JAVASCRIPT
 
 include $(BUILD_SHARED_LIBRARY)
 
-$(call import-add-path, $(LOCAL_PATH)/../../../../cocos2d-x)
 $(call import-module, cocos/scripting/js-bindings/proj.android)

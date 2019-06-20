@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCTweenFunction.h"
+#include <cmath>
 
 #define _USE_MATH_DEFINES // needed for M_PI and M_PI2
 #include <math.h> // M_PI
@@ -316,20 +317,20 @@ float expoEaseInOut(float time)
 // Circ Ease
 float circEaseIn(float time)
 {
-    return -1 * (sqrt(1 - time * time) - 1);
+    return -1 * (std::sqrt(1 - time * time) - 1);
 }
 float circEaseOut(float time)
 {
     time = time - 1;
-    return sqrt(1 - time * time);
+    return std::sqrt(1 - time * time);
 }
 float circEaseInOut(float time)
 {
     time = time * 2;
     if (time < 1)
-        return -0.5f * (sqrt(1 - time * time) - 1);
+        return -0.5f * (std::sqrt(1 - time * time) - 1);
     time -= 2;
-    return 0.5f * (sqrt(1 - time * time) + 1);
+    return 0.5f * (std::sqrt(1 - time * time) + 1);
 }
 
 

@@ -1,3 +1,5 @@
+import org.gradle.internal.os.OperatingSystem
+
 apply plugin: 'com.android.application'
 
 android {
@@ -16,19 +18,24 @@ android {
                     targets 'MyGame'
                     arguments 'NDK_TOOLCHAIN_VERSION=clang'
                     arguments '-j' + Runtime.runtime.availableProcessors()
+
+                    def module_paths = [project.file("../../cocos2d").absolutePath,
+                                        project.file("../../cocos2d/cocos").absolutePath,
+                                        project.file("../../cocos2d/external").absolutePath]
+                    if (OperatingSystem.current().isWindows()) {
+                        module_paths = module_paths.collect {it.replaceAll('\\\\', '/')}
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(";")
+                    }
+                    else {
+                        arguments 'NDK_MODULE_PATH=' + module_paths.join(':')
+                    }
                 }
             }
             else if (PROP_BUILD_TYPE == 'cmake') {
                 cmake {
                     targets 'MyGame'
-                    arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE", \
-                              "-DUSE_CHIPMUNK=TRUE", "-DUSE_BULLET=TRUE"
-                    cppFlags "-frtti -fexceptions"
-                    // prebuilt root must be defined as a directory which you have right to access or create if you use prebuilt
-                    // set "-DGEN_COCOS_PREBUILT=ON" and "-DUSE_COCOS_PREBUILT=OFF" to generate prebuilt,  this way build cocos2d-x libs
-                    // set "-DGEN_COCOS_PREBUILT=OFF" and "-DUSE_COCOS_PREBUILT=ON" to use prebuilt, this way not build cocos2d-x libs
-                    //arguments "-DCOCOS_PREBUILT_ROOT=/Users/laptop/cocos-prebuilt"
-                    //arguments "-DGEN_COCOS_PREBUILT=OFF", "-DUSE_COCOS_PREBUILT=OFF"
+                    arguments "-DCMAKE_FIND_ROOT_PATH=", "-DANDROID_STL=c++_static", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_NEON=TRUE"
+                    cppFlags "-frtti -fexceptions -fsigned-char"
                 }
             }
         }
@@ -43,7 +50,7 @@ android {
         java.srcDir "src"
         res.srcDir "res"
         manifest.srcFile "AndroidManifest.xml"
-        assets.srcDir "../../Resources"
+        assets.srcDir "assets"
     }
 
     externalNativeBuild {
@@ -104,16 +111,22 @@ android {
 }
 
 android.applicationVariants.all { variant ->
-    // delete previous files first
-    delete "${buildDir}/intermediates/assets/${variant.dirName}"
+    def project_root_folder = "${projectDir}/../.."
+    def dest_assets_folder = "${projectDir}/assets"
 
-    variant.mergeAssets.doLast {
+    // delete previous files first
+    delete dest_assets_folder
+    def targetName = variant.name.capitalize()
+    def copyTaskName = "copy${targetName}ResourcesToAssets"
+    
+    tasks.register(copyTaskName) {
         copy {
-            from "${buildDir}/../../../Resources"
-            into "${buildDir}/intermediates/assets/${variant.dirName}"
+            from project_root_folder + "/Resources"
+            into dest_assets_folder
             exclude "**/*.gz"
         }
     }
+    tasks.getByName("pre${targetName}Build").dependsOn copyTaskName
 }
 
 dependencies {

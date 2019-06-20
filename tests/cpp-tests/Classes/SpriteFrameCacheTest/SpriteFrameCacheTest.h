@@ -46,3 +46,34 @@ private:
 private:
     cocos2d::Label *infoLabel;
 };
+
+class SpriteFrameCacheLoadMultipleTimes : public TestCase
+{
+public:
+    CREATE_FUNC(SpriteFrameCacheLoadMultipleTimes);
+
+    virtual std::string title() const override { return "Load same plist multiple times"; }
+    virtual std::string subtitle() const override { return "It shouldn't crash"; }
+
+    SpriteFrameCacheLoadMultipleTimes();
+
+private:
+    void loadSpriteFrames(const std::string &file, cocos2d::Texture2D::PixelFormat expectedFormat);
+
+};
+
+
+class SpriteFrameCacheFullCheck: public TestCase
+{
+public:
+    CREATE_FUNC(SpriteFrameCacheFullCheck);
+
+    virtual std::string title() const override { return "Test isSpriteFramesWithFileLoaded"; }
+    virtual std::string subtitle() const override { return "It shouldn't crash"; }
+
+    SpriteFrameCacheFullCheck();
+
+private:
+    void loadSpriteFrames(const std::string &file, cocos2d::Texture2D::PixelFormat expectedFormat);
+
+};

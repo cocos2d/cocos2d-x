@@ -57,31 +57,31 @@ public:
     virtual void updatePUAffector(PUParticle3D *particle, float deltaTime) override;
 
     /** Returns the AnimationTimeStep. The AnimationTimeStep defines the time between each animation frame. */
-    float getAnimationTimeStep(void) const;
+    float getAnimationTimeStep() const;
 
     /** Set the  AnimationTimeStep */
     void setAnimationTimeStep(float animationTimeStep);
 
     /** Returns the type of texture animation. */
-    TextureAnimationType getTextureAnimationType(void) const;
+    TextureAnimationType getTextureAnimationType() const;
 
     /** Set the type of texture animation. */
     void setTextureAnimationType(TextureAnimationType textureAnimationType);
 
     /** Todo */
-    unsigned short getTextureCoordsStart(void) const;
+    unsigned short getTextureCoordsStart() const;
 
     /** Todo */
     void setTextureCoordsStart(unsigned short textureCoordsStart);
 
     /** Todo */
-    unsigned short getTextureCoordsEnd(void) const;
+    unsigned short getTextureCoordsEnd() const;
 
     /** Todo */
     void setTextureCoordsEnd(unsigned short textureCoordsEnd);
 
     /** Todo */
-    bool isStartRandom(void) const;
+    bool isStartRandom() const;
 
     /** Todo */
     void setStartRandom(bool startRandom);
@@ -89,8 +89,8 @@ public:
     virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:	
-    PUTextureAnimator(void);
-    virtual ~PUTextureAnimator(void);
+    PUTextureAnimator();
+    virtual ~PUTextureAnimator();
 
 protected:
 

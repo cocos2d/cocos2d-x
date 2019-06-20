@@ -78,6 +78,11 @@ public:
      * @lua NA
      */
     const std::string& getContentText();
+ 
+    /**
+    *@brief Returns if any delegate is attached with IME.
+    */
+    bool isAnyDelegateAttachedWithIME() const;
 
     //////////////////////////////////////////////////////////////////////////
     // dispatch keyboard notification
@@ -133,7 +138,7 @@ protected:
 private:
     IMEDispatcher();
     
-    class Impl;
+    struct Impl;
     Impl * _impl;
 };
 

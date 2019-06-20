@@ -25,6 +25,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "Camera3DTest.h"
+#include <cmath>
 #include "testResource.h"
 #include "ui/UISlider.h"
 
@@ -176,7 +177,8 @@ void CameraRotationTest::update(float dt)
 //
 //------------------------------------------------------------------
 Camera3DTestDemo::Camera3DTestDemo(void)
-: _incRot(nullptr)
+: _cameraType(CameraType::Free)
+, _incRot(nullptr)
 , _decRot(nullptr)
 , _camera(nullptr)
 , _bZoomOut(false)
@@ -1136,7 +1138,7 @@ void CameraArcBallDemo::calculateArcBall( cocos2d::Vec3 & axis, float & angle, f
     //clamp -1 to 1
     if (t > 1.0) t = 1.0;
     if (t < -1.0) t = -1.0;
-    angle = asin(t);           //rotation angle
+    angle = std::asin(t);           //rotation angle
 }
 
 /* project an x,y pair onto a sphere of radius r or a
@@ -1144,10 +1146,10 @@ hyperbolic sheet if we are away from the center of the sphere. */
 float CameraArcBallDemo::projectToSphere( float r, float x, float y )
 {
     float d, t, z;
-    d = sqrt(x*x + y*y);
+    d = std::sqrt(x*x + y*y);
     if (d < r * 0.70710678118654752440)//inside sphere
     {
-        z = sqrt(r*r - d*d);
+        z = std::sqrt(r*r - d*d);
     }                         
     else                               //on hyperbola
     {

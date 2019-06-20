@@ -143,6 +143,12 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
+-- Updates the visual elements of the slider.
+-- @function [parent=#Slider] updateVisualSlider 
+-- @param self
+-- @return Slider#Slider self (return value: ccui.Slider)
+        
+--------------------------------
 -- Gets capinsets for progress bar slider, if slider is using scale9 renderer.<br>
 -- return Capinsets for progress bar slider.<br>
 -- js NA

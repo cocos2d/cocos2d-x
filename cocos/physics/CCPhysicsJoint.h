@@ -26,6 +26,8 @@
 #ifndef __CCPHYSICS_JOINT_H__
 #define __CCPHYSICS_JOINT_H__
 
+#include <functional>
+
 #include "base/ccConfig.h"
 #if CC_USE_PHYSICS
 
@@ -40,6 +42,8 @@ class Node;
 class PhysicsBody;
 class PhysicsWorld;
 
+class WriteCache;
+
 /**
  * @addtogroup physics
  * @{
@@ -52,6 +56,8 @@ class PhysicsWorld;
  */
 class CC_DLL PhysicsJoint
 {
+protected:
+    typedef std::function<void()> DelayTask;
 protected:
     PhysicsJoint();
     virtual ~PhysicsJoint() = 0;
@@ -105,14 +111,21 @@ protected:
     bool init(PhysicsBody* a, PhysicsBody* b);
 
     bool initJoint();
+
+    void delay(const DelayTask & task) { _delayTasks.push_back(task); }
+
+    void flushDelayTasks();
     
     /** Create constraints for this type joint */
     virtual bool createConstraints() { return false; }
 
     std::vector<cpConstraint*> _cpConstraints;
+    std::vector<DelayTask> _delayTasks;
     PhysicsBody* _bodyA;
     PhysicsBody* _bodyB;
     PhysicsWorld* _world;
+
+    WriteCache *_writeCache = nullptr;
 
     bool _enable;
     bool _collisionEnable;
@@ -571,6 +584,7 @@ protected:
 
 /** @} */
 /** @} */
+
 
 
 NS_CC_END

@@ -33,6 +33,7 @@ extern "C" {
 #endif
 
 #include "scripting/lua-bindings/manual/network/lua_xml_http_request.h"
+#include "scripting/lua-bindings/manual/network/lua_downloader.h"
 #include "scripting/lua-bindings/manual/CCLuaEngine.h"
 
 
@@ -51,6 +52,7 @@ int register_network_module(lua_State* L)
 #endif
         
         register_xml_http_request(L);
+        register_downloader(L);
     }
     lua_pop(L, 1);
     

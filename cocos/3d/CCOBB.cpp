@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 #include "3d/CCOBB.h"
+#include <cmath>
 
 NS_CC_BEGIN
 
@@ -109,7 +110,7 @@ static void _getEigenVectors(Mat4* vout, Vec3* dout, Mat4 a)
     for(i = 0; i < 50; i++)
     {
         sm = 0.0;
-        for(ip = 0; ip < n; ip++) for(iq = ip+1; iq < n; iq++) sm += fabs(a.m[ip + 4 * iq]);
+        for(ip = 0; ip < n; ip++) for(iq = ip+1; iq < n; iq++) sm += std::fabs(a.m[ip + 4 * iq]);
         if( fabs(sm) < FLT_EPSILON )
         {
             v.transpose();
@@ -127,15 +128,15 @@ static void _getEigenVectors(Mat4* vout, Vec3* dout, Mat4 a)
         {
             for(iq = ip + 1; iq < n; iq++)
             {
-                g = 100.0 * fabs(a.m[ip + iq * 4]);
+                g = 100.0 * std::fabs(a.m[ip + iq * 4]);
                 float dmip = _getElement(d, ip);
                 float dmiq = _getElement(d, iq);
 
-                if( i>3 && fabs(dmip) + g == fabs(dmip) && fabs(dmiq) + g == fabs(dmiq) )
+                if( i>3 && std::fabs(dmip) + g == std::fabs(dmip) && std::fabs(dmiq) + g == std::fabs(dmiq) )
                 {
                     a.m[ip + 4 * iq] = 0.0;
                 }
-                else if (fabs(a.m[ip + 4 * iq]) > tresh)
+                else if (std::fabs(a.m[ip + 4 * iq]) > tresh)
                 {
                     h = dmiq - dmip;
                     if (fabs(h) + g == fabs(h))
@@ -177,7 +178,6 @@ static void _getEigenVectors(Mat4* vout, Vec3* dout, Mat4 a)
     v.transpose();
     *vout = v;
     *dout = d;
-    return;
 }
 
 static Mat4 _getOBBOrientation(const Vec3* vertPos, int num)

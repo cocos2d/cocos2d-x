@@ -203,7 +203,7 @@ void PrettyPrinter::visit(const __Set *p)
         if (i > 0) {
             _result += "\n";
         }
-        _result += _indentStr.c_str();
+        _result += _indentStr;
         PrettyPrinter v(_indentLevel);
 //FIXME:james        (*it)->acceptVisitor(v);
         _result += v.getResult();

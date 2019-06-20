@@ -35,7 +35,7 @@ _parentObserver(0),
 _eventHandlerScale(Vec3::ONE)
 {
     //mAliasType = AT_HANDLER;
-};
+}
 
 PUEventHandler::~PUEventHandler(  )
 {

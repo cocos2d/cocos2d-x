@@ -46,7 +46,7 @@ NavMeshTests::NavMeshTests()
     ADD_TEST_CASE(NavMeshBasicTestDemo);
     ADD_TEST_CASE(NavMeshAdvanceTestDemo);
 #endif
-};
+}
 
 #if ( CC_USE_NAVMESH == 0 ) || ( CC_USE_PHYSICS == 0 )
 void NavMeshDisabled::onEnter()
@@ -115,7 +115,7 @@ void NavMeshBaseTestDemo::onTouchesBegan(const std::vector<cocos2d::Touch*>& tou
 
 void NavMeshBaseTestDemo::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
 {
-    if (touches.size() && _camera)
+    if (!touches.empty() && _camera)
     {
         auto touch = touches[0];
         auto delta = touch->getDelta();

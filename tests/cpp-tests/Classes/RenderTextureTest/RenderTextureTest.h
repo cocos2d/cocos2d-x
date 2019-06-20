@@ -44,7 +44,11 @@ public:
     virtual std::string subtitle() const override;
     void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     void clearImage(cocos2d::Ref* pSender);
-    void saveImage(cocos2d::Ref* pSender);
+    void clearImageTransparent(cocos2d::Ref* sender);
+    void saveImageWithPremultipliedAlpha(cocos2d::Ref* pSender);
+    void saveImageWithNonPremultipliedAlpha(cocos2d::Ref* pSender);
+
+    void addImage(cocos2d::Ref* sender);
 
 private:
     cocos2d::RenderTexture* _target;

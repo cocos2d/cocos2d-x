@@ -97,7 +97,7 @@ void Particle3DTestDemo::onTouchesBegan(const std::vector<Touch*>& touches, coco
 
 void Particle3DTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
-    if (touches.size())
+    if (!touches.empty())
     {
         auto touch = touches[0];
         auto delta = touch->getDelta();

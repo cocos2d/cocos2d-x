@@ -33,18 +33,18 @@ NS_CC_BEGIN
 const float PUGravityAffector::DEFAULT_GRAVITY = 1.0f;
 
 //-----------------------------------------------------------------------
-PUGravityAffector::PUGravityAffector(void) : 
-    PUAffector(),
-    _gravity(DEFAULT_GRAVITY)
+PUGravityAffector::PUGravityAffector()
+: PUAffector()
+, _gravity(DEFAULT_GRAVITY)
 {
 }
 //-----------------------------------------------------------------------
-PUGravityAffector::~PUGravityAffector( void )
+PUGravityAffector::~PUGravityAffector()
 {
 
 }
 //-----------------------------------------------------------------------
-float PUGravityAffector::getGravity(void) const
+float PUGravityAffector::getGravity() const
 {
     return _gravity;
 }

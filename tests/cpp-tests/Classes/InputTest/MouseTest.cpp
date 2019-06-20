@@ -32,6 +32,7 @@ MouseTests::MouseTests()
 {
     ADD_TEST_CASE(MouseEventTest);
     ADD_TEST_CASE(HideMouseTest);
+    ADD_TEST_CASE(CursorTest);
 }
 
 //------------------------------------------------------------------
@@ -73,7 +74,7 @@ void MouseEventTest::onMouseDown(Event *event)
     EventMouse* e = (EventMouse*)event;
     std::string str = "Mouse Down detected, Key: ";
     str += tostr(static_cast<int>(e->getMouseButton()));
-    _labelAction->setString(str.c_str());
+    _labelAction->setString(str);
 }
 
 void MouseEventTest::onMouseUp(Event *event)
@@ -81,7 +82,7 @@ void MouseEventTest::onMouseUp(Event *event)
     EventMouse* e = (EventMouse*)event;
     std::string str = "Mouse Up detected, Key: ";
     str += tostr(static_cast<int>(e->getMouseButton()));
-    _labelAction->setString(str.c_str());
+    _labelAction->setString(str);
 }
 
 void MouseEventTest::onMouseMove(Event *event)
@@ -89,7 +90,7 @@ void MouseEventTest::onMouseMove(Event *event)
     EventMouse* e = (EventMouse*)event;
     std::string str = "MousePosition X:";
     str = str + tostr(e->getCursorX()) + " Y:" + tostr(e->getCursorY());
-    _labelPosition->setString(str.c_str());
+    _labelPosition->setString(str);
 }
 
 void MouseEventTest::onMouseScroll(Event *event)
@@ -97,7 +98,7 @@ void MouseEventTest::onMouseScroll(Event *event)
     EventMouse* e = (EventMouse*)event;
     std::string str = "Mouse Scroll detected, X: ";
     str = str + tostr(e->getScrollX()) + " Y: " + tostr(e->getScrollY());
-    _labelAction->setString(str.c_str());
+    _labelAction->setString(str);
 }
 
 std::string MouseEventTest::title() const
@@ -144,5 +145,48 @@ std::string HideMouseTest::title() const
 std::string HideMouseTest::subtitle() const
 {
     return "Click to hide mouse";
+}
+
+//------------------------------------------------------------------
+//
+// CursorTest
+//
+//------------------------------------------------------------------
+
+CursorTest::CursorTest()
+{
+    _cursor = 0;
+    _lis = EventListenerMouse::create();
+    _lis->onMouseDown = [this](Event* e){
+        _cursor = (_cursor + 1) % 3;
+        switch (_cursor) {
+            case 1:
+                Director::getInstance()->getOpenGLView()->setCursor("InputTest/cursor1.png");
+                break;
+            case 2:
+                Director::getInstance()->getOpenGLView()->setCursor("InputTest/cursor2.png", Point::ANCHOR_MIDDLE);
+                break;
+            default:
+                Director::getInstance()->getOpenGLView()->setDefaultCursor();
+                break;
+        }
+    };
+
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(_lis, this);
+}
+
+CursorTest::~CursorTest()
+{
+    _eventDispatcher->removeEventListener(_lis);
+}
+
+std::string CursorTest::title() const
+{
+    return "Custom Mouse Cursor";
+}
+
+std::string CursorTest::subtitle() const
+{
+    return "Click to change cursor";
 }
 

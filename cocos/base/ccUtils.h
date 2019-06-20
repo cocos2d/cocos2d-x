@@ -188,6 +188,14 @@ namespace utils
     * @lua NA
     */
     CC_DLL LanguageType getLanguageTypeByISO2(const char* code);
+
+    /**
+    @brief Parses a list of space-separated integers.
+    @return Vector of ints.
+    * @js NA
+    * @lua NA
+    */
+    CC_DLL std::vector<int> parseIntegerList(const std::string &intsString);
 }
 
 NS_CC_END

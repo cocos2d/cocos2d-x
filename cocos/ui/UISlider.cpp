@@ -455,13 +455,24 @@ void Slider::setPercent(int percent)
     {
         percent = 0;
     }
-    _percent = percent;
-    float res = 1.0 * percent / _maxPercent;
+
+    // Only send event if value has changed
+    if (_percent != percent)
+    {
+        _percent = percent;
+        updateVisualSlider();
+        percentChangedEvent(EventType::ON_PERCENTAGE_CHANGED);
+    }
+}
+
+void Slider::updateVisualSlider()
+{
+    float res = 1.0 * _percent / _maxPercent;
     float dis = _barLength * res;
     _slidBallRenderer->setPosition(dis, _contentSize.height / 2.0f);
     if (_scale9Enabled)
     {
-        _progressBarRenderer->setPreferredSize(Size(dis,_contentSize.height));
+        _progressBarRenderer->setPreferredSize(Size(dis, _contentSize.height));
     }
     else
     {
@@ -498,13 +509,11 @@ void Slider::onTouchMoved(Touch *touch, Event* /*unusedEvent*/)
 {
     _touchMovePosition = touch->getLocation();
     setPercent(getPercentWithBallPos(_touchMovePosition));
-    percentChangedEvent(EventType::ON_PERCENTAGE_CHANGED);
 }
 
 void Slider::onTouchEnded(Touch *touch, Event *unusedEvent)
 {
     Widget::onTouchEnded(touch, unusedEvent);
-    percentChangedEvent(EventType::ON_PERCENTAGE_CHANGED);
     percentChangedEvent(EventType::ON_SLIDEBALL_UP);
 }
 
@@ -624,7 +633,7 @@ void Slider::barRendererScaleChangedWithSize()
         }
     }
     _barRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
-    setPercent(_percent);
+    updateVisualSlider();
 }
 
 void Slider::progressBarRendererScaleChangedWithSize()
@@ -666,7 +675,7 @@ void Slider::progressBarRendererScaleChangedWithSize()
         }
     }
     _progressBarRenderer->setPosition(0.0f, _contentSize.height / 2.0f);
-    setPercent(_percent);
+    updateVisualSlider();
 }
 
 void Slider::onPressStateChangedToNormal()

@@ -42,7 +42,6 @@ AppDelegate::~AppDelegate()
 {
     // end simple audio engine here, or it may crashed on win32
     SimpleAudioEngine::getInstance()->end();
-    //CCScriptEngineManager::destroyInstance();
 }
 
 void AppDelegate::initGLContextAttrs()
@@ -61,6 +60,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     lua_module_register(L);
     //The call was commented because it will lead to ZeroBrane Studio can't find correct context when debugging
     //engine->executeScriptFile("src/hello.lua");
+    
+    LuaStack* stack = engine->getLuaStack();
+    stack->setXXTEAKeyAndSign("2dxLua", strlen("2dxLua"), "XXTEA", strlen("XXTEA"));
     
 #if CC_64BITS
     FileUtils::getInstance()->addSearchPath("src/64bit");

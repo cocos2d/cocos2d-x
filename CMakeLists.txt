@@ -26,7 +26,7 @@
 
 # build engine library and all tests
 
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.6)
 
 project(Cocos2d-x)
 
@@ -34,15 +34,28 @@ project(Cocos2d-x)
 set(COCOS2DX_ROOT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_MODULE_PATH ${COCOS2DX_ROOT_PATH}/cmake/Modules/)
 
+# prevent in-source-build
+include(PreventInSourceBuilds)
+
 # works before build libcocos2d
 include(CocosBuildSet)
+
+# build options
+option(BUILD_TESTS "Build tests" ON)
 
 # default tests include lua, js test project, so we set those option on to build libs
 set(BUILD_LUA_LIBS ON)
 set(BUILD_JS_LIBS ON)
 
-if(NOT USE_COCOS_PREBUILT)
-    add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
-endif()
-add_subdirectory(${COCOS2DX_ROOT_PATH}/tests ${ENGINE_BINARY_PATH}/tests)
+add_subdirectory(${COCOS2DX_ROOT_PATH}/cocos ${ENGINE_BINARY_PATH}/cocos/core)
 
+# prevent tests project to build "cocos2d-x/cocos" again
+set(BUILD_ENGINE_DONE ON)
+# add engine all tests project
+if (BUILD_TESTS)
+  add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/cpp-empty-test ${ENGINE_BINARY_PATH}/tests/cpp-empty-test)
+  add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/cpp-tests ${ENGINE_BINARY_PATH}/tests/cpp-tests)
+  add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/js-tests/project ${ENGINE_BINARY_PATH}/tests/js-tests)
+  add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/lua-empty-test/project ${ENGINE_BINARY_PATH}/tests/lua-empty-test)
+  add_subdirectory(${COCOS2DX_ROOT_PATH}/tests/lua-tests/project ${ENGINE_BINARY_PATH}/tests/lua-test)
+endif()

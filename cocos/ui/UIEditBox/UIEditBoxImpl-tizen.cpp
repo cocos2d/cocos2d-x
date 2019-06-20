@@ -213,7 +213,7 @@ void EditBoxImplTizen::setText(const char* pText)
     }
 }
 
-const char*  EditBoxImplTizen::getText(void)
+const char*  EditBoxImplTizen::getText()
 {
     return _text.c_str();
 }
@@ -232,7 +232,7 @@ void EditBoxImplTizen::setPlaceHolder(const char* pText)
     }
 }
 
-const char* EditBoxImplTizen::getPlaceHolder(void)
+const char* EditBoxImplTizen::getPlaceHolder()
 {
     return _placeHolder.c_str();
 }
@@ -257,12 +257,12 @@ void EditBoxImplTizen::setAnchorPoint(const Vec2& anchorPoint)
 
 }
 
-void EditBoxImplTizen::visit(void)
+void EditBoxImplTizen::visit()
 { // don't need to be implemented on tizen platform.
 
 }
 
-void EditBoxImplTizen::onEnter(void)
+void EditBoxImplTizen::onEnter()
 { // don't need to be implemented on tizen platform.
 
 }

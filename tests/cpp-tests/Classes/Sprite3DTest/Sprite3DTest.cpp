@@ -31,7 +31,7 @@
 #include "3d/CCMotionStreak3D.h"
 
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
-
+#include <cmath>
 #include <algorithm>
 #include "../testResource.h"
 
@@ -71,7 +71,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DPropertyTest);
     ADD_TEST_CASE(Sprite3DNormalMappingTest);
     ADD_TEST_CASE(Issue16155Test);
-};
+}
 
 //------------------------------------------------------------------
 //
@@ -1509,7 +1509,7 @@ void Sprite3DWithOBBPerformanceTest::update(float dt)
         _obbt.getCorners(corners);
         _drawDebug->drawCube(corners, Color4F(0,0,1,1));
     }
-    if(_obb.size() > 0)
+    if(!_obb.empty())
     {
         _drawOBB->clear();
         auto obbSize = _obb.size();
@@ -1634,7 +1634,7 @@ void Sprite3DWithOBBPerformanceTest::calculateRayByLocationInView(Ray* ray, cons
 {
     auto dir = Director::getInstance();
     auto view = dir->getWinSize();
-    auto mat = dir->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    const auto& mat = dir->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     
     Vec3 src = Vec3(location.x, location.y, -1);
     Vec3 nearPoint;
@@ -2159,7 +2159,7 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
 
 void Sprite3DCubeMapTest::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
-    if (touches.size())
+    if (!touches.empty())
     {
         auto touch = touches[0];
         auto delta = touch->getDelta();
@@ -2295,8 +2295,7 @@ Animate3DCallbackTest::Animate3DCallbackTest()
 
         ValueMap valuemap0;
         animate->setKeyFrameUserInfo(275, valuemap0);
-        
-        auto listener = EventListenerCustom::create(Animate3DDisplayedNotification, [&](EventCustom* event)
+        _customEventListener = EventListenerCustom::create(Animate3DDisplayedNotification, [&](EventCustom* event)
         {
             auto info = (Animate3D::Animate3DDisplayedEventInfo*)event->getUserData();
             auto node = getChildByTag(100);
@@ -2310,12 +2309,19 @@ Animate3DCallbackTest::Animate3DCallbackTest()
             
             cocos2d::log("frame %d", info->frame);
         });
-        Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(listener, -1);
+        Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_customEventListener, -1);
     }
 }
 
 Animate3DCallbackTest::~Animate3DCallbackTest()
 {
+    cocos2d::log("Animate3DCallbackTest destroied!");
+    if(_customEventListener)
+    {
+        Director::getInstance()->getEventDispatcher()->removeEventListener(_customEventListener);
+        _customEventListener = nullptr;
+    }
+
 }
 
 std::string Animate3DCallbackTest::title() const
@@ -2441,7 +2447,8 @@ CameraBackgroundClearTest::CameraBackgroundClearTest()
 
 void CameraBackgroundClearTest::switch_CameraClearMode(cocos2d::Ref* sender)
 {
-    auto type = _camera->getBackgroundBrush()->getBrushType();
+    auto brush = _camera->getBackgroundBrush();
+    auto type = brush ? brush->getBrushType() : CameraBackgroundBrush::BrushType::NONE;
     if (type == CameraBackgroundBrush::BrushType::NONE)
     {
         _camera->setBackgroundBrush(CameraBackgroundBrush::createDepthBrush(1.f));
@@ -2569,7 +2576,7 @@ void Sprite3DNormalMappingTest::update(float dt)
     static float radius = 100.0f;
     
     auto light = static_cast<PointLight*>(getChildByTag(100));
-    light->setPosition3D(Vec3(radius * cos(angle), 0.0f, radius * sin(angle)));
+    light->setPosition3D(Vec3(radius * std::cos(angle), 0.0f, radius * std::sin(angle)));
     if (reverseDir){
         angle -= 0.01f;
         if (angle < 0.0)

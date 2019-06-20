@@ -194,17 +194,17 @@ void ccPointSize( GLfloat pointSize )
 
 MATRIX_STACK_TYPE currentActiveStackType = MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW;
 
-void CC_DLL kmGLFreeAll(void)
+void CC_DLL kmGLFreeAll()
 {
     Director::getInstance()->resetMatrixStack();
 }
 
-void CC_DLL kmGLPushMatrix(void)
+void CC_DLL kmGLPushMatrix()
 {
     Director::getInstance()->pushMatrix(currentActiveStackType);
 }
 
-void CC_DLL kmGLPopMatrix(void)
+void CC_DLL kmGLPopMatrix()
 {
     Director::getInstance()->popMatrix(currentActiveStackType);
 }
@@ -223,7 +223,7 @@ void CC_DLL kmGLMatrixMode(unsigned int mode)
     }
 }
 
-void CC_DLL kmGLLoadIdentity(void)
+void CC_DLL kmGLLoadIdentity()
 {
     Director::getInstance()->loadIdentityMatrix(currentActiveStackType);
 }

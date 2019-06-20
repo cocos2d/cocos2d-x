@@ -51,11 +51,11 @@ extern "C"
                 filename = filename.substr(0, pos);
         }
 
-        pos = filename.find_first_of(".");
+        pos = filename.find_first_of('.');
         while (pos != std::string::npos)
         {
             filename.replace(pos, 1, "/");
-            pos = filename.find_first_of(".");
+            pos = filename.find_first_of('.');
         }
 
         // search file in package.path
@@ -68,7 +68,7 @@ extern "C"
         std::string searchpath(lua_tostring(L, -1));
         lua_pop(L, 1);
         size_t begin = 0;
-        size_t next = searchpath.find_first_of(";", 0);
+        size_t next = searchpath.find_first_of(';', 0);
 
         do
         {
@@ -89,14 +89,14 @@ extern "C"
                 if (pos != std::string::npos && pos == prefix.length() - NOT_BYTECODE_FILE_EXT.length())
                     prefix = prefix.substr(0, pos);
             }
-            pos = prefix.find_first_of("?", 0);
+            pos = prefix.find_first_of('?', 0);
             while (pos != std::string::npos)
             {
                 prefix.replace(pos, 1, filename);
-                pos = prefix.find_first_of("?", pos + filename.length() + 1);
+                pos = prefix.find_first_of('?', pos + filename.length() + 1);
             }
             chunkName = prefix + BYTECODE_FILE_EXT;
-            if (utils->isFileExist(chunkName) && !utils->isDirectoryExist(chunkName))
+            if (utils->isFileExist(chunkName)) // && !utils->isDirectoryExist(chunkName))
             {
                 chunk = utils->getDataFromFile(chunkName);
                 break;
@@ -104,7 +104,7 @@ extern "C"
             else
             {
                 chunkName = prefix + NOT_BYTECODE_FILE_EXT;
-                if (utils->isFileExist(chunkName) && !utils->isDirectoryExist(chunkName))
+                if (utils->isFileExist(chunkName) ) //&& !utils->isDirectoryExist(chunkName))
                 {
                     chunk = utils->getDataFromFile(chunkName);
                     break;
@@ -112,7 +112,7 @@ extern "C"
                 else
                 {
                     chunkName = prefix;
-                    if (utils->isFileExist(chunkName) && !utils->isDirectoryExist(chunkName))
+                    if (utils->isFileExist(chunkName)) // && !utils->isDirectoryExist(chunkName))
                     {
                         chunk = utils->getDataFromFile(chunkName);
                         break;
@@ -121,7 +121,7 @@ extern "C"
             }
 
             begin = next + 1;
-            next = searchpath.find_first_of(";", begin);
+            next = searchpath.find_first_of(';', begin);
         } while (begin < searchpath.length());
         if (chunk.getSize() > 0)
         {

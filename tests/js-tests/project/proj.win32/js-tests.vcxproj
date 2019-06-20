@@ -13,6 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{D0F06A44-A245-4D13-A498-0120C203B539}</ProjectGuid>
     <RootNamespace>js-tests</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -102,11 +103,6 @@
       <Culture>0x0409</Culture>
       <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
-    <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
-    </PreLinkEvent>
     <Link>
       <AdditionalDependencies>mozjs-33.lib;ws2_32.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)$(Configuration).win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -114,23 +110,23 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
-    <PreBuildEvent>
+    <PostBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 
-mkdir "$(OutDir)\script"
-mkdir "$(OutDir)\src"
-mkdir "$(OutDir)\res"
+mkdir "$(OutDir)\Resources\script"
+mkdir "$(OutDir)\Resources\src"
+mkdir "$(OutDir)\Resources\res"
 xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\js-bindings\script\*" "$(OutDir)\script" /e /Y
-xcopy "$(ProjectDir)..\..\src" "$(OutDir)\src\" /e /Y
-xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(OutDir)\res\" /e /Y
-copy "$(ProjectDir)..\..\main.js" "$(OutDir)"
-copy "$(ProjectDir)..\..\project.json" "$(OutDir)"
-xcopy "$(ProjectDir)..\..\resjs" "$(OutDir)\res\resjs\" /e /Y</Command>
-    </PreBuildEvent>
-    <PreBuildEvent>
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\js-bindings\script\*" "$(OutDir)\Resources\script\" /e /Y
+xcopy "$(ProjectDir)..\..\src" "$(OutDir)\Resources\src\" /e /Y
+xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(OutDir)\Resources\res\" /e /Y
+copy "$(ProjectDir)..\..\main.js" "$(OutDir)\Resources\"
+copy "$(ProjectDir)..\..\project.json" "$(OutDir)\Resources\"
+xcopy "$(ProjectDir)..\..\resjs" "$(OutDir)\Resources\res\resjs\" /e /Y</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
       <Message>Copy js and resource files.</Message>
-    </PreBuildEvent>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>
@@ -164,11 +160,6 @@ xcopy "$(ProjectDir)..\..\resjs" "$(OutDir)\res\resjs\" /e /Y</Command>
       <Culture>0x0409</Culture>
       <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
-    <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
-    </PreLinkEvent>
     <Link>
       <AdditionalDependencies>mozjs-33.lib;ws2_32.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)$(Configuration).win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -176,21 +167,24 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <PreBuildEvent>
+    <PostBuildEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
 
-mkdir "$(OutDir)\script"
-mkdir "$(OutDir)\src"
-mkdir "$(OutDir)\res"
+mkdir "$(OutDir)\Resources\script"
+mkdir "$(OutDir)\Resources\src"
+mkdir "$(OutDir)\Resources\res"
 xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\js-bindings\script\*" "$(OutDir)\script" /e /Y
-xcopy "$(ProjectDir)..\..\src" "$(OutDir)\src\" /e /Y
-xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(OutDir)\res\" /e /Y
-copy "$(ProjectDir)..\..\main.js" "$(OutDir)"
-copy "$(ProjectDir)..\..\project.json" "$(OutDir)"
-xcopy "$(ProjectDir)..\..\resjs" "$(OutDir)\res\" /e /Y</Command>
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\js-bindings\script\*" "$(OutDir)\Resources\script" /e /Y
+xcopy "$(ProjectDir)..\..\src" "$(OutDir)\Resources\src\" /e /Y
+xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(OutDir)\Resources\res\" /e /Y
+copy "$(ProjectDir)..\..\main.js" "$(OutDir)\Resources\"
+copy "$(ProjectDir)..\..\project.json" "$(OutDir)\Resources\"
+xcopy "$(ProjectDir)..\..\resjs" "$(OutDir)\Resources\res\" /e /Y</Command>
       <Message>Copy js and resource files.</Message>
-    </PreBuildEvent>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy js and resource files.</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\js_DrawNode3D_bindings.cpp" />

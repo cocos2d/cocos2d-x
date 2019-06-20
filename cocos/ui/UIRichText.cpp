@@ -544,7 +544,7 @@ std::string MyXMLVisitor::getFace() const
 {
     for (auto i = _fontElements.rbegin(), iRend = _fontElements.rend(); i != iRend; ++i)
     {
-        if (i->face.size() != 0)
+        if (!i->face.empty())
             return i->face;
     }
     return "fonts/Marker Felt.ttf";
@@ -554,7 +554,7 @@ std::string MyXMLVisitor::getURL() const
 {
     for (auto i = _fontElements.rbegin(), iRend = _fontElements.rend(); i != iRend; ++i)
     {
-        if (i->url.size() != 0)
+        if (!i->url.empty())
             return i->url;
     }
     return "";
@@ -789,7 +789,7 @@ void MyXMLVisitor::textHandler(void* /*ctx*/, const char *str, size_t len)
         flags |= RichElementText::UNDERLINE_FLAG;
     if (strikethrough)
         flags |= RichElementText::STRIKETHROUGH_FLAG;
-    if (url.size() > 0)
+    if (!url.empty())
         flags |= RichElementText::URL_FLAG;
     if (std::get<0>(outline))
         flags |= RichElementText::OUTLINE_FLAG;
@@ -1400,6 +1400,7 @@ void RichText::formatText()
                         if (elmtText->_flags & RichElementText::GLOW_FLAG) {
                             label->enableGlow(Color4B(elmtText->_glowColor));
                         }
+                        label->setTextColor(Color4B(elmtText->_color));
                         elementRenderer = label;
                         break;
                     }
@@ -1423,6 +1424,7 @@ void RichText::formatText()
                             elementRenderer->addComponent(ListenerComponent::create(elementRenderer,
                                                                                     elmtImage->_url,
                                                                                     std::bind(&RichText::openUrl, this, std::placeholders::_1)));
+                            elementRenderer->setColor(element->_color);
                         }
                         break;
                     }
@@ -1430,6 +1432,7 @@ void RichText::formatText()
                     {
                         RichElementCustomNode* elmtCustom = static_cast<RichElementCustomNode*>(element);
                         elementRenderer = elmtCustom->_customNode;
+                        elementRenderer->setColor(element->_color);
                         break;
                     }
                     case RichElement::Type::NEWLINE:
@@ -1443,7 +1446,6 @@ void RichText::formatText()
 
                 if (elementRenderer)
                 {
-                    elementRenderer->setColor(element->_color);
                     elementRenderer->setOpacity(element->_opacity);
                     pushToContainer(elementRenderer);
                 }
@@ -1470,7 +1472,7 @@ void RichText::formatText()
                     case RichElement::Type::IMAGE:
                     {
                         RichElementImage* elmtImage = static_cast<RichElementImage*>(element);
-                        handleImageRenderer(elmtImage->_filePath, elmtImage->_color, elmtImage->_opacity, elmtImage->_width, elmtImage->_height, elmtImage->_url);
+                        handleImageRenderer(elmtImage->_filePath, elmtImage->_textureType, elmtImage->_color, elmtImage->_opacity, elmtImage->_width, elmtImage->_height, elmtImage->_url);
                         break;
                     }
                     case RichElement::Type::CUSTOM:
@@ -1692,7 +1694,7 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
             if (flags & RichElementText::GLOW_FLAG)
                 textRenderer->enableGlow(Color4B(glowColor));
 
-            textRenderer->setColor(color);
+            textRenderer->setTextColor(Color4B(color));
             textRenderer->setOpacity(opacity);
 
             // textRendererWidth will get 0.0f, when we've got glError: 0x0501 in Label::getContentSize
@@ -1738,9 +1740,14 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
     }
 }
 
-void RichText::handleImageRenderer(const std::string& filePath, const Color3B &/*color*/, GLubyte /*opacity*/, int width, int height, const std::string& url)
+void RichText::handleImageRenderer(const std::string& filePath, Widget::TextureResType textureType, const Color3B &/*color*/, GLubyte /*opacity*/, int width, int height, const std::string& url)
 {
-    Sprite* imageRenderer = Sprite::create(filePath);
+    Sprite* imageRenderer;
+    if (textureType == Widget::TextureResType::LOCAL)
+        imageRenderer = Sprite::create(filePath);
+    else
+        imageRenderer = Sprite::createWithSpriteFrameName(filePath);
+
     if (imageRenderer)
     {
         auto currentSize = imageRenderer->getContentSize();
@@ -1935,7 +1942,7 @@ void RichText::adaptRenderers()
 
 void RichText::pushToContainer(cocos2d::Node *renderer)
 {
-    if (_elementRenders.size() <= 0)
+    if (_elementRenders.empty())
     {
         return;
     }

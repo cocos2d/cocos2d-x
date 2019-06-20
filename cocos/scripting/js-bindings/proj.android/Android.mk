@@ -2,9 +2,9 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocos2d_js_android_static
+LOCAL_MODULE := ccjs_android
 
-LOCAL_MODULE_FILENAME := libjscocos2dandroid
+LOCAL_MODULE_FILENAME := libjsccandroid
 
 LOCAL_ARM_MODE := arm
 
@@ -21,7 +21,7 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -lz \
                        -landroid
 
-LOCAL_STATIC_LIBRARIES := spidermonkey_static
+LOCAL_STATIC_LIBRARIES := ext_spidermonkey
 
 include $(BUILD_STATIC_LIBRARY)
 
@@ -29,9 +29,9 @@ include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := cocos2d_js_static
+LOCAL_MODULE := ccjs_static
 
-LOCAL_MODULE_FILENAME := libjscocos2d
+LOCAL_MODULE_FILENAME := libjscc
 
 LOCAL_ARM_MODE := arm
 
@@ -112,15 +112,13 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual \
                            $(LOCAL_PATH)/../auto \
                            $(LOCAL_PATH)/../../../audio/include
 
-LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_js_android_static
+LOCAL_WHOLE_STATIC_LIBRARIES := ccjs_android
 
-LOCAL_STATIC_LIBRARIES := cocos2dx_static
-LOCAL_STATIC_LIBRARIES += cocos_localstorage_static
+LOCAL_STATIC_LIBRARIES := cc_static
+LOCAL_STATIC_LIBRARIES += ccstorage
 
 include $(BUILD_STATIC_LIBRARY)
 
-$(call import-add-path,$(LOCAL_PATH)/../../../..)
-$(call import-add-path,$(LOCAL_PATH)/../../../../external)
 $(call import-module, cocos)
 $(call import-module, spidermonkey/prebuilt/android)
 $(call import-module, cocos/storage/local-storage)

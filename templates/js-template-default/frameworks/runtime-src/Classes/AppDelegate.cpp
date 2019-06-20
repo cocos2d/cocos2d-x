@@ -95,7 +95,6 @@ AppDelegate::~AppDelegate()
 #elif USE_SIMPLE_AUDIO_ENGINE
     SimpleAudioEngine::end();
 #endif
-    ScriptEngineManager::destroyInstance();
 }
 
 void AppDelegate::initGLContextAttrs()

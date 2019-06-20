@@ -148,7 +148,7 @@ Vec3 PUSimpleSpline::interpolate(unsigned int fromIndex, float t) const
 
 }
 //---------------------------------------------------------------------
-void PUSimpleSpline::recalcTangents(void)
+void PUSimpleSpline::recalcTangents()
 {
     // Catmull-Rom approach
     // 
@@ -226,12 +226,12 @@ const Vec3& PUSimpleSpline::getPoint(unsigned short index) const
     return _points[index];
 }
 //---------------------------------------------------------------------
-unsigned short PUSimpleSpline::getNumPoints(void) const
+unsigned short PUSimpleSpline::getNumPoints() const
 {
     return (unsigned short)_points.size();
 }
 //---------------------------------------------------------------------
-void PUSimpleSpline::clear(void)
+void PUSimpleSpline::clear()
 {
     _points.clear();
     _tangents.clear();

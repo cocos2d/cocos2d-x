@@ -29,12 +29,12 @@
 
 NS_CC_BEGIN
 
-PUBehaviour::PUBehaviour( void ): 
+PUBehaviour::PUBehaviour(): 
 _particleSystem(nullptr),
 _behaviourScale(Vec3::ONE)
 {}
 
-PUBehaviour::~PUBehaviour( void )
+PUBehaviour::~PUBehaviour()
 {}
 
 void PUBehaviour::updateBehaviour(PUParticle3D* /*particle*/, float /*deltaTime*/)

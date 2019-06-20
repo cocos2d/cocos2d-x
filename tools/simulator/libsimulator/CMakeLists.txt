@@ -24,16 +24,7 @@
 
 set(SIMULATOR_LIB_PATH ${COCOS2DX_ROOT_PATH}/tools/simulator/libsimulator/lib)
 
-if(MACOSX)
-    # add define for mac os GLFW_EXPOSE_NATIVE_NSGL
-    add_definitions(-DGLFW_EXPOSE_NATIVE_NSGL)
-elseif(WINDOWS)
-    add_definitions(-DUNICODE -D_UNICODE)
-    add_definitions(-D_USRLIBSIMSTATIC -DGLFW_EXPOSE_NATIVE_WIN32 -D_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS)
-    include_directories(${SIMULATOR_LIB_PATH}/../proj.win32)
-endif()
-
-if(WIN32)
+if(WINDOWS)
     set(PLATFORM_HEADER
         ${SIMULATOR_LIB_PATH}/../proj.win32/stdafx.h
         ${SIMULATOR_LIB_PATH}/../proj.win32/targetver.h
@@ -189,23 +180,31 @@ set(SIMULATOR_SOURCE
     ${PLATFORM_SOURCE}
     )
 
-include_directories(
-        ${SIMULATOR_LIB_PATH}
-        ${SIMULATOR_LIB_PATH}/platform/${PLATFORM_FOLDER}
-        ${SIMULATOR_LIB_PATH}/protobuf-lite
-        ${SIMULATOR_LIB_PATH}/runtime
-        ${COCOS2DX_ROOT_PATH}/cocos/editor-support
-)
 
 set(LIB_SOURCE ${SIMULATOR_SOURCE} ${SIMULATOR_HEADER})
 
-add_library(simulator STATIC
-            ${LIB_SOURCE}
-            )
+add_library(simulatorlib STATIC ${LIB_SOURCE})
+target_link_libraries(simulatorlib cocos2d)
 
-target_use_simulator_depend_libs(simulator)
+if(WINDOWS)
+    target_compile_definitions(simulatorlib
+        PUBLIC _USRLIBSIMSTATIC
+        PRIVATE _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS
+    )
+    target_include_directories(simulatorlib
+        PRIVATE ${SIMULATOR_LIB_PATH}/../proj.win32
+    )
+endif()
 
-set_target_properties(simulator
+target_include_directories(simulatorlib
+        PRIVATE ${SIMULATOR_LIB_PATH}
+        PRIVATE ${SIMULATOR_LIB_PATH}/platform/${PLATFORM_FOLDER}
+        PRIVATE ${SIMULATOR_LIB_PATH}/protobuf-lite
+        PRIVATE ${SIMULATOR_LIB_PATH}/runtime
+        PRIVATE ${COCOS2DX_ROOT_PATH}/cocos/editor-support
+)
+
+set_target_properties(simulatorlib
                       PROPERTIES
                       ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
                       LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
@@ -213,5 +212,5 @@ set_target_properties(simulator
                       )
 
 if(XCODE OR VS)
-    cocos_mark_code_files("simulator")
+    cocos_mark_code_files("simulatorlib")
 endif()

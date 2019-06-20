@@ -31,8 +31,8 @@
 #ifndef SPINE_EVENT_H_
 #define SPINE_EVENT_H_
 
-#include <spine/dll.h>
-#include <spine/EventData.h>
+#include "spine/dll.h"
+#include "spine/EventData.h"
 
 #ifdef __cplusplus
 extern "C" {

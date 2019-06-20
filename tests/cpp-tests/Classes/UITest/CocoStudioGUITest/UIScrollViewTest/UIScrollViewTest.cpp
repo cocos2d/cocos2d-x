@@ -160,7 +160,7 @@ bool UIScrollViewTest_Horizontal::init()
         scrollView->setInnerContainerSize(scrollView->getContentSize());
 		scrollView->setScrollBarPositionFromCorner(Vec2(4, 4));
 		scrollView->setScrollBarColor(Color3B::YELLOW);
-        Size backgroundSize = background->getContentSize();
+        const Size& backgroundSize = background->getContentSize();
         scrollView->setPosition((widgetSize - scrollView->getContentSize()) / 2.0f);
         _uiLayer->addChild(scrollView);
         

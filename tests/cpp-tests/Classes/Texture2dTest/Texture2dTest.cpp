@@ -109,7 +109,7 @@ Texture2DTests::Texture2DTests()
     ADD_TEST_CASE(TextureConvertRGBA8888);
     ADD_TEST_CASE(TextureConvertI8);
     ADD_TEST_CASE(TextureConvertAI88);
-};
+}
 
 //------------------------------------------------------------------
 //
@@ -1943,7 +1943,7 @@ void TextureMemoryAlloc::updateImage(cocos2d::Ref *sender)
             break;
 	}
 
-    _background = Sprite::create(file.c_str());
+    _background = Sprite::create(file);
     addChild(_background, -10);
 	
     _background->setVisible(false);

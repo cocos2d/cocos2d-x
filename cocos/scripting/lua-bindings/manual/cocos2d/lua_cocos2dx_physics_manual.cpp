@@ -135,7 +135,7 @@ int lua_cocos2dx_physics_PhysicsWorld_getScene(lua_State* tolua_S)
             auto iter = g_luaType.find(hashName);
             std::string className = "";
             if(iter != g_luaType.end()){
-                className = iter->second.c_str();
+                className = iter->second;
             } else {
                 className = "cc.Scene";
             }

@@ -1,8 +1,3 @@
-
-if(WINDOWS AND BUILD_SHARED_LIBS)
-    add_definitions(-D_USEGUIDLL)
-endif()
-
 if(WINDOWS)
     set(COCOS_UI_SPECIFIC_HEADER
         ui/UIEditBox/UIEditBoxImpl-win32.h

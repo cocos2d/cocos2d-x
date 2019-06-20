@@ -2,8 +2,4 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
 
-    <application android:allowBackup="true">
-
-    </application>
-
 </manifest>
