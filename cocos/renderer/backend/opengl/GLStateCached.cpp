@@ -301,6 +301,19 @@ void GL::viewport(GLint x, GLint y, GLsizei width, GLsizei height)
     _defaultGLState.viewport = {x, y, (unsigned int)width, (unsigned int)height};
 }
 
+void GL::bindBuffer(GLenum target, GLuint buffer)
+{
+    if (target == _defaultGLState.bufferTarget &&
+        buffer == _defaultGLState.bufferObject)
+        RETURN();
+    
+    cocos2d::log("last bufferID = %d, current bufferID = %d", _defaultGLState.bufferObject, buffer );
+
+    glBindBuffer(target, buffer);
+    _defaultGLState.bufferTarget = target;
+    _defaultGLState.bufferObject = buffer;
+}
+
 void GL::getBooleanv(GLenum pname, GLboolean *params)
 {
 #ifdef GL_STATE_CACHED_ENABLED

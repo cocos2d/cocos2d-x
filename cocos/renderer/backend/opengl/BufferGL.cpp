@@ -4,6 +4,7 @@
 #include "base/CCDirector.h"
 #include "base/CCEventType.h"
 #include "base/CCEventDispatcher.h"
+#include "GLStateCached.h"
 
 CC_BACKEND_BEGIN
 
@@ -88,12 +89,12 @@ void BufferGL::updateData(void* data, unsigned int size)
     {
         if (BufferType::VERTEX == _type)
         {
-            glBindBuffer(GL_ARRAY_BUFFER, _buffer);
+            GL::bindBuffer(GL_ARRAY_BUFFER, _buffer);
             glBufferData(GL_ARRAY_BUFFER, size, data, toGLUsage(_usage));
         }
         else
         {
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffer);
+            GL::bindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffer);
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, toGLUsage(_usage));
         }
         CHECK_GL_ERROR_DEBUG();
@@ -116,12 +117,12 @@ void BufferGL::updateSubData(void* data, unsigned int offset, unsigned int size)
         CHECK_GL_ERROR_DEBUG();
         if (BufferType::VERTEX == _type)
         {
-            glBindBuffer(GL_ARRAY_BUFFER, _buffer);
+            GL::bindBuffer(GL_ARRAY_BUFFER, _buffer);
             glBufferSubData(GL_ARRAY_BUFFER, offset, size, data);
         }
         else
         {
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffer);
+            GL::bindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffer);
             glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, offset, size, data);
         }
 

@@ -32,9 +32,9 @@ void BlendStateGL::apply() const
         GL::enable(GL_BLEND);
         GL::blendEquationSeparate(_rgbBlendOperation, _alphaBlendOperation);
         GL::blendFuncSeparate(_sourceRGBBlendFactor,
-            _destinationRGBBlendFactor,
-            _sourceAlphaBlendFactor,
-            _destinationAlphaBlendFactor);
+                              _destinationRGBBlendFactor,
+                              _sourceAlphaBlendFactor,
+                              _destinationAlphaBlendFactor);
     }
     else
         GL::disable(GL_BLEND);

@@ -25,6 +25,7 @@ public:
     static void cullFace(GLenum mode);
     static void colorMask(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha);
     static void viewport(GLint x, GLint y, GLsizei width, GLsizei height);
+    static void bindBuffer(GLenum target, GLuint buffer);
 
     static void getBooleanv(GLenum pname, GLboolean *params);
     static void getFloatv(GLenum pname, GLfloat *params);
@@ -71,6 +72,9 @@ public:
         GLenum srcAlphaBlendFactor = GL_ONE;
         GLenum dstRGBBlendFactor = GL_ZERO;
         GLenum dstALphaBlendFactor = GL_ZERO;
+
+        GLenum bufferTarget = GL_ARRAY_BUFFER;
+        GLuint bufferObject = GL_ZERO;
 
     };
 private:

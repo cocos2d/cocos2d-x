@@ -174,7 +174,6 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
         
         mask |= GL_DEPTH_BUFFER_BIT;
         glClearDepth(descirptor.clearDepthValue);
-
         GL::enable(GL_DEPTH_TEST);
         GL::depthMask(GL_TRUE);
         GL::depthFunc(GL_ALWAYS);
@@ -281,7 +280,7 @@ void CommandBufferGL::drawArrays(PrimitiveType primitiveType, unsigned int start
 void CommandBufferGL::drawElements(PrimitiveType primitiveType, IndexFormat indexType, unsigned int count, unsigned int offset)
 {
     prepareDrawing();
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer->getHandler());
+    GL::bindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer->getHandler());
     glDrawElements(UtilsGL::toGLPrimitiveType(primitiveType), count, UtilsGL::toGLIndexType(indexType), (GLvoid*)offset);
     CHECK_GL_ERROR_DEBUG();
     cleanResources();
@@ -355,7 +354,7 @@ void CommandBufferGL::bindVertexBuffer(ProgramGL *program) const
         if (i >= attributeInfos.size())
             break;
         
-        glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->getHandler());
+        GL::bindBuffer(GL_ARRAY_BUFFER, vertexBuffer->getHandler());
 
         const auto& attributeInfo = attributeInfos[i];
         const auto &layouts = vertexLayouts->at(i);
