@@ -26,6 +26,9 @@ public:
     static void colorMask(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha);
     static void viewport(GLint x, GLint y, GLsizei width, GLsizei height);
     static void bindBuffer(GLenum target, GLuint buffer);
+    static void bindFramebuffer(GLenum target, GLuint framebuffer);
+    static void activeTexture(GLenum texture);
+    static void bindTexture(GLenum target, GLuint texture);
 
     static void getBooleanv(GLenum pname, GLboolean *params);
     static void getFloatv(GLenum pname, GLfloat *params);
@@ -75,7 +78,11 @@ public:
 
         GLenum bufferTarget = GL_ARRAY_BUFFER;
         GLuint bufferObject = GL_ZERO;
+        GLuint framebufferObject = GL_ZERO;
 
+        GLenum textureUnit = GL_TEXTURE0;
+        GLenum textureTarget = GL_TEXTURE_2D;
+        GLuint textureObject = GL_ZERO;
     };
 private:
     static DefaultGLState _defaultGLState;

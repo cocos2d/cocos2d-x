@@ -98,7 +98,7 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
     {
         _currentFBO = _defaultFBO;
     }
-    glBindFramebuffer(GL_FRAMEBUFFER, _currentFBO);
+    GL::bindFramebuffer(GL_FRAMEBUFFER, _currentFBO);
     
     if (useDepthAttachmentExternal)
     {

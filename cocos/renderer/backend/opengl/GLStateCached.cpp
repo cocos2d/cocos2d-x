@@ -307,11 +307,38 @@ void GL::bindBuffer(GLenum target, GLuint buffer)
         buffer == _defaultGLState.bufferObject)
         RETURN();
     
-    cocos2d::log("last bufferID = %d, current bufferID = %d", _defaultGLState.bufferObject, buffer );
-
     glBindBuffer(target, buffer);
     _defaultGLState.bufferTarget = target;
     _defaultGLState.bufferObject = buffer;
+}
+
+void GL::bindFramebuffer(GLenum target, GLuint framebuffer)
+{
+    if (framebuffer == _defaultGLState.framebufferObject)
+        RETURN();
+
+    glBindFramebuffer(target, framebuffer);
+    _defaultGLState.framebufferObject = framebuffer;
+}
+
+void GL::activeTexture(GLenum texture)
+{
+    if (texture == _defaultGLState.textureUnit)
+        RETURN();
+
+    glActiveTexture(texture);
+    _defaultGLState.textureUnit = texture;
+}
+
+void GL::bindTexture(GLenum target, GLuint texture)
+{
+    if (target == _defaultGLState.textureTarget &&
+        texture == _defaultGLState.textureObject)
+        RETURN();
+
+    glBindTexture(target, texture);
+    _defaultGLState.textureTarget = target;
+    _defaultGLState.textureObject = texture;
 }
 
 void GL::getBooleanv(GLenum pname, GLboolean *params)
