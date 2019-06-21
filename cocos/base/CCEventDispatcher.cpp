@@ -980,20 +980,20 @@ void EventDispatcher::dispatchEvent(Event* event)
     if (!_isEnabled)
         return;
     
-    updateDirtyFlagForSceneGraph();
-    
+	// defer it in kinds of path
+	// reduce no related kind to call
     
     DispatchGuard guard(_inDispatch);
     
     if (event->getType() == Event::Type::TOUCH)
     {
+		updateDirtyFlagForSceneGraph();
+
         dispatchTouchEvent(static_cast<EventTouch*>(event));
         return;
     }
     
     auto listenerID = __getListenerID(event);
-    
-    sortEventListeners(listenerID);
     
     auto pfnDispatchEventToListeners = &EventDispatcher::dispatchEventToListeners;
     if (event->getType() == Event::Type::MOUSE) {
@@ -1002,7 +1002,13 @@ void EventDispatcher::dispatchEvent(Event* event)
     auto iter = _listenerMap.find(listenerID);
     if (iter != _listenerMap.end())
     {
-        auto listeners = iter->second;
+		EventListenerVector* listeners = iter->second;
+		auto sceneGraphPriorityListeners = listeners->getSceneGraphPriorityListeners();
+		// no sceneGraph listeners mean no necessary to call updateDirtyFlagForSceneGraph
+		if (sceneGraphPriorityListeners && !sceneGraphPriorityListeners->empty())
+			updateDirtyFlagForSceneGraph();
+
+		sortEventListeners(listenerID);
         
         auto onEvent = [&event](EventListener* listener) -> bool{
             event->setCurrentTarget(listener->getAssociatedNode());
@@ -1333,10 +1339,13 @@ void EventDispatcher::updateListeners(Event* event)
     }
 }
 
+static EventListener::ListenerID prevListenerID;
+
 void EventDispatcher::updateDirtyFlagForSceneGraph()
 {
     if (!_dirtyNodes.empty())
     {
+		prevListenerID.clear();
         for (auto& node : _dirtyNodes)
         {
             auto iter = _nodeListenersMap.find(node);
@@ -1344,7 +1353,13 @@ void EventDispatcher::updateDirtyFlagForSceneGraph()
             {
                 for (auto& l : *iter->second)
                 {
-                    setDirty(l->getListenerID(), DirtyFlag::SCENE_GRAPH_PRIORITY);
+					const EventListener::ListenerID& id = l->getListenerID();
+					// ListenerID only had 8 types and 2 types used frequently
+					// reduce std::unordered_map.find
+					if (id == prevListenerID)
+						continue;
+					prevListenerID = id;
+					setDirty(id, DirtyFlag::SCENE_GRAPH_PRIORITY);
                 }
             }
         }
