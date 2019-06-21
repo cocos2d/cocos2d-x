@@ -228,7 +228,7 @@ void EventDispatcher::visitTree(Node* node)
 	node->sortAllChildren();
 
 	int i = 0;
-	int nodeData = (int)node->getUserData();
+	long nodeData = (long)node->getUserData();
 	auto& children = node->getChildren();
 	auto childrenCount = children.size();
 
@@ -241,7 +241,7 @@ void EventDispatcher::visitTree(Node* node)
 			child = children.at(i);
 			if (child && child->getLocalZOrder() < 0)
 			{
-				if (child->getUserData() == 0)
+				if ((long)child->getUserData() == 0)
 					continue;
 				visitTree(child);
 			}
@@ -257,7 +257,7 @@ void EventDispatcher::visitTree(Node* node)
 			child = children.at(i);
 			if (child)
 			{
-				if (child->getUserData() == 0)
+				if ((long)child->getUserData() == 0)
 					continue;
 				visitTree(child);
 			}
@@ -1415,7 +1415,7 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener
 			Node* parent = node->getParent();
 			if (parent)
 			{
-				int data = (int)parent->getUserData();
+				long data = (long)parent->getUserData();
 				data |= 2;
 				parent->setUserData((void*)data);
 			}
