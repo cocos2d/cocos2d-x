@@ -449,16 +449,21 @@ bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::BlendFunc* outValue, con
 
     if (ok)
     {
-    //TODO minggo
-//        lua_pushstring(L, "src");
-//        lua_gettable(L, lo);
-//        outValue->src = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
-//        lua_pop(L, 1);
-//
-//        lua_pushstring(L, "dst");
-//        lua_gettable(L, lo);
-//        outValue->dst = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
-//        lua_pop(L, 1);
+        lua_pushstring(L, "src");
+        lua_gettable(L, lo);
+        if(!lua_isnil(L, -1))
+        {
+            outValue->src = static_cast<cocos2d::backend::BlendFactor>(lua_tointeger(L, -1));
+        }
+        lua_pop(L, 1);
+
+        lua_pushstring(L, "dst");
+        lua_gettable(L, lo);
+        if(!lua_isnil(L, -1))
+        {
+            outValue->dst = static_cast<cocos2d::backend::BlendFactor>(lua_tointeger(L, -1));
+        }
+        lua_pop(L, 1);
     }
     return ok;
 }
