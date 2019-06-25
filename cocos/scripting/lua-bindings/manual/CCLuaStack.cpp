@@ -145,7 +145,6 @@ bool LuaStack::init(void)
 
     g_luaType.clear();
     register_all_cocos2dx(_state);
-    tolua_opengl_open(_state);
     register_all_cocos2dx_backend(_state);
     register_all_cocos2dx_manual(_state);
     register_all_cocos2dx_module_manual(_state);
@@ -155,7 +154,8 @@ bool LuaStack::init(void)
     
     register_all_cocos2dx_experimental(_state);
     register_all_cocos2dx_experimental_manual(_state);
-
+    
+    tolua_opengl_open(_state);
     register_glnode_manual(_state);
 #if CC_USE_PHYSICS
     register_all_cocos2dx_physics(_state);
