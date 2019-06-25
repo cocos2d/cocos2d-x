@@ -824,7 +824,7 @@ local function ActionCallFuncND()
 	centerSprites(1)
 
     local function doRemoveFromParentAndCleanup(sender,table)
-        grossini:removeFromParentAndCleanup(table[1])
+        grossini:removeFromParent(true)
     end
 
     local action = cc.Sequence:create(
