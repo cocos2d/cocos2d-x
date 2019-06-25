@@ -277,8 +277,7 @@ void ProgramState::createVertexUniformBuffer()
 #ifdef CC_USE_METAL
     if (totalUniformsSize > 0)
     {
-        _vertexUniformBuffer.resize(totalUniformsSize);
-        std::fill(_vertexUniformBuffer.begin(), _vertexUniformBuffer.end(), 0);
+        _vertexUniformBuffer.resize(totalUniformsSize, 0);
     }
 #endif
 }
@@ -298,8 +297,7 @@ void ProgramState::createFragmentUniformBuffer()
 #ifdef CC_USE_METAL
     if (totalUniformsSize > 0)
     {
-        _fragmentUniformBuffer.resize(totalUniformsSize);
-        std::fill(_fragmentUniformBuffer.begin(), _fragmentUniformBuffer.end(), 0);
+        _fragmentUniformBuffer.resize(totalUniformsSize, 0);
     }
 #endif
 }
@@ -334,32 +332,36 @@ void ProgramState::setUniform(const backend::UniformLocation& uniformLocation, c
 }
 
 #ifdef CC_USE_METAL
-void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, std::vector<char>& uniformData)
+void ProgramState::convertAndCopyUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, std::vector<char>& uniformBuffer)
 {
     auto basicType = static_cast<glslopt_basic_type>(uniformInfo.type);
     char* convertedData = new char[uniformInfo.bufferSize];
     memset(convertedData, 0, uniformInfo.bufferSize);
+    int offset = 0;
     switch (basicType)
     {
         case kGlslTypeFloat:
         {
-            for (int i=0; i<uniformInfo.count; i++)
+            if(uniformInfo.isMatrix)
             {
-                int offset = 0;
-                if(uniformInfo.isMatrix)
+                for (int i=0; i<uniformInfo.count; i++)
                 {
-                    offset = i*MAT3_SIZE;
                     if(offset >= srcSize)
                         break;
                     
                     convertMat3ToMat4x3((float*)srcData + offset, (float*)convertedData + i * MAT4X3_SIZE);
+                    offset += MAT3_SIZE;
                 }
-                else
+            }
+            else
+            {
+                for (int i=0; i<uniformInfo.count; i++)
                 {
-                    offset = i*VEC3_SIZE;
                     if(offset >= srcSize)
                         break;
+                    
                     convertVec3ToVec4((float*)srcData +offset, (float*)convertedData + i * VEC4_SIZE);
+                    offset += VEC3_SIZE;
                 }
             }
             break;
@@ -368,12 +370,11 @@ void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, c
         {
             for (int i=0; i<uniformInfo.count; i++)
             {
-                int offset = 0;
-                offset = i*BVEC3_SIZE;
                 if(offset >= srcSize)
                     break;
                 
                 convertbVec3TobVec4((bool*)srcData + offset, (bool*)convertedData + i * BVEC4_SIZE);
+                offset += BVEC3_SIZE;
             }
             break;
         }
@@ -381,12 +382,11 @@ void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, c
         {
             for (int i=0; i<uniformInfo.count; i++)
             {
-                int offset = 0;
-                offset = i*IVEC3_SIZE;
                 if(offset >= srcSize)
                     break;
                 
                 convertiVec3ToiVec4((int*)srcData + offset, (int*)convertedData + i * IVEC4_SIZE);
+                offset += IVEC3_SIZE;
             }
             break;
         }
@@ -395,7 +395,7 @@ void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, c
             break;
     }
     
-    memcpy(uniformData.data() + uniformInfo.location, convertedData, uniformInfo.bufferSize);
+    memcpy(uniformBuffer.data() + uniformInfo.location, convertedData, uniformInfo.bufferSize);
     CC_SAFE_DELETE_ARRAY(convertedData);
 }
 #endif
@@ -410,7 +410,7 @@ void ProgramState::setVertexUniform(int location, const void* data, uint32_t siz
     auto& uniformInfo = _vertexUniformInfos[location].uniformInfo;
     if(uniformInfo.needConvert)
     {
-        convertUniformData(uniformInfo, data, size, _vertexUniformBuffer);
+        convertAndCopyUniformData(uniformInfo, data, size, _vertexUniformBuffer);
     }
     else
     {
@@ -431,8 +431,7 @@ void ProgramState::setFragmentUniform(int location, const void* data, uint32_t s
     auto& uniformInfo = _fragmentUniformInfos[location].uniformInfo;
     if(uniformInfo.needConvert)
     {
-        convertUniformData(uniformInfo, data, size, _fragmentUniformBuffer);
-       
+        convertAndCopyUniformData(uniformInfo, data, size, _fragmentUniformBuffer);
     }
     else
     {

@@ -163,7 +163,7 @@ protected:
     
 #ifdef CC_USE_METAL
     //float3 etc in Metal has both sizeof and alignment same as float4, convert it before fill into uniform buffer
-    void convertUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, std::vector<char>& uniformData);
+    void convertAndCopyUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, std::vector<char>& uniformBuffer);
 #endif
     /**
     * Applies the specified custom auto-binding.
