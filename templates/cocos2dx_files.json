@@ -3979,7 +3979,6 @@
         "cocos/scripting/lua-bindings/script/extension/DeprecatedExtensionEnum.lua", 
         "cocos/scripting/lua-bindings/script/extension/DeprecatedExtensionFunc.lua", 
         "cocos/scripting/lua-bindings/script/extension/ExtensionConstants.lua", 
-        "cocos/scripting/lua-bindings/script/framework/audio.lua", 
         "cocos/scripting/lua-bindings/script/framework/components/event.lua", 
         "cocos/scripting/lua-bindings/script/framework/device.lua", 
         "cocos/scripting/lua-bindings/script/framework/display.lua", 
