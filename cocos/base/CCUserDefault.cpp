@@ -324,7 +324,7 @@ Data UserDefault::getDataForKey(const char* pKey, const Data& defaultValue)
         encodedData = (const char*)(node->FirstChild()->Value());
     }
     
-    Data ret = defaultValue;
+    Data ret;
     
     if (encodedData)
     {
@@ -334,6 +334,10 @@ Data UserDefault::getDataForKey(const char* pKey, const Data& defaultValue)
         if (decodedData) {
             ret.fastSet(decodedData, decodedDataLen);
         }
+    }
+    else
+    {
+        ret = defaultValue;
     }
     
     if (doc) delete doc;
