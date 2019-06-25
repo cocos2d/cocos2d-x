@@ -24,8 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __CCPLATFORMDEFINE_H__
-#define __CCPLATFORMDEFINE_H__
+#pragma once
 
 #include "platform/CCPlatformConfig.h"
 #if CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
@@ -47,7 +46,4 @@ THE SOFTWARE.
 #endif
 #endif
 
-
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
-
-#endif /* __CCPLATFORMDEFINE_H__*/

@@ -66,16 +66,9 @@ elseif(LINUX)
 elseif(WINDOWS)
     list(APPEND GAME_HEADER
          ${RUNTIME_SRC_ROOT}/proj.win32/main.h
-         ${RUNTIME_SRC_ROOT}/proj.win32/stdafx.h
-         ${RUNTIME_SRC_ROOT}/proj.win32/SimulatorWin.h
-         ${RUNTIME_SRC_ROOT}/proj.win32/targetver.h
-         ${RUNTIME_SRC_ROOT}/proj.win32/resource.h
          )
     list(APPEND GAME_SOURCE
-         ${RUNTIME_SRC_ROOT}/proj.win32/game.rc
-         ${RUNTIME_SRC_ROOT}/proj.win32/stdafx.cpp
          ${RUNTIME_SRC_ROOT}/proj.win32/main.cpp
-         ${RUNTIME_SRC_ROOT}/proj.win32/SimulatorWin.cpp
          ${cc_common_res}
          )
 elseif(APPLE)

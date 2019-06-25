@@ -24,8 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef __PLATFORM_CCPLATFORMDEFINE_H__
-#define __PLATFORM_CCPLATFORMDEFINE_H__
+#pragma once
 /// @cond DO_NOT_SHOW
 
 #include "platform/CCPlatformConfig.h"
@@ -42,5 +41,4 @@ THE SOFTWARE.
 #include "platform/linux/CCPlatformDefine-linux.h"
 #endif
 
-/// @endcond
-#endif /* __PLATFORM_CCPLATFORMDEFINE_H__*/
+
