@@ -423,7 +423,7 @@ ActionTimeline* ActionTimelineCache::createActionWithFlatBuffersFile(const std::
     return action->clone();
 }
 
-ActionTimeline* ActionTimelineCache::createActionWithDataBuffer(Data data, const std::string &fileName)
+ActionTimeline* ActionTimelineCache::createActionWithDataBuffer(const Data& data, const std::string &fileName)
 {
     ActionTimeline* action = _animationActions.at(fileName);
     if (action == NULL)

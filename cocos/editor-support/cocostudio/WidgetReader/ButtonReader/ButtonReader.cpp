@@ -967,7 +967,7 @@ namespace cocostudio
         return button;
     }
     
-    int ButtonReader::getResourceType(std::string key)
+    int ButtonReader::getResourceType(const std::string& key)
     {
         if(key == "Normal" || key == "Default")
         {

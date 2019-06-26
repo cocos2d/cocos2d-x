@@ -1069,7 +1069,7 @@ Vector<CCBAnimationManager*>& CCBReader::getAnimationManagersForNodes()
     return _animationManagersForNodes;
 }
 
-void CCBReader::addOwnerOutletName(std::string name)
+void CCBReader::addOwnerOutletName(const std::string& name)
 {
     _ownerOutletNames.push_back(name);
 }

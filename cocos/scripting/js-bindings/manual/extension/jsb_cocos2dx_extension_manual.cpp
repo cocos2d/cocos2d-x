@@ -156,7 +156,7 @@ public:
     }
 
 private:
-    void callJSDelegate(ScrollView* view, std::string jsFunctionName)
+    void callJSDelegate(ScrollView* view, const std::string& jsFunctionName)
     {
         js_proxy_t * p = jsb_get_native_proxy(view);
         if (!p) return;
@@ -165,7 +165,7 @@ private:
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), jsFunctionName.c_str(), 1, &arg);
     }
 
-    void callJSDelegate(TableView* table, TableViewCell* cell, std::string jsFunctionName)
+    void callJSDelegate(TableView* table, TableViewCell* cell, const std::string& jsFunctionName)
     {
         js_proxy_t * p = jsb_get_native_proxy(table);
         if (!p) return;
@@ -292,7 +292,7 @@ public:
     }
 
 private:
-    bool callJSDelegate(TableView* table, std::string jsFunctionName, JS::MutableHandleValue retVal)
+    bool callJSDelegate(TableView* table, const std::string& jsFunctionName, JS::MutableHandleValue retVal)
     {
         js_proxy_t * p = jsb_get_native_proxy(table);
         if (!p) return false;
@@ -323,7 +323,7 @@ private:
         return false;
     }
 
-    bool callJSDelegate(TableView* table, ssize_t idx, std::string jsFunctionName, JS::MutableHandleValue retVal)
+    bool callJSDelegate(TableView* table, ssize_t idx, const std::string& jsFunctionName, JS::MutableHandleValue retVal)
     {
         js_proxy_t * p = jsb_get_native_proxy(table);
         if (!p) return false;

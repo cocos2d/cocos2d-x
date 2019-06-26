@@ -902,7 +902,7 @@ cocos2d::Node* TabHeaderReader::createNodeWithFlatBuffers(const flatbuffers::Tab
     return node;
 }
 
-int TabHeaderReader::getResourceType(std::string key)
+int TabHeaderReader::getResourceType(const std::string& key)
 {
     if (key == "Normal" || key == "Default")
     {

@@ -372,7 +372,7 @@ public:
      */
     cocos2d::Node* readFileWithCleanUp(bool bCleanUp, CCBAnimationManagerMapPtr am);
     
-    void addOwnerOutletName(std::string name);
+    void addOwnerOutletName(const std::string& name);
     void addOwnerOutletNode(cocos2d::Node *node);
 
 private:

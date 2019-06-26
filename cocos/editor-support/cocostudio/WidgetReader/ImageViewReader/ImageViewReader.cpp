@@ -422,7 +422,7 @@ namespace cocostudio
         return imageView;
     }
     
-    int ImageViewReader::getResourceType(std::string key)
+    int ImageViewReader::getResourceType(const std::string& key)
     {
         if(key == "Normal" || key == "Default")
         {

@@ -379,7 +379,7 @@ void Camera3DTestDemo::onExit()
     }
 }
 
-void Camera3DTestDemo::addNewSpriteWithCoords(Vec3 p,std::string fileName,bool playAnimation,float scale,bool bindCamera)
+void Camera3DTestDemo::addNewSpriteWithCoords(Vec3 p,const std::string& fileName,bool playAnimation,float scale,bool bindCamera)
 {
     auto sprite = Sprite3D::create(fileName);
     _layer3D->addChild(sprite);
