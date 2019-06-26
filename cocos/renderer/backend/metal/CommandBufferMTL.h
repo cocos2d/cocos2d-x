@@ -39,7 +39,6 @@ private:
     void setTextures() const;
     void doSetTextures(bool isVertex) const;
     void setUniformBuffer() const;
-    unsigned int fillUniformBuffer(uint8_t* buffer, const std::vector<UniformBuffer>& unifornInfo) const;
     void afterDraw();
     id<MTLRenderCommandEncoder> getRenderCommandEncoder(const RenderPassDescriptor& renderPassDescriptor);
 

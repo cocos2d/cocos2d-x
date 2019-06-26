@@ -71,7 +71,6 @@ public:
     void setUniform(const backend::UniformLocation& uniformLocation, const void* data, uint32_t size);
     backend::UniformLocation getUniformLocation(const std::string& uniform) const;
     inline const std::vector<UniformBuffer>& getVertexUniformInfos() const { return _vertexUniformInfos; }
-    inline std::vector<UniformBuffer>& getVertexUniformInfos() { return _vertexUniformInfos; }
     inline const std::vector<UniformBuffer>& getFragmentUniformInfos() const { return _fragmentUniformInfos; }
 
     void setCallbackUniform(const backend::UniformLocation&, const UniformCallback &);
@@ -83,6 +82,10 @@ public:
     inline const std::unordered_map<int, TextureInfo>& getVertexTextureInfos() const { return _vertexTextureInfos; }
     inline const std::unordered_map<int, TextureInfo>& getFragmentTextureInfos() const { return _fragmentTextureInfos; }
     inline const std::unordered_map<UniformLocation, UniformCallback, UniformLocation>& getCallbackUniforms() const { return _callbackUniforms; }
+#ifdef CC_USE_METAL
+    inline const std::vector<char>& getVertexUniformBuffer() const { return _vertexUniformBuffer; }
+    inline const std::vector<char>& getFragmentUniformBuffer() const { return _fragmentUniformBuffer; }
+#endif
     
     /**
     * An abstract base class that can be extended to support custom material auto bindings.
@@ -160,7 +163,7 @@ protected:
     
 #ifdef CC_USE_METAL
     //float3 etc in Metal has both sizeof and alignment same as float4, convert it before fill into uniform buffer
-    void convertUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, std::vector<char>& uniformData);
+    void convertAndCopyUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, std::vector<char>& uniformBuffer);
 #endif
     /**
     * Applies the specified custom auto-binding.
@@ -174,7 +177,9 @@ protected:
     std::vector<UniformBuffer>                              _vertexUniformInfos;
     std::vector<UniformBuffer>                              _fragmentUniformInfos;
     std::unordered_map<UniformLocation, UniformCallback, UniformLocation>   _callbackUniforms;
-    
+    std::vector<char> _vertexUniformBuffer;
+    std::vector<char> _fragmentUniformBuffer;
+
     std::unordered_map<int, TextureInfo>                    _vertexTextureInfos;
     std::unordered_map<int, TextureInfo>                    _fragmentTextureInfos;
 

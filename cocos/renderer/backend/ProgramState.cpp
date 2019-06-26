@@ -254,6 +254,8 @@ ProgramState *ProgramState::clone() const
     cp->_fragmentUniformInfos = _fragmentUniformInfos;
     cp->_vertexTextureInfos = _vertexTextureInfos;
     cp->_fragmentTextureInfos = _fragmentTextureInfos;
+    cp->_vertexUniformBuffer = _vertexUniformBuffer;
+    cp->_fragmentUniformBuffer = _fragmentUniformBuffer;
     CC_SAFE_RETAIN(cp->_program);
 
     return cp;
@@ -262,22 +264,42 @@ ProgramState *ProgramState::clone() const
 
 void ProgramState::createVertexUniformBuffer()
 {
+    uint32_t totalUniformsSize = 0;
     const auto& vertexUniformInfos = _program->getVertexUniformInfos();
     for(const auto& uniformInfo : vertexUniformInfos)
     {
         if(uniformInfo.second.bufferSize)
+        {
             _vertexUniformInfos[uniformInfo.second.location] = uniformInfo.second; 
+            totalUniformsSize += uniformInfo.second.bufferSize;
+        }
     }
+#ifdef CC_USE_METAL
+    if (totalUniformsSize > 0)
+    {
+        _vertexUniformBuffer.resize(totalUniformsSize, 0);
+    }
+#endif
 }
 
 void ProgramState::createFragmentUniformBuffer()
 {
+    uint32_t totalUniformsSize = 0;
     const auto& fragmentUniformInfos = _program->getFragmentUniformInfos();
     for(const auto& uniformInfo : fragmentUniformInfos)
     {
         if(uniformInfo.second.bufferSize)
+        {
             _fragmentUniformInfos[uniformInfo.second.location] = uniformInfo.second;
+            totalUniformsSize += uniformInfo.second.bufferSize;
+        }
     }
+#ifdef CC_USE_METAL
+    if (totalUniformsSize > 0)
+    {
+        _fragmentUniformBuffer.resize(totalUniformsSize, 0);
+    }
+#endif
 }
 
 backend::UniformLocation ProgramState::getUniformLocation(const std::string& uniform) const
@@ -310,32 +332,36 @@ void ProgramState::setUniform(const backend::UniformLocation& uniformLocation, c
 }
 
 #ifdef CC_USE_METAL
-void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, std::vector<char>& uniformData)
+void ProgramState::convertAndCopyUniformData(const backend::UniformInfo& uniformInfo, const void* srcData, uint32_t srcSize, std::vector<char>& uniformBuffer)
 {
     auto basicType = static_cast<glslopt_basic_type>(uniformInfo.type);
     char* convertedData = new char[uniformInfo.bufferSize];
     memset(convertedData, 0, uniformInfo.bufferSize);
+    int offset = 0;
     switch (basicType)
     {
         case kGlslTypeFloat:
         {
-            for (int i=0; i<uniformInfo.count; i++)
+            if(uniformInfo.isMatrix)
             {
-                int offset = 0;
-                if(uniformInfo.isMatrix)
+                for (int i=0; i<uniformInfo.count; i++)
                 {
-                    offset = i*MAT3_SIZE;
                     if(offset >= srcSize)
                         break;
                     
                     convertMat3ToMat4x3((float*)srcData + offset, (float*)convertedData + i * MAT4X3_SIZE);
+                    offset += MAT3_SIZE;
                 }
-                else
+            }
+            else
+            {
+                for (int i=0; i<uniformInfo.count; i++)
                 {
-                    offset = i*VEC3_SIZE;
                     if(offset >= srcSize)
                         break;
+                    
                     convertVec3ToVec4((float*)srcData +offset, (float*)convertedData + i * VEC4_SIZE);
+                    offset += VEC3_SIZE;
                 }
             }
             break;
@@ -344,12 +370,11 @@ void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, c
         {
             for (int i=0; i<uniformInfo.count; i++)
             {
-                int offset = 0;
-                offset = i*BVEC3_SIZE;
                 if(offset >= srcSize)
                     break;
                 
                 convertbVec3TobVec4((bool*)srcData + offset, (bool*)convertedData + i * BVEC4_SIZE);
+                offset += BVEC3_SIZE;
             }
             break;
         }
@@ -357,12 +382,11 @@ void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, c
         {
             for (int i=0; i<uniformInfo.count; i++)
             {
-                int offset = 0;
-                offset = i*IVEC3_SIZE;
                 if(offset >= srcSize)
                     break;
                 
                 convertiVec3ToiVec4((int*)srcData + offset, (int*)convertedData + i * IVEC4_SIZE);
+                offset += IVEC3_SIZE;
             }
             break;
         }
@@ -371,7 +395,7 @@ void ProgramState::convertUniformData(const backend::UniformInfo& uniformInfo, c
             break;
     }
     
-    uniformData.assign(convertedData, convertedData + uniformInfo.bufferSize);
+    memcpy(uniformBuffer.data() + uniformInfo.location, convertedData, uniformInfo.bufferSize);
     CC_SAFE_DELETE_ARRAY(convertedData);
 }
 #endif
@@ -386,12 +410,15 @@ void ProgramState::setVertexUniform(int location, const void* data, uint32_t siz
     auto& uniformInfo = _vertexUniformInfos[location].uniformInfo;
     if(uniformInfo.needConvert)
     {
-        convertUniformData(uniformInfo, data, size, _vertexUniformInfos[location].data);
-        return;
+        convertAndCopyUniformData(uniformInfo, data, size, _vertexUniformBuffer);
     }
-#endif
-
+    else
+    {
+        memcpy(_vertexUniformBuffer.data() + location, data, size);
+    }
+#else
     _vertexUniformInfos[location].data.assign((char*)data, (char*)data + size);
+#endif
 }
 
 void ProgramState::setFragmentUniform(int location, const void* data, uint32_t size)
@@ -404,11 +431,15 @@ void ProgramState::setFragmentUniform(int location, const void* data, uint32_t s
     auto& uniformInfo = _fragmentUniformInfos[location].uniformInfo;
     if(uniformInfo.needConvert)
     {
-        convertUniformData(uniformInfo, data, size, _fragmentUniformInfos[location].data);
-        return;
+        convertAndCopyUniformData(uniformInfo, data, size, _fragmentUniformBuffer);
     }
-#endif
+    else
+    {
+        memcpy(_fragmentUniformBuffer.data() + location, data, size);
+    }
+#else
     _fragmentUniformInfos[location].data.assign((char *)data, (char *)data + size);
+#endif
 }
 
 void ProgramState::setTexture(const backend::UniformLocation& uniformLocation, uint32_t slot, backend::TextureBackend* texture)

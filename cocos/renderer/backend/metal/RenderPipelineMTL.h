@@ -17,10 +17,7 @@ public:
     ~RenderPipelineMTL();
         
     inline id<MTLRenderPipelineState> getMTLRenderPipelineState() const { return _mtlRenderPipelineState; }
-    
-    inline const std::shared_ptr<uint8_t>& getVertexUniformBuffer() const { return _vertexUniformBuffer; }
-    inline const std::shared_ptr<uint8_t>& getFragmentUniformBuffer() const { return _fragementUniformBuffer; }
-    
+   
 private:
     void setVertexLayout(MTLRenderPipelineDescriptor*, const RenderPipelineDescriptor&);
     void setBlendState(MTLRenderPipelineColorAttachmentDescriptor*);
@@ -29,10 +26,7 @@ private:
     
     id<MTLRenderPipelineState> _mtlRenderPipelineState = nil;
     id<MTLDevice> _mtlDevice = nil;
-    
-    std::shared_ptr<uint8_t> _vertexUniformBuffer = nullptr;
-    std::shared_ptr<uint8_t> _fragementUniformBuffer = nullptr;
-    
+   
     MTLRenderPipelineDescriptor* _mtlRenderPipelineDescriptor = nil;
     BlendDescriptorMTL _blendDescriptorMTL;
 };
