@@ -1198,11 +1198,11 @@ local function TextureDrawAtPoint()
     m_pTex1:retain()
     m_pTex2F:retain()
 
-    local glNode = cc.GLNode:create()
-    glNode:setContentSize(cc.size(256, 256))
-    glNode:setAnchorPoint(cc.p(0,0))
-    glNode:registerScriptDrawHandler(draw)
-    ret:addChild(glNode)
+    local luaNode = cc.LuaNode:create()
+    luaNode:setContentSize(cc.size(256, 256))
+    luaNode:setAnchorPoint(cc.p(0,0))
+    luaNode:registerScriptDrawHandler(draw)
+    ret:addChild(luaNode)
 
     local function onNodeEvent(event)
         if event == "exit" then
@@ -1244,11 +1244,11 @@ local function TextureDrawInRect()
     m_pTex1:retain()
     m_pTex2F:retain()
 
-    local glNode = cc.GLNode:create()
-    glNode:setContentSize(cc.size(256, 256))
-    glNode:setAnchorPoint(cc.p(0,0))
-    glNode:registerScriptDrawHandler(draw)
-    ret:addChild(glNode)
+    local luaNode = cc.LuaNode:create()
+    luaNode:setContentSize(cc.size(256, 256))
+    luaNode:setAnchorPoint(cc.p(0,0))
+    luaNode:registerScriptDrawHandler(draw)
+    ret:addChild(luaNode)
 
     local function onNodeEvent(event)
         if event == "exit" then
