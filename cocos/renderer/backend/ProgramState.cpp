@@ -112,7 +112,7 @@ TextureInfo::TextureInfo(const std::vector<uint32_t>& _slots, const std::vector<
 TextureInfo::TextureInfo(const TextureInfo &other)
     : slot(other.slot)
     , textures(other.textures)
-#if CC_ENABLE_CACHE_TEXTURE_DATA == 1
+#if CC_ENABLE_CACHE_TEXTURE_DATA
     , location(other.location)
 #endif
 {
