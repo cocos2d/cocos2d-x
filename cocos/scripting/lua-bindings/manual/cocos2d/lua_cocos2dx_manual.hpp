@@ -37,6 +37,7 @@ extern "C" {
 #include "scripting/lua-bindings/manual/cocos2d/LuaScriptHandlerMgr.h"
 #include "base/CCEventListenerAcceleration.h"
 #include "base/CCEventListenerCustom.h"
+#include "2d/CCNode.h"
 
 NS_CC_BEGIN
 class LuaEventListenerCustom
@@ -121,5 +122,16 @@ struct LuaEventMouseData
     {
     }
 };
+
+class LuaNode :public cocos2d::Node
+{
+public:
+    virtual ~LuaNode() {}
+
+    virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
+};
+
+TOLUA_API int tolua_luanode_open(lua_State* tolua_S);
+TOLUA_API int register_luanode_manual(lua_State* tolua_S);
 
 #endif // #ifndef COCOS2DX_SCRIPT_LUA_COCOS2DX_SUPPORT_GENERATED_LUA_COCOS2DX_MANUAL_H

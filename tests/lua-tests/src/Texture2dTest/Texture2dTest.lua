@@ -1178,7 +1178,7 @@ local function TextureDrawAtPoint()
     local ret = createTestLayer("Texture2D: drawAtPoint",
                                 "draws 2 textures using drawAtPoint")
 
-    local function draw(transform, transformUpdated)
+    local function draw(transform, globalZOrder)
         local director = cc.Director:getInstance()
         assert(nil ~= director, "Director is null when setting matrix stack")
         director:pushMatrix(cc.MATRIX_STACK_TYPE.MODELVIEW)
@@ -1186,8 +1186,8 @@ local function TextureDrawAtPoint()
 
         local s = cc.Director:getInstance():getWinSize()
     
-        m_pTex1:drawAtPoint(cc.p(s.width/2-50, s.height/2 - 50))
-        m_pTex2F:drawAtPoint(cc.p(s.width/2+50, s.height/2 - 50))
+        m_pTex1:drawAtPoint(cc.p(s.width/2-50, s.height/2 - 50), globalZOrder)
+        m_pTex2F:drawAtPoint(cc.p(s.width/2+50, s.height/2 - 50), globalZOrder)
     
         director:popMatrix(cc.MATRIX_STACK_TYPE.MODELVIEW)
     end
@@ -1198,6 +1198,11 @@ local function TextureDrawAtPoint()
     m_pTex1:retain()
     m_pTex2F:retain()
 
+    local luaNode = cc.LuaNode:create()
+    luaNode:setContentSize(cc.size(256, 256))
+    luaNode:setAnchorPoint(cc.p(0,0))
+    luaNode:registerScriptDrawHandler(draw)
+    ret:addChild(luaNode)
 
     local function onNodeEvent(event)
         if event == "exit" then
@@ -1218,7 +1223,7 @@ local function TextureDrawInRect()
     local m_pTex2F = nil
     local ret = createTestLayer("Texture2D: drawInRect",
                                 "draws 2 textures using drawInRect")
-    local function draw(transform, transformUpdated)
+    local function draw(transform, globalZOrder)
         local director = cc.Director:getInstance()
         assert(nullptr ~= director, "Director is null when setting matrix stack")
         director:pushMatrix(cc.MATRIX_STACK_TYPE.MODELVIEW)
@@ -1229,8 +1234,8 @@ local function TextureDrawInRect()
         local rect1 = cc.rect( s.width/2 - 80, 20, m_pTex1:getContentSize().width * 0.5, m_pTex1:getContentSize().height *2 )
         local rect2 = cc.rect( s.width/2 + 80, s.height/2, m_pTex1:getContentSize().width * 2, m_pTex1:getContentSize().height * 0.5 )
 
-        m_pTex1:drawInRect(rect1)
-        m_pTex2F:drawInRect(rect2)
+        m_pTex1:drawInRect(rect1, globalZOrder)
+        m_pTex2F:drawInRect(rect2, globalZOrder)
     end
 
     m_pTex1 = cc.Director:getInstance():getTextureCache():addImage("Images/grossinis_sister1.png")
@@ -1238,6 +1243,12 @@ local function TextureDrawInRect()
 
     m_pTex1:retain()
     m_pTex2F:retain()
+
+    local luaNode = cc.LuaNode:create()
+    luaNode:setContentSize(cc.size(256, 256))
+    luaNode:setAnchorPoint(cc.p(0,0))
+    luaNode:registerScriptDrawHandler(draw)
+    ret:addChild(luaNode)
 
     local function onNodeEvent(event)
         if event == "exit" then

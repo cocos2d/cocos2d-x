@@ -152,7 +152,7 @@ public:
         WEBSOCKET_CLOSE,
         WEBSOCKET_ERROR,
         
-        GL_NODE_DRAW,
+        LUANODE_DRAW,
         
         SCROLLVIEW_SCROLL,
         SCROLLVIEW_ZOOM,
