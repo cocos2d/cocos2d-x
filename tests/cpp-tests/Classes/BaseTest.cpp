@@ -132,7 +132,7 @@ TestList::TestList()
     _shouldRestoreTableOffset = false;
 }
 
-void TestList::addTest(const std::string& testName, std::function<TestBase*()> callback)
+void TestList::addTest(const std::string& testName, const std::function<TestBase*()>& callback)
 {
     if (!testName.empty())
     {
@@ -256,7 +256,7 @@ ssize_t TestList::numberOfCellsInTableView(TableView *table)
 }
 
 //TestSuite
-void TestSuite::addTestCase(const std::string& testName, std::function<Scene*()> callback)
+void TestSuite::addTestCase(const std::string& testName, const std::function<Scene*()>& callback)
 {
     if (!testName.empty() && callback)
     {

@@ -24,11 +24,13 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "editor-support/cocostudio/CCArmatureAnimation.h"
+
 #include "editor-support/cocostudio/CCArmature.h"
-#include "editor-support/cocostudio/CCBone.h"
 #include "editor-support/cocostudio/CCArmatureDefine.h"
-#include "editor-support/cocostudio/CCUtilMath.h"
+#include "editor-support/cocostudio/CCBone.h"
 #include "editor-support/cocostudio/CCDatas.h"
+#include "editor-support/cocostudio/CCUtilMath.h"
+#include <utility>
 
 using namespace cocos2d;
 
@@ -484,11 +486,11 @@ void ArmatureAnimation::setFrameEventCallFunc(Ref *target, SEL_FrameEventCallFun
 
 void ArmatureAnimation::setMovementEventCallFunc(std::function<void(Armature *armature, MovementEventType movementType, const std::string& movementID)> listener)
 {
-    _movementEventListener = listener;
+    _movementEventListener = std::move(listener);
 }
 void ArmatureAnimation::setFrameEventCallFunc(std::function<void(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex)> listener)
 {
-    _frameEventListener = listener;
+    _frameEventListener = std::move(listener);
 }
 
 void ArmatureAnimation::setUserObject(Ref *pUserObject)

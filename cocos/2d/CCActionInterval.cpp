@@ -30,6 +30,8 @@ THE SOFTWARE.
 
 #include <stdarg.h>
 
+#include <utility>
+
 #include "2d/CCSprite.h"
 #include "2d/CCNode.h"
 #include "2d/CCSpriteFrame.h"
@@ -2803,7 +2805,7 @@ void TargetedAction::setForcedTarget(Node* forcedTarget)
 ActionFloat* ActionFloat::create(float duration, float from, float to, ActionFloatCallback callback)
 {
     auto ref = new (std::nothrow) ActionFloat();
-    if (ref && ref->initWithDuration(duration, from, to, callback))
+    if (ref && ref->initWithDuration(duration, from, to, std::move(callback)))
     {
         ref->autorelease();
         return ref;
@@ -2819,7 +2821,7 @@ bool ActionFloat::initWithDuration(float duration, float from, float to, ActionF
     {
         _from = from;
         _to = to;
-        _callback = callback;
+        _callback = std::move(callback);
         return true;
     }
     return false;

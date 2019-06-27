@@ -29,15 +29,16 @@
  ****************************************************************************/
 
 #include "network/SocketIO.h"
-#include "network/Uri.h"
-#include <algorithm>
-#include <sstream>
-#include <iterator>
-#include "base/ccUTF8.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
-#include "network/WebSocket.h"
+#include "base/ccUTF8.h"
 #include "network/HttpClient.h"
+#include "network/Uri.h"
+#include "network/WebSocket.h"
+#include <algorithm>
+#include <iterator>
+#include <sstream>
+#include <utility>
 
 #include "json/rapidjson.h"
 #include "json/document-wrapper.h"
@@ -1131,7 +1132,7 @@ void SIOClient::setConnected(bool connected)
 
 void SIOClient::on(const std::string& eventName, SIOEvent e)
 {
-    _eventRegistry[eventName] = e;
+    _eventRegistry[eventName] = std::move(e);
 }
 
 void SIOClient::fireEvent(const std::string& eventName, const std::string& data)

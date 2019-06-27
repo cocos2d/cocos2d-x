@@ -159,7 +159,7 @@ public:
      * @param callback When the file is save finished,it will callback this function.
      * @return Returns true if the operation is successful.
      */
-    bool saveToFileAsNonPMA(const std::string& filename, bool isRGBA = true, std::function<void(RenderTexture*, const std::string&)> callback = nullptr);
+    bool saveToFileAsNonPMA(const std::string& filename, bool isRGBA = true, const std::function<void(RenderTexture*, const std::string&)>& callback = nullptr);
 
 
     /** Saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
@@ -170,7 +170,7 @@ public:
      * @param callback When the file is save finished,it will callback this function.
      * @return Returns true if the operation is successful.
      */
-    bool saveToFile(const std::string& filename, bool isRGBA = true, std::function<void (RenderTexture*, const std::string&)> callback = nullptr);
+    bool saveToFile(const std::string& filename, bool isRGBA = true, const std::function<void (RenderTexture*, const std::string&)>& callback = nullptr);
 
     /** saves the texture into a file in non-PMA. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns true if the operation is successful.

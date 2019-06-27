@@ -28,13 +28,14 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "2d/CCTMXXMLParser.h"
-#include <unordered_map>
-#include <sstream>
 #include "2d/CCTMXTiledMap.h"
+#include "base/CCDirector.h"
 #include "base/ZipUtils.h"
 #include "base/base64.h"
-#include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
+#include <sstream>
+#include <unordered_map>
+#include <utility>
 
 using namespace std;
 
@@ -65,7 +66,7 @@ ValueMap& TMXLayerInfo::getProperties()
 
 void TMXLayerInfo::setProperties(ValueMap var)
 {
-    _properties = var;
+    _properties = std::move(var);
 }
 
 // implementation TMXTilesetInfo
