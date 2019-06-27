@@ -251,6 +251,7 @@ void UtilsGL::toGLTypes(PixelFormat textureFormat, GLint &internalFormat, GLuint
         format = 0xFFFFFFFF;
         type = 0xFFFFFFFF;
         isCompressed = true;
+        break;
 #endif // GL_ATC_RGBA_EXPLICIT_ALPHA_AMD
 #ifdef GL_ATC_RGBA_INTERPOLATED_ALPHA_AMD
     case PixelFormat::ATC_INTERPOLATED_ALPHA:
