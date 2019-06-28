@@ -65,6 +65,9 @@ void DataManager::onShaderLoaderEnd(){
 #endif
 }
 void DataManager::setOptimise(const char* thing, const char* value){
+    if (nullptr == thing || nullptr == value){
+        return;
+    }
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     JniHelper::callStaticVoidMethod(DataManagerClassName, "setOptimise", thing, value);
 #endif  
