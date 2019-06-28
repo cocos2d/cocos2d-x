@@ -966,6 +966,7 @@ void TMXIsoVertexZNew::onEnter()
     // TIP: 2d projection should be used
     Director::getInstance()->setProjection(Director::Projection::_2D);
     Director::getInstance()->setDepthTest(true);
+    Director::getInstance()->getRenderer()->setDepthWrite(true);
 }
 
 void TMXIsoVertexZNew::onExit()
@@ -973,6 +974,7 @@ void TMXIsoVertexZNew::onExit()
     // At exit use any other projection. 
     Director::getInstance()->setProjection(Director::Projection::DEFAULT);
     Director::getInstance()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthWrite(false);
     TileDemoNew::onExit();
 }
 
@@ -1037,6 +1039,7 @@ void TMXOrthoVertexZNew::onEnter()
     // TIP: 2d projection should be used
     Director::getInstance()->setProjection(Director::Projection::_2D);
     Director::getInstance()->setDepthTest(true);
+    Director::getInstance()->getRenderer()->setDepthWrite(true);
 }
 
 void TMXOrthoVertexZNew::onExit()
@@ -1044,6 +1047,7 @@ void TMXOrthoVertexZNew::onExit()
     // At exit use any other projection. 
     Director::getInstance()->setProjection(Director::Projection::DEFAULT);
     Director::getInstance()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthWrite(false);
     TileDemoNew::onExit();
 }
 
