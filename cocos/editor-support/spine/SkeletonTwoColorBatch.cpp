@@ -105,10 +105,10 @@ namespace {
         __locPMatrix = programState->getUniformLocation("u_PMatrix");
         __locTexture = programState->getUniformLocation("u_texture");
 
-        __vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(spine::V3F_C4B_C4B_T2F, position), false);
-        __vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::UBYTE4, offsetof(spine::V3F_C4B_C4B_T2F, color), true);
-        __vertexLayout.setAtrribute("a_color2", 2, backend::VertexFormat::UBYTE4, offsetof(spine::V3F_C4B_C4B_T2F, color2), true);
-        __vertexLayout.setAtrribute("a_texCoords", 3, backend::VertexFormat::FLOAT2, offsetof(spine::V3F_C4B_C4B_T2F, texCoords), false);
+        __vertexLayout.setAttribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(spine::V3F_C4B_C4B_T2F, position), false);
+        __vertexLayout.setAttribute("a_color", 1, backend::VertexFormat::UBYTE4, offsetof(spine::V3F_C4B_C4B_T2F, color), true);
+        __vertexLayout.setAttribute("a_color2", 2, backend::VertexFormat::UBYTE4, offsetof(spine::V3F_C4B_C4B_T2F, color2), true);
+        __vertexLayout.setAttribute("a_texCoords", 3, backend::VertexFormat::FLOAT2, offsetof(spine::V3F_C4B_C4B_T2F, texCoords), false);
         __vertexLayout.setLayout(sizeof(spine::V3F_C4B_C4B_T2F), backend::VertexStepMode::VERTEX);
 
         __twoColorProgramState = std::shared_ptr<backend::ProgramState>(programState);

@@ -60,7 +60,7 @@ namespace spine {
 
         void updateCommandPipelineDescriptor();
 
-        inline cocos2d::backend::Texture* getTexture() const { return _texture; }
+        inline cocos2d::backend::TextureBackend* getTexture() const { return _texture; }
 
         void draw(cocos2d::Renderer *renderer);
 
@@ -92,16 +92,16 @@ namespace spine {
 
 
         void *_prog = nullptr;
-        cocos2d::backend::Texture      *_texture        = nullptr;
-        cocos2d::backend::ProgramState *_programState   = nullptr;
+        cocos2d::backend::TextureBackend    *_texture       = nullptr;
+        cocos2d::backend::ProgramState      *_programState  = nullptr;
         cocos2d::backend::UniformLocation   _locPMatrix;
         cocos2d::backend::UniformLocation   _locTexture;
 
-		cocos2d::BlendFunc _blendType;
-		TwoColorTriangles _triangles;
-		cocos2d::Mat4 _mv;
-		GLuint _alphaTextureID;
-		bool _forceFlush;
+		cocos2d::BlendFunc  _blendType;
+		TwoColorTriangles   _triangles;
+		cocos2d::Mat4       _mv;
+		GLuint              _alphaTextureID;
+		bool                _forceFlush;
 	};
 
     class SkeletonTwoColorBatch {
