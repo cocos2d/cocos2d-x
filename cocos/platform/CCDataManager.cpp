@@ -64,5 +64,10 @@ void DataManager::onShaderLoaderEnd(){
     JniHelper::callStaticVoidMethod(DataManagerClassName, "onShaderLoaderEnd");
 #endif
 }
+void DataManager::setOptimise(const char* thing, const char* value){
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    JniHelper::callStaticVoidMethod(DataManagerClassName, "setOptimise", thing, value);
+#endif  
+}
 
 NS_CC_END

@@ -47,6 +47,7 @@ public:
     static void onSceneLoaderEnd();
     static void onShaderLoaderBegin();
     static void onShaderLoaderEnd();
+    static void setOptimise(const char* thing, const char* value);
 };
 
 // end of platform group
