@@ -74,6 +74,7 @@ TileDemoNew::TileDemoNew()
     // "test" is the default value in Director::setGLDefaultValues()
     // but TransitionTest may setDepthTest(false), we should revert it here
     Director::getInstance()->setDepthTest(true);
+    Director::getInstance()->getRenderer()->setDepthWrite(true);
 
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(TileDemoNew::onTouchesMoved, this);
@@ -98,6 +99,7 @@ void TileDemoNew::onExit()
 {
     TestCase::onExit();
     Director::getInstance()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthWrite(false);
 }
 
 void TileDemoNew::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
@@ -789,6 +791,7 @@ std::string TMXResizeTestNew::subtitle() const
 //------------------------------------------------------------------
 TMXIsoZorderNew::TMXIsoZorderNew()
 {
+    Director::getInstance()->setDepthTest(false);
     auto map = cocos2d::experimental::TMXTiledMap::create("TileMaps/iso-test-zorder.tmx");
     addChild(map, 0, kTagTileMap);
 

@@ -88,6 +88,7 @@ TileDemo::TileDemo()
     // "test" is the default value in Director::setGLDefaultValues()
     // but TransitionTest may setDepthTest(false), we should revert it here
     Director::getInstance()->setDepthTest(true);
+    Director::getInstance()->getRenderer()->setDepthWrite(true);
 
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(TileDemo::onTouchesMoved, this);
@@ -112,6 +113,7 @@ void TileDemo::onExit()
 {
     TestCase::onExit();
     Director::getInstance()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthWrite(false);
 }
 
 void TileDemo::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
@@ -902,6 +904,7 @@ std::string TMXResizeTest::subtitle() const
 //------------------------------------------------------------------
 TMXIsoZorder::TMXIsoZorder()
 {
+    Director::getInstance()->setDepthTest(false);
     auto map = TMXTiledMap::create("TileMaps/iso-test-zorder.tmx");
     addChild(map, 0, kTagTileMap);
 
