@@ -138,7 +138,7 @@ function SpineTestMain()
 
     Helper.createFunctionTable = 
     {
-        SpineTestLayerNormal.create,
+       -- SpineTestLayerNormal.create,
         SpineTestLayerFFD.create,
     }
     Helper.index = 1
