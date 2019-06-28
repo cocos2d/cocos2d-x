@@ -29,7 +29,7 @@
  *****************************************************************************/
 
 #include <spine/spine-cocos2dx.h>
-#include <spine/extension.h>
+#include <spine/Extension.h>
 #include <spine/AttachmentVertices.h>
 
 USING_NS_CC;

@@ -59,9 +59,9 @@ SkeletonBatch::SkeletonBatch () {
     
     _programState = new backend::ProgramState(positionTextureColor_vert, positionTextureColor_frag);
 
-    _vertexLayout.setAtrribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(V3F_C4B_T2F, vertices), false);
-    _vertexLayout.setAtrribute("a_color", 1, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
-    _vertexLayout.setAtrribute("a_texCoord", 2, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
+    _vertexLayout.setAttribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(V3F_C4B_T2F, vertices), false);
+    _vertexLayout.setAttribute("a_color", 1, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
+    _vertexLayout.setAttribute("a_texCoord", 2, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), false);
     _vertexLayout.setLayout(sizeof(_vertices[0]), backend::VertexStepMode::VERTEX);
 
     _locMVP     = _programState->getUniformLocation("u_MVPMatrix");
