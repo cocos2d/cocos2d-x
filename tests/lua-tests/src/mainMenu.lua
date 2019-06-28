@@ -86,6 +86,8 @@ if (currPlatform == cc.PLATFORM_OS_TIZEN) then
 end
 
 local _allTests = {
+    { isSupported = true,  name = "SpineTest"              , create_func   =                 SpineTestMain  },
+    
     { isSupported = true,  name = "Accelerometer"          , create_func=             AccelerometerMain  },
     { isSupported = true,  name = "ActionManagerTest"      , create_func   =         ActionManagerTestMain  },
     { isSupported = true,  name = "ActionsEaseTest"        , create_func   =           EaseActionsTest      },

@@ -61,7 +61,7 @@ set(lua_bindings_manual_files
     manual/network/Lua_web_socket.cpp
     manual/network/lua_xml_http_request.cpp
     manual/network/lua_downloader.cpp
-    #manual/spine/lua_cocos2dx_spine_manual.cpp
+    manual/spine/lua_cocos2dx_spine_manual.cpp
     manual/spine/LuaSkeletonAnimation.cpp
     manual/ui/lua_cocos2dx_experimental_video_manual.cpp
     manual/ui/lua_cocos2dx_ui_manual.cpp
@@ -98,7 +98,7 @@ set(lua_bindings_auto_files
     auto/lua_cocos2dx_experimental_video_auto.cpp
     auto/lua_cocos2dx_extension_auto.cpp
     auto/lua_cocos2dx_physics_auto.cpp
-    #auto/lua_cocos2dx_spine_auto.cpp
+    auto/lua_cocos2dx_spine_auto.cpp
     auto/lua_cocos2dx_studio_auto.cpp
     auto/lua_cocos2dx_csloader_auto.cpp
     auto/lua_cocos2dx_ui_auto.cpp
