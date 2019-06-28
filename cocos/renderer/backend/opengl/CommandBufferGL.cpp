@@ -54,8 +54,8 @@ CommandBufferGL::CommandBufferGL()
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom*){
-       if(_frameBuffer)
-           glGenFramebuffers(1, &_frameBuffer); //recreate framebuffer
+       if(_generatedFBO)
+           glGenFramebuffers(1, &_generatedFBO); //recreate framebuffer
     });
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
 #endif
@@ -63,7 +63,7 @@ CommandBufferGL::CommandBufferGL()
 
 CommandBufferGL::~CommandBufferGL()
 {
-    glDeleteFramebuffers(1, &_frameBuffer);
+    glDeleteFramebuffers(1, &_generatedFBO);
     cleanResources();
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
@@ -85,13 +85,15 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
     bool useColorAttachmentExternal = descirptor.needColorAttachment && descirptor.colorAttachmentsTexture[0];
     bool useDepthAttachmentExternal = descirptor.depthTestEnabled && descirptor.depthAttachmentTexture;
     bool useStencilAttachmentExternal = descirptor.stencilTestEnabled && descirptor.stencilAttachmentTexture;
+    bool useGeneratedFBO = false;
     if (useColorAttachmentExternal || useDepthAttachmentExternal || useStencilAttachmentExternal)
     {
-        if(_frameBuffer == 0)
+        if(_generatedFBO == 0)
         {
-            glGenFramebuffers(1, &_frameBuffer);
+            glGenFramebuffers(1, &_generatedFBO);
         }
-        _currentFBO = _frameBuffer;
+        _currentFBO = _generatedFBO;
+        useGeneratedFBO = true;
     }
     else
     {
@@ -107,6 +109,22 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
                                getHandler(descirptor.depthAttachmentTexture),
                                0);
         CHECK_GL_ERROR_DEBUG();
+
+        _generatedFBOBindDepth = true;
+    }
+    else
+    {
+        if (_generatedFBOBindDepth && useGeneratedFBO)
+        {
+            glFramebufferTexture2D(GL_FRAMEBUFFER,
+                                   GL_DEPTH_ATTACHMENT,
+                                   GL_TEXTURE_2D,
+                                   0,
+                                   0);
+            CHECK_GL_ERROR_DEBUG();
+
+            _generatedFBOBindDepth = false;
+        }
     }
         
     if (useStencilAttachmentExternal)
@@ -117,6 +135,22 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
                                getHandler(descirptor.depthAttachmentTexture),
                                0);
         CHECK_GL_ERROR_DEBUG();
+
+        _generatedFBOBindStencil = true;
+    }
+    else
+    {
+        if (_generatedFBOBindStencil && useGeneratedFBO)
+        {
+            glFramebufferTexture2D(GL_FRAMEBUFFER,
+                                   GL_STENCIL_ATTACHMENT,
+                                   GL_TEXTURE_2D,
+                                   0,
+                                   0);
+            CHECK_GL_ERROR_DEBUG();
+
+            _generatedFBOBindStencil = false;
+        }
     }
     
     if (descirptor.needColorAttachment)
@@ -136,9 +170,24 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
             CHECK_GL_ERROR_DEBUG();
             ++i;
         }
+
+        if (useGeneratedFBO)
+            _generatedFBOBindColor = true;
     }
     else
     {
+        if (_generatedFBOBindColor && useGeneratedFBO)
+        {
+           // FIXME: Now only support attaching to attachment 0.
+           glFramebufferTexture2D(GL_FRAMEBUFFER,
+                                  GL_COLOR_ATTACHMENT0,
+                                  GL_TEXTURE_2D,
+                                  0,
+                                  0);
+
+            _generatedFBOBindColor = false;
+        }
+
         // If not draw buffer is needed, should invoke this line explicitly, or it will cause
         // GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER and GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER error.
         // https://stackoverflow.com/questions/28313782/porting-opengl-es-framebuffer-to-opengl
@@ -185,7 +234,7 @@ void CommandBufferGL::applyRenderPassDescriptor(const RenderPassDescriptor& desc
         mask |= GL_STENCIL_BUFFER_BIT;
         glClearStencil(descirptor.clearStencilValue);
     }
-    
+
     if(mask) glClear(mask);
     
     CHECK_GL_ERROR_DEBUG();
