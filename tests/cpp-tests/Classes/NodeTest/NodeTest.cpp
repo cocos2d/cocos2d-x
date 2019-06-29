@@ -564,13 +564,13 @@ void CameraOrbitTest::onEnter()
 {
     TestCocosNodeDemo::onEnter();
     _preProjection = Director::getInstance()->getProjection();
-    Director::getInstance()->setDepthTest(true);
+    Director::getInstance()->getRenderer()->setDepthTest(true);
     Director::getInstance()->setProjection(Director::Projection::_3D);
 }
 
 void CameraOrbitTest::onExit()
 {
-    Director::getInstance()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthTest(false);
     Director::getInstance()->setProjection(_preProjection);
     TestCocosNodeDemo::onExit();
 }
@@ -1034,13 +1034,13 @@ void CameraTest1::onEnter()
     TestCocosNodeDemo::onEnter();
     _preProjection = Director::getInstance()->getProjection();
     Director::getInstance()->setProjection(Director::Projection::_3D);
-    Director::getInstance()->setDepthTest(true);
+    Director::getInstance()->getRenderer()->setDepthTest(true);
 }
 
 void CameraTest1::onExit()
 {
     Director::getInstance()->setProjection(_preProjection);
-    Director::getInstance()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthTest(false);
     TestCocosNodeDemo::onExit();
 }
 
@@ -1083,13 +1083,13 @@ void CameraTest2::onEnter()
     TestCocosNodeDemo::onEnter();
     _preProjection = Director::getInstance()->getProjection();
     Director::getInstance()->setProjection(Director::Projection::_3D);
-    Director::getInstance()->setDepthTest(true);
+    Director::getInstance()->getRenderer()->setDepthTest(true);
 }
 
 void CameraTest2::onExit()
 {
     Director::getInstance()->setProjection(_preProjection);
-    Director::getInstance()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthTest(false);
     TestCocosNodeDemo::onExit();
 }
 
