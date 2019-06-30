@@ -271,6 +271,7 @@ void PhysicsWorld::debugDraw()
     {
         _debugDraw = DrawNode::create();
         _debugDraw->setIsolated(true);
+        _debugDraw->setGlobalZOrder(_debugDrawGlobalZOrder);
         _debugDraw->retain();
         Director::getInstance()->getRunningScene()->addChild(_debugDraw);
     }
@@ -990,6 +991,7 @@ PhysicsWorld::PhysicsWorld()
 , _debugDraw(nullptr)
 , _debugDrawMask(DEBUGDRAW_NONE)
 , _eventDispatcher(nullptr)
+, _debugDrawGlobalZOrder(0.f)
 {
     
 }

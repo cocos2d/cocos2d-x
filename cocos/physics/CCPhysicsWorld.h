@@ -326,7 +326,12 @@ public:
     * @return An integer number.
     */
     int getDebugDrawMask() { return _debugDrawMask; }
-    
+
+    /**
+    * Set the debug draw global Z order.
+    */
+    void setDebugDrawGlobalZOrder(float globalZOrder) { _debugDrawGlobalZOrder = globalZOrder; }
+
     /**
      * To control the step of physics.
      *
@@ -396,7 +401,8 @@ protected:
     bool _autoStep;
     DrawNode* _debugDraw;
     int _debugDrawMask;
-    
+    float _debugDrawGlobalZOrder;
+
     EventDispatcher* _eventDispatcher;
 
     Vector<PhysicsBody*> _delayAddBodies;
