@@ -239,7 +239,8 @@ void Director::setGLDefaultValues()
     // This method SHOULD be called only after openGLView_ was initialized
     CCASSERT(_openGLView, "opengl view should not be null");
 
-    setDepthTest(false);
+    _renderer->setDepthTest(false);
+    _renderer->setDepthCompareFunction(backend::CompareFunction::LESS_EQUAL);
     setProjection(_projection);
 }
 
@@ -662,17 +663,6 @@ void Director::purgeCachedData(void)
 float Director::getZEye(void) const
 {
     return (_winSizeInPoints.height / 1.154700538379252f);//(2 * tanf(M_PI/6))
-}
-
-void Director::setDepthTest(bool on)
-{
-    if (on)
-    {
-        _renderer->setDepthTest(true);
-        _renderer->setDepthCompareFunction(backend::CompareFunction::LESS_EQUAL);
-    }
-    else
-        _renderer->setDepthTest(false);
 }
 
 void Director::setClearColor(const Color4F& clearColor)

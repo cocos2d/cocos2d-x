@@ -886,7 +886,7 @@ std::string LayerColorOccludeBug::subtitle() const
 void LayerColorOccludeBug::onEnter()
 {
     LayerTest::onEnter();
-    Director::getInstance()->setDepthTest(true);
+    Director::getInstance()->getRenderer()->setDepthTest(true);
     _layer = LayerColor::create(Color4B(0, 80, 95, 255));
     addChild(_layer);
 }
@@ -894,7 +894,7 @@ void LayerColorOccludeBug::onEnter()
 void LayerColorOccludeBug::onExit()
 {
     LayerTest::onExit();
-    Director::getInstance()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthTest(false);
 }
 
 // LayerRadialGradient

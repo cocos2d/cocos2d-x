@@ -87,7 +87,9 @@ TileDemo::TileDemo()
     // fix bug #486, #419.
     // "test" is the default value in Director::setGLDefaultValues()
     // but TransitionTest may setDepthTest(false), we should revert it here
-    Director::getInstance()->setDepthTest(true);
+    Director::getInstance()->getRenderer()->setDepthTest(true);
+    Director::getInstance()->getRenderer()->setDepthWrite(true);
+    Director::getInstance()->getRenderer()->setDepthCompareFunction(backend::CompareFunction::LESS_EQUAL);
 
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(TileDemo::onTouchesMoved, this);
@@ -111,7 +113,8 @@ std::string TileDemo::subtitle() const
 void TileDemo::onExit()
 {
     TestCase::onExit();
-    Director::getInstance()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthWrite(false);
 }
 
 void TileDemo::onTouchesMoved(const std::vector<Touch*>& touches, Event  *event)
@@ -902,6 +905,7 @@ std::string TMXResizeTest::subtitle() const
 //------------------------------------------------------------------
 TMXIsoZorder::TMXIsoZorder()
 {
+    Director::getInstance()->getRenderer()->setDepthTest(false);
     auto map = TMXTiledMap::create("TileMaps/iso-test-zorder.tmx");
     addChild(map, 0, kTagTileMap);
 
@@ -1077,14 +1081,17 @@ void TMXIsoVertexZ::onEnter()
     
     // TIP: 2d projection should be used
     Director::getInstance()->setProjection(Director::Projection::_2D);
-   Director::getInstance()->setDepthTest(true);
+   Director::getInstance()->getRenderer()->setDepthTest(true);
+   Director::getInstance()->getRenderer()->setDepthWrite(true);
 }
 
 void TMXIsoVertexZ::onExit()
 {
     // At exit use any other projection. 
     Director::getInstance()->setProjection(Director::Projection::DEFAULT);
-    Director::getInstance()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthWrite(false);
+
     TileDemo::onExit();
 }
 
@@ -1148,14 +1155,17 @@ void TMXOrthoVertexZ::onEnter()
     
     // TIP: 2d projection should be used
     Director::getInstance()->setProjection(Director::Projection::_2D);
-    Director::getInstance()->setDepthTest(true);
+    Director::getInstance()->getRenderer()->setDepthTest(true);
+    Director::getInstance()->getRenderer()->setDepthWrite(true);
+
 }
 
 void TMXOrthoVertexZ::onExit()
 {
     // At exit use any other projection. 
     Director::getInstance()->setProjection(Director::Projection::DEFAULT);
-    Director::getInstance()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthTest(false);
+    Director::getInstance()->getRenderer()->setDepthWrite(false);
     TileDemo::onExit();
 }
 
