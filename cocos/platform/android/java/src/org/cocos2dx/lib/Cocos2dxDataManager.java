@@ -31,27 +31,27 @@ import android.util.Log;
 import com.oppo.oiface.engine.OifaceGameEngineManager;
 
 public class Cocos2dxDataManager {
-    public static void setOptimise(String thing, float value){
+    public static void setOptimise(String thing, String value){
         String jsonStr = "{\"" + thing + "\":" + String.valueOf(value) + "}";
         OifaceGameEngineManager.getInstance().updateGameEngineInfo(jsonStr);
     }
 
     public static void setProcessID(int pid){
-        setOptimise("render_pid", pid);
+        setOptimise("render_pid", String.valueOf(pid));
     }
     public static void setFrameSize(int width, int height){
-        setOptimise("buffer_size", width * height);
+        setOptimise("buffer_size", String.valueOf(width * height));
     }
     public static void onSceneLoaderBegin(){
-        setOptimise("load_scene", 1);
+        setOptimise("load_scene", String.valueOf(1));
     }
     public static void onSceneLoaderEnd(){
-        setOptimise("load_scene", 0);
+        setOptimise("load_scene", String.valueOf(0));
     }
     public static void onShaderLoaderBegin(){
-        setOptimise("shader_compile", 1);
+        setOptimise("shader_compile", String.valueOf(1));
     }
     public static void onShaderLoaderEnd(){
-        setOptimise("shader_compile", 0);
+        setOptimise("shader_compile", String.valueOf(0));
     }
 }
