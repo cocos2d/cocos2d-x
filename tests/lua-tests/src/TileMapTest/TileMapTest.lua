@@ -1203,7 +1203,7 @@ end
 function TileMapTestMain()
     cclog("TileMapTestMain")
     Helper.index = 1
-    cc.Director:getInstance():setDepthTest(true)
+    cc.Director:getInstance():getRenderer():setDepthTest(true)
     local scene = cc.Scene:create()
 
     Helper.createFunctionTable = {

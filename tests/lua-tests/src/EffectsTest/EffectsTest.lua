@@ -263,7 +263,7 @@ end
 --  PageTurn3DDemo
 --------------------------------------
 local function PageTurn3DDemo(t)
-    cc.Director:getInstance():setDepthTest(true)
+    cc.Director:getInstance():getRenderer():setDepthTest(true)
     return cc.PageTurn3D:create(t, cc.size(15,10))
 end
 
@@ -271,7 +271,7 @@ end
 --  Effects Test
 --------------------------------------
 local function createEffect(idx, t)
-    cc.Director:getInstance():setDepthTest(false)
+    cc.Director:getInstance():getRenderer():setDepthTest(false)
     local action = nil
 
     if idx == 0 then

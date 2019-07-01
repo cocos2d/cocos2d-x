@@ -145,7 +145,7 @@ end
 -- Create Transition Test
 -----------------------------
 local function createTransition(index, t, scene)
-    cc.Director:getInstance():setDepthTest(false)
+    cc.Director:getInstance():getRenderer():setDepthTest(false)
 
     if firstEnter == true then
         firstEnter = false
@@ -169,10 +169,10 @@ local function createTransition(index, t, scene)
     elseif index == Transition_Table.CCTransitionCrossFade then
         scene = cc.TransitionCrossFade:create(t, scene)
     elseif index == Transition_Table.TransitionPageForward then
-        cc.Director:getInstance():setDepthTest(true)
+        cc.Director:getInstance():getRenderer():setDepthTest(true)
         scene = cc.TransitionPageTurn:create(t, scene, false)
     elseif index == Transition_Table.TransitionPageBackward then
-        cc.Director:getInstance():setDepthTest(true)
+        cc.Director:getInstance():getRenderer():setDepthTest(true)
         scene = cc.TransitionPageTurn:create(t, scene, true)
     elseif index == Transition_Table.CCTransitionFadeTR then
         scene = cc.TransitionFadeTR:create(t, scene)
