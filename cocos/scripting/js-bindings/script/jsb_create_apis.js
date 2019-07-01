@@ -774,6 +774,7 @@ cc.ClippingNode.prototype._ctor = function(stencil) {
 
 cc.DrawNode.prototype._ctor = function() {
     cc.DrawNode.prototype.init.call(this);
+    this._drawColor = cc.color(255, 255, 255, 255);
 };
 
 cc.LabelAtlas.prototype._ctor = function(strText, charMapFile, itemWidth, itemHeight, startCharMap) {
