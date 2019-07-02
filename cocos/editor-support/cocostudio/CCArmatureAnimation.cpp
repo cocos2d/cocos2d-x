@@ -484,13 +484,13 @@ void ArmatureAnimation::setFrameEventCallFunc(Ref *target, SEL_FrameEventCallFun
     _frameEventCallFunc = callFunc;
 }
 
-void ArmatureAnimation::setMovementEventCallFunc(std::function<void(Armature *armature, MovementEventType movementType, const std::string& movementID)> listener)
+void ArmatureAnimation::setMovementEventCallFunc(const std::function<void(Armature *armature, MovementEventType movementType, const std::string& movementID)>& listener)
 {
-    _movementEventListener = std::move(listener);
+    _movementEventListener = listener;
 }
-void ArmatureAnimation::setFrameEventCallFunc(std::function<void(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex)> listener)
+void ArmatureAnimation::setFrameEventCallFunc(const std::function<void(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex)>& listener)
 {
-    _frameEventListener = std::move(listener);
+    _frameEventListener = listener;
 }
 
 void ArmatureAnimation::setUserObject(Ref *pUserObject)

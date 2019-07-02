@@ -187,13 +187,13 @@ void GUIReader::registerTypeAndCallBack(const std::string& classType,
 }
 
 void GUIReader::registerTypeAndCallBack(const std::string& classType,
-                                        ObjectFactory::InstanceFunc ins,
+                                        const ObjectFactory::InstanceFunc& ins,
                                         Ref *object,
                                         SEL_ParseEvent callBack)
 {
     ObjectFactory* factoryCreate = ObjectFactory::getInstance();
 
-    ObjectFactory::TInfo t(classType, std::move(ins));
+    ObjectFactory::TInfo t(classType, ins);
     factoryCreate->registerType(t);
 
     if (object)

@@ -349,9 +349,9 @@ void ActionTimeline::setAnimationEndCallFunc(const std::string& animationName, c
     addFrameEndCallFunc(clipIter->second.endIndex, animationName, func);
 }
 
-void ActionTimeline::setFrameEventCallFunc(std::function<void(Frame *)> listener)
+void ActionTimeline::setFrameEventCallFunc(const std::function<void(Frame *)>& listener)
 {
-    _frameEventListener = std::move(listener);
+    _frameEventListener = listener;
 }
 
 void ActionTimeline::clearFrameEventCallFunc()
@@ -359,9 +359,9 @@ void ActionTimeline::clearFrameEventCallFunc()
     _frameEventListener = nullptr;
 }
 
-void ActionTimeline::setLastFrameCallFunc(std::function<void()> listener)
+void ActionTimeline::setLastFrameCallFunc(const std::function<void()>& listener)
 {
-    _lastFrameListener = std::move(listener);
+    _lastFrameListener = listener;
 }
 
 void ActionTimeline::clearLastFrameCallFunc()

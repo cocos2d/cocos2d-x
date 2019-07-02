@@ -64,9 +64,9 @@ ValueMap& TMXLayerInfo::getProperties()
     return _properties;
 }
 
-void TMXLayerInfo::setProperties(ValueMap var)
+void TMXLayerInfo::setProperties(const ValueMap& var)
 {
-    _properties = std::move(var);
+    _properties = var;
 }
 
 // implementation TMXTilesetInfo

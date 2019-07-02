@@ -337,7 +337,7 @@ public:
      * @js NA
      * @lua NA
      */
-    void setAnimationManagers(CCBAnimationManagerMapPtr x);
+    void setAnimationManagers(const CCBAnimationManagerMapPtr& x);
     /**
      * @js NA
      * @lua NA
@@ -370,7 +370,7 @@ public:
      * @js NA
      * @lua NA
      */
-    cocos2d::Node* readFileWithCleanUp(bool bCleanUp, CCBAnimationManagerMapPtr am);
+    cocos2d::Node* readFileWithCleanUp(bool bCleanUp, const CCBAnimationManagerMapPtr& am);
     
     void addOwnerOutletName(const std::string& name);
     void addOwnerOutletNode(cocos2d::Node *node);

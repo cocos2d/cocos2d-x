@@ -45,10 +45,10 @@ ObjectFactory::TInfo::TInfo(const std::string& type, Instance ins)
     ObjectFactory::getInstance()->registerType(*this);
 }
 
-ObjectFactory::TInfo::TInfo(const std::string& type, InstanceFunc ins)
+ObjectFactory::TInfo::TInfo(const std::string& type, const InstanceFunc& ins)
     :_class(type)
     ,_fun(nullptr)
-    ,_func(std::move(ins))
+    ,_func(ins)
 {
     ObjectFactory::getInstance()->registerType(*this);
 }

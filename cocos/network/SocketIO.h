@@ -276,7 +276,7 @@ public:
      * @param eventName the name of event.
      * @param e the callback function.
      */
-    void on(const std::string& eventName, SIOEvent e);
+    void on(const std::string& eventName, const SIOEvent& e);
 
     /**
      * Set tag of SIOClient.

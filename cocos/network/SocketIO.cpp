@@ -1130,9 +1130,9 @@ void SIOClient::setConnected(bool connected)
     _connected = connected;
 }
 
-void SIOClient::on(const std::string& eventName, SIOEvent e)
+void SIOClient::on(const std::string& eventName, const SIOEvent& e)
 {
-    _eventRegistry[eventName] = std::move(e);
+    _eventRegistry[eventName] = e;
 }
 
 void SIOClient::fireEvent(const std::string& eventName, const std::string& data)

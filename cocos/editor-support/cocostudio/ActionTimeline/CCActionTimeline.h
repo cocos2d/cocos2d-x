@@ -165,11 +165,11 @@ public:
     virtual void setAnimationEndCallFunc(const std::string& animationName, const std::function<void()>& func);
 
     /** Set ActionTimeline's frame event callback function */
-    void setFrameEventCallFunc(std::function<void(Frame *)> listener);
+    void setFrameEventCallFunc(const std::function<void(Frame *)>& listener);
     void clearFrameEventCallFunc();
 
     /** Last frame callback will call when arriving last frame */
-    void setLastFrameCallFunc(std::function<void()> listener);
+    void setLastFrameCallFunc(const std::function<void()>& listener);
     void clearLastFrameCallFunc();
 
     /** add a callback function after played frameIndex

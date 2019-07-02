@@ -184,7 +184,7 @@ public:
      * @param callback When the file is save finished,it will callback this function.
      * @return Returns true if the operation is successful.
      */
-    bool saveToFileAsNonPMA(const std::string& fileName, Image::Format format, bool isRGBA, std::function<void(RenderTexture*, const std::string&)> callback);
+    bool saveToFileAsNonPMA(const std::string& fileName, Image::Format format, bool isRGBA, const std::function<void(RenderTexture*, const std::string&)>& callback);
 
     /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
@@ -198,7 +198,7 @@ public:
      * @param callback When the file is save finished,it will callback this function.
      * @return Returns true if the operation is successful.
      */
-    bool saveToFile(const std::string& filename, Image::Format format, bool isRGBA = true, std::function<void (RenderTexture*, const std::string&)> callback = nullptr);
+    bool saveToFile(const std::string& filename, Image::Format format, bool isRGBA = true, const std::function<void (RenderTexture*, const std::string&)>& callback = nullptr);
     
     /** Listen "come to background" message, and save render texture.
      * It only has effect on Android.

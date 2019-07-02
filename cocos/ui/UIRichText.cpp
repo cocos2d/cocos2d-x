@@ -347,7 +347,7 @@ public:
     
     void pushBackElement(RichElement* element);
     
-    static void setTagDescription(const std::string& tag, bool isFontElement, RichText::VisitEnterHandler handleVisitEnter);
+    static void setTagDescription(const std::string& tag, bool isFontElement, const RichText::VisitEnterHandler& handleVisitEnter);
     
     static void removeTagDescription(const std::string& tag);
     
@@ -821,9 +821,9 @@ void MyXMLVisitor::pushBackElement(RichElement* element)
     _richText->pushBackElement(element);
 }
 
-void MyXMLVisitor::setTagDescription(const std::string& tag, bool isFontElement, RichText::VisitEnterHandler handleVisitEnter)
+void MyXMLVisitor::setTagDescription(const std::string& tag, bool isFontElement, const RichText::VisitEnterHandler& handleVisitEnter)
 {
-    MyXMLVisitor::_tagTables[tag] = {isFontElement, std::move(handleVisitEnter)};
+    MyXMLVisitor::_tagTables[tag] = {isFontElement, handleVisitEnter};
 }
 
 void MyXMLVisitor::removeTagDescription(const std::string& tag)
@@ -1326,9 +1326,9 @@ std::string RichText::stringWithColor4B(const cocos2d::Color4B& color4b)
     return std::string(buf, 9);
 }
 
-void RichText::setTagDescription(const std::string& tag, bool isFontElement, VisitEnterHandler handleVisitEnter)
+void RichText::setTagDescription(const std::string& tag, bool isFontElement, const VisitEnterHandler& handleVisitEnter)
 {
-    MyXMLVisitor::setTagDescription(tag, isFontElement, std::move(handleVisitEnter));
+    MyXMLVisitor::setTagDescription(tag, isFontElement, handleVisitEnter);
 }
 
 void RichText::removeTagDescription(const std::string& tag)

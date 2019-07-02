@@ -192,9 +192,9 @@ CCBReader::CCBAnimationManagerMapPtr CCBReader::getAnimationManagers()
     return _animationManagers;
 }
 
-void CCBReader::setAnimationManagers(CCBAnimationManagerMapPtr x)
+void CCBReader::setAnimationManagers(const CCBAnimationManagerMapPtr& x)
 {
-    _animationManagers = std::move(x);
+    _animationManagers = x;
 }
 
 CCBMemberVariableAssigner * CCBReader::getCCBMemberVariableAssigner() {
@@ -321,7 +321,7 @@ void CCBReader::cleanUpNodeGraph(Node *node)
     }
 }
 
-Node* CCBReader::readFileWithCleanUp(bool bCleanUp, CCBAnimationManagerMapPtr am)
+Node* CCBReader::readFileWithCleanUp(bool bCleanUp, const CCBAnimationManagerMapPtr& am)
 {
     if (! readHeader())
     {
@@ -338,7 +338,7 @@ Node* CCBReader::readFileWithCleanUp(bool bCleanUp, CCBAnimationManagerMapPtr am
         return nullptr;
     }
     
-    setAnimationManagers(std::move(am));
+    setAnimationManagers(am);
 
     Node *pNode = readNodeGraph(nullptr);
 
