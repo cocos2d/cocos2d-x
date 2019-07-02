@@ -152,7 +152,7 @@ protected:
     bool initWithVertex(const std::string &vert, const std::string &frag);
     void loadShaderVertex(const std::string &vert, const std::string &frag);
 
-    void setProgramState(cocos2d::backend::ProgramState *programState)
+    virtual void setProgramState(cocos2d::backend::ProgramState *programState) override
     {
         if (programState != _programState)
         {
