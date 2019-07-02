@@ -67,6 +67,7 @@
 - (void)setVisible:(BOOL)visible;
 - (void)setTextColor:(NSColor*)color;
 - (void)setFont:(NSFont *)font;
+- (void)setInsertionPointColor:(NSColor *)color;
 - (void)setPlaceholderFontColor:(NSColor*)color;
 - (void)setPlaceholderFont:(NSFont*)font;
 - (void)setText:(NSString *)text;

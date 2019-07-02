@@ -134,6 +134,14 @@ void EditBoxImplMac::setNativeFontColor(const cocos2d::Color4B &color)
     [_sysEdit setTextColor:newColor];
 }
     
+void EditBoxImplMac::setNativeInsertionPointColor(const Color4B& color)
+{
+    [_sysEdit setInsertionPointColor:[NSColor colorWithCalibratedRed:color.r / 255.0f
+                                                         green:color.g / 255.0f
+                                                          blue:color.b / 255.0f
+                                                         alpha:color.a / 255.f]];
+}
+
 void EditBoxImplMac::setNativePlaceholderFontColor(const cocos2d::Color4B &color)
 {
     NSColor *newColor = [NSColor colorWithCalibratedRed:color.r/255.f
