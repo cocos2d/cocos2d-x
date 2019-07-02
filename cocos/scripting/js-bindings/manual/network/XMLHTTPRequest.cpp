@@ -240,7 +240,7 @@ MinXmlHttpRequest::EncodingType MinXmlHttpRequest::_getEncodingType() const
     }
     else
     {
-        CCLOG("[error] bad unrecongized Content-Encoding value ", encodingTypeStr.c_str(), ", use \"identity\" as default");
+        CCLOG("[error] unrecongized Content-Encoding value %s, %s", encodingTypeStr.c_str(), "use \"identity\" as default");
         return EncodingType::IDENTITY;
     }
 }
