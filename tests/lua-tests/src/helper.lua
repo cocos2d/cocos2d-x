@@ -113,7 +113,7 @@ local function MainMenuCallback()
     local scene = cc.Scene:create()
     scene:addChild(CreateTestMenu())
     Helper.usePhysics = false
-    cc.Director:getInstance():setDepthTest(false)
+    cc.Director:getInstance():getRenderer():setDepthTest(false)
     cc.Director:getInstance():replaceScene(scene)
 end
 
