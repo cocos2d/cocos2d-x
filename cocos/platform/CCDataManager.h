@@ -28,6 +28,7 @@ THE SOFTWARE.
 #ifndef __CC_DataManager_H__
 #define __CC_DataManager_H__
 
+#include <string>
 #include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
 
@@ -47,7 +48,7 @@ public:
     static void onSceneLoaderEnd();
     static void onShaderLoaderBegin();
     static void onShaderLoaderEnd();
-    static void setOptimise(const char* thing, const char* value);
+    static void setOptimise(std::string thing, std::string value);
 };
 
 // end of platform group

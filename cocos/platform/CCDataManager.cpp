@@ -64,12 +64,9 @@ void DataManager::onShaderLoaderEnd(){
     JniHelper::callStaticVoidMethod(DataManagerClassName, "onShaderLoaderEnd");
 #endif
 }
-void DataManager::setOptimise(const char* thing, const char* value){
-    if (nullptr == thing || nullptr == value){
-        return;
-    }
+void DataManager::setOptimise(std::string thing, std::string value){
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    JniHelper::callStaticVoidMethod(DataManagerClassName, "setOptimise", thing, value);
+    JniHelper::callStaticVoidMethod(DataManagerClassName, "setOptimise", thing.c_str(), value.c_str());
 #endif  
 }
 
