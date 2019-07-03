@@ -26,7 +26,7 @@
 
 #include "scripting/lua-bindings/manual/audioengine/lua_cocos2dx_audioengine_manual.h"
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
 
 #include "scripting/lua-bindings/auto/lua_cocos2dx_audioengine_auto.hpp"
 #include "scripting/lua-bindings/manual/tolua_fix.h"
