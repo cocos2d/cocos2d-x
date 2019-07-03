@@ -588,7 +588,7 @@ public:
     /**
     * set ProgramState of current render command
     */
-    void setProgramState(backend::ProgramState *programState);
+    virtual void setProgramState(backend::ProgramState *programState) override;
 
     FontAtlas* getFontAtlas() { return _fontAtlas; }
 

@@ -120,7 +120,7 @@ public:
     
     // overrides
     /** set ProgramState, you should bind attributes by yourself */
-    virtual void setProgramState(backend::ProgramState *programState);
+    virtual void setProgramState(backend::ProgramState *programState) override;
 
     virtual void setVertexLayout(const backend::VertexLayout *vertexLayout);
 
