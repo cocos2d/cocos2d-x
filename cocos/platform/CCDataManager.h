@@ -48,7 +48,7 @@ public:
     static void onSceneLoaderEnd();
     static void onShaderLoaderBegin();
     static void onShaderLoaderEnd();
-    static void setOptimise(std::string& thing, std::string& value);
+    static void setOptimise(const std::string& thing, const std::string& value);
 };
 
 // end of platform group
