@@ -775,7 +775,7 @@ namespace cocostudio
         return checkBox;
     }
 
-    int CheckBoxReader::getResourceType(std::string key)
+    int CheckBoxReader::getResourceType(const std::string& key)
     {
         if(key == "Normal" || key == "Default")
         {

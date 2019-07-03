@@ -256,7 +256,7 @@ namespace cocos2d { namespace network {
             DLLOG("Destruct DownloaderCURL::Impl %p %d", this, _thread.joinable());
         }
 
-        void addTask(std::shared_ptr<const DownloadTask> task, DownloadTaskCURL* coTask)
+        void addTask(const std::shared_ptr<const DownloadTask>& task, DownloadTaskCURL* coTask)
         {
             if (DownloadTask::ERROR_NO_ERROR == coTask->_errCode)
             {

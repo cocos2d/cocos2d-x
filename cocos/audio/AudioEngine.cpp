@@ -530,7 +530,7 @@ AudioProfile* AudioEngine::getProfile(const std::string &name)
     }
 }
 
-void AudioEngine::preload(const std::string& filePath, std::function<void(bool isSuccess)> callback)
+void AudioEngine::preload(const std::string& filePath, const std::function<void(bool isSuccess)>& callback)
 {
     if (!isEnabled())
     {

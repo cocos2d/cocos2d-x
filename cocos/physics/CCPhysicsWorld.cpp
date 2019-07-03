@@ -395,7 +395,7 @@ void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
     _eventDispatcher->dispatchEvent(&contact);
 }
 
-void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Vec2& point1, const Vec2& point2, void* data)
+void PhysicsWorld::rayCast(const PhysicsRayCastCallbackFunc& func, const Vec2& point1, const Vec2& point2, void* data)
 {
     CCASSERT(func != nullptr, "func shouldn't be nullptr");
     
@@ -418,7 +418,7 @@ void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Vec2& point1, 
     }
 }
 
-void PhysicsWorld::queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect, void* data)
+void PhysicsWorld::queryRect(const PhysicsQueryRectCallbackFunc& func, const Rect& rect, void* data)
 {
     CCASSERT(func != nullptr, "func shouldn't be nullptr");
     
@@ -439,7 +439,7 @@ void PhysicsWorld::queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect
     }
 }
 
-void PhysicsWorld::queryPoint(PhysicsQueryPointCallbackFunc func, const Vec2& point, void* data)
+void PhysicsWorld::queryPoint(const PhysicsQueryPointCallbackFunc& func, const Vec2& point, void* data)
 {
     CCASSERT(func != nullptr, "func shouldn't be nullptr");
     

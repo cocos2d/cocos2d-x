@@ -82,7 +82,7 @@ public:
     ActionTimeline();
     virtual ~ActionTimeline();
 
-    virtual void play(std::string animationName, bool loop);
+    virtual void play(const std::string& animationName, bool loop);
 
     virtual bool init();
 
@@ -155,21 +155,21 @@ public:
     
     /** AnimationInfo*/
     virtual void addAnimationInfo(const AnimationInfo& animationInfo);
-    virtual void removeAnimationInfo(std::string animationName);
+    virtual void removeAnimationInfo(const std::string& animationName);
     virtual bool IsAnimationInfoExists(const std::string& animationName);
     virtual const AnimationInfo& getAnimationInfo(const std::string& animationName);
     /**add a frame end call back to animation's end frame
      * @param animationName  @addFrameEndCallFunc, make the animationName as funcKey
      * @param func the callback function
      */
-    virtual void setAnimationEndCallFunc(const std::string animationName, std::function<void()> func);
+    virtual void setAnimationEndCallFunc(const std::string& animationName, const std::function<void()>& func);
 
     /** Set ActionTimeline's frame event callback function */
-    void setFrameEventCallFunc(std::function<void(Frame *)> listener);
+    void setFrameEventCallFunc(const std::function<void(Frame *)>& listener);
     void clearFrameEventCallFunc();
 
     /** Last frame callback will call when arriving last frame */
-    void setLastFrameCallFunc(std::function<void()> listener);
+    void setLastFrameCallFunc(const std::function<void()>& listener);
     void clearLastFrameCallFunc();
 
     /** add a callback function after played frameIndex
@@ -177,7 +177,7 @@ public:
      * @param funcKey for identity the callback function
      * @param func the callback function
      */
-    virtual void addFrameEndCallFunc(int frameIndex, const std::string& funcKey, std::function<void()> func);
+    virtual void addFrameEndCallFunc(int frameIndex, const std::string& funcKey, const std::function<void()>& func);
     // remove callback function after frameIndex which identified with funcKey
     virtual void removeFrameEndCallFunc(int frameIndex, const std::string& funcKey);
     // clear callback functions after frameIndex

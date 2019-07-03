@@ -483,7 +483,7 @@ namespace cocostudio
         return camera;
     }
 
-    int UserCameraReader::getResourceType(std::string key)
+    int UserCameraReader::getResourceType(const std::string& key)
     {
         if (key == "Normal" || key == "Default")
         {

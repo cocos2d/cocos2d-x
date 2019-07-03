@@ -301,7 +301,7 @@ void AudioEngineImpl::uncacheAll()
     mapId.clear();
 }
 
-int AudioEngineImpl::preload(const std::string& filePath, std::function<void(bool isSuccess)> callback)
+int AudioEngineImpl::preload(const std::string& filePath, const std::function<void(bool isSuccess)>& callback)
 {
     FMOD::Sound * sound = findSound(filePath);
     if (!sound) {

@@ -609,7 +609,7 @@ namespace cocostudio
         return listView;
     }
     
-    int ListViewReader::getResourceType(std::string key)
+    int ListViewReader::getResourceType(const std::string& key)
     {
         if(key == "Normal" || key == "Default")
         {

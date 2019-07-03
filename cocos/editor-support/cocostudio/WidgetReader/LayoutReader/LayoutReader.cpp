@@ -746,7 +746,7 @@ namespace cocostudio
         return layout;
     }
     
-    int LayoutReader::getResourceType(std::string key)
+    int LayoutReader::getResourceType(const std::string& key)
     {
         if(key == "Normal" || key == "Default")
         {

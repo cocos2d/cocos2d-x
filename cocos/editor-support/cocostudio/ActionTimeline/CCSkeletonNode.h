@@ -69,7 +69,7 @@ public:
     *@param: groupName, key
     *@param: boneSkinNameMap, map <name of bone, name of skin to display which added to bone>
     */
-    void addSkinGroup(std::string groupName, std::map<std::string, std::string> boneSkinNameMap);
+    void addSkinGroup(const std::string& groupName, const std::map<std::string, std::string>& boneSkinNameMap);
 
     cocos2d::Rect getBoundingBox() const override;
 

@@ -43,7 +43,7 @@ public:
     {
         TInfo();
         TInfo(const std::string& type, Instance ins = nullptr);
-        TInfo(const std::string& type, InstanceFunc ins = nullptr);
+        TInfo(const std::string& type, const InstanceFunc& ins = nullptr);
         TInfo(const TInfo &t);
         ~TInfo();
         TInfo& operator= (const TInfo &t);

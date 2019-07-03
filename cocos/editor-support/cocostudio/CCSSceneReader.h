@@ -73,7 +73,7 @@ CC_CONSTRUCTOR_ACCESS:
 private:
     std::string getComponentClassName(const std::string& name);
 
-    cocos2d::Component* createComponent(const std::string classname);
+    cocos2d::Component* createComponent(const std::string& classname);
 
     
     cocos2d::Node* createObject(const rapidjson::Value& dict, cocos2d::Node* parent, AttachComponentType attachComponent);

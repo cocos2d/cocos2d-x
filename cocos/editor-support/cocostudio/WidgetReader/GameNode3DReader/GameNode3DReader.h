@@ -58,7 +58,7 @@ namespace cocostudio
         cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* node3DOptions);
         
     protected:
-        int getResourceType(std::string key);
+        int getResourceType(const std::string& key);
     };
 }
 

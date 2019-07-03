@@ -23,8 +23,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include <functional>
 #include "base/ObjectFactory.h"
+#include <functional>
+#include <utility>
 
 
 NS_CC_BEGIN
@@ -44,7 +45,7 @@ ObjectFactory::TInfo::TInfo(const std::string& type, Instance ins)
     ObjectFactory::getInstance()->registerType(*this);
 }
 
-ObjectFactory::TInfo::TInfo(const std::string& type, InstanceFunc ins)
+ObjectFactory::TInfo::TInfo(const std::string& type, const InstanceFunc& ins)
     :_class(type)
     ,_fun(nullptr)
     ,_func(ins)
