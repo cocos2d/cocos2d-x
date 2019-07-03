@@ -176,7 +176,7 @@ void CameraRotationTest::update(float dt)
 // Camera3DTestDemo
 //
 //------------------------------------------------------------------
-Camera3DTestDemo::Camera3DTestDemo(void)
+Camera3DTestDemo::Camera3DTestDemo()
 : _cameraType(CameraType::Free)
 , _incRot(nullptr)
 , _decRot(nullptr)
@@ -187,7 +187,7 @@ Camera3DTestDemo::Camera3DTestDemo(void)
 , _bRotateRight(false)
 {
 }
-Camera3DTestDemo::~Camera3DTestDemo(void)
+Camera3DTestDemo::~Camera3DTestDemo()
 {
 }
 void Camera3DTestDemo::reachEndCallBack()
@@ -701,7 +701,7 @@ void Camera3DTestDemo::onTouchesRotateRightEnd(Touch* touch, Event* event)
 
 ////////////////////////////////////////////////////////////
 // CameraCullingDemo
-CameraCullingDemo::CameraCullingDemo(void)
+CameraCullingDemo::CameraCullingDemo()
 : _layer3D(nullptr)
 , _cameraType(CameraType::FirstPerson)
 , _cameraFirst(nullptr)
@@ -712,7 +712,7 @@ CameraCullingDemo::CameraCullingDemo(void)
 , _row(3)
 {
 }
-CameraCullingDemo::~CameraCullingDemo(void)
+CameraCullingDemo::~CameraCullingDemo()
 {
 }
 
@@ -982,7 +982,7 @@ void CameraCullingDemo::drawCameraFrustum()
 
 ////////////////////////////////////////////////////////////
 // CameraArcBallDemo
-CameraArcBallDemo::CameraArcBallDemo(void)
+CameraArcBallDemo::CameraArcBallDemo()
 : CameraBaseTest()
 , _layer3D(nullptr)
 , _cameraType(CameraType::Free)
@@ -997,7 +997,7 @@ CameraArcBallDemo::CameraArcBallDemo(void)
 , _sprite3D2(nullptr)
 {
 }
-CameraArcBallDemo::~CameraArcBallDemo(void)
+CameraArcBallDemo::~CameraArcBallDemo()
 {
 }
 
@@ -1204,7 +1204,7 @@ void CameraArcBallDemo::update(float dt)
 
 ////////////////////////////////////////////////////////////
 // FogTestDemo
-FogTestDemo::FogTestDemo(void)
+FogTestDemo::FogTestDemo()
 : CameraBaseTest()
 , _layer3D(nullptr)
 , _cameraType(CameraType::Free)
@@ -1213,7 +1213,7 @@ FogTestDemo::FogTestDemo(void)
 , _state(nullptr)
 {
 }
-FogTestDemo::~FogTestDemo(void)
+FogTestDemo::~FogTestDemo()
 {
 }
 
