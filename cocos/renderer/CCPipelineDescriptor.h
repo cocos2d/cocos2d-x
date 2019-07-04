@@ -39,7 +39,6 @@ struct CC_DLL PipelineDescriptor
 {
     backend::ProgramState*          programState = nullptr;
     backend::BlendDescriptor        blendDescriptor;
-    backend::RenderPassDescriptor   renderPassDescriptor;
     backend::VertexLayout           vertexLayout;
 };
 
