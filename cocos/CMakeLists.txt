@@ -29,7 +29,7 @@
 # build luacocos2d if BUILD_LUA_LIBS=ON
 
 # The version number
-set(COCOS2D_X_VERSION 3.18)
+set(COCOS2D_X_VERSION 4.0)
 
 set(COCOS_CORE_LIB cocos2d)
 
