@@ -251,17 +251,23 @@ ProgramState::~ProgramState()
 
 ProgramState *ProgramState::clone() const
 {
-    ProgramState *cp = new ProgramState();
-    cp->_program = _program;
-    cp->_vertexUniformInfos = _vertexUniformInfos;
-    cp->_fragmentUniformInfos = _fragmentUniformInfos;
-    cp->_vertexTextureInfos = _vertexTextureInfos;
-    cp->_fragmentTextureInfos = _fragmentTextureInfos;
-    cp->_vertexUniformBuffer = _vertexUniformBuffer;
-    cp->_fragmentUniformBuffer = _fragmentUniformBuffer;
-    CC_SAFE_RETAIN(cp->_program);
-
-    return cp;
+   ProgramState *cp = new ProgramState();
+   cp->_program = _program;
+   if(!_vertexUniformInfos.empty())
+       cp->_vertexUniformInfos = _vertexUniformInfos;
+   if(!_fragmentUniformInfos.empty())
+       cp->_fragmentUniformInfos = _fragmentUniformInfos;
+   if(!_vertexTextureInfos.empty())
+       cp->_vertexTextureInfos = _vertexTextureInfos;
+   if(!_fragmentTextureInfos.empty())
+       cp->_fragmentTextureInfos = _fragmentTextureInfos;
+   if(!_vertexUniformBuffer.empty())
+       cp->_vertexUniformBuffer = _vertexUniformBuffer;
+   if(!_fragmentUniformBuffer.empty())
+       cp->_fragmentUniformBuffer = _fragmentUniformBuffer;
+   CC_SAFE_RETAIN(cp->_program);
+   
+   return cp;
 }
 
 
@@ -487,27 +493,25 @@ void ProgramState::setTexture(int location, uint32_t slot, backend::TextureBacke
 {
     if(location < 0)
         return;
-    TextureInfo info;
+    TextureInfo &info = textureInfo[location];
     info.slot = {slot};
     info.textures = {texture};
     info.retainTextures();
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     info.location = location;
 #endif
-    textureInfo[location] = std::move(info);
 }
 
 void ProgramState::setTextureArray(int location, const std::vector<uint32_t>& slots, const std::vector<backend::TextureBackend*> textures, std::unordered_map<int, TextureInfo>& textureInfo)
 {
     assert(slots.size() == textures.size());
-    TextureInfo info;
+    TextureInfo &info = textureInfo[location];
     info.slot = slots;
     info.textures = textures;
     info.retainTextures();
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     info.location = location;
 #endif
-    textureInfo[location] = std::move(info);
 
 }
 

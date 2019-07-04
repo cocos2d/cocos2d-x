@@ -58,7 +58,7 @@ public:
 
     ProgramState(const std::string& vertexShader, const std::string& fragmentShader);
     virtual ~ProgramState();
-    
+
     /***
     *  deep clone ProgramState
     */

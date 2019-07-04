@@ -45,6 +45,15 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+
+static struct {
+    backend::ProgramState *ps = nullptr;
+    backend::UniformLocation mvp;
+    backend::UniformLocation texture;
+    backend::UniformLocation alphaTexture;
+    backend::VertexLayout layout;
+} _defaulCommandInfo;
+
 // MARK: create, init, dealloc
 Sprite* Sprite::createWithTexture(Texture2D *texture)
 {
@@ -372,11 +381,48 @@ void Sprite::setVertexLayout()
     vertexLayout.setLayout(sizeof(V3F_C4B_T2F), backend::VertexStepMode::VERTEX);
 }
 
+
+
 void Sprite::updateShaders(const char* vert, const char* frag)
 {
-    auto programState = new (std::nothrow) backend::ProgramState(vert, frag);
-    setProgramState(programState);
-    CC_SAFE_RELEASE_NULL(programState);
+    if(_defaulCommandInfo.ps != nullptr && vert == positionTextureColor_vert && frag == positionTextureColor_frag)
+    {
+        auto programState = _defaulCommandInfo.ps->clone();
+        auto& pipelineDescriptor = _trianglesCommand.getPipelineDescriptor();
+        if (_programState != programState)
+        {
+            CC_SAFE_RELEASE(_programState);
+            _programState = programState;
+            CC_SAFE_RETAIN(programState);
+        }
+        pipelineDescriptor.programState = _programState;
+
+        _mvpMatrixLocation = _defaulCommandInfo.mvp;
+        _textureLocation = _defaulCommandInfo.texture;
+        _alphaTextureLocation = _defaulCommandInfo.alphaTexture;
+
+        _trianglesCommand.getPipelineDescriptor().vertexLayout = _defaulCommandInfo.layout;
+
+        updateProgramState();
+        setMVPMatrixUniform();
+    }
+    else
+    {
+        auto programState = new (std::nothrow) backend::ProgramState(vert, frag);
+        setProgramState(programState);
+        //cache command info
+        if(_defaulCommandInfo.ps == nullptr && vert == positionTextureColor_vert && frag == positionTextureColor_frag) {
+            _defaulCommandInfo.ps = programState->clone();
+
+            _defaulCommandInfo.mvp = _mvpMatrixLocation;
+            _defaulCommandInfo.texture = _textureLocation;
+            _defaulCommandInfo.alphaTexture = _alphaTextureLocation;
+            _defaulCommandInfo.layout = _trianglesCommand.getPipelineDescriptor().vertexLayout;
+
+        }
+
+        CC_SAFE_RELEASE_NULL(programState);
+    }
 }
 
 void Sprite::setProgramState(backend::ProgramState *programState)
