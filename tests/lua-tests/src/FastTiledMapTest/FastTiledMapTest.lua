@@ -710,6 +710,7 @@ local function TMXIsoZorder()
     local schedulerEntry = nil
     local function onNodeEvent(event)
         if event == "enter" then
+            cc.Director:getInstance():getRenderer():setDepthTest(false)
             schedulerEntry = scheduler:scheduleScriptFunc(repositionSprite, 0, false)
         elseif event == "exit" then
             if m_tamara ~= nil then
@@ -823,6 +824,8 @@ local function TMXIsoVertexZ()
             -- TIP: 2d projection should be used
             cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION2_D )
             schedulerEntry = scheduler:scheduleScriptFunc(repositionSprite, 0, false)
+            cc.Director:getInstance():getRenderer():setDepthTest(true)
+            cc.Director:getInstance():getRenderer():setDepthWrite(true)
         elseif event == "exit" then
             -- At exit use any other projection.
             cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION_DEFAULT )
@@ -830,6 +833,8 @@ local function TMXIsoVertexZ()
                 m_tamara:release()
             end
             scheduler:unscheduleScriptEntry(schedulerEntry)
+            cc.Director:getInstance():getRenderer():setDepthTest(false)
+            cc.Director:getInstance():getRenderer():setDepthWrite(false)
         end
     end
 
@@ -877,6 +882,8 @@ local function TMXOrthoVertexZ()
             -- TIP: 2d projection should be used
             cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION2_D )
             schedulerEntry = scheduler:scheduleScriptFunc(repositionSprite, 0, false)
+            cc.Director:getInstance():getRenderer():setDepthTest(true)
+            cc.Director:getInstance():getRenderer():setDepthWrite(true)
         elseif event == "exit" then
             -- At exit use any other projection.
             cc.Director:getInstance():setProjection(cc.DIRECTOR_PROJECTION_DEFAULT )
@@ -884,6 +891,8 @@ local function TMXOrthoVertexZ()
                 m_tamara:release()
             end
             scheduler:unscheduleScriptEntry(schedulerEntry)
+            cc.Director:getInstance():getRenderer():setDepthTest(false)
+            cc.Director:getInstance():getRenderer():setDepthWrite(false)
         end
     end
 
@@ -1113,7 +1122,6 @@ end
 function FastTiledMapTestMain()
     cclog("FastTiledMapTestMain")
     Helper.index = 1
-    cc.Director:getInstance():getRenderer():setDepthTest(true)
     local scene = cc.Scene:create()
 
     Helper.createFunctionTable = {
