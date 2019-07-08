@@ -30,6 +30,14 @@
 
 CC_BACKEND_BEGIN
 
+/**
+ * @addtogroup _backend
+ * @{
+ */
+
+/**
+ * @brief a structor to store blend descriptor
+ */
 struct BlendDescriptor
 {
     ColorWriteMask writeMask = ColorWriteMask::ALL;
@@ -45,10 +53,16 @@ struct BlendDescriptor
     BlendFactor destinationAlphaBlendFactor = BlendFactor::ZERO;
 };
 
+/**
+ * @brief a class of blend state
+ */
 class BlendState : public cocos2d::Ref
 {
 protected:
+    /// @name Constructor, Destructor and Initializers
     virtual ~BlendState() = default;
 };
 
+// end of _backend group
+/// @}
 CC_BACKEND_END

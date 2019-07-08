@@ -29,17 +29,60 @@
 
 CC_BACKEND_BEGIN
 
+/**
+ * @addtogroup _metal
+ * @{
+ */
+
+/**
+ * @brief Used to store vertex and index data data.
+ * Dynamic buffer data refers to frequently updated data stored in a buffer.
+ * To avoid creating new buffers per frame and to minimize processor idle time between frames, implement a triple buffering model to update dynamic buffer.
+ */
 class BufferMTL : public Buffer
 {
 public:
+    /// @name Constructor, Destructor and Initializers
+    /**
+     * @brief BufferMTL constructor
+     * @param mtlDevice The device for which MTLBuffer object was created.
+     * @param size Specifies the size in bytes of the buffer object's new data store.
+     * @param type Specifies the target buffer object. The symbolic constant must be BufferType::VERTEX or BufferType::INDEX.
+     * @param usage Specifies the expected usage pattern of the data store. The symbolic constant must be BufferUsage::STATIC, BufferUsage::DYNAMIC.
+     */
     BufferMTL(id<MTLDevice> mtlDevice, unsigned int size, BufferType type, BufferUsage usage);
     ~BufferMTL();
     
+    /// @name Update Buffer
+    /**
+     * @brief Update buffer data
+     * @param data Specifies a pointer to data that will be copied into the data store for initialization.
+     * @param size Specifies the size in bytes of the data store region being replaced.
+     * @see `updateSubData(void* data, unsigned int offset, unsigned int size)`
+     */
     virtual void updateData(void* data, unsigned int size) override;
+    
+    /**
+     * @brief Update buffer sub-region data
+     * @param data Specifies a pointer to the new data that will be copied into the data store.
+     * @param offset Specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes.
+     * @param size Specifies the size in bytes of the data store region being replaced.
+     * @see `updateData(void* data, unsigned int size)`
+     */
     virtual void updateSubData(void* data, unsigned int offset, unsigned int size) override;
+    
+    /**
+     * Emply implementation. Mainly used in EGL context lost.
+     */
     virtual void usingDefaultStoredData(bool needDefaultStoredData) override {};
     
+    /// @name Setters & Getters
     id<MTLBuffer> getMTLBuffer() const;
+    
+    /**
+     * @brief a triple buffering
+     * Will switch to next buffer and use the buffer in the following render pass in current frame.
+     */
     void beginFrame();
     
 private:
