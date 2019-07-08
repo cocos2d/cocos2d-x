@@ -6,16 +6,16 @@ cocos2d-x
 
 |Win32|Others|
 | ----|------|
-[![Build status](https://ci.appveyor.com/api/projects/status/nlgirox464j6ldg5/branch/v3?svg=true)](https://ci.appveyor.com/project/minggo/cocos2d-x/branch/v3)|[![Build Status](https://travis-ci.org/cocos2d/cocos2d-x.svg?branch=v3)](https://travis-ci.org/cocos2d/cocos2d-x)
+[![Build status](https://ci.appveyor.com/api/projects/status/nlgirox464j6ldg5/branch/metal-support?svg=true)](https://ci.appveyor.com/project/minggo/cocos2d-x/branch/v3)|[![Build Status](https://travis-ci.org/cocos2d/cocos2d-x.svg?branch=metal-support)](https://travis-ci.org/cocos2d/cocos2d-x)
 
 
 [cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
 It is based on [cocos2d-iphone][2], but instead of using Objective-C, it uses C++.
-It works on iOS, Android, OS X, Windows, Linux and Web platforms.
+It works on iOS, Android, OS X, Windows and Linux.
 
 **Cocos2d-x Framework Architecture**:
 
-![](docs/framework_architecture.jpg "")
+![](docs/framework_architecture_v4.png "")
 
 cocos2d-x is:
 
@@ -44,7 +44,6 @@ Download stable versions
 -----------------------
 
 * [Cocos2d-x stable versions](http://www.cocos2d-x.org/download)
-* [Cocos2d-JS Lite version](http://www.cocos2d-x.org/filecenter/jsbuilder)
 
 Documentations and samples
 -------------
@@ -103,7 +102,6 @@ Runtime Requirements
   * Android 3.0.0+ for Android
   * OS X v10.9+ for Mac games
   * Windows 7+ for Win games
-  * Modern browsers and IE 9+ for web games
 
 Environment Setup
 --------------------
@@ -146,7 +144,7 @@ How to start a new game
     $ cd build
     $ cocos run --proj-dir .. -p [mac|windows|android|linux|ios]
 
-You can also create a JS project or Lua project with `-l js` or `-l lua`.
+You can also create a Lua project with `-l lua`.
 
 Using IDE
 ----------------------------
