@@ -11,11 +11,11 @@ cocos2d-x
 
 [cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
 It is based on [cocos2d-iphone][2], but instead of using Objective-C, it uses C++.
-It works on iOS, Android, OS X, Windows, Linux and Web platforms.
+It works on iOS, Android, OS X, Windows and Linux.
 
 **Cocos2d-x Framework Architecture**:
 
-![](docs/framework_architecture.jpg "")
+![](docs/framework_architecture_v4.png "")
 
 cocos2d-x is:
 
@@ -44,12 +44,11 @@ Download stable versions
 -----------------------
 
 * [Cocos2d-x stable versions](http://www.cocos2d-x.org/download)
-* [Cocos2d-JS Lite version](http://www.cocos2d-x.org/filecenter/jsbuilder)
 
 Documentations and samples
 -------------
 * [All Docs in a single place!](http://cocos2d-x.org/docs/)
-* [Online API Reference](http://cocos2d-x.org/docs/api-ref/index.html) _Note that Cocos2d-x, Cocos2d-JS and Cocos Creator have different API set_
+* [Online API Reference](http://cocos2d-x.org/docs/api-ref/index.html) _Note that Cocos2d-x and Cocos Creator have different API set_
 * [Programmers Guide](http://cocos2d-x.org/docs/programmers-guide/2/index.html)
 * [Latest Release Note](https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md)
 * [Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
@@ -103,7 +102,6 @@ Runtime Requirements
   * Android 3.0.0+ for Android
   * OS X v10.9+ for Mac games
   * Windows 7+ for Win games
-  * Modern browsers and IE 9+ for web games
 
 Environment Setup
 --------------------
@@ -146,7 +144,7 @@ How to start a new game
     $ cd build
     $ cocos run --proj-dir .. -p [mac|windows|android|linux|ios]
 
-You can also create a JS project or Lua project with `-l js` or `-l lua`.
+You can also create a Lua project with `-l lua`.
 
 Using IDE
 ----------------------------
