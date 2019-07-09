@@ -31,15 +31,39 @@ CC_BACKEND_BEGIN
 
 class BufferMTL;
 
+/**
+ * @addtogroup _metal
+ * @{
+ */
+
+/**
+ * @brief A static class to manage BufferMTL
+ * Schedule next available buffer at the beginning of frame for the render pass
+ */
 class BufferManager
 {
 public:
+    /**
+     * Add a buffer object into container.
+     * @param buffer Specifies the buffer to be added.
+     */
     static void addBuffer(BufferMTL* buffer);
+    
+    /**
+     * Remove a buffer object from container.
+     * @param buffer Specifies the buffer to be removed.
+     */
     static void removeBuffer(BufferMTL* buffer);
+    
+    /**
+     * Schedule next available buffer at the beginning of frame for the following render passes.
+     */
     static void beginFrame();
 
 private:
     static std::vector<BufferMTL*> _buffers;
 };
 
+// end of _metal group
+/// @}
 CC_BACKEND_END

@@ -29,6 +29,14 @@
 
 CC_BACKEND_BEGIN
 
+/**
+ * @addtogroup _metal
+ * @{
+ */
+
+/**
+ * @brief Blend descriptor
+ */
 struct BlendDescriptorMTL
 {
     MTLColorWriteMask writeMask = MTLColorWriteMaskAll;
@@ -44,15 +52,27 @@ struct BlendDescriptorMTL
     MTLBlendFactor destinationAlphaBlendFactor = MTLBlendFactorZero;
 };
 
+/**
+ * @brief a class of BlendStateMTL
+ */
 class BlendStateMTL : public BlendState
 {
 public:
+    /// @name Constructor, Destructor and Initializers
     BlendStateMTL(const BlendDescriptor& descriptor);
     
+    /// @name Setters & Getters
+    /**
+     * @brief get blend descritptor
+     * @return return a const reference of BlendDescriptorMTL
+     */
     inline const BlendDescriptorMTL& getBlendDescriptorMTL() const { return _blendDescriptorMTL; }
     
 private:
     BlendDescriptorMTL _blendDescriptorMTL;
 };
+
+// end of metal group
+/** @}*/
 
 CC_BACKEND_END
