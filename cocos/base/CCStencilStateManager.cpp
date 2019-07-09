@@ -102,30 +102,33 @@ bool StencilStateManager::isInverted()const
     return _inverted;
 }
 
-void StencilStateManager::onBeforeVisit(float globalZOrder)
+void StencilStateManager::updateLayerMask()
 {
     // increment the current layer
     s_layer++;
 
     // mask of the current layer (ie: for layer 3: 00000100)
-    int mask_layer = 0x1 << s_layer;
+    _currentLayerMask = 0x1 << s_layer;
     // mask of all layers less than the current (ie: for layer 3: 00000011)
-    int mask_layer_l = mask_layer - 1;
+    int mask_layer_l = _currentLayerMask - 1;
     // mask of all layers less than or equal to the current (ie: for layer 3: 00000111)
-    _mask_layer_le = mask_layer | mask_layer_l;
+    _mask_layer_le = _currentLayerMask | mask_layer_l;
+}
 
-    _customCommand.setBeforeCallback(CC_CALLBACK_0(StencilStateManager::onBeforeDrawQuadCmd, this, (int)mask_layer));
-    _customCommand.setAfterCallback(CC_CALLBACK_0(StencilStateManager::onAfterDrawQuadCmd, this, (int)mask_layer));
+void StencilStateManager::onBeforeVisit(float globalZOrder)
+{
+    _customCommand.setBeforeCallback(CC_CALLBACK_0(StencilStateManager::onBeforeDrawQuadCmd, this));
+    _customCommand.setAfterCallback(CC_CALLBACK_0(StencilStateManager::onAfterDrawQuadCmd, this));
 
     // draw a fullscreen solid rectangle to clear the stencil buffer
     drawFullScreenQuadClearStencil(globalZOrder);
 
 }
 
-void StencilStateManager::onBeforeDrawQuadCmd(int mask_layer)
+void StencilStateManager::onBeforeDrawQuadCmd()
 {
     auto renderer = Director::getInstance()->getRenderer();
-
+    updateLayerMask();
     // manually save the stencil state
     _currentStencilEnabled = renderer->getStencilTest();
     _currentStencilWriteMask = renderer->getStencilWriteMask();
@@ -141,7 +144,7 @@ void StencilStateManager::onBeforeDrawQuadCmd(int mask_layer)
 
     // all bits on the stencil buffer are readonly, except the current layer bit,
     // this means that operation like glClear or glStencilOp will be masked with this value
-    renderer->setStencilWriteMask(mask_layer);
+    renderer->setStencilWriteMask(_currentLayerMask);
 
     // manually save the depth test state
 
@@ -162,16 +165,16 @@ void StencilStateManager::onBeforeDrawQuadCmd(int mask_layer)
     //     never draw it into the frame buffer
     //     if not in inverted mode: set the current layer value to 0 in the stencil buffer
     //     if in inverted mode: set the current layer value to 1 in the stencil buffer
-    renderer->setStencilCompareFunction(backend::CompareFunction::NEVER, mask_layer, mask_layer);
+    renderer->setStencilCompareFunction(backend::CompareFunction::NEVER, _currentLayerMask, _currentLayerMask);
     renderer->setStencilOperation(!_inverted ? backend::StencilOperation::ZERO : backend::StencilOperation::REPLACE,
         backend::StencilOperation::KEEP,
         backend::StencilOperation::KEEP);
 }
 
-void StencilStateManager::onAfterDrawQuadCmd(int mask_layer)
+void StencilStateManager::onAfterDrawQuadCmd()
 {
     auto renderer = Director::getInstance()->getRenderer();
-    renderer->setStencilCompareFunction(backend::CompareFunction::NEVER, mask_layer, mask_layer);
+    renderer->setStencilCompareFunction(backend::CompareFunction::NEVER, _currentLayerMask, _currentLayerMask);
 
     renderer->setStencilOperation(!_inverted ? backend::StencilOperation::REPLACE : backend::StencilOperation::ZERO,
         backend::StencilOperation::KEEP,
