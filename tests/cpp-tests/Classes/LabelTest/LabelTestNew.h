@@ -993,4 +993,15 @@ private:
     static void setLetterColors(cocos2d::Label* label, const cocos2d::Color3B& color);
 };
 
+class LabelCJKPunctualionLineBreaking : public LabelLayoutBaseTest
+{
+public:
+    CREATE_FUNC(LabelCJKPunctualionLineBreaking);
+
+    LabelCJKPunctualionLineBreaking();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 #endif
