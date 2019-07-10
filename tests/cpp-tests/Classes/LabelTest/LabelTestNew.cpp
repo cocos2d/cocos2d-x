@@ -142,6 +142,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssueLineGap);
     ADD_TEST_CASE(LabelIssue17902);
     ADD_TEST_CASE(LabelLetterColorsTest);
+    ADD_TEST_CASE(LabelCJKPunctualionLineBreaking);
 }
 
 LabelFNTColorAndOpacity::LabelFNTColorAndOpacity()
@@ -3600,4 +3601,29 @@ void LabelLetterColorsTest::setLetterColors(cocos2d::Label* label, const cocos2d
         if (letter != nullptr)
             letter->setColor(color);
     }
+}
+
+
+LabelCJKPunctualionLineBreaking::LabelCJKPunctualionLineBreaking()
+{
+    _label->setLineSpacing(5);
+    _label->setAdditionalKerning(2);
+    _label->setVerticalAlignment(TextVAlignment::CENTER);
+    _label->setOverflow(Label::Overflow::CLAMP);
+
+    cocos2d::TTFConfig ttf_config;
+    ttf_config.fontSize = 20;
+    ttf_config.fontFilePath = "fonts/NotoSansCJKsc-Bold.ttf";
+    _label->setTTFConfig(ttf_config);
+    _label->setString(FileUtils::getInstance()->getStringFromFile("strings/cjk_puctuation.txt"));
+}
+
+std::string LabelCJKPunctualionLineBreaking::title() const
+{
+    return "CJK punctuation line breaking";
+}
+
+std::string LabelCJKPunctualionLineBreaking::subtitle() const
+{
+    return "";
 }
