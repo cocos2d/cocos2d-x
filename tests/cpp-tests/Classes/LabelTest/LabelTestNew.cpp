@@ -3603,19 +3603,42 @@ void LabelLetterColorsTest::setLetterColors(cocos2d::Label* label, const cocos2d
     }
 }
 
-
 LabelCJKPunctualionLineBreaking::LabelCJKPunctualionLineBreaking()
 {
-    _label->setLineSpacing(5);
-    _label->setAdditionalKerning(2);
-    _label->setVerticalAlignment(TextVAlignment::CENTER);
-    _label->setOverflow(Label::Overflow::CLAMP);
+    auto size = Director::getInstance()->getVisibleSize();
 
-    cocos2d::TTFConfig ttf_config;
-    ttf_config.fontSize = 20;
-    ttf_config.fontFilePath = "fonts/NotoSansCJKsc-Bold.ttf";
-    _label->setTTFConfig(ttf_config);
-    _label->setString(FileUtils::getInstance()->getStringFromFile("strings/cjk_puctuation.txt"));
+   initTestLabel(size);
+   initDrawNode(size);
+   initSliders(size);
+
+   auto listener = EventListenerTouchOneByOne::create();
+   listener->onTouchBegan = CC_CALLBACK_2(LabelCJKPunctualionLineBreaking::onTouchBegan, this);
+   listener->onTouchEnded = CC_CALLBACK_2(LabelCJKPunctualionLineBreaking::onTouchEnded, this);
+   _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
+
+
+void LabelCJKPunctualionLineBreaking::updateDrawNodeSize(const cocos2d::Size &drawNodeSize)
+{
+    auto origin = Director::getInstance()->getWinSize();
+    auto labelSize = _text_field->getContentSize();
+
+    origin.width = origin.width / 2 - (labelSize.width / 2);
+    origin.height = origin.height / 2 - (labelSize.height / 2);
+
+    Vec2 vertices[4] =
+    {
+        Vec2(origin.width, origin.height),
+        Vec2(drawNodeSize.width + origin.width, origin.height),
+        Vec2(drawNodeSize.width + origin.width, drawNodeSize.height + origin.height),
+        Vec2(origin.width, drawNodeSize.height + origin.height)
+    };
+    _drawNode->clear();
+    _drawNode->drawLine(vertices[0], vertices[1], Color4F(1.0, 1.0, 1.0, 1.0));
+    _drawNode->drawLine(vertices[0], vertices[3], Color4F(1.0, 1.0, 1.0, 1.0));
+    _drawNode->drawLine(vertices[2], vertices[3], Color4F(1.0, 1.0, 1.0, 1.0));
+    _drawNode->drawLine(vertices[1], vertices[2], Color4F(1.0, 1.0, 1.0, 1.0));
+
 }
 
 std::string LabelCJKPunctualionLineBreaking::title() const
@@ -3625,5 +3648,119 @@ std::string LabelCJKPunctualionLineBreaking::title() const
 
 std::string LabelCJKPunctualionLineBreaking::subtitle() const
 {
-    return "";
+    return "Input text and use scrolls to test wrapping";
+}
+
+
+bool LabelCJKPunctualionLineBreaking::onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event)
+{
+    CCLOG("++++++++++++++++++++++++++++++++++++++++++++");
+    _beginPos = touch->getLocation();
+    return true;
+}
+
+void LabelCJKPunctualionLineBreaking::onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event)
+{
+    if (!_text_field)
+    {
+        return;
+    }
+
+    auto endPos = touch->getLocation();
+
+    float delta = 5.0f;
+    if (std::abs(endPos.x - _beginPos.x) > delta
+        || std::abs(endPos.y - _beginPos.y) > delta)
+    {
+        // not click
+        _beginPos.x = _beginPos.y = -1;
+        return;
+    }
+
+    // decide the trackNode is clicked.
+    Rect rect;
+    rect.size = _text_field->getContentSize();
+    auto clicked = isScreenPointInRect(endPos, Camera::getVisitingCamera(), _text_field->getWorldToNodeTransform(), rect, nullptr);
+    if (clicked)
+    {
+        // TextFieldTTFTest be clicked
+        CCLOG("TextFieldTTFDefaultTest:TextFieldTTF attachWithIME");
+        _text_field->attachWithIME();
+    }
+    else
+    {
+        // TextFieldTTFTest not be clicked
+        CCLOG("TextFieldTTFDefaultTest:TextFieldTTF detachWithIME");
+        _text_field->detachWithIME();
+    }
+    CCLOG("----------------------------------");
+}
+
+void LabelCJKPunctualionLineBreaking::initSliders(const cocos2d::Size& size)
+{
+    auto slider = ui::Slider::create();
+    slider->setTag(1);
+    slider->setTouchEnabled(true);
+    slider->loadBarTexture("cocosui/sliderTrack.png");
+    slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider->loadProgressBarTexture("cocosui/sliderProgress.png");
+    slider->setPosition(Vec2(size.width / 2.0f, size.height * 0.15f + slider->getContentSize().height * 2.0f - 5));
+    slider->setPercent(52);
+    addChild(slider);
+
+    auto slider2 = ui::Slider::create();
+    slider2->setTag(2);
+    slider2->setTouchEnabled(true);
+    slider2->loadBarTexture("cocosui/sliderTrack.png");
+    slider2->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+    slider2->loadProgressBarTexture("cocosui/sliderProgress.png");
+    slider2->setPosition(Vec2(size.width * 0.2f, size.height / 2.0));
+    slider2->setRotation(90);
+    slider2->setPercent(52);
+    addChild(slider2);
+    auto winSize = Director::getInstance()->getVisibleSize();
+
+    slider->addEventListener([=] (Ref* ref, Slider::EventType event){
+        float percent = slider->getPercent();
+        auto labelSize = _text_field->getContentSize();
+        auto drawNodeSize = Size(percent / 100.0 * winSize.width, labelSize.height);
+        if (drawNodeSize.width <= 0){
+            drawNodeSize.width = 0.1f;
+        }
+        _text_field->setDimensions(drawNodeSize.width, drawNodeSize.height);
+        this->updateDrawNodeSize(drawNodeSize);
+    });
+
+    slider2->addEventListener([=] (Ref* ref, Slider::EventType event){
+        float percent = slider2->getPercent();
+        auto labelSize = _text_field->getContentSize();
+        auto drawNodeSize = Size(labelSize.width, percent / 100.0 * winSize.height);
+        if (drawNodeSize.height <= 0){
+            drawNodeSize.height = 0.1f;
+        }
+        _text_field->setDimensions(drawNodeSize.width, drawNodeSize.height);
+        this->updateDrawNodeSize(drawNodeSize);
+    });
+}
+
+void LabelCJKPunctualionLineBreaking::initTestLabel(const cocos2d::Size& size)
+{
+    std::string string = FileUtils::getInstance()->getStringFromFile("strings/cjk_puctuation.txt");
+    auto center = VisibleRect::center();
+    
+    _text_field = TextFieldTTF::textFieldWithPlaceHolder("Input text here", cocos2d::Size(size.width / 2, size.height / 2), TextHAlignment::LEFT, "fonts/NotoSansCJKsc-Bold.ttf", 16);
+    _text_field->setPosition(center);
+    _text_field->setName("Label");
+    _text_field->setString(string);
+    //_label->setOverflow(Label::Overflow::CLAMP);
+    addChild(_text_field);
+}
+
+void LabelCJKPunctualionLineBreaking::initDrawNode(const cocos2d::Size& size)
+{
+    _drawNode = DrawNode::create();
+
+    _drawNode->setTag(3);
+    addChild(_drawNode);
+    this->updateDrawNodeSize(_text_field->getContentSize());
 }
