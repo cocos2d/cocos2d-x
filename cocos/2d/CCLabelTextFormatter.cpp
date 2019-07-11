@@ -91,6 +91,14 @@ int Label::getFirstWordLen(const std::u32string& utf32Text, int startIndex, int 
     {
         char32_t character = utf32Text[index];
 
+        // Avoid of changing world length because of cursor symbol.
+        if (character == StringUtils::AsciiCharacters::NextCharNoChangeX)
+        {
+           // Skip this symbol and next one (it's cursor).
+           ++index;
+           continue;
+        }
+
         if (character == StringUtils::UnicodeCharacters::NewLine
             || (!StringUtils::isUnicodeNonBreaking(character)
                 && StringUtils::isUnicodeSpace(character)))
