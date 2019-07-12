@@ -97,6 +97,10 @@
     textInput.ccui_placeholderFont = _textInput.ccui_placeholderFont ?: textInput.ccui_font;
     textInput.ccui_placeholderTextColor = _textInput.ccui_placeholderTextColor ?: [UIColor lightGrayColor];
     
+    if(_textInput && _textInput.inputAccessoryView){
+      [_textInput.inputAccessoryView release];
+    }
+
     [_textInput resignFirstResponder];
     [_textInput removeFromSuperview];
     [_textInput release];
@@ -114,7 +118,15 @@
     CCUISingleLineTextField *textField = [[[CCUISingleLineTextField alloc] initWithFrame:self.frameRect] autorelease];
     textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     textField.borderStyle = UITextBorderStyleNone;
-    
+
+    UIToolbar* numberToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+    numberToolbar.barStyle = UIBarStyleDefault;
+    numberToolbar.items = @[[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                         [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(closeKeyboard)]];
+    [numberToolbar sizeToFit];
+    numberToolbar.hidden = true;
+    textField.inputAccessoryView = numberToolbar;
+
     [textField addTarget:self action:@selector(textChanged:) forControlEvents:UIControlEventEditingChanged];
     
     self.textInput = textField;
@@ -185,6 +197,11 @@
         default:
             self.keyboardType = UIKeyboardTypeDefault;
             break;
+    }
+
+    if (inputMode != cocos2d::ui::EditBox::InputMode::ANY) {
+        bool needs_toolbar = (inputMode == cocos2d::ui::EditBox::InputMode::NUMERIC || inputMode == cocos2d::ui::EditBox::InputMode::DECIMAL)
+        self.textInput.inputAccessoryView.hidden = !needs_toolbar;
     }
 }
 
