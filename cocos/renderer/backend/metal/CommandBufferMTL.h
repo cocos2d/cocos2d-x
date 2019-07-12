@@ -153,8 +153,24 @@ public:
      */
     virtual void setLineWidth(float lineWidth) override;
     
+    /**
+     * Fixed-function state
+     * @param x, y Specifies the lower left corner of the scissor box
+     * @param wdith Specifies the width of the scissor box
+     * @param height Specifies the height of the scissor box
+     */
     virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) override;
+    
+    /**
+     * set depthStencil state
+     * @param depthStencilState Specifies the depth and stencil status
+     */
     virtual void setDepthStencilState(DepthStencilState* depthStencilState) override;
+    
+    /**
+     * get a screen snapshot
+     * @param callback A callback to deal with screen snapshot image.
+     */
     virtual void captureScreen(std::function<void(const unsigned char*, int, int)> callback) override;
     
 private:

@@ -33,13 +33,28 @@
 #import <Metal/Metal.h>
 
 CC_BACKEND_BEGIN
+/**
+ * @addtogroup _metal
+ * @{
+ */
 
+/**
+ * Create and compile a new MTLRenderPipelineState object synchronously.
+ */
 class RenderPipelineMTL : public RenderPipeline
 {
 public:
+    /**
+     * @param mtlDevice The device for which MTLRenderPipelineState object was created.
+     * @param descriptor Specify the render pipeline description.
+     */
     RenderPipelineMTL(id<MTLDevice> mtlDevice, const RenderPipelineDescriptor& descriptor);
     ~RenderPipelineMTL();
-        
+    
+    /**
+     * Get a MTLRenderPipelineState object.
+     * @return A MTLRenderPipelineState object.
+     */
     inline id<MTLRenderPipelineState> getMTLRenderPipelineState() const { return _mtlRenderPipelineState; }
    
 private:
@@ -55,4 +70,6 @@ private:
     BlendDescriptorMTL _blendDescriptorMTL;
 };
 
+// end of _metal group
+/// @}
 CC_BACKEND_END

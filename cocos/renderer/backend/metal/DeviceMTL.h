@@ -30,33 +30,129 @@
 
 CC_BACKEND_BEGIN
 
+/**
+ * @addtogroup _metal
+ * @{
+ */
+
+/**
+ * Create resources from MTLDevice.
+ */
 class DeviceMTL : public Device
 {
 public:
-    // TODO: temple solution to get default renderpass descriptor.
+    /**
+     * Set CAMetalLayer.
+     * @param metalLayer A CAMetalLayer object.
+     */
     static void setCAMetalLayer(CAMetalLayer* metalLayer);
-    // Invoke by engine internally at the beginning of rendering a new frame.
+    
+    /**
+     * Invoke by engine internally at the beginning of rendering a new frame.
+     */
     static void updateDrawable();
+    
+    /**
+     * Get a CAMetalLayer.
+     * @return A CAMetalLayer object.
+     */
     static CAMetalLayer* getCAMetalLayer() { return DeviceMTL::_metalLayer; }
+    
+    /**
+     * Get available Drawable.
+     * @return an available drawable.
+     */
     static id<CAMetalDrawable> getCurrentDrawable();
+    
+    /**
+     * Reset current drawable to nil.
+     */
     static void resetCurrentDrawable();
     
+    /// @name Constructor, Destructor and Initializers
     DeviceMTL();
     ~DeviceMTL();
     
+    /// @name Setters & Getters
+    /**
+     * New a CommandBuffer object.
+     * @return A CommandBuffer object.
+     */
     virtual CommandBuffer* newCommandBuffer() override;
+    
+    /**
+     * New a Buffer object.
+     * @param size Specifies the size in bytes of the buffer object's new data store.
+     * @param type Specifies the target buffer object. The symbolic constant must be BufferType::VERTEX or BufferType::INDEX.
+     * @param usage Specifies the expected usage pattern of the data store. The symbolic constant must be BufferUsage::STATIC, BufferUsage::DYNAMIC.
+     * @return A Buffer object.
+     */
     virtual Buffer* newBuffer(unsigned int size, BufferType type, BufferUsage usage) override;
+    
+    /**
+     * New a TextureBackend object.
+     * @param descriptor Specifies texture description.
+     * @return A TextureBackend object.
+     */
     virtual TextureBackend* newTexture(const TextureDescriptor& descriptor) override;
+    
+    /**
+     * Create a DepthStencilState object.
+     * @param descriptor Specifies depth and stencil description.
+     * @return An auto release DepthStencilState object.
+     */
     virtual DepthStencilState* createDepthStencilState(const DepthStencilDescriptor& descriptor) override;
+    
+    /**
+     * Create a BlendState object.
+     * @param descriptor Specifies blend description.
+     * @return An auto release BlendState object.
+     */
     virtual BlendState* createBlendState(const BlendDescriptor& descriptor) override;
+    
+    /**
+     * New a RenderPipeline object.
+     * @param descriptor Specifies render pipeline description.
+     * @return A RenderPipeline object.
+     */
     virtual RenderPipeline* newRenderPipeline(const RenderPipelineDescriptor& descriptor) override;
+    
+    /**
+     * This property controls whether or not the drawables'
+     * MTLTextures may only be used for framebuffer attachments (YES) or
+     * whether they may also be used for texture sampling and pixel
+     * read/write operations (NO).
+     * @param frameBufferOnly A value of YES allows CAMetalLayer to allocate the MTLTexture objects in ways that are optimized for display purposes that makes them unsuitable for sampling. The recommended value for most applications is YES.
+     */
     virtual void setFrameBufferOnly(bool frameBufferOnly) override;
 
+    /**
+     * Get a MTLDevice object.
+     * @return A MTLDevice object.
+     */
     inline id<MTLDevice> getMTLDevice() const { return _mtlDevice; }
+    
+    /**
+     * Get a MTLCommandQueue object.
+     * @return A MTLCommandQueue object.
+     */
     inline id<MTLCommandQueue> getMTLCommandQueue() const { return _mtlCommandQueue; }
     
 protected:
+    /**
+     * New a shaderModule.
+     * @param stage Specifies whether is vertex shader or fragment shader.
+     * @param source Specifies shader source.
+     * @return A ShaderModule object.
+     */
     virtual ShaderModule* newShaderModule(ShaderStage stage, const std::string& source) override;
+    
+    /**
+     * New a Program.
+     * @param vertexShader Specifes this is a vertex shader source.
+     * @param fragmentShader Specifes this is a fragment shader source.
+     * @return A Program object.
+     */
     virtual Program* newProgram(const std::string& vertexShader, const std::string& fragmentShader) override;
     
 private:
@@ -67,4 +163,6 @@ private:
     id<MTLCommandQueue> _mtlCommandQueue = nil;
 };
 
+// end of _metal group
+/// @}
 CC_BACKEND_END

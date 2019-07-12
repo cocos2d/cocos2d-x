@@ -31,23 +31,73 @@ CC_BACKEND_BEGIN
 
 class ShaderModuleMTL;
 
+/**
+ * @addtogroup _metal
+ * @{
+ */
+
+/**
+ * A Program
+ */
 class ProgramMTL : public Program
 {
 public:
-    ProgramMTL(id<MTLDevice> mtlDevice, const std::string& vertexShader, const std::string& fragmentShader);
+    /// @name Constructor, Destructor and Initializers
+    /**
+     * @param vertexShader Specifes this is a vertex shader source.
+     * @param fragmentShader Specifes this is a fragment shader source.
+     */
+    ProgramMTL(const std::string& vertexShader, const std::string& fragmentShader);
     virtual ~ProgramMTL();
-
+    
+    /// @name Setters & Getters
+    /**
+     * Get vertex uniform infomation.
+     * @return Vertex uniform information. Key is uniform name, Value is corresponding uniform info.
+     */
     virtual const std::unordered_map<std::string, UniformInfo>& getVertexUniformInfos() const override;
+    
+    /**
+     * Get fragment uniform information.
+     * @return Fragment uniform information. Key is uniform name, Value is corresponding uniform info.
+     */
     virtual const std::unordered_map<std::string, UniformInfo>& getFragmentUniformInfos() const override;
     
+    /**
+     * Get uniform location by name.
+     * @param uniform Specifies the uniform name.
+     * @return The uniform location.
+     */
     virtual UniformLocation getUniformLocation(const std::string& uniform) const override;
     
+    /**
+     * Get vertex shader module.
+     * @return Vertex shader module.
+     */
     virtual ShaderModuleMTL* getVertexShader() const { return _vertexShader; }
+    
+    /**
+     * Get fragment shader module.
+     * @ Fragment shader module.
+     */
     virtual ShaderModuleMTL* getFragmentShader() const { return _fragmentShader; }
     
+    /**
+     * Get active vertex attributes.
+     * @return Active vertex attributes. key is active attribute name, Value is corresponding attribute info.
+     */
     const std::unordered_map<std::string, AttributeBindInfo> getActiveAttributes() const override;
-
+    
+    /**
+     * Get maximum vertex location.
+     * @return Maximum vertex locaiton.
+     */
     virtual int getMaxVertexLocation() const override;
+    
+    /**
+     * Get maximum fragment location.
+     * @return Maximum fragment location.
+     */
     virtual int getMaxFragmentLocation() const override;
 
 private:
@@ -55,4 +105,6 @@ private:
     ShaderModuleMTL* _fragmentShader = nullptr;
 };
 
+// end of _metal group
+/// @}
 CC_BACKEND_END

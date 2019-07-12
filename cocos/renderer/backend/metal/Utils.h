@@ -31,6 +31,16 @@
 
 CC_BACKEND_BEGIN
 
+/**
+ * @addtogroup _metal
+ * @{
+ */
+
+/**
+ * create and manager default depth and stencil attachment.
+ * generate mipmaps.
+ * 
+ */
 class Utils
 {
 public:
@@ -53,4 +63,6 @@ private:
     static id<MTLTexture> _defaultDepthStencilAttachmentTexture;
 };
 
+// end of _metal group
+/// @}
 CC_BACKEND_END

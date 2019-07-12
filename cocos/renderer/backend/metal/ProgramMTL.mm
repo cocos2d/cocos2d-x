@@ -27,7 +27,7 @@
 
 CC_BACKEND_BEGIN
 
-ProgramMTL::ProgramMTL(id<MTLDevice> mtlDevice, const std::string& vertexShader, const std::string& fragmentShader)
+ProgramMTL::ProgramMTL(const std::string& vertexShader, const std::string& fragmentShader)
 : Program(vertexShader, fragmentShader)
 {
     _vertexShader = static_cast<ShaderModuleMTL*>(ShaderCache::newVertexShaderModule(vertexShader));
