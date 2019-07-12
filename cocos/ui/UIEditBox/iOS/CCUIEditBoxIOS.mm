@@ -200,8 +200,8 @@
     }
 
     if (inputMode != cocos2d::ui::EditBox::InputMode::ANY) {
-        bool needs_toolbar = (inputMode == cocos2d::ui::EditBox::InputMode::NUMERIC || inputMode == cocos2d::ui::EditBox::InputMode::DECIMAL)
-        self.textInput.inputAccessoryView.hidden = !needs_toolbar;
+        bool needsToolbar = (inputMode == cocos2d::ui::EditBox::InputMode::NUMERIC || inputMode == cocos2d::ui::EditBox::InputMode::DECIMAL)
+        self.textInput.inputAccessoryView.hidden = !needsToolbar;
     }
 }
 
