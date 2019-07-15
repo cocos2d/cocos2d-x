@@ -29,16 +29,35 @@
 
 CC_BACKEND_BEGIN
 
+/**
+ * @addtogroup _metal
+ * @{
+ */
+
+
+/**
+ * A class represent a depth/stencil test status.
+ */
 class DepthStencilStateMTL : public DepthStencilState
 {
 public:
+    /// @name Constructor, Destructor and Initializers
+    /**
+     * @param mtlDevice The device for which MTLDepthStencilState object was created.
+     */
     DepthStencilStateMTL(id<MTLDevice> mtlDevice, const DepthStencilDescriptor& descriptor);
     ~DepthStencilStateMTL();
     
+    /// @name Setters & Getters
+    /**
+     * get a MTLDepthStencilState object
+     */
     inline id<MTLDepthStencilState> getMTLDepthStencilState() const { return _mtlDepthStencilState; }
     
 private:
     id<MTLDepthStencilState> _mtlDepthStencilState = nil;
 };
 
+// end of _metal group
+/// @}
 CC_BACKEND_END

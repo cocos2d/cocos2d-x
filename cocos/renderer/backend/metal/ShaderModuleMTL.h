@@ -36,16 +36,47 @@
 struct glslopt_shader;
 
 CC_BACKEND_BEGIN
+/**
+ * @addtogroup _metal
+ * @{
+ */
 
+/**
+ * To Create a vertex or fragment shader.
+ */
 class ShaderModuleMTL : public ShaderModule
 {
 public:
+    /**
+     * @param mtlDevice The device for which MTLFunction object was created.
+     * @param stage Specify what kinds of shader to be created.
+     * @param source Specify the shader source.
+     */
     ShaderModuleMTL(id<MTLDevice> mtlDevice, ShaderStage stage, const std::string& source);
     ~ShaderModuleMTL();
     
+    /**
+     * Get MTLFunction object.
+     * @return A MTLFunction object.
+     */
     inline id<MTLFunction> getMTLFunction() const { return _mtlFunction; }
+    
+    /**
+     * Get current shader uniform informatino.
+     * @return Uniform information. Key is each uniform name, Value is corresponding uniform info.
+     */
     inline const std::unordered_map<std::string, UniformInfo>& getUniforms() const { return _uniformInfos; }
+    
+    /**
+     * Get maximum uniform location.
+     * @return Maximum uniform location.
+     */
     inline const int getMaxLocation() const { return _maxLocation; }
+    
+    /**
+     * Get active attribute informations.
+     * @return Active attribute informations. key is attribute name and Value is corresponding attribute info.
+     */
     inline const std::unordered_map<std::string, AttributeBindInfo> getAttributeInfo() const { return _attributeInfo; }
     
 private:
@@ -61,4 +92,6 @@ private:
     int _maxLocation = -1;
 };
 
+// end of _metal group
+/// @}
 CC_BACKEND_END

@@ -66,17 +66,60 @@ enum class FeatureSet : int32_t
 
 inline FeatureSet operator--( FeatureSet& x ) { return x = (FeatureSet)(std::underlying_type<FeatureSet>::type(x) - 1); }
 
+/**
+ * @addtogroup _metal
+ * @{
+ */
+
+
+/**
+ * Used to query features and implementation limits
+ */
 class DeviceInfoMTL : public DeviceInfo
 {
 public:
+    /// @name Constructor, Destructor and Initializers
+    /**
+     * @param device To query MTLDevice features and implementation limits in Metal.
+     */
     DeviceInfoMTL(id<MTLDevice> device);
 	virtual ~DeviceInfoMTL() = default;
 
+    /**
+     * gather features and implementation limits
+     */
     virtual bool init() override;
+    
+    /// @name Setters & Getters
+    /**
+     * get vendor device name.
+     * @return Vendor device name.
+     */
     virtual const char* getVendor() const override;
+    
+    /**
+     * get the full name of the vendor device.
+     * @return The full name of the vendor device.
+     */
     virtual const char* getRenderer() const override;
+    
+    /**
+     * get featureSet name.
+     * @return FeatureSet name.
+     */
     virtual const char* getVersion() const override;
+    
+    /**
+     * get metal extensions.
+     * @return extension supported by Metal.
+     */
     virtual const char* getExtension() const override;
+    
+    /**
+     * Check if feature supported by Metal.
+     * @param feature Specify feature to be query.
+     * @return true if the feature is supported, false otherwise.
+     */
     virtual bool checkForFeatureSupported(FeatureType feature) override;
     
 private:
@@ -85,4 +128,6 @@ private:
     bool _isDepth24Stencil8PixelFormatSupported = false;
 };
 
+// end of _metal group
+/// @}
 CC_BACKEND_END
