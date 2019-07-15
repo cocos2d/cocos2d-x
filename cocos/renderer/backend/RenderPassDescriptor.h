@@ -33,7 +33,14 @@
 CC_BACKEND_BEGIN
 
 class TextureBackend;
+/**
+ * @addtogroup _backend
+ * @{
+ */
 
+/**
+ * Store values about color, depth and stencil attachment.
+ */
 struct RenderPassDescriptor
 {
     RenderPassDescriptor& operator=(const RenderPassDescriptor& descriptor);
@@ -53,5 +60,6 @@ struct RenderPassDescriptor
     TextureBackend* colorAttachmentsTexture[MAX_COLOR_ATTCHMENT] = { nullptr };
 };
 
-
+//end of _backend group
+/// @}
 CC_BACKEND_END

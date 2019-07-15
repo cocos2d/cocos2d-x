@@ -34,7 +34,10 @@
 #include <unordered_map>
 
 CC_BACKEND_BEGIN
-
+/**
+ * @addtogroup _backend
+ * @{
+ */
 class VertexLayout
 {
 public:
@@ -75,4 +78,6 @@ private:
     VertexStepMode _stepMode = VertexStepMode::VERTEX;
 };
 
+//end of _backend group
+/// @}
 CC_BACKEND_END

@@ -162,13 +162,13 @@ public:
     virtual void setScissorRect(bool isEnabled, float x, float y, float width, float height) override;
     
     /**
-     * set depthStencil state
+     * Set depthStencil status
      * @param depthStencilState Specifies the depth and stencil status
      */
     virtual void setDepthStencilState(DepthStencilState* depthStencilState) override;
     
     /**
-     * get a screen snapshot
+     * Get a screen snapshot
      * @param callback A callback to deal with screen snapshot image.
      */
     virtual void captureScreen(std::function<void(const unsigned char*, int, int)> callback) override;

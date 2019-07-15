@@ -100,7 +100,7 @@ public:
      * @param x,y Specify the window coordinates of the first pixel that is read from the drawable texture. This location is the lower left corner of a rectangular block of pixels.
      * @param width,height Specify the dimensions of the pixel rectangle. width and height of one correspond to a single pixel.
      * @param flipImage Specifies if needs to flip the image.
-     * @param callback
+     * @param callback Specifies a call back function to deal with the image.
      */
     virtual void getBytes(int x, int y, int width, int height, bool flipImage, std::function<void(const unsigned char*, int, int)> callback) override;
     

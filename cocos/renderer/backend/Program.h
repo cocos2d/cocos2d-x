@@ -37,34 +37,93 @@
 CC_BACKEND_BEGIN
 
 class ShaderModule;
+/**
+ * @addtogroup _backend
+ * @{
+ */
 
+/**
+ * A program.
+ */
 class Program : public Ref
 {
 public:
+    /**
+     * Get vertex uniform infomation.
+     * @return Vertex uniform information. Key is uniform name, Value is corresponding uniform info.
+     */
     virtual const std::unordered_map<std::string, UniformInfo>& getVertexUniformInfos() const = 0;
+
+    /**
+     * Get fragment uniform information.
+     * @return Fragment uniform information. Key is uniform name, Value is corresponding uniform info.
+     */
     virtual const std::unordered_map<std::string, UniformInfo>& getFragmentUniformInfos() const = 0;
     
+    /**
+     * Get uniform location by name.
+     * @param uniform Specifies the uniform name.
+     * @return The uniform location.
+     */
     virtual UniformLocation getUniformLocation(const std::string& uniform) const = 0;
     
+    /**
+     * Get maximum vertex location.
+     * @return Maximum vertex locaiton.
+     */
     virtual int getMaxVertexLocation() const = 0;
+
+    /**
+     * Get maximum fragment location.
+     * @return Maximum fragment location.
+     */
     virtual int getMaxFragmentLocation() const = 0;
+
+    /**
+     * Get active vertex attributes.
+     * @return Active vertex attributes. key is active attribute name, Value is corresponding attribute info.
+     */
     virtual const std::unordered_map<std::string, AttributeBindInfo> getActiveAttributes() const = 0;
 
+    /**
+     * Get vertex shader.
+     * @return Vertex shader.
+     */
     const std::string& getVertexShader() const { return _vertexShader; }
+
+    /**
+     * Get fragment shader.
+     * @ Fragment shader.
+     */
     const std::string& getFragmentShader() const { return _fragmentShader; }
     
 protected:
+    /**
+     * @param vs Specifes the vertex shader source.
+     * @param fs Specifes the fragment shader source.
+     */
     Program(const std::string& vs, const std::string& fs);
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    virtual int getMappedLocation(int location) const = 0; //get the ture location after opengl program reload
+    /**
+     * Get the ture location after opengl program reload.
+     * @param location Specifies original location before EGL context lost.
+     */
+    virtual int getMappedLocation(int location) const = 0;
+
+    /**
+     * Get all uniform locations.
+     * @return All uniform locations.
+     */
     virtual const std::unordered_map<std::string, UniformLocation> getAllUniformsLocation() const = 0;
     friend class ProgramState;
     friend class ProgramCache;
 #endif
     
-    std::string _vertexShader;
-    std::string _fragmentShader;
+    std::string _vertexShader; ///< Vertex shader.
+    std::string _fragmentShader; ///< Fragment shader.
 };
 
+//end of _backend group
+/// @}
 CC_BACKEND_END

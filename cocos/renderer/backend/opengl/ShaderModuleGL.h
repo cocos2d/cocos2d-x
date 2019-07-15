@@ -29,7 +29,10 @@
 #include "platform/CCGL.h"
 
 CC_BACKEND_BEGIN
-
+/**
+ * @addtogroup _opengl
+ * @{
+ */
 class ShaderModuleGL : public ShaderModule
 {
 public:
@@ -46,5 +49,6 @@ private:
     GLuint _shader = 0;
     friend class ProgramGL;
 };
-
+//end of _opengl group
+/// @}
 CC_BACKEND_END

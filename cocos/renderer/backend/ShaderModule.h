@@ -31,10 +31,21 @@
 #include <string>
 
 CC_BACKEND_BEGIN
+/**
+ * @addtogroup _backend
+ * @{
+ */
 
+/**
+ * Create shader.
+ */
 class ShaderModule : public cocos2d::Ref
 {
 public:
+    /**
+     * Get shader stage. The symbolic constant can be either VERTEX or FRAGMENT.
+     * @return Shader stage.
+     */
     ShaderStage getShaderStage() const;
 
 protected:
@@ -44,4 +55,6 @@ protected:
     ShaderStage _stage = ShaderStage::VERTEX;
 };
 
+//end of _backend group
+/// @}
 CC_BACKEND_END

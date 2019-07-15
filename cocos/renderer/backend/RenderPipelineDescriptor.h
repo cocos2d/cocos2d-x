@@ -36,7 +36,14 @@ CC_BACKEND_BEGIN
 
 class DepthStencilState;
 class BlendState;
+/**
+ * @addtogroup _backend
+ * @{
+ */
 
+/**
+ * Store values about pipeline.
+ */
 struct RenderPipelineDescriptor
 {
     ProgramState* programState = nullptr;
@@ -46,5 +53,6 @@ struct RenderPipelineDescriptor
     PixelFormat depthAttachmentFormat = PixelFormat::NONE;
     PixelFormat stencilAttachmentFormat = PixelFormat::NONE;
 };
-
+//end of _backend group
+/// @}
 CC_BACKEND_END
