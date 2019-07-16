@@ -32,14 +32,22 @@ CC_BACKEND_BEGIN
  * @addtogroup _opengl
  * @{
  */
+
+/**
+ * Set blend state to pipeline 
+ */
 class BlendStateGL : public BlendState
 {
 public:
-    // Reset to default state.
+    /// Reset to default state.
     static void reset();
     
+    /**
+     * @descriptor Specifies the blend descriptor.
+     */
     BlendStateGL(const BlendDescriptor& descriptor);
     
+    /// Set blend status to pipeline.
     void apply() const;
     
 private:

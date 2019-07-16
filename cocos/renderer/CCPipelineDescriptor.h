@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2018 Xiamen Yaji Software Co., Ltd.
+ Copyright (c) 2019 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
  
@@ -33,6 +33,10 @@
 
 #include <string>
 
+/**
+ * @addtogroup renderer
+ * @{
+ */
 NS_CC_BEGIN
 
 struct CC_DLL PipelineDescriptor
@@ -42,4 +46,6 @@ struct CC_DLL PipelineDescriptor
     backend::VertexLayout           vertexLayout;
 };
 
+//end of renderer group
+/// @}
 NS_CC_END

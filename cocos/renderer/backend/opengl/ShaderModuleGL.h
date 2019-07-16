@@ -33,12 +33,24 @@ CC_BACKEND_BEGIN
  * @addtogroup _opengl
  * @{
  */
+
+/**
+ * Create and compile shader.
+ */
 class ShaderModuleGL : public ShaderModule
 {
 public:
+    /**
+     * @param stage Specifies whether is vertex shader or fragment shader.
+     * @param source Specifies shader source.
+     */
     ShaderModuleGL(ShaderStage stage, const std::string& source);
     ~ShaderModuleGL();
 
+    /**
+     * Get shader object.
+     * @return Shader object.
+     */
     inline GLuint getShader() const { return _shader; }
     
 private:
