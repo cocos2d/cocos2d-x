@@ -29,7 +29,10 @@
 #include "renderer/backend/Types.h"
 
 CC_BACKEND_BEGIN
-
+/**
+ * @addtogroup _opengl
+ * @{
+ */
 class UtilsGL
 {
 public:
@@ -53,5 +56,6 @@ public:
     static GLenum toGLIndexType(IndexFormat indexType);
     static GLenum toGLCullMode(CullMode mode);
 };
-
+//end of _opengl group
+/// @}
 CC_BACKEND_END

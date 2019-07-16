@@ -31,7 +31,10 @@
 #include <vector>
 
 CC_BACKEND_BEGIN
-
+/**
+ * @addtogroup _opengl
+ * @{
+ */
 class BufferGL : public Buffer
 {
 public:
@@ -58,5 +61,6 @@ private:
     char* _data = nullptr;
     bool _needDefaultStoredData = true;
 };
-
+//end of _opengl group
+///> @}
 CC_BACKEND_END

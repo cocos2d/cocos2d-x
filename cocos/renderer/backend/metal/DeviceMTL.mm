@@ -140,7 +140,7 @@ RenderPipeline* DeviceMTL::newRenderPipeline(const RenderPipelineDescriptor& des
 
 Program* DeviceMTL::newProgram(const std::string& vertexShader, const std::string& fragmentShader)
 {
-    return new (std::nothrow) ProgramMTL(_mtlDevice, vertexShader, fragmentShader);
+    return new (std::nothrow) ProgramMTL(vertexShader, fragmentShader);
 }
 
 void DeviceMTL::setFrameBufferOnly(bool frameBufferOnly)

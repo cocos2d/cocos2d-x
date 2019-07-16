@@ -86,32 +86,32 @@ public:
 	virtual ~DeviceInfoMTL() = default;
 
     /**
-     * gather features and implementation limits
+     * Gather features and implementation limits
      */
     virtual bool init() override;
     
     /// @name Setters & Getters
     /**
-     * get vendor device name.
+     * Get vendor device name.
      * @return Vendor device name.
      */
     virtual const char* getVendor() const override;
     
     /**
-     * get the full name of the vendor device.
+     * Get the full name of the vendor device.
      * @return The full name of the vendor device.
      */
     virtual const char* getRenderer() const override;
     
     /**
-     * get featureSet name.
+     * Get featureSet name.
      * @return FeatureSet name.
      */
     virtual const char* getVersion() const override;
     
     /**
-     * get metal extensions.
-     * @return extension supported by Metal.
+     * Get metal extensions.
+     * @return Extension supported by Metal.
      */
     virtual const char* getExtension() const override;
     

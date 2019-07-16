@@ -28,7 +28,10 @@
 #include "platform/CCGL.h"
 
 CC_BACKEND_BEGIN
-
+/**
+ * @addtogroup _opengl
+ * @{
+ */
 class BlendStateGL : public BlendState
 {
 public:
@@ -55,5 +58,6 @@ private:
     GLenum _sourceAlphaBlendFactor = GL_ONE;
     GLenum _destinationAlphaBlendFactor = GL_ZERO;
 };
-
+//end of _opengl group
+/// @}
 CC_BACKEND_END

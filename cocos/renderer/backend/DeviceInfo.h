@@ -45,29 +45,88 @@ enum class FeatureType : uint32_t
     ASTC
 };
 
+/**
+ * @addtogroup _backend
+ * @{
+ */
+
+/**
+ * Used to query features and implementation limits
+ */
 class DeviceInfo
 {
 public:
     virtual ~DeviceInfo() = default;
+
+    /**
+     * Gather features and implementation limits
+     */
     virtual bool init() = 0;
+
+    /**
+     * Get vendor device name.
+     * @return Vendor device name.
+     */
     virtual const char* getVendor() const = 0;
+
+    /**
+     * Get the full name of the vendor device.
+     * @return The full name of the vendor device.
+     */
     virtual const char* getRenderer() const = 0;
+
+    /**
+     * Get version name.
+     * @return Version name.
+     */
     virtual const char* getVersion() const = 0;
+
+    /**
+     * get extensions.
+     * @return Extension supported by device.
+     */
     virtual const char* getExtension() const = 0;
+
+    /**
+     * Check if feature supported by device.
+     * @param feature Specify feature to be query.
+     * @return true if the feature is supported, false otherwise.
+     */
     virtual bool checkForFeatureSupported(FeatureType feature) = 0;
     
+    /**
+     * Get maximum texture size.
+     * @return Maximum texture size.
+     */
     inline int getMaxTextureSize() const { return _maxTextureSize; }
+
+    /**
+     * Get maximum attribute counts.
+     * @return Maximum attribute counts.
+     */
     inline int getMaxAttributes() const { return _maxAttributes; }
+
+    /**
+     * Get maximum texture unit.
+     * @return Maximum texture unit.
+     */
     inline int getMaxTextureUnits() const { return _maxTextureUnits; }
+
+    /**
+     * Get maximum sampler count.
+     * @return Maximum sampler count.
+     */
     inline int getMaxSamplesAllowed() const { return _maxSamplesAllowed; }
     
 protected:
     DeviceInfo() = default;
     
-    int _maxAttributes = 0;
-    int _maxTextureSize = 0;
-    int _maxTextureUnits = 0;
-    int _maxSamplesAllowed = 0;
+    int _maxAttributes = 0; ///< Maximum attribute count.
+    int _maxTextureSize = 0; ///< Maximum texture size.
+    int _maxTextureUnits = 0; ///< Maximum texture unit.
+    int _maxSamplesAllowed = 0; ///< Maximum sampler count.
 };
 
+//end of _backend group
+/// @}
 CC_BACKEND_END

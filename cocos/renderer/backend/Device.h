@@ -47,41 +47,108 @@ class ShaderModule;
 class RenderPipeline;
 class RenderPass;
 
+/**
+ * @addtogroup _backend
+ * @{
+ */
+
+/**
+ * New or create resources from Device.
+ */
 class Device : public cocos2d::Ref
 {
 public:
     friend class ProgramCache;
     friend class ShaderCache;
     
+    /** 
+     * Returns a shared instance of the device. 
+     */
     static Device* getInstance();
     
     virtual ~Device() = default;
     
-    // Create a command buffer, not auto released.
+    /**
+     * New a CommandBuffer object, not auto released.
+     * @return A CommandBuffer object.
+     */
     virtual CommandBuffer* newCommandBuffer() = 0;
-    // Create a buffer, not auto released.
+
+    /**
+     * New a Buffer object, not auto released.
+     * @param size Specifies the size in bytes of the buffer object's new data store.
+     * @param type Specifies the target buffer object. The symbolic constant must be BufferType::VERTEX or BufferType::INDEX.
+     * @param usage Specifies the expected usage pattern of the data store. The symbolic constant must be BufferUsage::STATIC, BufferUsage::DYNAMIC.
+     * @return A Buffer object.
+     */
     virtual Buffer* newBuffer(uint32_t size, BufferType type, BufferUsage usage) = 0;
-    // Create a texture, not auto released.
+
+    /**
+     * New a TextureBackend object, not auto released.
+     * @param descriptor Specifies texture description.
+     * @return A TextureBackend object.
+     */
     virtual TextureBackend* newTexture(const TextureDescriptor& descriptor) = 0;
-    // Create a auto released depth stencil state.
+
+    /**
+     * Create an auto released DepthStencilState object.
+     * @param descriptor Specifies depth and stencil description.
+     * @return An auto release DepthStencilState object.
+     */
     virtual DepthStencilState* createDepthStencilState(const DepthStencilDescriptor& descriptor) = 0;
-    // Create a auto released blend state.
+
+    /**
+     * Create an auto released BlendState object.
+     * @param descriptor Specifies blend description.
+     * @return An auto release BlendState object.
+     */
     virtual BlendState* createBlendState(const BlendDescriptor& descriptor) = 0;
-    // Create a render pipeline, not auto released.
+
+    /**
+     * New a RenderPipeline object, not auto released.
+     * @param descriptor Specifies render pipeline description.
+     * @return A RenderPipeline object.
+     */
     virtual RenderPipeline* newRenderPipeline(const RenderPipelineDescriptor& descriptor) = 0;
+
+    /**
+     * This property controls whether or not the drawables'
+     * metal textures may only be used for framebuffer attachments (YES) or
+     * whether they may also be used for texture sampling and pixel
+     * read/write operations (NO).
+     * @param frameBufferOnly A value of YES allows CAMetalLayer to allocate the MTLTexture objects in ways that are optimized for display purposes that makes them unsuitable for sampling. The recommended value for most applications is YES.
+     * @note This interface is specificaly designed for metal.
+     */
     virtual void setFrameBufferOnly(bool frameBufferOnly) = 0;
 
+    /**
+     * Get a DeviceInfo object.
+     * @return A DeviceInfo object.
+     */
     inline DeviceInfo* getDeviceInfo() const { return _deviceInfo; }
 protected:
-    // Create a auto released shader module.
+    /**
+     * New a shaderModule, not auto released.
+     * @param stage Specifies whether is vertex shader or fragment shader.
+     * @param source Specifies shader source.
+     * @return A ShaderModule object.
+     */
     virtual ShaderModule* newShaderModule(ShaderStage stage, const std::string& source) = 0;
-    // Create a auto released program.
+    
+    /**
+     * New a Program, not auto released.
+     * @param vertexShader Specifes this is a vertex shader source.
+     * @param fragmentShader Specifes this is a fragment shader source.
+     * @return A Program object.
+     */
     virtual Program* newProgram(const std::string& vertexShader, const std::string& fragmentShader) = 0;
     
-    DeviceInfo* _deviceInfo = nullptr;
+    DeviceInfo* _deviceInfo = nullptr; ///< Device information.
     
 private:
     static Device* _instance;
 };
 
+//end of _backend group
+/// @}
 CC_BACKEND_END

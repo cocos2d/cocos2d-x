@@ -39,20 +39,64 @@ CC_BACKEND_BEGIN
 /**
  * create and manager default depth and stencil attachment.
  * generate mipmaps.
- * 
+ * read pixles from texture.
  */
 class Utils
 {
 public:
+    /**
+     * Update default color attachment texture.
+     * @param texture Specifies the texture to be setted to the color attachemnt.
+     */
     static void updateDefaultColorAttachmentTexture(id<MTLTexture> texture);
+    
+    /**
+     * Get the default combined depth and stencil attachment pixel format.
+     * @return The default combined depth and stencil attachment pixel format.
+     */
     static MTLPixelFormat getDefaultDepthStencilAttachmentPixelFormat();
+    
+    /**
+     * Get the default color attachment pixel format.
+     * @return The default color attachment pixel format.
+     */
     static MTLPixelFormat getDefaultColorAttachmentPixelFormat();
+    
+    /**
+     * Get the default combined depth and stencil texture.
+     * @return The default combined depth and stencil texture.
+     */
     static id<MTLTexture> getDefaultDepthStencilTexture();
 
-    
+    /**
+     * Convert backend::PixelFormat to MTLPixelFormat.
+     * @param textureFormat Specifies a pixel format to be converted.
+     * @return A MTLPixelFormat.
+     */
     static MTLPixelFormat toMTLPixelFormat(PixelFormat textureFormat);
+    
+    /**
+     * Generate a complete set of mipmaps in given texture.
+     * @param texture Specifies a texture to generate mipmap.
+     */
     static void generateMipmaps(id<MTLTexture> texture);
+    
+    /**
+     * Read a block of pixels from the given texture
+     * @param origX,origY Specify the window coordinates of the first pixel that is read from the given texture. This location is the lower left corner of a rectangular block of pixels.
+     * @param rectWidth,rectHeight Specify the dimensions of the pixel rectangle. rectWidth and rectHeight of one correspond to a single pixel.
+     * @param texture Specifies the texture to get the image.
+     * @param callback Specifies a call back function to deal with the image.
+     */
     static void getTextureBytes(int origX, int origY, int rectWidth, int rectHeight, id<MTLTexture> texture, std::function<void(const unsigned char*, int, int)> callback);
+    
+    /**
+     * Swizzle the iamge form the given format to MTLPixelFormatRGBA8Unorm.
+     * @param image Specifies the image to be swizzled.
+     * @param width Specifies the width of the image.
+     * @param heigth Specifies the height of the image.
+     * @param format Specifies the format of the image.
+     */
     static void swizzleImage(unsigned char* image, int width, int height, MTLPixelFormat format);
     
 private:

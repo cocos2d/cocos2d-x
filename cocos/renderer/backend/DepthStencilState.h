@@ -31,6 +31,14 @@
 
 CC_BACKEND_BEGIN
 
+/**
+ * @addtogroup _backend
+ * @{
+ */
+
+/**
+ * Stencil descriptor.
+ */
 struct StencilDescriptor
 {
     bool operator ==(const StencilDescriptor& rhs) const;
@@ -43,6 +51,9 @@ struct StencilDescriptor
     unsigned int writeMask = 0;
 };
 
+/**
+ * Depth and stencil descriptor.
+ */
 struct DepthStencilDescriptor
 {
     CompareFunction depthCompareFunction = CompareFunction::LESS;
@@ -54,14 +65,22 @@ struct DepthStencilDescriptor
     StencilDescriptor frontFaceStencil;
 };
 
+/**
+ * Store Depth and stencil status.
+ */
 class DepthStencilState : public cocos2d::Ref
 {
 protected:
+    /**
+     * @param descriptor Specifies depth and stencil descriptor.
+     */
     DepthStencilState(const DepthStencilDescriptor& descriptor);
     virtual ~DepthStencilState();
     
-    DepthStencilDescriptor _depthStencilInfo;
-    bool _isBackFrontStencilEqual = false;
+    DepthStencilDescriptor _depthStencilInfo; ///< depth and stencil descriptor.
+    bool _isBackFrontStencilEqual = false; ///< Does front stencil status equals to back stencil's.
 };
 
+// end of _backend group
+/// @}
 CC_BACKEND_END

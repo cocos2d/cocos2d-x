@@ -94,4 +94,6 @@ private:
     bool _indexUpdated = false;
 };
 
+// end of _metal group
+/// @}
 CC_BACKEND_END

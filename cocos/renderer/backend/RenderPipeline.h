@@ -30,10 +30,19 @@
 
 CC_BACKEND_BEGIN
 
+/**
+ * @addtogroup _backend
+ * @{
+ */
+
+/**
+ * Render pipeline
+ */
 class RenderPipeline : public cocos2d::Ref
 {
 protected:
     virtual ~RenderPipeline() = default;
 };
-
+//end of _backend group
+/// @}
 CC_BACKEND_END

@@ -27,7 +27,10 @@
 #include "../DepthStencilState.h"
 
 CC_BACKEND_BEGIN
-
+/**
+ * @addtogroup _opengl
+ * @{
+ */
 class DepthStencilStateGL : public DepthStencilState
 {
 public:
@@ -37,5 +40,6 @@ public:
     DepthStencilStateGL(const DepthStencilDescriptor& descriptor);
     void apply(unsigned int stencilReferenceValueFront, unsigned int stencilReferenceValueBack) const;
 };
-
+//end of _opengl group
+/// @}
 CC_BACKEND_END

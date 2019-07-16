@@ -37,15 +37,15 @@ class ShaderModuleMTL;
  */
 
 /**
- * A Program
+ * A metal Program
  */
 class ProgramMTL : public Program
 {
 public:
     /// @name Constructor, Destructor and Initializers
     /**
-     * @param vertexShader Specifes this is a vertex shader source.
-     * @param fragmentShader Specifes this is a fragment shader source.
+     * @param vertexShader Specifes the vertex shader source.
+     * @param fragmentShader Specifes the fragment shader source.
      */
     ProgramMTL(const std::string& vertexShader, const std::string& fragmentShader);
     virtual ~ProgramMTL();

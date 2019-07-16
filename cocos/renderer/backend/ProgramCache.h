@@ -33,7 +33,14 @@
 #include <unordered_map>
 
 CC_BACKEND_BEGIN
+/**
+ * @addtogroup _backend
+ * @{
+ */
 
+/**
+ * Cache and reuse program object.
+ */
 class ProgramCache : public Ref
 {
 public:
@@ -43,20 +50,47 @@ public:
     /** purges the cache. It releases the retained instance. */
     static void destroyInstance();
    
+   /**
+     * @param vertexShader Specifes the vertex shader source.
+     * @param fragmentShader Specifes the fragment shader source.
+     */
     backend::Program* newProgram(const std::string& vertexShader, const std::string& fragmentShader);
+    
+    /**
+     * Remove a program object from cache.
+     * @param program Specifies the program object to move.
+     */
     void removeProgram(backend::Program* program);
+
+    /**
+     * Remove all unused program objects from cache.
+     */
     void removeUnusedProgram();
+
+    /**
+     * Remove all program objects from cache.
+     */
     void removeAllPrograms();
     
 protected:
     ProgramCache() = default;
     virtual ~ProgramCache();
     
+    /**
+     * Pre-load programs into cache.
+     */
     bool init();
+
+    /**
+     * @param vertexShader Specifes the vertex shader source.
+     * @param fragmentShader Specifes the fragment shader source.
+     */
     void addProgram(const std::string& vertexShader, const std::string& fragmentShader);
     
-    static std::unordered_map<std::size_t, backend::Program*> _cachedPrograms;
-    static ProgramCache *_sharedProgramCache;
+    static std::unordered_map<std::size_t, backend::Program*> _cachedPrograms; ///< The cached program object.
+    static ProgramCache *_sharedProgramCache; ///< A shared instance of the program cache.
 };
 
+//end of _backend group
+/// @}
 CC_BACKEND_END

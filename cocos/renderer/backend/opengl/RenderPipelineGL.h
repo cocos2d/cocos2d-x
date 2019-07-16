@@ -35,7 +35,10 @@ CC_BACKEND_BEGIN
 
 class ProgramGL;
 class BlendStateGL;
-
+/**
+ * @addtogroup _opengl
+ * @{
+ */
 class RenderPipelineGL : public RenderPipeline
 {
 public:
@@ -48,5 +51,6 @@ private:
     ProgramGL* _programGL = nullptr;
     BlendStateGL* _blendState = nullptr;
 };
-
+// end of _opengl group
+/// @}
 CC_BACKEND_END

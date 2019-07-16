@@ -40,6 +40,9 @@ CC_BACKEND_BEGIN
 
 class ShaderModuleGL;
 
+/**
+ * Store attribute information.
+ */
 struct AttributeInfo
 {
     unsigned int location = 0;
@@ -51,26 +54,78 @@ struct AttributeInfo
     std::string name;
 };
 
+/**
+ * @addtogroup _opengl
+ * @{
+ */
+
+/**
+ * An OpenGL program.
+ */
 class ProgramGL : public Program
 {
 public:
     typedef std::vector<AttributeInfo> VertexAttributeArray;
     
+    /**
+     * @param vertexShader Specifes the vertex shader source.
+     * @param fragmentShader Specifes the fragment shader source.
+     */
     ProgramGL(const std::string& vertexShader, const std::string& fragmentShader);
     ~ProgramGL();
     
+    /**
+     * Get attribute informations.
+     * @return Attribute informations.
+     */
     inline const std::vector<VertexAttributeArray>& getAttributeInfos() const { return _attributeInfos; }
+
+    /**
+     * Get program object.
+     * @return Program object.
+     */
     inline GLuint getHandler() const { return _program; }
+
+    /**
+     * Calculate attribute information according to vertex layout.
+     */
     void computeAttributeInfos(const RenderPipelineDescriptor& descriptor);
 
+    /**
+     * Get vertex uniform infomation.
+     * @return Vertex uniform information. Key is uniform name, Value is corresponding uniform info.
+     */
     virtual const std::unordered_map<std::string, UniformInfo>& getVertexUniformInfos() const override;
+
+    /**
+     * Get fragment uniform information.
+     * @return Fragment uniform information. Key is uniform name, Value is corresponding uniform info.
+     */
     virtual const std::unordered_map<std::string, UniformInfo>& getFragmentUniformInfos() const override;
 
+    /**
+     * Get uniform location by name.
+     * @param uniform Specifies the uniform name.
+     * @return The uniform location.
+     */
     virtual UniformLocation getUniformLocation(const std::string& uniform) const override;
 
+    /**
+     * Get maximum vertex location.
+     * @return Maximum vertex locaiton.
+     */
     virtual int getMaxVertexLocation() const override;
+
+    /**
+     * Get maximum fragment location.
+     * @return Maximum fragment location.
+     */
     virtual int getMaxFragmentLocation() const override;
 
+    /**
+     * Get active vertex attributes.
+     * @return Active vertex attributes. key is active attribute name, Value is corresponding attribute info.
+     */
     virtual const std::unordered_map<std::string, AttributeBindInfo> getActiveAttributes() const override;
 
 private:
@@ -97,5 +152,6 @@ private:
     
     int _maxLocation = -1;
 };
-
+//end of _opengl group
+/// @}
 CC_BACKEND_END
