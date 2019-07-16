@@ -1003,11 +1003,11 @@ ActionsEaseTests::ActionsEaseTests()
     ADD_TEST_CASE(SpeedTest);
 }
 
-EaseSpriteDemo::EaseSpriteDemo(void)
+EaseSpriteDemo::EaseSpriteDemo()
 {
 }
 
-EaseSpriteDemo::~EaseSpriteDemo(void)
+EaseSpriteDemo::~EaseSpriteDemo()
 {
     _grossini->release();
     _tamara->release();

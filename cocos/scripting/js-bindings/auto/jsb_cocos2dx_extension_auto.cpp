@@ -6737,7 +6737,7 @@ bool js_cocos2dx_extension_AssetsManagerEx_setVerifyCallback(JSContext *cx, uint
 		    {
 		        JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
 		        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(0), args.thisv()));
-		        auto lambda = [=](const std::string& larg0, cocos2d::extension::ManifestAsset larg1) -> bool {
+		        auto lambda = [=](const std::string& larg0, const cocos2d::extension::ManifestAsset& larg1) -> bool {
 		            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 		            jsval largv[2];
 		            largv[0] = std_string_to_jsval(cx, larg0);

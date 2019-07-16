@@ -76,11 +76,11 @@ CocosNodeTests::CocosNodeTests()
     ADD_TEST_CASE(Issue16735Test);
 }
 
-TestCocosNodeDemo::TestCocosNodeDemo(void)
+TestCocosNodeDemo::TestCocosNodeDemo()
 {
 }
 
-TestCocosNodeDemo::~TestCocosNodeDemo(void)
+TestCocosNodeDemo::~TestCocosNodeDemo()
 {
 }
 

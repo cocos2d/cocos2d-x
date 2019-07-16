@@ -307,7 +307,7 @@ std::string Issue631::subtitle() const
 //
 //------------------------------------------------------------------
 
-void EffectAdvanceBaseTest::onEnter(void)
+void EffectAdvanceBaseTest::onEnter()
 {
     TestCase::onEnter();
     
@@ -344,7 +344,7 @@ void EffectAdvanceBaseTest::onEnter(void)
 
 }
 
-EffectAdvanceBaseTest::~EffectAdvanceBaseTest(void)
+EffectAdvanceBaseTest::~EffectAdvanceBaseTest()
 {
 }
 
