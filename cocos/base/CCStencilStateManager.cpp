@@ -46,7 +46,7 @@ StencilStateManager::StencilStateManager()
     {
         vertexLayout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
     }
-    vertexLayout.setLayout(2 * sizeof(float), backend::VertexStepMode::VERTEX);
+    vertexLayout.setLayout(2 * sizeof(float));
 
     _mvpMatrixLocaiton = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     _colorUniformLocation = pipelineDescriptor.programState->getUniformLocation("u_color");

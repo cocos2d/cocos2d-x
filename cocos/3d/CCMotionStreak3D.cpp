@@ -156,7 +156,7 @@ void MotionStreak3D::initCustomCommand()
     {
         layout.setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(VertexData, texPos), false);
     }
-    layout.setLayout(sizeof(VertexData), backend::VertexStepMode::VERTEX);
+    layout.setLayout(sizeof(VertexData));
 
     auto &blend = pipelineDescriptor.blendDescriptor;
     blend.blendEnabled = true;

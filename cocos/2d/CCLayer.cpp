@@ -303,7 +303,7 @@ LayerColor::LayerColor()
     {
         vertexLayout.setAttribute("a_color", iter->second.location, backend::VertexFormat::FLOAT4, sizeof(_vertexData[0].vertices), false);
     }
-    vertexLayout.setLayout(sizeof(_vertexData[0]), backend::VertexStepMode::VERTEX);
+    vertexLayout.setLayout(sizeof(_vertexData[0]));
     
     _mvpMatrixLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
     
@@ -721,7 +721,7 @@ LayerRadialGradient::LayerRadialGradient()
     {
         vertexLayout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
     }
-    vertexLayout.setLayout(sizeof(_vertices[0]), backend::VertexStepMode::VERTEX);
+    vertexLayout.setLayout(sizeof(_vertices[0]));
 
     _customCommand.createVertexBuffer(sizeof(_vertices[0]), sizeof(_vertices) / sizeof(_vertices[0]), CustomCommand::BufferUsage::STATIC);
     _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);

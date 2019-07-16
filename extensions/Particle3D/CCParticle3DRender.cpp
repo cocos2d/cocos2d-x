@@ -222,7 +222,7 @@ bool Particle3DQuadRender::initQuadRender( const std::string& texFile )
     {
         layout.setAttribute("a_color", iter->second.location, backend::VertexFormat::FLOAT4, offsetof(posuvcolor, color), false);
     }
-    layout.setLayout(sizeof(posuvcolor), backend::VertexStepMode::VERTEX);
+    layout.setLayout(sizeof(posuvcolor));
 
     _locColor = _programState->getUniformLocation("u_color");
     _locPMatrix = _programState->getUniformLocation("u_PMatrix");

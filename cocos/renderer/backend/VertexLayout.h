@@ -38,6 +38,10 @@ CC_BACKEND_BEGIN
  * @addtogroup _backend
  * @{
  */
+
+/**
+ * Store vertex attribute layout.
+ */
 class VertexLayout
 {
 public:
@@ -52,24 +56,53 @@ public:
         , needToBeNormallized(needToBeNormallized)
         {}
         
-        // name is used in opengl
-        std::string name;
-        VertexFormat format = VertexFormat::INT3;
+        std::string name; ///< name is used in opengl
+        VertexFormat format = VertexFormat::INT3; 
         unsigned int offset = 0;
-        // index is used in metal
-        unsigned int index = 0;
+        unsigned int index = 0; ///< index is used in metal
         bool needToBeNormallized = false;
     };
 
     VertexLayout() = default;
     
+    /**
+     * Set attribute values to name.
+     * @param name Specifies the attribute name.
+     * @param index Specifies the index of the generic vertex attribute to be modified.
+     * @param format Specifies how the vertex attribute data is laid out in memory.
+     * @param offset Specifies the byte offset to the first component of the first generic vertex attribute.
+     * @param needToBeNormallized Specifies whether fixed-point data values should be normalized (true) or converted directly as fixed-point values (false) when they are accessed.
+     */
     void setAttribute(const std::string& name, unsigned int index, VertexFormat format, unsigned int offset, bool needToBeNormallized);
-    //FIXME: remove stepMode?
-    void setLayout(unsigned int stride, VertexStepMode stepMode);
     
+    /**
+     * Set stride of vertices.
+     * @param stride Specifies the distance between the data of two vertices, in bytes.
+     */
+    void setLayout(unsigned int stride);
+    
+    /**
+     * Get the distance between the data of two vertices, in bytes.
+     * @return The distance between the data of two vertices, in bytes.
+     */
     inline unsigned int getStride() const { return _stride; }
+
+    /**
+     * Get vertex step function. Default value is VERTEX.
+     * @return Vertex step function.
+     * @note Used in metal.
+     */
     inline VertexStepMode getVertexStepMode() const { return _stepMode; }
+
+    /**
+     * Get attribute informations
+     * @return Atrribute informations.
+     */
     inline const std::unordered_map<std::string, Attribute>& getAttributes() const { return _attributes; }
+
+    /**
+     * Check if vertex layout has been set.
+     */
     inline bool isValid() const { return _stride != 0; }
     
 private:

@@ -248,7 +248,7 @@ void DrawNode::setVertexLayout(CustomCommand& cmd)
     {
         layout.setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V2F_C4B_T2F, colors), true);
     }
-    layout.setLayout(sizeof(V2F_C4B_T2F), backend::VertexStepMode::VERTEX);
+    layout.setLayout(sizeof(V2F_C4B_T2F));
 }
 
 void DrawNode::updateBlendState(CustomCommand& cmd)

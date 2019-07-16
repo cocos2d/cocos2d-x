@@ -146,7 +146,7 @@ bool CameraBackgroundDepthBrush::init()
     {
         layout.setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V3F_C4B_T2F, texCoords), true);
     }
-    layout.setLayout(sizeof(_vertices[0]), backend::VertexStepMode::VERTEX);
+    layout.setLayout(sizeof(_vertices[0]));
 
     _vertices.resize(4);
     _vertices[0].vertices = Vec3(-1, -1, 0);
@@ -422,7 +422,7 @@ bool CameraBackgroundSkyBoxBrush::init()
     pipelineDescriptor.blendDescriptor.blendEnabled     = false;
 
     layout.setAttribute(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, 0, backend::VertexFormat::FLOAT3, 0, false);
-    layout.setLayout(sizeof(Vec3), backend::VertexStepMode::VERTEX);
+    layout.setLayout(sizeof(Vec3));
 
     initBuffer();
 

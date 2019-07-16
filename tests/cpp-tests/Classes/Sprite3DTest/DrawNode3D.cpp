@@ -100,7 +100,7 @@ bool DrawNode3D::init()
     {
         layout.setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, sizeof(Vec3), true);
     }
-    layout.setLayout(sizeof(V3F_C4B), backend::VertexStepMode::VERTEX);
+    layout.setLayout(sizeof(V3F_C4B));
     
     _customCommand.createVertexBuffer(sizeof(V3F_C4B), INITIAL_VERTEX_BUFFER_LENGTH, CustomCommand::BufferUsage::DYNAMIC);
     _isDirty = true;

@@ -432,7 +432,7 @@ bool BoneNode::init()
     {
         vertexLayout.setAttribute("a_color", iter->second.location, cocos2d::backend::VertexFormat::FLOAT4, 3 * sizeof(float), false);
     }
-    vertexLayout.setLayout(7 * sizeof(float), cocos2d::backend::VertexStepMode::VERTEX);
+    vertexLayout.setLayout(7 * sizeof(float));
 
     _customCommand.createVertexBuffer(sizeof(_vertexData[0]), 4, cocos2d::CustomCommand::BufferUsage::DYNAMIC);
     _customCommand.createIndexBuffer(cocos2d::CustomCommand::IndexFormat::U_SHORT, 6, cocos2d::CustomCommand::BufferUsage::STATIC);

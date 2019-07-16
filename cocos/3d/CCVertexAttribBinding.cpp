@@ -114,7 +114,7 @@ bool VertexAttribBinding::init(MeshIndexData* meshIndexData, Pass* pass, MeshCom
         offset += meshattribute.getAttribSizeBytes();
     }
 
-    _vertexLayout->setLayout(offset, backend::VertexStepMode::VERTEX);
+    _vertexLayout->setLayout(offset);
 
     CCASSERT(offset == meshVertexData->getSizePerVertex(), "vertex layout mismatch!");
 

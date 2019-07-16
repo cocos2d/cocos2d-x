@@ -616,7 +616,7 @@ void RawStencilBufferTest::initCommands()
         auto iter = attributes.find("a_position");
         if (iter != attributes.end())
             vertexLayout.setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
-        vertexLayout.setLayout(sizeof(Vec2), backend::VertexStepMode::VERTEX);
+        vertexLayout.setLayout(sizeof(Vec2));
 
 
         auto& cmd2 = _renderCmds[cmdIndex];

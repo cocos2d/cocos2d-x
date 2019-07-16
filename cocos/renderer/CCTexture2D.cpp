@@ -851,7 +851,7 @@ void Texture2D::initProgram()
     if(iter != attributes.end())
         vertexLayout.setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, 2 * sizeof(float), false);
     
-    vertexLayout.setLayout(4 * sizeof(float), backend::VertexStepMode::VERTEX);
+    vertexLayout.setLayout(4 * sizeof(float));
     
     //create vertex buffer
     _customCommand.setDrawType(CustomCommand::DrawType::ARRAY);

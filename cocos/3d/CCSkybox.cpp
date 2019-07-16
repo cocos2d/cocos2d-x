@@ -80,7 +80,7 @@ bool Skybox::init()
     {
         layout.setAttribute(shaderinfos::attribute::ATTRIBUTE_NAME_POSITION, iter->second.location, backend::VertexFormat::FLOAT3, 0, false);
     }
-    layout.setLayout(sizeof(Vec3), backend::VertexStepMode::VERTEX);
+    layout.setLayout(sizeof(Vec3));
 
     _uniformColorLoc = _programState->getUniformLocation("u_color");
     _uniformCameraRotLoc = _programState->getUniformLocation("u_cameraRot");
