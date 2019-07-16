@@ -19069,7 +19069,7 @@ bool js_cocos2dx_FileUtils_getStringFromFile(JSContext *cx, uint32_t argc, jsval
 			    {
 			        JS::RootedObject jstarget(cx, args.thisv().toObjectOrNull());
 			        std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, jstarget, args.get(1), args.thisv()));
-			        auto lambda = [=](const std::string& larg0) -> void {
+			        auto lambda = [=](std::string larg0) -> void {
 			            JSB_AUTOCOMPARTMENT_WITH_GLOBAL_OBJCET
 			            jsval largv[1];
 			            largv[0] = std_string_to_jsval(cx, larg0);
