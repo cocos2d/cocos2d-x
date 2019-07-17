@@ -29,6 +29,10 @@ CC_BACKEND_BEGIN
  * @addtogroup _opengl
  * @{
  */
+
+/**
+ * Use to create resoureces.
+ */
 class DeviceGL : public Device
 {
 public:
@@ -36,13 +40,13 @@ public:
     ~DeviceGL();
 
     /**
-     * New a CommandBuffer object.
+     * New a CommandBuffer object, not auto released.
      * @return A CommandBuffer object.
      */
     virtual CommandBuffer* newCommandBuffer() override;
 
     /**
-     * New a Buffer object.
+     * New a Buffer object, not auto released.
      * @param size Specifies the size in bytes of the buffer object's new data store.
      * @param type Specifies the target buffer object. The symbolic constant must be BufferType::VERTEX or BufferType::INDEX.
      * @param usage Specifies the expected usage pattern of the data store. The symbolic constant must be BufferUsage::STATIC, BufferUsage::DYNAMIC.
@@ -51,28 +55,28 @@ public:
     virtual Buffer* newBuffer(unsigned int size, BufferType type, BufferUsage usage) override;
 
     /**
-     * New a TextureBackend object.
+     * New a TextureBackend object, not auto released.
      * @param descriptor Specifies texture description.
      * @return A TextureBackend object.
      */
     virtual TextureBackend* newTexture(const TextureDescriptor& descriptor) override;
 
     /**
-     * Create a DepthStencilState object.
+     * Create an auto released DepthStencilState object.
      * @param descriptor Specifies depth and stencil description.
      * @return An auto release DepthStencilState object.
      */
     virtual DepthStencilState* createDepthStencilState(const DepthStencilDescriptor& descriptor) override;
 
     /**
-     * Create a BlendState object.
+     * Create an auto released BlendState object.
      * @param descriptor Specifies blend description.
      * @return An auto release BlendState object.
      */
     virtual BlendState* createBlendState(const BlendDescriptor& descriptor) override;
 
     /**
-     * New a RenderPipeline object.
+     * New a RenderPipeline object, not auto released.
      * @param descriptor Specifies render pipeline description.
      * @return A RenderPipeline object.
      */
@@ -85,7 +89,7 @@ public:
 
 protected:
     /**
-     * New a shaderModule.
+     * New a shaderModule, not auto released.
      * @param stage Specifies whether is vertex shader or fragment shader.
      * @param source Specifies shader source.
      * @return A ShaderModule object.
@@ -93,7 +97,7 @@ protected:
     virtual ShaderModule* newShaderModule(ShaderStage stage, const std::string& source) override;
 
     /**
-     * New a Program.
+     * New a Program, not auto released.
      * @param vertexShader Specifes this is a vertex shader source.
      * @param fragmentShader Specifes this is a fragment shader source.
      * @return A Program object.

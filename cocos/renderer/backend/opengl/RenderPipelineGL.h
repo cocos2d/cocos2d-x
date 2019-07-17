@@ -39,13 +39,29 @@ class BlendStateGL;
  * @addtogroup _opengl
  * @{
  */
+
+/**
+ * Set program and blend state.
+ */
 class RenderPipelineGL : public RenderPipeline
 {
 public:
+    /**
+     * @param descriptor Specifies render pipeline descriptor.
+     */
     RenderPipelineGL(const RenderPipelineDescriptor& descriptor);
     ~RenderPipelineGL();
     
+    /**
+     * Get program instance.
+     * @return Program instance.
+     */
     inline ProgramGL* getProgram() const { return _programGL; }
+
+    /**
+     * Get blend state.
+     * @return Blend state.
+     */
     inline BlendStateGL* getBlendState() const { return _blendState; }
 private:
     ProgramGL* _programGL = nullptr;

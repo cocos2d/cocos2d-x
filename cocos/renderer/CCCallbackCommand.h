@@ -54,6 +54,9 @@ public:
     std::function<void()> func;
 };
 
+/**
+ * CaptureScreenCallbackCommand is used to capture the screen.
+ */
 class CC_DLL CaptureScreenCallbackCommand : public RenderCommand
 {
 public:
@@ -61,6 +64,9 @@ public:
     
     void init(float globalZOrder);
     
+    /**
+     * A callback function to do with the image after capture from the color buffer.
+     */
     std::function<void(const unsigned char*, int, int)> func;
 };
 

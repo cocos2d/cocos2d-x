@@ -93,7 +93,7 @@ public:
     void set3D(bool value) { _is3D = value; }
     /**Get the depth by current model view matrix.*/
     float getDepth() const { return _depth; }
-    // Can use the result to change the descriptor content.
+    /// Can use the result to change the descriptor content.
     inline PipelineDescriptor& getPipelineDescriptor() { return _pipelineDescriptor; }
 
     const Mat4 & getMV() const { return _mv; }
