@@ -818,7 +818,7 @@ void Terrain::cacheUniformAttribLocation()
     {
         _vertexLayout.setAttribute("a_normal", iter->second.location, backend::VertexFormat::FLOAT3, offsetof(TerrainVertexData, _normal), false);
     }
-    _vertexLayout.setLayout(sizeof(TerrainVertexData), backend::VertexStepMode::VERTEX);
+    _vertexLayout.setLayout(sizeof(TerrainVertexData));
 
     _alphaMapLocation.reset();
     for (int i = 0; i < 4; ++i)

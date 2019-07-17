@@ -435,7 +435,7 @@ void TMXLayer::updatePrimitives()
             {
                 vertexLayout.setAttribute("a_color", iterAttribute->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
             }
-            vertexLayout.setLayout(sizeof(V3F_C4B_T2F), backend::VertexStepMode::VERTEX);
+            vertexLayout.setLayout(sizeof(V3F_C4B_T2F));
             _mvpMatrixLocaiton = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
             _textureLocation = pipelineDescriptor.programState->getUniformLocation("u_texture");
             pipelineDescriptor.programState->setTexture(_textureLocation, 0, _texture->getBackendTexture());

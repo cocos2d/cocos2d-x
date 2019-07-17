@@ -129,7 +129,7 @@ bool GridBase::initWithSize(const Size& gridSize, Texture2D *texture, bool flipp
     {
         vertexLayout.setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, texcoordOffset, false);
     }
-    vertexLayout.setLayout(totalSize, backend::VertexStepMode::VERTEX);
+    vertexLayout.setLayout(totalSize);
 
     calculateVertexPoints();
     updateBlendState();

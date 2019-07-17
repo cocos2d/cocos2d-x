@@ -1290,7 +1290,7 @@ void FogTestDemo::onEnter()
         layout1.setAttribute(attributeName, i, meshattribute.type, offset, false);
         offset += meshattribute.getAttribSizeBytes();
     }
-    layout1.setLayout(offset, backend::VertexStepMode::VERTEX);
+    layout1.setLayout(offset);
     _sprite3D1->setVertexLayout(&layout1);
 
     backend::VertexLayout layout2;
@@ -1302,7 +1302,7 @@ void FogTestDemo::onEnter()
         layout2.setAttribute(attributeName, i, meshattribute.type, offset1, false);
         offset1 += meshattribute.getAttribSizeBytes();
     }
-    layout2.setLayout(offset1, backend::VertexStepMode::VERTEX);
+    layout2.setLayout(offset1);
     _sprite3D2->setVertexLayout(&layout2);
 
     auto    fogColor    = Vec4(0.5, 0.5, 0.5, 1.0);

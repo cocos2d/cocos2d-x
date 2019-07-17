@@ -37,10 +37,9 @@ void VertexLayout::setAttribute(const std::string &name, unsigned int index, Ver
     _attributes[name] = { name, index, format, offset, needToBeNormallized };
 }
 
-void VertexLayout::setLayout(unsigned int stride, VertexStepMode stepMode)
+void VertexLayout::setLayout(unsigned int stride)
 {
     _stride = stride;
-    _stepMode = stepMode;
 }
 
 CC_BACKEND_END

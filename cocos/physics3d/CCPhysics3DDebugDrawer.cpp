@@ -137,7 +137,7 @@ void Physics3DDebugDrawer::init()
     auto &layout = _customCommand.getPipelineDescriptor().vertexLayout;
     layout.setAttribute(locPosition.attributeName.c_str(), locPosition.location, backend::VertexFormat::FLOAT3, offsetof(V3F_V4F, vertex), false);
     layout.setAttribute(locColor.attributeName.c_str(), locColor.location, backend::VertexFormat::FLOAT4, offsetof(V3F_V4F, color), false);
-    layout.setLayout(sizeof(V3F_V4F), backend::VertexStepMode::VERTEX);
+    layout.setLayout(sizeof(V3F_V4F));
 
     _buffer.reserve(512);
 

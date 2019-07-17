@@ -683,7 +683,7 @@ void PUBillboardChain::init( const std::string &texFile )
     {
         layout.setAttribute("a_color", iter->second.location, backend::VertexFormat::FLOAT4, offsetof(VertexInfo, color), false);
     }
-    layout.setLayout(sizeof(VertexInfo), backend::VertexStepMode::VERTEX);
+    layout.setLayout(sizeof(VertexInfo));
     
     _locColor = _programState->getUniformLocation("u_color");
     _locPMatrix = _programState->getUniformLocation("u_PMatrix");

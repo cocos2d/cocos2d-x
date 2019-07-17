@@ -66,7 +66,7 @@ AtlasNode::AtlasNode()
     {
         vertexLayout.setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
     }
-    vertexLayout.setLayout(sizeof(V3F_C4B_T2F), backend::VertexStepMode::VERTEX);
+    vertexLayout.setLayout(sizeof(V3F_C4B_T2F));
 }
 
 AtlasNode::~AtlasNode()

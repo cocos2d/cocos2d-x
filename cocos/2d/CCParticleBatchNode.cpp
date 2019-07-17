@@ -68,7 +68,7 @@ ParticleBatchNode::ParticleBatchNode()
     {
         layout.setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V3F_C4B_T2F, colors), true);
     }
-    layout.setLayout(sizeof(V3F_C4B_T2F), backend::VertexStepMode::VERTEX);
+    layout.setLayout(sizeof(V3F_C4B_T2F));
 
     _customCommand.setDrawType(CustomCommand::DrawType::ELEMENT);
     _customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE);

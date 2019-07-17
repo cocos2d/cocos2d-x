@@ -43,7 +43,7 @@ NavMeshDebugDraw::NavMeshDebugDraw()
 
     _defaultLayout.setAttribute("a_position", 0, backend::VertexFormat::FLOAT3, offsetof(V3F_C4F, position), false);
     _defaultLayout.setAttribute("a_color", 1, backend::VertexFormat::FLOAT4, offsetof(V3F_C4F, color), false);
-    _defaultLayout.setLayout(sizeof(V3F_C4F), backend::VertexStepMode::VERTEX);
+    _defaultLayout.setLayout(sizeof(V3F_C4F));
 
     _beforeCommand.func = CC_CALLBACK_0(NavMeshDebugDraw::onBeforeVisitCmd, this);
     _afterCommand.func  = CC_CALLBACK_0(NavMeshDebugDraw::onAfterVisitCmd, this);

@@ -64,7 +64,7 @@ MotionStreak::MotionStreak()
     {
         vertexLayout.setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, 4 * sizeof(float), true);
     }
-    vertexLayout.setLayout(4 * sizeof(float) + 4 * sizeof(uint8_t), backend::VertexStepMode::VERTEX);
+    vertexLayout.setLayout(4 * sizeof(float) + 4 * sizeof(uint8_t));
 }
 
 MotionStreak::~MotionStreak()
