@@ -267,7 +267,7 @@ int ZipUtils::inflateGZipFile(const char *path, unsigned char **out)
     unsigned int totalBufferSize = bufferSize;
     
     *out = (unsigned char*)malloc( bufferSize );
-    if( ! out )
+    if(*out == NULL)
     {
         CCLOG("cocos2d: ZipUtils: out of memory");
         return -1;
