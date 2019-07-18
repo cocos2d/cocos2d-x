@@ -532,7 +532,7 @@ void Manifest::loadManifest(const rapidjson::Document &json)
             for (rapidjson::SizeType i = 0; i < paths.Size(); ++i)
             {
                 if (paths[i].IsString()) {
-                    _searchPaths.push_back(paths[i].GetString());
+                    _searchPaths.emplace_back(paths[i].GetString());
                 }
             }
         }

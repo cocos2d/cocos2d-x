@@ -826,11 +826,11 @@ void Sprite3DEffectTest::onTouchesEnded(const std::vector<Touch*>& touches, Even
 
 AsyncLoadSprite3DTest::AsyncLoadSprite3DTest()
 {
-    _paths.push_back("Sprite3DTest/boss.obj");
-    _paths.push_back("Sprite3DTest/girl.c3b");
-    _paths.push_back("Sprite3DTest/orc.c3b");
-    _paths.push_back("Sprite3DTest/ReskinGirl.c3b");
-    _paths.push_back("Sprite3DTest/axe.c3b");
+    _paths.emplace_back("Sprite3DTest/boss.obj");
+    _paths.emplace_back("Sprite3DTest/girl.c3b");
+    _paths.emplace_back("Sprite3DTest/orc.c3b");
+    _paths.emplace_back("Sprite3DTest/ReskinGirl.c3b");
+    _paths.emplace_back("Sprite3DTest/axe.c3b");
     
     TTFConfig ttfConfig("fonts/arial.ttf", 15);
     auto label1 = Label::createWithTTF(ttfConfig,"AsyncLoad Sprite3D");
@@ -1346,32 +1346,32 @@ void Sprite3DReskinTest::addNewSpriteWithCoords(Vec2 p)
     _sprite = sprite;
     
     auto& body = _skins[(int)SkinType::UPPER_BODY];
-    body.push_back("Girl_UpperBody01");
-    body.push_back("Girl_UpperBody02");
+    body.emplace_back("Girl_UpperBody01");
+    body.emplace_back("Girl_UpperBody02");
     
     auto& pants = _skins[(int)SkinType::PANTS];
-    pants.push_back("Girl_LowerBody01");
-    pants.push_back("Girl_LowerBody02");
+    pants.emplace_back("Girl_LowerBody01");
+    pants.emplace_back("Girl_LowerBody02");
     
     auto& shoes = _skins[(int)SkinType::SHOES];
-    shoes.push_back("Girl_Shoes01");
-    shoes.push_back("Girl_Shoes02");
+    shoes.emplace_back("Girl_Shoes01");
+    shoes.emplace_back("Girl_Shoes02");
     
     auto& hair = _skins[(int)SkinType::HAIR];
-    hair.push_back("Girl_Hair01");
-    hair.push_back("Girl_Hair02");
+    hair.emplace_back("Girl_Hair01");
+    hair.emplace_back("Girl_Hair02");
     
     auto& face = _skins[(int)SkinType::FACE];
-    face.push_back("Girl_Face01");
-    face.push_back("Girl_Face02");
+    face.emplace_back("Girl_Face01");
+    face.emplace_back("Girl_Face02");
     
     auto& hand = _skins[(int)SkinType::HAND];
-    hand.push_back("Girl_Hand01");
-    hand.push_back("Girl_Hand02");
+    hand.emplace_back("Girl_Hand01");
+    hand.emplace_back("Girl_Hand02");
     
     auto& glasses = _skins[(int)SkinType::GLASSES];
-    glasses.push_back("");
-    glasses.push_back("Girl_Glasses01");
+    glasses.emplace_back("");
+    glasses.emplace_back("Girl_Glasses01");
     
     memset(_curSkin, 0, (int)SkinType::MAX_TYPE * sizeof(int));
     

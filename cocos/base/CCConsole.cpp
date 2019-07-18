@@ -715,7 +715,7 @@ void Console::log(const char* buf)
 {
     if( _sendDebugStrings ) {
         _DebugStringsMutex.lock();
-        _DebugStrings.push_back(buf);
+        _DebugStrings.emplace_back(buf);
         _DebugStringsMutex.unlock();
     }
 }

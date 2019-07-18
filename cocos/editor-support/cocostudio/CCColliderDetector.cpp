@@ -196,7 +196,7 @@ void ColliderDetector::addContourData(ContourData *contourData)
     unsigned long num = contourData->vertexList.size();
     for (unsigned long i = 0; i < num; i++)
     {
-        calculatedVertexList.push_back(Vec2());
+        calculatedVertexList.emplace_back();
     }
 #endif
 }
