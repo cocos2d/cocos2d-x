@@ -58,7 +58,8 @@ public:
      */
     enum Key
     {
-        KEY_NONE = 0,
+        KEY_NONE = 0,   // TODO: Remove this on next compatibility breakage
+        KEY_UNMAPPED = 0,
 
         JOYSTICK_LEFT_X = 1000,
         JOYSTICK_LEFT_Y,
@@ -137,9 +138,18 @@ public:
     /**
      * Start discovering new controllers.
      *
+     * On desktop platforms supported by GLFW, if \p isRawInputPreferred is
+     * `true`, all button and axis codes sent to any EventListenerController
+     * will be raw indices instead of mapped (unified) button codes in enum
+     * Key. Device names may also differ in cases with raw and mapped input.
+     *
+     * Parameter \p isRawInputPreferred currently has no effect on other platforms.
+     *
      * @warning The API has an empty implementation on Android.
+     *
+     * @param isRawInputPreferred   Whether to use raw input instead of mapped input.
      */
-    static void startDiscoveryController();
+    static void startDiscoveryController(bool isRawInputPreferred = false);
 
     /**
      * Stop the discovery process.
@@ -220,24 +230,6 @@ private:
     EventController *_connectEvent;
     EventController *_keyEvent;
     EventController *_axisEvent;
-
-    #if ( CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 )
-    //FIXME: Once GLFW 3.3 is bundled with cocos2d-x, remove these unordered
-    //maps. They won't be needed. We will only need to provide a mapping from
-    //the GLFW gamepad key codes to the Controller::Key.
-
-    // Attach the controller profiles from CCController-linux-win32.cpp to each
-    // of the Controller variables in order to minimize profile lookup time.
-
-    // Note: this increases memory usage unnecessarily since the same maps are
-    // already stored on ControllerImpl within the static member variable
-    // "s_controllerProfiles", but on these platforms the increase in memory
-    // usage is negligible.  Peformance over memory optimization was
-    // consciously chosen.
-
-    std::unordered_map<int,int> _buttonInputMap;
-    std::unordered_map<int,int> _axisInputMap;
-    #endif
 
     friend class ControllerImpl;
     friend class EventListenerController;
