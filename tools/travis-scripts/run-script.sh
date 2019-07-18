@@ -45,8 +45,8 @@ function build_linux_clang_tidy()
     cd clang-tidy-build
     cmake ../.. -DCMAKE_EXPORT_COMPILE_COMMANDS=on
     clang_tidy_script=$(dirname $(dirname $(readlink -f `which clang-tidy`)))/share/clang/run-clang-tidy.py 
-    # run clang-tidy on all files except those in external directory
-    python $clang_tidy_script '^((?!/cocos2d-x/external/).)*$'
+    # disable clang-tidy checks on external directory and cocos/scripting directory
+    python $clang_tidy_script '^((?!/cocos2d-x/external/|/cocos/scripting/).)*$'
 }
 
 function build_mac()
