@@ -86,9 +86,10 @@ public:
     AudioEngineThreadPool(int threads = 4)
         : _stop(false)
     {
+        _workers.reserve(threads);
         for (int index = 0; index < threads; ++index)
         {
-            _workers.emplace_back(std::thread(std::bind(&AudioEngineThreadPool::threadFunc, this)));
+            _workers.emplace_back(std::bind(&AudioEngineThreadPool::threadFunc, this));
         }
     }
 
@@ -134,7 +135,8 @@ private:
                 }
             }
 
-            task();
+            if (task)
+                task();
         }
     }
 
@@ -148,11 +150,8 @@ private:
 
 void AudioEngine::end()
 {
-    if (s_threadPool)
-    {
-        delete s_threadPool;
-        s_threadPool = nullptr;
-    }
+    delete s_threadPool;
+    s_threadPool = nullptr;
 
     delete _audioEngineImpl;
     _audioEngineImpl = nullptr;
