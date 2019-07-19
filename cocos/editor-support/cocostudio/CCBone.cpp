@@ -96,7 +96,7 @@ Bone::~Bone(void)
 
 bool Bone::init()
 {
-    return Bone::init(nullptr);
+    return Bone::init("");
 }
 
 
