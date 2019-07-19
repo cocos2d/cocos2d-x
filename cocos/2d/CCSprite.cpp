@@ -425,12 +425,15 @@ void Sprite::setTexture(Texture2D *texture)
             CC_SAFE_RELEASE(image);
         }
     }
-    
-    if ((_renderMode != RenderMode::QUAD_BATCHNODE) && (_texture != texture))
+
+    if (_renderMode != RenderMode::QUAD_BATCHNODE)
     {
-        CC_SAFE_RETAIN(texture);
-        CC_SAFE_RELEASE(_texture);
-        _texture = texture;
+        if (_texture != texture)
+        {
+            CC_SAFE_RETAIN(texture);
+            CC_SAFE_RELEASE(_texture);
+            _texture = texture;
+        }
         updateBlendFunc();
     }
 
